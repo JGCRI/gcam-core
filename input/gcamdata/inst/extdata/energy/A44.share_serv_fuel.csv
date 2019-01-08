@@ -1,6 +1,8 @@
 # File: A44.share_serv_fuel.csv
 # Title: Shares of residential and commercial TFE by region
 # Units: Unitless
+# Column types: ccccn 
+# ----------
 region_GCAM3,sector,fuel,service,share_TFEbysector
 USA,bld_comm,biomass,comm heating,0.00924934
 USA,bld_comm,coal,comm heating,0

@@ -2,6 +2,8 @@
 # Title: Global estimates of energy production and water consumption for primary energy production in year 2005
 # Units: m3_per_TJ for 'water.coefficient.m3.per.TJ', EJ for 'energy.production.EJ', Million_m3 for  'total.water.consumption.million.m3'
 # Source: Maheu, A., 2009. Energy Choices and their Impacts on Demand for Water Resources : An Assessment of Current and Projected Water Consumption in Global Energy Production.
+# Column types: ccccnnn 
+# ----------
 fuel,region,subsector,technology,water.coefficient.m3.per.TJ ,energy.production.EJ,total.water.consumption.million.m3
 liquids.conventional,Non-OPEC,crude.oil.onshore,Primary recovery,6,31.8,175
 liquids.conventional,Non-OPEC,crude.oil.onshore,Secondary recovery,600,16,9588

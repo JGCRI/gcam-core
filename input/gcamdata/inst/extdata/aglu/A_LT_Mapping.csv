@@ -3,6 +3,8 @@
 # Units: NA
 # Original source: NA
 # Description: Allows land nodes to be assigned from the land types in level1
+# Column types: cccccc 
+# ----------
 LandNode1,LandNode2,LandNode3,Land_Type,LandLeaf,GCAM_commodity
 AgroForestLand,AgroForest_NonPasture,AllForestLand,Forest,Forest,Forest
 AgroForestLand,AgroForest_NonPasture,AllForestLand,UnmanagedForest,UnmanagedForest,

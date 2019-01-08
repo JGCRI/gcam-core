@@ -1,6 +1,8 @@
 # File: EPA_ghg_tech.csv
 # Title: Mapping between EPA emissions sources and GCAM sectors and fuels
 # Units: NA
+# Column types: ccc 
+# ----------
 Source_Category,sector,fuel
 1.A. Fuel Combustion_Liquid Fuels,,
 1.A. Fuel Combustion_Solid Fuels,,

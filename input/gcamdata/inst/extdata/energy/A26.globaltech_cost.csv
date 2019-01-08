@@ -3,6 +3,8 @@
 # Units: 1975 USD/GJ
 # Description: The added cost to producer prices to get final energy delivery prices. 0 values indicate the delivery cost is included elsewhere. Backup electricity costs represent the costs of a gas turbine to manage base load, but CSP backup is included in the primary tech cost.
 # Source: pre-2006 Minicam model inputs
+# Column types: ccccnnnn 
+# ----------
 supplysector,subsector,technology,minicam.non.energy.input,1971,1975,2005,2100
 backup_electricity,gas,gas (steam/CT),non-energy,1.84,1.84,1.84,1.69
 csp_backup,gas,CSP gas hybrid mode,non-energy,0,0,0,0

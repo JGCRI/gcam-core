@@ -1,6 +1,8 @@
 # File: A44.globaltech_eff_avg.csv
 # Title: Overall stock average efficiencies of efficiency-partitioned technologies
 # Units: Unitless
+# Column types: cccccn 
+# ----------
 supplysector,subsector,technology1,technology2,minicam-energy-input,stockavg
 resid heating,gas,gas furnace,gas furnace hi-eff,delivered gas,0.814
 resid heating,refined liquids,fuel furnace,fuel furnace hi-eff,refined liquids enduse,0.817

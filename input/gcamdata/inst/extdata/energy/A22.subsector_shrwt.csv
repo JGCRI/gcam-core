@@ -2,6 +2,8 @@
 # Title: Primary energy transformation subsector shareweights
 # Units: N/A
 # Description: shareweights and fillout years for subsectors 
+# Column types: ccccn 
+# ----------
 supplysector,subsector,year.fillout,year,share.weight
 gas processing,natural gas,start-year,,1
 gas processing,biomass gasification,start-year,,1

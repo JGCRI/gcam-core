@@ -40,8 +40,8 @@ module_water_L233.water.demand.livestock <- function(command, ...) {
     L133.water_demand_livestock_R_C_W_km3_Mt %>%
       rename(supplysector = GCAM_commodity) %>%
       inner_join(select(A_an_technology, supplysector, subsector, technology), by = "supplysector") %>%
-      mutate(water_sector = "Livestock") %>%
-      mutate(minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
+      mutate(water_sector = "Livestock",
+             minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
       left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(market.name = region) %>%
       # Set the coef for all years

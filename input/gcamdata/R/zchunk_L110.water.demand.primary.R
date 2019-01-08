@@ -26,9 +26,9 @@ module_water_L110.water.demand.primary <- function(command, ...) {
     return(c("L110.water_demand_primary_R_S_W_m3_GJ"))
   } else if(command == driver.MAKE) {
 
-    fuel <- supplysector <- water.coefficient.m3.per.TJ <- region <-
-        GCAM_region_ID <- region_GCAM3 <- fresh <- coefficient_WC <- cons_fr <-
-        cal <- water_type <- coefficient <- sal <- NULL # silence package check.
+    fuel <- supplysector <- water.coefficient.m3.per.TJ <- region <- rsrc_region <-
+      GCAM_region_ID <- region_GCAM3 <- fresh <- coefficient_WC <- cons_fr <-
+      cal <- water_type <- coefficient <- sal <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -62,7 +62,7 @@ module_water_L110.water.demand.primary <- function(command, ...) {
     MiddleEastRegion <- GCAM_region_names$region[GCAM_region_names$GCAM_region_ID == MiddleEastRegID]
     GCAM_region_names %>%
       mutate(rsrc_region = if_else(region == MiddleEastRegion, "Middle East", "USA")) %>%
-      left_join(resource_water_share, by = c(rsrc_region = "region_GCAM3")) %>%
+      left_join_error_no_match(resource_water_share, by = c(rsrc_region = "region_GCAM3")) %>%
       select(-rsrc_region, -region) -> L110.resource_water_share
     names(L110.resource_water_share) <- c("GCAM_region_ID", "sal", "fresh", "cons_fr", "cons_tot")
 
@@ -72,16 +72,16 @@ module_water_L110.water.demand.primary <- function(command, ...) {
 
     # Calculate water withdrawal, seawater, and consumption, then bind to single tibble
     L110.water_ratios_coef %>%
-      mutate(water_type = "water withdrawals") %>%
-      mutate(coefficient_WC = fresh * water.coefficient.m3.per.TJ * 1e-3) %>%
-      mutate(coefficient = coefficient_WC / cons_fr) %>%
+      mutate(water_type = "water withdrawals",
+             coefficient_WC = fresh * water.coefficient.m3.per.TJ * 1e-3,
+             coefficient = coefficient_WC / cons_fr) %>%
       select(-coefficient_WC) -> L110.water_withdrawals
     L110.water_ratios_coef %>%
-      mutate(water_type = "seawater") %>%
-      mutate(coefficient = sal * water.coefficient.m3.per.TJ * 1e-3) -> L110.seawater
+      mutate(water_type = "seawater",
+             coefficient = sal * water.coefficient.m3.per.TJ * 1e-3) -> L110.seawater
     L110.water_ratios_coef %>%
-      mutate(water_type = "water consumption") %>%
-      mutate(coefficient = fresh * water.coefficient.m3.per.TJ * 1e-3) %>%
+      mutate(water_type = "water consumption",
+             coefficient = fresh * water.coefficient.m3.per.TJ * 1e-3) %>%
       bind_rows(L110.water_withdrawals, L110.seawater) %>%
       select(GCAM_region_ID, supplysector, water_type, coefficient) ->
       L110.water_demand_primary
@@ -98,7 +98,7 @@ module_water_L110.water.demand.primary <- function(command, ...) {
                      "water/resource_water_share") ->
       L110.water_demand_primary_R_S_W_m3_GJ
 
-      return_data(L110.water_demand_primary_R_S_W_m3_GJ)
+    return_data(L110.water_demand_primary_R_S_W_m3_GJ)
 
   } else {
     stop("Unknown command")

@@ -2,6 +2,8 @@
 # Description: Assumed soil carbon content by land use type and AEZ
 # Units MgC/ha
 # Source: Listed in table
+# Column types: ciiiiiiiiiiiiiiiiiic 
+# ----------
 LT_SAGE,AEZ01,AEZ02,AEZ03,AEZ04,AEZ05,AEZ06,AEZ07,AEZ08,AEZ09,AEZ10,AEZ11,AEZ12,AEZ13,AEZ14,AEZ15,AEZ16,AEZ17,AEZ18,Source
 Tropical Evergreen Forest/Woodland,98,98,98,98,98,98,98,98,98,98,98,98,98,98,98,98,98,98,"Houghton 1999, tropical equatorial forest"
 Tropical Deciduous Forest/Woodland,98,98,98,98,98,98,98,98,98,98,98,98,98,98,98,98,98,98,"Houghton 1999, tropical seasonal forest"

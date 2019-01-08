@@ -3,6 +3,8 @@
 # Units: Specified in column headers
 # Source: Union of Concerned Scientists: http://www.ucsusa.org/clean-energy/energy-water-use/ucs-power-plant-database#.WdeR91tSyCg
 # Comments: Includes general plant characteristics, locational information, electricity production, water use data.
+# Column types: iccccccccnnicinicccnncccccc 
+# ----------
 Plant Code,Plant Name,State,Plant-Generator Code,Parent Company,Technology Code,Requires cooling?,Cooling Technology,Fuel,Latitude,Longitude,Water Basin (8-digit HUC),Water Resource Region,First Year of Operation,Nameplate Capacity (MW),Estimated Generation (MWh),Estimated Capacity Factor,Reported Water Source (Name),Reported Water Source (Type),Reported  Withdrawal (million gallons/yr),Reported  Consumption (million gallons/yr),Calculated Withdrawal (million gallons/yr),Calculated Withdrawal MIN (million gallons/yr),Calculated Withdrawal MAX (million gallons/yr),Calculated Consumption (million gallons/yr),Calculated Consumption MIN (million gallons/yr),Calculated Consumption MAX (million gallons/yr)
 2,Bankhead Dam,AL,2-1,Southern Company,HY-NA-HY,No,None,Hydropower,33.2189,-87.5797,3160112,South Atlantic Gulf,1963,45,88157,22%,Black Warrior River,Surface Water,0,0,0,0,0,0,0,0
 3,Barry,AL,3-1,Southern Company,CL-OT-ST,Yes,Once-Through,Coal,31.0042,-88.0139,3160204,South Atlantic Gulf,1954,153.1,873997,65%,Mobile River,Surface Water,"44,658",0,"31,770","17,480","43,700",218,87,277

@@ -9,10 +9,10 @@
 #' the generated outputs: \code{L125.LC_bm2_R}, \code{L125.LC_bm2_R_GLU}, \code{L125.LC_bm2_R_LT_Yh_GLU}.
 #' The corresponding file in the
 #' original data system was \code{LB125.LC_tot.R} (aglu level1).
-#' @details This module builds three total land cover area data from the lower-level raw data.
-#' The three types of data include: 1) total land area by GCAM region; 2) total land area by GCAM region and GLU;
-#' 3) total land area by GCAM region, GLU and historical year. Unit of the data is billion square meters.
-#' The land area changing rates (bm2 per year) were checked to make sure they are in certain tolerances.
+#' @details This module builds three total land cover area data from the lower-level raw data:
+#' 1) total land area by GCAM region; 2) total land area by GCAM region and GLU; and
+#' 3) total land area by GCAM region, GLU and historical year. Units of the data are billion square meters.
+#' The land area changing rates (bm2 per year) are checked to make sure they are within certain tolerances.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -20,16 +20,16 @@
 module_aglu_LB125.LC_tot <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L120.LC_bm2_R_UrbanLand_Yh_GLU",
-              "L120.LC_bm2_R_Tundra_Yh_GLU",
-              "L120.LC_bm2_R_RckIceDsrt_Yh_GLU",
-              "L122.LC_bm2_R_HarvCropLand_Yh_GLU",
-              "L122.LC_bm2_R_OtherArableLand_Yh_GLU",
-              "L123.LC_bm2_R_MgdPast_Yh_GLU",
-              "L123.LC_bm2_R_MgdFor_Yh_GLU",
-              "L124.LC_bm2_R_Shrub_Yh_GLU_adj",
-              "L124.LC_bm2_R_Grass_Yh_GLU_adj",
-              "L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj",
-              "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj"))
+             "L120.LC_bm2_R_Tundra_Yh_GLU",
+             "L120.LC_bm2_R_RckIceDsrt_Yh_GLU",
+             "L122.LC_bm2_R_HarvCropLand_Yh_GLU",
+             "L122.LC_bm2_R_OtherArableLand_Yh_GLU",
+             "L123.LC_bm2_R_MgdPast_Yh_GLU",
+             "L123.LC_bm2_R_MgdFor_Yh_GLU",
+             "L124.LC_bm2_R_Shrub_Yh_GLU_adj",
+             "L124.LC_bm2_R_Grass_Yh_GLU_adj",
+             "L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj",
+             "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L125.LC_bm2_R",
              "L125.LC_bm2_R_GLU",
@@ -98,17 +98,16 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
     L125.LC_bm2_R_Yh_GLU %>%
       filter(year == min(year)) %>%                        # using the starting year only
       group_by(GCAM_region_ID, GLU) %>%                    # group by GCAM_region_ID and GLU
-      summarise(value = sum(value)) %>%                    # calculate the total area for each region and GLU
-      ungroup() %>%
-      rename(LC_bm2 = value) ->                            # rename the column
+      summarise(LC_bm2 = sum(value)) %>%                    # calculate the total area for each region and GLU
+      ungroup ->
       L125.LC_bm2_R_GLU                                    # Total land cover by GCAM region and GLU (unit billion m2)
 
     L125.LC_bm2_R_Yh_GLU %>%
       filter(year == min(year)) %>%                        # using the starting year only
       group_by(GCAM_region_ID) %>%                         # group by GCAM_region_ID
-      summarise(value = sum(value)) %>%                    # calculate the total area for each region
-      rename(LC_bm2 = value) %>%                           # rename the column
-      mutate(LC_bm2 = round(LC_bm2, aglu.DIGITS_LAND_TOTAL)) -> # keep the data with digit precision defined by aglu.DIGITS_LAND_TOTAL
+      summarise(LC_bm2 = round(sum(value),
+                               aglu.DIGITS_LAND_TOTAL)) %>% # calculate the total area for each region
+      ungroup ->
       L125.LC_bm2_R                                        # Total land cover by GCAM region (unit billion m2)
 
     L125.LC_bm2_R_LT_Yh_GLU %>%                           # Land cover totals differentiated by land use types
@@ -120,7 +119,6 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
       add_title("Total land cover by GCAM region") %>%
       add_units("billion square meters (bm2)") %>%
       add_comments("Aggregated Land area by GCAM region") %>%
-      add_comments("Rounded to 2 digit") %>%
       add_legacy_name("L125.LC_bm2_R") %>%
       add_precursors("L120.LC_bm2_R_UrbanLand_Yh_GLU",
                      "L120.LC_bm2_R_Tundra_Yh_GLU",
@@ -140,18 +138,15 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
       add_units("billion square meters (bm2)") %>%
       add_comments("Aggregated Land area by GCAM region x GLU") %>%
       add_legacy_name("L125.LC_bm2_R_GLU") %>%
-      same_precursors_as(L125.LC_bm2_R) %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      same_precursors_as(L125.LC_bm2_R) ->
       L125.LC_bm2_R_GLU
 
     L125.LC_bm2_R_LT_Yh_GLU %>%
       add_title("Total land cover by GCAM region / land type / historical year / GLU") %>%
       add_units("billion square meters (bm2)") %>%
       add_comments("Data was read in from multiple data sources for each land cover type") %>%
-      add_comments("Rounded to 7 digit") %>%
       add_legacy_name("L125.LC_bm2_R_LT_Yh_GLU") %>%
-      same_precursors_as(L125.LC_bm2_R) %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      same_precursors_as(L125.LC_bm2_R) ->
       L125.LC_bm2_R_LT_Yh_GLU
 
     return_data(L125.LC_bm2_R, L125.LC_bm2_R_GLU, L125.LC_bm2_R_LT_Yh_GLU)

@@ -1,6 +1,8 @@
 # File: A44.subsector_logit.csv
 # Title: Building default subsector logit exponents
 # Units: Unitless
+# Column types: ccic 
+# ----------
 supplysector,subsector,logit.exponent,logit.type
 resid heating,biomass,-6,
 resid heating,coal,-6,

@@ -1,6 +1,8 @@
 # File: UCS_water_types.csv
 # Title: Union of Concerned Scientists (UCS) water types
 # Units: NA
+# Column types: cc 
+# ----------
 Reported Water Source (Type),water_type
 Groundwater,fresh
 GW/Municipal,fresh

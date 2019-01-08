@@ -2,6 +2,8 @@
 # Title: Biodiesel producers and production capacity by state in March 2014
 # Source: http://www.eia.gov/biofuels/biodiesel/production/table4.pdf
 # Units: Million gallons of biodiesel
+# Column types: ci 
+# ----------
 state,Mgal.yr
 AL,46
 AZ,2

@@ -3,6 +3,8 @@
 # Unit: NA
 # Description: agSupplySubsectors - logit and shareweight interpolation
 # Source: NA
+# Column types: ccici 
+# ----------
 AgSupplySector,AgSupplySubsector,logit.exponent,year.fillout,share.weight
 Corn,Corn,-6,start-year,1
 FiberCrop,FiberCrop,-6,start-year,1

@@ -1,6 +1,8 @@
 # File: A21.globaltech_cost.csv
 # Title: Primary energy handling default costs
 # Units: 1975$/GJ
+# Column types: ccccnn 
+# ----------
 supplysector,subsector,technology,minicam.non.energy.input,1971,2100
 regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737
 regional coal,regional coal,regional coal,non-energy,0.15,0.15

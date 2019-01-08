@@ -2,6 +2,7 @@
 # Title: Managed land leafs in the second node
 # Units: NA
 # Original source: Land_nesting_structure.xls
+# Column types: ccc 
 # ----------
 LandNode1,LandNode2,LandLeaf
 AgroForestLand,AllPastureLand,Pasture

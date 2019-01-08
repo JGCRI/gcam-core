@@ -2,6 +2,7 @@
 # Title: Unmanaged land leaf in the second node
 # Units: NA
 # Source: Land_nesting_structure.xls
+# Column types: ccc 
 # ----------
 LandNode1,LandNode2,UnmanagedLandLeaf
 AgroForestLand,AllPastureLand,UnmanagedPasture

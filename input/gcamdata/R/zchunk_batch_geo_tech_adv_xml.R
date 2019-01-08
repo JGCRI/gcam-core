@@ -10,7 +10,7 @@
 #' original data system was \code{batch_geo_tech_adv_xml.R} (energy XML).
 module_energy_batch_geo_tech_adv_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L223.GlobalTechCapital_geo_adv"))
+    return(c("L223.GlobalTechCapital_geo_adv"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "geo_tech_adv.xml"))
   } else if(command == driver.MAKE) {

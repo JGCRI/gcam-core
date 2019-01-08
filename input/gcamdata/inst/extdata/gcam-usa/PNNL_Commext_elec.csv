@@ -2,6 +2,8 @@
 # Title: Commercial Non-building Energy Use 
 # Units: TWh
 # Source: D. Belzer. 2004. Tables throughout section 3; http://www.pnl.gov/main/publications/external/technical_reports/PNNL-16820.pdf
+# Column types: icnnnnnn 
+# ----------
 Year,unit,Street and highway lighting,Parking lot lighting,Traffic signals,Water supply and treatment,Cell phone towers,Irrigation
 1983,TWh,16.01,3,3.67,50.2,0,23.6
 1984,TWh,16.33,3.06,3.75,50.7,0,23.6

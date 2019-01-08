@@ -1,6 +1,8 @@
 # File: A21.subsector_shrwt.csv
 # Title: Primary energy handling default subsector shareweights
 # Units: Unitless
+# Column types: ccccii 
+# ----------
 supplysector,subsector,year.fillout,year,share.weight,traded
 regional biomass,regional biomass,start-year,,1,0
 regional coal,regional coal,start-year,,1,0
