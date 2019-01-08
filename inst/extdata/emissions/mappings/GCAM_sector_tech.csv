@@ -2,6 +2,8 @@
 # Title: Mapping between GCAM agriculture technologies to EPA aggregate sectors, aggregte fuels, EDGAR aggregate sector, RCP aggregate sector, BCOC aggregate sectore, EPA MACC sector, and IIASA sector
 # Units: None
 # Source: internal
+# Column types: ccccccccccccccc 
+# ----------
 sector,fuel,technology,supplysector,subsector,stub.technology,EPA_agg_sector,EPA_agg_fuel,EPA_agg_fuel_ghg,EDGAR_agg_sector,RCP_agg_sector,BCOC_agg_sector,BCOC_agg_fuel,EPA_MACC_Sector,IIASA_sector
 Beef,Mixed,FeedCrops,Beef,Mixed,FeedCrops,Beef,all,all,Animals,,Beef,all,Livestock,
 Beef,Mixed,FodderHerb_Residue,Beef,Mixed,FodderHerb_Residue,Beef,all,all,Animals,,Beef,all,Livestock,

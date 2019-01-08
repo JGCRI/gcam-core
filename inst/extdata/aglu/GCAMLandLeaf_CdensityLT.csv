@@ -2,6 +2,7 @@
 # Title: Maps GCAM land leaves to corresponding land types in carbon density databases
 # Units: NA
 # Source: Land_nesting_structure.xls
+# Column types: cc 
 # ----------
 LandLeaf,Land_Type
 Tundra,Tundra

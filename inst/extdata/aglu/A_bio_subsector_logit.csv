@@ -3,6 +3,8 @@
 # Description: Subsector logit definitions for biomass trade
 # Source: NA
 # Unit: NA
+# Column types: cciic 
+# ----------
 supplysector,subsector,logit.exponent,traded,logit.type
 regional biomass,regional biomass,-6,0,
 total biomass,domestic biomass,-3,0,

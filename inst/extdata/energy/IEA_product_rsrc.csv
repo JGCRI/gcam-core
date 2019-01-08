@@ -2,6 +2,8 @@
 # Title: Mapping from IEA product names to GCAM primary resource names
 # Units: NA
 # Source: International Energy Agency, 2012, Energy Balances of OECD Countries 1960-2010 and Energy Balances of Non-OECD Countries 1971-2010
+# Column types: cc 
+# ----------
 PRODUCT,resource
 Crude/NGL/feedstocks (if no detail),crude oil
 Crude oil,crude oil

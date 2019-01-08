@@ -89,28 +89,28 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
       add_xml_data(L244.Floorspace, "Floorspace") %>%
       add_xml_data(L244.DemandFunction_serv, "DemandFunction_serv") %>%
       add_xml_data(L244.DemandFunction_flsp, "DemandFunction_flsp") %>%
-      add_xml_data(L244.Satiation_flsp, "Satiation_flsp" ) %>%
-      add_xml_data(L244.SatiationAdder, "SatiationAdder" ) %>%
-      add_xml_data(L244.ThermalBaseService, "ThermalBaseService" ) %>%
-      add_xml_data(L244.GenericBaseService, "GenericBaseService" ) %>%
-      add_xml_data(L244.ThermalServiceSatiation, "ThermalServiceSatiation" ) %>%
-      add_xml_data(L244.GenericServiceSatiation, "GenericServiceSatiation" ) %>%
-      add_xml_data(L244.Intgains_scalar, "Intgains_scalar" ) %>%
-      add_xml_data(L244.ShellConductance_bld, "ShellConductance" ) %>%
-      add_logit_tables_xml(L244.Supplysector_bld, "Supplysector" ) %>%
-      add_xml_data(L244.FinalEnergyKeyword_bld, "FinalEnergyKeyword" ) %>%
-      add_xml_data(L244.SubsectorShrwtFllt_bld, "SubsectorShrwtFllt" ) %>%
-      add_xml_data(L244.SubsectorInterp_bld, "SubsectorInterp" ) %>%
+      add_xml_data(L244.Satiation_flsp, "Satiation_flsp") %>%
+      add_xml_data(L244.SatiationAdder, "SatiationAdder") %>%
+      add_xml_data(L244.ThermalBaseService, "ThermalBaseService") %>%
+      add_xml_data(L244.GenericBaseService, "GenericBaseService") %>%
+      add_xml_data(L244.ThermalServiceSatiation, "ThermalServiceSatiation") %>%
+      add_xml_data(L244.GenericServiceSatiation, "GenericServiceSatiation") %>%
+      add_xml_data(L244.Intgains_scalar, "Intgains_scalar") %>%
+      add_xml_data(L244.ShellConductance_bld, "ShellConductance") %>%
+      add_logit_tables_xml(L244.Supplysector_bld, "Supplysector") %>%
+      add_xml_data(L244.FinalEnergyKeyword_bld, "FinalEnergyKeyword") %>%
+      add_xml_data(L244.SubsectorShrwtFllt_bld, "SubsectorShrwtFllt") %>%
+      add_xml_data(L244.SubsectorInterp_bld, "SubsectorInterp") %>%
       add_logit_tables_xml(L244.SubsectorLogit_bld, "SubsectorLogit") %>%
-      add_xml_data(L244.StubTech_bld, "StubTech" ) %>%
-      add_xml_data(L244.StubTechCalInput_bld, "StubTechCalInput" ) %>%
-      add_xml_data(L244.StubTechMarket_bld, "StubTechMarket" ) %>%
-      add_xml_data(L244.GlobalTechIntGainOutputRatio, "GlobalTechIntGainOutputRatio" ) %>%
-      add_xml_data(L244.GlobalTechInterpTo_bld, "GlobalTechInterpTo" ) %>%
-      add_xml_data(L244.GlobalTechEff_bld, "GlobalTechEff" ) %>%
-      add_xml_data(L244.GlobalTechShrwt_bld, "GlobalTechShrwt" ) %>%
-      add_xml_data(L244.GlobalTechCost_bld, "GlobalTechCost" ) %>%
-      add_xml_data(L244.GlobalTechSCurve_bld, "GlobalTechSCurve" )  %>%
+      add_xml_data(L244.StubTech_bld, "StubTech") %>%
+      add_xml_data(L244.StubTechCalInput_bld, "StubTechCalInput") %>%
+      add_xml_data(L244.StubTechMarket_bld, "StubTechMarket") %>%
+      add_xml_data(L244.GlobalTechIntGainOutputRatio, "GlobalTechIntGainOutputRatio") %>%
+      add_xml_data(L244.GlobalTechInterpTo_bld, "GlobalTechInterpTo") %>%
+      add_xml_data(L244.GlobalTechEff_bld, "GlobalTechEff") %>%
+      add_xml_data(L244.GlobalTechShrwt_bld, "GlobalTechShrwt") %>%
+      add_xml_data(L244.GlobalTechCost_bld, "GlobalTechCost") %>%
+      add_xml_data(L244.GlobalTechSCurve_bld, "GlobalTechSCurve")  %>%
       add_precursors("L244.DeleteConsumer_USAbld",
                      "L244.DeleteSupplysector_USAbld",
                      "L244.SubregionalShares_gcamusa",

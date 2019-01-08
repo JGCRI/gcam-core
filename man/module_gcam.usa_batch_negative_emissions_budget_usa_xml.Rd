@@ -15,8 +15,8 @@ module_gcam.usa_batch_negative_emissions_budget_usa_xml(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{paste0( "negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)), ".xml")}.
+the generated outputs: \code{paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)), ".xml")}.
 }
 \description{
-Construct XML data structure for \code{paste0( "negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), ".xml")}.
+Construct XML data structure for \code{paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), ".xml")}.
 }

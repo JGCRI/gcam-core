@@ -1,6 +1,8 @@
 # File: A322.subsector_interp.csv
 # Title: Fertilizer default subsector shareweight interpolation
 # Units: NA
+# Column types: ccccccc 
+# ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 N fertilizer,coal,share-weight,final-calibration-year,end-year,,fixed
 N fertilizer,gas,share-weight,final-calibration-year,end-year,,linear

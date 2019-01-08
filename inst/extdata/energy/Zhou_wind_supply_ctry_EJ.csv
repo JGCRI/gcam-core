@@ -3,6 +3,8 @@
 # Units: Energy in EJ; price in $2007/kWh
 # Source: http://pubs.acs.org/doi/pdf/10.1021/es204706m; Zhou et al. Evaluation of Global Onshore Wind Energy Potential and Generation Costs
 # Comments: Supplementary information - http://pubs.acs.org/doi/suppl/10.1021/es204706m/suppl_file/es204706m_si_001.pdf; Other helpful references http://jgcri.github.io/gcam-doc/v4.2/energy.html#wind & http://www.globalchange.umd.edu/data/gtsp/workshops/2011/tech1/Global_Onshore_Wind_Supply_GTSP.pdf
+# Column types: cnnnn 
+# ----------
 iso,maxSubResource,mid-price,curve-exponent,base-price
 rus,265.391693,0.055274,3.895056,0.0571
 can,160.767715,0.054188,3.024977,0.0565

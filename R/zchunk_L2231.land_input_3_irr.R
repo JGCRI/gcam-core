@@ -414,8 +414,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       add_comments("Historical unmanaged land data from L223.LN3_HistUnmgdAllocation is multiplied by ") %>%
       add_comments("specified fraction to give unprotected land allocation in the third nest. OtherArableLands omitted.") %>%
       add_legacy_name("L223.LN3_HistUnmgdAllocation_noprot") %>%
-      same_precursors_as(L223.LN3_HistUnmgdAllocation) %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      same_precursors_as(L223.LN3_HistUnmgdAllocation) ->
       L2231.LN3_HistUnmgdAllocation_noprot
 
     L223.LN3_UnmgdAllocation_noprot %>%
@@ -424,8 +423,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       add_comments("Unmanaged land data from L223.LN3_UnmgdAllocation is multiplied by specified fraction to give ") %>%
       add_comments("unprotected land allocation in the third nest. OtherArableLands omitted.") %>%
       add_legacy_name("L223.LN3_UnmgdAllocation_noprot") %>%
-      same_precursors_as(L223.LN3_UnmgdAllocation) %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      same_precursors_as(L223.LN3_UnmgdAllocation) ->
       L2231.LN3_UnmgdAllocation_noprot
 
     L223.LN1_HistUnmgdAllocation_prot %>%
@@ -434,8 +432,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       add_comments("Historical unmanaged land data from L223.LN3_HistUnmgdAllocation is multiplied by ") %>%
       add_comments("specified fraction to give protected land allocation in the first nest. OtherArableLands omitted.") %>%
       add_legacy_name("L223.LN1_HistUnmgdAllocation_prot") %>%
-      same_precursors_as(L223.LN3_HistUnmgdAllocation) %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      same_precursors_as(L223.LN3_HistUnmgdAllocation) ->
       L2231.LN1_HistUnmgdAllocation_prot
 
     L223.LN1_UnmgdAllocation_prot %>%
@@ -444,8 +441,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       add_comments("Unmanaged land data from L223.LN3_UnmgdAllocation is multiplied by specified fraction to give ") %>%
       add_comments("protected land allocation in the first nest. OtherArableLands omitted.") %>%
       add_legacy_name("L223.LN1_UnmgdAllocation_prot") %>%
-      same_precursors_as(L223.LN3_UnmgdAllocation) %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      same_precursors_as(L223.LN3_UnmgdAllocation) ->
       L2231.LN1_UnmgdAllocation_prot
 
     L223.LN1_UnmgdCarbon_prot %>%

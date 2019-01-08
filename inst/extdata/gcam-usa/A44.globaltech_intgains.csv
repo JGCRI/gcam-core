@@ -2,6 +2,8 @@
 # Title: Internal gain ratios
 # Units: Unitless (heat released per unit of energy input)
 # Note: this table should include all techs of non-thermal services (even zeroes)
+# Column types: cccn 
+# ----------
 supplysector,subsector,technology,input.ratio
 resid hot water,gas,gas water heater,0.112
 resid hot water,gas,gas water heater hi-eff,0.112

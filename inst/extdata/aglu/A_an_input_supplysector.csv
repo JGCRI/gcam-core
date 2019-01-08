@@ -2,6 +2,7 @@
 # Title: Supplysectors of inputs to animal production - name / unit
 # Units: Various
 # Original source: NA
+# Column types: ccccnc 
 # ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
 FodderHerb_Residue,Mt,Mt,1975$/kg,-1.5,

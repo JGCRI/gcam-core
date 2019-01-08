@@ -2,6 +2,7 @@
 # Title: Mapping between FAO AT2050 items and GCAM demand classes used for data processing, along with the caloric contents and time conversions
 # Units: kcal per numerator of item (typically kg); days per time denominator of item
 # Source: Estimated for the FAO AT2050 commodity classes from the specific data in FAO, [no specific publication year], Food Balance Sheets - A Handbook, Annex I. http://www.fao.org/docrep/003/X9892E/X9892e05.htm#P8217_125315
+# Column types: ccii 
 # ----------
 FAO2050_item,GCAM_demand,kcalkg,conv_d
 (Developing minus China & Brazil),,0,365

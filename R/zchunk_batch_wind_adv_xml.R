@@ -10,7 +10,7 @@
 #' original data system was \code{batch_wind_adv_xml.R} (energy XML).
 module_energy_batch_wind_adv_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L223.GlobalTechCapital_wind_adv",
+    return(c("L223.GlobalTechCapital_wind_adv",
               "L223.GlobalIntTechCapital_wind_adv"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "wind_adv.xml"))

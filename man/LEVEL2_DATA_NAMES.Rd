@@ -3,7 +3,7 @@
 \docType{data}
 \name{LEVEL2_DATA_NAMES}
 \alias{LEVEL2_DATA_NAMES}
-\title{A list of column orderings #' keyed by the ModelInterface header so that we
+\title{A list of column orderings keyed by the ModelInterface header so that we
 can ensure tables being sent to be converted to XML by the ModelInterface
 have their columns arranged in the order the ModelInterface is expecting them.}
 \format{A list object where [[header]] <- character vector of column names:}
@@ -11,7 +11,7 @@ have their columns arranged in the order the ModelInterface is expecting them.}
 LEVEL2_DATA_NAMES
 }
 \description{
-A list of column orderings #' keyed by the ModelInterface header so that we
+A list of column orderings keyed by the ModelInterface header so that we
 can ensure tables being sent to be converted to XML by the ModelInterface
 have their columns arranged in the order the ModelInterface is expecting them.
 }

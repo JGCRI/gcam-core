@@ -2,6 +2,8 @@
 # Title: Fuel preference elasticities for industrial energy use. Using rules rather than ad-hoc regional assignments
 # Units: Unitless
 # Description: share: share of industrial energy consumption from the given fuel in the base year (Unitless); fuelprefElasticity: elasticity relating the share-weight of the given fuel to income (Unitless)
+# Column types: ccnn 
+# ----------
 subsector,criteria,share,fuelprefElasticity
 biomass,greater than,0.15,-0.1
 biomass,greater than,0.3,-0.4

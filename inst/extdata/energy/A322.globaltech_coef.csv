@@ -1,6 +1,8 @@
 # File: A322.globaltech_coef.csv
 # Title: Fertilizer production default coefficients
 # Units:  minicam.energy.input (input-output coefficient)  
+# Column types: ccccnnnn 
+# ----------
 supplysector,subsector,technology,minicam.energy.input,1971,2010,2050,2100
 N fertilizer,coal,coal,delivered coal,0.054,0.054,0.0442,0.0390
 N fertilizer,coal,coal CCS,delivered coal,0.06,0.06,0.0491,0.0433

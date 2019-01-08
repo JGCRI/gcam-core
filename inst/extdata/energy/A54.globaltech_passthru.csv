@@ -1,6 +1,8 @@
 # File: A54.globaltech_passthru.csv
 # Title: Transportation technology defaults (all parameters; pass-through technologies only)
 # Units: Unitless
+# Column types: ccccii 
+# ----------
 supplysector,tranSubsector,technology,minicam.energy.input,coefficient,share.weight
 trn_pass,road,road,trn_pass_road,1,1
 trn_pass_road,LDV,LDV,trn_pass_road_LDV,1,1

@@ -10,7 +10,7 @@
 #' original data system was \code{L270.limits.R} (energy XML).
 module_energy_batch_liquids_limits_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L270.CreditOutput",
+    return(c("L270.CreditOutput",
               "L270.CreditInput_elec",
               "L270.CreditInput_feedstocks",
               "L270.CreditMkt"))
