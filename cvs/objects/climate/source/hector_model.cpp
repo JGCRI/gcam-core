@@ -55,13 +55,13 @@
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/ivisitor.h"
 
-#include "climate/source/hector/headers/components/component_data.hpp"
-#include "climate/source/hector/headers/data/unitval.hpp"
-#include "climate/source/hector/headers/data/message_data.hpp"
-#include "climate/source/hector/headers/core/core.hpp"
-#include "climate/source/hector/headers/input/ini_to_core_reader.hpp"
-#include "climate/source/hector/headers/h_exception.hpp"
-#include "visitors/csv_outputstream_visitor.hpp"
+#include "climate/source/hector/inst/include/component_data.hpp"
+#include "climate/source/hector/inst/include/unitval.hpp"
+#include "climate/source/hector/inst/include/message_data.hpp"
+#include "climate/source/hector/inst/include/core.hpp"
+#include "climate/source/hector/inst/include/ini_to_core_reader.hpp"
+#include "climate/source/hector/inst/include/h_exception.hpp"
+#include "climate/source/hector/inst/include/csv_outputstream_visitor.hpp"
 
 using namespace std;
 using namespace xercesc;
@@ -183,12 +183,6 @@ void HectorModel::completeInit( const string& aScenarioName ) {
 
     try {
         climatelog << "Setting up stub Hector core." << endl;
-        // TODO: shouldn't have to fool with the hector logger here.
-        if( !hector_log_is_init ) {
-            Hector::Logger::getGlobalLogger().open( "hector", true, true, Hector::Logger::WARNING ); 
-          //the new release of the Hector Logger has an additional argument must add a second true otherwise this will throw and error
-            hector_log_is_init = true; 
-        }
         if( mHcore.get() ) {
           // delete all hector components
           mHcore->shutDown();
@@ -220,9 +214,7 @@ void HectorModel::completeInit( const string& aScenarioName ) {
     mHectorEmissionsMsg["NOx"]           = D_EMISSIONS_NOX;
     mHectorEmissionsMsg["CO"]            = D_EMISSIONS_CO;
     mHectorEmissionsMsg["NMVOCs"]         = D_EMISSIONS_NMVOC;
-    
-    // Hector is not yet accepting emissions for CH4 or N2O.
-    // Uncomment below when they are working. 
+
     mHectorEmissionsMsg["CH4"] = D_EMISSIONS_CH4;
     mHectorEmissionsMsg["N2O"] = D_EMISSIONS_N2O;
 
@@ -314,10 +306,10 @@ void HectorModel::completeInit( const string& aScenarioName ) {
     mHectorUnits["CO2"] = mHectorUnits["CO2NetLandUse"] = Hector::U_PGC_YR;
     mHectorUnits["BC"]  = mHectorUnits["OC"]            = Hector::U_TG;
     mHectorUnits["NOx"]                                 = Hector::U_TG_N;
+    mHectorUnits["N2O"]                                 = Hector::U_TG_N;
     mHectorUnits["CO"]                                  = Hector::U_TG_CO;
     mHectorUnits["NMVOCs"]                              = Hector::U_TG_NMVOC;
     mHectorUnits["CH4"]                                 = Hector::U_TG_CH4;
-    mHectorUnits["N2O"]                                 = Hector::U_TG_N2O;
     mHectorUnits["SO2tot"]                              = Hector::U_GG_S;
     
     // reset up to (but not including) period 1.
