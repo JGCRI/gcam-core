@@ -2,6 +2,8 @@
 # Title: Primary energy transformation technology interpolation
 # Units: N/A
 # Description: characteristics of interpolation functions for techs that may have calibrated values in subsectors with multiple calibrated technologies
+# Column types: ccccccc 
+# ----------
 supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function
 refining,biomass liquids,cellulosic ethanol,share-weight,final-calibration-year,2015,fixed
 refining,biomass liquids,FT biofuels,share-weight,final-calibration-year,2015,linear

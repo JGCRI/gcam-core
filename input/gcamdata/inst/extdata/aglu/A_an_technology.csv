@@ -1,6 +1,8 @@
 # File: A_an_technology.csv
 # Title: Technologies and inputs of animal production
 # Units: NA
+# Column types: cccccccc 
+# ----------
 supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,minicam.energy.input
 Beef,Mixed,FodderHerb_Residue,share-weight,final-calibration-year,end-year,fixed,FodderHerb_Residue
 Beef,Mixed,Pasture_FodderGrass,share-weight,final-calibration-year,end-year,fixed,Pasture_FodderGrass

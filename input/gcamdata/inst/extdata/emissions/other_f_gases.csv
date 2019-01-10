@@ -3,6 +3,8 @@
 # Units: NA
 # Source: GCAM compilation?
 # Description: Specifies other fgases by sector
+# Column types: cc 
+# ----------
 Gas,Sector
 C2F6,refrigeration
 CF4,na

@@ -3,6 +3,7 @@
 # Units: NA
 # Description: Managed land leafs in the third node
 # Original source: Land_nesting_structure.xls
+# Column types: cccc 
 # ----------
 LandNode1,LandNode2,LandNode3,LandLeaf
 AgroForestLand,AgroForest_NonPasture,AllForestLand,Forest

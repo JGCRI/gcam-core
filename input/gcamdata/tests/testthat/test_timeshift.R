@@ -22,7 +22,7 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     UNDER_TIMESHIFT <<- TRUE
 
     # Re-set the model base years to 1975, 1990. Run 2005 and 2010 as future years
-    # Note that this does affect the HISTORICAL_YEARS or FUTURE_YEARS for data processing
+    # Note that this does not affect the HISTORICAL_YEARS or FUTURE_YEARS for data processing
     byr <- MODEL_BASE_YEARS
     MODEL_BASE_YEARS <<- c(1975, 1990)   # normally (1975, 1990, 2005, 2010)
     fyr <- MODEL_FUTURE_YEARS

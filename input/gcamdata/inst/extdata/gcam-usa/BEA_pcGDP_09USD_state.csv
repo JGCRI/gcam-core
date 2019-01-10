@@ -2,6 +2,8 @@
 # Title: GDP by State and Industry, NAICS, Per Capita Real GDP
 # Units: Chained 2009 US Dollars per capita
 # Source: Bureau of Economic Analysis, Gross Domestic Product by State, Advance 2013 and Revised 1997-2012. URL: https://www.bea.gov/regional/histdata/releases/0614gsp/gsp_naics_all_pc.zip
+# Column types: iciiiiiiiiiiiiiiiii 
+# ----------
 Fips,Area,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013
 1000,Alabama,31129,32128,33237,33548,33656,34515,35327,37093,37825,37870,37509,37098,35530,36156,36463,37186,37389
 2000,Alaska,63521,60156,59319,57859,60002,60578,59585,61107,61867,65058,67743,67300,71476,68656,70594,72281,70113

@@ -1,6 +1,8 @@
 # File: A44.sector.csv
 # Title: Building sector default supplysector information (units and logit exponents)
 # Units: In file
+# Column types: ccccicc 
+# ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,final.energy,logit.type
 resid heating,EJ,EJ,1975$/GJ,-3,building,
 resid cooling,EJ,EJ,1975$/GJ,-3,building,

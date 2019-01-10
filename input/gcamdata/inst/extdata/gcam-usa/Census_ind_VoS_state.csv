@@ -2,6 +2,8 @@
 # Title: Value of Shipments from Manufacturing by State
 # Units: thousand USD in 2008
 # Source: US Census Bureau Industry Data
+# Column types: ccicinn 
+# ----------
 state_name,state,NAICS_code,industry,year,VoS_thousUSD_NA,VoS_thousUSD
 Alabama,AL,31,Manufacturing,2008,116400000,116400000
 Alabama,AL,311,Food mfg,2008,9661432,9661432

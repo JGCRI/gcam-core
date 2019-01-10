@@ -4,6 +4,8 @@
 # Description: UN population data by country—historical and projected through 2100
 # Source: http://esa.un.org/unpd/wpp/Excel-Data/population.htm
 # —--
+# Column types: ccccin 
+# ----------
 Country,Region,Sex,Scenario,Year,Value
 AFG,sas,M+F,EST,1950,8151.455
 AFG,sas,M+F,EST,1951,8276.82

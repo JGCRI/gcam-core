@@ -1,6 +1,8 @@
 # File: A44.demand_satiation_mult.csv
 # Title: USA Demand Satiation Multipliers
 # Units: Increase in demand per unit floorspace
+# Column types: cn 
+# ----------
 supplysector,multiplier
 resid heating,1.05
 resid cooling,1.15

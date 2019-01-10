@@ -5,4 +5,6 @@
 # Region + water types not listed here are assumed to have a cost of DEFAULT_UNLIMITED_WATER_PRICE
 # Values in this table will be interpolated with gcam_interp rule=2
 # Source: values of water price are assumed by the modeler (See A_water_data.R for water types and the default price.)
+# Column types: ccccc 
+# ----------
 GCAM_region_ID,water_type,X1971,X2010,X2100

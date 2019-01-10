@@ -2,6 +2,8 @@
 # Title: Default per-capita assumption to use for countries with no floorspace data
 # Units: Floorspace (m2) per person
 # Source: GCAM 3.0 assumptions (Jiyong Eom); India from https://eaei.lbl.gov/publications/strategies-low-carbon-growth-india
+# Column types: ccnnn 
+# ----------
 region_GCAM3,gcam.consumer,1975,1990,2005
 USA,resid,62.25796962,66.46814215,69.39578954
 Canada,resid,37.25575198,43.05999819,48.33038306

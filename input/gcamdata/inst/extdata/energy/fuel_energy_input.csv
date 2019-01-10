@@ -2,6 +2,8 @@
 # Title: Mapping between intermediate fuel names and minicam-energy-input names
 # Units: NA
 # Source: NA
+# Column types: cc 
+# ----------
 minicam.energy.input,fuel
 regional biomass,biomass
 delivered biomass,biomass

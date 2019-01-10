@@ -50,14 +50,14 @@ test_that("loads test file", {
 })
 
 test_that("save_chunkdata saves", {
-  df <- tibble(x = 1:3)
+  df <- tibble(x = 1L:3L)
   all_data <- add_data(return_data(df), empty_data())
   td <- tempdir()
   save_chunkdata(all_data, outputs_dir = td)
 
   out <- file.path(td, "df.csv")
   expect_true(file.exists(out))
-  df2 <- readr::read_csv(out)
+  df2 <- readr::read_csv(out, col_types = "i")  # stupid readr
   expect_equal(df, df2)
 
   # Handles missing_data in data list
@@ -124,8 +124,9 @@ test_that("extract_header_info works", {
 
 test_that("parse_csv_header works", {
 
+  fn <- "file"
   # Test data; save to tempfile
-  x <- c("# File: file",
+  x <- c(paste("# File:", fn),
          "# Title: title",
          "#Units: units",
          "# Description: desc1",
@@ -134,14 +135,8 @@ test_that("parse_csv_header works", {
          "# Blank:    ",
          "data,start",
          "1,2")
-  tf <- tempfile()
-  x[1] <- paste("# File:", basename(tf))
   obj_original <- tibble()
-  expect_error(parse_csv_header(obj_original, tf))  # file doesn't exist yet
-  writeLines(x, tf)
-  expect_true(file.exists(tf))
-
-  obj <- parse_csv_header(obj_original, tf)
+  obj <- parse_csv_header(obj_original, fn, x)
   expect_equivalent(obj, obj_original)
   expect_equal(get_title(obj), "title")
   expect_equal(get_units(obj), "units")
@@ -152,20 +147,12 @@ test_that("parse_csv_header works", {
   expect_error(extract_header_info(x, "Blank:", "test"))
 
   # File without required data
-  writeLines(x[1], tf)
-  expect_error(parse_csv_header(obj_original, tf, enforce_requirements = TRUE))
+  expect_error(parse_csv_header(obj_original, fn, x[1], enforce_requirements = TRUE))
 
   # File with wrong filename
-  correctx1 <- x[1]
-  x[1] <- "# File: xxxx"
-  writeLines(x, tf)
-  expect_error(parse_csv_header(obj_original, tf, enforce_requirements = TRUE))
+  expect_error(parse_csv_header(obj_original, "different file", x, enforce_requirements = TRUE))
 
   # File with Excel-quote error
-  x[1] <- correctx1
   x[3] <- '"# Excel,is,stupid"'
-  writeLines(x, tf)
-  expect_error(parse_csv_header(obj_original, tf))
-
-  file.remove(tf)
+  expect_error(parse_csv_header(obj_original, fn, x))
 })

@@ -2,6 +2,8 @@
 # Title: Commercial Buildings Energy Consumption Survey Variables
 # Units: NA
 # Source: https://www.eia.gov/consumption/commercial/data/
+# Column types: ccc 
+# ----------
 variable,fuel,service
 ELHTBTU,electricity,comm heating
 ELCLBTU,electricity,comm cooling

@@ -1,6 +1,8 @@
 # File: A31.subsector_shrwt.csv
 # Title: Industry default subsector shareweights
 # Units: Unitless
+# Column types: cccci 
+# ----------
 supplysector,subsector,year.fillout,year,share.weight
 urban processes,landfills,start-year,,1
 urban processes,wastewater treatment,start-year,,1

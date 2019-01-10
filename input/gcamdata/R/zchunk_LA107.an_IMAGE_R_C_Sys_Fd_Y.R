@@ -115,7 +115,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       # repeat the entire animal production for each unique country, commodity, system, year combo dataframe for each feed type:
       repeat_add_columns(tibble::tibble(feed = unique(L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y$input))) %>%
       # bring in the feed fraction for each country, commodity, system, year as value.y:
-      left_join(L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y, by = c("iso", "year", "GCAM_commodity" = "commodity", "system", "feed"="input")) %>%
+      left_join(L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y, by = c("iso", "year", "GCAM_commodity" = "commodity", "system", "feed" = "input")) %>%
       # calculate feed type animal production = total animal production * fraction feed type for each country, commodity, system, year:
       mutate(value = value.x * value.y) %>%
       select(-value.x, -value.y, -IMAGE_region_ID) %>%

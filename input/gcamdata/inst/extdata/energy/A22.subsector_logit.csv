@@ -2,6 +2,8 @@
 # Title: Primary energy transformation subsector logit exponents
 # Units: NA
 # Description: logit exponents and types for subsectors in energy transformation
+# Column types: ccic 
+# ----------
 supplysector,subsector,logit.exponent,logit.type
 gas processing,natural gas,-6,
 gas processing,biomass gasification,-6,

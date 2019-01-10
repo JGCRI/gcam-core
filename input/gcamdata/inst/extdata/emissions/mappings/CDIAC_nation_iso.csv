@@ -1,6 +1,8 @@
 # File: CDIAC_nation_iso.csv
 # Title: Mapping between CDIAC country names, UN country codes, and 3-digit ISO codes
 # Units: NA
+# Column types: cci 
+# ----------
 nation,iso,UN_code
 AFGHANISTAN,afg,4
 ALBANIA,alb,8

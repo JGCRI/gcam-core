@@ -254,9 +254,9 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "water/basin_to_country_mapping",
                      "aglu/A_resbio_curves",
                      "aglu/A_bio_frac_prod_R",
-                     "L123.For_Prod_bm3_R_Y_GLU") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L123.For_Prod_bm3_R_Y_GLU") ->
       L2042.AgResBioCurve_For
+
     L204.GlobalResBio_Mill %>%
       add_title("Global mill residue biomass parameters") %>%
       add_units("Varies") %>%
@@ -266,6 +266,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       add_precursors("water/basin_to_country_mapping",
                      "aglu/A_demand_technology")  ->
       L2042.GlobalResBio_Mill
+
     L204.StubResBioCurve_Mill %>%
       add_title("Mill residue biomass supply curves") %>%
       add_units("Fraction harvested") %>%
@@ -279,6 +280,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "aglu/A_resbio_curves",
                      "aglu/A_bio_frac_prod_R") ->
       L2042.StubResBioCurve_Mill
+
     L2042.AgResBio_ag_irr_mgmt %>%
       add_title("Agriculture residue biomass parameters") %>%
       add_units("Varies") %>%
@@ -295,6 +297,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "L111.ag_resbio_R_C",
                      "L101.ag_Prod_Mt_R_C_Y_GLU") ->
       L2042.AgResBio_ag_irr_mgmt
+
     L2042.AgResBioCurve_ag_irr_mgmt %>%
       add_title("Agriculture residue biomass supply curves") %>%
       add_units("Fraction harvested") %>%
@@ -307,8 +310,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "aglu/A_resbio_curves",
                      "aglu/A_bio_frac_prod_R",
                      "L111.ag_resbio_R_C",
-                     "L101.ag_Prod_Mt_R_C_Y_GLU") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L101.ag_Prod_Mt_R_C_Y_GLU") ->
       L2042.AgResBioCurve_ag_irr_mgmt
 
     return_data(L2042.AgResBio_For, L2042.AgResBioCurve_For, L2042.GlobalResBio_Mill, L2042.StubResBioCurve_Mill, L2042.AgResBio_ag_irr_mgmt, L2042.AgResBioCurve_ag_irr_mgmt)

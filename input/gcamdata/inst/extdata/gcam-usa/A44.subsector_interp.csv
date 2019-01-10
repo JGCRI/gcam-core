@@ -1,6 +1,8 @@
 # File: A44.subsector_interp.csv
 # Title: Building default subsector shareweight interpolation
 # Units: NA
+# Column types: cccccic 
+# ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 resid heating,biomass,share-weight,final-calibration-year,end-year,,fixed
 resid heating,coal,share-weight,final-calibration-year,2020,0,linear

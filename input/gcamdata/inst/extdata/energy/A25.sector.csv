@@ -1,6 +1,8 @@
 # File: A25.sector.csv
 # Title: Hydrogen supplysector characteristics
 # Units: Units-in-table
+# Column types: ccccic 
+# ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
 H2 central production,EJ,EJ,1975$/GJ,-3,
 H2 forecourt production,EJ,EJ,1975$/GJ,-3,

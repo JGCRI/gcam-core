@@ -3,6 +3,8 @@
 # Units: Megatonnes, Megatonnes Carbon, Gigajoules/Tonne, Petajoules
 # Description: Regional cement production, energy use, energy intensity, process-based emissions, energy-use emissions, and total emissions 
 # Source: Table 4 in Worrell et al. 2001 Ann Rev Energ Env 26: 303-329
+# Column types: cnnninnnn 
+# ----------
 Country,cement_prod_Mt,clinker_cement_ratio,primary_energy_intensity,primary_energy_PJ,process_emissions_MtC,energy_emissions_MtC,emissions_MtC,share
 China,423,0.83,5,2117,47.7,53.7,101.4,0.33
 Europe,181.9,,4.1,749,20,15.3,35.3,0.115

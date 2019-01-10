@@ -13,7 +13,6 @@ LOGIT_TYPE_COLNAME        <- "logit.type"        # will be removed by test code 
 FLAG_INPUT_DATA      <- "FLAG_INPUT_DATA"       # input data, don't output
 FLAG_NO_OUTPUT       <- "FLAG_NO_OUTPUT"        # don't output
 FLAG_NO_TEST         <- "FLAG_NO_TEST"          # don't test
-FLAG_PROTECT_FLOAT   <- "FLAG_PROTECT_FLOAT"    # protect float columns from readr bug
 FLAG_SUM_TEST        <- "FLAG_SUM_TEST"         # use less-restrictive sum test
 FLAG_XML             <- "FLAG_XML"              # xml data
 
@@ -36,6 +35,9 @@ gcam.LOGIT_TYPES         <- c("relative-cost-logit", "absolute-cost-logit")
 gcam.EQUIV_TABLE         <- "EQUIV_TABLE"
 gcam.IND_ENERGY_USE      <- c("biomass", "coal", "gas", "refined liquids")  # GCAM industrial energy use fuels
 GCAM_REGION_ID      <- "GCAM_region_ID"
+# The default market price GCAM will use to start solving from if it has no other info
+# If users do not have an estimate for a starting price this is a safe one to set
+gcam.DEFAULT_PRICE <- 1.0
 
 
 # Driver constants ======================================================================
@@ -103,17 +105,17 @@ CONV_DAYS_YEAR  <- 1 / 365.25
 CONV_YEAR_HOURS <- 24 * 365.25
 
 # Energy
-CONV_BBLD_EJYR <- 6.119 * 365.25 * 1e-3 # billion barrels a day to EJ per year
 CONV_BTU_KJ    <- 1.0551
-CONV_GJ_EJ  <- 1e-9
-CONV_EJ_GJ  <- 1 / CONV_GJ_EJ
-CONV_GWH_EJ <- 3.6e-6
+CONV_GJ_EJ     <- 1e-9
+CONV_EJ_GJ     <- 1 / CONV_GJ_EJ
+CONV_GWH_EJ    <- 3.6e-6
 CONV_KBTU_EJ   <- 1.0551e-12            # KiloBTU to EJ
-CONV_KWH_GJ <- 3.6e-3
+CONV_KWH_GJ    <- 3.6e-3
+CONV_MBLD_EJYR <- 6.119 * 365.25 * 1e-3 # million barrels a day to EJ per year
 CONV_MJ_BTU    <- 947.777
-CONV_MWH_GJ <- 3.6                      # Megawatt hours to Gigajoules
+CONV_MWH_GJ    <- 3.6                   # Megawatt hours to Gigajoules
 CONV_TBTU_EJ   <- 0.0010551             # TeraBTU to EJ
-CONV_TWH_EJ <- 3.6e-3
+CONV_TWH_EJ    <- 3.6e-3
 
 # Other
 CONV_BM2_M2         <- 1e9
@@ -419,66 +421,6 @@ energy.OILFRACT_ELEC            <- 1.0 # Fraction of liquids for feedstocks that
 energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity that must come from oil
 
 
-# Conversion constants ======================================================================
-# The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
-
-# Numeric (unitless)
-CONV_BIL_MIL <- 1000
-CONV_MIL_BIL <- 1 / CONV_BIL_MIL
-CONV_BIL_THOUS <- 1e6
-CONV_THOUS_BIL <- 1 / CONV_BIL_THOUS
-CONV_MIL_THOUS <- 1000
-CONV_ONES_THOUS <- 0.001
-
-# Mass
-CONV_TON_MEGATON <- 1e-6
-CONV_T_KG <- 1e3
-CONV_KG_T <- 1 / CONV_T_KG
-CONV_T_METRIC_SHORT <- 1000 / 908  # Ratio between metric ton and short ton
-CONV_HA_BM2 <- 1e-5
-CONV_HA_M2 <- 10000
-CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
-CONV_GG_TG <- 0.001 # gigagrams to tegagrams
-CONV_TST_TG <- 0.000907 # thousand short tons to Tg
-CONV_KG_TO_TG <- 1e-9
-CONV_KT_MT <- 0.001 # kt to Mt
-CONV_T_MT <- 1e-6 # t to Mt
-CONV_G_KG <- 1e-3 # kilograms to grams
-CONV_NH3_N <- 14/17 # Nitrogen to Ammonia
-CONV_KBBL_BBL <- 1000 # thousand barrels to barrels
-CONV_BBL_TONNE_RFO <- 1 / 6.66 # barrels to tons residual fuel oil
-CONV_TONNE_GJ_RFO <- 40.87 # tons to GJ residual fuel oil
-CONV_BBL_TONNE_DISTILLATE <- 1 / 7.46 # barrels to tons distillate
-CONV_TONNE_GJ_DISTILLATE <- 42.91 # tons to GJ distillate
-
-# Time
-CONV_YEAR_HOURS <- 24 * 365.25
-CONV_DAYS_YEAR <- 1 / 365.25
-
-# Energy
-CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
-CONV_GWH_EJ <- 3.6e-6
-CONV_TWH_EJ <- 3.6e-3
-CONV_KWH_GJ <- 3.6e-3
-CONV_GJ_EJ <- 1e-9
-CONV_EJ_GJ <- 1 / CONV_GJ_EJ
-CONV_MBLD_EJYR <- 6.119 * 365.25 * 1e-3 # million barrels a day to EJ per year
-CONV_KBTU_EJ <- 1.0551e-12 # KiloBTU to EJ
-CONV_TBTU_EJ <- 0.0010551 # TeraBTU to EJ
-CONV_MJ_BTU <- 947.777
-CONV_BTU_KJ <- 1.0551
-
-# Other
-CONV_MCAL_PCAL <- 1e-9
-CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
-CONV_MILLION_M3_KM3 <- 1e-03
-CONV_M2_ACR <- 0.0002471058
-CONV_HA_M2 <- 1e4 # ha to m2
-CONV_BM2_M2 <- 1e9
-CONV_MILFT2_M2 <- 92900 # Million square feet to square meters
-CONV_FT2_M2 <- 0.0929 # Square feet to square meters
-
-
 # Socioeconomics constants ======================================================================
 
 # Population years - note that these sequences shouldn't have any overlap,
@@ -527,10 +469,10 @@ water.DIGITS_MUNI_WATER                   <- 4
 # GCAM intermediate sectors for which Vassolo + Doll assessed manufacturing water demands. In the paper, they indicate
 # chemicals, pulp and paper, pig iron, sugar, beer, cloth, cement, and crude steel. some industrial mfg does take place
 # in energy transformation (charcoal, pig iron), so we'll leave that one in.
-water.GCAM_MFG_SECTORS_VASSOLO <- c( "in_industry_general", "net_industry_energy transformation" )
+water.GCAM_MFG_SECTORS_VASSOLO <- c("in_industry_general", "net_industry_energy transformation")
 
 # GCAM intermediate fuels used for extrapolating manufacturing water use from one base year to all base years.
-water.GCAM_MFG_FUELS_EFW <- c( "electricity" )
+water.GCAM_MFG_FUELS_EFW <- c("electricity")
 
 # the maximum portion of aquastat industrial (mfg + elec) water withdrawals that is allowed to be assigned to
 # manufacturing. Used to set a cap on derived manufacturing water withdrawals
@@ -599,7 +541,7 @@ gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
 gcamusa.DEFAULT_COEFFICIENT <- 1
 gcamusa.DEFAULT_LOGIT_TYPE  <- NA  # default logit type
 gcamusa.DEFAULT_LOGITEXP    <- -3
-gcamusa.DEFAULT_MARKET      <- "USA"
+gcamusa.DEFAULT_MARKET      <- gcam.USA_REGION
 gcamusa.DEFAULT_SHAREWEIGHT <- 1
 
 # Logit exponent regulating competition between different grid regions in USA electricity market

@@ -1,6 +1,8 @@
 # File: IEA_PCResFloorspace.csv
 # Title: IEA per-capita residential floorspace by selected countries
 # Units: Floorspace (m2) per person
+# Column types: ccncccccccccnnnnnnnnnnnnnnn 
+# ----------
 country,iso,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004
 United States,usa,,,,,,,,,,,62.4,63.1,64,64.6,65.1,66.3,66.7,67.6,67.8,67.8,67.6,68.3,68.8,69.8,70
 Denmark,dnk,44,,,,,,,,,,49,49.2,49.4,49.5,49.6,49.8,49.8,50,50.2,50.5,50.7,51,51.1,51.5,51.9

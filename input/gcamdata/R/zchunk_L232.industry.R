@@ -121,13 +121,14 @@ module_energy_L232.industry <- function(command, ...) {
       calibrated.value <- sector.name <- subsector.name <- region <-
       calOutputValue <- subs.share.weight <- calOutputValue.x <- calOutputValue.y <-
       output_tot <- value.x <- value.y <- total <- fuelprefElasticity <-
-      `2100` <- terminal_coef <- criteria <- scenario <- temp_lag <- base.service <- energy.final.demand <-
+      terminal_coef <- criteria <- scenario <- temp_lag <- base.service <- energy.final.demand <-
       parameter <- income.elasticity <- L232.IncomeElasticity_ind_gcam3 <-
       L232.IncomeElasticity_ind_gssp1 <- L232.IncomeElasticity_ind_gssp2 <-
       L232.IncomeElasticity_ind_gssp3 <- L232.IncomeElasticity_ind_gssp4 <-
       L232.IncomeElasticity_ind_gssp5 <- L232.IncomeElasticity_ind_ssp1 <-
       L232.IncomeElasticity_ind_ssp2 <- L232.IncomeElasticity_ind_ssp3 <-
-      L232.IncomeElasticity_ind_ssp4 <- L232.IncomeElasticity_ind_ssp5 <- NULL
+      L232.IncomeElasticity_ind_ssp4 <- L232.IncomeElasticity_ind_ssp5 <-
+      market.name <- stub.technology <- NULL
 
     # ===================================================
     # 1. Perform computations
@@ -226,14 +227,8 @@ module_energy_L232.industry <- function(command, ...) {
     # Coefficients on global industry sector technologies (not energy-use or feedstocks)
     # L232.GlobalTechCoef_ind: Energy inputs and coefficients of global industry technologies
     A32.globaltech_coef %>%
-      gather_years(value_col = "coefficient") %>%
-      complete(nesting(supplysector, subsector, technology, minicam.energy.input),
-               year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
-      arrange(supplysector, subsector, technology, minicam.energy.input, year) %>%
-      group_by(supplysector, subsector, technology, minicam.energy.input) %>%
-      mutate(coefficient = approx_fun(year, coefficient, rule = 1)) %>%
-      ungroup %>%
-      filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
+      rename(coefficient = "terminal_coef") %>%
+      repeat_add_columns(tibble(year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>% # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       select(LEVEL2_DATA_NAMES[["GlobalTechCoef"]]) ->
@@ -309,8 +304,8 @@ module_energy_L232.industry <- function(command, ...) {
     L232.in_EJ_R_indenergy_F_Yh %>%
       left_join_error_no_match(distinct(select(A32.globaltech_eff, subsector, technology, minicam.energy.input)),
                                by = c("subsector", "stub.technology" = "technology")) %>%
-      mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
-      mutate(share.weight.year = year) %>%
+      mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT),
+             share.weight.year = year) %>%
       rename(calOutputValue = calibrated.value) %>%  # temporary column name change to accommodate function set_subsector_shrwt
       set_subsector_shrwt %>%
       rename(calibrated.value = calOutputValue) %>% # temporary column name change to accommodate function set_subsector_shrwt
@@ -384,8 +379,8 @@ module_energy_L232.industry <- function(command, ...) {
       rename(minicam.energy.input = supplysector) %>%
       mutate(supplysector = L232.industry_names[["supplysector"]],
              subsector = L232.industry_names[["subsector"]],
-             stub.technology = L232.industry_names[["technology"]]) %>%
-      mutate(market.name = region) %>%
+             stub.technology = L232.industry_names[["technology"]],
+             market.name = region) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
       L232.StubTechCoef_industry_base # intermediate tibble?
 
@@ -394,15 +389,14 @@ module_energy_L232.industry <- function(command, ...) {
     L232.StubTechCoef_industry_base %>%
       complete(nesting(region, supplysector, subsector, stub.technology, minicam.energy.input, market.name),
                year = unique(c(MODEL_YEARS, energy.INDCOEF_CONVERGENCE_YR))) %>%
-      left_join(select(A32.globaltech_coef, supplysector, subsector, technology, minicam.energy.input, `2100`),
+      left_join(select(A32.globaltech_coef, supplysector, subsector, technology, minicam.energy.input, terminal_coef),
                 by = c("supplysector", "subsector", stub.technology = "technology", "minicam.energy.input")) %>%
-      rename(terminal_coef = `2100`) %>%  # extract the assumption for the 2100 coef and assign it to energy.INDCOEF_CONVERGENCE_YR for interpolation
       mutate(coefficient = if_else(year == energy.INDCOEF_CONVERGENCE_YR, terminal_coef, coefficient)) %>%
       select(-terminal_coef) %>%
       group_by(region, supplysector, subsector, stub.technology, minicam.energy.input) %>%
       mutate(coefficient = round(approx_fun(year, coefficient), energy.DIGITS_COEFFICIENT)) %>%
       ungroup() %>%
-      filter(year %in% MODEL_YEARS) ->   #drop the terminal coef year if it's outside of the model years
+      filter(year %in% MODEL_YEARS) ->   # drop the terminal coef year if it's outside of the model years
       L232.StubTechCoef_industry
 
     # L232.FuelPrefElast_indenergy: fuel preference elasticities of industrial energy use
@@ -420,7 +414,7 @@ module_energy_L232.industry <- function(command, ...) {
       right_join(L232.indenergy_fuel_shares, by = c("region", "GCAM_region_ID", "supplysector", "year")) %>%
       rename(total = value.x,
              value = value.y) %>%
-      mutate(share = value/total) %>%
+      mutate(share = value / total) %>%
       filter(year == max(MODEL_BASE_YEARS)) %>%
       mutate(fuelprefElasticity = 0) ->
       L232.indenergy_fuel_shares
@@ -487,8 +481,8 @@ module_energy_L232.industry <- function(command, ...) {
       filter(year %in% c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
       # Per-capita GDP ratios, which are used in the equation for demand growth
       group_by(GCAM_region_ID, scenario) %>%
-      mutate(temp_lag = lag(value, 1)) %>%
-      mutate(value = value / temp_lag) %>%
+      mutate(temp_lag = lag(value, 1),
+             value = value / temp_lag) %>%
       ungroup %>%
       select(-temp_lag) %>%
       filter(year %in% MODEL_FUTURE_YEARS) ->
@@ -518,9 +512,9 @@ module_energy_L232.industry <- function(command, ...) {
         mutate(parameter = approx(x = A32.inc_elas_output[["pc.output_GJ"]],
                                   y = A32.inc_elas_output[["inc_elas"]],
                                   xout = value.x,
-                                  rule = 2)[['y']]) %>%
-        mutate(value = value.x * value.y ^ parameter) %>%
-        mutate(year = elast_years[i]) %>%
+                                  rule = 2)[['y']],
+               value = value.x * value.y ^ parameter,
+               year = elast_years[i]) %>%
         select(GCAM_region_ID, scenario, region, year, value) %>%
         bind_rows(L232.Output_ind) ->
         L232.Output_ind

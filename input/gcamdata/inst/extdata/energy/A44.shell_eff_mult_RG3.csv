@@ -1,6 +1,8 @@
 # File: A44.shell_eff_mult_RG3.csv
 # Title: GCAM 3.0 multipliers from USA to other regions - shell efficiency. Calculated based on per-capita GDP and heating degree days
 # Units: Unitless
+# Column types: cnnnnnnnnn 
+# ----------
 region_GCAM3,1971,2005,2020,2035,2050,2065,2080,2095,2100
 USA,1,1,1,1,1,1,1,1,1
 Canada,1.030301607,1.026630629,1.022972731,1.020943932,1.018242741,1.01564377,1.014421959,1.012913258,1.012913258

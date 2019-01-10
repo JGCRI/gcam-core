@@ -3,6 +3,8 @@
 # Units: N/A
 # Description: Shareweights of the distribution of final energy delivery to energy distribution subsectors
 # Source: N/A
+# Column types: cccci 
+# ----------
 supplysector,subsector,year.fillout,year,share.weight
 backup_electricity,gas,start-year,,1
 csp_backup,gas,start-year,,1
