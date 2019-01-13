@@ -1,6 +1,12 @@
 #' module_gcam.usa_L2011.socioeconomics_update_USA
 #'
-#' Population and GDP updates for GCAM-USA.
+#' Population and labor productivity updates for GCAM-USA.  2015 population & labor productivity updated to match
+#' historical values.  Future year population projections updated based on NCAR downsalced SSP2 data. Labor
+#' productivity growth rates from 2015 through 2040 harmonized with AEO assumptions. Labor productivity
+#' growth rates post-2040 are linearly interpolated from state-level 2040 values to the USA-region value
+#' in 2100, so that all states converge on a common labor productivity growth rate in 2100.
+#' Finally, the USA-region’s population and labor productivity assumptions were updated to match the
+#' sum-of-states population and GDP when running GCAM-USA.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -9,7 +15,8 @@
 #' the generated outputs: \code{L2011.Pop_updated_USA}, \code{L2011.BaseGDP_updated_USA}, \code{L2011.LaborProductivity_updated_USA},
 #' \code{L2011.Pop_national_updated_USA}, \code{L2011.BaseGDP_national_updated_USA}, \code{L2011.LaborProductivity_national_updated_USA}.
 #' The corresponding file in the original data system was \code{L2011.socioeconomics_USA_update.R} (gcam-usa level2).
-#' @details Interest rate, population, and GDP for GCAM-USA.
+#' @details Updated state-level population and labor productivity for GCAM-USA.  Updated USA-region  population and labor productivity
+#' to match the sum-of-states population and GDP when running GCAM-USA.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -17,7 +24,6 @@
 module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
-             FILE = "gcam-usa/state_census_region",
              FILE = "gcam-usa/Census_pop_hist",
              FILE = "gcam-usa/Census_pop_10_15",
              FILE = "gcam-usa/BEA_GDP_87_96_97USD_state",
@@ -46,7 +52,6 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    state_census_region <- get_data(all_data, "gcam-usa/state_census_region")
     Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist")
     Census_pop_10_15 <- get_data(all_data, "gcam-usa/Census_pop_10_15")
     BEA_GDP_87_96_97USD_state <- get_data(all_data, "gcam-usa/BEA_GDP_87_96_97USD_state")
@@ -58,9 +63,6 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
     L201.Pop_GCAMUSA <- get_data(all_data, "L201.Pop_GCAMUSA")
 
     # ===================================================
-
-    SE_HIST_YEAR <- 2015  # year to which historical socioeconomic data are used
-    AEO_SE_YEAR <- 2040   # year to which AEO socioeconomic assumptions run
 
     # L2011.Pop_USA: Historical population by state from the U.S. Census Bureau, through 2016
     # Merge historical population datasets
@@ -76,11 +78,10 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
     # Calculate historical (2010-2015) population growth rates by state
     L2011.Pop_USA %>%
       rename(region = state) %>%
-      filter(year %in% MODEL_YEARS,
-             year <= SE_HIST_YEAR) %>%
+      filter(year %in% MODEL_YEARS) %>%
       complete(nesting(region), year = c(MODEL_YEARS)) %>%
       mutate(growth_rate_hist = (totalPop / lag(totalPop)) ^ (1 / (year - lag(year))) - 1) %>%
-      filter(year >= SE_HIST_YEAR) -> L2011.Pop_future_temp
+      filter(year >= gcamusa.SE_HIST_YEAR) -> L2011.Pop_future_temp
 
     # Calculate SSP2 state-level population growth rates
     states_subregions %>%
@@ -90,13 +91,14 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
                 by = c("state_name")) %>%
       select(-state_name, -State_FIPS, -SSP) %>%
       gather_years("totalPop") %>%
-      mutate(totalPop = totalPop / 1000) %>%
+      # converting people to thousands of people
+      mutate(totalPop = totalPop * CONV_ONES_THOUS) %>%
       group_by(region) %>%
-      mutate(growth_rate_SSP2 = (totalPop / lag(totalPop)) ^ (1 / (year - lag(year))) - 1) %>%
       complete(nesting(region), year = c(MODEL_FUTURE_YEARS)) %>%
-      filter(year >= 2030) %>%
-      mutate(growth_rate_SSP2 = approx_fun(year, growth_rate_SSP2)) %>%
-      ungroup() -> L2011.Pop_GR_SSP2
+      mutate(totalPop = approx_fun(year, totalPop),
+             growth_rate_SSP2 = (totalPop / lag(totalPop)) ^ (1 / (year - lag(year))) - 1) %>%
+      ungroup() %>%
+      filter(year >= gcamusa.SE_NEAR_TERM_YEAR) -> L2011.Pop_GR_SSP2
 
     # Interpolate between historical 2010-2015 growth rates to NCAR 2030 growth rates
     L2011.Pop_future_temp %>%
@@ -155,8 +157,11 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
       mutate(GDP = as.numeric(GDP),
              GDP = GDP * gdp_deflator(1990, 1997)) %>%
       filter(!is.na(GDP)) %>%
+      # NOTE:  having these filters inside the same call [ filter(x, y) ] results in filtering for min(year)
+      # in the original tbl_df passed to filter(), not min(year) in the tbl_df after NAs have been filtered out.
+      # Thus, using two separate filter calls.
       filter(year == min(year)) %>%
-      mutate(year = MODEL_BASE_YEARS[1]) %>%
+      mutate(year = min(MODEL_BASE_YEARS)) %>%
       select(Area, year, GDP) -> L2011.GDP_state_1975
 
     L2011.GDP_state_1975 %>%
@@ -199,7 +204,7 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
       mutate(pcGDP = (GDP / totalPop) * CONV_MIL_THOUS) %>%
       select(state, year, pcGDP) %>%
       # Select model base years + 2015
-      filter(year %in% c(MODEL_BASE_YEARS, SE_HIST_YEAR)) -> L2011.pcGDP_state_2015
+      filter(year %in% c(MODEL_BASE_YEARS, gcamusa.SE_HIST_YEAR)) -> L2011.pcGDP_state_2015
 
     # L2011.pcGDP_AEO_reg_2040: Future per-capita GDP (through 2040), based on AEO data (thousand 2005$ / person).
     # AEO GDP data is past 12 months, presented quarterly. Hence we filter quarter 4 (Q4) because that represents
@@ -242,9 +247,12 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
       select(region, year, pcGDPratio) -> L2011.pcGDPratio_AEOreg_2040
 
     L2011.pcGDPratio_AEOreg_2040 %>%
-      left_join(state_census_region %>%
-                                 select(state, census_region),
-                               by = c("region" = "census_region")) %>%
+      # left_join_error_no_match throws error because rows are duplicated,
+      # which is intended because we are mapping values from 9 census
+      # divisions to 50 states + DC.  Thus, left_join is used.
+      left_join(states_subregions %>%
+                                 select(state, subregion9),
+                               by = c("region" = "subregion9")) %>%
       select(state, year, pcGDPratio) -> L2011.pcGDPratio_state_2040
 
     # Annualize the ratios to return annual growth rates
@@ -252,14 +260,16 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
     L2011.pcGDPratio_state_2015 %>%
       group_by(state) %>%
       mutate(laborproductivity = (pcGDPratio ^ (1 / (year - lag(year)))) - 1) %>%
+      ungroup() %>%
       select(state, year, laborproductivity) %>%
-      filter(year != MODEL_BASE_YEARS[1]) -> L2011.LaborProductivity_USA_2015
+      filter(year != min(MODEL_BASE_YEARS)) -> L2011.LaborProductivity_USA_2015
 
     L2011.pcGDPratio_state_2040 %>%
       group_by(state) %>%
       mutate(laborproductivity = (pcGDPratio ^ (1 / (year - lag(year)))) - 1) %>%
+      ungroup() %>%
       select(state, year, laborproductivity) %>%
-      filter(year > SE_HIST_YEAR) -> L2011.LaborProductivity_USA_2040
+      filter(year > gcamusa.SE_HIST_YEAR) -> L2011.LaborProductivity_USA_2040
 
     # Labor productivity post-2040 is linearly interpolated from 2040 state-level values to the
     # USA-region value in 2100
@@ -268,36 +278,33 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
       filter(region == gcam.USA_REGION,
              year == max(MODEL_FUTURE_YEARS)) %>%
       repeat_add_columns(tibble::tibble(state = gcamusa.STATES)) %>%
-      mutate(lp2100 = laborproductivity) %>%
-      select(state, lp2100) %>%
-      left_join_error_no_match(L2011.LaborProductivity_USA_2040 %>%
-                                 filter(year == AEO_SE_YEAR) %>%
-                                 rename(lp2040 = laborproductivity) %>%
-                                 select(state, lp2040),
-                               by = c("state")) %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_FUTURE_YEARS)) %>%
-      filter(year > AEO_SE_YEAR) %>%
-      mutate(laborproductivity = lp2040 + ((year - AEO_SE_YEAR) * ((lp2100 - lp2040) / (max(MODEL_FUTURE_YEARS) - AEO_SE_YEAR)))) %>%
-      select(state, year, laborproductivity)-> L2011.LaborProductivity_USA_EOC
+      select(state, year, laborproductivity) %>%
+      bind_rows(L2011.LaborProductivity_USA_2040 %>%
+                  filter(year == gcamusa.AEO_SE_YEAR) %>%
+                  select(state, year, laborproductivity)) %>%
+      group_by(state) %>%
+      complete(nesting(region), year = c(MODEL_FUTURE_YEARS)) %>%
+      mutate(laborproductivity = approx_fun(year, laborproductivity)) %>%
+      ungroup() %>%
+      filter(year > gcamusa.AEO_SE_YEAR)-> L2011.LaborProductivity_USA_EOC
 
     # Combine annual growth rates into a single table
 
     states_subregions %>%
       select(state) %>%
       repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
-      filter(year != MODEL_BASE_YEARS[1]) %>%
+      filter(year != min(MODEL_BASE_YEARS)) %>%
       left_join_error_no_match(L2011.LaborProductivity_USA_2015 %>%
                   bind_rows(L2011.LaborProductivity_USA_2040, L2011.LaborProductivity_USA_EOC),
                 by = c("state", "year")) %>%
       rename(region = state) %>%
-      mutate(laborproductivity = round(laborproductivity, socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>%
-      filter(year != MODEL_BASE_YEARS[1]) -> L2011.LaborProductivity_updated_USA
+      mutate(laborproductivity = round(laborproductivity, socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) -> L2011.LaborProductivity_updated_USA
 
     # Smoothen near-term changes in labor productivity growth rate
     # Interpolate between historical (2010-2015 growth) rates to AEO 2030 growth rates
 
     L2011.LaborProductivity_updated_USA %>%
-      filter(year <= 2015 | year >= 2030) %>%
+      filter(year <= gcamusa.SE_HIST_YEAR | year >= gcamusa.SE_NEAR_TERM_YEAR) %>%
       complete(nesting(region), year = c(MODEL_YEARS)) %>%
       filter(year != min(MODEL_YEARS)) %>%
       group_by(region) %>%
@@ -331,16 +338,20 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
     L201.Pop_GCAMUSA %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
       bind_rows(L2011.Pop_updated_USA) %>%
+      # left_join_error_no_match throws error because there are no laborproductivity values for 1975
+      # thus, using left_join
       left_join(L2011.LaborProductivity_updated_USA,
                 by = c("region", "year")) %>%
+      # left_join_error_no_match throws error because baseGDP only has value for 1975
+      # thus, using left_join
       left_join(L2011.BaseGDP_updated_USA %>%
-                  mutate(year = MODEL_BASE_YEARS[1]),
+                  mutate(year = min(MODEL_BASE_YEARS)),
                 by = c("region", "year")) %>%
       rename(GDP = baseGDP) -> L2011.GDP_USA
 
     L2011.GDP_USA %>%
       distinct(year) %>%
-      filter(year != MODEL_BASE_YEARS[1]) %>%
+      filter(year != min(MODEL_BASE_YEARS)) %>%
       unique %>%
       unlist -> years
 
@@ -372,14 +383,14 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
       summarise(totalPop = sum(totalPop),
                 GDP = sum(GDP)) %>%
       ungroup() %>%
-      mutate(region = gcam.USA_REGION) %>%
-      mutate(pcGDP = GDP / totalPop) %>%
+      mutate(region = gcam.USA_REGION,
+             pcGDP = GDP / totalPop) %>%
       group_by(region) %>%
       mutate(laborproductivity = round(((pcGDP / lag(pcGDP)) ^ (1 / (year - lag(year)))) - 1,
                                        socioeconomics.LABOR_PRODUCTIVITY_DIGITS)) %>%
       ungroup() %>%
       select(region, year, laborproductivity) %>%
-      filter(year != MODEL_BASE_YEARS[1]) -> L2011.LaborProductivity_national_updated_USA
+      filter(year != min(MODEL_BASE_YEARS)) -> L2011.LaborProductivity_national_updated_USA
 
     # ===================================================
 
@@ -415,7 +426,6 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
       add_comments("Labor productivity growth rates post-2040 were linearly interpolated from state-level 2040 values to the USA-region SSP2 value in 2100.") %>%
       add_legacy_name("L2011.LaborProductivity_USA_updated") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/state_census_region",
                      "gcam-usa/Census_pop_hist",
                      "gcam-usa/Census_pop_10_15",
                      "gcam-usa/BEA_GDP_87_96_97USD_state",
@@ -454,7 +464,6 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
       add_comments("Annual growth rate calcualted to produce USA region GDP which matches the 50 state + DC total") %>%
       add_legacy_name("L2011.LaborProductivity_updated_USA_national") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/state_census_region",
                      "gcam-usa/Census_pop_hist",
                      "gcam-usa/Census_pop_10_15",
                      "gcam-usa/BEA_GDP_87_96_97USD_state",
