@@ -36,27 +36,28 @@ module_gcam.usa_LB1234.elec_gridregions_USA <- function(command, ...) {
 
     # ===================================================
     # Data Processing
+    
+    # Take in state-level data on electric power sector fuel consumption, aggregate to grid regions
     L123.in_EJ_state_elec_F %>%
       left_join_error_no_match(states_subregions %>%
                                  select(state, grid_region),
                                by ="state") %>%
-      rename(fuel.input = value) %>%
       group_by(grid_region, sector, fuel, year) %>%
-      summarise(fuel.input = sum(fuel.input)) %>%
+      summarise(fuel.input = sum(value)) %>%
       ungroup() -> L1234.in_EJ_grid_elec_F
 
+    # Take in state-level data on electricity generation by fuel, aggregate to grid regions
     L123.out_EJ_state_elec_F %>%
       left_join_error_no_match(states_subregions %>%
                                  select(state, grid_region),
                                by ="state") %>%
-      rename(generation = value) %>%
       group_by(grid_region, sector, fuel, year) %>%
-      summarise(generation = sum(generation)) %>%
+      summarise(generation = sum(value)) %>%
       ungroup() -> L1234.out_EJ_grid_elec_F
 
     # ===================================================
-
     # Produce outputs
+    
     L1234.in_EJ_grid_elec_F %>%
       add_title("Fuel input into electricity by fuel and grid region") %>%
       add_units("EJ") %>%
