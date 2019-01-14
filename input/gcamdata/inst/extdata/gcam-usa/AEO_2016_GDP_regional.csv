@@ -1,9 +1,10 @@
-# File: AEO_2016_GDP_regional.csv,,,,,,,,,,
-# Title: AEO 2016 Gross Regional Product Assumptions,,,,,,,,,,
-# Units: billion 2005 dollars,,,,,,,,,,
-# Comments: GDP assumptions by US Census Division from 1990-2040,,,,,,,,,,
-# Source: U.S. Energy Information Administration,,,,,,,,,,
-Year,Quarter,New England,Mid-Atlantic,East North Central,West North Central,South Atlantic,East South Central,West South Central,Mountain,Pacific
+# File: AEO_2016_GDP_regional.csv
+# Title: AEO 2016 Gross Regional Product Assumptions
+# Units: billion 2005 dollars
+# Comments: GDP assumptions by US Census Division from 1990-2040
+# region names modified from original dataset to match subregion9 names in states_subregions.csv
+# Source: U.S. Energy Information Administration
+Year,Quarter,New England,Atlantic-N,Central-NE,Central-NW,Atlantic-S,Central-SE,Central-SW,Mountain,Pacific
 1990,1,525.34,1504.34,1498.48,587.7,1539.85,437.08,939.64,408.67,1506.01
 1990,2,523.69,1507.53,1499.85,589.66,1547.22,437.65,945.23,412.16,1518.71
 1990,3,520.17,1505.29,1495.83,589.5,1549,436.64,947.4,414.16,1525.9

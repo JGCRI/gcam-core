@@ -593,6 +593,11 @@ gcamusa.FINAL_HISTORICAL_YEAR <- 2010
 gcamusa.FINAL_CALIBRATION_YEAR <- 2010
 gcamusa.FUTURE_MODEL_YEARS <- seq(from = 2015, to = 2100, by = 5)
 
+gcamusa.SE_HIST_YEAR <- 2015  # year to which historical socioeconomic data (pop & GDP) are used in GCAM-USA
+gcamusa.SE_NEAR_TERM_YEAR <- 2030  # year after which projected growth rates from various socio-economic data sources are used as-is
+# (until this year, growth rates are interpolated from 2015 historical values to prevent spikey near-term behavior)
+gcamusa.AEO_SE_YEAR <- 2040   # year to which AEO 2016 socioeconomic assumptions run
+
 # Assumptions related to coal
 # Define assumptions about lifetimes for generators/units without data.
 # The categories chosen for lifetime assumptions are such that capacity in each category is roughly same.

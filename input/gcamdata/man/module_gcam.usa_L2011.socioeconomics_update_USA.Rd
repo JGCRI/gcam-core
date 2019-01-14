@@ -19,10 +19,17 @@ the generated outputs: \code{L2011.Pop_updated_USA}, \code{L2011.BaseGDP_updated
 The corresponding file in the original data system was \code{L2011.socioeconomics_USA_update.R} (gcam-usa level2).
 }
 \description{
-Population and GDP updates for GCAM-USA.
+Population and labor productivity updates for GCAM-USA.  2015 population & labor productivity updated to match
+historical values.  Future year population projections updated based on NCAR downsalced SSP2 data. Labor
+productivity growth rates from 2015 through 2040 harmonized with AEO assumptions. Labor productivity
+growth rates post-2040 are linearly interpolated from state-level 2040 values to the USA-region value
+in 2100, so that all states converge on a common labor productivity growth rate in 2100.
+Finally, the USA-region’s population and labor productivity assumptions were updated to match the
+sum-of-states population and GDP when running GCAM-USA.
 }
 \details{
-Interest rate, population, and GDP for GCAM-USA.
+Updated state-level population and labor productivity for GCAM-USA.  Updated USA-region  population and labor productivity
+to match the sum-of-states population and GDP when running GCAM-USA.
 }
 \author{
 MTB August 2018
