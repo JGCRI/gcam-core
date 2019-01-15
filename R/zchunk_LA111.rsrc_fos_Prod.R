@@ -206,22 +206,52 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
 
       # Produce outputs
 
-    # TODO: probably not right if the lifetime is shorter than the historical period
-    # L111.Prod_EJ_R_F_Yh %>%
-    #   left_join_error_no_match(A11.fos_reserve_lifetime) %>%
-    #   group_by(GCAM_region_ID, sector, fuel) %>%
-    #   mutate(value = pmax(value - lag(value, default = 0), 0) * lifetime) %>%
-    #   ungroup() %>%
-    #   select(-lifetime) ->
-    #   L111.Reserve_EJ_R_F_Yh
+    # Fossil resource historical prices are currently assumed. No level1 processing is needed.
+    GCAM_timesteps <- diff(MODEL_BASE_YEARS)
+    start.year.timestep    = GCAM_timesteps[1]
+    model_year_timesteps <- tibble(year = MODEL_BASE_YEARS, timestep = c(start.year.timestep, GCAM_timesteps))
+
+    lag_prod_helper <- function(year, value, year_operate, final_year) {
+      ret <- value
+      for(i in seq_along(year)) {
+        if(i == 1) {
+          # first year assume all production in this vintage
+          ret[i] <- value[i]
+        } else if( year_operate[i] > final_year[i]) {
+          if(year_operate[i -1] >= final_year[i]) {
+            ret[i] <- 0
+          } else {
+            ret[i] <- ret[i - 1] * (year_operate[i] - final_year[i]) / (year_operate[i] - year_operate[i-1])
+          }
+        } else if(year_operate[i] > year[i]) {
+          # assume a vintage that as already invested continues at full
+          # capacity
+          ret[i] <- ret[i -1]
+        } else {
+          # to determine new investment we take the difference between
+          # what the total should be and subtract off production from
+          # previous vintages that are still operating
+          ret[i] <- 0
+          ret[i] <- pmax(value[i] - sum(ret[year_operate == year[i]]), 0)
+        }
+      }
+      ret
+    }
     L111.Prod_EJ_R_F_Yh %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(select(A10.ResReserveTechLifetime, depresource, lifetime),
                                by=c("fuel" = "depresource")) %>%
+      left_join_error_no_match(model_year_timesteps, by = c("year")) %>%
+      repeat_add_columns(tibble(year_operate = MODEL_BASE_YEARS)) %>%
+      mutate(final_year = pmin(MODEL_BASE_YEARS[length(MODEL_BASE_YEARS)], (year - timestep + lifetime))) %>%
+      filter(year_operate >= year - timestep + 1) %>% #filter(year_operate <= MODEL_BASE_YEARS[MODEL_BASE_YEARS >= final_year][1]) %>%
+      #mutate(value = if_else(year_operate > final_year, (year_operate - final_year) / (timestep), value))
       group_by(GCAM_region_ID, sector, fuel) %>%
-      mutate(value = pmax(value - lag(value, default = 0), 0) * lifetime) %>%
+      mutate(value = lag_prod_helper(year, value, year_operate, final_year)) %>%
       ungroup() %>%
-      select(-lifetime) ->
+      filter(year == year_operate) %>%
+      mutate(value = value * lifetime) %>%
+      select(-lifetime, -timestep, -year_operate) ->
       L111.Reserve_EJ_R_F_Yh
 
     L111.Reserve_EJ_R_F_Yh %>%
