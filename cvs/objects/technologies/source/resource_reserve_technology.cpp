@@ -215,9 +215,11 @@ void ResourceReserveTechnology::setProductionState( const int aPeriod ) {
     //double eorCoef = 0.0;
     
     double annualAvgProd = mTotalReserve / mLifetimeYears;
+    bool active = true;
     if( mYear >= currYear || mTotalReserve == 0.0 || ( mYear + mLifetimeYears + ADDITIONAL_PRODUCTION_LIFETIME ) <= currYear ) {
         // variable, retired, or future production
         mProductionPhaseScaler = 1.0;
+        active = false;
     }
     else if((currYear - mYear) < BUILDUP_YEARS) {
         mProductionPhaseScaler = (currYear - mYear + 1) / BUILDUP_YEARS;
@@ -235,6 +237,14 @@ void ResourceReserveTechnology::setProductionState( const int aPeriod ) {
     }
 
     double initialOutput = annualAvgProd * mProductionPhaseScaler;
+    if( active ) {
+        // gaurd against producing more than the total reserve by backing out the
+        // annual production that would depelete the rest of the reserve and
+        // only producing the that amount if it is less that the adjusted average
+        // annual production
+        double maxAvail = std::max((( mTotalReserve - mCumulProd[ aPeriod - 1 ]) - modeltime->gettimestep(aPeriod) * mOutputs[0]->getPhysicalOutput(aPeriod - 1)) * 2 / modeltime->gettimestep( aPeriod) + mOutputs[0]->getPhysicalOutput( aPeriod - 1), 0.0);
+        initialOutput = std::min( initialOutput, maxAvail);
+    }
     
     mProductionState[ aPeriod ] =
         ProductionStateFactory::create( mYear, mLifetimeYears + ADDITIONAL_PRODUCTION_LIFETIME, mFixedOutput,
