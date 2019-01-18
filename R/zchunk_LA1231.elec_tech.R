@@ -11,7 +11,7 @@
 #' original data system was \code{LA1231.elec_tech.R} (energy level1).
 #' @details This chunk obtaines inputs, outputs and efficiencies in the electricity sector for all technologies by region, sector, and year.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr anti_join arrange bind_rows distinct filter full_join if_else group_by left_join mutate select semi_join
 #' @importFrom tidyr gather spread
 #' @author FF, May 2017
 

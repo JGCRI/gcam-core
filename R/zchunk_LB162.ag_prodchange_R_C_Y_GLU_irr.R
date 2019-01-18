@@ -15,7 +15,7 @@
 #' (Yield Rate(year i) = Yield Ratio(year i) / Yield ratio(year i-1) ). Externally defined default yield rates are used to fill in missing data at the GCAM
 #' region-commodity-glu-irrigation level for all model years.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows distinct filter group_by left_join mutate select semi_join summarise
 #' @importFrom tidyr gather spread
 #' @author ACS June 2017
 module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {

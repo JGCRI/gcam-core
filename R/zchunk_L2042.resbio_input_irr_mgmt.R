@@ -28,7 +28,7 @@
 #' Finally, for each region-supplySector-supplySubsector-ProductionTech-irrigation-tech combination in this table, base
 #' supply curves are read in from A_resbio_curves to form the table of Agriculture resbio supply curves for each region and year.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_cols bind_rows distinct filter if_else left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author ACS July 2017
 module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {

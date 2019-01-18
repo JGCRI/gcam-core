@@ -13,7 +13,7 @@
 #' by looking up using a mapping to the water.sector and water_type. The minicam.energy.input
 #' name to use will have to be some water mapping sector for water_types that are "mapped".
 #' @return A vector of names of form supplysector_watertype or supplysector_GLU_watertype.
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter matches mutate select summarise
 #' @importFrom tidyr gather spread
 #' @importFrom assertthat assert_that
 #' @author BBL April 2017
@@ -462,7 +462,7 @@ get_ssp_regions <- function(pcGDP, reg_names, income_group,
 #' column and will include all values in \code{out_years} and the filled in values will
 #' be in the \code{value} column.  All extrapolation parameters will be cleaned out.
 #' @importFrom tibble has_name
-#' @importFrom dplyr filter mutate select setdiff rename ungroup
+#' @importFrom dplyr bind_rows filter matches mutate select summarise setdiff rename ungroup
 #' @importFrom tidyr gather complete
 #' @importFrom assertthat assert_that
 #' @author Pralit Patel
@@ -590,6 +590,7 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
 #' @param country_name Pre-dissolution country name, character
 #' @param dissolution_year Year of country dissolution, integer
 #' @param years Years to operate on, integer vector
+#' @importFrom dplyr group_by select summarise_all ungroup
 #' @importFrom stats aggregate
 #' @return Downscaled data.
 downscale_FAO_country <- function(data, country_name, dissolution_year, years = aglu.AGLU_HISTORICAL_YEARS) {

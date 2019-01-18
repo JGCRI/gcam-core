@@ -12,7 +12,7 @@
 #' We assume coefficients (in kgN per kgCrop) are equal for all four technologies (irr v rfd; hi v lo).
 #' Adjust nonLandVariableCost to remove the now explicitly computed fertilizer cost.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter if_else left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author KVC June 2017
 module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {

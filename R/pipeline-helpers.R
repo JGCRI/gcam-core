@@ -62,6 +62,7 @@ left_join_error_no_match <- function(d, ..., ignore_columns = NULL) {
 #' supplied explicitly.
 #' @return Joined table.  In case of multiple matches, only the first will be
 #' included.
+#' @importFrom dplyr distinct_ left_join
 left_join_keep_first_only <- function(x, y, by) {
   ## Our strategy is to use "distinct" to filter y to a single element for
   ## each match category, then join that to x.
@@ -336,6 +337,8 @@ gdp_deflator <- function(year, base_year) {
 #' @param value_col Name of the resulting (gathered) value column, string or unquoted column name
 #' @param year_pattern Year pattern to match against
 #' @return The gathered (reshaped) data frame.
+#' @importFrom dplyr matches mutate
+#' @importFrom tidyr gather
 #' @export
 gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN) {
   assert_that(is_tibble(d))

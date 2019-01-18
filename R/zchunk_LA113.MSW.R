@@ -11,7 +11,7 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
-#' @import dplyr
+#' @importFrom dplyr filter full_join group_by group_by_ mutate full_join summarise
 #' @importFrom tidyr gather spread
 #' @author BBL
 module_energy_LA113.MSW <- function(command, ...) {

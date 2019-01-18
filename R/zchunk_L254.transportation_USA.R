@@ -31,7 +31,7 @@
 #' pass-through technologies are normal, standard GCAM technologies, not "tranTechnologies" which have different
 #' parameters read in, and perform a bunch of hard-wired unit conversions between inputs and outputs.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select select_if semi_join summarise
 #' @importFrom tidyr gather spread
 #' @author RC Oct 2017
 module_gcam.usa_L254.transportation_USA <- function(command, ...) {

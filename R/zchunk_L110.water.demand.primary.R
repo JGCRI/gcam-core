@@ -11,7 +11,7 @@
 #' @details Gets water use coefficients for primary energy using regional
 #' fractions of saline and freshwater shares.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select arrange left_join
+#' @importFrom dplyr arrange bind_rows filter if_else left_join mutate select
 #' @importFrom tidyr gather spread
 #' @importFrom tibble as_tibble
 #' @author SWDT April 2017

@@ -11,7 +11,7 @@
 #' original data system was \code{L141.hfc_R_S_T_Y.R} (emissions level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter funs group_by left_join matches mutate mutate_at select summarise summarize vars
 #' @importFrom tidyr gather spread
 #' @author RMH Aug 2017
 module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {

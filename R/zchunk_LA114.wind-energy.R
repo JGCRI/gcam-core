@@ -14,7 +14,7 @@
 #' within that region; maximum prices are calculated to be the price where supply is 95% that of the available resource,
 #' and the highest maximum price within the region is then used. The rest of the price points are filled out in equal increments.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter group_by mutate pull row_number select summarise
 #' @importFrom tidyr gather spread
 #' @author AJS June 2017
 module_energy_LA114.wind <- function(command, ...) {

@@ -11,7 +11,7 @@
 #' @details This chunk sets up the USA energy transformation technology databases as well as writing out assumptions to all states/sectors/markets for shareweights and logits.
 #' Calibrated outputs and I:O coefficients are updated from global values produced by \code{\link{module_energy_L222.en_transformation}}.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate one_of pull select summarise
 #' @importFrom tidyr gather spread
 #' @author ACS Nov 2017
 module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {

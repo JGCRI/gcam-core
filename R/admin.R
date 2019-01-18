@@ -2,7 +2,7 @@
 #' chunk_readylist
 #'
 #' @return Returns a list of disabled chunks: their lines of code, inputs and available inputs, dependencies
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter group_by left_join mutate right_join select summarise
 #' @importFrom tidyr gather spread
 #' @export
 chunk_readylist <- function() {

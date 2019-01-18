@@ -11,7 +11,7 @@
 #' @details This chunk calculates average prices over calibration years by GCAM commodity.
 #' Averages across years are unweighted; averages over FAO item are weighted by production.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter if_else group_by inner_join left_join mutate pull select summarise summarise_at summarize summarize_at vars
 #' @importFrom tidyr gather spread
 #' @author RC April 2017
 module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {

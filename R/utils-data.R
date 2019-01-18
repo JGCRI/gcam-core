@@ -222,6 +222,7 @@ get_data <- function(all_data, name) {
 #'
 #' @param ... Objects to handle
 #' @return Object ready for insertion into the data system data structure.
+#' @importFrom dplyr groups
 return_data <- function(...) {
   dots <- list(...)
   names(dots) <- as.list(substitute(list(...)))[-1L]

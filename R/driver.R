@@ -145,7 +145,7 @@ tibbelize_outputs <- function(chunk_data, chunk_name) {
 #' the relevant wiki page at \url{ https://github.com/bpbond/gcamdata/wiki/Driver}.
 #' @importFrom magrittr "%>%"
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by inner_join select summarise
 #' @export
 #' @author BBL
 driver <- function(all_data = empty_data(),

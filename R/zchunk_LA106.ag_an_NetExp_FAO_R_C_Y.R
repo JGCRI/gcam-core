@@ -11,7 +11,7 @@
 #' @details This chunk calculate the net exports of primary agricultural goods and animal products by GCAM region / commodity / year.
 #' Regional gross exports are adjusted so that global net exports are zero of each commodity / year.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select semi_join summarise summarize
 #' @importFrom tidyr gather spread
 #' @author RC June 2017
 module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y <- function(command, ...) {

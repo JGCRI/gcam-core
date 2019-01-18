@@ -10,7 +10,7 @@
 #' original data system was \code{LA144.Residential.R} (gcam-usa level1).
 #' @details Calculate residential floorspace by state and residential energy consumption by state/fuel/end use.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter if_else group_by lead left_join mutate select select_ summarise
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
 module_gcam.usa_LA144.Residential <- function(command, ...) {

@@ -14,7 +14,7 @@
 #' original data system was \code{L252.MACC.R} (emissions level2).
 #' @details Creates marginal abatement cost curves "MACC", for fossil resources, agriculture, animals, and processing.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange arrange_ bind_rows distinct filter left_join matches mutate select
 #' @importFrom tidyr gather spread
 #' @author RH August 2017
 module_emissions_L252.MACC <- function(command, ...) {

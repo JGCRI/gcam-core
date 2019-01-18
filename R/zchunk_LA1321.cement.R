@@ -13,7 +13,7 @@
 #' IEA fuelshares and heat and electricity are used to determine energy use by fuel. Energy inputs are then subtracted from industrial energy use and any resulting negative values
 #' are dealt with by moving their accounting to the cement sector.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter group_by left_join mutate select semi_join summarise summarise_all
 #' @importFrom tidyr gather spread
 #' @author CWR Nov 2017
 module_energy_LA1321.cement <- function(command, ...) {

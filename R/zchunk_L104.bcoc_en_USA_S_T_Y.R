@@ -10,7 +10,7 @@
 #' original data system was \code{L104.bcoc_en_USA_S_T_Y.R} (emissions level1).
 #' @details 1990 USA BC and OC emissions are divided by year 2000 USA energy use to generate emission factors for GCAM aggregate sectors
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter funs group_by left_join mutate mutate_all select summarize summarize_if
 #' @importFrom tidyr gather spread
 #' @author SJS May 2017
 module_emissions_L104.bcoc_en_USA_S_T_Y <- function(command, ...) {

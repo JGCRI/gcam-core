@@ -12,7 +12,7 @@
 #' and calculates the annual productivity change rates by GCAM commodity / region / future years to 2100.
 #' Yield improvement rates are based on FAO estimates up to 2050 and the default agriculture productivity change assumptions beyond 2050.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr anti_join bind_rows filter full_join if_else group_by left_join mutate pull select summarise
 #' @importFrom tidyr gather spread
 #' @importFrom stats median
 #' @author RC April 2017

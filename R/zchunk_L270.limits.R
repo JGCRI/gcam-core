@@ -15,7 +15,7 @@
 #' @details Generate GCAM policy constraints which enforce limits to liquid feedstocks
 #' and the amount of subsidies given for net negative emissions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter if_else group_by mutate select slice summarize
 #' @importFrom tidyr gather spread
 #' @importFrom magrittr %<>%
 #' @author PLP March 2018

@@ -18,7 +18,7 @@
 #' The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
 #' @details Creates GCAM-USA building output files for writing to xml.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select semi_join summarise
 #' @importFrom tidyr gather spread
 #' @author RLH November 2017
 

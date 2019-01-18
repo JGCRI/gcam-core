@@ -10,7 +10,7 @@
 #' @return Depends on \code{command}.
 #' @author Author name
 #' @importFrom tibble tibble
-#' @import dplyr
+#' @importFrom dplyr filter mutate select
 module_sample_sample <- function(command, ...) {
   if(command == driver.DECLARE_OUTPUTS) {
     return(c("first_output",

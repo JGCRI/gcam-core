@@ -12,7 +12,7 @@
 #' # based on 1. GCAM 3.0 assumptions 2. global average emissions coefficients based on CDIAC inventory and IEA energy balances
 #' # or 3. region-specific average emissions coefficients based on CDIAC inventory and IEA energy balances.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter if_else left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author JDH Sept 2017
 

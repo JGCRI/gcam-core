@@ -16,7 +16,7 @@
 #' in the inventory data. For rainfed crops, total biophysical = green, and for irrigated crops,
 #' total biophysical = blue + green.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter if_else group_by left_join mutate right_join select summarise summarise_at vars
 #' @importFrom tidyr gather spread
 #' @author BBL April 2017
 module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {

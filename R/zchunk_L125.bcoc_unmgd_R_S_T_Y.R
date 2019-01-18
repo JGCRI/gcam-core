@@ -14,7 +14,7 @@
 #' Compute global average deforestation emissions coefficients using deforestation from 2000 to 2005 using RCP emissions.
 #' Note: Non-CO2s are calculated in a separate chunk.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter funs group_by left_join mutate mutate_ select summarise summarize_all summarize_at vars
 #' @importFrom tidyr gather spread
 #' @author RMH May 2017
 module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {

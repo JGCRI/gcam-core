@@ -10,7 +10,7 @@
 #' original data system was \code{L115.nh3_an_R_S_T_Y.R} (emissions level1).
 #' @details This chunk uses EPA emissions and FAO data to estimate agricultural NH3 emissions which are scaled to regional values using EDGAR data.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange group_by left_join mutate select summarise summarize
 #' @importFrom tidyr gather spread unite separate
 #' @author KD May 2017
 module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {

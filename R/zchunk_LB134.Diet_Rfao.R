@@ -16,7 +16,7 @@
 #' extend the projected diets to all years, assuming convergence year and demand levels;
 #' make SSP-specific projections based on GDP changes.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter if_else group_by lead left_join mutate nth right_join select summarise
 #' @importFrom tidyr gather spread
 #' @author BBL May 2017
 module_aglu_LB134.Diet_Rfao <- function(command, ...) {

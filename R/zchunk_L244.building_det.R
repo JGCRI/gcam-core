@@ -21,7 +21,7 @@
 #' The corresponding file in the original data system was \code{L244.building_det.R} (energy level2).
 #' @details Creates level2 data for the building sector.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select semi_join summarise
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
 

@@ -12,7 +12,7 @@
 #' for region-specific livestock for#' model years (1975, 1990,2005, 2010....2100), with the information of supplysector,
 #' subsector,technology, and energy input.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr inner_join left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author YL July 2017
 module_water_L233.water.demand.livestock <- function(command, ...) {

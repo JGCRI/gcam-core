@@ -14,7 +14,7 @@
 #' original data system was \code{LA101.EIA_SEDS.R} (gcam-usa level1).
 #' @details See above
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread fill
 #' @author AS April 2017
 module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {

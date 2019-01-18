@@ -10,7 +10,7 @@
 #' original data system was \code{LA144.Commercial.R} (gcam-usa level1).
 #' @details Calculates commercial floorspace by state and energy consumption by state/fuel/end use
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows contains distinct filter if_else group_by left_join mutate select summarise transmute
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
 module_gcam.usa_LA144.Commercial <- function(command, ...) {

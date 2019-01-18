@@ -11,7 +11,7 @@
 #' @details Different proxies are used to calculate hydro potential.
 #' @details In most cases, a growth potential for each country was calculated, multiplied by its share in the region, and added to the base-year ouput
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate mutate_if pull select summarise
 #' @importFrom tidyr gather spread
 #' @author AS May 2017
 module_energy_LA118.hydro <- function(command, ...) {
