@@ -27,7 +27,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
              FILE = "energy/rsrc_unconv_oil_prod_bbld",
              FILE = "energy/A11.fos_curves",
              "L100.IEA_en_bal_ctry_hist",
-             "L1011.en_bal_EJ_R_Si_Fi_Yh"))
+             "L1012.en_bal_EJ_R_Si_Fi_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L111.Prod_EJ_R_F_Yh",
              "L111.RsrcCurves_EJ_R_Ffos"))
@@ -45,14 +45,14 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
     rsrc_unconv_oil_prod_bbld <- get_data(all_data, "energy/rsrc_unconv_oil_prod_bbld")
     A11.fos_curves <- get_data(all_data, "energy/A11.fos_curves")
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
+    L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh")
 
     # ------- HISTORICAL FOSSIL ENERGY PRODUCTION
 
     # (lines 38-56 in original file)
     # NOTE: Regional production is derived for each fuel as global TPES times regional share of global production
     # Determine global total primary energy supply (TPES) for each fuel
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    L1012.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "TPES", fuel %in% energy.RSRC_FUELS, year %in% HISTORICAL_YEARS) %>%
       group_by(sector, fuel, year) %>%
       summarise(value = sum(value)) %>%
@@ -60,7 +60,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       L111.TPES_EJ_F_Yh
 
     # Determine regional shares of production for each primary fuel
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    L1012.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "out_resources", fuel %in% energy.RSRC_FUELS, year %in% HISTORICAL_YEARS) ->
       L111.Prod_EJ_R_F_Yh_IEA
 
@@ -214,7 +214,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
         add_legacy_name("L111.RsrcCurves_EJ_R_Ffos") %>%
         add_precursors("common/iso_GCAM_regID", "energy/A11.fos_curves",
                        "energy/mappings/IEA_product_rsrc", "L100.IEA_en_bal_ctry_hist",
-                       "L1011.en_bal_EJ_R_Si_Fi_Yh") ->
+                       "L1012.en_bal_EJ_R_Si_Fi_Yh") ->
         L111.RsrcCurves_EJ_R_Ffos
     }
 

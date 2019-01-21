@@ -23,7 +23,7 @@ module_energy_LA131.enduse <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A_regions",
              FILE = "energy/mappings/enduse_sector_aggregation",
-             "L1011.en_bal_EJ_R_Si_Fi_Yh",
+             "L1012.en_bal_EJ_R_Si_Fi_Yh",
              "L121.in_EJ_R_unoil_F_Yh",
              "L122.in_EJ_R_refining_F_Yh",
              "L124.out_EJ_R_heat_F_Yh",
@@ -44,7 +44,7 @@ module_energy_LA131.enduse <- function(command, ...) {
 
     enduse_sector_aggregation <- get_data(all_data, "energy/mappings/enduse_sector_aggregation")
 
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
+    L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh")
 
 
      get_data(all_data, "L121.in_EJ_R_unoil_F_Yh") %>%
@@ -78,7 +78,7 @@ module_energy_LA131.enduse <- function(command, ...) {
       Enduse_elect
 
     # Subset the end use sectors and aggregate by fuel
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    L1012.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector %in% enduse_sector_aggregation$sector, year %in% HISTORICAL_YEARS) %>%
       filter(fuel == "electricity") %>%
       group_by(GCAM_region_ID, fuel, year) %>%
@@ -94,7 +94,7 @@ module_energy_LA131.enduse <- function(command, ...) {
       Enduse_elect_scaler
 
     # Multiply the electricity scalers by the original estimates of electricity consumption by end use sectors
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    L1012.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector %in% enduse_sector_aggregation$sector) %>%
       filter(fuel == "electricity") %>%
       left_join_error_no_match(Enduse_elect_scaler, by = c("GCAM_region_ID", "year")) %>%
@@ -103,7 +103,7 @@ module_energy_LA131.enduse <- function(command, ...) {
       Enduse_elect_scaled
 
     # Replace unscaled estimates of end use sector electricity consumption in full table
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    L1012.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector %in% enduse_sector_aggregation$sector) %>%
       filter(fuel != "electricity") %>%
       bind_rows(Enduse_elect_scaled) ->
@@ -202,7 +202,7 @@ module_energy_LA131.enduse <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Scalers were used to balance electricity and district heat production and consumption within each region") %>%
       add_legacy_name("L131.in_EJ_R_Senduse_F_Yh") %>%
-      add_precursors("energy/mappings/enduse_sector_aggregation", "L1011.en_bal_EJ_R_Si_Fi_Yh",
+      add_precursors("energy/mappings/enduse_sector_aggregation", "L1012.en_bal_EJ_R_Si_Fi_Yh",
                      "L121.in_EJ_R_unoil_F_Yh", "L122.in_EJ_R_refining_F_Yh", "L126.out_EJ_R_electd_F_Yh") ->
       L131.in_EJ_R_Senduse_F_Yh
 
@@ -212,7 +212,7 @@ module_energy_LA131.enduse <- function(command, ...) {
       add_comments("Share of regional heat demand by each sector was calculated for regions where heat is not modeled separately from the fuels used to produce it. Moreoever, regions having zero heat consumption by demand sectors while nevertheless also having heat production, this was assigned to industry") %>%
       add_legacy_name("L131.share_R_Senduse_heat_Yh") %>%
       add_precursors("energy/A_regions", "energy/mappings/enduse_sector_aggregation",
-                     "L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "L1012.en_bal_EJ_R_Si_Fi_Yh",
                      "L121.in_EJ_R_unoil_F_Yh",
                      "L122.in_EJ_R_refining_F_Yh",
                      "L124.out_EJ_R_heat_F_Yh", "L124.out_EJ_R_heatfromelec_F_Yh",

@@ -494,9 +494,9 @@ water.AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
 water.COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
 water.COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
 water.COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless)
-water.DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
+water.DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.00001 # 1975$/m3. This excludes water abstraction costs explicitly modeled.
 water.DEFAULT_UNLIMITED_WATER_PRICE       <- 0
-water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.00001 # 1975$/m3. This excludes water abstraction costs explicitly modeled.
 water.DEFAULT_BASEYEAR_WATER_PRICE        <- 0.001
 water.IRR_PRICE_SUBSIDY_MULT              <- 0.01  # Multiplier for irrigation price subsidy (OECD 2009 Managing Water for All)
 water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
@@ -543,6 +543,24 @@ water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010) # Historical years for freshwater
 water.RENEW.COST.GRADE1 <- 0.00001 #Renewable water grade1 cost
 water.RENEW.COST.GRADE2 <- 0.001 #Renewable water grade2 cost
 water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
+
+# Energy-for-water constants ======================================================================
+
+efw.GW_ABSTRACTION_EFW                    <- 0.000666  # GJ of electricity per cubic meter of groundwater produced
+efw.SW_ABSTRACTION_EFW                    <- 0.000284  # GJ of electricity per cubic meter of surface water produced
+efw.MAX_COMMIND_ENERGY_DESAL              <- 0.15      # maximum share of commercial + industrial sector energy consumption that can be re-assigned to desalination
+efw.MAX_AGCOMM_ENERGY_IRR                 <- 0.5       # maximum share of ag + commercial energy that can be re-assigned to irrigation
+efw.MAX_AG_ENERGY_IRR                     <- 1         # maximum share of reported agricultural energy that can be re-assigned to irrigation
+efw.MAX_IND_ENERGY_EFW                    <- 0.05      # maximum share of industrial sector energy consumption that can be re-assigned to industrial manufacturing energy-for-water
+efw.MAX_COMMIND_ENERGY_MUNI_EFW           <- 0.2       # maximum share of commercial + industrial sector energy consumption that can be re-assigned to municipal water systems
+efw.MAX_COMM_ENERGY_MUNI_EFW              <- 0.3       # maximum share of commercial sector energy consumption that can be re-assigned to municipal water systems
+efw.MAX_WWTRT_FRAC                        <- 0.85      # maximum share of municipal/industrial water use that can be treated as wastewater (considering consumptive uses)
+efw.WWTRT_STEEPNESS                       <- 10        # steepness assumption relating per-capita GDP to the portion of municipal/industrial wastewater treated
+
+efw.COUNTRIES_ELEC_DESAL                  <- c("are", "qat", "sau")     # countries whose desalination-related energy is in the power sector (combined electric + desal plants)
+efw.COUNTRIES_NO_DESAL                    <- c("mng", "pry", "mhl", "tjk", "tkm")   # landlocked or tiny countries whose reported desalinated water production is not included in GCAM
+efw.DESAL_ENERGY_SECTORS                  <- c("in_bld_comm", "in_industry_general")    # intermediate mapping sectors where desalination-related energy is initially assigned (from the energy balances)
+efw.ELEC_DESAL_TECHS                      <- c("gas (steam/CT)", "refined liquids (steam/CT)")    # Electric generation technologies that can produce secondary output of desalinated seawater
 
 # Emissions constants ======================================================================
 

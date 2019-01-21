@@ -1,0 +1,8 @@
+# File: A71.globaltech_cost.csv
+# Title: Desalination non-energy costs
+# Units: 1975$ per cubic meter of desalinated water (1975$/m3)
+# Source: None
+supplysector,subsector,technology,minicam.non.energy.input,1971,2100
+desalinated water,electricity,reverse osmosis,non-energy,0.1,0.1
+desalinated water,refined liquids,distillation,non-energy,0.1,0.1
+desalinated water,gas,distillation,non-energy,0.1,0.1

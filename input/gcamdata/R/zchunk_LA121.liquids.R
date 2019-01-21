@@ -30,7 +30,7 @@ module_energy_LA121.liquids <- function(command, ...) {
              FILE = "energy/A21.unoil_demandshares",
              FILE = "energy/A21.globaltech_coef",
              "L100.IEA_en_bal_ctry_hist",
-             "L1011.en_bal_EJ_R_Si_Fi_Yh",
+             "L1012.en_bal_EJ_R_Si_Fi_Yh",
              "L111.Prod_EJ_R_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L121.in_EJ_R_unoil_F_Yh",
@@ -62,7 +62,7 @@ module_energy_LA121.liquids <- function(command, ...) {
     A21.unoil_demandshares <- get_data(all_data, "energy/A21.unoil_demandshares")
     A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef")
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
+    L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh")
 
     # L100.IEA_en_bal_ctry_hist might be null (meaning the data system is running
     # without the proprietary IEA data files). If this is the case, we substitute
@@ -161,7 +161,7 @@ module_energy_LA121.liquids <- function(command, ...) {
         mutate(sector = "TPES") -> L121.in_EJ_R_TPES_unoil_Yh
 
       # Conventional (crude) oil: calculate as liquids TPES - unconventional oil
-      L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+      L1012.en_bal_EJ_R_Si_Fi_Yh %>%
         filter(sector == "TPES", fuel == "refined liquids") -> L121.in_EJ_R_TPES_liq_Yh
 
       L121.in_EJ_R_TPES_liq_Yh %>%
@@ -245,7 +245,7 @@ module_energy_LA121.liquids <- function(command, ...) {
         add_comments("Unconventional oil subtracted from total primary energy supply of liquids") %>%
         add_comments("to determine crude oil supply") %>%
         add_legacy_name("L121.in_EJ_R_TPES_crude_Yh") %>%
-        add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh") ->
+        add_precursors("L1012.en_bal_EJ_R_Si_Fi_Yh") ->
         L121.in_EJ_R_TPES_crude_Yh
 
       L121.in_EJ_R_TPES_unoil_Yh %>%
