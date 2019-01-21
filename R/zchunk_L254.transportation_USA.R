@@ -31,7 +31,7 @@
 #' pass-through technologies are normal, standard GCAM technologies, not "tranTechnologies" which have different
 #' parameters read in, and perform a bunch of hard-wired unit conversions between inputs and outputs.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select select_if semi_join summarise
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select semi_join summarise
 #' @importFrom tidyr gather spread
 #' @author RC Oct 2017
 module_gcam.usa_L254.transportation_USA <- function(command, ...) {
@@ -215,7 +215,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     # Model may make up calibration values otherwise.
     L254.StubTranTechCoef_USA %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      select_if(names(L254.StubTranTechCoef_USA) %in% LEVEL2_DATA_NAMES[["StubTranTechCalInput"]]) %>%
+      dplyr::select_if(names(L254.StubTranTechCoef_USA) %in% LEVEL2_DATA_NAMES[["StubTranTechCalInput"]]) %>%
       left_join(L254.StubTranTechCalInput_USA,
                 by = c("region", "supplysector", "tranSubsector", "stub.technology", "year", "minicam.energy.input")) %>%
       # Set calibration values as zero for technolgies that do not exist in some base years

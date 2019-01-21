@@ -462,7 +462,7 @@ get_ssp_regions <- function(pcGDP, reg_names, income_group,
 #' column and will include all values in \code{out_years} and the filled in values will
 #' be in the \code{value} column.  All extrapolation parameters will be cleaned out.
 #' @importFrom tibble has_name
-#' @importFrom dplyr bind_rows filter matches mutate select summarise setdiff rename ungroup
+#' @importFrom dplyr bind_rows filter matches mutate select summarise rename ungroup
 #' @importFrom tidyr gather complete
 #' @importFrom assertthat assert_that
 #' @author Pralit Patel
@@ -524,7 +524,7 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
     d_no_extrap
 
   d %>%
-    setdiff(d_no_extrap) ->
+    dplyr::setdiff(d_no_extrap) ->
     d_extrap
 
   # First partition the technologies that are not "shadowing" another technology
@@ -570,7 +570,7 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
                              (1.0 - improvement.rate) ^ (year - year_base),
                            value)) %>%
     # drop the extra columns created for the shadow / exp decay calculation
-    select_(.dots = paste0('`', names(d_nonshadowed), '`')) %>%
+    dplyr::select_(.dots = paste0('`', names(d_nonshadowed), '`')) %>%
     ungroup() ->
     d_shadowed
 

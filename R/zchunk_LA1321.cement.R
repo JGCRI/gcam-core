@@ -72,7 +72,7 @@ module_energy_LA1321.cement <- function(command, ...) {
     LIMESTONE_CCOEF <- A_PrimaryFuelCCoef$PrimaryFuelCO2Coef[A_PrimaryFuelCCoef$PrimaryFuelCO2Coef.name == "limestone"]
     # Determine historical years not available in data set (additional years) to copy values from final available year (final_CO2_year)
     ADDITIONAL_YEARS <- HISTORICAL_YEARS[!HISTORICAL_YEARS %in% energy.CDIAC_CO2_HISTORICAL_YEARS]
-    FINAL_CO2_YEAR <- last(energy.CDIAC_CO2_HISTORICAL_YEARS)
+    FINAL_CO2_YEAR <- dplyr::last(energy.CDIAC_CO2_HISTORICAL_YEARS)
 
     # =======================================================================================
     # Derivation of cement production and limestone consumption by region and historical year

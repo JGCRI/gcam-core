@@ -222,7 +222,6 @@ get_data <- function(all_data, name) {
 #'
 #' @param ... Objects to handle
 #' @return Object ready for insertion into the data system data structure.
-#' @importFrom dplyr groups
 return_data <- function(...) {
   dots <- list(...)
   names(dots) <- as.list(substitute(list(...)))[-1L]
@@ -236,7 +235,7 @@ return_data <- function(...) {
     # any other data could not possibly be grouped so we can skip the
     # check for them
     if(is_tibble(dots[[dname]])) {
-      assert_that(is.null(groups(dots[[dname]])), msg =
+      assert_that(is.null(dplyr::groups(dots[[dname]])), msg =
                     paste0(dname, " is being returned grouped. This is not allowed; please ungroup()"))
     }
   })

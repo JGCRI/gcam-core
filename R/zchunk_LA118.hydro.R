@@ -11,7 +11,7 @@
 #' @details Different proxies are used to calculate hydro potential.
 #' @details In most cases, a growth potential for each country was calculated, multiplied by its share in the region, and added to the base-year ouput
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate mutate_if pull select summarise
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate pull select summarise
 #' @importFrom tidyr gather spread
 #' @author AS May 2017
 module_energy_LA118.hydro <- function(command, ...) {
@@ -65,7 +65,7 @@ module_energy_LA118.hydro <- function(command, ...) {
       # Calculate a translation from Technical potential to Economic potential, using weighted average among regions where both are reported
       # First, for countries reporting in MW, convert to GWh (most countries have potentials as GWh but some are in MW)
       Hydropower_potential %>%
-        mutate_if(is.integer, as.numeric) %>% # Convert columns that are getting read in as integers to numbers
+        dplyr::mutate_if(is.integer, as.numeric) %>% # Convert columns that are getting read in as integers to numbers
         mutate(Technical_GWh = replace(Technical_GWh, is.na(Technical_GWh), (Technical_MW * CONV_YEAR_HOURS * CONV_MIL_BIL * Hydro_capfac)[is.na(Technical_GWh)]),
                Economic_GWh = replace(Economic_GWh, is.na(Economic_GWh), (Economic_MW * CONV_YEAR_HOURS * CONV_MIL_BIL * Hydro_capfac)[is.na(Economic_GWh)])) ->
         Hydropower_potential

@@ -55,7 +55,7 @@ count_downstream_dependencies <- function(chunkname, chunklist, ci, co, recurse 
     outputlist
 
   depnames <- unique(outputlist$name)
-  deps <- length(setdiff(depnames, excludes))
+  deps <- length(dplyr::setdiff(depnames, excludes))
 
   if(recurse) {
     for(i in unique(outputlist$chunk)) {

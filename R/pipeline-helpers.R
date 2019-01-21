@@ -31,7 +31,7 @@ left_join_error_no_match <- function(d, ..., ignore_columns = NULL) {
   if(nrow(d) != drows) {
     stop("left_join_no_match: number of rows in data changed")
   }
-  names_to_check <- setdiff(names(d), dnames) %>% setdiff(ignore_columns)
+  names_to_check <- dplyr::setdiff(names(d), dnames) %>% dplyr::setdiff(ignore_columns)
   if(any(is.na(d[names_to_check]))) {
     stop("left_join_no_match: NA values in new data columns")
   }
@@ -62,14 +62,14 @@ left_join_error_no_match <- function(d, ..., ignore_columns = NULL) {
 #' supplied explicitly.
 #' @return Joined table.  In case of multiple matches, only the first will be
 #' included.
-#' @importFrom dplyr distinct_ left_join
+#' @importFrom dplyr left_join
 left_join_keep_first_only <- function(x, y, by) {
   ## Our strategy is to use "distinct" to filter y to a single element for
   ## each match category, then join that to x.
   . <- NULL                           # silence notes on package check
   ll <- as.list(by)
   names(ll) <- NULL
-  do.call(distinct_, c(list(y), ll, list(.keep_all = TRUE))) %>%
+  do.call(dplyr::distinct_, c(list(y), ll, list(.keep_all = TRUE))) %>%
     left_join(x, ., by = by)
 }
 

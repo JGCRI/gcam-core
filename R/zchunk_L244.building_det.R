@@ -339,7 +339,7 @@ module_energy_L244.building_det <- function(command, ...) {
     # First, separate the thermal from the generic services. Generic services will be assumed to produce
     # internal gain energy, so anything in the internal gains assumptions table will be assumed generic
     generic_services <- unique(A44.internal_gains$supplysector)
-    thermal_services <- setdiff(unique(A44.sector$supplysector), generic_services)
+    thermal_services <- dplyr::setdiff(unique(A44.sector$supplysector), generic_services)
 
     # Base-service: filter only the model base years and change names as indicated in calibrated_techs_bld_det
     L244.base_service <- L144.base_service_EJ_serv %>%

@@ -16,7 +16,7 @@
 #' extend the projected diets to all years, assuming convergence year and demand levels;
 #' make SSP-specific projections based on GDP changes.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr arrange bind_rows filter if_else group_by lead left_join mutate nth right_join select summarise
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate right_join select summarise
 #' @importFrom tidyr gather spread
 #' @author BBL May 2017
 module_aglu_LB134.Diet_Rfao <- function(command, ...) {
@@ -248,7 +248,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
       raw_demand %>%
         arrange(GCAM_region_ID, GCAM_demand, desc(year)) %>%
         group_by(GCAM_region_ID, GCAM_demand) %>%
-        mutate(ratio = value / lead(value)) %>%
+        mutate(ratio = value / dplyr::lead(value)) %>%
         select(-value) %>%
         # ...and use those ratios to scale future food demand
         # the joined table includes all historical years, and 5-year intervals in the future years
@@ -261,7 +261,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
         # computing the cumulative product, and then multiplying by the last historical year value, is the
         # same mathematically as multiplying each year's ratio by the previous year's value
         mutate(ratio = cumprod(ratio),
-               demand_kcal = if_else(year > max(HISTORICAL_YEARS), ratio * nth(demand_kcal, which(year == max(HISTORICAL_YEARS))), demand_kcal)) %>%
+               demand_kcal = if_else(year > max(HISTORICAL_YEARS), ratio * dplyr::nth(demand_kcal, which(year == max(HISTORICAL_YEARS))), demand_kcal)) %>%
         # Next step will be to ensure the year-to-year change, and absolute values, don't exceed certain levels
         # These levels are given in 'A_FoodDemand_SSPs', so merge that in
         mutate(scenario = scen) %>%

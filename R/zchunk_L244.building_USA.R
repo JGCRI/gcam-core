@@ -239,7 +239,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     # First, separate the thermal from the generic services. Generic services will be assumed to produce
     # internal gain energy, so anything in the internal gains assumptions table will be assumed generic
     generic_services <- unique(A44.globaltech_intgains$supplysector)
-    thermal_services <- setdiff(unique(A44.sector$supplysector), generic_services)
+    thermal_services <- dplyr::setdiff(unique(A44.sector$supplysector), generic_services)
 
     # L244.HDDCDD: Heating and cooling degree days by scenario
     L244.HDDCDD_scen_state <- L143.HDDCDD_scen_state %>%

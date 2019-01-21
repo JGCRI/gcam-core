@@ -12,7 +12,7 @@
 #' @details This chunk replaces IEA international shipping fuel consumption estimates with EIA estimates,
 #' remaps USSR data to Russia, and removes coal-to-gas from natural gas TPES.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr arrange distinct filter if_else group_by inner_join left_join mutate select summarise summarize
+#' @importFrom dplyr arrange distinct filter if_else group_by inner_join left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author JDH July 2017
 module_energy_LA1011.en_bal_adj <- function(command, ...) {
@@ -119,7 +119,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
 
     L1011.in_EJ_ctry_intlship_TOT_Yh %>%
       group_by(GCAM_region_ID, year) %>%
-      summarize(value = sum(value)) -> L1011.in_EJ_R_intlship_Yh
+      summarise(value = sum(value)) -> L1011.in_EJ_R_intlship_Yh
 
     # Filter for historical years
     L101.en_bal_EJ_R_Si_Fi_Yh_full %>%

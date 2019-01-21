@@ -13,7 +13,7 @@
 #' shipping & aviation emission data calculated based on total emission and total emission shares. Finally, non-ghg emission
 #' totals and shares are calculated by GCAM sector, fuel, technology, and driver type for EDGAR historical years.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr arrange bind_rows filter group_by left_join mutate right_join select summarise summarize_if
+#' @importFrom dplyr arrange bind_rows filter group_by left_join mutate right_join select summarise summarise_if
 #' @importFrom tidyr gather spread
 #' @author RC April 2018
 module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
@@ -137,7 +137,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
     L111.EDGAR.agg <- L111.EDGAR %>%
       na.omit %>%
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector) %>%
-      summarize_if(is.numeric, sum) %>%
+      summarise_if(is.numeric, sum) %>%
       ungroup %>%
       gather(year, EDGAR_emissions, -GCAM_region_ID, -Non.CO2, -EDGAR_agg_sector) %>%
       mutate(year = as.integer(year)) %>%
