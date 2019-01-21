@@ -95,7 +95,7 @@ graph_chunks <- function(module_filter = NULL,
   # Compute number of outputs
   chunkoutputs %>%
     group_by(name) %>%
-    summarise(noutputs = n()) %>%
+    summarise(noutputs = dplyr::n()) %>%
     right_join(chunklist, by = "name") ->
     chunklist
 

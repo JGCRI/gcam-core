@@ -196,7 +196,7 @@ driver <- function(all_data = empty_data(),
   # Keep track of chunk inputs for later pruning
   chunkinputs %>%
     group_by(input) %>%
-    summarise(n = n()) ->
+    summarise(n = dplyr::n()) ->
     chunk_input_counts
   cic <- chunk_input_counts$n
   names(cic) <- chunk_input_counts$input

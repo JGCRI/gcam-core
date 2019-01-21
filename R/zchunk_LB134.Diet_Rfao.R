@@ -246,7 +246,7 @@ module_aglu_LB134.Diet_Rfao <- function(command, ...) {
 
       # Compute food demand ratios for future years
       raw_demand %>%
-        arrange(GCAM_region_ID, GCAM_demand, desc(year)) %>%
+        arrange(GCAM_region_ID, GCAM_demand, dplyr::desc(year)) %>%
         group_by(GCAM_region_ID, GCAM_demand) %>%
         mutate(ratio = value / dplyr::lead(value)) %>%
         select(-value) %>%

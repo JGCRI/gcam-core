@@ -500,7 +500,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       # remove the technologies that are not pass-through sectors
       semi_join(L254.StubTech_passthru, by = c("region", "supplysector", "tranSubsector", "stub.technology")) %>%
       # compute cumulative sum for use below
-      arrange(desc(minicam.energy.input)) %>%
+      arrange(dplyr::desc(minicam.energy.input)) %>%
       group_by(region, year) %>%
       mutate(output_cum = cumsum(output_agg)) %>%
       ungroup() ->

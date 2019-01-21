@@ -288,7 +288,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       # Some of the technologies are sub-totals, assign zero value now, will be calculated below
       replace_na(list(output_agg = 0)) %>%
       # Arrange input sectors so that sub-total sector is behind the subsectors
-      arrange(desc(minicam.energy.input)) %>%
+      arrange(dplyr::desc(minicam.energy.input)) %>%
       group_by(region, year) %>%
       # Calculate the cumulative for sub-total sector
       mutate(output_cum = cumsum(output_agg)) %>%
