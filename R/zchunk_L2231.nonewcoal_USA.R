@@ -1,4 +1,4 @@
-#' module_gcam.usa_L2231.nonewcoal_USA
+#' module_gcamusa_L2231.nonewcoal_USA
 #'
 #' Generates optional moratorium on new pulverized coal plants in USA states.
 #'
@@ -15,7 +15,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC Aug 2018
-module_gcam.usa_L2231.nonewcoal_USA <- function(command, ...) {
+module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/A23.elecS_tech_associations",
              FILE = "gcam-usa/A23.elecS_tech_availability",
@@ -43,12 +43,14 @@ module_gcam.usa_L2231.nonewcoal_USA <- function(command, ...) {
     # Perform computations
 
     A23.elecS_tech_associations %>%
+      # Remove the load segments and technology combinations that are not created in electricity sector
       anti_join(A23.elecS_tech_availability, by = c("Electric.sector.technology" = "stub.technology")) %>%
       arrange(subsector, Electric.sector) %>%
       mutate(Electric.sector = as.character(Electric.sector)) %>%
       select(supplysector = Electric.sector, subsector, stub.technology = Electric.sector.technology) %>%
+      # Get the conventional coal technology without CCS
       filter(subsector == "coal", !grepl("CCS", stub.technology)) %>%
-      bind_rows(c(supplysector = "industrial energy use", subsector = "coal", stub.technology = "coal cogen")) %>%
+      bind_rows(tibble(supplysector = "industrial energy use", subsector = "coal", stub.technology = "coal cogen")) %>%
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       mutate(share.weight = 0) %>%
@@ -72,7 +74,8 @@ module_gcam.usa_L2231.nonewcoal_USA <- function(command, ...) {
 
     bind_rows(L2231.StubTechShrwt_elec_USA,
               L2231.StubTechShrwt_refining_USA,
-              L2231.StubTechShrwt_en_USA) -> L2231.StubTechShrwt_nonewcoal_USA
+              L2231.StubTechShrwt_en_USA) ->
+      L2231.StubTechShrwt_nonewcoal_USA
 
     L2231.StubTechShrwt_nonewcoal_USA %>%
       filter(year <= gcamusa.FIRST_NEW_COAL_YEAR) ->
