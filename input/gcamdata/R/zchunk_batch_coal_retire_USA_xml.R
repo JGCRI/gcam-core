@@ -1,4 +1,4 @@
-#' module_gcam.usa_batch_coal_retire_USA_xml
+#' module_gcamusa_batch_coal_retire_USA_xml
 #'
 #' Construct XML data structure for \code{coal_retire_USA.xml}.
 #'
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{coal_retire_USA.xml}. The corresponding file in the
 #' original data system was \code{batch_coal_retire_USA.xml} (gcamusa xml-batch).
-module_gcam.usa_batch_coal_retire_USA_xml <- function(command, ...) {
+module_gcamusa_batch_coal_retire_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L2240.coal_conv_pul_delete_USA",
              "L2240.StubTechProd_elecS_coal_USA",
