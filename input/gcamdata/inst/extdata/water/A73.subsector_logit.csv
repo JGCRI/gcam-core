@@ -2,6 +2,7 @@
 # Title: Industrial manufacturing energy-for-water subsector logit exponents
 # Units: None
 # Source: NA
+# Column types: ccnc
 supplysector,subsector,logit.exponent,logit.type
 industrial water abstraction,electricity,-6,
 industrial water treatment,electricity,-6,

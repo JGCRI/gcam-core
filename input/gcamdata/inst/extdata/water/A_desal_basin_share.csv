@@ -3,6 +3,7 @@
 # Units: Unitless shares
 # Comments: This table sets the portional allocations of desalinated seawater production from country to basin (GLU)
 # Source: Values other than 1 are based on internet searches of locations and capacities of desalination plants
+# Column types: cccn
 iso,country_name,GLU_code,share
 ago,Angola,GLU182,1
 are,United Arab Emirates,GLU094,1

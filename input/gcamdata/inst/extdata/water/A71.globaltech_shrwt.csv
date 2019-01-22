@@ -2,6 +2,7 @@
 # Title: Desalination technology share-weights
 # Units: None
 # Source: NA
+# Column types: cccnn
 supplysector,subsector,technology,1971,2100
 desalinated water,electricity,reverse osmosis,1,1
 desalinated water,refined liquids,distillation,0,0

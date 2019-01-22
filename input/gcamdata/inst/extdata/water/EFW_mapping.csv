@@ -4,6 +4,7 @@
 # Source: NA
 # Comments: from.sector(2) indicates which sector(s) to re-assign energy from.
 # Comments, continued: apply.to.desal.water indicates whether the EFW process applies to desalinated seawater used for municipal or industrial purposes.
+# Column types: cccccccccci
 supplysector,subsector,technology,minicam.energy.input,sector,agg_sector,fuel,from.sector,from.sector.2,water.supplysector,apply.to.desal.water
 desalinated water,electricity,reverse osmosis,elect_td_ind,in_desalination,in_desalination,electricity,,,,
 desalinated water,refined liquids,distillation,refined liquids industrial,in_desalination,in_desalination,refined liquids,,,,
