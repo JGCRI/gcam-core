@@ -1,4 +1,4 @@
-#' module_gcam.usa_LA144.Residential
+#' module_gcamusa_LA144.Residential
 #'
 #' Calculate residential floorspace by state and residential energy consumption by state/fuel/end use.
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
-module_gcam.usa_LA144.Residential <- function(command, ...) {
+module_gcamusa_LA144.Residential <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/RECS_variables",
@@ -78,17 +78,6 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
     for(i in seq_along(L144.RECS_all)) {
       L144.RECS_all[[i]]$year <- substr(names(L144.RECS_all[i]), 5, 8) %>% as.integer()
     }
-
-    # # Lines 77-80 above do not appear to be working in debug mode
-    # # Hack for now to ensure that years column gets assigned properly
-    # L144.RECS_all$RECS1979 %>% mutate(year = as.integer(1986)) -> L144.RECS_all$RECS1979
-    # L144.RECS_all$RECS1984 %>% mutate(year = as.integer(1989)) -> L144.RECS_all$RECS1984
-    # L144.RECS_all$RECS1990 %>% mutate(year = as.integer(1992)) -> L144.RECS_all$RECS1990
-    # L144.RECS_all$RECS1993 %>% mutate(year = as.integer(1995)) -> L144.RECS_all$RECS1993
-    # L144.RECS_all$RECS1997 %>% mutate(year = as.integer(1999)) -> L144.RECS_all$RECS1997
-    # L144.RECS_all$RECS2001 %>% mutate(year = as.integer(2003)) -> L144.RECS_all$RECS2001
-    # L144.RECS_all$RECS2005 %>% mutate(year = as.integer(1999)) -> L144.RECS_all$RECS2005
-    # L144.RECS_all$RECS2009 %>% mutate(year = as.integer(2003)) -> L144.RECS_all$RECS2009
 
     # Add a vector specifying the census division (subregion9)
     L144.RECS_all <- L144.RECS_all %>%
@@ -162,7 +151,8 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
             select_("year", "subregion9", "HOUSEHOLDS", flsp_var) %>%
             tidyr::gather_("variable", "value", flsp_var) %>%
             group_by(year, subregion9, variable) %>%
-            summarise(value = sum(value * HOUSEHOLDS * CONV_MILFT2_M2))
+            summarise(value = sum(value * HOUSEHOLDS * CONV_MILFT2_M2)) %>%
+            ungroup()
         } else {
           # For all other years that have weight category to multiply by
           if("NWEIGHT" %in% names(df)) {
@@ -171,7 +161,8 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
               select_("year", "subregion9", "NWEIGHT", flsp_var) %>%
               tidyr::gather_("variable", "value", flsp_var) %>%
               group_by(year, subregion9, variable) %>%
-              summarise(value = sum(value * NWEIGHT * CONV_FT2_M2))
+              summarise(value = sum(value * NWEIGHT * CONV_FT2_M2)) %>%
+              ungroup()
           } else {
             # Return empty tibble for binding rows
             tibble()
@@ -192,7 +183,8 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
             select_("year", "subregion13", "NWEIGHT", flsp_var) %>%
             tidyr::gather_("variable", "value", flsp_var) %>%
             group_by(year, subregion13, variable) %>%
-            summarise(value = sum(value * NWEIGHT * CONV_FT2_M2))
+            summarise(value = sum(value * NWEIGHT * CONV_FT2_M2)) %>%
+            ungroup()
         } else {
           # Return empty tibble for binding rows
           tibble()
@@ -242,7 +234,7 @@ module_gcam.usa_LA144.Residential <- function(command, ...) {
       mutate(value = value * pcflsp_m2 / CONV_BM2_M2) %>%
       select(state, subregion13, sector, year, value)
 
-    #Final step - hack for AEO 2015 harmonization. NEMS resid floorspace is a lot lower than RECS
+    # Final step - adjustment for AEO 2015 harmonization. NEMS residential floorspace is a lot lower than RECS.
     AEO_2015_flsp %>%
       gather_years() %>%
       filter(Sector == "Residential",
