@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_batch_coal_delay_USA_xml.R
 \name{module_gcamusa_batch_coal_delay_USA_xml}
 \alias{module_gcamusa_batch_coal_delay_USA_xml}
-\title{module_gcam.usa_batch_coal_delay_USA_xml}
+\title{module_gcamusa_batch_coal_delay_USA_xml}
 \usage{
 module_gcamusa_batch_coal_delay_USA_xml(command, ...)
 }
