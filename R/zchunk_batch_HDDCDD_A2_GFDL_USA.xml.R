@@ -10,7 +10,7 @@
 #' original data system was \code{batch_HDDCDD_A2_GFDL_USA.xml} (gcamusa XML).
 module_gcamusa_batch_HDDCDD_A2_GFDL_USA.xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L244.HDDCDD_A2_GFDL"))
+    return(c("L244.HDDCDD_A2_GFDL_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "HDDCDD_A2_GFDL_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -18,12 +18,12 @@ module_gcamusa_batch_HDDCDD_A2_GFDL_USA.xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L244.HDDCDD_A2_GFDL <- get_data(all_data, "L244.HDDCDD_A2_GFDL")
+    L244.HDDCDD_A2_GFDL_USA <- get_data(all_data, "L244.HDDCDD_A2_GFDL_USA")
 
     # Produce outputs
     create_xml("HDDCDD_A2_GFDL_USA.xml") %>%
-      add_xml_data(L244.HDDCDD_A2_GFDL, "HDDCDD") %>%
-      add_precursors("L244.HDDCDD_A2_GFDL") ->
+      add_xml_data(L244.HDDCDD_A2_GFDL_USA, "HDDCDD") %>%
+      add_precursors("L244.HDDCDD_A2_GFDL_USA") ->
       HDDCDD_A2_GFDL_USA.xml
 
     return_data(HDDCDD_A2_GFDL_USA.xml)

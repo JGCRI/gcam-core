@@ -1,4 +1,4 @@
-#' module_gcam.usa_LA144.Commercial
+#' module_gcamusa_LA144.Commercial
 #'
 #' Calculates commercial floorspace by state and energy consumption by state/fuel/end use
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
-module_gcam.usa_LA144.Commercial <- function(command, ...) {
+module_gcamusa_LA144.Commercial <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/Census_pop_hist",
@@ -42,7 +42,7 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
     subregion4 <- subregion9 <- REGION <- DIVISION <- state <- year <- value <- setNames <-
       SQFT1 <- SQFT2 <- SQFT <- ADJWT <- subregion4 <- . <- pcflsp_m2 <- pcflsp_m2.x <- pcflsp_m2.y <-
       conv_4_9 <- variable <- scaler <- sector <- value <- fuel <- share <- efficiency <- service <-
-      value.x <- value.y <- Year <- unit <- value_EJ <- pre <- post <- state_EJ <- QER_target <-
+      value.x <- value.y <- Year <- unit <- value_EJ <- pre <- post <- state_EJ <- AEO_target <-
       initial <- NULL
 
     all_data <- list(...)[[1]]
@@ -139,15 +139,6 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       df$year <- as.integer(data_year)
       L144.CBECS_all[[i]] <- df
     }
-
-    # # Lines 135-141 above do not appear to be working in debug mode (specifically line 137)
-    # # Hack for now to ensure that years column gets assigned properly
-    # L144.CBECS_all$CBECS1986 %>% mutate(year = as.integer(1986)) -> L144.CBECS_all$CBECS1986
-    # L144.CBECS_all$CBECS1989 %>% mutate(year = as.integer(1989)) -> L144.CBECS_all$CBECS1989
-    # L144.CBECS_all$CBECS1992 %>% mutate(year = as.integer(1992)) -> L144.CBECS_all$CBECS1992
-    # L144.CBECS_all$CBECS1995 %>% mutate(year = as.integer(1995)) -> L144.CBECS_all$CBECS1995
-    # L144.CBECS_all$CBECS1999 %>% mutate(year = as.integer(1999)) -> L144.CBECS_all$CBECS1999
-    # L144.CBECS_all$CBECS2003 %>% mutate(year = as.integer(2003)) -> L144.CBECS_all$CBECS2003
 
     # Aggregate CBECS floorspace data by year and subregion
     L144.flsp_bm2_sR4 <- L144.CBECS_all %>%
@@ -372,41 +363,42 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
                                                       L144.in_EJ_state_comm_F_cooling_Y,
                                                       L144.in_EJ_state_comm_F_Uoth_Y)
 
-    # HACK ALERT: messing with the energy quantities to better match AEO 2015
-    # The problem is likely that the CBECS is 10 years out of date; way too much lighting, not enough office
+    # Adjusting commercial building energy consumption by fuel and energy service to better match AEO 2015.
+    # The problem is likely that CBECS is >10 years out of date (last survey was 2003), which results in
+    # too much lighting service and not enough office service.
     # Note that the EIA "target" estimates are in QBtu HHV, whereas GCAM uses EJ LHV, but this doesn't matter
     # because it's all going to be scaled later anyway. These unscaled values are only used to compute
-    # percentage-wise by fuels to specific services.
+    # percentage-wise allocation of fuels to specific services.
     EIA_AEO_Tab5 %>%
-      filter(year == max(MODEL_BASE_YEARS),
+      filter(year == max(HISTORICAL_YEARS),
              variable != "Floorspace") %>%
       select(EIA_fuel = fuel,
              EIA_service = service,
-             QER_target = value) %>%
+             AEO_target = value) %>%
       mutate(EIA_sector = "Commercial") %>%
       left_join_error_no_match(EIA_AEO_fuels, by = c("EIA_fuel")) %>%
       left_join_error_no_match(EIA_AEO_services, by = c("EIA_service", "EIA_sector")) %>%
       group_by(fuel, service) %>%
-      summarise(QER_target = sum(QER_target)) %>%
-      ungroup() -> L144.EIA_QER_target
+      summarise(AEO_target = sum(AEO_target)) %>%
+      ungroup() -> L144.EIA_AEO_target
 
     L144.in_EJ_state_comm_F_U_Y_unscaled %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == max(HISTORICAL_YEARS)) %>%
       group_by(fuel, service) %>%
       summarise(initial = sum(value)) %>%
       ungroup() %>%
-      left_join_error_no_match(L144.EIA_QER_target, by = c("fuel", "service")) %>%
-      # For comm other electricity, most of it is non-building, and will be taken into account below.
-      # For now, just set comm other electricity scaler to 1.
+      left_join_error_no_match(L144.EIA_AEO_target, by = c("fuel", "service")) %>%
+      # For "comm other" electricity, most of it is non-building, and will be taken into account below.
+      # For now, just set "comm other" electricity scaler to 1.
       mutate(scaler = if_else(fuel == "electricity" & service == "comm other",
-                              1, QER_target / initial )) -> L144.scaler_USA_comm_F_U_2010
+                              1, AEO_target / initial )) -> L144.scaler_USA_comm_F_U_2010
 
     # Multiply state-level un-scaled energy use by these scalers prior to calculating end-use proportions
     L144.in_EJ_state_comm_F_U_Y_unscaled %>%
       left_join_error_no_match(L144.scaler_USA_comm_F_U_2010 %>%
                                  select(fuel, service, scaler),
                                by = c("fuel", "service")) %>%
-      mutate(value = if_else(year == max(MODEL_BASE_YEARS), value * scaler, value)) %>%
+      mutate(value = if_else(year == max(HISTORICAL_YEARS), value * scaler, value)) %>%
       select(-scaler) -> L144.in_EJ_state_comm_F_U_Y_unscaled
 
 
@@ -434,24 +426,26 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
 
     # This dataset needs to be expanded to all historical years. Use population ratios
     first_year_commext <- min(PNNL_Commext_elec$Year)
-    pre_commext_years <- HISTORICAL_YEARS[HISTORICAL_YEARS < first_year_commext]
     last_year_commext <- max(PNNL_Commext_elec$Year)
 
     commext_Census_pop_hist <- Census_pop_hist %>%
       group_by(year) %>%
       summarise(sum = sum(value)) %>%
       ungroup() %>%
-      # For each year, add ratio to min and max PNNL_Commext_elec year
+      # For each year, add ratio to min PNNL_Commext_elec year
       transmute(year,
                 pre = sum / sum[year == first_year_commext])
 
-    # One more hack - set the 2010 comm exterior other electricity use equal to QER_target minus
-    # unscaled aggregated 2010 value. Interpolate back.
+    # One more adjustment - set 2010 comm exterior other ("comm non-building") electricity use equal to 
+    # AEO_target minus unscaled aggregated 2010 value for "comm other". Interpolate back.
+    # This separates out "comm non-building" from "comm other" to provide a better estimate of 
+    # "comm non-building" in 2010 (which is outside the time scope of PNNL_Commext_elec) than the
+    # previous method of scaling by population growth.
     comm_ext_2010 <- L144.scaler_USA_comm_F_U_2010 %>%
       filter(fuel == "electricity" & service == "comm other") %>%
-      mutate(QER_target = QER_target - initial) %>%
-      distinct(QER_target)
-    comm_ext_2010 <- unique(comm_ext_2010$QER_target)
+      mutate(AEO_target = AEO_target - initial) %>%
+      distinct(AEO_target)
+    comm_ext_2010 <- unique(comm_ext_2010$AEO_target)
 
     # Expand to all historical years
     L144.in_EJ_USA_commext_elec <- tibble(year = HISTORICAL_YEARS,
@@ -460,9 +454,9 @@ module_gcam.usa_LA144.Commercial <- function(command, ...) {
       left_join(L144.in_EJ_USA_commext_elec, by = c("year", "service")) %>%
       # Add in population ratios
       left_join_error_no_match(commext_Census_pop_hist, by = "year") %>%
-      # Interpolate to all historical years, with hack described above
-      mutate(value_EJ = if_else(year==2010, comm_ext_2010, value_EJ),
-        # If year is above the max PNNL_Commext_elec year, interpolate to hacked 2010 value
+      # Interpolate to all historical years, using adjusted 2010 value described above
+      mutate(value_EJ = if_else(year==max(HISTORICAL_YEARS), comm_ext_2010, value_EJ),
+        # If year is above the max PNNL_Commext_elec year, interpolate to adjusted 2010 value
         value_EJ = if_else(year > last_year_commext, approx_fun(year, value_EJ), value_EJ),
         value_EJ = approx_fun(year, value_EJ, rule = 2),
         # If year is below the min PNNL_Commext_elec year, multiply by population ratio to min year
