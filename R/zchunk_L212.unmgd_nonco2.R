@@ -16,7 +16,7 @@
 #' original data system was \code{L212.unmgd_nonco2.R} (emissions level2).
 #' @details Outputs unmanaged land emissions and emissions coefficients for forest fires, deforestation, and grassland fires.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH August 2017
 module_emissions_L212.unmgd_nonco2 <- function(command, ...) {

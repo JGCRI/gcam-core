@@ -10,7 +10,7 @@
 #' original data system was \code{LA161.Cstorage.R} (energy level1).
 #' @details Build carbon storage supply curves by region.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter group_by mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author RLH November 2017
 module_energy_LA161.Cstorage <- function(command, ...) {

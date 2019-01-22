@@ -12,7 +12,7 @@
 #' @details This chunk generates input files of carbon storage resource supply curves by the US grid regions, and input files of logit, shareweights, and
 #' technology information of carbon storage by the US states.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange filter mutate one_of select semi_join
 #' @importFrom tidyr gather spread
 #' @author RC Nov 2017
 module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {

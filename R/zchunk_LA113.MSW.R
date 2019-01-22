@@ -11,7 +11,7 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
-#' @import dplyr
+#' @importFrom dplyr filter full_join group_by mutate full_join summarise
 #' @importFrom tidyr gather spread
 #' @author BBL
 module_energy_LA113.MSW <- function(command, ...) {
@@ -62,7 +62,7 @@ module_energy_LA113.MSW <- function(command, ...) {
     }
 
     L113.GDP_ctry %>%
-      group_by_(GCAM_REGION_ID) %>%
+      dplyr::group_by_(GCAM_REGION_ID) %>%
       summarise(maxSubResource = sum(maxSubResource)) ->
       L113.MSW_maxSubResource
 

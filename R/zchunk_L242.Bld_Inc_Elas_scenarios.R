@@ -11,7 +11,7 @@
 #' @details Takes per-capita GDP from SSP scenarios in each region.
 #' Then calculates building income elasticity for each region by linear interpolation of assumption data.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange filter left_join mutate select transmute
 #' @importFrom tidyr gather spread
 #' @importFrom stats approx
 #' @author RH April 2017

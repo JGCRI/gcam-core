@@ -11,7 +11,7 @@
 #' @details Build datasets for ssp4 agricultural trade: food and nonfood trade coefficients, feed trade
 #' coefficients, restricted agricultural trade, and trade regions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter if_else left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL June 2017
 module_aglu_L241.trade_input <- function(command, ...) {

@@ -13,7 +13,7 @@
 #' Emission factors for historical years (1971 - 1989) are estiamted as the emissions factor for 1990.
 #' All historical NH3 Emission factors use US values.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select rename
+#' @importFrom dplyr arrange bind_rows filter funs group_by left_join mutate select rename summarize summarize_at vars
 #' @importFrom tidyr gather spread
 #' @author RMH April 2017
 module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {

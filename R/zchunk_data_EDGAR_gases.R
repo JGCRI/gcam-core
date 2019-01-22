@@ -10,7 +10,7 @@
 #' @details This reads all the EDGAR csv files and binds them together.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
-#' @import dplyr
+#' @importFrom dplyr mutate bind_rows
 #' @importFrom tidyr gather spread
 #' @author BBL May 2017
 module_data_EDGAR_gases <- function(command, ...) {

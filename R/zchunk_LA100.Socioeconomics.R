@@ -11,7 +11,7 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
-#' @import dplyr
+#' @importFrom dplyr arrange bind_rows bind_rows filter group_by left_join mutate rename right_join select ungroup
 #' @importFrom tidyr gather spread
 #' @author BBL
 module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {

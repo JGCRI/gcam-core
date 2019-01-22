@@ -10,7 +10,7 @@
 #' original data system was \code{L242.building_agg.R} (energy level2).
 #' @details Calculate shareweights, cost, price elasticity, calibrated, and other data for the building sector
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter if_else group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author AJS August 2017
 module_energy_L242.building_agg <- function(command, ...) {

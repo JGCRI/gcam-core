@@ -17,7 +17,7 @@
 #' is adjusted as LB133_cost * (1 - water cost fraction) = production cost - purchased irrigation water for each
 #' commodity.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_cols bind_rows filter group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @importFrom stats glm predict
 #' @author ACS June 2017
