@@ -155,7 +155,10 @@ module_water_L171.desalination <- function(command, ...) {
 
     # Check to see if this generated any missing values. If so, there will be problems downstream, when we try to deduct
     # energy from sectors/fuels that have no energy consumption
-    stopifnot(any(!is.na(L171.desal_fuel_shares)))
+    if(any(is.na(L171.desal_fuel_shares$share))){
+      stop(paste0("No energy from which to deduct desalination-related energy in region ",
+                  unique(L171.desal_fuel_shares$GCAM_region_ID[is.na(L171.desal_fuel_shares$share)])))
+    }
 
     L171.out_km3_R_desal_F_tech_Yh <- full_join(L171.out_km3_R_desal_tech_Yh,
                                                 select(EFW_mapping_desal, sector, fuel, technology),
