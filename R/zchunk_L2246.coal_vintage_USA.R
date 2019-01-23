@@ -198,7 +198,7 @@ module_gcamusa_L2246.coal_vintage_USA <- function(command, ...) {
     L2246.StubTechProd_coal_vintage_USA_2010 %>%
       mutate(stub.technology = stub.technology.new) %>%
       select(LEVEL2_DATA_NAMES[["StubTechLifetime"]]) %>%
-      mutate(median.shutdown.point = gcamusa.MEDIAN_SHUTDOWN_POINT, profit.shutdown.steepness = gcamusa.PROFIT_SHUTDOWN_STEPNESS) %>%
+      mutate(median.shutdown.point = gcamusa.MEDIAN_SHUTDOWN_POINT, profit.shutdown.steepness = gcamusa.PROFIT_SHUTDOWN_STEEPNESS) %>%
       select(LEVEL2_DATA_NAMES[["StubTechProfitShutdown"]]) ->
       L2246.StubTechProfitShutdown_coal_vintage_USA
 
