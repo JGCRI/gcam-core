@@ -613,7 +613,7 @@ gcamusa.COAL_RETIRE_STEEPNESS <- 0.3
 
 # Profit shutdown parameters
 gcamusa.MEDIAN_SHUTDOWN_POINT <- -0.1
-gcamusa.PROFIT_SHUTDOWN_STEPNESS <- 6
+gcamusa.PROFIT_SHUTDOWN_STEEPNESS <- 6
 
 # Define vintage bins and categories
 gcamusa.COAL_VINTAGE_BREAKS <- c(0, seq(1950, 2015, 5))
