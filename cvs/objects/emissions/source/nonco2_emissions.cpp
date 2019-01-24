@@ -67,8 +67,7 @@ extern Scenario* scenario;
 NonCO2Emissions::NonCO2Emissions():
 AGHG(),
 mShouldCalibrateEmissCoef( false ),
-mGDP( 0 ),
-mAdjustedEmissCoef( new objects::PeriodVector<double>( -1.0 ) )
+mGDP( 0 )
 {
     // default unit for emissions
     mEmissionsUnit = "Tg";
@@ -99,7 +98,6 @@ void NonCO2Emissions::copy( const NonCO2Emissions& aOther ) {
     AGHG::copy( aOther );
     
     mEmissionsCoef = aOther.mEmissionsCoef;
-    mAdjustedEmissCoef = aOther.mAdjustedEmissCoef;
     mGDP = aOther.mGDP;
     
     // Deep copy the auto_ptr
@@ -143,7 +141,6 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
     if( !mEmissionsCoef.isInited() ) {
         mEmissionsCoef = prevComplexGHG->mEmissionsCoef;
     }
-    mAdjustedEmissCoef = prevComplexGHG->mAdjustedEmissCoef;
     
     mGDP = prevComplexGHG->mGDP;
     
@@ -210,7 +207,7 @@ bool NonCO2Emissions::XMLDerivedClassParse( const string& aNodeName, const DOMNo
 void NonCO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mEmissionsCoef, "emiss-coef", aOut, aTabs );
     XMLWriteElement( mInputEmissions, "input-emissions", aOut, aTabs );
-    XMLWriteElement( (*mAdjustedEmissCoef)[ aPeriod ], "control-adjusted-emiss-coef", aOut, aTabs );
+    XMLWriteElement( mAdjustedEmissCoef [ aPeriod ], "control-adjusted-emiss-coef", aOut, aTabs );
     
     XMLWriteElement( "", mEmissionsDriver->getXMLName(), aOut, aTabs );
     
@@ -377,11 +374,9 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
     mEmissions[ aPeriod ] = totalEmissions;
     
     // Stash actual emissions coefficient including impact of any controls. Needed by control
-    // objects that apply reductions relative to the actual emission coefficient
-	// This is only needed for past periods - so this would ideally be done in a postCalc() object if that existed
-	mCurrAdjustedEmissCoef = emissDriver > 0 ? totalEmissions / emissDriver : 0;
-    (*mAdjustedEmissCoef)[ aPeriod ] = mCurrAdjustedEmissCoef;    
-
+    // objects that apply reductions relative to this emission coefficient value
+    mAdjustedEmissCoef[ aPeriod ]  = emissDriver > 0 ? totalEmissions / emissDriver : 0;
+    
     addEmissionsToMarket( aRegionName, aPeriod );
 }
 
@@ -420,8 +415,8 @@ double NonCO2Emissions::getAdjustedEmissCoef( const int aPeriod ) const
     /*!
      * \pre The adjusted emissions coefficient has been calculated for this period.
      */
-    assert( (*mAdjustedEmissCoef)[ aPeriod ] != -1.0 );
-
-    return (*mAdjustedEmissCoef)[ aPeriod ];
+    assert( mAdjustedEmissCoef[ aPeriod ].isInited() );
+    
+    return mAdjustedEmissCoef[ aPeriod ];
 }
 
