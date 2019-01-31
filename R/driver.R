@@ -362,7 +362,7 @@ driver <- function(all_data = empty_data(),
 #' @details test
 #' @importFrom tibble tibble
 #' @importFrom drake make
-#'  @export
+#' @export
 driver_drake <- function() {
   stop_before = NULL
   stop_after = NULL
@@ -463,14 +463,23 @@ driver_drake <- function() {
       if(chunk %in% unfound_inputs$input) {
         unfound_chunk = unfound_inputs[unfound_inputs$input == chunk, ]
         #chunk_data <- load_csv_files(unfound_chunk$input, unfound_chunk$optional, quiet = TRUE)
+        optional <- all(unfound_chunk$optional)
+        fqfn <- find_csv_file(chunk, optional, quiet = TRUE)
         target <- c(target, gsub('[/-]', '.', chunk))
-        command <- c(command, paste0("load_csv_files(file_in('", chunk, "'), ", all(unfound_chunk$optional), ", quiet = TRUE)"))
+        if(is.null(fqfn) && optional) {
+          assert_that(optional)
+          command <- c(command, paste0("list(\"", chunk, "\" = missing_data())"))
+        }
+        else {
+          command <- c(command, paste0("load_csv_files(\"", chunk, "\", ", optional, ", quiet = TRUE, dummy = file_in(\"", fqfn, "\"))"))
+        }
       }
       else {
         #chunk_data <- run_chunk(chunk, all_data[input_names])
         po <- subset(chunkoutputs, name == chunk)$output  # promised outputs
         target <- c(target, chunk)
-        command <- c(command, paste0("run_chunk('", chunk, "', c(", paste(gsub("[/-]", ".", input_names), collapse = ","), "))"))
+        #command <- c(command, paste0("run_chunk('", chunk, "', c(", paste(gsub("[/-]", ".", input_names), collapse = ","), "))"))
+        command <- c(command, paste0("gcamdata:::", chunk, "(\"MAKE\", c(", paste(gsub("[/-]", ".", input_names), collapse = ","), "))"))
         target <- c(target, po)
         command <- c(command, paste(chunk, '["', po, '"]', sep = ""))
       }

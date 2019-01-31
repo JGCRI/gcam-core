@@ -33,6 +33,7 @@ find_header <- function(fqfn) {
 #' @param filenames Character vector of filenames to load
 #' @param optionals Logical vector, specifying whether corresponding file is optional
 #' @param quiet Logical - suppress messages?
+#' @param dummy Not used, here as a hack for drake
 #' @param ... Any other parameter to pass to \code{readr::read_csv}
 #' @details The data frames read in are marked as inputs, not ones that have
 #' been computed, via \code{\link{add_comments}}. Optional files that are not found
@@ -40,7 +41,7 @@ find_header <- function(fqfn) {
 #' @return A list of data frames (tibbles).
 #' @importFrom magrittr "%>%"
 #' @importFrom assertthat assert_that
-load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
+load_csv_files <- function(filenames, optionals, quiet = FALSE, dummy = NULL, ...) {
   assert_that(is.character(filenames))
   assert_that(is.logical(optionals))
   assert_that(is.logical(quiet))
