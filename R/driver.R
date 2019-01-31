@@ -355,6 +355,141 @@ driver <- function(all_data = empty_data(),
   invisible(x)
 }
 
+#' driver_drake
+#'
+#' Test running the driver with drake.
+#'
+#' @details test
+#' @importFrom tibble tibble
+#' @importFrom drake make
+#'  @export
+driver_drake <- function() {
+  stop_before = NULL
+  stop_after = NULL
+  return_inputs_of = stop_before
+  return_outputs_of = stop_after
+  return_data_names = union(inputs_of(return_inputs_of),
+                            outputs_of(return_outputs_of))
+  return_data_map_only = FALSE
+  write_outputs = !return_data_map_only
+  write_xml = write_outputs
+  outdir = OUTPUTS_DIR
+  xmldir = XML_DIR
+  quiet = FALSE
+
+  optional <- input <- from_file <- name <- NULL    # silence notes from package check.
+
+  if(!quiet) cat("GCAM Data System v", as.character(utils::packageVersion("gcamdata")), "\n", sep = "")
+
+  chunklist <- find_chunks()
+  if(!quiet) cat("Found", nrow(chunklist), "chunks\n")
+  chunkinputs <- chunk_inputs(chunklist$name)
+  if(!quiet) cat("Found", nrow(chunkinputs), "chunk data requirements\n")
+  chunkoutputs <- chunk_outputs(chunklist$name)
+  if(!quiet) cat("Found", nrow(chunkoutputs), "chunk data products\n")
+
+  # Keep track of chunk inputs for later pruning
+  chunkinputs %>%
+    group_by(input) %>%
+    summarise(n = dplyr::n()) ->
+    chunk_input_counts
+  cic <- chunk_input_counts$n
+  names(cic) <- chunk_input_counts$input
+
+  warn_data_injects()
+  warn_datachunk_bypass()
+  warn_mismarked_fileinputs()
+
+  # Outputs should all be unique
+  dupes <- duplicated(chunkoutputs$output)
+  if(any(dupes)) {
+    stop("Outputs appear multiple times: ", chunkoutputs$output[dupes])
+  }
+
+  target <- c()
+  command <- c()
+
+  # If there are any unaccounted for input requirements,
+  # try to load them from csv files
+  unfound_inputs <- filter(chunkinputs, !input %in% chunkoutputs$output)
+  if(nrow(unfound_inputs)) {
+
+    # These should all be marked as 'from_file'
+    ff <- filter(unfound_inputs, !from_file)
+    if(nrow(ff)) {
+      stop("Unfound inputs not marked as from file: ", paste(ff$input, collapse = ", "),
+           " in ", paste(unique(ff$name), collapse = ", "))
+    }
+
+    if(!quiet) cat(nrow(unfound_inputs), "chunk data input(s) not accounted for\n")
+  }
+
+  # Extract metadata from the input data; we'll add output metadata as we run
+  metadata_info <- list()
+
+  # Initialize some stuff before we start to run the chunks
+  # if(!missing(stop_before) || !missing(stop_after)) {
+  #   if(!missing(stop_after)) {
+  #     run_chunks <- stop_after
+  #   } else {
+  #     run_chunks <- stop_before
+  #   }
+  #   # calc min list
+  #   name.x <- name.y <- NULL  # silence package check note
+  #   verts <- inner_join(bind_rows(chunkoutputs,
+  #                                 tibble(name = unfound_inputs$input,
+  #                                        output = unfound_inputs$input,
+  #                                        to_xml = FALSE)),
+  #                       chunkinputs, by=c("output" = "input")) %>%
+  #     select(name.x, name.y) %>%
+  #     unique()
+  #
+  #   chunks_to_run <- dstrace_chunks(run_chunks, verts)
+  # }
+  # else {
+    chunks_to_run <- c(unfound_inputs$input, chunklist$name)
+  #}
+
+  removed_count <- 0
+  save_chunkdata(empty_data(), create_dirs = TRUE, write_outputs=write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir) # clear directories
+
+    for(chunk in chunks_to_run) {
+
+      inputs <- filter(chunkinputs, name == chunk)
+      input_names <- inputs$input
+      required_inputs <- filter(inputs, !optional)
+
+
+      if(chunk %in% unfound_inputs$input) {
+        unfound_chunk = unfound_inputs[unfound_inputs$input == chunk, ]
+        #chunk_data <- load_csv_files(unfound_chunk$input, unfound_chunk$optional, quiet = TRUE)
+        target <- c(target, gsub('[/-]', '.', chunk))
+        command <- c(command, paste0("load_csv_files(file_in('", chunk, "'), ", all(unfound_chunk$optional), ", quiet = TRUE)"))
+      }
+      else {
+        #chunk_data <- run_chunk(chunk, all_data[input_names])
+        po <- subset(chunkoutputs, name == chunk)$output  # promised outputs
+        target <- c(target, chunk)
+        command <- c(command, paste0("run_chunk('", chunk, "', c(", paste(gsub("[/-]", ".", input_names), collapse = ","), "))"))
+        target <- c(target, po)
+        command <- c(command, paste(chunk, '["', po, '"]', sep = ""))
+      }
+
+
+    } # for
+
+
+  # Finish up: write outputs, determine return data format
+
+  #if(!quiet && (write_outputs || write_xml)) cat("Writing chunk data...\n")
+  #save_chunkdata(all_data, write_outputs = write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir)
+  plan <- tibble(target = target, command = command)
+
+  #future::plan(future::multisession)
+  options(clustermq.scheduler = "multicore")
+  make(plan, parallelism = "clustermq", jobs=4, caching = "worker", memory_strategy = "speed")
+}
+
 
 #' warn_data_injects
 #'
