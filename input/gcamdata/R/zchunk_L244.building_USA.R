@@ -1,4 +1,4 @@
-#' module_gcam.usa_L244.building_USA
+#' module_gcamusa_L244.building_USA
 #'
 #' Creates GCAM-USA building output files for writing to xml.
 #'
@@ -14,8 +14,8 @@
 #' \code{L244.SubsectorShrwtFllt_bld_gcamusa}, \code{L244.SubsectorInterp_bld_gcamusa}, \code{L244.SubsectorInterpTo_bld_gcamusa},
 #' \code{L244.SubsectorLogit_bld_gcamusa}, \code{L244.StubTech_bld_gcamusa}, \code{L244.StubTechCalInput_bld_gcamusa}, \code{L244.StubTechMarket_bld},
 #' \code{L244.GlobalTechIntGainOutputRatio}, \code{L244.GlobalTechInterpTo_bld}, \code{L244.GlobalTechEff_bld},
-#' \code{L244.GlobalTechShrwt_bld_gcamusa}, \code{L244.GlobalTechCost_bld_gcamusa}, \code{L244.GlobalTechSCurve_bld}, \code{L244.HDDCDD_A2_GFDL},
-#' \code{L244.HDDCDD_AEO_2015_USA}, \code{L244.Floorspace_AEO_2015_USA}.
+#' \code{L244.GlobalTechShrwt_bld_gcamusa}, \code{L244.GlobalTechCost_bld_gcamusa}, \code{L244.GlobalTechSCurve_bld}, \code{L244.HDDCDD_A2_GFDL_USA},
+#' \code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}.
 #' The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
 #' @details Creates GCAM-USA building output files for writing to xml.
 #' @importFrom assertthat assert_that
@@ -23,7 +23,7 @@
 #' @importFrom tidyr gather spread
 #' @author RLH November 2017
 
-module_gcam.usa_L244.building_USA <- function(command, ...) {
+module_gcamusa_L244.building_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A44.gcam_consumer",
              FILE = "energy/A44.sector",
@@ -47,7 +47,6 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
              FILE = "gcam-usa/A44.globaltech_shrwt",
              FILE = "gcam-usa/A44.globaltech_interp",
              FILE = "gcam-usa/A44.demand_satiation_mult",
-             FILE = "gcam-usa/AEO_2015_flsp",
              "L144.flsp_bm2_state_res",
              "L144.flsp_bm2_state_comm",
              "L144.in_EJ_state_comm_F_U_Y",
@@ -87,9 +86,9 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
              "L244.GlobalTechShrwt_bld_gcamusa",
              "L244.GlobalTechCost_bld_gcamusa",
              "L244.GlobalTechSCurve_bld",
-             "L244.HDDCDD_A2_GFDL",
-             "L244.HDDCDD_AEO_2015_USA",
-             "L244.Floorspace_AEO_2015_USA"))
+             "L244.HDDCDD_A2_GFDL_USA",
+             "L244.HDDCDD_constdds_USA",
+             "L244.HDDCDD_AEO_2015_USA"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -132,7 +131,6 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     A44.globaltech_shrwt <- get_data(all_data, "gcam-usa/A44.globaltech_shrwt")
     A44.globaltech_interp <- get_data(all_data, "gcam-usa/A44.globaltech_interp")
     A44.demand_satiation_mult <- get_data(all_data, "gcam-usa/A44.demand_satiation_mult")
-    AEO_2015_flsp <- get_data(all_data, "gcam-usa/AEO_2015_flsp")
     L144.flsp_bm2_state_res <- get_data(all_data, "L144.flsp_bm2_state_res")
     L144.flsp_bm2_state_comm <- get_data(all_data, "L144.flsp_bm2_state_comm")
     L144.in_EJ_state_comm_F_U_Y <- get_data(all_data, "L144.in_EJ_state_comm_F_U_Y")
@@ -258,7 +256,12 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     # Let's make a climate normal (historical average) for each region, using a selected interval of years
     # Don't want to just set one year, because we want average values for all regions
     L244.HDDCDD_normal_state <- L244.HDDCDD_scen_state %>%
-      filter(year %in% seq(1981, 2000)) %>%
+      filter(year %in% seq(1981, 2000),
+             # The AEO_2015 scenario changes this "normal climate" for each region,
+             # which is not desirable since it does not incldue historical data
+             # and is not the standard reference assumption.  Thus, we remove it
+             # from this calculation.
+             Scen != "AEO_2015") %>%
       group_by(region, variable) %>%
       summarise(degree.days = mean(degree.days)) %>%
       ungroup()
@@ -280,12 +283,16 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       # Add HDD/CDD so that we can join with L244.HDDCDD_scen_state, remove at end
       mutate(variable = if_else(thermal.building.service.input %in% heating_services, "HDD", "CDD")) %>%
       # Add in degree days
-      # L244.HDDCDD_scen_state has 2 scenarios, so rows are duplicated
-      # left_join_error_no_match throws error, so left_join is used
+      # L244.HDDCDD_scen_state has multiple scenarios, rows in this tbl_df are intended to be duplicated for each scenario
+      # left_join_error_no_match throws an error when rows are duplicated (as intended), so left_join is used
       left_join(L244.HDDCDD_scen_state, by = c("region", "variable", "year")) %>%
       mutate(degree.days = round(degree.days, energy.DIGITS_HDDCDD))
 
-    L244.HDDCDD_A2_GFDL <- L244.HDDCDD_temp %>%
+    L244.HDDCDD_constdds_USA <- L244.HDDCDD_temp %>%
+      filter(Scen == "constdds") %>%
+      select(-Scen, -GCM, -variable)
+
+    L244.HDDCDD_A2_GFDL_USA <- L244.HDDCDD_temp %>%
       filter(Scen == "A2") %>%
       select(-Scen, -GCM, -variable)
 
@@ -400,7 +407,6 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
     L244.globaltech_eff_prt <- A44.globaltech_eff %>%
       semi_join(A44.globaltech_eff_avg, by = c("supplysector", "subsector")) %>%
       filter(year == gcamusa.EFFICIENCY_PARTITION_YEAR) %>%
-      filter(year == 2010) %>%
       select(supplysector, subsector, technology, efficiency = value)
 
     # Calculate technology shares using efficiency values
@@ -577,40 +583,6 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
              internal.gains.scalar = if_else(variable == "HDD" & degree.days < threshold_HDD, 0, internal.gains.scalar)) %>%
       select(LEVEL2_DATA_NAMES[["Intgains_scalar"]])
 
-    # L244.Floorspace_AEO_2015_USA: Extend the base year floorspace through 2040 for AEO 2015 harmonization
-    # NOTE: This is a hack and only works when the final calibration year is 2010
-    L100.Pop_thous_state %>%
-      filter(year %in% c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
-      group_by(year) %>%
-      mutate(pop_year = sum(value)) %>%
-      ungroup() %>%
-      group_by(state) %>%
-      mutate(pop_share = value / pop_year) %>%
-      ungroup() -> L244.StateFlspShares_USA
-
-    AEO_2015_flsp %>%
-      gather_years() %>%
-      group_by(Sector) %>%
-      mutate(growth = value - value[year == 2010]) %>%
-      ungroup() %>%
-      repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
-      left_join_error_no_match(L244.StateFlspShares_USA %>%
-                                 select(state, year, pop_share),
-                               by = c("region" = "state", "year")) %>%
-      mutate(flsp_growth = growth * pop_share,
-             gcam.consumer = if_else(Sector == "Residential", "resid", "comm")) %>%
-      left_join_error_no_match(L244.Floorspace_gcamusa %>%
-                                 filter(year == max(MODEL_BASE_YEARS)) %>%
-                                 select(-year) %>%
-                                 distinct(),
-                               by = c("region", "gcam.consumer")) %>%
-      mutate(base.building.size = round(base.building.size + flsp_growth, digits = energy.DIGITS_FLOORSPACE)) %>%
-      filter(year %in% MODEL_FUTURE_YEARS) %>%
-      select(LEVEL2_DATA_NAMES$Floorspace) -> L244.Floorspace_AEO_2015_future_USA
-
-    L244.Floorspace_gcamusa %>%
-      bind_rows(L244.Floorspace_AEO_2015_future_USA) -> L244.Floorspace_AEO_2015_USA
-
 
     # ===================================================
     # Produce outputs
@@ -689,7 +661,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
                      "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm", "L100.pcGDP_thous90usd_state") ->
       L244.SatiationAdder_gcamusa
 
-    L244.HDDCDD_A2_GFDL %>%
+    L244.HDDCDD_A2_GFDL_USA %>%
       add_title("Heating and Cooling Degree Days by State for GFDL A2") %>%
       add_units("Fahrenheit Degree Days") %>%
       add_comments("L143.HDDCDD_scen_state assigned to GCAM subsectors") %>%
@@ -697,7 +669,7 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       add_precursors("L143.HDDCDD_scen_state", "gcam-usa/A44.sector",
                      "gcam-usa/calibrated_techs_bld_usa", "gcam-usa/A44.gcam_consumer") %>%
       add_flags(FLAG_PROTECT_FLOAT)->
-      L244.HDDCDD_A2_GFDL
+      L244.HDDCDD_A2_GFDL_USA
 
     L244.ThermalBaseService_gcamusa %>%
       add_title("Base year output of thermal buildings services") %>%
@@ -922,21 +894,15 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
       add_units("Fahrenheit Degree Days") %>%
       add_comments("L143.HDDCDD_scen_state assigned to GCAM residential / commercial building consumers") %>%
       add_legacy_name("L244.HDDCDD_QER_QER") %>%
-      same_precursors_as("L244.HDDCDD_A2_GFDL") ->
+      same_precursors_as("L244.HDDCDD_A2_GFDL_USA") ->
       L244.HDDCDD_AEO_2015_USA
 
-    L244.Floorspace_AEO_2015_USA %>%
-      add_title("Floorspace Assumptions Consistent with AEO 2015") %>%
-      add_units("billion m2") %>%
-      add_comments("Exogenous floorspace assumptions consistent with AEO 2015") %>%
-      add_comments("Base year floorspace the same as L244.Floorspace_gcamusa") %>%
-      add_legacy_name("L244.Floorspace_QER") %>%
-      add_precursors("gcam-usa/A44.gcam_consumer",
-                     "L144.flsp_bm2_state_res",
-                     "L144.flsp_bm2_state_comm",
-                     "gcam-usa/AEO_2015_flsp",
-                     "L100.Pop_thous_state") ->
-      L244.Floorspace_AEO_2015_USA
+    L244.HDDCDD_constdds_USA %>%
+      add_title("Heating and Cooling Degree Days by State - constant at historical levels") %>%
+      add_units("Fahrenheit Degree Days") %>%
+      add_comments("L143.HDDCDD_scen_state assigned to GCAM subsectors") %>%
+      same_precursors_as("L244.HDDCDD_A2_GFDL_USA") ->
+      L244.HDDCDD_constdds_USA
 
     return_data(L244.DeleteConsumer_USAbld,
                 L244.DeleteSupplysector_USAbld,
@@ -969,9 +935,9 @@ module_gcam.usa_L244.building_USA <- function(command, ...) {
                 L244.GlobalTechShrwt_bld_gcamusa,
                 L244.GlobalTechCost_bld_gcamusa,
                 L244.GlobalTechSCurve_bld,
-                L244.HDDCDD_A2_GFDL,
+                L244.HDDCDD_A2_GFDL_USA,
                 L244.HDDCDD_AEO_2015_USA,
-                L244.Floorspace_AEO_2015_USA)
+                L244.HDDCDD_constdds_USA)
   } else {
     stop("Unknown command")
   }
