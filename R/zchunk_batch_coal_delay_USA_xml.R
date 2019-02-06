@@ -1,4 +1,4 @@
-#' module_gcam.usa_batch_coal_delay_USA_xml
+#' module_gcamusa_batch_coal_delay_USA_xml
 #'
 #' Construct XML data structure for \code{coal_delay_USA.xml}.
 #'
