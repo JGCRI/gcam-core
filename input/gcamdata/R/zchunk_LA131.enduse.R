@@ -23,6 +23,7 @@ module_energy_LA131.enduse <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A_regions",
              FILE = "energy/mappings/enduse_sector_aggregation",
+             FILE = "water/EFW_mapping",
              "L1012.en_bal_EJ_R_Si_Fi_Yh",
              "L121.in_EJ_R_unoil_F_Yh",
              "L122.in_EJ_R_refining_F_Yh",
@@ -41,9 +42,8 @@ module_energy_LA131.enduse <- function(command, ...) {
 
     # Load required inputs
     A_regions <- get_data(all_data, "energy/A_regions")
-
     enduse_sector_aggregation <- get_data(all_data, "energy/mappings/enduse_sector_aggregation")
-
+    EFW_mapping <- get_data(all_data, "water/EFW_mapping")
     L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh")
 
 
@@ -63,15 +63,21 @@ module_energy_LA131.enduse <- function(command, ...) {
       filter(fuel == "electricity") ->
       Unoil_elect
 
+     L1012.en_bal_EJ_R_Si_Fi_Yh %>%
+      filter(sector %in% EFW_mapping$agg_sector,
+             fuel == "electricity") ->
+      L121.in_EJ_R_EFW_elec_Yh
+
     L122.in_EJ_R_refining_F_Yh %>%
       filter(fuel == "electricity", year %in% HISTORICAL_YEARS) %>%
       bind_rows(Unoil_elect) %>%
+      bind_rows(L121.in_EJ_R_EFW_elec_Yh) %>%
       group_by(GCAM_region_ID, fuel, year) %>%
       summarise(value = sum(value)) ->
-      Unoil_Refin_elect
+      Unoil_Refin_EFW_elect
 
     # Subtract this from total delivered electricity (output of t&d sector). This is the amount that is available for scaling to end uses.
-    Unoil_Refin_elect %>%
+    Unoil_Refin_EFW_elect %>%
       left_join_error_no_match(L126.out_EJ_R_electd_F_Yh, by = c("GCAM_region_ID", "fuel", "year")) %>%
       mutate(value = value.y - value.x) %>%
       select(-sector, -value.x, -value.y) ->
@@ -202,7 +208,7 @@ module_energy_LA131.enduse <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Scalers were used to balance electricity and district heat production and consumption within each region") %>%
       add_legacy_name("L131.in_EJ_R_Senduse_F_Yh") %>%
-      add_precursors("energy/mappings/enduse_sector_aggregation", "L1012.en_bal_EJ_R_Si_Fi_Yh",
+      add_precursors("energy/mappings/enduse_sector_aggregation", "water/EFW_mapping", "L1012.en_bal_EJ_R_Si_Fi_Yh",
                      "L121.in_EJ_R_unoil_F_Yh", "L122.in_EJ_R_refining_F_Yh", "L126.out_EJ_R_electd_F_Yh") ->
       L131.in_EJ_R_Senduse_F_Yh
 

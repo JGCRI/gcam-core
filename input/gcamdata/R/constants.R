@@ -46,6 +46,8 @@ GCAM_REGION_ID      <- "GCAM_region_ID"
 # The default market price GCAM will use to start solving from if it has no other info
 # If users do not have an estimate for a starting price this is a safe one to set
 gcam.DEFAULT_PRICE <- 1.0
+gcam.DEFAULT_SUBSECTOR_LOGIT <- -3
+gcam.DEFAULT_TECH_LOGIT      <- -6
 
 
 # Driver constants ======================================================================
@@ -501,9 +503,12 @@ water.DEFAULT_BASEYEAR_WATER_PRICE        <- 0.001
 water.IRR_PRICE_SUBSIDY_MULT              <- 0.01  # Multiplier for irrigation price subsidy (OECD 2009 Managing Water for All)
 water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
 water.IRRIGATION                          <- "Irrigation"
+water.MANUFACTURING                       <- "Manufacturing"
+water.MUNICIPAL                           <- "Municipal"
 water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
 water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
+water.DESAL                               <- "desalinated water"
 water.WATER_UNITS_PRICE                   <- "1975$/m^3"
 water.WATER_UNITS_QUANTITY                <- "km^3"
 water.DIGITS_MUNI_WATER                   <- 4
@@ -556,7 +561,9 @@ efw.MAX_COMMIND_ENERGY_MUNI_EFW           <- 0.2       # maximum share of commer
 efw.MAX_COMM_ENERGY_MUNI_EFW              <- 0.3       # maximum share of commercial sector energy consumption that can be re-assigned to municipal water systems
 efw.MAX_WWTRT_FRAC                        <- 0.85      # maximum share of municipal/industrial water use that can be treated as wastewater (considering consumptive uses)
 efw.WWTRT_STEEPNESS                       <- 10        # steepness assumption relating per-capita GDP to the portion of municipal/industrial wastewater treated
+efw.DEFAULT_IRR_ELEC_PRICE_75USDGJ        <- 15        # default assumed price paid for the electricity used for irrigation water abstraction
 
+efw.WWTRT_GDP_SCEN                        <- "SSP2"    # scenario to use for increasing the fraction of wastewater treated as a function of GDP in post-2010 years
 efw.COUNTRIES_ELEC_DESAL                  <- c("are", "qat", "sau")     # countries whose desalination-related energy is in the power sector (combined electric + desal plants)
 efw.COUNTRIES_NO_DESAL                    <- c("mng", "pry", "mhl", "tjk", "tkm")   # landlocked or tiny countries whose reported desalinated water production is not included in GCAM
 efw.DESAL_ENERGY_SECTORS                  <- c("in_bld_comm", "in_industry_general")    # intermediate mapping sectors where desalination-related energy is initially assigned (from the energy balances)

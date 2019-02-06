@@ -54,7 +54,7 @@ module_energy_L224.heat <- function(command, ...) {
       technology <- coef <- subsector <- supplysector <- minicam.energy.input <-
       input.cost <- minicam.non.energy.input <- share.weight <- sector <- fuel <-
       value <- subs.share.weight <- calibrated.value <- secondary.output <-
-      stub.technology <- cost_modifier <- year <- NULL
+      stub.technology <- cost_modifier <- year <- output.ratio <- NULL
 
     all_data <- list(...)[[1]]
 

@@ -18,7 +18,7 @@
 module_water_L210.water_demand_primary <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/A03.sector",
+             FILE = "water/water_td_sectors",
              FILE = "energy/A21.globaltech_coef",
              FILE = "energy/A22.globaltech_coef",
              "L110.water_demand_primary_R_S_W_m3_GJ"))
@@ -33,7 +33,7 @@ module_water_L210.water_demand_primary <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A03.sector <- get_data(all_data, "water/A03.sector")
+    water_td_sectors <- get_data(all_data, "water/water_td_sectors")
     A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef")
     A22.globaltech_coef <- get_data(all_data, "energy/A22.globaltech_coef")
     L110.water_demand_primary_R_S_W_m3_GJ <- get_data(all_data, "L110.water_demand_primary_R_S_W_m3_GJ")
@@ -55,7 +55,7 @@ module_water_L210.water_demand_primary <- function(command, ...) {
       # accounted for in unconventional oil production.
       filter(!(supplysector %in% "regional oil" & subsector %in% "unconventional oil")) %>%
       mutate(water_sector = "Mining",
-             minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
+             minicam.energy.input = set_water_input_name(water_sector, water_type, water_td_sectors)) %>%
       # Add in GCAM region names
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(market.name = region) ->
@@ -73,7 +73,7 @@ module_water_L210.water_demand_primary <- function(command, ...) {
       add_comments("Avoid double acounting unconventional oil in the regional oil sector, and then set the (water demand) coefficient") %>%
       add_comments("for each year, region, supplysector, subsector, technology, minicam.energy.input and market") %>%
       add_legacy_name("L210.TechCoef") %>%
-      add_precursors("common/GCAM_region_names", "water/A03.sector", "energy/A21.globaltech_coef",
+      add_precursors("common/GCAM_region_names", "water/water_td_sectors", "energy/A21.globaltech_coef",
                      "energy/A22.globaltech_coef", "L110.water_demand_primary_R_S_W_m3_GJ") ->
       L210.TechCoef
 

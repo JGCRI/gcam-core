@@ -51,7 +51,8 @@ module_energy_batch_electricity_xml <- function(command, ...) {
               "L223.StubTechFixOut_elec",
               "L223.StubTechFixOut_hydro",
               "L223.StubTechProd_elec",
-              "L223.StubTechEff_elec"))
+              "L223.StubTechEff_elec",
+              "L223.StubTechSecOut_desal"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "electricity.xml"))
   } else if(command == driver.MAKE) {
@@ -99,6 +100,7 @@ module_energy_batch_electricity_xml <- function(command, ...) {
     L223.StubTechFixOut_hydro <- get_data(all_data, "L223.StubTechFixOut_hydro")
     L223.StubTechProd_elec <- get_data(all_data, "L223.StubTechProd_elec")
     L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec")
+    L223.StubTechSecOut_desal <- get_data(all_data, "L223.StubTechSecOut_desal")
 
     share.weight <- subsector.share.weight <- intermittent.technology <- NULL # silence package checks
 
@@ -152,6 +154,7 @@ module_energy_batch_electricity_xml <- function(command, ...) {
       add_xml_data(L223.StubTechFixOut_hydro, "StubTechFixOut") %>%
       add_xml_data(L223.StubTechProd_elec, "StubTechProd") %>%
       add_xml_data(L223.StubTechEff_elec, "StubTechEff") %>%
+      add_xml_data(L223.StubTechSecOut_desal, "StubTechSecOut") %>%
       add_precursors("L223.Supplysector_elec",
                      "L223.ElecReserve",
                      "L223.SubsectorLogit_elec",
@@ -191,7 +194,8 @@ module_energy_batch_electricity_xml <- function(command, ...) {
                      "L223.StubTechFixOut_elec",
                      "L223.StubTechFixOut_hydro",
                      "L223.StubTechProd_elec",
-                     "L223.StubTechEff_elec") ->
+                     "L223.StubTechEff_elec",
+                     "L223.StubTechSecOut_desal") ->
       electricity.xml
 
     return_data(electricity.xml)

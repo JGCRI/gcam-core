@@ -2,7 +2,7 @@
 # Title: Desalinated water subsector (fuel) share-weight interpolation
 # Units: None
 # Source: NA
-# Column types: ccciinc
+# Column types: ccccinc
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 desalinated water,electricity,share-weight,final-calibration-year,2035,1,s-curve
 desalinated water,gas,share-weight,final-calibration-year,2035,0,s-curve
