@@ -1,4 +1,4 @@
-#' module_gcam.usa_L2237.wind_reeds_USA
+#' module_gcamusa_L2237.wind_reeds_USA
 #'
 #' Create updated wind resource supply curves consistent with ReEDS.
 #'
@@ -14,7 +14,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author MTB September 2018
-module_gcam.usa_L2237.wind_reeds_USA <- function(command, ...) {
+module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = 'gcam-usa/reeds_regions_states',
              FILE = 'gcam-usa/reeds_wind_curve_capacity',
@@ -70,9 +70,9 @@ module_gcam.usa_L2237.wind_reeds_USA <- function(command, ...) {
     # We then aggregate this to the state-level.
     reeds_wind_curve_capacity %>%
       mutate(resource.potential.MW = wsc1 + wsc2 + wsc3 + wsc4 + wsc5) %>%
-      select(Wind.Resource.Region, Wind.Class,resource.potential.MW) %>%
+      select(Wind.Resource.Region, Wind.Class, resource.potential.MW) %>%
       left_join_error_no_match(reeds_wind_curve_CF_avg, by = c("Wind.Resource.Region" , "Wind.Class" = "TRG")) %>%
-      mutate(resource.potential.EJ = resource.potential.MW * 8760 * CF * CONV_MWH_EJ) %>%
+      mutate(resource.potential.EJ = resource.potential.MW * CONV_YEAR_HOURS * CF * CONV_MWH_EJ) %>%
       left_join_error_no_match(reeds_regions_states, by = c("Wind.Resource.Region" = "Region")) %>%
       select(State, Wind.Class, resource.potential.EJ) %>%
       group_by(State, Wind.Class) %>%
@@ -99,16 +99,16 @@ module_gcam.usa_L2237.wind_reeds_USA <- function(command, ...) {
     L2237.wind_OMfixed <- as.numeric(L2237.wind_OMfixed)
 
     L2237.wind_potential_EJ %>%
-      left_join_error_no_match(L2237.wind_CF, by = c("State","Wind.Class")) %>%
+      left_join_error_no_match(L2237.wind_CF, by = c("State", "Wind.Class")) %>%
       group_by(State) %>%
       arrange(State, desc(CF)) %>%
-      mutate(CFmax = max(CF)) %>%
-      mutate(supply = cumsum(resource.potential.EJ)) %>%
+      mutate(CFmax = max(CF),
+             supply = cumsum(resource.potential.EJ)) %>%
       ungroup() %>%
       mutate(capital.overnight = L2237.wind_capital,
              fcr = L2237.fcr,
-             OM.fixed = L2237.wind_OMfixed) %>%
-      mutate(price = fcr * capital.overnight / CF / 8760 / CONV_KWH_GJ + OM.fixed / CF / 8760 / CONV_KWH_GJ) %>%
+             OM.fixed = L2237.wind_OMfixed,
+             price = fcr * capital.overnight / CF / CONV_YEAR_HOURS / CONV_KWH_GJ + OM.fixed / CF / CONV_YEAR_HOURS / CONV_KWH_GJ) %>%
       select(State, price, supply, CFmax) -> L2237.wind_matrix
 
     # L2237.wind_curve: estimating parameters of the smooth curve
@@ -117,22 +117,21 @@ module_gcam.usa_L2237.wind_reeds_USA <- function(command, ...) {
     # The function, evaluate_smooth_res_curve, computes the smooth renewable resource function
     # supply = (p - Pmin) ^ curve.exponent / (mid.price ^ curve.exponent +
     #    (p - Pmin) ^ curve.exponent * maxSubResource
-    # TODO: Define these as global functions
 
     evaluate_smooth_res_curve <- function(curve.exponent, mid.price, Pmin, maxSubResource, p) {
-      p_pow_exp <- ( p - Pmin ) ^ curve.exponent
-      supply <- p_pow_exp / ( mid.price ^ curve.exponent + p_pow_exp ) * maxSubResource
+      p_pow_exp <- (p - Pmin) ^ curve.exponent
+      supply <- p_pow_exp / (mid.price ^ curve.exponent + p_pow_exp) * maxSubResource
       # zero out the supply where the price was less than Pmin
-      supply[ p < Pmin ] <- 0
-      return( supply )
+      supply[p < Pmin] <- 0
+      return(supply)
     }
 
     # The function, smooth_res_curve_approx_error, checks how well the given smooth renewable curve matches the given supply-points.
     # Note that the first argument is the one that is changed by optimize when trying to minimize the error
     smooth_res_curve_approx_error <- function(curve.exponent, mid.price, Pmin, maxSubResource, supply_points) {
-      f_p <- evaluate_smooth_res_curve( curve.exponent, mid.price, Pmin, maxSubResource, supply_points$price )
+      f_p <- evaluate_smooth_res_curve(curve.exponent, mid.price, Pmin, maxSubResource, supply_points$price)
       error <- f_p - supply_points$supply
-      return( crossprod( error, error ) )
+      return( crossprod(error, error))
     }
 
     # Calculate maxSubResource, Pmin, and Pvar.
@@ -146,7 +145,7 @@ module_gcam.usa_L2237.wind_reeds_USA <- function(command, ...) {
       arrange(State, price) %>%
       mutate(Pmin = min(price),
              Pvar = price - Pmin,
-             maxSubResource = round(max(supply), 5)) %>%
+             maxSubResource = round(max(supply), energy.DIGITS_MAX_SUB_RESOURCE)) %>%
       ungroup() -> L2237.wind_curve
 
     # Approximate mid-price using first supply points that are less than (p1, Q1) and greater than (p2,Q2) 50% of maxSubResource.
@@ -159,22 +158,30 @@ module_gcam.usa_L2237.wind_reeds_USA <- function(command, ...) {
       mutate(percent.supply = supply / maxSubResource) %>%
       group_by(State) %>%
       arrange(State, desc(price)) %>%
-      filter( percent.supply <= 0.5) %>%
+      # filter for the supply point with just less than 50% of the maxSubResource, in order to calculate the mid-price
+      filter(percent.supply <= 0.5) %>%
+      # NOTE: separate filter calls are needed here; combining filters in same call requires both
+      # conditions to be met simultaneously (rather than sequentially), which returns an empty data set
       filter(row_number() == 1) %>%
-      select(State, P1 = Pvar, Q1 = supply, maxSubResource) -> L2237.mid.price_1
+      select(State, P1 = Pvar, Q1 = supply, maxSubResource) %>%
+      ungroup() -> L2237.mid.price_1
 
     # Calculating P2 and Q2
     L2237.wind_curve %>%
       mutate(percent.supply = supply / maxSubResource) %>%
       group_by(State) %>%
-      filter( percent.supply >= 0.5) %>%
+      # filter for the supply point with just over 50% of the maxSubResource, in order to calculate the mid-price
+      filter(percent.supply >= 0.5) %>%
+      # NOTE: separate filter calls are needed here; combining filters in same call requires both
+      # conditions to be met simultaneously (rather than sequentially), which returns an empty data set
       filter(row_number() == 1) %>%
-      select(State, P2 = Pvar, Q2 = supply) -> L2237.mid.price_2
+      select(State, P2 = Pvar, Q2 = supply) %>%
+      ungroup() -> L2237.mid.price_2
 
     # Calculating mid.price
     L2237.mid.price_1 %>%
       left_join_error_no_match(L2237.mid.price_2, by = "State") %>%
-      mutate(mid.price = round(((P2 - P1) * maxSubResource + 2 * Q2 * P1 - 2 * Q1 * P2) / (2 * (Q2 - Q1)), 5)) %>%
+      mutate(mid.price = round(((P2 - P1) * maxSubResource + 2 * Q2 * P1 - 2 * Q1 * P2) / (2 * (Q2 - Q1)), energy.DIGITS_MID_PRICE)) %>%
       select(State, mid.price) -> L2237.mid.price
 
     L2237.wind_curve %>%
@@ -193,13 +200,13 @@ module_gcam.usa_L2237.wind_reeds_USA <- function(command, ...) {
       L2237.wind_curve_state %>%
         select(price, supply) -> L2237.supply_points_state
 
-      L2237.error_min_curve.exp <- optimize(f = smooth_res_curve_approx_error, interval=c(1.0,15.0),
+      L2237.error_min_curve.exp <- optimize(f = smooth_res_curve_approx_error, interval = c(1.0, 15.0),
                                             L2237.wind_curve_state$mid.price,
                                             L2237.wind_curve_state$Pmin,
                                             L2237.wind_curve_state$maxSubResource,
                                             L2237.supply_points_state)
 
-      L2237.wind_curve_state$curve.exponent <-  round(L2237.error_min_curve.exp$minimum,5)
+      L2237.wind_curve_state$curve.exponent <-  round(L2237.error_min_curve.exp$minimum, energy.DIGITS_CURVE_EXPONENT)
       L2237.wind_curve_state %>%
         select(State, curve.exponent) %>%
         filter(row_number() == 1) -> L2237.curve.exponent_state
@@ -214,19 +221,20 @@ module_gcam.usa_L2237.wind_reeds_USA <- function(command, ...) {
 
     # Technological change in the supply curve is related to assumed improvements in capital cost.
     # If capital cost changes from CC to a.CC, then every price point of the curve will scale by a factor a' given as follows:
-    # a' = (k1.a.CC + k2. OM-fixed) / (k1.CC + k2. OM-fixed) where k1 = FCR / (8760 * kWh_GJ) and k2 = 1 / (8760 * kWh_GJ)
+    # a' = (k1.a.CC + k2. OM-fixed) / (k1.CC + k2. OM-fixed) where k1 = FCR / (CONV_YEAR_HOURS * kWh_GJ) and k2 = 1 / (CONV_YEAR_HOURS * kWh_GJ)
     # Thus, we calculate model input parameter techChange (which is the reduction per year) as 1 - a'^(1/5)
 
     L2247.GlobalIntTechCapitalOnly_elecS_USA %>%
       filter(intermittent.technology == "wind_base") %>%
       select(year, capital.overnight) %>%
-      mutate(capital.tech.change.5yr = lag(capital.overnight, 1) / capital.overnight,
+      mutate(capital.tech.change.period = lag(capital.overnight, 1) / capital.overnight,
+             time.change = year - lag(year),
              fixed.charge.rate = L2237.fcr,
              OM.fixed = L2237.wind_OMfixed,
-             k1 = fixed.charge.rate / (8760 * CONV_KWH_GJ),
-             k2 = 1 / (8760 * CONV_KWH_GJ),
-             tech.change.5yr = (k1 * capital.tech.change.5yr * capital.overnight + k2 * OM.fixed) / (k1 * capital.overnight + k2 * OM.fixed),
-             tech.change = round(abs(1 - (tech.change.5yr)^(1/5)), 5)) %>%
+             k1 = fixed.charge.rate / (CONV_YEAR_HOURS * CONV_KWH_GJ),
+             k2 = 1 / (CONV_YEAR_HOURS * CONV_KWH_GJ),
+             tech.change.period = (k1 * capital.tech.change.period * capital.overnight + k2 * OM.fixed) / (k1 * capital.overnight + k2 * OM.fixed),
+             tech.change = round(abs(1 - (tech.change.period) ^ ( 1 / time.change)), energy.DIGITS_TECHCHANGE)) %>%
       select(year, tech.change) %>%
       filter(!is.na(tech.change),
              year > max(MODEL_BASE_YEARS)) -> L2237.wind_curve_tech_change
@@ -235,7 +243,7 @@ module_gcam.usa_L2237.wind_reeds_USA <- function(command, ...) {
     # Our starting data consists of grid connection costs in $/MW by ReEDS region and wind class.
     # This data also categorizes the connection cost into five bins in each region and class.
     # Using this data, we obtain a grid connection cost in $/GJ for each region/ class/ bin data
-    # point as FCR * (grid connection cost in $/MW) / (8760 * CF * MWh_GJ).
+    # point as FCR * (grid connection cost in $/MW) / (CONV_YEAR_HOURS * CF * MWh_GJ).
     # Costs are then obtained for a state by averaging.
     # In the future, we might think about a separate state-level curve for grid connection costs.
     reeds_wind_curve_grid_cost %>%
@@ -243,52 +251,52 @@ module_gcam.usa_L2237.wind_reeds_USA <- function(command, ...) {
       gather(bin, cost, -Wind.Resource.Region, -Wind.Class) %>%
       filter(cost != 0) %>%
       left_join_error_no_match(reeds_wind_curve_CF_avg, by = c("Wind.Resource.Region", "Wind.Class" = "TRG")) %>%
-      mutate(fcr = L2237.fcr) %>%
-      mutate(grid.cost = fcr * cost / (8760 * CF * CONV_MWH_GJ),
+      mutate(fcr = L2237.fcr,
+             grid.cost = fcr * cost / (CONV_YEAR_HOURS * CF * CONV_MWH_GJ),
              grid.cost = grid.cost * gdp_deflator(1975, 2013)) %>%
       left_join_error_no_match(reeds_regions_states %>%
                   select(Region, State),
                 by = c("Wind.Resource.Region" = "Region")) %>%
       group_by(State) %>%
-      summarise(grid.cost = round(mean(grid.cost), 5)) %>%
+      summarise(grid.cost = round(mean(grid.cost), energy.DIGITS_COST)) %>%
       ungroup() -> L2237.grid.cost
 
     # Formatting tables for output
     L2237.wind_curve %>%
+      distinct(State, maxSubResource, mid.price, curve.exponent) %>%
       mutate(renewresource = "onshore wind resource",
-              smooth.renewable.subresource = "onshore wind resource") %>%
-      mutate(year.fillout = min(MODEL_YEARS)) %>%
-      select(region = State, renewresource, smooth.renewable.subresource,
-             year.fillout, maxSubResource, mid.price, curve.exponent) %>%
-      group_by(region) %>%
-      filter(row_number() == 1) %>%
-      ungroup() -> L2237.SmthRenewRsrcCurves_wind_reeds_USA
+             smooth.renewable.subresource = "onshore wind resource",
+             year.fillout = min(MODEL_YEARS)) %>%
+      select(region = State, renewresource, smooth.renewable.subresource, year.fillout,
+             maxSubResource, mid.price, curve.exponent) -> L2237.SmthRenewRsrcCurves_wind_reeds_USA
 
     L2234.StubTechCapFactor_elecS_wind_USA %>%
-      filter(!grepl("_offshore", stub.technology)) %>%
+      # using semi_join to filter out states not included in the ReEDS data set,
+      # for which wind resource curves are not being updated
       semi_join(L2237.wind_curve, by = c("region" = "State")) %>%
       left_join_error_no_match(L2237.wind_curve %>%
                   distinct(State, CFmax),
                 by = c("region" = "State")) %>%
       filter(!is.na(CFmax)) %>%
-      mutate(capacity.factor = round(CFmax, 5)) %>%
+      mutate(capacity.factor = round(CFmax, energy.DIGITS_CAPACITY_FACTOR)) %>%
       select(region, supplysector, subsector, stub.technology, year,
              capacity.factor) -> L2237.StubTechCapFactor_wind_reeds_USA
 
     # Copying tech change to all states and filtering out only the contiguous states
-    L2237.SmthRenewRsrcTechChange_wind_reeds_USA <- write_to_all_states(L2237.wind_curve_tech_change, c("region", "year","tech.change"))
+    L2237.SmthRenewRsrcTechChange_wind_reeds_USA <- write_to_all_states(L2237.wind_curve_tech_change, c("region", "year", "tech.change"))
     L2237.SmthRenewRsrcTechChange_wind_reeds_USA %>%
       filter(region %in% states_list) %>%
       mutate(renewresource = "onshore wind resource",
              smooth.renewable.subresource = "onshore wind resource") %>%
-      select(region,renewresource, smooth.renewable.subresource,year.fillout = year,
+      select(region,renewresource, smooth.renewable.subresource, year.fillout = year,
              techChange = tech.change) -> L2237.SmthRenewRsrcTechChange_wind_reeds_USA
 
     # Reading the grid connection cost as a state-level non-energy cost adder
     L2234.StubTechCapFactor_elecS_wind_USA %>%
-      filter(!grepl("_offshore", stub.technology)) %>%
       select(region, supplysector, subsector, stub.technology, year) %>%
       mutate(minicam.non.energy.input = "regional price adjustment") %>%
+      # using semi_join to filter out states not included in the ReEDS data set,
+      # for which wind resource curves are not being updated
       semi_join(L2237.grid.cost, by = c("region" = "State")) %>%
       left_join_error_no_match(L2237.grid.cost, by = c("region" = "State")) %>%
       rename(input.cost = grid.cost) %>%

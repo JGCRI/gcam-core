@@ -1,7 +1,8 @@
-# File: reeds_regions_states.csv,,,,,,,,
-# Title: Mapping File from ReEDS Regions to Various Other USA Subnational Regions,,,,,,,,
-# Units: NA,,,,,,,,
-# Comments: Region = ReEDS region.,,,,,,,,
+# File: reeds_regions_states.csv
+# Title: Mapping File from ReEDS Regions to Various Other USA Subnational Regions
+# Units: NA
+# Comments: Region = ReEDS region.
+# Source: Information based on ReEDS version 2017.  Files provided by ReEDS team in April 2017.
 Region,BA,NERC,RTO,EIA.Census.Region,State,Interconnect,Country,Custom
 1,p2,nr11,rto1,PA,WA,WSCC,USA,OTH
 2,p1,nr11,rto1,PA,WA,WSCC,USA,OTH
