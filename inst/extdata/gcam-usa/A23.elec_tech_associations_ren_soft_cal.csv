@@ -1,9 +1,0 @@
-# File: A23.elec_tech_associations_ren_soft_cal.csv,,,
-# Title: Power Sector Technologies for Renewable Soft Calibration,,,
-# Units: NA,,,
-# Comments: Power sector renewable technologies created for 2015 'soft calibration' (fixed output). The 'technology' column lists the corresponding technology in the single electricity sector version.,,,
-supplysector,subsector,new.technology,technology
-base load generation,wind,wind_base2015,wind
-peak generation,solar,PV_peak2015,PV
-peak generation,solar,CSP_peak2015,CSP
-elect_td_bld,rooftop_pv,rooftop_pv2015,rooftop_pv

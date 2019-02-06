@@ -1,8 +1,8 @@
-# File: reeds_PV_curve_capacity.csv,,,,,,
-# Title: Solar PV Resource Potential by ReEDS Region; PV Class; and Bin,,,,,,
-# Units: MW,,,,,,
-# Comments: PV resource potential in MW for each region-class-bin. Bins are the portions of the interconnection supply curves. Summing across bins will provide total resource in a region and class.,,,,,,
-# Source: TBC (ReEDS),,,,,,
+# File: reeds_PV_curve_capacity.csv
+# Title: Solar PV Resource Potential by ReEDS Region; PV Class; and Bin
+# Units: MW
+# Comments: PV resource potential in MW for each region-class-bin. Bins are the portions of the interconnection supply curves. Summing across bins will provide total resource in a region and class.
+# Source: Information based on ReEDS version 2017.  Files provided by ReEDS team in April 2017.
 BA,PV.class,upvsc1,upvsc2,upvsc3,upvsc4,upvsc5
 p1,class1,1.5795,2.2113,5.0544,0,0
 p1,class2,677.2896,582.8355,1392.4872,2685.7818,2447.9091

@@ -1,8 +1,8 @@
-# File: reeds_CSP_curve_capacity.csv,,,,,,
-# Title: CSP Resource Potential by ReEDS Region; CSP Class; and Bin,,,,,,
-# Units: MW,,,,,,
-# Comments: CSP resource potential in MW for each region-class-bin. Bins are the portions of the interconnection supply curves. Summing across bins will provide total resource in a region and class.,,,,,,
-# Source: TBC (ReEDS),,,,,,
+# File: reeds_CSP_curve_capacity.csv
+# Title: CSP Resource Potential by ReEDS Region; CSP Class; and Bin
+# Units: MW
+# Comments: CSP resource potential in MW for each region-class-bin. Bins are the portions of the interconnection supply curves. Summing across bins will provide total resource in a region and class.
+# Source: Information based on ReEDS version 2017.  Files provided by ReEDS team in April 2017.
 Region,CSP.class,cspsc1,cspsc2,cspsc3,cspsc4,cspsc5
 4,cspclass1,,,,,315.3816
 5,cspclass1,,,,,18531.6822
