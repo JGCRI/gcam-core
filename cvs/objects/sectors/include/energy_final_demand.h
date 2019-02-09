@@ -196,7 +196,7 @@ protected:
         DEFINE_VARIABLE( ARRAY, "price-elasticity", mPriceElasticity, objects::PeriodVector<Value> ),
 
         //! Service demand without technical change applied.
-        DEFINE_VARIABLE( ARRAY, "service-pre-tech-change", mPreTechChangeServiceDemand, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "service-pre-tech-change", mPreTechChangeServiceDemand, objects::PeriodVector<Value> ),
 
         //! Per capita service for each period to which to calibrate.
         DEFINE_VARIABLE( ARRAY, "base-service", mBaseService, objects::PeriodVector<Value> )
