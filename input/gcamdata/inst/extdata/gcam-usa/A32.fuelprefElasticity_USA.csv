@@ -1,6 +1,0 @@
-# File: A32.fuelprefElasticity_USA.csv,,,
-# Title: Industrial Energy Use Fuel Price Elasticities for High Industry Electrification Scenario,,,
-# Units: elasticity,,,
-# Comments: Fuel preference elasticities for industrial energy use in a high industry electrification scenario.,,,
-supplysector,subsector,year.fillout,fuelprefElasticity
-industrial energy use,electricity,2020,0.18

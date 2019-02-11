@@ -590,9 +590,6 @@ emissions.DIGITS_EMISSIONS <- 10
 
 # GCAM-USA time
 gcamusa.WIND_BASE_COST_YEAR   <- 2005
-gcamusa.FINAL_HISTORICAL_YEAR <- 2010
-gcamusa.FINAL_CALIBRATION_YEAR <- 2010
-gcamusa.FUTURE_MODEL_YEARS <- seq(from = 2015, to = 2100, by = 5)
 
 gcamusa.SE_HIST_YEAR <- 2015  # year to which historical socioeconomic data (pop & GDP) are used in GCAM-USA
 gcamusa.SE_NEAR_TERM_YEAR <- 2030  # year after which projected growth rates from various socio-economic data sources are used as-is
