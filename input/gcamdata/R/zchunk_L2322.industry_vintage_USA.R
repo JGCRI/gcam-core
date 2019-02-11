@@ -1,4 +1,4 @@
-#' module_gcam.usa_L2322.industry_vintage_USA
+#' module_gcamusa_L2322.industry_vintage_USA
 #'
 #' Creates a vintage structure and retirement parameters for U.S. industrial energy use
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author KD August 2018; edited MTB October 2018
-module_gcam.usa_L2322.industry_vintage_USA <- function(command, ...) {
+module_gcamusa_L2322.industry_vintage_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/A32.ind_retirement_USA",
