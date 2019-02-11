@@ -1,4 +1,4 @@
-#' module_gcam.usa_L2240.coal_slow_fast_retire_USA
+#' module_gcamusa_L2240.coal_slow_fast_retire_USA
 #'
 #' Generates GCAM-USA model input for removing coal capacity retired between 2010 and 2015.
 #'
@@ -19,7 +19,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC Aug 2018
-module_gcam.usa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
+module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/A23.coal_conv_pul_delete",
              FILE = "gcam-usa/A23.elec_tech_associations_coal_retire",
