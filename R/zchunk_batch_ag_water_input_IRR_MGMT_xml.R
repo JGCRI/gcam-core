@@ -16,7 +16,8 @@ module_aglu_batch_ag_water_input_IRR_MGMT_xml <- function(command, ...) {
               "L2072.AgCoef_RfdBphysWater_ag_mgmt",
               "L2072.AgCoef_BphysWater_bio_mgmt",
               "L2072.AgCoef_IrrWaterWdraw_bio_mgmt",
-              "L2072.AgCoef_IrrWaterCons_bio_mgmt"))
+              "L2072.AgCoef_IrrWaterCons_bio_mgmt",
+              "L2072.AgNonEnergyCost_IrrWaterWdraw"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "ag_water_input_IRR_MGMT.xml"))
   } else if(command == driver.MAKE) {
@@ -31,6 +32,7 @@ module_aglu_batch_ag_water_input_IRR_MGMT_xml <- function(command, ...) {
     L2072.AgCoef_BphysWater_bio_mgmt <- get_data(all_data, "L2072.AgCoef_BphysWater_bio_mgmt")
     L2072.AgCoef_IrrWaterWdraw_bio_mgmt <- get_data(all_data, "L2072.AgCoef_IrrWaterWdraw_bio_mgmt")
     L2072.AgCoef_IrrWaterCons_bio_mgmt<- get_data(all_data, "L2072.AgCoef_IrrWaterCons_bio_mgmt")
+    L2072.AgNonEnergyCost_IrrWaterWdraw <- get_data(all_data, "L2072.AgNonEnergyCost_IrrWaterWdraw")
     # ===================================================
 
     # Produce outputs
@@ -42,13 +44,15 @@ module_aglu_batch_ag_water_input_IRR_MGMT_xml <- function(command, ...) {
       add_xml_data(L2072.AgCoef_BphysWater_bio_mgmt, "AgCoef") %>%
       add_xml_data(L2072.AgCoef_IrrWaterWdraw_bio_mgmt, "AgCoef") %>%
       add_xml_data(L2072.AgCoef_IrrWaterCons_bio_mgmt, "AgCoef") %>%
+      add_xml_data(L2072.AgNonEnergyCost_IrrWaterWdraw, "AgNonEnergyCost") %>%
       add_precursors("L2072.AgCoef_IrrBphysWater_ag_mgmt",
                      "L2072.AgCoef_IrrWaterWdraw_ag_mgmt",
                      "L2072.AgCoef_IrrWaterCons_ag_mgmt",
                      "L2072.AgCoef_RfdBphysWater_ag_mgmt",
                      "L2072.AgCoef_BphysWater_bio_mgmt",
                      "L2072.AgCoef_IrrWaterWdraw_bio_mgmt",
-                     "L2072.AgCoef_IrrWaterCons_bio_mgmt") ->
+                     "L2072.AgCoef_IrrWaterCons_bio_mgmt",
+                     "L2072.AgNonEnergyCost_IrrWaterWdraw") ->
       ag_water_input_IRR_MGMT.xml
 
     return_data(ag_water_input_IRR_MGMT.xml)

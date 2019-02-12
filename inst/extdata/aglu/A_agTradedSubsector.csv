@@ -1,0 +1,17 @@
+# File: A_agTradedSubsector.csv
+# Title: Subsector assumptions for traded crop markets
+# Units: Various
+# Source: NA
+# Column types: ccncnccccic
+# ----------
+supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,interpolation.function,traded,logit.type
+traded corn,traded corn,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
+traded fibercrop,traded fibercrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
+traded misccrop,traded misccrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
+traded oilcrop,traded oilcrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
+traded othergrain,traded othergrain,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
+traded palmfruit,traded palmfruit,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
+traded rice,traded rice,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
+traded root_tuber,traded root_tuber,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
+traded sugarcrop,traded sugarcrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
+traded wheat,traded wheat,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
