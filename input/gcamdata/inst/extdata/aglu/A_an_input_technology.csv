@@ -9,15 +9,15 @@ FodderHerb_Residue,FodderHerb,FodderHerb,share-weight,final-calibration-year,end
 FodderHerb_Residue,Residue,Residue,share-weight,final-calibration-year,end-year,fixed,Residue,1
 Pasture_FodderGrass,Pasture,Pasture,share-weight,final-calibration-year,end-year,fixed,Pasture,1
 Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,final-calibration-year,end-year,fixed,FodderGrass,1
-FeedCrops,Corn,Corn,share-weight,final-calibration-year,end-year,fixed,Corn,1
-FeedCrops,FiberCrop,FiberCrop,share-weight,final-calibration-year,end-year,fixed,FiberCrop,1
-FeedCrops,MiscCrop,MiscCrop,share-weight,final-calibration-year,end-year,fixed,MiscCrop,1
-FeedCrops,OilCrop,OilCrop,share-weight,final-calibration-year,end-year,fixed,OilCrop,1
-FeedCrops,OtherGrain,OtherGrain,share-weight,final-calibration-year,end-year,fixed,OtherGrain,1
-FeedCrops,PalmFruit,PalmFruit,share-weight,final-calibration-year,end-year,fixed,PalmFruit,1
-FeedCrops,Rice,Rice,share-weight,final-calibration-year,end-year,fixed,Rice,1
-FeedCrops,Root_Tuber,Root_Tuber,share-weight,final-calibration-year,end-year,fixed,Root_Tuber,1
-FeedCrops,SugarCrop,SugarCrop,share-weight,final-calibration-year,end-year,fixed,SugarCrop,1
-FeedCrops,Wheat,Wheat,share-weight,final-calibration-year,end-year,fixed,Wheat,1
+FeedCrops,Corn,Corn,share-weight,final-calibration-year,end-year,fixed,regional corn,1
+FeedCrops,FiberCrop,FiberCrop,share-weight,final-calibration-year,end-year,fixed,regional fibercrop,1
+FeedCrops,MiscCrop,MiscCrop,share-weight,final-calibration-year,end-year,fixed,regional misccrop,1
+FeedCrops,OilCrop,OilCrop,share-weight,final-calibration-year,end-year,fixed,regional oilcrop,1
+FeedCrops,OtherGrain,OtherGrain,share-weight,final-calibration-year,end-year,fixed,regional othergrain,1
+FeedCrops,PalmFruit,PalmFruit,share-weight,final-calibration-year,end-year,fixed,regional palmfruit,1
+FeedCrops,Rice,Rice,share-weight,final-calibration-year,end-year,fixed,regional rice,1
+FeedCrops,Root_Tuber,Root_Tuber,share-weight,final-calibration-year,end-year,fixed,regional root_tuber,1
+FeedCrops,SugarCrop,SugarCrop,share-weight,final-calibration-year,end-year,fixed,regional sugarcrop,1
+FeedCrops,Wheat,Wheat,share-weight,final-calibration-year,end-year,fixed,regional wheat,1
 FeedCrops,DDGS and feedcakes,DDGS and feedcakes,share-weight,initial-future-year,end-year,fixed,DDGS and feedcakes,1
 Scavenging_Other,Scavenging_Other,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_Other_Rsrc,1

@@ -1,0 +1,18 @@
+# File: A_agTradedSector.csv
+# Title: Supplysector assumptions for traded crop markets (including logit exponent for subsector competition)
+# Units: Various
+# Comments: These sectors compete different regions in supplying the pool of globally traded crops
+# Source: NA
+# Column types: ccccinc
+# ----------
+supplysector,output.unit,input.unit,price.unit,traded,logit.exponent,logit.type
+traded corn,Mt,Mt,1975$/kg,1,-3,
+traded fibercrop,Mt,Mt,1975$/kg,1,-3,
+traded misccrop,Mt,Mt,1975$/kg,1,-3,
+traded oilcrop,Mt,Mt,1975$/kg,1,-3,
+traded othergrain,Mt,Mt,1975$/kg,1,-3,
+traded palmfruit,Mt,Mt,1975$/kg,1,-3,
+traded rice,Mt,Mt,1975$/kg,1,-3,
+traded root_tuber,Mt,Mt,1975$/kg,1,-3,
+traded sugarcrop,Mt,Mt,1975$/kg,1,-3,
+traded wheat,Mt,Mt,1975$/kg,1,-3,
