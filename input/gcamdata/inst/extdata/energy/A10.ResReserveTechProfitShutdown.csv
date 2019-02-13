@@ -1,6 +1,7 @@
 # File: A10.ResReserveTechProfitShutdown.csv
 # Title: Resource profit shutdown to characterize a well / mine's ability scale back production under unprofitable conditions
 # Units: NA
+# Column types: cccnn
 depresource,reserve.subresource,resource.reserve.technology,median.shutdown.point,profit.shutdown.steepness
 coal,coal,coal,0.3,9
 crude oil,crude oil,crude oil,0.3,9
