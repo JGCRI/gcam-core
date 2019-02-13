@@ -225,11 +225,11 @@ void ResourceReserveTechnology::setProductionState( const int aPeriod ) {
         mProductionPhaseScaler = (currYear - mYear + 1) / BUILDUP_YEARS;
     }
     else if((mTotalReserve - mCumulProd[ aPeriod - 1]) <= (mTotalReserve * ABANDONMENT_PCT)) {
-        mProductionPhaseScaler = max((mTotalReserve - mCumulProd[ aPeriod - 1]) / (mTotalReserve * ABANDONMENT_PCT), 0.0);
+        mProductionPhaseScaler = max((mTotalReserve - mCumulProd[ aPeriod - 1]) / (mTotalReserve * DECLINE_PCT), 0.0);
         //eorCoef = mEORCoef;
     }
     else if((mTotalReserve - mCumulProd[ aPeriod - 1]) <= (mTotalReserve * DECLINE_PCT)) {
-        mProductionPhaseScaler = 1.0;//max((mTotalReserve - mCumulProd[ aPeriod - 1]) / (mTotalReserve * DECLINE_PCT), 0.0);
+        mProductionPhaseScaler = max((mTotalReserve - mCumulProd[ aPeriod - 1]) / (mTotalReserve * DECLINE_PCT), 0.0);
         //eorCoef = mEORCoef;
     }
     else {
