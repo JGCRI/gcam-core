@@ -176,7 +176,7 @@ void LinearControl::initCalc( const string& aRegionName,
         abort();
     }
     
-     // Make sure start year is not before final calibration year
+    // Make sure start year is not before final calibration year
     if ( mStartYear < finalCalibYr ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
@@ -192,7 +192,7 @@ void LinearControl::initCalc( const string& aRegionName,
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << getXMLName() << ", " << getName() << " has invalid start year " << mStartYear
-        << " before first year " << thisModelYear << " of this technology. , resetting to " << thisModelYear << endl;
+                << " before first year " << thisModelYear << " for this vintage. Resetting to " << thisModelYear << endl;
         mStartYear = thisModelYear;
     }
     
