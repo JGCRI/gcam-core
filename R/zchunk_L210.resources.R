@@ -86,7 +86,7 @@ module_energy_L210.resources <- function(command, ...) {
       L210.DepRsrcTechChange_SSP2 <- L210.DepRsrcEnvironCost_SSP2 <- L210.DepRsrcTechChange_SSP3 <-
       L210.DepRsrcEnvironCost_SSP3 <- L210.DepRsrcTechChange_SSP4 <- L210.DepRsrcTechChange_SSP5 <-
       L210.DepRsrcEnvironCost_SSP5 <- available <- cal.production <- capacity.factor <- curve.exponent <-
-      depresource <- environCost <- extractioncost <- fuel <- gdpSupplyElast <- grade <- market <- value <-
+      resource <- environCost <- extractioncost <- fuel <- gdpSupplyElast <- grade <- market <- value <-
       maxSubResource <- mid.price <- object <- `output-unit` <- `price-unit` <- region <- resource <-
       resource_type <- scenario <-subResourceCapacityFactor <- subresource <- subresource_type <- NULL
 
@@ -132,8 +132,8 @@ module_energy_L210.resources <- function(command, ...) {
 
     # L210.DepRsrc: output unit, price unit, and market for depletable resources
     L210.DepRsrc <- L210.rsrc_info %>%
-      filter(resource_type == "depresource") %>%
-      select(region, depresource = resource, output.unit = `output-unit`, price.unit = `price-unit`, market) %>%
+      filter(resource_type == "resource") %>%
+      select(region, resource = resource, output.unit = `output-unit`, price.unit = `price-unit`, market) %>%
       distinct()
 
     # L210.RenewRsrc: output unit, price unit, and market for renewable resources
@@ -150,9 +150,9 @@ module_energy_L210.resources <- function(command, ...) {
 
     # L210.DepRsrcPrice: historical prices for depletable resources
     L210.DepRsrcPrice <- L210.rsrc_info %>%
-      filter(resource_type == "depresource",
+      filter(resource_type == "resource",
              year %in% MODEL_BASE_YEARS) %>%
-      select(region, depresource = resource, year, price = value)
+      select(region, resource = resource, year, price = value)
 
     # L210.RenewRsrcPrice: historical prices for renewable resources
     L210.RenewRsrcPrice <- L210.rsrc_info %>%
@@ -188,7 +188,7 @@ module_energy_L210.resources <- function(command, ...) {
 
     # L210.DepRsrcTechChange: technological change for depletable resources
     L210.DepRsrcTechChange <- L210.dep_rsrc_TechChange %>%
-      select(region, depresource = resource, subresource, year.fillout = year, techChange = value)
+      select(region, resource = resource, subresource, year.fillout = year, techChange = value)
 
     # L210.SmthRenewRsrcTechChange: technological change for smooth renewable subresources
     L210.SmthRenewRsrcTechChange <- L210.renew_rsrc_TechChange %>%
@@ -203,7 +203,7 @@ module_energy_L210.resources <- function(command, ...) {
 
     # L210.DepRsrcTechChange_SSPs: technological change for depletable resources in the SSPs
     L210.DepRsrcTechChange_SSPs <- L210.rsrc_TechChange_SSPs %>%
-      select(SSP, region, depresource = resource, subresource, year.fillout = year, techChange = value) %>%
+      select(SSP, region, resource = resource, subresource, year.fillout = year, techChange = value) %>%
       # Split by SSP and assign attributes
       split(.$SSP) %>%
       lapply(function(df) {
@@ -238,7 +238,7 @@ module_energy_L210.resources <- function(command, ...) {
       # Add subresource
       left_join_error_no_match(A10.subrsrc_info, by = c("fuel" = "resource")) %>%
       mutate(cal.production = round(value, energy.DIGITS_CALPRODUCTION)) %>%
-      select(region, depresource = fuel, subresource, year, cal.production)
+      select(region, resource = fuel, subresource, year, cal.production)
 
     L111.Reserve_EJ_R_F_Yh %>%
       # mutate(model_years = cut(year, c(0, MODEL_BASE_YEARS), labels = MODEL_BASE_YEARS)) %>%
@@ -250,8 +250,8 @@ module_energy_L210.resources <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       # Add subresource
       left_join_error_no_match(A10.subrsrc_info, by = c("fuel" = "resource")) %>%
-      select(region, depresource = fuel, reserve.subresource = subresource, year, cal.reserve) %>%
-      filter(depresource != "unconventional oil") ->
+      select(region, resource = fuel, reserve.subresource = subresource, year, cal.reserve) %>%
+      filter(resource != "unconventional oil") ->
       L210.DepReserveCalReserve
 
     # D. Resource supply curves
@@ -260,14 +260,14 @@ module_energy_L210.resources <- function(command, ...) {
       # Add region name
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(available = round(available, energy.DIGITS_DEPRESOURCE)) %>%
-      select(region, depresource = resource, subresource, grade, available, extractioncost)
+      select(region, resource = resource, subresource, grade, available, extractioncost)
 
     # L210.DepRsrcCurves_U: supply curves of uranium resources
     L210.DepRsrcCurves_U <- L112.RsrcCurves_Mt_R_U %>%
       # Add region name
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(available = round(available, energy.DIGITS_DEPRESOURCE)) %>%
-      select(region, depresource = resource, subresource, grade, available, extractioncost)
+      select(region, resource = resource, subresource, grade, available, extractioncost)
 
     # L210.SmthRenewRsrcCurves_MSW: supply curves of waste biomass resources
     L210.SmthRenewRsrcCurves_MSW <- L113.RsrcCurves_EJ_R_MSW %>%
@@ -350,7 +350,7 @@ module_energy_L210.resources <- function(command, ...) {
       repeat_add_columns(GCAM_region_names) %>%
       # Add subresource type
       left_join_error_no_match(A10.subrsrc_info, by = c("resource", "subresource")) %>%
-      select(SSP, region, depresource = resource, subresource, year.fillout = year, environCost = value) %>%
+      select(SSP, region, resource = resource, subresource, year.fillout = year, environCost = value) %>%
       # Split by SSP and assign attributes
       split(.$SSP) %>%
       lapply(function(df) {
@@ -381,8 +381,8 @@ module_energy_L210.resources <- function(command, ...) {
     L210.DepRsrcEnvironCost_SSP4 <- L210.DepRsrcEnvironCost_SSP4 %>%
       # Set environmental costs for coal to 0 for low growth regions,
       # 10 * environcost for high growth regions
-      mutate(environCost = if_else(depresource == "coal" & region %in% L210.low_reg, 0, environCost),
-             environCost = if_else(depresource == "coal" & region %in% L210.high_reg, 10 * environCost, environCost)) %>%
+      mutate(environCost = if_else(resource == "coal" & region %in% L210.low_reg, 0, environCost),
+             environCost = if_else(resource == "coal" & region %in% L210.high_reg, 10 * environCost, environCost)) %>%
       add_title("Environmental Costs for Depletable Resources: SSP4") %>%
       add_units("$/GJ") %>%
       add_comments("A10.EnvironCost_SSPs written to all regions") %>%
@@ -427,7 +427,7 @@ module_energy_L210.resources <- function(command, ...) {
       L210.ResTechShrwt
     L210.ResTechShrwt %>%
       semi_join(L210.DepRsrcCurves_U,
-                by = c("region", "resource" = "depresource", "subresource")) %>%
+                by = c("region", "resource" = "resource", "subresource")) %>%
       bind_rows(filter(L210.ResTechShrwt, resource != "uranium"), .) ->
       L210.ResTechShrwt
 

@@ -240,8 +240,8 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
     }
     L111.Prod_EJ_R_F_Yh %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      left_join_error_no_match(select(A10.ResReserveTechLifetime, depresource, lifetime),
-                               by=c("fuel" = "depresource")) %>%
+      left_join_error_no_match(select(A10.ResReserveTechLifetime, resource, lifetime),
+                               by=c("fuel" = "resource")) %>%
       left_join_error_no_match(model_year_timesteps, by = c("year")) %>%
       repeat_add_columns(tibble(year_operate = MODEL_BASE_YEARS)) %>%
       mutate(final_year = pmin(MODEL_BASE_YEARS[length(MODEL_BASE_YEARS)], (year - timestep + lifetime))) %>%

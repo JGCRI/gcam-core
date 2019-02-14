@@ -69,7 +69,7 @@ module_energy_L221.en_supply <- function(command, ...) {
 
     # Silence global variable package check
     P1 <- biodiesel <- biomassOil_tech <- calOutputValue <- calPrice <- coef <- coefficient <-
-    depresource <- ethanol <- feed_price <- fractional.secondary.output <- fuel <-
+    resource <- ethanol <- feed_price <- fractional.secondary.output <- fuel <-
     input.cost <- market <- minicam.energy.input <- minicam.non.energy.input <-
     object <- output.ratio <- output.unit <- price <- price.unit <- primary.consumption <-
     region <- sector <- sector.name <- share.weight <- stub.technology <- subsector <-
@@ -328,17 +328,17 @@ module_energy_L221.en_supply <- function(command, ...) {
       rename(GCAM_region_ID = region) %>%
       left_join_error_no_match(A_regions %>%
                   select(region, GCAM_region_ID), by = "GCAM_region_ID") %>%
-      select(region, depresource, output.unit = "output-unit", price.unit = "price-unit", market) %>%
+      select(region, resource, output.unit = "output-unit", price.unit = "price-unit", market) %>%
       mutate(market = region) -> L221.DepRsrc_en
 
     A21.rsrc_info %>%
-      select(depresource, market, output.unit = "output-unit", price.unit = "price-unit") %>%
+      select(resource, market, output.unit = "output-unit", price.unit = "price-unit") %>%
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS))) %>%
       left_join(A21.rsrc_info %>%
-                  gather(year, value, -depresource, -market, -"output-unit", -"price-unit") %>%
+                  gather(year, value, -resource, -market, -"output-unit", -"price-unit") %>%
                   rename(output.unit = "output-unit", price.unit = "price-unit") %>%
-                  mutate(year = as.numeric(year)), by = c("year", "depresource", "market", "output.unit", "price.unit")) %>%
-      group_by(depresource, market, output.unit, price.unit) %>%
+                  mutate(year = as.numeric(year)), by = c("year", "resource", "market", "output.unit", "price.unit")) %>%
+      group_by(resource, market, output.unit, price.unit) %>%
       mutate(price = round(approx_fun(year, value, rule = 1), digits = energy.DIGITS_COST)) %>%
       ungroup() %>%
       filter(year %in% MODEL_YEARS) %>%
@@ -346,7 +346,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       repeat_add_columns(L221.ddgs_regions) %>%
       left_join(A_regions %>%
                   select(region, GCAM_region_ID), by = c("GCAM_region_ID")) %>%
-      select(region, depresource, year, price) -> L221.DepRsrcPrice_en
+      select(region, resource, year, price) -> L221.DepRsrcPrice_en
 
     # Coefficients of traded technologies
     A21.tradedtech_coef %>%
