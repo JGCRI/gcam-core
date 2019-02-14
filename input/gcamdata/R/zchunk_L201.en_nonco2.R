@@ -43,7 +43,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
 
     year <- value <- supplysector <- region <- subsector <- stub.technology <- Non.CO2 <-
       input.emissions <- `2000` <- emiss.coef <- ctrl.name <- max_reduction <- variable <-
-      steepness <- SO2 <- NOx <- CO <- BC <- OC <- NMVOC <- depresource <- has_district_heat <-
+      steepness <- SO2 <- NOx <- CO <- BC <- OC <- NMVOC <- resource <- has_district_heat <-
       . <- region <- supplysector <- NULL  # silence package check notes
 
     # Load required inputs
@@ -141,7 +141,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       filter(supplysector == "out_resources",
              year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(depresource = subsector) %>%
+      mutate(resource = subsector) %>%
       rename(subresource = subsector, technology = stub.technology, emiss.coef = value) %>%
       select(!!!LEVEL2_DATA_NAMES[["ResEmissCoef"]]) %>%
       mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
@@ -152,7 +152,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       filter(supplysector == "out_resources",
              year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(depresource = subsector) %>%
+      mutate(resource = subsector) %>%
       rename(subresource = subsector, technology = stub.technology, emiss.coef = value) %>%
       select(!!!LEVEL2_DATA_NAMES[["ResEmissCoef"]]) %>%
       mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
@@ -162,7 +162,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L151.nonghg_ctrl_R_en_S_T %>%
       filter(supplysector == "out_resources") %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(depresource = subsector,
+      mutate(resource = subsector,
              year = emissions.GHG_CONTROL_READIN_YEAR,
              ctrl.name = "GDP_control") %>%
       rename(subresource = subsector, technology = stub.technology, max.reduction = max_reduction) %>%
@@ -175,7 +175,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       filter(supplysector == "out_resources") %>%
       # extend steepness factors across all regions
       repeat_add_columns(tibble(region = GCAM_region_names$region)) %>%
-      mutate(depresource = subsector,
+      mutate(resource = subsector,
              year = emissions.GHG_CONTROL_READIN_YEAR,
              ctrl.name = "GDP_control") %>%
       rename(subresource = subsector, technology = stub.technology, steepness = value) %>%
@@ -185,7 +185,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     # Remove rows where we only have a value for one of max.reduction or steepness
     # TODO: is this what we want or should we raise an error?
     L201.nonghg_max_reduction_res %>%
-      full_join(L201.nonghg_steepness_res, by = c("region", "depresource", "subresource", "technology", "year", "Non.CO2", "ctrl.name")) %>%
+      full_join(L201.nonghg_steepness_res, by = c("region", "resource", "subresource", "technology", "year", "Non.CO2", "ctrl.name")) %>%
       na.omit %>%
       # No need to include a GDP control when the max.reduction is zero
       filter(max.reduction > 0) ->

@@ -345,7 +345,7 @@ XML_NODE_EQUIV <- list(
                         "absolute-cost-logit"),
   "LandLeaf" = c("LandLeaf", "UnmanagedLandLeaf"),
   "carbon-calc" = c("land-carbon-densities", "no-emiss-carbon-calc"),
-  "resource" = c("resource", "depresource", "renewresource", "unlimited-resource"),
+  "resource" = c("resource", "renewresource", "unlimited-resource"),
   "subresource" = c("subresource", "sub-renewable-resource", "smooth-renewable-subresource",
                     "reserve-subresource")
 )

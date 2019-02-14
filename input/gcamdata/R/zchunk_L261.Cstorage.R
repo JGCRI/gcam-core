@@ -80,7 +80,7 @@ module_energy_L261.Cstorage <- function(command, ...) {
       grade <- logit.type <- minicam.energy.input <- minicam.non.energy.input <-
       `output-unit` <- `price-unit` <- resource <- resource_type <- share.weight <-
       subresource <- subsector <- subsector.name <- supplysector <- technology <-
-      value <- year <- region <- depresource <- output.unit <- price.unit <-
+      value <- year <- region <- resource <- output.unit <- price.unit <-
       market <- logit.exponent <- coefficient <- input.cost <- NULL
 
     # A
@@ -106,8 +106,8 @@ module_energy_L261.Cstorage <- function(command, ...) {
 
     # Create table reporting carbon storage information for depletable resources only
     L261.rsrc_info %>%
-      filter(resource_type == "depresource") %>%
-      select(region, depresource = resource, output.unit, price.unit, market) ->
+      filter(resource_type == "resource") %>%
+      select(region, resource = resource, output.unit, price.unit, market) ->
       L261.DepRsrc # This is a final ouput table.
 
 
@@ -121,11 +121,11 @@ module_energy_L261.Cstorage <- function(command, ...) {
       # Match in GCAM region names using region ID
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(available = round(available, DIGITS_COST)) %>%
-      select(region, depresource = resource, subresource, grade, available, extractioncost) ->
+      select(region, resource = resource, subresource, grade, available, extractioncost) ->
       L261.DepRsrcCurves_C # This is a final output table.
 
     L261.DepRsrcCurves_C %>%
-      select(region, resource = depresource, subresource) %>%
+      select(region, resource = resource, subresource) %>%
       distinct() %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(technology = subresource,

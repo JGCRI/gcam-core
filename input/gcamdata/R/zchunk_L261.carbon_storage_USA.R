@@ -40,7 +40,7 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     region <- state <- stub.technology <- subresource <- subsector <- grid_region <- market.name <- minicam.energy.input <-
-      Cost_1990USDtC <- MtC <- available <- coefficient <- depresource <- extractioncost <- grade <-  NULL # Silence package notes
+      Cost_1990USDtC <- MtC <- available <- coefficient <- resource <- extractioncost <- grade <-  NULL # Silence package notes
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
@@ -75,7 +75,7 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
     L261.DepRsrc %>%
       mutate(region = region) %>% # strip off attributes like title, etc.
       filter(region == gcam.USA_REGION) %>%
-      select(region, depresource) ->
+      select(region, resource) ->
       L261.DeleteDepRsrc_USAC
 
     # L261.DeleteSubsector_USAC: delete onshore carbon storage subsector of carbon storage sector in the USA region
@@ -83,13 +83,13 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
     L261.SubsectorShrwtFllt_C %>%
       mutate(region = region) %>% # strip off attributes like title, etc.
       filter(region == gcam.USA_REGION) %>%
-      semi_join(L261.DepRsrc, by = c("subsector" = "depresource")) %>%
+      semi_join(L261.DepRsrc, by = c("subsector" = "resource")) %>%
       select(one_of(c(LEVEL2_DATA_NAMES[["Subsector"]]))) ->
       L261.DeleteSubsector_USAC
 
     # Create a vector of grid level onshare carbon storage subsector with zero storage curve
     # States in these grid regions will be excluded from the onshare carbon storage subsector in the relevant input files below
-    grid_Cstorage_nonexist <- paste(noC_grid_regions, L261.DeleteDepRsrc_USAC$depresource[1])
+    grid_Cstorage_nonexist <- paste(noC_grid_regions, L261.DeleteDepRsrc_USAC$resource[1])
 
     # L261.DepRsrc_FERC: onshore storage in the FERC regions
     L261.DepRsrc %>%
@@ -103,11 +103,11 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
    # L261.DepRsrcCurves_FERC: onshore storage supply curves in the FERC regions
     L161.Cstorage_FERC %>%
       mutate(region = grid_region,
-             depresource = L261.DepRsrc_FERC$depresource[1],
-             subresource = L261.DepRsrc_FERC$depresource[1],
+             resource = L261.DepRsrc_FERC$resource[1],
+             subresource = L261.DepRsrc_FERC$resource[1],
              available = round(MtC, digits = gcamuse.DIGITS_DEPRESOURCE),
              extractioncost = round(Cost_1990USDtC, digits = gcamusa.DIGITS_COST)) %>%
-      select(region, depresource, subresource, grade, available, extractioncost) ->
+      select(region, resource, subresource, grade, available, extractioncost) ->
       L261.DepRsrcCurves_FERC
 
     # L261.Supplysector_C_USA: supplysector information in the states
@@ -152,7 +152,7 @@ module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
       # Use the grid region markets
       left_join_error_no_match(select(states_subregions, state, market.name = grid_region), by = c("region" = "state")) %>%
       # Replace offshore carbon storage with the USA market
-      mutate(market.name = replace(market.name, !minicam.energy.input %in% L261.DepRsrc_FERC$depresource, gcam.USA_REGION)) ->
+      mutate(market.name = replace(market.name, !minicam.energy.input %in% L261.DepRsrc_FERC$resource, gcam.USA_REGION)) ->
       L261.StubTechMarket_C_USA
 
     # Produce outputs
