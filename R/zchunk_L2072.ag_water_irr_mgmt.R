@@ -48,7 +48,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       Prod_Mt <- AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <- minicam.energy.input <-
       field.eff <- blue_fract <- conveyance.eff <- WaterPrice <- calPrice <- WaterCost <- nonLandVariableCost <-
       biomass <- type <- region <- GCAM_region_ID <- year <- value <- GCAM_commodity <- GLU <- GLU_name <-
-      IRR_RFD <- MGMT <- coefficient <- Profit <- . <- NULL  # silence package check notes
+      IRR_RFD <- MGMT <- coefficient <- Profit <- input.cost <- minicam.non.energy.input <- . <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -230,10 +230,16 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
     # Set a floor on profit rates, equal to the minimum observed profit rate not considering water costs
     minProfitMargin <- min(with(L2072.AgNonEnergyCost_IrrWaterWdraw, calPrice - nonLandVariableCost))
 
+    # Note: there is no need to write out zero subsidy values in region/supplysector/subsector/technology observations
+    # where all years are 0. The following steps ensure that there aren't observations with subsidies in some years but
+    # not others.
     L2072.AgNonEnergyCost_IrrWaterWdraw %>%
       mutate(minicam.non.energy.input = "water subsidy",
              # Round to the same number of digits as cal-output rather than cal-price; many are close to zero
              input.cost = if_else(Profit < minProfitMargin, round(Profit - minProfitMargin, aglu.DIGITS_CALOUTPUT), 0)) %>%
+      filter(input.cost < 0) %>%
+      complete(nesting(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, minicam.non.energy.input), year = MODEL_YEARS) %>%
+      replace_na(list(input.cost = 0)) %>%
       select(LEVEL2_DATA_NAMES[["AgNonEnergyCost"]]) ->
       L2072.AgNonEnergyCost_IrrWaterWdraw
 
