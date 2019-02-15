@@ -39,8 +39,9 @@ module_energy_batch_resources_SSP_xml <- function(command, ...) {
       xmlfn <- paste0("resources_SSP", i, '.xml')
 
       create_xml(xmlfn) %>%
+        add_node_equiv_xml("subresource") %>%
+        add_xml_data(L210.DepRsrcEnvironCost_SSP, "ResReserveTechCost") %>%
         add_xml_data(L210.DepRsrcTechChange_SSP, "DepRsrcTechChange") %>%
-        add_xml_data(L210.DepRsrcEnvironCost_SSP, "DepRsrcEnvironCost") %>%
         add_precursors(paste0("L210.DepRsrcTechChange_SSP", i), paste0("L210.DepRsrcEnvironCost_SSP", i)) ->
         xml_obj
 

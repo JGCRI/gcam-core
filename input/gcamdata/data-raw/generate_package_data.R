@@ -69,7 +69,6 @@ generate_level2_data_names <- function() {
   level2_data_names[["DepRsrcTechChange"]] <- c(level2_data_names[["SubDepRsrc"]], "year.fillout", "techChange")
   level2_data_names[["RenewRsrcTechChange"]] <- c(level2_data_names[["SubRenewRsrc"]], "year.fillout", "techChange")
   level2_data_names[["SmthRenewRsrcTechChange"]] <- c(level2_data_names[["SmthRenewRsrc"]], "year.fillout", "techChange")
-  level2_data_names[["DepRsrcEnvironCost"]] <- c("region", "resource", "subresource", "year.fillout", "environCost")
   level2_data_names[["SmthRenewRsrcCurvesGdpElast"]] <- c("region", "renewresource", "smooth.renewable.subresource", "year.fillout", "maxSubResource", "mid.price", "curve.exponent", "gdpSupplyElast")
   level2_data_names[["DepReserveCalReserve"]] <- c("region", "resource", "reserve.subresource", "year", "cal.reserve")
   level2_data_names[["ResSubresoureProdLifetime"]] <- c("region", "resource", "reserve.subresource", "avg.prod.lifetime")
