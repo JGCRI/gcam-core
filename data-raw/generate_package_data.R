@@ -72,6 +72,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["DepRsrcEnvironCost"]] <- c("region", "resource", "subresource", "year.fillout", "environCost")
   level2_data_names[["SmthRenewRsrcCurvesGdpElast"]] <- c("region", "renewresource", "smooth.renewable.subresource", "year.fillout", "maxSubResource", "mid.price", "curve.exponent", "gdpSupplyElast")
   level2_data_names[["DepReserveCalReserve"]] <- c("region", "resource", "reserve.subresource", "year", "cal.reserve")
+  level2_data_names[["ResSubresoureProdLifetime"]] <- c("region", "resource", "reserve.subresource", "avg.prod.lifetime")
 
   # Supplysectors
   level2_data_names[["Supplysector"]] <- c("region", "supplysector", "output.unit", "input.unit", "price.unit", "logit.year.fillout", "logit.exponent")
@@ -139,6 +140,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["ResReserveTechCost"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "minicam.non.energy.input", "input.cost")
   level2_data_names[["ResReserveTechLifetime"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "lifetime")
   level2_data_names[["ResReserveTechProfitShutdown"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "median.shutdown.point", "profit.shutdown.steepness")
+  level2_data_names[["ResReserveTechDeclinePhase"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "decline.phase.percent")
 
   # Global technologies
   level2_data_names[["GlobalTech"]] <- c("sector.name", "subsector.name", "technology")
