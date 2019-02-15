@@ -29,9 +29,10 @@ module_energy_batch_resources_xml <- function(command, ...) {
              "L210.GrdRenewRsrcMax_geo",
              "L210.GrdRenewRsrcCurves_tradbio",
              "L210.GrdRenewRsrcMax_tradbio",
+             "L210.ResSubresoureProdLifetime",
              "L210.ResReserveTechLifetime",
+             "L210.ResReserveTechDeclinePhase",
              "L210.ResReserveTechProfitShutdown",
-             "L210.ResReserveTechCost",
              "L210.ResTechShrwt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "resources.xml"))
@@ -59,9 +60,10 @@ module_energy_batch_resources_xml <- function(command, ...) {
     L210.GrdRenewRsrcMax_geo <- get_data(all_data, "L210.GrdRenewRsrcMax_geo")
     L210.GrdRenewRsrcCurves_tradbio <- get_data(all_data, "L210.GrdRenewRsrcCurves_tradbio")
     L210.GrdRenewRsrcMax_tradbio <- get_data(all_data, "L210.GrdRenewRsrcMax_tradbio")
+    L210.ResSubresoureProdLifetime <- get_data(all_data, "L210.ResSubresoureProdLifetime")
     L210.ResReserveTechLifetime <- get_data(all_data, "L210.ResReserveTechLifetime")
+    L210.ResReserveTechDeclinePhase <- get_data(all_data, "L210.ResReserveTechDeclinePhase")
     L210.ResReserveTechProfitShutdown <- get_data(all_data, "L210.ResReserveTechProfitShutdown")
-    L210.ResReserveTechCost <- get_data(all_data, "L210.ResReserveTechCost")
     L210.ResTechShrwt <- get_data(all_data, "L210.ResTechShrwt")
 
     # ===================================================
@@ -74,10 +76,11 @@ module_energy_batch_resources_xml <- function(command, ...) {
       add_node_equiv_xml("resource") %>%
       add_node_equiv_xml("subresource") %>%
       add_node_equiv_xml("technology") %>%
+      add_xml_data(L210.ResSubresoureProdLifetime, "ResSubresoureProdLifetime") %>%
       add_xml_data(L210.DepReserveCalReserve, "DepReserveCalReserve") %>%
       add_xml_data(L210.ResReserveTechLifetime, "ResReserveTechLifetime") %>%
+      add_xml_data(L210.ResReserveTechDeclinePhase, "ResReserveTechDeclinePhase") %>%
       add_xml_data(L210.ResReserveTechProfitShutdown, "ResReserveTechProfitShutdown") %>%
-      #add_xml_data(L210.ResReserveTechCost, "ResReserveTechCost") %>%
       add_xml_data(L210.DepRsrcPrice, "DepRsrcPrice") %>%
       add_xml_data(L210.RenewRsrcPrice, "RenewRsrcPrice") %>%
       add_xml_data(L210.UnlimitRsrcPrice, "UnlimitRsrcPrice") %>%
@@ -98,8 +101,8 @@ module_energy_batch_resources_xml <- function(command, ...) {
                      "L210.UnlimitRsrcPrice", "L210.DepRsrcTechChange", "L210.SmthRenewRsrcTechChange", "L210.DepRsrcCalProd", "L210.DepReserveCalReserve",
                      "L210.DepRsrcCurves_fos", "L210.DepRsrcCurves_U", "L210.SmthRenewRsrcCurves_MSW", "L210.SmthRenewRsrcCurves_wind",
                      "L210.SmthRenewRsrcCurvesGdpElast_roofPV", "L210.GrdRenewRsrcCurves_geo", "L210.GrdRenewRsrcMax_geo",
-                     "L210.GrdRenewRsrcCurves_tradbio", "L210.GrdRenewRsrcMax_tradbio", "L210.ResReserveTechLifetime",
-                     "L210.ResReserveTechProfitShutdown", "L210.ResReserveTechCost", "L210.ResTechShrwt") ->
+                     "L210.GrdRenewRsrcCurves_tradbio", "L210.GrdRenewRsrcMax_tradbio", "L210.ResSubresoureProdLifetime",
+                     "L210.ResReserveTechLifetime", "L210.ResReserveTechDeclinePhase", "L210.ResReserveTechProfitShutdown", "L210.ResTechShrwt") ->
       resources.xml
 
     return_data(resources.xml)

@@ -1,0 +1,11 @@
+# File: A10.ResSubresoureProdLifetime.csv
+# Title: Average resource well / mine lifetime over which the reserve will be produced / depleted
+# Units: Years
+# Source: TODO
+# Column types: cci
+# ----------
+resource,reserve.subresource,avg.prod.lifetime
+coal,coal,40
+crude oil,crude oil,60
+natural gas,natural gas,30
+unconventional oil,unconventional oil,45

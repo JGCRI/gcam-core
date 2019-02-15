@@ -24,7 +24,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
              FILE = "energy/IEA_product_rsrc",
              FILE = "energy/rsrc_unconv_oil_prod_bbld",
              FILE = "energy/A11.fos_curves",
-             FILE = "energy/A10.ResReserveTechLifetime",
+             FILE = "energy/A10.ResSubresoureProdLifetime",
              "L100.IEA_en_bal_ctry_hist",
              "L1011.en_bal_EJ_R_Si_Fi_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -44,7 +44,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
     IEA_product_rsrc <- get_data(all_data, "energy/IEA_product_rsrc")
     rsrc_unconv_oil_prod_bbld <- get_data(all_data, "energy/rsrc_unconv_oil_prod_bbld")
     A11.fos_curves <- get_data(all_data, "energy/A11.fos_curves")
-    A10.ResReserveTechLifetime <- get_data(all_data, "energy/A10.ResReserveTechLifetime")
+    A10.ResSubresoureProdLifetime <- get_data(all_data, "energy/A10.ResSubresoureProdLifetime")
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
 
@@ -240,7 +240,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
     }
     L111.Prod_EJ_R_F_Yh %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      left_join_error_no_match(select(A10.ResReserveTechLifetime, resource, lifetime),
+      left_join_error_no_match(select(A10.ResSubresoureProdLifetime, resource, lifetime = avg.prod.lifetime),
                                by=c("fuel" = "resource")) %>%
       left_join_error_no_match(model_year_timesteps, by = c("year")) %>%
       repeat_add_columns(tibble(year_operate = MODEL_BASE_YEARS)) %>%
@@ -295,7 +295,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       add_comments("they are unreliable as countries are allowed to report them as they choose") %>%
       add_comments("leading to unrealistic reserve values that do not match well with production") %>%
       same_precursors_as(L111.Prod_EJ_R_F_Yh) %>%
-      add_precursors("energy/A10.ResReserveTechLifetime") ->
+      add_precursors("energy/A10.ResSubresoureProdLifetime") ->
       L111.Reserve_EJ_R_F_Yh
 
     L111.RsrcCurves_EJ_R_Ffos %>%
