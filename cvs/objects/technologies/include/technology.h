@@ -161,8 +161,6 @@ public:
     virtual void setYear( const int aNewYear );
     virtual int getYear() const;
     
-    virtual int getLifetimeYears() const;
-    
     virtual bool isSameType( const std::string& aType ) const;
 
     bool XMLParse( const xercesc::DOMNode* tempnode );

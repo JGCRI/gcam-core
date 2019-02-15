@@ -113,8 +113,6 @@ public:
 
     virtual void setYear( const int aNewYear ) = 0;
     virtual int getYear() const = 0;
-    
-    virtual int getLifetimeYears() const = 0;
 
     virtual bool XMLParse( const xercesc::DOMNode* tempnode ) = 0;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const = 0;

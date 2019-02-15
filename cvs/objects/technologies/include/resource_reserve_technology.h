@@ -39,13 +39,11 @@
 
 
 /*!
-* \file resource_reserve_technology.h
-* \ingroup Objects
-* \brief The ResourceReserveTechnology class header file.
-* \details TODO:
-*
-* \author Pralit Patel
-*/
+ * \file resource_reserve_technology.h
+ * \ingroup Objects
+ * \brief The ResourceReserveTechnology class header file.
+ * \author Pralit Patel
+ */
 
 #include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/technology.h"
@@ -53,6 +51,34 @@
 // Forward declaration
 class Tabs;
 
+/*!
+ * \ingroup Objects
+ * \brief A type of technology that has a cumulative resource base set when initially
+ *        invested and produces from that resource base at some annualized rate until
+ *        it has been fully depleted.
+ * \details This class will work in conjunction with a ReserveSubResource for calculating
+ *          new investment.  This technology is still subject to shutdown deciders, cost
+ *          adders, emissions which may affect the level of vintaged production the same
+ *          as any other technology.  However when calculating profit shutdown we tack on
+ *          additional "investment" cost which is reflective of where on the supply curve
+ *          the containing ReserveSubResource was.
+ *
+ *          <b>XML specification for ResourceReserveTechnology</b>
+ *          - XML name: -c ResourceReserveTechnology::getXMLNameStatic()
+ *          - Contained by: ReserveSubResource
+ *          - Parsing inherited from class: Technology
+ *          - Attributes: None
+ *          - Elements:
+ *              - \c buildup-years mBuildupYears
+ *                   A parameter which can phase in annual production over the given
+ *                   number of years.
+ *              - \c decline-phase-percent mDeclinePhasePct
+ *                   A parameter which can be used to linearly phase out annual production
+ *                   after the remaining reserve has reached the configured percent.
+ *
+ * \sa ReserveSubResource
+ * \author Pralit Patel
+ */
 class ResourceReserveTechnology : public Technology {
 	friend class XMLDBOutputter;
 public:
@@ -63,35 +89,24 @@ public:
 	ResourceReserveTechnology* clone() const;
 
 	virtual void completeInit(const std::string& aRegionName,
-		const std::string& aSectorName,
-		const std::string& aSubsectorName,
-		const IInfo* aSubsectorIInfo,
-		ILandAllocator* aLandAllocator);
-
-	virtual void initCalc(const std::string& aRegionName,
-		const std::string& aSectorName,
-		const IInfo* aSubsectorInfo,
-		const Demographic* aDemographics,
-		PreviousPeriodInfo& aPrevPeriodInfo,
-		const int aPeriod);
+                              const std::string& aSectorName,
+                              const std::string& aSubsectorName,
+                              const IInfo* aSubsectorIInfo,
+                              ILandAllocator* aLandAllocator);
 
 	virtual void production(const std::string& aRegionName,
-		const std::string& aSectorName,
-		double aVariableDemand,
-		double aFixedOutputScaleFactor,
-		const GDP* aGDP,
-		const int aPeriod);
+                            const std::string& aSectorName,
+                            double aVariableDemand,
+                            double aFixedOutputScaleFactor,
+                            const GDP* aGDP,
+                            const int aPeriod);
     
-    virtual double getFixedOutput( const std::string& aRegionName,
-                          const std::string& aSectorName,
-                          const bool aHasRequiredInput,
-                          const std::string& aRequiredInput,
-                          const double aMarginalRevenue,
-                          const int aPeriod ) const;
-    
-    virtual double getMarginalRevenue( const std::string& aRegionName,
-                                      const std::string& aSectorName,
-                                      const int aPeriod ) const;
+    virtual double getFixedOutput(const std::string& aRegionName,
+                                  const std::string& aSectorName,
+                                  const bool aHasRequiredInput,
+                                  const std::string& aRequiredInput,
+                                  const double aMarginalRevenue,
+                                  const int aPeriod) const;
     
     virtual double getEnergyCost( const std::string& aRegionName,
                                   const std::string& aSectorName,
@@ -102,7 +117,6 @@ public:
 
 	virtual void doInterpolations(const Technology* aPrevTech, const Technology* aNextTech);
     
-    virtual void initTechVintageVector();
 protected:
     
     // Define data such that introspection utilities can process the data from this
@@ -110,26 +124,38 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         Technology,
 
-        //! The capacity for this technology.
+        //! The total reserve which was calculated during investment to produce from.
         DEFINE_VARIABLE( SIMPLE | STATE, "total-reserve", mTotalReserve, Value ),
-                            
-        DEFINE_VARIABLE( ARRAY, "cumulative-production", mCumulProd, objects::TechVintageVector<Value> ),
-                            
-        /*DEFINE_VARIABLE( SIMPLE, "eor-coef", mEORCoef, Value ),*/
-                            
-        // TODO: could make this a new vintage production state
-        DEFINE_VARIABLE( SIMPLE, "production-phase-scaler", mProductionPhaseScaler, Value ),
         
-        DEFINE_VARIABLE( SIMPLE | STATE, "investment-cost", mInvestmentCost, Value )
+        //! The "investment" cost which is the cost of where on the supply curve the
+        //! containing resource was when it invested in this technology.  We use this
+        //! as a way to reflect the costs captured in the supply curve when calculating
+        //! the profit shutdown.
+        DEFINE_VARIABLE( SIMPLE | STATE, "investment-cost", mInvestmentCost, Value ),
+                            
+        //! An expected average lifetime to fully produce the total reserve.  This
+        //! value is calculate an annualized production.  Note this value is generally
+        //! shorter than the actual technology lifetime as annual production may decline
+        //! in some years due to profit shutdown or because we are in a "decline" phase.
+        DEFINE_VARIABLE( SIMPLE, "average-production-lifetime", mAvgProdLifetime, Value ),
+                  
+        //! The cumulative production that has been depleted from the total reserve
+        //! by each model period.
+        DEFINE_VARIABLE( ARRAY, "cumulative-production", mCumulProd, objects::TechVintageVector<Value> ),
+        
+        //! A parameter which can phase in annual production over the given number of years.
+        DEFINE_VARIABLE( SIMPLE, "buildup-years", mBuildupYears, int ),
+    
+        //! A parameter which can be used to linearly phase out annual production
+        //! after the remaining reserve has reached the configured percent.
+        DEFINE_VARIABLE( SIMPLE, "decline-phase-percent", mDeclinePhasePct, Value )
     )
-
+    
 	virtual void toDebugXMLDerived(const int period, std::ostream& out, Tabs* tabs) const;
 	virtual bool XMLDerivedClassParse(const std::string& nodeName, const xercesc::DOMNode* curr);
-	//virtual void acceptDerived(IVisitor* aVisitor, const int aPeriod) const;
 	virtual const std::string& getXMLName() const;
     void copy( const ResourceReserveTechnology& aOther );
     virtual void setProductionState( const int aPeriod );
-    virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const; 
 };
 
 #endif // _RESOURCE_RESERVE_TECHNOLOGY_H_

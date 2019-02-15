@@ -1553,14 +1553,6 @@ int Technology::getYear() const {
     return mYear;
 }
 
-/*!
- * \brief Get the technology lifetime.
- * \return The number of years for which this technology vintage may produce.
- */
-int Technology::getLifetimeYears() const {
-    return mLifetimeYears;
-}
-
 /*! \brief Return the marginal revenue for this Technology's output.
 * \details The marginal revenue for the Technology is defined as the market
 *          price for the good in the given period divided by the price

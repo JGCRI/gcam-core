@@ -44,17 +44,14 @@
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/iproduction_state.h"
 #include "technologies/include/production_state_factory.h"
-#include "technologies/include/marginal_profit_calculator.h"
 #include "technologies/include/ioutput.h"
 #include "util/base/include/ivisitor.h"
-#include "util/base/include/initialize_tech_vector_helper.hpp"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-
-const int ADDITIONAL_PRODUCTION_LIFETIME = 20;
 
 /*!
 * \brief Constructor.
@@ -64,7 +61,9 @@ const int ADDITIONAL_PRODUCTION_LIFETIME = 20;
 ResourceReserveTechnology::ResourceReserveTechnology(const string& aName, const int aYear) :
 Technology(aName, aYear),
 mTotalReserve( 0.0 ),
-mInvestmentCost( 0.0 )
+mInvestmentCost( 0.0 ),
+mBuildupYears( 0 ),
+mDeclinePhasePct( 1.0 )
 {
 }
 
@@ -77,7 +76,8 @@ mInvestmentCost( 0.0 )
 void ResourceReserveTechnology::copy(const ResourceReserveTechnology& aTech) {
     Technology::copy( aTech );
     
-    //mEORCoef = aTech.mEORCoef;
+    mBuildupYears = aTech.mBuildupYears;
+    mDeclinePhasePct = aTech.mDeclinePhasePct;
 }
 
 // ! Destructor
@@ -87,10 +87,14 @@ ResourceReserveTechnology::~ResourceReserveTechnology() {
 //! Parses any input variables specific to derived classes
 bool ResourceReserveTechnology::XMLDerivedClassParse(const string& aNodeName, const DOMNode* aCurrNode) {
     bool success = false;
-    /*if( aNodeName == "eor-coef" ) {
-        mEORCoef = XMLHelper<Value>::getValue( aCurrNode );
+    if( aNodeName == "buildup-years" ) {
+        mBuildupYears = XMLHelper<int>::getValue( aCurrNode );
         success = true;
-    }*/
+    }
+    else if( aNodeName == "decline-phase-percent" ) {
+        mDeclinePhasePct = XMLHelper<Value>::getValue( aCurrNode );
+        success = true;
+    }
 	return success;
 }
 
@@ -99,7 +103,8 @@ void ResourceReserveTechnology::toDebugXMLDerived(const int aPeriod, ostream& aO
 	XMLWriteElement(mTotalReserve, "total-resource-reserve", aOut, aTabs);
     XMLWriteElement(mInvestmentCost, "investment-cost", aOut, aTabs);
 	XMLWriteElement(mCumulProd[ aPeriod ], "cumulative-production", aOut, aTabs);
-	XMLWriteElement(mProductionPhaseScaler, "production-phase-scaler", aOut, aTabs);
+	XMLWriteElement(mBuildupYears, "buildup-years", aOut, aTabs);
+    XMLWriteElement(mDeclinePhasePct, "decline-phase-percent", aOut, aTabs);
     XMLWriteElement(mMarginalRevenue, "marginal-revenue", aOut, aTabs);
 }
 
@@ -142,41 +147,29 @@ void ResourceReserveTechnology::completeInit(const std::string& aRegionName,
 	const IInfo* aSubsectorInfo,
 	ILandAllocator* aLandAllocator)
 {
-	// Note: Technology::completeInit() loops through the outputs.
-	//       Therefore, if any of the outputs need the land allocator,
-	//       the call to Technology::completeInit() must come afterwards
+    mAvgProdLifetime = aSubsectorInfo->getDouble( "average-production-lifetime", true );
+    
 	Technology::completeInit(aRegionName, aSectorName, aSubsectorName, aSubsectorInfo,
 		aLandAllocator);
 }
 
-void ResourceReserveTechnology::initCalc(const string& aRegionName,
-	const string& aSectorName,
-	const IInfo* aSubsectorInfo,
-	const Demographic* aDemographics,
-	PreviousPeriodInfo& aPrevPeriodInfo,
-	const int aPeriod)
-{
-	Technology::initCalc(aRegionName, aSectorName, aSubsectorInfo,
-		aDemographics, aPrevPeriodInfo, aPeriod);
-    
-    if( !isOperating( aPeriod ) ) {
-        return;
-    }
-
-    if( aPeriod == 0 || !isOperating( aPeriod - 1 ) ) {
-        mCumulProd[ aPeriod ] = 0.0;
-    }
-}
-
-/*! \brief Calculates the output of the technology.
-* \details Calculates the amount of current ag output based on the amount
-*          land and it's yield.
-* \param aRegionName Region name.
-* \param aSectorName Sector name, also the name of the product.
-* \param aVariableDemand Subsector demand for output.
-* \param aGDP Regional GDP container.
-* \param aPeriod Model period.
-*/
+/*!
+ * \brief Calculates the output of the technology.
+ * \details For the case of ResourceReserveTechnology this method will be called
+ *          by the containing resource and aVariableDemand will actually be the
+ *          new investment in terms of cumulative resource.  If this is a new vintage
+ *          technology then we can go ahead and set that value.  We can then just use
+ *          the base class production method if we annualize aVariableDemand using
+ *          the expected average lifetime already set from the containing resource.
+ * \param aRegionName Region name.
+ * \param aSectorName Sector name, aka resource name.
+ * \param aVariableDemand The cumulative resource base to use as new investment.
+ * \param aFixedOutputScaleFactor A factor that may scale down *all* production (new
+ *                                and existing vintages).  For ResourceReserveTechnology
+ *                                would only potentially be necessary during calibration.
+ * \param aGDP Regional GDP container.
+ * \param aPeriod Model period.
+ */
 void ResourceReserveTechnology::production(const string& aRegionName,
 	const string& aSectorName,
 	const double aVariableDemand,
@@ -184,17 +177,28 @@ void ResourceReserveTechnology::production(const string& aRegionName,
 	const GDP* aGDP,
 	const int aPeriod)
 {
-    if( !mProductionState[ aPeriod ]->isOperating() ) {
-        return;
-    }
-    
+    // Set the total resource reserve base if this is a new investment technology
     if( mProductionState[ aPeriod ]->isNewInvestment() ) {
         mTotalReserve = aVariableDemand;
     }
     
-    Technology::production( aRegionName, aSectorName, aVariableDemand / mLifetimeYears * aFixedOutputScaleFactor, aFixedOutputScaleFactor, aGDP, aPeriod );
+    // Just call the base class production with the annualized production value for
+    // aVariableDemand.  Note we also need to be sure to scale the annualized production
+    // by aFixedOutputScaleFactor to ensure all production is being scaled incase we
+    // need to do so in order to match calibration.
+    double annualizedProd = aVariableDemand / mAvgProdLifetime * aFixedOutputScaleFactor;
+    Technology::production( aRegionName, aSectorName, annualizedProd,
+                            aFixedOutputScaleFactor, aGDP, aPeriod );
 }
 
+/*!
+ * \brief Set up the production state object for this period which is responsible
+ *        for properly operating this vintage.
+ * \details For ResourceReserveTechnology we may need to adjust the "base" output
+ *          levels to account for the buildup or decline phase other than that this
+ *          method operates mostly the same as the base class version.
+ * \param aPeriod The current model period.
+ */
 void ResourceReserveTechnology::setProductionState( const int aPeriod ) {
     // Check that the state for this period has not already been initialized.
     // Note that this is the case when the same scenario is run multiple times
@@ -206,58 +210,63 @@ void ResourceReserveTechnology::setProductionState( const int aPeriod ) {
 
     const Modeltime* modeltime = scenario->getModeltime();
     const int currYear = modeltime->getper_to_yr( aPeriod );
-    //int adjTechYear = mYear - modeltime->gettimestep( modeltime->getyr_to_per( mYear ) ) + 1;
     
-    const double BUILDUP_YEARS = 0.0;
-    const double DECLINE_PCT = 0.3;
-    const double ABANDONMENT_PCT = 0.10;
-    
-    //double eorCoef = 0.0;
-    
-    double annualAvgProd = mTotalReserve / mLifetimeYears;
+    double annualAvgProd = mTotalReserve / mAvgProdLifetime;
+    double productionPhaseScaler;
     bool active = true;
-    if( mYear >= currYear || mTotalReserve == 0.0 || ( mYear + mLifetimeYears + ADDITIONAL_PRODUCTION_LIFETIME ) <= currYear ) {
+    if( mYear >= currYear || mTotalReserve == 0.0 || ( mYear + mLifetimeYears ) <= currYear ) {
         // variable, retired, or future production
-        mProductionPhaseScaler = 1.0;
+        productionPhaseScaler = 1.0;
         active = false;
     }
-    else if((currYear - mYear) < BUILDUP_YEARS) {
-        mProductionPhaseScaler = (currYear - mYear + 1) / BUILDUP_YEARS;
+    else if((currYear - mYear) < mBuildupYears) {
+        // phase in production linearly if we are within the buildup years
+        productionPhaseScaler = (currYear - mYear + 1) / mBuildupYears;
     }
-    else if((mTotalReserve - mCumulProd[ aPeriod - 1]) <= (mTotalReserve * ABANDONMENT_PCT)) {
-        mProductionPhaseScaler = max((mTotalReserve - mCumulProd[ aPeriod - 1]) / (mTotalReserve * DECLINE_PCT), 0.0);
-        //eorCoef = mEORCoef;
-    }
-    else if((mTotalReserve - mCumulProd[ aPeriod - 1]) <= (mTotalReserve * DECLINE_PCT)) {
-        mProductionPhaseScaler = max((mTotalReserve - mCumulProd[ aPeriod - 1]) / (mTotalReserve * DECLINE_PCT), 0.0);
-        //eorCoef = mEORCoef;
+    else if((mTotalReserve - mCumulProd[ aPeriod - 1]) <= (mTotalReserve * mDeclinePhasePct)) {
+        // phase out production linearly if we have depleted enough of the reserve to be
+        // in the decline phase
+        productionPhaseScaler = max((mTotalReserve - mCumulProd[ aPeriod - 1]) /
+                                    (mTotalReserve * mDeclinePhasePct), 0.0);
     }
     else {
-        mProductionPhaseScaler = 1.0;
+        productionPhaseScaler = 1.0;
     }
 
-    double initialOutput = annualAvgProd * mProductionPhaseScaler;
+    double initialOutput = annualAvgProd * productionPhaseScaler;
     if( active ) {
         // gaurd against producing more than the total reserve by backing out the
         // annual production that would depelete the rest of the reserve and
         // only producing the that amount if it is less that the adjusted average
         // annual production
-        double maxAvail = std::max((( mTotalReserve - mCumulProd[ aPeriod - 1 ]) - modeltime->gettimestep(aPeriod) * mOutputs[0]->getPhysicalOutput(aPeriod - 1)) * 2 / modeltime->gettimestep( aPeriod) + mOutputs[0]->getPhysicalOutput( aPeriod - 1), 0.0);
-        initialOutput = std::min( initialOutput, maxAvail);
+        double maxAvail = std::max(
+                                   (( mTotalReserve - mCumulProd[ aPeriod - 1 ]) - modeltime->gettimestep(aPeriod) * mOutputs[0]->getPhysicalOutput(aPeriod - 1)) * 2 /
+                                   modeltime->gettimestep( aPeriod) + mOutputs[0]->getPhysicalOutput( aPeriod - 1),
+                                   0.0);
+        initialOutput = std::min(initialOutput, maxAvail);
     }
     
     mProductionState[ aPeriod ] =
-        ProductionStateFactory::create( mYear, mLifetimeYears + ADDITIONAL_PRODUCTION_LIFETIME, mFixedOutput,
+        ProductionStateFactory::create( mYear, mLifetimeYears, mFixedOutput,
                                    initialOutput, aPeriod ).release();
 }
 
-double ResourceReserveTechnology::getMarginalRevenue( const string& aRegionName,
-                                      const string& aSectorName,
-                                      const int aPeriod ) const
-{
-    return mMarginalRevenue;
-}
-
+/*!
+ * \brief Return fixed Technology output
+ * \details For ResourceReserveTechnology we use this oportunity to set the investment
+ *          cost if this is a new vintage technology.  In addtion we adjust the marginal
+ *          revenue to include the investment cost.
+ * \param aRegionName Region name.
+ * \param aSectorName Sector name.
+ * \param aHasRequiredInput Whether the technology should check what the required
+ *        input is.
+ * \param aRequiredInput The input the technology is required to have if it
+ *        returns a fixed output value.
+ * \param aMarginalRevenue The marginal revenue that may be used when calculating
+ *                         the profit rate of this technology.
+ * \param aPeriod model period
+ * \return Value of fixed output for this Technology
+ */
 double ResourceReserveTechnology::getFixedOutput( const string& aRegionName,
                                   const string& aSectorName,
                                   const bool aHasRequiredInput,
@@ -268,23 +277,14 @@ double ResourceReserveTechnology::getFixedOutput( const string& aRegionName,
     if( mProductionState[ aPeriod ]->isNewInvestment() ) {
         const_cast<ResourceReserveTechnology*>(this)->mInvestmentCost = aMarginalRevenue;
     }
-    mMarginalRevenue = aMarginalRevenue + mInvestmentCost;
-    
-    // Construct a marginal profit calculator. This allows the calculation of
-    // marginal profits to be lazy.
-    MarginalProfitCalculator marginalProfitCalc( this );
-    return mProductionState[ aPeriod ]->calcProduction( aRegionName,
-                                                       aSectorName,
-                                                       0, // No variable output.
-                                                       &marginalProfitCalc,
-                                                       1, // Not shutting down any fixed output using
-                                                       // the scale factor.
-                                                       mShutdownDeciders,
-                                                       aPeriod );
+
+    return Technology::getFixedOutput( aRegionName, aSectorName, aHasRequiredInput, aRequiredInput,
+                                       aMarginalRevenue + mInvestmentCost, aPeriod );
 }
 
-/*! \brief Return the total variable input costs which includes energy, taxes, etc.
- * \todo This assumes a leontief production function.
+/*!
+ * \brief Return the total variable input costs which includes energy, taxes, etc.
+ * \details For ResourceReserveTechnology we simply tack on the investment cost.
  * \param aRegionName The region containing the Technology.
  * \param aSectorName The sector containing the Technology.
  * \param aPeriod Period in which to calculate the energy cost.
@@ -296,7 +296,7 @@ double ResourceReserveTechnology::getEnergyCost( const string& aRegionName,
 {
     // Calculates the energy cost by first calculating the total cost including
     // all inputs and then removing the non-energy costs.
-    double cost = getTotalInputCost( aRegionName, aSectorName, aPeriod ) +
+    double cost = Technology::getEnergyCost( aRegionName, aSectorName, aPeriod ) +
         mInvestmentCost;
 
     return cost;
@@ -326,44 +326,20 @@ void ResourceReserveTechnology::postCalc( const string& aRegionName, const int a
         return;
     }
     
+    // update cumulative production to account for resource depletion
     const Modeltime* modeltime = scenario->getModeltime();
     double currProd = mOutputs[ 0 ]->getPhysicalOutput( aPeriod );
     int timeStep = modeltime->gettimestep(aPeriod);
     int currYear = modeltime->getper_to_yr( aPeriod );
     if( mYear == currYear ) {
-        // assume constant production (consistent if BUILDUP_YEARS == 0)
+        // assume constant production
         mCumulProd[ aPeriod ] = currProd * timeStep;
     }
     else {
-        // simplify by using trapizoidal (maybe could do better since we know shape of "fixed"
-        // production profile)
+        // simplify by assuming linear change in annual production from the previous
+        // period
         double prevProd = mOutputs[ 0 ]->getPhysicalOutput( aPeriod - 1 );
         double periodCumulProd = prevProd * timeStep + 0.5 * ( currProd - prevProd) * timeStep;
         mCumulProd[ aPeriod ] = aPeriod > 0 ? mCumulProd[ aPeriod - 1 ] + periodCumulProd : 0.0;
     }
 }
-
-void ResourceReserveTechnology::acceptDerived( IVisitor* aVisitor, const int aPeriod ) const {
-    // Derived visit.
-    //aVisitor->startVisitResourceReserveTechnology( this, aPeriod );
-    // End the derived class visit.
-    //aVisitor->endVisitResourceReserveTechnology( this, aPeriod );
-}
-
-void ResourceReserveTechnology::initTechVintageVector() {
-    const Modeltime* modeltime = scenario->getModeltime();
-    int numPeriodsActive = 0;
-    int startPer = modeltime->getyr_to_per( getYear() );
-    int currPer = startPer;
-    for( int year = getYear(); currPer < modeltime->getmaxper() && year < (getYear() + mLifetimeYears + ADDITIONAL_PRODUCTION_LIFETIME); ) {
-        ++numPeriodsActive;
-        ++currPer;
-        if( currPer < modeltime->getmaxper() ) {
-            year = modeltime->getper_to_yr( currPer );
-        }
-    }
-    
-    objects::InitializeTechVectorHelper helper( startPer, numPeriodsActive );
-    helper.initializeTechVintageVector( this );
-}
-

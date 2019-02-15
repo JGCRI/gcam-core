@@ -58,6 +58,38 @@
 * \author Pralit Patel
 */
 
+/*!
+ * \ingroup Objects
+ * \brief A depleting sub-resource which producing using a resource - reserve paradigm.
+ * \details This class treats the graded supply curve as a definition of "resource"
+ *          potential and vintaged ResourceReserveTechnology that represents "reserves"
+ *          from which we can produce the annual production that gets added as the
+ *          supply to the marketplace.
+ *          The procedure is not too different than the base case, we still use the
+ *          market price (adjust by tech cost) to look up the supply curve.  However
+ *          instead of assuming that quantity is produced entirely in the current timestep
+ *          we treat it as a reserve that is produced over some assumed lifetime.  Thus
+ *          we use that quantity as the "new investment" in a ResourceReserveTechnology
+ *          the actual annual production is calculated by vintages with production
+ *          coming not only from the new investment but also prior vintages which
+ *          are still operating and have remaining reserve to produce from.
+ *
+ *          <b>XML specification for ReserveSubResource</b>
+ *          - XML name: -c ReserveSubResource::getXMLNameStatic()
+ *          - Contained by: Resource
+ *          - Parsing inherited from class: SubResource
+ *          - Attributes: None
+ *          - Elements:
+ *              - \c cal-reserve mCalReserve
+ *                   A historical reserve amount to calibrate to in the historical years.
+ *              - \c average-production-lifetime mAvgProdLifetime
+ *                   An expected average lifetime to fully produce the reserve -- or
+ *                   cumulsupply from a model period.  This value is calculate an annualized
+ *                   production.
+ *
+ * \sa ResourceReserveTechnology
+ * \author Pralit Patel
+ */
 class ReserveSubResource: public SubResource
 {
     friend class CalibrateResourceVisitor;
@@ -66,31 +98,25 @@ public:
     virtual ~ReserveSubResource();
     virtual void completeInit( const std::string& aRegionName, const std::string& aResourceName,
                                const IInfo* aResourceInfo );
-    //void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
-    virtual void cumulsupply( const std::string& aRegionName, const std::string& aResourceName,
-                              double aPrice, int aPeriod );
-    virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName,
-                           const IInfo* aResourceInfo, const int aPeriod );
-    virtual void postCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
     virtual void annualsupply( const std::string& aRegionName, const std::string& aResourceName,
                                int aPeriod, const GDP* aGdp, double aPrice );
-    double getAnnualProd( int aPeriod ) const;
-    double getAvailable( int aPeriod ) const;
-    void updateAvailable( const int period );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual double getLowestPrice( const int aPeriod ) const;
-    virtual double getHighestPrice( const int aPeriod ) const;
 protected:
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
 
     DEFINE_DATA_WITH_PARENT(
         SubResource,
-                         
-        DEFINE_VARIABLE( ARRAY, "cal-reserve", mCalReserve, objects::PeriodVector<Value> )
+        
+        //! A historical reserve amount to calibrate to in the historical years.
+        DEFINE_VARIABLE( ARRAY, "cal-reserve", mCalReserve, objects::PeriodVector<Value> ),
+        
+        //! An expected average lifetime to fully produce the reserve -- or cumulsupply from
+        //! a model period.  This value is calculate an annualized production.
+        DEFINE_VARIABLE( SIMPLE, "average-production-lifetime", mAvgProdLifetime, Value )
     )
 };
-
 
 #endif // _RESERVE_SUBRESOURCE_H_

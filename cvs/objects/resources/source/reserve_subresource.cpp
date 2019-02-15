@@ -46,16 +46,12 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 
-//#include "containers/include/scenario.h"
-//#include "util/base/include/model_time.h"
-//#include "marketplace/include/marketplace.h"
 #include "resources/include/reserve_subresource.h"
 #include "resources/include/grade.h"
 #include "util/base/include/xml_helper.h"
-//#include "containers/include/info_factory.h"
-//#include "containers/include/iinfo.h"
+#include "containers/include/info_factory.h"
+#include "containers/include/iinfo.h"
 #include "util/base/include/ivisitor.h"
-//#include "sectors/include/sector_utils.h"
 #include "technologies/include/resource_reserve_technology.h"
 #include "technologies/include/technology_container.h"
 
@@ -65,7 +61,8 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 //! Default constructor.
-ReserveSubResource::ReserveSubResource()
+ReserveSubResource::ReserveSubResource():
+mAvgProdLifetime( 0 )
 {
 }
 
@@ -73,62 +70,33 @@ ReserveSubResource::ReserveSubResource()
 ReserveSubResource::~ReserveSubResource() {
 }
 
-
-/*! \brief Complete the initialization
-*
-* This routine is only called once per model run
-*
-* \author Josh Lurz, Sonny Kim
-* \warning markets are not necessarily set when completeInit is called
-*/
 void ReserveSubResource::completeInit( const std::string& aRegionName, const std::string& aResourceName,
                                        const IInfo* aResourceInfo )
 {
-    SubResource::completeInit( aRegionName, aResourceName, aResourceInfo );
+    if( mAvgProdLifetime <= 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "No average production lifetime set in " << getXMLName() << ": "
+                << aRegionName << ", " << aResourceName << ", " << mName << endl;
+        abort();
+    }
+    IInfo* currInfo = InfoFactory::constructInfo( aResourceInfo, mName );
+    currInfo->setDouble( "average-production-lifetime", mAvgProdLifetime );
+    SubResource::completeInit( aRegionName, aResourceName, currInfo );
+    delete currInfo;
 }
 
-/*! \brief Perform any initializations needed for each period.
-* \details Any initializations or calculations that only need to be done once per
-*          period(instead of every iteration) should be placed in this function.
-* \author Sonny Kim
-* \param aRegionName Region name.
-* \param aResourceName Resource name.
-* \param aPeriod Model aPeriod
-*/
-void ReserveSubResource::initCalc( const string& aRegionName, const string& aResourceName,
-                                   const IInfo* aResourceInfo, const int aPeriod )
-{
-    SubResource::initCalc( aRegionName, aResourceName, aResourceInfo, aPeriod );
-}
-
-/*! \brief Perform any initializations needed after each period.
-* \details Any initializations or calculations that only need to be done once
-*          after each period(instead of every iteration) should be placed in
-*          this function.
-* \author Sonny Kim
-* \param aRegionName Region name.
-* \param aResourceName Resource name.
-* \param period Model aPeriod
-*/
-//#include "util/base/include/auto_file.h"
-void ReserveSubResource::postCalc( const string& aRegionName, const string& aResourceName, const int aPeriod ) {
-    SubResource::postCalc( aRegionName, aResourceName, aPeriod );
-    
-    /*if( aRegionName == "European Free Trade Association" && mName == "crude oil") {
-    AutoOutputFile temp("temp_debug_"+util::toString(aPeriod)+".txt");
-    Tabs tabs;
-    SubResource::toDebugXML( aPeriod, *temp, &tabs);
-    mTechnology->toDebugXML( aPeriod, *temp, &tabs);
-    }*/
-}
-
-bool ReserveSubResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
-    if( nodeName == ResourceReserveTechnology::getXMLNameStatic() ) {
-        parseSingleNode( node, mTechnology, new TechnologyContainer() );
+bool ReserveSubResource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
+    if( aNodeName == ResourceReserveTechnology::getXMLNameStatic() ) {
+        parseSingleNode( aNode, mTechnology, new TechnologyContainer() );
         return true;
     }
-    else if( nodeName == "cal-reserve" ) {
-        XMLHelper<Value>::insertValueIntoVector( node, mCalReserve, scenario->getModeltime() );
+    else if( aNodeName == "cal-reserve" ) {
+        XMLHelper<Value>::insertValueIntoVector( aNode, mCalReserve, scenario->getModeltime() );
+        return true;
+    }
+    else if( aNodeName == "average-production-lifetime" ) {
+        mAvgProdLifetime = XMLHelper<int>::getValue( aNode );
         return true;
     }
     return false;
@@ -160,88 +128,6 @@ const std::string& ReserveSubResource::getXMLNameStatic() {
     return XML_NAME;
 }
 
-void ReserveSubResource::cumulsupply( const string& aRegionName, const string& aResourceName,
-                                      double aPrice, int aPeriod ) {
-    // TODO: not ovverride this method?
-    /*if( mCalReserve[ aPeriod ].isInited() ) {
-        calCumulsupply( aPrice, aPeriod );
-    }
-    else if( aPeriod == 0 ) {
-        mCumulProd[ aPeriod ] = 0;
-        return;
-    }*/
-    SubResource::cumulsupply( aRegionName, aResourceName, aPrice, aPeriod );
-    /*if( aRegionName == "USA" ) {
-        cout << "prod: " << aResourceName << " = " << mCumulProd[ aPeriod ] << endl;
-    }*/
-    /*
-
-    double prevCumul = aPeriod > 0 ? mCumulProd[ aPeriod - 1 ] : 0.0;
-    mEffectivePrice[ aPeriod ] = aPrice + mPriceAdder[ aPeriod ];
-
-    // Case 1
-    // if market price is less than cost of first grade, then zero cumulative
-    // production
-    if ( mEffectivePrice[ aPeriod ] <= mGrade[0]->getCost( aPeriod )) {
-        mCumulProd[ aPeriod ] = prevCumul;
-    }
-
-    // Case 2
-    // if market price is in between cost of first and last grade, then calculate
-    // cumulative production in between those grades
-    if ( mEffectivePrice[ aPeriod ] > mGrade[0]->getCost( aPeriod ) && mEffectivePrice[ aPeriod ] <= mGrade[ mGrade.size() - 1 ]->getCost( aPeriod )) {
-        mCumulProd[ aPeriod ] = 0;
-        int i = 0;
-        int iL = 0;
-        int iU = 0;
-        while ( mGrade[ i ]->getCost( aPeriod ) < mEffectivePrice[ aPeriod ] ) {
-            iL=i; i++; iU=i;
-        }
-        // add subrsrcs up to the lower grade
-        for ( i = 0; i <= iL; i++ ) {
-            mCumulProd[ aPeriod ] += Value( mGrade[i]->getAvail() );
-        }
-        // price must reach upper grade cost to produce all of lower grade
-        double slope = mGrade[iL]->getAvail()
-            / ( mGrade[iU]->getCost( aPeriod ) - mGrade[iL]->getCost( aPeriod ) );
-        mCumulProd[ aPeriod ] -= Value( slope * ( mGrade[iU]->getCost( aPeriod ) - mEffectivePrice[ aPeriod ] ) );
-    }
-
-    // Case 3
-    // if market price greater than the cost of the last grade, then
-    // cumulative production is the amount in all grades
-    if ( mEffectivePrice[ aPeriod ] > mGrade[ mGrade.size() - 1 ]->getCost( aPeriod ) ) {
-        mCumulProd[ aPeriod ] = 0;
-        for ( unsigned int i = 0; i < mGrade.size(); i++ ) {
-            mCumulProd[ aPeriod ] += Value( mGrade[i]->getAvail() );
-        }
-    }
-    
-    mCumulProd[ aPeriod ] = std::max( mCumulProd[ aPeriod ].get(), prevCumul );
-    */
-}
-
-/*
-double ReserveSubResource::getCumulProd( const int aPeriod ) const {
-    return mCumulProd[ aPeriod ];
-}
-*/
-
-/*! Update the sub-resource availability for a period
-* Resource depletion by grade is not calculated.
-* This function only returns the maximum amount of resource
-* available by grade.  
-*
-*/
-/*
-void ReserveSubResource::updateAvailable( const int aPeriod ){
-    mAvailable[ aPeriod ] = 0;
-    for ( unsigned int i = 0; i < mGrade.size(); ++i ) {
-        mAvailable[ aPeriod ] += Value( mGrade[ i ]->getAvail() );
-    }
-}
-*/
-
 //! calculate annual supply
 /*! Takes into account short-term capacity limits.
 Note that cumulsupply() must be called before calling this function. */
@@ -251,7 +137,7 @@ void ReserveSubResource::annualsupply( const string& aRegionName, const string& 
     double prevCumul = aPeriod > 0 ? mCumulProd[ aPeriod - 1] : 0.0;
     double newReserves = mCumulProd[ aPeriod ] - prevCumul;
     
-    // get fixed output as we may scale to match calibration
+    // get fixed output as we may need scale to match calibration
     // note we still need to call Technology::getFixedOutput to set the correct marginal revenue
     // even when not calibrating
     double fixedScaleFactor = 1.0;
@@ -261,12 +147,15 @@ void ReserveSubResource::annualsupply( const string& aRegionName, const string& 
         fixedOutput += (*techIter).second->getFixedOutput( aRegionName, aResourceName, false, "", nonTechInvestmentCost, aPeriod );
     }
     if( mCalProduction[ aPeriod ] != -1 ) {
-        fixedScaleFactor = mCalProduction[ aPeriod ] == 0.0 ? 0.0 : mCalProduction[ aPeriod ] / ( fixedOutput + /* TOOD: move into tech? */ mCalReserve[ aPeriod ] / static_cast<double>( mTechnology->getNewVintageTechnology( aPeriod )->getLifetimeYears() ) );
+        // Calculate the ratio from the actual production to the calibrated production
+        // to use as the fixedScaleFactor which we can then use in Technology::production
+        // to scale and ensure production matches calibration.
+        fixedScaleFactor = mCalProduction[ aPeriod ] == 0.0 ? 0.0 :
+            mCalProduction[ aPeriod ] /
+                ( fixedOutput + mCalReserve[ aPeriod ] / static_cast<double>( mAvgProdLifetime ) );
     }
 
-    /*if( aRegionName == "USA" ) {
-        cout << "fixedOutput: " << fixedOutput << ", New inv: " << (mCalReserve[ aPeriod ] / 60.0) << ", scale: " << fixedScaleFactor << endl;
-    }*/
+    // Calculate production from all vintages
     for( auto techIter = mTechnology->getVintageBegin( aPeriod ); techIter != mTechnology->getVintageEnd( aPeriod ); ++techIter ) {
         (*techIter).second->production( aRegionName, aResourceName, newReserves, fixedScaleFactor, aGdp, aPeriod );
     }
@@ -275,13 +164,6 @@ void ReserveSubResource::annualsupply( const string& aRegionName, const string& 
     // we will avoid that by just telling the resource there was zero annual production.
     mAnnualProd[ aPeriod ] = 0;
 }
-
-//! return annual production for period
-/*
-double ReserveSubResource::getAnnualProd( int aPeriod ) const {
-    return mAnnualProd[ aPeriod ];
-}
-*/
 
 /*! \brief Update an output container for a ReserveSubResource.
 * \param aVisitor Output container to update.
@@ -300,67 +182,17 @@ void ReserveSubResource::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->endVisitReserveSubResource( this, aPeriod );
 }
 
-//! return available resource for period
-/*
-double ReserveSubResource::getAvailable(int per) const {
-    return mAvailable[per];
-}
-*/
-
-/*! do nothing here.  Applies to derived subrenewableresource
-* \author Marshall Wise
-*/
-/*
-double ReserveSubResource::getVariance() const {
-    return 0.0;
-}
-*/
-
-//! get resource capacity factor
-/*! do nothing here.  Applies to derived subrenewableresource
-* \author Marshall Wise
-*/
-/*
-double ReserveSubResource::getAverageCapacityFactor() const {
-    return 0.0;
-}
-*/
-
-/*!
- * \brief Calculate the highest price for which a price change produces a nonzero supply response 
- * \details This is simply the cost of the highest grade for the
- *          subresource, adjusted by the price adder. 
- * \param aPeriod The current model period.
- * \author Robert Link
- */
-double ReserveSubResource::getHighestPrice( const int aPeriod ) const
-{
-    if( mGrade.size() > 0 ) {
-        double cost = mGrade[ mGrade.size() - 1 ]->getCost( aPeriod );
-        return cost - mPriceAdder[ aPeriod ];
-    }
-    else {
-        // We may have subresources with no grades in the case where we are simply
-        // attempting to add a region to a global market and that region does not
-        // have any supply potential.
-        // In that case we return some small number and let another region set the
-        // high price for the market.
-        return -util::getLargeNumber();
-    }
-}
-
 /*!
  * \brief Calculate the lowest price for which a price change produces a nonzero supply response 
- * \details This one is slightly more complicated than the upper
- *          bound.  For a depletable resource we have to back out the
- *          production that has occurred in previous time periods so
- *          that we produce the minimum price that will produce a
- *          change in the annual supply.
+ * \details This one is not straight forward due to vintaging.  In principal we could
+ *          have supply with a price all the way down to zero so that is the best we
+ *          can give for an estimate without doing a lot of extra work.
  * \param aPeriod The current model period.
  */
 double ReserveSubResource::getLowestPrice( const int aPeriod ) const
 {
-    // TODO
+    // TODO: potentially could do better if, for instance, there were no vintages
+    // that are producing
     return 0.0;
 }
 
