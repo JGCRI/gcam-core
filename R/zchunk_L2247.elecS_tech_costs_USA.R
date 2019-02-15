@@ -1,4 +1,4 @@
-#' module_gcam.usa_L2247.elecS_tech_costs_USA
+#' module_gcamusa_L2247.elecS_tech_costs_USA
 #'
 #' Generates add-ons to harmonize reference case generation technology costs for multiple load segments with AEO-2016.
 #'
@@ -21,7 +21,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC Sep 2018
-module_gcam.usa_L2247.elecS_tech_costs_USA <- function(command, ...) {
+module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/A23.itc_USA",
              FILE = "gcam-usa/A23.ptc_USA",
@@ -58,7 +58,7 @@ module_gcam.usa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       sector.name <- subsector.name <- technology <- intermittent.technology <- Electric.sector.technology <-
       Electric.sector.intermittent.technology <- capital.overnight <- overnight.cost<- fixed.charge.rate <-
       GCAM.technology <- itc <- ptc <- OM.fixed <- OM.var <- OM.fixed.x <- OM.var.x <- OM.fixed.y <- OM.var.y <-
-      input.cost <- minicam.non.energy.input <- adv.ratio <- NULL # silence package check notes
+      input.cost <- minicam.non.energy.input <- adv.ratio <- OM <- NULL # silence package check notes
 
     # Load required inputs
     A23.itc_USA <- get_data(all_data, "gcam-usa/A23.itc_USA")
@@ -80,35 +80,37 @@ module_gcam.usa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     # 2. Build tables for CSVs
     # 2a. Build GCAM capital cost table for all model years from AEO/DOE data
 
-    # First, initialize variables
-    max_year_USA <- max(A23.elec_overnight_costs_USA$year)
+    # Define the minimum and maximum year of the input AEO data
+    max_year_AEO <- max(A23.elec_overnight_costs_USA$year)
+    min_year_AEO <- min(A23.elec_overnight_costs_USA$year)
 
-    # Copy the 2015 data to all base years and convert to right units
+    # First, copy the min_year_AEO (2015) data to all GCAM base years and convert to right units
     A23.elec_overnight_costs_USA %>%
       complete(nesting(GCAM.technology), year = c(MODEL_BASE_YEARS, unique(A23.elec_overnight_costs_USA$year))) %>%
       group_by(GCAM.technology) %>%
       # Use the 2015 value for all base years
-      mutate(overnight.cost = replace(overnight.cost, year %in% MODEL_BASE_YEARS, overnight.cost[year == 2015]),
+      mutate(overnight.cost = replace(overnight.cost, year %in% MODEL_BASE_YEARS, overnight.cost[year == min_year_AEO]),
              # Convert to 1975USD
              overnight.cost = overnight.cost * gdp_deflator(1975, base_year = 2013)) %>%
       filter(!is.na(overnight.cost)) ->
       L2247.elec_overnight_costs_USA
 
-    # Next, copy the aeo costs over to the global technology database. For years beyond max_aeo_year (typically 2040), we assume that the
+    # Next, copy the AEO costs over to the global technology database. For years beyond max_year_AEO (typically 2040), we assume that the
     # rate of technological change is the same as what is assumed in the core.
 
     # Technology capital costs
     L2234.GlobalTechCapital_elecS_USA %>%
       group_by(supplysector, subsector, technology) %>%
-      mutate(ratio = capital.overnight / capital.overnight[year == max_year_USA]) %>%
+      mutate(ratio = capital.overnight / capital.overnight[year == max_year_AEO]) %>%
+      # Not all GCAM global technologies have AEO mappings, NA generated, use left_join instead of left_join_error_no_match
       left_join(A23.elecS_tech_associations %>%
-                                 select(Electric.sector, subsector, Electric.sector.technology, GCAM.technology = technology),
-                               by = c("supplysector" = "Electric.sector", "subsector", "technology" = "Electric.sector.technology")) %>%
+                  select(Electric.sector, subsector, Electric.sector.technology, GCAM.technology = technology),
+                by = c("supplysector" = "Electric.sector", "subsector", "technology" = "Electric.sector.technology")) %>%
+      # Not all GCAM global technologies have AEO estimates, NA generated, use left_join instead of left_join_error_no_match
       left_join(L2247.elec_overnight_costs_USA, by = c("year", "GCAM.technology")) %>%
-      mutate(capital.overnight = replace(capital.overnight, !is.na(overnight.cost),
-                                         overnight.cost[!is.na(overnight.cost)]),
-             capital.overnight = replace(capital.overnight, year > max_year_USA,
-                                         capital.overnight[year == max_year_USA] * ratio[year > max_year_USA])) %>%
+      mutate(capital.overnight = replace(capital.overnight, !is.na(overnight.cost), overnight.cost[!is.na(overnight.cost)]),
+             capital.overnight = replace(capital.overnight, year > max_year_AEO,
+                                         capital.overnight[year == max_year_AEO] * ratio[year > max_year_AEO])) %>%
       ungroup %>%
       rename(sector.name = supplysector, subsector.name = subsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechCapital"]], GCAM.technology) ->
@@ -117,15 +119,14 @@ module_gcam.usa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     # Intermittent-Technology capital costs
     L2234.GlobalIntTechCapital_elecS_USA %>%
       group_by(supplysector, subsector, intermittent.technology) %>%
-      mutate(ratio = capital.overnight / capital.overnight[year == max_year_USA]) %>%
+      mutate(ratio = capital.overnight / capital.overnight[year == max_year_AEO]) %>%
       left_join_error_no_match(A23.elecS_inttech_associations %>%
                   select(Electric.sector, subsector, Electric.sector.intermittent.technology, GCAM.technology = intermittent.technology),
                 by = c("supplysector" = "Electric.sector", "subsector", "intermittent.technology" = "Electric.sector.intermittent.technology")) %>%
       left_join(L2247.elec_overnight_costs_USA, by = c("year", "GCAM.technology")) %>%
-      mutate(capital.overnight = replace(capital.overnight, !is.na(overnight.cost),
-                                         overnight.cost[!is.na(overnight.cost)]),
-             capital.overnight = replace(capital.overnight, year > max_year_USA,
-                                         capital.overnight[year == max_year_USA] * ratio[year > max_year_USA])) %>%
+      mutate(capital.overnight = replace(capital.overnight, !is.na(overnight.cost), overnight.cost[!is.na(overnight.cost)]),
+             capital.overnight = replace(capital.overnight, year > max_year_AEO,
+                                         capital.overnight[year == max_year_AEO] * ratio[year > max_year_AEO])) %>%
       ungroup %>%
       rename(sector.name = supplysector, subsector.name = subsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalIntTechCapital"]], GCAM.technology) ->
@@ -137,14 +138,14 @@ module_gcam.usa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     L2247.GlobalTechCapital_elecS_USA %>%
       left_join(A23.itc_USA, by = c("year", "GCAM.technology")) %>%
       filter(!is.na(itc)) %>%
-      mutate(fixed.charge.rate = fixed.charge.rate* (1 - itc)) %>%
+      mutate(fixed.charge.rate = fixed.charge.rate * (1 - itc)) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechFCROnly"]]) ->
       L2247.GlobalTechFCROnly_elecS_itc_USA
 
     L2247.GlobalIntTechCapital_elecS_USA %>%
       left_join(A23.itc_USA, by = c("year", "GCAM.technology")) %>%
       filter(!is.na(itc)) %>%
-      mutate(fixed.charge.rate = fixed.charge.rate* (1 - itc)) %>%
+      mutate(fixed.charge.rate = fixed.charge.rate * (1 - itc)) %>%
       select(LEVEL2_DATA_NAMES[["GlobalIntTechFCROnly"]]) ->
       L2247.GlobalIntTechFCROnly_elecS_itc_USA
 
@@ -185,16 +186,15 @@ module_gcam.usa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     # Technology capital costs
     L2247.GlobalTechCapital_elecS_USA %>%
       group_by(sector.name, subsector.name, technology) %>%
-      mutate(ratio = capital.overnight / capital.overnight[year == max_year_USA]) %>%
+      mutate(ratio = capital.overnight / capital.overnight[year == max_year_AEO]) %>%
       left_join(A23.elecS_tech_associations %>%
                   select(Electric.sector, subsector, Electric.sector.technology, GCAM.technology = technology),
                 by = c("sector.name" = "Electric.sector", "subsector.name" = "subsector",
                        "technology" = "Electric.sector.technology", "GCAM.technology")) %>%
       left_join(L2247.elec_overnight_costs_adv_USA, by = c("year", "GCAM.technology")) %>%
-      mutate(capital.overnight = replace(capital.overnight, !is.na(overnight.cost),
-                                         overnight.cost[!is.na(overnight.cost)]),
-             capital.overnight = replace(capital.overnight, year > max_year_USA,
-                                         capital.overnight[year == max_year_USA] * ratio[year > max_year_USA])) %>%
+      mutate(capital.overnight = replace(capital.overnight, !is.na(overnight.cost), overnight.cost[!is.na(overnight.cost)]),
+             capital.overnight = replace(capital.overnight, year > max_year_AEO,
+                                         capital.overnight[year == max_year_AEO] * ratio[year > max_year_AEO])) %>%
       ungroup %>%
       filter(GCAM.technology %in% adv_tech_usa) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechCapital"]], GCAM.technology) ->
@@ -207,24 +207,25 @@ module_gcam.usa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     L2247.elec_overnight_costs_adv_USA %>%
       filter(GCAM.technology %in% gcamusa.INT_TECH_LIST) %>%
       group_by(GCAM.technology) %>%
-      mutate(adv.ratio = overnight.cost / overnight.cost[year == min(MODEL_FUTURE_YEARS)]) %>%
+      # Calculate the cost reduction rate from the first AEO year
+      mutate(adv.ratio = overnight.cost / overnight.cost[year == min_year_AEO]) %>%
       ungroup %>%
       mutate(GCAM.technology = paste0(GCAM.technology, "_storage")) ->
       L2247.elec_overnight_costs_adv_storage_USA
 
     L2247.GlobalTechCapital_elecS_USA %>%
       group_by(sector.name, subsector.name, technology) %>%
-      mutate(ratio = capital.overnight / capital.overnight[year == max_year_USA]) %>%
+      mutate(ratio = capital.overnight / capital.overnight[year == max_year_AEO]) %>%
       left_join(A23.elecS_tech_associations %>%
                   select(Electric.sector, subsector, Electric.sector.technology, GCAM.technology = technology),
                 by = c("sector.name" = "Electric.sector", "subsector.name" = "subsector",
                        "technology" = "Electric.sector.technology", "GCAM.technology")) %>%
       filter(GCAM.technology %in% gcamusa.STORAGE_TECH_LIST) %>%
       left_join(L2247.elec_overnight_costs_adv_storage_USA, by = c("year", "GCAM.technology")) %>%
-      mutate(capital.overnight = replace(capital.overnight, year > 2015 & year <= max_year_USA,
-                                         capital.overnight[year == 2015] * adv.ratio[year > 2015 & year <= max_year_USA]),
-             capital.overnight = replace(capital.overnight, year > max_year_USA,
-                                         capital.overnight[year == max_year_USA] * ratio[year > max_year_USA])) %>%
+      mutate(capital.overnight = replace(capital.overnight, year > min_year_AEO & year <= max_year_AEO,
+                                         capital.overnight[year == min_year_AEO] * adv.ratio[year > min_year_AEO & year <= max_year_AEO]),
+             capital.overnight = replace(capital.overnight, year > max_year_AEO,
+                                         capital.overnight[year == max_year_AEO] * ratio[year > max_year_AEO])) %>%
       ungroup %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechCapital"]], GCAM.technology) %>%
       # Now, update the advanced tech cost table with above assumptions
@@ -236,7 +237,7 @@ module_gcam.usa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     # We don't need FCR and capacity factor assumptions in the tables to be printed since we did not update those assumptions
     L2247.GlobalTechCapital_elecS_adv_USA %>%
       # Filtering out years through 2015 to make sure that the model outputs are not different in 2015 between a reference and advanced case.
-      filter(year > 2015) %>%
+      filter(year > min(MODEL_FUTURE_YEARS)) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechCapitalOnly"]]) ->
       L2247.GlobalTechCapitalOnly_elecS_adv_USA
 
@@ -244,100 +245,90 @@ module_gcam.usa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     # Intermittent-Technology capital costs
     L2247.GlobalIntTechCapital_elecS_USA %>%
       group_by(sector.name, subsector.name, intermittent.technology) %>%
-      mutate(ratio = capital.overnight / capital.overnight[year == max_year_USA]) %>%
+      mutate(ratio = capital.overnight / capital.overnight[year == max_year_AEO]) %>%
       left_join_error_no_match(A23.elecS_inttech_associations %>%
                                  select(Electric.sector, subsector, Electric.sector.intermittent.technology,
                                         GCAM.technology = intermittent.technology),
                                by = c("sector.name" = "Electric.sector", "subsector.name" = "subsector",
                                       "intermittent.technology" = "Electric.sector.intermittent.technology", "GCAM.technology")) %>%
       left_join(L2247.elec_overnight_costs_adv_USA, by = c("year", "GCAM.technology")) %>%
-      mutate(capital.overnight = replace(capital.overnight, !is.na(overnight.cost),
-                                         overnight.cost[!is.na(overnight.cost)]),
-             capital.overnight = replace(capital.overnight, year > max_year_USA,
-                                         capital.overnight[year == max_year_USA] * ratio[year > max_year_USA])) %>%
+      mutate(capital.overnight = replace(capital.overnight, !is.na(overnight.cost), overnight.cost[!is.na(overnight.cost)]),
+             capital.overnight = replace(capital.overnight, year > max_year_AEO,
+                                         capital.overnight[year == max_year_AEO] * ratio[year > max_year_AEO])) %>%
       ungroup %>%
       # Filtering out years through 2015 to make sure that the model outputs are not different in 2015 between a reference and advanced case.
-      filter(year > 2015, GCAM.technology %in% adv_tech_usa) %>%
+      filter(year > min(MODEL_FUTURE_YEARS), GCAM.technology %in% adv_tech_usa) %>%
       # We don't need FCR and capacity factor assumptions in the tables to be printed since we did not update those assumptions
       select(LEVEL2_DATA_NAMES[["GlobalIntTechCapitalOnly"]]) ->
       L2247.GlobalIntTechCapitalOnly_elecS_adv_USA
 
-    # Advanced Fixed OM cost assumptions
+    # The next section process advanced OM cost assumptions with four steps.
 
-    # Convert 2014USD to 1975USD
+    # First, convert 2014USD to 1975USD
     A23.elec_OM_adv_USA %>%
       mutate(OM.fixed = OM.fixed * gdp_deflator(1975, base_year = 2014),
              OM.var = OM.var * gdp_deflator(1975, base_year = 2014)) ->
       L2247.elec_OM_adv_USA
 
+    # Second, define a function to process and replace OM costs with AEO data
+    replace_AEO_data <- function(data, tech_map) {
+
+      assert_that(is_tibble(data))
+      assert_that(is_tibble(tech_map))
+
+      data %>%
+        group_by(supplysector, subsector, technology) %>%
+        mutate(ratio = OM / OM[year == max_year_AEO]) %>%
+        left_join(tech_map, by = c("supplysector", "subsector", "technology")) %>%
+        left_join(L2247.elec_OM_adv_USA, by = c("year", "GCAM.technology")) %>%
+        mutate(OM = replace(OM, !is.na(OM.fixed), OM.fixed[!is.na(OM.fixed)]),
+               OM = replace(OM, year > max_year_AEO, OM[year == max_year_AEO] * ratio[year > max_year_AEO])) %>%
+        ungroup %>%
+        filter(year > min(MODEL_FUTURE_YEARS), GCAM.technology %in% adv_tech_usa) %>%
+        replace_na(list(OM = 0))
+    }
+
+    # Third, create technology mapping tibbles
+    A23.elecS_tech_associations %>%
+      select(supplysector = Electric.sector, subsector, GCAM.technology = technology,
+             technology = Electric.sector.technology) ->
+      elecS_tech_map
+
+    A23.elecS_inttech_associations %>%
+      select(supplysector = Electric.sector, subsector, GCAM.technology = intermittent.technology,
+             technology = Electric.sector.intermittent.technology) ->
+      elecS_inttech_map
+
+    # Forth, apply the function to replace OM costs with AEO values
+    # Advanced Technology fixed OM-costs
     L2234.GlobalTechOMfixed_elecS_USA %>%
-      group_by(supplysector, subsector, technology) %>%
-      mutate(ratio = OM.fixed / OM.fixed[year == max_year_USA]) %>%
-      left_join(A23.elecS_tech_associations %>%
-                  select(Electric.sector, subsector, Electric.sector.technology, GCAM.technology = technology),
-                by = c("supplysector" = "Electric.sector", "subsector", "technology" = "Electric.sector.technology")) %>%
-      left_join(L2247.elec_OM_adv_USA, by = c("year", "GCAM.technology")) %>%
-      mutate(OM.fixed.x = replace(OM.fixed.x, !is.na(OM.fixed.y), OM.fixed.y[!is.na(OM.fixed.y)]),
-             OM.fixed.x = replace(OM.fixed.x, year > max_year_USA,
-                                  OM.fixed.x[year == max_year_USA] * ratio[year > max_year_USA])) %>%
-      ungroup %>%
-      filter(year > 2015, GCAM.technology %in% adv_tech_usa) %>%
-      rename(sector.name = supplysector, subsector.name = subsector, OM.fixed = OM.fixed.x) %>%
-      replace_na(list(OM.fixed = 0)) %>%
+      rename(OM = OM.fixed) %>%
+      replace_AEO_data(tech_map = elecS_tech_map) %>%
+      select(sector.name = supplysector, subsector.name = subsector, technology, year, input.OM.fixed, OM.fixed = OM) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechOMfixed"]]) ->
       L2247.GlobalTechOMfixedOnly_elecS_adv_USA
 
     # Advanced Intermittent Technology fixed OM-costs
     L2234.GlobalIntTechOMfixed_elecS_USA %>%
-      group_by(supplysector, subsector, intermittent.technology) %>%
-      mutate(ratio = OM.fixed / OM.fixed[year == max_year_USA]) %>%
-      left_join(A23.elecS_inttech_associations %>%
-                  select(Electric.sector, subsector, Electric.sector.intermittent.technology, GCAM.technology = intermittent.technology),
-                by = c("supplysector" = "Electric.sector", "subsector", "intermittent.technology" = "Electric.sector.intermittent.technology")) %>%
-      left_join(L2247.elec_OM_adv_USA, by = c("year", "GCAM.technology")) %>%
-      mutate(OM.fixed.x = replace(OM.fixed.x, !is.na(OM.fixed.y), OM.fixed.y[!is.na(OM.fixed.y)]),
-             OM.fixed.x = replace(OM.fixed.x, year > max_year_USA,
-                                  OM.fixed.x[year == max_year_USA] * ratio[year > max_year_USA])) %>%
-      ungroup %>%
-      filter(year > 2015, GCAM.technology %in% adv_tech_usa) %>%
-      rename(sector.name = supplysector, subsector.name = subsector, OM.fixed = OM.fixed.x) %>%
-      replace_na(list(OM.fixed = 0)) %>%
+      rename(OM = OM.fixed, technology = intermittent.technology) %>%
+      replace_AEO_data(tech_map = elecS_inttech_map) %>%
+      select(sector.name = supplysector, subsector.name = subsector, intermittent.technology = technology, year, input.OM.fixed, OM.fixed = OM) %>%
       select(LEVEL2_DATA_NAMES[["GlobalIntTechOMfixed"]]) ->
       L2247.GlobalIntTechOMfixedOnly_elecS_adv_USA
 
     # Advanced Technology Variable OM
     L2234.GlobalTechOMvar_elecS_USA %>%
-      group_by(supplysector, subsector, technology) %>%
-      mutate(ratio = OM.var / OM.var[year == max_year_USA]) %>%
-      left_join(A23.elecS_tech_associations %>%
-                  select(Electric.sector, subsector, Electric.sector.technology, GCAM.technology = technology),
-                by = c("supplysector" = "Electric.sector", "subsector", "technology" = "Electric.sector.technology")) %>%
-      left_join(L2247.elec_OM_adv_USA, by = c("year", "GCAM.technology")) %>%
-      mutate(OM.var.x = replace(OM.var.x, !is.na(OM.var.y), OM.var.y[!is.na(OM.var.y)]),
-             OM.var.x = replace(OM.var.x, year > max_year_USA,
-                                OM.var.x[year == max_year_USA] * ratio[year > max_year_USA])) %>%
-      ungroup %>%
-      filter(year > 2015, GCAM.technology %in% adv_tech_usa) %>%
-      rename(sector.name = supplysector, subsector.name = subsector, OM.var = OM.var.x) %>%
-      replace_na(list(OM.var = 0)) %>%
+      rename(OM = OM.var) %>%
+      replace_AEO_data(tech_map = elecS_tech_map) %>%
+      select(sector.name = supplysector, subsector.name = subsector, technology, year, input.OM.var, OM.var = OM) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechOMvar"]]) ->
       L2247.GlobalTechOMvar_elecS_adv_USA
 
     # Advanced Intermittent Technology Variable OM
     L2234.GlobalIntTechOMvar_elecS_USA %>%
-      group_by(supplysector, subsector, intermittent.technology) %>%
-      mutate(ratio = OM.var / OM.var[year == max_year_USA]) %>%
-      left_join(A23.elecS_inttech_associations %>%
-                  select(Electric.sector, subsector, Electric.sector.intermittent.technology, GCAM.technology = intermittent.technology),
-                by = c("supplysector" = "Electric.sector", "subsector", "intermittent.technology" = "Electric.sector.intermittent.technology")) %>%
-      left_join(L2247.elec_OM_adv_USA, by = c("year", "GCAM.technology")) %>%
-      mutate(OM.var.x = replace(OM.var.x, !is.na(OM.var.y), OM.var.y[!is.na(OM.var.y)]),
-             OM.var.x = replace(OM.var.x, year > max_year_USA,
-                                OM.var.x[year == max_year_USA] * ratio[year > max_year_USA])) %>%
-      ungroup %>%
-      filter(year > 2015, GCAM.technology %in% adv_tech_usa) %>%
-      rename(sector.name = supplysector, subsector.name = subsector, OM.var = OM.var.x) %>%
-      replace_na(list(OM.var = 0)) %>%
+      rename(OM = OM.var, technology = intermittent.technology) %>%
+      replace_AEO_data(tech_map = elecS_inttech_map) %>%
+      select(sector.name = supplysector, subsector.name = subsector, intermittent.technology = technology, year, input.OM.var, OM.var = OM) %>%
       select(LEVEL2_DATA_NAMES[["GlobalIntTechOMvar"]]) ->
       L2247.GlobalIntTechOMvar_elecS_adv_USA
 
