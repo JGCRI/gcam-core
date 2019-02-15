@@ -91,7 +91,8 @@ module_energy_L210.resources <- function(command, ...) {
       L210.DepRsrcEnvironCost_SSP5 <- available <- cal.production <- capacity.factor <- curve.exponent <-
       resource <- environCost <- extractioncost <- fuel <- gdpSupplyElast <- grade <- market <- value <-
       maxSubResource <- mid.price <- object <- `output-unit` <- `price-unit` <- region <- resource <-
-      resource_type <- scenario <-subResourceCapacityFactor <- subresource <- subresource_type <- NULL
+      resource_type <- scenario <-subResourceCapacityFactor <- subresource <- subresource_type <-
+      minicam.non.energy.input <- input.cost <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -353,16 +354,15 @@ module_energy_L210.resources <- function(command, ...) {
     # Repeat and add region to assumed techchange tables
     L210.DepRsrcEnvironCost_SSPs <- A10.EnvironCost_SSPs %>%
       repeat_add_columns(GCAM_region_names) %>%
-      # Add subresource type
-      left_join_error_no_match(A10.subrsrc_info, by = c("resource", "subresource")) %>%
-      select(SSP, region, resource = resource, subresource, year.fillout = year, environCost = value) %>%
+      mutate(minicam.non.energy.input = "environCost") %>%
+      rename(input.cost = value) %>%
       # Split by SSP and assign attributes
       split(.$SSP) %>%
       lapply(function(df) {
-        select(df, -SSP) %>%
+        select(df, !!!LEVEL2_DATA_NAMES[["ResReserveTechCost"]]) %>%
           add_units("$/GJ") %>%
           add_comments("A10.EnvironCost_SSPs written to all regions") %>%
-          add_precursors("energy/A10.EnvironCost_SSPs", "common/GCAM_region_names", "energy/A10.subrsrc_info")
+          add_precursors("energy/A10.EnvironCost_SSPs", "common/GCAM_region_names")
       })
     # Assign each tibble in list
     for(i in names(L210.DepRsrcEnvironCost_SSPs)) {
