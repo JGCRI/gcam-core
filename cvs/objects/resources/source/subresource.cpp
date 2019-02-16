@@ -115,12 +115,6 @@ void SubResource::XMLParse( const DOMNode* aNode ){
         else if( nodeName == "techChange" ){
             XMLHelper<Value>::insertValueIntoVector( curr, mTechChange, modeltime );
         }
-        else if( nodeName == "environCost" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mEnvironCost, modeltime );
-        }
-        else if( nodeName == "severanceTax" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mSeveranceTax, modeltime );
-        }
         else if( nodeName == "cal-production" ){
             XMLHelper<double>::insertValueIntoVector( curr, mCalProduction, modeltime );
         }
@@ -181,12 +175,6 @@ void SubResource::completeInit( const std::string& aRegionName, const std::strin
     if( !mTechChange[ FinalCalPer ].isInited() ) {
         mTechChange[ FinalCalPer ] = 0;
     }
-    if( !mEnvironCost[ FinalCalPer ].isInited() ) {
-        mEnvironCost[ FinalCalPer ] = 0;
-    }
-    if( !mSeveranceTax[ FinalCalPer ].isInited() ) {
-        mSeveranceTax[ FinalCalPer ] = 0;
-    }
 
     // decrement from terminal period to copy backward the technical change for missing periods
     for( int per = modeltime->getmaxper() - 1; per > modeltime->getFinalCalibrationPeriod(); --per ) {
@@ -203,9 +191,6 @@ void SubResource::completeInit( const std::string& aRegionName, const std::strin
             }
         }
     }
-
-    SectorUtils::fillMissingPeriodVectorInterpolated( mEnvironCost );
-    SectorUtils::fillMissingPeriodVectorInterpolated( mSeveranceTax );
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -247,8 +232,7 @@ void SubResource::initCalc( const string& aRegionName, const string& aResourceNa
                 pow( ( 1.0 + mTechChange[ aPeriod ] ), modeltime->gettimestep( aPeriod ) );
         }
         // Determine cost
-        mGrade[gr]->calcCost( mSeveranceTax[ aPeriod ], mCumulativeTechChange[ aPeriod ],
-            mEnvironCost[ aPeriod ], aPeriod );
+        mGrade[gr]->calcCost( mCumulativeTechChange[ aPeriod ], aPeriod );
     }
 
     // Fill price added after it is calibrated.  This will interpolate to any
@@ -305,8 +289,6 @@ void SubResource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
     XMLWriteElement( mAnnualProd[ period ], "annualprod", out, tabs );
     XMLWriteElement( mCumulProd[ period ], "cumulprod", out, tabs );
     XMLWriteElement( mTechChange[ period ], "techChange", out, tabs );
-    XMLWriteElement( mEnvironCost[ period ], "environCost", out, tabs );
-    XMLWriteElement( mSeveranceTax[ period ], "severanceTax", out, tabs );
     XMLWriteElement( mCalProduction[ period ], "cal-production", out, tabs );
     XMLWriteElement( mEffectivePrice[ period ], "effective-price", out, tabs );
     XMLWriteElement( mPriceAdder[ period ], "price-adder", out, tabs );

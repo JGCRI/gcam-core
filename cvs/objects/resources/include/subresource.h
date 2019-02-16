@@ -138,12 +138,6 @@ protected:
         //! technical change
         DEFINE_VARIABLE( ARRAY, "techChange", mTechChange, objects::PeriodVector<Value> ),
         
-        //! Environmental costs
-        DEFINE_VARIABLE( ARRAY, "environCost", mEnvironCost, objects::PeriodVector<Value> ),
-        
-        //! Severance Tax (exogenous)
-        DEFINE_VARIABLE( ARRAY, "severanceTax", mSeveranceTax, objects::PeriodVector<Value> ),
-        
         //! price adder used for calibration purposes
         DEFINE_VARIABLE( ARRAY | STATE, "price-adder", mPriceAdder, objects::PeriodVector<Value> ),
     
