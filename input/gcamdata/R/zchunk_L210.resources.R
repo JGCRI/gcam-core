@@ -247,10 +247,6 @@ module_energy_L210.resources <- function(command, ...) {
       select(region, resource = fuel, subresource, year, cal.production)
 
     L111.Reserve_EJ_R_F_Yh %>%
-      # mutate(model_years = cut(year, c(0, MODEL_BASE_YEARS), labels = MODEL_BASE_YEARS)) %>%
-      # group_by(GCAM_region_ID, sector, fuel, model_years) %>%
-      # summarize(cal.reserve = sum(value)) %>%
-      # ungroup() %>%
       rename(cal.reserve = value) %>%
       # Add region name
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
@@ -396,6 +392,7 @@ module_energy_L210.resources <- function(command, ...) {
       add_precursors("energy/A10.EnvironCost_SSPs", "common/GCAM_region_names", "energy/A10.subrsrc_info", "L102.pcgdp_thous90USD_Scen_R_Y") ->
       L210.DepRsrcEnvironCost_SSP4
 
+    # Resource-reserve assumptions which just need to get copied to all regions and years
     A10.ResSubresoureProdLifetime %>%
       repeat_add_columns(GCAM_region_names) %>%
       select(!!!LEVEL2_DATA_NAMES[["ResSubresoureProdLifetime"]]) ->
@@ -419,6 +416,8 @@ module_energy_L210.resources <- function(command, ...) {
       select(!!!LEVEL2_DATA_NAMES[["ResReserveTechProfitShutdown"]]) ->
       L210.ResReserveTechProfitShutdown
 
+    # We need to make sure we have at least a shell technology for ALL resources
+    # and so we will just use the share weight table to facilatate doing that.
     A10.subrsrc_info %>%
       repeat_add_columns(GCAM_region_names) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
@@ -426,7 +425,6 @@ module_energy_L210.resources <- function(command, ...) {
              share.weight = 1.0) %>%
       select(!!!LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
       L210.ResTechShrwt
-
     # We need to remove regions + subresoures which should not exist
     L210.ResTechShrwt %>%
       semi_join(L210.GrdRenewRsrcMax_tradbio,
