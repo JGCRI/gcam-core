@@ -4,10 +4,17 @@
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
-#' @return Depends on \code{command}: either a vector of required inputs,
-#' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L243.DeleteInput_RegBio}, \code{L243.SectorLogitTables[[ curr_table ]]$data}, \code{L243.TechCoef_RegBio}, \code{L243.Supplysector_Bio}, \code{L243.SectorUseTrialMarket_Bio}, \code{L243.SubsectorLogitTables[[ curr_table ]]$data}, \code{L243.SubsectorLogit_Bio}, \code{L243.SubsectorShrwtFllt_TotBio}, \code{L243.SubsectorShrwtFllt_TradedBio}, \code{L243.GlobalTechCoef_TotBio}, \code{L243.GlobalTechShrwt_TotBio}, \code{L243.StubTech_TotBio}, \code{L243.StubTechShrwt_TotBio}, \code{L243.StubTechCoef_ImportedBio}, \code{L243.StubTechCoef_DomesticBio}, \code{L243.TechCoef_TradedBio}, \code{L243.TechShrwt_TradedBio}, \code{L243.SubsectorShrwtFllt_TotBio_SSP4}, \code{L243.SubsectorShrwtFllt_TradedBio_SSP4}, \code{L243.TechShrwt_TradedBio_SSP4}, \code{L243.StubTechShrwt_TotBio_SSP4}, \code{L243.SubsectorShrwtFllt_TotBio_SSP3}, \code{L243.StubTechShrwt_TotBio_SSP3}. The corresponding file in the
-#' original data system was \code{L243.bio_trade_input.R} (aglu level2).
+#' @return Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
+#'   \code{command} is "MAKE") all the generated outputs: \code{L243.DeleteInput_RegBio}, \code{L243.SectorLogitTables[[
+#'   curr_table ]]$data}, \code{L243.TechCoef_RegBio}, \code{L243.Supplysector_Bio},
+#'   \code{L243.SectorUseTrialMarket_Bio}, \code{L243.SubsectorLogitTables[[ curr_table ]]$data},
+#'   \code{L243.SubsectorLogit_Bio}, \code{L243.SubsectorShrwtFllt_TotBio}, \code{L243.SubsectorShrwtFllt_TradedBio},
+#'   \code{L243.GlobalTechCoef_TotBio}, \code{L243.GlobalTechShrwt_TotBio}, \code{L243.StubTech_TotBio},
+#'   \code{L243.StubTechShrwt_TotBio}, \code{L243.StubTechCoef_ImportedBio}, \code{L243.StubTechCoef_DomesticBio},
+#'   \code{L243.TechCoef_TradedBio}, \code{L243.TechShrwt_TradedBio}, \code{L243.SubsectorShrwtFllt_TotBio_SSP4},
+#'   \code{L243.SubsectorShrwtFllt_TradedBio_SSP4}, \code{L243.SubsectorShrwtFllt_TotBio_SSP3},
+#'   \code{L243.StubTechShrwt_TotBio_SSP3}, \code{L243.Supplysector_reg_SSP4}, \code{L243.SubsectorInterpTo_tra_SSP4}.
+#'   The corresponding file in the original data system was \code{L243.bio_trade_input.R} (aglu level2).
 #' @details This chunk sets up a structure for regionally differentiated bioenergy trade. Each
 #' region consumes a blend of domestic and international bioenergy. Regions can supply to either
 #' the domestic or international market. Share weights in the default case depend on the amount of
@@ -23,6 +30,8 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
              FILE = "aglu/A_bio_supplysector",
              FILE = "aglu/A_bio_subsector_logit",
              FILE = "aglu/A_bio_subsector",
+             FILE = "aglu/A_agRegionalSector",
+             FILE = "aglu/A_agTradedSubsector",
              "L120.LC_bm2_R_LT_Yh_GLU",
              "L102.pcgdp_thous90USD_Scen_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -43,10 +52,10 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
              "L243.TechShrwt_TradedBio",
              "L243.SubsectorShrwtFllt_TotBio_SSP4",
              "L243.SubsectorShrwtFllt_TradedBio_SSP4",
-             "L243.TechShrwt_TradedBio_SSP4",
-             "L243.StubTechShrwt_TotBio_SSP4",
              "L243.SubsectorShrwtFllt_TotBio_SSP3",
-             "L243.StubTechShrwt_TotBio_SSP3"))
+             "L243.StubTechShrwt_TotBio_SSP3",
+             "L243.Supplysector_reg_SSP4",
+             "L243.SubsectorInterpTo_tra_SSP4"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -60,6 +69,8 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
     A_bio_supplysector <- get_data(all_data, "aglu/A_bio_supplysector")
     A_bio_subsector_logit <- get_data(all_data, "aglu/A_bio_subsector_logit")
     A_bio_subsector <- get_data(all_data, "aglu/A_bio_subsector")
+    A_agRegionalSector <- get_data(all_data, "aglu/A_agRegionalSector")
+    A_agTradedSubsector <- get_data(all_data, "aglu/A_agTradedSubsector")
     L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
@@ -224,23 +235,9 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       select(-trade.region) ->
       L243.SubsectorShrwtFllt_TradedBio_SSP4
 
-    L243.TechShrwt_TradedBio %>%
-      mutate(trade.region = gsub(" traded biomass", "", subsector)) %>%
-      filter(trade.region %in% get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "low"),
-             year > 2020) %>%
-      mutate(share.weight = 0.1) %>%
-      select(-trade.region) ->
-      L243.TechShrwt_TradedBio_SSP4
-
-    L243.StubTechShrwt_TotBio %>%
-      filter(region %in% get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "low"),
-             subsector == "imported biomass", year > 2020) %>%
-      mutate(share.weight = 0.1) ->
-      L243.StubTechShrwt_TotBio_SSP4_lo
-
     # Set share weights for total biomass in SSP4 high and medium income regions.
-    # SSP4 assumes free trade within high income regions; so, subsector share weights are set to 0.5 and
-    # technology share weights are set to 0.25
+    # SSP4 assumes free trade within high income regions; so, subsector share weights are set to 0.5
+    # (tech shareweights are not relevant as there is only one tech per subsector)
     # See Calvin et al. (2017) for documentation. https://doi.org/10.1016/j.gloenvcha.2016.06.010
     L243.SubsectorShrwtFllt_TotBio %>%
       filter(region %in% c(get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "high"),
@@ -249,19 +246,9 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       mutate(year.fillout = 2025, share.weight = 0.5) ->
       L243.SubsectorShrwtFllt_TotBio_SSP4_hi
 
-    L243.StubTechShrwt_TotBio %>%
-      filter(region %in% c(get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "high"),
-                            get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "medium")),
-             subsector == "imported biomass", year > 2020) %>%
-      mutate(share.weight = 0.25) ->
-      L243.StubTechShrwt_TotBio_SSP4_hi
-
     # Bind SSP4 share weights for all regions into single data frames
     bind_rows(L243.SubsectorShrwtFllt_TotBio_SSP4_hi, L243.SubsectorShrwtFllt_TotBio_SSP4_lo) ->
       L243.SubsectorShrwtFllt_TotBio_SSP4
-
-    bind_rows(L243.StubTechShrwt_TotBio_SSP4_hi, L243.StubTechShrwt_TotBio_SSP4_lo) ->
-      L243.StubTechShrwt_TotBio_SSP4
 
     # Set share weights for total biomass in SSP3.
     # SSP3 assumes limited trade across regions; so, share weights are set to 0.1
@@ -275,6 +262,27 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       filter(subsector == "imported biomass", year > 2020) %>%
       mutate(share.weight = 0.1) ->
       L243.StubTechShrwt_TotBio_SSP3
+
+    # SSP4 ag trade - reduce the logit exponents for the decision between imports and consumption of domestic
+    # production, in low income regions
+    SSP4_AG_LOGIT_IMPORT_LOW <- -1.5
+    L243.Supplysector_reg_SSP4 <- mutate(A_agRegionalSector, logit.year.fillout = min(MODEL_BASE_YEARS)) %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], "logit.type"),
+                           filter(GCAM_region_names, region %in% get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "low"))) %>%
+      mutate(logit.exponent = SSP4_AG_LOGIT_IMPORT_LOW)
+
+    # SSP4 ag trade, cont'd - for the export market (sharing regions), decrease the share-weights from their base-year
+    # calibrated values towards zero in some year beyond the analysis window
+    SSP4_ZERO_EXPORT_YEAR_LOW <- 2150
+    A_agTradedSubsector_SSP4 <- mutate(A_agTradedSubsector, to.value = 0,
+                                       to.year = SSP4_ZERO_EXPORT_YEAR_LOW,
+                                       interpolation.function = "linear")
+    L243.SubsectorInterpTo_tra_SSP4 <- write_to_all_regions(A_agTradedSubsector_SSP4,
+                                                            LEVEL2_DATA_NAMES[["SubsectorInterpTo"]],
+                                                            filter(GCAM_region_names, region %in% get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "low")),
+                                                            has_traded = TRUE) %>%
+      mutate(region = gcam.USA_REGION)   # need to manually set the region name to gcam.USA_REGION, where the traded commodities are housed
+
 
     # Produce outputs
     L243.DeleteInput_RegBio %>%
@@ -434,26 +442,6 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "L102.pcgdp_thous90USD_Scen_R_Y") ->
       L243.SubsectorShrwtFllt_TradedBio_SSP4
 
-    L243.TechShrwt_TradedBio_SSP4 %>%
-      add_title("Technology shareweights for traded bioenergy in SSP4") %>%
-      add_units("unitless") %>%
-      add_comments("Uses the structure of L243.TechShrwt_TradedBio") %>%
-      add_comments("Replace shareweights with assumed coefficients (0.1 for low income)") %>%
-      add_legacy_name("L243.TechShrwt_TradedBio_SSP4") %>%
-      same_precursors_as("L243.TechShrwt_TradedBio") %>%
-      add_precursors("common/GCAM_region_names", "L102.pcgdp_thous90USD_Scen_R_Y") ->
-      L243.TechShrwt_TradedBio_SSP4
-
-    L243.StubTechShrwt_TotBio_SSP4 %>%
-      add_title("Technology shareweights for total bioenergy in SSP4") %>%
-      add_units("unitless") %>%
-      add_comments("Uses the structure of L243.StubTechShrwt_TotBio") %>%
-      add_comments("Replace shareweights with assumed coefficients (0.1 for low income, 0.25 for high income)") %>%
-      add_legacy_name("L243.StubTechShrwt_TotBio_SSP4") %>%
-      same_precursors_as("L243.StubTechShrwt_TotBio") %>%
-      add_precursors("common/GCAM_region_names", "L102.pcgdp_thous90USD_Scen_R_Y") ->
-      L243.StubTechShrwt_TotBio_SSP4
-
     L243.SubsectorShrwtFllt_TotBio_SSP3 %>%
       add_title("Subsector shareweights for total bioenergy in SSP3") %>%
       add_units("unitless") %>%
@@ -472,7 +460,41 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       same_precursors_as("L243.StubTechShrwt_TotBio") ->
       L243.StubTechShrwt_TotBio_SSP3
 
-    return_data(L243.DeleteInput_RegBio, L243.TechCoef_RegBio, L243.Supplysector_Bio, L243.SectorUseTrialMarket_Bio, L243.SubsectorLogit_Bio, L243.SubsectorShrwtFllt_TotBio, L243.SubsectorShrwtFllt_TradedBio, L243.GlobalTechCoef_TotBio, L243.GlobalTechShrwt_TotBio, L243.StubTech_TotBio, L243.StubTechShrwt_TotBio, L243.StubTechCoef_ImportedBio, L243.StubTechCoef_DomesticBio, L243.TechCoef_TradedBio, L243.TechShrwt_TradedBio, L243.SubsectorShrwtFllt_TotBio_SSP4, L243.SubsectorShrwtFllt_TradedBio_SSP4, L243.TechShrwt_TradedBio_SSP4, L243.StubTechShrwt_TotBio_SSP4, L243.SubsectorShrwtFllt_TotBio_SSP3, L243.StubTechShrwt_TotBio_SSP3)
+    L243.Supplysector_reg_SSP4 %>%
+      add_title("Supplysector info for regional crop markets w modified logits for SSP4") %>%
+      add_units("unitless") %>%
+      add_comments("Only applies to low-income regions") %>%
+      add_precursors("common/GCAM_region_names", "aglu/A_agRegionalSector") ->
+      L243.Supplysector_reg_SSP4
+
+    L243.SubsectorInterpTo_tra_SSP4 %>%
+      add_title("Subsector interpolation info for traded crop markets w modified share-weights for SSP4") %>%
+      add_units("unitless") %>%
+      add_comments("Only applies to low-income regions") %>%
+      add_precursors("common/GCAM_region_names", "aglu/A_agTradedSubsector") ->
+      L243.SubsectorInterpTo_tra_SSP4
+
+    return_data(L243.DeleteInput_RegBio,
+                L243.TechCoef_RegBio,
+                L243.Supplysector_Bio,
+                L243.SectorUseTrialMarket_Bio,
+                L243.SubsectorLogit_Bio,
+                L243.SubsectorShrwtFllt_TotBio,
+                L243.SubsectorShrwtFllt_TradedBio,
+                L243.GlobalTechCoef_TotBio,
+                L243.GlobalTechShrwt_TotBio,
+                L243.StubTech_TotBio,
+                L243.StubTechShrwt_TotBio,
+                L243.StubTechCoef_ImportedBio,
+                L243.StubTechCoef_DomesticBio,
+                L243.TechCoef_TradedBio,
+                L243.TechShrwt_TradedBio,
+                L243.SubsectorShrwtFllt_TotBio_SSP4,
+                L243.SubsectorShrwtFllt_TradedBio_SSP4,
+                L243.SubsectorShrwtFllt_TotBio_SSP3,
+                L243.StubTechShrwt_TotBio_SSP3,
+                L243.Supplysector_reg_SSP4,
+                L243.SubsectorInterpTo_tra_SSP4)
   } else {
     stop("Unknown command")
   }
