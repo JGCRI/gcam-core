@@ -105,8 +105,7 @@
 			<Value name="resource_extraction">../input/gcamdata/xml/resources_SSP4.xml</Value>	
 			
 			<!-- TRADE -->			
-			<Value name="trade">../input/gcamdata/xml/ssp4_trade.xml</Value>
-			<Value name="bio_trade">../input/gcamdata/xml/ssp4_bio_trade.xml</Value>
+			<Value name="bio_trade">../input/gcamdata/xml/ssp4_ag_bio_trade.xml</Value>
 			
 			<!-- NON-CO2 -->
 			<Value name="nonco2">../input/gcamdata/xml/delete_gdp_control.xml</Value>
