@@ -74,7 +74,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
       L201.NodeEquiv
 
     # assign GCAM region name to each basin
-    # basins with overlapping GCAM regions assign to region with largest basin area
+    # basin with overlapping GCAM regions assign to region with largest basin area
     basin_to_country_mapping %>%
       rename(iso = ISO) %>%
       mutate(iso = tolower(iso)) %>%
@@ -88,37 +88,51 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
       arrange(region) ->
       RegionBasinHome
 
+    # identify basins without gcam region mapping (anti_join)
+    basin_to_country_mapping %>%
+      rename(iso = ISO) %>%
+      mutate(iso = tolower(iso)) %>%
+      left_join(iso_GCAM_regID, by = "iso") %>%
+      anti_join(GCAM_region_names, by = "GCAM_region_ID") ->
+      BasinNoRegion
+
     # create full set of region/basin combinations
+    # some basins overlap multiple regions
     # Use left join to ensure only those basins in use by GCAM regions are included
     bind_rows(water_mapping_R_GLU_B_W_Ws_share %>%
                 rename(basin_id = GLU),
               water_mapping_R_B_W_Ws_share) %>%
-      select(-water_sector, -share) %>% unique() %>%
+      select(GCAM_region_ID, basin_id, water_type) %>%
       filter(water_type == "water withdrawals") %>%
-      select(basin_id) %>%
       unique() %>%
       left_join(basin_ids, by = "basin_id") %>%
-      left_join(RegionBasinHome, by = "basin_id") %>%
+      left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(water_type = "water withdrawals",
              resource = paste(basin_name, water_type, sep="_")) %>%
       arrange(region, basin_name) ->
       L201.region_basin
 
+    # create unique set of region/basin combination with
+    # basin contained by home region (region with largest basin area)
+    L201.region_basin %>%
+      inner_join(RegionBasinHome, by = c("basin_id","GCAM_region_ID","region")) %>%
+      arrange(region, basin_name) ->
+      L201.region_basin_home
+
     # create the delete for the unlimited resource markets for withdrawals
-    # using underscore as delimiter to paste water type
     L201.region_basin %>%
       arrange(region, basin_name) %>%
       rename(unlimited.resource = resource) %>%
       select(LEVEL2_DATA_NAMES[["DeleteUnlimitRsrc"]]) ->
       L201.DeleteUnlimitRsrc
 
-    # create resource markets for water withdrawals
-    # using underscore as delimiter to paste water type
+    # create resource markets for water withdrawals with
+    # unique or shared region/basin market
     L201.region_basin %>%
       arrange(region) %>%
       mutate(output.unit = water.WATER_UNITS_QUANTITY,
              price.unit = water.WATER_UNITS_PRICE,
-             market = region) %>%
+             market = basin_name) %>%
       arrange(region, resource) %>%
       select(LEVEL2_DATA_NAMES[["Rsrc"]]) ->
       L201.Rsrc
@@ -132,9 +146,10 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["RsrcPrice"]]) ->
       L201.RsrcPrice
 
-    # Read in annual water runoff supply
-    # using underscore as delimiter to paste water type
-    L201.region_basin %>%
+    # Read in annual water runoff supply for each basin
+    # Use L201.region_basin_home to assign actual resource to
+    # home region.
+    L201.region_basin_home %>%
       left_join(L100.runoff_max_bm3, by = "basin_id") %>%
       mutate(sub.renewable.resource = "runoff") %>%
       rename(year.fillout = year,
@@ -147,7 +162,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
     # CREATE INPUTS FOR THE UNCALIBRATED WATER SUPPLY XML
 
     # basin accessible fraction of total runoff
-    L201.region_basin %>%
+    L201.region_basin_home %>%
       left_join(L100.runoff_accessible, by = "basin_id") ->
       access_fraction_uncalibrated
 
@@ -172,7 +187,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
       L201.RenewRsrcCurves_uncalibrated
 
     # depleteable ground water supply curve for uniform resources
-    L201.region_basin %>%
+    L201.region_basin_home %>%
       left_join(L201.DepRsrcCurves_ground_uniform_bm3, by = c("basin_id" = "basin.id")) %>%
       mutate(subresource = "groundwater") %>%
       arrange(region, resource, price) %>%
@@ -214,11 +229,11 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
       mutate(accessible = (demand - depletion) / runoff,
             accessible = if_else(accessible < 0, NA_real_, accessible)) %>%
       select(basin_id = basin.id, accessible) ->
-      aw
+      accessible_water
 
     # Step 3
-    L201.region_basin %>%
-      left_join(aw, by= "basin_id") %>%
+    L201.region_basin_home %>%
+      left_join(accessible_water, by= "basin_id") %>%
       select(resource, accessible) %>%
       right_join(L201.RenewRsrcCurves_uncalibrated, by = "resource") %>%
       mutate(available = case_when(
@@ -271,7 +286,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
 
     access_fraction_uncalibrated %>%
         select(basin_id, access_fraction) %>%
-        left_join(aw, by = "basin_id") %>%
+        left_join(accessible_water, by = "basin_id") %>%
         left_join(runoff_mean_hist, by = "basin_id") %>%
         mutate(accessible = if_else(is.na(accessible),
                                     access_fraction,
@@ -293,10 +308,10 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
       groundwater_hist
 
       bind_rows(
-        L201.region_basin %>%
+        L201.region_basin_home %>%
           left_join(L101.groundwater_grades_constrained_bm3,
                     by = c("basin_id" = "basin.id")),
-        L201.region_basin %>%
+        L201.region_basin_home %>%
           left_join(groundwater_hist,
                     by = c("basin_id" = "basin.id")) %>%
           filter(is.na(grade) == F)
@@ -310,7 +325,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
         L201.DepRsrcCurves_ground
 
       # problem with original groundwater constrained input file
-      # contains extra 0 available grade and thus inconsistent supply curve
+      # contains extra 0 available grade and thus discontinuous supply curve
       L201.DepRsrcCurves_ground %>%
         filter(grade == "grade24" & available == 0) ->
         L201.DepRsrcCurves_ground_last

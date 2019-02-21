@@ -18,7 +18,6 @@ module_water_L203.water.mapping <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_to_country_mapping",
              FILE = "common/GCAM_region_names",
-             FILE = "common/iso_GCAM_regID",
              FILE = "water/A03.sector",
              FILE = "water/basin_ID",
              "L165.ag_IrrEff_R",
@@ -40,7 +39,6 @@ module_water_L203.water.mapping <- function(command, ...) {
 
     # Load required inputs
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_ID <- get_data(all_data, "water/basin_ID")
     A03.sector <- get_data(all_data, "water/A03.sector")
@@ -52,21 +50,6 @@ module_water_L203.water.mapping <- function(command, ...) {
     GCAM_region_ID <- GLU <- GLU_code <- GLU_name <- water.sector <-
       water_type <- supplysector <- field.eff <- conveyance.eff <-
       coefficient <- region <- NULL  # silence package check notes
-
-    # assign GCAM region name to each basin
-    # basins with overlapping GCAM regions assign to region with largest basin area
-    basin_to_country_mapping %>%
-      rename(iso = ISO) %>%
-      mutate(iso = tolower(iso)) %>%
-      left_join(iso_GCAM_regID, by = "iso") %>%
-      # basins without gcam region mapping excluded (right join)
-      # Antarctica not assigned
-      right_join(GCAM_region_names, by = "GCAM_region_ID") %>%
-      rename(basin_id = GCAM_basin_ID,
-             basin_name = Basin_name) %>%
-      select(GCAM_region_ID, region, basin_id, basin_name) %>%
-      arrange(region) ->
-      RegionBasinHome
 
     # Create tibble with all possible mapping sectors...
 
@@ -83,7 +66,6 @@ module_water_L203.water.mapping <- function(command, ...) {
     L103.water_mapping_R_B_W_Ws_share %>%
       mutate(GLU = NA) ->
       L203.mapping_nonirr
-
 
     # (c) combine irrigation and non-irrigation sectors and add additional required columns
     bind_rows(
@@ -144,19 +126,12 @@ module_water_L203.water.mapping <- function(command, ...) {
       L203.TechShrwt
 
     # Pass-through technology to the water resource
-    # market.name is the region that contains the water basin
-    RegionBasinHome %>%
-      rename(market.name = region) %>%
-      select(basin_id, market.name) ->
-      BasinRegionMarket
-
     L203.mapping_all %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      mutate(minicam.energy.input = paste(technology, water_type, sep = "_")) %>%
-      left_join_error_no_match(BasinRegionMarket, by = "basin_id") %>%
+      mutate(minicam.energy.input = paste(technology, water_type, sep = "_"),
+             market.name = region) %>%
       select(LEVEL2_DATA_NAMES[["TechCoef"]]) ->
       L203.TechCoef
-
 
     # Pass-through technology water price adjust if there one
     L203.mapping_all %>%
@@ -248,7 +223,6 @@ module_water_L203.water.mapping <- function(command, ...) {
       add_precursors("water/basin_to_country_mapping",
                      "L165.ag_IrrEff_R",
                      "common/GCAM_region_names",
-                     "common/iso_GCAM_regID",
                      "water/A03.sector",
                      "water/basin_ID",
                      "L103.water_mapping_R_GLU_B_W_Ws_share",
