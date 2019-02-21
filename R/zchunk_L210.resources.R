@@ -13,7 +13,7 @@
 #' \code{L210.GrdRenewRsrcCurves_tradbio}, \code{L210.GrdRenewRsrcMax_tradbio}, \code{L210.DepRsrcTechChange_SSP1}, \code{L210.DepRsrcEnvironCost_SSP1},
 #' \code{L210.DepRsrcTechChange_SSP2}, \code{L210.DepRsrcEnvironCost_SSP2}, \code{L210.DepRsrcTechChange_SSP3}, \code{L210.DepRsrcEnvironCost_SSP3},
 #' \code{L210.DepRsrcTechChange_SSP4}, \code{L210.DepRsrcEnvironCost_SSP4}, \code{L210.DepRsrcTechChange_SSP5}, \code{L210.DepRsrcEnvironCost_SSP5},
-#' \code{L210.ResSubresoureProdLifetime}, \code{L210.ResReserveTechLifetime}, \code{L210.ResReserveTechDeclinePhase}, \code{L210.ResReserveTechProfitShutdown}, \code{L210.ResTechShrwt}.
+#' \code{L210.ResSubresoureProdLifetime}, \code{L210.ResReserveTechLifetime}, \code{L210.ResReserveTechDeclinePhase}, \code{L210.ResReserveTechProfitShutdown}, \code{L210.ResTechShrwt}, \code{L210.ResTechShrwt_EGS}.
 #' The corresponding file in the original data system was \code{L210.resources.R} (energy level2).
 #' @details Resource market information, prices, TechChange parameters, supply curves, and environmental costs.
 #' @importFrom assertthat assert_that
@@ -81,7 +81,8 @@ module_energy_L210.resources <- function(command, ...) {
              "L210.ResReserveTechLifetime",
              "L210.ResReserveTechDeclinePhase",
              "L210.ResReserveTechProfitShutdown",
-             "L210.ResTechShrwt"))
+             "L210.ResTechShrwt",
+             "L210.ResTechShrwt_EGS"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -331,6 +332,14 @@ module_energy_L210.resources <- function(command, ...) {
       mutate(year.fillout = min(MODEL_BASE_YEARS),
              maxSubResource = 1) %>%
       select(LEVEL2_DATA_NAMES[["maxSubResource"]])
+
+    L210.ResTechShrwt_EGS <- L210.GrdRenewRsrcMax_EGS %>%
+      rename(resource = renewresource, subresource = sub.renewable.resource) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(technology = subresource,
+             share.weight = 1 ) %>%
+      select(!!!LEVEL2_DATA_NAMES[["ResTechShrwt"]])
+
 
     # L210.GrdRenewRsrcCurves_tradbio: graded supply curves of traditional biomass resources
     L210.GrdRenewRsrcCurves_tradbio <- L117.RsrcCurves_EJ_R_tradbio %>%
@@ -647,13 +656,22 @@ module_energy_L210.resources <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "energy/A10.subrsrc_info") ->
       L210.ResTechShrwt
 
+    L210.ResTechShrwt_EGS %>%
+      add_title("Share weights for technologies in EGS resources") %>%
+      add_units("NA") %>%
+      add_comments("Share weights won't matter for resource technologies as there") %>%
+      add_comments("is no competetion between technologies.") %>%
+      add_comments("Note EGS is serperated since the resource is only included in adv scenarios.") %>%
+      same_precursors_as(L210.GrdRenewRsrcMax_EGS) ->
+      L210.ResTechShrwt_EGS
+
     return_data(L210.DepRsrc, L210.RenewRsrc, L210.UnlimitRsrc, L210.DepRsrcPrice, L210.RenewRsrcPrice, L210.UnlimitRsrcPrice, L210.DepRsrcTechChange,
                 L210.SmthRenewRsrcTechChange, L210.DepRsrcCalProd, L210.DepReserveCalReserve, L210.DepRsrcCurves_fos, L210.DepRsrcCurves_U, L210.SmthRenewRsrcCurves_MSW,
                 L210.SmthRenewRsrcCurves_wind, L210.SmthRenewRsrcCurvesGdpElast_roofPV, L210.GrdRenewRsrcCurves_geo, L210.GrdRenewRsrcMax_geo,
                 L210.GrdRenewRsrcCurves_EGS, L210.GrdRenewRsrcMax_EGS, L210.GrdRenewRsrcCurves_tradbio, L210.GrdRenewRsrcMax_tradbio, L210.DepRsrcTechChange_SSP1,
                 L210.DepRsrcEnvironCost_SSP1, L210.DepRsrcTechChange_SSP2, L210.DepRsrcEnvironCost_SSP2, L210.DepRsrcTechChange_SSP3, L210.DepRsrcEnvironCost_SSP3,
                 L210.DepRsrcTechChange_SSP4, L210.DepRsrcEnvironCost_SSP4, L210.DepRsrcTechChange_SSP5, L210.DepRsrcEnvironCost_SSP5,
-                L210.ResSubresoureProdLifetime, L210.ResReserveTechLifetime, L210.ResReserveTechDeclinePhase, L210.ResReserveTechProfitShutdown, L210.ResTechShrwt)
+                L210.ResSubresoureProdLifetime, L210.ResReserveTechLifetime, L210.ResReserveTechDeclinePhase, L210.ResReserveTechProfitShutdown, L210.ResTechShrwt, L210.ResTechShrwt_EGS)
   } else {
     stop("Unknown command")
   }
