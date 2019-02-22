@@ -2,6 +2,7 @@
 # Title: USDA_item_cost
 # Units: Unitless
 # Description: Specifies cost type from USDA database
+# Column types: cc 
 # ----------
 Item,cost_type
 Primary output,na

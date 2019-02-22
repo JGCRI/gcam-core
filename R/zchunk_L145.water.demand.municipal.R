@@ -79,8 +79,8 @@ module_water_L145.water.demand.municipal <- function(command, ...) {
       # If there's only one observation (year) available for any country, approx(x, y, rule = 2) will wipe it out,
       # putting in missing values in all years. The sequence below achieves a simple rule = 2 extrapolation, but is
       # capable of extrapolation from a single observation
-      mutate(value_pc_filled = approx_fun(year = year, value = value_pc, rule = 2)) %>%
-      mutate(value_pc_filled = if_else(is.na(value_pc_filled), median(value_pc, na.rm = TRUE), value_pc_filled)) %>%
+      mutate(value_pc_filled = approx_fun(year = year, value = value_pc, rule = 2),
+             value_pc_filled = if_else(is.na(value_pc_filled), median(value_pc, na.rm = TRUE), value_pc_filled)) %>%
       ungroup() %>%
       mutate(value = round(population * value_pc_filled, digits = water.DIGITS_MUNI_WATER)) %>%
       select(iso, year, value)

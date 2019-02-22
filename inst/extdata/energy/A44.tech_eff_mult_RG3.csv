@@ -1,6 +1,8 @@
 # File: A44.tech_eff_mult_RG3.csv
 # Title: Efficiency multipliers from the USA to the given GCAM 3.0 regions
 # Units: Unitless
+# Column types: cnnnnnnnnn 
+# ----------
 region_GCAM3,1971,2005,2020,2035,2050,2065,2080,2095,2100
 USA,1,1,1,1,1,1,1,1,1
 Canada,0.964588851,0.969497233,0.974430592,0.978131011,0.98220829,0.986116017,0.989353551,0.992805871,0.992805871

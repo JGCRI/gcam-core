@@ -3,6 +3,8 @@
 # Source: queried from prior GCAM calibration period run
 # Comments: This data is used solely for calibrating accessible water fractions using historical runoff and groundwater extraction rates. It is not used to set up water demand in GCAM. Actual GCAM Water demands are determined dynamically within the model for each sector (see sean.turner@pnnl.gov for details)
 # Units: km^3/yr
+# Column types: iin
+# ----------
 basin.id,year,demand
 55,1990,15.0914
 55,2005,17.3037

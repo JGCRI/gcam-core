@@ -1,6 +1,8 @@
 # File: FAO_Fert_Prod_tN_RESOURCESTAT.csv
 # Title: FAO fertilizer production by country, year
 # Units: tons N
+# Column types: ciciciiiiiiiiii 
+# ----------
 countries,country codes,item,item codes,element,element codes,2002,2003,2004,2005,2006,2007,2008,2009,2010
 Afghanistan,2,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,23414,16206,19458,15631,17636,16973,15278,13603,12022
 Albania,3,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0

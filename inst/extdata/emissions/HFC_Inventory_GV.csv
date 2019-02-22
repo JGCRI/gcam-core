@@ -3,6 +3,8 @@
 # Units: kt
 # Source: Guus Velders HFC inventory
 # Description: HFC emissions from scenario - SSP2_GV 1990 - 2012
+# Column types: cinc 
+# ----------
 Species,Year,Emissions,Scenario
 HFC-32,1990,0,SSP2_GV
 HFC-32,1991,0.0015,SSP2_GV

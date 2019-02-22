@@ -1,6 +1,8 @@
 # File: A03.sector.csv
 # Title: Water mapping suppply sector information  (units and logit exponents)
 # Units: NA
+# Column types: cccccic 
+# ----------
 water.sector,supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
 Irrigation,water_td_irr,km^3,km^3,1975$/m^3,0,
 Municipal,water_td_dom,km^3,km^3,1975$/m^3,0,

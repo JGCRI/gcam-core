@@ -1,6 +1,8 @@
 # File: A31.subsector_logit.csv
 # Title: Urban and industrial processes default subsector logit exponents
 # Units: Unitless
+# Column types: ccic 
+# ----------
 supplysector,subsector,logit.exponent,logit.type
 urban processes,landfills,-6,
 urban processes,wastewater treatment,-6,

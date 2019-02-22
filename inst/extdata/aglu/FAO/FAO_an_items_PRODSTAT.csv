@@ -3,6 +3,8 @@
 # Unit: Unitless,
 # Description: Maps FAO PRODSTAT animal products to GCAM animal products,
 # Sources: FAO,
+# Column types: cc 
+# ----------
 item,GCAM_commodity
 Beeswax,
 "Bird meat, nes",Poultry

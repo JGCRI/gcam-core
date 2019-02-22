@@ -2,6 +2,8 @@
 # Title: Industrial water withdrawals from FAO AQUASTAT database
 # Units: km^3
 # Comments: Industrial includes both manufacturing and electric power sector
+# Column types: ciciincc 
+# ----------
 Area,Area Id,Variable Name,Variable Id,Year,Value,Symbol,Md
 Afghanistan,2,Industrial water withdrawal,4252,2000,0.1285,L,
 Afghanistan,2,Industrial water withdrawal,4252,2005,0.1695,L,

@@ -2,6 +2,7 @@
 # Title: Technologies of inputs to animal production
 # Units: NA
 # Source: NA
+# Column types: cccccccci 
 # ----------
 supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,minicam.energy.input,coefficient
 FodderHerb_Residue,FodderHerb,FodderHerb,share-weight,final-calibration-year,end-year,fixed,FodderHerb,1

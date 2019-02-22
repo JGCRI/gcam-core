@@ -1,6 +1,8 @@
 # File: EPA_FCCC_GHG_2005.csv
 # Title: EPA USA GHG emissions inventory, 2005
 # Units: Gg
+# Column types: ccnnn 
+# ----------
 GREENHOUSE GAS SOURCE AND SINK CATEGORIES,Source_Category, CO2,CH4,N2O
 1.A. Fuel Combustion,,5914480.32,454.79,168.35
 Liquid Fuels,1.A. Fuel Combustion_Liquid Fuels,2607686.99,156.68,126.21

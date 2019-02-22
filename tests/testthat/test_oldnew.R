@@ -23,7 +23,9 @@ test_that("matches old data system output", {
 
   if(identical(Sys.getenv("TRAVIS"), "true")) {
     # Run the driver and save chunk outputs
-    gcam_data_map <- driver(write_outputs = TRUE, quiet = TRUE, outdir = outputs_dir, xmldir = xml_dir, return_data_map_only = TRUE)
+    # Note we are not going to bother writing the XML since travis will not have
+    # any gcamdata.xml_cmpdir to do the OLD/NEW on the XML files anyways.
+    gcam_data_map <- driver(write_outputs = TRUE, write_xml = FALSE, quiet = TRUE, outdir = outputs_dir, xmldir = xml_dir, return_data_map_only = TRUE)
 
     # The following two tests are only run on Travis because they will fail
     # during the R CMD CHECK process locally (as the R build process removes outputs/)
@@ -50,7 +52,16 @@ test_that("matches old data system output", {
                        "GCAM_DATA_MAP precursors doesn't match. Rerun generate_package_data to update.")
   }
 
-  if(!require("gcamdata.compdata", quietly = TRUE)) {
+  # Get a list of files in OUTPUTS_DIR for which we will make OLD/NEW comparisons
+  new_files <- list.files(outputs_dir, full.names = TRUE)
+
+  if(length(new_files) == 0) {
+    # There was no "NEW" outputs in the OUTPUTS_DIR to make comparisons
+    # so we will skip this test
+    skip("no output data found for comparison")
+  } else if(!require("gcamdata.compdata", quietly = TRUE)) {
+    # We couldn't get the "OLD" outputs from the gcamdata.compdata repo
+    # so we will skip this test
     skip("gcamdata.compdata package not available")
   } else {
     # load the comparison data which is coming from the gcamdata.compdata package
@@ -74,45 +85,44 @@ test_that("matches old data system output", {
       flag_sum_test <- grepl(FLAG_SUM_TEST, new_firstline)
 
       newdata <- read_csv(newf, comment = COMMENT_CHAR)
-
-      # Look for matching file(s) in the comparison data folder
       oldf <- sub('.csv$', '', basename(newf))
-      expect_true(length(oldf) == 1, info = paste("Either zero, or multiple, comparison datasets found for", basename(newf)))
+      olddata <- COMPDATA[[oldf]]
+      expect_is(olddata, "data.frame", info = paste("No comparison data found for", oldf))
 
-      if(length(oldf) == 1) {
-        olddata <- COMPDATA[[oldf]]
+      # Finally, test (NB rounding numeric columns to a sensible number of
+      # digits; otherwise spurious mismatches occur)
+      # Also first converts integer columns to numeric (otherwise test will
+      # fail when comparing <int> and <dbl> columns)
+      DIGITS <- 3
+      round_df <- function(x, digits = DIGITS) {
+        integer_columns <- sapply(x, class) == "integer"
+        x[integer_columns] <- lapply(x[integer_columns], as.numeric)
 
-        # Finally, test (NB rounding numeric columns to a sensible number of
-        # digits; otherwise spurious mismatches occur)
-        # Also first converts integer columns to numeric (otherwise test will
-        # fail when comparing <int> and <dbl> columns)
-        DIGITS <- 3
-        round_df <- function(x, digits = DIGITS) {
-          integer_columns <- sapply(x, class) == "integer"
-          x[integer_columns] <- lapply(x[integer_columns], as.numeric)
+        numeric_columns <- sapply(x, class) == "numeric"
+        x[numeric_columns] <- round(x[numeric_columns], digits)
+        x
+      }
 
-          numeric_columns <- sapply(x, class) == "numeric"
-          x[numeric_columns] <- round(x[numeric_columns], digits)
-          x
-        }
+      expect_identical(dim(olddata), dim(newdata), info = paste("Dimensions are not the same for", basename(newf)))
 
-        expect_identical(dim(olddata), dim(newdata), info = paste("Dimensions are not the same for", basename(newf)))
-
-        # Some datasets throw errors when tested via `expect_equivalent` because of
-        # rounding issues, even when we verify that they're identical to three s.d.
-        # I think this is because of differences between readr::write_csv and write.csv
-        # To work around this, we allow chunks to tag datasets with FLAG_SUM_TEST,
-        # which is less strict, just comparing the sum of all numeric data
-        if(flag_sum_test) {
-          numeric_columns_old <- sapply(olddata, is.numeric)
-          numeric_columns_new <- sapply(newdata, is.numeric)
-          expect_equivalent(sum(olddata[numeric_columns_old]), sum(newdata[numeric_columns_new]),
-                            info = paste(basename(newf), "doesn't match (sum test)"))
-        } else {
-          expect_equivalent(round_df(olddata), round_df(newdata), info = paste(basename(newf), "doesn't match"))
-        }
+      # Some datasets throw errors when tested via `expect_equivalent` because of
+      # rounding issues, even when we verify that they're identical to three s.d.
+      # I think this is because of differences between readr::write_csv and write.csv
+      # To work around this, we allow chunks to tag datasets with FLAG_SUM_TEST,
+      # which is less strict, just comparing the sum of all numeric data
+      if(flag_sum_test) {
+        numeric_columns_old <- sapply(olddata, is.numeric)
+        numeric_columns_new <- sapply(newdata, is.numeric)
+        expect_equivalent(sum(olddata[numeric_columns_old]), sum(newdata[numeric_columns_new]),
+                          info = paste(basename(newf), "doesn't match (sum test)"))
+      } else {
+        expect_equivalent(round_df(olddata), round_df(newdata), info = paste(basename(newf), "doesn't match"))
       }
     }
+    # Explicitly clean up COMPDATA as it uses a lot of memory and gets loaded into the
+    # Global environment
+    rm(COMPDATA, envir = .GlobalEnv)
+    gc()
   }
 })
 

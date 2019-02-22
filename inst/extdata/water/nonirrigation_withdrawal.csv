@@ -1,8 +1,10 @@
-# File: nonirrigation_withdrawal.csv,,,,,,,,,,,,,,
-# Title: Nonirrigation withdrawal by country,,,,,,,,,,,,,,
-# Description: 2005 water demands by iso country from gridded data downscaled from the 14 region GCAM water demands.  This should be revised with new gridded data from the 32 region GCAM water demands.,,,,,,,,,,,,,,
-# Units: km^3/yr,,,,,,,,,,,,,,
-# Source: See description.,,,,,,,,,,,,,,
+# File: nonirrigation_withdrawal.csv
+# Title: Nonirrigation withdrawal by country
+# Description: 2005 water demands by iso country from gridded data downscaled from the 14 region GCAM water demands.  This should be revised with new gridded data from the 32 region GCAM water demands.
+# Units: km^3/yr
+# Source: See description.
+# Column types: iccicciiicnnnnn
+# ----------
 FID_,FIPS_CNTRY,ISO_3DIGIT,ISO_NUM,LONG_NAME,ISOSHRTNAM,GCAM_14_re,GCAM_30_re,GCAM_ID_1,Basin_na_1,Municipal,Electricity,Livestock,Manufacturing,Mining
 0,FK,FLK,238,Falkland Islands (Islas Malvinas),Falkland Islands (Malvinas),10,13,215,South_Argentina_South_Atlantic_Coast,0,0,0,0,0
 1,FG,GUF,254,Department of Guiana,French Guiana,10,25,156,Orinoco,0,0,0,0,0

@@ -3,6 +3,7 @@
 # Units: NA
 # Description: Logit exponents of land nodes
 # Original source: Land_nesting_structure.xls
+# Column types: cnc 
 # ----------
 LandNode,logit.exponent,logit.type
 Tundra,0,

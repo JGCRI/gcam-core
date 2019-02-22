@@ -1,6 +1,8 @@
 # File: A32.globaltech_cost.csv
 # Title: Industry default costs
 # Units: 1975$/GJ
+# Column types: ccccnn 
+# ----------
 supplysector,subsector,technology,minicam.non.energy.input,1971,2100
 industrial energy use,biomass,biomass,non-energy,3,3
 industrial energy use,biomass,biomass cogen,non-energy,4.5,4.5

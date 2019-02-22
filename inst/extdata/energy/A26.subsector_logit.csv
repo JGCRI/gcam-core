@@ -3,6 +3,8 @@
 # Units: NA
 # Description: Logit exponents for final energy delivery subsectors
 # Source: NA
+# Column types: ccic 
+# ----------
 supplysector,subsector,logit.exponent,logit.type
 backup_electricity,gas,-6,
 csp_backup,gas,-6,

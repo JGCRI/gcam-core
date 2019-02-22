@@ -2,6 +2,8 @@
 # Title: District heat share and efficiency by service and fuel
 # Units: Share: Proportion of fuel in service;Efficiency: output/input
 # Source: AEO2013 other commercial sector (provided by E. Boedecker pers. comm.)
+# Column types: ccnn 
+# ----------
 service,fuel,share,efficiency
 comm cooling,electricity,0.057251908,2
 comm cooling,gas,0.942748092,0.75
