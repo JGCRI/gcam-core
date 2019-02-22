@@ -2,6 +2,8 @@
 # Title: GCAM basin IDs and Names
 # Source: NA
 # Units: NA
+# Column types: ic
+# ----------
 basin_id,basin_name
 1,Arctic Ocean Islands
 2,Northwest Territories

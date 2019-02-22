@@ -2,6 +2,8 @@
 # Title: Historical trends of groundwater depletion based on watergap
 # Source: Based on data described in Scanlon et al., 2018. Global models underestimate large decadal declining and rising water storage trends relative to GRACE satellite data, PNAS.
 # Units: km^3/yr
+# Column types: inccc
+# ----------
 basin.id,trend_km3PerYr,basinName,scenario,model
 55,-0.102,Adriatic Sea - Greece - Black Sea Coast,hi,watergap
 171,-0.4756,"Africa, East Central Coast",hi,watergap

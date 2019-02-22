@@ -10,7 +10,7 @@
 #' original data system was \code{batch_electricity_water.xml.R} (water XML).
 module_water_batch_electricity_water_xml <- function(command, ...) {
     if(command == driver.DECLARE_INPUTS) {
-    return(c( "L223.Supplysector_elec",
+    return(c("L223.Supplysector_elec",
               "L223.SubsectorShrwtFllt_elec",
               "L223.ElecReserve",
               "L223.StubTechCapFactor_elec",
@@ -180,7 +180,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
       add_xml_data(L2233.StubTechShrwt_elec_cool, "StubTechShrwt") %>%
       add_xml_data(L2233.GlobalTechCapital_elec_cool, "GlobalTechCapital") %>%
       add_xml_data(L2233.GlobalIntTechCapital_elec_cool, "GlobalIntTechCapital", "GlobalTechCapital") %>%
-      add_precursors( "L223.Supplysector_elec",
+      add_precursors("L223.Supplysector_elec",
                       "L223.SubsectorShrwtFllt_elec",
                       "L223.ElecReserve",
                       "L223.StubTechCapFactor_elec",

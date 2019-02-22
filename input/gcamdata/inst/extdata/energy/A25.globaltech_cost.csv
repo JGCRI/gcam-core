@@ -1,6 +1,8 @@
 # File: A25.globaltech_cost.csv
 # Title: Hydrogen non-energy costs
 # Units: Unitless
+# Column types: ccccnnnnnnnn 
+# ----------
 supplysector,subsector,technology,minicam.non.energy.input,1971,2020,2035,2050,2065,2080,2095,2100
 H2 central production,coal,coal chemical,non-energy,2.999,2.999,2.743,2.509,2.295,2.130,1.976,1.976
 H2 central production,coal,coal chemical CCS,non-energy,3.878,3.878,3.560,3.268,3.000,2.784,2.583,2.583

@@ -99,20 +99,21 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
     # Part 2: Forest fires and deforestation
     # Calculate share of forest emissions from forest fires versus deforestation using GFED data.
     # Bind all GFED data together, aggregate by GCAM region/gas/year, calculate share of forest fire versus deforestation
+    # Note the odd spaces after some of the mutates below is to avoid tripping test for consecutive mutates
     bind_rows(mutate(GFED_ForestFire_CO, Non.CO2 = "CO", type = "ForestFire"),
-              mutate(GFED_Deforest_CO, Non.CO2 = "CO", type = "Deforest"),
+              mutate (GFED_Deforest_CO, Non.CO2 = "CO", type = "Deforest"),
               mutate(GFED_ForestFire_SO2, Non.CO2 = "SO2", type = "ForestFire"),
-              mutate(GFED_Deforest_SO2, Non.CO2 = "SO2", type = "Deforest"),
+              mutate (GFED_Deforest_SO2, Non.CO2 = "SO2", type = "Deforest"),
               mutate(GFED_ForestFire_NOx, Non.CO2 = "NOx", type = "ForestFire"),
-              mutate(GFED_Deforest_NOx, Non.CO2 = "NOx", type = "Deforest")) %>%
+              mutate (GFED_Deforest_NOx, Non.CO2 = "NOx", type = "Deforest")) %>%
       # NMVOC is split into lots of inventories, so using CO for now.
       bind_rows(mutate(GFED_ForestFire_CO, Non.CO2 = "NMVOC", type = "ForestFire"),
-                mutate(GFED_Deforest_CO, Non.CO2 = "NMVOC", type = "Deforest")) %>%
+                mutate (GFED_Deforest_CO, Non.CO2 = "NMVOC", type = "Deforest")) %>%
       # Use CO for other missing gases. Previous code did this implicitly in lines 162-166
       bind_rows(mutate(GFED_ForestFire_CO, Non.CO2 = "CH4", type = "ForestFire"),
-                mutate(GFED_Deforest_CO, Non.CO2 = "CH4", type = "Deforest"),
+                mutate (GFED_Deforest_CO, Non.CO2 = "CH4", type = "Deforest"),
                 mutate(GFED_ForestFire_CO, Non.CO2 = "N2O", type = "ForestFire"),
-                mutate(GFED_Deforest_CO, Non.CO2 = "N2O", type = "Deforest")) %>%
+                mutate (GFED_Deforest_CO, Non.CO2 = "N2O", type = "Deforest")) %>%
       gather_years %>%
       spread(type, value) %>%                                                                        # Spread data so deforestation and forest fires are in columns
       standardize_iso(col = "Country") %>%
@@ -146,8 +147,8 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       # Assume missing values mean 100% forest fires since these are easier to model in GCAM
       replace_na(list(PctForestFire = 1)) %>%
       replace_na(list(PctDeforest = 0)) %>%
-      mutate(ForestFire = value * PctForestFire) %>%                                                   # Compute forest fire emissions
-      mutate(Deforest = value * PctDeforest) %>%                                                       # Compute deforestation emissions
+      mutate(ForestFire = value * PctForestFire,
+             Deforest = value * PctDeforest) %>%                                                       # Compute deforestation emissions
       ungroup() %>%
       select(-value, -PctForestFire, -PctDeforest) %>%
       gather(technology, value, -GCAM_region_ID, -GLU, -Land_Type, -Non.CO2, -year) ->
@@ -161,8 +162,8 @@ module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
       filter(year %in% emissions.DEFOREST_COEF_YEARS) %>%                                             # Get years that we'll use for deforestation calculation (as of 5/14/17 this was 2000 & 2005)
       mutate(year = if_else(year == min(emissions.DEFOREST_COEF_YEARS), "year1", "year2")) %>%        # Rename years so we can use them as column headings (this also makes this robust to changes in years later)
       spread(year, value) %>%                                                                         # Spread so years are separate columns
-      mutate(driver = (year1 - year2) / (emissions.DEFOREST_COEF_YEARS[2] - emissions.DEFOREST_COEF_YEARS[1])) %>%    # Compute average annual deforestation rates (change in forest area / number of years)
-      mutate(driver = if_else(driver < 0, 0, driver)) %>%                                             # Deforestation emissions only happen if forest area decreases
+      mutate(driver = (year1 - year2) / (emissions.DEFOREST_COEF_YEARS[2] - emissions.DEFOREST_COEF_YEARS[1]),    # Compute average annual deforestation rates (change in forest area / number of years)
+             driver = if_else(driver < 0, 0, driver)) %>%                                             # Deforestation emissions only happen if forest area decreases
       repeat_add_columns(gas_list) %>%                                                                # Add in rows for all required emissions
       left_join(filter(L124.nonco2_tg_R_forest_Y_GLU,                                                 # Map in EDGAR deforestation emissions for the final deforestation year (as of 5/14/17 this was 2005)
                        year == emissions.DEFOREST_COEF_YEARS[2],

@@ -2,6 +2,8 @@
 # Title: HFD Abatement Scenarios
 # Units: PCT_ABATE: % reduction
 # Source: Unknown
+# Column types: cinnnn 
+# ----------
 Species,Year,SSP2_MIT,SSP2_REF,ABATE,PCT_ABATE
 HFC-125,1991,0.0018,0.0018,0,0
 HFC-125,1992,0.0128,0.0128,0,0

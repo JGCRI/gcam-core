@@ -224,19 +224,33 @@ driver <- function(all_data = empty_data(),
     }
 
     if(!quiet) cat(nrow(unfound_inputs), "chunk data input(s) not accounted for\n")
-    csv_data <- load_csv_files(unfound_inputs$input, unfound_inputs$optional, quiet = TRUE)
-    all_data <- add_data(csv_data, all_data)
   }
 
   # Extract metadata from the input data; we'll add output metadata as we run
   metadata_info <- list()
-  if(return_data_map_only) {
-    if(!quiet) cat("Extracting metadata from inputs...\n")
-    metadata_info <- list(INPUT = tibbelize_outputs(all_data, chunk_name = "INPUT"))
-  }
 
   # Initialize some stuff before we start to run the chunks
-  chunks_to_run <- chunklist$name
+  if(!missing(stop_before) || !missing(stop_after)) {
+    if(!missing(stop_after)) {
+      run_chunks <- stop_after
+    } else {
+      run_chunks <- stop_before
+    }
+    # calc min list
+    name.x <- name.y <- NULL  # silence package check note
+    verts <- inner_join(bind_rows(chunkoutputs,
+                                  tibble(name = unfound_inputs$input,
+                                         output = unfound_inputs$input,
+                                         to_xml = FALSE)),
+                        chunkinputs, by=c("output" = "input")) %>%
+      select(name.x, name.y) %>%
+      unique()
+
+    chunks_to_run <- dstrace_chunks(run_chunks, verts)
+  }
+  else {
+    chunks_to_run <- c(unfound_inputs$input, chunklist$name)
+  }
   removed_count <- 0
   save_chunkdata(empty_data(), create_dirs = TRUE, write_outputs=write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir) # clear directories
 
@@ -253,12 +267,23 @@ driver <- function(all_data = empty_data(),
         next  # chunk's required inputs are not all available
       }
 
-      if(!quiet) print(chunk)
-
       if(chunk %in% stop_before) {
         chunks_to_run <- character(0)
         break
       }
+
+      if(chunk %in% unfound_inputs$input) {
+        unfound_chunk = unfound_inputs[unfound_inputs$input == chunk, ]
+        chunk_data <- load_csv_files(unfound_chunk$input, unfound_chunk$optional, quiet = TRUE)
+        po <- chunk
+        if(return_data_map_only) {
+          if(!quiet) cat("Extracting metadata from inputs...\n")
+          metadata_info[[chunk]] <- tibbelize_outputs(chunk_data, chunk_name = "INPUT")
+        }
+      }
+      else {
+
+      if(!quiet) print(chunk)
 
       # Order chunk to build its data
       time1 <- Sys.time()
@@ -274,6 +299,7 @@ driver <- function(all_data = empty_data(),
       # Save precursor information and other metadata
       if(return_data_map_only) {
         metadata_info[[chunk]] <- tibbelize_outputs(chunk_data, chunk)
+      }
       }
 
       # Add this chunk's data to the global data store
@@ -346,7 +372,8 @@ warn_data_injects <- function() {
     co
 
   # Look for TEMP_DATA_INJECT pattern in the chunk input list
-  ci[grep(TEMP_DATA_INJECT, ci$input),] %>%
+  ci %>%
+    filter(grepl(TEMP_DATA_INJECT, input)) %>%
     mutate(base_input = basename(input)) %>%
     # Look for any tdi inputs that appear in the enabled chunks' outputs
     filter(base_input %in% co$output) %>%

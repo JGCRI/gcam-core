@@ -2,6 +2,8 @@
 # Title: Electric sector subsector logit exponents
 # Units: Unitless logit-exponent
 # Source: None (GCAM assumptions)
+# Column types: ccic 
+# ----------
 supplysector,subsector,logit.exponent,logit.type
 electricity,coal,-10,
 electricity,gas,-10,

@@ -2,6 +2,8 @@
 # Title: Electricity technology share weight interpolation
 # Units: None
 # Source: None (GCAM assumptions). Documented in Proposal 210_GCAM4p1_Electricity Generation Assumptions.pdf (page 20).
+# Column types: ccccccc 
+# ----------
 supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function
 electricity,gas,gas (CC),share-weight,final-calibration-year,end-year,s-curve
 electricity,refined liquids,refined liquids (CC),share-weight,final-calibration-year,end-year,s-curve

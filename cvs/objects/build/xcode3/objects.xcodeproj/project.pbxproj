@@ -266,6 +266,7 @@
 		CD48883A122873C200F5A88A /* logger_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48871B122873C200F5A88A /* logger_factory.cpp */; };
 		CD48883B122873C200F5A88A /* plain_text_logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48871C122873C200F5A88A /* plain_text_logger.cpp */; };
 		CD48883C122873C200F5A88A /* xml_logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48871D122873C200F5A88A /* xml_logger.cpp */; };
+		CD5162A721909920005B351E /* no_climate_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5162A621909920005B351E /* no_climate_model.cpp */; };
 		CD548E5A12AFFD9400ADCE8C /* generic_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD548E5912AFFD9400ADCE8C /* generic_output.cpp */; };
 		CD693FA01AEFE0CE00805384 /* relative_cost_logit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD693F9F1AEFE0CE00805384 /* relative_cost_logit.cpp */; };
 		CD693FA31AEFF0A100805384 /* absolute_cost_logit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD693FA21AEFF0A100805384 /* absolute_cost_logit.cpp */; };
@@ -951,6 +952,8 @@
 		CD48871B122873C200F5A88A /* logger_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logger_factory.cpp; sourceTree = "<group>"; };
 		CD48871C122873C200F5A88A /* plain_text_logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = plain_text_logger.cpp; sourceTree = "<group>"; };
 		CD48871D122873C200F5A88A /* xml_logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xml_logger.cpp; sourceTree = "<group>"; };
+		CD5162A321909915005B351E /* no_climate_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = no_climate_model.h; sourceTree = "<group>"; };
+		CD5162A621909920005B351E /* no_climate_model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = no_climate_model.cpp; sourceTree = "<group>"; };
 		CD52797916418A2B00A425BF /* fltcmp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fltcmp.hpp; sourceTree = "<group>"; };
 		CD52797C16418A6400A425BF /* logbroyden.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logbroyden.hpp; sourceTree = "<group>"; };
 		CD52797D16418A6400A425BF /* lognrbt.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lognrbt.hpp; sourceTree = "<group>"; };
@@ -1164,6 +1167,7 @@
 		CD488435122873C000F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CD5162A321909915005B351E /* no_climate_model.h */,
 				CD3B52C41BFE0E1F00179FDD /* hector_model.hpp */,
 				CDAF62EA130DAB6100D93AFB /* MAGICC_array.h */,
 				CDAF62EB130DAB6100D93AFB /* ObjECTS_MAGICC.h */,
@@ -1176,6 +1180,7 @@
 		CD488438122873C000F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CD5162A621909920005B351E /* no_climate_model.cpp */,
 				CD3B52C51BFE0E2800179FDD /* hector_model.cpp */,
 				CDAF62EC130DAB6900D93AFB /* MAGICC_array.cpp */,
 				CDAF62ED130DAB6900D93AFB /* MAGICC_IO_helpers.cpp */,
@@ -2582,6 +2587,7 @@
 				CD48877F122873C200F5A88A /* sgm_input.cpp in Sources */,
 				CD488780122873C200F5A88A /* trade_demand_function.cpp in Sources */,
 				CD488781122873C200F5A88A /* trade_input.cpp in Sources */,
+				CD5162A721909920005B351E /* no_climate_model.cpp in Sources */,
 				CD488782122873C200F5A88A /* utility_demand_function.cpp in Sources */,
 				CD488783122873C200F5A88A /* accelerator.cpp in Sources */,
 				CD488784122873C200F5A88A /* get_distributed_investment_visitor.cpp in Sources */,

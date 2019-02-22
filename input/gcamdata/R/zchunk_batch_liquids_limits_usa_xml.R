@@ -9,7 +9,7 @@
 #' the generated outputs: \code{liquids_limits_USA.xml}.
 module_gcam.usa_batch_liquids_limits_usa_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L270.CreditMkt_USA"))
+    return(c("L270.CreditMkt_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "liquids_limits_USA.xml"))
   } else if(command == driver.MAKE) {

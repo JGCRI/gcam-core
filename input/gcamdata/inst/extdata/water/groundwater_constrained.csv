@@ -3,6 +3,8 @@
 # Comments: Groundwater resource supply curves for all basins and three scenarios (5, 25, 40% availability). Based on global hydrogeological maps and cost extraction model.
 # Source: Yonkofski et al. (in review) Cost and accessibility of global non-renewable groundwater resources, Earth's Future.
 # Units: price in 1975USD; available in km3
+# Column types: inncc
+# ----------
 basin.id,price,available,grade,scenario
 1,0.002,51.2907,grade1,05pct
 1,0.022,61.3486,grade2,05pct

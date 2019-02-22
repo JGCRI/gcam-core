@@ -3,6 +3,7 @@
 # Units: Unitless
 # Author: Page Kyle
 # Source: IMAGE model, version 2.4. These tables were once downloaded from the model's website, but are no longer available. See IMAGE 2.4 documentation, Figure 5.1 (p80) and the surrounding text. Bouwman et al., 2006, Integrated Modelling of Global Environmental Change: An Overview of IMAGE 2.4. Netherlands Environmental Assessment Agency, MNP Publication 500110002/2006. https://www.researchgate.net/profile/Alexander_Bouwman/publication/235704246_Integrated_modelling_of_global_environmental_change_an_overview_of_Image_24/links/57a4307808ae455e8535f763.pdf
+# Column types: cinnnnnnnnnniinininnnnnnin 
 # ----------
 commodity,year,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24
 Beef,1970,0.83,0.83,0.25,0.45,0.25,0.2,0.82,0.35,0.2,0.2,1,1,0.35,1,0.35,1,0.35,0.4,0.5,0.45,0.88,0.9,1,0.25

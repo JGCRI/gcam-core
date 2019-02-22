@@ -1,6 +1,8 @@
 # File: A44.USA_TechChange.csv
 # Title: Improvement rates of technologies
 # Units: Annual rate
+# Column types: ccnnnnnnnnnn 
+# ----------
 supplysector,technology,1971,1990,2010,2020,2035,2050,2065,2080,2095,2100
 resid,resid shell,-0.0045,-0.0045,-0.0045,-0.0045,-0.0045,-0.0045,-0.0045,-0.0045,-0.0045,-0.0045
 resid heating,biomass,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001

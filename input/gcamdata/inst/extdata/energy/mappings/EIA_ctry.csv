@@ -2,6 +2,8 @@
 # Title: Mapping between iso codes and country names in EIA data,
 # Source: NA,
 # Units: NA,
+# Column types: cc 
+# ----------
 EIA_ctry,iso
 Afghanistan,afg
 Africa,

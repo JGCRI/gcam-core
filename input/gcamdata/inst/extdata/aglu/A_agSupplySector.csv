@@ -3,6 +3,8 @@
 # Unit: NA
 # Description: agSupplySectors - name / market / unit
 # Source: NA
+# Column types: ccccccic 
+# ----------
 AgSupplySector,output.unit,input.unit,price.unit,calPrice,market,logit.exponent,logit.type
 Corn,Mt,thous km2,1975$/kg,,global,-3,
 FiberCrop,Mt,thous km2,1975$/kg,,global,-3,

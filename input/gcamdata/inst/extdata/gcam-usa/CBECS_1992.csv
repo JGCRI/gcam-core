@@ -2,6 +2,8 @@
 # Title: Commercial Buildings Energy Consumption Survey 1992
 # Units: see source for details
 # Source: https://www.eia.gov/consumption/commercial/data/1992/
+# Column types: iiiiiiniiiiiiiiiiiiiiiiiii 
+# ----------
 BLDGID5,REGION5,CENDIV5,SQFT5,YRCONC5,PBA5,ADJWT5,ELHTBTU5,ELCLBTU5,ELVNBTU5,ELWTBTU5,ELLTBTU5,ELCKBTU5,ELRFBTU5,ELOFBTU5,ELMSBTU5,NGHTBTU5,NGWTBTU5,NGCKBTU5,NGMSBTU5,FKHTBTU5,FKWTBTU5,FKMSBTU5,DHHTBTU5,DHWTBTU5,DHMSBTU5
 1,4,9,100001,6,4,293.95,0,0,252681,0,663930,0,1573,98255,571107,0,511825,0,0,              ,              ,              ,11311000,0,0
 2,3,5,15000,5,13,1.03,0,314307,67466,94112,1095307,0,25561,13543,66362,4557235,0,0,0,              ,              ,              ,              ,              ,

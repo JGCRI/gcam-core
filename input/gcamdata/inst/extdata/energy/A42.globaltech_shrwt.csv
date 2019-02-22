@@ -1,6 +1,8 @@
 # File: A42.globaltech_shrwt.csv
 # Title: Aggregate building default technology shareweights
 # Units: Unitless
+# Column types: ccciii 
+# ----------
 supplysector,subsector,technology,1971,2010,2100
 building,biomass,biomass,1,1,1
 building,coal,coal,1,1,1

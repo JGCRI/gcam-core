@@ -3,6 +3,8 @@
 # Description: GAINS emissions data by sector and gas for historical and modeled years
 # Units: Identified by variable in data
 # Source: Rao et al. 2017 "Future air pollution in the Shared Socio-economic Pathways" Global Environmental Change.
+# Column types: ccccinnn 
+# ----------
 TIMER_REGION,TIMER_SECTOR,UNIT,POLL,IDYEARS,CLE,MFR,SLE
 Asia-Stan,CEMENT,kt,BC,2000,0.02011475,2.16E-05,0.006049573
 Asia-Stan,CEMENT,kt,BC,2005,0.022802961,2.30E-05,0.006856999

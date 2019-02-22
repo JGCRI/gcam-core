@@ -2,6 +2,8 @@
 # Title: 1990 BC emissions by Minicam 17 regions (14 reg + LAM breakout), technology, fuel
 # Units: Gg C
 # Source: Bond et al. 2007. Global Biogeochemical Cycles 21 GB2018. DOI: 10.1029/2006GB002840
+# Column types: cnnnnnnnnnnnnnnnnn 
+# ----------
 Technology,USA , Canada , WEurope , Japan , AustraliaAndNZ , FUSSR , EEurope , ChinaCPA , India , SandEAsia , SKorea , MiddleEast , Africa , LAmerica , Argentina , Brazil , Mexico 
 Elec_Coal,1.31,0.07,0.82,0.07,0.1,1.48,2,15.63,0.68,0.1,0.02,0.04,0.7,0.03,0,0.02,0.03
 Elec_Gas,0.01,0,0,0,0,0.01,0,0,0,0,0,0,0,0,0,0,0

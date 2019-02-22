@@ -1,8 +1,10 @@
-# File: basin_to_country_mapping.csv,,,,,,
-# Title: Mapping between basins, countries, and GLUs,,,,
-# Units: NA,,,,,,
-# Comments: Basin assigned to the country which has the largest basin area.,,,,,,
-# Source: NA,,,,,,
+# File: basin_to_country_mapping.csv
+# Title: Mapping between basins, countries, and GLUs
+# Units: NA
+# Comments: Basin assigned to the country which has the largest basin area.
+# Source: NA
+# Column types: iccccic
+# ----------
 GCAM_basin_ID,Basin_name,GLU_code,GLU_name,ISO,ISO_NUM,Country_name
 1,Arctic_Ocean_Islands,GLU001,ArcticIsl,GRL,304,Greenland
 2,Northwest_Territories,GLU002,NWTerr,CAN,124,Canada

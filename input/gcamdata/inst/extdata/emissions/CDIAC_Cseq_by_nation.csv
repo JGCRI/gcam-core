@@ -3,6 +3,8 @@
 # Units: kt C
 # Source: personal communication with Bob Andres, andresrj@ornl.gov (2/11/2013)
 # Comments: We have no data on non-fuel uses for solid fuels and gaseous fuels.
+# Column types: iin 
+# ----------
 year,UN_code,liquids.sequestration
 1970,4,-5.86
 1971,4,-2.51

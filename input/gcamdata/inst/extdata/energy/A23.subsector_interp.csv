@@ -2,6 +2,8 @@
 # Title: Electricity subsector shareweight interpolation
 # Units: Unitless share-weights
 # Source: None (GCAM assumptions)
+# Column types: cccciic 
+# ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 electricity,coal,share-weight,final-calibration-year,2300,1,s-curve
 electricity,gas,share-weight,final-calibration-year,2300,1,s-curve

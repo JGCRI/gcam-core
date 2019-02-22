@@ -188,10 +188,10 @@ module_energy_L224.heat <- function(command, ...) {
       filter(year %in% MODEL_BASE_YEARS) %>%
       filter(region %in% heat_region$region) %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], "minicam.energy.input", "value") %>%
-      mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
-      mutate(year.share.weight = year) %>%
-      mutate(subs.share.weight = if_else(calibrated.value == 0, 0, 1)) %>%
-      mutate(share.weight = subs.share.weight) %>%
+      mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT),
+             year.share.weight = year,
+             subs.share.weight = if_else(calibrated.value == 0, 0, 1),
+             share.weight = subs.share.weight) %>%
       select(-value) -> L224.StubTechCalInput_heat
 
     # Secondary output of heat, applied to electricity generation technologies
@@ -206,8 +206,8 @@ module_energy_L224.heat <- function(command, ...) {
       left_join(calibrated_techs %>%
                   select(sector, fuel, supplysector, subsector, technology) %>%
                   distinct, by = c("sector", "fuel", "technology")) %>%
-      mutate(stub.technology = technology) %>%
-      mutate(secondary.output.name = A24.sector[["supplysector"]]) %>%
+      mutate(stub.technology = technology,
+             secondary.output.name = A24.sector[["supplysector"]]) %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], "secondary.output.name", "value") %>%
       mutate(secondary.output = round(value, energy.DIGITS_CALOUTPUT)) %>%
       select(-value) -> L224.StubTechSecOut_elec
@@ -215,8 +215,8 @@ module_energy_L224.heat <- function(command, ...) {
     # Calculate cost adjustment, equal to the output of heat multiplied by the heat price (to minimize the distortion of including the secondary output)
     L224.StubTechSecOut_elec %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], "secondary.output") %>%
-      mutate(minicam.non.energy.input = "heat plant") %>%
-      mutate(input.cost = round(secondary.output*energy.HEAT_PRICE, energy.DIGITS_COST))-> L224.StubTechCost_elec
+      mutate(minicam.non.energy.input = "heat plant",
+             input.cost = round(secondary.output*energy.HEAT_PRICE, energy.DIGITS_COST))-> L224.StubTechCost_elec
 
     # The secondary output of heat from CHP in the electric sector can cause the price of the technologies
     # to go very low or negative if the technology cost is not modified to reflect the additional costs of

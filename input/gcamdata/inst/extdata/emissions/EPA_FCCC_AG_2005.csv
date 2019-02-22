@@ -1,6 +1,8 @@
 # File: EPA_FCCC_AG_2005.csv
 # Title: EPA USA GHG emissions inventory for agriculture, 2005
 # Units: Gg
+# Column types: ccnnnnc 
+# ----------
 Source_Category_Raw,Source_Category,CH4,N2O,NOx,CO,NMVOC
 Total Agriculture,Total Agriculture,7674.29,1210.04,38.56,857.92,
 A. Enteric Fermentation,A. Enteric Fermentation,5339.55,,,,

@@ -7,7 +7,7 @@
 screen_forbidden(fn)
 }
 \arguments{
-\item{fn}{The function to be tested.  This is the actual function object, not
+\item{fn}{The function to be tested. This is the actual function object, not
 the name of the function.}
 }
 \value{

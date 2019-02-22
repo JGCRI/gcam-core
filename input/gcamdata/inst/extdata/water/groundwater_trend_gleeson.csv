@@ -2,6 +2,8 @@
 # Title: Historical trends of groundwater depletion based on Gleeson study
 # Source: Gleeson et al., 2018. Water balance of global aquifers revealed by groundwater footprint, Nature.
 # Units: km^3/yr
+# Column types: ni
+# ----------
 netDepletion,basin.id
 0,1
 0,2

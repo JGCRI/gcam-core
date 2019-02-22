@@ -185,6 +185,17 @@ void LinearControl::initCalc( const string& aRegionName,
         mStartYear = finalCalibYr;
     }
     
+    // Linear control objects are not copied forward, so make sure start year is not before
+    // the first model period for this object.
+    int thisModelYear = scenario->getModeltime()->getper_to_yr( aPeriod );
+    if ( aTechInfo->getBoolean( "new-vintage-tech", true ) && mStartYear < thisModelYear ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << getXMLName() << ", " << getName() << " has invalid start year " << mStartYear
+                << " before first year " << thisModelYear << " for this vintage. Resetting to " << thisModelYear << endl;
+        mStartYear = thisModelYear;
+    }
+    
     // Need to get the emissions coefficient from start period to serve as starting point 
     // for linear decline.
     int startPeriod = scenario->getModeltime()->getyr_to_per( mStartYear );

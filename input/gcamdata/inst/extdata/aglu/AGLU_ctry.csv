@@ -1,6 +1,7 @@
 # File: AGLU_ctry.csv
 # Title: Mapping of countries in AGLU databases to ISO codes
 # Units: NA
+# Column types: ccccicccicc 
 # ----------
 FAO_country,iso,GTAP_region,CROSIT_ctry,CROSIT_country_ID,MIRCA_country,IFA2002_country,IFA_region,IMAGE_region_ID,IMAGE_region_name,FAO2050_reg
 Afghanistan,afg,xsa,AFGH,65,Afghanistan,,Rest of world,18,South Asia,South Asia
