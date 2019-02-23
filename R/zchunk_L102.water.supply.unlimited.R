@@ -10,7 +10,7 @@
 #' original data system was \code{L102.water.supply.unlimited.R} (water level1).
 #' @details  We generate all the possible combinations between the 32 GCAM regions, 4 water types, and all the defined years.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr if_else mutate select
 #' @importFrom tidyr gather spread
 #' @author MH May 2017
 module_water_L102.water.supply.unlimited <- function(command, ...) {

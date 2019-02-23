@@ -326,7 +326,7 @@ test_that("downscale_FAO_country", {
   expect_equal(ncol(d), ncol(dnew))
   expect_equal(nrow(d) - 1, nrow(dnew))  # post-dissolution country should be gone
   # ungrouped return
-  expect_null(groups(dnew))
+  expect_null(dplyr::groups(dnew))
 
   # Pre-dissolution year should be calculated from ratio of dissolution year data
   expect_equal(dnew[as.character(yrs[yrs < dy])], tibble(`1998` = c(1, 2), `1999` = c(2/3, 4/3)))
@@ -359,7 +359,7 @@ test_that("write_to_all_states", {
   expect_identical(dout$price.exp.year.fillout, as.character(rep(min(MODEL_BASE_YEARS), nrow(dout))))
 
   # ungrouped return
-  expect_null(groups(dout))
+  expect_null(dplyr::groups(dout))
 })
 
 test_that("set_subsector_shrwt", {
@@ -380,5 +380,5 @@ test_that("set_subsector_shrwt", {
   expect_equal(dout$subs.share.weight, 1)
 
   # ungrouped return
-  expect_null(groups(dout))
+  expect_null(dplyr::groups(dout))
 })

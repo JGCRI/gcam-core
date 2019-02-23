@@ -10,7 +10,7 @@
 #' original data system was \code{L201.socioeconomics_USA.R} (gcam-usa level2).
 #' @details Interest rate, population, and GDP for GCAM-USA.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter lag mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH October 2017
 module_gcam.usa_L201.socioeconomics_USA <- function(command, ...) {

@@ -10,7 +10,7 @@
 #' original data system was \code{LA161.Cstorage.R} (gcam-usa level1).
 #' @details Calculates onshore CO2 storage by grid region.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter group_by lag mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH October 2017
 
@@ -56,7 +56,7 @@ module_gcam.usa_LA161.Cstorage <- function(command, ...) {
       # From the cumulative totals, return to the marginal quantities associated with each grade
       mutate(MtC = Cumul_MtC - lag(Cumul_MtC),
              # this will create grade equal to grade 1 for 25%, grade 2 for 50%, etc.
-             grade = paste("grade",seq_len(n()), sep = " ")) %>%
+             grade = paste("grade",seq_len(dplyr::n()), sep = " ")) %>%
       ungroup() %>%
       # For the first grade, set the marginal quantity with the cumulative total
       mutate(MtC = replace(MtC, is.na(MtC), Cumul_MtC[is.na(MtC)]))

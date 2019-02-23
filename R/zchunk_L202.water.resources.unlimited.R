@@ -11,7 +11,7 @@
 #' @details Create unlimited resource markets (i.e., 32 GCAM regions) for water types (i.e., water consumption, withdrawals, biophysical water consumption and seawater),
 #' and read in fixed prices for water types.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange filter left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author YL July 2017
 module_water_L202.water.resources.unlimited <- function(command, ...) {

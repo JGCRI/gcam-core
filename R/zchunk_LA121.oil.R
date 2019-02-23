@@ -12,7 +12,7 @@
 #' the IEA energy balance to separate out unconventional oil production and crude oil (total liquids - unconventional oil).
 #' @note If the (proprietary) IEA data aren't available, pre-built summaries are used.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange distinct filter group_by inner_join left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author JDH June 2017
 module_energy_LA121.oil <- function(command, ...) {

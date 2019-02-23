@@ -10,7 +10,7 @@
 #' original data system was \code{LA114.Wind.R} (gcam-usa level1).
 #' @details Computes capacity factors for wind by US state.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter mutate pull select
 #' @importFrom tidyr gather spread
 #' @author ST September 2017
 module_gcam.usa_LA114.Wind <- function(command, ...) {

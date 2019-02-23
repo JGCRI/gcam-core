@@ -24,7 +24,7 @@
 #' @details This chunk generates input files to create an annualized electricity generation sector for each state
 #' and creates the demand for the state-level electricity sectors in the grid regions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join matches mutate select semi_join summarise transmute
 #' @importFrom tidyr gather spread
 #' @author RC Oct 2017
 module_gcam.usa_L223.electricity_USA <- function(command, ...) {

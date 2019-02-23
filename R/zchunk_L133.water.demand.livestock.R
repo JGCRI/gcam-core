@@ -10,7 +10,7 @@
 #' original data system was \code{L133.water.demand.livestock.R} (water level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter if_else group_by inner_join left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author KRD November 2017
 module_water_L133.water.demand.livestock <- function(command, ...) {

@@ -23,7 +23,7 @@
 #' Where HA:CL > 3, HA:CL is set to 3, and additional cropland (ExtraCropLand) is written out, to be taken from
 #' other land use types (determined in different code chunks).
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr anti_join arrange bind_rows distinct filter if_else group_by left_join mutate select summarise summarise_all
 #' @importFrom tidyr gather spread
 #' @author ACS April 2017
 module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {

@@ -13,7 +13,7 @@
 #' Second: Compute share of sectoral emissions in each subsector using EPA data. Third: Group by and then join by sector, subsector,
 #' and Non.CO2. Fourth: Disaggregate EDGAR emissions to subsectors. Fifth: map in all data and compute emissions (EDGAR emissions*tech_share)
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author CH May 2017
 module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {

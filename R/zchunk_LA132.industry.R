@@ -11,7 +11,7 @@
 #' @details The chunk calculates industrial feedstock consumption directly separated from enduse energy comsuption and
 #'          industrial energy consumption by deducting net energy use by unconventional oil production, gas processing, refining, and CHP
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr anti_join bind_rows filter group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author LF September 2017
 module_energy_LA132.industry <- function(command, ...) {
