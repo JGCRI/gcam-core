@@ -62,109 +62,107 @@ module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
     L2233.load_segments <- unique(A23.elecS_inttech_associations$Electric.sector)
 
     A23.elecS_tech_associations %>%
-      anti_join(A23.elecS_tech_availability,
-                by = c("Electric.sector.technology" = "stub.technology")) %>%
-      mutate(Electric.sector = factor(Electric.sector, levels = L2233.load_segments)) %>%
-      arrange(subsector, Electric.sector) %>%
-      mutate(Electric.sector = as.character(Electric.sector)) -> A23.elecS_tech_associations_Edit
+      anti_join(A23.elecS_tech_availability, by = c("Electric.sector.technology" = "stub.technology")) %>%
+      mutate(Electric.sector = as.character(factor(Electric.sector, levels = L2233.load_segments))) %>%
+      arrange(subsector, Electric.sector) -> A23.elecS_tech_associations_Edit
 
     A23.elecS_inttech_associations %>%
-      anti_join(A23.elecS_tech_availability,
-                by = c("Electric.sector.intermittent.technology" = "stub.technology")) %>%
-      mutate(Electric.sector = factor(Electric.sector, levels = L2233.load_segments)) %>%
+      anti_join(A23.elecS_tech_availability, by = c("Electric.sector.intermittent.technology" = "stub.technology")) %>%
+      mutate(Electric.sector = as.character(factor(Electric.sector, levels = L2233.load_segments))) %>%
       arrange(subsector, Electric.sector) %>%
-      mutate(Electric.sector = as.character(Electric.sector))%>%
-      rename(Electric.sector.technology=Electric.sector.intermittent.technology,
-             technology=intermittent.technology)%>%
+      rename(Electric.sector.technology = Electric.sector.intermittent.technology,
+             technology = intermittent.technology)%>%
       bind_rows(A23.elecS_tech_associations_Edit)%>%
-      rename(sector=supplysector,
-             fuel=subsector_1)%>%
-      dplyr::select(sector, fuel, technology, Electric.sector,subsector,Electric.sector.technology)->
+      rename(sector = supplysector,
+             fuel = subsector_1)%>%
+      dplyr::select(sector, fuel, technology, Electric.sector,subsector,Electric.sector.technology) ->
       elec_tech_water_map
 
     # Added elec water coefficient in here
 
     ######### Ref scenario
 
-    L1233.wdraw_coef_R_elec_F_tech_Yh_ref%>%
-      mutate(fuel=gsub("solar CSP","solar",fuel),
-             fuel=gsub("solar PV","solar",fuel),
-             water_sector="Electricity",
-             water_type="water withdrawals")%>%
-      mutate(minicam.energy.input=set_water_input_name(water_sector,water_type,A03.sector))->
+    L1233.wdraw_coef_R_elec_F_tech_Yh_ref %>%
+      mutate(fuel = gsub("solar CSP","solar",fuel),
+             fuel = gsub("solar PV","solar",fuel),
+             water_sector = "Electricity",
+             water_type = "water withdrawals",
+             minicam.energy.input = set_water_input_name(water_sector,water_type,A03.sector)) ->
       L2233.StubTech_WaterCoef_ref.wdraw
 
-    L1233.wcons_coef_R_elec_F_tech_Yh_ref%>%
-      mutate(fuel=gsub("solar CSP","solar",fuel),
-             fuel=gsub("solar PV","solar",fuel),
-             water_sector="Electricity",
-             water_type="water consumption")%>%
-      mutate(minicam.energy.input=set_water_input_name(water_sector,water_type,A03.sector))->
+    L1233.wcons_coef_R_elec_F_tech_Yh_ref %>%
+      mutate(fuel = gsub("solar CSP","solar",fuel),
+             fuel = gsub("solar PV","solar",fuel),
+             water_sector = "Electricity",
+             water_type = "water consumption",
+             minicam.energy.input = set_water_input_name(water_sector,water_type,A03.sector)) ->
       L2233.StubTech_WaterCoef_ref.wcons
 
     # Bind wdraw and wcons and add missing years.
-    bind_rows(L2233.StubTech_WaterCoef_ref.wdraw, L2233.StubTech_WaterCoef_ref.wcons)->
+    bind_rows(L2233.StubTech_WaterCoef_ref.wdraw, L2233.StubTech_WaterCoef_ref.wcons) ->
       L2233.StubTech_WaterCoef_ref_temp
 
 
-    #Indicate states where geothermal electric technologies will not be created
-    NREL_us_re_technical_potential%>%
-      left_join(states_subregions%>%dplyr::select(state,state_name)%>%unique%>%rename(State=state_name),by=c("State"))->
+    # Indicate states where geothermal electric technologies will not be created
+    NREL_us_re_technical_potential %>%
+      filter (State != "TOTAL") %>%
+      left_join_error_no_match(states_subregions %>%
+                               dplyr::select(state,state_name) %>%
+                               unique %>% rename(State = state_name),by = c("State")) ->
       NREL_us_re_technical_potential
-    geo_states_noresource <- tibble(region=gcamusa.STATES[gcamusa.STATES %in% NREL_us_re_technical_potential$state[NREL_us_re_technical_potential$Geothermal_Hydrothermal_GWh==0]],
-                                    subsector="geothermal" )
+
+    geo_states_noresource <- tibble( region = gcamusa.STATES[gcamusa.STATES %in% NREL_us_re_technical_potential$state[NREL_us_re_technical_potential$Geothermal_Hydrothermal_GWh==0]],
+                                    subsector = "geothermal" )
 
 
-    # Add columns and then gather instead of using complete() with the long format in which case R runs out of memory.
-    for (year_i in paste("X",as.character(MODEL_YEARS[!(paste("X",MODEL_YEARS,sep="") %in% names(L2233.StubTech_WaterCoef_ref_temp))]),sep="")){
-     L2233.StubTech_WaterCoef_ref_temp%>%
-        mutate(!!year_i:=NA_real_)->
-       L2233.StubTech_WaterCoef_ref_temp
-    }
+    years_to_create <-MODEL_YEARS[!MODEL_YEARS %in% names(L2233.StubTech_WaterCoef_ref_temp)]
+    L2233.StubTech_WaterCoef_ref_temp[,years_to_create] <- NA_real_
 
-    # Interpolate for missing years using approx_fun
-    L2233.StubTech_WaterCoef_ref_temp%>%
-      gather(key=year,value=x,-state,-fuel,-plant_type,-technology,-water_sector,-water_type,-minicam.energy.input)%>%
-      mutate(year=as.numeric(gsub("X","",year)))%>%
-      filter(year %in% MODEL_YEARS)%>%
-      group_by(state,fuel,plant_type,technology,water_sector,water_type,minicam.energy.input)%>%
-      mutate(coefficient=approx_fun(year,x,rule=2))%>%
-      ungroup()%>%
-      mutate(plant_type=NULL,x=NULL)%>%
-      inner_join(unique( elec_tech_water_map[ c( "sector","fuel","technology", grep( 'Electric.', names( elec_tech_water_map ), value=T ) ) ] ),
-           by=c("fuel","technology"))%>%
-      rename(region = state) %>%
-      rename(subsector = fuel) %>%
-      rename(supplysector = Electric.sector) %>%
-      dplyr::select(-technology) %>%
-      rename(technology = Electric.sector.technology) %>%
-      mutate(market.name = gcamusa.DEFAULT_MARKET)%>%
-      dplyr::select(region,supplysector,subsector,technology,year,minicam.energy.input,coefficient,market.name)%>%
-      anti_join(geo_states_noresource,by=c("region","subsector"))->   # Removing states which do not have geothermal technologies
+    # Interpolate for missing years using approx_fun and map elec_tech_water_map technologies
+    L2233.StubTech_WaterCoef_ref_temp %>%
+      gather(key = year,value = value,-state,-fuel,-plant_type,-technology,-water_sector,-water_type,-minicam.energy.input) %>%
+      mutate(year = as.numeric(year)) %>%
+      filter(year %in% MODEL_YEARS) %>%
+      group_by(state,fuel,plant_type,technology,water_sector,water_type,minicam.energy.input) %>%
+      mutate(coefficient = approx_fun(year,value,rule = 2),
+             market.name = gcamusa.DEFAULT_MARKET) %>%
+      ungroup() %>%
+      inner_join(unique( elec_tech_water_map[ c( "sector","fuel","technology", grep( 'Electric.', names( elec_tech_water_map ), value = T ) ) ] ),
+           by = c("fuel","technology")) %>%
+      dplyr::select(region = state,
+                    supplysector = Electric.sector,
+                    subsector = fuel,
+                    technology = Electric.sector.technology,
+                    year,
+                    minicam.energy.input,
+                    coefficient,
+                    market.name) %>%
+      anti_join(geo_states_noresource,by = c("region","subsector")) ->   # Removing states which do not have geothermal technologies
       L2233.StubTech_WaterCoef_ref
 
-    L2233.StubTech_WaterCoef_ref%>%
-      inner_join(A23.elec_tech_associations_coal_retire, by=c("subsector","technology"))%>%
-      mutate(technology=Electric.sector.technology,
-             Electric.sector=NULL,Electric.sector.technology=NULL)->
+    L2233.StubTech_WaterCoef_ref %>%
+      inner_join(A23.elec_tech_associations_coal_retire, by = c("subsector","technology")) %>%
+      mutate(technology = Electric.sector.technology,
+             Electric.sector = NULL,
+             Electric.sector.technology = NULL) ->
     L2233.StubTech_WaterCoef_ref_coal_split
 
     # Remove duplicate entries and sort data
-    L2233.StubTech_WaterCoef_ref%>%
+    L2233.StubTech_WaterCoef_ref %>%
       filter(!technology %in% c("coal_base_conv pul","coal_int_conv pul",
                                 "coal_peak_conv pul",
-                                "coal_subpeak_conv pul"))%>%
-      bind_rows(L2233.StubTech_WaterCoef_ref_coal_split)%>%
-      dplyr::select(region, supplysector, subsector, technology,year,minicam.energy.input,coefficient,market.name)%>%
-      arrange(region,year)%>%
-      rename(stub.technology=technology)->
+                                "coal_subpeak_conv pul")) %>%
+      bind_rows(L2233.StubTech_WaterCoef_ref_coal_split) %>%
+      dplyr::select(region, supplysector, subsector, technology,year,minicam.energy.input,coefficient,market.name) %>%
+      arrange(region,year) %>%
+      rename(stub.technology = technology) ->
       L2233.StubTech_WaterCoef_ref
 
     # ===================================================
     # Outputs
 
     L2233.StubTech_WaterCoef_ref %>%
-      add_title("Weighted water coefficient for reference scenario and load segment classification") %>%
+      add_title("Weighted water coefficients for reference scenario and load segment classification") %>%
       add_units("none") %>%
       add_comments("Generated using zchunk_LA2233.electricity_water_USA") %>%
       add_legacy_name("L2233.StubTech_WaterCoef_ref") %>%
