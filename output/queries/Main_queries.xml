@@ -3958,7 +3958,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          <emissionsQueryBuilder title="nonCO2 emissions by region">
             <axis1 name="GHG">GHG</axis1>
             <axis2 name="Year">emissions</axis2>
-            <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' (:collapse:) or @type = 'resource' (:collapse:)]//
+            <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' (:collapse:) or @type = 'resource' (:collapse:)](: / *[@type = 'subresource' (: collapse :)] :)//
             *[@type = 'GHG']/emissions/node()</xPath>
             <comments/>
          </emissionsQueryBuilder>
@@ -3991,7 +3991,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          <emissionsQueryBuilder title="specific nonCO2 emissions by region">
             <axis1 name="region">region</axis1>
             <axis2 name="Year">emissions</axis2>
-            <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' (:collapse:) or @type = 'resource' (:collapse:)]//
+            <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' (:collapse:) or @type = 'resource' (:collapse:)](: / *[@type = 'subresource' (: collapse :)] :)//
             *[@type = 'GHG' and (@name='BC')]/emissions/node()</xPath>
             <comments/>
          </emissionsQueryBuilder>
@@ -4004,7 +4004,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          <emissionsQueryBuilder title="specific nonCO2 emissions by resource production">
             <axis1 name="resource">resource</axis1>
             <axis2 name="Year">emissions</axis2>
-            <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'resource']//*[@type = 'GHG' and (@name='CH4')]/emissions/node()</xPath>
+            <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'resource'](: / *[@type = 'subresource' (: collapse :)] :)//*[@type = 'GHG' and (@name='CH4')]/emissions/node()</xPath>
             <comments/>
          </emissionsQueryBuilder>
          <emissionsQueryBuilder title="specific nonCO2 emissions by subsector">
