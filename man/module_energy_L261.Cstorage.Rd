@@ -21,7 +21,7 @@ original data system was \code{L261.Cstorage.R} (energy level2).
 Calculate carbon storage resource supply curves, shareweights, technology coefficients and costs, and other carbon storage information.
 }
 \details{
-The following fifteen tables pertaining to carbon storage properties are generated:
+The following tables pertaining to carbon storage properties are generated:
 \itemize{
  \item{Carbon storage information}
  \item{Unlimited carbon storage information}
