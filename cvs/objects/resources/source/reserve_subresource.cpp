@@ -156,13 +156,12 @@ void ReserveSubResource::annualsupply( const string& aRegionName, const string& 
     }
 
     // Calculate production from all vintages
+    double totalProduction = 0.0;
     for( auto techIter = mTechnology->getVintageBegin( aPeriod ); techIter != mTechnology->getVintageEnd( aPeriod ); ++techIter ) {
         (*techIter).second->production( aRegionName, aResourceName, newReserves, fixedScaleFactor, aGdp, aPeriod );
+        totalProduction += (*techIter).second->getOutput( aPeriod );
     }
-    
-    // The technologies will add output to the market and the resource would want to as well.
-    // we will avoid that by just telling the resource there was zero annual production.
-    mAnnualProd[ aPeriod ] = 0;
+    mAnnualProd[ aPeriod ] = totalProduction;
 }
 
 /*! \brief Update an output container for a ReserveSubResource.
