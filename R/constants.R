@@ -146,7 +146,8 @@ aglu.MODEL_PRICE_YEARS      <- 2008:2011
 aglu.PREAGLU_YEARS          <- c(1700, 1750,1800, 1850, 1900, 1950)          # Cropland cover years prior to first aglu historical year to use in climate model component
 aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years, KD i think this might need a better comment
 aglu.SSP_DEMAND_YEARS       <- seq(2010, 2100, 5) # food demand in the SSPs is calculated at 5-yr intervals
-aglu.TRADE_CAL_YEARS        <- 2008:2012 # Years used for calculating base year gross trade
+aglu.TRADE_CAL_YEARS        <- 2008:2012 # Years used for calculating base year gross trade. Should ideally include the final base year, but note that the trade data starts in 1986.
+aglu.TRADE_FINAL_BASE_YEAR  <- max(MODEL_BASE_YEARS) # The base year to which gross trade volumes are assigned. Should be within the aglu.TRADE_CAL_YEARS and equal to the final model calibration year
 aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "MiscCrop", "OilCrop", "OtherGrain", "PalmFruit", "Rice", "Root_Tuber", "SugarCrop", "Wheat")
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
