@@ -80,7 +80,7 @@ module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
 
     # Added elec water coefficient in here
 
-    ######### Ref scenario
+    # Ref scenario
 
     L1233.wdraw_coef_R_elec_F_tech_Yh_ref %>%
       mutate(fuel = gsub("solar CSP","solar",fuel),
@@ -115,7 +115,7 @@ module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
                                     subsector = "geothermal" )
 
 
-    years_to_create <-MODEL_YEARS[!MODEL_YEARS %in% names(L2233.StubTech_WaterCoef_ref_temp)]
+    years_to_create <- MODEL_YEARS[!MODEL_YEARS %in% names(L2233.StubTech_WaterCoef_ref_temp)]
     L2233.StubTech_WaterCoef_ref_temp[,years_to_create] <- NA_real_
 
     # Interpolate for missing years using approx_fun and map elec_tech_water_map technologies
