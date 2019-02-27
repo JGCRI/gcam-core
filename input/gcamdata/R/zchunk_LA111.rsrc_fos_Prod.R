@@ -301,6 +301,18 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
                     mutate(available = 0)) %>%
         bind_rows(L111.RsrcCurves_EJ_R_Ffos, .) ->
         L111.RsrcCurves_EJ_R_Ffos
+
+      L111.RsrcCurves_EJ_R_Ffos %>%
+        add_title("Fossil resource supply curves", overwrite = TRUE) %>%
+        add_units("available: EJ; extractioncost: 1975$/GJ") %>%
+        add_comments("Downscale GCAM3.0 supply curves to the country level (on the basis of resource") %>%
+        add_comments("production) and aggregate by the new GCAM regions.") %>%
+        add_comments("Use crude oil production shares as a proxy for unconventional oil resources.") %>%
+        add_legacy_name("L111.RsrcCurves_EJ_R_Ffos") %>%
+        add_precursors("common/iso_GCAM_regID", "energy/A11.fos_curves",
+                       "energy/IEA_product_rsrc", "L100.IEA_en_bal_ctry_hist",
+                       "L1011.en_bal_EJ_R_Si_Fi_Yh") ->
+        L111.RsrcCurves_EJ_R_Ffos
     }
 
     L111.Reserve_EJ_R_F_Yh %>%
@@ -313,18 +325,6 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       same_precursors_as(L111.Prod_EJ_R_F_Yh) %>%
       add_precursors("energy/A10.ResSubresoureProdLifetime") ->
       L111.Reserve_EJ_R_F_Yh
-
-    L111.RsrcCurves_EJ_R_Ffos %>%
-      add_title("Fossil resource supply curves", overwrite = TRUE) %>%
-      add_units("available: EJ; extractioncost: 1975$/GJ") %>%
-      add_comments("Downscale GCAM3.0 supply curves to the country level (on the basis of resource") %>%
-      add_comments("production) and aggregate by the new GCAM regions.") %>%
-      add_comments("Use crude oil production shares as a proxy for unconventional oil resources.") %>%
-      add_legacy_name("L111.RsrcCurves_EJ_R_Ffos") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/A11.fos_curves",
-                     "energy/IEA_product_rsrc", "L100.IEA_en_bal_ctry_hist",
-                     "L1011.en_bal_EJ_R_Si_Fi_Yh") ->
-      L111.RsrcCurves_EJ_R_Ffos
 
     return_data(L111.Prod_EJ_R_F_Yh, L111.Reserve_EJ_R_F_Yh, L111.RsrcCurves_EJ_R_Ffos)
   } else {
