@@ -148,7 +148,7 @@ module_aglu_LB1091.ag_GrossTrade <- function(command, ...) {
     # production, trade, food, feed, biofuels, and other.
     # If ScaledNetTrade > 0 (net exporter), then ScaledExports = Exports + (ScaledNetTrade - NetTrade) and ScaledImports = Imports
     # If ScaledNetTrade <= 0 (net importer), then ScaledImports = Imports + (NetTrade - ScaledNetTrade) and ScaledExports = Exports
-    L1091.ag_ALL_Mt_R_C_fhy <- filter(L109.ag_ALL_Mt_R_C_Y, year == max(HISTORICAL_YEARS))
+    L1091.ag_ALL_Mt_R_C_fhy <- filter(L109.ag_ALL_Mt_R_C_Y, year == aglu.TRADE_FINAL_BASE_YEAR)
     L1091.GrossTrade_Mt_R_C_fhy <- L1091.XregTrade_Mt_R_C %>%
       left_join_error_no_match(L1091.ag_ALL_Mt_R_C_fhy,
                                by = c("GCAM_region_ID", "GCAM_commodity")) %>%
@@ -169,7 +169,7 @@ module_aglu_LB1091.ag_GrossTrade <- function(command, ...) {
       select(GCAM_region_ID, GCAM_commodity, year, GrossExp_Mt, GrossImp_Mt)
 
     # The gross trade file needs to have data for all calibration years, so just use the net exports to determine this
-    L1091.GrossTrade_Mt_R_C_Y <- filter(L109.ag_ALL_Mt_R_C_Y, year < max(HISTORICAL_YEARS)) %>%
+    L1091.GrossTrade_Mt_R_C_Y <- filter(L109.ag_ALL_Mt_R_C_Y, year != aglu.TRADE_FINAL_BASE_YEAR) %>%
       select(GCAM_region_ID, GCAM_commodity, year, NetExp_Mt) %>%
       mutate(GrossExp_Mt = if_else(NetExp_Mt > 0, NetExp_Mt, 0)) %>%
       mutate(GrossImp_Mt = if_else(NetExp_Mt <= 0, -1 * NetExp_Mt, 0)) %>%
