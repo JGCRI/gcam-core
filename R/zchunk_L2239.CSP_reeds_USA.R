@@ -61,7 +61,8 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
       fcr <- price <- Pmin <- Pvar <- CFmax <- available <- grade <- extractioncost <- maxSubResource <-
       k1 <- capital.tech.change.5yr <- k2 <- tech.change.5yr <- tech.change <- bin <- cost <- grid.cost <-
       renewresource <- sub.renewable.resource <- year.fillout <- minicam.energy.input <- efficiency <-
-      market.name <- flag <- capacity.factor <- input.cost <- NULL
+      market.name <- flag <- capacity.factor <- input.cost <- capital.tech.change.period <-
+      tech.change.period <- time.change <- NULL
 
     # ===================================================
     # Data Processing

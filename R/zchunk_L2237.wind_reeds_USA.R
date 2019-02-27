@@ -51,7 +51,8 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       fcr <- price <- supply <- CFmax <- Pmin <- maxSubResource <- percent.supply <- Pvar <- P2 <- P1 <- Q2 <-
       Q1 <- mid.price <- optimize <- curve.exponent <- k1 <- capital.tech.change.5yr <- k2 <- tech.change.5yr <-
       tech.change <- Wind.Type <- bin <- cost <- grid.cost <- Region <- renewresource <-
-      smooth.renewable.subresource <- year.fillout <- capacity.factor <- input.cost <- NULL
+      smooth.renewable.subresource <- year.fillout <- capacity.factor <- input.cost <-
+      capital.tech.change.period <- tech.change.period <- time.change <- NULL
 
     # ===================================================
     # Data Processing
