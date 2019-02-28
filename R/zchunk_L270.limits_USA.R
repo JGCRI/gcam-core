@@ -41,7 +41,9 @@ module_gcam.usa_L270.limits_USA <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     value <- subsector <- supplysector <- year <- GCAM_region_ID <- sector.name <-
-      region <- scenario <- constraint <- . <- NULL # silence package check notes
+      region <- scenario <- constraint <- . <- subsector_1 <- Electric.sector <-
+      subsector.name<- Electric.sector.technology <- minicam.energy.input <-
+      coefficient<- NULL # silence package check notes
 
     all_data <- list(...)[[1]]
 

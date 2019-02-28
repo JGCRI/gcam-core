@@ -1,4 +1,4 @@
-#' module_gcam.usa_L2238.PV_reeds_USA
+#' module_gcamusa_L2238.PV_reeds_USA
 #'
 #' Create updated solar PV resource supply curves consistent with ReEDS.
 #'
@@ -16,7 +16,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author MTB September 2018
-module_gcam.usa_L2238.PV_reeds_USA <- function(command, ...) {
+module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = 'gcam-usa/reeds_regions_states',
              FILE = 'gcam-usa/reeds_PV_curve_capacity',
@@ -60,7 +60,7 @@ module_gcam.usa_L2238.PV_reeds_USA <- function(command, ...) {
       maxSubResource <- k1 <- capital.tech.change.5yr <- k2 <- tech.change.5yr <- tech.change <-
       bin <- cost <- grid.cost <- renewresource <- sub.renewable.resource <- year.fillout <-
       minicam.energy.input <- efficiency <- market.name <- flag <- capacity.factor <-
-      input.cost <- NULL
+      input.cost <- capital.tech.change.period <- tech.change.period <- time.change <- NULL
 
     # ===================================================
     # Data Processing
@@ -83,7 +83,7 @@ module_gcam.usa_L2238.PV_reeds_USA <- function(command, ...) {
       mutate(resource.potential.MW = upvsc1 + upvsc2 + upvsc3 + upvsc4 + upvsc5) %>%
       select(BA, PV.class, resource.potential.MW) %>%
       left_join_error_no_match(reeds_PV_curve_CF_avg, by = c("BA", "PV.class")) %>%
-      mutate(resource.potential.EJ = resource.potential.MW * 8760 * CF * CONV_MWH_EJ) %>%
+      mutate(resource.potential.EJ = resource.potential.MW * CONV_YEAR_HOURS * CF * CONV_MWH_EJ) %>%
       left_join_error_no_match(reeds_regions_states %>%
                                  distinct(BA, State),
                                by = "BA") %>%
@@ -117,8 +117,8 @@ module_gcam.usa_L2238.PV_reeds_USA <- function(command, ...) {
       mutate(capital.overnight = L2238.PV_capital,
              fcr = L2238.fcr,
              OM.fixed = L2238.PV_OMfixed,
-             price = fcr * capital.overnight / CF / 8760 / CONV_KWH_GJ +
-               OM.fixed / CF / 8760 / CONV_KWH_GJ) -> L2238.PV_matrix
+             price = fcr * capital.overnight / CF / CONV_YEAR_HOURS / CONV_KWH_GJ +
+               OM.fixed / CF / CONV_YEAR_HOURS / CONV_KWH_GJ) -> L2238.PV_matrix
 
     # We noticed that there are some classes with same capacity factor data. For example, in VT, class 3 and 4 have same
     # capacity factors. This is becuase the hourly capacity factor data from ReEDS are also the same for these classes. This
@@ -142,9 +142,9 @@ module_gcam.usa_L2238.PV_reeds_USA <- function(command, ...) {
       arrange(State, price) %>%
       mutate(Pmin = min(price),
              Pvar = price - Pmin,
-             available = round(resource.potential.EJ, 3),
-             extractioncost = round(Pvar, 3),
-             CFmax = round(CFmax, 3),
+             available = round(resource.potential.EJ, energy.DIGITS_MAX_SUB_RESOURCE),
+             extractioncost = round(Pvar, energy.DIGITS_COST),
+             CFmax = round(CFmax, energy.DIGITS_CAPACITY_FACTOR),
              grade = paste ("grade", row_number(), sep = ' '),
              available = cumsum(available)) %>%
       ungroup() %>%
@@ -155,9 +155,8 @@ module_gcam.usa_L2238.PV_reeds_USA <- function(command, ...) {
       group_by(State) %>%
       arrange(State, extractioncost) %>%
       mutate(maxSubResource = max(available)) %>%
-      filter(row_number() == 1) %>%
       ungroup() %>%
-      select(State, maxSubResource) -> L2238.maxSubResource_PV
+      distinct(State, maxSubResource) -> L2238.maxSubResource_PV
 
     # The points on the graded curves need to be read in as fractions of the maxSubResource
     L2238.PV_curve %>%
@@ -172,20 +171,21 @@ module_gcam.usa_L2238.PV_reeds_USA <- function(command, ...) {
 
     # Technological change in the supply curve is related to assumed improvements in capital cost.
     # If capital cost changes from CC to a.CC, then every price point of the curve will scale by a factor a' given as follows:
-    # a' = (k1.a.CC + k2. OM-fixed) / (k1.CC + k2. OM-fixed) where k1 = FCR / (8760 * kWh_GJ) and k2 = 1 / (8760 * kWh_GJ)
-    # Thus, we calculate model input parameter techChange (which is the reduction per year) as 1 - a'^(1/5)
+    # a' = (k1.a.CC + k2. OM-fixed) / (k1.CC + k2. OM-fixed) where k1 = FCR / (CONV_YEAR_HOURS * kWh_GJ) and k2 = 1 / (CONV_YEAR_HOURS * kWh_GJ)
+    # Thus, we calculate model input parameter techChange (which is the reduction per year) as 1 - a'^ (1/5)
 
     L2247.GlobalIntTechCapitalOnly_elecS_USA %>%
       filter(intermittent.technology == "PV_peak") %>%
       select(year, capital.overnight) %>%
-      mutate(capital.tech.change.5yr = lag(capital.overnight, 1) / capital.overnight,
-            fixed.charge.rate = L2238.fcr,
-            OM.fixed = L2238.PV_OMfixed,
-            k1 = fixed.charge.rate / (8760 * CONV_KWH_GJ),
-            k2 = 1 / (8760 * CONV_KWH_GJ),
-            tech.change.5yr = (k1 * capital.tech.change.5yr * capital.overnight + k2 * OM.fixed) /
-              (k1 * capital.overnight + k2 * OM.fixed),
-            tech.change = round(abs(1 - (tech.change.5yr)^(1/5)), 5)) %>%
+      mutate(capital.tech.change.period = lag(capital.overnight, 1) / capital.overnight,
+             time.change = year - lag(year),
+             fixed.charge.rate = L2238.fcr,
+             OM.fixed = L2238.PV_OMfixed,
+             k1 = fixed.charge.rate / (CONV_YEAR_HOURS * CONV_KWH_GJ),
+             k2 = 1 / (CONV_YEAR_HOURS * CONV_KWH_GJ),
+             tech.change.period = (k1 * capital.tech.change.period * capital.overnight + k2 * OM.fixed) /
+               (k1 * capital.overnight + k2 * OM.fixed),
+             tech.change = round(abs(1 - (tech.change.period) ^ (1 / time.change)), energy.DIGITS_TECHCHANGE)) %>%
       select(year, tech.change) %>%
       filter(!is.na(tech.change),
              year > max(MODEL_BASE_YEARS)) -> L2238.PV_curve_tech_change
@@ -194,7 +194,7 @@ module_gcam.usa_L2238.PV_reeds_USA <- function(command, ...) {
     # Our starting data comprises of grid connection costs in $/MW by ReEDS region and PV class.
     # This data also categorizes the connection cost into five bins in each region and class.
     # We first calculate the average cost for a region and class.Using this data, we then obtain grid connection cost
-    # in $/GJ for each region and class as FCR * (grid connection cost in $/MW) / (8760 * CF * MWh_GJ).
+    # in $/GJ for each region and class as FCR * (grid connection cost in $/MW) / (CONV_YEAR_HOURS * CF * MWh_GJ).
     # Costs are then obtained for a state by averaging.
     # In the future, we might think about a separate state-level curve for grid connection costs.
     reeds_PV_curve_grid_cost %>%
@@ -204,7 +204,7 @@ module_gcam.usa_L2238.PV_reeds_USA <- function(command, ...) {
       ungroup() %>%
       left_join_error_no_match(reeds_PV_curve_CF_avg, by = c("BA", "PV.class")) %>%
       mutate(fcr = L2238.fcr,
-             grid.cost = fcr * cost / (8760 * CF * CONV_MWH_GJ),
+             grid.cost = fcr * cost / (CONV_YEAR_HOURS * CF * CONV_MWH_GJ),
              grid.cost = grid.cost * gdp_deflator(1975, 2005)) %>%
       left_join_error_no_match(reeds_regions_states %>%
                                  distinct(BA, State),
@@ -213,7 +213,7 @@ module_gcam.usa_L2238.PV_reeds_USA <- function(command, ...) {
       group_by(State) %>%
       summarise(grid.cost = mean(grid.cost)) %>%
       ungroup() %>%
-      mutate(grid.cost = round(grid.cost, 5)) -> L2238.grid.cost
+      mutate(grid.cost = round(grid.cost, energy.DIGITS_COST)) -> L2238.grid.cost
 
     # Formatting tables for output
     # First populate the list of states we will be creating supply cuvres for.
@@ -241,7 +241,8 @@ module_gcam.usa_L2238.PV_reeds_USA <- function(command, ...) {
     # Table to create the graded resource curves
     L2238.PV_curve %>%
       mutate(renewresource = "PV_resource",
-             sub.renewable.resource = "PV_resource") %>%
+             sub.renewable.resource = "PV_resource",
+             available = round(available, energy.DIGITS_MAX_SUB_RESOURCE)) %>%
       select(region = State, renewresource, sub.renewable.resource, grade, available, extractioncost) %>%
       filter(region %in% states_list_curve) -> L2238.GrdRenewRsrcCurves_PV_reeds_USA
 
@@ -249,9 +250,10 @@ module_gcam.usa_L2238.PV_reeds_USA <- function(command, ...) {
     L2238.maxSubResource_PV %>%
       mutate(renewresource = "PV_resource",
              sub.renewable.resource = "PV_resource",
-             year.fillout = min(MODEL_YEARS)) %>%
+             year.fillout = min(MODEL_YEARS),
+             maxSubResource = round(maxSubResource, energy.DIGITS_MAX_SUB_RESOURCE)) %>%
       select(region = State, renewresource, sub.renewable.resource, year.fillout, maxSubResource ) %>%
-      filter(region %in% states_list_curve)-> L2238.GrdRenewRsrcMax_PV_reeds_USA
+      filter(region %in% states_list_curve) -> L2238.GrdRenewRsrcMax_PV_reeds_USA
 
     # Table to delete global solar resource minicam-energy-input
     L2234.StubTechMarket_elecS_USA %>%
@@ -275,12 +277,11 @@ module_gcam.usa_L2238.PV_reeds_USA <- function(command, ...) {
 
     L2234.StubTechCapFactor_elecS_solar_USA %>%
       filter(region %in% states_list_CF,
-             grepl("PV",stub.technology )) %>%
+             grepl("PV", stub.technology)) %>%
       left_join_error_no_match(L2238.PV_curve %>%
                                  distinct(State, CFmax),
                                by = c("region" = "State")) %>%
-      # filter(!is.na(CFmax)) %>%
-      mutate(capacity.factor = round(CFmax, 5)) %>%
+      mutate(capacity.factor = round(CFmax, energy.DIGITS_CAPACITY_FACTOR)) %>%
       select(region, supplysector, subsector, stub.technology, year,
              capacity.factor) -> L2238.StubTechCapFactor_PV_reeds_USA
 

@@ -1,4 +1,4 @@
-#' module_gcam.usa_L222.en_transformation_USA
+#' module_gcamusa_L222.en_transformation_USA
 #'
 #' Prepare the assumptions and calibrated outputs for energy transformation supplysectors, subsectors, and technologies specific to USA sectors and/or states.
 #'
@@ -14,11 +14,10 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author ACS Nov 2017
-module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
+module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",
-             FILE = "gcam-usa/A28.sector",
              FILE = "gcam-usa/SEDS_refining_feedstock_prod",
              "L222.Supplysector_en",
              "L222.SubsectorLogit_en",
@@ -66,7 +65,6 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    A28.sector <- get_data(all_data, "gcam-usa/A28.sector")
     SEDS_refining_feedstock_prod <- get_data(all_data, "gcam-usa/SEDS_refining_feedstock_prod")
     L222.Supplysector_en <- get_data(all_data, "L222.Supplysector_en")
     L222.SubsectorLogit_en <- get_data(all_data, "L222.SubsectorLogit_en")
@@ -225,16 +223,16 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     # L222.TechShrwt_USAen: technology shareweights in each year, USA region
     L222.Tech_USAen %>%
       repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
-      # split the state names out and because the refining tech names have spaces drop the extra
+      # Split the state names out and because the refining tech names have spaces drop the extra
       separate(technology, c("state"), sep = " ", remove = F, extra = "drop") %>%
-      left_join(SEDS_refining_feedstock_prod, by = c("state")) %>%
-      mutate(coal_fract = coal / max(coal), gas_fract = natural_gas / max(natural_gas)) %>%
-      mutate(share.weight = 1) %>%
-      # Scaling coal to liquids and gas to liquids shareweights to 2015 resource production levels
-      mutate(share.weight = if_else(grepl("coal", subsector), coal_fract, share.weight)) %>%
-      mutate(share.weight = if_else(grepl("gas", subsector), gas_fract, share.weight)) %>%
-      #Default the base year shareweights to 0. This will be over-ridden in calibration
-      mutate(share.weight = if_else(year %in% MODEL_BASE_YEARS, 0, round(share.weight, 3))) %>%
+      left_join_error_no_match(SEDS_refining_feedstock_prod, by = c("state")) %>%
+      mutate(coal_fract = coal / max(coal), gas_fract = natural_gas / max(natural_gas),
+             share.weight = gcamusa.DEFAULT_SHAREWEIGHT,
+             # Scaling coal to liquids and gas to liquids shareweights to 2015 resource production levels
+             share.weight = if_else(grepl("coal", subsector), coal_fract, share.weight),
+             share.weight = if_else(grepl("gas", subsector), gas_fract, share.weight),
+             # Default the base year shareweights to 0. This will be over-ridden in calibration,
+             share.weight = if_else(year %in% MODEL_BASE_YEARS, 0, round(share.weight, energy.DIGITS_SHRWT))) %>%
       select(region, supplysector, subsector, technology, year, share.weight) -> L222.TechShrwt_USAen
 
 
@@ -242,7 +240,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
     L222.TechShrwt_USAen %>%
       select(one_of(LEVEL2_DATA_NAMES[["TechYr"]])) %>%
       mutate(minicam.energy.input = subsector,
-             coefficient = 1,
+             coefficient = gcamusa.DEFAULT_COEFFICIENT,
              market.name = technology) %>%
       separate(market.name, c("market.name", "trash"), extra = "merge", sep = gcamusa.STATE_SUBSECTOR_DELIMITER) %>%
       select(-trash) ->
@@ -372,7 +370,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       # If designated, switch fuel market names to the regional markets
       if(gcamusa.USE_REGIONAL_FUEL_MARKETS) {
         L222.StubTechMarket_en_USA %>%
-          left_join(states_subregions %>%
+          left_join_error_no_match(states_subregions %>%
                       select(state, grid_region),
                     by = c("region" = "state")) %>%
           mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS, grid_region, market.name)) %>%
@@ -404,10 +402,6 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
                  subsector != "oil refining") ->
         L222.StubTechMarket_en_USA
 
-      # Changing regional biomass inputs to state-level regional biomass markets
-      L222.bio_feedstocks <- unique(A28.sector$supplysector)
-      L222.StubTechMarket_en_USA %>%
-        mutate(market.name = if_else(minicam.energy.input %in% L222.bio_feedstocks, region, market.name)) -> L222.StubTechMarket_en_USA
 
       # L222.CarbonCoef_en_USA: energy carbon coefficients in USA
       #
@@ -530,8 +524,7 @@ module_gcam.usa_L222.en_transformation_USA <- function(command, ...) {
       add_comments("on whether regional markets are used.") %>%
       add_legacy_name("L222.StubTechMarket_en_USA") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "L222.GlobalTechCoef_en",
-                     "gcam-usa/A28.sector") ->
+                     "L222.GlobalTechCoef_en") ->
       L222.StubTechMarket_en_USA
 
     L222.CarbonCoef_en_USA %>%

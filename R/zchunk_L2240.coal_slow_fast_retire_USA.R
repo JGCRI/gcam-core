@@ -132,7 +132,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["StubTechYr"]]) %>%
       left_join_error_no_match(A23.elec_tech_coal_retire_SCurve,
                                by = c("stub.technology" = "Electric.sector.technology")) %>%
-      filter(year == gcamusa.FINAL_CALIBRATION_YEAR) ->
+      filter(year == max(MODEL_BASE_YEARS)) ->
       L2240.StubTechSCurve_elec_coalret_USA
 
 

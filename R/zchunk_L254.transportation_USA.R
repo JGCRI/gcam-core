@@ -1,4 +1,4 @@
-#' module_gcam.usa_L254.transportation_USA
+#' module_gcamusa_L254.transportation_USA
 #'
 #' Generates GCAM-USA model inputs for transportation sector by states.
 #'
@@ -34,7 +34,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC Oct 2017
-module_gcam.usa_L254.transportation_USA <- function(command, ...) {
+module_gcamusa_L254.transportation_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/mappings/UCD_techs",
              FILE = "energy/A54.globaltech_nonmotor",
@@ -320,7 +320,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       ungroup ->
       L254.BaseService_trn_USA
 
-    
+
     # Produce outputs
     L254.DeleteSupplysector_USAtrn %>%
       add_title("Delect transportation supply sectors of the full USA region") %>%

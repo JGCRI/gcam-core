@@ -410,6 +410,7 @@ energy.DIGITS_REMOVE.FRACTION  <- 2
 energy.DIGITS_SATIATION_ADDER  <- 9
 energy.DIGITS_SHRWT            <- 4
 energy.DIGITS_SPEED            <- 1
+energy.DIGITS_TECHCHANGE       <- 4
 
 # Policy assumptions for module_energy_L270.limits
 energy.NEG_EMISS_POLICY_NAME    <- "negative_emiss_budget"
@@ -589,9 +590,6 @@ emissions.DIGITS_EMISSIONS <- 10
 
 # GCAM-USA time
 gcamusa.WIND_BASE_COST_YEAR   <- 2005
-gcamusa.FINAL_HISTORICAL_YEAR <- 2010
-gcamusa.FINAL_CALIBRATION_YEAR <- 2010
-gcamusa.FUTURE_MODEL_YEARS <- seq(from = 2015, to = 2100, by = 5)
 
 gcamusa.SE_HIST_YEAR <- 2015  # year to which historical socioeconomic data (pop & GDP) are used in GCAM-USA
 gcamusa.SE_NEAR_TERM_YEAR <- 2030  # year after which projected growth rates from various socio-economic data sources are used as-is
@@ -679,7 +677,7 @@ gcamusa.STORAGE_TECH_LIST <- c("CSP_storage", "PV_storage", "wind_storage")
 # Degree day norms
 gcamusa.BASE_HDD_USA <- 4524 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb0107
 gcamusa.BASE_CDD_USA <- 1215 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb010
-gcamusa.AEO_DD_years <- seq(2010, 2040, 5)
+gcamusa.AEO_DD_YEARS <- seq(2010, 2040, 5)
 
 gcamusa.GAS_ADJ_THRESH      <- 5
 
