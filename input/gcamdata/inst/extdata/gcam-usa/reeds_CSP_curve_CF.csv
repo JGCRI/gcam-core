@@ -1,8 +1,8 @@
-# File: reeds_CSP_curve_CF.csv,,
-# Title: CSP Capacity Factor by ReEDS Timeslice and CSP Class,,
-# Units: unitless (capacity factor),,
-# Comments: Capacity factors by ReEDS timeslice and CSP class for CSP systems without storage assuming parabolic trough.,,
-# Source: TBC (ReEDS),,
+# File: reeds_CSP_curve_CF.csv
+# Title: CSP Capacity Factor by ReEDS Timeslice and CSP Class
+# Units: unitless (capacity factor)
+# Comments: Capacity factors by ReEDS timeslice and CSP class for CSP systems without storage assuming parabolic trough.
+# Source: Information based on ReEDS version 2017.  Files provided by ReEDS team in April 2017.
 timeslice,class,CF
 H1,cspclass1,0
 H1,cspclass2,0

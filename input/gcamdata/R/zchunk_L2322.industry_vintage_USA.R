@@ -1,4 +1,4 @@
-#' module_gcam.usa_L2322.industry_vintage_USA
+#' module_gcamusa_L2322.industry_vintage_USA
 #'
 #' Creates a vintage structure and retirement parameters for U.S. industrial energy use
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author KD August 2018; edited MTB October 2018
-module_gcam.usa_L2322.industry_vintage_USA <- function(command, ...) {
+module_gcamusa_L2322.industry_vintage_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/A32.ind_retirement_USA",
@@ -40,15 +40,14 @@ module_gcam.usa_L2322.industry_vintage_USA <- function(command, ...) {
     # Assume the same S-curve parameters for the final historical year and all future vintages for all of the states.
     A32.ind_retirement_USA %>%
       repeat_add_columns(tibble("region" =  states_subregions$state)) %>%
-      repeat_add_columns(tibble("year" = c(gcamusa.FINAL_HISTORICAL_YEAR, gcamusa.FUTURE_MODEL_YEARS))) %>%
+      repeat_add_columns(tibble("year" = c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS))) %>%
       select(LEVEL2_DATA_NAMES$StubTechSCurve) ->
       L2322.StubTechSCurve_industry_USA
 
     # Assume the same shutdown parameters for the final historical year and all future vintages for all of the states.
     A32.ind_retirement_USA %>%
-      # mutate(year = gcamusa.FINAL_HISTORICAL_YEAR) %>%
       repeat_add_columns(tibble("region" =  states_subregions$state)) %>%
-      repeat_add_columns(tibble("year" = c(gcamusa.FINAL_HISTORICAL_YEAR, gcamusa.FUTURE_MODEL_YEARS))) %>%
+      repeat_add_columns(tibble("year" = c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS))) %>%
       select(LEVEL2_DATA_NAMES$StubTechProfitShutdown) ->
       L2322.StubTechProfitShutdown_industry_USA
 
