@@ -48,13 +48,13 @@ module_gcam.usa_LB1233.Elec_water_Update <- function(command, ...) {
     # Perform Computations
 
     # Add missing years.
-    LA1233.CoolingSystemShares_RG3_ref_allyears <- LA1233.CoolingSystemShares_RG3_ref
+    LA1233.CSS_allyears <- LA1233.CoolingSystemShares_RG3_ref
 
-    years_to_create <- as.character(FUTURE_YEARS[!(FUTURE_YEARS %in% names(LA1233.CoolingSystemShares_RG3_ref))])
-    LA1233.CoolingSystemShares_RG3_ref_allyears[,years_to_create] <- NA_real_
+    newyrs <- as.character(FUTURE_YEARS[!(FUTURE_YEARS %in% names(LA1233.CoolingSystemShares_RG3_ref))])
+    LA1233.CSS_allyears[,newyrs] <- NA_real_
 
     # Interpolate for missing years using approx_fun
-    LA1233.CoolingSystemShares_RG3_ref_allyears %>%
+    LA1233.CSS_allyears %>%
       gather(key = year, value = value, -fuel, -plant_type, -water_type, -technology, -State, -NEMS, -cooling_system) %>%
       mutate(year = as.numeric(as.character(year))) %>%
       group_by(fuel, plant_type, water_type, technology, State, NEMS, cooling_system) %>%
