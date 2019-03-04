@@ -122,7 +122,7 @@ module_gcamusa_LB1235.elec_load_segments_USA <- function(command, ...) {
       elecS_horizontal_vertical_GCAM_coeff_intermediate
 
     elecS_horizontal_vertical_GCAM_coeff_intermediate %>%
-      select(grid_region, off.peak.electricity, intermediate.electricity,subpeak.electricity, peak.electricity) ->
+      select(grid_region, off.peak.electricity, intermediate.electricity, subpeak.electricity, peak.electricity) ->
       elecS_horizontal_vertical_GCAM_coeff_int_elec # to be used subsequently in a left join
 
     elecS_horizontal_vertical_GCAM_coeff_intermediate %>%
@@ -183,10 +183,10 @@ module_gcamusa_LB1235.elec_load_segments_USA <- function(command, ...) {
              -subpeak.electricity.tot, -peak.electricity.tot) %>%
       # Gather the GCAM coefficients in long form
       gather(supplysector, coefficient, -grid_region, -horizontal_segment) %>%
-      mutate(supplysector = gsub("off.peak.electricity","off peak electricity",supplysector),
-             supplysector = gsub("intermediate.electricity","intermediate electricity",supplysector),
-             supplysector = gsub("subpeak.electricity","subpeak electricity",supplysector),
-             supplysector = gsub("peak.electricity","peak electricity",supplysector),
+      mutate(supplysector = gsub("off.peak.electricity", "off peak electricity", supplysector),
+             supplysector = gsub("intermediate.electricity", "intermediate electricity", supplysector),
+             supplysector = gsub("subpeak.electricity", "subpeak electricity", supplysector),
+             supplysector = gsub("peak.electricity", "peak electricity", supplysector),
              subsector = supplysector, technology = supplysector) %>%
       filter(coefficient != 0) %>%
       select(grid_region, supplysector, subsector, technology,
@@ -202,10 +202,10 @@ module_gcamusa_LB1235.elec_load_segments_USA <- function(command, ...) {
     # Gathering some information in long-form first
     elecS_demand_fraction %>%
       gather(vertical_segment, demand_fraction, -grid_region) %>%
-      mutate(vertical_segment = gsub("off.peak.electricity.demand","off peak electricity",vertical_segment),
-             vertical_segment = gsub("intermediate.electricity.demand","intermediate electricity", vertical_segment),
-             vertical_segment = gsub("subpeak.electricity.demand","subpeak electricity",vertical_segment),
-             vertical_segment = gsub("peak.electricity.demand","peak electricity",vertical_segment)) ->
+      mutate(vertical_segment = gsub("off.peak.electricity.demand", "off peak electricity", vertical_segment),
+             vertical_segment = gsub("intermediate.electricity.demand", "intermediate electricity", vertical_segment),
+             vertical_segment = gsub("subpeak.electricity.demand", "subpeak electricity", vertical_segment),
+             vertical_segment = gsub("peak.electricity.demand", "peak electricity", vertical_segment)) ->
       L1235.elecS_demand_fraction_USA
 
     elecS_fuel_fraction %>%

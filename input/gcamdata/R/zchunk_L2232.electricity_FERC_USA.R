@@ -76,12 +76,9 @@ module_gcamusa_L2232.electricity_FERC_USA <- function(command, ...) {
     # This chunk builds the electric sector model with demand resolved at the grid region level.
 
     # A vector of USA grid region names
-    states_subregions %>%
-      select(grid_region) %>%
+    grid_regions <- states_subregions$grid_region %>%
       unique %>%
-      arrange(grid_region) %>%
-      unlist ->
-      grid_regions
+      sort
 
     # PART 1: THE USA REGION
     # L2232.DeleteSupplysector_USAelec: Remove the electricity sectors of the USA region (incl. net_ownuse)
