@@ -10,8 +10,7 @@
 #' The corresponding file in the original data system was \code{batch_nuclear_USA.xml} (gcamusa XML batch).
 module_gcamusa_batch_nuclear_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L2244.StubTechSCurve_nuc_gen2_USA",
-             "L2244.StubTechShrwt_nuc_gen3_USA"))
+    return(c("L2244.StubTechSCurve_nuc_gen2_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "nuclear_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -20,16 +19,13 @@ module_gcamusa_batch_nuclear_USA_xml <- function(command, ...) {
 
     # Load required inputs
     L2244.StubTechSCurve_nuc_gen2_USA <- get_data(all_data, "L2244.StubTechSCurve_nuc_gen2_USA")
-    L2244.StubTechShrwt_nuc_gen3_USA <- get_data(all_data, "L2244.StubTechShrwt_nuc_gen3_USA")
 
     # ===================================================
 
     # Produce outputs
     create_xml("nuclear_USA.xml") %>%
       add_xml_data(L2244.StubTechSCurve_nuc_gen2_USA, "StubTechSCurve") %>%
-      add_xml_data(L2244.StubTechShrwt_nuc_gen3_USA, "StubTechShrwt") %>%
-      add_precursors("L2244.StubTechSCurve_nuc_gen2_USA",
-                     "L2244.StubTechShrwt_nuc_gen3_USA") ->
+      add_precursors("L2244.StubTechSCurve_nuc_gen2_USA") ->
       nuclear_USA.xml
 
     return_data(nuclear_USA.xml)
