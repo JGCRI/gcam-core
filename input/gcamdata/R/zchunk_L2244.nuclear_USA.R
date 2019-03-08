@@ -9,10 +9,9 @@
 #' the generated outputs: \code{L2244.StubTechSCurve_nuc_gen2_USA}.
 #' The corresponding file in the original data system was \code{L2244.nuclear_USA.R} (gcam-usa level2).
 #' @details This chunk creates an add-on file to update nuclear assumptions in GCAM-USA. Specifically, it reads in state-specific
-#' s-curve retirement functions and lifetimes for existing nuclear vintage based on data put together by Dr. Son H. Kim.
-#' The data reflect planned retirements by state and nuclear power plant. Further, the script updates share-weight assumptions for Gen 3 technology.
-#' It assumes that no new nuclear is deployed in any state through 2035, except in GA, based on current understanding. It does not update
-#' subsector share-weight assumptions in this add-on.
+#' s-curve retirement functions and lifetimes for existing nuclear vintage, based on planned retirements by state and nuclear power plant.
+#' The current and future power generation data from existing nuclear plants in the USA is based on US Nuclear Regulatory Commission (NRC) of
+#' nuclear reactor characteristic and operational history from January 2011, with additional updates to operating licenses and plant closures.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
