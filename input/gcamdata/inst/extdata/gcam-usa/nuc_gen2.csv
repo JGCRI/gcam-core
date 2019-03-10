@@ -1,8 +1,8 @@
 # File: nuc_gen2.csv
 # Title: Nuclear electricity generation by GenII by state and plant
 # Units: EJ
-# Comments: This data reflects planned retirements. 
-# Source: Data collected by Dr. Sonny Kim
+# Comments: This data reflects the current and future power generation from existing or "vintage" nuclear plants in the USA (labeled as Generation II) based on current operating licenses. Retired nuclear units and nuclear units with extended operating licenses have been accounted for. All new nuclear plants in GCAM are currently labeled as Gen III. Although new nuclear plant may be either Gen III or IV, characteristics of new nuclear plants in GCAM, such as uranium usage, plant thermal efficiency and costs, reflect Gen III LWR.
+# Source: Data is based on US Nuclear Regulatory Commission (NRC) of nuclear reactor characteristic and operational history from January 2011, with additional updates to operating licenses and plant closures. https://catalog.data.gov/dataset?q=organization:((nrc-gov)), NRC Commercial operating nuclear power reactors, including: licensee data, location, web address, capacity (MW).
 region,plant,1990,2005,2010,2015,2020,2025,2030,2035,2040,2045,2050,2055,2065,2080,2095,2100,Units
 AL,nuclearGenII-AL-BrownsFerry-1,0.0101423,0.0260873,0.0313149,0.0313149,0.0313149,0.0313149,0.0291059,0,0,0,0,0,0,0,0,0,EJ
 AL,nuclearGenII-AL-BrownsFerry-2,0.00904198,0.0232572,0.0279177,0.0279177,0.0279177,0.0279177,0.0259484,0,0,0,0,0,0,0,0,0,EJ
