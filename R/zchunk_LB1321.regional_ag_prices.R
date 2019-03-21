@@ -64,8 +64,7 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
       inner_join(L1321.GDPdefl_ctry,
                  by = c("countries", "year")) %>%
       mutate(value = as.numeric(value),
-             # to do - strip out these unnecessary parens, put in the as.numeric (if needed) into the statement below
-             value = (((value / currentusd_per_2005usd) * gdp_deflator(1975, 2005)) / CONV_T_KG)) %>%
+             value = ((value / currentusd_per_2005usd) * gdp_deflator(1975, 2005) / CONV_T_KG)) %>%
       select(iso, pp_commod = item, year, value) %>%
       drop_na(value)
 
