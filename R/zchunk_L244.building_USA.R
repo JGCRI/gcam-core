@@ -380,16 +380,13 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       rename(stub.technology = technology) %>%
       write_to_all_states(LEVEL2_DATA_NAMES[["StubTechMarket"]]) %>%
       # Electricity is consumed from state markets, so change market.name to states for electricity
-      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS, region, market.name))
-
-    # If true, then we change market.name for selected fuels to state markets, rather than USA
-    if(gcamusa.USE_REGIONAL_FUEL_MARKETS) {
-      L244.StubTechMarket_bld <- L244.StubTechMarket_bld %>%
-        left_join_error_no_match(states_subregions, by = c("region" = "state")) %>%
-        mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
+      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS, region, market.name)) %>%
+      # replace market name with the grid region name if the minicam.energy.input is
+      # considered a regional fuel market
+      left_join_error_no_match(states_subregions, by = c("region" = "state")) %>%
+      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
                                      grid_region, market.name)) %>%
-        select(LEVEL2_DATA_NAMES[["StubTechMarket"]])
-    }
+      select(LEVEL2_DATA_NAMES[["StubTechMarket"]])
 
     # L244.StubTechCalInput_bld: Calibrated energy consumption by buildings technologies
     # Combine residential and commercial energy data

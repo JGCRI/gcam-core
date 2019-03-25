@@ -590,6 +590,7 @@ emissions.DIGITS_EMISSIONS <- 10
 
 # GCAM-USA time
 gcamusa.WIND_BASE_COST_YEAR   <- 2005
+gcamusa.FINAL_AEO_HYDRO_YEAR <- 2050
 
 gcamusa.SE_HIST_YEAR <- 2015  # year to which historical socioeconomic data (pop & GDP) are used in GCAM-USA
 gcamusa.SE_NEAR_TERM_YEAR <- 2030  # year after which projected growth rates from various socio-economic data sources are used as-is
@@ -643,10 +644,8 @@ gcamusa.GEOTHERMAL_DEFAULT_EFFICIENCY <- 0.1
 
 gcamusa.ELECT_TD_SECTORS  <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
 
-# Indicate whether to resolve electricity demands at the level of the nation or the grid regions
-gcamusa.USE_REGIONAL_ELEC_MARKETS <- TRUE
-
-# Indicate whether to use regional as opposed to national fuel markets (FALSE = national markets)
+# Indicate whether to use regional “cost adders” to differentiate
+# fuel prices by grid region in GCAM-USA (FALSE = same prices in all states)
 gcamusa.USE_REGIONAL_FUEL_MARKETS  <- TRUE
 
 # GCAM-USA fertlizer constants

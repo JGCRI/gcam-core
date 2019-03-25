@@ -363,19 +363,14 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
         rename(supplysector = sector.name,
                subsector = subsector.name,
                stub.technology = technology) %>%
-        mutate(market.name = gcam.USA_REGION) ->
-        L222.StubTechMarket_en_USA
-
-
-      # If designated, switch fuel market names to the regional markets
-      if(gcamusa.USE_REGIONAL_FUEL_MARKETS) {
-        L222.StubTechMarket_en_USA %>%
-          left_join_error_no_match(states_subregions %>%
-                      select(state, grid_region),
-                    by = c("region" = "state")) %>%
-          mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS, grid_region, market.name)) %>%
-          select(-grid_region) -> L222.StubTechMarket_en_USA
-      }
+        mutate(market.name = gcam.USA_REGION) %>%
+        # switch designated fuel market names to the regional markets
+        left_join_error_no_match(states_subregions %>%
+                                   select(state, grid_region),
+                                 by = c("region" = "state")) %>%
+        mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
+                                     grid_region, market.name)) %>%
+        select(-grid_region) -> L222.StubTechMarket_en_USA
 
 
       # Finish L222.StubTechMarket_en_USA by Setting electricity to the state markets
