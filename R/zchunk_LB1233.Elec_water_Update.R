@@ -48,57 +48,53 @@ module_gcam.usa_LB1233.Elec_water_Update <- function(command, ...) {
     # Perform Computations
 
     # Add missing years.
-    # Adding Columns because when we use complete() with the long format R runs out of memory.
-    LA1233.CoolingSystemShares_RG3_ref_allyears<-LA1233.CoolingSystemShares_RG3_ref
-     for (year_i in as.character(FUTURE_YEARS[!(FUTURE_YEARS %in% names(LA1233.CoolingSystemShares_RG3_ref))])){
-      LA1233.CoolingSystemShares_RG3_ref_allyears%>%
-        mutate(!!year_i:=NA_real_)->
-         LA1233.CoolingSystemShares_RG3_ref_allyears
-    }
+    LA1233.CSS_allyears <- LA1233.CoolingSystemShares_RG3_ref
+
+    newyrs <- as.character(FUTURE_YEARS[!(FUTURE_YEARS %in% names(LA1233.CoolingSystemShares_RG3_ref))])
+    LA1233.CSS_allyears[,newyrs] <- NA_real_
 
     # Interpolate for missing years using approx_fun
-    LA1233.CoolingSystemShares_RG3_ref_allyears%>%
-      gather(key=year,value=x,-fuel,-plant_type,-water_type,-technology,-State,-NEMS,-cooling_system)%>%
-      mutate(year=as.numeric(as.character(year)))%>%
-      group_by(fuel,plant_type,water_type,technology,State,NEMS,cooling_system)%>%
-      mutate(x=approx_fun(year,x))%>%
-      filter(water_type!="seawater")->   # Remove Seawater as per old code
-      LA1233.CoolingSystemShares_RG3_future_ref;
+    LA1233.CSS_allyears %>%
+      gather(key = year, value = value, -fuel, -plant_type, -water_type, -technology, -State, -NEMS, -cooling_system) %>%
+      mutate(year = as.numeric(as.character(year))) %>%
+      group_by(fuel, plant_type, water_type, technology, State, NEMS, cooling_system) %>%
+      mutate(value = approx_fun(year, value)) %>%
+      filter(water_type != "seawater") ->   # Remove Seawater since only want cooling coefficient for fresh water
+      LA1233.CoolingSystemShares_RG3_future_ref
 
     # Calculate Water withdrawals and Consumption
-    LA1233.CoolingSystemShares_RG3_future_ref%>%
-      left_join((Macknick_elec_water_m3MWh%>%     # join with elec_tech_water_map to get plant_type
-                        left_join((elec_tech_water_map%>%
-                                dplyr::select(technology,plant_type)%>%
-                                unique),by=c("technology"))%>%
-                        dplyr::select(plant_type,cooling_system,fuel,water_withdrawals,water_consumption)),
-                by=c("plant_type", "fuel", "cooling_system"))%>%unique%>%
-      mutate(withdraw=water_withdrawals*x*CONV_M3_BM3 / CONV_MWH_EJ,
-             withdraw=case_when(is.na(withdraw)~0,TRUE~withdraw),
-             cons=water_consumption*x*CONV_M3_BM3 / CONV_MWH_EJ,
-             cons=case_when(is.na(cons)~0,TRUE~cons))%>%
-      group_by(year,State,fuel,plant_type,technology)%>%
-      summarise(withdrawSum=sum(withdraw),
-                consSum=sum(cons))->
+    LA1233.CoolingSystemShares_RG3_future_ref %>%
+      left_join((Macknick_elec_water_m3MWh %>%      # join with elec_tech_water_map to get plant_type (May not have complete matches so no ljenm)
+                        left_join_error_no_match((elec_tech_water_map %>%
+                                                    dplyr::select(technology, plant_type) %>%
+                                                    unique),
+                                                 by = c("technology")) %>%
+                        dplyr::select(plant_type, cooling_system, fuel, water_withdrawals, water_consumption)),
+                        by = c("plant_type", "fuel", "cooling_system")) %>% unique %>%
+      mutate(withdraw = water_withdrawals*value*CONV_M3_BM3 / CONV_MWH_EJ,
+             withdraw = case_when(is.na(withdraw)~0,TRUE~withdraw),
+             cons = water_consumption*value*CONV_M3_BM3 / CONV_MWH_EJ,
+             cons = case_when(is.na(cons)~0,TRUE~cons)) %>%
+      group_by(year, State, fuel, plant_type, technology) %>%
+      summarise(withdrawSum = sum(withdraw),
+                consSum = sum(cons)) ->
       L1233.All_coef_R_elec_F_tech_Yh_ref_data
 
 
     # Water withdrawals in wide format
-    L1233.All_coef_R_elec_F_tech_Yh_ref_data%>%
-      dplyr::select(-consSum)%>%
-      ungroup%>%
-      mutate(year=paste("X",year,sep=""))%>%
-      spread(key=year,value=withdrawSum)%>%
-      rename(state=State)->
+    L1233.All_coef_R_elec_F_tech_Yh_ref_data %>%
+      dplyr::select(-consSum) %>%
+      ungroup %>%
+      spread(key = year, value = withdrawSum) %>%
+      rename(state = State)->
     L1233.wdraw_coef_R_elec_F_tech_Yh_ref
 
     # Water consumption in wide format
-    L1233.All_coef_R_elec_F_tech_Yh_ref_data%>%
-      dplyr::select(-withdrawSum)%>%
-      ungroup%>%
-      mutate(year=paste("X",year,sep=""))%>%
-      spread(key=year,value=consSum)%>%
-      rename(state=State)->
+    L1233.All_coef_R_elec_F_tech_Yh_ref_data %>%
+      dplyr::select(-withdrawSum) %>%
+      ungroup %>%
+      spread(key = year, value = consSum) %>%
+      rename(state = State)->
       L1233.wcons_coef_R_elec_F_tech_Yh_ref
 
     # ===================================================

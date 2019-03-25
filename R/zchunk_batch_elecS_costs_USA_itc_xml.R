@@ -1,4 +1,4 @@
-#' module_gcam.usa_batch_elecS_costs_USA_itc_xml
+#' module_gcamusa_batch_elecS_costs_USA_itc_xml
 #'
 #' Construct XML data structure for \code{elecS_costs_USA_itc.xml}.
 #'
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{elecS_costs_USA_itc.xml}. The corresponding file in the
 #' original data system was \code{batch_elecS_costs_USA_itc.xml} (gcamusa xml-batch).
-module_gcam.usa_batch_elecS_costs_USA_itc_xml <- function(command, ...) {
+module_gcamusa_batch_elecS_costs_USA_itc_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L2247.GlobalTechFCROnly_elecS_itc_USA",
              "L2247.GlobalIntTechFCROnly_elecS_itc_USA"))
