@@ -157,8 +157,8 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
         filter(region == gcam.USA_REGION) %>%
         write_to_all_states(names = c(names(data), "region"))
 
-      # Re-set markets from USA to regional markets, if called for in the GCAM-USA assumptions for selected fuels
-      if(gcamusa.USE_REGIONAL_FUEL_MARKETS & "market.name" %in% names(data_new)) {
+      # Re-set markets from USA to grid region, if the minicam.energy.input is considered a regional fuel market
+      if("market.name" %in% names(data_new)) {
         data_new <- data_new %>%
           left_join_error_no_match(select(states_subregions, state, grid_region), by = c("region" = "state")) %>%
           mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,

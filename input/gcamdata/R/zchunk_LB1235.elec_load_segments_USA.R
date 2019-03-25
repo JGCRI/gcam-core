@@ -1,4 +1,4 @@
-#' module_gcam.usa_LB1235.elec_load_segments_USA
+#' module_gcamusa_LB1235.elec_load_segments_USA
 #'
 #' Read in demand fraction and time fraction and compute load curve related parameters
 #' Calculate an initial estimate of generation by fuel (EJ) in the horizontal segments
@@ -7,8 +7,8 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L1235.grid_elec_segments_USA}, \code{L1235.grid_elec_supply_USA}, \code{L1235.grid_elec_demand_USA},
-#' \code{L1235.elecS_horizontal_vertical_USA}, \code{L1235.elecS_horizontal_vertical_GCAM_coeff_USA}, \code{L1235.elecS_demand_fraction_USA}.
+#' the generated outputs: \code{L1235.grid_elec_supply_USA}, \code{L1235.elecS_horizontal_vertical_USA},
+#' \code{L1235.elecS_horizontal_vertical_GCAM_coeff_USA}, \code{L1235.elecS_demand_fraction_USA}.
 #'
 #' The corresponding file in the original data system was \code{LB1235.elec_load_segments.R} (gcam-usa level1).
 #' @details Compute load curve related parameters and nitial estimate of generation by fuel in the horizontal segments.
@@ -16,7 +16,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author MTB August 2018
-module_gcam.usa_LB1235.elec_load_segments_USA <- function(command, ...) {
+module_gcamusa_LB1235.elec_load_segments_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/elecS_demand_fraction",
              FILE = "gcam-usa/elecS_time_fraction",
@@ -24,9 +24,7 @@ module_gcam.usa_LB1235.elec_load_segments_USA <- function(command, ...) {
              FILE = "gcam-usa/elecS_horizontal_to_vertical_map",
              "L1234.out_EJ_grid_elec_F"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L1235.grid_elec_segments_USA",
-             "L1235.grid_elec_supply_USA",
-             "L1235.grid_elec_demand_USA",
+    return(c("L1235.grid_elec_supply_USA",
              "L1235.elecS_horizontal_vertical_USA",
              "L1235.elecS_horizontal_vertical_GCAM_coeff_USA",
              "L1235.elecS_demand_fraction_USA"))
@@ -68,31 +66,31 @@ module_gcam.usa_LB1235.elec_load_segments_USA <- function(command, ...) {
       mutate(horizontal_segment = horizontal_segment_list[1]) -> elecS_horizontal_vertical_base
 
     elecS_time_fraction %>%
-      mutate(horizontal_segment = horizontal_segment_list[2]) %>%
-      mutate(off.peak.electricity.time = 0) %>%
-      mutate(intermediate.sum = intermediate.electricity.time + subpeak.electricity.time + peak.electricity.time) %>%
-      mutate(intermediate.electricity.time = intermediate.electricity.time / intermediate.sum) %>%
-      mutate(subpeak.electricity.time = subpeak.electricity.time / intermediate.sum) %>%
-      mutate(peak.electricity.time = peak.electricity.time / intermediate.sum) %>%
+      mutate(horizontal_segment = horizontal_segment_list[2],
+             off.peak.electricity.time = 0,
+             intermediate.sum = intermediate.electricity.time + subpeak.electricity.time + peak.electricity.time,
+             intermediate.electricity.time = intermediate.electricity.time / intermediate.sum,
+             subpeak.electricity.time = subpeak.electricity.time / intermediate.sum,
+             peak.electricity.time = peak.electricity.time / intermediate.sum) %>%
       select(-intermediate.sum) -> elecS_horizontal_vertical_intermediate
 
     elecS_time_fraction %>%
-      mutate(horizontal_segment = horizontal_segment_list[3]) %>%
-      mutate(off.peak.electricity.time = 0, intermediate.electricity.time = 0) %>%
-      mutate(subpeak.sum = subpeak.electricity.time + peak.electricity.time) %>%
-      mutate(subpeak.electricity.time = subpeak.electricity.time / subpeak.sum) %>%
-      mutate(peak.electricity.time = peak.electricity.time / subpeak.sum) %>%
+      mutate(horizontal_segment = horizontal_segment_list[3],
+             off.peak.electricity.time = 0, intermediate.electricity.time = 0,
+             subpeak.sum = subpeak.electricity.time + peak.electricity.time,
+             subpeak.electricity.time = subpeak.electricity.time / subpeak.sum,
+             peak.electricity.time = peak.electricity.time / subpeak.sum) %>%
       select(-subpeak.sum) -> elecS_horizontal_vertical_subpeak
 
     elecS_time_fraction %>%
-      mutate(horizontal_segment = horizontal_segment_list[4]) %>%
-      mutate(off.peak.electricity.time = 0, intermediate.electricity.time = 0, subpeak.electricity.time = 0) %>%
-      mutate(peak.electricity.time = 1) -> elecS_horizontal_vertical_peak
+      mutate(horizontal_segment = horizontal_segment_list[4],
+             off.peak.electricity.time = 0, intermediate.electricity.time = 0, subpeak.electricity.time = 0,
+             peak.electricity.time = 1) -> elecS_horizontal_vertical_peak
 
     elecS_horizontal_vertical_base %>%
-      bind_rows(elecS_horizontal_vertical_intermediate) %>%
-      bind_rows(elecS_horizontal_vertical_subpeak) %>%
-      bind_rows (elecS_horizontal_vertical_peak) %>%
+      bind_rows(elecS_horizontal_vertical_intermediate,
+                elecS_horizontal_vertical_subpeak,
+                elecS_horizontal_vertical_peak) %>%
       arrange(grid_region) %>%
       select(grid_region, horizontal_segment, off.peak.electricity = off.peak.electricity.time,
              intermediate.electricity = intermediate.electricity.time,
@@ -104,11 +102,11 @@ module_gcam.usa_LB1235.elec_load_segments_USA <- function(command, ...) {
     # First compute % of load supplied by horizontal segments
     elecS_demand_fraction %>%
       left_join_error_no_match(elecS_time_fraction, by ="grid_region") %>%
-      mutate(horizontal_segment = horizontal_segment_list[1]) %>%
-      mutate(off.peak.electricity = off.peak.electricity.demand) %>%
-      mutate(intermediate.electricity = off.peak.electricity * intermediate.electricity.time / off.peak.electricity.time) %>%
-      mutate(subpeak.electricity = off.peak.electricity * subpeak.electricity.time / off.peak.electricity.time) %>%
-      mutate(peak.electricity = off.peak.electricity * peak.electricity.time / off.peak.electricity.time) ->
+      mutate(horizontal_segment = horizontal_segment_list[1],
+             off.peak.electricity = off.peak.electricity.demand,
+             intermediate.electricity = off.peak.electricity * intermediate.electricity.time / off.peak.electricity.time,
+             subpeak.electricity = off.peak.electricity * subpeak.electricity.time / off.peak.electricity.time,
+             peak.electricity = off.peak.electricity * peak.electricity.time / off.peak.electricity.time) ->
       elecS_horizontal_vertical_GCAM_coeff_base
 
     elecS_horizontal_vertical_GCAM_coeff_base %>%
@@ -116,24 +114,24 @@ module_gcam.usa_LB1235.elec_load_segments_USA <- function(command, ...) {
       elecS_horizontal_vertical_GCAM_coeff_base_elec # to be used subsequently in a left join
 
     elecS_horizontal_vertical_GCAM_coeff_base %>%
-      mutate(horizontal_segment = horizontal_segment_list[2]) %>%
-      mutate(off.peak.electricity = 0) %>%
-      mutate(intermediate.electricity = intermediate.electricity.demand - intermediate.electricity) %>%
-      mutate(subpeak.electricity = intermediate.electricity * subpeak.electricity.time / intermediate.electricity.time) %>%
-      mutate(peak.electricity = intermediate.electricity * peak.electricity.time / intermediate.electricity.time) ->
+      mutate(horizontal_segment = horizontal_segment_list[2],
+             off.peak.electricity = 0,
+             intermediate.electricity = intermediate.electricity.demand - intermediate.electricity,
+             subpeak.electricity = intermediate.electricity * subpeak.electricity.time / intermediate.electricity.time,
+             peak.electricity = intermediate.electricity * peak.electricity.time / intermediate.electricity.time) ->
       elecS_horizontal_vertical_GCAM_coeff_intermediate
 
     elecS_horizontal_vertical_GCAM_coeff_intermediate %>%
-      select(grid_region, off.peak.electricity, intermediate.electricity,subpeak.electricity, peak.electricity) ->
+      select(grid_region, off.peak.electricity, intermediate.electricity, subpeak.electricity, peak.electricity) ->
       elecS_horizontal_vertical_GCAM_coeff_int_elec # to be used subsequently in a left join
 
     elecS_horizontal_vertical_GCAM_coeff_intermediate %>%
-      mutate(horizontal_segment = horizontal_segment_list[3]) %>%
-      mutate(off.peak.electricity = 0) %>%
-      mutate(intermediate.electricity = 0) %>%
+      mutate(horizontal_segment = horizontal_segment_list[3],
+             off.peak.electricity = 0,
+             intermediate.electricity = 0) %>%
       left_join_error_no_match(elecS_horizontal_vertical_GCAM_coeff_base_elec, by = c("grid_region")) %>%
-      mutate(subpeak.electricity.x = subpeak.electricity.demand - subpeak.electricity.x - subpeak.electricity.y) %>%
-      mutate(peak.electricity.x = subpeak.electricity.x * peak.electricity.time / subpeak.electricity.time) %>%
+      mutate(subpeak.electricity.x = subpeak.electricity.demand - subpeak.electricity.x - subpeak.electricity.y,
+             peak.electricity.x = subpeak.electricity.x * peak.electricity.time / subpeak.electricity.time) %>%
       select(-off.peak.electricity.y, -intermediate.electricity.y, -subpeak.electricity.y, -peak.electricity.y) %>%
       rename(off.peak.electricity = off.peak.electricity.x,
              intermediate.electricity = intermediate.electricity.x,
@@ -141,10 +139,10 @@ module_gcam.usa_LB1235.elec_load_segments_USA <- function(command, ...) {
              peak.electricity= peak.electricity.x) -> elecS_horizontal_vertical_GCAM_coeff_subpeak
 
     elecS_horizontal_vertical_GCAM_coeff_subpeak %>%
-      mutate(horizontal_segment = horizontal_segment_list[4]) %>%
-      mutate(off.peak.electricity = 0) %>%
-      mutate(intermediate.electricity = 0) %>%
-      mutate(subpeak.electricity = 0) %>%
+      mutate(horizontal_segment = horizontal_segment_list[4],
+             off.peak.electricity = 0,
+             intermediate.electricity = 0,
+             subpeak.electricity = 0) %>%
       left_join_error_no_match(elecS_horizontal_vertical_GCAM_coeff_int_elec, by = c("grid_region")) %>%
       left_join_error_no_match(elecS_horizontal_vertical_GCAM_coeff_base_elec, by = c("grid_region")) %>%
       mutate(peak.electricity.x = peak.electricity.demand - peak.electricity - peak.electricity.y - peak.electricity.x) %>%
@@ -156,9 +154,9 @@ module_gcam.usa_LB1235.elec_load_segments_USA <- function(command, ...) {
              peak.electricity= peak.electricity.x) -> elecS_horizontal_vertical_GCAM_coeff_peak
 
     elecS_horizontal_vertical_GCAM_coeff_base %>%
-      bind_rows(elecS_horizontal_vertical_GCAM_coeff_intermediate) %>%
-      bind_rows(elecS_horizontal_vertical_GCAM_coeff_subpeak) %>%
-      bind_rows(elecS_horizontal_vertical_GCAM_coeff_peak) %>%
+      bind_rows(elecS_horizontal_vertical_GCAM_coeff_intermediate,
+                elecS_horizontal_vertical_GCAM_coeff_subpeak,
+                elecS_horizontal_vertical_GCAM_coeff_peak) %>%
       arrange(grid_region) %>%
       select(grid_region, horizontal_segment, off.peak.electricity, intermediate.electricity,
              subpeak.electricity, peak.electricity) -> L1235.elecS_horizontal_vertical_GCAM_coeff_USA
@@ -177,18 +175,19 @@ module_gcam.usa_LB1235.elec_load_segments_USA <- function(command, ...) {
 
     L1235.elecS_horizontal_vertical_GCAM_coeff_USA %>%
       left_join_error_no_match(L1235.elecS_horizontal_vertical_GCAM_coeff_USA_tot, by = "grid_region") %>%
-      mutate(off.peak.electricity = off.peak.electricity / off.peak.electricity.tot) %>%
-      mutate(intermediate.electricity = intermediate.electricity / intermediate.electricity.tot) %>%
-      mutate(subpeak.electricity = subpeak.electricity / subpeak.electricity.tot) %>%
-      mutate(peak.electricity = peak.electricity / peak.electricity.tot) %>%
-      select(-off.peak.electricity.tot, -intermediate.electricity.tot,-subpeak.electricity.tot, - peak.electricity.tot) %>%
+      mutate(off.peak.electricity = off.peak.electricity / off.peak.electricity.tot,
+             intermediate.electricity = intermediate.electricity / intermediate.electricity.tot,
+             subpeak.electricity = subpeak.electricity / subpeak.electricity.tot,
+             peak.electricity = peak.electricity / peak.electricity.tot) %>%
+      select(-off.peak.electricity.tot, -intermediate.electricity.tot,
+             -subpeak.electricity.tot, -peak.electricity.tot) %>%
       # Gather the GCAM coefficients in long form
       gather(supplysector, coefficient, -grid_region, -horizontal_segment) %>%
-      mutate(supplysector = gsub("off.peak.electricity","off peak electricity",supplysector)) %>%
-      mutate(supplysector = gsub("intermediate.electricity","intermediate electricity",supplysector)) %>%
-      mutate(supplysector = gsub("subpeak.electricity","subpeak electricity",supplysector))%>%
-      mutate(supplysector = gsub("peak.electricity","peak electricity",supplysector)) %>%
-      mutate(subsector = supplysector, technology = supplysector) %>%
+      mutate(supplysector = gsub("off.peak.electricity", "off peak electricity", supplysector),
+             supplysector = gsub("intermediate.electricity", "intermediate electricity", supplysector),
+             supplysector = gsub("subpeak.electricity", "subpeak electricity", supplysector),
+             supplysector = gsub("peak.electricity", "peak electricity", supplysector),
+             subsector = supplysector, technology = supplysector) %>%
       filter(coefficient != 0) %>%
       select(grid_region, supplysector, subsector, technology,
              minicam.energy.input = horizontal_segment, coefficient) %>%
@@ -203,67 +202,35 @@ module_gcam.usa_LB1235.elec_load_segments_USA <- function(command, ...) {
     # Gathering some information in long-form first
     elecS_demand_fraction %>%
       gather(vertical_segment, demand_fraction, -grid_region) %>%
-      mutate(vertical_segment = gsub("off.peak.electricity.demand","off peak electricity",vertical_segment)) %>%
-      mutate(vertical_segment = gsub("intermediate.electricity.demand","intermediate electricity",vertical_segment)) %>%
-      mutate(vertical_segment = gsub("subpeak.electricity.demand","subpeak electricity",vertical_segment))%>%
-      mutate(vertical_segment = gsub("peak.electricity.demand","peak electricity",vertical_segment)) ->
+      mutate(vertical_segment = gsub("off.peak.electricity.demand", "off peak electricity", vertical_segment),
+             vertical_segment = gsub("intermediate.electricity.demand", "intermediate electricity", vertical_segment),
+             vertical_segment = gsub("subpeak.electricity.demand", "subpeak electricity", vertical_segment),
+             vertical_segment = gsub("peak.electricity.demand", "peak electricity", vertical_segment)) ->
       L1235.elecS_demand_fraction_USA
 
     elecS_fuel_fraction %>%
       gather(year, fraction, -fuel, -segment) %>%
-      mutate(year = gsub("fraction", "",year)) %>%
+      mutate(year = gsub("fraction", "", year)) %>%
       mutate(year = as.integer(year)) -> elecS_fuel_fraction
 
     L1234.out_EJ_grid_elec_F %>%
-      mutate(fuel = sub("solar CSP", "solar", fuel)) %>%
-      mutate(fuel = sub("solar PV", "solar", fuel)) %>%
+      mutate(fuel = sub("solar CSP", "solar", fuel),
+             fuel = sub("solar PV", "solar", fuel)) %>%
       group_by(grid_region, sector, fuel, year) %>%
       summarise_at("generation", sum) %>%
       ungroup() %>%
       mutate(year = as.integer(year)) %>%
-      filter(year %in% MODEL_BASE_YEARS) %>%
-      # intended to duplicate rows; left_join_error_no_match throws an error
+      # this join is intended to duplicate rows; left_join_error_no_match throws an error,
+      # so left_join is used instead
       left_join(elecS_fuel_fraction, by = c("fuel", "year")) %>%
       filter(!is.na(fraction)) %>%
       mutate(generation = generation * fraction) %>%
       select(grid_region, segment, fuel, year, generation, fraction) -> L1235.grid_elec_supply_USA
 
-    #Aggregate all technologies to get total gridregional supply by generation segment
-
-    L1235.grid_elec_supply_USA %>%
-      group_by(grid_region, segment, year) %>%
-      summarise_at("generation", sum) %>%
-      ungroup() -> L1235.grid_elec_segments_USA
-
-    L1235.grid_elec_segments_USA %>%
-      rename(tot_demand = generation) %>%
-      group_by(grid_region, year) %>%
-      summarise_at("tot_demand", sum) %>%
-      ungroup() ->  L1235.grid_elec_demand_USA
-
-    L1235.grid_elec_demand_USA %>%
-      left_join(L1235.elecS_demand_fraction_USA, by= c("grid_region")) %>%
-      mutate(demand = tot_demand * demand_fraction) %>%
-      left_join(elecS_horizontal_to_vertical_map, by = "vertical_segment") -> L1235.grid_elec_demand_USA
-
-    L1235.grid_elec_segments_USA %>%
-      left_join(L1235.grid_elec_demand_USA, by = c("segment" = "horizontal_segment", "grid_region", "year")) %>%
-      mutate(check = demand - generation) -> L1235.grid_elec_segments_USA
-
 
     # ===================================================
 
     # Produce outputs
-
-    L1235.grid_elec_segments_USA %>%
-      add_title("Electricity generation in horizontal load segments") %>%
-      add_units("EJ; unitless (demand_fraction)") %>%
-      add_comments("Initial estimates of electricity generation in the horizontal load segments; by grid region") %>%
-      add_comments("check = demand - generation") %>%
-      add_legacy_name("L1235.grid_elec_segments") %>%
-      add_precursors("L1234.out_EJ_grid_elec_F",
-                     "gcam-usa/elecS_fuel_fraction") ->
-      L1235.grid_elec_segments_USA
 
     L1235.grid_elec_supply_USA %>%
       add_title("Electricity generation by fuel in the horizontal load segments") %>%
@@ -274,17 +241,6 @@ module_gcam.usa_LB1235.elec_load_segments_USA <- function(command, ...) {
       add_precursors("L1234.out_EJ_grid_elec_F",
                      "gcam-usa/elecS_fuel_fraction") ->
       L1235.grid_elec_supply_USA
-
-    L1235.grid_elec_demand_USA %>%
-      add_title("Electricity demand by load segment") %>%
-      add_units("EJ; unitless (demand_fraction)") %>%
-      add_comments("Electricity demand by load segment; by grid region") %>%
-      add_legacy_name("L1235.grid_elec_demand") %>%
-      add_precursors("L1234.out_EJ_grid_elec_F",
-                     "gcam-usa/elecS_demand_fraction",
-                     "gcam-usa/elecS_fuel_fraction",
-                     "gcam-usa/elecS_horizontal_to_vertical_map") ->
-      L1235.grid_elec_demand_USA
 
     L1235.elecS_horizontal_vertical_USA %>%
       add_title("Fraction of electricity demand supplied by vertical load segment") %>%
@@ -314,8 +270,9 @@ module_gcam.usa_LB1235.elec_load_segments_USA <- function(command, ...) {
       add_precursors("gcam-usa/elecS_demand_fraction") ->
       L1235.elecS_demand_fraction_USA
 
-    return_data(L1235.grid_elec_segments_USA, L1235.grid_elec_supply_USA, L1235.grid_elec_demand_USA,
-                L1235.elecS_horizontal_vertical_USA, L1235.elecS_horizontal_vertical_GCAM_coeff_USA,
+    return_data(L1235.grid_elec_supply_USA,
+                L1235.elecS_horizontal_vertical_USA,
+                L1235.elecS_horizontal_vertical_GCAM_coeff_USA,
                 L1235.elecS_demand_fraction_USA)
   } else {
     stop("Unknown command")

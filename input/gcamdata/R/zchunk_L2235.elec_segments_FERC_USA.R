@@ -24,7 +24,6 @@
 #' @importFrom tidyr gather spread
 #' @author MTB Aug 2018
 module_gcam.usa_L2235.elec_segments_FERC_USA <- function(command, ...) {
-  if( gcamusa.USE_REGIONAL_FUEL_MARKETS == TRUE ){
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/A232.structure",
@@ -714,6 +713,5 @@ module_gcam.usa_L2235.elec_segments_FERC_USA <- function(command, ...) {
 
   } else {
     stop("Unknown command")
-  }
   }
 }
