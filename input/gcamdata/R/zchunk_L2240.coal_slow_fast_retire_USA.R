@@ -12,7 +12,7 @@
 #' \code{L2240.GlobalTechCapital_elec_coalret_USA}, \code{L2240.GlobalTechOMfixed_elec_coalret_USA}, \code{L2240.GlobalTechOMvar_elec_coalret_USA},
 #' \code{L2240.GlobalTechEff_elec_coalret_USA}, \code{L2240.GlobalTechProfitShutdown_elec_coalret_USA}.
 #' The corresponding file in the original data system was \code{L2240.coal_slow_fast_retire_USA.R} (gcam-usa level2).
-#' @details This chunk creates add-on files to take the fractional reduction in coal electricity generation for each state and
+#' @details This chunk creates add-on files to take the fraction of reduction in coal electricity generation between 2010 and 2015 for each state and
 #' forces that generation to retire in 2015. It also tempers retirement assumptions for the remaining coal fleet to allow
 #' most 2015 generation to continue through mid-century.
 #' @importFrom assertthat assert_that
@@ -90,12 +90,12 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
     L2234.StubTechProd_elecS_USA %>%
       rename(tech.share.weight = share.weight) %>%
       semi_join(A23.elec_tech_associations_coal_retire %>%
-                  select("supplysector" = "Electric.sector", "subsector", "stub.technology" = "technology") %>%
+                  select(supplysector = Electric.sector, subsector, stub.technology = technology) %>%
                   distinct(),
                 by = c("supplysector", "subsector", "stub.technology")) %>%
       anti_join(A23.coal_conv_pul_delete, by = c("supplysector", "subsector", "stub.technology")) %>%
-      mutate(calOutputValue = 0,
-             tech.share.weight = 0) -> L2240.StubTechProd_elecS_coal_USA
+      mutate(calOutputValue = 0, tech.share.weight = 0) ->
+      L2240.StubTechProd_elecS_coal_USA
 
     # Prepare a table for stub technologies with all stats and base years
     A23.elec_tech_associations_coal_retire %>%
@@ -213,16 +213,6 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       select(supplysector, subsector, technology, year, median.shutdown.point, profit.shutdown.steepness) ->
       L2240.GlobalTechProfitShutdown_elec_coalret_USA
 
-    # # No new coal
-    # A23.elec_tech_associations_coal_retire %>%
-    #   select(supplysector = Electric.sector, subsector, stub.technology = Electric.sector.technology) %>%
-    #   filter(grepl("generation", supplysector)) %>%
-    #   repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
-    #   repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
-    #   mutate(share.weight = 0) %>%
-    #   select(LEVEL2_DATA_NAMES[["StubTechYr"]], share.weight) ->
-    #   L2240.StubTechShrwt_coal_retire_elec_USA
-
     # ===================================================
     # Produce outputs
 
@@ -256,7 +246,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
     L2240.StubTechEff_elec_coalret_USA %>%
       add_title("Efficiencies of U.S. conventional coal electricity plants by load segment and state in calibration years") %>%
       add_units("Unitless") %>%
-      add_comments("Same for fast retire and slow retire technologies") %>%
+      add_comments("Set the same efficiency values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.StubTechEff_elec_coalret_USA") %>%
       add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
                      "L2234.StubTechEff_elecS_USA") ->
@@ -292,7 +282,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
     L2240.GlobalTechCapFac_elec_coalret_USA %>%
       add_title("Capacity factors for historic U.S. conventional coal electricity plants by load segment and model year") %>%
       add_units("Unitless") %>%
-      add_comments("Same for fast retire and slow retire technologies") %>%
+      add_comments("Set the same capacity factor values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechCapFac_elec_coalret_USA") %>%
       add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
                      "L2234.GlobalTechCapFac_elecS_USA") ->
@@ -301,7 +291,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
     L2240.GlobalTechCapital_elec_coalret_USA %>%
       add_title("Capital costs of historic U.S. conventional coal electricity plants by load segment and model year") %>%
       add_units("1975$ per kW; unitless (fixed.charge.rate)") %>%
-      add_comments("Same for fast retire and slow retire technologies") %>%
+      add_comments("Set the same capital cost values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechCapital_elec_coalret_USA") %>%
       add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
                      "L2234.GlobalTechCapital_elecS_USA") ->
@@ -310,7 +300,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
     L2240.GlobalTechOMfixed_elec_coalret_USA %>%
       add_title("Fixed OM costs of historic U.S. conventional coal electricity plants by load segment and model year") %>%
       add_units("1975$/kW/yr") %>%
-      add_comments("Same for fast retire and slow retire technologies") %>%
+      add_comments("Set the same fixed OM cost values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechOMfixed_elec_coalret_USA") %>%
       add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
                      "L2234.GlobalTechOMfixed_elecS_USA") ->
@@ -319,7 +309,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
     L2240.GlobalTechOMvar_elec_coalret_USA %>%
       add_title("Variable OM costs of historic U.S. conventional coal electricity plants by load segment and model year") %>%
       add_units("1975$/MWh") %>%
-      add_comments("Same for fast retire and slow retire technologies") %>%
+      add_comments("Set the same variable OM cost values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechOMvar_elec_coalret_USA") %>%
       add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
                      "L2234.GlobalTechOMvar_elecS_USA") ->
@@ -328,7 +318,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
     L2240.GlobalTechEff_elec_coalret_USA %>%
       add_title("Efficiencies of historic U.S. conventional coal electricity plants by load segment and model year") %>%
       add_units("Unitless") %>%
-      add_comments("Same for fast retire and slow retire technologies") %>%
+      add_comments("Set the same efficiency values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechEff_elec_coalret_USA") %>%
       add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
                      "L2234.GlobalTechEff_elecS_USA") ->
@@ -337,7 +327,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
     L2240.GlobalTechProfitShutdown_elec_coalret_USA %>%
       add_title("Profit shut-down decider for historic U.S. conventional coal electricity plants by load segment and model year") %>%
       add_units("Unitless") %>%
-      add_comments("Same for fast retire and slow retire technologies") %>%
+      add_comments("Set the same values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechProfitShutdown_elec_coalret_USA") %>%
       add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
                      "L2234.GlobalTechProfitShutdown_elecS_USA") ->

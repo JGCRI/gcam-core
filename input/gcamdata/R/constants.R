@@ -605,6 +605,15 @@ gcamusa.AEO_SE_YEAR <- 2040   # year to which AEO 2016 socioeconomic assumptions
 gcamusa.AVG_COAL_PLANT_LIFETIME <- 70
 gcamusa.AVG_COAL_PLANT_HALFLIFE <- 60
 
+# The max remaining lifetime of existing coal that will retire at the average lifetime of that vintage group
+# Vintage groups with longer remaining life will retire based on the S-curve.
+gcamusa.COAL_REMAINING_LIFETIME <- 20
+gcamusa.COAL_RETIRE_STEEPNESS <- 0.3
+
+# Profit shutdown parameters
+gcamusa.MEDIAN_SHUTDOWN_POINT <- -0.1
+gcamusa.PROFIT_SHUTDOWN_STEEPNESS <- 6
+
 # Define vintage bins and categories
 gcamusa.COAL_VINTAGE_BREAKS <- c(0, seq(1950, 2015, 5))
 gcamusa.COAL_VINTAGE_LABELS <- c("before 1950", "1951-1955", "1956-1960", "1961-1965", "1966-1970", "1971-1975", "1976-1980",
