@@ -1,7 +1,7 @@
 # File: A23.elec_OM_adv_USA.csv
 # Title: Electricity technology OM costs
 # Units: 2014 $/kW
-# Comments: Based on "Adv Tech Case" in DOE report “Energy CO2 Emissions Impacts of Clean Energy Technology Innovation and Policy”
+# Comments: Based on "Adv Tech Case" in DOE report "Energy CO2 Emissions Impacts of Clean Energy Technology Innovation and Policy"
 # Source: Received from Elke Hodson (DOE-EPSA) [Filename: Adv Tech and QER Gen Tech Info for GCAM 06-22-2016.xlx]; https://energy.gov/sites/prod/files/2017/01/f34/Energy%20CO2%20Emissions%20Impacts%20of%20Clean%20Energy%20Technology%20Innovation%20and%20Policy.pdf
 year,GCAM.technology,OM.fixed,OM.var
 2015,coal (IGCC CCS),45.65960115,15.22650041
