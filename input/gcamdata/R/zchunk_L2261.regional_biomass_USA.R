@@ -1,4 +1,4 @@
-#' module_gcam.usa_L2261.regional_biomass_USA
+#' module_gcamusa_L2261.regional_biomass_USA
 #'
 #' Create biomass supply sectors at the state level.
 #'
@@ -16,11 +16,13 @@
 #' \code{L2261.StubTechMarket_en_USA}, \code{L2261.StubTechMarket_elecS_USA}, \code{L2261.StubTechMarket_ind_USA},
 #' \code{L2261.StubTechMarket_cement_USA}, \code{L2261.StubTechMarket_bld_USA}.
 #' The corresponding file in the original data system was \code{L2261.regional_biomass_USA.R} (gcam-usa level2).
+#' @details Create biomass supply sectors at the state level, in order ensure that biomass carbon-tracking is
+#' contained entirely within the consuming region (state).
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author MTB Aug 2018
-module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
+module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A21.sector",
              FILE = "energy/A26.sector",
@@ -127,13 +129,14 @@ module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
     L2261.Supplysector_bio_USA %>%
       mutate(subsector = supplysector,
              year.fillout = min(MODEL_BASE_YEARS),
-             share.weight = 1) %>%
+             share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
       select(LEVEL2_DATA_NAMES$SubsectorShrwtFllt) -> L2261.SubsectorShrwtFllt_bio_USA
 
     # Subsector shareweight interpolations for state-level biomass sectors
     L221.SubsectorInterp_en %>%
       bind_rows(L226.SubsectorInterp_en) %>%
       filter(region == gcam.USA_REGION) %>%
+      # filter for biomass supply sectors
       semi_join(A28.sector, by = c("supplysector")) %>%
       select(-region) %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
@@ -143,7 +146,7 @@ module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
     L2261.SubsectorShrwtFllt_bio_USA %>%
       select(LEVEL2_DATA_NAMES$Subsector) %>%
       mutate(logit.year.fillout = min(MODEL_BASE_YEARS),
-             logit.exponent = -3,
+             logit.exponent = gcamusa.DEFAULT_LOGITEXP,
              logit.type = gcamusa.DEFAULT_LOGIT_TYPE) -> L2261.SubsectorLogit_bio_USA
 
 
@@ -151,6 +154,7 @@ module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
     # Stub-technologies for state-level biomass sector
     L221.StubTech_en %>%
       filter(region == gcam.USA_REGION) %>%
+      # filter for biomass supply sectors
       semi_join(A28.sector, by = c("supplysector")) %>%
       # NOTE: can't use stub technology for state-level regional biomass sectors
       # because they would inherit the wrong energy-inputs
@@ -180,6 +184,7 @@ module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
     # so the global tech database can not be used
     L221.StubTechFractSecOut_en %>%
       filter(region == gcam.USA_REGION) %>%
+      # filter for biomass supply sectors
       semi_join(A28.sector, by = c("supplysector")) %>%
       select(-region) %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
@@ -188,6 +193,7 @@ module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
     # Cost curve points for producing secondary output feedcrops
     L221.StubTechFractProd_en %>%
       filter(region == gcam.USA_REGION) %>%
+      # filter for biomass supply sectors
       semi_join(A28.sector, by = c("supplysector")) %>%
       select(-region) %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
@@ -223,7 +229,7 @@ module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
     # Technology shareweights of state-level regional biomass sectors
     L2261.Tech_rbm_USA %>%
       repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
-      mutate(share.weight = 1) %>%
+      mutate(share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
       select(LEVEL2_DATA_NAMES$TechYr, share.weight) -> L2261.TechShrwt_rbm_USA
 
     # Technology input & efficiencies of state-level regional biomass sectors
@@ -232,7 +238,7 @@ module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
     L2261.TechShrwt_rbm_USA %>%
       select(LEVEL2_DATA_NAMES$TechYr) %>%
       mutate(minicam.energy.input = "regional biomass",
-             coefficient = 1,
+             coefficient = gcamusa.DEFAULT_COEFFICIENT,
              market.name = gcam.USA_REGION) %>%
       select(LEVEL2_DATA_NAMES$TechCoef) -> L2261.TechCoef_rbm_USA
 
@@ -241,6 +247,7 @@ module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
     # NOTE: can't use stub technology for delivered biomass sectors because they would inherit the wrong energy-inputs
     # Technologies for state-level delivered biomass sector
     L226.GlobalTechEff_en %>%
+      # filter for biomass supply sectors
       semi_join(A28.sector, by = c("sector.name" = "supplysector")) %>%
       rename(supplysector = sector.name, subsector = subsector.name) %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
@@ -250,11 +257,12 @@ module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
     # Technology shareweights of state-level delivered biomass sectors
     L2261.Tech_dbm_USA %>%
       repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
-      mutate(share.weight = 1) %>%
+      mutate(share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
       select(LEVEL2_DATA_NAMES$TechYr, share.weight) -> L2261.TechShrwt_dbm_USA
 
     # Technology efficiencies of state-level delivered biomass sectors
     L226.GlobalTechEff_en %>%
+      # filter for biomass supply sectors
       semi_join(A28.sector, by = c("sector.name" = "supplysector")) %>%
       rename(supplysector = sector.name, subsector = subsector.name) %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
@@ -263,6 +271,7 @@ module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
 
     # Technology costs for state-level delivered biomass sectors
     L226.GlobalTechCost_en %>%
+      # filter for biomass supply sectors
       semi_join(A28.sector, by = c("sector.name" = "supplysector")) %>%
       rename(supplysector = sector.name, subsector = subsector.name)  %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
@@ -277,6 +286,13 @@ module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
       select(region, PrimaryFuelCO2Coef.name, PrimaryFuelCO2Coef) -> L2261.CarbonCoef_bio_USA
 
+    # Adjusting the carbon coefficient for USA regional biomass
+    # This is necessary because, in order to ensure compatibility with the
+    # bio trade and negative emissions budget features, US states can't consume biomass
+    # from the global market, but rather consume regional biomass from the USA market.
+    # In order to associate the sequestered carbon embedded in biomass feedstocks with
+    # the state in which they're consumed (rather than the USA region), we set the
+    # USA regional biomass carbon coefficient to zero
     L202.CarbonCoef %>%
       filter(region == gcam.USA_REGION,
              PrimaryFuelCO2Coef.name == "regional biomass") %>%
@@ -288,7 +304,6 @@ module_gcam.usa_L2261.regional_biomass_USA <- function(command, ...) {
 
 
     # Update minicam-energy-inputs for technologies that consume biomass
-
     set_state_biomass_markets <- function( data ){
       data_new <- data %>%
         filter(region %in% gcamusa.STATES,
