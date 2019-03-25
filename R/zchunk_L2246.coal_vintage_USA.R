@@ -1,4 +1,4 @@
-#' module_gcam.usa_L2246.coal_vintage_USA
+#' module_gcamusa_L2246.coal_vintage_USA
 #'
 #' Generates GCAM-USA model inputs to include detailed coal vintages.
 #'
@@ -19,7 +19,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC Sep 2018
-module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
+module_gcamusa_L2246.coal_vintage_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/prime_mover_map",
              FILE = "gcam-usa/EIA_860_generators_existing_2015",
@@ -112,8 +112,8 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
     # Calculate the weighted-average lifetime of retired units that were built before 1970 by vintage bin
     L2246.coal_units_retired %>%
       filter(Operating.Year <= 1970) %>%
-      mutate(lifetime = Retirement.Year - Operating.Year) %>%
-      mutate(cap.lifetime = capacity * lifetime) %>%
+      mutate(lifetime = Retirement.Year - Operating.Year,
+             cap.lifetime = capacity * lifetime) %>%
       group_by(vintage.bin) %>%
       summarise(avg.lifetime = sum(cap.lifetime) / sum(capacity)) %>%
       ungroup ->
@@ -132,10 +132,10 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
       left_join(L2246.coal_units_retired %>% select(State, Plant.Code, Generator.ID, Retirement.Year),
                 by = c("State", "Plant.Code", "Generator.ID")) %>%
       # Note that NAs in Retirement year column indicate that the units were not retired through 2016. Repalce NAs with 9999 for now
-      mutate(Retirement.Year = replace(Retirement.Year, is.na(Retirement.Year), Planned.Retirement.Year[is.na(Retirement.Year)])) %>%
-      # Categorize coal units by vintage bins.
-      # We stick with 5-year bins for now.
-      mutate(vintage.bin = cut(Operating.Year, breaks = gcamusa.COAL_VINTAGE_BREAKS, labels = gcamusa.COAL_VINTAGE_LABELS)) %>%
+      mutate(Retirement.Year = replace(Retirement.Year, is.na(Retirement.Year), Planned.Retirement.Year[is.na(Retirement.Year)]),
+             # Categorize coal units by vintage bins. We stick with 5-year bins for now.
+             vintage.bin = cut(Operating.Year, breaks = gcamusa.COAL_VINTAGE_BREAKS, labels = gcamusa.COAL_VINTAGE_LABELS)) %>%
+      # Use left_join due to missing values in avg.lifetime, replace with the assumed value next
       left_join(L2246.coal_units_retired_avg_lifetime, by = "vintage.bin") %>%
       # For units built after 1970, we assume an average lifetime
       replace_na(list(avg.lifetime = gcamusa.AVG_COAL_PLANT_LIFETIME)) %>%
@@ -169,10 +169,10 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
       left_join(L2240.StubTechProd_elec_coalret_USA %>%
                   filter(subsector == "coal", year == max(MODEL_BASE_YEARS), grepl("slow_retire", stub.technology)), by = "region") %>%
       filter(!is.na(calOutputValue), calOutputValue != 0) %>%
-      mutate(calOutputValue = calOutputValue * share.vintage) %>%
-      # Create new technologies. Naming the variable as stub.technology.new so that we can use stub.technology as reference later
-      mutate(stub.technology.new = paste(stub.technology, vintage.bin, sep = " ")) %>%
-      mutate(year = max(MODEL_BASE_YEARS), share.weight.year = max(MODEL_BASE_YEARS),
+      mutate(calOutputValue = calOutputValue * share.vintage,
+             # Create new technologies. Naming the variable as stub.technology.new so that we can use stub.technology as reference later
+             stub.technology.new = paste(stub.technology, vintage.bin, sep = " "),
+             year = max(MODEL_BASE_YEARS), share.weight.year = max(MODEL_BASE_YEARS),
              subs.share.weight = 1, tech.share.weight = 1) %>%
       # Select variables. For now, include lifetime and vintage.bin as well. We'll remove it later
       select(LEVEL2_DATA_NAMES[["StubTechProd"]], stub.technology.new, lifetime, vintage.bin) ->
@@ -181,16 +181,16 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
     # Create a table to read lifetimes for vintage bin techs by state, for vintages with =< 20 year lifetime remaining
     L2246.StubTechProd_coal_vintage_USA_2010 %>%
       mutate(stub.technology = stub.technology.new) %>%
-      filter(lifetime <= 20) %>%
+      filter(lifetime <= gcamusa.COAL_REMAINING_LIFETIME) %>%
       select(LEVEL2_DATA_NAMES[["StubTechLifetime"]]) ->
       L2246.StubTechLifetime_coal_vintage_USA
 
     # Create a table to read in S-curve parameters for vintage bin techs by state, for vintages with > 20 year lifetime remaining
     L2246.StubTechProd_coal_vintage_USA_2010 %>%
       mutate(stub.technology = stub.technology.new) %>%
-      filter(lifetime > 20) %>%
+      filter(lifetime > gcamusa.COAL_REMAINING_LIFETIME) %>%
       select(LEVEL2_DATA_NAMES[["StubTechLifetime"]]) %>%
-      mutate(steepness = 0.3,
+      mutate(steepness = gcamusa.COAL_RETIRE_STEEPNESS,
              half.life = round(lifetime * (gcamusa.AVG_COAL_PLANT_HALFLIFE / gcamusa.AVG_COAL_PLANT_LIFETIME), 0)) ->
       L2246.StubTechSCurve_coal_vintage_USA
 
@@ -198,7 +198,7 @@ module_gcam.usa_L2246.coal_vintage_USA <- function(command, ...) {
     L2246.StubTechProd_coal_vintage_USA_2010 %>%
       mutate(stub.technology = stub.technology.new) %>%
       select(LEVEL2_DATA_NAMES[["StubTechLifetime"]]) %>%
-      mutate(median.shutdown.point = -0.1, profit.shutdown.steepness = 6) %>%
+      mutate(median.shutdown.point = gcamusa.MEDIAN_SHUTDOWN_POINT, profit.shutdown.steepness = gcamusa.PROFIT_SHUTDOWN_STEEPNESS) %>%
       select(LEVEL2_DATA_NAMES[["StubTechProfitShutdown"]]) ->
       L2246.StubTechProfitShutdown_coal_vintage_USA
 
