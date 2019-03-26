@@ -1,0 +1,1 @@
+This code is used to couple GCAM to E3SM.
