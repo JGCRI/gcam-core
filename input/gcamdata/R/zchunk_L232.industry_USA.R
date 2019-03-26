@@ -279,8 +279,9 @@ module_gcamusa_L232.industry_USA <- function(command, ...) {
       mutate(market.name = gcam.USA_REGION) %>%
       select(LEVEL2_DATA_NAMES[["StubTechMarket"]]) %>%
       left_join_error_no_match(states_subregions %>% select(state, grid_region), by = c("region" = "state")) %>%
-      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS & gcamusa.USE_REGIONAL_FUEL_MARKETS == TRUE,
-                                   grid_region, market.name)) %>% select(-grid_region) %>%
+      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
+                                   grid_region, market.name)) %>%
+      select(-grid_region) %>%
       mutate(market.name = if_else(grepl("elect_td", minicam.energy.input), region, market.name)) ->
       L232.StubTechMarket_ind_USA  ## OUTPUT
 
@@ -289,6 +290,7 @@ module_gcamusa_L232.industry_USA <- function(command, ...) {
       filter(is.na(secondary.output) == FALSE) %>%
       select(supplysector, subsector, technology) ->
       L232.chp_techs
+
     L232.StubTechMarket_ind_USA %>%
       # ^^ electricity is consumed from state markets
       semi_join(L232.chp_techs, by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
@@ -297,9 +299,11 @@ module_gcamusa_L232.industry_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], "secondary.output", "market.name") %>%
       mutate(market.name = gcam.USA_REGION) %>%
       # ^^ over-ride regional market names
-      left_join_error_no_match(states_subregions %>% select(state, grid_region), by = c("region" = "state")) %>%
-      mutate(x = gcamusa.USE_REGIONAL_ELEC_MARKETS,
-             market.name = if_else(x == TRUE, grid_region, market.name)) %>% select(-x, -grid_region) ->
+      left_join_error_no_match(states_subregions %>%
+                                 select(state, grid_region),
+                               by = c("region" = "state")) %>%
+      mutate(market.name = grid_region) %>%
+      select(-grid_region) ->
       L232.StubTechSecMarket_ind_USA  ## OUTPUT
 
     # base-year service output of industry final demand
