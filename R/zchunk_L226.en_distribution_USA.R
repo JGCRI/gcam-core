@@ -320,17 +320,29 @@ module_gcamusa_L226.en_distribution_USA <- function(command, ...) {
       add_precursors("L226.StubTechCoef_electd") ->
       L226.StubTechCoef_electd_USA
 
-    missing_data() %>%
+    L226.TechShrwt_electd_USA %>%
+      add_title("Tech share weights for elec T&D when using regional electricity markets") %>%
+      add_units("NA") %>%
+      add_comments("Tech share weights for elec T&D when using regional electricity markets") %>%
+      add_comments("The elect_td sectors can not use the global tech database as their input is different.") %>%
       add_legacy_name("L226.TechShrwt_electd_USA") %>%
       add_precursors("L226.GlobalTechShrwt_en") ->
       L226.TechShrwt_electd_USA
 
-    missing_data() %>%
+    L226.TechCost_electd_USA %>%
+      add_title("Tech costs for elec T&D when using regional electricity markets") %>%
+      add_units("1975$") %>%
+      add_comments("Tech costs for elec T&D when using regional electricity markets") %>%
+      add_comments("The elect_td sectors can not use the global tech database as their input is different.") %>%
       add_legacy_name("L226.TechCost_electd_USA") %>%
       add_precursors("L226.GlobalTechCost_en") ->
       L226.TechCost_electd_USA
 
-    missing_data() %>%
+    L226.TechCoef_electd_USA %>%
+      add_title("Tech coefficients for elec T&D when using regional electricity markets") %>%
+      add_units("NA") %>%
+      add_comments("Tech coeff for elec T&D when using regional electricity markets.") %>%
+      add_comments("The elect_td sectors can not use the global tech database as their input is different.") %>%
       add_legacy_name("L226.TechCoef_electd_USA") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L226.StubTechCoef_electd") ->

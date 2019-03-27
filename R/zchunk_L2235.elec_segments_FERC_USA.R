@@ -1,4 +1,4 @@
-#' module_gcam.usa_L2235.elec_segments_FERC_USA
+#' module_gcamusa_L2235.elec_segments_FERC_USA
 #'
 #' Creates the vertical segment supplysectors in the grid regions and also the domestic supply and
 #' electricity trade sectors.
@@ -25,7 +25,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author MTB Aug 2018
-module_gcam.usa_L2235.elec_segments_FERC_USA <- function(command, ...) {
+module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/A232.structure",
