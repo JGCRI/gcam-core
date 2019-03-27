@@ -17,12 +17,14 @@ a vector of output names, or (if \code{command} is "MAKE") all
 the generated outputs: \code{L2235.DeleteSupplysector_elec_USA}, \code{L2235.InterestRate_FERC_USA},
 \code{L2235.Pop_FERC_USA}, \code{L2235.BaseGDP_FERC_USA}, \code{L2235.LaborForceFillout_FERC_USA},
 \code{L2235.Supplysector_elec_USA}, \code{L2235.ElecReserve_elecS_grid_vertical_USA}, \code{L2235.SubsectorLogit_elec_USA},
-\code{L2235.SubsectorShrwtFllt_elec_USA}, \code{L2235.SubsectorInterp_elec_USA}, \code{L2235.SubsectorShrwtFllt_elecS_grid_vertical_USA},
+\code{L2235.SubsectorShrwtFllt_elec_USA}, \code{L2235.SubsectorInterp_elec_USA}, \code{L2235.SubsectorShrwt_elec_USA},
+\code{L2235.SubsectorInterpTo_elec_USA}, \code{L2235.SubsectorShrwtFllt_elecS_grid_vertical_USA},
 \code{L2235.SubsectorShrwtInterp_elecS_grid_vertical_USA}, \code{L2235.TechShrwt_elec_USA}, \code{L2235.TechCoef_elec_USA},
 \code{L2235.Production_exports_elec_USA}, \code{L2235.TechShrwt_elecS_grid_vertical_USA}, \code{L2235.TechCoef_elecS_grid_vertical_USA},
 \code{L2235.Supplysector_elec_FERC_USA}, \code{L2235.SubsectorLogit_elec_FERC_USA}, \code{L2235.SubsectorShrwtFllt_elec_FERC_USA},
-\code{L2235.SubsectorInterp_elec_FERC_USA}, \code{L2235.TechShrwt_elec_FERC_USA}, \code{L2235.TechCoef_elec_FERC_USA},
-\code{L2235.TechCoef_elecownuse_FERC_USA}, \code{L2235.Production_imports_FERC_USA},\code{L2235.Production_elec_gen_FERC_USA}.
+\code{L2235.SubsectorInterp_elec_FERC_USA}, \code{L2235.SubsectorShrwt_elec_FERC}, \code{L2235.SubsectorInterpTo_elec_FERC},
+\code{L2235.TechShrwt_elec_FERC_USA}, \code{L2235.TechCoef_elec_FERC_USA}, \code{L2235.TechCoef_elecownuse_FERC_USA},
+\code{L2235.Production_imports_FERC_USA},\code{L2235.Production_elec_gen_FERC_USA}.
 The corresponding file in the original data system was \code{L2235.elec_segments_FERC.R} (gcam-usa level2).
 }
 \description{
