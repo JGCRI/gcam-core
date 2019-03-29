@@ -1,21 +1,13 @@
-# File: A23.elecS_subsector_shrwt_state_adj.csv,,,,
-# Title: State-Specific Multiple Load Segments Subsector Shareweight Assumptions,,,,
-# Units: unitless,,,,
-# Comments: Subsector shareweights at points of inflexion - adjusting values for particular states,,,,
+# File: A23.elecS_subsector_shrwt_state_adj.csv
+# Title: State-Specific Multiple Load Segments Subsector Shareweight Assumptions
+# Units: unitless
+# Comments: Subsector shareweights at points of inflexion - adjusting values for particular states
 region,supplysector,subsector,year,share.weight
-GA,base load generation,nuclear,2015,0
-GA,intermediate generation,nuclear,2015,0
-GA,subpeak generation,nuclear,2015,0
-GA,peak generation,nuclear,2015,0
-GA,base load generation,nuclear,2025,0
-GA,intermediate generation,nuclear,2025,0
-GA,subpeak generation,nuclear,2025,0
-GA,peak generation,nuclear,2025,0
-GA,base load generation,nuclear,2030,1
-GA,intermediate generation,nuclear,2030,1
-GA,subpeak generation,nuclear,2030,1
-GA,peak generation,nuclear,2030,1
-GA,base load generation,nuclear,end-year,1
-GA,intermediate generation,nuclear,end-year,1
-GA,subpeak generation,nuclear,end-year,1
-GA,peak generation,nuclear,end-year,1
+HI,base load generation,gas,initial-future-year,0
+HI,intermediate generation,gas,initial-future-year,0
+HI,subpeak generation,gas,initial-future-year,0
+HI,peak generation,gas,initial-future-year,0
+HI,base load generation,gas,end-year,0
+HI,intermediate generation,gas,end-year,0
+HI,subpeak generation,gas,end-year,0
+HI,peak generation,gas,end-year,0

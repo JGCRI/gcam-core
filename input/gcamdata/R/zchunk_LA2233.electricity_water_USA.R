@@ -1,4 +1,4 @@
-#' module_gcam.usa_LA2233.electricity_water_USA
+#' module_gcamusa_LA2233.electricity_water_USA
 #'
 #' Weighted water coefficient for reference scenario and load segment classification
 #'
@@ -11,7 +11,7 @@
 #' original data system was \code{LA2233.electricity_water_USA} (gcam-usa level2)
 #' @details Weighted water coefficient for reference scenario and load segment classification
 #' @author Zarrar Khan September 2018
-module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
+module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",
@@ -33,7 +33,8 @@ module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
     region<- supplysector <- subsector <-  technology <- year <- minicam.energy.input <-
       coefficient<- market.name <- Electric.sector <- Electric.sector.intermittent.technology <-
       intermittent.technology <- subsector_1 <- sector <- fuel <- Electric.sector.technology <-
-      water_sector <- water_type <- state <- state_name <- ':=' <- x <- plant_type <- NULL
+      water_sector <- water_type <- state <- state_name <- ':=' <- x <- plant_type <-
+      State <- value <- NULL
 
     # ===================================================
     # 1. Read files

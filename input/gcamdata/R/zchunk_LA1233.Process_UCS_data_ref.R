@@ -1,4 +1,4 @@
-#' module_gcam.usa_LA1233.Process_UCS_data_ref
+#' module_gcamusa_LA1233.Process_UCS_data_ref
 #'
 #' This script reads in and processes "Union of Concerned Scientists. 2012. UCS EW3 Energy-Water Database V.1.3" www.ucsusa.org/ew3database - Main Data.
 #'
@@ -15,7 +15,7 @@
 #' @importFrom tidyr gather spread
 #' @author LL March 2017, ZK Sep 2019
 
-module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
+module_gcamusa_LA1233.Process_UCS_data_ref <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/UCS_Database",
              FILE = "gcam-usa/states_subregions",
@@ -33,7 +33,7 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
       Fuel <- 'Reported Water Source (Type)' <- 'Generation Technology' <- 'Cooling Technology' <-
       state <- 'First Year of Operation' <- 'Nameplate Capacity (MW)' <- x <- y <- z <- year <-
       . <- 'cooling pond' <- 'dry cooling' <- dry_hybrid <- none <- 'once through' <- recirculating <-
-      sumy <- sumx <- NULL
+      sumy <- sumx <- '2008' <- '2020' <- NULL
 
 # ===================================================
 # Load required inputs

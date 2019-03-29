@@ -602,8 +602,8 @@ gcamusa.AEO_SE_YEAR <- 2040   # year to which AEO 2016 socioeconomic assumptions
 # The categories chosen for lifetime assumptions are such that capacity in each category is roughly same.
 # This is done to get a somewhat smooth behavior for coal retirements
 # Assume lifetime for units built after 1970
-gcamusa.AVG_COAL_PLANT_LIFETIME <- 70
-gcamusa.AVG_COAL_PLANT_HALFLIFE <- 60
+gcamusa.AVG_COAL_PLANT_LIFETIME <- 80
+gcamusa.AVG_COAL_PLANT_HALFLIFE <- 70
 
 # The max remaining lifetime of existing coal that will retire at the average lifetime of that vintage group
 # Vintage groups with longer remaining life will retire based on the S-curve.
@@ -626,6 +626,10 @@ gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
                     "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
                     "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
 
+# GCAM-USA grid regions
+gcamusa.GRID_REGIONS <- c("Alaska grid", "California grid", "Central East grid", "Central Northeast grid",  "Central Northwest grid",
+                    "Central Southwest grid", "Florida grid", "Hawaii grid", "Mid-Atlantic grid", "New England grid",
+                    "New York grid", "Northwest grid", "Southeast grid", "Southwest grid", "Texas grid")
 
 # GCAM-USA default constants
 gcamusa.DEFAULT_COEFFICIENT <- 1

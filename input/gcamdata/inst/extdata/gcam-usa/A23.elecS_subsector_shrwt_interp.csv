@@ -1,9 +1,5 @@
-# File: A23.elecS_subsector_shrwt_interp.csv,,,,,,
-# Title: Multiple Load Segments Subsector Shareweights,,,,,,
-# Units: unitless,,,,,,
-# Comments: Subsector shareweights for subsectors that are fixed at calibration values,,,,,,
+# File: A23.elecS_subsector_shrwt_interp.csv
+# Title: Multiple Load Segments Subsector Shareweights
+# Units: unitless
+# Comments: Subsector shareweights for subsectors that are fixed at calibration values
 region,supplysector,subsector,apply.to,from.year,to.year,interpolation.function
-USA,base load generation,refined liquids,share-weight,final-calibration-year,end-year,fixed
-USA,intermediate generation,refined liquids,share-weight,final-calibration-year,end-year,fixed
-USA,subpeak generation,refined liquids,share-weight,final-calibration-year,end-year,fixed
-USA,peak generation,refined liquids,share-weight,final-calibration-year,end-year,fixed

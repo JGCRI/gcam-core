@@ -116,7 +116,8 @@ module_gcamusa_L2244.nuclear_USA <- function(command, ...) {
       filter(!grepl("Gen III", Electric.sector.technology)) %>%
       repeat_add_columns(tibble(region = unique(L2244.nuc_gen2_gen$region))) %>%
       left_join_error_no_match(L2244.nuc_gen2_s_curve_parameters, by = "region") %>%
-      # OR State has zero generation in the last historical period, thus no lifetime data
+      # Oregon (OR) has zero generation in the last historical period, thus no lifetime data
+      # left_join_error_no_match throws error due to NA for Oregon, so left_join is used instead
       left_join(L2244.nuc_gen2_lifetime, by = "region") %>%
       filter(!is.na(lifetime)) %>%
       mutate(year = max(MODEL_BASE_YEARS)) %>%

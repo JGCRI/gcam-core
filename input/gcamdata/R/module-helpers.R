@@ -227,6 +227,37 @@ write_to_all_states <- function(data, names) {
 }
 
 
+#' write_to_all_grid_regions
+#'
+#' write out data to all GCAM-USA grid regions
+#'
+#' @param data Base tibble to start from
+#' @param names Character vector indicating the column names of the returned tibble
+#' @note Used for GCAM-USA when repeating information for each USA electricity grid region
+#' @return Tibble with data written out to all USA grid regions
+write_to_all_grid_regions <- function(data, names) {
+
+  assert_that(is_tibble(data))
+  assert_that(is.character(names))
+
+  region <- NULL  # silence package check notes
+
+  if("logit.year.fillout" %in% names) {
+    data$logit.year.fillout <- "start-year"
+  }
+
+  if("price.exp.year.fillout" %in% names) {
+    data$price.exp.year.fillout <- "start-year"
+  }
+
+  data %>%
+    set_years %>%
+    mutate(region = NULL) %>% # remove region column if it exists
+    repeat_add_columns(tibble(region = gcamusa.GRID_REGIONS)) %>%
+    select(names)
+}
+
+
 #' set_subsector_shrwt
 #'
 #' Calculate subsector shareweights in calibration periods, where subsectors may have multiple technologies
