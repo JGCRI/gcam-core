@@ -1,4 +1,4 @@
-#' module_gcam.usa_LB1233.Elec_water_Update
+#' module_gcamusa_LB1233.Elec_water_Update
 #'
 #' Compute water withdrawals/consumption coefficients by state, fuel, technology, and cooling system type.
 #'
@@ -14,7 +14,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author Zarrar Khan September 2018
-module_gcam.usa_LB1233.Elec_water_Update <- function(command, ...) {
+module_gcamusa_LB1233.Elec_water_Update <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/elec_tech_water_map",
@@ -32,7 +32,7 @@ module_gcam.usa_LB1233.Elec_water_Update <- function(command, ...) {
 
     state <- fuel <- plant_type <- technology <- water_withdrawals <- subsector <-
       water_consumption <- ':=' <- year <- x <- water_type <- State <- NEMS <-
-      cooling_system <- withdraw <- cons <- consSum <- withdrawSum <- NULL
+      cooling_system <- withdraw <- cons <- consSum <- withdrawSum <- value <- NULL
 
     # ===================================================
     # Load required inputs

@@ -1,7 +1,7 @@
-# File: A23.elecS_tech_availability.csv,,,
-# Title: Unavailable Load Segment / Technology Combinations,,,
-# Units: NA,,,
-# Comments: Specify which load segment / technology combinations will not be created,,,
+# File: A23.elecS_tech_availability.csv
+# Title: Unavailable Load Segment / Technology Combinations
+# Units: NA
+# Comments: Specify which load segment / technology combinations will not be created
 region,supplysector,subsector,stub.technology
 USA,subpeak generation,biomass,biomass_subpeak_conv
 USA,subpeak generation,biomass,biomass_subpeak_conv_CCS
@@ -26,14 +26,6 @@ USA,peak generation,nuclear,nuc_peak_Gen II
 USA,intermediate generation,nuclear,nuc_int_Gen III
 USA,subpeak generation,nuclear,nuc_subpeak_Gen III
 USA,peak generation,nuclear,nuc_peak_Gen III
-USA,base load generation,refined liquids,refined liquids_base_CC
-USA,intermediate generation,refined liquids,refined liquids_int_CC
-USA,subpeak generation,refined liquids,refined liquids_subpeak_CC
-USA,peak generation,refined liquids,refined liquids_peak_CC
-USA,base load generation,refined liquids,refined liquids_base_CC_CCS
-USA,intermediate generation,refined liquids,refined liquids_int_CC_CCS
-USA,subpeak generation,refined liquids,refined liquids_subpeak_CC_CCS
-USA,peak generation,refined liquids,refined liquids_peak_CC_CCS
 USA,intermediate generation,solar,PV_int_storage
 USA,subpeak generation,solar,PV_subpeak_storage
 USA,peak generation,solar,PV_peak_storage
