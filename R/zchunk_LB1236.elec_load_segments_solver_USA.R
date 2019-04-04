@@ -44,7 +44,8 @@ module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
       subpeak.electricity.x <- subpeak.electricity.x.x <- subpeak.electricity.y <- subpeak.electricity.y.y <-
       vertical_segment_demand.x <- vertical_segment_demand.x.x <- vertical_segment_demand.y <- vertical_segment_demand.y.y <-
       peak.electricity.x <- peak.electricity.x.x <- peak.electricity.y <- peak.electricity.y.y <-
-      segment.x <- segment.x.x <- segment.y <- segment.y.y <- . <- uniroot <- NULL # silence package check notes
+      segment.x <- segment.x.x <- segment.y <- segment.y.y <- . <- uniroot <- fraction.y <- non_segment_frac <-
+      non_int_frac <- NULL # silence package check notes
 
     # Load required inputs
     elecS_horizontal_to_vertical_map <- get_data(all_data, "gcam-usa/elecS_horizontal_to_vertical_map")
