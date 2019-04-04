@@ -695,6 +695,13 @@ gcamusa.EFFICIENCY_PARTITION_YEAR <- 2010
 gcamusa.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA transport for compatability with model
 gcamusa.DIGITS_EMISSIONS          <- 5
 
+# Electricity load segments
+gcamusa.LOAD_SEG_CAL_YEARS <- c(2010, 2005, 1990)       # Years for which electricity load segments are calibrated
+gcamusa.ELEC_SEGMENT_BASE <- "base load generation"
+gcamusa.ELEC_SEGMENT_INT <- "intermediate generation"
+gcamusa.ELEC_SEGMENT_SUBPEAK <- "subpeak generation"
+gcamusa.ELEC_SEGMENT_PEAK <- "peak generation"
+
 
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions

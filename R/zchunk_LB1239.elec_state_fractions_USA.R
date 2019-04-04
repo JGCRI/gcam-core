@@ -19,7 +19,7 @@ module_gcam.usa_LB1239.elec_state_fractions_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              "L123.out_EJ_state_elec_F",
-             "L1238.grid_elec_supply_USA"))
+             "L1236.grid_elec_supply_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1239.state_elec_supply_USA"))
   } else if(command == driver.MAKE) {
@@ -33,31 +33,32 @@ module_gcam.usa_LB1239.elec_state_fractions_USA <- function(command, ...) {
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     L123.out_EJ_state_elec_F <- get_data(all_data, "L123.out_EJ_state_elec_F")
-    L1238.grid_elec_supply_USA <- get_data(all_data, "L1238.grid_elec_supply_USA")
+    L1236.grid_elec_supply_USA <- get_data(all_data, "L1236.grid_elec_supply_USA")
 
     # ===================================================
     # Data Processing
 
-    # Initialize varables
-    L1239.grid_elec_supply <- L1238.grid_elec_supply_USA
-
-    #Initialize state electricity table
+    # Create table of electricity generation by load segment | fuel | state
+    # L123.out_EJ_state_elec_F contains electricity generation by fuel & state
     L123.out_EJ_state_elec_F %>%
-      filter(year %in% MODEL_BASE_YEARS) %>%
-      mutate(fuel = sub("solar CSP", "solar", fuel)) %>%
-      mutate(fuel = sub("solar PV", "solar", fuel)) %>%
+      # The PV / CSP distinction does not matter for allocating electricity
+      # generation by fuel across load segments, so assign both to "solar"
+      mutate(fuel = sub("solar CSP", "solar", fuel),
+             fuel = sub("solar PV", "solar", fuel)) %>%
       group_by(state, sector, fuel, year) %>%
       summarise(tot_generation = sum(value)) %>%
-      ungroup() -> L1239.out_EJ_state_elec_F
-
-    L1239.out_EJ_state_elec_F %>%
+      ungroup() %>%
+      # filter out years which are not present in the electricity load segments calibration data table
+      semi_join(L1236.grid_elec_supply_USA, by = c("year")) %>%
       left_join_error_no_match(states_subregions %>%
                   select(state, grid_region),
                 by = "state") %>%
-      # L1239.grid_elec_supply join is intended to duplicate rows
-      # left_join_error_no_match throws error, so left_join is used
-      left_join(L1239.grid_elec_supply %>%
-                  select(-tot_generation, -generation),
+      # map fuel shares by horizontal load segment and grid to the states
+      # joining L1236.grid_elec_supply_USA is intended to duplicate rows,
+      # creating four rows for every state | fuel | year (one row per load segment)
+      # left_join_error_no_match throws error when number of rows changes, so left_join is used
+      left_join(L1236.grid_elec_supply_USA %>%
+                  select(grid_region, segment, fuel, year, fraction),
                 by = c("grid_region", "fuel", "year")) %>%
       mutate(generation = tot_generation * fraction) %>%
       select(state, grid_region, segment, fuel, year, tot_generation, fraction, generation) -> L1239.state_elec_supply
@@ -69,11 +70,12 @@ module_gcam.usa_LB1239.elec_state_fractions_USA <- function(command, ...) {
     L1239.state_elec_supply %>%
       add_title("Electricity supply by fuel by horizontal load segment in each state.") %>%
       add_units("EJ; unitless (fraction)") %>%
-      add_comments("Based on calculated fraction of fuel in the horizontal load segments by grid region.") %>%
+      add_comments("Electricity generation by fuel & state (from L123.out_EJ_state_elec_F) allocated across horizontal load segments.") %>%
+      add_comments("This allocation is based on the fraction of fuel in the horizontal load segments by grid region (from L1236.grid_elec_supply_USA).") %>%
       add_legacy_name("L1239.state_elec_supply") %>%
       add_precursors("gcam-usa/states_subregions",
                      "L123.out_EJ_state_elec_F",
-                     "L1238.grid_elec_supply_USA") ->
+                     "L1236.grid_elec_supply_USA") ->
       L1239.state_elec_supply_USA
 
     return_data(L1239.state_elec_supply_USA)
