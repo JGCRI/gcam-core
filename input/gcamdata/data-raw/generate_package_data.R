@@ -239,7 +239,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["AgProduction"]] <- c(level2_data_names[["AgTechYr"]], "calOutputValue", "share.weight.year", "subs.share.weight", "tech.share.weight")
   level2_data_names[["AgHAtoCL"]] <- c(level2_data_names[["AgTechYr"]], "harvests.per.year")
   level2_data_names[["AgYield"]] <- c(level2_data_names[["AgTechYr"]], "yield")
-  level2_data_names[["AgCoef"]] <- c(level2_data_names[["AgTechYr"]], "minicam.energy.input", "coefficient", "market.name")
+  level2_data_names[["AgNonEnergyCost"]] <- c(level2_data_names[["AgTechYr"]], "minicam.non.energy.input", "input.cost")
   level2_data_names[["AgProdChange"]] <- c(level2_data_names[["AgTechYr"]], "AgProdChange")
   level2_data_names[["AgCost"]] <- c(level2_data_names[["AgTechYr"]], "nonLandVariableCost")
   level2_data_names[["AgCoef"]] <- c(level2_data_names[["AgTechYr"]], "minicam.energy.input", "coefficient")

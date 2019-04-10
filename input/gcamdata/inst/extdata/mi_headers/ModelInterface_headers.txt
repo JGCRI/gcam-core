@@ -478,6 +478,8 @@ AgYield, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{nam
 
 AgCoef, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world, period/{name=CO2}CO2
 
+AgNonEnergyCost, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}minicam-non-energy-input, minicam-non-energy-input/+input-cost, scenario, scenario/world
+
 AgResBio, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}residue-biomass-production, residue-biomass-production/+mass-conversion, residue-biomass-production/+harvest-index, residue-biomass-production/+eros-ctrl, residue-biomass-production/+mass-to-energy, residue-biomass-production/+water-content, scenario, scenario/world
 
 AgResBioCurve, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}residue-biomass-production, residue-biomass-production/+{price}fract-harvested, residue-biomass-production/+fract-harvested, scenario, scenario/world
