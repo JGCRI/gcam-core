@@ -67,12 +67,12 @@ module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
 
     # Summarize generation by year / grid region / fuel; remove distinction between solar PV & CSP
     L1234.out_EJ_grid_elec_F %>%
+      filter(year %in% gcamusa.LOAD_SEG_CAL_YEARS) %>%
       mutate(fuel = sub("solar CSP", "solar", fuel),
              fuel = sub("solar PV", "solar", fuel)) %>%
       group_by(grid_region, sector, year, fuel) %>%
       summarise(tot_generation = sum(generation)) %>%
-      ungroup() %>%
-      filter(year %in% gcamusa.LOAD_SEG_CAL_YEARS) -> L1236.out_EJ_grid_elec_F
+      ungroup() -> L1236.out_EJ_grid_elec_F
 
     # Join in total generation data by year / grid region / fuel from L1236.out_EJ_grid_elec_F
     L1236.grid_elec_supply %>%
@@ -88,6 +88,7 @@ module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
     # Summarize generation by year / grid region / fuel;
     # Filter for years for which electricity load segments will not be calibrated
     L1235.grid_elec_supply_USA %>%
+      filter(!(year %in% gcamusa.LOAD_SEG_CAL_YEARS)) %>%
       left_join_error_no_match(L1234.out_EJ_grid_elec_F %>%
                                  mutate(fuel = sub("solar CSP", "solar", fuel),
                                         fuel = sub("solar PV", "solar", fuel)) %>%
@@ -95,8 +96,7 @@ module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
                                  summarise(tot_generation = sum(generation)) %>%
                                  ungroup(),
                                by = c("grid_region", "year", "fuel")) %>%
-      select(grid_region, segment, fuel, year, tot_generation, fraction, generation ) %>%
-      filter(!(year %in% gcamusa.LOAD_SEG_CAL_YEARS)) -> L1236.grid_elec_supply_non_cal
+      select(grid_region, segment, fuel, year, tot_generation, fraction, generation ) -> L1236.grid_elec_supply_non_cal
 
     # List of horizontal and vertical electricity segments
     L1236.segment_list <- unique(elecS_horizontal_to_vertical_map$horizontal_segment)
@@ -187,74 +187,113 @@ module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
         select(grid_region, segment, year, generation.x, vertical_segment_demand) %>%
         rename(generation = generation.x) -> L1236.grid_check
 
-      # Prepare tables for checking that supplies and demnds balance for each load segment
-      L1236.grid_check %>%
-        filter(segment == gcamusa.ELEC_SEGMENT_BASE ) -> L1236.grid_check_base
+      # Prepare tables to check that supplies and demands balance for each load segment.  For each horizontal (supply-side) load segment:
+      # (1) Filter for the relevant load segment.
+      # (2) Join L1236.elecS_horizontal_vertical.  This table outlines how generation in the horizontal (supply-side) load segments -
+      # base load generation, intermeidate generation, subpeak generation, peak generation - are shared across the four vertical
+      # (demand-side) load segments - off.peak.electricity, intermediate.electricity, subpeak.electricity, peak.electricity.
+      # (3) Calculate the size of generation in the horizontal load segment across all of the relevant vertical segments.
+      # For example, base load generation provides all of off.peak.electricity demand plus a portion of intermediate.electricity,
+      # subpeak.electricity, and peak.electricity demands.  Intermediate generation serves the remaining portion of
+      # intermediate.electricity as well as some subpeak.electricity and peak.electricity demands.  Peak generation serves only the
+      # portion of peak.electricity demands not met by generation from the other horizontal load segments.
 
       L1236.grid_check %>%
-        filter(segment == gcamusa.ELEC_SEGMENT_INT ) -> L1236.grid_check_int
-
-      L1236.grid_check %>%
-        filter(segment == gcamusa.ELEC_SEGMENT_SUBPEAK ) -> L1236.grid_check_subpeak
-
-      L1236.grid_check %>%
-        filter(segment == gcamusa.ELEC_SEGMENT_PEAK ) -> L1236.grid_check_peak
-
-      L1236.grid_check_base %>%
+        filter(segment == gcamusa.ELEC_SEGMENT_BASE ) %>%
         left_join_error_no_match(L1236.elecS_horizontal_vertical,
                                  by = c("grid_region", "segment" = "horizontal_segment")) %>%
+        # Calculate total demand for base load generation. This is equal to the demand for off.peak.electricity divided by the
+        # share of base load generation that serves off.peak.electricity (to account for the fact that base load generation
+        # also serves a portion of intermediate.electricity, subpeak.electricity, and peak.electricity demands).
         mutate(horizontal_segment_demand = vertical_segment_demand / off.peak.electricity,
+               # The below three calculations are not relevant for base load generation but will be used in calculations
+               # for the other three horizontal load segments below.
+               # Calculate amount of base load generation that serves the vertical intermediate.electricity segment
                base_intermediate = horizontal_segment_demand * intermediate.electricity,
+               # Calculate amount of base load generation that serves the vertical subpeak.electricity segment
                base_subpeak = horizontal_segment_demand * subpeak.electricity,
+               # Calculate amount of base load generation that serves the vertical peak.electricity segment
                base_peak = horizontal_segment_demand * peak.electricity) -> L1236.grid_check_base
 
-      L1236.grid_check_int %>%
+      L1236.grid_check %>%
+        filter(segment == gcamusa.ELEC_SEGMENT_INT ) %>%
         left_join_error_no_match(L1236.elecS_horizontal_vertical,
                                  by = c("grid_region", "segment" = "horizontal_segment")) %>%
-        left_join_error_no_match(L1236.grid_check_base,
+        left_join_error_no_match(L1236.grid_check_base %>%
+                                   select(grid_region, year, base_intermediate),
                                  by = c("grid_region", "year")) %>%
-        mutate(horizontal_segment_demand = (vertical_segment_demand.x - base_intermediate) /
-                 intermediate.electricity.x ,
-               int_subpeak = horizontal_segment_demand * subpeak.electricity.x,
-               int_peak = horizontal_segment_demand * peak.electricity.x) -> L1236.grid_check_int
+        # Calculate total demand for intermediate generation (horizontal segment).  This is equal to the demand
+        # for intermediate.electricity (vertical segment) minus the amount of intermediate.electricity served by
+        # base load generation, divided by the share of intermediate generation that serves intermediate.electricity
+        # (to account for the fact that intermediate generation also serves a portion of subpeak.electricity and peak.electricity demands).
+        mutate(horizontal_segment_demand = (vertical_segment_demand - base_intermediate) /
+                 intermediate.electricity ,
+               # Calculate amount of intermediate generation that serves the vertical subpeak.electricity segment
+               int_subpeak = horizontal_segment_demand * subpeak.electricity,
+               # Calculate amount of intermediate generation that serves the vertical peak.electricity segment
+               int_peak = horizontal_segment_demand * peak.electricity) -> L1236.grid_check_int
 
-      L1236.grid_check_subpeak %>%
+      L1236.grid_check %>%
+        filter(segment == gcamusa.ELEC_SEGMENT_SUBPEAK ) %>%
         left_join_error_no_match(L1236.elecS_horizontal_vertical,
                                  by = c("grid_region", "segment" = "horizontal_segment")) %>%
-        left_join_error_no_match(L1236.grid_check_int,
+        left_join_error_no_match(L1236.grid_check_base %>%
+                                   select(grid_region, year, base_subpeak),
                                  by = c("grid_region", "year")) %>%
+        left_join_error_no_match(L1236.grid_check_int %>%
+                                   select(grid_region, year, int_subpeak),
+                                 by = c("grid_region", "year")) %>%
+        # Calculate total demand for subpeak generation (horizontal segment).  This is equal to the demand
+        # for subpeak.electricity (vertical segment) minus the amount of  subpeak.electricity served by
+        # base load generation and intermediate generation, divided by the share of subpeak generation that serves subpeak.electricity
+        # (to account for the fact that subpeak generation also serves a portion of peak.electricity demands).
         mutate(horizontal_segment_demand = (vertical_segment_demand - base_subpeak - int_subpeak) /
                  subpeak.electricity,
+               # Calculate amount of subpeak generation that serves the vertical peak.electricity segment
                subpeak_peak = horizontal_segment_demand * peak.electricity) -> L1236.grid_check_subpeak
 
-      L1236.grid_check_peak %>%
+      L1236.grid_check %>%
+        filter(segment == gcamusa.ELEC_SEGMENT_PEAK ) %>%
         left_join_error_no_match(L1236.elecS_horizontal_vertical,
                                  by = c("grid_region", "segment" = "horizontal_segment")) %>%
-        left_join_error_no_match(L1236.grid_check_subpeak,
+        left_join_error_no_match(L1236.grid_check_base %>%
+                                   select(grid_region, year, base_peak),
                                  by = c("grid_region", "year")) %>%
-        mutate(horizontal_segment_demand = (vertical_segment_demand.x.x - base_peak - int_peak - subpeak_peak) /
-                 peak.electricity.x.x) ->  L1236.grid_check_peak
+        left_join_error_no_match(L1236.grid_check_int %>%
+                                   select(grid_region, year, int_peak),
+                                 by = c("grid_region", "year")) %>%
+        left_join_error_no_match(L1236.grid_check_subpeak %>%
+                                   select(grid_region, year, subpeak_peak),
+                                 by = c("grid_region", "year")) %>%
+        # Calculate total demand for peak generation (horizontal segment).  This is equal to the demand
+        # for peak.electricity (vertical segment) minus the amount of peak.electricity served by
+        # base load generation, intermediate generation, and subpeak generation.
+        mutate(horizontal_segment_demand = (vertical_segment_demand - base_peak - int_peak - subpeak_peak) /
+                 peak.electricity) ->  L1236.grid_check_peak
 
+      # Filter for the information needed going forward.  We needed to carry some additional information
+      # previously to build each of the tables below.
       L1236.grid_check_base %>%
         select(grid_region, segment, year, generation,
                vertical_segment_demand, horizontal_segment_demand) -> L1236.grid_check_base
 
       L1236.grid_check_int %>%
-        select(grid_region, segment = segment.x, year, generation = generation.x,
-               vertical_segment_demand = vertical_segment_demand.x, horizontal_segment_demand) -> L1236.grid_check_int
+        select(grid_region, segment, year, generation,
+               vertical_segment_demand, horizontal_segment_demand) -> L1236.grid_check_int
 
       L1236.grid_check_subpeak %>%
         select(grid_region, segment, year, generation,
                vertical_segment_demand, horizontal_segment_demand) -> L1236.grid_check_subpeak
 
       L1236.grid_check_peak %>%
-        select(grid_region, segment = segment.x.x, year, generation = generation.x.x,
-               vertical_segment_demand = vertical_segment_demand.x.x, horizontal_segment_demand) -> L1236.grid_check_peak
+        select(grid_region, segment, year, generation,
+               vertical_segment_demand, horizontal_segment_demand) -> L1236.grid_check_peak
 
       L1236.grid_check_base %>%
         bind_rows(L1236.grid_check_int, L1236.grid_check_subpeak, L1236.grid_check_peak) -> L1236.grid_check
 
-      # Check that supply meets demand for each load segment
+      # Check that supply meets demand for each load segment, i.e. that generation from a given horizontal
+      # electricity load segment matches demand for this generation across the four vertical load segments
       L1236.grid_check %>%
         mutate(check = horizontal_segment_demand - generation,
                pct_check = check / generation) -> L1236.grid_check
@@ -720,61 +759,21 @@ module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
           L1236.grid_elec_supply %>%
             replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
 
-        } else if (segment_year == 2010)  {
+        } else if (segment_year %in% c(2010, 2005)) {
           # In regions with high levels of coal such as Central Northeast, Central East, Central Northwest and Sothwest grids,
-          # allocate some wind into intermediate, and subpeak segments.
+          # allocate some wind into intermediate, and subpeak segments,and (for 2005) assign some refined liquids into the subpeak.
           # Note that we also read in different load curves for these regions with lower peak demand.
           L1236.grid_elec_supply %>%
             replace_fraction("wind", gcamusa.ELEC_SEGMENT_BASE, 0.6) %>%
             replace_fraction("wind", gcamusa.ELEC_SEGMENT_INT, 0.25) %>%
             replace_fraction("wind", gcamusa.ELEC_SEGMENT_SUBPEAK, 0.15) -> L1236.grid_elec_supply
 
-          # Solve for coal in baseload and assign the remaining to intermediate
-          L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_BASE, "coal")
-
-          L1236.grid_elec_supply %>%
-            replace_fraction("coal", gcamusa.ELEC_SEGMENT_BASE, L1236.solved_fraction$root) -> L1236.grid_elec_supply
-
-          L1236.grid_elec_supply %>%
-            calc_non_segment_frac("coal", gcamusa.ELEC_SEGMENT_INT) -> L1236.non_int
-
-          L1236.grid_elec_supply %>%
-            replace_fraction("coal", gcamusa.ELEC_SEGMENT_INT, 1 - L1236.non_int) -> L1236.grid_elec_supply
-
-          # Solve for gas fractions in intermediate, subpeak and peak
-          L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_INT, "gas")
-
-          L1236.grid_elec_supply %>%
-            replace_fraction("gas", gcamusa.ELEC_SEGMENT_INT, L1236.solved_fraction$root) -> L1236.grid_elec_supply
-
-          L1236.grid_elec_supply %>%
-            calc_non_segment_frac("gas", gcamusa.ELEC_SEGMENT_PEAK) -> L1236.non_peak
-
-          L1236.grid_elec_supply %>%
-            replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
-
-          L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_SUBPEAK, "gas")
-
-          L1236.grid_elec_supply %>%
-            replace_fraction("gas", gcamusa.ELEC_SEGMENT_SUBPEAK, L1236.solved_fraction$root) -> L1236.grid_elec_supply
-
-          L1236.grid_elec_supply %>%
-            calc_non_segment_frac("gas", gcamusa.ELEC_SEGMENT_PEAK) -> L1236.non_peak
-
-          L1236.grid_elec_supply %>%
-            replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
-
-        } else if (segment_year == 2005)  {
-          # In regions with high levels of coal such as Central Northeast, Central East, Central Northwest and Sothwest grids,
-          # allocate some wind into intermediate, and subpeak segments,and assign some refined liquids into the subpeak.
-          # Note that we also read in different load curves for these regions with lower peak demand.
-                    L1236.grid_elec_supply %>%
-            replace_fraction("wind", gcamusa.ELEC_SEGMENT_BASE, 0.6) %>%
-            replace_fraction("wind", gcamusa.ELEC_SEGMENT_INT, 0.25) %>%
-            replace_fraction("wind", gcamusa.ELEC_SEGMENT_SUBPEAK, 0.15) %>%
+          if (segment_year == 2005) {
             # Assigning all refined liquids into subpeak
-            replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_SUBPEAK, 1) %>%
-            replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_PEAK, 0) -> L1236.grid_elec_supply
+            L1236.grid_elec_supply  %>%
+              replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_SUBPEAK, 1) %>%
+              replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_PEAK, 0) -> L1236.grid_elec_supply
+          }
 
           # Solve for coal in baseload and assign the remaining to intermediate
           L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_BASE, "coal")
