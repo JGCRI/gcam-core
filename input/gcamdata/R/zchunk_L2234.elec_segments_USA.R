@@ -807,15 +807,14 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
                              L2234.StubTechEff_elecS_USA = L2234.StubTechEff_elecS_USA,
                              L2234.StubTechProd_elecS_USA = L2234.StubTechProd_elecS_USA)
 
-    process_geo_tables <- function( data, names ){
-      data_new <- data %>%
+    process_geo_tables <- function(data){
+      data %>%
         # join will produce NAs because only states with no geothermal resource are present in geo_states_noresource
         # left_join_error_no_match throws error, so left_join used
         left_join(geo_states_noresource, by = "region") %>%
         mutate(geothermal_resource = paste(geothermal_resource, subsector, sep = "-")) %>%
         filter(geothermal_resource != "none-geothermal") %>%
         select(-geothermal_resource)
-      return( data_new)
     }
 
     L2234.geo.tables_rev <- lapply(L2234.geo.tables, process_geo_tables)
