@@ -82,7 +82,7 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
 
   # Create data frame for complete set of technologies for each state and join NEMS region
   elec_tech_water_map %>%
-   select(plant_type, cooling_system, water_type, fuel, technology)%>%
+   select(plant_type, cooling_system, water_type, fuel, technology) %>%
    distinct %>%
    repeat_add_columns(tibble(state = unique(states_subregions$state))) %>%
    left_join_error_no_match(states_subregions %>%
@@ -102,7 +102,7 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
 
   cooling_share <- NULL; # initiate cooling share data frame
 
-  for(year_i in 1970:2008){
+  for(year_i in gcamusa.UCS_WATER_COEFFICIENTS_FIRST_HISTORICAL_YEAR:gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR){
 
   UCS_Database_Edited %>%
    filter(`First Year of Operation` <= year_i) %>%
@@ -148,7 +148,7 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
    distinct %>%
    as_tibble() %>%
    left_join_error_no_match(states_subregions %>%
-                              select(State=state, NEMS),
+                              select(State = state, NEMS),
                             by = "State") ->
    cooling_share
 
@@ -219,12 +219,11 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
    capacity_tech_future_state
 
   capacity_tech_future %>%
-   as.data.frame %>%
-   mutate(Cap_MW = Cap_MW/left_join_error_no_match((capacity_tech_future %>%
-                                                      ungroup() %>%
-                                                      select(State, Fuel, plant_type)),
-                                                   capacity_tech_future_state,
-                                                   by = c("State", "Fuel", "plant_type"))$Cap_MW) ->
+    left_join_error_no_match(capacity_tech_future_state %>%
+                               rename (Cap_MW_Total = Cap_MW),
+                             by = c("State", "Fuel", "plant_type")) %>%
+   mutate(Cap_MW = Cap_MW/Cap_MW_Total) %>%
+   select(-Cap_MW_Total)->
    cooling_share_future_state
 
   # --------------------------------
@@ -232,10 +231,10 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
   # If cooling share availble by State, use that else
   # assume the cooling share for US total
 
-  full_join(cooling_share_future_state,
-            cooling_share_future_US %>%
-              rename(Cap_MW_US = Cap_MW),
-            by = c("Cooling Technology", "Reported Water Source (Type)", "Fuel")) ->
+  cooling_share_future_state %>%
+    full_join(cooling_share_future_US %>%
+                rename(Cap_MW_US = Cap_MW),
+              by = c("Cooling Technology", "Reported Water Source (Type)", "Fuel")) ->
    cooling_share_future
 
   complete_tech %>%
@@ -252,71 +251,91 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
     select(-Cap_MW, -Cap_MW_US, Cap_MW = Cap_MW_Final) %>%
     mutate(`Cooling Technology` = case_when(plant_type == "no cooling" ~ "none", TRUE ~ `Cooling Technology`),
            `Reported Water Source (Type)` = case_when(plant_type == "no cooling" ~ "fresh", TRUE ~ `Reported Water Source (Type)`),
-           year=2008) ->
-   cooling_share_future_complete_tech_2008
+           year = gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR) ->
+   cooling_share_future_complete_tech_FINAL_HISTORICAL_YEAR
 
-  # repeat and add years 2010, 2020 and 2100
-  cooling_share_future_complete_tech_2008 %>%
-    bind_rows(cooling_share_future_complete_tech_2008 %>% mutate(year=2010)) %>%
-    bind_rows(cooling_share_future_complete_tech_2008 %>% mutate(year=2020)) %>%
-    bind_rows(cooling_share_future_complete_tech_2008 %>% mutate(year=2100)) ->
+  # repeat and add years final claibration year, first future year, final future year (from constants.R)
+  cooling_share_future_complete_tech_FINAL_HISTORICAL_YEAR %>%
+    bind_rows(cooling_share_future_complete_tech_FINAL_HISTORICAL_YEAR %>% mutate(year = gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR)) %>%
+    bind_rows(cooling_share_future_complete_tech_FINAL_HISTORICAL_YEAR %>% mutate(year = gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR)) %>%
+    bind_rows(cooling_share_future_complete_tech_FINAL_HISTORICAL_YEAR %>% mutate(year = gcamusa.UCS_WATER_COEFFICIENTS_FINAL_FUTURE_YEAR)) ->
     cooling_share_future_complete_tech
 
   # Combine into one Cooling Share Data Frame
   # All 'no cooling' has cooling_type none and is assigned 1
   # As per original script all historical Gen_III is made 0
-  bind_rows(cooling_share_historical %>%
-              filter(year!=2008),
-            cooling_share_future_complete_tech) %>%
+  cooling_share_historical %>%
+    filter(year != gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR) %>%
+    bind_rows(cooling_share_future_complete_tech) %>%
     distinct %>%
     mutate(Cap_MW = case_when(plant_type == "no cooling" ~ 1,
-                              (technology == "Gen_III" & year<2010) ~ 0,
+                              (technology == "Gen_III" & year < gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR) ~ 0,
                               TRUE ~ Cap_MW)) ->
   complete_tech_cooling_share
 
   # ----------------------------------------
   # Assumptions for Unassigned Cooling technologies in the Future
-  # If sum of cooling technologies across water_types is less than 0, then assign all remaining shares to recirculating
-  # In 2020 freshwater recirculating = 0.85, dry cooling = 0.05, cooling pond = 0.05, Once through seawater = 0.05
-  # In 2020 nuclear freshwater recirculating = 0.09, cooling pond = 0.05, once through seawater = 0.05
-  # Assign 2010 to 2008 values
-  # Assign 2100 to 2020 values
+  # If sum of cooling technologies across water_types is less than 1, then assign all remaining shares to recirculating
+  # Following assumptions as per original code and defined in constants.R
+  # In future years including and after gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR:
+  # freshwater recirculating = gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_RECIRCULATING
+  # dry cooling = gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_DRY_COOLING
+  # cooling pond = gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_COOLING_POND
+  # Once through seawater = gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_ONCE_THROUGH_SEAWATER
+  # nuclear freshwater is not assigned any dry cooling with the remainder assigned to recirculating.
+  # Assign gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR to gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR values ()
+  # Assign gcamusa.UCS_WATER_COEFFICIENTS_FINAL_FUTURE_YEAR to gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR values ()
   # In this script have ensured that sum of cooling techs across seawater and freshwater do no exceed 1
 
-  # CSP storage and regular after 2020 has recirculating assigned to 1.
+  # CSP storage and regular after year gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR has recirculating assigned to 1.
   # In original script all fresh water geothermal recirculating is assigned 1
   # In original script both dry-hybrid and recirculaitng were assigned 1 which didn't make sense.
 
+  # Group and get summed capacity by technology
+  complete_tech_cooling_share %>%
+    group_by(plant_type, Fuel, technology, State, NEMS, year) %>%
+    summarise(sum_byTech_Cap_MW = sum(Cap_MW, na.rm = TRUE)) %>%
+    ungroup()->
+    complete_tech_cooling_share_groupByTech
 
-  left_join_error_no_match(complete_tech_cooling_share %>%
-                             spread(key = `Cooling Technology`, value = Cap_MW),
-                           complete_tech_cooling_share %>%
-                             group_by(plant_type, Fuel, technology, State, NEMS, year) %>%
-                             summarise(sum_byTech_Cap_MW = sum(Cap_MW, na.rm = TRUE)) %>%
-                             ungroup(),
+  # Join with complete list of technologies and adjust values based on assumptions listed above
+  complete_tech_cooling_share %>%
+    spread(key = `Cooling Technology`, value = Cap_MW) %>%
+    left_join_error_no_match(complete_tech_cooling_share_groupByTech,
                            by = c("plant_type", "Fuel", "technology", "State", "NEMS", "year")) %>%
     mutate(sum_Cap_MW = rowSums(select(., `cooling pond`, `dry cooling`, dry_hybrid, none,
                                        `once through`, recirculating), na.rm = TRUE),
-           `dry cooling` = case_when((!is.na(`dry cooling`) & sum_byTech_Cap_MW < 0.85 &
-                                        year == 2020 & (Fuel == "gas" | Fuel == "biomass" |
-                                                          Fuel == "coal" | Fuel == "refined liquids") &
-                                        `Reported Water Source (Type)` == "fresh") ~ 0.05,
+           `dry cooling` = case_when((!is.na(`dry cooling`) & sum_byTech_Cap_MW <
+                                        gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_RECIRCULATING &
+                                        year == gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR &
+                                        (Fuel == "gas" | Fuel == "biomass" |
+                                           Fuel == "coal" | Fuel == "refined liquids") &
+                                        `Reported Water Source (Type)` == "fresh") ~
+                                       gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_DRY_COOLING,
                                      TRUE ~ `dry cooling`),
-           `cooling pond` = case_when((!is.na(`cooling pond`) & sum_byTech_Cap_MW < 0.85 & year == 2020 &
+           `cooling pond` = case_when((!is.na(`cooling pond`) & sum_byTech_Cap_MW <
+                                         gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_RECIRCULATING &
+                                         year == gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR &
                                          (Fuel == "gas" | Fuel == "nuclear" | Fuel == "biomass" | Fuel == "coal" |
                                             Fuel == "refined liquids") &
-                                         `Reported Water Source (Type)` == "fresh") ~ 0.05,
+                                         `Reported Water Source (Type)` == "fresh") ~
+                                        gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_COOLING_POND,
                                       TRUE ~ `cooling pond`),
-           `once through` = case_when((!is.na(`once through`) & sum_byTech_Cap_MW < 0.85 &
-                                         year == 2020 & (Fuel == "gas" | Fuel == "nuclear" | Fuel == "biomass" |
+           `once through` = case_when((!is.na(`once through`) & sum_byTech_Cap_MW <
+                                       gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_RECIRCULATING &
+                                         year == gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR &
+                                         (Fuel == "gas" | Fuel == "nuclear" | Fuel == "biomass" |
                                                            Fuel == "coal" | Fuel == "refined liquids") &
-                                         `Reported Water Source (Type)` == "seawater") ~ 0.05, TRUE ~ `once through`),
+                                         `Reported Water Source (Type)` == "seawater") ~
+                                        gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_ONCE_THROUGH_SEAWATER,
+                                      TRUE ~ `once through`),
            sum_Cap_MW = rowSums(select(., `cooling pond`, `dry cooling`, dry_hybrid, none, `once through`, recirculating), na.rm = TRUE)) %>%
     ungroup() ->
    complete_tech_cooling_share_Edited
 
 
-  select(complete_tech_cooling_share_Edited,-sum_Cap_MW, -sum_byTech_Cap_MW)%>%
+  complete_tech_cooling_share_Edited %>%
+    select(-sum_Cap_MW, -sum_byTech_Cap_MW)%>%
     gather(key = `Cooling Technology`,
            value = Cap_MW, -Fuel, -technology, -State, -plant_type, -`Reported Water Source (Type)`, -year, -NEMS) %>%
     group_by(plant_type, Fuel, technology, State, NEMS, year) %>%
@@ -325,9 +344,10 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
     complete_tech_cooling_share_Edited_sumbyTech
 
 
-  left_join(select(complete_tech_cooling_share_Edited,-sum_byTech_Cap_MW),
-            complete_tech_cooling_share_Edited_sumbyTech,
-            by = c("plant_type", "Fuel", "technology", "State", "NEMS", "year")) %>%
+  complete_tech_cooling_share_Edited %>%
+    select(-sum_byTech_Cap_MW) %>%
+    left_join_error_no_match(complete_tech_cooling_share_Edited_sumbyTech,
+                             by = c("plant_type", "Fuel", "technology", "State", "NEMS", "year")) %>%
     mutate(recirculating = case_when(is.na(recirculating) ~ 0,
                                      TRUE ~ recirculating),
            recirculating = case_when((sum_byTech_Cap_MW != 0 & sum_byTech_Cap_MW != 1 & `Reported Water Source (Type)` == "fresh") ~
@@ -340,8 +360,9 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
     gather(key = `Cooling Technology`, value = Cap_MW, -Fuel, -technology, -State, -plant_type, -`Reported Water Source (Type)`, -year, -NEMS) %>%
     distinct() %>%
     spread(key = year, value = Cap_MW) %>%
-    mutate(`2010`=`2008`,
-           `2100`=`2020`) %>%
+    # Simple extrapolation from first future year to final future year
+    mutate(!!as.name(gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR) := !!as.name(gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR),
+           !!as.name(gcamusa.UCS_WATER_COEFFICIENTS_FINAL_FUTURE_YEAR) := !!as.name(gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR)) %>%
     rename(fuel = Fuel, water_type = `Reported Water Source (Type)`, cooling_system = `Cooling Technology`) %>%
     replace(., is.na(.), 0) %>%
     ungroup() ->
