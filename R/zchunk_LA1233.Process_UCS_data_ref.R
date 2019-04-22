@@ -276,20 +276,15 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
   # ----------------------------------------
   # Assumptions for Unassigned Cooling technologies in the Future
   # If sum of cooling technologies across water_types is less than 1, then assign all remaining shares to recirculating
-  # Following assumptions as per original code and defined in constants.R
-  # In future years including and after gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR:
-  # freshwater recirculating = gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_RECIRCULATING
-  # dry cooling = gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_DRY_COOLING
-  # cooling pond = gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_COOLING_POND
-  # Once through seawater = gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_ONCE_THROUGH_SEAWATER
-  # nuclear freshwater is not assigned any dry cooling with the remainder assigned to recirculating.
-  # Assign gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR to gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR values ()
-  # Assign gcamusa.UCS_WATER_COEFFICIENTS_FINAL_FUTURE_YEAR to gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR values ()
-  # In this script have ensured that sum of cooling techs across seawater and freshwater do no exceed 1
+  # The Following assumptions are defined in constants.R and based on:
+  # "Davies, Evan GR, Page Kyle, and James A. Edmonds. "An integrated assessment of global and regional water
+  # demands for electricity generation to 2095." Advances in Water Resources 52 (2013): 296-313."
+  # https://www.sciencedirect.com/science/article/pii/S0309170812003028?via%3Dihub
 
+  # Sum of cooling techs across seawater and freshwater do no exceed 1
   # CSP storage and regular after year gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR has recirculating assigned to 1.
   # In original script all fresh water geothermal recirculating is assigned 1
-  # In original script both dry-hybrid and recirculaitng were assigned 1 which didn't make sense.
+  # In original script both dry-hybrid and recirculaitng were assigned 1 which did not add up..
 
   # Group and get summed capacity by technology
   complete_tech_cooling_share %>%
