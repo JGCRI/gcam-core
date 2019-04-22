@@ -13,6 +13,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
+#' @importFrom tibble as_tibble tibble
 #' @author LL March 2017, ZK Sep 2019
 
 module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
@@ -81,11 +82,11 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
 
   # Create data frame for complete set of technologies for each state and join NEMS region
   elec_tech_water_map %>%
-   dplyr::select(plant_type, cooling_system, water_type, fuel, technology)%>%
+   select(plant_type, cooling_system, water_type, fuel, technology)%>%
    distinct %>%
-   repeat_add_columns(tibble::tibble(state = unique(states_subregions$state))) %>%
+   repeat_add_columns(tibble(state = unique(states_subregions$state))) %>%
    left_join_error_no_match(states_subregions %>%
-         dplyr::select(state, NEMS), by = "state") %>%
+         select(state, NEMS), by = "state") %>%
    rename(State = state) ->
   complete_tech
 
@@ -99,7 +100,7 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
   # Historical cooling shares
   # For each year calculate cumulative cooling share upto that year & modify names to GCAM syntax
 
-  cooling_share<-NULL; # initiate cooling share data frame
+  cooling_share <- NULL; # initiate cooling share data frame
 
   for(year_i in 1970:2008){
 
@@ -107,6 +108,7 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
    filter(`First Year of Operation` <= year_i) %>%
    group_by(State, Fuel, `Generation Technology`, `Cooling Technology`, `Reported Water Source (Type)`) %>%
    summarise(Cap_MW = sum(`Nameplate Capacity (MW)`)) %>%
+   ungroup() %>%
    mutate(plant_type = case_when((Fuel == "gas" & `Generation Technology` == "CC") ~ "combined cycle",
                 (Fuel == "refined liquids" & `Generation Technology` == "CC") ~ "CC",
                 (Fuel == "solar" & `Generation Technology` == "SU") ~ "CSP",
@@ -127,13 +129,13 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
    ungroup() ->
   capacity_tech_state
 
+
   capacity_tech %>%
-   as.data.frame %>%
-   mutate(Cap_MW = Cap_MW/left_join_error_no_match((capacity_tech %>%
-                                        dplyr::select(State, plant_type, Fuel)),
-                                     capacity_tech_state,
-                                     by = c("State", "plant_type", "Fuel"))$Cap_MW,
-          year = year_i) ->
+    left_join_error_no_match(capacity_tech_state %>% rename (Cap_MW_State = Cap_MW),
+                             by = c("State", "plant_type", "Fuel")) %>%
+    mutate(Cap_MW = Cap_MW/Cap_MW_State,
+          year = year_i) %>%
+    select(-Cap_MW_State) ->
    capacity_tech_cooling
 
 
@@ -144,9 +146,9 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
 
   cooling_share %>%
    distinct %>%
-   tibble::as_tibble() %>%
+   as_tibble() %>%
    left_join_error_no_match(states_subregions %>%
-                              dplyr::select(State=state, NEMS),
+                              select(State=state, NEMS),
                             by = "State") ->
    cooling_share
 
@@ -172,6 +174,7 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
    filter(`First Year of Operation` > 1999) %>%
    group_by(State, Fuel, `Generation Technology`, `Cooling Technology`, `Reported Water Source (Type)`) %>%
    summarise(Cap_MW = sum(`Nameplate Capacity (MW)`)) %>%
+   ungroup() %>%
    mutate(plant_type = case_when((Fuel == "gas" & `Generation Technology` == "CC") ~ "combined cycle",
                 (Fuel == "refined liquids" & `Generation Technology` == "CC") ~ "CC",
                 (Fuel == "solar" & `Generation Technology` == "SU") ~ "CSP",
@@ -197,14 +200,16 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
    ungroup() ->
   capacity_tech_future_US_Total
 
+
   capacity_tech_future_US %>%
-   as.data.frame %>%
-   mutate(Cap_MW = Cap_MW/left_join_error_no_match((capacity_tech_future_US %>%
-                                                      ungroup() %>%
-                                                      dplyr::select(Fuel)),
-                                                   capacity_tech_future_US_Total,
-                                                   by = c("Fuel"))$Cap_MW) ->
-  cooling_share_future_US
+    left_join_error_no_match(capacity_tech_future_US_Total %>%
+                               rename (Cap_MW_Total = Cap_MW),
+                             by = c("Fuel")) %>%
+    mutate(Cap_MW = Cap_MW/Cap_MW_Total,
+           year = year_i) %>%
+    select(-Cap_MW_Total) ->
+    cooling_share_future_US
+
 
   # Aggregate by State & Fuel
   capacity_tech_future %>%
@@ -217,7 +222,7 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
    as.data.frame %>%
    mutate(Cap_MW = Cap_MW/left_join_error_no_match((capacity_tech_future %>%
                                                       ungroup() %>%
-                                                      dplyr::select(State, Fuel, plant_type)),
+                                                      select(State, Fuel, plant_type)),
                                                    capacity_tech_future_state,
                                                    by = c("State", "Fuel", "plant_type"))$Cap_MW) ->
    cooling_share_future_state
@@ -239,21 +244,30 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
     # Using left_join becaue cooling_share_future does not have wind as a fuel in it
     left_join(cooling_share_future,
               by = c("Fuel", "Cooling Technology", "plant_type", "Reported Water Source (Type)", "State")) %>%
-    repeat_add_columns(tibble::tibble(year = c(2010, 2020, 2100))) %>%
     mutate(Cap_MW = case_when(is.na(Cap_MW) ~ 0, TRUE ~ Cap_MW),
            Cap_MW_US = case_when(is.na(Cap_MW_US) ~ 0, TRUE ~ Cap_MW_US),
            Cap_MW_Final = case_when((Cap_MW == 0 & Cap_MW_US == 0) ~ 0,
                                     (Cap_MW == 0 & Cap_MW_US>0) ~ Cap_MW_US,
                                     TRUE ~ Cap_MW)) %>%
-    dplyr::select(-Cap_MW, -Cap_MW_US, Cap_MW = Cap_MW_Final) %>%
+    select(-Cap_MW, -Cap_MW_US, Cap_MW = Cap_MW_Final) %>%
     mutate(`Cooling Technology` = case_when(plant_type == "no cooling" ~ "none", TRUE ~ `Cooling Technology`),
-           `Reported Water Source (Type)` = case_when(plant_type == "no cooling" ~ "fresh", TRUE ~ `Reported Water Source (Type)`)) ->
-   cooling_share_future_complete_tech
+           `Reported Water Source (Type)` = case_when(plant_type == "no cooling" ~ "fresh", TRUE ~ `Reported Water Source (Type)`),
+           year=2008) ->
+   cooling_share_future_complete_tech_2008
+
+  # repeat and add years 2010, 2020 and 2100
+  cooling_share_future_complete_tech_2008 %>%
+    bind_rows(cooling_share_future_complete_tech_2008 %>% mutate(year=2010)) %>%
+    bind_rows(cooling_share_future_complete_tech_2008 %>% mutate(year=2020)) %>%
+    bind_rows(cooling_share_future_complete_tech_2008 %>% mutate(year=2100)) ->
+    cooling_share_future_complete_tech
 
   # Combine into one Cooling Share Data Frame
   # All 'no cooling' has cooling_type none and is assigned 1
   # As per original script all historical Gen_III is made 0
-  bind_rows(cooling_share_historical, cooling_share_future_complete_tech) %>%
+  bind_rows(cooling_share_historical %>%
+              filter(year!=2008),
+            cooling_share_future_complete_tech) %>%
     distinct %>%
     mutate(Cap_MW = case_when(plant_type == "no cooling" ~ 1,
                               (technology == "Gen_III" & year<2010) ~ 0,
@@ -275,52 +289,72 @@ module_gcam.usa_LA1233.Process_UCS_data_ref <- function(command, ...) {
 
 
   left_join_error_no_match(complete_tech_cooling_share %>%
-                             tibble::rowid_to_column() %>%
-                             spread(key = `Cooling Technology`, value = Cap_MW) %>%
-                             select(-rowid),
+                             spread(key = `Cooling Technology`, value = Cap_MW),
                            complete_tech_cooling_share %>%
                              group_by(plant_type, Fuel, technology, State, NEMS, year) %>%
-                             summarise(sum_byTech_Cap_MW = sum(Cap_MW, na.rm = T)),
+                             summarise(sum_byTech_Cap_MW = sum(Cap_MW, na.rm = TRUE)) %>%
+                             ungroup(),
                            by = c("plant_type", "Fuel", "technology", "State", "NEMS", "year")) %>%
-    mutate(sum_Cap_MW = rowSums(select(., `cooling pond`, `dry cooling`, dry_hybrid, none, `once through`, recirculating), na.rm = T),
-           `dry cooling` = case_when((!is.na(`dry cooling`) & sum_byTech_Cap_MW<0.85 & year == 2020 & (Fuel == "gas" | Fuel == "biomass" | Fuel == "coal" | Fuel == "refined liquids") & `Reported Water Source (Type)` == "fresh") ~ 0.05, TRUE ~ `dry cooling`),
-           `cooling pond` = case_when((!is.na(`cooling pond`) & sum_byTech_Cap_MW<0.85 & year == 2020 & (Fuel == "gas" | Fuel == "nuclear" | Fuel == "biomass" | Fuel == "coal" | Fuel == "refined liquids") & `Reported Water Source (Type)` == "fresh") ~ 0.05, TRUE ~ `cooling pond`),
-           `once through` = case_when((!is.na(`once through`) & sum_byTech_Cap_MW<0.85 & year == 2020 & (Fuel == "gas" | Fuel == "nuclear" | Fuel == "biomass" | Fuel == "coal" | Fuel == "refined liquids") & `Reported Water Source (Type)` == "seawater") ~ 0.05, TRUE ~ `once through`),
-           sum_Cap_MW = rowSums(select(., `cooling pond`, `dry cooling`, dry_hybrid, none, `once through`, recirculating), na.rm = T)) %>%
+    mutate(sum_Cap_MW = rowSums(select(., `cooling pond`, `dry cooling`, dry_hybrid, none,
+                                       `once through`, recirculating), na.rm = TRUE),
+           `dry cooling` = case_when((!is.na(`dry cooling`) & sum_byTech_Cap_MW < 0.85 &
+                                        year == 2020 & (Fuel == "gas" | Fuel == "biomass" |
+                                                          Fuel == "coal" | Fuel == "refined liquids") &
+                                        `Reported Water Source (Type)` == "fresh") ~ 0.05,
+                                     TRUE ~ `dry cooling`),
+           `cooling pond` = case_when((!is.na(`cooling pond`) & sum_byTech_Cap_MW < 0.85 & year == 2020 &
+                                         (Fuel == "gas" | Fuel == "nuclear" | Fuel == "biomass" | Fuel == "coal" |
+                                            Fuel == "refined liquids") &
+                                         `Reported Water Source (Type)` == "fresh") ~ 0.05,
+                                      TRUE ~ `cooling pond`),
+           `once through` = case_when((!is.na(`once through`) & sum_byTech_Cap_MW < 0.85 &
+                                         year == 2020 & (Fuel == "gas" | Fuel == "nuclear" | Fuel == "biomass" |
+                                                           Fuel == "coal" | Fuel == "refined liquids") &
+                                         `Reported Water Source (Type)` == "seawater") ~ 0.05, TRUE ~ `once through`),
+           sum_Cap_MW = rowSums(select(., `cooling pond`, `dry cooling`, dry_hybrid, none, `once through`, recirculating), na.rm = TRUE)) %>%
     ungroup() ->
    complete_tech_cooling_share_Edited
 
-  left_join(complete_tech_cooling_share_Edited %>%
-              dplyr::select(-sum_byTech_Cap_MW),
-            complete_tech_cooling_share_Edited %>%
-              dplyr::select(-sum_Cap_MW, -sum_byTech_Cap_MW) %>%
-              gather(key = `Cooling Technology`, value = Cap_MW, -Fuel, -technology, -State, -plant_type, -`Reported Water Source (Type)`, -year, -NEMS) %>%
-              group_by(plant_type, Fuel, technology, State, NEMS, year) %>%
-              summarise(sum_byTech_Cap_MW = sum(Cap_MW, na.rm = T)),
+
+  select(complete_tech_cooling_share_Edited,-sum_Cap_MW, -sum_byTech_Cap_MW)%>%
+    gather(key = `Cooling Technology`,
+           value = Cap_MW, -Fuel, -technology, -State, -plant_type, -`Reported Water Source (Type)`, -year, -NEMS) %>%
+    group_by(plant_type, Fuel, technology, State, NEMS, year) %>%
+    summarise(sum_byTech_Cap_MW = sum(Cap_MW, na.rm = TRUE)) %>%
+    ungroup() ->
+    complete_tech_cooling_share_Edited_sumbyTech
+
+
+  left_join(select(complete_tech_cooling_share_Edited,-sum_byTech_Cap_MW),
+            complete_tech_cooling_share_Edited_sumbyTech,
             by = c("plant_type", "Fuel", "technology", "State", "NEMS", "year")) %>%
-    mutate(recirculating = case_when(is.na(recirculating) ~ 0, TRUE ~ recirculating),
-           recirculating = case_when((sum_byTech_Cap_MW != 0 & sum_byTech_Cap_MW != 1 & `Reported Water Source (Type)` == "fresh") ~ recirculating+(1-sum_byTech_Cap_MW),
+    mutate(recirculating = case_when(is.na(recirculating) ~ 0,
+                                     TRUE ~ recirculating),
+           recirculating = case_when((sum_byTech_Cap_MW != 0 & sum_byTech_Cap_MW != 1 & `Reported Water Source (Type)` == "fresh") ~
+                                       recirculating + (1 - sum_byTech_Cap_MW),
                                      (Fuel == "solar CSP" & `Reported Water Source (Type)` == "fresh") ~ recirculating+(1-sum_byTech_Cap_MW),
                                      (Fuel == "geothermal" & `Reported Water Source (Type)` == "fresh") ~ recirculating+(1-sum_byTech_Cap_MW),
                                      TRUE ~ recirculating),
-           sum_Cap_MW = rowSums(select(., `cooling pond`, `dry cooling`, dry_hybrid, none, `once through`, recirculating), na.rm = T)) %>%
-    dplyr::select(-sum_Cap_MW, -sum_byTech_Cap_MW) %>%
+           sum_Cap_MW = rowSums(select(., `cooling pond`, `dry cooling`, dry_hybrid, none, `once through`, recirculating), na.rm = TRUE)) %>%
+    select(-sum_Cap_MW, -sum_byTech_Cap_MW) %>%
     gather(key = `Cooling Technology`, value = Cap_MW, -Fuel, -technology, -State, -plant_type, -`Reported Water Source (Type)`, -year, -NEMS) %>%
-    tibble::rowid_to_column() %>%
+    distinct() %>%
     spread(key = year, value = Cap_MW) %>%
-    select(-rowid, fuel = Fuel, water_type = `Reported Water Source (Type)`, cooling_system = `Cooling Technology`, `2010` = `2008`, `2100` = `2020`) %>%
+    mutate(`2010`=`2008`,
+           `2100`=`2020`) %>%
+    rename(fuel = Fuel, water_type = `Reported Water Source (Type)`, cooling_system = `Cooling Technology`) %>%
     replace(., is.na(.), 0) %>%
     ungroup() ->
    LA1233.CoolingSystemShares_RG3_ref
 
 
-  # Add off-shore wind technologies
+  # Future development: code related to off-shore wind technologies will go here.
 
 
   # NOTES: Differences from original script data output
   # Note 1: All "no cooling" plant_types are now assinged "fresh" water_type. In old data wind
   # and rooftop_pv were assigned "none" water_type while hydro, PV, PV_storage were assigned "fresh".
-  # Note 2: In CA for fue == coal the original script uses a US average distribution. However, in this script when
+  # Note 2: In CA for fuel == coal the original script uses a US average distribution. However, in this script when
   # future technologies do not exist in a state (past 1999) in the UCS database then it is assumed that those technologies do not have
   # a representative share based on the US average. The distribution is based on the assumptions made above for dry cooling, recirculating,
   # once through.
