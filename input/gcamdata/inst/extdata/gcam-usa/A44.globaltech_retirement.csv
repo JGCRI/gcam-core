@@ -1,7 +1,9 @@
-# File: A44.globaltech_retirement.csv,,,,,
-# Title: Building technology retirement function (survival curve) parameters,,,,,
-# Units: lifetime/half_life: years; steepness: shape parameter used by the s-curve-shutdown-decider retirement function,,,,,
-# Comments: PortionSurviving(t) = 1 / ( 1 + EXP( Steepness * ( t - HalfLife ) ) ),,,,,
+# File: A44.globaltech_retirement.csv
+# Title: Building technology retirement function (survival curve) parameters
+# Units: lifetime/half_life: years; steepness: shape parameter used by the s-curve-shutdown-decider retirement function
+# Comments: PortionSurviving(t) = 1 / ( 1 + EXP( Steepness * ( t - HalfLife ) ) )
+# Column types: ciinin 
+# ----------
 supplysector,lifetime,half_life_stock,steepness_stock,half_life_new,steepness_new
 resid heating,40,20,0.1219,18,0.1886
 resid cooling,30,15,0.162,15,0.2598

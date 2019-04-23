@@ -10,7 +10,7 @@
 #' original data system was \code{batch_nuclear_adv_xml.R} (energy XML).
 module_energy_batch_nuclear_adv_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L223.GlobalTechCapital_nuc_adv"))
+    return(c("L223.GlobalTechCapital_nuc_adv"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "nuclear_adv.xml"))
   } else if(command == driver.MAKE) {

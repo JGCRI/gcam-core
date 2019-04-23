@@ -5,6 +5,7 @@
 # Description: mirca irrigated harvested area (ha) for sage land cells in country X glu
 # Original source: MIRCA2000; country raster; new glu raster
 # Source: https://github.com/JGCRI/moirai
+# Column types: ciii 
 # ----------
 iso,glu_code,mirca_crop,value
 afg,52,1,103701

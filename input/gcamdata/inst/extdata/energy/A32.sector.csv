@@ -1,6 +1,8 @@
 # File: A32.sector.csv
 # Title: Industry default supplysector information (units and logit exponents)
 # Units: Units-in-table
+# Column types: ccccicc 
+# ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,final.energy,logit.type
 industrial energy use,EJ,EJ,1975$/GJ,-3,industry,
 industrial feedstocks,EJ,EJ,1975$/GJ,-1,industry,

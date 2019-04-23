@@ -18,7 +18,7 @@
 #' @importFrom dplyr filter
 #' @author PLP June 2018
 module_gcam.usa_L270.limits_USA <- function(command, ...) {
-  negative_emiss_input_names <- paste0( "L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)) )
+  negative_emiss_input_names <- paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)) )
   negative_emiss_output_names <- sub('NegEmissBudget', 'NegEmissBudget_USA', negative_emiss_input_names)
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
@@ -160,7 +160,7 @@ module_gcam.usa_L270.limits_USA <- function(command, ...) {
     # Call return_data but we need to jump through some hoops since we generated some of the
     # tibbles from the scenarios so we will generate the call to return_data
     ret_data %>%
-      paste(collapse=", ") %>%
+      paste(collapse = ", ") %>%
       paste0("return_data(", ., ")") %>%
       parse(text = .) %>%
       eval()

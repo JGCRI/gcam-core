@@ -2,6 +2,8 @@
 # Title: 2005-2100 population projections by state
 # Units: Persons
 # Source: Scott, M., D.S. Daly, Y. Zhou, J.S. Rice, P.L. Patel, H.C. McJeon, G.P. Kyle, S.H. Kim, J. Eom, and L.E. Clarke. 2014. Evaluating sub-national building-energy efficiency policy options under uncertainty: Efficient sensitivity testing of alternative climate, technological, and socioeconomic futures in a regional integrated-assessment model. Energy Economics 43: 22-33. http://dx.doi.org/10.1016/j.eneco.2014.01.012
+# Column types: ciiiiiiiiiiiiiiiiiiii 
+# ----------
 state,2005,2010,2015,2020,2025,2030,2035,2040,2045,2050,2055,2060,2065,2070,2075,2080,2085,2090,2095,2100
 Alabama,4527317,4602496,4648605,4702038,4758440,4805692,4854630,4910558,4982801,5079780,5207726,5339802,5441194,5532492,5610328,5673699,5732758,5788567,5835147,5870924
 Alaska,661132,695040,730265,770020,813758,855471,892531,925068,954134,980729,1005431,1030930,1050505,1068132,1083159,1095394,1106796,1117571,1126564,1133471

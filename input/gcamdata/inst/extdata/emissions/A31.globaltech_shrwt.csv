@@ -1,6 +1,8 @@
 # File: A31.globaltech_shrwt.csv
 # Title: Urban & industrial processes default shareweights
 # Units: Unitless
+# Column types: ccciiiii 
+# ----------
 supplysector,subsector,technology,1971,2010,2019,2020,2100
 urban processes,landfills,landfills,1,1,1,1,1
 urban processes,wastewater treatment,wastewater treatment,1,1,1,1,1

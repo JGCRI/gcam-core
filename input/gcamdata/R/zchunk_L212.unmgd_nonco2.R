@@ -325,7 +325,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
 
     L212.FORESTEmissionsFactors_future %>%
       add_title("Future BC/OC Emissions Coefficients-Deforestation") %>%
-      add_units("kg/m2/yr") %>%
+      add_units("kg/m2") %>%
       add_comments("L212.default_coefs values added to first future year") %>%
       add_legacy_name("L212.FORESTEmissionsFactors_future") %>%
       add_precursors("common/GCAM_region_names", "emissions/A_regions",
@@ -335,7 +335,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
 
     L212.FORESTEmissionsFactors_future_prot %>%
       add_title("Future BC/OC Emissions Coefficients-Deforestation for Protected Lands") %>%
-      add_units("kg/m2/yr") %>%
+      add_units("kg/m2") %>%
       add_comments("L212.default_coefs values added to first future year") %>%
       add_legacy_name("L212.FORESTEmissionsFactors_future") %>%
       add_precursors("common/GCAM_region_names", "emissions/A_regions",

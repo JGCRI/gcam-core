@@ -1,6 +1,8 @@
 # File: A32.globaltech_eff.csv
 # Title: Industry default efficiencies
 # Units: Unitless
+# Column types: cccccnnnnnnnnn 
+# ----------
 supplysector,subsector,technology,minicam.energy.input,secondary.output,1971,2005,2020,2035,2050,2065,2080,2095,2100
 industrial energy use,biomass,biomass,delivered biomass,,0.746423292,0.799,0.797,0.804,0.81,0.816,0.823,0.828,0.828
 industrial energy use,biomass,biomass cogen,delivered biomass,electricity,0.515676667,0.552,0.56,0.568,0.577,0.586,0.595,0.604,0.604

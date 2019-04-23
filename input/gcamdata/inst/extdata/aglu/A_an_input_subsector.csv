@@ -2,6 +2,7 @@
 # Title: Subsectors of inputs to animal production
 # Units: Various
 # Source: NA
+# Column types: cciciccccc 
 # ----------
 supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,interpolation.function,logit.type
 FodderHerb_Residue,FodderHerb,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,

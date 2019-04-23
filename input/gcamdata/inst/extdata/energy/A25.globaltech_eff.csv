@@ -2,6 +2,8 @@
 # Title: Hydrogen efficiencies 
 # Units: Unitless
 # Comments: Different from GCAM 3.0 in that CCS tech efficiencies take into account electricity inputs and outputs (using 3:1 conversion)
+# Column types: ccccnnnnnnnn 
+# ----------
 supplysector,subsector,technology,minicam.energy.input,1971,2020,2035,2050,2065,2080,2095,2100
 H2 central production,coal,coal chemical,regional coal,0.640,0.640,0.660,0.680,0.701,0.712,0.722,0.722
 H2 central production,coal,coal chemical CCS,regional coal,0.586,0.586,0.604,0.623,0.642,0.652,0.662,0.662

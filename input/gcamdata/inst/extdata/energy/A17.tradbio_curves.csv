@@ -3,6 +3,8 @@
 # Units: available: unitless multiplier; extractioncost: 1975$/GJ
 # Description: Available traditional biomass at varying extraction costs
 # Reference: Unknown
+# Column types: cccin 
+# ----------
 resource,subresource,grade,available,extractioncost
 traditional biomass,traditional biomass,grade 1,0,0.2
 traditional biomass,traditional biomass,grade 2,1,0.25

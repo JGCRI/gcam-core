@@ -1,6 +1,8 @@
 # File: A44.cost_efficiency.csv
 # Title: Base costs and efficiencies of building technologies
 # Units: lifetime in years; costs in 2005$; unitless for efficiency and rate
+# Column types: ccciiinnn 
+# ----------
 supplysector,subsector,technology,installed cost,lifetime,O&M cost,efficiency,UEC,shutdown.rate
 resid heating,biomass,biomass,500,15,100,0.4,150,0.024
 resid heating,coal,coal,500,15,100,0.5,120,0.024

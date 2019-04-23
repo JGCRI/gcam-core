@@ -15,6 +15,9 @@ test_that("screening for use of forbidden functions works", {
     # including match
     y <- ifelse(x < 0,0, x)
     z <- ifelse(x > 10, 10, x)
+    d %>%
+      mutate(x = 1) %>%
+      mutate(y = 2)
     dd <- melt(d)
     df <- cast(dd)
     dfm <- merge(d, dd)
@@ -25,21 +28,11 @@ test_that("screening for use of forbidden functions works", {
 
   expect_equal(screen_forbidden(testgood), character())
   tb <- screen_forbidden(testbad)
-  expect_equal(tb[,1], c("(?<!error_no_)match(?!es)", "ifelse", "ifelse", "melt", "cast", "rbind",
+  expect_equivalent(tb[,1], c("consecutive mutate calls", "(?<!error_no_)match(?!es)",
+                         "ifelse", "ifelse", "melt", "cast", "rbind",
                          "cbind", "merge"))
 })
 
-
-test_that("protect_float works", {
-  d <- tibble(x = LETTERS, y = runif(length(LETTERS)), z = seq_along(LETTERS))
-  out <- protect_float(d)
-  expect_identical(dim(d), dim(out))
-  expect_true(is.character(out$y))
-  expect_true(is.integer(out$z))
-  expect_identical(d$x, out$x)
-  expect_equal(d$y, as.numeric(out$y))  # equal but not identical
-  expect_identical(d$z, out$z)
-})
 
 # This code is written using the `mockr` package, currently only
 # available via GitHub. Apparently `testthat::with_mock` is going

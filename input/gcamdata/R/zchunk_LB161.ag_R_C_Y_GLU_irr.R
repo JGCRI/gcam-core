@@ -178,8 +178,7 @@ module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
       add_comments("Divide irrigated harvested area by the sum of irrigated and rainfed harvest area for each region, commodity and GLU") %>%
       add_legacy_name("L161.ag_irrHA_frac_R_C_GLU") %>%
       add_precursors("L152.ag_irrHA_bm2_R_C_GLU",
-                     "L152.ag_rfdHA_bm2_R_C_GLU") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L152.ag_rfdHA_bm2_R_C_GLU") ->
       L161.ag_irrHA_frac_R_C_GLU
 
     return_data(L161.ag_irrProd_Mt_R_C_Y_GLU, L161.ag_rfdProd_Mt_R_C_Y_GLU, L161.ag_irrHA_bm2_R_C_Y_GLU, L161.ag_rfdHA_bm2_R_C_Y_GLU, L161.ag_irrYield_kgm2_R_C_Y_GLU, L161.ag_rfdYield_kgm2_R_C_Y_GLU, L161.ag_irrHA_frac_R_C_GLU)

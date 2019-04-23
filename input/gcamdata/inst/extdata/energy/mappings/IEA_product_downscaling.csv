@@ -3,6 +3,8 @@
 # Source: NA
 # Units: NA
 # Description: This mapping table assigns a FLOW (i.e., sector or process) to each PRODUCT (fuel) to be used for downscaling from composite countries like the USSR to the 15 countries, in years when only values for the composite nation are reported. This assignment is designed to address the very large discrepancies in sectoral attribution of fuels that occurred over the time series.
+# Column types: cc 
+# ----------
 PRODUCT,FLOW
 Hard coal (if no detail),TPES
 Brown coal (if no detail),TPES

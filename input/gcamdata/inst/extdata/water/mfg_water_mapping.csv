@@ -4,6 +4,8 @@
 # Comments: Mapping of Vassolo manufacturing water withdrawal by continent to iso
 # Based on Table 3 of source document: "Summary of Industrial Water Use for Each Continent for 1995."
 # Source: Vassolo and Doll, 2005. Global-scale gridded estimates of thermoelectric power and manufacturing water use. Water Resources Research.
+# Column types: cc 
+# ----------
 iso,continent
 abw,South America and Caribbean
 afg,Asia
