@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L122.out_EJ_R_gasproc_F_Yh}, \code{L122.in_EJ_R_gasproc_F_Yh}, \code{L122.IO_R_oilrefining_F_Yh}, \code{L122.out_EJ_R_refining_F_Yh}, \code{L122.in_EJ_R_refining_F_Yh}, \code{L122.in_Mt_R_C_Yh}. The corresponding file in the
+#' the generated outputs: \code{L122.out_EJ_R_gasproc_F_Yh}, \code{L122.in_EJ_R_gasproc_F_Yh}, \code{L122.IO_R_oilrefining_F_Yh}, \code{L122.out_EJ_R_refining_F_Yh}, \code{L122.in_EJ_R_refining_F_Yh}, \code{L122.in_Mt_R_C_Yh}, \code{L122.FeedOut_Mt_R_C_Yh}. The corresponding file in the
 #' original data system was \code{LA122.gasproc_refining.R} (energy level1).
 #' @details This chunk creates gasproc, oil refining and crops inputs, outputs and IO "input-output" coefficients for refining.
 #' @importFrom assertthat assert_that
@@ -21,6 +21,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
              FILE = "energy/calibrated_techs",
              FILE = "energy/A_regions",
              FILE = "energy/A21.globaltech_coef",
+             FILE = "energy/A21.globaltech_secout",
              FILE = "energy/A22.globaltech_coef",
              "L1011.en_bal_EJ_R_Si_Fi_Yh",
              "L121.in_EJ_R_unoil_F_Yh"))
@@ -30,7 +31,8 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
              "L122.IO_R_oilrefining_F_Yh",
              "L122.out_EJ_R_refining_F_Yh",
              "L122.in_EJ_R_refining_F_Yh",
-             "L122.in_Mt_R_C_Yh"))
+             "L122.in_Mt_R_C_Yh",
+             "L122.FeedOut_Mt_R_C_Yh"))
   } else if(command == driver.MAKE) {
 
     EcYield_kgm2_hi <- EcYield_kgm2_lo <- GCAM_commodity <- GCAM_region_ID <- GLU <-
@@ -40,7 +42,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       subsector <- supplysector <- technology <- value <- value.x <- value.y <- valueInput <-
       value_ctl_oil <- value_en_bal <- value_en_bal_TPES <- value_en_bal_net_oil <-
       value_gtl_oil <- value_gtlctl <- year <- yield <- yieldmult_hi <- yieldmult_lo <-
-      market.name <- primary.crop <- NULL # silence package check notes
+      market.name <- primary.crop <- fractional.secondary.output <- output.ratio <- NULL # silence package check notes
 
     all_data <- list(...)[[1]]
 
@@ -51,6 +53,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     A_regions <- get_data(all_data, "energy/A_regions")
     A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef")
+    A21.globaltech_secout <- get_data(all_data, "energy/A21.globaltech_secout")
     A22.globaltech_coef <- get_data(all_data, "energy/A22.globaltech_coef")
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
     get_data(all_data, "L121.in_EJ_R_unoil_F_Yh") %>%
@@ -218,7 +221,8 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     bind_rows(L122.out_EJ_R_oilrefining_Yh, L122.out_EJ_R_gtlctl_Yh, L122.out_EJ_R_biofuel_Yh) -> L122.out_EJ_R_refining_F_Yh
     bind_rows(L122.in_EJ_R_oilrefining_F_Yh, L122.in_EJ_R_gtlctl_F_Yh, L122.in_EJ_R_biofuel_F_Yh) -> L122.in_EJ_R_refining_F_Yh
 
-    # Extra final step: calculate and create the derived crop inputs to the various first-generation biofuel technologies, for the AGLU processing
+    # The final steps here write out some information for the AgLU module
+    # First, calculate and create the derived crop inputs to the various first-generation biofuel technologies
     L122.in_EJ_R_biofuel_F_Yh %>%
       left_join(select(calibrated_techs, sector, fuel, passthrough.sector = minicam.energy.input), by = c("sector", "fuel")) %>%
       filter(passthrough.sector %in% A21.globaltech_coef$supplysector) -> L122.in_EJ_R_1stgenbio_F_Yh
@@ -273,6 +277,31 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       left_join(select(L121.globaltech_coef, GCAM_commodity = minicam.energy.input, year, value), by = c("GCAM_commodity", "year")) %>%
       mutate(value = in_value * value) %>%
       select(-in_value) -> L122.in_Mt_R_C_Yh
+
+    # Next, write out the secondary output flows of DDGS and feedcakes from these technologies
+    A21.globaltech_secout %>%
+      gather_years() %>%
+      complete(nesting(supplysector, subsector, technology, fractional.secondary.output),
+               year = unique(sort(c(year, HISTORICAL_YEARS)))) %>%
+      group_by(supplysector, subsector, technology, fractional.secondary.output) %>%
+      mutate(output.ratio = approx_fun(year, value, rule = 1)) %>%
+      ungroup() %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
+      select(-value) %>%
+      # Need to get the crop names to get the "GCAM_commodity" for joining with the 1stgenbio input data
+      left_join_error_no_match(select(A21.globaltech_coef, supplysector, subsector, technology, minicam.energy.input),
+                               by = c("supplysector", "subsector", "technology")) %>%
+      rename(GCAM_commodity = minicam.energy.input) %>%
+      left_join(biofuel_feedstock_cropname, by = c(GCAM_commodity = "regional.crop")) %>%
+      mutate(GCAM_commodity = if_else(is.na(primary.crop), GCAM_commodity, primary.crop)) %>%
+      select(passthrough.sector = supplysector, GCAM_commodity, fractional.secondary.output, year, output.ratio) ->
+      L121.feed_output_ratio
+
+    L122.in_EJ_R_1stgenbio_F_Yh %>%
+      inner_join(L121.feed_output_ratio, by = c("passthrough.sector", "GCAM_commodity", "year")) %>%
+      mutate(value = value * output.ratio) %>%
+      select(GCAM_region_ID, GCAM_commodity, fractional.secondary.output, year, value) ->
+      L122.FeedOut_Mt_R_C_Yh
 
     # GAS PROCESSING
     # Note: Gas processing input-output coefficients are exogenous
@@ -422,7 +451,22 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
                      "L121.in_EJ_R_unoil_F_Yh", "aglu/A_agRegionalTechnology") ->
       L122.in_Mt_R_C_Yh
 
-    return_data(L122.out_EJ_R_gasproc_F_Yh, L122.in_EJ_R_gasproc_F_Yh, L122.IO_R_oilrefining_F_Yh, L122.out_EJ_R_refining_F_Yh, L122.in_EJ_R_refining_F_Yh, L122.in_Mt_R_C_Yh)
+    L122.FeedOut_Mt_R_C_Yh %>%
+      add_title("Feed secondary outputs (DDGS and feedcakes) from first-generation biofuel production by GCAM region / commodity / historical year") %>%
+      add_units("Mt") %>%
+      add_comments("Created by matching 1st generation bio with the global technology secondary output ratios of DDGS and feedcakes") %>%
+      add_legacy_name("L122.in_Mt_R_C_Yh") %>%
+      same_precursors_as(L122.in_Mt_R_C_Yh) %>%
+      add_precursors("energy/A21.globaltech_secout") ->
+      L122.FeedOut_Mt_R_C_Yh
+
+    return_data(L122.out_EJ_R_gasproc_F_Yh,
+                L122.in_EJ_R_gasproc_F_Yh,
+                L122.IO_R_oilrefining_F_Yh,
+                L122.out_EJ_R_refining_F_Yh,
+                L122.in_EJ_R_refining_F_Yh,
+                L122.in_Mt_R_C_Yh,
+                L122.FeedOut_Mt_R_C_Yh)
   } else {
     stop("Unknown command")
   }
