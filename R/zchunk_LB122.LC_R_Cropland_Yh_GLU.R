@@ -82,9 +82,9 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # arrange so rows occur in more sensible order:
       arrange(GCAM_region_ID, GLU, year) %>%
       # add values of 0 everywhere for now:
-      mutate(value = 0) %>%
-      # add a Land_Type identifier:
-      mutate(Land_Type = "Cropland") %>%
+      mutate(value = 0,
+             # add a Land_Type identifier:
+             Land_Type = "Cropland") %>%
       # add these rows to the original Land Cover table:
       bind_rows(L122.LC_bm2_R_CropLand_Y_GLU) ->
       # save as the Land C over table:
@@ -228,11 +228,11 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       select(-fallow_frac, -uncropped_frac) %>%
       # use the nonharvested_frac and the cropland area information (value) for each Region-GLU-Year to calculate
       # the amouunt of fallowland in that Region-GLU-Year = value * nonharvested_frac
-      mutate(value = value * nonharvested_frac) %>%
+      mutate(value = value * nonharvested_frac,
+             # update the Land_Type identifier to reflect that this is now FallowLand, not Cropland
+             Land_Type = "FallowLand") %>%
       # drop nonharvested_frac since no longer necessary:
-      select(-nonharvested_frac) %>%
-      # update the Land_Type identifier to reflect that this is now FallowLand, not Cropland
-      mutate(Land_Type = "FallowLand") ->
+      select(-nonharvested_frac) ->
       # store in a table of fallowland land cover in bm2 for each region-glu-year
       L122.LC_bm2_R_FallowLand_Y_GLU
 
@@ -272,10 +272,10 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       select(-value.x, -value.y, -Land_Type) %>%
       # if the harvested to cropland ratio, value, is less than the min acceptable harvested area to cropland,
       # aglu.MIN_HA_TO_CROPLAND, replace with aglu.MIN_HA_TO_CROPLAND
-      mutate(value = if_else(value < aglu.MIN_HA_TO_CROPLAND, aglu.MIN_HA_TO_CROPLAND, value)) %>%
-      # if the harvested to cropland ratio is greater than the max acceptable harvested area to cropland,
-      # aglu.MAX_HA_TO_CROPLAND, replace with aglu.MAX_HA_TO_CROPLAND
-      mutate(value = if_else(value > aglu.MAX_HA_TO_CROPLAND, aglu.MAX_HA_TO_CROPLAND, value)) ->
+      mutate(value = if_else(value < aglu.MIN_HA_TO_CROPLAND, aglu.MIN_HA_TO_CROPLAND, value),
+             # if the harvested to cropland ratio is greater than the max acceptable harvested area to cropland,
+             # aglu.MAX_HA_TO_CROPLAND, replace with aglu.MAX_HA_TO_CROPLAND
+             value = if_else(value > aglu.MAX_HA_TO_CROPLAND, aglu.MAX_HA_TO_CROPLAND, value)) ->
       # store in a table of HA to cropland ratios by region-glu-year
       L122.ag_HA_to_CropLand_R_Y_GLU
 
@@ -289,7 +289,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # value.x = original harvested area info for each GCAM_commodity from L101.ag_HA_bm2_R_C_Y_GLU
       # value.y = HA:CL ratio from L122.ag_HA_to_CropLand_R_Y_GLU just joined
       # calculate the harvested cropland for each commodity as value = value.x/value.y:
-      mutate(value = value.x/value.y) %>%
+      mutate(value = value.x / value.y) %>%
       select(-value.x, -value.y) %>%
       # add a Land_Type identifier:
       mutate(Land_Type = "HarvCropLand") ->
@@ -364,10 +364,10 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       ungroup() %>% mutate(Land_Type = "UnusedCropLand") %>%
       # positive residuals cannot be remapped to OtherArableLand. Therefore, they do not count as UnusedCropLand
       # and region-glu-years with positive residual have 0 UnusedCropLand:
-      mutate(value = if_else(value > 0, 0, value)) %>%
-      # negative residuals ARE UnusedCropLand. -1 * the negative residual is the amount of UnusuedCropLand that
-      # can be mapped to OtherArable Land. Calculate UnusedCropLand:
-      mutate(value = -1 * value) ->
+      mutate(value = if_else(value > 0, 0, value),
+             # negative residuals ARE UnusedCropLand. -1 * the negative residual is the amount of UnusuedCropLand that
+             # can be mapped to OtherArable Land. Calculate UnusedCropLand:
+             value = -1 * value) ->
       # store in a table of UnusedCropLand by region-glu-year
       L122.LC_bm2_R_UnusedCropLand_Y_GLU
 
@@ -574,8 +574,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L100.FAO_CL_kha",
                      "L100.FAO_harv_CL_kha",
                      "L101.ag_HA_bm2_R_C_Y_GLU",
-                     "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L120.LC_bm2_R_LT_Yh_GLU") ->
       L122.LC_bm2_R_ExtraCropLand_Yh_GLU
 
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
@@ -590,8 +589,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L100.FAO_CL_kha",
                      "L100.FAO_harv_CL_kha",
                      "L101.ag_HA_bm2_R_C_Y_GLU",
-                     "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L120.LC_bm2_R_LT_Yh_GLU") ->
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU
 
     L122.LC_bm2_R_HarvCropLand_Yh_GLU %>%

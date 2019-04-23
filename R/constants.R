@@ -13,7 +13,6 @@ LOGIT_TYPE_COLNAME        <- "logit.type"        # will be removed by test code 
 FLAG_INPUT_DATA      <- "FLAG_INPUT_DATA"       # input data, don't output
 FLAG_NO_OUTPUT       <- "FLAG_NO_OUTPUT"        # don't output
 FLAG_NO_TEST         <- "FLAG_NO_TEST"          # don't test
-FLAG_PROTECT_FLOAT   <- "FLAG_PROTECT_FLOAT"    # protect float columns from readr bug
 FLAG_SUM_TEST        <- "FLAG_SUM_TEST"         # use less-restrictive sum test
 FLAG_XML             <- "FLAG_XML"              # xml data
 
@@ -36,6 +35,9 @@ gcam.LOGIT_TYPES         <- c("relative-cost-logit", "absolute-cost-logit")
 gcam.EQUIV_TABLE         <- "EQUIV_TABLE"
 gcam.IND_ENERGY_USE      <- c("biomass", "coal", "gas", "refined liquids")  # GCAM industrial energy use fuels
 GCAM_REGION_ID      <- "GCAM_region_ID"
+# The default market price GCAM will use to start solving from if it has no other info
+# If users do not have an estimate for a starting price this is a safe one to set
+gcam.DEFAULT_PRICE <- 1.0
 
 
 # Driver constants ======================================================================
@@ -103,13 +105,13 @@ CONV_DAYS_YEAR  <- 1 / 365.25
 CONV_YEAR_HOURS <- 24 * 365.25
 
 # Energy
-CONV_BBLD_EJYR <- 6.119 * 365.25 * 1e-3 # billion barrels a day to EJ per year
 CONV_BTU_KJ    <- 1.0551
 CONV_GJ_EJ  <- 1e-9
 CONV_EJ_GJ  <- 1 / CONV_GJ_EJ
 CONV_GWH_EJ <- 3.6e-6
 CONV_KBTU_EJ   <- 1.0551e-12            # KiloBTU to EJ
 CONV_KWH_GJ <- 3.6e-3
+CONV_MBLD_EJYR <- 6.119 * 365.25 * 1e-3 # million barrels a day to EJ per year
 CONV_MJ_BTU    <- 947.777
 CONV_MWH_GJ <- 3.6                      # Megawatt hours to Gigajoules
 CONV_TBTU_EJ   <- 0.0010551             # TeraBTU to EJ
@@ -529,10 +531,10 @@ water.DIGITS_MUNI_WATER                   <- 4
 # GCAM intermediate sectors for which Vassolo + Doll assessed manufacturing water demands. In the paper, they indicate
 # chemicals, pulp and paper, pig iron, sugar, beer, cloth, cement, and crude steel. some industrial mfg does take place
 # in energy transformation (charcoal, pig iron), so we'll leave that one in.
-water.GCAM_MFG_SECTORS_VASSOLO <- c( "in_industry_general", "net_industry_energy transformation" )
+water.GCAM_MFG_SECTORS_VASSOLO <- c("in_industry_general", "net_industry_energy transformation")
 
 # GCAM intermediate fuels used for extrapolating manufacturing water use from one base year to all base years.
-water.GCAM_MFG_FUELS_EFW <- c( "electricity" )
+water.GCAM_MFG_FUELS_EFW <- c("electricity")
 
 # the maximum portion of aquastat industrial (mfg + elec) water withdrawals that is allowed to be assigned to
 # manufacturing. Used to set a cap on derived manufacturing water withdrawals
@@ -635,7 +637,7 @@ gcamusa.GRID_REGIONS <- c("Alaska grid", "California grid", "Central East grid",
 gcamusa.DEFAULT_COEFFICIENT <- 1
 gcamusa.DEFAULT_LOGIT_TYPE  <- NA  # default logit type
 gcamusa.DEFAULT_LOGITEXP    <- -3
-gcamusa.DEFAULT_MARKET      <- "USA"
+gcamusa.DEFAULT_MARKET      <- gcam.USA_REGION
 gcamusa.DEFAULT_SHAREWEIGHT <- 1
 
 # Logit exponent regulating competition between different grid regions in USA electricity market
@@ -648,7 +650,7 @@ gcamusa.GEOTHERMAL_DEFAULT_EFFICIENCY <- 0.1
 
 gcamusa.ELECT_TD_SECTORS  <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
 
-# Indicate whether to use regional â€œcost addersâ€ to differentiate
+# Indicate whether to use regional “cost adders” to differentiate
 # fuel prices by grid region in GCAM-USA (FALSE = same prices in all states)
 gcamusa.USE_REGIONAL_FUEL_MARKETS  <- TRUE
 

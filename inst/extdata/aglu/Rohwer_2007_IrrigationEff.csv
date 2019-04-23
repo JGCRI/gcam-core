@@ -2,6 +2,8 @@
 # Title: Annex B Irrigation Functional Types, assignment and parameters
 # Units: Unitless efficiency; large.scale.frac in percentage
 # Source: Rohwer et al 2007. Appendix B Irrigation Functional Types, https://www.pik-potsdam.de/research/publications/pikreports/.files/pr104.pdf
+# Column types: ccnnin 
+# ----------
 country,iso,application.eff,conveyance.eff,large.scale.frac,management.eff
 Afghanistan,afg,0.6,0.7,20,0.9
 Albania,alb,0.68,0.83,20,0.95

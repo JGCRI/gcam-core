@@ -2,6 +2,8 @@
 # Title: Commercial Buildings Energy Consumption Survey 1986
 # Units: BLDGID3: building identifier;SQFT3: square footage;YRCONC3: year constructed;PBA3: principal building activity;ADJWT3: adjusted sampling weight
 # Source: https://www.eia.gov/consumption/commercial/data/previous/
+# Column types: iiiiiin 
+# ----------
 BLDGID3,REGION3,CENDIV3,SQFT3,YRCONC3,PBA3,ADJWT3
 1,1,1,20000,4,4,206.66
 2,2,3,80000,2,13,297.98

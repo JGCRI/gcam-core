@@ -2,6 +2,8 @@
 # Title: Electricity sector - supply sector characteristics
 # Units: Unitless
 # Description: Primary energy handling default supplysector information (units and logit exponents)
+# Column types: cccciic 
+# ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,traded,logit.type
 regional biomass,EJ,EJ,1975$/GJ,-3,0,
 regional coal,EJ,EJ,1975$/GJ,-3,0,

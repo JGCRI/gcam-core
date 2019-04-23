@@ -1,7 +1,9 @@
-# File: EIA_AEO_Tab4.csv,,,,,,,,,,,,,,,,,,,,
-# Title: AEO Table 4: Residential Energy Use,,,,,,,,,,,,,,,,,,,,
-# Source: AEO 1996-2013,,,,,,,,,,,,,,,,,,,,
-# Units: Quad BTU,,,,,,,,,,,,,,,,,,,,
+# File: EIA_AEO_Tab4.csv
+# Title: AEO Table 4: Residential Energy Use
+# Source: AEO 1996-2013
+# Units: Quad BTU
+# Column types: ccnnnnnnnnnnnnnnnnnnn 
+# ----------
 Fuel,Service,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011
 Distillate,Other Uses,0,0,0,0,0,0,0,0.01,0,0,0,0.001,0,0,0,0,0,0.007311,0.007113
 Distillate,Space Heating,0.81,0.78,0.8,0.83,0.78,0.66,0.68,0.71,0.774,0.792,0.791,0.807,0.746,0.589,0.611,0.555,0.498,0.495795,0.461704

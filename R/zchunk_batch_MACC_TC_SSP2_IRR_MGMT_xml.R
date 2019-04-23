@@ -10,7 +10,7 @@
 #' original data system was \code{batch_MACC_TC_SSP2_IRR_MGMT_xml.R} (emissions XML).
 module_emissions_batch_MACC_TC_SSP2_IRR_MGMT_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L2522.MAC_Ag_TC_SSP2",
+    return(c("L2522.MAC_Ag_TC_SSP2",
               "L2522.MAC_An_TC_SSP2"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "MACC_TC_SSP2_IRR_MGMT.xml"))

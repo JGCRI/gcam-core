@@ -3,6 +3,8 @@
 # Description: Activity data by GAINS sector for historical and modeled years
 # Units: Identified by variable in data
 # Source: Rao et al. 2017 "Future air pollution in the Shared Socio-economic Pathways" Global Environmental Change.
+# Column types: cccin 
+# ----------
 TIMER_REGION,TIMER_SECTOR,UNIT,IDYEARS,ACT
 Asia-Stan,CEMENT,Mt,2000,2.164000016
 Asia-Stan,CEMENT,Mt,2005,2.301490016

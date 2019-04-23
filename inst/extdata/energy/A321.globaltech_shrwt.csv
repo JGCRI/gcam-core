@@ -1,6 +1,8 @@
 # File: A321.globaltech_shrwt.csv
 # Title: Cement default shareweights
 # Units: Unitless
+# Column types: ccciiii 
+# ----------
 supplysector,subsector,technology,1971,2019,2020,2100
 cement,cement,cement,1,1,1,1
 cement,cement,cement CCS,0,0,1,1

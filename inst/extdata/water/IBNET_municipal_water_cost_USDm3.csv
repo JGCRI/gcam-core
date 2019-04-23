@@ -3,6 +3,8 @@
 # Units: Average Revenue W&WW (US$/m3 water sold), GDPPC ($), Total Water Consumption (l/person/day)
 # Comments: missing data for Japan and Taiwan are filled in from municipal.water.demand.32.csv. Note some country names were changed to match FAO
 #Source: http://www.ib-net.org/en/production/?
+# Column types: icnnn 
+# ----------
 year,country,cost,GDPPC,consumption
 2005,Albania,0.44,"2,693",53
 2006,Albania,0.28,"2,925",125

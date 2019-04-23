@@ -3,6 +3,7 @@
 # Units: NA
 # Description: Maps country names and codes  in socioeconomics databases to three digit iso codes
 # Source: Internally generated mapping file
+# Column types: cccc 
 # ----------
 iso,country_name,Maddison_ctry,Downscale_from
 afg,Afghanistan,Afghanistan,

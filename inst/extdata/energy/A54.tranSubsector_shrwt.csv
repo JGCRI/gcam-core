@@ -1,6 +1,8 @@
 # File: A54.tranSubsector_shrwt.csv
 # Title: Transportation default subsector shareweights
 # Units: Unitless
+# Column types: ccccn 
+# ----------
 supplysector,tranSubsector,year.fillout,year,share.weight
 trn_aviation_intl,International Aviation,start-year,,1
 trn_freight,Domestic Ship,start-year,,1
@@ -54,7 +56,7 @@ trn_pass_road_LDV_4W,Multipurpose Vehicle,start-year,,1
 trn_pass_road_LDV_4W,Subcompact Car,start-year,,1
 trn_pass_road_LDV_4W,Van,start-year,,1
 trn_shipping_intl,International Ship,start-year,,1
-# Passthrough tranSubsectors are listed below,,,,
+# Passthrough tranSubsectors are listed below
 trn_pass,road,start-year,,1
 trn_pass_road,LDV,start-year,,1
 trn_pass_road,bus,start-year,,1

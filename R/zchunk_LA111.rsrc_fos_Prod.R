@@ -24,7 +24,6 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
              FILE = "energy/IEA_product_rsrc",
              FILE = "energy/rsrc_unconv_oil_prod_bbld",
              FILE = "energy/A11.fos_curves",
-             FILE = "energy/prebuilt_data/L111.RsrcCurves_EJ_R_Ffos",
              "L100.IEA_en_bal_ctry_hist",
              "L1011.en_bal_EJ_R_Si_Fi_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -115,6 +114,18 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       bind_rows(select(L111.Prod_EJ_ctry_unconvOil_Yh, GCAM_region_ID, sector, fuel, year, value)) ->
       L111.Prod_EJ_R_F_Yh
 
+    # Produce outputs
+    L111.Prod_EJ_R_F_Yh %>%
+      add_title("Historical fossil energy production") %>%
+      add_units("EJ") %>%
+      add_comments("Determine regional shares of production for each primary fuel, ") %>%
+      add_comments("interpolate unconventional oil production to all historical years, ") %>%
+      add_comments("deduct unconventional oil from total oil and include it in calibrated production table.") %>%
+      add_legacy_name("L111.Prod_EJ_R_F_Yh") %>%
+      add_precursors("common/iso_GCAM_regID", "L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "energy/rsrc_unconv_oil_prod_bbld") ->
+      L111.Prod_EJ_R_F_Yh
+
     # ------- FOSSIL RESOURCE SUPPLY CURVES
 
     # Using supply curves from GCAM 3.0 (same as MiniCAM) (83-93)
@@ -126,9 +137,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
     # pre-built output datasets and exit.
     if(is.null(L100.IEA_en_bal_ctry_hist)) {
       # Proprietary IEA energy data are not available, so used saved outputs
-      get_data(all_data, "energy/prebuilt_data/L111.RsrcCurves_EJ_R_Ffos") %>%
-        add_comments("** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **") ->
-        L111.RsrcCurves_EJ_R_Ffos
+      L111.RsrcCurves_EJ_R_Ffos <- prebuilt_data("L111.RsrcCurves_EJ_R_Ffos")
     } else {
 
       L100.IEA_en_bal_ctry_hist %>%
@@ -187,36 +196,27 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
         left_join_keep_first_only(select(A11.fos_curves, resource, subresource, grade, extractioncost),
                                   by = c("resource", "subresource", "grade")) ->
         L111.RsrcCurves_EJ_R_Ffos
+
+      # ------- RESOURCE PRICES
+
+      # Fossil resource historical prices are currently assumed. No level1 processing is needed.
+
+      # Produce outputs
+
+      L111.RsrcCurves_EJ_R_Ffos %>%
+        add_title("Fossil resource supply curves", overwrite = TRUE) %>%
+        add_units("available: EJ; extractioncost: 1975$/GJ") %>%
+        add_comments("Downscale GCAM3.0 supply curves to the country level (on the basis of resource") %>%
+        add_comments("production) and aggregate by the new GCAM regions.") %>%
+        add_comments("Use crude oil production shares as a proxy for unconventional oil resources.") %>%
+        add_legacy_name("L111.RsrcCurves_EJ_R_Ffos") %>%
+        add_precursors("common/iso_GCAM_regID", "energy/A11.fos_curves",
+                       "energy/IEA_product_rsrc", "L100.IEA_en_bal_ctry_hist") ->
+        L111.RsrcCurves_EJ_R_Ffos
+
+      # At this point output should be identical to the prebuilt version
+      verify_identical_prebuilt(L111.RsrcCurves_EJ_R_Ffos)
     }
-
-    # ------- RESOURCE PRICES
-
-    # Fossil resource historical prices are currently assumed. No level1 processing is needed.
-
-
-    # Produce outputs
-    L111.Prod_EJ_R_F_Yh %>%
-      add_title("Historical fossil energy production") %>%
-      add_units("EJ") %>%
-      add_comments("Determine regional shares of production for each primary fuel, ") %>%
-      add_comments("interpolate unconventional oil production to all historical years, ") %>%
-      add_comments("deduct unconventional oil from total oil and include it in calibrated production table.") %>%
-      add_legacy_name("L111.Prod_EJ_R_F_Yh") %>%
-      add_precursors("common/iso_GCAM_regID", "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                     "energy/rsrc_unconv_oil_prod_bbld") ->
-      L111.Prod_EJ_R_F_Yh
-
-    L111.RsrcCurves_EJ_R_Ffos %>%
-      add_title("Fossil resource supply curves", overwrite = TRUE) %>%
-      add_units("available: EJ; extractioncost: 1975$/GJ") %>%
-      add_comments("Downscale GCAM3.0 supply curves to the country level (on the basis of resource") %>%
-      add_comments("production) and aggregate by the new GCAM regions.") %>%
-      add_comments("Use crude oil production shares as a proxy for unconventional oil resources.") %>%
-      add_legacy_name("L111.RsrcCurves_EJ_R_Ffos") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/A11.fos_curves",
-                     "energy/IEA_product_rsrc", "L100.IEA_en_bal_ctry_hist",
-                     "energy/prebuilt_data/L111.RsrcCurves_EJ_R_Ffos") ->
-      L111.RsrcCurves_EJ_R_Ffos
 
     return_data(L111.Prod_EJ_R_F_Yh, L111.RsrcCurves_EJ_R_Ffos)
   } else {

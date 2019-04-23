@@ -1,6 +1,8 @@
 # File: IEA_ctry.csv
 # Title: Mapping between iso codes and country names in IEA databases
 # Units: NA
+# Column types: ccc 
+# ----------
 IEA_ctry,iso,IEA_Fert_reg
 Albania,alb,Central European countries
 Algeria,dza,Africa

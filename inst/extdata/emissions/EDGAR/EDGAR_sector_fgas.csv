@@ -3,6 +3,8 @@
 # Units: NA
 # Source:  Emissions Database for Global Atmospheric Research, AR4
 # Description: EDGAR sector Fgases description from AR4
+# Column types: ccc 
+# ----------
 IPCC,IPCC_description,agg_sector
 1A1a,Public electricity and heat production,elec_heat
 1A1bc,Other Energy Industries,industry_energy

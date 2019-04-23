@@ -2,6 +2,8 @@
 # Title: Commercial floorspace by state
 # Units: Billion m2
 # Source: Written by LA144.Commercial.R from an earlier version of GCAM-USA
+# Column types: ccnnnnnnnn 
+# ----------
 state,GCAM_sector,X1975,X1980,X1985,X1990,X1995,X2000,X2005,X2008
 AK,comm,0.00505321,0.005398191,0.009820448,0.01022155,0.010520984,0.012603565,0.013446931,0.013821262
 AL,comm,0.072051395,0.076263726,0.098189297,0.1158003,0.121323255,0.117509477,0.119969552,0.123464733
