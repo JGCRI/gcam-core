@@ -14,7 +14,7 @@
 #'  The corresponding file in the original data system was \code{L2321.cement_USA.R} (gcam-usa level2).
 #' @details Make the logit and input tables for the cement sector in gcam-usa
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange distinct filter if_else group_by left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author KD  November 2017
 module_gcam.usa_L2321.cement_USA <- function(command, ...) {

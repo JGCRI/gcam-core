@@ -11,7 +11,7 @@
 #' @details Calculates agriculture emissions shares by GCAM region, commodity, GLU, and historical year.
 #' Downscales EDGAR agricultural emissions to GCAM region, commodity, GLU, and historical year
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise transmute
 #' @importFrom tidyr gather spread
 #' @author RH July 2017
 

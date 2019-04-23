@@ -13,7 +13,7 @@
 #' is then combined with ratios of irrigated to rainfed yield from the FAO CROSIT database to compute
 #' irrigated and rainfed production.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr distinct filter full_join if_else group_by left_join mutate right_join select summarize
 #' @importFrom tidyr gather spread replace_na
 #' @author KVC April 2017
 #' @export

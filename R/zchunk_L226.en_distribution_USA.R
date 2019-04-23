@@ -26,7 +26,7 @@
 #' }
 #' The corresponding file in the original data system was \code{L226.en_distribution_USA.R} (gcam-usa level2).
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select summarize
 #' @importFrom tidyr gather spread
 #' @author ACS Oct 2017
 module_gcam.usa_L226.en_distribution_USA <- function(command, ...) {

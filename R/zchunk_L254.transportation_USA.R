@@ -31,7 +31,7 @@
 #' pass-through technologies are normal, standard GCAM technologies, not "tranTechnologies" which have different
 #' parameters read in, and perform a bunch of hard-wired unit conversions between inputs and outputs.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select semi_join summarise
 #' @importFrom tidyr gather spread
 #' @author RC Oct 2017
 module_gcam.usa_L254.transportation_USA <- function(command, ...) {
@@ -215,7 +215,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
     # Model may make up calibration values otherwise.
     L254.StubTranTechCoef_USA %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      select_if(names(L254.StubTranTechCoef_USA) %in% LEVEL2_DATA_NAMES[["StubTranTechCalInput"]]) %>%
+      select(names(.)[names(.) %in% LEVEL2_DATA_NAMES[["StubTranTechCalInput"]]]) %>%
       left_join(L254.StubTranTechCalInput_USA,
                 by = c("region", "supplysector", "tranSubsector", "stub.technology", "year", "minicam.energy.input")) %>%
       # Set calibration values as zero for technolgies that do not exist in some base years
@@ -288,7 +288,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       # Some of the technologies are sub-totals, assign zero value now, will be calculated below
       replace_na(list(output_agg = 0)) %>%
       # Arrange input sectors so that sub-total sector is behind the subsectors
-      arrange(desc(minicam.energy.input)) %>%
+      arrange(dplyr::desc(minicam.energy.input)) %>%
       group_by(region, year) %>%
       # Calculate the cumulative for sub-total sector
       mutate(output_cum = cumsum(output_agg)) %>%

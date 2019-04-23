@@ -11,7 +11,7 @@
 #' @details This chunk calculates the production-weighted average
 #' residue biomass parameters by GCAM region and commodity.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter full_join group_by mutate select summarize_if
 #' @importFrom tidyr gather spread
 #' @author RC March 2017
 module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {

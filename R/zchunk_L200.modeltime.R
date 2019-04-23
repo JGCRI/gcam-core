@@ -11,7 +11,6 @@
 #' @details Generate the model time information needed to interact with Hector or MAGICC.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
-#' @import dplyr
 #' @importFrom tidyr gather spread
 #' @author BBL
 module_modeltime_L200.modeltime <- function(command, ...) {

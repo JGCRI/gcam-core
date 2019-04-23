@@ -11,7 +11,7 @@
 #' @details For unmanaged and managed pasture, adjust data so that their ratio is 0.25 and add node leaf names.
 #' We do this for both historical and model base periods, isolating low-growth regions (defined by \code{aglu.LOW_GROWTH_PCGDP}).
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter left_join mutate pull select
 #' @importFrom tidyr gather spread
 #' @author BBL June 2017
 module_aglu_L242.ssp34_pasture <- function(command, ...) {

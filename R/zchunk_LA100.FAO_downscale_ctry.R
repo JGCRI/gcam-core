@@ -14,8 +14,8 @@
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
 #' @importFrom stats aggregate
-#' @import dplyr
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter full_join left_join rename select
+#' @importFrom tidyr gather replace_na spread
 #' @author BBL
 module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

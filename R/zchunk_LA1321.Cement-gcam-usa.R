@@ -12,7 +12,7 @@
 #' @details The state shares were determined by the states' relative values of cement shipments.
 #' @details The input-out coefficients were downscaled to the states in proportation to the national data.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter mutate pull select summarise
 #' @importFrom tidyr gather spread
 #' @author AS May 2017
 module_gcam.usa_LA1321.Cement <- function(command, ...) {

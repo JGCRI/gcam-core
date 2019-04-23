@@ -13,7 +13,7 @@
 #' fertilizer net exports by GCAM region / year as production minus consumption, and fertilizer input-output coefficients
 #' by GCAM region / commodity / year / GLU.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter full_join group_by left_join mutate right_join select semi_join summarise
 #' @importFrom tidyr gather spread
 #' @author RC June 2017
 module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {

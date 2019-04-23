@@ -15,7 +15,7 @@
 #' @details Generate GCAM policy constraints which enforce limits to liquid feedstocks
 #' and the amount of subsidies given for net negative emissions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter if_else group_by mutate select summarize
 #' @importFrom tidyr gather spread
 #' @importFrom magrittr %<>%
 #' @author PLP March 2018
@@ -166,7 +166,7 @@ module_energy_L270.limits <- function(command, ...) {
         L270.NegEmissBudget
 
       # the negative emissions final demand must only be included in just one region (could be any)
-      L270.NegEmissFinalDemand %<>% slice(1)
+      L270.NegEmissFinalDemand %<>% dplyr::slice(1)
     }
 
     # Produce outputs

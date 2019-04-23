@@ -235,7 +235,7 @@ return_data <- function(...) {
     # any other data could not possibly be grouped so we can skip the
     # check for them
     if(is_tibble(dots[[dname]])) {
-      assert_that(is.null(groups(dots[[dname]])), msg =
+      assert_that(is.null(dplyr::groups(dots[[dname]])), msg =
                     paste0(dname, " is being returned grouped. This is not allowed; please ungroup()"))
     }
   })
