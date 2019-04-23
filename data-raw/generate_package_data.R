@@ -209,6 +209,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["StubTechElecMarket"]] <- c(level2_data_names[["StubTechYr"]], "electric.sector.market")
   level2_data_names[["StubTechFractSecOut"]] <- c(level2_data_names[["StubTechYr"]], "fractional.secondary.output", "output.ratio")
   level2_data_names[["StubTechFractProd"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "fractional.secondary.output", "price", "fraction.produced")
+  level2_data_names[["StubTechFractCalPrice"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "fractional.secondary.output", "calPrice")
   level2_data_names[["StubTechIntGainOutputRatio"]] <- c("region", "supplysector", "subsector", "technology", "year", "internal.gains.output.ratio", "internal.gains.market.name")
   level2_data_names[["StubTechSecOut"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "secondary.output.name", "secondary.output")
   level2_data_names[["StubTechSecMarket"]] <- c(level2_data_names[["StubTechYr"]], "secondary.output", "market.name")

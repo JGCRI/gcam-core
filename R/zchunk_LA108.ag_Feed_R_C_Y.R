@@ -23,7 +23,8 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
              FILE = "aglu/FAO/FAO_ag_items_cal_SUA",
              "L100.FAO_ag_Feed_t",
              "L101.ag_Prod_Mt_R_C_Y",
-             "L107.an_Feed_Mt_R_C_Sys_Fd_Y"))
+             "L107.an_Feed_Mt_R_C_Sys_Fd_Y",
+             "L122.FeedOut_Mt_R_C_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L108.ag_Feed_Mt_R_C_Y",
              "L108.ag_NetExp_Mt_R_FodderHerb_Y"))
@@ -32,7 +33,8 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     iso <- item <- year <- value <- GCAM_commodity <- GCAM_region_ID <- feed <-
       Feedfrac <- FodderHerb <- FodderHerb_Residue <- residual <-
       total_residual <- share <- Residue <- PastFodderGrass_Demand <-
-      Production <- Feed <- OtherUses <- NULL # silence package check.
+      Production <- Feed <- OtherUses <- fractional.secondary.output <-
+      feedcakes <- ddgs_feedcakes <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -42,13 +44,35 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     L100.FAO_ag_Feed_t <- get_data(all_data, "L100.FAO_ag_Feed_t")
     L101.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y")
     L107.an_Feed_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Feed_Mt_R_C_Sys_Fd_Y")
+    L122.FeedOut_Mt_R_C_Yh <- get_data(all_data, "L122.FeedOut_Mt_R_C_Yh")
+
+    # 4/12/2019 revision - include DDGS and feedcakes. This is somewhat complicated. FAOSTAT includes oilcrop feedcakes
+    # (e.g., soybean, rapeseed) that are co-produced with oils, irrespective of whether the oil is later used to produce
+    # biofuels. As such, the secondary output of feed from "biomassOil" is included in the reported oil crop feed
+    # numbers. However, DDGS from corn ethanol production are excluded from reported Corn -> Feed in FAOSTAT. For this
+    # reason, the methods below treat DDGS and feedcakes differently. Specifically, DDGS and biofuel-related feedcakes
+    # are both added as a new source of animal feed, but the biofuel-related feedcakes quantity is deducted from the
+    # prior reported oilcrop -> Feed totals.
+
+    # First, determine the oilcrop feedcakes from biofuel production that are tracked as secondary outputs
+    # The method assumes that DDGS come from corn, and anything else reported is oilcrop-related.
+    L108.feedcakes <- filter(L122.FeedOut_Mt_R_C_Yh, GCAM_commodity != "Corn") %>%
+      select(GCAM_region_ID, GCAM_commodity, year, feedcakes = value)
+
+    L108.DDGS_feedcakes <- select(L122.FeedOut_Mt_R_C_Yh, -GCAM_commodity) %>%
+      rename(GCAM_commodity = fractional.secondary.output) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, year) %>%
+      summarise(value = sum(value)) %>%
+      ungroup() %>%
+      complete(nesting(GCAM_commodity, year), GCAM_region_ID = sort(unique(iso_GCAM_regID$GCAM_region_ID)),
+               fill = list(value = 0)) %>%
+      select(GCAM_region_ID, GCAM_commodity, year, value)
 
     # Part 1: FEEDCROPS
     # Compute regional feedcrop demands by GCAM region, commodity, and year in Mt/yr.
     # Use crop-specific information from FAO, in combination with feed totals from IMAGE,
     # to calculate region/crop specific information. This ensures totals match IMAGE and shares match FAO.
     # First, calculate FAO totals by crop, region, and year. Then, use this compute % of feed from each crop in each region/year.
-
 
     L100.FAO_ag_Feed_t %>%
       select(iso, item, year, value) %>%
@@ -61,6 +85,9 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       ungroup() %>%
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
                GCAM_commodity, year, fill = list(value = 0)) %>%                                   # Fill in missing region/commodity combinations with 0
+      left_join(L108.feedcakes, by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%            # Bring in the feedcakes quantities to deduct from the estimated oil crops -> feed
+      mutate(value = if_else(is.na(feedcakes), value, value - feedcakes)) %>%
+      select(-feedcakes) %>%
       group_by(GCAM_region_ID, year) %>%
       mutate(Feedfrac = value / sum(value)) %>%                                                    # Calculate each crop's share of total feed in a region
       replace_na(list(Feedfrac = 0)) ->                                  # Replace missing data with 0 (assumes no share for those crops)
@@ -73,13 +100,24 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       ungroup() ->                                                                                # Ungrouping so "feed" column can be deleted later
       an_Feed_Mt_R_C_Y                                                                            # Save this dataframe for use in each feed category later
 
-    # Finally, compute feedcrop demand by region, crop, and year using IMAGE totals and feed fractions computed above
+    # 4/12/2019 revision, cont'd: because DDGS and biofuel-related feedcakes are coming from calibrated energy
+    # technologies in quantities that can not be scaled, the values in L108.DDGS_feedcakes need to be subtracted from
+    # this IMAGE-based animal feed total, with the remainder apportioned to the (non-DDGS and biofuel-related feedcakes).
+    # The steps below deduct the DDGS and feedcakes totals from the animal feed quantity computed above.
+
+    # Compute feedcrop demand by region, crop, and year using IMAGE totals, minus DDGS and feedcakes, multiplied by feed
+    # fractions computed above
     an_Feed_Mt_R_C_Y %>%
       filter(feed == "FeedCrops") %>%                                                              # Filter to only include "FeedCrops"
+      left_join_error_no_match(select(L108.DDGS_feedcakes, GCAM_region_ID, year, ddgs_feedcakes = value),
+                               by = c("GCAM_region_ID", "year")) %>%
+      mutate(value = value - ddgs_feedcakes) %>%
+      select(-ddgs_feedcakes) %>%
       right_join(select(ag_Feed_Mt_R_Cnf_Y, GCAM_region_ID, GCAM_commodity, year, Feedfrac),
                  by = c("GCAM_region_ID", "year")) %>%                                             # Map in feed fractions computed from FAO data
       mutate(value = value * Feedfrac) %>%                                                         # Compute FAO-IMAGE adjusted feed crop demand
-      select(-feed, -Feedfrac) ->
+      select(-feed, -Feedfrac) %>%
+      bind_rows(L108.DDGS_feedcakes) ->                                                            # Bind with the DDGS and feedcakes commodity(s)
       ag_Feed_Mt_R_Cnf_Y_adj
 
     # FODDERHERB/RESIDUE
@@ -215,7 +253,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       add_comments("Note: excess FodderGrass and FodderHerb production are mapped to OtherUses") %>%
       add_legacy_name("L108.ag_Feed_Mt_R_C_Y") %>%
       add_precursors("common/iso_GCAM_regID", "aglu/FAO/FAO_ag_items_cal_SUA", "L100.FAO_ag_Feed_t",
-                     "L101.ag_Prod_Mt_R_C_Y", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") ->
+                     "L101.ag_Prod_Mt_R_C_Y", "L107.an_Feed_Mt_R_C_Sys_Fd_Y", "L122.FeedOut_Mt_R_C_Yh") ->
       L108.ag_Feed_Mt_R_C_Y
 
     ag_NetExp_Mt_R_FodderHerb_Y %>%

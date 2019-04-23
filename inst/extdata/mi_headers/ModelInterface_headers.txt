@@ -371,6 +371,8 @@ StubTechFractSecOut, world/+{name}region, region/+{name}supplysector, supplysect
 
 StubTechFractProd, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}fractional-secondary-output, fractional-secondary-output/+{price}fraction-produced, fractional-secondary-output/+fraction-produced, scenario, scenario/world
 
+StubTechFractCalPrice,world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}fractional-secondary-output, fractional-secondary-output/+calPrice, scenario, scenario/world
+
 #####, STUB TRANSPORTATION TECHNOLOGY
 
 
