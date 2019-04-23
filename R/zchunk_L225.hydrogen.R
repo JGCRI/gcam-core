@@ -10,7 +10,7 @@
 #' original data system was \code{L225.hydrogen.R} (energy level2).
 #' @details Provides supply sector information, subsector information, technology information for hydrogen sectors.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange filter group_by mutate select
 #' @importFrom tidyr gather spread
 #' @author LF Augest 2017
 module_energy_L225.hydrogen <- function(command, ...) {

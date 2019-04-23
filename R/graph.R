@@ -6,6 +6,7 @@
 #' @param include_disabled Plots nodes of disabled chunks?
 #' @param quiet Suppress messages?
 #' @return Adjacency matrix showing chunk-to-chunk data flows
+#' @importFrom dplyr bind_rows distinct filter group_by inner_join left_join mutate right_join select summarise ungroup
 #' @importFrom grDevices rainbow
 #' @importFrom graphics plot title
 #' @export
@@ -94,7 +95,7 @@ graph_chunks <- function(module_filter = NULL,
   # Compute number of outputs
   chunkoutputs %>%
     group_by(name) %>%
-    summarise(noutputs = n()) %>%
+    summarise(noutputs = dplyr::n()) %>%
     right_join(chunklist, by = "name") ->
     chunklist
 

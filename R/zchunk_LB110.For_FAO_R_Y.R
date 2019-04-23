@@ -13,7 +13,7 @@
 #' FAO Production, Export, and Import data. FAO Production data is used to scale Net Exports
 #' at the Region level such that Global Production equals Consumption.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by mutate select summarise summarise_all
 #' @importFrom tidyr gather spread
 #' @author MC and ACS March 2017
 module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {

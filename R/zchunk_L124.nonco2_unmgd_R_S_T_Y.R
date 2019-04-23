@@ -14,7 +14,7 @@
 #' Compute global average deforestation emissions coefficients using deforestation from 2000 to 2005.
 #' Note: File does not calculate emissions from BC/OC (separate chunk) or NH3 (seemingly omitted)
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter if_else group_by inner_join left_join mutate select summarize
 #' @importFrom tidyr gather spread
 #' @author KVC May 2017
 module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {

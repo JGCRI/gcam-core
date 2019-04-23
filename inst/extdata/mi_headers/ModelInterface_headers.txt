@@ -11,6 +11,12 @@ MAGICC, MagiccModel/+last-historical-year, MagiccModel/+bc-unit-forcing, MagiccM
 
 hector, HectorModel/+hector-end-year, HectorModel/+emissions-switch-year, HectorModel/+hector-ini-file, HectorModel/+carbon-model-start-year, scenario, scenario/world, world/HectorModel
 
+NoClimateModel, no-climate-model/+carbon-model-start-year, scenario, scenario/world, world/no-climate-model
+
+DeleteMAGICC, world/{delete=1}MagiccModel, scenario, scenario/world
+
+DeleteHector, world/{delete=1}HectorModel, scenario, scenario/world
+
 #####, REGION
 
 

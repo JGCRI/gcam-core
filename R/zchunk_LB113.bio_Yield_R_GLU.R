@@ -15,7 +15,7 @@
 #' Biomass production in switchgrass across the United States: database description and determinants
 #' of yield. Agronomy Journal 102: 1158-1168. doi:10.2134/agronj2010.0087.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr distinct filter group_by inner_join mutate pull select summarise
 #' @importFrom tidyr gather spread
 #' @author BBL June 2017
 module_aglu_LB113.bio_Yield_R_GLU <- function(command, ...) {
@@ -106,7 +106,8 @@ module_aglu_LB113.bio_Yield_R_GLU <- function(command, ...) {
       add_legacy_name("L113.ag_bioYield_GJm2_R_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.LDS_ag_HA_ha",
-                     "L100.LDS_ag_prod_t") ->
+                     "L100.LDS_ag_prod_t",
+                     "L101.ag_HA_bm2_R_C_Y_GLU") ->
       L113.ag_bioYield_GJm2_R_GLU
 
     return_data(L113.ag_bioYield_GJm2_R_GLU)

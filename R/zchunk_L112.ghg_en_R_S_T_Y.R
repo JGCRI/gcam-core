@@ -10,7 +10,7 @@
 #' original data system was \code{L112.ghg_en_R_S_T_Y.R} (emissions level1).
 #' @details Calculates emissions using EPA emissions factors and energy data. Then scales to EDGAR emissions and calculates emissions factors.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author RH July 2017
 module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {

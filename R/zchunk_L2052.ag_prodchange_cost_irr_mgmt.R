@@ -11,7 +11,7 @@
 #' @details This chunk maps the production costs of crops, biomass and forest to all four technologies (irrigated / rainfed; high / low),
 #' and calculates future productivity change of crops and biomass for all technologies along reference, high, low and SSP4 scenarios.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter mutate one_of pull select
 #' @importFrom tidyr gather spread
 #' @author RC July 2017
 module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {

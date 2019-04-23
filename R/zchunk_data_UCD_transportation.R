@@ -14,7 +14,6 @@
 #' that we'd rather not suppress universally.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
-#' @import dplyr
 #' @importFrom tidyr gather spread
 #' @author BBL June 2017
 module_data_UCD_transportation <- function(command, ...) {

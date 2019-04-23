@@ -11,7 +11,7 @@
 #' @details This chunk generate (water demand) technology coefficients for each GCAM region for base years and future years,
 #' with information of supplysector, subsector, technology, minicam.energy.input and market.name.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author YL May 2017
 module_water_L210.water.demand.primary <- function(command, ...) {

@@ -27,7 +27,7 @@
 #'  \item{Shareweights of offshore carbon storage technologies}
 #' }
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter mutate select
 #' @importFrom tidyr gather spread
 #' @author AJS August 2017
 module_energy_L261.Cstorage <- function(command, ...) {

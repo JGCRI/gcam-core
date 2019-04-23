@@ -10,7 +10,6 @@
 #' original data system was \code{LA112.U.R} (energy level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author HM April 2017
 module_energy_LA112.U <- function(command, ...) {

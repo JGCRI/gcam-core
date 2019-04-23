@@ -43,7 +43,7 @@
 #' AgLU regions are given externally defined constant logit information. From L222.LN1_UnmgdAllocation_prot"}
 #' }
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr distinct filter left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author ACS August 2017
 module_aglu_L222.land_input_2 <- function(command, ...) {
