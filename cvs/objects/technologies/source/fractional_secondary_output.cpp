@@ -147,6 +147,9 @@ bool FractionalSecondaryOutput::XMLParse( const DOMNode* aNode )
         else if( nodeName == "output-ratio" ) {
             mOutputRatio.set( XMLHelper<double>::getValue( curr ) );
         }
+        else if( nodeName == "calPrice" ) {
+            mCalPrice.set( XMLHelper<double>::getValue( curr ) );
+        }
         else if( nodeName == "market-name" ) {
             mMarketName = XMLHelper<string>::getValue( curr );
         }
@@ -177,6 +180,7 @@ void FractionalSecondaryOutput::toDebugXML( const int aPeriod,
 {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     XMLWriteElement( mOutputRatio, "output-ratio", aOut, aTabs );
+    XMLWriteElement( mCalPrice, "calPrice", aOut, aTabs );
     XMLWriteElement( mPhysicalOutputs[ aPeriod ], "output", aOut, aTabs );
     
     const vector<pair<double,double> > pairs = mCostCurve->getSortedPairs();
@@ -222,6 +226,13 @@ void FractionalSecondaryOutput::initCalc( const string& aRegionName,
                                           const string& aSectorName,
                                           const int aPeriod )
 {
+    // If we are in a calibration period and a calibrated value was read in set the
+    // flag on the market that this resource is fully calibrated.
+    if( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() && mCalPrice.isInited() ) {
+        IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName, aPeriod, true );
+        marketInfo->setBoolean( "fully-calibrated", true );
+    }
+    
     // The fractional supply will not have any additional behavior below the minimum price
     // however there may still be some indirect behavior above the top of the curve as it affects
     // the primary good's economics.
@@ -330,6 +341,10 @@ double FractionalSecondaryOutput::calcPhysicalOutputInternal( const string& aReg
                                                               const double aPrimaryOutput,
                                                               const int aPeriod ) const
 {
+    // If we are calibrating then always assume an output ratio of 1.
+    if( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() && mCalPrice.isInited() ) {
+        return aPrimaryOutput * mOutputRatio;
+    }
     double maxSecondaryOutput = aPrimaryOutput * mOutputRatio;
     double secondaryGoodPrice = getMarketPrice( aRegionName, aPeriod );
     // do not allow extrapolation
