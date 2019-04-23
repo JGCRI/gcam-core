@@ -14,7 +14,7 @@ test_that("screening for use of forbidden functions works", {
     y <- MODEL_FUTURE_YEARS
   }
 
-  testbad <- function(x, d) {
+  testbad_L10 <- function(x, d) {
     # This function makes no sense, but it does use all of the currently forbidden functions,
     # including match
     y <- ifelse(x < 0,0, x)
@@ -33,7 +33,7 @@ test_that("screening for use of forbidden functions works", {
   }
 
   expect_equal(screen_forbidden(testgood_L20), character())
-  tb <- screen_forbidden(testbad)
+  tb <- screen_forbidden(testbad_L10)
   expect_equivalent(tb[,1], c("consecutive mutate calls", "(?<!error_no_)match(?!es)",
                          "ifelse", "ifelse", "melt", "cast", "rbind",
                          "cbind", "merge", "MODEL_BASE_YEARS", "MODEL_FUTURE_YEARS"))
