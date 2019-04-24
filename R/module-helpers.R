@@ -203,8 +203,10 @@ set_years <- function(data) {
 #' @param data Base tibble to start from
 #' @param names Character vector indicating the column names of the returned tibble
 #' @note Used for USA national data by GCAM region, which is repeated for each US state
+#' @note Contains an argument which allows user to specify a different region list.
+#' @note For example, this is occasionally used to write all USA data to GCAM-USA grid regions.
 #' @return Tibble with data written out to all USA states
-write_to_all_states <- function(data, names) {
+write_to_all_states <- function(data, names, region_list = gcamusa.STATES) {
 
   assert_that(is_tibble(data))
   assert_that(is.character(names))
@@ -222,38 +224,7 @@ write_to_all_states <- function(data, names) {
   data %>%
     set_years %>%
     mutate(region = NULL) %>% # remove region column if it exists
-    repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
-    select(names)
-}
-
-
-#' write_to_all_grid_regions
-#'
-#' write out data to all GCAM-USA grid regions
-#'
-#' @param data Base tibble to start from
-#' @param names Character vector indicating the column names of the returned tibble
-#' @note Used for GCAM-USA when repeating information for each USA electricity grid region
-#' @return Tibble with data written out to all USA grid regions
-write_to_all_grid_regions <- function(data, names) {
-
-  assert_that(is_tibble(data))
-  assert_that(is.character(names))
-
-  region <- NULL  # silence package check notes
-
-  if("logit.year.fillout" %in% names) {
-    data$logit.year.fillout <- "start-year"
-  }
-
-  if("price.exp.year.fillout" %in% names) {
-    data$price.exp.year.fillout <- "start-year"
-  }
-
-  data %>%
-    set_years %>%
-    mutate(region = NULL) %>% # remove region column if it exists
-    repeat_add_columns(tibble(region = gcamusa.GRID_REGIONS)) %>%
+    repeat_add_columns(tibble(region = region_list)) %>%
     select(names)
 }
 

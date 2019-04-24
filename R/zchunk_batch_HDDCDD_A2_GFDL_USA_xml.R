@@ -1,4 +1,4 @@
-#' module_gcamusa_batch_HDDCDD_A2_GFDL_USA.xml
+#' module_gcamusa_batch_HDDCDD_A2_GFDL_USA_xml
 #'
 #' Construct XML data structure for \code{HDDCDD_A2_GFDL_USA.xml}.
 #'
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{HDDCDD_A2_GFDL_USA.xml}. The corresponding file in the
 #' original data system was \code{batch_HDDCDD_A2_GFDL_USA.xml} (gcamusa XML).
-module_gcamusa_batch_HDDCDD_A2_GFDL_USA.xml <- function(command, ...) {
+module_gcamusa_batch_HDDCDD_A2_GFDL_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L244.HDDCDD_A2_GFDL_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {

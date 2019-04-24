@@ -1,4 +1,4 @@
-#' module_water_batch_water_elec_USA_ref_xml
+#' module_gcamusa_batch_water_elec_USA_ref_xml
 #'
 #' Construct XML data structure for \code{water_elec_USA_ref.xml}.
 #'
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{water_elec_USA_ref.xml}. The corresponding file in the
 #' original data system was \code{batch_water_elec_USA_ref_xml.R} (water XML).
-module_water_batch_water_elec_USA_ref_xml <- function(command, ...) {
+module_gcamusa_batch_water_elec_USA_ref_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L2233.StubTech_WaterCoef_ref"))
   } else if(command == driver.DECLARE_OUTPUTS) {

@@ -119,15 +119,19 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
 
     # Creating vertical segments in grid regions
     L2235.Supplysector_elecS_grid_vertical <-
-      write_to_all_grid_regions(A23.elecS_sector_vertical,
-                                c("region", "supplysector", "output.unit", "input.unit", "price.unit",
-                                  "logit.year.fillout", "logit.exponent" , "logit.type"))
+      write_to_all_states(A23.elecS_sector_vertical,
+                          c("region", "supplysector", "output.unit", "input.unit", "price.unit",
+                            "logit.year.fillout", "logit.exponent" , "logit.type"),
+                          # NOTE: writing to all grid regions, rather than states
+                          region_list = gcamusa.GRID_REGIONS)
 
     L2235.ElecReserve_elecS_grid_vertical <-
-      write_to_all_grid_regions(A23.elecS_metainfo_vertical %>%
-                                  select(-region),
-                                c("region", "supplysector","electricity.reserve.margin",
-                                  "average.grid.capacity.factor"))
+      write_to_all_states(A23.elecS_metainfo_vertical %>%
+                            select(-region),
+                          c("region", "supplysector","electricity.reserve.margin",
+                            "average.grid.capacity.factor"),
+                          # NOTE: writing to all grid regions, rather than states
+                          region_list = gcamusa.GRID_REGIONS)
 
     # Subsector share-weights for vertical segment supplysectors
     L2235.Supplysector_elecS_grid_vertical %>%
