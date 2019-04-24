@@ -1,6 +1,7 @@
 # File: A23.elecS_subsector_logit.csv
 # Title: Multiple Load Segments Subsector Logit Exponents
 # Units: unitless
+# Source: None (GCAM assumptions)
 # Column types: ccic 
 # ----------
 supplysector,subsector,logit.exponent,logit.type

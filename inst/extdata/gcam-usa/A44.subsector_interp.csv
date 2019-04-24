@@ -1,6 +1,7 @@
 # File: A44.subsector_interp.csv
 # Title: Building subsector default shareweight interpolation
 # Units: NA
+# Source: None (GCAM assumptions)
 # Column types: cccccnc 
 # ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function

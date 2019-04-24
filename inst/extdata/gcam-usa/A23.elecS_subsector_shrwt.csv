@@ -1,7 +1,7 @@
 # File: A23.elecS_subsector_shrwt.csv
 # Title: Multiple Load Segments Subsector Shareweights
 # Units: unitless
-# Comments: Subsector shareweights at points of inflexion
+# Comments: Subsector shareweights at points of inflection (end-points of interpolation function)
 # Column types: cccci 
 # ----------
 region,supplysector,subsector,year,share.weight

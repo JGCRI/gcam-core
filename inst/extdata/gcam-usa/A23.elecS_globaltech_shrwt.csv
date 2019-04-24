@@ -2,6 +2,7 @@
 # Title: MLS Electricity Sector Technology Shareweights
 # Units: unitless
 # Comments: USA multiple load segments electricity sector technology shareweight assumptions
+# Source: None (GCAM assumptions)
 # Column types: ccciiii 
 # ----------
 supplysector,subsector,technology,1971,2010,2011,2100

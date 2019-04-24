@@ -1,4 +1,4 @@
-#' module_gcam.usa_LB1234.elec_gridregions_USA
+#' module_gcamusa_LB1234.elec_gridregions_USA
 #'
 #' Calculate electricity fuel consumption and electricity generation by grid region.
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author MTB August 2018
-module_gcam.usa_LB1234.elec_gridregions_USA <- function(command, ...) {
+module_gcamusa_LB1234.elec_gridregions_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              "L123.in_EJ_state_elec_F",
@@ -36,7 +36,7 @@ module_gcam.usa_LB1234.elec_gridregions_USA <- function(command, ...) {
 
     # ===================================================
     # Data Processing
-    
+
     # Take in state-level data on electric power sector fuel consumption, aggregate to grid regions
     L123.in_EJ_state_elec_F %>%
       left_join_error_no_match(states_subregions %>%
@@ -57,7 +57,7 @@ module_gcam.usa_LB1234.elec_gridregions_USA <- function(command, ...) {
 
     # ===================================================
     # Produce outputs
-    
+
     L1234.in_EJ_grid_elec_F %>%
       add_title("Fuel input into electricity by fuel and grid region") %>%
       add_units("EJ") %>%

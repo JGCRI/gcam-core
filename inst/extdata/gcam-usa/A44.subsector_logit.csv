@@ -1,6 +1,7 @@
 # File: A44.subsector_logit.csv
 # Title: Building subsector default logit exponents
 # Units: Unitless
+# Source: None (GCAM assumptions)
 # Column types: ccic 
 # ----------
 supplysector,subsector,logit.exponent,logit.type
