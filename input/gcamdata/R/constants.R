@@ -539,16 +539,14 @@ gcamusa.SE_NEAR_TERM_YEAR <- 2030  # year after which projected growth rates fro
 gcamusa.AEO_SE_YEAR <- 2040   # year to which AEO 2016 socioeconomic assumptions run
 
 # Assumptions related to coal
-# Define assumptions about lifetimes for generators/units without data.
-# The categories chosen for lifetime assumptions are such that capacity in each category is roughly same.
-# This is done to get a somewhat smooth behavior for coal retirements
-# Assume lifetime for units built after 1970
+# Define assumptions about lifetimes for generators/units without retirement information.
+# Existing coal units built before 1970 will retire at the average lifetime of their vintage group.
+gcamusa.COAL_REMAINING_LIFETIME <- 20   # The max remaining lifetime of coal units built before 1970.
+
+# Vintage groups built after 1970 will retire based on the S-curve.
+# Assumed lifetime and S-curve parametetrs for coal units built after 1970:
 gcamusa.AVG_COAL_PLANT_LIFETIME <- 80
 gcamusa.AVG_COAL_PLANT_HALFLIFE <- 70
-
-# The max remaining lifetime of existing coal that will retire at the average lifetime of that vintage group
-# Vintage groups with longer remaining life will retire based on the S-curve.
-gcamusa.COAL_REMAINING_LIFETIME <- 20
 gcamusa.COAL_RETIRE_STEEPNESS <- 0.3
 
 # Profit shutdown parameters
@@ -556,6 +554,8 @@ gcamusa.MEDIAN_SHUTDOWN_POINT <- -0.1
 gcamusa.PROFIT_SHUTDOWN_STEEPNESS <- 6
 
 # Define vintage bins and categories
+# These categories chosen for lifetime assumptions are such that capacity in each category is roughly same.
+# This is done to get a somewhat smooth behavior for coal retirements.
 gcamusa.COAL_VINTAGE_BREAKS <- c(0, seq(1950, 2015, 5))
 gcamusa.COAL_VINTAGE_LABELS <- c("before 1950", "1951-1955", "1956-1960", "1961-1965", "1966-1970", "1971-1975", "1976-1980",
                                  "1981-1985", "1986-1990", "1991-1995", "1996-2000", "2001-2005", "2006-2010", "2011-2015")

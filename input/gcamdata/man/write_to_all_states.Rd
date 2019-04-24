@@ -4,7 +4,7 @@
 \alias{write_to_all_states}
 \title{write_to_all_states}
 \usage{
-write_to_all_states(data, names)
+write_to_all_states(data, names, region_list = gcamusa.STATES)
 }
 \arguments{
 \item{data}{Base tibble to start from}
@@ -19,4 +19,8 @@ write out data to all states
 }
 \note{
 Used for USA national data by GCAM region, which is repeated for each US state
+
+Contains an argument which allows user to specify a different region list.
+
+For example, this is occasionally used to write all USA data to GCAM-USA grid regions.
 }

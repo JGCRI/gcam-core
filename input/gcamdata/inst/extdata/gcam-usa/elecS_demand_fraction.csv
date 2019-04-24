@@ -2,7 +2,7 @@
 # Title: Fraction of grid-level electricity demand by vertical segment
 # Units: unitless (fraction)
 # Comments: This table specifies the fraction of electricity demand supplied by vertical segment.
-# Source: estimated from recent U.S. annual hourly (8760) load duration curves
+# Source: None (GCAM assumptions). Based on a representative U.S. annual hourly (8760) load duration curve (internal; unpublished).
 # Column types: cnnnn 
 # ----------
 grid_region,off.peak.electricity.demand,intermediate.electricity.demand,subpeak.electricity.demand,peak.electricity.demand

@@ -889,16 +889,20 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
 
     # 3. Build csvs for grid region sectors and append them to state-level tables where possible.
     # Create horizontal and vertical supplysectors in grid regions
-    L2234.Supplysector_elecS_grid <- write_to_all_grid_regions(
-      A23.elecS_sector, c( "region", "supplysector", "output.unit", "input.unit", "price.unit",
-                           "logit.year.fillout", "logit.exponent", "logit.type" ))
+    L2234.Supplysector_elecS_grid <- write_to_all_states(A23.elecS_sector,
+                                                         c( "region", "supplysector", "output.unit", "input.unit", "price.unit",
+                                                            "logit.year.fillout", "logit.exponent", "logit.type" ),
+                                                         # NOTE: writing to all grid regions, rather than states
+                                                         region_list = gcamusa.GRID_REGIONS)
 
     L2234.Supplysector_elecS_USA %>%
       bind_rows(L2234.Supplysector_elecS_grid) -> L2234.Supplysector_elecS_USA
 
-    L2234.ElecReserve_elecS_grid <- write_to_all_grid_regions(
-      A23.elecS_metainfo %>% select(-region),
-      c("region", "supplysector","electricity.reserve.margin", "average.grid.capacity.factor"))
+    L2234.ElecReserve_elecS_grid <- write_to_all_states(A23.elecS_metainfo %>% select(-region),
+                                                        c("region", "supplysector","electricity.reserve.margin",
+                                                          "average.grid.capacity.factor"),
+                                                        # NOTE: writing to all grid regions, rather than states
+                                                        region_list = gcamusa.GRID_REGIONS)
 
     L2234.ElecReserve_elecS_USA %>%
       bind_rows(L2234.ElecReserve_elecS_grid) -> L2234.ElecReserve_elecS_USA

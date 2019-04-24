@@ -1,6 +1,7 @@
 # File: calibrated_techs_bld_usa.csv
 # Title: Mapping between the sectors / services / fuels in Level1 processing to the technology names in GCAM
 # Units: NA
+# Source: None (GCAM assumptions)
 # Column types: ccccccc 
 # ----------
 supplysector,subsector,technology,minicam.energy.input,sector,fuel,service

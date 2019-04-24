@@ -1,4 +1,4 @@
-#' module_gcamusa_batch_HDDCDD_constdds_USA.xml
+#' module_gcamusa_batch_HDDCDD_constdds_USA_xml
 #'
 #' Construct XML data structure for \code{HDDCDD_constdds_USA.xml}.
 #'
@@ -7,7 +7,7 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{HDDCDD_constdds_USA.xml}.
-module_gcamusa_batch_HDDCDD_constdds_USA.xml <- function(command, ...) {
+module_gcamusa_batch_HDDCDD_constdds_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L244.HDDCDD_constdds_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
