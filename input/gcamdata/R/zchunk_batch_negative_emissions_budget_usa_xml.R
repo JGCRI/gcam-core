@@ -1,4 +1,4 @@
-#' module_gcam.usa_batch_negative_emissions_budget_usa_xml
+#' module_gcamusa_batch_negative_emissions_budget_usa_xml
 #'
 #' Construct XML data structure for \code{paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), ".xml")}.
 #'
@@ -7,7 +7,7 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)), ".xml")}.
-module_gcam.usa_batch_negative_emissions_budget_usa_xml <- function(command, ...) {
+module_gcamusa_batch_negative_emissions_budget_usa_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( paste0("L270.NegEmissBudget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5))),
            "L270.NegEmissBudgetMaxPrice_USA"))

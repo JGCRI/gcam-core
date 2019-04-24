@@ -1,4 +1,4 @@
-#' module_gcam.usa_LA100.Socioeconomics
+#' module_gcamusa_LA100.Socioeconomics
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -14,7 +14,7 @@
 #' @import dplyr
 #' @importFrom tidyr gather spread
 #' @author BBL
-module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
+module_gcamusa_LA100.Socioeconomics <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/BEA_pcGDP_09USD_state",

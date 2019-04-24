@@ -1,4 +1,4 @@
-#' module_gcam.usa_LB1233.Elec_water
+#' module_gcamusa_LB1233.Elec_water
 #'
 #' Compute water withdrawals/consumption by state, fuel, technology, and cooling system type.
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author ST October 2017
-module_gcam.usa_LB1233.Elec_water <- function(command, ...) {
+module_gcamusa_LB1233.Elec_water <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/UCS_tech_names",

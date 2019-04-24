@@ -189,9 +189,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["PrimaryRenewKeywordInt"]] <- c(level2_data_names[["GlobalTechYr"]], "primary.renewable")
   level2_data_names[["GlobalTechCTaxInput"]] <- c(level2_data_names[["GlobalTechYr"]], "ctax.input", "fuel.C.coef")
   level2_data_names[["DeleteGlobalTechInput"]] <- level2_data_names[["GlobalTechInput"]]
-  level2_data_names[["GlobalTechRegPriceAdj"]] <- level2_data_names[["GlobalTechCost"]]
-  level2_data_names[["GlobalIntTechRegPriceAdj"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "minicam.non.energy.input", "input.cost")
-
+  level2_data_names[["GlobalIntTechCost"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "minicam.non.energy.input", "input.cost")
+  
   # Stub technologies
   level2_data_names[["StubTech"]] <- c("region", "supplysector", "subsector", "stub.technology")
   level2_data_names[["StubTechYr"]] <- c(level2_data_names[["StubTech"]], "year")

@@ -1,6 +1,7 @@
 # File: A23.elecS_sector.csv
 # Title: Horizontal Load Segment Supplysector Characteristics
 # Units: NA
+# Comments: Same assumptions as energy/A23.sector.csv
 # Column types: ccccic 
 # ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type

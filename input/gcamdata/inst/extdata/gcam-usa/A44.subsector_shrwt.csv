@@ -1,6 +1,7 @@
 # File: A44.subsector_shrwt.csv
 # Title: Building subsector default shareweights
 # Units: Unitless
+# Source: None (GCAM assumptions)
 # Column types: ccccn 
 # ----------
 supplysector,subsector,year.fillout,year,share.weight

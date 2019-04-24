@@ -1,6 +1,7 @@
 # File: A44.sector.csv
 # Title: Building sector default supplysector information (units and logit exponents)
 # Units: NA
+# Source: None (GCAM assumptions)
 # Column types: ccccicc 
 # ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type,final.energy

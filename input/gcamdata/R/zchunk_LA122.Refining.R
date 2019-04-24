@@ -1,4 +1,4 @@
-#' module_gcam.usa_LA122.Refining
+#' module_gcamusa_LA122.refining
 #'
 #' Downscales crude oil, corn ethanol, and biodiesel refining inputs and outputs to state-level.
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
-module_gcam.usa_LA122.Refining <- function(command, ...) {
+module_gcamusa_LA122.refining <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L122.in_EJ_R_refining_F_Yh",
              "L122.out_EJ_R_refining_F_Yh",

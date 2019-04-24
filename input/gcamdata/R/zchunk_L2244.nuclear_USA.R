@@ -19,7 +19,7 @@
 module_gcamusa_L2244.nuclear_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/nuc_gen2",
-             FILE = "gcam-usa/A23.elecS_tech_associations",
+             FILE = "gcam-usa/A23.elecS_tech_mapping",
              FILE = "gcam-usa/A23.elecS_tech_availability"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2244.StubTechSCurve_nuc_gen2_USA"))
@@ -33,7 +33,7 @@ module_gcamusa_L2244.nuclear_USA <- function(command, ...) {
 
     # Load required inputs
     nuc_gen2 <- get_data(all_data, "gcam-usa/nuc_gen2")
-    A23.elecS_tech_associations <- get_data(all_data, "gcam-usa/A23.elecS_tech_associations")
+    A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping")
     A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability")
 
     # -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ module_gcamusa_L2244.nuclear_USA <- function(command, ...) {
     # Prepare table to read in s-curve parameters for base-year nuclear Gen II technology.
     # L2244.StubTechSCurve_elecS_nuc_gen2: S-curve shutdown decider for historic U.S. nuclear plants
 
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       anti_join(A23.elecS_tech_availability, by = c("Electric.sector.technology" = "stub.technology")) %>%
       filter(subsector == "nuclear") %>%
       select(Electric.sector, subsector, Electric.sector.technology) ->
@@ -135,7 +135,7 @@ module_gcamusa_L2244.nuclear_USA <- function(command, ...) {
       add_legacy_name("L2244.StubTechSCurve_nuc_gen2_USA") %>%
       add_precursors("gcam-usa/nuc_gen2",
                      "gcam-usa/A23.elecS_tech_availability",
-                     "gcam-usa/A23.elecS_tech_associations") ->
+                     "gcam-usa/A23.elecS_tech_mapping") ->
       L2244.StubTechSCurve_nuc_gen2_USA
 
     return_data(L2244.StubTechSCurve_nuc_gen2_USA)

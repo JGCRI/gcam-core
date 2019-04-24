@@ -2,6 +2,7 @@
 # Title: Building sector internal gain coefficients
 # Units: Unitless (heat released within building envelope per unit of energy input)
 # Comments:  NOTE:  this table should include all techs of non-thermal services (even zeroes)
+# Source: Table 12a in https://www.nrel.gov/docs/fy08osti/42011.pdf (some technologies only).
 # Column types: cccn 
 # ----------
 supplysector,subsector,technology,input.ratio

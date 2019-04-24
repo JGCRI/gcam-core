@@ -1,4 +1,4 @@
-#' module_gcam.usa_L2011.socioeconomics_update_USA
+#' module_gcamusa_L2011.socioeconomics_update_USA
 #'
 #' Population and labor productivity updates for GCAM-USA.  2015 population & labor productivity updated to match
 #' historical values.  Future year population projections updated based on NCAR downsalced SSP2 data. Labor
@@ -21,7 +21,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author MTB August 2018
-module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
+module_gcamusa_L2011.socioeconomics_update_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/Census_pop_hist",

@@ -131,8 +131,8 @@ module_gcamusa_LA1233.Process_UCS_data_ref <- function(command, ...) {
                               ungroup()%>%
                               dplyr::select(State,plant_type,Fuel)),
                            capacity_tech_state,
-                           by=c("State","plant_type","Fuel"))$x)%>%
-     mutate(year=year_i)->
+                           by=c("State","plant_type","Fuel"))$x,
+            year=year_i)->
      capacity_tech_cooling
 
 
@@ -255,11 +255,11 @@ module_gcamusa_LA1233.Process_UCS_data_ref <- function(command, ...) {
     left_join(complete_tech_cooling_share%>%spread(key=`Cooling Technology`,value=x),
               complete_tech_cooling_share%>%group_by(plant_type,Fuel,technology,State,NEMS,year)%>%summarise(sumy=sum(x,na.rm=T)),
               by=c("plant_type","Fuel","technology","State","NEMS","year"))%>%
-      mutate(sumx=rowSums(select(.,`cooling pond`,`dry cooling`,dry_hybrid,none,`once through`,recirculating),na.rm=T))%>%
-      mutate(`dry cooling`=case_when((!is.na(`dry cooling`) & sumy<0.85 & year==2020 & (Fuel=="gas" | Fuel=="biomass" | Fuel=="coal" | Fuel=="refined liquids") & `Reported Water Source (Type)`=="fresh")~0.05,TRUE~`dry cooling`),
+      mutate(sumx=rowSums(select(.,`cooling pond`,`dry cooling`,dry_hybrid,none,`once through`,recirculating),na.rm=T),
+             `dry cooling`=case_when((!is.na(`dry cooling`) & sumy<0.85 & year==2020 & (Fuel=="gas" | Fuel=="biomass" | Fuel=="coal" | Fuel=="refined liquids") & `Reported Water Source (Type)`=="fresh")~0.05,TRUE~`dry cooling`),
              `cooling pond`=case_when((!is.na(`cooling pond`) & sumy<0.85 & year==2020 & (Fuel=="gas" | Fuel=="nuclear" | Fuel=="biomass" | Fuel=="coal" | Fuel=="refined liquids") & `Reported Water Source (Type)`=="fresh")~0.05,TRUE~`cooling pond`),
-             `once through`=case_when((!is.na(`once through`) & sumy<0.85 & year==2020 & (Fuel=="gas" | Fuel=="nuclear" | Fuel=="biomass" | Fuel=="coal" | Fuel=="refined liquids") & `Reported Water Source (Type)`=="seawater")~0.05,TRUE~`once through`))%>%
-      mutate(sumx=rowSums(select(.,`cooling pond`,`dry cooling`,dry_hybrid,none,`once through`,recirculating),na.rm=T))->
+             `once through`=case_when((!is.na(`once through`) & sumy<0.85 & year==2020 & (Fuel=="gas" | Fuel=="nuclear" | Fuel=="biomass" | Fuel=="coal" | Fuel=="refined liquids") & `Reported Water Source (Type)`=="seawater")~0.05,TRUE~`once through`),
+             sumx=rowSums(select(.,`cooling pond`,`dry cooling`,dry_hybrid,none,`once through`,recirculating),na.rm=T))->
       complete_tech_cooling_share_Edited
 
     left_join(complete_tech_cooling_share_Edited%>%dplyr::select(-sumy),
@@ -270,8 +270,8 @@ module_gcamusa_LA1233.Process_UCS_data_ref <- function(command, ...) {
              recirculating=case_when((sumy!=0 & sumy!=1 & `Reported Water Source (Type)`=="fresh")~recirculating+(1-sumy),
                                      (Fuel=="solar CSP" & `Reported Water Source (Type)`=="fresh")~recirculating+(1-sumy),
                                      (Fuel=="geothermal" & `Reported Water Source (Type)`=="fresh")~recirculating+(1-sumy),
-                                     TRUE~recirculating))%>%
-      mutate(sumx=rowSums(select(.,`cooling pond`,`dry cooling`,dry_hybrid,none,`once through`,recirculating),na.rm=T))%>%
+                                     TRUE~recirculating),
+             sumx=rowSums(select(.,`cooling pond`,`dry cooling`,dry_hybrid,none,`once through`,recirculating),na.rm=T))%>%
       dplyr::select(-sumx,-sumy)%>%
       gather(key=`Cooling Technology`,value=x,-Fuel,-technology,-State,-plant_type,-`Reported Water Source (Type)`,-year,-NEMS)%>%
       spread(key=year,value=x)%>%

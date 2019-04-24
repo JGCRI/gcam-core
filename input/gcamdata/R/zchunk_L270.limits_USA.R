@@ -1,4 +1,4 @@
-#' module_gcam.usa_L270.limits_USA
+#' module_gcamusa_L270.limits_USA
 #'
 #' Add the 50 states to the USA market in each of the L270 limits polices.  In
 #' particular to limit the fraction of liquid feedstocks and inputs to electricity
@@ -17,12 +17,12 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter
 #' @author PLP June 2018
-module_gcam.usa_L270.limits_USA <- function(command, ...) {
+module_gcamusa_L270.limits_USA <- function(command, ...) {
   negative_emiss_input_names <- paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)) )
   negative_emiss_output_names <- sub('NegEmissBudget', 'NegEmissBudget_USA', negative_emiss_input_names)
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
-             FILE = "gcam-usa/A23.elecS_tech_associations",
+             FILE = "gcam-usa/A23.elecS_tech_mapping",
              FILE = "gcam-usa/A23.elecS_tech_availability",
              "L270.CreditOutput",
              "L270.CreditMkt",
@@ -49,7 +49,7 @@ module_gcam.usa_L270.limits_USA <- function(command, ...) {
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    A23.elecS_tech_associations <- get_data(all_data, "gcam-usa/A23.elecS_tech_associations")
+    A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping")
     A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability")
     L270.CreditMkt <- get_data(all_data, "L270.CreditMkt")
     L270.CreditOutput <- get_data(all_data, "L270.CreditOutput")
@@ -65,14 +65,14 @@ module_gcam.usa_L270.limits_USA <- function(command, ...) {
       L270.CreditMkt_USA
 
     L270.CreditOutput %>%
-      mutate(sector.name = "oil refining") %>%
-      mutate(subsector.name = "oil refining") ->
+      mutate(sector.name = "oil refining",
+             subsector.name = "oil refining") ->
       L270.CreditOutput_USA
 
     L270.CreditInput_elec %>%
       # join is intended to duplicate rows
       # left_join_error_no_match throws error, so left_join is used
-      left_join(A23.elecS_tech_associations %>%
+      left_join(A23.elecS_tech_mapping %>%
                                  select(-subsector_1),
                                by = c("sector.name" = "supplysector",
                                       "subsector.name" = "subsector",
@@ -117,7 +117,7 @@ module_gcam.usa_L270.limits_USA <- function(command, ...) {
       add_units("Elec coef * constraint") %>%
       add_comments("Consumes oil-credits limiting the blend of refined liquids that can be used generate electricity") %>%
       add_comments("Adding GCAM_USA electricity load segment refined liquids technologies as consumers of oil-credits") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L270.CreditInput_elec") ->
       L270.CreditInput_elecS_USA

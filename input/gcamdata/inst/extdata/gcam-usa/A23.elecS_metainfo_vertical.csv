@@ -1,7 +1,10 @@
 # File: A23.elecS_metainfo_vertical.csv
 # Title: Vertical Load Segment Supplysector Characteristics
 # Units: unitless
-# Vertical segment supplysector characteristics
+# Comments: Vertical segment supplysector characteristics
+# Same assumptions as energy/A23.sector.csv; corresponding to vertical (demand-side) electricity load segment sectors
+# Electricity reserve margin: required excess capacity for purposes of grid reliability
+# Average grid capacity factor: exogenous assumption allowing conversion between explicitly modeled generation and capacity
 # Column types: ccnn 
 # ----------
 region,supplysector,electricity.reserve.margin,average.grid.capacity.factor

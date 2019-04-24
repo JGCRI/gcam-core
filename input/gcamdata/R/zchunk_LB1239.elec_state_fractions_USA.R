@@ -1,4 +1,4 @@
-#' module_gcam.usa_LB1239.elec_state_fractions_USA
+#' module_gcamusa_LB1239.elec_state_fractions_USA
 #'
 #' Map electricity generation by fuel | grid region | horizontal segment to generation by fuel | state | segment.
 #' The fraction of generation by fuel by horizontal segment is assumed to be equal for all states within a grid region.
@@ -15,7 +15,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author MTB August 2018
-module_gcam.usa_LB1239.elec_state_fractions_USA <- function(command, ...) {
+module_gcamusa_LB1239.elec_state_fractions_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              "L123.out_EJ_state_elec_F",
