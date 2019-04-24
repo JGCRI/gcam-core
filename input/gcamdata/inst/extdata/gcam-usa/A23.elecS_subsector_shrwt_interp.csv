@@ -2,4 +2,6 @@
 # Title: Multiple Load Segments Subsector Shareweights
 # Units: unitless
 # Comments: Subsector shareweights for subsectors that are fixed at calibration values
+# Column types: ccccccc 
+# ----------
 region,supplysector,subsector,apply.to,from.year,to.year,interpolation.function

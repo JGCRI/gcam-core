@@ -3,6 +3,8 @@
 # Unit: MW
 # Comments: Selected columns from original form
 # Source: https://www.eia.gov/electricity/data/eia860/
+# Column types: ciciiccnn 
+# ----------
 State,Plant.Code,Generator.ID,Operating.Year,Planned.Retirement.Year,Prime.Mover,Energy.Source.1,Summer.Capacity..MW.,Nameplate.Capacity..MW.
 AL,2,1,1963,,HY,WAT,56,53.9
 AL,3,1,1954,2019,ST,NG,55,153.1

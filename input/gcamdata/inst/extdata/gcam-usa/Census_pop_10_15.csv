@@ -1,7 +1,9 @@
-# File: Census_pop_10_15.csv,,,,,,,
-# Title: U.S. Census Bureau Population by State,,,,,,,
-# Units: number of persons,,,,,,,
-# Source: U.S. Census Bureau (https://www2.census.gov/programs-surveys/popest/tables/2010-2016/state/totals/nst-est2016-01.xlsx),,,,,,,
+# File: Census_pop_10_15.csv
+# Title: U.S. Census Bureau Population by State
+# Units: number of persons
+# Source: U.S. Census Bureau (https://www2.census.gov/programs-surveys/popest/tables/2010-2016/state/totals/nst-est2016-01.xlsx)
+# Column types: ciiiiiii 
+# ----------
 state,2010,2011,2012,2013,2014,2015,2016
 AL,4785492,4799918,4815960,4829479,4843214,4853875,4863300
 AK,714031,722713,731089,736879,736705,737709,741894

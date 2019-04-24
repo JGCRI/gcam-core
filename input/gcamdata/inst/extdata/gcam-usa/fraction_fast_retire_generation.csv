@@ -3,6 +3,8 @@
 # Units: Unitless
 # Comments: The data is based on changes to each stata's coal electricity generation between 2010-2015.
 # Source: Based on data from EIA electricity data browser. https://www.eia.gov/electricity/data/browser/#/topic/0?agg=2,1,0&fuel=8&geo=g0fvvvvvvvvvo&sec=008&freq=A&start=2001&end=2016&ctype=linechart&ltype=pin&rtype=s&maptype=0&rse=0&pin=
+# Column types: cn 
+# ----------
 region,fast.retire
 CA,1
 DC,1

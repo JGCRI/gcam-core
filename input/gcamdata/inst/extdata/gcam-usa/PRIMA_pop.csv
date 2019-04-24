@@ -1,7 +1,7 @@
 # File: PRIMA_pop.csv
 # Title: 2005-2100 population projections by state
 # Units: Persons
-# Source: Scott, M., D.S. Daly, Y. Zhou, J.S. Rice, P.L. Patel, H.C. McJeon, G.P. Kyle, S.H. Kim, J. Eom, and L.E. Clarke. 2014. Evaluating sub-national building-energy efficiency policy options under uncertainty: Efficient sensitivity testing of alternative climate, technological, and socioeconomic futures in a regional integrated-assessment model. Energy Economics 43: 22-33. http://dx.doi.org/10.1016/j.eneco.2014.01.012
+# Source: Scott et al. 2014. Evaluating sub-national building-energy efficiency policy options under uncertainty: Efficient sensitivity testing of alternative climate; technological; and socioeconomic futures in a regional integrated-assessment model. Energy Economics 43: 22-33. http://dx.doi.org/10.1016/j.eneco.2014.01.012
 # Column types: ciiiiiiiiiiiiiiiiiiii 
 # ----------
 state,2005,2010,2015,2020,2025,2030,2035,2040,2045,2050,2055,2060,2065,2070,2075,2080,2085,2090,2095,2100

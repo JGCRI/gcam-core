@@ -1,8 +1,10 @@
-# File: elecS_fuel_fraction.csv,,,,,
-# Title: Fraction of electricity generation by fuel across horizontal load segments,,,,,
-# Units: unitless (fraction),,,,,
-# Comments: This table provides initial estimates of the fractions of electricity generation by fuel by horizontal segment. The starting assumption is that 87.14% of coal is available for baseload generation and the remaining 12.85% is available for intermediate generation.,,,,,
-# Source: reasonable initial values for heuristic algorithm to begin,,,,,
+# File: elecS_fuel_fraction.csv
+# Title: Fraction of electricity generation by fuel across horizontal load segments
+# Units: unitless (fraction)
+# Comments: This table provides initial estimates of the fractions of electricity generation by fuel by horizontal segment. The starting assumption is that 87.14% of coal is available for baseload generation and the remaining 12.85% is available for intermediate generation.
+# Source: reasonable initial values for heuristic algorithm to begin
+# Column types: ccnnnn 
+# ----------
 fuel,segment,fraction1975,fraction1990,fraction2005,fraction2010
 coal,base load generation,0.80336,0.80336,0.87143,0.87143
 coal,intermediate generation,0.19664,0.19664,0.12857,0.12857

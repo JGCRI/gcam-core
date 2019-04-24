@@ -1,7 +1,9 @@
-# File: A23.elecS_globaltech_shrwt.csv,,,,,,
-# Title: MLS Electricity Sector Technology Shareweights,,,,,,
-# Units: unitless,,,,,,
-# Comments: USA multiple load segments electricity sector technology shareweight assumptions,,,,,,
+# File: A23.elecS_globaltech_shrwt.csv
+# Title: MLS Electricity Sector Technology Shareweights
+# Units: unitless
+# Comments: USA multiple load segments electricity sector technology shareweight assumptions
+# Column types: ccciiii 
+# ----------
 supplysector,subsector,technology,1971,2010,2011,2100
 base load generation,coal,coal_base_conv pul,1,1,1,1
 intermediate generation,coal,coal_int_conv pul,1,1,1,1

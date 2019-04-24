@@ -3,6 +3,8 @@
 # Units: 2005$/MW
 # Comments: These costs are the additional cost in $/MW (2005 USD) for interconnecting to the grid on top of the capital and OM costs. Note that we need to apply an FCR to these interconnection costs.
 # Source: Information based on ReEDS version 2017.  Files provided by ReEDS team in April 2017.
+# Column types: ccnnnnn 
+# ----------
 BA,PV.class,upvsc1,upvsc2,upvsc3,upvsc4,upvsc5
 p1,class1,37456.78997,41621.54069,48543.01123,0,0
 p1,class2,32652.34938,59765.9759,104399.1106,156791.876,228726.68

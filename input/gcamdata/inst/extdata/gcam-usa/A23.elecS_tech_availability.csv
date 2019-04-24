@@ -2,6 +2,8 @@
 # Title: Unavailable Load Segment / Technology Combinations
 # Units: NA
 # Comments: Specify which load segment / technology combinations will not be created
+# Column types: cccc 
+# ----------
 region,supplysector,subsector,stub.technology
 USA,subpeak generation,biomass,biomass_subpeak_conv
 USA,subpeak generation,biomass,biomass_subpeak_conv_CCS
