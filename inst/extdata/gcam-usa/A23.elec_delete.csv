@@ -1,7 +1,9 @@
-# File: A23.elec_delete.csv,
-# Title: USA Electricity Sectors to be Deleted,
-# Units: N/A,
-# Comments: This table lists the various elements to be deleted from the existing electricity generation sectors from the USA,
+# File: A23.elec_delete.csv
+# Title: USA Electricity Sectors to be Deleted
+# Units: N/A
+# Comments: This table lists the various elements to be deleted from the existing electricity generation sectors from the USA
+# Column types: cc 
+# ----------
 region,supplysector
 USA,electricity
 USA,electricity_net_ownuse

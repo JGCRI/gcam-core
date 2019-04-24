@@ -1,7 +1,9 @@
-# File: BEA_GDP_87_96_97USD_state.csv,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-# Title: Real GDP by State (All Industry Total) 1987-1996,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-# Units: millions of chained 1997 dollars,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-# Source: Bureau of Economic Analysis ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+# File: BEA_GDP_87_96_97USD_state.csv
+# Title: Real GDP by State (All Industry Total) 1987-1996
+# Units: millions of chained 1997 dollars
+# Source: Bureau of Economic Analysis 
+# Column types: iccccccccccccccccccccccccciiiiiiiiii 
+# ----------
 Fips,Area,1963,1964,1965,1966,1967,1968,1969,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996
 1000,Alabama,,,,,,,,,,,,,,,,,,,,,,,,,78659,82507,82408,83766,86115,89814,91168,94803,98024,101379
 2000,Alaska,,,,,,,,,,,,,,,,,,,,,,,,,29525,27843,28985,28772,25821,26151,26048,26188,27608,27271

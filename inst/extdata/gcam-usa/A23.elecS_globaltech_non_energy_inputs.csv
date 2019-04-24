@@ -1,8 +1,10 @@
-# File: A23.elecS_globaltech_non_energy_inputs.csv,,,,,,,,,,,
-# Title: Non-Energy Inputs for Technologies Specific to the Multiple Load Segments Electricity Sector,,,,,,,,,,,
-# Units: capital costs - 1975 $/kW; fixed-om costs - 1975 $/kW; variable OM costs - 1975 $/MWh,,,,,,,,,,,
-# Comments: Non-energy inputs for new technologies that are not included in the energy system global technology database.  Shareweights are read in separately.,,,,,,,,,,,
-# Source: battery assumptions compiled from several sources (Lazard, 2016) (Schmidt et al., 2017) (Rastler, 2010) (Chen et al., 2009)",,,,,,,,,,,
+# File: A23.elecS_globaltech_non_energy_inputs.csv
+# Title: Non-Energy Inputs for Technologies Specific to the Multiple Load Segments Electricity Sector
+# Units: capital costs - 1975 $/kW; fixed-om costs - 1975 $/kW; variable OM costs - 1975 $/MWh
+# Comments: Non-energy inputs for new technologies that are not included in the energy system global technology database.  Shareweights are read in separately.
+# Source: battery assumptions compiled from several sources (Lazard, 2016) (Schmidt et al., 2017) (Rastler, 2010) (Chen et al., 2009)
+# Column types: cccininininn 
+# ----------
 supplysector,subsector,technology,period,capital.cost,lifetime,steepness,half.life,fixed.om,variable.om,fcr,capacity.factor
 peak generation,grid_storage,battery,1975,442.8107493,-1,-1,-1,0.399958096,0,0.13,0.16
 peak generation,grid_storage,battery,1990,442.8107493,-1,-1,-1,0.399958096,0,0.13,0.16

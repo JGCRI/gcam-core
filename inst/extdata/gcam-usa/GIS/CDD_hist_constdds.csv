@@ -3,6 +3,8 @@
 # Units: Fahrenheit Degree Days
 # Description: Cooling Degree Days by state; fixed at historical (2008) levels
 # Reference: Based on CDD_His.csv; See inst/extdata/gcam-usa/GIS/README
+# Column types: cnnnnnnnnnn 
+# ----------
 state,2008,2020,2030,2040,2050,2060,2070,2080,2090,2100
 AK,141.598312,141.598312,141.598312,141.598312,141.598312,141.598312,141.598312,141.598312,141.598312,141.598312
 AL,2665.761963,2665.761963,2665.761963,2665.761963,2665.761963,2665.761963,2665.761963,2665.761963,2665.761963,2665.761963

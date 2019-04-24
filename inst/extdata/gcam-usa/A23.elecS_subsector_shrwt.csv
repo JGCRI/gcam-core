@@ -2,6 +2,8 @@
 # Title: Multiple Load Segments Subsector Shareweights
 # Units: unitless
 # Comments: Subsector shareweights at points of inflexion
+# Column types: cccci 
+# ----------
 region,supplysector,subsector,year,share.weight
 USA,base load generation,coal,initial-future-year,1
 USA,intermediate generation,coal,initial-future-year,1

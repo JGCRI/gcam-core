@@ -1,6 +1,8 @@
-# File: A23.elecS_sector.csv,,,,,
-# Title: Horizontal Load Segment Supplysector Characteristics,,,,,
-# Units: NA,,,,,
+# File: A23.elecS_sector.csv
+# Title: Horizontal Load Segment Supplysector Characteristics
+# Units: NA
+# Column types: ccccic 
+# ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
 base load generation,EJ,EJ,1975$/GJ,-3,relative-cost-logit
 intermediate generation,EJ,EJ,1975$/GJ,-3,relative-cost-logit

@@ -1,7 +1,9 @@
-# File: state_census_region.csv,,
-# Title: Mapping File for States to US Census Divisions (9),,
-# Units: NA,,
-# Source: U.S. Census Bureau (https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf),,
+# File: state_census_region.csv
+# Title: Mapping File for States to US Census Divisions (9)
+# Units: NA
+# Source: U.S. Census Bureau (https://www2.census.gov/geo/pdfs/maps-data/maps/reference/us_regdiv.pdf)
+# Column types: cci 
+# ----------
 state,census_region,census_region_id
 AK,Pacific,9
 AL,East South Central,6

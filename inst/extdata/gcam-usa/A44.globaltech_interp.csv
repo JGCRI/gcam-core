@@ -2,7 +2,7 @@
 # Title: Share-weight interpolation rule over-writes for selected technologies
 # Units: NA
 # Comments:  Can be useful for smoothing behavior of efficiency-partitioned technologies
-# Column types: cccciicn 
+# Column types: cccccicn 
 # ----------
 supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,to.value
 resid hot water,electricity,electric heat pump water heater,share-weight,final-calibration-year,2050,s-curve,1

@@ -3,6 +3,8 @@
 # Units: 2013 $/kW (Original data was in 2014$/kW which is converted to 2013 $/kW)
 # Comments: Based on "Adv Tech Case" in DOE report "Energy CO2 Emissions Impacts of Clean Energy Technology Innovation and Policy".
 # Source: Constructed from file received from Elke Hodson (DOE-EPSA) [Filename: Adv Tech and QER Gen Tech Info for GCAM 06-22-2016.xlx]; https://energy.gov/sites/prod/files/2017/01/f34/Energy%20CO2%20Emissions%20Impacts%20of%20Clean%20Energy%20Technology%20Innovation%20and%20Policy.pdf
+# Column types: icn 
+# ----------
 year,GCAM.technology,overnight.cost
 2015,coal (IGCC),3246.050049
 2015,coal (IGCC CCS),4558.227816

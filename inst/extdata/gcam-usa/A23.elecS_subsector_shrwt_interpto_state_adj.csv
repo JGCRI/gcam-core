@@ -2,6 +2,8 @@
 # Title: State-Specific Multiple Load Segments Subsector Shareweight Assumptions
 # Units: unitless
 # Comments: Subsector share-weights which need a to-value - adjusting values for particular states
+# Column types: ccccccic 
+# ----------
 region,supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 HI,base load generation,gas,share-weight,final-calibration-year,initial-future-year,0,linear
 HI,intermediate generation,gas,share-weight,final-calibration-year,initial-future-year,0,linear

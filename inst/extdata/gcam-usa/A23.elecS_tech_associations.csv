@@ -1,7 +1,9 @@
-# File: A23.elecS_tech_associations.csv,,,,,
-# Title: MLS Technology Associations in the Single Electricity Sector,,,,,
-# Units: NA,,,,,
-# Comments: Mapping file between single electricity sector and multiple load segments electricity sector technologies,,,,,
+# File: A23.elecS_tech_associations.csv
+# Title: MLS Technology Associations in the Single Electricity Sector
+# Units: NA
+# Comments: Mapping file between single electricity sector and multiple load segments electricity sector technologies
+# Column types: cccccc 
+# ----------
 Electric.sector,subsector,Electric.sector.technology,supplysector,subsector_1,technology
 base load generation,coal,coal_base_conv pul,electricity,coal,coal (conv pul)
 intermediate generation,coal,coal_int_conv pul,electricity,coal,coal (conv pul)

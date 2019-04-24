@@ -1,8 +1,10 @@
-# File: AEO_2015_HDDCDD.csv,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-# Title: AEO 2015 Heating Degree Days and Cooling Degree Days,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-# Units: degree days,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-# Comments: Heating degree day and cooling degree day assumptions consistent with AEO 2015,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-# Source: EIA Annual Energy Outlook (AEO) 2015 - https://www.eia.gov/outlooks/aeo/pdf/0383(2015).pdf,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+# File: AEO_2015_HDDCDD.csv
+# Title: AEO 2015 Heating Degree Days and Cooling Degree Days
+# Units: degree days
+# Comments: Heating degree day and cooling degree day assumptions consistent with AEO 2015
+# Source: EIA Annual Energy Outlook (AEO) 2015 - https://www.eia.gov/outlooks/aeo/pdf/0383(2015).pdf
+# Column types: cciiiiiiiiiiiiiiiiiiiiiiiiiiiiiii 
+# ----------
 subregion9,variable,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040
 New England,HDD,5934,6114,5561,6424,6795,6346,6115,6093,6072,6051,6030,6009,5988,5966,5945,5924,5903,5882,5860,5839,5818,5796,5775,5754,5732,5711,5689,5668,5646,5625,5603
 Atlantic-N,HDD,5553,5483,4970,5836,6307,5699,5503,5484,5465,5446,5427,5409,5390,5371,5352,5333,5314,5295,5276,5258,5239,5220,5201,5183,5164,5146,5127,5109,5090,5072,5054

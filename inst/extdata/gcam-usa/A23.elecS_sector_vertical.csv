@@ -1,6 +1,8 @@
-# File: A23.elecS_sector_vertical.csv,,,,,
-# Title: Vertical Load Segment Supplysector Characteristics,,,,,
-# Units: NA,,,,,
+# File: A23.elecS_sector_vertical.csv
+# Title: Vertical Load Segment Supplysector Characteristics
+# Units: NA
+# Column types: ccccic 
+# ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
 off peak electricity,EJ,EJ,1975$/GJ,-3,relative-cost-logit
 intermediate electricity,EJ,EJ,1975$/GJ,-3,relative-cost-logit

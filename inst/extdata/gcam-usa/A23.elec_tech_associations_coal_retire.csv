@@ -1,6 +1,8 @@
-# File: A23.elec_tech_associations_coal_retire.csv,,,
-# Title: Technologies in the power sector to be retired at varying rates and their corresponding associations in the multiple load segments infrastructure,,,
-# Units: Unitless,,,
+# File: A23.elec_tech_associations_coal_retire.csv
+# Title: Technologies in the power sector to be retired at varying rates and their corresponding associations in the multiple load segments infrastructure
+# Units: Unitless
+# Column types: cccc 
+# ----------
 Electric.sector,subsector,Electric.sector.technology,technology
 base load generation,coal,coal_base_conv pul_slow_retire,coal_base_conv pul
 base load generation,coal,coal_base_conv pul_fast_retire,coal_base_conv pul

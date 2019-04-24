@@ -3,46 +3,46 @@
 # Units: Specified in column headers
 # Source: Union of Concerned Scientists: http://www.ucsusa.org/clean-energy/energy-water-use/ucs-power-plant-database#.WdeR91tSyCg
 # Comments: Includes general plant characteristics, locational information, electricity production, water use data.
-# Column types: iccccccccnnicinicccnncccccc 
+# Column types: icccccccccnnicinicccnncccccc 
 # ----------
 Plant Code,Plant Name,State,Plant-Generator Code,Parent Company,Technology Code,Generation Technology,Requires cooling?,Cooling Technology,Fuel,Latitude,Longitude,Water Basin (8-digit HUC),Water Resource Region,First Year of Operation,Nameplate Capacity (MW),Estimated Generation (MWh),Estimated Capacity Factor,Reported Water Source (Name),Reported Water Source (Type),Reported  Withdrawal (million gallons/yr),Reported  Consumption (million gallons/yr),Calculated Withdrawal (million gallons/yr),Calculated Withdrawal MIN (million gallons/yr),Calculated Withdrawal MAX (million gallons/yr),Calculated Consumption (million gallons/yr),Calculated Consumption MIN (million gallons/yr),Calculated Consumption MAX (million gallons/yr)
-2,Bankhead Dam,AL,1-Feb,Southern Company,HY-NA-HY,HY,No,None,Hydropower,33.2189,-87.5797,3160112,South Atlantic Gulf,1963,45,88157,22%,Black Warrior River,Surface Water,0,0,0,0,0,0,0,0
-3,Barry,AL,1-Mar,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,31.0042,-88.0139,3160204,South Atlantic Gulf,1954,153.1,873997,65%,Mobile River,Surface Water,"44,658",0,"31,770","17,480","43,700",218,87,277
+2,Bankhead Dam,AL,2-1,Southern Company,HY-NA-HY,HY,No,None,Hydropower,33.2189,-87.5797,3160112,South Atlantic Gulf,1963,45,88157,22%,Black Warrior River,Surface Water,0,0,0,0,0,0,0,0
+3,Barry,AL,3-1,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,31.0042,-88.0139,3160204,South Atlantic Gulf,1954,153.1,873997,65%,Mobile River,Surface Water,"44,658",0,"31,770","17,480","43,700",218,87,277
 3,Barry,AL,3-A1CT,Southern Company,NG-RC-CC,CC,Yes,Recirculating,Natural Gas,31.0042,-88.0139,3160204,South Atlantic Gulf,2000,170.1,952732,64%,Mobile River,Surface Water,0,0,241,143,270,189,124,286
 3,Barry,AL,3-A1ST,Southern Company,NG-RC-CC,CC,Yes,Recirculating,Natural Gas,31.0042,-88.0139,3160204,South Atlantic Gulf,2000,195.2,830095,49%,Mobile River,Surface Water,0,0,210,125,235,164,108,249
 3,Barry,AL,3-A2C1,Southern Company,NG-RC-CC,CC,Yes,Recirculating,Natural Gas,31.0042,-88.0139,3160204,South Atlantic Gulf,2000,170.1,952732,64%,Mobile River,Surface Water,0,0,241,143,270,189,124,286
 3,Barry,AL,3-A2C2,Southern Company,NG-RC-CC,CC,Yes,Recirculating,Natural Gas,31.0042,-88.0139,3160204,South Atlantic Gulf,2000,170.1,952732,64%,Mobile River,Surface Water,0,0,241,143,270,189,124,286
 3,Barry,AL,3-A2ST,Southern Company,NG-RC-CC,CC,Yes,Recirculating,Natural Gas,31.0042,-88.0139,3160204,South Atlantic Gulf,2000,195.2,778938,46%,Mobile River,Surface Water,0,802,197,117,220,154,101,234
-3,Barry,AL,2-Mar,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,31.0042,-88.0139,3160204,South Atlantic Gulf,1954,153.1,813505,61%,Mobile River,Surface Water,"41,567",0,"29,571","16,270","40,675",203,81,258
-3,Barry,AL,3-Mar,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,31.0042,-88.0139,3160204,South Atlantic Gulf,1959,272,1458889,61%,Mobile River,Surface Water,"74,544",0,"53,031","29,178","72,944",365,146,462
-3,Barry,AL,4-Mar,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,31.0042,-88.0139,3160204,South Atlantic Gulf,1969,403.7,2445624,69%,Mobile River,Surface Water,"74,202",0,"88,898","48,912","122,281",611,245,775
-3,Barry,AL,5-Mar,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,31.0042,-88.0139,3160204,South Atlantic Gulf,1971,788.8,3968109,57%,Mobile River,Surface Water,"120,396",0,"144,241","79,362","198,405",992,397,"1,258"
-4,Walter Bouldin Dam,AL,1-Apr,Southern Company,HY-NA-HY,HY,No,None,Hydropower,32.5664,-86.2803,3150201,South Atlantic Gulf,1967,75,138299,21%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
-4,Walter Bouldin Dam,AL,2-Apr,Southern Company,HY-NA-HY,HY,No,None,Hydropower,32.5664,-86.2803,3150201,South Atlantic Gulf,1967,75,138299,21%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
-4,Walter Bouldin Dam,AL,3-Apr,Southern Company,HY-NA-HY,HY,No,None,Hydropower,32.5664,-86.2803,3150201,South Atlantic Gulf,1967,75,138299,21%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
-7,Gadsden,AL,1-Jul,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,34.0136,-85.9703,3150106,South Atlantic Gulf,1949,69,279559,46%,Coosa River,Surface Water,"27,401",66,"10,162","5,591","13,978",70,28,89
-7,Gadsden,AL,2-Jul,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,34.0136,-85.9703,3150106,South Atlantic Gulf,1949,69,319739,53%,Coosa River,Surface Water,"31,339",76,"11,623","6,395","15,987",80,32,101
-8,Gorgas,AL,10-Aug,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,33.6442,-87.1972,3160109,South Atlantic Gulf,1972,788.8,4481336,65%,Warrior River,Surface Water,"260,605","257,585","162,897","89,627","224,067","1,120",448,"1,421"
-8,Gorgas,AL,6-Aug,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,33.6442,-87.1972,3160109,South Atlantic Gulf,1951,125,501760,46%,Warrior River,Surface Water,"36,842","1,472","18,239","10,035","25,088",125,50,159
-8,Gorgas,AL,7-Aug,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,33.6442,-87.1972,3160109,South Atlantic Gulf,1952,125,591564,54%,Warrior River,Surface Water,"43,436","1,736","21,503","11,831","29,578",148,59,188
-8,Gorgas,AL,8-Aug,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,33.6442,-87.1972,3160109,South Atlantic Gulf,1956,187.5,1090673,66%,Warrior River,Surface Water,"127,943","126,461","39,646","21,813","54,534",273,109,346
-8,Gorgas,AL,9-Aug,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,33.6442,-87.1972,3160109,South Atlantic Gulf,1958,190.4,1130894,68%,Warrior River,Surface Water,"132,662","131,124","41,108","22,618","56,545",283,113,358
-9,Copper,TX,1-Sep,El Paso Electric Company,NG-NA-CT,CT,No,None,Natural Gas,31.7453,-106.3692,13040100,Rio Grande,1980,80.5,18110,3%,Municipality,Municipal,0,0,0,0,0,0,0,0
+3,Barry,AL,3-2,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,31.0042,-88.0139,3160204,South Atlantic Gulf,1954,153.1,813505,61%,Mobile River,Surface Water,"41,567",0,"29,571","16,270","40,675",203,81,258
+3,Barry,AL,3-3,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,31.0042,-88.0139,3160204,South Atlantic Gulf,1959,272,1458889,61%,Mobile River,Surface Water,"74,544",0,"53,031","29,178","72,944",365,146,462
+3,Barry,AL,3-4,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,31.0042,-88.0139,3160204,South Atlantic Gulf,1969,403.7,2445624,69%,Mobile River,Surface Water,"74,202",0,"88,898","48,912","122,281",611,245,775
+3,Barry,AL,3-5,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,31.0042,-88.0139,3160204,South Atlantic Gulf,1971,788.8,3968109,57%,Mobile River,Surface Water,"120,396",0,"144,241","79,362","198,405",992,397,"1,258"
+4,Walter Bouldin Dam,AL,4-1,Southern Company,HY-NA-HY,HY,No,None,Hydropower,32.5664,-86.2803,3150201,South Atlantic Gulf,1967,75,138299,21%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
+4,Walter Bouldin Dam,AL,4-2,Southern Company,HY-NA-HY,HY,No,None,Hydropower,32.5664,-86.2803,3150201,South Atlantic Gulf,1967,75,138299,21%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
+4,Walter Bouldin Dam,AL,4-3,Southern Company,HY-NA-HY,HY,No,None,Hydropower,32.5664,-86.2803,3150201,South Atlantic Gulf,1967,75,138299,21%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
+7,Gadsden,AL,7-1,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,34.0136,-85.9703,3150106,South Atlantic Gulf,1949,69,279559,46%,Coosa River,Surface Water,"27,401",66,"10,162","5,591","13,978",70,28,89
+7,Gadsden,AL,7-2,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,34.0136,-85.9703,3150106,South Atlantic Gulf,1949,69,319739,53%,Coosa River,Surface Water,"31,339",76,"11,623","6,395","15,987",80,32,101
+8,Gorgas,AL,8-10,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,33.6442,-87.1972,3160109,South Atlantic Gulf,1972,788.8,4481336,65%,Warrior River,Surface Water,"260,605","257,585","162,897","89,627","224,067","1,120",448,"1,421"
+8,Gorgas,AL,8-6,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,33.6442,-87.1972,3160109,South Atlantic Gulf,1951,125,501760,46%,Warrior River,Surface Water,"36,842","1,472","18,239","10,035","25,088",125,50,159
+8,Gorgas,AL,8-7,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,33.6442,-87.1972,3160109,South Atlantic Gulf,1952,125,591564,54%,Warrior River,Surface Water,"43,436","1,736","21,503","11,831","29,578",148,59,188
+8,Gorgas,AL,8-8,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,33.6442,-87.1972,3160109,South Atlantic Gulf,1956,187.5,1090673,66%,Warrior River,Surface Water,"127,943","126,461","39,646","21,813","54,534",273,109,346
+8,Gorgas,AL,8-9,Southern Company,CL-OT-ST,ST,Yes,Once-Through,Coal,33.6442,-87.1972,3160109,South Atlantic Gulf,1958,190.4,1130894,68%,Warrior River,Surface Water,"132,662","131,124","41,108","22,618","56,545",283,113,358
+9,Copper,TX,9-1,El Paso Electric Company,NG-NA-CT,CT,No,None,Natural Gas,31.7453,-106.3692,13040100,Rio Grande,1980,80.5,18110,3%,Municipality,Municipal,0,0,0,0,0,0,0,0
 10,Greene County,AL,10-GT5,not reported,NG-NA-CT,CT,No,None,Natural Gas,32.6,-87.7667,3160113,South Atlantic Gulf,1995,80,15483,2%,Warrior River,Surface Water,0,0,0,0,0,0,0,0
 10,Greene County,AL,10-GT6,not reported,NG-NA-CT,CT,No,None,Natural Gas,32.6,-87.7667,3160113,South Atlantic Gulf,1995,80,15483,2%,Warrior River,Surface Water,0,0,0,0,0,0,0,0
 10,Greene County,AL,10-GT7,not reported,NG-NA-CT,CT,No,None,Natural Gas,32.6,-87.7667,3160113,South Atlantic Gulf,1995,80,15483,2%,Warrior River,Surface Water,0,0,0,0,0,0,0,0
 10,Greene County,AL,10-GT8,not reported,NG-NA-CT,CT,No,None,Natural Gas,32.6,-87.7667,3160113,South Atlantic Gulf,1996,80,15483,2%,Warrior River,Surface Water,0,0,0,0,0,0,0,0
 10,Greene County,AL,10-GT9,not reported,NG-NA-CT,CT,No,None,Natural Gas,32.6,-87.7667,3160113,South Atlantic Gulf,1996,80,15483,2%,Warrior River,Surface Water,0,0,0,0,0,0,0,0
-10,Greene County,AL,1-Oct,not reported,CL-OT-ST,ST,Yes,Once-Through,Coal,32.6,-87.7667,3160113,South Atlantic Gulf,1965,299.2,1568767,60%,Warrior River,Surface Water,"61,465",0,"57,025","31,375","78,438",392,157,497
-10,Greene County,AL,2-Oct,not reported,CL-OT-ST,ST,Yes,Once-Through,Coal,32.6,-87.7667,3160113,South Atlantic Gulf,1966,269.2,1783126,76%,Warrior River,Surface Water,"69,864",0,"64,817","35,663","89,156",446,178,565
+10,Greene County,AL,10-1,not reported,CL-OT-ST,ST,Yes,Once-Through,Coal,32.6,-87.7667,3160113,South Atlantic Gulf,1965,299.2,1568767,60%,Warrior River,Surface Water,"61,465",0,"57,025","31,375","78,438",392,157,497
+10,Greene County,AL,10-2,not reported,CL-OT-ST,ST,Yes,Once-Through,Coal,32.6,-87.7667,3160113,South Atlantic Gulf,1966,269.2,1783126,76%,Warrior River,Surface Water,"69,864",0,"64,817","35,663","89,156",446,178,565
 10,Greene County,AL,10-GT10,not reported,NG-NA-CT,CT,No,None,Natural Gas,32.6,-87.7667,3160113,South Atlantic Gulf,1996,80,15483,2%,Warrior River,Surface Water,0,0,0,0,0,0,0,0
 10,Greene County,AL,10-GT2,not reported,NG-NA-CT,CT,No,None,Natural Gas,32.6,-87.7667,3160113,South Atlantic Gulf,1996,80,15483,2%,Warrior River,Surface Water,0,0,0,0,0,0,0,0
 10,Greene County,AL,10-GT3,not reported,NG-NA-CT,CT,No,None,Natural Gas,32.6,-87.7667,3160113,South Atlantic Gulf,1995,80,15483,2%,Warrior River,Surface Water,0,0,0,0,0,0,0,0
 10,Greene County,AL,10-GT4,not reported,NG-NA-CT,CT,No,None,Natural Gas,32.6,-87.7667,3160113,South Atlantic Gulf,1995,80,15483,2%,Warrior River,Surface Water,0,0,0,0,0,0,0,0
-11,H Neely Henry Dam,AL,3-Nov,Southern Company,HY-NA-HY,HY,No,None,Hydropower,33.7667,-86.0356,3150106,South Atlantic Gulf,1966,24.3,38766,18%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
-11,H Neely Henry Dam,AL,1-Nov,Southern Company,HY-NA-HY,HY,No,None,Hydropower,33.7667,-86.0356,3150106,South Atlantic Gulf,1966,24.3,38766,18%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
-11,H Neely Henry Dam,AL,2-Nov,Southern Company,HY-NA-HY,HY,No,None,Hydropower,33.7667,-86.0356,3150106,South Atlantic Gulf,1966,24.3,38766,18%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
-12,Holt Dam,AL,1-Dec,Southern Company,HY-NA-HY,HY,No,None,Hydropower,33.2203,-87.5669,3160112,South Atlantic Gulf,1968,40,116204,33%,Black Warrior River,Surface Water,0,0,0,0,0,0,0,0
+11,H Neely Henry Dam,AL,11-3,Southern Company,HY-NA-HY,HY,No,None,Hydropower,33.7667,-86.0356,3150106,South Atlantic Gulf,1966,24.3,38766,18%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
+11,H Neely Henry Dam,AL,11-1,Southern Company,HY-NA-HY,HY,No,None,Hydropower,33.7667,-86.0356,3150106,South Atlantic Gulf,1966,24.3,38766,18%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
+11,H Neely Henry Dam,AL,11-2,Southern Company,HY-NA-HY,HY,No,None,Hydropower,33.7667,-86.0356,3150106,South Atlantic Gulf,1966,24.3,38766,18%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
+12,Holt Dam,AL,12-1,Southern Company,HY-NA-HY,HY,No,None,Hydropower,33.2203,-87.5669,3160112,South Atlantic Gulf,1968,40,116204,33%,Black Warrior River,Surface Water,0,0,0,0,0,0,0,0
 13,Jordan Dam,AL,13-1,Southern Company,HY-NA-HY,HY,No,None,Hydropower,32.6092,-86.2411,3150107,South Atlantic Gulf,1929,25,45254,21%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
 13,Jordan Dam,AL,13-2,Southern Company,HY-NA-HY,HY,No,None,Hydropower,32.6092,-86.2411,3150107,South Atlantic Gulf,1929,25,45254,21%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
 13,Jordan Dam,AL,13-3,Southern Company,HY-NA-HY,HY,No,None,Hydropower,32.6092,-86.2411,3150107,South Atlantic Gulf,1929,25,45254,21%,Coosa River,Surface Water,0,0,0,0,0,0,0,0
