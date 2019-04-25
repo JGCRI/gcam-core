@@ -10,6 +10,8 @@ write_to_all_states(data, names, region_list = gcamusa.STATES)
 \item{data}{Base tibble to start from}
 
 \item{names}{Character vector indicating the column names of the returned tibble}
+
+\item{region_list}{Character vector containing names of regions for which USA national data is repeated}
 }
 \value{
 Tibble with data written out to all USA states
