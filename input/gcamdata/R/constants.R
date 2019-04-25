@@ -335,7 +335,7 @@ aglu.DIGITS_WATER_CONTENT <- 2
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010] # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CLIMATE_NORMAL_YEARS       <- 1981:2000
 energy.SATIATION_YEAR             <- max(MODEL_BASE_YEARS) # Needs to be the last model base year to avoid the risk of the model crashing
-energy.UCD_EN_YEAR                <- 2005        # UCD transporctation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
+energy.UCD_EN_YEAR                <- 2005        # UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
 energy.WIND.BASE.COST.YEAR        <- 2005        # Base cost year for wind, used in capacity factor calculations
 
 # Constant to select SSP database to use for transportation UCD
@@ -531,7 +531,8 @@ emissions.DIGITS_EMISSIONS <- 10
 
 # GCAM-USA time
 gcamusa.WIND_BASE_COST_YEAR   <- 2005
-gcamusa.FINAL_AEO_HYDRO_YEAR <- 2050
+gcamusa.HYDRO_HIST_YEAR <- 2015
+gcamusa.HYDRO_FINAL_AEO_YEAR <- 2050
 
 gcamusa.SE_HIST_YEAR <- 2015  # year to which historical socioeconomic data (pop & GDP) are used in GCAM-USA
 gcamusa.SE_NEAR_TERM_YEAR <- 2030  # year after which projected growth rates from various socio-economic data sources are used as-is
@@ -646,7 +647,7 @@ gcamusa.ELEC_SEGMENT_PEAK <- "peak generation"
 
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions
-# HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
+# # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
 # MODEL_FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
 # MODEL_BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
 # MODEL_YEARS <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)

@@ -37,19 +37,19 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
     # ===================================================
     # Data Processing
 
-    # Calculate the ratio of 2010 GCAM hydro fixedOutput to 2010 EIA net generation for hydro
-    # Isolate 2010 hydro fixedOutput
+    # Isolate GCAM 2010 hydro fixedOutput
     L2234.StubTechFixOut_elecS_USA %>%
       filter(subsector == "hydro",
-             year == max(MODEL_BASE_YEARS),
+             year == max(year),
              fixedOutput != 0) -> L2242.hydro_2010_fixedOutput
 
     # Filter EIA data to get annual hydro net generation for 2010, 2015
     # Compute ratio of 2015 EIA to 2010 EIA
     EIA_elec_gen_hydro %>%
-      filter(year %in% c(max(MODEL_BASE_YEARS), min(MODEL_FUTURE_YEARS))) %>%
+      filter(year %in% MODEL_YEARS) %>%
       group_by(state) %>%
-      mutate(EIA_ratio =  EIA[year == min(MODEL_FUTURE_YEARS)] / EIA[year == max(MODEL_BASE_YEARS)] ) %>%
+      mutate(EIA_ratio =  EIA / lag(EIA)) %>%
+      filter(year == gcamusa.HYDRO_HIST_YEAR) %>%
       distinct(state, EIA_ratio) %>%
       ungroup() -> L2242.hydro_EIA_ratio
 
@@ -57,13 +57,13 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
     L2242.hydro_2010_fixedOutput %>%
       left_join_error_no_match(L2242.hydro_EIA_ratio, by = c("region" = "state")) %>%
       mutate(fixedOutput = fixedOutput * EIA_ratio,
-             year = min(MODEL_FUTURE_YEARS),
+             year = gcamusa.HYDRO_HIST_YEAR,
              share.weight.year = year) %>%
       select(-EIA_ratio) -> L2242.hydro_fixedOutput_2015
 
     # Compute ratio of AEO-2018 hydro generation relative to EIA 2015 at the national level
     EIA_elec_gen_hydro %>%
-      filter(year == min(MODEL_FUTURE_YEARS)) %>%
+      filter(year == gcamusa.HYDRO_HIST_YEAR) %>%
       group_by(year) %>%
       summarise(hydro_EIA_US_2015 = sum(EIA) * CONV_MWH_EJ) %>%
       ungroup() -> L2242.hydro_EIA_US_2015
@@ -73,7 +73,8 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
     # The same ratio is assumed for all states
     AEO_2018_elec_gen_hydro %>%
       mutate(AEO_2015_ratio = (AEO * CONV_TWH_EJ) / L2242.hydro_EIA_US_2015) %>%
-      filter(year %in% MODEL_FUTURE_YEARS) %>%
+      filter(year %in% MODEL_YEARS,
+             year >= gcamusa.HYDRO_HIST_YEAR) %>%
       select(year, AEO_2015_ratio) %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
       # filtering out states with no hydro generation
@@ -93,9 +94,10 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
     L2242.StubTechFixOut_hydro_USA_2050 %>%
       complete(year = MODEL_FUTURE_YEARS, nesting(region, supplysector, subsector, stub.technology,
                                             subs.share.weight, tech.share.weight)) %>%
+      filter(year >= gcamusa.HYDRO_HIST_YEAR) %>%
       group_by(region, supplysector, subsector, stub.technology) %>%
-      mutate(fixedOutput = replace(fixedOutput, year > gcamusa.FINAL_AEO_HYDRO_YEAR,
-                                   fixedOutput[year == gcamusa.FINAL_AEO_HYDRO_YEAR])) %>%
+      mutate(fixedOutput = replace(fixedOutput, year > gcamusa.HYDRO_FINAL_AEO_YEAR,
+                                   fixedOutput[year == gcamusa.HYDRO_FINAL_AEO_YEAR])) %>%
       ungroup() %>%
       mutate(share.weight.year = year,
              fixedOutput = round(fixedOutput, energy.DIGITS_CALOUTPUT)) %>%

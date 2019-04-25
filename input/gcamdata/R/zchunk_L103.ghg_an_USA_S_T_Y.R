@@ -52,6 +52,7 @@ module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
       group_by(sector, fuel) %>%
       summarize_if(is.numeric, sum, na.rm = TRUE) %>%
       filter(!is.na(sector), !is.na(fuel)) %>%
+      ungroup() %>%
       mutate_all( funs( replace(., is.na(.), 0))) %>%
       mutate_if(is.numeric, funs(. * CONV_GG_TG)) ->
       L103.ghg_tg_USA_an_Sepa_F_2005
