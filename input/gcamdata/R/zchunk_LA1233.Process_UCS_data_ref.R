@@ -6,13 +6,14 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{LA1233.CoolingSystemShares_RG3_ref},The corresponding file in the
+#' the generated outputs: \code{LA1233.CoolingSystemShares_RG3_ref}, The corresponding file in the
 #' original data system was \code{LA1233.Process_UCS_data_ref.R} (gcam-usa-processing-code level1).
 #' @details This script reads in and processes "Union of Concerned Scientists. 2012. UCS EW3 Energy-Water
 #' Database V.1.3" - Main Data.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
+#' @importFrom tibble as_tibble tibble
 #' @author LL March 2017, ZK Sep 2019
 
 module_gcamusa_LA1233.Process_UCS_data_ref <- function(command, ...) {
@@ -33,7 +34,7 @@ module_gcamusa_LA1233.Process_UCS_data_ref <- function(command, ...) {
       Fuel <- 'Reported Water Source (Type)' <- 'Generation Technology' <- 'Cooling Technology' <-
       state <- 'First Year of Operation' <- 'Nameplate Capacity (MW)' <- x <- y <- z <- year <-
       . <- 'cooling pond' <- 'dry cooling' <- dry_hybrid <- none <- 'once through' <- recirculating <-
-      sumy <- sumx <- '2008' <- '2020' <- NULL
+      sum_Cap_MW <- sum_byTech_Cap_MW <- NULL
 
 # ===================================================
 # Load required inputs
