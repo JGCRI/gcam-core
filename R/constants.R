@@ -202,7 +202,8 @@ aglu.LOW_PROD_GROWTH_MULT <- 0.5 # Multipliers for low ag prod growth scenarios
 # AgLU cost constants
 aglu.BIO_GRASS_COST_75USD_GJ <- 0.75   # Production costs of biomass (from Patrick Luckow's work)
 aglu.BIO_TREE_COST_75USD_GJ  <- 0.67   # Production costs of biomass (from Patrick Luckow's work)
-aglu.FERT_COST               <- 596    # Cost of fertlizer, 2010$ per ton NH3
+aglu.FERT_PRICE              <- 596    # Price of fertilizer, 2010$ per ton NH3
+aglu.FERT_PRICE_YEAR         <- 2010    # Year corresponding to the above price/cost
 aglu.FOR_COST_75USDM3        <- 29.59  # Forestry cost (1975$/GJ)
 
 # Price at which base year bio frac produced is used.
