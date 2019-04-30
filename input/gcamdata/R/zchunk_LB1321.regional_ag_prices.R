@@ -84,9 +84,9 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     # particularly problematic for countries that only have cottonseed prices reported, as very low prices combined
     # with nonLandVariableCosts of the total product return negative profit in calibration years.
     # Because cottonseed is a by-product (from USDA stats, over 90% of the revenue of producing cotton is from the
-    # lint), and its prices depend on the presence of large industrial consumers (e.g., crisco factories), the cotton
-    # seed prices are not a good proxy for estimating the cotton lint prices in countries where lint prices are
-    # not available. Instead, countries without cotton lint prices are dropped at this stage (to be filled in
+    # lint), and also because its prices depend on the presence of large industrial consumers, the cotton
+    # seed prices are not a good proxy for estimating the cotton lint prices in countries where the former are available
+    # and the latter are not. Instead, countries without cotton lint prices are dropped at this stage (to be filled in
     # subsequent steps). Cotton seed prices where missing are assigned the cotton lint price divided by USA lint:seed
     # price ratio.
 
@@ -110,7 +110,6 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     # Average producer prices, aggregated from countries and FAO items by regions and commodities using production as
     # the weighting factor. The pipeline below is mostly just filtering and cleaning data, and preparing a table to be
     # joined in to the table of producer prices from above.
-    # Need animal product prices as well to back calculate regional pasture prices later
     L1321.prod_kt_ctry_item <- FAO_ag_Prod_t_PRODSTAT %>%
       gather_years() %>%
       rename(production = value) %>%
