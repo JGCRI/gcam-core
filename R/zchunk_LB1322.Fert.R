@@ -323,7 +323,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
     L1322.Fert_Fuelcost_75USDGJ_gas <- L1322.P_gas_75USDGJ * L1322.IO_GJkgN_Fert_gas
 
     # Convert total NH3 cost (2010$/tNH3) to N cost (1975$/kgN)
-    Fert_Cost_75USDkgN <- aglu.FERT_PRICE * gdp_deflator(1975, 2010) * CONV_KG_T / CONV_NH3_N
+    Fert_Cost_75USDkgN <- aglu.FERT_PRICE * gdp_deflator(1975, aglu.FERT_PRICE_YEAR) * CONV_KG_T / CONV_NH3_N
 
     # Calculate non-fuel cost of natural gas steam reforming (includes delivery charges)
     L1322.Fert_NEcost_75USDkgN_gas <- Fert_Cost_75USDkgN - L1322.Fert_Fuelcost_75USDGJ_gas
