@@ -3,6 +3,8 @@
 # Description: Subsector information for bio trade 
 # Source: NA
 # Unit: NA
+# Column types: cccicccc 
+# ----------
 supplysector,subsector,year.fillout,share.weight,apply.to,from.year,to.year,interpolation.function
 total biomass,domestic biomass,start-year,1,share-weight,final-calibration-year,end-year,fixed
 total biomass,imported biomass,start-year,1,share-weight,final-calibration-year,end-year,fixed

@@ -176,11 +176,11 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
     L2234.PrimaryRenewKeywordInt_elecS_USA <- rename(L2234.PrimaryRenewKeywordInt_elecS_USA, technology = intermittent.technology)
 
     # Function to fix GlobalTech / GlobalIntTech sector & subsector names, which is a recurring issue
-    fix_global_tech_names <- function( data ){
+    fix_global_tech_names <- function(data){
       data_new <- data %>%
         rename(sector.name = supplysector,
                subsector.name = subsector)
-      return( data_new)
+      return(data_new)
     }
 
     L2234.GlobalTechCapital_elecS_USA <- fix_global_tech_names(L2234.GlobalTechCapital_elecS_USA)

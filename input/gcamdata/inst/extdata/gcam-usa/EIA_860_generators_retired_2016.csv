@@ -1,8 +1,10 @@
 # File: EIA_860_generators_retired_2016.csv
-# Title: EIA 2016 Form EIA-860 Data - Schedule 3, 'Generator Data'(Retired & Canceled Units Only)
+# Title: EIA 2016 Form EIA-860 Data - Schedule 3; 'Generator Data' (Retired & Canceled Units Only)
 # Unit: MW
 # Comments: Selected columns from original form
 # Source: https://www.eia.gov/electricity/data/eia860/
+# Column types: cicccccinni 
+# ----------
 State,Plant.Code,Generator.ID,Status,Technology,Prime.Mover,Energy.Source.1,Operating.Year,Nameplate.Capacity..MW.,Summer.Capacity..MW.,Retirement.Year
 AL,3,3,RE,Conventional Steam Coal,ST,BIT,1959,272,249,2015
 AL,8,6,RE,Conventional Steam Coal,ST,BIT,1951,125,103,2015

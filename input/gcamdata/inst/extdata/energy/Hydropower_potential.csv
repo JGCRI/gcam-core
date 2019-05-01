@@ -2,6 +2,8 @@
 # Title: World Hydro Potential and Development: hydropower potential by country
 # Units: MW and GWh for Theoretical_Technical_Economic_and Installed
 # Source: http://www.intpow.com/index.php?id=487&download=1 (need to change extension from php to pdf)
+# Column types: cciiiniinn 
+# ----------
 Country,iso,Theoretical_MW,Theoretical_GWh,Technical_MW,Technical_GWh,Economic_MW,Economic_GWh,Installed_MW,Installed_GWh
 Algeria,dza,,12000,,4000,,,278,560
 Angola,ago,,,,150000,,65000,790,3147

@@ -3,6 +3,8 @@
 # Units: NA
 # Description: Maps water demand for primary energy to assocated supply sectors.
 # Mapped to consumption rather than production since we do not have technology representations for the resource sectors
+# Column types: ccccc 
+# ----------
 fuel,supplysector,subsector,technology,minicam.energy.input
 unconventional oil,unconventional oil production,unconventional oil production,unconventional oil production,WaterTD_W_Primary
 coal,regional coal,regional coal,regional coal,WaterTD_W_Primary

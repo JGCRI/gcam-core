@@ -3,6 +3,8 @@
 # Description: Table A1. Selected Electric Industry Summary Statistics by State
 # Source: ftp://eia.gov/electricity/stateprofiles/08st_profiles/table_a.pdf
 # Units: In column names
+# Column types: ccciniiinniin 
+# ----------
 State_name,State,Primary Fuel Source,NetCapacity_MW,NetGeneration_MWh,SO2_kt,NOx_kt,CO2_kt,RetailSales_MWh,FullServiceSales_MWh,Other_MWh,DirectUse_MWh,Price_c.kWh
 Alabama,AL,Coal,31222,145869895,364,111,82917,89707279,89707279,0,4771287,8.59
 Alaska,AK,Gas,1995,6774834,4,15,4367,6324855,6283855,0,328826,14.73

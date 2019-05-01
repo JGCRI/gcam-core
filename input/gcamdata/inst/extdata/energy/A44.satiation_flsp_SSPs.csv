@@ -1,6 +1,8 @@
 # File: A44.satiation_flsp_SSPs.csv
 # Title: Assumed satiation levels of floorspace 
 # Units: m2 per capita
+# Column types: ccnn 
+# ----------
 SSP,region.class,resid,comm
 SSP1,A,54,24
 SSP1,B,45,22

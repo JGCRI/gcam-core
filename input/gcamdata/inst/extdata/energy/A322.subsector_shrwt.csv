@@ -1,6 +1,8 @@
 # File: A322.subsector_shrwt.csv
 # Title: Fertilizer default subsector shareweights
 # Units: Unitless
+# Column types: cccci 
+# ----------
 supplysector,subsector,year.fillout,year,share.weight
 N fertilizer,coal,start-year,,1
 N fertilizer,gas,start-year,,1

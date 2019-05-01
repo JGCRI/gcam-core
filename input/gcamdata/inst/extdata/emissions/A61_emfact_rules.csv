@@ -2,6 +2,8 @@
 # Title: SSP Emissions Factor Assignment Rules
 # Description: Rules by SSP and regional groupings on how to apply emissions factors from GAINS scenarios
 # Units: NA
+# Column types: cccicinii 
+# ----------
 SSP_group,region_grouping,policy,year,multiplier_scenario,multiplier_year,multiplier,marker_region,min
 1&5,highmed,,2010,CLE,2010,1,0,0
 1&5,highmed,,2030,CLE,2030,0.75,0,0

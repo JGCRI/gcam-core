@@ -15,7 +15,7 @@ add_logit_tables_xml(dot, data, header, base_logit_header = header)
 convert \code{data}}
 
 \item{base_logit_header}{The base header tag to use for the generated logit type
-tables such that \code{paste(base_logit_header, logit.type, sep="_")} corresponds
+tables such that \code{paste(base_logit_header, logit.type, sep = "_")} corresponds
 to the appropriate model interface header.  Note by default this value is the
 same as \code{header} as often this is the case but certainly not always.}
 }

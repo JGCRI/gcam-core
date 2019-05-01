@@ -1,6 +1,8 @@
 # File: A54.tranSubsector_VOTT_ssp1.csv
 # Title: Transportation default subsector value of time in transit multipliers (VOTT = wage rate * this factor)
 # Units: Unitless
+# Column types: ccnnnnicn 
+# ----------
 supplysector,tranSubsector,in.vehicle.VOTT,wait.walk.vott,wait.walk.share,time.value.multiplier,addTimeValue,speed.source,fuelprefElasticity
 trn_aviation_intl,International Aviation,1.45,0.5,0.415,1.056,1,,0
 trn_pass,Cycle,0.5,0.5,0,0.5,1,,0
@@ -26,7 +28,7 @@ trn_pass_road_LDV_4W,Mini Car,0.82,0.5,0,0.82,0,,-0.2
 trn_pass_road_LDV_4W,Multipurpose Vehicle,0.82,0.5,0,0.82,0,,0.2
 trn_pass_road_LDV_4W,Subcompact Car,0.82,0.5,0,0.82,0,,-0.1
 trn_pass_road_LDV_4W,Van,0.82,0.5,0,0.82,0,,0
-# Pass-through tranSubsectors,,,,,,,,
+# Pass-through tranSubsectors
 trn_pass,road,,,,1,0,,0
 trn_pass_road,LDV,,,,1,0,,0
 trn_pass_road,bus,0.77,0.5,0.128,0.736,0,,0

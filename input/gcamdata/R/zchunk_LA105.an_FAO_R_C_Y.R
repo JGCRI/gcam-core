@@ -135,8 +135,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_legacy_name("L105.an_Prod_Mt_R_C_Y") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO/FAO_an_items_cal_SUA",
-                     "L100.FAO_an_Prod_t") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L100.FAO_an_Prod_t") ->
       L105.an_Prod_Mt_R_C_Y
 
     L105.an_Prod_Mt_ctry_C_Y %>%
@@ -145,8 +144,7 @@ module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
       add_comments("Aggregate FAO country and item data by GCAM commodity, and year") %>%
       add_comments("Convert data from ton to Mt") %>%
       add_legacy_name("L105.an_Prod_Mt_ctry_C_Y") %>%
-      same_precursors_as(L105.an_Prod_Mt_R_C_Y) %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      same_precursors_as(L105.an_Prod_Mt_R_C_Y) ->
       L105.an_Prod_Mt_ctry_C_Y
 
     return_data(L105.an_Food_Mt_R_C_Y, L105.an_Food_Pcal_R_C_Y, L105.an_kcalg_R_C_Y, L105.an_Prod_Mt_R_C_Y, L105.an_Prod_Mt_ctry_C_Y)

@@ -10,7 +10,7 @@
 #' original data system was \code{batch_ssp15_emissions_factors_xml.R} (emissions XML).
 module_emissions_batch_ssp15_emissions_factors_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L251.ssp15_ef",
+    return(c("L251.ssp15_ef",
               "L251.ssp15_ef_vin"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "ssp15_emissions_factors.xml"))

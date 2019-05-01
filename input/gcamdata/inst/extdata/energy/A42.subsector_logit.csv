@@ -1,6 +1,8 @@
 # File: A42.subsector_logit.csv
 # Title: Aggregate building default subsector logit exponents
 # Units: Unitless
+# Column types: ccic 
+# ----------
 supplysector,subsector,logit.exponent,logit.type
 building,biomass,-6,
 building,coal,-6,

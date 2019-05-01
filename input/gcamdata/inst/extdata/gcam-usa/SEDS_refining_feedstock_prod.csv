@@ -4,6 +4,8 @@
 # Comments: Coal production and Natural gas marketed production for 2015 in Billion BTU
 # The relevant MSN codes from the SEDS dataset are 'CLPRB' (coal) and 'NGMPB' (gas)
 # Source:  SEDS production dataset (https://www.eia.gov/state/seds/sep_prod/xls/Prod_dataset.xlsx)
+# Column types: cii 
+# ----------
 state,coal,natural_gas
 AK,17747,380598
 AL,331420,182959

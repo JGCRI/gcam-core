@@ -1,4 +1,4 @@
-#' module_gcam.usa_L2011.socioeconomics_update_USA
+#' module_gcamusa_L2011.socioeconomics_update_USA
 #'
 #' Population and labor productivity updates for GCAM-USA.  2015 population & labor productivity updated to match
 #' historical values.  Future year population projections updated based on NCAR downsalced SSP2 data. Labor
@@ -21,7 +21,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author MTB August 2018
-module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
+module_gcamusa_L2011.socioeconomics_update_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/Census_pop_hist",
@@ -52,8 +52,10 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist")
-    Census_pop_10_15 <- get_data(all_data, "gcam-usa/Census_pop_10_15")
+    Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist") %>%
+      gather_years("totalPop")
+    Census_pop_10_15 <- get_data(all_data, "gcam-usa/Census_pop_10_15") %>%
+      gather_years("totalPop")
     BEA_GDP_87_96_97USD_state <- get_data(all_data, "gcam-usa/BEA_GDP_87_96_97USD_state")
     BEA_GDP_97_16_09USD_state <- get_data(all_data, "gcam-usa/BEA_GDP_97_16_09USD_state")
     AEO_2016_pop_regional <- get_data(all_data, "gcam-usa/AEO_2016_pop_regional")
@@ -67,10 +69,8 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
     # L2011.Pop_USA: Historical population by state from the U.S. Census Bureau, through 2016
     # Merge historical population datasets
     Census_pop_hist %>%
-      gather_years("totalPop") %>%
       bind_rows(Census_pop_10_15 %>%
-                  gather_years("totalPop") %>%
-                  filter(year != max(MODEL_BASE_YEARS))) %>%
+                  anti_join(Census_pop_hist, by = c("state", "year"))) %>%
       mutate(totalPop = round(totalPop * CONV_ONES_THOUS, socioeconomics.POP_DIGITS)) -> L2011.Pop_USA
 
     # L2011.Pop_updated_USA: Updated future year populations for GCAM USA based on
@@ -204,7 +204,8 @@ module_gcam.usa_L2011.socioeconomics_update_USA <- function(command, ...) {
       mutate(pcGDP = (GDP / totalPop) * CONV_MIL_THOUS) %>%
       select(state, year, pcGDP) %>%
       # Select model base years + 2015
-      filter(year %in% c(MODEL_BASE_YEARS, gcamusa.SE_HIST_YEAR)) -> L2011.pcGDP_state_2015
+      filter(year %in% c(MODEL_YEARS),
+             year <= gcamusa.SE_HIST_YEAR) -> L2011.pcGDP_state_2015
 
     # L2011.pcGDP_AEO_reg_2040: Future per-capita GDP (through 2040), based on AEO data (thousand 2005$ / person).
     # AEO GDP data is past 12 months, presented quarterly. Hence we filter quarter 4 (Q4) because that represents

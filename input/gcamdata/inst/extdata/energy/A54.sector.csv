@@ -1,6 +1,8 @@
 # File: A54.sector.csv
 # Title: Transportation sector default supplysector information (units and logit exponents)
 # Units: Unitless
+# Column types: ccccicccc 
+# ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,final.energy,logit.factor,energy.final.demand,logit.type
 trn_aviation_intl,million pass-km,EJ,1990$/pass-km,-3,transportation,,trn_aviation_intl,
 trn_freight,million ton-km,EJ,1990$/ton-km,-2,transportation,road / rail / air / ship,trn_freight,

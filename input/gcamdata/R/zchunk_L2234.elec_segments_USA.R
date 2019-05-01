@@ -1,4 +1,4 @@
-#' module_gcam.usa_L2234.elec_segments_USA
+#' module_gcamusa_L2234.elec_segments_USA
 #'
 #' Generates GCAM-USA model inputs for multiple load segments electricity sector by state.
 #'
@@ -27,7 +27,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author MTB Aug 2018
-module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
+module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/A23.elecS_sector",
@@ -38,8 +38,8 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
              FILE = "gcam-usa/A23.elecS_subsector_shrwt_interpto",
              FILE = "gcam-usa/A23.elecS_globaltech_shrwt",
              FILE = "gcam-usa/A23.elecS_globalinttech_shrwt",
-             FILE = "gcam-usa/A23.elecS_tech_associations",
-             FILE = "gcam-usa/A23.elecS_inttech_associations",
+             FILE = "gcam-usa/A23.elecS_tech_mapping",
+             FILE = "gcam-usa/A23.elecS_inttech_mapping",
              FILE = "gcam-usa/A23.elecS_tech_availability",
              FILE = "gcam-usa/A23.elecS_globaltech_non_energy_inputs",
              FILE = "gcam-usa/A23.elecS_stubtech_energy_inputs",
@@ -155,8 +155,8 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
     A23.elecS_subsector_shrwt_interpto <- get_data(all_data, "gcam-usa/A23.elecS_subsector_shrwt_interpto")
     A23.elecS_globaltech_shrwt <- get_data(all_data, "gcam-usa/A23.elecS_globaltech_shrwt")
     A23.elecS_globalinttech_shrwt <- get_data(all_data, "gcam-usa/A23.elecS_globalinttech_shrwt")
-    A23.elecS_tech_associations <- get_data(all_data, "gcam-usa/A23.elecS_tech_associations")
-    A23.elecS_inttech_associations <- get_data(all_data, "gcam-usa/A23.elecS_inttech_associations")
+    A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping")
+    A23.elecS_inttech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_inttech_mapping")
     A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability")
     A23.elecS_globaltech_non_energy_inputs <- get_data(all_data, "gcam-usa/A23.elecS_globaltech_non_energy_inputs")
     A23.elecS_stubtech_energy_inputs <- get_data(all_data, "gcam-usa/A23.elecS_stubtech_energy_inputs")
@@ -202,21 +202,21 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
     # To avoid creating these technologies and then deleting them (which eats up memory and
     # causes a lot of error messages), we remove them from the relevant association files here.
 
-    L2234.load_segments <- unique(A23.elecS_inttech_associations$Electric.sector)
+    L2234.load_segments <- unique(A23.elecS_inttech_mapping$Electric.sector)
 
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       anti_join(A23.elecS_tech_availability,
                 by = c("Electric.sector.technology" = "stub.technology")) %>%
       mutate(Electric.sector = factor(Electric.sector, levels = L2234.load_segments)) %>%
       arrange(subsector, Electric.sector) %>%
-      mutate(Electric.sector = as.character(Electric.sector)) -> A23.elecS_tech_associations
+      mutate(Electric.sector = as.character(Electric.sector)) -> A23.elecS_tech_mapping
 
-    A23.elecS_inttech_associations %>%
+    A23.elecS_inttech_mapping %>%
       anti_join(A23.elecS_tech_availability,
                 by = c("Electric.sector.intermittent.technology" = "stub.technology")) %>%
       mutate(Electric.sector = factor(Electric.sector, levels = L2234.load_segments)) %>%
       arrange(subsector, Electric.sector) %>%
-      mutate(Electric.sector = as.character(Electric.sector)) -> A23.elecS_inttech_associations
+      mutate(Electric.sector = as.character(Electric.sector)) -> A23.elecS_inttech_mapping
 
     A23.elecS_globaltech_shrwt %>%
       anti_join(A23.elecS_tech_availability,
@@ -330,7 +330,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
     # Primary energy keywords
     L223.PrimaryRenewKeyword_elec %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
-      left_join(A23.elecS_tech_associations %>%
+      left_join(A23.elecS_tech_mapping %>%
                   select(-subsector_1),
                 by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
       select(Electric.sector, subsector.name, Electric.sector.technology, year, primary.renewable) %>%
@@ -339,7 +339,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
 
     L223.PrimaryRenewKeywordInt_elec %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
-      left_join(A23.elecS_inttech_associations %>%
+      left_join(A23.elecS_inttech_mapping %>%
                   select(-subsector_1),
                 by = c("sector.name" = "supplysector", "subsector.name" = "subsector",
                        "intermittent.technology" = "intermittent.technology")) %>%
@@ -349,7 +349,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
 
     L223.AvgFossilEffKeyword_elec %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
-      left_join(A23.elecS_tech_associations %>%
+      left_join(A23.elecS_tech_mapping %>%
                   select(-subsector_1),
                 by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
       select(Electric.sector, subsector.name, Electric.sector.technology, year, average.fossil.efficiency) %>%
@@ -358,7 +358,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       arrange(year, subsector.name, sector.name, technology) -> L2234.AvgFossilEffKeyword_elecS
 
     # Capital Costs of detailed electric sector technologies
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalTechCapital_elec, by = c("subsector" = "subsector.name", "technology")) %>%
       filter(!is.na(capital.overnight)) %>%
@@ -376,7 +376,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
 
     L2234.peak_CF_adj <- round(mean(elecS_time_fraction$peak.electricity.time), 3)
 
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalTechCapFac_elec , by = c("subsector" = "subsector.name", "technology")) %>%
       filter(technology != "hydro") %>%
@@ -390,7 +390,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
                                        L2234.peak_CF_adj * capacity.factor, capacity.factor )) ->
       L2234.GlobalTechCapFac_elecS
 
-    A23.elecS_inttech_associations %>%
+    A23.elecS_inttech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalIntTechCapital_elec, by= c("subsector"= "subsector.name" , "intermittent.technology")) %>%
       filter(!is.na(capital.overnight)) %>%
@@ -399,14 +399,14 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       L2234.GlobalIntTechCapital_elecS
 
     # O&M Costs of detailed electric sector technologies
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalTechOMfixed_elec, by = c("subsector" = "subsector.name", "technology")) %>%
       filter(!is.na(OM.fixed)) %>%
       select(-supplysector, -subsector_1, -technology, -sector.name ) %>%
       rename(supplysector = Electric.sector, technology = Electric.sector.technology) -> L2234.GlobalTechOMfixed_elecS
 
-    A23.elecS_inttech_associations %>%
+    A23.elecS_inttech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalIntTechOMfixed_elec, by= c("subsector"= "subsector.name" , "intermittent.technology")) %>%
       filter(!is.na(OM.fixed)) %>%
@@ -414,14 +414,14 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       rename(supplysector = Electric.sector, intermittent.technology = Electric.sector.intermittent.technology) ->
       L2234.GlobalIntTechOMfixed_elecS
 
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalTechOMvar_elec, by = c("subsector" = "subsector.name", "technology")) %>%
       filter(!is.na(OM.var)) %>%
       select(-supplysector, -subsector_1, -technology, -sector.name ) %>%
       rename(supplysector = Electric.sector, technology = Electric.sector.technology) -> L2234.GlobalTechOMvar_elecS
 
-    A23.elecS_inttech_associations %>%
+    A23.elecS_inttech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalIntTechOMvar_elec, by= c("subsector"= "subsector.name" , "intermittent.technology")) %>%
       filter(!is.na(OM.var)) %>%
@@ -430,14 +430,14 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       L2234.GlobalIntTechOMvar_elecS
 
     # Efficiencies
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalTechEff_elec, by = c("subsector" = "subsector.name", "technology")) %>%
       filter(!is.na(efficiency)) %>%
       select(-supplysector, -subsector_1, -technology, -sector.name ) %>%
       rename(supplysector = Electric.sector, technology = Electric.sector.technology) -> L2234.GlobalTechEff_elecS
 
-    A23.elecS_inttech_associations %>%
+    A23.elecS_inttech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalIntTechEff_elec, by= c("subsector"= "subsector.name" , "intermittent.technology")) %>%
       filter(!is.na(efficiency)) %>%
@@ -446,14 +446,14 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       L2234.GlobalIntTechEff_elecS
 
     # Technology Lifetimes
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalTechLifetime_elec, by = c("subsector" = "subsector.name", "technology")) %>%
       filter(!is.na(lifetime)) %>%
       select(-supplysector, -subsector_1, -technology, -sector.name ) %>%
       rename(supplysector = Electric.sector, technology = Electric.sector.technology) -> L2234.GlobalTechLifetime_elecS
 
-    A23.elecS_inttech_associations %>%
+    A23.elecS_inttech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalIntTechLifetime_elec, by= c("subsector"= "subsector.name" , "intermittent.technology")) %>%
       filter(!is.na(lifetime)) %>%
@@ -462,7 +462,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       L2234.GlobalIntTechLifetime_elecS
 
     # S-curve shut-down decider
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalTechSCurve_elec, by = c("subsector" = "subsector.name", "technology")) %>%
       filter(!is.na(lifetime)) %>%
@@ -470,7 +470,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       rename(supplysector = Electric.sector, technology = Electric.sector.technology) -> L2234.GlobalTechSCurve_elecS
 
     # Profit shut-down decider
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalTechProfitShutdown_elec, by = c("subsector" = "subsector.name", "technology")) %>%
       filter(!is.na(median.shutdown.point)) %>%
@@ -479,7 +479,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       L2234.GlobalTechProfitShutdown_elecS
 
     # Additional characteristics for CCS technologies
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalTechCapture_elec, by = c("subsector" = "subsector.name", "technology")) %>%
       filter(!is.na(remove.fraction)) %>%
@@ -487,7 +487,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       rename(supplysector = Electric.sector, technology = Electric.sector.technology) -> L2234.GlobalTechCapture_elecS
 
     # Additional characteristics for intermittent technologies
-    A23.elecS_inttech_associations %>%
+    A23.elecS_inttech_mapping %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.GlobalIntTechBackup_elec, by= c("subsector"= "subsector.name", "intermittent.technology" = "technology")) %>%
       filter(!is.na(capacity.limit)) %>%
@@ -496,9 +496,9 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       L2234.GlobalIntTechBackup_elecS
 
     # Energy inputs
-    A23.elecS_inttech_associations %>%
+    A23.elecS_inttech_mapping %>%
       rename(Electric.sector.technology = Electric.sector.intermittent.technology, technology = intermittent.technology) %>%
-      bind_rows(A23.elecS_tech_associations) -> L2234.StubTechMarket_elecS_USA_temp
+      bind_rows(A23.elecS_tech_mapping) -> L2234.StubTechMarket_elecS_USA_temp
 
     L223.StubTechMarket_elec_USA %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
@@ -511,7 +511,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
     # Backup markets
     L223.StubTechMarket_backup_USA %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
-      left_join(A23.elecS_inttech_associations,
+      left_join(A23.elecS_inttech_mapping,
                  by = c("supplysector", "subsector", "stub.technology" = "intermittent.technology")) %>%
       filter(!is.na(minicam.energy.input)) %>%
       select(region, supplysector = Electric.sector, subsector, stub.technology = Electric.sector.intermittent.technology,
@@ -524,9 +524,9 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       L2234.StubTechElecMarket_backup_elecS_USA
 
     # Calibration Year Outputs. Note that all technologies in GCAM-USA are calibrated on the output.
-    A23.elecS_inttech_associations %>%
+    A23.elecS_inttech_mapping %>%
       rename(Electric.sector.technology = Electric.sector.intermittent.technology, technology = intermittent.technology) %>%
-      bind_rows(A23.elecS_tech_associations) -> L2234.StubTechProd_elecS_USA_temp
+      bind_rows(A23.elecS_tech_mapping) -> L2234.StubTechProd_elecS_USA_temp
 
     L2234.StubTechProd_elecS_USA_temp %>%
       repeat_add_columns(tibble::tibble(year = MODEL_BASE_YEARS)) %>%
@@ -679,7 +679,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
              share.weight.year, subs.share.weight, share.weight) -> L2234.StubTechProd_elecS_USA
 
     # Fixed Output calibration for hydro
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       filter(subsector == "hydro")  -> L2234.StubTechFixOut_elecS_USA_temp
 
     L223.StubTechFixOut_elec_USA %>%
@@ -701,7 +701,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
 
     L223.StubTechFixOut_hydro_USA %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
-      left_join(A23.elecS_tech_associations, by = c("supplysector","subsector","stub.technology" = "technology")) %>%
+      left_join(A23.elecS_tech_mapping, by = c("supplysector","subsector","stub.technology" = "technology")) %>%
       select(-supplysector, -subsector_1, -stub.technology) %>%
       rename(supplysector = Electric.sector, stub.technology = Electric.sector.technology) %>%
       left_join_error_no_match(L2234.fuelfractions_segment_USA_hydro_final_calibration_year,
@@ -714,7 +714,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
     L2234.StubTechMarket_elecS_USA %>%
       filter(subsector %in% c("coal", "gas", "refined liquids", "biomass"),
              year %in% MODEL_BASE_YEARS) %>%
-      left_join_error_no_match(A23.elecS_tech_associations,
+      left_join_error_no_match(A23.elecS_tech_mapping,
                            by = c("supplysector" = "Electric.sector", "subsector",
                                   "stub.technology" = "Electric.sector.technology")) %>%
       # join will produce NAs (filtered out later); left_join_error_no_match throws error, so left_join used
@@ -748,7 +748,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       select(-count_tech, -eff_actual) -> L2234.StubTechEff_elecS_USA
 
     # Capacity factors by state for wind and solar
-    A23.elecS_inttech_associations %>%
+    A23.elecS_inttech_mapping %>%
       rename(stub.technology = intermittent.technology) %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.StubTechCapFactor_elec_wind_USA, by = c("subsector", "stub.technology")) %>%
@@ -757,7 +757,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       filter(subsector != "solar",
              !is.na(capacity.factor)) -> L2234.StubTechCapFactor_elecS_wind_USA
 
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       rename(stub.technology = technology) %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.StubTechCapFactor_elec_wind_USA, by = c("subsector", "stub.technology")) %>%
@@ -769,7 +769,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
     L2234.StubTechCapFactor_elecS_wind_USA %>%
       bind_rows(L2234.StubTechCapFactor_elecS_wind_storage_USA) -> L2234.StubTechCapFactor_elecS_wind_USA
 
-    A23.elecS_inttech_associations %>%
+    A23.elecS_inttech_mapping %>%
       rename(stub.technology = intermittent.technology) %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.StubTechCapFactor_elec_solar_USA, by = c("subsector", "stub.technology")) %>%
@@ -778,7 +778,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       filter(subsector != "wind",
              !is.na(capacity.factor)) -> L2234.StubTechCapFactor_elecS_solar_USA
 
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       rename(stub.technology = technology) %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L223.StubTechCapFactor_elec_solar_USA, by = c("subsector", "stub.technology")) %>%
@@ -889,16 +889,20 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
 
     # 3. Build csvs for grid region sectors and append them to state-level tables where possible.
     # Create horizontal and vertical supplysectors in grid regions
-    L2234.Supplysector_elecS_grid <- write_to_all_grid_regions(
-      A23.elecS_sector, c( "region", "supplysector", "output.unit", "input.unit", "price.unit",
-                           "logit.year.fillout", "logit.exponent", "logit.type" ))
+    L2234.Supplysector_elecS_grid <- write_to_all_states(A23.elecS_sector,
+                                                         c( "region", "supplysector", "output.unit", "input.unit", "price.unit",
+                                                            "logit.year.fillout", "logit.exponent", "logit.type" ),
+                                                         # NOTE: writing to all grid regions, rather than states
+                                                         region_list = gcamusa.GRID_REGIONS)
 
     L2234.Supplysector_elecS_USA %>%
       bind_rows(L2234.Supplysector_elecS_grid) -> L2234.Supplysector_elecS_USA
 
-    L2234.ElecReserve_elecS_grid <- write_to_all_grid_regions(
-      A23.elecS_metainfo %>% select(-region),
-      c("region", "supplysector","electricity.reserve.margin", "average.grid.capacity.factor"))
+    L2234.ElecReserve_elecS_grid <- write_to_all_states(A23.elecS_metainfo %>% select(-region),
+                                                        c("region", "supplysector","electricity.reserve.margin",
+                                                          "average.grid.capacity.factor"),
+                                                        # NOTE: writing to all grid regions, rather than states
+                                                        region_list = gcamusa.GRID_REGIONS)
 
     L2234.ElecReserve_elecS_USA %>%
       bind_rows(L2234.ElecReserve_elecS_grid) -> L2234.ElecReserve_elecS_USA
@@ -1070,8 +1074,8 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
                      "gcam-usa/A23.elecS_subsector_shrwt_interpto",
                      "gcam-usa/A23.elecS_subsector_shrwt_interpto_state_adj",
                      "gcam-usa/NREL_us_re_technical_potential",
-                     "gcam-usa/A23.elecS_tech_associations",
-                     "gcam-usa/A23.elecS_inttech_associations",
+                     "gcam-usa/A23.elecS_tech_mapping",
+                     "gcam-usa/A23.elecS_inttech_mapping",
                      "L223.StubTechProd_elec_USA",
                      "L1239.state_elec_supply_USA") ->
       L2234.SubsectorShrwtInterpTo_elecS_USA
@@ -1086,8 +1090,8 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
                      "gcam-usa/A23.elecS_subsector_shrwt",
                      "gcam-usa/A23.elecS_subsector_shrwt_state_adj",
                      "gcam-usa/NREL_us_re_technical_potential",
-                     "gcam-usa/A23.elecS_tech_associations",
-                     "gcam-usa/A23.elecS_inttech_associations",
+                     "gcam-usa/A23.elecS_tech_mapping",
+                     "gcam-usa/A23.elecS_inttech_mapping",
                      "L223.StubTechProd_elec_USA",
                      "L1239.state_elec_supply_USA") ->
       L2234.SubsectorShrwt_elecS_USA
@@ -1098,7 +1102,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_comments("Efficiencies of multiple load segments coal, oil and gas technologies in base years") %>%
       add_legacy_name("L2234.StubTechEff_elecS_USA") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/A23.elecS_tech_associations",
+                     "gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/A23.elecS_stubtech_energy_inputs",
                      "gcam-usa/NREL_us_re_technical_potential",
@@ -1111,8 +1115,8 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Capacity factors by state for multiple load segments solar technologies") %>%
       add_legacy_name("L2234.StubTechCapFactor_elecS_solar_USA") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
-                     "gcam-usa/A23.elecS_inttech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
+                     "gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.StubTechCapFactor_elec_solar_USA") ->
       L2234.StubTechCapFactor_elecS_solar_USA
@@ -1122,8 +1126,8 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Capacity factors by state for multiple load segments wind technologies") %>%
       add_legacy_name("L2234.StubTechCapFactor_elecS_wind_USA") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
-                     "gcam-usa/A23.elecS_inttech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
+                     "gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.StubTechCapFactor_elec_wind_USA") ->
       L2234.StubTechCapFactor_elecS_wind_USA
@@ -1184,7 +1188,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Mapped to electricity load segment technologies from L223.PrimaryRenewKeyword_elec") %>%
       add_legacy_name("L2234.PrimaryRenewKeyword_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.PrimaryRenewKeyword_elec") ->
       L2234.PrimaryRenewKeyword_elecS_USA
@@ -1194,7 +1198,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Mapped to electricity load segment intermittent technologies from L223.PrimaryRenewKeywordInt_elec") %>%
       add_legacy_name("L2234.PrimaryRenewKeywordInt_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_inttech_associations",
+      add_precursors("gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.PrimaryRenewKeywordInt_elec") ->
       L2234.PrimaryRenewKeywordInt_elecS_USA
@@ -1204,7 +1208,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Mapped to electricity load segment technologies from L223.AvgFossilEffKeyword_elec") %>%
       add_legacy_name("L2234.AvgFossilEffKeyword_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.AvgFossilEffKeyword_elec") ->
       L2234.AvgFossilEffKeyword_elecS_USA
@@ -1214,7 +1218,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("1975$ per kW; unitless (fixed.charge.rate)") %>%
       add_comments("Capital costs of electricity load segments generation technologies") %>%
       add_legacy_name("L2234.GlobalTechCapital_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/A23.elecS_globaltech_non_energy_inputs",
                      "L223.GlobalTechCapital_elec") ->
@@ -1225,7 +1229,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("1975$ per kW; unitless (fixed.charge.rate)") %>%
       add_comments("Capital costs of intermittent lectricity load segments generation technologies") %>%
       add_legacy_name("L2234.GlobalIntTechCapital_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_inttech_associations",
+      add_precursors("gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.GlobalIntTechCapital_elec") ->
       L2234.GlobalIntTechCapital_elecS_USA
@@ -1235,7 +1239,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("1975$/kW/yr") %>%
       add_comments("Fixed OM costs of electricity load segments generation technologies") %>%
       add_legacy_name("L2234.GlobalTechOMfixed_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/A23.elecS_globaltech_non_energy_inputs",
                      "L223.GlobalTechOMfixed_elec") ->
@@ -1246,7 +1250,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("1975$/kW/yr") %>%
       add_comments("Fixed OM costs of intermittent electricity load segments generation technologies") %>%
       add_legacy_name("L2234.GlobalIntTechOMfixed_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_inttech_associations",
+      add_precursors("gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.GlobalIntTechOMfixed_elec") ->
       L2234.GlobalIntTechOMfixed_elecS_USA
@@ -1256,7 +1260,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("1975$/MWh") %>%
       add_comments("Variable OM costs of electricity load segments generation technologies") %>%
       add_legacy_name("L2234.GlobalTechOMvar_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/A23.elecS_globaltech_non_energy_inputs",
                      "L223.GlobalTechOMvar_elec") ->
@@ -1267,7 +1271,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("1975$/MWh") %>%
       add_comments("Variable OM costs of intermittent electricity load segments generation technologies") %>%
       add_legacy_name("L2234.GlobalIntTechOMvar_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_inttech_associations",
+      add_precursors("gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.GlobalIntTechOMvar_elec") ->
       L2234.GlobalIntTechOMvar_elecS_USA
@@ -1277,7 +1281,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Global capacity factors for electricity load segments generation technologies") %>%
       add_legacy_name("L2234.GlobalTechCapFac_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/elecS_time_fraction",
                      "gcam-usa/A23.elecS_globaltech_non_energy_inputs",
@@ -1289,7 +1293,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Efficiencies of electricity load segments generation technologies in future years") %>%
       add_legacy_name("L2234.GlobalTechEff_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.GlobalTechEff_elec") ->
       L2234.GlobalTechEff_elecS_USA
@@ -1299,7 +1303,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Efficiencies of intermittent electricity load segments generation technologies in future years") %>%
       add_legacy_name("L2234.GlobalIntTechEff_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_inttech_associations",
+      add_precursors("gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.GlobalIntTechEff_elec") ->
       L2234.GlobalIntTechEff_elecS_USA
@@ -1309,7 +1313,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("years") %>%
       add_comments("Lifetimes of electricity load segments generation technologies") %>%
       add_legacy_name("L2234.GlobalTechLifetime_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/A23.elecS_globaltech_non_energy_inputs",
                      "L223.GlobalTechLifetime_elec") ->
@@ -1320,7 +1324,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("years") %>%
       add_comments("Lifetimes of intermittent electricity load segments generation technologies") %>%
       add_legacy_name("L2234.GlobalIntTechLifetime_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_inttech_associations",
+      add_precursors("gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.GlobalIntTechLifetime_elec") ->
       L2234.GlobalIntTechLifetime_elecS_USA
@@ -1330,7 +1334,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Profit shutdown decider for electricity load segments generation technologies") %>%
       add_legacy_name("L2234.GlobalTechProfitShutdown_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.GlobalTechProfitShutdown_elec") ->
       L2234.GlobalTechProfitShutdown_elecS_USA
@@ -1340,7 +1344,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("years (lifetime); unitless") %>%
       add_comments("S-curve shutdown decider for electricity load segments generation technologies") %>%
       add_legacy_name("L2234.GlobalTechSCurve_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/A23.elecS_globaltech_non_energy_inputs",
                      "L223.GlobalTechSCurve_elec") ->
@@ -1351,7 +1355,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Characteristics of electricity load segments CCS technologies") %>%
       add_legacy_name("L2234.GlobalTechCapture_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.GlobalTechCapture_elec") ->
       L2234.GlobalTechCapture_elecS_USA
@@ -1361,7 +1365,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("1975$/kW/yr (backup.capital.cost); unitless") %>%
       add_comments("Backup characteristics for electricity load segments intermittent technologies") %>%
       add_legacy_name("L2234.GlobalIntTechBackup_elecS") %>%
-      add_precursors("gcam-usa/A23.elecS_inttech_associations",
+      add_precursors("gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.GlobalIntTechBackup_elec") ->
       L2234.GlobalIntTechBackup_elecS_USA
@@ -1371,8 +1375,8 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Energy inputs and markets for electricity load segments technologies") %>%
       add_legacy_name("L2234.StubTechMarket_elecS_USA") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
-                     "gcam-usa/A23.elecS_inttech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
+                     "gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.StubTechMarket_elec_USA") ->
       L2234.StubTechMarket_elecS_USA
@@ -1382,7 +1386,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("Backup energy inputs for intermittent electricity load segments technologies") %>%
       add_legacy_name("L2234.StubTechMarket_backup_elecS_USA") %>%
-      add_precursors("gcam-usa/A23.elecS_inttech_associations",
+      add_precursors("gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.StubTechMarket_backup_USA") ->
       L2234.StubTechMarket_backup_elecS_USA
@@ -1393,7 +1397,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_comments("Backup market sector names for intermittent electricity load segments technologies") %>%
       add_legacy_name("L2234.StubTechElecMarket_backup_elecS_USA") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/A23.elecS_inttech_associations",
+                     "gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.StubTechMarket_backup_USA") ->
       L2234.StubTechElecMarket_backup_elecS_USA
@@ -1404,8 +1408,8 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_comments("Calibration outputs for electricity load segments technologies") %>%
       add_legacy_name("L2234.StubTechProd_elecS_USA") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/A23.elecS_tech_associations",
-                     "gcam-usa/A23.elecS_inttech_associations",
+                     "gcam-usa/A23.elecS_tech_mapping",
+                     "gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/NREL_us_re_technical_potential",
                      "L223.StubTechProd_elec_USA",
@@ -1417,7 +1421,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("EJ (fixedOutput); unitless") %>%
       add_comments("Calibration year fixed outputs for hydro electricity load segments technologies") %>%
       add_legacy_name("L2234.StubTechFixOut_elecS_USA") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.StubTechFixOut_elec_USA",
                      "L1239.state_elec_supply_USA") ->
@@ -1428,7 +1432,7 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_units("EJ (fixedOutput); unitless") %>%
       add_comments("Future year fixed outputs for hydro electricity load segments technologies") %>%
       add_legacy_name("L2234.StubTechFixOut_hydro_elecS_USA") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L223.StubTechFixOut_hydro_USA",
                      "L1239.state_elec_supply_USA") ->
@@ -1457,8 +1461,8 @@ module_gcam.usa_L2234.elec_segments_USA <- function(command, ...) {
       add_comments("Calibration outputs for electricity load segments grid technologies") %>%
       add_legacy_name("L2234.TechProd_elecS_grid") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/A23.elecS_tech_associations",
-                     "gcam-usa/A23.elecS_inttech_associations",
+                     "gcam-usa/A23.elecS_tech_mapping",
+                     "gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/NREL_us_re_technical_potential",
                      "L223.StubTechProd_elec_USA",

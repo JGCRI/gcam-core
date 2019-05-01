@@ -1,7 +1,9 @@
-# File: BEA_GDP_97_16_09USD_state.csv,,,,,,,,,,,,,,,,,,,,,
-# Title: Real GDP by State (All Industry Total) 1997-2009,,,,,,,,,,,,,,,,,,,,,
-# Units: millions of chained 2009 dollars,,,,,,,,,,,,,,,,,,,,,
-# Source: Bureau of Economic Analysis (https://www.bea.gov/iTable/index_regional.cfm),,,,,,,,,,,,,,,,,,,,,
+# File: BEA_GDP_97_16_09USD_state.csv
+# Title: Real GDP by State (All Industry Total) 1997-2009
+# Units: millions of chained 2009 dollars
+# Source: Bureau of Economic Analysis (no stable link, but see: https://apps.bea.gov/iTable/index_regional.cfm)
+# Column types: iciiiiiiiiiiiiiiiiiiii 
+# ----------
 Fips,Area,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016
 1000,Alabama,137143,141672,146666,148188,148824,152630,156970,166286,171723,174675,175332,174459,168315,171861,173760,175420,177049,176960,178893,181211
 2000,Alaska,37880,36889,36617,35909,37102,38605,38262,39648,40767,43455,45735,46422,50463,49671,51004,53719,51361,49662,49947,47460

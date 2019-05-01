@@ -1,5 +1,7 @@
 # File: A322.globaltech_renew.csv
 # Title: Renewable input to import technologies of fertilizer production
 # Units: NA
+# Column types: cccc 
+# ----------
 supplysector,subsector,technology,renewable.input
 N fertilizer,Imports,Imports,renewable

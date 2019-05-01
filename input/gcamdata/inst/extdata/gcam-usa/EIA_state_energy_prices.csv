@@ -2,6 +2,8 @@
 # Title: EIA_state_energy_prices
 # Source: http://www.eia.gov/state/seds/data.cfm?incfile=/state/seds/sep_sum/html/sum_pr_tot.html&sid=US  Table E1. Primary Energy Electricity and Total Energy Price Estimates 2012
 # Units: Dollars per Million Btu
+# Column types: cnnnnnnnnnnnnnnn 
+# ----------
 State,Coal,Natural.gas,Distillate.fuel.oil,Jet.fuel,LPG,Motor.gasoline,Residual.fuel.oil,Other.petroleum,Petroleum.total,Nuclear.fuel,Biomass,Total.primary,Electricity,Retail.electricity,Total.energy
 Alabama,3.3,4.28,27.28,23.24,22.63,27.57,14.1,21.12,26.58,0.69,2.87,8.66,2.27,27.31,19.74
 Alaska,4.06,6.26,28.98,23.28,27.47,35.56,21.45,36.73,27.17,,16.03,20.9,6.35,47.84,25.33

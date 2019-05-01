@@ -3,6 +3,8 @@
 # Units: 2004$/MW
 # Comments: These costs are the additional cost in $/MW (2004 USD) for interconnecting to the grid on top of the capital and OM costs. Costs are sometimes assigned at an arbitrary high value for region-class-bin combinations where no resource exists. Note that we need to apply an FCR to these interconnection costs.
 # Source: Information based on ReEDS version 2017.  Files provided by ReEDS team in April 2017.
+# Column types: icnnnnn 
+# ----------
 Region,CSP.class,cspsc1,cspsc2,cspsc3,cspsc4,cspsc5
 1,cspclass5,,,,,497236.2125
 1,cspclass4,,,,,497236.2125
