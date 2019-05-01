@@ -17,7 +17,7 @@
 #' @author RC Aug 2018
 module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "gcam-usa/A23.elecS_tech_associations",
+    return(c(FILE = "gcam-usa/A23.elecS_tech_mapping",
              FILE = "gcam-usa/A23.elecS_tech_availability",
              "L222.StubTechMarket_en_USA",
              "L222.StubTech_en",
@@ -36,13 +36,13 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
     L222.StubTechMarket_en_USA <- get_data(all_data, "L222.StubTechMarket_en_USA")
     L222.StubTech_en <- get_data(all_data, "L222.StubTech_en")
     L225.StubTech_h2 <- get_data(all_data, "L225.StubTech_h2")
-    A23.elecS_tech_associations <- get_data(all_data, "gcam-usa/A23.elecS_tech_associations")
+    A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping")
     A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability")
 
     # ===================================================
     # Perform computations
 
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       # Remove the load segments and technology combinations that are not created in electricity sector
       anti_join(A23.elecS_tech_availability, by = c("Electric.sector.technology" = "stub.technology")) %>%
       arrange(subsector, Electric.sector) %>%
@@ -89,7 +89,7 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Set zero share-weights for all coal pulverized stub technologies in all USA states and future years") %>%
       add_legacy_name("L2231.StubTechShrwt_coal_USA") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L222.StubTechMarket_en_USA",
                      "L222.StubTech_en",
@@ -101,7 +101,7 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Set zero share-weights for all coal pulverized stub technologies in all USA states for near-future") %>%
       add_comments("New coal power deployment can begin in gcamusa.FIRST_NEW_COAL_YEAR (see constants.R; default is 2035) ") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_associations",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L222.StubTechMarket_en_USA",
                      "L222.StubTech_en",

@@ -3,6 +3,8 @@
 # Units: unitless (capacity factor)
 # Comments: Capacity factors by ReEDS timeslice and CSP class for CSP systems without storage assuming parabolic trough.
 # Source: Information based on ReEDS version 2017.  Files provided by ReEDS team in April 2017.
+# Column types: ccn 
+# ----------
 timeslice,class,CF
 H1,cspclass1,0
 H1,cspclass2,0

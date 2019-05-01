@@ -1,6 +1,8 @@
 # File: elec_tech_water_map.csv
 # Title: Electricity technology to water type mapping
 # Units: None
+# Column types: ccccccccccccc 
+# ----------
 from.supplysector,from.subsector,from.technology,to.supplysector,to.subsector,to.technology,plant_type,cooling_system,water_type,sector,fuel,technology,minicam.energy.input
 electricity,wind,wind,electricity,wind,wind,no cooling,none,none,electricity generation,wind,wind,onshore wind resource
 electricity,solar,PV,electricity,solar,PV,no cooling,none,fresh,electricity generation,solar PV,PV,global solar resource

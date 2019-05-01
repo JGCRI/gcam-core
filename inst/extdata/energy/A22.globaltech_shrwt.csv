@@ -2,6 +2,8 @@
 # Title: Primary energy transformation default technology shareweights
 # Units: N/A
 # Description: Shareweights of transformation technologies 
+# Column types: ccciinii 
+# ----------
 supplysector,subsector,technology,1971,2015,2020,2050,2100
 gas processing,natural gas,natural gas,1,1,1,1,1
 gas processing,biomass gasification,biomass gasification,1,1,1,1,1

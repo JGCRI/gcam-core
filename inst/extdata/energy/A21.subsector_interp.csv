@@ -1,6 +1,8 @@
 # File: A21.subsector_interp.csv
 # Title: Primary energy handling default subsector shareweight interpolation
 # Units: NA
+# Column types: cccccici 
+# ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function,traded
 regional biomass,regional biomass,share-weight,final-calibration-year,end-year,,linear,0
 regional coal,regional coal,share-weight,final-calibration-year,end-year,,linear,0

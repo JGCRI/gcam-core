@@ -118,8 +118,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       add_comments("Cropland cover by high and low management levels are currently set at the share of 50% by each.") %>%
       add_legacy_name("L181.LC_bm2_R_C_Yh_GLU_irr_level") %>%
       add_precursors("L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU",
-                     "L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU") ->
       L181.LC_bm2_R_C_Yh_GLU_irr_level
 
     L181.ag_EcYield_kgm2_R_C_Y_GLU_irr_level %>%

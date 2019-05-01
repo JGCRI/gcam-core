@@ -1,6 +1,8 @@
 # File: A10.TechChange.csv
 # Title: techChange only for resources whose techchange not specified elsewhere
 # Units: Unitless
+# Column types: ccnn 
+# ----------
 resource,subresource,1975,2005
 coal,coal,0.005,0.0075
 crude oil,crude oil,0.005,0.0075

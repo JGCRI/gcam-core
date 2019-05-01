@@ -3,7 +3,9 @@
 # Units: billion 2005 dollars
 # Comments: GDP assumptions by US Census Division from 1990-2040
 # region names modified from original dataset to match subregion9 names in states_subregions.csv
-# Source: U.S. Energy Information Administration
+# Source: U.S. Energy Information Administration.  Provided by Elizabeth Sendich via email on 12/4/16.  Assumptions correspond to Annual Energy Outlook 2016.
+# Column types: iinnnnnnnnn 
+# ----------
 Year,Quarter,New England,Atlantic-N,Central-NE,Central-NW,Atlantic-S,Central-SE,Central-SW,Mountain,Pacific
 1990,1,525.34,1504.34,1498.48,587.7,1539.85,437.08,939.64,408.67,1506.01
 1990,2,523.69,1507.53,1499.85,589.66,1547.22,437.65,945.23,412.16,1518.71

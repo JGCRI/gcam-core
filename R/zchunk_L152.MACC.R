@@ -45,10 +45,10 @@ module_emissions_L152.MACC <- function(command, ...) {
 
     # Make processes and region names consistent
     EPA_MACC_baselines_MtCO2e <- EPA_MACC_baselines_MtCO2e_in %>%
-      mutate(Process = sub("\\&", "and", Process)) %>%
-      mutate(EPA_region = sub("\\&", "and", EPA_region)) %>%
-      mutate(EPA_region = sub("World", "Global", EPA_region)) %>%
-      mutate(EPA_region = sub("Global Total", "Global", EPA_region))
+      mutate(Process = sub("\\&", "and", Process),
+             EPA_region = sub("\\&", "and", EPA_region),
+             EPA_region = sub("World", "Global", EPA_region),
+             EPA_region = sub("Global Total", "Global", EPA_region))
 
     EPA_MACC_MtCO2e <- EPA_MACC_MtCO2e %>%
       mutate(Process = sub("\\&", "and", Process))
@@ -57,16 +57,16 @@ module_emissions_L152.MACC <- function(command, ...) {
     # Convert from 2010$/tCO2e to 1990$/tC
     L152.EPA_MACC_MtCO2e <- EPA_MACC_MtCO2e %>%
       gather(cost_2010USD_tCO2e, reduction_MtCO2e, -Sector, -Process, -EPA_region, -EPA_region_code) %>%
-      mutate(cost_2010USD_tCO2e = as.numeric(cost_2010USD_tCO2e)) %>%
-      mutate(cost_1990USD_tCe = round(cost_2010USD_tCO2e * emissions.CONV_C_CO2 * gdp_deflator(1990, base_year = 2010), 0)) %>%
+      mutate(cost_2010USD_tCO2e = as.numeric(cost_2010USD_tCO2e),
+             cost_1990USD_tCe = round(cost_2010USD_tCO2e * emissions.CONV_C_CO2 * gdp_deflator(1990, base_year = 2010), 0)) %>%
       select(-cost_2010USD_tCO2e)
 
     # For in abatement and basebline data:
     # Combine aluminum and magnesium processes: define function, then call in both instances
     combine_Al_Mg <- function(x) {
       x %>%
-        mutate(Process = sub("Primary Aluminum Production", "Aluminum and Magnesium Production", Process)) %>%
-        mutate(Process = sub("Magnesium Manufacturing", "Aluminum and Magnesium Production", Process))
+        mutate(Process = sub("Primary Aluminum Production", "Aluminum and Magnesium Production", Process),
+               Process = sub("Magnesium Manufacturing", "Aluminum and Magnesium Production", Process))
      }
 
     # Abatement data

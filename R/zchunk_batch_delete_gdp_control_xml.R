@@ -10,7 +10,7 @@
 #' original data system was \code{batch_delete_gdp_control_xml.R} (emissions XML).
 module_emissions_batch_delete_gdp_control_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L251.ctrl.delete"))
+    return(c("L251.ctrl.delete"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "delete_gdp_control.xml"))
   } else if(command == driver.MAKE) {

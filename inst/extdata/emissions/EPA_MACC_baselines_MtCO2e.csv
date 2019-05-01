@@ -4,6 +4,8 @@
 # Source: EPA report - Global Mitigation of Non-CO2 Greenhouse Gases: 2010-2030
 #         https://www.epa.gov/sites/production/files/2016-09/mac_report_2013-data_annex.zip
 # Description: Cumulative Reductions (MtCO2e) as a function of Breakeven price by Sector/Region/Country
+# Column types: cccnnnnn 
+# ----------
 Sector,Process,EPA_region,2010,2015,2020,2025,2030
 Industrial Processes,Aerosols Product Use,Australia,0.618491038,1.016297552,1.095323275,1.181363981,1.270266472
 Industrial Processes,Aerosols Product Use,Brazil,0.335763911,0.67986583,0.779950582,0.894771255,1.022509203

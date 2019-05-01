@@ -3,6 +3,8 @@
 # Description: Specifies SSP-specific tech change parameters for the MAC curves. These increase the portion of emissions abated for a given carbon price.,
 # Units: Unitless,
 # Source: Lucas et al. 2007. Environmental Science & Policy.,
+# Column types: ccn 
+# ----------
 scenario,MAC,tech_change
 SSP1,Livestock,0.03
 SSP1,Cropland Management,0.019

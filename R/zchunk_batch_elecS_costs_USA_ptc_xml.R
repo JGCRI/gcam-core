@@ -10,8 +10,8 @@
 #' original data system was \code{batch_elecS_costs_USA_ptc.xml} (gcamusa xml-batch).
 module_gcamusa_batch_elecS_costs_USA_ptc_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L2247.GlobalTechRegPriceAdj_ptc_USA",
-             "L2247.GlobalIntTechRegPriceAdj_ptc_USA"))
+    return(c("L2247.GlobalTechCost_ptc_USA",
+             "L2247.GlobalIntTechCost_ptc_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "elecS_costs_USA_ptc.xml"))
   } else if(command == driver.MAKE) {
@@ -19,15 +19,15 @@ module_gcamusa_batch_elecS_costs_USA_ptc_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L2247.GlobalTechRegPriceAdj_ptc_USA <- get_data(all_data, "L2247.GlobalTechRegPriceAdj_ptc_USA")
-    L2247.GlobalIntTechRegPriceAdj_ptc_USA <- get_data(all_data, "L2247.GlobalIntTechRegPriceAdj_ptc_USA")
+    L2247.GlobalTechCost_ptc_USA <- get_data(all_data, "L2247.GlobalTechCost_ptc_USA")
+    L2247.GlobalIntTechCost_ptc_USA <- get_data(all_data, "L2247.GlobalIntTechCost_ptc_USA")
 
     # Produce outputs
     create_xml("elecS_costs_USA_ptc.xml") %>%
-      add_xml_data(L2247.GlobalTechRegPriceAdj_ptc_USA, "GlobalTechRegPriceAdj") %>%
-      add_xml_data(L2247.GlobalIntTechRegPriceAdj_ptc_USA, "GlobalIntTechRegPriceAdj") %>%
-      add_precursors("L2247.GlobalTechRegPriceAdj_ptc_USA",
-                     "L2247.GlobalIntTechRegPriceAdj_ptc_USA") ->
+      add_xml_data(L2247.GlobalTechCost_ptc_USA, "GlobalTechCost") %>%
+      add_xml_data(L2247.GlobalIntTechCost_ptc_USA, "GlobalIntTechCost") %>%
+      add_precursors("L2247.GlobalTechCost_ptc_USA",
+                     "L2247.GlobalIntTechCost_ptc_USA") ->
       elecS_costs_USA_ptc.xml
 
     return_data(elecS_costs_USA_ptc.xml)

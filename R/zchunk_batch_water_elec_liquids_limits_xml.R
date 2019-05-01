@@ -10,7 +10,7 @@
 #' original data system was \code{batch_water_elec_liquids_limits_xml.R} (water XML).
 module_water_batch_water_elec_liquids_limits_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L2233.DeleteCreditInput_elec",
+    return(c("L2233.DeleteCreditInput_elec",
               "L2233.CreditInput_elec"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "water_elec_liquids_limits.xml"))

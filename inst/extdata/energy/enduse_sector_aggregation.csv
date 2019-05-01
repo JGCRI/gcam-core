@@ -1,6 +1,8 @@
 # File: enduse_sector_aggregation.csv
 # Title: Mapping from first intermediate sector to aggregated intermediate sector
 # Units: None
+# Column types: cc 
+# ----------
 sector,sector_agg
 in_bld_comm,in_bld_comm
 in_bld_resid,in_bld_resid

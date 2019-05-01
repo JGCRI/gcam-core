@@ -1,5 +1,7 @@
 # File: A24.sector.csv
 # Title: District heat supplysector characteristics
 # Units: NA
+# Column types: ccccic 
+# ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
 district heat,EJ,EJ,1975$/GJ,-3,

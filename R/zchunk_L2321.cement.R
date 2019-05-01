@@ -365,9 +365,9 @@ module_energy_L2321.cement <- function(command, ...) {
         mutate(parameter = approx(x = A321.inc_elas_output[["pc.output_t"]],
                                   y = A321.inc_elas_output[["inc_elas"]],
                                   xout = intermediate[["value.x"]],
-                                  rule = 2)[['y']]) %>%
-        mutate(value = value.x * value.y ^ parameter) %>%
-        mutate(year = elast_years[i]) %>%
+                                  rule = 2)[['y']],
+               value = value.x * value.y ^ parameter,
+               year = elast_years[i]) %>%
         select(GCAM_region_ID, scenario, region, year, value) %>%
         bind_rows(L2321.Output_cement) ->
         L2321.Output_cement
@@ -378,8 +378,8 @@ module_energy_L2321.cement <- function(command, ...) {
       filter(year %in% MODEL_FUTURE_YEARS) %>%
       mutate(value = approx( x = A321.inc_elas_output[["pc.output_t"]],
                              y = A321.inc_elas_output[["inc_elas"]],
-                             xout = value, rule = 2)[["y"]]) %>%
-      mutate(value = round(value, energy.DIGITS_INCELAS_IND)) %>%
+                             xout = value, rule = 2)[["y"]],
+             value = round(value, energy.DIGITS_INCELAS_IND)) %>%
       rename(income.elasticity = value) %>%
       mutate(energy.final.demand = A321.demand[["energy.final.demand"]]) ->
       L2321.IncomeElasticity_cement # intermediate tibble

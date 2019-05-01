@@ -1,17 +1,20 @@
-# File: states_subregions.csv,,,,,,,,,,,,
-# Title: State codes-names-groupings mappings,,,,,,,,,,,,
-# Units: NA,,,,,,,,,,,,
-# Description: Mapping between state codes, state names, and state groupings found in various inventories relevant for GCAM-USA,,,,,,,,,,
-# grid_region: electricity grid region (n=12),,,,,,,,,,,,
-# DIVISION: Census division (n=9),,,,,,,,,,,,
-# LRGSTATE: Large states (CA, FL, NY, TX) specifically indicated in 1993-2005 versions of # the Residential Energy Consumption Survey (n=4),,,,,,,,,
-# REGION: Census region (n=4),,,,,,,,,,,,
-# subregion13: Census divisions with 4 large states broken out (n=13),,,,,,,,,,,,
-# DIVISION2009: Revised census divisions in 2009 (n=10) Breaks up the Mountain division into Northern (CO, ID, MT, UT, WY) and Southern components (AZ, NM, NV).,,,,,,
-# subregion9: named census divisions (n=9),,,,,,,,,,,,
-# subregion4: named census regions (n=4),,,,,,,,,,,,
-# REPORTABLE_DOMAIN: most resolved state groupings in 2009 Residential Energy Consumption Survey (n=27),,,,,,,,,,,,
-# subregion27: named reportable domains (n=27),,,,,,,,,,,,
+# File: states_subregions.csv
+# Title: State codes-names-groupings mappings
+# Units: NA
+# Source:  None (mapping of state groupings found in various datasets used in GCAM-USA data processing)
+# Description: Mapping between state codes, state names, and state groupings found in various inventories relevant for GCAM-USA
+# grid_region: electricity grid region (n=12)
+# DIVISION: Census division (n=9)
+# LRGSTATE: Large states (CA, FL, NY, TX) specifically indicated in 1993-2005 versions of # the Residential Energy Consumption Survey (n=4)
+# REGION: Census region (n=4)
+# subregion13: Census divisions with 4 large states broken out (n=13)
+# DIVISION2009: Revised census divisions in 2009 (n=10) Breaks up the Mountain division into Northern (CO, ID, MT, UT, WY) and Southern components (AZ, NM, NV).
+# subregion9: named census divisions (n=9)
+# subregion4: named census regions (n=4)
+# REPORTABLE_DOMAIN: most resolved state groupings in 2009 Residential Energy Consumption Survey (n=27)
+# subregion27: named reportable domains (n=27)
+# Column types: ccciiiciccicc 
+# ----------
 state,state_name,grid_region,DIVISION,LRGSTATE,REGION,subregion13,DIVISION2009,subregion9,subregion4,REPORTABLE_DOMAIN,subregion27,NEMS
 AK,Alaska,Alaska grid,9,0,4,Pacific,10,Pacific,West,27,Other Pacific,NWP
 AL,Alabama,Southeast grid,6,0,3,Central-SE,6,Central-SE,South,18,Other Central-SE,STV

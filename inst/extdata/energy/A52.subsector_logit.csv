@@ -1,6 +1,8 @@
 # File: A52.subsector_logit.csv
 # Title: Aggregate transportation default subsector logit exponents
 # Units: Unitless
+# Column types: ccic 
+# ----------
 supplysector,subsector,logit.exponent,logit.type
 transportation,coal,-6,
 transportation,electricity,-6,

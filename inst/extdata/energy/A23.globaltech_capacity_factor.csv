@@ -4,7 +4,9 @@
 # Source: Assumption
 # Electricity technology capacity factors currently just used to levelize costs
 # Assumed to stay constant
-# Changes to future capacity factors are allow and are interpolated,,,,
+# Changes to future capacity factors are allow and are interpolated
+# Column types: cccnn 
+# ----------
 supplysector,subsector,technology,1971,2100
 electricity,coal,coal (conv pul),0.85,0.85
 electricity,coal,coal (conv pul CCS),0.8,0.8

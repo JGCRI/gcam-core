@@ -1,6 +1,8 @@
 # File: A10.TechChange_SSPs.csv
 # Title: techChange only for fossil resources as specified in the SSPs
 # Units: Unitless
+# Column types: cccnnnnnnnnnnnnnnnnnn 
+# ----------
 SSP,resource,subresource,2015,2020,2025,2030,2035,2040,2045,2050,2055,2060,2065,2070,2075,2080,2085,2090,2095,2100
 SSP1,coal,coal,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
 SSP1,crude oil,crude oil,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005

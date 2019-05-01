@@ -84,7 +84,6 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
     L122.out_EJ_state_refining_F <- get_data(all_data, "L122.out_EJ_state_refining_F")
     L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
 
-
     # silence check package notes
     logit.year.fillout <- year <- from.year <- to.year <- region <- supplysector <- subsector <-
       technology <- sector.name <- subsector.name <- sector <- state <- fuel <- value <- market.name <-
@@ -97,37 +96,30 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
       mutate(logit.year.fillout = as.integer(logit.year.fillout)) -> # was character
       L222.Supplysector_en
 
-
     L222.SubsectorLogit_en  %>%
       mutate(logit.year.fillout = as.integer(logit.year.fillout)) -> # was character
       L222.SubsectorLogit_en
 
-
     L222.StubTechCoef_refining %>%
       mutate(year = as.integer(year)) -> # was double
       L222.StubTechCoef_refining
-
 
     L222.GlobalTechInterp_en %>%
       mutate(from.year = as.integer(from.year), # was character
              to.year = as.integer(to.year)) ->
       L222.GlobalTechInterp_en
 
-
     L222.GlobalTechCoef_en %>%
       mutate(year  = as.integer(year)) -> # was character
       L222.GlobalTechCoef_en
-
 
     L222.GlobalTechCost_en %>%
       mutate(year = as.integer(year)) -> # was double
       L222.GlobalTechCost_en
 
-
     L222.GlobalTechCapture_en %>%
       mutate(year = as.integer(year)) -> # was character
       L222.GlobalTechCapture_en
-
 
     L222.GlobalTechSCurve_en %>%
       mutate(year = as.integer(year)) -> # was character
@@ -168,14 +160,12 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
       pull(state) ->
       oil_refining_states
 
-
     # L222.DeleteStubTech_USAen: remove existing stub technologies in the USA region.
     # The supplysector and subsector structure in the sectors defined in gcamusa.SECTOR_EN_NAMES are retained
     L222.StubTech_en %>%
       filter(region == gcam.USA_REGION,
              supplysector %in% gcamusa.SECTOR_EN_NAMES) ->
       L222.DeleteStubTech_USAen
-
 
     # L222.Tech_USAen: Just the technology pass-throughs used to set the proper node name, USA region
     L222.SubsectorLogit_en %>%
@@ -188,7 +178,6 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
       mutate(technology = paste(state, subsector, sep = gcamusa.STATE_SUBSECTOR_DELIMITER)) ->
       L222.Tech_USAen
 
-
     # save some of this information for the PassThroughSector information
     # L222.PassThroughSector_USAen: PassThroughSector information to send vintaging info from states to USA.
     L222.Tech_USAen %>%
@@ -199,12 +188,10 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
              marginal.revenue.sector = supplysector) ->
       L222.PassThroughSector_USAen
 
-
     # select only relevant columns for L222.Tech_USAen, particularly dropping state
     L222.Tech_USAen %>%
       select(one_of(LEVEL2_DATA_NAMES[["Tech"]])) ->
       L222.Tech_USAen
-
 
     # L222.TechInterp_USAen: technology shareweights, USA region
     # Technology interpolation only applies to calibrated technologies.
@@ -218,7 +205,6 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
              to.year = max(MODEL_YEARS),
              interpolation.function = "fixed") ->
       L222.TechInterp_USAen
-
 
     # L222.TechShrwt_USAen: technology shareweights in each year, USA region
     L222.Tech_USAen %>%
@@ -246,7 +232,6 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
       select(-trash) ->
       L222.TechCoef_USAen
 
-
     # L222.Production_USArefining: calibrated refinery production in USA (consuming output of states)
     # Aggregated to the supplysector/subsector/technology level
       L122.out_EJ_state_refining_F %>%
@@ -269,7 +254,6 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
         mutate(tech.share.weight = abs(sign(calOutputValue))) %>%
         select(one_of(LEVEL2_DATA_NAMES[["Production"]])) ->
         L222.Production_USArefining
-
 
       # Process energy files from L222.en_transformation.R for use in the USA,
       # slightly differently processing for global tech vs not inputs
@@ -294,10 +278,9 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
       # calibration year so we can get a base cost for the absolute cost logit.  Having a share weight of zero
       # at the subsector is sufficient then to ensure we get no production in the calibration years
       L222.GlobalTechShrwt_en_USA %>%
-        mutate(share.weight = if_else(technology == "coal to liquids" & year == max(MODEL_BASE_YEARS), 1.0, share.weight)) %>%
-        mutate(share.weight = if_else(technology == "gas to liquids" & year == max(MODEL_BASE_YEARS), 1.0, share.weight)) ->
+        mutate(share.weight = if_else(technology == "coal to liquids" & year == max(MODEL_BASE_YEARS), 1.0, share.weight),
+               share.weight = if_else(technology == "gas to liquids" & year == max(MODEL_BASE_YEARS), 1.0, share.weight)) ->
         L222.GlobalTechShrwt_en_USA
-
 
       # L222.Supplysector_en_USA: Supplysector information, replace name of supplysector with the subsector names
       L222.SubsectorLogit_en_USA %>%
@@ -311,12 +294,10 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
         select(one_of(LEVEL2_DATA_NAMES[["Supplysector"]])) ->
         L222.Supplysector_en_USA
 
-
       # L222.Supplysector_en_USA_logit.type - Note there is no competition here so just use the default logit type
       L222.Supplysector_en_USA %>%
         mutate(logit.type = gcamusa.DEFAULT_LOGIT_TYPE) ->
         L222.Supplysector_en_USA_logit.type
-
 
       # L222.SubsectorShrwtFllt_en_USA: Subsector shareweights, there is no competition here, so just fill out with 1s
       # (will be over-ridden by base year calibration where necessary)
@@ -325,7 +306,6 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
         mutate(year = min(MODEL_YEARS),
                share.weight = gcamusa.DEFAULT_SHAREWEIGHT) ->
         L222.SubsectorShrwtFllt_en_USA
-
 
       # L222.StubTechProd_refining_USA: calibrated fuel production by state.
       # Only take the tech IDs where the calibration is identified as output.
@@ -355,7 +335,6 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
                  subsector != "oil refining") ->
         L222.StubTechProd_refining_USA
 
-
       # L222.StubTechMarket_en_USA: market names of inputs to state refining sectors
       L222.GlobalTechCoef_en_USA %>%
         select(one_of(LEVEL2_DATA_NAMES[["GlobalTechInput"]])) %>%
@@ -371,7 +350,6 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
         mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
                                      grid_region, market.name)) %>%
         select(-grid_region) -> L222.StubTechMarket_en_USA
-
 
       # Finish L222.StubTechMarket_en_USA by Setting electricity to the state markets
       L222.StubTechMarket_en_USA %>%
@@ -397,7 +375,6 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
                  subsector != "oil refining") ->
         L222.StubTechMarket_en_USA
 
-
       # L222.CarbonCoef_en_USA: energy carbon coefficients in USA
       #
       # Step 1, process L202.CarbonCoef for joining
@@ -417,7 +394,6 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
         select(-supplysector.y) %>%
         rename(PrimaryFuelCO2Coef.name = supplysector) ->
         L222.CarbonCoef_en_USA
-
 
     # Produce outputs
     L222.DeleteStubTech_USAen %>%
@@ -479,7 +455,7 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("L122.out_EJ_state_refining_F is aggregated to the supplysector/subsector/technology level.") %>%
       add_legacy_name("L222.Production_USArefining") %>%
-      add_precursors( "energy/calibrated_techs",
+      add_precursors("energy/calibrated_techs",
                       "L122.out_EJ_state_refining_F") ->
       L222.Production_USArefining
 

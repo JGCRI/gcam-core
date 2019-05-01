@@ -2,6 +2,8 @@
 # Title: Carbon storage reservoirs by GCAM3 region
 # Source: Updates results from Dooley and Friedman 2004
 # Units: quantity
+# Column types: ciiiii 
+# ----------
 region_GCAM3,Coal Basins,Depleted Oil Plays,Gas Basins,Deep Saline Formation On-shore,Deep Saline Formation Offshore
 USA,59000,107000,0,1161000,491000
 Canada,1000,14000,0,38000,0

@@ -3,6 +3,8 @@
 # Units: NA
 # Description: Default shareweights for final energy transformation technologies, used to interpolate shareweights for all model years.
 # Source: NA
+# Column types: cccii 
+# ----------
 supplysector,subsector,technology,1971,2100
 backup_electricity,gas,gas (steam/CT),1,1
 csp_backup,gas,CSP gas hybrid mode,1,1

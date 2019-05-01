@@ -2,6 +2,8 @@
 # Title: Mapping from IEA product names to intermediate fuel names,
 # Units: NA,
 # Source: IEA,
+# Column types: cc 
+# ----------
 PRODUCT,resource
 Crude/NGL/feedstocks (if no detail),crude oil
 Crude oil,crude oil

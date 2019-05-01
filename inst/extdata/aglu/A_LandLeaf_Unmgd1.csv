@@ -3,6 +3,7 @@
 # Units: NA
 # Description: Unmanaged land leafs in the first node
 # Original source: Land_nesting_structure.xls
+# Column types: cc 
 # ----------
 LandNode1,UnmanagedLandLeaf
 Tundra,Tundra
