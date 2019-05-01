@@ -1,7 +1,7 @@
 # File: BEA_GDP_97_16_09USD_state.csv
 # Title: Real GDP by State (All Industry Total) 1997-2009
 # Units: millions of chained 2009 dollars
-# Source: Bureau of Economic Analysis (https://www.bea.gov/iTable/index_regional.cfm)
+# Source: Bureau of Economic Analysis (no stable link, but see: https://apps.bea.gov/iTable/index_regional.cfm)
 # Column types: iciiiiiiiiiiiiiiiiiiii 
 # ----------
 Fips,Area,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016
