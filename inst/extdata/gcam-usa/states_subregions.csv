@@ -1,6 +1,7 @@
 # File: states_subregions.csv
 # Title: State codes-names-groupings mappings
 # Units: NA
+# Source:  None (mapping of state groupings found in various datasets used in GCAM-USA data processing)
 # Description: Mapping between state codes, state names, and state groupings found in various inventories relevant for GCAM-USA
 # grid_region: electricity grid region (n=12)
 # DIVISION: Census division (n=9)

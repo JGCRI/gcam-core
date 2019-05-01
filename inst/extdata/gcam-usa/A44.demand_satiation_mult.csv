@@ -1,6 +1,7 @@
 # File: A44.demand_satiation_mult.csv
 # Title: USA Demand Satiation Multipliers
 # Units: Increase in demand per unit floorspace
+# Source: None (GCAM assumptions)
 # Column types: cn 
 # ----------
 supplysector,multiplier

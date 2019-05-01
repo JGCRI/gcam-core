@@ -1,6 +1,7 @@
 # File: A44.gcam_consumer.csv
 # Title: GCAM consumer attributes
 # Units: NA
+# Source: None (GCAM assumptions)
 # Column types: cccncc 
 # ----------
 gcam.consumer,nodeInput,building.node.input,price.exponent,internal.gains.market.name,internal.gains.unit

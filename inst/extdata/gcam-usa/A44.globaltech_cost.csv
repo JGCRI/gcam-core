@@ -1,6 +1,7 @@
 # File: A44.globaltech_cost.csv
 # Title: Building technology costs
 # Units: 1975$/GJ
+# Source: Unpublished inputs to the NEMS model, provided by EIA
 # Column types: cccnnnnnnnnn 
 # ----------
 supplysector,subsector,technology,1971,2010,2015,2020,2025,2030,2035,2040,2100
