@@ -14,7 +14,7 @@ module_gcamusa_LA1233.Process_UCS_data_ref(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{LA1233.CoolingSystemShares_RG3_ref},The corresponding file in the
+the generated outputs: \code{LA1233.CoolingSystemShares_RG3_ref}, The corresponding file in the
 original data system was \code{LA1233.Process_UCS_data_ref.R} (gcam-usa-processing-code level1).
 }
 \description{
@@ -29,7 +29,7 @@ LL March 2017, ZK Sep 2019
 Note 1: The states_subregions raw file was modified to include NEMS region mappings.
 In states_subregion.csv row 65, West Virginia Central East Grid has subregion4 as South, insted of Midwest
 as in the harmonization folder.
-Note 2: the file elec_tech_water_map has changed and has different mappings.
+Note 2: The file elec_tech_water_map has changed and has different mappings.
 Note 3: UCS_Database used blanks instead of N/A in new database. Also the "generation technology" column was missing
-and was added to the new database.
+and needed to be added to the new database.
 }
