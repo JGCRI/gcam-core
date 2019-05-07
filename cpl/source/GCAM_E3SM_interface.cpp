@@ -109,7 +109,8 @@ void GCAM_E3SM_interface::initGCAM(void)
     list<string> exclusionList;
     
     //  create the scenario runner
-    auto_ptr<IScenarioRunner> runner = ScenarioRunnerFactory::createDefault( exclusionList );
+    //auto_ptr<IScenarioRunner> runner = ScenarioRunnerFactory::createDefault( exclusionList );
+    runner = ScenarioRunnerFactory::createDefault( exclusionList );
     
     // Setup the scenario.
     success = runner->setupScenarios( timer );
@@ -123,27 +124,48 @@ void GCAM_E3SM_interface::initGCAM(void)
     
 }
 
-void GCAM_E3SM_interface::runGCAM(int *yyyymmdd, int *tod, double *gcami, int *gcami_fdim1_nflds, int *gcami_fdim2_datasize, double *gcamo,int *gcamo_fdim1_nflds,int *gcamo_fdim2_datasize, double *gcamoemis,int *gcamoemis_fdim1_nflds,int *gcamoemis_fdim2_datasize,int *yr1,int *yr2,int *sneakermode,int *write_rest)
+/*!
+ * \brief Run GCAM as part of E3SM.
+ * \author Kate Calvin
+ * \param yyyymmdd Current date, in yyyymmdd format
+ * \param tod Time of day - not used in GCAM
+ * \param gcami array of inputs to GCAM from E3SM
+ * \param gcami_fdim1_nflds number of elements in gcami
+ * \param gcami_fdim2_datasize size of gcami
+ * \param gcamo array of outputs from GCAM for use in E3SM
+ * \param gcamo_fdim1_nflds number of elements in gcamo
+ * \param gcamo_fdim2_datasize size of gcamo
+ * \param gcamoemis array of emissions outputs from GCAM for use in E3SM
+ * \param gcamoemis_fdim1_nflds number of elements in gcamoemis
+ * \param gcamoemis_fdim2_datasize size of gcamoemis
+ * \param yr1 Year index used in GLM?
+ * \param yr2 Year index used in GLM?
+ * \param sneakermode integer indicating sneakernet mode is on
+ * \param write_rest integer indicating restarts should be written
+ */
+void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *gcami_fdim1_nflds, int *gcami_fdim2_datasize, double *gcamo, int *gcamo_fdim1_nflds, int *gcamo_fdim2_datasize, double *gcamoemis, int *gcamoemis_fdim1_nflds, int *gcamoemis_fdim2_datasize, int *yr1, int *yr2, int *sneakermode, int *write_rest )
 {
     
+    // Get year only of the current date
     int curryear = *yyyymmdd/10000;
     bool success = false;
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
     
-    if (curryear < gcamStartYear ) {
-        mainLog << "returning from runGCAM: current date: " <<*yyyymmdd<<" is before GCAM starting date: " << gcamStartYear << endl;
+    if ( curryear < gcamStartYear ) {
+        mainLog << "returning from runGCAM: current date: " << *yyyymmdd << " is before GCAM starting date: " << gcamStartYear << endl;
         return;
     }
-    if (curryear > 2104 ) {
-        mainLog << "returning from runGCAM: current date: " <<*yyyymmdd<<" is after GCAM ending date: " << gcamEndYear << endl;
+    if ( curryear > gcamEndYear ) {
+        mainLog << "returning from runGCAM: current date: " << *yyyymmdd << " is after GCAM ending date: " << gcamEndYear << endl;
         return;
     }
     
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
-    int finalCalibrationYear=modeltime->getper_to_yr(modeltime->getFinalCalibrationPeriod());
+    
+    int finalCalibrationYear = modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() );
     int period = modeltime->getyr_to_per( curryear );
-    int modelyear= modeltime->getper_to_yr(period);
+    int modelyear = modeltime->getper_to_yr( period );
     
     mainLog << "curryear is " << curryear << endl;
     mainLog << "period is " << period << endl;
@@ -151,13 +173,13 @@ void GCAM_E3SM_interface::runGCAM(int *yyyymmdd, int *tod, double *gcami, int *g
     mainLog << "finalCalibrationYear is " << finalCalibrationYear << endl;
     
     
-    if(modeltime->isModelYear( curryear)) {
+    if( modeltime->isModelYear( curryear )) {
         
         Timer timer;
         
         // TODO: is this necessary, it will be the same as currYear
         mainLog << "Running GCAM for year" << modelyear << endl;
-        mainLog << "calculating period=" << period << endl;
+        mainLog << "calculating period = " << period << endl;
         
         mainLog.precision(20);
         
@@ -171,7 +193,7 @@ void GCAM_E3SM_interface::runGCAM(int *yyyymmdd, int *tod, double *gcami, int *g
         // write restarts if needed.
         if(write_rest) {
             mainLog << "write_rest: " << *write_rest << endl;
-   //         runner->writeRestart( period, curryear );
+            //runner->writeRestart( period, curryear );
         }
     }
 }

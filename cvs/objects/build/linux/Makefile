@@ -43,7 +43,7 @@ main_dir : libgcam.a
 	@ echo '----------------------------------------------------------------'
 	rm -f ../../../../cpl/iesm.exe
 	$(MAKE) -C ../../../../cpl/main  BUILDPATH=$(BUILDPATH) main_dir 
-	cp ../../../../cpl/main/iesm.exe ../../../../cpl/
+	cp ../../../../cpl/main/iesm.exe ../../../../exe/
 	@echo BUILD COMPLETED
 	@date
 
