@@ -45,24 +45,42 @@
 #include <memory>
 #include <list>
 
-int main( ) {
+// Include interface
+#include "../include/GCAM_E3SM_interface.h"
 
-    std::cout << "Hello Kate!" << std::endl;
-    
+int main( ) {
     // Initialize Interface
-    // call initCCSMInterface()
+    GCAM_E3SM_interface *p_obj;
+    p_obj = new GCAM_E3SM_interface();
     
     // Initialize GCAM
-    //  call initcGCAM()
+    p_obj->initGCAM();
+    
+    // TEMPORARY - Set up data structures that will be passed to runGCAM
+    double *gcami = new double [384];
+    double *gcamo = new double [384];
+    double *gcamoemis = new double [384];
+    int *temp = (int *)(0); // KVC - Temporarily using this for all values additional integer pointers
     
     // Run GCAM
-//    call runcGCAM(ymd,tod,gcami,size(gcami,dim=1),size(gcami,dim=2),gcamo,size(gcamo,dim=1),size(gcamo,dim=2),gcamoemis,size(gcamoemis,dim=1),size(gcamoemis,dim=2), cdata%i(iac_cdatai_gcam_yr1),cdata%i(iac_cdatai_gcam_yr2),cdata%l(iac_cdatal_sneakermode),cdata%l(iac_cdatal_write_rest))
+    for( int yr = 1975; yr < 2010; yr++ ){
+        cout << "Running year: " << yr << endl;
+        int ymd = yr * 10000;
+        int *yyyymmdd = &ymd;
+        p_obj->runGCAM(yyyymmdd, temp, gcami, temp, temp,
+                       gcamo, temp, temp,
+                       gcamoemis, temp, temp,
+                       temp, temp, temp, temp);
+        
+        // Original call (Note lots of these arguments need to be fixed)
+        // runcGCAM(ymd,tod,gcami,size(gcami,dim=1),size(gcami,dim=2),gcamo,size(gcamo,dim=1),size(gcamo,dim=2),gcamoemis,size(gcamoemis,dim=1),size(gcamoemis,dim=2), cdata%i(iac_cdatai_gcam_yr1),cdata%i(iac_cdatai_gcam_yr2),cdata%l(iac_cdatal_sneakermode),cdata%l(iac_cdatal_write_rest))
+    }
     
     // Finalize GCAM
-    // call finalizecGCAM()
+    p_obj->finalizeGCAM();
     
     // Finalize Interface
-    // call deleteCCSMInterface()
+    delete p_obj;
 
     // Return exit code based on whether the model succeeded(Non-zero is failure by convention).
     return 0;
