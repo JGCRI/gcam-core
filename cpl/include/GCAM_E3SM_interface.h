@@ -39,6 +39,7 @@ class GCAM_E3SM_interface {
   void finalizeGCAM();
   int gcamStartYear;
   int gcamEndYear;
+  LoggerFactoryWrapper loggerFactoryWrapper;
   static std::vector<std::string> regionName; //
   static std::vector<std::string> landType; // 
   static std::vector<std::string> cropName; // 

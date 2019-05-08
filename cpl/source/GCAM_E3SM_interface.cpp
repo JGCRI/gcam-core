@@ -11,8 +11,6 @@
 
 ofstream outFile;
 
-LoggerFactoryWrapper loggerFactoryWrapper;
-
 // Pointer for a scenario
 Scenario* scenario; // model scenario info
 
