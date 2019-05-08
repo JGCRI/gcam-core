@@ -286,8 +286,12 @@ double FractionalSecondaryOutput::getValue( const string& aRegionName,
 {
     double secondaryGoodPrice = getMarketPrice( aRegionName, aPeriod );
     // do not allow extrapolation
-    double productionFraction = min( mCostCurve->getMaxY(), mCostCurve->getY( secondaryGoodPrice ) );
+    double productionFraction = aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() && mCalPrice.isInited() ? 1.0 : min( mCostCurve->getMaxY(), mCostCurve->getY( secondaryGoodPrice ) );
 
+    ILogger & gpkLog = ILogger::getLogger( "gpk_log" );
+    gpkLog.setLevel( ILogger::WARNING);
+    gpkLog << aRegionName << ", " <<aPeriod << ", " << secondaryGoodPrice << ", " << productionFraction << ", " << mOutputRatio << ", " << (secondaryGoodPrice * productionFraction * mOutputRatio) << endl;
+    
     // The value of the secondary output is the market price multiplied by the
     // output ratio adjusted by the fractional production.
     return secondaryGoodPrice * mOutputRatio * productionFraction;
