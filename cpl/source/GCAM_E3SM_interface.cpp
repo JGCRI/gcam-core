@@ -9,6 +9,9 @@
 #include "../include/GCAM_E3SM_interface.h"
 #include "containers/include/world.h"
 
+#include "../include/remap_data.h"
+#include "../include/get_data_helper.h"
+
 ofstream outFile;
 
 // Pointer for a scenario
@@ -187,6 +190,63 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         success = runner->runScenarios( period, true, timer );
         
         timer.stop();
+
+        //PLPTEST
+        ReMapData co2Data;
+        vector<string> regions = { "USA",
+"Africa_Eastern",
+"Africa_Northern",
+"Africa_Southern",
+"Africa_Western",
+"Australia_NZ",
+"Brazil",
+"Canada",
+"Central America and Caribbean",
+"Central Asia",
+"China",
+"EU-12",
+"EU-15",
+"Europe_Eastern",
+"Europe_Non_EU",
+"European Free Trade Association",
+"India",
+"Indonesia",
+"Japan",
+"Mexico",
+"Middle East",
+"Pakistan",
+"Russia",
+"South Africa",
+"South America_Northern",
+"South America_Southern",
+"South Asia",
+"South Korea",
+"Southeast Asia",
+"Taiwan",
+"Argentina",
+"Colombia" };
+        map<string, string> regionMap;
+        for(auto r : regions) {
+            regionMap[r] = "Other";
+        }
+        regionMap["USA"] = "USA";
+        vector<string> regionsOut = { "USA", "Other" };
+        co2Data.addColumn("region", regionsOut, regionMap);
+        vector<string> sectors = { "refining" };
+        co2Data.addColumn("sector", sectors, map<string, string>());
+        vector<int> years (modeltime->getmaxper());
+        for(int per = 0; per < modeltime->getmaxper(); ++per) {
+            years[per] = modeltime->getper_to_yr(per);
+        }
+        co2Data.addYearColumn("Year", years, map<int, int>());
+        co2Data.finalizeColumns();
+        GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,StringEquals,refining]/subsector[NamedFilter,MatchesAny]/technology[NamedFilter,MatchesAny]/period[YearFilter,MatchesAny]/ghg[NamedFilter,StringEquals,CO2]/emissions");
+        getCo2.run(scenario, co2Data);
+        double *co2 = co2Data.getData();
+        for(size_t i = 0; i < (2 * 1 * years.size()); ++i) {
+            cout << co2[i] << endl;
+        }
+        //PLPTEST
         
         // write restarts if needed.
         if(write_rest) {
