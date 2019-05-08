@@ -7,7 +7,7 @@
 PATHOFFSET = ../../cvs/objects
 include ${PATHOFFSET}/build/linux/configure.gcam
 
-OBJS       =  GCAM_E3SM_interface.o GCAM_E3SM_interface_wrapper.o
+OBJS       =  GCAM_E3SM_interface.o GCAM_E3SM_interface_wrapper.o get_data_helper.o remap_data.o
 
 cpl_dir:   ${OBJS}
 
