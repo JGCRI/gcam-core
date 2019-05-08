@@ -445,10 +445,11 @@ PREBUILT_DATA <- driver(write_outputs = FALSE,
                           # output of module_energy_LA118.hydro
                           "L118.out_EJ_R_elec_hydro_Yfut",
 
-                          # outputs of module_energy_LA121.oil
+                          # outputs of module_energy_LA121.liquids
                           "L121.in_EJ_R_unoil_F_Yh",
                           "L121.in_EJ_R_TPES_crude_Yh",
-                          "L121.in_EJ_R_TPES_unoil_Yh"
+                          "L121.in_EJ_R_TPES_unoil_Yh",
+                          "L121.share_R_TPES_biofuel_tech"
                         ))
 
 # Save these objects for use as internal package data
