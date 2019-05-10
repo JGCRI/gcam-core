@@ -1,4 +1,4 @@
-#' module_gcam.usa_L201.socioeconomics_USA
+#' module_gcamusa_L201.socioeconomics_USA
 #'
 #' Interest rate, population, and GDP for GCAM-USA.
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH October 2017
-module_gcam.usa_L201.socioeconomics_USA <- function(command, ...) {
+module_gcamusa_L201.socioeconomics_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              "L100.Pop_thous_state",

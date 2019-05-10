@@ -1,64 +1,80 @@
 # File: A44.globaltech_eff.csv
 # Title: Building default technology efficiency
 # Units: Unitless
-# Column types: ccccnnnnnnnnnn 
+# Source: Unpublished inputs to the NEMS model; provided by EIA. Assumptions are simliar to the 2016 Annual Energy Outlook (Table 22; https://www.eia.gov/outlooks/aeo/data/browser/#/?id=30-AEO2016&cases=ref2016~ref_no_cpp&sourcekey=0).
+# Column types: ccccnnnnnnnnn 
 # ----------
-supplysector,subsector,technology,minicam.energy.input,1971,1990,2005,2020,2035,2050,2065,2080,2095,2100
-resid heating,biomass,wood furnace,delivered biomass,0.4,0.4,0.4,0.406,0.412,0.418,0.425,0.431,0.438,0.438
-resid heating,coal,coal furnace,delivered coal,0.4,0.4,0.4,0.406,0.412,0.418,0.425,0.431,0.438,0.438
-resid heating,gas,gas furnace,delivered gas,0.665,0.665,0.78,0.78,0.792,0.804,0.816,0.828,0.841,0.841
-resid heating,gas,gas furnace hi-eff,delivered gas,0.767,0.767,0.9,0.92,0.955,0.97,0.97,0.97,0.97,0.97
-resid heating,electricity,electric furnace,elect_td_bld,1,1,1,1,1,1,1,1,1,1
-resid heating,electricity,electric heat pump,elect_td_bld,1.584,1.584,2.095,2.405,2.427,2.52,2.616,2.716,2.819,2.819
-resid heating,refined liquids,fuel furnace,refined liquids enduse,0.725,0.725,0.78,0.78,0.792,0.804,0.816,0.828,0.841,0.841
-resid heating,refined liquids,fuel furnace hi-eff,refined liquids enduse,0.85,0.85,0.85,0.85,0.863,0.876,0.889,0.903,0.916,0.916
-resid cooling,electricity,air conditioning,elect_td_bld,2.042,2.042,2.637,2.738,2.842,2.951,3.063,3.18,3.302,3.302
-resid cooling,electricity,air conditioning hi-eff,elect_td_bld,3.063,3.063,3.956,4.107,4.263,4.426,4.595,4.77,4.952,4.952
-resid hot water,gas,gas water heater,delivered gas,0.499,0.499,0.537,0.59,0.599,0.608,0.617,0.626,0.636,0.636
-resid hot water,gas,gas water heater hi-eff,delivered gas,0.694,0.694,0.747,0.77,0.782,0.793,0.805,0.818,0.83,0.83
-resid hot water,electricity,electric resistance water heater,elect_td_bld,0.803,0.803,0.842,0.9,0.914,0.927,0.941,0.956,0.97,0.97
-resid hot water,electricity,electric resistance water heater hi-eff,elect_td_bld,0.859,0.859,0.901,0.95,0.964,0.979,0.994,1,1,1
-resid hot water,electricity,electric heat pump water heater,elect_td_bld,2.2,2.2,2.2,2.2,2.233,2.267,2.301,2.336,2.371,2.371
-resid hot water,refined liquids,fuel water heater,refined liquids enduse,0.498,0.498,0.53,0.53,0.538,0.546,0.554,0.563,0.571,0.571
-resid hot water,refined liquids,fuel water heater hi-eff,refined liquids enduse,0.639,0.639,0.68,0.68,0.69,0.701,0.711,0.722,0.733,0.733
-resid lighting,electricity,incandescent,elect_td_bld,0.021,0.021,0.021,0.021,0.022,0.022,0.022,0.023,0.023,0.023
-resid lighting,electricity,fluorescent,elect_td_bld,0.12,0.12,0.12,0.122,0.124,0.126,0.127,0.129,0.131,0.131
-resid lighting,electricity,solid state,elect_td_bld,0.154,0.154,0.154,0.154,0.16,0.166,0.172,0.179,0.185,0.185
-resid appliances,gas,gas appliances,delivered gas,0.99,0.99,1,1.007,1.015,1.03,1.045,1.061,1.077,1.077
-resid appliances,electricity,electric appliances,elect_td_bld,0.709,0.709,1,1.108,1.129,1.146,1.163,1.181,1.199,1.199
-resid appliances,electricity,electric appliances hi-eff,elect_td_bld,1,1,1.58,1.675,1.7,1.726,1.752,1.779,1.805,1.805
-resid appliances,refined liquids,fuel appliances,refined liquids enduse,1,1,1,1,1,1,1,1,1,1
-resid other appliances,electricity,electricity,elect_td_bld,1,1,1,0.913,0.948,0.984,1.022,1.061,1.101,1.101
-resid other,gas,gas,delivered gas,1,1,1,1,1,1,1,1,1,1
-resid other,electricity,electricity,elect_td_bld,1,1,1,1.091,1.132,1.176,1.22,1.267,1.315,1.315
-resid other,refined liquids,refined liquids,refined liquids enduse,1,1,1,1,1,1,1,1,1,1
-comm heating,biomass,wood furnace,delivered biomass,0.65,0.65,0.65,0.66,0.67,0.68,0.69,0.701,0.711,0.711
-comm heating,coal,coal furnace,delivered coal,0.65,0.65,0.65,0.66,0.67,0.68,0.69,0.701,0.711,0.711
-comm heating,gas,gas furnace,delivered gas,0.7,0.7,0.7,0.775,0.787,0.799,0.811,0.823,0.835,0.835
-comm heating,gas,gas furnace hi-eff,delivered gas,0.855,0.855,0.855,0.868,0.881,0.894,0.908,0.922,0.935,0.935
-comm heating,electricity,electric furnace,elect_td_bld,1,1,1,1,1,1,1,1,1,1
-comm heating,electricity,electric heat pump,elect_td_bld,3.1,3.1,3.1,3.3,3.426,3.557,3.692,3.833,3.98,3.98
-comm heating,refined liquids,fuel boiler,refined liquids enduse,0.7,0.7,0.7,0.81,0.822,0.835,0.847,0.86,0.873,0.873
-comm heating,refined liquids,fuel boiler hi-eff,refined liquids enduse,0.85,0.85,0.85,0.85,0.863,0.876,0.889,0.903,0.916,0.916
-comm cooling,gas,gas cooling,delivered gas,0.833,0.833,0.833,0.919,0.967,0.98,0.98,0.98,0.98,0.98
-comm cooling,electricity,air conditioning,elect_td_bld,2.4,2.4,2.4,2.782,2.888,2.998,3.113,3.231,3.355,3.355
-comm cooling,electricity,air conditioning hi-eff,elect_td_bld,3.66,3.66,3.66,3.514,3.648,3.787,3.932,4.082,4.238,4.238
-comm hot water,gas,gas water heater,delivered gas,0.78,0.78,0.78,0.792,0.804,0.816,0.828,0.841,0.853,0.853
-comm hot water,gas,gas water heater hi-eff,delivered gas,0.94,0.94,0.94,0.954,0.969,0.983,0.99,0.99,0.99,0.99
-comm hot water,electricity,electric resistance water heater,elect_td_bld,0.983,0.983,0.983,0.99,0.99,0.99,0.99,0.99,0.99,0.99
-comm hot water,electricity,electric heat pump water heater,elect_td_bld,2.1,2.1,2.1,2.2,2.4,2.436,2.473,2.51,2.548,2.548
-comm hot water,refined liquids,fuel water heater,refined liquids enduse,0.768,0.768,0.768,0.801,0.805,0.817,0.829,0.842,0.855,0.855
-comm ventilation,electricity,ventilation,elect_td_bld,0.743,0.743,0.71,0.721,0.732,0.743,0.754,0.754,0.754,0.754
-comm ventilation,electricity,ventilation hi-eff,elect_td_bld,0.743,0.743,0.854,0.867,0.88,0.893,0.907,0.907,0.907,0.907
-comm cooking,gas,gas stove,delivered gas,0.514,0.514,0.514,0.527,0.533,0.541,0.55,0.558,0.566,0.566
-comm cooking,electricity,electric stove,elect_td_bld,0.722,0.722,0.713,0.748,0.755,0.766,0.778,0.789,0.801,0.801
-comm lighting,electricity,incandescent,elect_td_bld,0.021,0.021,0.021,0.021,0.022,0.022,0.022,0.023,0.023,0.023
-comm lighting,electricity,fluorescent,elect_td_bld,0.12,0.12,0.12,0.122,0.124,0.126,0.127,0.129,0.131,0.131
-comm lighting,electricity,solid state,elect_td_bld,0.154,0.154,0.154,0.154,0.16,0.166,0.172,0.179,0.185,0.185
-comm refrigeration,electricity,refrigeration,elect_td_bld,1.396,1.396,1.964,2.482,2.668,2.77,2.876,2.985,3.099,3.099
-comm refrigeration,electricity,refrigeration hi-eff,elect_td_bld,1.396,1.396,3.094,3.141,3.188,3.236,3.285,3.335,3.385,3.385
-comm office,electricity,office equipment,elect_td_bld,1,1,1,1.038,1.078,1.119,1.162,1.206,1.252,1.252
-comm other,gas,gas,delivered gas,1,1,1,1.038,1.078,1.119,1.162,1.206,1.252,1.252
-comm other,electricity,electricity,elect_td_bld,1,1,1,0.974,1.011,1.049,1.089,1.131,1.174,1.174
-comm other,refined liquids,refined liquids,refined liquids enduse,1,1,1,1.038,1.078,1.119,1.162,1.206,1.252,1.252
-comm non-building,electricity,electricity,elect_td_bld,1,1,1,0.974,1.011,1.049,1.089,1.131,1.174,1.174
+supplysector,subsector,technology,minicam.energy.input,1971,2010,2015,2020,2025,2030,2035,2040,2100
+resid heating,biomass,wood furnace,delivered biomass,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4
+resid heating,coal,coal furnace,delivered coal,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4,0.4
+resid heating,gas,gas furnace,delivered gas,0.78,0.78,0.8,0.8,0.8,0.8,0.8,0.8,0.8
+resid heating,gas,gas furnace hi-eff,delivered gas,0.98,0.98,0.98,0.98,0.98,0.98,0.98,0.98,0.98
+resid heating,electricity,electric furnace,elect_td_bld,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99
+resid heating,electricity,electric heat pump,elect_td_bld,2.258,2.258,2.673,2.673,2.673,2.737,2.737,2.769,2.769
+resid heating,refined liquids,fuel furnace,refined liquids enduse,0.8,0.8,0.83,0.83,0.83,0.83,0.83,0.83,0.83
+resid heating,refined liquids,fuel furnace hi-eff,refined liquids enduse,0.97,0.97,0.97,0.97,0.97,0.97,0.97,0.97,0.97
+resid cooling,electricity,air conditioning,elect_td_bld,3.043,3.043,3.81,3.81,3.81,3.81,3.81,3.81,3.81
+resid cooling,electricity,air conditioning hi-eff,elect_td_bld,7.03,7.03,7.03,7.03,7.03,7.03,7.03,7.03,7.03
+resid hot water,gas,gas water heater,delivered gas,0.59,0.59,0.62,0.62,0.62,0.62,0.62,0.62,0.62
+resid hot water,gas,gas water heater hi-eff,delivered gas,0.82,0.82,0.82,0.82,0.82,0.82,0.82,0.82,0.82
+resid hot water,electricity,electric resistance water heater,elect_td_bld,0.894,0.894,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+resid hot water,electricity,electric resistance water heater hi-eff,elect_td_bld,0.95,0.95,0.95,0.96,0.96,0.96,0.96,0.96,0.96
+resid hot water,electricity,electric heat pump water heater,elect_td_bld,2,2,2.3,2.3,2.3,2.45,2.45,2.5,2.5
+resid hot water,refined liquids,fuel water heater,refined liquids enduse,0.59,0.59,0.62,0.62,0.62,0.62,0.62,0.62,0.62
+resid hot water,refined liquids,fuel water heater hi-eff,refined liquids enduse,0.82,0.82,0.82,0.82,0.82,0.82,0.82,0.82,0.82
+resid lighting,electricity,incandescent,elect_td_bld,4.028,4.028,5.5,5.5,5.5,5.5,5.5,5.5,5.5
+resid lighting,electricity,fluorescent,elect_td_bld,18.667,18.667,18.667,19.167,19.167,19.639,19.639,20.139,20.139
+resid lighting,electricity,solid state,elect_td_bld,12.222,12.222,25.556,43.611,49.861,56.111,56.111,56.111,56.111
+resid refrigerators,electricity,refrigerator,elect_td_bld,1.919,1.919,2.534,2.534,2.534,2.534,2.534,2.534,2.534
+resid refrigerators,electricity,refrigerator hi-eff,elect_td_bld,2,2,2.97,2.97,2.97,2.97,2.97,2.97,2.97
+resid freezers,electricity,freezer,elect_td_bld,0.997,0.997,1.391,1.391,1.391,1.391,1.391,1.391,1.391
+resid freezers,electricity,freezer hi-eff,elect_td_bld,1.391,1.391,1.462,1.462,1.462,1.462,1.462,1.462,1.462
+resid dishwashers,electricity,dishwasher,elect_td_bld,194.444,194.444,194.444,194.444,194.444,194.444,194.444,194.444,194.444
+resid dishwashers,electricity,dishwasher hi-eff,elect_td_bld,333.333,333.333,333.333,333.333,333.333,333.333,333.333,333.333,333.333
+resid cooking,electricity,electric oven,elect_td_bld,0.621,0.621,0.621,0.621,0.621,0.621,0.621,0.621,0.621
+resid cooking,gas,gas oven,delivered gas,0.399,0.399,0.399,0.399,0.399,0.399,0.399,0.399,0.399
+resid cooking,gas,gas oven hi-eff,delivered gas,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
+resid cooking,refined liquids,lpg oven,refined liquids enduse,0.399,0.399,0.399,0.399,0.399,0.399,0.399,0.399,0.399
+resid cooking,refined liquids,lpg oven hi-eff,refined liquids enduse,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
+resid clothes dryers,electricity,clothes dryer,elect_td_bld,447.694,447.694,470.394,480.483,480.483,480.483,480.483,480.483,480.483
+resid clothes dryers,electricity,clothes dryer hi-eff,elect_td_bld,480.483,480.483,520.839,683.522,683.522,683.522,683.522,683.522,683.522
+resid clothes dryers,gas,clothes dryer,delivered gas,395.989,395.989,416.167,416.167,416.167,416.167,416.167,416.167,416.167
+resid clothes washers,electricity,clothes washer,elect_td_bld,1262.626,1262.626,1262.626,2777.778,2777.778,2777.778,2777.778,2777.778,2777.778
+resid clothes washers,electricity,clothes washer hi-eff,elect_td_bld,2525.253,2525.253,2525.253,3086.42,3086.42,3086.42,3086.42,3086.42,3086.42
+resid televisions,electricity,electricity,elect_td_bld,1,1,1.1,1.25,1.35,1.35,1.35,1.35,1.35
+resid computers,electricity,electricity,elect_td_bld,1,1,1.25,1.5,1.9,2.4,3,3.8,3.8
+resid furnace fans,electricity,electricity,elect_td_bld,1,1,1.17,1.33,1.5,1.67,1.83,2,2
+resid other,gas,gas,delivered gas,1,1,1,1,1,1,1,1,1
+resid other,electricity,electricity,elect_td_bld,1,1,1,1,1,1,1,1,1
+resid other,refined liquids,refined liquids,refined liquids enduse,1,1,1,1,1,1,1,1,1
+comm heating,biomass,wood furnace,delivered biomass,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65
+comm heating,coal,coal furnace,delivered coal,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65
+comm heating,gas,gas furnace,delivered gas,0.758,0.758,0.775,0.775,0.775,0.775,0.775,0.775,0.775
+comm heating,gas,gas furnace hi-eff,delivered gas,0.875,0.875,0.875,0.875,0.875,0.885,0.885,0.885,0.885
+comm heating,electricity,electric furnace,elect_td_bld,0.98,0.98,0.98,0.98,0.98,0.98,0.98,0.98,0.98
+comm heating,electricity,electric heat pump,elect_td_bld,3.3,3.3,3.3,3.3,3.3,3.3,3.3,3.3,3.3
+comm heating,refined liquids,fuel furnace,refined liquids enduse,0.785,0.785,0.795,0.795,0.795,0.795,0.795,0.795,0.795
+comm cooling,gas,gas cooling,delivered gas,0.866,0.866,0.951,0.977,1.005,1.03,1.052,1.073,1.1
+comm cooling,electricity,air conditioning,elect_td_bld,2.872,2.872,3.224,3.224,3.224,3.224,3.224,3.224,3.224
+comm cooling,electricity,air conditioning hi-eff,elect_td_bld,5.803,5.803,5.803,6.064,6.064,6.28,6.28,6.28,6.28
+comm hot water,gas,gas water heater,delivered gas,0.787,0.787,0.8,0.8,0.8,0.8,0.8,0.8,0.8
+comm hot water,gas,gas water heater hi-eff,delivered gas,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99,0.99
+comm hot water,electricity,electric resistance water heater,elect_td_bld,0.975,0.975,0.975,0.975,0.975,0.975,0.975,0.975,0.975
+comm hot water,electricity,electric heat pump water heater,elect_td_bld,2.45,2.45,2.45,2.45,2.45,2.45,2.45,2.45,2.45
+comm hot water,refined liquids,fuel water heater,refined liquids enduse,0.787,0.787,0.8,0.8,0.8,0.8,0.8,0.8,0.8
+comm ventilation,electricity,ventilation,elect_td_bld,0.613,0.613,0.654,0.727,0.727,0.769,0.769,0.818,0.818
+comm ventilation,electricity,ventilation hi-eff,elect_td_bld,2.416,2.416,2.416,2.567,2.567,2.738,2.738,2.934,2.934
+comm cooking,gas,gas range,delivered gas,0.45,0.45,0.45,0.45,0.45,0.45,0.45,0.45,0.45
+comm cooking,gas,gas range hi-eff,delivered gas,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6
+comm cooking,electricity,electric range,elect_td_bld,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7
+comm cooking,electricity,electric range hi-eff,elect_td_bld,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8
+comm lighting,electricity,incandescent,elect_td_bld,3.75,3.75,5.389,5.651,5.651,5.934,5.934,5.934,5.934
+comm lighting,electricity,fluorescent,elect_td_bld,19.333,19.333,19.515,19.808,19.808,20.133,20.133,20.133,20.133
+comm lighting,electricity,solid state,elect_td_bld,17.5,17.5,25.278,47.222,47.222,56.111,56.111,56.111,56.111
+comm refrigeration,electricity,refrigeration,elect_td_bld,2.06,2.06,2.931,3.317,3.317,3.317,3.317,3.317,3.317
+comm refrigeration,electricity,refrigeration hi-eff,elect_td_bld,3.756,3.756,3.756,4.115,4.115,4.115,4.115,4.115,4.115
+comm office,electricity,office equipment,elect_td_bld,1,1,1.3,1.45,1.45,1.45,1.45,1.45,1.45
+comm other,gas,gas,delivered gas,1,1,1,1,1,1,1,1,1
+comm other,electricity,electricity,elect_td_bld,1,1,1,1,1,1,1,1,1
+comm other,refined liquids,refined liquids,refined liquids enduse,1,1,1,1,1,1,1,1,1
+comm non-building,electricity,electricity,elect_td_bld,1,1,1,1,1,1,1,1,1

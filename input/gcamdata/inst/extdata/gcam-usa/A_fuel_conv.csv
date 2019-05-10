@@ -1,8 +1,8 @@
-# File: A_fuel_conv.csv,
-# Title: Fuel specific conversions from Billion BTU to EJ,
-# Units: EJ divided by Billion BTU,
-# Comments: This is a table of unit conversions from billion btu (HHV) to EJ (LHV). The basic engineering explanation for the difference is that the LHV:HHV difference is determined by the ratio of H2O to CO2 in the combustion flue gases and as such the ratio scales with the hydrogen:carbon ratio of the fuel. Higher hydrogen content means lower LHV:HHV. The ratio is assumed to be 1 for electricity geothermal hydro nuclear solar and wind; 0.965 for coal; 0.905 for gas; and 0.94 for biomass oil and derived fuels. Note that our specific assumptions differ from the values in the table linked below. They are legacy values since before 2006. Note also that our actual processing methods scale the energy quantities such that the specific values assumed here don't actually matter.,
-# Source: See following link for LHV and HHV of fuels http://hydrogen.pnl.gov/sites/default/files/data/lower_and_higher_heating_values.xls,
+# File: A_fuel_conv.csv
+# Title: Fuel specific conversions from Billion BTU to EJ
+# Units: EJ divided by Billion BTU
+# Comments: This is a table of unit conversions from billion btu (HHV) to EJ (LHV). The basic engineering explanation for the difference is that the LHV:HHV difference is determined by the ratio of H2O to CO2 in the combustion flue gases and as such the ratio scales with the hydrogen:carbon ratio of the fuel. Higher hydrogen content means lower LHV:HHV. The ratio is assumed to be 1 for electricity geothermal hydro nuclear solar and wind; 0.965 for coal; 0.905 for gas; and 0.94 for biomass oil and derived fuels. Note that our specific assumptions differ from the values in the table linked below. They are legacy values since before 2006. Note also that our actual processing methods scale the energy quantities such that the specific values assumed here don't actually matter.
+# Source: See following link for LHV and HHV of fuels http://hydrogen.pnl.gov/sites/default/files/data/lower_and_higher_heating_values.xls
 # Column types: cn 
 # ----------
 fuel,conv_Bbtu_EJ

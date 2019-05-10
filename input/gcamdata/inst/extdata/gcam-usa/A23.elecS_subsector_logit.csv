@@ -1,0 +1,45 @@
+# File: A23.elecS_subsector_logit.csv
+# Title: Multiple Load Segments Subsector Logit Exponents
+# Units: unitless
+# Source: None (GCAM assumptions)
+# Column types: ccic 
+# ----------
+supplysector,subsector,logit.exponent,logit.type
+base load generation,coal,-3,relative-cost-logit
+intermediate generation,coal,-3,relative-cost-logit
+subpeak generation,coal,-3,relative-cost-logit
+peak generation,coal,-3,relative-cost-logit
+base load generation,gas,-3,relative-cost-logit
+intermediate generation,gas,-3,relative-cost-logit
+subpeak generation,gas,-3,relative-cost-logit
+peak generation,gas,-3,relative-cost-logit
+base load generation,refined liquids,-3,relative-cost-logit
+intermediate generation,refined liquids,-3,relative-cost-logit
+subpeak generation,refined liquids,-3,relative-cost-logit
+peak generation,refined liquids,-3,relative-cost-logit
+base load generation,biomass,-3,relative-cost-logit
+intermediate generation,biomass,-3,relative-cost-logit
+subpeak generation,biomass,-3,relative-cost-logit
+peak generation,biomass,-3,relative-cost-logit
+base load generation,nuclear,-3,relative-cost-logit
+intermediate generation,nuclear,-3,relative-cost-logit
+subpeak generation,nuclear,-3,relative-cost-logit
+peak generation,nuclear,-3,relative-cost-logit
+base load generation,wind,-3,relative-cost-logit
+intermediate generation,wind,-3,relative-cost-logit
+subpeak generation,wind,-3,relative-cost-logit
+peak generation,wind,-3,relative-cost-logit
+base load generation,solar,-3,relative-cost-logit
+intermediate generation,solar,-3,relative-cost-logit
+subpeak generation,solar,-3,relative-cost-logit
+peak generation,solar,-3,relative-cost-logit
+base load generation,geothermal,-3,relative-cost-logit
+intermediate generation,geothermal,-3,relative-cost-logit
+subpeak generation,geothermal,-3,relative-cost-logit
+peak generation,geothermal,-3,relative-cost-logit
+base load generation,hydro,-3,relative-cost-logit
+intermediate generation,hydro,-3,relative-cost-logit
+subpeak generation,hydro,-3,relative-cost-logit
+peak generation,hydro,-3,relative-cost-logit
+elect_td_bld,rooftop_pv,-3,relative-cost-logit
+peak generation,grid_storage,-3,relative-cost-logit

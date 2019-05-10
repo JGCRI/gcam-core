@@ -1,4 +1,4 @@
-#' module_gcam.usa_LB1232.Elec_subregions
+#' module_gcamusa_LB1232.Elec_subregions
 #'
 #' Aggregates USA state electricity generation to electricity subregions.
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
-module_gcam.usa_LB1232.Elec_subregions <- function(command, ...) {
+module_gcamusa_LB1232.Elec_subregions <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              "L1231.out_EJ_state_elec_F_tech"))
