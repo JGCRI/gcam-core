@@ -1,23 +1,31 @@
 # File: A44.sector.csv
 # Title: Building sector default supplysector information (units and logit exponents)
 # Units: NA
+# Source: None (GCAM assumptions)
 # Column types: ccccicc 
 # ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type,final.energy
 resid heating,EJ,EJ,1975$/GJ,-3,,building
 resid cooling,EJ,EJ,1975$/GJ,-3,,building
 resid hot water,EJ,EJ,1975$/GJ,-3,,building
-resid lighting,EJ,EJ,1975$/GJ,-3,,building
-resid appliances,EJ,EJ,1975$/GJ,-2,,building
-resid other appliances,EJ,EJ,1975$/GJ,-3,,building
-resid other,EJ,EJ,1975$/GJ,-2,,building
+resid lighting,petalumen-hours,EJ,1975$/megalumen-hours,-3,,building
+resid refrigerators,EJ,EJ,1975$/GJ,-3,,building
+resid freezers,EJ,EJ,1975$/GJ,-3,,building
+resid dishwashers,billion cycles,EJ,1975$/cycle,-3,,building
+resid cooking,EJ,EJ,1975$/GJ,-3,,building
+resid clothes dryers,Mt,EJ,1975$/kg,-3,,building
+resid clothes washers,billion cycles,EJ,1975$/cycle,-3,,building
+resid televisions,EJ,EJ,1975$/GJ,-3,,building
+resid computers,EJ,EJ,1975$/GJ,-3,,building
+resid furnace fans,EJ,EJ,1975$/GJ,-3,,building
+resid other,EJ,EJ,1975$/GJ,-3,,building
 comm heating,EJ,EJ,1975$/GJ,-3,,building
 comm cooling,EJ,EJ,1975$/GJ,-3,,building
 comm hot water,EJ,EJ,1975$/GJ,-3,,building
-comm ventilation,EJ,EJ,1975$/GJ,-3,,building
+comm ventilation,million km3,EJ,1975$/million m3,-3,,building
 comm cooking,EJ,EJ,1975$/GJ,-3,,building
-comm lighting,EJ,EJ,1975$/GJ,-3,,building
+comm lighting,petalumen-hours,EJ,1975$/megalumen-hours,-3,,building
 comm refrigeration,EJ,EJ,1975$/GJ,-3,,building
 comm office,EJ,EJ,1975$/GJ,-3,,building
-comm other,EJ,EJ,1975$/GJ,-2,,building
+comm other,EJ,EJ,1975$/GJ,-3,,building
 comm non-building,EJ,EJ,1975$/GJ,-3,,building

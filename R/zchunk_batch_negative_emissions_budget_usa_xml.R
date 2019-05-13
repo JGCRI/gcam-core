@@ -1,4 +1,4 @@
-#' module_gcam.usa_batch_negative_emissions_budget_usa_xml
+#' module_gcamusa_batch_negative_emissions_budget_usa_xml
 #'
 #' Construct XML data structure for \code{paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), ".xml")}.
 #'
@@ -7,9 +7,10 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)), ".xml")}.
-module_gcam.usa_batch_negative_emissions_budget_usa_xml <- function(command, ...) {
+module_gcamusa_batch_negative_emissions_budget_usa_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( paste0("L270.NegEmissBudget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5))) ))
+    return(c( paste0("L270.NegEmissBudget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5))),
+           "L270.NegEmissBudgetMaxPrice_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     xml_files = paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)), ".xml")
     names(xml_files) <- rep("XML", length(xml_files))
@@ -21,6 +22,7 @@ module_gcam.usa_batch_negative_emissions_budget_usa_xml <- function(command, ...
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    L270.NegEmissBudgetMaxPrice_USA <- get_data(all_data, "L270.NegEmissBudgetMaxPrice_USA")
 
     # ===================================================
 
@@ -35,7 +37,9 @@ module_gcam.usa_batch_negative_emissions_budget_usa_xml <- function(command, ...
       curr_xml_name <- paste0("negative_emissions_budget_USA_", scen, ".xml")
       create_xml(curr_xml_name) %>%
         add_xml_data(get_data(all_data, curr_data_name), "PortfolioStd") %>%
-        add_precursors(curr_data_name) %>%
+        add_xml_data(L270.NegEmissBudgetMaxPrice_USA, "PortfolioStdMaxPrice") %>%
+        add_precursors(curr_data_name,
+                       "L270.NegEmissBudgetMaxPrice_USA") %>%
         assign(curr_xml_name, ., envir = curr_env)
 
       ret_data <- c(ret_data, curr_xml_name)
