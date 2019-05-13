@@ -7,7 +7,7 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L261.DeleteDepRsrc_USAC}, \code{L261.DeleteSubsector_USAC}, \code{L261.DepRsrc_FERC}, \code{L261.DepRsrcCurves_FERC}, \code{L261.Supplysector_C_USA},
-#' \code{L261.SubsectorLogit_C_USA}, \code{L261.SubsectorShrwtFllt_C_USA}, \code{L261.StubTech_C_USA}, \code{L261.StubTechMarket_C_USA}. The corresponding file in the
+#' \code{L261.SubsectorLogit_C_USA}, \code{L261.SubsectorShrwtFllt_C_USA}, \code{L261.StubTech_C_USA}, \code{L261.StubTechMarket_C_USA}, \code{L261.ResTechShrwt_C_USA}. The corresponding file in the
 #' original data system was \code{L261.carbon_storage_USA.R} (gcam-usa level2).
 #' @details This chunk generates input files of carbon storage resource supply curves by the US grid regions, and input files of logit, shareweights, and
 #' technology information of carbon storage by the US states.
@@ -34,7 +34,8 @@ module_gcamusa_L261.carbon_storage_USA <- function(command, ...) {
              "L261.SubsectorLogit_C_USA",
              "L261.SubsectorShrwtFllt_C_USA",
              "L261.StubTech_C_USA",
-             "L261.StubTechMarket_C_USA"))
+             "L261.StubTechMarket_C_USA",
+             "L261.ResTechShrwt_C_USA"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -155,6 +156,15 @@ module_gcamusa_L261.carbon_storage_USA <- function(command, ...) {
       mutate(market.name = replace(market.name, !minicam.energy.input %in% L261.DepRsrc_FERC$resource, gcam.USA_REGION)) ->
       L261.StubTechMarket_C_USA
 
+    L261.DepRsrcCurves_FERC %>%
+      select(region, resource = resource, subresource) %>%
+      distinct() %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(technology = subresource,
+             share.weight = 1.0) %>%
+      select(!!!LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+      L261.ResTechShrwt_C_USA
+
     # Produce outputs
     L261.DeleteDepRsrc_USAC %>%
       add_title("Delete onshore carbon storage in the USA region") %>%
@@ -244,9 +254,17 @@ module_gcamusa_L261.carbon_storage_USA <- function(command, ...) {
       same_precursors_as("L261.StubTech_C_USA") ->
       L261.StubTechMarket_C_USA
 
+    L261.ResTechShrwt_C_USA %>%
+      add_title("Technology share-weights for the carbon storage resource") %>%
+      add_units("NA") %>%
+      add_comments("Mostly just to provide a shell of a technology for the resource to use") %>%
+      same_precursors_as(L261.DepRsrcCurves_FERC) ->
+      L261.ResTechShrwt_C_USA
+
     return_data(L261.DeleteDepRsrc_USAC, L261.DeleteSubsector_USAC, L261.DepRsrc_FERC,
                 L261.DepRsrcCurves_FERC, L261.Supplysector_C_USA, L261.SubsectorLogit_C_USA,
-                L261.SubsectorShrwtFllt_C_USA, L261.StubTech_C_USA, L261.StubTechMarket_C_USA)
+                L261.SubsectorShrwtFllt_C_USA, L261.StubTech_C_USA, L261.StubTechMarket_C_USA,
+                L261.ResTechShrwt_C_USA)
   } else {
     stop("Unknown command")
   }
