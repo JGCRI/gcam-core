@@ -4408,4 +4408,809 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          </supplyDemandQuery>
       </queryGroup>
    </queryGroup>
+   <queryGroup name="GCAM USA">
+      <queryGroup name="primary energy">
+         <supplyDemandQuery title="primary energy consumption by region (direct equivalent)">
+            <axis1 name="fuel">input[@name]</axis1>
+            <axis2 name="Year">demand-physical[@vintage]</axis2>
+            <xPath buildList="true" dataName="input" group="false" sumAll="false"> <![CDATA[
+			 	 	 declare function local:append-heirarchy($parent as node(), $append as node()) as node() {
+			 	 		 let $scn := $parent/ancestor::scenario,
+			 			   	  $rgn := $parent/ancestor::region
+			 			   return
+			 			   	  document { element scenario {
+			 			 	  					$scn/@*,
+			 			 						element region {
+			 			 							$rgn/@*,
+			 			 							$append
+			 			 						}
+			 			 	  				}
+			 				}
+			 	 	 };  
+			 	 	 declare function local:get-primary-renewable($outputs as node()*) as node()* {
+			 	 	 unordered { 	
+			 	 	 for $output in $outputs 
+			 	 	 let $new_output :=  
+			 	 	 element input {
+			 	 		 attribute type {'input'},
+			 	 		 attribute name {$output/parent::*/following-sibling::keyword/@primary-renewable},
+			 	 		 element demand-physical {
+			 	 			 attribute vintage {$output/@vintage},
+			 	 			 attribute unit {$output/@unit},
+			 	 			 text { $output }
+			 	 		 }
+			 	 	 },
+			 	 	 $new_root := local:append-heirarchy($output/parent::*/parent::*, $new_output)
+			 	 	 return $new_root//text()
+			 	 	 } 
+			 	 	 };
+			 	 	 declare function local:run-primary-energy($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+                     $scenario_name := string-join($scenario_split[position() < last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
+			 	 	 return (: get renewables from electricity :)
+					 	 	 	local:get-primary-renewable($currTree/*[@type='sector' (: collapse :) and (@name='electricity' or @name='base load generation' or @name='intermediate generation' or @name='subpeak generation' or @name='peak generation' or @name='elect_td_bld' or starts-with(@name,'elec_'))]//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output)
+					 		 	| (: get renewables from H2ProdCS :)
+					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='H2 central production'](: /*[@type='subsector' (: collapse :) and fn:not(@name='electrolysis')] :)//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output)
+					 	 	 	| (: get renewables from H2ProdDist :)
+					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='H2 forecourt production'](: /*[@type='subsector' (: collapse :) and fn:not(@name='electrolysis')] :)//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output)
+					 	 	 	| (: get the primaries :)
+	 	 						$currTree//keyword[fn:exists(@primary-consumption)]/preceding-sibling::input-energy/demand-physical/text()
+                                | (: get traditional biomass :)
+							    $currTree//*[@type='input' and @name='traditional biomass']/demand-physical/node()
+			 	 	 	
+	 	 }; 
+            	 local:run-primary-energy((:scenarios:), (:regions:), (:collection:))
+                 ]]>
+            </xPath>
+            <comments/>
+            <labelRewriteList append-values="false">
+               <level name="input">
+                  <rewrite from="traditional biomass" to="j traditional biomass"/>
+                  <rewrite from="geothermal-elect" to="i geothermal"/>
+                  <rewrite from="biomass" to="d biomass"/>
+                  <rewrite from="total biomass" to="d biomass"/>
+                  <rewrite from="nuclear-H2" to="e nuclear"/>
+                  <rewrite from="natural gas" to="b natural gas"/>
+                  <rewrite from="wind-elect" to="g wind"/>
+                  <rewrite from="exotic-elect" to="j breakthrough"/>
+                  <rewrite from="elect_td_ind" to=""/>
+                  <rewrite from="k new" to="k new"/>
+                  <rewrite from="solar-elect" to="h solar"/>
+                  <rewrite from="solar-H2" to="h solar"/>
+                  <rewrite from="regional natural gas" to=""/>
+                  <rewrite from="coal" to="c coal"/>
+                  <rewrite from="crude oil" to="a oil"/>
+                  <rewrite from="hydro-elect" to="f hydro"/>
+                  <rewrite from="nuclear-elect" to="e nuclear"/>
+                  <rewrite from="traded unconventional oil" to="a oil"/>
+                  <rewrite from="wind-H2" to="g wind"/>
+                  <rewrite from="seawater" to=""/>
+                  <rewrite from="water_td_pri_C" to=""/>
+                  <rewrite from="water_td_pri_W" to=""/>
+               </level>
+            </labelRewriteList>
+         </supplyDemandQuery>
+      </queryGroup>
+      <queryGroup name="energy transformation">
+         <queryGroup name="electricity">
+            <supplyDemandQuery title="elec gen by region (incl CHP)">
+               <axis1 name="region">region</axis1>
+               <axis2 name="Year">physical-output[@vintage]</axis2>
+               <xPath buildList="true" dataName="output" group="false" sumAll="true">*[@type='sector' (:collapse:)]//
+               *[@type='technology' (:collapse:) and not (@name='elect_td_bld')]/
+               *[@type='output' (:collapse:)  and (@name='electricity' or @name='base load generation' or @name='intermediate generation' or 
+               @name='subpeak generation' or @name='peak generation' or @name='elect_td_bld')]/
+               physical-output/node()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="elec gen by subsector">
+               <axis1 name="subsector">subsector</axis1>
+               <axis2 name="Year">physical-output[@vintage]</axis2>
+               <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' (:collapse:) and (@name='electricity' or 
+               @name='base load generation' or @name='intermediate generation' or @name='subpeak generation' or @name='peak generation' or @name='elect_td_bld')]/
+               *[@type='subsector' and not (@name='elect_td_bld')]//*[@type='output' (:collapse:)]/
+               physical-output/node()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="elec gen by gen tech">
+               <axis1 name="technology">technology</axis1>
+               <axis2 name="Year">physical-output[@vintage]</axis2>
+               <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' (:collapse:) and (@name='electricity' or 
+               @name='base load generation' or @name='intermediate generation' or @name='subpeak generation' or @name='peak generation' or 
+               @name='elect_td_bld' or @name='industrial energy use')]/
+               *[@type='subsector']/*[@type='technology' and not (@name='electricity' or @name='elect_td_bld')]/
+               *[@type='output' (:collapse:) and (@name='electricity' or @name='base load generation' or @name='intermediate generation' or 
+               @name='subpeak generation' or @name='peak generation' or @name='elect_td_bld')]/
+               physical-output/node()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="elec energy input by subsector">
+               <axis1 name="input">input</axis1>
+               <axis2 name="Year">demand-physical[@vintage]</axis2>
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='base load generation' or 
+               @name='intermediate generation' or @name='subpeak generation' or @name='peak generation' or @name='elect_td_bld' ) and not(contains(@name, 'water_td'))]/
+                  *[@type='subsector' and not (@name='elect_td_bld')]/
+                  *[@type='technology' (:collapse:) and not(
+                                   @name='biomass (conv)' or @name='biomass (conv CCS)' or @name='biomass (IGCC)' or @name='biomass (IGCC CCS)'
+                                   or @name='coal (conv pul)' or @name='coal (conv pul CCS)' or @name='coal (IGCC)' or @name='coal (IGCC CCS)'
+                                   or @name='gas (steam/CT)' or @name='gas (CC)' or @name='gas (CC CCS)'
+                                   or @name='refined liquids (steam/CT)' or @name='refined liquids (CC)' or @name='refined liquids (CC CCS)'
+                                   or @name='geothermal' or @name='Gen_II_LWR' or @name='Gen_III'
+                                   or @name='CSP' or @name='CSP_storage')]/
+                   *[@type='input' and not( contains( @name, 'water')) and @name != 'oil-credits']/
+                   demand-physical/node()
+                </xPath>
+               <comments/>
+               <labelRewriteList append-values="false">
+                  <level name="sector">
+                     <rewrite from="base load generation" to="electricity"/>
+                     <rewrite from="intermediate generation" to="electricity"/>
+                     <rewrite from="subpeak generation" to="electricity"/>
+                     <rewrite from="peak generation" to="electricity"/>
+                  </level>
+               </labelRewriteList>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="elec energy input by elec gen tech">
+               <axis1 name="input">input</axis1>
+               <axis2 name="Year">demand-physical[@vintage]</axis2>
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='base load generation' or 
+               @name='intermediate generation' or @name='subpeak generation' or @name='peak generation' or @name='elect_td_bld' ) and not(contains(@name, 'water_td'))]/
+                  *[@type='subsector' and not (@name='elect_td_bld')]/
+                  *[@type='technology' and not(@name='biomass (conv)' or @name='biomass (conv CCS)' or @name='biomass (IGCC)' or @name='biomass (IGCC CCS)'
+                                   or @name='coal (conv pul)' or @name='coal (conv pul CCS)' or @name='coal (IGCC)' or @name='coal (IGCC CCS)'
+                                   or @name='gas (steam/CT)' or @name='gas (CC)' or @name='gas (CC CCS)'
+                                   or @name='refined liquids (steam/CT)' or @name='refined liquids (CC)' or @name='refined liquids (CC CCS)'
+                                   or @name='geothermal' or @name='Gen_II_LWR' or @name='Gen_III'
+                                   or @name='CSP' or @name='CSP_storage')]/
+                   *[@type='input' and not( contains( @name, 'water')) and @name != 'oil-credits']/
+                   demand-physical/node()
+                </xPath>
+               <comments/>
+               <labelRewriteList append-values="false">
+                  <level name="sector">
+                     <rewrite from="base load generation" to="electricity"/>
+                     <rewrite from="intermediate generation" to="electricity"/>
+                     <rewrite from="subpeak generation" to="electricity"/>
+                     <rewrite from="peak generation" to="electricity"/>
+                  </level>
+                  <level name="technology">
+                    <rewrite from="biomass_base_conv" to="biomass (conv)"/>
+                    <rewrite from="biomass_base_conv_CCS" to="biomass (conv CCS)"/>
+                    <rewrite from="biomass_base_IGCC" to="biomass (IGCC)"/>
+                    <rewrite from="biomass_base_IGCC_CCS" to="biomass (IGCC CCS)"/>
+                    <rewrite from="biomass_int_conv" to="biomass (conv)"/>
+                    <rewrite from="biomass_int_conv_CCS" to="biomass (conv CCS)"/>
+                    <rewrite from="biomass_int_IGCC" to="biomass (IGCC)"/>
+                    <rewrite from="biomass_int_IGCC_CCS" to="biomass (IGCC CCS)"/>
+                    <rewrite from="biomass_peak_conv" to="biomass (conv)"/>
+                    <rewrite from="biomass_peak_conv_CCS" to="biomass (conv CCS)"/>
+                    <rewrite from="biomass_peak_IGCC" to="biomass (IGCC)"/>
+                    <rewrite from="biomass_peak_IGCC_CCS" to="biomass (IGCC CCS)"/>
+                    <rewrite from="biomass_subpeak_conv" to="biomass (conv)"/>
+                    <rewrite from="biomass_subpeak_conv_CCS" to="biomass (conv CCS)"/>
+                    <rewrite from="biomass_subpeak_IGCC" to="biomass (IGCC)"/>
+                    <rewrite from="biomass_subpeak_IGCC_CCS" to="biomass (IGCC CCS)"/>
+                    <rewrite from="coal_base_conv pul" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_CCS" to="coal (conv pul CCS)"/>
+                    <rewrite from="coal_base_conv pul_fast_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_IGCC" to="coal (IGCC)"/>
+                    <rewrite from="coal_base_IGCC_CCS" to="coal (IGCC CCS)"/>
+                    <rewrite from="coal_int_conv pul" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_CCS" to="coal (conv pul CCS)"/>
+                    <rewrite from="coal_int_conv pul_fast_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_IGCC" to="coal (IGCC)"/>
+                    <rewrite from="coal_int_IGCC_CCS" to="coal (IGCC CCS)"/>
+                    <rewrite from="coal_peak_conv pul" to="coal (conv pul)"/>
+                    <rewrite from="coal_peak_conv pul_CCS" to="coal (conv pul CCS)"/>
+                    <rewrite from="coal_peak_conv pul_fast_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_peak_conv pul_slow_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_peak_IGCC" to="coal (IGCC)"/>
+                    <rewrite from="coal_peak_IGCC_CCS" to="coal (IGCC CCS)"/>
+                    <rewrite from="coal_subpeak_conv pul" to="coal (conv pul)"/>
+                    <rewrite from="coal_subpeak_conv pul_CCS" to="coal (conv pul CCS)"/>
+                    <rewrite from="coal_subpeak_conv pul_fast_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_subpeak_conv pul_slow_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_subpeak_IGCC" to="coal (IGCC)"/>
+                    <rewrite from="coal_subpeak_IGCC_CCS" to="coal (IGCC CCS)"/>
+                    <rewrite from="gas_base_CC" to="gas (CC)"/>
+                    <rewrite from="gas_base_CC_CCS" to="gas (CC CCS)"/>
+                    <rewrite from="gas_base_steam/CT" to="gas (steam/CT)"/>
+                    <rewrite from="gas_int_CC" to="gas (CC)"/>
+                    <rewrite from="gas_int_CC_CCS" to="gas (CC CCS)"/>
+                    <rewrite from="gas_int_steam/CT" to="gas (steam/CT)"/>
+                    <rewrite from="gas_peak_CC" to="gas (CC)"/>
+                    <rewrite from="gas_peak_CC_CCS" to="gas (CC CCS)"/>
+                    <rewrite from="gas_peak_steam/CT" to="gas (steam/CT)"/>
+                    <rewrite from="gas_subpeak_CC" to="gas (CC)"/>
+                    <rewrite from="gas_subpeak_CC_CCS" to="gas (CC CCS)"/>
+                    <rewrite from="gas_subpeak_steam/CT" to="gas (steam/CT)"/>
+                    <rewrite from="geo_base" to="geothermal"/>
+                    <rewrite from="geo_int" to="geothermal"/>
+                    <rewrite from="geo_peak" to="geothermal"/>
+                    <rewrite from="geo_subpeak" to="geothermal"/>
+                    <rewrite from="hydro_base" to="hydro"/>
+                    <rewrite from="hydro_int" to="hydro"/>
+                    <rewrite from="hydro_peak" to="hydro"/>
+                    <rewrite from="hydro_subpeak" to="hydro"/>
+                    <rewrite from="nuc_base_Gen II" to="Gen_II_LWR"/>
+                    <rewrite from="nuc_base_Gen III" to="Gen_III"/>
+                    <rewrite from="nuc_int_Gen II" to="Gen_II_LWR"/>
+                    <rewrite from="nuc_int_Gen III" to="Gen_III"/>
+                    <rewrite from="nuc_peak_Gen II" to="Gen_II_LWR"/>
+                    <rewrite from="nuc_peak_Gen III" to="Gen_III"/>
+                    <rewrite from="nuc_subpeak_Gen II" to="Gen_II_LWR"/>
+                    <rewrite from="nuc_subpeak_Gen III" to="Gen_III"/>
+                    <rewrite from="refined liquids_base_CC" to="refined liquids (CC)"/>
+                    <rewrite from="refined liquids_base_CC_CCS" to="refined liquids (CC CCS)"/>
+                    <rewrite from="refined liquids_base_steam/CT" to="refined liquids (steam/CT)"/>
+                    <rewrite from="refined liquids_int_CC" to="refined liquids (CC)"/>
+                    <rewrite from="refined liquids_int_CC_CCS" to="refined liquids (CC CCS)"/>
+                    <rewrite from="refined liquids_int_steam/CT" to="refined liquids (steam/CT)"/>
+                    <rewrite from="refined liquids_peak_CC" to="refined liquids (CC)"/>
+                    <rewrite from="refined liquids_peak_CC_CCS" to="refined liquids (CC CCS)"/>
+                    <rewrite from="refined liquids_peak_steam/CT" to="refined liquids (steam/CT)"/>
+                    <rewrite from="refined liquids_subpeak_CC" to="refined liquids (CC)"/>
+                    <rewrite from="refined liquids_subpeak_CC_CCS" to="refined liquids (CC CCS)"/>
+                    <rewrite from="refined liquids_subpeak_steam/CT" to="refined liquids (steam/CT)"/>
+                    <rewrite from="CSP_base" to="CSP"/>
+                    <rewrite from="CSP_base_storage" to="CSP_storage"/>
+                    <rewrite from="PV_base" to="PV"/>
+                    <rewrite from="PV_base_storage" to="PV_storage"/>
+                    <rewrite from="CSP_int" to="CSP"/>
+                    <rewrite from="CSP_int_storage" to="CSP_storage"/>
+                    <rewrite from="PV_int" to="PV"/>
+                    <rewrite from="PV_int_storage" to="PV_storage"/>
+                    <rewrite from="CSP_peak" to="CSP"/>
+                    <rewrite from="CSP_peak_storage" to="CSP_storage"/>
+                    <rewrite from="PV_peak" to="PV"/>
+                    <rewrite from="PV_peak_storage" to="PV_storage"/>
+                    <rewrite from="CSP_subpeak" to="CSP"/>
+                    <rewrite from="CSP_subpeak_storage" to="CSP_storage"/>
+                    <rewrite from="PV_subpeak" to="PV"/>
+                    <rewrite from="PV_subpeak_storage" to="PV_storage"/>
+                    <rewrite from="wind_base" to="wind"/>
+                    <rewrite from="wind_base_storage" to="wind_storage"/>
+                    <rewrite from="wind_int" to="wind"/>
+                    <rewrite from="wind_int_storage" to="wind_storage"/>
+                    <rewrite from="wind_peak" to="wind"/>
+                    <rewrite from="wind_peak_storage" to="wind_storage"/>
+                    <rewrite from="wind_subpeak" to="wind"/>
+                    <rewrite from="wind_subpeak_storage" to="wind_storage"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1951-1955" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1956-1960" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1961-1965" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1966-1970" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1971-1975" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1976-1980" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1981-1985" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1986-1990" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1991-1995" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1996-2000" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 2001-2005" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 2006-2010" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 2011-2015" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire before 1950" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1951-1955" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1956-1960" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1961-1965" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1966-1970" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1971-1975" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1976-1980" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1981-1985" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1986-1990" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1991-1995" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1996-2000" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 2001-2005" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 2006-2010" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 2011-2015" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire before 1950" to="coal (conv pul)"/>
+                  </level>
+               </labelRewriteList>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="elec prices by sector">
+               <axis1 name="fuel">sector</axis1>
+               <axis2 name="Year">cost</axis2>
+               <xPath buildList="true" dataName="price" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='base load generation' or 
+               @name='intermediate generation' or @name='subpeak generation' or @name='peak generation' or @name='elect_td_bld' or @name='elect_td_ind'
+               or @name='elect_td_trn')]/cost/text()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="elec gen costs by subsector">
+               <axis1 name="subsector">subsector</axis1>
+               <axis2 name="Year">cost</axis2>
+               <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='base load generation' or 
+               @name='intermediate generation' or @name='subpeak generation' or @name='peak generation')]/*[@type='subsector']/cost/text()</xPath>
+               <comments>doesn't include rooftop PV</comments>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="elec gen costs by tech">
+               <axis1 name="technology">technology</axis1>
+               <axis2 name="Year">cost</axis2>
+               <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='base load generation' or 
+               @name='intermediate generation' or @name='subpeak generation' or @name='peak generation' or @name='elect_td_bld')]/*[@type='subsector']/
+              *[@type='technology' and not(@name='elect_td_bld')]/cost/text()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="elec share-weights by subsector">
+               <axis1 name="subsector">subsector</axis1>
+               <axis2 name="Year">share-weight</axis2>
+               <xPath buildList="true" dataName="price" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='base load generation' or 
+               @name='intermediate generation' or @name='subpeak generation' or @name='peak generation' or @name='elect_td_bld')]/
+               *[@type='subsector' and not (@name='elect_td_bld')]/
+               share-weight/text()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="elec share-weights by tech">
+               <axis1 name="technology">technology</axis1>
+               <axis2 name="Year">technology</axis2>
+               <xPath buildList="true" dataName="share-weight" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='base load generation' or 
+               @name='intermediate generation' or @name='subpeak generation' or @name='peak generation' or @name='elect_td_bld')]/
+               *[@type='subsector' and not (@name='elect_td_bld')]/
+               *[@type='technology']/share-weight/node()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="elec water withdrawals by gen tech">
+               <axis1 name="input">input</axis1>
+               <axis2 name="Year">demand-physical[@vintage]</axis2>
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/
+               *[@type='subsector' and not(@name='elect_td_bld')]/*[@type='technology']/
+               *[@type='input' and (@name='water_td_elec_W')]/demand-physical/node()</xPath>
+               <comments/>
+               <labelRewriteList append-values="false">
+                  <level name="sector">
+                     <rewrite from="base load generation" to="electricity"/>
+                     <rewrite from="intermediate generation" to="electricity"/>
+                     <rewrite from="subpeak generation" to="electricity"/>
+                     <rewrite from="peak generation" to="electricity"/>
+                  </level>
+                  <level name="technology">
+                    <rewrite from="biomass_base_conv" to="biomass (conv)"/>
+                    <rewrite from="biomass_base_conv_CCS" to="biomass (conv CCS)"/>
+                    <rewrite from="biomass_base_IGCC" to="biomass (IGCC)"/>
+                    <rewrite from="biomass_base_IGCC_CCS" to="biomass (IGCC CCS)"/>
+                    <rewrite from="biomass_int_conv" to="biomass (conv)"/>
+                    <rewrite from="biomass_int_conv_CCS" to="biomass (conv CCS)"/>
+                    <rewrite from="biomass_int_IGCC" to="biomass (IGCC)"/>
+                    <rewrite from="biomass_int_IGCC_CCS" to="biomass (IGCC CCS)"/>
+                    <rewrite from="biomass_peak_conv" to="biomass (conv)"/>
+                    <rewrite from="biomass_peak_conv_CCS" to="biomass (conv CCS)"/>
+                    <rewrite from="biomass_peak_IGCC" to="biomass (IGCC)"/>
+                    <rewrite from="biomass_peak_IGCC_CCS" to="biomass (IGCC CCS)"/>
+                    <rewrite from="biomass_subpeak_conv" to="biomass (conv)"/>
+                    <rewrite from="biomass_subpeak_conv_CCS" to="biomass (conv CCS)"/>
+                    <rewrite from="biomass_subpeak_IGCC" to="biomass (IGCC)"/>
+                    <rewrite from="biomass_subpeak_IGCC_CCS" to="biomass (IGCC CCS)"/>
+                    <rewrite from="coal_base_conv pul" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_CCS" to="coal (conv pul CCS)"/>
+                    <rewrite from="coal_base_conv pul_fast_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_IGCC" to="coal (IGCC)"/>
+                    <rewrite from="coal_base_IGCC_CCS" to="coal (IGCC CCS)"/>
+                    <rewrite from="coal_int_conv pul" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_CCS" to="coal (conv pul CCS)"/>
+                    <rewrite from="coal_int_conv pul_fast_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_IGCC" to="coal (IGCC)"/>
+                    <rewrite from="coal_int_IGCC_CCS" to="coal (IGCC CCS)"/>
+                    <rewrite from="coal_peak_conv pul" to="coal (conv pul)"/>
+                    <rewrite from="coal_peak_conv pul_CCS" to="coal (conv pul CCS)"/>
+                    <rewrite from="coal_peak_conv pul_fast_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_peak_conv pul_slow_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_peak_IGCC" to="coal (IGCC)"/>
+                    <rewrite from="coal_peak_IGCC_CCS" to="coal (IGCC CCS)"/>
+                    <rewrite from="coal_subpeak_conv pul" to="coal (conv pul)"/>
+                    <rewrite from="coal_subpeak_conv pul_CCS" to="coal (conv pul CCS)"/>
+                    <rewrite from="coal_subpeak_conv pul_fast_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_subpeak_conv pul_slow_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_subpeak_IGCC" to="coal (IGCC)"/>
+                    <rewrite from="coal_subpeak_IGCC_CCS" to="coal (IGCC CCS)"/>
+                    <rewrite from="gas_base_CC" to="gas (CC)"/>
+                    <rewrite from="gas_base_CC_CCS" to="gas (CC CCS)"/>
+                    <rewrite from="gas_base_steam/CT" to="gas (steam/CT)"/>
+                    <rewrite from="gas_int_CC" to="gas (CC)"/>
+                    <rewrite from="gas_int_CC_CCS" to="gas (CC CCS)"/>
+                    <rewrite from="gas_int_steam/CT" to="gas (steam/CT)"/>
+                    <rewrite from="gas_peak_CC" to="gas (CC)"/>
+                    <rewrite from="gas_peak_CC_CCS" to="gas (CC CCS)"/>
+                    <rewrite from="gas_peak_steam/CT" to="gas (steam/CT)"/>
+                    <rewrite from="gas_subpeak_CC" to="gas (CC)"/>
+                    <rewrite from="gas_subpeak_CC_CCS" to="gas (CC CCS)"/>
+                    <rewrite from="gas_subpeak_steam/CT" to="gas (steam/CT)"/>
+                    <rewrite from="geo_base" to="geothermal"/>
+                    <rewrite from="geo_int" to="geothermal"/>
+                    <rewrite from="geo_peak" to="geothermal"/>
+                    <rewrite from="geo_subpeak" to="geothermal"/>
+                    <rewrite from="hydro_base" to="hydro"/>
+                    <rewrite from="hydro_int" to="hydro"/>
+                    <rewrite from="hydro_peak" to="hydro"/>
+                    <rewrite from="hydro_subpeak" to="hydro"/>
+                    <rewrite from="nuc_base_Gen II" to="Gen_II_LWR"/>
+                    <rewrite from="nuc_base_Gen III" to="Gen_III"/>
+                    <rewrite from="nuc_int_Gen II" to="Gen_II_LWR"/>
+                    <rewrite from="nuc_int_Gen III" to="Gen_III"/>
+                    <rewrite from="nuc_peak_Gen II" to="Gen_II_LWR"/>
+                    <rewrite from="nuc_peak_Gen III" to="Gen_III"/>
+                    <rewrite from="nuc_subpeak_Gen II" to="Gen_II_LWR"/>
+                    <rewrite from="nuc_subpeak_Gen III" to="Gen_III"/>
+                    <rewrite from="refined liquids_base_CC" to="refined liquids (CC)"/>
+                    <rewrite from="refined liquids_base_CC_CCS" to="refined liquids (CC CCS)"/>
+                    <rewrite from="refined liquids_base_steam/CT" to="refined liquids (steam/CT)"/>
+                    <rewrite from="refined liquids_int_CC" to="refined liquids (CC)"/>
+                    <rewrite from="refined liquids_int_CC_CCS" to="refined liquids (CC CCS)"/>
+                    <rewrite from="refined liquids_int_steam/CT" to="refined liquids (steam/CT)"/>
+                    <rewrite from="refined liquids_peak_CC" to="refined liquids (CC)"/>
+                    <rewrite from="refined liquids_peak_CC_CCS" to="refined liquids (CC CCS)"/>
+                    <rewrite from="refined liquids_peak_steam/CT" to="refined liquids (steam/CT)"/>
+                    <rewrite from="refined liquids_subpeak_CC" to="refined liquids (CC)"/>
+                    <rewrite from="refined liquids_subpeak_CC_CCS" to="refined liquids (CC CCS)"/>
+                    <rewrite from="refined liquids_subpeak_steam/CT" to="refined liquids (steam/CT)"/>
+                    <rewrite from="CSP_base" to="CSP"/>
+                    <rewrite from="CSP_base_storage" to="CSP_storage"/>
+                    <rewrite from="PV_base" to="PV"/>
+                    <rewrite from="PV_base_storage" to="PV_storage"/>
+                    <rewrite from="CSP_int" to="CSP"/>
+                    <rewrite from="CSP_int_storage" to="CSP_storage"/>
+                    <rewrite from="PV_int" to="PV"/>
+                    <rewrite from="PV_int_storage" to="PV_storage"/>
+                    <rewrite from="CSP_peak" to="CSP"/>
+                    <rewrite from="CSP_peak_storage" to="CSP_storage"/>
+                    <rewrite from="PV_peak" to="PV"/>
+                    <rewrite from="PV_peak_storage" to="PV_storage"/>
+                    <rewrite from="CSP_subpeak" to="CSP"/>
+                    <rewrite from="CSP_subpeak_storage" to="CSP_storage"/>
+                    <rewrite from="PV_subpeak" to="PV"/>
+                    <rewrite from="PV_subpeak_storage" to="PV_storage"/>
+                    <rewrite from="wind_base" to="wind"/>
+                    <rewrite from="wind_base_storage" to="wind_storage"/>
+                    <rewrite from="wind_int" to="wind"/>
+                    <rewrite from="wind_int_storage" to="wind_storage"/>
+                    <rewrite from="wind_peak" to="wind"/>
+                    <rewrite from="wind_peak_storage" to="wind_storage"/>
+                    <rewrite from="wind_subpeak" to="wind"/>
+                    <rewrite from="wind_subpeak_storage" to="wind_storage"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1951-1955" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1956-1960" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1961-1965" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1966-1970" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1971-1975" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1976-1980" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1981-1985" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1986-1990" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1991-1995" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1996-2000" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 2001-2005" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 2006-2010" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 2011-2015" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire before 1950" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1951-1955" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1956-1960" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1961-1965" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1966-1970" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1971-1975" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1976-1980" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1981-1985" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1986-1990" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1991-1995" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1996-2000" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 2001-2005" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 2006-2010" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 2011-2015" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire before 1950" to="coal (conv pul)"/>
+                  </level>
+               </labelRewriteList>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="elec water consumption by gen tech">
+               <axis1 name="input">input</axis1>
+               <axis2 name="Year">demand-physical[@vintage]</axis2>
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' ]/
+               *[@type='subsector' and not(@name='elect_td_bld')]/*[@type='technology']/
+               *[@type='input' and (@name='water_td_elec_C')]/demand-physical/node()</xPath>
+               <comments/>
+               <labelRewriteList append-values="false">
+                  <level name="sector">
+                     <rewrite from="base load generation" to="electricity"/>
+                     <rewrite from="intermediate generation" to="electricity"/>
+                     <rewrite from="subpeak generation" to="electricity"/>
+                     <rewrite from="peak generation" to="electricity"/>
+                  </level>
+                  <level name="technology">
+                    <rewrite from="biomass_base_conv" to="biomass (conv)"/>
+                    <rewrite from="biomass_base_conv_CCS" to="biomass (conv CCS)"/>
+                    <rewrite from="biomass_base_IGCC" to="biomass (IGCC)"/>
+                    <rewrite from="biomass_base_IGCC_CCS" to="biomass (IGCC CCS)"/>
+                    <rewrite from="biomass_int_conv" to="biomass (conv)"/>
+                    <rewrite from="biomass_int_conv_CCS" to="biomass (conv CCS)"/>
+                    <rewrite from="biomass_int_IGCC" to="biomass (IGCC)"/>
+                    <rewrite from="biomass_int_IGCC_CCS" to="biomass (IGCC CCS)"/>
+                    <rewrite from="biomass_peak_conv" to="biomass (conv)"/>
+                    <rewrite from="biomass_peak_conv_CCS" to="biomass (conv CCS)"/>
+                    <rewrite from="biomass_peak_IGCC" to="biomass (IGCC)"/>
+                    <rewrite from="biomass_peak_IGCC_CCS" to="biomass (IGCC CCS)"/>
+                    <rewrite from="biomass_subpeak_conv" to="biomass (conv)"/>
+                    <rewrite from="biomass_subpeak_conv_CCS" to="biomass (conv CCS)"/>
+                    <rewrite from="biomass_subpeak_IGCC" to="biomass (IGCC)"/>
+                    <rewrite from="biomass_subpeak_IGCC_CCS" to="biomass (IGCC CCS)"/>
+                    <rewrite from="coal_base_conv pul" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_CCS" to="coal (conv pul CCS)"/>
+                    <rewrite from="coal_base_conv pul_fast_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_IGCC" to="coal (IGCC)"/>
+                    <rewrite from="coal_base_IGCC_CCS" to="coal (IGCC CCS)"/>
+                    <rewrite from="coal_int_conv pul" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_CCS" to="coal (conv pul CCS)"/>
+                    <rewrite from="coal_int_conv pul_fast_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_IGCC" to="coal (IGCC)"/>
+                    <rewrite from="coal_int_IGCC_CCS" to="coal (IGCC CCS)"/>
+                    <rewrite from="coal_peak_conv pul" to="coal (conv pul)"/>
+                    <rewrite from="coal_peak_conv pul_CCS" to="coal (conv pul CCS)"/>
+                    <rewrite from="coal_peak_conv pul_fast_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_peak_conv pul_slow_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_peak_IGCC" to="coal (IGCC)"/>
+                    <rewrite from="coal_peak_IGCC_CCS" to="coal (IGCC CCS)"/>
+                    <rewrite from="coal_subpeak_conv pul" to="coal (conv pul)"/>
+                    <rewrite from="coal_subpeak_conv pul_CCS" to="coal (conv pul CCS)"/>
+                    <rewrite from="coal_subpeak_conv pul_fast_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_subpeak_conv pul_slow_retire" to="coal (conv pul)"/>
+                    <rewrite from="coal_subpeak_IGCC" to="coal (IGCC)"/>
+                    <rewrite from="coal_subpeak_IGCC_CCS" to="coal (IGCC CCS)"/>
+                    <rewrite from="gas_base_CC" to="gas (CC)"/>
+                    <rewrite from="gas_base_CC_CCS" to="gas (CC CCS)"/>
+                    <rewrite from="gas_base_steam/CT" to="gas (steam/CT)"/>
+                    <rewrite from="gas_int_CC" to="gas (CC)"/>
+                    <rewrite from="gas_int_CC_CCS" to="gas (CC CCS)"/>
+                    <rewrite from="gas_int_steam/CT" to="gas (steam/CT)"/>
+                    <rewrite from="gas_peak_CC" to="gas (CC)"/>
+                    <rewrite from="gas_peak_CC_CCS" to="gas (CC CCS)"/>
+                    <rewrite from="gas_peak_steam/CT" to="gas (steam/CT)"/>
+                    <rewrite from="gas_subpeak_CC" to="gas (CC)"/>
+                    <rewrite from="gas_subpeak_CC_CCS" to="gas (CC CCS)"/>
+                    <rewrite from="gas_subpeak_steam/CT" to="gas (steam/CT)"/>
+                    <rewrite from="geo_base" to="geothermal"/>
+                    <rewrite from="geo_int" to="geothermal"/>
+                    <rewrite from="geo_peak" to="geothermal"/>
+                    <rewrite from="geo_subpeak" to="geothermal"/>
+                    <rewrite from="hydro_base" to="hydro"/>
+                    <rewrite from="hydro_int" to="hydro"/>
+                    <rewrite from="hydro_peak" to="hydro"/>
+                    <rewrite from="hydro_subpeak" to="hydro"/>
+                    <rewrite from="nuc_base_Gen II" to="Gen_II_LWR"/>
+                    <rewrite from="nuc_base_Gen III" to="Gen_III"/>
+                    <rewrite from="nuc_int_Gen II" to="Gen_II_LWR"/>
+                    <rewrite from="nuc_int_Gen III" to="Gen_III"/>
+                    <rewrite from="nuc_peak_Gen II" to="Gen_II_LWR"/>
+                    <rewrite from="nuc_peak_Gen III" to="Gen_III"/>
+                    <rewrite from="nuc_subpeak_Gen II" to="Gen_II_LWR"/>
+                    <rewrite from="nuc_subpeak_Gen III" to="Gen_III"/>
+                    <rewrite from="refined liquids_base_CC" to="refined liquids (CC)"/>
+                    <rewrite from="refined liquids_base_CC_CCS" to="refined liquids (CC CCS)"/>
+                    <rewrite from="refined liquids_base_steam/CT" to="refined liquids (steam/CT)"/>
+                    <rewrite from="refined liquids_int_CC" to="refined liquids (CC)"/>
+                    <rewrite from="refined liquids_int_CC_CCS" to="refined liquids (CC CCS)"/>
+                    <rewrite from="refined liquids_int_steam/CT" to="refined liquids (steam/CT)"/>
+                    <rewrite from="refined liquids_peak_CC" to="refined liquids (CC)"/>
+                    <rewrite from="refined liquids_peak_CC_CCS" to="refined liquids (CC CCS)"/>
+                    <rewrite from="refined liquids_peak_steam/CT" to="refined liquids (steam/CT)"/>
+                    <rewrite from="refined liquids_subpeak_CC" to="refined liquids (CC)"/>
+                    <rewrite from="refined liquids_subpeak_CC_CCS" to="refined liquids (CC CCS)"/>
+                    <rewrite from="refined liquids_subpeak_steam/CT" to="refined liquids (steam/CT)"/>
+                    <rewrite from="CSP_base" to="CSP"/>
+                    <rewrite from="CSP_base_storage" to="CSP_storage"/>
+                    <rewrite from="PV_base" to="PV"/>
+                    <rewrite from="PV_base_storage" to="PV_storage"/>
+                    <rewrite from="CSP_int" to="CSP"/>
+                    <rewrite from="CSP_int_storage" to="CSP_storage"/>
+                    <rewrite from="PV_int" to="PV"/>
+                    <rewrite from="PV_int_storage" to="PV_storage"/>
+                    <rewrite from="CSP_peak" to="CSP"/>
+                    <rewrite from="CSP_peak_storage" to="CSP_storage"/>
+                    <rewrite from="PV_peak" to="PV"/>
+                    <rewrite from="PV_peak_storage" to="PV_storage"/>
+                    <rewrite from="CSP_subpeak" to="CSP"/>
+                    <rewrite from="CSP_subpeak_storage" to="CSP_storage"/>
+                    <rewrite from="PV_subpeak" to="PV"/>
+                    <rewrite from="PV_subpeak_storage" to="PV_storage"/>
+                    <rewrite from="wind_base" to="wind"/>
+                    <rewrite from="wind_base_storage" to="wind_storage"/>
+                    <rewrite from="wind_int" to="wind"/>
+                    <rewrite from="wind_int_storage" to="wind_storage"/>
+                    <rewrite from="wind_peak" to="wind"/>
+                    <rewrite from="wind_peak_storage" to="wind_storage"/>
+                    <rewrite from="wind_subpeak" to="wind"/>
+                    <rewrite from="wind_subpeak_storage" to="wind_storage"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1951-1955" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1956-1960" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1961-1965" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1966-1970" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1971-1975" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1976-1980" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1981-1985" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1986-1990" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1991-1995" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 1996-2000" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 2001-2005" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 2006-2010" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire 2011-2015" to="coal (conv pul)"/>
+                    <rewrite from="coal_base_conv pul_slow_retire before 1950" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1951-1955" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1956-1960" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1961-1965" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1966-1970" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1971-1975" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1976-1980" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1981-1985" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1986-1990" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1991-1995" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 1996-2000" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 2001-2005" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 2006-2010" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire 2011-2015" to="coal (conv pul)"/>
+                    <rewrite from="coal_int_conv pul_slow_retire before 1950" to="coal (conv pul)"/>
+                  </level>
+               </labelRewriteList>
+            </supplyDemandQuery>
+         </queryGroup>
+         <queryGroup name="refining">
+            <supplyDemandQuery title="refined liquids production by region">
+               <axis1 name="region">region</axis1>
+               <axis2 name="Year">physical-output[@vintage]</axis2>
+               <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' (:collapse:) and
+               (@name='oil refining' or @name='biomass liquids' or @name='gas to liquids' or @name='coal to liquids')]//
+               output-primary[@type='output' (:collapse:)]/physical-output/node()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="refined liquids production by subsector">
+               <axis1 name="subsector">subsector</axis1>
+               <axis2 name="Year">physical-output[@vintage]</axis2>
+               <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and 
+               (@name='oil refining' or @name='biomass liquids' or @name='gas to liquids' or @name='coal to liquids')]/
+               *[@type='subsector']//
+               output-primary[@type='output' (:collapse:)]/physical-output/node()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="refined liquids production by tech">
+               <axis1 name="technology">technology</axis1>
+               <axis2 name="Year">physical-output[@vintage]</axis2>
+               <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and 
+               (@name='oil refining' or @name='biomass liquids' or @name='gas to liquids' or @name='coal to liquids')]/*[@type='subsector']/
+               *[@type='technology']/output-primary[@type='output' (:collapse:)]/physical-output/node()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="refined liquids production by tech and vintage">
+               <axis1 name="technology">technology</axis1>
+               <axis2 name="Year">physical-output[@vintage]</axis2>
+               <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and 
+               (@name='oil refining' or @name='biomass liquids' or @name='gas to liquids' or @name='coal to liquids')]/*[@type='subsector']/
+               *[@type='technology']/output-primary[@type='output' (:collapse:)]/physical-output/node()</xPath>
+               <comments/>
+               <showAttribute attribute-name="year" level="technology"/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="refined liquids production by tech (new)">
+               <axis1 name="technology">technology</axis1>
+               <axis2 name="Year">physical-output[@vintage]</axis2>
+               <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and 
+               (@name='oil refining' or @name='biomass liquids' or @name='gas to liquids' or @name='coal to liquids')]/*[@type='subsector']/
+               *[@type='technology']/output-primary[@type='output' (:collapse:)]/physical-output[
+               @vintage=parent::*/parent::*/@year]/node()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="refinery inputs by tech (energy and feedstocks)">
+               <axis1 name="input">input</axis1>
+               <axis2 name="Year">demand-physical[@vintage]</axis2>
+               <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and 
+               (@name='oil refining' or @name='biomass liquids' or @name='gas to liquids' or @name='coal to liquids' or 
+               @name='regional oil' or @name='regional corn for ethanol' or @name='regional sugar for ethanol')]/
+               *[@type='subsector']/*[@type='technology']/
+               *[@type='input' and not(contains(@name,'water'))]/demand-physical/node()</xPath>
+               <comments>includes passthrough sectors for refining</comments>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="refined liquids prices by sector">
+               <axis1 name="fuel">sector</axis1>
+               <axis2 name="Year">cost</axis2>
+               <xPath buildList="true" dataName="price" group="false" sumAll="false">*[@type='sector' and 
+               (@name='oil refining' or @name='biomass liquids' or @name='gas to liquids' or @name='coal to liquids' or 
+               @name='refined liquids enduse' or @name='refined liquids industrial')]/cost/text()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="refined liquids costs by subsector">
+               <axis1 name="subsector">subsector</axis1>
+               <axis2 name="Year">cost</axis2>
+               <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='oil refining' or 
+               @name='biomass liquids' or @name='gas to liquids' or @name='coal to liquids')]/*[@type='subsector']/cost/text()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="refined liquids costs by tech">
+               <axis1 name="technology">technology</axis1>
+               <axis2 name="Year">cost</axis2>
+               <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='oil refining' or 
+               @name='biomass liquids' or @name='gas to liquids' or @name='coal to liquids')]/*[@type='subsector']/*[@type='technology']/cost/text()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="refining and oil share-weights by subsector">
+               <axis1 name="subsector">subsector</axis1>
+               <axis2 name="Year">share-weight</axis2>
+               <xPath buildList="true" dataName="share-weight" group="false" sumAll="false">*[@type='sector' and (@name='oil refining' or 
+               @name='biomass liquids' or @name='gas to liquids' or @name='coal to liquids' or @name='regional oil')]/
+               *[@type='subsector']/share-weight/text()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="refining share-weights by tech">
+               <axis1 name="technology">technology</axis1>
+               <axis2 name="Year">technology</axis2>
+               <xPath buildList="true" dataName="share-weight" group="false" sumAll="false">*[@type='sector' and (@name='oil refining' or 
+               @name='biomass liquids' or @name='gas to liquids' or @name='coal to liquids')]/*[@type='subsector']/
+               *[@type='technology']/share-weight/node()</xPath>
+               <comments/>
+            </supplyDemandQuery>
+         </queryGroup>
+      </queryGroup>
+      <queryGroup name="end use sectors">
+        <queryGroup name="total end use sectors">
+          <supplyDemandQuery title="total final energy by aggregate sector">
+            <axis1 name="sector">sector</axis1>
+            <axis2 name="Year">demand-physical[@vintage]</axis2>
+            <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or
+            (exists(child::keyword/@final-energy)))]//*[@type='input' (:collapse:) and
+            not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or
+                @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn') or @name='oil-credits')]/
+            demand-physical[@unit='EJ']/node()</xPath>
+            <comments/>
+            <labelRewriteList append-values="false">
+               <level name="sector">
+                  <rewrite from="trn_pass_road_bus" to="transportation"/>
+                  <rewrite from="trn_pass_road_LDV" to="transportation"/>
+                  <rewrite from="trn_freight" to="transportation"/>
+                  <rewrite from="trn_pass_road_LDV_2W" to="transportation"/>
+                  <rewrite from="N fertilizer" to="industry"/>
+                  <rewrite from="resid heating" to="building"/>
+                  <rewrite from="industrial feedstocks" to="industry"/>
+                  <rewrite from="comm heating" to="building"/>
+                  <rewrite from="trn_aviation_intl" to="transportation"/>
+                  <rewrite from="industrial energy use" to="industry"/>
+                  <rewrite from="comm cooling" to="building"/>
+                  <rewrite from="trn_shipping_intl" to="transportation"/>
+                  <rewrite from="trn_pass_road_LDV_4W" to="transportation"/>
+                  <rewrite from="trn_freight_road" to="transportation"/>
+                  <rewrite from="comm others" to="building"/>
+                  <rewrite from="trn_pass" to="transportation"/>
+                  <rewrite from="process heat cement" to="industry"/>
+                  <rewrite from="resid cooling" to="building"/>
+                  <rewrite from="cement" to="industry"/>
+                  <rewrite from="resid others" to="building"/>
+                  <rewrite from="trn_pass_road" to="transportation"/>
+                  <rewrite from="resid hot water" to="building"/>
+                  <rewrite from="resid lighting" to="building"/>
+                  <rewrite from="resid refrigerators" to="building"/>
+                  <rewrite from="resid freezers" to="building"/>
+                  <rewrite from="resid dishwashers" to="building"/>
+                  <rewrite from="resid cooking" to="building"/>
+                  <rewrite from="resid clothes dryers" to="building"/>
+                  <rewrite from="resid clothes washers" to="building"/>
+                  <rewrite from="resid televisions" to="building"/>
+                  <rewrite from="resid computers" to="building"/>
+                  <rewrite from="resid furnace fans" to="building"/>
+                  <rewrite from="resid other" to="building"/>
+                  <rewrite from="comm hot water" to="building"/>
+                  <rewrite from="comm ventilation" to="building"/>
+                  <rewrite from="comm cooking" to="building"/>
+                  <rewrite from="comm lighting" to="building"/>
+                  <rewrite from="comm refrigeration" to="building"/>
+                  <rewrite from="comm office" to="building"/>
+                  <rewrite from="comm other" to="building"/>
+                  <rewrite from="comm non-building" to="building"/>
+               </level>
+            </labelRewriteList>
+          </supplyDemandQuery>
+        </queryGroup>
+      </queryGroup>
+   </queryGroup>
 </queries>

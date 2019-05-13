@@ -1,0 +1,60 @@
+# File: SEDS_refining_feedstock_prod.csv
+# Title: Coal production; Natural gas marketed production
+# Units: Billion BTU
+# Comments: Coal production and Natural gas marketed production for 2015 in Billion BTU
+# The relevant MSN codes from the SEDS dataset are 'CLPRB' (coal) and 'NGMPB' (gas)
+# Source:  SEDS production dataset (https://www.eia.gov/state/seds/sep_prod/xls/Prod_dataset.xlsx)
+# Column types: cii 
+# ----------
+state,coal,natural_gas
+AK,17747,380598
+AL,331420,182959
+AR,1819,1031401
+AZ,146450,99
+CA,0,265156
+CO,403605,1988142
+CT,0,0
+DC,0,0
+DE,0,0
+FL,0,908
+GA,0,0
+HI,0,0
+IA,0,0
+ID,0,0
+IL,1252879,2212
+IN,776493,7446
+KS,4387,320981
+KY,1486019,98132
+LA,46879,1890707
+MA,0,0
+MD,45587,28
+ME,0,0
+MI,0,114232
+MN,0,0
+MO,3178,1
+MS,34528,60532
+MT,746222,61966
+NC,0,0
+ND,392183,664232
+NE,0,504
+NH,0,0
+NJ,0,0
+NM,357525,1444535
+NV,0,3
+NY,0,18400
+OH,417682,1182848
+OK,17422,2891719
+OR,0,879
+PA,1278078,5128439
+RI,0,0
+SC,0,0
+SD,0,15347
+TN,23192,4977
+TX,471257,9449581
+UT,325216,468636
+VA,365832,134218
+VT,0,0
+WA,0,0
+WI,0,0
+WV,2447181,1572115
+WY,6538240,1985336

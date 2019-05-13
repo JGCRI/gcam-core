@@ -1,7 +1,8 @@
 # File: A44.subsector_interp.csv
-# Title: Building default subsector shareweight interpolation
+# Title: Building subsector default shareweight interpolation
 # Units: NA
-# Column types: cccccic 
+# Source: None (GCAM assumptions)
+# Column types: cccccnc 
 # ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 resid heating,biomass,share-weight,final-calibration-year,end-year,,fixed
@@ -9,16 +10,24 @@ resid heating,coal,share-weight,final-calibration-year,2020,0,linear
 resid heating,coal,share-weight,2020,end-year,,fixed
 resid heating,gas,share-weight,final-calibration-year,end-year,,fixed
 resid heating,electricity,share-weight,final-calibration-year,end-year,,fixed
-resid heating,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+resid heating,refined liquids,share-weight,final-calibration-year,2050,0.1,linear
 resid cooling,electricity,share-weight,final-calibration-year,end-year,,fixed
 resid hot water,gas,share-weight,final-calibration-year,end-year,,fixed
 resid hot water,electricity,share-weight,final-calibration-year,end-year,,fixed
-resid hot water,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+resid hot water,refined liquids,share-weight,final-calibration-year,2050,0.1,linear
 resid lighting,electricity,share-weight,final-calibration-year,end-year,,fixed
-resid appliances,gas,share-weight,final-calibration-year,end-year,,fixed
-resid appliances,electricity,share-weight,final-calibration-year,end-year,,fixed
-resid appliances,refined liquids,share-weight,final-calibration-year,end-year,,fixed
-resid other appliances,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid refrigerators,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid freezers,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid dishwashers,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid cooking,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid cooking,gas,share-weight,final-calibration-year,end-year,,fixed
+resid cooking,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+resid clothes dryers,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid clothes dryers,gas,share-weight,final-calibration-year,end-year,,fixed
+resid clothes washers,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid televisions,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid computers,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid furnace fans,electricity,share-weight,final-calibration-year,end-year,,fixed
 resid other,gas,share-weight,final-calibration-year,end-year,,fixed
 resid other,electricity,share-weight,final-calibration-year,end-year,,fixed
 resid other,refined liquids,share-weight,final-calibration-year,end-year,,fixed
@@ -27,12 +36,14 @@ comm heating,coal,share-weight,final-calibration-year,2020,0,linear
 comm heating,coal,share-weight,2020,end-year,,fixed
 comm heating,gas,share-weight,final-calibration-year,end-year,,fixed
 comm heating,electricity,share-weight,final-calibration-year,end-year,,fixed
-comm heating,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+comm heating,refined liquids,share-weight,final-calibration-year,2050,0.1,s-curve
+comm heating,refined liquids,share-weight,2050,end-year,,fixed
 comm cooling,gas,share-weight,final-calibration-year,end-year,,fixed
 comm cooling,electricity,share-weight,final-calibration-year,end-year,,fixed
 comm hot water,gas,share-weight,final-calibration-year,end-year,,fixed
-comm hot water,electricity,share-weight,final-calibration-year,end-year,,fixed
-comm hot water,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+comm hot water,electricity,share-weight,final-calibration-year,end-year,1,s-curve
+comm hot water,refined liquids,share-weight,final-calibration-year,2050,0.1,s-curve
+comm hot water,refined liquids,share-weight,2050,end-year,,fixed
 comm ventilation,electricity,share-weight,final-calibration-year,end-year,,fixed
 comm cooking,gas,share-weight,final-calibration-year,end-year,,fixed
 comm cooking,electricity,share-weight,final-calibration-year,end-year,,fixed
@@ -41,5 +52,6 @@ comm refrigeration,electricity,share-weight,final-calibration-year,end-year,,fix
 comm office,electricity,share-weight,final-calibration-year,end-year,,fixed
 comm other,gas,share-weight,final-calibration-year,end-year,,fixed
 comm other,electricity,share-weight,final-calibration-year,end-year,,fixed
-comm other,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+comm other,refined liquids,share-weight,final-calibration-year,2050,0.1,s-curve
+comm other,refined liquids,share-weight,2050,end-year,,fixed
 comm non-building,electricity,share-weight,final-calibration-year,end-year,,fixed
