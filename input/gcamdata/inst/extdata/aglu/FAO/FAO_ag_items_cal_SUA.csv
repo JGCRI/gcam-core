@@ -7,14 +7,14 @@
 # ----------
 item,GCAM_commodity,crop_cal_lookup,Mcal_t
 Abaca,FiberCrop,,0
-"Alcohol, Non-Food",alcohol,,0
+"Alcohol, Non-Food",,,0
 Apples and products,MiscCrop,APPLES,480
 Bananas,MiscCrop,BANANAS,600
 Barley and products,OtherGrain,BARLEY,3320
 Beans,MiscCrop,"BEANS, DRY",3410
-Beer,alcohol,,0
-"Beverages, Alcoholic",alcohol,,0
-"Beverages, Fermented",alcohol,,0
+Beer,,,0
+"Beverages, Alcoholic",,,0
+"Beverages, Fermented",,,0
 Brans,,,0
 Cassava and products,Root_Tuber,CASSAVA,1090
 "Cereals, Other",OtherGrain,CEREALS NES,3400
@@ -102,5 +102,5 @@ Tobacco,,,0
 Tomatoes and products,MiscCrop,TOMATOES,170
 "Vegetables, Other",MiscCrop,VEGETABLES NES FRESH,220
 Wheat and products,Wheat,WHEAT,3340
-Wine,alcohol,,0
+Wine,,,0
 Yams,Root_Tuber,YAMS,1010
