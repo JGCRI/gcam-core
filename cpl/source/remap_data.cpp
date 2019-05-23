@@ -35,6 +35,10 @@ ReMapData::ReMapData():
 {
 }
 
+ReMapData::~ReMapData() {
+    delete mData;
+}
+
 void ReMapData::addColumn(string aDataName, vector<string> aInOrderOutputNames, map<string, string> aGCAMToOutputNameMap) {
   ReMapDataHelper<string> col;
   col.mDataName = aDataName;
@@ -52,12 +56,13 @@ void ReMapData::addYearColumn(string aDataName, vector<int> aInOrderOutputNames,
 }
 
 void ReMapData::finalizeColumns() {
-    size_t size = mColumns.size() == 0 ? 0 : 1;
+    // if no year column or mColumns error?
+    size_t size = mYearColumn.getStrideLength();
     for(auto col : mColumns) {
         size *= col.getStrideLength();
     }
     mData = new double[size];
-    fill(mData, mData + size, 0.0);
+    fill(mData, mData+size, 0.0);
     mIsInitialized = true;
 }
 
@@ -70,6 +75,9 @@ void ReMapData::setData(const vector<string>& aColValues, const int aYearValue, 
     for(size_t colIndex = aColValues.size(); colIndex-- > 0; ) {
         index += mColumns[colIndex].getIndex(aColValues[colIndex]) * currStride;
         currStride *= mColumns[colIndex].getStrideLength();
+    }
+    if(index >= currStride) {
+        abort();
     }
     mData[index] += aValue;
 }
