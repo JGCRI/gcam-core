@@ -242,7 +242,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         }
         co2Data.addYearColumn("Year", years, map<int, int>());
         co2Data.finalizeColumns();
-        GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,StringEquals,refining]/subsector[NamedFilter,MatchesAny]/technology[NamedFilter,MatchesAny]/period[YearFilter,MatchesAny]/ghg[NamedFilter,StringEquals,CO2]/emissions");
+        GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,StringEquals,refining]//ghg[NamedFilter,StringEquals,CO2]/emissions");
         getCo2.run(runner->getInternalScenario(), co2Data);
         double *co2 = co2Data.getData();
         for(size_t i = 0; i < (2 * 1 * years.size()); ++i) {
