@@ -17,7 +17,7 @@ ofstream outFile;
 // Pointer for a scenario
 Scenario* scenario; // model scenario info
 
-auto_ptr<IScenarioRunner> runner;
+//auto_ptr<IScenarioRunner> runner;
 
 vector<string> GCAM_E3SM_interface::regionName;
 vector<string> GCAM_E3SM_interface::landType;
@@ -115,6 +115,8 @@ void GCAM_E3SM_interface::initGCAM(void)
     
     // Setup the scenario.
     success = runner->setupScenarios( timer );
+
+    XMLHelper<void>::cleanupParser();
     
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
     
@@ -241,7 +243,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         co2Data.addYearColumn("Year", years, map<int, int>());
         co2Data.finalizeColumns();
         GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,StringEquals,refining]/subsector[NamedFilter,MatchesAny]/technology[NamedFilter,MatchesAny]/period[YearFilter,MatchesAny]/ghg[NamedFilter,StringEquals,CO2]/emissions");
-        getCo2.run(scenario, co2Data);
+        getCo2.run(runner->getInternalScenario(), co2Data);
         double *co2 = co2Data.getData();
         for(size_t i = 0; i < (2 * 1 * years.size()); ++i) {
             cout << co2[i] << endl;
@@ -249,10 +251,12 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         //PLPTEST
         
         // write restarts if needed.
+        /*
         if(write_rest) {
             mainLog << "write_rest: " << *write_rest << endl;
             //runner->writeRestart( period, curryear );
         }
+        */
     }
 }
 

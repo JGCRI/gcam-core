@@ -45,6 +45,6 @@ class GCAM_E3SM_interface {
   static std::vector<std::string> cropName; // 
 
  private:
-  //  std::auto_ptr<IScenarioRunner> runner;
+    std::auto_ptr<IScenarioRunner> runner;
     typedef std::vector<Region*>::iterator RegionIterator;
 };

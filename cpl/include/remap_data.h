@@ -18,6 +18,7 @@ public:
 class ReMapData {
 public:
     ReMapData();
+    ~ReMapData();
     void addColumn(std::string aDataName, std::vector<std::string> aInOrderOutputNames, std::map<std::string, std::string> aGCAMToOutputNameMap);
     void addYearColumn(std::string aDataName, std::vector<int> aInOrderOutputNames, std::map<int, int> aGCAMToOutputNameMap);
     void finalizeColumns();
