@@ -1,11 +1,11 @@
 # File: A10.ResReserveTechLifetime.csv
-# Title: Resource well / mine lifetime over which the reserve will be produced / depleted
+# Title: Total lifetime a Technology has to produce a reserve which is different than A10.ResSubresoureProdLifetime in that this value allows for extra years to produce in case it was producing at less than "capacity" due to economic shutdown
 # Units: Years
-# Source: Assumed to be 20 years beyond the lifetimes in  A10.ResSubresoureProdLifetime
+# Source: Assumed to be so long that all reserve gets produced
 # Column types: ccci
 # ----------
 resource,reserve.subresource,resource.reserve.technology,lifetime
-coal,coal,coal,60
-crude oil,crude oil,crude oil,80
-natural gas,natural gas,natural gas,50
-unconventional oil,unconventional oil,unconventional oil,60
+coal,coal,coal,100
+crude oil,crude oil,crude oil,100
+natural gas,natural gas,natural gas,100
+unconventional oil,unconventional oil,unconventional oil,100
