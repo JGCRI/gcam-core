@@ -45,8 +45,11 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
 
     # GDP deflators are used to convert each reported year- and country- values to a common unit of measure
     # This step filters years, sets iso codes to countries, and converts all deflators from an index-100 with a base
-    # year of 2005 to a multiplier, calculated from a base year of 2010
-    # Sudan (former) is re-set to Sudan and South Sudan for building the full time series
+    # year of 2005 to a multiplier with an exogenous base year. The deflator base year is the year in which relative
+    # regional nominal prices are preserved in the constant dollar (i.e., 1975$ in this code) prices. For example, with
+    # deflator base year set to 2010, prices are in 2010 Constant USD but expressed in terms of 1975 USD.
+    
+    # Sudan (former) is re-set to Sudan for building the full time series
     # South Sudan is dropped as only a few data years are available and it isn't in the price data
     L1321.GDPdefl_ctry <- FAO_GDP_Deflators %>%
       select(Area, year = Year, Value) %>%
