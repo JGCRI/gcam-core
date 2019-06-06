@@ -297,9 +297,8 @@ double SolarTechnology::getSolarPenetration( const int aPeriod ) const
    // Compute the CSP penetration level
    double SolarPenetration = 0;
    if ( aPeriod > 0 && mMaxSectorLoadServed > 0 ){
-      SolarPenetration = std::max( 0.0,
-                     SectorUtils::getTrialSupply(mRegionName, mTrialMarketName, 
-                                                 aPeriod ) / mMaxSectorLoadServed); 
+      SolarPenetration = SectorUtils::getTrialSupply( mRegionName, mTrialMarketName, aPeriod )
+                         / mMaxSectorLoadServed;
    }
 
    return SolarPenetration;
