@@ -8,6 +8,8 @@
 # Root_Shoot (unitless): Mass of roots (below-ground biomass) divided by mass of shoots (above-ground biomass)
 # WaterContent (unitless): Water content of aboveground crop biomass
 # Original source: see aglu data documentation
+# Column types: cnnnnn 
+# ----------
 item,HarvestIndex,ErosCtrl_tHa,ResEnergy_GJt,Root_Shoot,WaterContent
 "Almonds, with shell",0.42,0.013,16.8,0.15,0.2
 "Anise, badian, fennel, corian.",1,0,0,0.15,0

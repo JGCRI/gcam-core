@@ -96,6 +96,35 @@ dstrace <- function(object_name, direction = "upstream", graph = FALSE,
   invisible(previous_tracelist)
 }
 
+#' A simplified dstrace which simply finds the chunks which are precursors
+#' recursively.
+#'
+#' The algorithm is performing a depth first search where chunks are "nodes"
+#' and data objects are "verticies" connecting them.
+#' @param chunk_names A list of chunks to find the precursors for.
+#' @param gcam_data_map A tibble of metadata information; normally a built-in package dataset.
+#' @param prev_trace_list The list of chunks already found.
+#' @return The unique list of chunk names which are precursors for \code{chunk_names}.
+#' @export
+#' @importFrom magrittr %$%
+dstrace_chunks <- function(chunk_names, gcam_data_map, prev_trace_list = c()) {
+  trace_list = prev_trace_list
+
+  name.x <- name.y <- NULL  # silence package check note
+
+  for(chunk_name in chunk_names) {
+    if(!(chunk_name %in% trace_list)) {
+      trace_list <- c(trace_list, chunk_name)
+      precursor_chunks <- gcam_data_map %>% filter(name.y == chunk_name) %$% name.x
+      trace_list <- dstrace_chunks(precursor_chunks,
+                                   gcam_data_map,
+                                   trace_list)
+    }
+  }
+
+  trace_list
+}
+
 
 #' Plot a trace
 #'

@@ -1,0 +1,12 @@
+# File: elecS_horizontal_to_vertical_map.csv
+# Title: Mapping between horizontal and vertical electricity load segments
+# Units: unitless
+# Comments: This table maps horizontal to vertical electricity load segments.
+# Source: N/A (mapping file)
+# Column types: cc 
+# ----------
+vertical_segment,horizontal_segment
+off peak electricity,base load generation
+intermediate electricity,intermediate generation
+subpeak electricity,subpeak generation
+peak electricity,peak generation

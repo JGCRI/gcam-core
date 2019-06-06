@@ -1,6 +1,8 @@
 # File: A21.subsector_logit.csv
 # Title: Primary energy handling default subsector logit exponents
 # Units: Unitless
+# Column types: cciic 
+# ----------
 supplysector,subsector,logit.exponent,traded,logit.type
 regional biomass,regional biomass,-6,0,
 regional coal,regional coal,-6,0,

@@ -10,7 +10,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L270.CreditOutput}, \code{L270.CreditInput_elec}, \code{L270.CreditInput_feedstocks}, \code{L270.CreditMkt}, \code{L270.CTaxInput}, \code{L270.NegEmissFinalDemand}, \code{L270.NegEmissFinalDemand_SPA}, \code{L270.NegEmissBudgetMaxPrice}, \code{paste0( "L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5))) )}. The corresponding file in the
+#' the generated outputs: \code{L270.CreditOutput}, \code{L270.CreditInput_elec}, \code{L270.CreditInput_feedstocks}, \code{L270.CreditMkt}, \code{L270.CTaxInput}, \code{L270.NegEmissFinalDemand}, \code{L270.NegEmissFinalDemand_SPA}, \code{L270.NegEmissBudgetMaxPrice}, \code{paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5))) )}. The corresponding file in the
 #' original data system was \code{L270.limits.R} (energy level2).
 #' @details Generate GCAM policy constraints which enforce limits to liquid feedstocks
 #' and the amount of subsidies given for net negative emissions.
@@ -25,7 +25,8 @@ module_energy_L270.limits <- function(command, ...) {
              FILE = "energy/A23.globaltech_eff",
              "L102.gdp_mil90usd_GCAM3_R_Y",
              "L102.gdp_mil90usd_Scen_R_Y",
-             "L221.GlobalTechCoef_en"))
+             "L221.GlobalTechCoef_en",
+             "L202.CarbonCoef"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L270.CreditOutput",
              "L270.CreditInput_elec",
@@ -38,11 +39,12 @@ module_energy_L270.limits <- function(command, ...) {
              # TODO: might just be easier to keep the scenarios in a single
              # table here and split when making XMLs but to match the old
              # data system we will split here
-             paste0( "L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)) )))
+             paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)) )))
   } else if(command == driver.MAKE) {
 
     value <- subsector <- supplysector <- year <- GCAM_region_ID <- sector.name <-
-      region <- scenario <- constraint <- . <- NULL # silence package check notes
+      region <- scenario <- constraint <- . <- PrimaryFuelCO2Coef.name <-
+      PrimaryFuelCO2Coef <- NULL # silence package check notes
 
     all_data <- list(...)[[1]]
 
@@ -53,6 +55,7 @@ module_energy_L270.limits <- function(command, ...) {
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
     L221.GlobalTechCoef_en <- get_data(all_data, "L221.GlobalTechCoef_en")
+    L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
 
     # Limit bioliquids for feedstocks and electricity
     # Note: we do this by requiring a certain fraction of inputs to those technologies to come from oil
@@ -61,8 +64,8 @@ module_energy_L270.limits <- function(command, ...) {
            subsector.name = "oil refining",
            technology = "oil refining") %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      mutate(res.secondary.output = "oil-credits") %>%
-      mutate(output.ratio = 1.0) ->
+      mutate(res.secondary.output = "oil-credits",
+             output.ratio = 1.0) ->
       L270.CreditOutput
 
     # L270.CreditInput_elec: minicam-energy-input of oil credits for electricity techs
@@ -70,9 +73,9 @@ module_energy_L270.limits <- function(command, ...) {
       fill_exp_decay_extrapolate(MODEL_YEARS) %>%
       mutate(value = round(value, energy.DIGITS_EFFICIENCY)) %>%
       filter(subsector == "refined liquids") %>%
-      mutate(minicam.energy.input = "oil-credits") %>%
+      mutate(minicam.energy.input = "oil-credits",
       # note we are converting the efficiency to a coefficient here
-      mutate(coefficient = energy.OILFRACT_ELEC / value) %>%
+             coefficient = energy.OILFRACT_ELEC / value) %>%
       select(-value) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) ->
@@ -83,8 +86,8 @@ module_energy_L270.limits <- function(command, ...) {
            subsector.name = "refined liquids",
            technology = "refined liquids") %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      mutate(minicam.energy.input = "oil-credits") %>%
-      mutate(coefficient = energy.OILFRACT_FEEDSTOCKS) ->
+      mutate(minicam.energy.input = "oil-credits",
+             coefficient = energy.OILFRACT_FEEDSTOCKS) ->
       L270.CreditInput_feedstocks
 
     # L270.CreditMkt: Market for oil credits
@@ -113,9 +116,13 @@ module_energy_L270.limits <- function(command, ...) {
     L221.GlobalTechCoef_en %>%
       filter(grepl("(biomass|ethanol)", sector.name)) %>%
       mutate(ctax.input = energy.NEG_EMISS_POLICY_NAME) %>%
-      mutate(fuel.name = sector.name) ->
-      L270.CTaxInput
-    L270.CTaxInput <- L270.CTaxInput[, c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "ctax.input", "fuel.name")]
+      left_join_error_no_match(L202.CarbonCoef %>%
+                                 distinct(PrimaryFuelCO2Coef.name, PrimaryFuelCO2Coef),
+                               by = c("sector.name" = "PrimaryFuelCO2Coef.name")) %>%
+      rename(fuel.C.coef = PrimaryFuelCO2Coef) ->
+	  L270.CTaxInput
+	  
+    L270.CTaxInput <- L270.CTaxInput[, c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "ctax.input", "fuel.C.coef")]
 
     # L270.NegEmissFinalDemand: Create negative emissions final demand
     tibble(region = GCAM_region_names$region,
@@ -126,13 +133,13 @@ module_energy_L270.limits <- function(command, ...) {
     # L270.NegEmissBudget: Create the budget for paying for net negative emissions
     GDP_scenario %>%
       # no dollar year or unit conversions since emissions already match
-      mutate(constraint = value * energy.NEG_EMISS_GDP_BUDGET_PCT) %>%
+      mutate(constraint = value * energy.NEG_EMISS_GDP_BUDGET_PCT,
+             policy.portfolio.standard = energy.NEG_EMISS_POLICY_NAME,
+             policyType = "tax",
+             market = region,
+             price.unit = "%",
+             output.unit = "mil 1990$") %>%
       select(-value) %>%
-      mutate(policy.portfolio.standard = energy.NEG_EMISS_POLICY_NAME) %>%
-      mutate(policyType = "tax") %>%
-      mutate(market = region) %>%
-      mutate(price.unit = "%") %>%
-      mutate(output.unit = "mil 1990$") %>%
       # constrain in only years which could include a carbon price
       filter(year >= 2020) ->
       L270.NegEmissBudget
@@ -206,11 +213,13 @@ module_energy_L270.limits <- function(command, ...) {
 
     L270.CTaxInput %>%
       add_title("Creates the ctax-input limiting the amount of negative emissions") %>%
-      add_units("NA") %>%
+      add_units("kgC/GJ") %>%
       add_comments("Add ctax-input to all of the bio-energy supply sectors") %>%
       add_comments("by using L221.GlobalTechCoef_en filtered by biomass|ethanol") %>%
+      add_comments("and joining carbon coefficients from L202.CarbonCoef") %>%
       add_legacy_name("L270.CTaxInput") %>%
-      add_precursors("L221.GlobalTechCoef_en") ->
+      add_precursors("L221.GlobalTechCoef_en",
+                     "L202.CarbonCoef") ->
       L270.CTaxInput
 
     L270.NegEmissFinalDemand %>%
@@ -251,7 +260,7 @@ module_energy_L270.limits <- function(command, ...) {
     # Put the SPA budgets in with the rest of the scenarios so that we can export them all in bulk
     L270.NegEmissBudget %<>% bind_rows(L270.NegEmissBudget_SPA)
     for(scen in unique(L270.NegEmissBudget$scenario)) {
-      curr_data_name <- paste0( "L270.NegEmissBudget_", scen)
+      curr_data_name <- paste0("L270.NegEmissBudget_", scen)
       L270.NegEmissBudget %>%
         filter(scenario == scen) %>%
         select(-scenario) %>%
@@ -268,7 +277,7 @@ module_energy_L270.limits <- function(command, ...) {
     # Call return_data but we need to jump through some hoops since we generated some of the
     # tibbles from the scenarios so we will generate the call to return_data
     ret_data %>%
-      paste(collapse=", ") %>%
+      paste(collapse = ", ") %>%
       paste0("return_data(", ., ")") %>%
       parse(text = .) %>%
       eval()

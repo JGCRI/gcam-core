@@ -1,6 +1,8 @@
 # File: A44.internal_gains.csv
 # Title: Internal gains fuel input ratio
 # Units: Unitless
+# Column types: cccn 
+# ----------
 supplysector,subsector,technology,input.ratio
 resid others,biomass,biomass,0.5
 resid others,coal,coal,0.5

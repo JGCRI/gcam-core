@@ -2,6 +2,8 @@
 # Title: Assumed vegetation carbon content by land use type and AEZ
 # Units: Listed in table
 # Source: Listed in table
+# Column types: ccncc 
+# ----------
 LT_SAGE,variable,value,unit,Source
 Tropical Evergreen Forest/Woodland,mature age,40,years,"Houghton 1999, Table 1, tropical equatorial forest"
 Tropical Deciduous Forest/Woodland,mature age,35,years,"Houghton 1999, Table 1, tropical seasonal forest"

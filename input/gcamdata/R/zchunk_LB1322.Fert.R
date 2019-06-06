@@ -71,8 +71,8 @@ module_energy_LB1322.Fert <- function(command, ...) {
     IEA_Fert_fuel_data %>%
       gather(variable, value, -IEA_Fert_reg) %>% # Convert to long form
       filter(grepl("share", variable)) %>% # Filter for only the share data
-      mutate(fuel = sub("share_", "", variable)) %>% # Create a dedicated fuel column
-      mutate(fuel = sub("oil", "refined liquids", fuel)) %>% # Rename oil to refined liquids
+      mutate(fuel = sub("share_", "", variable), # Create a dedicated fuel column
+             fuel = sub("oil", "refined liquids", fuel)) %>% # Rename oil to refined liquids
       select(IEA_Fert_reg, fuel, value_share = value) ->
       L1322.IEA_fert_fuel_shares
 
@@ -80,9 +80,9 @@ module_energy_LB1322.Fert <- function(command, ...) {
     IEA_Fert_fuel_data %>%
       gather(variable, value, -IEA_Fert_reg) %>%
       filter(grepl("GJtNH3", variable)) %>% # Filter for only GJtNH3 (i.e., energy per unit mass)
-      mutate(fuel = sub("_GJtNH3", "", variable)) %>%
-      mutate(fuel = sub("oil", "refined liquids", fuel)) %>% # Rename oil to refined liquids
-      mutate(intensity_GJkgN = value / CONV_T_KG / CONV_NH3_N) %>%  # Convert units to kg of nitrogen instead of ton of ammonia
+      mutate(fuel = sub("_GJtNH3", "", variable),
+             fuel = sub("oil", "refined liquids", fuel), # Rename oil to refined liquids
+             intensity_GJkgN = value / CONV_T_KG / CONV_NH3_N) %>%  # Convert units to kg of nitrogen instead of ton of ammonia
       select(IEA_Fert_reg, fuel, intensity_GJkgN) ->
       L1322.IEA_fert_fuel_intensities
 
@@ -97,10 +97,10 @@ module_energy_LB1322.Fert <- function(command, ...) {
       left_join_error_no_match(L1322.IEA_fert_fuel_shares, by = c("fuel", "IEA_Fert_reg")) %>%
       # Switch individual countries' fuel shares according to literature or to make energy balances work at the regional level.
       # North Korea: coal in all years (http://www9.ocn.ne.jp/~aslan/dprkeng0409.pdf)
-      mutate(value_share = replace(value_share, (iso == "prk") & (fuel == "coal"), 1)) %>%
-      mutate(value_share = replace(value_share, (iso == "prk") & (fuel != "coal"), 0)) %>%
-      # Multiply total production by fuel-specific shares to calculate fertilizer production by fuel type
-      mutate(Fert_Prod_MtN = value * value_share) %>%
+      mutate(value_share = replace(value_share, (iso == "prk") & (fuel == "coal"), 1),
+             value_share = replace(value_share, (iso == "prk") & (fuel != "coal"), 0),
+             # Multiply total production by fuel-specific shares to calculate fertilizer production by fuel type
+             Fert_Prod_MtN = value * value_share) %>%
       # Calculating energy inputs to fertilizer production by country and fuel type
       # Match in the energy intensity by fuel type and IEA fertilizer region
       left_join_error_no_match(L1322.IEA_fert_fuel_intensities, by = c("IEA_Fert_reg", "fuel")) %>%
@@ -129,7 +129,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       left_join_error_no_match(L132.in_EJ_R_indfeed_F_Yh, by = c("GCAM_region_ID", "fuel", "year")) %>%
       select(GCAM_region_ID, fuel, year, in_Fert, in_indenergy = value.x, in_indfeed = value.y) %>%
       # Finally, check whether the remaining available industrial energy use is not negative
-           # (i.e., ind. energy + ind. feedstocks - fert)
+      # (i.e., ind. energy + ind. feedstocks - fert)
       mutate(check = in_indenergy + in_indfeed - in_Fert) ->
       L1322.Fert_ALL_MtN_R_F_Y
 
@@ -152,7 +152,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       L1322.Fert_Prod_MtN_ctry_F_Y_share_adj
 
     # For regions whose fuel shares changed, re-assign the production and energy inputs to the oil-based technology
-         # Note that the sum of coal and gas shares never exceed 1. So the minimum share for refined liquids would be 0.
+    # Note that the sum of coal and gas shares never exceed 1. So the minimum share for refined liquids would be 0.
     L1322.Fert_Prod_MtN_ctry_F_Y_share_adj %>%
       select(iso, year, fuel, value_share_adj) %>%
       spread(fuel, value_share_adj) %>% # This is to set up the calculation in the next step
@@ -161,10 +161,10 @@ module_energy_LB1322.Fert <- function(command, ...) {
       Ctry_fuel_share_adj
 
     # Disaggregating input energy to fertilizer production into energy use (combustion) and feedstocks
-         # The "feedstock" requirement is equal to the energy content of the hydrogen in NH3
-         # see https://www.iea.org/publications/freepublications/publication/chemical_petrochemical_sector.pdf
+    # The "feedstock" requirement is equal to the energy content of the hydrogen in NH3
+    # see https://www.iea.org/publications/freepublications/publication/chemical_petrochemical_sector.pdf
     H_energy_GJtH2 <- 120 # Energy content of hydrogen is 120 MJ/kg, which is 120 GJ/t
-                               # See https://hypertextbook.com/facts/2005/MichelleFung.shtml
+    # See https://hypertextbook.com/facts/2005/MichelleFung.shtml
     NH3_H_frac <- 3 / 17 # Mass ratio of hydrogen in ammonia is about 3/17
     NH3_energy_GJtNH3 <- H_energy_GJtH2 * NH3_H_frac # Calculating energy in ammonia
     NH3_energy_GJkgN <- NH3_energy_GJtNH3  / CONV_T_KG / CONV_NH3_N # Calcuating energy per kg of N (from ton of NH3)
@@ -173,10 +173,10 @@ module_energy_LB1322.Fert <- function(command, ...) {
     L1322.Fert_Prod_MtN_ctry_F_Y_share_adj %>%
       select(-value_share_adj) %>% # Drop old share. Will be replaced with new values in next step.
       left_join_error_no_match(Ctry_fuel_share_adj, by = c("iso", "year", "fuel")) %>%
-      mutate(Fert_Prod_MtN_adj = value * value_share_adj) %>% # Adjust Fert_Prod with adjusted shares
-      mutate(in_Fert_adj = Fert_Prod_MtN_adj * intensity_GJkgN) %>% # Adjust in_Fert with adjusted production
+      mutate(Fert_Prod_MtN_adj = value * value_share_adj, # Adjust Fert_Prod with adjusted shares
+             in_Fert_adj = Fert_Prod_MtN_adj * intensity_GJkgN) %>% # Adjust in_Fert with adjusted production
       # Recheck total energy inputs to fertilizer against industrial energy use for each region
-           # Aggregate to GCAM region
+      # Aggregate to GCAM region
       group_by(GCAM_region_ID, fuel, year) %>%
       summarise(Fert_Prod_MtN_adj = sum(Fert_Prod_MtN_adj),
                 in_Fert_adj = sum(in_Fert_adj)) %>%
@@ -188,42 +188,44 @@ module_energy_LB1322.Fert <- function(command, ...) {
                fill = list(in_Fert_adj = 0, Fert_Prod_MtN_adj = 0)) %>%
       # Re-checking total energy inputs to fertilizer against industrial energy use for each region
       left_join_error_no_match(L1322.Fert_ALL_MtN_R_F_Y, by = c("GCAM_region_ID", "fuel", "year")) %>%
-      mutate(check = in_indenergy + in_indfeed - in_Fert_adj) %>% # Recheck, adjusting for in_Fert_adj
-      mutate(check = replace(check, abs(check) < 1e-6, 0)) %>%
-      # Recalculate intensity
-      mutate(intensity_GJkgN = in_Fert_adj / Fert_Prod_MtN_adj) %>%
+      mutate(check = in_indenergy + in_indfeed - in_Fert_adj, # Recheck, adjusting for in_Fert_adj
+             check = replace(check, abs(check) < 1e-6, 0),
+             # Recalculate intensity
+             intensity_GJkgN = in_Fert_adj / Fert_Prod_MtN_adj) %>%
       replace_na(list(intensity_GJkgN = 0)) %>%
       # Adding column for feedstock energy density, which was calcuated earlier using hydrogen density
-      mutate(feedstock_GJkgN = NH3_energy_GJkgN) %>% # Adding single column with energy density of feedstock
-      mutate(energy_GJkgN = intensity_GJkgN - feedstock_GJkgN) %>% # Substract energy density of feedstock
-      # Calculate first-order estimate of energy and feedstock quantities in the industrial sector
-      mutate(indfeed_to_Fert = Fert_Prod_MtN_adj * feedstock_GJkgN,
-             indenergy_to_Fert = Fert_Prod_MtN_adj * energy_GJkgN) %>%
-      # Calculate remaining industrial energy and feedstock consumption re-allocating to avoid negative values
-      mutate(in_indenergy_netFert = in_indenergy - indenergy_to_Fert,
-             in_indfeed_netFert = in_indfeed - indfeed_to_Fert) %>%
-      # This next step pertains to the available energy and feedstock quantities for the industrial sector, in regions
-      # where either went negative as a result of including the fertilizer industry (using the IEA's shares of production by fuel type,
-      # modified so that no regions went negative, and following the IEA's conventions on disaggregation of feedstocks and energy-use).
-      # We are assuming that for the purposes of re-allocation of energy from the (general) industrial sector to the fertilizer sector, all energy
-      # is available, whether initially classified as feedstocks or energy-use. This may zero out both energy and feedstocks or both in the
-      # general industrial sector, causing all industrial demands of natural gas to be for the ammonia industry.
-      # Note that the quantities are added because one is negative.
-      mutate(in_indenergy_netFert = replace(in_indenergy_netFert, in_indfeed_netFert < 0,
-                                            round((in_indenergy_netFert + in_indfeed_netFert)[in_indfeed_netFert < 0], 10))) %>%
-      mutate(in_indfeed_netFert = replace(in_indfeed_netFert, in_indfeed_netFert < 0, 0)) %>%
-      mutate(in_indfeed_netFert = replace(in_indfeed_netFert, in_indenergy_netFert < 0,
-                                            round((in_indfeed_netFert + in_indenergy_netFert)[in_indenergy_netFert < 0], 10))) %>%
-      mutate(in_indenergy_netFert = replace(in_indenergy_netFert, in_indenergy_netFert < 0, 0)) %>%
-      # Add column for sector, which will be "N fertilizer"
-      mutate(sector = "N fertilizer") %>%
+      mutate(feedstock_GJkgN = NH3_energy_GJkgN, # Adding single column with energy density of feedstock
+             energy_GJkgN = intensity_GJkgN - feedstock_GJkgN, # Substract energy density of feedstock
+             # Calculate first-order estimate of energy and feedstock quantities in the industrial sector
+             indfeed_to_Fert = Fert_Prod_MtN_adj * feedstock_GJkgN,
+             indenergy_to_Fert = Fert_Prod_MtN_adj * energy_GJkgN,
+             # Calculate remaining industrial energy and feedstock consumption re-allocating to avoid negative values
+             in_indenergy_netFert = in_indenergy - indenergy_to_Fert,
+             in_indfeed_netFert = in_indfeed - indfeed_to_Fert,
+             # This next step pertains to the available energy and feedstock quantities for the industrial sector,
+             # in regions where either went negative as a result of including the fertilizer industry (using the
+             # IEA's shares of production by fuel type, modified so that no regions went negative, and following
+             # the IEA's conventions on disaggregation of feedstocks and energy-use). We are assuming that for the
+             # purposes of re-allocation of energy from the (general) industrial sector to the fertilizer sector,
+             # all energy is available, whether initially classified as feedstocks or energy-use. This may zero out
+             # both energy and feedstocks or both in the general industrial sector, causing all industrial demands
+             # of natural gas to be for the ammonia industry.
+             # Note that the quantities are added because one is negative.
+             in_indenergy_netFert = replace(in_indenergy_netFert, in_indfeed_netFert < 0,
+                                            round((in_indenergy_netFert + in_indfeed_netFert)[in_indfeed_netFert < 0], 10)),
+             in_indfeed_netFert = replace(in_indfeed_netFert, in_indfeed_netFert < 0, 0),
+             in_indfeed_netFert = replace(in_indfeed_netFert, in_indenergy_netFert < 0,
+                                          round((in_indfeed_netFert + in_indenergy_netFert)[in_indenergy_netFert < 0], 10)),
+             in_indenergy_netFert = replace(in_indenergy_netFert, in_indenergy_netFert < 0, 0),
+             # Add column for sector, which will be "N fertilizer"
+             sector = "N fertilizer") %>%
       select(GCAM_region_ID, fuel, sector, year, Fert_Prod_MtN_adj, intensity_GJkgN,
              in_indenergy_netFert, in_indfeed_netFert) ->
       L1322.Fert_ALL_MtN_R_F_Y_adj
 
     # -----------------------------------------------------------------------------------------------------------------
     # Building tables of fertilizer production by technology, IO coefs, and energy/feedstock inputs to rest of industry
-         # Four of the final five tables will be built here.
+    # Four of the final five tables will be built here.
 
     # Creating final output table "Fertilizer production by GCAM region / fuel / year"
     L1322.Fert_ALL_MtN_R_F_Y_adj %>%
@@ -252,7 +254,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
     L1321.in_EJ_R_indenergy_F_Yh %>%
       rename(value_indenergy = value) %>%
       # left_join_error_no_match cannot be used because the joining tibble has less rows, so NAs will be introduced.
-           # This will be helpful as a filter in the following step.
+      # This will be helpful as a filter in the following step.
       left_join(L1322.in_EJ_R_indenergy_Ffert_Yh, by = c("GCAM_region_ID", "fuel", "year")) %>% # Join values we calculated
       # Replace any NAs with original industrial energy value
       mutate(value = replace(value, is.na(value), value_indenergy[is.na(value)])) %>%
@@ -262,10 +264,10 @@ module_energy_LB1322.Fert <- function(command, ...) {
     # -----------------------------------------------------------------------------------------------------------------
 
     # Calculate fertilizer non-energy costs by technology
-         # These technologies include gas, gas with CCS, coal, coal with CCS, and oil
+    # These technologies include gas, gas with CCS, coal, coal with CCS, and oil
     # First, calculate gas cost per kg N
-         # Calculating non-energy costs for gas technology as USA market fertilizer price minus GCAM fuel costs
-         # Calculate the gas price as the sum of resource costs plus intermediate sectoral mark-ups
+    # Calculating non-energy costs for gas technology as USA market fertilizer price minus GCAM fuel costs
+    # Calculate the gas price as the sum of resource costs plus intermediate sectoral mark-ups
 
     # Note that 2005 is used as the fertilizer base price, and we will also interpolate for 2005 in the latter cost tables for natural gas
     # To help prevent any potential mix-up, we will define this year to be base_fert_year
@@ -280,9 +282,9 @@ module_energy_LB1322.Fert <- function(command, ...) {
       A10.rsrc_info_base_fert_year
 
     # A21.globaltech_cost and A22.globaltech_cost report costs on primary energy handling (A21) and transformation technologies (A22)
-         # Units for both are 1975$/GJ
+    # Units for both are 1975$/GJ
     # As mentioned above, because 2005 is the year used as the fertilizer base price (from A10.rsrc_info), we will interpolate for
-         # this year for both global tech cost tables so that we may add up all costs consistently.
+    # this year for both global tech cost tables so that we may add up all costs consistently.
 
     # Include placeholder for base_fert_year in the global tech tables. Value for that year will be interpolated.
     A21.globaltech_cost[[as.character(base_fert_year)]] <- NA
@@ -334,7 +336,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
     # Use H2A technology characteristics to derive characteristics of other technologies
 
     # NOTE: Because our NGSR NEcosts were calculated as a residual from mkt prices, and include delivery costs,
-         # not using a ratio of costs, but rather an arithmetic adder. H2A costs are in $/kgH; convert to N-equivalent
+    # not using a ratio of costs, but rather an arithmetic adder. H2A costs are in $/kgH; convert to N-equivalent
 
     # First, calculate costs in 1975 USD per kg N
     H2A_Prod_Tech %>%
@@ -359,12 +361,12 @@ module_energy_LB1322.Fert <- function(command, ...) {
     L1322.Fert_NEcost_75USDkgN_coalCCS <- L1322.Fert_NEcost_75USDkgN_technologies[["coalCCS"]]
 
     # Oil
-         # For oil, the lack of differentiation in oil-derived products means that the fuel costs are too high
-         # Fertilizer is made from relatively low-cost by-products of oil refining
-         # Also, the technology is being phased out where it is currently used (primarily India)
-         # To minimize price distortions from this phase-out, and to ensure no negative profit rates in the ag sector,
-         # set the NE cost to generally balance the total net costs with natural gas steam reforming
-              # Costs for natural gas were calculated above to be 0.074. So set costs for oil to be -0.1.
+    # For oil, the lack of differentiation in oil-derived products means that the fuel costs are too high
+    # Fertilizer is made from relatively low-cost by-products of oil refining
+    # Also, the technology is being phased out where it is currently used (primarily India)
+    # To minimize price distortions from this phase-out, and to ensure no negative profit rates in the ag sector,
+    # set the NE cost to generally balance the total net costs with natural gas steam reforming
+    # Costs for natural gas were calculated above to be 0.074. So set costs for oil to be -0.1.
     L1322.Fert_NEcost_75USDkgN_oil <- -0.1
 
     # Build final output table with NE costs by technology

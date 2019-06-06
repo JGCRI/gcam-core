@@ -1,6 +1,8 @@
 # File: A52.globaltech_eff.csv
 # Title: Aggregate transportation default efficiencies
 # Units: Unitless
+# Column types: ccccnnn 
+# ----------
 supplysector,subsector,technology,minicam.energy.input,1971,2005,2100
 transportation,coal,coal,delivered coal,0.05,0.05,0.05
 transportation,electricity,electricity,elect_td_trn,0.48,0.51,0.65

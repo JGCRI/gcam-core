@@ -10,7 +10,7 @@
 #' original data system was \code{batch_resbio_input_IRR_MGMT_xml.R} (aglu XML).
 module_aglu_batch_resbio_input_IRR_MGMT_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L2042.AgResBio_For",
+    return(c("L2042.AgResBio_For",
               "L2042.AgResBioCurve_For",
               "L2042.GlobalResBio_Mill",
               "L2042.StubResBioCurve_Mill",

@@ -1,0 +1,29 @@
+# File: A23.elec_delete.csv
+# Title: USA Electricity Sectors to be Deleted
+# Units: N/A
+# Comments: This table lists the various elements to be deleted from the existing electricity generation sectors from the USA
+# Column types: cc 
+# ----------
+region,supplysector
+USA,electricity
+USA,electricity_net_ownuse
+USA,elec_CSP
+USA,elec_coal (conv pul)
+USA,elec_coal (IGCC)
+USA,elec_coal (conv pul CCS)
+USA,elec_coal (IGCC CCS)
+USA,elec_gas (steam/CT)
+USA,elec_gas (CC)
+USA,elec_gas (CC CCS)
+USA,elec_refined liquids (steam/CT)
+USA,elec_refined liquids (CC)
+USA,elec_refined liquids (CC CCS)
+USA,elec_biomass (conv)
+USA,elec_biomass (IGCC)
+USA,elec_biomass (conv CCS)
+USA,elec_biomass (IGCC CCS)
+USA,elec_Gen_II_LWR
+USA,elec_Gen_III
+USA,elec_CSP_storage
+USA,elec_geothermal
+USA,elect_td_bld

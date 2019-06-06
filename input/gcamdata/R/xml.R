@@ -25,7 +25,8 @@ create_xml <- function(xml_file, mi_header = NULL) {
   list(xml_file = xml_file,
        mi_header = mi_header,
        data_tables = list()) %>%
-    add_flags(FLAG_XML)
+    add_flags(FLAG_XML) %>%
+    invisible()
 }
 
 #' Add a table to an XML pipeline to include for conversion to XML.
@@ -56,7 +57,7 @@ add_xml_data <- function(dot, data, header, column_order_lookup = header) {
   curr_table <- list(data = data, header = header)
   dot$data_tables[[length(dot$data_tables)+1]] <- curr_table
 
-  dot
+  invisible(dot)
 }
 
 # Note: we have put the definition of run_xml_conversion inside of the "closure"
@@ -86,24 +87,24 @@ make_run_xml_conversion <- function() {
       # We will just write to a temporary file ourselves and avoid incurring _that_
       # performance penalty as well.
       tmpfn <- tempfile()
-      tmp_conn <- file(tmpfn, open="w")
+      tmp_conn <- file(tmpfn, open = "w")
       for(i in seq_along(dot$data_tables)) {
         table <- dot$data_tables[[i]]
         cat("INPUT_TABLE", file = tmp_conn, sep = "\n")
         cat("Variable ID", file = tmp_conn, sep = "\n")
         cat(table$header, file = tmp_conn, sep = "\n")
         cat("", file = tmp_conn, sep = "\n")
-        utils::write.table(table$data, file = tmp_conn, sep=", ", row.names = FALSE, col.names = TRUE, quote = FALSE)
+        utils::write.table(table$data, file = tmp_conn, sep = ", ", row.names = FALSE, col.names = TRUE, quote = FALSE)
         cat("", file = tmp_conn, sep = "\n")
       }
       close(tmp_conn)
       args <- c(
-        "-cp", java_cp,
+        "-cp", shQuote(java_cp),
         "-Xmx1g", # TODO: memory limits?
         "ModelInterface.ModelGUI2.csvconv.CSVToXMLMain",
         tmpfn, # Read from the temporary file
-        dot$mi_header,
-        dot$xml_file
+        shQuote(dot$mi_header),
+        shQuote(dot$xml_file)
       )
       warning_msgs <- system2("java", args, stdout = TRUE, stderr = TRUE)
       unlink(tmpfn)
@@ -116,7 +117,7 @@ make_run_xml_conversion <- function() {
       }
     }
 
-    dot
+    invisible(dot)
   }
 }
 
@@ -150,7 +151,7 @@ run_xml_conversion <- make_run_xml_conversion()
 #' @param header The header tag to can be looked up in the header file to
 #' convert \code{data}
 #' @param base_logit_header The base header tag to use for the generated logit type
-#' tables such that \code{paste(base_logit_header, logit.type, sep="_")} corresponds
+#' tables such that \code{paste(base_logit_header, logit.type, sep = "_")} corresponds
 #' to the appropriate model interface header.  Note by default this value is the
 #' same as \code{header} as often this is the case but certainly not always.
 #' @return A "data structure" to hold the various parts needed to run the model
@@ -184,7 +185,7 @@ add_logit_tables_xml <- function(dot, data, header, base_logit_header=header) {
   # Loop through each of the logit types and create a table for it
   # using the appropriate header name.
   for(curr_logit_type in gcam.LOGIT_TYPES) {
-    curr_header <- paste(base_logit_header, curr_logit_type, sep="_")
+    curr_header <- paste(base_logit_header, curr_logit_type, sep = "_")
     data %>%
       filter(logit.type == curr_logit_type) %>%
       # Note we rely on add_xml_data to select the appropriate columns for us
@@ -211,7 +212,7 @@ add_logit_tables_xml <- function(dot, data, header, base_logit_header=header) {
 #' @author Pralit Patel
 #' @export
 add_rename_landnode_xml <- function(dot) {
-  land_name_table <- tibble(from=paste0("LandNode", seq(1,5)),to="LandNode")
+  land_name_table <- tibble(from = paste0("LandNode", seq(1,5)),to = "LandNode")
 
   add_xml_data(dot, land_name_table, "NodeRename", NULL)
 }

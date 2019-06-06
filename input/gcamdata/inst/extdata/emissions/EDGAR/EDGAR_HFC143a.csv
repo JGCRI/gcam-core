@@ -3,6 +3,8 @@
 # Units: kt
 # Source: EDGAR v4.2
 # Description: EDGAR inventory of F gases (1970 - 2008)
+# Column types: ccccccccccccccccccccccccccccnnnnnnnnnnnnnnnnn 
+# ----------
 IPCC-Annex,World Region,ISO_A3,Name,IPCC,IPCC_description,1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008
 Annex_I,Canada,CAN,Canada,2F9,Other F-gas use,,,,,,,,,,,,,,,,,,,,,,,1.19E-03,5.79E-03,1.73E-02,3.89E-02,6.77E-02,1.05E-01,1.60E-01,2.33E-01,3.21E-01,4.20E-01,5.19E-01,6.06E-01,7.05E-01,8.02E-01,9.12E-01,1.01E+00,1.11E+00
 Annex_I,USA,USA,United States,2F9,Other F-gas use,,,,,,,,,,,,,,,,,,,,,,,1.88E-02,9.13E-02,2.71E-01,6.06E-01,1.07E+00,1.66E+00,2.53E+00,3.64E+00,4.96E+00,6.46E+00,7.92E+00,9.25E+00,1.08E+01,1.22E+01,1.39E+01,1.54E+01,1.70E+01

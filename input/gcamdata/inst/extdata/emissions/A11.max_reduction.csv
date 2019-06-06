@@ -2,6 +2,8 @@
 # Title: Maximum emissions reduction for agricultural sectors in all regions,
 # Units: Percent reduction from base-year emissions coefficient,
 # Source: Internal GCAM assumptions,
+# Column types: ci 
+# ----------
 AgSupplySector,max.reduction
 Corn,60
 FiberCrop,60

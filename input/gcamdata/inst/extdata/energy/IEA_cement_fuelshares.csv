@@ -2,6 +2,8 @@
 # Units: Unitless fractions
 # Title: IEA cement production fuel shares by region
 # Description: IEA 2007 Table 6.6 with modifications to assure that all rows add to 1 and with redesignation from biomass to pet coke
+# Column types: cnnnn 
+# ----------
 Country,Coal,Oil,Gas,Biomass
 United States,0.66,0.3,0.03,0.01
 Canada,0.52,0.05,0.18,0.25

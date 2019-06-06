@@ -1064,6 +1064,9 @@
     <ClCompile Include="..\..\util\base\source\initialize_tech_vector_helper.cpp">
       <Filter>Source Files\util\base</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\climate\source\no_climate_model.cpp">
+      <Filter>Source Files\climate</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -2187,6 +2190,9 @@
     </ClInclude>
     <ClInclude Include="..\..\util\base\include\initialize_tech_vector_helper.hpp">
       <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\climate\include\no_climate_model.h">
+      <Filter>Header Files\climate</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

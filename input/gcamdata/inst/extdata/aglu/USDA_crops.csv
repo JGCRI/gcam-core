@@ -2,6 +2,7 @@
 # Title: USDA_crops
 # Units: Unitless
 # Description: Maps crops in USDA cost database to GCAM commodities
+# Column types: ccc 
 # ----------
 USDA_crop,GTAP_crop,GCAM_commodity
 Barley,Barley,OtherGrain

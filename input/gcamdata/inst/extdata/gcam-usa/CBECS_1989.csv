@@ -2,6 +2,8 @@
 # Title: Commercial Buildings Energy Consumption Survey 1989
 # Units: BLDGID4: building identifier;SQFT4: square footage;YRCONC4: year constructed;PBA4: principal building activity;ADJWT4: adjusted sampling weight
 # Source: https://www.eia.gov/consumption/commercial/data/previous/
+# Column types: iiiiiin 
+# ----------
 BLDGID4,REGION4,CENDIV4,SQFT4,YRCONC4,PBA4,ADJWT4
 1,3,7,50001,5,4,1.13
 2,2,3,300000,6,2,21.19

@@ -2,6 +2,7 @@
 # Title: Sets the characteristics and supply curves of OtherMeat_Fish
 # Units: Various
 # Source: NA
+# Column types: cccciiiiii 
 # ----------
 unlimited.resource,market,output.unit,price.unit,capacity.factor,1971,1975,1990,2005,2010
 OtherMeat_Fish,global,Mt,1975$/kg,1,1,1,1,1,1

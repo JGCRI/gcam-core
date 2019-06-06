@@ -1,6 +1,8 @@
 # File: calibrated_techs_bld_agg.csv
 # Title: Mapping between intermediate sectors and fuels to the techs in aggregate buildings
 # Units: NA
+# Column types: ccccccc 
+# ----------
 sector,fuel,supplysector,subsector,technology,minicam.energy.input,calibration
 bld_resid,biomass,building,biomass,biomass,delivered biomass,input
 bld_resid,coal,building,coal,coal,delivered coal,input

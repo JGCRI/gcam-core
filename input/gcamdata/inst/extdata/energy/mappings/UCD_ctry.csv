@@ -3,6 +3,8 @@
 # Units: NA
 # Description: Maps iso codes to GCAM regions (including composites as necessary)
 # Source: Mishra et al. 2013
+# Column types: ccc 
+# ----------
 iso,country_name,UCD_region
 abw,Aruba,Latin America
 afg,Afghanistan,Southeast Asia

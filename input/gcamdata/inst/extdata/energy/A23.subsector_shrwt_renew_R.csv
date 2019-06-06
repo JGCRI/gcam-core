@@ -2,6 +2,8 @@
 # Title: Region-specific renewable electric subsector shareweights by GCAM3 region
 # Units: Unitless share-weights
 # Source: None (GCAM assumptions)
+# Column types: ccci 
+# ----------
 region_GCAM3,supplysector,subsector,2100
 Africa,electricity,wind,1
 Australia_NZ,electricity,wind,1

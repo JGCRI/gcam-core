@@ -3,6 +3,8 @@
 # Units: Fahrenheit Degree Days
 # Description: Heating Degree Days by state
 # Reference: See inst/extdata/gcam-usa/GIS/README
+# Column types: cnnnnnnnnn 
+# ----------
 state,1975,1990,2005,2020,2035,2050,2065,2080,2095
 AK,11708.34473,10306.93164,9874,9178,8689,7687,8117,7374,6397
 AL,2458.192871,2552.500977,2569.32,2287.44,2445.12,2248.92,2234.16,1894.32,1656.72

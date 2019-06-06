@@ -1,6 +1,8 @@
 # File: A10.subrsrc_info.csv
 # Title: Information about resources types in each region
 # Units: NA
+# Column types: cccc 
+# ----------
 resource,resource_type,subresource,subresource_type
 coal,depresource,coal,subresource
 crude oil,depresource,crude oil,subresource
