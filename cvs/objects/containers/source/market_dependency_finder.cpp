@@ -40,9 +40,11 @@
 
 #include "util/base/include/definitions.h"
 #include <cassert>
+#include <boost/algorithm/string/predicate.hpp>
 #include "containers/include/market_dependency_finder.h"
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/marketplace.h"
+#include "marketplace/include/market_container.h"
 #include "marketplace/include/market_locator.h"
 #include "marketplace/include/market.h"
 #include "marketplace/include/linked_market.h"
@@ -213,7 +215,7 @@ const vector<IActivity*> MarketDependencyFinder::getOrdering( const int aMarketN
             // Somehow this market was not linked to any entry points into the graph.
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Could not find market: " << mMarketplace->markets[ aMarketNumber ][ 0 ]->getName()
+            mainLog << "Could not find market: " << mMarketplace->mMarkets[ aMarketNumber ]->getName()
                     << " to get an ordering for." << endl;
             exit( 1 );
         }
@@ -301,7 +303,7 @@ GcamFlowGraph* MarketDependencyFinder::getFlowGraph( const int aMarketNumber ) {
             // Somehow this market was not linked to any entry points into the graph.
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Could not find market: " << mMarketplace->markets[ aMarketNumber ][ 0 ]->getName()
+            mainLog << "Could not find market: " << mMarketplace->mMarkets[ aMarketNumber ]->getName()
                     << " to get an ordering for." << endl;
             exit( 1 );
         }
@@ -393,30 +395,11 @@ void MarketDependencyFinder::createOrdering() {
     // been created so now we may create an ordering.
     
     // First associate markets to their corresponding dependency items
+    map<int, DependencyItemSet> marketDepGrouping;
     for( CItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
         // locate the market by name
         int marketNumber = mMarketplace->mMarketLocator->getMarketNumber( (*it)->mLocatedInRegion, (*it)->mName );
         if( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
-            // Handle the linked market type by tracing back the links to the actual policy
-            // and associating to that market directly.  Note that may be need to traverse
-            // multiple linked markets before we arrive at the actual policy.
-            if( mMarketplace->markets[ marketNumber ][ 0 ]->getType() == IMarketType::LINKED ) {
-                Market* currMarket = mMarketplace->markets[ marketNumber ][ 0 ];
-                int currMarketNumber = marketNumber;
-                while( currMarket->getType() == IMarketType::LINKED ) {
-                    currMarket = ((LinkedMarket*)currMarket)->mLinkedMarket;
-                    if( !currMarket ) {
-                        break;
-                    }
-                    currMarketNumber = mMarketplace->mMarketLocator->getMarketNumber( (*it)->mLocatedInRegion, currMarket->getGoodName() );
-                }
-                if( !currMarket ) {
-                    continue;
-                }
-                marketNumber = currMarketNumber;
-                assert( marketNumber != MarketLocator::MARKET_NOT_FOUND );
-            }
-            
             // Find/create an entry for the market to dependency struct
             auto_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( marketNumber ) );
             MarketToDepIterator mrktIter = mMarketsToDep.find( marketToDep.get() );
@@ -429,10 +412,33 @@ void MarketDependencyFinder::createOrdering() {
             // Implied entry points will be added below.
             (*it)->mLinkedMarket = marketNumber;
             bool isSolved = false;
-            for( int period = 1; period < mMarketplace->markets[ marketNumber ].size() && !isSolved; ++period ) {
-                isSolved = mMarketplace->markets[ marketNumber ][ period ]->isSolvable();
+            for( int period = 1; period < mMarketplace->mMarkets[ marketNumber ]->size() && !isSolved; ++period ) {
+                isSolved = mMarketplace->mMarkets[ marketNumber ]->getMarket( period )->isSolvable();
             }
             (*it)->mIsSolved = isSolved;
+            // we don't need to wory about grouping solved markets since they will just
+            // get disconnected anyways
+            if( !isSolved || !(*it)->mCanBreakCycle ) {
+                marketDepGrouping[ marketNumber ].insert( *it );
+            }
+        }
+    }
+    
+    // Ajust dependencies for multi-region dependencies (such as global markets ) since a dependency
+    // on an activity in just one region should actually apply to all regions in the market.  Note
+    // we have excluded solved markets from this list for simplicitly since they will just drop the
+    // dependencies anyways.
+    for( auto depGrouping : marketDepGrouping ) {
+        // skip groupings that are not multi-region
+        if( depGrouping.second.size() > 1 ) {
+            // add dependencies from any one of the regions to all of the others
+            for( auto currDep : depGrouping.second ) {
+                for( auto otherDep : depGrouping.second ) {
+                    // note mDependentList is a set so we don't need to worry about
+                    // duplicates which will happen a bunch but oh well..
+                    currDep->mDependentList.insert( otherDep->mDependentList.begin(), otherDep->mDependentList.end() );
+                }
+            }
         }
     }
     
@@ -496,7 +502,7 @@ void MarketDependencyFinder::createOrdering() {
                     ++numDependencies[ (*it)->getFirstDemandVertex() ];
                     // These implied in edges will be added to the list of verticies to calculate
                     // any time the land-allocator needs to be recalculated for any reason.
-                    (*dependIt)->getLastDemandVertex()->mImpliedInEdges.insert( (*it)->getLastPriceVertex() );
+                    //(*dependIt)->getLastDemandVertex()->mImpliedInEdges.insert( (*it)->getLastPriceVertex() );
                 }
                 else {
                     if( !(*dependIt)->mPriceVertices.empty() ) {
@@ -508,7 +514,11 @@ void MarketDependencyFinder::createOrdering() {
                     }
                 }
             }
-            continue;
+            // if this depenency can not have it's dependency broken then we can't skip adding
+            // it's dependents even if it is solved
+            if( (*it)->mCanBreakCycle ) {
+                continue;
+            }
         }
         
         if( (*it)->mDemandVertices.empty() ) {
@@ -530,17 +540,23 @@ void MarketDependencyFinder::createOrdering() {
                 // dependent's item links to the first demand vertex of this item.
                 if( !(*it)->mPriceVertices.empty() ) {
                     if( (*dependIt)->mPriceVertices.empty() ) {
+                        if( !(*dependIt)->mDemandVertices.empty() ) {
                         // Could get here for instance if a resource has dependencies
                         (*it)->getLastPriceVertex()->mOutEdges.push_back( (*dependIt)->getFirstDemandVertex() );
-                        ++numDependencies[ (*dependIt)->getFirstDemandVertex() ];
+                            ++numDependencies[ (*dependIt)->getFirstDemandVertex() ];
+                        }
+                        // else would get here if we had dependencies between two items which do
+                        // not have anything to calculate yet are unsolved such as linked markets.
                     }
                     else {
                         (*it)->getLastPriceVertex()->mOutEdges.push_back( (*dependIt)->getFirstPriceVertex() );
                         ++numDependencies[ (*dependIt)->getFirstPriceVertex() ];
                     }
                 }
-                (*dependIt)->getLastDemandVertex()->mOutEdges.push_back( (*it)->getFirstDemandVertex() );
-                ++numDependencies[ (*it)->getFirstDemandVertex() ];
+                if( !(*dependIt)->mDemandVertices.empty()) {
+                    (*dependIt)->getLastDemandVertex()->mOutEdges.push_back( (*it)->getFirstDemandVertex() );
+                    ++numDependencies[ (*it)->getFirstDemandVertex() ];
+                }
             }
         }
     }
@@ -845,15 +861,21 @@ void MarketDependencyFinder::createTrialsForItem( CItemIterator aItemToReset, Ca
     // Remove dependencies on the demand vertex now that it is solved.
     // Dependencies on the price vertex must remain since it is responsible
     // for setting it's actual price into the marketplace.
+    vector<CalcVertex*> fixedOutputVertices;
     for( CItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
         for( VertexIterator vertexIter = (*it)->mDemandVertices.begin(); vertexIter != (*it)->mDemandVertices.end(); ++vertexIter ) {
             VertexIterator dependIter = find( (*vertexIter)->mOutEdges.begin(), (*vertexIter)->mOutEdges.end(), (*aItemToReset)->getFirstDemandVertex() );
             if( dependIter != (*vertexIter)->mOutEdges.end() ) {
-                (*vertexIter)->mOutEdges.erase( dependIter );
+                if( boost::algorithm::ends_with( (*vertexIter)->mCalcItem->getDescription(), "-fixed-output" ) ) {
+                    fixedOutputVertices.push_back( *vertexIter );
+                }
+                else {
+                    (*vertexIter)->mOutEdges.erase( dependIter );
+                }
             }
         }
     }
-    aNumDependencies[ (*aItemToReset)->getFirstDemandVertex() ] = 0;
+    aNumDependencies[ (*aItemToReset)->getFirstDemandVertex() ] = fixedOutputVertices.size();
 
     // Lookup/create the associated market linkages to the price and demand
     // vertices.
@@ -866,6 +888,10 @@ void MarketDependencyFinder::createTrialsForItem( CItemIterator aItemToReset, Ca
     // price/demand trial price changes.
     (*priceMrktIter)->mImpliedVertices.insert( (*aItemToReset)->getFirstPriceVertex() );
     (*demandMrktIter)->mImpliedVertices.insert( (*aItemToReset)->getFirstDemandVertex() );
+    
+    for( VertexIterator fixedVertexIt = fixedOutputVertices.begin(); fixedVertexIt != fixedOutputVertices.end(); ++fixedVertexIt ) {
+        (*demandMrktIter)->mImpliedVertices.insert( *fixedVertexIt );
+    }
 
     // Make dependencies from these price vertices implied only.
     for( VertexIterator dependIter = (*aItemToReset)->getLastPriceVertex()->mOutEdges.begin(); dependIter != (*aItemToReset)->getLastPriceVertex()->mOutEdges.end(); ) {

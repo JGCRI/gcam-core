@@ -51,6 +51,7 @@ class Tabs;
 
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 /*! 
  * \ingroup Objects
@@ -85,6 +86,8 @@ public:
      */
     static const std::string& getXMLNameStatic();
 
+    virtual ~SecondaryOutput();
+    
     virtual SecondaryOutput* clone() const;
 
     virtual bool isSameType( const std::string& aType ) const;
@@ -96,9 +99,6 @@ public:
     virtual const std::string& getXMLReportingName() const;
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -172,33 +172,35 @@ protected:
     SecondaryOutput();
 
     double calcPhysicalOutputInternal( const double aPrimaryOutput ) const;
-
-    //! Physical output by period.
-    std::vector<Value> mPhysicalOutputs;
-
-    //! Name of the secondary output. Corresponds to a market for this good and
-    //! a supply sector which supplies this good as its primary output.
-    std::string mName;
-
-    //! CO2 emissions coefficient cached from the marketplace.
-    Value mCachedCO2Coef;
-
-    //! Ratio of the secondary output to primary output production such that
-    //! primary output multiplied by the ratio is equal to secondary output.
-    Value mOutputRatio;
-
-    //! Multiplier to price of secondary good to allow unit changes.
-    double mPriceMult;
     
-    //! State value necessary to use Marketplace::addToDemand
-    double mLastCalcValue;
-    
-    //! The market name in which this output is adjusting the value.  If empty
-    //! the current region is assumed.
-    std::string mMarketName;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IOutput,
 
-private:
-    const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
+        //! Physical output by period.
+        DEFINE_VARIABLE( ARRAY | STATE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
+
+        //! Name of the secondary output. Corresponds to a market for this good and
+        //! a supply sector which supplies this good as its primary output.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+
+        //! CO2 emissions coefficient cached from the marketplace.
+        DEFINE_VARIABLE( SIMPLE, "co2-coef", mCachedCO2Coef, Value ),
+
+        //! Ratio of the secondary output to primary output production such that
+        //! primary output multiplied by the ratio is equal to secondary output.
+        DEFINE_VARIABLE( SIMPLE, "output-ratio", mOutputRatio, Value ),
+
+        //! Multiplier to price of secondary good to allow unit changes.
+        DEFINE_VARIABLE( SIMPLE, "pMultiplier", mPriceMult, double ),
+        
+        //! The market name in which this output is adjusting the value.  If empty
+        //! the current region is assumed.
+        DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, std::string )
+    )
+    
+    void copy( const SecondaryOutput& aOther );
 };
 
 #endif // _SECONDARY_OUTPUT_H_

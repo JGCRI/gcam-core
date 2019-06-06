@@ -48,6 +48,8 @@
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/icapture_component.h"
+#include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 
 /*! 
  * \ingroup Objects
@@ -105,6 +107,8 @@
 class StandardCaptureComponent: public ICaptureComponent {
     friend class CaptureComponentFactory;
 public:
+    virtual ~StandardCaptureComponent();
+    
     // Documentation inherits.
     virtual StandardCaptureComponent* clone() const;
     
@@ -113,9 +117,6 @@ public:
     virtual const std::string& getName() const;
     
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
     
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -150,31 +151,36 @@ public:
 protected:
     StandardCaptureComponent();
     
+    void copy( const StandardCaptureComponent& aOther );
+    
     static const std::string& getXMLNameStatic();
-
-    //! Sequestered quantity by period.
-    std::vector<double> mSequesteredAmount;
-
-    //! Name of the storage market.
-    std::string mStorageMarket;
-
-    //! The name of the gas which will be sequestered.
-    std::string mTargetGas;
-
-	//! Fraction of carbon removed from fuel.
-    double mRemoveFraction;
     
-    //! Storage cost associated with the remove fraction.
-    double mStorageCost;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICaptureComponent,
 
-	//! Energy intensity penalty.
-    double mIntensityPenalty;
+        //! Sequestered quantity by period.
+        DEFINE_VARIABLE( ARRAY | STATE, "sequestered-amount", mSequesteredAmount, objects::TechVintageVector<Value> ),
 
-    //! Multiplicative non-energy cost penalty.
-    double mNonEnergyCostPenalty;
-    
-    //! State value necessary to use Marketplace::addToDemand
-    double mLastCalcValue;
+        //! Name of the storage market.
+        DEFINE_VARIABLE( SIMPLE, "storage-market", mStorageMarket, std::string ),
+
+        //! The name of the gas which will be sequestered.
+        DEFINE_VARIABLE( SIMPLE, "target-gas", mTargetGas, std::string ),
+
+        //! Fraction of carbon removed from fuel.
+        DEFINE_VARIABLE( SIMPLE, "remove-fraction", mRemoveFraction, double ),
+        
+        //! Storage cost associated with the remove fraction.
+        DEFINE_VARIABLE( SIMPLE, "storage-cost", mStorageCost, double ),
+
+        //! Energy intensity penalty.
+        DEFINE_VARIABLE( SIMPLE, "intensity-penalty", mIntensityPenalty, double ),
+
+        //! Multiplicative non-energy cost penalty.
+        DEFINE_VARIABLE( SIMPLE, "non-energy-penalty", mNonEnergyCostPenalty, double )
+    )
 };
 
 #endif // _STANDARD_CAPTURE_COMPONENT_H_

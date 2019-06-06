@@ -45,11 +45,12 @@
  */
 
 #include <string>
+#include <memory>
 #include <xercesc/dom/DOMNode.hpp>
+
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
-#include <vector>
-#include <memory>
+#include "util/base/include/time_vector.h"
 
 class Tabs;
 class ICoefficient;
@@ -100,9 +101,6 @@ public:
 
     virtual bool isSameType( const std::string& aType ) const;
 
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
-
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
@@ -122,6 +120,8 @@ public:
                            const bool aIsTrade,
                            const IInfo* aTechInfo,
                            const int aPeriod );
+
+    virtual void initializeTypeFlags();
 
     virtual const std::string& getMarketName( const std::string& aRegionName ) const;
 
@@ -149,8 +149,6 @@ public:
                                  const int aPeriod );
 
     virtual double getCalibrationQuantity( const int aPeriod ) const;
-
-    virtual bool hasTypeFlag( const int aTypeFlag ) const;
     
     virtual double getIncomeElasticity( const int aPeriod ) const;
 
@@ -169,42 +167,45 @@ protected:
     EnergyInput( const EnergyInput& aOther );
 
     void initializeCachedCoefficients( const std::string& aRegionName );
-
-    //! Coefficient for production or demand function.
-    std::auto_ptr<ICoefficient> mCoefficient;
     
-    //! Cached CO2 coefficient.
-    Value mCO2Coefficient;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        MiniCAMInput,
 
-    //! Read-in calibration value.
-    Value mCalibrationInput;
+        //! Coefficient for production or demand function.
+        DEFINE_VARIABLE( CONTAINER, "coefficient", mCoefficient, ICoefficient* ),
+        
+        //! Cached CO2 coefficient.
+        DEFINE_VARIABLE( SIMPLE, "co2-coef", mCO2Coefficient, Value ),
 
-    //! Income elasticity.
-    Value mIncomeElasticity;
-    
-    //! Input specific technical change.
-    Value mTechChange;
+        //! Read-in calibration value.
+        DEFINE_VARIABLE( SIMPLE, "calibrated-value", mCalibrationInput, Value ),
 
-    //! Conversion factor to change the market price units to working units
-    Value mPriceUnitConversionFactor;
+        //! Income elasticity.
+        DEFINE_VARIABLE( SIMPLE, "income-elasticity", mIncomeElasticity, Value ),
+        
+        //! Input specific technical change.
+        DEFINE_VARIABLE( SIMPLE, "tech-change", mTechChange, Value ),
 
-    //! Physical Demand.
-    std::vector<Value> mPhysicalDemand;
+        //! The market name from which to demand.  It will default to the region
+        //! in which this input is contained.
+        DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, std::string ),
 
-    //! Carbon content of input by period.
-    std::vector<Value> mCarbonContent;
+        //! Conversion factor to change the market price units to working units
+        DEFINE_VARIABLE( SIMPLE, "price-unit-conversion", mPriceUnitConversionFactor, Value ),
 
-    //! Current coefficient after adjustments have been made by the technology's
-    //! capture component.
-    std::vector<Value> mAdjustedCoefficients;
+        //! Physical Demand.
+        DEFINE_VARIABLE( ARRAY | STATE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> ),
+
+        //! Current coefficient after adjustments have been made by the technology's
+        //! capture component.
+        DEFINE_VARIABLE( ARRAY | STATE, "current-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> )
+    )
     
     //! A pre-located market which has been cahced from the marketplace to get
     //! the price and add demands to.
     std::auto_ptr<CachedMarket> mCachedMarket;
-    
-    //! The market name from which to demand.  It will default to the region
-    //! in which this input is contained.
-    std::string mMarketName;
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 

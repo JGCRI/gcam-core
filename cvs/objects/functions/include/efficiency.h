@@ -72,9 +72,6 @@ public:
 
     virtual const std::string& getName() const;
 
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
-
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
@@ -82,9 +79,15 @@ public:
     virtual void completeInit();
 
     virtual double getCoefficient() const;
-private:
-    //! The read-in efficiency.
-    Value mReadInEfficiency;
+protected:
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICoefficient,
+                            
+        //! The read-in efficiency.
+        DEFINE_VARIABLE( SIMPLE, "efficiency", mReadInEfficiency, Value )
+    )
 };
 
 #endif // _EFFICIENCY_H_

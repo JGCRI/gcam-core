@@ -45,6 +45,7 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -83,13 +84,24 @@ const string& InputOMFixed::getXMLReportingName() const{
 
 //! Constructor
 InputOMFixed::InputOMFixed()
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ){
+{
 }
 
 //! Clone the input.
 InputOMFixed* InputOMFixed::clone() const {
-    return new InputOMFixed( *this );
+    InputOMFixed* clone = new InputOMFixed();
+    clone->copy( *this );
+    return clone;
+}
+
+void InputOMFixed::copy( const InputOMFixed& aOther ) {
+    MiniCAMInput::copy( aOther );
+    
+    mTechChange = aOther.mTechChange;
+    mOMFixed = aOther.mOMFixed;
+    mCapacityFactor = aOther.mCapacityFactor;
+    
+    // calculated parameters are not copied.
 }
 
 bool InputOMFixed::isSameType( const string& aType ) const {
@@ -131,14 +143,10 @@ void InputOMFixed::XMLParse( const xercesc::DOMNode* node ) {
 
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
         if ( nodeName == "OM-fixed" ) {
-            mOMFixed = XMLHelper<double>::getValue( curr );
-        }
-        // TODO: Create capacity factor for technology and use that instead.
-        else if( nodeName == "capacity-factor" ){
-            mCapacityFactor = XMLHelper<double>::getValue( curr );
+            mOMFixed = XMLHelper<Value>::getValue( curr );
         }
         else if( nodeName == "tech-change" ){
-            mTechChange = XMLHelper<double>::getValue( curr );
+            mTechChange = XMLHelper<Value>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -147,16 +155,6 @@ void InputOMFixed::XMLParse( const xercesc::DOMNode* node ) {
                     << getXMLNameStatic() << "." << endl;
         }
     }
-}
-
-void InputOMFixed::toInputXML( ostream& aOut,
-                               Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mOMFixed, "OM-fixed", aOut, aTabs );
-    XMLWriteElement( mCapacityFactor, "capacity-factor", aOut, aTabs );
-    XMLWriteElementCheckDefault( mTechChange, "tech-change", aOut, aTabs, Value( 0 ) );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void InputOMFixed::toDebugXML( const int aPeriod,
@@ -179,6 +177,10 @@ void InputOMFixed::completeInit( const string& aRegionName,
                                  const string& aTechName,
                                  const IInfo* aTechInfo )
 {   
+    // technology capacity factor
+    // capacity factor needed before levelized fixed om cost calculation
+    mCapacityFactor = aTechInfo->getDouble("tech-capacity-factor", true);
+
     // completeInit() is called for each technology for each period
     // so levelized O&M fixed cost calculation is done here.
 
@@ -188,7 +190,7 @@ void InputOMFixed::completeInit( const string& aRegionName,
     // levelized OM_fixed cost.
     // These costs may be adjusted by the Technology, for instance for capture
     // penalties.
-    mAdjustedCosts.assign( mAdjustedCosts.size(), mLevelizedOMFixedCost );
+    fill( mAdjustedCosts.begin(), mAdjustedCosts.end(), mLevelizedOMFixedCost );
 }
 
 /** Calculate the levelizd fixed O&M cost.

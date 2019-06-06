@@ -70,7 +70,7 @@ inline bool dblcmp(double x, double y, int64_t tol=5)
   if(x2.i < 0)
     x2.i = moffset-x2.i;
 
-  int64_t diff = abs(x1.i-x2.i);
+  int64_t diff = std::abs(x1.i-x2.i);
 
   if(diff <= tol)
     return true;

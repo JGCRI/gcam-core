@@ -45,12 +45,8 @@
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/non_energy_use_capture_component.h"
 #include "util/logger/include/ilogger.h"
-#include "util/base/include/model_time.h"
-#include "containers/include/scenario.h" // for modeltime.
 
 using namespace std;
-
-extern Scenario* scenario; // For modeltime.
 
 /*!
  * \brief Constructor.
@@ -58,14 +54,23 @@ extern Scenario* scenario; // For modeltime.
  *          being created without using the CaptureComponentFactory.
  */
 NonEnergyUseCaptureComponent::NonEnergyUseCaptureComponent()
-:mSequesteredAmount( scenario->getModeltime()->getmaxper() ),
-mRemoveFraction( 0 )
 {
+    mRemoveFraction = 0;
+}
+
+NonEnergyUseCaptureComponent::~NonEnergyUseCaptureComponent() {
 }
 
 // Documentation inherits.
 NonEnergyUseCaptureComponent* NonEnergyUseCaptureComponent::clone() const {
-    return new NonEnergyUseCaptureComponent( *this );
+    NonEnergyUseCaptureComponent* clone = new NonEnergyUseCaptureComponent();
+    clone->copy( *this );
+    return clone;
+}
+
+void NonEnergyUseCaptureComponent::copy( const NonEnergyUseCaptureComponent& aOther ) {
+    mRemoveFraction = aOther.mRemoveFraction;
+    mTargetGas = aOther.mTargetGas;
 }
 
 // Documentation inherits.
@@ -104,8 +109,7 @@ bool NonEnergyUseCaptureComponent::XMLParse( const xercesc::DOMNode* node ){
             continue;
         }
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        // TODO: Fix this on commit.
-        if( nodeName == "remove-fraction" || nodeName == "removefrac" ){
+        if( nodeName == "remove-fraction" ){
             mRemoveFraction = XMLHelper<double>::getValue( curr );
         }
 		else if( nodeName == "target-gas" ){
@@ -120,15 +124,6 @@ bool NonEnergyUseCaptureComponent::XMLParse( const xercesc::DOMNode* node ){
     }
     // TODO: Handle success and failure better.
     return true;
-}
-
-void NonEnergyUseCaptureComponent::toInputXML( ostream& aOut,
-                                               Tabs* aTabs ) const 
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteElementCheckDefault( mRemoveFraction, "remove-fraction", aOut, aTabs, 0.0 );
-    XMLWriteElementCheckDefault( mTargetGas, "target-gas", aOut, aTabs, string( "" ) );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void NonEnergyUseCaptureComponent::toDebugXML( const int aPeriod,

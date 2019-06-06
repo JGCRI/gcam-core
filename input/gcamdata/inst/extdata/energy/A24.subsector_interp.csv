@@ -1,0 +1,10 @@
+# File: A24.subsector_interp.csv
+# Title: District heat subsector shareweight interpolation
+# Units: NA
+# Column types: ccccccc 
+# ----------
+supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+district heat,biomass,share-weight,final-calibration-year,end-year,,fixed
+district heat,coal,share-weight,final-calibration-year,end-year,,fixed
+district heat,gas,share-weight,final-calibration-year,end-year,,fixed
+district heat,refined liquids,share-weight,final-calibration-year,end-year,,fixed

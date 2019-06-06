@@ -58,16 +58,11 @@ const string& LandUseHistory::getXMLNameStatic(){
 /*!
  * \brief Constructor.
  */
-LandUseHistory::LandUseHistory():
-mHistoricAboveGroundCarbonDensity( 0.0 ),
-mHistoricBelowGroundCarbonDensity( 0.0 )
+LandUseHistory::LandUseHistory()
 {
+    mHistoricAboveGroundCarbonDensity = 0.0;
+    mHistoricBelowGroundCarbonDensity = 0.0;
 }
-
-LandUseHistory::LandUseHistory(const LandUseHistory &aLandUseHistory){
-	this->mHistoricalLand = aLandUseHistory.mHistoricalLand;
-}
-
 
 bool LandUseHistory::XMLParse( const xercesc::DOMNode* aNode ){
 
@@ -120,20 +115,6 @@ bool LandUseHistory::XMLParse( const xercesc::DOMNode* aNode ){
 
 const string& LandUseHistory::getName() const {
     return getXMLNameStatic();
-}
-
-void LandUseHistory::toInputXML( ostream& aOut,
-                                    Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    for( LandMapType::const_iterator i = mHistoricalLand.begin();
-         i != mHistoricalLand.end(); ++i )
-    {
-        XMLWriteElement( i->second, "allocation", aOut, aTabs, i->first );
-    }
-    XMLWriteElementCheckDefault( mHistoricAboveGroundCarbonDensity, "above-ground-carbon-density", aOut, aTabs, 0.0 );
-    XMLWriteElementCheckDefault( mHistoricBelowGroundCarbonDensity, "below-ground-carbon-density", aOut, aTabs, 0.0 );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void LandUseHistory::toDebugXML( const int aPeriod,

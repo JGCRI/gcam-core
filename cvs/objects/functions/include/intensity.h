@@ -70,9 +70,6 @@ public:
     
     virtual const std::string& getName() const;
 
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
-
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
@@ -81,9 +78,16 @@ public:
 
     virtual double getCoefficient() const;
 
-private:
-    //! The read-in intensity.
-    Value mReadInIntensity;
+protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICoefficient,
+        
+        //! The read-in intensity.
+        DEFINE_VARIABLE( SIMPLE, "coefficient", mReadInIntensity, Value )
+    )
 };
 
 #endif // _INTENSITY_H_

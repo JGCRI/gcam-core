@@ -116,7 +116,9 @@ void ProductionTechnology::copyParamsInto( ProductionTechnology& prodTechIn,
 }
 
 ProductionTechnology* ProductionTechnology::clone() const {
-    return new ProductionTechnology( *this );
+    ProductionTechnology* clone = new ProductionTechnology();
+    clone->copy( *this );
+    return clone;
 }
 
 const string& ProductionTechnology::getXMLName() const {
@@ -176,25 +178,6 @@ bool ProductionTechnology::XMLDerivedClassParse( const string& nodeName, const D
         return false;
     }
     return true;
-}
-
-//! For derived classes to output XML data
-void ProductionTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    // Note: We should be using checkDefault version of this function.
-    XMLWriteElement( lifeTime, "lifeTime", out, tabs );
-    XMLWriteElement( mCapitalStock, "capital-stock", out, tabs );
-    XMLWriteElement( indBusTax, "indBusTax", out, tabs );
-    XMLWriteElement( mBasePhysicalOutput, "basePhysicalOutput", out, tabs );
-    XMLWriteElement( delayedInvestTime, "delayedInvestTime", out, tabs );
-    XMLWriteElement( maxLifeTime, "maxLifeTime", out, tabs );
-    XMLWriteElement( retrofitLifeTime, "retrofitLifeTime", out, tabs );
-    XMLWriteElement( periodIniInvest, "periodIniInvest", out, tabs );
-    XMLWriteElement( periodInvestUnallowed, "periodInvestUnallowed", out, tabs );
-    XMLWriteElement( mAnnualInvestment, "annual-investment", out, tabs );
-    XMLWriteElementCheckDefault( mFixedInvestment, "fixed-investment", out, tabs, -1.0 );
-    XMLWriteElement( mTechChange.mEnergyTechChange, "technicalChangeEnergy", out, tabs );
-    XMLWriteElement( mTechChange.mMaterialTechChange, "technicalChangeMaterial", out, tabs );
-    XMLWriteElement( mTechChange.mHicksTechChange, "technicalChangeHicks", out, tabs );
 }
 
 //! Output debug info for derived class
@@ -844,13 +827,6 @@ void ProductionTechnology::postCalc( const string& aRegionName, const string& aS
     // we should clear the list of inputs which are really leaves because they
     // should be managed between here and the next initCalc by the nesting structure
     mLeafInputs.clear();
-}
-
-void ProductionTechnology::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    // print for all operating vintages
-    if( isAvailable( period ) && !isRetired( period ) ){
-        // BaseTechnology::csvSGMOutputFile( aFile, period );
-    }
 }
 
 void ProductionTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const

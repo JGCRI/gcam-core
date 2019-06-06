@@ -47,11 +47,22 @@
 
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
-#include "util/base/include/iround_trippable.h"
+#include "util/base/include/inamed.h"
+#include "util/base/include/iparsable.h"
+#include "util/base/include/value.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
 class GDP;
 class IInfo;
+class NonCO2Emissions;
+class Tabs;
+
+// Need to forward declare the subclasses as well.
+class GDPControl;
+class MACControl;
+class LinearControl;
+class ReadInControl;
 
 /*! 
  * \ingroup Objects
@@ -59,15 +70,14 @@ class IInfo;
  * \details The AEmissionsControl class describes a means of reducing emissions.
  * \author Kate Calvin
  */
-class AEmissionsControl: public IRoundTrippable {
+class AEmissionsControl: public INamed, public IParsable {
 public:
     //! Virtual Destructor.
     virtual ~AEmissionsControl();
     //! Clone operator.
     virtual AEmissionsControl* clone() const = 0;
     
-    void XMLParse( const xercesc::DOMNode* aNode );
-    void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
+    bool XMLParse( const xercesc::DOMNode* aNode );
     void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
     static const std::string& getXMLNameStatic();
     
@@ -91,11 +101,13 @@ public:
     /*!
      * \brief Perform initializations that only need to be done once per period.
      * \param aRegionName Region name.
-     * \param aLocalInfo The local information object.
+     * \param aTechInfo The local information object.
+     * \param aParentGHG The NonCO2Emissions that contains this object.
      * \param aPeriod Model period.
      */
     virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod ) = 0;
 
 protected:
@@ -127,17 +139,6 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode ) = 0;
     
     /*!
-     * \brief XML output stream for derived classes
-     * \details Function writes output due to any variables specific to derived
-     *          classes to XML
-     * \author Jim Naslund
-     * \param aOut reference to the output stream
-     * \param aTabs A tabs object responsible for printing the correct number of
-     *        tabs. 
-     */
-    virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const = 0;
-    
-    /*!
      * \brief XML debug output stream for derived classes
      * \details Function writes output due to any variables specific to derived
      *          classes to XML
@@ -153,13 +154,20 @@ protected:
 
     void setEmissionsReduction( double aReduction );
     
-private:
-    //! Name of the reduction so that users can have multiple emissions reductions
-    std::string mName;
-    
-    //! Reduction (usually calculated)
-    double mReduction;
+    DEFINE_DATA(
+        /* Declare all subclasses of AEmissionsControl to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( AEmissionsControl, GDPControl, MACControl, LinearControl, ReadInControl ),
+        
+        //! Name of the reduction so that users can have multiple emissions reductions
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        
+        //! Reduction (usually calculated)
+        DEFINE_VARIABLE( SIMPLE | STATE, "reduction", mReduction, Value )
+    )
 
+private:
     void copy( const AEmissionsControl& aOther );
 
 };

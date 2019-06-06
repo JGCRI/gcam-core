@@ -1,0 +1,21 @@
+# File: A25.globaltech_cost.csv
+# Title: Hydrogen non-energy costs
+# Units: Unitless
+# Column types: ccccnnnnnnnn 
+# ----------
+supplysector,subsector,technology,minicam.non.energy.input,1971,2020,2035,2050,2065,2080,2095,2100
+H2 central production,coal,coal chemical,non-energy,2.999,2.999,2.743,2.509,2.295,2.130,1.976,1.976
+H2 central production,coal,coal chemical CCS,non-energy,3.878,3.878,3.560,3.268,3.000,2.784,2.583,2.583
+H2 central production,gas,natural gas steam reforming,non-energy,1.029,1.029,0.955,0.886,0.823,0.764,0.709,0.709
+H2 central production,gas,natural gas steam reforming CCS,non-energy,1.579,1.579,1.438,1.309,1.192,1.106,1.026,1.026
+H2 central production,biomass,biomass to H2,non-energy,2.979,2.979,2.725,2.493,2.280,2.116,1.963,1.963
+H2 central production,biomass,biomass to H2 CCS,non-energy,3.878,3.878,3.560,3.268,3.000,2.784,2.583,2.583
+H2 central production,nuclear,thermal splitting,non-energy,7.000,7.000,7.000,7.000,4.442,4.122,3.825,3.825
+H2 central production,electricity,electrolysis,non-energy,7.397,7.397,6.111,5.048,4.170,3.870,3.591,3.591
+H2 central production,wind,electrolysis,non-energy,7.397,7.397,7.397,7.397,7.397,6.864,6.369,6.369
+H2 central production,solar,electrolysis,non-energy,7.397,7.397,7.397,7.397,7.397,6.864,6.369,6.369
+H2 forecourt production,gas,natural gas steam reforming,non-energy,6.464,6.464,5.701,5.027,4.434,4.114,3.818,3.818
+H2 forecourt production,electricity,electrolysis,non-energy,7.397,7.397,7.397,7.397,7.397,6.864,6.369,6.369
+H2 distribution,H2 distribution,H2 distribution,non-energy,6.071,6.071,5.713,5.376,5.059,4.694,4.356,4.356
+H2 enduse,H2 distribution,H2 distribution,non-energy,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000
+H2 enduse,H2 forecourt production,H2 forecourt production,non-energy,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000

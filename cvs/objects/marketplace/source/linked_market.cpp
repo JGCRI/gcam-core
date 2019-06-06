@@ -47,12 +47,12 @@
 using namespace std;
 
 ///! Constructor
-LinkedMarket::LinkedMarket( Market* aLinkedMarket, const string& aGoodName, const string& aRegionName, const int aPeriod ):
-Market( aGoodName, aRegionName, aPeriod ),
-mLinkedMarket( aLinkedMarket ),
-mPriceMult( 1.0 ),
-mQuantityMult( 1.0 )
+LinkedMarket::LinkedMarket( Market* aLinkedMarket, const MarketContainer* aContainer ):
+Market( aContainer ),
+mLinkedMarket( aLinkedMarket )
 {
+    mPriceMult = 1.0;
+    mQuantityMult = 1.0;
 }
 
 void LinkedMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
@@ -69,7 +69,13 @@ void LinkedMarket::initPrice() {
 }
 
 void LinkedMarket::setPrice( const double aPrice ) {
-    // TODO: possibly could allow setting the linked market price.
+    // Linked markets do not have a price of its own.  This
+    // method may be called to calculate policy costs in which 
+    // case to make it work we simply forward this to the linked
+    // market adjusting for mPriceMult
+    if( mLinkedMarket ) {
+        mLinkedMarket->setPrice( aPrice / mPriceMult );
+    }
 }
 
 void LinkedMarket::set_price_to_last_if_default( const double aLastPrice ) {
@@ -112,6 +118,15 @@ void LinkedMarket::addToSupply( const double aSupply ) {
     Market::addToSupply( aSupply );
     if( mLinkedMarket ) {
         mLinkedMarket->addToSupply( aSupply * mQuantityMult );
+    }
+}
+
+void LinkedMarket::setSolveMarket( const bool aShouldSolve ) {
+    // Linked markets are never solved.  However this method
+    // may be called for the cost calculator.  To make this
+    // work as intended we forward this to the linked market.
+    if( mLinkedMarket ) {
+        mLinkedMarket->setSolveMarket( aShouldSolve );
     }
 }
 

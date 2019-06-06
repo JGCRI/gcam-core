@@ -69,10 +69,7 @@ public:
 
     virtual void setUnmanagedLandProfitRate( const std::string& aRegionName,
                                              double aAverageProfitRate,
-                                             const int aPeriod ); 
-
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
+                                             const int aPeriod );
     
     virtual void setProfitRate( const std::string& aRegionName,
                                    const std::string& aProductName,
@@ -80,6 +77,13 @@ public:
                                    const int aPeriod );
 
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        LandLeaf
+    )
+    
     virtual const std::string& getXMLName() const;
 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );

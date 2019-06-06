@@ -49,6 +49,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/icapture_component.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 /*! 
  * \ingroup Objects
@@ -97,6 +98,8 @@
 class PowerPlantCaptureComponent: public ICaptureComponent {
     friend class CaptureComponentFactory;
 public:
+    virtual ~PowerPlantCaptureComponent();
+    
     // Documentation is inherited from ICaptureComponent.
     virtual PowerPlantCaptureComponent* clone() const;
         
@@ -105,9 +108,6 @@ public:
     virtual const std::string& getName() const;
     
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
     
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -151,6 +151,8 @@ public:
 
 protected:
 	PowerPlantCaptureComponent();
+    
+    void copy( const PowerPlantCaptureComponent& aOther );
 
 	static const std::string& getXMLNameStatic();
     
@@ -163,30 +165,30 @@ protected:
                                const double aEffectiveEnergyIntensity,
                                const double aFuelEmissCoef,
                                const int aPeriod ) const;
-
-    //! Sequestered quantity by period.
-    std::vector<double> mSequesteredAmount;
-
-    //! Name of the storage market.
-    std::string mStorageMarket;
-
-    //! The name of the gas which will be sequestered.
-    std::string mTargetGas;
-
-     //! Fraction of carbon removed from the emissions stream.
-    double mRemoveFraction;
-
-    //! The amount of energy required to capture one unit of the emitted gas.
-    double mCaptureEnergy;
-
-    //! Non-energy cost penalty.
-    double mNonEnergyCostPenalty;
-
-    //! Stored emissions coefficient for the fuel.
-    Value mCachedFuelCoef;
     
-    //! State value necessary to use Marketplace::addToDemand
-    double mLastCalcValue;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICaptureComponent,
+
+        //! Sequestered quantity by period.
+        DEFINE_VARIABLE( ARRAY | STATE, "sequestered-amount", mSequesteredAmount, objects::TechVintageVector<Value> ),
+
+        //! Name of the storage market.
+        DEFINE_VARIABLE( SIMPLE, "storage-market", mStorageMarket, std::string ),
+
+        //! The name of the gas which will be sequestered.
+        DEFINE_VARIABLE( SIMPLE, "target-gas", mTargetGas, std::string ),
+
+         //! Fraction of carbon removed from the emissions stream.
+        DEFINE_VARIABLE( SIMPLE, "remove-fraction", mRemoveFraction, double ),
+
+        //! The amount of energy required to capture one unit of the emitted gas.
+        DEFINE_VARIABLE( SIMPLE, "capture-energy", mCaptureEnergy, double ),
+
+        //! Non-energy cost penalty.
+        DEFINE_VARIABLE( SIMPLE, "non-energy-penalty", mNonEnergyCostPenalty, double )
+    )
 };
 
 #endif // _POWER_PLANT_CAPTURE_COMPONENT_H_

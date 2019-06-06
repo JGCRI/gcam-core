@@ -52,6 +52,7 @@
 class IInvestor;
 class Demographic;
 class NationalAccount;
+class MoreSectorInfo;
 class GDP;
 class IInfo;
 
@@ -117,8 +118,6 @@ public:
     virtual void postCalc( const int aPeriod );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
-    virtual void dbOutput( const GDP* aGDP,
-                           const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
 protected:
     std::map<std::string,double> ghgEmissCoefMap; //! Map of ghg name to emission coefficient
     void setMarket();
@@ -128,12 +127,11 @@ protected:
 
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:
     //! Vector of read-in prices for the production sector which will be used as
     //! fixed prices if mIsFixedPrice is true.
-    std::vector<double> mFixedPrices;
+    objects::PeriodVector<Value> mFixedPrices;
 
     //! The market region into which the sector is exporting.
     std::string mMarketName;
@@ -157,6 +155,8 @@ private:
     //! in its various technologies. Different types of investment objects may
     //! be read in to change the investment behavior.
     std::auto_ptr<IInvestor> mInvestor;
+    
+    std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
     
     void calcInvestment( const Demographic* aDemographic, NationalAccount& aNationalAccount, const int aPeriod );
     void operateOldCapital( const Demographic* aDemographic, NationalAccount& aNationalAccount, const int aPeriod );

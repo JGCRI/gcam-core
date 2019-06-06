@@ -68,7 +68,14 @@ public:
     SubsectorAddTechCosts( const std::string& aRegionName, const std::string& aSectorName );
     static const std::string& getXMLNameStatic();
 	virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
-private:
+protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Subsector
+    )
+
     virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;
 };

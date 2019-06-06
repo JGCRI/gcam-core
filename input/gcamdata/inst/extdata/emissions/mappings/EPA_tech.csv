@@ -1,0 +1,138 @@
+# File: EPA_tech.csv
+# Title: xxx
+# Units: NA
+# Source: NA
+# Column types: ccc 
+# ----------
+EPA_Category,sector,fuel
+TOTAL ALL SOURCES,,
+FUEL COMBUSTION TOTAL (Tier 0 - 01),,
+FUEL COMB. ELEC. UTIL. (Tier 1 - 01),,
+FUEL COMB. ELEC. UTIL. (Tier 1 - 01)_Coal,elec_heat,coal
+FUEL COMB. ELEC. UTIL. (Tier 1 - 01)_        bituminous,,
+FUEL COMB. ELEC. UTIL. (Tier 1 - 01)_        subbituminous,,
+FUEL COMB. ELEC. UTIL. (Tier 1 - 01)_        anthracite & lignite,,
+FUEL COMB. ELEC. UTIL. (Tier 1 - 01)_Oil,elec_heat,refined liquids
+FUEL COMB. ELEC. UTIL. (Tier 1 - 01)_        residual,,
+FUEL COMB. ELEC. UTIL. (Tier 1 - 01)_        distillate,,
+FUEL COMB. ELEC. UTIL. (Tier 1 - 01)_Gas,elec_heat,gas
+FUEL COMB. ELEC. UTIL. (Tier 1 - 01)_Other,,
+FUEL COMB. ELEC. UTIL. (Tier 1 - 01)_Internal Combustion,,
+FUEL COMB. INDUSTRIAL (Tier 1 - 02),,
+FUEL COMB. INDUSTRIAL (Tier 1 - 02)_Coal,industry_energy,coal
+FUEL COMB. INDUSTRIAL (Tier 1 - 02)_        bituminous,,
+FUEL COMB. INDUSTRIAL (Tier 1 - 02)_        subbituminous,,
+FUEL COMB. INDUSTRIAL (Tier 1 - 02)_        anthracite & lignite,,
+FUEL COMB. INDUSTRIAL (Tier 1 - 02)_        other,,
+FUEL COMB. INDUSTRIAL (Tier 1 - 02)_Oil,industry_energy,refined liquids
+FUEL COMB. INDUSTRIAL (Tier 1 - 02)_        residual,,
+FUEL COMB. INDUSTRIAL (Tier 1 - 02)_        distillate,,
+FUEL COMB. INDUSTRIAL (Tier 1 - 02)_        other,,
+FUEL COMB. INDUSTRIAL (Tier 1 - 02)_Gas,industry_energy,gas
+FUEL COMB. INDUSTRIAL (Tier 1 - 02)_Other,industry_energy,
+FUEL COMB. INDUSTRIAL (Tier 1 - 02)_Internal Combustion,,
+FUEL COMB. OTHER (Tier 1 - 03),,
+FUEL COMB. OTHER (Tier 1 - 03)_Commercial/Institutional Coal,bld_comm,coal
+FUEL COMB. OTHER (Tier 1 - 03)_Commercial/Institutional Oil,bld_comm,refined liquids
+FUEL COMB. OTHER (Tier 1 - 03)_Commercial/Institutional Gas,bld_comm,gas
+FUEL COMB. OTHER (Tier 1 - 03)_Misc. Fuel Comb. (Except Residential),bld_comm,biomass
+FUEL COMB. OTHER (Tier 1 - 03)_Residential Wood,bld_resid,biomass
+FUEL COMB. OTHER (Tier 1 - 03)_Residential Other,,
+FUEL COMB. OTHER (Tier 1 - 03)_        distillate oil,bld_resid,refined liquids
+FUEL COMB. OTHER (Tier 1 - 03)_        bituminous/subbituminous coal,bld_resid,coal
+FUEL COMB. OTHER (Tier 1 - 03)_        natural gas,bld_resid,gas
+FUEL COMB. OTHER (Tier 1 - 03)_        other,bld_resid,gas
+INDUSTRIAL PROCESSES TOTAL (Tier 0 - 02),,
+CHEMICAL & ALLIED PRODUCT MFG (Tier 1 - 04),,
+CHEMICAL & ALLIED PRODUCT MFG (Tier 1 - 04)_Organic Chemical Mfg,,
+CHEMICAL & ALLIED PRODUCT MFG (Tier 1 - 04)_Inorganic Chemical Mfg,,
+CHEMICAL & ALLIED PRODUCT MFG (Tier 1 - 04)_        sulfur compounds,,
+CHEMICAL & ALLIED PRODUCT MFG (Tier 1 - 04)_        other,,
+CHEMICAL & ALLIED PRODUCT MFG (Tier 1 - 04)_Polymer & Resin Mfg,,
+CHEMICAL & ALLIED PRODUCT MFG (Tier 1 - 04)_Agricultural Chemical Mfg,,
+"CHEMICAL & ALLIED PRODUCT MFG (Tier 1 - 04)_Paint, Varnish, Lacquer, Enamel Mfg",,
+CHEMICAL & ALLIED PRODUCT MFG (Tier 1 - 04)_Pharmaceutical Mfg,,
+CHEMICAL & ALLIED PRODUCT MFG (Tier 1 - 04)_Other Chemical Mfg,,
+METALS PROCESSING (Tier 1 - 05),,
+METALS PROCESSING (Tier 1 - 05)_Non-Ferrous Metals Processing,,
+METALS PROCESSING (Tier 1 - 05)_        copper,,
+METALS PROCESSING (Tier 1 - 05)_        lead,,
+METALS PROCESSING (Tier 1 - 05)_        zinc,,
+METALS PROCESSING (Tier 1 - 05)_        other,,
+METALS PROCESSING (Tier 1 - 05)_Ferrous Metals Processing,,
+METALS PROCESSING (Tier 1 - 05)_Metals Processing NEC,,
+PETROLEUM & RELATED INDUSTRIES (Tier 1 - 06),,
+PETROLEUM & RELATED INDUSTRIES (Tier 1 - 06)_Oil & Gas Production,oil_gas,all
+PETROLEUM & RELATED INDUSTRIES (Tier 1 - 06)_        natural gas,,
+PETROLEUM & RELATED INDUSTRIES (Tier 1 - 06)_        other,,
+PETROLEUM & RELATED INDUSTRIES (Tier 1 - 06)_Petroleum Refineries & Related Industries,oil_gas,all
+PETROLEUM & RELATED INDUSTRIES (Tier 1 - 06)_        fluid catalytic cracking units,,
+PETROLEUM & RELATED INDUSTRIES (Tier 1 - 06)_        other,,
+PETROLEUM & RELATED INDUSTRIES (Tier 1 - 06)_Asphalt Manufacturing,coal,all
+OTHER INDUSTRIAL PROCESSES (Tier 1 - 07),,
+"OTHER INDUSTRIAL PROCESSES (Tier 1 - 07)_Agriculture, Food, & Kindred Products",,
+"OTHER INDUSTRIAL PROCESSES (Tier 1 - 07)_Textiles, Leather, & Apparel Products",,
+"OTHER INDUSTRIAL PROCESSES (Tier 1 - 07)_Wood, Pulp & Paper, & Publishing Products",,
+OTHER INDUSTRIAL PROCESSES (Tier 1 - 07)_Rubber & Miscellaneous Plastic Products,,
+OTHER INDUSTRIAL PROCESSES (Tier 1 - 07)_Mineral Products,,
+OTHER INDUSTRIAL PROCESSES (Tier 1 - 07)_        cement mfg,cement,all
+OTHER INDUSTRIAL PROCESSES (Tier 1 - 07)_        other,,
+OTHER INDUSTRIAL PROCESSES (Tier 1 - 07)_Machinery Products,,
+OTHER INDUSTRIAL PROCESSES (Tier 1 - 07)_Electronic Equipment,,
+OTHER INDUSTRIAL PROCESSES (Tier 1 - 07)_Transportation Equipment,,
+OTHER INDUSTRIAL PROCESSES (Tier 1 - 07)_Miscellaneous Industrial Processes,,
+SOLVENT UTILIZATION (Tier 1 - 08),,
+SOLVENT UTILIZATION (Tier 1 - 08)_Degreasing,,
+SOLVENT UTILIZATION (Tier 1 - 08)_Graphic Arts,,
+SOLVENT UTILIZATION (Tier 1 - 08)_Dry Cleaning,,
+SOLVENT UTILIZATION (Tier 1 - 08)_Surface Coating,,
+SOLVENT UTILIZATION (Tier 1 - 08)_Other Industrial,,
+STORAGE & TRANSPORT (Tier 1 - 09),,
+STORAGE & TRANSPORT (Tier 1 - 09)_Bulk Terminals & Plants,,
+STORAGE & TRANSPORT (Tier 1 - 09)_Petroleum & Petroleum Product Storage,,
+STORAGE & TRANSPORT (Tier 1 - 09)_Petroleum & Petroleum Product Transport,,
+STORAGE & TRANSPORT (Tier 1 - 09)_Service Stations: Stage II,,
+STORAGE & TRANSPORT (Tier 1 - 09)_Organic Chemical Storage,,
+STORAGE & TRANSPORT (Tier 1 - 09)_Organic Chemical Transport,,
+STORAGE & TRANSPORT (Tier 1 - 09)_Inorganic Chemical Storage,,
+STORAGE & TRANSPORT (Tier 1 - 09)_Inorganic Chemical Transport,,
+STORAGE & TRANSPORT (Tier 1 - 09)_Bulk Materials Storage storage,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10),,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_Incineration,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_        industrial,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_        other,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_Open Burning,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_        industrial,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_        land clearing debris,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_        other,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_POTW,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_Industrial Waste Water,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_TSDF,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_Landfills,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_        industrial,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_        other,,
+WASTE DISPOSAL & RECYCLING (Tier 1 - 10)_Other,,
+TRANSPORTATION TOTAL (Tier 0 - 03),,
+HIGHWAY VEHICLES (Tier 1 - 11),,
+HIGHWAY VEHICLES (Tier 1 - 11)_Light-Duty Gas Vehicles & Motorcycles,trn_road,refined liquids
+HIGHWAY VEHICLES (Tier 1 - 11)_        light-duty gas vehicles,,
+HIGHWAY VEHICLES (Tier 1 - 11)_        motorcycles,,
+HIGHWAY VEHICLES (Tier 1 - 11)_Light-Duty Gas Trucks,trn_road,refined liquids
+HIGHWAY VEHICLES (Tier 1 - 11)_        light-duty gas trucks 1,,
+HIGHWAY VEHICLES (Tier 1 - 11)_        light-duty gas trucks 2,,
+HIGHWAY VEHICLES (Tier 1 - 11)_Heavy-Duty Gas Vehicles,trn_road,refined liquids
+HIGHWAY VEHICLES (Tier 1 - 11)_Diesels,trn_road,refined liquids
+OFF-HIGHWAY (Tier 1 - 12),,
+OFF-HIGHWAY (Tier 1 - 12)_Non-Road Gasoline,,
+OFF-HIGHWAY (Tier 1 - 12)_Non-Road Diesel,,
+OFF-HIGHWAY (Tier 1 - 12)_Aircraft,trn_air,all
+OFF-HIGHWAY (Tier 1 - 12)_Marine Vessels,trn_ship,all
+OFF-HIGHWAY (Tier 1 - 12)_Railroads,trn_rail,all
+OFF-HIGHWAY (Tier 1 - 12)_Other,,
+MISCELLANEOUS (Tier 0 - 04),,
+MISCELLANEOUS (Tier 1 - 14),,
+MISCELLANEOUS (Tier 1 - 14)_Agriculture & Forestry,,
+MISCELLANEOUS (Tier 1 - 14)_        agricultural livestock,Animals,all
+MISCELLANEOUS (Tier 1 - 14)_Other Combustion,,
+MISCELLANEOUS (Tier 1 - 14)_Fugitive Dust,,
+MISCELLANEOUS (Tier 1 - 14)_Other,,

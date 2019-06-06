@@ -1,0 +1,22 @@
+# File: IEA_sector_fuel_modifications.csv
+# Title: Mapping sectors and fuels
+# Units: n/a
+# Column types: ccccn 
+# ----------
+sector_initial,fuel_initial,sector,fuel,conversion
+in_electricity generation,electricity,,,
+in_electricity generation,heat,,,
+in_heat,heat,,,
+in_industry_chp,electricity,,,
+in_industry_chp,heat,,,
+in_industry_ctl,refined liquids,out_ctl,coal,0.00004186
+in_industry_energy distribution,gas,net_gas pipeline,gas,-0.00004186
+in_industry_energy distribution,electricity,net_electricity distribution,electricity,-0.00004186
+in_industry_feedstocks,biomass,,,
+in_industry_gtl,refined liquids,out_gtl,gas,0.00004186
+in_industry_ownuse,electricity,net_electricity ownuse,electricity,-0.00004186
+in_industry_pipeline,gas,net_gas pipeline,gas,0.00004186
+in_trn_road,biomass,in_trn_road,refined biofuels_ethanol,0.00004186
+net_industry_oil refining,refined liquids,net_oil refining,refined liquids,-0.00004186
+net_industry_oil refining,electricity,net_oil refining,electricity,-0.00004186
+net_industry_oil refining,gas,net_oil refining,gas,-0.00004186

@@ -1,0 +1,13 @@
+# File: A42.globaltech_cost.csv
+# Title: Aggregate building default costs
+# Units: Unitless
+# Column types: ccccii 
+# ----------
+supplysector,subsector,technology,minicam.non.energy.input,1971,2100
+building,biomass,biomass,non-energy,3,3
+building,coal,coal,non-energy,3,3
+building,district heat,district heat,non-energy,3,3
+building,electricity,electricity,non-energy,3,3
+building,gas,gas,non-energy,3,3
+building,refined liquids,refined liquids,non-energy,3,3
+building,traditional biomass,traditional biomass,non-energy,3,3

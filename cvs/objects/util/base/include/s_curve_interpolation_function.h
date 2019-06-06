@@ -87,22 +87,28 @@ public:
     static const std::string& getXMLAttrNameStatic();
     
     // IInterpolationFunction methods
+    virtual IInterpolationFunction* clone() const;
+    
     virtual double interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,
         const double aXValue ) const;
     
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
-    // IRoundTrippable methods
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
+protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IInterpolationFunction,
 
-private:
-    //! Parameter for the steepness of the s-curve. Higher number means steeper ascent.
-    double mSteepness;
+        //! Parameter for the steepness of the s-curve. Higher number means steeper ascent.
+        DEFINE_VARIABLE( SIMPLE, "steepness", mSteepness, double ),
 
-    //! Parameter for at which x-value the curve will have exactly the median of
-    //! the y-values from the left and right data points.
-    double mMedianXValue;
+        //! Parameter for at which x-value the curve will have exactly the median of
+        //! the y-values from the left and right data points.
+        DEFINE_VARIABLE( SIMPLE, "median-x-value", mMedianXValue, double )
+    )
 };
 
 #endif // _S_CURVE_INTERPOLATION_FUNCTION_H_

@@ -74,3 +74,4 @@ xcuserdata
 *.xccheckout
 *.moved-aside
 *.xcuserstate
+.Rproj.user

@@ -58,11 +58,22 @@ extern Scenario* scenario;
  * \brief Constructor
  */
 PhasedShutdownDecider::PhasedShutdownDecider()
-: mShutdownRate( 0 )
-{}
+{
+    mShutdownRate = 0;
+}
+
+PhasedShutdownDecider::~PhasedShutdownDecider() {
+}
 
 PhasedShutdownDecider* PhasedShutdownDecider::clone() const {
-    return new PhasedShutdownDecider( *this );
+    PhasedShutdownDecider* clone = new PhasedShutdownDecider();
+    clone->copy( *this );
+    return clone;
+}
+
+void PhasedShutdownDecider::copy( const PhasedShutdownDecider& aOther ) {
+    mName = aOther.mName;
+    mShutdownRate = aOther.mShutdownRate;
 }
 
 bool PhasedShutdownDecider::isSameType( const string& aType ) const {
@@ -118,14 +129,6 @@ bool PhasedShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
     }
 
     return true;
-}
-
-void PhasedShutdownDecider::toInputXML( ostream& aOut,
-                                        Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElementCheckDefault( mShutdownRate, "shutdown-rate", aOut, aTabs, 0.0 );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void PhasedShutdownDecider::toDebugXML( const int aPeriod,

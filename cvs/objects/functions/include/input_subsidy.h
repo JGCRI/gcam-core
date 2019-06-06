@@ -45,14 +45,14 @@
  */
 
 #include <string>
+#include <memory>
 #include <xercesc/dom/DOMNode.hpp>
+
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
-#include <vector>
-#include <memory>
+#include "util/base/include/time_vector.h"
 
 class Tabs;
-class ICoefficient;
 
 /*! 
  * \ingroup Objects
@@ -96,9 +96,6 @@ public:
     virtual void XMLParse( const xercesc::DOMNode* aNode );
 
     virtual bool isSameType( const std::string& aType ) const;
-
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -158,21 +155,24 @@ public:
 
 protected:
     InputSubsidy( const InputSubsidy& aOther );
-
-    //! Physical Demand.
-    std::vector<Value> mPhysicalDemand;
-
-    //! Current coefficient after adjustments have been made by the technology's
-    //! capture component.
-    std::vector<Value> mAdjustedCoefficients;
     
-    //! State value necessary to use Marketpalce::addToSupply
-    double mLastCalcValue;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        MiniCAMInput,
+        
+        //! Physical Demand.
+        DEFINE_VARIABLE( ARRAY | STATE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> ),
+        
+        //! Current coefficient after adjustments have been made by the technology's
+        //! capture component.
+        DEFINE_VARIABLE( ARRAY, "current-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> )
+    )
 
+    //! Stash the current sector name for use in setPhysicalDemand
+    std::string mSectorName;
 private:
-    const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
-    bool isShareBased; // boolean for determining share or quantity based subsidy
-    std::string mSectorName; // sector that subsidy applies
+    const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db
 };
 
 #endif // _INPUT_SUBSIDY_H_

@@ -154,29 +154,6 @@ bool GlobalTechnologyDatabase::XMLParse( const DOMNode* aNode ){
     return true;
 }
 
-//! Write out datamembers to XML output stream.
-void GlobalTechnologyDatabase::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-
-    for( CTechLocationIterator locIter = mTechnologyList.begin(); locIter != mTechnologyList.end(); ++locIter ) {
-        // TODO: create an XML helper to write an opening tag with arbitrary attributes
-        aTabs->writeTabs( aOut );
-        aOut << "<location-info sector-name=\"" << ( *locIter ).first.first << "\" subsector-name=\""
-             << ( *locIter ).first.second << "\">" << endl;
-        aTabs->increaseIndent();
-        
-        const vector<ITechnologyContainer*>& tempTechs = ( *locIter ).second;
-        for( CTechListIterator techIter = tempTechs.begin(); techIter != tempTechs.end(); ++techIter ) {
-            ( *techIter )->toInputXML( aOut, aTabs );
-        }
-        XMLWriteClosingTag( "location-info", aOut, aTabs );
-    }
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-
-}
-
 /*!
  * \brief Get the global technology identified by the given sector, subsector,
  *        and technology name.

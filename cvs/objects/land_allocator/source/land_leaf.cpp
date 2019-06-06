@@ -57,6 +57,7 @@
 #include "ccarbon_model/include/carbon_model_utils.h"
 #include "util/base/include/configuration.h"
 #include "containers/include/market_dependency_finder.h"
+#include "functions/include/idiscrete_choice.hpp"
 
 using namespace std;
 using namespace xercesc;
@@ -71,23 +72,20 @@ extern Scenario* scenario;
 */
 LandLeaf::LandLeaf( const ALandAllocatorItem* aParent, const std::string &aName ):
     ALandAllocatorItem( aParent, eLeaf ),
-    mLandAllocation( 0.0 ),
-    mCarbonContentCalc(0),
+    mCarbonContentCalc( 0 ),
     mMinAboveGroundCDensity( 0.0 ),
     mMinBelowGroundCDensity( 0.0 ),
-    mCarbonPriceIncreaseRate( 0.0 ),
-    mLandUseHistory(0),
-    mReadinLandAllocation(0.0),
-    mLastCalcCO2Value(0.0),
-    mLastCalcExpansionValue(0.0)
+    mCarbonPriceIncreaseRate( Value( 0.0 ) ),
+    mLandUseHistory( 0 ),
+    mReadinLandAllocation( Value( 0.0 ) ),
+    mLastCalcCO2Value( 0.0 )
 {
-    // Can't use initializer because mName is a member of ALandAllocatorItem,
-    // not LandLeaf.
-    mName = aName;
 }
 
 //! Destructor
 LandLeaf::~LandLeaf() {
+    delete mLandUseHistory;
+    delete mCarbonContentCalc;
 }
 
 const string& LandLeaf::getXMLName() const {
@@ -125,6 +123,7 @@ ALandAllocatorItem* LandLeaf::getChildAt( const size_t aIndex ) {
 }
 
 bool LandLeaf::XMLParse( const xercesc::DOMNode* aNode ){
+    const Modeltime* modeltime = scenario->getModeltime();
 
     // assume we are passed a valid node.
     assert( aNode );
@@ -143,9 +142,8 @@ bool LandLeaf::XMLParse( const xercesc::DOMNode* aNode ){
             continue;
         }
         else if( nodeName == "landAllocation" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mLandAllocation,
-                                                 scenario->getModeltime() );
-            mReadinLandAllocation = mLandAllocation;
+            XMLHelper<Value>::insertValueIntoVector( curr, mReadinLandAllocation,
+                                                     modeltime );
         }
         else if( nodeName == "minAboveGroundCDensity" ){
             mMinAboveGroundCDensity = XMLHelper<double>::getValue( curr );
@@ -153,10 +151,12 @@ bool LandLeaf::XMLParse( const xercesc::DOMNode* aNode ){
         else if( nodeName == "minBelowGroundCDensity" ){
             mMinBelowGroundCDensity = XMLHelper<double>::getValue( curr );
         }
-        else if( nodeName == "isNewTechnology" ){
-            XMLHelper<bool>::insertValueIntoVector( curr, mIsNewTech,
-                                                 scenario->getModeltime() );
-        }        
+		else if( nodeName == "ghost-unnormalized-share" ){
+            XMLHelper<Value>::insertValueIntoVector( curr, mGhostUnormalizedShare, modeltime );
+        }
+        else if( nodeName == "is-ghost-share-relative" ){
+            mIsGhostShareRelativeToDominantCrop = XMLHelper<bool>::getValue( curr );
+        }
         else if( nodeName == LandUseHistory::getXMLNameStatic() ){
             parseSingleNode( curr, mLandUseHistory, new LandUseHistory );
         }
@@ -191,16 +191,17 @@ void LandLeaf::completeInit( const string& aRegionName,
                              const IInfo* aRegionInfo )
 {
     // Store the interest rate from the region.
-    mInterestRate = aRegionInfo->getDouble( "interest-rate", true );
+    mSocialDiscountRate = aRegionInfo->getDouble( "social-discount-rate", true );
+    const double privateDiscountRateLand = aRegionInfo->getDouble( "private-discount-rate-land", true );
 
     // Set the carbon cycle object if it has not already been initialized. Use a
     // virtual function so that derived leaves may use a different default type.
-    if( !mCarbonContentCalc.get() ){
-        mCarbonContentCalc.reset( new LandCarbonDensities );
+    if( !mCarbonContentCalc ){
+        mCarbonContentCalc = new LandCarbonDensities;
     }
 
     // Initialize the carbon-cycle object
-    mCarbonContentCalc->completeInit();
+    mCarbonContentCalc->completeInit( privateDiscountRateLand );
 
     // Ensure that a carbon cycle object has been setup.
     assert( mCarbonContentCalc.get() );
@@ -209,13 +210,13 @@ void LandLeaf::completeInit( const string& aRegionName,
     // Note: zero land allocation is allowed
     const Modeltime* modeltime = scenario->getModeltime();
     for( int period = 0; period < modeltime->getmaxper(); period++ ) {
-        if( mLandAllocation[ period ] < 0 ) {
+        if( mReadinLandAllocation[ period ] < 0 ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Negative land allocation of " << mLandAllocation[ period ] 
+            mainLog << "Negative land allocation of " << mReadinLandAllocation[ period ] 
                     << " read in for leaf " << getName() << " in " 
                     << aRegionName << "." << endl;
-            exit( -1 );
+            abort();
         }
     }
     
@@ -233,34 +234,15 @@ void LandLeaf::completeInit( const string& aRegionName,
 
 void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
 {
+    // TODO: error checking
     if ( aPeriod > 1 ) {
         // If leaf is a "new tech" get the scaler from its parent
-        if ( mIsNewTech[ aPeriod ] ) {
-            mProfitScaler[ aPeriod ] = getParent()->getNewTechProfitScaler( aPeriod );
+        if ( !mShareWeight[ aPeriod ].isInited()) {
+            mShareWeight[ aPeriod ] = mShareWeight[ aPeriod - 1 ];
         }
-        // Copy share weights forward if new ones haven't been read in 
-        else if ( mProfitScaler[ aPeriod ] == -1 ) {
-            mProfitScaler[ aPeriod ] = mProfitScaler[ aPeriod - 1 ];
-        }
+    }
 
-        // If share is uninitialized, set it to the previous period's.
-        // For most land leafs, this will be overwritten during the 
-        // calcLandShares method.  The exception is when a leaf is the only
-        // leaf within a node.
-        if ( mShare[ aPeriod ] == -1 ) {
-            mShare[ aPeriod ] = mShare[ aPeriod - 1 ];
-        }
-    }
-    //  This works since the land allocator calibration is called before these 
-    //  initcalcs are called in the landallocator initcalc, so Period 1 values 
-    //  should be set by the time it gets here
-    else if ( mProfitScaler[ aPeriod ] == -1 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Negative share weight in period " << aPeriod
-                << " for region " << aRegionName << endl;
-        exit( -1 );
-    }
+    mCarbonContentCalc->initCalc( aPeriod );
 }
 
 /*!
@@ -291,44 +273,24 @@ void LandLeaf::setInitShares( const string& aRegionName,
  */
 void LandLeaf::initLandUseHistory( const string& aRegionName )
 {
-    if( !mLandUseHistory.get() ){
+    if( !mLandUseHistory ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "No land use history read in for leaf "
                 << getName() << " in region " << aRegionName << endl;
-        exit( -1 );
+        abort();
     }
-    mCarbonContentCalc->initLandUseHistory( mLandUseHistory.get() );
-}
-
-void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
-    const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteVector( mReadinLandAllocation, "landAllocation", aOut, aTabs, modeltime );
-    XMLWriteVector( mIsNewTech, "isNewTechnology", aOut, aTabs, modeltime );
-    XMLWriteElement( mMinAboveGroundCDensity, "minAboveGroundCDensity", aOut, aTabs );
-    XMLWriteElement( mMinBelowGroundCDensity, "minBelowGroundCDensity", aOut, aTabs );
-    XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", aOut, aTabs, string() );
-    
-
-    if( mLandUseHistory.get() ){
-        mLandUseHistory->toInputXML( aOut, aTabs );
-    }
-
-    mCarbonContentCalc->toInputXML( aOut, aTabs );
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
+    mCarbonContentCalc->setLandUseObjects( mLandUseHistory, this );
 }
 
 void LandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
-    XMLWriteElement( mLandAllocation[ period ], "landAllocation", out, tabs );    
+    XMLWriteElement( mReadinLandAllocation[ period ], "read-in-land-allocation", out, tabs );
     XMLWriteElement( mMinAboveGroundCDensity, "minAboveGroundCDensity", out, tabs );
     XMLWriteElement( mMinBelowGroundCDensity, "minBelowGroundCDensity", out, tabs );
-    XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
+    XMLWriteElement( mSocialDiscountRate, "social-discount-rate", out, tabs );
     XMLWriteVector( mCarbonPriceIncreaseRate, "carbon-price-increase-rate", out, tabs, scenario->getModeltime() );
     XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", out, tabs, string() );
-    if( mLandUseHistory.get() ){
+    if( mLandUseHistory ){
         mLandUseHistory->toDebugXML( period, out, tabs );
     }
     
@@ -362,8 +324,9 @@ void LandLeaf::setProfitRate( const string& aRegionName,
         adjustedProfitRate = aProfitRate - expansionCost;
     }
 
-    mProfitRate[ aPeriod ] = max( adjustedProfitRate + getCarbonSubsidy( aRegionName, aPeriod ), 0.0 );
+    mProfitRate[ aPeriod ] = adjustedProfitRate + getCarbonSubsidy( aRegionName, aPeriod );
 }
+
 
 /*!
 * \brief Calculates the carbon subsidy per hectare for this land leaf.
@@ -401,7 +364,7 @@ double LandLeaf::getCarbonSubsidy( const string& aRegionName, const int aPeriod 
         // multiplied by the carbon price and the interest rate.
         double carbonSubsidy = ( incrementalAboveCDensity * mCarbonContentCalc->getAboveGroundCarbonSubsidyDiscountFactor()
             + incrementalBelowCDensity * mCarbonContentCalc->getBelowGroundCarbonSubsidyDiscountFactor() )
-            * carbonPrice * ( mInterestRate - mCarbonPriceIncreaseRate[ aPeriod ] )* conversionFactor;
+            * carbonPrice * ( mSocialDiscountRate - mCarbonPriceIncreaseRate[ aPeriod ] )* conversionFactor;
 
         assert( carbonSubsidy >= 0.0 );
 
@@ -415,39 +378,20 @@ double LandLeaf::getCarbonSubsidy( const string& aRegionName, const int aPeriod 
 void LandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,  
                                            double aAverageProfitRate, const int aPeriod ) {
     // Does nothing for production (managed) leaves.
-	//Only takes action on unmanaged leaves , which is a type derived from LandLeaf
+	// Only takes action on unmanaged leaves, which is a type derived from LandLeaf
+}
+
+void LandLeaf::resetCalLandAllocation( const string& aRegionName,
+                                          double aNewLandAllocation, const int aPeriod ) {
+    mReadinLandAllocation[ aPeriod ] = aNewLandAllocation;
 }
 
 
-/*!
-* \brief Calculate the leaf calibration profit rate.
-* \details Calculate the leaf calibration profit rate. This is the profit
-*          rate that is implied by the share this leaf gets within
-*          its node and the calibration profit rate of that.
-* \param aAverageProfitRateAbove - profit rate of the containing node
-* \param aLogitExponentAbove - logit exponent of the containing node
-* \author Marshall Wise
-*/
 
-
-void LandLeaf::calculateCalibrationProfitRate( const string& aRegionName, 
-                                               double aAverageProfitRateAbove, 
-                                               double aLogitExponentAbove, 
-                                               const int aPeriod ) {
-    // Calculates calibration profit rate based on share within node and profit
-    // of the node that contains it
-
-    double avgProfitRate = aAverageProfitRateAbove;
-    // If logit exponent of node is zero, this calculation will not matter
-    // so don't do it.  Zero means fixed shares so average profit won't change.
-    // And avoid 1/0.
-    if ( aLogitExponentAbove > 0 ) {    
-        avgProfitRate *= pow( mShare[ aPeriod ], 1.0 / aLogitExponentAbove ); 
-    }
-
-    // store this value in this leaf 
-    mCalibrationProfitRate[ aPeriod ] = avgProfitRate;
-
+void LandLeaf::calculateNodeProfitRates( const string& aRegionName,
+                                         const int aPeriod ) {
+    // This value is not used by the leaf, although we could calculate it for
+    // comparison..
 }
 
 
@@ -475,63 +419,23 @@ void LandLeaf::setSoilTimeScale( const int aTimeScale ) {
 *          distribution assumed for the parent node ( aLogitExpAbove )
 * \param aRegionName Region.
 * \param aLogitExpAbove Distribution parameter for the parent node
+* \param aChoiceFnAbove The discrete choice function from the level above.
 * \param aPeriod Model period
 */
 double LandLeaf::calcLandShares( const string& aRegionName,
-                                 const double aLogitExpAbove,
+                                 IDiscreteChoice* aChoiceFnAbove,
                                  const int aPeriod )
 {
     // Calculate the unnormalized share for this leaf
     // The unnormalized share is used by the parent node to 
     // calculate the leaf's share of the parent's land
-    double unnormalizedShare = 0.0;
-    double totalProfitRate = mProfitScaler[ aPeriod ] * mProfitRate[ aPeriod ] * mAdjustForNewTech[ aPeriod ];
-    // Total profit rate including the carbon subsidy should not be negative.
-    if( totalProfitRate < 0.0 || mProfitScaler[ aPeriod ] == 0.0 ){
-        unnormalizedShare = 0.0;
-    }
-    else {
-        unnormalizedShare = pow( totalProfitRate , aLogitExpAbove );
-    }
-
-    // result should be > 0.
-    assert( unnormalizedShare >= 0.0 );
+    double unnormalizedShare = aChoiceFnAbove->calcUnnormalizedShare( mShareWeight[ aPeriod ], mProfitRate[ aPeriod ], aPeriod );
+    
+    // result should be > 0 if we have a non-zero share-weight (it is -infinity when zero)
+    assert( mShareWeight[ aPeriod ] == 0.0 || unnormalizedShare >= 0.0 );
 
     return unnormalizedShare; 
 }
-
-/*!
- * \brief Calculates share profit scalers
- * \param aRegionName Region name.
- * \param aPeriod model period.
- */
-void LandLeaf::calculateProfitScalers( const string& aRegionName, 
-                                          const int aPeriod ) 
-{
-    // profit scaler is the ratio of the calibration profit over the 
-    // observed or computed profit. For managed land, the observed profit is the yield
-    // times the (price minus cost).  For unmanaged land, the observed profit is the
-    // the price of land read in for the subregion, plus any carbon value
-
-    // Only calculate if numerator and denomiator are both not equal to 0, else set to zero
-    if ( mCalibrationProfitRate[ aPeriod ] == 0 || mProfitRate[ aPeriod ] == 0 ) {
-        mProfitScaler[ aPeriod ] = 0;
-    }
-    else {
-        mProfitScaler[ aPeriod ] = mCalibrationProfitRate[ aPeriod ] / mProfitRate[ aPeriod ];
-    }
-
-    //put in a warning if this scaler is negative, that means cal price too low.
-    if ( mProfitScaler[ aPeriod ] < 0 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "CalPrice too low resulting in negative share profit scaler. Setting scaler to zero"
-               << aRegionName << " " << mName << endl;
-               mProfitScaler[ aPeriod ] = 0;
-        }
-
-}
-
 
 
 /*!
@@ -561,14 +465,11 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
         mLandAllocation[ aPeriod ] = 0.0;
     }
 
-    // Set the land use in the carbon content calculator.
-    mCarbonContentCalc->setTotalLandUse( mLandAllocation[ aPeriod ], aPeriod );
-
     // compute any demands for land use constraint resources
     if ( mIsLandExpansionCost ) {
         Marketplace* marketplace = scenario->getMarketplace();
-        mLastCalcExpansionValue = marketplace->addToDemand( mLandExpansionCostName, aRegionName, 
-            mLandAllocation[ aPeriod ], mLastCalcExpansionValue, aPeriod, true );      
+        marketplace->addToDemand( mLandExpansionCostName, aRegionName,
+            mLandAllocation[ aPeriod ], aPeriod, true );
     }
 
 }
@@ -578,21 +479,21 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
 * \param aRegionName Region.
 * \param aPeriod Current model period.
 * \param aEndYear The year to calculate LUC emissions to.
+* \param aStoreFullEmiss Flag to pass on to the carbon calc used as an optimization
+*                        to avoid store full LUC emissins during World.calc.
 */
 void LandLeaf::calcLUCEmissions( const string& aRegionName,
-                                 const int aPeriod, const int aEndYear )
+                                 const int aPeriod, const int aEndYear,
+                                 const bool aStoreFullEmiss )
 {
     // Calculate the amount of emissions attributed to land use change in the current period
-    mCarbonContentCalc->calc( aPeriod, aEndYear );
+    mLastCalcCO2Value = mCarbonContentCalc->calc( aPeriod, aEndYear, aStoreFullEmiss ? ICarbonCalc::eStoreResults : ICarbonCalc::eReturnTotal );
 
-    // Add emissions to the carbon market. 
-    const Modeltime* modeltime = scenario->getModeltime();
-    if ( ( aEndYear != CarbonModelUtils::getEndYear() || aPeriod == modeltime->getmaxper() - 1 ) ) {
-        double LUCEmissions = mCarbonContentCalc
-            ->getNetLandUseChangeEmission( modeltime->getper_to_yr( aPeriod ) );
+    // Add emissions to the carbon market.
+    if ( !aStoreFullEmiss ) {
         Marketplace* marketplace = scenario->getMarketplace();
-        mLastCalcCO2Value = marketplace->addToDemand( "CO2_LUC", aRegionName, LUCEmissions,
-                                                      mLastCalcCO2Value, aPeriod, false );
+        marketplace->addToDemand( "CO2_LUC", aRegionName,
+                                  mLastCalcCO2Value, aPeriod, false );
     }  
 }
 
@@ -607,6 +508,16 @@ double LandLeaf::getLandAllocation( const string& aProductName,
     assert( aProductName == mName || aProductName == "" ); // Residue output object calls this without product information
 
     return mLandAllocation[ aPeriod ];
+}
+
+/*!
+ * \brief Has the land allocation ever been calculated for this leaf.
+ * \param aPeriod Model period to check.
+ * \return True if the land allocation has been calculated at *any* point
+ *         for the given model period.
+ */
+bool LandLeaf::hasLandAllocationCalculated( const int aPeriod ) const {
+    return mLandAllocation[ aPeriod ].isInited();
 }
 
 /*!
@@ -625,19 +536,32 @@ double LandLeaf::getCalLandAllocation( const LandAllocationType aType,
     return 0;
 }
 
-// does nothing for leaves. all new leafs within a node get the same scaler
-double LandLeaf::getNewTechProfitScaler( const int aPeriod ) const {
-     return 0;
+void LandLeaf::getObservedAverageProfitRate( double& aProfitRate, double& aShare,
+                                             const int aPeriod ) const
+{
+    aProfitRate = mProfitRate[ aPeriod ];
+    // If this leaf has a calibration share return that and if not try for a ghost
+    // share.
+    if( mShare[ aPeriod ] > 0 ) {
+        aShare = mShare[ aPeriod ];
+    }
+    else {
+        const Modeltime* modeltime = scenario->getModeltime();
+        for( int futurePer = aPeriod + 1; futurePer < modeltime->getmaxper(); ++futurePer ) {
+            if( mGhostUnormalizedShare[ futurePer ].isInited() ) {
+                aShare = mGhostUnormalizedShare[ futurePer ];
+                return;
+            }
+        }
+        // If we get here then there was no ghost share either so just set a share
+        // of zero.
+        aShare = 0.0;
+    }
 }
 
-double LandLeaf::getLogitExponent( const int aPeriod ) const {
-    // Land leaves do not have logit exponents
-    return 0.0;
-}
-
-void LandLeaf::adjustProfitScalers( const std::string& aRegionName, 
-                         const int aPeriod ) {
-    // This shouldn't do anything for land leafs.
+const ALandAllocatorItem* LandLeaf::getChildWithHighestShare( const bool aIncludeAllChildren,
+                                                              const int aPeriod ) const {
+    return !aIncludeAllChildren && isUnmanagedLandLeaf() ? 0 : this;
 }
 
 void LandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
@@ -645,7 +569,7 @@ void LandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
 
     acceptDerived( aVisitor, aPeriod );
 
-    if( mCarbonContentCalc.get() ){
+    if( mCarbonContentCalc ){
         mCarbonContentCalc->accept( aVisitor, aPeriod );
     }
 
@@ -657,10 +581,11 @@ void LandLeaf::acceptDerived( IVisitor* aVisitor, const int aPeriod ) const {
 }
 
 ICarbonCalc* LandLeaf::getCarbonContentCalc() const{
-    return ( mCarbonContentCalc.get() );
+    return mCarbonContentCalc;
 }
 
-bool LandLeaf::isManagedLandLeaf( )  const 
+bool LandLeaf::isUnmanagedLandLeaf( )  const 
 {
-    return true;
+    return false;
 }
+

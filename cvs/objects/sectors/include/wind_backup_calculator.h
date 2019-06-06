@@ -99,7 +99,6 @@ public:
     virtual bool isSameType( const std::string& aType ) const;
     virtual const std::string& getName() const;
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
     virtual void initCalc( const IInfo* aTechInfo );
     
@@ -107,6 +106,7 @@ public:
                                               const std::string& aElectricSector,
                                               const std::string& aResource,
                                               const std::string& aRegion,
+                                              const double aTechCapacityFactor,
                                               const double aReserveMargin,
                                               const double aAverageGridCapacityFactor,
                                               const int aPeriod ) const;
@@ -115,16 +115,25 @@ public:
                                              const std::string& aElectricSector,
                                              const std::string& aResource,
                                              const std::string& aRegion,
+                                             const double aTechCapacityFactor,
                                              const double aReserveMargin,
                                              const double aAverageGridCapacityFactor,
                                              const int aPeriod ) const;
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IBackupCalculator
+    )
+    
     static const std::string& getXMLNameStatic();
 
     double getBackupCapacityFraction( const std::string& aSector,
                                       const std::string& aElectricSector,
                                       const std::string& aResource,
                                       const std::string& aRegion,
+                                      const double aTechCapacityFactor,
                                       const double aReserveMargin,
                                       const double aAverageGridCapacityFactor,
                                       const int aPeriod ) const;
@@ -139,6 +148,7 @@ protected:
                               const std::string& aSectorName,
                               const std::string& aDependentSectorName,
                               const std::string& aResourceName,
+                              const double aTechCapacityFactor,
                               const int aPeriod ) const;
 
     WindBackupCalculator();

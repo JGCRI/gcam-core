@@ -1,0 +1,10 @@
+# File: A24.subsector_shrwt.csv
+# Title: District heat subsector shareweights
+# Units: unitless
+# Column types: cccci 
+# ----------
+supplysector,subsector,year.fillout,year,share.weight
+district heat,biomass,start-year,,1
+district heat,coal,start-year,,1
+district heat,gas,start-year,,1
+district heat,refined liquids,start-year,,1

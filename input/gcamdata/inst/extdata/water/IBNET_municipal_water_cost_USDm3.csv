@@ -1,0 +1,400 @@
+# File:IBNET_municipal_water_cost_USDm3.csv
+# Title: The International Benchmarking Network for Water and Sanitation Utilities (IBNET) 
+# Units: Average Revenue W&WW (US$/m3 water sold), GDPPC ($), Total Water Consumption (l/person/day)
+# Comments: missing data for Japan and Taiwan are filled in from municipal.water.demand.32.csv. Note some country names were changed to match FAO
+#Source: http://www.ib-net.org/en/production/?
+# Column types: icnnn 
+# ----------
+year,country,cost,GDPPC,consumption
+2005,Albania,0.44,"2,693",53
+2006,Albania,0.28,"2,925",125
+2007,Albania,0.39,"3,459",105
+2008,Albania,0.52,"4,126",94
+2009,Albania,0.44,"3,808",97
+2002,Argentina,0.21,"2,708",337
+2003,Argentina,0.2,"3,408",329
+2004,Argentina,0.2,"3,991",362
+2005,Argentina,0.21,"4,730",371
+2006,Argentina,0.24,"5,474",340
+2004,Armenia,0.15,"1,168",156
+2005,Armenia,0.24,"1,599",126
+2006,Armenia,0.29,"2,081",153
+2007,Armenia,0.41,"2,996",146
+2008,Armenia,0.47,"3,873",151
+2005,Australia,1.96,"34,128",360
+2006,Australia,2.11,"36,203",346
+2007,Australia,2.62,"40,660",338
+2008,Australia,3.05,"48,499",308
+2009,Australia,2.81,"42,279",304
+2000,Azerbaijan,0.53,655,336
+2001,Azerbaijan,0.34,704,281
+2002,Azerbaijan,0.36,763,281
+2003,Azerbaijan,0.4,884,281
+2004,Azerbaijan,0.41,"1,045",281
+2007,Bangladesh,0.13,434,107
+2008,Bangladesh,0.13,497,108
+2009,Bangladesh,0.14,551,108
+2004,Belarus,0.35,"2,356",310
+2005,Belarus,0.43,"3,090",290
+2006,Belarus,0.57,"3,798",259
+2007,Belarus,0.75,"4,667",241
+2008,Belarus,0.92,"6,277",208
+2000,Belgium,1.54,22666,199
+2005,Benin,0.86,545,42
+2006,Benin,0.95,583,43
+2007,Benin,1.17,661,42
+2008,Benin,1.28,771,45
+2009,Benin,1.37,745,41
+2001,Bhutan,0.03,788,156
+2002,Bhutan,0.04,862,156
+2003,Bhutan,0.06,"1,018",150
+2004,Bhutan,0.06,"1,107",151
+2002,Bolivia (Plurinational State of),0.3,913,86
+2003,Bolivia (Plurinational State of),0.43,915,108
+2004,Bolivia (Plurinational State of),0.67,974,72
+2005,Bolivia (Plurinational State of),0.45,"1,040",93
+2006,Bolivia (Plurinational State of),0.4,"1,224",83
+2003,Bosnia and Herzegovina,0.65,"2,212",169
+2004,Bosnia and Herzegovina,0.65,"2,650",173
+2005,Bosnia and Herzegovina,0.72,"2,847",178
+2006,Bosnia and Herzegovina,0.77,"3,241",159
+2007,Bosnia and Herzegovina,0.82,"4,030",161
+2004,Brazil,0.79,"3,610",148
+2005,Brazil,0.98,"4,741",163
+2006,Brazil,1.17,"5,787",162
+2007,Brazil,1.49,"7,185",169
+2008,Brazil,1.56,"8,532",167
+2004,Bulgaria,0.51,"3,249",117
+2005,Bulgaria,0.66,"3,733",169
+2006,Bulgaria,0.68,"4,313",172
+2007,Bulgaria,0.78,"5,498",170
+2008,Bulgaria,1,"6,798",170
+2005,Burkina Faso,1.04,395,31
+2006,Burkina Faso,1.43,406,55
+2007,Burkina Faso,1.57,460,47
+2008,Burkina Faso,1.89,528,47
+2009,Burkina Faso,1.67,517,50
+2004,Burundi,0.21,93,78
+2005,Burundi,0.21,108,77
+2006,Burundi,0.24,121,73
+2003,Cambodia,0.24,352,173
+2004,Cambodia,0.24,404,184
+2005,Cambodia,0.24,465,186
+2006,Cambodia,0.2,518,197
+2007,Cambodia,0.28,583,172
+2000,Canada,0.4,23560,787
+2001,Cape Verde,1.76,"1,231",86
+2002,Cape Verde,1.84,"1,355",91
+2003,Cape Verde,3.07,"1,724",86
+2004,Cape Verde,3.52,"1,967",77
+2005,Cape Verde,3.49,"2,093",75
+2002,Chile,0.66,"4,263",199
+2003,Chile,0.7,"4,637",183
+2004,Chile,0.76,"5,931",196
+2005,Chile,0.82,"7,256",192
+2006,Chile,0.86,"8,913",198
+2005,China,0.21,"1,731",196
+2006,China,0.27,"2,069",185
+2007,China,0.28,"2,651",181
+2008,China,0.29,"3,414",167
+2009,China,0.32,"3,744",164
+2003,Colombia,0.7,"2,274",146
+2004,Colombia,0.81,"2,766",142
+2001,Congo,0.17,90,71
+2002,Congo,0.19,103,69
+2003,Congo,0.28,102,63
+2004,Congo,0.34,115,69
+2005,Congo,0.49,120,68
+2002,Costa Rica,1.32,"4,108",234
+2003,Costa Rica,1.58,"4,191",179
+2004,Costa Rica,0.56,"4,369",209
+2000,Cote dIvoire,0.49,603,50
+2001,Cote dIvoire,0.43,596,54
+2002,Cote dIvoire,0.5,636,53
+2003,Cote dIvoire,0.51,744,53
+2004,Cote dIvoire,0.65,822,53
+2000,Croatia,0.45,"4,817",382
+2001,Croatia,0.44,"5,152",370
+2002,Croatia,0.52,"5,958",357
+2003,Croatia,0.68,"7,625",364
+2004,Croatia,0.86,"9,167",350
+2001,Czech Republic,0.78,"6,049",204
+2002,Czech Republic,0.97,"7,376",201
+2003,Czech Republic,1.17,"8,950",201
+2004,Czech Republic,1.37,"10,721",198
+2005,Czech Republic,1.54,"12,168",191
+2000,Denmark,1.64,29993,220
+2003,Ecuador,0.7,"2,242",183
+2004,Ecuador,0.74,"2,527",163
+2005,Ecuador,0.72,"2,847",178
+2006,El Salvador,0.04,"3,067",158
+2004,Ethiopia,1.04,138,48
+2005,Ethiopia,1.02,165,47
+2006,Ethiopia,0.98,197,48
+2000,Finland,0.69,23514,213
+2000,France,1.23,21914,269
+2001,Gabon,0.28,"3,736",226
+2002,Gabon,0.29,"3,826",223
+2003,Gabon,0.36,"4,601",216
+2004,Gabon,0.4,"5,346",214
+2005,Gabon,0.41,"6,329",207
+2004,Georgia,0.07,"1,187",604
+2005,Georgia,0.08,"1,470",560
+2006,Georgia,0.09,"1,761",685
+2007,Georgia,0.13,"2,318",702
+2008,Georgia,0.14,"2,919",701
+2000,Germany,1.91,23114,180
+2005,Ghana,0.6,489,51
+2006,Ghana,0.58,910,45
+2007,Ghana,0.74,"1,077",46
+2008,Ghana,0.87,"1,222",45
+2009,Ghana,0.63,"1,098",46
+2005,Guinea,0.59,319,22
+2006,Guinea,0.33,300,15
+2007,Guinea,0.56,438,15
+2008,Guinea,0.59,384,20
+2009,Guinea,0.65,407,23
+2003,Hungary,0.88,"8,325",194
+2004,Hungary,1.08,"10,099",184
+2005,Hungary,1.2,"10,924",178
+2006,Hungary,1.37,"11,220",159
+2007,Hungary,1.64,"13,799",158
+2005,India,0.23,765,134
+2009,India,0.15,"1,134",114
+2001,Indonesia,0.11,771,151
+2002,Indonesia,0.14,928,151
+2003,Indonesia,0.18,"1,099",142
+2004,Indonesia,0.2,"1,187",130
+2000,Ireland,0.63,25380,403
+2000,Italy,0.76,19269,433
+1995,Jordan,0.44,"1,604",69
+1996,Jordan,0.47,"1,602",69
+1997,Jordan,0.48,"1,625",67
+1998,Jordan,0.66,"1,721",62
+2003,Kazakhstan,0.13,"2,068",293
+2004,Kazakhstan,0.15,"2,874",282
+2005,Kazakhstan,0.17,"3,771",281
+2006,Kazakhstan,0.22,"5,292",289
+2007,Kazakhstan,0.24,"6,772",295
+2004,Kenya,0.96,461,110
+2005,Kenya,0.32,523,96
+2006,Kenya,0.48,612,77
+2002,Kyrgyzstan,0.09,322,172
+2003,Kyrgyzstan,0.11,381,154
+2004,Kyrgyzstan,0.12,434,147
+2005,Kyrgyzstan,0.12,478,150
+2006,Kyrgyzstan,0.11,546,137
+2004,Lao Peoples Democratic Republic,0.08,434,284
+2005,Lao Peoples Democratic Republic,0.09,463,292
+2006,Lao Peoples Democratic Republic,0.09,589,274
+2007,Lao Peoples Democratic Republic,0.13,704,249
+2008,Lao Peoples Democratic Republic,0.15,882,250
+2005,Lesotho,0.84,659,127
+2006,Lesotho,0.8,704,116
+2007,Lesotho,0.96,776,99
+2008,Lesotho,0.88,778,77
+2004,Liberia,1.15,143,7
+2005,Liberia,1.15,159,6
+2006,Liberia,1.22,176,6
+2003,The former Yugoslav Republic of Macedonia,0.52,"2,282",173
+2004,The former Yugoslav Republic of Macedonia,0.47,"2,642",200
+2005,The former Yugoslav Republic of Macedonia,0.49,"2,857",181
+2006,The former Yugoslav Republic of Macedonia,0.48,"3,127",176
+2007,The former Yugoslav Republic of Macedonia,0.69,"3,883",171
+2004,Malawi,0.26,198,62
+2005,Malawi,0.5,209,96
+2006,Malawi,0.56,225,76
+2007,Malawi,0.62,248,76
+2008,Malawi,0.7,288,75
+2007,Malaysia,0.4,"7,028",351
+2005,Mali,0.56,448,78
+2006,Mali,0.61,484,74
+2007,Mali,0.64,576,73
+2008,Mali,0.75,686,74
+2009,Mali,0.65,691,73
+2004,Mauritania,0.56,532,79
+2005,Mauritania,0.61,615,77
+2006,Mauritania,0.66,869,67
+2007,Mauritania,0.32,842,92
+2008,Mauritania,0.36,"1,101",125
+2004,Mauritius,0.34,"5,177",205
+2005,Mauritius,0.33,"5,054",212
+2006,Mauritius,0.32,"5,193",212
+2005,Mexico,0.79,"8,235",181
+2006,Mexico,0.89,"9,140",213
+2007,Mexico,1,"9,741",209
+2008,Mexico,1.08,"10,248",214
+2009,Mexico,0.93,"8,143",208
+2005,Republic of Moldova,0.49,831,150
+2006,Republic of Moldova,0.5,951,148
+2007,Republic of Moldova,0.63,"1,231",158
+2008,Republic of Moldova,0.91,"1,696",156
+2009,Republic of Moldova,0.92,"1,516",144
+2003,Mozambique,0.36,236,106
+2004,Mozambique,0.65,281,100
+2005,Mozambique,0.55,316,103
+2006,Mozambique,0.57,332,106
+2007,Mozambique,0.69,367,87
+2005,Namibia,1.85,"3,615",200
+2006,Namibia,2.18,"3,896",178
+2007,Namibia,2.23,"4,216",178
+2008,Namibia,2.05,"4,211",177
+2009,Namibia,2.2,"4,267",179
+2000,Netherlands,1.25,24180,224
+2003,New Zealand,1.62,"21,489",285
+2004,New Zealand,1.89,"25,006",297
+2005,New Zealand,1.89,"26,846",294
+2006,New Zealand,1.36,"26,421",349
+2007,New Zealand,1.9,"32,712",342
+2003,Nicaragua,1.41,771,103
+2005,Nicaragua,0.42,893,109
+2005,Niger,0.54,254,57
+2006,Niger,0.52,268,62
+2007,Niger,0.55,300,64
+2008,Niger,0.64,364,65
+2009,Niger,0.58,352,67
+2004,Nigeria,0.2,639,40
+2005,Nigeria,0.07,797,95
+2006,Nigeria,0.08,"1,018",94
+2007,Nigeria,0.07,"1,123",94
+2008,Nigeria,0.08,"1,370",95
+2002,Pakistan,0.05,499,136
+2003,Pakistan,0.06,561,130
+2004,Pakistan,0.08,644,127
+2005,Pakistan,0.07,704,115
+2006,Pakistan,0.17,801,97
+2002,Panama,0.29,"4,006",296
+2003,Panama,0.26,"4,146",330
+2004,Panama,0.27,"4,465",347
+2005,Panama,0.26,"4,785",390
+2006,Panama,0.25,"5,213",335
+2002,Paraguay,0.69,906,169
+2003,Paraguay,0.86,977,130
+2004,Paraguay,0.37,"1,200",242
+2005,Paraguay,0.36,"1,266",243
+2004,Peru,0.44,"2,537",137
+2005,Peru,0.46,"2,852",138
+2006,Peru,0.53,"3,276",140
+2007,Peru,0.57,"3,771",136
+2008,Peru,0.68,"4,477",135
+2005,Philippines,0.38,"1,156",162
+2006,Philippines,0.4,"1,349",149
+2007,Philippines,0.48,"1,624",151
+2008,Philippines,0.53,"1,844",154
+2009,Philippines,0.54,"1,752",156
+2003,Poland,1.04,"5,675",172
+2004,Poland,1.15,"6,620",164
+2005,Poland,1.35,"7,963",160
+2006,Poland,1.39,"8,958",160
+2007,Poland,1.71,"11,157",156
+2003,Romania,0.35,"2,737",253
+2004,Romania,0.41,"3,481",243
+2005,Romania,0.64,"4,572",215
+2006,Romania,0.78,"5,681",206
+2007,Romania,1.08,"7,856",194
+2005,Russian Federation,0.37,"5,337",432
+2006,Russian Federation,0.47,"6,947",412
+2007,Russian Federation,0.57,"9,146",403
+2008,Russian Federation,0.76,"11,743",366
+2009,Russian Federation,0.64,"8,684",343
+2001,Rwanda,0.74,202,13
+2002,Rwanda,0.68,192,12
+2003,Rwanda,0.62,205,12
+2004,Rwanda,0.57,224,11
+2005,Rwanda,0.42,266,11
+2002,Senegal,0.21,511,63
+2003,Senegal,0.26,642,63
+2004,Senegal,0.81,732,62
+2005,Senegal,0.81,771,62
+2006,Senegal,0.87,810,62
+2004,Seychelles,1.06,"8,482",347
+2005,Seychelles,0.77,"10,661",379
+2006,Seychelles,0.79,"11,440",377
+2003,Slovakia,0.92,"8,514",184
+2004,Slovakia,1.13,"10,410",154
+2005,Slovakia,1.34,"11,377",144
+2006,Slovakia,1.5,"12,809",151
+2007,Slovakia,1.81,"15,608",149
+2002,South Africa,0.57,"2,440",190
+2003,South Africa,0.84,"3,648",182
+2004,South Africa,1.11,"4,695",180
+2005,South Africa,1.09,"5,235",188
+2006,South Africa,1.07,"5,468",186
+2000,Spain,0.57,14422,364
+2005,Sri Lanka,0.23,"1,241",412
+2006,Sri Lanka,0.22,"1,421",416
+2005,Sudan,0.25,708,88
+2006,Sudan,0.37,921,208
+2007,Sudan,0.46,"1,151",197
+2008,Sudan,0.41,"1,404",211
+2009,Sudan,0.36,"1,294",241
+2006,Swaziland,1.39,"2,349",112
+2007,Swaziland,1.53,"2,562",112
+2008,Swaziland,1.4,"2,432",115
+2009,Swaziland,1.56,"2,533",115
+2000,Sweden,0.58,27879,311
+2001,Tajikistan,0.01,173,544
+2002,Tajikistan,0.01,194,535
+2003,Tajikistan,0.01,244,518
+2004,Tajikistan,0.02,322,542
+2005,Tajikistan,0.03,354,554
+2007,United Republic of Tanzania,0.35,420,64
+2008,United Republic of Tanzania,0.24,503,61
+2009,United Republic of Tanzania,0.39,509,44
+2005,Gambia,0.26,302,57
+2000,Togo,0.36,253,44
+2001,Togo,0.76,246,37
+2002,Togo,0.63,266,41
+2003,Togo,0.77,309,42
+2004,Togo,0.65,353,37
+2004,Tunisia,0.42,"2,832",86
+2005,Tunisia,0.41,"2,888",88
+2006,Tunisia,0.4,"3,057",91
+2004,Turkey,0.92,"5,582",96
+2005,Turkey,1.01,"6,786",97
+2006,Turkey,1.04,"7,365",97
+2007,Turkey,1.36,"8,865",92
+2008,Turkey,1.21,"9,881",108
+2000,United States of America,0.51,35081,596
+2005,Uganda,0.79,314,69
+2006,Uganda,0.8,335,67
+2007,Uganda,1.05,388,62
+2008,Uganda,1.29,456,60
+2009,Uganda,1.1,490,57
+2003,Ukraine,0.19,"1,049",338
+2004,Ukraine,0.22,"1,367",314
+2005,Ukraine,0.25,"1,829",311
+2006,Ukraine,0.32,"2,303",296
+2007,Ukraine,0.44,"3,069",283
+2000,United Kingdom,1.18,25089,326
+2001,Uruguay,1.38,"6,317",129
+2002,Uruguay,1.01,"4,113",122
+2003,Uruguay,0.98,"3,646",117
+2004,Uruguay,1.04,"4,145",128
+2005,Uruguay,1.36,"5,252",133
+2003,Uzbekistan,0.05,396,267
+2004,Uzbekistan,0.06,465,272
+2005,Uzbekistan,0.06,547,122
+2006,Uzbekistan,0.07,643,119
+2007,Uzbekistan,0.11,830,61
+2006,Venezuela (Bolivarian Republic of),0.25,"6,795",178
+2005,Viet Nam,0.23,631,140
+2006,Viet Nam,0.24,710,139
+2007,Viet Nam,0.24,804,147
+2008,Viet Nam,0.25,943,147
+2009,Viet Nam,0.26,"1,032",149
+2005,Zambia,0.19,610,136
+2006,Zambia,0.28,890,142
+2007,Zambia,0.33,937,141
+2008,Zambia,0.44,"1,165",144
+2009,Zambia,0.33,985,135
+2010,Republic of Korea,0.63,,278.51
+2011,Republic of Korea,0.72,,281.32
+2012,Republic of Korea,0.73,,281.08
+2011,Norway,2.25,,249.07
+2012,Norway,2.12,,239.73
+2013,Norway,2.32,,231.41
+2014,Norway,2.04,,240.63
+2015,Norway,1.57,,231.97
+2010,Japan,3.2564,,1
+2010,Taiwan,0.7247,,1

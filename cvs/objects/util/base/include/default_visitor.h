@@ -191,9 +191,6 @@ public:
     virtual void startVisitGHG( const AGHG* aGHG, const int aPeriod ){}
     virtual void endVisitGHG( const AGHG* aGHG, const int aPeriod ){}
 
-    virtual void startVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ){}
-    virtual void endVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod ){}
-
     virtual void startVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ){}
     virtual void endVisitMarketplace( const Marketplace* aMarketplace, const int aPeriod ){}
 

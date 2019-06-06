@@ -122,7 +122,7 @@ public:
 
 	Value getFloorToSurfaceRatio( const int aPeriod ) const;
 
-	double getInternalGains( const int aPeriod ) const;
+    double getInternalGains( const std::string& aRegionName, const int aPeriod ) const;
 
 	SatiationDemandFunction* getSatiationDemandFunction() const;
 
@@ -191,9 +191,6 @@ public:
     virtual const std::string& getXMLReportingName() const;
 
     virtual void XMLParse( const xercesc::DOMNode* aNode );
-    
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
     
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -316,10 +313,7 @@ public:
                             NationalAccount* aNationalAccount,
                             Expenditure* aExpenditure,
                             const int aPeriod ) const { return 0; }
-
-    virtual void csvSGMOutputFile( std::ostream& aFile,
-        const int aPeriod ) const {}
-    
+   
     virtual void copyParamsInto( ProductionInput& aInput,
         const int aPeriod ) const {}
 
@@ -366,61 +360,62 @@ public:
 
 
 protected:
-	//! Vector of child inputs
-    std::vector<INestedInput*> mNestedInputs;
-    typedef std::vector<INestedInput*>::iterator NestedInputIterator;
-    typedef std::vector<INestedInput*>::const_iterator CNestedInputIterator;
     
-    //! The name of this input
-    std::string mName;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        INestedInput,
 
-    //! Type of function used
-    std::string mFunctionType;
+        //! Vector of child inputs
+        DEFINE_VARIABLE( CONTAINER, "nodeInput", mNestedInputs, std::vector<INestedInput*> ),
+        
+        //! The name of this input
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
+        //! Type of function used
+        DEFINE_VARIABLE( SIMPLE, "prodDmdFnType", mFunctionType, std::string ),
+
+        //! Building size by period.
+        DEFINE_VARIABLE( ARRAY | STATE, "base-building-size", mBuildingSize, objects::PeriodVector<Value> ),
+
+        //! Price exponent by period.
+        DEFINE_VARIABLE( ARRAY, "price-exponent", mPriceExponent, objects::PeriodVector<Value> ),
+
+        //! Satiation demand function.
+        DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* ),
+
+        //! Shell conductance by period.
+        DEFINE_VARIABLE( ARRAY, "shell-conductance", mShellConductance, objects::PeriodVector<Value> ),
+
+        //! Floor to surface ratio by period.
+        DEFINE_VARIABLE( ARRAY, "floor-to-surface-ratio", mFloorToSurfaceRatio, objects::PeriodVector<Value> ),
+
+        //! Internal gains market name
+        DEFINE_VARIABLE( SIMPLE, "internal-gains-market-name", mInternalGainsMarketname, std::string ),
+
+        //! Internal gains output unit used to create the market
+        DEFINE_VARIABLE( SIMPLE, "internal-gains-unit", mInternalGainsUnit, std::string ),
+
+        //! Current Subregional population.  Note that this is just a
+        //! temporary value used during demand calculations
+        DEFINE_VARIABLE( SIMPLE, "subregional-population", mCurrentSubregionalPopulation, Value ),
+
+        //! Current Subregional income.  Note that this is just a
+        //! temporary value used during demand calculations
+        DEFINE_VARIABLE( SIMPLE, "subregional-income", mCurrentSubregionalIncome, Value ),
+
+        //! The sum product of energy service price necessary to drive demands.
+        DEFINE_VARIABLE( ARRAY | STATE, "price", mPrice, objects::PeriodVector<Value> )
+    )
+                           
     //! Pointer to function this class will use
     const IFunction* mFunction;
 
-	//! Building size by period.
-	objects::PeriodVector<Value> mBuildingSize;
-
-	//! Price exponent by period.
-	objects::PeriodVector<Value> mPriceExponent;
-
-	//! Satiation demand function.
-	std::auto_ptr<SatiationDemandFunction> mSatiationDemandFunction;
-
-	//! Shell conductance by period.
-	objects::PeriodVector<Value> mShellConductance;
-
-	//! Floor to surface ratio by period.
-	objects::PeriodVector<Value> mFloorToSurfaceRatio;
-
-	//! Internal gains market name
-	std::string mInternalGainsMarketname;
-
-	//! Internal gains output unit used to create the market
-	std::string mInternalGainsUnit;
-
-	//! Current Subregional population.  Note that this is just a
-	//! temporary value used during demand calculations
-	Value mCurrentSubregionalPopulation;
-
-	//! Current Subregional income.  Note that this is just a
-	//! temporary value used during demand calculations
-	Value mCurrentSubregionalIncome;
-
-	//! Cache the vector of children as IInput* which is needed for the mFunction
+    //! Cache the vector of children as IInput* which is needed for the mFunction
     std::vector<IInput*> mChildInputsCache;
-
-	//! Stored trial internal gains trial supply for reporting
-	objects::PeriodVector<double> mInternalGainsTrialSupply;
-
-	//! Stored region name only necessary because there is no
-	//! post calc to store the trial internal gains supply
-	std::string mRegionName;
-
-	//! The sum product of energy service price necessary to drive demands.
-	objects::PeriodVector<double> mPrice;
+                       
+    typedef std::vector<INestedInput*>::iterator NestedInputIterator;
+    typedef std::vector<INestedInput*>::const_iterator CNestedInputIterator;
     
     void copy( const BuildingNodeInput& aNodeInput );
 };

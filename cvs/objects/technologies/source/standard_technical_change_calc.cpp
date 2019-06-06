@@ -60,7 +60,15 @@ StandardTechnicalChangeCalc::StandardTechnicalChangeCalc()
 
 
 StandardTechnicalChangeCalc* StandardTechnicalChangeCalc::clone() const {
-    return new StandardTechnicalChangeCalc( *this );
+    StandardTechnicalChangeCalc* clone = new StandardTechnicalChangeCalc();
+    clone->copy( *this );
+    return clone;
+}
+
+void StandardTechnicalChangeCalc::copy( const StandardTechnicalChangeCalc& aOther ) {
+    mHicksNeutralTechChange = aOther.mHicksNeutralTechChange;
+    mEnergyTechChange = aOther.mEnergyTechChange;
+    mMaterialTechChange = aOther.mMaterialTechChange;
 }
 
 bool StandardTechnicalChangeCalc::isSameType( const string& aType ) const {
@@ -115,16 +123,6 @@ bool StandardTechnicalChangeCalc::XMLParse( const xercesc::DOMNode* node ){
 
     // TODO: Handle success and failure better.
     return true;
-}
-
-void StandardTechnicalChangeCalc::toInputXML( ostream& aOut,
-                                              Tabs* aTabs ) const
-{
-	XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-	XMLWriteElementCheckDefault( mHicksNeutralTechChange, "hicks-neutral", aOut, aTabs, Value( 0 ) );
-    XMLWriteElementCheckDefault( mEnergyTechChange, "energy-only", aOut, aTabs, Value( 0 ) );
-    XMLWriteElementCheckDefault( mMaterialTechChange, "material-only", aOut, aTabs, Value( 0 ) );
-	XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void StandardTechnicalChangeCalc::toDebugXML( const int aPeriod,

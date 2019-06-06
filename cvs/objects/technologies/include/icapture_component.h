@@ -44,9 +44,18 @@
  * \author Josh Lurz
  */
 #include <vector>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/inamed.h"
 #include "util/base/include/istandard_component.h"
+#include "util/base/include/data_definition_util.h"
 
 class IInput;
+
+// Need to forward declare the subclasses as well.
+class StandardCaptureComponent;
+class NonEnergyUseCaptureComponent;
+class PowerPlantCaptureComponent;
 
 /*! 
  * \ingroup Objects
@@ -59,7 +68,7 @@ class IInput;
  *          and how the emissions are disposed.
  * \author Josh Lurz
 */
-class ICaptureComponent : public IParsedComponent { 
+class ICaptureComponent : public INamed, public IParsedComponent, private boost::noncopyable {
 public:
     // Clone operator must be declared explicitly even though it is inherited
     // from IStandardComponent so that the return type can be changed. Since
@@ -78,13 +87,6 @@ public:
     * \param aNode Root node from which to parse data.
     */
     virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
-    
-    /*! \brief Write data from this object in an XML format so that it can be
-    *          read back in later as input.
-    * \param aOut Filestream to which to write.
-    * \param aTabs Object responsible for writing the correct number of tabs. 
-    */
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
     
     /*! \brief Write data from this object in an XML format for debugging.
     * \param aPeriod Period for which to write data.
@@ -167,6 +169,16 @@ public:
     virtual void adjustInputs( const std::string& aRegionName,
                                std::vector<IInput*>& aInputs,
                                const int aPeriod ) const = 0;
+    
+protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of ICaptureComponent to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( ICaptureComponent, StandardCaptureComponent,
+                                NonEnergyUseCaptureComponent, PowerPlantCaptureComponent )
+    )
 };
 
 #endif // _ICAPTURE_COMPONENT_H_

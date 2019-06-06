@@ -1,0 +1,22 @@
+# File: A21.unoil_demandshares.csv,
+# Title: Unconventional oil regional demand shares,
+# Units: unitless shares,
+# Description: Assumptions for regional shares of global unconventional oil consumption,
+# Source: GCAM 3.1 model inputs. Calculated from export destinations of Canadian and Venezuelan oil.,
+# Column types: cn 
+# ----------
+region_GCAM3,share
+USA,0.628571429
+Canada,0.17012987
+Western Europe,0.024675325
+Japan,0
+Australia_NZ,0
+Former Soviet Union,0
+China,0.021298701
+Middle East,0
+Africa,0
+Latin America,0.130649351
+Southeast Asia,0.024675325
+Eastern Europe,0
+Korea,0
+India,0

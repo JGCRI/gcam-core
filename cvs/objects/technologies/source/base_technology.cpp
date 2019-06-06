@@ -76,11 +76,11 @@ typedef vector<AGHG*>::iterator GHGIterator;
 //!< Default Constructor
 BaseTechnology::BaseTechnology():
   mShareWeight( 1.0 ),
-  mNestedInputRoot( 0 ),
   mIsInitialYear( false ),
   mSequestrationDevice( 0 ),
   doCalibration( false )
 {
+    mNestedInputRoot = 0 ;
     const int maxper = scenario->getModeltime()->getmaxper();
     expenditures.resize( maxper );
 }
@@ -88,20 +88,6 @@ BaseTechnology::BaseTechnology():
 //!< Destructor
 BaseTechnology::~BaseTechnology() {
     clear();
-}
-
-BaseTechnology::BaseTechnology( const BaseTechnology& baseTechIn ) {
-    const int maxper = scenario->getModeltime()->getmaxper();
-    expenditures.resize( maxper );
-    copy( baseTechIn );
-}
-
-BaseTechnology& BaseTechnology::operator =( const BaseTechnology& baseTechIn ) {
-    if ( this != &baseTechIn ) {
-        clear();
-        copy( baseTechIn );
-    }
-    return *this;
 }
 
 void BaseTechnology::copy( const BaseTechnology& baseTechIn ) {
@@ -240,24 +226,6 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
         }
     }
-}
-
-//! Output to XML data
-void BaseTechnology::toInputXML( ostream& out, Tabs* tabs ) const {
-
-    // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name, year, "");
-
-    XMLWriteElement( mShareWeight, "share-weight", out, tabs );
-    mNestedInputRoot->toInputXML( out, tabs );
-    
-    for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
-        (*ghg)->toInputXML( out, tabs );
-    }
-    toInputXMLDerived( out, tabs );
-
-    // write the closing tag.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Output debug info to XML data
@@ -442,14 +410,6 @@ void BaseTechnology::updateMarketplace( const string& sectorName, const string& 
     }
     //marketplace->addToSupply( sectorName, regionName, totalDemand, period );
     mLeafInputs.clear();
-}
-
-void BaseTechnology::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    aFile <<  "Commodity" << ',' << "Consumption" << ',' << "Price Paid" << endl;
-    for( CInputIterator curr = mLeafInputs.begin(); curr != mLeafInputs.end(); ++curr ) {
-        (*curr)->csvSGMOutputFile( aFile, period );
-    }
-    aFile << "Total Consumption" << ',' << mOutputs[ 0 ]->getCurrencyOutput( period ) << endl << endl;
 }
 
 void BaseTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const

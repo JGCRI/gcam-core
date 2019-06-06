@@ -40,7 +40,6 @@
 
 # Load all support functions into memory
 source( "scripts/diag_header.R" )	# configuration and helper functions
-source( "scripts/diag_parser.R" )	# parser to read "ModelInterface" style CSVs
 source( "scripts/diag_grapher.R" )  # functions to generate figures
 source( "scripts/color_schemes.R" ) # some predefined color schemes
 source( "scripts/diag_util_functions.R" ) # library of useful utility functions
@@ -49,7 +48,18 @@ logstart( "diagnostics.R", savelog=F )
 
 # ============================================================================
 # REQUIRED: model interface output file(s) to read.
-FILES <- c( "gcam_data/Core/reference.csv", "gcam_data/Core/tax_25_5.csv" )
+
+# Batch query results already saved to CSV to read
+BATCH_QUERY_RESULTS <- c( "gcam_data/Core/reference.csv", "gcam_data/Core/tax_25_5.csv" )
+
+# Query the following DB with the following batch query file for the following scenarios
+# or NULL to perform no queries
+db_conn <- localDBConn("../", "database_basexdb")
+QUERY_BATCH_FILE <- "batch_queries/Model_verification_queries.xml"
+QUERY_SCENARIOS <- NULL
+#QUERY_SCENARIOS <- c("Reference", "Tax_25_5")
+
+# The default scenario to create difference plots from
 BASE_SCENARIO_NAME <- "Core_Ref"
 
 # ============================================================================
@@ -59,9 +69,14 @@ OUTPUT_DIR <- "figures"
 # ============================================================================
 # REQUIRED: parse data, building list of tables and output directory name
 printlog( "-------- Reading data --------" )
-tables <- list()
-for( fn in FILES ) {
-	tables[[ fn ]] <- parse_mi_output( fn )
+tables <- loadProject("tables.proj")
+for( fn in BATCH_QUERY_RESULTS) {
+    printlog("Adding batch results ", fn)
+	tables <- addMIBatchCSV(fn, tables)
+}
+if(!is.null(QUERY_SCENARIOS)) {
+    printlog("Running queries")
+    tables <- addScenario( db_conn, tables, QUERY_SCENARIOS, QUERY_BATCH_FILE)
 }
 
 # ============================================================================
@@ -84,22 +99,22 @@ Conversion_GJ_kWh <- 277.8
 printlog( "-------- Plotting --------" )
 
 printlog( "Final Energy Consumption: Buildings" )
-fe.bld.d <- extract_data("Final energy by aggregate end-use sector and fuel")
+fe.bld.d <- getQuery(tables, "Final energy by aggregate end-use sector and fuel")
 fe.bld.d <- subset( fe.bld.d, sector == "building" & value != 0 )
 fe.bld.d <- add_global_sum(fe.bld.d)
 fe.bld.d <- compute_energy_reduction(fe.bld.d, "fuel")
 fe.bld.d[TITLE_FIELD_NAME] <- "Final Energy Consumption: Buildings"
-p <- ggplot(fe.bld.d) + geom_bar(aes(x=Year, y=value, fill=fuel), stat="identity") +
+p <- ggplot(fe.bld.d) + geom_bar(aes(x=year, y=value, fill=fuel), stat="identity", position=position_stack(reverse=T)) +
     scale_fill_manual(values=enduse_fuel_numbered)
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
-#do_graph_YearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+#do_graph_yearSubset(p, page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog( "Final Energy Consumption: Industry" )
-fe.ind.d <- extract_data("Final energy by aggregate end-use sector and fuel")
+fe.ind.d <- getQuery(tables, "Final energy by aggregate end-use sector and fuel")
 fe.ind.d <- subset( fe.ind.d, sector == "industry" & value != 0 & fuel != "industrial processes" )
-feedstock.d <- extract_data("Industry feedstocks (liquids only)")
+feedstock.d <- getQuery(tables, "Industry feedstocks (liquids only)")
 feedstock.d$fuel <- "feedstocks"
 feedstock.d$input <- NULL
 feedstock.d$sector <- "industry"
@@ -107,58 +122,58 @@ fe.ind.d <- rbind(fe.ind.d, feedstock.d)
 fe.ind.d <- add_global_sum(fe.ind.d)
 fe.ind.d <- compute_energy_reduction(fe.ind.d, "fuel")
 fe.ind.d[TITLE_FIELD_NAME] <- "Final Energy Consumption: Industry"
-p <- ggplot(fe.ind.d) + geom_bar(aes(x=Year, y=value, fill=fuel), stat="identity") +
+p <- ggplot(fe.ind.d) + geom_bar(aes(x=year, y=value, fill=fuel), stat="identity", position=position_stack(reverse=T)) +
     scale_fill_manual(values=enduse_fuel_numbered)
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
-#do_graph_YearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+#do_graph_yearSubset(p, page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog( "Final Energy Consumption: Transportation" )
-fe.trn.d <- extract_data("Final energy by aggregate end-use sector and fuel")
+fe.trn.d <- getQuery(tables, "Final energy by aggregate end-use sector and fuel")
 fe.trn.d <- subset( fe.trn.d, sector == "transportation" & value != 0)
 fe.trn.d <- add_global_sum(fe.trn.d)
 fe.trn.d <- compute_energy_reduction(fe.trn.d, "fuel")
 fe.trn.d[TITLE_FIELD_NAME] <- "Final Energy Consumption: Transportation"
-p <- ggplot(fe.trn.d) + geom_bar(aes(x=Year, y=value, fill=fuel), stat="identity") +
+p <- ggplot(fe.trn.d) + geom_bar(aes(x=year, y=value, fill=fuel), stat="identity", position=position_stack(reverse=T)) +
     scale_fill_manual(values=enduse_fuel_numbered)
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
-#do_graph_YearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+#do_graph_yearSubset(p, page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog( "Final Energy Consumption by Sector" )
-fe.d <- extract_data("Final energy by aggregate end-use sector and fuel")
-fe.d <- aggregate( value ~ scenario + region + sector + Year + date, fe.d, FUN=sum)
+fe.d <- getQuery(tables, "Final energy by aggregate end-use sector and fuel")
+fe.d <- aggregate( value ~ scenario + region + sector + year, fe.d, FUN=sum)
 # TODO: we have to do this because of inconsistent units
 fe.d$Units <- "EJ"
 fe.d <- add_global_sum(fe.d)
 fe.d <- compute_energy_reduction(fe.d, "sector")
 fe.d$sector <- factor(fe.d$sector, levels=names(enduse_colors))
 fe.d[TITLE_FIELD_NAME] <- "Final Energy Consumption by Sector"
-p <- ggplot(fe.d) + geom_bar(aes(x=Year, y=value, fill=sector, order=sector), stat="identity") +
+p <- ggplot(fe.d) + geom_bar(aes(x=year, y=value, fill=sector), stat="identity", position=position_stack(reverse=T)) +
     scale_fill_manual(values=enduse_colors)
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
-#do_graph_YearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+#do_graph_yearSubset(p, page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Primary Energy Consumption")
-pri.d <- extract_data("Primary energy with CCS (Direct Equivalent)")
+pri.d <- getQuery(tables, "Primary energy with CCS (Direct Equivalent)")
 pri.d <- subset(pri.d, value != 0 )
 pri.d <- add_global_sum(pri.d)
 pri.d <- compute_energy_reduction(pri.d, "fuel")
 pri.d$fuel <- factor(pri.d$fuel, levels=names(PAL_pri_ene))
 pri.d[TITLE_FIELD_NAME] <- "Primary Energy Consumption"
-p <- ggplot(pri.d) + geom_bar(aes(x=Year, y=value, fill=fuel, order=fuel), stat="identity") +
+p <- ggplot(pri.d) + geom_bar(aes(x=year, y=value, fill=fuel), stat="identity", position=position_stack(reverse=T)) +
     scale_fill_manual(values=PAL_pri_ene)
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
-#do_graph_YearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+#do_graph_yearSubset(p, page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Electricity Production by Fuel: CCS Focus")
-elec.ccs.d <- extract_data("Electricity generation by aggregate technology")
+elec.ccs.d <- getQuery(tables, "Electricity generation by aggregate technology")
 elec.ccs.d <- subset(elec.ccs.d, grepl('CCS', technology) | value != 0)
 elec.ccs.d <- add_global_sum(elec.ccs.d)
 elec.ccs.d$value <- elec.ccs.d$value * Conversion_GJ_kWh
@@ -166,15 +181,15 @@ elec.ccs.d$Units <- "TWh"
 elec.ccs.d <- compute_energy_reduction(elec.ccs.d, "technology")
 elec.ccs.d$technology <- factor(elec.ccs.d$technology, levels=names(elec_tech_colors))
 elec.ccs.d[TITLE_FIELD_NAME] <- "Electricity Production by Fuel: CCS Focus"
-p <- ggplot(elec.ccs.d) + geom_bar(aes(x=Year, y=value, fill=technology, order=technology), stat="identity") +
+p <- ggplot(elec.ccs.d) + geom_bar(aes(x=year, y=value, fill=technology), stat="identity", position=position_stack(reverse=T)) +
     scale_fill_manual(values=elec_tech_colors)
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
-#do_graph_YearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+#do_graph_yearSubset(p, page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Hydrogen Production by Fuel")
-h2.d <- extract_data("Hydrogen production by technology")
+h2.d <- getQuery(tables, "Hydrogen production by technology")
 h2.d[ grepl("biomass", h2.d$subsector) & !grepl("CCS", h2.d$technology), "fuel" ] <- "biomass"
 h2.d[ grepl("biomass", h2.d$subsector) & grepl("CCS", h2.d$technology), "fuel" ] <- "biomass w/CCS"
 h2.d[ grepl("coal", h2.d$subsector) & !grepl("CCS", h2.d$technology), "fuel" ] <- "coal"
@@ -186,20 +201,20 @@ h2.d[ grepl("nuclear", h2.d$subsector), "fuel" ] <- "nuclear"
 h2.d[ grepl("solar", h2.d$subsector), "fuel" ] <- "solar"
 h2.d[ grepl("wind", h2.d$subsector), "fuel" ] <- "wind"
 stopifnot(sum(is.na(h2.d$fuel)) == 0)
-h2.d <- aggregate(value ~ scenario + region + fuel + Year + Units + date, h2.d, FUN=sum)
+h2.d <- aggregate(value ~ scenario + region + fuel + year + Units, h2.d, FUN=sum)
 h2.d <- add_global_sum(h2.d)
 h2.d <- compute_energy_reduction(h2.d, "fuel")
 h2.d$fuel <- factor(h2.d$fuel, levels=names(PAL_hydrogen))
 h2.d[TITLE_FIELD_NAME] <- "Hydrogen Production by Fuel"
-p <- ggplot(h2.d) + geom_bar(aes(x=Year, y=value, fill=fuel, order=fuel), stat="identity") +
+p <- ggplot(h2.d) + geom_bar(aes(x=year, y=value, fill=fuel), stat="identity", position=position_stack(reverse=T)) +
     scale_fill_manual(values=PAL_hydrogen)
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
-#do_graph_YearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+#do_graph_yearSubset(p, page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Electricity Production by Fuel: Renewables Focus")
-elec.renew.d <- extract_data("Electricity generation by technology (inc solar roofs)")
+elec.renew.d <- getQuery(tables, "Electricity generation by technology (inc solar roofs)")
 elec.renew.d[ grepl("liquids", elec.renew.d$technology), "technology"] <- "liquids"
 elec.renew.d[ grepl("gas", elec.renew.d$technology), "technology"] <- "gas"
 elec.renew.d[ grepl("coal", elec.renew.d$technology), "technology"] <- "coal"
@@ -214,23 +229,23 @@ elec.renew.d[ elec.renew.d$technology == "PV_storage" , "technology"] <- "pv w/ 
 elec.renew.d[ elec.renew.d$technology == "rooftop_pv" , "technology"] <- "rooftop solar"
 elec.renew.d[ grepl("cogen", elec.renew.d$technology), "technology"] <- "cogen"
 elec.renew.d[ elec.renew.d$technology == "Battery" , "technology"] <- "battery"
-stopifnot(sum(elec.renew.d[is.na(elec.renew.d$technology), "value"]) == 0 )
-elec.renew.d <- aggregate(value ~ scenario + region + technology + Year + Units + date, elec.renew.d, FUN=sum)
+stopifnot(nrow(elec.renew.d[is.na(elec.renew.d$technology), ]) == 0 )
+elec.renew.d <- aggregate(value ~ scenario + region + technology + year + Units, elec.renew.d, FUN=sum)
 elec.renew.d <- add_global_sum(elec.renew.d)
 elec.renew.d$value <- elec.renew.d$value * Conversion_GJ_kWh
 elec.renew.d$Units <- "TWh"
 elec.renew.d <- compute_energy_reduction(elec.renew.d, "technology")
 elec.renew.d$technology <- factor(elec.renew.d$technology, levels=names(elec_renew_colors))
 elec.renew.d[TITLE_FIELD_NAME] <- "Electricity Production by Fuel: Renewables Focus"
-p <- ggplot(elec.renew.d) + geom_bar(aes(x=Year, y=value, fill=technology, order=technology), stat="identity") +
+p <- ggplot(elec.renew.d) + geom_bar(aes(x=year, y=value, fill=technology), stat="identity", position=position_stack(reverse=T)) +
     scale_fill_manual(values=elec_renew_colors)
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
-#do_graph_YearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+#do_graph_yearSubset(p, page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Total Refined Liquid Fuel Production")
-refliq.d <- extract_data("Refined liquid fuel production by technology")
+refliq.d <- getQuery(tables, "Refined liquid fuel production by technology")
 refliq.d[ grepl("oil", refliq.d$technology), "fuel" ] <- "oil"
 refliq.d[ grepl("coal", refliq.d$technology) & !grepl("CCS", refliq.d$technology), "fuel" ] <- "coal"
 refliq.d[ grepl("coal", refliq.d$technology) & grepl("CCS", refliq.d$technology), "fuel" ] <- "coal w/CCS"
@@ -242,9 +257,12 @@ refliq.d[ grepl("bio", refliq.d$technology) & !grepl("CCS", refliq.d$technology)
 refliq.d[ grepl("bio", refliq.d$technology) & grepl("CCS", refliq.d$technology), "fuel" ] <- "biomass w/CCS"
 refliq.d[ grepl("gas", refliq.d$technology), "fuel" ] <- "gas"
 stopifnot(sum(is.na(refliq.d$fuel)) == 0)
-regoil.d <- extract_data("Regional oil production by fuel")
-regoil.d <- dcast( regoil.d, scenario + region + Year ~ fuel)
+regoil.d <- getQuery(tables, "Regional oil production by fuel")
+regoil.d <- dcast( regoil.d, scenario + region + year ~ fuel)
+regoil.d[is.na(regoil.d$"crude oil"), "crude oil"] <- 0
+regoil.d[is.na(regoil.d$"unconventional oil"), "unconventional oil"] <- 0
 regoil.d$total <- regoil.d$"crude oil" + regoil.d$"unconventional oil"
+regoil.d[regoil.d$total == 0.0, "total"] <- 1.0 # avoid NA, zero production will get 0 fract anyway
 regoil.d$fract_crude <- regoil.d$"crude oil" / regoil.d$total
 regoil.d$fract_unconv <- regoil.d$"unconventional oil" / regoil.d$total
 refliq.d.temp <- subset(refliq.d, fuel == "oil")
@@ -258,20 +276,20 @@ refliq.d.temp <- merge(refliq.d.temp, regoil.d)
 refliq.d.temp$value <- refliq.d.temp$value * refliq.d.temp$fract_unconv
 refliq.d <- rbind(refliq.d, refliq.d.temp[, names(refliq.d)])
 refliq.d <- subset(refliq.d, fuel != "oil")
-refliq.d <- aggregate(value ~ scenario + region + fuel + Year + Units + date, refliq.d, FUN=sum)
+refliq.d <- aggregate(value ~ scenario + region + fuel + year + Units, refliq.d, FUN=sum)
 refliq.d <- add_global_sum(refliq.d)
 refliq.d <- compute_energy_reduction(refliq.d, "fuel")
 refliq.d$fuel <- factor(refliq.d$fuel, levels=names(PAL_refliq))
 refliq.d[TITLE_FIELD_NAME] <- "Total Refined Liquid Fuel Production"
-p <- ggplot(refliq.d) + geom_bar(aes(x=Year, y=value, fill=fuel, order=fuel), stat="identity") +
+p <- ggplot(refliq.d) + geom_bar(aes(x=year, y=value, fill=fuel), stat="identity", position=position_stack(reverse=T)) +
     scale_fill_manual(values=PAL_refliq)
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
-#do_graph_YearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+#do_graph_yearSubset(p, page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("CO2 emissions by sector")
-emiss.d <- extract_data("CO2 Emissions by enduse")
+emiss.d <- getQuery(tables, "CO2 Emissions by enduse")
 emiss.d$sector <- factor(emiss.d$sector, levels=names(emiss_by_enduse_colors))
 # Convert MTC to GT CO2
 emiss.d$value <- emiss.d$value * 44/12/1000
@@ -280,18 +298,18 @@ emiss.d <- add_global_sum(emiss.d)
 emiss.d$sector <- factor(emiss.d$sector, levels=names(emiss_by_enduse_colors))
 emiss.d[TITLE_FIELD_NAME] <- "CO2 emissions by sector"
 # TOOD: hack for argument is of length zero bug
-hack.d <- subset(emiss.d, Year == 1990 & sector == sector[1])
+hack.d <- subset(emiss.d, year == 1990 & sector == sector[1])
 hack.d$value <- -0.0000001
 emiss.d <- rbind(emiss.d, hack.d)
-p <- ggplot(emiss.d) + geom_bar(aes(x=Year, y=value, fill=sector, order=sector), stat="identity") +
+p <- ggplot(emiss.d) + geom_bar(aes(x=year, y=value, fill=sector), stat="identity", position=position_stack(reverse=T)) +
     scale_fill_manual(values=emiss_by_enduse_colors)
 p$save_args <- FIGURE_DIMS
 do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
-#do_graph_YearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+#do_graph_yearSubset(p, page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Biomass Consumption by use")
-biouse.d <- extract_data("Biomass Consumption by use")
+biouse.d <- getQuery(tables, "Biomass Consumption by use")
 biouse.d[ grepl("building", biouse.d$sector), "sector" ] <- "direct buildings"
 biouse.d[ grepl("cement", biouse.d$sector), "sector" ] <- "industry"
 biouse.d[ grepl("H2", biouse.d$sector), "sector" ] <- "industry"
@@ -299,69 +317,70 @@ biouse.d[ grepl("district heat", biouse.d$sector), "sector" ] <- "industry"
 biouse.d[ grepl("gas processing", biouse.d$sector), "sector" ] <- "synthetic gas"
 biouse.d[ grepl("refined liquids", biouse.d$sector), "sector" ] <- "refined liquids"
 stopifnot(sum(is.na(biouse.d$sector)) == 0)
-biouse.d <- aggregate(value ~ scenario + region + sector + Year + Units + date, biouse.d, FUN=sum)
+biouse.d <- aggregate(value ~ scenario + region + sector + year + Units, biouse.d, FUN=sum)
 biouse.d <- add_global_sum(biouse.d)
 biouse.d$sector <- factor(biouse.d$sector, levels=names(biouse_colors))
 biouse.d[TITLE_FIELD_NAME] <- "Biomass Consumption by use"
-p <- ggplot(biouse.d) + geom_bar(aes(x=Year, y=value, fill=sector, order=sector), stat="identity") +
+p <- ggplot(biouse.d) + geom_bar(aes(x=year, y=value, fill=sector), stat="identity", position=position_stack(reverse=T)) +
     scale_fill_manual(values=biouse_colors)
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables=c("region", "scenario"))
-#do_graph_YearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+#do_graph_yearSubset(p, page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Land Use by Type")
-landuse.d <- extract_data("Aggregated Land Allocation")
-landuse.d[landuse.d$land.allocation == "grass", "land.allocation"] <- "grass/other pasture"
-landuse.d[landuse.d$land.allocation == "pasture (other)", "land.allocation"] <- "grass/other pasture"
-landuse.d[landuse.d$land.allocation == "otherarable", "land.allocation"] <- "crops"
-landuse.d[landuse.d$land.allocation == "tundra", "land.allocation"] <- "desert"
-stopifnot(sum(is.na(landuse.d$land.allocation)) == 0)
-landuse.d$land.allocation <- factor(landuse.d$land.allocation, levels=names(PAL_landuse))
-landuse.d <- aggregate(value ~ scenario + region + land.allocation + Units + date + Year + file, landuse.d, FUN=sum)
+landuse.d <- getQuery(tables, "Aggregated Land Allocation")
+landuse.d$agg.land <- landuse.d[["land-allocation"]]
+landuse.d[landuse.d[,"land-allocation"] == "grass", "agg.land"] <- "grass/other pasture"
+landuse.d[landuse.d[,"land-allocation"] == "pasture (other)", "agg.land"] <- "grass/other pasture"
+landuse.d[landuse.d[,"land-allocation"] == "otherarable", "agg.land"] <- "crops"
+landuse.d[landuse.d[,"land-allocation"] == "tundra", "agg.land"] <- "desert"
+stopifnot(sum(is.na(landuse.d$agg.land)) == 0)
+landuse.d$agg.land <- factor(landuse.d$agg.land, levels=names(PAL_landuse))
+landuse.d <- aggregate(value ~ scenario + region + agg.land + Units + year, landuse.d, FUN=sum)
 landuse.d <- add_global_sum(landuse.d)
 landuse.d[TITLE_FIELD_NAME] <- "Land Use by Type"
-p <- ggplot(landuse.d) + geom_bar(aes(x=Year, y=value, fill=land.allocation, order=land.allocation), stat="identity") +
+p <- ggplot(landuse.d) + geom_bar(aes(x=year, y=value, fill=agg.land), stat="identity", position=position_stack(reverse=T)) +
     scale_fill_manual(values=PAL_landuse)
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables=c("region", "scenario"))
-#do_graph_YearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+#do_graph_yearSubset(p, page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("Regional Fuel Prices")
-prices.d <- extract_data("Regional energy costs")
+prices.d <- getQuery(tables, "Regional energy costs")
 prices.d <- subset(prices.d, sector != "nuclearFuelGenIII" & value != 0)
 prices.d[TITLE_FIELD_NAME] <- "Regional Fuel Prices"
-p <- ggplot(prices.d) + geom_line(aes(x=Year, y=value, color=sector), size=1.5) +
+p <- ggplot(prices.d) + geom_line(aes(x=year, y=value, color=sector), size=1.5) +
     scale_color_manual(values=cbPalette)
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables=c("region", "scenario"))
-#do_graph_YearSubset(p, page_variables=c("region", "scenario"))
-#do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
+#do_graph_yearSubset(p, page_variables=c("region", "scenario"))
+do_graph(create_diff_plot(p), page_variables=c("region", "scenario"))
 
 printlog("GDP")
-gdp.d <- extract_data("GDP by region")
+gdp.d <- getQuery(tables, "GDP by region")
 # million 1990$ to trillion 2005$
 gdp.d$value <- gdp.d$value * DollarConversion_90_05 / 1000000
 gdp.d$Units <- "trillion 2005$"
 gdp.d[TITLE_FIELD_NAME] <- "GDP"
-p <- ggplot(gdp.d) + geom_line(aes(x=Year, y=value, color=region), size=1.5) +
+p <- ggplot(gdp.d) + geom_line(aes(x=year, y=value, color=region), size=1.5) +
     scale_color_manual(values=c(cbPalette, cbPalette))
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables="scenario")
-#do_graph_YearSubset(p, page_variables="scenario")
+#do_graph_yearSubset(p, page_variables="scenario")
 
 printlog("Population")
-pop.d <- extract_data("Population by region")
+pop.d <- getQuery(tables, "Population by region")
 # thousands of people to millions
 pop.d$value <- pop.d$value / 1000
 pop.d$Units <- "millions"
 pop.d[TITLE_FIELD_NAME] <- "Population"
-p <- ggplot(pop.d) + geom_line(aes(x=Year, y=value, color=region), size=1.5) +
+p <- ggplot(pop.d) + geom_line(aes(x=year, y=value, color=region), size=1.5) +
     scale_color_manual(values=c(cbPalette, cbPalette))
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables="scenario")
-#do_graph_YearSubset(p, page_variables="scenario")
+#do_graph_yearSubset(p, page_variables="scenario")
 
 printlog("GDP per capita")
 names(gdp.d)[names(gdp.d) %in% c("Units", "value")] <- c("gdp_Units", "gdp")
@@ -372,22 +391,22 @@ gdppc.d <- merge(gdp.d, pop.d)
 gdppc.d$gdppc <- gdppc.d$gdp / gdppc.d$pop * 1000
 gdppc.d$Units <- "thousand 2005$ per capita"
 gdppc.d[TITLE_FIELD_NAME] <- "GDP per capita"
-p <- ggplot(gdppc.d) + geom_line(aes(x=Year, y=gdppc, color=region), size=1.5) +
+p <- ggplot(gdppc.d) + geom_line(aes(x=year, y=gdppc, color=region), size=1.5) +
     scale_color_manual(values=c(cbPalette, cbPalette))
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables="scenario")
-#do_graph_YearSubset(p, page_variables="scenario")
+#do_graph_yearSubset(p, page_variables="scenario")
 
 printlog("Primary Energy")
-pri.d <- extract_data("Primary energy with CCS (Direct Equivalent)")
-pri.d <- aggregate(value ~ scenario + region + Year, pri.d, FUN=sum)
+pri.d <- getQuery(tables, "Primary energy with CCS (Direct Equivalent)")
+pri.d <- aggregate(value ~ scenario + region + year, pri.d, FUN=sum)
 pri.d$Units <- "EJ"
 pri.d[TITLE_FIELD_NAME] <- "Primary Energy"
-p <- ggplot(pri.d) + geom_line(aes(x=Year, y=value, color=region), size=1.5) +
+p <- ggplot(pri.d) + geom_line(aes(x=year, y=value, color=region), size=1.5) +
     scale_color_manual(values=c(cbPalette, cbPalette))
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables="scenario")
-#do_graph_YearSubset(p, page_variables="scenario")
+#do_graph_yearSubset(p, page_variables="scenario")
 
 printlog("Primary Energy per Capita")
 names(pri.d)[names(pri.d) %in% c("value", "Units")] <- c("pri", "pri_Units")
@@ -396,33 +415,33 @@ percap.d <- merge(gdppc.d, pri.d)
 percap.d$pripc <- percap.d$pri / percap.d$pop * 1000
 percap.d$Units <- "GJ per capita"
 percap.d[TITLE_FIELD_NAME] <- "Primary Energy per Capita"
-p <- ggplot(percap.d) + geom_line(aes(x=Year, y=pripc, color=region), size=1.5) +
+p <- ggplot(percap.d) + geom_line(aes(x=year, y=pripc, color=region), size=1.5) +
     scale_color_manual(values=c(cbPalette, cbPalette))
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables="scenario")
-#do_graph_YearSubset(p, page_variables="scenario")
+#do_graph_yearSubset(p, page_variables="scenario")
 
 printlog("Primary Energy Intensity")
 percap.d$priint <- percap.d$pri / percap.d$gdp
 percap.d$Units <- "MJ/$ (2005$)"
 percap.d[TITLE_FIELD_NAME] <- "Primary Energy Intensity"
-p <- ggplot(percap.d) + geom_line(aes(x=Year, y=priint, color=region), size=1.5) +
+p <- ggplot(percap.d) + geom_line(aes(x=year, y=priint, color=region), size=1.5) +
     scale_color_manual(values=c(cbPalette, cbPalette))
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables="scenario")
-#do_graph_YearSubset(p, page_variables="scenario")
+#do_graph_yearSubset(p, page_variables="scenario")
 
 printlog("Emissions")
-emiss.d <- extract_data("CO2 emissions by region")
+emiss.d <- getQuery(tables, "CO2 emissions by region")
 # Convert from MTC to GT CO2
 emiss.d$value <- emiss.d$value * 44/12/1000
 emiss.d$Units <- "GT CO2"
 emiss.d[TITLE_FIELD_NAME] <- "Emissions"
-p <- ggplot(emiss.d) + geom_line(aes(x=Year, y=value, color=region), size=1.5) +
+p <- ggplot(emiss.d) + geom_line(aes(x=year, y=value, color=region), size=1.5) +
     scale_color_manual(values=c(cbPalette, cbPalette))
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables="scenario")
-#do_graph_YearSubset(p, page_variables="scenario")
+#do_graph_yearSubset(p, page_variables="scenario")
 
 printlog("Emissions per capita")
 names(emiss.d)[names(emiss.d) %in% c("Units", "value")] <- c("emiss_Units", "emiss")
@@ -431,21 +450,21 @@ percap.d <- merge(percap.d, emiss.d)
 percap.d$emisspc <- percap.d$emiss / percap.d$pop * 1000
 percap.d$Units <- "tCO2 per capita"
 percap.d[TITLE_FIELD_NAME] <- "Emissions per capita"
-p <- ggplot(percap.d) + geom_line(aes(x=Year, y=emisspc, color=region), size=1.5) +
+p <- ggplot(percap.d) + geom_line(aes(x=year, y=emisspc, color=region), size=1.5) +
     scale_color_manual(values=c(cbPalette, cbPalette))
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables="scenario")
-#do_graph_YearSubset(p, page_variables="scenario")
+#do_graph_yearSubset(p, page_variables="scenario")
 
 printlog("Emissions Intensity")
 percap.d$emissint <- percap.d$emiss / percap.d$gdp * 10
 percap.d$Units <- "tCO2/$100"
 percap.d[TITLE_FIELD_NAME] <- "Emissions Intensity"
-p <- ggplot(percap.d) + geom_line(aes(x=Year, y=emissint, color=region), size=1.5) +
+p <- ggplot(percap.d) + geom_line(aes(x=year, y=emissint, color=region), size=1.5) +
     scale_color_manual(values=c(cbPalette, cbPalette))
 p$save_args <- FIGURE_DIMS
 do_graph(p, page_variables="scenario")
-#do_graph_YearSubset(p, page_variables="scenario")
+#do_graph_yearSubset(p, page_variables="scenario")
 
 # ============================================================================
 generate_html_index()

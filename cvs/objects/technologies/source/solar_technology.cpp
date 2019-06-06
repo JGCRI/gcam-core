@@ -82,49 +82,43 @@ const double DEFAULT_TOTAL_ANNUAL_IRRADIANCE = 1000.0;
 SolarTechnology::SolarTechnology(
    const std::string& aName,
    const int          aYear ) :
-    parent( aName, aYear ),
-    mCapitalCost( 3486 ),
-    mCSPEfficiency( 0.001 ), // non-sensical value -- this should always be read-in
-    mPlantAvailability( 0.98 ),
-    mScheduledMaintenance( 0.15 ),
-    mRandomMaintenanceFraction( 0.50 ),
-    mCSPCapacityFactor( 1 ),
-    mElectricSectorName(),
-    mFCR( 0.0856 ),
-    mGridConnectionCost( 1500 ),
-    mOM( 47.87 ),
-    mRegionName(),
-    mSectorName(),
-    mSolarFieldFraction( 0.3 ),
-    mSolarFieldArea( 6.9 ),
-    mMaxLoss( 0.55 ),
-    mEfficiencyLossExponent( 3.0 ),
-    mMaxSectorLoadServed( 0.15 )
+    parent( aName, aYear )
 {
-}
-
-/*! Copy constructor
- *  \param other the instance to copy
- */
-SolarTechnology::SolarTechnology( const SolarTechnology& other ) :
-    parent( other ),
-    mCapitalCost( other.mCapitalCost ),
-    mCSPCapacityFactor( other.mCSPCapacityFactor ),
-    mElectricSectorName( other.mElectricSectorName ),
-    mFCR( other.mFCR ),
-    mGridConnectionCost( other.mGridConnectionCost ),
-    mOM( other.mOM ),
-    mRegionName( other.mRegionName ),
-    mSectorName( other.mSectorName ),
-    mSolarFieldFraction( other.mSolarFieldFraction ),
-    mSolarFieldArea( other.mSolarFieldArea )
-{
+    mCapitalCost = 3486;
+    mCSPEfficiency = 0.001; // non-sensical value -- this should always be read-in
+    mPlantAvailability = 0.98;
+    mScheduledMaintenance = 0.15;
+    mRandomMaintenanceFraction = 0.50;
+    mCSPCapacityFactor = 1;
+    mFCR = 0.0856;
+    mGridConnectionCost = 1500;
+    mOM = 47.87;
+    mSolarFieldFraction = 0.3;
+    mSolarFieldArea = 6.9;
+    mMaxLoss = 0.55;
+    mEfficiencyLossExponent = 3.0;
+    mMaxSectorLoadServed = 0.15;
 }
 
 // Destructor: SolarTechnology ***********************************************
 
 SolarTechnology::~SolarTechnology(void)
 {
+}
+
+void SolarTechnology::copy( const SolarTechnology& aOther ) {
+    IntermittentTechnology::copy( aOther );
+    
+    mCapitalCost = aOther.mCapitalCost;
+    mCSPCapacityFactor = aOther.mCSPCapacityFactor;
+    mElectricSectorName = aOther.mElectricSectorName;
+    mFCR = aOther.mFCR;
+    mGridConnectionCost = aOther.mGridConnectionCost;
+    mOM = aOther.mOM;
+    mRegionName = aOther.mRegionName;
+    mSectorName = aOther.mSectorName;
+    mSolarFieldFraction = aOther.mSolarFieldFraction;
+    mSolarFieldArea = aOther.mSolarFieldArea;
 }
 
 // SolarTechnology::calcCost *************************************************
@@ -240,7 +234,9 @@ double SolarTechnology::calcResourceArea(
 // Documentation is inherited
 SolarTechnology* SolarTechnology::clone( void ) const
 {
-   return new SolarTechnology( *this );
+    SolarTechnology* clone = new SolarTechnology( mName, mYear );
+    clone->copy( *this );
+    return clone;
 }
 
 // SolarTechnology::completeInit *********************************************
@@ -462,30 +458,6 @@ void SolarTechnology::toDebugXMLDerived(
    XMLWriteElement( mTotalAnnualIrradianceKey, "irradiance-tagname", out, tabs );
    XMLWriteElement( getSolarEfficiency( period ), "net-efficiency", out, tabs );
    XMLWriteElement( getSolarPenetration( period ), "estimated-sector-penetration", out, tabs );
-}
-
-// SolarTechnology::toInputXMLDerived ****************************************
-
-// Documentation is inherited
-void SolarTechnology::toInputXMLDerived(
-   std::ostream& out,
-   Tabs*         tabs ) const
-{
-   parent::toInputXMLDerived( out,  tabs );
-   XMLWriteElementCheckDefault( mCapitalCost, "capital-cost", out, tabs, double( 3486 ) );
-   XMLWriteElementCheckDefault( mFCR, "fcr", out, tabs, double( 0.0856 ) );
-   XMLWriteElementCheckDefault( mGridConnectionCost, "grid-connection-cost", out, tabs, double( 1500 ) );
-   XMLWriteElementCheckDefault( mOM, "om", out, tabs, double( 47.87 ) );
-   XMLWriteElementCheckDefault( mSolarFieldFraction, "solar-field-fraction", out, tabs, double( 0.3 ) );
-   XMLWriteElementCheckDefault( mSolarFieldArea, "solar-field-area", out, tabs, double( 6.9 ) );
-   XMLWriteElementCheckDefault( mMaxLoss, "max-solar-loss", out, tabs, double( 0.55 ) );
-   XMLWriteElementCheckDefault( mEfficiencyLossExponent, "loss-exponent", out, tabs, double( 3.0 ) );
-   XMLWriteElementCheckDefault( mPlantAvailability, "plant-availability-fraction", out, tabs, double( 0.98 ) );
-   XMLWriteElementCheckDefault( mScheduledMaintenance, "plant-scheduled-maintenance-fraction", out, tabs, double( 0.15 ) );
-   XMLWriteElementCheckDefault( mRandomMaintenanceFraction, "random-maintence-fraction", out, tabs, double( 0.50 ) );
-   XMLWriteElement( mCSPEfficiency, "net-solar-conversion-efficiency", out, tabs );
-   XMLWriteElement( mMaxSectorLoadServed, "max-sector-load-served", out, tabs );
-   XMLWriteElementCheckDefault<std::string>( mTotalAnnualIrradianceKey, "irradiance-tagname", out, tabs, "total-annual-irradiance" ); 
 }
 
 // SolarTechnology::XMLDerivedClassParse *************************************

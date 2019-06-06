@@ -44,10 +44,11 @@
  */
 
 #include <string>
-#include <vector>
 #include <xercesc/dom/DOMNode.hpp>
+
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 class Tabs;
 
@@ -87,10 +88,6 @@ public:
     virtual void XMLParse( const xercesc::DOMNode* aNode );
 
     virtual bool isSameType( const std::string& aType ) const;
-    
-
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -160,41 +157,46 @@ public:
 protected:
 
     InputCapital();
-
-    //! Cost of the capital input adjusted for the additional costs of the
-    //! capture component.
-    std::vector<Value> mAdjustedCosts;
-
-    //! Coefficient for production or demand function. Coefficients are not
-    // read in and are initialized to 1, but can increase over time with
-    // technical change.
-    std::vector<Value> mAdjustedCoefficients;
-
-    //! Cost of the capital input.
-    Value mCost;
-
-    //! Input specific technical change.
-    Value mTechChange;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        MiniCAMInput,
+        
+        //! Cost of the non-energy input adjusted for the additional costs of the
+        //! capture component.
+        DEFINE_VARIABLE( ARRAY, "adjusted-cost", mAdjustedCosts, objects::TechVintageVector<Value> ),
+        
+        //! Coefficient for production or demand function. Coefficients are not
+        // read in and are initialized to 1, but can increase over time with
+        // technical change.
+        DEFINE_VARIABLE( ARRAY, "adjusted-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> ),
+        
+        //! Input specific technical change.
+        DEFINE_VARIABLE( SIMPLE, "tech-change", mTechChange, Value ),
+        
+        //! Overnight cost of capital.
+        DEFINE_VARIABLE( SIMPLE, "capital-overnight", mCapitalOvernight, Value ),
+        
+        //! Fixed charge rate for levelizing capital.
+        // TODO: this should come from the capital market.
+        DEFINE_VARIABLE( SIMPLE, "fixed-charge-rate", mFixedChargeRate, double ),
+        
+        //! Lifetime of capital that may be different from lifetime of technology.
+        // This is a Value object so as to include units.
+        DEFINE_VARIABLE( SIMPLE, "lifetime-capital", mLifetimeCapital, Value ),
+        
+        //! Calculated value for the levelized cost of capital.
+        DEFINE_VARIABLE( SIMPLE, "levelized-capital-cost", mLevelizedCapitalCost, Value ),
+        
+        //! Technology capacity factor.
+        // TODO: create one in technology and use that instead.
+        DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, double )
+    )
+    
+    void copy( const InputCapital& aOther );
 
 private:
-    //! Overnight cost of capital.
-    Value mCapitalOvernight;
-
-    //! Fixed charge rate for levelizing capital.
-    // TODO: this should come from the capital market.
-    double mFixedChargeRate;
-
-    //! Lifetime of capital that may be different from lifetime of technology.
-    // This is a Value object so as to include units.
-    Value mLifetimeCapital;
-
-    //! Calculated value for the levelized cost of capital.
-    Value mLevelizedCapitalCost;
-
-    //! Technology capacity factor.
-    // TODO: create one in technology and use that instead.
-    double mCapacityFactor;
-
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
 
     // Function to calculate levelized capital costs.

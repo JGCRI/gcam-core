@@ -1,0 +1,36 @@
+# File: A16.EGS_curves.csv
+# Title: Supply curves of engineered geothermal systems (EGS), inherited from GCAM 3.0
+# Units: available in Thermal EJ/yr (i.e. heat input to geothermal power plants); extractioncost in 1975$/GJ
+# Description: available: quantity available; extractioncost: costs of production
+# Reference: Hannam, P., P. Kyle, and S.J. Smith. 2009. Global Deployment of Geothermal Energy Using a New Characterization in GCAM 1.0. PNNL-19231, Pacitic Northwest National Laboratory. http://www.pnl.gov/main/publications/external/technical_reports/PNNL-19231.pdf
+# Column types: ccccnn 
+# ----------
+region_GCAM3,resource,subresource,grade,available,extractioncost
+USA,geothermal,EGS,grade 1,0,0.569
+Canada,geothermal,EGS,grade 1,0,0.569
+Western Europe,geothermal,EGS,grade 1,0,0.569
+Japan,geothermal,EGS,grade 1,0,0.569
+Australia_NZ,geothermal,EGS,grade 1,0,0.569
+Former Soviet Union,geothermal,EGS,grade 1,0,0.569
+China,geothermal,EGS,grade 1,0,0.569
+Middle East,geothermal,EGS,grade 1,0,0.569
+Africa,geothermal,EGS,grade 1,0,0.569
+Latin America,geothermal,EGS,grade 1,0,0.569
+Southeast Asia,geothermal,EGS,grade 1,0,0.569
+Eastern Europe,geothermal,EGS,grade 1,0,0.569
+Korea,geothermal,EGS,grade 1,0,0.569
+India,geothermal,EGS,grade 1,0,0.569
+USA,geothermal,EGS,grade 2,78.46082,1.352
+Canada,geothermal,EGS,grade 2,3.01769,1.352
+Western Europe,geothermal,EGS,grade 2,43.75382,1.352
+Japan,geothermal,EGS,grade 2,5.74418,1.352
+Australia_NZ,geothermal,EGS,grade 2,7.03603,1.352
+Former Soviet Union,geothermal,EGS,grade 2,25.83517,1.352
+China,geothermal,EGS,grade 2,14.35591,1.352
+Middle East,geothermal,EGS,grade 2,5.74418,1.352
+Africa,geothermal,EGS,grade 2,5.68938,1.352
+Latin America,geothermal,EGS,grade 2,37.06546,1.352
+Southeast Asia,geothermal,EGS,grade 2,57.41452,1.352
+Eastern Europe,geothermal,EGS,grade 2,8.75076,1.352
+Korea,geothermal,EGS,grade 2,0.001,1.352
+India,geothermal,EGS,grade 2,5.74418,1.352

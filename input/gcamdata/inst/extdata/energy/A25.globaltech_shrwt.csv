@@ -1,0 +1,21 @@
+# File: A25.globaltech_shrwt.csv
+# Title: Hydrogen technology shareweights
+# Units: Unitless
+# Column types: cccii 
+# ----------
+supplysector,subsector,technology,1971,2100
+H2 central production,coal,coal chemical,1,1
+H2 central production,coal,coal chemical CCS,1,1
+H2 central production,gas,natural gas steam reforming,1,1
+H2 central production,gas,natural gas steam reforming CCS,1,1
+H2 central production,biomass,biomass to H2,1,1
+H2 central production,biomass,biomass to H2 CCS,1,1
+H2 central production,nuclear,thermal splitting,1,1
+H2 central production,electricity,electrolysis,1,1
+H2 central production,wind,electrolysis,1,1
+H2 central production,solar,electrolysis,1,1
+H2 forecourt production,gas,natural gas steam reforming,1,1
+H2 forecourt production,electricity,electrolysis,1,1
+H2 distribution,H2 distribution,H2 distribution,1,1
+H2 enduse,H2 distribution,H2 distribution,1,1
+H2 enduse,H2 forecourt production,H2 forecourt production,1,1

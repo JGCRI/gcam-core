@@ -70,35 +70,52 @@ extern Scenario* scenario;
  */
 
 IntermittentTechnology::IntermittentTechnology( const string& aName, const int aYear ) 
-:Technology( aName, aYear ),
-mElectricSectorName("electricity"),
-mBackupCapacityFactor(0.05),
-mBackupCapitalCost( 0.0 ),
-mElecReserveMargin( 0.15 ),
-mAveGridCapacityFactor( 0.60 )
+:Technology( aName, aYear )
 {
+    mElectricSectorName = "electricity";
+    mBackupCapacityFactor = 0.05;
+    mBackupCapitalCost = 0.0;
+    mElecReserveMargin = 0.15;
+    mAveGridCapacityFactor = 0.60;
+    
+    mBackupCalculator = 0;
+    
+    mResourceInput = mInputs.end();
+    mBackupInput = mInputs.end();
+    mBackupCapCostInput = mInputs.end();
+    mTechCostInput = mInputs.end();
 }
 
-/*! 
- * \brief Copy constructor.
- * \param aOther Technology from which to copy data.
+/*!
+ * \brief Destructor.
  */
-IntermittentTechnology::IntermittentTechnology( const IntermittentTechnology& aOther )
-: Technology( aOther ),mElectricSectorName( aOther.mElectricSectorName ),
-mElectricSectorMarket( aOther.mElectricSectorMarket ),
-mTrialMarketNameParsed( aOther.mTrialMarketNameParsed ),
-mBackupCapacityFactor( aOther.mBackupCapacityFactor ),
-mBackupCapitalCost( aOther.mBackupCapitalCost )
-// Only copy member variables that are read-in. The rest will be filled in by
-// initialization methods.
-{
-    if( aOther.mBackupCalculator.get() ){
-        mBackupCalculator.reset( aOther.mBackupCalculator->clone() );
-    }
+IntermittentTechnology::~IntermittentTechnology() {
+    delete mBackupCalculator;
 }
     
 IntermittentTechnology* IntermittentTechnology::clone() const {
-    return new IntermittentTechnology( *this );
+    IntermittentTechnology* clone = new IntermittentTechnology( mName, mYear );
+    clone->copy( *this );
+    return clone;
+}
+
+void IntermittentTechnology::copy( const IntermittentTechnology& aOther ) {
+    Technology::copy( aOther );
+    mElectricSectorName = aOther.mElectricSectorName;
+    mElectricSectorMarket = aOther.mElectricSectorMarket;
+    mTrialMarketNameParsed = aOther.mTrialMarketNameParsed;
+    mBackupCapacityFactor = aOther.mBackupCapacityFactor;
+    mBackupCapitalCost = aOther.mBackupCapitalCost;
+    
+    if( aOther.mBackupCalculator ) {
+        delete mBackupCalculator;
+        mBackupCalculator = aOther.mBackupCalculator->clone();
+    }
+    
+    /*!
+     * \warning Only copy member variables that are read-in. The rest will be filled in by
+     *          initialization methods.
+     */
 }
 
 const string& IntermittentTechnology::getXMLName() const {
@@ -167,16 +184,7 @@ bool IntermittentTechnology::XMLDerivedClassParse( const string& aNodeName,
         mBackupCapitalCost = XMLHelper<double>::getValue( aCurr );
     }
     else if( BackupCalculatorFactory::isOfType( aNodeName ) ){
-        // Check if a new backup calculator needs to be created because
-        // there is not currently one or the current type does not match the
-        // new type.
-        if( !mBackupCalculator.get() || !mBackupCalculator->isSameType( aNodeName ) ){
-            mBackupCalculator = BackupCalculatorFactory::create( aNodeName );
-        }
-        mBackupCalculator->XMLParse( aCurr );
-    }
-    else if( aNodeName == "trial-market-price" ){
-        mTrialMarketPrice.set( XMLHelper<double>::getValue(aCurr) );
+        parseSingleNode( aCurr, mBackupCalculator, BackupCalculatorFactory::create( aNodeName ).release() );
     }
     else {
         return false;
@@ -184,38 +192,10 @@ bool IntermittentTechnology::XMLDerivedClassParse( const string& aNodeName,
     return true;
 }
 
-void IntermittentTechnology::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteElement( mElectricSectorName, "electric-sector-name", aOut, aTabs);
-    XMLWriteElement( mElectricSectorMarket, "electric-sector-market", aOut, aTabs);
-    XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, string("") );
-    if( mBackupCapacityFactor.isInited() ){
-        XMLWriteElement( mBackupCapacityFactor.get(), "backup-capacity-factor", aOut, aTabs);
-    }
-    if( mBackupCapitalCost.isInited() ){
-        XMLWriteElement( mBackupCapitalCost.get(), "backup-capital-cost", aOut, aTabs);
-    }
-    if( mBackupCalculator.get() ){
-        mBackupCalculator->toInputXML( aOut, aTabs );
-    }
-}   
-
-void IntermittentTechnology::toInputXMLForRestart( ostream& aOut, Tabs* aTabs ) const {
-    Technology::toInputXMLForRestart( aOut, aTabs );
-
-    XMLWriteOpeningTag( getXMLVintageNameStatic(), aOut, aTabs, "", year );
-    if( mTrialMarketPrice.isInited() ){
-        XMLWriteElementCheckDefault( mTrialMarketPrice.get(), "trial-market-price", aOut, aTabs, 0.001 );
-    }
-    XMLWriteClosingTag( getXMLVintageNameStatic(), aOut, aTabs );
-}
-
 void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mElectricSectorName, "electric-sector-name", aOut, aTabs);
     XMLWriteElement( mElectricSectorMarket, "electric-sector-market", aOut, aTabs);
     XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, string("") );
-    if( mTrialMarketPrice.isInited() ){
-        XMLWriteElementCheckDefault( mTrialMarketPrice.get(), "trial-market-price", aOut, aTabs, 0.001 );
-    }
     if( mBackupCapacityFactor.isInited() ){
         XMLWriteElement( mBackupCapacityFactor.get(), "backup-capacity-factor", aOut, aTabs );
     }
@@ -223,7 +203,7 @@ void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut,
         XMLWriteElement( mBackupCapitalCost.get(), "backup-capital-cost", aOut, aTabs );
     }
     XMLWriteElement( calcEnergyFromBackup(), "energy-to-backup", aOut, aTabs );
-    if( mBackupCalculator.get() ){
+    if( mBackupCalculator ){
         mBackupCalculator->toDebugXML( period, aOut, aTabs );
     }
 }
@@ -287,7 +267,7 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
 
     // Create trial market for intermettent technology if backup exists and needs to be
     // calculated.
-    if( mBackupCalculator.get() ){
+    if( mBackupCalculator ){
         SectorUtils::createTrialSupplyMarket( aRegionName, mTrialMarketName, mIntermittTechInfo.get(), mElectricSectorMarket );
         MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
         depFinder->addDependency( aSectorName, aRegionName,
@@ -301,21 +281,12 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
     }
 
     // Warn if a backup calculator was not read-in.
-    if( !mBackupCalculator.get() ){
+    if( !mBackupCalculator ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
                 << " in region " << aRegionName
                 << " did not read in a backup calculator. Backup costs will default to zero. " << endl;
-    }
-    // Convert technology year to period
-    int period = scenario->getModeltime()->getyr_to_per( year );
-    // Initialize trial market price here instead of in initCalc to avoid
-    // price override.
-    if( mTrialMarketPrice.isInited() ){
-        scenario->getMarketplace()->setPrice( 
-            SectorUtils::getTrialMarketName(mTrialMarketName),
-            aRegionName, mTrialMarketPrice.get(), period, true );
     }
     
     initializeInputLocations( aRegionName, aSectorName, 0 );
@@ -333,11 +304,9 @@ void IntermittentTechnology::initCalc( const string& aRegionName,
     // Note: initCalc is called for all past, current and future technologies.
     Technology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
         aDemographics, aPrevPeriodInfo, aPeriod );
-    if ( mBackupCalculator.get() ) {
+    if ( mBackupCalculator ) {
         mBackupCalculator->initCalc( mIntermittTechInfo.get() );
-    }
 
-    if( mBackupCalculator.get() ) {
         // The renewable trial market is a share calculation so we can give the
         // solver some additional hints that the range should be between 0 and 1.
         SectorUtils::setSupplyBehaviorBounds( SectorUtils::getTrialMarketName( mTrialMarketName ),
@@ -351,16 +320,6 @@ void IntermittentTechnology::postCalc( const string& aRegionName,
 {
     // Use the base class postCalc.
     Technology::postCalc( aRegionName, aPeriod );
-    // Store trial market solution price 
-    if( mProductionState[ aPeriod ]->isNewInvestment() ) { // do only once
-        mTrialMarketPrice.set( scenario->getMarketplace()->getPrice(
-            SectorUtils::getTrialMarketName(mTrialMarketName),
-            aRegionName, aPeriod, true) );
-    }
-    // TODO: hack since interpolated intermittent technologies are written out
-    if( !mParsedShareWeight.isInited() ) {
-        mParsedShareWeight = mShareWeight;
-    }
 }
 
 /*! \brief Set intermittent technology outputs and inputs and shares for trial market.
@@ -387,14 +346,16 @@ void IntermittentTechnology::production( const string& aRegionName,
     // the ratio of intermittent-technology output to the electricity output.
     double dependentSectorOutput = scenario->getMarketplace()->getDemand( mElectricSectorName, mElectricSectorMarket, aPeriod );
 
-    double currentTechRatio = 0;
     if ( dependentSectorOutput > 0 ){
-        currentTechRatio = getOutput( aPeriod ) / dependentSectorOutput;
+        mIntermitOutTechRatio = std::min( getOutput( aPeriod ) / dependentSectorOutput, 1.0 );
+    }
+    else {
+        mIntermitOutTechRatio = 0.0;
     }
 
     // Multiple vintaged intermittent technology ratios are additive. This gives one 
     // share for backup calculation and proper behavior for vintaging intermittent technologies.
-    SectorUtils::addToTrialDemand( aRegionName, mTrialMarketName, currentTechRatio, mLastCalcValue, aPeriod );
+    SectorUtils::addToTrialDemand( aRegionName, mTrialMarketName, mIntermitOutTechRatio, aPeriod );
 }
 
 /*! \brief Set tech shares based on backup energy needs for an intermittent
@@ -507,11 +468,11 @@ double IntermittentTechnology::getMarginalBackupCapacity( const string& aRegionN
                                                           const string& aSectorName,
                                                           const int aPeriod ) const {
     double backupCapacity = 0;
-    if( mBackupCalculator.get() && mResourceInput != mInputs.end() ){
+    if( mBackupCalculator && mResourceInput != mInputs.end() ){
         const string& resourceName = ( *mResourceInput )->getName();
         backupCapacity = mBackupCalculator->getMarginalBackupCapacity( aSectorName,
                          mElectricSectorName, resourceName, aRegionName,
-                         mElecReserveMargin, mAveGridCapacityFactor, aPeriod );
+                         mCapacityFactor, mElecReserveMargin, mAveGridCapacityFactor, aPeriod );
     }
 
     /*! \post Backup capacity is a valid number and positive. */
@@ -534,11 +495,11 @@ double IntermittentTechnology::getAverageBackupCapacity( const string& aRegionNa
                                                          const int aPeriod ) const
 {
     double backupCapacity = 0;
-    if( mBackupCalculator.get() ){
+    if( mBackupCalculator ){
         const string& resourceName = ( *mResourceInput )->getName();
         backupCapacity = mBackupCalculator->getAverageBackupCapacity( aSectorName,
                          mElectricSectorName, resourceName, aRegionName,
-                         mElecReserveMargin, mAveGridCapacityFactor, aPeriod );
+                         mCapacityFactor, mElecReserveMargin, mAveGridCapacityFactor, aPeriod );
     }
 
     /*! \post Backup capacity is a valid number and positive. */
@@ -564,10 +525,34 @@ void IntermittentTechnology::initializeInputLocations( const string& aRegionName
     // Set the inputs to the error value.
     mBackupCapCostInput = mTechCostInput = mResourceInput = mBackupInput = mInputs.end();
 
-    const Marketplace* marketplace = scenario->getMarketplace();
     for( InputIterator i = mInputs.begin(); i != mInputs.end(); ++i ){
+        // Parse location for energy inputs.
+        if( ( *i )->hasTypeFlag( IInput::ENERGY | IInput::RESOURCE ) ){
+            if( mResourceInput != mInputs.end() ){
+                // There already was a resource input.
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::NOTICE );
+                mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
+                << " in region " << aRegionName << " has more than one variable resource input." << endl;
+            }
+            else {
+                mResourceInput = i;
+            }
+        }
+        else if( ( *i )->hasTypeFlag( IInput::ENERGY | IInput::BACKUP_ENERGY ) ){
+            if( mBackupInput != mInputs.end() ){
+                // There already was a resource input.
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::NOTICE );
+                mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
+                << " in region " << aRegionName << " has more than one backup input." << endl;
+            }
+            else {
+                mBackupInput = i;
+            }
+        }
         // Parse location for non-energy inputs.
-        if( !( *i )->hasTypeFlag( IInput::ENERGY ) ){
+        else{
             if ( ( *i )->getName() == getBackupCapCostName() && ( getBackupCapCostName() != "" ) ) {
                mBackupCapCostInput = i;
                continue;
@@ -577,56 +562,17 @@ void IntermittentTechnology::initializeInputLocations( const string& aRegionName
                continue;
             }
         }
-
-        // Otherwise, if this is any other non-energy input then skip this input
-        if( !( *i )->hasTypeFlag( IInput::ENERGY ) ){
-            continue;
-        }
-        
-        // Determine the location of the resource and backup input. Resource input
-        // is known to be the input with a variance. Backup input is assumed to be
-        // the other energy input.
-        
-        // Use period 0 marketInfo object to determine which input has a resource variance and is therefore a resource.
-        const IInfo* info = marketplace->getMarketInfo( ( *i )->getName(), aRegionName, 0, false );
-
-        // If the good has a variance it must be the resource input.
-        if( info && info->hasValue( "resourceVariance" ) ){
-            if( mResourceInput != mInputs.end() ){
-                // There already was a resource input.
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::NOTICE );
-                mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
-                        << " in region " << aRegionName << " has more than one variable resource input." << endl;
-            }
-            else {
-                mResourceInput = i;
-            }
-        }
-        // If it is an energy input that is not the resource it must be the backup.
-        else {
-            if( mBackupInput != mInputs.end() ){
-              // There already was a resource input.
-              ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::NOTICE );
-                mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
-                        << " in region " << aRegionName
-                        << " has more than one energy input that is not the resource." << endl;
-            }
-            else {
-                mBackupInput = i;
-            }
-        }
     }
 
     // Check that both the resource and backup input were set.
     if( mResourceInput == mInputs.end() || mBackupInput == mInputs.end() ){
         // There already was a resource input.
         ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::NOTICE );
+        mainLog.setLevel( ILogger::SEVERE );
         mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
                 << " in region " << aRegionName << " does not have the required resource and backup inputs."
                 << endl;
+        abort();
     }
 }
 

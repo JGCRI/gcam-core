@@ -1,0 +1,13 @@
+# File: A232.elec_subsector_shrwt_interpto_grid_adj.csv
+# Title: Grid-Specific Subsector Shareweight Assumptions
+# Units: unitless
+# Comments: Subsector share weights for electricity passthrough sectors in the FERC (grid) regions which need a to-value - adjusting values for particular grids
+# Alaska is not allowed to export electricity in future model years.  It must export a small amount in historical periods to ensure that energy flows balance.
+# Hawaii is not allowed to import electricity in future model years.  It must import a small amount in historical periods to ensure that energy flows balance.
+# Column types: ccccccic 
+# ----------
+region,supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+Hawaii grid,electricity domestic supply,electricity trade,share-weight,final-calibration-year,initial-future-year,0,linear
+Hawaii grid,electricity domestic supply,electricity trade,share-weight,initial-future-year,end-year,0,fixed
+USA,electricity trade,Alaska grid electricity trade,share-weight,final-calibration-year,initial-future-year,0,linear
+USA,electricity trade,Alaska grid electricity trade,share-weight,initial-future-year,end-year,0,fixed

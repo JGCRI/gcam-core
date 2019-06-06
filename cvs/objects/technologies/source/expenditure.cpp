@@ -112,23 +112,6 @@ void Expenditure::setType( const ExpenditureType aType, const double aValue ) {
 }
 
 /*!
- * \brief For outputting SGM data to a flat csv File 
- * \param aFile The file to write output to.
- * \param period The period which we are outputting for
- * \author Pralit Patel
- */
-void Expenditure::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    for( int i = 0; i < END; ++i ){
-        // Need to statically cast the index into an expenditure type. Since its
-        // starting at zero and stopping below end, this won't fail.
-        aFile << enumToName( static_cast<ExpenditureType>( i ) ) << ",";
-        // reset format to default
-        aFile.setf( ios_base::fixed, ios_base::floatfield );
-        aFile << mExpenditures[ i ] << endl;
-    }
-}
-
-/*!
  * \brief Convert between the Expenditure enum type to the String representation
  * \param aType The enum Expenditure type
  * \return The string representation of the type

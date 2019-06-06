@@ -47,7 +47,9 @@
 #include <string>
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
+
 #include "technologies/include/icapture_component.h"
+#include "util/base/include/time_vector.h"
 
 /*! 
  * \ingroup Objects
@@ -73,6 +75,8 @@
 class NonEnergyUseCaptureComponent: public ICaptureComponent {
     friend class CaptureComponentFactory;
 public:
+    virtual ~NonEnergyUseCaptureComponent();
+    
     // Documentation is inherited from ICaptureComponent.
     virtual NonEnergyUseCaptureComponent* clone() const;
 
@@ -81,9 +85,6 @@ public:
     virtual const std::string& getName() const;
    
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -117,19 +118,23 @@ public:
                                const int aPeriod ) const;
 protected:
     NonEnergyUseCaptureComponent();
+    void copy( const NonEnergyUseCaptureComponent& aOther );
     static const std::string& getXMLNameStatic();
 
-    //! Sequestered quantity by period.
-    std::vector<double> mSequesteredAmount;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICaptureComponent,
 
-    //! The name of the gas which will be sequestered.
-    std::string mTargetGas;
+        //! Sequestered quantity by period.
+        DEFINE_VARIABLE( ARRAY, "sequestered-amount", mSequesteredAmount, objects::TechVintageVector<double> ),
 
-    //! Name of sequestration device.
-    std::string mName;
+        //! The name of the gas which will be sequestered.
+        DEFINE_VARIABLE( SIMPLE, "target-gas", mTargetGas, std::string ),
 
-     //! Fraction of carbon removed from the emissions stream.
-    double mRemoveFraction;
+        //! Fraction of carbon removed from the emissions stream.
+        DEFINE_VARIABLE( SIMPLE, "remove-fraction", mRemoveFraction, double )
+    )
 };
 
 #endif // _NON_ENERGY_USE_CAPTURE_COMPONENT_H_

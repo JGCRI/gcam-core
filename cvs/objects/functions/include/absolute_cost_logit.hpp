@@ -45,6 +45,7 @@
 
 #include "functions/include/idiscrete_choice.hpp"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 
 /*!
  * \ingroup Objects
@@ -61,8 +62,10 @@
  *          - Elements:
  *              - \c "logit-exponent" AbsoluteCostLogit::mLogitExponent
  *                   The logit exponent used to describe the width of the distribution.
- *              - \c "base-cost" AbsoluteCostLogit::mBaseCost
- *                   The base cost that sets the scale for cost differences.
+ *                   The sign of the exponent depends on if costs or profit are used as
+ *                   value parameters for these equations.
+ *              - \c "base-value" AbsoluteCostLogit::mBaseValue
+ *                   The base value that sets the scale for value differences.
  *
  * \author Robert Link
  */
@@ -77,32 +80,47 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode *aNode );
 
-    // IRoundTrippable methods
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
-
     // IDiscreteChoice methods
     virtual const std::string& getXMLName() const { return getXMLNameStatic(); }
 
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut,
                              Tabs *aTabs ) const;
+    
+    virtual void initCalc( const std::string& aRegionName, const std::string& aContainerName,
+                           const bool aShouldShareIncreaseWithValue, const int aPeriod );
 
-    virtual double calcUnnormalizedShare( const double aShareWeight, const double aCost,
+    virtual double calcUnnormalizedShare( const double aShareWeight, const double aValue,
                                           const int aPeriod ) const;
+    
+    virtual double calcAverageValue( const double aUnnormalizedShareSum,
+                                     const double aLogShareFac,
+                                     const int aPeriod ) const;
+    
+    virtual double calcShareWeight( const double aShare, const double aValue, const double aAnchorShare,
+                                    const double aAnchorValue, const int aPeriod ) const;
+    
+    virtual double calcShareWeight( const double aShare, const double aValue, const int aPeriod ) const {
+        return calcShareWeight( aShare, aValue, 1.0, 0.0, aPeriod );
+    }
+    
+    virtual void setBaseValue( const double aBaseValue );
 
-    virtual double calcShareWeight( const double aShare, const double aCost, const double aAnchorShare,
-                                    const double aAnchorCost, const int aPeriod ) const;
+protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IDiscreteChoice,
+                            
+        //! The logit exponents by period.
+        DEFINE_VARIABLE( ARRAY, "logit-exponent", mLogitExponent, objects::PeriodVector<double> ),
 
-    virtual void setBaseCost( const double aBaseCost, const std::string &aFailMsg );
-
-private:
-    //! The logit exponents by period.
-    objects::PeriodVector<double> mLogitExponent;
-
-    //! scale factor for cost -- may be parsed or set in calibration
-    double mBaseCost;
-
-    //! flag indicating whether a base cost was set in the XML input
-    bool mParsedBaseCost;
+        //! scale factor for value -- may be parsed or set in calibration
+        DEFINE_VARIABLE( SIMPLE | STATE, "base-value", mBaseValue, Value ),
+        
+        //! flag indicating whether a base value was set in the XML input
+        DEFINE_VARIABLE( SIMPLE, "is-base-value-parsed", mParsedBaseValue, bool )
+    )
 };
 
 #endif // _ABSOLUTE_COST_LOGIT_HPP_

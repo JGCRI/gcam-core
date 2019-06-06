@@ -58,7 +58,6 @@
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
-#include "util/base/include/summary.h"
 #include "util/curves/include/curve.h"
 #include "util/curves/include/point_set_curve.h"
 #include "util/curves/include/point_set.h"
@@ -71,6 +70,7 @@
 // Could hide with a factory method.
 #include "climate/include/magicc_model.h"
 #include "climate/include/hector_model.hpp"
+#include "climate/include/no_climate_model.h"
 #include "emissions/include/emissions_summer.h"
 #include "emissions/include/luc_emissions_summer.h"
 #include "technologies/include/global_technology_database.h"
@@ -96,10 +96,11 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 //! Default constructor.
-World::World():
-mCalcCounter( new CalcCounter() ),
-mGlobalTechDB( new GlobalTechnologyDatabase() )
+World::World()
 {
+    mClimateModel = 0;
+    mCalcCounter = new CalcCounter();
+    mGlobalTechDB = new GlobalTechnologyDatabase();
 }
 
 //! World destructor. 
@@ -109,9 +110,12 @@ World::~World(){
 
 //! Helper member function for the destructor. Performs memory deallocation. 
 void World::clear(){
-    for ( RegionIterator regionIter = regions.begin(); regionIter != regions.end(); regionIter++ ) {
+    for ( RegionIterator regionIter = mRegions.begin(); regionIter != mRegions.end(); regionIter++ ) {
         delete *regionIter;
     }
+    delete mClimateModel;
+    delete mCalcCounter;
+    delete mGlobalTechDB;
 }
 
 //! parses World xml object
@@ -134,21 +138,23 @@ void World::XMLParse( const DOMNode* node ){
         }
         // MiniCAM regions
         else if( nodeName == RegionMiniCAM::getXMLNameStatic() ){
-            parseContainerNode( curr, regions, regionNamesToNumbers, new RegionMiniCAM() );
+            parseContainerNode( curr, mRegions, new RegionMiniCAM() );
         }
 		// Read in parameters for climate model
         else if( nodeName == MagiccModel::getXMLNameStatic() ){
-            parseSingleNode( curr, mClimateModel, new MagiccModel( scenario->getModeltime() ) ); 
+            parseSingleNode( curr, mClimateModel, new MagiccModel() );
+        }
+        else if( nodeName == NoClimateModel::getXMLNameStatic() ){
+            parseSingleNode( curr, mClimateModel, new NoClimateModel() );
         }
 #if USE_HECTOR
         else if( nodeName == HectorModel::getXMLNameStatic() ) {
-            parseSingleNode( curr, mClimateModel, new HectorModel( scenario->getModeltime() ) );
-                
+            parseSingleNode( curr, mClimateModel, new HectorModel() );
         }
 #endif
 		// SGM regions
         else if( nodeName == RegionCGE::getXMLNameStatic() ){
-            parseContainerNode( curr, regions, regionNamesToNumbers, new RegionCGE() );
+            parseContainerNode( curr, mRegions, new RegionCGE() );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -166,15 +172,15 @@ void World::XMLParse( const DOMNode* node ){
 */
 void World::completeInit() {
     //If none has been read in, instantiate the default climate model
-    if ( !mClimateModel.get() ) {
-        mClimateModel.reset( new MagiccModel( scenario->getModeltime() ) );
+    if ( !mClimateModel ) {
+        mClimateModel = new MagiccModel();
     }
     
     // Initialize Climate Model
     mClimateModel->completeInit( scenario->getName() );
     
     // Finish initializing all the regions.
-    for( RegionIterator regionIter = regions.begin(); regionIter != regions.end(); regionIter++ ) {
+    for( RegionIterator regionIter = mRegions.begin(); regionIter != mRegions.end(); regionIter++ ) {
         ( *regionIter )->completeInit();
     }
 
@@ -192,29 +198,12 @@ void World::completeInit() {
     ILogger &mainlog = ILogger::getLogger("main_log");
     totalgraphtimer.print(mainlog, "Total of all graph analysis setup:  ");
 #endif
-}
-
-//! Write out datamembers to XML output stream.
-void World::toInputXML( ostream& out, Tabs* tabs ) const {
-
-    XMLWriteOpeningTag ( getXMLNameStatic(), out, tabs );
-
-    mGlobalTechDB->toInputXML( out, tabs );
-	
-    // Climate model parameters
-    // note that due to a dependency in the carbon cycle model this
-    // must be written out before any of the carbon cycle historical
-    // year data is written which is contained in the regions
-    if ( mClimateModel.get() ) {
-        mClimateModel->toInputXML( out, tabs );
-    }
-
-    for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
-        ( *i )->toInputXML( out, tabs );
-    }
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
+    
+    // At this point we can assume all model components have been initialized and will
+    // no longer require the global technology database to get parameters from so we are
+    // free to delete it
+    delete mGlobalTechDB;
+    mGlobalTechDB = 0;
 }
 
 //! Write out XML for debugging purposes.
@@ -230,14 +219,14 @@ void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // Only print debug XML information for the specified region to avoid
     // unmanagably large XML files.
     const static string debugRegion = Configuration::getInstance()->getString( "debug-region", "USA" );
-    for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ) {
+    for( CRegionIterator i = mRegions.begin(); i != mRegions.end(); i++ ) {
         if( ( *i )->getName() == debugRegion ){
             ( *i )->toDebugXML( period, out, tabs );
         }
     }
 
     // Climate model parameters
-    if ( !mClimateModel.get() ) {
+    if ( !mClimateModel ) {
         mClimateModel->toDebugXML( period, out, tabs );
     }
 
@@ -276,7 +265,7 @@ const string& World::getName() const {
 */
 void World::initCalc( const int period ) {
 
-    for( vector<Region*>::iterator i = regions.begin(); i != regions.end(); i++ ){
+    for( vector<Region*>::iterator i = mRegions.begin(); i != mRegions.end(); i++ ){
         // Add supplies and demands to the marketplace in the base year for checking data consistency
         // and for getting demand and supply totals.
         // Need to update markets here after markets have been null by scenario.
@@ -292,7 +281,7 @@ void World::initCalc( const int period ) {
         // print an I/O table for debuging before we do any calibration
         ILogger& calLog = ILogger::getLogger( "calibration_log" );
         calLog.setLevel( ILogger::DEBUG );
-        for( CRegionIterator reigonIt = regions.begin(); reigonIt != regions.end(); ++reigonIt ){
+        for( CRegionIterator reigonIt = mRegions.begin(); reigonIt != mRegions.end(); ++reigonIt ){
             // for this table we will want a condensed table without non-calibrated values
             // so the user can get an easy to see view of what they put in
             EnergyBalanceTable table( (*reigonIt)->getName(), calLog, true, false );
@@ -387,14 +376,6 @@ void World::calc( const int aPeriod, GcamFlowGraph *aWorkGraph, const vector<IAc
 }
 #endif
 
-//! Update all summary information for reporting
-// Orginally in world.calc, removed to call only once after solved
-void World::updateSummary( const list<string> aPrimaryFuelList, const int period ) {
-    for( RegionIterator i = regions.begin(); i != regions.end(); i++ ){
-        ( *i )->updateSummary( aPrimaryFuelList, period );
-        ( *i )->updateAllOutputContainers( period );
-    }
-}
 
 /*! Calculates the global emissions.
  */
@@ -691,51 +672,6 @@ void World::runClimateModel( int aPeriod ) {
     }
 }
 
-
-//! write results for all regions to file
-void World::csvOutputFile() const {
-
-    // Write global data
-    csvGlobalDataFile();
-    
-    for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
-        ( *i )->csvOutputFile();
-    }
-}
-
-//! write global results to file
-void World::csvGlobalDataFile() const {
-    const int maxper = scenario->getModeltime()->getmaxper();
-    vector<double> temp(maxper);
-    // function protocol
-    void fileoutput3(string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // write total emissions for World
-    for ( int m = 0; m < maxper; m++ ){
-        // Sum emissions by period.
-        for( CRegionIterator iter = regions.begin(); iter != regions.end(); ++iter ) {
-            // This interface needs to be fixed.
-            temp[ m ] += ( *iter )->getSummary( m ).get_emissmap_second( "CO2" );
-        }
-    }
-    fileoutput3( "global"," "," "," ","CO2 emiss","MTC",temp);
-
-    // Write out concentrations.
-    mClimateModel->printFileOutput();
-}
-
-//! MiniCAM style output to database
-void World::dbOutput( const list<string>& aPrimaryFuelList ) const {
-    // Write out concentrations
-    mClimateModel->printDBOutput();
-
-    // call regional output
-    for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
-        ( *i )->dbOutput( aPrimaryFuelList );
-    }
-}
-
 /*! \brief Test to see if calibration worked for all regions
 *
 * Compares the sum of calibrated + fixed values to output of each sector.
@@ -751,7 +687,7 @@ bool World::isAllCalibrated( const int period, double calAccuracy, const bool pr
     bool isAllCalibrated = true;
     ILogger& calLog = ILogger::getLogger( "calibration_log" );
     calLog.setLevel( ILogger::DEBUG );
-    for( CRegionIterator i = regions.begin(); i != regions.end(); i++ ){
+    for( CRegionIterator i = mRegions.begin(); i != mRegions.end(); i++ ){
         bool currRegionCalibrated = ( *i )->isAllCalibrated( period, calAccuracy, printWarnings );
         isAllCalibrated &= currRegionCalibrated;
         // if we did not calibrate this region correctly and we are printing warnings then give the
@@ -788,8 +724,8 @@ bool World::isAllCalibrated( const int period, double calAccuracy, const bool pr
 const map<string,int> World::getOutputRegionMap() const {
     map<string,int> regionMap;
 
-    for ( unsigned int i = 0; i < regions.size(); i++ ) {
-        regionMap[regions[i]->getName()] = i+1; // start index from 1
+    for ( unsigned int i = 0; i < mRegions.size(); i++ ) {
+        regionMap[mRegions[i]->getName()] = i+1; // start index from 1
     }
     // hardcode for now
     regionMap["global"] = 0;
@@ -800,7 +736,7 @@ const map<string,int> World::getOutputRegionMap() const {
 * \param aTax Tax.
 */
 void World::setTax( const GHGPolicy* aTax ){
-    for( RegionIterator iter = regions.begin(); iter != regions.end(); ++iter ){
+    for( RegionIterator iter = mRegions.begin(); iter != mRegions.end(); ++iter ){
         (*iter)->setTax( aTax );
     }
 }
@@ -809,7 +745,7 @@ void World::setTax( const GHGPolicy* aTax ){
 * \return The climate model.
 */
 const IClimateModel* World::getClimateModel() const {
-    return mClimateModel.get();
+    return mClimateModel;
 }
 
 /*! \brief A function to generate a series of ghg emissions quantity curves based on an already performed model run.
@@ -824,7 +760,7 @@ map<string,const Curve*> World::getEmissionsQuantityCurves( const string& ghgNam
     /*! \pre The run has been completed. */
     map<string,const Curve*> emissionsQCurves;
 
-    for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
+    for( CRegionIterator rIter = mRegions.begin(); rIter != mRegions.end(); rIter++ ){
         emissionsQCurves[ (*rIter)->getName() ] = (*rIter)->getEmissionsQuantityCurve( ghgName );
     }
 
@@ -843,7 +779,7 @@ map<string,const Curve*> World::getEmissionsPriceCurves( const string& ghgName )
     /*! \pre The run has been completed. */
     map<string,const Curve*> emissionsPCurves;
     
-    for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
+    for( CRegionIterator rIter = mRegions.begin(); rIter != mRegions.end(); rIter++ ){
         emissionsPCurves[ (*rIter)->getName() ] = (*rIter)->getEmissionsPriceCurve( ghgName );
     }
 
@@ -858,7 +794,7 @@ map<string,const Curve*> World::getEmissionsPriceCurves( const string& ghgName )
  * \return A reference to the Calc Counter
  */
 CalcCounter* World::getCalcCounter() const {
-    return mCalcCounter.get();
+    return mCalcCounter;
 }
 
 /*! \brief Call any calculations that are only done once per period after
@@ -870,20 +806,8 @@ CalcCounter* World::getCalcCounter() const {
 */
 void World::postCalc( const int aPeriod ){
     // Finalize sectors.
-    for( RegionIterator region = regions.begin(); region != regions.end(); ++region ){
+    for( RegionIterator region = mRegions.begin(); region != mRegions.end(); ++region ){
         (*region)->postCalc( aPeriod );
-    }
-}
-
-void World::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); ++rIter ){
-        ( *rIter )->csvSGMOutputFile( aFile, period );
-    }
-}
-
-void World::csvSGMGenFile( ostream& aFile ) const {
-    for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); ++rIter ){
-        ( *rIter )->csvSGMGenFile( aFile );
     }
 }
 
@@ -892,7 +816,13 @@ void World::csvSGMGenFile( ostream& aFile ) const {
  * \return A reference to the global technologies database.
  */
 const GlobalTechnologyDatabase* World::getGlobalTechnologyDatabase() const {
-    return mGlobalTechDB.get();
+    if( !mGlobalTechDB ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Attempting to retrieve " << mGlobalTechDB->getXMLNameStatic() << " after completeInit()." << endl;
+        abort();
+    }
+    return mGlobalTechDB;
 }
 
 /*! \brief Update a visitor for the World.
@@ -909,7 +839,7 @@ void World::accept( IVisitor* aVisitor, const int aPeriod ) const {
     mClimateModel->accept( aVisitor, aPeriod );
 
     // loop for regions
-    for( CRegionIterator currRegion = regions.begin(); currRegion != regions.end(); ++currRegion ){
+    for( CRegionIterator currRegion = mRegions.begin(); currRegion != mRegions.end(); ++currRegion ){
         (*currRegion)->accept( aVisitor, aPeriod );
     }
 

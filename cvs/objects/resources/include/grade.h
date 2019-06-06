@@ -45,12 +45,21 @@
 * \author Sonny Kim
 */
 
-#include <vector>
 #include <memory>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/time_vector.h"
+#include "util/base/include/data_definition_util.h"
+
 class Tabs;
 class IInfo;
+
+// Forward declarations.
+class AccumulatedGrade;
+class AccumulatedPostGrade;
 
 /*! 
 * \ingroup Objects
@@ -61,14 +70,13 @@ class IInfo;
 * \author Sonny Kim
 */
 
-class Grade: public IVisitable
+class Grade: public INamed, public IVisitable, private boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
     Grade();
     void XMLParse( const xercesc::DOMNode* tempnode );
     virtual void completeInit( const IInfo* aSubresourceInfo );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
 
@@ -82,12 +90,30 @@ public:
     const std::string& getName() const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of SubResource to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( Grade, AccumulatedGrade, AccumulatedPostGrade ),
+        
+        //! Grade name.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        
+        //! amount of Grade for each Grade
+        DEFINE_VARIABLE( SIMPLE, "available", mAvailable, double ),
+        
+        //! extraction cost of each Grade
+        DEFINE_VARIABLE( SIMPLE, "extractioncost", mExtractCost, double ),
+        
+        //! total cost
+        DEFINE_VARIABLE( ARRAY, "totalcost", mTotalCost, objects::PeriodVector<double> )
+    )
+
+    //! The Grade's information store.
+    std::auto_ptr<IInfo> mGradeInfo;
+    
     virtual const std::string& getXMLName() const;
-    std::string mName; //!< Grade name
-    std::auto_ptr<IInfo> mGradeInfo; //!< The Grade's information store.
-    double mAvailable; //!< amount of Grade for each Grade
-    double mExtractCost; //!< extraction cost of each Grade
-    std::vector<double> mTotalCost; //!< total cost
 };
 
 #endif // _GRADE_H_

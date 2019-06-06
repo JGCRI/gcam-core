@@ -49,17 +49,21 @@
 #include <map>
 #include "resources/include/aresource.h"
 #include "util/base/include/object_meta_info.h"
+#include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 // Forward declaration.
 class SubResource;
 
 /*! 
 * \ingroup Objects
-* \brief An abstract class which defines a single resource containing multiple
-*        subresources.
+* \brief A class which defines a single resource containing multiple
+*        subresources, which can be of either depletable or renewable type.
 * \todo This class needs much more documentation.
 * \todo This class and AResource need refactoring and cleaning up. FixedResource
-*       should be removed, DeplatableResource and Resource should be merged, and
+*       should be removed. Resource is generic and may contain depletable or 
+*       renewable subresources. DepletableResource contains only depletable
+*       subresources, while RenewableResource contains only renewable subresources.
 *       RenewableResource should inherit from AResource and be moved to its own
 *       files.
 * \author Sonny Kim
@@ -69,8 +73,8 @@ class Resource: public AResource {
 public:
     Resource();
     virtual ~Resource();
+    static const std::string& getXMLNameStatic();
     void XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     void toDebugXML( const int period, std::ostream& aOut, Tabs* aTabs ) const;
     const std::string& getName() const; 
     virtual void completeInit( const std::string& aRegionName, const IInfo* aRegionInfo );
@@ -80,29 +84,51 @@ public:
     
     void calcSupply( const std::string& aRegionName, const GDP* aGdp, const int aPeriod );
     virtual double getAnnualProd( const std::string& aRegionName, const int aPeriod ) const;
-    void dbOutput( const std::string& regname ); 
-    void csvOutputFile( const std::string& regname ); 
+    virtual double getPrice( const int aPeriod ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
 
+    // TODO: is this stuff used?
     typedef ObjECTS::TObjectMetaInfo<> object_meta_info_type;
     typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
 
-    int mNumSubResource; //!< number of subsectors for each Resource
-    std::auto_ptr<IInfo> mResourceInfo; //!< Pointer to the resource's information store.
-    std::vector<SubResource*> mSubResource; //!< subsector objects for each Resource
-    std::vector<double> mResourcePrice; //!< Resource price
-    std::vector<double> mAvailable; //!< total Resource available
-    std::vector<double> mAnnualProd; //!< annual production rate of Resource
-    std::vector<double> mCumulProd; //!< cumulative production of Resource
-    std::map<std::string,int> mSubResourceNameMap; //!< Map of subResource name to integer position in vector.
-    object_meta_info_vector_type mObjectMetaInfo; //!< Vector of object meta info to pass to the market
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AResource,
+
+        //! subresource objects for each Resource
+        DEFINE_VARIABLE( CONTAINER, "subresource", mSubResource, std::vector<SubResource*> ),
+
+        //! Resource price
+        DEFINE_VARIABLE( ARRAY | STATE, "price", mResourcePrice, objects::PeriodVector<Value> ),
+
+        //! total Resource available
+        DEFINE_VARIABLE( ARRAY | STATE, "available", mAvailable, objects::PeriodVector<Value> ),
+
+        //! annual production rate of Resource
+        DEFINE_VARIABLE( ARRAY | STATE, "annualprod", mAnnualProd, objects::PeriodVector<Value> ),
+
+        //! cumulative production of Resource
+        DEFINE_VARIABLE( ARRAY | STATE, "cummprod", mCumulProd, objects::PeriodVector<Value> )
+    )
+    
+    //! Pointer to the resource's information store.
+    std::auto_ptr<IInfo> mResourceInfo;
+
+    //! Vector of object meta info to pass to the market
+    object_meta_info_vector_type mObjectMetaInfo;
+
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
-                                       const xercesc::DOMNode* aNode ) = 0;
-    virtual const std::string& getXMLName() const = 0;
+                                       const xercesc::DOMNode* aNode );
+    virtual const std::string& getXMLName() const;
     void setMarket( const std::string& aRegionName );
     virtual void annualsupply( const std::string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
     void cumulsupply( double aPrice, int aPeriod );
+    
+    void initTechVintageVector();
+private:
+    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 /*! 
@@ -114,10 +140,15 @@ class DepletableResource: public Resource {
 public: 
     static const std::string& getXMLNameStatic();
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Resource
+    )
+    
     const std::string& getXMLName() const;
     bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
-private:
-    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 /*! 
@@ -130,10 +161,15 @@ public:
 
     static const std::string& getXMLNameStatic();
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Resource
+    )
+    
     const std::string& getXMLName() const;
     bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
-private:
-    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 /*! 
@@ -146,17 +182,23 @@ public:
     RenewableResource();
     static const std::string& getXMLNameStatic();
 protected:
-    //! average resource variance computed from subresources
-    std::vector<double> resourceVariance;
-    //! average resource capacity factor computed from subresources
-    std::vector<double> resourceCapacityFactor;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Resource,
+
+        //! average resource variance computed from subresources
+        DEFINE_VARIABLE( ARRAY, "resourceVariance", mResourceVariance, objects::PeriodVector<double> ),
+
+        //! average resource capacity factor computed from subresources
+        DEFINE_VARIABLE( ARRAY, "resourceCapacityFactor", mResourceCapacityFactor, objects::PeriodVector<double> )
+    )
 
     bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
     virtual const std::string& getXMLName() const;
     void completeInit( const std::string& aRegionName, const IInfo* aRegionInfo );
     void annualsupply( const std::string& regionName, int per, const GDP* gdp, double price, double prev_price );
-private:
-    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _RESOURCE_H_

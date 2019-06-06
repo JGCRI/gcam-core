@@ -70,7 +70,15 @@ GovtConsumer::GovtConsumer() {
 }
 
 GovtConsumer* GovtConsumer::clone() const {
-    return new GovtConsumer( *this );
+    GovtConsumer* clone = new GovtConsumer();
+    clone->copy( *this );
+    clone->mBaseTransferPopCoef.set( mBaseTransferPopCoef );
+    clone->mBaseDeficit.set( mBaseDeficit );
+    clone->mBaseTransfer.set( mBaseTransfer );
+    clone->mTaxProportional.set( mTaxProportional );
+    clone->mTaxAdditive.set( mTaxAdditive );
+    clone->mRho.set( mRho );
+    return clone;
 }
 
 /*! \brief Used to merge an existing consumer with the coefficients from the previous periods
@@ -102,24 +110,19 @@ void GovtConsumer::copyParamsInto( GovtConsumer& aGovtConsumer,
 //! Parse xml file for data
 bool GovtConsumer::XMLDerivedClassParse( const string &nodeName, const DOMNode* curr ) {
     if ( nodeName == "deficit" ) {
-        mBaseDeficit = XMLHelper<double>::getValue( curr );
+        mBaseDeficit = XMLHelper<Value>::getValue( curr );
     }
     else if ( nodeName == "rho" ){
-        mRho = XMLHelper<double>::getValue( curr );
+        mRho = XMLHelper<Value>::getValue( curr );
     }
     // base year transfer to household
     else if ( nodeName == "baseTransfer" ){
-        mBaseTransfer = XMLHelper<double>::getValue( curr );
+        mBaseTransfer = XMLHelper<Value>::getValue( curr );
     }
     else {
         return false;
     }
     return true;
-}
-
-//! For derived classes to output XML data
-void GovtConsumer::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElement( mBaseDeficit, "deficit", out, tabs );
 }
 
 //! Output debug info for derived class
@@ -433,21 +436,6 @@ const string& GovtConsumer::getXMLName() const {
 const string& GovtConsumer::getXMLNameStatic() {
     const static string XML_NAME = "govtConsumer";
     return XML_NAME;
-}
-
-//! SGM version of outputing data to a csv file
-void GovtConsumer::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    if ( year == scenario->getModeltime()->getper_to_yr( period ) ) {
-        aFile << "***** Government Sector Results *****" << endl << endl;
-        aFile << "Tax Accounts" << endl;
-        aFile << "Proportional Tax" << ',' << mTaxProportional << endl;
-        aFile << "Additive Tax" << ',' << mTaxAdditive << endl;
-        aFile << "Corporate Income Tax" << ',' << mTaxCorporate << endl;
-        aFile << "Indirect Business Tax" << ',' << mTaxIBT << endl;
-        expenditures[ period ].csvSGMOutputFile( aFile, period );
-        aFile << endl;
-        BaseTechnology::csvSGMOutputFile( aFile, period );
-    }
 }
 
 void GovtConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {

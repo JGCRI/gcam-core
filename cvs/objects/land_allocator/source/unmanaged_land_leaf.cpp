@@ -44,7 +44,6 @@
 #include "util/base/include/xml_helper.h"
 #include "ccarbon_model/include/land_carbon_densities.h"
 #include "emissions/include/aghg.h"
-#include "util/base/include/summary.h"
 #include "util/base/include/ivisitor.h"
 #include "emissions/include/ghg_factory.h"
 #include "marketplace/include/marketplace.h"
@@ -149,8 +148,7 @@ void UnmanagedLandLeaf::setProfitRate( const string& aRegionName,
     // This shouldn't do anything for unmanaged land leafs
 }
 
-
-bool UnmanagedLandLeaf::isManagedLandLeaf( )  const 
+bool UnmanagedLandLeaf::isUnmanagedLandLeaf( )  const 
 {
-    return false;
+    return true;
 }

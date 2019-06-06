@@ -1,0 +1,2777 @@
+# File: Census_ind_VoS_state.csv
+# Title: Value of Shipments from Manufacturing by State
+# Units: thousand USD in 2008
+# Source: US Census Bureau Industry Data
+# Column types: ccicinn 
+# ----------
+state_name,state,NAICS_code,industry,year,VoS_thousUSD_NA,VoS_thousUSD
+Alabama,AL,31,Manufacturing,2008,116400000,116400000
+Alabama,AL,311,Food mfg,2008,9661432,9661432
+Alabama,AL,3111,Animal food mfg,2008,1744928,1744928
+Alabama,AL,3116,Animal  slaughtering and processing,2008,4198062,4198062
+Alabama,AL,3118,Bakeries and tortilla mfg,2008,461753,461753
+Alabama,AL,3119,Other food mfg,2008,1020629,1020629
+Alabama,AL,312,Beverage and tobacco product mfg,2008,1073702,1073702
+Alabama,AL,3121,Beverage mfg,2008,NA,0
+Alabama,AL,313,Textile mills,2008,1201568,1201568
+Alabama,AL,3131,"Fiber, yarn, and thread mills",2008,746466,746466
+Alabama,AL,3132,Fabric mills,2008,NA,0
+Alabama,AL,314,Textile product mills,2008,1156667,1156667
+Alabama,AL,3141,Textile furnishings mills,2008,747664,747664
+Alabama,AL,3149,Other textile product mills,2008,409003,409003
+Alabama,AL,315,Apparel mfg,2008,561695,561695
+Alabama,AL,3151,Apparel knitting mills,2008,385143,385143
+Alabama,AL,321,Wood product mfg,2008,3682060,3682060
+Alabama,AL,3211,Sawmills and wood preservation,2008,1379999,1379999
+Alabama,AL,3212,"Veneer, plywood, and engineered wood product mfg",2008,631510,631510
+Alabama,AL,3219,Other wood product mfg,2008,1670551,1670551
+Alabama,AL,322,Paper mfg,2008,8526893,8526893
+Alabama,AL,3221,"Pulp, paper, and paperboard mills",2008,7357513,7357513
+Alabama,AL,3222,Converted paper product mfg,2008,1169380,1169380
+Alabama,AL,323,Printing and related support activities,2008,672875,672875
+Alabama,AL,3231,Printing and related support activities,2008,672875,672875
+Alabama,AL,324,Petroleum and coal products mfg,2008,6879382,6879382
+Alabama,AL,3241,Petroleum and coal products mfg,2008,6879382,6879382
+Alabama,AL,325,Chemical mfg,2008,11455732,11455732
+Alabama,AL,3251,Basic chemical mfg,2008,6858428,6858428
+Alabama,AL,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,2387700,2387700
+Alabama,AL,3255,"Paint, coating, and adhesive mfg",2008,576832,576832
+Alabama,AL,326,Plastics and rubber products mfg,2008,4127724,4127724
+Alabama,AL,3261,Plastics product mfg,2008,2691075,2691075
+Alabama,AL,3262,Rubber product mfg,2008,1436649,1436649
+Alabama,AL,327,Nonmetallic mineral product mfg,2008,2697306,2697306
+Alabama,AL,3272,Glass and glass product mfg,2008,257482,257482
+Alabama,AL,3273,Cement and concrete product mfg,2008,1406408,1406408
+Alabama,AL,3279,Other nonmetallic mineral product mfg,2008,505653,505653
+Alabama,AL,331,Primary metal mfg,2008,15518820,15518820
+Alabama,AL,3311,Iron and steel mills and ferroalloy mfg,2008,9178883,9178883
+Alabama,AL,3313,Alumina and aluminum production and processing,2008,1544156,1544156
+Alabama,AL,3314,Nonferrous metal (except aluminum) production and processing,2008,2067725,2067725
+Alabama,AL,3315,Foundries,2008,1879020,1879020
+Alabama,AL,332,Fabricated metal product mfg,2008,6561386,6561386
+Alabama,AL,3321,Forging and stamping,2008,340634,340634
+Alabama,AL,3323,Architectural and structural metals mfg,2008,2756656,2756656
+Alabama,AL,3324,"Boiler, tank, and shipping container mfg",2008,549939,549939
+Alabama,AL,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,1114159,1114159
+Alabama,AL,3328,"Coating, engraving, heat treating, and allied activities",2008,238436,238436
+Alabama,AL,3329,Other fabricated metal product mfg,2008,1246899,1246899
+Alabama,AL,333,Machinery mfg,2008,3905124,3905124
+Alabama,AL,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,608868,608868
+Alabama,AL,3335,Metalworking machinery mfg,2008,196485,196485
+Alabama,AL,3336,"Engine, turbine, and power transmission equipment mfg",2008,1214403,1214403
+Alabama,AL,3339,Other general purpose machinery mfg,2008,1010919,1010919
+Alabama,AL,334,Computer and electronic product mfg,2008,4109398,4109398
+Alabama,AL,3341,Computer and peripheral equipment mfg,2008,744707,744707
+Alabama,AL,3342,Communications equipment mfg,2008,873080,873080
+Alabama,AL,3344,Semiconductor and other electronic component mfg,2008,1268643,1268643
+Alabama,AL,3345,"Navigational, measuring, medical, and control instruments mfg",2008,693435,693435
+Alabama,AL,3346,Mfg and reproducing magnetic and optical media,2008,513373,513373
+Alabama,AL,335,"Electrical equipment, appliance, and component mfg",2008,2148133,2148133
+Alabama,AL,3352,Household appliance mfg,2008,NA,0
+Alabama,AL,3353,Electrical equipment mfg,2008,348118,348118
+Alabama,AL,3359,Other electrical equipment and component mfg,2008,901936,901936
+Alabama,AL,336,Transportation equipment mfg,2008,29357463,29357463
+Alabama,AL,3361,Motor vehicle mfg,2008,16727384,16727384
+Alabama,AL,3362,Motor vehicle body and trailer mfg,2008,1032218,1032218
+Alabama,AL,3363,Motor vehicle parts mfg,2008,8349351,8349351
+Alabama,AL,3364,Aerospace product and parts mfg,2008,1554078,1554078
+Alabama,AL,3366,Ship and boat building,2008,845714,845714
+Alabama,AL,3369,Other transportation equipment mfg,2008,796222,796222
+Alabama,AL,337,Furniture and related product mfg,2008,1985898,1985898
+Alabama,AL,3371,Household and institutional furniture and kitchen cabinet mfg,2008,1236414,1236414
+Alabama,AL,3372,Office furniture (including fixtures) mfg,2008,675177,675177
+Alabama,AL,339,Miscellaneous mfg,2008,1118027,1118027
+Alabama,AL,3391,Medical equipment and supplies mfg,2008,379895,379895
+Alabama,AL,3399,Other miscellaneous mfg,2008,738132,738132
+Alaska,AK,31,Manufacturing,2008,9070714,9070714
+Alaska,AK,311,Food mfg,2008,2186305,2186305
+Alaska,AK,3117,Seafood product preparation and packaging,2008,2128847,2128847
+Arizona,AZ,31,Manufacturing,2008,56273714,56273714
+Arizona,AZ,311,Food mfg,2008,5172923,5172923
+Arizona,AZ,3115,Dairy product mfg,2008,2441489,2441489
+Arizona,AZ,3116,Animal  slaughtering and processing,2008,521411,521411
+Arizona,AZ,3118,Bakeries and tortilla mfg,2008,558529,558529
+Arizona,AZ,3119,Other food mfg,2008,755372,755372
+Arizona,AZ,312,Beverage and tobacco product mfg,2008,1620271,1620271
+Arizona,AZ,3121,Beverage mfg,2008,1620271,1620271
+Arizona,AZ,321,Wood product mfg,2008,866305,866305
+Arizona,AZ,3219,Other wood product mfg,2008,681200,681200
+Arizona,AZ,322,Paper mfg,2008,971766,971766
+Arizona,AZ,3222,Converted paper product mfg,2008,687461,687461
+Arizona,AZ,323,Printing and related support activities,2008,911949,911949
+Arizona,AZ,3231,Printing and related support activities,2008,911949,911949
+Arizona,AZ,325,Chemical mfg,2008,4058226,4058226
+Arizona,AZ,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,NA,0
+Arizona,AZ,326,Plastics and rubber products mfg,2008,1713556,1713556
+Arizona,AZ,3261,Plastics product mfg,2008,1569170,1569170
+Arizona,AZ,327,Nonmetallic mineral product mfg,2008,2561274,2561274
+Arizona,AZ,3272,Glass and glass product mfg,2008,228798,228798
+Arizona,AZ,3273,Cement and concrete product mfg,2008,2031791,2031791
+Arizona,AZ,331,Primary metal mfg,2008,2851324,2851324
+Arizona,AZ,3314,Nonferrous metal (except aluminum) production and processing,2008,1955292,1955292
+Arizona,AZ,332,Fabricated metal product mfg,2008,4452189,4452189
+Arizona,AZ,3323,Architectural and structural metals mfg,2008,1549664,1549664
+Arizona,AZ,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,852622,852622
+Arizona,AZ,3329,Other fabricated metal product mfg,2008,1388623,1388623
+Arizona,AZ,333,Machinery mfg,2008,1827006,1827006
+Arizona,AZ,3331,"Agriculture, construction, and mining machinery mfg",2008,503226,503226
+Arizona,AZ,3332,Industrial machinery mfg,2008,412346,412346
+Arizona,AZ,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,267172,267172
+Arizona,AZ,3335,Metalworking machinery mfg,2008,227280,227280
+Arizona,AZ,334,Computer and electronic product mfg,2008,10284847,10284847
+Arizona,AZ,3344,Semiconductor and other electronic component mfg,2008,4811958,4811958
+Arizona,AZ,3345,"Navigational, measuring, medical, and control instruments mfg",2008,4348710,4348710
+Arizona,AZ,335,"Electrical equipment, appliance, and component mfg",2008,652100,652100
+Arizona,AZ,336,Transportation equipment mfg,2008,14397254,14397254
+Arizona,AZ,3363,Motor vehicle parts mfg,2008,694586,694586
+Arizona,AZ,3364,Aerospace product and parts mfg,2008,13077460,13077460
+Arizona,AZ,337,Furniture and related product mfg,2008,962800,962800
+Arizona,AZ,3371,Household and institutional furniture and kitchen cabinet mfg,2008,505653,505653
+Arizona,AZ,339,Miscellaneous mfg,2008,1974885,1974885
+Arizona,AZ,3391,Medical equipment and supplies mfg,2008,1160002,1160002
+Arizona,AZ,3399,Other miscellaneous mfg,2008,814883,814883
+Arkansas,AR,31,Manufacturing,2008,61242015,61242015
+Arkansas,AR,311,Food mfg,2008,15606389,15606389
+Arkansas,AR,3111,Animal food mfg,2008,2155145,2155145
+Arkansas,AR,3112,Grain and oilseed milling,2008,2169040,2169040
+Arkansas,AR,3114,Fruit and vegetable preserving and specialty food mfg,2008,1696874,1696874
+Arkansas,AR,3116,Animal  slaughtering and processing,2008,8050948,8050948
+Arkansas,AR,3118,Bakeries and tortilla mfg,2008,296675,296675
+Arkansas,AR,3119,Other food mfg,2008,848526,848526
+Arkansas,AR,316,Leather and allied product mfg,2008,137736,137736
+Arkansas,AR,3162,Footwear mfg,2008,NA,0
+Arkansas,AR,321,Wood product mfg,2008,2297976,2297976
+Arkansas,AR,3211,Sawmills and wood preservation,2008,988295,988295
+Arkansas,AR,3212,"Veneer, plywood, and engineered wood product mfg",2008,624336,624336
+Arkansas,AR,3219,Other wood product mfg,2008,685345,685345
+Arkansas,AR,322,Paper mfg,2008,4876086,4876086
+Arkansas,AR,3221,"Pulp, paper, and paperboard mills",2008,2415355,2415355
+Arkansas,AR,3222,Converted paper product mfg,2008,2460731,2460731
+Arkansas,AR,323,Printing and related support activities,2008,552435,552435
+Arkansas,AR,3231,Printing and related support activities,2008,552435,552435
+Arkansas,AR,325,Chemical mfg,2008,3002656,3002656
+Arkansas,AR,3251,Basic chemical mfg,2008,1586654,1586654
+Arkansas,AR,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,487240,487240
+Arkansas,AR,326,Plastics and rubber products mfg,2008,2824392,2824392
+Arkansas,AR,3261,Plastics product mfg,2008,1868097,1868097
+Arkansas,AR,3262,Rubber product mfg,2008,956296,956296
+Arkansas,AR,327,Nonmetallic mineral product mfg,2008,993834,993834
+Arkansas,AR,3273,Cement and concrete product mfg,2008,447858,447858
+Arkansas,AR,331,Primary metal mfg,2008,7572458,7572458
+Arkansas,AR,3311,Iron and steel mills and ferroalloy mfg,2008,5321116,5321116
+Arkansas,AR,3312,Steel product mfg from purchased steel,2008,1156249,1156249
+Arkansas,AR,332,Fabricated metal product mfg,2008,4697228,4697228
+Arkansas,AR,3322,Cutlery and handtool mfg,2008,202123,202123
+Arkansas,AR,3323,Architectural and structural metals mfg,2008,1596061,1596061
+Arkansas,AR,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,268376,268376
+Arkansas,AR,3329,Other fabricated metal product mfg,2008,1960139,1960139
+Arkansas,AR,333,Machinery mfg,2008,3307138,3307138
+Arkansas,AR,3331,"Agriculture, construction, and mining machinery mfg",2008,787552,787552
+Arkansas,AR,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,1260754,1260754
+Arkansas,AR,3339,Other general purpose machinery mfg,2008,672480,672480
+Arkansas,AR,334,Computer and electronic product mfg,2008,467373,467373
+Arkansas,AR,335,"Electrical equipment, appliance, and component mfg",2008,2950509,2950509
+Arkansas,AR,3352,Household appliance mfg,2008,NA,0
+Arkansas,AR,3353,Electrical equipment mfg,2008,1088869,1088869
+Arkansas,AR,3359,Other electrical equipment and component mfg,2008,NA,0
+Arkansas,AR,336,Transportation equipment mfg,2008,5575929,5575929
+Arkansas,AR,3363,Motor vehicle parts mfg,2008,1243220,1243220
+Arkansas,AR,3364,Aerospace product and parts mfg,2008,2850095,2850095
+Arkansas,AR,3366,Ship and boat building,2008,322720,322720
+Arkansas,AR,337,Furniture and related product mfg,2008,876977,876977
+Arkansas,AR,3371,Household and institutional furniture and kitchen cabinet mfg,2008,642289,642289
+Arkansas,AR,3372,Office furniture (including fixtures) mfg,2008,223564,223564
+Arkansas,AR,339,Miscellaneous mfg,2008,1114957,1114957
+Arkansas,AR,3391,Medical equipment and supplies mfg,2008,555388,555388
+Arkansas,AR,3399,Other miscellaneous mfg,2008,559569,559569
+California,CA,31,Manufacturing,2008,517454354,517454354
+California,CA,311,Food mfg,2008,66345481,66345481
+California,CA,3111,Animal food mfg,2008,3486767,3486767
+California,CA,3112,Grain and oilseed milling,2008,4903927,4903927
+California,CA,3113,Sugar and confectionery product mfg,2008,2538648,2538648
+California,CA,3114,Fruit and vegetable preserving and specialty food mfg,2008,13136450,13136450
+California,CA,3115,Dairy product mfg,2008,13918654,13918654
+California,CA,3116,Animal  slaughtering and processing,2008,7836191,7836191
+California,CA,3117,Seafood product preparation and packaging,2008,1082255,1082255
+California,CA,3118,Bakeries and tortilla mfg,2008,6528308,6528308
+California,CA,3119,Other food mfg,2008,12914281,12914281
+California,CA,312,Beverage and tobacco product mfg,2008,6170016.3,6170016.3
+California,CA,3121,Beverage mfg,2008,NA,0
+California,CA,313,Textile mills,2008,1567435,1567435
+California,CA,3132,Fabric mills,2008,325199,325199
+California,CA,3133,Textile and fabric finishing and fabric coating mills,2008,1106228,1106228
+California,CA,314,Textile product mills,2008,2017865,2017865
+California,CA,3141,Textile furnishings mills,2008,1402954,1402954
+California,CA,3149,Other textile product mills,2008,614911,614911
+California,CA,315,Apparel mfg,2008,7545890,7545890
+California,CA,3151,Apparel knitting mills,2008,245714,245714
+California,CA,3152,Cut and sew apparel mfg,2008,6957262,6957262
+California,CA,3159,Apparel accessories and other apparel mfg,2008,342913,342913
+California,CA,316,Leather and allied product mfg,2008,14396704.7,14396704.7
+California,CA,3169,Other leather and allied product mfg,2008,491025,491025
+California,CA,321,Wood product mfg,2008,5231234,5231234
+California,CA,3211,Sawmills and wood preservation,2008,905792,905792
+California,CA,3212,"Veneer, plywood, and engineered wood product mfg",2008,733716,733716
+California,CA,3219,Other wood product mfg,2008,3591727,3591727
+California,CA,322,Paper mfg,2008,9869299,9869299
+California,CA,3221,"Pulp, paper, and paperboard mills",2008,2074295,2074295
+California,CA,3222,Converted paper product mfg,2008,7795004,7795004
+California,CA,323,Printing and related support activities,2008,8780896,8780896
+California,CA,3231,Printing and related support activities,2008,8780896,8780896
+California,CA,324,Petroleum and coal products mfg,2008,100572800,100572800
+California,CA,3241,Petroleum and coal products mfg,2008,100572800,100572800
+California,CA,325,Chemical mfg,2008,45957080,45957080
+California,CA,3251,Basic chemical mfg,2008,3351100,3351100
+California,CA,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,1736098,1736098
+California,CA,3253,"Pesticide, fertilizer, and other agricultural chemical mfg",2008,1142641,1142641
+California,CA,3254,Pharmaceutical and medicine mfg,2008,30674300,30674300
+California,CA,3255,"Paint, coating, and adhesive mfg",2008,2161082,2161082
+California,CA,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,4212881,4212881
+California,CA,3259,Other chemical product and preparation mfg,2008,2678978,2678978
+California,CA,326,Plastics and rubber products mfg,2008,14762770,14762770
+California,CA,3261,Plastics product mfg,2008,13370078,13370078
+California,CA,3262,Rubber product mfg,2008,1392693,1392693
+California,CA,327,Nonmetallic mineral product mfg,2008,11430992,11430992
+California,CA,3271,Clay product and refractory mfg,2008,400628,400628
+California,CA,3272,Glass and glass product mfg,2008,2292454,2292454
+California,CA,3273,Cement and concrete product mfg,2008,6625070,6625070
+California,CA,3279,Other nonmetallic mineral product mfg,2008,1505386,1505386
+California,CA,331,Primary metal mfg,2008,8831545,8831545
+California,CA,3311,Iron and steel mills and ferroalloy mfg,2008,3540048,3540048
+California,CA,3312,Steel product mfg from purchased steel,2008,834525,834525
+California,CA,3313,Alumina and aluminum production and processing,2008,1198717,1198717
+California,CA,3314,Nonferrous metal (except aluminum) production and processing,2008,1812568,1812568
+California,CA,3315,Foundries,2008,1445688,1445688
+California,CA,332,Fabricated metal product mfg,2008,30169327,30169327
+California,CA,3321,Forging and stamping,2008,2910156,2910156
+California,CA,3322,Cutlery and handtool mfg,2008,541345,541345
+California,CA,3323,Architectural and structural metals mfg,2008,8019749,8019749
+California,CA,3324,"Boiler, tank, and shipping container mfg",2008,2521327,2521327
+California,CA,3325,Hardware mfg,2008,540822,540822
+California,CA,3326,Spring and wire product mfg,2008,573753,573753
+California,CA,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,8062524,8062524
+California,CA,3328,"Coating, engraving, heat treating, and allied activities",2008,2379600,2379600
+California,CA,3329,Other fabricated metal product mfg,2008,4620050,4620050
+California,CA,333,Machinery mfg,2008,20028379,20028379
+California,CA,3331,"Agriculture, construction, and mining machinery mfg",2008,2006284,2006284
+California,CA,3332,Industrial machinery mfg,2008,3388484,3388484
+California,CA,3333,Commercial and service industry machinery mfg,2008,3155707,3155707
+California,CA,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,1827222,1827222
+California,CA,3335,Metalworking machinery mfg,2008,2400901,2400901
+California,CA,3336,"Engine, turbine, and power transmission equipment mfg",2008,2745381,2745381
+California,CA,3339,Other general purpose machinery mfg,2008,4504399,4504399
+California,CA,334,Computer and electronic product mfg,2008,82889737,82889737
+California,CA,3341,Computer and peripheral equipment mfg,2008,6136421,6136421
+California,CA,3342,Communications equipment mfg,2008,18675601,18675601
+California,CA,3343,Audio and video equipment mfg,2008,1097153,1097153
+California,CA,3344,Semiconductor and other electronic component mfg,2008,24098963,24098963
+California,CA,3345,"Navigational, measuring, medical, and control instruments mfg",2008,30574647,30574647
+California,CA,3346,Mfg and reproducing magnetic and optical media,2008,2306951,2306951
+California,CA,335,"Electrical equipment, appliance, and component mfg",2008,9766171,9766171
+California,CA,3351,Electric lighting equipment mfg,2008,1992439,1992439
+California,CA,3353,Electrical equipment mfg,2008,2594464,2594464
+California,CA,3359,Other electrical equipment and component mfg,2008,4985971,4985971
+California,CA,336,Transportation equipment mfg,2008,39084440,39084440
+California,CA,3361,Motor vehicle mfg,2008,3932284,3932284
+California,CA,3362,Motor vehicle body and trailer mfg,2008,1391975,1391975
+California,CA,3363,Motor vehicle parts mfg,2008,5815825,5815825
+California,CA,3364,Aerospace product and parts mfg,2008,23811136,23811136
+California,CA,3366,Ship and boat building,2008,2426265,2426265
+California,CA,3369,Other transportation equipment mfg,2008,1411673,1411673
+California,CA,337,Furniture and related product mfg,2008,7848704,7848704
+California,CA,3371,Household and institutional furniture and kitchen cabinet mfg,2008,4608468,4608468
+California,CA,3372,Office furniture (including fixtures) mfg,2008,2020995,2020995
+California,CA,3379,Other furniture related product mfg,2008,1219242,1219242
+California,CA,339,Miscellaneous mfg,2008,24187588,24187588
+California,CA,3391,Medical equipment and supplies mfg,2008,15604532,15604532
+California,CA,3399,Other miscellaneous mfg,2008,8583056,8583056
+Colorado,CO,31,Manufacturing,2008,46925245,46925245
+Colorado,CO,311,Food mfg,2008,7785985,7785985
+Colorado,CO,3113,Sugar and confectionery product mfg,2008,219060,219060
+Colorado,CO,3115,Dairy product mfg,2008,876632,876632
+Colorado,CO,3116,Animal  slaughtering and processing,2008,4333680,4333680
+Colorado,CO,3118,Bakeries and tortilla mfg,2008,571389,571389
+Colorado,CO,3119,Other food mfg,2008,536477,536477
+Colorado,CO,312,Beverage and tobacco product mfg,2008,3409458,3409458
+Colorado,CO,3121,Beverage mfg,2008,3409458,3409458
+Colorado,CO,314,Textile product mills,2008,473694,473694
+Colorado,CO,3149,Other textile product mills,2008,NA,0
+Colorado,CO,321,Wood product mfg,2008,639807,639807
+Colorado,CO,3219,Other wood product mfg,2008,467519,467519
+Colorado,CO,322,Paper mfg,2008,593070,593070
+Colorado,CO,3222,Converted paper product mfg,2008,593070,593070
+Colorado,CO,323,Printing and related support activities,2008,1320757,1320757
+Colorado,CO,3231,Printing and related support activities,2008,1320757,1320757
+Colorado,CO,325,Chemical mfg,2008,4795914,4795914
+Colorado,CO,3254,Pharmaceutical and medicine mfg,2008,2591700,2591700
+Colorado,CO,3259,Other chemical product and preparation mfg,2008,1163319,1163319
+Colorado,CO,326,Plastics and rubber products mfg,2008,1085600,1085600
+Colorado,CO,3261,Plastics product mfg,2008,1052666,1052666
+Colorado,CO,327,Nonmetallic mineral product mfg,2008,2142620,2142620
+Colorado,CO,3271,Clay product and refractory mfg,2008,630498,630498
+Colorado,CO,3273,Cement and concrete product mfg,2008,1233979,1233979
+Colorado,CO,3279,Other nonmetallic mineral product mfg,2008,278143,278143
+Colorado,CO,331,Primary metal mfg,2008,1521004,1521004
+Colorado,CO,3311,Iron and steel mills and ferroalloy mfg,2008,1521004,1521004
+Colorado,CO,332,Fabricated metal product mfg,2008,3172658,3172658
+Colorado,CO,3323,Architectural and structural metals mfg,2008,1103825,1103825
+Colorado,CO,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,472909,472909
+Colorado,CO,3329,Other fabricated metal product mfg,2008,366277,366277
+Colorado,CO,333,Machinery mfg,2008,2931724,2931724
+Colorado,CO,3332,Industrial machinery mfg,2008,205012,205012
+Colorado,CO,3333,Commercial and service industry machinery mfg,2008,459962,459962
+Colorado,CO,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,490773,490773
+Colorado,CO,3336,"Engine, turbine, and power transmission equipment mfg",2008,626715,626715
+Colorado,CO,3339,Other general purpose machinery mfg,2008,867178,867178
+Colorado,CO,334,Computer and electronic product mfg,2008,4653674,4653674
+Colorado,CO,3341,Computer and peripheral equipment mfg,2008,349122,349122
+Colorado,CO,3342,Communications equipment mfg,2008,665834,665834
+Colorado,CO,3344,Semiconductor and other electronic component mfg,2008,1379919,1379919
+Colorado,CO,3345,"Navigational, measuring, medical, and control instruments mfg",2008,2195734,2195734
+Colorado,CO,335,"Electrical equipment, appliance, and component mfg",2008,4722856,4722856
+Colorado,CO,336,Transportation equipment mfg,2008,4047346,4047346
+Colorado,CO,3364,Aerospace product and parts mfg,2008,3573136,3573136
+Colorado,CO,337,Furniture and related product mfg,2008,819828,819828
+Colorado,CO,3371,Household and institutional furniture and kitchen cabinet mfg,2008,284601,284601
+Colorado,CO,3372,Office furniture (including fixtures) mfg,2008,319501,319501
+Colorado,CO,339,Miscellaneous mfg,2008,2809250,2809250
+Colorado,CO,3391,Medical equipment and supplies mfg,2008,2143646,2143646
+Colorado,CO,3399,Other miscellaneous mfg,2008,665605,665605
+Connecticut,CT,31,Manufacturing,2008,56594921,56594921
+Connecticut,CT,311,Food mfg,2008,2839813,2839813
+Connecticut,CT,3118,Bakeries and tortilla mfg,2008,1121019,1121019
+Connecticut,CT,3119,Other food mfg,2008,885642,885642
+Connecticut,CT,314,Textile product mills,2008,239232,239232
+Connecticut,CT,322,Paper mfg,2008,1678467,1678467
+Connecticut,CT,3221,"Pulp, paper, and paperboard mills",2008,899548,899548
+Connecticut,CT,3222,Converted paper product mfg,2008,778919,778919
+Connecticut,CT,323,Printing and related support activities,2008,1341448,1341448
+Connecticut,CT,3231,Printing and related support activities,2008,1341448,1341448
+Connecticut,CT,325,Chemical mfg,2008,9575814,9575814
+Connecticut,CT,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,2220016,2220016
+Connecticut,CT,3259,Other chemical product and preparation mfg,2008,569010,569010
+Connecticut,CT,326,Plastics and rubber products mfg,2008,1743460,1743460
+Connecticut,CT,3261,Plastics product mfg,2008,1581275,1581275
+Connecticut,CT,327,Nonmetallic mineral product mfg,2008,819998,819998
+Connecticut,CT,3272,Glass and glass product mfg,2008,190492,190492
+Connecticut,CT,3273,Cement and concrete product mfg,2008,438454,438454
+Connecticut,CT,331,Primary metal mfg,2008,1864936,1864936
+Connecticut,CT,3312,Steel product mfg from purchased steel,2008,553076,553076
+Connecticut,CT,3314,Nonferrous metal (except aluminum) production and processing,2008,828117,828117
+Connecticut,CT,332,Fabricated metal product mfg,2008,6751013,6751013
+Connecticut,CT,3321,Forging and stamping,2008,839292,839292
+Connecticut,CT,3322,Cutlery and handtool mfg,2008,746073,746073
+Connecticut,CT,3323,Architectural and structural metals mfg,2008,886208,886208
+Connecticut,CT,3325,Hardware mfg,2008,503251,503251
+Connecticut,CT,3326,Spring and wire product mfg,2008,181624,181624
+Connecticut,CT,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,1642429,1642429
+Connecticut,CT,3328,"Coating, engraving, heat treating, and allied activities",2008,560431,560431
+Connecticut,CT,3329,Other fabricated metal product mfg,2008,1303012,1303012
+Connecticut,CT,333,Machinery mfg,2008,3726394,3726394
+Connecticut,CT,3332,Industrial machinery mfg,2008,796815,796815
+Connecticut,CT,3333,Commercial and service industry machinery mfg,2008,394303,394303
+Connecticut,CT,3335,Metalworking machinery mfg,2008,850176,850176
+Connecticut,CT,3336,"Engine, turbine, and power transmission equipment mfg",2008,560079,560079
+Connecticut,CT,3339,Other general purpose machinery mfg,2008,956031,956031
+Connecticut,CT,334,Computer and electronic product mfg,2008,4326516,4326516
+Connecticut,CT,3342,Communications equipment mfg,2008,892084,892084
+Connecticut,CT,3344,Semiconductor and other electronic component mfg,2008,837352,837352
+Connecticut,CT,3345,"Navigational, measuring, medical, and control instruments mfg",2008,2474466,2474466
+Connecticut,CT,335,"Electrical equipment, appliance, and component mfg",2008,2624057,2624057
+Connecticut,CT,3351,Electric lighting equipment mfg,2008,232836,232836
+Connecticut,CT,3353,Electrical equipment mfg,2008,780508,780508
+Connecticut,CT,3359,Other electrical equipment and component mfg,2008,1582459,1582459
+Connecticut,CT,336,Transportation equipment mfg,2008,14605450,14605450
+Connecticut,CT,3363,Motor vehicle parts mfg,2008,NA,0
+Connecticut,CT,3364,Aerospace product and parts mfg,2008,11297988,11297988
+Connecticut,CT,3366,Ship and boat building,2008,NA,0
+Connecticut,CT,337,Furniture and related product mfg,2008,509464,509464
+Connecticut,CT,3371,Household and institutional furniture and kitchen cabinet mfg,2008,172629,172629
+Connecticut,CT,3372,Office furniture (including fixtures) mfg,2008,214498,214498
+Connecticut,CT,339,Miscellaneous mfg,2008,2506139,2506139
+Connecticut,CT,3391,Medical equipment and supplies mfg,2008,1707452,1707452
+Connecticut,CT,3399,Other miscellaneous mfg,2008,798687,798687
+Delaware,DE,31,Manufacturing,2008,25895386,25895386
+Delaware,DE,311,Food mfg,2008,2527142,2527142
+Delaware,DE,3116,Animal  slaughtering and processing,2008,1314696,1314696
+Delaware,DE,325,Chemical mfg,2008,11169218,11169218
+Delaware,DE,3254,Pharmaceutical and medicine mfg,2008,NA,0
+Delaware,DE,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,1401227,1401227
+Delaware,DE,326,Plastics and rubber products mfg,2008,567679,567679
+Delaware,DE,3261,Plastics product mfg,2008,490760,490760
+Delaware,DE,332,Fabricated metal product mfg,2008,525562,525562
+Delaware,DE,3323,Architectural and structural metals mfg,2008,304713,304713
+Delaware,DE,334,Computer and electronic product mfg,2008,838592,838592
+Delaware,DE,3345,"Navigational, measuring, medical, and control instruments mfg",2008,NA,0
+Delaware,DE,337,Furniture and related product mfg,2008,199712,199712
+Delaware,DE,339,Miscellaneous mfg,2008,472844,472844
+Delaware,DE,3391,Medical equipment and supplies mfg,2008,343149,343149
+District of Columbia,DC,31,Manufacturing,2008,344608,344608
+Florida,FL,31,Manufacturing,2008,99686915,99686915
+Florida,FL,311,Food mfg,2008,11748514,11748514
+Florida,FL,3113,Sugar and confectionery product mfg,2008,801315,801315
+Florida,FL,3114,Fruit and vegetable preserving and specialty food mfg,2008,3853351,3853351
+Florida,FL,3115,Dairy product mfg,2008,1302508,1302508
+Florida,FL,3116,Animal  slaughtering and processing,2008,1301673,1301673
+Florida,FL,3117,Seafood product preparation and packaging,2008,581350,581350
+Florida,FL,3118,Bakeries and tortilla mfg,2008,1139647,1139647
+Florida,FL,3119,Other food mfg,2008,2079574,2079574
+Florida,FL,312,Beverage and tobacco product mfg,2008,5444502,5444502
+Florida,FL,3121,Beverage mfg,2008,NA,0
+Florida,FL,3122,Tobacco mfg,2008,NA,0
+Florida,FL,314,Textile product mills,2008,547080,547080
+Florida,FL,3141,Textile furnishings mills,2008,194847,194847
+Florida,FL,3149,Other textile product mills,2008,352234,352234
+Florida,FL,315,Apparel mfg,2008,374286,374286
+Florida,FL,3152,Cut and sew apparel mfg,2008,325119,325119
+Florida,FL,321,Wood product mfg,2008,2081349,2081349
+Florida,FL,3211,Sawmills and wood preservation,2008,624535,624535
+Florida,FL,3212,"Veneer, plywood, and engineered wood product mfg",2008,593797,593797
+Florida,FL,3219,Other wood product mfg,2008,863018,863018
+Florida,FL,322,Paper mfg,2008,4500585,4500585
+Florida,FL,3221,"Pulp, paper, and paperboard mills",2008,2719491,2719491
+Florida,FL,3222,Converted paper product mfg,2008,1781094,1781094
+Florida,FL,323,Printing and related support activities,2008,2866566,2866566
+Florida,FL,3231,Printing and related support activities,2008,2866566,2866566
+Florida,FL,324,Petroleum and coal products mfg,2008,761504,761504
+Florida,FL,3241,Petroleum and coal products mfg,2008,761504,761504
+Florida,FL,325,Chemical mfg,2008,12722244,12722244
+Florida,FL,3251,Basic chemical mfg,2008,803251,803251
+Florida,FL,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,1630868,1630868
+Florida,FL,3253,"Pesticide, fertilizer, and other agricultural chemical mfg",2008,6595218,6595218
+Florida,FL,3254,Pharmaceutical and medicine mfg,2008,1492924,1492924
+Florida,FL,3255,"Paint, coating, and adhesive mfg",2008,695304,695304
+Florida,FL,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,848615,848615
+Florida,FL,3259,Other chemical product and preparation mfg,2008,656064,656064
+Florida,FL,326,Plastics and rubber products mfg,2008,3308466,3308466
+Florida,FL,3261,Plastics product mfg,2008,2968062,2968062
+Florida,FL,3262,Rubber product mfg,2008,340404,340404
+Florida,FL,327,Nonmetallic mineral product mfg,2008,5255891,5255891
+Florida,FL,3272,Glass and glass product mfg,2008,340456,340456
+Florida,FL,3273,Cement and concrete product mfg,2008,4012316,4012316
+Florida,FL,3279,Other nonmetallic mineral product mfg,2008,523367,523367
+Florida,FL,331,Primary metal mfg,2008,1915338,1915338
+Florida,FL,3312,Steel product mfg from purchased steel,2008,713593,713593
+Florida,FL,332,Fabricated metal product mfg,2008,7077866,7077866
+Florida,FL,3321,Forging and stamping,2008,812618,812618
+Florida,FL,3323,Architectural and structural metals mfg,2008,3210113,3210113
+Florida,FL,3324,"Boiler, tank, and shipping container mfg",2008,728560,728560
+Florida,FL,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,798872,798872
+Florida,FL,3328,"Coating, engraving, heat treating, and allied activities",2008,225620,225620
+Florida,FL,3329,Other fabricated metal product mfg,2008,879098,879098
+Florida,FL,333,Machinery mfg,2008,5430097,5430097
+Florida,FL,3331,"Agriculture, construction, and mining machinery mfg",2008,543565,543565
+Florida,FL,3332,Industrial machinery mfg,2008,475264,475264
+Florida,FL,3333,Commercial and service industry machinery mfg,2008,1584776,1584776
+Florida,FL,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,616440,616440
+Florida,FL,3335,Metalworking machinery mfg,2008,214719,214719
+Florida,FL,3339,Other general purpose machinery mfg,2008,1526626,1526626
+Florida,FL,334,Computer and electronic product mfg,2008,15337817,15337817
+Florida,FL,3341,Computer and peripheral equipment mfg,2008,867275,867275
+Florida,FL,3342,Communications equipment mfg,2008,4744325,4744325
+Florida,FL,3344,Semiconductor and other electronic component mfg,2008,3476953,3476953
+Florida,FL,3345,"Navigational, measuring, medical, and control instruments mfg",2008,6045102,6045102
+Florida,FL,335,"Electrical equipment, appliance, and component mfg",2008,2303872,2303872
+Florida,FL,3351,Electric lighting equipment mfg,2008,227672,227672
+Florida,FL,3353,Electrical equipment mfg,2008,625859,625859
+Florida,FL,3359,Other electrical equipment and component mfg,2008,1429433,1429433
+Florida,FL,336,Transportation equipment mfg,2008,8483926,8483926
+Florida,FL,3362,Motor vehicle body and trailer mfg,2008,828455,828455
+Florida,FL,3363,Motor vehicle parts mfg,2008,823466,823466
+Florida,FL,3364,Aerospace product and parts mfg,2008,3757013,3757013
+Florida,FL,3366,Ship and boat building,2008,1892852,1892852
+Florida,FL,337,Furniture and related product mfg,2008,1701753,1701753
+Florida,FL,3371,Household and institutional furniture and kitchen cabinet mfg,2008,887850,887850
+Florida,FL,3372,Office furniture (including fixtures) mfg,2008,385943,385943
+Florida,FL,3379,Other furniture related product mfg,2008,427960,427960
+Florida,FL,339,Miscellaneous mfg,2008,7582482,7582482
+Florida,FL,3391,Medical equipment and supplies mfg,2008,5742638,5742638
+Florida,FL,3399,Other miscellaneous mfg,2008,1839845,1839845
+Georgia,GA,31,Manufacturing,2008,143601340,143601340
+Georgia,GA,311,Food mfg,2008,26708993,26708993
+Georgia,GA,3111,Animal food mfg,2008,2738576,2738576
+Georgia,GA,3112,Grain and oilseed milling,2008,3959874,3959874
+Georgia,GA,3113,Sugar and confectionery product mfg,2008,1421187,1421187
+Georgia,GA,3115,Dairy product mfg,2008,559187,559187
+Georgia,GA,3116,Animal  slaughtering and processing,2008,9623910,9623910
+Georgia,GA,3118,Bakeries and tortilla mfg,2008,3120220,3120220
+Georgia,GA,3119,Other food mfg,2008,4771429,4771429
+Georgia,GA,312,Beverage and tobacco product mfg,2008,3288669,3288669
+Georgia,GA,3121,Beverage mfg,2008,NA,0
+Georgia,GA,313,Textile mills,2008,5434930,5434930
+Georgia,GA,3131,"Fiber, yarn, and thread mills",2008,2688620,2688620
+Georgia,GA,3132,Fabric mills,2008,2112741,2112741
+Georgia,GA,3133,Textile and fabric finishing and fabric coating mills,2008,633569,633569
+Georgia,GA,314,Textile product mills,2008,10009076,10009076
+Georgia,GA,3141,Textile furnishings mills,2008,9017099,9017099
+Georgia,GA,3149,Other textile product mills,2008,991978,991978
+Georgia,GA,315,Apparel mfg,2008,179907,179907
+Georgia,GA,3152,Cut and sew apparel mfg,2008,161024,161024
+Georgia,GA,321,Wood product mfg,2008,4070583,4070583
+Georgia,GA,3211,Sawmills and wood preservation,2008,1770731,1770731
+Georgia,GA,3212,"Veneer, plywood, and engineered wood product mfg",2008,805619,805619
+Georgia,GA,3219,Other wood product mfg,2008,1494233,1494233
+Georgia,GA,322,Paper mfg,2008,10963035,10963035
+Georgia,GA,3221,"Pulp, paper, and paperboard mills",2008,5580592,5580592
+Georgia,GA,3222,Converted paper product mfg,2008,5382444,5382444
+Georgia,GA,323,Printing and related support activities,2008,3009125,3009125
+Georgia,GA,3231,Printing and related support activities,2008,3009125,3009125
+Georgia,GA,324,Petroleum and coal products mfg,2008,1283678,1283678
+Georgia,GA,3241,Petroleum and coal products mfg,2008,1283678,1283678
+Georgia,GA,325,Chemical mfg,2008,13790791,13790791
+Georgia,GA,3251,Basic chemical mfg,2008,3481594,3481594
+Georgia,GA,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,2036611,2036611
+Georgia,GA,3253,"Pesticide, fertilizer, and other agricultural chemical mfg",2008,1064569,1064569
+Georgia,GA,3254,Pharmaceutical and medicine mfg,2008,906948,906948
+Georgia,GA,3255,"Paint, coating, and adhesive mfg",2008,1597550,1597550
+Georgia,GA,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,2442473,2442473
+Georgia,GA,3259,Other chemical product and preparation mfg,2008,2261046,2261046
+Georgia,GA,326,Plastics and rubber products mfg,2008,7897437,7897437
+Georgia,GA,3261,Plastics product mfg,2008,5939577,5939577
+Georgia,GA,3262,Rubber product mfg,2008,1957860,1957860
+Georgia,GA,327,Nonmetallic mineral product mfg,2008,4573489,4573489
+Georgia,GA,3271,Clay product and refractory mfg,2008,435278,435278
+Georgia,GA,3272,Glass and glass product mfg,2008,743574,743574
+Georgia,GA,3273,Cement and concrete product mfg,2008,1758321,1758321
+Georgia,GA,3279,Other nonmetallic mineral product mfg,2008,1368756,1368756
+Georgia,GA,331,Primary metal mfg,2008,4884400,4884400
+Georgia,GA,3313,Alumina and aluminum production and processing,2008,927042,927042
+Georgia,GA,332,Fabricated metal product mfg,2008,7987432,7987432
+Georgia,GA,3321,Forging and stamping,2008,605706,605706
+Georgia,GA,3323,Architectural and structural metals mfg,2008,3549602,3549602
+Georgia,GA,3324,"Boiler, tank, and shipping container mfg",2008,1069377,1069377
+Georgia,GA,3325,Hardware mfg,2008,330904,330904
+Georgia,GA,3326,Spring and wire product mfg,2008,204726,204726
+Georgia,GA,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,657315,657315
+Georgia,GA,3328,"Coating, engraving, heat treating, and allied activities",2008,306435,306435
+Georgia,GA,3329,Other fabricated metal product mfg,2008,1170809,1170809
+Georgia,GA,333,Machinery mfg,2008,8482964,8482964
+Georgia,GA,3331,"Agriculture, construction, and mining machinery mfg",2008,3674072,3674072
+Georgia,GA,3332,Industrial machinery mfg,2008,517751,517751
+Georgia,GA,3333,Commercial and service industry machinery mfg,2008,245209,245209
+Georgia,GA,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,1722830,1722830
+Georgia,GA,3336,"Engine, turbine, and power transmission equipment mfg",2008,539155,539155
+Georgia,GA,3339,Other general purpose machinery mfg,2008,1627300,1627300
+Georgia,GA,334,Computer and electronic product mfg,2008,2762234,2762234
+Georgia,GA,3341,Computer and peripheral equipment mfg,2008,416315,416315
+Georgia,GA,3342,Communications equipment mfg,2008,744375,744375
+Georgia,GA,3345,"Navigational, measuring, medical, and control instruments mfg",2008,696881,696881
+Georgia,GA,335,"Electrical equipment, appliance, and component mfg",2008,5991764,5991764
+Georgia,GA,3351,Electric lighting equipment mfg,2008,NA,0
+Georgia,GA,3352,Household appliance mfg,2008,NA,0
+Georgia,GA,3353,Electrical equipment mfg,2008,2318172,2318172
+Georgia,GA,3359,Other electrical equipment and component mfg,2008,2648959,2648959
+Georgia,GA,336,Transportation equipment mfg,2008,17444004,17444004
+Georgia,GA,3361,Motor vehicle mfg,2008,2883809,2883809
+Georgia,GA,3362,Motor vehicle body and trailer mfg,2008,738269,738269
+Georgia,GA,3363,Motor vehicle parts mfg,2008,3238024,3238024
+Georgia,GA,3364,Aerospace product and parts mfg,2008,7084275,7084275
+Georgia,GA,3366,Ship and boat building,2008,499007,499007
+Georgia,GA,3369,Other transportation equipment mfg,2008,2439458,2439458
+Georgia,GA,337,Furniture and related product mfg,2008,2170431,2170431
+Georgia,GA,3371,Household and institutional furniture and kitchen cabinet mfg,2008,821583,821583
+Georgia,GA,3372,Office furniture (including fixtures) mfg,2008,944393,944393
+Georgia,GA,3379,Other furniture related product mfg,2008,404455,404455
+Georgia,GA,339,Miscellaneous mfg,2008,2646612,2646612
+Georgia,GA,3391,Medical equipment and supplies mfg,2008,1127423,1127423
+Georgia,GA,3399,Other miscellaneous mfg,2008,1519189,1519189
+Hawaii,HI,31,Manufacturing,2008,8528172,8528172
+Hawaii,HI,311,Food mfg,2008,938016,938016
+Hawaii,HI,3118,Bakeries and tortilla mfg,2008,196484,196484
+Hawaii,HI,323,Printing and related support activities,2008,156771,156771
+Hawaii,HI,3231,Printing and related support activities,2008,156771,156771
+Hawaii,HI,327,Nonmetallic mineral product mfg,2008,294131,294131
+Idaho,ID,31,Manufacturing,2008,19051955,19051955
+Idaho,ID,311,Food mfg,2008,6636286,6636286
+Idaho,ID,3113,Sugar and confectionery product mfg,2008,NA,0
+Idaho,ID,3114,Fruit and vegetable preserving and specialty food mfg,2008,2075112,2075112
+Idaho,ID,3115,Dairy product mfg,2008,2460461,2460461
+Idaho,ID,3116,Animal  slaughtering and processing,2008,617054,617054
+Idaho,ID,321,Wood product mfg,2008,1353287,1353287
+Idaho,ID,3211,Sawmills and wood preservation,2008,705806,705806
+Idaho,ID,3219,Other wood product mfg,2008,584359,584359
+Idaho,ID,322,Paper mfg,2008,818270,818270
+Idaho,ID,3221,"Pulp, paper, and paperboard mills",2008,NA,0
+Idaho,ID,323,Printing and related support activities,2008,197517,197517
+Idaho,ID,3231,Printing and related support activities,2008,197517,197517
+Idaho,ID,325,Chemical mfg,2008,1632984,1632984
+Idaho,ID,326,Plastics and rubber products mfg,2008,349265,349265
+Idaho,ID,3261,Plastics product mfg,2008,343101,343101
+Idaho,ID,327,Nonmetallic mineral product mfg,2008,356078,356078
+Idaho,ID,3273,Cement and concrete product mfg,2008,324738,324738
+Idaho,ID,332,Fabricated metal product mfg,2008,872016,872016
+Idaho,ID,3323,Architectural and structural metals mfg,2008,239125,239125
+Idaho,ID,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,132683,132683
+Idaho,ID,3329,Other fabricated metal product mfg,2008,356224,356224
+Idaho,ID,333,Machinery mfg,2008,592236,592236
+Idaho,ID,3331,"Agriculture, construction, and mining machinery mfg",2008,180744,180744
+Idaho,ID,334,Computer and electronic product mfg,2008,4593818,4593818
+Idaho,ID,3341,Computer and peripheral equipment mfg,2008,NA,0
+Idaho,ID,3344,Semiconductor and other electronic component mfg,2008,NA,0
+Idaho,ID,335,"Electrical equipment, appliance, and component mfg",2008,234942,234942
+Idaho,ID,336,Transportation equipment mfg,2008,454634,454634
+Idaho,ID,337,Furniture and related product mfg,2008,297584,297584
+Idaho,ID,339,Miscellaneous mfg,2008,663038,663038
+Illinois,IL,31,Manufacturing,2008,269513771,269513771
+Illinois,IL,311,Food mfg,2008,38601917,38601917
+Illinois,IL,3111,Animal food mfg,2008,842061,842061
+Illinois,IL,3112,Grain and oilseed milling,2008,13532533,13532533
+Illinois,IL,3113,Sugar and confectionery product mfg,2008,3408709,3408709
+Illinois,IL,3114,Fruit and vegetable preserving and specialty food mfg,2008,2313787,2313787
+Illinois,IL,3115,Dairy product mfg,2008,2891814,2891814
+Illinois,IL,3116,Animal  slaughtering and processing,2008,8002842,8002842
+Illinois,IL,3118,Bakeries and tortilla mfg,2008,3169783,3169783
+Illinois,IL,3119,Other food mfg,2008,4275646,4275646
+Illinois,IL,312,Beverage and tobacco product mfg,2008,2725411,2725411
+Illinois,IL,3121,Beverage mfg,2008,NA,0
+Illinois,IL,314,Textile product mills,2008,502912,502912
+Illinois,IL,3141,Textile furnishings mills,2008,214273,214273
+Illinois,IL,3149,Other textile product mills,2008,288639,288639
+Illinois,IL,315,Apparel mfg,2008,417691,417691
+Illinois,IL,3152,Cut and sew apparel mfg,2008,366159,366159
+Illinois,IL,316,Leather and allied product mfg,2008,229640,229640
+Illinois,IL,321,Wood product mfg,2008,1694733,1694733
+Illinois,IL,3212,"Veneer, plywood, and engineered wood product mfg",2008,287177,287177
+Illinois,IL,3219,Other wood product mfg,2008,1216003,1216003
+Illinois,IL,322,Paper mfg,2008,5829090,5829090
+Illinois,IL,3222,Converted paper product mfg,2008,5211234,5211234
+Illinois,IL,323,Printing and related support activities,2008,7729244,7729244
+Illinois,IL,3231,Printing and related support activities,2008,7729244,7729244
+Illinois,IL,324,Petroleum and coal products mfg,2008,42533332,42533332
+Illinois,IL,3241,Petroleum and coal products mfg,2008,42533332,42533332
+Illinois,IL,325,Chemical mfg,2008,35900108,35900108
+Illinois,IL,3251,Basic chemical mfg,2008,8822289,8822289
+Illinois,IL,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,4548944,4548944
+Illinois,IL,3254,Pharmaceutical and medicine mfg,2008,11168609,11168609
+Illinois,IL,3255,"Paint, coating, and adhesive mfg",2008,3352082,3352082
+Illinois,IL,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,4609912,4609912
+Illinois,IL,3259,Other chemical product and preparation mfg,2008,2136603,2136603
+Illinois,IL,326,Plastics and rubber products mfg,2008,13021498,13021498
+Illinois,IL,3261,Plastics product mfg,2008,10887824,10887824
+Illinois,IL,3262,Rubber product mfg,2008,2133674,2133674
+Illinois,IL,327,Nonmetallic mineral product mfg,2008,4174232,4174232
+Illinois,IL,3272,Glass and glass product mfg,2008,761233,761233
+Illinois,IL,3273,Cement and concrete product mfg,2008,2236944,2236944
+Illinois,IL,3279,Other nonmetallic mineral product mfg,2008,840307,840307
+Illinois,IL,331,Primary metal mfg,2008,14401894,14401894
+Illinois,IL,3311,Iron and steel mills and ferroalloy mfg,2008,6350091,6350091
+Illinois,IL,3312,Steel product mfg from purchased steel,2008,2615662,2615662
+Illinois,IL,3313,Alumina and aluminum production and processing,2008,1054582,1054582
+Illinois,IL,3314,Nonferrous metal (except aluminum) production and processing,2008,2456974,2456974
+Illinois,IL,3315,Foundries,2008,1924586,1924586
+Illinois,IL,332,Fabricated metal product mfg,2008,23009993,23009993
+Illinois,IL,3321,Forging and stamping,2008,3071050,3071050
+Illinois,IL,3322,Cutlery and handtool mfg,2008,608605,608605
+Illinois,IL,3323,Architectural and structural metals mfg,2008,3614200,3614200
+Illinois,IL,3324,"Boiler, tank, and shipping container mfg",2008,2159065,2159065
+Illinois,IL,3325,Hardware mfg,2008,695855,695855
+Illinois,IL,3326,Spring and wire product mfg,2008,784721,784721
+Illinois,IL,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,5251923,5251923
+Illinois,IL,3328,"Coating, engraving, heat treating, and allied activities",2008,1761867,1761867
+Illinois,IL,3329,Other fabricated metal product mfg,2008,5062706,5062706
+Illinois,IL,333,Machinery mfg,2008,32776864,32776864
+Illinois,IL,3331,"Agriculture, construction, and mining machinery mfg",2008,14734273,14734273
+Illinois,IL,3332,Industrial machinery mfg,2008,2089974,2089974
+Illinois,IL,3333,Commercial and service industry machinery mfg,2008,1981144,1981144
+Illinois,IL,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,1513517,1513517
+Illinois,IL,3335,Metalworking machinery mfg,2008,2345759,2345759
+Illinois,IL,3336,"Engine, turbine, and power transmission equipment mfg",2008,4663980,4663980
+Illinois,IL,3339,Other general purpose machinery mfg,2008,5448216,5448216
+Illinois,IL,334,Computer and electronic product mfg,2008,12059384,12059384
+Illinois,IL,3341,Computer and peripheral equipment mfg,2008,1195863,1195863
+Illinois,IL,3342,Communications equipment mfg,2008,4402270,4402270
+Illinois,IL,3344,Semiconductor and other electronic component mfg,2008,1752854,1752854
+Illinois,IL,3345,"Navigational, measuring, medical, and control instruments mfg",2008,4330218,4330218
+Illinois,IL,335,"Electrical equipment, appliance, and component mfg",2008,7323162,7323162
+Illinois,IL,3351,Electric lighting equipment mfg,2008,1242589,1242589
+Illinois,IL,3352,Household appliance mfg,2008,973359,973359
+Illinois,IL,3353,Electrical equipment mfg,2008,2610734,2610734
+Illinois,IL,3359,Other electrical equipment and component mfg,2008,2496480,2496480
+Illinois,IL,336,Transportation equipment mfg,2008,17810802,17810802
+Illinois,IL,3361,Motor vehicle mfg,2008,4993500,4993500
+Illinois,IL,3362,Motor vehicle body and trailer mfg,2008,616469,616469
+Illinois,IL,3363,Motor vehicle parts mfg,2008,6674304,6674304
+Illinois,IL,3364,Aerospace product and parts mfg,2008,2247559,2247559
+Illinois,IL,3365,Railroad rolling stock mfg,2008,2920458,2920458
+Illinois,IL,337,Furniture and related product mfg,2008,2657628,2657628
+Illinois,IL,3371,Household and institutional furniture and kitchen cabinet mfg,2008,1088852,1088852
+Illinois,IL,3372,Office furniture (including fixtures) mfg,2008,1292928,1292928
+Illinois,IL,3379,Other furniture related product mfg,2008,275848,275848
+Illinois,IL,339,Miscellaneous mfg,2008,5931197,5931197
+Illinois,IL,3391,Medical equipment and supplies mfg,2008,1402435,1402435
+Illinois,IL,3399,Other miscellaneous mfg,2008,4528762,4528762
+Indiana,IN,31,Manufacturing,2008,220855726,220855726
+Indiana,IN,311,Food mfg,2008,18954577,18954577
+Indiana,IN,3111,Animal food mfg,2008,1729740,1729740
+Indiana,IN,3112,Grain and oilseed milling,2008,6678484,6678484
+Indiana,IN,3113,Sugar and confectionery product mfg,2008,NA,0
+Indiana,IN,3114,Fruit and vegetable preserving and specialty food mfg,2008,1132094,1132094
+Indiana,IN,3115,Dairy product mfg,2008,1647115,1647115
+Indiana,IN,3116,Animal  slaughtering and processing,2008,2850344,2850344
+Indiana,IN,3118,Bakeries and tortilla mfg,2008,1992208,1992208
+Indiana,IN,3119,Other food mfg,2008,2582632,2582632
+Indiana,IN,312,Beverage and tobacco product mfg,2008,2084762,2084762
+Indiana,IN,3121,Beverage mfg,2008,NA,0
+Indiana,IN,314,Textile product mills,2008,313582,313582
+Indiana,IN,3149,Other textile product mills,2008,204449,204449
+Indiana,IN,321,Wood product mfg,2008,2822631,2822631
+Indiana,IN,3211,Sawmills and wood preservation,2008,708764,708764
+Indiana,IN,3212,"Veneer, plywood, and engineered wood product mfg",2008,573980,573980
+Indiana,IN,3219,Other wood product mfg,2008,1539886,1539886
+Indiana,IN,322,Paper mfg,2008,3776671,3776671
+Indiana,IN,3222,Converted paper product mfg,2008,3583541,3583541
+Indiana,IN,323,Printing and related support activities,2008,3038083,3038083
+Indiana,IN,3231,Printing and related support activities,2008,3038083,3038083
+Indiana,IN,324,Petroleum and coal products mfg,2008,14529435,14529435
+Indiana,IN,3241,Petroleum and coal products mfg,2008,14529435,14529435
+Indiana,IN,325,Chemical mfg,2008,26446422,26446422
+Indiana,IN,3251,Basic chemical mfg,2008,2365844,2365844
+Indiana,IN,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,2464450,2464450
+Indiana,IN,3254,Pharmaceutical and medicine mfg,2008,18575392,18575392
+Indiana,IN,3255,"Paint, coating, and adhesive mfg",2008,588062,588062
+Indiana,IN,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,1187084,1187084
+Indiana,IN,3259,Other chemical product and preparation mfg,2008,1143402,1143402
+Indiana,IN,326,Plastics and rubber products mfg,2008,9342552,9342552
+Indiana,IN,3261,Plastics product mfg,2008,7684519,7684519
+Indiana,IN,3262,Rubber product mfg,2008,1658033,1658033
+Indiana,IN,327,Nonmetallic mineral product mfg,2008,3496423,3496423
+Indiana,IN,3272,Glass and glass product mfg,2008,1004530,1004530
+Indiana,IN,3273,Cement and concrete product mfg,2008,1230236,1230236
+Indiana,IN,3279,Other nonmetallic mineral product mfg,2008,782641,782641
+Indiana,IN,331,Primary metal mfg,2008,36320172,36320172
+Indiana,IN,3311,Iron and steel mills and ferroalloy mfg,2008,25135768,25135768
+Indiana,IN,3312,Steel product mfg from purchased steel,2008,1887054,1887054
+Indiana,IN,3313,Alumina and aluminum production and processing,2008,4132226,4132226
+Indiana,IN,3314,Nonferrous metal (except aluminum) production and processing,2008,2489881,2489881
+Indiana,IN,3315,Foundries,2008,2675244,2675244
+Indiana,IN,332,Fabricated metal product mfg,2008,14691962,14691962
+Indiana,IN,3321,Forging and stamping,2008,1526191,1526191
+Indiana,IN,3323,Architectural and structural metals mfg,2008,2951074,2951074
+Indiana,IN,3324,"Boiler, tank, and shipping container mfg",2008,987795,987795
+Indiana,IN,3325,Hardware mfg,2008,729977,729977
+Indiana,IN,3326,Spring and wire product mfg,2008,674489,674489
+Indiana,IN,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,2108814,2108814
+Indiana,IN,3328,"Coating, engraving, heat treating, and allied activities",2008,2499219,2499219
+Indiana,IN,3329,Other fabricated metal product mfg,2008,3059814,3059814
+Indiana,IN,333,Machinery mfg,2008,13677169,13677169
+Indiana,IN,3331,"Agriculture, construction, and mining machinery mfg",2008,1367608,1367608
+Indiana,IN,3332,Industrial machinery mfg,2008,688977,688977
+Indiana,IN,3333,Commercial and service industry machinery mfg,2008,526442,526442
+Indiana,IN,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,2058193,2058193
+Indiana,IN,3335,Metalworking machinery mfg,2008,921782,921782
+Indiana,IN,3336,"Engine, turbine, and power transmission equipment mfg",2008,5052503,5052503
+Indiana,IN,3339,Other general purpose machinery mfg,2008,3061663,3061663
+Indiana,IN,334,Computer and electronic product mfg,2008,5768216,5768216
+Indiana,IN,3342,Communications equipment mfg,2008,1213179,1213179
+Indiana,IN,3344,Semiconductor and other electronic component mfg,2008,875760,875760
+Indiana,IN,3345,"Navigational, measuring, medical, and control instruments mfg",2008,1898326,1898326
+Indiana,IN,3346,Mfg and reproducing magnetic and optical media,2008,NA,0
+Indiana,IN,335,"Electrical equipment, appliance, and component mfg",2008,3351764,3351764
+Indiana,IN,3351,Electric lighting equipment mfg,2008,287014,287014
+Indiana,IN,3352,Household appliance mfg,2008,701208,701208
+Indiana,IN,3353,Electrical equipment mfg,2008,837417,837417
+Indiana,IN,3359,Other electrical equipment and component mfg,2008,1526125,1526125
+Indiana,IN,336,Transportation equipment mfg,2008,50218758,50218758
+Indiana,IN,3361,Motor vehicle mfg,2008,17739679,17739679
+Indiana,IN,3362,Motor vehicle body and trailer mfg,2008,8099923,8099923
+Indiana,IN,3363,Motor vehicle parts mfg,2008,17789948,17789948
+Indiana,IN,3364,Aerospace product and parts mfg,2008,2600320,2600320
+Indiana,IN,3366,Ship and boat building,2008,1024072,1024072
+Indiana,IN,3369,Other transportation equipment mfg,2008,NA,0
+Indiana,IN,337,Furniture and related product mfg,2008,4094941,4094941
+Indiana,IN,3371,Household and institutional furniture and kitchen cabinet mfg,2008,2649981,2649981
+Indiana,IN,3372,Office furniture (including fixtures) mfg,2008,1219168,1219168
+Indiana,IN,3379,Other furniture related product mfg,2008,225793,225793
+Indiana,IN,339,Miscellaneous mfg,2008,7476494,7476494
+Indiana,IN,3391,Medical equipment and supplies mfg,2008,5959552,5959552
+Indiana,IN,3399,Other miscellaneous mfg,2008,1516943,1516943
+Iowa,IA,31,Manufacturing,2008,98666330,98666330
+Iowa,IA,311,Food mfg,2008,35125059,35125059
+Iowa,IA,3111,Animal food mfg,2008,3903875,3903875
+Iowa,IA,3112,Grain and oilseed milling,2008,14941176,14941176
+Iowa,IA,3114,Fruit and vegetable preserving and specialty food mfg,2008,930901,930901
+Iowa,IA,3115,Dairy product mfg,2008,2012905,2012905
+Iowa,IA,3116,Animal  slaughtering and processing,2008,11018545,11018545
+Iowa,IA,3118,Bakeries and tortilla mfg,2008,384472,384472
+Iowa,IA,3119,Other food mfg,2008,1871807,1871807
+Iowa,IA,315,Apparel mfg,2008,114093,114093
+Iowa,IA,3152,Cut and sew apparel mfg,2008,78634,78634
+Iowa,IA,321,Wood product mfg,2008,1653812,1653812
+Iowa,IA,3219,Other wood product mfg,2008,1432419,1432419
+Iowa,IA,322,Paper mfg,2008,1714137,1714137
+Iowa,IA,3222,Converted paper product mfg,2008,NA,0
+Iowa,IA,323,Printing and related support activities,2008,1440093,1440093
+Iowa,IA,3231,Printing and related support activities,2008,1440093,1440093
+Iowa,IA,325,Chemical mfg,2008,14165995,14165995
+Iowa,IA,3251,Basic chemical mfg,2008,7773074,7773074
+Iowa,IA,3253,"Pesticide, fertilizer, and other agricultural chemical mfg",2008,1418836,1418836
+Iowa,IA,3254,Pharmaceutical and medicine mfg,2008,1312768,1312768
+Iowa,IA,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,NA,0
+Iowa,IA,3259,Other chemical product and preparation mfg,2008,NA,0
+Iowa,IA,326,Plastics and rubber products mfg,2008,3986534,3986534
+Iowa,IA,3261,Plastics product mfg,2008,2352923,2352923
+Iowa,IA,3262,Rubber product mfg,2008,1633611,1633611
+Iowa,IA,327,Nonmetallic mineral product mfg,2008,1926093,1926093
+Iowa,IA,3273,Cement and concrete product mfg,2008,894237,894237
+Iowa,IA,331,Primary metal mfg,2008,4330456,4330456
+Iowa,IA,3313,Alumina and aluminum production and processing,2008,3400773,3400773
+Iowa,IA,3315,Foundries,2008,929683,929683
+Iowa,IA,332,Fabricated metal product mfg,2008,4928933,4928933
+Iowa,IA,3321,Forging and stamping,2008,391454,391454
+Iowa,IA,3323,Architectural and structural metals mfg,2008,1727102,1727102
+Iowa,IA,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,820362,820362
+Iowa,IA,3329,Other fabricated metal product mfg,2008,1020933,1020933
+Iowa,IA,333,Machinery mfg,2008,16686690,16686690
+Iowa,IA,3331,"Agriculture, construction, and mining machinery mfg",2008,11918416,11918416
+Iowa,IA,3332,Industrial machinery mfg,2008,421901,421901
+Iowa,IA,3333,Commercial and service industry machinery mfg,2008,431378,431378
+Iowa,IA,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,1066610,1066610
+Iowa,IA,3335,Metalworking machinery mfg,2008,281138,281138
+Iowa,IA,3336,"Engine, turbine, and power transmission equipment mfg",2008,694322,694322
+Iowa,IA,3339,Other general purpose machinery mfg,2008,1872925,1872925
+Iowa,IA,334,Computer and electronic product mfg,2008,2566237,2566237
+Iowa,IA,3345,"Navigational, measuring, medical, and control instruments mfg",2008,2311387,2311387
+Iowa,IA,335,"Electrical equipment, appliance, and component mfg",2008,2963088,2963088
+Iowa,IA,3352,Household appliance mfg,2008,NA,0
+Iowa,IA,3353,Electrical equipment mfg,2008,520344,520344
+Iowa,IA,336,Transportation equipment mfg,2008,3194772,3194772
+Iowa,IA,3362,Motor vehicle body and trailer mfg,2008,1289963,1289963
+Iowa,IA,3363,Motor vehicle parts mfg,2008,1311004,1311004
+Iowa,IA,337,Furniture and related product mfg,2008,1634161,1634161
+Iowa,IA,3371,Household and institutional furniture and kitchen cabinet mfg,2008,527418,527418
+Iowa,IA,3372,Office furniture (including fixtures) mfg,2008,NA,0
+Iowa,IA,339,Miscellaneous mfg,2008,803515,803515
+Iowa,IA,3391,Medical equipment and supplies mfg,2008,289294,289294
+Iowa,IA,3399,Other miscellaneous mfg,2008,514221,514221
+Kansas,KS,31,Manufacturing,2008,84882652,84882652
+Kansas,KS,311,Food mfg,2008,18477363,18477363
+Kansas,KS,3111,Animal food mfg,2008,1329041,1329041
+Kansas,KS,3112,Grain and oilseed milling,2008,2205973,2205973
+Kansas,KS,3113,Sugar and confectionery product mfg,2008,NA,0
+Kansas,KS,3114,Fruit and vegetable preserving and specialty food mfg,2008,474597,474597
+Kansas,KS,3116,Animal  slaughtering and processing,2008,11736820,11736820
+Kansas,KS,3118,Bakeries and tortilla mfg,2008,941699,941699
+Kansas,KS,3119,Other food mfg,2008,1393571,1393571
+Kansas,KS,321,Wood product mfg,2008,421691,421691
+Kansas,KS,3219,Other wood product mfg,2008,333539,333539
+Kansas,KS,322,Paper mfg,2008,713248,713248
+Kansas,KS,3222,Converted paper product mfg,2008,NA,0
+Kansas,KS,323,Printing and related support activities,2008,1537121,1537121
+Kansas,KS,3231,Printing and related support activities,2008,1537121,1537121
+Kansas,KS,324,Petroleum and coal products mfg,2008,11796584,11796584
+Kansas,KS,3241,Petroleum and coal products mfg,2008,11796584,11796584
+Kansas,KS,325,Chemical mfg,2008,6557898,6557898
+Kansas,KS,3251,Basic chemical mfg,2008,1991015,1991015
+Kansas,KS,3254,Pharmaceutical and medicine mfg,2008,1341377,1341377
+Kansas,KS,3259,Other chemical product and preparation mfg,2008,843534,843534
+Kansas,KS,326,Plastics and rubber products mfg,2008,3659995,3659995
+Kansas,KS,3261,Plastics product mfg,2008,2975678,2975678
+Kansas,KS,3262,Rubber product mfg,2008,684317,684317
+Kansas,KS,327,Nonmetallic mineral product mfg,2008,1429401,1429401
+Kansas,KS,3273,Cement and concrete product mfg,2008,717543,717543
+Kansas,KS,3279,Other nonmetallic mineral product mfg,2008,343206,343206
+Kansas,KS,331,Primary metal mfg,2008,652810,652810
+Kansas,KS,3315,Foundries,2008,385407,385407
+Kansas,KS,332,Fabricated metal product mfg,2008,4501266,4501266
+Kansas,KS,3323,Architectural and structural metals mfg,2008,1572977,1572977
+Kansas,KS,3324,"Boiler, tank, and shipping container mfg",2008,482662,482662
+Kansas,KS,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,727907,727907
+Kansas,KS,3329,Other fabricated metal product mfg,2008,1176055,1176055
+Kansas,KS,333,Machinery mfg,2008,5144315,5144315
+Kansas,KS,3331,"Agriculture, construction, and mining machinery mfg",2008,2207950,2207950
+Kansas,KS,3332,Industrial machinery mfg,2008,456195,456195
+Kansas,KS,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,744594,744594
+Kansas,KS,3339,Other general purpose machinery mfg,2008,1053543,1053543
+Kansas,KS,334,Computer and electronic product mfg,2008,4366446,4366446
+Kansas,KS,3344,Semiconductor and other electronic component mfg,2008,166388,166388
+Kansas,KS,3345,"Navigational, measuring, medical, and control instruments mfg",2008,3172218,3172218
+Kansas,KS,335,"Electrical equipment, appliance, and component mfg",2008,1236827,1236827
+Kansas,KS,3359,Other electrical equipment and component mfg,2008,831579,831579
+Kansas,KS,336,Transportation equipment mfg,2008,22525511,22525511
+Kansas,KS,3361,Motor vehicle mfg,2008,NA,0
+Kansas,KS,3362,Motor vehicle body and trailer mfg,2008,469979,469979
+Kansas,KS,3363,Motor vehicle parts mfg,2008,NA,0
+Kansas,KS,3364,Aerospace product and parts mfg,2008,16812523,16812523
+Kansas,KS,337,Furniture and related product mfg,2008,680838,680838
+Kansas,KS,3371,Household and institutional furniture and kitchen cabinet mfg,2008,467742,467742
+Kansas,KS,339,Miscellaneous mfg,2008,623377,623377
+Kansas,KS,3391,Medical equipment and supplies mfg,2008,229987,229987
+Kansas,KS,3399,Other miscellaneous mfg,2008,393390,393390
+Kentucky,KY,31,Manufacturing,2008,113969931,113969931
+Kentucky,KY,311,Food mfg,2008,9787826,9787826
+Kentucky,KY,3114,Fruit and vegetable preserving and specialty food mfg,2008,1416216,1416216
+Kentucky,KY,3115,Dairy product mfg,2008,1367703,1367703
+Kentucky,KY,3116,Animal  slaughtering and processing,2008,2333129,2333129
+Kentucky,KY,3118,Bakeries and tortilla mfg,2008,1235268,1235268
+Kentucky,KY,3119,Other food mfg,2008,1328721,1328721
+Kentucky,KY,312,Beverage and tobacco product mfg,2008,3606548,3606548
+Kentucky,KY,3121,Beverage mfg,2008,NA,0
+Kentucky,KY,313,Textile mills,2008,NA,0
+Kentucky,KY,3132,Fabric mills,2008,NA,0
+Kentucky,KY,314,Textile product mills,2008,NA,0
+Kentucky,KY,315,Apparel mfg,2008,NA,0
+Kentucky,KY,3152,Cut and sew apparel mfg,2008,NA,0
+Kentucky,KY,321,Wood product mfg,2008,1798428,1798428
+Kentucky,KY,3211,Sawmills and wood preservation,2008,517076,517076
+Kentucky,KY,3219,Other wood product mfg,2008,1110579,1110579
+Kentucky,KY,322,Paper mfg,2008,4933360,4933360
+Kentucky,KY,3221,"Pulp, paper, and paperboard mills",2008,1707524,1707524
+Kentucky,KY,3222,Converted paper product mfg,2008,3225836,3225836
+Kentucky,KY,323,Printing and related support activities,2008,2048816,2048816
+Kentucky,KY,3231,Printing and related support activities,2008,2048816,2048816
+Kentucky,KY,324,Petroleum and coal products mfg,2008,NA,0
+Kentucky,KY,3241,Petroleum and coal products mfg,2008,NA,0
+Kentucky,KY,325,Chemical mfg,2008,12422095,12422095
+Kentucky,KY,3251,Basic chemical mfg,2008,5963699,5963699
+Kentucky,KY,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,3486835,3486835
+Kentucky,KY,3255,"Paint, coating, and adhesive mfg",2008,1219838,1219838
+Kentucky,KY,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,950661,950661
+Kentucky,KY,3259,Other chemical product and preparation mfg,2008,546455,546455
+Kentucky,KY,326,Plastics and rubber products mfg,2008,4864714,4864714
+Kentucky,KY,3261,Plastics product mfg,2008,4485971,4485971
+Kentucky,KY,3262,Rubber product mfg,2008,378743,378743
+Kentucky,KY,327,Nonmetallic mineral product mfg,2008,2365192,2365192
+Kentucky,KY,3272,Glass and glass product mfg,2008,1053134,1053134
+Kentucky,KY,3273,Cement and concrete product mfg,2008,571229,571229
+Kentucky,KY,3279,Other nonmetallic mineral product mfg,2008,201014,201014
+Kentucky,KY,331,Primary metal mfg,2008,13736860,13736860
+Kentucky,KY,3311,Iron and steel mills and ferroalloy mfg,2008,6394647,6394647
+Kentucky,KY,3313,Alumina and aluminum production and processing,2008,5305061,5305061
+Kentucky,KY,3315,Foundries,2008,409985,409985
+Kentucky,KY,332,Fabricated metal product mfg,2008,5544250,5544250
+Kentucky,KY,3321,Forging and stamping,2008,745791,745791
+Kentucky,KY,3323,Architectural and structural metals mfg,2008,1124453,1124453
+Kentucky,KY,3324,"Boiler, tank, and shipping container mfg",2008,426443,426443
+Kentucky,KY,3326,Spring and wire product mfg,2008,869724,869724
+Kentucky,KY,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,791636,791636
+Kentucky,KY,3328,"Coating, engraving, heat treating, and allied activities",2008,159612,159612
+Kentucky,KY,3329,Other fabricated metal product mfg,2008,1005456,1005456
+Kentucky,KY,333,Machinery mfg,2008,5795099,5795099
+Kentucky,KY,3331,"Agriculture, construction, and mining machinery mfg",2008,933560,933560
+Kentucky,KY,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,870205,870205
+Kentucky,KY,3335,Metalworking machinery mfg,2008,1090553,1090553
+Kentucky,KY,3336,"Engine, turbine, and power transmission equipment mfg",2008,495168,495168
+Kentucky,KY,3339,Other general purpose machinery mfg,2008,2092273,2092273
+Kentucky,KY,334,Computer and electronic product mfg,2008,NA,0
+Kentucky,KY,3344,Semiconductor and other electronic component mfg,2008,NA,0
+Kentucky,KY,335,"Electrical equipment, appliance, and component mfg",2008,3216175,3216175
+Kentucky,KY,3352,Household appliance mfg,2008,NA,0
+Kentucky,KY,3353,Electrical equipment mfg,2008,709261,709261
+Kentucky,KY,3359,Other electrical equipment and component mfg,2008,1179491,1179491
+Kentucky,KY,336,Transportation equipment mfg,2008,30007941,30007941
+Kentucky,KY,3361,Motor vehicle mfg,2008,18036453,18036453
+Kentucky,KY,3362,Motor vehicle body and trailer mfg,2008,285743,285743
+Kentucky,KY,3363,Motor vehicle parts mfg,2008,10357124,10357124
+Kentucky,KY,3364,Aerospace product and parts mfg,2008,920221,920221
+Kentucky,KY,3366,Ship and boat building,2008,152954,152954
+Kentucky,KY,337,Furniture and related product mfg,2008,673698,673698
+Kentucky,KY,3371,Household and institutional furniture and kitchen cabinet mfg,2008,355159,355159
+Kentucky,KY,3372,Office furniture (including fixtures) mfg,2008,NA,0
+Kentucky,KY,339,Miscellaneous mfg,2008,1158063,1158063
+Kentucky,KY,3391,Medical equipment and supplies mfg,2008,308285,308285
+Kentucky,KY,3399,Other miscellaneous mfg,2008,849779,849779
+Louisiana,LA,31,Manufacturing,2008,227977824,227977824
+Louisiana,LA,311,Food mfg,2008,7285365,7285365
+Louisiana,LA,3113,Sugar and confectionery product mfg,2008,1257058,1257058
+Louisiana,LA,3116,Animal  slaughtering and processing,2008,1119739,1119739
+Louisiana,LA,3118,Bakeries and tortilla mfg,2008,326189,326189
+Louisiana,LA,3119,Other food mfg,2008,1959203,1959203
+Louisiana,LA,312,Beverage and tobacco product mfg,2008,659339,659339
+Louisiana,LA,3121,Beverage mfg,2008,659339,659339
+Louisiana,LA,321,Wood product mfg,2008,1825063,1825063
+Louisiana,LA,3211,Sawmills and wood preservation,2008,576469,576469
+Louisiana,LA,3212,"Veneer, plywood, and engineered wood product mfg",2008,1087018,1087018
+Louisiana,LA,3219,Other wood product mfg,2008,161575,161575
+Louisiana,LA,322,Paper mfg,2008,5442480,5442480
+Louisiana,LA,3221,"Pulp, paper, and paperboard mills",2008,4402103,4402103
+Louisiana,LA,3222,Converted paper product mfg,2008,1040377,1040377
+Louisiana,LA,323,Printing and related support activities,2008,414421,414421
+Louisiana,LA,3231,Printing and related support activities,2008,414421,414421
+Louisiana,LA,324,Petroleum and coal products mfg,2008,129208248,129208248
+Louisiana,LA,3241,Petroleum and coal products mfg,2008,129208248,129208248
+Louisiana,LA,325,Chemical mfg,2008,61674917,61674917
+Louisiana,LA,3251,Basic chemical mfg,2008,39399648,39399648
+Louisiana,LA,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,7769150,7769150
+Louisiana,LA,3253,"Pesticide, fertilizer, and other agricultural chemical mfg",2008,7123858,7123858
+Louisiana,LA,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,NA,0
+Louisiana,LA,3259,Other chemical product and preparation mfg,2008,745693,745693
+Louisiana,LA,326,Plastics and rubber products mfg,2008,1339443,1339443
+Louisiana,LA,3261,Plastics product mfg,2008,1008870,1008870
+Louisiana,LA,3262,Rubber product mfg,2008,330573,330573
+Louisiana,LA,327,Nonmetallic mineral product mfg,2008,1148054,1148054
+Louisiana,LA,3272,Glass and glass product mfg,2008,251335,251335
+Louisiana,LA,3273,Cement and concrete product mfg,2008,664726,664726
+Louisiana,LA,331,Primary metal mfg,2008,1424186,1424186
+Louisiana,LA,332,Fabricated metal product mfg,2008,5778942,5778942
+Louisiana,LA,3323,Architectural and structural metals mfg,2008,1763058,1763058
+Louisiana,LA,3324,"Boiler, tank, and shipping container mfg",2008,589717,589717
+Louisiana,LA,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,1071557,1071557
+Louisiana,LA,3328,"Coating, engraving, heat treating, and allied activities",2008,509644,509644
+Louisiana,LA,3329,Other fabricated metal product mfg,2008,1685126,1685126
+Louisiana,LA,333,Machinery mfg,2008,3076120,3076120
+Louisiana,LA,3331,"Agriculture, construction, and mining machinery mfg",2008,1644828,1644828
+Louisiana,LA,3333,Commercial and service industry machinery mfg,2008,315554,315554
+Louisiana,LA,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,453399,453399
+Louisiana,LA,3339,Other general purpose machinery mfg,2008,395356,395356
+Louisiana,LA,334,Computer and electronic product mfg,2008,402798,402798
+Louisiana,LA,335,"Electrical equipment, appliance, and component mfg",2008,472029,472029
+Louisiana,LA,3353,Electrical equipment mfg,2008,284495,284495
+Louisiana,LA,336,Transportation equipment mfg,2008,6679350,6679350
+Louisiana,LA,3361,Motor vehicle mfg,2008,NA,0
+Louisiana,LA,3363,Motor vehicle parts mfg,2008,272791,272791
+Louisiana,LA,3364,Aerospace product and parts mfg,2008,NA,0
+Louisiana,LA,3366,Ship and boat building,2008,2685261,2685261
+Louisiana,LA,337,Furniture and related product mfg,2008,224463,224463
+Louisiana,LA,339,Miscellaneous mfg,2008,663789,663789
+Louisiana,LA,3399,Other miscellaneous mfg,2008,593717,593717
+Maine,ME,31,Manufacturing,2008,17190512,17190512
+Maine,ME,311,Food mfg,2008,1764527,1764527
+Maine,ME,3114,Fruit and vegetable preserving and specialty food mfg,2008,628322,628322
+Maine,ME,3118,Bakeries and tortilla mfg,2008,432205,432205
+Maine,ME,312,Beverage and tobacco product mfg,2008,1069935,1069935
+Maine,ME,3121,Beverage mfg,2008,1069935,1069935
+Maine,ME,316,Leather and allied product mfg,2008,407299,407299
+Maine,ME,3162,Footwear mfg,2008,NA,0
+Maine,ME,321,Wood product mfg,2008,1099883,1099883
+Maine,ME,3211,Sawmills and wood preservation,2008,553536,553536
+Maine,ME,3219,Other wood product mfg,2008,360521,360521
+Maine,ME,322,Paper mfg,2008,4490647,4490647
+Maine,ME,3221,"Pulp, paper, and paperboard mills",2008,3769962,3769962
+Maine,ME,3222,Converted paper product mfg,2008,720685,720685
+Maine,ME,323,Printing and related support activities,2008,347151,347151
+Maine,ME,3231,Printing and related support activities,2008,347151,347151
+Maine,ME,325,Chemical mfg,2008,517303,517303
+Maine,ME,326,Plastics and rubber products mfg,2008,664376,664376
+Maine,ME,3261,Plastics product mfg,2008,612334,612334
+Maine,ME,327,Nonmetallic mineral product mfg,2008,237375,237375
+Maine,ME,332,Fabricated metal product mfg,2008,1353098,1353098
+Maine,ME,3323,Architectural and structural metals mfg,2008,370755,370755
+Maine,ME,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,435886,435886
+Maine,ME,3329,Other fabricated metal product mfg,2008,403212,403212
+Maine,ME,333,Machinery mfg,2008,495318,495318
+Maine,ME,3339,Other general purpose machinery mfg,2008,191286,191286
+Maine,ME,334,Computer and electronic product mfg,2008,835698,835698
+Maine,ME,3342,Communications equipment mfg,2008,NA,0
+Maine,ME,3344,Semiconductor and other electronic component mfg,2008,355167,355167
+Maine,ME,336,Transportation equipment mfg,2008,2643510,2643510
+Maine,ME,3364,Aerospace product and parts mfg,2008,NA,0
+Maine,ME,3366,Ship and boat building,2008,1551441,1551441
+Maine,ME,339,Miscellaneous mfg,2008,343110,343110
+Maryland,MD,31,Manufacturing,2008,40568388,40568388
+Maryland,MD,311,Food mfg,2008,6890804,6890804
+Maryland,MD,3115,Dairy product mfg,2008,1015154,1015154
+Maryland,MD,3116,Animal  slaughtering and processing,2008,777841,777841
+Maryland,MD,3118,Bakeries and tortilla mfg,2008,640394,640394
+Maryland,MD,3119,Other food mfg,2008,2236812,2236812
+Maryland,MD,312,Beverage and tobacco product mfg,2008,1562904,1562904
+Maryland,MD,3121,Beverage mfg,2008,1562904,1562904
+Maryland,MD,313,Textile mills,2008,390590,390590
+Maryland,MD,3132,Fabric mills,2008,365213,365213
+Maryland,MD,321,Wood product mfg,2008,589341,589341
+Maryland,MD,3219,Other wood product mfg,2008,371699,371699
+Maryland,MD,322,Paper mfg,2008,1063471,1063471
+Maryland,MD,3221,"Pulp, paper, and paperboard mills",2008,320594,320594
+Maryland,MD,3222,Converted paper product mfg,2008,742877,742877
+Maryland,MD,323,Printing and related support activities,2008,2119623,2119623
+Maryland,MD,3231,Printing and related support activities,2008,2119623,2119623
+Maryland,MD,325,Chemical mfg,2008,5810800,5810800
+Maryland,MD,3251,Basic chemical mfg,2008,973694,973694
+Maryland,MD,3254,Pharmaceutical and medicine mfg,2008,1646528,1646528
+Maryland,MD,3255,"Paint, coating, and adhesive mfg",2008,846896,846896
+Maryland,MD,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,1886390,1886390
+Maryland,MD,326,Plastics and rubber products mfg,2008,1507376,1507376
+Maryland,MD,3261,Plastics product mfg,2008,1378918,1378918
+Maryland,MD,327,Nonmetallic mineral product mfg,2008,1498852,1498852
+Maryland,MD,3273,Cement and concrete product mfg,2008,909779,909779
+Maryland,MD,331,Primary metal mfg,2008,875621,875621
+Maryland,MD,3311,Iron and steel mills and ferroalloy mfg,2008,875621,875621
+Maryland,MD,332,Fabricated metal product mfg,2008,3004384,3004384
+Maryland,MD,3323,Architectural and structural metals mfg,2008,906340,906340
+Maryland,MD,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,458919,458919
+Maryland,MD,3329,Other fabricated metal product mfg,2008,883919,883919
+Maryland,MD,333,Machinery mfg,2008,2747948,2747948
+Maryland,MD,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,702355,702355
+Maryland,MD,3336,"Engine, turbine, and power transmission equipment mfg",2008,NA,0
+Maryland,MD,3339,Other general purpose machinery mfg,2008,558813,558813
+Maryland,MD,334,Computer and electronic product mfg,2008,8106069,8106069
+Maryland,MD,3342,Communications equipment mfg,2008,2017212,2017212
+Maryland,MD,3344,Semiconductor and other electronic component mfg,2008,850361,850361
+Maryland,MD,3345,"Navigational, measuring, medical, and control instruments mfg",2008,4868818,4868818
+Maryland,MD,335,"Electrical equipment, appliance, and component mfg",2008,450110,450110
+Maryland,MD,336,Transportation equipment mfg,2008,1305267,1305267
+Maryland,MD,3364,Aerospace product and parts mfg,2008,700369,700369
+Maryland,MD,337,Furniture and related product mfg,2008,756253,756253
+Maryland,MD,3371,Household and institutional furniture and kitchen cabinet mfg,2008,266573,266573
+Maryland,MD,3372,Office furniture (including fixtures) mfg,2008,210305,210305
+Maryland,MD,3379,Other furniture related product mfg,2008,279375,279375
+Maryland,MD,339,Miscellaneous mfg,2008,936363,936363
+Maryland,MD,3391,Medical equipment and supplies mfg,2008,521455,521455
+Maryland,MD,3399,Other miscellaneous mfg,2008,414908,414908
+Massachusetts,MA,31,Manufacturing,2008,83712924,83712924
+Massachusetts,MA,311,Food mfg,2008,6562151,6562151
+Massachusetts,MA,3113,Sugar and confectionery product mfg,2008,268898,268898
+Massachusetts,MA,3114,Fruit and vegetable preserving and specialty food mfg,2008,383963,383963
+Massachusetts,MA,3115,Dairy product mfg,2008,1544776,1544776
+Massachusetts,MA,3116,Animal  slaughtering and processing,2008,676308,676308
+Massachusetts,MA,3117,Seafood product preparation and packaging,2008,1185234,1185234
+Massachusetts,MA,3118,Bakeries and tortilla mfg,2008,1150778,1150778
+Massachusetts,MA,3119,Other food mfg,2008,1184633,1184633
+Massachusetts,MA,312,Beverage and tobacco product mfg,2008,998687,998687
+Massachusetts,MA,3121,Beverage mfg,2008,998687,998687
+Massachusetts,MA,313,Textile mills,2008,849729,849729
+Massachusetts,MA,3133,Textile and fabric finishing and fabric coating mills,2008,634348,634348
+Massachusetts,MA,314,Textile product mills,2008,323190,323190
+Massachusetts,MA,315,Apparel mfg,2008,269865,269865
+Massachusetts,MA,3152,Cut and sew apparel mfg,2008,204378,204378
+Massachusetts,MA,316,Leather and allied product mfg,2008,233506,233506
+Massachusetts,MA,321,Wood product mfg,2008,537550,537550
+Massachusetts,MA,3219,Other wood product mfg,2008,394218,394218
+Massachusetts,MA,322,Paper mfg,2008,3257158,3257158
+Massachusetts,MA,3221,"Pulp, paper, and paperboard mills",2008,750155,750155
+Massachusetts,MA,3222,Converted paper product mfg,2008,2507003,2507003
+Massachusetts,MA,323,Printing and related support activities,2008,2469795,2469795
+Massachusetts,MA,3231,Printing and related support activities,2008,2469795,2469795
+Massachusetts,MA,325,Chemical mfg,2008,10450641,10450641
+Massachusetts,MA,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,779872,779872
+Massachusetts,MA,3254,Pharmaceutical and medicine mfg,2008,6273643,6273643
+Massachusetts,MA,3255,"Paint, coating, and adhesive mfg",2008,625421,625421
+Massachusetts,MA,3259,Other chemical product and preparation mfg,2008,1507644,1507644
+Massachusetts,MA,326,Plastics and rubber products mfg,2008,4096908,4096908
+Massachusetts,MA,3261,Plastics product mfg,2008,3816495,3816495
+Massachusetts,MA,327,Nonmetallic mineral product mfg,2008,1365192,1365192
+Massachusetts,MA,3272,Glass and glass product mfg,2008,198692,198692
+Massachusetts,MA,3273,Cement and concrete product mfg,2008,504019,504019
+Massachusetts,MA,3279,Other nonmetallic mineral product mfg,2008,490254,490254
+Massachusetts,MA,331,Primary metal mfg,2008,1433268,1433268
+Massachusetts,MA,3314,Nonferrous metal (except aluminum) production and processing,2008,742081,742081
+Massachusetts,MA,332,Fabricated metal product mfg,2008,7241660,7241660
+Massachusetts,MA,3321,Forging and stamping,2008,1000839,1000839
+Massachusetts,MA,3322,Cutlery and handtool mfg,2008,845022,845022
+Massachusetts,MA,3323,Architectural and structural metals mfg,2008,1152186,1152186
+Massachusetts,MA,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,1864420,1864420
+Massachusetts,MA,3328,"Coating, engraving, heat treating, and allied activities",2008,542323,542323
+Massachusetts,MA,3329,Other fabricated metal product mfg,2008,1476522,1476522
+Massachusetts,MA,333,Machinery mfg,2008,5271343,5271343
+Massachusetts,MA,3332,Industrial machinery mfg,2008,2206218,2206218
+Massachusetts,MA,3333,Commercial and service industry machinery mfg,2008,719739,719739
+Massachusetts,MA,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,366829,366829
+Massachusetts,MA,3335,Metalworking machinery mfg,2008,880661,880661
+Massachusetts,MA,3336,"Engine, turbine, and power transmission equipment mfg",2008,371686,371686
+Massachusetts,MA,3339,Other general purpose machinery mfg,2008,687785,687785
+Massachusetts,MA,334,Computer and electronic product mfg,2008,24140298,24140298
+Massachusetts,MA,3341,Computer and peripheral equipment mfg,2008,3703781,3703781
+Massachusetts,MA,3342,Communications equipment mfg,2008,2079319,2079319
+Massachusetts,MA,3344,Semiconductor and other electronic component mfg,2008,5617655,5617655
+Massachusetts,MA,3345,"Navigational, measuring, medical, and control instruments mfg",2008,12038627,12038627
+Massachusetts,MA,335,"Electrical equipment, appliance, and component mfg",2008,3196265,3196265
+Massachusetts,MA,3351,Electric lighting equipment mfg,2008,NA,0
+Massachusetts,MA,3353,Electrical equipment mfg,2008,715665,715665
+Massachusetts,MA,3359,Other electrical equipment and component mfg,2008,1913459,1913459
+Massachusetts,MA,336,Transportation equipment mfg,2008,2321869,2321869
+Massachusetts,MA,3363,Motor vehicle parts mfg,2008,767021,767021
+Massachusetts,MA,3364,Aerospace product and parts mfg,2008,1179487,1179487
+Massachusetts,MA,337,Furniture and related product mfg,2008,1021737,1021737
+Massachusetts,MA,3371,Household and institutional furniture and kitchen cabinet mfg,2008,400178,400178
+Massachusetts,MA,3372,Office furniture (including fixtures) mfg,2008,438167,438167
+Massachusetts,MA,339,Miscellaneous mfg,2008,6999103,6999103
+Massachusetts,MA,3391,Medical equipment and supplies mfg,2008,3585448,3585448
+Massachusetts,MA,3399,Other miscellaneous mfg,2008,3413655,3413655
+Michigan,MI,31,Manufacturing,2008,210197251,210197251
+Michigan,MI,311,Food mfg,2008,14173388,14173388
+Michigan,MI,3112,Grain and oilseed milling,2008,1999820,1999820
+Michigan,MI,3113,Sugar and confectionery product mfg,2008,749850,749850
+Michigan,MI,3114,Fruit and vegetable preserving and specialty food mfg,2008,1425088,1425088
+Michigan,MI,3115,Dairy product mfg,2008,4833433,4833433
+Michigan,MI,3116,Animal  slaughtering and processing,2008,2163614,2163614
+Michigan,MI,3118,Bakeries and tortilla mfg,2008,1739213,1739213
+Michigan,MI,3119,Other food mfg,2008,993223,993223
+Michigan,MI,312,Beverage and tobacco product mfg,2008,2649854,2649854
+Michigan,MI,3121,Beverage mfg,2008,2649854,2649854
+Michigan,MI,314,Textile product mills,2008,263835,263835
+Michigan,MI,321,Wood product mfg,2008,2027201,2027201
+Michigan,MI,3211,Sawmills and wood preservation,2008,429099,429099
+Michigan,MI,3212,"Veneer, plywood, and engineered wood product mfg",2008,638360,638360
+Michigan,MI,3219,Other wood product mfg,2008,959742,959742
+Michigan,MI,322,Paper mfg,2008,5189368,5189368
+Michigan,MI,3221,"Pulp, paper, and paperboard mills",2008,2800062,2800062
+Michigan,MI,3222,Converted paper product mfg,2008,2389306,2389306
+Michigan,MI,323,Printing and related support activities,2008,2677558,2677558
+Michigan,MI,3231,Printing and related support activities,2008,2677558,2677558
+Michigan,MI,324,Petroleum and coal products mfg,2008,4821108,4821108
+Michigan,MI,3241,Petroleum and coal products mfg,2008,4821108,4821108
+Michigan,MI,325,Chemical mfg,2008,14530139,14530139
+Michigan,MI,3251,Basic chemical mfg,2008,2962317,2962317
+Michigan,MI,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,3143374,3143374
+Michigan,MI,3254,Pharmaceutical and medicine mfg,2008,4340691,4340691
+Michigan,MI,3255,"Paint, coating, and adhesive mfg",2008,1478930,1478930
+Michigan,MI,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,1043168,1043168
+Michigan,MI,3259,Other chemical product and preparation mfg,2008,1325548,1325548
+Michigan,MI,326,Plastics and rubber products mfg,2008,9531488,9531488
+Michigan,MI,3261,Plastics product mfg,2008,8599677,8599677
+Michigan,MI,3262,Rubber product mfg,2008,931812,931812
+Michigan,MI,327,Nonmetallic mineral product mfg,2008,3493348,3493348
+Michigan,MI,3272,Glass and glass product mfg,2008,1416952,1416952
+Michigan,MI,3273,Cement and concrete product mfg,2008,1303695,1303695
+Michigan,MI,3279,Other nonmetallic mineral product mfg,2008,548267,548267
+Michigan,MI,331,Primary metal mfg,2008,12442381,12442381
+Michigan,MI,3311,Iron and steel mills and ferroalloy mfg,2008,5118891,5118891
+Michigan,MI,3313,Alumina and aluminum production and processing,2008,1235033,1235033
+Michigan,MI,3314,Nonferrous metal (except aluminum) production and processing,2008,2883448,2883448
+Michigan,MI,3315,Foundries,2008,2596697,2596697
+Michigan,MI,332,Fabricated metal product mfg,2008,15712809,15712809
+Michigan,MI,3321,Forging and stamping,2008,1802134,1802134
+Michigan,MI,3322,Cutlery and handtool mfg,2008,317233,317233
+Michigan,MI,3323,Architectural and structural metals mfg,2008,2330025,2330025
+Michigan,MI,3325,Hardware mfg,2008,605440,605440
+Michigan,MI,3326,Spring and wire product mfg,2008,493005,493005
+Michigan,MI,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,4975557,4975557
+Michigan,MI,3328,"Coating, engraving, heat treating, and allied activities",2008,1904894,1904894
+Michigan,MI,3329,Other fabricated metal product mfg,2008,3109442,3109442
+Michigan,MI,333,Machinery mfg,2008,17995358,17995358
+Michigan,MI,3331,"Agriculture, construction, and mining machinery mfg",2008,883242,883242
+Michigan,MI,3332,Industrial machinery mfg,2008,1511541,1511541
+Michigan,MI,3333,Commercial and service industry machinery mfg,2008,509931,509931
+Michigan,MI,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,698131,698131
+Michigan,MI,3335,Metalworking machinery mfg,2008,5807632,5807632
+Michigan,MI,3336,"Engine, turbine, and power transmission equipment mfg",2008,3395559,3395559
+Michigan,MI,3339,Other general purpose machinery mfg,2008,5189323,5189323
+Michigan,MI,334,Computer and electronic product mfg,2008,4477671,4477671
+Michigan,MI,3342,Communications equipment mfg,2008,304670,304670
+Michigan,MI,3344,Semiconductor and other electronic component mfg,2008,888905,888905
+Michigan,MI,3345,"Navigational, measuring, medical, and control instruments mfg",2008,2957594,2957594
+Michigan,MI,335,"Electrical equipment, appliance, and component mfg",2008,2820633,2820633
+Michigan,MI,3352,Household appliance mfg,2008,729446,729446
+Michigan,MI,3353,Electrical equipment mfg,2008,1007870,1007870
+Michigan,MI,3359,Other electrical equipment and component mfg,2008,981908,981908
+Michigan,MI,336,Transportation equipment mfg,2008,87012872,87012872
+Michigan,MI,3361,Motor vehicle mfg,2008,45625874,45625874
+Michigan,MI,3362,Motor vehicle body and trailer mfg,2008,521000,521000
+Michigan,MI,3363,Motor vehicle parts mfg,2008,37790635,37790635
+Michigan,MI,3364,Aerospace product and parts mfg,2008,1120149,1120149
+Michigan,MI,3366,Ship and boat building,2008,434146,434146
+Michigan,MI,3369,Other transportation equipment mfg,2008,1436962,1436962
+Michigan,MI,337,Furniture and related product mfg,2008,6685872,6685872
+Michigan,MI,3371,Household and institutional furniture and kitchen cabinet mfg,2008,939969,939969
+Michigan,MI,3372,Office furniture (including fixtures) mfg,2008,5665269,5665269
+Michigan,MI,339,Miscellaneous mfg,2008,3320840,3320840
+Michigan,MI,3391,Medical equipment and supplies mfg,2008,2065503,2065503
+Michigan,MI,3399,Other miscellaneous mfg,2008,1255337,1255337
+Minnesota,MN,31,Manufacturing,2008,116826770,116826770
+Minnesota,MN,311,Food mfg,2008,25053955,25053955
+Minnesota,MN,3111,Animal food mfg,2008,1307955,1307955
+Minnesota,MN,3112,Grain and oilseed milling,2008,5649770,5649770
+Minnesota,MN,3113,Sugar and confectionery product mfg,2008,1181471,1181471
+Minnesota,MN,3114,Fruit and vegetable preserving and specialty food mfg,2008,1539679,1539679
+Minnesota,MN,3115,Dairy product mfg,2008,5990745,5990745
+Minnesota,MN,3116,Animal  slaughtering and processing,2008,6109703,6109703
+Minnesota,MN,3118,Bakeries and tortilla mfg,2008,NA,0
+Minnesota,MN,3119,Other food mfg,2008,2142798,2142798
+Minnesota,MN,312,Beverage and tobacco product mfg,2008,787623,787623
+Minnesota,MN,3121,Beverage mfg,2008,787623,787623
+Minnesota,MN,314,Textile product mills,2008,NA,0
+Minnesota,MN,316,Leather and allied product mfg,2008,NA,0
+Minnesota,MN,321,Wood product mfg,2008,2976814,2976814
+Minnesota,MN,3212,"Veneer, plywood, and engineered wood product mfg",2008,410544,410544
+Minnesota,MN,3219,Other wood product mfg,2008,2335220,2335220
+Minnesota,MN,322,Paper mfg,2008,5419815,5419815
+Minnesota,MN,3221,"Pulp, paper, and paperboard mills",2008,2223896,2223896
+Minnesota,MN,3222,Converted paper product mfg,2008,3195919,3195919
+Minnesota,MN,323,Printing and related support activities,2008,4966637,4966637
+Minnesota,MN,3231,Printing and related support activities,2008,4966637,4966637
+Minnesota,MN,324,Petroleum and coal products mfg,2008,NA,0
+Minnesota,MN,3241,Petroleum and coal products mfg,2008,NA,0
+Minnesota,MN,325,Chemical mfg,2008,5413111,5413111
+Minnesota,MN,3251,Basic chemical mfg,2008,2024834,2024834
+Minnesota,MN,3254,Pharmaceutical and medicine mfg,2008,1183416,1183416
+Minnesota,MN,3255,"Paint, coating, and adhesive mfg",2008,605639,605639
+Minnesota,MN,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,346875,346875
+Minnesota,MN,3259,Other chemical product and preparation mfg,2008,379432,379432
+Minnesota,MN,326,Plastics and rubber products mfg,2008,3178499,3178499
+Minnesota,MN,3261,Plastics product mfg,2008,2943090,2943090
+Minnesota,MN,3262,Rubber product mfg,2008,235409,235409
+Minnesota,MN,327,Nonmetallic mineral product mfg,2008,2290589,2290589
+Minnesota,MN,3272,Glass and glass product mfg,2008,518959,518959
+Minnesota,MN,3273,Cement and concrete product mfg,2008,963422,963422
+Minnesota,MN,3279,Other nonmetallic mineral product mfg,2008,783900,783900
+Minnesota,MN,331,Primary metal mfg,2008,2058947,2058947
+Minnesota,MN,3315,Foundries,2008,878521,878521
+Minnesota,MN,332,Fabricated metal product mfg,2008,10158937,10158937
+Minnesota,MN,3321,Forging and stamping,2008,1821552,1821552
+Minnesota,MN,3322,Cutlery and handtool mfg,2008,607164,607164
+Minnesota,MN,3323,Architectural and structural metals mfg,2008,1326173,1326173
+Minnesota,MN,3324,"Boiler, tank, and shipping container mfg",2008,812079,812079
+Minnesota,MN,3325,Hardware mfg,2008,337257,337257
+Minnesota,MN,3326,Spring and wire product mfg,2008,297923,297923
+Minnesota,MN,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,2001838,2001838
+Minnesota,MN,3328,"Coating, engraving, heat treating, and allied activities",2008,424497,424497
+Minnesota,MN,3329,Other fabricated metal product mfg,2008,2530454,2530454
+Minnesota,MN,333,Machinery mfg,2008,9669072,9669072
+Minnesota,MN,3331,"Agriculture, construction, and mining machinery mfg",2008,1949985,1949985
+Minnesota,MN,3332,Industrial machinery mfg,2008,931025,931025
+Minnesota,MN,3333,Commercial and service industry machinery mfg,2008,889487,889487
+Minnesota,MN,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,1090016,1090016
+Minnesota,MN,3335,Metalworking machinery mfg,2008,985646,985646
+Minnesota,MN,3336,"Engine, turbine, and power transmission equipment mfg",2008,426005,426005
+Minnesota,MN,3339,Other general purpose machinery mfg,2008,3396909,3396909
+Minnesota,MN,334,Computer and electronic product mfg,2008,11156722,11156722
+Minnesota,MN,3341,Computer and peripheral equipment mfg,2008,2073461,2073461
+Minnesota,MN,3342,Communications equipment mfg,2008,308736,308736
+Minnesota,MN,3344,Semiconductor and other electronic component mfg,2008,2635698,2635698
+Minnesota,MN,3345,"Navigational, measuring, medical, and control instruments mfg",2008,6005181,6005181
+Minnesota,MN,335,"Electrical equipment, appliance, and component mfg",2008,4058212,4058212
+Minnesota,MN,3352,Household appliance mfg,2008,NA,0
+Minnesota,MN,3353,Electrical equipment mfg,2008,2435905,2435905
+Minnesota,MN,3359,Other electrical equipment and component mfg,2008,1002176,1002176
+Minnesota,MN,336,Transportation equipment mfg,2008,6628750,6628750
+Minnesota,MN,3361,Motor vehicle mfg,2008,NA,0
+Minnesota,MN,3362,Motor vehicle body and trailer mfg,2008,750751,750751
+Minnesota,MN,3363,Motor vehicle parts mfg,2008,655169,655169
+Minnesota,MN,3364,Aerospace product and parts mfg,2008,440694,440694
+Minnesota,MN,3366,Ship and boat building,2008,555331,555331
+Minnesota,MN,3369,Other transportation equipment mfg,2008,NA,0
+Minnesota,MN,337,Furniture and related product mfg,2008,1762027,1762027
+Minnesota,MN,3371,Household and institutional furniture and kitchen cabinet mfg,2008,948121,948121
+Minnesota,MN,3372,Office furniture (including fixtures) mfg,2008,732974,732974
+Minnesota,MN,339,Miscellaneous mfg,2008,6515899,6515899
+Minnesota,MN,3391,Medical equipment and supplies mfg,2008,5192880,5192880
+Minnesota,MN,3399,Other miscellaneous mfg,2008,1323020,1323020
+Mississippi,MS,31,Manufacturing,2008,62555502,62555502
+Mississippi,MS,311,Food mfg,2008,5525202,5525202
+Mississippi,MS,3116,Animal  slaughtering and processing,2008,3293508,3293508
+Mississippi,MS,3117,Seafood product preparation and packaging,2008,438061,438061
+Mississippi,MS,314,Textile product mills,2008,NA,0
+Mississippi,MS,315,Apparel mfg,2008,NA,0
+Mississippi,MS,321,Wood product mfg,2008,2310258,2310258
+Mississippi,MS,3211,Sawmills and wood preservation,2008,1037449,1037449
+Mississippi,MS,3212,"Veneer, plywood, and engineered wood product mfg",2008,731518,731518
+Mississippi,MS,3219,Other wood product mfg,2008,541292,541292
+Mississippi,MS,322,Paper mfg,2008,2241580,2241580
+Mississippi,MS,3221,"Pulp, paper, and paperboard mills",2008,1318065,1318065
+Mississippi,MS,3222,Converted paper product mfg,2008,923515,923515
+Mississippi,MS,323,Printing and related support activities,2008,586524,586524
+Mississippi,MS,3231,Printing and related support activities,2008,586524,586524
+Mississippi,MS,324,Petroleum and coal products mfg,2008,NA,0
+Mississippi,MS,3241,Petroleum and coal products mfg,2008,NA,0
+Mississippi,MS,325,Chemical mfg,2008,5247102,5247102
+Mississippi,MS,3251,Basic chemical mfg,2008,1530123,1530123
+Mississippi,MS,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,1282136,1282136
+Mississippi,MS,3254,Pharmaceutical and medicine mfg,2008,238006,238006
+Mississippi,MS,326,Plastics and rubber products mfg,2008,2491274,2491274
+Mississippi,MS,3261,Plastics product mfg,2008,1604636,1604636
+Mississippi,MS,3262,Rubber product mfg,2008,886637,886637
+Mississippi,MS,327,Nonmetallic mineral product mfg,2008,964463,964463
+Mississippi,MS,3273,Cement and concrete product mfg,2008,536180,536180
+Mississippi,MS,331,Primary metal mfg,2008,2390179,2390179
+Mississippi,MS,332,Fabricated metal product mfg,2008,3329572,3329572
+Mississippi,MS,3323,Architectural and structural metals mfg,2008,1272631,1272631
+Mississippi,MS,3324,"Boiler, tank, and shipping container mfg",2008,743975,743975
+Mississippi,MS,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,242275,242275
+Mississippi,MS,3329,Other fabricated metal product mfg,2008,411518,411518
+Mississippi,MS,333,Machinery mfg,2008,3339894,3339894
+Mississippi,MS,3331,"Agriculture, construction, and mining machinery mfg",2008,525137,525137
+Mississippi,MS,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,664642,664642
+Mississippi,MS,3336,"Engine, turbine, and power transmission equipment mfg",2008,663749,663749
+Mississippi,MS,3339,Other general purpose machinery mfg,2008,1055620,1055620
+Mississippi,MS,334,Computer and electronic product mfg,2008,NA,0
+Mississippi,MS,335,"Electrical equipment, appliance, and component mfg",2008,3118425,3118425
+Mississippi,MS,3351,Electric lighting equipment mfg,2008,NA,0
+Mississippi,MS,3352,Household appliance mfg,2008,850355,850355
+Mississippi,MS,3353,Electrical equipment mfg,2008,1473182,1473182
+Mississippi,MS,336,Transportation equipment mfg,2008,7782109,7782109
+Mississippi,MS,3361,Motor vehicle mfg,2008,NA,0
+Mississippi,MS,3363,Motor vehicle parts mfg,2008,NA,0
+Mississippi,MS,3366,Ship and boat building,2008,3187723,3187723
+Mississippi,MS,337,Furniture and related product mfg,2008,4301543,4301543
+Mississippi,MS,3371,Household and institutional furniture and kitchen cabinet mfg,2008,3898433,3898433
+Mississippi,MS,3372,Office furniture (including fixtures) mfg,2008,286504,286504
+Mississippi,MS,339,Miscellaneous mfg,2008,707386,707386
+Mississippi,MS,3399,Other miscellaneous mfg,2008,579776,579776
+Missouri,MO,31,Manufacturing,2008,109938325,109938325
+Missouri,MO,311,Food mfg,2008,18529042,18529042
+Missouri,MO,3111,Animal food mfg,2008,2197734,2197734
+Missouri,MO,3112,Grain and oilseed milling,2008,3046207,3046207
+Missouri,MO,3114,Fruit and vegetable preserving and specialty food mfg,2008,1581464,1581464
+Missouri,MO,3115,Dairy product mfg,2008,3663580,3663580
+Missouri,MO,3116,Animal  slaughtering and processing,2008,4782962,4782962
+Missouri,MO,3118,Bakeries and tortilla mfg,2008,1556255,1556255
+Missouri,MO,3119,Other food mfg,2008,1679371,1679371
+Missouri,MO,312,Beverage and tobacco product mfg,2008,2727739,2727739
+Missouri,MO,3121,Beverage mfg,2008,NA,0
+Missouri,MO,314,Textile product mills,2008,339448,339448
+Missouri,MO,3149,Other textile product mills,2008,244824,244824
+Missouri,MO,315,Apparel mfg,2008,169747,169747
+Missouri,MO,3152,Cut and sew apparel mfg,2008,134013,134013
+Missouri,MO,316,Leather and allied product mfg,2008,258539,258539
+Missouri,MO,321,Wood product mfg,2008,1150335,1150335
+Missouri,MO,3211,Sawmills and wood preservation,2008,287777,287777
+Missouri,MO,3219,Other wood product mfg,2008,753619,753619
+Missouri,MO,322,Paper mfg,2008,4573651,4573651
+Missouri,MO,3221,"Pulp, paper, and paperboard mills",2008,NA,0
+Missouri,MO,3222,Converted paper product mfg,2008,NA,0
+Missouri,MO,323,Printing and related support activities,2008,2989427,2989427
+Missouri,MO,3231,Printing and related support activities,2008,2989427,2989427
+Missouri,MO,324,Petroleum and coal products mfg,2008,906297,906297
+Missouri,MO,3241,Petroleum and coal products mfg,2008,906297,906297
+Missouri,MO,325,Chemical mfg,2008,15191827,15191827
+Missouri,MO,3251,Basic chemical mfg,2008,1460951,1460951
+Missouri,MO,3253,"Pesticide, fertilizer, and other agricultural chemical mfg",2008,3074395,3074395
+Missouri,MO,3254,Pharmaceutical and medicine mfg,2008,2852603,2852603
+Missouri,MO,3255,"Paint, coating, and adhesive mfg",2008,876693,876693
+Missouri,MO,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,6095410,6095410
+Missouri,MO,3259,Other chemical product and preparation mfg,2008,527149,527149
+Missouri,MO,326,Plastics and rubber products mfg,2008,3717959,3717959
+Missouri,MO,3261,Plastics product mfg,2008,3007878,3007878
+Missouri,MO,3262,Rubber product mfg,2008,710081,710081
+Missouri,MO,327,Nonmetallic mineral product mfg,2008,2565749,2565749
+Missouri,MO,3272,Glass and glass product mfg,2008,243486,243486
+Missouri,MO,3273,Cement and concrete product mfg,2008,1413601,1413601
+Missouri,MO,3279,Other nonmetallic mineral product mfg,2008,450515,450515
+Missouri,MO,331,Primary metal mfg,2008,4228056,4228056
+Missouri,MO,3312,Steel product mfg from purchased steel,2008,717796,717796
+Missouri,MO,3313,Alumina and aluminum production and processing,2008,1260763,1260763
+Missouri,MO,3314,Nonferrous metal (except aluminum) production and processing,2008,1475810,1475810
+Missouri,MO,3315,Foundries,2008,691579,691579
+Missouri,MO,332,Fabricated metal product mfg,2008,7304339,7304339
+Missouri,MO,3321,Forging and stamping,2008,345460,345460
+Missouri,MO,3323,Architectural and structural metals mfg,2008,2162240,2162240
+Missouri,MO,3324,"Boiler, tank, and shipping container mfg",2008,1088769,1088769
+Missouri,MO,3326,Spring and wire product mfg,2008,501976,501976
+Missouri,MO,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,882910,882910
+Missouri,MO,3328,"Coating, engraving, heat treating, and allied activities",2008,255431,255431
+Missouri,MO,3329,Other fabricated metal product mfg,2008,1852807,1852807
+Missouri,MO,333,Machinery mfg,2008,7574135,7574135
+Missouri,MO,3331,"Agriculture, construction, and mining machinery mfg",2008,435093,435093
+Missouri,MO,3332,Industrial machinery mfg,2008,480122,480122
+Missouri,MO,3333,Commercial and service industry machinery mfg,2008,707399,707399
+Missouri,MO,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,2163211,2163211
+Missouri,MO,3335,Metalworking machinery mfg,2008,478439,478439
+Missouri,MO,3336,"Engine, turbine, and power transmission equipment mfg",2008,712097,712097
+Missouri,MO,3339,Other general purpose machinery mfg,2008,2597774,2597774
+Missouri,MO,334,Computer and electronic product mfg,2008,1890638,1890638
+Missouri,MO,3342,Communications equipment mfg,2008,430055,430055
+Missouri,MO,3344,Semiconductor and other electronic component mfg,2008,534246,534246
+Missouri,MO,3345,"Navigational, measuring, medical, and control instruments mfg",2008,838322,838322
+Missouri,MO,335,"Electrical equipment, appliance, and component mfg",2008,4356276,4356276
+Missouri,MO,3353,Electrical equipment mfg,2008,2006161,2006161
+Missouri,MO,3359,Other electrical equipment and component mfg,2008,2131226,2131226
+Missouri,MO,336,Transportation equipment mfg,2008,28508519,28508519
+Missouri,MO,3361,Motor vehicle mfg,2008,12885582,12885582
+Missouri,MO,3362,Motor vehicle body and trailer mfg,2008,NA,0
+Missouri,MO,3363,Motor vehicle parts mfg,2008,3641752,3641752
+Missouri,MO,3364,Aerospace product and parts mfg,2008,NA,0
+Missouri,MO,3366,Ship and boat building,2008,691403,691403
+Missouri,MO,3369,Other transportation equipment mfg,2008,NA,0
+Missouri,MO,337,Furniture and related product mfg,2008,1092109,1092109
+Missouri,MO,3371,Household and institutional furniture and kitchen cabinet mfg,2008,737491,737491
+Missouri,MO,3372,Office furniture (including fixtures) mfg,2008,312476,312476
+Missouri,MO,339,Miscellaneous mfg,2008,1781725,1781725
+Missouri,MO,3391,Medical equipment and supplies mfg,2008,892479,892479
+Missouri,MO,3399,Other miscellaneous mfg,2008,889246,889246
+Montana,MT,31,Manufacturing,2008,12710891,12710891
+Montana,MT,311,Food mfg,2008,820333,820333
+Montana,MT,321,Wood product mfg,2008,840652,840652
+Montana,MT,3211,Sawmills and wood preservation,2008,338152,338152
+Montana,MT,324,Petroleum and coal products mfg,2008,7091602,7091602
+Montana,MT,3241,Petroleum and coal products mfg,2008,7091602,7091602
+Montana,MT,327,Nonmetallic mineral product mfg,2008,3958304,3958304
+Montana,MT,332,Fabricated metal product mfg,2008,279841,279841
+Montana,MT,333,Machinery mfg,2008,257537,257537
+Montana,MT,339,Miscellaneous mfg,2008,348569,348569
+Nebraska,NE,31,Manufacturing,2008,46884812,46884812
+Nebraska,NE,311,Food mfg,2008,25330258,25330258
+Nebraska,NE,3111,Animal food mfg,2008,2251286,2251286
+Nebraska,NE,3112,Grain and oilseed milling,2008,5602208,5602208
+Nebraska,NE,3115,Dairy product mfg,2008,555459,555459
+Nebraska,NE,3116,Animal  slaughtering and processing,2008,15852003,15852003
+Nebraska,NE,3118,Bakeries and tortilla mfg,2008,330538,330538
+Nebraska,NE,3119,Other food mfg,2008,455725,455725
+Nebraska,NE,321,Wood product mfg,2008,335141,335141
+Nebraska,NE,3219,Other wood product mfg,2008,260515,260515
+Nebraska,NE,322,Paper mfg,2008,507096,507096
+Nebraska,NE,3222,Converted paper product mfg,2008,506535,506535
+Nebraska,NE,323,Printing and related support activities,2008,686730,686730
+Nebraska,NE,3231,Printing and related support activities,2008,686730,686730
+Nebraska,NE,325,Chemical mfg,2008,4029750,4029750
+Nebraska,NE,3251,Basic chemical mfg,2008,2201561,2201561
+Nebraska,NE,3254,Pharmaceutical and medicine mfg,2008,1014200,1014200
+Nebraska,NE,326,Plastics and rubber products mfg,2008,1148261,1148261
+Nebraska,NE,3261,Plastics product mfg,2008,702597,702597
+Nebraska,NE,3262,Rubber product mfg,2008,445664,445664
+Nebraska,NE,327,Nonmetallic mineral product mfg,2008,475470,475470
+Nebraska,NE,3273,Cement and concrete product mfg,2008,392079,392079
+Nebraska,NE,331,Primary metal mfg,2008,1254445,1254445
+Nebraska,NE,332,Fabricated metal product mfg,2008,2329409,2329409
+Nebraska,NE,3323,Architectural and structural metals mfg,2008,1056090,1056090
+Nebraska,NE,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,217409,217409
+Nebraska,NE,3329,Other fabricated metal product mfg,2008,347593,347593
+Nebraska,NE,333,Machinery mfg,2008,3802571,3802571
+Nebraska,NE,3331,"Agriculture, construction, and mining machinery mfg",2008,2851395,2851395
+Nebraska,NE,3339,Other general purpose machinery mfg,2008,362397,362397
+Nebraska,NE,334,Computer and electronic product mfg,2008,1084382,1084382
+Nebraska,NE,3342,Communications equipment mfg,2008,571669,571669
+Nebraska,NE,3344,Semiconductor and other electronic component mfg,2008,106148,106148
+Nebraska,NE,3345,"Navigational, measuring, medical, and control instruments mfg",2008,326980,326980
+Nebraska,NE,335,"Electrical equipment, appliance, and component mfg",2008,676092,676092
+Nebraska,NE,3359,Other electrical equipment and component mfg,2008,303221,303221
+Nebraska,NE,336,Transportation equipment mfg,2008,2371791,2371791
+Nebraska,NE,3362,Motor vehicle body and trailer mfg,2008,448342,448342
+Nebraska,NE,3363,Motor vehicle parts mfg,2008,1081278,1081278
+Nebraska,NE,337,Furniture and related product mfg,2008,404000,404000
+Nebraska,NE,3372,Office furniture (including fixtures) mfg,2008,259952,259952
+Nebraska,NE,339,Miscellaneous mfg,2008,1990983,1990983
+Nebraska,NE,3391,Medical equipment and supplies mfg,2008,1857999,1857999
+Nevada,NV,31,Manufacturing,2008,16014392,16014392
+Nevada,NV,311,Food mfg,2008,1595992,1595992
+Nevada,NV,3118,Bakeries and tortilla mfg,2008,212249,212249
+Nevada,NV,321,Wood product mfg,2008,364320,364320
+Nevada,NV,323,Printing and related support activities,2008,607852,607852
+Nevada,NV,3231,Printing and related support activities,2008,607852,607852
+Nevada,NV,325,Chemical mfg,2008,697842,697842
+Nevada,NV,326,Plastics and rubber products mfg,2008,1064009,1064009
+Nevada,NV,3261,Plastics product mfg,2008,966317,966317
+Nevada,NV,327,Nonmetallic mineral product mfg,2008,1435889,1435889
+Nevada,NV,3273,Cement and concrete product mfg,2008,936721,936721
+Nevada,NV,331,Primary metal mfg,2008,563663,563663
+Nevada,NV,332,Fabricated metal product mfg,2008,1552722,1552722
+Nevada,NV,3323,Architectural and structural metals mfg,2008,798940,798940
+Nevada,NV,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,182706,182706
+Nevada,NV,333,Machinery mfg,2008,572102,572102
+Nevada,NV,334,Computer and electronic product mfg,2008,1458807,1458807
+Nevada,NV,3342,Communications equipment mfg,2008,NA,0
+Nevada,NV,335,"Electrical equipment, appliance, and component mfg",2008,290975,290975
+Nevada,NV,336,Transportation equipment mfg,2008,359388,359388
+Nevada,NV,337,Furniture and related product mfg,2008,255209,255209
+Nevada,NV,339,Miscellaneous mfg,2008,4373097,4373097
+Nevada,NV,3399,Other miscellaneous mfg,2008,4203189,4203189
+New Hampshire,NH,31,Manufacturing,2008,18599565,18599565
+New Hampshire,NH,311,Food mfg,2008,842917,842917
+New Hampshire,NH,3113,Sugar and confectionery product mfg,2008,NA,0
+New Hampshire,NH,313,Textile mills,2008,270289,270289
+New Hampshire,NH,3132,Fabric mills,2008,174323,174323
+New Hampshire,NH,321,Wood product mfg,2008,436650,436650
+New Hampshire,NH,3219,Other wood product mfg,2008,253040,253040
+New Hampshire,NH,323,Printing and related support activities,2008,502848,502848
+New Hampshire,NH,3231,Printing and related support activities,2008,502848,502848
+New Hampshire,NH,325,Chemical mfg,2008,574665,574665
+New Hampshire,NH,326,Plastics and rubber products mfg,2008,892068,892068
+New Hampshire,NH,3261,Plastics product mfg,2008,718391,718391
+New Hampshire,NH,327,Nonmetallic mineral product mfg,2008,476585,476585
+New Hampshire,NH,331,Primary metal mfg,2008,465227,465227
+New Hampshire,NH,3315,Foundries,2008,257622,257622
+New Hampshire,NH,332,Fabricated metal product mfg,2008,2403981,2403981
+New Hampshire,NH,3323,Architectural and structural metals mfg,2008,476091,476091
+New Hampshire,NH,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,423435,423435
+New Hampshire,NH,3329,Other fabricated metal product mfg,2008,1182442,1182442
+New Hampshire,NH,333,Machinery mfg,2008,3218444,3218444
+New Hampshire,NH,3332,Industrial machinery mfg,2008,958158,958158
+New Hampshire,NH,3333,Commercial and service industry machinery mfg,2008,781254,781254
+New Hampshire,NH,3339,Other general purpose machinery mfg,2008,1027453,1027453
+New Hampshire,NH,334,Computer and electronic product mfg,2008,3963304,3963304
+New Hampshire,NH,3344,Semiconductor and other electronic component mfg,2008,1220868,1220868
+New Hampshire,NH,3345,"Navigational, measuring, medical, and control instruments mfg",2008,2139944,2139944
+New Hampshire,NH,335,"Electrical equipment, appliance, and component mfg",2008,1487794,1487794
+New Hampshire,NH,3351,Electric lighting equipment mfg,2008,NA,0
+New Hampshire,NH,3359,Other electrical equipment and component mfg,2008,886173,886173
+New Hampshire,NH,336,Transportation equipment mfg,2008,503301,503301
+New Hampshire,NH,3363,Motor vehicle parts mfg,2008,228037,228037
+New Hampshire,NH,3364,Aerospace product and parts mfg,2008,NA,0
+New Hampshire,NH,337,Furniture and related product mfg,2008,236581,236581
+New Hampshire,NH,3371,Household and institutional furniture and kitchen cabinet mfg,2008,179906,179906
+New Hampshire,NH,339,Miscellaneous mfg,2008,1161261,1161261
+New Hampshire,NH,3391,Medical equipment and supplies mfg,2008,648825,648825
+New Hampshire,NH,3399,Other miscellaneous mfg,2008,512436,512436
+New Jersey,NJ,31,Manufacturing,2008,117279655,117279655
+New Jersey,NJ,311,Food mfg,2008,11077163,11077163
+New Jersey,NJ,3113,Sugar and confectionery product mfg,2008,790539,790539
+New Jersey,NJ,3114,Fruit and vegetable preserving and specialty food mfg,2008,1804297,1804297
+New Jersey,NJ,3115,Dairy product mfg,2008,1567223,1567223
+New Jersey,NJ,3116,Animal  slaughtering and processing,2008,1133505,1133505
+New Jersey,NJ,3118,Bakeries and tortilla mfg,2008,1984059,1984059
+New Jersey,NJ,3119,Other food mfg,2008,2508504,2508504
+New Jersey,NJ,312,Beverage and tobacco product mfg,2008,2162258,2162258
+New Jersey,NJ,3121,Beverage mfg,2008,2162258,2162258
+New Jersey,NJ,313,Textile mills,2008,478877,478877
+New Jersey,NJ,314,Textile product mills,2008,414736,414736
+New Jersey,NJ,3149,Other textile product mills,2008,207661,207661
+New Jersey,NJ,315,Apparel mfg,2008,273954,273954
+New Jersey,NJ,3152,Cut and sew apparel mfg,2008,242917,242917
+New Jersey,NJ,321,Wood product mfg,2008,683323,683323
+New Jersey,NJ,3219,Other wood product mfg,2008,555338,555338
+New Jersey,NJ,322,Paper mfg,2008,3198277,3198277
+New Jersey,NJ,3221,"Pulp, paper, and paperboard mills",2008,546739,546739
+New Jersey,NJ,3222,Converted paper product mfg,2008,2651538,2651538
+New Jersey,NJ,323,Printing and related support activities,2008,3619856,3619856
+New Jersey,NJ,3231,Printing and related support activities,2008,3619856,3619856
+New Jersey,NJ,324,Petroleum and coal products mfg,2008,26965336,26965336
+New Jersey,NJ,3241,Petroleum and coal products mfg,2008,26965336,26965336
+New Jersey,NJ,325,Chemical mfg,2008,28850077,28850077
+New Jersey,NJ,3251,Basic chemical mfg,2008,4790508,4790508
+New Jersey,NJ,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,1248130,1248130
+New Jersey,NJ,3254,Pharmaceutical and medicine mfg,2008,13405047,13405047
+New Jersey,NJ,3255,"Paint, coating, and adhesive mfg",2008,1349781,1349781
+New Jersey,NJ,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,6387734,6387734
+New Jersey,NJ,3259,Other chemical product and preparation mfg,2008,1245476,1245476
+New Jersey,NJ,326,Plastics and rubber products mfg,2008,4717718,4717718
+New Jersey,NJ,3261,Plastics product mfg,2008,4255959,4255959
+New Jersey,NJ,3262,Rubber product mfg,2008,461759,461759
+New Jersey,NJ,327,Nonmetallic mineral product mfg,2008,3160328,3160328
+New Jersey,NJ,3272,Glass and glass product mfg,2008,1170754,1170754
+New Jersey,NJ,3273,Cement and concrete product mfg,2008,1198534,1198534
+New Jersey,NJ,3279,Other nonmetallic mineral product mfg,2008,469677,469677
+New Jersey,NJ,331,Primary metal mfg,2008,3279627,3279627
+New Jersey,NJ,3314,Nonferrous metal (except aluminum) production and processing,2008,1071173,1071173
+New Jersey,NJ,3315,Foundries,2008,526734,526734
+New Jersey,NJ,332,Fabricated metal product mfg,2008,5603636,5603636
+New Jersey,NJ,3321,Forging and stamping,2008,539694,539694
+New Jersey,NJ,3323,Architectural and structural metals mfg,2008,1888542,1888542
+New Jersey,NJ,3324,"Boiler, tank, and shipping container mfg",2008,414451,414451
+New Jersey,NJ,3326,Spring and wire product mfg,2008,260836,260836
+New Jersey,NJ,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,846192,846192
+New Jersey,NJ,3328,"Coating, engraving, heat treating, and allied activities",2008,335706,335706
+New Jersey,NJ,3329,Other fabricated metal product mfg,2008,1137878,1137878
+New Jersey,NJ,333,Machinery mfg,2008,3779576,3779576
+New Jersey,NJ,3332,Industrial machinery mfg,2008,593462,593462
+New Jersey,NJ,3333,Commercial and service industry machinery mfg,2008,620414,620414
+New Jersey,NJ,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,594968,594968
+New Jersey,NJ,3335,Metalworking machinery mfg,2008,291634,291634
+New Jersey,NJ,3339,Other general purpose machinery mfg,2008,1365846,1365846
+New Jersey,NJ,334,Computer and electronic product mfg,2008,6934855,6934855
+New Jersey,NJ,3342,Communications equipment mfg,2008,1182869,1182869
+New Jersey,NJ,3344,Semiconductor and other electronic component mfg,2008,1159984,1159984
+New Jersey,NJ,3345,"Navigational, measuring, medical, and control instruments mfg",2008,3953979,3953979
+New Jersey,NJ,3346,Mfg and reproducing magnetic and optical media,2008,282951,282951
+New Jersey,NJ,335,"Electrical equipment, appliance, and component mfg",2008,2947946,2947946
+New Jersey,NJ,3351,Electric lighting equipment mfg,2008,700147,700147
+New Jersey,NJ,3353,Electrical equipment mfg,2008,1084084,1084084
+New Jersey,NJ,3359,Other electrical equipment and component mfg,2008,1080247,1080247
+New Jersey,NJ,336,Transportation equipment mfg,2008,880972,880972
+New Jersey,NJ,337,Furniture and related product mfg,2008,1256315,1256315
+New Jersey,NJ,3371,Household and institutional furniture and kitchen cabinet mfg,2008,526635,526635
+New Jersey,NJ,3372,Office furniture (including fixtures) mfg,2008,436606,436606
+New Jersey,NJ,3379,Other furniture related product mfg,2008,293074,293074
+New Jersey,NJ,339,Miscellaneous mfg,2008,6919335,6919335
+New Jersey,NJ,3391,Medical equipment and supplies mfg,2008,5430146,5430146
+New Jersey,NJ,3399,Other miscellaneous mfg,2008,1489189,1489189
+New Mexico,NM,31,Manufacturing,2008,16660591,16660591
+New Mexico,NM,311,Food mfg,2008,2871784,2871784
+New Mexico,NM,3115,Dairy product mfg,2008,1752914,1752914
+New Mexico,NM,325,Chemical mfg,2008,770038,770038
+New Mexico,NM,327,Nonmetallic mineral product mfg,2008,536821,536821
+New Mexico,NM,3273,Cement and concrete product mfg,2008,347392,347392
+New Mexico,NM,332,Fabricated metal product mfg,2008,443728,443728
+New Mexico,NM,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,102022,102022
+New Mexico,NM,333,Machinery mfg,2008,399809,399809
+New Mexico,NM,334,Computer and electronic product mfg,2008,2764709,2764709
+New Mexico,NM,3344,Semiconductor and other electronic component mfg,2008,2101626,2101626
+New Mexico,NM,3345,"Navigational, measuring, medical, and control instruments mfg",2008,553764,553764
+New Mexico,NM,335,"Electrical equipment, appliance, and component mfg",2008,236034,236034
+New Mexico,NM,337,Furniture and related product mfg,2008,7760427,7760427
+New Mexico,NM,339,Miscellaneous mfg,2008,877241,877241
+New Mexico,NM,3391,Medical equipment and supplies mfg,2008,684975,684975
+New Mexico,NM,3399,Other miscellaneous mfg,2008,192266,192266
+New York,NY,31,Manufacturing,2008,163993100,163993100
+New York,NY,311,Food mfg,2008,17382470,17382470
+New York,NY,3111,Animal food mfg,2008,1599996,1599996
+New York,NY,3113,Sugar and confectionery product mfg,2008,663948,663948
+New York,NY,3114,Fruit and vegetable preserving and specialty food mfg,2008,2959830,2959830
+New York,NY,3115,Dairy product mfg,2008,4599165,4599165
+New York,NY,3116,Animal  slaughtering and processing,2008,1147289,1147289
+New York,NY,3118,Bakeries and tortilla mfg,2008,2406487,2406487
+New York,NY,3119,Other food mfg,2008,2347079,2347079
+New York,NY,312,Beverage and tobacco product mfg,2008,3082236,3082236
+New York,NY,3121,Beverage mfg,2008,3020265,3020265
+New York,NY,313,Textile mills,2008,841028,841028
+New York,NY,3132,Fabric mills,2008,380290,380290
+New York,NY,3133,Textile and fabric finishing and fabric coating mills,2008,403218,403218
+New York,NY,314,Textile product mills,2008,898082,898082
+New York,NY,3141,Textile furnishings mills,2008,307412,307412
+New York,NY,3149,Other textile product mills,2008,590669,590669
+New York,NY,315,Apparel mfg,2008,2982248,2982248
+New York,NY,3152,Cut and sew apparel mfg,2008,2674396,2674396
+New York,NY,3159,Apparel accessories and other apparel mfg,2008,255782,255782
+New York,NY,316,Leather and allied product mfg,2008,306632,306632
+New York,NY,321,Wood product mfg,2008,1482206,1482206
+New York,NY,3219,Other wood product mfg,2008,1069586,1069586
+New York,NY,322,Paper mfg,2008,5190069,5190069
+New York,NY,3221,"Pulp, paper, and paperboard mills",2008,2343399,2343399
+New York,NY,3222,Converted paper product mfg,2008,2846670,2846670
+New York,NY,323,Printing and related support activities,2008,5412248,5412248
+New York,NY,3231,Printing and related support activities,2008,5412248,5412248
+New York,NY,324,Petroleum and coal products mfg,2008,1330018,1330018
+New York,NY,3241,Petroleum and coal products mfg,2008,1330018,1330018
+New York,NY,325,Chemical mfg,2008,38837148,38837148
+New York,NY,3251,Basic chemical mfg,2008,3328733,3328733
+New York,NY,3254,Pharmaceutical and medicine mfg,2008,21066917,21066917
+New York,NY,3255,"Paint, coating, and adhesive mfg",2008,618083,618083
+New York,NY,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,6356571,6356571
+New York,NY,3259,Other chemical product and preparation mfg,2008,6770667,6770667
+New York,NY,326,Plastics and rubber products mfg,2008,5736278,5736278
+New York,NY,3261,Plastics product mfg,2008,4931553,4931553
+New York,NY,3262,Rubber product mfg,2008,804725,804725
+New York,NY,327,Nonmetallic mineral product mfg,2008,4271436,4271436
+New York,NY,3271,Clay product and refractory mfg,2008,346508,346508
+New York,NY,3272,Glass and glass product mfg,2008,859260,859260
+New York,NY,3273,Cement and concrete product mfg,2008,1828131,1828131
+New York,NY,3279,Other nonmetallic mineral product mfg,2008,1058622,1058622
+New York,NY,331,Primary metal mfg,2008,9252951,9252951
+New York,NY,3311,Iron and steel mills and ferroalloy mfg,2008,1332006,1332006
+New York,NY,3313,Alumina and aluminum production and processing,2008,3011133,3011133
+New York,NY,3314,Nonferrous metal (except aluminum) production and processing,2008,3744903,3744903
+New York,NY,3315,Foundries,2008,438201,438201
+New York,NY,332,Fabricated metal product mfg,2008,11868282,11868282
+New York,NY,3321,Forging and stamping,2008,680864,680864
+New York,NY,3322,Cutlery and handtool mfg,2008,437796,437796
+New York,NY,3323,Architectural and structural metals mfg,2008,3376368,3376368
+New York,NY,3324,"Boiler, tank, and shipping container mfg",2008,1492579,1492579
+New York,NY,3325,Hardware mfg,2008,247460,247460
+New York,NY,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,2340612,2340612
+New York,NY,3328,"Coating, engraving, heat treating, and allied activities",2008,729787,729787
+New York,NY,3329,Other fabricated metal product mfg,2008,2366655,2366655
+New York,NY,333,Machinery mfg,2008,13664848,13664848
+New York,NY,3331,"Agriculture, construction, and mining machinery mfg",2008,446883,446883
+New York,NY,3332,Industrial machinery mfg,2008,1703684,1703684
+New York,NY,3333,Commercial and service industry machinery mfg,2008,830217,830217
+New York,NY,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,799477,799477
+New York,NY,3335,Metalworking machinery mfg,2008,1075056,1075056
+New York,NY,3336,"Engine, turbine, and power transmission equipment mfg",2008,3889944,3889944
+New York,NY,3339,Other general purpose machinery mfg,2008,4919588,4919588
+New York,NY,334,Computer and electronic product mfg,2008,14144592,14144592
+New York,NY,3341,Computer and peripheral equipment mfg,2008,1991819,1991819
+New York,NY,3342,Communications equipment mfg,2008,3078509,3078509
+New York,NY,3344,Semiconductor and other electronic component mfg,2008,5243873,5243873
+New York,NY,3345,"Navigational, measuring, medical, and control instruments mfg",2008,3531793,3531793
+New York,NY,335,"Electrical equipment, appliance, and component mfg",2008,4275623,4275623
+New York,NY,3351,Electric lighting equipment mfg,2008,NA,0
+New York,NY,3353,Electrical equipment mfg,2008,1217563,1217563
+New York,NY,3359,Other electrical equipment and component mfg,2008,1763432,1763432
+New York,NY,336,Transportation equipment mfg,2008,10254010,10254010
+New York,NY,3363,Motor vehicle parts mfg,2008,5023987,5023987
+New York,NY,3364,Aerospace product and parts mfg,2008,2508665,2508665
+New York,NY,3365,Railroad rolling stock mfg,2008,1803412,1803412
+New York,NY,337,Furniture and related product mfg,2008,3010452,3010452
+New York,NY,3371,Household and institutional furniture and kitchen cabinet mfg,2008,1448380,1448380
+New York,NY,3372,Office furniture (including fixtures) mfg,2008,1056255,1056255
+New York,NY,3379,Other furniture related product mfg,2008,505817,505817
+New York,NY,339,Miscellaneous mfg,2008,9770244,9770244
+New York,NY,3391,Medical equipment and supplies mfg,2008,3026926,3026926
+New York,NY,3399,Other miscellaneous mfg,2008,6743319,6743319
+North Carolina,NC,31,Manufacturing,2008,199887820,199887820
+North Carolina,NC,311,Food mfg,2008,20279117,20279117
+North Carolina,NC,3111,Animal food mfg,2008,2790294,2790294
+North Carolina,NC,3114,Fruit and vegetable preserving and specialty food mfg,2008,1956295,1956295
+North Carolina,NC,3115,Dairy product mfg,2008,635234,635234
+North Carolina,NC,3116,Animal  slaughtering and processing,2008,8488834,8488834
+North Carolina,NC,3118,Bakeries and tortilla mfg,2008,2290377,2290377
+North Carolina,NC,3119,Other food mfg,2008,1583824,1583824
+North Carolina,NC,312,Beverage and tobacco product mfg,2008,25461664,25461664
+North Carolina,NC,3121,Beverage mfg,2008,2115768,2115768
+North Carolina,NC,3122,Tobacco mfg,2008,23345896,23345896
+North Carolina,NC,313,Textile mills,2008,7330853,7330853
+North Carolina,NC,3131,"Fiber, yarn, and thread mills",2008,2800658,2800658
+North Carolina,NC,3132,Fabric mills,2008,3007326,3007326
+North Carolina,NC,3133,Textile and fabric finishing and fabric coating mills,2008,1522868,1522868
+North Carolina,NC,314,Textile product mills,2008,1651766,1651766
+North Carolina,NC,3141,Textile furnishings mills,2008,901227,901227
+North Carolina,NC,3149,Other textile product mills,2008,750540,750540
+North Carolina,NC,315,Apparel mfg,2008,1491291,1491291
+North Carolina,NC,3151,Apparel knitting mills,2008,1163592,1163592
+North Carolina,NC,3152,Cut and sew apparel mfg,2008,260034,260034
+North Carolina,NC,321,Wood product mfg,2008,5079291,5079291
+North Carolina,NC,3211,Sawmills and wood preservation,2008,1172076,1172076
+North Carolina,NC,3212,"Veneer, plywood, and engineered wood product mfg",2008,1591558,1591558
+North Carolina,NC,3219,Other wood product mfg,2008,2315657,2315657
+North Carolina,NC,322,Paper mfg,2008,6589735,6589735
+North Carolina,NC,3221,"Pulp, paper, and paperboard mills",2008,2077130,2077130
+North Carolina,NC,3222,Converted paper product mfg,2008,4512605,4512605
+North Carolina,NC,323,Printing and related support activities,2008,2251746,2251746
+North Carolina,NC,3231,Printing and related support activities,2008,2251746,2251746
+North Carolina,NC,325,Chemical mfg,2008,45885057,45885057
+North Carolina,NC,3251,Basic chemical mfg,2008,3428903,3428903
+North Carolina,NC,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,2688853,2688853
+North Carolina,NC,3253,"Pesticide, fertilizer, and other agricultural chemical mfg",2008,1148461,1148461
+North Carolina,NC,3254,Pharmaceutical and medicine mfg,2008,22612671,22612671
+North Carolina,NC,3255,"Paint, coating, and adhesive mfg",2008,1098638,1098638
+North Carolina,NC,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,13110216,13110216
+North Carolina,NC,3259,Other chemical product and preparation mfg,2008,1797315,1797315
+North Carolina,NC,326,Plastics and rubber products mfg,2008,9747644,9747644
+North Carolina,NC,3261,Plastics product mfg,2008,7080456,7080456
+North Carolina,NC,3262,Rubber product mfg,2008,2667188,2667188
+North Carolina,NC,327,Nonmetallic mineral product mfg,2008,3821396,3821396
+North Carolina,NC,3271,Clay product and refractory mfg,2008,434590,434590
+North Carolina,NC,3272,Glass and glass product mfg,2008,1614085,1614085
+North Carolina,NC,3273,Cement and concrete product mfg,2008,1444103,1444103
+North Carolina,NC,3279,Other nonmetallic mineral product mfg,2008,328618,328618
+North Carolina,NC,331,Primary metal mfg,2008,4671826,4671826
+North Carolina,NC,3311,Iron and steel mills and ferroalloy mfg,2008,1865294,1865294
+North Carolina,NC,3314,Nonferrous metal (except aluminum) production and processing,2008,1873885,1873885
+North Carolina,NC,3315,Foundries,2008,932647,932647
+North Carolina,NC,332,Fabricated metal product mfg,2008,10985949,10985949
+North Carolina,NC,3321,Forging and stamping,2008,560741,560741
+North Carolina,NC,3322,Cutlery and handtool mfg,2008,560555,560555
+North Carolina,NC,3323,Architectural and structural metals mfg,2008,3457874,3457874
+North Carolina,NC,3324,"Boiler, tank, and shipping container mfg",2008,1067579,1067579
+North Carolina,NC,3325,Hardware mfg,2008,330078,330078
+North Carolina,NC,3326,Spring and wire product mfg,2008,260026,260026
+North Carolina,NC,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,955057,955057
+North Carolina,NC,3328,"Coating, engraving, heat treating, and allied activities",2008,303784,303784
+North Carolina,NC,3329,Other fabricated metal product mfg,2008,3490253,3490253
+North Carolina,NC,333,Machinery mfg,2008,12376529,12376529
+North Carolina,NC,3331,"Agriculture, construction, and mining machinery mfg",2008,3358833,3358833
+North Carolina,NC,3332,Industrial machinery mfg,2008,930170,930170
+North Carolina,NC,3333,Commercial and service industry machinery mfg,2008,921781,921781
+North Carolina,NC,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,1169160,1169160
+North Carolina,NC,3335,Metalworking machinery mfg,2008,326437,326437
+North Carolina,NC,3336,"Engine, turbine, and power transmission equipment mfg",2008,2400787,2400787
+North Carolina,NC,3339,Other general purpose machinery mfg,2008,3269361,3269361
+North Carolina,NC,334,Computer and electronic product mfg,2008,10125292,10125292
+North Carolina,NC,3341,Computer and peripheral equipment mfg,2008,NA,0
+North Carolina,NC,3344,Semiconductor and other electronic component mfg,2008,2999372,2999372
+North Carolina,NC,3345,"Navigational, measuring, medical, and control instruments mfg",2008,982458,982458
+North Carolina,NC,3346,Mfg and reproducing magnetic and optical media,2008,NA,0
+North Carolina,NC,335,"Electrical equipment, appliance, and component mfg",2008,6806287,6806287
+North Carolina,NC,3351,Electric lighting equipment mfg,2008,NA,0
+North Carolina,NC,3352,Household appliance mfg,2008,NA,0
+North Carolina,NC,3353,Electrical equipment mfg,2008,2125330,2125330
+North Carolina,NC,3359,Other electrical equipment and component mfg,2008,3697072,3697072
+North Carolina,NC,336,Transportation equipment mfg,2008,14049428,14049428
+North Carolina,NC,3361,Motor vehicle mfg,2008,NA,0
+North Carolina,NC,3362,Motor vehicle body and trailer mfg,2008,1129957,1129957
+North Carolina,NC,3363,Motor vehicle parts mfg,2008,6619228,6619228
+North Carolina,NC,3364,Aerospace product and parts mfg,2008,2966756,2966756
+North Carolina,NC,3366,Ship and boat building,2008,NA,0
+North Carolina,NC,337,Furniture and related product mfg,2008,6534536,6534536
+North Carolina,NC,3371,Household and institutional furniture and kitchen cabinet mfg,2008,5052872,5052872
+North Carolina,NC,3372,Office furniture (including fixtures) mfg,2008,1121745,1121745
+North Carolina,NC,3379,Other furniture related product mfg,2008,359920,359920
+North Carolina,NC,339,Miscellaneous mfg,2008,3938065,3938065
+North Carolina,NC,3391,Medical equipment and supplies mfg,2008,2160284,2160284
+North Carolina,NC,3399,Other miscellaneous mfg,2008,1777782,1777782
+North Dakota,ND,31,Manufacturing,2008,13955728,13955728
+North Dakota,ND,311,Food mfg,2008,4203454,4203454
+North Dakota,ND,3113,Sugar and confectionery product mfg,2008,NA,0
+North Dakota,ND,3118,Bakeries and tortilla mfg,2008,380872,380872
+North Dakota,ND,321,Wood product mfg,2008,332456,332456
+North Dakota,ND,3219,Other wood product mfg,2008,NA,0
+North Dakota,ND,327,Nonmetallic mineral product mfg,2008,187079,187079
+North Dakota,ND,332,Fabricated metal product mfg,2008,629681,629681
+North Dakota,ND,3323,Architectural and structural metals mfg,2008,403327,403327
+North Dakota,ND,333,Machinery mfg,2008,4168991,4168991
+North Dakota,ND,3331,"Agriculture, construction, and mining machinery mfg",2008,3811298,3811298
+North Dakota,ND,334,Computer and electronic product mfg,2008,470928,470928
+North Dakota,ND,3344,Semiconductor and other electronic component mfg,2008,329422,329422
+North Dakota,ND,336,Transportation equipment mfg,2008,704765,704765
+North Dakota,ND,337,Furniture and related product mfg,2008,116723,116723
+Ohio,OH,31,Manufacturing,2008,298539475,298539475
+Ohio,OH,311,Food mfg,2008,25205045,25205045
+Ohio,OH,3111,Animal food mfg,2008,2311015,2311015
+Ohio,OH,3112,Grain and oilseed milling,2008,4521946,4521946
+Ohio,OH,3113,Sugar and confectionery product mfg,2008,NA,0
+Ohio,OH,3114,Fruit and vegetable preserving and specialty food mfg,2008,4651985,4651985
+Ohio,OH,3115,Dairy product mfg,2008,3247491,3247491
+Ohio,OH,3116,Animal  slaughtering and processing,2008,2922969,2922969
+Ohio,OH,3118,Bakeries and tortilla mfg,2008,3741272,3741272
+Ohio,OH,3119,Other food mfg,2008,3534710,3534710
+Ohio,OH,312,Beverage and tobacco product mfg,2008,3615750,3615750
+Ohio,OH,3121,Beverage mfg,2008,3615750,3615750
+Ohio,OH,313,Textile mills,2008,358923,358923
+Ohio,OH,314,Textile product mills,2008,512004,512004
+Ohio,OH,3141,Textile furnishings mills,2008,306896,306896
+Ohio,OH,3149,Other textile product mills,2008,205108,205108
+Ohio,OH,315,Apparel mfg,2008,260055,260055
+Ohio,OH,3152,Cut and sew apparel mfg,2008,240952,240952
+Ohio,OH,316,Leather and allied product mfg,2008,160113,160113
+Ohio,OH,3169,Other leather and allied product mfg,2008,NA,0
+Ohio,OH,321,Wood product mfg,2008,2352495,2352495
+Ohio,OH,3211,Sawmills and wood preservation,2008,411692,411692
+Ohio,OH,3219,Other wood product mfg,2008,1636006,1636006
+Ohio,OH,322,Paper mfg,2008,7784900,7784900
+Ohio,OH,3221,"Pulp, paper, and paperboard mills",2008,1772429,1772429
+Ohio,OH,3222,Converted paper product mfg,2008,6012471,6012471
+Ohio,OH,323,Printing and related support activities,2008,4606354,4606354
+Ohio,OH,3231,Printing and related support activities,2008,4606354,4606354
+Ohio,OH,324,Petroleum and coal products mfg,2008,23222332,23222332
+Ohio,OH,3241,Petroleum and coal products mfg,2008,23222332,23222332
+Ohio,OH,325,Chemical mfg,2008,30268330,30268330
+Ohio,OH,3251,Basic chemical mfg,2008,7102955,7102955
+Ohio,OH,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,4137056,4137056
+Ohio,OH,3253,"Pesticide, fertilizer, and other agricultural chemical mfg",2008,1420524,1420524
+Ohio,OH,3254,Pharmaceutical and medicine mfg,2008,2499590,2499590
+Ohio,OH,3255,"Paint, coating, and adhesive mfg",2008,4666824,4666824
+Ohio,OH,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,7992421,7992421
+Ohio,OH,3259,Other chemical product and preparation mfg,2008,2448959,2448959
+Ohio,OH,326,Plastics and rubber products mfg,2008,17093490,17093490
+Ohio,OH,3261,Plastics product mfg,2008,12706655,12706655
+Ohio,OH,3262,Rubber product mfg,2008,4386835,4386835
+Ohio,OH,327,Nonmetallic mineral product mfg,2008,5785833,5785833
+Ohio,OH,3271,Clay product and refractory mfg,2008,965964,965964
+Ohio,OH,3272,Glass and glass product mfg,2008,1605928,1605928
+Ohio,OH,3273,Cement and concrete product mfg,2008,1680028,1680028
+Ohio,OH,3279,Other nonmetallic mineral product mfg,2008,1206345,1206345
+Ohio,OH,331,Primary metal mfg,2008,32354800,32354800
+Ohio,OH,3311,Iron and steel mills and ferroalloy mfg,2008,17296303,17296303
+Ohio,OH,3312,Steel product mfg from purchased steel,2008,4094360,4094360
+Ohio,OH,3313,Alumina and aluminum production and processing,2008,1909187,1909187
+Ohio,OH,3314,Nonferrous metal (except aluminum) production and processing,2008,4945116,4945116
+Ohio,OH,3315,Foundries,2008,4109833,4109833
+Ohio,OH,332,Fabricated metal product mfg,2008,31449958,31449958
+Ohio,OH,3321,Forging and stamping,2008,5500547,5500547
+Ohio,OH,3322,Cutlery and handtool mfg,2008,1394724,1394724
+Ohio,OH,3323,Architectural and structural metals mfg,2008,4578417,4578417
+Ohio,OH,3324,"Boiler, tank, and shipping container mfg",2008,3863032,3863032
+Ohio,OH,3325,Hardware mfg,2008,632211,632211
+Ohio,OH,3326,Spring and wire product mfg,2008,676595,676595
+Ohio,OH,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,5387561,5387561
+Ohio,OH,3328,"Coating, engraving, heat treating, and allied activities",2008,4279286,4279286
+Ohio,OH,3329,Other fabricated metal product mfg,2008,5137586,5137586
+Ohio,OH,333,Machinery mfg,2008,20025693,20025693
+Ohio,OH,3331,"Agriculture, construction, and mining machinery mfg",2008,2191070,2191070
+Ohio,OH,3332,Industrial machinery mfg,2008,2139757,2139757
+Ohio,OH,3333,Commercial and service industry machinery mfg,2008,872249,872249
+Ohio,OH,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,2125190,2125190
+Ohio,OH,3335,Metalworking machinery mfg,2008,3343647,3343647
+Ohio,OH,3336,"Engine, turbine, and power transmission equipment mfg",2008,2008523,2008523
+Ohio,OH,3339,Other general purpose machinery mfg,2008,7345256,7345256
+Ohio,OH,334,Computer and electronic product mfg,2008,7881073,7881073
+Ohio,OH,3341,Computer and peripheral equipment mfg,2008,538916,538916
+Ohio,OH,3342,Communications equipment mfg,2008,1683551,1683551
+Ohio,OH,3344,Semiconductor and other electronic component mfg,2008,1129602,1129602
+Ohio,OH,3345,"Navigational, measuring, medical, and control instruments mfg",2008,4070922,4070922
+Ohio,OH,335,"Electrical equipment, appliance, and component mfg",2008,9962753,9962753
+Ohio,OH,3351,Electric lighting equipment mfg,2008,1194397,1194397
+Ohio,OH,3352,Household appliance mfg,2008,4646055,4646055
+Ohio,OH,3353,Electrical equipment mfg,2008,2058328,2058328
+Ohio,OH,3359,Other electrical equipment and component mfg,2008,2063973,2063973
+Ohio,OH,336,Transportation equipment mfg,2008,67101160,67101160
+Ohio,OH,3361,Motor vehicle mfg,2008,30982642,30982642
+Ohio,OH,3362,Motor vehicle body and trailer mfg,2008,718593,718593
+Ohio,OH,3363,Motor vehicle parts mfg,2008,23487128,23487128
+Ohio,OH,3364,Aerospace product and parts mfg,2008,9138769,9138769
+Ohio,OH,3369,Other transportation equipment mfg,2008,2588748,2588748
+Ohio,OH,337,Furniture and related product mfg,2008,3696370,3696370
+Ohio,OH,3371,Household and institutional furniture and kitchen cabinet mfg,2008,2744688,2744688
+Ohio,OH,3372,Office furniture (including fixtures) mfg,2008,724297,724297
+Ohio,OH,339,Miscellaneous mfg,2008,4842047,4842047
+Ohio,OH,3391,Medical equipment and supplies mfg,2008,2268210,2268210
+Ohio,OH,3399,Other miscellaneous mfg,2008,2573837,2573837
+Oklahoma,OK,31,Manufacturing,2008,73562398,73562398
+Oklahoma,OK,311,Food mfg,2008,6378764,6378764
+Oklahoma,OK,3111,Animal food mfg,2008,1532453,1532453
+Oklahoma,OK,3116,Animal  slaughtering and processing,2008,2825147,2825147
+Oklahoma,OK,3118,Bakeries and tortilla mfg,2008,831975,831975
+Oklahoma,OK,312,Beverage and tobacco product mfg,2008,1028785,1028785
+Oklahoma,OK,3121,Beverage mfg,2008,1028785,1028785
+Oklahoma,OK,321,Wood product mfg,2008,398477,398477
+Oklahoma,OK,3219,Other wood product mfg,2008,124005,124005
+Oklahoma,OK,322,Paper mfg,2008,2437291,2437291
+Oklahoma,OK,3221,"Pulp, paper, and paperboard mills",2008,2015359,2015359
+Oklahoma,OK,3222,Converted paper product mfg,2008,421932,421932
+Oklahoma,OK,323,Printing and related support activities,2008,570275,570275
+Oklahoma,OK,3231,Printing and related support activities,2008,570275,570275
+Oklahoma,OK,324,Petroleum and coal products mfg,2008,25598391,25598391
+Oklahoma,OK,3241,Petroleum and coal products mfg,2008,25598391,25598391
+Oklahoma,OK,325,Chemical mfg,2008,3523503,3523503
+Oklahoma,OK,326,Plastics and rubber products mfg,2008,3473669,3473669
+Oklahoma,OK,3261,Plastics product mfg,2008,2041809,2041809
+Oklahoma,OK,3262,Rubber product mfg,2008,1431860,1431860
+Oklahoma,OK,327,Nonmetallic mineral product mfg,2008,2046154,2046154
+Oklahoma,OK,3271,Clay product and refractory mfg,2008,330867,330867
+Oklahoma,OK,3272,Glass and glass product mfg,2008,607676,607676
+Oklahoma,OK,3273,Cement and concrete product mfg,2008,772200,772200
+Oklahoma,OK,331,Primary metal mfg,2008,2382261,2382261
+Oklahoma,OK,3311,Iron and steel mills and ferroalloy mfg,2008,1008048,1008048
+Oklahoma,OK,3312,Steel product mfg from purchased steel,2008,524915,524915
+Oklahoma,OK,3315,Foundries,2008,234662,234662
+Oklahoma,OK,332,Fabricated metal product mfg,2008,6652904,6652904
+Oklahoma,OK,3323,Architectural and structural metals mfg,2008,1784376,1784376
+Oklahoma,OK,3324,"Boiler, tank, and shipping container mfg",2008,1869898,1869898
+Oklahoma,OK,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,721629,721629
+Oklahoma,OK,3328,"Coating, engraving, heat treating, and allied activities",2008,348626,348626
+Oklahoma,OK,3329,Other fabricated metal product mfg,2008,1519672,1519672
+Oklahoma,OK,333,Machinery mfg,2008,10322944,10322944
+Oklahoma,OK,3331,"Agriculture, construction, and mining machinery mfg",2008,3572901,3572901
+Oklahoma,OK,3332,Industrial machinery mfg,2008,927369,927369
+Oklahoma,OK,3333,Commercial and service industry machinery mfg,2008,323508,323508
+Oklahoma,OK,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,1232427,1232427
+Oklahoma,OK,3336,"Engine, turbine, and power transmission equipment mfg",2008,835493,835493
+Oklahoma,OK,3339,Other general purpose machinery mfg,2008,3178483,3178483
+Oklahoma,OK,334,Computer and electronic product mfg,2008,1528694,1528694
+Oklahoma,OK,3344,Semiconductor and other electronic component mfg,2008,186037,186037
+Oklahoma,OK,3345,"Navigational, measuring, medical, and control instruments mfg",2008,508366,508366
+Oklahoma,OK,335,"Electrical equipment, appliance, and component mfg",2008,1205437,1205437
+Oklahoma,OK,3352,Household appliance mfg,2008,NA,0
+Oklahoma,OK,3353,Electrical equipment mfg,2008,547430,547430
+Oklahoma,OK,336,Transportation equipment mfg,2008,4423424,4423424
+Oklahoma,OK,3361,Motor vehicle mfg,2008,NA,0
+Oklahoma,OK,3362,Motor vehicle body and trailer mfg,2008,718664,718664
+Oklahoma,OK,3363,Motor vehicle parts mfg,2008,NA,0
+Oklahoma,OK,3364,Aerospace product and parts mfg,2008,1465184,1465184
+Oklahoma,OK,337,Furniture and related product mfg,2008,490579,490579
+Oklahoma,OK,3371,Household and institutional furniture and kitchen cabinet mfg,2008,222183,222183
+Oklahoma,OK,339,Miscellaneous mfg,2008,951237,951237
+Oklahoma,OK,3391,Medical equipment and supplies mfg,2008,245035,245035
+Oklahoma,OK,3399,Other miscellaneous mfg,2008,706202,706202
+Oregon,OR,31,Manufacturing,2008,71037103,71037103
+Oregon,OR,311,Food mfg,2008,7260535,7260535
+Oregon,OR,3114,Fruit and vegetable preserving and specialty food mfg,2008,2660646,2660646
+Oregon,OR,3115,Dairy product mfg,2008,1443150,1443150
+Oregon,OR,3116,Animal  slaughtering and processing,2008,482560,482560
+Oregon,OR,3118,Bakeries and tortilla mfg,2008,1183181,1183181
+Oregon,OR,3119,Other food mfg,2008,756001,756001
+Oregon,OR,312,Beverage and tobacco product mfg,2008,692988,692988
+Oregon,OR,3121,Beverage mfg,2008,692988,692988
+Oregon,OR,321,Wood product mfg,2008,6093942,6093942
+Oregon,OR,3211,Sawmills and wood preservation,2008,1965583,1965583
+Oregon,OR,3212,"Veneer, plywood, and engineered wood product mfg",2008,2385145,2385145
+Oregon,OR,3219,Other wood product mfg,2008,1743214,1743214
+Oregon,OR,322,Paper mfg,2008,3831535,3831535
+Oregon,OR,3221,"Pulp, paper, and paperboard mills",2008,2998892,2998892
+Oregon,OR,3222,Converted paper product mfg,2008,832643,832643
+Oregon,OR,323,Printing and related support activities,2008,997520,997520
+Oregon,OR,3231,Printing and related support activities,2008,997520,997520
+Oregon,OR,325,Chemical mfg,2008,2295600,2295600
+Oregon,OR,326,Plastics and rubber products mfg,2008,1232213,1232213
+Oregon,OR,3261,Plastics product mfg,2008,1059239,1059239
+Oregon,OR,327,Nonmetallic mineral product mfg,2008,1107103,1107103
+Oregon,OR,3273,Cement and concrete product mfg,2008,559497,559497
+Oregon,OR,331,Primary metal mfg,2008,4221006,4221006
+Oregon,OR,3314,Nonferrous metal (except aluminum) production and processing,2008,2968424,2968424
+Oregon,OR,3315,Foundries,2008,1252582,1252582
+Oregon,OR,332,Fabricated metal product mfg,2008,3739590,3739590
+Oregon,OR,3322,Cutlery and handtool mfg,2008,453146,453146
+Oregon,OR,3323,Architectural and structural metals mfg,2008,1635630,1635630
+Oregon,OR,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,546928,546928
+Oregon,OR,3328,"Coating, engraving, heat treating, and allied activities",2008,220531,220531
+Oregon,OR,3329,Other fabricated metal product mfg,2008,413741,413741
+Oregon,OR,333,Machinery mfg,2008,3287797,3287797
+Oregon,OR,3331,"Agriculture, construction, and mining machinery mfg",2008,456386,456386
+Oregon,OR,3332,Industrial machinery mfg,2008,948463,948463
+Oregon,OR,3333,Commercial and service industry machinery mfg,2008,322119,322119
+Oregon,OR,3339,Other general purpose machinery mfg,2008,1076070,1076070
+Oregon,OR,334,Computer and electronic product mfg,2008,28936908,28936908
+Oregon,OR,3341,Computer and peripheral equipment mfg,2008,2603820,2603820
+Oregon,OR,3344,Semiconductor and other electronic component mfg,2008,NA,0
+Oregon,OR,3345,"Navigational, measuring, medical, and control instruments mfg",2008,1750452,1750452
+Oregon,OR,335,"Electrical equipment, appliance, and component mfg",2008,673212,673212
+Oregon,OR,336,Transportation equipment mfg,2008,3655987,3655987
+Oregon,OR,3362,Motor vehicle body and trailer mfg,2008,1446375,1446375
+Oregon,OR,3363,Motor vehicle parts mfg,2008,301883,301883
+Oregon,OR,3364,Aerospace product and parts mfg,2008,368711,368711
+Oregon,OR,3366,Ship and boat building,2008,412019,412019
+Oregon,OR,337,Furniture and related product mfg,2008,943150,943150
+Oregon,OR,3371,Household and institutional furniture and kitchen cabinet mfg,2008,580415,580415
+Oregon,OR,3372,Office furniture (including fixtures) mfg,2008,251248,251248
+Oregon,OR,339,Miscellaneous mfg,2008,1462338,1462338
+Oregon,OR,3391,Medical equipment and supplies mfg,2008,732806,732806
+Oregon,OR,3399,Other miscellaneous mfg,2008,729532,729532
+Pennsylvania,PA,31,Manufacturing,2008,249177008,249177008
+Pennsylvania,PA,311,Food mfg,2008,29555680,29555680
+Pennsylvania,PA,3111,Animal food mfg,2008,3563401,3563401
+Pennsylvania,PA,3112,Grain and oilseed milling,2008,1336679,1336679
+Pennsylvania,PA,3113,Sugar and confectionery product mfg,2008,4142979,4142979
+Pennsylvania,PA,3114,Fruit and vegetable preserving and specialty food mfg,2008,2122117,2122117
+Pennsylvania,PA,3115,Dairy product mfg,2008,4055405,4055405
+Pennsylvania,PA,3116,Animal  slaughtering and processing,2008,5096755,5096755
+Pennsylvania,PA,3118,Bakeries and tortilla mfg,2008,3950679,3950679
+Pennsylvania,PA,3119,Other food mfg,2008,5275928,5275928
+Pennsylvania,PA,312,Beverage and tobacco product mfg,2008,3775119,3775119
+Pennsylvania,PA,3121,Beverage mfg,2008,3282349,3282349
+Pennsylvania,PA,313,Textile mills,2008,1214474,1214474
+Pennsylvania,PA,3132,Fabric mills,2008,873473,873473
+Pennsylvania,PA,314,Textile product mills,2008,840635,840635
+Pennsylvania,PA,3141,Textile furnishings mills,2008,582083,582083
+Pennsylvania,PA,3149,Other textile product mills,2008,258552,258552
+Pennsylvania,PA,315,Apparel mfg,2008,984029,984029
+Pennsylvania,PA,3152,Cut and sew apparel mfg,2008,902725,902725
+Pennsylvania,PA,321,Wood product mfg,2008,4359409,4359409
+Pennsylvania,PA,3211,Sawmills and wood preservation,2008,1146937,1146937
+Pennsylvania,PA,3212,"Veneer, plywood, and engineered wood product mfg",2008,446146,446146
+Pennsylvania,PA,3219,Other wood product mfg,2008,2766326,2766326
+Pennsylvania,PA,322,Paper mfg,2008,11056621,11056621
+Pennsylvania,PA,3221,"Pulp, paper, and paperboard mills",2008,5360308,5360308
+Pennsylvania,PA,3222,Converted paper product mfg,2008,5696313,5696313
+Pennsylvania,PA,323,Printing and related support activities,2008,6637936,6637936
+Pennsylvania,PA,3231,Printing and related support activities,2008,6637936,6637936
+Pennsylvania,PA,324,Petroleum and coal products mfg,2008,33404430,33404430
+Pennsylvania,PA,3241,Petroleum and coal products mfg,2008,33404430,33404430
+Pennsylvania,PA,325,Chemical mfg,2008,28130134,28130134
+Pennsylvania,PA,3251,Basic chemical mfg,2008,4408388,4408388
+Pennsylvania,PA,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,2468050,2468050
+Pennsylvania,PA,3254,Pharmaceutical and medicine mfg,2008,15898444,15898444
+Pennsylvania,PA,3255,"Paint, coating, and adhesive mfg",2008,1751729,1751729
+Pennsylvania,PA,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,907436,907436
+Pennsylvania,PA,3259,Other chemical product and preparation mfg,2008,2265714,2265714
+Pennsylvania,PA,326,Plastics and rubber products mfg,2008,10537334,10537334
+Pennsylvania,PA,3261,Plastics product mfg,2008,9320244,9320244
+Pennsylvania,PA,3262,Rubber product mfg,2008,1217090,1217090
+Pennsylvania,PA,327,Nonmetallic mineral product mfg,2008,6144809,6144809
+Pennsylvania,PA,3271,Clay product and refractory mfg,2008,724973,724973
+Pennsylvania,PA,3272,Glass and glass product mfg,2008,1533394,1533394
+Pennsylvania,PA,3273,Cement and concrete product mfg,2008,2714210,2714210
+Pennsylvania,PA,3279,Other nonmetallic mineral product mfg,2008,953947,953947
+Pennsylvania,PA,331,Primary metal mfg,2008,29395342,29395342
+Pennsylvania,PA,3311,Iron and steel mills and ferroalloy mfg,2008,17467276,17467276
+Pennsylvania,PA,3312,Steel product mfg from purchased steel,2008,2986508,2986508
+Pennsylvania,PA,3313,Alumina and aluminum production and processing,2008,1900007,1900007
+Pennsylvania,PA,3314,Nonferrous metal (except aluminum) production and processing,2008,5040281,5040281
+Pennsylvania,PA,3315,Foundries,2008,2001270,2001270
+Pennsylvania,PA,332,Fabricated metal product mfg,2008,21120655,21120655
+Pennsylvania,PA,3321,Forging and stamping,2008,2884221,2884221
+Pennsylvania,PA,3322,Cutlery and handtool mfg,2008,383652,383652
+Pennsylvania,PA,3323,Architectural and structural metals mfg,2008,5825205,5825205
+Pennsylvania,PA,3324,"Boiler, tank, and shipping container mfg",2008,1693724,1693724
+Pennsylvania,PA,3325,Hardware mfg,2008,426581,426581
+Pennsylvania,PA,3326,Spring and wire product mfg,2008,930304,930304
+Pennsylvania,PA,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,3577138,3577138
+Pennsylvania,PA,3328,"Coating, engraving, heat treating, and allied activities",2008,1826167,1826167
+Pennsylvania,PA,3329,Other fabricated metal product mfg,2008,3573662,3573662
+Pennsylvania,PA,333,Machinery mfg,2008,15378562,15378562
+Pennsylvania,PA,3331,"Agriculture, construction, and mining machinery mfg",2008,3822098,3822098
+Pennsylvania,PA,3332,Industrial machinery mfg,2008,1581097,1581097
+Pennsylvania,PA,3333,Commercial and service industry machinery mfg,2008,1031790,1031790
+Pennsylvania,PA,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,1580145,1580145
+Pennsylvania,PA,3335,Metalworking machinery mfg,2008,1631617,1631617
+Pennsylvania,PA,3336,"Engine, turbine, and power transmission equipment mfg",2008,698931,698931
+Pennsylvania,PA,3339,Other general purpose machinery mfg,2008,5032884,5032884
+Pennsylvania,PA,334,Computer and electronic product mfg,2008,9536103,9536103
+Pennsylvania,PA,3341,Computer and peripheral equipment mfg,2008,622586,622586
+Pennsylvania,PA,3342,Communications equipment mfg,2008,859150,859150
+Pennsylvania,PA,3344,Semiconductor and other electronic component mfg,2008,2250390,2250390
+Pennsylvania,PA,3345,"Navigational, measuring, medical, and control instruments mfg",2008,4854883,4854883
+Pennsylvania,PA,3346,Mfg and reproducing magnetic and optical media,2008,NA,0
+Pennsylvania,PA,335,"Electrical equipment, appliance, and component mfg",2008,7714809,7714809
+Pennsylvania,PA,3351,Electric lighting equipment mfg,2008,1032401,1032401
+Pennsylvania,PA,3353,Electrical equipment mfg,2008,1887729,1887729
+Pennsylvania,PA,3359,Other electrical equipment and component mfg,2008,4571044,4571044
+Pennsylvania,PA,336,Transportation equipment mfg,2008,17965306,17965306
+Pennsylvania,PA,3362,Motor vehicle body and trailer mfg,2008,1417559,1417559
+Pennsylvania,PA,3363,Motor vehicle parts mfg,2008,2495096,2495096
+Pennsylvania,PA,3364,Aerospace product and parts mfg,2008,3025741,3025741
+Pennsylvania,PA,3365,Railroad rolling stock mfg,2008,5133443,5133443
+Pennsylvania,PA,3366,Ship and boat building,2008,NA,0
+Pennsylvania,PA,3369,Other transportation equipment mfg,2008,4590938,4590938
+Pennsylvania,PA,337,Furniture and related product mfg,2008,3743901,3743901
+Pennsylvania,PA,3371,Household and institutional furniture and kitchen cabinet mfg,2008,1701034,1701034
+Pennsylvania,PA,3372,Office furniture (including fixtures) mfg,2008,1527323,1527323
+Pennsylvania,PA,3379,Other furniture related product mfg,2008,515544,515544
+Pennsylvania,PA,339,Miscellaneous mfg,2008,7566108,7566108
+Pennsylvania,PA,3391,Medical equipment and supplies mfg,2008,4278459,4278459
+Pennsylvania,PA,3399,Other miscellaneous mfg,2008,3287649,3287649
+Rhode Island,RI,31,Manufacturing,2008,11627266,11627266
+Rhode Island,RI,311,Food mfg,2008,546871,546871
+Rhode Island,RI,3118,Bakeries and tortilla mfg,2008,112819,112819
+Rhode Island,RI,313,Textile mills,2008,434910,434910
+Rhode Island,RI,3132,Fabric mills,2008,193554,193554
+Rhode Island,RI,322,Paper mfg,2008,254335,254335
+Rhode Island,RI,3222,Converted paper product mfg,2008,254335,254335
+Rhode Island,RI,323,Printing and related support activities,2008,323503,323503
+Rhode Island,RI,3231,Printing and related support activities,2008,323503,323503
+Rhode Island,RI,325,Chemical mfg,2008,1056711,1056711
+Rhode Island,RI,3254,Pharmaceutical and medicine mfg,2008,333986,333986
+Rhode Island,RI,326,Plastics and rubber products mfg,2008,764818,764818
+Rhode Island,RI,3261,Plastics product mfg,2008,753982,753982
+Rhode Island,RI,331,Primary metal mfg,2008,747158,747158
+Rhode Island,RI,332,Fabricated metal product mfg,2008,1716224,1716224
+Rhode Island,RI,3323,Architectural and structural metals mfg,2008,512384,512384
+Rhode Island,RI,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,230979,230979
+Rhode Island,RI,3328,"Coating, engraving, heat treating, and allied activities",2008,528315,528315
+Rhode Island,RI,333,Machinery mfg,2008,642617,642617
+Rhode Island,RI,3339,Other general purpose machinery mfg,2008,368957,368957
+Rhode Island,RI,334,Computer and electronic product mfg,2008,990021,990021
+Rhode Island,RI,3345,"Navigational, measuring, medical, and control instruments mfg",2008,542582,542582
+Rhode Island,RI,335,"Electrical equipment, appliance, and component mfg",2008,832565,832565
+Rhode Island,RI,3359,Other electrical equipment and component mfg,2008,736385,736385
+Rhode Island,RI,337,Furniture and related product mfg,2008,242149,242149
+Rhode Island,RI,339,Miscellaneous mfg,2008,1945199,1945199
+Rhode Island,RI,3391,Medical equipment and supplies mfg,2008,383234,383234
+Rhode Island,RI,3399,Other miscellaneous mfg,2008,1561965,1561965
+South Carolina,SC,31,Manufacturing,2008,92526998,92526998
+South Carolina,SC,311,Food mfg,2008,5304304,5304304
+South Carolina,SC,3114,Fruit and vegetable preserving and specialty food mfg,2008,523170,523170
+South Carolina,SC,3116,Animal  slaughtering and processing,2008,2091342,2091342
+South Carolina,SC,3118,Bakeries and tortilla mfg,2008,964754,964754
+South Carolina,SC,313,Textile mills,2008,3683124,3683124
+South Carolina,SC,3131,"Fiber, yarn, and thread mills",2008,663014,663014
+South Carolina,SC,3132,Fabric mills,2008,2385527,2385527
+South Carolina,SC,3133,Textile and fabric finishing and fabric coating mills,2008,634582,634582
+South Carolina,SC,314,Textile product mills,2008,625680,625680
+South Carolina,SC,3141,Textile furnishings mills,2008,345262,345262
+South Carolina,SC,315,Apparel mfg,2008,276093,276093
+South Carolina,SC,3152,Cut and sew apparel mfg,2008,114416,114416
+South Carolina,SC,321,Wood product mfg,2008,2029190,2029190
+South Carolina,SC,3211,Sawmills and wood preservation,2008,757728,757728
+South Carolina,SC,3212,"Veneer, plywood, and engineered wood product mfg",2008,561454,561454
+South Carolina,SC,3219,Other wood product mfg,2008,710008,710008
+South Carolina,SC,322,Paper mfg,2008,7253834,7253834
+South Carolina,SC,3221,"Pulp, paper, and paperboard mills",2008,4659105,4659105
+South Carolina,SC,3222,Converted paper product mfg,2008,2594729,2594729
+South Carolina,SC,323,Printing and related support activities,2008,868798,868798
+South Carolina,SC,3231,Printing and related support activities,2008,868798,868798
+South Carolina,SC,325,Chemical mfg,2008,14014763,14014763
+South Carolina,SC,3251,Basic chemical mfg,2008,3774149,3774149
+South Carolina,SC,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,6231870,6231870
+South Carolina,SC,3254,Pharmaceutical and medicine mfg,2008,1196931,1196931
+South Carolina,SC,3259,Other chemical product and preparation mfg,2008,1378149,1378149
+South Carolina,SC,326,Plastics and rubber products mfg,2008,9170490,9170490
+South Carolina,SC,3261,Plastics product mfg,2008,5631903,5631903
+South Carolina,SC,3262,Rubber product mfg,2008,3538587,3538587
+South Carolina,SC,327,Nonmetallic mineral product mfg,2008,2324603,2324603
+South Carolina,SC,3271,Clay product and refractory mfg,2008,256656,256656
+South Carolina,SC,3272,Glass and glass product mfg,2008,617455,617455
+South Carolina,SC,3273,Cement and concrete product mfg,2008,1287389,1287389
+South Carolina,SC,331,Primary metal mfg,2008,6192675,6192675
+South Carolina,SC,3311,Iron and steel mills and ferroalloy mfg,2008,4216872,4216872
+South Carolina,SC,332,Fabricated metal product mfg,2008,6782185,6782185
+South Carolina,SC,3323,Architectural and structural metals mfg,2008,1392557,1392557
+South Carolina,SC,3324,"Boiler, tank, and shipping container mfg",2008,572273,572273
+South Carolina,SC,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,733912,733912
+South Carolina,SC,3328,"Coating, engraving, heat treating, and allied activities",2008,430381,430381
+South Carolina,SC,3329,Other fabricated metal product mfg,2008,2883225,2883225
+South Carolina,SC,333,Machinery mfg,2008,7929703,7929703
+South Carolina,SC,3331,"Agriculture, construction, and mining machinery mfg",2008,989833,989833
+South Carolina,SC,3332,Industrial machinery mfg,2008,179792,179792
+South Carolina,SC,3333,Commercial and service industry machinery mfg,2008,232025,232025
+South Carolina,SC,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,641176,641176
+South Carolina,SC,3335,Metalworking machinery mfg,2008,491425,491425
+South Carolina,SC,3336,"Engine, turbine, and power transmission equipment mfg",2008,3083622,3083622
+South Carolina,SC,3339,Other general purpose machinery mfg,2008,2311830,2311830
+South Carolina,SC,334,Computer and electronic product mfg,2008,2112383,2112383
+South Carolina,SC,3344,Semiconductor and other electronic component mfg,2008,551697,551697
+South Carolina,SC,3345,"Navigational, measuring, medical, and control instruments mfg",2008,419983,419983
+South Carolina,SC,335,"Electrical equipment, appliance, and component mfg",2008,4538261,4538261
+South Carolina,SC,3352,Household appliance mfg,2008,NA,0
+South Carolina,SC,3353,Electrical equipment mfg,2008,1552312,1552312
+South Carolina,SC,3359,Other electrical equipment and component mfg,2008,2178072,2178072
+South Carolina,SC,336,Transportation equipment mfg,2008,16390387,16390387
+South Carolina,SC,3361,Motor vehicle mfg,2008,NA,0
+South Carolina,SC,3363,Motor vehicle parts mfg,2008,6859903,6859903
+South Carolina,SC,3364,Aerospace product and parts mfg,2008,469664,469664
+South Carolina,SC,3365,Railroad rolling stock mfg,2008,NA,0
+South Carolina,SC,3366,Ship and boat building,2008,525009,525009
+South Carolina,SC,3369,Other transportation equipment mfg,2008,1957707,1957707
+South Carolina,SC,337,Furniture and related product mfg,2008,606086,606086
+South Carolina,SC,3371,Household and institutional furniture and kitchen cabinet mfg,2008,190169,190169
+South Carolina,SC,339,Miscellaneous mfg,2008,1784529,1784529
+South Carolina,SC,3391,Medical equipment and supplies mfg,2008,1310411,1310411
+South Carolina,SC,3399,Other miscellaneous mfg,2008,474118,474118
+South Dakota,SD,31,Manufacturing,2008,14181194,14181194
+South Dakota,SD,311,Food mfg,2008,3746504,3746504
+South Dakota,SD,3115,Dairy product mfg,2008,1109378,1109378
+South Dakota,SD,3116,Animal  slaughtering and processing,2008,1690915,1690915
+South Dakota,SD,323,Printing and related support activities,2008,199752,199752
+South Dakota,SD,3231,Printing and related support activities,2008,199752,199752
+South Dakota,SD,325,Chemical mfg,2008,1881261,1881261
+South Dakota,SD,326,Plastics and rubber products mfg,2008,416602,416602
+South Dakota,SD,3261,Plastics product mfg,2008,NA,0
+South Dakota,SD,327,Nonmetallic mineral product mfg,2008,281172,281172
+South Dakota,SD,3273,Cement and concrete product mfg,2008,241150,241150
+South Dakota,SD,332,Fabricated metal product mfg,2008,902164,902164
+South Dakota,SD,3323,Architectural and structural metals mfg,2008,419231,419231
+South Dakota,SD,333,Machinery mfg,2008,1678619,1678619
+South Dakota,SD,3331,"Agriculture, construction, and mining machinery mfg",2008,638996,638996
+South Dakota,SD,3339,Other general purpose machinery mfg,2008,680562,680562
+South Dakota,SD,334,Computer and electronic product mfg,2008,1064186,1064186
+South Dakota,SD,3344,Semiconductor and other electronic component mfg,2008,376722,376722
+South Dakota,SD,336,Transportation equipment mfg,2008,729884,729884
+South Dakota,SD,3362,Motor vehicle body and trailer mfg,2008,311971,311971
+South Dakota,SD,337,Furniture and related product mfg,2008,305340,305340
+South Dakota,SD,3371,Household and institutional furniture and kitchen cabinet mfg,2008,259437,259437
+South Dakota,SD,339,Miscellaneous mfg,2008,1635938,1635938
+South Dakota,SD,3399,Other miscellaneous mfg,2008,NA,0
+Tennessee,TN,31,Manufacturing,2008,139009958,139009958
+Tennessee,TN,311,Food mfg,2008,17723753,17723753
+Tennessee,TN,3112,Grain and oilseed milling,2008,3371522,3371522
+Tennessee,TN,3113,Sugar and confectionery product mfg,2008,1586717,1586717
+Tennessee,TN,3114,Fruit and vegetable preserving and specialty food mfg,2008,1762769,1762769
+Tennessee,TN,3115,Dairy product mfg,2008,1314115,1314115
+Tennessee,TN,3116,Animal  slaughtering and processing,2008,3315375,3315375
+Tennessee,TN,3118,Bakeries and tortilla mfg,2008,3238589,3238589
+Tennessee,TN,3119,Other food mfg,2008,2390041,2390041
+Tennessee,TN,312,Beverage and tobacco product mfg,2008,4608430,4608430
+Tennessee,TN,3121,Beverage mfg,2008,NA,0
+Tennessee,TN,313,Textile mills,2008,1412137,1412137
+Tennessee,TN,3131,"Fiber, yarn, and thread mills",2008,548917,548917
+Tennessee,TN,3132,Fabric mills,2008,712041,712041
+Tennessee,TN,314,Textile product mills,2008,970274,970274
+Tennessee,TN,3141,Textile furnishings mills,2008,270892,270892
+Tennessee,TN,3149,Other textile product mills,2008,699382,699382
+Tennessee,TN,315,Apparel mfg,2008,NA,0
+Tennessee,TN,3152,Cut and sew apparel mfg,2008,NA,0
+Tennessee,TN,321,Wood product mfg,2008,2148859,2148859
+Tennessee,TN,3211,Sawmills and wood preservation,2008,412529,412529
+Tennessee,TN,3219,Other wood product mfg,2008,1562303,1562303
+Tennessee,TN,322,Paper mfg,2008,5553416,5553416
+Tennessee,TN,3221,"Pulp, paper, and paperboard mills",2008,2571086,2571086
+Tennessee,TN,3222,Converted paper product mfg,2008,2982330,2982330
+Tennessee,TN,323,Printing and related support activities,2008,2633427,2633427
+Tennessee,TN,3231,Printing and related support activities,2008,2633427,2633427
+Tennessee,TN,324,Petroleum and coal products mfg,2008,NA,0
+Tennessee,TN,3241,Petroleum and coal products mfg,2008,NA,0
+Tennessee,TN,325,Chemical mfg,2008,14905029,14905029
+Tennessee,TN,3251,Basic chemical mfg,2008,6925435,6925435
+Tennessee,TN,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,1308173,1308173
+Tennessee,TN,3254,Pharmaceutical and medicine mfg,2008,2589839,2589839
+Tennessee,TN,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,1775345,1775345
+Tennessee,TN,3259,Other chemical product and preparation mfg,2008,1591733,1591733
+Tennessee,TN,326,Plastics and rubber products mfg,2008,6565459,6565459
+Tennessee,TN,3261,Plastics product mfg,2008,4024586,4024586
+Tennessee,TN,3262,Rubber product mfg,2008,2540873,2540873
+Tennessee,TN,327,Nonmetallic mineral product mfg,2008,3009023,3009023
+Tennessee,TN,3271,Clay product and refractory mfg,2008,348700,348700
+Tennessee,TN,3272,Glass and glass product mfg,2008,1030126,1030126
+Tennessee,TN,3273,Cement and concrete product mfg,2008,1208703,1208703
+Tennessee,TN,3279,Other nonmetallic mineral product mfg,2008,330104,330104
+Tennessee,TN,331,Primary metal mfg,2008,7487310,7487310
+Tennessee,TN,3311,Iron and steel mills and ferroalloy mfg,2008,1383806,1383806
+Tennessee,TN,3313,Alumina and aluminum production and processing,2008,3309914,3309914
+Tennessee,TN,3314,Nonferrous metal (except aluminum) production and processing,2008,1079991,1079991
+Tennessee,TN,3315,Foundries,2008,1102627,1102627
+Tennessee,TN,332,Fabricated metal product mfg,2008,7799836,7799836
+Tennessee,TN,3321,Forging and stamping,2008,724447,724447
+Tennessee,TN,3322,Cutlery and handtool mfg,2008,321641,321641
+Tennessee,TN,3323,Architectural and structural metals mfg,2008,1858385,1858385
+Tennessee,TN,3324,"Boiler, tank, and shipping container mfg",2008,622555,622555
+Tennessee,TN,3325,Hardware mfg,2008,335272,335272
+Tennessee,TN,3326,Spring and wire product mfg,2008,361993,361993
+Tennessee,TN,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,842153,842153
+Tennessee,TN,3328,"Coating, engraving, heat treating, and allied activities",2008,296066,296066
+Tennessee,TN,3329,Other fabricated metal product mfg,2008,2437324,2437324
+Tennessee,TN,333,Machinery mfg,2008,9348894,9348894
+Tennessee,TN,3331,"Agriculture, construction, and mining machinery mfg",2008,1908466,1908466
+Tennessee,TN,3332,Industrial machinery mfg,2008,252268,252268
+Tennessee,TN,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,3355384,3355384
+Tennessee,TN,3335,Metalworking machinery mfg,2008,513708,513708
+Tennessee,TN,3336,"Engine, turbine, and power transmission equipment mfg",2008,893726,893726
+Tennessee,TN,3339,Other general purpose machinery mfg,2008,1841833,1841833
+Tennessee,TN,334,Computer and electronic product mfg,2008,14091274,14091274
+Tennessee,TN,3341,Computer and peripheral equipment mfg,2008,NA,0
+Tennessee,TN,3344,Semiconductor and other electronic component mfg,2008,NA,0
+Tennessee,TN,3345,"Navigational, measuring, medical, and control instruments mfg",2008,1560890,1560890
+Tennessee,TN,335,"Electrical equipment, appliance, and component mfg",2008,5016207,5016207
+Tennessee,TN,3352,Household appliance mfg,2008,2869955,2869955
+Tennessee,TN,3353,Electrical equipment mfg,2008,870150,870150
+Tennessee,TN,3359,Other electrical equipment and component mfg,2008,1065703,1065703
+Tennessee,TN,336,Transportation equipment mfg,2008,21275517,21275517
+Tennessee,TN,3361,Motor vehicle mfg,2008,NA,0
+Tennessee,TN,3362,Motor vehicle body and trailer mfg,2008,597327,597327
+Tennessee,TN,3363,Motor vehicle parts mfg,2008,12697494,12697494
+Tennessee,TN,3364,Aerospace product and parts mfg,2008,NA,0
+Tennessee,TN,3366,Ship and boat building,2008,1156642,1156642
+Tennessee,TN,337,Furniture and related product mfg,2008,2110060,2110060
+Tennessee,TN,3371,Household and institutional furniture and kitchen cabinet mfg,2008,1313515,1313515
+Tennessee,TN,3372,Office furniture (including fixtures) mfg,2008,618952,618952
+Tennessee,TN,339,Miscellaneous mfg,2008,3984125,3984125
+Tennessee,TN,3391,Medical equipment and supplies mfg,2008,2594109,2594109
+Tennessee,TN,3399,Other miscellaneous mfg,2008,1390016,1390016
+Texas,TX,31,Manufacturing,2008,646178418,646178418
+Texas,TX,311,Food mfg,2008,39313520,39313520
+Texas,TX,3111,Animal food mfg,2008,2927004,2927004
+Texas,TX,3112,Grain and oilseed milling,2008,2210835,2210835
+Texas,TX,3113,Sugar and confectionery product mfg,2008,1496848,1496848
+Texas,TX,3114,Fruit and vegetable preserving and specialty food mfg,2008,2388821,2388821
+Texas,TX,3115,Dairy product mfg,2008,4382581,4382581
+Texas,TX,3116,Animal  slaughtering and processing,2008,16809924,16809924
+Texas,TX,3118,Bakeries and tortilla mfg,2008,3347564,3347564
+Texas,TX,3119,Other food mfg,2008,5540175,5540175
+Texas,TX,312,Beverage and tobacco product mfg,2008,7315937,7315937
+Texas,TX,3121,Beverage mfg,2008,7288239,7288239
+Texas,TX,313,Textile mills,2008,580670,580670
+Texas,TX,3132,Fabric mills,2008,400417,400417
+Texas,TX,314,Textile product mills,2008,846555,846555
+Texas,TX,3141,Textile furnishings mills,2008,396990,396990
+Texas,TX,3149,Other textile product mills,2008,449565,449565
+Texas,TX,315,Apparel mfg,2008,1079111,1079111
+Texas,TX,3152,Cut and sew apparel mfg,2008,985973,985973
+Texas,TX,316,Leather and allied product mfg,2008,443740,443740
+Texas,TX,3162,Footwear mfg,2008,260988,260988
+Texas,TX,321,Wood product mfg,2008,4792171,4792171
+Texas,TX,3211,Sawmills and wood preservation,2008,1066051,1066051
+Texas,TX,3212,"Veneer, plywood, and engineered wood product mfg",2008,978492,978492
+Texas,TX,3219,Other wood product mfg,2008,2747628,2747628
+Texas,TX,322,Paper mfg,2008,6607017,6607017
+Texas,TX,3221,"Pulp, paper, and paperboard mills",2008,1797785,1797785
+Texas,TX,3222,Converted paper product mfg,2008,4809232,4809232
+Texas,TX,323,Printing and related support activities,2008,4711627,4711627
+Texas,TX,3231,Printing and related support activities,2008,4711627,4711627
+Texas,TX,324,Petroleum and coal products mfg,2008,208982383,208982383
+Texas,TX,3241,Petroleum and coal products mfg,2008,208982383,208982383
+Texas,TX,325,Chemical mfg,2008,153404943,153404943
+Texas,TX,3251,Basic chemical mfg,2008,97592130,97592130
+Texas,TX,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,39777630,39777630
+Texas,TX,3253,"Pesticide, fertilizer, and other agricultural chemical mfg",2008,1317357,1317357
+Texas,TX,3254,Pharmaceutical and medicine mfg,2008,3453200,3453200
+Texas,TX,3255,"Paint, coating, and adhesive mfg",2008,3324068,3324068
+Texas,TX,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,3781101,3781101
+Texas,TX,3259,Other chemical product and preparation mfg,2008,4159457,4159457
+Texas,TX,326,Plastics and rubber products mfg,2008,13102933,13102933
+Texas,TX,3261,Plastics product mfg,2008,12477953,12477953
+Texas,TX,3262,Rubber product mfg,2008,624980,624980
+Texas,TX,327,Nonmetallic mineral product mfg,2008,10817084,10817084
+Texas,TX,3271,Clay product and refractory mfg,2008,860161,860161
+Texas,TX,3272,Glass and glass product mfg,2008,1135577,1135577
+Texas,TX,3273,Cement and concrete product mfg,2008,6190191,6190191
+Texas,TX,3274,Lime and gypsum product mfg,2008,589901,589901
+Texas,TX,3279,Other nonmetallic mineral product mfg,2008,2041254,2041254
+Texas,TX,331,Primary metal mfg,2008,18773298,18773298
+Texas,TX,3311,Iron and steel mills and ferroalloy mfg,2008,5185131,5185131
+Texas,TX,3312,Steel product mfg from purchased steel,2008,1340519,1340519
+Texas,TX,3313,Alumina and aluminum production and processing,2008,2578039,2578039
+Texas,TX,3314,Nonferrous metal (except aluminum) production and processing,2008,8080944,8080944
+Texas,TX,3315,Foundries,2008,1588665,1588665
+Texas,TX,332,Fabricated metal product mfg,2008,32504314,32504314
+Texas,TX,3321,Forging and stamping,2008,2999863,2999863
+Texas,TX,3322,Cutlery and handtool mfg,2008,263417,263417
+Texas,TX,3323,Architectural and structural metals mfg,2008,11186480,11186480
+Texas,TX,3324,"Boiler, tank, and shipping container mfg",2008,3064268,3064268
+Texas,TX,3326,Spring and wire product mfg,2008,730566,730566
+Texas,TX,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,4668246,4668246
+Texas,TX,3328,"Coating, engraving, heat treating, and allied activities",2008,1801791,1801791
+Texas,TX,3329,Other fabricated metal product mfg,2008,7568715,7568715
+Texas,TX,333,Machinery mfg,2008,36348634,36348634
+Texas,TX,3331,"Agriculture, construction, and mining machinery mfg",2008,15001490,15001490
+Texas,TX,3332,Industrial machinery mfg,2008,4905487,4905487
+Texas,TX,3333,Commercial and service industry machinery mfg,2008,925510,925510
+Texas,TX,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,5172418,5172418
+Texas,TX,3335,Metalworking machinery mfg,2008,501718,501718
+Texas,TX,3336,"Engine, turbine, and power transmission equipment mfg",2008,2016255,2016255
+Texas,TX,3339,Other general purpose machinery mfg,2008,7825756,7825756
+Texas,TX,334,Computer and electronic product mfg,2008,43752697,43752697
+Texas,TX,3341,Computer and peripheral equipment mfg,2008,NA,0
+Texas,TX,3342,Communications equipment mfg,2008,NA,0
+Texas,TX,3344,Semiconductor and other electronic component mfg,2008,10604817,10604817
+Texas,TX,3345,"Navigational, measuring, medical, and control instruments mfg",2008,9727265,9727265
+Texas,TX,335,"Electrical equipment, appliance, and component mfg",2008,5355647,5355647
+Texas,TX,3351,Electric lighting equipment mfg,2008,586143,586143
+Texas,TX,3352,Household appliance mfg,2008,649796,649796
+Texas,TX,3353,Electrical equipment mfg,2008,2494364,2494364
+Texas,TX,3359,Other electrical equipment and component mfg,2008,1625344,1625344
+Texas,TX,336,Transportation equipment mfg,2008,45554635,45554635
+Texas,TX,3361,Motor vehicle mfg,2008,11350064,11350064
+Texas,TX,3362,Motor vehicle body and trailer mfg,2008,1579283,1579283
+Texas,TX,3363,Motor vehicle parts mfg,2008,3631401,3631401
+Texas,TX,3364,Aerospace product and parts mfg,2008,24242134,24242134
+Texas,TX,3366,Ship and boat building,2008,NA,0
+Texas,TX,3369,Other transportation equipment mfg,2008,NA,0
+Texas,TX,337,Furniture and related product mfg,2008,3949061,3949061
+Texas,TX,3371,Household and institutional furniture and kitchen cabinet mfg,2008,2111211,2111211
+Texas,TX,3372,Office furniture (including fixtures) mfg,2008,1094284,1094284
+Texas,TX,3379,Other furniture related product mfg,2008,743566,743566
+Texas,TX,339,Miscellaneous mfg,2008,7942442,7942442
+Texas,TX,3391,Medical equipment and supplies mfg,2008,3983154,3983154
+Texas,TX,3399,Other miscellaneous mfg,2008,3959288,3959288
+Utah,UT,31,Manufacturing,2008,42963190,42963190
+Utah,UT,311,Food mfg,2008,6223468,6223468
+Utah,UT,3114,Fruit and vegetable preserving and specialty food mfg,2008,655649,655649
+Utah,UT,3115,Dairy product mfg,2008,2068923,2068923
+Utah,UT,3116,Animal  slaughtering and processing,2008,1333499,1333499
+Utah,UT,3118,Bakeries and tortilla mfg,2008,829707,829707
+Utah,UT,321,Wood product mfg,2008,396537,396537
+Utah,UT,3219,Other wood product mfg,2008,230941,230941
+Utah,UT,322,Paper mfg,2008,1291858,1291858
+Utah,UT,3222,Converted paper product mfg,2008,1283760,1283760
+Utah,UT,323,Printing and related support activities,2008,999983,999983
+Utah,UT,3231,Printing and related support activities,2008,999983,999983
+Utah,UT,324,Petroleum and coal products mfg,2008,6823042,6823042
+Utah,UT,3241,Petroleum and coal products mfg,2008,6823042,6823042
+Utah,UT,325,Chemical mfg,2008,2654392,2654392
+Utah,UT,3254,Pharmaceutical and medicine mfg,2008,1222194,1222194
+Utah,UT,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,536063,536063
+Utah,UT,326,Plastics and rubber products mfg,2008,1226667,1226667
+Utah,UT,3261,Plastics product mfg,2008,1147525,1147525
+Utah,UT,327,Nonmetallic mineral product mfg,2008,1100732,1100732
+Utah,UT,3273,Cement and concrete product mfg,2008,585901,585901
+Utah,UT,3279,Other nonmetallic mineral product mfg,2008,358431,358431
+Utah,UT,331,Primary metal mfg,2008,4114715,4114715
+Utah,UT,3314,Nonferrous metal (except aluminum) production and processing,2008,2975894,2975894
+Utah,UT,332,Fabricated metal product mfg,2008,2754021,2754021
+Utah,UT,3323,Architectural and structural metals mfg,2008,1243584,1243584
+Utah,UT,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,395370,395370
+Utah,UT,3329,Other fabricated metal product mfg,2008,500370,500370
+Utah,UT,333,Machinery mfg,2008,1534945,1534945
+Utah,UT,3333,Commercial and service industry machinery mfg,2008,270644,270644
+Utah,UT,3339,Other general purpose machinery mfg,2008,686423,686423
+Utah,UT,334,Computer and electronic product mfg,2008,4757196,4757196
+Utah,UT,3344,Semiconductor and other electronic component mfg,2008,2292084,2292084
+Utah,UT,3345,"Navigational, measuring, medical, and control instruments mfg",2008,2015143,2015143
+Utah,UT,335,"Electrical equipment, appliance, and component mfg",2008,712963,712963
+Utah,UT,336,Transportation equipment mfg,2008,3539543,3539543
+Utah,UT,3363,Motor vehicle parts mfg,2008,1341895,1341895
+Utah,UT,3364,Aerospace product and parts mfg,2008,NA,0
+Utah,UT,337,Furniture and related product mfg,2008,1453140,1453140
+Utah,UT,3371,Household and institutional furniture and kitchen cabinet mfg,2008,987627,987627
+Utah,UT,339,Miscellaneous mfg,2008,2939184,2939184
+Utah,UT,3391,Medical equipment and supplies mfg,2008,1552465,1552465
+Utah,UT,3399,Other miscellaneous mfg,2008,1386719,1386719
+Vermont,VT,31,Manufacturing,2008,9930906,9930906
+Vermont,VT,311,Food mfg,2008,2378982,2378982
+Vermont,VT,3115,Dairy product mfg,2008,1308252,1308252
+Vermont,VT,321,Wood product mfg,2008,344402,344402
+Vermont,VT,323,Printing and related support activities,2008,178097,178097
+Vermont,VT,3231,Printing and related support activities,2008,178097,178097
+Vermont,VT,325,Chemical mfg,2008,994740,994740
+Vermont,VT,326,Plastics and rubber products mfg,2008,231493,231493
+Vermont,VT,3261,Plastics product mfg,2008,NA,0
+Vermont,VT,327,Nonmetallic mineral product mfg,2008,307470,307470
+Vermont,VT,332,Fabricated metal product mfg,2008,411453,411453
+Vermont,VT,333,Machinery mfg,2008,791279,791279
+Vermont,VT,3335,Metalworking machinery mfg,2008,404736,404736
+Vermont,VT,334,Computer and electronic product mfg,2008,3255286,3255286
+Vermont,VT,3344,Semiconductor and other electronic component mfg,2008,NA,0
+Vermont,VT,3345,"Navigational, measuring, medical, and control instruments mfg",2008,NA,0
+Vermont,VT,335,"Electrical equipment, appliance, and component mfg",2008,432978,432978
+Vermont,VT,3359,Other electrical equipment and component mfg,2008,379431,379431
+Vermont,VT,336,Transportation equipment mfg,2008,313913,313913
+Vermont,VT,3364,Aerospace product and parts mfg,2008,195111,195111
+Vermont,VT,339,Miscellaneous mfg,2008,290813,290813
+Virginia,VA,31,Manufacturing,2008,91030348,91030348
+Virginia,VA,311,Food mfg,2008,11411745,11411745
+Virginia,VA,3113,Sugar and confectionery product mfg,2008,NA,0
+Virginia,VA,3115,Dairy product mfg,2008,2296795,2296795
+Virginia,VA,3116,Animal  slaughtering and processing,2008,3703941,3703941
+Virginia,VA,3118,Bakeries and tortilla mfg,2008,1620312,1620312
+Virginia,VA,3119,Other food mfg,2008,1652281,1652281
+Virginia,VA,312,Beverage and tobacco product mfg,2008,11397157,11397157
+Virginia,VA,3121,Beverage mfg,2008,NA,0
+Virginia,VA,3122,Tobacco mfg,2008,NA,0
+Virginia,VA,313,Textile mills,2008,2454258,2454258
+Virginia,VA,3131,"Fiber, yarn, and thread mills",2008,318356,318356
+Virginia,VA,3132,Fabric mills,2008,1939692,1939692
+Virginia,VA,314,Textile product mills,2008,725763,725763
+Virginia,VA,3141,Textile furnishings mills,2008,433436,433436
+Virginia,VA,3149,Other textile product mills,2008,292327,292327
+Virginia,VA,315,Apparel mfg,2008,3621333,3621333
+Virginia,VA,321,Wood product mfg,2008,3666702,3666702
+Virginia,VA,3211,Sawmills and wood preservation,2008,1168088,1168088
+Virginia,VA,3212,"Veneer, plywood, and engineered wood product mfg",2008,863779,863779
+Virginia,VA,3219,Other wood product mfg,2008,1634835,1634835
+Virginia,VA,322,Paper mfg,2008,4135986,4135986
+Virginia,VA,3221,"Pulp, paper, and paperboard mills",2008,2537020,2537020
+Virginia,VA,3222,Converted paper product mfg,2008,1598966,1598966
+Virginia,VA,323,Printing and related support activities,2008,2664382,2664382
+Virginia,VA,3231,Printing and related support activities,2008,2664382,2664382
+Virginia,VA,325,Chemical mfg,2008,9619096,9619096
+Virginia,VA,3251,Basic chemical mfg,2008,1697036,1697036
+Virginia,VA,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,2046754,2046754
+Virginia,VA,3254,Pharmaceutical and medicine mfg,2008,3335938,3335938
+Virginia,VA,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,529246,529246
+Virginia,VA,3259,Other chemical product and preparation mfg,2008,1080539,1080539
+Virginia,VA,326,Plastics and rubber products mfg,2008,5279419,5279419
+Virginia,VA,3261,Plastics product mfg,2008,4028491,4028491
+Virginia,VA,3262,Rubber product mfg,2008,1250928,1250928
+Virginia,VA,327,Nonmetallic mineral product mfg,2008,2750446,2750446
+Virginia,VA,3272,Glass and glass product mfg,2008,452818,452818
+Virginia,VA,3273,Cement and concrete product mfg,2008,1489646,1489646
+Virginia,VA,3279,Other nonmetallic mineral product mfg,2008,600757,600757
+Virginia,VA,331,Primary metal mfg,2008,2867561,2867561
+Virginia,VA,3311,Iron and steel mills and ferroalloy mfg,2008,1495164,1495164
+Virginia,VA,3315,Foundries,2008,618226,618226
+Virginia,VA,332,Fabricated metal product mfg,2008,4990046,4990046
+Virginia,VA,3323,Architectural and structural metals mfg,2008,1774846,1774846
+Virginia,VA,3324,"Boiler, tank, and shipping container mfg",2008,1369193,1369193
+Virginia,VA,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,712539,712539
+Virginia,VA,3329,Other fabricated metal product mfg,2008,615282,615282
+Virginia,VA,333,Machinery mfg,2008,5119485,5119485
+Virginia,VA,3331,"Agriculture, construction, and mining machinery mfg",2008,1706604,1706604
+Virginia,VA,3332,Industrial machinery mfg,2008,351595,351595
+Virginia,VA,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,1337684,1337684
+Virginia,VA,3339,Other general purpose machinery mfg,2008,1111174,1111174
+Virginia,VA,334,Computer and electronic product mfg,2008,4678056,4678056
+Virginia,VA,3342,Communications equipment mfg,2008,819494,819494
+Virginia,VA,3344,Semiconductor and other electronic component mfg,2008,1463818,1463818
+Virginia,VA,3345,"Navigational, measuring, medical, and control instruments mfg",2008,2112735,2112735
+Virginia,VA,335,"Electrical equipment, appliance, and component mfg",2008,2908385,2908385
+Virginia,VA,3353,Electrical equipment mfg,2008,1893458,1893458
+Virginia,VA,3359,Other electrical equipment and component mfg,2008,687156,687156
+Virginia,VA,336,Transportation equipment mfg,2008,9011968,9011968
+Virginia,VA,3361,Motor vehicle mfg,2008,NA,0
+Virginia,VA,3362,Motor vehicle body and trailer mfg,2008,430941,430941
+Virginia,VA,3363,Motor vehicle parts mfg,2008,NA,0
+Virginia,VA,3364,Aerospace product and parts mfg,2008,589438,589438
+Virginia,VA,3366,Ship and boat building,2008,4418372,4418372
+Virginia,VA,337,Furniture and related product mfg,2008,2090629,2090629
+Virginia,VA,3371,Household and institutional furniture and kitchen cabinet mfg,2008,1345114,1345114
+Virginia,VA,3372,Office furniture (including fixtures) mfg,2008,254791,254791
+Virginia,VA,339,Miscellaneous mfg,2008,1637931,1637931
+Virginia,VA,3391,Medical equipment and supplies mfg,2008,642753,642753
+Virginia,VA,3399,Other miscellaneous mfg,2008,995178,995178
+Washington,WA,31,Manufacturing,2008,111076760,111076760
+Washington,WA,311,Food mfg,2008,10963808,10963808
+Washington,WA,3114,Fruit and vegetable preserving and specialty food mfg,2008,2947289,2947289
+Washington,WA,3115,Dairy product mfg,2008,1001255,1001255
+Washington,WA,3116,Animal  slaughtering and processing,2008,1775895,1775895
+Washington,WA,3117,Seafood product preparation and packaging,2008,1784506,1784506
+Washington,WA,3118,Bakeries and tortilla mfg,2008,1132353,1132353
+Washington,WA,3119,Other food mfg,2008,1384911,1384911
+Washington,WA,312,Beverage and tobacco product mfg,2008,1379917,1379917
+Washington,WA,3121,Beverage mfg,2008,1379917,1379917
+Washington,WA,314,Textile product mills,2008,308205,308205
+Washington,WA,3149,Other textile product mills,2008,276431,276431
+Washington,WA,321,Wood product mfg,2008,3781501,3781501
+Washington,WA,3211,Sawmills and wood preservation,2008,2138735,2138735
+Washington,WA,3212,"Veneer, plywood, and engineered wood product mfg",2008,558299,558299
+Washington,WA,3219,Other wood product mfg,2008,1084467,1084467
+Washington,WA,322,Paper mfg,2008,5544051,5544051
+Washington,WA,3221,"Pulp, paper, and paperboard mills",2008,3834733,3834733
+Washington,WA,3222,Converted paper product mfg,2008,1709318,1709318
+Washington,WA,323,Printing and related support activities,2008,1206879,1206879
+Washington,WA,3231,Printing and related support activities,2008,1206879,1206879
+Washington,WA,324,Petroleum and coal products mfg,2008,23070403,23070403
+Washington,WA,3241,Petroleum and coal products mfg,2008,23070403,23070403
+Washington,WA,325,Chemical mfg,2008,2479370,2479370
+Washington,WA,3251,Basic chemical mfg,2008,736389,736389
+Washington,WA,3254,Pharmaceutical and medicine mfg,2008,637968,637968
+Washington,WA,326,Plastics and rubber products mfg,2008,2309440,2309440
+Washington,WA,3261,Plastics product mfg,2008,2229994,2229994
+Washington,WA,327,Nonmetallic mineral product mfg,2008,2252116,2252116
+Washington,WA,3272,Glass and glass product mfg,2008,573873,573873
+Washington,WA,3273,Cement and concrete product mfg,2008,1182056,1182056
+Washington,WA,331,Primary metal mfg,2008,2905896,2905896
+Washington,WA,3313,Alumina and aluminum production and processing,2008,1978649.4,1978649.4
+Washington,WA,3314,Nonferrous metal (except aluminum) production and processing,2008,636657,636657
+Washington,WA,3315,Foundries,2008,290589.6,290589.6
+Washington,WA,332,Fabricated metal product mfg,2008,4600724,4600724
+Washington,WA,3323,Architectural and structural metals mfg,2008,1657029,1657029
+Washington,WA,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,1008085,1008085
+Washington,WA,3328,"Coating, engraving, heat treating, and allied activities",2008,739215,739215
+Washington,WA,3329,Other fabricated metal product mfg,2008,494148,494148
+Washington,WA,333,Machinery mfg,2008,5643643,5643643
+Washington,WA,3331,"Agriculture, construction, and mining machinery mfg",2008,450765,450765
+Washington,WA,3332,Industrial machinery mfg,2008,855034,855034
+Washington,WA,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,341817,341817
+Washington,WA,3335,Metalworking machinery mfg,2008,309201,309201
+Washington,WA,3339,Other general purpose machinery mfg,2008,3437818,3437818
+Washington,WA,334,Computer and electronic product mfg,2008,7020833,7020833
+Washington,WA,3341,Computer and peripheral equipment mfg,2008,1100483,1100483
+Washington,WA,3342,Communications equipment mfg,2008,523161,523161
+Washington,WA,3344,Semiconductor and other electronic component mfg,2008,2257498,2257498
+Washington,WA,3345,"Navigational, measuring, medical, and control instruments mfg",2008,2836680,2836680
+Washington,WA,335,"Electrical equipment, appliance, and component mfg",2008,905485,905485
+Washington,WA,336,Transportation equipment mfg,2008,33365856,33365856
+Washington,WA,3363,Motor vehicle parts mfg,2008,497077,497077
+Washington,WA,3364,Aerospace product and parts mfg,2008,NA,0
+Washington,WA,3366,Ship and boat building,2008,1299993,1299993
+Washington,WA,337,Furniture and related product mfg,2008,1191569,1191569
+Washington,WA,3371,Household and institutional furniture and kitchen cabinet mfg,2008,662673,662673
+Washington,WA,3372,Office furniture (including fixtures) mfg,2008,308609,308609
+Washington,WA,339,Miscellaneous mfg,2008,1792901,1792901
+Washington,WA,3391,Medical equipment and supplies mfg,2008,607016,607016
+Washington,WA,3399,Other miscellaneous mfg,2008,1185885,1185885
+West Virginia,WV,31,Manufacturing,2008,26224933,26224933
+West Virginia,WV,311,Food mfg,2008,720872,720872
+West Virginia,WV,3116,Animal  slaughtering and processing,2008,NA,0
+West Virginia,WV,3118,Bakeries and tortilla mfg,2008,141048,141048
+West Virginia,WV,321,Wood product mfg,2008,1522403,1522403
+West Virginia,WV,3211,Sawmills and wood preservation,2008,542167,542167
+West Virginia,WV,3219,Other wood product mfg,2008,653449,653449
+West Virginia,WV,323,Printing and related support activities,2008,405787,405787
+West Virginia,WV,3231,Printing and related support activities,2008,405787,405787
+West Virginia,WV,325,Chemical mfg,2008,9352688,9352688
+West Virginia,WV,3251,Basic chemical mfg,2008,3589312,3589312
+West Virginia,WV,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,3506995,3506995
+West Virginia,WV,3254,Pharmaceutical and medicine mfg,2008,NA,0
+West Virginia,WV,326,Plastics and rubber products mfg,2008,754091,754091
+West Virginia,WV,3261,Plastics product mfg,2008,594982,594982
+West Virginia,WV,327,Nonmetallic mineral product mfg,2008,917139,917139
+West Virginia,WV,3271,Clay product and refractory mfg,2008,265892,265892
+West Virginia,WV,3273,Cement and concrete product mfg,2008,335073,335073
+West Virginia,WV,331,Primary metal mfg,2008,3885422,3885422
+West Virginia,WV,3311,Iron and steel mills and ferroalloy mfg,2008,1260159,1260159
+West Virginia,WV,3313,Alumina and aluminum production and processing,2008,1473401,1473401
+West Virginia,WV,3314,Nonferrous metal (except aluminum) production and processing,2008,994183,994183
+West Virginia,WV,332,Fabricated metal product mfg,2008,2772023,2772023
+West Virginia,WV,3323,Architectural and structural metals mfg,2008,306303,306303
+West Virginia,WV,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,384602,384602
+West Virginia,WV,3328,"Coating, engraving, heat treating, and allied activities",2008,1473788,1473788
+West Virginia,WV,333,Machinery mfg,2008,589585,589585
+West Virginia,WV,3331,"Agriculture, construction, and mining machinery mfg",2008,371492,371492
+West Virginia,WV,336,Transportation equipment mfg,2008,2656113,2656113
+West Virginia,WV,3363,Motor vehicle parts mfg,2008,NA,0
+West Virginia,WV,3364,Aerospace product and parts mfg,2008,776164,776164
+West Virginia,WV,339,Miscellaneous mfg,2008,424313,424313
+West Virginia,WV,3391,Medical equipment and supplies mfg,2008,NA,0
+Wisconsin,WI,31,Manufacturing,2008,156367519,156367519
+Wisconsin,WI,311,Food mfg,2008,33752349,33752349
+Wisconsin,WI,3111,Animal food mfg,2008,1715399,1715399
+Wisconsin,WI,3113,Sugar and confectionery product mfg,2008,792945,792945
+Wisconsin,WI,3114,Fruit and vegetable preserving and specialty food mfg,2008,3495720,3495720
+Wisconsin,WI,3115,Dairy product mfg,2008,15268436,15268436
+Wisconsin,WI,3116,Animal  slaughtering and processing,2008,7209863,7209863
+Wisconsin,WI,3118,Bakeries and tortilla mfg,2008,767914,767914
+Wisconsin,WI,3119,Other food mfg,2008,3327225,3327225
+Wisconsin,WI,312,Beverage and tobacco product mfg,2008,1421616,1421616
+Wisconsin,WI,3121,Beverage mfg,2008,1421616,1421616
+Wisconsin,WI,313,Textile mills,2008,439878,439878
+Wisconsin,WI,314,Textile product mills,2008,167744,167744
+Wisconsin,WI,316,Leather and allied product mfg,2008,336565,336565
+Wisconsin,WI,321,Wood product mfg,2008,4184216,4184216
+Wisconsin,WI,3211,Sawmills and wood preservation,2008,602554,602554
+Wisconsin,WI,3212,"Veneer, plywood, and engineered wood product mfg",2008,577659,577659
+Wisconsin,WI,3219,Other wood product mfg,2008,3004004,3004004
+Wisconsin,WI,322,Paper mfg,2008,14257749,14257749
+Wisconsin,WI,3221,"Pulp, paper, and paperboard mills",2008,7641886,7641886
+Wisconsin,WI,3222,Converted paper product mfg,2008,6615863,6615863
+Wisconsin,WI,323,Printing and related support activities,2008,5761346,5761346
+Wisconsin,WI,3231,Printing and related support activities,2008,5761346,5761346
+Wisconsin,WI,325,Chemical mfg,2008,9192458,9192458
+Wisconsin,WI,3251,Basic chemical mfg,2008,1969857,1969857
+Wisconsin,WI,3252,"Resin, syn rubber, and artificial syn fibers and filaments mfg",2008,578667,578667
+Wisconsin,WI,3254,Pharmaceutical and medicine mfg,2008,660379,660379
+Wisconsin,WI,3255,"Paint, coating, and adhesive mfg",2008,898207,898207
+Wisconsin,WI,3256,"Soap, cleaning compound, and toilet preparation mfg",2008,4282997,4282997
+Wisconsin,WI,3259,Other chemical product and preparation mfg,2008,658537,658537
+Wisconsin,WI,326,Plastics and rubber products mfg,2008,7515138,7515138
+Wisconsin,WI,3261,Plastics product mfg,2008,7035789,7035789
+Wisconsin,WI,3262,Rubber product mfg,2008,479350,479350
+Wisconsin,WI,327,Nonmetallic mineral product mfg,2008,2898864,2898864
+Wisconsin,WI,3272,Glass and glass product mfg,2008,763143,763143
+Wisconsin,WI,3273,Cement and concrete product mfg,2008,920252,920252
+Wisconsin,WI,3279,Other nonmetallic mineral product mfg,2008,1062955,1062955
+Wisconsin,WI,331,Primary metal mfg,2008,5704531,5704531
+Wisconsin,WI,3312,Steel product mfg from purchased steel,2008,704887,704887
+Wisconsin,WI,3313,Alumina and aluminum production and processing,2008,1505612,1505612
+Wisconsin,WI,3315,Foundries,2008,3494032,3494032
+Wisconsin,WI,332,Fabricated metal product mfg,2008,14541703,14541703
+Wisconsin,WI,3321,Forging and stamping,2008,1907231,1907231
+Wisconsin,WI,3322,Cutlery and handtool mfg,2008,550517,550517
+Wisconsin,WI,3323,Architectural and structural metals mfg,2008,3398061,3398061
+Wisconsin,WI,3324,"Boiler, tank, and shipping container mfg",2008,1544094,1544094
+Wisconsin,WI,3325,Hardware mfg,2008,653766,653766
+Wisconsin,WI,3326,Spring and wire product mfg,2008,228799,228799
+Wisconsin,WI,3327,"Machine shops, turned product, and screw, nut, and bolt mfg",2008,3196260,3196260
+Wisconsin,WI,3328,"Coating, engraving, heat treating, and allied activities",2008,797464,797464
+Wisconsin,WI,3329,Other fabricated metal product mfg,2008,2265511,2265511
+Wisconsin,WI,333,Machinery mfg,2008,19550985,19550985
+Wisconsin,WI,3331,"Agriculture, construction, and mining machinery mfg",2008,6198507,6198507
+Wisconsin,WI,3332,Industrial machinery mfg,2008,2255196,2255196
+Wisconsin,WI,3333,Commercial and service industry machinery mfg,2008,1275948,1275948
+Wisconsin,WI,3334,"Ventilation, heating, AC, and commercial refrigeration equip mfg",2008,1537764,1537764
+Wisconsin,WI,3335,Metalworking machinery mfg,2008,1347970,1347970
+Wisconsin,WI,3336,"Engine, turbine, and power transmission equipment mfg",2008,2575540,2575540
+Wisconsin,WI,3339,Other general purpose machinery mfg,2008,4360059,4360059
+Wisconsin,WI,334,Computer and electronic product mfg,2008,5938579,5938579
+Wisconsin,WI,3341,Computer and peripheral equipment mfg,2008,NA,0
+Wisconsin,WI,3344,Semiconductor and other electronic component mfg,2008,1748599,1748599
+Wisconsin,WI,3345,"Navigational, measuring, medical, and control instruments mfg",2008,2542105,2542105
+Wisconsin,WI,335,"Electrical equipment, appliance, and component mfg",2008,8724824,8724824
+Wisconsin,WI,3351,Electric lighting equipment mfg,2008,274198,274198
+Wisconsin,WI,3352,Household appliance mfg,2008,1557374,1557374
+Wisconsin,WI,3353,Electrical equipment mfg,2008,5584958,5584958
+Wisconsin,WI,3359,Other electrical equipment and component mfg,2008,1308295,1308295
+Wisconsin,WI,336,Transportation equipment mfg,2008,14646965,14646965
+Wisconsin,WI,3361,Motor vehicle mfg,2008,NA,0
+Wisconsin,WI,3362,Motor vehicle body and trailer mfg,2008,1556504,1556504
+Wisconsin,WI,3363,Motor vehicle parts mfg,2008,4256106,4256106
+Wisconsin,WI,3366,Ship and boat building,2008,NA,0
+Wisconsin,WI,3369,Other transportation equipment mfg,2008,1742612,1742612
+Wisconsin,WI,337,Furniture and related product mfg,2008,3293271,3293271
+Wisconsin,WI,3371,Household and institutional furniture and kitchen cabinet mfg,2008,1996398,1996398
+Wisconsin,WI,3372,Office furniture (including fixtures) mfg,2008,988455,988455
+Wisconsin,WI,3379,Other furniture related product mfg,2008,308419,308419
+Wisconsin,WI,339,Miscellaneous mfg,2008,2704909,2704909
+Wisconsin,WI,3391,Medical equipment and supplies mfg,2008,814103,814103
+Wisconsin,WI,3399,Other miscellaneous mfg,2008,1890806,1890806
+Wyoming,WY,31,Manufacturing,2008,10746575,10746575
+Wyoming,WY,324,Petroleum and coal products mfg,2008,6205313,6205313
+Wyoming,WY,3241,Petroleum and coal products mfg,2008,6205313,6205313
+Wyoming,WY,325,Chemical mfg,2008,2414074.7,2414074.7
+Wyoming,WY,3251,Basic chemical mfg,2008,1447957,1447957
+Wyoming,WY,333,Machinery mfg,2008,2127187.3,2127187.3

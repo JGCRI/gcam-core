@@ -52,6 +52,7 @@
 
 class Tabs;
 class IInfo;
+class MoreSectorInfo;
 
 /*!
  * \brief A sector which calculates the final demands for a region using a
@@ -76,9 +77,9 @@ public:
     virtual void completeInit( const IInfo* aRegionInfo,
                                ILandAllocator* aLandAllocator );
 
-    virtual void dbOutput( const GDP* aGDP,
-                           const IndirectEmissionsCalculator* aIndEmissCalc ) const {}
 protected:
+    std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
+    
     virtual double getOutput( const int aPeriod ) const { return 0; }
 	
     virtual double getPrice( const GDP* aGDP,
@@ -88,7 +89,6 @@ protected:
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-	virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
 };
 
 #endif // _FINAL_DEMAND_SECTOR_H_

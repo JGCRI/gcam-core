@@ -65,6 +65,7 @@
 #include "sectors/include/ag_supply_sector.h"
 #include "sectors/include/energy_final_demand.h"
 #include "sectors/include/consumer_final_demand.hpp"
+#include "sectors/include/negative_emissions_final_demand.h"
 #include "sectors/include/export_sector.h"
 #include "sectors/include/pass_through_sector.h"
 
@@ -82,15 +83,12 @@
 #include "emissions/include/luc_emissions_summer.h"
 #include "policy/include/policy_ghg.h"
 
-#include "util/base/include/summary.h"
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
-
-#include "reporting/include/indirect_emissions_calculator.h"
 
 #include "containers/include/resource_activity.h"
 #include "containers/include/sector_activity.h"
@@ -112,23 +110,20 @@ typedef std::vector<Sector*>::const_iterator CSectorIterator;
 typedef std::vector<Consumer*>::iterator ConsumerIterator;
 typedef std::vector<Consumer*>::const_iterator CConsumerIterator;
 
+const double DEFAULT_SOCIAL_DISCOUNT_RATE = 0.02;
+const double DEFAULT_PRIVATE_DISCOUNT_RATE = 0.1;
+
 
 extern Scenario* scenario;
 
 //! Default constructor
 RegionMiniCAM::RegionMiniCAM() {
-    /*! \pre The modeltime object must be read-in before the Region can be
-    *        parsed.
-    */
-    assert( scenario->getModeltime() );
-
-    // Resize all vectors to maximum period
-    const int maxper = scenario->getModeltime()->getmaxper();
-    summary.resize( maxper );
-    calibrationGDPs.resize( maxper );
-    GDPcalPerCapita.resize( maxper );
+    mGDP = 0;
+    mLandAllocator = 0;
 
     mInterestRate = 0;
+    mSocialDiscountRate = DEFAULT_SOCIAL_DISCOUNT_RATE;
+    mPrivateDiscountRateLand = DEFAULT_PRIVATE_DISCOUNT_RATE;
 }
 
 //! Default destructor destroys sector, demsector, Resource, and
@@ -147,37 +142,49 @@ void RegionMiniCAM::clear(){
     for( CConsumerIterator consumerIter = mConsumers.begin(); consumerIter != mConsumers.end(); ++consumerIter ) {
         delete *consumerIter;
     }
+    
+    delete mGDP;
+    delete mLandAllocator;
 }
 
 // for parsing derived region classes
 bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) {
     if( nodeName == "PrimaryFuelCO2Coef" ) {
-        primaryFuelCO2Coef[ XMLHelper<string>::getAttr( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
+        mPrimaryFuelCO2Coef[ XMLHelper<string>::getAttr( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
     }
 
     else if( nodeName == GDP::getXMLNameStatic() ){
-        parseSingleNode( curr, gdp, new GDP );
+        parseSingleNode( curr, mGDP, new GDP );
     }
     else if( nodeName == "interest-rate" ){
         mInterestRate = XMLHelper<double>::getValue( curr );
     }
+    else if( nodeName == "social-discount-rate" ){
+        mSocialDiscountRate = XMLHelper<double>::getValue( curr );
+    }
+    else if( nodeName == "private-discount-rate-land" ){
+        mPrivateDiscountRateLand = XMLHelper<double>::getValue( curr );
+    }
     else if( nodeName == SupplySector::getXMLNameStatic() ){
-        parseContainerNode( curr, supplySector, supplySectorNameMap, new SupplySector( name ) );
+        parseContainerNode( curr, mSupplySector, new SupplySector( mName ) );
     }
     else if( nodeName == ExportSector::getXMLNameStatic() ){
-        parseContainerNode( curr, supplySector, supplySectorNameMap, new ExportSector( name ) );
+        parseContainerNode( curr, mSupplySector, new ExportSector( mName ) );
     }
     else if( nodeName == AgSupplySector::getXMLNameStatic() ) {
-        parseContainerNode( curr, supplySector, supplySectorNameMap, new AgSupplySector( name ) );
+        parseContainerNode( curr, mSupplySector, new AgSupplySector( mName ) );
     }
     else if( nodeName == PassThroughSector::getXMLNameStatic() ) {
-        parseContainerNode( curr, supplySector, supplySectorNameMap, new PassThroughSector( name ) );
+        parseContainerNode( curr, mSupplySector, new PassThroughSector( mName ) );
     }
     else if( nodeName == EnergyFinalDemand::getXMLNameStatic() ){
         parseContainerNode( curr, mFinalDemands, new EnergyFinalDemand );
     }
     else if( nodeName == ConsumerFinalDemand::getXMLNameStatic() ) {
         parseContainerNode( curr, mFinalDemands, new ConsumerFinalDemand );
+    }
+    else if( nodeName == NegativeEmissionsFinalDemand::getXMLNameStatic() ){
+        parseContainerNode( curr, mFinalDemands, new NegativeEmissionsFinalDemand );
     }
     else if( nodeName == GCAMConsumer::getXMLNameStatic() ) {
         parseContainerNode( curr, mConsumers, new GCAMConsumer );
@@ -200,11 +207,11 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
                 continue;
             }
             else if( nodeNameChild == "GDPcal" ) { // TODO: MOVE TO GDP
-                XMLHelper<double>::insertValueIntoVector( currChild, calibrationGDPs, modeltime );
+                XMLHelper<double>::insertValueIntoVector( currChild, mCalibrationGDPs, modeltime );
             }
             // Per-capita value -- is converted to total GDP using population
             else if( nodeNameChild == "GDPcalPerCapita" ) { // TODO: MOVE TO GDP
-                XMLHelper<double>::insertValueIntoVector( currChild, GDPcalPerCapita, modeltime );
+                XMLHelper<double>::insertValueIntoVector( currChild, mGDPcalPerCapita, modeltime );
             }
             else {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -230,45 +237,51 @@ void RegionMiniCAM::completeInit() {
     Region::completeInit();
 
     // Region info has no parent Info.
-    mRegionInfo.reset( InfoFactory::constructInfo( 0, name ) );
+    mRegionInfo = InfoFactory::constructInfo( 0, mName );
 
     if( mInterestRate == 0 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "No interest rate was read-in for region " << name << "." << endl;
+        mainLog << "No interest rate was read-in for region " << mName << "." << endl;
     }
 
     // Add the interest rate to the region info.
     mRegionInfo->setDouble( "interest-rate", mInterestRate );
+    
+    // Add the social discount rate to the region info.
+    mRegionInfo->setDouble( "social-discount-rate", mSocialDiscountRate );
+    
+    // Add the land private discount rate to the region info.
+    mRegionInfo->setDouble( "private-discount-rate-land", mPrivateDiscountRateLand );
 
     // initialize demographic
-    if( demographic.get() ){
-        demographic->completeInit();
+    if( mDemographic ){
+        mDemographic->completeInit();
     }
 
     // Initialize the GDP
-    if( gdp.get() ){
-        gdp->initData( demographic.get() );
+    if( mGDP ){
+        mGDP->initData( mDemographic );
     }
 
-    for( SectorIterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ) {
-        ( *sectorIter )->completeInit( mRegionInfo.get(), mLandAllocator.get() );
+    for( SectorIterator sectorIter = mSupplySector.begin(); sectorIter != mSupplySector.end(); ++sectorIter ) {
+        ( *sectorIter )->completeInit( mRegionInfo, mLandAllocator );
     }
 
-    if ( mLandAllocator.get() ) {
-        mLandAllocator->completeInit( name, mRegionInfo.get() );
+    if ( mLandAllocator ) {
+        mLandAllocator->completeInit( mName, mRegionInfo );
     }
 
     for( FinalDemandIterator demandSectorIter = mFinalDemands.begin();
         demandSectorIter != mFinalDemands.end(); ++demandSectorIter )
     {
-        ( *demandSectorIter )->completeInit( name, mRegionInfo.get() );
+        ( *demandSectorIter )->completeInit( mName, mRegionInfo );
     }
 
     for( ConsumerIterator consumerIter = mConsumers.begin(); consumerIter != mConsumers.end();
          ++consumerIter )
     {
-        ( *consumerIter )->completeInit( name, "", "" );
+        ( *consumerIter )->completeInit( mName, "", "" );
     }
     
     // Set the CO2 coefficients into the Marketplace before the Technologies and
@@ -285,98 +298,52 @@ void RegionMiniCAM::completeInit() {
     // for the wrappers is managed by the market dependency finder.
     MarketDependencyFinder* markDepFinder = scenario->getMarketplace()->getDependencyFinder();
     for( int i = 0; i < mResources.size(); ++i ) {
-        markDepFinder->resolveActivityToDependency( name, mResources[ i ]->getName(),
-            new ResourceActivity( mResources[ i ], gdp.get(), name ) );
+        markDepFinder->resolveActivityToDependency( mName, mResources[ i ]->getName(),
+            new ResourceActivity( mResources[ i ], mGDP, mName ) );
     }
-    for( int i = 0; i < supplySector.size(); ++i ) {
+    for( int i = 0; i < mSupplySector.size(); ++i ) {
         SectorActivity* tempSectorActivity(
-            new SectorActivity( supplySector[ i ], gdp.get(), name ) );
-        markDepFinder->resolveActivityToDependency( name, supplySector[ i ]->getName(),
+            new SectorActivity( mSupplySector[ i ], mGDP, mName ) );
+        markDepFinder->resolveActivityToDependency( mName, mSupplySector[ i ]->getName(),
             tempSectorActivity->getSectorDemandActivity(),
             tempSectorActivity->getSectorPriceActivity() );
     }
     for( int i = 0; i < mFinalDemands.size(); ++i ) {
-        markDepFinder->resolveActivityToDependency( name, mFinalDemands[ i ]->getName(),
-            new FinalDemandActivity( mFinalDemands[ i ], gdp.get(), demographic.get(), name ) );
+        markDepFinder->resolveActivityToDependency( mName, mFinalDemands[ i ]->getName(),
+            new FinalDemandActivity( mFinalDemands[ i ], mGDP, mDemographic, mName ) );
     }
-    if( mLandAllocator.get() ) {
-        markDepFinder->resolveActivityToDependency( name, "land-allocator",
-            new LandAllocatorActivity( mLandAllocator.get(), name ) );
+    if( mLandAllocator ) {
+        markDepFinder->resolveActivityToDependency( mName, "land-allocator",
+            new LandAllocatorActivity( mLandAllocator, mName ) );
     }
     for( int i = 0; i < mConsumers.size(); ++i ) {
-        markDepFinder->resolveActivityToDependency( name, mConsumers[ i ]->getName(),
-            new ConsumerActivity( mConsumers[ i ], demographic.get(), name ) );
+        markDepFinder->resolveActivityToDependency( mName, mConsumers[ i ]->getName(),
+            new ConsumerActivity( mConsumers[ i ], mDemographic, mName ) );
     }
-}
-
-void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    // Write out the Co2 Coefficients.
-    for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
-        XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, tabs, 0, coefAllIter->first );
-    }
-
-    XMLWriteElementCheckDefault( mInterestRate, "interest-rate", out, tabs, 0.0 );
-
-    // write the xml for the class members.
-
-    // write out data for land allocator
-    if( mLandAllocator.get() ){
-        mLandAllocator->toInputXML( out, tabs);
-    }
-
-    if( gdp.get() ){ // Check if gdp object exists
-        gdp->toInputXML( out, tabs );
-    }
-
-    // write out demand sector objects.
-    for( CFinalDemandIterator k = mFinalDemands.begin(); k != mFinalDemands.end(); k++ ){
-        ( *k )->toInputXML( out, tabs );
-    }
-
-    // write out consumer objects.
-    for( CConsumerIterator consumerIter = mConsumers.begin(); consumerIter != mConsumers.end(); consumerIter++ ){
-        ( *consumerIter )->toInputXML( out, tabs );
-    }
-
-    // Note: The count function is an STL algorithm that counts the number of
-    // times a value occurs within the a range of a container. The first two
-    // arguments to the function are the range of the container to search, the
-    // third is the value to search for.
-    if( ( count( calibrationGDPs.begin(), calibrationGDPs.end(), 0 )
-        != static_cast<int>( calibrationGDPs.size() ) ) ){ // makes sure tags aren't printed if no real data
-
-            // Write out regional economic data
-            XMLWriteOpeningTag( "calibrationdata", out, tabs );
-
-            // write out calibration GDP
-            const Modeltime* modeltime = scenario->getModeltime();
-            XMLWriteVector( calibrationGDPs, "GDPcal", out, tabs, modeltime, 0.0 );
-
-            XMLWriteClosingTag( "calibrationdata", out, tabs );
-            // End write out regional economic data
-        } // close calibration IF
 }
 
 void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     // write out basic datamembers
     XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
+    XMLWriteElement( mSocialDiscountRate, "social-discount-rate", out, tabs );
+    XMLWriteElement( mPrivateDiscountRateLand, "private-discount-rate-land", out, tabs );
 
-    XMLWriteElement( calibrationGDPs[ period ], "calibrationGDPs", out, tabs );
+    XMLWriteElement( mCalibrationGDPs[ period ], "calibrationGDPs", out, tabs );
     XMLWriteElement( getEndUseServicePrice( period ), "priceSer", out, tabs );
     
     // Write out the Co2 Coefficients.
-    for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
+    for( map<string,double>::const_iterator coefAllIter = mPrimaryFuelCO2Coef.begin(); coefAllIter != mPrimaryFuelCO2Coef.end(); coefAllIter++ ) {
         XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, tabs, 0, coefAllIter->first );
     }
 
     // write the xml for the class members.
     // write out the single population object.
-    if( gdp.get() ){
-        gdp->toDebugXML( period, out, tabs );
+    if( mGDP ){
+        mGDP->toDebugXML( period, out, tabs );
     }
 
     // Write out the land allocator.
-    if ( mLandAllocator.get() ) {
+    if ( mLandAllocator ) {
         mLandAllocator->toDebugXML( period, out, tabs );
     }
 
@@ -428,7 +395,7 @@ void RegionMiniCAM::calcGDP( const int period ){
     if( !ensureGDP() || !ensureDemographics() ){
         return;
     }
-    gdp->initialGDPcalc( period, demographic->getTotal( period ) );
+    mGDP->initialGDPcalc( period, mDemographic->getTotal( period ) );
 }
 
 /*! \brief Calculate forward-looking gdp (without feedbacks) for AgLU use.
@@ -450,8 +417,8 @@ const vector<double> RegionMiniCAM::calcFutureGDP() const {
     vector<double> gdps( modeltime->getmaxper() );
 
     for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
-        gdp->initialGDPcalc( period, demographic->getTotal( period ) );
-        gdps[ period ] = gdp->getApproxScaledGDPperCap( period );
+        mGDP->initialGDPcalc( period, mDemographic->getTotal( period ) );
+        gdps[ period ] = mGDP->getApproxScaledGDPperCap( period );
     }
     return gdps;
 }
@@ -459,7 +426,7 @@ const vector<double> RegionMiniCAM::calcFutureGDP() const {
 double RegionMiniCAM::getEndUseServicePrice( const int period ) const {
     double servicePrice = 0;
     for ( CFinalDemandIterator currDemSector = mFinalDemands.begin(); currDemSector != mFinalDemands.end(); ++currDemSector ) {
-        servicePrice += (*currDemSector)->getWeightedEnergyPrice( name, period );
+        servicePrice += (*currDemSector)->getWeightedEnergyPrice( mName, period );
     }
 
     return servicePrice;
@@ -481,7 +448,7 @@ void RegionMiniCAM::adjustGDP( const int period ){
     if ( period > modeltime->getFinalCalibrationPeriod() ){
         tempratio = getEndUseServicePrice( period ) / getEndUseServicePrice( period - 1 );
     }
-    gdp->adjustGDP( period, tempratio );
+    mGDP->adjustGDP( period, tempratio );
 }
 
 /*! \brief Test to see if calibration worked for all sectors in this region
@@ -507,8 +474,8 @@ bool RegionMiniCAM::isAllCalibrated( const int period, double calAccuracy, const
     }
 
     bool returnVal = true;
-    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-        if ( !supplySector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
+    for ( unsigned int i = 0; i < mSupplySector.size(); i++ ) {
+        if ( !mSupplySector[ i ]->isAllCalibrated( period, calAccuracy, printWarnings ) ) {
             returnVal = false;
         }
     }
@@ -524,30 +491,31 @@ bool RegionMiniCAM::isAllCalibrated( const int period, double calAccuracy, const
 */
 void RegionMiniCAM::initCalc( const int period )
 {
-    for( SectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
-        (*currSector)->initCalc( 0, demographic.get(), period );
+    Region::initCalc( period );
+    for( SectorIterator currSector = mSupplySector.begin(); currSector != mSupplySector.end(); ++currSector ){
+        (*currSector)->initCalc( 0, mDemographic, period );
     }
     for ( FinalDemandIterator currSector = mFinalDemands.begin(); currSector != mFinalDemands.end(); ++currSector ) {
-        (*currSector)->initCalc( name, gdp.get(), demographic.get(), period  );
+        (*currSector)->initCalc( mName, mGDP, mDemographic, period  );
     }
     for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
-        (*currResource)->initCalc( name, period );
+        (*currResource)->initCalc( mName, period );
     }
 
     calcGDP( period );
-    gdp->adjustGDP( period, 1.0 );
+    mGDP->adjustGDP( period, 1.0 );
     
     for( ConsumerIterator currConsumer = mConsumers.begin(); currConsumer != mConsumers.end(); ++currConsumer ) {
         NationalAccount nationalAccount;
         // Note that we are using the unadjusted gdp for these equations and so
         // gdp price feedbacks will be ignored.
-        (*currConsumer)->initCalc( 0, name, "", nationalAccount, demographic.get(), gdp->getGDP( period ), period );
+        (*currConsumer)->initCalc( 0, mName, "", nationalAccount, mDemographic, mGDP->getGDP( period ), period );
     }
 
     // Call initCalc for land allocator last. It needs profit from the ag sectors
     // before it can calculate share weights
-    if ( mLandAllocator.get() ) {
-        mLandAllocator->initCalc( name, period );
+    if ( mLandAllocator ) {
+        mLandAllocator->initCalc( mName, period );
     }
 }
 
@@ -561,11 +529,11 @@ void RegionMiniCAM::initCalc( const int period )
 void RegionMiniCAM::setCO2CoefsIntoMarketplace( const int aPeriod ){
     const static string CO2COEF = "CO2coefficient";
     Marketplace* marketplace = scenario->getMarketplace();
-    for( map<string, double>::const_iterator coef = primaryFuelCO2Coef.begin();
-        coef != primaryFuelCO2Coef.end(); ++coef )
+    for( map<string, double>::const_iterator coef = mPrimaryFuelCO2Coef.begin();
+        coef != mPrimaryFuelCO2Coef.end(); ++coef )
     {
         // Markets may not exist for incorrect fuel names.
-        IInfo* fuelInfo = marketplace->getMarketInfo( coef->first, name, aPeriod, false );
+        IInfo* fuelInfo = marketplace->getMarketInfo( coef->first, mName, aPeriod, false );
         if( fuelInfo ){
             fuelInfo->setDouble( CO2COEF, coef->second );
         }
@@ -573,7 +541,8 @@ void RegionMiniCAM::setCO2CoefsIntoMarketplace( const int aPeriod ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Cannot set emissions factor of zero for fuel " << coef->first
-                    << " because the name does not match the name of a market." << endl;
+                    << " for region " << mName
+                    << " because the name does not match the market name or market does not exist." << endl;
         }
     }
 }
@@ -589,295 +558,12 @@ void RegionMiniCAM::postCalc( const int aPeriod ) {
     Region::postCalc( aPeriod );
 
     for( CConsumerIterator consumerIter = mConsumers.begin(); consumerIter != mConsumers.end(); ++consumerIter ) {
-        (*consumerIter)->postCalc( name, "", aPeriod );
+        (*consumerIter)->postCalc( mName, "", aPeriod );
     }
     
-    if( mLandAllocator.get() ) {
-        mLandAllocator->postCalc( name, aPeriod );
+    if( mLandAllocator ) {
+        mLandAllocator->postCalc( mName, aPeriod );
     }
-}
-
-//! Calculate regional emissions from resources.
-void RegionMiniCAM::calcEmissions( const int period ) {
-    summary[period].clearemiss(); // clear emissions map
-
-    // need to call emissions function but sum is not needed
-    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-        supplySector[i]->emission(period);
-        summary[period].updateemiss(supplySector[i]->getemission(period));
-    }
-
-    // Determine land use change emissions and add to the summary.
-	if( period > 0 ) {
-		LUCEmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
-
-
-		const int year = scenario->getModeltime()->getper_to_yr( period );
-		accept( &co2LandUseSummer, period );
-		map<string,double> agEmissions;
-		if ( co2LandUseSummer.areEmissionsSet( year ) ) {
-			agEmissions[ "CO2NetLandUse" ] = co2LandUseSummer.getEmissions( year );
-			summary[ period ].updateemiss( agEmissions );
-		}
-	}
-}
-
-/*! \brief Calculate regional emissions by fuel for reporting.
-* \warning This function assumes emission has already been called, as this
-*          function cannot clear the summary emissions.
-* \param The global list of primary fuels.
-* \param period The model period.
-*/
-void RegionMiniCAM::calcEmissFuel( const list<string>& aPrimaryFuelList, const int period )
-{
-    map<string, double> fuelemiss; // tempory emissions by fuel
-
-    for( list<string>::const_iterator fuelIter = aPrimaryFuelList.begin();
-        fuelIter != aPrimaryFuelList.end(); ++fuelIter )
-    {
-        fuelemiss[ *fuelIter ] = summary[period].get_pemap_second( *fuelIter )
-                                 * util::searchForValue( primaryFuelCO2Coef, *fuelIter );
-    }
-
-    summary[period].updateemiss(fuelemiss); // add CO2 emissions by fuel
-}
-
-//! Write all outputs to file.
-void RegionMiniCAM::csvOutputFile() const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    // function protocol
-    void fileoutput3(string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // write population results to database
-    if( demographic.get() ){
-        demographic->csvOutputFile( name );
-    }
-    if( gdp.get() ){
-        gdp->csvOutputFile( name );
-    }
-
-    // write total emissions for region
-    for (int m= 0;m<maxper;m++) {
-        temp[m] = summary[m].get_emissmap_second("CO2");
-    }
-    fileoutput3(name," "," "," ","CO2 emiss","MTC",temp);
-
-    // write ag emissions for region
-    for (int m= 0;m<maxper;m++) {
-        temp[m] = summary[m].get_emissmap_second( "CO2NetLandUse" );
-    }
-    fileoutput3(name," "," "," ","Net Land Use CO2 emiss","MTC",temp);
-
-    // region primary energy consumption by fuel type
-    typedef map<string,double>:: const_iterator CI;
-    map<string,double> tpemap = summary[0].getpecons();
-    for (CI pmap=tpemap.begin(); pmap!=tpemap.end(); ++pmap) {
-        for (int m= 0;m<maxper;m++) {
-            temp[m] = summary[m].get_pemap_second(pmap->first);
-        }
-        fileoutput3(name,"Pri Energy","Consumption","",pmap->first,"EJ",temp);
-    }
-
-
-    // regional Pri Energy Production Total
-    for (int m= 0;m<maxper;m++) {
-        temp[m] = summary[m].get_peprodmap_second("zTotal");
-    }
-    fileoutput3(name,"Pri Energy","total","","zTotal","EJ",temp);
-
-    // Calculate indirect emissions so they can be written to the database.
-    IndirectEmissionsCalculator indEmissCalc;
-    for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        accept( &indEmissCalc, i );
-    }
-
-    // write resource results to file
-    for ( unsigned int i = 0; i < mResources.size(); i++ )
-        mResources[i]->csvOutputFile( name );
-
-    // write supply sector results to file
-    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-        supplySector[i]->csvOutputFile( gdp.get(), &indEmissCalc );
-    }
-
-    // write end-use sector demand results to file
-    for ( unsigned int i = 0; i < mFinalDemands.size(); i++ ){
-        mFinalDemands[i]->csvOutputFile( name );
-    }
-}
-
-//! Write MiniCAM style outputs to file.
-void RegionMiniCAM::dbOutput( const list<string>& aPrimaryFuelList ) const {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper),temptot(maxper);
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    // write population results to database
-    if( demographic.get() ){
-        demographic->dbOutput( name );
-    }
-    if( gdp.get() ){
-        gdp->dbOutput( name );
-    }
-
-    // CO2 emissions by fuel
-    for( list<string>::const_iterator fuelIter = aPrimaryFuelList.begin();
-        fuelIter != aPrimaryFuelList.end(); fuelIter++ )
-    {
-        for ( int m= 0;m<maxper;m++) {
-            temp[m] = summary[m].get_emissfuelmap_second( *fuelIter );
-            temptot[m] += temp[m];
-        }
-        dboutput4(name,"CO2 Emiss","by Fuel",*fuelIter,"MTC",temp);
-    }
-    // add amount of geologic sequestration to emissions by fuel
-    // todo change hard-coded category name
-    for ( int m= 0;m<maxper;m++) {
-        // note the negative value for sequestered amount
-        temp[m] = - summary[m].get_emissmap_second( "CO2sequestGeologic" );
-        temptot[m] += temp[m];
-    }
-    dboutput4(name,"CO2 Emiss","by Fuel","geologic sequestration","MTC",temp);
-
-    // add amount of sequestration from non-energy use to emissions by fuel
-    // todo change hard-coded category name
-    for ( int m= 0;m<maxper;m++) {
-        // note the negative value for sequestered amount
-        temp[m] = - summary[m].get_emissmap_second( "CO2sequestNonEngy" );
-        temptot[m] += temp[m];
-    }
-    dboutput4(name,"CO2 Emiss","by Fuel","non-energy use","MTC",temp);
-
-    // total emissions by sector for region
-    for ( int m= 0;m<maxper;m++) {
-        temp[m] = summary[m].get_emissmap_second("CO2");
-    }
-    // CO2 emissions by fuel and sector totals use same value
-    dboutput4(name,"CO2 Emiss","by Fuel","zTotal","MTC",temptot);
-    dboutput4(name,"CO2 Emiss","by Sector","zTotal","MTC",temp);
-
-    // total ag sector emissions by sector for region
-    for ( int m= 0;m<maxper;m++) {
-        temp[m] = summary[m].get_emissmap_second( "CO2NetLandUse" );
-    }
-    dboutput4(name, "CO2 Emiss", "Net Land Use", "total", "MTC", temp );
-
-    // regional emissions for all greenhouse gases
-    typedef map<string,double>:: const_iterator CI;
-    map<string,double> temissmap = summary[0].getemission(); // get gases for period 0
-    for (CI gmap=temissmap.begin(); gmap!=temissmap.end(); ++gmap) {
-        for ( int m= 0;m<maxper;m++) {
-            temp[m] = summary[m].get_emissmap_second(gmap->first);
-        }
-        dboutput4(name,"Emissions","by gas",gmap->first,"MTC",temp);
-    }
-
-    // regional fuel consumption (primary and secondary) by fuel type
-    map<string,double> tfuelmap = summary[0].getfuelcons();
-    for (CI fmap=tfuelmap.begin(); fmap!=tfuelmap.end(); ++fmap) {
-        for ( int m= 0;m<maxper;m++) {
-            temp[m] = summary[m].get_fmap_second(fmap->first);
-        }
-        if( fmap->first == "" ){
-            dboutput4(name,"Fuel Consumption"," Region by fuel","No Fuelname","EJ",temp);
-        }
-        else {
-            dboutput4(name,"Fuel Consumption"," Region by fuel",fmap->first,"EJ",temp);
-        }
-    }
-
-    // region primary energy consumption by fuel type
-    map<string,double> tpemap = summary[0].getpecons();
-    for (CI pmap = tpemap.begin(); pmap != tpemap.end(); ++pmap) {
-        for ( int m = 0; m < maxper; ++m ) {
-            temp[m] = summary[m].get_pemap_second(pmap->first);
-        }
-        dboutput4(name,"Primary Energy","Consumption by fuel(renew error)",pmap->first,"EJ",temp);
-    }
-
-    // regional Pri Energy Production by fuel type
-    tpemap = summary[0].getpeprod();
-    for (CI pmap = tpemap.begin(); pmap != tpemap.end(); ++pmap) {
-        for ( int m = 0; m < maxper; ++m ) {
-            temp[m] = summary[m].get_peprodmap_second(pmap->first);
-        }
-        dboutput4(name,"Primary Energy","Production by fuel(renew error)",pmap->first,"EJ",temp);
-    }
-
-    // region primary energy trade by fuel type
-    tpemap = summary[0].getpetrade();
-    for (CI pmap = tpemap.begin(); pmap != tpemap.end(); ++pmap) {
-        for ( int m = 0; m < maxper; ++m ) {
-            temp[m] = summary[m].get_petrmap_second(pmap->first);
-        }
-        dboutput4(name,"Primary Energy","Trade by fuel",pmap->first,"EJ",temp);
-    }
-
-    // write resource results to database
-    for ( unsigned int i = 0; i < mResources.size(); i++ ) {
-        mResources[i]->dbOutput( name );
-    }
-
-    // Calculate indirect emissions so they can be written to the database.
-        IndirectEmissionsCalculator indEmissCalc;
-        for( int i = 0; i < modeltime->getmaxper(); ++i ){
-            accept( &indEmissCalc, i );
-    }
-
-    // write supply sector results to database
-    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-        supplySector[i]->dbOutput( gdp.get(), &indEmissCalc );
-    }
-    // write end-use sector demand results to database
-    for ( unsigned int i = 0; i < mFinalDemands.size(); i++ ) {
-        mFinalDemands[i]->dbOutput( name );
-    }
-}
-
-//! update regional summaries for reporting
-void RegionMiniCAM::updateSummary( const list<string>& aPrimaryFuelList, const int period ) {
-    calcEmissions( period );
-
-    summary[period].clearpeprod();
-    summary[period].clearfuelcons();
-    summary[period].clearemfuelmap();
-
-    for ( unsigned int i = 0; i < mResources.size(); i++ ) {
-        summary[period].initpeprod( aPrimaryFuelList, mResources[i]->getName(),
-            mResources[i]->getAnnualProd( name, period) );
-    }
-
-    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-        // call update for supply sector
-        supplySector[i]->updateSummary( aPrimaryFuelList, period );
-        // update regional fuel consumption (primary and secondary) for supply sector
-        summary[period].updatefuelcons( aPrimaryFuelList, supplySector[i]->getfuelcons(period));
-        summary[ period ].updateemfuelmap( supplySector[ i ]->getemfuelmap( period ) );
-    }
-    // update primary energy trade from consumption and production amounts
-    summary[period].updatepetrade();
-
-    calcEmissFuel( aPrimaryFuelList, period );
-}
-
-//! Return the summary object for the given period.
-/*! \todo This is a temporary fix to get the global CO2. This should be
-*         restructured.
-* \param period Model period to return the summary for.
-* \return The summary object.
-*/
-const Summary& RegionMiniCAM::getSummary( const int period ) const {
-    return summary[ period ];
-}
-
-//! update regional output tables for reporting
-void RegionMiniCAM::updateAllOutputContainers( const int period ) {
 }
 
 /*! \brief Check whether the GDP object exists and report a warning if it does not.
@@ -885,7 +571,7 @@ void RegionMiniCAM::updateAllOutputContainers( const int period ) {
 * \author Josh Lurz
 */
 bool RegionMiniCAM::ensureGDP() const {
-    if( !gdp.get() ){
+    if( !mGDP ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "GDP object has not been created and is required. "
@@ -900,7 +586,7 @@ bool RegionMiniCAM::ensureGDP() const {
 * \author Josh Lurz
 */
 bool RegionMiniCAM::ensureDemographics() const {
-    if( !demographic.get() ){
+    if( !mDemographic ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Population object has not been created and is required. "
@@ -919,12 +605,12 @@ void RegionMiniCAM::accept( IVisitor* aVisitor, const int aPeriod ) const {
     Region::accept( aVisitor, aPeriod );
 
     // Visit GDP object
-    if ( gdp.get() ){
-        gdp->accept( aVisitor, aPeriod );
+    if ( mGDP ){
+        mGDP->accept( aVisitor, aPeriod );
     }
 
     // Visit LandAllocator object
-    if ( mLandAllocator.get() ){
+    if ( mLandAllocator ){
         mLandAllocator->accept( aVisitor, aPeriod );
     }
 

@@ -48,12 +48,9 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "land_allocator/include/aland_allocator_item.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/time_vector.h"
-#include "util/base/include/value.h"
 
 class Tabs;
 class ICarbonCalc;
-class LandNode;
 
 /*!
  * \brief A LandLeaf is the leaf of a land allocation tree.
@@ -96,8 +93,8 @@ public:
                                 const double aLandAllocationAbove,
                                 const int aPeriod );
 
-    virtual void calculateProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
+    virtual void calculateNodeProfitRates( const std::string& aRegionName,
+                                           const int aPeriod );
 
 	virtual void setProfitRate( const std::string& aRegionName,
                                    const std::string& aProductName,
@@ -110,7 +107,7 @@ public:
     virtual void setSoilTimeScale( const int aTimeScale );
 
     virtual double calcLandShares( const std::string& aRegionName,
-                                   const double aLogitExpAbove,
+                                   IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod );
 
     virtual void calcLandAllocation( const std::string& aRegionName,
@@ -118,33 +115,28 @@ public:
                                      const int aPeriod );
 
     virtual void calcLUCEmissions( const std::string& aRegionName,
-                                   const int aPeriod, const int aEndYear );
+                                   const int aPeriod, const int aEndYear,
+                                   const bool aStoreFullEmiss );
 
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
 
     virtual double getCalLandAllocation( const LandAllocationType aType,
                                          const int aPeriod ) const;
-    virtual double getNewTechProfitScaler( const int aPeriod ) const;
-        
-    virtual double getLogitExponent( const int aPeriod ) const;
-
+    
     virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod );
-
-    virtual void calculateCalibrationProfitRate( const std::string& aRegionName, 
-                                             double aAverageProfitRate,
-                                             double aLogitExponentAbove,
-                                             const int aPeriod );
-
-    virtual void adjustProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
+    
+    virtual void resetCalLandAllocation( const std::string& aRegionName,
+                                            double aNewLandAllocation,
+                                            const int aPeriod );
+    
+    virtual void getObservedAverageProfitRate( double& aProfitRate, double& aShare, const int aPeriod ) const;
+    
+    virtual const ALandAllocatorItem* getChildWithHighestShare( const bool aIncludeAllChildren, const int aPeriod ) const;
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
 
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;
@@ -154,31 +146,43 @@ public:
 
     virtual ICarbonCalc* getCarbonContentCalc() const;
         
-    virtual bool isManagedLandLeaf( )  const;
+	virtual bool isUnmanagedLandLeaf( )  const;
+    
+    bool hasLandAllocationCalculated( const int aPeriod ) const;
 
 protected:
-    //! Land allocated in 1000's of hectares
-    objects::PeriodVector<Value> mLandAllocation;
-
-    //! Carbon content and emissions calculator for the leaf.
-    std::auto_ptr<ICarbonCalc> mCarbonContentCalc;
-
-    //! Interest rate stored from the region info.
-    Value mInterestRate;
-
-    //! Minimum above ground carbon density (used for carbon subsidy and not emissions calculations)
-    Value mMinAboveGroundCDensity;
-
-    //! Minimum below ground carbon density (used for carbon subsidy and not emissions calculations)
-    Value mMinBelowGroundCDensity;
-
-    //! Expected rate of increase of the carbon price from the region info.
-    objects::PeriodVector<Value> mCarbonPriceIncreaseRate;
-
-    //! Container of historical land use.
-    std::auto_ptr<LandUseHistory> mLandUseHistory;
     
-    objects::PeriodVector<Value> mReadinLandAllocation;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ALandAllocatorItem,
+                            
+        //! Land allocated typically in thous km2.
+        DEFINE_VARIABLE( ARRAY | STATE, "land-allocation", mLandAllocation, objects::PeriodVector<Value> ),
+
+        //! Carbon content and emissions calculator for the leaf.
+        DEFINE_VARIABLE( CONTAINER, "carbon-calc", mCarbonContentCalc, ICarbonCalc* ),
+
+        //! Social discount rate stored from the region info.
+        DEFINE_VARIABLE( SIMPLE, "social-discount-rate", mSocialDiscountRate, Value ),
+
+        //! Minimum above ground carbon density (used for carbon subsidy and not emissions calculations)
+        DEFINE_VARIABLE( SIMPLE, "minAboveGroundCDensity", mMinAboveGroundCDensity, Value ),
+
+        //! Minimum below ground carbon density (used for carbon subsidy and not emissions calculations)
+        DEFINE_VARIABLE( SIMPLE, "minBelowGroundCDensity", mMinBelowGroundCDensity, Value ),
+
+        //! Expected rate of increase of the carbon price from the region info.
+        DEFINE_VARIABLE( ARRAY, "carbon-price-increase-rate", mCarbonPriceIncreaseRate, objects::PeriodVector<Value> ),
+
+        //! Container of historical land use.
+        DEFINE_VARIABLE( CONTAINER, "land-use-history", mLandUseHistory, LandUseHistory* ),
+        
+        DEFINE_VARIABLE( ARRAY, "parsed-landAllocation", mReadinLandAllocation, objects::PeriodVector<Value> ),
+                            
+        //! State value necessary to use Marketplace::addToDemand for CO2 emissions
+        DEFINE_VARIABLE( SIMPLE | STATE, "luc-state", mLastCalcCO2Value, Value )
+    )
 
     double getCarbonSubsidy( const std::string& aRegionName,
                            const int aPeriod ) const;
@@ -193,13 +197,6 @@ protected:
     virtual const std::string& getXMLName() const;
 
     virtual void initLandUseHistory( const std::string& aRegionName );
-    
-    //! State value necessary to use Marketplace::addToDemand for CO2 emissions
-    double mLastCalcCO2Value;
-    
-    //! State value necessary to use Marketplace::addToDemand for expansion constraint
-    double mLastCalcExpansionValue;
-
 };
 
 #endif // _LAND_LEAF_H_

@@ -130,9 +130,6 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
-    // IRoundTrippable methods
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
-    
     // IVisitable methods
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
@@ -142,13 +139,33 @@ protected:
     virtual void interpolateAndParse( const xercesc::DOMNode* aNode );
     
 private:
-    //! The name of the technology which will be duplicated in each contained
-    //! technology.
-    std::string mName;
     
-    //! The map that will be the primary data structure to contain technology vintages
-    //! which do not have to align to model periods
-    std::map<int, ITechnology*> mVintages;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ITechnologyContainer,
+
+        //! The name of the technology which will be duplicated in each contained
+        //! technology.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        
+        //! The map that will be the primary data structure to contain technology vintages
+        //! which do not have to align to model periods
+        DEFINE_VARIABLE( CONTAINER, "period", mVintages, std::map<int, ITechnology*> ),
+                                
+        //! Optional parameter for the first year in which a vintage should exist.
+        DEFINE_VARIABLE( SIMPLE, "initial-available-year", mInitialAvailableYear, int ),
+        
+        //! Optional parameter for the last year in which a technology can be invested in.
+        DEFINE_VARIABLE( SIMPLE, "final-available-year", mFinalAvailableYear, int ),
+        
+        //! A list of technology years that were created by interpolations.  This could
+        //! be used to avoid writing them back out in toInputXML
+        DEFINE_VARIABLE( ARRAY, "interpolated-years", mInterpolatedTechYears, std::vector<int> ),
+                                
+        //! Interpolation rules for technology share weight values.
+        DEFINE_VARIABLE( CONTAINER, "interpolation-rule", mShareWeightInterpRules, std::vector<InterpolationRule*> )
+    )
     
     // Typedef iterators to help keep code readable
     typedef std::map<int, ITechnology*>::const_iterator CVintageIterator;
@@ -159,22 +176,9 @@ private:
     //! map will not necessarily be addressed by this vector.
     objects::PeriodVector<ITechnology*> mVintagesByPeriod;
     
-    //! Interpolation rules for technology share weight values.
-    std::vector<InterpolationRule*> mShareWeightInterpRules;
-    
     // Some typedefs to make using interpolation rules more readable.
     typedef std::vector<InterpolationRule*>::const_iterator CInterpRuleIterator;
     
-    //! Optional parameter for the first year in which a vintage should exist.
-    int mInitialAvailableYear;
-    
-    //! Optional parameter for the last year in which a technology can be invested in.
-    int mFinalAvailableYear;
-    
-    //! A list of technology years that were created by interpolations.  This could
-    //! be used to avoid writing them back out in toInputXML
-    std::vector<int> mInterpolatedTechYears;
-
     //! The period which has been cached to optimize finding and iterating over
     //! the operating technologies in that period.
     int mCachedVintageRangePeriod;

@@ -84,13 +84,6 @@ void EmptyTechnology::completeInit( const string& aRegionName,
 {
 }
 
-void EmptyTechnology::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    assert( false );
-}
-
-void EmptyTechnology::toInputXMLForRestart( ostream& aOut, Tabs* aTabs ) const {
-}
-
 void EmptyTechnology::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 }
 
@@ -139,25 +132,15 @@ void EmptyTechnology::production( const string& aRegionName,
 {
 }
 
-const map<string, double> EmptyTechnology::getEmissions( const string& aGoodName,
-                                                   const int aPeriod ) const
-{
-    const map<string, double> emissions;
-    
-    return emissions;
-}
-
 const string& EmptyTechnology::getName() const
 {
     const static string name = "empty";
     return name;
 }
 
-Value EmptyTechnology::getShareWeight() const
+double EmptyTechnology::getShareWeight() const
 {
-    const Value zeroShareWeight( 0 );
-    
-    return zeroShareWeight;
+    return 0.0;
 }
 
 Value EmptyTechnology::getParsedShareWeight() const {
@@ -263,19 +246,6 @@ const AGHG* EmptyTechnology::getGHGPointer( const string& aGHGName ) const {
     return 0;
 }
 
-double EmptyTechnology::getEmissionsByGas( const string& aGasName,
-                                     const int aPeriod ) const
-{
-    return 0;
-}
-
-const map<string, double> EmptyTechnology::getFuelMap( const int aPeriod ) const
-{
-    const map<string, double> inputMap;
-
-    return inputMap;
-}
-
 bool EmptyTechnology::isAllCalibrated( const int aPeriod,
                                  double aCalAccuracy,
                                  const string& aRegionName,
@@ -288,6 +258,10 @@ bool EmptyTechnology::isAllCalibrated( const int aPeriod,
 
 void EmptyTechnology::setYear( const int aYear )
 {
+}
+
+int EmptyTechnology::getYear() const {
+    return 0;
 }
 
 void EmptyTechnology::doInterpolations( const Technology* aPrevTech,

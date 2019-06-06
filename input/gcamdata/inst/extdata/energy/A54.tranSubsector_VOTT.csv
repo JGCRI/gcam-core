@@ -1,0 +1,36 @@
+# File: A54.tranSubsector_VOTT.csv
+# Title: Transportation default subsector value of time in transit multipliers (VOTT = wage rate * this factor)
+# Units: Unitless
+# Column types: ccnnnnicn 
+# ----------
+supplysector,tranSubsector,in.vehicle.VOTT,wait.walk.vott,wait.walk.share,time.value.multiplier,addTimeValue,speed.source,fuelprefElasticity
+trn_aviation_intl,International Aviation,1.45,1.066,0.415,1.291,1,,0
+trn_pass,Cycle,1.066,1.066,0,1.066,1,,0
+trn_pass,Domestic Aviation,1.45,1.066,0.537,1.244,1,,0
+trn_pass,HSR,0.77,1.066,0.102,0.8,1,,0
+trn_pass,Passenger Rail,0.77,1.066,0.102,0.8,1,,0
+trn_pass,Walk,1.066,1.066,0,1.066,1,,0
+trn_pass_road,Bus,0.77,1.066,0.128,0.808,1,,0
+trn_pass_road_bus,Heavy Bus,0.77,1.066,0.128,0.808,1,,0
+trn_pass_road_bus,Light Bus,0.77,1.066,0.128,0.808,1,,0
+trn_pass_road_LDV,Three-Wheeler,0.82,1.066,0,0.82,1,,0
+trn_pass_road_LDV_2W,Moped,0.82,1.066,0,0.82,1,,0
+trn_pass_road_LDV_2W,Motorcycle (>250cc),0.82,1.066,0,0.82,1,,0
+trn_pass_road_LDV_2W,Motorcycle (50-250cc),0.82,1.066,0,0.82,1,,0
+trn_pass_road_LDV_2W,Motorcycle (50-250cc),0.82,1.066,0,0.82,1,,0
+trn_pass_road_LDV_2W,Scooter,0.82,1.066,0,0.82,1,,0
+trn_pass_road_LDV_4W,Compact Car,0.82,1.066,0,0.82,0,,0
+trn_pass_road_LDV_4W,Large Car,0.82,1.066,0,0.82,0,,0.1
+trn_pass_road_LDV_4W,Large Car and SUV,0.82,1.066,0,0.82,0,,0.2
+trn_pass_road_LDV_4W,Light Truck and SUV,0.82,1.066,0,0.82,0,,0.2
+trn_pass_road_LDV_4W,Midsize Car,0.82,1.066,0,0.82,0,,0
+trn_pass_road_LDV_4W,Mini Car,0.82,1.066,0,0.82,0,,-0.2
+trn_pass_road_LDV_4W,Multipurpose Vehicle,0.82,1.066,0,0.82,0,,0.2
+trn_pass_road_LDV_4W,Subcompact Car,0.82,1.066,0,0.82,0,,-0.1
+trn_pass_road_LDV_4W,Van,0.82,1.066,0,0.82,0,,0
+# Pass-through tranSubsectors
+trn_pass,road,,,,1,0,,0
+trn_pass_road,LDV,,,,1,0,,0
+trn_pass_road,bus,0.77,1.066,0.128,0.808,0,,0
+trn_pass_road_LDV,4W,0.82,1.066,0,0.82,1,trn_pass_road_LDV_4W,0
+trn_pass_road_LDV,2W,,,,1,0,,0

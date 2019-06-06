@@ -96,18 +96,24 @@ public:
 
 protected:
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode );
-    virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aout, Tabs* aTabs ) const;
 
-private:
-    //! The name of the sector this technology is retrieving fixed output from (extracted from the input objects).
-    std::string mPassThroughSectorName;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Technology,
 
-    //! The market name in which mPassThroughSectorName exists (extracted from the input objects).
-    std::string mPassThroughMarketName;
+        //! The name of the sector this technology is retrieving fixed output from (extracted from the input objects).
+        DEFINE_VARIABLE( SIMPLE, "pass-through-name", mPassThroughSectorName, std::string ),
 
-    //! The level of fixed output that exists in mPassThroughSectorName.
-    double mPassThroughFixedOutput;
+        //! The market name in which mPassThroughSectorName exists (extracted from the input objects).
+        DEFINE_VARIABLE( SIMPLE, "pass-through-market-name", mPassThroughMarketName, std::string ),
+
+        //! The level of fixed output that exists in mPassThroughSectorName.
+        DEFINE_VARIABLE( SIMPLE | STATE, "pass-through-fixed-output", mPassThroughFixedOutput, Value )
+    )
+    
+    void copy( const PassThroughTechnology& aOther );
 };
 
 #endif // _PASS_THROUGH_TECHNOLOGY_H_

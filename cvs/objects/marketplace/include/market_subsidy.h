@@ -55,11 +55,18 @@
 
 class MarketSubsidy: public MarketRES {
 public:
-    MarketSubsidy( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn );
+    MarketSubsidy( const MarketContainer* aContainer );
     virtual IMarketType::Type getType() const;
 
     virtual void nullDemand();
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        MarketRES
+    )
+    
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 };
 

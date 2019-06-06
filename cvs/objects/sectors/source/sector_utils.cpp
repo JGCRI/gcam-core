@@ -131,13 +131,11 @@ bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
  * \param aRegion Region of the market.
  * \param aSector Name of the sector.
  * \param aSupply Known value of supply for the iteration.
- * \param aLastValue A state variable used by Marketplace::addToDemand.
  * \param aPeriod Model period.
  */
 void SectorUtils::addToTrialDemand( const string& aRegionName,
                                     const string& aSectorName,
-                                    const double aSupply,
-                                    double& aLastValue,
+                                    const Value& aSupply,
                                     const int aPeriod )
 {
     // Market is not created until period 1.
@@ -153,8 +151,8 @@ void SectorUtils::addToTrialDemand( const string& aRegionName,
 
     // Demand is the known value of the trial market. Trial markets do not solve
     // well when the value of one side is zero.
-    aLastValue = scenario->getMarketplace()->addToDemand( trialName->second, aRegionName, aSupply,
-                                             aLastValue, aPeriod, true );
+    scenario->getMarketplace()->addToDemand( trialName->second, aRegionName, aSupply,
+                                             aPeriod, true );
 }
 
 /*!
@@ -195,33 +193,6 @@ double SectorUtils::getTrialSupply( const string& aRegionName,
 }
 
 /*!
- * \brief Set a request for a sector to create a trial supply market for
- *          itself.
- * \details Sets a flag in the sector's market info asking it to create a trial
- *          supply market for itself. This must be done before the initCalc
- *          method is called for the sector in the period where the trial supply
- *          is required.
- * \param aRegion Region of the sector.
- * \param aSector Sector which should create a trial supply market.
- * \todo Find a more elegant way to do this.
- */
-void SectorUtils::askToCreateTrialSupply( const string& aRegionName,
-                                          const string& aSectorName )
-{
-    // Get the market info for the sector.
-    Marketplace* marketplace = scenario->getMarketplace();
-
-    // Always set the flag in period 0.
-    IInfo* sectorInfo = marketplace->getMarketInfo( aSectorName, aRegionName, 0, true );
-
-    // If the market does not exist the sector info will not exist. The
-    // marketplace will print a warning.
-    if( sectorInfo ){
-        sectorInfo->setBoolean( "create-trial-supply", true );
-    }
-}
-
-/*!
  * \brief Calculate the scale factor used to reduce fixed output.
  * \details Calculates the scaling factor applied to fixed output in the sector
  *          when fixed output exceeds the market demand. The scale factor is one
@@ -258,9 +229,11 @@ double SectorUtils::calcFixedOutputScaleFactor( const double aMarketDemand,
  *          shares.
  * \param alogShares A vector of logs of unnormalized shares on input, normalized shares
  *                   (not logs) on output
- * \return The normalized sum of the shares.
+ * \return The unnormalized sum of the shares and a log(adjustment factor) that
+ *         has been factored out of the sum.  Having both can allow users to make
+ *         calculations using these values in a numerically stable way.
  */
-double SectorUtils::normalizeLogShares( vector<double>& alogShares ){
+pair<double, double> SectorUtils::normalizeLogShares( vector<double>& alogShares ){
     // find the log of the largest unnormalized share
     double lfac = *max_element(alogShares.begin(), alogShares.end());
     double sum = 0.0;
@@ -272,7 +245,7 @@ double SectorUtils::normalizeLogShares( vector<double>& alogShares ){
         for( size_t i = 0; i < alogShares.size(); ++i ) {
             alogShares[ i ] = 0.0;
         }
-        return 0.0;
+        return make_pair( 0.0, 0.0 );
     }
 
     // in theory we could check for lfac == +Inf here, but in light of how the log
@@ -283,6 +256,7 @@ double SectorUtils::normalizeLogShares( vector<double>& alogShares ){
         alogShares[ i ] -= lfac;
         sum += exp( alogShares[ i ] );
     }
+    double unnormAdjustedSum = sum;
     double norm = log( sum );
     sum = 0.0;                               // double check the normalization
     for( size_t i = 0; i < alogShares.size(); ++i ) {
@@ -295,7 +269,7 @@ double SectorUtils::normalizeLogShares( vector<double>& alogShares ){
     // failed normalizations, but we'll allow for the possibility anyhow.
     assert( sum < numeric_limits<double>::min() || util::isEqual( sum, 1.0 ) );
 
-    return sum;
+    return make_pair( unnormAdjustedSum, lfac );
 }
 
 double SectorUtils::normalizeShares( vector<double>& aShares ){
@@ -380,34 +354,6 @@ double SectorUtils::getVariance( const string& aResourceName,
 
     assert( variance >= 0 );
     return variance;
-}
-
-/*!
- * \brief Get the capacity factor of the resource.
- * \details Queries the market-info of the good for the capacity factor.
- *          Returns zero if the market does not exist or does not have a
- *          capacity factor set.
- * \param aResource Resource for which to get the capacity factor.
- * \param aRegion Region for which to get the capacity factor.
- * \param aPeriod Model period.
- * \return The resource capacity factor.
- */
-double SectorUtils::getCapacityFactor( const string& aResourceName,
-                                       const string& aRegionName,
-                                       const int aPeriod )
-{
-    // Get resource capacity factor from market info for the sector.
-    const Marketplace* marketplace = scenario->getMarketplace();
-    const IInfo* resourceInfo =
-        marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod, true );
-
-    double resourceCapacityFactor = resourceInfo ?
-        resourceInfo->getDouble( "resourceCapacityFactor", true ) :
-        util::getLargeNumber();
-    
-    // Resource capacity factor must be between 0 and 1 inclusive.
-    assert( resourceCapacityFactor >= 0 && resourceCapacityFactor <= 1 );
-    return resourceCapacityFactor;
 }
 
 /*!
@@ -667,8 +613,14 @@ void SectorUtils::fillMissingPeriodVectorInterpolated( objects::PeriodVector<Val
             int nextYear = modeltime->getper_to_yr( nextPer );
             Value nextValue = aPeriodVector[ nextPer ];
             // Initialize period vector with interpolated values.
-            aPeriodVector[ per ].set( prevYear != nextYear ? util::linearInterpolateY( 
-                currYear, prevYear, nextYear, prevValue, nextValue ) : prevValue.get() );
+            // Note we are allowing interpolation from uninitialized end points (which
+            // will have a value of 0) but not if both are uninitialized.  The subtle
+            // difference is if the isInited() flag on the interpolated value is set
+            // or not.
+            if( prevValue.isInited() || nextValue.isInited() ) {
+                aPeriodVector[ per ].set( prevYear != nextYear ? util::linearInterpolateY( 
+                    currYear, prevYear, nextYear, prevValue, nextValue ) : prevValue.get() );
+            }
         }
     }
 }

@@ -1,0 +1,22 @@
+# File: resource_water_share.csv
+# Title: Fresh and saline water share and consumption to withdrawal ratios based on 1995 US data
+# Units: Unitless
+# Source: USGS 1995 consumption withdrawal estimates; and Davies, E., Kyle, P., and Edmonds, J., 2013. An integrated assessment of global and regional water demands for electricity generation to 2095, Adv. Water Resour., 52, 296–313.
+# Comment: Assumes 95% of Middle East water use for resource prodution from saline water.
+# Column types: cnnnn 
+# ----------
+region_GCAM3,fraction.salinewater,fraction.freshwater,ratio.consumption.withdrawal.fresh,ratio.consumption.withdrawal.total
+USA,0.425,0.575,0.305,0.271
+Canada,0.425,0.575,0.305,0.271
+Western Europe,0.425,0.575,0.305,0.271
+Japan,0.425,0.575,0.305,0.271
+Australia_NZ,0.425,0.575,0.305,0.271
+Former Soviet Union,0.425,0.575,0.305,0.271
+China,0.425,0.575,0.305,0.271
+Middle East,0.95,0.05,0.305,0.271
+Africa,0.425,0.575,0.305,0.271
+Latin America,0.425,0.575,0.305,0.271
+Southeast Asia,0.425,0.575,0.305,0.271
+Eastern Europe,0.425,0.575,0.305,0.271
+Korea,0.425,0.575,0.305,0.271
+India,0.425,0.575,0.305,0.271

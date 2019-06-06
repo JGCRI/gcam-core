@@ -1,0 +1,279 @@
+# File: EPA_ghg_tech.csv
+# Title: Mapping between EPA emissions sources and GCAM sectors and fuels
+# Units: NA
+# Column types: ccc 
+# ----------
+Source_Category,sector,fuel
+1.A. Fuel Combustion_Liquid Fuels,,
+1.A. Fuel Combustion_Solid Fuels,,
+1.A. Fuel Combustion_Gaseous Fuels,,
+1.A. Fuel Combustion_Biomass,,
+1.A. Fuel Combustion_Other Fuels,,
+1.A.1. Energy Industries_Liquid Fuels,,
+1.A.1. Energy Industries_Solid Fuels,,
+1.A.1. Energy Industries_Gaseous Fuels,,
+1.A.1. Energy Industries_Biomass,,
+1.A.1. Energy Industries_Other Fuels,,
+ a.  Public Electricity and Heat Production_Liquid Fuels,elec_heat,refined liquids
+ a.  Public Electricity and Heat Production_Solid Fuels,elec_heat,coal
+ a.  Public Electricity and Heat Production_Gaseous Fuels,elec_heat,gas
+ a.  Public Electricity and Heat Production_Biomass,,
+ a.  Public Electricity and Heat Production_Other Fuels,,
+b.  Petroleum Refining_Liquid Fuels,oil_gas,all
+b.  Petroleum Refining_Solid Fuels,oil_gas,all
+b.  Petroleum Refining_Gaseous Fuels,oil_gas,all
+b.  Petroleum Refining_Biomass,oil_gas,all
+b.  Petroleum Refining_Other Fuels,oil_gas,all
+c.  Manufacture of Solid Fuels and Other Energy Industries_Liquid Fuels,coal,all
+c.  Manufacture of Solid Fuels and Other Energy Industries_Solid Fuels,coal,all
+c.  Manufacture of Solid Fuels and Other Energy Industries_Gaseous Fuels,coal,all
+c.  Manufacture of Solid Fuels and Other Energy Industries_Biomass,coal,all
+c.  Manufacture of Solid Fuels and Other Energy Industries_Other Fuels,coal,all
+1.A.2 Manufacturing Industries and Construction_Liquid Fuels,industry_energy,refined liquids
+1.A.2 Manufacturing Industries and Construction_Solid Fuels,industry_energy,coal
+1.A.2 Manufacturing Industries and Construction_Gaseous Fuels,industry_energy,gas
+1.A.2 Manufacturing Industries and Construction_Biomass,industry_energy,biomass
+1.A.2 Manufacturing Industries and Construction_Other Fuels,industry_energy,
+a.  Iron and Steel_Liquid Fuels,,
+a.  Iron and Steel_Solid Fuels,,
+a.  Iron and Steel_Gaseous Fuels,,
+a.  Iron and Steel_Biomass,,
+a.  Iron and Steel_Other Fuels,,
+b.  Non-Ferrous Metals_Liquid Fuels,,
+b.  Non-Ferrous Metals_Solid Fuels,,
+b.  Non-Ferrous Metals_Gaseous Fuels,,
+b.  Non-Ferrous Metals_Biomass,,
+b.  Non-Ferrous Metals_Other Fuels,,
+c.  Chemicals_Liquid Fuels,,
+c.  Chemicals_Solid Fuels,,
+c.  Chemicals_Gaseous Fuels,,
+c.  Chemicals_Biomass,,
+c.  Chemicals_Other Fuels,,
+"d.  Pulp, Paper and Print_Liquid Fuels",,
+"d.  Pulp, Paper and Print_Solid Fuels",,
+"d.  Pulp, Paper and Print_Gaseous Fuels",,
+"d.  Pulp, Paper and Print_Biomass",,
+"d.  Pulp, Paper and Print_Other Fuels",,
+"e.  Food Processing, Beverages and Tobacco_Liquid Fuels",,
+"e.  Food Processing, Beverages and Tobacco_Solid Fuels",,
+"e.  Food Processing, Beverages and Tobacco_Gaseous Fuels",,
+"e.  Food Processing, Beverages and Tobacco_Biomass",,
+"e.  Food Processing, Beverages and Tobacco_Other Fuels",,
+Internal Combustion_Liquid Fuels,,
+Internal Combustion_Solid Fuels,,
+Internal Combustion_Gaseous Fuels,,
+Internal Combustion_Biomass,,
+Internal Combustion_Other Fuels,,
+Other non-specified_Liquid Fuels,,
+Other non-specified_Solid Fuels,,
+Other non-specified_Gaseous Fuels,,
+Other non-specified_Biomass,,
+Other non-specified_Other Fuels,,
+1.A.3  Transport_Liquid Fuels,,
+1.A.3  Transport_Solid Fuels,,
+1.A.3  Transport_Gaseous Fuels,,
+1.A.3  Transport_Biomass,,
+1.A.3  Transport_Other Fuels,,
+a.  Civil  Aviation_Aviation Gasoline,trn_air,refined liquids
+a.  Civil  Aviation_Jet Kerosene,trn_air,refined liquids
+b.  Road Transportation_Gasoline,trn_road,refined liquids
+b.  Road Transportation_Diesel Oil,trn_road,refined liquids
+b.  Road Transportation_Liquefied Petroleum Gases (LPG),trn_road,refined liquids
+b.  Road Transportation_Other Liquid Fuels (please specify),trn_road,refined liquids
+b.  Road Transportation_Gaseous Fuels,trn_road,gas
+b.  Road Transportation_Biomass,trn_road,biomass
+b.  Road Transportation_Other Fuels (please specify),trn_road,
+c.  Railways_Liquid Fuels,trn_rail,refined liquids
+c.  Railways_Solid Fuels,trn_rail,coal
+c.  Railways_Gaseous Fuels,trn_rail,gas
+c.  Railways_Other Fuels (please specify),trn_rail,
+d.  Navigation _Residual Oil (Residual Fuel Oil),trn_ship,refined liquids
+d.  Navigation _Gas/Diesel Oil,trn_ship,refined liquids
+d.  Navigation _Gasoline,trn_ship,refined liquids
+d.  Navigation _Other Liquid Fuels (please specify),trn_ship,refined liquids
+d.  Navigation _Solid Fuels,trn_ship,coal
+d.  Navigation _Gaseous Fuels,trn_ship,gas
+d.  Navigation _Other Fuels (please specify),trn_ship,refined liquids
+Other non-specified_Liquid Fuels,,
+Other non-specified_Solid Fuels,,
+Other non-specified_Gaseous Fuels,,
+Other non-specified_Biomass,,
+Other non-specified_Other Fuels,,
+1.A.4  Other Sectors_Liquid Fuels,,
+1.A.4  Other Sectors_Solid Fuels,,
+1.A.4  Other Sectors_Gaseous Fuels,,
+1.A.4  Other Sectors_Biomass,,
+1.A.4  Other Sectors_Other Fuels,,
+a.  Commercial/Institutional_Liquid Fuels,bld_comm,refined liquids
+a.  Commercial/Institutional_Solid Fuels,bld_comm,coal
+a.  Commercial/Institutional_Gaseous Fuels,bld_comm,gas
+a.  Commercial/Institutional_Biomass,bld_comm,biomass
+a.  Commercial/Institutional_Other Fuels,bld_comm,
+b.  Residential_Liquid Fuels,bld_resid,refined liquids
+b.  Residential_Solid Fuels,bld_resid,coal
+b.  Residential_Gaseous Fuels,bld_resid,gas
+b.  Residential_Biomass,bld_resid,biomass
+b.  Residential_Other Fuels,bld_resid,
+c.  Agriculture/Forestry/Fisheries_Liquid Fuels,industry_energy,refined liquids
+c.  Agriculture/Forestry/Fisheries_Solid Fuels,industry_energy,coal
+c.  Agriculture/Forestry/Fisheries_Gaseous Fuels,industry_energy,gas
+c.  Agriculture/Forestry/Fisheries_Biomass,industry_energy,biomass
+c.  Agriculture/Forestry/Fisheries_Other Fuels,industry_energy,
+Other non-specified_Liquid Fuels,,
+Other non-specified_Solid Fuels,,
+Other non-specified_Gaseous Fuels,,
+Other non-specified_Biomass,,
+Other non-specified_Other Fuels,,
+U.S. Territories_Liquid Fuels,,
+U.S. Territories_Solid Fuels,,
+U.S. Territories_Gaseous Fuels,,
+U.S. Territories_Biomass,,
+U.S. Territories_Other Fuels,,
+Non-Energy Use_Liquid Fuels,,
+Non-Energy Use_Solid Fuels,,
+Non-Energy Use_Gaseous Fuels,,
+Non-Energy Use_Biomass,,
+Non-Energy Use_Other Fuels,,
+Military use_Liquid Fuels,,
+Military use_Solid Fuels,,
+Military use_Gaseous Fuels,,
+Military use_Biomass,,
+Military use_Other Fuels,,
+Total Agriculture,,
+A. Enteric Fermentation,,
+A. Enteric Fermentation_1.    Cattle (1),,
+A. Enteric Fermentation_Option A:,,
+A. Enteric Fermentation_Dairy Cattle,Dairy,all
+A. Enteric Fermentation_Non-Dairy Cattle,Beef,all
+A. Enteric Fermentation_Option B:,,
+A. Enteric Fermentation_Mature Dairy Cattle,,
+A. Enteric Fermentation_Mature Non-Dairy Cattle,,
+A. Enteric Fermentation_Young Cattle,,
+A. Enteric Fermentation_2.    Buffalo,,
+A. Enteric Fermentation_3.    Sheep,SheepGoat,all
+A. Enteric Fermentation_4.    Goats,SheepGoat,all
+A. Enteric Fermentation_5.    Camels and Llamas,,
+A. Enteric Fermentation_6.    Horses,,
+A. Enteric Fermentation_7.    Mules and Asses ,,
+A. Enteric Fermentation_8.    Swine,Pork,all
+A. Enteric Fermentation_9.    Poultry ,Poultry,all
+A. Enteric Fermentation_10.  Other (as specified in table 4.A),,
+A. Enteric Fermentation_Dairy Cows,,
+A. Enteric Fermentation_Bulls,,
+A. Enteric Fermentation_Heifer Feedlot,,
+A. Enteric Fermentation_Steer Feedlot,,
+A. Enteric Fermentation_Beef Replacements,,
+A. Enteric Fermentation_Dairy Replacements,,
+A. Enteric Fermentation_Beef Cows,,
+A. Enteric Fermentation_Heifer Stocker,,
+A. Enteric Fermentation_Steer Stocker,,
+B.  Manure Management,,
+B.  Manure Management_1.    Cattle (1),,
+B.  Manure Management_Option A:,,
+B.  Manure Management_Dairy Cattle,Dairy,all
+B.  Manure Management_Non-Dairy Cattle,Beef,all
+B.  Manure Management_Option B:,,
+B.  Manure Management_Mature Dairy Cattle,,
+B.  Manure Management_Mature Non-Dairy Cattle,,
+B.  Manure Management_Young Cattle,,
+B.  Manure Management_2.    Buffalo,,
+B.  Manure Management_3.    Sheep,SheepGoat,all
+B.  Manure Management_4.    Goats,SheepGoat,all
+B.  Manure Management_5.    Camels and Llamas,,
+B.  Manure Management_6.    Horses,,
+B.  Manure Management_7.    Mules and Asses,,
+B.  Manure Management_8.    Swine,Pork,all
+B.  Manure Management_9.    Poultry,Poultry,all
+B.  Manure Management_10.   Other livestock (as specified in table 4.B(a)),,
+B.  Manure Management_Dairy Cows,,
+B.  Manure Management_Bulls,,
+B.  Manure Management_Heifer Feedlot,,
+B.  Manure Management_Steer Feedlot,,
+B.  Manure Management_Beef Replacements,,
+B.  Manure Management_Dairy Replacements,,
+B.  Manure Management_Beef Cows,,
+B.  Manure Management_Heifer Stocker,,
+B.  Manure Management_Steer Stocker,,
+B.  Manure Management_B.  Manure Management (continued),,
+B.  Manure Management_11.  Anaerobic Lagoons,,
+B.  Manure Management_12.  Liquid Systems,,
+B.  Manure Management_13.  Solid Storage and Dry Lot,,
+B.  Manure Management_14.  Other AWMS,,
+C.  Rice Cultivation,,
+C.  Rice Cultivation_1.  Irrigated,,
+C.  Rice Cultivation_2.  Rainfed ,,
+C.  Rice Cultivation_3.  Deep Water,,
+C.  Rice Cultivation_4.  Other (as specified in table 4.C),,
+C.  Rice Cultivation_Ratoon (Secondary) Harvest,,
+D.  Agricultural Soils (2),,
+D.  Agricultural Soils (2)_1.  Direct Soil Emissions,,
+"D.  Agricultural Soils (2)_2.  Pasture, Range and Paddock Manure (3)",,
+D.  Agricultural Soils (2)_3.  Indirect Emissions,,
+D.  Agricultural Soils (2)_4.  Other (as specified in table 4.D),,
+D.  Agricultural Soils (2)_Other Direct Soil Emissions,,
+E.  Prescribed Burning of Savannas,,
+F.  Field Burning of Agricultural Residues ,,
+F.  Field Burning of Agricultural Residues _1 . Cereals,,
+F.  Field Burning of Agricultural Residues _2.  Pulses,,
+F.  Field Burning of Agricultural Residues _3 . Tubers and Roots,,
+F.  Field Burning of Agricultural Residues _4 . Sugar Cane,,
+F.  Field Burning of Agricultural Residues _5 . Other (as specified in table 4.F),,
+A.  Mineral Products,,
+A.  Mineral Products_1.  Cement Production,industry_processes,other
+A.  Mineral Products_2.  Lime Production,industry_processes,other
+A.  Mineral Products_3.  Limestone and Dolomite Use,industry_processes,other
+A.  Mineral Products_4.  Soda Ash Production and Use,industry_processes,other
+A.  Mineral Products_5.  Asphalt Roofing,industry_processes,other
+A.  Mineral Products_6.  Road Paving with Asphalt,industry_processes,other
+A.  Mineral Products_7.  Other (as specified in table 2(I).A-G),industry_processes,other
+A.  Mineral Products_Glass Production,industry_processes,other
+B.  Chemical Industry ,,
+B.  Chemical Industry _1.  Ammonia Production,industry_processes,other
+B.  Chemical Industry _2.  Nitric Acid Production ,chemicals,nitric acid
+B.  Chemical Industry _3.  Adipic Acid Production,chemicals,adipic acid
+B.  Chemical Industry _4.  Carbide Production,industry_processes,other
+B.  Chemical Industry _5.  Other (as specified in table 2(I).A-G),industry_processes,other
+B.  Chemical Industry _Carbon Black,industry_processes,other
+B.  Chemical Industry _Ethylene,industry_processes,other
+B.  Chemical Industry _Dichloroethylene,industry_processes,other
+B.  Chemical Industry _Styrene,industry_processes,other
+B.  Chemical Industry _Methanol,industry_processes,other
+B.  Chemical Industry _Titanium Dioxide Production,industry_processes,other
+B.  Chemical Industry _Carbon Dioxide,industry_processes,other
+B.  Chemical Industry _Phosphoric Acid,industry_processes,other
+B.  Chemical Industry _Other non-specified,industry_processes,other
+B.  Chemical Industry _Silicon Carbide Consumption,industry_processes,other
+C.  Metal Production,,
+C.  Metal Production_1.  Iron and Steel Production,industry_processes,other
+C.  Metal Production_2.  Ferroalloys Production,industry_processes,other
+C.  Metal Production_3.  Aluminium Production,metals,all
+C.  Metal Production_4.  SF6 Used in Aluminium and Magnesium Foundries,metals,all
+C.  Metal Production_5.  Other (as specified in table 2(I).A-G),industry_processes,other
+C.  Metal Production_Zinc production,industry_processes,other
+C.  Metal Production_Other non-specified,industry_processes,other
+C.  Metal Production_Lead Production,industry_processes,other
+D.  Other Production,,
+D.  Other Production_1.  Pulp and Paper,industry_processes,other
+D.  Other Production_2.  Food and Drink(2),industry_processes,other
+E.  Production of Halocarbons and SF6,,
+E.  Production of Halocarbons and SF6_1.  By-product Emissions,industry_processes,other
+E.  Production of Halocarbons and SF6_ Production of HCFC-22,industry_processes,HCFC22
+E.  Production of Halocarbons and SF6_Other ,industry_processes,other
+E.  Production of Halocarbons and SF6_2.  Fugitive Emissions,industry_processes,other
+E.  Production of Halocarbons and SF6_3.  Other (as specified in table 2(II)),industry_processes,other
+F.  Consumption of Halocarbons and SF6,,
+F.  Consumption of Halocarbons and SF6_1.  Refrigeration and Air Conditioning Equipment ,,
+F.  Consumption of Halocarbons and SF6_2.  Foam Blowing,foams,all
+F.  Consumption of Halocarbons and SF6_3.  Fire Extinguishers,fire exting,all
+F.  Consumption of Halocarbons and SF6_4.  Aerosols/ Metered Dose Inhalers,aerosols,all
+F.  Consumption of Halocarbons and SF6_5.  Solvents,solvents,all
+F.  Consumption of Halocarbons and SF6_6.  Other applications using ODS(3)  substitutes,industry_processes,other
+F.  Consumption of Halocarbons and SF6_7.  Semiconductor Manufacture,semiconductors,all
+F.  Consumption of Halocarbons and SF6_8.  Electrical Equipment,industry_processes,other
+F.  Consumption of Halocarbons and SF6_9.  Other (as specified in table 2(II),industry_processes,other
+F.  Consumption of Halocarbons and SF6_Foam manufacturing,foams,all
+F.  Consumption of Halocarbons and SF6_Other non-specified,industry_processes,other
+G.  Other (as specified in tables 2(I).A-G and 2(II)),,
+G.  Other (as specified in tables 2(I).A-G and 2(II))_Other non-specified,industry_processes,other
+G.  Other (as specified in tables 2(I).A-G and 2(II))_Storage and Transport,industry_processes,other
+G.  Other (as specified in tables 2(I).A-G and 2(II))_Other Industrial Processes,industry_processes,other

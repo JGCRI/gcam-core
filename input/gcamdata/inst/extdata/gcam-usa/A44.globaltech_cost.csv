@@ -1,0 +1,79 @@
+# File: A44.globaltech_cost.csv
+# Title: Building technology costs
+# Units: 1975$/GJ
+# Source: Unpublished inputs to the NEMS model, provided by EIA
+# Column types: cccnnnnnnnnn 
+# ----------
+supplysector,subsector,technology,1971,2010,2015,2020,2025,2030,2035,2040,2100
+resid heating,biomass,wood furnace,1.355,1.355,1.335,1.315,1.315,1.315,1.295,1.276,1.238
+resid heating,coal,coal furnace,1.355,1.355,1.335,1.315,1.315,1.315,1.295,1.276,1.238
+resid heating,gas,gas furnace,2.262,2.262,2.262,2.262,2.262,2.262,2.262,2.262,2.262
+resid heating,gas,gas furnace hi-eff,3.512,3.512,3.512,3.512,3.512,3.512,3.512,3.512,3.512
+resid heating,electricity,electric furnace,1.31,1.31,1.31,1.31,1.31,1.31,1.31,1.31,1.31
+resid heating,electricity,electric heat pump,1.965,1.965,2.024,2.024,2.024,2.173,2.173,2.232,2.232
+resid heating,refined liquids,fuel furnace,3.483,3.483,3.929,3.929,3.929,3.929,3.929,3.929,3.929
+resid heating,refined liquids,fuel furnace hi-eff,5.804,5.804,5.804,5.804,5.804,5.804,5.804,5.804,5.804
+resid cooling,electricity,air conditioning,5.527,5.527,5.527,5.527,5.527,5.527,5.527,5.527,5.527
+resid cooling,electricity,air conditioning hi-eff,13.423,13.423,13.423,13.423,13.423,13.423,13.423,13.423,13.423
+resid hot water,gas,gas water heater,9.879,9.879,9.928,9.928,9.928,9.928,9.928,9.928,9.928
+resid hot water,gas,gas water heater hi-eff,16.596,16.596,16.596,16.596,16.596,16.596,16.596,16.596,16.596
+resid hot water,electricity,electric resistance water heater,5.502,5.502,5.502,5.502,5.502,5.502,5.502,5.502,5.502
+resid hot water,electricity,electric resistance water heater hi-eff,6.531,6.531,6.531,6.531,6.531,6.531,6.531,6.531,6.531
+resid hot water,electricity,electric heat pump water heater,17.624,17.624,16.729,16.729,16.729,16.729,16.729,16.729,16.729
+resid hot water,refined liquids,fuel water heater,9.879,9.879,9.928,9.928,9.928,9.928,9.928,9.928,9.928
+resid hot water,refined liquids,fuel water heater hi-eff,16.596,16.596,16.596,16.596,16.596,16.596,16.596,16.596,16.596
+resid lighting,electricity,incandescent,0.143,0.143,0.74,0.74,0.74,0.74,0.74,0.74,0.74
+resid lighting,electricity,fluorescent,0.246,0.246,0.186,0.182,0.182,0.177,0.177,0.173,0.173
+resid lighting,electricity,solid state,4.266,4.266,0.491,0.251,0.179,0.151,0.151,0.151,0.151
+resid refrigerators,electricity,refrigerator,9.064,9.064,9.949,9.949,9.949,9.949,9.949,9.949,9.949
+resid refrigerators,electricity,refrigerator hi-eff,9.064,9.064,12.216,12.216,12.216,12.216,12.216,12.216,12.216
+resid freezers,electricity,freezer,15.92,15.92,17.966,17.966,17.966,17.966,17.966,17.966,17.966
+resid freezers,electricity,freezer hi-eff,17.966,17.966,18.952,18.952,18.952,18.952,18.952,18.952,18.952
+resid dishwashers,electricity,dishwasher,0.185,0.185,0.185,0.185,0.185,0.185,0.185,0.185,0.185
+resid dishwashers,electricity,dishwasher hi-eff,0.205,0.205,0.205,0.205,0.205,0.205,0.205,0.205,0.205
+resid cooking,electricity,electric oven,12.947,12.947,12.947,12.947,12.947,12.947,12.947,12.947,12.947
+resid cooking,gas,gas oven,12.947,12.947,12.947,12.947,12.947,12.947,12.947,12.947,12.947
+resid cooking,gas,gas oven hi-eff,14.797,14.797,14.797,14.797,14.797,14.797,14.797,14.797,14.797
+resid cooking,refined liquids,lpg oven,12.947,12.947,12.947,12.947,12.947,12.947,12.947,12.947,12.947
+resid cooking,refined liquids,lpg oven hi-eff,14.797,14.797,14.797,14.797,14.797,14.797,14.797,14.797,14.797
+resid clothes dryers,electricity,clothes dryer,0.027,0.027,0.033,0.036,0.036,0.036,0.036,0.036,0.036
+resid clothes dryers,electricity,clothes dryer hi-eff,0.036,0.036,0.04,0.046,0.046,0.046,0.046,0.046,0.046
+resid clothes dryers,gas,clothes dryer,0.029,0.029,0.03,0.03,0.03,0.03,0.03,0.03,0.03
+resid clothes washers,electricity,clothes washer,0.114,0.114,0.114,0.124,0.124,0.124,0.124,0.124,0.124
+resid clothes washers,electricity,clothes washer hi-eff,0.117,0.117,0.117,0.171,0.171,0.171,0.171,0.171,0.171
+resid televisions,electricity,electricity,20,20,20,20,20,20,20,20,20
+resid computers,electricity,electricity,20,20,20,20,20,20,20,20,20
+resid furnace fans,electricity,electricity,20,20,20,20,20,20,20,20,20
+resid other,gas,gas,20,20,19.702,19.409,19.409,19.409,19.12,18.835,18.278
+resid other,electricity,electricity,20,20,20,20,20,20,20,20,20
+resid other,refined liquids,refined liquids,20,20,19.702,19.409,19.409,19.409,19.12,18.835,18.278
+comm heating,biomass,wood furnace,1.335,1.335,1.335,1.315,1.315,1.315,1.295,1.276,1.238
+comm heating,coal,coal furnace,1.355,1.355,1.335,1.315,1.315,1.315,1.295,1.276,1.238
+comm heating,gas,gas furnace,1.034981706,1.035,1.035,1.172,1.172,1.172,1.172,1.172,1.172
+comm heating,gas,gas furnace hi-eff,1.729055379,1.729,1.729,1.729,1.729,1.729,1.729,1.729,1.729
+comm heating,electricity,electric furnace,1.681086436,1.681,1.931,1.931,1.931,1.931,1.931,1.931,1.931
+comm heating,electricity,electric heat pump,6.832606279,6.833,6.833,6.833,6.833,6.833,6.833,6.833,6.833
+comm heating,refined liquids,fuel furnace,1.113304744,1.113,1.143,1.143,1.143,1.143,1.143,1.143,1.143
+comm cooling,gas,gas cooling,15.29647571,15.296,15.296,15.296,15.296,15.296,15.296,15.296,15.296
+comm cooling,electricity,air conditioning,1.674856528,1.675,1.675,2.299,2.299,2.299,2.299,2.299,2.299
+comm cooling,electricity,air conditioning hi-eff,4.05284568,4.053,4.053,4.053,4.053,4.053,4.053,4.053,4.053
+comm hot water,gas,gas water heater,1.279441619,1.279,1.279,1.279,1.279,1.279,1.279,1.279,1.279
+comm hot water,gas,gas water heater hi-eff,1.389960864,1.39,1.39,1.39,1.39,1.39,1.39,1.39,1.39
+comm hot water,electricity,electric resistance water heater,1.438534595,1.439,1.439,1.439,1.439,1.439,1.439,1.439,1.439
+comm hot water,electricity,electric heat pump water heater,14.04040192,14.04,14.04,12.674,12.674,12.674,12.674,12.674,12.674
+comm hot water,refined liquids,fuel water heater,2.213061403,2.213,3.007,3.007,3.007,3.007,3.007,3.007,3.007
+comm ventilation,electricity,ventilation,51.58129863,51.581,54.33,54.33,54.33,54.33,54.33,54.33,54.33
+comm ventilation,electricity,ventilation hi-eff,72.86420362,72.864,72.864,72.864,72.864,72.864,72.864,72.864,72.864
+comm cooking,gas,gas range,2.440030755,2.44,2.44,2.44,2.44,2.44,2.44,2.44,2.44
+comm cooking,gas,gas range hi-eff,3.290355214,3.29,3.29,3.29,3.29,3.29,3.29,3.29,3.29
+comm cooking,electricity,electric range,3.364253631,3.364,3.364,3.364,3.364,3.364,3.364,3.364,3.364
+comm cooking,electricity,electric range hi-eff,3.917999107,3.918,3.918,3.918,3.918,3.918,3.918,3.918,3.918
+comm lighting,electricity,incandescent,1.985899771,1.986,1.809,1.713,1.713,1.623,1.623,1.623,1.623
+comm lighting,electricity,fluorescent,0.375906771,0.376,0.371,0.359,0.359,0.354,0.354,0.354,0.354
+comm lighting,electricity,solid state,7.383531689,7.384,2.891,0.703,0.667,0.527,0.527,0.527,0.527
+comm refrigeration,electricity,refrigeration,42.91327908,42.913,44.124,44.783,44.783,44.783,44.783,44.783,44.783
+comm refrigeration,electricity,refrigeration hi-eff,42.91327908,42.913,48.591,49.243,49.243,49.243,49.243,49.243,49.243
+comm office,electricity,office equipment,44.187,44.187,43.529,42.881,42.881,42.881,42.242,41.613,40.382
+comm other,gas,gas,20,20,19.702,19.409,19.409,19.409,19.12,18.835,18.278
+comm other,electricity,electricity,40.064,40.064,39.467,38.879,38.879,38.879,38.3,37.73,36.614
+comm other,refined liquids,refined liquids,20,20,19.702,19.409,19.409,19.409,19.12,18.835,18.278

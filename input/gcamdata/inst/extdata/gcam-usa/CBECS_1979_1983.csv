@@ -1,0 +1,11 @@
+# File: CBECS_1979_1983.csv
+# Title: Commercial Buildings Energy Consumption Survey 1979-1983
+# Units: Square feet
+# Source: https://www.eia.gov/consumption/commercial/data/previous/
+# Column types: iii 
+# ----------
+REGION,SQFT1,SQFT2
+1,9531,10253
+2,14197,15248
+3,13661,16611
+4,6156,7359

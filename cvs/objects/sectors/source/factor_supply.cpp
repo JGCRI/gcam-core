@@ -115,20 +115,6 @@ bool FactorSupply::XMLParse( const xercesc::DOMNode* node) {
     return true;
 }
 
-//! Write to XML
-void FactorSupply::toInputXML( ostream &out, Tabs* tabs ) const {
-
-    // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLName(), out, tabs, name );
-    
-    // Write the data.
-    XMLWriteElement( mBaseSupply, "supply", out, tabs );
-    XMLWriteElement( mBasePrice, "price", out, tabs );
-
-    // write the closing tag.
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
 //! Debug info written to XML
 void FactorSupply::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // write the beginning tag.
@@ -236,16 +222,6 @@ void FactorSupply::calcPricePaid( const string& aRegionName, const int period ) 
         
     // set price paid in market info.
     FunctionUtils::setPricePaid( aRegionName, name, period, pricePaid );
-}
-
-/*! \brief For outputing SGM data to a flat csv File
- * 
- * \author Pralit Patel, Sonny Kim
- * \param period The period which we are outputing for
- */
-void FactorSupply::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    // Write factor supply output
-    // aFile << "Factor Supply Results" << endl << endl;
 }
 
 void FactorSupply::accept( IVisitor* aVisitor, const int aPeriod ) const {

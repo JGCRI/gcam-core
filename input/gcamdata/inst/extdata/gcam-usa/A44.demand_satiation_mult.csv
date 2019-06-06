@@ -1,0 +1,31 @@
+# File: A44.demand_satiation_mult.csv
+# Title: USA Demand Satiation Multipliers
+# Units: Increase in demand per unit floorspace
+# Source: None (GCAM assumptions)
+# Column types: cn 
+# ----------
+supplysector,multiplier
+resid heating,1.05
+resid cooling,1.15
+resid hot water,1.01
+resid lighting,1.1
+resid refrigerators,1.01
+resid freezers,1.01
+resid dishwashers,1.15
+resid cooking,1.01
+resid clothes dryers,1.2
+resid clothes washers,1.2
+resid televisions,1.05
+resid computers,1.05
+resid furnace fans,1.05
+resid other,1.01
+comm heating,1.05
+comm cooling,1.1
+comm hot water,1.05
+comm ventilation,1.01
+comm cooking,1.1
+comm lighting,1.1
+comm refrigeration,1.01
+comm office,1.1
+comm other,1.01
+comm non-building,1.01

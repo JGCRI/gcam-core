@@ -312,24 +312,6 @@ bool NodeInput::hasTypeFlag( const int aTypeFlag ) const {
     return false;
 }
 
-//! Output to XML data
-void NodeInput::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLReportingName(), aOut, aTabs, mName );
-    
-    XMLWriteElement( mSigmaNewCapital, "Sigma1", aOut, aTabs );
-    XMLWriteElement( mSigmaOldCapital, "Sigma2", aOut, aTabs );
-
-    //toInputXMLDerived( out, tabs );
-    XMLWriteElement( mProdDmdFnType, "prodDmdFnType", aOut, aTabs );
-    for( CNestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
-        (*it)->toInputXML( aOut, aTabs );
-    }
-
-    // write the closing tag.
-    XMLWriteClosingTag( getXMLReportingName(), aOut, aTabs );
-}
-
 //! Output debug info to XML
 void NodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     // write the beginning tag.

@@ -1,0 +1,9 @@
+# File: Other_pcflsp_m2_ctry_Yh.csv
+# Title: Other countries - per-capita floorspace
+# Units: Floorspace (m2) per person
+# Source: Marc Pienaar
+# Column types: cccnnc 
+# ----------
+country,iso,gcam.consumer,2004,2005,source
+South Africa,zaf,resid,13,13,Marc Pienaar (see documentation)
+South Africa,zaf,comm,1.8,1.8,Marc Pienaar (see documentation)

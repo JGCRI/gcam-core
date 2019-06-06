@@ -1,0 +1,18 @@
+# File: A23.elecS_subsector_shrwt_interpto_state_adj.csv
+# Title: State-Specific Multiple Load Segments Subsector Shareweight Assumptions
+# Units: unitless
+# Comments: Subsector shareweights for subsectors that are not fixed at calibration values. 
+# These subsectors need a "to-value" which specifies the value to which the shareweight is being interpolated.
+# This table adjusts shareweights / interpolation functions for particular states.
+# Hawaii is is not allowed to deploy natural gas electric power plants in future model periods. According to the EIA, Hawaii has no natural gas consumption and no electricity generation by gas. Considering that over half of final energy consumption is for transport, and that there are no energy intensive industries and limited heating needs, building expensive LNG terminals or storage facilities seems unrealistic. Thus, we do not allow gas-fired electricity as an option for Hawaii.
+# Column types: ccccccic 
+# ----------
+region,supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+HI,base load generation,gas,share-weight,final-calibration-year,initial-future-year,0,linear
+HI,intermediate generation,gas,share-weight,final-calibration-year,initial-future-year,0,linear
+HI,subpeak generation,gas,share-weight,final-calibration-year,initial-future-year,0,linear
+HI,peak generation,gas,share-weight,final-calibration-year,initial-future-year,0,linear
+HI,base load generation,gas,share-weight,initial-future-year,end-year,0,fixed
+HI,intermediate generation,gas,share-weight,initial-future-year,end-year,0,fixed
+HI,subpeak generation,gas,share-weight,initial-future-year,end-year,0,fixed
+HI,peak generation,gas,share-weight,initial-future-year,end-year,0,fixed

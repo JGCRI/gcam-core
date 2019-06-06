@@ -62,6 +62,12 @@
  *          Similarly a multiplier exists for the quantity value of the gas as well.
  *          Note that these multipliers can change over time to simulate a "phase in"
  *          of the gas into the policy at a later time.
+ *          In addition this type of policy has the ability to switch from linking
+ *          from one policy to another at a specified start-year.  Such a use case
+ *          would be to specify region specific constraints in the near term and switch
+ *          to a global market for target finding in later model periods. Please see
+ *          Marketplace::createLinkedMarket for additional details about how changing
+ *          market links over time works as well as some caveats about it's use.
  *
  *          <b>XML specification for LinkedGHGPolicy</b>
  *          - XML name: \c LinkedGHGPolicy::getXMLNameStatic()
@@ -89,6 +95,13 @@
  *              - \c price-adjust LinkedGHGPolicy::mPriceAdjust
  *                   A multiplier on the quantity added to the linked market to allow
  *                   for GWP unit conversion or to turn "off" inclusion in a constraint.
+ *              - \c start-year LinkedGHGPolicy::mStartYear
+ *                   The first year this linked policy should be used (-1 indicates all years).
+ *                   This is the parameter which allows us to switch markets over time.
+ *              - \c policy-name LinkedGHGPolicy::mPolicyName
+ *                   The name this policy will use to create the linked market.  Note
+ *                   this is typically the same as mName however may differ if for
+ *                   instance a user wanted to switch markets over time.
  *
  * \sa Marketplace::createLinkedMarket
  * \sa LinkedMarket
@@ -103,28 +116,45 @@ public:
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
     virtual void XMLParse( const xercesc::DOMNode* node );
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual void completeInit( const std::string& aRegionName );
     virtual bool isApplicable( const std::string& aRegion ) const;
     virtual void setConstraint( const std::vector<double>& aConstraint );
 protected:
-    //! The name of the policy to link to.
-    std::string mLinkedPolicyName;
-
-    //! A label for the price units of this market
-    std::string mPriceUnits;
-
-    //! A label for the units of this market
-    std::string mOutputUnits;
     
-    //! A price adjustment factor by period.  Could be useful for unit conversion or
-    //! "turning off" price feedbacks from the linked market.
-    objects::PeriodVector<Value> mPriceAdjust;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        GHGPolicy,
+
+        //! The name of the policy to link to.
+        DEFINE_VARIABLE( SIMPLE, "linked-policy", mLinkedPolicyName, std::string ),
+
+        //! A label for the price units of this market
+        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnits, std::string ),
+
+        //! A label for the units of this market
+        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnits, std::string ),
+        
+        //! A price adjustment factor by period.  Could be useful for unit conversion or
+        //! "turning off" price feedbacks from the linked market.
+        DEFINE_VARIABLE( ARRAY, "price-adjust", mPriceAdjust, objects::PeriodVector<Value> ),
+        
+        //! A demand adjustment factor by period.  Could be useful for unit conversion (GWP) or
+        //! "turning off" participation in the linked market.
+        DEFINE_VARIABLE( ARRAY, "demand-adjust", mDemandAdjust, objects::PeriodVector<Value> ),
+        
+        //! The first year this linked policy should be used (-1 indicates all years).
+        //! This is the parameter which allows us to switch markets over time.
+        DEFINE_VARIABLE( SIMPLE, "start-year", mStartYear, int ),
+        
+        //! The name this policy will use to create the linked market.  Note this is typically
+        //! the same as mName however may differ if for instance a user wanted to switch markets
+        //! over time.
+        DEFINE_VARIABLE( SIMPLE, "policy-name", mPolicyName, std::string )
+    )
     
-    //! A demand adjustment factor by period.  Could be useful for unit conversion (GWP) or
-    //! "turning off" participation in the linked market.
-    objects::PeriodVector<Value> mDemandAdjust;
+    void copy( const LinkedGHGPolicy& aOther );
 };
 
 #endif // _LINKED_GHG_POLICY_H_

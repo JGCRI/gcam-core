@@ -231,20 +231,16 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
             else {
                 switch(solvable[i].getType()) {
                 case IMarketType::NORMAL:
-                case IMarketType::TRIAL_VALUE:
-                    // select a lower bound just a bit above the bottom of the supply curve.
                     lb = solvable[i].getLowerBoundSupplyPrice();
-                    lb += 1.0e-5 * std::max(1.0, fabs(lb));
-                    // select an upper bound just a bit below the top of the supply curve.
                     ub = solvable[i].getUpperBoundSupplyPrice();
-                    ub -= 1.0e-5 * std::max(1.0, fabs(ub));
                     if(oldprice < lb &&
                        oldsply < olddmnd && olddmnd > mFTOL
                         ) {
                         // price is below the bottom of the supply curve,
                         // and there is excess demand: set new price a bit
                         // above the bottom of the curve.
-                        newprice = lb + 0.01*std::max(1.0, fabs(lb)); 
+                        // 1% above lower bound
+                        newprice = lb + 0.01 * fabs(lb);
                         // sometimes the range of valid prices is really
                         // narrow and the above can actually overshoot.
                         if(newprice >= solvable[i].getUpperBoundSupplyPrice())
@@ -270,14 +266,40 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     } 
                     else if (oldprice > ub &&
                              oldsply > olddmnd) {
-                        // price is above the top of the supply curve,
-                        // and there little demand.  Set new price at
-                        // the top of the supply curve.  We are
-                        // conservative about this adjustment because
-                        // it frequently happens that the supply of
-                        // certain resources runs out, and the
-                        // clearing price will be above the top of the
-                        // supply curve.
+                      // price is above the top of the supply curve,
+                      // and there little demand.  This is not
+                      // necessarily wrong.  When a resource runs out,
+                      // the clearing price *should* be above the top
+                      // of the supply curve, so this is not
+                      // necessarily an error.  Therefore, we will be
+                      // a little conservative in this adjustment.
+                      // When demand is less than 1% of supply, we set
+                      // the price to the upper bound.  When demand is
+                      // greater than or equal to supply, we leave the
+                      // price alone.  In between we interpolate.
+                      double sthresh = 100.0; // the 1% threshold described above.
+                      if(oldsply >= sthresh*olddmnd) {
+                        newprice = ub;
+                      }
+                      else {
+                        double k = (sthresh - (oldsply-olddmnd)) / sthresh;
+                        newprice = ub + k * (oldprice-ub);
+                      }
+                      solvable[i].setPrice(newprice);
+                      chg = true;
+                      ++nchg;
+                    }
+                    break; 
+                case IMarketType::TRIAL_VALUE:
+                    lb = solvable[i].getLowerBoundSupplyPrice();
+                    ub = solvable[i].getUpperBoundSupplyPrice();
+                    if(oldprice < lb) {
+                        newprice = 0.001;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    }
+                    else if(oldprice > ub) {
                         newprice = ub;
                         solvable[i].setPrice(newprice);
                         chg = true;
@@ -321,16 +343,49 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     // to something less than zero.  If a trial demand
                     // is less than zero, set it to a small positive
                     // number.
-                    if(pass>0) {
+                    if(pass>=0) {
+                        double normoldprice = oldprice / solvable[i].getForecastDemand();
+                        double normolddemand = olddmnd / solvable[i].getForecastDemand();
                         if(olddmnd <= 0.0) {
                             newprice = util::getSmallNumber();
                             solvable[i].setPrice(newprice);
                             chg = true;
                             ++nchg;
+                        } else if(oldprice <= 0.0 && olddmnd > 0.0) {
+                            newprice = olddmnd;
+                            solvable[i].setPrice(newprice);
+                            chg = true;
+                            ++nchg;
                         }
-                        
+                        else if(normoldprice < 0.1 && fabs(1.0 - normolddemand) < 0.2) {
+                            newprice = olddmnd;
+                            solvable[i].setPrice(newprice);
+                            chg = true;
+                            ++nchg;
+                        }
                     } 
                     break; 
+                case IMarketType::TAX:
+                    lb = solvable[i].getLowerBoundSupplyPrice();
+                    ub = solvable[i].getUpperBoundSupplyPrice();
+                    if( olddmnd <= 0.0 && olddmnd < oldsply && oldprice > ub ) {
+                        newprice = lb - 0.1;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    } else if(olddmnd > 0.0 && oldprice < lb ) {
+                        newprice = lb + 0.01;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    } else if(oldprice > ub && olddmnd < oldsply) {
+                        newprice = ub - 0.1;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    }
+                    break;
+
                 default:
                     // no action for tax markets, etc.
                     chg = false;
@@ -343,6 +398,8 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                       << marker << std::setw(8) << newprice << "\t"
                       << std::setw(8) << oldsply << "\t"
                       << std::setw(8) << olddmnd << "\t"
+                      << std::setw(8) << solvable[i].getForecastPrice() << "\t"
+                      << std::setw(8) << solvable[i].getForecastDemand() << "\t"
                       << solvable[i].getName() << "\n";
             if(nchg==0 && pass > 2)
                 // no additional effect from further passes.

@@ -69,7 +69,6 @@ public:
     virtual CalDataOutput* clone() const;
 
     virtual void XMLParse( const xercesc::DOMNode* aNode );
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXML( std::ostream& aOut, Tabs* aTabs ) const;
     static const std::string& getXMLNameStatic();
 
@@ -80,9 +79,16 @@ public:
 
     virtual double getCalOutput();
 
-private:
-    //! Calibrated output value.
-    double mCalOutputValue;
+protected:
+
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICalData,
+
+        //! Calibrated output value.
+        DEFINE_VARIABLE( SIMPLE, "calOutputValue", mCalOutputValue, double )
+    )
 };
 
 #endif // _CAL_DATA_OUTPUT_H_

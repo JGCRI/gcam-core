@@ -64,8 +64,8 @@ extern Scenario* scenario; // for marketplace
 /* \brief Constructor
 * \param aRegionName The region name.
 */
-ExportSector::ExportSector ( const string& aRegionName ) : SupplySector ( aRegionName ) {
-    mFixedPrices.resize( scenario->getModeltime()->getmaxper() );
+ExportSector::ExportSector ( const string& aRegionName ) : SupplySector ( aRegionName )
+{
 }
 
 /*! \brief Return the export sector price.
@@ -105,8 +105,8 @@ void ExportSector::supply( const GDP* aGDP, const int aPeriod ) {
     // Instruct technologies to only produce fixed output and no variable
     // output. Shares do not need to be calculated because there is
     // no variable output.
-    for( unsigned int i = 0; i < subsec.size(); ++i ){
-        subsec[ i ]->setOutput( 0, 1, aGDP, aPeriod );
+    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
+        mSubsectors[ i ]->setOutput( 0, 1, aGDP, aPeriod );
     }
 
     // This is a global market so demands do not have to equal supplies locally.
@@ -142,23 +142,13 @@ bool ExportSector::XMLDerivedClassParse( const string& aNodeName, const DOMNode*
 		mMarketName = XMLHelper<string>::getValue( aCurr );
 	}
     else if( aNodeName == "sectorprice" ){
-        XMLHelper<double>::insertValueIntoVector( aCurr, mFixedPrices, scenario->getModeltime() );
+        XMLHelper<Value>::insertValueIntoVector( aCurr, mFixedPrices, scenario->getModeltime() );
     }
 	else {
 		return false;
 	}
 	return true;
 }
-
-/*! \brief Write out derived class specific class members as an input file.
-* \param aOut The output stream to which to write.
-* \param aTabs Object responsible for writing tabs.
-*/
-void ExportSector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {  
-    // write out the market string.
-    XMLWriteElement( mMarketName, "market", aOut, aTabs );
-    XMLWriteVector( mFixedPrices, "sectorprice", aOut, aTabs, scenario->getModeltime(), 0.0 );
-}	
 
 /*! \brief Write out derived class specific class members for debugging.
 * \param aPeriod The period in which to write debugging information.
@@ -178,7 +168,7 @@ void ExportSector::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aT
 */
 void ExportSector::setMarket() {
 	// Check if the market name was not read-in or is the same as the region name.
-	if( mMarketName.empty() || mMarketName == regionName ){
+	if( mMarketName.empty() || mMarketName == mRegionName ){
 		ILogger& mainLog = ILogger::getLogger( "main_log" );
 		mainLog.setLevel( ILogger::WARNING );
 		mainLog << "Market name for export sector was unset or set to the region name." << endl;
@@ -188,17 +178,17 @@ void ExportSector::setMarket() {
     Marketplace* marketplace = scenario->getMarketplace();
 	// Creates a regional market. MiniCAM supply sectors are not independent and 
 	// cannot be members of multi-region markets.
-    if( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
+    if( marketplace->createMarket( mRegionName, mMarketName, mName, IMarketType::NORMAL ) ) {
         // Set price and output units for period 0 market info
-        IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, 0, true );
+        IInfo* marketInfo = marketplace->getMarketInfo( mName, mRegionName, 0, true );
         marketInfo->setString( "price-unit", mPriceUnit );
         marketInfo->setString( "output-unit", mOutputUnit );
 
         // Set the base year price which the sector reads in, into the mFixedPrices vector.
         // TODO: Separate SupplySector so this is not needed.
-        mFixedPrices[ 0 ] = mBasePrice;
+        mFixedPrices[ 0 ] = mPrice[ 0 ];
 
 		// Initializes prices with any values that are read-in. 
-        marketplace->setPriceVector( name, regionName, mFixedPrices );
+        marketplace->setPriceVector( mName, mRegionName, mFixedPrices );
     }
 }

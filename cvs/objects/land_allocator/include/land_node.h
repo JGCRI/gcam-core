@@ -49,7 +49,6 @@
 #include <memory>
 #include <xercesc/dom/DOMNode.hpp>
 #include "land_allocator/include/aland_allocator_item.h"
-#include "util/base/include/value.h"
 
 // Forward declarations
 class LandUseHistory;
@@ -99,17 +98,19 @@ public:
                                 const double aLandAllocationAbove,
                                 const int aPeriod );
 
-    virtual void calculateProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
+    virtual void calculateNodeProfitRates( const std::string& aRegionName,
+                                           const int aPeriod );
 
-    virtual void adjustProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
+    virtual void calculateShareWeights( const std::string& aRegionName, 
+                                        IDiscreteChoice* aChoiceFnAbove,
+                                        const int aPeriod,
+                                        const bool aCalcFutureSW );
 
     virtual void setProfitRate( const std::string& aRegionName,
                                    const std::string& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod );
- 
+
     virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, 
                                       const int aPeriod );
 
@@ -123,7 +124,7 @@ public:
     virtual void setSoilTimeScale( const int aTimeScale );
 
     virtual double calcLandShares( const std::string& aRegionName,
-                                   const double aLogitExpAbove,
+                                   IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod );
 
     virtual void calcLandAllocation( const std::string& aRegionName,
@@ -131,7 +132,8 @@ public:
                                      const int aPeriod );
     
     virtual void calcLUCEmissions( const std::string& aRegionName,
-                                   const int aYear, const int aEndYear );
+                                   const int aYear, const int aEndYear,
+                                   const bool aStoreFullEmiss );
     
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
@@ -141,26 +143,19 @@ public:
 
     virtual LandUseHistory* getLandUseHistory();
         
-    virtual double getLogitExponent( const int aPeriod ) const;
-
-    virtual double getNewTechProfitScaler( const int aPeriod ) const;
-    
     virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod );
-           
-    virtual bool isManagedLandLeaf( )  const;
-
-    virtual void calculateCalibrationProfitRate( const std::string& aRegionName,
-                                             double aAverageProfitRate,
-                                             double aLogitExponentAbove,
-                                             const int aPeriod );
+    
+    virtual void getObservedAverageProfitRate( double& aProfitRate, double& aShare, const int aPeriod ) const;
+    
+    virtual const ALandAllocatorItem* getChildWithHighestShare( const bool aIncludeAllChildren,
+                                                                const int aPeriod ) const;
+    
+	virtual bool isUnmanagedLandLeaf( )  const;
 
     virtual void accept( IVisitor* aVisitor, 
                          const int aPeriod ) const;
-
-    virtual void toInputXML( std::ostream& out, 
-                             Tabs* tabs ) const;
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
@@ -172,9 +167,6 @@ protected:
                                     std::ostream& out, 
                                     Tabs* tabs ) const;
 
-    virtual void toInputXMLDerived( std::ostream& aOutput, 
-                                    Tabs* aTabs ) const;
-
     virtual const std::string& getXMLName() const;
     
     ALandAllocatorItem* findChild( const std::string& aName,
@@ -182,39 +174,29 @@ protected:
     
     const ALandAllocatorItem* findChild( const std::string& aName,
                                          const LandAllocatorItemType aType ) const;
-
-    //! Land allocated -- used for conceptual roots
-    objects::PeriodVector<double> mLandAllocation;
-        
-    //! Logit exponent -- should be positive since we are sharing on profit
-    objects::PeriodVector<double> mLogitExponent;
-
-    //! Share Profit scaler for new technologies in this node
-    objects::PeriodVector<double> mNewTechProfitScaler;
     
-    //! Numerator that determines share for new technologies IF the right profit conditions hold
-	//! Share will equal ( mGhostShareNumerator / ( 1 + mGhostShareNumerator ) ) if and only if
-	//! the profit of the new technology is equal to the profit of the dominant technology in 
-	//! the base year, and all other profits stay the same.
-    objects::PeriodVector<double> mGhostShareNumerator;
-    
-    //! Double storing the average price of land in a region or subregion
-    double mUnManagedLandValue;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ALandAllocatorItem,
 
-    //! Boolean indicating that scalers in this node should be adjusted for new technologies
-    // TODO: we may want this boolean at the LandLeaf level, but it will need to be used in LandNode
-    bool mAdjustScalersForNewTech;
+        //! Logit exponent -- should be positive since we are sharing on profit
+        DEFINE_VARIABLE( CONTAINER, "discrete-choice-function", mChoiceFn, IDiscreteChoice* ),
 
-    //! List of the children of this land node located below it in the land
-    //! allocation tree.
-    std::vector<ALandAllocatorItem*> mChildren;
+        //! Double storing the average price of land in a region or subregion
+        DEFINE_VARIABLE( SIMPLE, "unManagedLandValue", mUnManagedLandValue, double ),
 
-    //! Container of historical land use.
-    std::auto_ptr<LandUseHistory> mLandUseHistory;
+        //! List of the children of this land node located below it in the land
+        //! allocation tree.
+        DEFINE_VARIABLE( CONTAINER, "child-nodes", mChildren, std::vector<ALandAllocatorItem*> ),
 
-    //! (optional) A carbon calculation which can used when children maybe similar
-    //! in terms of switching between them does not mean carbon is emitted per se.
-    std::auto_ptr<NodeCarbonCalc> mCarbonCalc;
+        //! Container of historical land use.
+        DEFINE_VARIABLE( CONTAINER, "land-use-history", mLandUseHistory, LandUseHistory* ),
+
+        //! (optional) A carbon calculation which can used when children maybe similar
+        //! in terms of switching between them does not mean carbon is emitted per se.
+        DEFINE_VARIABLE( CONTAINER, "node-carbon-calc", mCarbonCalc, NodeCarbonCalc* )
+    )
 };
 
 #endif // _LAND_NODE_H_

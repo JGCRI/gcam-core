@@ -148,19 +148,6 @@ bool AgeCohort::parseGender( DOMNode* aNode ) {
     }
     return true;
 }
-//! Write out data members to XML output stream.
-void AgeCohort::toInputXML( std::ostream& out, Tabs* tabs ) const {
-    // write the beginning tag.
-    tabs->writeTabs( out );
-    out << "<" << getXMLNameStatic() << " ageGroup=\"" << ageGroup << "\">"<< endl;
-
-    // increase the indent.
-    tabs->increaseIndent();
-
-    male->toInputXML( out, tabs );
-    female->toInputXML( out, tabs );
-    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
-}
 
 //! Write out XML for debugging purposes.
 void AgeCohort::toDebugXML( ostream& out, Tabs* tabs ) const {

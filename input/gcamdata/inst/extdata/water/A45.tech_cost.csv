@@ -1,0 +1,7 @@
+# File: A45.tech_cost.csv
+# Title: Municipal water sector and non-energy-input names
+# Units: NA
+# Column types: cccc 
+# ----------
+supplysector,subsector,technology,minicam.non.energy.input
+municipal water,municipal water,municipal water,infrastructure cost

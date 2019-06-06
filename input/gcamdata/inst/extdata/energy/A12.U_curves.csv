@@ -1,0 +1,14 @@
+# File: A12.U_curves.csv
+# Title: GCAM 3.0 uranium supply curve
+# Units: MtU; 1975$/kgU
+# Column types: ccccii 
+# ----------
+region_GCAM3,resource,subresource,grade,available,extractioncost
+USA,uranium,uranium,grade 0,3,15
+USA,uranium,uranium,grade 1,6,50
+USA,uranium,uranium,grade 2,10,100
+USA,uranium,uranium,grade 3,16,150
+USA,uranium,uranium,grade 4,20,200
+USA,uranium,uranium,grade 5,25,250
+USA,uranium,uranium,grade 6,4000,300
+USA,uranium,uranium,grade 7,0,28800

@@ -1,0 +1,8 @@
+# File: A322.globaltech_co2capture.csv
+# Title: Fertilizer CO2 capture rates
+# Units: Unitless
+# Column types: cccnn 
+# ----------
+supplysector,subsector,technology,1971,2100
+N fertilizer,coal,coal CCS,0.9,0.9
+N fertilizer,gas,gas CCS,0.9,0.9

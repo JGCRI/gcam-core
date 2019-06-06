@@ -76,6 +76,8 @@ class PhasedShutdownDecider: public IShutdownDecider
 {
     friend class ShutdownDeciderFactory;
 public:
+    virtual ~PhasedShutdownDecider();
+    
     // IParsedComponent methods.
     virtual PhasedShutdownDecider* clone() const;
 
@@ -84,9 +86,6 @@ public:
     virtual const std::string& getName() const;
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -99,15 +98,23 @@ public:
                                      const std::string& aSectorName,
                                      const int aInitialTechYear,
                                      const int aPeriod ) const;
-private:
-    //! The name of this shutdown decider in case we want to stack multiple.
-    std::string mName;
+protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IShutdownDecider,
 
-    //! The annual rate at which to shutdown production. This rate may be zero
-    //! which is the equivalent to not reading in the phased shutdown decider.
-    double mShutdownRate;
+        //! The name of this shutdown decider in case we want to stack multiple.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+
+        //! The annual rate at which to shutdown production. This rate may be zero
+        //! which is the equivalent to not reading in the phased shutdown decider.
+        DEFINE_VARIABLE( SIMPLE, "shutdown-rate", mShutdownRate, double )
+    )
 
     PhasedShutdownDecider();
+    void copy( const PhasedShutdownDecider& aOther );
 
     static const std::string& getXMLNameStatic();
 };

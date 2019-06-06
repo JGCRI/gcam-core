@@ -59,7 +59,9 @@ CalDataOutput::CalDataOutput() {
 * \return A clone of the object.
 */
 CalDataOutput* CalDataOutput::clone() const {
-    return new CalDataOutput( *this );
+    CalDataOutput* clone = new CalDataOutput();
+    clone->mCalOutputValue = mCalOutputValue;
+    return clone;
 }
 
 /*! \brief Parses XML for the object.
@@ -90,13 +92,6 @@ void CalDataOutput::XMLParse( const DOMNode* aNode ){
                     << getXMLNameStatic() << "." << endl;
 		}
 	}
-}
-
-//! write object to xml output stream
-void CalDataOutput::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteElement( mCalOutputValue, "calOutputValue", aOut, aTabs );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 //! Write object to debugging xml output stream.

@@ -1,0 +1,213 @@
+# File: mfg_water_mapping.csv
+# Title: Mapping from Vassolo and Doll continents to countries (iso codes)
+# Units: NA
+# Comments: Mapping of Vassolo manufacturing water withdrawal by continent to iso
+# Based on Table 3 of source document: "Summary of Industrial Water Use for Each Continent for 1995."
+# Source: Vassolo and Doll, 2005. Global-scale gridded estimates of thermoelectric power and manufacturing water use. Water Resources Research.
+# Column types: cc 
+# ----------
+iso,continent
+abw,South America and Caribbean
+afg,Asia
+ago,Africa
+alb,Europe
+ant,South America and Caribbean
+are,West Asia
+arg,South America and Caribbean
+arm,Europe
+atg,South America and Caribbean
+aus,Oceania
+aut,Europe
+aze,Europe
+bdi,Africa
+bel,Europe
+ben,Africa
+bfa,Africa
+bgd,Asia
+bgr,Europe
+bhr,West Asia
+bhs,South America and Caribbean
+bih,Europe
+blr,Europe
+blz,South America and Caribbean
+bmu,Europe
+bol,South America and Caribbean
+bra,South America and Caribbean
+brb,South America and Caribbean
+brn,Asia
+btn,Asia
+bwa,Africa
+caf,Africa
+can,North America
+che,Europe
+chl,South America and Caribbean
+chn,Asia
+civ,Africa
+cmr,Africa
+cod,Africa
+cog,Africa
+col,South America and Caribbean
+com,Africa
+cpv,Africa
+cri,South America and Caribbean
+cub,South America and Caribbean
+cym,South America and Caribbean
+cyp,Europe
+cze,Europe
+deu,Europe
+dji,Africa
+dma,South America and Caribbean
+dnk,Europe
+dom,South America and Caribbean
+dza,Africa
+ecu,South America and Caribbean
+egy,Africa
+eri,Africa
+esh,Africa
+esp,Europe
+est,Europe
+eth,Africa
+fin,Europe
+fji,Asia
+flk,South America and Caribbean
+fra,Europe
+gab,Africa
+gbr,Europe
+geo,Europe
+gha,Africa
+gib,Europe
+gin,Africa
+glp,South America and Caribbean
+gmb,Africa
+gnb,Africa
+gnq,Africa
+grc,Europe
+grd,South America and Caribbean
+gtm,South America and Caribbean
+guf,South America and Caribbean
+guy,South America and Caribbean
+hkg,Asia
+hnd,South America and Caribbean
+hrv,Europe
+hti,South America and Caribbean
+hun,Europe
+idn,Asia
+ind,Asia
+irl,Europe
+irn,West Asia
+irq,West Asia
+isl,Europe
+isr,West Asia
+ita,Europe
+jam,South America and Caribbean
+jor,West Asia
+jpn,Asia
+kaz,Europe
+ken,Africa
+kgz,Europe
+khm,Asia
+kir,Asia
+kna,South America and Caribbean
+kor,Asia
+kwt,West Asia
+lao,Asia
+lbn,West Asia
+lbr,Africa
+lby,Africa
+lca,South America and Caribbean
+lka,Asia
+lso,Africa
+ltu,Europe
+lux,Europe
+lva,Europe
+mac,Asia
+mar,Africa
+mco,Europe
+mda,Europe
+mdg,Africa
+mdv,Asia
+mex,South America and Caribbean
+mkd,Europe
+mli,Africa
+mlt,Europe
+mmr,Asia
+mne,Europe
+mng,Asia
+moz,Africa
+mrt,Africa
+msr,South America and Caribbean
+mus,Africa
+mwi,Africa
+mys,Asia
+nam,Africa
+ncl,Asia
+ner,Africa
+nga,Africa
+nic,South America and Caribbean
+nld,Europe
+nor,Europe
+npl,Asia
+nzl,Oceania
+omn,West Asia
+pak,Asia
+pan,South America and Caribbean
+per,South America and Caribbean
+phl,Asia
+plw,Asia
+png,Asia
+pol,Europe
+prk,Asia
+pri,South America and Caribbean
+prt,Europe
+pry,South America and Caribbean
+pse,West Asia
+qat,West Asia
+reu,Africa
+rom,Europe
+rus,Europe
+rwa,Africa
+sau,West Asia
+sdn,Africa
+sen,Africa
+sgp,Asia
+slb,Asia
+sle,Africa
+slv,South America and Caribbean
+som,Africa
+srb,Europe
+stp,Africa
+sur,South America and Caribbean
+svk,Europe
+svn,Europe
+swe,Europe
+swz,Africa
+syc,Africa
+syr,West Asia
+tca,South America and Caribbean
+tcd,Africa
+tgo,Africa
+tha,Asia
+tjk,Europe
+tkm,Europe
+tls,Asia
+ton,Asia
+tto,South America and Caribbean
+tun,Africa
+tur,Europe
+twn,Asia
+tza,Africa
+uga,Africa
+ukr,Europe
+ury,South America and Caribbean
+usa,North America
+uzb,Europe
+vct,South America and Caribbean
+ven,South America and Caribbean
+vgb,South America and Caribbean
+vnm,Asia
+vut,Asia
+wsm,Asia
+yem,West Asia
+zaf,Africa
+zmb,Africa
+zwe,Africa

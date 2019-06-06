@@ -128,24 +128,20 @@ bool GDPControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
     return true;
 }
 
-void GDPControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-    
+void GDPControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mMaxReduction, "max-reduction", aOut, aTabs);
     XMLWriteElement( mSteepness, "steepness", aOut, aTabs);
 }
 
-void GDPControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
-    toInputXMLDerived( aOut, aTabs );
-}
-
 void GDPControl::completeInit( const string& aRegionName, const string& aSectorName,
-                               const IInfo* aTechInfo )
+                               const IInfo* aTechIInfo )
 {
 
 }
 
 void GDPControl::initCalc( const string& aRegionName,
-                           const IInfo* aLocalInfo,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod )
 {
     // TODO: Figure out what gas this is & print more meaningful information

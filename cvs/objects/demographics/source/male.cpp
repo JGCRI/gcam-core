@@ -54,11 +54,6 @@ bool Male::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     return false;
 }
 
-//! For derived classes to output XML data
-void Male::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    // nothing
-}
-
 //! Output debug info for derived class
 void Male::toDebugXMLDerived(ostream& out, Tabs* tabs ) const {
     // nothing

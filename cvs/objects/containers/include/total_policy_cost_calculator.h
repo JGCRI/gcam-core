@@ -111,7 +111,5 @@ private:
     void createCostCurvesByPeriod();
     void createRegionalCostCurves();
     const std::string createXMLOutputString() const;
-    void writeToDB() const;
-    void writeToCSV() const;
 };
 #endif // _TOTAL_POLICY_COST_CALCULATOR_H_

@@ -88,40 +88,70 @@ public:
 protected:
 
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
     virtual double getTotalInputCost( const std::string& aRegionName,
                                       const std::string& aSectorName,
                                       const int aPeriod ) const;
-
-private:
-    static const std::string XML_NAME; //!< The XML name of this object.
     
-    std::string fertileFuelName; //!< name of secondary fertile material used for making nuclear fuel
-    std::string blanketFuelName; //!< name of secondary fertile material used for breeding fissile material
-
-    //! Unit Conversion factor, used to be fmult.
-    double mConversionFactor;
-
-    double blanketFuelRatio; //!< Ratio of blanket to fuel materials (kgBlanket/kgFuel)
-    double burnup; //!< designed burnup of fuel associated with nuclear plant (MWd/kgHM)
-    double conversionCost; //!< uranium ore conversion cost ($/kgU)
-	double enrichmentProd; //!< fissile material enrichment (%)
-	double enrichmentFeed; //!< feed material enrichment (%)
-	double enrichmentTail; //!< tail enrichment (%)
-    double enrichmentCost; //!< uranium enrichment cost ($/SWU)
-    double fabricationCost; //!< primary fuel fuel fabrication cost ($/kgHM)
-    double blanketFabCost; //!< blanket material fabrication cost ($/kgHM)
-    double interimStorageCost; //!< interim storage cost of spent fuel ($/kgHM)
-	double geologicWasteDisposalCost; //!< cost of permenant waste disposal ($/kgHM)
-    double reprocessingCost; //!< reprocessing cost of spent fuel ($/kgHM)
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Technology,
     
-    //! State value for fertile fuel market necessary to use Marketplace::addToDemand
-    double mLastFertileValue;
+        //! name of secondary fertile material used for making nuclear fuel
+        DEFINE_VARIABLE( SIMPLE, "fertileFuelName", fertileFuelName, std::string ),
+
+        //! name of secondary fertile material used for breeding fissile material
+        DEFINE_VARIABLE( SIMPLE, "blanketFuelName", blanketFuelName, std::string ),
+
+        //! Unit Conversion factor, used to be fmult.
+        DEFINE_VARIABLE( SIMPLE, "fMultiplier", mConversionFactor, double ),
+
+        //! Ratio of blanket to fuel materials (kgBlanket/kgFuel)
+        DEFINE_VARIABLE( SIMPLE, "blanketFuelRatio", blanketFuelRatio, double ),
+
+        //! designed burnup of fuel associated with nuclear plant (MWd/kgHM)
+        DEFINE_VARIABLE( SIMPLE, "burnup", burnup, double ),
+
+        //! uranium ore conversion cost ($/kgU)
+        DEFINE_VARIABLE( SIMPLE, "conversionCost", conversionCost, double ),
+
+        //! fissile material enrichment (%)
+        DEFINE_VARIABLE( SIMPLE, "enrichmentProd", enrichmentProd, double ),
+
+        //! feed material enrichment (%)
+        DEFINE_VARIABLE( SIMPLE, "enrichmentFeed", enrichmentFeed, double ),
+
+        //! tail enrichment (%)
+        DEFINE_VARIABLE( SIMPLE, "enrichmentTail", enrichmentTail, double ),
+
+        //! uranium enrichment cost ($/SWU)
+        DEFINE_VARIABLE( SIMPLE, "enrichmentCost", enrichmentCost, double ),
+
+        //! primary fuel fuel fabrication cost ($/kgHM)
+        DEFINE_VARIABLE( SIMPLE, "fabricationCost", fabricationCost, double ),
+
+        //! blanket material fabrication cost ($/kgHM)
+        DEFINE_VARIABLE( SIMPLE, "blanketFabCost", blanketFabCost, double ),
+
+        //! interim storage cost of spent fuel ($/kgHM)
+        DEFINE_VARIABLE( SIMPLE, "interimStorageCost", interimStorageCost, double ),
+
+        //! cost of permenant waste disposal ($/kgHM)
+        DEFINE_VARIABLE( SIMPLE, "geologicWasteDisposalCost", geologicWasteDisposalCost, double ),
+
+        //! reprocessing cost of spent fuel ($/kgHM)
+        DEFINE_VARIABLE( SIMPLE, "reprocessingCost", reprocessingCost, double ),
+
+        //! State value for fertile fuel market necessary to use Marketplace::addToDemand
+        DEFINE_VARIABLE( SIMPLE | STATE, "fertile-fuel-state", mLastFertileValue, Value ),
+
+        //! State value for blanket fuel market necessary to use Marketplace::addToDemand
+        DEFINE_VARIABLE( SIMPLE | STATE, "blanket-fuel-state", mLastBlanketValue, Value )
+    )
     
-    //! State value for blanket fuel market necessary to use Marketplace::addToDemand
-    double mLastBlanketValue;
+    void copy( const NukeFuelTechnology& aOther );
 
 	static double getSWValue( const double aWeightFraction );
 

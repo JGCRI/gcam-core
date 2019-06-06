@@ -47,6 +47,7 @@
 #include <memory>
 
 #include "emissions/include/aemissions_control.h"
+#include "util/base/include/time_vector.h"
 
 class PointSetCurve;
 
@@ -70,7 +71,8 @@ public:
                                const IInfo* aTechIInfo );
 
     virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod );
 
 protected:
@@ -79,20 +81,41 @@ protected:
     
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
-    virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AEmissionsControl,
+        
+        //! Boolean indicating whether reductions should occur at a zero carbon price
+        DEFINE_VARIABLE( SIMPLE, "no-zero-cost-reductions", mNoZeroCostReductions, bool ),
+        
+        //! The underlying Curve (as read in)
+        DEFINE_VARIABLE( CONTAINER, "mac-reduction", mMacCurve, PointSetCurve* ),
+        
+        //! Length of time in years to phase in no-cost MAC reductions
+        DEFINE_VARIABLE( SIMPLE, "zero-cost-phase-in-time", mZeroCostPhaseInTime, int ),
+        
+        //! Conversion factor if getting price from its own market.
+        DEFINE_VARIABLE( SIMPLE, "mac-price-conversion", mCovertPriceValue, Value ),
+        
+        //! Name of market who's price is used to look up the curve.
+        DEFINE_VARIABLE( SIMPLE, "market-name", mPriceMarketName, std::string )
+    )
+    
+    //! Technology change, % improvement rate per year
+    // Note ideally this would be included for GCAMFusion with the following definition however it is
+    // not currently able to handle smart pointers.
+    // DEFINE_VARIABLE( ARRAY, "tech-change", mTechChange, std::shared_ptr<objects::PeriodVector<double> > ),
+    std::shared_ptr<objects::PeriodVector<double> > mTechChange;
 
 private:
-    //! Boolean indicating whether reductions should occur at a zero carbon price
-    bool mNoZeroCostReductions;
-    
-    //! The underlying Curve (as read in)
-    std::auto_ptr<PointSetCurve> mMacCurve;
-
     void copy( const MACControl& other );
     double getMACValue( const double aCarbonPrice ) const;
+    double adjustForTechChange( const int aPeriod, double reduction );
 };
 
 #endif // _MAC_CONTROL_H_

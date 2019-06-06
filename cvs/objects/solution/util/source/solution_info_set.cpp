@@ -188,30 +188,6 @@ void SolutionInfoSet::updateElasticities() {
     }
 }
 
-//! Have all contained SolutionInfo's store their current values.
-void SolutionInfoSet::storeValues(){
-    // Store values for solvable.
-    for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
-        iter->storeValues();
-    }
-    // Store values for unsolvable.
-    for( SetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
-        iter->storeValues();
-    }
-}
-
-//! Have all contained SolutionInfo's restore their previous values.
-void SolutionInfoSet::restoreValues(){
-    // Retore values for solvable.
-    for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
-        iter->restoreValues();
-    }
-    // Store values for unsolvable. 
-    for( SetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
-        iter->restoreValues();
-    }
-}
-
 /*! \brief Check if the bracket is empty and reset it if neccessary.
 * \return Whether any brackets were reset. 
 */
@@ -227,7 +203,11 @@ bool SolutionInfoSet::checkAndResetBrackets(){
     set bracketed to false.
 */
 void SolutionInfoSet::resetBrackets(){
+    // do all markets including solvable and unsolvable
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
+        iter->resetBrackets();
+    }
+    for( SetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
         iter->resetBrackets();
     }
 }
@@ -646,11 +626,11 @@ void SolutionInfoSet::printMarketInfo( const string& aLocation,
 * \param aPeriod Period for which to print supply-demand curves.
 * \param aLogger Logger stream to print the curves to.
 */
-void SolutionInfoSet::findAndPrintSD( World* aWorld, Marketplace* aMarketplace, const int aPeriod, ILogger& aLogger ) {
+void SolutionInfoSet::findAndPrintSD( World* aWorld, Marketplace* aMarketplace, const int aPeriod, ostream& aOut) {
     const Configuration* conf = Configuration::getInstance();
     const int numMarketsToFindSD = conf->getInt( "numMarketsToFindSD", 5 );
     const int numPointsForSD = conf->getInt( "numPointsForSD", 5 );
-    
+   
     // Sort the vector so the worst markets are first.
     sort( solvable.begin(), solvable.end(), SolutionInfo::GreaterRelativeED() );
 
@@ -660,9 +640,9 @@ void SolutionInfoSet::findAndPrintSD( World* aWorld, Marketplace* aMarketplace, 
         if( solvable[ i ].isSolved() ){
             continue;
         }
-        SupplyDemandCurve sdCurve = solvable[ i ].createSDCurve();
-        sdCurve.calculatePoints( numPointsForSD, aWorld, aMarketplace, aPeriod );
-        sdCurve.print( aLogger );
+        SupplyDemandCurve sdCurve( i, solvable[ i ].getName() );
+        sdCurve.calculatePoints( numPointsForSD, *this, aWorld, aMarketplace, aPeriod );
+        sdCurve.print( aOut );
     }
 }
 

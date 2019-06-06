@@ -1,0 +1,59 @@
+# File: NREL_us_re_capacity_factors.csv
+# Title: Capacity factors by state by renewable technology
+# Units: Unitless
+# Comments: Source: http://www.nrel.gov/gis/docs/us_re_technical_potential.xlsx. Capacity factors were calculated by dividing generation in GWh by (8760* capacity in GW)
+# Column types: cnnnnnn 
+# ----------
+State,Urban_Utility_scale_PV,Rural_Utility_scale_PV,Rooftop_PV,CSP,Onshore_Wind,Offshore_Wind
+Alabama,0.2,0.2,0.14,0,0.27,0
+Alaska,0.17,0.11,0,0,0.32,0
+Arizona,0.26,0.26,0.17,0.41,0.27,0
+Arkansas,0.21,0.21,0.14,0,0.28,0
+California,0.25,0.25,0.16,0.36,0.3,0.46
+Colorado,0.26,0.26,0.16,0.34,0.32,0
+Connecticut,0.18,0.18,0.13,0,0.27,0.42
+Delaware,0.19,0.19,0.13,0,0.26,0.46
+District of Columbia,0.18,0,0.14,0,0,0
+Florida,0.21,0.21,0.15,0.32,0.27,0.41
+Georgia,0.2,0.2,0.14,0,0.28,0.43
+Hawaii,0.26,0.21,0,0.32,0.36,0.44
+Idaho,0.22,0.22,0.14,0.32,0.28,0
+Illinois,0.19,0.19,0.13,0,0.3,0.48
+Indiana,0.18,0.18,0.13,0,0.29,0.42
+Iowa,0.2,0.2,0.14,0,0.34,0
+Kansas,0.24,0.24,0.15,0.32,0.37,0
+Kentucky,0.19,0.19,0.13,0,0.28,0
+Louisiana,0.2,0.2,0.14,0,0.26,0.4
+Maine,0.19,0.19,0.13,0,0.29,0.49
+Maryland,0.18,0.18,0.13,0,0.28,0.44
+Massachusetts,0.18,0.18,0.13,0,0.31,0.5
+Michigan,0.17,0.17,0.12,0,0.28,0.47
+Minnesota,0.19,0.19,0.13,0,0.33,0.39
+Mississippi,0.2,0.2,0.14,0,0,0.36
+Missouri,0.19,0.19,0.14,0,0.29,0
+Montana,0.21,0.21,0.13,0.32,0.33,0
+Nebraska,0.22,0.22,0.14,0.32,0.37,0
+Nevada,0.26,0.26,0.17,0.37,0.28,0
+New Hampshire,0.18,0.18,0.13,0,0.31,0.48
+New Jersey,0.2,0.2,0.13,0,0.27,0.48
+New Mexico,0.26,0.26,0.18,0.39,0.32,0
+New York,0.18,0.18,0.13,0,0.28,0.48
+North Carolina,0.21,0.21,0.14,0,0.29,0.47
+North Dakota,0.2,0.2,0.13,0.32,0.38,0
+Ohio,0.17,0.17,0.12,0,0.27,0.47
+Oklahoma,0.22,0.22,0.15,0.32,0.34,0
+Oregon,0.23,0.23,0.12,0.32,0.29,0.49
+Pennsylvania,0.18,0.18,0.13,0,0.28,0.47
+Rhode Island,0.18,0.18,0.13,0,0.32,0.49
+South Carolina,0.2,0.2,0.14,0,0.26,0.46
+South Dakota,0.21,0.21,0.14,0.32,0.38,0
+Tennessee,0.2,0.2,0.14,0,0.28,0
+Texas,0.22,0.22,0.15,0.34,0.33,0.46
+Utah,0.25,0.25,0.15,0.35,0.27,0
+Vermont,0.18,0.18,0.12,0,0.3,0
+Virginia,0.2,0.2,0.14,0,0.29,0.46
+Washington,0.2,0.2,0.12,0.32,0.29,0.46
+West Virginia,0.17,0.17,0.13,0,0.3,0
+Wisconsin,0.18,0.18,0.13,0,0.28,0.45
+Wyoming,0.23,0.23,0.15,0.32,0.34,0
+Average,0.21,0.21,0.14,0.35,0.34,0.46

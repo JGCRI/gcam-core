@@ -45,7 +45,12 @@
  * \author James Blackwood
  */
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/flyweight.hpp>
+#include <boost/flyweight/key_value.hpp>
+#include <boost/flyweight/no_tracking.hpp>
+
 #include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 #include "ccarbon_model/include/icarbon_calc.h"
 
 class LandUseHistory;
@@ -64,18 +69,16 @@ public:
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
 
-    virtual void completeInit() = 0;
+    virtual void completeInit( const double aPrivateDiscountRateLand  ) = 0;
+    
+    virtual void initCalc( const int aPeriod );
 
-    virtual void initLandUseHistory( const LandUseHistory* aHistory );
+    virtual void setLandUseObjects( const LandUseHistory* aHistory, const LandLeaf* aLandLeaf );
 
-    virtual void calc( const int aPeriod, const int aEndYear );
+    virtual double calc( const int aPeriod, const int aEndYear, const CarbonCalcMode aCalcMode );
 
     virtual double getNetLandUseChangeEmission( const int aYear ) const;
-
-    virtual void setTotalLandUse( const double aLandUse,
-                                  const int aPeriod );
 
     virtual double getActualAboveGroundCarbonDensity( const int aYear ) const = 0;
     
@@ -104,34 +107,32 @@ public:
     virtual void setSoilTimeScale( const int aTimeScale );
 
 protected:
-    //! Total land used by period.
-    objects::PeriodVector<double> mLandUse;
 
-    //! Stored above ground emissions which are necessary to clear the total emissions
-    //! when recalculating a period.
-    objects::PeriodVector<objects::YearVector<double>*> mStoredEmissionsAbove;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICarbonCalc,
+        
+        //! Total emissions by year.
+        DEFINE_VARIABLE( ARRAY, "land-use-change-emissions", mTotalEmissions, objects::YearVector<double> ),
+        
+        //! Above ground total emissions by year
+        DEFINE_VARIABLE( ARRAY, "above-ground-land-use-change-emissions", mTotalEmissionsAbove, objects::YearVector<double> ),
+        
+        //! Below ground total emissions by year
+        DEFINE_VARIABLE( ARRAY, "above-ground-land-use-change-emissions", mTotalEmissionsBelow, objects::YearVector<double> ),
+        
+        //! Above ground carbon stock
+        DEFINE_VARIABLE( ARRAY | STATE, "above-ground-carbon-stock", mCarbonStock, objects::YearVector<Value> ),
+        
+        //! Time scale for soil carbon emissions
+        DEFINE_VARIABLE( SIMPLE, "soil-time-scale", mSoilTimeScale, int ),
+        
+        //! Discount rate for land related decisions
+        DEFINE_VARIABLE( SIMPLE, "private-discount-rate", mPrivateDiscountRate, double )
+    )
 
-    //! Stored above ground emissions which are necessary to clear the total emissions
-    //! when recalculating a period.
-    objects::PeriodVector<objects::YearVector<double>*> mStoredEmissionsBelow;
-
-    //! Total emissions by year.
-    objects::YearVector<double> mTotalEmissions;
-
-    //! Above ground total emissions by year
-    objects::YearVector<double> mTotalEmissionsAbove;
-
-    //! Below ground total emissions by year
-    objects::YearVector<double> mTotalEmissionsBelow;
-
-    //! Above ground carbon stock
-    objects::YearVector<double> mCarbonStock;
-
-    //! Time scale for soil carbon emissions
-    int mSoilTimeScale;
-
-
-    /*! 
+    /*!
      * \brief The land use history for the land leaf or it's parent land node.
      * \details Weak pointer to the land use history either for this leaf
      *          or the parent land type. The historical land share will be set to
@@ -140,10 +141,38 @@ protected:
      */
     const LandUseHistory* mLandUseHistory;
     
+    //! The containing LandLeaf object which can be used to retrieve the current
+    //! land allocation.
+    const LandLeaf* mLandLeaf;
+    
+    //! A copy of the carbon stock from the final year in the previous time-step.
+    //! We have to keep a copy incase we need to run the carbon calc in reverse
+    //! and the previous timestep got re-run in forward.
+    objects::PeriodVector<double> mSavedCarbonStock;
+    
+    //! A copy of the previous land allocations
+    //! We have to keep a copy incase we need to run the carbon calc in reverse
+    //! and the previous timestep got re-run in forward.
+    objects::PeriodVector<double> mSavedLandAllocation;
+    
+    // Some boiler plate to be able to take advantage of boost::flyweight to share
+    // the precalc sigmoid curve between instances that have the same mature age
+    struct precalc_sigmoid_helper {
+        precalc_sigmoid_helper( const int aMatureAge );
+        std::vector<double> mData;
+        
+        const double& operator[]( const size_t aPos ) const {
+            return mData[ aPos ];
+        }
+    };
+    using precalc_sigmoid_type = boost::flyweights::flyweight<
+        boost::flyweights::key_value<int, precalc_sigmoid_helper>,
+        boost::flyweights::no_tracking>;
+    
     //! The difference in the sigmoid curve by year offset + 1 - year offset.
     //! This value get precomputed during initcalc to avoid doing the computationally
     //! expensive operations during calc.
-    std::vector<double> precalc_sigmoid_diff;
+    precalc_sigmoid_type precalc_sigmoid_diff;
     
     //! Flag to ensure historical emissions are only calculated a single time
     //! since they can not be reset.

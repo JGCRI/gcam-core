@@ -1,0 +1,9 @@
+# File: A44.demandFn_serv.csv
+# Title: Building service demand function type
+# Units: NA
+# Source: None (GCAM structure)
+# Column types: cccc 
+# ----------
+gcam.consumer,nodeInput,building.node.input,prodDmdFnType
+resid,resid,resid_building,building-service-function
+comm,comm,comm_building,building-service-function

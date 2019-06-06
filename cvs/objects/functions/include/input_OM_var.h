@@ -44,10 +44,11 @@
  */
 
 #include <string>
-#include <vector>
 #include <xercesc/dom/DOMNode.hpp>
+
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 class Tabs;
 
@@ -84,10 +85,6 @@ public:
     virtual void XMLParse( const xercesc::DOMNode* aNode );
 
     virtual bool isSameType( const std::string& aType ) const;
-    
-
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -157,23 +154,31 @@ public:
 protected:
 
     InputOMVar();
-
-    //! Cost of the capital input adjusted for the additional costs of the
-    //! capture component.
-    std::vector<Value> mAdjustedCosts;
-
-    //! Coefficient for production or demand function. Coefficients are not
-    // read in and are initialized to 1, but can increase over time with
-    // technical change.
-    std::vector<Value> mAdjustedCoefficients;
-
-    //! Input specific technical change.
-    Value mTechChange;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        MiniCAMInput,
+        
+        //! Cost of the non-energy input adjusted for the additional costs of the
+        //! capture component.
+        DEFINE_VARIABLE( ARRAY, "adjusted-cost", mAdjustedCosts, objects::TechVintageVector<Value> ),
+        
+        //! Coefficient for production or demand function. Coefficients are not
+        // read in and are initialized to 1, but can increase over time with
+        // technical change.
+        DEFINE_VARIABLE( ARRAY, "adjusted-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> ),
+        
+        //! Input specific technical change.
+        DEFINE_VARIABLE( SIMPLE, "tech-change", mTechChange, Value ),
+        
+        //! Variable O&M cost.
+        DEFINE_VARIABLE( SIMPLE, "OM-var", mOMVar, Value )
+    )
+    
+    void copy( const InputOMVar& aOther );
 
 private:
-    //! Variable O&M cost.
-    Value mOMVar;
-
     // Convert to 1975$/GJ for now.
     double calcOMVarCost( void ) const;
 

@@ -87,7 +87,7 @@ public class RunQueries implements Runnable {
             return;
         }
         try {
-            XMLDB.openDatabase( aDBLocation, aContext );
+            XMLDB.openDatabase( aContext );
             // process the queries on the worker thread
             mWorkerThread.start();
         }

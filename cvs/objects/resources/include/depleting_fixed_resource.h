@@ -91,9 +91,6 @@ public:
 
     virtual void XMLParse( const xercesc::DOMNode* aNode );
 
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
-
     virtual void toDebugXML( const int period,
                              std::ostream &out,
                              Tabs* tabs ) const;
@@ -116,23 +113,27 @@ public:
     virtual double getAnnualProd( const std::string& aRegionName,
                                   const int aPeriod ) const;
 
-    virtual void dbOutput( const std::string& aRegionName );
-
-    virtual void csvOutputFile( const std::string& aRegionName ); 
+    virtual double getPrice( const int aPeriod ) const;
 
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;
 
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AResource,
 
-    //! Fixed resource quantity currently available.
-    Value mFixedResource;
+        //! Fixed resource quantity currently available.
+        DEFINE_VARIABLE( SIMPLE, "fixed-resource", mFixedResource, Value ),
 
-    //! The rate at which the resource depletes.
-    Value mDepletionRate;
+        //! The rate at which the resource depletes.
+        DEFINE_VARIABLE( SIMPLE, "depletion-rate", mDepletionRate, Value ),
 
-    //! The initial price for this resource.
-    Value mInitialPrice;
+        //! The initial price for this resource.
+        DEFINE_VARIABLE( SIMPLE, "price", mInitialPrice, Value )
+    )
 
     void setMarket( const std::string& aRegionName );
 };

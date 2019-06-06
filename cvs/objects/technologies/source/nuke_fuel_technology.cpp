@@ -81,7 +81,29 @@ NukeFuelTechnology::NukeFuelTechnology( const string& aName, const int aYear ): 
 }
 
 NukeFuelTechnology* NukeFuelTechnology::clone() const {
-    return new NukeFuelTechnology( *this );
+    NukeFuelTechnology* clone = new NukeFuelTechnology( mName, mYear );
+    clone->copy( *this );
+    return clone;
+}
+
+void NukeFuelTechnology::copy( const NukeFuelTechnology& aOther ) {
+    Technology::copy( aOther );
+    
+    fertileFuelName = aOther.fertileFuelName;
+    blanketFuelName = aOther.blanketFuelName;
+    blanketFuelRatio = aOther.blanketFuelRatio;
+    burnup = aOther.burnup;
+    conversionCost = aOther.conversionCost;
+    enrichmentProd = aOther.enrichmentProd;
+    enrichmentFeed = aOther.enrichmentFeed;
+    enrichmentTail = aOther.enrichmentTail;
+    enrichmentCost = aOther.enrichmentCost;
+    fabricationCost = aOther.fabricationCost;
+    blanketFabCost = aOther.blanketFabCost;
+    interimStorageCost = aOther.interimStorageCost;
+    geologicWasteDisposalCost = aOther.geologicWasteDisposalCost;
+    reprocessingCost = aOther.reprocessingCost;
+    mConversionFactor = aOther.mConversionFactor;
 }
 
 const string& NukeFuelTechnology::getXMLName() const {
@@ -152,24 +174,6 @@ bool NukeFuelTechnology::XMLDerivedClassParse( const string& nodeName, const DOM
         return false;
     }
     return true;
-}
-
-void NukeFuelTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
-    XMLWriteElementCheckDefault( fertileFuelName, "fertileFuelName", out, tabs, string( "none" ) );
-    XMLWriteElementCheckDefault( blanketFuelName, "blanketFuelName", out, tabs, string( "none" ) );
-    XMLWriteElementCheckDefault( burnup, "burnup", out, tabs, 50.0 );
-    XMLWriteElementCheckDefault( blanketFuelRatio, "blanketFuelRatio", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( conversionCost, "conversionCost", out, tabs, 5.0 );
-    XMLWriteElementCheckDefault( enrichmentProd, "enrichmentProd", out, tabs, 0.045 );
-    XMLWriteElementCheckDefault( enrichmentFeed, "enrichmentFeed", out, tabs, 0.0071 );
-    XMLWriteElementCheckDefault( enrichmentTail, "enrichmentTail", out, tabs, 0.003 );
-    XMLWriteElementCheckDefault( enrichmentCost, "enrichmentCost", out, tabs, 100.0 );
-    XMLWriteElementCheckDefault( fabricationCost, "fabricationCost", out, tabs, 200.0 );
-    XMLWriteElementCheckDefault( blanketFabCost, "blanketFabCost", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( interimStorageCost, "interimStorageCost", out, tabs, 200.0 );
-    XMLWriteElementCheckDefault( geologicWasteDisposalCost, "geologicWasteDisposalCost", out, tabs, 400.0 );
-    XMLWriteElementCheckDefault( reprocessingCost, "reprocessingCost", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( mConversionFactor, "fMultiplier", out, tabs, 1.0 );
 }	
 
 void NukeFuelTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 
@@ -324,15 +328,15 @@ void NukeFuelTechnology::production( const string& aRegionName,
     // add demand for fertile material
     Marketplace* marketplace = scenario->getMarketplace();
     if( fertileFuelName != "none" ) {
-        double inputFertile = primaryOutput / getFertileEfficiency( aPeriod );
-        mLastFertileValue = marketplace->addToDemand( fertileFuelName, aRegionName,
-                                                      inputFertile, mLastFertileValue, aPeriod );
+        mLastFertileValue = primaryOutput / getFertileEfficiency( aPeriod );
+        marketplace->addToDemand( fertileFuelName, aRegionName,
+                                  mLastFertileValue, aPeriod );
     }
     // add demand for blanket material
     if( blanketFuelName != "none" ) {
-        double inputBlanket = primaryOutput / getBlanketEfficiency( aPeriod );
-        mLastBlanketValue = marketplace->addToDemand( blanketFuelName, aRegionName,
-                                                      inputBlanket, mLastBlanketValue, aPeriod );
+        mLastBlanketValue = primaryOutput / getBlanketEfficiency( aPeriod );
+        marketplace->addToDemand( blanketFuelName, aRegionName,
+                                  mLastBlanketValue, aPeriod );
     }
 
     // calculate by-products from technology (shk 10/11/04) mass of initial

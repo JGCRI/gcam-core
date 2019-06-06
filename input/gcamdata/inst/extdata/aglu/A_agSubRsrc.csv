@@ -1,0 +1,9 @@
+# File: A_agSubRsrc.csv
+# Title: Sets the characteristics and supply curves of the non-modeled inputs to animal production
+# Units: Various
+# Source: NA
+# Column types: cc 
+# ----------
+renewresource,sub.renewable.resource
+Residue,Residue
+Scavenging_Other_Rsrc,Scavenging_Other

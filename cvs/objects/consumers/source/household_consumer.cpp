@@ -163,6 +163,43 @@ void HouseholdConsumer::copyParamsInto( HouseholdConsumer& householdConsumerIn,
     householdConsumerIn.mUtilityParameterA = mUtilityParameterA;
 }
 
+void HouseholdConsumer::copy( const HouseholdConsumer& aOther ) {
+    Consumer::copy( aOther );
+    
+    baseLandDemandPerHH = aOther.baseLandDemandPerHH;
+    baseLaborDemandPerHH = aOther.baseLaborDemandPerHH;
+    maxSavingsSupplyFrac = aOther.maxSavingsSupplyFrac;
+    maxLandSupplyFrac = aOther.maxLandSupplyFrac;
+    socialSecurityTaxRate = aOther.socialSecurityTaxRate;
+    landIncomeTaxRate = aOther.landIncomeTaxRate;
+    laborIncomeTaxRate = aOther.laborIncomeTaxRate;
+    dividendsIncomeTaxRate = aOther.dividendsIncomeTaxRate;
+    
+    numberOfHouseholds = aOther.numberOfHouseholds;
+    personsPerHousehold = aOther.personsPerHousehold;
+    totalLandArea = aOther.totalLandArea;
+    landDemand = aOther.landDemand;
+    laborDemand = aOther.laborDemand;
+    householdLandDemand = aOther.householdLandDemand;
+    householdLaborDemand = aOther.householdLaborDemand;
+    baseScalerSavings = aOther.baseScalerSavings;
+    baseScalerLand = aOther.baseScalerLand;
+    baseScalerLaborMale = aOther.baseScalerLaborMale;
+    baseScalerLaborFemale = aOther.baseScalerLaborFemale;
+    transfer = aOther.transfer;
+    baseLandSupply = aOther.baseLandSupply;
+    landSupply = aOther.landSupply;
+    laborSupplyMaleUnSkLab = aOther.laborSupplyMaleUnSkLab;
+    laborSupplyFemaleUnSkLab = aOther.laborSupplyFemaleUnSkLab;
+    laborSupplyUnSkLab = aOther.laborSupplyUnSkLab;
+    laborSupplyMaleSkLab = aOther.laborSupplyMaleSkLab;
+    laborSupplyFemaleSkLab = aOther.laborSupplyFemaleSkLab;
+    laborSupplySkLab = aOther.laborSupplySkLab;
+    workingAgePopMale = aOther.workingAgePopMale;
+    workingAgePopFemale = aOther.workingAgePopFemale;
+    mUtilityParameterA = aOther.mUtilityParameterA;
+}
+
 /*! \brief Creates a clone of this class
  *
  * \author Pralit Patel
@@ -170,7 +207,9 @@ void HouseholdConsumer::copyParamsInto( HouseholdConsumer& householdConsumerIn,
  * \return Pointer to the new class created
  */
 HouseholdConsumer* HouseholdConsumer::clone() const {
-    return new HouseholdConsumer( *this );
+    HouseholdConsumer* clone = new HouseholdConsumer();
+    clone->copy( *this );
+    return clone;
 }
 
 //! Parse xml file for data
@@ -185,13 +224,13 @@ bool HouseholdConsumer::XMLDerivedClassParse( const string &nodeName, const DOMN
         socialSecurityTaxRate = XMLHelper<double>::getValue( curr );
     }
     else if (nodeName == "land-income-tax-rate" ) {
-        landIncomeTaxRate = XMLHelper<double>::getValue( curr );
+        landIncomeTaxRate = XMLHelper<Value>::getValue( curr );
     }
     else if (nodeName == "labor-income-tax-rate" ) {
-        laborIncomeTaxRate = XMLHelper<double>::getValue( curr );
+        laborIncomeTaxRate = XMLHelper<Value>::getValue( curr );
     }
     else if (nodeName == "dividends-income-tax-rate" ) {
-        dividendsIncomeTaxRate = XMLHelper<double>::getValue( curr );
+        dividendsIncomeTaxRate = XMLHelper<Value>::getValue( curr );
     }
     else if (nodeName == "personsPerHousehold" ) {
         personsPerHousehold = XMLHelper<double>::getValue( curr );
@@ -240,28 +279,6 @@ bool HouseholdConsumer::XMLDerivedClassParse( const string &nodeName, const DOMN
         return false;
     }
     return true;
-}
-
-//! For derived classes to output XML data
-void HouseholdConsumer::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElement(baseLandDemandPerHH, "baseLandDemandPerHH", out, tabs );
-    XMLWriteElement(baseLaborDemandPerHH, "baseLaborDemandPerHH", out, tabs );
-    XMLWriteElement( mInitialSavings, "savings", out, tabs );
-    XMLWriteElement(maxSavingsSupplyFrac, "maxSavingsSupplyFrac", out, tabs );
-    XMLWriteElement(maxLandSupplyFrac, "maxLandSupplyFrac", out, tabs );
-    XMLWriteElement(socialSecurityTaxRate, "socialSecurityTaxRate", out, tabs );
-    XMLWriteElement(landIncomeTaxRate, "land-income-tax-rate", out, tabs );
-    XMLWriteElement(laborIncomeTaxRate, "labor-income-tax-rate", out, tabs );
-    XMLWriteElement(dividendsIncomeTaxRate, "dividends-income-tax-rate", out, tabs );
-
-    XMLWriteElement(numberOfHouseholds, "numberOfHouseholds", out, tabs );
-    XMLWriteElement(personsPerHousehold, "personsPerHousehold", out, tabs );
-    XMLWriteElement(totalLandArea, "totalLandArea", out, tabs );
-    XMLWriteElement(baseLandSupply, "baseLandSupply", out, tabs );
-    XMLWriteElement(workingAgePopMale, "workingAgePopMale", out, tabs );
-    XMLWriteElement(workingAgePopFemale, "workingAgePopFemale", out, tabs );
-    XMLWriteElement(workingAgePop, "workingAgePop", out, tabs );
-    XMLWriteElement(mUtilityParameterA, "A-utility-parameter", out, tabs );
 }
 
 //! Output debug info for derived class
@@ -890,43 +907,6 @@ const string HouseholdConsumer::getBudgetMarketName() const {
 const string HouseholdConsumer::getPriceIndexMarketName() const {
     static const string PRICE_INDEX_NAME = "price-index";
     return PRICE_INDEX_NAME;
-}
-
-/*! \brief For outputing SGM data to a flat csv File
- *
- * \author Pralit Patel
- * \param period The period which we are outputing for
- */
-void HouseholdConsumer::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    if ( year == scenario->getModeltime()->getper_to_yr( period ) ) {
-        aFile << "***** Household Sector Results *****" << endl << endl;
-
-        aFile << "Land Demand" << ',' << landDemand << endl;
-        aFile << "Labor Demand" << ',' << laborDemand << endl;
-        aFile << "Household Land Demand" << ',' << householdLandDemand << endl;
-        aFile << "Household Labor Demand" << ',' << householdLaborDemand << endl;
-
-        aFile << "Persons Per Household" << ',' << personsPerHousehold << endl;
-        aFile << "Number Of Households" << ',' << numberOfHouseholds << endl;
-        aFile << "Total Land Area" << ',' << totalLandArea << endl;
-
-        aFile << "Land Supply" << ',' << landSupply << endl;
-        aFile << "Unskilled Labor Supply: Male" << ',' << laborSupplyMaleUnSkLab << endl;
-        aFile << "Unskilled Labor Supply: Female" << ',' << laborSupplyFemaleUnSkLab << endl;
-        aFile << "Skilled Labor Supply: Male" << ',' << laborSupplyMaleSkLab << endl;
-        aFile << "Skilled Labor Supply: Female" << ',' << laborSupplyFemaleSkLab << endl;
-        aFile << "Labor Supply: Total" << ',' << getLaborSupply() << endl;
-
-        aFile << "Working Age Pop: Male" << ',' << workingAgePopMale << endl;
-        aFile << "Working Age Pop: Female" << ',' << workingAgePopFemale << endl;
-        aFile << "Working Age Pop: Total" << ',' << workingAgePopMale + workingAgePopFemale << endl;
-        expenditures[ period ].csvSGMOutputFile( aFile, period );
-
-        aFile << endl;
-
-        aFile << "HouseholdConsumer Expenditure" << endl << endl;
-        BaseTechnology::csvSGMOutputFile( aFile, period );
-    }
 }
 
 void HouseholdConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {

@@ -58,7 +58,6 @@ class FactorSupply;
 class IVisitor;
 class NationalAccount;
 // TEMP
-class SGMGenTable;
 class Tabs;
 
 /*!
@@ -102,11 +101,6 @@ class Tabs;
  */
 class RegionCGE : public Region
 {
-    friend class SocialAccountingMatrix;
-    friend class DemandComponentsTable;
-    friend class SectorReport;
-    friend class SGMGenTable;
-    friend class InputOutputTable;
     friend class XMLDBOutputter;
 public:
     RegionCGE();
@@ -117,26 +111,27 @@ public:
     virtual void postCalc( const int aPeriod );
     virtual void calc( const int period );
     virtual void updateMarketplace( const int period );
-    virtual void updateAllOutputContainers( const int period );
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    virtual void csvSGMGenFile( std::ostream& aFile ) const;
 
 protected:
+
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Region
+    )
+    // TODO: convert SGM classes for introspection?
     const static std::string XML_NAME; //!< node name for toXML method.
     std::vector<FinalDemandSector*> finalDemandSector; //!< vector of pointers to final demand sector objects
     std::vector<FactorSupply*> factorSupply; //!< vector of pointers to factor supply objects
-    std::vector<SGMGenTable*> mOutputContainers; //!< vector of output containers
     std::vector<NationalAccount*> mNationalAccounts; //!< vector of NationalAccounts, one for each period.
     IVisitor* mCalcCapitalGoodPriceVisitor; //!< vistor to calculate the price of the capital good
 
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     void operate( const int period );
 private:
-    void createSGMGenTables();
     void clear();
 };
 

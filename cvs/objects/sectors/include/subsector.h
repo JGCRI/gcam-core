@@ -50,13 +50,15 @@
 #include <map>
 #include <list>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "investment/include/iinvestable.h"
-#include "util/base/include/iround_trippable.h"
+#include "util/base/include/inamed.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
-class Summary;
 class ITechnologyContainer;
 class GDP;
 class IInfo;
@@ -70,9 +72,13 @@ class IDistributor;
 class Tabs;
 class ILandAllocator;
 class Demographics;
-class IndirectEmissionsCalculator;
 class InterpolationRule;
 class IDiscreteChoice;
+
+// Need to forward declare the subclasses as well.
+class TranSubsector;
+class AgSupplySubsector;
+class SubsectorAddTechCosts;
 
 /*! 
 * \ingroup Objects
@@ -83,13 +89,10 @@ class IDiscreteChoice;
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 
-class Subsector: public IInvestable,
-                 public IRoundTrippable
+class Subsector: public INamed,
+                 public IInvestable,
+                 private boost::noncopyable
 {
-    friend class SocialAccountingMatrix;
-    friend class DemandComponentsTable;
-    friend class SectorReport;
-    friend class SGMGenTable;
     friend class XMLDBOutputter;
     // needs to be friend so that it can set the doCalibration flag
     friend class InvestableCounterVisitor;
@@ -99,40 +102,57 @@ class Subsector: public IInvestable,
     friend class SetShareWeightVisitor;
     friend class CalibrateShareWeightVisitor;
 private:
-    static const std::string XML_NAME; //!< node name for toXML methods
     void clear();
     void clearInterpolationRules();
     //! A flag for convenience to know whether this Subsector created a market
-    //! for calibration
+    //! for calibration (SGM)
     bool doCalibration;
 protected:
-    std::string name; //!< subsector name
-    std::string regionName; //!< region name
-    std::string sectorName; //!< sector name
-    std::auto_ptr<IInfo> mSubsectorInfo; //!< The subsector's information store.
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of Subsector to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( Subsector, TranSubsector, AgSupplySubsector, SubsectorAddTechCosts ),
 
-    //! Vector of technology containers by name
-    std::vector<ITechnologyContainer*> mTechContainers;
+        //! subsector name
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+
+        //! region name
+        DEFINE_VARIABLE( SIMPLE, "region-name", mRegionName, std::string ),
+
+        //! sector name
+        DEFINE_VARIABLE( SIMPLE, "sector-name", mSectorName, std::string ),
+
+        //! Subsector logit share weights
+        DEFINE_VARIABLE( ARRAY | STATE, "share-weight", mShareWeights, objects::PeriodVector<Value> ),
+
+        //! The original subsector logit share weights that were parsed
+        DEFINE_VARIABLE( ARRAY, "parsed-share-weight", mParsedShareWeights, objects::PeriodVector<Value> ),
+                    
+        //! Fuel preference elasticity
+        DEFINE_VARIABLE( ARRAY, "fuelprefElasticity", mFuelPrefElasticity, objects::PeriodVector<double> ),
+        
+        //! Vector of technology containers by name
+        DEFINE_VARIABLE( CONTAINER, "technology", mTechContainers, std::vector<ITechnologyContainer*> ),
+
+        //! Interpolation rules for subsector share weight values.
+        DEFINE_VARIABLE( CONTAINER, "interpolation-rule", mShareWeightInterpRules, std::vector<InterpolationRule*> ),
+
+        //! Discrete choice model used for allocating technology shares
+        DEFINE_VARIABLE( CONTAINER, "discreate-choice-function", mDiscreteChoiceModel, IDiscreteChoice* )
+    )
+    
     // Some typedefs for technology interators
     typedef std::vector<ITechnologyContainer*>::iterator TechIterator;
     typedef std::vector<ITechnologyContainer*>::const_iterator CTechIterator;
-
-    //! Subsector logit share weights
-    objects::PeriodVector<Value> mShareWeights;
-    //! The original subsector logit share weights that were parsed
-    objects::PeriodVector<Value> mParsedShareWeights;
-    //! Interpolation rules for subsector share weight values.
-    std::vector<InterpolationRule*> mShareWeightInterpRules;
     // Some typedefs to make using interpolation rules more readable.
     typedef std::vector<InterpolationRule*>::const_iterator CInterpRuleIterator;
-    //! Discrete choice model used for allocating technology shares
-    std::auto_ptr<IDiscreteChoice> mDiscreteChoiceModel;
-
-    std::vector<double> fuelPrefElasticity; //!< Fuel preference elasticity
+    
+    std::auto_ptr<IInfo> mSubsectorInfo; //!< The subsector's information store.
 
     std::vector<double> mInvestments; //!< Investment by period.
     std::vector<double> mFixedInvestments; //!< Input fixed subsector level investment by period.
-    std::vector<Summary> summary; //!< summary for reporting
     std::vector<BaseTechnology*> baseTechs; // for the time being
     std::map<std::string, TechnologyType*> mTechTypes; //!< Mapping from technology name to group of technology vintages.
 
@@ -145,7 +165,6 @@ protected:
 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
     void parseBaseTechHelper( const xercesc::DOMNode* curr, BaseTechnology* aNewTech );
     
@@ -166,8 +185,6 @@ public:
                            const MoreSectorInfo* aMoreSectorInfo,
                            const int aPeriod );
 
-
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
@@ -190,13 +207,6 @@ public:
 
     virtual double getTotalCalOutputs( const int period ) const;
 
-    void csvOutputFile( const GDP* aGDP,
-                        const IndirectEmissionsCalculator* aIndirectEmissCalc ) const; 
-    virtual void MCoutputSupplySector( const GDP* aGDP ) const; 
-    virtual void MCoutputAllSectors( const GDP* aGDP, 
-                                     const IndirectEmissionsCalculator* aIndirectEmissCalc,
-                                     const std::vector<double> aSectorOutput ) const; 
-
     void emission( const int period );
 
     double getInput( const int period ) const;
@@ -213,12 +223,6 @@ public:
                                  const std::string& aSectorName,
                                  const double aNewInvestment,
                                  const int aPeriod );
-
-    std::map<std::string, double> getfuelcons( const int period ) const; 
-    std::map<std::string, double> getemission( const int period ) const;
-    std::map<std::string, double> getemfuelmap( const int period ) const; 
-
-    void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
     
     double getExpectedProfitRate( const NationalAccount& aNationalAccount,
                                   const std::string& aRegionName,
@@ -241,7 +245,6 @@ public:
     
     void updateMarketplace( const int period );
     void postCalc( const int aPeriod );
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     double getFixedInvestment( const int aPeriod ) const;
     bool hasCalibrationMarket() const;

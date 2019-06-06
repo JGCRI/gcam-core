@@ -59,6 +59,11 @@ FixedInterpolationFunction::FixedInterpolationFunction() {
 FixedInterpolationFunction::~FixedInterpolationFunction() {
 }
 
+IInterpolationFunction* FixedInterpolationFunction::clone() const {
+    // no parameters to copy
+    return new FixedInterpolationFunction();
+}
+
 /*!
  * \brief The value for the xml name attribute which identifies this
  *        interpolation function.
@@ -99,10 +104,6 @@ bool FixedInterpolationFunction::XMLParse( const DOMNode* aNode ) {
         }
     }
     return true;
-}
-
-void FixedInterpolationFunction::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteElement("", IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, 0, getXMLAttrNameStatic() );
 }
 
 double FixedInterpolationFunction::interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,

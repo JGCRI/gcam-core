@@ -61,20 +61,15 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-// static initialize.
-const string SubResource::XML_NAME = "subresource";
-const double GDP_EXPANS_DEFAULT = 1;
-const Value VALUE_DEFAULT = 0.0;
 
 //! Default constructor.
 SubResource::SubResource():
-//mPriceAdder( scenario->getModeltime()->getmaxper() , 0.0 ),
-mAvailable( scenario->getModeltime()->getmaxper() , 0.0 ),
-mAnnualProd( scenario->getModeltime()->getmaxper() , 0.0 ),
-mCumulProd( scenario->getModeltime()->getmaxper() , 0.0 ),
-mCumulativeTechChange( scenario->getModeltime()->getmaxper() , 1.0 ),
-mEffectivePrice( scenario->getModeltime()->getmaxper() , -1.0 ),
-mCalProduction( scenario->getModeltime()->getmaxper() , -1.0 )
+mAvailable( Value( 0.0 ) ),
+mAnnualProd( Value( 0.0 ) ),
+mCumulProd( Value( 0.0 ) ),
+mCumulativeTechChange( 1.0 ),
+mEffectivePrice( Value( -1.0 ) ),
+mCalProduction( -1.0 )
 {
 }
 
@@ -106,10 +101,10 @@ void SubResource::XMLParse( const DOMNode* node ){
             continue;
         }
         else if( nodeName == Grade::getXMLNameStatic() ){
-            parseContainerNode( curr, mGrade, mGradeNameMap, new Grade );
+            parseContainerNode( curr, mGrade, new Grade );
         }
         else if( nodeName == "annualprod" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mAnnualProd, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mAnnualProd, modeltime );
         }
         else if( nodeName == "techChange" ){
             XMLHelper<Value>::insertValueIntoVector( curr, mTechChange, modeltime );
@@ -160,13 +155,13 @@ void SubResource::completeInit( const IInfo* aResourceInfo ) {
     // If unitialize, initialize following variables to null for final calibration period.
     const int FinalCalPer = modeltime->getFinalCalibrationPeriod();
     if( !mTechChange[ FinalCalPer ].isInited() ) {
-        mTechChange[ FinalCalPer ] = VALUE_DEFAULT;
+        mTechChange[ FinalCalPer ] = 0;
     }
     if( !mEnvironCost[ FinalCalPer ].isInited() ) {
-        mEnvironCost[ FinalCalPer ] = VALUE_DEFAULT;
+        mEnvironCost[ FinalCalPer ] = 0;
     }
     if( !mSeveranceTax[ FinalCalPer ].isInited() ) {
-        mSeveranceTax[ FinalCalPer ] = VALUE_DEFAULT;
+        mSeveranceTax[ FinalCalPer ] = 0;
     }
 
     // decrement from terminal period to copy backward the technical change for missing periods
@@ -180,7 +175,7 @@ void SubResource::completeInit( const IInfo* aResourceInfo ) {
             // This may occur if running GCAM time periods beyond read-in dataset and
             // fillout is not used.
             else{
-                mTechChange[ per ] = VALUE_DEFAULT;
+                mTechChange[ per ] = 0;
             }
         }
     }
@@ -250,48 +245,13 @@ void SubResource::postCalc( const string& aRegionName, const string& aResourceNa
     updateAvailable( aPeriod ); // reinitialize available amount
     if( aPeriod > 0 ) {
         mAvailable[ aPeriod ] -= mCumulProd[ aPeriod - 1 ];
-        mAvailable[ aPeriod ] = max( mAvailable[ aPeriod ], 0.0 );
+        mAvailable[ aPeriod ] = max( mAvailable[ aPeriod ].get(), 0.0 );
     }
 
     // call grade post calculations.
     for( unsigned int i = 0; i < mGrade.size(); i++ ) {
         mGrade[i]->postCalc( aRegionName, aResourceName, aPeriod );
     }
-}
-
-//! Blank definition so that don't have to define in derived classes if there is nothing to write out
-void SubResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {   
-}   
-
-//! Write data members to data stream in XML format for replicating input file.
-void SubResource::toInputXML( ostream& out, Tabs* tabs ) const {
-
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
-
-    // write the xml for the class members.
-    const Value VALUE_DEFAULT = 0.0; // enables template function to recognize Value Class
-    XMLWriteVector( mEnvironCost, "environCost", out, tabs, modeltime, VALUE_DEFAULT );
-    XMLWriteVector( mSeveranceTax, "severanceTax", out, tabs, modeltime, VALUE_DEFAULT );
-    XMLWriteVector( mTechChange, "techChange", out, tabs, modeltime, VALUE_DEFAULT );
-    
-    // for base year only
-    XMLWriteElementCheckDefault(mAnnualProd[0],"annualprod",out, tabs, 0.0 , modeltime->getper_to_yr(0)); 
-
-    XMLWriteVector( mCalProduction, "cal-production", out, tabs, modeltime, -1.0 );
-    XMLWriteVector( mPriceAdder, "price-adder", out, tabs, modeltime, VALUE_DEFAULT  );
-    // finished writing xml for the class members.
-
-    // write out anything specific to the derived classes
-    toXMLforDerivedClass( out, tabs );
-
-    // write out the grade objects.
-    for( vector<Grade*>::const_iterator i = mGrade.begin(); i != mGrade.end(); i++ ){ 
-        ( *i )->toInputXML( out, tabs );
-    }
-
-    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 void SubResource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
@@ -316,9 +276,6 @@ void SubResource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 
     // finished writing xml for the class members.
 
-    // write out anything specific to the derived classes
-    toXMLforDerivedClass( out, tabs );
-
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
@@ -331,7 +288,7 @@ void SubResource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 * \return The constant XML_NAME.
 */
 const std::string& SubResource::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -344,11 +301,12 @@ const std::string& SubResource::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& SubResource::getXMLNameStatic() {
+    static const string XML_NAME = "subresource";
     return XML_NAME;
 }
 
 //! return SubResource name
-string SubResource::getName() const {
+const std::string& SubResource::getName() const {
     return mName;
 }
 
@@ -384,12 +342,12 @@ void SubResource::cumulsupply( double aPrice, int aPeriod )
             }
             // add subrsrcs up to the lower grade
             for ( i = 0; i <= iL; i++ ) {
-                mCumulProd[ aPeriod ] += mGrade[i]->getAvail();
+                mCumulProd[ aPeriod ] += Value( mGrade[i]->getAvail() );
             }
             // price must reach upper grade cost to produce all of lower grade
             double slope = mGrade[iL]->getAvail()
                 / ( mGrade[iU]->getCost( aPeriod ) - mGrade[iL]->getCost( aPeriod ) );
-            mCumulProd[ aPeriod ] -= slope * ( mGrade[iU]->getCost( aPeriod ) - mEffectivePrice[ aPeriod ] );
+            mCumulProd[ aPeriod ] -= Value( slope * ( mGrade[iU]->getCost( aPeriod ) - mEffectivePrice[ aPeriod ] ) );
         }
         
         // Case 3
@@ -398,7 +356,7 @@ void SubResource::cumulsupply( double aPrice, int aPeriod )
         if ( mEffectivePrice[ aPeriod ] > mGrade[ mGrade.size() - 1 ]->getCost( aPeriod ) ) {
             mCumulProd[ aPeriod ] = 0;
             for ( unsigned int i = 0; i < mGrade.size(); i++ ) {
-                mCumulProd[ aPeriod ] += mGrade[i]->getAvail();
+                mCumulProd[ aPeriod ] += Value( mGrade[i]->getAvail() );
             }
         }
     }
@@ -417,7 +375,7 @@ double SubResource::getCumulProd( const int aPeriod ) const {
 void SubResource::updateAvailable( const int aPeriod ){
     mAvailable[ aPeriod ] = 0;
     for ( unsigned int i = 0; i < mGrade.size(); ++i ) {
-        mAvailable[ aPeriod ] += mGrade[ i ]->getAvail();
+        mAvailable[ aPeriod ] += Value( mGrade[ i ]->getAvail() );
     }
 }
 
@@ -445,7 +403,7 @@ void SubResource::annualsupply( int aPeriod, const GDP* aGdp, double aPrice, dou
 
         // mAvailable is the total resource (stock) remaining
         mAvailable[ aPeriod ] = mAvailable[ aPeriod - 1 ] - ( mAnnualProd[ aPeriod ] * modeltime->gettimestep( aPeriod ) );
-        mAvailable[ aPeriod ] = max( mAvailable[ aPeriod ], 0.0 );
+        mAvailable[ aPeriod ] = max( mAvailable[ aPeriod ].get(), 0.0 );
     }
 }
 
@@ -472,69 +430,6 @@ void SubResource::accept( IVisitor* aVisitor, const int aPeriod ) const {
 double SubResource::getAvailable(int per) const {
     return mAvailable[per];
 }
-
-//! write SubResource output to database
-void SubResource::dbOutput( const string &regname, const string& secname ){
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    int m=0;
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    const string outputUnit = mSubresourceInfo->getString( "output-unit", true );
-    const string priceUnit = mSubresourceInfo->getString( "price-unit", true );
-    vector<double> temp(maxper);
-    string tssname = mName; // tempory subsector name
-
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total subsector output
-    //dboutput4(regname,"Primary Energy", "Production for " + secname,name,outputUnit,annualprod);
-    //    dboutput4(regname,"Resource",secname,str,"EJ",available);
-    dboutput4(regname,"Resource","Available "+secname,mName,outputUnit,mAvailable);
-    dboutput4(regname,"Resource","CummProd "+secname,mName,outputUnit,mCumulProd);
-
-    // do for all grades in the sector
-    for ( unsigned int i=0;i< mGrade.size();i++) {
-        string str = tssname + "_" + mGrade[i]->getName();
-        // grade cost
-        for (m=0;m<maxper;m++) {
-            temp[m] = mGrade[i]->getCost(m);
-        }
-        dboutput4(regname,"Price",secname,str,priceUnit,temp);
-        // grade extraction cost
-        for (m=0;m<maxper;m++) {
-            temp[m] = mGrade[i]->getExtCost();
-        }
-        dboutput4(regname,"Price ExtCost",secname,str,priceUnit,temp);
-        // available resource for each grade
-        for (m=0;m<maxper;m++) {
-            temp[m] = mGrade[i]->getAvail();
-        }
-        dboutput4(regname,"Resource",secname,str,outputUnit,temp);
-    }
-}
-
-//! write SubResource output to file
-void SubResource::csvOutputFile( const string &regname, const string& sname) {
-    const Modeltime* modeltime = scenario->getModeltime();
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    const int maxper = modeltime->getmaxper();
-    const string outputUnit = mSubresourceInfo->getString( "output-unit", true );
-    vector<double> temp(maxper);
-
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total subsector output
-    fileoutput3( regname,sname,mName," ","production",outputUnit,mAnnualProd);
-    fileoutput3( regname,sname,mName," ","resource",outputUnit,mAvailable);
-
-}
-
 
 // ************************************************************
 // Definitions for two of the derived classes below.

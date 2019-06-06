@@ -45,9 +45,6 @@
 
 using namespace std;
 
-// static initialize.
-const string GenericOutput::XML_REPORTING_NAME = "output-generic";
-
 GenericOutput::GenericOutput( const string& aSectorName )
     : PrimaryOutput( aSectorName )
 {
@@ -58,7 +55,9 @@ GenericOutput::~GenericOutput() {
 
 GenericOutput* GenericOutput::clone() const
 {
-    return new GenericOutput( *this );
+    GenericOutput* clone = new GenericOutput( mName );
+    clone->copy( *this );
+    return clone;
 }
 
 bool GenericOutput::isSameType( const string& aType ) const
@@ -75,6 +74,7 @@ bool GenericOutput::isSameType( const string& aType ) const
 * \return The constant XML_NAME.
 */
 const string& GenericOutput::getXMLReportingName() const{
+    static const string XML_REPORTING_NAME = "output-generic";
     return XML_REPORTING_NAME;
 }
 

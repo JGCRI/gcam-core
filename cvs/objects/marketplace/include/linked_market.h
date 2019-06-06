@@ -62,7 +62,7 @@
 class LinkedMarket: public Market {
     friend class MarketDependencyFinder;
 public:
-    LinkedMarket( Market* aLinkedMarket, const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
+    LinkedMarket( Market* aLinkedMarket, const MarketContainer* aContainer );
     virtual IMarketType::Type getType() const;
     
     virtual void initPrice();
@@ -79,6 +79,7 @@ public:
     virtual double getSupply() const;
     virtual void addToSupply( const double aSupply );
     
+    virtual void setSolveMarket( const bool aShouldSolve );
     virtual bool meetsSpecialSolutionCriteria() const;
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;
@@ -86,13 +87,19 @@ protected:
     //! The pointer to the market linked to.
     Market* mLinkedMarket;
     
-    //! A price scalar which could be used to convert units from this good to those
-    //! of the linked market.
-    double mPriceMult;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Market,
     
-    //! A quantity scalar which could be used to convert units from this good to those
-    //! of the linked market.
-    double mQuantityMult;
+        //! A price scalar which could be used to convert units from this good to those
+        //! of the linked market.
+        DEFINE_VARIABLE( SIMPLE, "price-adjust", mPriceMult, double ),
+        
+        //! A quantity scalar which could be used to convert units from this good to those
+        //! of the linked market.
+        DEFINE_VARIABLE( SIMPLE, "demand-adjust", mQuantityMult, double )
+    )
     
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 };

@@ -1,0 +1,9 @@
+# File: A44.bld_shell_conductance.csv
+# Title: Assumed USA shell efficiency trajectories
+# Units: Unitless
+# Source: Provided by the DOE EPSA office in 2015. Assumptions are simliar to the 2016 Annual Energy Outlook (Table 22; "Building shell efficiency index"; https://www.eia.gov/outlooks/aeo/data/browser/#/?id=30-AEO2016&cases=ref2016~ref_no_cpp&sourcekey=0).
+# Column types: cnnnnnnnnn 
+# ----------
+gcam.consumer,1971,2010,2015,2020,2025,2030,2035,2040,2100
+resid,1,0.99,0.96,0.95,0.93,0.91,0.9,0.89,0.89
+comm,1,1,0.96,0.95,0.93,0.91,0.9,0.89,0.89

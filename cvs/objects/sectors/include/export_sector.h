@@ -78,10 +78,7 @@ protected:
                              const int aPeriod ) const;
 
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
-                                       const xercesc::DOMNode* aCurr ); 
-    
-    virtual void toInputXMLDerived( std::ostream& aOut,
-                                    Tabs* aTabs ) const;
+                                       const xercesc::DOMNode* aCurr );
     
     virtual void toDebugXMLDerived( const int aPeriod,
                                     std::ostream& aOut,
@@ -89,11 +86,17 @@ protected:
 	
     const std::string& getXMLName() const;
     
-    //! Vector of read-in fixed prices.
-    std::vector<double> mFixedPrices;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        SupplySector,
+    
+        //! Vector of read-in fixed prices.
+        DEFINE_VARIABLE( ARRAY, "sectorprice", mFixedPrices, objects::PeriodVector<Value> ),
 
-	//! The market region into which the sector is exporting.
-	std::string mMarketName;
+        //! The market region into which the sector is exporting.
+        DEFINE_VARIABLE( SIMPLE, "market", mMarketName, std::string )
+    )
 };
 
 #endif // _EXPORT_SECTOR_H_

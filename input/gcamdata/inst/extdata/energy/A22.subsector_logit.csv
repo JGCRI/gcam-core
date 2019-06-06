@@ -1,0 +1,16 @@
+# File: A22.subsector_logit.csv
+# Title: Primary energy transformation subsector logit exponents
+# Units: NA
+# Description: logit exponents and types for subsectors in energy transformation
+# Column types: ccic 
+# ----------
+supplysector,subsector,logit.exponent,logit.type
+gas processing,natural gas,-6,
+gas processing,biomass gasification,-6,
+gas processing,coal gasification,-6,
+nuclearFuelGenII,enrichedUranium,-6,
+nuclearFuelGenIII,enrichedUranium,-6,
+refining,oil refining,-6,absolute-cost-logit
+refining,biomass liquids,-6,absolute-cost-logit
+refining,coal to liquids,-6,absolute-cost-logit
+refining,gas to liquids,-6,absolute-cost-logit

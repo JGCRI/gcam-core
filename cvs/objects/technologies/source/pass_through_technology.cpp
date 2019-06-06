@@ -63,8 +63,17 @@ PassThroughTechnology::~PassThroughTechnology() {
 }
 
 PassThroughTechnology* PassThroughTechnology::clone() const {
+    PassThroughTechnology* clone = new PassThroughTechnology( mName, mYear );
+    clone->copy( *this );
+    return clone;
+}
 
-    return new PassThroughTechnology( *this );
+void PassThroughTechnology::copy( const PassThroughTechnology& aOther ) {
+    Technology::copy( aOther );
+    
+    mPassThroughSectorName = aOther.mPassThroughSectorName;
+    mPassThroughMarketName = aOther.mPassThroughMarketName;
+    mPassThroughFixedOutput = aOther.mPassThroughFixedOutput;
 }
 
 const string& PassThroughTechnology::getXMLNameStatic() {
@@ -89,7 +98,7 @@ void PassThroughTechnology::completeInit( const string& aRegionName,
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Reseting lifetime " << mLifetimeYears << " to a single timestep for "
-                << getXMLNameStatic() << " " << mName << " in year " << year << "." << endl;
+                << getXMLNameStatic() << " " << mName << " in year " << mYear << "." << endl;
         mLifetimeYears = -1;
     }
 
@@ -121,7 +130,6 @@ void PassThroughTechnology::completeInit( const string& aRegionName,
     // Ensure we gather the fixed demands after we calculate prices / before we
     // set supplies
     depFinder->addDependency( fixedDemandActivityName, mPassThroughMarketName, aSectorName, aRegionName );
-    depFinder->addDependency( fixedDemandActivityName, mPassThroughMarketName, aSectorName+ "-fixed-output", aRegionName );
 }
 
 void PassThroughTechnology::production( const string& aRegionName,
@@ -145,9 +153,9 @@ double PassThroughTechnology::getFixedOutput( const string& aRegionName,
                                               const int aPeriod ) const
 {
     // Retrieve the fixed output from the pass-through sector which will store this
-    // information in it's info object
-    IInfo* passThroughInfo = scenario->getMarketplace()->getMarketInfo( mPassThroughSectorName, mPassThroughMarketName, aPeriod, true );
-    const_cast<PassThroughTechnology*>( this )->mPassThroughFixedOutput = passThroughInfo->getDouble( "fixed-output", true );
+    // information in a unsolved trial market.
+    const string fixedDemandActivityName = mPassThroughSectorName + "-fixed-output";
+    const_cast<PassThroughTechnology*>( this )->mPassThroughFixedOutput = scenario->getMarketplace()->getPrice( fixedDemandActivityName, mPassThroughMarketName, aPeriod );
     return mPassThroughFixedOutput;
 }
 
@@ -169,9 +177,6 @@ double PassThroughTechnology::getCalibrationOutput( const bool aHasRequiredInput
 bool PassThroughTechnology::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
     // no additional parameters are parsed by this technology
     return false;
-}
-
-void PassThroughTechnology::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 }
 
 //! write object to xml output stream

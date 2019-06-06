@@ -1,0 +1,8 @@
+# File: A31.sector.csv
+# Title: Industrial & urban processes default supplysector information
+# Units: NA
+# Column types: ccccic 
+# ----------
+supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
+industrial processes,NA,NA,NA,0,
+urban processes,NA,NA,NA,0,

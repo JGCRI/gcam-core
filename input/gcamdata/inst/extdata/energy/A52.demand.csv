@@ -1,0 +1,7 @@
+# File: A52.demand.csv
+# Title: Aggregate transportation final demand perCapitaBased and price elasticity
+# Units: Unitless
+# Column types: cii 
+# ----------
+energy.final.demand,perCapitaBased,price.elasticity
+transportation,1,-1

@@ -44,11 +44,16 @@
  * \author Kate Calvin
  */
 
+#include <memory>
+
 #include "emissions/include/aghg.h"
+#include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
 
+// Forward declaration
 class AEmissionsDriver;
 class AEmissionsControl;
+class IInfo;
 
 /*! 
  * \ingroup Objects
@@ -56,6 +61,7 @@ class AEmissionsControl;
  * \author Kate Calvin
  */
 class NonCO2Emissions: public AGHG {
+
 public:
     NonCO2Emissions();
     
@@ -72,7 +78,7 @@ public:
                                const IInfo* aTechIInfo );
 
     virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
+                           const IInfo* aTechIInfo,
                            const int aPeriod );
 
     virtual double getGHGValue( const std::string& aRegionName,
@@ -91,21 +97,35 @@ public:
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const AGHG* aPreviousGHG,
                                    const AGHG* aNextGHG );
-protected: 
+
+    double getAdjustedEmissCoef( const int aPeriod ) const;
+    
+protected:
     NonCO2Emissions( const NonCO2Emissions& aOther );
     NonCO2Emissions& operator=( const NonCO2Emissions& aOther );
     
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
-    virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AGHG,
 
-private:    
-    //! The emissions coefficient.
-    Value mEmissionsCoef;
+        //! The emissions coefficient.
+        DEFINE_VARIABLE( SIMPLE | STATE, "emiss-coef", mEmissionsCoef, Value ),
 
-    //! Emissions to calibrate to if provided.
-    Value mInputEmissions;
+        //! Emissions to calibrate to if provided.
+        DEFINE_VARIABLE( SIMPLE, "input-emissions", mInputEmissions, Value ),
+                                
+        //! Set of emissions controls
+        DEFINE_VARIABLE( CONTAINER, "emissions-control", mEmissionsControls, std::vector<AEmissionsControl*> ),
+                                
+        //! Stored Emissions Coefficient (needed for some control technologies)
+        //! The emissions coefficient is the current ratio of emissions to driver, accounting for any controls   
+        DEFINE_VARIABLE( ARRAY | STATE, "control-adjusted-emiss-coef", mAdjustedEmissCoef, objects::TechVintageVector<Value> )
+    )
 
     //! A flag to indicate if mInputEmissions should be used recalibrate mEmissionsCoef
     //! in the current model period.
@@ -116,14 +136,12 @@ private:
     const GDP* mGDP;
 
     //! Emissions driver delegate
+    //! Include this in DEFINE_DATA?  These currently have no data at all and are simply "tags".
     std::auto_ptr<AEmissionsDriver> mEmissionsDriver;
-
-    //! Set of emissions controls
-    std::vector<AEmissionsControl*> mEmissionsControls;
 
     // typdef to help simplify code
     typedef std::vector<AEmissionsControl*>::const_iterator CControlIterator;
-
+    
     void clear();
 
     void copy( const NonCO2Emissions& aOther );

@@ -50,8 +50,10 @@
 #include <list>
 #include <memory>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
 class Region;
@@ -62,6 +64,7 @@ class IClimateModel;
 class GHGPolicy;
 class GlobalTechnologyDatabase;
 class IActivity;
+class Tabs;
 
 #if GCAM_PARALLEL_ENABLED
 class GcamFlowGraph;
@@ -81,14 +84,13 @@ class GcamFlowGraph;
 * \author Sonny Kim
 */
 
-class World: public IVisitable, public IRoundTrippable
+class World: public IVisitable, private boost::noncopyable
 {
 public:
     World();
     ~World();
     void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 	static const std::string& getXMLNameStatic();
     const std::string& getName() const;
@@ -97,12 +99,9 @@ public:
 
     void calc( const int period );
     void calc( const int period, const std::vector<IActivity*>& aRegionsToCalc );
-    void updateSummary( const std::list<std::string> aPrimaryFuelList, const int period ); 
     void setEmissions( int period );
     void runClimateModel();
     void runClimateModel( int period );
-    void csvOutputFile() const; 
-    void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const; 
     const std::map<std::string,int> getOutputRegionMap() const;
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void setTax( const GHGPolicy* aTax );
@@ -110,14 +109,14 @@ public:
     std::map<std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
     std::map<std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
     CalcCounter* getCalcCounter() const;
+    int getGlobalOrderingSize() const {return mGlobalOrdering.size();}
+    
     const GlobalTechnologyDatabase* getGlobalTechnologyDatabase() const;
 
 	void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
-    void csvSGMGenFile( std::ostream& aFile ) const;
 
 #if GCAM_PARALLEL_ENABLED
-  private:
+  protected:
     //! TBB flow graph for a complete model evaluation
     GcamFlowGraph* mTBBGraphGlobal;
   public:
@@ -132,33 +131,36 @@ public:
      */
     GcamFlowGraph *getGlobalFlowGraph() {return mTBBGraphGlobal;}
 #endif
-private:
+protected:
     //! The type of an iterator over the Region vector.
     typedef std::vector<Region*>::iterator RegionIterator;
 
     //! The type of a constant iterator over the Region vector.
     typedef std::vector<Region*>::const_iterator CRegionIterator;
     
-    std::map<std::string, int> regionNamesToNumbers; //!< Map of region name to indice used for XML parsing.
-    std::vector<Region*> regions; //!< array of pointers to Region objects
-    std::auto_ptr<IClimateModel> mClimateModel; //!< The climate model.
-
-    //! An object which maintains a count of the number of times
-    //! calc() has been called.
-    std::auto_ptr<CalcCounter> mCalcCounter;
+    DEFINE_DATA(
+        /*! \brief World is the only member of this container hierarchy. */
+        DEFINE_SUBCLASS_FAMILY( World ),
+        
+        /*! \brief Array of pointers to Region objects. */
+        DEFINE_VARIABLE( CONTAINER, "region", mRegions, std::vector<Region*> ),
+        
+        /*! \brief The climate model. */
+        DEFINE_VARIABLE( SIMPLE, "climate-model", mClimateModel, IClimateModel* ),
+        
+        /*! \brief The global technology database. */
+        DEFINE_VARIABLE( SIMPLE, "global-technology-database", mGlobalTechDB, GlobalTechnologyDatabase* ),
+        
+        /*! \brief An object which maintains a count of the number of times
+         *         calc() has been called.
+         */
+        DEFINE_VARIABLE( SIMPLE, "calc-counter", mCalcCounter, CalcCounter* )
+    )
     
     //! The global ordering of activities which can be used to calculate the model.
     std::vector<IActivity*> mGlobalOrdering;
 
-    //! The global technology database.
-    std::auto_ptr<GlobalTechnologyDatabase> mGlobalTechDB;
-
     void clear();
-
-    void csvGlobalDataFile() const;
- public:
-    //! Number of activities in the global activity list
-    int global_size(void) {return mGlobalOrdering.size();}
 };
 
 #endif // _WORLD_H_

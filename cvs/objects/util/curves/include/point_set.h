@@ -51,9 +51,15 @@
 #include <cfloat>
 #include <iosfwd>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/data_definition_util.h"
 
 class Tabs;
 class DataPoint;
+
+// Need to forward declare the subclasses as well.
+class ExplicitPointSet;
 
 /*!
 * \ingroup Util
@@ -62,7 +68,7 @@ class DataPoint;
 * \author Josh Lurz
 */
 
-class PointSet {
+class PointSet : private boost::noncopyable {
     friend std::ostream& operator<<( std::ostream& os, const PointSet& pointSet ) {
         pointSet.print( os );
         return os;
@@ -94,10 +100,17 @@ public:
     virtual double getNearestXAbove( const double x ) const = 0;
     virtual double getNearestYBelow( const double x ) const = 0;
     virtual double getNearestYAbove( const double x ) const = 0;
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const = 0;
+    virtual void outputAsXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual void invertAxises() = 0;
 protected:
-    static const std::string XML_NAME; //!< The name of the XML tag associated with this object.
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of PointSet to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( PointSet, ExplicitPointSet )
+    )
+
     virtual void print( std::ostream& out, const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX,
         const double lowRange = -DBL_MAX, const double highRange = DBL_MAX, const int minPoints = 0 ) const = 0;
 };

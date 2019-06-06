@@ -43,9 +43,12 @@
  * \brief The LandUseHistory class header file.
  * \author Josh Lurz
  */
-#include <xercesc/dom/DOMNode.hpp>
-#include "util/base/include/ivisitable.h"
 #include <map>
+#include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/ivisitable.h"
+#include "util/base/include/data_definition_util.h"
 
 class Tabs;
 /*!
@@ -67,7 +70,7 @@ class Tabs;
  */
 class LandUseHistory : public IVisitable,
                        public IParsable,
-                       public IRoundTrippable
+                       private boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
@@ -78,8 +81,6 @@ public:
     static const std::string& getXMLNameStatic();
 
     LandUseHistory();
-
-	LandUseHistory( const LandUseHistory& aLandUseHistory );
     
     // IParsable Methods.
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
@@ -89,10 +90,6 @@ public:
     void toDebugXML( const int aPeriod,
                      std::ostream& aOut,
                      Tabs* aTabs ) const;
-    
-    // IRoundTrippable
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
     
     // IVisitableMethod
 	virtual void accept( IVisitor* aVisitor,
@@ -113,18 +110,20 @@ public:
 	void printHistory() const;
 
 protected:
-    //! Map type for land allocations by year.
-    //typedef std::map<unsigned int, double> LandMapType;
 
-    //! Sparse mapping of year to land allocation.
-    LandMapType mHistoricalLand;
+    DEFINE_DATA(
+        // LandUseHistory is the only member of this container hierarchy.
+        DEFINE_SUBCLASS_FAMILY( LandUseHistory ),
 
-    //! Average above ground carbon content historically.
-    double mHistoricAboveGroundCarbonDensity;
+        //! Sparse mapping of year to land allocation.
+        DEFINE_VARIABLE( ARRAY, "allocation", mHistoricalLand, LandMapType ),
 
-    //! Average below ground carbon content historically.
-    double mHistoricBelowGroundCarbonDensity;
+        //! Average above ground carbon content historically.
+        DEFINE_VARIABLE( SIMPLE, "above-ground-carbon-density", mHistoricAboveGroundCarbonDensity, double ),
 
+        //! Average below ground carbon content historically.
+        DEFINE_VARIABLE( SIMPLE, "below-ground-carbon-density", mHistoricBelowGroundCarbonDensity, double )
+    )
 };
 
 #endif // _HISTORICAL_LAND_USE_H_

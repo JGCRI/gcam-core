@@ -56,18 +56,30 @@ using namespace std;
 extern Scenario* scenario;
 
 //! Constructor
-StandardCaptureComponent::StandardCaptureComponent():
-mSequesteredAmount( scenario->getModeltime()->getmaxper() ),
-mRemoveFraction( 0 ),
-mStorageCost( 0 ),
-mIntensityPenalty( 0 ),
-mNonEnergyCostPenalty( 0 )
+StandardCaptureComponent::StandardCaptureComponent()
 {
+    mRemoveFraction = 0;
+    mStorageCost = 0;
+    mIntensityPenalty = 0;
+    mNonEnergyCostPenalty = 0;
 }
 
+StandardCaptureComponent::~StandardCaptureComponent() {
+}
 
 StandardCaptureComponent* StandardCaptureComponent::clone() const {
-    return new StandardCaptureComponent( *this );
+    StandardCaptureComponent* clone = new StandardCaptureComponent();
+    clone->copy( * this );
+    return clone;
+}
+
+void StandardCaptureComponent::copy( const StandardCaptureComponent& aOther ) {
+    mStorageMarket = aOther.mStorageMarket;
+    mTargetGas = aOther.mTargetGas;
+    mRemoveFraction = aOther.mRemoveFraction;
+    mStorageCost = aOther.mStorageCost;
+    mIntensityPenalty = aOther.mIntensityPenalty;
+    mNonEnergyCostPenalty = aOther.mNonEnergyCostPenalty;
 }
 
 bool StandardCaptureComponent::isSameType( const string& aType ) const {
@@ -107,19 +119,16 @@ bool StandardCaptureComponent::XMLParse( const xercesc::DOMNode* node ){
         if( nodeName == "storage-market" ){
             mStorageMarket = XMLHelper<string>::getValue( curr );
         }
-        // TODO: Fix this on commit.
-        else if( nodeName == "remove-fraction" || nodeName == "removefrac" ){
+        else if( nodeName == "remove-fraction" ){
             mRemoveFraction = XMLHelper<double>::getValue( curr );
         }
-        // TODO: Fix this on commit.
-        else if( nodeName == "storage-cost" || nodeName == "storageCost" ){
+        else if( nodeName == "storage-cost" ){
             mStorageCost = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "intensity-penalty" ){
             mIntensityPenalty = XMLHelper<double>::getValue( curr );
         }
-        // TODO: Fix this on commit.
-        else if( nodeName == "non-energy-penalty" || nodeName == "neCostPenalty" ){
+        else if( nodeName == "non-energy-penalty" ){
             mNonEnergyCostPenalty = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "target-gas" ){
@@ -134,16 +143,6 @@ bool StandardCaptureComponent::XMLParse( const xercesc::DOMNode* node ){
 
     // TODO: Handle success and failure better.
     return true;
-}
-
-void StandardCaptureComponent::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteElementCheckDefault( mStorageMarket, "storage-market", aOut, aTabs, string( "" ) );
-    XMLWriteElementCheckDefault( mRemoveFraction, "remove-fraction", aOut, aTabs, 0.0 );
-    XMLWriteElementCheckDefault( mStorageCost, "storage-cost", aOut, aTabs, util::getLargeNumber() );
-    XMLWriteElementCheckDefault( mIntensityPenalty, "intensity-penalty", aOut, aTabs, 0.0 );
-	XMLWriteElementCheckDefault( mNonEnergyCostPenalty, "non-energy-penalty", aOut, aTabs, 0.0 );
-	XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void StandardCaptureComponent::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
@@ -250,20 +249,21 @@ double StandardCaptureComponent::calcSequesteredAmount( const string& aRegionNam
                                                         const int aPeriod )
 {
     // Calculate the amount of sequestration.
-    // Note: using the read in mRemoveFraction rather than getRemoveFraction().
-    mSequesteredAmount[ aPeriod ] = mRemoveFraction * aTotalEmissions;
+    // Note the remove fraction is only greater than zero if the current GHG matches
+    // the target gas of this capture component.
+    double removeFrac = getRemoveFraction( aGHGName );
+    double sequestered =  0.0;
 
     // Add the demand to the marketplace.
-    if( mSequesteredAmount[ aPeriod ] > 0 ){
+    if( removeFrac > 0 ){
+        sequestered = removeFrac * aTotalEmissions;
+        mSequesteredAmount[ aPeriod ] = sequestered;
         // set sequestered amount as demand side of carbon storage market
-        // do only if mTargetGas (currently "CO2)
         Marketplace* marketplace = scenario->getMarketplace();
-        if( aGHGName == mTargetGas ){
-            mLastCalcValue = marketplace->addToDemand( mStorageMarket, aRegionName, mSequesteredAmount[ aPeriod ], mLastCalcValue, aPeriod,
-            false );
-        }
+        marketplace->addToDemand( mStorageMarket, aRegionName, mSequesteredAmount[ aPeriod ], aPeriod,
+                                  false );
     }
-    return mSequesteredAmount[ aPeriod ];
+    return sequestered;
 }
 
 /**
@@ -277,7 +277,7 @@ double StandardCaptureComponent::getSequesteredAmount( const string& aGHGName,
                                                        const int aPeriod ) const 
 {
     // Only return emissions if the type of the sequestration equals is geologic.
-    if( aGetGeologic ){
+    if( aGetGeologic && aGHGName == mTargetGas ){
         return mSequesteredAmount[ aPeriod ];
     }
     return 0;

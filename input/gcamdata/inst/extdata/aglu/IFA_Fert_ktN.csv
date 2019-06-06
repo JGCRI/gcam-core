@@ -1,0 +1,34 @@
+# File: IFA_Fert_ktN.csv
+# Title: IFA_Fert_ktN
+# Units: kilotons N
+# Author: Mayda Nathan
+# Description: Fertilizer application by IFA region and IFA crop category
+# Original source: Annex 1 of P Heffer 2009. Assessment of Fertilizer Use by Crop at the Global Level 2009/07 - 2008/08. International Fertilizer Industry Association. AgCom/09/28.
+# Column types: ciiiiiiiiiii 
+# ----------
+Country,Wheat,Rice,Maize,OtherCoarseGrains,Soybean,OilPalm,OtherOilSeeds,Cotton,SugarCrops,FruitsAndVeg,Other
+China,4258,5496,4862,302,453,6,1450,1238,453,9060,2621
+India,2892,4132,344,620,138,0,620,895,689,964,2479
+USA,1604,227,5793,407,96,0,180,287,120,503,2753
+EU-27,2794,43,1290,1719,11,0,989,54,226,806,2815
+Brazil,69,163,675,94,87,5,2,170,535,156,340
+Pakistan,1004,249,127,16,0,0,29,498,175,101,450
+Indonesia,0,1058,353,0,9,306,24,1,47,212,342
+Canada,591,0,156,258,9,0,359,0,9,11,366
+Vietnam,0,764,135,0,8,0,17,2,45,34,119
+Turkey,584,13,96,170,1,0,65,76,28,239,135
+Australia,263,0,6,207,0,0,88,6,70,72,145
+Malaysia,0,81,3,0,0,351,1,0,2,16,87
+Iran,414,86,63,92,2,0,52,23,40,173,205
+Thailand,0,310,72,5,1,31,10,10,52,290,252
+Bangladesh,14,1113,4,0,0,0,10,2,8,18,24
+Russia,402,11,70,210,4,0,22,0,92,10,136
+Mexico,59,6,687,20,0,13,2,6,68,167,92
+Egypt,302,113,340,57,1,0,13,44,50,239,100
+Argentina,280,5,220,40,50,0,25,5,25,55,53
+South Africa,31,0,206,6,0,0,18,1,49,49,67
+Philippines,0,208,104,0,0,3,10,0,10,104,81
+Chile,46,2,30,15,0,0,2,0,4,51,104
+Morocco,63,1,7,43,0,0,5,0,12,45,49
+Rest of world,944,1017,944,437,37,50,361,364,364,1304,1437
+World Total,16614,15098,16587,4718,907,765,4354,3682,3173,14679,15252

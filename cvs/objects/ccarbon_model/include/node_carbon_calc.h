@@ -44,12 +44,15 @@
  * \brief The NodeCarbonCalc class header file.
  * \author Pralit Patel
  */
-#include "util/base/include/iparsable.h"
-#include "util/base/include/iround_trippable.h"
-#include "util/base/include/default_visitor.h"
+#include <boost/core/noncopyable.hpp>
 
-class ICarbonCalc;
+#include "ccarbon_model/include/icarbon_calc.h"
+#include "util/base/include/iparsable.h"
+#include "util/base/include/default_visitor.h"
+#include "util/base/include/data_definition_util.h"
+
 class LandUseHistory;
+class Tabs;
 
 /*!
  * \brief A carbon calculator which simply drive the carbon calculation from leaves
@@ -71,8 +74,8 @@ class LandUseHistory;
  *          so that the carbon calculations are not incorrectly calculated twice.
  */
 class NodeCarbonCalc: public IParsable,
-                      public IRoundTrippable,
-                      public DefaultVisitor
+                      public DefaultVisitor,
+                      private boost::noncopyable
 {
 public:
     NodeCarbonCalc();
@@ -83,18 +86,27 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
-    // IRoundTrippable methods
+    // IStandardComponent methods
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
 
     // DefaultVisitor methods
     virtual void startVisitNoEmissCarbonCalc( const NoEmissCarbonCalc* aNoEmissCarbonCalc, const int aPeriod );
     
     void completeInit();
     
-    void calc( const int aPeriod, const int aEndYear );
+    void initCalc( const int aPeriod );
     
-private:
+    void calc( const int aPeriod, const int aEndYear, const ICarbonCalc::CarbonCalcMode aCalcMode );
+    
+protected:
+    
+    DEFINE_DATA(
+        /*! \brief NodeCarbonCalc is the only member of this container hierarchy. */
+        DEFINE_SUBCLASS_FAMILY( NodeCarbonCalc )
+                
+        // TODO: should any of these member variables be accessible through introspection?
+    )
+    
     //! The carbon leaves that will drive the carbon calculations at this node.
     std::vector<NoEmissCarbonCalc*> mCarbonCalcs;
 

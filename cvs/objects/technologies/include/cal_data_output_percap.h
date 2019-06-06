@@ -54,7 +54,6 @@ public:
     virtual CalDataOutputPercap* clone() const;
 
     virtual void XMLParse( const xercesc::DOMNode* aNode );
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXML( std::ostream& aOut, Tabs* aTabs ) const;
     static const std::string& getXMLNameStatic();
 
@@ -65,14 +64,21 @@ public:
 
     virtual double getCalOutput();
 
-private:
-    //! Calibrated output on a per capita basis.
-    double mCalOutputPercapValue;
+protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICalData,
 
-    /*! \brief Cached population for the period of the calibration value.
-    * \todo If population becomes dynamic this will have to change.
-    */
-    double mPopulation;
+        //! Calibrated output on a per capita basis.
+        DEFINE_VARIABLE( SIMPLE, "calOutputPercapValue", mCalOutputPercapValue, double ),
+
+        /*! \brief Cached population for the period of the calibration value.
+        * \todo If population becomes dynamic this will have to change.
+        */
+        DEFINE_VARIABLE( SIMPLE, "population", mPopulation, double )
+    )
 };
 
 #endif // _CAL_DATA_OUTPUT_PERCAP_H_

@@ -65,11 +65,6 @@ class IVisitor;
 
 class HouseholdConsumer : public Consumer
 {
-    friend class SocialAccountingMatrix;
-    friend class DemandComponentsTable;
-    friend class SectorReport;
-    friend class SGMGenTable;
-    friend class GovtResults;
     friend class XMLDBOutputter;
 public:
     HouseholdConsumer();
@@ -98,15 +93,13 @@ public:
         const std::string& aSectorName, const bool aIsNewVintageMode, const int aPeriod );
 
     static const std::string& getXMLNameStatic();
-
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+    
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
     double getLaborSupply() const;
 protected:
     bool isCoefBased() const { return true; }
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:
     void calcBaseScalerLand( const std::string& regionName, const int period );

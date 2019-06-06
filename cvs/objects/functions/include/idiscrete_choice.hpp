@@ -43,10 +43,16 @@
  * \brief IDiscreteChoice class declaration file
  * \author Robert Link
  */
+#include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/iparsable.h"
-#include "util/base/include/iround_trippable.h"
+#include "util/base/include/data_definition_util.h"
 
+class Tabs;
+
+// Need to forward declare the subclasses as well.
+class RelativeCostLogit;
+class AbsoluteCostLogit;
 
 /*!
  * \ingroup Objects
@@ -55,12 +61,17 @@
  *          imputing shares to competing options with different
  *          prices.  The classes gather in a single place the
  *          functions for calculating the discrete choice function and
- *          computing share weights 
- * \todo Bring the getPrice methods for the sectors and and subsectors
- *       into these classes so that we can calculate proper average
- *       costs.
+ *          computing share weights.
+ * \note For numerical stability purposes calculations done by the subclasses
+ *       of this interface are done in log space.  Thus the return values, of
+ *       calcUnnormalizedShare for instance, may be the log of the value a user
+ *       would otherwise expect.  All methods will assume calculations are done
+ *       in log space.
+ * \note The calcAveragePrice method is currently only used in the land-allocator.
+ *       The sectors and and subsectors are currently not using this and instead
+ *       are calculating a straight average cost.
  */
-class IDiscreteChoice : public IParsable, public IRoundTrippable {
+class IDiscreteChoice : public IParsable, private boost::noncopyable {
 public:
     /*!
      * \brief Constructor.
@@ -90,17 +101,48 @@ public:
      * \brief Return the actual XML name of the object.
      */
     virtual const std::string& getXMLName() const = 0;
+    
+    /*!
+     * \brief Any initializations or error checking before beginning of a model period.
+     * \param aRegionName The name of the region that contains this object.
+     * \param aContainerName The name of the containing object of this one.
+     * \param aShouldShareIncreaseWithValue A boolean from containing objects if true
+     *                                      would like to ensure share increases if the
+     *                                      value of an option increases (i.e. it is a
+     *                                      profit rate).  Conversely if false, the share
+     *                                      should decrease if the value increases (i.e.
+     *                                      it is a cost).
+     * \param aPeriod The model period.
+     */
+    virtual void initCalc( const std::string& aRegionName, const std::string& aContainerName,
+                           const bool aShouldShareIncreaseWithValue, const int aPeriod ) = 0;
   
     /*!
-     * \brief Compute the unnormalized share given the cost and share weight of the
-     *        give option.
+     * \brief Compute the unnormalized share given the value (e.g. cost or profit) and
+     *        share weight of the given option.
      * \param aShareWeight The weighting term used in the share calculation.
-     * \param aCost The cost of the option.
+     * \param aValue The value of the option.
      * \param aPeriod The current model period.
-     * \return The unnormalized share.
+     * \return The log of the unnormalized share.
      */
-    virtual double calcUnnormalizedShare( const double aShareWeight, const double aCost,
+    virtual double calcUnnormalizedShare( const double aShareWeight, const double aValue,
                                           const int aPeriod ) const = 0;
+
+    /*!
+     * \brief Compute the mean value according the the discrete choice function's
+     *        parameterization.
+     * \param aUnnormalizedShareSum The sum of all of the shares as calculated by
+     *                              exp( calcUnnormalizedShare ) which will be used to
+     *                              calculate the mean value.
+     * \param aLogShareFac A log( unnormalized share ) factor that has been factored
+     *                     out of aUnnormalizedShareSum.  Doing this allows for calculating
+     *                     the average value in a numerically stable way.
+     * \param aPeriod The current model period.
+     * \return The average value.
+     */
+    virtual double calcAverageValue( const double aUnnormalizedShareSum,
+                                     const double aLogShareFac,
+                                     const int aPeriod ) const = 0;
 
     /*!
      * \brief Compute the share weight by inverting the discrete choice function
@@ -109,23 +151,46 @@ public:
      *          anchor this calculation which is done by assuming some "anchor" option
      *          receives a share weight of 1.
      * \param aShare The share the option should receive.
-     * \param aCost The cost of the option.
+     * \param aValue The value of the option.
      * \param aAnchorShare The share of the anchoring option.
-     * \param aAnchorCost The cost of the anchoring option.
+     * \param aAnchorValue The value of the anchoring option.
+     * \param aPeriod The current model period.
+     * \return The share weight.
+     * \warning If users are intending to calcAverageValue then the scale of the share-weights matter.
+     *          In such a case users may want to just set the anchor share to one and choose the anchor
+     *          value to be in the correct range for which calcAverageValue should return a value.
+     */
+    virtual double calcShareWeight( const double aShare, const double aValue, const double aAnchorShare,
+                                    const double aAnchorValue, const int aPeriod ) const = 0;
+
+    /*!
+     * \brief Compute the share weight by inverting the discrete choice function
+     *        given the values of the other terms in the equation.
+     * \details This is a convenience method for users who would like to use these
+     *          share-weights with the calcAverageValue and anchor to the base value.
+     * \param aShare The share the option should receive.
+     * \param aValue The value of the option.
      * \param aPeriod The current model period.
      * \return The share weight.
      */
-    virtual double calcShareWeight( const double aShare, const double aCost, const double aAnchorShare,
-                                    const double aAnchorCost, const int aPeriod ) const = 0;
+    virtual double calcShareWeight( const double aShare, const double aValue, const int aPeriod ) const = 0;
 
     /*!
-     * \brief Sets the base cost to use in the choice formulation if necessary.
+     * \brief Sets the base value to use in the choice formulation if necessary.
      * \warning This value may be ignored if a user explicitly parsed a value to
      *          use instead.
-     * \param aBaseCost The base cost to set.
-     * \param aFailMsg String to prepend to log message, if an illegal value is passed for aBaseCost.
+     * \param aBaseValue The base value to set.
      */
-    virtual void setBaseCost( const double aBaseCost, const std::string &aFailMsg ) = 0;
+    virtual void setBaseValue( const double aBaseValue ) = 0;
+    
+protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of IDiscreteChoice to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( IDiscreteChoice, RelativeCostLogit, AbsoluteCostLogit )
+    )
 };
 
 // Inline function definitions.

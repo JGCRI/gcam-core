@@ -1,0 +1,13 @@
+# File: A42.subsector_shrwt.csv
+# Title: Aggregate building default subsector shareweights
+# Units: Unitless
+# Column types: cccci 
+# ----------
+supplysector,subsector,year.fillout,year,share.weight
+building,biomass,start-year,,1
+building,coal,start-year,,1
+building,district heat,start-year,,1
+building,electricity,start-year,,1
+building,gas,start-year,,1
+building,refined liquids,start-year,,1
+building,traditional biomass,start-year,,1

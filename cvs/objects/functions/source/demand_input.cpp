@@ -94,21 +94,15 @@ double DemandInput::getIncomeElasticity( const int aPeriod ) const {
 //! XML parsing for derived class
 bool DemandInput::XMLDerivedClassParse( const string& nodeName, const xercesc::DOMNode* curr ) {
     if ( nodeName == "incomeElasticity" ) {
-        mIncomeElasticity = XMLHelper<double>::getValue( curr );
+        mIncomeElasticity = XMLHelper<Value>::getValue( curr );
     }
     else if ( nodeName == "priceElasticity" ) {
-        mPriceElasticity = XMLHelper<double>::getValue( curr );
+        mPriceElasticity = XMLHelper<Value>::getValue( curr );
     }
     else {
         return false;
     }
     return true;
-}
-
-//! Output XML for derived class
-void DemandInput::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElement( mIncomeElasticity, "incomeElasticity", out, tabs );
-    XMLWriteElement( mPriceElasticity, "priceElasticity", out, tabs );
 }
 
 //! Output debug info to XML for derived class

@@ -1,0 +1,62 @@
+# File: A23.subsector_shrwt_renew_R.csv
+# Title: Region-specific renewable electric subsector shareweights by GCAM3 region
+# Units: Unitless share-weights
+# Source: None (GCAM assumptions)
+# Column types: ccci 
+# ----------
+region_GCAM3,supplysector,subsector,2100
+Africa,electricity,wind,1
+Australia_NZ,electricity,wind,1
+Canada,electricity,wind,1
+China,electricity,wind,1
+Eastern Europe,electricity,wind,1
+Former Soviet Union,electricity,wind,1
+India,electricity,wind,1
+Japan,electricity,wind,1
+Korea,electricity,wind,1
+Latin America,electricity,wind,1
+Middle East,electricity,wind,1
+Southeast Asia,electricity,wind,1
+USA,electricity,wind,1
+Western Europe,electricity,wind,1
+Africa,electricity,solar,1
+Australia_NZ,electricity,solar,1
+Canada,electricity,solar,1
+China,electricity,solar,1
+Eastern Europe,electricity,solar,1
+Former Soviet Union,electricity,solar,1
+India,electricity,solar,1
+Japan,electricity,solar,1
+Korea,electricity,solar,1
+Latin America,electricity,solar,1
+Middle East,electricity,solar,1
+Southeast Asia,electricity,solar,1
+USA,electricity,solar,1
+Western Europe,electricity,solar,1
+Africa,electricity,biomass,1
+Australia_NZ,electricity,biomass,1
+Canada,electricity,biomass,1
+China,electricity,biomass,1
+Eastern Europe,electricity,biomass,1
+Former Soviet Union,electricity,biomass,1
+India,electricity,biomass,1
+Japan,electricity,biomass,1
+Korea,electricity,biomass,1
+Latin America,electricity,biomass,1
+Middle East,electricity,biomass,1
+Southeast Asia,electricity,biomass,1
+USA,electricity,biomass,1
+Western Europe,electricity,biomass,1
+Africa,electricity,geothermal,1
+Australia_NZ,electricity,geothermal,1
+Canada,electricity,geothermal,1
+China,electricity,geothermal,1
+Eastern Europe,electricity,geothermal,1
+Former Soviet Union,electricity,geothermal,1
+India,electricity,geothermal,1
+Japan,electricity,geothermal,1
+Latin America,electricity,geothermal,1
+Middle East,electricity,geothermal,1
+Southeast Asia,electricity,geothermal,1
+USA,electricity,geothermal,1
+Western Europe,electricity,geothermal,1

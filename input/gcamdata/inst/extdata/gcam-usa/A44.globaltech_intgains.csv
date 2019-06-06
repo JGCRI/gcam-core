@@ -1,0 +1,61 @@
+# File: A44.globaltech_intgains.csv
+# Title: Building sector internal gain coefficients
+# Units: Unitless (heat released within building envelope per unit of energy input)
+# Comments:  NOTE:  this table should include all techs of non-thermal services (even zeroes)
+# Source: Table 12a in https://www.nrel.gov/docs/fy08osti/42011.pdf (some technologies only).
+# Column types: cccn 
+# ----------
+supplysector,subsector,technology,input.ratio
+resid hot water,gas,gas water heater,0.112
+resid hot water,gas,gas water heater hi-eff,0.112
+resid hot water,electricity,electric resistance water heater,0.112
+resid hot water,electricity,electric resistance water heater hi-eff,0.112
+resid hot water,electricity,electric heat pump water heater,0
+resid hot water,refined liquids,fuel water heater,0.112
+resid hot water,refined liquids,fuel water heater hi-eff,0.112
+resid lighting,electricity,incandescent,0.803
+resid lighting,electricity,fluorescent,0.721
+resid lighting,electricity,solid state,0.694
+resid refrigerators,electricity,refrigerator,1
+resid refrigerators,electricity,refrigerator hi-eff,1
+resid freezers,electricity,freezer,1
+resid freezers,electricity,freezer hi-eff,1
+resid dishwashers,electricity,dishwasher,0.6
+resid dishwashers,electricity,dishwasher hi-eff,0.6
+resid cooking,electricity,electric oven,0.4
+resid cooking,gas,gas oven,0.4
+resid cooking,gas,gas oven hi-eff,0.4
+resid cooking,refined liquids,lpg oven,0.4
+resid cooking,refined liquids,lpg oven hi-eff,0.4
+resid clothes dryers,electricity,clothes dryer,0.15
+resid clothes dryers,electricity,clothes dryer hi-eff,0.15
+resid clothes dryers,gas,clothes dryer,0.15
+resid clothes washers,electricity,clothes washer,0.8
+resid clothes washers,electricity,clothes washer hi-eff,0.8
+resid televisions,electricity,electricity,0.866
+resid computers,electricity,electricity,0.866
+resid furnace fans,electricity,electricity,0
+resid other,gas,gas,0.866
+resid other,electricity,electricity,0.866
+resid other,refined liquids,refined liquids,0.866
+comm hot water,gas,gas water heater,0.017
+comm hot water,gas,gas water heater hi-eff,0.017
+comm hot water,electricity,electric resistance water heater,0.017
+comm hot water,electricity,electric heat pump water heater,0
+comm hot water,refined liquids,fuel water heater,0.017
+comm ventilation,electricity,ventilation,0
+comm ventilation,electricity,ventilation hi-eff,0
+comm cooking,gas,gas range,0.4
+comm cooking,gas,gas range hi-eff,0.4
+comm cooking,electricity,electric range,0.4
+comm cooking,electricity,electric range hi-eff,0.4
+comm lighting,electricity,incandescent,0.979
+comm lighting,electricity,fluorescent,0.88
+comm lighting,electricity,solid state,0.846
+comm refrigeration,electricity,refrigeration,1
+comm refrigeration,electricity,refrigeration hi-eff,1
+comm office,electricity,office equipment,0.8
+comm other,gas,gas,0.048
+comm other,electricity,electricity,0.048
+comm other,refined liquids,refined liquids,0.048
+comm non-building,electricity,electricity,0

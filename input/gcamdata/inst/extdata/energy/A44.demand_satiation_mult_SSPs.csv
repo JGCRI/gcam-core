@@ -1,0 +1,16 @@
+# File: A44.demand_satiation_mult_SSPs.csv
+# Title: Assumed increase in demand of services in USA
+# Units: Increase in demand per unit floorspace
+# Column types: ccn 
+# ----------
+SSP,supplysector,multiplier
+SSP1,resid others,1.17
+SSP1,comm others,1.17
+SSP2,resid others,1.3
+SSP2,comm others,1.3
+SSP3,resid others,1.3
+SSP3,comm others,1.3
+SSP4,resid others,1.3
+SSP4,comm others,1.3
+SSP5,resid others,1.43
+SSP5,comm others,1.43

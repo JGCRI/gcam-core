@@ -47,6 +47,7 @@
 #include "util/base/include/model_time.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
 #include "util/base/include/configuration.h"
+#include "functions/include/idiscrete_choice.hpp"
 
 using namespace std;
 using namespace xercesc;
@@ -58,10 +59,10 @@ extern Scenario* scenario;
  * \author James Blackwood
  */
 LandAllocator::LandAllocator()
-: LandNode( 0 ),
-  mCarbonPriceIncreaseRate( 0.0 ),
-  mSoilTimeScale( CarbonModelUtils::getSoilTimeScale() )
+: LandNode( 0 )
 {
+    mCarbonPriceIncreaseRate.assign( mCarbonPriceIncreaseRate.size(), 0.0 );
+    mSoilTimeScale = CarbonModelUtils::getSoilTimeScale();
 }
 
 //! Destructor
@@ -93,7 +94,7 @@ bool LandAllocator::XMLParse( const DOMNode* aNode ){
 
 bool LandAllocator::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ){
     if( aNodeName == "landAllocation" ){
-        XMLHelper<double>::insertValueIntoVector( aCurr, mLandAllocation, scenario->getModeltime() );
+        XMLHelper<Value>::insertValueIntoVector( aCurr, mLandAllocation, scenario->getModeltime() );
     }
     else if( aNodeName == "carbonPriceIncreaseRate" ){
         XMLHelper<double>::insertValueIntoVector( aCurr, mCarbonPriceIncreaseRate, scenario->getModeltime() );
@@ -112,33 +113,12 @@ void LandAllocator::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTa
     ALandAllocatorItem::toDebugXML( aPeriod, aOut, aTabs );  
 }
 
-void LandAllocator::toInputXML( std::ostream& aOut, Tabs* aTabs ) const {
-    // Call the node toInputXML
-    LandNode::toInputXML( aOut, aTabs );
-}
-
-void LandAllocator::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteVector( mLandAllocation, "landAllocation", aOut, aTabs, scenario->getModeltime() );
-    XMLWriteVector( mCarbonPriceIncreaseRate, "carbonPriceIncreaseRate", aOut, aTabs, scenario->getModeltime() );
-    XMLWriteElement( mSoilTimeScale, "soilTimeScale", aOut, aTabs );
-}
-
 void LandAllocator::initCalc( const string& aRegionName, const int aPeriod )
 {
     // In calibration periods, check land area and set calibration values
     if ( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
         checkLandArea( aRegionName, aPeriod);
         calibrateLandAllocator( aRegionName, aPeriod );
-    } 
-    else {
-        /* In non-calibration periods, adjust the profit scalers to account for new technologies. 
-           If a new technology is added to a node, it will increase the node's land share because 
-           it represents another "throw of the dice".  The adjustment procedure modifies the 
-           profit scalers to correct for this problem.  The adjustment ensures that if a new 
-           technology that is identical to an existing technology is added to a node, then the node
-           will be allocated the same amount of land as when the new technology didn't exist.
-        */
-        adjustProfitScalers( aRegionName, aPeriod );
     }
 
     // Call land node's initCalc
@@ -192,7 +172,7 @@ void LandAllocator::checkLandArea( const string& aRegionName, const int aPeriod 
     // If the difference between the total and the sum of the leafs
     // is too large, print an error message and exit. 
     double fractionDiff = excessLand / mLandAllocation[ aPeriod ];
-    if ( abs( fractionDiff ) > 0.01 ) {
+    if ( abs( fractionDiff ) > 0.001 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "The sum of land areas in region " << aRegionName 
@@ -241,49 +221,24 @@ void LandAllocator::calibrateLandAllocator( const string& aRegionName, const int
    part of the calibration.  All the info needed is in the leaves. */
 
 
-/* Step 3. Calculate the profit rate implied by the shares in the calibration data. These rates 
-   are what the profit rates would have to be based on the actual shares, the logit exponent, and
-   the average profit of the containing node. These are equivalent to what was called "intrinsic
-   rates" in the 2008 version of the code based on Sands and Leimbech. */
+/* Step 3. Set the profit rates to use at each node in the land allocation tree.  Note the choice
+   of profit rate used here is arbitrary.  Thus we can choose values which we find convenient:
+   the profit rate of the dominant child in each nest.  Choosing node profit rates in this way also
+   gives us an appropriate value to use if we are making sharing decisions using absolute profit
+   rate differences then we can use the node profit rate as it will already be in the appropriate
+   range of values. */
+	
+    calculateNodeProfitRates( aRegionName, aPeriod );
 
-    calculateCalibrationProfitRate( aRegionName, mUnManagedLandValue, 
-                                    0, // logit exponent is zero at this level
-                                    aPeriod );
+/* Step 4. Calculate share-weights with in each sub nest of the land allocation tree.  The scale
+   of these share-weights matter since we will use IDiscreteChoice::calcAverageValue method for
+   calculating.  Thus it is important that this method is called after calculateNodeProfitRates
+   so that the node profit rate can be used to set that scale.  Exactly how it will affect the
+   calculated share-weights depends on the discrete choice function configured in each nest but
+   generally it is related to it's share and the ratio of the node profit rate and it's
+   profit rate. */
 
-/* Step 4. Calculate profit scalers. Because the calibration profit rate computed in Step 4
-   will most likely differ from the profit rate computed using the yield times price - cost, a
-   scaler or multiplier is solved for which makes the profit equal to the calibration profit. In
-   future periods, this scaler is then applied to the computed profit for use in the sharing
-   and node profit equations.  It is analagous to the share weight calibration approach. Also, it
-   will work the same for unmanaged land leafs with the land price being used as the profit.
-   
-   All of the calibration is captured in the leaves, so the share profit scalers for nodes are
-   set equal to 1.  */
-
-    calculateProfitScalers( aRegionName, aPeriod );
-}
-
-/*!
- * \brief Calculates share profit scalers
- * \param aRegionName Region name.
- * \param aPeriod model period.
- */
-void LandAllocator::calculateProfitScalers( const string& aRegionName, 
-                                          const int aPeriod ) {
-    LandNode::calculateProfitScalers( aRegionName, aPeriod );
-
-    // Land allocator gets a shareweight of 1
-    mProfitScaler[ aPeriod ] = 1.0;
-}
-
-/*!
- * \brief Adjusts share profit scalers
- * \param aRegionName Region name.
- * \param aPeriod model period.
- */
-void LandAllocator::adjustProfitScalers( const string& aRegionName, 
-                                          const int aPeriod ) {
-    LandNode::adjustProfitScalers( aRegionName, aPeriod );
+    calculateShareWeights( aRegionName, mChoiceFn, aPeriod, false );
 }
 
 double LandAllocator::getLandAllocation( const string& aProductName,
@@ -332,8 +287,8 @@ void LandAllocator::setProfitRate( const string& aRegionName,
 }
 
 void LandAllocator::setInitShares( const string& aRegionName,
-                                       const double aLandAllocationAbove,
-                                       const int aPeriod )
+                                   const double aLandAllocationAbove,
+                                   const int aPeriod )
 {
     // Calculating the shares
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
@@ -347,13 +302,13 @@ void LandAllocator::setInitShares( const string& aRegionName,
 }
 
 double LandAllocator::calcLandShares( const string& aRegionName,
-                                          const double aLogitExpAbove,
-                                          const int aPeriod ){
+                                      IDiscreteChoice* aChoiceFnAbove,
+                                      const int aPeriod ){
 
     // First set value of unmanaged land leaves
     setUnmanagedLandProfitRate( aRegionName, mUnManagedLandValue, aPeriod );
 
-    LandNode::calcLandShares( aRegionName, aLogitExpAbove, aPeriod );
+    LandNode::calcLandShares( aRegionName, aChoiceFnAbove, aPeriod );
  
     // This is the root node so its share is 100%.
     mShare[ aPeriod ] = 1;
@@ -369,12 +324,12 @@ void LandAllocator::calcLandAllocation( const string& aRegionName,
 }
 
 void LandAllocator::calcLUCEmissions( const string& aRegionName, const int aPeriod,
-                                      const int aEndYear )
+                                      const int aEndYear, const bool aStoreFullEmiss )
 {
     // Calculate emissions for all years in this model period.  Note that in
     // period 0 historical emissions are also calculated.
     for ( unsigned int i = 0; i < mChildren.size(); ++i ){
-        mChildren[ i ]->calcLUCEmissions( aRegionName, aPeriod, aEndYear );
+        mChildren[ i ]->calcLUCEmissions( aRegionName, aPeriod, aEndYear, aStoreFullEmiss );
     } 
 }
 
@@ -384,12 +339,12 @@ void LandAllocator::calcFinalLandAllocation( const string& aRegionName,
 
     // In calibration periods, check land area and set calibration values
     if ( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
-        calibrateLandAllocator( aRegionName, aPeriod );
+       calibrateLandAllocator( aRegionName, aPeriod );
     } 
 	
     // Calculate land shares
     calcLandShares( aRegionName,
-                    0, // No logit exponent above the root.
+                    mChoiceFn,
                     aPeriod );
 
     // Calculate land allocation
@@ -401,12 +356,22 @@ void LandAllocator::calcFinalLandAllocation( const string& aRegionName,
     // period for performance reasons.
     calcLUCEmissions( aRegionName,
                       aPeriod,
-                      scenario->getModeltime()->getper_to_yr( aPeriod ) );
+                      scenario->getModeltime()->getper_to_yr( aPeriod ), false );
 }
 
 void LandAllocator::postCalc( const string& aRegionName, const int aPeriod ) {
+    // In the final calibration year re-calculate the share-weights this time
+    // calculating the future share-weights as well.
+    if( scenario->getModeltime()->getFinalCalibrationPeriod() == aPeriod ) {
+        setInitShares( aRegionName,
+                      0, // No land allocation above this node.
+                      aPeriod );
+        calculateNodeProfitRates( aRegionName, aPeriod );
+        calculateShareWeights( aRegionName, mChoiceFn, aPeriod, true );
+    }
+    
     // Calculate land-use change emissions for the entire model time horizon.
-    calcLUCEmissions( aRegionName, aPeriod, CarbonModelUtils::getEndYear() );
+    calcLUCEmissions( aRegionName, aPeriod, CarbonModelUtils::getEndYear(), true );
 }
 
 ALandAllocatorItem* LandAllocator::findProductLeaf( const string& aProductName ) {

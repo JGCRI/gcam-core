@@ -83,16 +83,23 @@ protected:
                              const int aPeriod ) const;
 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual const std::string& getXMLName() const;
     virtual void setMarket();
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        SupplySector,
 
-    // TODO: Should this be a vector?
-    double mCalPrice;
+        // TODO: Should this be a vector?
+        DEFINE_VARIABLE( SIMPLE, "calPrice", mCalPrice, double ),
 
-    //! Name of the market for this good.
-    std::string mMarketName;
+        DEFINE_VARIABLE( ARRAY, "subsidy", mSubsidy, objects::PeriodVector<double> ),
+
+        //! Name of the market for this good.
+        DEFINE_VARIABLE( SIMPLE, "market", mMarketName, std::string )
+    )
 };
 
 #endif // _AG_SUPPLY_SECTOR_H_

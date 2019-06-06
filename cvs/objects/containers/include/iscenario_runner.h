@@ -110,11 +110,9 @@ public:
      * \brief Print the output from the set of scenarios run.
      * \details Print the output of the scenario runs.
      * \param aTimer Reference to the global timer.
-     * \param aCloseDB Whether to close the database. Defaults to true.
      * \todo Rename the aCloseDB parameter to something more general.
      */
-    virtual void printOutput( Timer& aTimer,
-                              const bool aCloseDB = true ) const = 0;
+    virtual void printOutput( Timer& aTimer ) const = 0;
 
     /*!
      * \brief Cleanup any memory that may no longer be needed.

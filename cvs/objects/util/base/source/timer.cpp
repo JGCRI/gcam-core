@@ -46,20 +46,22 @@ using namespace std;
 using namespace boost::posix_time;
 
 //! Constructor
-Timer::Timer():mTotalTime( 0 )
+Timer::Timer():mTotalTime( 0 ),
+mRunning( 0 )
 {
-    mRunning = false;
 }
-        
+
 /*! \brief Start the timer.
  * \details This function starts the timer. All times will be relative
  *          to this time.  Starting a timer that is already running is
  *          a no-op; however, no error is logged.
 */     
 void Timer::start(){
-    if(!mRunning) {
+#if GCAM_PARALLEL_ENABLED
+    tbb::spin_mutex::scoped_lock lock( mMutex );
+#endif
+    if( ++mRunning == 1 ) {
         mStartTime = microsec_clock::universal_time();
-        mRunning = true;
     }
 }
 
@@ -70,19 +72,15 @@ void Timer::start(){
 *          logged.
 */
 void Timer::stop(){
-    if(mRunning) {
-        mStopTime = microsec_clock::universal_time();
-        mTotalTime += getTimeDifference();
-        mRunning = false;
+#if GCAM_PARALLEL_ENABLED
+    tbb::spin_mutex::scoped_lock lock( mMutex );
+#endif
+    if( --mRunning == 0 ) {
+        time_duration diff = microsec_clock::universal_time() - mStartTime;
+        mTotalTime += diff.total_seconds() + pow( 10.0, -time_duration::num_fractional_digits() ) * diff.fractional_seconds();
     }
-}
-
-/*! \brief Get the differential between the start time and stop time.
-* \return The difference between the stop and start time.
-*/
-double Timer::getTimeDifference() const {
-    time_duration diff = mStopTime - mStartTime;
-    return diff.total_seconds() + pow( 10.0, -time_duration::num_fractional_digits() ) * diff.fractional_seconds();
+    // guard against excessive stops
+    mRunning = std::max( mRunning, 0 );
 }
 
 /*!

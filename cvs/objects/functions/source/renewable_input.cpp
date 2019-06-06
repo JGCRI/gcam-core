@@ -79,7 +79,7 @@ const string& RenewableInput::getXMLReportingName() const{
 
 //! Constructor
 RenewableInput::RenewableInput() 
-: mPhysicalDemand( scenario->getModeltime()->getmaxper() ) {
+{
 }
 
 /*! \brief Constructor that sets name attribute.
@@ -88,19 +88,26 @@ RenewableInput::RenewableInput()
 * objects.
 * \author Steve Smith
 */
-RenewableInput::RenewableInput( const std::string& aName ) 
-: mPhysicalDemand( scenario->getModeltime()->getmaxper() )
+RenewableInput::RenewableInput( const std::string& aName )
 {
     mName = aName;
 }
 
 //! Clone the input.
 RenewableInput* RenewableInput::clone() const {
-    return new RenewableInput( *this );
+    RenewableInput* clone = new RenewableInput();
+    clone->copy( *this );
+    return clone;
 }
 
 bool RenewableInput::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
+}
+
+void RenewableInput::copy( const RenewableInput& aOther ) {
+    MiniCAMInput::copy( aOther );
+    
+    // calculated parameters are not copied.
 }
 
 void RenewableInput::copyParam( const IInput* aInput,
@@ -134,13 +141,6 @@ void RenewableInput::XMLParse( const xercesc::DOMNode* node ) {
         mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
                     << getXMLNameStatic() << "." << endl;
     }
-}
-
-void RenewableInput::toInputXML( ostream& aOut,
-                               Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void RenewableInput::toDebugXML( const int aPeriod,

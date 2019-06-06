@@ -52,6 +52,7 @@ class CachedMarket;
 
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 /*! 
  * \ingroup Objects
@@ -76,8 +77,6 @@ public:
      */
     PrimaryOutput( const std::string& aSectorName );
     
-    PrimaryOutput( const PrimaryOutput& aPrimaryOutput );
-    
     virtual ~PrimaryOutput();
 
     virtual PrimaryOutput* clone() const;
@@ -89,9 +88,6 @@ public:
     virtual const std::string& getXMLReportingName() const;
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -158,20 +154,26 @@ public:
                                    const IOutput* aNextInput ) {}
 
 protected:
-    //! Physical output by period.
-    std::vector<Value> mPhysicalOutputs;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IOutput,
 
-    //! Name of the primary output. This is the same as the sector name.
-    const std::string mName;
+        //! Physical output by period.
+        DEFINE_VARIABLE( ARRAY | STATE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
 
-    //! CO2 emissions coefficient cached from the marketplace.
-    Value mCachedCO2Coef;
+        //! Name of the primary output. This is the same as the sector name.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+
+        //! CO2 emissions coefficient cached from the marketplace.
+        DEFINE_VARIABLE( SIMPLE, "co2-coef", mCachedCO2Coef, Value )
+    )
     
     //! A pre-located market which has been cached from the marketplace to add supply to.
     std::auto_ptr<CachedMarket> mCachedMarket;
-
-private:
-    const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
+    
+    void copy( const PrimaryOutput& aOther );
 };
 
 #endif // _PRIMARY_OUTPUT_H_

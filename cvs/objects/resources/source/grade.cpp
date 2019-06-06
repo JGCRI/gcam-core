@@ -61,10 +61,10 @@ extern Scenario* scenario;
 
 //! Default constructor
 Grade::Grade():
-mAvailable( 0.0 ),
-mExtractCost( 0.0 ),
-mTotalCost( scenario->getModeltime()->getmaxper(), 0.0 )
+mTotalCost( 0.0 )
 {
+    mAvailable = 0.0;
+    mExtractCost = 0.0;
 }
 
 //! Initialize data members from XML.
@@ -107,15 +107,6 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
 */
 void Grade::completeInit( const IInfo* aSubresourceInfo ) {
     mGradeInfo.reset( InfoFactory::constructInfo( aSubresourceInfo, mName ) ); 
-}
-
-
-//! Write data members to data stream in XML format for replicating input file.
-void Grade::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
-    XMLWriteElementCheckDefault( mAvailable, "available", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( mExtractCost, "extractioncost", out, tabs, 0.0 );
-    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Write data members to debugging data stream in XML format.

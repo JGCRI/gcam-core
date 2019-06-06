@@ -51,8 +51,14 @@
 #include <cfloat>
 #include <functional>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/data_definition_util.h"
 
 class Tabs;
+
+// Need to forward declare the subclasses as well.
+class PointSetCurve;
 
 /*!
 * \ingroup Util
@@ -60,7 +66,7 @@ class Tabs;
 * \author Josh Lurz
 */
 
-class Curve {
+class Curve : private boost::noncopyable {
     friend std::ostream& operator<<( std::ostream& os, const Curve& curve ){
         curve.print( os );
         return os;
@@ -68,7 +74,6 @@ class Curve {
 public:
     typedef std::vector<std::pair<double,double> > SortedPairVector;
     Curve();
-    Curve( const Curve& curveIn );
     virtual ~Curve();
     virtual bool operator==( const Curve& rhs ) const;
     virtual bool operator!=( const Curve& rhs ) const;
@@ -76,8 +81,8 @@ public:
     static Curve* getCurve( const std::string& type );
     static const std::string& getXMLNameStatic();
     virtual const std::string& getXMLName() const;
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
+    void outputAsXML( std::ostream& aOut, Tabs* aTabs ) const;
+    virtual void outputAsXMLDerived( std::ostream& aOut, Tabs* aTabs ) const = 0;
     void XMLParse( const xercesc::DOMNode* node );
     virtual bool XMLParseDerived( const xercesc::DOMNode* node ) = 0;
     virtual void invertAxises() = 0;
@@ -110,14 +115,23 @@ public:
     virtual double getHammingDistance( const Curve* otherCurve, const double xStart, const double xEnd, const double xInterval ) const;
 
 protected:
-    const static std::string XML_NAME; //!< The name of the XML tag associated with this object.
-    double numericalLabel;
-    std::string name;
-    std::string title;
-    std::string xAxisLabel;
-    std::string yAxisLabel;
-    std::string xAxisUnits;
-    std::string yAxisUnits;
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of Curve to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( Curve, PointSetCurve ),
+                
+        DEFINE_VARIABLE( SIMPLE, "numericalLabel", numericalLabel, double ),
+        DEFINE_VARIABLE( SIMPLE, "name", name, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "title", title, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "xAxisLabel", xAxisLabel, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "yAxisLabel", yAxisLabel, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "xAxisUnit", xAxisUnits, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "yAxisUnit", yAxisUnits, std::string )
+    )
+    
+    void copy( const Curve& aOther );
 
     virtual void print( std::ostream& out, const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX,
         const double lowRange = -DBL_MAX, const double highRange = DBL_MAX, const int minPoints = 0 ) const = 0;

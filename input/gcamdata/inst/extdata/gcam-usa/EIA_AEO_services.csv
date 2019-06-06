@@ -1,0 +1,31 @@
+# File: EIA_AEO_services.csv
+# Title: Mapping EIA Services to GCAM services
+# Units: NA
+# Source:  EIA Annual Energy Outlook Tables 4 and 5 (https://www.eia.gov/outlooks/aeo/)
+# Column types: ccc 
+# ----------
+EIA_sector,EIA_service,service
+Residential,Space Heating,resid heating
+Residential,Space Cooling,resid cooling
+Residential,Water Heating,resid hot water
+Residential,Refrigeration,resid refrigerators
+Residential,Cooking,resid cooking
+Residential,Clothes Dryers,resid clothes dryers
+Residential,Freezers,resid freezers
+Residential,Lighting,resid lighting
+Residential,Clothes Washers,resid clothes washers
+Residential,Dishwashers,resid dishwashers
+Residential,Color Televisions,resid televisions
+Residential,Personal Computers,resid computers
+Residential,Furnace Fans,resid furnace fans
+Residential,Other Uses,resid other
+Commercial,Space Heating,comm heating
+Commercial,Space Cooling,comm cooling
+Commercial,Water Heating,comm hot water
+Commercial,Ventilation,comm ventilation
+Commercial,Cooking,comm cooking
+Commercial,Lighting,comm lighting
+Commercial,Refrigeration,comm refrigeration
+Commercial,Office Equipment (PC),comm office
+Commercial,Office Equipment (non-PC),comm office
+Commercial,Other Uses,comm other

@@ -48,8 +48,12 @@
 #include <vector>
 #include <map>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/iyeared.h"
 #include "util/base/include/istandard_component.h"
 #include "util/base/include/value.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declaration
 class AGHG;
@@ -60,8 +64,20 @@ class ILandAllocator;
 class Demographic;
 class IOutput;
 class IInput;
-class Technology;
 class IDiscreteChoice;
+
+// Need to forward declare the subclasses as well.
+class Technology;
+class DefaultTechnology;
+class IntermittentTechnology;
+class WindTechnology;
+class SolarTechnology;
+class NukeFuelTechnology;
+class TranTechnology;
+class AgProductionTechnology;
+class PassThroughTechnology;
+class UnmanagedLandTechnology;
+class EmptyTechnology;
 
 /*!
 * \brief A structure containing information about the same type Technology
@@ -87,7 +103,7 @@ struct PreviousPeriodInfo {
 *
 * \author Pralit Patel
 */
-class ITechnology: public IParsedComponent
+class ITechnology: public IYeared, public IParsedComponent, private boost::noncopyable
 {
 public:
     virtual ITechnology* clone() const = 0;
@@ -95,23 +111,10 @@ public:
     inline virtual ~ITechnology() = 0;
 
     virtual void setYear( const int aNewYear ) = 0;
+    virtual int getYear() const = 0;
 
     virtual bool XMLParse( const xercesc::DOMNode* tempnode ) = 0;
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const = 0;
-
-    /*!
-     * \brief Write any data that should go into the output XML that is necessary
-     *        for restarts.
-     * \details Most data written to the output XML is to replicate the input data
-     *          set however that file is also used as a restart file thus additional
-     *          data may be required to be able to fully restart the state of the
-     *          model.  Any such data should be written here to ensure they get
-     *          written out which may not be the case when using global technologies.
-     * \param aOut The output stream to write data into.
-     * \param aTabs The tabs object keeping track of indentation formatting.
-     */
-    virtual void toInputXMLForRestart( std::ostream& aOut, Tabs* aTabs ) const = 0;
     
     virtual const std::string& getXMLName() const = 0;
     
@@ -161,9 +164,6 @@ public:
 
     virtual bool hasCalibratedValue( const int aPeriod ) const = 0;
 
-    virtual const std::map<std::string,double> getEmissions( const std::string& aGoodName,
-                                                             const int aPeriod ) const = 0;
-
     virtual const std::string& getName() const = 0;
 
     virtual void setShareWeight( double shareWeightValue ) = 0;
@@ -179,7 +179,7 @@ public:
     virtual double getTotalGHGCost( const std::string& aRegionName, const std::string& aSectorName, 
                             const int aPeriod ) const = 0;
 
-    virtual Value getShareWeight() const = 0;
+    virtual double getShareWeight() const = 0;
     virtual Value getParsedShareWeight() const = 0;
     virtual int getNumbGHGs()  const = 0;
     virtual void copyGHGParameters( const AGHG* prevGHG ) = 0;
@@ -187,8 +187,6 @@ public:
     virtual const AGHG* getGHGPointer( const std::string& aGHGName ) const = 0;
 
     virtual const std::vector<std::string> getGHGNames() const = 0;
- 
-    virtual double getEmissionsByGas( const std::string& aGasName, const int aPeriod ) const = 0;
 
     virtual double getFixedOutput( const std::string& aRegionName,
                                    const std::string& aSectorName,
@@ -207,8 +205,6 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const = 0;
 
-    virtual const std::map<std::string, double> getFuelMap( const int aPeriod ) const = 0;
-
     virtual bool isAvailable( const int aPeriod ) const = 0;
     
     virtual bool isOperating( const int aPeriod ) const = 0;
@@ -216,12 +212,24 @@ public:
     virtual double calcFuelPrefElasticity( const int aPeriod ) const = 0;
     
     virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech ) = 0;
+    
+    virtual void initTechVintageVector() { }
 
     protected:
 
     virtual double getTotalInputCost( const std::string& aRegionName,
                                     const std::string& aSectorName,
                                     const int aPeriod ) const = 0;
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of ITechnology to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( ITechnology, Technology, DefaultTechnology, IntermittentTechnology,
+                                WindTechnology, SolarTechnology, NukeFuelTechnology, TranTechnology,
+                                AgProductionTechnology, PassThroughTechnology, UnmanagedLandTechnology,
+                                EmptyTechnology )
+    )
 };
 
 // Inline methods

@@ -1,0 +1,21 @@
+# File: A15.roofPV_curves.csv
+# Title: GCAM 3.0 rooftop PV supply curves
+# Units: EJ for maxSubResource; 1975 $/GJ for midprice; unitless for gdpSupplyElast and subResourceCapacityFactor
+# Comments: From http://jgcri.github.io/gcam-doc/v3.2/Resource_Supply_Curves: For rooftop PV GCAM does use supply curves based on Denholm and Margolisís (2008)<ref>Denholm P. and R. Margolis. 2008. Supply Curves for Rooftop Solar PV-Generated Electricity for the United States. NREL/TP-6A0-44073 National Renewable Energy Laboratory. http://www.nrel.gov/docs/fy09osti/44073.pdf%3C/ref%3E supply curves for rooftop PV in the residential and commercial sectors in the USA. In other regions the supply curves are assigned similar shape as the USA supply curve with the available resource quantities adjusted by regional population used as a proxy of available rooftop space and by insolation.
+# Column types: cccnnnn 
+# ----------
+region_GCAM3,resource,subresource,maxSubResource,mid-price,curve-exponent,gdpSupplyElast
+USA,distributed_solar,distributed_solar,4.718453352,13.40917456,4.240486051,0.1
+Canada,distributed_solar,distributed_solar,0.374144475,16.52819307,4.240486051,0.1
+Western Europe,distributed_solar,distributed_solar,5.302743618,16.06949292,4.240486051,0.1
+Japan,distributed_solar,distributed_solar,1.126882043,14.43122184,4.240486051,0.1
+Australia_NZ,distributed_solar,distributed_solar,0.3841428,11.52252602,4.240486051,0.1
+Former Soviet Union,distributed_solar,distributed_solar,2.889066662,16.75512477,4.240486051,0.1
+China,distributed_solar,distributed_solar,16.06862022,13.62132187,4.240486051,0.1
+Middle East,distributed_solar,distributed_solar,1.912899244,10.11638903,4.240486051,0.1
+Africa,distributed_solar,distributed_solar,9.101716856,10.02533587,4.240486051,0.1
+Latin America,distributed_solar,distributed_solar,5.862118428,10.99167946,4.240486051,0.1
+Southeast Asia,distributed_solar,distributed_solar,7.952781714,11.01447492,4.240486051,0.1
+Eastern Europe,distributed_solar,distributed_solar,1.616168252,16.58376593,4.240486051,0.1
+Korea,distributed_solar,distributed_solar,0.570043404,13.47928694,4.240486051,0.1
+India,distributed_solar,distributed_solar,10.49707023,11.16173708,4.240486051,0.1

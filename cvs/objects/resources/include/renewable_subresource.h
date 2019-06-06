@@ -62,27 +62,42 @@ class IInfo;
 */
 class SubRenewableResource: public SubResource {
     friend class CalibrateResourceVisitor;
-protected:
-    double maxSubResource;
-    double gdpSupplyElasticity;
-    //! subresource variance now read in rather than computed
-    double subResourceVariance;
-    //! read in average capacity factor for each subresource
-    double subResourceCapacityFactor;  
-    virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
-    virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
-public: 
+public:
     SubRenewableResource();
-    virtual void completeInit( const IInfo* aSectorInfo );
-    virtual void cumulsupply(double prc,int per);
-    virtual void annualsupply( int per, const GDP* gdp, double price1, double price2 );
-    virtual double getVariance() const;
-    virtual double getMaxSubResource() const;
-    virtual double getAverageCapacityFactor() const;
+    virtual ~SubRenewableResource();
     //! Return the XML tag name
     static const std::string& getXMLNameStatic( void );
+    virtual void completeInit( const IInfo* aSectorInfo );
+    virtual void cumulsupply( double aPrice, int aPeriod );
+    virtual void annualsupply( int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
+    virtual double getVariance() const;
+    virtual double getMaxAnnualSubResource( const int aPeriod ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual double getLowestPrice( const int aPeriod ) const;
+    
+protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        SubResource,
+
+        //! The maximum achievable resource production at a price of infinity.
+        //! This value may change by model period and is the max prior to any GDP
+        //! based supply expansion.
+        DEFINE_VARIABLE( ARRAY, "maxSubResource", mMaxAnnualSubResource, objects::PeriodVector<double> ),
+
+        //! elasticity on GDP growth that controls expansion of the max subresource.
+        DEFINE_VARIABLE( SIMPLE, "gdpSupplyElast", mGdpSupplyElasticity, double ),
+
+        //! subresource variance now read in rather than computed
+        DEFINE_VARIABLE( SIMPLE, "subResourceVariance", mSubResourceVariance, double ),
+
+        //! read in average capacity factor for each subresource
+        DEFINE_VARIABLE( SIMPLE, "subResourceCapacityFactor", mSubResourceCapacityFactor, double )
+    )
+
+    virtual const std::string& getXMLName() const;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
 };
 #endif // _RENEWABLE_SUBRESOURCE_H_

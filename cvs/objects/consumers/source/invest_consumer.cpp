@@ -73,16 +73,15 @@ void InvestConsumer::copyParamsInto( InvestConsumer& aInvestConsumer,
 }
 
 InvestConsumer* InvestConsumer::clone() const {
-    return new InvestConsumer( *this );
+    InvestConsumer* clone = new InvestConsumer();
+    clone->copy( *this );
+    clone->mCapitalGoodPrice = mCapitalGoodPrice;
+    return clone;
 }
 
 //! parses rest of InvestConsumer xml object
 bool InvestConsumer::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ) {
     return false;
-}
-
-//! Write out additional data members to XML output stream.
-void InvestConsumer::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 }
 
 //! Output debug info for derived class
@@ -210,19 +209,6 @@ const string& InvestConsumer::getXMLName() const {
 const string& InvestConsumer::getXMLNameStatic() {
     const static string XML_NAME = "investConsumer";
     return XML_NAME;
-}
-
-//! SGM version of outputing data members to a csv file
-void InvestConsumer::csvSGMOutputFile( ostream& aFile, const int aPeriod ) const {
-	if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-		aFile << "***** Investment Sector Results *****" << endl << endl;
-        aFile << "Capital good price," << mCapitalGoodPrice << endl;
-		expenditures[ aPeriod ].csvSGMOutputFile( aFile, aPeriod );
-		aFile << endl;
-
-		aFile << "Investment Consumer Expenditure" << endl << endl;
-		BaseTechnology::csvSGMOutputFile( aFile, aPeriod );
-	}
 }
 
 void InvestConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {

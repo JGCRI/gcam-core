@@ -61,7 +61,9 @@ DefaultTechnology::DefaultTechnology( const string& aName,
 
 //! Clone Function. Returns a deep copy of the current technology.
 DefaultTechnology* DefaultTechnology::clone() const {
-    return new DefaultTechnology( *this );
+    DefaultTechnology* clone = new DefaultTechnology( mName, mYear );
+    clone->copy( *this );
+    return clone;
 }
 
 const string& DefaultTechnology::getXMLName() const {
@@ -93,13 +95,6 @@ double DefaultTechnology::getTotalInputCost( const string& aRegionName, const st
 //! Parses any input variables specific to derived classes
 bool DefaultTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
     return false;
-}
-
-void DefaultTechnology::toInputXMLDerived( ostream& aOut,
-                                           Tabs* aTabs ) const
-{
-    // Empty implementation as the base class will print all the variables
-    // in toInputXML.
 }
 
 void DefaultTechnology::toDebugXMLDerived( const int aPeriod,

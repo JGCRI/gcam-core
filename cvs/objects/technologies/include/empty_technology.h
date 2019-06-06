@@ -54,7 +54,7 @@ class IVisitor;
  *          the real technology should not exist.  This will allow all calculations
  *          to remain the same without checking for a missing technology.  Note that
  *          there is only a single instance of this class and thus it can not be
- *          parsed nor should it be written in toInputXML.
+ *          parsed.
  *
  * \author Pralit Patel
  */
@@ -71,11 +71,10 @@ public:
     virtual ITechnology* clone() const;
     
     virtual void setYear( const int aNewYear );
+    virtual int getYear() const;
     
     virtual bool XMLParse( const xercesc::DOMNode* tempnode );
-    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void toInputXMLForRestart( std::ostream& out, Tabs* tabs ) const;
     
     virtual const std::string& getXMLName() const;
     
@@ -124,9 +123,6 @@ public:
                                         const int aPeriod ) const;
     
     virtual bool hasCalibratedValue( const int aPeriod ) const;
-    
-    virtual const std::map<std::string,double> getEmissions( const std::string& aGoodName,
-                                                            const int aPeriod ) const;
        
     virtual const std::string& getName() const;
     
@@ -143,7 +139,7 @@ public:
     virtual double getTotalGHGCost( const std::string& aRegionName, const std::string& aSectorName, 
                                    const int aPeriod ) const;
     
-    virtual Value getShareWeight() const;
+    virtual double getShareWeight() const;
     virtual Value getParsedShareWeight() const;
     virtual int getNumbGHGs()  const;
     virtual void copyGHGParameters( const AGHG* prevGHG );
@@ -151,8 +147,6 @@ public:
     virtual const AGHG* getGHGPointer( const std::string& aGHGName ) const;
     
     virtual const std::vector<std::string> getGHGNames() const;
-    
-    virtual double getEmissionsByGas( const std::string& aGasName, const int aPeriod ) const;
     
     virtual double getFixedOutput( const std::string& aRegionName,
                                   const std::string& aSectorName,
@@ -171,8 +165,6 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
     
-    virtual const std::map<std::string, double> getFuelMap( const int aPeriod ) const;
-    
     virtual bool isAvailable( const int aPeriod ) const;
     
     virtual bool isOperating( const int aPeriod ) const;
@@ -182,6 +174,12 @@ public:
     virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech );
     
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ITechnology
+    )
     
     virtual double getTotalInputCost( const std::string& aRegionName,
                                      const std::string& aSectorName,

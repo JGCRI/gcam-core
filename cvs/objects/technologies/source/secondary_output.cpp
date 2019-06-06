@@ -55,9 +55,6 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-// static initialize.
-const string SecondaryOutput::XML_REPORTING_NAME = "output-secondary";
-
 /*! \brief Get the XML name for reporting to XML file.
 *
 * This public function accesses the private constant string, XML_NAME. This way
@@ -67,6 +64,7 @@ const string SecondaryOutput::XML_REPORTING_NAME = "output-secondary";
 * \return The constant XML_NAME.
 */
 const string& SecondaryOutput::getXMLReportingName() const{
+    static const string XML_REPORTING_NAME = "output-secondary";
     return XML_REPORTING_NAME;
 }
 
@@ -77,14 +75,28 @@ const string& SecondaryOutput::getXMLNameStatic()
 }
 
 SecondaryOutput::SecondaryOutput()
-    : mPhysicalOutputs( scenario->getModeltime()->getmaxper() ),
-      mPriceMult( 1.0 )
 {
+    mPriceMult = 1.0;
+}
+
+SecondaryOutput::~SecondaryOutput() {
 }
 
 SecondaryOutput* SecondaryOutput::clone() const
 {
-    return new SecondaryOutput( *this );
+    SecondaryOutput* clone = new SecondaryOutput();
+    clone->copy( * this );
+    return clone;
+}
+
+void SecondaryOutput::copy( const SecondaryOutput& aOther ) {
+    mName = aOther.mName;
+    mCachedCO2Coef = aOther.mCachedCO2Coef;
+    mOutputRatio = aOther.mOutputRatio;
+    mPriceMult = aOther.mPriceMult;
+    mMarketName = aOther.mMarketName;
+    
+    // note results are not copied.
 }
 
 bool SecondaryOutput::isSameType( const string& aType ) const
@@ -144,16 +156,6 @@ bool SecondaryOutput::XMLParse( const DOMNode* aNode )
 
     // TODO: Improve error handling.
     return true;
-}
-
-void SecondaryOutput::toInputXML( ostream& aOut,
-                                  Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mOutputRatio, "output-ratio", aOut, aTabs );
-    XMLWriteElementCheckDefault( mPriceMult, "pMultiplier", aOut, aTabs, 1.0 );
-    XMLWriteElementCheckDefault( mMarketName, "market-name", aOut, aTabs, string() );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void SecondaryOutput::toDebugXML( const int aPeriod,
@@ -220,20 +222,20 @@ void SecondaryOutput::setPhysicalOutput( const double aPrimaryOutput,
                                          const int aPeriod )
 {
     // Secondary output is the primary output multiplied by the output ratio.
-    mPhysicalOutputs[ aPeriod ] = calcPhysicalOutputInternal( aPrimaryOutput );
+    mPhysicalOutputs[ aPeriod ] = -1 * calcPhysicalOutputInternal( aPrimaryOutput );
 
     // Remove the secondary output from demand instead of adding to supply
     // because the sector which has this output as a primary will attempt to
     // fill all of demand. If this technology also added to supply, supply would
     // not equal demand.
     Marketplace* marketplace = scenario->getMarketplace();
-    mLastCalcValue = marketplace->addToDemand( mName, mMarketName.empty() ? aRegionName : mMarketName, -1 * mPhysicalOutputs[ aPeriod ], mLastCalcValue, aPeriod, true );
+    marketplace->addToDemand( mName, mMarketName.empty() ? aRegionName : mMarketName, mPhysicalOutputs[ aPeriod ], aPeriod, true );
 }
 
 double SecondaryOutput::getPhysicalOutput( const int aPeriod ) const
 {
     assert( mPhysicalOutputs[ aPeriod ].isInited() );
-    return mPhysicalOutputs[ aPeriod ];
+    return -1 * mPhysicalOutputs[ aPeriod ];
 }
 
 double SecondaryOutput::getValue( const string& aRegionName,

@@ -46,6 +46,7 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 #include "util/base/include/hash_map.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -72,22 +73,18 @@ public:
 
     static void addToTrialDemand( const std::string& aRegionName,
                                   const std::string& aSectorName,
-                                  const double aSupply,
-                                  double& aLastValue,
+                                  const Value& aSupply,
                                   const int aPeriod );
 
     static double getTrialSupply( const std::string& aRegionName,
                                   const std::string& aSectorName,
                                   const int aPeriod );
 
-    static void askToCreateTrialSupply( const std::string& aRegionName,
-                                        const std::string& aSectorName );
-
     static double calcFixedOutputScaleFactor( const double aMarketDemand,
                                               const double aFixedOutput );
 
     static double normalizeShares( std::vector<double>& aShares );
-    static double normalizeLogShares( std::vector<double> & alogShares );
+    static std::pair<double, double> normalizeLogShares( std::vector<double> & alogShares );
 
     static double calcPriceRatio( const std::string& aRegionName,
                                   const std::string& aSectorName,
@@ -113,10 +110,6 @@ public:
 
     static int getDemandNormPeriod( const int aPeriod );
 
-    static double getCapacityFactor( const std::string& aResourceName,
-                                     const std::string& aRegionName,
-                                     const int aPeriod );
-    
     static double convertEnergyToCapacity( const double aCapacityFactor,
                                            const double aEnergy );
 

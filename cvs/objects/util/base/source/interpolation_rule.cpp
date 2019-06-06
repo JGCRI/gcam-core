@@ -58,15 +58,37 @@ using namespace objects;
 
 extern Scenario* scenario;
 
-InterpolationRule::InterpolationRule():
-mOverwritePolicy( ALWAYS ),
-mWarnWhenOverwritting( false ),
-mIsFixedFunction( false ),
-mUseLastModelYearConstant( false )
+InterpolationRule::InterpolationRule()
 {
+    mFromYear = -1;
+    mToYear = -1;
+    mOverwritePolicy = ALWAYS;
+    mWarnWhenOverwritting = false;
+    mIsFixedFunction = false;
+    mInterpolationFunction = 0;
 }
 
 InterpolationRule::~InterpolationRule() {
+    delete mInterpolationFunction;
+}
+
+InterpolationRule* InterpolationRule::clone() const {
+    InterpolationRule* clone = new InterpolationRule();
+    clone->copy( *this );
+    return clone;
+}
+
+void InterpolationRule::copy( const InterpolationRule& aOther ) {
+    mFromYear = aOther.mFromYear;
+    mFromValue = aOther.mFromValue;
+    mToYear = aOther.mToYear;
+    mToValue = aOther.mToValue;
+    mOverwritePolicy = aOther.mOverwritePolicy;
+    mWarnWhenOverwritting = aOther.mWarnWhenOverwritting;
+    mIsFixedFunction = aOther.mIsFixedFunction;
+    
+    delete mInterpolationFunction;
+    mInterpolationFunction = aOther.mInterpolationFunction ? aOther.mInterpolationFunction->clone() : 0;
 }
 
 const string& InterpolationRule::getXMLNameStatic() {
@@ -89,9 +111,6 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
     // assume we were passed a valid node.
     assert( aNode );
 
-    // store what this rule applies to so that we can be round-trippable
-    mApplyTo = XMLHelper<string>::getAttr( aNode, "apply-to" );
-
     // get the year-range this rule is applicable from the attributes
     mFromYear = XMLHelper<int>::getAttr( aNode, "from-year" );
     mToYear = XMLHelper<int>::getAttr( aNode, "to-year" );
@@ -99,7 +118,6 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
     // replace to year if it is equal to the last model year flag
     if( mToYear == getLastModelYearConstant() ) {
         mToYear = scenario->getModeltime()->getEndYear();
-        mUseLastModelYearConstant = true;
     }
 
     // get the children of the node.
@@ -137,7 +155,8 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
             // only set valid functions
             if( tempFn ) {
                 mIsFixedFunction = functionName == FixedInterpolationFunction::getXMLAttrNameStatic();
-                mInterpolationFunction.reset( tempFn );
+                delete mInterpolationFunction;
+                mInterpolationFunction = tempFn;
             }
         }
         else if( nodeName == "overwrite-policy" ) {
@@ -170,35 +189,6 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
     return true;
 }
 
-void InterpolationRule::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    // TODO: create a XMLWriteOpeningTagWithAttributes
-    aTabs->writeTabs( aOut );
-    aOut << "<" << getXMLNameStatic() << " apply-to=\"" << mApplyTo
-         << "\" from-year=\"" << mFromYear << "\" to-year=\""
-         << ( mUseLastModelYearConstant ? getLastModelYearConstant() : mToYear )
-         << "\">" << endl;
-    aTabs->increaseIndent();
-
-    // only write out a value to this element if one was parsed
-    if( mFromValue.isInited() ) {
-        XMLWriteElement( mFromValue, "from-value", aOut, aTabs );
-    }
-
-    // only write out a value to this element if one was parsed
-    if( mToValue.isInited() ) {
-        XMLWriteElement( mToValue, "to-value", aOut, aTabs );
-    }
-
-    mInterpolationFunction->toInputXML( aOut, aTabs );
-
-    map<string, bool> attrs;
-    attrs[ "warn" ] = mWarnWhenOverwritting;
-    XMLWriteElementWithAttributes( overwritePolicyEnumToStr( mOverwritePolicy ),
-        "overwrite-policy", aOut, aTabs, attrs );
-
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 /*!
  * \brief Perform any potential interpolations according to the parsed rules.
  * \details Apply interpolations for any years that are with in the ranged
@@ -216,7 +206,7 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
                                              const PeriodVector<Value>& aParsedValues ) const
 {
     // perform error checking before attempting interpolations
-    if( !mInterpolationFunction.get() ) {
+    if( !mInterpolationFunction ) {
         // abort no interpolation function set
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
@@ -348,7 +338,7 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
 
 /*!
  * \brief Convert the enumerated OverwritePolicy values to a string which 
- *        is suitable for use during XMLParse and toInputXML.
+ *        is suitable for use during XMLParse.
  * \param aPolicy An enumerated value to convert.
  * \return The string which represents that value.
  */

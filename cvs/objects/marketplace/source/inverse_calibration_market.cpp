@@ -46,8 +46,8 @@
 using namespace std;
 
 //! Constructor
-InverseCalibrationMarket::InverseCalibrationMarket( const string& goodNameIn, const string& regionNameIn, int periodIn ) :
-  Market( goodNameIn, regionNameIn, periodIn ) {
+InverseCalibrationMarket::InverseCalibrationMarket( const MarketContainer* aContainer ) :
+  Market( aContainer ) {
 }
 
 //! Destructor

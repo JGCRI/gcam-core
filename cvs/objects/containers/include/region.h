@@ -51,11 +51,11 @@
 #include <string>
 #include <list>
 #include <xercesc/dom/DOMNode.hpp>
-
-#include "util/base/include/ivisitable.h"
-#include "util/base/include/iround_trippable.h"
-#include "util/base/include/summary.h"
 #include <boost/noncopyable.hpp>
+
+#include "util/base/include/inamed.h"
+#include "util/base/include/ivisitable.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations.
 class Demographic;
@@ -65,6 +65,12 @@ class PolicyPortfolioStandard;
 class Curve;
 class AResource;
 class IInfo;
+class Tabs;
+
+// Need to forward declare the subclasses as well.
+class RegionMiniCAM;
+class RegionCGE;
+
 /*! 
 * \ingroup Objects
 * \brief This is an abstract base class for Regions.
@@ -72,55 +78,61 @@ class IInfo;
 * \author Sonny Kim
 */
 
-class Region: public IVisitable, public IRoundTrippable, protected boost::noncopyable
+class Region: public INamed, public IVisitable, protected boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
     Region();
     virtual ~Region();
     void XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual void completeInit();
     const std::string& getName() const;
     
-    virtual void initCalc( const int period ) = 0;
+    virtual void initCalc( const int period );
     
-    virtual void postCalc( const int aPeriod ) = 0;
-
-    virtual void csvOutputFile() const {};
-    virtual void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const {};
-    virtual void initializeAgMarketPrices( const std::vector<double>& pricesIn ) {};
-    virtual void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period ) {};
-    virtual const Summary& getSummary( const int period ) const { static const Summary nullSummary; return nullSummary; };
+    virtual void postCalc( const int aPeriod );
 
     void setTax( const GHGPolicy* aTax );
     const Curve* getEmissionsQuantityCurve( const std::string& ghgName ) const;
     const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;
 
     virtual bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const { return true; };
-    virtual void updateAllOutputContainers( const int period ) = 0;
     virtual void updateMarketplace( const int period ) {};
 
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const {};
-
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    virtual void csvSGMGenFile( std::ostream& aFile ) const {};
 protected:
-    std::string name; //!< Region name
-    std::auto_ptr<Demographic> demographic; //!< Population object
-    std::vector<Sector*> supplySector; //!< vector of pointers to supply sector objects
-    //! vector of pointers to ghg market objects, container for constraints and emissions
-    std::vector<GHGPolicy*> mGhgPolicies;
-    //! vector of pointers to portfolio standard market objects, container for constraints
-    std::vector<PolicyPortfolioStandard*> mPolicies;
-    std::vector<AResource*> mResources; //!< vector of pointers to resource objects
-    //! The region's information store.
-    std::auto_ptr<IInfo> mRegionInfo;
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of Region to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( Region, RegionMiniCAM, RegionCGE ),
+                
+        /*! \brief Region name */
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        
+        /*! \brief Population object */
+        DEFINE_VARIABLE( CONTAINER, "demographic", mDemographic, Demographic* ),
+        
+        /*! \brief  vector of pointers to supply sector objects */
+        DEFINE_VARIABLE( CONTAINER, "sector", mSupplySector, std::vector<Sector*> ),
+        
+        /*! \brief vector of pointers to ghg market objects, container for constraints and emissions */
+        DEFINE_VARIABLE( CONTAINER, "ghg-policies", mGhgPolicies, std::vector<GHGPolicy*> ),
+        
+        /*! \brief vector of pointers to portfolio standard market objects, container for constraints */
+        DEFINE_VARIABLE( CONTAINER, "policies", mPolicies, std::vector<PolicyPortfolioStandard*> ),
+        
+        /*! \brief vector of pointers to resource objects */
+        DEFINE_VARIABLE( CONTAINER, "resource", mResources, std::vector<AResource*> ),
+        
+        /*! \brief The region's information store. */
+        DEFINE_VARIABLE( SIMPLE, "info", mRegionInfo, IInfo* )
+    )
 
     virtual const std::string& getXMLName() const = 0;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
 private:

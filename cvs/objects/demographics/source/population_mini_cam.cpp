@@ -62,8 +62,9 @@ extern Scenario* scenario;
 const string PopulationMiniCAM::XML_NAME = "populationMiniCAM";
 
 //! Default constructor.
-PopulationMiniCAM::PopulationMiniCAM():
-mFractionWorking( 1.0 ) {
+PopulationMiniCAM::PopulationMiniCAM()
+{
+    mFractionWorking = 1.0;
 }
 
 Population* PopulationMiniCAM::cloneAndInterpolate( const int aNewYear, const Population* aNextPopulation ) const {
@@ -99,12 +100,6 @@ double PopulationMiniCAM::getWorkingAgePop() const { // ages 15-65
     // for population MiniCAM we just take the total and multiply
     // by an exogenous working age fraction which defaults to 1
     return mTotalPop * mFractionWorking;
-}
-
-//! Write out data members to XML output stream.
-void PopulationMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    // note that mTotalPop is actually written out by Population
-    XMLWriteElementCheckDefault( mFractionWorking, "fraction-working", out, tabs, 1.0 );
 }
 
 //! Write out XML for debugging purposes.
@@ -145,10 +140,6 @@ const string& PopulationMiniCAM::getXMLName() const {
 */
 const string& PopulationMiniCAM::getXMLNameStatic() {
     return XML_NAME;
-}
-
-void PopulationMiniCAM::csvSGMOutputFile( ostream& aFile, const int period ) const {
-    Population::csvSGMOutputFile( aFile, period );
 }
 
 /*! \brief Update a visitor with information about a MiniCAM population.

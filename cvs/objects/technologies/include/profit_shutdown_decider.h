@@ -84,6 +84,8 @@ class ProfitShutdownDecider: public IShutdownDecider
     // Allow SGM technology to create the ProfitShutdownDecider directly.
     friend class ProductionTechnology;
 public:
+    ~ProfitShutdownDecider();
+    
     // IParsedComponent methods.
     virtual ProfitShutdownDecider* clone() const;
 
@@ -92,9 +94,6 @@ public:
     virtual const std::string& getName() const;
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -107,23 +106,30 @@ public:
                                      const std::string& aSectorName,
                                      const int aInitialTechYear,
                                      const int aPeriod ) const;
-private:
+protected:
     ProfitShutdownDecider();
+    
+    void copy( const ProfitShutdownDecider& aOther );
 
     static const std::string& getXMLNameStatic();
 
-    //! The name of this shutdown decider in case we want to stack multiple.
-    std::string mName;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IShutdownDecider,
 
-    //! Parameter for max rate of shutdown (e.g. 1 means entire vintage can be shutdown)
-    double mMaxShutdown;
+        //! The name of this shutdown decider in case we want to stack multiple.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
-    //! Parameter for steepness of backup curve. Higher number means steeper ascent.
-    double mSteepness;
+        //! Parameter for max rate of shutdown (e.g. 1 means entire vintage can be shutdown)
+        DEFINE_VARIABLE( SIMPLE, "max-shutdown", mMaxShutdown, double ),
 
-    //! Parameter for profitRate at which 50% of is shutdown.
-    double mMedianShutdownPoint;
-  
+        //! Parameter for steepness of backup curve. Higher number means steeper ascent.
+        DEFINE_VARIABLE( SIMPLE, "steepness", mSteepness, double ),
+
+        //! Parameter for profitRate at which 50% of is shutdown.
+        DEFINE_VARIABLE( SIMPLE, "median-shutdown-point", mMedianShutdownPoint, double )
+    )
 };
 
 #endif // _PROFIT_SHUTDOWN_DECIDER_H_

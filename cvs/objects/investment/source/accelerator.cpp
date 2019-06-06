@@ -200,23 +200,6 @@ void Accelerator::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) co
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-/*! \brief Write the object to an XML output stream.
-* \param aOut The output stream to write to.
-* \param aTabs The object which tracks the number of tabs to write.
-*/
-void Accelerator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteVector( mFixedInvestments, "FixedInvestment", aOut, aTabs, scenario->getModeltime(), -1.0 );
-
-    XMLWriteElementCheckDefault( mInvestmentLogitExp, "InvestmentLogitExp", aOut, aTabs, 1.0 );
-    XMLWriteElementCheckDefault( mProfitElasExp, "ProfitElasExp", aOut, aTabs, 1.0 );
-    assert( mGrowthCalculator.get() );
-    mGrowthCalculator->toInputXML( aOut, aTabs );
-    assert( mProfitRateCalculator.get() );
-    mProfitRateCalculator->toInputXML( aOut, aTabs );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 /*! \brief Complete the initialization of the Accelerator before it is used.
 * \details This function stores the region and sector name internally, and then
 *          creates default growth and profit calculation objects if they were

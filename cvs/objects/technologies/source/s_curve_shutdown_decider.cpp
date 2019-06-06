@@ -58,11 +58,24 @@ extern Scenario* scenario;
  * \brief Constructor
  */
 S_CurveShutdownDecider::S_CurveShutdownDecider()
-: mSteepness( 0.1 ), mHalfLife( 45 )
-{}
+{
+    mSteepness = 0.1;
+    mHalfLife = 45;
+}
+
+S_CurveShutdownDecider::~S_CurveShutdownDecider() {
+}
 
 S_CurveShutdownDecider* S_CurveShutdownDecider::clone() const {
-    return new S_CurveShutdownDecider( *this );
+    S_CurveShutdownDecider* clone = new S_CurveShutdownDecider();
+    clone->copy( *this );
+    return clone;
+}
+
+void S_CurveShutdownDecider::copy( const S_CurveShutdownDecider& aOther ) {
+    mName = aOther.mName;
+    mSteepness = aOther.mSteepness;
+    mHalfLife = aOther.mHalfLife;
 }
 
 bool S_CurveShutdownDecider::isSameType( const string& aType ) const {
@@ -121,15 +134,6 @@ bool S_CurveShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
     }
 
     return true;
-}
-
-void S_CurveShutdownDecider::toInputXML( ostream& aOut,
-                                        Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElementCheckDefault( mSteepness, "steepness", aOut, aTabs, 0.0 );
-    XMLWriteElementCheckDefault( mHalfLife, "half-life", aOut, aTabs, 0.0 );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void S_CurveShutdownDecider::toDebugXML( const int aPeriod,

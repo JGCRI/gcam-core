@@ -55,9 +55,7 @@
 #include <boost/iostreams/concepts.hpp>
 #endif
 
-class IndirectEmissionsCalculator;
-
-/*! 
+/*!
 * \ingroup Objects
 * \brief A visitor which writes model results to an XML database.
 * \details
@@ -70,14 +68,13 @@ public:
 
     ~XMLDBOutputter();
 
+    static bool checkJavaWorking();
+
     void finish() const;
     void finalizeAndClose();
 
     void startVisitScenario( const Scenario* aScenario, const int aPeriod );
     void endVisitScenario( const Scenario* aScenario, const int aPeriod );
-
-    void startVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod );
-    void endVisitOutputMetaData( const OutputMetaData* aOutputMetaData, const int aPeriod );
 
     void startVisitWorld( const World* aWorld, const int aPeriod );
     void endVisitWorld( const World* aWorld, const int aPeriod );
@@ -96,6 +93,9 @@ public:
 
     void startVisitSubResource( const SubResource* aSubResource, const int aPeriod );
     void endVisitSubResource( const SubResource* aSubResource, const int aPeriod );
+    
+    void startVisitSubRenewableResource( const SubRenewableResource* aSubResource, const int aPeriod );
+    void endVisitSubRenewableResource( const SubRenewableResource* aSubResource, const int aPeriod );
 
     void startVisitGrade( const Grade* aGrade, const int aPeriod );
     void endVisitGrade( const Grade* aGrade, const int aPeriod );
@@ -267,9 +267,6 @@ private:
     //! database.
     std::stack<std::iostream*> mBufferStack;
 
-    //! Indirect emissions calculator for the current region.
-    std::auto_ptr<IndirectEmissionsCalculator> mIndirectEmissCalc;
-
 #if( __HAVE_JAVA__ )
     /*!
      * \brief Contains all objects necessary to interact with Java.
@@ -299,7 +296,7 @@ private:
     //! the like of the XMLDBOutputter.
     const std::auto_ptr<JNIContainer> mJNIContainer;
 
-    static std::auto_ptr<JNIContainer> createContainer();
+    static std::auto_ptr<JNIContainer> createContainer( const bool aTestingOnly );
 #endif
     static const std::string createContainerName( const std::string& aScenarioName );
 
@@ -323,6 +320,8 @@ private:
     bool isTechnologyOperating( const int aPeriod );
     
     std::iostream* popBufferStack();
+    
+    static std::map<std::string, std::string> decomposeLandName( std::string aLandName );
 
 #if( __HAVE_JAVA__ )
     /*!

@@ -122,18 +122,6 @@ public :
     *  \return Whether the parse completed successfully.
     */
    virtual bool XMLParse( const xercesc::DOMNode* apNode );
-   /*! \brief Serialize the object to an output stream in an XML format.
-    *  \details Function which writes out all data members of an object which are
-    *           necessary to duplicate a model run. This should not include
-    *           internal state variables, only variables that were read-in or
-    *           changed by calibration.
-    *  \param aOut Stream into which to write.
-    *  \param aTabs Object which controls formatting of the file.
-    */
-
-   virtual void toInputXML(
-      std::ostream& aOut,
-      Tabs*         aTabs ) const;
 
    /*! \brief Serialize the object to an output stream in an XML format.
     *  \details Function which writes out all data members of an object which are
@@ -242,25 +230,6 @@ inline bool TObjectMetaInfo<T>::XMLParse( const xercesc::DOMNode* apNode )
    }
 
    return numParsed == 2;
-}
-
-
-// TObjectMetaInfo<T>::toInputXML ******************************************
-
-/*! \brief Serialize the object to an output stream in an XML format.
- *  \details Function which writes out all data members of an object which are
- *           necessary to duplicate a model run. This should not include
- *           internal state variables, only variables that were read-in or
- *           changed by calibration.
- *  \param aOut Stream into which to write.
- *  \param aTabs Object which controls formatting of the file.
- */
-template <class T>
-inline void TObjectMetaInfo<T>::toInputXML( std::ostream& aOut, Tabs* aTabs ) const
-{
-   XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-   XMLWriteElement( mValue, "value", aOut, aTabs );
-   XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 // TObjectMetaInfo<T>::toDebugXML ******************************************

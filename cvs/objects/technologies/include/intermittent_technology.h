@@ -91,8 +91,7 @@ public:
 
     IntermittentTechnology( const std::string& aName,
                             const int aYear );
-
-    IntermittentTechnology( const IntermittentTechnology& aOther );
+    virtual ~IntermittentTechnology();
     
     virtual IntermittentTechnology* clone() const;
 
@@ -126,55 +125,60 @@ public:
                            const std::string& aSectorName,
                            const int aPeriod );
 protected:
+    typedef std::vector<IInput*>::iterator InputIterator;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Technology,
+
+        //! A calculator which determines the amount of backup per unit output.
+        DEFINE_VARIABLE( CONTAINER, "backup-calculator", mBackupCalculator, IBackupCalculator* ),
+
+        //! Name of the electricity sector which this Technology will supply.
+        DEFINE_VARIABLE( SIMPLE, "electric-sector-name", mElectricSectorName, std::string ),
+        
+        DEFINE_VARIABLE( SIMPLE, "electric-sector-market", mElectricSectorMarket, std::string ),
+
+        //! Name of trial market associated with this Intermittent Technology.
+        DEFINE_VARIABLE( SIMPLE, "trial-market-name", mTrialMarketName, std::string ),
+
+        //! Name of trial market readin for this Intermittent Technology.
+        DEFINE_VARIABLE( SIMPLE, "trial-market-name-parsed", mTrialMarketNameParsed, std::string ),
+
+        //! Cached input containing the resource.
+        DEFINE_VARIABLE( SIMPLE, "resource-input-pointer", mResourceInput, InputIterator ),
+
+        //! Cached input containing the backup.
+        DEFINE_VARIABLE( SIMPLE, "backup-input-pointer", mBackupInput, InputIterator ),
+
+        //! Cached input containing the capital costs for backup.
+        DEFINE_VARIABLE( SIMPLE, "backup-cap-cost-input-pointer", mBackupCapCostInput, InputIterator ),
+
+        //! Cached input containing the technology costs.
+        DEFINE_VARIABLE( SIMPLE, "tech-cost-input-pointer", mTechCostInput, InputIterator ),
+
+        //! Backup capacity factor read in at the Sector level.
+        DEFINE_VARIABLE( SIMPLE, "backup-capacity-factor", mBackupCapacityFactor, Value ),
+
+        //! Backup capital cost.
+        DEFINE_VARIABLE( SIMPLE, "backup-capital-cost", mBackupCapitalCost, Value ),
+
+        //! Electric reserve cost read in at the Sector level.
+        DEFINE_VARIABLE( SIMPLE, "electricity-reserve-margin", mElecReserveMargin, Value ),
+
+        //! Average grid capacity factor read in at the Sector level.
+        //todo dynamically calculate average grid capacity factor
+        DEFINE_VARIABLE( SIMPLE, "average-grid-capacity-factor", mAveGridCapacityFactor, Value ),
+
+        //! State value necessary to track tech output ration
+        DEFINE_VARIABLE( SIMPLE | STATE, "tech-output-ratio", mIntermitOutTechRatio, Value )
+    )
+    
     //! Info object used to pass parameter information into backup calculators.
     std::auto_ptr<IInfo> mIntermittTechInfo;
-
-    //! A calculator which determines the amount of backup per unit output.
-    std::auto_ptr<IBackupCalculator> mBackupCalculator;
-
-    //! Name of the electricity sector which this Technology will supply.
-    std::string mElectricSectorName; 
     
-    std::string mElectricSectorMarket;
-
-    //! Name of trial market associated with this Intermittent Technology.
-    std::string mTrialMarketName ;
-
-    //! Name of trial market readin for this Intermittent Technology.
-    std::string mTrialMarketNameParsed ;
-
-    typedef std::vector<IInput*>::iterator InputIterator;
-
-    //! Cached input containing the resource.
-    InputIterator mResourceInput;
-
-    //! Cached input containing the backup.
-    InputIterator mBackupInput;
-
-    //! Cached input containing the capital costs for backup.
-    InputIterator mBackupCapCostInput;
-
-    //! Cached input containing the technology costs.
-    InputIterator mTechCostInput;
-
-    //! Backup capacity factor read in at the Sector level.
-    Value mBackupCapacityFactor;
-
-    //! Backup capital cost.
-    Value mBackupCapitalCost;
-
-    //! Backup cost read in at the Sector level.
-    Value mBackupCost;
-
-    //! Electric reserve cost read in at the Sector level.
-    Value mElecReserveMargin;
-
-    //! Average grid capacity factor read in at the Sector level.
-    //todo dynamically calculate average grid capacity factor
-    Value mAveGridCapacityFactor;
-
-    //! Trial market price updated with solution price.
-    Value mTrialMarketPrice;
+    void copy( const IntermittentTechnology& aOther );
 
     void setCoefficients( const std::string& aRegionName,
                           const std::string& aSectorName,
@@ -209,17 +213,12 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
                                        const xercesc::DOMNode* aCurr );
 
-    virtual void toInputXMLForRestart( std::ostream& out, Tabs* tabs ) const;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
 
     virtual const std::string& getBackupCapCostName( ) const;
 
     virtual const std::string& getTechCostName( ) const;
-    
-    //! State value necessary to use addToTrialDemand
-    double mLastCalcValue;
 };
 
 #endif // _ITERMITTENT_TECHNOLOGY_H_

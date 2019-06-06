@@ -288,8 +288,8 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
  */
 bool BisectAll::areAllBracketsEqual( SolutionInfoSet& aSolutionSet ) const {
 	for ( unsigned int i = 0; i < aSolutionSet.getNumSolvable(); ++i ) {
-        // TODO: need a get solution tolerance instead of hard coding the .001
-		if( !util::isEqual( aSolutionSet.getSolvable( i ).getCurrentBracketInterval(), 0.0, .001 ) 
+        // TODO: need a get solution tolerance instead of hard coding tolerance.
+        if( !util::isEqual( aSolutionSet.getSolvable( i ).getCurrentBracketInterval(), 0.0, 0.001 )
 			&& !aSolutionSet.getSolvable( i ).isWithinTolerance() ) {
 			return false;
 		}

@@ -34,10 +34,12 @@ import java.net.URLClassLoader;
 import java.net.URL;
 import java.net.URI;
 import java.net.URLDecoder;
+import java.net.MalformedURLException;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * A custom class loader which simply expands any wildcard jar specifications
@@ -45,11 +47,23 @@ import java.util.ArrayList;
  * Such a class loader is necessary since while Java should do this automatically
  * for us it turns out that it is not done when the JVM is launched via JNI.
  * This class loader will simply do the wild card expansion and rely on the
- * URLClassLoader to do the real work.
+ * URLClassLoader to do the real work.  Note since Java 9 the URLClassLoader
+ * is no longer the default so we will also manually lookup the classpath as well.
  *
  * @author Pralit Patel
  */
 public class WildcardExpandingClassLoader extends URLClassLoader {
+    /**
+     * A pattern that looks for BaseX library names.
+     */
+    final static String BASEX_LIB_MATCH = "^.*[Bb][Aa][Ss][Ee][Xx].*$";
+    
+    /**
+     * A pattern that looks for a "prefered" BaseX version if we find
+     * duplicate versions of the library.
+     */
+    final static String PREFERED_BASEX_VER = "^.*[Bb][Aa][Ss][Ee][Xx]-8.6.7.*$";
+
     /**
      * Constructor which will expand any wildcard jar specifications then call
      * the constructor or the base URLClassLoader with this updated list of jars.
@@ -61,7 +75,7 @@ public class WildcardExpandingClassLoader extends URLClassLoader {
         // cut the parent class loader out of the loop by copying it's search path
         // and expanding the wildcard definitions then pointing directly to it's
         // parent class loader
-        super( expandWildcardClasspath( ((URLClassLoader)aParentClassLoader).getURLs() ), aParentClassLoader.getParent() );
+        super( expandWildcardClasspath(), aParentClassLoader.getParent() );
     }
 
     /**
@@ -71,10 +85,21 @@ public class WildcardExpandingClassLoader extends URLClassLoader {
      * @return An array of the URLs from aOriginalURLs except the unexpaned wildcards
      *         have been expaneded.
      */
-    private static URL[] expandWildcardClasspath( URL[] aOriginalURLs ) {
+    private static URL[] expandWildcardClasspath() {
         List<URL> ret = new ArrayList<URL>();
-        for( URL currURL : aOriginalURLs ) {
-            if( currURL.getFile().endsWith( "*" ) ) {
+        int numBaseXJars = 0;
+        String classpath = System.getProperty("java.class.path");
+        String[] classpathEntries = classpath.split(System.getProperty("path.separator"));
+        for( String currCP : classpathEntries ) {
+            File classpathFile = new File(currCP);
+            URI uri = classpathFile.toURI();
+            URL currURL = null;
+            try {
+                currURL = uri.toURL();
+            } catch (MalformedURLException e) {
+                System.out.println("Ignoring classpath entry: " + currCP);
+            }
+            if( currCP.endsWith( "*" ) ) {
                 // This URL needs to be expanded
                 try {
                     File currFile = new File( URLDecoder.decode( currURL.getFile(), "UTF-8" ) );
@@ -89,6 +114,9 @@ public class WildcardExpandingClassLoader extends URLClassLoader {
                     if( expandedJars != null ) {
                         for( File currJar : expandedJars ) {
                             ret.add( currJar.toURI().toURL() );
+                            if( currJar.getName().matches(BASEX_LIB_MATCH) ) {
+                                ++numBaseXJars;
+                            }
                         }
                     } else {
                         // could not expand due to some error, we can try to
@@ -104,7 +132,25 @@ public class WildcardExpandingClassLoader extends URLClassLoader {
             else {
                 // Just use this unmodified
                 ret.add( currURL );
+                if( currURL.getFile().matches(BASEX_LIB_MATCH) ) {
+                    ++numBaseXJars;
+                }
             }
+        }
+        // we've had trouble finding multiple jars of the BaseX of different versions
+        // so if we find more than we will accept the one that matches the "prefered" version
+        // which is hard coded to the version used when this workspace was created
+        if( numBaseXJars > 1 ) {
+            for( Iterator<URL> it = ret.iterator(); it.hasNext(); ) {
+                URL currURL = it.next();
+                if( currURL.getFile().matches(BASEX_LIB_MATCH) && !currURL.getFile().matches(PREFERED_BASEX_VER) ) {
+                    it.remove();
+                    --numBaseXJars;
+                }
+            }
+        }
+        if( numBaseXJars == 0 ) {
+            System.out.println( "WARNING: did not recongnize any BaseX jars in classpath.  This may indicate missing jars or duplicate version mismatch.");
         }
         return ret.toArray( new URL[ 0 ] );
     }

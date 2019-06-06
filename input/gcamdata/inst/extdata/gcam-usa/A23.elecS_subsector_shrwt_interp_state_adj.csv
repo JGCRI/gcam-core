@@ -1,0 +1,13 @@
+# File: A23.elecS_subsector_shrwt_interp_state_adj.csv
+# Title: Multiple Load Segments Subsector Shareweights
+# Units: unitless
+# Comments: Subsector shareweights for subsectors that are fixed at calibration values.
+# This table adjusts shareweights / interpolation functions for particular states.
+# Hawaii is the only state which is allowed to deploy new refined liquids electric power plants in future model periods, because of its historical reliance on oil-fired electricity generation and geographic / resource constraints on alternative fuels (particularly natual gas).
+# Column types: ccccccc 
+# ----------
+region,supplysector,subsector,apply.to,from.year,to.year,interpolation.function
+HI,base load generation,refined liquids,share-weight,final-calibration-year,end-year,fixed
+HI,intermediate generation,refined liquids,share-weight,final-calibration-year,end-year,fixed
+HI,subpeak generation,refined liquids,share-weight,final-calibration-year,end-year,fixed
+HI,peak generation,refined liquids,share-weight,final-calibration-year,end-year,fixed

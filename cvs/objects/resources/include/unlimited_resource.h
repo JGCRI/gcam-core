@@ -65,7 +65,6 @@
  *          - Attributes: name UnlimitedResource::mName
  *          - Elements:
  *              - \c market UnlimitedResource::mMarket
- *              - \c capacity-factor UnlimitedResource::mCapacityFactor
  *              - \c variance UnlimitedResource::mVariance
  *              - \c price UnlimitedResource::mFixedPrices
  *                  - Attributes: year Year
@@ -83,9 +82,6 @@ public:
     virtual const std::string& getXMLName() const;
 
     virtual void XMLParse( const xercesc::DOMNode* aNode );
-
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
 
     virtual void toDebugXML( const int period,
                              std::ostream &out,
@@ -109,22 +105,30 @@ public:
     virtual double getAnnualProd( const std::string& aRegionName,
                                   const int aPeriod ) const;
 
-    virtual void dbOutput( const std::string& aRegionName );
-
-    virtual void csvOutputFile( const std::string& aRegionName ); 
+    virtual double getPrice( const int aPeriod ) const;
 
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;
 
 protected:
-    //! Read in prices.
-    objects::PeriodVector<Value> mFixedPrices;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AResource,
+                            
+        //! Read in prices.
+        DEFINE_VARIABLE( ARRAY, "price", mFixedPrices, objects::PeriodVector<Value> ),
 
-    //! Capacity factor.
-    Value mCapacityFactor;
+        //! Capacity factor.
+        DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, Value ),
 
-    //! Variance.
-    Value mVariance;
+        //! Variance.
+        DEFINE_VARIABLE( SIMPLE, "variance", mVariance, Value ),
+        
+        //! The last supply value that was added to the marketplace so it is equal.
+        DEFINE_VARIABLE( SIMPLE | STATE, "supply-wedge", mSupplyWedge, Value)
+    )
 
     void setMarket( const std::string& aRegionName );
 };

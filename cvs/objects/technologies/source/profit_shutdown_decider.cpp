@@ -52,15 +52,27 @@ using namespace std;
 using namespace xercesc;
 
 //! Constructor
-ProfitShutdownDecider::ProfitShutdownDecider():
-    mMaxShutdown(1.0),
-    mSteepness(6.0),
-    mMedianShutdownPoint(-0.1)
+ProfitShutdownDecider::ProfitShutdownDecider()
 {
+    mMaxShutdown = 1.0;
+    mSteepness = 6.0;
+    mMedianShutdownPoint = -0.1;
+}
+
+ProfitShutdownDecider::~ProfitShutdownDecider() {
 }
 
 ProfitShutdownDecider* ProfitShutdownDecider::clone() const {
-    return new ProfitShutdownDecider( *this );
+    ProfitShutdownDecider* clone = new ProfitShutdownDecider();
+    clone->copy( *this );
+    return clone;
+}
+
+void ProfitShutdownDecider::copy( const ProfitShutdownDecider& aOther ) {
+    mName = aOther.mName;
+    mMaxShutdown = aOther.mMaxShutdown;
+    mSteepness = aOther.mSteepness;
+    mMedianShutdownPoint = aOther.mMedianShutdownPoint;
 }
 
 bool ProfitShutdownDecider::isSameType( const std::string& aType ) const {
@@ -123,14 +135,6 @@ bool ProfitShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
     }
     
     return true;
-}
-
-void ProfitShutdownDecider::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElementCheckDefault( mMaxShutdown, "max-shutdown", aOut, aTabs, 1.0 );
-    XMLWriteElementCheckDefault( mSteepness, "steepness", aOut, aTabs, 6.0 );
-    XMLWriteElementCheckDefault( mMedianShutdownPoint, "median-shutdown-point", aOut, aTabs, -0.1 );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void ProfitShutdownDecider::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

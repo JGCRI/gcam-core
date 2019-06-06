@@ -82,9 +82,15 @@ int CalcCounter::getMethodCount( const string methodName ) const {
 * \param additional Amount to increment the counts by, 1 is the default.
 */
 void CalcCounter::incrementCount( const double additional ){
+#if GCAM_PARALLEL_ENABLED
+    mCounterLock.lock();
+#endif
     totalCount += additional;
     periodCount += additional;
     methodCounts[ currMethodName ] += additional;
+#if GCAM_PARALLEL_ENABLED
+    mCounterLock.unlock();
+#endif
 }
 
 /*! \brief Set the name of the method currently being used to solve.

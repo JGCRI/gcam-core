@@ -556,7 +556,9 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
     solverLog << "dx: " << dx << "\n"; 
 #endif /* USE_LAPACK */
 
+    // log the proposal step
     solverLog << "Proposal step magnitude dxmag= " << sqrt(inner_prod(dx,dx)) << "\n\n";
+    reportVec("dxprop", dx, mktids_solv, issolvable_solv);    
 
     
     // dx now holds the newton step.  Execute the line search along

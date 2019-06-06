@@ -81,9 +81,15 @@ public:
     double getWorkingAgePopMale() const;
     double getWorkingAgePopFemale() const;
 
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Population,
+    )
+    
     std::vector<AgeCohort*> ageCohort; //!< array of age cohorts
     typedef std::vector<AgeCohort*>::iterator AgeCohortIterator;
     typedef std::vector<AgeCohort*>::const_iterator CAgeCohortIterator;
@@ -91,7 +97,6 @@ protected:
 
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string &nodeName, const xercesc::DOMNode* curr );
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 private:
     void fillMalePop( const std::vector<double>& aMalePop );

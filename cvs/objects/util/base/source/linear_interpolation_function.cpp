@@ -59,6 +59,11 @@ LinearInterpolationFunction::LinearInterpolationFunction() {
 LinearInterpolationFunction::~LinearInterpolationFunction() {
 }
 
+IInterpolationFunction* LinearInterpolationFunction::clone() const {
+    // no parameters to copy
+    return new LinearInterpolationFunction();
+}
+
 /*!
  * \brief The value for the xml name attribute which identifies this
  *        interpolation function.
@@ -99,10 +104,6 @@ bool LinearInterpolationFunction::XMLParse( const DOMNode* aNode ) {
         }
     }
     return true;
-}
-
-void LinearInterpolationFunction::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteElement("", IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, 0, getXMLAttrNameStatic() );
 }
 
 double LinearInterpolationFunction::interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,

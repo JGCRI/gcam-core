@@ -46,9 +46,10 @@
 
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
+
 #include "functions/include/minicam_input.h"
-#include <vector>
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 class Tabs;
 
@@ -87,10 +88,6 @@ public:
     virtual void XMLParse( const xercesc::DOMNode* aNode );
 
     virtual bool isSameType( const std::string& aType ) const;
-    
-
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -147,9 +144,17 @@ protected:
 
     // Constuctor to allow internal creation of this object
     RenewableInput( const std::string& aName );
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        MiniCAMInput,
 
-    //! Physical Demand.
-    std::vector<Value> mPhysicalDemand;
+        //! Physical Demand.
+        DEFINE_VARIABLE( ARRAY | STATE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> )
+    )
+    
+    void copy( const RenewableInput& aOther );
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
 };

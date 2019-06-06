@@ -70,16 +70,14 @@ void TradeConsumer::copyParamsInto( TradeConsumer& aTradeConsumer,
 }
 
 TradeConsumer* TradeConsumer::clone() const {
-	return new TradeConsumer( *this );
+    TradeConsumer* clone = new TradeConsumer();
+    clone->copy( *this );
+    return clone;
 }
 
 //! Parse xml file for data
 bool TradeConsumer::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ) {
 	return false;
-}
-
-//! For derived classes to output XML data
-void TradeConsumer::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 }
 
 //! Output debug info for derived class
@@ -170,18 +168,6 @@ const string& TradeConsumer::getXMLName() const {
 const string& TradeConsumer::getXMLNameStatic() {
     const static string XML_NAME = "tradeConsumer";
 	return XML_NAME;
-}
-
-//! SGM version of outputing data to a csv file
-void TradeConsumer::csvSGMOutputFile( ostream& aFile, const int aPeriod ) const {
-	if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-		aFile << "***** Trade Sector Results *****" << endl << endl;
-		expenditures[ aPeriod ].csvSGMOutputFile( aFile, aPeriod );
-		aFile << endl;
-
-		aFile << "Trade Consumer Expenditure" << endl << endl;
-		BaseTechnology::csvSGMOutputFile( aFile, aPeriod );
-	}
 }
 
 void TradeConsumer::accept( IVisitor* aVisitor, const int aPeriod ) const {

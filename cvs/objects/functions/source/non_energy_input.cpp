@@ -83,8 +83,7 @@ const string& NonEnergyInput::getXMLReportingName() const{
 
 //! Constructor
 NonEnergyInput::NonEnergyInput()
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ){
+{
 }
 
 /*! \brief Constructor that sets name attribute.
@@ -93,20 +92,29 @@ NonEnergyInput::NonEnergyInput()
 * objects.
 * \author Steve Smith
 */
-NonEnergyInput::NonEnergyInput( const std::string& aName ) 
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() )
+NonEnergyInput::NonEnergyInput( const std::string& aName )
 {
     mName = aName;
 }
 
 //! Clone the input.
 NonEnergyInput* NonEnergyInput::clone() const {
-    return new NonEnergyInput( *this );
+    NonEnergyInput* clone = new NonEnergyInput();
+    clone->copy( *this );
+    return clone;
 }
 
 bool NonEnergyInput::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
+}
+
+void NonEnergyInput::copy( const NonEnergyInput& aOther ) {
+    MiniCAMInput::copy( aOther );
+    
+    mCost = aOther.mCost;
+    mTechChange = aOther.mTechChange;
+    
+    // calculated parameters are not copied.
 }
 
 void NonEnergyInput::copyParam( const IInput* aInput,
@@ -158,15 +166,6 @@ void NonEnergyInput::XMLParse( const xercesc::DOMNode* node ) {
     }
 }
 
-void NonEnergyInput::toInputXML( ostream& aOut,
-                                 Tabs* aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mCost, "input-cost", aOut, aTabs );
-    XMLWriteElementCheckDefault( mTechChange, "tech-change", aOut, aTabs, Value( 0 ) );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
 void NonEnergyInput::toDebugXML( const int aPeriod,
                                  ostream& aOut,
                                  Tabs* aTabs ) const
@@ -188,7 +187,7 @@ void NonEnergyInput::completeInit( const string& aRegionName,
     // Initialize the adjusted costs in all periods to the base read-in costs.
     // These costs may be adjusted by the Technology, for instance for capture
     // penalties.
-    mAdjustedCosts.assign( mAdjustedCosts.size(), mCost );
+    fill( mAdjustedCosts.begin(), mAdjustedCosts.end(), mCost );
 }
 
 void NonEnergyInput::initCalc( const string& aRegionName,

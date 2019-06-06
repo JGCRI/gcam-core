@@ -77,7 +77,6 @@ public:
 protected:
     const std::string& getXMLName() const;
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:
     void copy( const ProductionInput& prodInput );

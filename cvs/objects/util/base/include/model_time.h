@@ -48,7 +48,9 @@
 #include <vector>
 #include <map>
 #include "util/base/include/iparsable.h"
-#include "util/base/include/iround_trippable.h"
+
+class Tabs;
+
 /*! 
 * \ingroup Objects
 * \brief A class which defines the time information necessary for the model to run.
@@ -56,7 +58,7 @@
 * \author Sonny Kim
 */
 
-class Modeltime: public IParsable, public IRoundTrippable
+class Modeltime: public IParsable
 {
 private:
     //! Model start year (read-in).
@@ -98,9 +100,6 @@ public:
     
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
-    // IRoundTrippable methods
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     
     void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 

@@ -144,7 +144,6 @@ public:
     void addToAccount( const AccountType aType, const double aValue );
     void setAccount( const AccountType aType, const double aValue );
     double getAccountValue( const AccountType aType ) const;
-    void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 private:
     const std::string& enumToName( const AccountType aType ) const;

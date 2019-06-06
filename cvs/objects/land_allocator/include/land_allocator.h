@@ -83,9 +83,6 @@ public:
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
     
-    virtual void toInputXML( std::ostream& aOut,
-                             Tabs* aTabs ) const;
-    
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
 
@@ -120,7 +117,7 @@ public:
                                 const int aPeriod );
 
     virtual double calcLandShares( const std::string& aRegionName,
-                                   const double aLogitExpAbove,
+                                   IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod );
 
      virtual void calcLandAllocation( const std::string& aRegionName,
@@ -128,7 +125,8 @@ public:
                                      const int aYear );
 
     virtual void calcLUCEmissions( const std::string& aRegionName,
-                                   const int aPeriod, const int aEndYear );
+                                   const int aPeriod, const int aEndYear,
+                                   const bool aStoreFullEmiss );
                               
     virtual ALandAllocatorItem* findProductLeaf( const std::string& aProductName );
 protected:
@@ -137,25 +135,27 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
                                        const xercesc::DOMNode* aCurr );
 
-    virtual void toInputXMLDerived( std::ostream& aOutput,
-                                    Tabs* aTabs ) const;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        /*!
+         * \note Defining LandNode as the parent type of LandAllocator since that is
+         *       the parent type which contains shared data members.
+         */
+        LandNode,
+                            
+        //! Land allocated typically in thous km2.
+        DEFINE_VARIABLE( ARRAY, "land-allocation", mLandAllocation, objects::PeriodVector<Value> ),
+
+        //! Rate at which carbon price is expected to increase
+        DEFINE_VARIABLE( ARRAY, "carbonPriceIncreaseRate", mCarbonPriceIncreaseRate, objects::PeriodVector<double> ),
+
+        //! Integer storing the soil time scale for a region
+        DEFINE_VARIABLE( SIMPLE, "soilTimeScale", mSoilTimeScale, int )
+    )
+
 private:
-    //! Land allocated in 1000's of hectares
-    objects::PeriodVector<double> mLandAllocation;
-
-    //! Rate at which carbon price is expected to increase
-    objects::PeriodVector<double> mCarbonPriceIncreaseRate;
-
-    //! Integer storing the soil time scale for a region
-    int mSoilTimeScale;                              
-
     void calibrateLandAllocator( const std::string& aRegionName, const int aPeriod );
-
-    void calculateProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
-
-    void adjustProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
 
     void checkLandArea( const std::string& aRegionName, const int aPeriod );
 };

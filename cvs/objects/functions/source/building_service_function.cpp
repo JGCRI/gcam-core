@@ -63,7 +63,7 @@ double BuildingServiceFunction::calcCoefficient( InputSet& input, double consump
     // income is 1990 thousand $ and service price is 1975 $
     double income = buildingParentInput->getSubregionalIncome() * 1000 / CVRT90;
     const double floorSpace = buildingParentInput->getPhysicalDemand( period );
-    const double internalGainsPerSqMeter = buildingParentInput->getInternalGains( period )
+    const double internalGainsPerSqMeter = buildingParentInput->getInternalGains( regionName, period )
         / floorSpace;
     for( InputSet::iterator inputIter = input.begin(); inputIter != input.end(); ++inputIter ) {
         double coefficient = 1;
@@ -93,7 +93,7 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
     // income is 1990 thousand $ and service price is 1975 $
     double income = buildingParentInput->getSubregionalIncome() * 1000 / CVRT90;
     const double floorSpace = buildingParentInput->getPhysicalDemand( period );
-    const double internalGainsPerSqMeter = buildingParentInput->getInternalGains( period )
+    const double internalGainsPerSqMeter = buildingParentInput->getInternalGains( regionName, period )
         / floorSpace;
     double totalDemand = 0;
     for( InputSet::iterator inputIter = input.begin(); inputIter != input.end(); ++inputIter ) {

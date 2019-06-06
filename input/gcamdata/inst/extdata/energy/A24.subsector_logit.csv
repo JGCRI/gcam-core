@@ -1,0 +1,10 @@
+# File: A24.subsector_logit.csv
+# Title: District heat subsector logit exponents
+# Units: unitless
+# Column types: ccic 
+# ----------
+supplysector,subsector,logit.exponent,logit.type
+district heat,biomass,-6,
+district heat,coal,-6,
+district heat,gas,-6,
+district heat,refined liquids,-6,

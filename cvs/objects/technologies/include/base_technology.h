@@ -51,12 +51,14 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <cassert>
 #include <map>
+#include <boost/core/noncopyable.hpp>
 
 #include "technologies/include/expenditure.h"
 #include "investment/include/iinvestable.h"
-#include "util/base/include/iround_trippable.h"
+#include "util/base/include/inamed.h"
 #include "util/base/include/value.h"
 #include "containers/include/iinfo.h"
+#include "util/base/include/data_definition_util.h"
 
 class IInput;
 class IOutput;
@@ -77,6 +79,9 @@ class IExpectedProfitRateCalculator;
 class TechnologyType;
 class INestedInput;
 class ICaptureComponent;
+
+// Need to forward declare the subclasses as well.
+class GCAMConsumer;
 
 /*! 
  * \ingroup Objects
@@ -121,15 +126,13 @@ class ICaptureComponent;
  * \author Pralit Patel, Sonny Kim
  */
 
-class BaseTechnology: public IInvestable, public IRoundTrippable
+class BaseTechnology: public INamed, public IInvestable, private boost::noncopyable
 {
     friend class XMLDBOutputter;
     friend class InvestableCounterVisitor;
     friend class SetShareWeightVisitor;
 public:
     BaseTechnology();
-    BaseTechnology( const BaseTechnology& baseTechIn );
-    BaseTechnology& operator= (const BaseTechnology& baseTechIn );
     virtual BaseTechnology* clone() const = 0;
     virtual ~BaseTechnology();
 
@@ -156,7 +159,6 @@ public:
 
     void XMLParse( const xercesc::DOMNode* node );
 
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     
     virtual void completeInit( const std::string& aRegionName,
@@ -217,7 +219,6 @@ public:
                                          const int aPeriod ) = 0;
     virtual void updateMarketplace( const std::string& sectorName, const std::string& regionName,
                                     const int period ) = 0;
-    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const = 0;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
 
     const std::string getIdentifier() const;
@@ -238,10 +239,26 @@ protected:
 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
+    
+    void copy( const BaseTechnology& baseTechIn );
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of ICalData to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( BaseTechnology, Consumer, GCAMConsumer ),
+                
+        //! Name
+        DEFINE_VARIABLE( SIMPLE, "name", name, std::string ),
+        
+        //! The root of the nested inputs
+        DEFINE_VARIABLE( CONTAINER, "nodeInput", mNestedInputRoot, INestedInput* ),
 
-    std::string name; //!< Name
+        //! The outputs.
+        DEFINE_VARIABLE( CONTAINER, "output", mOutputs, std::vector<IOutput*> )
+    )
+
     std::string categoryName; //!< Category name, used for reporting
     int year; //!< Year the technology will initially operate.
     std::map<std::string,int> mGhgNameMap; //!< Mapping of ghg name to number.
@@ -249,17 +266,11 @@ protected:
     //! A temporary list of the leaf inputs from mNestedInputRoot
     std::vector<IInput*> mLeafInputs;
     std::vector<AGHG*> mGhgs; //!< Green-House gases.
-    
-    std::vector<IOutput*> mOutputs; //!< Outputs
 
     std::vector<Expenditure> expenditures; //!< Keep track of expenditures
 
     //! The share weight used to bias investment
     double mShareWeight;
-    
-    //! The root of the nested inputs
-    // TODO: should I make this an auto_ptr
-    INestedInput* mNestedInputRoot;
 
     //! A flag to determine if this technology is the first of it's kind
     bool mIsInitialYear;
@@ -274,7 +285,6 @@ protected:
     std::auto_ptr<IInfo> mTechInfo;
 private:
     void clear();
-    void copy( const BaseTechnology& baseTechIn );
     bool doCalibration;
 };
 

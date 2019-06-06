@@ -1,0 +1,39 @@
+# File: GCAM_region_names.csv
+# Title: GCAM 32-region names
+# Units: NA
+# Description: Maps GCAM region IDs to region names
+# Column types: ic 
+# ----------
+GCAM_region_ID,region
+1,USA
+2,Africa_Eastern
+3,Africa_Northern
+4,Africa_Southern
+5,Africa_Western
+6,Australia_NZ
+7,Brazil
+8,Canada
+9,Central America and Caribbean
+10,Central Asia
+11,China
+12,EU-12
+13,EU-15
+14,Europe_Eastern
+15,Europe_Non_EU
+16,European Free Trade Association
+17,India
+18,Indonesia
+19,Japan
+20,Mexico
+21,Middle East
+22,Pakistan
+23,Russia
+24,South Africa
+25,South America_Northern
+26,South America_Southern
+27,South Asia
+28,South Korea
+29,Southeast Asia
+30,Taiwan
+31,Argentina
+32,Colombia

@@ -45,7 +45,6 @@
 * \author Marshall Wise, Sonny Kim, Josh Lurz
 */
 
-#include <vector>
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/subsector.h"
@@ -86,21 +85,35 @@ public:
                             const int aPeriod );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
-    objects::PeriodVector<Value> speed; // Speed of Mode in Miles/hour
-    std::vector<double> mPopulation; // copy of population from demographics
-    std::vector<double> popDenseElasticity; // Population Density Elasticity of mode
-    std::vector<double> mServiceOutputs; //!< Service output by period.
-    double popDensity; // population density per land area
-    //! Time value multiplier
-    objects::PeriodVector<Value> mTimeValueMult;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Subsector,
 
-    virtual void MCoutputSupplySector( const GDP* aGDP ) const; 
-    virtual void MCoutputAllSectors( const GDP* aGDP,
-                                     const IndirectEmissionsCalculator* aIndirectEmissionsCalc,
-                                     const std::vector<double> aSectorOutput ) const;
+        //! Speed of Mode in Miles/hour
+        DEFINE_VARIABLE( ARRAY, "speed", mSpeed, objects::PeriodVector<Value> ),
+
+        //! copy of population from demographics
+        DEFINE_VARIABLE( ARRAY, "population", mPopulation, objects::PeriodVector<double> ),
+
+        //! Population Density Elasticity of mode
+        DEFINE_VARIABLE( ARRAY, "popDenseElasticity", mPopDenseElasticity, objects::PeriodVector<double> ),
+
+        //! population density per land area
+        DEFINE_VARIABLE( SIMPLE, "popDensity", mPopDensity, double ),
+
+        //! Time value multiplier
+        DEFINE_VARIABLE( ARRAY, "time-value-multiplier", mTimeValueMult, objects::PeriodVector<Value> ),
+
+        //! add value of time to price term
+        DEFINE_VARIABLE( SIMPLE, "addTimeValue", mAddTimeValue, bool )
+    )
+    
+    //! Save time value for debugging purposes.
+    mutable double mTimeValue;
 
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const;
 
@@ -108,12 +121,6 @@ protected:
     double getTimeInTransit( const int aPeriod ) const;
     double getServicePerCapita( const int aPeriod ) const;
     double getGeneralizedPrice( const GDP* aGDP, const int aPeriod ) const;
-private:
-    static const std::string XML_NAME; //!< XML name of this object.
-    bool mAddTimeValue;  //!< add value of time to price term
-
-    //! Save time value for debugging purposes. 
-    mutable double mTimeValue;
 };
 
 

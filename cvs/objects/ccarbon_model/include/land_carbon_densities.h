@@ -73,11 +73,10 @@ public:
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
-    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual const std::string& getXMLName() const;
 
-    virtual void completeInit();
+    virtual void completeInit( const double aPrivateDiscountRateLand  );
 
     virtual double getActualAboveGroundCarbonDensity( const int aYear ) const;
     
@@ -94,23 +93,21 @@ public:
 	virtual int getMatureAge( ) const;
 
 protected:
-    //! Actual above ground carbon content by year.  Note that these are for
-    //! GCAM model years only since historical years have a seperate value.
-    objects::YearVector<double> mAboveGroundCarbon;
-
-    //! Actual below ground carbon content by year.  Note that these are for
-    //! GCAM model years only since historical years have a seperate value.
-    objects::YearVector<double> mBelowGroundCarbon;
-
-    //! Average above ground carbon content (read in).
-    double mAvgAboveGroundCarbon;
-
-    //! Average below ground carbon content (read in).
-    double mAvgBelowGroundCarbon;
-	
-    //! Age at maturity.  This is used to grow forests slowly.
-    int mMatureAge;      
     
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ASimpleCarbonCalc,
+                            
+        //! Average above ground carbon content (read in).
+        DEFINE_VARIABLE( SIMPLE, "above-ground-carbon-density", mAvgAboveGroundCarbon, double ),
+        
+        //! Average below ground carbon content (read in).
+        DEFINE_VARIABLE( SIMPLE, "below-ground-carbon-density", mAvgBelowGroundCarbon, double ),
+        
+        //! Age at maturity.  This is used to grow forests slowly.
+        DEFINE_VARIABLE( SIMPLE, "mature-age", mMatureAge, int )
+    )
 };
 
 #endif // _LAND_CARBON_DENSITIES_H_

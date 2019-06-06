@@ -51,12 +51,21 @@
  *          deciders and don't rely on the add-on file replacing them.<br>
  * \author Josh Lurz
  */
-
-#include "util/base/include/istandard_component.h"
 #include <cfloat>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/inamed.h"
+#include "util/base/include/istandard_component.h"
+#include "util/base/include/data_definition_util.h"
+
 
 struct ProductionFunctionInfo;
 class Tabs;
+
+// Need to forward declare the subclasses as well.
+class ProfitShutdownDecider;
+class PhasedShutdownDecider;
+class S_CurveShutdownDecider;
 
 /*! 
  * \ingroup Objects
@@ -64,7 +73,7 @@ class Tabs;
  *        decision for a vintage.
  * \author Josh Lurz
  */
-class IShutdownDecider: public IParsedComponent
+class IShutdownDecider: public INamed, public IParsedComponent, private boost::noncopyable
 {
 public:
     // Clone operator must be declared explicitly even though it is inherited
@@ -111,6 +120,15 @@ public:
      *         been calculated.
      */
     static double getUncalculatedProfitRateConstant();
+    
+protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of IShutdownDecider to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( IShutdownDecider, ProfitShutdownDecider, PhasedShutdownDecider, S_CurveShutdownDecider )
+    )
 };
 
 

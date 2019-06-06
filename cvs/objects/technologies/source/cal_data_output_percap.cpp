@@ -62,7 +62,10 @@ CalDataOutputPercap::CalDataOutputPercap() {
 * \return A clone of the object.
 */
 CalDataOutputPercap* CalDataOutputPercap::clone() const {
-    return new CalDataOutputPercap( *this );
+    CalDataOutputPercap* clone = new CalDataOutputPercap();
+    clone->mCalOutputPercapValue = mCalOutputPercapValue;
+    clone->mPopulation = mPopulation;
+    return clone;
 }
 
 /*! \brief Parses XML for the object.
@@ -93,13 +96,6 @@ void CalDataOutputPercap::XMLParse( const DOMNode* aNode ){
                     << getXMLNameStatic() << "." << endl;
 		}
 	}
-}
-
-//! write object to xml output stream
-void CalDataOutputPercap::toInputXML( std::ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
-    XMLWriteElement( mCalOutputPercapValue, "calOutputPercapValue", out, tabs );
-    XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
 //! Write object to debugging xml output stream.

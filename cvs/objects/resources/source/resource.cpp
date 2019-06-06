@@ -57,7 +57,6 @@
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/imarket_type.h"
-#include "resources/include/resource.h"
 #include "resources/include/renewable_subresource.h"
 #include "resources/include/smooth_renewable_subresource.h"
 #include "util/base/include/ivisitor.h"
@@ -70,26 +69,23 @@
 #include "functions/include/iinput.h"
 #include "sectors/include/sector_utils.h"
 
+#include "util/base/include/initialize_tech_vector_helper.hpp"
+
 
 using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-// static initialize.
-const string DepletableResource::XML_NAME = "depresource";
-const string FixedResource::XML_NAME = "fixedresource";
-const string RenewableResource::XML_NAME = "renewresource";
 
 typedef vector<AGHG*>::const_iterator CGHGIterator;
 
 //! Default constructor.
 Resource::Resource():
-mNumSubResource( 0 ), 
-mResourcePrice( scenario->getModeltime()->getmaxper(), 0.0 ),
-mAvailable( scenario->getModeltime()->getmaxper(), 0.0 ),
-mAnnualProd( scenario->getModeltime()->getmaxper(), 0.0 ),
-mCumulProd( scenario->getModeltime()->getmaxper(), 0.0 ),
-mObjectMetaInfo()
+mObjectMetaInfo(),
+mResourcePrice( Value( 0.0 ) ),
+mAvailable( Value( 0.0 ) ),
+mAnnualProd( Value( 0.0 ) ),
+mCumulProd( Value( 0.0 ) )
 {
 }
 
@@ -98,12 +94,38 @@ Resource::~Resource() {
     for ( vector<SubResource*>::iterator iter = mSubResource.begin(); iter != mSubResource.end(); iter++ ) {
         delete *iter;
     }
-    for( CGHGIterator iter = ghg.begin(); iter != ghg.end(); ++iter ) {
+    for( CGHGIterator iter = mGHG.begin(); iter != mGHG.end(); ++iter ) {
         delete *iter;
     }
     for( vector<IOutput*>::const_iterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
         delete *iter;
     }
+}
+
+/*! \brief Get the XML node name for output to XML.
+ *
+ * This public function accesses the private constant string, XML_NAME.
+ * This way the tag is always consistent for both read-in and output and can be easily changed.
+ * This function may be virtual to be overridden by derived class pointers.
+ * \author Josh Lurz, James Blackwood
+ * \return The constant XML_NAME.
+ */
+const std::string& Resource::getXMLName() const {
+    return getXMLNameStatic();
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+ *
+ * This public function accesses the private constant string, XML_NAME.
+ * This way the tag is always consistent for both read-in and output and can be easily changed.
+ * The "==" operator that is used when parsing, required this second function to return static.
+ * \note A function cannot be static and virtual.
+ * \author Josh Lurz, James Blackwood
+ * \return The constant XML_NAME as a static.
+ */
+const std::string& Resource::getXMLNameStatic() {
+    const static string XML_NAME = "resource";
+    return XML_NAME;
 }
 
 //! Set data members from XML input.
@@ -140,7 +162,7 @@ void Resource::XMLParse( const DOMNode* node ){
             mMarket = XMLHelper<string>::getValue( curr ); // only one market element.
         }
         else if( nodeName == "price" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mResourcePrice, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mResourcePrice, modeltime );
         }
         else if( nodeName == "keyword" ){
             DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
@@ -158,7 +180,13 @@ void Resource::XMLParse( const DOMNode* node ){
             }
         }
         else if( GHGFactory::isGHGNode( nodeName ) ) {
-            parseContainerNode( curr, ghg, GHGFactory::create( nodeName ).release() );
+            parseContainerNode( curr, mGHG, GHGFactory::create( nodeName ).release() );
+        }
+        else if( nodeName == SubDepletableResource::getXMLNameStatic() ){
+            parseContainerNode( curr, mSubResource, new SubDepletableResource() );
+        }
+        else if( nodeName == SubRenewableResource::getXMLNameStatic() ) {
+            parseContainerNode( curr, mSubResource, new SubRenewableResource() );
         }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
             // no-op
@@ -169,40 +197,6 @@ void Resource::XMLParse( const DOMNode* node ){
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing Resource." << endl;
         }
     }
-}
-
-//! Write data members to data stream in XML format for replicating input file.
-void Resource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLName(), aOut, aTabs, mName );
-
-    // write the xml for the class members.
-    XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
-    XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
-    XMLWriteElement( mMarket, "market", aOut, aTabs );
-    if( !mKeywordMap.empty() ) {
-        XMLWriteElementWithAttributes( "", "keyword", aOut, aTabs, mKeywordMap );
-    }
-
-    if ( mObjectMetaInfo.size() ) {
-        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
-            metaInfoIterItem != mObjectMetaInfo.end(); 
-            ++metaInfoIterItem ) {
-                metaInfoIterItem->toInputXML( aOut, aTabs );
-            }
-    }
-
-    // write out resource prices for base period only
-    XMLWriteVector( mResourcePrice, "price", aOut, aTabs, scenario->getModeltime() );
-    // write out the subresource objects.
-    for( vector<SubResource*>::const_iterator i = mSubResource.begin(); i != mSubResource.end(); i++ ){
-        ( *i )->toInputXML( aOut, aTabs );
-    }
-    for( CGHGIterator iter = ghg.begin(); iter != ghg.end(); ++iter ) {
-        ( *iter )->toInputXML( aOut, aTabs );
-    }
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
 //! Write data members to data stream in XML format for debugging.
@@ -220,7 +214,7 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
         for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
             metaInfoIterItem != mObjectMetaInfo.end(); 
             ++metaInfoIterItem ) {
-                metaInfoIterItem->toInputXML( aOut, aTabs );
+                metaInfoIterItem->toDebugXML( period, aOut, aTabs );
             }
     }
 
@@ -236,20 +230,22 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
     // Write out cumulative prod for debugging period.
     XMLWriteElement( mCumulProd[ period ], "cummprod", aOut, aTabs );
 
-    // Write out the number of sub-resources.
-    XMLWriteElement( mNumSubResource, "nosubrsrc", aOut, aTabs );
-
     // Write out the subresource objects.
     for( vector<SubResource*>::const_iterator i = mSubResource.begin(); i != mSubResource.end(); i++ ){
         ( *i )->toDebugXML( period, aOut, aTabs );
     }
     // Write out ghg object, vector is of number of gases
-    for( CGHGIterator i = ghg.begin(); i != ghg.end(); i++ ) {
+    for( CGHGIterator i = mGHG.begin(); i != mGHG.end(); i++ ) {
         ( *i )->toDebugXML( period, aOut, aTabs );
     }
 
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
+}
+
+bool Resource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
+    // do nothing
+    return false;
 }
 
 /*! \brief Complete the initialization
@@ -261,8 +257,6 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
 */
 
 void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo ) {
-    mNumSubResource = static_cast<int>( mSubResource.size() );
-
     // default unit to EJ
     if ( mOutputUnit.empty() ) {
         mOutputUnit = "EJ"; 
@@ -296,8 +290,10 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
     // Create a single primary output for the resource output.
     mOutputs.insert( mOutputs.begin(), new PrimaryOutput( mName ) );
     
-    for( unsigned int i = 0; i < ghg.size(); i++ ) {
-        ghg[ i ]->completeInit( aRegionName, mName, mResourceInfo.get() );
+    initTechVintageVector();
+    
+    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
+        mGHG[ i ]->completeInit( aRegionName, mName, mResourceInfo.get() );
     }
 }
 
@@ -314,8 +310,12 @@ void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
         mSubResource[i]->initCalc( aRegionName, mName, aPeriod );
     }
 
-    for( unsigned int i = 0; i < ghg.size(); i++ ) {
-        ghg[ i ]->initCalc( aRegionName, 0, aPeriod );
+    // The GHG objects will need to check the following flags to properly
+    // initialize and do error checking.
+    mResourceInfo->setBoolean( "new-vintage-tech", true );
+    mResourceInfo->setBoolean( "is-tech-operating", true );
+    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
+        mGHG[ i ]->initCalc( aRegionName, mResourceInfo.get(), aPeriod );
     }
     
     for( unsigned int i = 0; i < mOutputs.size(); i++ ) {
@@ -420,8 +420,8 @@ void Resource::calcSupply( const string& aRegionName, const GDP* aGDP, const int
     
     double totalGHGCost = 0;
     // totalGHGCost and carbontax must be in same unit as fuel price
-    for( unsigned int i = 0; i < ghg.size(); i++ ) {
-        totalGHGCost += ghg[ i ]->getGHGValue( aRegionName, inputs, mOutputs, 0 , aPeriod );
+    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
+        totalGHGCost += mGHG[ i ]->getGHGValue( aRegionName, inputs, mOutputs, 0 , aPeriod );
     }
     
     // Subtract ghg cost from price paid for resource
@@ -432,11 +432,11 @@ void Resource::calcSupply( const string& aRegionName, const GDP* aGDP, const int
 
     // There is only one primary output at the first position.
     // Setting market supply of resource occurs in setPhysicalOutput().
-    mOutputs[0]->setPhysicalOutput( aPeriod > 0 ? mAnnualProd[ aPeriod ] : 0, aRegionName, 0, aPeriod );
+    mOutputs[0]->setPhysicalOutput( aPeriod > 0 ? mAnnualProd[ aPeriod ] : 0.0, aRegionName, 0, aPeriod );
 
-    for( unsigned int i = 0; i < ghg.size(); ++i ) {
+    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
         // no inputs or capture components
-        ghg[i]->calcEmission( aRegionName, inputs, mOutputs, aGDP, 0, aPeriod );
+        mGHG[i]->calcEmission( aRegionName, inputs, mOutputs, aGDP, 0, aPeriod );
     }
 }
 
@@ -447,9 +447,9 @@ void Resource::cumulsupply( double aPrice, int aPeriod )
 
     mResourcePrice[ aPeriod ] = aPrice;
     // sum cumulative production of each subsector
-    for ( i = 0; i < mNumSubResource; i++ ) {
+    for ( i = 0; i < mSubResource.size(); i++ ) {
         mSubResource[ i ]->cumulsupply( aPrice, aPeriod );
-        mCumulProd[ aPeriod ] += mSubResource[ i ]->getCumulProd( aPeriod );
+        mCumulProd[ aPeriod ] += Value( mSubResource[ i ]->getCumulProd( aPeriod ) );
     }
 }
 
@@ -464,10 +464,10 @@ void Resource::annualsupply( const string& aRegionName, int aPeriod, const GDP* 
     cumulsupply( aPrice, aPeriod );
 
     // sum annual production of each subsector
-    for ( i = 0; i < mNumSubResource; i++) {
+    for ( i = 0; i < mSubResource.size(); i++) {
         mSubResource[i]->annualsupply( aPeriod, aGdp, aPrice, aPrevPrice );
-        mAnnualProd[ aPeriod ] += mSubResource[i]->getAnnualProd( aPeriod );
-        mAvailable[ aPeriod ] += mSubResource[i]->getAvailable( aPeriod );
+        mAnnualProd[ aPeriod ] += Value( mSubResource[i]->getAnnualProd( aPeriod ) );
+        mAvailable[ aPeriod ] += Value( mSubResource[i]->getAvailable( aPeriod ) );
     }
 }
 
@@ -477,73 +477,9 @@ double Resource::getAnnualProd( const string& aRegionName, const int aPeriod ) c
     return mAnnualProd[ aPeriod ];
 }
 
-//! Write resource output to file.
-void Resource::csvOutputFile( const string& regname )
-{
-    // function protocol
-    void fileoutput3( string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // function arguments are variable name, double array, db name, table name
-    // the function writes all years
-    // total sector output
-    fileoutput3( regname,mName," "," ","production",mOutputUnit,mAnnualProd);
-
-    // do for all subsectors in the sector
-    for (int i=0;i<mNumSubResource;i++) {
-        mSubResource[i]->csvOutputFile(regname ,mName);
-    }
-}
-
-//! Write resource output to database.
-void Resource::dbOutput( const string& regname ) {
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-    // resource price
-    dboutput4(regname,"Price","by Sector",mName,mPriceUnit,mResourcePrice);
-    // do for all subsectors in the sector
-    temp.assign( temp.size(), 0.0 );
-    for (int m=0;m<maxper;m++) {
-        for (int i=0;i<mNumSubResource;i++) {
-            temp[m] += mSubResource[i]->getCumulProd(m);
-        }
-    }
-    dboutput4(regname,"Resource","CummProd "+mName,"zTotal",mOutputUnit,temp);
-
-    temp.assign( temp.size(), 0.0 );
-    for (int m=0;m<maxper;m++) {
-        for (int i=0;i<mNumSubResource;i++) {
-            temp[m] += mSubResource[i]->getAnnualProd(m);
-        }
-    }
-    dboutput4(regname,"Resource","annual-production", mName, mOutputUnit, temp);
-
-    temp.assign( temp.size(), 0.0 );
-    // do for all subsectors in the sector
-    for (int m=0;m<maxper;m++) {
-        for (int i=0;i<mNumSubResource;i++) {
-            temp[m] += mSubResource[i]->getAvailable(m);
-        }
-    }
-    dboutput4(regname,"Resource","Available "+mName,"zTotal",mOutputUnit,temp);
-    
-    for( unsigned int i = 0; i < ghg.size(); ++i ) {
-        // no inputs and capture components
-        temp.assign( temp.size(), 0.0 );
-        for (int period = 0; period < maxper; ++period) {
-            temp[period] += ghg[i]->getEmission( period );
-        }
-        dboutput4(regname,"Emissions","Rsc-"+mName,ghg[i]->getName(),"Tg",temp);
-    }
-
-    // do for all subsectors in the sector
-    for (int i=0;i<mNumSubResource;i++) {
-        mSubResource[i]->dbOutput(regname,mName);
-    }
+//! Return price of resources.
+double Resource::getPrice( const int aPeriod ) const {
+    return mResourcePrice[ aPeriod ];
 }
 
 /*! \brief Update an output container for a Resource.
@@ -558,8 +494,8 @@ void Resource::accept( IVisitor* aVisitor, const int aPeriod ) const {
         mSubResource[ i ]->accept( aVisitor, aPeriod );
     }
 
-    for( unsigned int i = 0; i < ghg.size(); ++i ) {
-        ghg[ i ]->accept( aVisitor, aPeriod );
+    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
+        mGHG[ i ]->accept( aVisitor, aPeriod );
     }
 
     aVisitor->endVisitResource( this, aPeriod );
@@ -582,7 +518,7 @@ void Resource::accept( IVisitor* aVisitor, const int aPeriod ) const {
 * \return The constant XML_NAME.
 */
 const std::string& DepletableResource::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -595,6 +531,7 @@ const std::string& DepletableResource::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& DepletableResource::getXMLNameStatic() {
+    static const string XML_NAME = "depresource";
     return XML_NAME;
 }
 
@@ -613,7 +550,7 @@ const std::string& DepletableResource::getXMLNameStatic() {
 bool DepletableResource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
     // TODO: Fix this.
     if( aNodeName == SubResource::getXMLNameStatic() || aNodeName == SubDepletableResource::getXMLNameStatic() ){
-        parseContainerNode( aNode, mSubResource, mSubResourceNameMap, new SubDepletableResource() );
+        parseContainerNode( aNode, mSubResource, new SubDepletableResource() );
         return true;
     }
     return false;
@@ -631,7 +568,7 @@ bool DepletableResource::XMLDerivedClassParse( const string& aNodeName, const DO
 * \return The constant XML_NAME.
 */
 const std::string& FixedResource::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -644,6 +581,7 @@ const std::string& FixedResource::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& FixedResource::getXMLNameStatic() {
+    static const string XML_NAME = "fixedresource";
     return XML_NAME;
 }
 
@@ -658,9 +596,9 @@ const std::string& FixedResource::getXMLNameStatic() {
 * \param nodeName name of the current node 
 * \return Whether an element was parsed.
 */
-bool FixedResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
-    if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubFixedResource::getXMLNameStatic() ){
-        parseContainerNode( node, mSubResource, mSubResourceNameMap, new SubFixedResource() );
+bool FixedResource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
+    if( aNodeName == SubResource::getXMLNameStatic() || aNodeName == SubFixedResource::getXMLNameStatic() ){
+        parseContainerNode( aNode, mSubResource, new SubFixedResource() );
         return true;
     }
     return false;
@@ -672,8 +610,6 @@ bool FixedResource::XMLDerivedClassParse( const string& nodeName, const DOMNode*
 //! \brief set the size for the resourceVariance member
 RenewableResource::RenewableResource()
 {
-    resourceVariance.resize( scenario->getModeltime()->getmaxper() );
-    resourceCapacityFactor.resize( scenario->getModeltime()->getmaxper() );
 }
 
 
@@ -686,7 +622,7 @@ RenewableResource::RenewableResource()
 * \return The constant XML_NAME.
 */
 const std::string& RenewableResource::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -699,6 +635,7 @@ const std::string& RenewableResource::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& RenewableResource::getXMLNameStatic() {
+    static const string XML_NAME = "renewresource";
     return XML_NAME;
 }
 
@@ -717,11 +654,11 @@ bool RenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMN
 {
     if( nodeName == SubResource::getXMLNameStatic() ||
         nodeName == SubRenewableResource::getXMLNameStatic() ) {
-            parseContainerNode( node, mSubResource, mSubResourceNameMap, new SubRenewableResource() );
+            parseContainerNode( node, mSubResource, new SubRenewableResource() );
             return true;
         }
     else if ( nodeName == SmoothRenewableSubresource::getXMLNameStatic() ) {
-        parseContainerNode( node, mSubResource, mSubResourceNameMap, new SmoothRenewableSubresource() );
+        parseContainerNode( node, mSubResource, new SmoothRenewableSubresource() );
         return true;
     }
     return false;
@@ -753,9 +690,10 @@ void RenewableResource::completeInit( const string& aRegionName, const IInfo* aR
      */
     double resourceVariance = mSubResource[ 0 ]->getVariance();
     double resourceCapacityFactor = mSubResource[ 0 ]->getAverageCapacityFactor();
+    
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::WARNING );
-    for( int subResource = 1; subResource < mNumSubResource; ++subResource ) {
+    for( int subResource = 1; subResource < mSubResource.size(); ++subResource ) {
         if( mSubResource[ subResource ]->getVariance() != resourceVariance ) {
             mainLog << "Non-constant resource variance in " << mName << ", region: "
                 << aRegionName << " may cause trouble finding a solution." << endl;
@@ -765,6 +703,7 @@ void RenewableResource::completeInit( const string& aRegionName, const IInfo* aR
                 << aRegionName << " may cause trouble finding a solution." << endl;
         }
     }
+    
     for( int period = 0; period < pModeltime->getmaxper(); ++period ){
         IInfo* marketInfo = pMarketplace->getMarketInfo( mName, aRegionName, period, true );
         marketInfo->setDouble( "resourceVariance", resourceVariance );
@@ -787,8 +726,8 @@ void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, co
     // clear out sums for this iteration
     mAnnualProd[ aPeriod ]=0.0;
     mAvailable[ aPeriod ]=0.0;
-    resourceVariance[ aPeriod ]=0.0;
-    resourceCapacityFactor[ aPeriod ] = 0.0;
+    mResourceVariance[ aPeriod ]=0.0;
+    mResourceCapacityFactor[ aPeriod ] = 0.0;
     
     // If annual production is extremely small or zero, these will not be calculated properly.
     // In this case, set production to some minimum number.
@@ -796,17 +735,17 @@ void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, co
     double adjustedProduction = 0;
     
     // sum annual production of each subsector
-    for (int i=0;i<mNumSubResource;i++) {
+    for (int i=0;i<mSubResource.size();i++) {
         mSubResource[i]->annualsupply( aPeriod, aGdp, aPrice, aPrevPrice );
-        mAnnualProd[ aPeriod ] += mSubResource[i]->getAnnualProd( aPeriod );
+        mAnnualProd[ aPeriod ] += Value( mSubResource[i]->getAnnualProd( aPeriod ) );
         double adjustedSubResourceProd = max( mSubResource[i]->getAnnualProd( aPeriod ), MIN_RESOURCE_PROD );
         adjustedProduction += adjustedSubResourceProd;
-        mAvailable[ aPeriod ] += mSubResource[i]->getAvailable( aPeriod );
+        mAvailable[ aPeriod ] += Value( mSubResource[i]->getAvailable( aPeriod ) );
         
         // and compute weighted average variance
-        resourceVariance[ aPeriod ] += adjustedSubResourceProd * mSubResource[i]->getVariance();
+        mResourceVariance[ aPeriod ] += adjustedSubResourceProd * mSubResource[i]->getVariance();
         // and compute weighted average capacity factor
-        resourceCapacityFactor[ aPeriod ] += adjustedSubResourceProd * mSubResource[i]->getAverageCapacityFactor();
+        mResourceCapacityFactor[ aPeriod ] += adjustedSubResourceProd * mSubResource[i]->getAverageCapacityFactor();
     }
 
     // TODO: This is currently wrong because the resource calculation is done last
@@ -819,15 +758,27 @@ void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, co
     // subresources, and should not adjust the market info values.
     if( !mSubResource.empty() ){
         if ( adjustedProduction >= MIN_RESOURCE_PROD ) {
-            resourceVariance[ aPeriod ] /= adjustedProduction;
-            resourceCapacityFactor[ aPeriod ] /= adjustedProduction;
+            mResourceVariance[ aPeriod ] /= adjustedProduction;
+            mResourceCapacityFactor[ aPeriod ] /= adjustedProduction;
         }
 
         // add variance to marketinfo
         IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName, aPeriod, true );
-        marketInfo->setDouble( "resourceVariance", resourceVariance[ aPeriod ] );
+        marketInfo->setDouble( "resourceVariance", mResourceVariance[ aPeriod ] );
 
         // add capacity factor to marketinfo
-        marketInfo->setDouble( "resourceCapacityFactor", resourceCapacityFactor[ aPeriod ] );
+        marketInfo->setDouble( "resourceCapacityFactor", mResourceCapacityFactor[ aPeriod ] );
     }
+}
+
+/*!
+ * \brief Initialize any TechVintageVector in any object that may be contained
+ *        in this class.
+ * \details Resource does not have vintaging so the vectors will be sized for
+ *          the entire model time.
+ */
+void Resource::initTechVintageVector() {
+    const Modeltime* modeltime = scenario->getModeltime();
+    objects::InitializeTechVectorHelper helper( 0, modeltime->getmaxper() );
+    helper.initializeTechVintageVector( this );
 }
