@@ -210,8 +210,8 @@ module_gcamusa_LB1235.elec_load_segments_USA <- function(command, ...) {
 
     elecS_fuel_fraction %>%
       gather(year, fraction, -fuel, -segment) %>%
-      mutate(year = gsub("fraction", "", year)) %>%
-      mutate(year = as.integer(year)) -> elecS_fuel_fraction
+      mutate(year = gsub("fraction", "", year),
+             year = as.integer(year)) -> elecS_fuel_fraction
 
     L1234.out_EJ_grid_elec_F %>%
       mutate(fuel = sub("solar CSP", "solar", fuel),

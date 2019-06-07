@@ -1,8 +1,10 @@
-# File: elecS_demand_fraction.csv,,,,
-# Title: Fraction of grid-level electricity demand by vertical segment,,,,
-# Units: unitless (fraction),,,,
-# Comments: This table specifies the fraction of electricity demand supplied by vertical segment.,,,,
-# Source: estimated from recent U.S. annual hourly (8760) load duration curves,,,,
+# File: elecS_demand_fraction.csv
+# Title: Fraction of grid-level electricity demand by vertical segment
+# Units: unitless (fraction)
+# Comments: This table specifies the fraction of electricity demand supplied by vertical segment.
+# Source: None (GCAM assumptions). Based on a representative U.S. annual hourly (8760) load duration curve (internal; unpublished).
+# Column types: cnnnn 
+# ----------
 grid_region,off.peak.electricity.demand,intermediate.electricity.demand,subpeak.electricity.demand,peak.electricity.demand
 Alaska grid,0.415,0.4,0.1,0.085
 California grid,0.415,0.4,0.1,0.085

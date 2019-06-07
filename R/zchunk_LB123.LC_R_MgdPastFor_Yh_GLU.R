@@ -325,8 +325,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       add_comments("Reduce managed forest land no greater than the assumed threshold percentage of total forest land") %>%
       add_legacy_name("L123.LC_bm2_R_MgdFor_Yh_GLU") %>%
       same_precursors_as("L123.For_Prod_bm3_R_Y_GLU") %>%
-      add_precursors("L101.Pop_thous_R_Yh") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      add_precursors("L101.Pop_thous_R_Yh") ->
       L123.LC_bm2_R_MgdFor_Yh_GLU
 
     L123.For_Yield_m3m2_R_GLU %>%

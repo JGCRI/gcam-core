@@ -2,6 +2,8 @@
 # Title: EIA residual fuel oil bunkering by international ships in thousand barrels of oil per day
 # Units: Thousand barrels of oil per day
 # Source: EIA
+# Column types: cnnnnnnnnnnnnnnnnnnnnnnnnn 
+# ----------
 Country,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010
 North America,13.29,15.38,325,337.82,330.02,366.59,301.41,243.42,241.01,240.65,246.5,260.62,279.4,232.7,211.86,203.87,146.64,120.59,171.33,164.12,271.2,276.39,297.71,274.57,275.06
 Bermuda,0.02,0.02,0.02,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.05,0.05,0.05,0.33,0.33,0.33,0.33

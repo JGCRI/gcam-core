@@ -227,9 +227,9 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       # Join efficiency values (by sector and technology)
       left_join_error_no_match(A44.cost_efficiency, by = c("supplysector", "subsector", "technology")) %>%
       # Multiply by efficiency values
-      mutate(value = value * efficiency) %>%
-      # Prepare to drop region/subsector combinations where district heat and traditional biomass are not modeled
-      mutate(region_subsector = paste(GCAM_region_ID, subsector),
+      mutate(value = value * efficiency,
+             # Prepare to drop region/subsector combinations where district heat and traditional biomass are not modeled
+             region_subsector = paste(GCAM_region_ID, subsector),
              year = as.integer(year)) %>%
       # Drop district heat and traditional biomass in regions where these are not modeled
       filter(!region_subsector %in% c(regions_NoDistHeat, regions_NoTradBio)) %>%
@@ -246,11 +246,11 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     # A44.cost_efficiency reports base costs and efficiencies of building technologies
     # Note that this produces a final output table.
     A44.cost_efficiency %>%
-      mutate(CRF = discount_rate_bld * ((1 + discount_rate_bld) ^ lifetime) / (((1 + discount_rate_bld) ^ lifetime) - 1)) %>%
-      mutate(CapitalCost = `installed cost` * CRF) %>%
-      mutate(NonEnergyCost = CapitalCost + `O&M cost`) %>%
-      mutate(ServiceOutput = UEC * efficiency) %>%
-      mutate(NEcostPerService = NonEnergyCost / ServiceOutput * gdp_deflator(1975, 2005)) %>%
+      mutate(CRF = discount_rate_bld * ((1 + discount_rate_bld) ^ lifetime) / (((1 + discount_rate_bld) ^ lifetime) - 1),
+             CapitalCost = `installed cost` * CRF,
+             NonEnergyCost = CapitalCost + `O&M cost`,
+             ServiceOutput = UEC * efficiency,
+             NEcostPerService = NonEnergyCost / ServiceOutput * gdp_deflator(1975, 2005)) %>%
       select(supplysector, subsector, technology, NEcostPerService) ->
       L144.NEcost_75USDGJ # This is a final output table.
 
@@ -460,13 +460,13 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       # Rows expanded due to years
       left_join(L142.in_EJ_R_bld_F_Yh, by = c("GCAM_region_ID", "sector", "fuel")) %>%
       filter(year %in% HISTORICAL_YEARS) %>%
-      mutate(value = ServiceShare * value) %>%
-      # This has a number of combinations that do not apply. Drop the known ones.
-      # This would be regions where heat or traditional biomass are not modeled as separate fuels.
-      # This should take care of all missing values
-      # First, prepare columns concatenating fuel with region and sector
-      mutate(regions_fuel = paste(GCAM_region_ID, fuel)) %>%
-      mutate(sector_fuel = paste(sector, fuel)) %>%
+      mutate(value = ServiceShare * value,
+             # This has a number of combinations that do not apply. Drop the known ones.
+             # This would be regions where heat or traditional biomass are not modeled as separate fuels.
+             # This should take care of all missing values
+             # First, prepare columns concatenating fuel with region and sector
+             regions_fuel = paste(GCAM_region_ID, fuel),
+             sector_fuel = paste(sector, fuel)) %>%
       filter(!regions_fuel %in% regions_noheat,
              !regions_fuel %in% regions_NoTradBio,
              sector_fuel != "bld_comm traditional biomass") %>%  # Note that the number of rows didn't decrease

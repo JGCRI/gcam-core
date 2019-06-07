@@ -2,6 +2,8 @@
 # Title: Residential Energy Consumption Survey 1979
 # Source: https://www.eia.gov/consumption/residential/data
 # Units: TBTU
+# Column types: innnnnnnnnnnn 
+# ----------
 DIVISION,TBTUELSPH,TBTUELWTH,TBTUELCOL,TBTUELAPL,TBTUNGSPH,TBTUNGWTH,TBTUNGAPL,TBTUFOSPH,TBTUFOWTH,TBTULPSPH,TBTULPWTH,TBTULPAPL
 1,8.17,12.47,1.72,73.53,98.8,33.25,12.92,264.6,54.54,4,2.4,3.25
 2,34.84,32.16,13.4,215.74,536.4,161.1,81,622.7,150.15,8.96,3.22,3.85

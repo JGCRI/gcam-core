@@ -22,10 +22,10 @@ original data system was \code{LB125.LC_tot.R} (aglu level1).
 Build Total Land Cover by GCAM region, and by GCAM region and GLU, and by GCAM region/GLU/year.
 }
 \details{
-This module builds three total land cover area data from the lower-level raw data.
-The three types of data include: 1) total land area by GCAM region; 2) total land area by GCAM region and GLU;
-3) total land area by GCAM region, GLU and historical year. Unit of the data is billion square meters.
-The land area changing rates (bm2 per year) were checked to make sure they are in certain tolerances.
+This module builds three total land cover area data from the lower-level raw data:
+1) total land area by GCAM region; 2) total land area by GCAM region and GLU; and
+3) total land area by GCAM region, GLU and historical year. Units of the data are billion square meters.
+The land area changing rates (bm2 per year) are checked to make sure they are within certain tolerances.
 }
 \author{
 MC May 2017

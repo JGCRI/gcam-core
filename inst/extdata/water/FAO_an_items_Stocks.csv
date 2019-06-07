@@ -2,6 +2,8 @@
 # Title: FAO animal product item names
 # Units: NA
 # Comments: NA
+# Column types: cccc 
+# ----------
 "item","GCAM_commodity","Animal",dairy.to.total
 "Milk, whole fresh cow","Dairy","Dairy cattle",Cattle
 "Milk, whole fresh sheep","Dairy","Dairy cattle",Sheep

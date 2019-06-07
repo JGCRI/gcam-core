@@ -62,6 +62,8 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
              "L2235.SubsectorLogit_elec_USA",
              "L2235.SubsectorShrwtFllt_elec_USA",
              "L2235.SubsectorInterp_elec_USA",
+             "L2235.SubsectorShrwt_elec_USA",
+             "L2235.SubsectorInterpTo_elec_USA",
              "L2235.SubsectorShrwtFllt_elecS_grid_vertical_USA",
              "L2235.SubsectorShrwtInterp_elecS_grid_vertical_USA",
              "L2235.TechShrwt_elec_USA",
@@ -73,6 +75,8 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
              "L2235.SubsectorLogit_elec_FERC_USA",
              "L2235.SubsectorShrwtFllt_elec_FERC_USA",
              "L2235.SubsectorInterp_elec_FERC_USA",
+             "L2235.SubsectorShrwt_elec_FERC",
+             "L2235.SubsectorInterpTo_elec_FERC",
              "L2235.TechShrwt_elec_FERC_USA",
              "L2235.TechCoef_elec_FERC_USA",
              "L2235.TechCoef_elecownuse_FERC_USA",
@@ -141,6 +145,8 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
     L2235.SubsectorLogit_elec_USA <- get_data(all_data, "L2235.SubsectorLogit_elec_USA")
     L2235.SubsectorShrwtFllt_elec_USA <- get_data(all_data, "L2235.SubsectorShrwtFllt_elec_USA")
     L2235.SubsectorInterp_elec_USA <- get_data(all_data, "L2235.SubsectorInterp_elec_USA")
+    L2235.SubsectorShrwt_elec_USA <- get_data(all_data, "L2235.SubsectorShrwt_elec_USA")
+    L2235.SubsectorInterpTo_elec_USA <- get_data(all_data, "L2235.SubsectorInterpTo_elec_USA")
     L2235.SubsectorShrwtFllt_elecS_grid_vertical_USA <- get_data(all_data, "L2235.SubsectorShrwtFllt_elecS_grid_vertical_USA")
     L2235.SubsectorShrwtInterp_elecS_grid_vertical_USA <- get_data(all_data, "L2235.SubsectorShrwtInterp_elecS_grid_vertical_USA")
     L2235.TechShrwt_elec_USA <- get_data(all_data, "L2235.TechShrwt_elec_USA")
@@ -152,6 +158,8 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
     L2235.SubsectorLogit_elec_FERC_USA <- get_data(all_data, "L2235.SubsectorLogit_elec_FERC_USA")
     L2235.SubsectorShrwtFllt_elec_FERC_USA <- get_data(all_data, "L2235.SubsectorShrwtFllt_elec_FERC_USA")
     L2235.SubsectorInterp_elec_FERC_USA <- get_data(all_data, "L2235.SubsectorInterp_elec_FERC_USA")
+    L2235.SubsectorShrwt_elec_FERC <- get_data(all_data, "L2235.SubsectorShrwt_elec_FERC")
+    L2235.SubsectorInterpTo_elec_FERC <- get_data(all_data, "L2235.SubsectorInterpTo_elec_FERC")
     L2235.TechShrwt_elec_FERC_USA <- get_data(all_data, "L2235.TechShrwt_elec_FERC_USA")
     L2235.TechCoef_elec_FERC_USA <- get_data(all_data, "L2235.TechCoef_elec_FERC_USA")
     L2235.TechCoef_elecownuse_FERC_USA <- get_data(all_data, "L2235.TechCoef_elecownuse_FERC_USA")
@@ -168,11 +176,11 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
     L2234.PrimaryRenewKeywordInt_elecS_USA <- rename(L2234.PrimaryRenewKeywordInt_elecS_USA, technology = intermittent.technology)
 
     # Function to fix GlobalTech / GlobalIntTech sector & subsector names, which is a recurring issue
-    fix_global_tech_names <- function( data ){
+    fix_global_tech_names <- function(data){
       data_new <- data %>%
         rename(sector.name = supplysector,
                subsector.name = subsector)
-      return( data_new)
+      return(data_new)
     }
 
     L2234.GlobalTechCapital_elecS_USA <- fix_global_tech_names(L2234.GlobalTechCapital_elecS_USA)
@@ -255,6 +263,8 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
       add_logit_tables_xml(L2235.SubsectorLogit_elec_USA, "SubsectorLogit") %>%
       add_xml_data(L2235.SubsectorShrwtFllt_elec_USA, "SubsectorShrwtFllt") %>%
       add_xml_data(L2235.SubsectorInterp_elec_USA, "SubsectorInterp") %>%
+      add_xml_data(L2235.SubsectorShrwt_elec_USA, "SubsectorShrwt") %>%
+      add_xml_data(L2235.SubsectorInterpTo_elec_USA, "SubsectorInterpTo") %>%
       add_xml_data(L2235.SubsectorShrwtFllt_elecS_grid_vertical_USA, "SubsectorShrwtFllt") %>%
       add_xml_data(L2235.SubsectorShrwtInterp_elecS_grid_vertical_USA, "SubsectorInterp") %>%
       add_xml_data(L2235.TechShrwt_elec_USA, "TechShrwt") %>%
@@ -266,6 +276,8 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
       add_logit_tables_xml(L2235.SubsectorLogit_elec_FERC_USA, "SubsectorLogit") %>%
       add_xml_data(L2235.SubsectorShrwtFllt_elec_FERC_USA, "SubsectorShrwtFllt") %>%
       add_xml_data(L2235.SubsectorInterp_elec_FERC_USA, "SubsectorInterp") %>%
+      add_xml_data(L2235.SubsectorShrwt_elec_FERC, "SubsectorShrwt") %>%
+      add_xml_data(L2235.SubsectorInterpTo_elec_FERC, "SubsectorInterpTo") %>%
       add_xml_data(L2235.TechShrwt_elec_FERC_USA, "TechShrwt") %>%
       add_xml_data(L2235.TechCoef_elec_FERC_USA, "TechCoef") %>%
       add_xml_data(L2235.TechCoef_elecownuse_FERC_USA, "TechCoef") %>%
@@ -323,6 +335,8 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
                      "L2235.SubsectorLogit_elec_USA",
                      "L2235.SubsectorShrwtFllt_elec_USA",
                      "L2235.SubsectorInterp_elec_USA",
+                     "L2235.SubsectorShrwt_elec_USA",
+                     "L2235.SubsectorInterpTo_elec_USA",
                      "L2235.SubsectorShrwtFllt_elecS_grid_vertical_USA",
                      "L2235.SubsectorShrwtInterp_elecS_grid_vertical_USA",
                      "L2235.TechShrwt_elec_USA",
@@ -334,6 +348,8 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
                      "L2235.SubsectorLogit_elec_FERC_USA",
                      "L2235.SubsectorShrwtFllt_elec_FERC_USA",
                      "L2235.SubsectorInterp_elec_FERC_USA",
+                     "L2235.SubsectorShrwt_elec_FERC",
+                     "L2235.SubsectorInterpTo_elec_FERC",
                      "L2235.TechShrwt_elec_FERC_USA",
                      "L2235.TechCoef_elec_FERC_USA",
                      "L2235.TechCoef_elecownuse_FERC_USA",

@@ -18,7 +18,7 @@ the generated outputs: \code{L2247.GlobalTechCapitalOnly_elecS_USA}, \code{L2247
 \code{L2247.GlobalTechCapitalOnly_elecS_adv_USA}, \code{L2247.GlobalIntTechCapitalOnly_elecS_adv_USA},
 \code{L2247.GlobalTechOMfixedOnly_elecS_adv_USA}, \code{L2247.GlobalIntTechOMfixedOnly_elecS_adv_USA},
 \code{L2247.GlobalTechOMvar_elecS_adv_USA}, \code{L2247.GlobalIntTechOMvar_elecS_adv_USA}, \code{L2247.GlobalTechFCROnly_elecS_itc_USA},
-\code{L2247.GlobalIntTechFCROnly_elecS_itc_USA}, \code{L2247.GlobalTechRegPriceAdj_ptc_USA}, \code{L2247.GlobalIntTechRegPriceAdj_ptc_USA}.
+\code{L2247.GlobalIntTechFCROnly_elecS_itc_USA}, \code{L2247.GlobalTechCost_ptc_USA}, \code{L2247.GlobalIntTechCost_ptc_USA}.
 The corresponding file in the original data system was \code{L2247.elecS_tech_costs.R} (gcam-usa level2).
 }
 \description{

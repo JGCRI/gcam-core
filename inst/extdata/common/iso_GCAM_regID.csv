@@ -2,7 +2,8 @@
 # Title: ISO to GCAM region mapping
 # Units: NA
 # Description: Maps iso codes to GCAM regions (including composites as necessary)
-# ----------,,Former GCAM regions, 
+# Column types: ccci 
+# ----------
 iso,country_name,region_GCAM3,GCAM_region_ID
 abw,Aruba,Latin America,9
 afg,Afghanistan,Southeast Asia,27

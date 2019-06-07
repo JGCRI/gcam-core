@@ -5,6 +5,7 @@
 # Description: ref veg soil and veg carbon density (Mg/ha) for hyde land cells in country X glu X land type
 # Original source: soil c for sage pot veg; veg c for sage pot veg; reference veg; country raster; new glu raster; hyde land area
 # Source: https://github.com/JGCRI/moirai
+# Column types: ciici 
 # ----------
 iso,glu_code,land_type,c_type,value
 afg,52,902,soil_c,95

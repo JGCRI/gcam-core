@@ -69,3 +69,19 @@ test_that("same_attributes_as works", {
   expect_identical(get_comments(x), get_comments(y))
   expect_identical(get_precursors(x), get_precursors(y))
 })
+
+test_that("prebuilt_data works", {
+  pb <- list(x = 1, y = 2)
+  expect_null(prebuilt_data("not_prebuild_data"))
+
+  obj <- prebuilt_data(names(pb)[1], pb = pb)
+  expect_equivalent(obj, pb[[1]])
+  expect_is(get_comments(obj), "character")  # should have a comment attached
+})
+
+test_that("verify_identical_prebuilt works", {
+  pb <- list(x = 1, y = 2)
+  x <- 1
+  expect_silent(verify_identical_prebuilt(x, pb = pb))
+  expect_warning(verify_identical_prebuilt(zzz = 1, pb = pb))
+})

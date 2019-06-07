@@ -3,6 +3,8 @@
 # Units: Emissions (GtCO2-eq yr-1)
 # Comments: These are for  SSP scenarios.
 # Source: http://www.sciencedirect.com/science/article/pii/S135223101530488X  
+# Column types: cincnn 
+# ----------
 "Species","Year","Emissions","Scenario","GDP","EF"
 "HFC-32",2005,5.2936,"SSP2",56713.85939,9.33387368967062e-05
 "HFC-32",2010,14.7798,"SSP2",66937.02343,0.000220801572024727

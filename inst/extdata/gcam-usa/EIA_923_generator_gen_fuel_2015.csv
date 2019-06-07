@@ -3,6 +3,8 @@
 # Unit: MWh
 # Comments: Selected columns from original form
 # Source: https://www.eia.gov/electricity/data/eia923/archive/xls/f923_2015.zip; Page 4 Generator Data from file
+# Column types: cici 
+# ----------
 State,Plant.Id,Generator.Id,Net.Generation.Year.To.Date
 AL,3,1,-1413
 AL,3,2,418

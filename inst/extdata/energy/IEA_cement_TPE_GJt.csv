@@ -3,6 +3,8 @@
 # Units: GJ per tonne of cement
 # Description: GJ of energy used to produce a tonne of cement by country
 # Source: IEA 2007 Figure 6.10
+# Column types: cnnnn 
+# ----------
 Country,1971,1990,2004,2010
 United States,5.885,5.35,5.3,5.3
 Canada,6.16,5.6,4.75,4.75

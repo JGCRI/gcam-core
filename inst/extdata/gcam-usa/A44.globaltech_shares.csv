@@ -1,7 +1,10 @@
-# File: A44.globaltech_shares.csv,,,,,
-# Title: Base Year Exogenous Shares for Selected Technologies,,,,,
-# Units: Unitless,,,,,
-# Comments: Base year exogenous shares assigned to selected efficiency-partitioned technologies whose shares are not calculated from aggregate average efficiency.,,,,,
+# File: A44.globaltech_shares.csv
+# Title: Base Year Exogenous Shares for Selected Technologies
+# Units: Unitless
+# Comments: Base year exogenous shares assigned to selected efficiency-partitioned technologies whose shares are not calculated from aggregate average efficiency.
+# Source: Furnace/heat: Annual Energy Outlook, ~2009 edition. Lighting: https://www1.eere.energy.gov/buildings/publications/pdfs/ssl/lmc_vol1_final.pdf. All other technologies are not partitioned in the base year (i.e., all shares are allocated to the base technology).
+# Column types: ccccnn 
+# ----------
 supplysector,subsector,technology1,technology2,share_tech1,share_tech2
 resid heating,electricity,electric furnace,electric heat pump,0.76,0.24
 resid hot water,electricity,electric heat pump water heater,,0,

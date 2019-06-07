@@ -2,6 +2,8 @@
 # Title: Hydropower by region in GCAM 3.0
 # Units: EJ
 # Source: GCAM 3.0
+# Column types: cnnnnnn 
+# ----------
 region_GCAM3,2020,2035,2050,2065,2080,2095
 Africa,0.3267648,0.65408832,0.98141184,1.30873536,1.63605888,1.9633824
 Australia_NZ,0.1409616,0.162445752,0.183929904,0.205414056,0.226898208,0.24838236

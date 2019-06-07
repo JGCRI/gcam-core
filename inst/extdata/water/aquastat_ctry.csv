@@ -3,6 +3,8 @@
 # Units: NA
 # Comments: Maps countries in all aquastat databases to iso codes
 # Source: NA
+# Column types: ccc 
+# ----------
 aquastat_ctry,iso,AusNWC_reg
 Afghanistan,afg,
 Angola,ago,Middle East and Africa

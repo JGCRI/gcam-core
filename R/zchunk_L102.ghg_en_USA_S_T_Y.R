@@ -27,8 +27,8 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     year <- energy <- sector <- fuel <- technology <- GCAM_region_ID <- CO2 <-
-        . <- EPA_agg_sector <- EPA_agg_sector <- EPA_agg_fuel_ghg <- CH4 <-
-        N2O <- ch4_em_factor <- n2o_em_factor <- NULL # silence package check.
+      . <- EPA_agg_sector <- EPA_agg_sector <- EPA_agg_fuel_ghg <- CH4 <-
+      N2O <- ch4_em_factor <- n2o_em_factor <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -73,12 +73,12 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
     # combine emissions and energy to get emission factors
     L102.ghg_tg_USA_en_Sepa_F_2005 %>%
       left_join(L102.in_EJ_USA_en_Sepa_F_2005, by = c("sector" = "EPA_agg_sector", "fuel" = "EPA_agg_fuel_ghg")) %>% # energy data and emission data joined
-      mutate(ch4_em_factor = CH4 / energy) %>% # emission factor calculated
-      mutate(n2o_em_factor = N2O / energy) %>% # emission factor calculated
+      mutate(ch4_em_factor = CH4 / energy, # emission factor calculated
+             n2o_em_factor = N2O / energy) %>% # emission factor calculated
       select(-CH4, -N2O, -energy) %>% # delete orignal data
       arrange(fuel) %>%
-      mutate(ch4_em_factor = if_else(is.na(ch4_em_factor) | is.infinite(ch4_em_factor), 0, ch4_em_factor)) %>% # set NA and INF to zero
-      mutate(n2o_em_factor = if_else(is.na(n2o_em_factor) | is.infinite(n2o_em_factor), 0, n2o_em_factor)) -> # set NA and INF to zero
+      mutate(ch4_em_factor = if_else(is.na(ch4_em_factor) | is.infinite(ch4_em_factor), 0, ch4_em_factor), # set NA and INF to zero
+             n2o_em_factor = if_else(is.na(n2o_em_factor) | is.infinite(n2o_em_factor), 0, n2o_em_factor)) -> # set NA and INF to zero
       L102.ghg_tgej_USA_en_Sepa_F_2005
 
     # Produce outputs

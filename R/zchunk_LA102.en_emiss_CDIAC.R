@@ -70,7 +70,8 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
     # Calculate the TPES by fuel, deducting non-energy use of fuels that does not result in CO2 emissions
 
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == "in_industry_feedstocks" & fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
+      filter(sector == "in_industry_feedstocks") %>%
+      filter(fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
       left_join_error_no_match(A32.nonenergy_Cseq, by = c("fuel" = "subsector")) %>%
       mutate(val_non_energy = value * remove.fraction) %>%
       select(GCAM_region_ID, fuel, year, val_non_energy) ->
@@ -78,7 +79,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
 
     # subtracts the non-energy use of fuels (sequestered carbon) from the TPES to get only the emitting energy
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == "TPES" & fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
+      filter(sector == "TPES", fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
       left_join_error_no_match(L102.en_sequestered_EJ_R_Fi_Yh, by = c("GCAM_region_ID", "fuel", "year")) %>%
       mutate(val_energy = value - val_non_energy) %>%
       select(-sector, -val_non_energy, -value) ->
@@ -100,9 +101,9 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
       select(-val_energy) %>%
 
     # reset to defaults wherever NAs result from 0 energy consumption
-      mutate(value = if_else(fuel == "gas" & is.na(value), DEFAULT_GAS_CCOEF, value)) %>%
-      mutate(value = if_else(fuel == "coal" & is.na(value), DEFAULT_COAL_CCOEF, value)) %>%
-      mutate(value = if_else(fuel == "refined liquids" & is.na(value), DEFAULT_LIQUIDS_CCOEF, value)) ->
+      mutate(value = if_else(fuel == "gas" & is.na(value), DEFAULT_GAS_CCOEF, value),
+             value = if_else(fuel == "coal" & is.na(value), DEFAULT_COAL_CCOEF, value),
+             value = if_else(fuel == "refined liquids" & is.na(value), DEFAULT_LIQUIDS_CCOEF, value)) ->
       L102.Ccoef_kgCGJ_R_F_Yh
 
     # aggregate regional values to global and calculate global coefficients
@@ -135,8 +136,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
       add_units("MtC") %>%
       add_comments("Aggregated from CDIAC country emissions database") %>%
       add_legacy_name("L102.CO2_Mt_R_F_Yh") %>%
-      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel") ->
       L102.CO2_Mt_R_F_Yh
 
     L102.Ccoef_kgCGJ_R_F_Yh %>%

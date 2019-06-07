@@ -664,8 +664,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       add_comments("L143.HDDCDD_scen_state assigned to GCAM subsectors") %>%
       add_legacy_name("L244.HDDCDD_A2_GFDL") %>%
       add_precursors("L143.HDDCDD_scen_state", "gcam-usa/A44.sector",
-                     "gcam-usa/calibrated_techs_bld_usa", "gcam-usa/A44.gcam_consumer") %>%
-      add_flags(FLAG_PROTECT_FLOAT)->
+                     "gcam-usa/calibrated_techs_bld_usa", "gcam-usa/A44.gcam_consumer") ->
       L244.HDDCDD_A2_GFDL_USA
 
     L244.ThermalBaseService_gcamusa %>%

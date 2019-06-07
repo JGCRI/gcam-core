@@ -106,7 +106,7 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
     # which we don't want.
     AGLU_ctry %>%
       select(iso, CROSIT_country_ID) %>%
-      distinct(iso, .keep_all=TRUE) ->
+      distinct(iso, .keep_all = TRUE) ->
       Unique_AGLU_ctry
 
     # Next, Calculate the yield ratio for each country and crop, based on the CROSIT database
@@ -122,19 +122,19 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
       filter(year == aglu.CROSIT_HISTORICAL_YEAR | is.na(year)) %>%
       mutate(yieldratio = Yield_kgHa_irrigated / Yield_kgHa_rainfed) %>%                                               # Compute yield ratio
       select(-Yield_kgHa_irrigated, -Yield_kgHa_rainfed) %>%
-      mutate(yieldratio=if_else( is.na(yieldratio), 1, yieldratio)) %>%                                                # Replace NAs with 1
-      mutate(yieldratio=if_else( yieldratio==0, 1, yieldratio)) %>%                                                    # Replace zeros with 1
-      mutate(yieldratio=if_else( is.infinite(yieldratio), 1, yieldratio))  ->                                          # Replace Infs with 1
+      mutate(yieldratio = if_else(is.na(yieldratio), 1, yieldratio),
+             yieldratio = if_else(yieldratio == 0, 1, yieldratio),
+             yieldratio = if_else(is.infinite(yieldratio), 1, yieldratio))  ->                                          # Replace Infs with 1
       Yieldratio_ctry_crop
 
     # Now, use the yield ratio to solve for the production shares (irrigated versus rainfed)
     # This calculation preserves the harvested area shares and yield ratios computed above.
     ag_HA_ha_ctry_crop %>%
       left_join(select(Yieldratio_ctry_crop, iso, GLU, GTAP_crop, yieldratio), by = c("iso", "GLU", "GTAP_crop")) %>%          # Map in the yield ratio
-      mutate(irrshareHA = irrHA / (irrHA + rfdHA)) %>%                                                                          # Compute the share of irrigated harvested area
-      mutate(irrshareProd = (irrshareHA * yieldratio)/((irrshareHA * yieldratio) + (1 - irrshareHA))) %>%                       # Compute the share of irrigated production
+      mutate(irrshareHA = irrHA / (irrHA + rfdHA),                                                                                # Compute the share of irrigated harvest area
+             irrshareProd = (irrshareHA * yieldratio) / ((irrshareHA * yieldratio) + (1 - irrshareHA))) %>%                       # Compute the share of irrigated production
       right_join(L100.LDS_ag_prod_t, by = c("iso", "GLU", "GTAP_crop")) %>%                                                       # Map in the total production
-      mutate(irrProd=value*irrshareProd, rfdProd=value*(1-irrshareProd)) ->                                                     # Compute irrigated and rainfed production
+      mutate(irrProd=value * irrshareProd, rfdProd=value * (1 - irrshareProd)) ->                                                     # Compute irrigated and rainfed production
       ag_Prod_t_ctry_crop
 
     # Split irrigated and rainfed production into separate dataframes

@@ -1,21 +1,18 @@
-# File: A23.elecS_subsector_shrwt_interpto_state_adj.csv,,,,,,,
-# Title: State-Specific Multiple Load Segments Subsector Shareweight Assumptions,,,,,,,
-# Units: unitless,,,,,,,
-# Comments: Subsector share-weights which need a to-value - adjusting values for particular states,,,,,,,
+# File: A23.elecS_subsector_shrwt_interpto_state_adj.csv
+# Title: State-Specific Multiple Load Segments Subsector Shareweight Assumptions
+# Units: unitless
+# Comments: Subsector shareweights for subsectors that are not fixed at calibration values. 
+# These subsectors need a "to-value" which specifies the value to which the shareweight is being interpolated.
+# This table adjusts shareweights / interpolation functions for particular states.
+# Hawaii is is not allowed to deploy natural gas electric power plants in future model periods. According to the EIA, Hawaii has no natural gas consumption and no electricity generation by gas. Considering that over half of final energy consumption is for transport, and that there are no energy intensive industries and limited heating needs, building expensive LNG terminals or storage facilities seems unrealistic. Thus, we do not allow gas-fired electricity as an option for Hawaii.
+# Column types: ccccccic 
+# ----------
 region,supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
-GA,base load generation,nuclear,share-weight,2010,2015,0,linear
-GA,intermediate generation,nuclear,share-weight,2010,2015,0,linear
-GA,subpeak generation,nuclear,share-weight,2010,2015,0,linear
-GA,peak generation,nuclear,share-weight,2010,2015,0,linear
-GA,base load generation,nuclear,share-weight,2015,2025,0,fixed
-GA,intermediate generation,nuclear,share-weight,2015,2025,0,fixed
-GA,subpeak generation,nuclear,share-weight,2015,2025,0,fixed
-GA,peak generation,nuclear,share-weight,2015,2025,0,fixed
-GA,base load generation,nuclear,share-weight,2025,2030,1,linear
-GA,intermediate generation,nuclear,share-weight,2025,2030,1,linear
-GA,subpeak generation,nuclear,share-weight,2025,2030,1,linear
-GA,peak generation,nuclear,share-weight,2025,2030,1,linear
-GA,base load generation,nuclear,share-weight,2030,end-year,1,fixed
-GA,intermediate generation,nuclear,share-weight,2030,end-year,1,fixed
-GA,subpeak generation,nuclear,share-weight,2030,end-year,1,fixed
-GA,peak generation,nuclear,share-weight,2030,end-year,1,fixed
+HI,base load generation,gas,share-weight,final-calibration-year,initial-future-year,0,linear
+HI,intermediate generation,gas,share-weight,final-calibration-year,initial-future-year,0,linear
+HI,subpeak generation,gas,share-weight,final-calibration-year,initial-future-year,0,linear
+HI,peak generation,gas,share-weight,final-calibration-year,initial-future-year,0,linear
+HI,base load generation,gas,share-weight,initial-future-year,end-year,0,fixed
+HI,intermediate generation,gas,share-weight,initial-future-year,end-year,0,fixed
+HI,subpeak generation,gas,share-weight,initial-future-year,end-year,0,fixed
+HI,peak generation,gas,share-weight,initial-future-year,end-year,0,fixed

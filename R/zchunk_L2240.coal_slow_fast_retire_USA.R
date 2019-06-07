@@ -22,7 +22,7 @@
 module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/A23.coal_conv_pul_delete",
-             FILE = "gcam-usa/A23.elec_tech_associations_coal_retire",
+             FILE = "gcam-usa/A23.elec_tech_mapping_coal_retire",
              FILE = "gcam-usa/A23.elec_tech_coal_retire_SCurve",
              FILE = "gcam-usa/fraction_fast_retire_generation",
              "L2234.StubTechProd_elecS_USA",
@@ -63,7 +63,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
 
     # Load required inputs
     A23.coal_conv_pul_delete <- get_data(all_data, "gcam-usa/A23.coal_conv_pul_delete")
-    A23.elec_tech_associations_coal_retire <- get_data(all_data, "gcam-usa/A23.elec_tech_associations_coal_retire")
+    A23.elec_tech_mapping_coal_retire <- get_data(all_data, "gcam-usa/A23.elec_tech_mapping_coal_retire")
     A23.elec_tech_coal_retire_SCurve <- get_data(all_data, "gcam-usa/A23.elec_tech_coal_retire_SCurve") %>%
       select(-Electric.sector)
     fraction_fast_retire_generation <- get_data(all_data, "gcam-usa/fraction_fast_retire_generation")
@@ -89,7 +89,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
     # Zero out calibrated production of coal_base_conv pul and coal_int_conv pul technologies
     L2234.StubTechProd_elecS_USA %>%
       rename(tech.share.weight = share.weight) %>%
-      semi_join(A23.elec_tech_associations_coal_retire %>%
+      semi_join(A23.elec_tech_mapping_coal_retire %>%
                   select(supplysector = Electric.sector, subsector, stub.technology = technology) %>%
                   distinct(),
                 by = c("supplysector", "subsector", "stub.technology")) %>%
@@ -98,7 +98,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       L2240.StubTechProd_elecS_coal_USA
 
     # Prepare a table for stub technologies with all stats and base years
-    A23.elec_tech_associations_coal_retire %>%
+    A23.elec_tech_mapping_coal_retire %>%
       repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
       rename(supplysector = Electric.sector, stub.technology = Electric.sector.technology) ->
@@ -148,7 +148,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       L2240.StubTechMarket_elec_coalret_USA
 
     # Prepare a table for global technologies with all model years
-    A23.elec_tech_associations_coal_retire %>%
+    A23.elec_tech_mapping_coal_retire %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       rename(supplysector = Electric.sector, tech = technology, technology = Electric.sector.technology) ->
       L2240.elec_USA_coalret
@@ -229,7 +229,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Zeroing out calibrated outpts for technologies that will be allocated to fast retire and slow retire technologies") %>%
       add_precursors("gcam-usa/A23.coal_conv_pul_delete",
-                     "gcam-usa/A23.elec_tech_associations_coal_retire",
+                     "gcam-usa/A23.elec_tech_mapping_coal_retire",
                      "L2234.StubTechProd_elecS_USA") ->
     L2240.StubTechProd_elecS_coal_USA
 
@@ -238,7 +238,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Conventional coal electricity outpts are allocated to fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.StubTechProd_elec_coalret_USA") %>%
-      add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
+      add_precursors("gcam-usa/A23.elec_tech_mapping_coal_retire",
                      "gcam-usa/fraction_fast_retire_generation",
                      "L2234.StubTechProd_elecS_USA") ->
       L2240.StubTechProd_elec_coalret_USA
@@ -248,7 +248,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Set the same efficiency values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.StubTechEff_elec_coalret_USA") %>%
-      add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
+      add_precursors("gcam-usa/A23.elec_tech_mapping_coal_retire",
                      "L2234.StubTechEff_elecS_USA") ->
       L2240.StubTechEff_elec_coalret_USA
 
@@ -257,7 +257,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Separate fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.StubTechSCurve_elec_coalret_USA") %>%
-      add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
+      add_precursors("gcam-usa/A23.elec_tech_mapping_coal_retire",
                      "gcam-usa/A23.elec_tech_coal_retire_SCurve") ->
       L2240.StubTechSCurve_elec_coalret_USA
 
@@ -266,7 +266,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Separate fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.StubTechMarket_elec_coalret_USA") %>%
-      add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
+      add_precursors("gcam-usa/A23.elec_tech_mapping_coal_retire",
                      "L2234.StubTechMarket_elecS_USA") ->
       L2240.StubTechMarket_elec_coalret_USA
 
@@ -275,7 +275,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Separate fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechShrwt_elec_coalret_USA") %>%
-      add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
+      add_precursors("gcam-usa/A23.elec_tech_mapping_coal_retire",
                      "L2234.GlobalTechShrwt_elecS_USA") ->
       L2240.GlobalTechShrwt_elec_coalret_USA
 
@@ -284,7 +284,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Set the same capacity factor values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechCapFac_elec_coalret_USA") %>%
-      add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
+      add_precursors("gcam-usa/A23.elec_tech_mapping_coal_retire",
                      "L2234.GlobalTechCapFac_elecS_USA") ->
       L2240.GlobalTechCapFac_elec_coalret_USA
 
@@ -293,7 +293,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       add_units("1975$ per kW; unitless (fixed.charge.rate)") %>%
       add_comments("Set the same capital cost values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechCapital_elec_coalret_USA") %>%
-      add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
+      add_precursors("gcam-usa/A23.elec_tech_mapping_coal_retire",
                      "L2234.GlobalTechCapital_elecS_USA") ->
       L2240.GlobalTechCapital_elec_coalret_USA
 
@@ -302,7 +302,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       add_units("1975$/kW/yr") %>%
       add_comments("Set the same fixed OM cost values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechOMfixed_elec_coalret_USA") %>%
-      add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
+      add_precursors("gcam-usa/A23.elec_tech_mapping_coal_retire",
                      "L2234.GlobalTechOMfixed_elecS_USA") ->
       L2240.GlobalTechOMfixed_elec_coalret_USA
 
@@ -311,7 +311,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       add_units("1975$/MWh") %>%
       add_comments("Set the same variable OM cost values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechOMvar_elec_coalret_USA") %>%
-      add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
+      add_precursors("gcam-usa/A23.elec_tech_mapping_coal_retire",
                      "L2234.GlobalTechOMvar_elecS_USA") ->
       L2240.GlobalTechOMvar_elec_coalret_USA
 
@@ -320,7 +320,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Set the same efficiency values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechEff_elec_coalret_USA") %>%
-      add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
+      add_precursors("gcam-usa/A23.elec_tech_mapping_coal_retire",
                      "L2234.GlobalTechEff_elecS_USA") ->
       L2240.GlobalTechEff_elec_coalret_USA
 
@@ -329,7 +329,7 @@ module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Set the same values for fast retire and slow retire technologies") %>%
       add_legacy_name("L2240.GlobalTechProfitShutdown_elec_coalret_USA") %>%
-      add_precursors("gcam-usa/A23.elec_tech_associations_coal_retire",
+      add_precursors("gcam-usa/A23.elec_tech_mapping_coal_retire",
                      "L2234.GlobalTechProfitShutdown_elecS_USA") ->
       L2240.GlobalTechProfitShutdown_elec_coalret_USA
 

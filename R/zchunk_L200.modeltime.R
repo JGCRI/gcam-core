@@ -47,7 +47,7 @@ module_modeltime_L200.modeltime <- function(command, ...) {
 
     tibble(inter.year.timestep = GCAM_interyear.timesteps,
            inter.year          = GCAM_interyears,
-           dummy.tag           = 1:length(GCAM_interyears)) %>% # dummy tag avoids later years over-writing prior years that have the same timestep length
+           dummy.tag           = seq_along(GCAM_interyears)) %>% # dummy tag avoids later years over-writing prior years that have the same timestep length
       add_title("GCAM timestep change information") %>%
       add_units("years") %>%
       add_legacy_name("L200.ModelTimeInterYears") %>%

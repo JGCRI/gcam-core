@@ -3,6 +3,8 @@
 # Units: unitless shares,
 # Description: Assumptions for regional shares of global unconventional oil consumption,
 # Source: GCAM 3.1 model inputs. Calculated from export destinations of Canadian and Venezuelan oil.,
+# Column types: cn 
+# ----------
 region_GCAM3,share
 USA,0.628571429
 Canada,0.17012987

@@ -10,7 +10,7 @@
 #' original data system was \code{batch_food_SSP4_xml.R} (aglu XML).
 module_aglu_batch_food_SSP4_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( "L203.IncomeElasticity_SSP4"))
+    return(c("L203.IncomeElasticity_SSP4"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "food_SSP4.xml"))
   } else if(command == driver.MAKE) {

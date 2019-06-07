@@ -2,6 +2,8 @@
 # Title: Mapping file for prime mover
 # Unit: Unitless
 # Source: https://www.eia.gov/survey/form/eia_860/instructions.pdf
+# Column types: cccc 
+# ----------
 Reported.Fuel.Type.Code,Reported.Prime.Mover,gcam_fuel,elec_tech
 WAT,HY,hydro,hyrdo
 NG,CA,gas,gas_CC

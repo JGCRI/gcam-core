@@ -2,6 +2,7 @@
 # Title: Subsectors of animal production
 # Units: Various
 # Source: NA
+# Column types: ccnciccccc 
 # ----------
 supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,interpolation.function,logit.type
 Beef,Mixed,-1.5,start-year,1,share-weight,final-calibration-year,end-year,fixed,

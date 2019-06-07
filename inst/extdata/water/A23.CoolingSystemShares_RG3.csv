@@ -2,6 +2,8 @@
 # Title: Cooling system shares for GCAM3 regions
 # Units: Unitless
 # Source: Various sources. USA values are from UCS data. WEUR future are from Schakel inventory.
+# Column types: ccccnnnnn 
+# ----------
 region_GCAM3,plant_type,cooling_system,water_type,1971,2005,2010,2015,2100
 USA,coal,once through,fresh,0.3592,0.3592,0.3592,0,0
 USA,coal,once through,seawater,0.02,0.02,0.02,0.05,0.05

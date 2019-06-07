@@ -2,7 +2,13 @@
 # Title: The International Benchmarking Network for Water and Sanitation Utilities (IBNET)
 # Units: Average Revenue W&WW (US$/m3 water sold), GDPPC ($), Total Water Consumption (l/person/day)
 # Comments: missing data for Japan and Taiwan are filled in from municipal.water.demand.32.csv. Note some country names were changed to match FAO
+<<<<<<< HEAD
 # Source: http://www.ib-net.org/en/production/?
+=======
+#Source: http://www.ib-net.org/en/production/?
+# Column types: icnnn 
+# ----------
+>>>>>>> remotes/origin/master
 year,country,cost,GDPPC,consumption
 2005,Albania,0.44,2693,53
 2006,Albania,0.28,2925,125

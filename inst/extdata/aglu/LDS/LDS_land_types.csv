@@ -4,6 +4,7 @@
 # Description: Mapping from LDS land categories to specific categories in databases
 # Original source: land type area and pot veg carbon calc in: moirai
 # Source: https://github.com/JGCRI/moirai
+# Column types: iccc 
 # ----------
 Category,LT_SAGE,LT_HYDE,LT_WDPA
 1,Unknown,Unmanaged,Protected
