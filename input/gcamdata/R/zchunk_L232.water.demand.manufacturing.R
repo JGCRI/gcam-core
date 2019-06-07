@@ -26,7 +26,8 @@ module_water_L232.water.demand.manufacturing <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    water_sector <- water_type <- region <- supplysector <- subsector <- technology <-
+    stub.technology <- subs.share.weight <- tech.share.weight <- share.weight.year <-
+      water_sector <- water_type <- region <- supplysector <- subsector <- technology <-
       year <- minicam.energy.input <- coefficient <- market.name <- calOutputValue <-
       water_km3 <- energy_EJ <- NULL  # silence package check notes
 
@@ -35,20 +36,32 @@ module_water_L232.water.demand.manufacturing <- function(command, ...) {
     A03.sector <- get_data(all_data, "water/A03.sector")
     A32.globaltech_coef <- get_data(all_data, "energy/A32.globaltech_coef")
     L132.water_km3_R_ind_Yh <- get_data(all_data, "L132.water_km3_R_ind_Yh")
-    L232.StubTechProd_industry <- get_data(all_data, "L232.StubTechProd_industry")
+
+    # Extrapolate this one to all model years if necessary
+    get_data(all_data, "L232.StubTechProd_industry") %>%
+      complete(nesting(region, supplysector, subsector, stub.technology), year = MODEL_YEARS) %>%
+      group_by(region, supplysector, subsector, stub.technology) %>%
+      arrange(year) %>%
+      mutate(calOutputValue = approx_fun(year, calOutputValue, rule = 2),
+             subs.share.weight = approx_fun(year, subs.share.weight, rule = 2),
+             tech.share.weight = approx_fun(year, tech.share.weight, rule = 2),
+             share.weight.year = approx_fun(year, share.weight.year, rule = 2)) %>%
+      ungroup ->
+      L232.StubTechProd_industry
 
     # First, compute historical coefficients, as total withdrawals/consumption divided by industrial sector output
     # (base-service)
     L232.water_km3_R_ind_Yh <-
       filter(L132.water_km3_R_ind_Yh, year %in% MODEL_BASE_YEARS) %>%
-      left_join_error_no_match( GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(L232.StubTechProd_industry, by = c("region", "year")) %>%
       rename(energy_EJ = calOutputValue) %>%
-      mutate(coefficient = round(water_km3 / energy_EJ, digits = energy.DIGITS_COEFFICIENT))
+      mutate(coefficient = round(water_km3 / energy_EJ, digits = energy.DIGITS_COEFFICIENT)) ->
+      L232.water_km3_R_ind_Yh
 
     # Read in water coefs for all years
-    L232.TechCoef <-
-      select(L232.water_km3_R_ind_Yh, region, water_type, year, coefficient) %>%
+    L232.water_km3_R_ind_Yh %>%
+      select(region, water_type, year, coefficient) %>%
       repeat_add_columns(distinct(A32.globaltech_coef, supplysector, subsector, technology)) %>%
       mutate(water_sector = "Manufacturing",
              minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector),
@@ -60,7 +73,7 @@ module_water_L232.water.demand.manufacturing <- function(command, ...) {
       mutate(coefficient = if_else(year %in% MODEL_FUTURE_YEARS, coefficient[year == max(MODEL_BASE_YEARS)], coefficient)) %>%
       ungroup() %>%
 
-    # add attributes for output
+      # add attributes for output
       add_title("Water withdrawal and consumption coefficients for manufacturing") %>%
       add_units("m3/GJ") %>%
       add_comments("Manufacturing water demand coefficients by region, water type, and year") %>%

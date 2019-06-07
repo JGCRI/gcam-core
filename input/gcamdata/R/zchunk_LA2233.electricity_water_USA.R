@@ -1,4 +1,4 @@
-#' module_gcam.usa_LA2233.electricity_water_USA
+#' module_gcamusa_LA2233.electricity_water_USA
 #'
 #' Weighted water coefficient for reference scenario and load segment classification
 #'
@@ -11,14 +11,14 @@
 #' original data system was \code{LA2233.electricity_water_USA} (gcam-usa level2)
 #' @details Weighted water coefficient for reference scenario and load segment classification
 #' @author Zarrar Khan September 2018
-module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
+module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",
              FILE = "water/A03.sector",
-             FILE = "gcam-usa/A23.elecS_inttech_associations",
-             FILE = "gcam-usa/A23.elecS_tech_associations",
-             FILE = "gcam-usa/A23.elec_tech_associations_coal_retire",
+             FILE = "gcam-usa/A23.elecS_inttech_mapping",
+             FILE = "gcam-usa/A23.elecS_tech_mapping",
+             FILE = "gcam-usa/A23.elec_tech_mapping_coal_retire",
              FILE = "gcam-usa/A23.elecS_tech_availability",
              FILE = "gcam-usa/NREL_us_re_technical_potential",
              "L223.StubTechMarket_elec_USA",
@@ -33,7 +33,8 @@ module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
     region<- supplysector <- subsector <-  technology <- year <- minicam.energy.input <-
       coefficient<- market.name <- Electric.sector <- Electric.sector.intermittent.technology <-
       intermittent.technology <- subsector_1 <- sector <- fuel <- Electric.sector.technology <-
-      water_sector <- water_type <- state <- state_name <- ':=' <- x <- plant_type <- NULL
+      water_sector <- water_type <- state <- state_name <- ':=' <- x <- plant_type <-
+      State <- value <- NULL
 
     # ===================================================
     # 1. Read files
@@ -42,9 +43,9 @@ module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     A03.sector <- get_data(all_data, "water/A03.sector")
-    A23.elecS_inttech_associations <- get_data(all_data, "gcam-usa/A23.elecS_inttech_associations")
-    A23.elecS_tech_associations <- get_data(all_data, "gcam-usa/A23.elecS_tech_associations")
-    A23.elec_tech_associations_coal_retire <- get_data(all_data, "gcam-usa/A23.elec_tech_associations_coal_retire")%>%
+    A23.elecS_inttech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_inttech_mapping")
+    A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping")
+    A23.elec_tech_mapping_coal_retire <- get_data(all_data, "gcam-usa/A23.elec_tech_mapping_coal_retire")%>%
       filter(grepl("generation", Electric.sector))
     A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability")
     NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")
@@ -59,20 +60,20 @@ module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
     # outlined in A23.elecS_tech_availability.  To avoid creating these technologies and then deleting them (which
     # eats up memory and causes a lot of error messages), we remove them from the relevant association files here.
 
-    L2233.load_segments <- unique(A23.elecS_inttech_associations$Electric.sector)
+    L2233.load_segments <- unique(A23.elecS_inttech_mapping$Electric.sector)
 
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       anti_join(A23.elecS_tech_availability, by = c("Electric.sector.technology" = "stub.technology")) %>%
       mutate(Electric.sector = as.character(factor(Electric.sector, levels = L2233.load_segments))) %>%
-      arrange(subsector, Electric.sector) -> A23.elecS_tech_associations_Edit
+      arrange(subsector, Electric.sector) -> A23.elecS_tech_mapping_Edit
 
-    A23.elecS_inttech_associations %>%
+    A23.elecS_inttech_mapping %>%
       anti_join(A23.elecS_tech_availability, by = c("Electric.sector.intermittent.technology" = "stub.technology")) %>%
       mutate(Electric.sector = as.character(factor(Electric.sector, levels = L2233.load_segments))) %>%
       arrange(subsector, Electric.sector) %>%
       rename(Electric.sector.technology = Electric.sector.intermittent.technology,
              technology = intermittent.technology)%>%
-      bind_rows(A23.elecS_tech_associations_Edit)%>%
+      bind_rows(A23.elecS_tech_mapping_Edit)%>%
       rename(sector = supplysector,
              fuel = subsector_1)%>%
       dplyr::select(sector, fuel, technology, Electric.sector, subsector, Electric.sector.technology) ->
@@ -142,7 +143,7 @@ module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
       L2233.StubTech_WaterCoef_ref
 
     L2233.StubTech_WaterCoef_ref %>%
-      inner_join(A23.elec_tech_associations_coal_retire, by = c("subsector", "technology")) %>%
+      inner_join(A23.elec_tech_mapping_coal_retire, by = c("subsector", "technology")) %>%
       mutate(technology = Electric.sector.technology,
              Electric.sector = NULL,
              Electric.sector.technology = NULL) ->
@@ -170,9 +171,9 @@ module_gcam.usa_LA2233.electricity_water_USA <- function(command, ...) {
       add_precursors("gcam-usa/states_subregions",
                      "energy/calibrated_techs",
                      "water/A03.sector",
-                     "gcam-usa/A23.elecS_inttech_associations",
-                     "gcam-usa/A23.elecS_tech_associations",
-                     "gcam-usa/A23.elec_tech_associations_coal_retire",
+                     "gcam-usa/A23.elecS_inttech_mapping",
+                     "gcam-usa/A23.elecS_tech_mapping",
+                     "gcam-usa/A23.elec_tech_mapping_coal_retire",
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/NREL_us_re_technical_potential",
                      "L223.StubTechMarket_elec_USA",

@@ -3,6 +3,8 @@
 # Units: thousand short tons (?)
 # Source: EPA National Emissions Trends
 # Description: These EPA data files come from the old GCAM3 system (they were in nonco2/Input Data/EPA National Inventories). The documentation there is limited. For example, the CO file says: "National Emissions Trends -- updated 7/18/2005. Carbon Monoxide Emissions (thousand short tons)."
+# Column types: ccnnnnnnnnnnnnn 
+# ----------
 Source_Category_Raw,Source_Category,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002
 TOTAL ALL SOURCES,TOTAL ALL SOURCES,4319.00,4382.00,4443.00,4518.00,4589.00,4659.00,4728.00,4819.00,4939.00,4857.00,4908.00,3691.00,3712.00
 FUEL COMBUSTION TOTAL (Tier 0 - 01),FUEL COMBUSTION TOTAL (Tier 0 - 01),25.00,25.00,25.00,26.00,26.00,26.00,47.00,47.00,47.00,50.00,51.00,51.00,16.00

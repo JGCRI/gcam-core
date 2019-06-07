@@ -64,7 +64,7 @@ test_that('Changed node value and attribute value are detected', {
   expect_equal(rslt[1], "At: [('scenario', ''), ('modeltime', '')]")
   expect_equal(rslt[7], "\t\t2010")
   expect_equal(rslt[14], "\t\t2015")
-  expect_equal(rslt[22], "\t\t['5']" )
+  expect_equal(rslt[22], "\t\t['5']")
   expect_equal(rslt[29], "\t\t['1']")
 })
 

@@ -1,8 +1,10 @@
-# File: AEO_2018_elec_gen_hydro.csv,,
-# Title: Annual Energy Outlook 2018 Hydropower Electricity Generation,,
-# Units: billion kWh,,
-# Comments: AEO 2018 Renewable Energy All Sectors Electricity Generation Hydropower (case = Reference case; region = United States),,
-# Source: U.S. Energy Information Administration (https://www.eia.gov/outlooks/aeo/data/browser/#/?id=67-AEO2018&region=3-0&cases=ref2018&start=2016&end=2050&f=A&linechart=~~ref2018-d121317a.110-67-AEO2018.3-0&map=&ctype=linechart&sid=ref2018-d121317a.110-67-AEO2018.3-0&sourcekey=0),,
+# File: AEO_2018_elec_gen_hydro.csv
+# Title: Annual Energy Outlook 2018 Hydropower Electricity Generation
+# Units: billion kWh
+# Comments: AEO 2018 Renewable Energy All Sectors Electricity Generation Hydropower (case = Reference case; region = United States)
+# Source: U.S. Energy Information Administration (https://www.eia.gov/outlooks/aeo/data/browser/#/?id=67-AEO2018&region=3-0&cases=ref2018&start=2016&end=2050&f=A&linechart=~~ref2018-d121317a.110-67-AEO2018.3-0&map=&ctype=linechart&sid=ref2018-d121317a.110-67-AEO2018.3-0&sourcekey=0)
+# Column types: cin 
+# ----------
 region,year,AEO
 USA,2050,298.258179
 USA,2049,298.238007

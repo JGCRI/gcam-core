@@ -53,8 +53,8 @@ module_water_L210.water.demand.primary <- function(command, ...) {
       # Avoid double acounting unconventional oil in the regional oil sector as it is already
       # accounted for in unconventional oil production.
       filter(!(supplysector %in% "regional oil" & subsector %in% "unconventional oil")) %>%
-      mutate(water_sector = "Mining") %>%
-      mutate(minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
+      mutate(water_sector = "Mining",
+             minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
       # Add in GCAM region names
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(market.name = region) ->

@@ -309,6 +309,9 @@ template<typename T>
 void TechVectorParseHelper<T>::initializeVector( const unsigned int aStartPeriod, const unsigned int aSize, objects::TechVintageVector<T>& aTechVec ) {
     // Do not re-initialize an instance that has already been initialized.
     if( !aTechVec.isInitialized() ) {
+        // Save temp data key before we overwrite it.
+        size_t tempDataKey = reinterpret_cast<size_t>( aTechVec.mData );
+
         // Fill the the vector parameters and allocate it's memory.
         aTechVec.mStartPeriod = aStartPeriod;
         aTechVec.mSize = aSize;
@@ -318,7 +321,6 @@ void TechVectorParseHelper<T>::initializeVector( const unsigned int aStartPeriod
         
         // Attempt to copy in data from temporary storage
         TechVectorParseHelper<T>* currTVParseHelper = boost::fusion::at_key<T>( sTechVectorParseHelperMap );
-        size_t tempDataKey = reinterpret_cast<size_t>( aTechVec.mData );
         
         if( currTVParseHelper ) {
             auto tempData = currTVParseHelper->mTempStore.find( tempDataKey );

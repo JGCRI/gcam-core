@@ -1,6 +1,8 @@
 # File: FAO_Fert_Cons_tN_RESOURCESTAT.csv
 # Title: FAO fertilizer consumption by country, year
 # Units: tons N
+# Column types: ciciciiiiiiiiii 
+# ----------
 countries,country codes,item,item codes,element,element codes,2002,2003,2004,2005,2006,2007,2008,2009,2010
 Afghanistan,2,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,23446,20320,23383,25096,49032,28205,23243,35232,33159
 Albania,3,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,37986,37155,35785,36866,30014,30978,28153,33501,30818

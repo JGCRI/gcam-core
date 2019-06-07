@@ -1,5 +1,7 @@
 # File: A42.demand.csv
 # Title: Aggregate building final demand perCapitaBased and price elasticity
 # Units: Unitless
+# Column types: cii 
+# ----------
 energy.final.demand,perCapitaBased,price.elasticity
 building,1,-1

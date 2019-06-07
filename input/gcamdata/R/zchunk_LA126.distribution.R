@@ -81,8 +81,8 @@ module_energy_LA126.distribution <- function(command, ...) {
       summarise(value_electricity_ownuse = sum(value)) %>%
       ungroup() %>%
       left_join_error_no_match(Electricity_total, by = c("GCAM_region_ID", "year")) %>% # Joining previous table (electricity sector generation, which includes industrial CHP electricity generation)
-      mutate(value_electricity_ownuse_out = value_electricity_ownuse_in - value_electricity_ownuse) %>% # Creating values for table, L126.out_EJ_R_elecownuse_F_Yh (i.e., output), by subtracting electricity generation by elecricity ownuse
-      mutate(value_electricity_ownuse_IO = value_electricity_ownuse_in / value_electricity_ownuse_out) -> # Creating values for table, L126.IO_R_elecownuse_F_Yh,  by dividing input by output
+      mutate(value_electricity_ownuse_out = value_electricity_ownuse_in - value_electricity_ownuse, # Creating values for table, L126.out_EJ_R_elecownuse_F_Yh (i.e., output), by subtracting electricity generation by elecricity ownuse
+             value_electricity_ownuse_IO = value_electricity_ownuse_in / value_electricity_ownuse_out) -> # Creating values for table, L126.IO_R_elecownuse_F_Yh,  by dividing input by output
       Electricity_ownuse_all
 
     # Table Electricity_ownuse_all is separated to create the final tables
@@ -111,8 +111,8 @@ module_energy_LA126.distribution <- function(command, ...) {
       summarise(value_electd = sum(value)) %>%
       ungroup() %>%
       left_join_error_no_match(Electricity_ownuse_out, by = c("GCAM_region_ID", "year")) %>% # Joining electricity generation output (L126.out_EJ_R_elecownuse_F_Yh, wherein electricity ownuse was subtracted from electricity generation)
-      mutate(value_electd_out = value - value_electd) %>% # Creating values for table, L126.out_EJ_R_electd_F_Yh (i.e. ouput), by subtracting electricity generation (without ownuse) by transmission and distribution consumption
-      mutate(value_electd_IO = value / value_electd_out) -> # Creating values for table, L126.IO_R_electd_F_Yh, by dividing input by output
+      mutate(value_electd_out = value - value_electd, # Creating values for table, L126.out_EJ_R_electd_F_Yh (i.e. ouput), by subtracting electricity generation (without ownuse) by transmission and distribution consumption
+             value_electd_IO = value / value_electd_out) -> # Creating values for table, L126.IO_R_electd_F_Yh, by dividing input by output
       Electricity_distribution_all
 
     # Table Electricity_distribution_all is separated to create the final tables
@@ -142,8 +142,8 @@ module_energy_LA126.distribution <- function(command, ...) {
       summarise(value_gaspipe = sum(value)) %>%
       ungroup() %>%
       left_join(Gasproc_out, by = c("GCAM_region_ID", "year")) %>% # Joining gas output
-      mutate(value_gaspipe_out = value_gaspipe_in - value_gaspipe) %>% # Creating values for table, L126.out_EJ_R_gaspipe_F_Yh (i.e., output), by subtracting gas pipeline input by gas pipeline consumption
-      mutate(value_gaspipe_IO = value_gaspipe_in / value_gaspipe_out) %>% # Creating values for table, L126.IO_R_gaspipe_F_Yh, by dividing input by output. Note that some regions have zero gas in some of the base years. Reset their IO coefs to 1 in the next step.
+      mutate(value_gaspipe_out = value_gaspipe_in - value_gaspipe, # Creating values for table, L126.out_EJ_R_gaspipe_F_Yh (i.e., output), by subtracting gas pipeline input by gas pipeline consumption
+             value_gaspipe_IO = value_gaspipe_in / value_gaspipe_out) %>% # Creating values for table, L126.IO_R_gaspipe_F_Yh, by dividing input by output. Note that some regions have zero gas in some of the base years. Reset their IO coefs to 1 in the next step.
       replace_na(list(value_gaspipe_IO = 1)) -> # Reset NaN IO coefs to 1, since some regions have no gas in some base years.
       Gas_pipeline_all
 

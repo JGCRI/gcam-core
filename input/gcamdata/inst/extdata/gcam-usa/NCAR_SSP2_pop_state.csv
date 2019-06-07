@@ -1,7 +1,9 @@
-# File: NCAR_SSP2_pop_state.csv,,,,,,,,,,,,
-# Title: Population Projections for US States under SSP2 Based on Global Gridded Population Projections,,,,,,,,,,,,
-# Units: persons,,,,,,,,,,,,
-# Source: Jiang et al (2018) - https://opensky.ucar.edu/islandora/object/technotes%3A561/datastream/PDF/download/citation.pdf,,,,,,,,,,,,
+# File: NCAR_SSP2_pop_state.csv
+# Title: Population Projections for US States under SSP2 Based on Global Gridded Population Projections
+# Units: persons
+# Source: Jiang et al (2018) - https://opensky.ucar.edu/islandora/object/technotes%3A561/datastream/PDF/download/citation.pdf
+# Column types: ciiiiiiiiiiii 
+# ----------
 State,State_FIPS,SSP,2010,2020,2030,2040,2050,2060,2070,2080,2090,2100
 Alabama,1000,2,4879341,5212193,5535659,5801754,6014447,6222869,6404409,6516371,6554921,6536790
 Alaska,2000,2,584669,621153,656834,687884,714388,740304,751326,766005,774497,775232

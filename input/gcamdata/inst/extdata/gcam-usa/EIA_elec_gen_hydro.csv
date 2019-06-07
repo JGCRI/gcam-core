@@ -1,8 +1,10 @@
-# File: EIA_elec_gen_hydro.csv,,
-# Title: U.S. EIA Historical Electricity Generation from Hydropower,,
-# Units: MWh,,
-# Comments: Filtered from Net Generation by State by Type of Producer by Energy Source. Filters: 'TYPE OF PRODUCER = 'Total Electric Power Industry; 'ENERGY SOURCE = 'Hydroelectric Conventional; State != 'U.S-Total',,
-# Source: U.S. Energy Information Administration - Electricity Data Browser (https://www.eia.gov/electricity/data/state/),,
+# File: EIA_elec_gen_hydro.csv
+# Title: U.S. EIA Historical Electricity Generation from Hydropower
+# Units: MWh
+# Comments: Filtered from Net Generation by State by Type of Producer by Energy Source. Filters: 'TYPE OF PRODUCER = 'Total Electric Power Industry; 'ENERGY SOURCE = 'Hydroelectric Conventional; State != 'U.S-Total'
+# Source: U.S. Energy Information Administration - Electricity Data Browser (https://www.eia.gov/electricity/data/state/)
+# Column types: ici 
+# ----------
 year,state,EIA
 1990,AK,974521
 1990,AL,10366507

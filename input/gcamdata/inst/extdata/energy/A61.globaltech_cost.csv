@@ -3,5 +3,7 @@
 # Units: 1975$/tCO2
 # Source: Decarre 2010; CO2 maritime transportation; https://doi.org/10.1016/j.ijggc.2010.05.005
 # Comments: $32/tCO2. Converted to 1975$ and multiplied by 3 to be conservative and then by 0.8 to scale back
+# Column types: ccccii 
+# ----------
 supplysector,subsector,technology,minicam.non.energy.input,1971,2100
 carbon-storage,offshore carbon-storage,offshore carbon-storage,non-energy,211,211

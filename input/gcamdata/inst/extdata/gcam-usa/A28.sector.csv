@@ -3,6 +3,8 @@
 # Units: N/A
 # Description: USA state-level biomass sectors
 # Source: N/A
+# Column types: c 
+# ----------
 supplysector
 regional biomass
 regional corn for ethanol

@@ -1,6 +1,8 @@
 # File: A321.subsector_logit.csv
 # Title: Cement default subsector logit exponents
 # Units: Unitless
+# Column types: ccic 
+# ----------
 supplysector,subsector,logit.exponent,logit.type
 cement,cement,-12,
 process heat cement,biomass,-6,

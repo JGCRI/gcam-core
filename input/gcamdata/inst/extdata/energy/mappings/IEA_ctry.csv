@@ -3,6 +3,8 @@
 # Source: NA
 # Units: NA
 # Description: IEA_ctry refers to the name of the country or country group in the IEA Energy Balances. IEA_Fert_reg corresponds to the world region for which ammonia production volumes and energy intensities are reported in Table 4.15 of IEA (2007); Tracking Industrial Energy Efficiency and CO2 Emissions, https://www.iea.org/publications/freepublications/publication/tracking_emissions.pdf
+# Column types: ccc 
+# ----------
 IEA_ctry,iso,IEA_Fert_reg
 Albania,alb,Central European countries
 Algeria,dza,Africa

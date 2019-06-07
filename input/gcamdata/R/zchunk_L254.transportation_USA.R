@@ -216,7 +216,7 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
     # Model may make up calibration values otherwise.
     L254.StubTranTechCoef_USA %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      select_if(names(L254.StubTranTechCoef_USA) %in% LEVEL2_DATA_NAMES[["StubTranTechCalInput"]]) %>%
+      select(names(.)[names(.) %in% LEVEL2_DATA_NAMES[["StubTranTechCalInput"]]]) %>%
       left_join(L254.StubTranTechCalInput_USA,
                 by = c("region", "supplysector", "tranSubsector", "stub.technology", "year", "minicam.energy.input")) %>%
       # Set calibration values as zero for technolgies that do not exist in some base years
@@ -389,8 +389,7 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
       add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L254.tranSubsectorSpeed_USA") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "L254.tranSubsectorSpeed") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "L254.tranSubsectorSpeed") ->
       L254.tranSubsectorSpeed_USA
 
     L254.tranSubsectorSpeed_passthru_USA %>%
@@ -528,8 +527,7 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
       add_legacy_name("L254.StubTranTechCalInput_USA") %>%
       same_precursors_as("L254.StubTranTechCoef_USA") %>%
       add_precursors("L154.in_EJ_state_trn_m_sz_tech_F",
-                     "energy/mappings/UCD_techs") %>%
-      add_flags(FLAG_PROTECT_FLOAT) ->
+                     "energy/mappings/UCD_techs") ->
       L254.StubTranTechCalInput_USA
 
     L254.StubTranTechProd_nonmotor_USA %>%

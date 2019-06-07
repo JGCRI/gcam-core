@@ -1,6 +1,8 @@
 # File: A52.subsector_shrwt.csv
 # Title: Aggregate transportation default subsector shareweights
 # Units: Unitless
+# Column types: cccin 
+# ----------
 supplysector,subsector,year.fillout,year,share.weight
 transportation,coal,start-year,,1
 transportation,electricity,start-year,,1

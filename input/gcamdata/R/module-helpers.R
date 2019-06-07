@@ -202,12 +202,16 @@ set_years <- function(data) {
 #'
 #' @param data Base tibble to start from
 #' @param names Character vector indicating the column names of the returned tibble
+#' @param region_list Character vector containing names of regions for which USA national data is repeated
 #' @note Used for USA national data by GCAM region, which is repeated for each US state
+#' @note Contains an argument which allows user to specify a different region list.
+#' @note For example, this is occasionally used to write all USA data to GCAM-USA grid regions.
 #' @return Tibble with data written out to all USA states
-write_to_all_states <- function(data, names) {
+write_to_all_states <- function(data, names, region_list = gcamusa.STATES) {
 
   assert_that(is_tibble(data))
   assert_that(is.character(names))
+  assert_that(is.character(region_list))
 
   region <- NULL  # silence package check notes
 
@@ -222,7 +226,7 @@ write_to_all_states <- function(data, names) {
   data %>%
     set_years %>%
     mutate(region = NULL) %>% # remove region column if it exists
-    repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+    repeat_add_columns(tibble(region = region_list)) %>%
     select(names)
 }
 
@@ -385,14 +389,14 @@ reduce_mgd_carbon <- function( data, LTfor = "Forest", LTpast = "Pasture") {
     hist.soil.carbon.density <- soil.carbon.density <- NULL # silence package check notes
 
   data %>%
-    mutate(hist.veg.carbon.density = if_else(Land_Type == LTpast, hist.veg.carbon.density * aglu.CVEG_MULT_UNMGDPAST_MGDPAST, hist.veg.carbon.density)) %>%
-    mutate(veg.carbon.density = if_else(Land_Type == LTpast, veg.carbon.density * aglu.CVEG_MULT_UNMGDPAST_MGDPAST, veg.carbon.density)) %>%
-    mutate(hist.soil.carbon.density = if_else(Land_Type == LTpast, hist.soil.carbon.density * aglu.CSOIL_MULT_UNMGDPAST_MGDPAST, hist.soil.carbon.density)) %>%
-    mutate(soil.carbon.density = if_else(Land_Type == LTpast, soil.carbon.density * aglu.CSOIL_MULT_UNMGDPAST_MGDPAST, soil.carbon.density)) %>%
-    mutate(hist.veg.carbon.density = if_else(Land_Type == LTfor, hist.veg.carbon.density * aglu.CVEG_MULT_UNMGDFOR_MGDFOR, hist.veg.carbon.density)) %>%
-    mutate(veg.carbon.density = if_else(Land_Type == LTfor, veg.carbon.density * aglu.CVEG_MULT_UNMGDFOR_MGDFOR, veg.carbon.density)) %>%
-    mutate(hist.soil.carbon.density = if_else(Land_Type == LTfor, hist.soil.carbon.density * aglu.CSOIL_MULT_UNMGDFOR_MGDFOR, hist.soil.carbon.density)) %>%
-    mutate(soil.carbon.density = if_else(Land_Type == LTfor, soil.carbon.density * aglu.CSOIL_MULT_UNMGDFOR_MGDFOR, soil.carbon.density))
+    mutate(hist.veg.carbon.density = if_else(Land_Type == LTpast, hist.veg.carbon.density * aglu.CVEG_MULT_UNMGDPAST_MGDPAST, hist.veg.carbon.density),
+           veg.carbon.density = if_else(Land_Type == LTpast, veg.carbon.density * aglu.CVEG_MULT_UNMGDPAST_MGDPAST, veg.carbon.density),
+           hist.soil.carbon.density = if_else(Land_Type == LTpast, hist.soil.carbon.density * aglu.CSOIL_MULT_UNMGDPAST_MGDPAST, hist.soil.carbon.density),
+           soil.carbon.density = if_else(Land_Type == LTpast, soil.carbon.density * aglu.CSOIL_MULT_UNMGDPAST_MGDPAST, soil.carbon.density),
+           hist.veg.carbon.density = if_else(Land_Type == LTfor, hist.veg.carbon.density * aglu.CVEG_MULT_UNMGDFOR_MGDFOR, hist.veg.carbon.density),
+           veg.carbon.density = if_else(Land_Type == LTfor, veg.carbon.density * aglu.CVEG_MULT_UNMGDFOR_MGDFOR, veg.carbon.density),
+           hist.soil.carbon.density = if_else(Land_Type == LTfor, hist.soil.carbon.density * aglu.CSOIL_MULT_UNMGDFOR_MGDFOR, hist.soil.carbon.density),
+           soil.carbon.density = if_else(Land_Type == LTfor, soil.carbon.density * aglu.CSOIL_MULT_UNMGDFOR_MGDFOR, soil.carbon.density))
 }
 
 
@@ -556,15 +560,15 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
                              by = c("improvement.shadow.technology" = "technology", "year" = "year")) %>%
     # figure out the last specified year from which we will be extrapolating
     # (adding a -Inf in case there are no extrapolation years, to avoid a warning)
-    mutate(year_base = max(c(-Inf, year[!is.na(value)]))) %>%
-    # for shadowing technologies the decay is only applied to the difference
-    # in the values in the last year in which one was specified
-    # this is to allow for instance a Gas CC plant to have cost reductions at
-    # a moderate pace but a Gas CC+CCS can have rapid cost reductions to
-    # the CCS portion of the cost
-    mutate(value_base = value - shadow.value) %>%
-    mutate(value_base = value_base[year == year_base]) %>%
-    mutate(value = if_else(is.na(value),
+    mutate(year_base = max(c(-Inf, year[!is.na(value)])),
+           # for shadowing technologies the decay is only applied to the difference
+           # in the values in the last year in which one was specified
+           # this is to allow for instance a Gas CC plant to have cost reductions at
+           # a moderate pace but a Gas CC+CCS can have rapid cost reductions to
+           # the CCS portion of the cost
+           value_base = value - shadow.value,
+           value_base = value_base[year == year_base],
+           value = if_else(is.na(value),
                            shadow.value +
                              value_base * improvement.max + (value_base - value_base * improvement.max ) *
                              (1.0 - improvement.rate) ^ (year - year_base),

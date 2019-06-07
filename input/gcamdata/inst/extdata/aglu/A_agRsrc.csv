@@ -2,6 +2,7 @@
 # Title: Sets the characteristics and supply curves of the non-modeled inputs to animal production
 # Units: Various
 # Source: NA
+# Column types: cccc 
 # ----------
 renewresource,output.unit,price.unit,market
 Residue,Mt,1975$/kg,global

@@ -10,7 +10,7 @@
 #' \code{L2247.GlobalTechCapitalOnly_elecS_adv_USA}, \code{L2247.GlobalIntTechCapitalOnly_elecS_adv_USA},
 #' \code{L2247.GlobalTechOMfixedOnly_elecS_adv_USA}, \code{L2247.GlobalIntTechOMfixedOnly_elecS_adv_USA},
 #' \code{L2247.GlobalTechOMvar_elecS_adv_USA}, \code{L2247.GlobalIntTechOMvar_elecS_adv_USA}, \code{L2247.GlobalTechFCROnly_elecS_itc_USA},
-#' \code{L2247.GlobalIntTechFCROnly_elecS_itc_USA}, \code{L2247.GlobalTechRegPriceAdj_ptc_USA}, \code{L2247.GlobalIntTechRegPriceAdj_ptc_USA}.
+#' \code{L2247.GlobalIntTechFCROnly_elecS_itc_USA}, \code{L2247.GlobalTechCost_ptc_USA}, \code{L2247.GlobalIntTechCost_ptc_USA}.
 #' The corresponding file in the original data system was \code{L2247.elecS_tech_costs.R} (gcam-usa level2).
 #' @details This chunk creates add-ons to harmonize reference case generation technology costs for multiple load segments with AEO-2016.
 #' These assumptions are also consistent with the Base case scenario. For technologies in GCAM that are not listed in the AEO,
@@ -29,8 +29,8 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
              FILE = "gcam-usa/A23.elec_overnight_costs_USA",
              FILE = "gcam-usa/A23.elec_overnight_costs_adv_USA",
              FILE = "gcam-usa/A23.elec_OM_adv_USA",
-             FILE = "gcam-usa/A23.elecS_tech_associations",
-             FILE = "gcam-usa/A23.elecS_inttech_associations",
+             FILE = "gcam-usa/A23.elecS_tech_mapping",
+             FILE = "gcam-usa/A23.elecS_inttech_mapping",
              "L2234.GlobalTechCapital_elecS_USA",
              "L2234.GlobalIntTechCapital_elecS_USA",
              "L2234.GlobalTechOMfixed_elecS_USA",
@@ -48,17 +48,18 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
              "L2247.GlobalIntTechOMvar_elecS_adv_USA",
              "L2247.GlobalTechFCROnly_elecS_itc_USA",
              "L2247.GlobalIntTechFCROnly_elecS_itc_USA",
-             "L2247.GlobalTechRegPriceAdj_ptc_USA",
-             "L2247.GlobalIntTechRegPriceAdj_ptc_USA"))
+             "L2247.GlobalTechCost_ptc_USA",
+             "L2247.GlobalIntTechCost_ptc_USA"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
+    # silence package check notes
     region <- year <- supplysector <- Electric.sector <- sector <- subsector <- subsector_1 <- ratio <-
       sector.name <- subsector.name <- technology <- intermittent.technology <- Electric.sector.technology <-
       Electric.sector.intermittent.technology <- capital.overnight <- overnight.cost<- fixed.charge.rate <-
       GCAM.technology <- itc <- ptc <- OM.fixed <- OM.var <- OM.fixed.x <- OM.var.x <- OM.fixed.y <- OM.var.y <-
-      input.cost <- minicam.non.energy.input <- adv.ratio <- OM <- NULL # silence package check notes
+      input.cost <- minicam.non.energy.input <- adv.ratio <- OM <- input.OM.fixed <- input.OM.var <- NULL
 
     # Load required inputs
     A23.itc_USA <- get_data(all_data, "gcam-usa/A23.itc_USA")
@@ -67,8 +68,8 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     A23.elec_overnight_costs_USA <- get_data(all_data, "gcam-usa/A23.elec_overnight_costs_USA")
     A23.elec_overnight_costs_adv_USA <- get_data(all_data, "gcam-usa/A23.elec_overnight_costs_adv_USA")
     A23.elec_OM_adv_USA <- get_data(all_data, "gcam-usa/A23.elec_OM_adv_USA")
-    A23.elecS_tech_associations <- get_data(all_data, "gcam-usa/A23.elecS_tech_associations")
-    A23.elecS_inttech_associations <- get_data(all_data, "gcam-usa/A23.elecS_inttech_associations")
+    A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping")
+    A23.elecS_inttech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_inttech_mapping")
     L2234.GlobalTechCapital_elecS_USA <- get_data(all_data, "L2234.GlobalTechCapital_elecS_USA")
     L2234.GlobalIntTechCapital_elecS_USA <- get_data(all_data, "L2234.GlobalIntTechCapital_elecS_USA")
     L2234.GlobalTechOMfixed_elecS_USA <- get_data(all_data, "L2234.GlobalTechOMfixed_elecS_USA")
@@ -103,7 +104,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       group_by(supplysector, subsector, technology) %>%
       mutate(ratio = capital.overnight / capital.overnight[year == max_year_AEO]) %>%
       # Not all GCAM global technologies have AEO mappings, NA generated, use left_join instead of left_join_error_no_match
-      left_join(A23.elecS_tech_associations %>%
+      left_join(A23.elecS_tech_mapping %>%
                   select(Electric.sector, subsector, Electric.sector.technology, GCAM.technology = technology),
                 by = c("supplysector" = "Electric.sector", "subsector", "technology" = "Electric.sector.technology")) %>%
       # Not all GCAM global technologies have AEO estimates, NA generated, use left_join instead of left_join_error_no_match
@@ -120,7 +121,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     L2234.GlobalIntTechCapital_elecS_USA %>%
       group_by(supplysector, subsector, intermittent.technology) %>%
       mutate(ratio = capital.overnight / capital.overnight[year == max_year_AEO]) %>%
-      left_join_error_no_match(A23.elecS_inttech_associations %>%
+      left_join_error_no_match(A23.elecS_inttech_mapping %>%
                   select(Electric.sector, subsector, Electric.sector.intermittent.technology, GCAM.technology = intermittent.technology),
                 by = c("supplysector" = "Electric.sector", "subsector", "intermittent.technology" = "Electric.sector.intermittent.technology")) %>%
       left_join(L2247.elec_overnight_costs_USA, by = c("year", "GCAM.technology")) %>%
@@ -161,16 +162,16 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
 
     # Build table to read in PTC as cost adder (subtracter)
     A23.ptc_USA %>%
-      left_join(A23.elecS_tech_associations, by = c("supplysector", "subsector" = "subsector_1", "technology")) %>%
+      left_join(A23.elecS_tech_mapping, by = c("supplysector", "subsector" = "subsector_1", "technology")) %>%
       select(sector.name = Electric.sector, subsector.name = subsector, technology = Electric.sector.technology,
              year, minicam.non.energy.input, input.cost) ->
-      L2247.GlobalTechRegPriceAdj_ptc_USA
+      L2247.GlobalTechCost_ptc_USA
 
     A23.ptc_inttech_USA %>%
-      left_join(A23.elecS_inttech_associations, by = c("supplysector", "subsector" = "subsector_1", "intermittent.technology")) %>%
+      left_join(A23.elecS_inttech_mapping, by = c("supplysector", "subsector" = "subsector_1", "intermittent.technology")) %>%
       select(sector.name = Electric.sector, subsector.name = subsector, intermittent.technology = Electric.sector.intermittent.technology,
              year, minicam.non.energy.input, input.cost) ->
-      L2247.GlobalIntTechRegPriceAdj_ptc_USA
+      L2247.GlobalIntTechCost_ptc_USA
 
     # 2c. Generate csvs for advanced costs. These tables contain advanced tech assumptions for technologies that are provided by DOE.For technologies
     # without advanced assumptions, we assume reference assumptions
@@ -187,7 +188,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     L2247.GlobalTechCapital_elecS_USA %>%
       group_by(sector.name, subsector.name, technology) %>%
       mutate(ratio = capital.overnight / capital.overnight[year == max_year_AEO]) %>%
-      left_join(A23.elecS_tech_associations %>%
+      left_join(A23.elecS_tech_mapping %>%
                   select(Electric.sector, subsector, Electric.sector.technology, GCAM.technology = technology),
                 by = c("sector.name" = "Electric.sector", "subsector.name" = "subsector",
                        "technology" = "Electric.sector.technology", "GCAM.technology")) %>%
@@ -216,7 +217,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     L2247.GlobalTechCapital_elecS_USA %>%
       group_by(sector.name, subsector.name, technology) %>%
       mutate(ratio = capital.overnight / capital.overnight[year == max_year_AEO]) %>%
-      left_join(A23.elecS_tech_associations %>%
+      left_join(A23.elecS_tech_mapping %>%
                   select(Electric.sector, subsector, Electric.sector.technology, GCAM.technology = technology),
                 by = c("sector.name" = "Electric.sector", "subsector.name" = "subsector",
                        "technology" = "Electric.sector.technology", "GCAM.technology")) %>%
@@ -246,7 +247,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     L2247.GlobalIntTechCapital_elecS_USA %>%
       group_by(sector.name, subsector.name, intermittent.technology) %>%
       mutate(ratio = capital.overnight / capital.overnight[year == max_year_AEO]) %>%
-      left_join_error_no_match(A23.elecS_inttech_associations %>%
+      left_join_error_no_match(A23.elecS_inttech_mapping %>%
                                  select(Electric.sector, subsector, Electric.sector.intermittent.technology,
                                         GCAM.technology = intermittent.technology),
                                by = c("sector.name" = "Electric.sector", "subsector.name" = "subsector",
@@ -289,12 +290,12 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
     }
 
     # Third, create technology mapping tibbles
-    A23.elecS_tech_associations %>%
+    A23.elecS_tech_mapping %>%
       select(supplysector = Electric.sector, subsector, GCAM.technology = technology,
              technology = Electric.sector.technology) ->
       elecS_tech_map
 
-    A23.elecS_inttech_associations %>%
+    A23.elecS_inttech_mapping %>%
       select(supplysector = Electric.sector, subsector, GCAM.technology = intermittent.technology,
              technology = Electric.sector.intermittent.technology) ->
       elecS_inttech_map
@@ -341,7 +342,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       add_comments("For years beyond AEO max year (2040), rate of technological change is assumed the same as in the core.") %>%
       add_legacy_name("L2247.GlobalTechCapitalOnly_elecS_USA") %>%
       add_precursors("gcam-usa/A23.elec_overnight_costs_USA",
-                     "gcam-usa/A23.elecS_tech_associations",
+                     "gcam-usa/A23.elecS_tech_mapping",
                      "L2234.GlobalTechCapital_elecS_USA") ->
       L2247.GlobalTechCapitalOnly_elecS_USA
 
@@ -352,7 +353,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       add_comments("For years beyond AEO max year (2040), rate of technological change is assumed the same as in the core.") %>%
       add_legacy_name("L2247.GlobalIntTechCapitalOnly_elecS_USA") %>%
       add_precursors("gcam-usa/A23.elec_overnight_costs_USA",
-                     "gcam-usa/A23.elecS_inttech_associations",
+                     "gcam-usa/A23.elecS_inttech_mapping",
                      "L2234.GlobalIntTechCapital_elecS_USA") ->
       L2247.GlobalIntTechCapitalOnly_elecS_USA
 
@@ -363,7 +364,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       add_comments("For years beyond AEO max year (2040), rate of technological change is assumed the same as in the core.") %>%
       add_legacy_name("L2247.GlobalTechCapitalOnly_elecS_adv_USA") %>%
       add_precursors("gcam-usa/A23.elec_overnight_costs_adv_USA",
-                     "gcam-usa/A23.elecS_tech_associations",
+                     "gcam-usa/A23.elecS_tech_mapping",
                      "L2234.GlobalTechCapital_elecS_USA") ->
       L2247.GlobalTechCapitalOnly_elecS_adv_USA
 
@@ -374,7 +375,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       add_comments("For years beyond AEO max year (2040), rate of technological change is assumed the same as in the core.") %>%
       add_legacy_name("L2247.GlobalIntTechCapitalOnly_elecS_adv_USA") %>%
       add_precursors("gcam-usa/A23.elec_overnight_costs_adv_USA",
-                     "gcam-usa/A23.elecS_inttech_associations",
+                     "gcam-usa/A23.elecS_inttech_mapping",
                      "L2234.GlobalIntTechCapital_elecS_USA") ->
       L2247.GlobalIntTechCapitalOnly_elecS_adv_USA
 
@@ -385,7 +386,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       add_comments("For years beyond AEO max year (2040), rate of technological change is assumed the same as in the core.") %>%
       add_legacy_name("L2247.GlobalTechOMfixedOnly_elecS_adv_USA") %>%
       add_precursors("gcam-usa/A23.elec_OM_adv_USA",
-                     "gcam-usa/A23.elecS_tech_associations",
+                     "gcam-usa/A23.elecS_tech_mapping",
                      "L2234.GlobalTechOMfixed_elecS_USA") ->
       L2247.GlobalTechOMfixedOnly_elecS_adv_USA
 
@@ -396,7 +397,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       add_comments("For years beyond AEO max year (2040), rate of technological change is assumed the same as in the core.") %>%
       add_legacy_name("L2247.GlobalIntTechOMfixedOnly_elecS_adv_USA") %>%
       add_precursors("gcam-usa/A23.elec_OM_adv_USA",
-                     "gcam-usa/A23.elecS_inttech_associations",
+                     "gcam-usa/A23.elecS_inttech_mapping",
                      "L2234.GlobalIntTechOMfixed_elecS_USA") ->
       L2247.GlobalIntTechOMfixedOnly_elecS_adv_USA
 
@@ -407,7 +408,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       add_comments("For years beyond AEO max year (2040), rate of technological change is assumed the same as in the core.") %>%
       add_legacy_name("L2247.GlobalTechOMvar_elecS_adv_USA") %>%
       add_precursors("gcam-usa/A23.elec_OM_adv_USA",
-                     "gcam-usa/A23.elecS_tech_associations",
+                     "gcam-usa/A23.elecS_tech_mapping",
                      "L2234.GlobalTechOMvar_elecS_USA") ->
       L2247.GlobalTechOMvar_elecS_adv_USA
 
@@ -418,7 +419,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       add_comments("For years beyond AEO max year (2040), rate of technological change is assumed the same as in the core.") %>%
       add_legacy_name("L2247.GlobalIntTechOMvar_elecS_adv_USA") %>%
       add_precursors("gcam-usa/A23.elec_OM_adv_USA",
-                     "gcam-usa/A23.elecS_inttech_associations",
+                     "gcam-usa/A23.elecS_inttech_mapping",
                      "L2234.GlobalIntTechOMvar_elecS_USA") ->
       L2247.GlobalIntTechOMvar_elecS_adv_USA
 
@@ -428,7 +429,7 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       add_comments("Adjust FCRs by 1 minus Investment Tax Credits for technologies that have ITC") %>%
       add_legacy_name("L2247.GlobalTechFCROnly_elecS_itc_USA") %>%
       add_precursors("gcam-usa/A23.itc_USA",
-                     "gcam-usa/A23.elecS_tech_associations",
+                     "gcam-usa/A23.elecS_tech_mapping",
                      "L2234.GlobalTechCapital_elecS_USA") ->
       L2247.GlobalTechFCROnly_elecS_itc_USA
 
@@ -438,27 +439,27 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       add_comments("Adjust FCRs by 1 minus Investment Tax Credits for technologies that have ITC") %>%
       add_legacy_name("L2247.GlobalIntTechFCROnly_elecS_itc_USA") %>%
       add_precursors("gcam-usa/A23.itc_USA",
-                     "gcam-usa/A23.elecS_inttech_associations",
+                     "gcam-usa/A23.elecS_inttech_mapping",
                      "L2234.GlobalIntTechCapital_elecS_USA") ->
       L2247.GlobalIntTechFCROnly_elecS_itc_USA
 
-    L2247.GlobalTechRegPriceAdj_ptc_USA %>%
+    L2247.GlobalTechCost_ptc_USA %>%
       add_title("Production cost adjustments for non-intermittent electricity sector technologies in USA") %>%
       add_units("1975$US/GJ") %>%
       add_comments("Read in Poduction Tax Credits as cost adder (subtracter)") %>%
-      add_legacy_name("L2247.GlobalTechRegPriceAdj_ptc_USA") %>%
+      add_legacy_name("L2247.GlobalTechCost_ptc_USA") %>%
       add_precursors("gcam-usa/A23.ptc_USA",
-                     "gcam-usa/A23.elecS_tech_associations") ->
-      L2247.GlobalTechRegPriceAdj_ptc_USA
+                     "gcam-usa/A23.elecS_tech_mapping") ->
+      L2247.GlobalTechCost_ptc_USA
 
-    L2247.GlobalIntTechRegPriceAdj_ptc_USA %>%
+    L2247.GlobalIntTechCost_ptc_USA %>%
       add_title("Production cost adjustments for intermittent electricity sector technologies in USA") %>%
       add_units("1975$US/GJ") %>%
       add_comments("Read in Poduction Tax Credits as cost adder (subtracter)") %>%
-      add_legacy_name("L2247.GlobalIntTechRegPriceAdj_ptc_USA") %>%
+      add_legacy_name("L2247.GlobalIntTechCost_ptc_USA") %>%
       add_precursors("gcam-usa/A23.ptc_inttech_USA",
-                     "gcam-usa/A23.elecS_inttech_associations") ->
-      L2247.GlobalIntTechRegPriceAdj_ptc_USA
+                     "gcam-usa/A23.elecS_inttech_mapping") ->
+      L2247.GlobalIntTechCost_ptc_USA
 
 
     return_data(L2247.GlobalTechCapitalOnly_elecS_USA,
@@ -471,8 +472,8 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
                 L2247.GlobalIntTechOMvar_elecS_adv_USA,
                 L2247.GlobalTechFCROnly_elecS_itc_USA,
                 L2247.GlobalIntTechFCROnly_elecS_itc_USA,
-                L2247.GlobalTechRegPriceAdj_ptc_USA,
-                L2247.GlobalIntTechRegPriceAdj_ptc_USA)
+                L2247.GlobalTechCost_ptc_USA,
+                L2247.GlobalIntTechCost_ptc_USA)
   } else {
     stop("Unknown command")
   }

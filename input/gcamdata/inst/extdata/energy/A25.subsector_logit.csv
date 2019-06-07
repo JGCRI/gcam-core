@@ -1,6 +1,8 @@
 # File: A25.subsector_logit.csv
 # Title: Hydrogen subsector logit exponents
 # Units: Unitless
+# Column types: ccic 
+# ----------
 supplysector,subsector,logit.exponent,logit.type
 H2 central production,coal,-10,
 H2 central production,gas,-10,

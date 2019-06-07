@@ -72,7 +72,6 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
     # Hence we assume same representative capacity factors by class across states.
     # Also note that since capacity factors are given by timeslice, we need to ignore 0 capacity factors.
     reeds_CSP_curve_CF %>%
-      filter(CF != 0) %>%
       group_by(class) %>%
       summarise(CF = mean(CF)) %>%
       ungroup() -> L2239.CSP_CF

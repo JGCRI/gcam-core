@@ -2,6 +2,8 @@
 # Title: Total CO2 emissions from fossil-fuels and cement production
 # Units: kt C
 # Source: http://cdiac.ornl.gov/ftp/ndp030/CSV-FILES/nation.1751_2014.csv
+# Column types: ciiiiiii 
+# ----------
 nation,year,solids,liquids,gas,cement,gas.flaring,liquids.shipping
 AFGHANISTAN,1949,4,0,0,0,,0
 AFGHANISTAN,1950,6,18,0,0,0,0

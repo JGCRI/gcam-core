@@ -3,6 +3,8 @@
 # Units: Unitless
 # Source: USGS 1995 consumption withdrawal estimates; and Davies, E., Kyle, P., and Edmonds, J., 2013. An integrated assessment of global and regional water demands for electricity generation to 2095, Adv. Water Resour., 52, 296–313.
 # Comment: Assumes 95% of Middle East water use for resource prodution from saline water.
+# Column types: cnnnn 
+# ----------
 region_GCAM3,fraction.salinewater,fraction.freshwater,ratio.consumption.withdrawal.fresh,ratio.consumption.withdrawal.total
 USA,0.425,0.575,0.305,0.271
 Canada,0.425,0.575,0.305,0.271

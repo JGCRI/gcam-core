@@ -1,4 +1,4 @@
-#' module_gcam.usa_batch_liquids_limits_usa_xml
+#' module_gcamusa_batch_liquids_limits_usa_xml
 #'
 #' Construct XML data structure for \code{liquids_limits.xml}.
 #'
@@ -7,7 +7,7 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{liquids_limits_USA.xml}.
-module_gcam.usa_batch_liquids_limits_usa_xml <- function(command, ...) {
+module_gcamusa_batch_liquids_limits_usa_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( "L270.CreditMkt_USA",
               "L270.CreditOutput_USA",

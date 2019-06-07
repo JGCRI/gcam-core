@@ -1,8 +1,35 @@
 # utils.R
 
+
+#' find_header
+#'
+#' Read a file line-by-line to find how far its header extends, and return it.
+#'
+#' @param fqfn Fully qualified filename, character
+#' @return The header as a character vector.
+#' @note Headers are defined as consecutive lines beginning with "#" at the top of a file.
+#' @author Alexey Shiklomanov
+find_header <- function(fqfn) {
+  con <- file(fqfn, "r")
+  on.exit(close(con))
+
+  is_comment <- TRUE
+  header <- character()
+
+  while(is_comment) {
+    line <- readLines(con, n = 1)
+    is_comment <- grepl("^#", line)
+    if (is_comment) {
+      header <- c(header, line)
+    }
+  }
+  header
+}
+
 #' load_csv_files
 #'
 #' Load one or more internal, i.e. included with the package, csv (or csv.gz) data files.
+#'
 #' @param filenames Character vector of filenames to load
 #' @param optionals Logical vector, specifying whether corresponding file is optional
 #' @param quiet Logical - suppress messages?
@@ -35,8 +62,14 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
       if(!quiet) message("Note: optional input ", f, "not found")
       next
     }
-    suppressMessages(readr::read_csv(fqfn, comment = COMMENT_CHAR, ...)) %>%
-      parse_csv_header(fqfn) %>%
+
+    # Read the file header and extract the column type info from it
+    assert_that(file.exists(fqfn))
+    header <- find_header(fqfn)
+    col_types <- extract_header_info(header, label = "Column types:", fqfn, required = TRUE)
+
+    readr::read_csv(fqfn, comment = COMMENT_CHAR, col_types = col_types, ...) %>%
+      parse_csv_header(fqfn, header) %>%
       add_comments(paste("Read from", gsub("^.*extdata", "extdata", fqfn))) %>%
       add_flags(FLAG_INPUT_DATA) ->
       filedata[[f]]
@@ -101,6 +134,9 @@ extract_header_info <- function(header_lines, label, filename, required = FALSE,
       trimws ->
       info
 
+    if(any(grepl(",,+$", info))) {
+      warning("Multiple commas at end of header line in ", filename)
+    }
     if(nchar(paste(info, collapse = "")) == 0) {
       stop("Empty metadata label '", label, "' found in ", basename(filename))
     }
@@ -120,36 +156,27 @@ extract_header_info <- function(header_lines, label, filename, required = FALSE,
 #'
 #' @param obj The object to attach attributes to
 #' @param filename Fully-qualified filename
-#' @param n Number of lines to read from the beginning of the file
+#' @param header A vector of strings comprising the file header
 #' @param enforce_requirements Enforce mandatory fields?
 #' @details Headers are given at the top of files and consist of labels ("Title:", "Units:", etc)
 #' prefixed by comment characters (#). The parser looks for these, and calls \code{\link{add_title}} and
 #' similar functions to return an empty data frame with appropriate attribute set.
 #' @return An empty \code{\link{tibble}} with appropriate attributes filled in.
 #' @export
-parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE) {
+parse_csv_header <- function(obj, filename, header, enforce_requirements = TRUE) {
   assert_that(tibble::is_tibble(obj))
   assert_that(is.character(filename))
-  assert_that(is.numeric(n))
+  assert_that(is.character(header))
   assert_that(is.logical(enforce_requirements))
-  assert_that(file.exists(filename))
-
-  # TEMPORARY: don't enforce metadata, for test, for data injection (from old d.s.)
-  if(isTRUE(grepl(TEMP_DATA_INJECT, filename, fixed = TRUE))) {
-    enforce_requirements <- FALSE
-    obj <- add_flags(obj, FLAG_NO_TEST)
-  }
-
-  x <- readLines(filename, n = n)
 
   # Excel tries to be 'helpful' and, when working with CSV files, quotes lines with
   # commas in them...which you CAN'T SEE when re-opening in Excel. Trap this problem.
-  if(any(grepl(paste0('^"', COMMENT_CHAR), x))) {
+  if(any(grepl(paste0('^"', COMMENT_CHAR), header))) {
     stop('A quoted comment (# prefixed by a double quote, probably due to Excel) detected in ', basename(filename))
   }
 
   # The 'File:' field has to match the actual filename
-  filecheck <- extract_header_info(x, "File:", filename, required = enforce_requirements)
+  filecheck <- extract_header_info(header, "File:", filename, required = enforce_requirements)
   # Remove trailing commas - stupid Excel
   filecheck <- gsub(",*$", "", filecheck)
   if(enforce_requirements & !identical(filecheck, basename(filename))) {
@@ -157,10 +184,10 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE)
   }
 
   obj %>%
-    add_title(extract_header_info(x, "Title:", filename, required = enforce_requirements)) %>%
-    add_units(extract_header_info(x, "Units?:", filename, required = enforce_requirements)) %>%
-    add_comments(extract_header_info(x, "(Comments|Description):", filename, multiline = TRUE)) %>%
-    add_reference(extract_header_info(x, "(References?|Sources?):", filename, multiline = TRUE))
+    add_title(extract_header_info(header, "Title:", filename, required = enforce_requirements)) %>%
+    add_units(extract_header_info(header, "Units?:", filename, required = enforce_requirements)) %>%
+    add_comments(extract_header_info(header, "(Comments|Description):", filename, multiline = TRUE)) %>%
+    add_reference(extract_header_info(header, "(References?|Sources?):", filename, multiline = TRUE))
 }
 
 
@@ -264,10 +291,6 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, create_dirs = FALSE,
         cat(paste(COMMENT_CHAR, paste(flags, collapse = " ")), file = fqfn, sep = "\n")
       }
 
-      if(FLAG_PROTECT_FLOAT %in% flags) {
-        cd <- protect_float(cd)
-      }
-
       if(!is.null(cmnts)) {
         cat(paste(COMMENT_CHAR, cmnts), file = fqfn, sep = "\n", append = TRUE)
       }
@@ -277,39 +300,6 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, create_dirs = FALSE,
   }
 }
 
-
-#' Protect floating point values in a data frame.
-#'
-#' All of the currently extant functions for writing tables render floating
-#' point values using C's %g format.  This format is badly broken, in that a
-#' value like 2.0 will be output as "2".  This can cause problems when the table
-#' is read in at some later time, as "2" looks like an integer.  This function
-#' converts all floating point columns in a data frame to character strings that
-#' are properly formatted as floating point literals.  Using
-#' \code{\link[readr]{write_csv}} on a data frame protected in this way will
-#' produce the expected output.
-#'
-#' @note The output produced this way will probably be a lot larger than one
-#' produced by the default behavior, so this function should be used only where
-#' the default behavior is causing problems.
-#' @note Because the numeric columns are converted to characters, a data
-#' frame converted in this way is no longer useful for computation.
-#'
-#' @param df Data frame to have floats protected.
-#' @return Data frame with floating point columns converted to character.
-protect_float <- function(df) {
-  floatcols <- names(df)[sapply(df, function(col) {is.numeric(col) &&
-      !is.integer(col)})]
-  for(col in floatcols) {
-    ## Write entries with very large or very small values in scientific
-    ## notation.  Other values will be in decimal notation.
-
-    df[[col]] <- if_else(abs(df[[col]]) < 1e-4 | abs(df[[col]]) > 1e6,
-                         sprintf("%.10e", df[[col]]),
-                         sprintf("%.10f", df[[col]]))
-  }
-  df
-}
 
 #' find_chunks
 #'
@@ -349,27 +339,30 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
   assertthat::assert_that(is.character(chunks))
 
   # Get list of data required by each chunk
-  chunkinputs <- list()
+  chunk_names <- character()
+  inputs <- character()
+  from_files <- logical()
+  optionals <- logical()
   for(ch in chunks) {
     cl <- call(ch, driver.DECLARE_INPUTS)
     reqdata <- eval(cl)
 
     # Chunks mark their file inputs specially, using vector names
     if(is.null(names(reqdata))) {
-      file_inputs <- FALSE
-      optional_file_inputs <- FALSE
+      file_inputs <- rep(FALSE, times = length(reqdata))
+      optional_file_inputs <- rep(FALSE, times = length(reqdata))
     } else {
       file_inputs <- names(reqdata) %in% c("FILE", "OPTIONAL_FILE")
       optional_file_inputs <- names(reqdata) == "OPTIONAL_FILE"
     }
     if(!is.null(reqdata)) {
-      chunkinputs[[ch]] <- tibble(name = ch,
-                                  input = reqdata,
-                                  from_file = file_inputs,
-                                  optional = optional_file_inputs)
+      chunk_names <- c(chunk_names, rep(ch, times = length(reqdata)))
+      inputs <- c(inputs, as.vector(unlist(reqdata)))
+      from_files <- c(from_files, file_inputs)
+      optionals <- c(optionals, optional_file_inputs)
     }
   }
-  dplyr::bind_rows(chunkinputs)
+  tibble(name = chunk_names, input = inputs, from_file = from_files, optional = optionals)
 }
 
 
@@ -396,22 +389,26 @@ inputs_of <- function(chunks) {
 chunk_outputs <- function(chunks = find_chunks()$name) {
   assertthat::assert_that(is.character(chunks))
 
-  chunkoutputs <- list()
+  chunk_names <- character()
+  outputs <- character()
+  to_xmls <- logical()
   for(ch in chunks) {
     cl <- call(ch, driver.DECLARE_OUTPUTS)
     reqdata <- eval(cl)
 
     # Chunks mark any XML file outputs using vector names
     if(is.null(names(reqdata))) {
-      fileoutputs <- FALSE
+      fileoutputs <- rep(FALSE, times = length(reqdata))
     } else {
       fileoutputs <- names(reqdata) == "XML"
     }
     if(!is.null(reqdata)) {
-      chunkoutputs[[ch]] <- tibble(name = ch, output = reqdata, to_xml = fileoutputs)
+      chunk_names <- c(chunk_names, rep(ch, times = length(reqdata)))
+      outputs <- c(outputs, as.vector(unlist(reqdata)))
+      to_xmls <- c(to_xmls, fileoutputs)
     }
   }
-  dplyr::bind_rows(chunkoutputs)
+  tibble(name = chunk_names, output = outputs, to_xml = to_xmls)
 }
 
 #' outputs_of
@@ -434,7 +431,7 @@ outputs_of <- function(chunks) {
 #' code chunks.  This function tests a function for calls to forbidden functions
 #' and flags the offending lines.
 #'
-#' @param fn The function to be tested.  This is the actual function object, not
+#' @param fn The function to be tested. This is the actual function object, not
 #' the name of the function.
 #' @return Nx2 Character matrix of flagged lines and the test that tripped them
 #' (empty vector, if none)
@@ -451,7 +448,23 @@ screen_forbidden <- function(fn) {
   code <- gsub("#.*$", "", code)      # remove comments
   code <- gsub('"[^"]*"', "", code)   # remove double quoted material
   code <- gsub("'[^']*'", "", code)   # remove single quoted material
+
+  # For some reason the R package check process seems to concatenate certain lines;
+  # in particular a mutate() followed by a replace_na() ends up on a single line, which
+  # can cause false positives below if it's then followed by another mutate(). This
+  # does not occur during 'normal' testthat testing.
+  # Anyway, ensure all %>% operations are on separate lines
+  code <- unlist(vapply(code, strsplit, split = "%>%", fixed = TRUE, FUN.VALUE = list(1)))
+
+  # Special multiline case: consecutive mutate calls
   rslt <- character()
+  mutates <- grep("^\\s*mutate\\(", code)
+  diff1s <- base::diff(mutates) == 1
+  if(any(diff1s)) {
+    rslt <- cbind("consecutive mutate calls", code[mutates[which(diff1s)]])
+  }
+
+  # General screen-forbidden search, single lines only
   for(f in unique(forbidden)) {
     bad <- grep(f, code, perl = TRUE)
     if(length(bad) > 0) {
@@ -460,40 +473,4 @@ screen_forbidden <- function(fn) {
     }
   }
   rslt
-}
-
-
-#' normalize_files
-#'
-#' Normalize line endings for all package input data.
-#'
-#' @param root Folder root to scan, character
-#' @return Nothing - run for side effects only.
-#' @note Set \code{root} to "./extdata" in the git directory, not the package root, to make changes that 'stick'.
-#' @export
-#' @details Some GCAM input datafiles have bad line endings, and/or
-#' don't have a final newline. This utility script converts all files to have Unix line endings (\code{\\n}) and a final newline.
-#' @author BBL
-normalize_files <- function(root = system.file("extdata", package = "gcamdata")) {
-  assert_that(is.character(root))
-  message("Root: ", root)
-
-  # Get a list of all CSV input files
-  files <- list.files(root, pattern = "\\.csv$", full.names = TRUE, recursive = TRUE)
-
-  for(f in seq_along(files)) {
-    shortfn <- gsub(root, "", files[f])
-    size <- round(file.size(files[f]) / 1024 / 1024, 3)  # MB
-    message(f, "/", length(files), ": ", shortfn, ", ", size, " Mb ", appendLF = FALSE)
-
-    # Read file and then write it back out
-    message("\tReading...", appendLF = FALSE)
-    txt <- readLines(files[f], warn = FALSE)
-    uc_size <- format(utils::object.size(txt), units = "Mb")
-    message("OK. ", uc_size, " uncompressed")
-
-    message("\tWriting...", appendLF = FALSE)
-    writeLines(txt, files[f])
-    message("OK")
-  }
 }

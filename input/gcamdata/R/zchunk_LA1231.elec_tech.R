@@ -54,8 +54,8 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     # Obtain unique gas technologies to avoid hard coding technologies later in the code
     # NOTE: It is assumed that there are 2 gas technologies only. If new gas technologies are added in the future, then this chunk has to be updated.
     calibrated_techs %>%
-      filter(subsector == "gas")%>%
-      filter(supplysector == "electricity")%>%
+      filter(subsector == "gas") %>%
+      filter(supplysector == "electricity") %>%
       distinct(technology) -> energy.GAS_TECH_CONST
 
     # GAS_TECH1: gas steam/CT
@@ -74,7 +74,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     # Interpolation is needed since input data is only provided for some intermediate years in the range 1971-2010.
     # Therefore there is not efficiency values for every historical year. Efficiencies for all historical years are needed
     # To estimate outputs from fuel/technology by region in the electricity sector
-    tibble(supplysector = "electricity", subsector="gas", year = HISTORICAL_YEARS) %>%
+    tibble(supplysector = "electricity", subsector = "gas", year = HISTORICAL_YEARS) %>%
       mutate(year = as.integer(year)) %>%
       full_join(energy.GAS_TECH, by = "supplysector") -> Aux_gas_tech_elec
 
@@ -88,9 +88,9 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       semi_join(Aux_gas_tech_elec, by = "year") %>%
       full_join(Aux_gas_tech_elec, by = c("supplysector", "subsector", "technology", "minicam.energy.input", "year")) %>%
       group_by(supplysector, subsector, technology) %>%
-      mutate(efficiency_tech = approx_fun(year, efficiency_tech)) %>%
-      mutate(improvement.max = approx_fun(year, improvement.max)) %>%
-      mutate(improvement.rate = approx_fun(year, improvement.rate)) %>%
+      mutate(efficiency_tech = approx_fun(year, efficiency_tech),
+             improvement.max = approx_fun(year, improvement.max),
+             improvement.rate = approx_fun(year, improvement.rate)) %>%
       ungroup() -> L1231.eff_R_elec_gas_tech
 
     # Reset upper and lower bound efficiencies, as needed
@@ -110,8 +110,8 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       select(-supplysector, -subsector, -technology) %>%
       rename(efficiency_tech1 = efficiency_tech.x, efficiency_tech2 = efficiency_tech.y) %>%
       # performing adjustments here
-      mutate(efficiency_tech1 = if_else(efficiency < efficiency_tech1, efficiency, efficiency_tech1)) %>%
-      mutate(efficiency_tech2 = if_else(efficiency > efficiency_tech2, efficiency + ELEC_ADJ, efficiency_tech2)) -> L1231.eff_R_elec_gas_Yh_gathered
+      mutate(efficiency_tech1 = if_else(efficiency < efficiency_tech1, efficiency, efficiency_tech1),
+             efficiency_tech2 = if_else(efficiency > efficiency_tech2, efficiency + ELEC_ADJ, efficiency_tech2)) -> L1231.eff_R_elec_gas_Yh_gathered
 
     # Create tibble for gas (steam/CT) that is going to be binded with gas(CC) to create output for gas technologies
     L1231.eff_R_elec_gas_Yh_gathered %>%
@@ -134,10 +134,10 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     # Use share obtained above to get inputs of gas by technology
     L1231.eff_R_elec_gas_Yh_gathered %>%
       select(GCAM_region_ID, sector, fuel, year, share_tech1) %>%
-      full_join(filter(L123.in_EJ_R_elec_F_Yh, fuel == "gas"),by = c("GCAM_region_ID", "sector", "fuel", "year")) %>%
+      full_join(filter(L123.in_EJ_R_elec_F_Yh, fuel == "gas"), by = c("GCAM_region_ID", "sector", "fuel", "year")) %>%
       rename(in_EJ = value) %>%
-      mutate(in_EJ_tech1=in_EJ*share_tech1) %>%
-      mutate(in_EJ_tech2=in_EJ - in_EJ_tech1) -> L1231.in_EJ_R_elec_gas_Yh_gathered
+      mutate(in_EJ_tech1 = in_EJ*share_tech1,
+             in_EJ_tech2 = in_EJ - in_EJ_tech1) -> L1231.in_EJ_R_elec_gas_Yh_gathered
 
     # Combined gas technologies (inputs) in long format
     L1231.in_EJ_R_elec_gas_Yh_gathered %>%
