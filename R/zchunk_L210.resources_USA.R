@@ -1,4 +1,4 @@
-#' module_gcam.usa_L210.resources_USA
+#' module_gcamusa_L210.resources_USA
 #'
 #' GCAM-USA resource market information, prices, TechChange parameters, and supply curves.
 #'
@@ -18,7 +18,7 @@
 #' @importFrom tidyr gather spread
 #' @author RLH November 2017
 
-module_gcam.usa_L210.resources_USA <- function(command, ...) {
+module_gcamusa_L210.resources_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",

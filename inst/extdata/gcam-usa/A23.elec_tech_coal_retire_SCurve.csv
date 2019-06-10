@@ -1,0 +1,15 @@
+# File: A23.elec_tech_coal_retire_SCurve.csv
+# Title: Parameters for S-curve shutdown decider for U.S. coal electricity plants
+# Units: Unitless
+# Comments: lifetime = maximum life of plant from 2010; steepness = S curve exponent; half.life = year from 2010 at which half of initial 2010 plants will be retired
+# Column types: ccinn 
+# ----------
+Electric.sector,Electric.sector.technology,lifetime,steepness,half.life
+base load generation,coal_base_conv pul_slow_retire,60,0.3,50
+base load generation,coal_base_conv pul_fast_retire,5,0.1,2.5
+intermediate generation,coal_int_conv pul_slow_retire,60,0.3,50
+intermediate generation,coal_int_conv pul_fast_retire,5,0.1,2.5
+peak generation,coal_peak_conv pul_slow_retire,60,0.3,50
+peak generation,coal_peak_conv pul_fast_retire,5,0.1,2.5
+subpeak generation,coal_subpeak_conv pul_slow_retire,60,0.3,50
+subpeak generation,coal_subpeak_conv pul_fast_retire,5,0.1,2.5

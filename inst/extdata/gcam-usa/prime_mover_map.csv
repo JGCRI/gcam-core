@@ -1,0 +1,144 @@
+# File: prime_mover_map.csv
+# Title: Mapping file for prime mover
+# Unit: Unitless
+# Source: https://www.eia.gov/survey/form/eia_860/instructions.pdf
+# Column types: cccc 
+# ----------
+Reported.Fuel.Type.Code,Reported.Prime.Mover,gcam_fuel,elec_tech
+WAT,HY,hydro,hyrdo
+NG,CA,gas,gas_CC
+NG,CT,gas,gas_CC
+BIT,ST,coal,coal_conv
+NG,ST,gas,gas_steam
+WDS,ST,biomass,biomass_conv
+DFO,ST,refined liquids,refined liquids_steam
+DFO,GT,refined liquids,refined liquids_turbine
+NG,GT,gas,gas_turbine
+SUB,ST,coal,coal_conv
+DFO,IC,refined liquids,refined liquids_ice
+NG,IC,gas,gas_ice
+NUC,ST,nuclear,nuclear_conv
+LIG,ST,coal,coal_conv
+PG,ST,refined liquids,refined liquids_steam
+RFO,ST,refined liquids,refined liquids_steam
+AB,ST,biomass,biomass_conv
+WND,WT,wind,wind_onshore
+WAT,PS,hydro,hydro_pumped_storage
+RFO,GT,refined liquids,refined liquids_turbine
+SUN,PV,solar PV,solar_PV
+NG,CS,gas,gas_CC
+DFO,CT,refined liquids,refined liquids_CC
+LFG,ST,biomass,biomass_conv
+PC,ST,refined liquids,refined liquids_steam
+DFO,CA,refined liquids,refined liquids_CC
+OBG,IC,biomass,biomass_ice
+GEO,ST,geothermal,geothermal_conv
+OBG,CA,biomass,biomass_IGCC
+OBG,CT,biomass,biomass_IGCC
+OBG,GT,biomass,biomass_turbine
+OBG,ST,biomass,biomass_conv
+BIT,IC,coal,coal_ice
+WO,ST,refined liquids,refined liquids_steam
+JF,GT,refined liquids,refined liquids_turbine
+KER,GT,refined liquids,refined liquids_turbine
+ANT,IC,coal,coal_ice
+ANT,ST,coal,coal_conv
+ANT,GT,coal,coal_turbine
+JF,ST,refined liquids,refined liquids_steam
+RFO,CT,refined liquids,refined liquids_CC
+SUB,CT,coal,coal_IGCC
+KER,CT,refined liquids,refined liquids_CC
+PC,CT,refined liquids,refined liquids_CC
+BIT,CT,coal,coal_IGCC
+BIT,GT,coal,coal_turbine
+SUB,GT,coal,coal_turbine
+OTH,ST,other,other_steam
+BIT,CA,coal,coal_IGCC
+SGC,CA,coal,coal_IGCC
+SGC,CT,coal,coal_IGCC
+KER,ST,refined liquids,refined liquids_steam
+OBS,ST,biomass,biomass_conv
+PC,GT,refined liquids,refined liquids_turbine
+RFO,IC,refined liquids,refined liquids_ice
+TDF,ST,refined liquids,refined liquids_steam
+OG,GT,gas,gas_turbine
+OG,ST,gas,gas_steam
+RFO,CA,refined liquids,refined liquids_CC
+BFG,ST,gas,gas_steam
+SUB,IC,coal,coal_ice
+MSB,ST,biomass,biomass_conv
+MSN,ST,biomass,biomass_conv
+LFG,IC,biomass,biomass_ice
+DFO,CS,refined liquids,refined liquids_CC
+KER,CA,refined liquids,refined liquids_CC
+SC,ST,coal,coal_conv
+WC,ST,coal,coal_conv
+WC,GT,coal,coal_turbine
+PC,IC,refined liquids,refined liquids_ice
+WC,IC,coal,coal_ice
+WO,GT,refined liquids,refined liquids_turbine
+CBL,ST,biomass,biomass_conv
+SUN,CA,solar CSP,solar_CSP
+WO,CA,refined liquids,refined liquids_CC
+JF,CT,refined liquids,refined liquids_turbine
+WO,CT,refined liquids,refined liquids_turbine
+JF,IC,refined liquids,refined liquids_ice
+LFG,GT,biomass,biomass_turbine
+PG,GT,refined liquids,refined liquids_turbine
+NG,CE,gas,gas_turbine
+BLQ,ST,biomass,biomass_conv
+LFG,CA,biomass,biomass_IGCC
+LFG,CT,biomass,biomass_IGCC
+WH,ST,heat,heat_conv
+OBL,ST,biomass,biomass_conv
+SLW,ST,biomass,biomass_conv
+GEO,BT,geothermal,geothermal_conv
+PG,IC,refined liquids,refined liquids_ice
+SUN,ST,solar CSP,solar_CSP
+PUR,ST,heat,heat_conv
+BFG,OT,gas,gas_steam
+WDL,ST,biomass,biomass_conv
+OG,CA,gas,gas_CC
+OG,CT,gas,gas_CC
+RC,ST,coal,coal_conv
+NG,OT,gas,gas_steam
+OG,OT,gas,gas_steam
+OTH,OT,other,other_steam
+PC,OT,refined liquids,refined liquids_steam
+ANT,CT,coal,coal_IGCC
+LFG,OT,biomass,biomass_conv
+OTH,CA,other,other_CC
+OTH,CT,other,other_CC
+NG,FC,gas,gas_fuelcell
+OBL,IC,biomass,biomass_ice
+WO,IC,refined liquids,refined liquids_ice
+OTH,GT,other,other_turbine
+OBL,GT,biomass,biomass_turbine
+SUN,CP,solar CSP,solar_CSP
+WH,OT,heat,heat_conv
+OBG,FC,biomass,biomass_fuelcell
+PC,CA,refined liquids,refined liquids_CC
+SGP,CA,refined liquids,refined liquids_CC
+SGP,CT,refined liquids,refined liquids_CC
+OG,IC,gas,gas_ice
+LFG,FC,biomass,biomass_fuelcell
+MWH,BA,electricity,battery
+MWH,FW,electricity,flywheel
+SUN,OT,solar CSP,solar_CSP
+WH,CA,heat,heat_CC
+JF,CA,refined liquids,refined liquids_CC
+SLW,CA,biomass,biomass_IGCC
+TDF,CA,refined liquids,refined liquids_CC
+WDS,CA,biomass,biomass_IGCC
+SLW,CT,biomass,biomass_IGCC
+TDF,CT,refined liquids,refined liquids_CC
+WDS,CT,biomass,biomass_IGCC
+OG,CS,gas,gas_CC
+SLW,IC,biomass,biomass_ice
+BFG,CA,gas,gas_CC
+BFG,CT,gas,gas_CC
+OTH,IC,other,other_ice
+OBS,IC,biomass,biomass_ice
+WH,BT,geothermal,geothermal_conv
+MSW,ST,biomass,biomass_conv
+MSW,IC,biomass,biomass_ice
