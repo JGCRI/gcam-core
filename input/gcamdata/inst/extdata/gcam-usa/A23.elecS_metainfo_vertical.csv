@@ -1,0 +1,15 @@
+# File: A23.elecS_metainfo_vertical.csv
+# Title: Vertical Load Segment Supplysector Characteristics
+# Units: unitless
+# Comments: Vertical segment supplysector characteristics
+# Same assumptions as energy/A23.sector.csv; corresponding to vertical (demand-side) electricity load segment sectors
+# Electricity reserve margin: required excess capacity for purposes of grid reliability
+# Average grid capacity factor: exogenous assumption allowing conversion between explicitly modeled generation and capacity
+# Column types: ccnn 
+# ----------
+region,supplysector,electricity.reserve.margin,average.grid.capacity.factor
+USA,off peak electricity,0.15,0.6
+USA,intermediate electricity,0.15,0.6
+USA,subpeak electricity,0.15,0.6
+USA,peak electricity,0.15,0.6
+USA,electricity,0.15,0.6

@@ -1,0 +1,44 @@
+# File: A23.elecS_tech_availability.csv
+# Title: Unavailable Load Segment / Technology Combinations
+# Units: NA
+# Comments: Specify which load segment / technology combinations will not be created
+# Column types: cccc 
+# ----------
+region,supplysector,subsector,stub.technology
+USA,subpeak generation,biomass,biomass_subpeak_conv
+USA,subpeak generation,biomass,biomass_subpeak_conv_CCS
+USA,peak generation,biomass,biomass_peak_conv
+USA,peak generation,biomass,biomass_peak_conv_CCS
+USA,subpeak generation,biomass,biomass_subpeak_IGCC
+USA,peak generation,biomass,biomass_peak_IGCC
+USA,subpeak generation,biomass,biomass_subpeak_IGCC_CCS
+USA,peak generation,biomass,biomass_peak_IGCC_CCS
+USA,subpeak generation,coal,coal_subpeak_conv pul_CCS
+USA,peak generation,coal,coal_peak_conv pul_CCS
+USA,subpeak generation,coal,coal_subpeak_IGCC
+USA,peak generation,coal,coal_peak_IGCC
+USA,subpeak generation,coal,coal_subpeak_IGCC_CCS
+USA,peak generation,coal,coal_peak_IGCC_CCS
+USA,intermediate generation,geothermal,geo_int
+USA,subpeak generation,geothermal,geo_subpeak
+USA,peak generation,geothermal,geo_peak
+USA,intermediate generation,nuclear,nuc_int_Gen II
+USA,subpeak generation,nuclear,nuc_subpeak_Gen II
+USA,peak generation,nuclear,nuc_peak_Gen II
+USA,intermediate generation,nuclear,nuc_int_Gen III
+USA,subpeak generation,nuclear,nuc_subpeak_Gen III
+USA,peak generation,nuclear,nuc_peak_Gen III
+USA,intermediate generation,solar,PV_int_storage
+USA,subpeak generation,solar,PV_subpeak_storage
+USA,peak generation,solar,PV_peak_storage
+USA,intermediate generation,solar,CSP_int_storage
+USA,subpeak generation,solar,CSP_subpeak_storage
+USA,peak generation,solar,CSP_peak_storage
+USA,base load generation,solar,PV_base
+USA,base load generation,solar,CSP_base
+USA,intermediate generation,wind,wind_int_storage
+USA,subpeak generation,wind,wind_subpeak_storage
+USA,peak generation,wind,wind_peak_storage
+USA,peak generation,wind,wind_peak
+USA,base load generation,gas,gas_base_steam/CT
+USA,intermediate generation,gas,gas_int_steam/CT

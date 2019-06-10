@@ -1,0 +1,25 @@
+# File: A23.ptc_inttech_USA.csv
+# Title: Production tax credit
+# Units: 1975 $/GJ
+# Comments: consistent with Consolidated Appropriations Act of 2016, https://www.gpo.gov/fdsys/pkg/BILLS-114hr2029enr/pdf/BILLS-114hr2029enr.pdf
+# Source: Received from Elke Hodson, DOE-EPSA; http://www.nrel.gov/docs/fy16osti/65571.pdf; https://www.gpo.gov/fdsys/pkg/BILLS-114hr2029enr/pdf/BILLS-114hr2029enr.pdf
+# Column types: cccicn 
+# ----------
+supplysector,subsector,intermittent.technology,year,minicam.non.energy.input,input.cost
+electricity,wind,wind,2020,regional price adjustment,-1.45
+electricity,wind,wind,2025,regional price adjustment,0
+electricity,wind,wind,2030,regional price adjustment,0
+electricity,wind,wind,2035,regional price adjustment,0
+electricity,wind,wind,2040,regional price adjustment,0
+electricity,wind,wind,2045,regional price adjustment,0
+electricity,wind,wind,2050,regional price adjustment,0
+electricity,wind,wind,2055,regional price adjustment,0
+electricity,wind,wind,2060,regional price adjustment,0
+electricity,wind,wind,2065,regional price adjustment,0
+electricity,wind,wind,2070,regional price adjustment,0
+electricity,wind,wind,2075,regional price adjustment,0
+electricity,wind,wind,2080,regional price adjustment,0
+electricity,wind,wind,2085,regional price adjustment,0
+electricity,wind,wind,2090,regional price adjustment,0
+electricity,wind,wind,2095,regional price adjustment,0
+electricity,wind,wind,2100,regional price adjustment,0
