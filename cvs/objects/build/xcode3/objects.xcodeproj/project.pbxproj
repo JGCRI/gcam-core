@@ -294,6 +294,9 @@
 		CDD5A20D130338B60088463C /* empty_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5A20A130338B60088463C /* empty_technology.cpp */; };
 		CDD5A20E130338B60088463C /* stub_technology_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5A20B130338B60088463C /* stub_technology_container.cpp */; };
 		CDD5A20F130338B60088463C /* technology_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5A20C130338B60088463C /* technology_container.cpp */; };
+		CDDA8FA822A9779000FE5EE6 /* consumer_final_demand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDA8FA722A9779000FE5EE6 /* consumer_final_demand.cpp */; };
+		CDDA8FAD22A9922900FE5EE6 /* fooddemandsystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDA8FAB22A9922900FE5EE6 /* fooddemandsystem.cpp */; };
+		CDDA8FAE22A9922900FE5EE6 /* idemandsystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDA8FAC22A9922900FE5EE6 /* idemandsystem.cpp */; };
 		CDE074A41468959600432712 /* gcam_consumer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE074A31468959600432712 /* gcam_consumer.cpp */; };
 		CDE074AF146895AA00432712 /* building_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE074AA146895AA00432712 /* building_function.cpp */; };
 		CDE074B0146895AA00432712 /* building_node_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE074AB146895AA00432712 /* building_node_input.cpp */; };
@@ -1021,6 +1024,12 @@
 		CDD5A20A130338B60088463C /* empty_technology.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = empty_technology.cpp; sourceTree = "<group>"; };
 		CDD5A20B130338B60088463C /* stub_technology_container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stub_technology_container.cpp; sourceTree = "<group>"; };
 		CDD5A20C130338B60088463C /* technology_container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = technology_container.cpp; sourceTree = "<group>"; };
+		CDDA8FA422A9753D00FE5EE6 /* consumer_final_demand.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = consumer_final_demand.hpp; sourceTree = "<group>"; };
+		CDDA8FA722A9779000FE5EE6 /* consumer_final_demand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = consumer_final_demand.cpp; sourceTree = "<group>"; };
+		CDDA8FA922A9921500FE5EE6 /* fooddemandsystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fooddemandsystem.hpp; sourceTree = "<group>"; };
+		CDDA8FAA22A9921500FE5EE6 /* idemandsystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = idemandsystem.hpp; sourceTree = "<group>"; };
+		CDDA8FAB22A9922900FE5EE6 /* fooddemandsystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fooddemandsystem.cpp; sourceTree = "<group>"; };
+		CDDA8FAC22A9922900FE5EE6 /* idemandsystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idemandsystem.cpp; sourceTree = "<group>"; };
 		CDE074A01468959200432712 /* gcam_consumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gcam_consumer.h; sourceTree = "<group>"; };
 		CDE074A31468959600432712 /* gcam_consumer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gcam_consumer.cpp; sourceTree = "<group>"; };
 		CDE074A5146895A000432712 /* building_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = building_function.h; sourceTree = "<group>"; };
@@ -1482,6 +1491,8 @@
 		CD4884CE122873C100F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CDDA8FA922A9921500FE5EE6 /* fooddemandsystem.hpp */,
+				CDDA8FAA22A9921500FE5EE6 /* idemandsystem.hpp */,
 				CD8DFFD51FA8D1D900CB3719 /* ctax_input.h */,
 				CD693FA41AF02DC200805384 /* discrete_choice_factory.hpp */,
 				CD693FA11AEFF09200805384 /* absolute_cost_logit.hpp */,
@@ -1536,6 +1547,8 @@
 		CD4884F4122873C100F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CDDA8FAB22A9922900FE5EE6 /* fooddemandsystem.cpp */,
+				CDDA8FAC22A9922900FE5EE6 /* idemandsystem.cpp */,
 				CD8DFFD81FA8D1F000CB3719 /* ctax_input.cpp */,
 				CD693FA51AF0315E00805384 /* discrete_choice_factory.cpp */,
 				CD693FA21AEFF0A100805384 /* absolute_cost_logit.cpp */,
@@ -1860,6 +1873,7 @@
 		CD4885E4122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CDDA8FA422A9753D00FE5EE6 /* consumer_final_demand.hpp */,
 				CD8DFFDA1FA8D20600CB3719 /* negative_emissions_final_demand.h */,
 				CD8FDEC71C0647050099C752 /* pass_through_sector.h */,
 				CD4885E5122873C200F5A88A /* afinal_demand.h */,
@@ -1889,6 +1903,7 @@
 		CD488600122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CDDA8FA722A9779000FE5EE6 /* consumer_final_demand.cpp */,
 				CD8DFFDB1FA8D21700CB3719 /* negative_emissions_final_demand.cpp */,
 				CD8FDEC81C0647140099C752 /* pass_through_sector.cpp */,
 				CD488601122873C200F5A88A /* ag_supply_sector.cpp */,
@@ -2556,6 +2571,7 @@
 				CD48875E122873C200F5A88A /* output_driver.cpp in Sources */,
 				CD488762122873C200F5A88A /* ademand_function.cpp in Sources */,
 				CD8DFFDC1FA8D21700CB3719 /* negative_emissions_final_demand.cpp in Sources */,
+				CDDA8FAE22A9922900FE5EE6 /* idemandsystem.cpp in Sources */,
 				CD488763122873C200F5A88A /* aproduction_function.cpp in Sources */,
 				CD488765122873C200F5A88A /* ces_production_function.cpp in Sources */,
 				CD488766122873C200F5A88A /* demand_input.cpp in Sources */,
@@ -2738,6 +2754,7 @@
 				CD488823122873C200F5A88A /* atom_registry.cpp in Sources */,
 				CD488824122873C200F5A88A /* calibrate_resource_visitor.cpp in Sources */,
 				CD488825122873C200F5A88A /* calibrate_share_weight_visitor.cpp in Sources */,
+				CDDA8FA822A9779000FE5EE6 /* consumer_final_demand.cpp in Sources */,
 				0EB5CE791C063E4B008CEF7D /* fractional_secondary_output.cpp in Sources */,
 				CD488826122873C200F5A88A /* configuration.cpp in Sources */,
 				CD488827122873C200F5A88A /* fixed_interpolation_function.cpp in Sources */,
@@ -2775,6 +2792,7 @@
 				CDF83C1313A30CA600DF178D /* res_secondary_output.cpp in Sources */,
 				CDF83C1413A30CA600DF178D /* s_curve_shutdown_decider.cpp in Sources */,
 				CDF83C1A13A30CC500DF178D /* kyoto_forcing_target.cpp in Sources */,
+				CDDA8FAD22A9922900FE5EE6 /* fooddemandsystem.cpp in Sources */,
 				CDF83C1B13A30CC500DF178D /* secanter.cpp in Sources */,
 				0EF7AF5813E1EFDA0034AA71 /* market_dependency_finder.cpp in Sources */,
 				0EF7AF5D13E1EFF80034AA71 /* lognrbt.cpp in Sources */,

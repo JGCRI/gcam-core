@@ -49,12 +49,15 @@
 #include <string>
 
 #include "util/base/include/iparsable.h"
-#include "util/base/include/iround_trippable.h"
 #include "util/base/include/inamed.h"
+#include "util/base/include/data_definition_util.h"
 
 class Demographic;
 class GDP;
 class Value;
+
+// Forward declare subclasses as well
+class FoodDemandSystem;
 
 /*!
  * \ingroup Objects
@@ -95,7 +98,7 @@ class Value;
  *          including by parsing it from input XML.  However,
  *          they aren't required to do either.
  */
-class IDemandSystem : public INamed, public IParsable, public IRoundTrippable {
+class IDemandSystem : public INamed, public IParsable {
 
 public:
 
@@ -192,15 +195,26 @@ public:
     static IDemandSystem *create( const std::string &tpname );
     
 protected:
-
-    /*!
-     * \brief Flag indicating whether or not output is per-capita. 
-     * \details This value is protected (vice private) so that
-     *          subclasses can set it during their setup (either on
-     *          creation or during input parsing).  It should not be
-     *          changed at any other time.  
-     */
-    bool mPerCapita;
+    
+    DEFINE_DATA(
+        DEFINE_SUBCLASS_FAMILY( IDemandSystem, FoodDemandSystem ),
+                
+        /*!
+         * \brief Flag indicating whether or not output is per-capita.
+         * \details This value is protected (vice private) so that
+         *          subclasses can set it during their setup (either on
+         *          creation or during input parsing).  It should not be
+         *          changed at any other time.
+         */
+        DEFINE_VARIABLE( SIMPLE, "is-per-capita", mPerCapita, bool ),
+        
+        /*!
+         * \brief Number of goods in the demand system.
+         * \details This value is set at construction and is read-only
+         *          (via ngoods()) thereafter.
+         */
+        DEFINE_VARIABLE( SIMPLE, "num-goods", mNGoods, int )
+    )
 
     /*!
      * \brief Output vector for calcDemand. 
@@ -211,16 +225,6 @@ protected:
      *          provide any other way of accessing this value.
      */
     mutable std::vector<double> mDemandOutput;
-
-private:
-
-    /*!
-     * \brief Number of goods in the demand system.
-     * \details This value is set at construction and is read-only
-     *          (via ngoods()) thereafter.
-     */
-    int mNGoods;
-
 };
 
 #endif /* _IDEMANDSYSTEM_HPP_ */    

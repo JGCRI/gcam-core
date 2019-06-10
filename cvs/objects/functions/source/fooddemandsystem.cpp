@@ -221,8 +221,6 @@ void FoodDemandSystem::completeInit( const std::string &aRegionName, const
     mTrialValueMktNames.resize(2);
     mTrialValueMktNames[0] = aSectorName + "-staple-budget-fraction";
     mTrialValueMktNames[1] = aSectorName + "-nonstaple-budget-fraction";
-    mLastValues.resize(2);
-    mLastValues[0] = mLastValues[1] = 0.0;
 
     ILogger &mainlog = ILogger::getLogger( "main_log" );
     mainlog.setLevel( ILogger::DEBUG );
@@ -242,6 +240,13 @@ void FoodDemandSystem::completeInit( const std::string &aRegionName, const
         mainlog.setLevel(ILogger::ERROR);
         mainlog << "FoodDemandSystem::completeInit:  created duplicate trial value market in region= " 
                 << aRegionName << "  sector= " << aSectorName << std::endl;
+    }
+    
+    // TODO: hard wire some default prices for now since this really helps solution, what to do in the long run?
+    for(int sn = 0; sn < 1; ++sn) {
+        for(int period = 0; period < scenario->getModeltime()->getmaxper(); ++period) {
+            scenario->getMarketplace()->setPrice(SectorUtils::getTrialMarketName(mTrialValueMktNames[sn]), aRegionName, 0.1, period);
+        }
     }
 
     // Make this sector depend on the trial value markets
@@ -318,22 +323,6 @@ bool FoodDemandSystem::XMLParse( const xercesc::DOMNode *aNode )
     return true;
 }
 
-void FoodDemandSystem::toInputXML( std::ostream &aOut, Tabs *aTabs ) const
-{
-    XMLWriteOpeningTag( getXMLName(), aOut, aTabs, mName );
-    aTabs->increaseIndent();
-    
-    // Write the parameter values
-    std::map<std::string, std::string> attr;
-    for(unsigned i=0; i < pnames.size(); ++i) {
-        attr["name"] = pnames[i];
-        XMLWriteElementWithAttributes(mParams[i], param_tag, aOut, aTabs, attr);
-    }
-
-    aTabs->decreaseIndent();
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}
-
 double FoodDemandSystem::getTrialBudgetFrac( const std::string &aRegion, int aPeriod,
                                              int acomp ) const
 {
@@ -342,9 +331,9 @@ double FoodDemandSystem::getTrialBudgetFrac( const std::string &aRegion, int aPe
 
     // transform the value from the trial value market (-infinity, infinity) to
     // (0,1).
-    double bfrac = 0.5 * ( 1 + tanh(param) );
+    //double bfrac = 0.5 * ( 1 + tanh(param) );
 
-    return bfrac;
+    return param;
 }
 
 
@@ -353,16 +342,30 @@ void FoodDemandSystem::setActualBudgetFrac( const std::string &aRegion, int aPer
 {
     // transform budget fraction from (0,1) to (-infinity, infinity)
     double param;
-    if( alpha < std::numeric_limits<double>::min() )
+    /*if( alpha < std::numeric_limits<double>::min() )
         param = std::numeric_limits<double>::lowest();
     else if( alpha >= 1.0) 
         param = std::numeric_limits<double>::max();
     else 
-        param = atanh( 2.0*alpha - 1 );
+        param = atanh( 2.0*alpha - 1 );*/
+    if(alpha < 0) {
+        param = 0.0;
+    }
+    else if(alpha > 1.0) {
+        param = 1.0;
+    }
+    else {
+        param = alpha;
+    }
     
     // set value in trial value market
-    SectorUtils::addToTrialDemand( aRegion, mTrialValueMktNames[acomp], param,
-                                   mLastValues[acomp], aPeriod );
+    Value& paramValue = acomp == 0 ?
+        const_cast<FoodDemandSystem*>(this)->mTrialValueStaples :
+        const_cast<FoodDemandSystem*>(this)->mTrialValueNonStaples;
+    paramValue = param;
+    SectorUtils::addToTrialDemand( aRegion, mTrialValueMktNames[acomp],
+                                  paramValue,
+                                   aPeriod );
 
 }
 

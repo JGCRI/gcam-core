@@ -51,6 +51,8 @@
 #include "functions/include/idemandsystem.hpp"
 #include "util/base/include/value.h"
 #include "util/base/include/ivisitor.h"
+#include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 
 
 /*!
@@ -77,7 +79,7 @@ public:
     ConsumerFinalDemand(void);
 
     //! Destructor
-    virtual ~ConsumerFinalDemand(void) {}
+    virtual ~ConsumerFinalDemand(void);
 
     //! XML name for this class
     static const std::string &getXMLNameStatic();
@@ -142,12 +144,6 @@ public:
                            const Demographic *aDemographics,
                            const int aPeriod );
 
-    //! \copydoc AFinalDemand::csvOutputFile()
-    virtual void csvOutputFile( const std::string &aRegionName ) const;
-
-    //! \copydoc AFinalDemand::dbOutput()
-    virtual void dbOutput( const std::string &aRegionName ) const;
-
 
     /*
      * INamed interface
@@ -167,13 +163,6 @@ public:
     //! \copydoc IVisitable::accept()
     virtual void accept( IVisitor *aVisitor, const int aPeriod ) const;
 
-
-    /*
-     * IRoundTrippableInterface 
-     */
-    //! \copydoc IRoundTrippable::toInputXML()
-    virtual void toInputXML( std::ostream &aOut, Tabs *aTabs ) const;
-
     // Technically part of AFinalDemand interface, but thematically similar to
     // IRoundTrippable.
     //! \copydoc AFinalDemand::toDebugXML()
@@ -183,76 +172,90 @@ public:
  
    
 
-private:
-    //! Pointer to the demand system used in the sector
-    std::unique_ptr<IDemandSystem> mDemandSys;
-
-    /*!
-     * \brief Names of the goods consumed in each of the demand components. 
-     * \details These should be given in the same order that they are given in
-     *          the demand system object, as we don't do any matching between
-     *          them.  These names will be passed as the first argument to
-     *          Marketplace::addToDemand, so just the name of the good is
-     *          required; the region is a separate argument.
-     */
-    std::vector<std::string> mSupplySectors;
-
-    /*!
-     * \brief Prescribed output values during calibration years 
-     * \details Components will be indexed in the same order as the
-     *          entries in mSupplySectors, and within each component
-     *          they will be indexed by year.  One side effect of this
-     *          is that during parsing mSupplySectors must be
-     *          populated with a component's name before any base
-     *          service values can be read for that component.
-     *
-     *          Note that the components are stored row-wise, while
-     *          periods are stored column-wise.  This is the opposite
-     *          of what we do in mDemand.  That is because
-     *          XMLHelper::insertValueIntoVector() needs the values
-     *          for each component to be contiguous.  For the rest of
-     *          the functions here it is more convenient to index
-     *          years in rows and components in columns.
-     *
-     *          Base service values are stored in the units used by
-     *          their respective supply sectors.
-     */
-    std::vector<std::vector<double> > mBaseServices; 
+protected:
+    
+    class DemandComponentHelper : public INamed {
+        friend class ConsumerFinalDemand;
+    public:
+        virtual const std::string& getName() const;
+    protected:
+        DEFINE_DATA(
+        DEFINE_SUBCLASS_FAMILY(DemandComponentHelper),
+                    
+                    /*!
+                     * \brief Names of the goods consumed in each of the demand components.
+                     * \details These should be given in the same order that they are given in
+                     *          the demand system object, as we don't do any matching between
+                     *          them.  These names will be passed as the first argument to
+                     *          Marketplace::addToDemand, so just the name of the good is
+                     *          required; the region is a separate argument.
+                     */
+                    DEFINE_VARIABLE( SIMPLE, "supply-component", mSupplySectors, std::string ),
+                    
+                    /*!
+                     * \brief Prescribed output values during calibration years
+                     * \details Components will be indexed in the same order as the
+                     *          entries in mSupplySectors, and within each component
+                     *          they will be indexed by year.  One side effect of this
+                     *          is that during parsing mSupplySectors must be
+                     *          populated with a component's name before any base
+                     *          service values can be read for that component.
+                     *
+                     *          Note that the components are stored row-wise, while
+                     *          periods are stored column-wise.  This is the opposite
+                     *          of what we do in mDemand.  That is because
+                     *          XMLHelper::insertValueIntoVector() needs the values
+                     *          for each component to be contiguous.  For the rest of
+                     *          the functions here it is more convenient to index
+                     *          years in rows and components in columns.
+                     *
+                     *          Base service values are stored in the units used by
+                     *          their respective supply sectors.
+                     */
+                    DEFINE_VARIABLE( ARRAY, "base-service", mBaseServices, objects::PeriodVector<double> ),
+                    
+                    /*!
+                     * \brief Demand values over the course of the run.
+                     *
+                     * \details These are stored as a two-dimensional matrix.  The
+                     *          first dimension is the period, and the second is the
+                     *          demand component (corresponding to the supply sectors
+                     *          above).  Values will be filled in in setFinalDemand().
+                     *
+                     *          Demand is stored in the units used by the supply
+                     *          sectors.  When we go to report these values in
+                     *          getDemand(), we pass the stored values to the
+                     *          reportDemand() method of the demand system, which will
+                     *          convert them to the units we want to report.  Why do
+                     *          we delegate that to the demand system?  It's because
+                     *          we can't know what unit conversions are appropriate
+                     *          without knowing what specific demand system is in
+                     *          use.
+                     *
+                     *          If the demand system is per-capita, then these are
+                     *          also per-capita values; otherwise they are totals.
+                     *          This is not ideal, but we don't have access to the
+                     *          population when the reporting happens, so if we want
+                     *          to output the values as per-capita, we have to store
+                     *          them that way.
+                     *
+                     */
+                    DEFINE_VARIABLE( ARRAY | STATE, "demand", mDemand, objects::PeriodVector<Value> )
+        )
+    };
+    
+    DEFINE_DATA_WITH_PARENT(
+        AFinalDemand,
         
-    std::string mName;          //!< name of the sector
+        //! Pointer to the demand system used in the sector
+        DEFINE_VARIABLE( CONTAINER, "demand-system", mDemandSys, IDemandSystem* ),
 
-    /*!
-     * \brief Demand values over the course of the run.
-     *
-     * \details These are stored as a two-dimensional matrix.  The
-     *          first dimension is the period, and the second is the
-     *          demand component (corresponding to the supply sectors
-     *          above).  Values will be filled in in setFinalDemand().
-     *
-     *          Demand is stored in the units used by the supply
-     *          sectors.  When we go to report these values in
-     *          getDemand(), we pass the stored values to the
-     *          reportDemand() method of the demand system, which will
-     *          convert them to the units we want to report.  Why do
-     *          we delegate that to the demand system?  It's because
-     *          we can't know what unit conversions are appropriate
-     *          without knowing what specific demand system is in
-     *          use.
-     *
-     *          If the demand system is per-capita, then these are
-     *          also per-capita values; otherwise they are totals.
-     *          This is not ideal, but we don't have access to the
-     *          population when the reporting happens, so if we want
-     *          to output the values as per-capita, we have to store
-     *          them that way.
+        //! TODO
+        DEFINE_VARIABLE( CONTAINER, "demand-components", mDemandCompents, std::vector<DemandComponentHelper*> ),
 
-     */
-    std::vector<std::vector<double> > mDemand;
-
-    /*!
-     * \brief State holder for Marketplace::setDemand()
-     */
-    std::vector<double> mLastDemand;
+        //! name of the sector
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string )
+    )
 
     /*!
      * \brief Derived clas visitor accept

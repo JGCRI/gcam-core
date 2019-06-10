@@ -60,6 +60,7 @@ class Tabs;
 // Need to forward declare the subclasses as well.
 class EnergyFinalDemand;
 class NegativeEmissionsFinalDemand;
+class ConsumerFinalDemand;
 
 /*! 
  * \ingroup Objects
@@ -153,7 +154,8 @@ protected:
         /* Declare all subclasses of AFinalDemand to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( AFinalDemand, EnergyFinalDemand, NegativeEmissionsFinalDemand )
+        DEFINE_SUBCLASS_FAMILY( AFinalDemand, EnergyFinalDemand, NegativeEmissionsFinalDemand,
+                                ConsumerFinalDemand )
     )
 };
 

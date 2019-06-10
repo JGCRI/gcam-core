@@ -47,6 +47,7 @@
  */
 
 #include "functions/include/idemandsystem.hpp"
+#include "util/base/include/value.h"
 
 
 class Demographic;
@@ -176,36 +177,34 @@ public:
 
     //! IParsable interface
     virtual bool XMLParse( const xercesc::DOMNode *aNode );
-
-    //! IRoundTrippable interface
-    virtual void toInputXML( std::ostream &aOut, Tabs *aTabs ) const;
+    
+protected:
+    DEFINE_DATA_WITH_PARENT(
+        IDemandSystem,
+        
+        //! Name of this object
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        
+        //! Names of trial value markets for budget fractions
+        DEFINE_VARIABLE( SIMPLE, "trial-market-names", mTrialValueMktNames, std::vector<std::string> ),
+        
+        /*!
+         * \brief Demand system parameters
+         * \note Possibly we should consider moving these up into the base
+         *       class, since most subclasses will have something similar.
+         */
+        DEFINE_VARIABLE( SIMPLE, "params", mParams, std::vector<double> ),
+                            
+        DEFINE_VARIABLE( SIMPLE | STATE, "trial-value-staples", mTrialValueStaples, Value ),
+    
+        DEFINE_VARIABLE( SIMPLE | STATE, "trial-value-nonstaples", mTrialValueNonStaples, Value )
+    )
 
 private:
     //! Price conversion factor
     const static double mprice_conversion_fac;
     //! Output quantity conversion factor
     const static double mqty_conversion_fac;
-
-    //! Name of this object
-    std::string mName;
-
-    //! Names of trial value markets for budget fractions
-    std::vector<std::string> mTrialValueMktNames;
-
-    //! Some bit of internal state for the trial value markets that we have to
-    //! keep track of ourselves, because of reasons. 
-    // NB: This member is mutable because it isn't really our data;
-    //     therefore, it makes sense to allow the class that *really*
-    //     owns it to make changes to it, even when called from one of
-    //     our const methods.
-    mutable std::vector<double> mLastValues;
-
-    /*!
-     * \brief Demand system parameters 
-     * \note Possibly we should consider moving these up into the base
-     *       class, since most subclasses will have something similar.
-     */
-    std::vector<double> mParams;
 
     /*!
      * \brief Fetch trial budget fraction from the trial value market. 
