@@ -1,7 +1,7 @@
 # File: BEA_pcGDP_09USD_state.csv
-# Title: GDP by State and Industry, NAICS, Per Capita Real GDP
+# Title: GDP by State and Industry; NAICS; Per Capita Real GDP
 # Units: Chained 2009 US Dollars per capita
-# Source: Bureau of Economic Analysis, Gross Domestic Product by State, Advance 2013 and Revised 1997-2012. URL: https://www.bea.gov/regional/histdata/releases/0614gsp/gsp_naics_all_pc.zip
+# Source: Bureau of Economic Analysis; Gross Domestic Product by State; Advance 2013 and Revised 1997-2012. URL: https://www.bea.gov/regional/histdata/releases/0614gsp/gsp_naics_all_pc.zip
 # Column types: iciiiiiiiiiiiiiiiii 
 # ----------
 Fips,Area,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013

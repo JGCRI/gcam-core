@@ -1,10 +1,10 @@
 # File: Dooley_CCS_USA.csv
 # Title: CO2 Storage Capacity
 # Units: In columns
-# Source: Dahowski, R., Dooley, J., Davidson, C., Bachu, S. & Gupta, N. Building the Cost Curves for CO2 Storage: North America. IEA Greenhouse Gas R&D Programme, Cheltenham, UK. (2005).
-# Wise, M., Dooley, J., Dahowski, R. & Davidson, C. Modeling the impacts of climate policy on the deployment of carbon dioxide capture and geologic storage across electric power regions in the United States. International Journal of Greenhouse Gas Control 1, 261-270 (2007).
-# Dahowski, R. T., Davidson, C. L., Li, X. C. & Wei, N. A $70/tCO2 greenhouse gas mitigation backstop for China's industrial and electric power sectors: Insights from a comprehensive CCS cost curve. International Journal of Greenhouse Gas Control 11, 73-85, doi:10.1016/j.ijggc.2012.07.024 (2012).
-# Dahowski, R., Davidson, C. & Dooley, J. Comparing large scale CCS deployment potential in the USA and China: A detailed analysis based on country-specific CO2 transport & storage cost curves. Energy Procedia 4, 2732-2739, doi:DOI: 10.1016/j.egypro.2011.02.175 (2011).
+# Source: Dahowski et al. Building the Cost Curves for CO2 Storage: North America. IEA Greenhouse Gas R&D Programme. Cheltenham; UK. (2005).
+# Wise et al. Modeling the impacts of climate policy on the deployment of carbon dioxide capture and geologic storage across electric power regions in the United States. International Journal of Greenhouse Gas Control 1; 261-270 (2007).
+# Dahowski et al. A $70/tCO2 greenhouse gas mitigation backstop for China's industrial and electric power sectors: Insights from a comprehensive CCS cost curve. International Journal of Greenhouse Gas Control 11; 73-85. doi:10.1016/j.ijggc.2012.07.024 (2012).
+# Dahowski et al. Comparing large scale CCS deployment potential in the USA and China: A detailed analysis based on country-specific CO2 transport & storage cost curves. Energy Procedia 4; 2732-2739. doi:DOI: 10.1016/j.egypro.2011.02.175 (2011).
 # Column types: cccnn 
 # ----------
 Timestep,GENUNIT,state,CO2_Mt,Cost_2005USDtCO2

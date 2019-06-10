@@ -202,12 +202,16 @@ set_years <- function(data) {
 #'
 #' @param data Base tibble to start from
 #' @param names Character vector indicating the column names of the returned tibble
+#' @param region_list Character vector containing names of regions for which USA national data is repeated
 #' @note Used for USA national data by GCAM region, which is repeated for each US state
+#' @note Contains an argument which allows user to specify a different region list.
+#' @note For example, this is occasionally used to write all USA data to GCAM-USA grid regions.
 #' @return Tibble with data written out to all USA states
-write_to_all_states <- function(data, names) {
+write_to_all_states <- function(data, names, region_list = gcamusa.STATES) {
 
   assert_that(is_tibble(data))
   assert_that(is.character(names))
+  assert_that(is.character(region_list))
 
   region <- NULL  # silence package check notes
 
@@ -222,7 +226,7 @@ write_to_all_states <- function(data, names) {
   data %>%
     set_years %>%
     mutate(region = NULL) %>% # remove region column if it exists
-    repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+    repeat_add_columns(tibble(region = region_list)) %>%
     select(names)
 }
 
