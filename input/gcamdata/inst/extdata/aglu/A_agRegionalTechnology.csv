@@ -1,0 +1,28 @@
+# File: A_agRegionalTechnology.csv
+# Title: Technology-level assumptions of regional crop markets
+# Units: Various
+# Comments: pass-through subsectors; there is no technology competition
+# Source: NA
+# Column types: ccccnnnc 
+# ----------
+supplysector,subsector,technology,minicam.energy.input,coefficient,input.cost,share.weight,market.name
+regional corn,domestic corn,domestic corn,Corn,1,0,1,regional
+regional corn,imported corn,imported corn,traded corn,1,0,1,USA
+regional fibercrop,domestic fibercrop,domestic fibercrop,FiberCrop,1,0,1,regional
+regional fibercrop,imported fibercrop,imported fibercrop,traded fibercrop,1,0,1,USA
+regional misccrop,domestic misccrop,domestic misccrop,MiscCrop,1,0,1,regional
+regional misccrop,imported misccrop,imported misccrop,traded misccrop,1,0,1,USA
+regional oilcrop,domestic oilcrop,domestic oilcrop,OilCrop,1,0,1,regional
+regional oilcrop,imported oilcrop,imported oilcrop,traded oilcrop,1,0,1,USA
+regional othergrain,domestic othergrain,domestic othergrain,OtherGrain,1,0,1,regional
+regional othergrain,imported othergrain,imported othergrain,traded othergrain,1,0,1,USA
+regional palmfruit,domestic palmfruit,domestic palmfruit,PalmFruit,1,0,1,regional
+regional palmfruit,imported palmfruit,imported palmfruit,traded palmfruit,1,0,1,USA
+regional rice,domestic rice,domestic rice,Rice,1,0,1,regional
+regional rice,imported rice,imported rice,traded rice,1,0,1,USA
+regional root_tuber,domestic root_tuber,domestic root_tuber,Root_Tuber,1,0,1,regional
+regional root_tuber,imported root_tuber,imported root_tuber,traded root_tuber,1,0,1,USA
+regional sugarcrop,domestic sugarcrop,domestic sugarcrop,SugarCrop,1,0,1,regional
+regional sugarcrop,imported sugarcrop,imported sugarcrop,traded sugarcrop,1,0,1,USA
+regional wheat,domestic wheat,domestic wheat,Wheat,1,0,1,regional
+regional wheat,imported wheat,imported wheat,traded wheat,1,0,1,USA

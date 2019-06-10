@@ -38,6 +38,7 @@
 			<Value name = "land5">../input/gcamdata/xml/land_input_5_IRR_MGMT.xml</Value>
 			<Value name = "demand">../input/gcamdata/xml/demand_input.xml</Value>
 			<Value name = "bio_trade">../input/gcamdata/xml/bio_trade.xml</Value>
+			<Value name = "ag_trade">../input/gcamdata/xml/ag_trade.xml</Value>
 			
 			<Value name = "ind_urb_proc">../input/gcamdata/xml/ind_urb_processing_sectors.xml</Value>
 			<Value name = "nonco2_energy">../input/gcamdata/xml/all_energy_emissions.xml</Value>
@@ -100,8 +101,7 @@
 			<Value name="resource_extraction">../input/gcamdata/xml/resources_SSP4.xml</Value>	
 			
 			<!-- TRADE -->			
-			<Value name="trade">../input/gcamdata/xml/ssp4_trade.xml</Value>
-			<Value name="bio_trade">../input/gcamdata/xml/ssp4_bio_trade.xml</Value>
+			<Value name="bio_trade">../input/gcamdata/xml/ssp4_ag_bio_trade.xml</Value>
 
 			<!-- NON-CO2 -->
 			<Value name="nonco2">../input/gcamdata/xml/delete_gdp_control.xml</Value>
