@@ -1,4 +1,4 @@
-#' module_gcam.usa_L261.carbon_storage_USA
+#' module_gcamusa_L261.carbon_storage_USA
 #'
 #' Generates GCAM-USA input files of carbon storage resource supply curves, shareweights, technology coefficients and costs, and other carbon storage information.
 #'
@@ -15,7 +15,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC Nov 2017
-module_gcam.usa_L261.carbon_storage_USA <- function(command, ...) {
+module_gcamusa_L261.carbon_storage_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              "L161.Cstorage_FERC",

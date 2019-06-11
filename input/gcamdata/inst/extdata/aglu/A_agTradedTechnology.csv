@@ -1,7 +1,7 @@
 # File: A_agTradedTechnology.csv
 # Title: Technology-level assumptions of traded crop markets
 # Units: Various
-# Comments: pass-through subsectors; there is no technology competition
+# Comments: for traded crops, each subsector has only one technology; there is no technology-level competition
 # Source: NA
 # Column types: ccccnnni 
 # ----------

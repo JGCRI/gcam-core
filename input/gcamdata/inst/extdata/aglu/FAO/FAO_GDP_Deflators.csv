@@ -1,6 +1,7 @@
 # File: FAO_GDP_Deflators.csv
 # Title: FAO GDP deflators by country. Queried 7/27/2017.
 # Units: Unitless
+# Comments: For definition see http://www.fao.org/faostat/en/#data/PD/metadata. This dataset differs from the deflators in the gcamdata package in that it is international (i.e., not just the USA).
 # Column types: cciciciciicncc
 # ----------
 Domain Code,Domain,Area Code,Area,Element Code,Element,Item Code,Item,Year Code,Year,Unit,Value,Flag,Flag Description

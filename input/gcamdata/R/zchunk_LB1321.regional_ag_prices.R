@@ -25,10 +25,10 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     year <- value <- Year <- Value <- FAO_country <- iso <- deflator <-
-      Area <- currentusd_per_2005usd <- item <- pp_commod <- Cottonseed <-
+      Area <- currentUSD_per_baseyearUSD <- item <- pp_commod <- Cottonseed <-
       `Cotton lint` <- item.codes <- production <- prod_commod <- item.code <-
       GCAM_commodity <- GCAM_region_ID <- revenue <- avg_prP_C <- prP <- prPmult <-
-      production_wt_prPmult <- prPmult_R <- NULL    # silence package check.
+      production_wt_prPmult <- prPmult_R <- countries <- NULL    # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -44,27 +44,40 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     # 1.1 GDP deflators (to 2005) by country and analysis year
 
     # GDP deflators are used to convert each reported year- and country- values to a common unit of measure
-    # This step filters years, sets iso codes to countries, and converts all deflators from an index-100 to a multiplier
+    # This step filters years, sets iso codes to countries, and converts all deflators from an index-100 with a base
+    # year of 2005 to a multiplier with an exogenous base year. The deflator base year is the year in which relative
+    # regional nominal prices are preserved in the constant dollar (i.e., 1975$ in this code) prices. For example, with
+    # deflator base year set to 2010, prices are in 2010 Constant USD but expressed in terms of 1975 USD.
+    
+    # Sudan (former) is re-set to Sudan for building the full time series
+    # South Sudan is dropped as only a few data years are available and it isn't in the price data
     L1321.GDPdefl_ctry <- FAO_GDP_Deflators %>%
-      rename(year = Year, deflator = Value) %>%
+      select(Area, year = Year, Value) %>%
+      mutate(Area = if_else(Area == "Sudan (former)", "Sudan", Area)) %>%
+      filter(Area != "South Sudan") %>%
+      group_by(Area) %>%
+      mutate(currentUSD_per_baseyearUSD = (Value / Value[year == aglu.DEFLATOR_BASE_YEAR])) %>%
+      ungroup() %>%
       filter(year %in% aglu.TRADE_CAL_YEARS) %>%
       left_join_error_no_match(select(AGLU_ctry, FAO_country, iso),
                                by = c(Area = "FAO_country")) %>%
-      mutate(currentusd_per_2005usd = deflator / 100) %>%
-      select(iso, countries = Area, year, currentusd_per_2005usd)
+      select(iso, countries = Area, year, currentUSD_per_baseyearUSD)
 
     # 1.2. Producer prices by country, analysis year, and crop
 
     # filter analysis years, re-name items for merging with other datasets w/different item lists
     # inner_join producer prices and deflators in order to drop any countries and years w/o available price or deflator data
     # calculate the revised prices as the reported prices divided by deflators
+    # Here "Sudan (former)" has data in most years, but "Sudan" is all missing values
     L1321.prP_ctry_item_75USDkg <- FAO_ag_an_ProducerPrice %>%
+      filter(countries != "Sudan") %>%
+      mutate(countries = if_else(countries == "Sudan (former)", "Sudan", countries)) %>%
       gather_years() %>%
       filter(year %in% aglu.TRADE_CAL_YEARS) %>%
       inner_join(L1321.GDPdefl_ctry,
                  by = c("countries", "year")) %>%
       mutate(value = as.numeric(value),
-             value = ((value / currentusd_per_2005usd) * gdp_deflator(1975, 2005) / CONV_T_KG)) %>%
+             value = ((value / currentUSD_per_baseyearUSD) * gdp_deflator(1975, aglu.DEFLATOR_BASE_YEAR) / CONV_T_KG)) %>%
       select(iso, pp_commod = item, year, value) %>%
       drop_na(value)
 
@@ -84,9 +97,9 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     # particularly problematic for countries that only have cottonseed prices reported, as very low prices combined
     # with nonLandVariableCosts of the total product return negative profit in calibration years.
     # Because cottonseed is a by-product (from USDA stats, over 90% of the revenue of producing cotton is from the
-    # lint), and its prices depend on the presence of large industrial consumers (e.g., crisco factories), the cotton
-    # seed prices are not a good proxy for estimating the cotton lint prices in countries where lint prices are
-    # not available. Instead, countries without cotton lint prices are dropped at this stage (to be filled in
+    # lint), and also because its prices depend on the presence of large industrial consumers, the cotton
+    # seed prices are not a good proxy for estimating the cotton lint prices in countries where the former are available
+    # and the latter are not. Instead, countries without cotton lint prices are dropped at this stage (to be filled in
     # subsequent steps). Cotton seed prices where missing are assigned the cotton lint price divided by USA lint:seed
     # price ratio.
 
@@ -110,7 +123,6 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     # Average producer prices, aggregated from countries and FAO items by regions and commodities using production as
     # the weighting factor. The pipeline below is mostly just filtering and cleaning data, and preparing a table to be
     # joined in to the table of producer prices from above.
-    # Need animal product prices as well to back calculate regional pasture prices later
     L1321.prod_kt_ctry_item <- FAO_ag_Prod_t_PRODSTAT %>%
       gather_years() %>%
       rename(production = value) %>%

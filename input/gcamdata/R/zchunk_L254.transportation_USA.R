@@ -1,4 +1,4 @@
-#' module_gcam.usa_L254.transportation_USA
+#' module_gcamusa_L254.transportation_USA
 #'
 #' Generates GCAM-USA model inputs for transportation sector by states.
 #'
@@ -15,8 +15,8 @@
 #' \code{L254.StubTranTechLoadFactor_USA}, \code{L254.StubTranTechCost_USA}, \code{L254.StubTranTechCoef_USA},
 #' \code{L254.PerCapitaBased_trn_USA}, \code{L254.PriceElasticity_trn_USA}, \code{L254.IncomeElasticity_trn_USA},
 #' \code{L254.StubTranTechCalInput_USA}, \code{L254.StubTranTechProd_nonmotor_USA}, \code{L254.StubTranTechCalInput_passthru_USA},
-#' \code{L254.BaseService_trn_USA}. The corresponding file in the
-#' original data system was \code{L254.transportation_USA.R} (gcam-usa level2).
+#' \code{L254.BaseService_trn_USA}.
+#' The corresponding file in the original data system was \code{L254.transportation_USA.R} (gcam-usa level2).
 #' @details This chunk generates input files for transportation sector with generic information for supplysector,
 #' subsector and technologies, as well as calibrated inputs and outputs by the US states.
 #' @note The transportation structure is heavily nested. The GCAM structure of sector/subsector/technology only
@@ -34,7 +34,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC Oct 2017
-module_gcam.usa_L254.transportation_USA <- function(command, ...) {
+module_gcamusa_L254.transportation_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/mappings/UCD_techs",
              FILE = "energy/A54.globaltech_nonmotor",
@@ -99,7 +99,8 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       UCD_fuel <- UCD_sector <- UCD_technology <- calibrated.value <- coefficient <- loadFactor <-
       size.class <- state <- tranSubsector <- tranTechnology <- calibrated.value <- stub.technology <-
       output <- output_agg <- output_cum <- share.weight <- subs.share.weight <- share.weight.year <-
-      tech.share.weight <- calOutputValue <- energy.final.demand <- base.service <- . <- NULL
+      tech.share.weight <- calOutputValue <- energy.final.demand <- base.service <- year.fillout <-
+      fuelprefElasticity <- income.elasticity <- . <- NULL
 
     # Load required inputs
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs") # Mapping file of transportation technology from the UC Davis report (Mishra et al. 2013)
@@ -156,8 +157,8 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
         filter(region == gcam.USA_REGION) %>%
         write_to_all_states(names = c(names(data), "region"))
 
-      # Re-set markets from USA to regional markets, if called for in the GCAM-USA assumptions for selected fuels
-      if(gcamusa.USE_REGIONAL_FUEL_MARKETS & "market.name" %in% names(data_new)) {
+      # Re-set markets from USA to grid region, if the minicam.energy.input is considered a regional fuel market
+      if("market.name" %in% names(data_new)) {
         data_new <- data_new %>%
           left_join_error_no_match(select(states_subregions, state, grid_region), by = c("region" = "state")) %>%
           mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
@@ -318,6 +319,7 @@ module_gcam.usa_L254.transportation_USA <- function(command, ...) {
       summarise(base.service = sum(base.service)) %>%
       ungroup ->
       L254.BaseService_trn_USA
+
 
     # Produce outputs
     L254.DeleteSupplysector_USAtrn %>%

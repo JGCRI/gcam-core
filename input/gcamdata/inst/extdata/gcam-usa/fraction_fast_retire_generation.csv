@@ -1,0 +1,59 @@
+# File: fraction_fast_retire_generation.csv
+# Title: Fraction of a state's coal electricity generation that will be retired in 2015
+# Units: Unitless
+# Comments: The data is based on changes to each stata's coal electricity generation between 2010-2015.
+# Source: Based on data from EIA electricity data browser. https://www.eia.gov/electricity/data/browser/#/topic/0?agg=2,1,0&fuel=8&geo=g0fvvvvvvvvvo&sec=008&freq=A&start=2001&end=2016&ctype=linechart&ltype=pin&rtype=s&maptype=0&rse=0&pin=
+# Column types: cn 
+# ----------
+region,fast.retire
+CA,1
+DC,1
+ID,1
+RI,1
+VT,1
+NY,0.842945807
+CT,0.769585253
+DE,0.766744548
+MA,0.729853812
+NJ,0.72592708
+NH,0.696075251
+NV,0.620265828
+SD,0.546694967
+MS,0.53041309
+GA,0.491178498
+NC,0.445075228
+OR,0.423897237
+PA,0.413135748
+MD,0.410710476
+WA,0.408978438
+SC,0.399775797
+OH,0.391428693
+LA,0.366091209
+AL,0.340237962
+VA,0.31663432
+IN,0.302667368
+TN,0.299952674
+IA,0.291810608
+FL,0.282537496
+KS,0.243408706
+AR,0.226739417
+IL,0.213636165
+OK,0.211524223
+KY,0.202451293
+NM,0.202123507
+MI,0.191101968
+TX,0.172250596
+AZ,0.165659315
+MT,0.139454868
+WV,0.131861491
+HI,0.129010695
+MO,0.128051958
+MN,0.112746541
+CO,0.087560404
+WI,0.068570408
+UT,0.059756758
+ND,0.025291897
+WY,0.002221391
+AK,0
+ME,0
+NE,0

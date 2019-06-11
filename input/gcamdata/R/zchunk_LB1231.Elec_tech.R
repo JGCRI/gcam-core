@@ -1,4 +1,4 @@
-#' module_gcam.usa_LB1231.Elec_tech
+#' module_gcamusa_LB1231.Elec_tech
 #'
 #' Downscaling electricity by state/fuel to state/fuel/technology
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH August 2017
-module_gcam.usa_LB1231.Elec_tech<- function(command, ...) {
+module_gcamusa_LB1231.Elec_tech<- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L123.out_EJ_R_elec_F_Yh",
              "L1231.in_EJ_R_elec_F_tech_Yh",
