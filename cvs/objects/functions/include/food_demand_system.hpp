@@ -1,5 +1,5 @@
-#ifndef _FOODDEMANDSYSTEM_HPP_
-#define _FOODDEMANDSYSTEM_HPP_
+#ifndef _FOOD_DEMAND_SYSTEM_HPP_
+#define _FOOD_DEMAND_SYSTEM_HPP_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -39,14 +39,14 @@
 
 
 /*!
- * \file fooddemandsystem.hpp
+ * \file food_demand_system.hpp
  * \ingroup Objects
  * \brief Header file for FoodDemandSystem, a demand system for staple
  * and nonstaple food.
  * \author Robert Link
  */
 
-#include "functions/include/idemandsystem.hpp"
+#include "functions/include/idemand_system.hpp"
 #include "util/base/include/value.h"
 
 

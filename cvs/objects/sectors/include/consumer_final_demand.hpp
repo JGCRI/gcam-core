@@ -48,7 +48,7 @@
 #include <vector>
 
 #include "sectors/include/afinal_demand.h"
-#include "functions/include/idemandsystem.hpp"
+#include "functions/include/idemand_system.hpp"
 #include "util/base/include/value.h"
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/time_vector.h"

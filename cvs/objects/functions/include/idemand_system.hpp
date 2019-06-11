@@ -1,5 +1,5 @@
-#ifndef _IDEMANDSYSTEM_HPP_
-#define _IDEMANDSYSTEM_HPP_
+#ifndef _IDEMAND_SYSTEM_HPP_
+#define _IDEMAND_SYSTEM_HPP_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -39,7 +39,7 @@
 
 
 /*!
- * \file idemandsystem.h
+ * \file idemand_system.h
  * \ingroup Objects
  * \brief Header file for IDemandSystem, an interface for demand systems
  * \author Robert Link
@@ -227,4 +227,4 @@ protected:
     mutable std::vector<double> mDemandOutput;
 };
 
-#endif /* _IDEMANDSYSTEM_HPP_ */    
+#endif /* _IDEMAND_SYSTEM_HPP_ */    

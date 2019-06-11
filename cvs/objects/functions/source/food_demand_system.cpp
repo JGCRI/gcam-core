@@ -32,7 +32,7 @@
 
 
 /*! 
- * \file fooddemandsystem.cpp
+ * \file food_demand_system.cpp
  * \ingroup Objects
  * \brief FoodDemandSystem source file
  * \author Robert Link
@@ -42,7 +42,7 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <math.h>
 
-#include "functions/include/fooddemandsystem.hpp"
+#include "functions/include/food_demand_system.hpp"
 #include "functions/include/function_utils.h"
 #include "containers/include/gdp.h"
 #include "marketplace/include/marketplace.h"

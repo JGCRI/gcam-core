@@ -32,14 +32,14 @@
 
 
 /*! 
- * \file idemandsystem.cpp
+ * \file idemand_system.cpp
  * \ingroup Objects
  * \brief IDemandSystem source file
  * \author Robert Link
  */
 
-#include "functions/include/idemandsystem.hpp"
-#include "functions/include/fooddemandsystem.hpp"
+#include "functions/include/idemand_system.hpp"
+#include "functions/include/food_demand_system.hpp"
 
 bool IDemandSystem::isSubtype( const std::string &tpname )
 {
