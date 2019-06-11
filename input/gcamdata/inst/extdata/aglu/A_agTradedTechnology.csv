@@ -1,0 +1,18 @@
+# File: A_agTradedTechnology.csv
+# Title: Technology-level assumptions of traded crop markets
+# Units: Various
+# Comments: for traded crops, each subsector has only one technology; there is no technology-level competition
+# Source: NA
+# Column types: ccccnnni 
+# ----------
+supplysector,subsector,technology,minicam.energy.input,coefficient,input.cost,share.weight,traded
+traded corn,traded corn,traded corn,Corn,1,0,1,1
+traded fibercrop,traded fibercrop,traded fibercrop,FiberCrop,1,0,1,1
+traded misccrop,traded misccrop,traded misccrop,MiscCrop,1,0,1,1
+traded oilcrop,traded oilcrop,traded oilcrop,OilCrop,1,0,1,1
+traded othergrain,traded othergrain,traded othergrain,OtherGrain,1,0,1,1
+traded palmfruit,traded palmfruit,traded palmfruit,PalmFruit,1,0,1,1
+traded rice,traded rice,traded rice,Rice,1,0,1,1
+traded root_tuber,traded root_tuber,traded root_tuber,Root_Tuber,1,0,1,1
+traded sugarcrop,traded sugarcrop,traded sugarcrop,SugarCrop,1,0,1,1
+traded wheat,traded wheat,traded wheat,Wheat,1,0,1,1
