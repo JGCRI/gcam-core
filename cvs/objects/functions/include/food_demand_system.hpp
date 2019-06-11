@@ -147,7 +147,7 @@ public:
     virtual void calcDemand( const std::string & aRegionName,
                              const Demographic & aDemographics,
                              const GDP & aGDP,
-                             const std::vector<double> & aprices,
+                             const std::vector<double> & aPrices,
                              int aPeriod,
                              std::vector<double> &aDemandOutput ) const;
 
@@ -202,12 +202,12 @@ protected:
 
 private:
     //! Price conversion factor
-    const static double mprice_conversion_fac;
+    const static double mPriceConversionFactor;
     //! Output quantity conversion factor
-    const static double mqty_conversion_fac;
+    const static double mQuantityConversionFactor;
 
     /*!
-     * \brief Fetch trial budget fraction from the trial value market. 
+     * \brief Get trial budget fraction from the trial value market.
      * \param aRegion[in] Region for this sector
      * \param aPeriod[in] Period to fetch (usually the current period).
      * \param acomp[in] Component for which to fetch the trial value.

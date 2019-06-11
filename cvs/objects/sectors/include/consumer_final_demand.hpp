@@ -251,7 +251,7 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "demand-system", mDemandSys, IDemandSystem* ),
 
         //! TODO
-        DEFINE_VARIABLE( CONTAINER, "demand-components", mDemandCompents, std::vector<DemandComponentHelper*> ),
+        DEFINE_VARIABLE( CONTAINER, "demand-components", mDemandComponents, std::vector<DemandComponentHelper*> ),
 
         //! name of the sector
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string )

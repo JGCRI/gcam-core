@@ -70,7 +70,7 @@ mDemandSys(0)
 
 ConsumerFinalDemand::~ConsumerFinalDemand() {
     delete mDemandSys;
-    for(auto demandComp : mDemandCompents) {
+    for(auto demandComp : mDemandComponents) {
         delete demandComp;
     }
 }
@@ -84,28 +84,28 @@ void ConsumerFinalDemand::setFinalDemand( const std::string &aRegionName,
                      const GDP *aGDP,
                      const int aPeriod )
 {
-    Marketplace *mp = scenario->getMarketplace();
+    Marketplace *marketplace = scenario->getMarketplace();
     if( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
         // These values are totals (even if the underlying demand model is per
         // capita) and are kept in the units of the upstream sector
-        for(unsigned i=0; i<mDemandCompents.size(); ++i) {
+        for(unsigned i=0; i<mDemandComponents.size(); ++i) {
             // Store these for later reporting.  If the demand system is per
             // capita then we convert to per capita values and store those.
-            mDemandCompents[i]->mDemand[aPeriod] = mDemandCompents[i]->mBaseServices[aPeriod];
+            mDemandComponents[i]->mDemand[aPeriod] = mDemandComponents[i]->mBaseServices[aPeriod];
             // add these values to the upstreadm sectors
-            mp->addToDemand( mDemandCompents[i]->mSupplySectors, aRegionName,
-                             mDemandCompents[i]->mDemand[aPeriod], aPeriod );
+            marketplace->addToDemand( mDemandComponents[i]->mSupplySectors, aRegionName,
+                             mDemandComponents[i]->mDemand[aPeriod], aPeriod );
         }
     }
     else {
-        std::vector<double> prices(mDemandCompents.size());
-        std::vector<double> demands(mDemandCompents.size());
-        for(unsigned i=0; i<mDemandCompents.size(); ++i)
-            prices[i] =
-                mp->getPrice( mDemandCompents[i]->mSupplySectors, aRegionName, aPeriod, true );
+        std::vector<double> prices(mDemandComponents.size());
+        std::vector<double> demands(mDemandComponents.size());
+        for(unsigned i=0; i<mDemandComponents.size(); ++i) {
+            prices[i] = marketplace->getPrice( mDemandComponents[i]->mSupplySectors, aRegionName, aPeriod, true );
+        }
         mDemandSys->calcDemand( aRegionName, *aDemographics, *aGDP,
                                 prices, aPeriod, demands );
-        for(unsigned i=0; i<mDemandCompents.size(); ++i) {
+        for(unsigned i=0; i<mDemandComponents.size(); ++i) {
             double value = demands[i];
             if( mDemandSys->isPerCapita() ) {
                 // If the demand is calculated per capita, then add
@@ -113,9 +113,9 @@ void ConsumerFinalDemand::setFinalDemand( const std::string &aRegionName,
                 // per capita demand.
                 value *= 1000.0 * aDemographics->getTotal( aPeriod );
             }
-            mDemandCompents[i]->mDemand[aPeriod] = value;
-            mp->addToDemand( mDemandCompents[i]->mSupplySectors, aRegionName,
-                                              mDemandCompents[i]->mDemand[aPeriod], aPeriod);
+            mDemandComponents[i]->mDemand[aPeriod] = value;
+            marketplace->addToDemand( mDemandComponents[i]->mSupplySectors, aRegionName,
+                                              mDemandComponents[i]->mDemand[aPeriod], aPeriod);
         }
 
     }
@@ -124,12 +124,12 @@ void ConsumerFinalDemand::setFinalDemand( const std::string &aRegionName,
 
 void ConsumerFinalDemand::getDemand( std::vector<double> &aOutDemand, int aPeriod ) const
 {
-    int ncomp = mDemandSys->ngoods();
-    if( aOutDemand.size() != ncomp ) {
-        aOutDemand.resize( ncomp );
+    int numComponents = mDemandSys->getNumGoods();
+    if( aOutDemand.size() != numComponents ) {
+        aOutDemand.resize( numComponents );
     }
-    for(unsigned i=0; i<mDemandCompents.size(); ++i) {
-        aOutDemand[i] = mDemandCompents[i]->mDemand[aPeriod];
+    for(unsigned i = 0; i < mDemandComponents.size(); ++i) {
+        aOutDemand[i] = mDemandComponents[i]->mDemand[ aPeriod ];
     }
     mDemandSys->reportDemand( aOutDemand ); // convert to reporting units
 }
@@ -137,9 +137,9 @@ void ConsumerFinalDemand::getDemand( std::vector<double> &aOutDemand, int aPerio
 
 void ConsumerFinalDemand::getReportingUnits( std::vector<std::string> &aOutUnits ) const
 {
-    int ncomp = mDemandSys->ngoods();
-    if( aOutUnits.size() != ncomp ) {
-        aOutUnits.resize( ncomp );
+    int numComponents = mDemandSys->getNumGoods();
+    if( aOutUnits.size() != numComponents ) {
+        aOutUnits.resize( numComponents );
     }
     mDemandSys->reportUnits( aOutUnits );
 }
@@ -147,12 +147,12 @@ void ConsumerFinalDemand::getReportingUnits( std::vector<std::string> &aOutUnits
 
 void ConsumerFinalDemand::getComponentNames( std::vector<std::string> &aOutComponents ) const
 {
-    size_t ncomp = mDemandCompents.size();
-    if( aOutComponents.size() != ncomp ) {
-        aOutComponents.resize( ncomp );
+    size_t numComponents = mDemandComponents.size();
+    if( aOutComponents.size() != numComponents ) {
+        aOutComponents.resize( numComponents );
     }
-    for(unsigned i=0; i<mDemandCompents.size(); ++i) {
-        aOutComponents[i] = mDemandCompents[i]->mSupplySectors;
+    for(unsigned i=0; i<mDemandComponents.size(); ++i) {
+        aOutComponents[i] = mDemandComponents[i]->mSupplySectors;
     }
 }
 
@@ -192,59 +192,53 @@ bool ConsumerFinalDemand::XMLParse( const xercesc::DOMNode *aNode )
     for(unsigned i=0; i < childnodes->getLength(); ++i) {
         DOMNode *child = childnodes->item(i);
 
-        const std::string nodename =
-            XMLHelper<std::string>::safeTranscode( child->getNodeName() );
+        const std::string nodename = XMLHelper<std::string>::safeTranscode( child->getNodeName() );
 
         if( nodename == "#text" ) {
             continue;
         }
         else if( nodename == supply_component_tag ) {
-            std::string compname = XMLHelper<std::string>::getValue( child );
-            DemandComponentHelper* newComp = new DemandComponentHelper;
-            newComp->mSupplySectors = compname;
-            mDemandCompents.push_back(newComp);
+            std::string componentName = XMLHelper<std::string>::getValue( child );
+            DemandComponentHelper* newComponent = new DemandComponentHelper;
+            newComponent->mSupplySectors = componentName;
+            mDemandComponents.push_back( newComponent );
             mainlog.setLevel( ILogger::DEBUG );
-            mainlog << "Found supply component: >"
-                    << compname
-                    << "< .\n";
+            mainlog << "Found supply component: >" << componentName << "< ." << std::endl;
         }
         else if( nodename == base_service_tag ) {
             // A base service child node should have "component" and "year" attributes.  We'll grab
             // the component here, and the year will be used in XMLHelper::insertValueIntoVector().
-            std::string compname = XMLHelper<std::string>::getAttr( child,
-                                                                    "component" );
-            auto citer = objects::searchForValue(mDemandCompents, compname );
-            if( citer == mDemandCompents.end() ) {
+            std::string componentName = XMLHelper<std::string>::getAttr( child, "component" );
+            auto citer = objects::searchForValue(mDemandComponents, componentName );
+            if( citer == mDemandComponents.end() ) {
                 mainlog.setLevel( ILogger::SEVERE );
                 mainlog << "Error parsing Consumer Final Demand Sector. Component " 
-                        << compname << " has not been defined." << std::endl;
+                        << componentName << " has not been defined." << std::endl;
                 abort();
             }
-            int compindex = std::distance(mDemandCompents.begin(), citer );
-            if( compindex >= mDemandCompents.size() ) {
+            int componentIndex = std::distance(mDemandComponents.begin(), citer );
+            if( componentIndex >= mDemandComponents.size() ) {
                 // TODO: wouldn't this have been caught by the above abort check already?
-                mDemandCompents.push_back(new DemandComponentHelper);
+                mDemandComponents.push_back(new DemandComponentHelper);
             }
-            XMLHelper<double>::insertValueIntoVector( child, mDemandCompents[compindex]->mBaseServices,
-                                                     modeltime );
+            XMLHelper<double>::insertValueIntoVector( child, mDemandComponents[componentIndex]->mBaseServices, modeltime );
         }
         else if( nodename == demand_sys_tag ) {
-            std::string dstype = XMLHelper<std::string>::getAttr( child, "type" );
-            if( IDemandSystem::isSubtype( dstype ) ) {
-                std::auto_ptr<IDemandSystem> ptmp;
+            std::string demandSystemType = XMLHelper<std::string>::getAttr( child, "type" );
+            if( IDemandSystem::isSubtype( demandSystemType ) ) {
+                std::auto_ptr<IDemandSystem> tempPointer;
                 // parseSingleNode expects an auto_ptr, but we're storing our stuff
                 // in a unique_ptr, so we need to make a temporary.
-                parseSingleNode( child, ptmp, IDemandSystem::create( dstype ),
-                                 "type" );
+                parseSingleNode( child, tempPointer, IDemandSystem::create( demandSystemType ), "type" );
 
                 // take ownership of the pointer.
                 delete mDemandSys;
-                mDemandSys = ptmp.release();
+                mDemandSys = tempPointer.release();
             }
             else {
                 mainlog.setLevel( ILogger::SEVERE );
                 mainlog << "ConsumerFinalDemand::XMLParse:  unknown demand system type: "
-                        << dstype << std::endl;
+                        << demandSystemType << std::endl;
                 abort();
             }
         }
@@ -264,11 +258,11 @@ bool ConsumerFinalDemand::XMLParse( const xercesc::DOMNode *aNode )
         abort();
     }
 
-    if( mDemandSys->ngoods() != mDemandCompents.size() ) {
+    if( mDemandSys->getNumGoods() != mDemandComponents.size() ) {
         mainlog << "ConsumerFinalDemand::XMLParse: number of supply sectors doesn't match demand system. "
-                << "Found " << mDemandCompents.size()
+                << "Found " << mDemandComponents.size()
                 << " supply sectors. Expecting "
-                << mDemandSys->ngoods() << "." << std::endl;
+                << mDemandSys->getNumGoods() << "." << std::endl;
         abort();
     }
     return true; 
@@ -280,9 +274,9 @@ void ConsumerFinalDemand::toDebugXML( const int aPeriod, std::ostream &aOut,
     XMLWriteOpeningTag( getXMLName(), aOut, aTabs, mName );
     aTabs->increaseIndent();
     std::map<std::string, std::string> attr;
-    for(unsigned comp=0; comp < mDemandCompents.size(); ++comp) {
-        attr[demand_component_attr] = mDemandCompents[comp]->getName();
-        XMLWriteElementWithAttributes( mDemandCompents[comp]->mDemand[aPeriod], demand_out_tag,
+    for(unsigned comp=0; comp < mDemandComponents.size(); ++comp) {
+        attr[demand_component_attr] = mDemandComponents[comp]->getName();
+        XMLWriteElementWithAttributes( mDemandComponents[comp]->mDemand[aPeriod], demand_out_tag,
                                        aOut, aTabs, attr );
 
     }

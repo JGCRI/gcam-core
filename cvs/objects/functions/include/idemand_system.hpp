@@ -103,8 +103,8 @@ class IDemandSystem : public INamed, public IParsable {
 public:
 
     // Constructor
-    inline IDemandSystem( int angoods=1 ) : mNGoods(angoods), mPerCapita(true) {
-        mDemandOutput.resize(angoods);
+    inline IDemandSystem( int aNumGoods=1 ) : mNumGoods(aNumGoods), mPerCapita(true) {
+        mDemandOutput.resize(aNumGoods);
     }
     // Destructor
     virtual ~IDemandSystem(void) {}
@@ -130,7 +130,7 @@ public:
         calcDemand( const std::string & aRegionName,
                     const Demographic & aDemographics,
                     const GDP & aGDP,
-                    const std::vector<double> & aprices,
+                    const std::vector<double> & aPrices,
                     int aPeriod,
                     std::vector<double> & aDemandOutput) const = 0; 
 
@@ -180,7 +180,7 @@ public:
     /*!
      * \brief Return the number of demand components
      */
-    int ngoods(void) const { return mNGoods; }
+    int getNumGoods(void) const { return mNumGoods; }
     /*!
      * \brief Indicate whether the demand output is per-capita
      */
@@ -191,8 +191,8 @@ public:
     virtual const std::string &getXMLName(void) const = 0;
 
     /* Factory functions*/
-    static bool isSubtype( const std::string &tpname );
-    static IDemandSystem *create( const std::string &tpname );
+    static bool isSubtype( const std::string &aTypeName );
+    static IDemandSystem *create( const std::string &aTypeName );
     
 protected:
     
@@ -213,7 +213,7 @@ protected:
          * \details This value is set at construction and is read-only
          *          (via ngoods()) thereafter.
          */
-        DEFINE_VARIABLE( SIMPLE, "num-goods", mNGoods, int )
+        DEFINE_VARIABLE( SIMPLE, "num-goods", mNumGoods, int )
     )
 
     /*!

@@ -93,7 +93,7 @@ namespace {
 // Since Quantity is in Mcal/day (and we don't want to convert it to
 // Mcal/yr), that means we hae to absorb the 365 day/year conversion
 // factor into the prices.
-const double FoodDemandSystem::mprice_conversion_fac =
+const double FoodDemandSystem::mPriceConversionFactor =
     0.365 / FunctionUtils::DEFLATOR_1975_PER_DEFLATOR_2005();
 
 // Quantity conversion factor on output.  Output quantities are in
@@ -106,19 +106,19 @@ const double FoodDemandSystem::mprice_conversion_fac =
 // rejiggering to conform to GCAM unit conventions is a bit of a
 // pain.  Converting on input and again on output seems like the
 // least bad solution.
-const double FoodDemandSystem::mqty_conversion_fac = 365.0 * 1e-9;
+const double FoodDemandSystem::mQuantityConversionFactor = 365.0 * 1e-9;
 
 void FoodDemandSystem::calcDemand(
     const std::string &aRegionName,
     const Demographic &aDemographics,
     const GDP &aGDP,
-    const std::vector<double> &aprices,
+    const std::vector<double> &aPrices,
     int aPeriod,
     std::vector<double> &aDemandOutput ) const
 {
-    std::vector<double> prices(aprices);
-    for(unsigned i=0; i<aprices.size(); ++i) {
-        prices[i] *= mprice_conversion_fac;
+    std::vector<double> prices(aPrices);
+    for(unsigned i=0; i<aPrices.size(); ++i) {
+        prices[i] *= mPriceConversionFactor;
         if(prices[i] < price_min) // protect against NaN values below
             prices[i] = price_min;
     }
@@ -193,16 +193,17 @@ void FoodDemandSystem::calcDemand(
     setActualBudgetFrac( aRegionName, aPeriod, 1, alphan_actual);
 
     // Set the primary outputs of the demand system
-    aDemandOutput[0] = Qs*mqty_conversion_fac;
-    aDemandOutput[1] = Qn*mqty_conversion_fac;
+    aDemandOutput[0] = Qs*mQuantityConversionFactor;
+    aDemandOutput[1] = Qn*mQuantityConversionFactor;
 }
 
 void FoodDemandSystem::reportDemand(std::vector<double> &aDemand) const
 {
     // Convert from Pcal/yr back to KCal/day (both values are per
     // capita)
-    for(unsigned i=0; i<aDemand.size(); ++i)
-        aDemand[i] /= mqty_conversion_fac;
+    for(unsigned i=0; i<aDemand.size(); ++i) {
+        aDemand[i] /= mQuantityConversionFactor;
+    }
 }
 
 

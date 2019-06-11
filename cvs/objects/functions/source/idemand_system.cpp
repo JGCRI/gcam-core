@@ -41,21 +41,25 @@
 #include "functions/include/idemand_system.hpp"
 #include "functions/include/food_demand_system.hpp"
 
-bool IDemandSystem::isSubtype( const std::string &tpname )
+bool IDemandSystem::isSubtype( const std::string &aTypeName )
 {
-    if(tpname == FoodDemandSystem::getXMLNameStatic())
+    if(aTypeName == FoodDemandSystem::getXMLNameStatic()) {
         // add other types here if/when created.
         return true;
-    else
+    }
+    else {
         return false;
+    }
 }
 
 
-IDemandSystem *IDemandSystem::create( const std::string &tpname )
+IDemandSystem *IDemandSystem::create( const std::string &aTypeName )
 {
-    if(tpname == FoodDemandSystem::getXMLNameStatic())
+    if(aTypeName == FoodDemandSystem::getXMLNameStatic()) {
         return new FoodDemandSystem;
+    }
     // add other subtypes here if/when created.
-    else
+    else {
         return NULL;
+    }
 }
