@@ -1,0 +1,14 @@
+# File: A23.elec_tech_mapping_coal_retire.csv
+# Title: Technologies in the power sector to be retired at varying rates and their corresponding technologies in the multiple load segments electricity sector
+# Units: Unitless
+# Column types: cccc 
+# ----------
+Electric.sector,subsector,Electric.sector.technology,technology
+base load generation,coal,coal_base_conv pul_slow_retire,coal_base_conv pul
+base load generation,coal,coal_base_conv pul_fast_retire,coal_base_conv pul
+intermediate generation,coal,coal_int_conv pul_slow_retire,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul_fast_retire,coal_int_conv pul
+peak generation,coal,coal_peak_conv pul_slow_retire,coal_peak_conv pul
+peak generation,coal,coal_peak_conv pul_fast_retire,coal_peak_conv pul
+subpeak generation,coal,coal_subpeak_conv pul_slow_retire,coal_subpeak_conv pul
+subpeak generation,coal,coal_subpeak_conv pul_fast_retire,coal_subpeak_conv pul

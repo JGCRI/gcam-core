@@ -250,6 +250,10 @@ GlobalTechCapFac, global-technology-database/+{sector-name}location-info, global
 
 GlobalTechCapital, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}input-capital, input-capital/+capital-overnight, input-capital/+fixed-charge-rate, scenario, scenario/world, world/global-technology-database
 
+GlobalTechCapitalOnly, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}input-capital, input-capital/+capital-overnight, scenario, scenario/world, world/global-technology-database
+
+GlobalTechFCROnly, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}input-capital, input-capital/+fixed-charge-rate, scenario, scenario/world, world/global-technology-database
+
 GlobalTechOMfixed, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}input-OM-fixed, input-OM-fixed/+OM-fixed, scenario, scenario/world, world/global-technology-database
 
 GlobalTechOMvar, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}input-OM-var, input-OM-var/+OM-var, scenario, scenario/world, world/global-technology-database
@@ -276,9 +280,10 @@ GlobalTechCSeq, global-technology-database/+{sector-name}location-info, global-t
 
 GlobalPassThroughTech, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}pass-through-technology, scenario, scenario/world, world/global-technology-database
 
-GlobalTechCTaxInput,global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}ctax-input, ctax-input/+fuel-name, scenario, scenario/world, world/global-technology-database
+GlobalTechCTaxInput,global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}ctax-input, ctax-input/+fuel-C-coef, scenario, scenario/world, world/global-technology-database
 
 DeleteGlobalTechInput, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name;delete=1}minicam-energy-input, scenario, scenario/world, world/global-technology-database
+
 
 #####, GLOBAL INTERMITTENT TECHNOLOGY
 
@@ -293,6 +298,10 @@ GlobalIntTechCapFac, global-technology-database/+{sector-name}location-info, glo
 
 GlobalIntTechCapital, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}input-capital, input-capital/+capital-overnight, input-capital/+fixed-charge-rate, scenario, scenario/world, world/global-technology-database
 
+GlobalIntTechCapitalOnly, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}input-capital, input-capital/+capital-overnight, scenario, scenario/world, world/global-technology-database
+
+GlobalIntTechFCROnly, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}input-capital, input-capital/+fixed-charge-rate, scenario, scenario/world, world/global-technology-database
+
 GlobalIntTechOMfixed, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}input-OM-fixed, input-OM-fixed/+OM-fixed, scenario, scenario/world, world/global-technology-database
 
 GlobalIntTechOMvar, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}input-OM-var, input-OM-var/+OM-var, scenario, scenario/world, world/global-technology-database
@@ -306,6 +315,8 @@ GlobalIntTechLifetime, global-technology-database/+{sector-name}location-info, g
 GlobalIntTechProfitShutdown, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, profit-shutdown-decider/+median-shutdown-point, profit-shutdown-decider/+steepness, scenario, scenario/world, world/global-technology-database, period/{name=profit}profit-shutdown-decider
 
 GlobalIntTechBackup, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+electric-sector-name, period/+trial-market-name, period/+backup-capital-cost, period/+backup-capacity-factor, capacity-limit-backup-calculator/+capacity-limit, period/+{name}minicam-energy-input, period/+{name}minicam-non-energy-input, minicam-energy-input/+flag, scenario, scenario/world, world/global-technology-database, period/capacity-limit-backup-calculator
+
+GlobalIntTechCost, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}minicam-non-energy-input, minicam-non-energy-input/+input-cost, scenario, scenario/world, world/global-technology-database
 
 GlobalRenewTech, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}renewable-input, scenario/world, scenario, world/global-technology-database, period/{name=CO2}CO2
 
@@ -327,6 +338,8 @@ GlobalTranTechSCurve, global-technology-database/+{sector-name}location-info, gl
 
 DeleteStubTech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name;delete=1}stub-technology, scenario, scenario/world
 
+DeleteStubTechMinicamEnergyInput, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name;delete=1}minicam-energy-input, scenario, scenario/world
+
 StubTech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, scenario, scenario/world
 
 StubTechShrwt, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+share-weight, scenario, scenario/world
@@ -344,6 +357,8 @@ StubTechCoef, world/+{name}region, region/+{name}supplysector, supplysector/+{na
 StubTechCoef_NM, world/+{name}region, region/+{name}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world
 
 StubTechEff, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, minicam-energy-input/+market-name, scenario, scenario/world
+
+StubTechEffFlag, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, minicam-energy-input/+market-name, minicam-energy-input/+flag, scenario, scenario/world
 
 StubTechCost, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-non-energy-input, minicam-non-energy-input/+input-cost, scenario, scenario/world
 
@@ -372,6 +387,12 @@ StubTechFractSecOut, world/+{name}region, region/+{name}supplysector, supplysect
 StubTechFractProd, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}fractional-secondary-output, fractional-secondary-output/+{price}fraction-produced, fractional-secondary-output/+fraction-produced, scenario, scenario/world
 
 StubTechFractCalPrice,world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}fractional-secondary-output, fractional-secondary-output/+calPrice, scenario, scenario/world
+
+StubTechSCurve, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+lifetime, s-curve-shutdown-decider/+steepness, s-curve-shutdown-decider/+half-life, scenario, scenario/world, period/{name=s-curve}s-curve-shutdown-decider
+
+StubTechLifetime, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+lifetime, scenario, scenario/world
+
+StubTechProfitShutdown, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, profit-shutdown-decider/+median-shutdown-point, profit-shutdown-decider/+steepness, scenario, scenario/world, period/{name=profit}profit-shutdown-decider
 
 #####, STUB TRANSPORTATION TECHNOLOGY
 
@@ -494,21 +515,21 @@ AgProdChange, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/
 
 AgCost, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+nonLandVariableCost, scenario, scenario/world, period/{name=CO2}CO2
 
-AgRES, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}res-secondary-output, res-secondary-output/+output-ratio, scenario, scenario/world 
+AgRES, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}res-secondary-output, res-secondary-output/+output-ratio, scenario, scenario/world
 
-AgInputTax, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}input-tax, input-tax/+coefficient, scenario, scenario/world 
+AgInputTax, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}input-tax, input-tax/+coefficient, scenario, scenario/world
 
 AgMkt, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+market, scenario, scenario/world
 
 
 #####, POLICY
 
-PortfolioStd,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+market, policy-portfolio-standard/+policyType, policy-portfolio-standard/+{year}constraint, policy-portfolio-standard/+constraint, policy-portfolio-standard/+price-unit, policy-portfolio-standard/+output-unit, scenario,scenario/world 
-PortfolioStdConstraint,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+market, policy-portfolio-standard/+policyType, policy-portfolio-standard/+{year}constraint, policy-portfolio-standard/+constraint,  scenario,scenario/world 
+PortfolioStd,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+market, policy-portfolio-standard/+policyType, policy-portfolio-standard/+{year}constraint, policy-portfolio-standard/+constraint, policy-portfolio-standard/+price-unit, policy-portfolio-standard/+output-unit, scenario,scenario/world
+PortfolioStdConstraint,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+market, policy-portfolio-standard/+policyType, policy-portfolio-standard/+{year}constraint, policy-portfolio-standard/+constraint,  scenario,scenario/world
 
-PortfolioStdMinPrice,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+{year=1975;fillout=1}min-price, scenario,scenario/world 
+PortfolioStdMinPrice,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+{year=1975;fillout=1}min-price, scenario,scenario/world
 
-PortfolioStdMaxPrice,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+{year=1975;fillout=1}max-price, scenario,scenario/world 
+PortfolioStdMaxPrice,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+{year=1975;fillout=1}max-price, scenario,scenario/world
 
 #####, LAND ALLOCATOR
 
@@ -688,5 +709,11 @@ ResEmissCoef, world/+{name}region, region/+{name;nocreate=1}depresource, depreso
 ReadInControl, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}readin-control, readin-control/+{year}future-emiss-factor, readin-control/+future-emiss-factor, scenario, scenario/world
 
 StubTechEmissUnits, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emissions-unit, scenario, scenario/world
+
+TrnInputEmissCoeff, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}tranSubsector, tranSubsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/input-driver, scenario, scenario/world
+
+LinearCtrlInc, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}tranSubsector, tranSubsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}linear-control, linear-control/+start-year, linear-control/+end-year, linear-control/+final-emissions-coefficient, linear-control/allow-ef-increase, scenario, scenario/world
+
+
 
 EQUIV_TABLE,NODE_EQUIVALENCE

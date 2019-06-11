@@ -225,22 +225,22 @@
 828,"MiscCrop",,,"Cigarettes"
 829,"MiscCrop",,,"Cigars, cheroots"
 831,"MiscCrop",,,"Tobacco products nes"
-216,"OilCrop","Brazil nuts, with shell","Brazil nuts, with shell",
-217,"OilCrop","Cashew nuts, with shell","Cashew nuts, with shell","Cashew nuts, with shell"
-220,"OilCrop","Chestnut","Chestnut","Chestnut"
-221,"OilCrop","Almonds, with shell","Almonds, with shell",
-222,"OilCrop","Walnuts, with shell","Walnuts, with shell","Walnuts, with shell"
-223,"OilCrop","Pistachios","Pistachios","Pistachios"
-224,"OilCrop","Kola nuts","Kola nuts","Kola nuts"
-225,"OilCrop","Hazelnuts, with shell","Hazelnuts, with shell",
-226,"OilCrop","Areca nuts","Areca nuts",
-229,"OilCrop",,,"Brazil nuts, shelled"
-230,"OilCrop",,,"Cashew nuts, shelled"
-231,"OilCrop",,,"Almonds shelled"
-232,"OilCrop",,,"Walnuts, shelled"
-233,"OilCrop",,,"Hazelnuts, shelled"
-234,"OilCrop","Nuts, nes","Nuts, nes","Nuts, nes"
-235,"OilCrop",,,"Nuts, prepared (exc. groundnuts)"
+216,"MiscCrop","Brazil nuts, with shell","Brazil nuts, with shell",
+217,"MiscCrop","Cashew nuts, with shell","Cashew nuts, with shell","Cashew nuts, with shell"
+220,"MiscCrop","Chestnut","Chestnut","Chestnut"
+221,"MiscCrop","Almonds, with shell","Almonds, with shell",
+222,"MiscCrop","Walnuts, with shell","Walnuts, with shell","Walnuts, with shell"
+223,"MiscCrop","Pistachios","Pistachios","Pistachios"
+224,"MiscCrop","Kola nuts","Kola nuts","Kola nuts"
+225,"MiscCrop","Hazelnuts, with shell","Hazelnuts, with shell",
+226,"MiscCrop","Areca nuts","Areca nuts",
+229,"MiscCrop",,,"Brazil nuts, shelled"
+230,"MiscCrop",,,"Cashew nuts, shelled"
+231,"MiscCrop",,,"Almonds shelled"
+232,"MiscCrop",,,"Walnuts, shelled"
+233,"MiscCrop",,,"Hazelnuts, shelled"
+234,"MiscCrop","Nuts, nes","Nuts, nes","Nuts, nes"
+235,"MiscCrop",,,"Nuts, prepared (exc. groundnuts)"
 236,"OilCrop","Soybeans","Soybeans","Soybeans"
 237,"OilCrop","Oil, soybean",,"Oil, soybean"
 238,"OilCrop",,,"Cake, soybeans"
@@ -280,7 +280,7 @@
 296,"OilCrop","Poppy seed","Poppy seed","Poppy seed"
 297,"OilCrop",,,"Oil, poppy"
 299,"OilCrop","Melonseed","Melonseed",
-305,"OilCrop","Tallowtree seed","Tallowtree seed",
+305,"MiscCrop","Tallowtree seed","Tallowtree seed",
 306,"OilCrop",,"Vegetable tallow","Vegetable tallow"
 307,"OilCrop",,"Oil, stillingia",
 310,"OilCrop","Kapok fruit","Kapok fruit",

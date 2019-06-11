@@ -1,4 +1,4 @@
-#' module_gcam.usa_L232.industry_USA
+#' module_gcamusa_L232.industry_USA
 #'
 #' Prepare level 2 industry sector files for USA.
 #'
@@ -6,14 +6,20 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L232.DeleteSupplysector_USAind}, \code{L232.DeleteFinalDemand_USAind}, \code{object}, \code{L232.StubTechCalInput_indenergy_USA}, \code{L232.StubTechCalInput_indfeed_USA}, \code{L232.StubTechProd_industry_USA}, \code{L232.StubTechCoef_industry_USA}, \code{L232.StubTechMarket_ind_USA}, \code{L232.StubTechSecMarket_ind_USA}, \code{L232.BaseService_ind_USA}. The corresponding file in the
-#' original data system was \code{L232.industry_USA.R} (gcam-usa level2).
+#' the generated outputs: \code{L232.DeleteSupplysector_USAind}, \code{L232.DeleteFinalDemand_USAind},
+#' \code{L232.StubTechCalInput_indenergy_USA}, \code{L232.StubTechCalInput_indfeed_USA}, \code{L232.StubTechProd_industry_USA},
+#' \code{L232.StubTechCoef_industry_USA}, \code{L232.StubTechMarket_ind_USA}, \code{L232.StubTechSecMarket_ind_USA},
+#' \code{L232.BaseService_ind_USA}, \code{L232.Supplysector_ind_USA}, \code{L232.FinalEnergyKeyword_ind_USA},
+#' \code{L232.SubsectorLogit_ind_USA}, \code{L232.SubsectorShrwtFllt_ind_USA}, \code{L232.SubsectorInterp_ind_USA},
+#' \code{L232.StubTech_ind_USA}, \code{L232.StubTechInterp_ind_USA}, \code{L232.PerCapitaBased_ind_USA},
+#' \code{L232.PriceElasticity_ind_USA}, \code{L232.IncomeElasticity_ind_gcam3_USA}.
+#' The corresponding file in the original data system was \code{L232.industry_USA.R} (gcam-usa level2).
 #' @details Prepare level 2 industry sector files for USA.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author ST October 2017
-module_gcam.usa_L232.industry_USA <- function(command, ...) {
+module_gcamusa_L232.industry_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/A32.demand",
@@ -57,6 +63,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
              "L232.IncomeElasticity_ind_gcam3_USA"))
   } else if(command == driver.MAKE) {
 
+    # silence check package notes
     year <- value <- output_tot <- grid_region <- market.name <-
       calOutputValue <- calibrated.value <- calibration <- technology <-
       efficiency <- fuel <- minicam.energy.input <- object <-
@@ -87,7 +94,9 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     L232.PriceElasticity_ind <- get_data(all_data, "L232.PriceElasticity_ind")
     L232.IncomeElasticity_ind_gcam3 <- get_data(all_data, "L232.IncomeElasticity_ind_gcam3")
 
+
     # ===================================================
+    # Data Processing
 
     # convert to long form
     A32.globaltech_eff %>%
@@ -151,7 +160,6 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
     L232.PerCapitaBased_ind_USA <- industry_USA_processing(L232.PerCapitaBased_ind)
     L232.PriceElasticity_ind_USA <- industry_USA_processing(L232.PriceElasticity_ind)
     L232.IncomeElasticity_ind_gcam3_USA <- industry_USA_processing(L232.IncomeElasticity_ind_gcam3)
-
 
     # get calibrated input of industrial energy use technologies, including cogen
     L132.in_EJ_state_indnochp_F %>%
@@ -271,8 +279,9 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       mutate(market.name = gcam.USA_REGION) %>%
       select(LEVEL2_DATA_NAMES[["StubTechMarket"]]) %>%
       left_join_error_no_match(states_subregions %>% select(state, grid_region), by = c("region" = "state")) %>%
-      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS & gcamusa.USE_REGIONAL_FUEL_MARKETS == TRUE,
-                                   grid_region, market.name)) %>% select(-grid_region) %>%
+      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
+                                   grid_region, market.name)) %>%
+      select(-grid_region) %>%
       mutate(market.name = if_else(grepl("elect_td", minicam.energy.input), region, market.name)) ->
       L232.StubTechMarket_ind_USA  ## OUTPUT
 
@@ -281,6 +290,7 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       filter(is.na(secondary.output) == FALSE) %>%
       select(supplysector, subsector, technology) ->
       L232.chp_techs
+
     L232.StubTechMarket_ind_USA %>%
       # ^^ electricity is consumed from state markets
       semi_join(L232.chp_techs, by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
@@ -289,9 +299,11 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], "secondary.output", "market.name") %>%
       mutate(market.name = gcam.USA_REGION) %>%
       # ^^ over-ride regional market names
-      left_join_error_no_match(states_subregions %>% select(state, grid_region), by = c("region" = "state")) %>%
-      mutate(x = gcamusa.USE_REGIONAL_ELEC_MARKETS,
-             market.name = if_else(x == TRUE, grid_region, market.name)) %>% select(-x, -grid_region) ->
+      left_join_error_no_match(states_subregions %>%
+                                 select(state, grid_region),
+                               by = c("region" = "state")) %>%
+      mutate(market.name = grid_region) %>%
+      select(-grid_region) ->
       L232.StubTechSecMarket_ind_USA  ## OUTPUT
 
     # base-year service output of industry final demand
@@ -302,7 +314,8 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
       L232.BaseService_ind_USA  # base service is equal to the output of the industry supplysector
 
 
-    # OUTPUTS...
+    # ===================================================
+    # Produce outputs
 
     L232.DeleteSupplysector_USAind %>%
       add_title("USA industry supply sectors") %>%
@@ -391,7 +404,6 @@ module_gcam.usa_L232.industry_USA <- function(command, ...) {
                      "L132.in_EJ_state_indfeed_F",
                      "energy/A32.demand") ->
       L232.BaseService_ind_USA
-
 
     L232.Supplysector_ind_USA %>%
       add_title("Supply sector information for industry sector") %>%

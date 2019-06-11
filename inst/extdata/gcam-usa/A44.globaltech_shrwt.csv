@@ -1,5 +1,5 @@
 # File: A44.globaltech_shrwt.csv
-# Title: Building default technology shareweights
+# Title: Building technology default shareweights
 # Units: Unitless
 # Column types: ccciii 
 # ----------
@@ -24,11 +24,25 @@ resid hot water,refined liquids,fuel water heater hi-eff,1,1,1
 resid lighting,electricity,incandescent,1,1,1
 resid lighting,electricity,fluorescent,1,1,1
 resid lighting,electricity,solid state,1,1,1
-resid appliances,gas,gas appliances,1,1,1
-resid appliances,electricity,electric appliances,1,1,1
-resid appliances,electricity,electric appliances hi-eff,1,1,1
-resid appliances,refined liquids,fuel appliances,1,1,1
-resid other appliances,electricity,electricity,1,1,1
+resid refrigerators,electricity,refrigerator,1,1,1
+resid refrigerators,electricity,refrigerator hi-eff,1,1,1
+resid freezers,electricity,freezer,1,1,1
+resid freezers,electricity,freezer hi-eff,1,1,1
+resid dishwashers,electricity,dishwasher,1,1,1
+resid dishwashers,electricity,dishwasher hi-eff,1,1,1
+resid cooking,electricity,electric oven,1,1,1
+resid cooking,gas,gas oven,1,1,1
+resid cooking,gas,gas oven hi-eff,1,1,1
+resid cooking,refined liquids,lpg oven,1,1,1
+resid cooking,refined liquids,lpg oven hi-eff,1,1,1
+resid clothes dryers,electricity,clothes dryer,1,1,1
+resid clothes dryers,electricity,clothes dryer hi-eff,1,1,1
+resid clothes dryers,gas,clothes dryer,1,1,1
+resid clothes washers,electricity,clothes washer,1,1,1
+resid clothes washers,electricity,clothes washer hi-eff,1,1,1
+resid televisions,electricity,electricity,1,1,1
+resid computers,electricity,electricity,1,1,1
+resid furnace fans,electricity,electricity,1,1,1
 resid other,gas,gas,1,1,1
 resid other,electricity,electricity,1,1,1
 resid other,refined liquids,refined liquids,1,1,1
@@ -38,8 +52,7 @@ comm heating,gas,gas furnace,1,1,1
 comm heating,gas,gas furnace hi-eff,1,1,1
 comm heating,electricity,electric furnace,1,1,1
 comm heating,electricity,electric heat pump,1,1,1
-comm heating,refined liquids,fuel boiler,1,1,1
-comm heating,refined liquids,fuel boiler hi-eff,1,1,1
+comm heating,refined liquids,fuel furnace,1,1,1
 comm cooling,gas,gas cooling,1,1,1
 comm cooling,electricity,air conditioning,1,1,1
 comm cooling,electricity,air conditioning hi-eff,1,1,1
@@ -50,8 +63,10 @@ comm hot water,electricity,electric heat pump water heater,1,1,1
 comm hot water,refined liquids,fuel water heater,1,1,1
 comm ventilation,electricity,ventilation,1,1,1
 comm ventilation,electricity,ventilation hi-eff,1,1,1
-comm cooking,gas,gas stove,1,1,1
-comm cooking,electricity,electric stove,1,1,1
+comm cooking,gas,gas range,1,1,1
+comm cooking,gas,gas range hi-eff,1,1,1
+comm cooking,electricity,electric range,1,1,1
+comm cooking,electricity,electric range hi-eff,1,1,1
 comm lighting,electricity,incandescent,1,1,1
 comm lighting,electricity,fluorescent,1,1,1
 comm lighting,electricity,solid state,1,1,1
