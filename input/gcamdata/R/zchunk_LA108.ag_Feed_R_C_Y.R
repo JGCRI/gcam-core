@@ -93,6 +93,16 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       replace_na(list(Feedfrac = 0)) ->                                  # Replace missing data with 0 (assumes no share for those crops)
       ag_Feed_Mt_R_Cnf_Y
 
+    # If any of the secondary output feedcakes of some GCAM commodity used for biodiesel production exceed the
+    # reported use of that commodity as feed in FAOSTAT, the method above returns negative estimates of feed demand.
+    # This should be addressed by looking specifically at the data, and likely reducing the secondary output coefficient
+    # of the problematic process(es). Failure to do so will result in negative calibration values read to GCAM and
+    # model solution failure.
+    if(any(ag_Feed_Mt_R_Cnf_Y$value < 0)){
+      stop("Negative feed demands due to secondary output feedcakes exceeding regional feed usage")
+    }
+
+
     # Compute aggregate demand by region, feed, and year from the IMAGE data
     L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
       group_by(GCAM_region_ID, feed, year) %>%
