@@ -31,7 +31,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
              "L221.GlobalTechCoef_en",
              "L221.SubsectorInterp_en",
              "L221.StubTech_en",
-             "L221.StubTechShrwt_bio",
+             "L221.StubTechShrwt_bioOil",
              "L221.StubTechFractProd_en",
              "L221.StubTechFractSecOut_en",
              "L221.DepRsrc_en",
@@ -89,7 +89,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
     L221.GlobalTechCoef_en <- get_data(all_data, "L221.GlobalTechCoef_en")
     L221.SubsectorInterp_en <- get_data(all_data, "L221.SubsectorInterp_en")
     L221.StubTech_en <- get_data(all_data, "L221.StubTech_en")
-    L221.StubTechShrwt_bio <- get_data(all_data, "L221.StubTechShrwt_bio")
+    L221.StubTechShrwt_bioOil <- get_data(all_data, "L221.StubTechShrwt_bioOil")
     L221.StubTechFractProd_en <- get_data(all_data, "L221.StubTechFractProd_en")
     L221.StubTechFractSecOut_en <- get_data(all_data, "L221.StubTechFractSecOut_en")
     L221.DepRsrc_en <- get_data(all_data, "L221.DepRsrc_en")
@@ -172,7 +172,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES$StubTechMarket) -> L2261.StubTechMarket_bio_USA
 
     # Technology share-weights of state-level regional biomassOil sectors
-    L221.StubTechShrwt_bio %>%
+    L221.StubTechShrwt_bioOil %>%
       filter(region == gcam.USA_REGION) %>%
       select(-region) %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
@@ -401,7 +401,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Technology share-weights for state-level regional biomassOil supply sectors") %>%
       add_legacy_name("L2261.StubTechShrwt_rbO_USA") %>%
-      add_precursors("L221.StubTechShrwt_bio") ->
+      add_precursors("L221.StubTechShrwt_bioOil") ->
       L2261.StubTechShrwt_rbO_USA
 
     L2261.StubTechFractSecOut_bio_USA %>%
