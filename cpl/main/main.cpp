@@ -33,7 +33,7 @@
 
 /*!
 * \file main.cpp
-* \brief This is file runs GCAM as if it were coupled to E3SM. This is used for testing.
+* \brief This file runs GCAM as if it were coupled to E3SM. This is used for testing.
 *
 * \author Kate Calvin
 */
@@ -64,7 +64,6 @@ int main( ) {
     
     // Run GCAM
     for( int yr = 1975; yr < 2010; yr++ ){
-        cout << "Running year: " << yr << endl;
         int ymd = yr * 10000;
         int *yyyymmdd = &ymd;
         p_obj->runGCAM(yyyymmdd, temp, gcami, temp, temp,
