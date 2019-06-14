@@ -14,9 +14,10 @@
 // xerces xml headers
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
-#include "util/base/include/xml_helper.h"
+
 
 // include custom headers
+#include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
 #include "containers/include/iscenario_runner.h"
 #include "containers/include/scenario_runner_factory.h"
@@ -25,6 +26,7 @@
 #include "util/logger/include/logger_factory.h"
 #include "util/base/include/timer.h"
 #include "util/base/include/version.h"
+#include "../include/remap_data.h"
 
 using namespace std;
 using namespace xercesc;
@@ -44,6 +46,8 @@ class GCAM_E3SM_interface {
   static std::vector<std::string> landType; // 
   static std::vector<std::string> cropName; // 
 
+  ReMapData mCO2EmissData;
+    
  private:
     std::auto_ptr<IScenarioRunner> runner;
     typedef std::vector<Region*>::iterator RegionIterator;

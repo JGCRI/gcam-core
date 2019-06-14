@@ -11,6 +11,7 @@
 
 #include "../include/remap_data.h"
 #include "../include/get_data_helper.h"
+#include "util/base/include/xml_helper.h"
 
 ofstream outFile;
 
@@ -98,7 +99,7 @@ void GCAM_E3SM_interface::initGCAM(void)
     mainLog << "Parsing input files..." << endl;
     Configuration* conf = Configuration::getInstance();
     success = XMLHelper<void>::parseXML( configurationFileName, conf );
-    // Check if parsing succeeded. Non-zero return codes from main indicate
+    // TODO: Check if parsing succeeded. Non-zero return codes from main indicate
     
     
     // Initialize the timer.  Create an object of the Timer class.
@@ -110,19 +111,29 @@ void GCAM_E3SM_interface::initGCAM(void)
     list<string> exclusionList;
     
     //  create the scenario runner
-    //auto_ptr<IScenarioRunner> runner = ScenarioRunnerFactory::createDefault( exclusionList );
     runner = ScenarioRunnerFactory::createDefault( exclusionList );
     
     // Setup the scenario.
     success = runner->setupScenarios( timer );
 
+    // Setup the mappings
+    success = XMLHelper<void>::parseXML("../cpl/mappings/co2.xml", &mCO2EmissData);
+    const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
+    vector<int> years (modeltime->getmaxper());
+    for(int per = 0; per < modeltime->getmaxper(); ++per) {
+        years[per] = modeltime->getper_to_yr(per);
+    }
+    mCO2EmissData.addYearColumn("Year", years, map<int, int>());
+    mCO2EmissData.finalizeColumns();
+
+    // Clean up
     XMLHelper<void>::cleanupParser();
     
-    const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
-    
+    // Set start and end year
     gcamStartYear = modeltime->getStartYear();
     gcamEndYear = modeltime->getEndYear();
     
+    // Stop the timer
     timer.stop();
     
 }
@@ -170,10 +181,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
     int period = modeltime->getyr_to_per( curryear );
     int modelyear = modeltime->getper_to_yr( period );
     
-    mainLog << "curryear is " << curryear << endl;
-    mainLog << "period is " << period << endl;
-    mainLog << "modelyear is " << modelyear << endl;
-    mainLog << "finalCalibrationYear is " << finalCalibrationYear << endl;
+    mainLog << "Current Year is " << curryear << endl;
     
     
     if( modeltime->isModelYear( curryear )) {
@@ -181,82 +189,31 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         Timer timer;
         
         // TODO: is this necessary, it will be the same as currYear
-        mainLog << "Running GCAM for year" << modelyear << endl;
-        mainLog << "calculating period = " << period << endl;
+        mainLog << "Running GCAM for year " << modelyear;
+        mainLog << ", calculating period = " << period << endl;
         
         mainLog.precision(20);
         
         // Initialize the timer.  Create an object of the Timer class.
         timer.start();
         
+        // Run this GCAM period
         success = runner->runScenarios( period, true, timer );
         
+        // Stop the timer
         timer.stop();
 
-        //PLPTEST
-        ReMapData co2Data;
-        vector<string> regions = { "USA",
-"Africa_Eastern",
-"Africa_Northern",
-"Africa_Southern",
-"Africa_Western",
-"Australia_NZ",
-"Brazil",
-"Canada",
-"Central America and Caribbean",
-"Central Asia",
-"China",
-"EU-12",
-"EU-15",
-"Europe_Eastern",
-"Europe_Non_EU",
-"European Free Trade Association",
-"India",
-"Indonesia",
-"Japan",
-"Mexico",
-"Middle East",
-"Pakistan",
-"Russia",
-"South Africa",
-"South America_Northern",
-"South America_Southern",
-"South Asia",
-"South Korea",
-"Southeast Asia",
-"Taiwan",
-"Argentina",
-"Colombia" };
-        map<string, string> regionMap;
-        for(auto r : regions) {
-            regionMap[r] = "Other";
-        }
-        regionMap["USA"] = "USA";
-        vector<string> regionsOut = { "USA", "Other" };
-        co2Data.addColumn("region", regionsOut, regionMap);
-        vector<string> sectors = { "refining" };
-        co2Data.addColumn("sector", sectors, map<string, string>());
+        // Get all data that needs to be passed back to E3SM
+        GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions");
+        getCo2.run(runner->getInternalScenario(), mCO2EmissData);
+        double *co2 = mCO2EmissData.getData();
+        cout << "Current year is: " << curryear << endl;
+        const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
         vector<int> years (modeltime->getmaxper());
-        for(int per = 0; per < modeltime->getmaxper(); ++per) {
-            years[per] = modeltime->getper_to_yr(per);
-        }
-        co2Data.addYearColumn("Year", years, map<int, int>());
-        co2Data.finalizeColumns();
-        GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,StringEquals,refining]//ghg[NamedFilter,StringEquals,CO2]/emissions");
-        getCo2.run(runner->getInternalScenario(), co2Data);
-        double *co2 = co2Data.getData();
         for(size_t i = 0; i < (2 * 1 * years.size()); ++i) {
             cout << co2[i] << endl;
         }
-        //PLPTEST
         
-        // write restarts if needed.
-        /*
-        if(write_rest) {
-            mainLog << "write_rest: " << *write_rest << endl;
-            //runner->writeRestart( period, curryear );
-        }
-        */
     }
 }
 
