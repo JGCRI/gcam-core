@@ -13,7 +13,7 @@
 #' \code{L210.GrdRenewRsrcCurves_tradbio}, \code{L210.GrdRenewRsrcMax_tradbio}, \code{L210.DepRsrcTechChange_SSP1}, \code{L210.DepRsrcEnvironCost_SSP1},
 #' \code{L210.DepRsrcTechChange_SSP2}, \code{L210.DepRsrcEnvironCost_SSP2}, \code{L210.DepRsrcTechChange_SSP3}, \code{L210.DepRsrcEnvironCost_SSP3},
 #' \code{L210.DepRsrcTechChange_SSP4}, \code{L210.DepRsrcEnvironCost_SSP4}, \code{L210.DepRsrcTechChange_SSP5}, \code{L210.DepRsrcEnvironCost_SSP5},
-#' \code{L210.ResSubresoureProdLifetime}, \code{L210.ResReserveTechLifetime}, \code{L210.ResReserveTechDeclinePhase}, \code{L210.ResReserveTechProfitShutdown}, \code{L210.ResTechShrwt}, \code{L210.ResTechShrwt_EGS}.
+#' \code{L210.ResSubresourceProdLifetime}, \code{L210.ResReserveTechLifetime}, \code{L210.ResReserveTechDeclinePhase}, \code{L210.ResReserveTechProfitShutdown}, \code{L210.ResTechShrwt}, \code{L210.ResTechShrwt_EGS}.
 #' The corresponding file in the original data system was \code{L210.resources.R} (energy level2).
 #' @details Resource market information, prices, TechChange parameters, supply curves, and environmental costs.
 #' @importFrom assertthat assert_that
@@ -30,7 +30,8 @@ module_energy_L210.resources <- function(command, ...) {
              FILE = "energy/A10.TechChange_SSPs",
              FILE = "energy/A10.EnvironCost_SSPs",
              FILE = "energy/A15.roofPV_TechChange",
-             FILE = "energy/A10.ResSubresoureProdLifetime",
+             FILE = "energy/A10.ResSubresourceProdLifetime",
+             FILE = "energy/A10.SubresourcePriceAdder",
              FILE = "energy/A10.ResReserveTechLifetime",
              FILE = "energy/A10.ResReserveTechDeclinePhase",
              FILE = "energy/A10.ResReserveTechProfitShutdown",
@@ -77,7 +78,8 @@ module_energy_L210.resources <- function(command, ...) {
              "L210.DepRsrcEnvironCost_SSP4", # Units
              "L210.DepRsrcTechChange_SSP5",
              "L210.DepRsrcEnvironCost_SSP5", # Units
-             "L210.ResSubresoureProdLifetime",
+             "L210.ResSubresourceProdLifetime",
+             "L210.SubresourcePriceAdder",
              "L210.ResReserveTechLifetime",
              "L210.ResReserveTechDeclinePhase",
              "L210.ResReserveTechProfitShutdown",
@@ -111,7 +113,9 @@ module_energy_L210.resources <- function(command, ...) {
       gather_years
     A15.roofPV_TechChange <- get_data(all_data, "energy/A15.roofPV_TechChange") %>%
       gather_years
-    A10.ResSubresoureProdLifetime <- get_data(all_data, "energy/A10.ResSubresoureProdLifetime")
+    A10.ResSubresourceProdLifetime <- get_data(all_data, "energy/A10.ResSubresourceProdLifetime")
+    A10.SubresourcePriceAdder <- get_data(all_data, "energy/A10.SubresourcePriceAdder") %>%
+      gather_years
     A10.ResReserveTechLifetime <- get_data(all_data, "energy/A10.ResReserveTechLifetime")
     A10.ResReserveTechDeclinePhase <- get_data(all_data, "energy/A10.ResReserveTechDeclinePhase")
     A10.ResReserveTechProfitShutdown <- get_data(all_data, "energy/A10.ResReserveTechProfitShutdown")
@@ -402,10 +406,16 @@ module_energy_L210.resources <- function(command, ...) {
       L210.DepRsrcEnvironCost_SSP4
 
     # Resource-reserve assumptions which just need to get copied to all regions and years
-    A10.ResSubresoureProdLifetime %>%
+    A10.ResSubresourceProdLifetime %>%
       repeat_add_columns(GCAM_region_names) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResSubresoureProdLifetime"]]) ->
-      L210.ResSubresoureProdLifetime
+      select(!!!LEVEL2_DATA_NAMES[["ResSubresourceProdLifetime"]]) ->
+      L210.ResSubresourceProdLifetime
+
+    A10.SubresourcePriceAdder %>%
+      repeat_add_columns(GCAM_region_names) %>%
+      rename(price.adder = value) %>%
+      select(!!!LEVEL2_DATA_NAMES[["SubresourcePriceAdder"]]) ->
+      L210.SubresourcePriceAdder
 
     A10.ResReserveTechLifetime %>%
       repeat_add_columns(GCAM_region_names) %>%
@@ -434,7 +444,7 @@ module_energy_L210.resources <- function(command, ...) {
              share.weight = 1.0) %>%
       select(!!!LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
       L210.ResTechShrwt
-    # We need to remove regions + subresoures which should not exist
+    # We need to remove regions + Subresources which should not exist
     L210.ResTechShrwt %>%
       semi_join(L210.GrdRenewRsrcMax_tradbio,
                 by = c("region", "resource" = "renewresource", "subresource" = "sub.renewable.resource")) %>%
@@ -513,6 +523,13 @@ module_energy_L210.resources <- function(command, ...) {
       add_legacy_name("L210.SmthRenewRsrcTechChange") %>%
       same_precursors_as(L210.DepRsrcTechChange) ->
       L210.SmthRenewRsrcTechChange
+
+    L210.SubresourcePriceAdder %>%
+      add_title("Adjust calibration price adders in future model years") %>%
+      add_units("1975$/GJ") %>%
+      add_comments("A10.SubresourcePriceAdder written to all regions") %>%
+      add_precursors("common/GCAM_region_names", "energy/A10.SubresourcePriceAdder") ->
+      L210.SubresourcePriceAdder
 
     L210.DepRsrcCalProd %>%
       add_title("Calibrated production of depletable resources") %>%
@@ -618,12 +635,12 @@ module_energy_L210.resources <- function(command, ...) {
       same_precursors_as(L210.GrdRenewRsrcCurves_tradbio) ->
       L210.GrdRenewRsrcMax_tradbio
 
-    L210.ResSubresoureProdLifetime %>%
+    L210.ResSubresourceProdLifetime %>%
       add_title("Average production lifetime for reserve subresource") %>%
       add_units("Years") %>%
       add_comments("Used to annualize production of the cumulative resource reserve") %>%
-      add_precursors("common/GCAM_region_names", "energy/A10.ResSubresoureProdLifetime") ->
-      L210.ResSubresoureProdLifetime
+      add_precursors("common/GCAM_region_names", "energy/A10.ResSubresourceProdLifetime") ->
+      L210.ResSubresourceProdLifetime
 
     L210.ResReserveTechLifetime %>%
       add_title("Resource reserve technology lifetime") %>%
@@ -671,7 +688,8 @@ module_energy_L210.resources <- function(command, ...) {
                 L210.GrdRenewRsrcCurves_EGS, L210.GrdRenewRsrcMax_EGS, L210.GrdRenewRsrcCurves_tradbio, L210.GrdRenewRsrcMax_tradbio, L210.DepRsrcTechChange_SSP1,
                 L210.DepRsrcEnvironCost_SSP1, L210.DepRsrcTechChange_SSP2, L210.DepRsrcEnvironCost_SSP2, L210.DepRsrcTechChange_SSP3, L210.DepRsrcEnvironCost_SSP3,
                 L210.DepRsrcTechChange_SSP4, L210.DepRsrcEnvironCost_SSP4, L210.DepRsrcTechChange_SSP5, L210.DepRsrcEnvironCost_SSP5,
-                L210.ResSubresoureProdLifetime, L210.ResReserveTechLifetime, L210.ResReserveTechDeclinePhase, L210.ResReserveTechProfitShutdown, L210.ResTechShrwt, L210.ResTechShrwt_EGS)
+                L210.ResSubresourceProdLifetime, L210.SubresourcePriceAdder, L210.ResReserveTechLifetime, L210.ResReserveTechDeclinePhase, L210.ResReserveTechProfitShutdown,
+                L210.ResTechShrwt, L210.ResTechShrwt_EGS)
   } else {
     stop("Unknown command")
   }

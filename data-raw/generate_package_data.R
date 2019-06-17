@@ -69,9 +69,10 @@ generate_level2_data_names <- function() {
   level2_data_names[["DepRsrcTechChange"]] <- c(level2_data_names[["SubDepRsrc"]], "year.fillout", "techChange")
   level2_data_names[["RenewRsrcTechChange"]] <- c(level2_data_names[["SubRenewRsrc"]], "year.fillout", "techChange")
   level2_data_names[["SmthRenewRsrcTechChange"]] <- c(level2_data_names[["SmthRenewRsrc"]], "year.fillout", "techChange")
+  level2_data_names[["SubresourcePriceAdder"]] <- c(level2_data_names[["SubDepRsrc"]], "year", "price.adder")
   level2_data_names[["SmthRenewRsrcCurvesGdpElast"]] <- c("region", "renewresource", "smooth.renewable.subresource", "year.fillout", "maxSubResource", "mid.price", "curve.exponent", "gdpSupplyElast")
   level2_data_names[["DepReserveCalReserve"]] <- c("region", "resource", "reserve.subresource", "year", "cal.reserve")
-  level2_data_names[["ResSubresoureProdLifetime"]] <- c("region", "resource", "reserve.subresource", "avg.prod.lifetime")
+  level2_data_names[["ResSubresourceProdLifetime"]] <- c("region", "resource", "reserve.subresource", "avg.prod.lifetime")
 
   # Supplysectors
   level2_data_names[["Supplysector"]] <- c("region", "supplysector", "output.unit", "input.unit", "price.unit", "logit.year.fillout", "logit.exponent")
@@ -196,7 +197,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["GlobalTechCTaxInput"]] <- c(level2_data_names[["GlobalTechYr"]], "ctax.input", "fuel.C.coef")
   level2_data_names[["DeleteGlobalTechInput"]] <- level2_data_names[["GlobalTechInput"]]
   level2_data_names[["GlobalIntTechCost"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "minicam.non.energy.input", "input.cost")
-  
+
   # Stub technologies
   level2_data_names[["StubTech"]] <- c("region", "supplysector", "subsector", "stub.technology")
   level2_data_names[["StubTechYr"]] <- c(level2_data_names[["StubTech"]], "year")
