@@ -1,0 +1,18 @@
+# File: A_agRegionalSector.csv
+# Title: Supplysector assumptions for regional crop markets (including logit exponent for subsector competition)
+# Units: Various
+# Comments: These sectors compete domestic production and imports from the globally traded markets
+# Source: NA
+# Column types: ccccnc
+# ----------
+supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
+regional corn,Mt,Mt,1975$/kg,-3,
+regional fibercrop,Mt,Mt,1975$/kg,-3,
+regional misccrop,Mt,Mt,1975$/kg,-3,
+regional oilcrop,Mt,Mt,1975$/kg,-3,
+regional othergrain,Mt,Mt,1975$/kg,-3,
+regional palmfruit,Mt,Mt,1975$/kg,-3,
+regional rice,Mt,Mt,1975$/kg,-3,
+regional root_tuber,Mt,Mt,1975$/kg,-3,
+regional sugarcrop,Mt,Mt,1975$/kg,-3,
+regional wheat,Mt,Mt,1975$/kg,-3,
