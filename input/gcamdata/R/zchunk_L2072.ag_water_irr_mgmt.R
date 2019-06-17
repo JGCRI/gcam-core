@@ -4,10 +4,13 @@
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
-#' @return Depends on \code{command}: either a vector of required inputs,
-#' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L2071.AgCoef_IrrBphysWater_ag_mgmt}, \code{L2072.AgCoef_IrrWaterWdraw_ag_mgmt}, \code{L2072.AgCoef_IrrWaterCons_ag_mgmt}, \code{L2072.AgCoef_RfdBphysWater_ag_mgmt}, \code{L2072.AgCoef_BphysWater_bio_mgmt}, \code{L2072.AgCoef_IrrWaterWdraw_bio_mgmt}, \code{L2072.AgCoef_IrrWaterCons_bio_mgmt}. The corresponding file in the
-#' original data system was \code{L2072.ag_water_irr_mgmt.R} (aglu level2).
+#' @return Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
+#'   \code{command} is "MAKE") all the generated outputs: \code{L2071.AgCoef_IrrBphysWater_ag_mgmt},
+#'   \code{L2072.AgCoef_IrrWaterWdraw_ag_mgmt}, \code{L2072.AgCoef_IrrWaterCons_ag_mgmt},
+#'   \code{L2072.AgCoef_RfdBphysWater_ag_mgmt}, \code{L2072.AgCoef_BphysWater_bio_mgmt},
+#'   \code{L2072.AgCoef_IrrWaterWdraw_bio_mgmt}, \code{L2072.AgCoef_IrrWaterCons_bio_mgmt},
+#'   \code{L2072.AgNonEnergyCost_IrrWaterWdraw}. The corresponding file in the original data system was
+#'   \code{L2072.ag_water_irr_mgmt.R} (aglu level2).
 #' @details This chunk calculates the Input-Output coefficients of irrigation water withdrawals and consumption, and biophysical water consumption of irrigated and rainfed crops,
 #' for each primary and dedicated bioenergy crop by region / year / GLU / management level.
 #' @importFrom assertthat assert_that
@@ -18,7 +21,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/basin_to_country_mapping",
-             "L132.ag_an_For_Prices",
+             "L2012.AgSupplySector",
              "L161.ag_irrProd_Mt_R_C_Y_GLU",
              "L161.ag_rfdProd_Mt_R_C_Y_GLU",
              "L165.BlueIrr_m3kg_R_C_GLU",
@@ -35,7 +38,8 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
              "L2072.AgCoef_RfdBphysWater_ag_mgmt",
              "L2072.AgCoef_BphysWater_bio_mgmt",
              "L2072.AgCoef_IrrWaterWdraw_bio_mgmt",
-             "L2072.AgCoef_IrrWaterCons_bio_mgmt"))
+             "L2072.AgCoef_IrrWaterCons_bio_mgmt",
+             "L2072.AgNonEnergyCost_IrrWaterWdraw"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -44,12 +48,12 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       Prod_Mt <- AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <- minicam.energy.input <-
       field.eff <- blue_fract <- conveyance.eff <- WaterPrice <- calPrice <- WaterCost <- nonLandVariableCost <-
       biomass <- type <- region <- GCAM_region_ID <- year <- value <- GCAM_commodity <- GLU <- GLU_name <-
-      IRR_RFD <- MGMT <- coefficient <- . <- NULL  # silence package check notes
+      IRR_RFD <- MGMT <- coefficient <- Profit <- input.cost <- minicam.non.energy.input <- . <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
+    L2012.AgSupplySector <- get_data(all_data, "L2012.AgSupplySector")
     L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
     L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
     L165.BlueIrr_m3kg_R_C_GLU <- get_data(all_data, "L165.BlueIrr_m3kg_R_C_GLU")
@@ -194,40 +198,50 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["AgCoef"]]) ->
       L2072.AgCoef_IrrWaterWdraw_mgmt
 
-    # Separate table of water withdrawals IO coefs for dedicated bioenergy crops
+    # Separate table of water withdrawals IO coefs into 2: one for bioenergy crops, another for non-bio crops
+    L2072.AgCoef_IrrWaterWdraw_mgmt %>%
+      filter(AgSupplySector != "biomass") ->
+      L2072.AgCoef_IrrWaterWdraw_ag_mgmt
+
     L2072.AgCoef_IrrWaterWdraw_mgmt %>%
       filter(AgSupplySector == "biomass") ->
       L2072.AgCoef_IrrWaterWdraw_bio_mgmt
 
-    # Ad hoc adjustment to water coefficients so that none of the region/GLU/crops have negative profit
-    # In GCAM, the profit rate is calculated as price minus cost times yield, so if the cost exceeds the price, then the profit goes negative.
-    # By adding in the water cost without modifying the non-land variable costs, we risk having costs that exceed commodity prices, which will
-    # cause solution/calibration failure in base years, and zero share in future years. This calculation checks whether any of our costs exceed
-    # the prices, and reduces water withdrawal coefficients where necessary.
-    # Note that the default unlimited water price is divided by the conveyance efficiency in order to replicate the prices in the model
+    # Ad hoc assignment of subsidies to observations with negative profit. In GCAM, the land profit rate is calculated
+    # as price minus cost times yield, so if the cost exceeds the price, then the profit goes negative. By adding in the
+    # water cost without modifying the non-land variable costs, we risk having costs that exceed commodity prices. This
+    # calculation checks whether any of our costs exceed the prices, and uses this information to determine a "water
+    # subsidy", applied as a negative cost to the price paid for irrigation water.
     L165.ag_IrrEff_R %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      # Separate table of water withdrawals IO coefs for primary crops
-      right_join(filter(L2072.AgCoef_IrrWaterWdraw_mgmt, AgSupplySector != "biomass"), by = "region") %>%
+      right_join(L2072.AgCoef_IrrWaterWdraw_ag_mgmt, by = "region") %>%
       # Calculate water price and water cost
-      mutate(WaterPrice = water.DEFAULT_UNLIMITED_IRR_WATER_PRICE / conveyance.eff,
-             WaterCost = coefficient * WaterPrice) %>%
-      # Match in non-land variable costs
-      left_join_error_no_match(L2052.AgCost_ag_irr_mgmt, by = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year")) %>%
-      # Match in commodity price
-      left_join_error_no_match(L132.ag_an_For_Prices, by = c("AgSupplySector" = "GCAM_commodity")) ->
-      L2072.AgCoef_IrrWaterWdraw_ag_mgmt
+      mutate(WaterCost = coefficient * water.DEFAULT_UNLIMITED_IRR_WATER_PRICE / conveyance.eff) %>%
+      # Join in non-land variable costs
+      left_join_error_no_match(L2052.AgCost_ag_irr_mgmt,
+                               by = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year")) %>%
+      # Join in commodity price
+      left_join(select(L2012.AgSupplySector, region, AgSupplySector, calPrice),
+                by = c("region", "AgSupplySector")) %>%
+      mutate(Profit = calPrice - WaterCost - nonLandVariableCost) ->
+      L2072.AgNonEnergyCost_IrrWaterWdraw
 
     # Assume an exogenous floor on profit rates to prevent negative, zero, and very low profit rates
-    # For the model, low profit rates are fine as long as it's not the dominant crop in a nest where bioenergy is allowed
-    # Define minimum profit
-    minProfit <- min(L2072.AgCoef_IrrWaterWdraw_ag_mgmt["calPrice"] - L2072.AgCoef_IrrWaterWdraw_ag_mgmt["nonLandVariableCost"]) / 2
-    L2072.AgCoef_IrrWaterWdraw_ag_mgmt %>%
-      # Adjust profit floor
-      mutate(coefficient = round(pmin(coefficient, (calPrice - nonLandVariableCost - minProfit) / WaterPrice), aglu.DIGITS_CALOUTPUT)) %>%
-      # Remove the unnecessary columns
-      select(LEVEL2_DATA_NAMES[["AgCoef"]]) ->
-      L2072.AgCoef_IrrWaterWdraw_ag_mgmt
+    # Set a floor on profit rates, equal to the minimum observed profit rate not considering water costs
+    minProfitMargin <- min(with(L2072.AgNonEnergyCost_IrrWaterWdraw, calPrice - nonLandVariableCost))
+
+    # Note: there is no need to write out zero subsidy values in region/supplysector/subsector/technology observations
+    # where all years are 0. The following steps ensure that there aren't observations with subsidies in some years but
+    # not others.
+    L2072.AgNonEnergyCost_IrrWaterWdraw %>%
+      mutate(minicam.non.energy.input = "water subsidy",
+             # Round to the same number of digits as cal-output rather than cal-price; many are close to zero
+             input.cost = if_else(Profit < minProfitMargin, round(Profit - minProfitMargin, aglu.DIGITS_CALOUTPUT), 0)) %>%
+      filter(input.cost < 0) %>%
+      complete(nesting(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, minicam.non.energy.input), year = MODEL_YEARS) %>%
+      replace_na(list(input.cost = 0)) %>%
+      select(LEVEL2_DATA_NAMES[["AgNonEnergyCost"]]) ->
+      L2072.AgNonEnergyCost_IrrWaterWdraw
 
     # Produce outputs
     L2072.AgCoef_IrrWaterCons_ag_mgmt %>%
@@ -250,9 +264,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       add_comments("The same IO coefficients are assigned to both high and low management and keep constant for all model years") %>%
       add_legacy_name("L2072.AgCoef_IrrWaterWdraw_ag_mgmt") %>%
       same_precursors_as("L2072.AgCoef_IrrWaterCons_ag_mgmt") %>%
-      add_precursors("L132.ag_an_For_Prices",
-                     "L165.ag_IrrEff_R",
-                     "L2052.AgCost_ag_irr_mgmt") ->
+      add_precursors("L165.ag_IrrEff_R") ->
       L2072.AgCoef_IrrWaterWdraw_ag_mgmt
 
     L2072.AgCoef_IrrBphysWater_ag_mgmt %>%
@@ -312,7 +324,24 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       add_precursors("L165.ag_IrrEff_R") ->
       L2072.AgCoef_IrrWaterWdraw_bio_mgmt
 
-    return_data(L2072.AgCoef_IrrBphysWater_ag_mgmt, L2072.AgCoef_IrrWaterWdraw_ag_mgmt, L2072.AgCoef_IrrWaterCons_ag_mgmt, L2072.AgCoef_RfdBphysWater_ag_mgmt, L2072.AgCoef_BphysWater_bio_mgmt, L2072.AgCoef_IrrWaterWdraw_bio_mgmt, L2072.AgCoef_IrrWaterCons_bio_mgmt)
+    L2072.AgNonEnergyCost_IrrWaterWdraw %>%
+      add_title("Irrigation water subsidies by region / crop / year / GLU / management level") %>%
+      add_units("1975$/kg") %>%
+      add_comments("Water subsidies are calculated to keep profit rates of irrigated technologies above a minimum level") %>%
+      add_comments("While implemented using <input-cost>, all values are negative so these reduce net costs") %>%
+      same_precursors_as("L2072.AgCoef_IrrWaterWdraw_ag_mgmt") %>%
+      add_precursors("L2012.AgSupplySector",
+                     "L2052.AgCost_ag_irr_mgmt") ->
+      L2072.AgNonEnergyCost_IrrWaterWdraw
+
+    return_data(L2072.AgCoef_IrrBphysWater_ag_mgmt,
+                L2072.AgCoef_IrrWaterWdraw_ag_mgmt,
+                L2072.AgCoef_IrrWaterCons_ag_mgmt,
+                L2072.AgCoef_RfdBphysWater_ag_mgmt,
+                L2072.AgCoef_BphysWater_bio_mgmt,
+                L2072.AgCoef_IrrWaterWdraw_bio_mgmt,
+                L2072.AgCoef_IrrWaterCons_bio_mgmt,
+                L2072.AgNonEnergyCost_IrrWaterWdraw)
   } else {
     stop("Unknown command")
   }

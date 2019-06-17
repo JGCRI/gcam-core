@@ -206,7 +206,7 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
   assert_that(is.logical(optional))
   assert_that(is.logical(quiet))
 
-  extensions <- c("", ".csv")
+  extensions <- c("", ".csv", ".csv.gz")
   for(ex in extensions) {
     fqfn <- system.file("extdata", paste0(filename, ex), package = "gcamdata")
     if(fqfn != "") {
