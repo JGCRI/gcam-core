@@ -229,6 +229,9 @@ public:
     virtual void endVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod );
 
     bool appendData( const std::string& aData, const std::string& aLocation );
+    
+    static std::map<std::string, std::string> decomposeLandName( std::string aLandName );
+
 private:
     //! A boost iostream which will send output to the DB as it is printed.
     mutable boost::iostreams::filtering_ostream mBuffer;
@@ -324,8 +327,6 @@ private:
     bool isTechnologyOperating( const int aPeriod );
     
     std::iostream* popBufferStack();
-    
-    static std::map<std::string, std::string> decomposeLandName( std::string aLandName );
 
 #if( __HAVE_JAVA__ )
     /*!
