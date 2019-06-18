@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remap-data>
+    <column name="region">
+        <!-- order matters here! -->
+        <output-data>USA</output-data>
+        <output-data>Other</output-data>
+        <!--output-data>Africa_Eastern</output-data>
+        <output-data>Africa_Northern</output-data>
+        <output-data>Africa_Southern</output-data>
+        <output-data>Africa_Western</output-data>
+        <output-data>Australia_NZ</output-data>
+        <output-data>Brazil</output-data>
+        <output-data>Canada</output-data>
+        <output-data>Central America and Caribbean</output-data>
+        <output-data>Central Asia</output-data>
+        <output-data>China</output-data>
+        <output-data>EU-12</output-data>
+        <output-data>EU-15</output-data>
+        <output-data>Europe_Eastern</output-data>
+        <output-data>Europe_Non_EU</output-data>
+        <output-data>European Free Trade Association</output-data>
+        <output-data>India</output-data>
+        <output-data>Indonesia</output-data>
+        <output-data>Japan</output-data>
+        <output-data>Mexico</output-data>
+        <output-data>Middle East</output-data>
+        <output-data>Pakistan</output-data>
+        <output-data>Russia</output-data>
+        <output-data>South Africa</output-data>
+        <output-data>South America_Northern</output-data>
+        <output-data>South America_Southern</output-data>
+        <output-data>South Asia</output-data>
+        <output-data>South Korea</output-data>
+        <output-data>Southeast Asia</output-data>
+        <output-data>Taiwan</output-data>
+        <output-data>Argentina</output-data>
+        <output-data>Colombia</output-data-->
+        <!-- no mappings implies no data will not get remapped -->
+        <map from="USA" to="USA"/>
+        <map from="Africa_Eastern" to="Other"/>
+        <map from="Africa_Northern" to="Other"/>
+        <map from="Africa_Southern" to="Other"/>
+        <map from="Africa_Western" to="Other"/>
+        <map from="Australia_NZ" to="Other"/>
+        <map from="Brazil" to="Other"/>
+        <map from="Canada" to="Other"/>
+        <map from="Central America and Caribbean" to="Other"/>
+        <map from="Central Asia" to="Other"/>
+        <map from="China" to="Other"/>
+        <map from="EU-12" to="Other"/>
+        <map from="EU-15" to="Other"/>
+        <map from="Europe_Eastern" to="Other"/>
+        <map from="Europe_Non_EU" to="Other"/>
+        <map from="European Free Trade Association" to="Other"/>
+        <map from="India" to="Other"/>
+        <map from="Indonesia" to="Other"/>
+        <map from="Japan" to="Other"/>
+        <map from="Mexico" to="Other"/>
+        <map from="Middle East" to="Other"/>
+        <map from="Pakistan" to="Other"/>
+        <map from="Russia" to="Other"/>
+        <map from="South Africa" to="Other"/>
+        <map from="South America_Northern" to="Other"/>
+        <map from="South America_Southern" to="Other"/>
+        <map from="South Asia" to="Other"/>
+        <map from="South Korea" to="Other"/>
+        <map from="Southeast Asia" to="Other"/>
+        <map from="Taiwan" to="Other"/>
+        <map from="Argentina" to="Other"/>
+        <map from="Colombia" to="Other"/>
+    </column>
+    <column name="sector">
+        <output-data>total</output-data>
+        <map from="H2 central production" to="total"/>
+        <map from="H2 forecourt production" to="total"/>
+        <map from="N fertilizer" to="total"/>
+        <map from="backup_electricity" to="total"/>
+        <map from="cement" to="total"/>
+        <map from="comm cooling" to="total"/>
+        <map from="comm heating" to="total"/>
+        <map from="comm others" to="total"/>
+        <map from="csp_backup" to="total"/>
+        <map from="district heat" to="total"/>
+        <map from="elec_biomass (IGCC)" to="total"/>
+        <map from="elec_biomass (conv)" to="total"/>
+        <map from="elec_coal (IGCC)" to="total"/>
+        <map from="elec_coal (conv pul)" to="total"/>
+        <map from="elec_gas (CC)" to="total"/>
+        <map from="elec_gas (steam/CT)" to="total"/>
+        <map from="elec_refined liquids (CC)" to="total"/>
+        <map from="elec_refined liquids (steam/CT)" to="total"/>
+        <map from="gas pipeline" to="total"/>
+        <map from="gas processing" to="total"/>
+        <map from="industrial energy use" to="total"/>
+        <map from="industrial feedstocks" to="total"/>
+        <map from="process heat cement" to="total"/>
+        <map from="refining" to="total"/>
+        <map from="regional biomass" to="total"/>
+        <map from="regional biomassOil" to="total"/>
+        <map from="regional corn for ethanol" to="total"/>
+        <map from="regional sugar for ethanol" to="total"/>
+        <map from="resid cooling" to="total"/>
+        <map from="resid heating" to="total"/>
+        <map from="resid others" to="total"/>
+        <map from="trn_aviation_intl" to="total"/>
+        <map from="trn_freight" to="total"/>
+        <map from="trn_freight_road" to="total"/>
+        <map from="trn_pass" to="total"/>
+        <map from="trn_pass_road" to="total"/>
+        <map from="trn_pass_road_LDV" to="total"/>
+        <map from="trn_pass_road_LDV_2W" to="total"/>
+        <map from="trn_pass_road_LDV_4W" to="total"/>
+        <map from="trn_pass_road_bus" to="total"/>
+        <map from="trn_shipping_intl" to="total"/>
+        <map from="unconventional oil production" to="total"/>
+    </column>
+</remap-data>
