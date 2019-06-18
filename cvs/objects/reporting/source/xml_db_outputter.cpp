@@ -2022,7 +2022,7 @@ map<string, string> XMLDBOutputter::decomposeLandName( string aLandName ) {
     size_t pos;
     map<string, string> ret;
     // Include the full unparsed name in the results.
-    ret[ "name " ] = aLandName;
+    ret[ "name" ] = aLandName;
     
     // Split the name on underscores from right to left.  Once we have found the
     // land-region we will assume the rest of the name is just the crop (some of
