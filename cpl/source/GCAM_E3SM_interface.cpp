@@ -18,17 +18,9 @@ ofstream outFile;
 // Pointer for a scenario
 Scenario* scenario; // model scenario info
 
-//auto_ptr<IScenarioRunner> runner;
-
-vector<string> GCAM_E3SM_interface::regionName;
-vector<string> GCAM_E3SM_interface::landType;
-vector<string> GCAM_E3SM_interface::cropName;
-
 /*! \brief Constructor
  * \details This is the constructor for the E3SM_driver class.
  */
-
-
 GCAM_E3SM_interface::GCAM_E3SM_interface(){
 }
 
@@ -124,7 +116,7 @@ void GCAM_E3SM_interface::initGCAM(void)
         years[per] = modeltime->getper_to_yr(per);
     }
     mCO2EmissData.addYearColumn("Year", years, map<int, int>());
-    mCO2EmissData.finalizeColumns();
+    
 
     // Clean up
     XMLHelper<void>::cleanupParser();
@@ -202,16 +194,22 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         
         // Stop the timer
         timer.stop();
-
+       
         // Get all data that needs to be passed back to E3SM
+        mCO2EmissData.finalizeColumns();
         GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions");
         getCo2.run(runner->getInternalScenario(), mCO2EmissData);
         double *co2 = mCO2EmissData.getData();
-        cout << "Current year is: " << curryear << endl;
+        
+//        GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/LandNode[@name='root' or @type='LandNode']//land-allocation");
+//        getLUC.run(runner->getInternalScenario(), mLUCData);
+//        double *luc = mLUCData.getData();
+        
+        // Set data in the gcamo* arrays
         const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
         vector<int> years (modeltime->getmaxper());
-        for(size_t i = 0; i < (2 * 1 * years.size()); ++i) {
-            cout << co2[i] << endl;
+        for(size_t i = 0; i < (32 * 1 * years.size()); ++i) {
+            gcamoemis[i] = co2[i];
         }
         
     }

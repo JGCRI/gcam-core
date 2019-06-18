@@ -57,9 +57,11 @@ int main( ) {
     p_obj->initGCAM();
     
     // TEMPORARY - Set up data structures that will be passed to runGCAM
+    int numEnergyRegions = 32;
+    int numModelPeriods = 22;
     double *gcami = new double [384];
     double *gcamo = new double [384];
-    double *gcamoemis = new double [384];
+    double *gcamoemis = new double [numEnergyRegions * numModelPeriods]();
     int *temp = (int *)(0); // KVC - Temporarily using this for all values additional integer pointers
     
     // Run GCAM
@@ -73,6 +75,11 @@ int main( ) {
         
         // Original call (Note lots of these arguments need to be fixed)
         // runcGCAM(ymd,tod,gcami,size(gcami,dim=1),size(gcami,dim=2),gcamo,size(gcamo,dim=1),size(gcamo,dim=2),gcamoemis,size(gcamoemis,dim=1),size(gcamoemis,dim=2), cdata%i(iac_cdatai_gcam_yr1),cdata%i(iac_cdatai_gcam_yr2),cdata%l(iac_cdatal_sneakermode),cdata%l(iac_cdatal_write_rest))
+    }
+    
+    // Test output
+    for (auto i=0; i < 32*22; i++) {
+        cout << gcamoemis[i] << endl;
     }
     
     // Finalize GCAM

@@ -3,8 +3,7 @@
     <column name="region">
         <!-- order matters here! -->
         <output-data>USA</output-data>
-        <output-data>Other</output-data>
-        <!--output-data>Africa_Eastern</output-data>
+        <output-data>Africa_Eastern</output-data>
         <output-data>Africa_Northern</output-data>
         <output-data>Africa_Southern</output-data>
         <output-data>Africa_Western</output-data>
@@ -34,40 +33,40 @@
         <output-data>Southeast Asia</output-data>
         <output-data>Taiwan</output-data>
         <output-data>Argentina</output-data>
-        <output-data>Colombia</output-data-->
-        <!-- no mappings implies no data will not get remapped -->
+        <output-data>Colombia</output-data>
+        <!-- no mappings implies no data will get remapped -->
         <map from="USA" to="USA"/>
-        <map from="Africa_Eastern" to="Other"/>
-        <map from="Africa_Northern" to="Other"/>
-        <map from="Africa_Southern" to="Other"/>
-        <map from="Africa_Western" to="Other"/>
-        <map from="Australia_NZ" to="Other"/>
-        <map from="Brazil" to="Other"/>
-        <map from="Canada" to="Other"/>
-        <map from="Central America and Caribbean" to="Other"/>
-        <map from="Central Asia" to="Other"/>
-        <map from="China" to="Other"/>
-        <map from="EU-12" to="Other"/>
-        <map from="EU-15" to="Other"/>
-        <map from="Europe_Eastern" to="Other"/>
-        <map from="Europe_Non_EU" to="Other"/>
-        <map from="European Free Trade Association" to="Other"/>
-        <map from="India" to="Other"/>
-        <map from="Indonesia" to="Other"/>
-        <map from="Japan" to="Other"/>
-        <map from="Mexico" to="Other"/>
-        <map from="Middle East" to="Other"/>
-        <map from="Pakistan" to="Other"/>
-        <map from="Russia" to="Other"/>
-        <map from="South Africa" to="Other"/>
-        <map from="South America_Northern" to="Other"/>
-        <map from="South America_Southern" to="Other"/>
-        <map from="South Asia" to="Other"/>
-        <map from="South Korea" to="Other"/>
-        <map from="Southeast Asia" to="Other"/>
-        <map from="Taiwan" to="Other"/>
-        <map from="Argentina" to="Other"/>
-        <map from="Colombia" to="Other"/>
+        <map from="Africa_Eastern" to="Africa_Eastern"/>
+        <map from="Africa_Northern" to="Africa_Northern"/>
+        <map from="Africa_Southern" to="Africa_Southern"/>
+        <map from="Africa_Western" to="Africa_Western"/>
+        <map from="Australia_NZ" to="Australia_NZ"/>
+        <map from="Brazil" to="Brazil"/>
+        <map from="Canada" to="Canada"/>
+        <map from="Central America and Caribbean" to="Central America and Caribbean"/>
+        <map from="Central Asia" to="Central Asia"/>
+        <map from="China" to="China"/>
+        <map from="EU-12" to="EU-12"/>
+        <map from="EU-15" to="EU-15"/>
+        <map from="Europe_Eastern" to="Europe_Eastern"/>
+        <map from="Europe_Non_EU" to="Europe_Non_EU"/>
+        <map from="European Free Trade Association" to="European Free Trade Association"/>
+        <map from="India" to="India"/>
+        <map from="Indonesia" to="Indonesia"/>
+        <map from="Japan" to="Japan"/>
+        <map from="Mexico" to="Mexico"/>
+        <map from="Middle East" to="Middle East"/>
+        <map from="Pakistan" to="Pakistan"/>
+        <map from="Russia" to="Russia"/>
+        <map from="South Africa" to="South Africa"/>
+        <map from="South America_Northern" to="South America_Northern"/>
+        <map from="South America_Southern" to="South America_Southern"/>
+        <map from="South Asia" to="South Asia"/>
+        <map from="South Korea" to="South Korea"/>
+        <map from="Southeast Asia" to="Southeast Asia"/>
+        <map from="Taiwan" to="Taiwan"/>
+        <map from="Argentina" to="Argentina"/>
+        <map from="Colombia" to="Colombia"/>
     </column>
     <column name="sector">
         <output-data>total</output-data>
