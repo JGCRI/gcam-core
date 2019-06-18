@@ -235,6 +235,9 @@ void ReMapData::addYearColumn(string aDataName, vector<int> aInOrderOutputNames,
  * \author Pralit Patel
  */
 void ReMapData::finalizeColumns() {
+    // First delete the old mData so we can reinitialize it.
+    delete mData;
+    
     // TODO: Error checking (if no year column or mColumns error?)
     // Calculate total size by multiplying length of each column
     size_t size = mYearColumn.getStrideLength();
