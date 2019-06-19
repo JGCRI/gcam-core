@@ -662,3 +662,14 @@ gcamusa.ELEC_SEGMENT_PEAK <- "peak generation"
 # MODEL_FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
 # MODEL_BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
 # MODEL_YEARS <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
+
+# GCAM INDIA Constants ======================================================================
+
+# GCAM-INDIA states
+gcamindia.STATES <- c("AP", "AR", "AS", "BR", "CG", "DL", "GA", "GJ", "HR",
+                      "HP", "JK", "JH", "KA", "KL", "MP", "MH", "MN", "ML",
+                      "MZ", "NL", "OD", "PB", "RJ", "SK", "TN", "TS", "TR",
+                      "UP", "UK", "UT", "WB")
+
+# GCAM-USA grid regions
+gcamindia.GRID_REGIONS <- c("Northern", "Western", "North-Eastern", "Eastern",  "Southern")
