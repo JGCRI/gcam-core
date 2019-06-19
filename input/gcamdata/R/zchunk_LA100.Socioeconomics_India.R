@@ -39,6 +39,10 @@ module_gcam.india_LA100.Socioeconomics <- function(command, ...) {
     SE_PopP_IIASA_2005_2100        <- get_data(all_data, "gcam-india/SE_PopP_IIASA_2005_2100")
     L100.gdp_mil90usd_ctry_Yh      <- get_data(all_data, "L100.gdp_mil90usd_ctry_Yh")
 
+
+    #Reshaping States and subregion files
+    States_Subregions_Grid <- select(States_Subregions_Grid, state, state_name)
+
     #Interpolating the GDP data to fill the data gaps
     SE_SGDP_MOSPI_11INR %>%
       gather_years %>%
@@ -63,9 +67,7 @@ module_gcam.india_LA100.Socioeconomics <- function(command, ...) {
     L100.GDPstate_shares %>%
       left_join_error_no_match(L100.gdp_mil90usd_India, by = "year") %>%
       mutate(value = share *total) %>%
-      select(-total, -share) %>%
-      rename(GDP_1990USD = value) %>%
-      mutate(GDP_1990USD = round(GDP_1990USD, 0)) %>%
+      select(-total, -share, -state_name) %>%
       ungroup %>%
       add_title("GDP by state") %>%
       add_units("million 1990 USD") %>%
@@ -76,15 +78,18 @@ module_gcam.india_LA100.Socioeconomics <- function(command, ...) {
       add_legacy_name("L100.GDP_mil90usd_state_india")->
       L100.GDP_mil90usd_state_india
 
-    #Estimating state wise GDP per capita
+    #Reshaping historical population
     SE_PopH_Census_1961_2011 %>%
       gather_years %>%
-      complete(nesting(state, state_name), year = HISTORICAL_YEARS) %>%
-      rename(Population = value) %>%
-      mutate(GDP_PC = (L100.GDP_mil90usd_state_india$GDP_1990USD * CONV_MIL_THOUS) / Population) %>%
-      mutate(GDP_PC = round(GDP_PC, 3)) %>%
-      ungroup %>%
-      select(state, state_name, year, GDP_PC) %>%
+      PH_year_value_historical %>%
+      rename (population = value)->
+      SE_PopH_Census_1961_2011
+
+    #Estimating state wise GDP per capita
+    L100.GDP_mil90usd_state_india %>%
+      left_join(SE_PopH_Census_1961_2011, by = c("state", "year")) %>%
+      mutate(value = value * CONV_MIL_THOUS / population) %>%
+      select(-population, -state_name) %>%
       add_title("Per-capita GDP by state") %>%
       add_units("thousand 1990 USD per capita") %>%
       add_comments("State wise GDP per capita thousands@1990USD from 1971 to 2010") %>%
@@ -109,16 +114,15 @@ module_gcam.india_LA100.Socioeconomics <- function(command, ...) {
 
     #Starting from end of history, projecting state populations into future
     SE_PopH_Census_1961_2011 %>%
-      gather_years %>%
-      filter(year == max(HISTORICAL_YEARS)) %>%
+    filter(year == max(HISTORICAL_YEARS)) %>%
       select(-year) %>%
       right_join(L100.Pop_ratio_state, by = c("state")) %>%
       filter(year > max(HISTORICAL_YEARS)) %>%
-      mutate(value = value * pop_ratio) %>%
-      rename(Population = value) %>%
-      mutate(Population = Population * CONV_ONES_THOUS) %>%
-      mutate(Population = round(Population, 0)) %>%
-      select(-pop_ratio) %>%
+      mutate(population = population * pop_ratio) %>%
+      bind_rows(SE_PopH_Census_1961_2011) %>%
+      mutate(value = population * CONV_ONES_THOUS) %>%
+      mutate(population = round(population, 0)) %>%
+      select(-population, -pop_ratio, -state_name) %>%
       arrange(state, year) %>%
       ungroup %>%
       add_title("Population by state") %>%
