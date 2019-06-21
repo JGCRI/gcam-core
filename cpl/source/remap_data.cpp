@@ -42,6 +42,7 @@
 
 #include "../include/remap_data.h"
 #include "util/base/include/xml_helper.h"
+#include "reporting/include/xml_db_outputter.h"
 
 using namespace std;
 using namespace xercesc;
@@ -132,8 +133,9 @@ bool ReMapDataHelper<T>::XMLParse( const DOMNode* aNode ) {
 
 // Constructor
 ReMapData::ReMapData():
-  mIsInitialized(false),
-  mData(0)
+mIsInitialized(false),
+mLandNameColumn(false),
+mData(0)
 {
 }
 
@@ -184,6 +186,9 @@ bool ReMapData::XMLParse( const DOMNode* aNode ) {
                 newHelper.XMLParse( curr );
                 mColumns.push_back( newHelper );
             }
+        }
+        else if( nodeName == "land-name-column" ) {
+            mLandNameColumn = true;
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -263,10 +268,31 @@ void ReMapData::finalizeColumns() {
  *
  * \author Pralit Patel
  */
-void ReMapData::setData(const vector<string>& aColValues, const int aYearValue, const double aValue) {
+void ReMapData::setData(vector<string>& aColValues, const int aYearValue, const double aValue) {
     // TODO: assume columns are in order?  If not we will want a vector<pair> and map column to index
     // TODO: error checking such as column lengths match
     
+    // For land allocation, we need to split and recombine column names.
+    if( mLandNameColumn ) {
+        // First figure out which column has the region names and which has the land types
+        size_t regionIndex = 0;
+        size_t landTypeIndex = 1;
+        for(size_t colIndex = aColValues.size(); colIndex-- > 0; ) {
+            if ( mColumns[colIndex].getName() == "region" ) {
+                regionIndex = colIndex;
+            }
+            else if ( mColumns[colIndex].getName() == "land-type" ) {
+                landTypeIndex = colIndex;
+            }
+        }
+        
+        // Next, use `decomposeLandName` to determine the region and land type.
+        // Update the column values to reflect these names.
+        map<string, string> landNames = XMLDBOutputter::decomposeLandName(aColValues[landTypeIndex]);
+        aColValues[regionIndex] = aColValues[regionIndex] + "_" + landNames["land-region"];
+        aColValues[landTypeIndex] = landNames["crop"];
+    }
+
     // Only set data if value is non-zero
     if ( aValue != 0 ) {
         // Find the index for this particular data element

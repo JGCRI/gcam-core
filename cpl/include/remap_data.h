@@ -61,11 +61,12 @@ public:
     void addColumn(std::string aDataName, std::vector<std::string> aInOrderOutputNames, std::map<std::string, std::string> aGCAMToOutputNameMap);
     void addYearColumn(std::string aDataName, std::vector<int> aInOrderOutputNames, std::map<int, int> aGCAMToOutputNameMap);
     void finalizeColumns();
-    void setData(const std::vector<std::string>& aColValues, const int aYearValue, const double aValue);
+    void setData(std::vector<std::string>& aColValues, const int aYearValue, const double aValue);
     double* getData();
     bool XMLParse(const xercesc::DOMNode* aNode);
 private:
     bool mIsInitialized;
+    bool mLandNameColumn;
     std::vector<ReMapDataHelper<std::string> > mColumns;
     ReMapDataHelper<int> mYearColumn;
     double* mData;

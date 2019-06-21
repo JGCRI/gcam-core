@@ -117,6 +117,8 @@ void GCAM_E3SM_interface::initGCAM(void)
     }
     mCO2EmissData.addYearColumn("Year", years, map<int, int>());
     
+    success = XMLHelper<void>::parseXML("../cpl/mappings/luc.xml", &mLUCData);
+    mLUCData.addYearColumn("Year", years, map<int, int>());
 
     // Clean up
     XMLHelper<void>::cleanupParser();
@@ -201,15 +203,19 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         getCo2.run(runner->getInternalScenario(), mCO2EmissData);
         double *co2 = mCO2EmissData.getData();
         
-//        GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/LandNode[@name='root' or @type='LandNode']//land-allocation");
-//        getLUC.run(runner->getInternalScenario(), mLUCData);
-//        double *luc = mLUCData.getData();
+        mLUCData.finalizeColumns();
+        GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation");
+        getLUC.run(runner->getInternalScenario(), mLUCData);
+        double *luc = mLUCData.getData();
         
         // Set data in the gcamo* arrays
         const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
         vector<int> years (modeltime->getmaxper());
         for(size_t i = 0; i < (32 * 1 * years.size()); ++i) {
             gcamoemis[i] = co2[i];
+        }
+        for(size_t i = 0; i < (390 * 8 * years.size()); ++i) {
+            gcamo[i] = luc[i];
         }
         
     }
