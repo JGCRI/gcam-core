@@ -47,6 +47,7 @@ class GCAM_E3SM_interface {
   static std::vector<std::string> cropName; // 
 
   ReMapData mCO2EmissData;
+  ReMapData mLUCData;
     
  private:
     std::auto_ptr<IScenarioRunner> runner;
