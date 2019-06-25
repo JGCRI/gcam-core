@@ -211,10 +211,11 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         // Set data in the gcamo* arrays
         const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
         vector<int> years (modeltime->getmaxper());
-        for(size_t i = 0; i < (32 * 1 * years.size()); ++i) {
+        cout << "Length = " << mCO2EmissData.getArrayLength() << endl;
+        for(size_t i = 0; i < mCO2EmissData.getArrayLength(); ++i) {
             gcamoemis[i] = co2[i];
         }
-        for(size_t i = 0; i < (390 * 8 * years.size()); ++i) {
+        for(size_t i = 0; i < mLUCData.getArrayLength(); ++i) {
             gcamo[i] = luc[i];
         }
         
