@@ -322,3 +322,18 @@ void ReMapData::setData(vector<string>& aColValues, const int aYearValue, const 
 double* ReMapData::getData() {
     return mData;
 }
+
+/*! \brief Get length of array
+ *
+ * \return size size_t with number of elements in the array
+ *
+ * \author Pralit Patel
+ */
+size_t ReMapData::getArrayLength() {
+    size_t size = mYearColumn.getStrideLength();
+    for(auto col : mColumns) {
+        size *= col.getStrideLength();
+    }
+    
+    return size;
+}

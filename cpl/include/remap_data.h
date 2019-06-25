@@ -64,6 +64,7 @@ public:
     void setData(std::vector<std::string>& aColValues, const int aYearValue, const double aValue);
     double* getData();
     bool XMLParse(const xercesc::DOMNode* aNode);
+    size_t getArrayLength();
 private:
     bool mIsInitialized;
     bool mLandNameColumn;
