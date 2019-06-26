@@ -125,6 +125,9 @@ protected:
         //! optional input of yield used only for sectors with no current production
         //! but maybe also use for calibrated yield?
         DEFINE_VARIABLE( SIMPLE, "yield", mYield, double ),
+                            
+        //! optional input of yield scaler to adjust
+        DEFINE_VARIABLE( SIMPLE, "yield-scaler", mYieldScaler, double ),
         
         //! the technological change factor
         DEFINE_VARIABLE( SIMPLE, "agProdChange", mAgProdChange, double ),

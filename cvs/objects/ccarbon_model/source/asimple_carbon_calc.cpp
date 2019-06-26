@@ -58,11 +58,10 @@ ASimpleCarbonCalc::ASimpleCarbonCalc():
 mTotalEmissions( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
 mTotalEmissionsAbove( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
 mTotalEmissionsBelow( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
+mAboveGroundCarbonDensity( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear()),
+mBelowGroundCarbonDensity( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
 mCarbonStock( scenario->getModeltime()->getStartYear(), CarbonModelUtils::getEndYear() )
 {
-    int endYear = CarbonModelUtils::getEndYear();
-    const Modeltime* modeltime = scenario->getModeltime();
-    
     mLandUseHistory = 0;
     mLandLeaf = 0;
     mSoilTimeScale = CarbonModelUtils::getSoilTimeScale();
@@ -88,6 +87,20 @@ void ASimpleCarbonCalc::initCalc( const int aPeriod ) {
 double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const CarbonCalcMode aCalcMode ) {
     const Modeltime* modeltime = scenario->getModeltime();
     
+    // KVC_IESM: First, construct the carbon density vectors, by appending the historic
+    //           carbon density to the future carbon density. There may be a better way to
+    //           do this, but I'm not seeing it right now.
+    for( int year = CarbonModelUtils::getStartYear(); year <= CarbonModelUtils::getEndYear(); ++year ) {
+        if ( year < modeltime->getStartYear() ) {
+            mAboveGroundCarbonDensity[ year ] = mLandUseHistory->getHistoricAboveGroundCarbonDensity();
+            mBelowGroundCarbonDensity[ year ] = mLandUseHistory->getHistoricBelowGroundCarbonDensity();
+        }
+        else {
+            mAboveGroundCarbonDensity[ year ] = getActualAboveGroundCarbonDensity( year );
+            mBelowGroundCarbonDensity[ year ] = getActualBelowGroundCarbonDensity( year );
+        }
+    }
+    
     // If this is a land-use history year...
     if( aPeriod == 0 ) {
         /*!
@@ -99,16 +112,15 @@ double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const Car
             // AboveGroundCarbon is overwritten in these years
             // BelowGroundCarbon affects future model periods that are not overwritten
             const double aboveGroundCarbonDensity = mLandUseHistory->getHistoricAboveGroundCarbonDensity();
-            const double belowGroundCarbonDensity = mLandUseHistory->getHistoricBelowGroundCarbonDensity();
-            
+
             double currCarbonStock = aboveGroundCarbonDensity * mLandUseHistory->getAllocation( CarbonModelUtils::getStartYear() );
             
             double prevLand = mLandUseHistory->getAllocation( CarbonModelUtils::getStartYear() - 1 );
             for( int year = CarbonModelUtils::getStartYear(); year <= mLandUseHistory->getMaxYear(); ++year ) {
                 double currLand = mLandUseHistory->getAllocation( year );
                 double landDifference = prevLand - currLand;
-                calcAboveGroundCarbonEmission( currCarbonStock, prevLand, currLand, aboveGroundCarbonDensity, year, aEndYear, mTotalEmissionsAbove );
-                calcBelowGroundCarbonEmission( landDifference * belowGroundCarbonDensity, year, aEndYear, mTotalEmissionsBelow );
+                calcAboveGroundCarbonEmission( currCarbonStock, prevLand, currLand, mAboveGroundCarbonDensity, year, aEndYear, mTotalEmissionsAbove );
+                calcBelowGroundCarbonEmission( landDifference, mBelowGroundCarbonDensity, year, aEndYear, mTotalEmissionsBelow );
                 prevLand = currLand;
                 currCarbonStock -= mTotalEmissionsAbove[ year ];
                 mTotalEmissions[year] = mTotalEmissionsAbove[year] + mTotalEmissionsBelow[year];
@@ -133,24 +145,21 @@ double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const Car
             aCalcMode != eReverseCalc ? mLandLeaf->getLandAllocation( mLandLeaf->getName(), aPeriod - 1 ) : mSavedLandAllocation[ aPeriod - 1];
         const double avgAnnualChangeInLand = ( mLandLeaf->getLandAllocation( mLandLeaf->getName(), aPeriod ) - currLand )
             / modeltime->gettimestep( aPeriod );
-        double prevCarbonBelow = currLand * getActualBelowGroundCarbonDensity( year );
 
         for( ++year; year <= modelYear; ++year ) {
             double prevLand = currLand;
             currLand += avgAnnualChangeInLand;
-            double currCarbonBelow = currLand * getActualBelowGroundCarbonDensity( year);
             // we need to be careful about accessing the carbon stock from a previous timestep
             // when we are intending to calculate in eReverseCalc as the previous timestep may have
             // already calculated in eStoreResults
             calcAboveGroundCarbonEmission( aCalcMode == eReverseCalc && (year - 1) == prevModelYear ?
                                           mSavedCarbonStock[ aPeriod - 1 ] :
-                                          mCarbonStock[ year - 1 ], prevLand, currLand, getActualAboveGroundCarbonDensity( year ), year, aEndYear, currEmissionsAbove );
-            calcBelowGroundCarbonEmission( prevCarbonBelow - currCarbonBelow, year, aEndYear, currEmissionsBelow );
+                                          mCarbonStock[ year - 1 ], prevLand, currLand, mAboveGroundCarbonDensity, year, aEndYear, currEmissionsAbove );
+            calcBelowGroundCarbonEmission( prevLand - currLand, mBelowGroundCarbonDensity, year, aEndYear, currEmissionsBelow );
 
             if( aCalcMode != eReverseCalc ) {
                 mCarbonStock[ year ] = mCarbonStock[ year - 1 ] - ( mTotalEmissionsAbove[ year ] + currEmissionsAbove[ year ] );
             }
-            prevCarbonBelow = currCarbonBelow;
         }
         
         if( aCalcMode == eStoreResults ) {
@@ -196,30 +205,30 @@ double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const Car
 void ASimpleCarbonCalc::calcAboveGroundCarbonEmission( const double aPrevCarbonStock,
                                                        const double aPrevLandArea,
                                                        const double aCurrLandArea,
-                                                       const double aPrevCarbonDensity,
+                                                       objects::YearVector<double>& aCarbonDensity,
                                                        const int aYear,
                                                        const int aEndYear,
                                                        YearVector<double>& aEmissVector)
 {
-    double carbonDiff = aPrevCarbonDensity * ( aPrevLandArea  - aCurrLandArea );
-    // If no emissions or sequestration occurred, then exit.
-    if( util::isEqual( carbonDiff, 0.0 ) ) {
+    double landDiff = aPrevLandArea  - aCurrLandArea;
+    // If no land change occurred, then exit.
+    if( util::isEqual( landDiff, 0.0 ) ) {
         return;
     }
     
     // Finally, calculate net land use change emissions from changes in
     // above ground carbon.
-    if ( getMatureAge() > 1 && carbonDiff < 0.0 ) {
+    if ( getMatureAge() > 1 && landDiff < 0.0 ) {
         // If carbon content increases, then carbon was sequestered.
         // Carbon sequestration is stretched out in time, based on mMatureAge, because some
         // land cover types (notably forests) don't mature instantly.
-        calcSigmoidCurve( carbonDiff, aYear, aEndYear, aEmissVector );
+        calcSigmoidCurve( landDiff, aCarbonDensity, aYear, aEndYear, aEmissVector, 0.0 );
     }
     else if( util::isEqual( aPrevLandArea, 0.0 ) ) {
         // If this land category didn't exist before, and now it does,
         // then the calculation below will generate a NaN.  Avoid that
         // by taking the appropriate limit here.
-        aEmissVector[ aYear ] -= aCurrLandArea * aPrevCarbonDensity;
+        aEmissVector[ aYear ] -= aCurrLandArea * aCarbonDensity[ aYear ];
     }
     else {
         // If carbon content decreases, then emissions have occurred.
@@ -243,9 +252,7 @@ void ASimpleCarbonCalc::calcAboveGroundCarbonEmission( const double aPrevCarbonS
             // difference between those two quantities tells us how
             // much pending sequestration we have.  Distribute the
             // correction as a sigmoid between aYear and aEndYear.
-            double carbonFutureAdjust = ( aPrevLandArea - aCurrLandArea ) * ( aPrevCarbonDensity -
-                                                                             ( aPrevCarbonStock / aPrevLandArea ) );
-            calcSigmoidCurve( carbonFutureAdjust, aYear, aEndYear, aEmissVector );
+            calcSigmoidCurve( landDiff, aCarbonDensity, aYear, aEndYear, aEmissVector, ( aPrevCarbonStock / aPrevLandArea ) );
         }
     }
 }
@@ -254,25 +261,30 @@ void ASimpleCarbonCalc::calcAboveGroundCarbonEmission( const double aPrevCarbonS
  * \brief Calculate the emission from below ground carbon for the given year.
  * \details Below ground, or soil carbon, is not emitted as a pulse but at a
  *          exponential rate with a half-life computed from the soil time scale.
+ * \param aLandDiff Difference in land area
+ * \param aCarbonDensity Carbon density vector
  * \param aYear Year.
  * \param aEndYear The last future year to calculate to.
  * \param aEmissVector A vector to accumulate emissions into.
  */
 //template<typename DoubleType>
-void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const double aCarbonDiff,
+void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const double aLandDiff,
+                                                       YearVector<double>& aCarbonDensity,
                                                        const int aYear,
                                                        const int aEndYear,
                                                        YearVector<double>& aEmissVector )
 {
-    // If no emissions or sequestration occurred, then exit.
-    if( util::isEqual( aCarbonDiff, 0.0 ) ){
+    // If no land use change, then exit without calculating emissions.
+    // KVC_IESM: This means we aren't capturing land use emissions (just LUC) -- that is, if
+    //           carbon density changes but land area doesn't, we won't have emissions.
+    if( util::isEqual( aLandDiff, 0.0 ) ){
         return;
     }
     
     // Exponential Soil carbon accumulation and decay, with half-life assumed to be
     // the soil time scale divided by ten.  At the half-life, half of the change will
     // have occured, at twice the half-life 75% would have occurred, etc.
-    // Note also that the aCarbonDiff is passed here as previous carbon minus current carbon
+    // Note also that the aLandDiff is passed here as previous land minus current land
     // so a positive difference means that emissions will occur and a negative means uptake.
     
     const double halfLife = mSoilTimeScale / 10.0;
@@ -283,7 +295,7 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const double aCarbonDiff,
     cumStockDiff_t1 = 0.0;
     for( int currYear = aYear; currYear <= aEndYear; ++currYear ) {
         yearCounter += 1;
-        cumStockDiff_t2 = aCarbonDiff * ( 1.0 - exp( -1.0 * lambda * yearCounter ) );
+        cumStockDiff_t2 = aLandDiff * aCarbonDensity[ currYear ] * ( 1.0 - exp( -1.0 * lambda * yearCounter ) );
         aEmissVector[ currYear ] += cumStockDiff_t2 - cumStockDiff_t1;
         cumStockDiff_t1 = cumStockDiff_t2;
     }
@@ -298,10 +310,12 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const double aCarbonDiff,
  * \param    aEmissVector A vector to accumulate emissions into.
  */
 //template<typename DoubleType>
-void ASimpleCarbonCalc::calcSigmoidCurve( const double aCarbonDiff,
+void ASimpleCarbonCalc::calcSigmoidCurve( const double aLandDiff,
+                                          objects::YearVector<double>& aCarbonDensity,
                                           const int aYear,
                                           const int aEndYear,
-                                          YearVector<double>& aEmissVector )
+                                          YearVector<double>& aEmissVector,
+                                          const double aCarbonAdjust )
 {
     /*!
      * \pre This calculation will not be correct for a mature age of a single
@@ -312,7 +326,7 @@ void ASimpleCarbonCalc::calcSigmoidCurve( const double aCarbonDiff,
     for( int currYear = aYear; currYear <= aEndYear; ++currYear ){
         // To avoid expensive calculations the difference in the sigmoid curve
         // has already been precomputed.
-        aEmissVector[ currYear ] += precalc_sigmoid_diff.get()[ currYear - aYear ] * aCarbonDiff;
+        aEmissVector[ currYear ] += precalc_sigmoid_diff.get()[ currYear - aYear ] * aLandDiff * ( aCarbonDensity[ currYear ] - aCarbonAdjust );
     }
 }
 

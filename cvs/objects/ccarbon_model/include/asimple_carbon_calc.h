@@ -127,6 +127,12 @@ protected:
         //! Above ground carbon stock
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "above-ground-carbon-stock", mCarbonStock, objects::YearVector<Value> ),
         
+        //! Below ground carbon density
+        DEFINE_VARIABLE( ARRAY, "above-ground-carbon-density", mAboveGroundCarbonDensity, objects::YearVector<double> ),
+                            
+        //! Below ground carbon density
+        DEFINE_VARIABLE( ARRAY, "below-ground-carbon-density", mBelowGroundCarbonDensity, objects::YearVector<double> ),
+                            
         //! Time scale for soil carbon emissions
         DEFINE_VARIABLE( SIMPLE, "soil-time-scale", mSoilTimeScale, int ),
         
@@ -183,20 +189,23 @@ protected:
     void calcAboveGroundCarbonEmission(const double aPrevCarbonStock,
                                        const double aPrevLandArea,
                                        const double aCurrLandArea,
-                                       const double aPrevCarbonDensity,
+                                       objects::YearVector<double>& aCarbonDensity,
                                        const int aYear,
                                        const int aEndYear,
                                        objects::YearVector<double>& aEmissVector);
 
-    void calcBelowGroundCarbonEmission( const double aCarbonDiff,
+    void calcBelowGroundCarbonEmission( const double aLandDiff,
+                                        objects::YearVector<double>& aCarbonDensity,
                                         const int aYear,
                                         const int aEndYear,
                                         objects::YearVector<double>& aEmissVector);
 private:
-    void calcSigmoidCurve( const double aCarbonDiff,
+    void calcSigmoidCurve( const double aLandDiff,
+                           objects::YearVector<double>& aCarbonDensity,
                            const int aYear,
                            const int aEndYear,
-                           objects::YearVector<double>& aEmissVector);
+                           objects::YearVector<double>& aEmissVector,
+                           const double aCarbonAdjust);
 };
 
 #endif // _ASIMPLE_CARBON_CALC_H_

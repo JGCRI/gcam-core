@@ -69,6 +69,7 @@ AgProductionTechnology::AgProductionTechnology( const string& aName, const int a
     mNonLandVariableCost = 0;
     mNonLandCostTechChange = 0;
     mYield  = 0;
+    mYieldScaler = 1.0;
     mAgProdChange  = 0;
     mHarvestsPerYear = 1;
     mProductLeaf = 0;
@@ -205,6 +206,11 @@ void AgProductionTechnology::initCalc( const string& aRegionName,
     
     // set the previous vintage for the next tech
     aPrevPeriodInfo.mPrevVintage = this;
+
+    // Adjust yield for changes in carbon density.
+    // Note that we want to make sure this adjustment is for this year's yield only,
+    // so this is done after the yield is set in the market info object
+    mYield *= mYieldScaler;
 
     // If yield is GCal/kHa and prices are $/GCal, then rental rate is $/kHa
     // And this is what is now passed in ($/kHa)
