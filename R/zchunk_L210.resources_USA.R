@@ -58,7 +58,8 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
     Geothermal_Hydrothermal_GWh <- State <- available <- b_exp <- cost_modifier <- curve.exponent <- curve_exponent <-
       extractioncost <- generation <- geothermal <- grade <- grade_share <- maxResource <- maxSubResource <- mid.price <-
       mid_p <- mid_price <- object <- offtake <- offtake_share <- region <- renewresource <- smooth.renewable.subresource <-
-      state <- unlimited.resource <- value <- year <- year.fillout <- . <- NULL
+      state <- unlimited.resource <- value <- year <- year.fillout <- . <-
+      sub.renewable.resource <- subresource <- NULL
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
@@ -234,7 +235,7 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(technology = subresource,
              share.weight = 1.0) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+      select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
       L210.ResTechShrwt_USA
     # ===================================================
 

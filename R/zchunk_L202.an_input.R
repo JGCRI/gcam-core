@@ -161,7 +161,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(technology = subresource,
              share.weight = 1.0) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+      select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
     L202.ResTechShrwt
 
     # L202.UnlimitedRenewRsrcCurves

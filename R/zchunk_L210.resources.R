@@ -95,7 +95,7 @@ module_energy_L210.resources <- function(command, ...) {
       resource <- environCost <- extractioncost <- fuel <- gdpSupplyElast <- grade <- market <- value <-
       maxSubResource <- mid.price <- object <- `output-unit` <- `price-unit` <- region <- resource <-
       resource_type <- scenario <-subResourceCapacityFactor <- subresource <- subresource_type <-
-      minicam.non.energy.input <- input.cost <- NULL
+      minicam.non.energy.input <- input.cost <- cal.reserve <- renewresource <- sub.renewable.resource <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -342,7 +342,7 @@ module_energy_L210.resources <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(technology = subresource,
              share.weight = 1 ) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResTechShrwt"]])
+      select(LEVEL2_DATA_NAMES[["ResTechShrwt"]])
 
 
     # L210.GrdRenewRsrcCurves_tradbio: graded supply curves of traditional biomass resources
@@ -368,7 +368,7 @@ module_energy_L210.resources <- function(command, ...) {
       # Split by SSP and assign attributes
       split(.$SSP) %>%
       lapply(function(df) {
-        select(df, !!!LEVEL2_DATA_NAMES[["ResReserveTechCost"]]) %>%
+        select(df, LEVEL2_DATA_NAMES[["ResReserveTechCost"]]) %>%
           add_units("$/GJ") %>%
           add_comments("A10.EnvironCost_SSPs written to all regions") %>%
           add_precursors("energy/A10.EnvironCost_SSPs", "common/GCAM_region_names")
@@ -408,31 +408,31 @@ module_energy_L210.resources <- function(command, ...) {
     # Resource-reserve assumptions which just need to get copied to all regions and years
     A10.ResSubresourceProdLifetime %>%
       repeat_add_columns(GCAM_region_names) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResSubresourceProdLifetime"]]) ->
+      select(LEVEL2_DATA_NAMES[["ResSubresourceProdLifetime"]]) ->
       L210.ResSubresourceProdLifetime
 
     A10.SubresourcePriceAdder %>%
       repeat_add_columns(GCAM_region_names) %>%
       rename(price.adder = value) %>%
-      select(!!!LEVEL2_DATA_NAMES[["SubresourcePriceAdder"]]) ->
+      select(LEVEL2_DATA_NAMES[["SubresourcePriceAdder"]]) ->
       L210.SubresourcePriceAdder
 
     A10.ResReserveTechLifetime %>%
       repeat_add_columns(GCAM_region_names) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResReserveTechLifetime"]]) ->
+      select(LEVEL2_DATA_NAMES[["ResReserveTechLifetime"]]) ->
       L210.ResReserveTechLifetime
 
     A10.ResReserveTechDeclinePhase %>%
       repeat_add_columns(GCAM_region_names) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResReserveTechDeclinePhase"]]) ->
+      select(LEVEL2_DATA_NAMES[["ResReserveTechDeclinePhase"]]) ->
       L210.ResReserveTechDeclinePhase
 
     A10.ResReserveTechProfitShutdown %>%
       repeat_add_columns(GCAM_region_names) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResReserveTechProfitShutdown"]]) ->
+      select(LEVEL2_DATA_NAMES[["ResReserveTechProfitShutdown"]]) ->
       L210.ResReserveTechProfitShutdown
 
     # We need to make sure we have at least a shell technology for ALL resources
@@ -442,7 +442,7 @@ module_energy_L210.resources <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(technology = subresource,
              share.weight = 1.0) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+      select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
       L210.ResTechShrwt
     # We need to remove regions + Subresources which should not exist
     L210.ResTechShrwt %>%
