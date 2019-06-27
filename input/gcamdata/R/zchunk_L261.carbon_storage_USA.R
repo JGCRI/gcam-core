@@ -162,7 +162,7 @@ module_gcamusa_L261.carbon_storage_USA <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(technology = subresource,
              share.weight = 1.0) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+      select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
       L261.ResTechShrwt_C_USA
 
     # Produce outputs

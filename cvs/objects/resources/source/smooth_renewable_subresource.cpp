@@ -232,16 +232,6 @@ double SmoothRenewableSubresource::getHighestPrice( const int aPeriod ) const{
     return value;
 }
 
-/*! \brief Update an output container for a SubResource.
- * \param aVisitor Output container to update.
- * \param aPeriod Period to update.
- */
-/*void SmoothRenewableSubresource::accept( IVisitor* aVisitor, const int aPeriod ) const {
-    // call the parent class methods since same outputs
-    aVisitor->startVisitSubRenewableResource( this, aPeriod );
-    aVisitor->endVisitSubRenewableResource( this, aPeriod );
-}*/
-
 // end of smooth_renewable_subresource.cpp 
 
 

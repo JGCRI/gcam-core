@@ -93,7 +93,6 @@ public:
                                int aPeriod, const GDP* aGDP, double aPrice );
     virtual double getLowestPrice( const int aPeriod ) const;
     virtual double getHighestPrice( const int aPeriod ) const;
-    //virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
 protected :
     

@@ -44,7 +44,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     year <- value <- supplysector <- region <- subsector <- stub.technology <- Non.CO2 <-
       input.emissions <- `2000` <- emiss.coef <- ctrl.name <- max_reduction <- variable <-
       steepness <- SO2 <- NOx <- CO <- BC <- OC <- NMVOC <- resource <- has_district_heat <-
-      . <- region <- supplysector <- NULL  # silence package check notes
+      . <- region <- supplysector <- max.reduction <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -143,7 +143,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(resource = subsector) %>%
       rename(subresource = subsector, technology = stub.technology, emiss.coef = value) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResEmissCoef"]]) %>%
+      select(LEVEL2_DATA_NAMES[["ResEmissCoef"]]) %>%
       mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
       L201.nonghg_res
 
@@ -154,7 +154,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(resource = subsector) %>%
       rename(subresource = subsector, technology = stub.technology, emiss.coef = value) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResEmissCoef"]]) %>%
+      select(LEVEL2_DATA_NAMES[["ResEmissCoef"]]) %>%
       mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
       L201.ghg_res
 
@@ -166,7 +166,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
              year = emissions.GHG_CONTROL_READIN_YEAR,
              ctrl.name = "GDP_control") %>%
       rename(subresource = subsector, technology = stub.technology, max.reduction = max_reduction) %>%
-      select(!!!LEVEL2_DATA_NAMES[["GDPCtrlMaxRes"]]) ->
+      select(LEVEL2_DATA_NAMES[["GDPCtrlMaxRes"]]) ->
       L201.nonghg_max_reduction_res
 
     # L201.nonghg_steepness_res: steepness of reduction for resources in all regions
@@ -179,7 +179,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
              year = emissions.GHG_CONTROL_READIN_YEAR,
              ctrl.name = "GDP_control") %>%
       rename(subresource = subsector, technology = stub.technology, steepness = value) %>%
-      select(!!!LEVEL2_DATA_NAMES[["GDPCtrlSteepRes"]]) ->
+      select(LEVEL2_DATA_NAMES[["GDPCtrlSteepRes"]]) ->
       L201.nonghg_steepness_res
 
     # Remove rows where we only have a value for one of max.reduction or steepness

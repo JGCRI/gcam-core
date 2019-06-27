@@ -107,7 +107,6 @@ bool ReserveSubResource::XMLDerivedClassParse( const string& aNodeName, const DO
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
 * This function may be virtual to be overridden by derived class pointers.
-* \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
 const std::string& ReserveSubResource::getXMLName() const {
@@ -120,7 +119,6 @@ const std::string& ReserveSubResource::getXMLName() const {
 * This way the tag is always consistent for both read-in and output and can be easily changed.
 * The "==" operator that is used when parsing, required this second function to return static.
 * \note A function cannot be static and virtual.
-* \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
 const std::string& ReserveSubResource::getXMLNameStatic() {

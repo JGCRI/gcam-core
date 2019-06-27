@@ -128,8 +128,8 @@ module_aglu_LB1091.ag_GrossTrade <- function(command, ...) {
       left_join_error_no_match(iso_mapping_partner,
                                by = "iso.partner") %>%
       filter(GCAM_region_ID != GCAMreg.partner) %>%
-      mutate(value = value * CONV_T_MT) %>%
-      mutate(var = tolower(sub(" Quantity", "", Element))) %>%
+      mutate(value = value * CONV_T_MT,
+             var = tolower(sub(" Quantity", "", Element))) %>%
       group_by(GCAM_region_ID, GCAM_commodity, var, year) %>%
       summarise(value = sum(value)) %>%
       group_by(GCAM_region_ID, GCAM_commodity, var, add = FALSE) %>%

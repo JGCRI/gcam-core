@@ -113,7 +113,6 @@ void ResourceReserveTechnology::toDebugXMLDerived(const int aPeriod, ostream& aO
 * This public function accesses the private constant string, XML_NAME.
 * This way the tag is always consistent for both read-in and output and can be easily changed.
 * This function may be virtual to be overridden by derived class pointers.
-* \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
 const string& ResourceReserveTechnology::getXMLName() const {
@@ -126,7 +125,6 @@ const string& ResourceReserveTechnology::getXMLName() const {
 * This way the tag is always consistent for both read-in and output and can be easily changed.
 * The "==" operator that is used when parsing, required this second function to return static.
 * \note A function cannot be static and virtual.
-* \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
 const string& ResourceReserveTechnology::getXMLNameStatic() {
@@ -235,7 +233,7 @@ void ResourceReserveTechnology::setProductionState( const int aPeriod ) {
 
     double initialOutput = annualAvgProd * productionPhaseScaler;
     if( active ) {
-        // gaurd against producing more than the total reserve by backing out the
+        // guard against producing more than the total reserve by backing out the
         // annual production that would depelete the rest of the reserve and
         // only producing the that amount if it is less that the adjusted average
         // annual production
@@ -254,7 +252,7 @@ void ResourceReserveTechnology::setProductionState( const int aPeriod ) {
 /*!
  * \brief Return fixed Technology output
  * \details For ResourceReserveTechnology we use this oportunity to set the investment
- *          cost if this is a new vintage technology.  In addtion we adjust the marginal
+ *          cost if this is a new vintage technology.  In addition we adjust the marginal
  *          revenue to include the investment cost.
  * \param aRegionName Region name.
  * \param aSectorName Sector name.
