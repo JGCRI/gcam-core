@@ -401,7 +401,7 @@ energy.DIGITS_CAPITAL          <- 0
 energy.DIGITS_COEFFICIENT      <- 7
 energy.DIGITS_COST             <- 4
 energy.DIGITS_CURVE_EXPONENT   <- 3
-energy.DIGITS_DEPRESOURCE      <- 1
+energy.DIGITS_RESOURCE      <- 1
 energy.DIGITS_EFFICIENCY       <- 3
 energy.DIGITS_FLOORSPACE       <- 3
 energy.DIGITS_GDP_SUPPLY_ELAST <- 3
@@ -647,8 +647,6 @@ gcamusa.STATE_SUBSECTOR_DELIMITER <- " "
 
 # Number of digits for model input data
 gcamusa.DIGITS_CALOUTPUT          <- 7    # production
-gcamusa.DIGITS_COST               <- 4
-gcamuse.DIGITS_DEPRESOURCE        <- 1
 gcamusa.EFFICIENCY_PARTITION_YEAR <- 2010
 gcamusa.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA transport for compatability with model
 gcamusa.DIGITS_EMISSIONS          <- 5
