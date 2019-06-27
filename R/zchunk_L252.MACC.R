@@ -126,7 +126,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       # Add column for market variable
       mutate(market.name = emissions.MAC_MARKET) %>%
       # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
-      select(!!!LEVEL2_DATA_NAMES[["ResMAC"]])
+      select(LEVEL2_DATA_NAMES[["ResMAC"]])
 
     # L252.AgMAC: Agricultural abatement (including bioenergy)
     L252.AgMAC <- L211.AGREmissions %>%

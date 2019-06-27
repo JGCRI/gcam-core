@@ -62,7 +62,8 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       maxSubResource <- k1 <- capital.tech.change.5yr <- k2 <- tech.change.5yr <- tech.change <-
       bin <- cost <- grid.cost <- renewresource <- sub.renewable.resource <- year.fillout <-
       minicam.energy.input <- efficiency <- market.name <- flag <- capacity.factor <-
-      input.cost <- capital.tech.change.period <- tech.change.period <- time.change <- NULL
+      input.cost <- capital.tech.change.period <- tech.change.period <- time.change <-
+      subresource <- NULL
 
     # ===================================================
     # Data Processing
@@ -312,7 +313,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(technology = subresource,
              share.weight = 1.0) %>%
-      select(!!!LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+      select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
       L2238.ResTechShrwt_PV_reeds_USA
 
     # ===================================================

@@ -37,7 +37,8 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
 
     sector <- fuel <- year <- value <- share <- iso <- GCAM_region_ID <- unconventionals <- value.x <-
       value.y <- FLOW <- PRODUCT <- resource <- region_GCAM3 <- CumulSum <- subresource <- grade <-
-      available <- available_region_GCAM3 <- extractioncost <- NULL  # silence package check notes
+      available <- available_region_GCAM3 <- extractioncost <- avg.prod.lifetime<-
+      timestep <- lifetime <- year_operate <- final_year <- . <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -290,15 +291,15 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
                                    ungroup() %>%
                                    select(-available),
                                  by = c("GCAM_region_ID", "resource")) ->
-        RsrcCurve_ReserveMismatch
-      RsrcCurve_ReserveMismatch %>%
-        bind_rows(RsrcCurve_ReserveMismatch %>%
+        RsrcCurve_ReserveDeficit
+      RsrcCurve_ReserveDeficit %>%
+        bind_rows(RsrcCurve_ReserveDeficit %>%
                     mutate(grade = "extended for reserve") %>%
                     # Note the factor here does not matter because this region + resource will completely
                     # deplete in the historical period and none will be available during model operation
                     # anyways.
-                    mutate(extractioncost = extractioncost * 1.1) %>%
-                    mutate(available = 0)) %>%
+                    mutate(extractioncost = extractioncost * 1.1,
+                           available = 0)) %>%
         bind_rows(L111.RsrcCurves_EJ_R_Ffos, .) ->
         L111.RsrcCurves_EJ_R_Ffos
 
