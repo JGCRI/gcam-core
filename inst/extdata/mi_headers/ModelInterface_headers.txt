@@ -58,7 +58,7 @@ PPPConvert, world/+{name}region, GDP/+{constRatio}PPPConvert, GDP/+PPPConvert, s
 #####, RESOURCES
 
 
-DepRsrc, world/+{name}region, region/+{name}resource, resource/+output-unit, resource/+price-unit, resource/+market, scenario, scenario/world
+Rsrc, world/+{name}region, region/+{name}resource, resource/+output-unit, resource/+price-unit, resource/+market, scenario, scenario/world
 
 RenewRsrc, world/+{name}region, region/+{name}renewresource, renewresource/+output-unit, renewresource/+price-unit, renewresource/+market, scenario, scenario/world
 
@@ -66,19 +66,19 @@ UnlimitRsrc, world/+{name}region, region/+{name}unlimited-resource, unlimited-re
 
 RenewRsrcMkt, world/+{name}region, region/+{name}renewresource, renewresource/+market, scenario, scenario/world
 
-DepRsrcPrice, world/+{name}region, region/+{name}resource, resource/+{year}price, resource/+price, scenario, scenario/world
+RsrcPrice, world/+{name}region, region/+{name}resource, resource/+{year}price, resource/+price, scenario, scenario/world
 
 RenewRsrcPrice, world/+{name}region, region/+{name}renewresource, renewresource/+{year}price, renewresource/+price, scenario, scenario/world
 
 UnlimitRsrcPrice, world/+{name}region, region/+{name}unlimited-resource, unlimited-resource/+{year}price, unlimited-resource/+price, scenario, scenario/world
 
-SubDepRsrc, world/+{name}region, region/+{name}resource, resource/+{name}subresource, scenario, scenario/world
+SubRsrc, world/+{name}region, region/+{name}resource, resource/+{name}subresource, scenario, scenario/world
 
 SubRenewRsrc, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, scenario, scenario/world
 
 SmthRenewRsrc, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, scenario, scenario/world
 
-DepRsrcCalProd, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{year}cal-production, subresource/+cal-production, scenario, scenario/world
+RsrcCalProd, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{year}cal-production, subresource/+cal-production, scenario, scenario/world
 
 RenewRsrcCalProd, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{year}cal-production, sub-renewable-resource/+cal-production, scenario, scenario/world
 
@@ -86,7 +86,7 @@ maxSubResource, world/+{name}region, region/+{name}renewresource, renewresource/
 
 GrdRenewRsrcMax, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{year;fillout=1}maxSubResource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
 
-DepRsrcCurves, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
+RsrcCurves, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
 RenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
@@ -96,13 +96,13 @@ SmthRenewRsrcCurvesGdpElast, world/+{name}region, region/+{name}renewresource, r
 
 GrdRenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
-DepRsrcTechChange, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{year;fillout=1}techChange, subresource/+techChange, scenario, scenario/world
+RsrcTechChange, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{year;fillout=1}techChange, subresource/+techChange, scenario, scenario/world
 
 RenewRsrcTechChange, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{year;fillout=1}techChange, sub-renewable-resource/+techChange, scenario, scenario/world
 
 SmthRenewRsrcTechChange, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+{year;fillout=1}techChange, smooth-renewable-subresource/+techChange, scenario, scenario/world
 
-DeleteDepRsrc, world/+{name}region, region/+{name; delete=1}resource, scenario, scenario/world
+DeleteRsrc, world/+{name}region, region/+{name; delete=1}resource, scenario, scenario/world
 
 DeleteRenewRsrc, world/+{name}region, region /+{name; delete=1}renewresource, scenario, scenario/world
 
@@ -110,7 +110,7 @@ DeleteUnlimitRsrc, world/+{name}region, region/+{name; delete=1}unlimited-resour
 
 SubresourcePriceAdder, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{year}price-adder, subresource/+price-adder, scenario, scenario/world
 
-DepReserveCalReserve, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{year}cal-reserve, reserve-subresource/+cal-reserve, scenario, scenario/world
+ReserveCalReserve, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{year}cal-reserve, reserve-subresource/+cal-reserve, scenario, scenario/world
 
 ResSubresourceProdLifetime, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+average-production-lifetime, scenario, scenario/world
 
