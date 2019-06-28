@@ -67,9 +67,15 @@ int main( ) {
     int *temp = (int *)(0); // KVC - Temporarily using this for all values additional integer pointers
     
     // Run GCAM
-    for( int yr = 1975; yr < 2010; yr++ ){
+    for( int yr = 1975; yr < 2025; yr++ ){
+        // Set up years
         int ymd = yr * 10000;
         int *yyyymmdd = &ymd;
+        
+        // Set carbon density
+        p_obj->setDensityGCAM(yyyymmdd, temp, gcami, temp, temp);
+        
+        // Run model
         p_obj->runGCAM(yyyymmdd, temp, gcami, temp, temp,
                        gcamo, temp, temp,
                        gcamoemis, temp, temp,
