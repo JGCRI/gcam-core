@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L252.transportation
 #'
 #' Calculate supply sector, subsector, and technology information for the transportation sector

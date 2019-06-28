@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L243.bio_trade_input
 #'
 #' Establish regionally differentiated trade structure for bioenergy.

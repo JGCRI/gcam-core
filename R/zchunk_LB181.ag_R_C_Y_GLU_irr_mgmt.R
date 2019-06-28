@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt
 #'
 #' Calculates the economic yields, cropland cover and production by GCAM region / commodity / year / GLU / irrigation / mgmt level.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L232.prc_nonco2
 #'
 #' Generates input emissions by energy technology, GHG, and base historical year.

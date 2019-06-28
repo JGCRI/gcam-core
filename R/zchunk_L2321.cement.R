@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L2321.cement
 #'
 #' Compute a variety of final energy keyword, sector, share weight, and technology information for cement-related GCAM inputs.

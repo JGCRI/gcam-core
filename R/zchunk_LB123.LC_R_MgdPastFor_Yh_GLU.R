@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU
 #'
 #' Calculates pasture and forests production, yields and managed land cover by GCAM region / GLU / year.

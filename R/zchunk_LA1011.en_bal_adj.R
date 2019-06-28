@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA1011.en_bal_adj
 #'
 #' Adjustments to the IEA energy balance for shipping fuel consumption, Russia, and natural

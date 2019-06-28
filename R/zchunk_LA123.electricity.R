@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA123.electricity
 #'
 #' This script creates electricity generation and inputs by fuel, region and historical year. Estimates are adjusted by efficiency factors.

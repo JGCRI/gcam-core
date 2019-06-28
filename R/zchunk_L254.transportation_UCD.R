@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L254.transportation_UCD
 #'
 #' Calculate transportation data using information from the global UCD transportation technology database.

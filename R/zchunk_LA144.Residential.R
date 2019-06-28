@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_LA144.Residential
 #'
 #' Calculate residential floorspace by state and residential energy consumption by state/fuel/end use.

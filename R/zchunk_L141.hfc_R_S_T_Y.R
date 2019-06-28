@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L141.hfc_R_S_T_Y
 #'
 #' Calculate HFC emissions from EDGAR, by residential and commercial cooling shares,

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L226.en_distribution
 #'
 #' Generate the level 2 data tables for the energy distribution sector,

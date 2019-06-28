@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L103.ghg_an_USA_S_T_Y
 #'
 #' Calculates methane emissions factors for animals by GCAM technology,

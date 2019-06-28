@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L202.water.resources.unlimited
 #'
 #' Create unlimited resource markets for water types, and read in fixed prices for water types.

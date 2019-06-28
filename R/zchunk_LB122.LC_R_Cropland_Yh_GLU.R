@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB122.LC_R_Cropland_Yh_GLU
 #'
 #' Integrate disparate data sources for land cover and harvested area from FAO, Monfreda, and Hyde in

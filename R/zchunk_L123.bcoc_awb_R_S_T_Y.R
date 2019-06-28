@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L123.bcoc_awb_R_S_T_Y
 #'
 #' Produces BC and OC AWB emission factors for each Ag production technology.

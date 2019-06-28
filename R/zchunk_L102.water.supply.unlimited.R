@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L102.water.supply.unlimited
 #'
 #' Summarize the water price values by water type and GCAM region.

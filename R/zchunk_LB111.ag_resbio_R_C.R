@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB111.ag_resbio_R_C
 #'
 #' Calculate the production-weighted parameters of residue biomass by GCAM region and commodity.

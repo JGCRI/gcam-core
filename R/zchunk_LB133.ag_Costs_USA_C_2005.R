@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB133.ag_Costs_USA_C_2005
 #'
 #' This module computes costs for each GCAM commodity (used by each region-GLU) using USDA cost

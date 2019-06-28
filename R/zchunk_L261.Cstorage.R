@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L261.Cstorage
 #'
 #' Calculate carbon storage resource supply curves, shareweights, technology coefficients and costs, and other carbon storage information.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L102.ghg_en_USA_S_T_Y
 #'
 #' Calculates CH4 and N2O emission factors derived from EPA GHG inventory and GCAM energy balances for the US in 2005.

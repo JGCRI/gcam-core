@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_LA143.HDDCDD
 #'
 #' Estimate heating and cooling degree days for gcam-usa.

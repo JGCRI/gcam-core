@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_batch_ccs_supply_lowest_xml
 #'
 #' Construct XML data structure for \code{ccs_supply_lowest.xml}.

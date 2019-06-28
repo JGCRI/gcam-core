@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_LA1322.Fert
 #'
 #' Calculate input-output intensity coefficients and input energy for state fertilizer production

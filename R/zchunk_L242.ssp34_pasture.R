@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L242.ssp34_pasture
 #'
 #' Construct the managed and unmanaged pasture allocation datasets for SSP3 and SSP4

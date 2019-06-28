@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_L2232.electricity_FERC_USA
 #'
 #' Generate GCAM-USA model inputs for electrcity trade sectors at the level of grid regions.

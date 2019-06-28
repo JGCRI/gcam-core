@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_data_Maddison_population
 #'
 #' Dedicated data chunk to read \code{Maddison_population.csv} file.

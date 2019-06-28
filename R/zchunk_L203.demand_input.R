@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L203.demand_input
 #'
 #' Builds agriculture demand inputs for the core and each SSP scenario.

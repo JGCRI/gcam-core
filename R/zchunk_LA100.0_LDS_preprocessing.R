@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA100.0_LDS_preprocessing
 #'
 #' Read in and process LDS (Land Data System) files.

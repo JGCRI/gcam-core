@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_LB123.Electricity
 #'
 #' Calculate electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse

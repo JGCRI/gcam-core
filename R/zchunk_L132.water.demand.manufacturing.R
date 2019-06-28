@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L132.water.demand.manufacturing
 #'
 #' Computes manufacturing water withdrawals and consumption by nation/region and historical year

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_batch_negative_emissions_budget_usa_xml
 #'
 #' Construct XML data structure for \code{paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), ".xml")}.

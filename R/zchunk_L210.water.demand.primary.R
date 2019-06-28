@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L210.water.demand.primary
 #'
 #' Generate (water demand) technology coefficients for each GCAM region for base years and future years.

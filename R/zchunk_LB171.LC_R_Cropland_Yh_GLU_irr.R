@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr
 #'
 #' Calculate irrigated/rainfed harvested cropland cover and economic yields by GCAM region / commodity / year / GLU.

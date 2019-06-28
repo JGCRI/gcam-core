@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA124.heat
 #'
 #' Process historical heat data into input, output from district heat, output from CHP, CHP ratio

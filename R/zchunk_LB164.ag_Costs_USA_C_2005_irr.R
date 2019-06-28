@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB164.ag_Costs_USA_C_2005_irr
 #'
 #' This module calculates production costs of GCAM commodities not including purchased irrigation water.

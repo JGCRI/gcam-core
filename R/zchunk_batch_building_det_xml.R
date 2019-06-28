@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_batch_building_det_xml
 #'
 #' Construct XML data structure for \code{building_det.xml}.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2062.ag_Fert_irr_mgmt
 #'
 #' Specifies fertilizer coefficients for all technologies; adjusts nonLandVariableCost to remove fertilizer cost.

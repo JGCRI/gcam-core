@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA1321.cement
 #'
 #' Sets up input, output, and IO coefficients for cement and subtracts input energy from industry energy use

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA114.wind
 #'
 #' Calculate regional supply curves for wind using country-level supply curves.

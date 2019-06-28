@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L161.nonghg_en_ssp_R_S_T_Y
 #'
 #' Produce future non-GHG emissions factors by SSP scenario.

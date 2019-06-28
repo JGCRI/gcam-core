@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L201.en_nonco2
 #'
 #' Generate non-CO2 emissions: pollutants, GHGs, non-CO2, BC/OCs, and reduction data.

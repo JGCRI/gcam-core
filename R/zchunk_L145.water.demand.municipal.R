@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L145.water.demand.municipal
 #'
 #' Generate municipal water withdrawals, municipal water base delivery cost, and municipal water use efficiency.

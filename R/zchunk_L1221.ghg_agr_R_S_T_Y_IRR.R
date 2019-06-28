@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L1221.ghg_agr_R_S_T_Y_IRR
 #'
 #' Downscale emissions to irrigated/rainfed technologies on the basis of production share.

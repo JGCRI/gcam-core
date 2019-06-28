@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L225.hydrogen
 #'
 #' Provides supply sector information, subsector information, technology information for hydrogen sectors.

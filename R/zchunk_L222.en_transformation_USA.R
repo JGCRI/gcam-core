@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_L222.en_transformation_USA
 #'
 #' Prepare the assumptions and calibrated outputs for energy transformation supplysectors, subsectors, and technologies specific to USA sectors and/or states.

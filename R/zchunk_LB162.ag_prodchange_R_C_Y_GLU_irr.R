@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr
 #'
 #' This module calculates the first level production/yield change assumptions that are exogenous to GCAM. These rates are calculated for each commodity

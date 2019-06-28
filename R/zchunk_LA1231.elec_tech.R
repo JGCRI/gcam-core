@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA1231.elec_tech
 #'
 #' Obtain inputs, outputs and efficiencies in the electricity sector for all technologies by region, sector, and year.

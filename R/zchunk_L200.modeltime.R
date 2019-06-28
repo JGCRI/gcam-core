@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_modeltime_L200.modeltime
 #'
 #' Generate the model time information needed to interact with Hector or MAGICC.

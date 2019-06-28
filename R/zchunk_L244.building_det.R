@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L244.building_det
 #'
 #' Creates level2 data for the building sector.

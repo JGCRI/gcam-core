@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA100.IMAGE_downscale_ctry_yr
 #'
 #' Extrapolate IMAGE data to all AGLU historical years and countries.
