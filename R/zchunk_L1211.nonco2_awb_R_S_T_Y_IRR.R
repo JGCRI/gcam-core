@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR
 #'
 #' Produce irrigated and rainfed production shares, and agricultural waste burning emissions by irrigated & rainfed production shares.

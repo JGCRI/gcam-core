@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L221.en_supply
 #'
 #' Writes all energy supply sector outputs.

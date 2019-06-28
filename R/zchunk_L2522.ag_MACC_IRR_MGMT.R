@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L2522.ag_MACC_IRR_MGMT
 #'
 #' Add new technology data from A_MACC_TechChange to the animal and agricultural marginal abatement cost "MAC" curves.

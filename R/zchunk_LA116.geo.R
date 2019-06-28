@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA116.geo
 #'
 #' Generate geothermal (hydrothermal and engineered geothermal systems (EGS)) supply curves by GCAM region

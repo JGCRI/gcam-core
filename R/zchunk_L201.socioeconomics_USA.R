@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_L201.socioeconomics_USA
 #'
 #' Interest rate, population, and GDP for GCAM-USA.

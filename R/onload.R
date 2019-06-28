@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 # onload.R
 
 .onLoad <- function(libname, pkgname) {

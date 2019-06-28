@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB152.ag_GTAP_R_C_GLU_irr
 #'
 #' Aggregate the irrigated/rainfed harvest area and production data by GCAM region / commodity / GLU.

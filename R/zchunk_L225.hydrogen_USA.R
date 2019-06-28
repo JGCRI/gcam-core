@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_L225.hydrogen_USA
 #'
 #' Selects the subsectors to be removed from the hydrogen sectors for GCAM USA

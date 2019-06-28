@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LB1322.Fert
 #'
 #' Compute fertilizer production and energy inputs by technology.

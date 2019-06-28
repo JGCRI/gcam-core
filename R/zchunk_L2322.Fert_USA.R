@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_L2322.Fert_USA
 #'
 #' Produce tables to create the N fertilizer sector in GCAM-USA.

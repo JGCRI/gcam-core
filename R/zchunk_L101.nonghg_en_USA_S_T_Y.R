@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L101.nonghg_en_USA_S_T_Y
 #'
 #' Compute historical emissions factors for energy by GCAM technology, from EPA emissions data and IEA energy balances.

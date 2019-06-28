@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L104.bcoc_en_USA_S_T_Y
 #'
 #' Creates USA BC and OC emission factors for combustion sectors

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L210.resources
 #'
 #' Resource market information, prices, TechChange parameters, supply curves, and environmental costs.

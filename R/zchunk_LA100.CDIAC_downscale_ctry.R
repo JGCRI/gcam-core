@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA100.CDIAC_downscale_ctry
 #'
 #' Combine and downscale (back in time, for USSR and Yugoslavia) the CDIAC emissions and sequestration data.

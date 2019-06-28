@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L151.ctrl_R_en_S_T
 #'
 #' Compute maximum reduction by region / sector / gas.

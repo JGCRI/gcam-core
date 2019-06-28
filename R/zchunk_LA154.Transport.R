@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_LA154.Transport
 #'
 #' Downscale transportation energy consumption and nonmotor data to the state level, generating three ouput tables.

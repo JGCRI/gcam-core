@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_LA101.EIA_SEDS
 #'
 #' Produce two ouput tables from the EIA state energy database:

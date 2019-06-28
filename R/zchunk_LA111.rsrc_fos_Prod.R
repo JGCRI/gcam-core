@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA111.rsrc_fos_Prod
 #'
 #' Calculate historical fossil energy production and fossil resource supply curves.

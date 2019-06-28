@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L121.nonco2_awb_R_S_T_Y
 #'
 #' Calculates 1) share of agricultural waste burning emissions by crop and land use unit, and 2) a default set of agricultural waste burning emissions at this same level.

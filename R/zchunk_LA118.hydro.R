@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA118.hydro
 #'
 #' Calculate hydro potential in EJ from 2010 to 2100 by GCAM region ID

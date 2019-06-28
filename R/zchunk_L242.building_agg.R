@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L242.building_agg
 #'
 #' Calculate supply sector, subsector, and technology information for the building sector

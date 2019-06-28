@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB163.bio_Yield_R_GLU_irr
 #'
 #' Compute base year rainfed and irrigated bioenergy crop yields for each GCAM region and GLU.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L125.bcoc_unmgd_R_S_T_Y
 #'
 #' Generate historical BC/OC emission factors for unmanaged land by land cover type, computed from RCP emissions data.

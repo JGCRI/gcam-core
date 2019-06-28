@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L105.nh3_an_USA_S_T_Y
 #'
 #' Historical NH3 emissions factors for animals by GCAM technology, computed from EPA emissions data and FAO animal statistics

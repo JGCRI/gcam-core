@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA100.FAO_downscale_ctry
 #'
 #' Downscale FAO production and consumption agricultural data to AGLU countries.

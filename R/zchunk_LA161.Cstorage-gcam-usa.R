@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_LA161.Cstorage
 #'
 #' Calculates onshore CO2 storage by grid region.

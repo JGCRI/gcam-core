@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA102.en_emiss_CDIAC
 #'
 #' Calculates regional TPES as well as regional and global emissions coefficients by fuel

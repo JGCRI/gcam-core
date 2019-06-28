@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_LA115.RooftopPV
 #'
 #' Prepare resource curves for rooftop PV (commercial and residential combined).

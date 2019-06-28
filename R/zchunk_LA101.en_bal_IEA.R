@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA101.en_bal_IEA
 #'
 #' Rename IEA products and flows to intermediate fuels and sectors used for constructing GCAM's fuel and sector calibration.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA132.industry
 #'
 #' Provides industrial energy consumption (not including CHP) and industrial feedstock consumption by GCAM region/fuel/historical year.
