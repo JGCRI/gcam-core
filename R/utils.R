@@ -444,6 +444,12 @@ screen_forbidden <- function(fn) {
                  "read\\.csv", "write\\.csv",
                  "summarise_each", "mutate_each")
 
+  # If this is a level 1 chunk we add a couple constants
+  level1 <- regexpr("_L1[0-9]+", deparse(substitute(fn))) > 0
+  if(level1) {
+    forbidden <- c(forbidden, "MODEL_BASE_YEARS", "MODEL_FUTURE_YEARS")
+  }
+
   code <- capture.output(fn)
   code <- gsub("#.*$", "", code)      # remove comments
   code <- gsub('"[^"]*"', "", code)   # remove double quoted material

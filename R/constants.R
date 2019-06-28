@@ -19,10 +19,16 @@ FLAG_XML             <- "FLAG_XML"              # xml data
 
 # Time constants ======================================================================
 
-HISTORICAL_YEARS        <- 1971:2010                            # historical years for data processing
-FUTURE_YEARS            <- 2011:2100                            # future years for data processing
-MODEL_BASE_YEARS        <- c(1975, 1990, 2005, 2010)            # calibrated periods in the model
-MODEL_FUTURE_YEARS      <- seq(2015, 2100, 5)                   # future (i.e., not calibrated) time periods in the model
+# Historical years for level 1 data processing. All chunks that produce historical data
+# for model calibration are required to produce annual data covering this entire span.
+HISTORICAL_YEARS        <- 1971:2010
+# Future years for level 1 data processing, for the few chunks that
+# produce future data (e.g., population projections)
+FUTURE_YEARS            <- 2011:2100
+# Calibrated periods in the model. Only level 2 chunks should reference these
+MODEL_BASE_YEARS        <- c(1975, 1990, 2005, 2010)
+# Future (not calibrated) model periods. Only level 2 chunks should reference these
+MODEL_FUTURE_YEARS      <- seq(2015, 2100, 5)
 MODEL_YEARS             <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
 
 
