@@ -14,6 +14,8 @@
 #' @import dplyr
 #' @importFrom tidyr gather spread
 #' @author Malyan_Ankur_CEEW
+#'
+#'
 module_gcam.india_LA100.Socioeconomics <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-india/States_Subregions_Grid",
@@ -28,9 +30,11 @@ module_gcam.india_LA100.Socioeconomics <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     state <- state_name <- year <- value  <- Area <- population <- iso <-
-        share <- pop_ratio <- NULL      # silence package check.
+        share <- pop_ratio <- total <- NULL      # silence package check.
 
     all_data <- list(...)[[1]]
+
+    # ===================================================
 
     # Load required inputs
     States_Subregions_Grid         <- get_data(all_data, "gcam-india/States_Subregions_Grid")
@@ -39,75 +43,74 @@ module_gcam.india_LA100.Socioeconomics <- function(command, ...) {
     SE_PopP_IIASA_2005_2100        <- get_data(all_data, "gcam-india/SE_PopP_IIASA_2005_2100")
     L100.gdp_mil90usd_ctry_Yh      <- get_data(all_data, "L100.gdp_mil90usd_ctry_Yh")
 
+    # ===================================================
 
+    #L100.gdp_mil90usd_India : State wise GDP at 1990 USD from 1971 to 2010
     #Reshaping States and subregion files
     States_Subregions_Grid <- select(States_Subregions_Grid, state, state_name)
 
-    #Interpolating the GDP data to fill the data gaps
+    #Interpolating the GDP data to fill the data gaps and estimating the shares of state GDP
     SE_SGDP_MOSPI_11INR %>%
       gather_years %>%
       complete(nesting(state, state_name), year = HISTORICAL_YEARS) %>%
       group_by(state, state_name) %>%
-      mutate(value = approx_fun(year, value, rule = 2)) ->
-      SE_SGDP_MOSPI_11INR
-
-    #Estimating the shares of state GDP
-    SE_SGDP_MOSPI_11INR %>%
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
       ungroup %>%
       group_by(year) %>%
-      mutate(share = value/sum(value)) %>%
-      select(-value)-> L100.GDPstate_shares
+      mutate(share = value / sum(value)) %>%
+      select(-value) %>%
+      ungroup ->
+      L100.GDPstate_shares
 
     #Estimating state wise GDP @1990USD prices
     ##FIltering the data for India
     L100.gdp_mil90usd_ctry_Yh %>%
-      filter(iso == "ind") %>% select(year, total = value) ->  L100.gdp_mil90usd_India
+      filter(iso == "ind") %>%
+      select(year, total = value) ->
+      L100.gdp_mil90usd_India
 
     ##Estimation of state GDP using L100.GDPstate_shares
     L100.GDPstate_shares %>%
       left_join_error_no_match(L100.gdp_mil90usd_India, by = "year") %>%
-      mutate(value = share *total) %>%
-      select(-total, -share, -state_name) %>%
-      ungroup %>%
-      add_title("GDP by state") %>%
-      add_units("million 1990 USD") %>%
-      add_comments("State wise GDP Millions@1990USD prices from 1971 to 2010") %>%
-      add_precursors("L100.gdp_mil90usd_ctry_Yh",
-                     "gcam-india/SE_SGDP_MOSPI_11INR",
-                     "gcam-india/SE_PopH_Census_1961_2011") %>%
-      add_legacy_name("L100.GDP_mil90usd_state_india")->
+      mutate(value = share * total) %>%
+      select(-total, -share, -state_name) ->
       L100.GDP_mil90usd_state_india
 
+
+    #L100.pcGDP_thous90usd_state_india : State wise per capita GDP at 1990 USD from 1971 to 2010
     #Reshaping historical population
     SE_PopH_Census_1961_2011 %>%
       gather_years %>%
       PH_year_value_historical %>%
-      rename (population = value)->
+      rename(population = value) ->
       SE_PopH_Census_1961_2011
 
     #Estimating state wise GDP per capita
     L100.GDP_mil90usd_state_india %>%
       left_join(SE_PopH_Census_1961_2011, by = c("state", "year")) %>%
       mutate(value = value * CONV_MIL_THOUS / population) %>%
-      select(-population, -state_name) %>%
-      add_title("Per-capita GDP by state") %>%
-      add_units("thousand 1990 USD per capita") %>%
-      add_comments("State wise GDP per capita thousands@1990USD from 1971 to 2010") %>%
-      add_precursors("L100.GDP_mil90usd_state_india") %>%
-      add_legacy_name("L100.pcGDP_thous90usd_state_india")->
+      select(-population, -state_name) ->
       L100.pcGDP_thous90usd_state_india
 
-    #Future Population by scenario. Right now just one scenario.
+
+    #L100.Pop_thous_state_india : State populations (in thousands) from end of history (2011) projected into future till 2100
+
+    #Method of Estimation:
+    #The value of first historical year (2010) of each state is considered as the reference year for that particular state for the future population (data by IIASA) and based on 2010 values
+    #the population ratios of future years (from 2011 to 2100) has been estimated. The estimated ratios are applied on the 2010 value of historical census data to make
+    #IIASA values uniform with respect to the census values.
+
     ##Estiamting the state wise population ratio
     SE_PopP_IIASA_2005_2100 %>%
       gather_years(value_col = "population") %>%
       mutate(population = as.numeric(population)) %>%
+      #completing the years from 2011 to 2100
       complete(nesting(state), year = c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
       group_by(state) %>%
       mutate(population = approx_fun(year, population)) %>%
       arrange(state, year) %>%
-      mutate(pop_ratio = population / first(population)) %>%
-      arrange(state, year) %>%
+      #estimating population share using 2010 as the reference
+      mutate(pop_ratio = population / population[year == socioeconomics.FINAL_HIST_YEAR]) %>%
       ungroup %>%
       select(-state_name, -population) ->
       L100.Pop_ratio_state
@@ -117,22 +120,48 @@ module_gcam.india_LA100.Socioeconomics <- function(command, ...) {
     filter(year == max(HISTORICAL_YEARS)) %>%
       select(-year) %>%
       right_join(L100.Pop_ratio_state, by = c("state")) %>%
+      #filtering the data after 2010
       filter(year > max(HISTORICAL_YEARS)) %>%
-      mutate(population = population * pop_ratio) %>%
+      #applying the ratios on the population and rounding off the value
+      mutate(population = round((population * pop_ratio), socioeconomics.POP_DIGITS)) %>%
       bind_rows(SE_PopH_Census_1961_2011) %>%
+      #converting the values into thousands
       mutate(value = population * CONV_ONES_THOUS) %>%
-      mutate(population = round(population, 0)) %>%
       select(-population, -pop_ratio, -state_name) %>%
       arrange(state, year) %>%
-      ungroup %>%
+      ungroup ->
+      L100.Pop_thous_state_india
+
+    # ===================================================
+
+    #Produce Outputs
+    L100.GDP_mil90usd_state_india %>%
+      add_title("GDP by state") %>%
+      add_units("million 1990 USD") %>%
+      add_comments("State wise GDP Millions_1990USD prices from 1971 to 2010") %>%
+      add_precursors("L100.gdp_mil90usd_ctry_Yh",
+                     "gcam-india/SE_SGDP_MOSPI_11INR",
+                     "gcam-india/SE_PopH_Census_1961_2011") %>%
+      add_legacy_name("L100.GDP_mil90usd_state_india")->
+      L100.GDP_mil90usd_state_india
+
+    L100.pcGDP_thous90usd_state_india %>%
+      add_title("Per-capita GDP by state") %>%
+      add_units("thousand 1990 USD per capita") %>%
+      add_comments("State wise GDP per capita thousands at 1990USD from 1971 to 2010") %>%
+      add_precursors("gcam-india/SE_PopH_Census_1961_2011") %>%
+      same_precursors_as("L100.GDP_mil90usd_state_india") %>%
+      add_legacy_name("L100.pcGDP_thous90usd_state_india") ->
+      L100.pcGDP_thous90usd_state_india
+
+    L100.Pop_thous_state_india %>%
       add_title("Population by state") %>%
       add_units("thousand persons") %>%
       add_comments("State populations (in thousands) from end of history (2011) projected into future till 2100") %>%
-      add_precursors("L100.gdp_mil90usd_ctry_Yh",
-                     "gcam-india/SE_SGDP_MOSPI_11INR",
+      add_precursors("gcam-india/SE_SGDP_MOSPI_11INR",
                      "gcam-india/SE_PopP_IIASA_2005_2100",
                      "gcam-india/States_Subregions_Grid") %>%
-      add_legacy_name("L100.Pop_thous_state_india")->
+      add_legacy_name("L100.Pop_thous_state_india") ->
       L100.Pop_thous_state_india
 
     return_data(L100.pcGDP_thous90usd_state_india, L100.GDP_mil90usd_state_india, L100.Pop_thous_state_india)
