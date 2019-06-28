@@ -21,7 +21,7 @@ extern "C" {
 
   // Set Carbon Densities in GCAM using scalers from E3SM
   void setdensitycgcam_(int *ymd, int *tod, double *gcami, int *gcami_fdim_1, int *gcami_fdim_2) {
-//    p_obj->setDensityGCAM(ymd, tod, gcami,gcami_fdim_1,gcami_fdim_2);
+    p_obj->setDensityGCAM(ymd, tod, gcami,gcami_fdim_1,gcami_fdim_2);
   }
     
   // Run GCAM

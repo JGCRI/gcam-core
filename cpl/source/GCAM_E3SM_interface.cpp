@@ -11,6 +11,7 @@
 
 #include "../include/remap_data.h"
 #include "../include/get_data_helper.h"
+#include "../include/set_data_helper.h"
 #include "util/base/include/xml_helper.h"
 
 ofstream outFile;
@@ -211,7 +212,6 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         // Set data in the gcamo* arrays
         const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
         vector<int> years (modeltime->getmaxper());
-        cout << "Length = " << mCO2EmissData.getArrayLength() << endl;
         for(size_t i = 0; i < mCO2EmissData.getArrayLength(); ++i) {
             gcamoemis[i] = co2[i];
         }
@@ -220,6 +220,38 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         }
         
     }
+}
+
+void GCAM_E3SM_interface::setDensityGCAM(int *ymd, int *tod, double *gcami, int *gcami_fdim_1, int *gcami_fdim_2) {
+    vector<int> newYear(32*22);
+    vector<std::string> newRegion(32*22);
+    vector<double> newData(32*22);
+    
+    std::string reg[] = {"USA", "Africa_Eastern", "Africa_Northern", "Africa_Southern",
+        "Africa_Western", "Australia_NZ", "Brazil", "Canada", "Central America and Caribbean",
+        "Central Asia", "China", "EU-12", "EU-15", "Europe_Eastern", "Europe_Non_EU",
+        "European Free Trade Association", "India", "Indonesia", "Japan",
+        "Mexico", "Middle East", "Pakistan", "Russia", "South Africa",
+        "South America_Northern", "South America_Southern", "South Asia",
+        "South Korea", "Southeast Asia", "Taiwan", "Argentina", "Colombia"};
+    
+    int row = 0;
+    for(int i = 0; i < 22; i++) {
+        for(int j = 0; j < 32; j++) {
+            newYear[row] = runner->getInternalScenario()->getModeltime()->getper_to_yr(i);
+            newRegion[row] = reg[j];
+            newData[row] = 1;
+            if(j == 0 & runner->getInternalScenario()->getModeltime()->getper_to_yr(i) == 2015){
+                newData[row] = 1.25;
+            }
+            
+            row++;
+        }
+    }
+    
+    SetDataHelper setScaler(newYear, newRegion, newData, "world/region[+name]/sector/subsector/technology/period[+year]/yield-scaler");
+    setScaler.run(runner->getInternalScenario());
+
 }
 
 void GCAM_E3SM_interface::finalizeGCAM()
