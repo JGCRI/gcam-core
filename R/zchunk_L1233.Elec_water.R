@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L1233.Elec_water
 #'
 #' Water consumption and withdrawals for electricity.

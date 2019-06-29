@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB121.Carbon_LT
 #'
 #' Compute natural vegetation, managed land, and pasture carbon density, mature age, and yield.

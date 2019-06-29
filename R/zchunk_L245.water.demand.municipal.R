@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L245.water.demand.municipal
 #'
 #' Expands municipal water information (cost, efficiency, coefficients) across regions and model years

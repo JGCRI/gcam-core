@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' Join past GDP time series to future.
 #'
 #' When we have to join two GDP time series, we usually find that they don't

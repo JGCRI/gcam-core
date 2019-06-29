@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB112.ag_prodchange_R_C_Y_GLU
 #'
 #' Calculate yield change ratios and yield change rates by GCAM commodity / region / future years.

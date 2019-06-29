@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2252.land_input_5_irr_mgmt
 #'
 #' Produce the inputs for the lowest level of the land nest, including disaggregated crop technologies:

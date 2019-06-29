@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L110.water.demand.primary
 #'
 #' Gets water use coefficients for primary energy.

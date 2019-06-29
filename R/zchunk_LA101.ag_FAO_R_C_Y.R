@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA101.ag_FAO_R_C_Y
 #'
 #' Aggregate FAO food consumption, ag production, and harvested area

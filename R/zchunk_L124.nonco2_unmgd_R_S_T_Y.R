@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L124.nonco2_unmgd_R_S_T_Y
 #'
 #' Calculate non-CO2 emissions from unmanaged lands (savanna burning, forest fires, deforestation)

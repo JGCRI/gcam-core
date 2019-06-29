@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_batch_MACC_TC_SSP5_IRR_MGMT_xml
 #'
 #' Construct XML data structure for \code{MACC_TC_SSP5_IRR_MGMT.xml}.

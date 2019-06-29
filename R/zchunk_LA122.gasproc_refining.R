@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA122.gasproc_refining
 #'
 #' Create gasproc, oil refining and crops inputs, outputs and IO "input-output" coefficients for refining.

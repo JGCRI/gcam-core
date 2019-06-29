@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA144.building_det_flsp
 #'
 #' Calculate residential and commercial floorspace - and floorspace prices - by GCAM region and historical year.

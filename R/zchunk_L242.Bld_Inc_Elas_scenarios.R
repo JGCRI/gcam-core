@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socioeconomics_L242.Bld_Inc_Elas_scenarios
 #'
 #' Calculates building income elasticity for each GCAM region by linear interpolation of assumption data

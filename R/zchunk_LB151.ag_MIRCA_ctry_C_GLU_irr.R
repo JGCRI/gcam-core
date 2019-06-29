@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr
 #'
 #' Separates country and harvested area into irrigated and rainfed by country, GLU, and GTAP_crop.

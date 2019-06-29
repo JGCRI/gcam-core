@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_LA100.Socioeconomics
 #'
 #' Briefly describe what this chunk does.

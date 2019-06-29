@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_data_UCD_transportation
 #'
 #' Dedicated data chunk to read UCD transportation database

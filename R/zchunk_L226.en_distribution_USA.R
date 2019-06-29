@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_L226.en_distribution_USA
 #'
 #' Create a variety of energy and electricity outputs for USA at the state and/or grid_region level.

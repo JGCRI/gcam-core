@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB110.For_FAO_R_Y
 #'
 #' Build FAO forestry production, export, import, and consumption data for every GCAM region in each year.

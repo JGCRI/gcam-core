@@ -1,16 +1,20 @@
 context("util")
 
 test_that("screening for use of forbidden functions works", {
-  testgood <- function(d1, d2) {
+  testgood_L20 <- function(d1, d2) {
     # This function should pass because we only mention
     # match and ifelse in comments and strings
     foo <- left_join_error_no_match(d1, d2)
     message('The "match" above passes because it is part of left_join_error_no_match')
     foo <- gather(d1, year, value, matches(YEAR_PATTERN))
     message('The "match" above passes because it is dplyr::matches')
+
+    # We reference model time constants but that's OK as we're a level2 function
+    x <- MODEL_BASE_YEARS
+    y <- MODEL_FUTURE_YEARS
   }
 
-  testbad <- function(x, d) {
+  testbad_L10 <- function(x, d) {
     # This function makes no sense, but it does use all of the currently forbidden functions,
     # including match
     y <- ifelse(x < 0,0, x)
@@ -24,13 +28,15 @@ test_that("screening for use of forbidden functions works", {
     dx <- cbind(d, x)
     wtf <- rbind(d, df)
     gtfo <- match(x, y)
+    mby <- MODEL_BASE_YEARS
+    mfy <- MODEL_FUTURE_YEARS
   }
 
-  expect_equal(screen_forbidden(testgood), character())
-  tb <- screen_forbidden(testbad)
+  expect_equal(screen_forbidden(testgood_L20), character())
+  tb <- screen_forbidden(testbad_L10)
   expect_equivalent(tb[,1], c("consecutive mutate calls", "(?<!error_no_)match(?!es)",
                          "ifelse", "ifelse", "melt", "cast", "rbind",
-                         "cbind", "merge"))
+                         "cbind", "merge", "MODEL_BASE_YEARS", "MODEL_FUTURE_YEARS"))
 })
 
 

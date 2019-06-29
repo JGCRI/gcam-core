@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB109.ag_an_ALL_R_C_Y
 #'
 #' Calculate primary agricultural good and animal product mass balances, by region / commodity / year.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB125.LC_tot
 #'
 #' Build Total Land Cover by GCAM region, and by GCAM region and GLU, and by GCAM region/GLU/year.

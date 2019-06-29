@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_batch_resources_SSP_xml
 #'
 #' Construct XML data structure for all the \code{resources_SSP.xml} files.

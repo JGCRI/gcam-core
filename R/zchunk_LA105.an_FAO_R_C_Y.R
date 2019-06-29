@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA105.an_FAO_R_C_Y
 #'
 #' Aggregates FAO animal products consumption and production data to GCAM region / commodity.

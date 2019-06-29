@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L111.nonghg_en_R_S_T_Y
 #'
 #' Calculate non-ghg emission totals and non-ghg emission shares of total emissions.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L122.ghg_agr_R_S_T_Y
 #'
 #' Calculates agricultural emissions shares and downscales EDGAR agricultural emissions data

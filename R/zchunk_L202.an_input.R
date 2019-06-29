@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L202.an_input
 #'
 #' Produce a wide range of animal-related resource tables: production, import, resource curves.

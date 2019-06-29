@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA100.GTAP_downscale_ctry
 #'
 #' Downscale GTAP region-level land value data to all countries.

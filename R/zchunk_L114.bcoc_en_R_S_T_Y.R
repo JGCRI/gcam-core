@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L114.bcoc_en_R_S_T_Y
 #'
 #' Compute emissions coefficients for black carbon (BC) and organic carbon (OC) for a single representative base year

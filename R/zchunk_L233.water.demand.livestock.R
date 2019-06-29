@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L233.water.demand.livestock
 #'
 #' Generates water coefficients for region-specific livestock for model years.

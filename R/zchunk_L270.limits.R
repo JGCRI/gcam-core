@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L270.limits
 #'
 #' Generate GCAM policy constraints which limit model behavior in some way.  In

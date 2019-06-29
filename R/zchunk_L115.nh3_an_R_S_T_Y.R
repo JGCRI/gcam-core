@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L115.nh3_an_R_S_T_Y
 #'
 #' Annual animal NH3 emissions by GCAM region, sector and technology.

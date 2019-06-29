@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_LA144.Commercial
 #'
 #' Calculates commercial floorspace by state and energy consumption by state/fuel/end use

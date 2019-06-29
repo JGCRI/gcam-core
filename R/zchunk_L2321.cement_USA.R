@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_L2321.cement_USA
 #'
 #' Make the logit and input tables for the cement sector in gcam-usa

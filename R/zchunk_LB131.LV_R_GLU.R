@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB131.LV_R_GLU
 #'
 #' Compute average value of land in $/m2

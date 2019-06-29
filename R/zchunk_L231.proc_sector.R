@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L231.proc_sector
 #'
 #' Writes urban & industrial processing sector outputs.

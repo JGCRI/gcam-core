@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L2233.electricity_water
 #'
 #' Generates GCAM model inputs for electricity sector with cooling system types disaggregated.

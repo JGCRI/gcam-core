@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB132.ag_an_For_Prices_USA_C_2005
 #'
 #' Calculate the calibration prices for all GCAM AGLU commodities.
