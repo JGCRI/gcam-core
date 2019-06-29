@@ -69,9 +69,11 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
     col_types <- extract_header_info(header, label = "Column types:", fqfn, required = TRUE)
 
     # Attempt the file read
+    # Note `options(warn = 2)` forces all warnings to errors...
     op <- options(warn = 2)
     fd <- try(readr::read_csv(fqfn, comment = COMMENT_CHAR, col_types = col_types, ...))
     options(op)
+    # ...ensuring we trap any anomaly here
     if(is(fd, "try-error")) {
       stop("Error or warning while reading ", basename(fqfn))
     }
