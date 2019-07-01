@@ -37,7 +37,6 @@ module_energy_L210.resources <- function(command, ...) {
              FILE = "energy/A10.ResReserveTechProfitShutdown",
              "L111.RsrcCurves_EJ_R_Ffos",
              "L111.Prod_EJ_R_F_Yh",
-             "L111.Reserve_EJ_R_F_Yh",
              "L112.RsrcCurves_Mt_R_U",
              "L113.RsrcCurves_EJ_R_MSW",
              "L114.RsrcCurves_EJ_R_wind",
@@ -95,7 +94,9 @@ module_energy_L210.resources <- function(command, ...) {
       resource <- environCost <- extractioncost <- fuel <- gdpSupplyElast <- grade <- market <- value <-
       maxSubResource <- mid.price <- object <- `output-unit` <- `price-unit` <- region <- resource <-
       resource_type <- scenario <-subResourceCapacityFactor <- subresource <- subresource_type <-
-      minicam.non.energy.input <- input.cost <- cal.reserve <- renewresource <- sub.renewable.resource <- NULL
+      minicam.non.energy.input <- input.cost <- cal.reserve <- renewresource <- sub.renewable.resource <-
+      avg.prod.lifetime <- timestep <- lifetime <- year_operate <- final_year <- GCAM_region_ID <-
+      sector <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -121,7 +122,6 @@ module_energy_L210.resources <- function(command, ...) {
     A10.ResReserveTechProfitShutdown <- get_data(all_data, "energy/A10.ResReserveTechProfitShutdown")
     L111.RsrcCurves_EJ_R_Ffos <- get_data(all_data, "L111.RsrcCurves_EJ_R_Ffos")
     L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
-    L111.Reserve_EJ_R_F_Yh <- get_data(all_data, "L111.Reserve_EJ_R_F_Yh")
     L112.RsrcCurves_Mt_R_U <- get_data(all_data, "L112.RsrcCurves_Mt_R_U")
     L113.RsrcCurves_EJ_R_MSW <- get_data(all_data, "L113.RsrcCurves_EJ_R_MSW")
     L114.RsrcCurves_EJ_R_wind <- get_data(all_data, "L114.RsrcCurves_EJ_R_wind")
@@ -132,6 +132,105 @@ module_energy_L210.resources <- function(command, ...) {
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
     # ===================================================
+    # ------- FOSSIL RESOURCE RESERVE ADDITIONS
+    # Kind of a level 1.5 we are going to calculate / update historical energy
+    # but the years we choose as the model base years matter
+
+    GCAM_timesteps <- diff(MODEL_BASE_YEARS)
+    start.year.timestep <- modeltime.PERIOD0_TIMESTEP
+    model_year_timesteps <- tibble(year = MODEL_BASE_YEARS, timestep = c(start.year.timestep, GCAM_timesteps))
+
+    # a pipelne helper function to help back calculate new additions to reserve
+    # from historical production
+    lag_prod_helper <- function(year, value, year_operate, final_year) {
+      ret <- value
+      for(i in seq_along(year)) {
+        if(i == 1) {
+          # first year assume all production in this vintage
+          ret[i] <- value[i]
+        } else if( year_operate[i] > final_year[i]) {
+          if(year_operate[i -1] >= final_year[i]) {
+            # retired
+            ret[i] <- 0
+          } else {
+            # final timestep that is operating so we must adjust the production
+            # by the number of years into the timestep it should have operated
+            # incase lifetime and timesteps do not neatly overlap
+            ret[i] <- ret[i - 1] * (year_operate[i] - final_year[i]) / (year_operate[i] - year_operate[i-1])
+          }
+        } else if(year_operate[i] > year[i]) {
+          # assume a vintage that as already invested continues at full
+          # capacity
+          ret[i] <- ret[i -1]
+        } else {
+          # to determine new investment we take the difference between
+          # what the total should be and subtract off production from
+          # previous vintages that are still operating
+          ret[i] <- 0
+          ret[i] <- pmax(value[i] - sum(ret[year_operate == year[i]]), 0)
+        }
+      }
+      ret
+    }
+    # Back calculate reserve additions to be exactly enough given our historical production
+    # and assumed production lifetime.  Note production lifetimes may not cover the entire
+    # historical period making the calculation a bit more tricky.  We use the lag_prod_helper
+    # to help project forward production by each historical vintage so we can take this into
+    # account.
+    L111.Prod_EJ_R_F_Yh %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
+      left_join_error_no_match(select(A10.ResSubresourceProdLifetime, resource, lifetime = avg.prod.lifetime),
+                               by=c("fuel" = "resource")) %>%
+      left_join_error_no_match(model_year_timesteps, by = c("year")) %>%
+      repeat_add_columns(tibble(year_operate = MODEL_BASE_YEARS)) %>%
+      mutate(final_year = pmin(MODEL_BASE_YEARS[length(MODEL_BASE_YEARS)], (year - timestep + lifetime))) %>%
+      filter(year_operate >= year - timestep + 1) %>%
+      group_by(GCAM_region_ID, sector, fuel) %>%
+      mutate(value = lag_prod_helper(year, value, year_operate, final_year)) %>%
+      ungroup() %>%
+      filter(year == year_operate) %>%
+      mutate(value = value * lifetime) %>%
+      select(-lifetime, -timestep, -year_operate) ->
+      L210.Reserve_EJ_R_F_Yh
+
+    # Given the mismatch between data sets for historical production / regional supply curves / and
+    # assumption for production lifetimes it may be the case that for some region + resource there
+    # is not enough supply in the supply curve to cover historical reserves.  We will add in just
+    # enough to be able to cover the historical period.  And of course this means that in the future
+    # model periods those region + resource will not be able to produce more which seems like the
+    # correct compromise.
+    L210.Reserve_EJ_R_F_Yh %>%
+      group_by(GCAM_region_ID, fuel) %>%
+      summarize(value = sum(value)) %>%
+      ungroup() ->
+      ReserveTotal_EJ_R_F
+    L111.RsrcCurves_EJ_R_Ffos %>%
+      group_by(GCAM_region_ID, resource) %>%
+      summarize(available = sum(available)) %>%
+      ungroup() %>%
+      left_join_error_no_match(ReserveTotal_EJ_R_F, ., by=c("GCAM_region_ID", "fuel" = "resource")) %>%
+      filter(value > available) %>%
+      mutate(available = value - available) %>%
+      select(-value) %>%
+      rename(resource = fuel) %>%
+      left_join_error_no_match(L111.RsrcCurves_EJ_R_Ffos %>%
+                                 group_by(GCAM_region_ID, resource) %>%
+                                 filter(extractioncost == max(extractioncost)) %>%
+                                 ungroup() %>%
+                                 select(-available),
+                               by = c("GCAM_region_ID", "resource")) ->
+      RsrcCurve_ReserveDeficit
+    RsrcCurve_ReserveDeficit %>%
+      bind_rows(RsrcCurve_ReserveDeficit %>%
+                  mutate(grade = "extended for reserve") %>%
+                  # Note the factor here does not matter because this region + resource will completely
+                  # deplete in the historical period and none will be available during model operation
+                  # anyways.
+                  mutate(extractioncost = extractioncost * 1.1,
+                         available = 0)) %>%
+      bind_rows(L111.RsrcCurves_EJ_R_Ffos, .) ->
+      L111.RsrcCurves_EJ_R_Ffos
+
     # A. Output unit, price unit, market
     L210.rsrc_info <- A10.rsrc_info %>%
       # Repeat and add region to resource assumptions table
@@ -251,7 +350,7 @@ module_energy_L210.resources <- function(command, ...) {
       mutate(cal.production = round(value, energy.DIGITS_CALPRODUCTION)) %>%
       select(region, resource = fuel, subresource, year, cal.production)
 
-    L111.Reserve_EJ_R_F_Yh %>%
+    L210.Reserve_EJ_R_F_Yh %>%
       rename(cal.reserve = value) %>%
       # Add region name
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
@@ -544,7 +643,7 @@ module_energy_L210.resources <- function(command, ...) {
       add_units("EJ cumulative") %>%
       add_comments("Calibrated reserve additions in each model year from which") %>%
       add_comments("the vintage will produce from for the assumed lifetime") %>%
-      add_precursors("L111.Reserve_EJ_R_F_Yh", "common/GCAM_region_names", "energy/A10.subrsrc_info") ->
+      add_precursors("L111.Prod_EJ_R_F_Yh", "energy/A10.ResSubresourceProdLifetime", "common/GCAM_region_names", "energy/A10.subrsrc_info") ->
       L210.ReserveCalReserve
 
     L210.RsrcCurves_fos %>%
@@ -552,7 +651,7 @@ module_energy_L210.resources <- function(command, ...) {
       add_units("available: EJ; extractioncost: 1975$/GJ") %>%
       add_comments("Data from L111.RsrcCurves_EJ_R_Ffos") %>%
       add_legacy_name("L210.RsrcCurves_fos") %>%
-      add_precursors("L111.RsrcCurves_EJ_R_Ffos", "common/GCAM_region_names") ->
+      add_precursors("L111.RsrcCurves_EJ_R_Ffos", "L111.Prod_EJ_R_F_Yh", "energy/A10.ResSubresourceProdLifetime", "common/GCAM_region_names") ->
       L210.RsrcCurves_fos
 
     L210.RsrcCurves_U %>%

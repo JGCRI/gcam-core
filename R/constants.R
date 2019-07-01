@@ -55,6 +55,10 @@ data.DEPENDENT <- "Dependent"
 
 
 # Modeltime constants ======================================================================
+# The number of years encompased in the first model period, currently hard coded in the C++
+# Note, this is different than the number of years between period 0 and period 1
+# The value typically does not matter but does come up for calculating resource depletion
+modeltime.PERIOD0_TIMESTEP <- 15
 
 # MAGICC model assumptions
 modeltime.MAGICC_LAST_HISTORICAL_YEAR <- 2005
