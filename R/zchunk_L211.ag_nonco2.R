@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L211.ag_nonco2
 #'
 #' Processes agriculture, agricultural waste burning, and animal emissions, adding regions and sectors/technologies.

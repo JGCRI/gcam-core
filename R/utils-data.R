@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 # utils-data.R
 #
 # Utility functions dealing with data storage, comments, flags

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA143.HDDCDD
 #'
 #' Reads in country level heating and cooling degree day data and returns GCAM region degree days via population weighting

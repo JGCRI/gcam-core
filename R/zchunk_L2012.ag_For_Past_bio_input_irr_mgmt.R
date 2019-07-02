@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt
 #'
 #' Build agriculture, forest, pasture and biomass production inputs for all technologies.

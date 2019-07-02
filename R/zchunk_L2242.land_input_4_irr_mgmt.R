@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2242.land_input_4_irr_mgmt
 #'
 #' Generate logit exponent of the fourth land node that specifies crop commodity and GLU by region,

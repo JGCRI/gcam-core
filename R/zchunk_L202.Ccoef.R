@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L202.Ccoef
 #'
 #' Create the file of CO2 coefficients (carbon emissions/GJ energy consumed) for primary energy sources.

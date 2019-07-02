@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L142.pfc_R_S_T_Y
 #'
 #' Map HFC emission shares by region, sector, technology, gas, and year for years 1971-2008.

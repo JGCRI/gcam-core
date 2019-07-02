@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB113.bio_Yield_R_GLU
 #'
 #' Calculate base year bioenergy yields by GCAM region and GLU

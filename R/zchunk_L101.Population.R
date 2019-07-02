@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socioeconomics_L101.Population
 #'
 #' Compute population for historical and future years, by region and SSP.

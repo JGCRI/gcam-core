@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L241.trade_input
 #'
 #' Build datasets for ssp4 agricultural trade.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU
 #'
 #' Land cover by GCAM region / aggregate land type / historical year / GLU.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA144.building_det_en
 #'
 #' Calculates global detailed buildings energy data

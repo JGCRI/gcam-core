@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socioeconomics_L100.Population_downscale_ctry
 #'
 #'  Clean and interpolate both Maddison historical population data (1700-2010) and SSP population scenarios.

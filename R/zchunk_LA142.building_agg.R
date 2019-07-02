@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA142.building_agg
 #'
 #' Calculate building sector energy consumption, producing the following output table: Building energy consumption by GCAM region / fuel / historical year

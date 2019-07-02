@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L232.water.demand.manufacturing
 #'
 #' Computes manufacturing water withdrawal/consumption coefficients (m3/GJ output) by region and year

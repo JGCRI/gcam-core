@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_data_EDGAR_gases
 #'
 #' Dedicated data chunk to read \code{EDGAR} csv files.

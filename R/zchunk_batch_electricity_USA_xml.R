@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_batch_electricity_USA_xml
 #'
 #' Construct XML data structure for \code{electricity_USA.xml}.

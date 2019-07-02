@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socioeconomics_L252.Trn_Inc_Elas_scenarios
 #'
 #' Calculates transportation income elasticity for SSP scenarios using linear interpolation of assumption data

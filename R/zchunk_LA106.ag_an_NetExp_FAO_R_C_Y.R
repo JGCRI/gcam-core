@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y
 #'
 #' Calculate the net exports of primary agricultural goods and animal products by GCAM region / commodity / year.

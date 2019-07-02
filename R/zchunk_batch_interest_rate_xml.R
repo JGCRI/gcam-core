@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socio_batch_interest_rate_xml
 #'
 #' Construct XML data structure for \code{interest_rate.xml}.

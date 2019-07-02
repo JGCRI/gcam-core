@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB161.ag_R_C_Y_GLU_irr
 #'
 #' Calculates irrigated and rainfed agriculture production, harvested area and yields by GCAM region / commodity / GLU / year.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA108.ag_Feed_R_C_Y
 #'
 #' Compute (1) feed by GCAM commodity, region, and year, and (2) net exports of FodderHerb.

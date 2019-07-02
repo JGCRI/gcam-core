@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L2322.Fert
 #'
 #' Provide supply sector information/keywords, subsector shareweights, global technology lifetime,

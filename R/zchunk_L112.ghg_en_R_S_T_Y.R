@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L112.ghg_en_R_S_T_Y
 #'
 #' Calculates emissions and emissions factors using EPA emissions factors and scales to EDGAR emissions.

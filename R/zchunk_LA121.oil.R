@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA121.oil
 #'
 #' Process historical oil data and separate into unconventional oil, crude oil, and energy inputs to oil.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB134.Diet_Rfao
 #'
 #' Build historical and future time series of per-capita caloric demands.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_batch_all_fgas_emissions_xml
 #'
 #' Construct XML data structure for \code{all_fgas_emissions.xml}.

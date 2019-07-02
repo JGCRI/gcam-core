@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L2112.ag_nonco2_IRR_MGMT
 #'
 #' Disaggregate non-CO2 agricultral emissions by production technology

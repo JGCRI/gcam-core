@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L212.unmgd_nonco2
 #'
 #' Outputs unmanaged land emissions and emissions coefficients for forest fires, deforestation, and grassland fires.

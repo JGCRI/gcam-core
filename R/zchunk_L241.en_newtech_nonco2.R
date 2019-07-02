@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L241.en_newtech_nonco2
 #'
 #' Produce emission coefficient tables for model input tables related to new energy technology.

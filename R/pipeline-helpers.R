@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 # pipeline-helpers.R
 
 # Pipeline shortcuts we use a lot

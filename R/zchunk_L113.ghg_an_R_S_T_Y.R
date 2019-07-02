@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L113.ghg_an_R_S_T_Y
 #'
 #'  Calculate the animal GHG emissions (CH4 and N2O)

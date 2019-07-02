@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_L254.transportation_USA
 #'
 #' Generates GCAM-USA model inputs for transportation sector by states.

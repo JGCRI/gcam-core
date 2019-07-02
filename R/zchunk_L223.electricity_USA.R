@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_L223.electricity_USA
 #'
 #' Generates GCAM-USA model inputs for electrcity sector by grid regions and states.

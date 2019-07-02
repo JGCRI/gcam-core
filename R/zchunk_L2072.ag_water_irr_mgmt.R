@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2072.ag_water_irr_mgmt
 #'
 #' Calculate agriculture water Input-Output coefficients by region / crop / year / GLU / technology.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU
 #'
 #' Calculate the adjusted fertilizer production by country / year, fertilizer net exports by GCAM region / year,

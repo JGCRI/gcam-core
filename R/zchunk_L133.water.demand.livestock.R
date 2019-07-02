@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L133.water.demand.livestock
 #'
 #' Calculate livestock water coefficients by region ID / GCAM_commodity/ water type

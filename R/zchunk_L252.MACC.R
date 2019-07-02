@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L252.MACC
 #'
 #' Creates marginal abatement cost curves "MACC", for fossil resources, agriculture, animals, and processing.

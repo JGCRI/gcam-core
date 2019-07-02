@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA112.U
 #'
 #' Assigning global uranium supply curve to GCAM_region_ID 1.

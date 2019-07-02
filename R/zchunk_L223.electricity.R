@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L223.electricity
 #'
 #' Prepares assumptions and calibrated inputs and outputs for the electricity sector.

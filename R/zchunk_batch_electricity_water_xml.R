@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_batch_electricity_water.xml
 #'
 #' Construct XML data structure for \code{electricity_water.xml}.
