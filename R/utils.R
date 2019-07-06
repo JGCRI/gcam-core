@@ -41,6 +41,7 @@ find_header <- function(fqfn) {
 #' as returned as NA in the list.
 #' @return A list of data frames (tibbles).
 #' @importFrom magrittr "%>%"
+#' @importFrom methods is
 #' @importFrom assertthat assert_that
 load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
   assert_that(is.character(filenames))
@@ -70,7 +71,18 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
     header <- find_header(fqfn)
     col_types <- extract_header_info(header, label = "Column types:", fqfn, required = TRUE)
 
-    readr::read_csv(fqfn, comment = COMMENT_CHAR, col_types = col_types, ...) %>%
+    # Attempt the file read
+    # Note `options(warn = 2)` forces all warnings to errors...
+    op <- options(warn = 2)
+    fd <- try(readr::read_csv(fqfn, comment = COMMENT_CHAR, col_types = col_types, ...))
+    options(op)
+    # ...ensuring we trap any anomaly here
+    if(is(fd, "try-error")) {
+      stop("Error or warning while reading ", basename(fqfn))
+    }
+
+    # Parse the file's header and add metadata
+    fd %>%
       parse_csv_header(fqfn, header) %>%
       add_comments(paste("Read from", gsub("^.*extdata", "extdata", fqfn))) %>%
       add_flags(FLAG_INPUT_DATA) ->
