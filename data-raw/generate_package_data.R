@@ -1,4 +1,4 @@
-library(devtools)
+library(usethis)
 library(gcamdata)
 LOGIT_TYPE_COLNAME <- gcamdata:::LOGIT_TYPE_COLNAME
 
@@ -451,4 +451,4 @@ PREBUILT_DATA <- driver(write_outputs = FALSE,
                         ))
 
 # Save these objects for use as internal package data
-devtools::use_data(GCAM_DATA_MAP, LEVEL2_DATA_NAMES, PREBUILT_DATA, overwrite = TRUE, internal = TRUE)
+usethis::use_data(GCAM_DATA_MAP, LEVEL2_DATA_NAMES, PREBUILT_DATA, overwrite = TRUE, internal = TRUE)

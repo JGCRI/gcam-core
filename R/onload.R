@@ -6,7 +6,7 @@
 
   # Older versions of readr produce incorrect results in gcamdata (#1086)
   # This is bad.
-  readr_version <- packageVersion("readr")
+  readr_version <- utils::packageVersion("readr")
   if (!(readr_version >= "1.3")) {
     stop("Need readr >= v1.3, but installed version is ", readr_version)
   }
