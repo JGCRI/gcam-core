@@ -41,6 +41,7 @@ find_header <- function(fqfn) {
 #' as returned as NA in the list.
 #' @return A list of data frames (tibbles).
 #' @importFrom magrittr "%>%"
+#' @importFrom methods is
 #' @importFrom assertthat assert_that
 load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
   assert_that(is.character(filenames))
