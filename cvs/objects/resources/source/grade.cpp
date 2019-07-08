@@ -148,8 +148,8 @@ const std::string& Grade::getXMLNameStatic() {
 }
 
 //! Total cost of each grade.
-void Grade::calcCost( const double aTax, const double aCumTechChange, const double aEnvironCost, const int aPeriod ) {
-    mTotalCost[ aPeriod ] = ( mExtractCost + aEnvironCost ) / aCumTechChange + aTax;
+void Grade::calcCost( const double aCumTechChange, const int aPeriod ) {
+    mTotalCost[ aPeriod ] = ( mExtractCost ) / aCumTechChange;
 }
 
 //! Return available amount in each Grade.

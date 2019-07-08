@@ -14,13 +14,14 @@ module_energy_L210.resources(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L210.DepRsrc}, \code{L210.RenewRsrc}, \code{L210.UnlimitRsrc}, \code{L210.DepRsrcPrice}, \code{L210.RenewRsrcPrice},
-\code{L210.UnlimitRsrcPrice}, \code{L210.DepRsrcTechChange}, \code{L210.SmthRenewRsrcTechChange}, \code{L210.DepRsrcCalProd}, \code{L210.DepRsrcCurves_fos},
-\code{L210.DepRsrcCurves_U}, \code{L210.SmthRenewRsrcCurves_MSW}, \code{L210.SmthRenewRsrcCurves_wind}, \code{L210.SmthRenewRsrcCurvesGdpElast_roofPV},
+the generated outputs: \code{L210.Rsrc}, \code{L210.RenewRsrc}, \code{L210.UnlimitRsrc}, \code{L210.RsrcPrice}, \code{L210.RenewRsrcPrice},
+\code{L210.UnlimitRsrcPrice}, \code{L210.RsrcTechChange}, \code{L210.SmthRenewRsrcTechChange}, \code{L210.RsrcCalProd}, \code{L210.ReserveCalReserve}, \code{L210.RsrcCurves_fos},
+\code{L210.RsrcCurves_U}, \code{L210.SmthRenewRsrcCurves_MSW}, \code{L210.SmthRenewRsrcCurves_wind}, \code{L210.SmthRenewRsrcCurvesGdpElast_roofPV},
 \code{L210.GrdRenewRsrcCurves_geo}, \code{L210.GrdRenewRsrcMax_geo}, \code{L210.GrdRenewRsrcCurves_EGS}, \code{L210.GrdRenewRsrcMax_EGS},
-\code{L210.GrdRenewRsrcCurves_tradbio}, \code{L210.GrdRenewRsrcMax_tradbio}, \code{L210.DepRsrcTechChange_SSP1}, \code{L210.DepRsrcEnvironCost_SSP1},
-\code{L210.DepRsrcTechChange_SSP2}, \code{L210.DepRsrcEnvironCost_SSP2}, \code{L210.DepRsrcTechChange_SSP3}, \code{L210.DepRsrcEnvironCost_SSP3},
-\code{L210.DepRsrcTechChange_SSP4}, \code{L210.DepRsrcEnvironCost_SSP4}, \code{L210.DepRsrcTechChange_SSP5}, \code{L210.DepRsrcEnvironCost_SSP5}.
+\code{L210.GrdRenewRsrcCurves_tradbio}, \code{L210.GrdRenewRsrcMax_tradbio}, \code{L210.RsrcTechChange_SSP1}, \code{L210.RsrcEnvironCost_SSP1},
+\code{L210.RsrcTechChange_SSP2}, \code{L210.RsrcEnvironCost_SSP2}, \code{L210.RsrcTechChange_SSP3}, \code{L210.RsrcEnvironCost_SSP3},
+\code{L210.RsrcTechChange_SSP4}, \code{L210.RsrcEnvironCost_SSP4}, \code{L210.RsrcTechChange_SSP5}, \code{L210.RsrcEnvironCost_SSP5},
+\code{L210.ResSubresourceProdLifetime}, \code{L210.ResReserveTechLifetime}, \code{L210.ResReserveTechDeclinePhase}, \code{L210.ResReserveTechProfitShutdown}, \code{L210.ResTechShrwt}, \code{L210.ResTechShrwt_EGS}.
 The corresponding file in the original data system was \code{L210.resources.R} (energy level2).
 }
 \description{

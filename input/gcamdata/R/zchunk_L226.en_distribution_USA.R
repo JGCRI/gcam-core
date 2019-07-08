@@ -233,7 +233,7 @@ module_gcamusa_L226.en_distribution_USA <- function(command, ...) {
         filter(sector1 == sector2) %>%
         select(-trash1, -sector1, -sector2) %>%
         rename(input.cost = adjustment) %>%
-        mutate(input.cost = round(input.cost, gcamusa.DIGITS_COST)) ->
+        mutate(input.cost = round(input.cost, energy.DIGITS_COST)) ->
         L226.TechCost_en_USA
       }
 

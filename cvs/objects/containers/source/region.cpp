@@ -69,7 +69,6 @@
 
 #include "resources/include/resource.h"
 #include "resources/include/unlimited_resource.h"
-#include "resources/include/depleting_fixed_resource.h"
 
 #include "containers/include/iinfo.h"
 
@@ -174,20 +173,11 @@ void Region::XMLParse( const DOMNode* node ){
         else if( nodeName == Resource::getXMLNameStatic() ){
             parseContainerNode( curr, mResources, new Resource() );
         }
-        else if( nodeName == DepletableResource::getXMLNameStatic() ){
-            parseContainerNode( curr, mResources, new DepletableResource() );
-        }
-        else if( nodeName == FixedResource::getXMLNameStatic() ){
-            parseContainerNode( curr, mResources, new FixedResource() );
-        }
         else if( nodeName == RenewableResource::getXMLNameStatic() ){
             parseContainerNode( curr, mResources, new RenewableResource() );
         }
         else if( nodeName == UnlimitedResource::getXMLNameStatic() ){
             parseContainerNode( curr, mResources, new UnlimitedResource );
-        }
-        else if( nodeName == DepletingFixedResource::getXMLNameStatic() ) {
-            parseContainerNode( curr, mResources, new DepletingFixedResource() );
         }
         else if( XMLDerivedClassParse(nodeName, curr) ){
             // Do nothing but avoid printing the error.

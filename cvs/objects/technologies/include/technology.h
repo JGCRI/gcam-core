@@ -239,7 +239,7 @@ public:
 
     const std::vector<std::string> getGHGNames() const;
 
-    double getFixedOutput( const std::string& aRegionName,
+    virtual double getFixedOutput( const std::string& aRegionName,
                            const std::string& aSectorName,
                            const bool aHasRequiredInput,
                            const std::string& aRequiredInput,
@@ -360,11 +360,7 @@ protected:
 
     static double getFixedOutputDefault();
 
-    void setProductionState( const int aPeriod );
-
-    double getMarginalProfit( const std::string& aRegionName,
-                              const std::string& aSectorName,
-                              const int aPeriod ) const;
+    virtual void setProductionState( const int aPeriod );
 
     bool hasInput( const std::string& aInput ) const;
     
@@ -372,7 +368,7 @@ protected:
                                       const std::string& aSectorName,
                                       const int aPeriod ) const;
 
-    double getMarginalRevenue( const std::string& aRegionName,
+    virtual double getMarginalRevenue( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const int aPeriod ) const;
 

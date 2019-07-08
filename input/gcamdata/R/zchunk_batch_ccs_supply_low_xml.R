@@ -10,7 +10,7 @@
 #' original data system was \code{batch_ccs_supply_low.xml.R} (energy XML).
 module_energy_batch_ccs_supply_low_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L261.DepRsrcCurves_C_low"))
+    return(c("L261.RsrcCurves_C_low"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "ccs_supply_low.xml"))
   } else if(command == driver.MAKE) {
@@ -18,14 +18,14 @@ module_energy_batch_ccs_supply_low_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L261.DepRsrcCurves_C_low <- get_data(all_data, "L261.DepRsrcCurves_C_low")
+    L261.RsrcCurves_C_low <- get_data(all_data, "L261.RsrcCurves_C_low")
 
     # ===================================================
 
     # Produce outputs
     create_xml("ccs_supply_low.xml") %>%
-      add_xml_data(L261.DepRsrcCurves_C_low, "DepRsrcCurves") %>%
-      add_precursors("L261.DepRsrcCurves_C_low") ->
+      add_xml_data(L261.RsrcCurves_C_low, "RsrcCurves") %>%
+      add_precursors("L261.RsrcCurves_C_low") ->
       ccs_supply_low.xml
 
     return_data(ccs_supply_low.xml)
