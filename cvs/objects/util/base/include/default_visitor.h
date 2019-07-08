@@ -103,6 +103,9 @@ public:
     
     virtual void startVisitSubResource( const SubResource* aSubResource, const int aPeriod ){}
     virtual void endVisitSubResource( const SubResource* aSubResource, const int aPeriod ){}
+    
+    virtual void startVisitReserveSubResource( const ReserveSubResource* aSubResource, const int aPeriod ){}
+    virtual void endVisitReserveSubResource( const ReserveSubResource* aSubResource, const int aPeriod ){}
 
     virtual void startVisitSubRenewableResource( const SubRenewableResource* aSubResource, const int aPeriod ){}
     virtual void endVisitSubRenewableResource( const SubRenewableResource* aSubResource, const int aPeriod ){}

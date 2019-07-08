@@ -1,0 +1,12 @@
+# File: A10.SubresourcePriceAdder.csv
+# Title: Set a fixed price adder used to adjust all grades
+# Description: GCAM calculates this value in historical years as a means of matching calibrated production and resource price.  Setting a value here essentially removes the calibration bias.
+# Units: 1975$/GJ
+# Source: Assumption
+# Column types: ccn
+# ----------
+resource,subresource,2100
+coal,coal,0.0
+crude oil,crude oil,0.0
+natural gas,natural gas,0.0
+unconventional oil,unconventional oil,0.0
