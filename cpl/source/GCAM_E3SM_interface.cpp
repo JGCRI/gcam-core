@@ -222,35 +222,64 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
     }
 }
 
-void GCAM_E3SM_interface::setDensityGCAM(int *ymd, int *tod, double *gcami, int *gcami_fdim_1, int *gcami_fdim_2) {
-    vector<int> newYear(32*22);
-    vector<std::string> newRegion(32*22);
-    vector<double> newData(32*22);
+void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, int *tod, double *gcami, int *gcami_fdim_1, int *gcami_fdim_2) {
+    // Get year only of the current date
+    int curryear = *yyyymmdd/10000;
     
-    std::string reg[] = {"USA", "Africa_Eastern", "Africa_Northern", "Africa_Southern",
-        "Africa_Western", "Australia_NZ", "Brazil", "Canada", "Central America and Caribbean",
-        "Central Asia", "China", "EU-12", "EU-15", "Europe_Eastern", "Europe_Non_EU",
-        "European Free Trade Association", "India", "Indonesia", "Japan",
-        "Mexico", "Middle East", "Pakistan", "Russia", "South Africa",
-        "South America_Northern", "South America_Southern", "South Asia",
-        "South Korea", "Southeast Asia", "Taiwan", "Argentina", "Colombia"};
+    // Define vectors for scaler information
+    vector<int> newYear(17722);
+    vector<std::string> newRegion(17722);
+    vector<std::string> newLandTech(17722);
+    vector<double> newData(17722);
     
-    int row = 0;
-    for(int i = 0; i < 22; i++) {
-        for(int j = 0; j < 32; j++) {
-            newYear[row] = runner->getInternalScenario()->getModeltime()->getper_to_yr(i);
-            newRegion[row] = reg[j];
-            newData[row] = 1;
-            if(j == 0 & runner->getInternalScenario()->getModeltime()->getper_to_yr(i) == 2015){
-                newData[row] = 1.25;
-            }
+    const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
+    
+    // Only set carbon densities during GCAM model years.
+    if( modeltime->isModelYear( curryear )) {
+        // TEMPORARY: Read scaler data from a file
+        // NOTE: This will be passed from E3SM eventually
+        ifstream data("scaler_data.csv");
+        if (!data.is_open())
+        {
+            exit(EXIT_FAILURE);
+        }
+        string str;
+        getline(data, str); // skip the first line
+        int row = 0;
+        while (getline(data, str))
+        {
+            istringstream iss(str);
+            string token;
+            int year;
+            std::string region;
+            std::string tech;
+            double scaler;
+            
+            // Parse current year
+            getline(iss, token, ',');
+            year = std::stoi(token);
+            
+            // Parse region
+            getline(iss, region, ',');
+            
+            // Parse ag production technology name
+            getline(iss, tech, ',');
+            
+            // Parse scaler
+            getline(iss, token, ',');
+            scaler = std::stod(token);
+            
+            newYear[row] = year;
+            newRegion[row] = region;
+            newLandTech[row] = tech;
+            newData[row] = scaler;
             
             row++;
         }
+        
+        SetDataHelper setScaler(newYear, newRegion, newLandTech, newData, "world/region[+name]/sector/subsector/technology[+name]/period[+year]/yield-scaler");
+        setScaler.run(runner->getInternalScenario());
     }
-    
-    SetDataHelper setScaler(newYear, newRegion, newData, "world/region[+name]/sector/subsector/technology/period[+year]/yield-scaler");
-    setScaler.run(runner->getInternalScenario());
 
 }
 

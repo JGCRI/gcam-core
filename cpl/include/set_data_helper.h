@@ -41,9 +41,11 @@ class FilterStep;
 class SetDataHelper {
 public:
     SetDataHelper(const std::vector<int>& aYearColumn, const std::vector<std::string>& aRegionColumn,
+                  const std::vector<std::string>& aLandTechColumn,
                   const std::vector<double>& aDataVector, const std::string& aHeader):
     mYearColumn(aYearColumn),
     mRegionColumn(aRegionColumn),
+    mLandTechColumn(aLandTechColumn),
     mDataVector(aDataVector),
     mFilterSteps(parseFilterString(aHeader))
     {
@@ -55,6 +57,7 @@ public:
 private:
     std::vector<int> mYearColumn;
     std::vector<std::string> mRegionColumn;
+    std::vector<std::string> mLandTechColumn;
     std::vector<double> mDataVector;
     std::vector<FilterStep*> mFilterSteps;
     int mRow;
