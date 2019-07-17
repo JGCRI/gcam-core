@@ -1,0 +1,36 @@
+# File: EN_Sectormapping_ASI_MOSPI_GCAM.csv
+# Title: Convert ASI and MOSPI sectors to GCAM_sector name
+# Units: NA
+# Column types: ccc
+# ----------
+ASI_MOSPI_sector,GCAM_sector,description
+Aviation ,transport,
+Navigation,transport,
+Railways,transport,
+Road,transport,all road transport modes included
+Commercial,buildings_comm,
+Residential,buildings_res,
+Agriculture,agri_allied,agriculture
+Fisheries,agri_allied,fisheries is included in allied sectors of agriculture
+Iron and Steel,industry,includes ferro alloys
+Cement,industry,
+Other non_metallic minerals,industry,
+Fertilizers,industry,
+Chemicals,industry,
+Aluminium,industry,
+Zinc,industry,
+other non-ferrous metals,industry,
+Petroleum Refining,industry,
+Paper and Pulp,industry,
+Textiles,industry,
+Mining and Quarrying,industry,
+Other Industries,industry,
+Electricity,electricity,
+Power_Coal,electricity,
+Power_NG,electricity,
+Power_Oil,electricity,
+Solar,electricity,
+Wind,electricity,
+Nuclear,electricity,
+Hydro,electricity,
+Geothermal,electricity,
