@@ -117,6 +117,7 @@ CONV_KBTU_EJ <- 1.0551e-12 # KiloBTU to EJ
 CONV_TBTU_EJ <- 0.0010551 # TeraBTU to EJ
 CONV_MJ_BTU <- 947.777
 CONV_BTU_KJ <- 1.0551
+CONV_MTOE_EJ <- 0.041868 #Coverting million tonnes of oil equivalent to exajoules (IEA covertor value)
 
 # Other
 CONV_MCAL_PCAL <- 1e-9
