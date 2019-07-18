@@ -451,7 +451,7 @@ driver_drake <- function() {
   #}
 
   removed_count <- 0
-  save_chunkdata(empty_data(), create_dirs = TRUE, write_outputs=write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir) # clear directories
+  #save_chunkdata(empty_data(), create_dirs = TRUE, write_outputs=write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir) # clear directories
 
     for(chunk in chunks_to_run) {
 
@@ -482,6 +482,12 @@ driver_drake <- function() {
         command <- c(command, paste0("gcamdata:::", chunk, "(\"MAKE\", c(", paste(gsub("[/-]", ".", input_names), collapse = ","), "))"))
         target <- c(target, po)
         command <- c(command, paste(chunk, '["', po, '"]', sep = ""))
+        po_xml <- subset(chunkoutputs, name == chunk & to_xml)$output
+        if(length(po_xml) > 0) {
+          target <- c(target, paste0("xml/", po_xml))
+          #command <- c(command, paste0("set_xml_file_helper(", "`", po_xml, "`, file_out(\"", paste0("xml/",po_xml), "\")) %>% run_xml_conversion()"))
+          command <- c(command, paste0("run_xml_conversion(set_xml_file_helper(", po_xml, "[[1]], file_out(\"", paste0("xml/",po_xml), "\")))"))
+        }
       }
 
 
@@ -497,6 +503,17 @@ driver_drake <- function() {
   #future::plan(future::multisession)
   options(clustermq.scheduler = "multicore")
   make(plan, parallelism = "clustermq", jobs=4, caching = "worker", memory_strategy = "speed")
+}
+
+#' set_xml_file_helper
+#'
+#' @param xml The xml pipeline object
+#' @param fq_name The full path to the XML file
+#' @return The updated XML object.
+set_xml_file_helper <- function(xml, fq_name) {
+  xml$xml_file <- fq_name
+
+  xml
 }
 
 
