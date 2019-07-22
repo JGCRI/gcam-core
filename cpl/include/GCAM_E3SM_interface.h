@@ -33,24 +33,22 @@ using namespace xercesc;
 
 
 class GCAM_E3SM_interface {
- public:
-  GCAM_E3SM_interface();
-  ~GCAM_E3SM_interface();
-  void initGCAM();
-  void runGCAM(int *yyyymmdd, int *tod, double *gcami, int *gcami_fdim1_nflds, int *gcami_fdim2_datasize, double *gcamo,int *gcamo_fdim1_nflds,int *gcamo_fdim2_datasize, double *gcamoemis,int *gcamoemis_fdim1_nflds,int *gcamoemis_fdim2_datasize,int* yr1, int *yr2,int *sneakermode,int *write_rest);
-  void setDensityGCAM(int *ymd, int *tod, double *gcami, int *gcami_fdim_1, int *gcami_fdim_2);
-  void finalizeGCAM();
-  int gcamStartYear;
-  int gcamEndYear;
-  LoggerFactoryWrapper loggerFactoryWrapper;
-  static std::vector<std::string> regionName; //
-  static std::vector<std::string> landType; // 
-  static std::vector<std::string> cropName; // 
-
-  ReMapData mCO2EmissData;
-  ReMapData mLUCData;
+public:
+    GCAM_E3SM_interface();
+    ~GCAM_E3SM_interface();
+    void initGCAM();
+    void runGCAM(int *yyyymmdd, int *tod, double *gcami, int *gcami_fdim1_nflds, int *gcami_fdim2_datasize, double *gcamo,int *gcamo_fdim1_nflds,int *gcamo_fdim2_datasize, double *gcamoemis,int *gcamoemis_fdim1_nflds,int *gcamoemis_fdim2_datasize,int* yr1, int *yr2,int *sneakermode,int *write_rest);
+    void setDensityGCAM(int *ymd, int *tod, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers);
+    void readScalers(int *ymd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers);
+    void finalizeGCAM();
+    int gcamStartYear;
+    int gcamEndYear;
+    LoggerFactoryWrapper loggerFactoryWrapper;
     
- private:
+    ReMapData mCO2EmissData;
+    ReMapData mLUCData;
+    
+private:
     std::auto_ptr<IScenarioRunner> runner;
     typedef std::vector<Region*>::iterator RegionIterator;
 };

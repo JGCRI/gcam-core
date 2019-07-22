@@ -66,6 +66,13 @@ int main( ) {
     double *gcamoemis = new double [numEnergyRegions * numModelPeriods]();
     int *temp = (int *)(0); // KVC - Temporarily using this for all values additional integer pointers
     
+    // Define vectors for scaler information
+    vector<int> newYear(17722);
+    vector<std::string> newRegion(17722);
+    vector<std::string> newLandTech(17722);
+    vector<double> newData(17722);
+    
+    
     // Run GCAM
     for( int yr = 1975; yr < 2025; yr++ ){
         // Set up years
@@ -73,7 +80,7 @@ int main( ) {
         int *yyyymmdd = &ymd;
         
         // Set carbon density
-        p_obj->setDensityGCAM(yyyymmdd, temp, gcami, temp, temp);
+        p_obj->setDensityGCAM(yyyymmdd, temp, newYear, newRegion, newLandTech, newData);
         
         // Run model
         p_obj->runGCAM(yyyymmdd, temp, gcami, temp, temp,

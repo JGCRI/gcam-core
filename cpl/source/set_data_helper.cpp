@@ -107,7 +107,6 @@ FilterStep* SetDataHelper::parseFilterStepStr( const std::string& aFilterStepStr
         
         AMatchesValue* matcher = 0;
         FilterStep* filterStep = 0;
-        cout << "Column #" << aCol << endl;
         if( filterStr == "name" && aCol == 0) {
             matcher = new StringVecEquals( mRegionColumn, mRow );
             filterStep = new FilterStep( dataName, new NamedFilter( matcher ) );
