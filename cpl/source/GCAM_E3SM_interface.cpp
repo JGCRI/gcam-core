@@ -222,16 +222,29 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
     }
 }
 
-void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, int *tod, double *gcami, int *gcami_fdim_1, int *gcami_fdim_2) {
+void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, int *tod, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
     // Get year only of the current date
     int curryear = *yyyymmdd/10000;
+    const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
     
-    // Define vectors for scaler information
-    vector<int> newYear(17722);
-    vector<std::string> newRegion(17722);
-    vector<std::string> newLandTech(17722);
-    vector<double> newData(17722);
+    // Get scaler information
+    // For now, we are reading this from a file, but we will need to get it from E3SM directly eventually.
+    readScalers(yyyymmdd, aYears, aRegions, aLandTechs, aScalers);
     
+    // Only set carbon densities during GCAM model years.
+    if( modeltime->isModelYear( curryear )) {
+        SetDataHelper setScaler(aYears, aRegions, aLandTechs, aScalers, "world/region[+name]/sector/subsector/technology[+name]/period[+year]/yield-scaler");
+        setScaler.run(runner->getInternalScenario());
+    }
+    
+}
+
+// Read in scalers from a csv file
+// Note: this is used for diagnostics and testing. In fully coupled E3SM-GCAM, these scalers
+// are passed in code to the wrapper
+void GCAM_E3SM_interface::readScalers(int *yyyymmdd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
+    // Get year only of the current date
+    int curryear = *yyyymmdd/10000;
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
     
     // Only set carbon densities during GCAM model years.
@@ -269,16 +282,13 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, int *tod, double *gcami,
             getline(iss, token, ',');
             scaler = std::stod(token);
             
-            newYear[row] = year;
-            newRegion[row] = region;
-            newLandTech[row] = tech;
-            newData[row] = scaler;
+            aYears.at(row) = year;
+            aRegions[row] = region;
+            aLandTechs[row] = tech;
+            aScalers[row] = scaler;
             
             row++;
         }
-        
-        SetDataHelper setScaler(newYear, newRegion, newLandTech, newData, "world/region[+name]/sector/subsector/technology[+name]/period[+year]/yield-scaler");
-        setScaler.run(runner->getInternalScenario());
     }
 
 }
