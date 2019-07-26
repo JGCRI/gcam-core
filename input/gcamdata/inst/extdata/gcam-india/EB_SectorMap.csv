@@ -1,0 +1,40 @@
+# File: EB_SectorMap.csv
+# Title: Convert ASI and MOSPI sectors to GCAM_sector name
+# Units: NA
+# Column types:ccc
+# ----------
+GHG_Platform_sectors,GCAM_sector,description
+Road,trn_all,RoadTransport
+Railways,trn_all,RailwaysTransport
+Aviation,trn_all,AviationTransport
+Navigation,trn_all,NavigationTransport
+Commercial,comm,CommercialBuilding
+Residential_Urban,resid,Residential_UrbanBuilding
+Residential_Rural,resid,Residential_RuralBuilding
+Agriculture,industry,AgricultureAgri_allied
+Fisheries,industry,FisheriesAgri_allied
+Iron and SteelIndustry,industry,Iron and SteelIndustryIndustry
+CementIndustry,industry,CementIndustryIndustry
+Other non_metallic mineralsIndustry,industry,Other non_metallic mineralsIndustryIndustry
+FertilizersIndustry,industry,FertilizersIndustryIndustry
+ChemicalsIndustry,industry,ChemicalsIndustryIndustry
+AluminiumIndustry,industry,AluminiumIndustryIndustry
+ZincIndustry,industry,ZincIndustryIndustry
+other non_ferrous metalsIndustry,industry,other non_ferrous metalsIndustryIndustry
+Petroleum RefiningIndustry,industry,Petroleum RefiningIndustryIndustry
+Paper and PulpIndustry,industry,Paper and PulpIndustryIndustry
+TextilesIndustry,industry,TextilesIndustryIndustry
+Mining and QuarryingIndustry,industry,Mining and QuarryingIndustryIndustry
+Other IndustriesIndustry,industry,Other IndustriesIndustryIndustry
+Coal Power,electricity,Coal PowerElectricity
+Gas Power,electricity,Gas PowerElectricity
+Oil Power,electricity,Oil PowerElectricity
+Nuclear Power,electricity,Nuclear PowerElectricity
+Solar Power,electricity,Solar PowerElectricity
+Wind Power,electricity,Wind PowerElectricity
+Hydro Power,electricity,Hydro PowerElectricity
+Geothermal Power,electricity,Geothermal PowerElectricity
+Captive Coal Power,electricity,Captive Coal PowerElectricity
+Captive Gas Power ,electricity,Captive Gas Power Electricity
+Captive Oil Power,electricity,Captive Oil PowerElectricity
+Biomass Power,electricity,Coal PowerElectricity

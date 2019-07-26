@@ -1,0 +1,37 @@
+# File: EB_FuelMap.csv
+# Title: Converting ASI-MOSPI fuel to GCAM_fuel
+# Units: NA
+# Column types:ccc
+# ---
+GHG_Platform_fuels,GCAM_fuel,description
+Fuelwood,biomass,Fuelwood
+Biomass for Power,biomass,Biomass_P
+Coal for traction,coal,Coal for traction 
+Coal and Products,coal,Coal/ coke/ charcoal/lignite
+Mined Coal,coal,Coal from underground mining and opencast mining
+Industrial Coal types,coal,Ind_Coal: Coal and Lignite/ coke breeze/ Coke and semi-coke of coal/ of lignite/  retort carbon n.e.c
+Coal for Power,coal,Coal_P
+Electricity,electricity,Electricity for consumption at the demand side
+Captive electricity,electricity,Captive electricity
+Purchased Electricity,electricity,Electricity purchased
+Generated Electricity,electricity,Electricity own generated
+CNG,gas,CNG/ Natural Gas
+Industrial Gas types,gas,Ind_Gas including Coal gas water gas producer gas  water gas producer gas and similar gases other than petroleum gases and other gaseous hydrocarbons n.e.c
+Industrial Natural Gas,gas,Ind_NG:Natural gas/ RLNG/ LNG/ CNG
+Gas for Power,gas,Gas_P
+Geothermal for Power,geothermal,Geothermal_P
+Hydro for Power,hydro,Hydro_P
+Nuclear for Power,nuclear,Nuclear_P
+Diesel and products,refined liquids,HSDO/HSD/Diesel/LDO/HSDO-Retail/LSHS/Diesel-retails/HHS
+LPG,refined liquids,LPG/Auto LPG
+Other Oils,refined liquids,other refined liquids  Motor spirit Kerosene Oil FO 
+Aviation Turbine Fuel,refined liquids,ATF
+Naphtha,refined liquids,Naptha 
+Industrial Pet coke,refined liquids,Ind_RL: Petroleum coke calcined / Pet coke
+Industrial oil types,refined liquids,Ind_RL: Furnace oil / Fuel oil n.e.c/ Gas oils/ Light and medium petroleum oil/shale oil/kerosene
+Industrial diesel types,refined liquids,Ind_RL diesel/HSD
+Industrial LPG,refined liquids,Ind_RL : LPG
+Industrial ATF,refined liquids,Machinery ind: ATF
+Oil for Power,refined liquids,Oil_P
+Solar for Power,solar,Solar_P
+Wind for Power,wind,Wind_P
