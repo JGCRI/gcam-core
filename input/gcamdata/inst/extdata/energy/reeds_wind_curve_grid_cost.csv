@@ -5,7 +5,7 @@
 # Source: NREL
 # Column types: iccnnnnn
 #  ----------
-Wind.Resource.Region,Wind.Class,Wind.Type,wsc1,wsc2,wsc3,wsc4,wsc5
+Wind_Resource_Region,Wind_Class,Wind_Type,wsc1,wsc2,wsc3,wsc4,wsc5
 1,class1,wind-ons,22807.38109,22807.38109,22807.38109,0,0
 1,class10,wind-ons,111082.6505,178533.7944,248249.9291,297834.3638,362021.6676
 1,class2,wind-ons,12899.37449,41403.70643,45390.62864,0,0

@@ -60,7 +60,8 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
              "L2232.TechCoef_elecownuse_FERC",
              "L2232.Production_imports_FERC",
              "L2232.Production_elec_gen_FERC",
-             "L2232.StubTechElecMarket_backup_USA"))
+             "L2232.StubTechElecMarket_backup_USA",
+             "L223.StubTechCost_offshore_wind_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "electricity_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -122,6 +123,7 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
     L2232.Production_imports_FERC <- get_data(all_data, "L2232.Production_imports_FERC")
     L2232.Production_elec_gen_FERC <- get_data(all_data, "L2232.Production_elec_gen_FERC")
     L2232.StubTechElecMarket_backup_USA <- get_data(all_data, "L2232.StubTechElecMarket_backup_USA")
+    L223.StubTechCost_offshore_wind_USA <- get_data(all_data,"L223.StubTechCost_offshore_wind_USA")
 
     # ===================================================
     # Rename tibble columns to match the L2 data names.
@@ -184,6 +186,7 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
       add_xml_data(L2232.Production_imports_FERC, "Production") %>%
       add_xml_data(L2232.Production_elec_gen_FERC, "Production") %>%
       add_xml_data(L2232.StubTechElecMarket_backup_USA, "StubTechElecMarket") %>%
+      add_xml_data(L223.StubTechCost_offshore_wind_USA, "StubTechCost") %>%
       add_precursors("L223.PassthroughSector_elec_USA",
                      "L223.PassthroughTech_elec_FERC",
                      "L223.Supplysector_elec_FERC",
@@ -234,7 +237,8 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
                      "L2232.TechCoef_elecownuse_FERC",
                      "L2232.Production_imports_FERC",
                      "L2232.Production_elec_gen_FERC",
-                     "L2232.StubTechElecMarket_backup_USA") ->
+                     "L2232.StubTechElecMarket_backup_USA",
+                     "L223.StubTechCost_offshore_wind_USA") ->
       electricity_USA.xml
 
     return_data(electricity_USA.xml)

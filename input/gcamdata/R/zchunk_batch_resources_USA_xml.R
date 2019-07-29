@@ -17,7 +17,9 @@ module_gcamusa_batch_resources_USA_xml <- function(command, ...) {
              "L210.UnlimitRsrc_USA",
              "L210.UnlimitRsrcPrice_USA",
              "L210.SmthRenewRsrcTechChange_USA",
+             "L210.SmthRenewRsrcTechChange_offshore_wind_USA",
              "L210.SmthRenewRsrcCurves_wind_USA",
+             "L210.SmthRenewRsrcCurves_offshore_wind_USA",
              "L210.GrdRenewRsrcCurves_geo_USA",
              "L210.GrdRenewRsrcMax_geo_USA",
              "L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA",
@@ -36,7 +38,9 @@ module_gcamusa_batch_resources_USA_xml <- function(command, ...) {
     L210.UnlimitRsrc_USA <- get_data(all_data, "L210.UnlimitRsrc_USA")
     L210.UnlimitRsrcPrice_USA <- get_data(all_data, "L210.UnlimitRsrcPrice_USA")
     L210.SmthRenewRsrcTechChange_USA <- get_data(all_data, "L210.SmthRenewRsrcTechChange_USA")
+    L210.SmthRenewRsrcTechChange_offshore_wind_USA <- get_data(all_data, "L210.SmthRenewRsrcTechChange_offshore_wind_USA")
     L210.SmthRenewRsrcCurves_wind_USA <- get_data(all_data, "L210.SmthRenewRsrcCurves_wind_USA")
+    L210.SmthRenewRsrcCurves_offshore_wind_USA <- get_data(all_data, "L210.SmthRenewRsrcCurves_offshore_wind_USA")
     L210.GrdRenewRsrcCurves_geo_USA <- get_data(all_data, "L210.GrdRenewRsrcCurves_geo_USA")
     L210.GrdRenewRsrcMax_geo_USA <- get_data(all_data, "L210.GrdRenewRsrcMax_geo_USA")
     L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA")
@@ -52,7 +56,9 @@ module_gcamusa_batch_resources_USA_xml <- function(command, ...) {
       add_xml_data(L210.UnlimitRsrc_USA, "UnlimitRsrc") %>%
       add_xml_data(L210.UnlimitRsrcPrice_USA, "UnlimitRsrcPrice") %>%
       add_xml_data(L210.SmthRenewRsrcTechChange_USA, "SmthRenewRsrcTechChange") %>%
+      add_xml_data(L210.SmthRenewRsrcTechChange_offshore_wind_USA, "SmthRenewRsrcTechChange") %>%
       add_xml_data(L210.SmthRenewRsrcCurves_wind_USA, "SmthRenewRsrcCurves") %>%
+      add_xml_data(L210.SmthRenewRsrcCurves_offshore_wind_USA, "SmthRenewRsrcCurves") %>%
       add_xml_data(L210.GrdRenewRsrcCurves_geo_USA, "GrdRenewRsrcCurves") %>%
       add_xml_data(L210.GrdRenewRsrcMax_geo_USA, "GrdRenewRsrcMax") %>%
       add_xml_data(L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA, "SmthRenewRsrcCurvesGdpElast") %>%
@@ -66,7 +72,9 @@ module_gcamusa_batch_resources_USA_xml <- function(command, ...) {
                      "L210.UnlimitRsrc_USA",
                      "L210.UnlimitRsrcPrice_USA",
                      "L210.SmthRenewRsrcTechChange_USA",
+                     "L210.SmthRenewRsrcTechChange_offshore_wind_USA",
                      "L210.SmthRenewRsrcCurves_wind_USA",
+                     "L210.SmthRenewRsrcCurves_offshore_wind_USA",
                      "L210.GrdRenewRsrcCurves_geo_USA",
                      "L210.GrdRenewRsrcMax_geo_USA",
                      "L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA",

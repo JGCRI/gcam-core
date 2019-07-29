@@ -7,8 +7,8 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L210.Rsrc}, \code{L210.RenewRsrc}, \code{L210.UnlimitRsrc}, \code{L210.RsrcPrice}, \code{L210.RenewRsrcPrice},
-#' \code{L210.UnlimitRsrcPrice}, \code{L210.RsrcTechChange}, \code{L210.SmthRenewRsrcTechChange}, \code{L210.RsrcCalProd}, \code{L210.ReserveCalReserve}, \code{L210.RsrcCurves_fos},
-#' \code{L210.RsrcCurves_U}, \code{L210.SmthRenewRsrcCurves_MSW}, \code{L210.SmthRenewRsrcCurves_wind}, \code{L210.SmthRenewRsrcCurvesGdpElast_roofPV},
+#' \code{L210.UnlimitRsrcPrice}, \code{L210.RsrcTechChange}, \code{L210.SmthRenewRsrcTechChange}, \code{L210.SmthRenewRsrcTechChange_offshore_wind}, \code{L210.RsrcCalProd}, \code{L210.ReserveCalReserve}, \code{L210.RsrcCurves_fos},
+#' \code{L210.RsrcCurves_U}, \code{L210.SmthRenewRsrcCurves_MSW}, \code{L210.SmthRenewRsrcCurves_wind}, \code{L210.SmthRenewRsrcCurves_offshore_wind}, \code{L210.SmthRenewRsrcCurvesGdpElast_roofPV},
 #' \code{L210.GrdRenewRsrcCurves_geo}, \code{L210.GrdRenewRsrcMax_geo}, \code{L210.GrdRenewRsrcCurves_EGS}, \code{L210.GrdRenewRsrcMax_EGS},
 #' \code{L210.GrdRenewRsrcCurves_tradbio}, \code{L210.GrdRenewRsrcMax_tradbio}, \code{L210.RsrcTechChange_SSP1}, \code{L210.RsrcEnvironCost_SSP1},
 #' \code{L210.RsrcTechChange_SSP2}, \code{L210.RsrcEnvironCost_SSP2}, \code{L210.RsrcTechChange_SSP3}, \code{L210.RsrcEnvironCost_SSP3},
@@ -44,6 +44,8 @@ module_energy_L210.resources <- function(command, ...) {
              "L116.RsrcCurves_EJ_R_geo",
              "L116.RsrcCurves_EJ_R_EGS",
              "L117.RsrcCurves_EJ_R_tradbio",
+             "L120.RsrcCurves_EJ_R_offshore_wind",
+             "L120.TechChange_offshore_wind",
              "L102.pcgdp_thous90USD_Scen_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L210.Rsrc",
@@ -54,12 +56,14 @@ module_energy_L210.resources <- function(command, ...) {
              "L210.UnlimitRsrcPrice",
              "L210.RsrcTechChange",
              "L210.SmthRenewRsrcTechChange",
+			 "L210.SmthRenewRsrcTechChange_offshore_wind",
              "L210.RsrcCalProd",
              "L210.ReserveCalReserve",
              "L210.RsrcCurves_fos",
              "L210.RsrcCurves_U",
              "L210.SmthRenewRsrcCurves_MSW",
              "L210.SmthRenewRsrcCurves_wind",
+			 "L210.SmthRenewRsrcCurves_offshore_wind",
              "L210.SmthRenewRsrcCurvesGdpElast_roofPV",
              "L210.GrdRenewRsrcCurves_geo",
              "L210.GrdRenewRsrcMax_geo",
@@ -129,6 +133,8 @@ module_energy_L210.resources <- function(command, ...) {
     L116.RsrcCurves_EJ_R_geo <- get_data(all_data, "L116.RsrcCurves_EJ_R_geo")
     L116.RsrcCurves_EJ_R_EGS <- get_data(all_data, "L116.RsrcCurves_EJ_R_EGS")
     L117.RsrcCurves_EJ_R_tradbio <- get_data(all_data, "L117.RsrcCurves_EJ_R_tradbio")
+    L120.RsrcCurves_EJ_R_offshore_wind <- get_data(all_data, "L120.RsrcCurves_EJ_R_offshore_wind" )
+    L120.TechChange_offshore_wind <- get_data(all_data, "L120.TechChange_offshore_wind" )
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
     # ===================================================
@@ -304,6 +310,12 @@ module_energy_L210.resources <- function(command, ...) {
     L210.SmthRenewRsrcTechChange <- L210.renew_rsrc_TechChange %>%
       select(region, renewresource = resource, smooth.renewable.subresource = subresource, year.fillout = year, techChange = value)
 
+    # L210.SmthRenewRsrcTechChange_offshore_wind: technological change for offshore wind
+    L210.SmthRenewRsrcTechChange_offshore_wind <- write_to_all_regions(L120.TechChange_offshore_wind, c("region", "year","tech.change"), GCAM_region_names)
+    L210.SmthRenewRsrcTechChange_offshore_wind %>%
+      mutate(renewresource = "offshore wind resource", smooth.renewable.subresource = "offshore wind resource") %>%
+      select(region,renewresource, smooth.renewable.subresource, year.fillout = year, techChange = tech.change) -> L210.SmthRenewRsrcTechChange_offshore_wind
+
     # Tech change in the SSPs
     # Repeat and add region vector to assumed techchange tables
     L210.rsrc_TechChange_SSPs <- A10.TechChange_SSPs %>%
@@ -388,6 +400,16 @@ module_energy_L210.resources <- function(command, ...) {
 
     # L210.SmthRenewRsrcCurves_wind: supply curves of wind resources
     L210.SmthRenewRsrcCurves_wind <- L114.RsrcCurves_EJ_R_wind %>%
+      # Add region name
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      mutate(maxSubResource = round(maxSubResource, energy.DIGITS_MAX_SUB_RESOURCE),
+             mid.price = round(mid.price, energy.DIGITS_MID_PRICE),
+             curve.exponent = round(curve.exponent, energy.DIGITS_CURVE_EXPONENT),
+             year.fillout = min(MODEL_BASE_YEARS)) %>%
+      select(region, renewresource = resource, smooth.renewable.subresource = subresource, year.fillout, maxSubResource, mid.price, curve.exponent)
+
+    # L210.SmthRenewRsrcCurves_offshore_wind: supply curves of offshore wind resources
+    L210.SmthRenewRsrcCurves_offshore_wind <- L120.RsrcCurves_EJ_R_offshore_wind %>%
       # Add region name
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(maxSubResource = round(maxSubResource, energy.DIGITS_MAX_SUB_RESOURCE),
@@ -623,6 +645,14 @@ module_energy_L210.resources <- function(command, ...) {
       same_precursors_as(L210.RsrcTechChange) ->
       L210.SmthRenewRsrcTechChange
 
+    L210.SmthRenewRsrcTechChange_offshore_wind %>%
+      add_title("Technological change parameter for offshore wind resource") %>%
+      add_units("Unitless") %>%
+      add_comments("Data from L120.TechChange_offshore_wind added to all regions") %>%
+      same_precursors_as(L210.RsrcTechChange) %>%
+      add_precursors("L120.TechChange_offshore_wind") ->
+      L210.SmthRenewRsrcTechChange_offshore_wind
+
     L210.SubresourcePriceAdder %>%
       add_title("Adjust calibration price adders in future model years") %>%
       add_units("1975$/GJ") %>%
@@ -677,6 +707,13 @@ module_energy_L210.resources <- function(command, ...) {
       add_legacy_name("L210.SmthRenewRsrcCurves_wind") %>%
       add_precursors("L114.RsrcCurves_EJ_R_wind", "common/GCAM_region_names") ->
       L210.SmthRenewRsrcCurves_wind
+
+    L210.SmthRenewRsrcCurves_offshore_wind %>%
+      add_title("Supply curves of offshore wind resources") %>%
+      add_units("maxSubResource: EJ; mid.price: $1975/GJ") %>%
+      add_comments("Data from L120.RsrcCurves_EJ_R_offshore_wind") %>%
+      add_precursors("L120.RsrcCurves_EJ_R_offshore_wind", "common/GCAM_region_names") ->
+      L210.SmthRenewRsrcCurves_offshore_wind
 
     L210.SmthRenewRsrcCurvesGdpElast_roofPV %>%
       add_title("Supply curves of rooftop PV resources") %>%
@@ -782,8 +819,8 @@ module_energy_L210.resources <- function(command, ...) {
       L210.ResTechShrwt_EGS
 
     return_data(L210.Rsrc, L210.RenewRsrc, L210.UnlimitRsrc, L210.RsrcPrice, L210.RenewRsrcPrice, L210.UnlimitRsrcPrice, L210.RsrcTechChange,
-                L210.SmthRenewRsrcTechChange, L210.RsrcCalProd, L210.ReserveCalReserve, L210.RsrcCurves_fos, L210.RsrcCurves_U, L210.SmthRenewRsrcCurves_MSW,
-                L210.SmthRenewRsrcCurves_wind, L210.SmthRenewRsrcCurvesGdpElast_roofPV, L210.GrdRenewRsrcCurves_geo, L210.GrdRenewRsrcMax_geo,
+                L210.SmthRenewRsrcTechChange, L210.SmthRenewRsrcTechChange_offshore_wind, L210.RsrcCalProd, L210.ReserveCalReserve, L210.RsrcCurves_fos, L210.RsrcCurves_U, L210.SmthRenewRsrcCurves_MSW,
+                L210.SmthRenewRsrcCurves_wind, L210.SmthRenewRsrcCurves_offshore_wind, L210.SmthRenewRsrcCurvesGdpElast_roofPV, L210.GrdRenewRsrcCurves_geo, L210.GrdRenewRsrcMax_geo,
                 L210.GrdRenewRsrcCurves_EGS, L210.GrdRenewRsrcMax_EGS, L210.GrdRenewRsrcCurves_tradbio, L210.GrdRenewRsrcMax_tradbio, L210.RsrcTechChange_SSP1,
                 L210.RsrcEnvironCost_SSP1, L210.RsrcTechChange_SSP2, L210.RsrcEnvironCost_SSP2, L210.RsrcTechChange_SSP3, L210.RsrcEnvironCost_SSP3,
                 L210.RsrcTechChange_SSP4, L210.RsrcEnvironCost_SSP4, L210.RsrcTechChange_SSP5, L210.RsrcEnvironCost_SSP5,

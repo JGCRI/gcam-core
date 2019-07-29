@@ -628,3 +628,23 @@ downscale_FAO_country <- function(data, country_name, dissolution_year, years = 
   data_new[newyrs][is.na(data_new[newyrs])] <- 0
   data_new
 }
+
+# Evaluate_smooth_res_curve
+# The function, evaluate_smooth_res_curve, computes the smooth renewable resource function
+
+evaluate_smooth_res_curve <- function(curve.exponent, mid.price, Pmin, maxSubResource, p) {
+  p_pow_exp <- ( p - Pmin ) ^ curve.exponent
+  supply <- p_pow_exp / ( mid.price ^ curve.exponent + p_pow_exp ) * maxSubResource
+  # zero out the supply where the price was less than Pmin
+  supply[ p < Pmin ] <- 0
+  return( supply )
+}
+
+# Smooth_res_curve_approx_error
+# The function, smooth_res_curve_approx_error, checks how well the given smooth renewable curve matches the given supply-points.
+# Note that the first argument is the one that is changed by optimize when trying to minimize the error
+smooth_res_curve_approx_error <- function(curve.exponent, mid.price, Pmin, maxSubResource, supply_points) {
+  f_p <- evaluate_smooth_res_curve( curve.exponent, mid.price, Pmin, maxSubResource, supply_points$price )
+  error <- f_p - supply_points$supply
+  return( crossprod( error, error ) )
+}
