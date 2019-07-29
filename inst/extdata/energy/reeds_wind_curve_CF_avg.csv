@@ -5,7 +5,7 @@
 # Source: NREL
 # Column types: icn
 #  ----------
-Wind.Resource.Region,TRG,CF
+Wind_Resource_Region,TRG,CF
 1,class1,0.456283005
 1,class10,0.122117297
 1,class2,0.454881608

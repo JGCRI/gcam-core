@@ -15,7 +15,7 @@
 #' \code{L223.GlobalIntTechOMfixed_elec}, \code{L223.GlobalTechOMvar_elec}, \code{L223.GlobalIntTechOMvar_elec},
 #' \code{L223.GlobalTechShrwt_elec}, \code{L223.GlobalTechInterp_elec}, \code{L223.GlobalIntTechShrwt_elec},
 #' \code{L223.PrimaryRenewKeyword_elec}, \code{L223.PrimaryRenewKeywordInt_elec}, \code{L223.AvgFossilEffKeyword_elec},
-#' \code{L223.GlobalTechCapture_elec}, \code{L223.GlobalIntTechBackup_elec}, \code{L223.StubTechCapFactor_elec},
+#' \code{L223.GlobalTechCapture_elec}, \code{L223.GlobalIntTechBackup_elec}, \code{L223.StubTechCapFactor_elec}, \code{L223.StubTechCost_offshore_wind},
 #' \code{L223.GlobalTechShutdown_elec}, \code{L223.GlobalIntTechShutdown_elec}, \code{L223.GlobalTechSCurve_elec},
 #' \code{L223.GlobalIntTechSCurve_elec}, \code{L223.GlobalTechLifetime_elec}, \code{L223.GlobalIntTechLifetime_elec},
 #' \code{L223.GlobalTechProfitShutdown_elec}, \code{L223.GlobalIntTechProfitShutdown_elec},
@@ -67,6 +67,8 @@ module_energy_L223.electricity <- function(command, ...) {
              "L1231.in_EJ_R_elec_F_tech_Yh",
              "L1231.out_EJ_R_elec_F_tech_Yh",
              "L1231.eff_R_elec_F_tech_Yh",
+             "L120.GridCost_offshore_wind",
+             "L120.RegCapFactor_offshore_wind",
              "L102.gdp_mil90usd_GCAM3_ctry_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L223.Supplysector_elec",
@@ -98,6 +100,7 @@ module_energy_L223.electricity <- function(command, ...) {
              "L223.GlobalTechCapture_elec",
              "L223.GlobalIntTechBackup_elec",
              "L223.StubTechCapFactor_elec",
+             "L223.StubTechCost_offshore_wind",
              "L223.GlobalTechShutdown_elec",
              "L223.GlobalIntTechShutdown_elec",
              "L223.GlobalTechSCurve_elec",
@@ -165,6 +168,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L114.RsrcCurves_EJ_R_wind <- get_data(all_data, "L114.RsrcCurves_EJ_R_wind")
     L118.out_EJ_R_elec_hydro_Yfut <- get_data(all_data, "L118.out_EJ_R_elec_hydro_Yfut")
     L119.Irradiance_rel_R <- get_data(all_data, "L119.Irradiance_rel_R")
+    L120.GridCost_offshore_wind <- get_data(all_data, "L120.GridCost_offshore_wind")
+    L120.RegCapFactor_offshore_wind <- get_data(all_data, "L120.RegCapFactor_offshore_wind") 
     L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
     L1231.eff_R_elec_F_tech_Yh <- get_data(all_data, "L1231.eff_R_elec_F_tech_Yh")
@@ -952,6 +957,38 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.StubTechCapFactor_elec %>%
       bind_rows(L223.StubTechCapFactor_solar) ->
       L223.StubTechCapFactor_elec
+	
+    # Adding offshore wind capacity factors
+    # Adding regions to capacity factor first
+    L120.RegCapFactor_offshore_wind %>% left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") -> L120.RegCapFactor_offshore_wind	
+    # Adding capacity factors to the main electricity table
+    L223.StubTechCapFactor_elec %>%
+      filter(stub.technology == "wind") %>%
+      mutate(stub.technology = "wind_offshore") %>%
+      left_join_error_no_match(L120.RegCapFactor_offshore_wind ,
+                               by = c("region")) %>%
+      mutate(capacity.factor = round(CFmax,energy.DIGITS_CAPACITY_FACTOR)) %>% 
+      select(region, supplysector, subsector, stub.technology, year, capacity.factor) -> L223.StubTechCapFactor_elec_offshore_wind
+
+  L223.StubTechCapFactor_elec %>%
+  bind_rows(L223.StubTechCapFactor_elec_offshore_wind) -> L223.StubTechCapFactor_elec
+
+
+  # L223.StubTechCost_offshore_wind: Regional non-energy cost adder for offshore wind grid connection cost"
+  
+  gcam_regions <- unique(GCAM_region_names$region)
+  
+  A23.globaltech_capital %>%
+    filter(technology == "wind_offshore") %>%
+    select(supplysector, subsector, technology) %>%
+    repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+    repeat_add_columns(tibble(region = gcam_regions)) %>% 
+    mutate(minicam.non.energy.input = "regional price adjustment") %>%
+    left_join_error_no_match(L120.GridCost_offshore_wind , by = c("region")) %>%
+    rename (input.cost = grid.cost) %>%
+    filter(!is.na(input.cost)) %>%
+    select(region, supplysector, subsector, stub.technology = technology, 
+           year, minicam.non.energy.input, input.cost) -> L223.StubTechCost_offshore_wind
 
     # ===================================================
 
@@ -1207,6 +1244,13 @@ module_energy_L223.electricity <- function(command, ...) {
       add_legacy_name("L223.StubTechCapFactor_elec") %>%
       add_precursors("common/GCAM_region_names", "L114.RsrcCurves_EJ_R_wind", "L119.Irradiance_rel_R", "energy/A23.globaltech_capital", "energy/A23.globaltech_OMfixed", "energy/A23.globaltech_OMvar", "energy/A23.globalinttech") ->
       L223.StubTechCapFactor_elec
+	
+    L223.StubTechCost_offshore_wind %>%
+      add_title("Cost of offshore wind") %>%
+      add_units("unitless") %>%
+      add_comments("Regional non-energy cost adder for offshore wind grid connection cost") %>%
+      add_precursors("common/GCAM_region_names", "L114.RsrcCurves_EJ_R_wind", "L119.Irradiance_rel_R", "energy/A23.globaltech_capital", "energy/A23.globaltech_OMfixed", "energy/A23.globaltech_OMvar", "energy/A23.globalinttech", "L223.StubTechCapFactor_elec", "L120.RegCapFactor_offshore_wind", "L120.GridCost_offshore_wind") ->
+      L223.StubTechCost_offshore_wind
 
     if(exists("L223.GlobalTechShutdown_elec")) {
       L223.GlobalTechShutdown_elec %>%
@@ -1478,7 +1522,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_bio_low
 
-    return_data(L223.Supplysector_elec, L223.ElecReserve, L223.SubsectorLogit_elec, L223.SubsectorShrwt_elec, L223.SubsectorShrwtFllt_elec, L223.SubsectorShrwt_nuc, L223.SubsectorShrwt_renew, L223.SubsectorInterp_elec, L223.SubsectorInterpTo_elec, L223.StubTech_elec, L223.GlobalIntTechEff_elec, L223.GlobalTechEff_elec, L223.GlobalTechCapFac_elec, L223.GlobalIntTechCapFac_elec, L223.GlobalTechCapital_elec, L223.GlobalIntTechCapital_elec, L223.GlobalTechOMfixed_elec, L223.GlobalIntTechOMfixed_elec, L223.GlobalTechOMvar_elec, L223.GlobalIntTechOMvar_elec, L223.GlobalTechShrwt_elec, L223.GlobalTechInterp_elec, L223.GlobalIntTechShrwt_elec, L223.PrimaryRenewKeyword_elec, L223.PrimaryRenewKeywordInt_elec, L223.AvgFossilEffKeyword_elec, L223.GlobalTechCapture_elec, L223.GlobalIntTechBackup_elec, L223.StubTechCapFactor_elec, L223.GlobalTechShutdown_elec, L223.GlobalIntTechShutdown_elec, L223.GlobalTechSCurve_elec, L223.GlobalIntTechSCurve_elec, L223.GlobalTechLifetime_elec, L223.GlobalIntTechLifetime_elec, L223.GlobalTechProfitShutdown_elec, L223.GlobalIntTechProfitShutdown_elec, L223.StubTechCalInput_elec, L223.StubTechFixOut_elec, L223.StubTechFixOut_hydro, L223.StubTechProd_elec, L223.StubTechEff_elec, L223.GlobalTechCapital_sol_adv, L223.GlobalIntTechCapital_sol_adv, L223.GlobalTechCapital_wind_adv, L223.GlobalIntTechCapital_wind_adv, L223.GlobalTechCapital_geo_adv, L223.GlobalTechCapital_nuc_adv, L223.GlobalTechCapital_sol_low, L223.GlobalIntTechCapital_sol_low, L223.GlobalTechCapital_wind_low, L223.GlobalIntTechCapital_wind_low, L223.GlobalTechCapital_geo_low, L223.GlobalTechCapital_nuc_low, L223.GlobalTechCapital_bio_low)
+    return_data(L223.Supplysector_elec, L223.ElecReserve, L223.SubsectorLogit_elec, L223.SubsectorShrwt_elec, L223.SubsectorShrwtFllt_elec, L223.SubsectorShrwt_nuc, L223.SubsectorShrwt_renew, L223.SubsectorInterp_elec, L223.SubsectorInterpTo_elec, L223.StubTech_elec, L223.GlobalIntTechEff_elec, L223.GlobalTechEff_elec, L223.GlobalTechCapFac_elec, L223.GlobalIntTechCapFac_elec, L223.GlobalTechCapital_elec, L223.GlobalIntTechCapital_elec, L223.GlobalTechOMfixed_elec, L223.GlobalIntTechOMfixed_elec, L223.GlobalTechOMvar_elec, L223.GlobalIntTechOMvar_elec, L223.GlobalTechShrwt_elec, L223.GlobalTechInterp_elec, L223.GlobalIntTechShrwt_elec, L223.PrimaryRenewKeyword_elec, L223.PrimaryRenewKeywordInt_elec, L223.AvgFossilEffKeyword_elec, L223.GlobalTechCapture_elec, L223.GlobalIntTechBackup_elec, L223.StubTechCapFactor_elec, L223.StubTechCost_offshore_wind, L223.GlobalTechShutdown_elec, L223.GlobalIntTechShutdown_elec, L223.GlobalTechSCurve_elec, L223.GlobalIntTechSCurve_elec, L223.GlobalTechLifetime_elec, L223.GlobalIntTechLifetime_elec, L223.GlobalTechProfitShutdown_elec, L223.GlobalIntTechProfitShutdown_elec, L223.StubTechCalInput_elec, L223.StubTechFixOut_elec, L223.StubTechFixOut_hydro, L223.StubTechProd_elec, L223.StubTechEff_elec, L223.GlobalTechCapital_sol_adv, L223.GlobalIntTechCapital_sol_adv, L223.GlobalTechCapital_wind_adv, L223.GlobalIntTechCapital_wind_adv, L223.GlobalTechCapital_geo_adv, L223.GlobalTechCapital_nuc_adv, L223.GlobalTechCapital_sol_low, L223.GlobalIntTechCapital_sol_low, L223.GlobalTechCapital_wind_low, L223.GlobalIntTechCapital_wind_low, L223.GlobalTechCapital_geo_low, L223.GlobalTechCapital_nuc_low, L223.GlobalTechCapital_bio_low)
   } else {
     stop("Unknown command")
   }

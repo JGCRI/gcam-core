@@ -1,0 +1,14 @@
+# File: NREL_wind_energy_distance_range.csv
+# Title: Numerical minimum and maximum in miles or nautical miles for NREL distance bins for both onshore and offshore wind
+# Units: miles (onshore) and nautical miles (offshore)
+# Comments: onshore distance -  near =  0-50 miles; transitional = 50-100 miles; far = 100-5000 miles; offshore distance - near <20 nautical miles; transitional = 20-50 nautical miles; far = 50-100 nautical miles
+# Source: https://catalog.data.gov/dataset/global-cfdda-based-onshore-and-offshore-wind-potential-supply-curves-by-country-class-and-
+# Column types: ccnn
+#  ----------
+technology,distance,min,max
+onshore_wind,near,0,49
+onshore_wind,transitional,50,99
+onshore_wind,far,100,5000
+offshore_wind,near,0,19
+offshore_wind,intermediate,20,49
+offshore_wind,far,50,100

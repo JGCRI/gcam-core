@@ -1,0 +1,11 @@
+# File: onshore_wind_grid_cost.csv
+# Title: Grid Connection Costs for Onshore Wind
+# Units: $2010 USD per kW of capacity and km from grid (2010$/kW-km;Representative km value of distance bin at which cost is applicable
+# Comments:  consistent with interconnection costs in CERF model (https://openresearchsoftware.metajnl.com/articles/10.5334/jors.227/); 774000 2010$/km per 251 MW wind farm (774000 / 251 / 1000 = 3.08 2010$ / kW-km). Distance based on reasonable representative points for existing distance bins onshore winds in NREL_onshore_energy.csv (see script for details) 
+# Source:  provided by Chris Vernon via email 2019.07.10; original source https://www.wecc.org/Reliability/2014_TEPPC_Transmission_CapCost_Report_B+V.pdf
+# Column types: cnn
+# ----------
+technology,cost_per_kW-km,rep_dist_for_bin
+onshore_wind,3.0837,40
+onshore_wind,3.0837,120
+onshore_wind,3.0837,160
