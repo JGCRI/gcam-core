@@ -3,7 +3,7 @@
 # Units: unitless
 # Comments: USA multiple load segments electricity sector intermittent technology shareweight assumptions
 # Source: None (GCAM assumptions)
-# Column types: ccciiiii 
+# Column types: cccnnnnn 
 # ----------
 supplysector,subsector,technology,1971,2010,2011,2030,2100
 base load generation,wind,wind_base,1,1,1,1,1
@@ -19,3 +19,4 @@ intermediate generation,solar,CSP_int,1,1,1,1,1
 subpeak generation,solar,CSP_subpeak,1,1,1,1,1
 peak generation,solar,CSP_peak,1,1,1,1,1
 elect_td_bld,rooftop_pv,rooftop_pv,1,1,1,1,1
+base load generation,wind,wind_base_offshore,0,0,0.05,1,1

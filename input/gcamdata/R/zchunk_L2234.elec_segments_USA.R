@@ -18,7 +18,7 @@
 #' \code{L2234.GlobalTechLifetime_elecS_USA}, \code{L2234.GlobalIntTechLifetime_elecS_USA}, \code{L2234.GlobalTechProfitShutdown_elecS_USA},
 #' \code{L2234.GlobalTechSCurve_elecS_USA}, \code{L2234.GlobalTechCapture_elecS_USA}, \code{L2234.GlobalIntTechBackup_elecS_USA},
 #' \code{L2234.StubTechMarket_elecS_USA}, \code{L2234.StubTechMarket_backup_elecS_USA}, \code{L2234.StubTechElecMarket_backup_elecS_USA},
-#' \code{L2234.StubTechProd_elecS_USA}, \code{L2234.StubTechFixOut_elecS_USA}, \code{L2234.StubTechFixOut_hydro_elecS_USA},
+#' \code{L2234.StubTechProd_elecS_USA}, \code{L2234.StubTechFixOut_elecS_USA}, \code{L2234.StubTechFixOut_hydro_elecS_USA}, \code{L2234.StubTechCost_offshore_wind_elecS_USA},
 #' \code{L2234.TechShrwt_elecS_grid_USA}, \code{L2234.TechCoef_elecS_grid_USA}, \code{L2234.TechProd_elecS_grid_USA}.
 #' The corresponding file in the original data system was \code{L2234.elec_segments_USA.R} (gcam-usa level2).
 #' @details This chunk generates input files to create an electricity generation sector with multiple load segments
@@ -75,7 +75,8 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
              "L223.GlobalIntTechBackup_elec",
              "L223.PrimaryRenewKeyword_elec",
              "L223.PrimaryRenewKeywordInt_elec",
-             "L223.AvgFossilEffKeyword_elec"))
+             "L223.AvgFossilEffKeyword_elec",
+             "L223.StubTechCost_offshore_wind_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2234.Supplysector_elecS_USA",
              "L2234.ElecReserve_elecS_USA",
@@ -116,6 +117,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
              "L2234.StubTechProd_elecS_USA",
              "L2234.StubTechFixOut_elecS_USA",
              "L2234.StubTechFixOut_hydro_elecS_USA",
+             "L2234.StubTechCost_offshore_wind_elecS_USA",
              "L2234.TechShrwt_elecS_grid_USA",
              "L2234.TechCoef_elecS_grid_USA",
              "L2234.TechProd_elecS_grid_USA"))
@@ -193,6 +195,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
     L223.PrimaryRenewKeyword_elec <- get_data(all_data, "L223.PrimaryRenewKeyword_elec")
     L223.PrimaryRenewKeywordInt_elec <- get_data(all_data, "L223.PrimaryRenewKeywordInt_elec")
     L223.AvgFossilEffKeyword_elec <- get_data(all_data, "L223.AvgFossilEffKeyword_elec")
+    L223.StubTechCost_offshore_wind_USA <- get_data(all_data, "L223.StubTechCost_offshore_wind_USA")
 
     # ===================================================
     # Data Processing
@@ -590,6 +593,17 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
       left_join(L2234.StubTechProd_elecS_USA, by = c("region", "supplysector", "subsector", "year")) %>%
       mutate(subs.share.weight = if_else(subsector.cal.value == 0, 0, 1),
              share.weight = if_else(calOutputValue == 0, 0, 1 )) -> L2234.StubTechProd_elecS_USA
+
+    # Removing offshore wind technologies for states that don't have any resource
+    offshore_wind_states <- L223.StubTechMarket_elec_USA %>%
+      filter(stub.technology == "wind_offshore") %>%
+      distinct(region)
+    L2234.StubTechProd_elecS_USA %>%
+      filter(!grepl("_offshore", stub.technology)) %>%
+      bind_rows(L2234.StubTechProd_elecS_USA %>%
+                  filter(grepl("_offshore", stub.technology)) %>%
+                  semi_join(offshore_wind_states, by = c("region"))) -> L2234.StubTechProd_elecS_USA
+
 
     # Update future subsector share-weights as follows:
     # 1. For coal, gas and oil - fix share-weights to calibration values. This does not require any update
@@ -1021,6 +1035,15 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
       select(-year, -share.weight) %>%
       distinct() -> L2234.PassThroughTech_elecS_grid
 
+    # Create State-specific non-energy cost adder for offshore wind grid connection cost
+    L2234.StubTechMarket_elecS_USA %>%
+      filter(grepl("_offshore", stub.technology)) %>%
+      select(-minicam.energy.input, -market.name) %>%
+      left_join_error_no_match(L223.StubTechCost_offshore_wind_USA %>%
+                                 select(-supplysector, -stub.technology),
+                               by = c("region", "subsector", "year")) -> L2234.StubTechCost_offshore_wind_elecS_USA
+
+
     # ===================================================
     # Produce outputs
 
@@ -1438,6 +1461,13 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
                      "L1239.state_elec_supply_USA") ->
       L2234.StubTechFixOut_hydro_elecS_USA
 
+    L2234.StubTechCost_offshore_wind_elecS_USA %>%
+      add_title("Cost adders for offshore wind grid connection in USA") %>%
+      add_units("Unitless") %>%
+      add_comments("State-specific non-energy cost adder for offshore wind grid connection cost") %>%
+      add_precursors("L223.StubTechCost_offshore_wind_USA") ->
+      L2234.StubTechCost_offshore_wind_elecS_USA
+
     L2234.TechShrwt_elecS_grid %>%
       add_title("Electricity Load Segments Grid Technology Shareweights") %>%
       add_units("unitless") %>%
@@ -1509,6 +1539,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
                 L2234.StubTechProd_elecS_USA,
                 L2234.StubTechFixOut_elecS_USA,
                 L2234.StubTechFixOut_hydro_elecS_USA,
+                L2234.StubTechCost_offshore_wind_elecS_USA,
                 L2234.TechShrwt_elecS_grid_USA,
                 L2234.TechCoef_elecS_grid_USA,
                 L2234.TechProd_elecS_grid_USA)

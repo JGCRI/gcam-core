@@ -49,6 +49,7 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
              "L2234.StubTechProd_elecS_USA",
              "L2234.StubTechFixOut_elecS_USA",
              "L2234.StubTechFixOut_hydro_elecS_USA",
+			       "L2234.StubTechCost_offshore_wind_elecS_USA",
              "L2234.TechShrwt_elecS_grid_USA",
              "L2234.TechCoef_elecS_grid_USA",
              "L2234.TechProd_elecS_grid_USA",
@@ -131,6 +132,7 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
     L2234.StubTechProd_elecS_USA <- get_data(all_data, "L2234.StubTechProd_elecS_USA")
     L2234.StubTechFixOut_elecS_USA <- get_data(all_data, "L2234.StubTechFixOut_elecS_USA")
     L2234.StubTechFixOut_hydro_elecS_USA <- get_data(all_data, "L2234.StubTechFixOut_hydro_elecS_USA")
+   	L2234.StubTechCost_offshore_wind_elecS_USA <- get_data(all_data, "L2234.StubTechCost_offshore_wind_elecS_USA")
     L2234.TechShrwt_elecS_grid_USA <- get_data(all_data, "L2234.TechShrwt_elecS_grid_USA")
     L2234.TechCoef_elecS_grid_USA <- get_data(all_data, "L2234.TechCoef_elecS_grid_USA")
     L2234.TechProd_elecS_grid_USA <- get_data(all_data, "L2234.TechProd_elecS_grid_USA")
@@ -248,6 +250,7 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
       add_xml_data(L2234.StubTechFixOut_elecS_USA, "StubTechFixOut") %>%
       add_xml_data(L2234.StubTechEff_elecS_USA, "StubTechEff") %>%
       add_xml_data(L2234.StubTechFixOut_hydro_elecS_USA, "StubTechFixOut") %>%
+	  add_xml_data(L2234.StubTechCost_offshore_wind_elecS_USA, "StubTechCost") %>%
       add_xml_data(L2234.TechShrwt_elecS_grid_USA, "TechShrwt") %>%
       add_xml_data(L2234.TechCoef_elecS_grid_USA, "TechCoef") %>%
       add_xml_data(L2234.TechProd_elecS_grid_USA, "Production") %>%
@@ -322,6 +325,7 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
                      "L2234.StubTechProd_elecS_USA",
                      "L2234.StubTechFixOut_elecS_USA",
                      "L2234.StubTechFixOut_hydro_elecS_USA",
+				     "L2234.StubTechCost_offshore_wind_elecS_USA",
                      "L2234.TechShrwt_elecS_grid_USA",
                      "L2234.TechCoef_elecS_grid_USA",
                      "L2234.TechProd_elecS_grid_USA",
