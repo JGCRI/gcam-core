@@ -5,6 +5,7 @@
 # ----------
 from.supplysector,from.subsector,from.technology,to.supplysector,to.subsector,to.technology,plant_type,cooling_system,water_type,sector,fuel,technology,minicam.energy.input
 electricity,wind,wind,electricity,wind,wind,no cooling,none,none,electricity generation,wind,wind,onshore wind resource
+electricity,wind,wind_offshore,electricity,wind,wind_offshore,no cooling,none,none,electricity generation,wind,wind_offshore,offshore wind resource
 electricity,solar,PV,electricity,solar,PV,no cooling,none,fresh,electricity generation,solar PV,PV,global solar resource
 electricity,solar,CSP,elec_CSP,CSP,CSP (recirculating),CSP,recirculating,fresh,electricity generation,solar CSP,CSP,global solar resource
 electricity,solar,CSP,elec_CSP,CSP,CSP (dry_hybrid),CSP,dry_hybrid,fresh,electricity generation,solar CSP,CSP,global solar resource
