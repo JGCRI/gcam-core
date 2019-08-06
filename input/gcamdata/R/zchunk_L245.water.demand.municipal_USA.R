@@ -111,9 +111,9 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
       # ^^ withdrawal coefficient is 1; consumption coefficient is fraction of withdrawal
       mutate(coefficient = 1,
              coefficient = replace(coefficient, water_type == "water consumption",
-                                   round(value[water_type == "water consumption"], water.DIGITS_MUNI_WATER))) %>%
-      mutate(water_sector = "Municipal") %>%
-      mutate(minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
+                                   round(value[water_type == "water consumption"], water.DIGITS_MUNI_WATER)),
+      water_sector = "Municipal",
+      minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
       select(LEVEL2_DATA_NAMES$TechCoef) ->
       L245.TechCoef_USA  # municipal water technology withdrawals and consumption efficiencies
 
