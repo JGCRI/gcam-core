@@ -56,14 +56,14 @@ module_energy_L210.resources <- function(command, ...) {
              "L210.UnlimitRsrcPrice",
              "L210.RsrcTechChange",
              "L210.SmthRenewRsrcTechChange",
-			 "L210.SmthRenewRsrcTechChange_offshore_wind",
+             "L210.SmthRenewRsrcTechChange_offshore_wind",
              "L210.RsrcCalProd",
              "L210.ReserveCalReserve",
              "L210.RsrcCurves_fos",
              "L210.RsrcCurves_U",
              "L210.SmthRenewRsrcCurves_MSW",
              "L210.SmthRenewRsrcCurves_wind",
-			 "L210.SmthRenewRsrcCurves_offshore_wind",
+             "L210.SmthRenewRsrcCurves_offshore_wind",
              "L210.SmthRenewRsrcCurvesGdpElast_roofPV",
              "L210.GrdRenewRsrcCurves_geo",
              "L210.GrdRenewRsrcMax_geo",
@@ -100,7 +100,7 @@ module_energy_L210.resources <- function(command, ...) {
       resource_type <- scenario <-subResourceCapacityFactor <- subresource <- subresource_type <-
       minicam.non.energy.input <- input.cost <- cal.reserve <- renewresource <- sub.renewable.resource <-
       avg.prod.lifetime <- timestep <- lifetime <- year_operate <- final_year <- GCAM_region_ID <-
-      sector <- NULL
+      sector <- smooth.renewable.subresource <- tech.change <- NULL
 
     all_data <- list(...)[[1]]
 

@@ -1,8 +1,8 @@
 # File: reeds_offshore_wind_curve_grid_cost.csv
-# Title: REEDS Wind curve cost
-# Units: $ per MW
+# Title: Offshore Wind Power Grid Interconnection Costs by ReEDS Wind Region; Class; and Bin
+# Units: 2013$/MW
 # Comments: These costs are the additional cost in $/MW (2013 USD) for interconnecting to the grid on top of the capital and OM costs.
-# Source: NREL
+# Source: Information based on ReEDS version 2017.  Files provided by ReEDS team in April 2017.
 # Column types: iccnnnnn
 #  ----------
 Wind_Resource_Region,Wind_Class,Wind_Type,wsc1,wsc2,wsc3,wsc4,wsc5
