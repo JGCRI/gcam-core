@@ -1,4 +1,4 @@
-#' module_gcam.usa_L210.resources_USA
+#' module_gcamusa_L210.resources_USA
 #'
 #' GCAM-USA resource market information, prices, TechChange parameters, and supply curves.
 #'
@@ -10,7 +10,7 @@
 #' \code{L210.UnlimitRsrc_USA}, \code{L210.UnlimitRsrcPrice_USA}, \code{L210.SmthRenewRsrcTechChange_USA},
 #' \code{L210.SmthRenewRsrcCurves_wind_USA}, \code{L210.GrdRenewRsrcCurves_geo_USA}, \code{L210.GrdRenewRsrcMax_geo_USA},
 #' \code{L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA}, \code{L210.DeleteUnlimitRsrc_USAlimestone},
-#' \code{L210.UnlimitRsrc_limestone_USA}, \code{L210.UnlimitRsrcPrice_limestone_USA}. The corresponding file in the
+#' \code{L210.UnlimitRsrc_limestone_USA}, \code{L210.UnlimitRsrcPrice_limestone_USA}, \code{L210.ResTechShrwt_USA}. The corresponding file in the
 #' original data system was \code{L210.resources_USA.R} (gcam-usa level2).
 #' @details GCAM-USA resource market information, prices, TechChange parameters, and supply curves.
 #' @importFrom assertthat assert_that
@@ -18,7 +18,7 @@
 #' @importFrom tidyr gather spread
 #' @author RLH November 2017
 
-module_gcam.usa_L210.resources_USA <- function(command, ...) {
+module_gcamusa_L210.resources_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",
@@ -48,7 +48,8 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
              "L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA", #
              "L210.DeleteUnlimitRsrc_USAlimestone", #
              "L210.UnlimitRsrc_limestone_USA", #
-             "L210.UnlimitRsrcPrice_limestone_USA")) #
+             "L210.UnlimitRsrcPrice_limestone_USA",
+             "L210.ResTechShrwt_USA")) #
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -57,7 +58,8 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
     Geothermal_Hydrothermal_GWh <- State <- available <- b_exp <- cost_modifier <- curve.exponent <- curve_exponent <-
       extractioncost <- generation <- geothermal <- grade <- grade_share <- maxResource <- maxSubResource <- mid.price <-
       mid_p <- mid_price <- object <- offtake <- offtake_share <- region <- renewresource <- smooth.renewable.subresource <-
-      state <- unlimited.resource <- value <- year <- year.fillout <- . <- NULL
+      state <- unlimited.resource <- value <- year <- year.fillout <- . <-
+      sub.renewable.resource <- subresource <- NULL
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
@@ -224,6 +226,17 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
       write_to_all_states(names = c(names(.), "region")) %>%
       left_join_error_no_match(L115.rsrc_state_rooftopPV, by = c("region" = "state")) %>%
       rename(maxSubResource = generation, mid.price = mid_p, curve.exponent = b_exp)
+
+    # L210.ResTechShrwt_USA: To provide a shell for the technology object in the resources
+    L210.SmthRenewRsrcCurves_wind_USA %>%
+      select(region, resource = renewresource, subresource = smooth.renewable.subresource) %>%
+      bind_rows(select(L210.GrdRenewRsrcMax_geo_USA, region, resource = renewresource, subresource = sub.renewable.resource)) %>%
+      bind_rows(select(L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA, region, resource = renewresource, subresource = smooth.renewable.subresource)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(technology = subresource,
+             share.weight = 1.0) %>%
+      select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+      L210.ResTechShrwt_USA
     # ===================================================
 
     # Produce outputs
@@ -331,10 +344,20 @@ module_gcam.usa_L210.resources_USA <- function(command, ...) {
       add_precursors("L210.SmthRenewRsrcCurvesGdpElast_roofPV", "L115.rsrc_state_rooftopPV") ->
       L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA
 
+    L210.ResTechShrwt_USA %>%
+      add_title("Technology share-weights for the renewable resources") %>%
+      add_units("NA") %>%
+      add_comments("Mostly just to provide a shell of a technology for the resource to use") %>%
+      add_precursors("L210.SmthRenewRsrcCurves_wind", "gcam-usa/us_state_wind",
+                     "L210.GrdRenewRsrcMax_geo", "L210.SmthRenewRsrcCurvesGdpElast_roofPV",
+                     "L115.rsrc_state_rooftopPV") ->
+      L210.ResTechShrwt_USA
+
     return_data(L210.DeleteRenewRsrc_USArsrc, L210.DeleteUnlimitRsrc_USArsrc, L210.RenewRsrc_USA, L210.UnlimitRsrc_USA,
                 L210.UnlimitRsrcPrice_USA, L210.SmthRenewRsrcTechChange_USA, L210.SmthRenewRsrcCurves_wind_USA,
                 L210.GrdRenewRsrcCurves_geo_USA, L210.GrdRenewRsrcMax_geo_USA, L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA,
-                L210.DeleteUnlimitRsrc_USAlimestone, L210.UnlimitRsrc_limestone_USA, L210.UnlimitRsrcPrice_limestone_USA)
+                L210.DeleteUnlimitRsrc_USAlimestone, L210.UnlimitRsrc_limestone_USA, L210.UnlimitRsrcPrice_limestone_USA,
+                L210.ResTechShrwt_USA)
   } else {
     stop("Unknown command")
   }

@@ -1,0 +1,44 @@
+# File: A23.elec_OM_adv_USA.csv
+# Title: Electricity technology OM costs
+# Units: 2014 $/kW
+# Comments: Based on "Adv Tech Case" in DOE report "Energy CO2 Emissions Impacts of Clean Energy Technology Innovation and Policy"
+# Source: Received from Elke Hodson (DOE-EPSA) [Filename: Adv Tech and QER Gen Tech Info for GCAM 06-22-2016.xlx]; https://energy.gov/sites/prod/files/2017/01/f34/Energy%20CO2%20Emissions%20Impacts%20of%20Clean%20Energy%20Technology%20Innovation%20and%20Policy.pdf
+# Column types: icnn 
+# ----------
+year,GCAM.technology,OM.fixed,OM.var
+2015,coal (IGCC CCS),45.65960115,15.22650041
+2015,gas (CC CCS),32.27830035,6.885120908
+2015,Gen_III,86.34984203,0
+2015,wind,50.85086124,0
+2015,PV,18.75,0
+2015,CSP,61,0
+2020,coal (IGCC CCS),45.65960115,15.22650041
+2020,gas (CC CCS),32.27830035,6.885120908
+2020,Gen_III,86.34984203,0
+2020,wind,47.41499224,0
+2020,PV,10,0
+2020,CSP,56,0
+2025,coal (IGCC CCS),44.28981311,14.7697054
+2025,gas (CC CCS),31.57404653,6.734900089
+2025,Gen_III,86.34984203,0
+2025,wind,45.35347084,0
+2025,PV,10,0
+2025,CSP,40,0
+2030,coal (IGCC CCS),42.00683306,14.00838038
+2030,gas (CC CCS),30.40029015,6.484532056
+2030,Gen_III,86.34984203,0
+2030,wind,43.29194944,0
+2030,PV,10,0
+2030,CSP,40,0
+2035,coal (IGCC CCS),38.99329938,13.00343135
+2035,gas (CC CCS),28.92135712,6.169068334
+2035,Gen_III,86.34984203,0
+2035,wind,41.84888446,0
+2035,PV,10,0
+2035,CSP,40,0
+2040,coal (IGCC CCS),36.52768092,12.18120033
+2040,gas (CC CCS),27.7593383,5.921203981
+2040,Gen_III,86.34984203,0
+2040,wind,40.40581947,0
+2040,PV,10,0
+2040,CSP,40,0

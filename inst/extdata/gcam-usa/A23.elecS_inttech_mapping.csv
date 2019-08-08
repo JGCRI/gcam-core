@@ -1,0 +1,20 @@
+# File: A23.elecS_inttech_mapping.csv
+# Title: Multiple Load Segments to Single Electricity Sector Mapping
+# Units: NA
+# Comments: Mapping file between single electricity sector and multiple load segments electricity sector intermittent technologies
+# Column types: cccccc 
+# ----------
+Electric.sector,subsector,Electric.sector.intermittent.technology,supplysector,subsector_1,intermittent.technology
+base load generation,wind,wind_base,electricity,wind,wind
+intermediate generation,wind,wind_int,electricity,wind,wind
+subpeak generation,wind,wind_subpeak,electricity,wind,wind
+peak generation,wind,wind_peak,electricity,wind,wind
+base load generation,solar,PV_base,electricity,solar,PV
+intermediate generation,solar,PV_int,electricity,solar,PV
+subpeak generation,solar,PV_subpeak,electricity,solar,PV
+peak generation,solar,PV_peak,electricity,solar,PV
+base load generation,solar,CSP_base,electricity,solar,CSP
+intermediate generation,solar,CSP_int,electricity,solar,CSP
+subpeak generation,solar,CSP_subpeak,electricity,solar,CSP
+peak generation,solar,CSP_peak,electricity,solar,CSP
+elect_td_bld,rooftop_pv,rooftop_pv,elect_td_bld,rooftop_pv,rooftop_pv

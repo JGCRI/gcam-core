@@ -1,0 +1,27 @@
+# File: A_agRegionalSubsector.csv
+# Title: Subsector assumptions for regional crop markets
+# Units: Various
+# Source: NA
+# Column types: ccncnccccc
+# ----------
+supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,interpolation.function,logit.type
+regional corn,domestic corn,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional corn,imported corn,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional fibercrop,domestic fibercrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional fibercrop,imported fibercrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional misccrop,domestic misccrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional misccrop,imported misccrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional oilcrop,domestic oilcrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional oilcrop,imported oilcrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional othergrain,domestic othergrain,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional othergrain,imported othergrain,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional palmfruit,domestic palmfruit,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional palmfruit,imported palmfruit,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional rice,domestic rice,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional rice,imported rice,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional root_tuber,domestic root_tuber,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional root_tuber,imported root_tuber,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional sugarcrop,domestic sugarcrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional sugarcrop,imported sugarcrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional wheat,domestic wheat,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional wheat,imported wheat,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,

@@ -42,8 +42,8 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
       add_xml_data(L201.Rsrc, "Rsrc") %>%
       add_xml_data(L201.RsrcPrice, "RsrcPrice") %>%
       add_xml_data(L201.RenewRsrcCurves_calib, "RenewRsrcCurvesWater") %>%
-      add_xml_data(L201.GrdRenewRsrcMax_runoff, "GrdRenewRsrcMaxNoFOWater") %>%
-      add_xml_data(L201.DepRsrcCurves_ground, "DepRsrcCurvesWater") %>%
+      add_xml_data(L201.GrdRenewRsrcMax_runoff, "GrdRenewRsrcMaxWaterNoFO") %>%
+      add_xml_data(L201.DepRsrcCurves_ground, "RsrcCurves") %>%
       add_precursors("L201.NodeEquiv",
                      "L201.DeleteUnlimitRsrc",
                      "L201.Rsrc",

@@ -1,7 +1,7 @@
 # File: NREL_Res_PV_supply_curve.csv
 # Title: PV supply curve for residential buildings
 # Units: Relative_Cost - Unitless
-# Source: Denholm, P. & Margolis, R. Supply Curves for Rooftop Solar PV-Generated Electricity for the United States. National Renewable Energy Laboratory, Technical Report NREL / TP-6A0-44073 (2008) - www.nrel.gov
+# Source: Denholm & Margolis. Supply Curves for Rooftop Solar PV-Generated Electricity for the United States. National Renewable Energy Laboratory. Technical Report NREL / TP-6A0-44073 (2008) - www.nrel.gov
 # Column types: cccnnn 
 # ----------
 State,TMY_Site,Pitch,MW,MWh,Relative_Cost

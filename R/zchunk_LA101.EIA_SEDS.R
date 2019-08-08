@@ -1,4 +1,4 @@
-#' module_gcam.usa_LA101.EIA_SEDS
+#' module_gcamusa_LA101.EIA_SEDS
 #'
 #' Produce two ouput tables from the EIA state energy database:
 #' \itemize{
@@ -17,7 +17,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread fill
 #' @author AS April 2017
-module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
+module_gcamusa_LA101.EIA_SEDS <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/EIA_SEDS_fuels",
              FILE = "gcam-usa/EIA_SEDS_sectors",
