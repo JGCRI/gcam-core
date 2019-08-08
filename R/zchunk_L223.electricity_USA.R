@@ -19,8 +19,8 @@
 #' \code{L223.StubTech_elec_USA}, \code{L223.StubTechEff_elec_USA}, \code{L223.StubTechCapFactor_elec_USA},
 #' \code{L223.StubTechFixOut_elec_USA}, \code{L223.StubTechFixOut_hydro_USA}, \code{L223.StubTechProd_elec_USA},
 #' \code{L223.StubTechMarket_elec_USA}, \code{L223.StubTechMarket_backup_USA}, \code{L223.StubTechElecMarket_backup_USA},
-#' \code{L223.StubTechCapFactor_elec_wind_USA}, \code{L223.StubTechCapFactor_elec_solar_USA}, \code{L223.StubTechCost_offshore_wind_USA}. The corresponding file in the
-#' original data system was \code{L223.electricity_USA.R} (gcam-usa level2).
+#' \code{L223.StubTechCapFactor_elec_wind_USA}, \code{L223.StubTechCapFactor_elec_solar_USA}, \code{L223.StubTechCost_offshore_wind_USA}.
+#' The corresponding file in the original data system was \code{L223.electricity_USA.R} (gcam-usa level2).
 #' @details This chunk generates input files to create an annualized electricity generation sector for each state
 #' and creates the demand for the state-level electricity sectors in the grid regions.
 #' @importFrom assertthat assert_that
@@ -105,7 +105,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       sector <- calOutputValue <- fuel <- elec <- share <- avg.share <- pref <-
       share.weight.mult <- share.weight <- market.name <- sector.name <- subsector.name <-
       minicam.energy.input <- calibration <- secondary.output <- stub.technology <-
-      capacity.factor <- scaler <- capacity.factor.capital <- . <- NULL  # silence package check notes
+      capacity.factor <- scaler <- capacity.factor.capital <- . <- CFmax <- grid.cost <- NULL  # silence package check notes
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
@@ -485,11 +485,13 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
     # Modifications for offshore wind
     # Remove states with no offshore wind resources
     offshore_wind_states <- unique(L120.RsrcCurves_EJ_R_offshore_wind_USA$region)
+
     L223.StubTech_elec_USA %>%
       filter(stub.technology != "wind_offshore") %>%
       bind_rows(L223.StubTech_elec_USA %>%
                   filter(stub.technology == "wind_offshore",
                          region %in% offshore_wind_states)) -> L223.StubTech_elec_USA
+
     L223.StubTechCapFactor_elec_USA %>%
       filter(stub.technology != "wind_offshore") %>%
       bind_rows(L223.StubTechCapFactor_elec_USA %>%
@@ -497,23 +499,11 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
                          region %in% offshore_wind_states)) -> L223.StubTechCapFactor_elec_USA
 
     L223.StubTechMarket_elec_USA %>%
-      left_join_error_no_match(select(states_subregions, grid_region, state), by = c("region" = "state")) %>%
-      mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
-                                   grid_region[minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS])) %>%
-      select(-grid_region) ->
-      L223.StubTechMarket_elec_USA
-    
-
-    # Removing states with no offshore wind resource
-    # offshore_wind_states <- unique(L120.RsrcCurves_EJ_R_offshore_wind_USA$region)
-    L223.StubTechMarket_elec_USA %>%
       filter(stub.technology != "wind_offshore") %>%
       bind_rows(L223.StubTechMarket_elec_USA %>%
                   filter(stub.technology == "wind_offshore",
                          region %in% offshore_wind_states)) -> L223.StubTechMarket_elec_USA
 
-
-    # Removing states with no offshore wind resource
     L223.StubTechMarket_backup_USA %>%
       filter(stub.technology != "wind_offshore") %>%
       bind_rows(L223.StubTechMarket_backup_USA %>%
@@ -530,6 +520,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       mutate(capacity.factor= round(CFmax,energy.DIGITS_CAPACITY_FACTOR)) %>%
       select(region, supplysector, subsector, stub.technology, year,
              capacity.factor) -> L223.StubTechCapFactor_elec_offshore_wind_USA
+
     L223.StubTechCapFactor_elec_wind_USA %>%
       filter(stub.technology != "wind_offshore") %>%
       bind_rows(L223.StubTechCapFactor_elec_offshore_wind_USA) -> L223.StubTechCapFactor_elec_wind_USA
@@ -542,6 +533,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       left_join(L120.GridCost_offshore_wind_USA, by = c("region" = "State")) %>%
       rename(input.cost = grid.cost) -> L223.StubTechCost_offshore_wind_USA
 
+
     # Produce outputs
 
     missing_data() %>%
@@ -549,12 +541,12 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       L223.DeleteSubsector_USAelec
 
     missing_data() %>%
-        add_legacy_name("L223.Supplysector_USAelec") ->
-        L223.Supplysector_USAelec
+      add_legacy_name("L223.Supplysector_USAelec") ->
+      L223.Supplysector_USAelec
 
     missing_data() %>%
-        add_legacy_name("L223.SubsectorShrwtFllt_USAelec") ->
-        L223.SubsectorShrwtFllt_USAelec
+      add_legacy_name("L223.SubsectorShrwtFllt_USAelec") ->
+      L223.SubsectorShrwtFllt_USAelec
 
     missing_data() %>%
       add_legacy_name("L223.SubsectorInterp_USAelec") ->

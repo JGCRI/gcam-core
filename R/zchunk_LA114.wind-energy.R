@@ -46,29 +46,10 @@ module_energy_LA114.wind <- function(command, ...) {
       max.price <- maxSubResource <- p <- supply <- optimize <- resource <- subresource <- maxSubResource <-
       optimize <- mid.price <- . <- price <- NULL
 
-    # First, define three useful functions that will be used later: evaluate_smooth_res_curve,
-    # smooth_res_curve_approx_error, and generate_max_prices.
+    # First, define useful functions that will be used later: generate_max_prices.
 
-    # The function, evaluate_smooth_res_curve, computes the smooth renewable resource function
-    # supply = (p - base.price) ^ curve.exponent / (mid.price ^ curve.exponent +
-    # (p - base.price) ^ curve.exponent * maxSubResource
-    # Note that all of these can be vectors
-    evaluate_smooth_res_curve <- function(curve.exponent, mid.price, base.price, maxSubResource, p) {
-      supply <- ((p - base.price) ^ curve.exponent) / (mid.price ^ curve.exponent + ((p - base.price) ^ curve.exponent)) * maxSubResource
-      # zero out the supply where the price was less than the base.price
-      supply[p < base.price] <- 0
-      supply
-    }
-
-    # The function, smooth_res_curve_approx_error, checks how well the given smooth renewable curve matches the given supply-points.
-    # Note that the first argument is the one that is changed by optimize when trying to minimize the error
-    smooth_res_curve_approx_error <- function(curve.exponent, mid.price, base.price, maxSubResource, supply_points) {
-      f_p <- evaluate_smooth_res_curve(curve.exponent, mid.price, base.price, maxSubResource, supply_points$price)
-      error <- f_p - supply_points$supply
-      crossprod(error, error)
-    }
-
-    # The function, generate_max_prices, calculates the maximum price for each country supply curve where supply is 95% of the maximum resource.
+    # The function, generate_max_prices, calculates the maximum price for each country supply curve where
+    # supply is 95% of the maximum resource.
     generate_max_prices <- function(base.price, mid.price, curve.exponent) {
       # Max price is defined to be the price at which supply is 95% of the maximum resource.
       # This range should cover the entire curve with sufficient density.

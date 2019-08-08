@@ -1,8 +1,8 @@
 # File: NREL_offshore_energy.csv
-# Title: Offshore Wind Resource Potential by region from NREL
+# Title: Offshore Wind Resource Potential by Country from NREL
 # Units: PWh
 # Comments: distance -  near =  0-50 miles; transitional = 50-100 miles; far = 100-5000 miles
-# Source: https://catalog.data.gov/dataset/global-cfdda-based-onshore-and-offshore-wind-potential-supply-curves-by-country-class-and-
+# Source: Eurek et. al (2017); https://doi.org/10.1016/j.eneco.2016.11.015; raw data at https://catalog.data.gov/dataset/global-cfdda-based-onshore-and-offshore-wind-potential-supply-curves-by-country-class-and-
 # Column types: cccnnnnnnnnnn
 #  ----------
 IAM_country,depth_class,distance_to_shore,c1,c2,c3,c4,c5,c6,c7,c8,c9,total

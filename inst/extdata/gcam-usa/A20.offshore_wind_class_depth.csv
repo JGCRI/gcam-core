@@ -1,8 +1,8 @@
 # File: A20.offshore_wind_class_depth.csv
-# Title: Offshore wind class and depth assumptions in USA
+# Title: Offshore wind depth assumptions by ReEDS resource class
 # Units: Unitless
 # Comments: Depth level assumptions are class-specific for state-level offshore wind
-# Source: Cole et al. 2016
+# Source: NREL 2016 Annual Technology Baseline; https://www.nrel.gov/docs/fy16osti/66944.pdf
 # Column types: cc
 # ----------
 Wind_Class,depth_class

@@ -116,7 +116,7 @@ module_gcamusa_LA115.rooftopPV <- function(command, ...) {
       p_pow_b <- p ^ b
       f_p <- p_pow_b / ( midp ^ b + p_pow_b )
     }
-    smooth_res_curve_approx_error <- function(b, midp, supply_curve) {
+    smooth_res_curve_approx_error_PV <- function(b, midp, supply_curve) {
       f_p <- smooth_res_curve_approx(b, midp, supply_curve$p)
       error <- f_p - supply_curve$percent_cumul
       crossprod(error, error)
@@ -127,7 +127,7 @@ module_gcamusa_LA115.rooftopPV <- function(command, ...) {
     get_error_min_b <- function(stateAb) {
       midPrice <- filter(L115.pv_midPrice, state == stateAb)$mid_p
       supplyCurve <- filter(ungroup(L115.pv_sc_State), state == stateAb)
-      stats::optimize(f = smooth_res_curve_approx_error, interval = c(1.0, 15.0),
+      stats::optimize(f = smooth_res_curve_approx_error_PV, interval = c(1.0, 15.0),
                midPrice, supplyCurve) %>% unlist
     }
     # Get error_min_b for all states using apply (replaces "for loop" structure of legacy code)

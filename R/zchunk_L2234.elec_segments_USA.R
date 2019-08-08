@@ -515,7 +515,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
     L223.StubTechMarket_backup_USA %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(A23.elecS_inttech_mapping,
-                 by = c("supplysector", "subsector", "stub.technology" = "intermittent.technology")) %>%
+                by = c("supplysector", "subsector", "stub.technology" = "intermittent.technology")) %>%
       filter(!is.na(minicam.energy.input)) %>%
       select(region, supplysector = Electric.sector, subsector, stub.technology = Electric.sector.intermittent.technology,
              year, minicam.energy.input, market.name) -> L2234.StubTechMarket_backup_elecS_USA
@@ -598,6 +598,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
     offshore_wind_states <- L223.StubTechMarket_elec_USA %>%
       filter(stub.technology == "wind_offshore") %>%
       distinct(region)
+
     L2234.StubTechProd_elecS_USA %>%
       filter(!grepl("_offshore", stub.technology)) %>%
       bind_rows(L2234.StubTechProd_elecS_USA %>%
@@ -719,7 +720,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
       select(-supplysector, -subsector_1, -stub.technology) %>%
       rename(supplysector = Electric.sector, stub.technology = Electric.sector.technology) %>%
       left_join_error_no_match(L2234.fuelfractions_segment_USA_hydro_final_calibration_year,
-                by = c("region", "supplysector", "subsector")) %>%
+                               by = c("region", "supplysector", "subsector")) %>%
       mutate(fixedOutput = fixedOutput * fraction) %>%
       select(region, supplysector, subsector, stub.technology, year = year.x, fixedOutput,
              share.weight.year, subs.share.weight, tech.share.weight) -> L2234.StubTechFixOut_hydro_elecS_USA
@@ -729,8 +730,8 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
       filter(subsector %in% c("coal", "gas", "refined liquids", "biomass"),
              year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(A23.elecS_tech_mapping,
-                           by = c("supplysector" = "Electric.sector", "subsector",
-                                  "stub.technology" = "Electric.sector.technology")) %>%
+                               by = c("supplysector" = "Electric.sector", "subsector",
+                                      "stub.technology" = "Electric.sector.technology")) %>%
       # join will produce NAs (filtered out later); left_join_error_no_match throws error, so left_join used
       left_join(L223.StubTechEff_elec_USA %>%
                   select(-supplysector),
@@ -757,7 +758,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
       mutate(count_tech = n()) %>%
       ungroup() %>%
       left_join_error_no_match(L2234.fuel_eff_actual %>%
-                  select(-GCAM_region_ID, -sector), by = c("subsector" = "fuel", "year" )) %>%
+                                 select(-GCAM_region_ID, -sector), by = c("subsector" = "fuel", "year" )) %>%
       mutate(efficiency = if_else(count_tech == 1 , eff_actual, efficiency)) %>%
       select(-count_tech, -eff_actual) -> L2234.StubTechEff_elecS_USA
 
@@ -888,8 +889,8 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
 
     # Energy Inputs for additional technologies such as battery
     L2234.StubTech_energy_elecS_USA <- write_to_all_states(A23.elecS_stubtech_energy_inputs,
-                                                            c("region", "supplysector","subsector","stub.technology",
-                                                              "period", "minicam.energy.input", "market.name", "efficiency") )
+                                                           c("region", "supplysector","subsector","stub.technology",
+                                                             "period", "minicam.energy.input", "market.name", "efficiency") )
 
     L2234.StubTech_energy_elecS_USA %>%
       left_join_error_no_match(states_subregions, by = c("region" = "state")) %>%

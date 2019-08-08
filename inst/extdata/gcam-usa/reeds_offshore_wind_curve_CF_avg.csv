@@ -1,8 +1,8 @@
 # File: reeds_offshore_wind_curve_CF_avg.csv
-# Title: REEDS Offshore Wind Curve Capacity Factor average
-# Units: Unitless
-# Comments: Capacity factor by resource group and resource region
-# Source: NREL
+# Title: Offshore Wind Average Annual Capacity Factor by ReEDS Wind Region and Class
+# Units: unitless (capacity factor)
+# Comments: Annual average capacity factor for each ReEDS wind resource region / wind class.  Calculated by taking the average of (8760) hourly net capacity factor profiles for each wind resource region / wind class.
+# Source: Information based on ReEDS version 2017.  Files provided by ReEDS team in April 2017.
 # Column types: icn
 #  ----------
 Wind_Resource_Region,TRG,CF

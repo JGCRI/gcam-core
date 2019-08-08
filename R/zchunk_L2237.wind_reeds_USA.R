@@ -50,7 +50,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       supplysector <- subsector <- stub.technology <- year <- input.capital <- capital.overnight <-
       fixed.charge.rate <- input.OM.fixed <- OM.fixed <- State <- TRG <- CF <- Wind.Class <- wsc1 <-
       wsc2 <- wsc3 <- wsc4 <- wsc5 <- Wind.Resource.Region <- resource.potential.MW <- resource.potential.EJ <-
-      fcr <- price <- supply <- CFmax <- Pmin <- maxSubResource <- percent.supply <- Pvar <- P2 <- P1 <- Q2 <-
+      fcr <- price <- supply <- CFmax <- base.price <- maxSubResource <- percent.supply <- Pvar <- P2 <- P1 <- Q2 <-
       Q1 <- mid.price <- optimize <- curve.exponent <- k1 <- capital.tech.change.5yr <- k2 <- tech.change.5yr <-
       tech.change <- Wind.Type <- bin <- cost <- grid.cost <- Region <- renewresource <-
       smooth.renewable.subresource <- year.fillout <- capacity.factor <- input.cost <-
@@ -116,39 +116,17 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       select(State, price, supply, CFmax) -> L2237.wind_matrix
 
     # L2237.wind_curve: estimating parameters of the smooth curve
-    # We need to define two useful functions that will be used later: evaluate_smooth_res_curve, and
-    # smooth_res_curve_approx_error.
-    # The function, evaluate_smooth_res_curve, computes the smooth renewable resource function
-    # supply = (p - Pmin) ^ curve.exponent / (mid.price ^ curve.exponent +
-    #    (p - Pmin) ^ curve.exponent * maxSubResource
-
-    evaluate_smooth_res_curve <- function(curve.exponent, mid.price, Pmin, maxSubResource, p) {
-      p_pow_exp <- (p - Pmin) ^ curve.exponent
-      supply <- p_pow_exp / (mid.price ^ curve.exponent + p_pow_exp) * maxSubResource
-      # zero out the supply where the price was less than Pmin
-      supply[p < Pmin] <- 0
-      return(supply)
-    }
-
-    # The function, smooth_res_curve_approx_error, checks how well the given smooth renewable curve matches the given supply-points.
-    # Note that the first argument is the one that is changed by optimize when trying to minimize the error
-    smooth_res_curve_approx_error <- function(curve.exponent, mid.price, Pmin, maxSubResource, supply_points) {
-      f_p <- evaluate_smooth_res_curve(curve.exponent, mid.price, Pmin, maxSubResource, supply_points$price)
-      error <- f_p - supply_points$supply
-      return( crossprod(error, error))
-    }
-
-    # Calculate maxSubResource, Pmin, and Pvar.
-    # Pmin represents the minimum cost of generating electricity from the resource.
-    # Pmin comprises of the cost of generating power at the most optimal location.
-    # Pvar represents costs that are expected to increase from Pmin as deployment increases.
+    # Calculate maxSubResource, base.price, and Pvar.
+    # base.price represents the minimum cost of generating electricity from the resource.
+    # base.price comprises of the cost of generating power at the most optimal location.
+    # Pvar represents costs that are expected to increase from base.price as deployment increases.
     # This models the increase in costs as more optimal locations are used first.
 
     L2237.wind_matrix %>%
       group_by(State) %>%
       arrange(State, price) %>%
-      mutate(Pmin = min(price),
-             Pvar = price - Pmin,
+      mutate(base.price = min(price),
+             Pvar = price - base.price,
              maxSubResource = round(max(supply), energy.DIGITS_MAX_SUB_RESOURCE)) %>%
       ungroup() -> L2237.wind_curve
 
@@ -206,7 +184,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
 
       L2237.error_min_curve.exp <- optimize(f = smooth_res_curve_approx_error, interval = c(1.0, 15.0),
                                             L2237.wind_curve_state$mid.price,
-                                            L2237.wind_curve_state$Pmin,
+                                            L2237.wind_curve_state$base.price,
                                             L2237.wind_curve_state$maxSubResource,
                                             L2237.supply_points_state)
 
