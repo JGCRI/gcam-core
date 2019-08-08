@@ -275,9 +275,6 @@
     <ClCompile Include="..\..\resources\source\accumulated_post_grade.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\resources\source\depleting_fixed_resource.cpp">
-      <Filter>Source Files\resources</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\resources\source\grade.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
@@ -1067,6 +1064,12 @@
     <ClCompile Include="..\..\climate\source\no_climate_model.cpp">
       <Filter>Source Files\climate</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\resources\source\reserve_subresource.cpp">
+      <Filter>Source Files\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\technologies\source\resource_reserve_technology.cpp">
+      <Filter>Source Files\technology</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -1205,9 +1208,6 @@
       <Filter>Header Files\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\resources\include\aresource.h">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\resources\include\depleting_fixed_resource.h">
       <Filter>Header Files\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\resources\include\grade.h">
@@ -2193,6 +2193,12 @@
     </ClInclude>
     <ClInclude Include="..\..\climate\include\no_climate_model.h">
       <Filter>Header Files\climate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\resources\include\reserve_subresource.h">
+      <Filter>Header Files\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\technologies\include\resource_reserve_technology.h">
+      <Filter>Header Files\technologies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

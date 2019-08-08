@@ -55,6 +55,10 @@ data.DEPENDENT <- "Dependent"
 
 
 # Modeltime constants ======================================================================
+# The number of years encompased in the first model period, currently hard coded in the C++
+# Note, this is different than the number of years between period 0 and period 1
+# The value typically does not matter but does come up for calculating resource depletion
+modeltime.PERIOD0_TIMESTEP <- 15
 
 # MAGICC model assumptions
 modeltime.MAGICC_LAST_HISTORICAL_YEAR <- 2005
@@ -73,60 +77,60 @@ modeltime.HECTOR_INI_FILE        <- "../input/climate/hector-gcam.ini"
 
 # Numeric (unitless)
 CONV_BIL_MIL    <- 1000
-CONV_BIL_THOUS  <- 1e6
 CONV_MIL_BIL    <- 1 / CONV_BIL_MIL
+CONV_BIL_THOUS  <- 1e6
+CONV_THOUS_BIL  <- 1 / CONV_BIL_THOUS
 CONV_MIL_THOUS  <- 1000
 CONV_ONES_THOUS <- 0.001
-CONV_THOUS_BIL  <- 1 / CONV_BIL_THOUS
 
 # Mass
+CONV_TON_MEGATON <- 1e-6
+CONV_T_KG <- 1e3
+CONV_KG_T <- 1 / CONV_T_KG
+CONV_T_METRIC_SHORT <- 1000 / 908  # Ratio between metric ton and short ton
+CONV_HA_BM2 <- 1e-5
+CONV_HA_M2 <- 10000
+CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
+CONV_GG_TG <- 0.001 # gigagrams to tegagrams
+CONV_TST_TG <- 0.000907 # thousand short tons to Tg
+CONV_KG_TO_TG <- 1e-9
+CONV_KT_MT <- 0.001 # kt to Mt
+CONV_T_MT <- 1e-6 # t to Mt
+CONV_G_KG <- 1e-3 # kilograms to grams
+CONV_NH3_N <- 14/17 # Nitrogen to Ammonia
+CONV_KBBL_BBL <- 1000 # thousand barrels to barrels
+CONV_BBL_TONNE_RFO <- 1 / 6.66 # barrels to tons residual fuel oil
+CONV_TONNE_GJ_RFO <- 40.87 # tons to GJ residual fuel oil
 CONV_BBL_TONNE_DISTILLATE <- 1 / 7.46 # barrels to tons distillate
-CONV_BBL_TONNE_RFO  <- 1 / 6.66       # barrels to tons residual fuel oil
-CONV_G_KG           <- 1e-3           # kilograms to grams
-CONV_GG_TG          <- 0.001          # gigagrams to tegagrams
-CONV_HA_BM2         <- 1e-5
-CONV_HA_M2          <- 10000
-CONV_KBBL_BBL       <- 1000           # thousand barrels to barrels
-CONV_KG_TO_TG       <- 1e-9
-CONV_KT_MT          <- 0.001          # kt to Mt
-CONV_NH3_N          <- 14/17          # Nitrogen to Ammonia
-CONV_T_KG           <- 1e3
-CONV_KG_T           <- 1 / CONV_T_KG
-CONV_T_METRIC_SHORT <- 1000 / 908     # Ratio between metric ton and short ton
-CONV_T_MT           <- 1e-6           # t to Mt
-CONV_THA_KGM2       <- 0.1            # tons C/ha -> kg C/m2
-CONV_TON_MEGATON    <- 1e-6
-CONV_TONNE_GJ_DISTILLATE  <- 42.91    # tons to GJ distillate
-CONV_TONNE_GJ_RFO   <- 40.87          # tons to GJ residual fuel oil
-CONV_TST_TG         <- 0.000907       # thousand short tons to Tg
+CONV_TONNE_GJ_DISTILLATE <- 42.91 # tons to GJ distillate
 
 # Time
-CONV_DAYS_YEAR  <- 1 / 365.25
 CONV_YEAR_HOURS <- 24 * 365.25
+CONV_DAYS_YEAR <- 1 / 365.25
 
 # Energy
-CONV_BTU_KJ    <- 1.0551
-CONV_GJ_EJ     <- 1e-9
-CONV_EJ_GJ     <- 1 / CONV_GJ_EJ
-CONV_GWH_EJ    <- 3.6e-6
-CONV_KBTU_EJ   <- 1.0551e-12            # KiloBTU to EJ
-CONV_KWH_GJ    <- 3.6e-3
+CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
+CONV_MWH_EJ <- 3.6e-9 # Megawatt hours to Exajoules
+CONV_GWH_EJ <- 3.6e-6
+CONV_TWH_EJ <- 3.6e-3
+CONV_KWH_GJ <- 3.6e-3
+CONV_GJ_EJ <- 1e-9
+CONV_EJ_GJ <- 1 / CONV_GJ_EJ
 CONV_MBLD_EJYR <- 6.119 * 365.25 * 1e-3 # million barrels a day to EJ per year
-CONV_MJ_BTU    <- 947.777
-CONV_MWH_GJ    <- 3.6                   # Megawatt hours to Gigajoules
-CONV_TBTU_EJ   <- 0.0010551             # TeraBTU to EJ
-CONV_TWH_EJ    <- 3.6e-3
+CONV_KBTU_EJ <- 1.0551e-12 # KiloBTU to EJ
+CONV_TBTU_EJ <- 0.0010551 # TeraBTU to EJ
+CONV_MJ_BTU <- 947.777
+CONV_BTU_KJ <- 1.0551
 
 # Other
-CONV_BM2_M2         <- 1e9
-CONV_FT2_M2         <- 0.0929        # Square feet to square meters
-CONV_HA_M2          <- 1e4           # ha to m2
-CONV_M2_ACR         <- 0.0002471058
-CONV_M3_BM3         <- 1e-09         # Cubic meters (m3) to billion cubic meters (bm3)
-CONV_MCAL_PCAL      <- 1e-9
-CONV_MILFT2_M2      <- 92900         # Million square feet to square meters
+CONV_MCAL_PCAL <- 1e-9
+CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_MILLION_M3_KM3 <- 1e-03
-
+CONV_M2_ACR <- 0.0002471058
+CONV_HA_M2 <- 1e4 # ha to m2
+CONV_BM2_M2 <- 1e9
+CONV_MILFT2_M2 <- 92900 # Million square feet to square meters
+CONV_FT2_M2 <- 0.0929 # Square feet to square meters
 
 # AgLU constants ======================================================================
 
@@ -136,7 +140,7 @@ aglu.BASE_YEAR_IFA          <- 2006      # Base year of International Fertilizer
 aglu.BIO_START_YEAR         <- 2020
 aglu.CROSIT_HISTORICAL_YEAR <- 2005      # Historical year from the CROSIT data
 aglu.DIET_YEARS             <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5)
-aglu.FAO_HISTORICAL_YEARS   <- 1961:2011
+aglu.FAO_HISTORICAL_YEARS   <- 1961:2012
 aglu.FAO_LDS_YEARS          <- 1998:2002  # Years for which FAO harvested area data is averaged over for use in the land data system (LDS)
 aglu.GTAP_HISTORICAL_YEAR   <- 2000      # Is the year that the GTAP data is based on.
 aglu.LAND_HISTORY_YEARS     <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
@@ -144,9 +148,12 @@ aglu.LAND_COVER_YEARS       <- sort(unique(c(aglu.LAND_HISTORY_YEARS, aglu.AGLU_
 aglu.MODEL_COST_YEARS       <- 2008:2011
 aglu.MODEL_PRICE_YEARS      <- 2008:2011
 aglu.PREAGLU_YEARS          <- c(1700, 1750,1800, 1850, 1900, 1950)          # Cropland cover years prior to first aglu historical year to use in climate model component
+aglu.DEFLATOR_BASE_YEAR     <- 2010                                          # year used as the basis for computing regional price deflators
 aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years, KD i think this might need a better comment
 aglu.SSP_DEMAND_YEARS       <- seq(2010, 2100, 5) # food demand in the SSPs is calculated at 5-yr intervals
-
+aglu.TRADE_CAL_YEARS        <- 2008:2012 # Years used for calculating base year gross trade. Should ideally include the final base year, but note that the trade data starts in 1986.
+aglu.TRADE_FINAL_BASE_YEAR  <- max(MODEL_BASE_YEARS) # The base year to which gross trade volumes are assigned. Should be within the aglu.TRADE_CAL_YEARS and equal to the final model calibration year
+aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "MiscCrop", "OilCrop", "OtherGrain", "PalmFruit", "Rice", "Root_Tuber", "SugarCrop", "Wheat")
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
 
@@ -200,7 +207,8 @@ aglu.LOW_PROD_GROWTH_MULT <- 0.5 # Multipliers for low ag prod growth scenarios
 # AgLU cost constants
 aglu.BIO_GRASS_COST_75USD_GJ <- 0.75   # Production costs of biomass (from Patrick Luckow's work)
 aglu.BIO_TREE_COST_75USD_GJ  <- 0.67   # Production costs of biomass (from Patrick Luckow's work)
-aglu.FERT_COST               <- 363    # Cost of fertlizer, 2007$ per ton NH3
+aglu.FERT_PRICE              <- 596    # Price of fertilizer, 2010$ per ton NH3
+aglu.FERT_PRICE_YEAR         <- 2010    # Year corresponding to the above price/cost
 aglu.FOR_COST_75USDM3        <- 29.59  # Forestry cost (1975$/GJ)
 
 # Price at which base year bio frac produced is used.
@@ -335,7 +343,7 @@ aglu.DIGITS_WATER_CONTENT <- 2
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010] # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CLIMATE_NORMAL_YEARS       <- 1981:2000
 energy.SATIATION_YEAR             <- max(MODEL_BASE_YEARS) # Needs to be the last model base year to avoid the risk of the model crashing
-energy.UCD_EN_YEAR                <- 2005        # UCD transporctation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
+energy.UCD_EN_YEAR                <- 2005        # UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
 energy.WIND.BASE.COST.YEAR        <- 2005        # Base cost year for wind, used in capacity factor calculations
 
 # Constant to select SSP database to use for transportation UCD
@@ -356,6 +364,7 @@ energy.RSRC_FUELS              <- c("coal", "gas", "refined liquids")
 # technologies with secondary output of heat in units of 1975$/EJ
 energy.HEAT_PRICE <- 3.2
 energy.GAS_PRICE  <- 2
+energy.GAS_PIPELINE_COST_ADDER_75USDGJ  <- 0.1  # estimated cost mark-up from "regional natural gas" to "wholesale gas" (1975$/GJ)
 
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
 
@@ -396,7 +405,7 @@ energy.DIGITS_CAPITAL          <- 0
 energy.DIGITS_COEFFICIENT      <- 7
 energy.DIGITS_COST             <- 4
 energy.DIGITS_CURVE_EXPONENT   <- 3
-energy.DIGITS_DEPRESOURCE      <- 1
+energy.DIGITS_RESOURCE      <- 1
 energy.DIGITS_EFFICIENCY       <- 3
 energy.DIGITS_FLOORSPACE       <- 3
 energy.DIGITS_GDP_SUPPLY_ELAST <- 3
@@ -412,6 +421,7 @@ energy.DIGITS_REMOVE.FRACTION  <- 2
 energy.DIGITS_SATIATION_ADDER  <- 9
 energy.DIGITS_SHRWT            <- 4
 energy.DIGITS_SPEED            <- 1
+energy.DIGITS_TECHCHANGE       <- 4
 
 # Policy assumptions for module_energy_L270.limits
 energy.NEG_EMISS_POLICY_NAME    <- "negative_emiss_budget"
@@ -552,14 +562,60 @@ emissions.DIGITS_EMISSIONS <- 10
 
 # GCAM-USA constants ======================================================================
 
+# GCAM-USA Constants for Processing UCS Database. As of 04/22/19, only used in chunk zchunk_LA1233.Process_UCS_data_ref.R
+gcamusa.UCS_WATER_COEFFICIENTS_FIRST_HISTORICAL_YEAR   <- 1970
+gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR   <- 2008
+gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR <- 2010
+gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR <- 2020
+gcamusa.UCS_WATER_COEFFICIENTS_FINAL_FUTURE_YEAR <- 2100
+gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_RECIRCULATING <- 0.85
+gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_DRY_COOLING <- 0.05
+gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_COOLING_POND <- 0.05
+gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_ONCE_THROUGH_SEAWATER <- 0.05
+
 # GCAM-USA time
-gcamusa.WIND_BASE_COST_YEAR <- 2005
+gcamusa.WIND_BASE_COST_YEAR   <- 2005
+gcamusa.HYDRO_HIST_YEAR <- 2015
+gcamusa.HYDRO_FINAL_AEO_YEAR <- 2050
+
+gcamusa.SE_HIST_YEAR <- 2015  # year to which historical socioeconomic data (pop & GDP) are used in GCAM-USA
+gcamusa.SE_NEAR_TERM_YEAR <- 2030  # year after which projected growth rates from various socio-economic data sources are used as-is
+# (until this year, growth rates are interpolated from 2015 historical values to prevent spikey near-term behavior)
+gcamusa.AEO_SE_YEAR <- 2040   # year to which AEO 2016 socioeconomic assumptions run
+
+# Assumptions related to coal
+# Define assumptions about lifetimes for generators/units without retirement information.
+# Existing coal units built before 1970 will retire at the average lifetime of their vintage group.
+gcamusa.COAL_REMAINING_LIFETIME <- 20   # The max remaining lifetime of coal units built before 1970.
+
+# Vintage groups built after 1970 will retire based on the S-curve.
+# Assumed lifetime and S-curve parametetrs for coal units built after 1970:
+gcamusa.AVG_COAL_PLANT_LIFETIME <- 80
+gcamusa.AVG_COAL_PLANT_HALFLIFE <- 70
+gcamusa.COAL_RETIRE_STEEPNESS <- 0.3
+
+# Profit shutdown parameters
+gcamusa.MEDIAN_SHUTDOWN_POINT <- -0.1
+gcamusa.PROFIT_SHUTDOWN_STEEPNESS <- 6
+
+# Define vintage bins and categories
+# These categories chosen for lifetime assumptions are such that capacity in each category is roughly same.
+# This is done to get a somewhat smooth behavior for coal retirements.
+gcamusa.COAL_VINTAGE_BREAKS <- c(0, seq(1950, 2015, 5))
+gcamusa.COAL_VINTAGE_LABELS <- c("before 1950", "1951-1955", "1956-1960", "1961-1965", "1966-1970", "1971-1975", "1976-1980",
+                                 "1981-1985", "1986-1990", "1991-1995", "1996-2000", "2001-2005", "2006-2010", "2011-2015")
+
+gcamusa.FIRST_NEW_COAL_YEAR <- 2035
 
 # GCAM-USA states
 gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
                     "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
                     "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
 
+# GCAM-USA grid regions
+gcamusa.GRID_REGIONS <- c("Alaska grid", "California grid", "Central East grid", "Central Northeast grid",  "Central Northwest grid",
+                    "Central Southwest grid", "Florida grid", "Hawaii grid", "Mid-Atlantic grid", "New England grid",
+                    "New York grid", "Northwest grid", "Southeast grid", "Southwest grid", "Texas grid")
 
 # GCAM-USA default constants
 gcamusa.DEFAULT_COEFFICIENT <- 1
@@ -578,10 +634,8 @@ gcamusa.GEOTHERMAL_DEFAULT_EFFICIENCY <- 0.1
 
 gcamusa.ELECT_TD_SECTORS  <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
 
-# Indicate whether to resolve electricity demands at the level of the nation or the grid regions
-gcamusa.USE_REGIONAL_ELEC_MARKETS <- TRUE
-
-# Indicate whether to use regional as opposed to national fuel markets (FALSE = national markets)
+# Indicate whether to use regional ?cost adders? to differentiate
+# fuel prices by grid region in GCAM-USA (FALSE = same prices in all states)
 gcamusa.USE_REGIONAL_FUEL_MARKETS  <- TRUE
 
 # GCAM-USA fertlizer constants
@@ -602,9 +656,17 @@ gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 # The supplysector and subsector structure in these sectors are retained
 gcamusa.SECTOR_EN_NAMES <- "refining"
 
+# Define intermittent technologies
+gcamusa.INT_TECH_LIST <- c("CSP", "PV", "wind")
+
+# Define storage technologies
+gcamusa.STORAGE_TECH_LIST <- c("CSP_storage", "PV_storage", "wind_storage")
+
+
 # Degree day norms
 gcamusa.BASE_HDD_USA <- 4524 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb0107
 gcamusa.BASE_CDD_USA <- 1215 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb010
+gcamusa.AEO_DD_YEARS <- seq(2010, 2040, 5)
 
 gcamusa.GAS_ADJ_THRESH      <- 5
 
@@ -613,15 +675,21 @@ gcamusa.STATE_SUBSECTOR_DELIMITER <- " "
 
 # Number of digits for model input data
 gcamusa.DIGITS_CALOUTPUT          <- 7    # production
-gcamusa.DIGITS_COST               <- 4
-gcamuse.DIGITS_DEPRESOURCE        <- 1
-gcamusa.EFFICIENCY_PARTITION_YEAR <- 2005
+gcamusa.EFFICIENCY_PARTITION_YEAR <- 2010
 gcamusa.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA transport for compatability with model
+gcamusa.DIGITS_EMISSIONS          <- 5
+
+# Electricity load segments
+gcamusa.LOAD_SEG_CAL_YEARS <- c(2010, 2005, 1990)       # Years for which electricity load segments are calibrated
+gcamusa.ELEC_SEGMENT_BASE <- "base load generation"
+gcamusa.ELEC_SEGMENT_INT <- "intermediate generation"
+gcamusa.ELEC_SEGMENT_SUBPEAK <- "subpeak generation"
+gcamusa.ELEC_SEGMENT_PEAK <- "peak generation"
 
 
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions
-# HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
+# # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
 # MODEL_FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
 # MODEL_BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
 # MODEL_YEARS <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)

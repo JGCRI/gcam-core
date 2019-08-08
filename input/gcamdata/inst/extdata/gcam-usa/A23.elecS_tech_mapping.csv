@@ -1,0 +1,91 @@
+# File: A23.elecS_tech_mapping.csv
+# Title: Multiple Load Segments to Single Electricity Sector Mapping
+# Units: NA
+# Comments: Mapping file between single electricity sector and multiple load segments electricity sector technologies
+# Column types: cccccc 
+# ----------
+Electric.sector,subsector,Electric.sector.technology,supplysector,subsector_1,technology
+base load generation,coal,coal_base_conv pul,electricity,coal,coal (conv pul)
+intermediate generation,coal,coal_int_conv pul,electricity,coal,coal (conv pul)
+subpeak generation,coal,coal_subpeak_conv pul,electricity,coal,coal (conv pul)
+peak generation,coal,coal_peak_conv pul,electricity,coal,coal (conv pul)
+base load generation,coal,coal_base_conv pul_CCS,electricity,coal,coal (conv pul CCS)
+intermediate generation,coal,coal_int_conv pul_CCS,electricity,coal,coal (conv pul CCS)
+subpeak generation,coal,coal_subpeak_conv pul_CCS,electricity,coal,coal (conv pul CCS)
+peak generation,coal,coal_peak_conv pul_CCS,electricity,coal,coal (conv pul CCS)
+base load generation,coal,coal_base_IGCC,electricity,coal,coal (IGCC)
+intermediate generation,coal,coal_int_IGCC,electricity,coal,coal (IGCC)
+subpeak generation,coal,coal_subpeak_IGCC,electricity,coal,coal (IGCC)
+peak generation,coal,coal_peak_IGCC,electricity,coal,coal (IGCC)
+base load generation,coal,coal_base_IGCC_CCS,electricity,coal,coal (IGCC CCS)
+intermediate generation,coal,coal_int_IGCC_CCS,electricity,coal,coal (IGCC CCS)
+subpeak generation,coal,coal_subpeak_IGCC_CCS,electricity,coal,coal (IGCC CCS)
+peak generation,coal,coal_peak_IGCC_CCS,electricity,coal,coal (IGCC CCS)
+base load generation,gas,gas_base_steam/CT,electricity,gas,gas (steam/CT)
+intermediate generation,gas,gas_int_steam/CT,electricity,gas,gas (steam/CT)
+subpeak generation,gas,gas_subpeak_steam/CT,electricity,gas,gas (steam/CT)
+peak generation,gas,gas_peak_steam/CT,electricity,gas,gas (steam/CT)
+base load generation,gas,gas_base_CC,electricity,gas,gas (CC)
+intermediate generation,gas,gas_int_CC,electricity,gas,gas (CC)
+subpeak generation,gas,gas_subpeak_CC,electricity,gas,gas (CC)
+peak generation,gas,gas_peak_CC,electricity,gas,gas (CC)
+base load generation,gas,gas_base_CC_CCS,electricity,gas,gas (CC CCS)
+intermediate generation,gas,gas_int_CC_CCS,electricity,gas,gas (CC CCS)
+subpeak generation,gas,gas_subpeak_CC_CCS,electricity,gas,gas (CC CCS)
+peak generation,gas,gas_peak_CC_CCS,electricity,gas,gas (CC CCS)
+base load generation,refined liquids,refined liquids_base_steam/CT,electricity,refined liquids,refined liquids (steam/CT)
+intermediate generation,refined liquids,refined liquids_int_steam/CT,electricity,refined liquids,refined liquids (steam/CT)
+subpeak generation,refined liquids,refined liquids_subpeak_steam/CT,electricity,refined liquids,refined liquids (steam/CT)
+peak generation,refined liquids,refined liquids_peak_steam/CT,electricity,refined liquids,refined liquids (steam/CT)
+base load generation,refined liquids,refined liquids_base_CC,electricity,refined liquids,refined liquids (CC)
+intermediate generation,refined liquids,refined liquids_int_CC,electricity,refined liquids,refined liquids (CC)
+subpeak generation,refined liquids,refined liquids_subpeak_CC,electricity,refined liquids,refined liquids (CC)
+peak generation,refined liquids,refined liquids_peak_CC,electricity,refined liquids,refined liquids (CC)
+base load generation,refined liquids,refined liquids_base_CC_CCS,electricity,refined liquids,refined liquids (CC CCS)
+intermediate generation,refined liquids,refined liquids_int_CC_CCS,electricity,refined liquids,refined liquids (CC CCS)
+subpeak generation,refined liquids,refined liquids_subpeak_CC_CCS,electricity,refined liquids,refined liquids (CC CCS)
+peak generation,refined liquids,refined liquids_peak_CC_CCS,electricity,refined liquids,refined liquids (CC CCS)
+base load generation,biomass,biomass_base_conv,electricity,biomass,biomass (conv)
+intermediate generation,biomass,biomass_int_conv,electricity,biomass,biomass (conv)
+subpeak generation,biomass,biomass_subpeak_conv,electricity,biomass,biomass (conv)
+peak generation,biomass,biomass_peak_conv,electricity,biomass,biomass (conv)
+base load generation,biomass,biomass_base_conv_CCS,electricity,biomass,biomass (conv CCS)
+intermediate generation,biomass,biomass_int_conv_CCS,electricity,biomass,biomass (conv CCS)
+subpeak generation,biomass,biomass_subpeak_conv_CCS,electricity,biomass,biomass (conv CCS)
+peak generation,biomass,biomass_peak_conv_CCS,electricity,biomass,biomass (conv CCS)
+base load generation,biomass,biomass_base_IGCC,electricity,biomass,biomass (IGCC)
+intermediate generation,biomass,biomass_int_IGCC,electricity,biomass,biomass (IGCC)
+subpeak generation,biomass,biomass_subpeak_IGCC,electricity,biomass,biomass (IGCC)
+peak generation,biomass,biomass_peak_IGCC,electricity,biomass,biomass (IGCC)
+base load generation,biomass,biomass_base_IGCC_CCS,electricity,biomass,biomass (IGCC CCS)
+intermediate generation,biomass,biomass_int_IGCC_CCS,electricity,biomass,biomass (IGCC CCS)
+subpeak generation,biomass,biomass_subpeak_IGCC_CCS,electricity,biomass,biomass (IGCC CCS)
+peak generation,biomass,biomass_peak_IGCC_CCS,electricity,biomass,biomass (IGCC CCS)
+base load generation,nuclear,nuc_base_Gen II,electricity,nuclear,Gen_II_LWR
+intermediate generation,nuclear,nuc_int_Gen II,electricity,nuclear,Gen_II_LWR
+subpeak generation,nuclear,nuc_subpeak_Gen II,electricity,nuclear,Gen_II_LWR
+peak generation,nuclear,nuc_peak_Gen II,electricity,nuclear,Gen_II_LWR
+base load generation,nuclear,nuc_base_Gen III,electricity,nuclear,Gen_III
+intermediate generation,nuclear,nuc_int_Gen III,electricity,nuclear,Gen_III
+subpeak generation,nuclear,nuc_subpeak_Gen III,electricity,nuclear,Gen_III
+peak generation,nuclear,nuc_peak_Gen III,electricity,nuclear,Gen_III
+base load generation,wind,wind_base_storage,electricity,wind,wind_storage
+intermediate generation,wind,wind_int_storage,electricity,wind,wind_storage
+subpeak generation,wind,wind_subpeak_storage,electricity,wind,wind_storage
+peak generation,wind,wind_peak_storage,electricity,wind,wind_storage
+base load generation,solar,PV_base_storage,electricity,PV,PV_storage
+intermediate generation,solar,PV_int_storage,electricity,PV,PV_storage
+subpeak generation,solar,PV_subpeak_storage,electricity,PV,PV_storage
+peak generation,solar,PV_peak_storage,electricity,PV,PV_storage
+base load generation,solar,CSP_base_storage,electricity,CSP,CSP_storage
+intermediate generation,solar,CSP_int_storage,electricity,CSP,CSP_storage
+subpeak generation,solar,CSP_subpeak_storage,electricity,CSP,CSP_storage
+peak generation,solar,CSP_peak_storage,electricity,CSP,CSP_storage
+base load generation,geothermal,geo_base,electricity,geothermal,geothermal
+intermediate generation,geothermal,geo_int,electricity,geothermal,geothermal
+subpeak generation,geothermal,geo_subpeak,electricity,geothermal,geothermal
+peak generation,geothermal,geo_peak,electricity,geothermal,geothermal
+base load generation,hydro,hydro_base,electricity,hydro,hydro
+intermediate generation,hydro,hydro_int,electricity,hydro,hydro
+subpeak generation,hydro,hydro_subpeak,electricity,hydro,hydro
+peak generation,hydro,hydro_peak,electricity,hydro,hydro

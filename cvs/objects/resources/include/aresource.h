@@ -53,16 +53,11 @@
 class Tabs;
 class GDP;
 class IInfo;
-class IOutput;
-class AGHG;
 
 // Need to forward declare the subclasses as well.
 class Resource;
-class DepletableResource;
-class FixedResource;
 class RenewableResource;
 class UnlimitedResource;
-class DepletingFixedResource;
 
 /*! 
 * \ingroup Objects
@@ -111,8 +106,7 @@ protected:
         /* Declare all subclasses of AResource to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( AResource, Resource, DepletableResource, FixedResource,
-                                RenewableResource, UnlimitedResource, DepletingFixedResource ),
+        DEFINE_SUBCLASS_FAMILY( AResource, Resource, RenewableResource, UnlimitedResource ),
 
         //! Resource name.
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
@@ -127,13 +121,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
 
         //! A map of a keyword to its keyword group
-        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
-
-        //! Vector of output objects representing the outputs of the technology.
-        DEFINE_VARIABLE( CONTAINER, "output", mOutputs, std::vector<IOutput*> ),
-
-        //! Suite of greenhouse gases
-        DEFINE_VARIABLE( CONTAINER, "ghg", mGHG, std::vector<AGHG*> )
+        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> )
     )
 };
 

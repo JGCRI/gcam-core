@@ -1,4 +1,4 @@
-#' module_gcam.usa_LB123.Electricity
+#' module_gcamusa_LB123.Electricity
 #'
 #' Calculate electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse
 #' (the electricity used by production/transformation facilities) by state.
@@ -14,7 +14,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH August 2017
-module_gcam.usa_LB123.Electricity <- function(command, ...) {
+module_gcamusa_LB123.Electricity <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/NREL_us_re_technical_potential",

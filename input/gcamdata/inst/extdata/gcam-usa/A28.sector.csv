@@ -1,0 +1,13 @@
+# File: A28.sector.csv
+# Title: USA state-level biomass sectors
+# Units: N/A
+# Description: USA state-level biomass sectors
+# Source: N/A
+# Column types: c 
+# ----------
+supplysector
+regional biomass
+regional corn for ethanol
+regional sugar for ethanol
+regional biomassOil
+delivered biomass

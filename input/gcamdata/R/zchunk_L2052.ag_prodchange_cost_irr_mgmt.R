@@ -24,6 +24,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
              "L162.ag_YieldRate_R_C_Y_GLU_irr",
              "L162.bio_YieldRate_R_Y_GLU_irr",
              "L164.ag_Cost_75USDkg_C",
+             "L2012.AgSupplySector",
              "L201.AgYield_bio_grass",
              "L201.AgYield_bio_tree",
              "L102.pcgdp_thous90USD_Scen_R_Y"))
@@ -44,7 +45,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       MGMT <- AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <-
       AgProdChange <- nonLandVariableCost <- high_reg <- low_reg <- region <-
       GCAM_region_ID <- year <- value <- GCAM_commodity <- Cost_75USDkg <-
-      Irr_Rfd <- scenario <- . <- NULL  # silence package check notes
+      Irr_Rfd <- scenario <- calPrice <- cost_PrP_ratio <- . <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -55,6 +56,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     L162.ag_YieldRate_R_C_Y_GLU_irr <- get_data(all_data, "L162.ag_YieldRate_R_C_Y_GLU_irr")
     L162.bio_YieldRate_R_Y_GLU_irr <- get_data(all_data, "L162.bio_YieldRate_R_Y_GLU_irr")
     L164.ag_Cost_75USDkg_C <- get_data(all_data, "L164.ag_Cost_75USDkg_C")
+    L2012.AgSupplySector <- get_data(all_data, "L2012.AgSupplySector")
     L201.AgYield_bio_grass <- get_data(all_data, "L201.AgYield_bio_grass")
     L201.AgYield_bio_tree <- get_data(all_data, "L201.AgYield_bio_tree")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
@@ -87,6 +89,27 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       select(names_AgCost) ->
       L2052.AgCost_ag_irr_mgmt
+
+    # 2/14/2019 ag trade modification (GPK): These costs need to be modified in order to accommodate any crops with
+    # regional markets, whose prices differ from the default (USA-based) assumptions for global markets. Failure to
+    # take this into account will result in inconsistency between cost assumptions (which are based on the USA) and
+    # crop prices, which may return distorted and potentially negative profit rates.
+
+    # Specifically, the method applies the cost:price ratio of each crop in the USA to each crop in all regions
+    L2052.AgCostRatio_USA <- filter(L2012.AgSupplySector,
+                                    region == gcam.USA_REGION,
+                                    AgSupplySector %in% L164.ag_Cost_75USDkg_C$GCAM_commodity) %>%
+      select(region, AgSupplySector, calPrice) %>%
+      left_join_error_no_match(L164.ag_Cost_75USDkg_C, by = c(AgSupplySector = "GCAM_commodity")) %>%
+      mutate(cost_PrP_ratio = Cost_75USDkg / calPrice) %>%
+      select(AgSupplySector, cost_PrP_ratio)
+
+    L2052.AgCost_ag_irr_mgmt <- left_join_error_no_match(L2052.AgCost_ag_irr_mgmt, L2052.AgCostRatio_USA,
+                                     by = "AgSupplySector") %>%
+      left_join_error_no_match(select(L2012.AgSupplySector, region, AgSupplySector, calPrice),
+                               by = c("region", "AgSupplySector")) %>%
+      mutate(nonLandVariableCost = round(calPrice * cost_PrP_ratio, aglu.DIGITS_CALPRICE)) %>%
+      select(LEVEL2_DATA_NAMES[["AgCost"]])
 
     # Assign nonLandVariableCost of bioenergy production, assuming the same level to all four technologies
     # Start with the yield table to determine where bioenergy crops are being read in, get both grass and tree crops
@@ -233,7 +256,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
                      "water/basin_to_country_mapping",
                      "L161.ag_irrProd_Mt_R_C_Y_GLU",
                      "L161.ag_rfdProd_Mt_R_C_Y_GLU",
-                     "L164.ag_Cost_75USDkg_C") ->
+                     "L164.ag_Cost_75USDkg_C",
+                     "L2012.AgSupplySector") ->
       L2052.AgCost_ag_irr_mgmt
 
     L2052.AgCost_bio_irr_mgmt %>%

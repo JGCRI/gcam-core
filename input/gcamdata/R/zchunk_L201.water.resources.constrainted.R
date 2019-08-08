@@ -155,7 +155,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
       rename(year.fillout = year,
              maxSubResource = runoff_max) %>%
       arrange(region, resource, year.fillout) %>%
-      select(LEVEL2_DATA_NAMES[["GrdRenewRsrcMaxNoFOWater"]]) ->
+      select(LEVEL2_DATA_NAMES[["GrdRenewRsrcMaxWaterNoFO"]]) ->
       L201.GrdRenewRsrcMax_runoff
 
     # ==========================================================#
@@ -193,7 +193,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
       arrange(region, resource, price) %>%
       rename(extractioncost = price,
              available = avail) %>%
-      select(LEVEL2_DATA_NAMES[["DepRsrcCurvesWater"]]) ->
+      select(LEVEL2_DATA_NAMES[["RsrcCurves"]]) ->
       L201.DepRsrcCurves_ground_uniform
 
     # ==========================================================#
@@ -320,7 +320,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
         mutate(subresource = "groundwater",
                available = round(available, 5),
                extractioncost = round(extractioncost, 5)) %>%
-        select(LEVEL2_DATA_NAMES[["DepRsrcCurvesWater"]]) %>%
+        select(LEVEL2_DATA_NAMES[["RsrcCurves"]]) %>%
         arrange(region, resource, extractioncost) ->
         L201.DepRsrcCurves_ground
 

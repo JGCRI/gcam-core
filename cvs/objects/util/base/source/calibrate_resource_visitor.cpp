@@ -43,9 +43,12 @@
 #include "util/base/include/calibrate_resource_visitor.h"
 #include "util/logger/include/ilogger.h"
 #include "resources/include/subresource.h"
+#include "resources/include/reserve_subresource.h"
 #include "resources/include/renewable_subresource.h"
 #include "resources/include/resource.h"
 #include "resources/include/grade.h"
+#include "technologies/include/technology_container.h"
+#include "technologies/include/itechnology.h"
 
 #include "marketplace/include/marketplace.h"
 #include "containers/include/scenario.h"
@@ -75,7 +78,6 @@ void CalibrateResourceVisitor::endVisitResource( const AResource* aResource,
 {
     mCurrentResourceName.clear();
 }
-
 
 void CalibrateResourceVisitor::startVisitSubResource( const SubResource* aSubResource, const int aPeriod ) {
     // If calibration is active and a calibrated production quantity was read in, 
@@ -122,11 +124,15 @@ void CalibrateResourceVisitor::startVisitSubResource( const SubResource* aSubRes
         double mktPrice = scenario->getMarketplace()->getPrice( mCurrentResourceName, 
                                                                 mCurrentRegionName, 
                                                                 aPeriod );
+        
+        ITechnology* currTech = aSubResource->mTechnology->getNewVintageTechnology( aPeriod );
+        currTech->calcCost( mCurrentRegionName, mCurrentResourceName, aPeriod );
+        double techCost = currTech->getCost( aPeriod );
 
         // Finally, calculate the price adder. This is the difference between the
         // effective price and the global price
-        const_cast<SubResource*>( aSubResource )->mPriceAdder[ aPeriod ] = tempEffectivePrice - mktPrice;
-    } 
+        const_cast<SubResource*>( aSubResource )->mPriceAdder[ aPeriod ] = tempEffectivePrice - mktPrice + techCost;
+    }
     else {
         // If no calibration, then set price adder to zero
         if ( aSubResource->mPriceAdder[ aPeriod ].isInited() && aSubResource->mPriceAdder[ aPeriod ] != 0 ) {
@@ -137,6 +143,81 @@ void CalibrateResourceVisitor::startVisitSubResource( const SubResource* aSubRes
                     << "< for price-adder variable in SubResource being re-set in period " << aPeriod << endl;
         }
         const_cast<SubResource*>( aSubResource )->mPriceAdder[ aPeriod ] = 0;
+    }
+}
+
+void CalibrateResourceVisitor::startVisitReserveSubResource( const ReserveSubResource* aSubResource, const int aPeriod ) {
+    if( aSubResource->mCalReserve[ aPeriod ].isInited() ){
+        double prevCumul = aPeriod > 0 ? aSubResource->mCumulProd[ aPeriod - 1 ] : 0.0;
+        
+        // First, calculate the cumulative production.  This is equal to
+        // cumulative production in the previous period plus the calibrated
+        // production times the timestep.  Note: this assumes constant production
+        // in all years with in a timestep. This is necessary to prevent erratic
+        // production in the future.
+        
+        double tempCumulProd = prevCumul + aSubResource->mCalReserve[ aPeriod ];
+        
+        // Next, determine which grade of resource is produced to get to the
+        // cumulative production needed.
+        double temp_cumulative = 0.0;
+        int gr_ind = 0;
+        double gr_avail = 0.0;
+        while ( temp_cumulative < tempCumulProd && gr_ind < aSubResource->mGrade.size() ) {
+            gr_avail = aSubResource->mGrade[ gr_ind ]->getAvail();
+            temp_cumulative += gr_avail;
+            gr_ind++;
+        }
+        
+        // not enough in supply curve to meet calibration
+        if( gr_ind == aSubResource->mGrade.size() ) {
+            const_cast<ReserveSubResource*>( aSubResource )->mPriceAdder[ aPeriod ] = aSubResource->mGrade[ gr_ind - 1 ]->getCost( aPeriod ); // TODO?
+            return;
+        }
+        
+        // Then, calculate the fraction of the next grade that will be produced
+        double fractGrade = 0.0;
+        if ( gr_avail > 0.0 ) {
+            fractGrade = ( tempCumulProd - ( temp_cumulative - gr_avail ) )
+            / gr_avail;
+        }
+        
+        // Next, calculate the effective price.  This is the price needed
+        // to produce the calibrated production quantity in this period.
+        // mEffectivePrice = cost of the next highest grade -
+        // ( 1 - fractGrade )*( cost of higher grade - cost of lower grade )
+        double low_cost = 0.0;
+        if ( gr_ind > 0 ) {
+            low_cost = aSubResource->mGrade[ gr_ind - 1 ]->getCost( aPeriod );
+        }
+        double tempEffectivePrice = aSubResource->mGrade[ gr_ind ]->getCost( aPeriod ) -
+            ( 1 - fractGrade ) * ( aSubResource->mGrade[ gr_ind ]->getCost( aPeriod ) - low_cost );
+        
+        double mktPrice = scenario->getMarketplace()->getPrice( mCurrentResourceName,
+                                                                mCurrentRegionName,
+                                                                aPeriod );
+        
+        ITechnology* currTech = aSubResource->mTechnology->getNewVintageTechnology( aPeriod );
+        currTech->calcCost( mCurrentRegionName, mCurrentResourceName, aPeriod );
+        double techCost = currTech->getCost( aPeriod );
+        
+        // Finally, calculate the price adder. This is the difference between the
+        // effective price and the global price
+        const_cast<ReserveSubResource*>( aSubResource )->mPriceAdder[ aPeriod ] = tempEffectivePrice - mktPrice + techCost;
+    }
+    else if( aPeriod == 0 ) {
+        const_cast<ReserveSubResource*>( aSubResource )->mPriceAdder[ aPeriod ] = -util::getLargeNumber();
+    }
+    else {
+        // If no calibration, then set price adder to zero
+        if ( aSubResource->mPriceAdder[ aPeriod ].isInited() && aSubResource->mPriceAdder[ aPeriod ] != 0 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "User input value >"
+                    << aSubResource->mPriceAdder[ aPeriod ]
+                    << "< for price-adder variable in SubResource being re-set in period " << aPeriod << endl;
+        }
+        const_cast<ReserveSubResource*>( aSubResource )->mPriceAdder[ aPeriod ] = 0;
     }
 }
 
@@ -195,10 +276,14 @@ void CalibrateResourceVisitor::startVisitSubRenewableResource( const SubRenewabl
         double mktPrice = scenario->getMarketplace()->getPrice( mCurrentResourceName, 
                                                                 mCurrentRegionName, 
                                                                 aPeriod );
+        
+        ITechnology* currTech = aSubResource->mTechnology->getNewVintageTechnology( aPeriod );
+        currTech->calcCost( mCurrentRegionName, mCurrentResourceName, aPeriod );
+        double techCost = currTech->getCost( aPeriod );
 
         // Finally, calculate the price adder. This is the difference between the
         // effective price and the global price
-        const_cast<SubRenewableResource*>( aSubResource )->mPriceAdder[ aPeriod ] = tempEffectivePrice - mktPrice;
+        const_cast<SubRenewableResource*>( aSubResource )->mPriceAdder[ aPeriod ] = tempEffectivePrice - mktPrice + techCost;
     }
     else {
         // If no calibration, then set price adder to zero

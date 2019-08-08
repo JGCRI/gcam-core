@@ -83,7 +83,7 @@ public:
     virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
     virtual void postCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
 
-    void calcCost( const double tax, const double cumTechChange, const double environCost, const int per );
+    void calcCost( const double cumTechChange, const int per );
     double getAvail() const;
     double getCost( const int per ) const;
     double getExtCost() const;

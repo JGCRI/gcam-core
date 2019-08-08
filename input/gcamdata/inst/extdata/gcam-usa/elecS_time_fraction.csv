@@ -1,0 +1,23 @@
+# File: elecS_time_fraction.csv
+# Title: Fraction of electricity demand supplied by vertical segment
+# Units: unitless (fraction)
+# Comments: This table specifies the fraction of electricity demand supplied by vertical load segment.
+# Source: estimated from recent U.S. annual hourly (8760) load duration curves
+# Column types: cnnnn 
+# ----------
+grid_region,off.peak.electricity.time,intermediate.electricity.time,subpeak.electricity.time,peak.electricity.time
+Alaska grid,0.66,0.25,0.05,0.04
+California grid,0.66,0.25,0.05,0.04
+Central East grid,0.66,0.25,0.05,0.04
+Central Northeast grid,0.66,0.25,0.05,0.04
+Central Northwest grid,0.66,0.25,0.05,0.04
+Central Southwest grid,0.66,0.25,0.05,0.04
+Florida grid,0.66,0.25,0.05,0.04
+Hawaii grid,0.66,0.25,0.05,0.04
+Mid-Atlantic grid,0.66,0.25,0.05,0.04
+New England grid,0.66,0.25,0.05,0.04
+New York grid,0.66,0.25,0.05,0.04
+Northwest grid,0.66,0.25,0.05,0.04
+Southeast grid,0.66,0.25,0.05,0.04
+Southwest grid,0.66,0.25,0.05,0.04
+Texas grid,0.66,0.25,0.05,0.04

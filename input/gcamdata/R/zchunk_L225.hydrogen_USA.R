@@ -1,4 +1,4 @@
-#' module_gcam.usa_L225.hydrogen_USA
+#' module_gcamusa_L225.hydrogen_USA
 #'
 #' Selects the subsectors to be removed from the hydrogen sectors for GCAM USA
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author KD September 2017
-module_gcam.usa_L225.hydrogen_USA <- function(command, ...) {
+module_gcamusa_L225.hydrogen_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L225.SubsectorLogit_h2"))
   } else if(command == driver.DECLARE_OUTPUTS) {

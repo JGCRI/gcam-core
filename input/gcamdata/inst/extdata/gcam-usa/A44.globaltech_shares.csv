@@ -1,16 +1,21 @@
 # File: A44.globaltech_shares.csv
-# Title: base year exogenous shares assigned to selected technologies
+# Title: Base Year Exogenous Shares for Selected Technologies
 # Units: Unitless
+# Comments: Base year exogenous shares assigned to selected efficiency-partitioned technologies whose shares are not calculated from aggregate average efficiency.
+# Source: Furnace/heat: Annual Energy Outlook, ~2009 edition. Lighting: https://www1.eere.energy.gov/buildings/publications/pdfs/ssl/lmc_vol1_final.pdf. All other technologies are not partitioned in the base year (i.e., all shares are allocated to the base technology).
 # Column types: ccccnn 
 # ----------
 supplysector,subsector,technology1,technology2,share_tech1,share_tech2
-resid heating,electricity,electric furnace,electric heat pump,0.86,0.14
+resid heating,electricity,electric furnace,electric heat pump,0.76,0.24
 resid hot water,electricity,electric heat pump water heater,,0,
 resid lighting,electricity,incandescent,fluorescent,0.9,0.1
 resid lighting,electricity,solid state,,0,
-resid appliances,electricity,electric appliances,electric appliances hi-eff,1,0
-comm heating,electricity,electric furnace,electric heat pump,0.46,0.54
+resid refrigerators,electricity,refrigerator,refrigerator hi-eff,1,0
+resid freezers,electricity,freezer,freezer hi-eff,1,0
+resid dishwashers,electricity,dishwasher,dishwasher hi-eff,1,0
+resid cooking,refined liquids,lpg oven,lpg oven hi-eff,1,0
+resid cooking,gas,gas oven,gas oven hi-eff,1,0
+resid clothes dryers,electricity,clothes dryer,clothes dryer hi-eff,1,0
+resid clothes washers,electricity,clothes washer,clothes washer hi-eff,1,0
 comm hot water,electricity,electric resistance water heater,electric heat pump water heater,1,0
-comm lighting,electricity,incandescent,fluorescent,0.32,0.68
 comm lighting,electricity,solid state,,0,
-comm refrigeration,electricity,refrigeration,refrigeration hi-eff,1,0
