@@ -986,8 +986,9 @@ module_energy_L223.electricity <- function(command, ...) {
       repeat_add_columns(tibble(region = gcam_regions)) %>%
       mutate(minicam.non.energy.input = "regional price adjustment") %>%
       left_join_error_no_match(L120.GridCost_offshore_wind, by = c("region")) %>%
-      rename (input.cost = grid.cost) %>%
+      rename(input.cost = grid.cost) %>%
       filter(!is.na(input.cost)) %>%
+      mutate(input.cost = round(input.cost, energy.DIGITS_COST)) %>%
       select(region, supplysector, subsector, stub.technology = technology,
              year, minicam.non.energy.input, input.cost) -> L223.StubTechCost_offshore_wind
 

@@ -318,6 +318,7 @@ module_energy_L2231.wind_update <- function(command, ...) {
       select(region, supplysector, subsector, stub.technology, year) %>%
       mutate(minicam.non.energy.input = "regional price adjustment") %>%
       left_join_error_no_match(L2231.GridCost_onshore_wind, by = c("region")) %>%
+      mutate(grid.cost = round(grid.cost, energy.DIGITS_COST)) %>%
       rename(input.cost = grid.cost) -> L2231.StubTechCost_onshore_wind
 
     # ===================================================
