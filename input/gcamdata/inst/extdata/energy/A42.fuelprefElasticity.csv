@@ -5,7 +5,8 @@
 # ----------
 supplysector,subsector,fuelprefElasticity
 building,biomass,-1
-building,coal,-0.7
+building,coal,-1
+building,refined liquids,-1
 building,electricity,0.2
 building,gas,0.1
 building,traditional biomass,-2
