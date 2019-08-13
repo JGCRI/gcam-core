@@ -231,6 +231,39 @@ write_to_all_states <- function(data, names, region_list = gcamusa.STATES) {
 }
 
 
+#' write out data to all states
+#'
+#' @param data Base tibble to start from
+#' @param names Character vector indicating the column names of the returned tibble
+#' @param region_list Character vector containing names of regions for which india national data is repeated
+#' @note Used for india national data by GCAM region, which is repeated for each india state
+#' @note Contains an argument which allows user to specify a different region list.
+#' @note For example, this is occasionally used to write all india data to GCAM-india grid regions.
+#' @return Tibble with data written out to all USA states
+write_to_all_india_states <- function(data, names, region_list = gcamindia.STATES) {
+
+  assert_that(is_tibble(data))
+  assert_that(is.character(names))
+  assert_that(is.character(region_list))
+
+  region <- NULL  # silence package check notes
+
+  if("logit.year.fillout" %in% names) {
+    data$logit.year.fillout <- "start-year"
+  }
+
+  if("price.exp.year.fillout" %in% names) {
+    data$price.exp.year.fillout <- "start-year"
+  }
+
+  data %>%
+    set_years %>%
+    mutate(region = NULL) %>% # remove region column if it exists
+    repeat_add_columns(tibble(region = region_list)) %>%
+    select(names)
+}
+
+
 #' set_subsector_shrwt
 #'
 #' Calculate subsector shareweights in calibration periods, where subsectors may have multiple technologies
