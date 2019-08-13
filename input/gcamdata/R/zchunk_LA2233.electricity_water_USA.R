@@ -10,7 +10,7 @@
 #' The corresponding file in the
 #' original data system was \code{LA2233.electricity_water_USA} (gcam-usa level2)
 #' @details Weighted water coefficient for reference scenario and load segment classification
-#' @author Zarrar Khan September 2018
+#' @author Zarrar Khan September 2018, NTG Aug 2019
 module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
@@ -23,7 +23,8 @@ module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
              FILE = "gcam-usa/NREL_us_re_technical_potential",
              "L223.StubTechMarket_elec_USA",
              "L1233.wdraw_coef_R_elec_F_tech_Yh_ref",
-             "L1233.wcons_coef_R_elec_F_tech_Yh_ref"))
+             "L1233.wcons_coef_R_elec_F_tech_Yh_ref",
+             "L2246.StubTechMarket_coal_vintage_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2233.StubTech_WaterCoef_ref"))
   } else if(command == driver.MAKE) {
@@ -52,6 +53,7 @@ module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
     L223.StubTechMarket_elec_USA <- get_data(all_data, "L223.StubTechMarket_elec_USA")
     L1233.wdraw_coef_R_elec_F_tech_Yh_ref <- get_data(all_data, "L1233.wdraw_coef_R_elec_F_tech_Yh_ref")
     L1233.wcons_coef_R_elec_F_tech_Yh_ref <- get_data(all_data, "L1233.wcons_coef_R_elec_F_tech_Yh_ref")
+    L2246.StubTechMarket_coal_vintage_USA <- get_data(all_data, "L2246.StubTechMarket_coal_vintage_USA")
 
 
   # -----------------------------------------------------------------------------
@@ -79,6 +81,25 @@ module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
       dplyr::select(sector, fuel, technology, Electric.sector, subsector, Electric.sector.technology) ->
       elec_tech_water_map
 
+    #Add historical years to vintages
+    L2246.StubTechMarket_coal_vintage_USA %>%
+      select(-year) %>%
+      unique() %>%
+      repeat_add_columns(tibble(year=MODEL_BASE_YEARS)) %>%
+      bind_rows(L2246.StubTechMarket_coal_vintage_USA) ->
+      L2246.StubTechMarket_coal_vintage_USA
+
+    # Create mapping of future vintages
+    A23.elec_tech_mapping_coal_retire %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+      rename(stub.technology = Electric.sector.technology,
+             supplysector = Electric.sector) %>%
+      bind_rows(L2246.StubTechMarket_coal_vintage_USA %>%
+                  mutate(technology = stub.technology,
+                         technology = gsub("_slow.*", "", technology)) %>%
+                  dplyr::select(region, supplysector, subsector, stub.technology,technology, year)) ->
+      A23.elec_tech_mapping_coal_retire
     # Added elec water coefficient in here
 
     # Ref scenario
@@ -142,11 +163,10 @@ module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
       anti_join(geo_states_noresource, by = c("region", "subsector")) ->   # Removing states which do not have geothermal technologies
       L2233.StubTech_WaterCoef_ref
 
+
+
     L2233.StubTech_WaterCoef_ref %>%
-      inner_join(A23.elec_tech_mapping_coal_retire, by = c("subsector", "technology")) %>%
-      mutate(technology = Electric.sector.technology,
-             Electric.sector = NULL,
-             Electric.sector.technology = NULL) ->
+      inner_join(A23.elec_tech_mapping_coal_retire, by = c("subsector", "technology","region","year","supplysector")) ->
     L2233.StubTech_WaterCoef_ref_coal_split
 
     # Remove duplicate entries and sort data
@@ -154,7 +174,9 @@ module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
       filter(!technology %in% c("coal_base_conv pul", "coal_int_conv pul",
                                 "coal_peak_conv pul",
                                 "coal_subpeak_conv pul")) %>%
-      bind_rows(L2233.StubTech_WaterCoef_ref_coal_split) %>%
+      bind_rows(L2233.StubTech_WaterCoef_ref_coal_split %>%
+                  select(region, supplysector, subsector, stub.technology, year, minicam.energy.input, coefficient, market.name) %>%
+                  mutate(technology=stub.technology)) %>%
       dplyr::select(region, supplysector, subsector, technology, year, minicam.energy.input, coefficient, market.name) %>%
       arrange(region, year) %>%
       rename(stub.technology = technology) ->
@@ -178,7 +200,8 @@ module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
                      "gcam-usa/NREL_us_re_technical_potential",
                      "L223.StubTechMarket_elec_USA",
                      "L1233.wdraw_coef_R_elec_F_tech_Yh_ref",
-                     "L1233.wcons_coef_R_elec_F_tech_Yh_ref") ->
+                     "L1233.wcons_coef_R_elec_F_tech_Yh_ref",
+                     "L2246.StubTechMarket_coal_vintage_USA") ->
       L2233.StubTech_WaterCoef_ref
 
     return_data(L2233.StubTech_WaterCoef_ref)
