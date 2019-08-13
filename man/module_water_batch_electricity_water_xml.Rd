@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_batch_electricity_water_xml.R
 \name{module_water_batch_electricity_water_xml}
 \alias{module_water_batch_electricity_water_xml}
-\title{module_water_batch_electricity_water.xml}
+\title{module_water_batch_electricity_water_xml}
 \usage{
 module_water_batch_electricity_water_xml(command, ...)
 }
