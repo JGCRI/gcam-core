@@ -14,7 +14,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @importFrom tibble as_tibble tibble
-#' @author LL March 2017, ZK Sep 2019
+#' @author LL March 2017, ZK Sep 2018, NTG Aug 2019
 
 module_gcamusa_LA1233.Process_UCS_data_ref <- function(command, ...) {
  if(command == driver.DECLARE_INPUTS) {
@@ -200,13 +200,14 @@ module_gcamusa_LA1233.Process_UCS_data_ref <- function(command, ...) {
    ungroup() ->
   capacity_tech_future_US_Total
 
-
+  # Set year = the first futue year as we have changed 2010 to now be represented by
+  # historical cooling shares
   capacity_tech_future_US %>%
     left_join_error_no_match(capacity_tech_future_US_Total %>%
                                rename (Cap_MW_Total = Cap_MW),
                              by = c("Fuel")) %>%
     mutate(Cap_MW = Cap_MW/Cap_MW_Total,
-           year = year_i) %>%
+           year = gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR) %>%
     select(-Cap_MW_Total) ->
     cooling_share_future_US
 
@@ -251,21 +252,19 @@ module_gcamusa_LA1233.Process_UCS_data_ref <- function(command, ...) {
     select(-Cap_MW, -Cap_MW_US, Cap_MW = Cap_MW_Final) %>%
     mutate(`Cooling Technology` = case_when(plant_type == "no cooling" ~ "none", TRUE ~ `Cooling Technology`),
            `Reported Water Source (Type)` = case_when(plant_type == "no cooling" ~ "fresh", TRUE ~ `Reported Water Source (Type)`),
-           year = gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR) ->
-   cooling_share_future_complete_tech_FINAL_HISTORICAL_YEAR
+           year = gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR) ->
+   cooling_share_future_complete_tech_FIRST_FUTURE_YEAR
 
   # repeat and add years final claibration year, first future year, final future year (from constants.R)
-  cooling_share_future_complete_tech_FINAL_HISTORICAL_YEAR %>%
-    bind_rows(cooling_share_future_complete_tech_FINAL_HISTORICAL_YEAR %>% mutate(year = gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR)) %>%
-    bind_rows(cooling_share_future_complete_tech_FINAL_HISTORICAL_YEAR %>% mutate(year = gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR)) %>%
-    bind_rows(cooling_share_future_complete_tech_FINAL_HISTORICAL_YEAR %>% mutate(year = gcamusa.UCS_WATER_COEFFICIENTS_FINAL_FUTURE_YEAR)) ->
+  cooling_share_future_complete_tech_FIRST_FUTURE_YEAR %>%
+    bind_rows(cooling_share_future_complete_tech_FIRST_FUTURE_YEAR %>% mutate(year = gcamusa.UCS_WATER_COEFFICIENTS_FINAL_FUTURE_YEAR)) ->
     cooling_share_future_complete_tech
 
   # Combine into one Cooling Share Data Frame
   # All 'no cooling' has cooling_type none and is assigned 1
   # As per original script all historical Gen_III is made 0
   cooling_share_historical %>%
-    filter(year != gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR) %>%
+    bind_rows(cooling_share_historical %>% filter(year == gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR) %>% mutate(year = gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR)) %>%
     bind_rows(cooling_share_future_complete_tech) %>%
     distinct %>%
     mutate(Cap_MW = case_when(plant_type == "no cooling" ~ 1,
@@ -339,6 +338,7 @@ module_gcamusa_LA1233.Process_UCS_data_ref <- function(command, ...) {
     complete_tech_cooling_share_Edited_sumbyTech
 
 
+  # Adjmusts made to account for all cases of sum_byTech_Cap_MW, as two cases were missing
   complete_tech_cooling_share_Edited %>%
     select(-sum_byTech_Cap_MW) %>%
     left_join_error_no_match(complete_tech_cooling_share_Edited_sumbyTech,
@@ -349,6 +349,8 @@ module_gcamusa_LA1233.Process_UCS_data_ref <- function(command, ...) {
                                        recirculating + (1 - sum_byTech_Cap_MW),
                                      (Fuel == "solar CSP" & `Reported Water Source (Type)` == "fresh") ~ recirculating+(1-sum_byTech_Cap_MW),
                                      (Fuel == "geothermal" & `Reported Water Source (Type)` == "fresh") ~ recirculating+(1-sum_byTech_Cap_MW),
+                                     sum_byTech_Cap_MW == 0 ~ 1,
+                                     sum_byTech_Cap_MW == 1 ~ recirculating,
                                      TRUE ~ recirculating),
            sum_Cap_MW = rowSums(select(., `cooling pond`, `dry cooling`, dry_hybrid, none, `once through`, recirculating), na.rm = TRUE)) %>%
     select(-sum_Cap_MW, -sum_byTech_Cap_MW) %>%
