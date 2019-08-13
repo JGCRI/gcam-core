@@ -29,9 +29,7 @@ MODEL_YEARS             <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
 # GCAM constants ======================================================================
 
 gcam.USA_CODE            <- 1
-gcam.INDIA_CODE          <- 17
 gcam.USA_REGION          <- "USA"
-gcam.india_REGION          <- "India"
 gcam.WESTERN_EUROPE_CODE <- 13
 gcam.LOGIT_TYPES         <- c("relative-cost-logit", "absolute-cost-logit")
 gcam.EQUIV_TABLE         <- "EQUIV_TABLE"
@@ -119,7 +117,6 @@ CONV_KBTU_EJ <- 1.0551e-12 # KiloBTU to EJ
 CONV_TBTU_EJ <- 0.0010551 # TeraBTU to EJ
 CONV_MJ_BTU <- 947.777
 CONV_BTU_KJ <- 1.0551
-CONV_MTOE_EJ <- 0.041868 #Coverting million tonnes of oil equivalent to exajoules (IEA covertor value)
 
 # Other
 CONV_MCAL_PCAL <- 1e-9
@@ -145,7 +142,6 @@ aglu.GTAP_HISTORICAL_YEAR   <- 2000      # Is the year that the GTAP data is bas
 aglu.LAND_HISTORY_YEARS     <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
 aglu.LAND_COVER_YEARS       <- sort(unique(c(aglu.LAND_HISTORY_YEARS, aglu.AGLU_HISTORICAL_YEARS)))
 aglu.MODEL_COST_YEARS       <- 2008:2011
-Price_2019INR_1975USD       <- 0.00304
 aglu.MODEL_PRICE_YEARS      <- 2008:2011
 aglu.PREAGLU_YEARS          <- c(1700, 1750,1800, 1850, 1900, 1950)          # Cropland cover years prior to first aglu historical year to use in climate model component
 aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years, KD i think this might need a better comment
@@ -546,7 +542,6 @@ gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_ONCE_THROUGH_SEAWATER <- 0.05
 
 # GCAM-USA time
 gcamusa.WIND_BASE_COST_YEAR   <- 2005
-gcamindia.WIND_BASE_COST_YEAR   <- 2005
 gcamusa.HYDRO_HIST_YEAR <- 2015
 gcamusa.HYDRO_FINAL_AEO_YEAR <- 2050
 
@@ -596,54 +591,33 @@ gcamusa.DEFAULT_LOGITEXP    <- -3
 gcamusa.DEFAULT_MARKET      <- gcam.USA_REGION
 gcamusa.DEFAULT_SHAREWEIGHT <- 1
 
-
-# GCAM-India default constants
-gcamindia.DEFAULT_COEFFICIENT <- 1
-gcamindia.DEFAULT_LOGIT_TYPE  <- NA  # default logit type
-gcamindia.DEFAULT_LOGITEXP    <- -3
-gcamindia.DEFAULT_MARKET      <- gcam.india_REGION
-gcamindia.DEFAULT_SHAREWEIGHT <- 1
-
 # Logit exponent regulating competition between different grid regions in USA electricity market
 # (single market approach only)
 gcamusa.GRID_REGION_LOGIT      <- -6
-gcamindia.GRID_REGION_LOGIT      <- -6
 
 gcamusa.GRID_REGION_LOGIT_TYPE <- "relative-cost-logit"
-gcamindia.GRID_REGION_LOGIT_TYPE <- "relative-cost-logit"
 
 gcamusa.GEOTHERMAL_DEFAULT_EFFICIENCY <- 0.1
-gcamindia.GEOTHERMAL_DEFAULT_EFFICIENCY <- 0.1
 
 gcamusa.ELECT_TD_SECTORS  <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
-gcamindia.ELECT_TD_SECTORS  <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
 
 # Indicate whether to use regional ?cost adders? to differentiate
-# Indicate whether to resolve electricity demands at the level of the nation or the grid regions
-gcamusa.USE_REGIONAL_ELEC_MARKETS <- TRUE
-gcamindia.USE_REGIONAL_ELEC_MARKETS <- TRUE
-
 # fuel prices by grid region in GCAM-USA (FALSE = same prices in all states)
 gcamusa.USE_REGIONAL_FUEL_MARKETS  <- TRUE
-gcamindia.USE_REGIONAL_FUEL_MARKETS  <- TRUE
 
 # GCAM-USA fertlizer constants
-gcamusa.FERT_LOGIT_EXP  <- -3             # Define  logit expoent used in the fertlizer subsector
+gcamusa.FERT_LOGIT_EXP  <- -3             # Define default logit expoent used in the fertlizer subsector
 gcamusa.FERT_LOGIT_TYPE <- NA
 gcamusa.FERT_NAME       <- "N fertilizer" # Define GCAM-USA category name of fertilizer
 
 # Fuels whose markets will be modeled at the level of the FERC regions, with prices calibrated
 gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale gas", "delivered gas",
                                    "refined liquids industrial", "refined liquids enduse")
-gcamindia.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale gas", "delivered gas",
-                                   "refined liquids industrial", "refined liquids enduse")
 
 
 # Resources that will be modeled at the state level
 gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource")
 gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
-gcamindia.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource")
-gcamindia.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
 # Define sector(s) used in L222.en_transformation_USA
 # The supplysector and subsector structure in these sectors are retained
@@ -651,11 +625,9 @@ gcamusa.SECTOR_EN_NAMES <- "refining"
 
 # Define intermittent technologies
 gcamusa.INT_TECH_LIST <- c("CSP", "PV", "wind")
-gcamindia.INT_TECH_LIST <- c("CSP", "PV", "wind")
 
 # Define storage technologies
 gcamusa.STORAGE_TECH_LIST <- c("CSP_storage", "PV_storage", "wind_storage")
-gcamindia.STORAGE_TECH_LIST <- c("CSP_storage", "PV_storage", "wind_storage")
 
 
 # Degree day norms
@@ -664,11 +636,9 @@ gcamusa.BASE_CDD_USA <- 1215 # https://www.eia.gov/totalenergy/data/annual/showt
 gcamusa.AEO_DD_YEARS <- seq(2010, 2040, 5)
 
 gcamusa.GAS_ADJ_THRESH      <- 5
-gcamindia.GAS_ADJ_THRESH      <- 5
 
 # Some xml delimiter
 gcamusa.STATE_SUBSECTOR_DELIMITER <- " "
-gcamindia.STATE_SUBSECTOR_DELIMITER <- " "
 
 # Number of digits for model input data
 gcamusa.DIGITS_CALOUTPUT          <- 7    # production
@@ -678,29 +648,12 @@ gcamusa.EFFICIENCY_PARTITION_YEAR <- 2010
 gcamusa.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA transport for compatability with model
 gcamusa.DIGITS_EMISSIONS          <- 5
 
-# Number of digits for model input data
-gcamindia.DIGITS_CALOUTPUT          <- 7    # production
-gcamindia.DIGITS_COST               <- 4
-gcamuse.DIGITS_DEPRESOURCE        <- 1
-gcamindia.EFFICIENCY_PARTITION_YEAR <- 2010
-gcamindia.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA transport for compatability with model
-gcamindia.DIGITS_EMISSIONS          <- 5
-
-
-
 # Electricity load segments
 gcamusa.LOAD_SEG_CAL_YEARS <- c(2010, 2005, 1990)       # Years for which electricity load segments are calibrated
 gcamusa.ELEC_SEGMENT_BASE <- "base load generation"
 gcamusa.ELEC_SEGMENT_INT <- "intermediate generation"
 gcamusa.ELEC_SEGMENT_SUBPEAK <- "subpeak generation"
 gcamusa.ELEC_SEGMENT_PEAK <- "peak generation"
-
-# Electricity load segments
-gcamindia.LOAD_SEG_CAL_YEARS <- c(2010, 2005, 1990)       # Years for which electricity load segments are calibrated
-gcamindia.ELEC_SEGMENT_BASE <- "base load generation"
-gcamindia.ELEC_SEGMENT_INT <- "intermediate generation"
-gcamindia.ELEC_SEGMENT_SUBPEAK <- "subpeak generation"
-gcamindia.ELEC_SEGMENT_PEAK <- "peak generation"
 
 
 # Time shift conditions ======================================================================
@@ -709,14 +662,3 @@ gcamindia.ELEC_SEGMENT_PEAK <- "peak generation"
 # MODEL_FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
 # MODEL_BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
 # MODEL_YEARS <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
-
-# GCAM INDIA Constants ======================================================================
-
-# GCAM-INDIA states
-gcamindia.STATES <- c("AP", "AR", "AS", "BR", "CG", "DL", "GA", "GJ", "HR",
-                      "HP", "JK", "JH", "KA", "KL", "MP", "MH", "MN", "ML",
-                      "MZ", "NL", "OD", "PB", "RJ", "SK", "TN", "TS", "TR",
-                      "UP", "UK", "UT", "WB")
-
-# GCAM-india grid regions
-gcamindia.GRID_REGIONS <- c("Northern", "Western", "North-Eastern", "Eastern",  "Southern")
