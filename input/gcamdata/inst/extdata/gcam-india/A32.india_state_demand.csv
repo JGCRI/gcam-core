@@ -1,0 +1,11 @@
+# File: A32.india_state_demand.csv
+# Title: Final demand sectors 
+# Units: Unitless
+# Column types: cii
+# ----------
+energy.final.demand,perCapitaBased,price.elasticity
+industry,1,-1
+resid,1,-1
+comm,1,-1
+trn_passenger,1,-1
+trn_freight,1,-1

@@ -1,0 +1,12 @@
+# File: A42.india_state_globaltech_shrwt_resid.csv
+# Title: Aggregate resid default technology shareweights
+# Units: Unitless
+# Column types: ccciii 
+# ----------
+supplysector,subsector,technology,1971,2010,2100
+resid,biomass,biomass,1,1,1
+resid,coal,coal,1,1,1
+resid,electricity,electricity,1,1,1
+resid,gas,gas,1,1,1
+resid,refined liquids,refined liquids,1,1,1
+resid,traditional biomass,traditional biomass,1,1,1

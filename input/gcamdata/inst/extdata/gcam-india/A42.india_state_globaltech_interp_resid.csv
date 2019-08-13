@@ -1,0 +1,7 @@
+# File: A42.india_state_globaltech_interp_resid.csv
+# Title: Aggregate resid default shareweight technology interpolation
+# Units: Unitless
+# Column types: cccccccc 
+# ----------
+supplysector,subsector,technology,apply.to,from.year,to.year,to.value,interpolation.function
+resid,traditional biomass,traditional biomass,share-weight,final-calibration-year,end-year,,fixed

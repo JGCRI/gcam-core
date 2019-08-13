@@ -1,0 +1,12 @@
+# File: A42.india_state_subsector_interp_resid.csv
+# Title: Aggregate resid default subsector shareweight interpolation
+# Units: NA
+# Column types: ccccccc 
+# ----------
+supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+resid,biomass,share-weight,final-calibration-year,end-year,,fixed
+resid,coal,share-weight,final-calibration-year,end-year,,fixed
+resid,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid,gas,share-weight,final-calibration-year,end-year,,fixed
+resid,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+resid,traditional biomass,share-weight,final-calibration-year,end-year,,fixed

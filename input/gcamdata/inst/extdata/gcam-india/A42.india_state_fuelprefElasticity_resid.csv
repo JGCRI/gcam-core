@@ -1,0 +1,11 @@
+# File: A42.india_state_fuelprefElasticity_resid.csv
+# Title: Fuel preference elasticities for resid energy use
+# Units: Unitless
+# Column types: ccn 
+# ----------
+supplysector,subsector,fuelprefElasticity
+resid,biomass,-1
+resid,coal,-0.7
+resid,electricity,0.2
+resid,gas,0.1
+resid,traditional biomass,-2

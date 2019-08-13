@@ -1,0 +1,11 @@
+# File: A42.india_state_subsector_interp_comm.csv
+# Title: Aggregate comm default subsector shareweight interpolation
+# Units: NA
+# Column types: ccccccc 
+# ----------
+supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+comm,biomass,share-weight,final-calibration-year,end-year,,fixed
+comm,coal,share-weight,final-calibration-year,end-year,,fixed
+comm,electricity,share-weight,final-calibration-year,end-year,,fixed
+comm,gas,share-weight,final-calibration-year,end-year,,fixed
+comm,refined liquids,share-weight,final-calibration-year,end-year,,fixed

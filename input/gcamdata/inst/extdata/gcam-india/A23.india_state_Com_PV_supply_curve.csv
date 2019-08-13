@@ -1,0 +1,38 @@
+# File: A23.india_state_Com_PV_supply_curve.csv
+# Title: PV supply curve for commercial buildings
+# Units: Rel_Cost - Unitless
+# Source: None  check for India
+# Column types: ccnnn
+# ----------
+State,angle,MW,GWH,Rel_Cost
+Andhra Pradesh,Flat,884.6,966.2,1.48
+Arunachal Pradesh,Flat,133.2,81.8,2.63
+Assam,Flat,960.6,1318,1.18
+Bihar,Flat,476.1,520,1.48
+Chhattisgarh,Flat,5995.4,7554.6,1.28
+Delhi,Flat,930.7,1161.2,1.29
+Goa,Flat,721.6,697.5,1.67
+Gujarat,Flat,146.7,146.4,1.62
+Haryana,Flat,243.6,245.1,1.6
+Himachal Pradesh,Flat,3157.2,3754.4,1.36
+Jammu and Kashmir,Flat,1826.5,2006,1.47
+Jharkhand,Flat,256,360.5,1.15
+Karnataka,Flat,227.7,253.9,1.45
+Kerala,Flat,2557.1,2594.9,1.59
+Madhya Pradesh,Flat,1449.9,1461.5,1.6
+Maharashtra,Flat,626.8,642.9,1.57
+Manipur,Flat,577.2,648,1.44
+Meghalaya,Flat,836.6,858.2,1.57
+Mizoram,Flat,819.7,932.8,1.42
+Nagaland,Flat,219.3,210.2,1.68
+Odisha,Flat,1017,1016.7,1.61
+Punjab,Flat,1278.4,1239.3,1.66
+Rajasthan,Flat,2019.5,1965.7,1.66
+Sikkim,Flat,1051.9,1014.8,1.67
+Tamil Nadu,Flat,500,554.8,1.45
+Telangana,Flat,1097.6,1182.6,1.5
+Tripura,Flat,141.5,142.3,1.6
+Uttar Pradesh,Flat,367.9,399.7,1.49
+Uttarakhand,Flat,481.2,641.8,1.21
+Union Terotories,Flat,234.5,225.4,1.68
+West Bengal,Flat,1655,1628.2,1.64

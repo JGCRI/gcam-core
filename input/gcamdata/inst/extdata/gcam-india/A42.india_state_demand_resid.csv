@@ -1,0 +1,7 @@
+# File: A42.india_state_demand_resid.csv
+# Title: Aggregate resid final demand perCapitaBased and price elasticity
+# Units: Unitless
+# Column types: ci 
+# ----------
+energy.final.demand,perCapitaBased
+resid,1

@@ -1,0 +1,10 @@
+# File: A42.india_state_fuelprefElasticity_comm.csv
+# Title: Fuel preference elasticities for comm energy use
+# Units: Unitless
+# Column types: ccn 
+# ----------
+supplysector,subsector,fuelprefElasticity
+comm,biomass,-1
+comm,coal,-0.7
+comm,electricity,0.2
+comm,gas,0.1

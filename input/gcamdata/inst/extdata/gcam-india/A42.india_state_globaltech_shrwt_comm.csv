@@ -1,0 +1,11 @@
+# File: A42.india_state_globaltech_shrwt_comm.csv
+# Title: Aggregate comm default technology shareweights
+# Units: Unitless
+# Column types: ccciii 
+# ----------
+supplysector,subsector,technology,1971,2010,2100
+comm,biomass,biomass,1,1,1
+comm,coal,coal,1,1,1
+comm,electricity,electricity,1,1,1
+comm,gas,gas,1,1,1
+comm,refined liquids,refined liquids,1,1,1

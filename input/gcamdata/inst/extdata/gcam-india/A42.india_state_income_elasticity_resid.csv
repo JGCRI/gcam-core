@@ -1,0 +1,7 @@
+# File: A42.india_state_income_elasticity_resid.csv
+# Title: Price elasticity
+# Units: Unitless
+# Column types: cnnnnnnnnnnnnnnnnnn
+# -----------------
+energy.final.demand,2015,2020,2025,2030,2035,2040,2045,2050,2055,2060,2065,2070,2075,2080,2085,2090,2095,2100
+resid,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7,0.7
