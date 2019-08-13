@@ -1,0 +1,12 @@
+# File: A42.india_state_subsector_shrwt_resid.csv
+# Title: Aggregate resid default subsector shareweights
+# Units: Unitless
+# Column types: cccii 
+# ----------
+supplysector,subsector,year.fillout,year,share.weight
+resid,biomass,start-year,,1
+resid,coal,start-year,,1
+resid,electricity,start-year,,1
+resid,gas,start-year,,1
+resid,refined liquids,start-year,,1
+resid,traditional biomass,start-year,,1

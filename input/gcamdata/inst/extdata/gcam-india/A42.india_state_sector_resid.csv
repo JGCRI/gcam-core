@@ -1,0 +1,7 @@
+# File: A42.india_state_sector_resid.csv
+# Title: Resid sector default supplysector information (units and logit exponents)
+# Units: Unitless
+# Column types: ccccicc
+# ----------
+supplysector,output.unit,input.unit,price.unit,logit.exponent,final.energy,logit.type
+resid,EJ,EJ,1975$/GJ,-3,resid,

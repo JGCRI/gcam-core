@@ -1,0 +1,11 @@
+# File: A42.india_state_subsector_logit_comm.csv
+# Title: Aggregate comm default subsector logit exponents
+# Units: Unitless
+# Column types: ccic 
+# ----------
+supplysector,subsector,logit.exponent,logit.type
+comm,biomass,-6,
+comm,coal,-6,
+comm,electricity,-6,
+comm,gas,-6,
+comm,refined liquids,-6,

@@ -1,0 +1,12 @@
+# File: A42.india_state_subsector_logit_resid.csv
+# Title: Aggregate resid default subsector logit exponents
+# Units: Unitless
+# Column types: ccic 
+# ----------
+supplysector,subsector,logit.exponent,logit.type
+resid,biomass,-6,
+resid,coal,-6,
+resid,electricity,-6,
+resid,gas,-6,
+resid,refined liquids,-6,
+resid,traditional biomass,-6,

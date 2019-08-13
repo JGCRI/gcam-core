@@ -1,0 +1,11 @@
+# File: A42.india_state_subsector_shrwt_comm.csv
+# Title: Aggregate comm default subsector shareweights
+# Units: Unitless
+# Column types: cccii 
+# ----------
+supplysector,subsector,year.fillout,year,share.weight
+comm,biomass,start-year,,1
+comm,coal,start-year,,1
+comm,electricity,start-year,,1
+comm,gas,start-year,,1
+comm,refined liquids,start-year,,1

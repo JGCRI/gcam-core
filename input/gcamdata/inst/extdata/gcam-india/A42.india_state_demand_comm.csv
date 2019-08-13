@@ -1,0 +1,7 @@
+# File: A42.india_state_demand_comm.csv
+# Title: Aggregate comm final demand perCapitaBased and price elasticity
+# Units: Unitless
+# Column types: ci 
+# ----------
+energy.final.demand,perCapitaBased
+comm,1

@@ -1,0 +1,12 @@
+# File: A42.india_state_calibrated_tech_resid.csv
+# Title: Mapping between intermediate sectors and fuels to the techs in aggregate buildings
+# Units: NA
+# Column types: ccccccc
+# ----------
+sector,fuel,supplysector,subsector,technology,minicam.energy.input,calibration
+resid,biomass,resid,biomass,biomass,delivered biomass,input
+resid,coal,resid,coal,coal,delivered coal,input
+resid,electricity,resid,electricity,electricity,elect_td_bld,input
+resid,gas,resid,gas,gas,delivered gas,input
+resid,refined liquids,resid,refined liquids,refined liquids,refined liquids enduse,input
+resid,traditional biomass,resid,traditional biomass,traditional biomass,traditional biomass,input

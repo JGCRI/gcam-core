@@ -1,0 +1,39 @@
+# File: A23.india_state_wind.csv
+# Title: India wind resources by state
+# Units: maxResource in GW; Base Cost in 2015INR/kWh
+# Source: RECHECK and correct: maxResources and base cost are from CEEW's analysis available at https://www.ceew.in/sites/default/files/CEEW-A-Second-Wind-for-India-Wind-Energy-Sector-17July19.pdf
+# The report gives prices in 2019INR/kWh which are converted to 2015INR/kWh for the uniformity of calculations
+# Column types: cnnnn
+# ----------
+region,maxResource,mid_price,curve_exponent,base_cost
+AP,23.5,0.039745,4.569628,3.1
+AR,0,0.069636,3.536482,0
+AS,0,0.035565,2.2761,0
+BR,0,0.024669,2.825933,0
+CG,0.2,0.066781,3.024004,3.6
+DL,0,0.018672,2.16841,0
+GA,0,0.020393,2.413221,0
+GJ,27.5,0.0039,0.988859,2.61
+HR,0,100,2,0
+HP,0,0.073587,3.912349,0
+JK,0,0.012586,2.309999,0
+JH,0,0.041209,1.555354,0
+KA,34.3,0.035454,3.332757,2.8
+KL,5.7,0.022381,6.3851,3.6
+MP,29.4,0.014244,4.063657,3.6
+MH,38.3,0.004687,2.932831,3.19
+MN,0,0.00546,2.428037,0
+ML,0,0.005816,2.472147,0
+MZ,0,0.054559,4.046113,0
+NL,0,0.02695,3.187683,0
+OD,2.7,0.020344,1.906103,3.6
+PB,0,0.019805,2.228154,0
+RJ,23.8,0.020204,2.814435,3.19
+SK,0,0.022824,4.54994,0
+TN,14.3,0.026228,4.85941,2.55
+TS,16.1,0.008109,2.763293,3.1
+TR,0,0.023072,3.079691,0
+UP,0.8,0.006138,2.28142,3.6
+UK,0,0.032988,2.437621,0
+WB,0.1,0.018863,3.413099,3.6
+UT,0,0.020917,3.016222,0

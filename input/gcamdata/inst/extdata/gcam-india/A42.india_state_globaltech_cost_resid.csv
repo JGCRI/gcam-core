@@ -1,0 +1,12 @@
+# File: A42.india_state_globaltech_cost_resid.csv
+# Title: Aggregate resid default costs
+# Units: Unitless
+# Column types: ccccii 
+# ----------
+supplysector,subsector,technology,minicam.non.energy.input,1971,2100
+resid,biomass,biomass,non-energy,3,3
+resid,coal,coal,non-energy,3,3
+resid,electricity,electricity,non-energy,3,3
+resid,gas,gas,non-energy,3,3
+resid,refined liquids,refined liquids,non-energy,3,3
+resid,traditional biomass,traditional biomass,non-energy,3,3

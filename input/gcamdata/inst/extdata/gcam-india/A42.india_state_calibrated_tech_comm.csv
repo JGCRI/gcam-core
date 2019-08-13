@@ -1,0 +1,11 @@
+# File: A42.india_state_calibrated_tech_comm.csv
+# Title: Mapping between intermediate sectors and fuels to the techs in aggregate buildings
+# Units: NA
+# Column types: ccccccc
+# ----------
+sector,fuel,supplysector,subsector,technology,minicam.energy.input,calibration
+comm,coal,comm,coal,coal,delivered coal,input
+comm,electricity,comm,electricity,electricity,elect_td_bld,input
+comm,gas,comm,gas,gas,delivered gas,input
+comm,refined liquids,comm,refined liquids,refined liquids,refined liquids enduse,input
+comm,biomass,comm,biomass,biomass,biomass,input

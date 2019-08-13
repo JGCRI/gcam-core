@@ -1,0 +1,11 @@
+# File: A42.india_state_globaltech_cost_comm.csv
+# Title: Aggregate comm default costs
+# Units: Unitless
+# Column types: ccccii 
+# ----------
+supplysector,subsector,technology,minicam.non.energy.input,1971,2100
+comm,biomass,biomass,non-energy,3,3
+comm,coal,coal,non-energy,3,3
+comm,electricity,electricity,non-energy,3,3
+comm,gas,gas,non-energy,3,3
+comm,refined liquids,refined liquids,non-energy,3,3

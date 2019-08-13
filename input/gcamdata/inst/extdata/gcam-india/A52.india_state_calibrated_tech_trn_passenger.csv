@@ -1,0 +1,12 @@
+# File: A52.india_state_calibrated_tech_trn_passenger.csv
+# Title: passenger transportation and UCD category mapping
+# Units: NA
+# Description: mapping between sector / fuel to supplysector/subsector/technology in aggregate transportation and UCD_category
+# Source: Mishra et al. 2013
+# Column types: cccccccc
+# ----------
+sector,fuel,supplysector,subsector,technology,minicam.energy.input,calibration
+trn_passenger,refined liquids,trn_passenger,refined liquids,refined liquids,refined liquids enduse,input
+trn_passenger,hydrogen,trn_passenger,hydrogen,hydrogen,H2 enduse,input
+trn_passenger,gas,trn_passenger,gas,gas,delivered gas,input
+trn_passenger,electricity,trn_passenger,electricity,electricity,elect_td_trn,input

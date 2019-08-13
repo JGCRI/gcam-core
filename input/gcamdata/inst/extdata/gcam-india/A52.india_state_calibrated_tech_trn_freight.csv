@@ -1,0 +1,12 @@
+# File: A52.india_state_calibrated_tech_trn_freight.csv
+# Title: Freight transportation and UCD category mapping
+# Units: NA
+# Description: mapping between sector / fuel to supplysector/subsector/technology in aggregate transportation and UCD_category
+# Source: Mishra et al. 2013
+# Column types: cccccccc
+# ----------
+sector,fuel,supplysector,subsector,technology,minicam.energy.input,calibration
+trn_freight,refined liquids,trn_freight,refined liquids,refined liquids,refined liquids enduse,input
+trn_freight,coal,trn_freight,coal,coal,delivered coal,input
+trn_freight,gas,trn_freight,gas,gas,delivered gas,input
+trn_freight,electricity,trn_freight,electricity,electricity,elect_td_trn,input
