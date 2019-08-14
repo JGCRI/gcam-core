@@ -1,0 +1,23 @@
+# File: USDA_an_items_Stocks.csv
+# Title: USDA animal product item names
+# Units: NA
+# Comments: NA
+# Column types: ccc
+# ----------
+Data Item,GCAM_commodity,Animal
+"CATTLE, (EXCL COWS) - INVENTORY",Beef,Beef cattle
+"CATTLE, COWS, BEEF - INVENTORY",Dairy,Dairy cattle
+"CATTLE, COWS, MILK - INVENTORY",Beef,Beef cattle
+"CHICKENS, BROILERS - INVENTORY",Poultry,Broiler chicken
+"CHICKENS, LAYERS - INVENTORY",Poultry,Layer chicken
+DUCKS - INVENTORY,Poultry,Broiler chicken
+"EQUINE, HORSES & PONIES - INVENTORY",OtherMeat_Fish,Horse
+"EQUINE, MULES & BURROS & DONKEYS - INVENTORY",OtherMeat_Fish,Horse
+GEESE - INVENTORY,Poultry,Broiler chicken
+GOATS - INVENTORY,SheepGoat,Goat
+"GOATS, MILK - INVENTORY",Dairy,Dairy cattle
+GUINEAS - INVENTORY,Poultry,Broiler chicken
+HOGS - INVENTORY,Pork,Pig
+"RABBITS, LIVE - INVENTORY",OtherMeat_Fish,
+"SHEEP, INCL LAMBS - INVENTORY",SheepGoat,Sheep
+TURKEYS - INVENTORY,Poultry,Broiler chicken

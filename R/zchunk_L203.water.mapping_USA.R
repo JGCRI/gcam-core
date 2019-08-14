@@ -1,6 +1,6 @@
 #' module_gcamusa_L203.water.mapping
 #'
-#' Mapping of water consumption/withdrawal to sectoral demands.
+#' Mapping of water consumption/withdrawal to sectoral demands at the state level.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -18,6 +18,7 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
     return(c(FILE = "water/basin_to_country_mapping",
 #             "L125.LC_bm2_R_GLU",
 #             "L165.ag_IrrEff_R",
+              "L103.water_mapping_USA_R_LS_W_Ws_share",
              FILE = "gcam-usa/states_subregions",
              FILE = "water/A03.sector"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -34,12 +35,13 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
 #    L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU")
 #    L165.ag_IrrEff_R <- get_data(all_data, "L165.ag_IrrEff_R")
+    L103.water_mapping_USA_R_LS_W_Ws_share <- get_data(all_data, "L103.water_mapping_USA_R_LS_W_Ws_share")
     GCAM_state_names <- get_data(all_data, "gcam-usa/states_subregions")
     A03.sector <- get_data(all_data, "water/A03.sector")
 
       GLU <- GLU_code <- GLU_name <- water.sector <-
       water_type <- supplysector <- field.eff <- conveyance.eff <-
-      coefficient <- region <- NULL  # silence package check notes
+      coefficient <- region <- state <- share <- NULL  # silence package check notes
 
     # Create tibble with all possible mapping sectors...
 
@@ -55,36 +57,45 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
     #  mutate(supplysector = set_water_input_name(water.sector, water_type, A03.sector, GLU)) ->
     #  L203.mapping_irr
 
-    # (b) non-irrigation sectors
+    # (b) non-irrigation
     GCAM_state_names %>%
       select(state) %>%
       rename(region = state) %>%
       repeat_add_columns(filter(A03.sector, !(water.sector %in% water.IRRIGATION))) %>%
-      mutate(GLU = NA) %>%
       repeat_add_columns(tibble(water_type = c("water consumption", "water withdrawals"))) %>%
       mutate(supplysector = set_water_input_name(water.sector, water_type, A03.sector)) ->
       L203.mapping_nonirr
 
-    # (c) combine irrigation and non-irrigation sectors and add additional required columns
+    # (c) livestock sector
+    # This done slightly different as production of livestock is not at the state level.
+    # Here we take the regional (i.e. USA) water demands of livestock and map them to the state level based on
+    # the amount of water for livestock that each state requires compared to the USA as a whole.
+    L103.water_mapping_USA_R_LS_W_Ws_share %>%
+      mutate(region="USA") %>%
+      repeat_add_columns(filter(A03.sector, (water.sector %in% water.LIVESTOCK))) %>%
+      mutate(wt_short = if_else(water_type == "water consumption", "C", "W"),
+            supplysector = paste(supplysector, wt_short, sep = "_"),
+            coefficient = 1,
+             subsector = state,
+             technology = supplysector,
+             share.weight = share,
+             market.name=state,
+             logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
+      select(-wt_short, -share, -state) %>%
+      arrange(region)  ->
+      L203.mapping_livestock
+
+    # (d) combine irrigation and non-irrigation sectors and add additional required columns
 #    L203.mapping_irr %>%
 #      bind_rows(L203.mapping_nonirr) %>%
     L203.mapping_nonirr %>%
       mutate(coefficient = 1,
              subsector = supplysector,
              technology = supplysector,
+             share.weight =1,
              logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
-      arrange(region) ->
-#      arrange(region) %>%
-#      left_join(select(L165.ag_IrrEff_R, -field.eff), by = "GCAM_region_ID") %>%
-      # ^^ non-restrictive join required (NA values generated for region 30, Taiwan)
-#      mutate(coefficient = if_else(water.sector == water.IRRIGATION & water_type == "water withdrawals",
-#                                   1 / conveyance.eff, coefficient)) %>%
-      # ^^ conveyance losses for irrigation--applied to withdrawals only
-      # Note: Conveyance losses are taken out of agriculture withdrawals and...
-      # ... instead applied to water distribution sectors (water_td_irr). This means that to get total...
-      # ... ag withdrawals for reporting (i.e., when querying GCAM results)...
-      # ... it is necessary to include the conveyance loss.
-#      select(-conveyance.eff) ->
+      arrange(region) %>%
+      bind_rows(L203.mapping_livestock) ->
       L203.mapping_all
 
     # Sector information
@@ -99,8 +110,7 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
 
     # Subsector share weights to 1 (no competition)
     L203.mapping_all %>%
-      mutate(share.weight = 1,
-             year.fillout = first(MODEL_YEARS)) %>%
+      mutate(year.fillout = first(MODEL_YEARS)) %>%
       select(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]]) ->
       L203.SubsectorShrwtFllt
 
@@ -112,10 +122,13 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
       L203.TechShrwt
 
     # Pass-through technology to the water resource
+    # Market name is already defined for livestock and remain the same as defined above
+    # In order for water to be mapped back to state level, water_td_an_* exists at the USA level,
+    # but water consumption/withdrawal must exist at the state level
     L203.mapping_all %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      mutate(minicam.energy.input = water_type,
-             market.name = region) %>%
+      mutate(minicam.energy.input = case_when( water.sector == "Livestock" & region =="USA" ~ supplysector, TRUE~water_type),
+             market.name = case_when( water.sector == "Livestock" & region =="USA" ~ market.name,TRUE~region)) %>%
       select(LEVEL2_DATA_NAMES[["TechCoef"]]) ->
       L203.TechCoef
 
@@ -132,6 +145,7 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
       add_precursors("water/basin_to_country_mapping",
 #                     "L125.LC_bm2_R_GLU",
 #                     "L165.ag_IrrEff_R",
+                      "L103.water_mapping_USA_R_LS_W_Ws_share",
                       "gcam-usa/states_subregions",
                      "water/A03.sector") ->
       L203.Supplysector_USA
@@ -143,6 +157,7 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
       add_precursors("water/basin_to_country_mapping",
 #                     "L125.LC_bm2_R_GLU",
 #                     "L165.ag_IrrEff_R",
+                      "L103.water_mapping_USA_R_LS_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "water/A03.sector") ->
       L203.SubsectorLogit_USA
@@ -154,6 +169,7 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
       add_precursors("water/basin_to_country_mapping",
 #                     "L125.LC_bm2_R_GLU",
 #                     "L165.ag_IrrEff_R",
+                      "L103.water_mapping_USA_R_LS_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "water/A03.sector") ->
       L203.SubsectorShrwtFllt_USA
@@ -166,6 +182,7 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
       add_precursors("water/basin_to_country_mapping",
 #                     "L125.LC_bm2_R_GLU",
 #                     "L165.ag_IrrEff_R",
+                      "L103.water_mapping_USA_R_LS_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "water/A03.sector") ->
       L203.TechShrwt_USA
@@ -177,6 +194,7 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
       add_precursors("water/basin_to_country_mapping",
 #                     "L125.LC_bm2_R_GLU",
 #                     "L165.ag_IrrEff_R",
+                      "L103.water_mapping_USA_R_LS_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "water/A03.sector") ->
       L203.TechCoef_USA
