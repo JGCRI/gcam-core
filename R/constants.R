@@ -461,6 +461,7 @@ water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
 water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
 water.IRRIGATION                          <- "Irrigation"
 water.LIVESTOCK                           <- "Livestock"
+water.LIVESTOCK_TYPES                     <- c("Beef","Dairy","Pork","Poultry","SheepGoat")
 water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
 water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
