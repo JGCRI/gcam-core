@@ -2,6 +2,8 @@
 # Title: Municipal water withdrawals by USA state
 # Units: km3
 # Source: USGS domestic water withdrawals
+# Column types: ccnnnnnn
+# ----------
 state,water_type,1985,1990,1995,2000,2005,2010
 AK,water withdrawal,0.1178658,0.1365786,0.1231512,0.1258698,0.084042,0.08832
 AL,water withdrawal,0.901761,1.0137618,1.2067134,1.2603954,0.5037,0.5037
