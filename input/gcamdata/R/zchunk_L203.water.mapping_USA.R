@@ -26,7 +26,8 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
              "L203.SubsectorLogit_USA",
              "L203.SubsectorShrwtFllt_USA",
              "L203.TechShrwt_USA",
-             "L203.TechCoef_USA"))
+             "L203.TechCoef_USA",
+             "L203.DeleteSubsector_USAls"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -62,7 +63,7 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
       select(state) %>%
       rename(region = state) %>%
       repeat_add_columns(filter(A03.sector, !(water.sector %in% water.IRRIGATION))) %>%
-      repeat_add_columns(tibble(water_type = c("water consumption", "water withdrawals"))) %>%
+      repeat_add_columns(tibble(water_type = water.MAPPED_WATER_TYPES)) %>%
       mutate(supplysector = set_water_input_name(water.sector, water_type, A03.sector)) ->
       L203.mapping_nonirr
 
@@ -71,7 +72,7 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
     # Here we take the regional (i.e. USA) water demands of livestock and map them to the state level based on
     # the amount of water for livestock that each state requires compared to the USA as a whole.
     L103.water_mapping_USA_R_LS_W_Ws_share %>%
-      mutate(region="USA") %>%
+      mutate(region=gcam.USA_REGION) %>%
       repeat_add_columns(filter(A03.sector, (water.sector %in% water.LIVESTOCK))) %>%
       mutate(wt_short = if_else(water_type == "water consumption", "C", "W"),
             supplysector = paste(supplysector, wt_short, sep = "_"),
@@ -84,6 +85,11 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
       select(-wt_short, -share, -state) %>%
       arrange(region)  ->
       L203.mapping_livestock
+
+    tibble(region = gcam.USA_REGION,
+           supplysector = c("water_td_an_W","water_td_an_C"),
+           subsector = c("water_td_an_W","water_td_an_C")) ->
+      L203.DeleteSubsector_USAls
 
     # (d) combine irrigation and non-irrigation sectors and add additional required columns
 #    L203.mapping_irr %>%
@@ -136,6 +142,13 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
     # OUTPUTS
     # possible future amendment: consider creating water mapping files by demand type ...
     # ...(irr, dom, ind, ...) rather than by variable (see issue #663 on dsr gcamdata repo)
+
+    L203.DeleteSubsector_USAls %>%
+      add_title("Remove the livestock water withdrawal and consumption of the USA region") %>%
+      add_units("Uniteless") %>%
+      add_comments("Remove the USA livestock water sectors, and replace with state level livestock sectors") %>%
+      add_legacy_name("L2232.DeleteSubsector_USAls") ->
+      L203.DeleteSubsector_USAls
 
     L203.Supplysector %>%
       add_title("Water sector information") %>%
@@ -199,7 +212,7 @@ module_gcamusa_L203.water.mapping <- function(command, ...) {
                      "water/A03.sector") ->
       L203.TechCoef_USA
 
-    return_data(L203.Supplysector_USA, L203.SubsectorLogit_USA, L203.SubsectorShrwtFllt_USA, L203.TechShrwt_USA, L203.TechCoef_USA)
+    return_data(L203.Supplysector_USA, L203.SubsectorLogit_USA, L203.SubsectorShrwtFllt_USA, L203.TechShrwt_USA, L203.TechCoef_USA, L203.DeleteSubsector_USAls)
   } else {
     stop("Unknown command")
   }
