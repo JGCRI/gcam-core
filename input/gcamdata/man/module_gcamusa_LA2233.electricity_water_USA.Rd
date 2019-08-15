@@ -25,5 +25,5 @@ Weighted water coefficient for reference scenario and load segment classificatio
 Weighted water coefficient for reference scenario and load segment classification
 }
 \author{
-Zarrar Khan September 2018
+Zarrar Khan September 2018, NTG Aug 2019
 }
