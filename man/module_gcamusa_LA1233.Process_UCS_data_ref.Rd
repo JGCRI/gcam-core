@@ -25,7 +25,7 @@ This script reads in and processes "Union of Concerned Scientists. 2012. UCS EW3
 Database V.1.3" - Main Data.
 }
 \author{
-LL March 2017, ZK Sep 2019
+LL March 2017, ZK Sep 2018, NTG Aug 2019
 Note 1: The states_subregions raw file was modified to include NEMS region mappings.
 In states_subregion.csv row 65, West Virginia Central East Grid has subregion4 as South, insted of Midwest
 as in the harmonization folder.
