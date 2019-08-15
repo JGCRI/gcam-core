@@ -2,6 +2,8 @@
 # Title: Industry water demand by USA state
 # Units: km3
 # Source: USGS industry water withdrawal and consumption
+# Column types: cccnnnnnn 
+# ----------
 state,sector,water_type,1985,1990,1995,2000,2005,2010
 AK,industry,water withdrawals,0.1566852,0.1538424,0.0755826,0.0112056,0.0112608,0.0107364
 AL,industry,water withdrawals,1.1570472,1.0818648,1.0117332,1.1496642,0.759,0.79212
