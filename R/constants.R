@@ -462,6 +462,7 @@ water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustme
 water.IRRIGATION                          <- "Irrigation"
 water.LIVESTOCK                           <- "Livestock"
 water.LIVESTOCK_TYPES                     <- c("Beef","Dairy","Pork","Poultry","SheepGoat")
+water.LIVESTOCK_DEMAND_TYPES              <- c("water_td_an_W","water_td_an_C")
 water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
 water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
@@ -583,8 +584,8 @@ gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
 
 # GCAM-USA grid regions
 gcamusa.GRID_REGIONS <- c("Alaska grid", "California grid", "Central East grid", "Central Northeast grid",  "Central Northwest grid",
-                    "Central Southwest grid", "Florida grid", "Hawaii grid", "Mid-Atlantic grid", "New England grid",
-                    "New York grid", "Northwest grid", "Southeast grid", "Southwest grid", "Texas grid")
+                          "Central Southwest grid", "Florida grid", "Hawaii grid", "Mid-Atlantic grid", "New England grid",
+                          "New York grid", "Northwest grid", "Southeast grid", "Southwest grid", "Texas grid")
 
 # GCAM-USA default constants
 gcamusa.DEFAULT_COEFFICIENT <- 1
@@ -657,6 +658,10 @@ gcamusa.ELEC_SEGMENT_INT <- "intermediate generation"
 gcamusa.ELEC_SEGMENT_SUBPEAK <- "subpeak generation"
 gcamusa.ELEC_SEGMENT_PEAK <- "peak generation"
 
+# Water mapping assumptions
+gcamusa.LIVESTOCK_FIRST_YEAR <- 1997  #  Initial year in which USDA Census data is available surrounding the year 2000
+gcamusa.LIVESTOCK_FINAL_YEAR <- 2002  #  Final year in which USDA Census data is available surrounding the year 2000
+gcamusa.LIVESTOCK_NO_EXIST <- c("RABBITS")  # Livestock types that currently do not map to a Mekonnen and Hoekstra WF type
 
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions

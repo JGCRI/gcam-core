@@ -34,7 +34,7 @@ module_gcamusa_L202.water.resources.unlimited_USA <- function(command, ...) {
 
     # Create unlimited resource markets for water types
     L102.unlimited_water_price_state_R_W_Y_75USDm3 %>%
-      # the file is in long year format, and the intent is to select one year
+      # the file is in long year format (58 years), and the intent is to select one year
       # (the year order does not matter) since all other years are duplicate and not needed.
       filter(year == first(year)) %>%
       select(region, water_type) %>%
@@ -55,10 +55,7 @@ module_gcamusa_L202.water.resources.unlimited_USA <- function(command, ...) {
       filter(year %in% MODEL_YEARS) %>%
       #left_join_keep_first_only(GCAM_state_names, by = "state") %>%
       rename(unlimited.resource = water_type, price = value) %>%
-      ##The following line is currently in to alter the DF in order for add_title to
-      ##work appropriately. FIX!
-      mutate(hello = "1") %>%
-      select(-hello)%>%
+      mutate(year = year) %>%
       #filter(!region %in% aglu.NO_AGLU_REGIONS | !unlimited.resource %in% water.AG_ONLY_WATER_TYPES) %>%
       #select(-GCAM_region_ID) %>%
       arrange(region, unlimited.resource, year, price) ->

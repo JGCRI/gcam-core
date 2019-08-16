@@ -16,9 +16,9 @@
 module_gcamusa_L203.water.mapping_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_to_country_mapping",
-#             "L125.LC_bm2_R_GLU",
-#             "L165.ag_IrrEff_R",
-              "L103.water_mapping_USA_R_LS_W_Ws_share",
+             #             "L125.LC_bm2_R_GLU",
+             #             "L165.ag_IrrEff_R",
+             "L103.water_mapping_USA_R_LS_W_Ws_share",
              FILE = "gcam-usa/states_subregions",
              FILE = "water/A03.sector"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -34,13 +34,13 @@ module_gcamusa_L203.water.mapping_USA <- function(command, ...) {
 
     # Load required inputs
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-#    L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU")
-#    L165.ag_IrrEff_R <- get_data(all_data, "L165.ag_IrrEff_R")
+    #    L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU")
+    #    L165.ag_IrrEff_R <- get_data(all_data, "L165.ag_IrrEff_R")
     L103.water_mapping_USA_R_LS_W_Ws_share <- get_data(all_data, "L103.water_mapping_USA_R_LS_W_Ws_share")
     GCAM_state_names <- get_data(all_data, "gcam-usa/states_subregions")
     A03.sector <- get_data(all_data, "water/A03.sector")
 
-      GLU <- GLU_code <- GLU_name <- water.sector <-
+    GLU <- GLU_code <- GLU_name <- water.sector <-
       water_type <- supplysector <- field.eff <- conveyance.eff <-
       coefficient <- region <- state <- share <- NULL  # silence package check notes
 
@@ -59,6 +59,9 @@ module_gcamusa_L203.water.mapping_USA <- function(command, ...) {
     #  L203.mapping_irr
 
     # (b) non-irrigation
+    # create supply sectors for each non-irrigation water type (i.e. livestock, electricity, primary energy, municipal, industry).
+    # While individual sectors will be mapped from the USA region next, the demands must be mapped to the state level
+    # in order to draw from the regional mapping created below.
     GCAM_state_names %>%
       select(state) %>%
       rename(region = state) %>%
@@ -68,15 +71,16 @@ module_gcamusa_L203.water.mapping_USA <- function(command, ...) {
       L203.mapping_nonirr
 
     # (c) livestock sector
-    # This done slightly different as production of livestock is not at the state level.
+    # This done slightly different as production of livestock is not modeled at the state level.
     # Here we take the regional (i.e. USA) water demands of livestock and map them to the state level based on
-    # the amount of water for livestock that each state requires compared to the USA as a whole.
+    # the amount of water for livestock that each state requires compared to the USA as a whole, computed in
+    # L103.water.basin.mapping_USA
     L103.water_mapping_USA_R_LS_W_Ws_share %>%
       mutate(region=gcam.USA_REGION) %>%
       repeat_add_columns(filter(A03.sector, (water.sector %in% water.LIVESTOCK))) %>%
       mutate(wt_short = if_else(water_type == "water consumption", "C", "W"),
-            supplysector = paste(supplysector, wt_short, sep = "_"),
-            coefficient = 1,
+             supplysector = paste(supplysector, wt_short, sep = "_"),
+             coefficient = 1,
              subsector = state,
              technology = supplysector,
              share.weight = share,
@@ -86,14 +90,11 @@ module_gcamusa_L203.water.mapping_USA <- function(command, ...) {
       arrange(region)  ->
       L203.mapping_livestock
 
-    tibble(region = gcam.USA_REGION,
-           supplysector = c("water_td_an_W","water_td_an_C"),
-           subsector = c("water_td_an_W","water_td_an_C")) ->
-      L203.DeleteSubsector_USAls
 
-    # (d) combine irrigation and non-irrigation sectors and add additional required columns
-#    L203.mapping_irr %>%
-#      bind_rows(L203.mapping_nonirr) %>%
+
+    # (d) combine all sectors and add additional required columns
+    #    L203.mapping_irr %>%
+    #      bind_rows(L203.mapping_nonirr) %>%
     L203.mapping_nonirr %>%
       mutate(coefficient = 1,
              subsector = supplysector,
@@ -103,6 +104,14 @@ module_gcamusa_L203.water.mapping_USA <- function(command, ...) {
       arrange(region) %>%
       bind_rows(L203.mapping_livestock) ->
       L203.mapping_all
+
+    # Delete water_td_an_* for the USA region that is currently already mapped in the
+    # original module_water_L203.water.mapping file. This ensures shares sum to 1 rather
+    # than 2.
+    tibble(region = gcam.USA_REGION,
+           supplysector = water.LIVESTOCK_DEMAND_TYPES,
+           subsector = water.LIVESTOCK_DEMAND_TYPES) ->
+      L203.DeleteSubsector_USAls
 
     # Sector information
     L203.mapping_all %>%
@@ -128,9 +137,10 @@ module_gcamusa_L203.water.mapping_USA <- function(command, ...) {
       L203.TechShrwt
 
     # Pass-through technology to the water resource
-    # Market name is already defined for livestock and remain the same as defined above
+    # Market name is already defined for livestock and remains the same as defined above.
     # In order for water to be mapped back to state level, water_td_an_* exists at the USA level,
-    # but water consumption/withdrawal must exist at the state level
+    # but water consumption/withdrawal must exist at the state level therefore minicam.energy.input differs
+    # in the USA region compared to each state
     L203.mapping_all %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(minicam.energy.input = case_when( water.sector == "Livestock" & region =="USA" ~ supplysector, TRUE~water_type),
@@ -156,10 +166,10 @@ module_gcamusa_L203.water.mapping_USA <- function(command, ...) {
       add_comments("Supply sector info expanded to GLU regions and water demand sectors") %>%
       add_legacy_name("L203.Supplysector") %>%
       add_precursors("water/basin_to_country_mapping",
-#                     "L125.LC_bm2_R_GLU",
-#                     "L165.ag_IrrEff_R",
-                      "L103.water_mapping_USA_R_LS_W_Ws_share",
-                      "gcam-usa/states_subregions",
+                     #                     "L125.LC_bm2_R_GLU",
+                     #                     "L165.ag_IrrEff_R",
+                     "L103.water_mapping_USA_R_LS_W_Ws_share",
+                     "gcam-usa/states_subregions",
                      "water/A03.sector") ->
       L203.Supplysector_USA
     L203.SubsectorLogit %>%
@@ -168,9 +178,9 @@ module_gcamusa_L203.water.mapping_USA <- function(command, ...) {
       add_comments("Subsector info expanded to GLU regions and water demand sectors") %>%
       add_legacy_name("L203.SubsectorLogit") %>%
       add_precursors("water/basin_to_country_mapping",
-#                     "L125.LC_bm2_R_GLU",
-#                     "L165.ag_IrrEff_R",
-                      "L103.water_mapping_USA_R_LS_W_Ws_share",
+                     #                     "L125.LC_bm2_R_GLU",
+                     #                     "L165.ag_IrrEff_R",
+                     "L103.water_mapping_USA_R_LS_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "water/A03.sector") ->
       L203.SubsectorLogit_USA
@@ -180,9 +190,9 @@ module_gcamusa_L203.water.mapping_USA <- function(command, ...) {
       add_comments("Subsector shareweights expanded to GLU regions and water demand sectors") %>%
       add_legacy_name("L203.SubsectorShrwtFllt") %>%
       add_precursors("water/basin_to_country_mapping",
-#                     "L125.LC_bm2_R_GLU",
-#                     "L165.ag_IrrEff_R",
-                      "L103.water_mapping_USA_R_LS_W_Ws_share",
+                     #                     "L125.LC_bm2_R_GLU",
+                     #                     "L165.ag_IrrEff_R",
+                     "L103.water_mapping_USA_R_LS_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "water/A03.sector") ->
       L203.SubsectorShrwtFllt_USA
@@ -193,9 +203,9 @@ module_gcamusa_L203.water.mapping_USA <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.TechShrwt") %>%
       add_precursors("water/basin_to_country_mapping",
-#                     "L125.LC_bm2_R_GLU",
-#                     "L165.ag_IrrEff_R",
-                      "L103.water_mapping_USA_R_LS_W_Ws_share",
+                     #                     "L125.LC_bm2_R_GLU",
+                     #                     "L165.ag_IrrEff_R",
+                     "L103.water_mapping_USA_R_LS_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "water/A03.sector") ->
       L203.TechShrwt_USA
@@ -205,9 +215,9 @@ module_gcamusa_L203.water.mapping_USA <- function(command, ...) {
       add_comments("Technology info expanded to GLU regions and water demand sectors") %>%
       add_legacy_name("L203.TechCoef") %>%
       add_precursors("water/basin_to_country_mapping",
-#                     "L125.LC_bm2_R_GLU",
-#                     "L165.ag_IrrEff_R",
-                      "L103.water_mapping_USA_R_LS_W_Ws_share",
+                     #                     "L125.LC_bm2_R_GLU",
+                     #                     "L165.ag_IrrEff_R",
+                     "L103.water_mapping_USA_R_LS_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "water/A03.sector") ->
       L203.TechCoef_USA

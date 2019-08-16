@@ -28,7 +28,7 @@ module_gcamusa_L103.water.basin_mapping_USA <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     region <- Animal <- GCAM_commodity <- State <- `Data Item` <- Year <-
-      Coefficient <- water_type <- demand <- demand_total <- Value<- NULL                      # silence package check.
+      Coefficient <- water_type <- demand <- demand_total <- Value <- NULL        # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -41,22 +41,29 @@ module_gcamusa_L103.water.basin_mapping_USA <- function(command, ...) {
     LivestockWaterFootprint_MH2010 <- get_data(all_data, "water/LivestockWaterFootprint_MH2010")
     L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU")
 
-    # livestock mappings
+    # Livestock mappings
+    # We create shares of livestock water demands in each state in order to map the water demands (C and W)
+    # from the USA to each individual state. USDA inventories of each animal (heads) are multiplied by
+    # service water use coefficients (liters/day/head) from Mekonnen and Hoekstra (2010) and summed over all animals.
+    # Inventory values are averaged in the time period 1997-2002 to complement the 2000 water footprint
+    # values from Mekonnen and Hoekstra (2010).
     USDA_an_Stocks %>%
       rename("state_name" = "State","year"="Year","value"="Value") %>%
-      left_join((GCAM_state_names %>%
-                   select(state_name, state) %>%
-                   mutate(state_name = toupper(state_name))), by = c("state_name")) %>%
-      left_join(USDA_an_items_Stocks, by=c("Data Item")) %>%
+      left_join_error_no_match((GCAM_state_names %>%
+                                  select(state_name, state) %>%
+                                  mutate(state_name = toupper(state_name))), by = c("state_name")) %>%
+      # Remove Rabbits from dataset for now as they are not mapped to a Mekonnen and Hoeskstra WF type and create NAs if kept
+      dplyr::filter(Commodity!=gcamusa.LIVESTOCK_NO_EXIST) %>%
+      left_join_error_no_match(USDA_an_items_Stocks, by=c("Data Item")) %>%
       select(state, year, GCAM_commodity, Animal, value) %>%
       repeat_add_columns(tibble(water_type=water.MAPPED_WATER_TYPES)) %>%
       mutate(value = replace_na(value,0)) %>%
-      left_join(LivestockWaterFootprint_MH2010, by=c("Animal")) %>%
+      left_join_error_no_match(LivestockWaterFootprint_MH2010, by=c("Animal")) %>%
       mutate(demand = value * Coefficient) %>%
       select(-Animal) %>%
       group_by(state,year,water_type) %>%
       summarise(demand = sum(demand)) %>% ungroup %>%
-      dplyr::filter(year==1997|year==2002) %>%
+      dplyr::filter(year==gcamusa.LIVESTOCK_FIRST_YEAR|year==gcamusa.LIVESTOCK_FINAL_YEAR) %>%
       group_by(water_type,state) %>%
       summarise(demand = mean(demand)) %>% ungroup %>%
       group_by(water_type) %>%
