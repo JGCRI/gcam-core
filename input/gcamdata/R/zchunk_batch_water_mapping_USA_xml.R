@@ -1,4 +1,4 @@
-#' module_gcamusa_batch_water_mapping_xml
+#' module_gcamusa_batch_water_mapping_USA_xml
 #'
 #' Construct XML data structure for \code{water_mapping.xml}.
 #'
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{water_mapping.xml}. The corresponding file in the
 #' original data system was \code{batch_water_mapping.xml.R} (water XML).
-module_gcamusa_batch_water_mapping_xml <- function(command, ...) {
+module_gcamusa_batch_water_mapping_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L203.Supplysector_USA",
              "L203.SubsectorLogit_USA",

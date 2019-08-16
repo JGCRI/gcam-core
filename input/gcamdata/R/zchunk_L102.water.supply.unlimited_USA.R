@@ -1,4 +1,4 @@
-#' module_gcamusa_L102.water.supply.unlimited
+#' module_gcamusa_L102.water.supply.unlimited_USA
 #'
 #' Summarize the water price values by water type and US state.
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author NTG August 2019
-module_gcamusa_L102.water.supply.unlimited <- function(command, ...) {
+module_gcamusa_L102.water.supply.unlimited_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "water/A_unlimited_water_price"))
@@ -39,7 +39,7 @@ module_gcamusa_L102.water.supply.unlimited <- function(command, ...) {
     # all historical and future years
     year <- c(HISTORICAL_YEARS, FUTURE_YEARS)
 
-    # generate a long table format with the all the possible combinations between the 32 GCAM regions, 4 water types, and all the defined years
+    # generate a long table format with the all the possible combinations between the 50 states, 4 water types, and all the defined years
     GCAM_state_names %>%
       select(state) %>%
       rename(region = state) %>%

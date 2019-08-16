@@ -1,4 +1,4 @@
-#' module_gcamusa_L203.water.mapping
+#' module_gcamusa_L203.water.mapping_USA
 #'
 #' Mapping of water consumption/withdrawal to sectoral demands at the state level.
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author NTG August 2019
-module_gcamusa_L203.water.mapping <- function(command, ...) {
+module_gcamusa_L203.water.mapping_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_to_country_mapping",
 #             "L125.LC_bm2_R_GLU",

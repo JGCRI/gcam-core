@@ -1,4 +1,4 @@
-#' module_gcamusa_L202.water.resources.unlimited
+#' module_gcamusa_L202.water.resources.unlimited_USA
 #'
 #' Create unlimited resource markets for water types, and read in fixed prices for water types.
 #'
@@ -14,7 +14,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author NTG August 2019
-module_gcamusa_L202.water.resources.unlimited <- function(command, ...) {
+module_gcamusa_L202.water.resources.unlimited_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              "L102.unlimited_water_price_state_R_W_Y_75USDm3"))
@@ -34,7 +34,7 @@ module_gcamusa_L202.water.resources.unlimited <- function(command, ...) {
 
     # Create unlimited resource markets for water types
     L102.unlimited_water_price_state_R_W_Y_75USDm3 %>%
-      # the file is in long year format (58 years), and the intent is to select one year
+      # the file is in long year format, and the intent is to select one year
       # (the year order does not matter) since all other years are duplicate and not needed.
       filter(year == first(year)) %>%
       select(region, water_type) %>%

@@ -1,4 +1,4 @@
-#' module_gcamusa_batch_unlimited_water_supply_xml
+#' module_gcamusa_batch_unlimited_water_supply_USA_xml
 #'
 #' Construct XML data structure for \code{unlimited_water_supply_USA.xml}.
 #'
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{unlimited_water_supply_USA.xml}. The corresponding file in the
 #' original data system was \code{batch_unlimited_water_supply.xml.R} (water XML).
-module_gcamusa_batch_unlimited_water_supply_xml <- function(command, ...) {
+module_gcamusa_batch_unlimited_water_supply_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L202.UnlimitRsrc_USA",
               "L202.UnlimitRsrcPrice_USA"))
