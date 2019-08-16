@@ -1,4 +1,4 @@
-#' module_gcamusa_L103.water.basin_mapping
+#' module_gcamusa_L103.water.basin_mapping_USA
 #'
 #' Calculate percentage shares to map water demands by region / sector to basin.
 #'
@@ -14,7 +14,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author ST Oct 2018, NTG Aug 2019
-module_gcamusa_L103.water.basin_mapping <- function(command, ...) {
+module_gcamusa_L103.water.basin_mapping_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_ID",
              FILE = "common/iso_GCAM_regID",
