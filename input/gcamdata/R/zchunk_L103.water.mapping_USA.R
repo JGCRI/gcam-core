@@ -1,6 +1,6 @@
-#' module_gcamusa_L103.water.basin_mapping_USA
+#' module_gcamusa_L103.water.mapping_USA
 #'
-#' Calculate percentage shares to map water demands by region / sector to basin.
+#' Calculate percentage shares to map water demands from USA regional level to State.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -14,11 +14,9 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author ST Oct 2018, NTG Aug 2019
-module_gcamusa_L103.water.basin_mapping_USA <- function(command, ...) {
+module_gcamusa_L103.water.mapping_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "water/basin_ID",
-             FILE = "common/iso_GCAM_regID",
-             FILE = "gcam-usa/USDA_an_Stocks",
+    return(c(FILE = "gcam-usa/USDA_an_Stocks",
              FILE = "gcam-usa/USDA_an_items_Stocks",
              FILE = "gcam-usa/states_subregions",
              FILE = "water/LivestockWaterFootprint_MH2010",
@@ -33,13 +31,13 @@ module_gcamusa_L103.water.basin_mapping_USA <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    basin_ids <- get_data(all_data, "water/basin_ID")
-    iso_GCAM_mapping <- get_data(all_data, "common/iso_GCAM_regID")
     USDA_an_Stocks <- get_data(all_data, "gcam-usa/USDA_an_Stocks")
     USDA_an_items_Stocks <- get_data(all_data, "gcam-usa/USDA_an_items_Stocks")
     GCAM_state_names <- get_data(all_data, "gcam-usa/states_subregions")
     LivestockWaterFootprint_MH2010 <- get_data(all_data, "water/LivestockWaterFootprint_MH2010")
-    L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU")
+
+
+    ##Add additional shareweight calcualtions either before or after the livestock calcs below
 
     # Livestock mappings
     # We create shares of livestock water demands in each state in order to map the water demands (C and W)
@@ -84,13 +82,10 @@ module_gcamusa_L103.water.basin_mapping_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L103.water_mapping_R_B_W_Ws_share") %>%
-      add_precursors("water/basin_ID",
-                     "common/iso_GCAM_regID",
-                     "gcam-usa/USDA_an_Stocks",
+      add_precursors("gcam-usa/USDA_an_Stocks",
                      "gcam-usa/USDA_an_items_Stocks",
                      "gcam-usa/states_subregions",
-                     "water/LivestockWaterFootprint_MH2010",
-                     "L125.LC_bm2_R_GLU") ->
+                     "water/LivestockWaterFootprint_MH2010") ->
       L103.water_mapping_USA_R_LS_W_Ws_share
 
 
