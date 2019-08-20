@@ -389,9 +389,12 @@ const Curve* Region::getEmissionsQuantityCurve( const string& ghgName ) const {
 
     auto_ptr<ExplicitPointSet> emissionsPoints( new ExplicitPointSet() );
 
+    // Note the GroupedEmissionsSummer will update all years
+    GroupedEmissionsSummer emissGroup;
+    EmissionsSummer emissionsSummer( ghgName );
+    emissGroup.addEmissionsSummer( &emissionsSummer );
+    accept( &emissGroup, -1 );
     for( int i = 0; i < scenario->getModeltime()->getmaxper(); i++ ) {
-        EmissionsSummer emissionsSummer( ghgName );
-        accept( &emissionsSummer, i );
         XYDataPoint* currPoint = new XYDataPoint( modeltime->getper_to_yr( i ),
             emissionsSummer.getEmissions( i ) );
         emissionsPoints->addPoint( currPoint );
