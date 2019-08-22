@@ -2443,7 +2443,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                <axis2 name="Year">price-paid[@vintage]</axis2>
                <xPath buildList="true" dataName="non energy cost" group="false" sumAll="false">*[@type='sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]/
                *[@type='subsector']/*[@type='technology']/*[@type='input' (:collapse:) and not (@name='fuel taxes')]/
-               price-paid/text()</xPath>
+               price-paid[@vintage=parent::*/parent::*/@year]/text()</xPath>
                <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="LDV energy by primary fuel">
