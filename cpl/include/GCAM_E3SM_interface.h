@@ -15,7 +15,6 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 
-
 // include custom headers
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
@@ -31,7 +30,6 @@
 using namespace std;
 using namespace xercesc;
 
-
 class GCAM_E3SM_interface {
 public:
     GCAM_E3SM_interface();
@@ -40,6 +38,7 @@ public:
     void runGCAM(int *yyyymmdd, int *tod, double *gcami, int *gcami_fdim1_nflds, int *gcami_fdim2_datasize, double *gcamo,int *gcamo_fdim1_nflds,int *gcamo_fdim2_datasize, double *gcamoemis,int *gcamoemis_fdim1_nflds,int *gcamoemis_fdim2_datasize,int* yr1, int *yr2,int *sneakermode,int *write_rest);
     void setDensityGCAM(int *ymd, int *tod, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers);
     void readScalers(int *ymd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers);
+    void getScalers(int *ymd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers);
     void finalizeGCAM();
     int gcamStartYear;
     int gcamEndYear;
