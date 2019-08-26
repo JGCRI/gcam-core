@@ -12,6 +12,8 @@
 #include "../include/remap_data.h"
 #include "../include/get_data_helper.h"
 #include "../include/set_data_helper.h"
+#include "../include/carbon_scalers.h"
+#include "../include/emiss_downscale.h"
 #include "util/base/include/xml_helper.h"
 
 ofstream outFile;
@@ -214,11 +216,19 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         vector<int> years (modeltime->getmaxper());
         for(size_t i = 0; i < mCO2EmissData.getArrayLength(); ++i) {
             gcamoemis[i] = co2[i];
+            cout << gcamoemis[i] << endl;
         }
         for(size_t i = 0; i < mLUCData.getArrayLength(); ++i) {
             gcamo[i] = luc[i];
         }
         
+        // Downscale CO2 emissions
+        // TODO: need to pass in the gcamoemis vector
+        EmissDownscale gcam2e3sm(360*180); // Emissions data is 1 degree by 1 degree
+        double totalEmissions2010 = gcam2e3sm.readSpatialData("../cpl/data/gridded_co2.2010", false, true);
+        cout << "TOTAL is equal to " << totalEmissions2010 << endl;
+        gcam2e3sm.downscaleCO2Emissions(totalEmissions2010, 10000);
+        gcam2e3sm.writeSpatialData("./testco2.txt", false);
     }
 }
 
@@ -229,7 +239,7 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, int *tod, std::vector<in
     
     // Get scaler information
     // For now, we are reading this from a file, but we will need to get it from E3SM directly eventually.
-    readScalers(yyyymmdd, aYears, aRegions, aLandTechs, aScalers);
+    getScalers(yyyymmdd, aYears, aRegions, aLandTechs, aScalers);
     
     // Only set carbon densities during GCAM model years.
     if( modeltime->isModelYear( curryear )) {
@@ -239,58 +249,73 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, int *tod, std::vector<in
     
 }
 
-// Read in scalers from a csv file
-// Note: this is used for diagnostics and testing. In fully coupled E3SM-GCAM, these scalers
-// are passed in code to the wrapper
-void GCAM_E3SM_interface::readScalers(int *yyyymmdd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
+// Get scalers.
+// For testing this calls a method to read scalers from a file. In fully coupled mode,
+// this will get scalers passed to GCAM.
+void GCAM_E3SM_interface::getScalers(int *yyyymmdd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
     // Get year only of the current date
     int curryear = *yyyymmdd/10000;
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
     
     // Only set carbon densities during GCAM model years.
     if( modeltime->isModelYear( curryear )) {
-        // TEMPORARY: Read scaler data from a file
-        // NOTE: This will be passed from E3SM eventually
-        ifstream data("scaler_data.csv");
-        if (!data.is_open())
-        {
-            exit(EXIT_FAILURE);
-        }
-        string str;
-        getline(data, str); // skip the first line
-        int row = 0;
-        while (getline(data, str))
-        {
-            istringstream iss(str);
-            string token;
-            int year;
-            std::string region;
-            std::string tech;
-            double scaler;
-            
-            // Parse current year
-            getline(iss, token, ',');
-            year = std::stoi(token);
-            
-            // Parse region
-            getline(iss, region, ',');
-            
-            // Parse ag production technology name
-            getline(iss, tech, ',');
-            
-            // Parse scaler
-            getline(iss, token, ',');
-            scaler = std::stod(token);
-            
-            aYears.at(row) = year;
-            aRegions[row] = region;
-            aLandTechs[row] = tech;
-            aScalers[row] = scaler;
-            
-            row++;
-        }
+        // TODO: Insert condition for when to read scalers from file
+        readScalers(yyyymmdd, aYears, aRegions, aLandTechs, aScalers);
+        
+        // TODO: Once this works, add if block to call it only when not reading from file. For now, it doesn't do everything so it is fine to run
+        CarbonScalers e3sm2gcam(1101600);
+        e3sm2gcam.readSpatialData("../cpl/data/NPP.csv", true, false);
+        e3sm2gcam.writeSpatialData("./test.txt", true);
     }
+}
 
+// Read in scalers from a csv file
+// Note: this is used for diagnostics and testing. In fully coupled E3SM-GCAM, these scalers
+// are passed in code to the wrapper
+void GCAM_E3SM_interface::readScalers(int *yyyymmdd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
+    
+    // TEMPORARY: Read scaler data from a file
+    // NOTE: This will be passed from E3SM eventually
+    ifstream data("scaler_data.csv");
+    if (!data.is_open())
+    {
+        exit(EXIT_FAILURE);
+    }
+    string str;
+    getline(data, str); // skip the first line
+    int row = 0;
+    while (getline(data, str))
+    {
+        istringstream iss(str);
+        string token;
+        int year;
+        std::string region;
+        std::string tech;
+        double scaler;
+        
+        // Parse current year
+        getline(iss, token, ',');
+        year = std::stoi(token);
+        
+        // Parse region
+        getline(iss, region, ',');
+        
+        // Parse ag production technology name
+        getline(iss, tech, ',');
+        
+        // Parse scaler
+        getline(iss, token, ',');
+        scaler = std::stod(token);
+        
+        aYears.at(row) = year;
+        aRegions[row] = region;
+        aLandTechs[row] = tech;
+        aScalers[row] = scaler;
+        
+        row++;
+    }
+    
+    
 }
 
 void GCAM_E3SM_interface::finalizeGCAM()
