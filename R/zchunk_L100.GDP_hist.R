@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socioeconomics_L100.GDP_hist
 #'
 #' Prepare GDP database for later use: filter missing values and convert units to 1990 USD.
@@ -14,7 +16,7 @@
 #' and converting the units to GCAM's GDP unit (million 1990 USD).
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
-#' @import dplyr
+#' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL February 2017
 module_socioeconomics_L100.GDP_hist <- function(command, ...) {

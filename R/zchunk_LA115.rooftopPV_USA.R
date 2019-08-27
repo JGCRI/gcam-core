@@ -1,4 +1,6 @@
-#' module_gcamusa_LA115.rooftopPV
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LA115.RooftopPV
 #'
 #' Prepare resource curves for rooftop PV (commercial and residential combined).
 #'
@@ -10,7 +12,7 @@
 #' original data system was \code{LA115.RooftopPV.R} (gcam-usa level1).
 #' @details Prepare resource curves for rooftop PV (commercial and residential combined).
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter group_by mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author ST September 2017
 module_gcamusa_LA115.rooftopPV <- function(command, ...) {

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA100.IEA_downscale_ctry
 #'
 #' Downscale proprietary IEA energy balance data to 201 countries, by iso code, FLOW, PRODUCT, and historical year.
@@ -16,7 +18,7 @@
 #' they are available; if not, this chunk reads in a pre-generated \code{L100.IEA_en_bal_ctry_hist}
 #' file and returns that. (In other words, our output is an optional input.)
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter group_by mutate one_of select semi_join summarise
 #' @importFrom tidyr gather spread
 #' @author BBL May 2017
 module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {

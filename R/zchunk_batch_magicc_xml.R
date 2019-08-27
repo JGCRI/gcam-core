@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_climate_xml_batch_magicc_xml
 #'
 #' Construct XML data structure for \code{magicc.xml}.

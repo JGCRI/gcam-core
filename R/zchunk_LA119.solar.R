@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA119.solar
 #'
 #' Computes relative average irradiance and dni (direct normal irradiance) by GCAM region for solar sector.
@@ -11,7 +13,7 @@
 #' @details The chunk computes relative average irradiance and dni (direct normal irradiance) from Smith_irradiance_ctry_kwh.csv
 #' by GCAM region for solar sector. The average irradiance and dni is relative to USA values.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter if_else group_by inner_join left_join mutate right_join select summarise
 #' @importFrom tidyr gather spread
 #' @author LF November 2017
 module_energy_LA119.solar <- function(command, ...) {

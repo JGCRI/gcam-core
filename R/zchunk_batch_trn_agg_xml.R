@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socio_batch_trn_agg_xml
 #'
 #' Construct XML data structure for \code{trn_agg.xml} and all the SSP and gSSP ones as well.

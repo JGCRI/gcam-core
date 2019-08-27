@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' Join past GDP time series to future.
 #'
 #' When we have to join two GDP time series, we usually find that they don't
@@ -106,7 +108,7 @@ join.gdp.ts <- function(past, future, grouping) {
 #' the generated outputs: \code{L102.gdp_mil90usd_Scen_R_Y}, \code{L102.pcgdp_thous90USD_Scen_R_Y}, \code{L102.gdp_mil90usd_GCAM3_R_Y}, \code{L102.gdp_mil90usd_GCAM3_ctry_Y}, \code{L102.pcgdp_thous90USD_GCAM3_R_Y}, \code{L102.pcgdp_thous90USD_GCAM3_ctry_Y}, \code{L102.PPP_MER_R}. The corresponding file in the
 #' original data system was \code{L102.GDP.R} (socioeconomics level1).
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows distinct filter full_join if_else group_by left_join mutate one_of select summarise transmute
 #' @importFrom tidyr gather spread
 #' @author RPL March 2017
 module_socioeconomics_L102.GDP <- function(command, ...) {
@@ -173,7 +175,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       change_iso_code('rou', 'rom') %>%
       left_join_error_no_match(iso_region32_lookup, by = 'iso') %>%
       protect_integer_cols %>%
-      select_if(function(x) {!any(is.na(x))}) %>% # apparently the SSP database has some missing in it; filter these out.
+      dplyr::select_if(function(x) {!any(is.na(x))}) %>% # apparently the SSP database has some missing in it; filter these out.
       unprotect_integer_cols %>%
       select(-MODEL, -iso, -VARIABLE, -UNIT) %>%
       gather_years(value_col = "gdp") %>%

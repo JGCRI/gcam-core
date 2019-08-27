@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L232.water.demand.manufacturing
 #'
 #' Computes manufacturing water withdrawal/consumption coefficients (m3/GJ output) by region and year
@@ -10,7 +12,7 @@
 #' original data system was \code{L232.water.demand.manufacturing.R} (water level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange distinct filter if_else group_by left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author GPK June 2018
 module_water_L232.water.demand.manufacturing <- function(command, ...) {

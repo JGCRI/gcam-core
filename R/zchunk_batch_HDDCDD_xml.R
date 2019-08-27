@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_batch_HDDCDD_xml
 #'
 #' Construct XML data structure for all the \code{HDDCDD.xml} files.

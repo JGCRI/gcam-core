@@ -1,4 +1,6 @@
-#' module_gcamusa_LA122.refining
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LA122.Refining
 #'
 #' Downscales crude oil, corn ethanol, and biodiesel refining inputs and outputs to state-level.
 #'
@@ -10,7 +12,7 @@
 #' original data system was \code{LA122.Refining.R} (gcam-usa level1).
 #' @details Downscales crude oil, corn ethanol, and biodiesel refining inputs and outputs to state-level.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter group_by left_join mutate select transmute
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
 module_gcamusa_LA122.refining <- function(command, ...) {

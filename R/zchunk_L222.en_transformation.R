@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L222.en_transformation
 #'
 #' Prepare the assumptions and calibrated outputs for energy transformation supplysectors, subsectors, and technologies.
@@ -18,7 +20,7 @@
 #' @details This chunk sets up the energy transformation global technology database as well as writing out assumptions to all regions for shareweights and logits.
 #' Calibrated outputs for gas processing and oil refining as well as I:O coefficients are interpolated from historical values to base model years.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select semi_join
 #' @importFrom tidyr gather spread
 #' @author CWR Sept 2017
 module_energy_L222.en_transformation <- function(command, ...) {

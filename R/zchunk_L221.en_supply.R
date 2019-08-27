@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L221.en_supply
 #'
 #' Writes all energy supply sector outputs.
@@ -13,7 +15,7 @@
 #' information to all model periods and regions. It creates global tech coef, costs, and shareweights
 #' by interpolating assumptions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr anti_join distinct filter full_join if_else group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author JDH Nov 2017
 module_energy_L221.en_supply <- function(command, ...) {

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L2322.Fert
 #'
 #' Provide supply sector information/keywords, subsector shareweights, global technology lifetime,
@@ -12,7 +14,7 @@
 #' @details This chunk provides supply sector information/keywords, subsector shareweights, global technology lifetime,
 #' energy inputs and coefficients, global fertilizer manufacturing technologies, etc. for the fertilizer sector.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author LF September 2017
 module_energy_L2322.Fert <- function(command, ...) {

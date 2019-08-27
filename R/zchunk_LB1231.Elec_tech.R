@@ -1,4 +1,6 @@
-#' module_gcamusa_LB1231.Elec_tech
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LB1231.Elec_tech
 #'
 #' Downscaling electricity by state/fuel to state/fuel/technology
 #'
@@ -10,7 +12,7 @@
 #' original data system was \code{LB1231.Elec_tech.R} (gcam-usa level1).
 #' @details Downscaling electricity by state/fuel to state/fuel/technology
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author RLH August 2017
 module_gcamusa_LB1231.Elec_tech<- function(command, ...) {

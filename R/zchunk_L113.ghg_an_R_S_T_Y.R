@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L113.ghg_an_R_S_T_Y
 #'
 #'  Calculate the animal GHG emissions (CH4 and N2O)
@@ -16,7 +18,7 @@
 #' then compute EDGAR emissions by region and sector and lastly, scale the EPA emissions
 #' by tech to match EDGAR. Note that file L115, handles NH3."
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author CH July 2017
 module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
@@ -71,7 +73,7 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
     # Aggregate by sector and region
     L113.ghg_tg_R_an_C_Sys_Fd_Yh.mlt %>%
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
-      summarize(EPA_emissions = sum(epa_emissions)) %>%
+      summarise(EPA_emissions = sum(epa_emissions)) %>%
       ungroup() ->
       L113.ghg_tg_R_an_C_Yh.mlt
 

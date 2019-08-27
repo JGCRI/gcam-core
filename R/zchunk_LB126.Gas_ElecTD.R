@@ -1,4 +1,6 @@
-#' module_gcamusa_LB126.Gas_ElecTD
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LB126.Gas_ElecTD
 #'
 #' Calculates inputs and outputs of: gas processing by fuel and state, gas pipeline by state, and transmission and distribution of electricity by state.
 #'
@@ -10,7 +12,7 @@
 #' original data system was \code{LB126.Gas_ElecTD.R} (gcam-usa level1).
 #' @details Calculates inputs and outputs of: gas processing by fuel and state, gas pipeline by state, and transmission and distribution of electricity by state.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise transmute
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
 module_gcamusa_LB126.Gas_ElecTD <- function(command, ...) {

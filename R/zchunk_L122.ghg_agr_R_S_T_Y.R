@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L122.ghg_agr_R_S_T_Y
 #'
 #' Calculates agricultural emissions shares and downscales EDGAR agricultural emissions data
@@ -11,7 +13,7 @@
 #' @details Calculates agriculture emissions shares by GCAM region, commodity, GLU, and historical year.
 #' Downscales EDGAR agricultural emissions to GCAM region, commodity, GLU, and historical year
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise transmute
 #' @importFrom tidyr gather spread
 #' @author RH July 2017
 

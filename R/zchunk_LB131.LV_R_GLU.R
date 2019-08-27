@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB131.LV_R_GLU
 #'
 #' Compute average value of land in $/m2
@@ -11,7 +13,7 @@
 #' @details Computes average value of land in $/m2, using total land value
 #' and harvested cropland area.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter group_by left_join mutate select summarize
 #' @importFrom tidyr gather spread
 #' @author KVC April 2017
 module_aglu_LB131.LV_R_GLU <- function(command, ...) {

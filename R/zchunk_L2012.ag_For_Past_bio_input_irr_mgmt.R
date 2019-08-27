@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt
 #'
 #' Build agriculture, forest, pasture and biomass production inputs for all technologies.
@@ -12,7 +14,7 @@
 #' agricultural commodity production and harvest area to cropland by technologies, forest and pasture production,
 #' and biomass grass and tree crops yield by technologies.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter full_join group_by left_join mutate right_join select semi_join summarise
 #' @importFrom tidyr gather spread
 #' @author RC August 2017
 module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {

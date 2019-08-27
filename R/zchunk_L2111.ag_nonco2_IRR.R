@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L2111.ag_nonco2_IRR
 #'
 #' Creates agricultural, agricultural waste burning and animal non-CO2 emissions.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L203.water.mapping
 #'
 #' Mapping of water consumption/withdrawal to sectoral demands.
@@ -10,7 +12,7 @@
 #' original data system was \code{L203.water.mapping.R} (water level2).
 #' @details Generates water mapping sector input files to group demands by sectors.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter if_else left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author ST August 2017
 module_water_L203.water.mapping <- function(command, ...) {

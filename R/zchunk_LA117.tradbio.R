@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA117.tradbio
 #'
 #' Creates regional traditional biomass supply curves
@@ -11,7 +13,7 @@
 #' @details Creates regional traditional biomass supply curves by multiplying the max historical amount
 #' used in each region by the supply curve amount in the global assumption supply curve
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange filter group_by mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author RH March 2017
 module_energy_LA117.tradbio <- function(command, ...) {

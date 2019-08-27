@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L243.bio_trade_input
 #'
 #' Establish regionally differentiated trade structure for bioenergy.
@@ -21,7 +23,7 @@
 #' cropland a region has, with the largest region having a share weight of 1. Share weights in SSP3
 #' and SSP4 are adjusted to reflect the trade frictions in the SSP storylines.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter full_join if_else group_by left_join mutate select summarize
 #' @importFrom tidyr gather spread
 #' @author KVC July 2017
 module_aglu_L243.bio_trade_input <- function(command, ...) {

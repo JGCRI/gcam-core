@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB125.LC_tot
 #'
 #' Build Total Land Cover by GCAM region, and by GCAM region and GLU, and by GCAM region/GLU/year.
@@ -14,7 +16,7 @@
 #' 3) total land area by GCAM region, GLU and historical year. Units of the data are billion square meters.
 #' The land area changing rates (bm2 per year) are checked to make sure they are within certain tolerances.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter group_by lag mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author MC May 2017
 module_aglu_LB125.LC_tot <- function(command, ...) {

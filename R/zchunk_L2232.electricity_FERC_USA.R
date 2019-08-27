@@ -1,4 +1,6 @@
-#' module_gcamusa_L2232.electricity_FERC_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L2232.electricity_FERC_USA
 #'
 #' Generate GCAM-USA model inputs for electrcity trade sectors at the level of grid regions.
 #'
@@ -17,7 +19,7 @@
 #' @details This chunk generates input files to create electricity trade and passthrough sectors for the grid regions,
 #' and balances electricity supply and demand for each grid region.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange filter if_else group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author RC Oct 2017
 module_gcamusa_L2232.electricity_FERC_USA <- function(command, ...) {
