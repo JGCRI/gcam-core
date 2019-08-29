@@ -50,6 +50,9 @@ public:
     virtual void writeSpatialData(std::string aFileName, bool aWriteID);
     virtual void setValueVector(std::vector<double> aValueVector);
     virtual std::vector<double> getValueVector();
+    virtual std::vector<int> getIDVector();
+    virtual std::vector<int> getLatVector();
+    virtual std::vector<double> getLonVector();
 private:
     std::vector<double> mValueVector;
     std::vector<int> mLatVector;
