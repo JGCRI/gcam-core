@@ -47,10 +47,53 @@ using namespace std;
 
 // Constructor
 CarbonScalers::CarbonScalers(int aSize):
-ASpatialData( aSize ) {
+ASpatialData( aSize ),
+mNPPVector( aSize ),
+mNPPLatVector( aSize ),
+mNPPLonVector( aSize ),
+mNPPIDVector( aSize ),
+mPFTFractVector( aSize ),
+mPFTFractLatVector( aSize ),
+mPFTFractLonVector( aSize ),
+mPFTFractIDVector( aSize ),
+mAreaVector( aSize ),
+mAreaLatVector( aSize ),
+mAreaLonVector( aSize ),
+mLandFractVector( aSize ),
+mLandFractLatVector( aSize ),
+mLandFractLonVector( aSize )
+{
 }
 
 // Destructor
 CarbonScalers::~CarbonScalers() {
+}
+
+// Read each component of the carbon scaler data, using the
+// ASpatialData::readSpatialData method and then copying the vectors.
+void CarbonScalers::readAllSpatialData(){
+    
+    // Read in average NPP
+    readSpatialData("../cpl/data/npp_mean_pft.txt", true, false);
+    mNPPVector = getValueVector();
+    mNPPLatVector = getLatVector();
+    mNPPLonVector = getLonVector();
+    mNPPIDVector = getIDVector();
+    
+    // Read in PFT weight in grid cell
+    readSpatialData("../cpl/data/pft_wt.txt", true, false);
+    mPFTFractVector = getValueVector();
+    mPFTFractLatVector = getLatVector();
+    mPFTFractLonVector = getLonVector();
+    mPFTFractIDVector = getIDVector();
+    
+    // Print some debugging information
+    for ( int i = 1000; i < 1011; i++ ) {
+        cout << "NPP is " << mNPPVector[ i ] << " and PFT Fract is " << mPFTFractVector[ i ] << endl;
+    }
+
+}
+
+void CarbonScalers::calcScalers() {
 }
 

@@ -120,8 +120,10 @@ void GCAM_E3SM_interface::initGCAM(void)
     cout << "Adding year " << years[0] << endl;
     success = XMLHelper<void>::parseXML("../cpl/mappings/co2.xml", &mCO2EmissData);
     mCO2EmissData.addYearColumn("Year", years, map<int, int>());
+    cout << "CO2 added" << endl;
     success = XMLHelper<void>::parseXML("../cpl/mappings/luc.xml", &mLUCData);
     mLUCData.addYearColumn("Year", years, map<int, int>());
+    cout << "LUC added" << endl;
 
     // Clean up
     XMLHelper<void>::cleanupParser();
@@ -156,6 +158,7 @@ void GCAM_E3SM_interface::initGCAM(void)
  */
 void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *gcami_fdim1_nflds, int *gcami_fdim2_datasize, double *gcamo, int *gcamo_fdim1_nflds, int *gcamo_fdim2_datasize, double *gcamoemis, int *gcamoemis_fdim1_nflds, int *gcamoemis_fdim2_datasize, int *yr1, int *yr2, int *sneakermode, int *write_rest )
 {
+    cout << "RUNNING GCAM" << endl;
     
     // Get year only of the current date
     int curryear = *yyyymmdd/10000;
@@ -208,11 +211,13 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         mLUCData.addYearColumn("Year", years, map<int, int>());
        
         // Get all data that needs to be passed back to E3SM
+        cout << "Getting CO2 emissions" << endl;
         mCO2EmissData.finalizeColumns();
         GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions");
         getCo2.run(runner->getInternalScenario(), mCO2EmissData, curryear);
         double *co2 = mCO2EmissData.getData();
         
+        cout << "Getting LUC" << endl;
         mLUCData.finalizeColumns();
         GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation");
         getLUC.run(runner->getInternalScenario(), mLUCData, curryear);
@@ -221,6 +226,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         // Set data in the gcamo* arrays
         const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
         for(size_t i = 0; i < mCO2EmissData.getArrayLength(); ++i) {
+            // TOOD: Is this still needed?
             gcamoemis[i] = co2[i];
         }
         for(size_t i = 0; i < mLUCData.getArrayLength(); ++i) {
@@ -228,7 +234,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         }
         
         // Downscale CO2 emissions
-        // TODO: need to pass in the gcamoemis vector
+        cout << "Downscaling CO2 emissions" << endl;
         EmissDownscale gcam2e3sm(360*180); // Emissions data is 1 degree by 1 degree
         double totalEmissions2010 = gcam2e3sm.readSpatialData("../cpl/data/gridded_co2.2010", false, true);
         gcam2e3sm.downscaleCO2Emissions(totalEmissions2010, gcamoemis[0]);
@@ -257,6 +263,7 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, int *tod, std::vector<in
 // For testing this calls a method to read scalers from a file. In fully coupled mode,
 // this will get scalers passed to GCAM.
 void GCAM_E3SM_interface::getScalers(int *yyyymmdd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
+    cout << "Getting scalers" << endl;
     // Get year only of the current date
     int curryear = *yyyymmdd/10000;
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
@@ -266,9 +273,11 @@ void GCAM_E3SM_interface::getScalers(int *yyyymmdd, std::vector<int>& aYears, st
         // TODO: Insert condition for when to read scalers from file
         readScalers(yyyymmdd, aYears, aRegions, aLandTechs, aScalers);
         
+        cout << "Scalers read" << endl;
+        
         // TODO: Once this works, add if block to call it only when not reading from file. For now, it doesn't do everything so it is fine to run
         CarbonScalers e3sm2gcam(1101600);
-        e3sm2gcam.readSpatialData("../cpl/data/NPP.csv", true, false);
+        e3sm2gcam.readAllSpatialData();
         e3sm2gcam.writeSpatialData("./test.txt", true);
     }
 }
@@ -280,7 +289,7 @@ void GCAM_E3SM_interface::readScalers(int *yyyymmdd, std::vector<int>& aYears, s
     
     // TEMPORARY: Read scaler data from a file
     // NOTE: This will be passed from E3SM eventually
-    ifstream data("scaler_data.csv");
+    ifstream data("../cpl/data/scaler_data.csv");
     if (!data.is_open())
     {
         exit(EXIT_FAILURE);

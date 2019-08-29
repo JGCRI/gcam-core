@@ -85,23 +85,23 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasID, bool aC
             int id;
             
             // Parse longitude
-            getline(iss, token, ',');
+            getline(iss, token, ' ');
             lon = std::stod(token);
             mLonVector[row] = lon;
         
             // Parse latitude
-            getline(iss, token, ',');
+            getline(iss, token, ' ');
             lat = std::stoi(token);
             mLatVector.at(row) = lat;
         
             // Parse ID
-            getline(iss, token, ',');
+            getline(iss, token, ' ');
             id = std::stoi(token);
             mIDVector.at(row) = id;
         }
         
         // Parse Value
-        getline(iss, token, ',');
+        getline(iss, token, ' ');
         value = std::stod(token);
         mValueVector[row] = value;
         
@@ -141,3 +141,16 @@ void ASpatialData::setValueVector(std::vector<double> aValueVector) {
 std::vector<double> ASpatialData::getValueVector() {
     return mValueVector;
 }
+
+std::vector<int> ASpatialData::getIDVector() {
+    return mIDVector;
+}
+
+std::vector<int> ASpatialData::getLatVector() {
+    return mLatVector;
+}
+
+std::vector<double> ASpatialData::getLonVector() {
+    return mLonVector;
+}
+
