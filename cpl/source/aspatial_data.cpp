@@ -61,7 +61,7 @@ ASpatialData::~ASpatialData() {
 // Read in spatial data from a csv file
 // Note: this is used for diagnostics and testing. In fully coupled E3SM-GCAM, this data
 // are passed in code to the wrapper
-double ASpatialData::readSpatialData(std::string aFileName, bool aHasID, bool aCalcTotal) {
+double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal) {
     // Create a double to store totals (if aCalcTotal == true)
     double total = 0.0;
     
@@ -79,21 +79,24 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasID, bool aC
         string token;
         double value;
         
-        if ( aHasID ) {
+        if ( aHasLatLon ) {
             double lon;
             int lat;
-            int id;
             
             // Parse longitude
             getline(iss, token, ' ');
             lon = std::stod(token);
             mLonVector[row] = lon;
-        
+            
             // Parse latitude
             getline(iss, token, ' ');
-            lat = std::stoi(token);
-            mLatVector.at(row) = lat;
+            lat = std::stod(token);
+            mLatVector[row] = lat;
+        }
         
+        if ( aHasID ) {
+            int id;
+            
             // Parse ID
             getline(iss, token, ' ');
             id = std::stoi(token);
@@ -101,7 +104,7 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasID, bool aC
         }
         
         // Parse Value
-        getline(iss, token, ' ');
+        getline(iss, token, ',');
         value = std::stod(token);
         mValueVector[row] = value;
         
@@ -146,7 +149,7 @@ std::vector<int> ASpatialData::getIDVector() {
     return mIDVector;
 }
 
-std::vector<int> ASpatialData::getLatVector() {
+std::vector<double> ASpatialData::getLatVector() {
     return mLatVector;
 }
 

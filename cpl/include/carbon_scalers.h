@@ -52,19 +52,20 @@ public:
 private:
     // TODO: Is there a better way of doing this?
     std::vector<double> mNPPVector;
-    std::vector<int> mNPPLatVector;
+    std::vector<double> mNPPLatVector;
     std::vector<double> mNPPLonVector;
     std::vector<int> mNPPIDVector;
     std::vector<double> mPFTFractVector;
-    std::vector<int> mPFTFractLatVector;
+    std::vector<double> mPFTFractLatVector;
     std::vector<double> mPFTFractLonVector;
     std::vector<int> mPFTFractIDVector;
     std::vector<double> mAreaVector;
-    std::vector<int> mAreaLatVector;
+    std::vector<double> mAreaLatVector;
     std::vector<double> mAreaLonVector;
     std::vector<double> mLandFractVector;
-    std::vector<int> mLandFractLatVector;
+    std::vector<double> mLandFractLatVector;
     std::vector<double> mLandFractLonVector;
+    std::vector<double> mOutputVector;
 };
 
 #endif // __CARBON_SCALERS__
