@@ -47,7 +47,7 @@ public:
     parseFilterString(aHeader);
   }
   ~GetDataHelper();
-  void run(Scenario* aScenario, ReMapData& aDataMapper);
+  void run(Scenario* aScenario, ReMapData& aDataMapper, int aCurrYear);
   template<typename T>
   void processData(T& aData);
 private:

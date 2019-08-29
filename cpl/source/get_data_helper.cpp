@@ -113,7 +113,7 @@ public:
     vector<int> mData;
 };
 
-void GetDataHelper::run(Scenario* aScenario, ReMapData& aDataMapper) {
+void GetDataHelper::run(Scenario* aScenario, ReMapData& aDataMapper, int aCurrYear) {
   GCAMFusion<GetDataHelper> fusion(*this, mFilterSteps);
   fusion.startFilter(aScenario);
   size_t nCol = mPathTracker.size();
@@ -122,24 +122,11 @@ void GetDataHelper::run(Scenario* aScenario, ReMapData& aDataMapper) {
       for(size_t col = 0; col < nCol; ++col) {
           colValues[col] = mPathTracker[col]->getColValue(row);
       }
-      aDataMapper.setData(colValues, mYearVector[row], mDataVector[row]);
+      // If the year is the current year, then set the data
+      if( mYearVector[row] == aCurrYear ) {
+          aDataMapper.setData(colValues, mYearVector[row], mDataVector[row]);
+      }
   }
-  /*
-  List ret(nCol);
-  ret.attr("class") = "data.frame";
-  ret.attr("names") = mColNames;
-  Rcpp::IntegerVector rnms(mDataVector.size()); std::iota(rnms.begin(), rnms.end(), 1);
-  ret.attr("row.names") = rnms;
-  size_t i = 0;
-  for(i = 0; i < mPathTracker.size(); ++i) {
-      mPathTracker[i]->updateList(ret, i);
-  }
-  ret[i++] = Rcpp::wrap(mDataVector);
-  if(!mYearVector.empty()) {
-      ret[i] = Rcpp::wrap(mYearVector);
-  }
-  return ret;
-  */
 }
 
 GetDataHelper::~GetDataHelper() {
