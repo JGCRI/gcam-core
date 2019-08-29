@@ -48,20 +48,21 @@ using namespace std;
 // Constructor
 CarbonScalers::CarbonScalers(int aSize):
 ASpatialData( aSize ),
-mNPPVector( aSize ),
-mNPPLatVector( aSize ),
-mNPPLonVector( aSize ),
-mNPPIDVector( aSize ),
-mPFTFractVector( aSize ),
-mPFTFractLatVector( aSize ),
-mPFTFractLonVector( aSize ),
-mPFTFractIDVector( aSize ),
-mAreaVector( aSize ),
-mAreaLatVector( aSize ),
-mAreaLonVector( aSize ),
-mLandFractVector( aSize ),
-mLandFractLatVector( aSize ),
-mLandFractLonVector( aSize )
+mNPPVector( aSize, 0 ),
+mNPPLatVector( aSize, 0 ),
+mNPPLonVector( aSize, 0 ),
+mNPPIDVector( aSize, 0 ),
+mPFTFractVector( aSize, 0 ),
+mPFTFractLatVector( aSize, 0 ),
+mPFTFractLonVector( aSize, 0 ),
+mPFTFractIDVector( aSize, 0 ),
+mAreaVector( aSize, 0 ),
+mAreaLatVector( aSize, 0 ),
+mAreaLonVector( aSize, 0 ),
+mLandFractVector( aSize, 0 ),
+mLandFractLatVector( aSize, 0 ),
+mLandFractLonVector( aSize, 0 ),
+mOutputVector( aSize, 0 )
 {
 }
 
@@ -73,19 +74,35 @@ CarbonScalers::~CarbonScalers() {
 // ASpatialData::readSpatialData method and then copying the vectors.
 void CarbonScalers::readAllSpatialData(){
     
+    cout << "Read NPP" << endl;
     // Read in average NPP
-    readSpatialData("../cpl/data/npp_mean_pft.txt", true, false);
+    readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false);
     mNPPVector = getValueVector();
     mNPPLatVector = getLatVector();
     mNPPLonVector = getLonVector();
     mNPPIDVector = getIDVector();
     
+    cout << "Read PFT weight" << endl;
     // Read in PFT weight in grid cell
-    readSpatialData("../cpl/data/pft_wt.txt", true, false);
+    readSpatialData("../cpl/data/pft_wt.txt", true, true, false);
     mPFTFractVector = getValueVector();
     mPFTFractLatVector = getLatVector();
     mPFTFractLonVector = getLonVector();
     mPFTFractIDVector = getIDVector();
+    
+    cout << "Read area" << endl;
+    // Read in area of grid cell
+    readSpatialData("../cpl/data/area.txt", true, false, false);
+    mAreaVector = getValueVector();
+    mAreaLatVector = getLatVector();
+    mAreaLonVector = getLonVector();
+    
+    cout << "Read land fract" << endl;
+    // Read in area of grid cell
+    readSpatialData("../cpl/data/landfrac.txt", true, false, false);
+    mLandFractVector = getValueVector();
+    mLandFractLatVector = getLatVector();
+    mLandFractLonVector = getLonVector();
     
     // Print some debugging information
     for ( int i = 1000; i < 1011; i++ ) {
@@ -94,6 +111,41 @@ void CarbonScalers::readAllSpatialData(){
 
 }
 
+// Calculate scalers
+// TODO: This still needs mappings to GCAM regions and crops
+// TODO: Add outlier test/removal
 void CarbonScalers::calcScalers() {
+    // First, read spatial data
+    readAllSpatialData();
+    
+    // Loop over PFTs and grid cells to calculate weighted average NPP
+    // TODO: currently assumes grid cells are in the same order in each vector
+    // TODO: Need to get number of PFTs and number of grid cells from somewhere
+    vector<int> total(17);
+    int index = 0; // Could calculate this from i & j
+    for( int i = 0; i < 17; i++ ) {
+        for ( int j = 0; j < 64800; j++ ) {
+            // Calculate total as NPP of the PFT * area of of the PFT
+            mOutputVector[index] = mNPPVector[index] * mPFTFractVector[index] * mLandFractVector[j] * mAreaVector[j];
+            
+            // Add to total
+            total[i] += mOutputVector[index];
+            
+            // Increment the index
+            index++;
+        }
+    }
+    
+    // Divide by the total
+    index = 0;
+    for( int i = 0; i < 17; i++ ) {
+        for ( int j = 0; j < 64800; j++ ) {
+            mOutputVector[index] /= total[i];
+            index++;
+        }
+    }
+    
+    // Set the value vector
+    setValueVector(mOutputVector);
 }
 

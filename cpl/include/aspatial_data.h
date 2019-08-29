@@ -46,16 +46,16 @@ public:
     ASpatialData(int aSize);
     ~ASpatialData();
     virtual void readMapping(std::string aFileName);
-    virtual double readSpatialData(std::string aFileName, bool aHasID, bool aCalcTotal);
+    virtual double readSpatialData(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal);
     virtual void writeSpatialData(std::string aFileName, bool aWriteID);
     virtual void setValueVector(std::vector<double> aValueVector);
     virtual std::vector<double> getValueVector();
     virtual std::vector<int> getIDVector();
-    virtual std::vector<int> getLatVector();
+    virtual std::vector<double> getLatVector();
     virtual std::vector<double> getLonVector();
 private:
     std::vector<double> mValueVector;
-    std::vector<int> mLatVector;
+    std::vector<double> mLatVector;
     std::vector<double> mLonVector;
     std::vector<int> mIDVector;
 };

@@ -236,7 +236,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         // Downscale CO2 emissions
         cout << "Downscaling CO2 emissions" << endl;
         EmissDownscale gcam2e3sm(360*180); // Emissions data is 1 degree by 1 degree
-        double totalEmissions2010 = gcam2e3sm.readSpatialData("../cpl/data/gridded_co2.2010", false, true);
+        double totalEmissions2010 = gcam2e3sm.readSpatialData("../cpl/data/gridded_co2.2010", false, false, true);
         gcam2e3sm.downscaleCO2Emissions(totalEmissions2010, gcamoemis[0]);
         gcam2e3sm.writeSpatialData("./testco2.txt", false);
     }
@@ -277,7 +277,7 @@ void GCAM_E3SM_interface::getScalers(int *yyyymmdd, std::vector<int>& aYears, st
         
         // TODO: Once this works, add if block to call it only when not reading from file. For now, it doesn't do everything so it is fine to run
         CarbonScalers e3sm2gcam(1101600);
-        e3sm2gcam.readAllSpatialData();
+        e3sm2gcam.calcScalers();
         e3sm2gcam.writeSpatialData("./test.txt", true);
     }
 }

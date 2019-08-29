@@ -58,6 +58,8 @@ EmissDownscale::~EmissDownscale() {
 
 // Downscale emissions
 void EmissDownscale::downscaleCO2Emissions(double aBaseYearEmissions, double aCurrYearEmissions) {
+    cout << "Starting downscaling" << endl;
+    
     // First, set the values that were read in as the BaseYearEmissions
     mBaseYearEmissVector = getValueVector();
     
@@ -69,6 +71,8 @@ void EmissDownscale::downscaleCO2Emissions(double aBaseYearEmissions, double aCu
     
     // Finally, re-set the value vector to be the final emissions, since this will be written out
     setValueVector( mCurrYearEmissVector );
+    
+    cout << "Downscaling complete" << endl;
     
     return;
 }
