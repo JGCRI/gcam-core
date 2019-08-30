@@ -3,6 +3,7 @@
 context("xml")
 
 test_that("default MI header exists in the package", {
+  gc()
   conv_test <- create_xml("test.xml")
 
   expect_true(file.exists(conv_test$mi_header))
