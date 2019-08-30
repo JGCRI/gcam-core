@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_LA1233.Process_UCS_data_ref
 #'
 #' This script reads in and processes "Union of Concerned Scientists. 2012. UCS EW3 Energy-Water Database V.1.3" www.ucsusa.org/ew3database - Main Data.

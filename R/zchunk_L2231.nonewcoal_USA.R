@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2231.nonewcoal_USA
 #'
 #' Generates optional moratorium on new pulverized coal plants in USA states.

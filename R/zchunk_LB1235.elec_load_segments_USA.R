@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_LB1235.elec_load_segments_USA
 #'
 #' Read in demand fraction and time fraction and compute load curve related parameters

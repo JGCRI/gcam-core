@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB1321.regional_ag_prices
 #'
 #' Calculate the calibration prices for all GCAM AGLU commodities.

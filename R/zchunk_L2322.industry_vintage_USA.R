@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2322.industry_vintage_USA
 #'
 #' Creates a vintage structure and retirement parameters for U.S. industrial energy use

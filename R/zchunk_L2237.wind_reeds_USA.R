@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2237.wind_reeds_USA
 #'
 #' Create updated wind resource supply curves consistent with ReEDS.

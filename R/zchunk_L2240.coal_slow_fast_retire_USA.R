@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2240.coal_slow_fast_retire_USA
 #'
 #' Generates GCAM-USA model input for removing coal capacity retired between 2010 and 2015.

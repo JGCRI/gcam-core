@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2261.regional_biomass_USA
 #'
 #' Create biomass supply sectors at the state level.

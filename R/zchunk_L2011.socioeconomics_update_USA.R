@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2011.socioeconomics_update_USA
 #'
 #' Population and labor productivity updates for GCAM-USA.  2015 population & labor productivity updated to match
