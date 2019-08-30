@@ -38,7 +38,9 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
              "L201.GrdRenewRsrcMax_runoff",
              "L201.DepRsrcCurves_ground_uniform",
              "L201.RenewRsrcCurves_calib",
-             "L201.DepRsrcCurves_ground"))
+             "L201.DepRsrcCurves_ground",
+             "L201.RenewRsrcTechShrwt",
+             "L201.RsrcTechShrwt"))
   } else if(command == driver.MAKE) {
 
     region <- NULL                      # silence package check.
@@ -337,6 +339,24 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
         arrange(region, resource, extractioncost) ->
         L201.DepRsrcCurves_ground
 
+      # Create an empty technology for all water resources and subresources.
+      # Include a share weight of 1 to facilatate creating a technology.
+      # Create technology for renewable freshwater and depletable groundwater subresource
+      L201.RenewRsrcCurves_calib %>%
+        distinct(region, resource, sub.renewable.resource) %>%
+        repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+        mutate(technology = sub.renewable.resource,
+               share.weight = 1.0) %>%
+        select(LEVEL2_DATA_NAMES[["RenewRsrcTechShrwt"]]) ->
+        L201.RenewRsrcTechShrwt
+
+      L201.DepRsrcCurves_ground %>%
+        distinct(region, resource, subresource) %>%
+        repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+        mutate(technology = subresource,
+               share.weight = 1.0) %>%
+        select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+        L201.RsrcTechShrwt
 
     # ===================================================
 
@@ -431,6 +451,20 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
                        "L101.groundwater_grades_constrained_bm3") ->
         L201.DepRsrcCurves_ground
 
+      L201.RenewRsrcTechShrwt %>%
+        add_title("Water renewable resource technologies") %>%
+        add_units("NA") %>%
+        add_comments("share weight is 1") %>%
+        add_precursors("L201.RenewRsrcCurves_calib") ->
+        L201.RenewRsrcTechShrwt
+
+      L201.RsrcTechShrwt %>%
+        add_title("Water depletable resource technologies") %>%
+        add_units("NA") %>%
+        add_comments("share weight is 1") %>%
+        add_precursors("L201.DepRsrcCurves_ground") ->
+        L201.RsrcTechShrwt
+
       return_data(L201.NodeEquiv,
                   L201.DeleteUnlimitRsrc,
                   L201.Rsrc,
@@ -439,7 +473,9 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
                   L201.GrdRenewRsrcMax_runoff,
                   L201.DepRsrcCurves_ground_uniform,
                   L201.RenewRsrcCurves_calib,
-                  L201.DepRsrcCurves_ground)
+                  L201.DepRsrcCurves_ground,
+                  L201.RenewRsrcTechShrwt,
+                  L201.RsrcTechShrwt)
 
   } else {
     stop("Unknown command")
