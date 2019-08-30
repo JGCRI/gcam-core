@@ -16,7 +16,9 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
              "L201.RsrcPrice",
              "L201.RenewRsrcCurves_calib",
              "L201.GrdRenewRsrcMax_runoff",
-             "L201.DepRsrcCurves_ground"))
+             "L201.DepRsrcCurves_ground",
+             "L201.RenewRsrcTechShrwt",
+             "L201.RsrcTechShrwt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "water_supply_constrained.xml"))
   } else if(command == driver.MAKE) {
@@ -31,6 +33,8 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
     L201.RenewRsrcCurves_calib <- get_data(all_data, "L201.RenewRsrcCurves_calib")
     L201.GrdRenewRsrcMax_runoff <- get_data(all_data, "L201.GrdRenewRsrcMax_runoff")
     L201.DepRsrcCurves_ground <- get_data(all_data, "L201.DepRsrcCurves_ground")
+    L201.RenewRsrcTechShrwt <- get_data(all_data, "L201.RenewRsrcTechShrwt")
+    L201.RsrcTechShrwt <- get_data(all_data, "L201.RsrcTechShrwt")
 
 
     # ===================================================
@@ -44,16 +48,18 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
       add_xml_data(L201.RenewRsrcCurves_calib, "RenewRsrcCurvesWater") %>%
       add_xml_data(L201.GrdRenewRsrcMax_runoff, "GrdRenewRsrcMaxWaterNoFO") %>%
       add_xml_data(L201.DepRsrcCurves_ground, "RsrcCurves") %>%
+      add_xml_data(L201.RenewRsrcTechShrwt, "RenewRsrcTechShrwt") %>%
+      add_xml_data(L201.RsrcTechShrwt, "ResTechShrwt") %>%
       add_precursors("L201.NodeEquiv",
                      "L201.DeleteUnlimitRsrc",
                      "L201.Rsrc",
                      "L201.RsrcPrice",
                      "L201.RenewRsrcCurves_calib",
                      "L201.GrdRenewRsrcMax_runoff",
-                     "L201.DepRsrcCurves_ground") ->
-      water_supply_constrained.xml
-
-
+                     "L201.DepRsrcCurves_ground",
+                     "L201.RenewRsrcTechShrwt",
+                     "L201.RsrcTechShrwt") ->
+    water_supply_constrained.xml
     return_data(water_supply_constrained.xml)
   } else {
     stop("Unknown command")

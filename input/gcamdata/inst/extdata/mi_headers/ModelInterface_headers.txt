@@ -129,6 +129,8 @@ ResSubresourceProdLifetime, world/+{name}region, region/+{name}resource, resourc
 
 ResTechShrwt, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{name}technology, technology/+{year}period, period/+share-weight, scenario, scenario/world
 
+RenewRsrcTechShrwt, world/+{name}region, region/+{name}resource, resource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}technology, technology/+{year}period, period/+share-weight, scenario, scenario/world
+
 ResReserveTechCost, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+{name}minicam-non-energy-input, minicam-non-energy-input/+input-cost, scenario, scenario/world, period/{name=CO2}CO2
 
 ResReserveTechLifetime, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+lifetime, scenario, scenario/world
