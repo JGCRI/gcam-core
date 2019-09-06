@@ -79,6 +79,7 @@ class IDiscreteChoice;
 class TranSubsector;
 class AgSupplySubsector;
 class SubsectorAddTechCosts;
+class NestingSubsector;
 
 /*! 
 * \ingroup Objects
@@ -101,19 +102,15 @@ class Subsector: public INamed,
     // be necessary
     friend class SetShareWeightVisitor;
     friend class CalibrateShareWeightVisitor;
-private:
-    void clear();
-    void clearInterpolationRules();
-    //! A flag for convenience to know whether this Subsector created a market
-    //! for calibration (SGM)
-    bool doCalibration;
+    friend class NestingSubsector;
 protected:
     
     DEFINE_DATA(
         /* Declare all subclasses of Subsector to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( Subsector, TranSubsector, AgSupplySubsector, SubsectorAddTechCosts ),
+        DEFINE_SUBCLASS_FAMILY( Subsector, TranSubsector, AgSupplySubsector, SubsectorAddTechCosts,
+                                NestingSubsector ),
 
         //! subsector name
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
@@ -169,6 +166,12 @@ protected:
     void parseBaseTechHelper( const xercesc::DOMNode* curr, BaseTechnology* aNewTech );
     
     virtual const std::vector<double> calcTechShares ( const GDP* gdp, const int period ) const;
+    
+    void clear();
+    void clearInterpolationRules();
+    //! A flag for convenience to know whether this Subsector created a market
+    //! for calibration (SGM)
+    bool doCalibration;
 
 public:
     Subsector( const std::string& regionName, const std::string& sectorName );
@@ -188,8 +191,8 @@ public:
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
-    bool allOutputFixed( const int period ) const;
-    bool containsOnlyFixedOutputTechnologies( const int period ) const;
+    virtual bool allOutputFixed( const int period ) const;
+    virtual bool containsOnlyFixedOutputTechnologies( const int period ) const;
     virtual double getAverageFuelPrice( const GDP* aGDP, const int aPeriod ) const;
 
     virtual void calcCost( const int aPeriod );
@@ -202,14 +205,12 @@ public:
                             const GDP* aGDP,
                             const int aPeriod );
 
-    bool isAllCalibrated( const int aPeriod, double aCalAccuracy, const bool aPrintWarnings ) const;
-    double getFixedOutput( const int Period, const double aMarginalRevenue ) const;
+    virtual bool isAllCalibrated( const int aPeriod, double aCalAccuracy, const bool aPrintWarnings ) const;
+    virtual double getFixedOutput( const int Period, const double aMarginalRevenue ) const;
 
     virtual double getTotalCalOutputs( const int period ) const;
 
-    void emission( const int period );
-
-    double getInput( const int period ) const;
+    virtual double getInput( const int period ) const;
     virtual double getOutput( const int period ) const;
 
     virtual double getEnergyInput( const int aPeriod ) const;
@@ -244,7 +245,7 @@ public:
                   const MoreSectorInfo* aMoreSectorInfo, const bool isNewVintageMode, const int aPeriod );
     
     void updateMarketplace( const int period );
-    void postCalc( const int aPeriod );
+    virtual void postCalc( const int aPeriod );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     double getFixedInvestment( const int aPeriod ) const;
     bool hasCalibrationMarket() const;

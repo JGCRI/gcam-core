@@ -48,6 +48,8 @@
 #include <string>
 
 class GDP;
+class ITechnology;
+class IDiscreteChoice;
 
 /*! 
  * \ingroup Objects
@@ -81,6 +83,8 @@ public:
 
     virtual void startVisitSubsector( const Subsector* aSubsector,
                                      const int aPeriod );
+    
+    virtual void endVisitNestingSubsector( const NestingSubsector* aSubsector, const int aPeriod );
 
 private:
     //! Name of the Region the for which we are calibrating
@@ -91,6 +95,34 @@ private:
 
     //! The GDP for the current region. TODO: is this really necessary
     const GDP* mGDP;
+    
+    template<typename ContainerType>
+    void calibrateShareWeights( const ContainerType* aContainer, const int aPeriod ) const;
+    
+    // Adaptor methods to be able to use the generic calibrateShareWeights method with
+    // subsector/nesting-subsector/technology even though they may not share a common
+    // interface
+    std::vector<Subsector*> getChildren( const Sector* aSector, const int aPeriod ) const;
+    std::vector<Subsector*> getChildren( const NestingSubsector* aSubsector, const int aPeriod ) const;
+    std::vector<ITechnology*> getChildren( const Subsector* aSubsector, const int aPeriod ) const;
+    
+    bool isAvailable( const Subsector* aSubsector, const int aPeriod ) const;
+    bool isAvailable( const ITechnology* aTechnology, const int aPeriod ) const;
+    
+    double getCalValue( const Subsector* aSubsector, const int aPeriod ) const;
+    double getCalValue( const ITechnology* aTechnology, const int aPeriod ) const;
+    
+    double getCost( const Subsector* aSubsector, const int aPeriod ) const;
+    double getCost( const ITechnology* aTechnology, const int aPeriod ) const;
+    
+    double getFuelPrefElasticity( const Subsector* aSubsector, const int aPeriod ) const;
+    double getFuelPrefElasticity( const ITechnology* aTechnology, const int aPeriod ) const;
+    
+    IDiscreteChoice* getDiscreteChoice( const Sector* aSector ) const;
+    IDiscreteChoice* getDiscreteChoice( const Subsector* aSubsector ) const;
+    
+    void setShareWeight( Subsector* aSubsector, const double aShareWeight, const int aPeriod ) const;
+    void setShareWeight( ITechnology* aTechnology, const double aShareWeight, const int aPeriod ) const;
 };
 
 #endif // _CALIBRATE_SHARE_WEIGHT_VISITOR_H_

@@ -846,6 +846,7 @@ bool Subsector::allOutputFixed( const int period ) const {
             return false;
         }
     }
+    
     return true;
 }
 
