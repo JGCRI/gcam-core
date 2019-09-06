@@ -118,7 +118,7 @@ struct GetIndexAsYear {
     }
 };
 
-/*! 
+/*!
  * \brief The base class for the matcher predicates which may be used in a FilterStep.
  * \details These predicates will be used to determine if for instance any GCAM
  *          container's name matches some string or if the container's year matches
@@ -401,20 +401,23 @@ struct FilterStep {
     //! against that element's Data::mDataName.  Note an empty name indicates a
     //! "wild card" and matches any element of a Data vector.
     const std::string mDataName;
-    
+
     //! A "filter" that can be used to select if Data::hasTypeFlag( mDataFlag ) is
     //! true.
     const int mDataFlag;
-    
+
     //! A flag to quickly indicate if no "filters" have been set.
     const bool mNoFilters;
 
+    //! Counter to help with descendant steps
+    int mNumDescendantSteps;
+
     //! A type list of filter types which may be used in a FilterStep.
     using FilterTypes = boost::mpl::vector<NoFilter, IndexFilter, NamedFilter, YearFilter>;
-    
+
     //! A type list of filter types as pointers, such as NoFilter*, IndexFilter*, etc.
     using FilterPtrTypes = typename boost::mpl::transform<FilterTypes, boost::add_pointer<boost::mpl::_> >::type;
-    
+
     //! The type for the boost fusion map which maps a Filter type to a pointer of an instance.
     using FilterMapType = typename boost::fusion::result_of::as_map<
         typename boost::fusion::result_of::as_vector<
@@ -425,7 +428,7 @@ struct FilterStep {
                 >
             >::type
         >::type;
-    
+
     //! The map which is used to track which, if any, "filter" has been set.  If
     //! at least one filter type has been set (mNoFilters is false) and mFilterMap
     //! gets looked up to a null value then no data will match.  For instance a Data
@@ -433,36 +436,36 @@ struct FilterStep {
     //! NamedFilter is set then that indicates some other filter such as YearFilter
     //! was set thus the FilterStep should not match.
     FilterMapType mFilterMap;
-    
+
     /*!
      * \brief Constructor which (potentially) sets the data name and data flag filters.
      */
-    FilterStep( const std::string& aDataName, const int aDataFlag = 0 ):mDataName( aDataName ), mDataFlag( aDataFlag ), mFilterMap(), mNoFilters( true ) {}
-    
+    FilterStep( const std::string& aDataName, const int aDataFlag = 0 ):mDataName( aDataName ), mDataFlag( aDataFlag ), mNumDescendantSteps( 0 ), mFilterMap(), mNoFilters( true ) {}
+
     /*!
      * \brief Constructor which (potentially) sets the data name and an IndexFilter.
      * \note The memory for aFilter will be managed by this class.
      */
-    FilterStep( const std::string& aDataName, IndexFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mFilterMap(), mNoFilters( false ) {
+    FilterStep( const std::string& aDataName, IndexFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mNumDescendantSteps( 0 ), mFilterMap(), mNoFilters( false ) {
         boost::fusion::at_key<IndexFilter>( mFilterMap ) = aFilter;
     }
-    
+
     /*!
      * \brief Constructor which (potentially) sets the data name and a NamedFilter.
      * \note The memory for aFilter will be managed by this class.
      */
-    FilterStep( const std::string& aDataName, NamedFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mFilterMap(), mNoFilters( false ) {
+    FilterStep( const std::string& aDataName, NamedFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mNumDescendantSteps( 0 ), mFilterMap(), mNoFilters( false ) {
         boost::fusion::at_key<NamedFilter>( mFilterMap ) = aFilter;
     }
-    
+
     /*!
      * \brief Constructor which (potentially) sets the data name and a YearFilter.
      * \note The memory for aFilter will be managed by this class.
      */
-    FilterStep( const std::string& aDataName, YearFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mFilterMap(), mNoFilters( false ) {
+    FilterStep( const std::string& aDataName, YearFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mNumDescendantSteps( 0 ), mFilterMap(), mNoFilters( false ) {
         boost::fusion::at_key<YearFilter>( mFilterMap ) = aFilter;
     }
-    
+
     /*!
      * \brief Destructors, free memory from any set Filter objects.
      */
@@ -483,7 +486,7 @@ struct FilterStep {
     bool isDescendantStep() const {
         return mDataName.empty() && mDataFlag == 0 && mNoFilters;
     }
-    
+
     /*!
      * \brief A first cut check to see if an element of a Data vector matches.
      * \details Check the Data element to see if the Data::mDataName or Data::hasDataFlag()
@@ -806,7 +809,7 @@ struct FilterStep {
             // so no element containers will be accepted
         }
     }
-    
+
     // Specializations for non-containers i.e. actual data that is a single value
     template<typename DataType, typename DataVectorHandler>
     typename boost::enable_if<
@@ -841,7 +844,7 @@ std::vector<FilterStep*> parseFilterString( const std::string& aFilterStr );
  *        the GCAM hierarchical nesting structure.  Such an object gives a foundation
  *        to build dynamic feedbacks to any part of the model.
  * \details GCAMFusion can then be used by essentially giving it a search term, list
- *          of "FilterSteps", an object that can process the results, and a GCAM 
+ *          of "FilterSteps", an object that can process the results, and a GCAM
  *          CONTAINER object to start the search from.
  *          The GCAMFusion object takes four template parameters:
  *            - The type of the object that can handle the results of the search.
@@ -895,7 +898,7 @@ class GCAMFusion {
             wasLastDescendant = isCurrDescendant;
         }
     }
-    
+
     /*!
      * \brief Destructor
      * \warning This object does not manage any of the memory passed to it.  This
@@ -903,7 +906,7 @@ class GCAMFusion {
      */
     ~GCAMFusion() {
     }
-    
+
     /*!
      * \brief Kickoff the search process starting at the given GCAM CONTAINER object.
      * \param aContainer Any CONTAINER object from which we will start applying the
@@ -946,7 +949,7 @@ class GCAMFusion {
                 // "gas".  The FilterStep will facilitate any further processing /
                 // recursive steps to take.
                 this->mFilterSteps[ mCurrStep ]->applyFilter( aData, *this, isAtLastStep );
-                
+
                 // explicitly handle the "descendant" step case where we need to
                 // both handle taking one step down and no steps down.
                 if( !isAtLastStep && this->mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
@@ -976,9 +979,12 @@ class GCAMFusion {
         if( !mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
             ++mCurrStep;
         }
+        else {
+            ++mFilterSteps[ mCurrStep ]->mNumDescendantSteps;
+        }
         mDataProcessor.pushFilterStep( aData );
     }
-    
+
     /*!
      * \brief Callback from FilterStep to indicate that we are about to take a
      *        step into another CONTAINER and need to update the current FilterStep
@@ -994,6 +1000,9 @@ class GCAMFusion {
         if( !mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
             ++mCurrStep;
         }
+        else {
+            ++mFilterSteps[ mCurrStep ]->mNumDescendantSteps;
+        }
     }
 
     /*!
@@ -1008,12 +1017,15 @@ class GCAMFusion {
     template<typename DataType>
     typename boost::enable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, boost::integral_constant<bool, ProcessPopStep> >,
     void>::type popFilterStep( const DataType& aData )  {
-        if( !mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
+        if( mFilterSteps[ mCurrStep ]->mNumDescendantSteps == 0 ) {
             --mCurrStep;
+        }
+        else {
+            --mFilterSteps[ mCurrStep ]->mNumDescendantSteps;
         }
         mDataProcessor.popFilterStep( aData );
     }
-    
+
     /*!
      * \brief Callback from FilterStep to indicate that we are finished with the
      *        step into the current CONTAINER and need to update the current FilterStep
@@ -1026,8 +1038,11 @@ class GCAMFusion {
     template<typename DataType>
     typename boost::disable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, boost::integral_constant<bool, ProcessPopStep> >,
     void>::type popFilterStep( const DataType& aData )  {
-        if( !mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
+        if( mFilterSteps[ mCurrStep ]->mNumDescendantSteps == 0 ) {
             --mCurrStep;
+        }
+        else {
+            --mFilterSteps[ mCurrStep ]->mNumDescendantSteps;
         }
     }
 
@@ -1046,7 +1061,7 @@ class GCAMFusion {
     void>::type processData( DataType& aData )  {
         mDataProcessor.processData( aData );
     }
-    
+
     /*!
      * \brief Callback from FilterStep to indicate that we have found some Data we
      *        have been searching for.
