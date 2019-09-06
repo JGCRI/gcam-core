@@ -116,6 +116,9 @@
                   <rewrite from="geothermal-elect" to="i geothermal"/>
                   <rewrite from="biomass" to="d biomass"/>
                   <rewrite from="total biomass" to="d biomass"/>
+                  <rewrite from="regional biomassOil" to="d biomass"/>
+                  <rewrite from="regional corn for ethanol" to="d biomass"/>
+                  <rewrite from="wholesale gas" to=""/>
                   <rewrite from="nuclear-H2" to="e nuclear"/>
                   <rewrite from="natural gas" to="b natural gas"/>
                   <rewrite from="wind-elect" to="g wind"/>
@@ -200,6 +203,9 @@
                   <rewrite from="geothermal-elect" to="i geothermal"/>
                   <rewrite from="biomass" to="d biomass"/>
                   <rewrite from="total biomass" to="d biomass"/>
+                  <rewrite from="regional biomassOil" to="d biomass"/>
+                  <rewrite from="regional corn for ethanol" to="d biomass"/>
+                  <rewrite from="wholesale gas" to=""/>
                   <rewrite from="nuclear-H2" to="e nuclear"/>
                   <rewrite from="natural gas" to="b natural gas"/>
                   <rewrite from="wind-elect" to="g wind"/>
