@@ -402,7 +402,7 @@
 		CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cumulative_emissions_target.cpp; sourceTree = "<group>"; };
 		CD2420002162D2250071DB2B /* initialize_tech_vector_helper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = initialize_tech_vector_helper.hpp; sourceTree = "<group>"; };
 		CD2420012162D2310071DB2B /* initialize_tech_vector_helper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = initialize_tech_vector_helper.cpp; sourceTree = "<group>"; };
-		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD299E9611B9C11800E6D196 /* gcam */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gcam; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD3B52C41BFE0E1F00179FDD /* hector_model.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = hector_model.hpp; sourceTree = "<group>"; };
 		CD3B52C51BFE0E2800179FDD /* hector_model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hector_model.cpp; sourceTree = "<group>"; };
 		CD42839E203F157000A75025 /* readin_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = readin_control.h; sourceTree = "<group>"; };
@@ -1085,7 +1085,7 @@
 		CD299E9711B9C11800E6D196 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CD299E9611B9C11800E6D196 /* objects */,
+				CD299E9611B9C11800E6D196 /* gcam */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2441,7 +2441,7 @@
 			name = objects;
 			productInstallPath = "$(HOME)/bin";
 			productName = objects;
-			productReference = CD299E9611B9C11800E6D196 /* objects */;
+			productReference = CD299E9611B9C11800E6D196 /* gcam */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -2837,7 +2837,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = objects;
+				PRODUCT_NAME = gcam;
 			};
 			name = Debug;
 		};
@@ -2850,7 +2850,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = objects;
+				PRODUCT_NAME = gcam;
 			};
 			name = Release;
 		};
@@ -2999,7 +2999,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = objects;
+				PRODUCT_NAME = gcam;
 			};
 			name = "Release - LAPACK";
 		};
@@ -3066,7 +3066,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = objects;
+				PRODUCT_NAME = gcam;
 			};
 			name = "Release - TBB";
 		};
