@@ -55,12 +55,12 @@ public:
     template<typename T>
     void processData(T& aData);
 private:
-    std::vector<int> mYearColumn;
-    std::vector<std::string> mRegionColumn;
-    std::vector<std::string> mLandTechColumn;
-    std::vector<double> mDataVector;
+    const std::vector<int>& mYearColumn;
+    const std::vector<std::string>& mRegionColumn;
+    const std::vector<std::string>& mLandTechColumn;
+    const std::vector<double>& mDataVector;
     std::vector<FilterStep*> mFilterSteps;
-    int mRow;
+    size_t mRow;
     
     std::vector<FilterStep*> parseFilterString(const std::string& aFilterStr );
     FilterStep* parseFilterStepStr( const std::string& aFilterStepStr, int& aCol );

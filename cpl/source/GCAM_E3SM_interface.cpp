@@ -111,18 +111,24 @@ void GCAM_E3SM_interface::initGCAM(void)
     // Setup the scenario.
     success = runner->setupScenarios( timer );
 
-    // Initialize the year column with the model start year. This will be overwritten in the runGCAM method.
+    // Note we will only allocate space to store GCAM results for one model period
+    // at a time.
+    // For that reason we will remap all model years to just zero
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
-    vector<int> years (1);
-    years[0] = modeltime->getStartYear();
+    vector<int> years{ 0 };
+    std::map<int, int> yearRemap;
+    for(int period = 0; period < modeltime->getmaxper(); ++period) {
+        yearRemap[modeltime->getper_to_yr(period)] = 0;
+    }
     
     // Setup the mappings
-    cout << "Adding year " << years[0] << endl;
     success = XMLHelper<void>::parseXML("../cpl/mappings/co2.xml", &mCO2EmissData);
-    mCO2EmissData.addYearColumn("Year", years, map<int, int>());
+    mCO2EmissData.addYearColumn("Year", years, yearRemap);
+    mCO2EmissData.finalizeColumns();
     cout << "CO2 added" << endl;
     success = XMLHelper<void>::parseXML("../cpl/mappings/luc.xml", &mLUCData);
-    mLUCData.addYearColumn("Year", years, map<int, int>());
+    mLUCData.addYearColumn("Year", years, yearRemap);
+    mLUCData.finalizeColumns();
     cout << "LUC added" << endl;
 
     // Clean up
@@ -203,25 +209,18 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         // Stop the timer
         timer.stop();
         
-        // Update the year columns
-        vector<int> years (1);
-        years[0] = curryear;
-        cout << "Adding year " << curryear << endl;
-        mCO2EmissData.addYearColumn("Year", years, map<int, int>());
-        mLUCData.addYearColumn("Year", years, map<int, int>());
-       
-        // Get all data that needs to be passed back to E3SM
-        cout << "Getting CO2 emissions" << endl;
-        mCO2EmissData.finalizeColumns();
-        GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions");
-        getCo2.run(runner->getInternalScenario(), mCO2EmissData, curryear);
         double *co2 = mCO2EmissData.getData();
+        // be sure to reset any data set previously
+        fill(co2, co2+mCO2EmissData.getArrayLength(), 0.0);
+        GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mCO2EmissData);
+        getCo2.run(runner->getInternalScenario());
         
         cout << "Getting LUC" << endl;
-        mLUCData.finalizeColumns();
-        GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation");
-        getLUC.run(runner->getInternalScenario(), mLUCData, curryear);
         double *luc = mLUCData.getData();
+        // be sure to reset any data set previously
+        fill(luc, luc+mLUCData.getArrayLength(), 0.0);
+        GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mLUCData);
+        getLUC.run(runner->getInternalScenario());
         
         // Set data in the gcamo* arrays
         const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();

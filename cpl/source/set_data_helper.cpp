@@ -38,26 +38,26 @@ using namespace std;
 
 class StringVecEquals : public AMatchesValue {
 public:
-    StringVecEquals( const vector<string>& aStr, int& row ):mStr( aStr ), mRow( row ) {}
+    StringVecEquals( const vector<string>& aStr, size_t& row ):mStr( aStr ), mRow( row ) {}
     virtual ~StringVecEquals() {}
     virtual bool matchesString( const std::string& aStrToTest ) const {
         return mStr[mRow] == aStrToTest;
     }
 private:
-    const vector<string> mStr;
-    int& mRow;
+    const vector<string>& mStr;
+    size_t& mRow;
 };
 
 class IntVecEquals : public AMatchesValue {
 public:
-    IntVecEquals( const vector<int>& aInt, int& row ):mInt( aInt ), mRow( row ) {}
+    IntVecEquals( const vector<int>& aInt, size_t& row ):mInt( aInt ), mRow( row ) {}
     virtual ~IntVecEquals() {}
     virtual bool matchesInt( const int aIntToTest ) const {
         return mInt[mRow] == aIntToTest;
     }
 private:
-    const vector<int> mInt;
-    int& mRow;
+    const vector<int>& mInt;
+    size_t& mRow;
 };
 
 void SetDataHelper::run(Scenario* aScenario) {

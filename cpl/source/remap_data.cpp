@@ -110,15 +110,15 @@ bool ReMapDataHelper<T>::XMLParse( const DOMNode* aNode ) {
             mInOrderOutputNames.push_back(tempName);
         }
         else if( nodeName == "map" ) {
-            const std::string fromName = XMLHelper<std::string>::getAttr( curr, "from" );
-            const std::string toName = XMLHelper<std::string>::getAttr( curr, "to" );
-            mGCAMToOutputNameMap.insert( std::pair<string,string>( fromName, toName ));
+            const T fromName = XMLHelper<T>::getAttr( curr, "from" );
+            const T toName = XMLHelper<T>::getAttr( curr, "to" );
+            mGCAMToOutputNameMap.insert( std::make_pair( fromName, toName ) );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-            << "column information" << "." << endl;
+                    << "column information" << "." << endl;
         }
         
         // Get the next child of aNode to process.
