@@ -42,20 +42,23 @@ class ReMapData;
 
 class GetDataHelper {
 public:
-  GetDataHelper(const std::string& aHeader)
+  GetDataHelper(const std::string& aHeader, ReMapData& aDataMapper)
+      :mDataMapper(aDataMapper)
   {
     parseFilterString(aHeader);
   }
   ~GetDataHelper();
-  void run(Scenario* aScenario, ReMapData& aDataMapper, int aCurrYear);
+  void run(Scenario* aScenario);
   template<typename T>
   void processData(T& aData);
 private:
-  std::vector<double> mDataVector;
-  std::vector<int> mYearVector;
+  double mCurrDataValue;
+  int mCurrYearValue;
+  std::vector<std::string> mCurrColValues;
   std::vector<std::string> mColNames;
   std::vector<AMatcherWrapper*> mPathTracker;
   std::vector<FilterStep*> mFilterSteps;
+  ReMapData& mDataMapper;
 
   void parseFilterString(const std::string& aFilterStr );
   FilterStep* parseFilterStepStr( const std::string& aFilterStepStr, int& aCol );

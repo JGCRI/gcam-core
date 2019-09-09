@@ -56,10 +56,6 @@ public:
         delete mToWrap;
     }
     virtual void recordPath() = 0;
-    //virtual void updateList(List& aList, size_t aCol) const = 0;
-    virtual string getColValue(size_t aRow) const {
-        return "";
-    }
 
 protected:
     AMatchesValue* mToWrap;
@@ -67,7 +63,7 @@ protected:
 
 class StrMatcherWrapper : public AMatcherWrapper {
 public:
-  StrMatcherWrapper(AMatchesValue* aToWrap):AMatcherWrapper(aToWrap)
+  StrMatcherWrapper(AMatchesValue* aToWrap, std::vector<std::string>& aCurrRowValue, const size_t aIndex):AMatcherWrapper(aToWrap), mCurrRowValue( aCurrRowValue ), mIndex( aIndex )
   {
   }
     virtual bool matchesString( const std::string& aStrToTest ) const {
@@ -78,19 +74,17 @@ public:
         return matches;
     }
     virtual void recordPath() {
-        mData.push_back(mCurrValue);
-    }
-    virtual string getColValue(size_t aRow) const {
-        return mData[aRow];
+        mCurrRowValue[mIndex] = mCurrValue;
     }
     private:
     string mCurrValue;
-    vector<string> mData;
+    std::vector<string>& mCurrRowValue;
+    size_t mIndex;
 };
 
 class IntMatcherWrapper : public AMatcherWrapper {
 public:
-  IntMatcherWrapper(AMatchesValue* aToWrap):AMatcherWrapper(aToWrap)
+  IntMatcherWrapper(AMatchesValue* aToWrap, int& aCurrRowValue):AMatcherWrapper(aToWrap), mCurrRowValue(aCurrRowValue)
   {
   }
     virtual bool matchesInt( const int aIntToTest ) const {
@@ -101,36 +95,21 @@ public:
         return matches;
     }
     virtual void recordPath() {
-        mData.push_back(mCurrValue);
+        mCurrRowValue = mCurrValue;
     }
-    /*
-    virtual void updateList(List& aList, size_t aCol) const {
-        aList[aCol] = Rcpp::wrap(mData);
-    }
-    */
+    /
     private:
     int mCurrValue;
-    vector<int> mData;
+    int& mCurrRowValue;
 };
 
-void GetDataHelper::run(Scenario* aScenario, ReMapData& aDataMapper, int aCurrYear) {
+void GetDataHelper::run(Scenario* aScenario) {
   GCAMFusion<GetDataHelper> fusion(*this, mFilterSteps);
   fusion.startFilter(aScenario);
-  size_t nCol = mPathTracker.size();
-  vector<string> colValues(nCol);
-  for(size_t row = 0; row < mDataVector.size(); ++row) {
-      for(size_t col = 0; col < nCol; ++col) {
-          colValues[col] = mPathTracker[col]->getColValue(row);
-      }
-      // If the year is the current year, then set the data
-      if( mYearVector[row] == aCurrYear ) {
-          aDataMapper.setData(colValues, mYearVector[row], mDataVector[row]);
-      }
-  }
 }
 
 GetDataHelper::~GetDataHelper() {
-    // note mPathTracker's memory is managed by mFilterSteps
+  // note mPathTracker's memory is managed by mFilterSteps
   for(auto step : mFilterSteps) {
     delete step;
   }
@@ -138,24 +117,27 @@ GetDataHelper::~GetDataHelper() {
 
 template<>
 void GetDataHelper::processData(double& aData) {
-    mDataVector.push_back(aData);
+    mCurrDataValue = aData;
     for(auto path: mPathTracker) {
         path->recordPath();
     }
+    mDataMapper.setData(mCurrColValues, mCurrYearValue, mCurrDataValue);
 }
 template<>
 void GetDataHelper::processData(Value& aData) {
-    mDataVector.push_back(aData);
+    mCurrDataValue = aData;
     for(auto path: mPathTracker) {
         path->recordPath();
     }
+    mDataMapper.setData(mCurrColValues, mCurrYearValue, mCurrDataValue);
 }
 template<>
 void GetDataHelper::processData(int& aData) {
-    mDataVector.push_back(aData);
+    mCurrDataValue = aData;
     for(auto path: mPathTracker) {
         path->recordPath();
     }
+    mDataMapper.setData(mCurrColValues, mCurrYearValue, mCurrDataValue);
 }
 template<>
 void GetDataHelper::processData(std::vector<int>& aData) {
@@ -195,18 +177,14 @@ void GetDataHelper::processData(objects::TechVintageVector<Value>& aData) {
 }
 template<typename VecType>
 void GetDataHelper::vectorDataHelper(VecType& aDataVec) {
-    if(mYearVector.empty()) {
-        mColNames.push_back("year");
-    }
     for(auto iter = aDataVec.begin(); iter != aDataVec.end(); ++iter) {
-        mYearVector.push_back(GetIndexAsYear::convertIterToYear(aDataVec, iter));
+        mCurrYearValue = (GetIndexAsYear::convertIterToYear(aDataVec, iter));
         processData(*iter);
     }
 }
 
 template<typename T>
 void GetDataHelper::processData(T& aData) {
-  //Rcpp::stop(string("Search found unexpected type: ")+string(typeid(T).name()));
   // TODO: what is error handling strategy?
   abort();
 }
@@ -261,7 +239,7 @@ FilterStep* GetDataHelper::parseFilterStepStr( const std::string& aFilterStepStr
     FilterStep* filterStep = 0;
         if( filterOptions[ 0 ] == "IndexFilter" ) {
             if(isRead) {
-                AMatcherWrapper* wrap = new IntMatcherWrapper(matcher);
+                AMatcherWrapper* wrap = new IntMatcherWrapper(matcher, mCurrYearValue);
                 mPathTracker.push_back(wrap);
                 mColNames.push_back("index");
                 matcher = wrap;
@@ -271,7 +249,8 @@ FilterStep* GetDataHelper::parseFilterStepStr( const std::string& aFilterStepStr
         }
         else if( filterOptions[ 0 ] == "NamedFilter" ) {
             if(isRead) {
-                AMatcherWrapper* wrap = new StrMatcherWrapper(matcher);
+                mCurrColValues.push_back("");
+                AMatcherWrapper* wrap = new StrMatcherWrapper(matcher, mCurrColValues, mCurrColValues.size() -1);
                 mColNames.push_back(dataName);
                 mPathTracker.push_back(wrap);
                 matcher = wrap;
@@ -281,7 +260,7 @@ FilterStep* GetDataHelper::parseFilterStepStr( const std::string& aFilterStepStr
         }
         else if( filterOptions[ 0 ] == "YearFilter" ) {
             if(isRead) {
-                AMatcherWrapper* wrap = new IntMatcherWrapper(matcher);
+                AMatcherWrapper* wrap = new IntMatcherWrapper(matcher, mCurrYearValue);
                 mColNames.push_back("year");
                 mPathTracker.push_back(wrap);
                 matcher = wrap;
