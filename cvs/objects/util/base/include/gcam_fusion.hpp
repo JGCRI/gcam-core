@@ -119,6 +119,34 @@ struct GetIndexAsYear {
 };
 
 /*!
+ * \brief Converting an array index to model period is trivial in most cases as they
+ *        are one in the same.  However we do have a special case which is the TechVintageVector
+ */
+struct GetIndexAsPeriod {
+    // specialization for TechVintageVector for which we need to account for the
+    // start period to convert the index to period
+    template<typename VecType>
+    static typename boost::enable_if<
+        typename boost::is_same<
+            VecType,
+            typename objects::TechVintageVector<typename VecType::value_type>
+        >::type,
+    int>::type convertIndexToPeriod( const VecType& aArray, const int aIndex ) {
+        return aArray.getStartPeriod() + aIndex;
+    }
+    // all other container types for which the index to period is one to one
+    template<typename VecType>
+    static typename boost::disable_if<
+        typename boost::is_same<
+            VecType,
+            typename objects::TechVintageVector<typename VecType::value_type>
+        >::type,
+    int>::type convertIndexToPeriod( const VecType& aArray, const int aIndex ) {
+        return aIndex;
+    }
+};
+
+/*!
  * \brief The base class for the matcher predicates which may be used in a FilterStep.
  * \details These predicates will be used to determine if for instance any GCAM
  *          container's name matches some string or if the container's year matches
@@ -642,7 +670,8 @@ struct FilterStep {
             // accept and take a step on
             auto& filterPred = *boost::fusion::at_key<IndexFilter>( mFilterMap );
             for( auto iter = aData.mData.begin(); iter != aData.mData.end(); ++iter ) {
-                if( filterPred( iter - aData.mData.begin() ) ) {
+                int period = GetIndexAsPeriod::convertIndexToPeriod( aData.mData, iter - aData.mData.begin() );
+                if( filterPred( period ) ) {
                     if( !aIsLastStep ) {
                         // We still have more steps to take so have GCAMFusion take
                         // one on this element of the array of container data.
@@ -798,7 +827,8 @@ struct FilterStep {
             // map iterators so we will have to keep track of the index location explicitly
             int index = 0;
             for( auto iter = aData.mData.begin(); iter != aData.mData.end(); ++iter ) {
-                if( filterPred( index ) ) {
+                int period = GetIndexAsPeriod::convertIndexToPeriod( aData.mData, index );
+                if( filterPred( period ) ) {
                     aHandler.processData( *iter );
                 }
                 ++index;
