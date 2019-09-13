@@ -3105,7 +3105,7 @@ element input {
                   <rewrite from="ProtectedUnmanagedPasture" to="pasture (other)"/>
                   <rewrite from="Rice" to="crops"/>
                   <rewrite from="RockIceDesert" to="rock and desert"/>
-                  <rewrite from="Root_Tuber" to="crops"/>
+                  <rewrite from="RootTuber" to="crops"/>
                   <rewrite from="Shrubland" to="shrubs"/>
                   <rewrite from="SugarCrop" to="crops"/>
                   <rewrite from="Tundra" to="tundra"/>
@@ -3113,8 +3113,8 @@ element input {
                   <rewrite from="UnmanagedPasture" to="pasture (other)"/>
                   <rewrite from="UrbanLand" to="urban"/>
                   <rewrite from="Wheat" to="crops"/>
-                  <rewrite from="biomass_grass" to="biomass"/>
-                  <rewrite from="biomass_tree" to="biomass"/>
+                  <rewrite from="biomassGrass" to="biomass"/>
+                  <rewrite from="biomassTree" to="biomass"/>
                </level>
             </labelRewriteList>
          </query>

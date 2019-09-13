@@ -103,13 +103,13 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     L101.ag_Prod_Mt_R_C_Y_GLU %>%
       select(GCAM_region_ID, GLU) %>%
       unique %>%
-      mutate(GCAM_commodity = "biomass_grass") ->
+      mutate(GCAM_commodity = "biomassGrass") ->
       L201.R_C_GLU_biograss
     # Second, biotree: available anywhere that has any forest production at all
     L123.For_Prod_bm3_R_Y_GLU %>%
       select(GCAM_region_ID, GLU) %>%
       unique %>%
-      mutate(GCAM_commodity = "biomass_tree") ->
+      mutate(GCAM_commodity = "biomassTree") ->
       L201.R_C_GLU_biotree
     # Third, bind Ag commodties, forest, pasture and biomass all together
     L101.ag_Prod_Mt_R_C_Y_GLU %>%
@@ -235,7 +235,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # Copy to all model years
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       # Separate the AgSupplySubsector variable to get GLU names for matching in the harvest data
-      mutate(AgSupplySubsector = sub("Root_Tuber", "RootTuber", AgSupplySubsector)) %>%
+      mutate(AgSupplySubsector = sub("RootTuber", "RootTuber", AgSupplySubsector)) %>%
       separate(AgSupplySubsector, c("GCAM_commodity", "GLU_name"), sep = "_") %>%
       left_join(L201.ag_HA_to_CropLand_R_Y_GLU, by = c("region", "GLU_name", "year")) %>%
       # Copy to both irrigated and rainfed technologies
@@ -243,7 +243,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # Copy to high and low management levels
       repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
       # Add subsector and technology names
-      mutate(GCAM_commodity = sub("RootTuber", "Root_Tuber", GCAM_commodity),
+      mutate(GCAM_commodity = sub("RootTuber", "RootTuber", GCAM_commodity),
              AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
              AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_")) %>%
       select(LEVEL2_DATA_NAMES[["AgHAtoCL"]]) ->
@@ -263,12 +263,12 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       bind_rows(mutate(L163.ag_rfdBioYield_GJm2_R_GLU, IRR_RFD = "RFD")) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) %>%
-      mutate(AgSupplySubsector = paste("biomass_grass", GLU_name, sep = "_")) ->
+      mutate(AgSupplySubsector = paste("biomassGrass", GLU_name, sep = "_")) ->
       L2011.AgYield_bio_grass_irr
 
     # From the subsector generic table, filter bio grass crops
     L2012.AgSupplySubsector %>%
-      filter(grepl("biomass_grass", AgSupplySubsector)) %>%
+      filter(grepl("biomassGrass", AgSupplySubsector)) %>%
       # Copy to all base years
       repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       # Copy to both irrigated and rainfed technologies
@@ -299,14 +299,14 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
 
     # From the subsector table, filter bio tree crops
     L2012.AgSupplySubsector %>%
-      filter(grepl("biomass_tree", AgSupplySubsector)) %>%
+      filter(grepl("biomassTree", AgSupplySubsector)) %>%
       # No tech split yet
       mutate(AgProductionTechnology = AgSupplySubsector) %>%
       # Copy to all base years
       repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       select(LEVEL2_DATA_NAMES[["AgTechYr"]]) %>%
       mutate(GLU_name = AgSupplySubsector,
-             GLU_name = sub("biomass_tree_", "", GLU_name)) %>%
+             GLU_name = sub("biomassTree_", "", GLU_name)) %>%
       # Match in grass crop yields where available, use left_join instead because of NAs
       left_join(L201.AgYield_bio_grass, by = c("region", "GLU_name")) %>%
       # Where not available (i.e., where there is forest but not cropped land),
@@ -323,7 +323,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
 
     # Compile the generic:irr and generic:rfd conversion factors
     L201.AgYield_bio_grass %>%
-      mutate(AgSupplySubsector = paste("biomass_grass", GLU_name, sep = "_")) %>%
+      mutate(AgSupplySubsector = paste("biomassGrass", GLU_name, sep = "_")) %>%
       # Generic bio grass crop yield w/o tech split
       rename(generic.yield = yield) %>%
       # Match in irrigated and rainfed bio grass yields
@@ -331,8 +331,8 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # Compute conversion factor as irr/generic, and rfd/generic
       mutate(factor = yield / generic.yield,
              # Prepare for bio tree crops
-             AgSupplySubsector = sub("biomass_grass", "biomass_tree", AgSupplySubsector),
-             AgProductionTechnology = sub("biomass_grass", "biomass_tree", AgProductionTechnology)) %>%
+             AgSupplySubsector = sub("biomassGrass", "biomassTree", AgSupplySubsector),
+             AgProductionTechnology = sub("biomassGrass", "biomassTree", AgProductionTechnology)) %>%
       select(-GLU_name, -yield, -generic.yield) ->
       L2011.irr_rfd_factors
 
@@ -370,7 +370,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # Copy to high and low management levels
       repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
       # Separate technology to match in the multipliers
-      separate(AgProductionTechnology, c("biomass", "type", "GLU_name", "IRR_RFD")) %>%
+      separate(AgProductionTechnology, c("biomass", "GLU_name", "IRR_RFD")) %>%
       # Match in multipliers, use left_join instead because of NAs
       left_join(L2012.YieldMult_R_bio_GLU_irr, by = c("region", "GLU_name", "IRR_RFD" = "Irr_Rfd", "MGMT" = "level")) %>%
       # For minor region/GLUs that are missing from the ag data, set the multipliers to 1 (effectively fixing yields in all periods)
@@ -384,7 +384,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     # Add sector, subsector, and technology information to L201.AgYield_bio_grass
     L201.AgYield_bio_grass %>%
       mutate(AgSupplySector = "biomass",
-             AgSupplySubsector = paste0("biomass_grass_", GLU_name),
+             AgSupplySubsector = paste0("biomassGrass_", GLU_name),
              AgProductionTechnology = AgSupplySubsector) %>%
       repeat_add_columns((tibble(year = MODEL_BASE_YEARS))) %>%
       select(-GLU_name) ->

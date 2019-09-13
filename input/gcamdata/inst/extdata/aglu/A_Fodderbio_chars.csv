@@ -8,5 +8,5 @@
 GCAM_commodity,HarvestIndex,Root_Shoot,WaterContent
 FodderGrass,0.95,1.5,0.65
 FodderHerb,0.95,1.1,0.65
-biomass_grass,1,0.77,0.15
-biomass_tree,1,0.77,0.15
+biomassGrass,1,0.77,0.15
+biomassTree,1,0.77,0.15
