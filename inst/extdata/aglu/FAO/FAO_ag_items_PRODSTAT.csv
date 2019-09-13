@@ -36,7 +36,7 @@ Carrots and turnips,426,Carrots,MiscCrop,VEGE,16,Carrot,FruitsAndVeg,Others (ann
 Carrots for Fodder,648,Carrots4Fddr,FodderHerb,,,,Other,Fodder crops,Crop25,,,Roots other,Carrots and turnips,ocr
 "Cashew nuts, with shell",217,CashewNuts,MiscCrop,,,,Other,Others (perennial) ,Crop24,Cashewnuts,,Nuts,,v_f
 Cashewapple,591,Cashewapple,MiscCrop,,,,FruitsAndVeg,Others (perennial) ,Crop24,Cashewapple,,,,v_f
-Cassava,125,Cassava,Root_Tuber,CASS,10,Cassava,Other,Cassava,Crop11,,Cassava,Cassava,,
+Cassava,125,Cassava,RootTuber,CASS,10,Cassava,Other,Cassava,Crop11,,Cassava,Cassava,,
 Cassava leaves,378,,MiscCrop,,,,,,,,,,,
 Castor oil seed,265,CastorBeans,OilCrop,OILC,20,,Other,Others (annual),Crop26,Castoroilseed,,Oilcrops other,,osd
 Cauliflowers and broccoli,393,Cauliflower,MiscCrop,VEGE,16,Cauliflower,FruitsAndVeg,Others (annual),Crop26,Cauliflowersandbroccoli,,Vegetables other,,v_f
@@ -140,7 +140,7 @@ Plantains and others,489,Plantains,MiscCrop,PLAN,12,Plantain,FruitsAndVeg,Others
 Plums and sloes,536,Plums,MiscCrop,FRUI,19,Plum,FruitsAndVeg,Others (perennial) ,Crop24,Plumsandsloes,,Fruits other,,v_f
 Popcorn,68,PopCorn,Corn,MAIZ,3,,OtherCoarseGrains,Maize,Crop2,,,,,gro
 Poppy seed,296,PoppySeed,OilCrop,OILC,20,Poppy,OtherOilSeeds,Others (annual),Crop26,Poppyseed,,Oilcrops other,,osd
-Potatoes,116,Potatoes,Root_Tuber,POTA,8,Potato,Other,Potatoes,Crop10,,Potatoes,Potatoes,,
+Potatoes,116,Potatoes,RootTuber,POTA,8,Potato,Other,Potatoes,Crop10,,Potatoes,Potatoes,,
 "Pulses, nes",211,Pulsesnes,MiscCrop,PULS,15,Pulses,Other,Pulses,Crop17,,,Beans,,
 Pumpkins for Fodder,645,,,,,,,,,,,,,
 "Pumpkins, squash and gourds",394,PmpknSqshGrd,MiscCrop,VEGE,16,Squash,FruitsAndVeg,Others (annual),Crop26,Pumpkins_squashandgourds,,Vegetables other,,v_f
@@ -151,7 +151,7 @@ Ramie,788,Ramie,FiberCrop,,,,Other,Others (annual),Crop26,Ramie,,,,pfb
 Rapeseed,270,Rapeseed,OilCrop,RAPE,21,Rapeseed,OtherOilSeeds,Rapeseed,Crop15,,Rapeseed,Rapeseed,,osd
 Raspberries,547,Raspberries,MiscCrop,FRUI,19,Raspberry,FruitsAndVeg,Others (perennial) ,Crop24,Raspberries,,Fruits other,,v_f
 "Rice, paddy",27,PaddyRice,Rice,RICE,2,Rice,Rice,Rice,Crop3,,Rice,Rice,,pdr
-"Roots and tubers, nes",149,Root_TbrNES,Root_Tuber,OTHR,11,Roots & tubers,Other,Others (annual),Crop26,Rootsandtubersnes,,Roots other,,
+"Roots and tubers, nes",149,Root_TbrNES,RootTuber,OTHR,11,Roots & tubers,Other,Others (annual),Crop26,Rootsandtubersnes,,Roots other,,
 Rye,71,Rye,OtherGrain,OTHC,7,Rye,OtherCoarseGrains,Rye,Crop5,,,Rye,,gro
 Rye grass for forage & silage,638,RyeGrsFrgSlg,FodderGrass,OTHC,7,,Other,Rye,Crop5,,,Rye,Rye,
 Safflower seed,280,SfflwrSeed,OilCrop,OILC,20,Safflower,OtherOilSeeds,Others (annual),Crop26,Safflowerseed,,Oilcrops other,,osd
@@ -170,10 +170,10 @@ Sugar cane,156,SugarCane,SugarCrop,CANE,14,Sugar cane,SugarCrops,Sugar cane,Crop
 "Sugar crops, nes",161,SugarCrpNES,SugarCrop,,,,SugarCrops,Others (annual),Crop26,Sugarcrops_nes,,,,c_b
 Sunflower seed,267,SnflwrSeed,OilCrop,SUNF,25,Sunflower,OtherOilSeeds,Sunflower,Crop9,,Sunflower,Sunflower,,osd
 Swedes for Fodder,649,Swedes4Fddr,FodderHerb,,,,Other,Others (annual),Crop26,,,,,ocr
-Sweet potatoes,122,SweetPotato,Root_Tuber,SPOT,9,"Potato, sweet",Other,Others (annual),Crop26,Sweetpotatoes,,Sweet Potatoes,,
+Sweet potatoes,122,SweetPotato,RootTuber,SPOT,9,"Potato, sweet",Other,Others (annual),Crop26,Sweetpotatoes,,Sweet Potatoes,,
 Tallowtree seed,305,,MiscCrop,,,,Other,Others (perennial) ,Crop24,,,,,
 "Tangerines, mandarins, clementines, satsumas",495,TngMndClmnt,MiscCrop,CITR,18,Tangerine,FruitsAndVeg,Citrus,Crop18,,,"Oranges, Mandarines",,v_f
-Taro (cocoyam),136,TaroCocoYam,Root_Tuber,CASS,10,Taro,Other,Others (annual),Crop26,Taro.cocoyam.,,,,
+Taro (cocoyam),136,TaroCocoYam,RootTuber,CASS,10,Taro,Other,Others (annual),Crop26,Taro.cocoyam.,,,,
 Tea,667,Tea,MiscCrop,TEAS,30,Tea,Other,Others (perennial) ,Crop24,Tea,,Tea,,ocr
 Tea Nes,674,,MiscCrop,TEAS,30,Tea,Other,Others (perennial) ,Crop24,,,Tea,,ocr
 "Tobacco, unmanufactured",826,TbccLeaves,MiscCrop,TOBA,31,Tobacco,Other,Others (annual),Crop26,Tobacco_unmanufactured,,,,ocr
@@ -189,7 +189,7 @@ Vetches,205,Vetches,FodderHerb,PULS,15,,Other,Pulses,Crop17,,,Beans,,ocr
 "Walnuts, with shell",222,Walnuts,MiscCrop,,,,Other,Others (perennial) ,Crop24,Walnuts_withshell,,Nuts,,v_f
 Watermelons,567,Watermelons,MiscCrop,FRUI,,Watermelon,FruitsAndVeg,Others (annual),Crop26,Watermelons,,Fruits other,,v_f
 Wheat,15,Wheat,Wheat,WHEA,1,Wheat,Wheat,Wheat,Crop1,,Wheat,Wheat,,wht
-Yams,137,Yams,Root_Tuber,SPOT,9,Yam,Other,Others (annual),Crop26,Yams,,Yams,,
-Yautia (cocoyam),135,YautiaCcYam,Root_Tuber,OTHR,11,,Other,Others (annual),Crop26,Yautia.cocoyam.,,,,
+Yams,137,Yams,RootTuber,SPOT,9,Yam,Other,Others (annual),Crop26,Yams,,Yams,,
+Yautia (cocoyam),135,YautiaCcYam,RootTuber,OTHR,11,,Other,Others (annual),Crop26,Yautia.cocoyam.,,,,
 ,,BrdBeanGreen,MiscCrop,PULS,15,,Other,Others (annual),Crop26,,,,,
 ,,KapokFibre,FiberCrop,,,,,Others (perennial) ,Crop24,,,,,pfb
