@@ -111,7 +111,6 @@ public:
 
     virtual double getTotalCalOutputs( const int period ) const;
 
-    virtual double getInput( const int period ) const;
     virtual double getOutput( const int period ) const;
 
     virtual double getEnergyInput( const int aPeriod ) const;
