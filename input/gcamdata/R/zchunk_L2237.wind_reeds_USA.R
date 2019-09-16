@@ -240,7 +240,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
                   select(Region, State),
                 by = c("Wind.Resource.Region" = "Region")) %>%
       group_by(State) %>%
-      summarise(grid.cost = round(mean(grid.cost), energy.DIGITS_COST)) %>%
+      summarise(grid.cost = round(min(grid.cost), energy.DIGITS_COST)) %>%
       ungroup() -> L2237.grid.cost
 
     # Formatting tables for output
