@@ -86,6 +86,7 @@
 		<Value name="debug-region">USA</Value>
 		<Value name="MAGICC-input-dir">../input/magicc/inputs</Value>
 		<Value name="MAGICC-output-dir">../output</Value>
+		<Value name="AbatedGasForCostCurves">CO2</Value>
 	</Strings>
 	<Bools>
 		<Value name="CalibrationActive">1</Value>
