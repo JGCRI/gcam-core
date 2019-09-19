@@ -338,11 +338,12 @@ gdp_deflator <- function(year, base_year) {
 #' @param d Data frame to operate on (a tibble)
 #' @param value_col Name of the resulting (gathered) value column, string or unquoted column name
 #' @param year_pattern Year pattern to match against
+#' @param na.rm Remove NAs flag passed on to tidyr::gather
 #' @return The gathered (reshaped) data frame.
 #' @importFrom dplyr matches mutate
 #' @importFrom tidyr gather
 #' @export
-gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN) {
+gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN, na.rm = FALSE) {
   assert_that(is_tibble(d))
   assert_that(is.character(value_col))
   assert_that(is.character(year_pattern))
@@ -350,7 +351,7 @@ gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN) {
   . <- year <- value <- NULL  # silence package check notes
 
   d %>%
-    gather(year, value, matches(year_pattern)) %>%
+    gather(year, value, matches(year_pattern), na.rm = na.rm) %>%
     mutate(year = as.integer(year)) %>%
     stats::setNames(sub("value", value_col, names(.)))
 }
