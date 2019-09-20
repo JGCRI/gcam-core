@@ -1,5 +1,17 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
+#' module_data_FAO_BilateralTrade
+#'
+#' Read the FAO_BilateralTrade trade from file and reduce / summarize as soon as possible to
+#' keep it's memory footprint small
+#'
+#' @param command API command to execute
+#' @param ... other optional parameters, depending on command
+#' @return Depends on \code{command}: either a vector of required inputs,
+#' a vector of output names, or (if \code{command} is "MAKE") all
+#' the generated outputs: \code{FAO_BilateralTrade}.
+#' @importFrom dplyr filter select
+#' @author PLP
 module_data_FAO_BilateralTrade <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(NULL)
@@ -10,13 +22,24 @@ module_data_FAO_BilateralTrade <- function(command, ...) {
     Element <- Reporter.Countries <- Partner.Countries <-
       Item.Code <- Item <- item.code <- NULL # silence package check.
 
-    load_csv_files("aglu/FAO/FAO_BilateralTrade", FALSE, quiet = T)[[1]] %>%
+    # The bilateral trade dataset is massive (286m data points). The order of the steps below is intended to minimize
+    # processing time (i.e., the dataset is filtered before performing operations)
+
+    # Select columns, filter to the import and export quantity variables, and gather_years dropping NAs
+    # as the "matrix" is very sparse
+    fn <- "aglu/FAO/FAO_BilateralTrade"
+    fqfn <- find_csv_file(fn, FALSE, quiet = TRUE)
+    load_csv_files(fn, FALSE, quiet = TRUE)[[1]] %>%
       select(Reporter.Countries, Partner.Countries, Item.Code, Item, Element, as.character(aglu.TRADE_CAL_YEARS)) %>%
       filter(Element %in% c( "Import Quantity", "Export Quantity")) %>%
-      gather_years(na.rm = TRUE) ->
+      gather_years(na.rm = TRUE) %>%
+      parse_csv_header(fqfn, find_header(fqfn)) %>%
+      add_flags(FLAG_NO_TEST) ->
       FAO_BilateralTrade
 
     return_data(FAO_BilateralTrade)
+  } else {
+    stop("Unknown command")
   }
 }
 
@@ -62,10 +85,7 @@ module_aglu_LB1091.ag_GrossTrade <- function(command, ...) {
 
     # 1: Filter and prepare the bi-lateral trade flow volume data by country and FAO commodity
 
-    # The bilateral trade dataset is massive (286m data points). The order of the steps below is intended to minimize
-    # processing time (i.e., the dataset is filtered before performing operations)
-
-    # Select columns, filter to the import and export quantity variables, and filter to traded GCAM commodities
+    # Filter to traded GCAM commodities
     # left_join because many of the trade commodities don't map to GCAM commodities (e.g., silk worm cocoons)
     L1091.BiTrade_t_ctry_item <- left_join(FAO_BilateralTrade, select(FAO_ag_items_TRADE, item.code, bitrade_commod, GCAM_commodity),
                 by = c(Item.Code = "item.code")) %>%
