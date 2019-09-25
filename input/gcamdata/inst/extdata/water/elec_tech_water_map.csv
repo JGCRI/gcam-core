@@ -1,7 +1,7 @@
 # File: elec_tech_water_map.csv
 # Title: Electricity technology to water type mapping
 # Units: None
-# Column types: ccccccccccccc 
+# Column types: ccccccccccccc
 # ----------
 from.supplysector,from.subsector,from.technology,to.supplysector,to.subsector,to.technology,plant_type,cooling_system,water_type,sector,fuel,technology,minicam.energy.input
 electricity,wind,wind,electricity,wind,wind,no cooling,none,none,electricity generation,wind,wind,onshore wind resource
@@ -44,14 +44,14 @@ electricity,refined liquids,refined liquids (steam/CT),elec_refined liquids (ste
 electricity,refined liquids,refined liquids (steam/CT),elec_refined liquids (steam/CT),refined liquids (steam/CT),refined liquids (steam/CT) (recirculating),fossil non-coal,recirculating,fresh,electricity generation,refined liquids,refined liquids (steam/CT),refined liquids industrial
 electricity,refined liquids,refined liquids (steam/CT),elec_refined liquids (steam/CT),refined liquids (steam/CT),refined liquids (steam/CT) (cooling pond),fossil non-coal,cooling pond,fresh,electricity generation,refined liquids,refined liquids (steam/CT),refined liquids industrial
 electricity,refined liquids,refined liquids (steam/CT),elec_refined liquids (steam/CT),refined liquids (steam/CT),refined liquids (steam/CT) (dry cooling),fossil non-coal,dry cooling,fresh,electricity generation,refined liquids,refined liquids (steam/CT),refined liquids industrial
-electricity,refined liquids,refined liquids (CC),elec_refined liquids (CC),refined liquids (CC),refined liquids (CC) (once through),CC,once through,fresh,electricity generation,refined liquids,refined liquids (CC),refined liquids industrial
-electricity,refined liquids,refined liquids (CC),elec_refined liquids (CC),refined liquids (CC),refined liquids (CC) (seawater),CC,once through,seawater,electricity generation,refined liquids,refined liquids (CC),refined liquids industrial
-electricity,refined liquids,refined liquids (CC),elec_refined liquids (CC),refined liquids (CC),refined liquids (CC) (recirculating),CC,recirculating,fresh,electricity generation,refined liquids,refined liquids (CC),refined liquids industrial
-electricity,refined liquids,refined liquids (CC),elec_refined liquids (CC),refined liquids (CC),refined liquids (CC) (dry cooling),CC,dry cooling,fresh,electricity generation,refined liquids,refined liquids (CC),refined liquids industrial
-electricity,refined liquids,refined liquids (CC CCS),elec_refined liquids (CC CCS),refined liquids (CC CCS),refined liquids (CC CCS) (once through),CC (CCS),once through,fresh,electricity generation,refined liquids,refined liquids (CC CCS),refined liquids industrial
-electricity,refined liquids,refined liquids (CC CCS),elec_refined liquids (CC CCS),refined liquids (CC CCS),refined liquids (CC CCS) (seawater),CC (CCS),once through,seawater,electricity generation,refined liquids,refined liquids (CC CCS),refined liquids industrial
-electricity,refined liquids,refined liquids (CC CCS),elec_refined liquids (CC CCS),refined liquids (CC CCS),refined liquids (CC CCS) (recirculating),CC (CCS),recirculating,fresh,electricity generation,refined liquids,refined liquids (CC CCS),refined liquids industrial
-electricity,refined liquids,refined liquids (CC CCS),elec_refined liquids (CC CCS),refined liquids (CC CCS),refined liquids (CC CCS) (dry cooling),CC (CCS),dry cooling,fresh,electricity generation,refined liquids,refined liquids (CC CCS),refined liquids industrial
+electricity,refined liquids,refined liquids (CC),elec_refined liquids (CC),refined liquids (CC),refined liquids (CC) (once through),combined cycle,once through,fresh,electricity generation,refined liquids,refined liquids (CC),refined liquids industrial
+electricity,refined liquids,refined liquids (CC),elec_refined liquids (CC),refined liquids (CC),refined liquids (CC) (seawater),combined cycle,once through,seawater,electricity generation,refined liquids,refined liquids (CC),refined liquids industrial
+electricity,refined liquids,refined liquids (CC),elec_refined liquids (CC),refined liquids (CC),refined liquids (CC) (recirculating),combined cycle,recirculating,fresh,electricity generation,refined liquids,refined liquids (CC),refined liquids industrial
+electricity,refined liquids,refined liquids (CC),elec_refined liquids (CC),refined liquids (CC),refined liquids (CC) (dry cooling),combined cycle,dry cooling,fresh,electricity generation,refined liquids,refined liquids (CC),refined liquids industrial
+electricity,refined liquids,refined liquids (CC CCS),elec_refined liquids (CC CCS),refined liquids (CC CCS),refined liquids (CC CCS) (once through),combined cycle (CCS),once through,fresh,electricity generation,refined liquids,refined liquids (CC CCS),refined liquids industrial
+electricity,refined liquids,refined liquids (CC CCS),elec_refined liquids (CC CCS),refined liquids (CC CCS),refined liquids (CC CCS) (seawater),combined cycle (CCS),once through,seawater,electricity generation,refined liquids,refined liquids (CC CCS),refined liquids industrial
+electricity,refined liquids,refined liquids (CC CCS),elec_refined liquids (CC CCS),refined liquids (CC CCS),refined liquids (CC CCS) (recirculating),combined cycle (CCS),recirculating,fresh,electricity generation,refined liquids,refined liquids (CC CCS),refined liquids industrial
+electricity,refined liquids,refined liquids (CC CCS),elec_refined liquids (CC CCS),refined liquids (CC CCS),refined liquids (CC CCS) (dry cooling),combined cycle (CCS),dry cooling,fresh,electricity generation,refined liquids,refined liquids (CC CCS),refined liquids industrial
 electricity,biomass,biomass (conv),elec_biomass (conv),biomass (conv),biomass (conv) (once through),fossil non-coal,once through,fresh,electricity generation,biomass,biomass (conv),regional biomass
 electricity,biomass,biomass (conv),elec_biomass (conv),biomass (conv),biomass (conv) (seawater),fossil non-coal,once through,seawater,electricity generation,biomass,biomass (conv),regional biomass
 electricity,biomass,biomass (conv),elec_biomass (conv),biomass (conv),biomass (conv) (recirculating),fossil non-coal,recirculating,fresh,electricity generation,biomass,biomass (conv),regional biomass
