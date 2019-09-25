@@ -9,8 +9,8 @@
 #' the generated outputs: \code{L2261.DeleteSupplysector_bio_USA}, \code{L2261.Supplysector_bio_USA},
 #' \code{L2261.SubsectorShrwtFllt_bio_USA}, \code{L2261.SubsectorInterp_bio_USA}, \code{L2261.SubsectorLogit_bio_USA},
 #' \code{L2261.StubTech_bio_USA}, \code{L2261.StubTechMarket_bio_USA}, \code{L2261.StubTechShrwt_rbO_USA},
-#' \code{L2261.StubTechFractSecOut_bio_USA}, \code{L2261.StubTechFractProd_bio_USA}, \code{L2261.DepRsrc_DDGS_USA},
-#' \code{L2261.DepRsrcPrice_DDGS_USA}, \code{L2261.Tech_rbm_USA}, \code{L2261.TechShrwt_rbm_USA},
+#' \code{L2261.StubTechFractSecOut_bio_USA}, \code{L2261.StubTechFractProd_bio_USA}, \code{L2261.Rsrc_DDGS_USA},
+#' \code{L2261.RsrcPrice_DDGS_USA}, \code{L2261.Tech_rbm_USA}, \code{L2261.TechShrwt_rbm_USA},
 #' \code{L2261.TechCoef_rbm_USA}, \code{L2261.Tech_dbm_USA}, \code{L2261.TechShrwt_dbm_USA},
 #' \code{L2261.TechEff_dbm_USA}, \code{L2261.TechCost_dbm_USA}, \code{L2261.CarbonCoef_bio_USA},
 #' \code{L2261.StubTechMarket_en_USA}, \code{L2261.StubTechMarket_elecS_USA}, \code{L2261.StubTechMarket_ind_USA},
@@ -34,8 +34,8 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
              "L221.StubTechShrwt_bio",
              "L221.StubTechFractProd_en",
              "L221.StubTechFractSecOut_en",
-             "L221.DepRsrc_en",
-             "L221.DepRsrcPrice_en",
+             "L221.Rsrc_en",
+             "L221.RsrcPrice_en",
              "L226.SubsectorInterp_en",
              "L226.GlobalTechEff_en",
              "L226.GlobalTechCost_en",
@@ -55,8 +55,8 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
              "L2261.StubTechShrwt_rbO_USA",
              "L2261.StubTechFractSecOut_bio_USA",
              "L2261.StubTechFractProd_bio_USA",
-             "L2261.DepRsrc_DDGS_USA",
-             "L2261.DepRsrcPrice_DDGS_USA",
+             "L2261.Rsrc_DDGS_USA",
+             "L2261.RsrcPrice_DDGS_USA",
              "L2261.Tech_rbm_USA",
              "L2261.TechShrwt_rbm_USA",
              "L2261.TechCoef_rbm_USA",
@@ -92,8 +92,8 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
     L221.StubTechShrwt_bio <- get_data(all_data, "L221.StubTechShrwt_bio")
     L221.StubTechFractProd_en <- get_data(all_data, "L221.StubTechFractProd_en")
     L221.StubTechFractSecOut_en <- get_data(all_data, "L221.StubTechFractSecOut_en")
-    L221.DepRsrc_en <- get_data(all_data, "L221.DepRsrc_en")
-    L221.DepRsrcPrice_en <- get_data(all_data, "L221.DepRsrcPrice_en")
+    L221.Rsrc_en <- get_data(all_data, "L221.Rsrc_en")
+    L221.RsrcPrice_en <- get_data(all_data, "L221.RsrcPrice_en")
     L226.SubsectorInterp_en <- get_data(all_data, "L226.SubsectorInterp_en")
     L226.GlobalTechEff_en <- get_data(all_data, "L226.GlobalTechEff_en")
     L226.GlobalTechCost_en <- get_data(all_data, "L226.GlobalTechCost_en")
@@ -201,19 +201,19 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
 
 
     # Connecting state-level DDGS & feedcakes secondary outputs to USA sector
-    # Depletable resource info for state-level DDGS & feedcake secondary outputs
-    L221.DepRsrc_en %>%
+    # depletable resource info for state-level DDGS & feedcake secondary outputs
+    L221.Rsrc_en %>%
       filter(region == gcam.USA_REGION) %>%
       select(-region) %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
-      select(LEVEL2_DATA_NAMES$DepRsrc) -> L2261.DepRsrc_DDGS_USA
+      select(LEVEL2_DATA_NAMES$Rsrc) -> L2261.Rsrc_DDGS_USA
 
     # Depletable resource prices for state-level DDGS & feedcake secondary outputs
-    L221.DepRsrcPrice_en %>%
+    L221.RsrcPrice_en %>%
       filter(region == gcam.USA_REGION) %>%
       select(-region) %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
-      select(LEVEL2_DATA_NAMES$DepRsrcPrice) -> L2261.DepRsrcPrice_DDGS_USA
+      select(LEVEL2_DATA_NAMES$RsrcPrice) -> L2261.RsrcPrice_DDGS_USA
 
 
     # Technologies for state-level regional biomass sectors, which consume "regional biomass" from USA regional biomass sector
@@ -424,21 +424,21 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
                      "L221.StubTechFractProd_en") ->
       L2261.StubTechFractProd_bio_USA
 
-    L2261.DepRsrc_DDGS_USA %>%
+    L2261.Rsrc_DDGS_USA %>%
       add_title("Depletable Resource Information for State-level Biomass Supply Sector Secondary Feed Outputs") %>%
       add_units("NA") %>%
       add_comments("Depletable resource info for state-level DDGS & feedcake secondary outputs") %>%
-      add_legacy_name("L2261.DepRsrc_DDGS_USA") %>%
-      add_precursors("L221.DepRsrc_en") ->
-      L2261.DepRsrc_DDGS_USA
+      add_legacy_name("L2261.Rsrc_DDGS_USA") %>%
+      add_precursors("L221.Rsrc_en") ->
+      L2261.Rsrc_DDGS_USA
 
-    L2261.DepRsrcPrice_DDGS_USA %>%
+    L2261.RsrcPrice_DDGS_USA %>%
       add_title("Depletable Resource Information for State-level Biomass Supply Sector Secondary Feed Outputs") %>%
       add_units("1975$/kg") %>%
       add_comments("Depletable resource prices for state-level DDGS & feedcake secondary outputs") %>%
-      add_legacy_name("L2261.DepRsrcPrice_DDGS_USA") %>%
-      add_precursors("L221.DepRsrcPrice_en") ->
-      L2261.DepRsrcPrice_DDGS_USA
+      add_legacy_name("L2261.RsrcPrice_DDGS_USA") %>%
+      add_precursors("L221.RsrcPrice_en") ->
+      L2261.RsrcPrice_DDGS_USA
 
     L2261.Tech_rbm_USA %>%
       add_title("State-level Regional Biomass Technologies") %>%
@@ -563,8 +563,8 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
                 L2261.StubTechShrwt_rbO_USA,
                 L2261.StubTechFractSecOut_bio_USA,
                 L2261.StubTechFractProd_bio_USA,
-                L2261.DepRsrc_DDGS_USA,
-                L2261.DepRsrcPrice_DDGS_USA,
+                L2261.Rsrc_DDGS_USA,
+                L2261.RsrcPrice_DDGS_USA,
                 L2261.Tech_rbm_USA,
                 L2261.TechShrwt_rbm_USA,
                 L2261.TechCoef_rbm_USA,

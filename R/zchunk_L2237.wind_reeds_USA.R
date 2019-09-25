@@ -7,7 +7,8 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L2237.SmthRenewRsrcCurves_wind_reeds_USA}, \code{L2237.StubTechCapFactor_wind_reeds_USA},
-#' \code{L2237.SmthRenewRsrcTechChange_wind_reeds_USA}, and \code{L2237.StubTechCost_wind_reeds_USA}.
+#' \code{L2237.SmthRenewRsrcTechChange_wind_reeds_USA}, \code{L2237.StubTechCost_wind_reeds_USA},
+#' \code{L2237.ResTechShrwt_wind_reeds_USA}.
 #' The corresponding file in the original data system was \code{L2237.wind_reeds_USA.R} (gcam-usa level2).
 #' @details Create state-level wind resource supply curves
 #' @importFrom assertthat assert_that
@@ -28,7 +29,8 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
     return(c('L2237.SmthRenewRsrcCurves_wind_reeds_USA',
              'L2237.StubTechCapFactor_wind_reeds_USA',
              'L2237.SmthRenewRsrcTechChange_wind_reeds_USA',
-             'L2237.StubTechCost_wind_reeds_USA'))
+             'L2237.StubTechCost_wind_reeds_USA',
+             'L2237.ResTechShrwt_wind_reeds_USA'))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -52,7 +54,8 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       Q1 <- mid.price <- optimize <- curve.exponent <- k1 <- capital.tech.change.5yr <- k2 <- tech.change.5yr <-
       tech.change <- Wind.Type <- bin <- cost <- grid.cost <- Region <- renewresource <-
       smooth.renewable.subresource <- year.fillout <- capacity.factor <- input.cost <-
-      capital.tech.change.period <- tech.change.period <- time.change <- NULL
+      capital.tech.change.period <- tech.change.period <- time.change <-
+      subresource <- NULL
 
     # ===================================================
     # Data Processing
@@ -303,6 +306,15 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       rename(input.cost = grid.cost) %>%
       filter(!is.na(input.cost)) -> L2237.StubTechCost_wind_reeds_USA
 
+    L2237.SmthRenewRsrcCurves_wind_reeds_USA %>%
+      select(region, resource = renewresource, subresource = smooth.renewable.subresource) %>%
+      unique() %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(technology = subresource,
+             share.weight = 1.0) %>%
+      select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+      L2237.ResTechShrwt_wind_reeds_USA
+
     # ===================================================
     # Produce outputs
 
@@ -355,11 +367,19 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
                      'L223.GlobalIntTechCapital_elec') ->
       L2237.StubTechCost_wind_reeds_USA
 
+    L2237.ResTechShrwt_wind_reeds_USA %>%
+      add_title("Technology share-weights for the renewable resources") %>%
+      add_units("NA") %>%
+      add_comments("Mostly just to provide a shell of a technology for the resource to use") %>%
+      same_attributes_as(L2237.SmthRenewRsrcCurves_wind_reeds_USA) ->
+      L2237.ResTechShrwt_wind_reeds_USA
+
 
     return_data(L2237.SmthRenewRsrcCurves_wind_reeds_USA,
                 L2237.StubTechCapFactor_wind_reeds_USA,
                 L2237.SmthRenewRsrcTechChange_wind_reeds_USA,
-                L2237.StubTechCost_wind_reeds_USA)
+                L2237.StubTechCost_wind_reeds_USA,
+                L2237.ResTechShrwt_wind_reeds_USA)
 
   } else {
     stop("Unknown command")

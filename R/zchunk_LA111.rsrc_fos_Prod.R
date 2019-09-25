@@ -35,7 +35,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
 
     sector <- fuel <- year <- value <- share <- iso <- GCAM_region_ID <- unconventionals <- value.x <-
       value.y <- FLOW <- PRODUCT <- resource <- region_GCAM3 <- CumulSum <- subresource <- grade <-
-      available <- available_region_GCAM3 <- extractioncost <- NULL  # silence package check notes
+      available <- available_region_GCAM3 <- extractioncost <- . <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -126,6 +126,11 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
                      "energy/rsrc_unconv_oil_prod_bbld") ->
       L111.Prod_EJ_R_F_Yh
 
+    # ------- RESOURCE PRICES
+
+    # Fossil resource historical prices are currently assumed. No level1 processing is needed.
+
+
     # ------- FOSSIL RESOURCE SUPPLY CURVES
 
     # Using supply curves from GCAM 3.0 (same as MiniCAM) (83-93)
@@ -197,12 +202,6 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
                                   by = c("resource", "subresource", "grade")) ->
         L111.RsrcCurves_EJ_R_Ffos
 
-      # ------- RESOURCE PRICES
-
-      # Fossil resource historical prices are currently assumed. No level1 processing is needed.
-
-      # Produce outputs
-
       L111.RsrcCurves_EJ_R_Ffos %>%
         add_title("Fossil resource supply curves", overwrite = TRUE) %>%
         add_units("available: EJ; extractioncost: 1975$/GJ") %>%
@@ -211,11 +210,9 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
         add_comments("Use crude oil production shares as a proxy for unconventional oil resources.") %>%
         add_legacy_name("L111.RsrcCurves_EJ_R_Ffos") %>%
         add_precursors("common/iso_GCAM_regID", "energy/A11.fos_curves",
-                       "energy/IEA_product_rsrc", "L100.IEA_en_bal_ctry_hist") ->
+                       "energy/IEA_product_rsrc", "L100.IEA_en_bal_ctry_hist",
+                       "L1011.en_bal_EJ_R_Si_Fi_Yh") ->
         L111.RsrcCurves_EJ_R_Ffos
-
-      # At this point output should be identical to the prebuilt version
-      verify_identical_prebuilt(L111.RsrcCurves_EJ_R_Ffos)
     }
 
     return_data(L111.Prod_EJ_R_F_Yh, L111.RsrcCurves_EJ_R_Ffos)
