@@ -15,7 +15,10 @@ module_gcamusa_batch_water_mapping_USA_xml <- function(command, ...) {
              "L203.SubsectorShrwtFllt_USA",
              "L203.TechShrwt_USA",
              "L203.TechCoef_USA",
-             "L203.DeleteSubsector_USAls"))
+             "L203.DeleteSubsector_USA",
+             "L203.TechDesalCoef_USA",
+             "L203.TechDesalShrwt_USA",
+             "L203.TechDesalCost_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "water_mapping_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -28,19 +31,25 @@ module_gcamusa_batch_water_mapping_USA_xml <- function(command, ...) {
     L203.SubsectorShrwtFllt_USA <- get_data(all_data, "L203.SubsectorShrwtFllt_USA")
     L203.TechShrwt_USA <- get_data(all_data, "L203.TechShrwt_USA")
     L203.TechCoef_USA <- get_data(all_data, "L203.TechCoef_USA")
-    L203.DeleteSubsector_USAls <- get_data(all_data, "L203.DeleteSubsector_USAls")
-
+    L203.DeleteSubsector_USA <- get_data(all_data, "L203.DeleteSubsector_USA")
+    L203.TechDesalCoef_USA  <- get_data(all_data, "L203.TechDesalCoef_USA")
+    L203.TechDesalShrwt_USA <- get_data(all_data, "L203.TechDesalShrwt_USA")
+    L203.TechDesalCost_USA <- get_data(all_data, "L203.TechDesalCost_USA")
     # ===================================================
 
     # Produce outputs
     create_xml("water_mapping_USA.xml") %>%
       add_logit_tables_xml(L203.Supplysector_USA, "Supplysector") %>%
       add_logit_tables_xml(L203.SubsectorLogit_USA, "SubsectorLogit") %>%
-      add_xml_data(L203.DeleteSubsector_USAls, "DeleteSubsector") %>%
+      add_xml_data(L203.DeleteSubsector_USA, "DeleteSubsector") %>%
       add_xml_data(L203.SubsectorShrwtFllt_USA, "SubsectorShrwtFllt") %>%
       add_xml_data(L203.TechShrwt_USA, "TechShrwt") %>%
       add_xml_data(L203.TechCoef_USA, "TechCoef") %>%
-      add_precursors("L203.Supplysector_USA", "L203.SubsectorLogit_USA", "L203.DeleteSubsector_USAls", "L203.SubsectorShrwtFllt_USA", "L203.TechShrwt_USA", "L203.TechCoef_USA") ->
+      add_xml_data(L203.TechDesalCoef_USA, "TechCoef") %>%
+      add_xml_data(L203.TechDesalShrwt_USA, "TechShrwt") %>%
+      add_xml_data(L203.TechDesalCost_USA, "TechCost") %>%
+      add_precursors("L203.Supplysector_USA", "L203.SubsectorLogit_USA", "L203.DeleteSubsector_USA", "L203.SubsectorShrwtFllt_USA",
+                     "L203.TechShrwt_USA", "L203.TechCoef_USA","L203.TechDesalCoef_USA", "L203.TechDesalShrwt_USA", "L203.TechDesalCost_USA") ->
       water_mapping_USA.xml
 
     return_data(water_mapping_USA.xml)

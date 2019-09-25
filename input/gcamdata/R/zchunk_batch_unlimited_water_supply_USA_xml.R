@@ -11,7 +11,7 @@
 module_gcamusa_batch_unlimited_water_supply_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L202.UnlimitRsrc_USA",
-              "L202.UnlimitRsrcPrice_USA"))
+             "L202.UnlimitRsrcPrice_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "unlimited_water_supply_USA.xml"))
   } else if(command == driver.MAKE) {

@@ -461,8 +461,9 @@ water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
 water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
 water.IRRIGATION                          <- "Irrigation"
 water.LIVESTOCK                           <- "Livestock"
+water.PRIMARY_ENERGY                      <- "Mining"
 water.LIVESTOCK_TYPES                     <- c("Beef","Dairy","Pork","Poultry","SheepGoat")
-water.LIVESTOCK_DEMAND_TYPES              <- c("water_td_an_W","water_td_an_C")
+water.DELETE_DEMAND_TYPES              <- c("water_td_an_W","water_td_an_C","water_td_pri_W","water_td_pri_C")
 water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
 water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
@@ -482,6 +483,29 @@ water.GCAM_MFG_FUELS_EFW <- c("electricity")
 # manufacturing. Used to set a cap on derived manufacturing water withdrawals
 water.MAX_MFG_FRAC_OF_IND <- 0.85
 
+# Constants used for Graham et al. (2018) in which SSP assumptions were extended to the water sector
+water.MUNICIPAL_AEEI_DECAY <- 0.75
+water.MUNICIPAL_AEEI_GROWTH <- 1.25
+water.MUNICIPAL_PRICE_DECAY <- 0.9
+water.MUNICIPAL_PRICE_GROWTH <- 1.1
+water.HIGH_INCOME_REGIONS <- c("Australia_NZ","Canada","EU-15","European Free Trade Association","Japan",
+                                "South Korea","Taiwan","USA")
+water.MEDIUM_INCOME_REGIONS <- c("Argentina","Brazil","Central America and the Caribbean","China","Colombia","EU-12",
+                                "Europe_Eastern","Europe_Non_EU","Mexico","Middle East","Russia","South Africa","South America_Northern",
+                                "South America_Southern")
+water.LOW_INCOME_REGIONS <- c("Africa_Eastern","Africa_Northern","Africa_Southern","Africa_Western","Central Asia","India","Indonesia",
+                            "Pakistan","South Asia","Southeast Asia")
+water.MANUFACTURING_HIGH <- 0.011
+water.MANUFACTURING_MEDIUM <- 0.0055
+water.MANUFACTURING_LOW <- 0.00275
+
+water.MAPPING_COEF <- 1
+water.MAPPING_PMULT <- 1
+
+
+water.IRR_PRICE_SUBSIDY_MULT              <- 0.01  # Multiplier for irrigation price subsidy
+water.DESALINATION_PRICE                  <- 0.214  # 1975$/m3
+water.LOGIT_EXP                           <- -6
 # Emissions constants ======================================================================
 
 # Time
@@ -662,6 +686,13 @@ gcamusa.ELEC_SEGMENT_PEAK <- "peak generation"
 gcamusa.LIVESTOCK_FIRST_YEAR <- 1997  #  Initial year in which USDA Census data is available surrounding the year 2000
 gcamusa.LIVESTOCK_FINAL_YEAR <- 2002  #  Final year in which USDA Census data is available surrounding the year 2000
 gcamusa.LIVESTOCK_NO_EXIST <- c("RABBITS")  # Livestock types that currently do not map to a Mekonnen and Hoekstra WF type
+gcamusa.WATER_MAPPING_YEAR <- 2005
+gcamusa.USA_REGION_NUMBER <- 1
+gcamusa.ZERO_WATER_COEF <- 0
+gcamusa.CONVEYANCE_LOSSES <- 0.829937455747218 ## From file: L165.ag_IrrEff_R
+water.MAPPED_PRI_WATER_TYPES                  <- c("water consumption", "water withdrawals","desalination")
+gcamusa.MIN_PRIM_ENERGY_YEAR <- 1990
+
 
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions
