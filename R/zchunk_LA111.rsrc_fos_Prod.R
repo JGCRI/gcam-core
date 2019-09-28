@@ -84,6 +84,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       gather_years %>%
       # interpolate production to all historical years
       complete(iso, year = HISTORICAL_YEARS) %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
       arrange(iso, year) %>%
       group_by(iso) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
