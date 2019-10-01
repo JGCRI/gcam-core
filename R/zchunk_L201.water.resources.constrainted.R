@@ -29,8 +29,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
              "L103.water_mapping_R_GLU_B_W_Ws_share",
              "L103.water_mapping_R_B_W_Ws_share"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L201.NodeEquiv",
-             "L201.DeleteUnlimitRsrc",
+    return(c("L201.DeleteUnlimitRsrc",
              "L201.Rsrc",
              "L201.RsrcPrice",
              "L201.RenewRsrcCurves_uncalibrated",
@@ -64,15 +63,6 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
 
     # build tables with all possible technologies
-
-    # create node equivalence lists to allow use of same subresource headers
-    # ... regardless of what type the actual resources is
-
-    tibble(group.name = "Resources", tag1 = "resource",
-           tag2 = "depresource", tag3 = "renewresource",
-           tag4 = "unlimited.resource") %>%
-      select(LEVEL2_DATA_NAMES[["EQUIV_TABLE"]]) ->
-      L201.NodeEquiv
 
     # assign GCAM region name to each basin
     # basin with overlapping GCAM regions assign to region with largest basin area
@@ -153,10 +143,10 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
     L201.region_basin_home %>%
       left_join(L100.runoff_max_bm3, by = "basin_id") %>%
       mutate(sub.renewable.resource = "runoff") %>%
-      rename(year.fillout = year,
+      rename(renewresource = resource,
              maxSubResource = runoff_max) %>%
-      arrange(region, resource, year.fillout) %>%
-      select(LEVEL2_DATA_NAMES[["GrdRenewRsrcMaxWaterNoFO"]]) ->
+      arrange(region, renewresource, year) %>%
+      select(LEVEL2_DATA_NAMES[["GrdRenewRsrcMaxNoFillOut"]]) ->
       L201.GrdRenewRsrcMax_runoff
 
     # ==========================================================#
@@ -343,7 +333,8 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
         repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
         mutate(technology = sub.renewable.resource,
                share.weight = 1.0) %>%
-        select(LEVEL2_DATA_NAMES[["RenewRsrcTechShrwt"]]) ->
+        rename(subresource = sub.renewable.resource) %>%
+        select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
         L201.RenewRsrcTechShrwt
 
       L201.DepRsrcCurves_ground %>%
@@ -357,14 +348,6 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
-
-      L201.NodeEquiv %>%
-        add_title("Node Equiv") %>%
-        add_units("NA") %>%
-        add_comments("") %>%
-        add_legacy_name("L201.NodeEquiv") %>%
-        add_precursors("water/basin_ID") ->
-        L201.NodeEquiv
 
       L201.DeleteUnlimitRsrc %>%
         add_title("Delete Unlimited Resources") %>%
@@ -461,8 +444,7 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
         add_precursors("L201.DepRsrcCurves_ground") ->
         L201.RsrcTechShrwt
 
-      return_data(L201.NodeEquiv,
-                  L201.DeleteUnlimitRsrc,
+      return_data(L201.DeleteUnlimitRsrc,
                   L201.Rsrc,
                   L201.RsrcPrice,
                   L201.RenewRsrcCurves_uncalibrated,
