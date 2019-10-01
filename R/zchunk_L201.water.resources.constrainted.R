@@ -13,7 +13,6 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @importFrom purrr map map_dfr
 #' @author ST Oct 2018
 module_water_L201.water.resources.constrained <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -250,7 +249,8 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
 
     # Step 4
     # make function to expand out the 3-point resource curve to an interpolated 20-point curve
-    get_smooth_renewresource <- function(x){
+    get_smooth_renewresource <- function(resource, data){
+      x <- data[data$resource == resource, ]
       av <- x$available
       ex <- x$extractioncost
       x_region <- x$region[1]
@@ -260,24 +260,20 @@ module_water_L201.water.resources.constrained <- function(command, ...) {
                              seq(av[1], av[2], length.out = 10),
                              seq(av[2], av[3], length.out = 11))[-10])
 
-      tibble(available = rnw_spline$x,
-             extractioncost = rnw_spline$y,
+      tibble(region = x_region,
+             resource = resource,
              sub.renewable.resource = "runoff",
              grade = paste0("grade", 1:20),
-             region = x_region)
+             available = rnw_spline$x,
+             extractioncost = rnw_spline$y)
     }
 
     # apply smooth across all basins using purrr::map on split table
     accessible_water_unsmoothed %>%
-      split(.$resource) %>%
-      map(get_smooth_renewresource) %>%
-      map_dfr(magrittr::extract, .id = "resource") %>%
-      select(one_of(LEVEL2_DATA_NAMES$RenewRsrcCurvesWater)) %>%
-      filter(!(grepl("Arctic Ocean", resource))) %>%
-      # ^^ remove convex case (Artic Ocean)
+      filter(!grepl("Arctic Ocean", resource)) %>%
+      lapply(unique(pull(., resource)), get_smooth_renewresource, .) %>%
       bind_rows(filter(accessible_water_unsmoothed,
-                       grepl("Arctic Ocean", resource))) %>%
-      arrange(region, resource, extractioncost) ->
+                       grepl("Arctic Ocean", resource))) ->
       L201.RenewRsrcCurves_calib
 
     # Step 5

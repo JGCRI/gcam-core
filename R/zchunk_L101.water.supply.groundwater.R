@@ -13,7 +13,6 @@
 #' @importFrom tibble tibble
 #' @import dplyr
 #' @importFrom tidyr gather spread
-#' @importFrom purrr map
 #' @author ST September 2018
 module_water_L101.water.supply.groundwater <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -59,16 +58,12 @@ module_water_L101.water.supply.groundwater <- function(command, ...) {
     # Step 2: Compute uniform groundwater grades (see Kim et al., 2016)
 
     gw_uniform %>%
-      split(.$basin.id) %>%
       # add price points and expand out all basins to required number of grades
-      map(function(x){
-        seq(log(x$base.prc),
-            log(x$base.prc * water.GROUNDWATER_MAX_PRICE_INC),
-            length.out = water.GROUNDWATER_UNIFORM_GRADES) %>%
-          exp(.) %>%
-          tibble(price = ., basin.id = x$basin.id) %>%
-          left_join(x, by = "basin.id")
-      }) %>% bind_rows() ->
+      # prices are from base.prc, base.prc * water.GROUNDWATER_MAX_PRICE_INC on a log interval
+      repeat_add_columns(tibble(price=seq(log(1),
+                                          log(water.GROUNDWATER_MAX_PRICE_INC),
+                                          length.out = water.GROUNDWATER_UNIFORM_GRADES))) %>%
+      mutate(price = exp(price + log(base.prc))) ->
       gw_uniform_grade_expand
 
     gw_uniform_grade_expand %>%
@@ -76,13 +71,10 @@ module_water_L101.water.supply.groundwater <- function(command, ...) {
                (alpha * water.GROUNDWATER_BETA) - base.cum) %>%
       arrange(basin.id, price) %>%
       select(basin.id, price, avail) %>%
-      split(.$basin.id) %>%
-      map(function(x){
-        x %>% mutate(avail = lead(avail)) %>%
-          tidyr::replace_na(list(avail = 0)) %>%
-          mutate(grade = paste0("grade", 1:10))
-      }) %>%
-      bind_rows() ->
+      group_by(basin.id) %>%
+      mutate(avail = lead(avail, default = 0.0),
+             grade = paste0("grade", row_number())) %>%
+      ungroup() ->
       gw_uniform_unadjusted
 
     # corrections to cover historical use
