@@ -53,25 +53,20 @@ generate_level2_data_names <- function() {
   level2_data_names[["DeleteRsrc"]] <- c("region", "resource")
   level2_data_names[["DeleteRenewRsrc"]] <- c("region", "renewresource")
   level2_data_names[["DeleteUnlimitRsrc"]] <- c("region", "unlimited.resource")
-  level2_data_names[["EQUIV_TABLE"]] <- c("group.name", "tag1", "tag2", "tag3", "tag4")
 
   # Subresources
   level2_data_names[["SubRsrc"]] <- c("region", "resource", "subresource")
   level2_data_names[["SubRenewRsrc"]] <- c("region", "renewresource", "sub.renewable.resource")
-  level2_data_names[["SubRenewRsrcWater"]] <- c("region", "resource", "sub.renewable.resource")
   level2_data_names[["SmthRenewRsrc"]] <- c("region", "renewresource", "smooth.renewable.subresource")
   level2_data_names[["RsrcCalProd"]] <- c(level2_data_names[["SubRsrc"]], "year", "cal.production")
   level2_data_names[["RenewRsrcCalProd"]] <- c(level2_data_names[["SubRenewRsrc"]], "year", "cal.production")
   level2_data_names[["maxSubResource"]] <- c(level2_data_names[["SubRenewRsrc"]], "year.fillout", "maxSubResource") #only applicable for renewable resources
   level2_data_names[["RsrcCurves"]] <- c(level2_data_names[["SubRsrc"]], "grade", "available", "extractioncost")
   level2_data_names[["RenewRsrcCurves"]] <- c(level2_data_names[["SubRenewRsrc"]], "grade", "available", "extractioncost")
-  level2_data_names[["RenewRsrcCurvesWater"]] <- c(level2_data_names[["SubRenewRsrcWater"]], "grade", "available", "extractioncost")
   level2_data_names[["SmthRenewRsrcCurves"]] <- c(level2_data_names[["SmthRenewRsrc"]], "year.fillout", "maxSubResource", "mid.price", "curve.exponent")
   level2_data_names[["GrdRenewRsrcCurves"]] <- c("region", "renewresource", "sub.renewable.resource", "grade", "available", "extractioncost")
   level2_data_names[["GrdRenewRsrcMax"]] <- c("region", "renewresource", "sub.renewable.resource", "year.fillout", "maxSubResource")
-  level2_data_names[["GrdRenewRsrcCurvesWater"]] <- c("region", "resource", "sub.renewable.resource", "grade", "available", "extractioncost")
-  level2_data_names[["GrdRenewRsrcMaxWater"]] <- c("region", "resource", "sub.renewable.resource", "year.fillout", "maxSubResource")
-  level2_data_names[["GrdRenewRsrcMaxWaterNoFO"]] <- c("region", "resource", "sub.renewable.resource", "year.fillout", "maxSubResource")
+  level2_data_names[["GrdRenewRsrcMaxNoFillOut"]] <- c("region", "renewresource", "sub.renewable.resource", "year", "maxSubResource")
   level2_data_names[["RsrcTechChange"]] <- c(level2_data_names[["SubRsrc"]], "year.fillout", "techChange")
   level2_data_names[["RenewRsrcTechChange"]] <- c(level2_data_names[["SubRenewRsrc"]], "year.fillout", "techChange")
   level2_data_names[["SmthRenewRsrcTechChange"]] <- c(level2_data_names[["SmthRenewRsrc"]], "year.fillout", "techChange")
@@ -144,7 +139,6 @@ generate_level2_data_names <- function() {
   level2_data_names[["CalorieContent"]] <- c(level2_data_names[["TechYr"]], "minicam.energy.input", "efficiency")
   level2_data_names[["DeleteInput"]] <- c("region", "supplysector", "subsector", "technology", "year", "minicam.energy.input")
   level2_data_names[["ResTechShrwt"]] <- c("region", "resource", "subresource", "technology", "year", "share.weight")
-  level2_data_names[["RenewRsrcTechShrwt"]] <- c("region", "resource", "sub.renewable.resource", "technology", "year", "share.weight")
   level2_data_names[["ResReserveTechCost"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "minicam.non.energy.input", "input.cost")
   level2_data_names[["ResReserveTechLifetime"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "lifetime")
   level2_data_names[["ResReserveTechProfitShutdown"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "median.shutdown.point", "profit.shutdown.steepness")
@@ -456,7 +450,6 @@ GCAM_DATA_MAP <- driver(return_data_map_only = TRUE)
 #' Its immediate downstream dependencies (currently, four chunks) then use the
 #' prebuilt versions of their outputs stored in this object.
 #' @author BBL
-
 PREBUILT_DATA <- driver(write_outputs = FALSE,
                         write_xml = FALSE,
                         return_data_names = c(

@@ -10,8 +10,7 @@
 #' original data system was \code{batch_water_supply_x.xml} (water XML).
 module_water_batch_water_supply_constrained_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L201.NodeEquiv",
-             "L201.DeleteUnlimitRsrc",
+    return(c("L201.DeleteUnlimitRsrc",
              "L201.Rsrc",
              "L201.RsrcPrice",
              "L201.RenewRsrcCurves_calib",
@@ -26,7 +25,6 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L201.NodeEquiv <- get_data(all_data, "L201.NodeEquiv")
     L201.DeleteUnlimitRsrc <- get_data(all_data, "L201.DeleteUnlimitRsrc")
     L201.Rsrc <- get_data(all_data, "L201.Rsrc")
     L201.RsrcPrice <- get_data(all_data, "L201.RsrcPrice")
@@ -41,17 +39,21 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("water_supply_constrained.xml") %>%
-      add_xml_data(L201.NodeEquiv, "EQUIV_TABLE") %>%
+      add_node_equiv_xml("resource") %>%
       add_xml_data(L201.DeleteUnlimitRsrc, "DeleteUnlimitRsrc") %>%
       add_xml_data(L201.Rsrc, "Rsrc") %>%
       add_xml_data(L201.RsrcPrice, "RsrcPrice") %>%
-      add_xml_data(L201.RenewRsrcCurves_calib, "RenewRsrcCurvesWater") %>%
-      add_xml_data(L201.GrdRenewRsrcMax_runoff, "GrdRenewRsrcMaxWaterNoFO") %>%
+      # Note we are going to use the RenewRsrcCurves header to avoid having to create
+      # duplicate headers.  The resource type will remain "resource" because we set
+      # the "resource" node_equiv_xml above.  However we still need to set the
+      # column names appropriately if we want the column re-ordering to work.
+      add_xml_data(L201.RenewRsrcCurves_calib %>% rename(renewresource = resource), "RenewRsrcCurves") %>%
+      add_xml_data(L201.GrdRenewRsrcMax_runoff, "GrdRenewRsrcMaxNoFillOut") %>%
       add_xml_data(L201.DepRsrcCurves_ground, "RsrcCurves") %>%
-      add_xml_data(L201.RenewRsrcTechShrwt, "RenewRsrcTechShrwt") %>%
+      add_node_equiv_xml("subresource") %>%
+      add_xml_data(L201.RenewRsrcTechShrwt, "ResTechShrwt") %>%
       add_xml_data(L201.RsrcTechShrwt, "ResTechShrwt") %>%
-      add_precursors("L201.NodeEquiv",
-                     "L201.DeleteUnlimitRsrc",
+      add_precursors("L201.DeleteUnlimitRsrc",
                      "L201.Rsrc",
                      "L201.RsrcPrice",
                      "L201.RenewRsrcCurves_calib",
