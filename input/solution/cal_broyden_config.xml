@@ -86,7 +86,7 @@
         
         <broyden-solver-component>
             <max-iterations>10</max-iterations>
-            <ftol>5.0e-3</ftol>
+            <ftol>5.0e-4</ftol>
             <linear-price/>
             <solution-info-filter>solvable-nr || (market-type="Tax" &amp;&amp; solvable)</solution-info-filter>
         </broyden-solver-component>
