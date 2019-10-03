@@ -14,7 +14,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author ST Oct 2018
-module_water_L102.water.supply.unlimited <- function(command, ...) {
+module_water_L102.water_supply_unlimited <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_ID",
              FILE = "common/GCAM_region_names"))

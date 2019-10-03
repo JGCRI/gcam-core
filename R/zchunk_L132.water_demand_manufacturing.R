@@ -14,7 +14,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author GPK June 2018
-module_water_L132.water.demand.manufacturing <- function(command, ...) {
+module_water_L132.water_demand_manufacturing <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "water/aquastat_ctry",

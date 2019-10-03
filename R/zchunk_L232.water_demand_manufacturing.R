@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author GPK June 2018
-module_water_L232.water.demand.manufacturing <- function(command, ...) {
+module_water_L232.water_demand_manufacturing <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/A03.sector",

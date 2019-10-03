@@ -14,7 +14,7 @@
 #' @import dplyr
 #' @importFrom tidyr gather spread
 #' @author ST September 2018
-module_water_L101.water.supply.groundwater <- function(command, ...) {
+module_water_L101.water_supply_groundwater <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_ID",
              FILE = "water/groundwater_uniform",
@@ -41,7 +41,6 @@ module_water_L101.water.supply.groundwater <- function(command, ...) {
     basin_ids <- get_data(all_data, "water/basin_ID")
     gw_uniform <- get_data(all_data, "water/groundwater_uniform")
     gw_constrained <- get_data(all_data, "water/groundwater_constrained")
-
 
     # throw error if water.GROUNDWATER_CALIBRATION is incorrectly referenced in constants.R
     if(!(water.GROUNDWATER_CALIBRATION %in% c("watergap", "gleeson"))){
@@ -105,7 +104,7 @@ module_water_L101.water.supply.groundwater <- function(command, ...) {
         mutate(human_only = hi - nhi) %>%
         filter(human_only < 0, hi < 0) %>%
         rename(depletion = human_only) %>%
-        mutate(depletion = round(-depletion, 6)) %>%
+        mutate(depletion = round(-depletion, water.DIGITS_GROUND_WATER)) %>%
         select(basin.id, depletion) ->
         L101.groundwater_depletion_bm3
     }
@@ -114,11 +113,10 @@ module_water_L101.water.supply.groundwater <- function(command, ...) {
       gw_dep %>%
         rename(depletion = netDepletion) %>%
         filter(depletion > 0) %>%
-        mutate(depletion = round(depletion, 6)) %>%
+        mutate(depletion = round(depletion, water.DIGITS_GROUND_WATER)) %>%
         arrange(basin.id) %>% select(basin.id, depletion) ->
         L101.groundwater_depletion_bm3
     }
-
 
     # Prepare outputs
 

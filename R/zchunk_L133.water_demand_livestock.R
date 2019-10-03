@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author KRD November 2017
-module_water_L133.water.demand.livestock <- function(command, ...) {
+module_water_L133.water_demand_livestock <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              "L105.an_Prod_Mt_R_C_Y",

@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YL May 2017
-module_water_L145.water.demand.municipal <- function(command, ...) {
+module_water_L145.water_demand_municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "water/aquastat_ctry",

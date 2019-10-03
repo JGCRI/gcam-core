@@ -14,7 +14,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author ST Oct 2018
-module_water_L103.water.basin_mapping <- function(command, ...) {
+module_water_L103.water_basin_mapping <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_ID",
              FILE = "water/nonirrigation_consumption",
@@ -66,7 +66,7 @@ module_water_L103.water.basin_mapping <- function(command, ...) {
       gather(water_sector, value, -basin_id, -iso, -water_type) %>%
       left_join(select(iso_GCAM_mapping, iso, GCAM_region_ID),
                 by = "iso") %>%
-      filter(is.na(GCAM_region_ID) == F) %>%
+      filter(!is.na(GCAM_region_ID)) %>%
       group_by(GCAM_region_ID, basin_id, water_type, water_sector) %>%
       summarise(demand = sum(value)) %>% ungroup() %>%
       group_by(GCAM_region_ID, water_type, water_sector) %>%

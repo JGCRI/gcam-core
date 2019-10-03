@@ -15,7 +15,7 @@
 #' @importFrom tidyr gather spread
 #' @importFrom tibble as_tibble
 #' @author SWDT April 2017
-module_water_L110.water.demand.primary <- function(command, ...) {
+module_water_L110.water_demand_primary <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "common/iso_GCAM_regID",
