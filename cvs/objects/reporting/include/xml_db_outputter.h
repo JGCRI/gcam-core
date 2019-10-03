@@ -108,6 +108,9 @@ public:
 
     void startVisitSubsector( const Subsector* aSubsector, const int aPeriod );
     void endVisitSubsector( const Subsector* aSubsector, const int aPeriod );
+    
+    void startVisitNestingSubsector( const NestingSubsector* aSubsector, const int aPeriod );
+    void endVisitNestingSubsector( const NestingSubsector* aSubsector, const int aPeriod );
 
     void startVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergyFinalDemand, const int aPeriod );
     void endVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergyFinalDemand, const int aPeriod );
@@ -264,6 +267,9 @@ private:
     //! A stack used to keep track of what needs to be written to the
     //! database.
     std::stack<std::iostream*> mBufferStack;
+    
+    //! Subsector nesting depth output to help querying
+    int mSubsectorDepth;
 
 #if( __HAVE_JAVA__ )
     /*!

@@ -55,6 +55,7 @@
 #include "sectors/include/energy_final_demand.h"
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
+#include "sectors/include/nesting_subsector.h"
 #include "technologies/include/technology.h"
 #include "emissions/include/aghg.h"
 #include "technologies/include/icapture_component.h"
@@ -181,7 +182,8 @@ XMLDBOutputter::JNIContainer::~JNIContainer() {
 */
 XMLDBOutputter::XMLDBOutputter():
 mTabs( new Tabs ),
-mGDP( 0 )
+mGDP( 0 ),
+mSubsectorDepth( 0 )
 #if( __HAVE_JAVA__ )
 ,mJNIContainer( createContainer( false ) )
 #endif
@@ -716,8 +718,16 @@ void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
                                           const int aPeriod )
 {
     // Write the opening subsector tag and the type of the base class.
-    XMLWriteOpeningTag( aSubsector->getXMLName(), mBuffer, mTabs.get(),
-        aSubsector->getName(), 0, Subsector::getXMLNameStatic() );
+    map<string, string> attrs;
+    attrs["name"] = aSubsector->getName();
+    attrs["type"] = Subsector::getXMLNameStatic();
+    int currDepth = mSubsectorDepth++;
+    // optimization to avoid writing depth of zero, which is the vast majority
+    // of the cases, to save space in the DB.
+    if( currDepth > 0 ) {
+        attrs["depth"] = util::toString( currDepth );
+    }
+    XMLWriteOpeningTag( aSubsector->getXMLName(), mBuffer, mTabs.get(), attrs );
 
     // Loop over the periods to output subsector information.
     // The loops are separated so the types are grouped together, as is required for
@@ -737,8 +747,20 @@ void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
 void XMLDBOutputter::endVisitSubsector( const Subsector* aSubsector,
                                         const int aPeriod )
 {
+    --mSubsectorDepth;
     // Write the closing subsector tag.
     XMLWriteClosingTag( aSubsector->getXMLName(), mBuffer, mTabs.get() );
+}
+
+void XMLDBOutputter::startVisitNestingSubsector( const NestingSubsector* aSubsector,
+                                                 const int aPeriod )
+{
+    startVisitSubsector( aSubsector, aPeriod );
+}
+void XMLDBOutputter::endVisitNestingSubsector( const NestingSubsector* aSubsector,
+                                               const int aPeriod )
+{
+    endVisitSubsector( aSubsector, aPeriod );
 }
 
 void XMLDBOutputter::startVisitTranSubsector( const TranSubsector* aTranSubsector, const int aPeriod ) {
