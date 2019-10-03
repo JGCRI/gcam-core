@@ -13,7 +13,7 @@
 #' @import dplyr
 #' @importFrom tidyr gather spread
 #' @author ST September 2018
-module_water_L100.water.supply.runoff <- function(command, ...) {
+module_water_L100.water_supply_runoff <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_ID",
              FILE = "water/xanthos_basin_runoff",
@@ -30,6 +30,7 @@ module_water_L100.water.supply.runoff <- function(command, ...) {
 
     # Load required inputs
     basin_ids <- get_data(all_data, "water/basin_ID")
+    # historical runoff and accessible water by basin for 1970 - 2010
     xanthos_runoff <- get_data(all_data, "water/xanthos_basin_runoff")
     xanthos_access <- get_data(all_data, "water/xanthos_accessible_water")
 
@@ -38,32 +39,34 @@ module_water_L100.water.supply.runoff <- function(command, ...) {
       gather(year, runoff, -name, -id) %>%
       mutate(year = as.integer(year)) %>%
       filter(year < max(MODEL_BASE_YEARS)) ->
-      runoff_1970_2009
+      runoff_historical
 
     xanthos_access %>% as_tibble() %>%
       gather(year, accessible_water, -name, -id) %>%
       mutate(year = as.integer(year)) %>%
       filter(year < max(MODEL_BASE_YEARS)) ->
-      access_1970_2009
+      aaccessible_historical
 
     # compute the accessible fraction as the average ...
     # ... of accessible / runoff for each basin
-    left_join(runoff_1970_2009,
-              access_1970_2009,
+    left_join_error_no_match(runoff_historical,
+              aaccessible_historical,
               by = c("id", "name", "year")) %>%
       mutate(access_fraction = accessible_water / runoff) %>%
       group_by(id) %>% summarise(access_fraction = mean(access_fraction)) %>%
-      mutate(access_fraction = round(access_fraction, 3)) %>%
+      ungroup() %>%
+      mutate(access_fraction = round(access_fraction, water.DIGITS_RENEW_WATER)) %>%
       rename(basin_id = id) ->
       L100.runoff_accessible
 
     # compute basin runoff as mean of
     # (this will have to be updated for climate change runs from Xanthos)
-    runoff_1970_2009 %>%
+    runoff_historical %>%
       group_by(id) %>%
-      summarise(runoff_max = round(mean(runoff), 3)) %>%
+      summarise(runoff_max = round(mean(runoff), water.DIGITS_RENEW_WATER)) %>%
+      ungroup() %>%
       rename(basin_id = id) %>%
-      mutate(year = 2000) %>%
+      mutate(year = 2000) %>% #temp year
       complete(year = MODEL_YEARS, nesting(basin_id, runoff_max)) %>%
       arrange(basin_id) ->
       L100.runoff_max_bm3
@@ -83,7 +86,7 @@ module_water_L100.water.supply.runoff <- function(command, ...) {
     L100.runoff_accessible %>%
       add_title("Proportion of runoff available for access by basin") %>%
       add_units("Unitless") %>%
-      add_comments("XXXX") %>%
+      add_comments("") %>%
       add_legacy_name("L100.runoff_max_bm3") %>%
       add_precursors("water/basin_ID",
                      "water/xanthos_basin_runoff",

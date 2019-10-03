@@ -15,7 +15,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YL July 2017 / ST Oct 2018
-module_water_L202.water.resources.unlimited <- function(command, ...) {
+module_water_L202.water_resources_unlimited <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "common/iso_GCAM_regID",
@@ -52,9 +52,9 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
     bind_rows(L103.water_mapping_R_GLU_B_W_Ws_share %>% rename(basin_id = GLU),
               L103.water_mapping_R_B_W_Ws_share) %>%
       select(GCAM_region_ID, basin_id, water_type) %>%
-      unique() %>%
-      left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join(basin_ID, by = "basin_id") %>%
+      distinct() %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(basin_ID, by = "basin_id") %>%
       arrange(region, basin_name, water_type) ->
       L202.region_basin
 
@@ -70,8 +70,8 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
       L202.UnlimitRsrc_mapped
 
     # Read in fixed prices for mapped water types
-    # Left join ensures only those basins in use get prices
     L202.region_basin %>%
+      # Left join ensures only those basins in use get prices
       left_join(L102.unlimited_mapped_water_price_B_W_Y_75USDm3,
                 by = c("basin_id", "water_type")) %>%
       mutate(unlimited.resource = paste(basin_name, water_type, sep = "_")) %>%
@@ -81,8 +81,9 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
 
     # Create unlimited resource markets for non-mapped water types
     L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3 %>%
-      select(GCAM_region_ID, water_type) %>% unique() %>%
-      left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
+      select(GCAM_region_ID, water_type) %>%
+      distinct() %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(market = region) %>%
       rename(unlimited.resource = water_type) %>%
       mutate(output.unit = water.WATER_UNITS_QUANTITY,
@@ -95,8 +96,9 @@ module_water_L202.water.resources.unlimited <- function(command, ...) {
     L202.UnlimitRsrc_nonmapped
 
     # Read in fixed prices for non-mapped water types
-    L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3 %>%
-      left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
+    GCAM_region_names %>%
+      # Left join ensures only those basins in use get prices
+      left_join(L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3, by = "GCAM_region_ID") %>%
       rename(unlimited.resource = water_type) %>%
       select(one_of(LEVEL2_DATA_NAMES$UnlimitRsrcPrice)) %>%
       filter(!(region %in% aglu.NO_AGLU_REGIONS) |

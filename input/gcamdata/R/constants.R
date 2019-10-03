@@ -473,7 +473,7 @@ water.DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
 water.DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
 water.DEFAULT_BASEYEAR_WATER_PRICE        <- 0.001
-water.IRR_PRICE_SUBSIDY_MULT              <- 0.01  # Multiplier for irrigation price subsidy
+water.IRR_PRICE_SUBSIDY_MULT              <- 0.01  # Multiplier for irrigation price subsidy (OECD 2009 Managing Water for All)
 water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
 water.IRRIGATION                          <- "Irrigation"
 water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
@@ -509,8 +509,15 @@ water.GROUNDWATER_SCENARIO <- "25pct" # may be "05pct", "25pct", or "40pct" (i.e
 water.GROUNDWATER_MAX_PRICE_INC <- 10000
 water.GROUNDWATER_UNIFORM_GRADES <- 10
 water.GROUNDWATER_BETA <- 1.0
-
-
+water.DIGITS_GROUND_WATER <- 6 #Digits for rounding
+water.DIGITS_GROUND_WATER_RSC <- 5 #Digits for rounding
+water.DIGITS_RENEW_WATER <- 3 #Digits for rounding
+water.GW_DEPLETION_HISTORICAL <- c(2005, 2010) # Historical years for groundwater depletion
+water.GW_DEPLETION_BASE_YEAR <- 1990 # Historical year for groundwater depletion calibration
+water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010) # Historical years for freshwater runoff
+water.RENEW.COST.GRADE1 <- 0.00001 #Renewable water grade1 cost
+water.RENEW.COST.GRADE2 <- 0.001 #Renewable water grade2 cost
+water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
 
 # Emissions constants ======================================================================
 

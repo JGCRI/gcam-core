@@ -14,7 +14,7 @@
 #' @importFrom dplyr filter mutate select first
 #' @importFrom tidyr gather spread
 #' @author ST August 2017 / ST Oct 2018
-module_water_L203.water.mapping <- function(command, ...) {
+module_water_L203.water_mapping <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_to_country_mapping",
              FILE = "common/GCAM_region_names",
@@ -74,17 +74,17 @@ module_water_L203.water.mapping <- function(command, ...) {
     ) %>%
     left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join(A03.sector, by = c("water_sector" = "water.sector")) %>%
+      # ^^ non-restrictive join required (NA values generated for logit type)
       mutate(wt_short = if_else(water_type == "water consumption", "C", "W")) %>%
       mutate(supplysector = if_else(water_sector != water.IRRIGATION,
              paste(supplysector, wt_short, sep = "_"),
              paste(supplysector, GLU, wt_short, sep = "_"))) %>%
-      left_join(basin_ID, by = "basin_id") %>%
+      left_join_error_no_match(basin_ID, by = "basin_id") %>%
       mutate(coefficient = water.MAPPING_COEF,
              pMult = water.MAPPING_PMULT,
              subsector = basin_name,
              technology = basin_name,
              logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
-      arrange(GCAM_region_ID) %>%
       left_join(select(L165.ag_IrrEff_R, -field.eff), by = "GCAM_region_ID") %>%
       # ^^ non-restrictive join required (NA values generated for region 30, Taiwan)
       mutate(coefficient = if_else(water_sector == water.IRRIGATION & water_type == "water withdrawals",
