@@ -1,4 +1,4 @@
-#' module_water_L210.water.demand.primary
+#' module_water_L210.water_demand_primary
 #'
 #' Generate (water demand) technology coefficients for each GCAM region for base years and future years.
 #'
@@ -7,7 +7,7 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L210.TechCoef}. The corresponding file in the
-#' original data system was \code{L210.water.demand.primary.R} (water level2).
+#' original data system was \code{L210.water_demand_primary.R} (water level2).
 #' @details This chunk generate (water demand) technology coefficients for each GCAM region for base years and future years,
 #' with information of supplysector, subsector, technology, minicam.energy.input and market.name.
 #' @importFrom assertthat assert_that

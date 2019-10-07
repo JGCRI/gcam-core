@@ -1,4 +1,4 @@
-#' module_water_L100.water.supply.runoff
+#' module_water_L100.water_supply_runoff
 #'
 #' Prepare GCAM basin runoff and accessible water fractions using Xanthos output.
 #'
@@ -7,8 +7,8 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L100.runoff_max_bm3}, \code{L100.runoff_accessible}. The corresponding file in the
-#' original data system was \code{L100.water.supply.runoff.R} (Water level1).
-#' @details Reads Xanthos outputs and converts to maximum and accessible water for all GCAM model years.
+#' original data system was \code{L100.water_supply_runoff.R} (Water level1).
+#' @details Reads Xanthos outputs and converts to maximum and accessible runoff water for all GCAM model years.
 #' @importFrom tibble tibble
 #' @import dplyr
 #' @importFrom tidyr gather spread
@@ -35,22 +35,20 @@ module_water_L100.water_supply_runoff <- function(command, ...) {
     xanthos_access <- get_data(all_data, "water/xanthos_accessible_water")
 
     # convert data to long form
-    xanthos_runoff %>% as_tibble() %>%
+    xanthos_runoff %>%
       gather(year, runoff, -name, -id) %>%
-      mutate(year = as.integer(year)) %>%
       filter(year < max(MODEL_BASE_YEARS)) ->
       runoff_historical
 
-    xanthos_access %>% as_tibble() %>%
+    xanthos_access %>%
       gather(year, accessible_water, -name, -id) %>%
-      mutate(year = as.integer(year)) %>%
       filter(year < max(MODEL_BASE_YEARS)) ->
-      aaccessible_historical
+      accessible_historical
 
     # compute the accessible fraction as the average ...
     # ... of accessible / runoff for each basin
     left_join_error_no_match(runoff_historical,
-              aaccessible_historical,
+              accessible_historical,
               by = c("id", "name", "year")) %>%
       mutate(access_fraction = accessible_water / runoff) %>%
       group_by(id) %>% summarise(access_fraction = mean(access_fraction)) %>%
@@ -66,7 +64,7 @@ module_water_L100.water_supply_runoff <- function(command, ...) {
       summarise(runoff_max = round(mean(runoff), water.DIGITS_RENEW_WATER)) %>%
       ungroup() %>%
       rename(basin_id = id) %>%
-      mutate(year = 2000) %>% #temp year
+      mutate(year = 2000) %>% #temp year written over by following line
       complete(year = MODEL_YEARS, nesting(basin_id, runoff_max)) %>%
       arrange(basin_id) ->
       L100.runoff_max_bm3

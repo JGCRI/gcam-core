@@ -1,4 +1,4 @@
-#' module_water_L102.water.supply.unlimited
+#' module_water_L102.water_supply_unlimited
 #'
 #' Build out unlimited water prices using defaults in Constants.R.
 #'
@@ -8,8 +8,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L102.unlimited_mapped_water_price_B_W_Y_75USDm3},
 #' \code{L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3}. The corresponding file in the
-#' original data system was \code{L102.water.supply.unlimited.R} (water level1).
-#' @details  Generates all combinations of basin / region and water_type.
+#' original data system was \code{L102.water_supply_unlimited.R} (water level1).
+#' @details  Generates unlimited water supply for all combinations of basin / region and water_type.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread

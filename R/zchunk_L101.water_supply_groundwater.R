@@ -1,4 +1,4 @@
-#' module_water_L101.water.supply.groundwater
+#' module_water_L101.water_supply_groundwater
 #'
 #' Prepare GCAM basin groundwater supply curves
 #'
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L101.groundwater_grades_uniform_bm3},
 #' \code{L101.groundwater_grades_constrained_bm3}, \code{L101.groundwater_depletion_bm3}. The corresponding file in the
-#' original data system was \code{L100.water.supply.runoff.R} (Water level1).
+#' original data system was \code{L100.water_supply_runoff.R} (Water level1).
 #' @details Prepares groundwater resource curves and sets up groundwater calibration data.
 #' @importFrom tibble tibble
 #' @import dplyr
