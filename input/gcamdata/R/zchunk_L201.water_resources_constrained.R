@@ -1,4 +1,4 @@
-#' module_water_L201.water.resources.constrained
+#' module_water_L201.water_resources_constrained
 #'
 #' Constrained surface and groudwater.
 #'
@@ -8,8 +8,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L201.RenewRsrcCurves_calib},
 #' \code{201.GrdRenewRsrcMax_runoff}, \code{L201.DepRsrcCurves_ground}. The corresponding file in the
-#' original data system was \code{L102.water.supply.unlimited.R} (water level1).
-#' @details  Genereates water withdrawal resource input files for region + basin which includes runoff and groundwater.
+#' original data system was \code{L102.water_supply_unlimited.R} (water level1).
+#' @details  Genereates water resource input files for region + basin which includes runoff and groundwater.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread

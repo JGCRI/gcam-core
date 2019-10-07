@@ -1,4 +1,4 @@
-#' module_water_L245.water.demand.municipal
+#' module_water_L245.water_demand_municipal
 #'
 #' Expands municipal water information (cost, efficiency, coefficients) across regions and model years
 #'
@@ -7,7 +7,7 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L245.Supplysector}, \code{L245.SubsectorLogit}, \code{L245.SubsectorShrwtFllt}, \code{L245.TechShrwt}, \code{L245.TechCoef}, \code{L245.TechCost}, \code{L245.PerCapitaBased}, \code{L245.BaseService}, \code{L245.IncomeElasticity}, \code{L245.PriceElasticity}, \code{L245.aeei}. The corresponding file in the
-#' original data system was \code{L245.water.demand.municipal.R} (water level2).
+#' original data system was \code{L245.water_demand_municipal.R} (water level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select

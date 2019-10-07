@@ -1,4 +1,4 @@
-#' module_water_L103.water.basin_mapping
+#' module_water_L103.water_basin_mapping
 #'
 #' Calculate percentage shares to map water demands by region / sector to basin.
 #'
@@ -9,7 +9,7 @@
 #' the generated outputs: \code{L103.water_mapping_R_GLU_B_W_Ws_share},
 #' \code{L103.water_mapping_R_B_W_Ws_share}. There was no corresponding file in the
 #' original data system.
-#' @details  Water demands to by region / sector to basin.
+#' @details  Water demands by sector and region to basins.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
