@@ -45,27 +45,53 @@
 
 class CarbonScalers : public ASpatialData {
 public:
-    CarbonScalers(int aSize);
+    CarbonScalers(int aNumLat, int aNumLon, int aNumPFT);
     ~CarbonScalers();
-    void calcScalers();
+    void readScalers(int *ymd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers);
+    void calcScalers(int *ymd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers);
     void readAllSpatialData();
+    void readRegionalMappingData(std::string aFileName);
 private:
-    // TODO: Is there a better way of doing this?
+    // Vectors of spatial data. Data is either lat * lon or lat * lon * pft long.
+    // Data can either be read from file or passed from E3SM
     std::vector<double> mNPPVector;
-    std::vector<double> mNPPLatVector;
-    std::vector<double> mNPPLonVector;
-    std::vector<int> mNPPIDVector;
+    std::vector<double> mBaseNPPVector;
     std::vector<double> mPFTFractVector;
-    std::vector<double> mPFTFractLatVector;
-    std::vector<double> mPFTFractLonVector;
-    std::vector<int> mPFTFractIDVector;
+    std::vector<double> mBasePFTFractVector;
     std::vector<double> mAreaVector;
-    std::vector<double> mAreaLatVector;
-    std::vector<double> mAreaLonVector;
     std::vector<double> mLandFractVector;
-    std::vector<double> mLandFractLatVector;
-    std::vector<double> mLandFractLonVector;
-    std::vector<double> mOutputVector;
+    
+    // Map grid cells to regions. Key is a string with longitude and latitude ("lon_lat").
+    // Key maps to a vector of strings containing the region and subregion
+    // Note that this map will be longer than lat * lon since some grid cells map to multiple regions
+    std::map<std::string, std::vector<std::string>> mRegionMapping;
+    
+    // Map region weights (these indicate the fraction of a grid cell assigned to each region)
+    // Key is a pair indicating the grid cell and the region/subregion
+    // Key maps to a double representing the fraction of the grid cell in that region/subregion
+    std::map<std::pair<std::string,std::string>, double> mRegionWeights;
+    
+    //! Map PFTs to GCAM crops
+    std::map<int, std::vector<std::string>> mPFT2GCAMCropMap {
+        { 0, { "RockIceDesert", "UrbanLand" } },
+        { 1, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } },
+        { 2, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } },
+        { 3, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } },
+        { 4, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "PalmFruit", "biomass_tree" } },
+        { 5, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "biomass_tree" } },
+        { 6, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "PalmFruit", "biomass_tree" } },
+        { 7, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "biomass_tree" } },
+        { 8, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } },
+        { 9, { "Shrubland", "ProtectedShrubland" } },
+        { 10, { "Shrubland", "ProtectedShrubland"  } },
+        { 11, { "Shrubland", "ProtectedShrubland"  } },
+        { 12, { "Grassland", "Tundra", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass" } },
+        { 13, { "Grassland", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass" } },
+        { 14, { "Grassland", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass", "biomass_grass" } },
+        { 15, { "Corn", "SugarCrop", "Rice", "OtherArableLand", "Wheat", "MiscCrop", "OtherGrain", "OilCrop", "FiberCrop",
+            "FodderHerb", "Root_Tuber", "OtherArableLand", "biomass" } },
+        { 16, { "" } }
+    };
 };
 
 #endif // __CARBON_SCALERS__

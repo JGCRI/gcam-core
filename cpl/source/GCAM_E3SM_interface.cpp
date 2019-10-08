@@ -269,66 +269,15 @@ void GCAM_E3SM_interface::getScalers(int *yyyymmdd, std::vector<int>& aYears, st
     
     // Only set carbon densities during GCAM model years.
     if( modeltime->isModelYear( curryear )) {
-        // TODO: Insert condition for when to read scalers from file
-        readScalers(yyyymmdd, aYears, aRegions, aLandTechs, aScalers);
-        
-        cout << "Scalers read" << endl;
-        
         // TODO: Once this works, add if block to call it only when not reading from file. For now, it doesn't do everything so it is fine to run
-        CarbonScalers e3sm2gcam(1101600);
-        e3sm2gcam.calcScalers();
-        e3sm2gcam.writeSpatialData("./test.txt", true);
+        CarbonScalers e3sm2gcam(180, 360, 17);
+        e3sm2gcam.readScalers(yyyymmdd, aYears, aRegions, aLandTechs, aScalers);
+        
+        
+        e3sm2gcam.calcScalers(yyyymmdd, aYears, aRegions, aLandTechs, aScalers);
     }
 }
 
-// Read in scalers from a csv file
-// Note: this is used for diagnostics and testing. In fully coupled E3SM-GCAM, these scalers
-// are passed in code to the wrapper
-void GCAM_E3SM_interface::readScalers(int *yyyymmdd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
-    
-    // TEMPORARY: Read scaler data from a file
-    // NOTE: This will be passed from E3SM eventually
-    ifstream data("../cpl/data/scaler_data.csv");
-    if (!data.is_open())
-    {
-        exit(EXIT_FAILURE);
-    }
-    string str;
-    getline(data, str); // skip the first line
-    int row = 0;
-    while (getline(data, str))
-    {
-        istringstream iss(str);
-        string token;
-        int year;
-        std::string region;
-        std::string tech;
-        double scaler;
-        
-        // Parse current year
-        getline(iss, token, ',');
-        year = std::stoi(token);
-        
-        // Parse region
-        getline(iss, region, ',');
-        
-        // Parse ag production technology name
-        getline(iss, tech, ',');
-        
-        // Parse scaler
-        getline(iss, token, ',');
-        scaler = std::stod(token);
-        
-        aYears.at(row) = year;
-        aRegions[row] = region;
-        aLandTechs[row] = tech;
-        aScalers[row] = scaler;
-        
-        row++;
-    }
-    
-    
-}
 
 void GCAM_E3SM_interface::finalizeGCAM()
 {
