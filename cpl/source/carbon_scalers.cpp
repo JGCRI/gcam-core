@@ -46,14 +46,14 @@
 using namespace std;
 
 // Constructor
-CarbonScalers::CarbonScalers(int aNumLat, int aNumLon, int aNumPFT):
+// TODO: I don't think this needs to be a derived class anymore.
+CarbonScalers::CarbonScalers(int aNumLon, int aNumLat, int aNumPFT):
 ASpatialData( aNumLat * aNumLon * aNumPFT ),
-mNPPVector( aNumLat * aNumLon * aNumPFT, 0 ),
-mBaseNPPVector( aNumLat * aNumLon * aNumPFT, 0 ),
-mPFTFractVector( aNumLat * aNumLon * aNumPFT, 0 ),
-mBasePFTFractVector( aNumLat * aNumLon * aNumPFT, 0 ),
-mAreaVector( aNumLat * aNumLon, 0 ),
-mLandFractVector( aNumLat * aNumLon, 0 )
+mBaseNPPVector( aNumLat * aNumLon * aNumPFT, 0),
+mBasePFTFractVector( aNumLat * aNumLon * aNumPFT, 0),
+mNumLon( aNumLon ),
+mNumLat( aNumLat ),
+mNumPFT( aNumPFT )
 {
 }
 
@@ -61,43 +61,19 @@ mLandFractVector( aNumLat * aNumLon, 0 )
 CarbonScalers::~CarbonScalers() {
 }
 
-// Read each component of the carbon scaler data, using the
+// Read each component of the base year data
+// This is used to calculate the scalar baseline.
 // ASpatialData::readSpatialData method and then copying the vectors.
-void CarbonScalers::readAllSpatialData(){
-    
-    cout << "Read NPP" << endl;
-    // Read in average NPP
-    readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false);
-    mNPPVector = getValueVector();
-    
+void CarbonScalers::readBaseYearData(){
     cout << "Read Base NPP" << endl;
     // Read in average NPP
     readSpatialData("../cpl/data/base_npp_mean_pft.txt", true, true, false);
     mBaseNPPVector = getValueVector();
     
-    cout << "Read PFT weight" << endl;
-    // Read in PFT weight in grid cell
-    readSpatialData("../cpl/data/pft_wt.txt", true, true, false);
-    mPFTFractVector = getValueVector();
-    
     cout << "Read Base PFT weight" << endl;
     // Read in PFT weight in grid cell
     readSpatialData("../cpl/data/base_pft_wt.txt", true, true, false);
     mBasePFTFractVector = getValueVector();
-    
-    cout << "Read area" << endl;
-    // Read in area of grid cell
-    readSpatialData("../cpl/data/area.txt", true, false, false);
-    mAreaVector = getValueVector();
-    
-    cout << "Read land fract" << endl;
-    // Read in area of grid cell
-    readSpatialData("../cpl/data/landfrac.txt", true, false, false);
-    mLandFractVector = getValueVector();
-    
-    cout << "Read region map" << endl;
-    // Read in region ID for each grid cell
-    readRegionalMappingData("../cpl/data/regionmap.csv");
 }
 
 // Read in a regional mapping data from a file
@@ -109,7 +85,6 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
     }
     string str;
     getline(data, str); // skip the first line
-    int row = 0;
     while (getline(data, str))
     {
         istringstream iss(str);
@@ -159,8 +134,6 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
         value = std::stod(token);
         
         mRegionWeights[std::make_pair(gridID,regID)] = value;
-        
-        row++;
     }
     
     return;
@@ -169,9 +142,11 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
 // Calculate scalers
 // TODO: Add outlier test/removal
 // TODO: Add HR
-void CarbonScalers::calcScalers(int *ymd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
+// TODO: Set the data in the passed vectors
+void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+                                std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
     // First, read spatial data
-    readAllSpatialData();
+    readBaseYearData();
     
     // Pre-process the weights
     // TODO: Fortran & R code divide the mPFTFractVector by the number of GCAM land types
@@ -188,16 +163,15 @@ void CarbonScalers::calcScalers(int *ymd, std::vector<int>& aYears, std::vector<
     std::map<std::pair<std::string,std::string>, double> baseTotalNPP;
     std::map<std::pair<std::string,std::string>, double> gcamScalar;
     
-    int index = 0; // Could calculate this from i & j
-    int reg = 0; // Define a region index
-    int subregion = 0; // Define a sub-region index
-    std::string regID;
-    int pft = 0;
+    int gridIndex = 0; // Index used for Grid vectors
+    int valIndex = 0; // Index used for PFT x Grid vectors
     double scalar = 0.0; // Define the scalar
     double base_scalar = 0.0; // Define the base scalar
-    for( int pft = 0; pft < 17; pft++ ) {
-        for ( int j = 1; j <= 360; j++ ) {
-            for ( int k = 1; k <= 180; k++ ) {
+    for( int pft = 1; pft <= mNumPFT; pft++ ) {
+        for ( int j = 1; j <= mNumLon; j++ ) {
+            for ( int k = 1; k <= mNumLat; k++ ) {
+                gridIndex = ( j - 1 ) * mNumLat + ( k - 1 );
+                valIndex = ( pft - 1 ) * mNumLat * mNumLon + ( j - 1 ) * mNumLat + ( k - 1 );
                 // Get region, subregion, and pft for this entry
                 // TODO: What to do about grid cells with multiple entries?
                 string gridID = std::to_string(j) + "_" + std::to_string(k);
@@ -208,15 +182,13 @@ void CarbonScalers::calcScalers(int *ymd, std::vector<int>& aYears, std::vector<
                 } else {
                     vector<string> regInGrd = (*tempGrid).second;
                     regInGrd = (*tempGrid).second;
-                    cout << "Looking at grid " << gridID << endl;
                     // Loop over all regions this grid is mapped to and calculate the scalars
                     for(auto regID : regInGrd) {
-                        cout << regID << endl;
-                        
                         // Calculate total as NPP of the PFT * area of the PFT
                         // TODO: Add in HR
-                        scalar = mRegionWeights[std::make_pair(gridID,regID)] * mPFTFractVector[index] * mLandFractVector[j] * mAreaVector[j];
-                        base_scalar = mRegionWeights[std::make_pair(gridID,regID)] * mBasePFTFractVector[index] * mLandFractVector[j] * mAreaVector[j];
+                        scalar = mRegionWeights[std::make_pair(gridID,regID)] * aELMPFTFract[valIndex] * aELMLandFract[gridIndex] * aELMArea[gridIndex];
+                        base_scalar = mRegionWeights[std::make_pair(gridID,regID)] * mBasePFTFractVector[valIndex] * aELMLandFract[gridIndex] * aELMArea[gridIndex];
+                       
                         
                         // Find current PFT in the PFT2Crop map
                         // Then add the npp and area for both current and base periods to the region/crop totals
@@ -228,13 +200,19 @@ void CarbonScalers::calcScalers(int *ymd, std::vector<int>& aYears, std::vector<
                             if( totalArea.count(std::make_pair(regID,currCrop)) > 0 ) {
                                 totalArea[std::make_pair(regID,currCrop)] += scalar;
                                 baseTotalArea[std::make_pair(regID,currCrop)] += base_scalar;
-                                totalNPP[std::make_pair(regID,currCrop)] += mNPPVector[index] * scalar;
-                                baseTotalNPP[std::make_pair(regID,currCrop)] += mBaseNPPVector[index] * base_scalar;
+                                totalNPP[std::make_pair(regID,currCrop)] += aELMNPP[valIndex] * scalar;
+                                baseTotalNPP[std::make_pair(regID,currCrop)] += mBaseNPPVector[valIndex] * base_scalar;
                             } else {
                                 totalArea[std::make_pair(regID,currCrop)] = scalar;
                                 baseTotalArea[std::make_pair(regID,currCrop)] = base_scalar;
-                                totalNPP[std::make_pair(regID,currCrop)] = mNPPVector[index] * scalar;
-                                baseTotalNPP[std::make_pair(regID,currCrop)] = mBaseNPPVector[index] * base_scalar;
+                                totalNPP[std::make_pair(regID,currCrop)] = aELMNPP[valIndex] * scalar;
+                                baseTotalNPP[std::make_pair(regID,currCrop)] = mBaseNPPVector[valIndex] * base_scalar;
+                            }
+                            
+                            if( regID == "3_4") {
+                                cout << "PFT " << pft << " for crop " << currCrop << ": " << scalar << ", " << base_scalar;
+                                cout << ", " << aELMNPP[valIndex] << ", " << mBaseNPPVector[valIndex];
+                                cout << ", " << aELMNPP[valIndex]*scalar << ", " << mBaseNPPVector[valIndex]*base_scalar << endl;
                             }
                         }
                         
@@ -242,8 +220,6 @@ void CarbonScalers::calcScalers(int *ymd, std::vector<int>& aYears, std::vector<
                     }
                 }
                 
-                // Increment the index
-                index++;
             }
         }
     }
@@ -251,6 +227,7 @@ void CarbonScalers::calcScalers(int *ymd, std::vector<int>& aYears, std::vector<
     // Calculate scalars
     // Loop over all items in the map
     std::string crop;
+    std::string regID;
     double avgNPP;
     double baseAvgNPP;
     for(const auto &curr : totalArea) {
@@ -270,6 +247,12 @@ void CarbonScalers::calcScalers(int *ymd, std::vector<int>& aYears, std::vector<
             baseAvgNPP = 0.0;
         }
         
+        if( regID == "3_4") {
+            cout << "SCALAR for " << crop << ": ";
+            cout << ", " << totalNPP[std::make_pair(regID,crop)] << ", " << totalArea[std::make_pair(regID,crop)];
+            cout << ", " << baseTotalNPP[std::make_pair(regID,crop)] << ", " << baseTotalArea[std::make_pair(regID,crop)] << endl;
+        }
+        
         // Calculate scalar
         if ( baseAvgNPP > 0 ) {
             gcamScalar[std::make_pair(regID,crop)] = avgNPP / baseAvgNPP;
@@ -280,6 +263,7 @@ void CarbonScalers::calcScalers(int *ymd, std::vector<int>& aYears, std::vector<
      }
     
     // DEBUG: Write output
+    // TODO: This should be moved to a separate method that will write output (if the boolean is set)
     ofstream oFile;
     oFile.open("./test.txt");
     for(const auto &curr : gcamScalar) {
@@ -290,11 +274,10 @@ void CarbonScalers::calcScalers(int *ymd, std::vector<int>& aYears, std::vector<
 
 // Read in scalers from a csv file
 // Note: this is used for diagnostics and testing. In fully coupled E3SM-GCAM, these scalers
-// are passed in code to the wrapper
+// are calculated based on data passed in code through the wrapper
 void CarbonScalers::readScalers(int *yyyymmdd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
     
-    // TEMPORARY: Read scaler data from a file
-    // NOTE: This will be passed from E3SM eventually
+    // TODO: Get this file name from either a configuration or passed argument
     ifstream data("../cpl/data/scaler_data.csv");
     if (!data.is_open())
     {
