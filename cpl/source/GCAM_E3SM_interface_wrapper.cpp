@@ -15,18 +15,20 @@ extern "C" {
   }
     
   // Call the GCAM initialization
-  void initcgcam_() {
-    p_obj->initGCAM();
+  void initcgcam_(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap) {
+    p_obj->initGCAM(aCaseName, aGCAMConfig, aGCAM2ELMCO2Map, aGCAM2ELMLUCMap);
   }
 
   // Set Carbon Densities in GCAM using scalers from E3SM
-  void setdensitycgcam_(int *ymd, int *tod, double *gcami, int *gcami_fdim_1, int *gcami_fdim_2) {
-   // p_obj->setDensityGCAM(ymd, tod, aYears, aRegions, aLandTechs, aScalers);
+  void setdensitycgcam_(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+                          int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, bool aReadScalars, bool aWriteScalars) {
+      p_obj->setDensityGCAM(yyyymmdd, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
+                            aNumLon, aNumLat, aNumPFT, aMappingFile, aReadScalars, aWriteScalars);
   }
     
   // Run GCAM
-  void runcgcam_(int *ymd, int *tod, double *gcami, int *gcami_fdim_1, int *gcami_fdim_2, double *gcamo, int *gcamo_fdim_1, int *gcamo_fdim_2, double *gcamoemis, int *gcamoemis_fdim_1, int *gcamoemis_fdim_2,int *gcamoyr1, int* gcamoyr2,int* sneakermode,int* write_rest) {
-    p_obj->runGCAM(ymd, tod, gcami,gcami_fdim_1,gcami_fdim_2,gcamo, gcamo_fdim_1, gcamo_fdim_2,gcamoemis, gcamoemis_fdim_1, gcamoemis_fdim_2,gcamoyr1, gcamoyr2,sneakermode,write_rest);
+  void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemis, std::string aBaseCO2File, int aNumLon, int aNumLat, bool aWriteCO2) {
+    p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemis, aBaseCO2File, aNumLon, aNumLat, aWriteCO2);
   }
     
   // Finalize GCAM

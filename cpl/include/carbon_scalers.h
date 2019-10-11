@@ -48,18 +48,19 @@ public:
     CarbonScalers(int aNumLat, int aNumLon, int aNumPFT);
     ~CarbonScalers();
     void readScalers(int *ymd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers);
-    void calcScalers(int *ymd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers);
-    void readAllSpatialData();
+    void calcScalers(int *ymd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+                     std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers);
+    void readBaseYearData();
     void readRegionalMappingData(std::string aFileName);
 private:
-    // Vectors of spatial data. Data is either lat * lon or lat * lon * pft long.
-    // Data can either be read from file or passed from E3SM
-    std::vector<double> mNPPVector;
+    // Data for calculating the scalar baseline
     std::vector<double> mBaseNPPVector;
-    std::vector<double> mPFTFractVector;
     std::vector<double> mBasePFTFractVector;
-    std::vector<double> mAreaVector;
-    std::vector<double> mLandFractVector;
+    
+    // Number of latitude, longitude, and PFTs. Storing this so it doesn't have to be passed to every method
+    int mNumLat;
+    int mNumLon;
+    int mNumPFT;
     
     // Map grid cells to regions. Key is a string with longitude and latitude ("lon_lat").
     // Key maps to a vector of strings containing the region and subregion
@@ -73,24 +74,24 @@ private:
     
     //! Map PFTs to GCAM crops
     std::map<int, std::vector<std::string>> mPFT2GCAMCropMap {
-        { 0, { "RockIceDesert", "UrbanLand" } },
-        { 1, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } },
-        { 2, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } },
-        { 3, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } },
-        { 4, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "PalmFruit", "biomass_tree" } },
-        { 5, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "biomass_tree" } },
-        { 6, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "PalmFruit", "biomass_tree" } },
-        { 7, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "biomass_tree" } },
-        { 8, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } },
-        { 9, { "Shrubland", "ProtectedShrubland" } },
-        { 10, { "Shrubland", "ProtectedShrubland"  } },
-        { 11, { "Shrubland", "ProtectedShrubland"  } },
-        { 12, { "Grassland", "Tundra", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass" } },
-        { 13, { "Grassland", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass" } },
-        { 14, { "Grassland", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass", "biomass_grass" } },
-        { 15, { "Corn", "SugarCrop", "Rice", "OtherArableLand", "Wheat", "MiscCrop", "OtherGrain", "OilCrop", "FiberCrop",
-            "FodderHerb", "Root_Tuber", "OtherArableLand", "biomass" } },
-        { 16, { "" } }
+        //{ 0, { "RockIceDesert", "UrbanLand" } },
+        { 1, { "Forest", "UnmanagedForest" } },
+        { 2, { "Forest", "UnmanagedForest" } },
+        { 3, { "Forest", "UnmanagedForest" } },
+        { 4, { "Forest", "UnmanagedForest", "PalmFruit", "willow", "eucalyptus" } },
+        { 5, { "Forest", "UnmanagedForest", "willow" } },
+        { 6, { "Forest", "UnmanagedForest", "PalmFruit", "willow", "eucalyptus" } },
+        { 7, { "Forest", "UnmanagedForest", "willow" } },
+        { 8, { "Forest", "UnmanagedForest" } },
+        { 9, { "Shrubland", "Jatropha" } },
+        { 10, { "Shrubland", "Jatropha" } },
+        { 11, { "Shrubland" } },
+        { 12, {  "Grassland", "Tundra", "Pasture", "UnmanagedPasture", "FodderGrass"} },
+        { 13, { "Grassland", "Pasture", "UnmanagedPasture", "FodderGrass" } },
+        { 14, { "Grassland", "Pasture", "UnmanagedPasture", "FodderGrass", "miscanthus" } },
+        { 15, { "Corn", "SugarCrop", "Rice", "OtherArableLand" } },
+        { 16, { "Wheat", "MiscCrop", "OtherGrain", "OilCrop", "FiberCrop",
+            "FodderHerb", "Root_Tuber", "OtherArableLand", "biomass" } }
     };
 };
 

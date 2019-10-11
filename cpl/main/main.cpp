@@ -47,31 +47,52 @@
 
 // Include interface
 #include "../include/GCAM_E3SM_interface.h"
+#include "../include/aspatial_data.h"
 
 int main( ) {
+    // Define base control variables.
+    // In fully coupled mode, these are defined in an E3SM namelist.
+    std::string CASE_NAME = "Test";
+    std::string GCAM_CONFIG = "configuration.xml";
+    std::string BASE_CO2_FILE = "../cpl/data/gridded_co2.2010";
+    std::string GCAM2ELM_CO2_MAPPING_FILE = "../cpl/mappings/co2.xml";
+    std::string GCAM2ELM_LUC_MAPPING_FILE = "../cpl/mappings/luc.xml";
+    std::string ELM2GCAM_MAPPING_FILE = "../cpl/mappings/regionmap.csv";
+    bool READ_SCALARS = true; // If FALSE, scalars are calculated from NPP/HR
+    bool READ_ELM_FROM_FILE = true; // If FALSE, ELM data (NPP, HR, Area, PFT weight) are passed from E3SM.
+    bool WRITE_CO2 = true; // If TRUE, gridded CO2 emissions will be written to a file (in addition to passed in code).
+    bool WRITE_SCALARS = true; // If TRUE, scalars will be written to a file.
+    
+    // Define coupling control variables
+    // These booleans define what is passed between GCAM & E3SM.
+    bool ELM_IAC_CARBON_SCALING = true; // If TRUE, changes in land productivity from ELM are used in GCAM.
+    bool IAC_ELM_CO2_EMISSIONS = true; // If TRUE, energy system CO2 is passed from GCAM to EAM.
+    
+    // Define size control variables
+    // These integers define the length of the various arrays used in the coupling
+    int NUM_LAT = 180; // Number of horizontal grid cells
+    int NUM_LON = 360; // Number of vertical grid cells
+    int NUM_PFT = 17; // Number of PFTs in ELM
+    int NUM_GCAM_ENERGY_REGIONS = 32;
+    int NUM_GCAM_LAND_REGIONS = 384;
+    int NUM_IAC2ELM_LANDTYPES = 8;
+    
     // Initialize Interface
     GCAM_E3SM_interface *p_obj;
     p_obj = new GCAM_E3SM_interface();
     
     // Initialize GCAM
-    p_obj->initGCAM();
+    p_obj->initGCAM(CASE_NAME, GCAM_CONFIG, GCAM2ELM_CO2_MAPPING_FILE, GCAM2ELM_LUC_MAPPING_FILE);
     
-    // TEMPORARY - Set up data structures that will be passed to runGCAM
-    int numEnergyRegions = 32;
-    int numLandRegions = 390;
-    int numLandTypes = 8;
-    int numModelPeriods = 22;
-    double *gcami = new double [384];
-    double *gcamo = new double [numLandRegions * numLandTypes * numModelPeriods]();
-    double *gcamoemis = new double [numEnergyRegions * numModelPeriods]();
-    int *temp = (int *)(0); // KVC - Temporarily using this for all values additional integer pointers
-    
-    // Define vectors for scaler information
-    vector<int> newYear(17722);
-    vector<std::string> newRegion(17722);
-    vector<std::string> newLandTech(17722);
-    vector<double> newData(17722);
-    
+    // Set up data structures that will be passed to runGCAM
+    // In fully coupled mode, these are allocated by E3SM
+    double *gcamiarea = new double [NUM_LAT * NUM_LON]();
+    double *gcamilfract = new double [NUM_LAT * NUM_LON]();
+    double *gcamipftfract = new double [NUM_LAT * NUM_LON * NUM_PFT]();
+    double *gcaminpp = new double [NUM_LAT * NUM_LON * NUM_PFT]();
+    double *gcamihr = new double [NUM_LAT * NUM_LON * NUM_PFT]();
+    double *gcamoluc = new double [NUM_GCAM_LAND_REGIONS * NUM_IAC2ELM_LANDTYPES]();
+    double *gcamoemis = new double [NUM_LAT * NUM_LON]();
     
     // Run GCAM
     for( int yr = 1975; yr < 2025; yr++ ){
@@ -79,14 +100,39 @@ int main( ) {
         int ymd = yr * 10000;
         int *yyyymmdd = &ymd;
         
-        // Set carbon density
-        p_obj->setDensityGCAM(yyyymmdd, temp, newYear, newRegion, newLandTech, newData);
+        // If coupling is active, then set carbon density
+        if ( ELM_IAC_CARBON_SCALING ) {
+            cout << "E3SM-GCAM: Carbon scaling on" << endl;
+            if ( READ_ELM_FROM_FILE ) {
+                // Read the ELM data from a file and then pass it to setDensityGCAM below
+                cout << "Read NPP" << endl;
+                // Read in average NPP
+                ASpatialData tempPFTData(NUM_LAT * NUM_LON * NUM_PFT);
+                tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false);
+                gcaminpp = tempPFTData.getValueVector().data();
+                
+                cout << "Read PFT weight" << endl;
+                // Read in PFT weight in grid cell
+                tempPFTData.readSpatialData("../cpl/data/pft_wt.txt", true, true, false);
+                gcamipftfract = tempPFTData.getValueVector().data();
+                
+                cout << "Read area" << endl;
+                // Read in area of grid cell
+                ASpatialData tempData(NUM_LAT * NUM_LON);
+                tempData.readSpatialData("../cpl/data/area.txt", true, false, false);
+                gcamiarea = tempData.getValueVector().data();
+                
+                cout << "Read land fract" << endl;
+                // Read in area of grid cell
+                tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false);
+                gcamilfract = tempData.getValueVector().data();
+            }
+            p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamilfract, gcamipftfract, gcaminpp, gcamihr,
+                                  NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, READ_SCALARS, WRITE_SCALARS);
+        }
         
         // Run model
-        p_obj->runGCAM(yyyymmdd, temp, gcami, temp, temp,
-                       gcamo, temp, temp,
-                       gcamoemis, temp, temp,
-                       temp, temp, temp, temp);
+        p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemis, BASE_CO2_FILE, NUM_LON, NUM_LAT, WRITE_CO2);
         
         // Original call (Note lots of these arguments need to be fixed)
         // runcGCAM(ymd,tod,gcami,size(gcami,dim=1),size(gcami,dim=2),gcamo,size(gcamo,dim=1),size(gcamo,dim=2),gcamoemis,size(gcamoemis,dim=1),size(gcamoemis,dim=2), cdata%i(iac_cdatai_gcam_yr1),cdata%i(iac_cdatai_gcam_yr2),cdata%l(iac_cdatal_sneakermode),cdata%l(iac_cdatal_write_rest))

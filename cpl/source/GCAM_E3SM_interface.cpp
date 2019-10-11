@@ -37,11 +37,11 @@ GCAM_E3SM_interface::~GCAM_E3SM_interface(){
  *  and base model information.  Create and setup scenario
  */
 
-void GCAM_E3SM_interface::initGCAM(void)
+void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap)
 {
     
     // identify default file names for control input and logging controls
-    string configurationArg = "configuration.xml";
+    string configurationArg = aGCAMConfig;
     string loggerFactoryArg = "log_conf.xml";
     
     // Add OS dependent prefixes to the arguments.
@@ -94,8 +94,8 @@ void GCAM_E3SM_interface::initGCAM(void)
     mainLog << "Parsing input files..." << endl;
     Configuration* conf = Configuration::getInstance();
     success = XMLHelper<void>::parseXML( configurationFileName, conf );
-    // TODO: Check if parsing succeeded. Non-zero return codes from main indicate
-    
+    // TODO: Check if parsing succeeded.
+    // TODO: Use case name for scenario name
     
     // Initialize the timer.  Create an object of the Timer class.
     Timer timer;
@@ -121,15 +121,17 @@ void GCAM_E3SM_interface::initGCAM(void)
         yearRemap[modeltime->getper_to_yr(period)] = 0;
     }
     
-    // Setup the mappings
-    success = XMLHelper<void>::parseXML("../cpl/mappings/co2.xml", &mCO2EmissData);
+    // Setup the CO2 mappings
+    // TODO: Error checking?
+    success = XMLHelper<void>::parseXML(aGCAM2ELMCO2Map, &mCO2EmissData);
     mCO2EmissData.addYearColumn("Year", years, yearRemap);
     mCO2EmissData.finalizeColumns();
-    cout << "CO2 added" << endl;
-    success = XMLHelper<void>::parseXML("../cpl/mappings/luc.xml", &mLUCData);
+
+    // Setup the land use change mappings
+    // TODO: Error checking?
+    success = XMLHelper<void>::parseXML(aGCAM2ELMLUCMap, &mLUCData);
     mLUCData.addYearColumn("Year", years, yearRemap);
     mLUCData.finalizeColumns();
-    cout << "LUC added" << endl;
 
     // Clean up
     XMLHelper<void>::cleanupParser();
@@ -162,7 +164,8 @@ void GCAM_E3SM_interface::initGCAM(void)
  * \param sneakermode integer indicating sneakernet mode is on
  * \param write_rest integer indicating restarts should be written
  */
-void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *gcami_fdim1_nflds, int *gcami_fdim2_datasize, double *gcamo, int *gcamo_fdim1_nflds, int *gcamo_fdim2_datasize, double *gcamoemis, int *gcamoemis_fdim1_nflds, int *gcamoemis_fdim2_datasize, int *yr1, int *yr2, int *sneakermode, int *write_rest )
+void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemis, std::string aBaseCO2File,
+                                  int aNumLon, int aNumLat, bool aWriteCO2 )
 {
     cout << "RUNNING GCAM" << endl;
     
@@ -222,62 +225,61 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, int *tod, double *gcami, int *
         GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mLUCData);
         getLUC.run(runner->getInternalScenario());
         
-        // Set data in the gcamo* arrays
+        // Set data in the gcamoluc* arrays
         const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
-        for(size_t i = 0; i < mCO2EmissData.getArrayLength(); ++i) {
-            // TOOD: Is this still needed?
-            gcamoemis[i] = co2[i];
-        }
         for(size_t i = 0; i < mLUCData.getArrayLength(); ++i) {
-            gcamo[i] = luc[i];
+            // TODO: Is this needed or can we directly copy?
+            gcamoluc[i] = luc[i];
         }
         
         // Downscale CO2 emissions
         cout << "Downscaling CO2 emissions" << endl;
-        EmissDownscale gcam2e3sm(360*180); // Emissions data is 1 degree by 1 degree
-        double totalEmissions2010 = gcam2e3sm.readSpatialData("../cpl/data/gridded_co2.2010", false, false, true);
-        gcam2e3sm.downscaleCO2Emissions(totalEmissions2010, gcamoemis[0]);
-        gcam2e3sm.writeSpatialData("./testco2.txt", false);
+        EmissDownscale gcam2e3sm(aNumLon * aNumLat);
+        double totalEmissions2010 = gcam2e3sm.readSpatialData(aBaseCO2File, false, false, true);
+        gcam2e3sm.downscaleCO2Emissions(totalEmissions2010, co2[0]);
+        if ( aWriteCO2 ) {
+            // TODO: Set name of file based on case name?
+            gcam2e3sm.writeSpatialData("./gridded_co2.txt", false);
+        }
+        // Set gcamoemis to the output of this
+        gcamoemis = gcam2e3sm.getValueVector().data();
     }
 }
 
-void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, int *tod, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
+void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+                                         int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, bool aReadScalars, bool aWriteScalars) {
     // Get year only of the current date
     int curryear = *yyyymmdd/10000;
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
     
-    // Get scaler information
-    // For now, we are reading this from a file, but we will need to get it from E3SM directly eventually.
-    getScalers(yyyymmdd, aYears, aRegions, aLandTechs, aScalers);
+    // Create scalar vectors
+    // TODO: Find a better way to determine the length
+    std::vector<int> scalarYears(17722);
+    vector<std::string> scalarRegion(17722);
+    vector<std::string> scalarLandTech(17722);
+    vector<double> scalarData(17722);
     
     // Only set carbon densities during GCAM model years.
     if( modeltime->isModelYear( curryear )) {
-        SetDataHelper setScaler(aYears, aRegions, aLandTechs, aScalers, "world/region[+name]/sector/subsector/technology[+name]/period[+year]/yield-scaler");
+        CarbonScalers e3sm2gcam(aNumLon, aNumLat, aNumPFT);
+        
+        // Get scaler information
+        if ( aReadScalars ) {
+            e3sm2gcam.readScalers(yyyymmdd, scalarYears, scalarRegion, scalarLandTech, scalarData);
+        }
+        // TODO: This should really be in an `else` block -- only do if you aren't reading scalars.
+        // But, I'm leaving it on for testing/debugging
+        cout << "Read region map" << endl;
+        e3sm2gcam.readRegionalMappingData(aMappingFile);
+        e3sm2gcam.calcScalers(yyyymmdd, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
+                              scalarYears, scalarRegion, scalarLandTech, scalarData);
+        
+        // TODO: What happens if there is no scalarData or if the elements are blank?
+        SetDataHelper setScaler(scalarYears, scalarRegion, scalarLandTech, scalarData, "world/region[+name]/sector/subsector/technology[+name]/period[+year]/yield-scaler");
         setScaler.run(runner->getInternalScenario());
     }
     
 }
-
-// Get scalers.
-// For testing this calls a method to read scalers from a file. In fully coupled mode,
-// this will get scalers passed to GCAM.
-void GCAM_E3SM_interface::getScalers(int *yyyymmdd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
-    cout << "Getting scalers" << endl;
-    // Get year only of the current date
-    int curryear = *yyyymmdd/10000;
-    const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
-    
-    // Only set carbon densities during GCAM model years.
-    if( modeltime->isModelYear( curryear )) {
-        // TODO: Once this works, add if block to call it only when not reading from file. For now, it doesn't do everything so it is fine to run
-        CarbonScalers e3sm2gcam(180, 360, 17);
-        e3sm2gcam.readScalers(yyyymmdd, aYears, aRegions, aLandTechs, aScalers);
-        
-        
-        e3sm2gcam.calcScalers(yyyymmdd, aYears, aRegions, aLandTechs, aScalers);
-    }
-}
-
 
 void GCAM_E3SM_interface::finalizeGCAM()
 {
