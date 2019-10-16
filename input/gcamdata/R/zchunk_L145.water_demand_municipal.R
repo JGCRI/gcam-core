@@ -1,4 +1,4 @@
-#' module_water_L145.water.demand.municipal
+#' module_water_L145.water_demand_municipal
 #'
 #' Generate municipal water withdrawals, municipal water base delivery cost, and municipal water use efficiency.
 #'
@@ -7,13 +7,13 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L145.municipal_water_R_W_Yh_km3}, \code{L145.municipal_water_cost_R_75USD_m3}, \code{L145.municipal_water_eff_R_Yh}. The corresponding file in the
-#' original data system was \code{L145.water.demand.municipal.R} (water level1).
+#' original data system was \code{L145.water_demand_municipal.R} (water level1).
 #' @details Generate municipal water withdrawals, municipal water base delivery cost, and municipal water use efficiency.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YL May 2017
-module_water_L145.water.demand.municipal <- function(command, ...) {
+module_water_L145.water_demand_municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "water/aquastat_ctry",

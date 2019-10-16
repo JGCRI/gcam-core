@@ -66,6 +66,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["SmthRenewRsrcCurves"]] <- c(level2_data_names[["SmthRenewRsrc"]], "year.fillout", "maxSubResource", "mid.price", "curve.exponent")
   level2_data_names[["GrdRenewRsrcCurves"]] <- c("region", "renewresource", "sub.renewable.resource", "grade", "available", "extractioncost")
   level2_data_names[["GrdRenewRsrcMax"]] <- c("region", "renewresource", "sub.renewable.resource", "year.fillout", "maxSubResource")
+  level2_data_names[["GrdRenewRsrcMaxNoFillOut"]] <- c("region", "renewresource", "sub.renewable.resource", "year", "maxSubResource")
   level2_data_names[["RsrcTechChange"]] <- c(level2_data_names[["SubRsrc"]], "year.fillout", "techChange")
   level2_data_names[["RenewRsrcTechChange"]] <- c(level2_data_names[["SubRenewRsrc"]], "year.fillout", "techChange")
   level2_data_names[["SmthRenewRsrcTechChange"]] <- c(level2_data_names[["SmthRenewRsrc"]], "year.fillout", "techChange")
@@ -122,6 +123,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["TechCoef"]] <- c(level2_data_names[["TechYr"]], "minicam.energy.input", "coefficient", "market.name")
   level2_data_names[["TechEff"]] <- c(level2_data_names[["TechYr"]], "minicam.energy.input", "efficiency", "market.name")
   level2_data_names[["TechCost"]] <- c(level2_data_names[["TechYr"]], "minicam.non.energy.input", "input.cost")
+  level2_data_names[["TechPmult"]] <- c(level2_data_names[["TechYr"]], "pMult")
   level2_data_names[["CarbonCapture"]] <- c(level2_data_names[["TechYr"]], "storage.market", "remove.fraction")
   level2_data_names[["ImportTech"]] <- c(level2_data_names[["TechYr"]]) #indicates a renewable input; nothing is specified in the table however
   level2_data_names[["TechCapital"]] <- c(level2_data_names[["TechYr"]], "input.capital", "capital.overnight", "fixed.charge.rate")
