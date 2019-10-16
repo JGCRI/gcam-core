@@ -492,6 +492,7 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const ICarbonC
             }
             else if( aCalcMode == ICarbonCalc::eReturnTotal ) {
                 mCarbonCalcs[ i ]->mStoredEmissions = mCarbonCalcs[ i ]->mTotalEmissionsAbove[ aEndYear ] +
+                    mCarbonCalcs[ i ]->mTotalEmissionsBelow[ aEndYear ] +
                     (*currEmissionsAbove[ i ])[ aEndYear ] + (*currEmissionsBelow[ i ])[ aEndYear ];
             }
             // clean up memory now that we are done with it
