@@ -1,0 +1,243 @@
+# File: groundwater_uniform.csv
+# Title: Parameters for uniform ground water resource supply curves
+# Source: Kim et al. 2016. Balancing global water availability and use at basin scale in an integrated assessment model. Climatic Change, 136(2), pp.217-231.
+# Comments: alpha parameter is 0.5, water depth at 50 percentile, water price from 14 region version mapped to 32 region version of GCAM
+# Units: NA
+# Column types: icnnnnnn
+# ----------
+basin.id,basin.name,alpha,base.cum,base.rsc,base.prc,hist.use,hist.price
+55,Adriatic Sea - Greece - Black Sea Coast,0.5,100,100,0.001,0,0
+171,"Africa, East Central Coast",0.5,100,100,0.001,0,0
+190,"Africa, Indian Ocean Coast",0.5,100,100,0.001,0,0
+144,"Africa, North Interior",0.5,100,100,0.001,0,0
+86,"Africa, North West Coast",0.5,100,100,0.001,0,0
+100,"Africa, Red Sea - Gulf of Aden Coast",0.5,100,100,0.001,0,0
+197,"Africa, South Interior",0.5,100,100,0.001,0,0
+142,"Africa, West Coast",0.5,100,100,0.001,0,0
+168,Amazon,0.5,100,100,0.001,0,0
+58,Amu Darya,0.5,100,100,0.001,0,0
+43,Amur,0.5,100,100,0.001,0,0
+141,Andaman - Nicobar Islands,0.5,100,100,0.001,0,0
+182,"Angola, Coast",0.5,100,100,0.001,0,0
+216,Antarctica,0.5,100,100,0.001,0,0
+94,Arabian Peninsula,0.5,100,100,0.001,0,0
+104,Arabian Sea Coast,0.5,100,100,0.001,0,0
+1,Arctic Ocean Islands,0.5,100,100,0.001,0,0
+224,Arkansas White Red Basin,0.5,100,100,0.001,0,0
+19,Atlantic Ocean Seaboard,0.5,100,100,0.001,0,0
+189,"Australia, East Coast",0.5,100,100,0.001,0,0
+193,"Australia, Interior",0.5,100,100,0.001,0,0
+184,"Australia, North Coast",0.5,100,100,0.001,0,0
+202,"Australia, South Coast",0.5,100,100,0.001,0,0
+191,"Australia, West Coast",0.5,100,100,0.001,0,0
+91,Baja California,0.5,100,100,0.001,0,0
+20,Baltic Sea Coast,0.5,100,100,0.001,0,0
+116,"Bay of Bengal, North East Coast",0.5,100,100,0.001,0,0
+47,"Black Sea, North Coast",0.5,100,100,0.001,0,0
+70,"Black Sea, South Coast",0.5,100,100,0.001,0,0
+66,"Bo Hai - Korean Bay, North Coast",0.5,100,100,0.001,0,0
+120,Brahamani,0.5,100,100,0.001,0,0
+217,California River Basin,0.5,100,100,0.001,0,0
+101,Caribbean,0.5,100,100,0.001,0,0
+143,Caribbean Coast,0.5,100,100,0.001,0,0
+45,Caspian Sea Coast,0.5,100,100,0.001,0,0
+52,"Caspian Sea, East Coast",0.5,100,100,0.001,0,0
+72,"Caspian Sea, South West Coast",0.5,100,100,0.001,0,0
+153,Cauvery,0.5,100,100,0.001,0,0
+82,Central Iran,0.5,100,100,0.001,0,0
+214,Central Patagonia Highlands,0.5,100,100,0.001,0,0
+146,Chao Phraya,0.5,100,100,0.001,0,0
+78,China Coast,0.5,100,100,0.001,0,0
+34,Churchill,0.5,100,100,0.001,0,0
+157,"Colombia - Ecuador, Pacific Coast",0.5,100,100,0.001,0,0
+183,Congo,0.5,100,100,0.001,0,0
+54,Danube,0.5,100,100,0.001,0,0
+25,Daugava,0.5,100,100,0.001,0,0
+95,Dead Sea,0.5,100,100,0.001,0,0
+21,Denmark - Germany Coast,0.5,100,100,0.001,0,0
+39,Dnieper,0.5,100,100,0.001,0,0
+49,Dniester,0.5,100,100,0.001,0,0
+53,Don,0.5,100,100,0.001,0,0
+74,Douro,0.5,100,100,0.001,0,0
+186,"East Brazil, South Atlantic Coast",0.5,100,100,0.001,0,0
+99,Eastern Jordan - Syria,0.5,100,100,0.001,0,0
+73,Ebro,0.5,100,100,0.001,0,0
+31,Elbe,0.5,100,100,0.001,0,0
+28,Ems - Weser,0.5,100,100,0.001,0,0
+26,England and Wales,0.5,100,100,0.001,0,0
+90,Farahrud,0.5,100,100,0.001,0,0
+13,Finland,0.5,100,100,0.001,0,0
+181,Fly,0.5,100,100,0.001,0,0
+61,"France, South Coast",0.5,100,100,0.001,0,0
+41,"France, West Coast",0.5,100,100,0.001,0,0
+27,Fraser,0.5,100,100,0.001,0,0
+110,Ganges - Bramaputra,0.5,100,100,0.001,0,0
+64,Gironde,0.5,100,100,0.001,0,0
+42,Gobi Interior,0.5,100,100,0.001,0,0
+123,Godavari,0.5,100,100,0.001,0,0
+222,Great Basin,0.5,100,100,0.001,0,0
+227,Great Lakes Basin,0.5,100,100,0.001,0,0
+133,Grijalva - Usumacinta,0.5,100,100,0.001,0,0
+83,Guadalquivir,0.5,100,100,0.001,0,0
+81,Guadiana,0.5,100,100,0.001,0,0
+162,Gulf of Guinea,0.5,100,100,0.001,0,0
+148,Gulf of Thailand Coast,0.5,100,100,0.001,0,0
+124,Hainan,0.5,100,100,0.001,0,0
+102,Hamun-i-Mashkel,0.5,100,100,0.001,0,0
+234,Hawaii,0.5,100,100,0.001,0,0
+97,Helmand,0.5,100,100,0.001,0,0
+109,Hong (Red River),0.5,100,100,0.001,0,0
+79,Huang He,0.5,100,100,0.001,0,0
+15,Hudson Bay Coast,0.5,100,100,0.001,0,0
+11,Iceland,0.5,100,100,0.001,0,0
+145,India East Coast,0.5,100,100,0.001,0,0
+128,India North East Coast,0.5,100,100,0.001,0,0
+155,India South Coast,0.5,100,100,0.001,0,0
+129,India West Coast,0.5,100,100,0.001,0,0
+89,Indus,0.5,0,200,0.001,6832,0.0001
+24,Ireland,0.5,100,100,0.001,0,0
+167,Irian Jaya Coast,0.5,100,100,0.001,0,0
+137,Irrawaddy,0.5,100,100,0.001,0,0
+136,Isthmus of Tehuantepec,0.5,100,100,0.001,0,0
+50,"Italy, East Coast",0.5,100,100,0.001,0,0
+59,"Italy, West Coast",0.5,100,100,0.001,0,0
+51,Japan,0.5,100,100,0.001,0,0
+175,Java - Timor,0.5,100,100,0.001,0,0
+165,Kalimantan,0.5,100,100,0.001,0,0
+5,Kara Sea Coast,0.5,100,100,0.001,0,0
+140,Krishna,0.5,100,100,0.001,0,0
+206,La Plata,0.5,100,100,0.001,0,0
+200,La Puna Region,0.5,100,100,0.001,0,0
+68,Lake Balkash,0.5,100,100,0.001,0,0
+151,Lake Chad,0.5,100,100,0.001,0,0
+6,Lena,0.5,100,100,0.001,0,0
+199,Limpopo,0.5,100,100,0.001,0,0
+44,Loire,0.5,100,100,0.001,0,0
+221,Lower Colorado River Basin,0.5,100,100,0.001,0,0
+219,Lower Mississippi River Basin,0.5,100,100,0.001,0,0
+10,Mackenzie,0.5,100,100,0.001,0,0
+177,Madasgacar,0.5,100,100,0.001,0,0
+166,Magdalena,0.5,100,100,0.001,0,0
+122,Mahandi,0.5,100,100,0.001,0,0
+113,Mahi,0.5,100,100,0.001,0,0
+203,Mar Chiquita,0.5,100,100,0.001,0,0
+63,Mediterranean Sea Islands,0.5,100,100,0.001,0,0
+75,"Mediterranean Sea, East Coast",0.5,100,100,0.001,0,0
+80,Mediterranean South Coast,0.5,100,100,0.001,0,0
+125,Mekong,0.5,100,100,0.001,0,0
+114,"Mexico, Interior",0.5,100,100,0.001,0,0
+96,"Mexico, Northwest Coast",0.5,100,100,0.001,0,0
+150,Micronesia,0.5,100,100,0.001,0,0
+233,Mid Atlantic Basin,0.5,100,100,0.001,0,0
+223,Missouri River Basin,0.5,100,100,0.001,0,0
+208,Murray - Darling,0.5,100,100,0.001,0,0
+196,"Namibia, Coast",0.5,100,100,0.001,0,0
+235,Narmada,0.5,100,100,0.001,0,0
+22,Narva,0.5,100,100,0.001,0,0
+213,Negro,0.5,100,100,0.001,0,0
+35,Neman,0.5,100,100,0.001,0,0
+17,Neva,0.5,100,100,0.001,0,0
+232,New England Basin,0.5,100,100,0.001,0,0
+201,New Zealand,0.5,100,100,0.001,0,0
+149,Niger,0.5,100,100,0.001,0,0
+87,Nile,0.5,100,100,0.001,0,0
+65,North and South Korea,0.5,100,100,0.001,0,0
+210,"North Argentina, South Atlantic Coast",0.5,100,100,0.001,0,0
+159,North Borneo Coast,0.5,100,100,0.001,0,0
+172,"North Brazil, South Atlantic Coast",0.5,100,100,0.001,0,0
+207,"North Chile, Pacific Coast",0.5,100,100,0.001,0,0
+105,North Gulf,0.5,100,100,0.001,0,0
+121,North Marina Islands and Guam,0.5,100,100,0.001,0,0
+161,"Northeast South America, South Atlantic Coast",0.5,100,100,0.001,0,0
+14,Northern Dvina,0.5,100,100,0.001,0,0
+2,Northwest Territories,0.5,100,100,0.001,0,0
+56,Ob,0.5,100,100,0.001,0,0
+29,Oder,0.5,100,100,0.001,0,0
+228,Ohio River Basin,0.5,100,100,0.001,0,0
+194,Orange,0.5,100,100,0.001,0,0
+156,Orinoco,0.5,100,100,0.001,0,0
+7,Pacific and Arctic Coast,0.5,100,100,0.001,0,0
+115,Pacific Central Coast,0.5,100,100,0.001,0,0
+229,Pacific Northwest Basin,0.5,100,100,0.001,0,0
+158,Palau and East Indonesia,0.5,100,100,0.001,0,0
+209,Pampas Region,0.5,100,100,0.001,0,0
+130,Papaloapan,0.5,100,100,0.001,0,0
+173,Papua New Guinea Coast,0.5,100,100,0.001,0,0
+187,Parnaiba,0.5,100,100,0.001,0,0
+139,Peninsula Malaysia,0.5,100,100,0.001,0,0
+147,Pennar,0.5,100,100,0.001,0,0
+88,Persian Gulf Coast,0.5,100,100,0.001,0,0
+180,"Peru, Pacific Coast",0.5,100,100,0.001,0,0
+119,Philippines,0.5,100,100,0.001,0,0
+92,Plateau of Tibet Interior,0.5,100,100,0.001,0,0
+57,Po,0.5,100,100,0.001,0,0
+33,Poland Coast,0.5,100,100,0.001,0,0
+93,"Red Sea, East Coast",0.5,100,100,0.001,0,0
+32,Rhine,0.5,100,100,0.001,0,0
+62,Rhone,0.5,100,100,0.001,0,0
+179,Rift Valley,0.5,100,100,0.001,0,0
+134,Rio Balsas,0.5,100,100,0.001,0,0
+231,Rio Grande River Basin,0.5,100,100,0.001,0,0
+131,Rio Lerma,0.5,100,100,0.001,0,0
+132,Rio Verde,0.5,100,100,0.001,0,0
+9,"Russia, Barents Sea Coast",0.5,100,100,0.001,0,0
+37,"Russia, South East Coast",0.5,100,100,0.001,0,0
+107,Sabarmati,0.5,0,300,0.001,1248.683298,0.0001
+205,Salinas Grandes,0.5,100,100,0.001,0,0
+127,Salween,0.5,100,100,0.001,0,0
+192,Sao Francisco,0.5,100,100,0.001,0,0
+23,Saskatchewan - Nelson,0.5,100,100,0.001,0,0
+8,"Scandinavia, North Coast",0.5,100,100,0.001,0,0
+36,Scheldt,0.5,100,100,0.001,0,0
+16,Scotland,0.5,100,100,0.001,0,0
+46,Seine,0.5,100,100,0.001,0,0
+152,Senegal,0.5,100,100,0.001,0,0
+178,Sepik,0.5,100,100,0.001,0,0
+170,Shebelli - Juba,0.5,100,100,0.001,0,0
+3,"Siberia, North Coast",0.5,100,100,0.001,0,0
+4,"Siberia, West Coast",0.5,100,100,0.001,0,0
+98,Sinai Peninsula,0.5,100,100,0.001,0,0
+138,Sittang,0.5,100,100,0.001,0,0
+176,Solomon Islands,0.5,100,100,0.001,0,0
+198,"South Africa, South Coast",0.5,100,100,0.001,0,0
+204,"South Africa, West Coast",0.5,100,100,0.001,0,0
+212,"South America, Colorad",0.5,100,100,0.001,0,0
+215,"South Argentina, South Atlantic Coast",0.5,100,100,0.001,0,0
+226,South Atlantic Gulf Basin,0.5,100,100,0.001,0,0
+169,"South Chile, Pacific Coast",0.5,100,100,0.001,0,0
+112,South China Sea Coast,0.5,100,100,0.001,0,0
+185,South Pacific Islands,0.5,100,100,0.001,0,0
+135,Southern Central America,0.5,100,100,0.001,0,0
+60,"Spain - Portugal, Atlantic Coast",0.5,100,100,0.001,0,0
+67,"Spain, South and East Coast",0.5,100,100,0.001,0,0
+154,Sri Lanka,0.5,100,100,0.001,0,0
+40,St Lawrence,0.5,100,100,0.001,0,0
+164,Sulawesi,0.5,100,100,0.001,0,0
+163,Sumatra,0.5,100,100,0.001,0,0
+12,Sweden,0.5,100,100,0.001,0,0
+76,Syr Darya,0.5,100,100,0.001,0,0
+71,Tagus,0.5,100,100,0.001,0,0
+103,Taiwan,0.5,100,100,0.001,0,0
+117,Tapti,0.5,100,100,0.001,0,0
+85,Tarim Interior,0.5,100,100,0.001,0,0
+211,Tasmania,0.5,100,100,0.001,0,0
+230,Tennessee River Basin,0.5,100,100,0.001,0,0
+225,Texas Gulf Coast Basin,0.5,100,100,0.001,0,0
+69,Tiber,0.5,100,100,0.001,0,0
+84,Tigris - Euphrates,0.5,100,100,0.001,0,0
+174,Tocantins,0.5,100,100,0.001,0,0
+220,Upper Colorado River Basin,0.5,100,100,0.001,0,0
+218,Upper Mississippi Basin,0.5,100,100,0.001,0,0
+38,Ural,0.5,100,100,0.001,0,0
+195,"Uruguay - Brazil, South Atlantic Coast",0.5,100,100,0.001,0,0
+126,"Viet Nam, Coast",0.5,100,100,0.001,0,0
+18,Volga,0.5,100,100,0.001,0,0
+160,Volta,0.5,100,100,0.001,0,0
+30,Wisla,0.5,100,100,0.001,0,0
+108,Xun Jiang,0.5,100,100,0.001,0,0
+106,Yangtze,0.5,100,100,0.001,0,0
+118,Yasai,0.5,100,100,0.001,0,0
+48,Yenisey,0.5,100,100,0.001,0,0
+111,Yucatan Peninsula,0.5,100,100,0.001,0,0
+188,Zambezi,0.5,100,100,0.001,0,0
+77,"Ziya He, Interior",0.5,100,100,0.001,0,0

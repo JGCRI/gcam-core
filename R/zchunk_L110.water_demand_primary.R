@@ -1,21 +1,21 @@
-#' module_water_L110.water.demand.primary
+#' module_water_L110.water_demand_primary
 #'
-#' Gets water use coefficients for primary energy.
+#' Gets water use coefficients for primary energy production.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L110.water_demand_primary_R_S_W_m3_GJ}. The corresponding file in the
-#' original data system was \code{L110.water.demand.primary.R} (water level1).
-#' @details Gets water use coefficients for primary energy using regional
+#' original data system was \code{L110.water_demand_primary.R} (water level1).
+#' @details Gets water use coefficients for primary energy production using regional
 #' fractions of saline and freshwater shares.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select arrange left_join
 #' @importFrom tidyr gather spread
 #' @importFrom tibble as_tibble
 #' @author SWDT April 2017
-module_water_L110.water.demand.primary <- function(command, ...) {
+module_water_L110.water_demand_primary <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "common/iso_GCAM_regID",

@@ -175,6 +175,9 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # Combine with subsector and technology shareweights
       right_join(select(L2011.AgProduction_ag_irr, -calOutputValue),
                  by = c("region", "AgProductionTechnology", "year")) %>%
+      # recheck technology share weight after splitting technology levels and rounding
+      mutate(tech.share.weight = 0,
+             tech.share.weight = replace(tech.share.weight, calOutputValue > 0, 1)) %>%
       select(LEVEL2_DATA_NAMES[["AgProduction"]]) ->
       L2012.AgProduction_ag_irr_mgmt
 

@@ -1,4 +1,4 @@
-#' module_water_L233.water.demand.livestock
+#' module_water_L233.water_demand_livestock
 #'
 #' Generates water coefficients for region-specific livestock for model years.
 #'
@@ -7,7 +7,7 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L233.TechCoef}. The corresponding file in the
-#' original data system was \code{L233.water.demand.livestock.R} (water level2).
+#' original data system was \code{L233.water_demand_livestock.R} (water level2).
 #' @details This chunk generates water coefficients (amount of water needed to produce one unit of livestock, unit: m^3/Mt)
 #' for region-specific livestock for#' model years (1975, 1990,2005, 2010....2100), with the information of supplysector,
 #' subsector,technology, and energy input.
@@ -15,7 +15,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YL July 2017
-module_water_L233.water.demand.livestock <- function(command, ...) {
+module_water_L233.water_demand_livestock <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/A03.sector",
