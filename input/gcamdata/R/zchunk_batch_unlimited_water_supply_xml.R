@@ -10,8 +10,10 @@
 #' original data system was \code{batch_unlimited_water_supply.xml.R} (water XML).
 module_water_batch_unlimited_water_supply_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L202.UnlimitRsrc",
-              "L202.UnlimitRsrcPrice"))
+    return(c("L202.UnlimitRsrc_mapped",
+             "L202.UnlimitRsrc_nonmapped",
+             "L202.UnlimitRsrcPrice_mapped",
+             "L202.UnlimitRsrcPrice_nonmapped"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "unlimited_water_supply.xml"))
   } else if(command == driver.MAKE) {
@@ -19,16 +21,22 @@ module_water_batch_unlimited_water_supply_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L202.UnlimitRsrc <- get_data(all_data, "L202.UnlimitRsrc")
-    L202.UnlimitRsrcPrice <- get_data(all_data, "L202.UnlimitRsrcPrice")
+    L202.UnlimitRsrc_mapped <- get_data(all_data, "L202.UnlimitRsrc_mapped")
+    L202.UnlimitRsrc_nonmapped <- get_data(all_data, "L202.UnlimitRsrc_nonmapped")
+    L202.UnlimitRsrcPrice_mapped <- get_data(all_data, "L202.UnlimitRsrcPrice_mapped")
+    L202.UnlimitRsrcPrice_nonmapped <- get_data(all_data, "L202.UnlimitRsrcPrice_nonmapped")
+
 
     # ===================================================
 
     # Produce outputs
     create_xml("unlimited_water_supply.xml") %>%
-      add_xml_data(L202.UnlimitRsrc, "UnlimitRsrc") %>%
-      add_xml_data(L202.UnlimitRsrcPrice, "UnlimitRsrcPrice") %>%
-      add_precursors("L202.UnlimitRsrc", "L202.UnlimitRsrcPrice") ->
+      add_xml_data(L202.UnlimitRsrc_mapped, "UnlimitRsrc") %>%
+      add_xml_data(L202.UnlimitRsrc_nonmapped, "UnlimitRsrc") %>%
+      add_xml_data(L202.UnlimitRsrcPrice_mapped, "UnlimitRsrcPrice") %>%
+      add_xml_data(L202.UnlimitRsrcPrice_nonmapped, "UnlimitRsrcPrice") %>%
+      add_precursors("L202.UnlimitRsrc_mapped", "L202.UnlimitRsrc_nonmapped",
+                     "L202.UnlimitRsrcPrice_mapped", "L202.UnlimitRsrcPrice_nonmapped") ->
       unlimited_water_supply.xml
 
     return_data(unlimited_water_supply.xml)

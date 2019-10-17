@@ -461,10 +461,12 @@ socioeconomics.POP_DIGITS                <- 0
 # Water constants ======================================================================
 
 water.ALL_WATER_TYPES                     <- c("water consumption",
+
 "water withdrawals",
 "seawater",
 "biophysical water consumption",
 "desalination")
+
 water.AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
 water.COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
 water.COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
@@ -486,12 +488,9 @@ water.MAPPING_COEF                        <- 1
 water.MAPPING_PMULT                       <- 1
 water.NONIRRIGATION_SECTORS               <- c("Municipal", "Electricity", "Livestock", "Manufacturing", "Mining")
 water.LOGIT_EXP                           <- -6
-water.LIVESTOCK                           <- "Livestock"
-water.PRIMARY_ENERGY                      <- "Mining"
-water.LIVESTOCK_TYPES                     <- c("Beef","Dairy","Pork","Poultry","SheepGoat")
-water.DELETE_DEMAND_TYPES              <- c("water_td_an_W","water_td_an_C","water_td_pri_W","water_td_pri_C")
-water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
-names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
+
+
+
 
 # GCAM intermediate sectors for which Vassolo + Doll assessed manufacturing water demands. In the paper, they indicate
 # chemicals, pulp and paper, pig iron, sugar, beer, cloth, cement, and crude steel. some industrial mfg does take place
@@ -522,6 +521,8 @@ water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010) # Historical years for freshwater
 water.RENEW.COST.GRADE1 <- 0.00001 #Renewable water grade1 cost
 water.RENEW.COST.GRADE2 <- 0.001 #Renewable water grade2 cost
 water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
+
+
 
 
 # Emissions constants ======================================================================
@@ -708,6 +709,13 @@ gcamusa.ZERO_WATER_COEF <- 0
 gcamusa.CONVEYANCE_LOSSES <- 0.829937455747218 ## From file: L165.ag_IrrEff_R
 water.MAPPED_PRI_WATER_TYPES                  <- c("water consumption", "water withdrawals","desalination")
 gcamusa.MIN_PRIM_ENERGY_YEAR <- 1990
+
+water.LIVESTOCK                           <- "Livestock"
+water.PRIMARY_ENERGY                      <- "Mining"
+water.LIVESTOCK_TYPES                     <- c("Beef","Dairy","Pork","Poultry","SheepGoat")
+water.DELETE_DEMAND_TYPES              <- c("water_td_an_W","water_td_an_C","water_td_pri_W","water_td_pri_C")
+water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
+names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
 
 
 # Time shift conditions ======================================================================

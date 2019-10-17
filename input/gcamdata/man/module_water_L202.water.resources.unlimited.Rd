@@ -14,7 +14,8 @@ module_water_L202.water.resources.unlimited(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L202.UnlimitRsrc}, \code{L202.UnlimitRsrcPrice}. The corresponding file in the
+the generated outputs: \code{L202.UnlimitRsrc_mapped}, \code{L202.UnlimitRsrc_nonmapped},
+\code{L202.UnlimitRsrcPrice_mapped}, \code{L202.UnlimitRsrcPrice_nonmapped}. The corresponding file in the
 original data system was \code{L202.water.resources.unlimited.R} (water level2).
 }
 \description{
@@ -25,5 +26,5 @@ Create unlimited resource markets (i.e., 32 GCAM regions) for water types (i.e.,
 and read in fixed prices for water types.
 }
 \author{
-YL July 2017
+YL July 2017 / ST Oct 2018
 }
