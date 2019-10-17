@@ -460,6 +460,11 @@ socioeconomics.POP_DIGITS                <- 0
 
 # Water constants ======================================================================
 
+water.ALL_WATER_TYPES                     <- c("water consumption",
+"water withdrawals",
+"seawater",
+"biophysical water consumption",
+"desalination")
 water.AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
 water.COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
 water.COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
@@ -467,18 +472,26 @@ water.COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless
 water.DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
 water.DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+water.DEFAULT_BASEYEAR_WATER_PRICE        <- 0.001
+water.IRR_PRICE_SUBSIDY_MULT              <- 0.01  # Multiplier for irrigation price subsidy (OECD 2009 Managing Water for All)
 water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
 water.IRRIGATION                          <- "Irrigation"
+water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
+water.WATER_UNITS_PRICE                   <- "1975$/m^3"
+water.WATER_UNITS_QUANTITY                <- "km^3"
+water.DIGITS_MUNI_WATER                   <- 4
+water.DESALINATION_PRICE                  <- 0.214  # 1975$/m3
+water.IRR_SHARE                           <- 1
+water.MAPPING_COEF                        <- 1
+water.MAPPING_PMULT                       <- 1
+water.NONIRRIGATION_SECTORS               <- c("Municipal", "Electricity", "Livestock", "Manufacturing", "Mining")
+water.LOGIT_EXP                           <- -6
 water.LIVESTOCK                           <- "Livestock"
 water.PRIMARY_ENERGY                      <- "Mining"
 water.LIVESTOCK_TYPES                     <- c("Beef","Dairy","Pork","Poultry","SheepGoat")
 water.DELETE_DEMAND_TYPES              <- c("water_td_an_W","water_td_an_C","water_td_pri_W","water_td_pri_C")
-water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
 water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
-water.WATER_UNITS_PRICE                   <- "1975$/m^3"
-water.WATER_UNITS_QUANTITY                <- "km^3"
-water.DIGITS_MUNI_WATER                   <- 4
 
 # GCAM intermediate sectors for which Vassolo + Doll assessed manufacturing water demands. In the paper, they indicate
 # chemicals, pulp and paper, pig iron, sugar, beer, cloth, cement, and crude steel. some industrial mfg does take place
@@ -492,29 +505,25 @@ water.GCAM_MFG_FUELS_EFW <- c("electricity")
 # manufacturing. Used to set a cap on derived manufacturing water withdrawals
 water.MAX_MFG_FRAC_OF_IND <- 0.85
 
-# Constants used for Graham et al. (2018) in which SSP assumptions were extended to the water sector
-water.MUNICIPAL_AEEI_DECAY <- 0.75
-water.MUNICIPAL_AEEI_GROWTH <- 1.25
-water.MUNICIPAL_PRICE_DECAY <- 0.9
-water.MUNICIPAL_PRICE_GROWTH <- 1.1
-water.HIGH_INCOME_REGIONS <- c("Australia_NZ","Canada","EU-15","European Free Trade Association","Japan",
-                                "South Korea","Taiwan","USA")
-water.MEDIUM_INCOME_REGIONS <- c("Argentina","Brazil","Central America and the Caribbean","China","Colombia","EU-12",
-                                "Europe_Eastern","Europe_Non_EU","Mexico","Middle East","Russia","South Africa","South America_Northern",
-                                "South America_Southern")
-water.LOW_INCOME_REGIONS <- c("Africa_Eastern","Africa_Northern","Africa_Southern","Africa_Western","Central Asia","India","Indonesia",
-                            "Pakistan","South Asia","Southeast Asia")
-water.MANUFACTURING_HIGH <- 0.011
-water.MANUFACTURING_MEDIUM <- 0.0055
-water.MANUFACTURING_LOW <- 0.00275
+# Groundwater may be calibrated using either the "watergap" or "gleeson" historical groundwater depletion estimates.
+water.GROUNDWATER_CALIBRATION <- "watergap"  # "gleeson"
+water.GROUNDWATER_SCENARIO <- "25pct" # may be "05pct", "25pct", or "40pct" (i.e., 5, 25, 40 % of groundwater)
 
-water.MAPPING_COEF <- 1
-water.MAPPING_PMULT <- 1
+# Groundwater depletable resource curve parameters (see Kim et al., 2016)
+water.GROUNDWATER_MAX_PRICE_INC <- 10000
+water.GROUNDWATER_UNIFORM_GRADES <- 10
+water.GROUNDWATER_BETA <- 1.0
+water.DIGITS_GROUND_WATER <- 6 #Digits for rounding
+water.DIGITS_GROUND_WATER_RSC <- 5 #Digits for rounding
+water.DIGITS_RENEW_WATER <- 3 #Digits for rounding
+water.GW_DEPLETION_HISTORICAL <- c(2005, 2010) # Historical years for groundwater depletion
+water.GW_DEPLETION_BASE_YEAR <- 1990 # Historical year for groundwater depletion calibration
+water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010) # Historical years for freshwater runoff
+water.RENEW.COST.GRADE1 <- 0.00001 #Renewable water grade1 cost
+water.RENEW.COST.GRADE2 <- 0.001 #Renewable water grade2 cost
+water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
 
 
-water.IRR_PRICE_SUBSIDY_MULT              <- 0.01  # Multiplier for irrigation price subsidy
-water.DESALINATION_PRICE                  <- 0.214  # 1975$/m3
-water.LOGIT_EXP                           <- -6
 # Emissions constants ======================================================================
 
 # Time
