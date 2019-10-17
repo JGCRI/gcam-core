@@ -1798,7 +1798,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and ((@name='building' or @name='industry' or @name='transportation') or
             (exists(child::keyword/@final-energy)))]//*[@type='input' (:collapse:) and
             not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or
-                @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn') or @name='oil-credits')]/
+                @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn_') or @name='oil-credits')]/
             demand-physical[@unit='EJ']/node()</xPath>
             <comments/>
          </supplyDemandQuery>
@@ -1808,7 +1808,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or
             (exists(child::keyword/@final-energy)))]//*[@type='input' (:collapse:) and
             not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or
-                @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn') or @name='oil-credits')]/
+                @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn_') or @name='oil-credits')]/
             demand-physical[@unit='EJ']/node()</xPath>
             <comments/>
             <labelRewriteList append-values="false">
@@ -1843,7 +1843,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or
             (exists(child::keyword/@final-energy)))]//*[@type='input' (:collapse:) and
             not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or
-                @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn') or @name='oil-credits')]/
+                @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn_') or @name='oil-credits')]/
             demand-physical[@unit='EJ']/node()</xPath>
             <comments/>
          </supplyDemandQuery>
@@ -1853,7 +1853,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and ((@name='building' or @name='industry' or @name='transportation') or
             (exists(child::keyword/@final-energy)))]//*[@type='input' and
             not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or
-                @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn') or @name='oil-credits')]/
+                @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn_') or @name='oil-credits')]/
             demand-physical[@unit='EJ']/node()</xPath>
             <comments/>
             <labelRewriteList append-values="false">
@@ -1879,7 +1879,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or
             (exists(child::keyword/@final-energy)))]//*[@type='input' and
             not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or
-                @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn') or @name='oil-credits')]/
+                @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn_') or @name='oil-credits')]/
             demand-physical[@unit='EJ']/node()</xPath>
             <comments/>
             <labelRewriteList append-values="false">
@@ -5168,7 +5168,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
             <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or
             (exists(child::keyword/@final-energy)))]//*[@type='input' (:collapse:) and
             not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or
-                @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn') or @name='oil-credits')]/
+                @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn_') or @name='oil-credits')]/
             demand-physical[@unit='EJ']/node()</xPath>
             <comments/>
             <labelRewriteList append-values="false">
