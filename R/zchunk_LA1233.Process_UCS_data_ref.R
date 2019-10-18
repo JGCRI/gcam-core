@@ -33,7 +33,7 @@ module_gcamusa_LA1233.Process_UCS_data_ref <- function(command, ...) {
    Fuel <- 'Reported Water Source (Type)' <- 'Generation Technology' <- 'Cooling Technology' <-
    state <- 'First Year of Operation' <- 'Nameplate Capacity (MW)' <- Cap_MW <- Cap_MW_US <- Cap_MW_Final <- year <-
    . <- 'cooling pond' <- 'dry cooling' <- dry_hybrid <- none <- 'once through' <- recirculating <-
-   sum_Cap_MW <- sum_byTech_Cap_MW <- NULL
+   sum_Cap_MW <- sum_byTech_Cap_MW <- Cap_MW_State <- Cap_MW_Total <- `:=` <- NULL
 
   # == == == == == == == == == == == == == == == == == == == == == == == == == =
   # Load required inputs
