@@ -66,7 +66,7 @@ module_energy_LA121.liquids <- function(command, ...) {
       L121.in_EJ_R_unoil_F_Yh <- prebuilt_data("L121.in_EJ_R_unoil_F_Yh")
       L121.in_EJ_R_TPES_crude_Yh <- prebuilt_data("L121.in_EJ_R_TPES_crude_Yh")
       L121.in_EJ_R_TPES_unoil_Yh <- prebuilt_data("L121.in_EJ_R_TPES_unoil_Yh")
-      L121.in_EJ_R_TPES_unoil_Yh <- prebuilt_data("L121.in_EJ_R_TPES_unoil_Yh")
+      L121.share_R_TPES_biofuel_tech <- prebuilt_data("L121.share_R_TPES_biofuel_tech")
     } else {
 
       L100.IEA_en_bal_ctry_hist %>%
