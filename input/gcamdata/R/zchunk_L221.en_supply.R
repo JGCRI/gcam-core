@@ -80,7 +80,8 @@ module_energy_L221.en_supply <- function(command, ...) {
     subsector.name <- subsector.share.weight <- supplysector <- technology <-
     to.value <- tradbio_region <- traded <- unit <- value <- value_2010 <- variable <- year <-
     year.fillout <- year.share.weight <- GCAM_commodity <- GCAM_region_ID <-
-    GCAM_region_ID.x <- GCAM_region_ID.y <- P0 <- calibrated.value <- tech.share.weight <- NULL
+    GCAM_region_ID.x <- GCAM_region_ID.y <- P0 <- calibrated.value <- tech.share.weight <-
+      market.name <- passthru_tech_input <- NULL
 
     all_data <- list(...)[[1]]
 
