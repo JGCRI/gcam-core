@@ -89,18 +89,6 @@ void InitializeTechVectorHelper::initializeTechVintageVector( GCAMConsumer* aCon
 }
 
 /*!
- * \brief Starts the process of initializing any uninitialized TechVintageVectors found in
- *        the given Resource.
- * \details We need have a method for Resource even though it does not have vintaging
- *          since it contains some objects such as IOutput that are typicaly found in
- *          Technology.
- * \param aContainer The current technology vintage in which to search for vectors.
- */
-void InitializeTechVectorHelper::initializeTechVintageVector( Resource* aContainer ) {
-    initializeTechVintageVectorImpl( aContainer );
-}
-
-/*!
  * \brief The implementation for initializeTechVintageVector which is templated simply to reduce
  *        code duplication from having the same code for each of the container type this class
  *        supports.

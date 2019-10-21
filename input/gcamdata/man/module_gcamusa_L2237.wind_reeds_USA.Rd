@@ -15,7 +15,8 @@ module_gcamusa_L2237.wind_reeds_USA(command, ...)
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
 the generated outputs: \code{L2237.SmthRenewRsrcCurves_wind_reeds_USA}, \code{L2237.StubTechCapFactor_wind_reeds_USA},
-\code{L2237.SmthRenewRsrcTechChange_wind_reeds_USA}, and \code{L2237.StubTechCost_wind_reeds_USA}.
+\code{L2237.SmthRenewRsrcTechChange_wind_reeds_USA}, \code{L2237.StubTechCost_wind_reeds_USA},
+\code{L2237.ResTechShrwt_wind_reeds_USA}.
 The corresponding file in the original data system was \code{L2237.wind_reeds_USA.R} (gcam-usa level2).
 }
 \description{

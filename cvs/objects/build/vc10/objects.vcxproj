@@ -618,9 +618,9 @@
     <ClCompile Include="..\..\policy\source\linked_ghg_policy.cpp" />
     <ClCompile Include="..\..\resources\source\accumulated_grade.cpp" />
     <ClCompile Include="..\..\resources\source\accumulated_post_grade.cpp" />
-    <ClCompile Include="..\..\resources\source\depleting_fixed_resource.cpp" />
     <ClCompile Include="..\..\resources\source\grade.cpp" />
     <ClCompile Include="..\..\resources\source\renewable_subresource.cpp" />
+    <ClCompile Include="..\..\resources\source\reserve_subresource.cpp" />
     <ClCompile Include="..\..\resources\source\resource.cpp" />
     <ClCompile Include="..\..\resources\source\smooth_renewable_subresource.cpp" />
     <ClCompile Include="..\..\resources\source\subresource.cpp" />
@@ -636,6 +636,7 @@
     <ClCompile Include="..\..\sectors\source\final_demand_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\more_sector_info.cpp" />
     <ClCompile Include="..\..\sectors\source\negative_emissions_final_demand.cpp" />
+    <ClCompile Include="..\..\sectors\source\nesting_subsector.cpp" />
     <ClCompile Include="..\..\sectors\source\pass_through_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\production_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\sector.cpp" />
@@ -710,6 +711,7 @@
     <ClCompile Include="..\..\technologies\source\production_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\profit_shutdown_decider.cpp" />
     <ClCompile Include="..\..\technologies\source\residue_biomass_output.cpp" />
+    <ClCompile Include="..\..\technologies\source\resource_reserve_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\res_secondary_output.cpp" />
     <ClCompile Include="..\..\technologies\source\retired_production_state.cpp" />
     <ClCompile Include="..\..\technologies\source\secondary_output.cpp" />
@@ -941,9 +943,9 @@
     <ClInclude Include="..\..\resources\include\accumulated_grade.h" />
     <ClInclude Include="..\..\resources\include\accumulated_post_grade.h" />
     <ClInclude Include="..\..\resources\include\aresource.h" />
-    <ClInclude Include="..\..\resources\include\depleting_fixed_resource.h" />
     <ClInclude Include="..\..\resources\include\grade.h" />
     <ClInclude Include="..\..\resources\include\renewable_subresource.h" />
+    <ClInclude Include="..\..\resources\include\reserve_subresource.h" />
     <ClInclude Include="..\..\resources\include\resource.h" />
     <ClInclude Include="..\..\resources\include\smooth_renewable_subresource.h" />
     <ClInclude Include="..\..\resources\include\subresource.h" />
@@ -961,6 +963,7 @@
     <ClInclude Include="..\..\sectors\include\ibackup_calculator.h" />
     <ClInclude Include="..\..\sectors\include\more_sector_info.h" />
     <ClInclude Include="..\..\sectors\include\negative_emissions_final_demand.h" />
+    <ClInclude Include="..\..\sectors\include\nesting_subsector.h" />
     <ClInclude Include="..\..\sectors\include\pass_through_sector.h" />
     <ClInclude Include="..\..\sectors\include\production_sector.h" />
     <ClInclude Include="..\..\sectors\include\sector.h" />
@@ -1055,6 +1058,7 @@
     <ClInclude Include="..\..\technologies\include\production_technology.h" />
     <ClInclude Include="..\..\technologies\include\profit_shutdown_decider.h" />
     <ClInclude Include="..\..\technologies\include\residue_biomass_output.h" />
+    <ClInclude Include="..\..\technologies\include\resource_reserve_technology.h" />
     <ClInclude Include="..\..\technologies\include\res_secondary_output.h" />
     <ClInclude Include="..\..\technologies\include\retired_production_state.h" />
     <ClInclude Include="..\..\technologies\include\secondary_output.h" />

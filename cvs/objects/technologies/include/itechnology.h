@@ -77,6 +77,7 @@ class TranTechnology;
 class AgProductionTechnology;
 class PassThroughTechnology;
 class UnmanagedLandTechnology;
+class ResourceReserveTechnology;
 class EmptyTechnology;
 
 /*!
@@ -228,7 +229,7 @@ public:
         DEFINE_SUBCLASS_FAMILY( ITechnology, Technology, DefaultTechnology, IntermittentTechnology,
                                 WindTechnology, SolarTechnology, NukeFuelTechnology, TranTechnology,
                                 AgProductionTechnology, PassThroughTechnology, UnmanagedLandTechnology,
-                                EmptyTechnology )
+                                ResourceReserveTechnology, EmptyTechnology )
     )
 };
 

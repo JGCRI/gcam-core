@@ -18,7 +18,7 @@ the generated outputs: \code{L2239.DeleteUnlimitRsrc_reeds_USA}, \code{L2239.Del
 \code{L2239.RenewRsrc_CSP_reeds_USA}, \code{L2239.GrdRenewRsrcCurves_CSP_reeds_USA},
 \code{L2239.GrdRenewRsrcMax_CSP_reeds_USA}, \code{L2239.StubTechEffFlag_CSP_reeds_USA},
 \code{L2239.StubTechCapFactor_CSP_reeds_USA}, \code{L2239.RenewRsrcTechChange_CSP_reeds_USA},
-and \code{L2239.StubTechCost_CSP_reeds_USA}.
+\code{L2239.StubTechCost_CSP_reeds_USA}, \code{L2239.ResTechShrwt_CSP_reeds_USA}.
 The corresponding file in the original data system was \code{L2239.CSP_reeds_USA.R} (gcam-usa level2).
 }
 \description{

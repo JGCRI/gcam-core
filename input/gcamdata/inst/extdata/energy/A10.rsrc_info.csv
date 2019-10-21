@@ -2,14 +2,14 @@
 # Title: Information about resources in each region
 # Units: 1975$/kg for uranium and limestone;  1975$/GJ for everything else
 # Source: Prices from GCAM 3.1 model input. 2010 estimated
-# Column types: cccccnnnnn 
+# Column types: cccccnnnnn
 # ----------
 resource,resource_type,market,output-unit,price-unit,1971,1975,1990,2005,2010
-coal,depresource,global,EJ,1975$/GJ,0.4,0.4,0.435,0.438,0.5
-crude oil,depresource,global,EJ,1975$/GJ,1.84,1.84,1.37,1.639,3.278
-natural gas,depresource,global,EJ,1975$/GJ,0.65,0.65,0.812,0.98,1.5
-unconventional oil,depresource,regional,EJ,1975$/GJ,1.81,1.81,1.81,1.81,1.81
-uranium,depresource,global,Mt,1975$/kg,20,20,25,35,35
+coal,resource,global,EJ,1975$/GJ,0.4,0.4,0.435,0.438,0.5
+crude oil,resource,global,EJ,1975$/GJ,1.84,1.84,1.37,1.639,3.278
+natural gas,resource,global,EJ,1975$/GJ,0.65,0.65,0.812,0.98,1.5
+unconventional oil,resource,regional,EJ,1975$/GJ,1.81,1.81,1.81,1.81,1.81
+uranium,resource,global,Mt,1975$/kg,20,20,25,35,35
 biomass,renewresource,regional,EJ,1975$/GJ,1,1,1,1.25,1.25
 distributed_solar,renewresource,regional,EJ,1975$/GJ,6,6,6,6,6
 geothermal,renewresource,regional,EJ,1975$/GJ,0.1,0.1,0.1,0.1,0.1

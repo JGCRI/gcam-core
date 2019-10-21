@@ -54,6 +54,7 @@
 #include "sectors/include/more_sector_info.h"
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
+#include "sectors/include/nesting_subsector.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
@@ -175,6 +176,9 @@ void Sector::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == Subsector::getXMLNameStatic() ){
             parseContainerNode( curr, mSubsectors, new Subsector( mRegionName, mName ) );
+        }
+        else if( nodeName == NestingSubsector::getXMLNameStatic() ){
+            parseContainerNode( curr, mSubsectors, new NestingSubsector( mRegionName, mName, 0 ) );
         }
         else if( nodeName == TranSubsector::getXMLNameStatic() ){
             parseContainerNode( curr, mSubsectors, new TranSubsector( mRegionName, mName ) );

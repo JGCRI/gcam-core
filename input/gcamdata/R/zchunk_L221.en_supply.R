@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L221.SectorLogitTables[[ curr_table ]]$data}, \code{L221.Supplysector_en}, \code{L221.SectorUseTrialMarket_en}, \code{L221.SubsectorLogitTables[[ curr_table ]]$data}, \code{L221.SubsectorLogit_en}, \code{L221.SubsectorShrwt_en}, \code{L221.SubsectorShrwtFllt_en}, \code{L221.SubsectorInterp_en}, \code{L221.SubsectorInterpTo_en}, \code{L221.StubTech_en}, \code{L221.GlobalTechCoef_en}, \code{L221.GlobalTechCost_en}, \code{L221.GlobalTechShrwt_en}, \code{L221.PrimaryConsKeyword_en}, \code{L221.StubTechFractSecOut_en}, \code{L221.StubTechFractProd_en}, \code{L221.StubTechFractCalPrice_en}, \code{L221.DepRsrc_en}, \code{L221.DepRsrcPrice_en}, \code{L221.TechCoef_en_Traded}, \code{L221.TechCost_en_Traded}, \code{L221.TechShrwt_en_Traded}, \code{L221.StubTechCoef_unoil}, \code{L221.Production_unoil}, \code{L221.StubTechProd_oil_unoil}, \code{L221.StubTechProd_oil_crude}. The corresponding file in the
+#' the generated outputs: \code{L221.SectorLogitTables[[ curr_table ]]$data}, \code{L221.Supplysector_en}, \code{L221.SectorUseTrialMarket_en}, \code{L221.SubsectorLogitTables[[ curr_table ]]$data}, \code{L221.SubsectorLogit_en}, \code{L221.SubsectorShrwt_en}, \code{L221.SubsectorShrwtFllt_en}, \code{L221.SubsectorInterp_en}, \code{L221.SubsectorInterpTo_en}, \code{L221.StubTech_en}, \code{L221.GlobalTechCoef_en}, \code{L221.GlobalTechCost_en}, \code{L221.GlobalTechShrwt_en}, \code{L221.PrimaryConsKeyword_en}, \code{L221.StubTechFractSecOut_en}, \code{L221.StubTechFractProd_en}, \code{L221.StubTechFractCalPrice_en}, \code{L221.Rsrc_en}, \code{L221.RsrcPrice_en}, \code{L221.TechCoef_en_Traded}, \code{L221.TechCost_en_Traded}, \code{L221.TechShrwt_en_Traded}, \code{L221.StubTechCoef_unoil}, \code{L221.Production_unoil}, \code{L221.StubTechProd_oil_unoil}, \code{L221.StubTechProd_oil_crude}. The corresponding file in the
 #' original data system was \code{L221.en_supply.R} (energy level2).
 #' @details This chunk creates level 2 output files for energy supply. It creates supply sector information,
 #' subsector logit exponents, subsector shareweight and interpolation, and stubtech info by writing assumption file
@@ -57,8 +57,8 @@ module_energy_L221.en_supply <- function(command, ...) {
              "L221.StubTechFractSecOut_en",
              "L221.StubTechFractProd_en",
              "L221.StubTechFractCalPrice_en",
-             "L221.DepRsrc_en",
-             "L221.DepRsrcPrice_en",
+             "L221.Rsrc_en",
+             "L221.RsrcPrice_en",
              "L221.TechCoef_en_Traded",
              "L221.TechCost_en_Traded",
              "L221.TechShrwt_en_Traded",
@@ -73,7 +73,7 @@ module_energy_L221.en_supply <- function(command, ...) {
 
     # Silence global variable package check
     P1 <- biodiesel <- biomassOil_tech <- calOutputValue <- calPrice <- coef <- coefficient <-
-    depresource <- ethanol <- feed_price <- fractional.secondary.output <- fuel <-
+    resource <- ethanol <- feed_price <- fractional.secondary.output <- fuel <-
     input.cost <- market <- minicam.energy.input <- minicam.non.energy.input <-
     object <- output.ratio <- output.unit <- price <- price.unit <- primary.consumption <-
     region <- sector <- sector.name <- share.weight <- stub.technology <- subsector <-
@@ -343,23 +343,23 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Final tables for feedcrop secondary output: the resource
     A21.rsrc_info %>%
       repeat_add_columns(L221.ddgs_regions) %>%
-      select(region, depresource, output.unit = "output-unit", price.unit = "price-unit", market) %>%
-      mutate(market = region) -> L221.DepRsrc_en
+      select(region, resource, output.unit = "output-unit", price.unit = "price-unit", market) %>%
+      mutate(market = region) -> L221.Rsrc_en
 
     A21.rsrc_info %>%
-      select(depresource, market, output.unit = "output-unit", price.unit = "price-unit") %>%
+      select(resource, market, output.unit = "output-unit", price.unit = "price-unit") %>%
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS))) %>%
       left_join(A21.rsrc_info %>%
-                  gather(year, value, -depresource, -market, -"output-unit", -"price-unit") %>%
+                  gather(year, value, -resource, -market, -"output-unit", -"price-unit") %>%
                   rename(output.unit = "output-unit", price.unit = "price-unit") %>%
-                  mutate(year = as.numeric(year)), by = c("year", "depresource", "market", "output.unit", "price.unit")) %>%
-      group_by(depresource, market, output.unit, price.unit) %>%
+                  mutate(year = as.numeric(year)), by = c("year", "resource", "market", "output.unit", "price.unit")) %>%
+      group_by(resource, market, output.unit, price.unit) %>%
       mutate(price = round(approx_fun(year, value, rule = 1), digits = energy.DIGITS_COST)) %>%
       ungroup() %>%
       filter(year %in% MODEL_YEARS) %>%
       select(-value) %>%
       repeat_add_columns(L221.ddgs_regions) %>%
-      select(region, depresource, year, price) -> L221.DepRsrcPrice_en
+      select(region, resource, year, price) -> L221.RsrcPrice_en
 
     # Coefficients of traded technologies
     A21.tradedtech_coef %>%
@@ -695,21 +695,21 @@ module_energy_L221.en_supply <- function(command, ...) {
       add_precursors("L108.ag_Feed_Mt_R_C_Y", "L132.ag_an_For_Prices", "aglu/A_an_input_subsector") ->
       L221.StubTechFractCalPrice_en
 
-    L221.DepRsrc_en %>%
+    L221.Rsrc_en %>%
       add_title("Resource table for feedcrop secondary output") %>%
       add_units("unitless") %>%
       add_comments("A21.rsrc_info written out to regions with secondary feed output") %>%
-      add_legacy_name("L221.DepRsrc_en") %>%
+      add_legacy_name("L221.Rsrc_en") %>%
       add_precursors("energy/A21.rsrc_info") ->
-      L221.DepRsrc_en
+      L221.Rsrc_en
 
-    L221.DepRsrcPrice_en %>%
+    L221.RsrcPrice_en %>%
       add_title("Resource price for feedcrop secondary output") %>%
       add_units("1975$") %>%
       add_comments("A21.rsrc_info interpolated to all historical model time periods") %>%
-      add_legacy_name("L221.DepRsrcPrice_en") %>%
+      add_legacy_name("L221.RsrcPrice_en") %>%
       add_precursors("energy/A21.rsrc_info") ->
-      L221.DepRsrcPrice_en
+      L221.RsrcPrice_en
 
     L221.TechCoef_en_Traded %>%
       add_title("Coefficients of traded technologies") %>%
@@ -792,8 +792,8 @@ module_energy_L221.en_supply <- function(command, ...) {
                 L221.SubsectorShrwt_en, L221.SubsectorShrwtFllt_en, L221.SubsectorInterp_en,
                 L221.SubsectorInterpTo_en, L221.StubTech_en, L221.GlobalTechCoef_en,
                 L221.GlobalTechCost_en, L221.GlobalTechShrwt_en, L221.PrimaryConsKeyword_en,
-                L221.StubTechFractSecOut_en, L221.StubTechFractProd_en, L221.StubTechFractCalPrice_en, L221.DepRsrc_en,
-                L221.DepRsrcPrice_en, L221.TechCoef_en_Traded, L221.TechCost_en_Traded,
+                L221.StubTechFractSecOut_en, L221.StubTechFractProd_en, L221.StubTechFractCalPrice_en, L221.Rsrc_en,
+                L221.RsrcPrice_en, L221.TechCoef_en_Traded, L221.TechCost_en_Traded,
                 L221.TechShrwt_en_Traded, L221.StubTechCoef_unoil, L221.Production_unoil,
                 L221.StubTechProd_oil_unoil, L221.StubTechProd_oil_crude, L221.StubTechCalInput_bioOil,
                 L221.StubTechInterp_bioOil, L221.StubTechShrwt_bioOil)
