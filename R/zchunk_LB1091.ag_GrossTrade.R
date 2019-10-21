@@ -128,8 +128,8 @@ module_aglu_LB1091.ag_GrossTrade <- function(command, ...) {
       left_join_error_no_match(iso_mapping_partner,
                                by = "iso.partner") %>%
       filter(GCAM_region_ID != GCAMreg.partner) %>%
-      mutate(value = value * CONV_T_MT) %>%
-      mutate(var = tolower(sub(" Quantity", "", Element))) %>%
+      mutate(value = value * CONV_T_MT,
+             var = tolower(sub(" Quantity", "", Element))) %>%
       group_by(GCAM_region_ID, GCAM_commodity, var, year) %>%
       summarise(value = sum(value)) %>%
       group_by(GCAM_region_ID, GCAM_commodity, var, add = FALSE) %>%
@@ -171,8 +171,8 @@ module_aglu_LB1091.ag_GrossTrade <- function(command, ...) {
     # The gross trade file needs to have data for all calibration years, so just use the net exports to determine this
     L1091.GrossTrade_Mt_R_C_Y <- filter(L109.ag_ALL_Mt_R_C_Y, year != aglu.TRADE_FINAL_BASE_YEAR) %>%
       select(GCAM_region_ID, GCAM_commodity, year, NetExp_Mt) %>%
-      mutate(GrossExp_Mt = if_else(NetExp_Mt > 0, NetExp_Mt, 0)) %>%
-      mutate(GrossImp_Mt = if_else(NetExp_Mt <= 0, -1 * NetExp_Mt, 0)) %>%
+      mutate(GrossExp_Mt = if_else(NetExp_Mt > 0, NetExp_Mt, 0),
+             GrossImp_Mt = if_else(NetExp_Mt <= 0, -1 * NetExp_Mt, 0)) %>%
       select(-NetExp_Mt) %>%
       bind_rows(L1091.GrossTrade_Mt_R_C_fhy)
 

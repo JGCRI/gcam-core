@@ -18,6 +18,7 @@ module_gcamusa_batch_solar_reeds_USA_xml <- function(command, ...) {
              "L2238.StubTechCapFactor_PV_reeds_USA",
              "L2238.RenewRsrcTechChange_PV_reeds_USA",
              "L2238.StubTechCost_PV_reeds_USA",
+             "L2238.ResTechShrwt_PV_reeds_USA",
              "L2239.DeleteUnlimitRsrc_reeds_USA",
              "L2239.DeleteStubTechMinicamEnergyInput_CSP_reeds_USA",
              "L2239.RenewRsrc_CSP_reeds_USA",
@@ -26,7 +27,8 @@ module_gcamusa_batch_solar_reeds_USA_xml <- function(command, ...) {
              "L2239.StubTechEffFlag_CSP_reeds_USA",
              "L2239.StubTechCapFactor_CSP_reeds_USA",
              "L2239.RenewRsrcTechChange_CSP_reeds_USA",
-             "L2239.StubTechCost_CSP_reeds_USA"))
+             "L2239.StubTechCost_CSP_reeds_USA",
+             "L2239.ResTechShrwt_CSP_reeds_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "solar_reeds_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -42,6 +44,7 @@ module_gcamusa_batch_solar_reeds_USA_xml <- function(command, ...) {
     L2238.StubTechCapFactor_PV_reeds_USA <- get_data(all_data, "L2238.StubTechCapFactor_PV_reeds_USA")
     L2238.RenewRsrcTechChange_PV_reeds_USA <- get_data(all_data, "L2238.RenewRsrcTechChange_PV_reeds_USA")
     L2238.StubTechCost_PV_reeds_USA <- get_data(all_data, "L2238.StubTechCost_PV_reeds_USA")
+    L2238.ResTechShrwt_PV_reeds_USA <- get_data(all_data, "L2238.ResTechShrwt_PV_reeds_USA")
     L2239.DeleteUnlimitRsrc_reeds_USA <- get_data(all_data, "L2239.DeleteUnlimitRsrc_reeds_USA")
     L2239.DeleteStubTechMinicamEnergyInput_CSP_reeds_USA <- get_data(all_data, "L2239.DeleteStubTechMinicamEnergyInput_CSP_reeds_USA")
     L2239.RenewRsrc_CSP_reeds_USA <- get_data(all_data, "L2239.RenewRsrc_CSP_reeds_USA")
@@ -51,6 +54,7 @@ module_gcamusa_batch_solar_reeds_USA_xml <- function(command, ...) {
     L2239.StubTechCapFactor_CSP_reeds_USA <- get_data(all_data, "L2239.StubTechCapFactor_CSP_reeds_USA")
     L2239.RenewRsrcTechChange_CSP_reeds_USA <- get_data(all_data, "L2239.RenewRsrcTechChange_CSP_reeds_USA")
     L2239.StubTechCost_CSP_reeds_USA <- get_data(all_data, "L2239.StubTechCost_CSP_reeds_USA")
+    L2239.ResTechShrwt_CSP_reeds_USA <- get_data(all_data, "L2239.ResTechShrwt_CSP_reeds_USA")
 
     # ===================================================
     # Produce outputs
@@ -73,6 +77,10 @@ module_gcamusa_batch_solar_reeds_USA_xml <- function(command, ...) {
       add_xml_data(L2239.StubTechCapFactor_CSP_reeds_USA, "StubTechCapFactor") %>%
       add_xml_data(L2239.RenewRsrcTechChange_CSP_reeds_USA, "RenewRsrcTechChange") %>%
       add_xml_data(L2239.StubTechCost_CSP_reeds_USA, "StubTechCost") %>%
+      add_node_equiv_xml("resource") %>%
+      add_node_equiv_xml("subresource") %>%
+      add_xml_data(L2238.ResTechShrwt_PV_reeds_USA, "ResTechShrwt") %>%
+      add_xml_data(L2239.ResTechShrwt_CSP_reeds_USA, "ResTechShrwt") %>%
       add_precursors("L2238.DeleteStubTechMinicamEnergyInput_PV_reeds_USA",
                      "L2238.RenewRsrc_PV_reeds_USA",
                      "L2238.GrdRenewRsrcCurves_PV_reeds_USA",
@@ -81,6 +89,7 @@ module_gcamusa_batch_solar_reeds_USA_xml <- function(command, ...) {
                      "L2238.StubTechCapFactor_PV_reeds_USA",
                      "L2238.RenewRsrcTechChange_PV_reeds_USA",
                      "L2238.StubTechCost_PV_reeds_USA",
+                     "L2238.ResTechShrwt_PV_reeds_USA",
                      "L2239.DeleteUnlimitRsrc_reeds_USA",
                      "L2239.DeleteStubTechMinicamEnergyInput_CSP_reeds_USA",
                      "L2239.RenewRsrc_CSP_reeds_USA",
@@ -89,7 +98,8 @@ module_gcamusa_batch_solar_reeds_USA_xml <- function(command, ...) {
                      "L2239.StubTechEffFlag_CSP_reeds_USA",
                      "L2239.StubTechCapFactor_CSP_reeds_USA",
                      "L2239.RenewRsrcTechChange_CSP_reeds_USA",
-                     "L2239.StubTechCost_CSP_reeds_USA") ->
+                     "L2239.StubTechCost_CSP_reeds_USA",
+                     "L2239.ResTechShrwt_CSP_reeds_USA") ->
       solar_reeds_USA.xml
 
     return_data(solar_reeds_USA.xml)

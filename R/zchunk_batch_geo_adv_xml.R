@@ -11,7 +11,8 @@
 module_energy_batch_geo_adv_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L210.GrdRenewRsrcCurves_EGS",
-             "L210.GrdRenewRsrcMax_EGS"))
+             "L210.GrdRenewRsrcMax_EGS",
+             "L210.ResTechShrwt_EGS"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "geo_adv.xml"))
   } else if(command == driver.MAKE) {
@@ -21,6 +22,7 @@ module_energy_batch_geo_adv_xml <- function(command, ...) {
     # Load required inputs
     L210.GrdRenewRsrcCurves_EGS <- get_data(all_data, "L210.GrdRenewRsrcCurves_EGS")
     L210.GrdRenewRsrcMax_EGS <- get_data(all_data, "L210.GrdRenewRsrcMax_EGS")
+    L210.ResTechShrwt_EGS <- get_data(all_data, "L210.ResTechShrwt_EGS")
 
     # ===================================================
 
@@ -28,7 +30,11 @@ module_energy_batch_geo_adv_xml <- function(command, ...) {
     create_xml("geo_adv.xml") %>%
       add_xml_data(L210.GrdRenewRsrcCurves_EGS, "GrdRenewRsrcCurves") %>%
       add_xml_data(L210.GrdRenewRsrcMax_EGS, "GrdRenewRsrcMax") %>%
-      add_precursors("L210.GrdRenewRsrcCurves_EGS", "L210.GrdRenewRsrcMax_EGS") ->
+      add_node_equiv_xml("resource") %>%
+      add_node_equiv_xml("subresource") %>%
+      add_xml_data(L210.ResTechShrwt_EGS, "ResTechShrwt") %>%
+      add_precursors("L210.GrdRenewRsrcCurves_EGS", "L210.GrdRenewRsrcMax_EGS",
+                     "L210.ResTechShrwt_EGS") ->
       geo_adv.xml
 
     return_data(geo_adv.xml)
