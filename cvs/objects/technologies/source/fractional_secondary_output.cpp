@@ -226,7 +226,7 @@ void FractionalSecondaryOutput::initCalc( const string& aRegionName,
                                           const string& aSectorName,
                                           const int aPeriod )
 {
-    // If we are in a calibration period and a calibrated value was read in set the
+    // If we are in a calibration period and a calibrated value was read in then set the
     // flag on the market that this resource is fully calibrated.
     if( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() && mCalPrice.isInited() ) {
         IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName, aPeriod, true );
@@ -285,13 +285,11 @@ double FractionalSecondaryOutput::getValue( const string& aRegionName,
                                             const int aPeriod ) const
 {
     double secondaryGoodPrice = getMarketPrice( aRegionName, aPeriod );
+    // if calibrating then we assume a fractional production of 1
     // do not allow extrapolation
-    double productionFraction = aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() && mCalPrice.isInited() ? 1.0 : min( mCostCurve->getMaxY(), mCostCurve->getY( secondaryGoodPrice ) );
+    double productionFraction = aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() && mCalPrice.isInited() ?
+        1.0 : min( mCostCurve->getMaxY(), mCostCurve->getY( secondaryGoodPrice ) );
 
-    ILogger & gpkLog = ILogger::getLogger( "gpk_log" );
-    gpkLog.setLevel( ILogger::WARNING);
-    gpkLog << aRegionName << ", " <<aPeriod << ", " << secondaryGoodPrice << ", " << productionFraction << ", " << mOutputRatio << ", " << (secondaryGoodPrice * productionFraction * mOutputRatio) << endl;
-    
     // The value of the secondary output is the market price multiplied by the
     // output ratio adjusted by the fractional production.
     return secondaryGoodPrice * mOutputRatio * productionFraction;
@@ -345,11 +343,11 @@ double FractionalSecondaryOutput::calcPhysicalOutputInternal( const string& aReg
                                                               const double aPrimaryOutput,
                                                               const int aPeriod ) const
 {
+    double maxSecondaryOutput = aPrimaryOutput * mOutputRatio;
     // If we are calibrating then always assume an output ratio of 1.
     if( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() && mCalPrice.isInited() ) {
-        return aPrimaryOutput * mOutputRatio;
+        return maxSecondaryOutput;
     }
-    double maxSecondaryOutput = aPrimaryOutput * mOutputRatio;
     double secondaryGoodPrice = getMarketPrice( aRegionName, aPeriod );
     // do not allow extrapolation
     double productionFraction = min( mCostCurve->getMaxY(), mCostCurve->getY( secondaryGoodPrice ) );
