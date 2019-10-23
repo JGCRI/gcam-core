@@ -72,7 +72,7 @@ int main( ) {
     // These integers define the length of the various arrays used in the coupling
     int NUM_LAT = 180; // Number of horizontal grid cells
     int NUM_LON = 360; // Number of vertical grid cells
-    int NUM_PFT = 17; // Number of PFTs in ELM
+    int NUM_PFT = 16; // Number of PFTs in ELM
     int NUM_GCAM_ENERGY_REGIONS = 32;
     int NUM_GCAM_LAND_REGIONS = 384;
     int NUM_IAC2ELM_LANDTYPES = 8;
@@ -108,24 +108,22 @@ int main( ) {
                 cout << "Read NPP" << endl;
                 // Read in average NPP
                 ASpatialData tempPFTData(NUM_LAT * NUM_LON * NUM_PFT);
-                tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false);
-                gcaminpp = tempPFTData.getValueVector().data();
+                tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false, gcaminpp);
                 
                 cout << "Read PFT weight" << endl;
                 // Read in PFT weight in grid cell
-                tempPFTData.readSpatialData("../cpl/data/pft_wt.txt", true, true, false);
-                gcamipftfract = tempPFTData.getValueVector().data();
+                ASpatialData test(NUM_LAT * NUM_LON * NUM_PFT);
+                test.readSpatialData("../cpl/data/pft_wt.txt", true, true, false, gcamipftfract);
+                // std::copy(test.getValueVector().begin(), test.getValueVector().end(), gcamipftfract);
                 
                 cout << "Read area" << endl;
                 // Read in area of grid cell
                 ASpatialData tempData(NUM_LAT * NUM_LON);
-                tempData.readSpatialData("../cpl/data/area.txt", true, false, false);
-                gcamiarea = tempData.getValueVector().data();
+                tempData.readSpatialData("../cpl/data/area.txt", true, false, false, gcamiarea);
                 
                 cout << "Read land fract" << endl;
                 // Read in area of grid cell
-                tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false);
-                gcamilfract = tempData.getValueVector().data();
+                tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
             }
             p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamilfract, gcamipftfract, gcaminpp, gcamihr,
                                   NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, READ_SCALARS, WRITE_SCALARS);

@@ -114,6 +114,67 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, boo
         row++;
     }
     
+    cout << "Read " << row << " rows" << endl;
+    
+    return total;
+}
+
+// Read in spatial data from a csv file directly into an array
+double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal, double *aValueArray) {
+    // Create a double to store totals (if aCalcTotal == true)
+    double total = 0.0;
+    
+    ifstream data(aFileName);
+    if (!data.is_open())
+    {
+        exit(EXIT_FAILURE);
+    }
+    string str;
+    getline(data, str); // skip the first line
+    int row = 0;
+    while (getline(data, str))
+    {
+        istringstream iss(str);
+        string token;
+        double value;
+        
+        if ( aHasLatLon ) {
+            double lon;
+            int lat;
+            
+            // Parse longitude
+            getline(iss, token, ' ');
+            lon = std::stod(token);
+            mLonVector[row] = lon;
+            
+            // Parse latitude
+            getline(iss, token, ' ');
+            lat = std::stod(token);
+            mLatVector[row] = lat;
+        }
+        
+        if ( aHasID ) {
+            int id;
+            
+            // Parse ID
+            getline(iss, token, ' ');
+            id = std::stoi(token);
+            mIDVector.at(row) = id;
+        }
+        
+        // Parse Value
+        getline(iss, token, ',');
+        value = std::stod(token);
+        aValueArray[row] = value;
+        
+        // if aCalcTotal == true, then add this to the total
+        total += value;
+        
+        row++;
+    }
+    
+    cout << "Read " << row << " rows" << endl;
+    
     return total;
 }
 
