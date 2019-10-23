@@ -189,13 +189,17 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
                         scalar = mRegionWeights[std::make_pair(gridID,regID)] * aELMPFTFract[valIndex] * aELMLandFract[gridIndex] * aELMArea[gridIndex];
                         base_scalar = mRegionWeights[std::make_pair(gridID,regID)] * mBasePFTFractVector[valIndex] * aELMLandFract[gridIndex] * aELMArea[gridIndex];
                        
-                        
                         // Find current PFT in the PFT2Crop map
+                        auto currPFT = mPFT2GCAMCropMap.find( pft );
+                        vector<string> cropsInPFT = (*currPFT).second;
+                        
+                        // Adjust scalars based on number of crops in PFT
+                        scalar = scalar / cropsInPFT.size();
+                        base_scalar = base_scalar / cropsInPFT.size();
+                        
                         // Then add the npp and area for both current and base periods to the region/crop totals
                         // Note: this assumes that if you find the pair in totalArea that it exists for the baseTotalArea,
                         //       totalNPP and baseTotalNPP. This should be true since they are all created simultaneously.
-                        auto currPFT = mPFT2GCAMCropMap.find( pft );
-                        vector<string> cropsInPFT = (*currPFT).second;
                         for(auto currCrop : cropsInPFT) {
                             if( totalArea.count(std::make_pair(regID,currCrop)) > 0 ) {
                                 totalArea[std::make_pair(regID,currCrop)] += scalar;
