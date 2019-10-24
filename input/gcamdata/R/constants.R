@@ -713,7 +713,7 @@ gcamusa.MIN_PRIM_ENERGY_YEAR <- 1990
 water.LIVESTOCK                           <- "Livestock"
 water.PRIMARY_ENERGY                      <- "Mining"
 water.LIVESTOCK_TYPES                     <- c("Beef","Dairy","Pork","Poultry","SheepGoat")
-water.DELETE_DEMAND_TYPES              <- c("water_td_an_W","water_td_an_C","water_td_pri_W","water_td_pri_C")
+water.DELETE_DEMAND_TYPES              <- c("water_td_elec_W","water_td_elec_C","water_td_dom_W","water_td_dom_C", "water_td_ind_W","water_td_ind_C")
 water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
 
