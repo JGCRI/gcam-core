@@ -9,7 +9,6 @@ test_that("default MI header exists in the package", {
 })
 
 test_that("bogus MI header causes error", {
-  gc()
   if(!isTRUE(getOption("gcamdata.use_java"))) {
     skip("Skipping test as global option gcamdata.use_java is not TRUE")
   }
