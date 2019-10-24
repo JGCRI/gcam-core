@@ -471,5 +471,6 @@ PREBUILT_DATA <- driver(write_outputs = FALSE,
                           "L121.in_EJ_R_TPES_unoil_Yh"
                         ))
 
+
 # Save these objects for use as internal package data
-devtools::use_data(GCAM_DATA_MAP, LEVEL2_DATA_NAMES, PREBUILT_DATA, overwrite = TRUE, internal = TRUE)
+usethis::use_data(GCAM_DATA_MAP, LEVEL2_DATA_NAMES, PREBUILT_DATA, overwrite = TRUE, internal = TRUE)
