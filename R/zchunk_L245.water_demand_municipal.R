@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_water_L245.water.demand.municipal
+#' module_water_L245.water_demand_municipal
 #'
 #' Expands municipal water information (cost, efficiency, coefficients) across regions and model years
 #'
@@ -9,13 +9,13 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L245.Supplysector}, \code{L245.SubsectorLogit}, \code{L245.SubsectorShrwtFllt}, \code{L245.TechShrwt}, \code{L245.TechCoef}, \code{L245.TechCost}, \code{L245.PerCapitaBased}, \code{L245.BaseService}, \code{L245.IncomeElasticity}, \code{L245.PriceElasticity}, \code{L245.aeei}. The corresponding file in the
-#' original data system was \code{L245.water.demand.municipal.R} (water level2).
+#' original data system was \code{L245.water_demand_municipal.R} (water level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_cols filter if_else group_by left_join mutate one_of select
 #' @importFrom tidyr gather spread
 #' @author ST August 2017
-module_water_L245.water.demand.municipal <- function(command, ...) {
+module_water_L245.water_demand_municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/A03.sector",

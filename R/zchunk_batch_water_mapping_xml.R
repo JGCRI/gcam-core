@@ -16,7 +16,11 @@ module_water_batch_water_mapping_xml <- function(command, ...) {
              "L203.SubsectorLogit",
              "L203.SubsectorShrwtFllt",
              "L203.TechShrwt",
-             "L203.TechCoef"))
+             "L203.TechCoef",
+             "L203.TechPmult",
+             "L203.TechDesalCoef",
+             "L203.TechDesalShrwt",
+             "L203.TechDesalCost"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "water_mapping.xml"))
   } else if(command == driver.MAKE) {
@@ -29,6 +33,10 @@ module_water_batch_water_mapping_xml <- function(command, ...) {
     L203.SubsectorShrwtFllt <- get_data(all_data, "L203.SubsectorShrwtFllt")
     L203.TechShrwt <- get_data(all_data, "L203.TechShrwt")
     L203.TechCoef <- get_data(all_data, "L203.TechCoef")
+    L203.TechPmult <- get_data(all_data, "L203.TechPmult")
+    L203.TechDesalCoef <- get_data(all_data, "L203.TechDesalCoef")
+    L203.TechDesalShrwt <- get_data(all_data, "L203.TechDesalShrwt")
+    L203.TechDesalCost <- get_data(all_data, "L203.TechDesalCost")
 
     # ===================================================
 
@@ -39,7 +47,13 @@ module_water_batch_water_mapping_xml <- function(command, ...) {
       add_xml_data(L203.SubsectorShrwtFllt, "SubsectorShrwtFllt") %>%
       add_xml_data(L203.TechShrwt, "TechShrwt") %>%
       add_xml_data(L203.TechCoef, "TechCoef") %>%
-      add_precursors("L203.Supplysector", "L203.SubsectorLogit", "L203.SubsectorShrwtFllt", "L203.TechShrwt", "L203.TechCoef") ->
+      add_xml_data(L203.TechPmult, "TechPmult") %>%
+      add_xml_data(L203.TechDesalCoef, "TechCoef") %>%
+      add_xml_data(L203.TechDesalShrwt, "TechShrwt") %>%
+      add_xml_data(L203.TechDesalCost, "TechCost") %>%
+      add_precursors("L203.Supplysector", "L203.SubsectorLogit", "L203.SubsectorShrwtFllt",
+                     "L203.TechShrwt", "L203.TechCoef", "L203.TechPmult", "L203.TechDesalCoef",
+                     "L203.TechDesalShrwt", "L203.TechDesalCost") ->
       water_mapping.xml
 
     return_data(water_mapping.xml)

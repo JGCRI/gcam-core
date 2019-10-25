@@ -3,7 +3,7 @@
 # Units: NA
 # Comments: Basin assigned to the country which has the largest basin area.
 # Source: NA
-# Column types: iccccic 
+# Column types: iccccic
 # ----------
 GCAM_basin_ID,Basin_name,GLU_code,GLU_name,ISO,ISO_NUM,Country_name
 1,Arctic_Ocean_Islands,GLU001,ArcticIsl,GRL,304,Greenland
@@ -59,7 +59,7 @@ GCAM_basin_ID,Basin_name,GLU_code,GLU_name,ISO,ISO_NUM,Country_name
 51,Japan,GLU051,Japan,JPN,392,Japan
 52,Caspian_Sea_East_Coast,GLU052,CaspianE,TKM,795,Turkmenistan
 53,Don,GLU053,DonR,RUS,643,Russian Federation
-54,Danube,GLU054,DanubeR,ROU,642,Romania
+54,Danube,GLU054,DanubeR,ROM,642,Romania
 55,Adriatic_Sea_Greece_Black_Sea_Coast,GLU055,AdrBlkSea,GRC,300,Greece
 56,Ob,GLU056,ObR,RUS,643,Russian Federation
 57,Po,GLU057,PoR,ITA,380,Italy

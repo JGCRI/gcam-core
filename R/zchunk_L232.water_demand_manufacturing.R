@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_water_L232.water.demand.manufacturing
+#' module_water_L232.water_demand_manufacturing
 #'
 #' Computes manufacturing water withdrawal/consumption coefficients (m3/GJ output) by region and year
 #'
@@ -9,13 +9,13 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L232.TechCoef}. The corresponding file in the
-#' original data system was \code{L232.water.demand.manufacturing.R} (water level2).
-#' @details Describe in detail what this chunk does.
+#' original data system was \code{L232.water_demand_manufacturing.R} (water level2).
+#' @details Water widthdrawal and consumption coefficients for manufacturing for GCAM regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange distinct filter if_else group_by left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author GPK June 2018
-module_water_L232.water.demand.manufacturing <- function(command, ...) {
+module_water_L232.water_demand_manufacturing <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/A03.sector",

@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_water_L132.water.demand.manufacturing
+#' module_water_L132.water_demand_manufacturing
 #'
 #' Computes manufacturing water withdrawals and consumption by nation/region and historical year
 #'
@@ -9,14 +9,14 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L132.water_coef_manufacturing_R_W_m3_GJ}. The corresponding file in the
-#' original data system was \code{L132.water.demand.manufacturing.R} (water level1).
-#' @details Computes manufacturing energy use coefficients for water withdrawal
-#' and consumption for all regions.
+#' original data system was \code{L132.water_demand_manufacturing.R} (water level1).
+#' @details Computes manufacturing water withdrawal and consumption coefficients for
+#' all regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter if_else group_by inner_join left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author GPK June 2018
-module_water_L132.water.demand.manufacturing <- function(command, ...) {
+module_water_L132.water_demand_manufacturing <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "water/aquastat_ctry",
