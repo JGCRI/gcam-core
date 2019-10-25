@@ -12,24 +12,31 @@
 #' original data system was \code{batch_resources_xml.R} (energy XML).
 module_energy_batch_resources_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L210.DepRsrc",
+    return(c("L210.Rsrc",
              "L210.RenewRsrc",
              "L210.UnlimitRsrc",
-             "L210.DepRsrcPrice",
+             "L210.RsrcPrice",
              "L210.RenewRsrcPrice",
              "L210.UnlimitRsrcPrice",
-             "L210.DepRsrcTechChange",
+             "L210.RsrcTechChange",
              "L210.SmthRenewRsrcTechChange",
-             "L210.DepRsrcCalProd",
-             "L210.DepRsrcCurves_fos",
-             "L210.DepRsrcCurves_U",
+             "L210.RsrcCalProd",
+             "L210.ReserveCalReserve",
+             "L210.RsrcCurves_fos",
+             "L210.RsrcCurves_U",
              "L210.SmthRenewRsrcCurves_MSW",
              "L210.SmthRenewRsrcCurves_wind",
              "L210.SmthRenewRsrcCurvesGdpElast_roofPV",
              "L210.GrdRenewRsrcCurves_geo",
              "L210.GrdRenewRsrcMax_geo",
              "L210.GrdRenewRsrcCurves_tradbio",
-             "L210.GrdRenewRsrcMax_tradbio"))
+             "L210.GrdRenewRsrcMax_tradbio",
+             "L210.ResSubresourceProdLifetime",
+             "L210.SubresourcePriceAdder",
+             "L210.ResReserveTechLifetime",
+             "L210.ResReserveTechDeclinePhase",
+             "L210.ResReserveTechProfitShutdown",
+             "L210.ResTechShrwt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "resources.xml"))
   } else if(command == driver.MAKE) {
@@ -37,17 +44,18 @@ module_energy_batch_resources_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L210.DepRsrc <- get_data(all_data, "L210.DepRsrc")
+    L210.Rsrc <- get_data(all_data, "L210.Rsrc")
     L210.RenewRsrc <- get_data(all_data, "L210.RenewRsrc")
     L210.UnlimitRsrc <- get_data(all_data, "L210.UnlimitRsrc")
-    L210.DepRsrcPrice <- get_data(all_data, "L210.DepRsrcPrice")
+    L210.RsrcPrice <- get_data(all_data, "L210.RsrcPrice")
     L210.RenewRsrcPrice <- get_data(all_data, "L210.RenewRsrcPrice")
     L210.UnlimitRsrcPrice <- get_data(all_data, "L210.UnlimitRsrcPrice")
-    L210.DepRsrcTechChange <- get_data(all_data, "L210.DepRsrcTechChange")
+    L210.RsrcTechChange <- get_data(all_data, "L210.RsrcTechChange")
     L210.SmthRenewRsrcTechChange <- get_data(all_data, "L210.SmthRenewRsrcTechChange")
-    L210.DepRsrcCalProd <- get_data(all_data, "L210.DepRsrcCalProd")
-    L210.DepRsrcCurves_fos <- get_data(all_data, "L210.DepRsrcCurves_fos")
-    L210.DepRsrcCurves_U <- get_data(all_data, "L210.DepRsrcCurves_U")
+    L210.RsrcCalProd <- get_data(all_data, "L210.RsrcCalProd")
+    L210.ReserveCalReserve <- get_data(all_data, "L210.ReserveCalReserve")
+    L210.RsrcCurves_fos <- get_data(all_data, "L210.RsrcCurves_fos")
+    L210.RsrcCurves_U <- get_data(all_data, "L210.RsrcCurves_U")
     L210.SmthRenewRsrcCurves_MSW <- get_data(all_data, "L210.SmthRenewRsrcCurves_MSW")
     L210.SmthRenewRsrcCurves_wind <- get_data(all_data, "L210.SmthRenewRsrcCurves_wind")
     L210.SmthRenewRsrcCurvesGdpElast_roofPV <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElast_roofPV")
@@ -55,22 +63,37 @@ module_energy_batch_resources_xml <- function(command, ...) {
     L210.GrdRenewRsrcMax_geo <- get_data(all_data, "L210.GrdRenewRsrcMax_geo")
     L210.GrdRenewRsrcCurves_tradbio <- get_data(all_data, "L210.GrdRenewRsrcCurves_tradbio")
     L210.GrdRenewRsrcMax_tradbio <- get_data(all_data, "L210.GrdRenewRsrcMax_tradbio")
+    L210.ResSubresourceProdLifetime <- get_data(all_data, "L210.ResSubresourceProdLifetime")
+    L210.SubresourcePriceAdder <- get_data(all_data, "L210.SubresourcePriceAdder")
+    L210.ResReserveTechLifetime <- get_data(all_data, "L210.ResReserveTechLifetime")
+    L210.ResReserveTechDeclinePhase <- get_data(all_data, "L210.ResReserveTechDeclinePhase")
+    L210.ResReserveTechProfitShutdown <- get_data(all_data, "L210.ResReserveTechProfitShutdown")
+    L210.ResTechShrwt <- get_data(all_data, "L210.ResTechShrwt")
 
     # ===================================================
 
     # Produce outputs
     create_xml("resources.xml") %>%
-      add_xml_data(L210.DepRsrc, "DepRsrc") %>%
+      add_xml_data(L210.Rsrc, "Rsrc") %>%
       add_xml_data(L210.RenewRsrc, "RenewRsrc") %>%
       add_xml_data(L210.UnlimitRsrc, "UnlimitRsrc") %>%
-      add_xml_data(L210.DepRsrcPrice, "DepRsrcPrice") %>%
+      add_node_equiv_xml("resource") %>%
+      add_node_equiv_xml("subresource") %>%
+      add_node_equiv_xml("technology") %>%
+      add_xml_data(L210.ResSubresourceProdLifetime, "ResSubresourceProdLifetime") %>%
+      add_xml_data(L210.SubresourcePriceAdder, "SubresourcePriceAdder") %>%
+      add_xml_data(L210.ReserveCalReserve, "ReserveCalReserve") %>%
+      add_xml_data(L210.ResReserveTechLifetime, "ResReserveTechLifetime") %>%
+      add_xml_data(L210.ResReserveTechDeclinePhase, "ResReserveTechDeclinePhase") %>%
+      add_xml_data(L210.ResReserveTechProfitShutdown, "ResReserveTechProfitShutdown") %>%
+      add_xml_data(L210.RsrcPrice, "RsrcPrice") %>%
       add_xml_data(L210.RenewRsrcPrice, "RenewRsrcPrice") %>%
       add_xml_data(L210.UnlimitRsrcPrice, "UnlimitRsrcPrice") %>%
-      add_xml_data(L210.DepRsrcTechChange, "DepRsrcTechChange") %>%
+      add_xml_data(L210.RsrcTechChange, "RsrcTechChange") %>%
       add_xml_data(L210.SmthRenewRsrcTechChange, "SmthRenewRsrcTechChange") %>%
-      add_xml_data(L210.DepRsrcCalProd, "DepRsrcCalProd") %>%
-      add_xml_data(L210.DepRsrcCurves_fos, "DepRsrcCurves") %>%
-      add_xml_data(L210.DepRsrcCurves_U, "DepRsrcCurves") %>%
+      add_xml_data(L210.RsrcCalProd, "RsrcCalProd") %>%
+      add_xml_data(L210.RsrcCurves_fos, "RsrcCurves") %>%
+      add_xml_data(L210.RsrcCurves_U, "RsrcCurves") %>%
       add_xml_data(L210.SmthRenewRsrcCurves_MSW, "SmthRenewRsrcCurvesGdpElast") %>%
       add_xml_data(L210.SmthRenewRsrcCurves_wind, "SmthRenewRsrcCurves") %>%
       add_xml_data(L210.SmthRenewRsrcCurvesGdpElast_roofPV, "SmthRenewRsrcCurvesGdpElast") %>%
@@ -78,11 +101,13 @@ module_energy_batch_resources_xml <- function(command, ...) {
       add_xml_data(L210.GrdRenewRsrcMax_geo, "GrdRenewRsrcMax") %>%
       add_xml_data(L210.GrdRenewRsrcCurves_tradbio, "GrdRenewRsrcCurves") %>%
       add_xml_data(L210.GrdRenewRsrcMax_tradbio, "GrdRenewRsrcMax") %>%
-      add_precursors("L210.DepRsrc", "L210.RenewRsrc", "L210.UnlimitRsrc", "L210.DepRsrcPrice", "L210.RenewRsrcPrice",
-                     "L210.UnlimitRsrcPrice", "L210.DepRsrcTechChange", "L210.SmthRenewRsrcTechChange", "L210.DepRsrcCalProd",
-                     "L210.DepRsrcCurves_fos", "L210.DepRsrcCurves_U", "L210.SmthRenewRsrcCurves_MSW", "L210.SmthRenewRsrcCurves_wind",
+      add_xml_data(L210.ResTechShrwt, "ResTechShrwt") %>%
+      add_precursors("L210.Rsrc", "L210.RenewRsrc", "L210.UnlimitRsrc", "L210.RsrcPrice", "L210.RenewRsrcPrice",
+                     "L210.UnlimitRsrcPrice", "L210.RsrcTechChange", "L210.SmthRenewRsrcTechChange", "L210.RsrcCalProd", "L210.ReserveCalReserve",
+                     "L210.RsrcCurves_fos", "L210.RsrcCurves_U", "L210.SmthRenewRsrcCurves_MSW", "L210.SmthRenewRsrcCurves_wind",
                      "L210.SmthRenewRsrcCurvesGdpElast_roofPV", "L210.GrdRenewRsrcCurves_geo", "L210.GrdRenewRsrcMax_geo",
-                     "L210.GrdRenewRsrcCurves_tradbio", "L210.GrdRenewRsrcMax_tradbio") ->
+                     "L210.GrdRenewRsrcCurves_tradbio", "L210.GrdRenewRsrcMax_tradbio", "L210.ResSubresourceProdLifetime", "L210.SubresourcePriceAdder",
+                     "L210.ResReserveTechLifetime", "L210.ResReserveTechDeclinePhase", "L210.ResReserveTechProfitShutdown", "L210.ResTechShrwt") ->
       resources.xml
 
     return_data(resources.xml)

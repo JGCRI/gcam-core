@@ -15,7 +15,7 @@
 #' @importFrom dplyr distinct filter if_else left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author KD October 2017
-module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
+module_gcamusa_L2322.Fert_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",
@@ -299,27 +299,17 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
     L2322.StubTechCoef_Fert_USA %>%
       mutate(stub.technology = technology, market.name = gcam.USA_REGION) %>%
       select(region, supplysector, subsector, stub.technology,
-             year, minicam.energy.input, coefficient, market.name) ->
-      L2322.StubTechCoef_Fert_USA
+             year, minicam.energy.input, coefficient, market.name) %>%
+      # replace market name with the grid region name if the minicam.energy.input is
+      # considered a regional fuel market
+      left_join_error_no_match(states_subregions %>%
+                                 select(state, grid_region),
+                               by = c("region" = "state")) %>%
+      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
+             grid_region, market.name)) %>%
+      select(-grid_region) ->
+	  L2322.StubTechCoef_Fert_USA
 
-
-    # If using GCAM-USA regional fuel markets then replace the market name from
-    # the input-ouput coefficients of fertilizer production technologies data frame from above
-    # with regional grid names.
-    if(gcamusa.USE_REGIONAL_FUEL_MARKETS) {
-
-      # Use the state codes-names-groupings mappings data frame to replace the input-ouput
-      # coefficients of fertilizer production technologies market.name with the grid region
-      # name for each fertilizer producing state.
-      L2322.StubTechCoef_Fert_USA %>%
-        left_join_error_no_match(states_subregions %>% select(state, grid_region),
-                                 by = c("region" = "state")) %>%
-        mutate(replace = if_else(any(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS), 1, 0),
-               market.name = if_else(replace == 1, grid_region, market.name)) %>%
-        select(-replace, -grid_region) ->
-        L2322.StubTechCoef_Fert_USA
-
-    }
 
     # Create a table of the market for the fuel inputs into the state fertilizer sectors
     #
@@ -335,26 +325,16 @@ module_gcam.usa_L2322.Fert_USA <- function(command, ...) {
       left_join_error_no_match(A322.globaltech_coef %>%
                                  select(supplysector, subsector, technology, minicam.energy.input),
                                by = c("supplysector", "subsector", c("stub.technology" = "technology"))) %>%
-      mutate(market.name = gcam.USA_REGION) ->
-      L2322.StubTechMarket_Fert_USA
-
-
-    # If using GCAM-USA regional fuel markets then replace the market name from
-    # the fuel inputs into the state fertilizer sectors data frame from above
-    # with regional grid names.
-    if(gcamusa.USE_REGIONAL_FUEL_MARKETS) {
-
-      # Use the state codes-names-groupings mappings data frame to replace the  fuel inputs into the state fertilizer sectors
-      # market.name with the grid region name for each fertilizer producing state.
-      L2322.StubTechMarket_Fert_USA %>%
-        left_join_error_no_match(states_subregions %>% select(state, grid_region),
-                                 by = c("region" = "state")) %>%
-        mutate(replace = if_else(any(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS), 1, 0),
-               market.name = if_else(replace == 1, grid_region, market.name)) %>%
-        select(-replace, -grid_region) ->
-        L2322.StubTechMarket_Fert_USA
-
-    }
+      mutate(market.name = gcam.USA_REGION) %>%
+      # replace market name with the grid region name if the minicam.energy.input is
+      # considered a regional fuel market
+      left_join_error_no_match(states_subregions %>%
+                                 select(state, grid_region),
+                               by = c("region" = "state")) %>%
+      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
+                                   grid_region, market.name)) %>%
+      select(-grid_region) ->
+	  L2322.StubTechMarket_Fert_USA
 
 
     # ===================================================

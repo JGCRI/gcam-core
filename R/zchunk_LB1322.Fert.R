@@ -271,54 +271,51 @@ module_energy_LB1322.Fert <- function(command, ...) {
     # Calculating non-energy costs for gas technology as USA market fertilizer price minus GCAM fuel costs
     # Calculate the gas price as the sum of resource costs plus intermediate sectoral mark-ups
 
-    # Note that 2005 is used as the fertilizer base price, and we will also interpolate for 2005 in the latter cost tables for natural gas
-    # To help prevent any potential mix-up, we will define this year to be base_fert_year
-    base_fert_year <- 2005
-
+    # The processing steps below ensure that the base year for fertilizer prices is included
     A10.rsrc_info %>%
-      gather_years %>%
-      filter(resource == "natural gas",
-             year == base_fert_year) %>%
-      summarise(value = sum(value)) %>% # Ensuring no duplicates
+      filter(resource == "natural gas") %>%
+      gather_years() %>%
+      select(resource, year, value) %>%
+      complete(resource, year = sort(unique(c(year, aglu.FERT_PRICE_YEAR)))) %>%
+      mutate(value = approx_fun(year, value)) %>%
+      filter(year == aglu.FERT_PRICE_YEAR) %>%
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
-      A10.rsrc_info_base_fert_year
+      A10.rsrc_cost_aglu.FERT_PRICE_YEAR
 
     # A21.globaltech_cost and A22.globaltech_cost report costs on primary energy handling (A21) and transformation technologies (A22)
     # Units for both are 1975$/GJ
-    # As mentioned above, because 2005 is the year used as the fertilizer base price (from A10.rsrc_info), we will interpolate for
+    # As mentioned above, because 2010 is the year used as the fertilizer base price (from A10.rsrc_info), we will interpolate for
     # this year for both global tech cost tables so that we may add up all costs consistently.
 
-    # Include placeholder for base_fert_year in the global tech tables. Value for that year will be interpolated.
-    A21.globaltech_cost[[as.character(base_fert_year)]] <- NA
-    A22.globaltech_cost[[as.character(base_fert_year)]] <- NA
-
-    # Interpolate to get cost of primary energy handling for natural gas in base_fert_year
+    # Interpolate to get cost of primary energy handling for natural gas in aglu.FERT_PRICE_YEAR
     A21.globaltech_cost %>%
-      gather_years %>%
-      group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
-      mutate(value = approx_fun(year, value)) %>% # Interpolation step
-      ungroup() %>%
-      filter(technology == "regional natural gas", year == base_fert_year) %>% # Filter only for natural gas and base_fert_year
+      filter(technology == "regional natural gas") %>%
+      gather_years() %>%
+      select(technology, year, value) %>%
+      complete(technology, year = sort(unique(c(year, aglu.FERT_PRICE_YEAR)))) %>%
+      mutate(value = approx_fun(year, value)) %>%
+      filter(year == aglu.FERT_PRICE_YEAR) %>%
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
-      A21.globaltech_cost_base_fert_year
+      A21.globaltech_cost_aglu.FERT_PRICE_YEAR
 
-    # Interpolate to get cost of primary energy transformation for natural gas in base_fert_year
+    # Interpolate to get cost of primary energy transformation for natural gas in aglu.FERT_PRICE_YEAR
     A22.globaltech_cost %>%
-      gather_years %>%
-      group_by(supplysector, subsector, technology, minicam.non.energy.input, improvement.max,
-               improvement.rate, improvement.shadow.technology) %>%
-      mutate(value = approx_fun(year, value)) %>% # Interpolation step
-      ungroup() %>%
-      filter(technology == "natural gas", year == base_fert_year) %>% # Filter only for natural gas and base_fert_year
+      filter(technology == "natural gas") %>%
+      gather_years() %>%
+      select(technology, year, value) %>%
+      complete(technology, year = sort(unique(c(year, aglu.FERT_PRICE_YEAR)))) %>%
+      mutate(value = approx_fun(year, value)) %>%
+      filter(year == aglu.FERT_PRICE_YEAR) %>%
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
-      A22.globaltech_cost_base_fert_year
+      A22.globaltech_cost_aglu.FERT_PRICE_YEAR
 
     # Sum up costs. Units are 1975 USD per GJ.
-    L1322.P_gas_75USDGJ <- A10.rsrc_info_base_fert_year + A21.globaltech_cost_base_fert_year + A22.globaltech_cost_base_fert_year
+    L1322.P_gas_75USDGJ <- A10.rsrc_cost_aglu.FERT_PRICE_YEAR + A21.globaltech_cost_aglu.FERT_PRICE_YEAR +
+      A22.globaltech_cost_aglu.FERT_PRICE_YEAR + energy.GAS_PIPELINE_COST_ADDER_75USDGJ
 
-    # Obtain fertilizer input-output cofficient for natural gas in base_fert_year
+    # Obtain fertilizer input-output cofficient for natural gas in aglu.FERT_PRICE_YEAR
     L1322.IO_R_Fert_F_Yh %>%
-      filter(year == base_fert_year,
+      filter(year == aglu.FERT_PRICE_YEAR,
              GCAM_region_ID == gcam.USA_CODE,
              fuel == "gas") %>%
       pull(value) -> # Save coefficient as single number
@@ -327,9 +324,8 @@ module_energy_LB1322.Fert <- function(command, ...) {
     # Multiply cost by input-output cofficient. Units are 1975 USD per GJ.
     L1322.Fert_Fuelcost_75USDGJ_gas <- L1322.P_gas_75USDGJ * L1322.IO_GJkgN_Fert_gas
 
-    # Convert total NH3 cost (2007$/tNH3) to N cost (1975$/kgN)
-    Fert_Cost_07USDtNH3 <- 363 # 2007 USD per ton of ammonia
-    Fert_Cost_75USDkgN <- Fert_Cost_07USDtNH3 * gdp_deflator(1975, 2007) * CONV_KG_T / CONV_NH3_N
+    # Convert total NH3 cost (2010$/tNH3) to N cost (1975$/kgN)
+    Fert_Cost_75USDkgN <- aglu.FERT_PRICE * gdp_deflator(1975, aglu.FERT_PRICE_YEAR) * CONV_KG_T / CONV_NH3_N
 
     # Calculate non-fuel cost of natural gas steam reforming (includes delivery charges)
     L1322.Fert_NEcost_75USDkgN_gas <- Fert_Cost_75USDkgN - L1322.Fert_Fuelcost_75USDGJ_gas
@@ -342,7 +338,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
 
     # First, calculate costs in 1975 USD per kg N
     H2A_Prod_Tech %>%
-      mutate(NEcost_75USDkgN = NEcost * gdp_deflator(1975, base_fert_year) * NH3_H_frac / CONV_NH3_N) ->
+      mutate(NEcost_75USDkgN = NEcost * gdp_deflator(1975, aglu.FERT_PRICE_YEAR) * NH3_H_frac / CONV_NH3_N) ->
       H2A_Prod_Tech_1975
 
     # Derive costs as the cost of NGSR plus the specified cost adder

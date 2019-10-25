@@ -15,7 +15,7 @@
 #' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise transmute
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
-module_gcam.usa_LB126.Gas_ElecTD <- function(command, ...) {
+module_gcamusa_LB126.Gas_ElecTD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L122.in_EJ_R_gasproc_F_Yh",
               "L122.out_EJ_R_gasproc_F_Yh",

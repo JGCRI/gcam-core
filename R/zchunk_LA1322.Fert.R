@@ -15,7 +15,7 @@
 #' @importFrom dplyr distinct filter left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author KD September 2017
-module_gcam.usa_LA1322.Fert <- function(command, ...) {
+module_gcamusa_LA1322.Fert <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/Census_ind_VoS_state",
              "L1322.Fert_Prod_MtN_R_F_Y",

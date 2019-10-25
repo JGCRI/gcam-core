@@ -51,10 +51,19 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
 
     # Perform Calculations
 
+    # 02/2018 revision (GPK): several of the "Other" commodities in the IFA 2009 inventory have very high fertilizer
+    # application quantities for the given land areas, leading to crops whose fertilizer costs alone approach or exceed
+    # the commodity price. These are reduced by a factor of 5; this value is selected to get the implied fertilizer
+    # application rates (kg N / m2) of IFA's "Other" crops in Pakistan and Morocco within the range of the "Other" crops'
+    # average application rates observed in all other regions.
+    IFA_Fert_ktN$Other[IFA_Fert_ktN$Country %in% c("Morocco", "Pakistan")] <-
+      IFA_Fert_ktN$Other[IFA_Fert_ktN$Country %in% c("Morocco", "Pakistan")] / 5
+
     # Convert IFA (Heffer 2009) fertilizer consumption to long form and convert units to Mt of N consumed.
     # This is a top-down fertilizer consumption inventory by 24 large countries + regions and commodity
     # classes for a 2006-2007 base year, to be supplemented with bottom-up application rates estimated by
     # IFA2002, multiplied by LDS/Monfreda harvested area to get consumption quantities.
+
     IFA_Fert_ktN %>%
       filter(Country != "World Total") %>%
       gather(IFA_commodity, value, -Country) %>%

@@ -1,0 +1,21 @@
+# File: A23.elecS_globalinttech_shrwt.csv
+# Title: MLS Electricity Sector Intermittent Technology Shareweights
+# Units: unitless
+# Comments: USA multiple load segments electricity sector intermittent technology shareweight assumptions
+# Source: None (GCAM assumptions)
+# Column types: ccciiiii 
+# ----------
+supplysector,subsector,technology,1971,2010,2011,2030,2100
+base load generation,wind,wind_base,1,1,1,1,1
+intermediate generation,wind,wind_int,1,1,0,0,0
+subpeak generation,wind,wind_subpeak,1,1,0,0,0
+peak generation,wind,wind_peak,1,1,1,1,1
+base load generation,solar,PV_base,1,1,1,1,1
+intermediate generation,solar,PV_int,1,1,1,1,1
+subpeak generation,solar,PV_subpeak,1,1,1,1,1
+peak generation,solar,PV_peak,1,1,1,1,1
+base load generation,solar,CSP_base,1,1,1,1,1
+intermediate generation,solar,CSP_int,1,1,1,1,1
+subpeak generation,solar,CSP_subpeak,1,1,1,1,1
+peak generation,solar,CSP_peak,1,1,1,1,1
+elect_td_bld,rooftop_pv,rooftop_pv,1,1,1,1,1

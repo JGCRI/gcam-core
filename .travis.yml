@@ -1,9 +1,15 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
-sudo: false
+sudo: true
 warnings_are_errors: true
 cache: packages
+
+before_install:
+  - sudo fallocate -l 8g /mnt/for_fork.swap
+  - sudo chmod 600 /mnt/for_fork.swap
+  - sudo mkswap /mnt/for_fork.swap
+  - sudo swapon /mnt/for_fork.swap
 
 env:
   - GCAMDATA_USE_JAVA=TRUE

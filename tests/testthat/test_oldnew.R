@@ -64,10 +64,6 @@ test_that("matches old data system output", {
     # so we will skip this test
     skip("gcamdata.compdata package not available")
   } else {
-    # load the comparison data which is coming from the gcamdata.compdata package
-    # the format is a list[[data name ]] = data tibble
-    data(COMPDATA)
-
     # For each file in OUTPUTS_DIR, look for corresponding file in our
     # comparison data. Load them, reshape new data if necessary, compare.
     for(newf in list.files(outputs_dir, full.names = TRUE)) {
@@ -86,7 +82,8 @@ test_that("matches old data system output", {
 
       newdata <- read_csv(newf, comment = COMMENT_CHAR)
       oldf <- sub('.csv$', '', basename(newf))
-      olddata <- COMPDATA[[oldf]]
+      # get the comparison data which is coming from the gcamdata.compdata package
+      olddata <- get_comparison_data(oldf)
       expect_is(olddata, "data.frame", info = paste("No comparison data found for", oldf))
 
       # Finally, test (NB rounding numeric columns to a sensible number of
@@ -119,10 +116,6 @@ test_that("matches old data system output", {
         expect_equivalent(round_df(olddata), round_df(newdata), info = paste(basename(newf), "doesn't match"))
       }
     }
-    # Explicitly clean up COMPDATA as it uses a lot of memory and gets loaded into the
-    # Global environment
-    rm(COMPDATA, envir = .GlobalEnv)
-    gc()
   }
 })
 

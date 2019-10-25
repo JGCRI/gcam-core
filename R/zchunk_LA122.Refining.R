@@ -15,7 +15,7 @@
 #' @importFrom dplyr bind_rows distinct filter group_by left_join mutate select transmute
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
-module_gcam.usa_LA122.Refining <- function(command, ...) {
+module_gcamusa_LA122.refining <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L122.in_EJ_R_refining_F_Yh",
              "L122.out_EJ_R_refining_F_Yh",

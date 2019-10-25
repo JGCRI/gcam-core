@@ -19,6 +19,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
+             FILE = "aglu/A_agRegionalTechnology",
              FILE = "energy/calibrated_techs",
              FILE = "energy/A_regions",
              FILE = "energy/A21.globaltech_coef",
@@ -40,13 +41,15 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       landshare_lo <- level <- minicam.energy.input <- passthrough.sector <- sector <-
       subsector <- supplysector <- technology <- value <- value.x <- value.y <- valueInput <-
       value_ctl_oil <- value_en_bal <- value_en_bal_TPES <- value_en_bal_net_oil <-
-      value_gtl_oil <- value_gtlctl <- year <- yield <- yieldmult_hi <- yieldmult_lo <- NULL # silence package check notes
+      value_gtl_oil <- value_gtlctl <- year <- yield <- yieldmult_hi <- yieldmult_lo <-
+      market.name <- primary.crop <- NULL # silence package check notes
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
+    A_agRegionalTechnology <- get_data(all_data, "aglu/A_agRegionalTechnology")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     A_regions <- get_data(all_data, "energy/A_regions")
     A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef")
@@ -228,6 +231,17 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       right_join(L122.in_EJ_R_1stgenbio_F_Yh, by = "passthrough.sector") %>%
       rename(GCAM_commodity = minicam.energy.input) -> L122.in_EJ_R_1stgenbio_F_Yh
 
+    # 2/13/2019 GPK - Revisions related to ag trade - if any of these commodities in the "traded" set, then the
+    # commodity name needs to be re-set to match the primary crop name (e.g., from "regional corn" to "Corn"). This is
+    # done with the A_agRegionalTechnology assumptions table.
+    biofuel_feedstock_cropname <- filter(A_agRegionalTechnology, market.name == "regional") %>%
+      select(regional.crop = "supplysector", primary.crop = "minicam.energy.input")
+
+    L122.in_EJ_R_1stgenbio_F_Yh %>%
+      left_join(biofuel_feedstock_cropname, by = c(GCAM_commodity = "regional.crop")) %>%
+      mutate(GCAM_commodity = if_else(is.na(primary.crop), GCAM_commodity, primary.crop)) %>%
+      select(-primary.crop) -> L122.in_EJ_R_1stgenbio_F_Yh
+
     # Crop inputs to biodiesel are region-specific
     L122.in_EJ_R_1stgenbio_F_Yh %>%
       filter(passthrough.sector == "regional biomassOil") %>%
@@ -241,11 +255,19 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     # Interpolate coefs (using repeat_add_columns) to all historical periods, and then multiply by the input quantities
     # Filter 1971 since the value associated to this year is the same till 2100, but all historical years are missing. Therefore filter
     # 1971 and the repeat the corresponding value (repeat_add_columns) for historical years
+
+    # 2/13/2019 - note that this sequence requires the same re-naming from regional crop names to primary crop names (as necessary)
+    # Sequence also modified to not assume constant coefs over all historical years
     A21.globaltech_coef %>%
-      gather(hist_year, value, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
-      filter(hist_year == min(HISTORICAL_YEARS)) %>%
-      repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
-      select(-hist_year) -> L121.globaltech_coef
+      left_join(biofuel_feedstock_cropname, by = c(minicam.energy.input = "regional.crop")) %>%
+      mutate(minicam.energy.input = if_else(is.na(primary.crop), minicam.energy.input, primary.crop)) %>%
+      select(-primary.crop) %>%
+      gather_years() %>%
+      group_by(supplysector, subsector, technology, minicam.energy.input) %>%
+      complete(year = HISTORICAL_YEARS) %>%
+      mutate(value = approx_fun(year, value)) %>%
+      ungroup() %>%
+      filter(year %in% HISTORICAL_YEARS) -> L121.globaltech_coef
 
     # Multiply by input quantities by coefficients in L121.globaltech_coef
     L122.in_EJ_R_1stgenbio_F_Yh %>%
@@ -399,7 +421,7 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       add_legacy_name("L122.in_Mt_R_C_Yh") %>%
       add_precursors("common/GCAM_region_names", "aglu/FAO/FAO_ag_items_PRODSTAT", "energy/calibrated_techs",
                      "energy/A_regions", "energy/A21.globaltech_coef", "energy/A22.globaltech_coef", "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                     "L121.in_EJ_R_unoil_F_Yh") ->
+                     "L121.in_EJ_R_unoil_F_Yh", "aglu/A_agRegionalTechnology") ->
       L122.in_Mt_R_C_Yh
 
     return_data(L122.out_EJ_R_gasproc_F_Yh, L122.in_EJ_R_gasproc_F_Yh, L122.IO_R_oilrefining_F_Yh, L122.out_EJ_R_refining_F_Yh, L122.in_EJ_R_refining_F_Yh, L122.in_Mt_R_C_Yh)

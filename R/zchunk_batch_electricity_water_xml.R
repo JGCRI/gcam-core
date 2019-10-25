@@ -30,7 +30,6 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
               "L2233.GlobalTechCapFac_elec_cool",
               "L2233.GlobalTechCapture_elec_cool",
               "L2233.GlobalTechEff_elec_cool",
-              "L2233.GlobalTechInterp_elec_cool",
               "L2233.GlobalTechLifetime_elec_cool",
               "L2233.GlobalTechProfitShutdown_elec_cool",
               "L2233.GlobalTechSCurve_elec_cool",
@@ -48,6 +47,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
               "L2233.GlobalTechOMfixed_elecPassthru",
               "L2233.GlobalIntTechOMvar_elec",
               "L2233.GlobalTechOMvar_elecPassthru",
+              "L2233.GlobalTechInterp_elecPassthru",
               "L2233.PassThroughSector_elec_cool",
               "L2233.Supplysector_elec_cool",
               "L2233.ElecReserve_elec_cool",
@@ -85,7 +85,6 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
     L2233.GlobalTechCapFac_elec_cool <- get_data(all_data, "L2233.GlobalTechCapFac_elec_cool")
     L2233.GlobalTechCapture_elec_cool <- get_data(all_data, "L2233.GlobalTechCapture_elec_cool")
     L2233.GlobalTechEff_elec_cool <- get_data(all_data, "L2233.GlobalTechEff_elec_cool")
-    L2233.GlobalTechInterp_elec_cool <- get_data(all_data, "L2233.GlobalTechInterp_elec_cool")
     L2233.GlobalTechLifetime_elec_cool <- get_data(all_data, "L2233.GlobalTechLifetime_elec_cool")
     L2233.GlobalTechProfitShutdown_elec_cool <- get_data(all_data, "L2233.GlobalTechProfitShutdown_elec_cool")
     L2233.GlobalTechSCurve_elec_cool <- get_data(all_data, "L2233.GlobalTechSCurve_elec_cool")
@@ -103,6 +102,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
     L2233.GlobalTechOMfixed_elecPassthru <- get_data(all_data, "L2233.GlobalTechOMfixed_elecPassthru")
     L2233.GlobalIntTechOMvar_elec <- get_data(all_data, "L2233.GlobalIntTechOMvar_elec")
     L2233.GlobalTechOMvar_elecPassthru <- get_data(all_data, "L2233.GlobalTechOMvar_elecPassthru")
+    L2233.GlobalTechInterp_elecPassthru <- get_data(all_data, "L2233.GlobalTechInterp_elecPassthru")
     L2233.PassThroughSector_elec_cool <- get_data(all_data, "L2233.PassThroughSector_elec_cool")
     L2233.Supplysector_elec_cool <- get_data(all_data, "L2233.Supplysector_elec_cool")
     L2233.ElecReserve_elec_cool <- get_data(all_data, "L2233.ElecReserve_elec_cool")
@@ -152,7 +152,6 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
       add_xml_data(L2233.GlobalTechCapFac_elec_cool, "GlobalTechCapFac") %>%
       add_xml_data(L2233.GlobalTechCapture_elec_cool, "GlobalTechCapture") %>%
       add_xml_data(L2233.GlobalTechEff_elec_cool, "GlobalTechEff") %>%
-      add_xml_data(L2233.GlobalTechInterp_elec_cool, "GlobalTechInterp") %>%
       add_xml_data(L2233.GlobalTechLifetime_elec_cool, "GlobalTechLifetime") %>%
       add_xml_data(L2233.GlobalTechProfitShutdown_elec_cool, "GlobalTechProfitShutdown") %>%
       add_xml_data(L2233.GlobalTechSCurve_elec_cool, "GlobalTechSCurve") %>%
@@ -170,6 +169,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
       add_xml_data(L2233.GlobalTechOMfixed_elecPassthru, "GlobalTechOMfixed") %>%
       add_xml_data(L2233.GlobalIntTechOMvar_elec, "GlobalIntTechOMvar", "GlobalTechOMvar") %>%
       add_xml_data(L2233.GlobalTechOMvar_elecPassthru, "GlobalTechOMvar") %>%
+      add_xml_data(L2233.GlobalTechInterp_elecPassthru, "GlobalTechInterp") %>%
       add_xml_data(L2233.PassThroughSector_elec_cool, "PassThroughSector") %>%
       add_logit_tables_xml(L2233.Supplysector_elec_cool, "Supplysector") %>%
       add_xml_data(L2233.ElecReserve_elec_cool, "ElecReserve") %>%
@@ -200,7 +200,6 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
                       "L2233.GlobalTechCapFac_elec_cool",
                       "L2233.GlobalTechCapture_elec_cool",
                       "L2233.GlobalTechEff_elec_cool",
-                      "L2233.GlobalTechInterp_elec_cool",
                       "L2233.GlobalTechLifetime_elec_cool",
                       "L2233.GlobalTechProfitShutdown_elec_cool",
                       "L2233.GlobalTechSCurve_elec_cool",
@@ -218,6 +217,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
                       "L2233.GlobalTechOMfixed_elecPassthru",
                       "L2233.GlobalIntTechOMvar_elec",
                       "L2233.GlobalTechOMvar_elecPassthru",
+                      "L2233.GlobalTechInterp_elecPassthru",
                       "L2233.PassThroughSector_elec_cool",
                       "L2233.Supplysector_elec_cool",
                       "L2233.ElecReserve_elec_cool",

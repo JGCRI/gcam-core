@@ -27,7 +27,8 @@ module_energy_L270.limits <- function(command, ...) {
              FILE = "energy/A23.globaltech_eff",
              "L102.gdp_mil90usd_GCAM3_R_Y",
              "L102.gdp_mil90usd_Scen_R_Y",
-             "L221.GlobalTechCoef_en"))
+             "L221.GlobalTechCoef_en",
+             "L202.CarbonCoef"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L270.CreditOutput",
              "L270.CreditInput_elec",
@@ -44,7 +45,8 @@ module_energy_L270.limits <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     value <- subsector <- supplysector <- year <- GCAM_region_ID <- sector.name <-
-      region <- scenario <- constraint <- . <- NULL # silence package check notes
+      region <- scenario <- constraint <- . <- PrimaryFuelCO2Coef.name <-
+      PrimaryFuelCO2Coef <- NULL # silence package check notes
 
     all_data <- list(...)[[1]]
 
@@ -55,6 +57,7 @@ module_energy_L270.limits <- function(command, ...) {
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
     L221.GlobalTechCoef_en <- get_data(all_data, "L221.GlobalTechCoef_en")
+    L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
 
     # Limit bioliquids for feedstocks and electricity
     # Note: we do this by requiring a certain fraction of inputs to those technologies to come from oil
@@ -73,7 +76,7 @@ module_energy_L270.limits <- function(command, ...) {
       mutate(value = round(value, energy.DIGITS_EFFICIENCY)) %>%
       filter(subsector == "refined liquids") %>%
       mutate(minicam.energy.input = "oil-credits",
-             # note we are converting the efficiency to a coefficient here
+      # note we are converting the efficiency to a coefficient here
              coefficient = energy.OILFRACT_ELEC / value) %>%
       select(-value) %>%
       rename(sector.name = supplysector,
@@ -114,10 +117,14 @@ module_energy_L270.limits <- function(command, ...) {
     # L270.CTaxInput: Create ctax-input for all biomass
     L221.GlobalTechCoef_en %>%
       filter(grepl("(biomass|ethanol)", sector.name)) %>%
-      mutate(ctax.input = energy.NEG_EMISS_POLICY_NAME,
-             fuel.name = sector.name) ->
-      L270.CTaxInput
-    L270.CTaxInput <- L270.CTaxInput[, c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "ctax.input", "fuel.name")]
+      mutate(ctax.input = energy.NEG_EMISS_POLICY_NAME) %>%
+      left_join_error_no_match(L202.CarbonCoef %>%
+                                 distinct(PrimaryFuelCO2Coef.name, PrimaryFuelCO2Coef),
+                               by = c("sector.name" = "PrimaryFuelCO2Coef.name")) %>%
+      rename(fuel.C.coef = PrimaryFuelCO2Coef) ->
+	  L270.CTaxInput
+	  
+    L270.CTaxInput <- L270.CTaxInput[, c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "ctax.input", "fuel.C.coef")]
 
     # L270.NegEmissFinalDemand: Create negative emissions final demand
     tibble(region = GCAM_region_names$region,
@@ -208,11 +215,13 @@ module_energy_L270.limits <- function(command, ...) {
 
     L270.CTaxInput %>%
       add_title("Creates the ctax-input limiting the amount of negative emissions") %>%
-      add_units("NA") %>%
+      add_units("kgC/GJ") %>%
       add_comments("Add ctax-input to all of the bio-energy supply sectors") %>%
       add_comments("by using L221.GlobalTechCoef_en filtered by biomass|ethanol") %>%
+      add_comments("and joining carbon coefficients from L202.CarbonCoef") %>%
       add_legacy_name("L270.CTaxInput") %>%
-      add_precursors("L221.GlobalTechCoef_en") ->
+      add_precursors("L221.GlobalTechCoef_en",
+                     "L202.CarbonCoef") ->
       L270.CTaxInput
 
     L270.NegEmissFinalDemand %>%

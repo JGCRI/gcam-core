@@ -1,0 +1,67 @@
+# File: A23.elecS_subsector_shrwt_interpto.csv
+# Title: Multiple Load Segments Subsector Shareweights
+# Units: unitless
+# Comments: Subsector shareweights for subsectors that are not fixed at calibration values. 
+# These subsectors need a "to-value" which specifies the value to which the shareweight is being interpolated.
+# Column types: ccccccic 
+# ----------
+region,supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+USA,base load generation,coal,share-weight,initial-future-year,end-year,1,fixed
+USA,intermediate generation,coal,share-weight,initial-future-year,end-year,1,fixed
+USA,subpeak generation,coal,share-weight,initial-future-year,end-year,1,fixed
+USA,peak generation,coal,share-weight,initial-future-year,end-year,1,fixed
+USA,base load generation,gas,share-weight,initial-future-year,end-year,1,fixed
+USA,intermediate generation,gas,share-weight,initial-future-year,end-year,1,fixed
+USA,subpeak generation,gas,share-weight,initial-future-year,end-year,1,fixed
+USA,peak generation,gas,share-weight,initial-future-year,end-year,1,fixed
+USA,base load generation,biomass,share-weight,final-calibration-year,end-year,1,linear
+USA,intermediate generation,biomass,share-weight,final-calibration-year,end-year,1,linear
+USA,subpeak generation,biomass,share-weight,final-calibration-year,end-year,1,linear
+USA,peak generation,biomass,share-weight,final-calibration-year,end-year,1,linear
+USA,base load generation,geothermal,share-weight,final-calibration-year,end-year,1,linear
+USA,intermediate generation,geothermal,share-weight,final-calibration-year,end-year,1,linear
+USA,subpeak generation,geothermal,share-weight,final-calibration-year,end-year,1,linear
+USA,peak generation,geothermal,share-weight,final-calibration-year,end-year,1,linear
+USA,base load generation,nuclear,share-weight,final-calibration-year,initial-future-year,0,linear
+USA,intermediate generation,nuclear,share-weight,final-calibration-year,initial-future-year,0,linear
+USA,subpeak generation,nuclear,share-weight,final-calibration-year,initial-future-year,0,linear
+USA,peak generation,nuclear,share-weight,final-calibration-year,initial-future-year,0,linear
+USA,base load generation,nuclear,share-weight,initial-future-year,2025,0,fixed
+USA,intermediate generation,nuclear,share-weight,initial-future-year,2025,0,fixed
+USA,subpeak generation,nuclear,share-weight,initial-future-year,2025,0,fixed
+USA,peak generation,nuclear,share-weight,initial-future-year,2025,0,fixed
+USA,base load generation,nuclear,share-weight,2025,2030,1,linear
+USA,intermediate generation,nuclear,share-weight,2025,2030,1,linear
+USA,subpeak generation,nuclear,share-weight,2025,2030,1,linear
+USA,peak generation,nuclear,share-weight,2025,2030,1,linear
+USA,base load generation,nuclear,share-weight,2030,end-year,1,fixed
+USA,intermediate generation,nuclear,share-weight,2030,end-year,1,fixed
+USA,subpeak generation,nuclear,share-weight,2030,end-year,1,fixed
+USA,peak generation,nuclear,share-weight,2030,end-year,1,fixed
+USA,base load generation,wind,share-weight,final-calibration-year,2030,1,linear
+USA,intermediate generation,wind,share-weight,final-calibration-year,initial-future-year,0,linear
+USA,subpeak generation,wind,share-weight,final-calibration-year,initial-future-year,0,linear
+USA,peak generation,wind,share-weight,final-calibration-year,initial-future-year,0,linear
+USA,base load generation,wind,share-weight,2030,end-year,1,fixed
+USA,intermediate generation,wind,share-weight,initial-future-year,end-year,0,fixed
+USA,subpeak generation,wind,share-weight,initial-future-year,end-year,0,fixed
+USA,peak generation,wind,share-weight,initial-future-year,end-year,0,fixed
+USA,base load generation,solar,share-weight,final-calibration-year,2030,1,linear
+USA,intermediate generation,solar,share-weight,final-calibration-year,2030,1,linear
+USA,subpeak generation,solar,share-weight,final-calibration-year,2030,1,linear
+USA,peak generation,solar,share-weight,final-calibration-year,2030,1,linear
+USA,base load generation,solar,share-weight,2030,end-year,1,fixed
+USA,intermediate generation,solar,share-weight,2030,end-year,1,fixed
+USA,subpeak generation,solar,share-weight,2030,end-year,1,fixed
+USA,peak generation,solar,share-weight,2030,end-year,1,fixed
+USA,elect_td_bld,rooftop_pv,share-weight,final-calibration-year,2030,1,linear
+USA,elect_td_bld,rooftop_pv,share-weight,2030,end-year,1,fixed
+USA,peak generation,grid_storage,share-weight,final-calibration-year,end-year,1,linear
+USA,base load generation,refined liquids,share-weight,final-calibration-year,initial-future-year,0,linear
+USA,intermediate generation,refined liquids,share-weight,final-calibration-year,initial-future-year,0,linear
+USA,subpeak generation,refined liquids,share-weight,final-calibration-year,initial-future-year,0,linear
+USA,peak generation,refined liquids,share-weight,final-calibration-year,initial-future-year,0,linear
+USA,base load generation,refined liquids,share-weight,initial-future-year,end-year,0,fixed
+USA,intermediate generation,refined liquids,share-weight,initial-future-year,end-year,0,fixed
+USA,subpeak generation,refined liquids,share-weight,initial-future-year,end-year,0,fixed
+USA,peak generation,refined liquids,share-weight,initial-future-year,end-year,0,fixed

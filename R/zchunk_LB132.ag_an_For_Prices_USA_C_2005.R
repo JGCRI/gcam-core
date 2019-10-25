@@ -89,7 +89,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     # Part 1: Primary agricultural goods and animal products
     # Primary agricultural goods
     FAO_ag_Prod_t_PRODSTAT %>%
-      select(-`country codes`, -`item codes`, -element, -`element codes`) %>%
+      select(-`country.codes`, -`item.codes`, -element, -`element.codes`) %>%
       gather_years(value_col = "prod") %>%
       filter(year %in% aglu.MODEL_PRICE_YEARS) %>%
       # Match production and price for each FAO item to calculate revenue, avoid any missing value by inner_join

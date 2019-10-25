@@ -16,7 +16,7 @@
 #' @importFrom dplyr arrange bind_rows bind_rows filter group_by left_join mutate rename right_join select ungroup
 #' @importFrom tidyr gather spread
 #' @author BBL
-module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
+module_gcamusa_LA100.Socioeconomics <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/BEA_pcGDP_09USD_state",
@@ -121,7 +121,8 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
       gather_years(value_col = "population") %>%
       mutate(population = as.numeric(population)) %>%
       # interpolate any missing data from end of history into future
-      complete(nesting(state), year = c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
+      complete(nesting(state), year = c(socioeconomics.FINAL_HIST_YEAR, MODEL_FUTURE_YEARS)) %>%
+      filter(year %in% c(socioeconomics.FINAL_HIST_YEAR, MODEL_FUTURE_YEARS)) %>%
       group_by(state) %>%
       mutate(population = approx_fun(year, population)) %>%
       arrange(state, year) %>%

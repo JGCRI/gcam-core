@@ -16,6 +16,7 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
               "L202.RenewRsrcPrice",
               "L202.maxSubResource",
               "L202.RenewRsrcCurves",
+              "L202.ResTechShrwt",
               "L202.UnlimitedRenewRsrcCurves",
               "L202.UnlimitedRenewRsrcPrice",
               "L202.Supplysector_in",
@@ -45,6 +46,7 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
     L202.RenewRsrcPrice <- get_data(all_data, "L202.RenewRsrcPrice")
     L202.maxSubResource <- get_data(all_data, "L202.maxSubResource")
     L202.RenewRsrcCurves <- get_data(all_data, "L202.RenewRsrcCurves")
+    L202.ResTechShrwt <- get_data(all_data, "L202.ResTechShrwt")
     L202.UnlimitedRenewRsrcCurves <- get_data(all_data, "L202.UnlimitedRenewRsrcCurves")
     L202.UnlimitedRenewRsrcPrice <- get_data(all_data, "L202.UnlimitedRenewRsrcPrice")
     L202.Supplysector_in <- get_data(all_data, "L202.Supplysector_in")
@@ -72,6 +74,9 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
       add_xml_data(L202.RenewRsrcPrice, "RenewRsrcPrice") %>%
       add_xml_data(L202.maxSubResource, "maxSubResource") %>%
       add_xml_data(L202.RenewRsrcCurves, "RenewRsrcCurves") %>%
+      add_node_equiv_xml("resource") %>%
+      add_node_equiv_xml("subresource") %>%
+      add_xml_data(L202.ResTechShrwt, "ResTechShrwt") %>%
       add_xml_data(L202.UnlimitedRenewRsrcCurves, "UnlimitRsrc") %>%
       add_xml_data(L202.UnlimitedRenewRsrcPrice, "UnlimitRsrcPrice") %>%
       add_logit_tables_xml(L202.Supplysector_in, "Supplysector") %>%
@@ -94,6 +99,7 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
                      "L202.RenewRsrcPrice",
                      "L202.maxSubResource",
                      "L202.RenewRsrcCurves",
+                     "L202.ResTechShrwt",
                      "L202.UnlimitedRenewRsrcCurves",
                      "L202.UnlimitedRenewRsrcPrice",
                      "L202.Supplysector_in",

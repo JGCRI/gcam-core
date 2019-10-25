@@ -57,7 +57,7 @@ module_emissions_L252.MACC <- function(command, ...) {
     # Silence package checks
     . <- AgProductionTechnology <- AgSupplySector <- AgSupplySubsector <- EPA_MACC_Sector <- EPA_region <-
       GV_year <- MAC_region <- Non.CO2 <- PCT_ABATE <- Process <- Species <- Year <- bio_N2O_coef <-
-      depresource <- emiss.coef <- input.emissions <- mac.control <- mac.reduction <- region <-
+      resource <- emiss.coef <- input.emissions <- mac.control <- mac.reduction <- region <-
       scenario <- sector <- stub.technology <- subsector <- supplysector <- tax <- tech_change <-
       market.name <- year <- NULL
 
@@ -123,12 +123,12 @@ module_emissions_L252.MACC <- function(command, ...) {
       left_join_error_no_match(GCAM_sector_tech %>%
                                  filter(sector == "out_resources") %>%
                                  select(mac.control = EPA_MACC_Sector, subsector),
-                               by = c("depresource" = "subsector")) %>%
-      mac_reduction_adder(order = "depresource") %>%
+                               by = c("resource" = "subsector")) %>%
+      mac_reduction_adder(order = "resource") %>%
       # Add column for market variable
       mutate(market.name = emissions.MAC_MARKET) %>%
       # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
-      select(region, depresource, Non.CO2, mac.control, tax, mac.reduction, market.name)
+      select(LEVEL2_DATA_NAMES[["ResMAC"]])
 
     # L252.AgMAC: Agricultural abatement (including bioenergy)
     L252.AgMAC <- L211.AGREmissions %>%

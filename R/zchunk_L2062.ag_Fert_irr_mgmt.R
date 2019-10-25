@@ -68,7 +68,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, minicam.energy.input, year, coefficient) ->
       L2062.AgCoef_Fert_ag_irr_mgmt
 
-    # Copy 2010 coefficients to all future years, bind with historic coefficients, then remove zeroes
+    # Copy final base year coefficients to all future years, bind with historic coefficients, then remove zeroes
     # Note: this assumes constant fertilizer coefficients in the future
     L2062.AgCoef_Fert_ag_irr_mgmt %>%
       filter(year == max(MODEL_BASE_YEARS)) %>%
@@ -111,9 +111,9 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       # Set fertilizer coefficient to zero when missing. This will lead to zero fertilizer cost.
       replace_na(list(coefficient = 0)) %>%
 
-      # Calculate fertilizer cost using a fixed value (specified in constants.R in 2007$ per ton of NH3)
+      # Calculate fertilizer cost using a fixed value (specified in constants.R in current $ per ton of NH3)
       # and the fertilizer coefficient calculated above. Subtract from original nonLandVariableCost.
-      mutate(FertCost = coefficient * aglu.FERT_COST * gdp_deflator(1975, 2007) * CONV_KG_T / CONV_NH3_N,
+      mutate(FertCost = coefficient * aglu.FERT_PRICE * gdp_deflator(1975, aglu.FERT_PRICE_YEAR) * CONV_KG_T / CONV_NH3_N,
              nonLandVariableCost = round(nonLandVariableCost - FertCost, aglu.DIGITS_CALPRICE)) %>%
       select(-minicam.energy.input, -coefficient, -FertCost) ->
       L2062.AgCost_ag_irr_mgmt_adj
@@ -129,7 +129,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
 
       # Calculate fertilizer cost using a fixed value (specified in constants.R in 2007$ per ton of NH3)
       # and the fertilizer coefficient calculated above. Subtract from original nonLandVariableCost.
-      mutate(FertCost = coefficient * aglu.FERT_COST * gdp_deflator(1975, 2007) * CONV_KG_T / CONV_NH3_N,
+      mutate(FertCost = coefficient * aglu.FERT_PRICE * gdp_deflator(1975, 2007) * CONV_KG_T / CONV_NH3_N,
              nonLandVariableCost = round(nonLandVariableCost - FertCost, aglu.DIGITS_CALPRICE)) %>%
       select(-minicam.energy.input, -coefficient, -FertCost) ->
       L2062.AgCost_bio_irr_mgmt_adj

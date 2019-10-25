@@ -16,7 +16,7 @@
 #' @importFrom dplyr filter group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author AJS June 2017
-module_gcam.usa_LA154.Transport <- function(command, ...) {
+module_gcamusa_LA154.Transport <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/trnUCD_EIA_mapping",
              "L154.in_EJ_R_trn_m_sz_tech_F_Yh",

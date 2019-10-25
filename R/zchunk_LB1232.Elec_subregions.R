@@ -15,7 +15,7 @@
 #' @importFrom dplyr group_by left_join select summarise
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
-module_gcam.usa_LB1232.Elec_subregions <- function(command, ...) {
+module_gcamusa_LB1232.Elec_subregions <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              "L1231.out_EJ_state_elec_F_tech"))
