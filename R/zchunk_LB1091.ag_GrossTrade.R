@@ -3,7 +3,9 @@
 #' module_data_FAO_BilateralTrade
 #'
 #' Read the FAO_BilateralTrade trade from file and reduce / summarize as soon as possible to
-#' keep it's memory footprint small
+#' keep its memory footprint small.  NOTE: we do not market the FAO_BilateralTrade as
+#' INPUT in order to have more control of when it gets loaded and minimize the amount of
+#' time it is loaded in memory.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -14,6 +16,8 @@
 #' @author PLP
 module_data_FAO_BilateralTrade <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
+    # Note: we do not declare any inputs and will handle loading the data directly
+    # to have more control.
     return(NULL)
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("FAO_BilateralTrade"))
