@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2042.resbio_input_irr_mgmt
 #'
 #' Produce a table of global Mill Residue Biomass Paramters by year, a table of regional Forest Residue Biomass Paramters by year, and a table of
@@ -28,7 +30,7 @@
 #' Finally, for each region-supplySector-supplySubsector-ProductionTech-irrigation-tech combination in this table, base
 #' supply curves are read in from A_resbio_curves to form the table of Agriculture resbio supply curves for each region and year.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter if_else left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author ACS July 2017
 module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
@@ -150,7 +152,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       write_to_all_regions(names = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "residue.biomass.production"),
                            GCAM_region_names) %>%
       filter(! region %in% aglu.NO_AGLU_REGIONS) %>%
-      repeat_add_columns(bind_cols(tibble(year = MODEL_YEARS))) %>%
+      repeat_add_columns(dplyr::bind_cols(tibble(year = MODEL_YEARS))) %>%
       mutate(colID = "Mill") %>%
       # bind to processed Forest data
       bind_rows(For.tmp) %>%

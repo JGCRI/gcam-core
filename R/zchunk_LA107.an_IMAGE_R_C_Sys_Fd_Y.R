@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y
 #'
 #' Build IMAGE Animal Production, Feed Consumption, and Input-Output Coefficients for each GCAM region and GCAM commodity in every year.
@@ -13,7 +15,7 @@
 #' Second, Feed Consumption is built at the country-level from IMAGE country-level input-output coefficients and animal production information and aggregated to region.
 #' Finally, Feed Input-Output coefficients are calculated from region-level Feed Consumption and Animal Production.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author ACS April 2017
 module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_batch_bio_trade_xml
 #'
 #' Construct XML data structure for \code{bio_trade.xml}.

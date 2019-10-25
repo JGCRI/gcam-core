@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L2321.cement
 #'
 #' Compute a variety of final energy keyword, sector, share weight, and technology information for cement-related GCAM inputs.
@@ -18,7 +20,7 @@
 #' original data system was \code{L2321.cement.R} (energy level2).
 #' @details The chunk provides final energy keyword, supplysector/subsector information, supplysector/subsector interpolation information, global technology share weight, global technology efficiency, global technology coefficients, global technology cost, price elasticity, stub technology information, stub technology interpolation information, stub technology calibrated inputs, and etc for cement sector.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows distinct filter if_else group_by lag left_join mutate pull select
 #' @importFrom tidyr gather spread
 #' @author LF October 2017
 module_energy_L2321.cement <- function(command, ...) {

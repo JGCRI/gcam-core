@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L201.en_nonco2
 #'
 #' Generate non-CO2 emissions: pollutants, GHGs, non-CO2, BC/OCs, and reduction data.
@@ -11,7 +13,7 @@
 #' @details Set up all of the inputs needed for the energy system non-CO2 emissions in GCAM.
 #' This includes historical emissions, drivers (input or output), and pollution controls.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter full_join left_join mutate pull select
 #' @importFrom tidyr gather spread
 #' @author BBL July 2017
 module_emissions_L201.en_nonco2 <- function(command, ...) {

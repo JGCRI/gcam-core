@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_data_UCD_transportation
 #'
 #' Dedicated data chunk to read UCD transportation database
@@ -14,7 +16,6 @@
 #' that we'd rather not suppress universally.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
-#' @import dplyr
 #' @importFrom tidyr gather spread
 #' @author BBL June 2017
 module_data_UCD_transportation <- function(command, ...) {

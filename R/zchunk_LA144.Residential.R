@@ -1,4 +1,6 @@
-#' module_gcamusa_LA144.Residential
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LA144.Residential
 #'
 #' Calculate residential floorspace by state and residential energy consumption by state/fuel/end use.
 #'
@@ -10,7 +12,7 @@
 #' original data system was \code{LA144.Residential.R} (gcam-usa level1).
 #' @details Calculate residential floorspace by state and residential energy consumption by state/fuel/end use.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
 module_gcamusa_LA144.Residential <- function(command, ...) {
@@ -148,7 +150,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
         if("HOUSEHOLDS" %in% names(df)) {
           flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
           df %>%
-            select_("year", "subregion9", "HOUSEHOLDS", flsp_var) %>%
+            dplyr::select_("year", "subregion9", "HOUSEHOLDS", flsp_var) %>%
             tidyr::gather_("variable", "value", flsp_var) %>%
             group_by(year, subregion9, variable) %>%
             summarise(value = sum(value * HOUSEHOLDS * CONV_MILFT2_M2)) %>%
@@ -158,7 +160,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
           if("NWEIGHT" %in% names(df)) {
             flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
             df %>%
-              select_("year", "subregion9", "NWEIGHT", flsp_var) %>%
+              dplyr::select_("year", "subregion9", "NWEIGHT", flsp_var) %>%
               tidyr::gather_("variable", "value", flsp_var) %>%
               group_by(year, subregion9, variable) %>%
               summarise(value = sum(value * NWEIGHT * CONV_FT2_M2)) %>%
@@ -180,7 +182,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
         if("subregion13" %in% names(df)) {
           flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
           df %>%
-            select_("year", "subregion13", "NWEIGHT", flsp_var) %>%
+            dplyr::select_("year", "subregion13", "NWEIGHT", flsp_var) %>%
             tidyr::gather_("variable", "value", flsp_var) %>%
             group_by(year, subregion13, variable) %>%
             summarise(value = sum(value * NWEIGHT * CONV_FT2_M2)) %>%
@@ -206,7 +208,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
       select(subregion13, subregion9, conv_9_13)
 
     # Find years that don't have subregion13
-    conv_years <- setdiff(unique(L144.flsp_bm2_sR9$year), unique(L144.flsp_bm2_sR13$year))
+    conv_years <- dplyr::setdiff(unique(L144.flsp_bm2_sR9$year), unique(L144.flsp_bm2_sR13$year))
     allRECS_year <- union(unique(L144.flsp_bm2_sR9$year), unique(L144.flsp_bm2_sR13$year))
 
     # Multiplying the per-capita floorspace ratios from subregion9 to subregion13, to expand from 9 to 13
@@ -324,12 +326,12 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
     L144.in_EJ_sR9_res_F_U_Y <- L144.in_EJ_sR9_res_F_U_Y %>%
       bind_rows(L144.RECS_1979) %>%
       group_by(subregion9, fuel, service) %>%
-      mutate(conv = value / lead(value, n = 1L, order_by = year)) %>%
+      mutate(conv = value / dplyr::lead(value, n = 1L, order_by = year)) %>%
       ungroup() %>%
       replace_na(list(conv = 1))
 
     # Find years for converting
-    conv_years <- setdiff(unique(L144.in_EJ_sR9_res_F_U_Y$year), unique(L144.in_EJ_sR13_res_F_U_Y$year))
+    conv_years <- dplyr::setdiff(unique(L144.in_EJ_sR9_res_F_U_Y$year), unique(L144.in_EJ_sR13_res_F_U_Y$year))
     allyears <- union(unique(L144.in_EJ_sR9_res_F_U_Y$year), unique(L144.in_EJ_sR13_res_F_U_Y$year))
 
     # It would be possible to do this without hardcoding years, but not sure if worth time and complicated code given that RECS years are set

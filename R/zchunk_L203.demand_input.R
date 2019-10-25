@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L203.demand_input
 #'
 #' Builds agriculture demand inputs for the core and each SSP scenario.
@@ -12,7 +14,7 @@
 #' food and non-food demand in calibration years, forest product demand, net exports and caloric contents in calibration and future years,
 #' income elasticities for future years in core and SSP scenarios, as well as price elasticities.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter if_else group_by lag left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author RC July 2017
 module_aglu_L203.demand_input <- function(command, ...) {

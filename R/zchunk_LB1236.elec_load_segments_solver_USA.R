@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_LB1236.elec_load_segments_solver_USA
 #'
 #' Calculate the fraction of electricity generation by fuel by horizontal load segment such that the total supply

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU
 #'
 #' Calculates pasture and forests production, yields and managed land cover by GCAM region / GLU / year.
@@ -13,7 +15,7 @@
 #' Managed land area for both are adjusted below the threshold percentage of total pasture and forest land,
 #' and yields are increased so that production stays unchanged for those regions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by left_join mutate right_join select summarise
 #' @importFrom tidyr gather spread
 #' @author RC August 2017
 module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {

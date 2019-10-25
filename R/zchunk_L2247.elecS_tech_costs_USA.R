@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2247.elecS_tech_costs_USA
 #'
 #' Generates add-ons to harmonize reference case generation technology costs for multiple load segments with AEO-2016.

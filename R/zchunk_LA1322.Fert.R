@@ -1,4 +1,6 @@
-#' module_gcamusa_LA1322.Fert
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LA1322.Fert
 #'
 #' Calculate input-output intensity coefficients and input energy for state fertilizer production
 #'
@@ -10,7 +12,7 @@
 #' original data system was \code{LA1322.Fert.R} (gcam-usa level1).
 #' @details Calculate input-output intensity coefficients and input energy for state fertilizer production from state shares of national values.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr distinct filter left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author KD September 2017
 module_gcamusa_LA1322.Fert <- function(command, ...) {

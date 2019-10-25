@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L2522.ag_MACC_IRR_MGMT
 #'
 #' Add new technology data from A_MACC_TechChange to the animal and agricultural marginal abatement cost "MAC" curves.
@@ -10,7 +12,7 @@
 #' original data system was \code{L2522.ag_MACC_IRR_MGMT.R} (emissions level2).
 #' @details Add new technology data from A_MACC_TechChange to the animal and agricultural marginal abatement cost "MAC" curves.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr distinct filter select
 #' @importFrom tidyr gather spread
 #' @author KD Aug 2017
 module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {

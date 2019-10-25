@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L211.ag_nonco2
 #'
 #' Processes agriculture, agricultural waste burning, and animal emissions, adding regions and sectors/technologies.
@@ -16,7 +18,7 @@
 #' Writes out non-GHG maximum emissions coefficient reduction and steepness,
 #' a shape parameter that reduces emissions coefficient as function of per-capita GDP, by region and ag sector/technology.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RH July 2017
 module_emissions_L211.ag_nonco2 <- function(command, ...) {

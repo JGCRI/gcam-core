@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L161.nonghg_en_ssp_R_S_T_Y
 #'
 #' Produce future non-GHG emissions factors by SSP scenario.
@@ -11,7 +13,7 @@
 #' @details Scales future GAINS, Greenhouse Gas - Air Pollution Interactions and Synergies model, non-GHG emissions factors to L111/L114 base year emissions factors,
 #' then applies future emissions factors to some GCAM years based on SSP-specific rules.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter if_else group_by lag left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author RLH July 2017
 module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {

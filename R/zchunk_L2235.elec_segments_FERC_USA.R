@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2235.elec_segments_FERC_USA
 #'
 #' Creates the vertical segment supplysectors in the grid regions and also the domestic supply and

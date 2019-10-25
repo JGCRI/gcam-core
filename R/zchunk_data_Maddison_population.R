@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_data_Maddison_population
 #'
 #' Dedicated data chunk to read \code{Maddison_population.csv} file.
@@ -12,7 +14,7 @@
 #' that we'd rather not suppress universally. We also need to skip a goofy initial couple of lines.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
-#' @import dplyr
+#' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL
 module_data_Maddison_population <- function(command, ...) {

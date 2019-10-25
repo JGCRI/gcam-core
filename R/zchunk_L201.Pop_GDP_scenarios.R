@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socioeconomics_L201.Pop_GDP_scenarios
 #'
 #' Labor productivity and population by scenario and region.
@@ -11,7 +13,7 @@
 #' @details Produces default interest rate by region, historical and future population by region and SSP scenario,
 #' and uses per-capita GDP to calculate labor productivity by region and scenario.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by lag mutate select transmute
 #' @importFrom tidyr gather spread
 #' @author HM & RH June 2017
 module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {

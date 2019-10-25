@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y
 #'
 #' Calculate the net exports of primary agricultural goods and animal products by GCAM region / commodity / year.
@@ -11,7 +13,7 @@
 #' @details This chunk calculate the net exports of primary agricultural goods and animal products by GCAM region / commodity / year.
 #' Regional gross exports are adjusted so that global net exports are zero of each commodity / year.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select semi_join summarise
 #' @importFrom tidyr gather spread
 #' @author RC June 2017
 module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y <- function(command, ...) {
@@ -56,7 +58,7 @@ module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y <- function(command, ...) {
       left_join(FAO_items_map, by = "item") %>%                                    # Map in GCAM commodities, creates NAs
       filter(!is.na(GCAM_commodity)) %>%                                           # Remove commodities not included in GCAM
       group_by(GCAM_region_ID, GCAM_commodity, element, year) %>%                  # Group by region, commodity, year
-      summarize(value = sum(value)) %>%                                            # Aggregate exports and imports
+      summarise(value = sum(value)) %>%                                            # Aggregate exports and imports
       ungroup() %>%
       mutate(element = sub("ag_", "", element),                                    # Change the element (export and import) name for wide format
              element = sub("an_", "", element)) %>%

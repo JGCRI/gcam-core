@@ -1,4 +1,6 @@
-#' module_gcamusa_LA154.Transport
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LA154.Transport
 #'
 #' Downscale transportation energy consumption and nonmotor data to the state level, generating three ouput tables.
 #'
@@ -11,7 +13,7 @@
 #' @details Transportation energy data was downscaled in proportion to EIA state-level transportation energy data
 #' @details Transportation nonmotor data was downscaled in proportion to state population
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author AJS June 2017
 module_gcamusa_LA154.Transport <- function(command, ...) {

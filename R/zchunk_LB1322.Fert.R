@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LB1322.Fert
 #'
 #' Compute fertilizer production and energy inputs by technology.
@@ -14,7 +16,7 @@
 #' to the regional level. Also, a final cost table was calculated using USA market fertilizer price data and H2A characteristics
 #' of hydrogen production technologies.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter group_by left_join mutate pull select summarise
 #' @importFrom tidyr gather spread
 #' @author AJS July 2017
 module_energy_LB1322.Fert <- function(command, ...) {

@@ -1,4 +1,6 @@
-#' module_gcamusa_L270.limits_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L270.limits_USA
 #'
 #' Add the 50 states to the USA market in each of the L270 limits polices.  In
 #' particular to limit the fraction of liquid feedstocks and inputs to electricity

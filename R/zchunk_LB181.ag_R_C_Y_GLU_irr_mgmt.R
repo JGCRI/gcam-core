@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt
 #'
 #' Calculates the economic yields, cropland cover and production by GCAM region / commodity / year / GLU / irrigation / mgmt level.
@@ -13,7 +15,7 @@
 #' and the land share by high and low yield management is 50 percent by each. But this chunk is also a placeholder for a generic method of calculating specific
 #' yield mutipliers and land shares for each region / commodity / GLU / irrigation level.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author RC May 2017
 module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {

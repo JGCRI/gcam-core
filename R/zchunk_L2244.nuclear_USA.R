@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2244.nuclear_USA
 #'
 #' Generates an add-on file to update nuclear assumptions in GCAM-USA.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA102.en_emiss_CDIAC
 #'
 #' Calculates regional TPES as well as regional and global emissions coefficients by fuel
@@ -13,7 +15,7 @@
 #' extracts non-energy emissions and uses the remainder to calculate regional (L102.Ccoef_kgCGJ_R_F_Yh) and
 #' global (L102.Ccoef_kgCGJ_F_Yh) emissions coefficients
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter if_else group_by mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author CWR July 2017
 
