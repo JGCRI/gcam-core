@@ -411,15 +411,8 @@ double LandLeaf::getLandConstraintCost( const string& aRegionName, const int aPe
             landPrice *= -1.0;
         }
         
-        // Price is in 1975$/m2, but profit is in billion 1975$/m2
-        landPrice *= 1e9;
-        
-        if ( aPeriod > 3 ) {
-            // KVC_TEMP: Print some debugging stuff
-            cout << "Current subsidy is " << landPrice;
-            cout << ". Supply is " << marketplace->getSupply(mLandConstraintPolicy, aRegionName, aPeriod );
-            cout << ". Demand is " << marketplace->getDemand(mLandConstraintPolicy, aRegionName, aPeriod ) << endl;
-        }
+        // Adjust price to get to a reasonable solved value
+        landPrice *= 1e3;
         
         return landPrice;
     }
