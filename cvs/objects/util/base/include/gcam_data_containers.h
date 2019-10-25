@@ -142,6 +142,7 @@
 #include "sectors/include/pass_through_sector.h"
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
+#include "sectors/include/nesting_subsector.h"
 #include "sectors/include/subsector_add_techcosts.h"
 #include "sectors/include/supply_sector.h"
 #include "sectors/include/tran_subsector.h"

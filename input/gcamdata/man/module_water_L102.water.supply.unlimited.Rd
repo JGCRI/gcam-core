@@ -14,15 +14,16 @@ module_water_L102.water.supply.unlimited(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L102.unlimited_water_price_R_W_Y_75USDm3}. The corresponding file in the
+the generated outputs: \code{L102.unlimited_mapped_water_price_B_W_Y_75USDm3},
+\code{L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3}. The corresponding file in the
 original data system was \code{L102.water.supply.unlimited.R} (water level1).
 }
 \description{
-Summarize the water price values by water type and GCAM region.
+Build out unlimited water prices using defaults in Constants.R.
 }
 \details{
-We generate all the possible combinations between the 32 GCAM regions, 4 water types, and all the defined years.
+Generates all combinations of basin / region and water_type.
 }
 \author{
-MH May 2017
+ST Oct 2018
 }

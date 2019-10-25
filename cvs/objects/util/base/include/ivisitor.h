@@ -54,6 +54,7 @@ class NationalAccount;
 class Demographic;
 class Sector;
 class Subsector;
+class NestingSubsector;
 class BuildingDemandSubSector;
 class BaseTechnology;
 class Consumer;
@@ -200,6 +201,9 @@ public:
     
     virtual void startVisitSubsector( const Subsector* aSubsector, const int aPeriod ) = 0;
     virtual void endVisitSubsector( const Subsector* aSubsector, const int aPeriod ) = 0;
+    
+    virtual void startVisitNestingSubsector( const NestingSubsector* aSubsector, const int aPeriod ) = 0;
+    virtual void endVisitNestingSubsector( const NestingSubsector* aSubsector, const int aPeriod ) = 0;
     
     virtual void startVisitBuildingDemandSubsector( const BuildingDemandSubSector* aSubsector,
                                                     const int aPeriod ) = 0;
