@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_batch_regional_biomass_USA_xml
 #'
 #' Construct XML data structure for \code{regional_biomass_USA.xml}.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L241.fgas
 #'
 #' Format fgases emission inputs for GCAM and estimates future emission factors for f gases for the SSP scenarios.
@@ -10,7 +12,7 @@
 #' original data system was \code{L241.fgas.R} (emissions level2).
 #' @details Formats hfc and pfc gas emissions for input. Calculates future emission factors for hfc gases based on 2010 region emissions and USA emission factors and emission factors from Guus Velders (http://www.sciencedirect.com/science/article/pii/S135223101530488X) for the  SSP scenarios.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter if_else group_by left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author KD July 2017
 module_emissions_L241.fgas <- function(command, ...) {

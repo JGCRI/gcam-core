@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_LA2233.electricity_water_USA
 #'
 #' Weighted water coefficient for reference scenario and load segment classification

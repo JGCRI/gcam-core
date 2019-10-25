@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_LB1239.elec_state_fractions_USA
 #'
 #' Map electricity generation by fuel | grid region | horizontal segment to generation by fuel | state | segment.

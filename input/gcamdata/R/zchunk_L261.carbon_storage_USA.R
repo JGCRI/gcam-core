@@ -1,4 +1,6 @@
-#' module_gcamusa_L261.carbon_storage_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L261.carbon_storage_USA
 #'
 #' Generates GCAM-USA input files of carbon storage resource supply curves, shareweights, technology coefficients and costs, and other carbon storage information.
 #'
@@ -12,7 +14,7 @@
 #' @details This chunk generates input files of carbon storage resource supply curves by the US grid regions, and input files of logit, shareweights, and
 #' technology information of carbon storage by the US states.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange filter mutate one_of select semi_join
 #' @importFrom tidyr gather spread
 #' @author RC Nov 2017
 module_gcamusa_L261.carbon_storage_USA <- function(command, ...) {

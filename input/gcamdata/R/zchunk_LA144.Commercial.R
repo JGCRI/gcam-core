@@ -1,4 +1,6 @@
-#' module_gcamusa_LA144.Commercial
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LA144.Commercial
 #'
 #' Calculates commercial floorspace by state and energy consumption by state/fuel/end use
 #'
@@ -10,7 +12,7 @@
 #' original data system was \code{LA144.Commercial.R} (gcam-usa level1).
 #' @details Calculates commercial floorspace by state and energy consumption by state/fuel/end use
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select summarise transmute
 #' @importFrom tidyr gather spread
 #' @author RLH September 2017
 module_gcamusa_LA144.Commercial <- function(command, ...) {
@@ -253,7 +255,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
           df %>%
             select(cols_to_keep, ADJWT, subregion9, year) %>%
             # All cols_to_keep have BTU in name
-            gather(variable, value, contains("BTU")) %>%
+            gather(variable, value, dplyr::contains("BTU")) %>%
             group_by(subregion9, year, variable) %>%
             # Sum by census division, multiplying by sampling weights
             summarise(value = sum(value * ADJWT * CONV_KBTU_EJ)) %>%

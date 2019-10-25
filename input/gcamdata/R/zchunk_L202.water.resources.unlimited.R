@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L202.water.resources.unlimited
 #'
 #' Create unlimited resource markets for water types, and read in fixed prices for water types.
@@ -11,7 +13,7 @@
 #' @details Create unlimited resource markets (i.e., 32 GCAM regions) for water types (i.e., water consumption, withdrawals, biophysical water consumption and seawater),
 #' and read in fixed prices for water types.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange filter left_join mutate select
 #' @importFrom tidyr gather spread
 #' @author YL July 2017
 module_water_L202.water.resources.unlimited <- function(command, ...) {

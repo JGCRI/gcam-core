@@ -1,4 +1,6 @@
-#' module_gcamusa_L232.industry_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L232.industry_USA
 #'
 #' Prepare level 2 industry sector files for USA.
 #'
@@ -16,7 +18,7 @@
 #' The corresponding file in the original data system was \code{L232.industry_USA.R} (gcam-usa level2).
 #' @details Prepare level 2 industry sector files for USA.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter if_else group_by left_join mutate select semi_join summarise
 #' @importFrom tidyr gather spread
 #' @author ST October 2017
 module_gcamusa_L232.industry_USA <- function(command, ...) {

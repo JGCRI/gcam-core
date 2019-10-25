@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2252.land_input_5_irr_mgmt
 #'
 #' Produce the inputs for the lowest level of the land nest, including disaggregated crop technologies:
@@ -29,7 +31,7 @@
 #' \item{"L2252.LN5_NodeGhostShare: Ghost share of the nest 4 nodes (irrigated versus rainfed)."}
 #' }
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter full_join if_else group_by left_join mutate select semi_join summarize
 #' @importFrom tidyr gather spread
 #' @author ACS September 2017
 module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
@@ -90,7 +92,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       crop2 <- landshare <- lev <- . <- ghost.unnormalized.share <- HarvestIndex.x <- HarvestIndex.y <-
       Root_Shoot.x <- Root_Shoot.y <- WaterContent.x <- WaterContent.y <- yield <- HarvestIndex <-
       WaterContent <- Root_Shoot <- total_land <- gcam5_hist.veg.carbon.density <- new_hist.veg.carbon.density <-
-      gcam5_veg.carbon.density <- new_veg.carbon.density <- dif_hist.veg <- dif_veg<- NULL
+      gcam5_veg.carbon.density <- new_veg.carbon.density <- dif_hist.veg <- dif_veg<- id <- NULL
 
     # 1. Process inputs
 

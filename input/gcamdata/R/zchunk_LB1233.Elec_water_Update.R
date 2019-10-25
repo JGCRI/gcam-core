@@ -69,12 +69,13 @@ module_gcamusa_LB1233.Elec_water_Update <- function(command, ...) {
                                                     dplyr::select(technology, plant_type) %>%
                                                     unique),
                                                  by = c("technology")) %>%
-                        dplyr::select(plant_type, cooling_system, fuel, water_withdrawals, water_consumption)),
-                        by = c("plant_type", "fuel", "cooling_system")) %>% unique %>%
+                        dplyr::select(plant_type, cooling_system, fuel, water_withdrawals, water_consumption) %>%
+                        distinct()),
+                        by = c("plant_type", "fuel", "cooling_system")) %>%
       mutate(withdraw = water_withdrawals*value*CONV_M3_BM3 / CONV_MWH_EJ,
-             withdraw = case_when(is.na(withdraw)~0,TRUE~withdraw),
+             withdraw = if_else(is.na(withdraw), 0, withdraw),
              cons = water_consumption*value*CONV_M3_BM3 / CONV_MWH_EJ,
-             cons = case_when(is.na(cons)~0,TRUE~cons)) %>%
+             cons = if_else(is.na(cons), 0, cons)) %>%
       group_by(year, State, fuel, plant_type, technology) %>%
       summarise(withdrawSum = sum(withdraw),
                 consSum = sum(cons)) ->

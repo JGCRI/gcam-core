@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_batch_socioeconomics_udpate_USA_xml
 #'
 #' Construct XML data structure for \code{socioeconomics_update_USA.xml}.

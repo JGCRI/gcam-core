@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR
 #'
 #' Produce irrigated and rainfed production shares, and agricultural waste burning emissions by irrigated & rainfed production shares.
@@ -13,7 +15,7 @@
 #' Third, we divide the irrigated and rainfed production shares over the historical years to get the share of irrigated and rainfed production within region, GLU, and crop.
 #' Finally, we multiply non-CO2 emissions within region, GLU, and crop by irrigated and rainfed production shares.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by mutate select summarise
 #' @importFrom tidyr gather spread
 #' @importFrom data.table data.table
 #' @author CDL April 2017

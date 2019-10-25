@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socioeconomics_L100.Population_downscale_ctry
 #'
 #'  Clean and interpolate both Maddison historical population data (1700-2010) and SSP population scenarios.
@@ -10,7 +12,7 @@
 #' original data system was \code{L100.Population_downscale_ctry.R} (socioeconomics level1).
 #' @details (1) Cleans Maddison historical population data and interpolates to country and year (1700-2010). (2) Cleans SSP population scenarios for smooth join with final base year population.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter full_join if_else group_by left_join mutate select summarize
 #' @importFrom tidyr gather spread
 #' @author STW May 2017
 module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
@@ -109,7 +111,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
     for( i in rev(maddison_hist_years)[-1]) {
       maddison_hist_ratio %>%
         ungroup() %>%
-        mutate(pop2 = if_else(is.na(pop), (lead(pop, n = 1L, order_by = iso)), 0)) %>%
+        mutate(pop2 = if_else(is.na(pop), (dplyr::lead(pop, n = 1L, order_by = iso)), 0)) %>%
         group_by(year) %>%
         mutate(pop = if_else(year == i, pmax(pop, pop2/sum(pop2) * pop_allocate, na.rm = TRUE), pop)) ->
         maddison_hist_ratio
@@ -173,6 +175,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
       gather_years(value_col = "pop") %>%  # Long format
       mutate(pop = as.numeric(pop)) %>%  # Clean year variable
       complete(nesting(scenario, iso), year = c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
+      filter(year %in% c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
       group_by(scenario, iso) %>%
       mutate(pop = approx_fun(year, pop),
              ratio_iso_ssp = pop / pop[year == socioeconomics.FINAL_HIST_YEAR]) %>%  # Calculate population ratios to final historical year (2010), no units

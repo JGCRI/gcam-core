@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2072.ag_water_irr_mgmt
 #'
 #' Calculate agriculture water Input-Output coefficients by region / crop / year / GLU / technology.
@@ -14,7 +16,7 @@
 #' @details This chunk calculates the Input-Output coefficients of irrigation water withdrawals and consumption, and biophysical water consumption of irrigated and rainfed crops,
 #' for each primary and dedicated bioenergy crop by region / year / GLU / management level.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter full_join group_by left_join mutate right_join select semi_join summarise
 #' @importFrom tidyr gather spread
 #' @author RC July 2017
 module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {

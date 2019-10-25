@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB121.Carbon_LT
 #'
 #' Compute natural vegetation, managed land, and pasture carbon density, mature age, and yield.
@@ -11,7 +13,7 @@
 #' @details Combine Houghton et al. (1999 and similar) carbon density, mature age, and pasture yield data with
 #' SAGE data to produce tables giving, for each GCAM region and land use type, data on these variables.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select summarise
 #' @importFrom tidyr gather spread
 #' @importFrom stats weighted.mean
 #' @author BBL April 2017

@@ -1,4 +1,6 @@
-#' module_gcamusa_batch_HDDCDD_A2_GFDL_USA_xml
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcamusa_batch_HDDCDD_A2_GFDL_USA.xml
 #'
 #' Construct XML data structure for \code{HDDCDD_A2_GFDL_USA.xml}.
 #'

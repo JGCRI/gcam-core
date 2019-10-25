@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2242.elec_hydro_USA
 #'
 #' Update hydro-electricity fixed output to match historical data for 2015 and AEO-2018 for the future.

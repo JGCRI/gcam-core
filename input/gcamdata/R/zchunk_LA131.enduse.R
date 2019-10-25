@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA131.enduse
 #'
 #' Generate the following two tables:
@@ -14,7 +16,7 @@
 #' original data system was \code{LA131.enduse.R} (energy level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter group_by mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author AJS May 2017
 module_energy_LA131.enduse <- function(command, ...) {

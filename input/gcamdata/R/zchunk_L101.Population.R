@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socioeconomics_L101.Population
 #'
 #' Compute population for historical and future years, by region and SSP.
@@ -11,7 +13,7 @@
 #' @details Interpolates GCAM population data to all historical and future years, aggregating by
 #' country and/or region and/or SPP as necessary.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr arrange bind_rows filter group_by mutate select summarise
 #' @importFrom tidyr gather spread
 #' @author BBL April 2017
 module_socioeconomics_L101.Population <- function(command, ...) {

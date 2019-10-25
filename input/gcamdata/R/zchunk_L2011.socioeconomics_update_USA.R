@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2011.socioeconomics_update_USA
 #'
 #' Population and labor productivity updates for GCAM-USA.  2015 population & labor productivity updated to match
@@ -284,7 +286,7 @@ module_gcamusa_L2011.socioeconomics_update_USA <- function(command, ...) {
                   filter(year == gcamusa.AEO_SE_YEAR) %>%
                   select(state, year, laborproductivity)) %>%
       group_by(state) %>%
-      complete(nesting(region), year = c(MODEL_FUTURE_YEARS)) %>%
+      complete(nesting(state), year = c(MODEL_FUTURE_YEARS)) %>%
       mutate(laborproductivity = approx_fun(year, laborproductivity)) %>%
       ungroup() %>%
       filter(year > gcamusa.AEO_SE_YEAR)-> L2011.LaborProductivity_USA_EOC

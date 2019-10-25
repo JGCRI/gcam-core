@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2234.elec_segments_USA
 #'
 #' Generates GCAM-USA model inputs for multiple load segments electricity sector by state.
