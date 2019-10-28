@@ -295,21 +295,21 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
              element.codes = `element codes`,
              item.codes = `item codes`) %>%
       gather_years() %>%
-      add_comments("Downscale countries") %>%
       add_legacy_name("L100.FAO_CL_kha") %>%
       na.omit() %>%
-      mutate(value = as.numeric(value)) ->
+      mutate(value = as.numeric(value)) %>%
+      add_comments("Downscale countries") ->
       L100.FAO_CL_kha
     FAO_fallowland_kha_RESOURCESTAT %>%
       left_join(distinct(AGLU_ctry, FAO_country, .keep_all = TRUE), by = c("countries" = "FAO_country")) %>%
       rename(country.codes = `country codes`,
              element.codes = `element codes`,
              item.codes = `item codes`) %>%
-      gather_years() %>%
-      add_comments("Downscale countries") %>%
+      gather_years()  %>%
       add_legacy_name("L100.FAO_fallowland_kha") %>%
       na.omit() %>%
-      mutate(value = as.numeric(value)) ->
+      mutate(value = as.numeric(value)) %>%
+      add_comments("Downscale countries") ->
       L100.FAO_fallowland_kha
     FAO_harv_CL_kha_RESOURCESTAT %>%
       left_join(distinct(AGLU_ctry, FAO_country, .keep_all = TRUE), by = c("countries" = "FAO_country")) %>%
@@ -317,10 +317,10 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
              element.codes = `element codes`,
              item.codes = `item codes`) %>%
       gather_years() %>%
-      add_comments("Downscale countries") %>%
       add_legacy_name("L100.FAO_harv_CL_kha") %>%
       na.omit() %>%
-      mutate(value = as.numeric(value)) ->
+      mutate(value = as.numeric(value)) %>%
+      add_comments("Downscale countries") ->
       L100.FAO_harv_CL_kha
 
     # Add description, units, process (done above), and precursor information
