@@ -67,6 +67,7 @@ using namespace xercesc;
 BisectAll::BisectAll( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ):SolverComponent( marketplaceIn, worldIn, calcCounterIn ),
 mMaxIterations( 30 ),
 mDefaultBracketInterval( 0.4 ),
+mBracketTolerance( 1.0e-6 ),
 mMaxBracketIterations( 40 )
 {
 }
@@ -110,6 +111,9 @@ bool BisectAll::XMLParse( const DOMNode* aNode ) {
         }
         else if( nodeName == "bracket-interval" ) {
             mDefaultBracketInterval = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "bracket-tolerance" ) {
+            mBracketTolerance = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "max-bracket-iterations" ) {
             mMaxBracketIterations = XMLHelper<unsigned int>::getValue( curr );
@@ -279,17 +283,16 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
 
 /*!
  * \brief Check if all of the solvable solution infos have either left and right brackets
- *        separated by less than the solution tolerance or are solved.
+ *        separated by less than the bracket tolerance or are solved.
  * \details Since we do not attempt to reset to resize brackets this will provide an early
  *          exit condition.  The left and right brackets be close enough that means
  *          bisection does not have a chance to make progress on that solution info.
  * \return True if the current bracket interval or relative excess demand for all solution
- *         infos are equal with in tolerance otherwise false.
+ *         infos are equal within tolerance, otherwise false.
  */
 bool BisectAll::areAllBracketsEqual( SolutionInfoSet& aSolutionSet ) const {
 	for ( unsigned int i = 0; i < aSolutionSet.getNumSolvable(); ++i ) {
-        // TODO: need a get solution tolerance instead of hard coding tolerance.
-        if( !util::isEqual( aSolutionSet.getSolvable( i ).getCurrentBracketInterval(), 0.0, 0.001 )
+        if( !util::isEqual( aSolutionSet.getSolvable( i ).getCurrentBracketInterval(), 0.0, mBracketTolerance )
 			&& !aSolutionSet.getSolvable( i ).isWithinTolerance() ) {
 			return false;
 		}

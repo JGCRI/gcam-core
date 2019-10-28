@@ -63,7 +63,7 @@ ResourceActivity::~ResourceActivity() {
 }
 
 void ResourceActivity::calc( const int aPeriod ) {
-    const bool calibrationPeriod = aPeriod > 0 && aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod();
+    const bool calibrationPeriod = aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod();
     static const bool calibrationActive = Configuration::getInstance()->getBool( "CalibrationActive" );
     if( calibrationActive && calibrationPeriod ) {
         CalibrateResourceVisitor calibrator( mRegionName );

@@ -1,4 +1,4 @@
-#' module_water_L210.water.demand.primary
+#' module_water_L210.water_demand_primary
 #'
 #' Generate (water demand) technology coefficients for each GCAM region for base years and future years.
 #'
@@ -7,14 +7,14 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L210.TechCoef}. The corresponding file in the
-#' original data system was \code{L210.water.demand.primary.R} (water level2).
+#' original data system was \code{L210.water_demand_primary.R} (water level2).
 #' @details This chunk generate (water demand) technology coefficients for each GCAM region for base years and future years,
 #' with information of supplysector, subsector, technology, minicam.energy.input and market.name.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YL May 2017
-module_water_L210.water.demand.primary <- function(command, ...) {
+module_water_L210.water_demand_primary <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/A03.sector",

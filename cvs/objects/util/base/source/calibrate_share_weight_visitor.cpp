@@ -46,6 +46,7 @@
 #include "technologies/include/technology_container.h"
 #include "technologies/include/itechnology.h"
 #include "sectors/include/subsector.h"
+#include "sectors/include/nesting_subsector.h"
 #include "sectors/include/sector.h"
 #include "containers/include/gdp.h"
 #include "util/logger/include/ilogger.h"
@@ -65,6 +66,197 @@ CalibrateShareWeightVisitor::CalibrateShareWeightVisitor( const string& aRegionN
 {
 }
 
+/*!
+ * \brief A generic method to calculate share-weights based off of calibrated outputs
+ * \details This method will make share-weights relative to the child container that has
+ *          has the largest share, which will be given a share-weight of 1.
+ *
+ *          Note that because we want to generalize this routine to avoid code duplication
+ *          but we have to deal with ContainerType that do not share a common interface we
+ *          will rely on the following adaptor methods being defined to supply the behavior
+ *          appropriate for the derived types that this tempalted function gets instatiated
+ *          with:
+ *            - getChildren: to get a vector of child containers to calculate share-weights for
+ *            - isAvailable: determine if this child is "available" (i.e. not fixed)
+ *            - getCalValue: get calibrated output of child to determine share
+ *            - getCost: get cost of child
+ *            - getFuelPrefElasticity: get fuel preference elasticity of child
+ *            - getDiscreteChoice: get the discrete choice function to use
+ *            - setShareWeight: sets the calibrated share-weight into the child
+ *
+ * \param aContainer The container who's children need to have their share-weights calibrated.
+ * \param aPeriod The current model period.
+ */
+template<typename ContainerType>
+void CalibrateShareWeightVisitor::calibrateShareWeights( const ContainerType* aContainer, const int aPeriod ) const
+{
+    // Find out if we need to do calibration, make sure we do not have a mix of calibrated/non-calibrated
+    // children, and figure out the largest child to make the other children anchored by it.
+    int anchorIndex = -1;
+    bool hasCalValues = false;
+    double maxCalValue = 0;
+    int numCalChildren = 0;
+    double totalCalValue = 0;
+    auto childrenVec = getChildren( aContainer, aPeriod );
+    for( int childIndex = 0; childIndex < childrenVec.size(); ++childIndex ) {
+        double currCalValue = getCalValue( childrenVec[ childIndex ], aPeriod );
+        bool isAvail = isAvailable( childrenVec[ childIndex ], aPeriod );
+        
+        // check if the child is calibrated
+        if( hasCalValues && currCalValue <= 0 && isAvail ) {
+            // warn that we mixed calibrated and variable children
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            calibrationLog.setLevel( ILogger::WARNING );
+            mainLog << "Mixed calibrated and variable children or read a zero calibration value in Region: "
+                    << mCurrentRegionName << " in sector: " << mCurrentSectorName
+                    << " for container: " << childrenVec[ childIndex ]->getName() << endl;
+            calibrationLog << "Mixed calibrated and variable children or read a zero calibration value in Region: "
+                    << mCurrentRegionName << " in sector: " << mCurrentSectorName
+                    << " for container: " << childrenVec[ childIndex ]->getName() << endl;
+        }
+        else if( currCalValue > 0 ) {
+            hasCalValues = true;
+        }
+        
+        // If the calibrated value > 0 then increase the number of children to calibrate
+        // and include it in the total sum.
+        if( currCalValue > 0 ) {
+            ++numCalChildren;
+            totalCalValue += currCalValue;
+        }
+        
+        // attempt to locate the largest child
+        if( currCalValue > maxCalValue ) {
+            maxCalValue = currCalValue;
+            anchorIndex = childIndex;
+        }
+    }
+    
+    // If we are using the abosolute choice function, then we need to
+    // set the base cost for the model.  We will calculate an appropriate
+    // base cost and let the discrete choice function use it if it needs it.
+    
+    // The base cost is equal to the highest cost child that has a share if we
+    // have calibration data.  Otherwise, it is equal to the highest cost child
+    // that has a valid cost; otherwise, we may be in trouble if a user did not
+    // parse a value.
+    double baseCost = 0;
+    for( int childIndex = 0; childIndex < childrenVec.size(); ++childIndex ) {
+        double currCost = getCost( childrenVec[ childIndex ], aPeriod );
+        if( !boost::math::isnan( currCost )  && currCost > baseCost &&
+           ( ( hasCalValues && getCalValue( childrenVec[ childIndex ], aPeriod ) > 0 ) || !hasCalValues ) )
+        {
+            baseCost = currCost;
+        }
+    }
+    // In the case where there is only one child we will reset the base-price
+    // to one as the sharing should not matter.
+    if( baseCost == 0 && childrenVec.size() == 1 ) {
+        baseCost = 1;
+    }
+    // baseCost may still be zero and if a user did not parse a base cost an error
+    // will be generated.
+    IDiscreteChoice* choiceFn = getDiscreteChoice( aContainer );
+    choiceFn->setBaseValue( baseCost );
+    
+    // do calibration if we have cal values and there are more than one child in this nest
+    if( hasCalValues && numCalChildren > 1 ) {
+        // we should have found a child to have share weights anchored
+        assert( anchorIndex != -1 );
+        const double scaledGdpPerCapita = mGDP->getBestScaledGDPperCap( aPeriod );
+        const double anchorCost = getCost( childrenVec[ anchorIndex ], aPeriod );
+        const double anchorShare = ( getCalValue( childrenVec[ anchorIndex ], aPeriod )
+                                    / totalCalValue ) / pow( scaledGdpPerCapita, getFuelPrefElasticity( childrenVec[ anchorIndex ], aPeriod ) );
+        assert( anchorShare > 0 );
+        
+        for( int childIndex = 0; childIndex < childrenVec.size(); ++childIndex ) {
+            auto currChild = childrenVec[ childIndex ];
+            double currShare = ( getCalValue( currChild, aPeriod ) / totalCalValue )
+                / pow( scaledGdpPerCapita, getFuelPrefElasticity( currChild, aPeriod ) );
+            
+            // only set the share weight for valid children
+            if( currShare > 0 ) {
+                double currCost = getCost( currChild, aPeriod );
+                
+                double currShareWeight = choiceFn->calcShareWeight( currShare, currCost,
+                                                                    anchorShare, anchorCost, aPeriod );
+                setShareWeight( currChild, currShareWeight, aPeriod );
+            }
+        }
+    }
+    
+}
+
+// adaptor methods that allows us to generically define calibrateShareWeights even
+// though Sector/Subsector/Technology do not share a common interface
+std::vector<Subsector*> CalibrateShareWeightVisitor::getChildren( const Sector* aSector, const int aPeriod ) const {
+    return aSector->mSubsectors;
+}
+std::vector<Subsector*> CalibrateShareWeightVisitor::getChildren( const NestingSubsector* aSubsector, const int aPeriod ) const {
+    return aSubsector->mSubsectors;
+}
+std::vector<ITechnology*> CalibrateShareWeightVisitor::getChildren( const Subsector* aSubsector, const int aPeriod ) const {
+    vector<ITechnology*> ret( aSubsector->mTechContainers.size() );
+    size_t index = 0;
+    for( auto techContainer : aSubsector->mTechContainers ) {
+        ret[index++] = techContainer->getNewVintageTechnology( aPeriod );
+    }
+    return ret;
+}
+
+bool CalibrateShareWeightVisitor::isAvailable( const Subsector* aSubsector, const int aPeriod ) const {
+    return !( aSubsector->containsOnlyFixedOutputTechnologies( aPeriod )
+        || aSubsector->mShareWeights[ aPeriod ] == 0 );
+}
+bool CalibrateShareWeightVisitor::isAvailable( const ITechnology* aTechnology, const int aPeriod ) const {
+    return aTechnology->isAvailable( aPeriod );
+}
+
+double CalibrateShareWeightVisitor::getCalValue( const Subsector* aSubsector, const int aPeriod ) const {
+    return aSubsector->getTotalCalOutputs( aPeriod );
+}
+double CalibrateShareWeightVisitor::getCalValue( const ITechnology* aTechnology, const int aPeriod ) const {
+    const bool hasRequired = false;
+    const string requiredName = "";
+    return aTechnology->getCalibrationOutput( hasRequired, requiredName, aPeriod );
+}
+
+double CalibrateShareWeightVisitor::getCost( const Subsector* aSubsector, const int aPeriod ) const {
+    return aSubsector->getPrice( mGDP, aPeriod );
+}
+double CalibrateShareWeightVisitor::getCost( const ITechnology* aTechnology, const int aPeriod ) const {
+    return aTechnology->getCost( aPeriod );
+}
+
+double CalibrateShareWeightVisitor::getFuelPrefElasticity( const Subsector* aSubsector, const int aPeriod ) const {
+    return aSubsector->mFuelPrefElasticity[ aPeriod ];
+}
+double CalibrateShareWeightVisitor::getFuelPrefElasticity( const ITechnology* aTechnology, const int aPeriod ) const {
+    return aTechnology->calcFuelPrefElasticity( aPeriod );
+}
+
+IDiscreteChoice* CalibrateShareWeightVisitor::getDiscreteChoice( const Sector* aSector ) const {
+    return aSector->mDiscreteChoiceModel;
+}
+IDiscreteChoice* CalibrateShareWeightVisitor::getDiscreteChoice( const Subsector* aSubsector ) const {
+    return aSubsector->mDiscreteChoiceModel;
+}
+
+void CalibrateShareWeightVisitor::setShareWeight( Subsector* aSubsector,
+                                                  const double aShareWeight,
+                                                  const int aPeriod ) const
+{
+    aSubsector->mShareWeights[ aPeriod ] = aShareWeight;
+}
+void CalibrateShareWeightVisitor::setShareWeight( ITechnology* aTechnology,
+                                                  const double aShareWeight,
+                                                  const int aPeriod ) const
+{
+    aTechnology->setShareWeight( aShareWeight );
+}
+
 void CalibrateShareWeightVisitor::startVisitSector( const Sector* aSector, const int aPeriod ) {
     mCurrentSectorName = aSector->getName();
 }
@@ -74,102 +266,8 @@ void CalibrateShareWeightVisitor::endVisitSector( const Sector* aSector, const i
     // to all of the subsectors at the same time.  Also we need to do this in end visit sector
     // because the subsector can't be calculated until we have gotten the correct share weights
     // for the technologies.
-
-    // Find out if we need to do calibration, make sure we do not have a mix of calibrated/non-calibrated
-    // subsectors, and figure out the largest subsector to make the other subsectors anchored by it.
-    int anchorIndex = -1;
-    bool hasCalValues = false;
-    double maxCalValue = 0;
-    int numCalSubsectors = 0;
-    double totalCalValue = 0;
-    for( int subsectorIndex = 0; subsectorIndex < aSector->mSubsectors.size(); ++subsectorIndex ) {
-        double currCalValue = aSector->mSubsectors[ subsectorIndex ]->getTotalCalOutputs( aPeriod );
-        bool isAllFixed = aSector->mSubsectors[ subsectorIndex ]->containsOnlyFixedOutputTechnologies( aPeriod )
-            || aSector->mSubsectors[ subsectorIndex ]->mShareWeights[ aPeriod ] == 0;
-
-        // check if the subsector is calibrated
-        if( hasCalValues && currCalValue == 0 && !isAllFixed ) {
-            // warn that we mixed calibrated and variable technologies
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            calibrationLog.setLevel( ILogger::WARNING );
-            mainLog << "Mixed calibrated and variable subsectors or read a zero calibration value in Region: "
-                << mCurrentRegionName << " in sector: " << mCurrentSectorName
-                << " for Subsector: " << aSector->mSubsectors[ subsectorIndex ]->getName() << endl;
-            calibrationLog << "Mixed calibrated and variable subsectors or read a zero calibration value in Region: "
-                << mCurrentRegionName << " in sector: " << mCurrentSectorName
-                << " for Subsector: " << aSector->mSubsectors[ subsectorIndex ]->getName() << endl;
-        }
-        else if( currCalValue > 0 ) {
-            hasCalValues = true;
-        }
-
-        // If the calibrated value > 0 then increase the number of subsectors to calibrate
-        // and include it in the total sum.
-        if( currCalValue > 0 ) {
-            ++numCalSubsectors;
-            totalCalValue += currCalValue;
-        }
-
-        // attempt to locate the largest subsector
-        if( currCalValue > maxCalValue ) {
-            maxCalValue = currCalValue;
-            anchorIndex = subsectorIndex;
-        }
-    }
-
-    // If we are using the abosolute choice function, then we need to
-    // set the base cost for the model.  We will calculate an appropriate
-    // base cost and let the discrete choice function use it if it needs it.
-
-    // The base cost is equal to the highest cost subsector that has a share if we
-    // have calibration data.  Otherwise, it is equal to the highest cost subsector
-    // that has a valid cost; otherwise, we may be in trouble if a user did not
-    // parse a value.
-    double baseCost = 0;
-    for( int subsectorIndex = 0; subsectorIndex < aSector->mSubsectors.size(); ++subsectorIndex ) {
-        double currCost = aSector->mSubsectors[ subsectorIndex ]->getPrice( mGDP, aPeriod );
-        if( !boost::math::isnan( currCost )  && currCost > baseCost &&
-            ( ( hasCalValues && aSector->mSubsectors[ subsectorIndex ]->getTotalCalOutputs( aPeriod ) > 0 ) || !hasCalValues ) )
-        {
-            baseCost = currCost;
-        }
-    }
-    // In the case where there is only one subsector we will reset the base-price
-    // to one as the sharing should not matter.
-    if( baseCost == 0 && aSector->mSubsectors.size() == 1 ) {
-        baseCost = 1;
-    }
-    // baseCost may still be zero and if a user did not parse a base cost an error
-    // will be generated.
-    aSector->mDiscreteChoiceModel->setBaseValue( baseCost );
-
-    // do calibration if we have cal values and there are more than one subsector in this nest
-    if( hasCalValues && numCalSubsectors > 1 ) {	
-        // we should have found a subsector to have share weights anchored
-        assert( anchorIndex != -1 );
-        const double scaledGdpPerCapita = mGDP->getBestScaledGDPperCap( aPeriod );
-        const double anchorPrice = aSector->mSubsectors[ anchorIndex ]->getPrice( mGDP, aPeriod );
-        const double anchorShare = ( aSector->mSubsectors[ anchorIndex ]->getTotalCalOutputs( aPeriod )
-            / totalCalValue ) / pow( scaledGdpPerCapita, aSector->mSubsectors[ anchorIndex ]->mFuelPrefElasticity[ aPeriod ] );
-        assert( anchorShare > 0 );
-        
-        for( int subsectorIndex = 0; subsectorIndex < aSector->mSubsectors.size(); ++subsectorIndex ) {
-            Subsector* currSubsector = aSector->mSubsectors[ subsectorIndex ];
-            double currShare = ( currSubsector->getTotalCalOutputs( aPeriod ) / totalCalValue )
-                / pow( scaledGdpPerCapita, currSubsector->mFuelPrefElasticity[ aPeriod ] );
-
-            // only set the share weight for valid subsectors
-            if( currShare > 0 ) {
-                double currPrice = currSubsector->getPrice( mGDP, aPeriod );
-
-                double currShareWeight = aSector->mDiscreteChoiceModel->calcShareWeight( currShare, currPrice,
-                     anchorShare, anchorPrice, aPeriod );
-                currSubsector->mShareWeights[ aPeriod ] = currShareWeight; 
-            }
-        }
-    }
+    
+    calibrateShareWeights( aSector, aPeriod );
 
     mCurrentSectorName.clear();
 }
@@ -179,100 +277,17 @@ void CalibrateShareWeightVisitor::startVisitSubsector( const Subsector* aSubsect
     // to all of the technologies at the same time.
 
     // First we need to make sure that the technologies have calculated their costs.
-    // We will also find the largest technology in terms of output so that we can anchor the share weights
-    // by that technology and we will also make sure that we do not have a inconsistent set of
-    // technologies with and without calibration values.
-    const bool hasRequired = false;
-    const string requiredName = "";
-    int anchorTechIndex = -1;
-    bool hasCalValues = false;
-    double maxCalValue = -1;
-    int numlCalTechs = 0;
-    double totalCalValue = 0;
-    for( int techIndex = 0; techIndex < aSubsector->mTechContainers.size(); ++techIndex ) {
-        ITechnology* currTech = aSubsector->mTechContainers[ techIndex ]->getNewVintageTechnology( aPeriod );
-        // call calc cost to make sure they are up to date
-        currTech->calcCost( mCurrentRegionName, mCurrentSectorName, aPeriod );
-
-        double currCalValue = currTech->getCalibrationOutput( hasRequired, requiredName, aPeriod );
-        bool isAvailable = currTech->isAvailable( aPeriod );
-
-        // check if we have calibrated technologies
-        if( hasCalValues && currCalValue == -1 && isAvailable ) {
-            // log that we have inconsistent calibrated and variable technologies
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-            calibrationLog.setLevel( ILogger::WARNING );
-            mainLog << "Mixed calibrated and variable subsectors in Region: " << mCurrentRegionName
-                << " in sector: " << mCurrentSectorName
-                << " for technology: " << currTech->getName()  << endl;
-            calibrationLog << "Mixed calibrated and variable subsectors in Region: " << mCurrentRegionName
-                << " in sector: " << mCurrentSectorName
-                << " for technology: " << currTech->getName()  << endl;
-        }
-        else if( isAvailable && currCalValue != -1 ) {
-            hasCalValues = true;
-        }
-
-        // If the calibrated value > 0 then increase the number of technologies to calibrate
-        // and include it in the total sum.
-        if( currCalValue > 0 ) {
-            ++numlCalTechs;
-            totalCalValue += currCalValue;
-        }
-
-        // attempt to locate the largest technology
-        if( currCalValue > maxCalValue ) {
-            maxCalValue = currCalValue;
-            anchorTechIndex = techIndex;
-        }
+    for( auto techContainer : aSubsector->mTechContainers ) {
+        techContainer->getNewVintageTechnology( aPeriod )->calcCost( mCurrentRegionName, mCurrentSectorName, aPeriod );
     }
+    
+    calibrateShareWeights( aSubsector, aPeriod );
+}
 
-    // The base cost is equal to the highest cost subsector that has a share if we
-    // have calibration data.  Otherwise, it is equal to the highest cost subsector
-    // that has a valid cost; otherwise, we may be in trouble if a user did not
-    // parse a value.
-    double baseCost = 0;
-    for( int techIndex = 0; techIndex < aSubsector->mTechContainers.size(); ++techIndex ) {
-        double currCost = aSubsector->mTechContainers[ techIndex ]->getNewVintageTechnology( aPeriod )
-            ->getCost( aPeriod );
-        double calValue = aSubsector->mTechContainers[ techIndex ]->getNewVintageTechnology( aPeriod )->getCalibrationOutput( hasRequired, requiredName, aPeriod );
-        if( !boost::math::isnan( currCost ) && currCost > baseCost && ( ( hasCalValues && calValue > 0 ) || !hasCalValues ) ) {
-            baseCost = currCost;
-        }
-    }
-    // In the case where there is only one subsector we will reset the base-price
-    // to one as the sharing should not matter.
-    if( baseCost == 0 && aSubsector->mTechContainers.size() == 1 ) {
-        baseCost = 1;
-    }
-    // baseCost may still be zero and if a user did not parse a base cost an error
-    // will be generated.  
-    aSubsector->mDiscreteChoiceModel->setBaseValue( baseCost );
-
-    // do calibration if we have cal values and there are more than one technologies in this nest
-    if( hasCalValues && numlCalTechs > 1 ) {
-        // we should have found a technology to have share weights anchored by
-        assert( anchorTechIndex != -1 );
-        const ITechnology* anchorTech = aSubsector->mTechContainers[ anchorTechIndex ]->getNewVintageTechnology( aPeriod );
-        const double scaledGdpPerCapita = mGDP->getBestScaledGDPperCap( aPeriod );
-        const double anchorPrice = anchorTech->getCost( aPeriod );
-        const double anchorShare = ( anchorTech->getCalibrationOutput( hasRequired, requiredName, aPeriod )
-            / totalCalValue ) / pow( scaledGdpPerCapita, anchorTech->calcFuelPrefElasticity( aPeriod ) );
-        
-        for( int techIndex = 0; techIndex < aSubsector->mTechContainers.size(); ++techIndex ) {
-            ITechnology* currTech = aSubsector->mTechContainers[ techIndex ]->getNewVintageTechnology( aPeriod );
-            double currShare = ( currTech->getCalibrationOutput( hasRequired, requiredName, aPeriod ) / totalCalValue )
-                / pow( scaledGdpPerCapita, currTech->calcFuelPrefElasticity( aPeriod ) );
-
-            // only set share weights for valid technologies
-            if( currShare > 0 ) {
-                double currPrice = currTech->getCost( aPeriod );
-                double currShareWeight = aSubsector->mDiscreteChoiceModel->calcShareWeight( currShare, currPrice,
-                    anchorShare, anchorPrice, aPeriod );
-                currTech->setShareWeight( currShareWeight ); 
-            }
-        }
-    }
+void CalibrateShareWeightVisitor::endVisitNestingSubsector( const NestingSubsector* aSubsector, const int aPeriod ) {
+    // We need to do this in end visit NestingSubsector because the child subsector
+    // can't be calculated until we have gotten the correct share weights from the
+    // bottom of the nesting strucutre first.
+    
+    calibrateShareWeights( aSubsector, aPeriod );
 }

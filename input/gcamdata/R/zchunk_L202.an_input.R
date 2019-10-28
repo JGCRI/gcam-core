@@ -7,7 +7,7 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L202.RenewRsrc}, \code{L202.RenewRsrcPrice}, \code{L202.maxSubResource},
-#' \code{L202.RenewRsrcCurves}, \code{L202.UnlimitedRenewRsrcCurves}, \code{L202.UnlimitedRenewRsrcPrice},
+#' \code{L202.RenewRsrcCurves}, \code{L202.ResTechShrwt}, \code{L202.UnlimitedRenewRsrcCurves}, \code{L202.UnlimitedRenewRsrcPrice},
 #' \code{L202.Supplysector_in}, \code{L202.SubsectorAll_in}, \code{L202.StubTech_in}, \code{L202.StubTechInterp_in},
 #' \code{L202.GlobalTechCoef_in}, \code{L202.GlobalTechShrwt_in}, \code{L202.StubTechProd_in},
 #' \code{L202.Supplysector_an}, \code{L202.SubsectorAll_an}, \code{L202.StubTech_an}, \code{L202.StubTechInterp_an},
@@ -24,6 +24,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "energy/A_regions",
              FILE = "aglu/A_agRsrc",
+             FILE = "aglu/A_agSubRsrc",
              FILE = "aglu/A_agRsrcCurves",
              FILE = "aglu/A_agUnlimitedRsrcCurves",
              FILE = "aglu/A_an_input_supplysector",
@@ -44,6 +45,7 @@ module_aglu_L202.an_input <- function(command, ...) {
              "L202.RenewRsrcPrice",
              "L202.maxSubResource",
              "L202.RenewRsrcCurves",
+             "L202.ResTechShrwt",
              "L202.UnlimitedRenewRsrcCurves",
              "L202.UnlimitedRenewRsrcPrice",
              "L202.Supplysector_in",
@@ -72,12 +74,13 @@ module_aglu_L202.an_input <- function(command, ...) {
       stub.technology <- output_supplysector <- grade <- extractioncost <- calPrice <- unit <- share_Fd <-
       feed <- wtd_price <- Feed_Mt <- FeedPrice_USDkg <- FeedCost_bilUSD <- CommodityPrice_USDkg <-
       FeedCost_USDkg <- nonFeedCost <- NetExp_Mt <- share.weight.year <- fixedOutput <- ethanol <-
-      biomassOil_tech <- biodiesel <- NULL  # silence package check notes
+      biomassOil_tech <- biodiesel <- resource <- subresource <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions <- get_data(all_data, "energy/A_regions")
     A_agRsrc <- get_data(all_data, "aglu/A_agRsrc")
+    A_agSubRsrc <- get_data(all_data, "aglu/A_agSubRsrc")
     A_agRsrcCurves <- get_data(all_data, "aglu/A_agRsrcCurves")
     A_agUnlimitedRsrcCurves <- get_data(all_data, "aglu/A_agUnlimitedRsrcCurves")
     A_an_input_supplysector <- get_data(all_data, "aglu/A_an_input_supplysector")
@@ -150,6 +153,16 @@ module_aglu_L202.an_input <- function(command, ...) {
     A_agRsrcCurves %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["RenewRsrcCurves"]], GCAM_region_names) ->
       L202.RenewRsrcCurves
+
+    # L261.ResTechShrwt_C
+    A_agSubRsrc %>%
+      rename(resource = renewresource, subresource = sub.renewable.resource) %>%
+      repeat_add_columns(GCAM_region_names) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(technology = subresource,
+             share.weight = 1.0) %>%
+      select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+    L202.ResTechShrwt
 
     # L202.UnlimitedRenewRsrcCurves
     A_agUnlimitedRsrcCurves %>%
@@ -430,6 +443,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     L202.RenewRsrcPrice <- filter(L202.RenewRsrcPrice, !region %in% aglu.NO_AGLU_REGIONS)
     L202.maxSubResource <- filter(L202.maxSubResource, !region %in% aglu.NO_AGLU_REGIONS)
     L202.RenewRsrcCurves <- filter(L202.RenewRsrcCurves, !region %in% aglu.NO_AGLU_REGIONS)
+    L202.ResTechShrwt <- filter(L202.ResTechShrwt, !region %in% aglu.NO_AGLU_REGIONS)
     L202.UnlimitedRenewRsrcCurves <- filter(L202.UnlimitedRenewRsrcCurves, !region %in% aglu.NO_AGLU_REGIONS)
     L202.UnlimitedRenewRsrcPrice <- filter(L202.UnlimitedRenewRsrcPrice, !region %in% aglu.NO_AGLU_REGIONS)
     L202.Supplysector_in <- filter(L202.Supplysector_in, !region %in% aglu.NO_AGLU_REGIONS)
@@ -491,6 +505,13 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_legacy_name("L202.RenewRsrcCurves") %>%
       add_precursors("aglu/A_agRsrcCurves", "common/GCAM_region_names") ->
       L202.RenewRsrcCurves
+
+    L202.ResTechShrwt %>%
+      add_title("Technology share-weights for the renewable resources") %>%
+      add_units("NA") %>%
+      add_comments("Mostly just to provide a shell of a technology for the resource to use") %>%
+      add_precursors("aglu/A_agSubRsrc", "common/GCAM_region_names") ->
+      L202.ResTechShrwt
 
     L202.UnlimitedRenewRsrcCurves %>%
       add_title("Unlimited renewable resource curves") %>%
@@ -644,7 +665,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_precursors("aglu/A_an_supplysector", "L109.an_ALL_Mt_R_C_Y", "common/GCAM_region_names") ->
       L202.StubTechFixOut_imp_an
 
-    return_data(L202.RenewRsrc, L202.RenewRsrcPrice, L202.maxSubResource, L202.RenewRsrcCurves,
+    return_data(L202.RenewRsrc, L202.RenewRsrcPrice, L202.maxSubResource, L202.RenewRsrcCurves, L202.ResTechShrwt,
                 L202.UnlimitedRenewRsrcCurves, L202.UnlimitedRenewRsrcPrice, L202.Supplysector_in,
                 L202.SubsectorAll_in, L202.StubTech_in, L202.StubTechInterp_in, L202.GlobalTechCoef_in,
                 L202.GlobalTechShrwt_in, L202.StubTechProd_in, L202.Supplysector_an, L202.SubsectorAll_an,

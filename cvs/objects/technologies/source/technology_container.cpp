@@ -60,6 +60,7 @@
 #include "technologies/include/ag_production_technology.h"
 #include "technologies/include/pass_through_technology.h"
 #include "technologies/include/unmanaged_land_technology.h"
+#include "technologies/include/resource_reserve_technology.h"
 #include "technologies/include/empty_technology.h"
 
 extern Scenario* scenario;
@@ -191,6 +192,9 @@ bool TechnologyContainer::createAndParseVintage( const DOMNode* aNode, const str
         }
         else if( aTechType == UnmanagedLandTechnology::getXMLNameStatic() ) {
             newVintage = new UnmanagedLandTechnology( mName, techYear );
+        }
+        else if( aTechType == ResourceReserveTechnology::getXMLNameStatic() ) {
+            newVintage = new ResourceReserveTechnology( mName, techYear );
         }
         else {
             // Getting an error message here implies that the known technologies in this method are

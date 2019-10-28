@@ -10,7 +10,7 @@
 #' \code{L2239.RenewRsrc_CSP_reeds_USA}, \code{L2239.GrdRenewRsrcCurves_CSP_reeds_USA},
 #' \code{L2239.GrdRenewRsrcMax_CSP_reeds_USA}, \code{L2239.StubTechEffFlag_CSP_reeds_USA},
 #' \code{L2239.StubTechCapFactor_CSP_reeds_USA}, \code{L2239.RenewRsrcTechChange_CSP_reeds_USA},
-#' and \code{L2239.StubTechCost_CSP_reeds_USA}.
+#' \code{L2239.StubTechCost_CSP_reeds_USA}, \code{L2239.ResTechShrwt_CSP_reeds_USA}.
 #' The corresponding file in the original data system was \code{L2239.CSP_reeds_USA.R} (gcam-usa level2).
 #' @details Create state-level solar CSP resource supply curves
 #' @importFrom assertthat assert_that
@@ -37,7 +37,8 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
              "L2239.StubTechEffFlag_CSP_reeds_USA",
              "L2239.StubTechCapFactor_CSP_reeds_USA",
              "L2239.RenewRsrcTechChange_CSP_reeds_USA",
-             "L2239.StubTechCost_CSP_reeds_USA"))
+             "L2239.StubTechCost_CSP_reeds_USA",
+             "L2239.ResTechShrwt_CSP_reeds_USA"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -62,7 +63,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
       k1 <- capital.tech.change.5yr <- k2 <- tech.change.5yr <- tech.change <- bin <- cost <- grid.cost <-
       renewresource <- sub.renewable.resource <- year.fillout <- minicam.energy.input <- efficiency <-
       market.name <- flag <- capacity.factor <- input.cost <- capital.tech.change.period <-
-      tech.change.period <- time.change <- NULL
+      tech.change.period <- time.change <- subresource <- NULL
 
     # ===================================================
     # Data Processing
@@ -322,6 +323,15 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
       rename(input.cost = grid.cost) %>%
       filter(!is.na(input.cost)) -> L2239.StubTechCost_CSP_reeds_USA
 
+    L2239.GrdRenewRsrcMax_CSP_reeds_USA %>%
+      select(region, resource = renewresource, subresource = sub.renewable.resource) %>%
+      unique() %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(technology = subresource,
+             share.weight = 1.0) %>%
+      select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+      L2239.ResTechShrwt_CSP_reeds_USA
+
 
     # ===================================================
     # Produce outputs
@@ -428,6 +438,13 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
                      'L223.GlobalIntTechOMfixed_elec') ->
       L2239.StubTechCost_CSP_reeds_USA
 
+    L2239.ResTechShrwt_CSP_reeds_USA %>%
+      add_title("Technology share-weights for the renewable resources") %>%
+      add_units("NA") %>%
+      add_comments("Mostly just to provide a shell of a technology for the resource to use") %>%
+      same_attributes_as(L2239.GrdRenewRsrcMax_CSP_reeds_USA) ->
+      L2239.ResTechShrwt_CSP_reeds_USA
+
 
     return_data(L2239.DeleteUnlimitRsrc_reeds_USA,
                 L2239.DeleteStubTechMinicamEnergyInput_CSP_reeds_USA,
@@ -437,7 +454,8 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
                 L2239.StubTechEffFlag_CSP_reeds_USA,
                 L2239.StubTechCapFactor_CSP_reeds_USA,
                 L2239.RenewRsrcTechChange_CSP_reeds_USA,
-                L2239.StubTechCost_CSP_reeds_USA)
+                L2239.StubTechCost_CSP_reeds_USA,
+                L2239.ResTechShrwt_CSP_reeds_USA)
 
   } else {
     stop("Unknown command")
