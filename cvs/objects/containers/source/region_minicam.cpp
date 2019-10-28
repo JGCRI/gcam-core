@@ -235,13 +235,8 @@ void RegionMiniCAM::completeInit() {
     // Region info has no parent Info.
     mRegionInfo = InfoFactory::constructInfo( 0, mName );
 
-    if( mInterestRate == 0 ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "No interest rate was read-in for region " << mName << "." << endl;
-    }
-
     // Add the interest rate to the region info.
+    // TODO: mInterestRate is currently not used in GCAM and could be removed
     mRegionInfo->setDouble( "interest-rate", mInterestRate );
     
     // Add the social discount rate to the region info.
