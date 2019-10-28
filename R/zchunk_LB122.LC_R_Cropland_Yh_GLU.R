@@ -107,7 +107,6 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # using the average cropland, fallow land, and land in temporary crops from FAO RESOURCESTAT
     # The time series is unreliable, so using the average of all available years between 2008 and 2012
     # (and applying to all historical years)
-    fallowland_years <- 2008:2012
     # And continue with calculating average crop land, fallow land, land in temporary crops:
     # compile the ratio of "temporary crops" to total arable land in each region
     # make table with fallow land compared to total arable land
@@ -125,10 +124,10 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # Take the FAO cropland table, L100.FAO_CL_kha:
     L100.FAO_CL_kha %>%
       # only include data in the right fallow land year range
-      filter(year %in% fallowland_years) %>%
+      filter(year %in% aglu.FALLOW_YEARS) %>%
       # keep only the iso country and the value for each:
       select(iso, countries, cropland = value, year) %>%
-      # append in fallow land data in fallowland_year from FAO, L100.FAO_fallowland_kha, keeping NA values:
+      # append in fallow land data in aglu.FALLOW_YEARS from FAO, L100.FAO_fallowland_kha, keeping NA values:
       left_join(L100.FAO_fallowland_kha, by = c("iso", "countries", "year")) %>%
       # rename value to fallow and remove NAs:
       rename(fallow = value) %>%
@@ -157,10 +156,10 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # Take the FAO cropland table, L100.FAO_CL_kha:
     L100.FAO_CL_kha %>%
       # only include data in the right fallow land year range
-      filter(year %in% fallowland_years) %>%
+      filter(year %in% aglu.FALLOW_YEARS) %>%
       # keep only the iso country and the value for each:
       select(iso, countries, cropland = value, year) %>%
-      # append in cropped land data in fallowland_years from FAO, L100.FAO_harv_CL_kha, keeping NA values:
+      # append in cropped land data in aglu.FALLOW_YEARS from FAO, L100.FAO_harv_CL_kha, keeping NA values:
       left_join(L100.FAO_harv_CL_kha, by = c("iso", "countries", "year")) %>%
       # rename value to cropped and remove NAs:
       rename(cropped = value) %>%

@@ -235,7 +235,6 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # Copy to all model years
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       # Separate the AgSupplySubsector variable to get GLU names for matching in the harvest data
-      mutate(AgSupplySubsector = sub("RootTuber", "RootTuber", AgSupplySubsector)) %>%
       separate(AgSupplySubsector, c("GCAM_commodity", "GLU_name"), sep = "_") %>%
       left_join(L201.ag_HA_to_CropLand_R_Y_GLU, by = c("region", "GLU_name", "year")) %>%
       # Copy to both irrigated and rainfed technologies
@@ -243,8 +242,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       # Copy to high and low management levels
       repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
       # Add subsector and technology names
-      mutate(GCAM_commodity = sub("RootTuber", "RootTuber", GCAM_commodity),
-             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
+      mutate(AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
              AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_")) %>%
       select(LEVEL2_DATA_NAMES[["AgHAtoCL"]]) ->
       L2012.AgHAtoCL_irr_mgmt
