@@ -52,15 +52,8 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
       bind_rows(distinct(L2012.AgYield_bio_ref, region, AgSupplySubsector, AgSupplySector)) %>%
       mutate(AgSupplySector = if_else(grepl("biomassTree", AgSupplySubsector), "biomassTree", "biomassGrass")) %>%
       left_join(A_LandLeaf3, by=c("AgSupplySector" = "LandLeaf")) %>%
-      mutate(AgSupplySubsector = sub("RootTuber", "RootTuber", AgSupplySubsector),
-             AgSupplySubsector = sub("biomassTree", "biomasstree", AgSupplySubsector),
-             AgSupplySubsector = sub("biomassGrass", "biomassgrass", AgSupplySubsector)) %>%
       separate(AgSupplySubsector, c("LandNode4", "GLU_name")) %>%
-      mutate(logit.year.fillout = min(MODEL_BASE_YEARS),
-             # Modify land node variable to match in logit exponent values
-             LandNode4 = sub("RootTuber", "RootTuber", LandNode4),
-             LandNode4 = sub("biomasstree", "biomassTree", LandNode4),
-             LandNode4 = sub("biomassgrass", "biomassGrass", LandNode4)) %>%
+      mutate(logit.year.fillout = min(MODEL_BASE_YEARS)) %>%
       # Match in logit exponent values, use left_join instead because the logit.type variable are NAs, drop later
       left_join(A_LandNode_logit_irr, by = c("LandNode4" = "LandNode")) %>%
       mutate(LandAllocatorRoot = "root",
