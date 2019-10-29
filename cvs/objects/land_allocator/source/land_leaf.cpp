@@ -170,6 +170,9 @@ bool LandLeaf::XMLParse( const xercesc::DOMNode* aNode ){
             mLandExpansionCostName = XMLHelper<string>::getValue( curr );
             mIsLandExpansionCost = true;
         }
+        else if( nodeName == "negative-emiss-market" ) {
+            mNegEmissMarketName = XMLHelper<string>::getValue( curr );
+        }
 
         else if ( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -229,6 +232,12 @@ void LandLeaf::completeInit( const string& aRegionName,
                                                                           aRegionName,
                                                                           mLandExpansionCostName,
                                                                           aRegionName );
+    }
+
+    // if a user hasn't explicitly set a negative emissions policy 
+    // the set the one from the root
+    if( mNegEmissMarketName.empty() ) {
+        mNegEmissMarketName = aRegionInfo->getString( "negative-emiss-market", true );
     }
 }
 
@@ -367,6 +376,14 @@ double LandLeaf::getCarbonSubsidy( const string& aRegionName, const int aPeriod 
             * carbonPrice * ( mSocialDiscountRate - mCarbonPriceIncreaseRate[ aPeriod ] )* conversionFactor;
 
         assert( carbonSubsidy >= 0.0 );
+        
+        // potentially scale back the carbon subsidy if we have a binding negative
+        // emissions budget in place
+        if( !mNegEmissMarketName.empty() ) {
+            double taxFraction = marketplace->getPrice( mNegEmissMarketName, aRegionName, aPeriod, false ) == Marketplace::NO_MARKET_PRICE ?
+                1.0 : (1.0 - taxFraction);
+            carbonSubsidy *= taxFraction;
+        }
 
         return carbonSubsidy;
     }
