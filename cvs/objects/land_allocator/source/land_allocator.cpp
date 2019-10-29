@@ -151,6 +151,9 @@ void LandAllocator::completeInit( const string& aRegionName,
     // Call generic node method (since LandAllocator is just a specialized node)
     LandNode::completeInit( aRegionName, landInfo );
 
+    // clean up landInfo as we are done with it
+    delete landInfo;
+
     // Ensure that soil time scale is positive
     if ( mSoilTimeScale < 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
