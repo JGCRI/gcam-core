@@ -653,6 +653,10 @@ LN5_LeafGhostShare,world/+{name}region,region/+{name}LandAllocatorRoot,LandAlloc
 
 LN5_NodeGhostShare,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4,LandNode4/+{name}LandNode5,LandNode5/+{year}ghost-unnormalized-share,LandNode5/+ghost-unnormalized-share,scenario,scenario/world
 
+LandRootNegEmissMkt,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+negative-emiss-market,scenario,scenario/world
+
+LandLeafNegEmissMkt,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode,LandNode/+{name}LandLeaf,LandLeaf/+negative-emiss-market,scenario,scenario/world
+
 NodeRename, NODE_RENAME
 
 
