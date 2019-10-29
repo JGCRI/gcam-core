@@ -426,7 +426,7 @@ energy.DIGITS_TECHCHANGE       <- 4
 # Policy assumptions for module_energy_L270.limits
 
 energy.NEG_EMISS_POLICY_NAME    <- "negative_emiss_budget"
-energy.NEG_EMISS_TARGET_GAS     <- "CO2_tf" # the name of the gas to target in the negative emiss budget
+energy.NEG_EMISS_TARGET_GAS     <- "CO2_LTG" # the name of the gas to target in the negative emiss budget
 energy.NEG_EMISS_GDP_BUDGET_PCT <- 0.01 # Max fraction of GDP which may be given to subsidize net negative emissions
 energy.NEG_EMISS_MARKT_GLOBAL   <- TRUE # If the negative emissions budget is global (TRUE) or regional (FALSE)
 energy.OIL_CREDITS_MARKETNAME   <- "oil-credits"
