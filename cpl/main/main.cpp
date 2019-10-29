@@ -110,11 +110,13 @@ int main( ) {
                 ASpatialData tempPFTData(NUM_LAT * NUM_LON * NUM_PFT);
                 tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false, gcaminpp);
                 
+                cout << "Read HR" << endl;
+                // Read in average HR
+                tempPFTData.readSpatialData("../cpl/data/hr_mean_pft.txt", true, true, false, gcamihr);
+                
                 cout << "Read PFT weight" << endl;
                 // Read in PFT weight in grid cell
-                ASpatialData test(NUM_LAT * NUM_LON * NUM_PFT);
-                test.readSpatialData("../cpl/data/pft_wt.txt", true, true, false, gcamipftfract);
-                // std::copy(test.getValueVector().begin(), test.getValueVector().end(), gcamipftfract);
+                tempPFTData.readSpatialData("../cpl/data/pft_wt.txt", true, true, false, gcamipftfract);
                 
                 cout << "Read area" << endl;
                 // Read in area of grid cell

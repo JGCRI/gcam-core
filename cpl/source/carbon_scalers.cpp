@@ -50,6 +50,7 @@ using namespace std;
 CarbonScalers::CarbonScalers(int aNumLon, int aNumLat, int aNumPFT):
 ASpatialData( aNumLat * aNumLon * aNumPFT ),
 mBaseNPPVector( aNumLat * aNumLon * aNumPFT, 0),
+mBaseHRVector( aNumLat * aNumLon * aNumPFT, 0),
 mBasePFTFractVector( aNumLat * aNumLon * aNumPFT, 0),
 mNumLon( aNumLon ),
 mNumLat( aNumLat ),
@@ -69,6 +70,11 @@ void CarbonScalers::readBaseYearData(){
     // Read in average NPP
     readSpatialData("../cpl/data/base_npp_mean_pft.txt", true, true, false);
     mBaseNPPVector = getValueVector();
+    
+    cout << "Read Base HR" << endl;
+    // Read in average HR
+    readSpatialData("../cpl/data/base_hr_mean_pft.txt", true, true, false);
+    mBaseHRVector = getValueVector();
     
     cout << "Read Base PFT weight" << endl;
     // Read in PFT weight in grid cell
@@ -161,7 +167,10 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
     std::map<std::pair<std::string,std::string>, double> baseTotalArea;
     std::map<std::pair<std::string,std::string>, double> totalNPP;
     std::map<std::pair<std::string,std::string>, double> baseTotalNPP;
-    std::map<std::pair<std::string,std::string>, double> gcamScalar;
+    std::map<std::pair<std::string,std::string>, double> aboveScalar;
+    std::map<std::pair<std::string,std::string>, double> totalHR;
+    std::map<std::pair<std::string,std::string>, double> baseTotalHR;
+    std::map<std::pair<std::string,std::string>, double> belowScalar;
     
     int gridIndex = 0; // Index used for Grid vectors
     int valIndex = 0; // Index used for PFT x Grid vectors
@@ -206,17 +215,21 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
                                 baseTotalArea[std::make_pair(regID,currCrop)] += base_scalar;
                                 totalNPP[std::make_pair(regID,currCrop)] += aELMNPP[valIndex] * scalar;
                                 baseTotalNPP[std::make_pair(regID,currCrop)] += mBaseNPPVector[valIndex] * base_scalar;
+                                totalHR[std::make_pair(regID,currCrop)] += aELMHR[valIndex] * scalar;
+                                baseTotalHR[std::make_pair(regID,currCrop)] += mBaseHRVector[valIndex] * base_scalar;
                             } else {
                                 totalArea[std::make_pair(regID,currCrop)] = scalar;
                                 baseTotalArea[std::make_pair(regID,currCrop)] = base_scalar;
                                 totalNPP[std::make_pair(regID,currCrop)] = aELMNPP[valIndex] * scalar;
                                 baseTotalNPP[std::make_pair(regID,currCrop)] = mBaseNPPVector[valIndex] * base_scalar;
+                                totalHR[std::make_pair(regID,currCrop)] = aELMHR[valIndex] * scalar;
+                                baseTotalHR[std::make_pair(regID,currCrop)] = mBaseHRVector[valIndex] * base_scalar;
                             }
                             
                             if( regID == "3_4") {
                                 cout << "PFT " << pft << " for crop " << currCrop << ": " << scalar << ", " << base_scalar;
-                                cout << ", " << aELMNPP[valIndex] << ", " << mBaseNPPVector[valIndex];
-                                cout << ", " << aELMNPP[valIndex]*scalar << ", " << mBaseNPPVector[valIndex]*base_scalar << endl;
+                                cout << ", " << aELMHR[valIndex] << ", " << mBaseHRVector[valIndex];
+                                cout << ", " << aELMHR[valIndex]*scalar << ", " << mBaseHRVector[valIndex]*base_scalar << endl;
                             }
                         }
                         
@@ -234,6 +247,9 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
     std::string regID;
     double avgNPP;
     double baseAvgNPP;
+    double avgHR;
+    double baseAvgHR;
+    double hrScalar;
     for(const auto &curr : totalArea) {
         regID = curr.first.first;
         crop = curr.first.second;
@@ -241,27 +257,41 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
         // Calculate average NPP and average NPP in the base year
         if ( totalArea[std::make_pair(regID,crop)] > 0.0 ) {
             avgNPP = totalNPP[std::make_pair(regID,crop)] / totalArea[std::make_pair(regID,crop)];
+            avgHR = totalHR[std::make_pair(regID,crop)] / totalArea[std::make_pair(regID,crop)];
         } else {
             avgNPP = 0.0;
+            avgHR = 0.0;
         }
         
         if ( baseTotalArea[std::make_pair(regID,crop)] > 0.0 ) {
             baseAvgNPP = baseTotalNPP[std::make_pair(regID,crop)] / baseTotalArea[std::make_pair(regID,crop)];
+            baseAvgHR = baseTotalHR[std::make_pair(regID,crop)] / baseTotalArea[std::make_pair(regID,crop)];
         } else {
             baseAvgNPP = 0.0;
+            baseAvgHR = 0.0;
         }
         
         if( regID == "3_4") {
             cout << "SCALAR for " << crop << ": ";
-            cout << ", " << totalNPP[std::make_pair(regID,crop)] << ", " << totalArea[std::make_pair(regID,crop)];
-            cout << ", " << baseTotalNPP[std::make_pair(regID,crop)] << ", " << baseTotalArea[std::make_pair(regID,crop)] << endl;
+            cout << ", " << totalHR[std::make_pair(regID,crop)] << ", " << totalArea[std::make_pair(regID,crop)];
+            cout << ", " << baseTotalHR[std::make_pair(regID,crop)] << ", " << baseTotalArea[std::make_pair(regID,crop)] << endl;
         }
         
         // Calculate scalar
         if ( baseAvgNPP > 0 ) {
-            gcamScalar[std::make_pair(regID,crop)] = avgNPP / baseAvgNPP;
+            aboveScalar[std::make_pair(regID,crop)] = avgNPP / baseAvgNPP;
         } else {
-            gcamScalar[std::make_pair(regID,crop)] = 1.0;
+            aboveScalar[std::make_pair(regID,crop)] = 1.0;
+        }
+        
+        // Calculate scalar
+        if ( baseAvgHR > 0 ) {
+            // The belowground scalar is a combination of NPP and HR...BUT HR needs to be "flipped" around 1
+            // This is because higher heterotrophic respiration means lower C density, everything else being equal
+            hrScalar = 2.0 - ( avgHR / baseAvgHR );
+            belowScalar[std::make_pair(regID,crop)] = ( aboveScalar[std::make_pair(regID,crop)] + hrScalar ) / 2.0;
+        } else {
+            belowScalar[std::make_pair(regID,crop)] = 1.0;
         }
         
      }
@@ -270,7 +300,7 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
     // TODO: This should be moved to a separate method that will write output (if the boolean is set)
     ofstream oFile;
     oFile.open("./test.txt");
-    for(const auto &curr : gcamScalar) {
+    for(const auto &curr : belowScalar) {
         oFile << curr.first.first << ", " << curr.first.second << ": " << curr.second << endl;
     }
     oFile.close();

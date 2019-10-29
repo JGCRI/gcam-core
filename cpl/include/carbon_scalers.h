@@ -55,6 +55,7 @@ public:
 private:
     // Data for calculating the scalar baseline
     std::vector<double> mBaseNPPVector;
+    std::vector<double> mBaseHRVector;
     std::vector<double> mBasePFTFractVector;
     
     // Number of latitude, longitude, and PFTs. Storing this so it doesn't have to be passed to every method
