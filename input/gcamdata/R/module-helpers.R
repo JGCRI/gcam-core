@@ -244,7 +244,7 @@ set_subsector_shrwt <- function(data, value_col = "calOutputValue") {
 
   assert_that(is_tibble(data))
 
-  region <- supplysector <- subsector <- year <- calOutputValue_agg <- named_value_col <-
+  region <- supplysector <- subsector <- year <- calOutputValue_agg <-
     subs.share.weight <- NULL  # silence package check notes
 
   data_aggregated <- data %>%
