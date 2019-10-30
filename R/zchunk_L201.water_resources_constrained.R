@@ -248,8 +248,9 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         grade == "grade2" & is.na(accessible) == FALSE ~ accessible,
         grade == "grade1" | grade == "grade3" ~ available
       )) %>% select(-accessible) %>%
-      group_by(resource) %>% mutate(x = cumsum(available)) %>%
-      mutate(available = if_else(x >= 2, x, available)) %>%
+      group_by(resource) %>%
+      mutate(x = cumsum(available),
+             available = if_else(x >= 2, x, available)) %>%
       select(-x) %>%
       ungroup() ->
       accessible_water_unsmoothed
