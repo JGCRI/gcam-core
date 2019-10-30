@@ -1,14 +1,18 @@
 #' module_energy_batch_transportation_UCD_CORE_xml
 #'
-#' Construct XML data structure for \code{transportation_UCD_CORE.xml}.
+#' Construct XML data structure for \code{transportation_UCD_*.xml}.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{transportation_UCD_CORE.xml}. The corresponding file in the
+#' the generated outputs: \code{transportation_UCD_*.xml}. The corresponding file in the
 #' original data system was \code{batch_transportation_UCD_CORE.xml} (energy XML).
 module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
+  # The below variable (trn_SPP) controls which scenario to run, as only one scenario can be run at a time.
+  # This is a special case, and the way this is executed will likely change in the future.
+  outfile <- paste0("transportation_UCD_", energy.TRN_SSP, ".xml")
+
   if(command == driver.DECLARE_INPUTS) {
     return(c("L254.Supplysector_trn",
              "L254.FinalEnergyKeyword_trn",
@@ -42,7 +46,7 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
              "L254.IncomeElasticity_trn",
              "L254.BaseService_trn"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "transportation_UCD_CORE.xml"))
+    return(c(XML = outfile))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -84,7 +88,7 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
-    create_xml("transportation_UCD_CORE.xml") %>%
+    create_xml(outfile) %>%
       add_logit_tables_xml(L254.Supplysector_trn, "Supplysector") %>%
       add_xml_data(L254.FinalEnergyKeyword_trn, "FinalEnergyKeyword") %>%
       add_logit_tables_xml(L254.tranSubsectorLogit, "tranSubsectorLogit", "tranSubsector") %>%
@@ -147,9 +151,27 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
                      "L254.PriceElasticity_trn",
                      "L254.IncomeElasticity_trn",
                      "L254.BaseService_trn") ->
-      transportation_UCD_CORE.xml
+      xml_tmp
 
-    return_data(transportation_UCD_CORE.xml)
+    # Because `return_data` gets the name of the object from what's actually given in the call,
+    # we need to assign xml_tmp to a correctly-named variable in the current environment
+    transportation_UCD_CORE.xml <- transportation_UCD_SSP1.xml <- transportation_UCD_SSP2.xml <-
+      transportation_UCD_SSP3.xml <- transportation_UCD_SSP5.xml <- NULL  # silence package check notes
+    assign(paste0("transportation_UCD_", energy.TRN_SSP, ".xml"), xml_tmp)
+    if(energy.TRN_SSP == "CORE") {
+      return_data(transportation_UCD_CORE.xml)
+    } else if(energy.TRN_SSP == "SSP1") {
+      return_data(transportation_UCD_SSP1.xml)
+    } else if(energy.TRN_SSP == "SSP2") {
+      return_data(transportation_UCD_SSP2.xml)
+    } else if(energy.TRN_SSP == "SSP3") {
+      return_data(transportation_UCD_SSP3.xml)
+    } else if(energy.TRN_SSP == "SSP5") {
+      return_data(transportation_UCD_SSP5.xml)
+    } else {
+      stop("Unknown energy.TRN_SSP value:", energy.TRN_SSP)
+    }
+
   } else {
     stop("Unknown command")
   }
