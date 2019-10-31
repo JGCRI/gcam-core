@@ -405,14 +405,18 @@ double LandLeaf::getLandConstraintCost( const string& aRegionName, const int aPe
         const Marketplace* marketplace = scenario->getMarketplace();
         double landPrice = marketplace->getPrice( mLandConstraintPolicy, aRegionName, aPeriod, false );
         
-        // If the market is a tax, then we need to subtract the cost from profit. Otherwise, we keep it positive.
+        // Only two policy types are permitted, "tax" and "subsidy".
+        // Since this value is added to the profit rate of the LandLeaf later, we need to ensure it is the correct sign.
+        // If the market is a tax, then we convert to a negative value so that it is effectively subtracted from the profit.
+        // Otherwise, we keep it positive.
         std::string type = marketplace->getMarketInfo( mLandConstraintPolicy, aRegionName, 0, true)->getString( "policy-type", true);
         if ( type == "tax" ) {
             landPrice *= -1.0;
+        } else if ( type != "subsidy" ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Invalid policy type for the LandConstraintCost. Defaulting to subsidy." << endl;
         }
-        
-        // Adjust price to get to a reasonable solved value
-        landPrice *= 1e3;
         
         return landPrice;
     }
