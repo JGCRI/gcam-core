@@ -240,7 +240,7 @@ write_to_all_states <- function(data, names, region_list = gcamusa.STATES) {
 #' @return Tibble returned with a new column of calculated subsector shareweights.
 set_subsector_shrwt <- function(data, value_col = "calOutputValue") {
 
-  value_col <- dplyr::sym(value_col)
+  value_col <- rlang::sym(value_col)
 
   assert_that(is_tibble(data))
 
