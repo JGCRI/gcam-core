@@ -79,6 +79,10 @@ public:
     virtual double calc( const int aPeriod, const int aEndYear, const CarbonCalcMode aCalcMode );
 
     virtual double getNetLandUseChangeEmission( const int aYear ) const;
+    
+    virtual double getNetLandUseChangeEmissionAbove( const int aYear ) const;
+    
+    virtual double getNetLandUseChangeEmissionBelow( const int aYear ) const;
 
     virtual double getActualAboveGroundCarbonDensity( const int aYear ) const = 0;
     
@@ -120,7 +124,7 @@ protected:
         DEFINE_VARIABLE( ARRAY, "above-ground-land-use-change-emissions", mTotalEmissionsAbove, objects::YearVector<double> ),
         
         //! Below ground total emissions by year
-        DEFINE_VARIABLE( ARRAY, "above-ground-land-use-change-emissions", mTotalEmissionsBelow, objects::YearVector<double> ),
+        DEFINE_VARIABLE( ARRAY, "below-ground-land-use-change-emissions", mTotalEmissionsBelow, objects::YearVector<double> ),
         
         //! Above ground carbon stock
         DEFINE_VARIABLE( ARRAY | STATE, "above-ground-carbon-stock", mCarbonStock, objects::YearVector<Value> ),

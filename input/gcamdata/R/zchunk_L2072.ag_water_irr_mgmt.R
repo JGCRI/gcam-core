@@ -139,7 +139,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["AgTechYr"]]) %>%
       mutate(minicam.energy.input = "biophysical water consumption",
              coefficient = aglu.BIO_GRASS_WATER_IO_KM3EJ,
-             coefficient = replace(coefficient, grepl("biomass_tree", AgProductionTechnology), aglu.BIO_TREE_WATER_IO_KM3EJ)) ->
+             coefficient = replace(coefficient, grepl("biomassTree", AgProductionTechnology), aglu.BIO_TREE_WATER_IO_KM3EJ)) ->
       L2072.AgCoef_BphysWater_bio_mgmt
 
     # Compute irrigation water consumption IO coefficients (km3/EJ biomass) by region / dedicated bioenergy crop / year / GLU / management level
@@ -170,7 +170,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
     L2072.AgCoef_BphysWater_bio_mgmt %>%
       mutate(water_type = "water consumption") %>%
       # Separate subsector variale for GLU names
-      separate(AgSupplySubsector, c("biomass", "type", "GLU_name"), sep = "_") %>%
+      separate(AgSupplySubsector, c("biomass", "GLU_name"), sep = "_") %>%
       # Match in % of blue water by region / GLU, create NAs, use left_join instead
       left_join(select(L2072.BlueFract_R_GLU, region, GLU_name, blue_fract), by = c("region", "GLU_name")) %>%
       # Multiply biophysical water consumption IO coefs and blue water %
@@ -178,7 +178,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       replace_na(list(coefficient = 0)) %>%
       # Irrigated water consumption only applies to the irrigated techs, which are assumed to end in the string "IRR"
       filter(grepl("IRR", AgProductionTechnology)) %>%
-      mutate(AgSupplySubsector = paste(biomass, type, GLU_name, sep = "_")) %>%
+      mutate(AgSupplySubsector = paste(biomass, GLU_name, sep = "_")) %>%
       # Standardize irrigation water input names
       mutate(water_sector = "Irrigation",
              minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector, GLU = GLU_name)) %>%

@@ -194,6 +194,10 @@ protected:
         //! Ratio of the secondary output to primary output production such that
         //! primary output multiplied by the ratio is equal to secondary output.
         DEFINE_VARIABLE( SIMPLE, "output-ratio", mOutputRatio, Value ),
+                            
+        //! A fixed price to use for calibration if set.
+        //! Note if we are calibrating then we assume a output-ratio of 1 and disable solving.
+        DEFINE_VARIABLE( SIMPLE, "calPrice", mCalPrice, Value ),
         
         //! Piece-wise linear cost curve that contains price driven fraction adjustments
         //! to mOutputRatio.

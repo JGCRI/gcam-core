@@ -1,4 +1,4 @@
-library(devtools)
+library(usethis)
 library(gcamdata)
 LOGIT_TYPE_COLNAME <- gcamdata:::LOGIT_TYPE_COLNAME
 
@@ -223,6 +223,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["StubTechElecMarket"]] <- c(level2_data_names[["StubTechYr"]], "electric.sector.market")
   level2_data_names[["StubTechFractSecOut"]] <- c(level2_data_names[["StubTechYr"]], "fractional.secondary.output", "output.ratio")
   level2_data_names[["StubTechFractProd"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "fractional.secondary.output", "price", "fraction.produced")
+  level2_data_names[["StubTechFractCalPrice"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "fractional.secondary.output", "calPrice")
   level2_data_names[["StubTechIntGainOutputRatio"]] <- c("region", "supplysector", "subsector", "technology", "year", "internal.gains.output.ratio", "internal.gains.market.name")
   level2_data_names[["StubTechSecOut"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "secondary.output.name", "secondary.output")
   level2_data_names[["StubTechSecMarket"]] <- c(level2_data_names[["StubTechYr"]], "secondary.output", "market.name")
@@ -467,11 +468,12 @@ PREBUILT_DATA <- driver(write_outputs = FALSE,
                           # output of module_energy_LA118.hydro
                           "L118.out_EJ_R_elec_hydro_Yfut",
 
-                          # outputs of module_energy_LA121.oil
+                          # outputs of module_energy_LA121.liquids
                           "L121.in_EJ_R_unoil_F_Yh",
                           "L121.in_EJ_R_TPES_crude_Yh",
-                          "L121.in_EJ_R_TPES_unoil_Yh"
+                          "L121.in_EJ_R_TPES_unoil_Yh",
+                          "L121.share_R_TPES_biofuel_tech"
                         ))
 
 # Save these objects for use as internal package data
-devtools::use_data(GCAM_DATA_MAP, LEVEL2_DATA_NAMES, PREBUILT_DATA, overwrite = TRUE, internal = TRUE)
+usethis::use_data(GCAM_DATA_MAP, LEVEL2_DATA_NAMES, PREBUILT_DATA, overwrite = TRUE, internal = TRUE)

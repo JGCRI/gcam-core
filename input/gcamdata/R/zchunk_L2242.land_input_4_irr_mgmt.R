@@ -50,17 +50,10 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
     L2012.AgProduction_ag_irr_mgmt %>%
       distinct(region, AgSupplySubsector, AgSupplySector) %>%
       bind_rows(distinct(L2012.AgYield_bio_ref, region, AgSupplySubsector, AgSupplySector)) %>%
-      mutate(AgSupplySector = if_else(grepl("biomass_tree", AgSupplySubsector), "biomass_tree", "biomass_grass")) %>%
+      mutate(AgSupplySector = if_else(grepl("biomassTree", AgSupplySubsector), "biomassTree", "biomassGrass")) %>%
       left_join(A_LandLeaf3, by=c("AgSupplySector" = "LandLeaf")) %>%
-      mutate(AgSupplySubsector = sub("Root_Tuber", "RootTuber", AgSupplySubsector),
-             AgSupplySubsector = sub("biomass_tree", "biomasstree", AgSupplySubsector),
-             AgSupplySubsector = sub("biomass_grass", "biomassgrass", AgSupplySubsector)) %>%
       separate(AgSupplySubsector, c("LandNode4", "GLU_name")) %>%
-      mutate(logit.year.fillout = min(MODEL_BASE_YEARS),
-             # Modify land node variable to match in logit exponent values
-             LandNode4 = sub("RootTuber", "Root_Tuber", LandNode4),
-             LandNode4 = sub("biomasstree", "biomass_tree", LandNode4),
-             LandNode4 = sub("biomassgrass", "biomass_grass", LandNode4)) %>%
+      mutate(logit.year.fillout = min(MODEL_BASE_YEARS)) %>%
       # Match in logit exponent values, use left_join instead because the logit.type variable are NAs, drop later
       left_join(A_LandNode_logit_irr, by = c("LandNode4" = "LandNode")) %>%
       mutate(LandAllocatorRoot = "root",
@@ -75,9 +68,9 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
     # Specify ghost node share for bioenergy node in future years (starting with first bio year).
     L2012.AgYield_bio_ref %>%
       distinct(region, AgSupplySubsector) %>%
-      mutate(GCAM_commodity = if_else(grepl("^biomass_grass", AgSupplySubsector), "biomass_grass", "biomass_tree"),
-             GLU_name = if_else(grepl("^biomass_grass", AgSupplySubsector), gsub("biomass_grass_", "", AgSupplySubsector),
-                                                                            gsub("biomass_tree_", "", AgSupplySubsector))) %>%
+      mutate(GCAM_commodity = if_else(grepl("^biomassGrass", AgSupplySubsector), "biomassGrass", "biomassTree"),
+             GLU_name = if_else(grepl("^biomassGrass", AgSupplySubsector), gsub("biomassGrass_", "", AgSupplySubsector),
+                                                                            gsub("biomassTree_", "", AgSupplySubsector))) %>%
       left_join_error_no_match(A_LT_Mapping, by = "GCAM_commodity") %>%
       mutate(LandAllocatorRoot = "root",
              LandNode1 = paste(LandNode1, GLU_name, sep = "_"),

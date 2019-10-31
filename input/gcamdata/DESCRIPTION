@@ -50,6 +50,7 @@ Suggests:
     mockr (>= 0.1),
     testthat (>= 1.0.2),
     R.utils (>= 2.6.0),
+    usethis (>= 1.4.0),
     gcamdata.compdata
 Remotes: github::JGCRI/gcamdata.compdata
 Encoding: UTF-8
