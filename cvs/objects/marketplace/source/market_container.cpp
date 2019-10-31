@@ -208,8 +208,7 @@ Market* MarketContainer::createMarket( const IMarketType::Type aType )
 void MarketContainer::changeLinkedMarket( MarketContainer* aMarketToLink, const int aStartPeriod ) {
     if( aStartPeriod > 0 ) {
         for( unsigned int period = aStartPeriod; period < size(); period++ ){
-            delete mMarkets[ period ];
-            mMarkets[ period ] = new LinkedMarket( aMarketToLink ? aMarketToLink->mMarkets[ period ] : 0, this );
+            mMarkets[ period ]->resetLinkedMarket( aMarketToLink ? aMarketToLink->mMarkets[ period ] : 0 );
         }
     }
 }
