@@ -147,22 +147,16 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
 
 // Calculate scalers
 // TODO: Add outlier test/removal
-// TODO: Add HR
 // TODO: Set the data in the passed vectors
 void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                                 std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
     // First, read spatial data
     readBaseYearData();
     
-    // Pre-process the weights
-    // TODO: Fortran & R code divide the mPFTFractVector by the number of GCAM land types
-    // mapped to this PFT and replicate the output vector for each of those types
+    // Exclude outliers from the scalar calculation
+    excludeOutliers(aELMNPP, aELMHR);
     
-    // TODO: Outlier exclusion
-    
-    // Loop over PFTs and grid cells to calculate weighted average NPP for each GCAM region
-    // TODO: currently assumes grid cells are in the same order in each vector
-    // TODO: Need to get number of land types, regions, and number of grid cells from somewhere
+    // Create mappings to store intermediate information
     std::map<std::pair<std::string,std::string>, double> totalArea;
     std::map<std::pair<std::string,std::string>, double> baseTotalArea;
     std::map<std::pair<std::string,std::string>, double> totalNPP;
@@ -172,6 +166,7 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
     std::map<std::pair<std::string,std::string>, double> baseTotalHR;
     std::map<std::pair<std::string,std::string>, double> belowScalar;
     
+    // Loop over PFTs and grid cells to calculate weighted average NPP for each GCAM region
     int gridIndex = 0; // Index used for Grid vectors
     int valIndex = 0; // Index used for PFT x Grid vectors
     double scalar = 0.0; // Define the scalar
@@ -225,18 +220,9 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
                                 totalHR[std::make_pair(regID,currCrop)] = aELMHR[valIndex] * scalar;
                                 baseTotalHR[std::make_pair(regID,currCrop)] = mBaseHRVector[valIndex] * base_scalar;
                             }
-                            
-                            if( regID == "3_4") {
-                                cout << "PFT " << pft << " for crop " << currCrop << ": " << scalar << ", " << base_scalar;
-                                cout << ", " << aELMHR[valIndex] << ", " << mBaseHRVector[valIndex];
-                                cout << ", " << aELMHR[valIndex]*scalar << ", " << mBaseHRVector[valIndex]*base_scalar << endl;
-                            }
-                        }
-                        
-                        
+                         }
                     }
                 }
-                
             }
         }
     }
@@ -271,12 +257,6 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
             baseAvgHR = 0.0;
         }
         
-        if( regID == "3_4") {
-            cout << "SCALAR for " << crop << ": ";
-            cout << ", " << totalHR[std::make_pair(regID,crop)] << ", " << totalArea[std::make_pair(regID,crop)];
-            cout << ", " << baseTotalHR[std::make_pair(regID,crop)] << ", " << baseTotalArea[std::make_pair(regID,crop)] << endl;
-        }
-        
         // Calculate scalar
         if ( baseAvgNPP > 0 ) {
             aboveScalar[std::make_pair(regID,crop)] = avgNPP / baseAvgNPP;
@@ -300,7 +280,7 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
     // TODO: This should be moved to a separate method that will write output (if the boolean is set)
     ofstream oFile;
     oFile.open("./test.txt");
-    for(const auto &curr : belowScalar) {
+    for(const auto &curr : aboveScalar) {
         oFile << curr.first.first << ", " << curr.first.second << ": " << curr.second << endl;
     }
     oFile.close();
@@ -351,6 +331,45 @@ void CarbonScalers::readScalers(int *yyyymmdd, std::vector<int>& aYears, std::ve
         row++;
     }
     
+    
+}
+
+void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
+    int length = mNumLat * mNumLon * mNumPFT;
+    std::vector<double> scaledNPP(aELMNPP+0, aELMNPP+length);
+    
+    // Calculate raw scalars
+    std::transform(scaledNPP.begin(), scaledNPP.end(), mBaseNPPVector.begin(), scaledNPP.begin(), std::divides<double>());
+    
+    // Remove zero and nan values -- ocean grid cells weren't included in the original data and cells with 0 base values were excluded
+    std::vector<double>::iterator newIter = std::remove_if( scaledNPP.begin(), scaledNPP.end(), [](double x){return x == 0 || x != x;});
+    scaledNPP.resize( newIter -  scaledNPP.begin() );
+
+    // Compute the median and median absolute deviation
+    // See: Davies, P.L. and Gather, U. (1993), "The identification of multiple outliers"
+    // J. Amer. Statist. Assoc., 88:782-801.
+    double madLimit = 5.2;
+
+    // First, sort the scaler and find median
+    std::sort(scaledNPP.begin(), scaledNPP.end());
+    double median = 0.5 * (scaledNPP[scaledNPP.size() / 2 - 1] + scaledNPP[scaledNPP.size() / 2]);
+    
+    // Then, find the median absolute deviation
+    transform(scaledNPP.begin(), scaledNPP.end(), scaledNPP.begin(), [median](double x){return abs(x - median);});
+    std::sort(scaledNPP.begin(), scaledNPP.end());
+    double mad = 0.5 * (scaledNPP[scaledNPP.size() / 2 - 1] + scaledNPP[scaledNPP.size() / 2]);
+
+    // Now, calculate upper and lower bounds as median +/- madLimit * mad
+    double upperBound = median + madLimit * mad;
+    double lowerBound = median - madLimit * mad;
+    
+    // Remove Outliers. These are set to zero so they will be excluded from scaler calculation
+    for( int i = 0; i < length; i++ ) {
+        if( scaledNPP[i] > upperBound || scaledNPP[i] < lowerBound) {
+            aELMNPP[i] = 0;
+            mBaseNPPVector[i] = 0;
+        }
+    }
     
 }
 

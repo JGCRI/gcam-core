@@ -134,12 +134,19 @@ int main( ) {
         // Run model
         p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemis, BASE_CO2_FILE, NUM_LON, NUM_LAT, WRITE_CO2);
         
-        // Original call (Note lots of these arguments need to be fixed)
-        // runcGCAM(ymd,tod,gcami,size(gcami,dim=1),size(gcami,dim=2),gcamo,size(gcamo,dim=1),size(gcamo,dim=2),gcamoemis,size(gcamoemis,dim=1),size(gcamoemis,dim=2), cdata%i(iac_cdatai_gcam_yr1),cdata%i(iac_cdatai_gcam_yr2),cdata%l(iac_cdatal_sneakermode),cdata%l(iac_cdatal_write_rest))
     }
     
     // Finalize GCAM
     p_obj->finalizeGCAM();
+    
+    // Remove all arrays
+    delete [] gcamiarea;
+    delete [] gcamilfract;
+    delete [] gcamipftfract;
+    delete [] gcaminpp;
+    delete [] gcamihr;
+    delete [] gcamoluc;
+    delete [] gcamoemis;
     
     // Finalize Interface
     delete p_obj;
