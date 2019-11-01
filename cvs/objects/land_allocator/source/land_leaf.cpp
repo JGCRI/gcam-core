@@ -392,7 +392,8 @@ double LandLeaf::getCarbonSubsidy( const string& aRegionName, const int aPeriod 
         // potentially scale back the carbon subsidy if we have a binding negative
         // emissions budget in place
         if( !mNegEmissMarketName.empty() ) {
-            double taxFraction = marketplace->getPrice( mNegEmissMarketName, aRegionName, aPeriod, false ) == Marketplace::NO_MARKET_PRICE ?
+            double taxFraction = marketplace->getPrice( mNegEmissMarketName, aRegionName, aPeriod, false );
+            taxFraction = taxFraction == Marketplace::NO_MARKET_PRICE ?
                 1.0 : (1.0 - taxFraction);
             carbonSubsidy *= taxFraction;
         }
