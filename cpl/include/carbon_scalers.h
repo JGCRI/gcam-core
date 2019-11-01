@@ -52,6 +52,7 @@ public:
                      std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers);
     void readBaseYearData();
     void readRegionalMappingData(std::string aFileName);
+    void excludeOutliers(double *aELMNPP, double *aELMHR);
 private:
     // Data for calculating the scalar baseline
     std::vector<double> mBaseNPPVector;
