@@ -251,42 +251,64 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # remove OtherArableLand types from UnmanageLandLeaf and adjust allocation
     # grepl is used in filtering out OtherArableLand from UnmanagedLandLeaf
     # because entries in UnmanagedLandLeaf are formatted as landtype_basin.
-    create_noprot_unmgd <- function(data) {
+    create_noprot_unmgd <- function(data, base_data, min_data) {
       data %>%
         filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
-        mutate(allocation = (1 - aglu.PROTECT_LAND_FRACT) * allocation)
+        left_join(base_data, by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
+        left_join(min_data, by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
+        mutate(allocation = if_else(min_allocation < aglu.PROTECT_LAND_FRACT * base_allocation,
+                                    (1 - aglu.PROTECT_LAND_FRACT) * allocation,
+                                    allocation - aglu.PROTECT_LAND_FRACT * base_allocation)) %>%
+        select(-base_allocation, -min_allocation)
     } # end create_noprot
 
+    L223.LN3_UnmgdAllocation %>%
+      filter(!grepl("OtherArable", UnmanagedLandLeaf),
+             year == max(MODEL_BASE_YEARS)) %>%
+      rename(base_allocation = allocation) %>%
+      select(-year) ->
+      BYUnmgdAllocation
+
+    bind_rows(L223.LN3_HistUnmgdAllocation, L223.LN3_UnmgdAllocation) %>%
+      filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
+      group_by(region, LandAllocatorRoot, LandNode1, LandNode2, LandNode3, UnmanagedLandLeaf) %>%
+      summarize(min_allocation = min(allocation)) %>%
+      ungroup() ->
+      MINUnmgdAllocation
 
     # L223.LN3_HistUnmgdAllocation_noprot: historical unmanaged land cover, no protect
-    L223.LN3_HistUnmgdAllocation_noprot <- create_noprot_unmgd(L223.LN3_HistUnmgdAllocation)
-
+    L223.LN3_HistUnmgdAllocation_noprot <- create_noprot_unmgd(L223.LN3_HistUnmgdAllocation, BYUnmgdAllocation, MINUnmgdAllocation)
 
     # L223.LN3_UnmgdAllocation_noprot: unmanaged land cover, no protect
-    L223.LN3_UnmgdAllocation_noprot <- create_noprot_unmgd(L223.LN3_UnmgdAllocation)
+    L223.LN3_UnmgdAllocation_noprot <- create_noprot_unmgd(L223.LN3_UnmgdAllocation, BYUnmgdAllocation, MINUnmgdAllocation)
 
 
     # PROTECTED LANDS in the first nest
     # modified land allocations, different names, different nesting structure
 
     # function to process protected lands
-    create_prot_unmgd <- function(data) {
+    create_prot_unmgd <- function(data, base_data, min_data) {
       data %>%
         filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
+        left_join(base_data, by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
+        left_join(min_data, by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
         mutate(UnmanagedLandLeaf = paste0("Protected", UnmanagedLandLeaf),
                LandNode1 = UnmanagedLandLeaf,
                LandNode2 = NULL,
                LandNode3 = NULL,
-               allocation = aglu.PROTECT_LAND_FRACT * allocation)
+               allocation = if_else(min_allocation < aglu.PROTECT_LAND_FRACT * base_allocation,
+                                      aglu.PROTECT_LAND_FRACT * allocation,
+                                      aglu.PROTECT_LAND_FRACT * base_allocation)) %>%
+        select(-base_allocation, -min_allocation)
     }
 
 
     # L223.LN1_HistUnmgdAllocation_prot: historical unmanaged land cover, protected
-    L223.LN1_HistUnmgdAllocation_prot <- create_prot_unmgd(L223.LN3_HistUnmgdAllocation)
+    L223.LN1_HistUnmgdAllocation_prot <- create_prot_unmgd(L223.LN3_HistUnmgdAllocation, BYUnmgdAllocation, MINUnmgdAllocation)
 
 
     # L223.LN1_UnmgdAllocation_prot: unmanaged land cover, protected
-    L223.LN1_UnmgdAllocation_prot <- create_prot_unmgd(L223.LN3_UnmgdAllocation)
+    L223.LN1_UnmgdAllocation_prot <- create_prot_unmgd(L223.LN3_UnmgdAllocation, BYUnmgdAllocation, MINUnmgdAllocation)
 
 
     # L223.LN1_UnmgdCarbon_prot: unmanaged carbon info, protected
