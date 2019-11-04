@@ -251,6 +251,12 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # remove OtherArableLand types from UnmanageLandLeaf and adjust allocation
     # grepl is used in filtering out OtherArableLand from UnmanagedLandLeaf
     # because entries in UnmanagedLandLeaf are formatted as landtype_basin.
+    # Note: because of the NodeCarbonCalc, the use of protected lands for forests
+    # alters land use change emissions. To minimize the consequences,
+    # we'd like to keep protected lands constant in the historical period and
+    # equal to the aglu.PROTECT_LAND_FRACT * base_allocation (i.e., value in the final historical year).
+    # However, in some cases that results in negative land allocation. In those cases,
+    # we revert to calculating protected area as aglu.PROTECT_LAND_FRACT * allocation in the current year
     create_noprot_unmgd <- function(data, base_data, min_data) {
       data %>%
         filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
@@ -262,6 +268,8 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
         select(-base_allocation, -min_allocation)
     } # end create_noprot
 
+    # Find unmanaged land allocation in the base year. This is used
+    # to set the amount of protected land (if possible)
     L223.LN3_UnmgdAllocation %>%
       filter(!grepl("OtherArable", UnmanagedLandLeaf),
              year == max(MODEL_BASE_YEARS)) %>%
@@ -269,6 +277,10 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       select(-year) ->
       BYUnmgdAllocation
 
+    # Find the minimum amount of land in the entire historical period
+    # by land type and region. This is used to determine how protected
+    # lands in the historical period are calculated (either as fraction of
+    # current year or as a fraction of final historical year)
     bind_rows(L223.LN3_HistUnmgdAllocation, L223.LN3_UnmgdAllocation) %>%
       filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
       group_by(region, LandAllocatorRoot, LandNode1, LandNode2, LandNode3, UnmanagedLandLeaf) %>%
@@ -287,6 +299,12 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # modified land allocations, different names, different nesting structure
 
     # function to process protected lands
+    # Note: because of the NodeCarbonCalc, the use of protected lands for forests
+    # alters land use change emissions. To minimize the consequences,
+    # we'd like to keep protected lands constant in the historical period and
+    # equal to the aglu.PROTECT_LAND_FRACT * base_allocation (i.e., value in the final historical year).
+    # However, in some cases that results in negative land allocation. In those cases,
+    # we revert to calculating protected area as aglu.PROTECT_LAND_FRACT * allocation in the current year
     create_prot_unmgd <- function(data, base_data, min_data) {
       data %>%
         filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
