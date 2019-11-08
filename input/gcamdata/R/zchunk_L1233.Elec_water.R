@@ -76,6 +76,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
       gather_years %>%
       complete(nesting(region_GCAM3, plant_type, cooling_system, water_type),
                year = c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
+      filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       group_by(region_GCAM3, plant_type, cooling_system, water_type) %>%
       mutate(value = approx_fun(year, value, rule = 1)) %>%
       ungroup() ->
@@ -98,6 +99,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
       # ^^ non-restrictive join required as A23 lacks data for "no cooling" plant type
       complete(nesting(sector, fuel, technology, cooling_system, water_type, plant_type, iso, region_GCAM3),
                year = HISTORICAL_YEARS) %>%  # << Fill out all years for "no cooling" plant type
+      filter(year %in% HISTORICAL_YEARS) %>%
       mutate(value = if_else(plant_type == "no cooling", 1, value)) %>%
       # ^^ Set cooling system share to 1 for technologies with no cooling
       rename(share = value) -> L1233.weights_ctry_elec_F_Yh_cool

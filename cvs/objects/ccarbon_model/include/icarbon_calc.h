@@ -190,6 +190,10 @@ public:
      * \return Annual net land use change emission for the year.
      */
     virtual double getNetLandUseChangeEmission( const int aYear ) const = 0;
+    
+    virtual double getNetLandUseChangeEmissionAbove( const int aYear ) const = 0;
+    
+    virtual double getNetLandUseChangeEmissionBelow( const int aYear ) const = 0;
 
     virtual double getActualAboveGroundCarbonDensity( const int aYear ) const = 0;
     

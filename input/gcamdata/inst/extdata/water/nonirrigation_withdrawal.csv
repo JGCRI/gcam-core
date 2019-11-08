@@ -1,0 +1,799 @@
+# File: nonirrigation_withdrawal.csv
+# Title: Nonirrigation withdrawal by country
+# Description: 2005 water demands by iso country from gridded data downscaled from the 14 region GCAM water demands.  This should be revised with new gridded data from the 32 region GCAM water demands.
+# Units: km^3/yr
+# Source: See description.
+# Column types: iccicciiicnnnnn
+# ----------
+FID_,FIPS_CNTRY,ISO_3DIGIT,ISO_NUM,LONG_NAME,ISOSHRTNAM,GCAM_14_re,GCAM_30_re,GCAM_ID_1,Basin_na_1,Municipal,Electricity,Livestock,Manufacturing,Mining
+0,FK,FLK,238,Falkland Islands (Islas Malvinas),Falkland Islands (Malvinas),10,13,215,South_Argentina_South_Atlantic_Coast,0,0,0,0,0
+1,FG,GUF,254,Department of Guiana,French Guiana,10,25,156,Orinoco,0,0,0,0,0
+2,FG,GUF,254,Department of Guiana,French Guiana,10,25,161,Northeast_South_America_South_Atlantic_Coast,0.010332,0.001791,1.10E-04,0.002499,6.22E-04
+3,GY,GUY,328,Co-operative Republic of Guyana,Guyana,10,25,156,Orinoco,0.011052,0.001916,3.44E-04,0.002671,6.68E-04
+4,GY,GUY,328,Co-operative Republic of Guyana,Guyana,10,25,161,Northeast_South_America_South_Atlantic_Coast,0.058141,0.010078,0.002058,0.01405,0.003508
+5,PC,PCN,612,"Pitcairn, Henderson, Ducie, and Oeno Isl",Pitcairn,10,29,26,England_and_Wales,0,0,0,0,0
+6,SX,SGS,239,South Georgia and the South Sandwich Is,South Georgia and the South Sandwich Islands,0,13,216,Antarctica,0,0,0,0,0
+7,SH,SHN,654,St. Helena,Saint Helena,9,13,182,Saint_Helena,0,0,0,0,0
+8,NS,SUR,740,Republic of Suriname,Suriname,10,25,156,Orinoco,0.003,5.20E-04,3.60E-05,7.25E-04,1.81E-04
+9,NS,SUR,740,Republic of Suriname,Suriname,10,25,161,Northeast_South_America_South_Atlantic_Coast,0.021444,0.003716,0.001039,0.005185,0.001294
+10,TD,TTO,780,Republic of Trinidad and Tobago,Trinidad and Tobago,10,9,143,Caribbean_Coast,0.079842,0.013838,0,0.019301,0.004825
+11,VE,VEN,862,Bolivarian Republic of Venezuela,Venezuela,10,25,143,Caribbean_Coast,1.87764,0.325433,0.05927,0.453907,0.113468
+12,VE,VEN,862,Bolivarian Republic of Venezuela,Venezuela,10,25,156,Orinoco,0.649683,0.112598,0.083935,0.157048,0.039275
+13,VE,VEN,862,Bolivarian Republic of Venezuela,Venezuela,10,25,161,Northeast_South_America_South_Atlantic_Coast,0.022602,0.003918,0.00126,0.005465,0.001368
+14,VE,VEN,862,Bolivarian Republic of Venezuela,Venezuela,10,25,166,Magdalena,0,0,0,0,0
+15,AQ,ASM,16,Territory of American Samoa,American Samoa,11,29,176,Samoa,0,0,0,0,0
+16,CW,COK,184,Cook Islands,Cook Islands,5,29,201,New_Zealand,0,0,0,0,0
+17,FP,PYF,258,Territory of French Polynesia,French Polynesia,10,29,41,France_West_Coast,0,0,0,0,0
+18,DQ,NA,581,Jarvis Island,United States Minor Outlying Islands,11,1,176,Wake_Marshall_Islands,0,0,0,0,0
+19,NE,NIU,570,Niue,Niue,5,29,201,New_Zealand,0,0,0,0,0
+20,WS,WSM,882,Independent State of Samoa,Samoa,11,29,176,Samoa,0,0,0,0,0
+21,TN,TON,776,Kingdom of Tonga,Tonga,11,29,176,Tonga,0,0,0,0,0
+22,WF,WLF,876,Territory of the Wallis and Futuna Islan,Wallis and Futuna,5,13,176,Wallis_and_Futuna,0,0,0,0,0
+23,AR,ARG,32,Argentine Republic,Argentina,10,31,169,South_Chile_Pacific_Coast,0.019967,0.003458,0.001347,0.004828,0.001208
+24,AR,ARG,32,Argentine Republic,Argentina,10,31,200,La_Puna_Region,0.008599,0.00149,5.58E-04,0.00208,5.21E-04
+25,AR,ARG,32,Argentine Republic,Argentina,10,31,203,Mar_Chiquita,0.263965,0.045749,0.010078,0.063812,0.015948
+26,AR,ARG,32,Argentine Republic,Argentina,10,31,205,Salinas_Grandes,0.108788,0.018854,0.00846,0.026297,0.006578
+27,AR,ARG,32,Argentine Republic,Argentina,10,31,206,La_Plata,2.09184,0.362556,0.214927,0.50569,0.126409
+28,AR,ARG,32,Argentine Republic,Argentina,10,31,207,North_Chile_Pacific_Coast,1.64E-04,2.80E-05,0,4.00E-05,1.00E-05
+29,AR,ARG,32,Argentine Republic,Argentina,10,31,209,Pampas_Region,0.173054,0.029996,0.058136,0.041833,0.010456
+30,AR,ARG,32,Argentine Republic,Argentina,10,31,210,North_Argentina_South_Atlantic_Coast,0.335517,0.058148,0.1184,0.081108,0.020282
+31,AR,ARG,32,Argentine Republic,Argentina,10,31,212,South_America_Colorado,0.307998,0.053372,0.018318,0.074461,0.018619
+32,AR,ARG,32,Argentine Republic,Argentina,10,31,213,Negro,0.130742,0.022655,0.008091,0.031611,0.007902
+33,AR,ARG,32,Argentine Republic,Argentina,10,31,214,Central_Patagonia_Highlands,0.010955,0.001893,0.009132,0.002653,6.64E-04
+34,AR,ARG,32,Argentine Republic,Argentina,10,31,215,South_Argentina_South_Atlantic_Coast,0.167402,0.029002,0.027615,0.04048,0.010125
+35,BL,BOL,68,Republic of Bolivia,Bolivia,10,26,156,Orinoco,0.704575,0.122095,0.060279,0.170338,0.042605
+36,BL,BOL,68,Republic of Bolivia,Bolivia,10,26,200,La_Puna_Region,0.099503,0.017247,0.002853,0.024057,0.006019
+37,BL,BOL,68,Republic of Bolivia,Bolivia,10,26,206,La_Plata,0.145906,0.025283,0.015826,0.035275,0.008825
+38,BL,BOL,68,Republic of Bolivia,Bolivia,10,26,207,North_Chile_Pacific_Coast,0,0,0,0,0
+39,BR,BRA,76,Federative Republic of Brazil,Brazil,10,7,156,Orinoco,1.50669,0.261148,0.104374,0.364252,0.091016
+40,BR,BRA,76,Federative Republic of Brazil,Brazil,10,7,161,Northeast_South_America_South_Atlantic_Coast,0.033994,0.005893,3.48E-04,0.008219,0.002054
+41,BR,BRA,76,Federative Republic of Brazil,Brazil,10,7,168,Amazon,0.075221,0.013038,0.002452,0.018186,0.004548
+42,BR,BRA,76,Federative Republic of Brazil,Brazil,10,7,172,North_Brazil_South_Atlantic_Coast,0.453763,0.078651,0.047694,0.109693,0.027421
+43,BR,BRA,76,Federative Republic of Brazil,Brazil,10,7,174,Tocantins,1.19498,0.207121,0.310523,0.288885,0.072201
+44,BR,BRA,76,Federative Republic of Brazil,Brazil,10,7,186,East_Brazil_South_Atlantic_Coast,1.53764,0.266508,0.069927,0.37171,0.092927
+45,BR,BRA,76,Federative Republic of Brazil,Brazil,10,7,187,Parnaiba,0.455848,0.079013,0.038947,0.110196,0.027549
+46,BR,BRA,76,Federative Republic of Brazil,Brazil,10,7,192,Sao_Francisco,1.18891,0.206062,0.142604,0.287417,0.071846
+47,BR,BRA,76,Federative Republic of Brazil,Brazil,10,7,195,Uruguay_Brazil_South_Atlantic_Coast,5.35523,0.928173,0.293108,1.29459,0.323624
+48,BR,BRA,76,Federative Republic of Brazil,Brazil,10,7,206,La_Plata,6.68422,1.15851,0.938226,1.61587,0.403937
+49,CI,CHL,152,Republic of Chile,Chile,10,26,169,South_Chile_Pacific_Coast,0.520266,0.09017,0.036379,0.125775,0.031445
+50,CI,CHL,152,Republic of Chile,Chile,10,26,180,Peru_Pacific_Coast,0.002474,4.29E-04,1.29E-04,5.98E-04,1.50E-04
+51,CI,CHL,152,Republic of Chile,Chile,10,26,200,La_Puna_Region,0.011028,0.001912,8.70E-05,0.002666,6.67E-04
+52,CI,CHL,152,Republic of Chile,Chile,10,26,205,Salinas_Grandes,0,0,0,0,0
+53,CI,CHL,152,Republic of Chile,Chile,10,26,207,North_Chile_Pacific_Coast,1.00961,0.174989,0.00704,0.244066,0.061008
+54,CI,CHL,152,Republic of Chile,Chile,10,26,212,South_America_Colorado,0,0,0,0,0
+55,CI,CHL,152,Republic of Chile,Chile,10,26,213,Negro,0,0,0,0,0
+56,CI,CHL,152,Republic of Chile,Chile,10,26,215,South_Argentina_South_Atlantic_Coast,0.019315,0.003349,0.001331,0.004668,0.001166
+57,EC,ECU,218,Republic of Ecuador,Ecuador,10,26,156,Orinoco,0.403561,0.069945,0.012842,0.097556,0.024387
+58,EC,ECU,218,Republic of Ecuador,Ecuador,10,26,157,Colombia_Ecuador_Pacific_Coast,0.911864,0.158043,0.036704,0.220434,0.055105
+59,EC,ECU,218,Republic of Ecuador,Ecuador,10,26,169,South_Chile_Pacific_Coast,0.013233,0.002294,0,0.003199,8.00E-04
+60,EC,ECU,218,Republic of Ecuador,Ecuador,10,26,180,Peru_Pacific_Coast,0.028067,0.004865,0.002565,0.006785,0.001697
+61,PA,PRY,600,Republic of Paraguay,Paraguay,10,26,206,La_Plata,0.655161,0.113548,0.092639,0.158376,0.039585
+62,PE,PER,604,Republic of Peru,Peru,10,26,156,Orinoco,1.04391,0.18091,0.04379,0.252339,0.063099
+63,PE,PER,604,Republic of Peru,Peru,10,26,157,Colombia_Ecuador_Pacific_Coast,0,0,0,0,0
+64,PE,PER,604,Republic of Peru,Peru,10,26,180,Peru_Pacific_Coast,1.65962,0.287646,0.018391,0.401201,0.100295
+65,PE,PER,604,Republic of Peru,Peru,10,26,200,La_Puna_Region,0.110046,0.019073,0.00366,0.026604,0.006652
+66,PE,PER,604,Republic of Peru,Peru,10,26,207,North_Chile_Pacific_Coast,0,0,0,0,0
+67,UY,URY,858,Oriental Republic of Uruguay,Uruguay,10,26,195,Uruguay_Brazil_South_Atlantic_Coast,0.032444,0.005624,0.020441,0.007844,0.001961
+68,UY,URY,858,Oriental Republic of Uruguay,Uruguay,10,26,206,La_Plata,0.317717,0.055069,0.08844,0.076808,0.019199
+69,AV,AIA,660,Anguilla,Anguilla,10,9,101,Caribbean,0,0,0,0,0
+70,AC,ATG,28,Antigua and Barbuda,Antigua and Barbuda,10,9,101,Caribbean,0,0,0,0,0
+71,VI,VGB,92,British Virgin Islands,"Virgin Islands, British",10,13,101,Caribbean,0,0,0,0,0
+72,MH,MSR,500,Montserrat,Montserrat,10,9,101,Caribbean,0,0,0,0,0
+73,RQ,PRI,630,Commonwealth of Puerto Rico,Puerto Rico,1,1,101,Caribbean,0.918293,0,0.002817,0.328617,0.031164
+74,SC,KNA,659,Federation of Saint Kitts and Nevis,Saint Kitts and Nevis,10,9,101,Caribbean,0,0,0,0,0
+75,VQ,VIR,850,United States Virgin Islands,"Virgin Islands, U.S.",10,1,101,Caribbean,0,0,0,0,0
+76,FQ,NA,581,Baker Island,United States Minor Outlying Islands,11,1,176,Wake_Marshall_Islands,0,0,0,0,0
+77,CA,CAN,124,Canada,Canada,2,8,2,Northwest_Territories,0.107933,0.341212,0.004946,0.066489,0.01212
+78,CA,CAN,124,Canada,Canada,2,8,7,Pacific_and_Arctic_Coast,0.197325,0.623798,6.66E-04,0.121562,0.022151
+79,CA,CAN,124,Canada,Canada,2,8,10,Mackenzie,0.510258,1.61314,0.011209,0.314337,0.05727
+80,CA,CAN,124,Canada,Canada,2,8,15,Hudson_Bay_Coast,0.172437,0.545129,0.005286,0.106228,0.019355
+81,CA,CAN,124,Canada,Canada,2,8,19,Atlantic_Ocean_Seaboard,0.306093,0.967692,0.002567,0.188572,0.034345
+82,CA,CAN,124,Canada,Canada,2,8,23,Saskatchewan_Nelson,1.97822,6.25933,0.082294,1.21873,0.222146
+83,CA,CAN,124,Canada,Canada,2,8,27,Fraser,0.3984,1.25952,0.003336,0.245441,0.044704
+84,CA,CAN,124,Canada,Canada,2,8,34,Churchill,0.008737,0.027624,2.91E-04,0.005382,9.83E-04
+85,CA,CAN,124,Canada,Canada,2,8,40,St_Lawrence,0.343161,1.08489,0.002458,0.211413,0.038498
+86,CA,CAN,124,Canada,Canada,2,8,223,Missouri_River_Basin,0.01239,0.039171,9.33E-04,0.007633,0.00139
+87,CA,CAN,124,Canada,Canada,2,8,227,Great_Lakes_Basin,4.00869,12.8037,0.039764,2.39328,0.456568
+88,CA,CAN,124,Canada,Canada,2,8,229,Pacific_Northwest_Basin,0.118751,0.375427,8.87E-04,0.073159,0.013324
+89,CA,CAN,124,Canada,Canada,2,8,232,New_England_Basin,0.081043,0.252427,7.45E-04,0.047215,0.009806
+90,GT,GTM,320,Republic of Guatemala,Guatemala,10,9,111,Yucatan_Peninsula,0.492692,0.085393,0.007023,0.119105,0.029774
+91,GT,GTM,320,Republic of Guatemala,Guatemala,10,9,133,Grijalva_Usumacinta,0.447404,0.077544,0.003201,0.108155,0.027036
+92,GT,GTM,320,Republic of Guatemala,Guatemala,10,9,135,Southern_Central_America,0.446856,0.077449,0.011152,0.108024,0.027005
+93,HQ,NA,581,Howland Island,United States Minor Outlying Islands,11,1,176,Wake_Marshall_Islands,0,0,0,0,0
+94,JQ,NA,581,Johnston Atoll,United States Minor Outlying Islands,0,1,234,Hawaii,0,0,0,0,0
+95,KR,KIR,296,Republic of Kiribati,Kiribati,11,29,176,Wake_Marshall_Islands,0,0,0,0,0
+96,MX,MEX,484,United Mexican States,Mexico,10,20,91,Baja_California,0.25457,0.042108,0.002135,0.058609,0.014684
+97,MX,MEX,484,United Mexican States,Mexico,10,20,96,Mexico_Northwest_Coast,1.20583,0.208991,0.037035,0.291498,0.072871
+98,MX,MEX,484,United Mexican States,Mexico,10,20,105,North_Gulf,0.694691,0.099513,0.019713,0.174215,0.034696
+99,MX,MEX,484,United Mexican States,Mexico,10,20,111,Yucatan_Peninsula,0.50192,0.086996,0.009937,0.121333,0.030334
+100,MX,MEX,484,United Mexican States,Mexico,10,20,114,Mexico_Interior,0.842533,0.146034,0.028354,0.203675,0.050915
+101,MX,MEX,484,United Mexican States,Mexico,10,20,115,Pacific_Central_Coast,0.269291,0.046676,0.022928,0.065096,0.016275
+102,MX,MEX,484,United Mexican States,Mexico,10,20,130,Papaloapan,0.358761,0.062179,0.017946,0.086726,0.02168
+103,MX,MEX,484,United Mexican States,Mexico,10,20,131,Rfo_Lerma,1.37501,0.238319,0.031695,0.332396,0.083098
+104,MX,MEX,484,United Mexican States,Mexico,10,20,132,Rfo_Verde,1.86043,0.322449,0.020149,0.449745,0.112433
+105,MX,MEX,484,United Mexican States,Mexico,10,20,133,Grijalva_Usumacinta,0.481839,0.083513,0.010194,0.116483,0.029119
+106,MX,MEX,484,United Mexican States,Mexico,10,20,134,Rfo_Balsas,1.12033,0.194177,0.040671,0.270832,0.067702
+107,MX,MEX,484,United Mexican States,Mexico,10,20,135,Southern_Central_America,0.080187,0.013898,2.65E-04,0.019385,0.004846
+108,MX,MEX,484,United Mexican States,Mexico,10,20,136,Isthmus_of_Tehuantepec,0.298208,0.051686,0.018873,0.07209,0.018023
+109,MX,MEX,484,United Mexican States,Mexico,10,20,217,California_River_Basin,0.002692,0.004514,5.00E-05,2.60E-05,0.001574
+110,MX,MEX,484,United Mexican States,Mexico,10,20,221,Lower_Colorado_River_Basin,0.114386,0.018632,0.0027,0.016602,0.006495
+111,MX,MEX,484,United Mexican States,Mexico,10,20,225,Texas_Gulf_Coast_Basin,0,0,0,0,0
+112,MX,MEX,484,United Mexican States,Mexico,10,20,231,Rio_Grande_River_Basin,1.00882,0.163868,0.022475,0.250599,0.05713
+113,MQ,NA,581,Midway Islands,United States Minor Outlying Islands,0,1,234,Hawaii,0,0,0,0,0
+114,BB,BRB,52,Barbados,Barbados,10,9,143,Caribbean_Coast,0,0,0,0,0
+115,DO,DMA,212,Commonwealth of Dominica,Dominica,10,9,101,Caribbean,0,0,0,0,0
+116,GJ,GRD,308,Grenada,Grenada,10,9,143,Caribbean_Coast,0,0,0,0,0
+117,GP,GLP,312,Department of Guadeloupe,Guadeloupe,10,9,101,Caribbean,0,0,0,0,0
+118,MB,MTQ,474,Department of Martinique,Martinique,3,9,143,Caribbean_Coast,0,0,0,0,0
+119,ST,LCA,662,St. Lucia,Saint Lucia,10,9,143,Caribbean_Coast,0,0,0,0,0
+120,SB,SPM,666,Territorial Collectivity of Saint Pierre,Saint Pierre and Miquelon,2,13,19,Atlantic_Ocean_Seaboard,0,0,0,0,0
+121,VC,VCT,670,St. Vincent and the Grenadines,Saint Vincent and the Grenadines,10,9,143,Caribbean_Coast,0,0,0,0,0
+122,AA,ABW,533,Aruba,Aruba,10,9,143,Caribbean_Coast,0,0,0,0,0
+123,BD,BMU,60,Bermuda,Bermuda,1,9,26,England_and_Wales,0,0,0,0,0
+124,DR,DOM,214,Dominican Republic,Dominican Republic,10,9,101,Caribbean,0.706772,0.122498,0.015027,0.170858,0.042713
+125,HA,HTI,332,Republic of Haiti,Haiti,10,9,101,Caribbean,0.784723,0.136009,0.012082,0.189699,0.047423
+126,JM,JAM,388,Jamaica,Jamaica,10,9,101,Caribbean,0.097148,0.016838,9.97E-04,0.023485,0.005871
+127,NT,ANT,530,Netherlands Antilles,Netherlands Antilles,10,9,143,Caribbean_Coast,0,0,0,0,0
+128,BF,BHS,44,Commonwealth of The Bahamas,Bahamas,10,9,101,Caribbean,0,0,6.00E-06,0,0
+129,TK,TCA,796,Turks and Caicos Islands,Turks and Caicos Islands,10,13,101,Caribbean,0,0,0,0,0
+130,BH,BLZ,84,Belize,Belize,10,9,111,Yucatan_Peninsula,0.01581,0.00274,3.40E-04,0.003823,9.55E-04
+131,BH,BLZ,84,Belize,Belize,10,9,133,Grijalva_Usumacinta,0,0,0,0,0
+132,CJ,CYM,136,Cayman Islands,Cayman Islands,10,9,101,Caribbean,0,0,0,0,0
+133,CO,COL,170,Republic of Colombia,Colombia,10,32,143,Caribbean_Coast,0.600382,0.104057,0.047464,0.145136,0.036283
+134,CO,COL,170,Republic of Colombia,Colombia,10,32,156,Orinoco,0.683417,0.118458,0.074995,0.165235,0.041301
+135,CO,COL,170,Republic of Colombia,Colombia,10,32,157,Colombia_Ecuador_Pacific_Coast,0.347155,0.060168,0.009658,0.08392,0.020978
+136,CO,COL,170,Republic of Colombia,Colombia,10,32,166,Magdalena,2.61057,0.452465,0.121026,0.631081,0.157762
+137,CS,CRI,188,Republic of Costa Rica,Costa Rica,10,9,135,Southern_Central_America,0.356575,0.061802,0.007282,0.086198,0.021548
+138,CU,CUB,192,Republic of Cuba,Cuba,10,9,101,Caribbean,0.909836,0.157691,0.030833,0.219948,0.054985
+139,ES,SLV,222,Republic of El Salvador,El Salvador,10,9,135,Southern_Central_America,0.321527,0.055727,0.008779,0.077727,0.01943
+140,HO,HND,340,Republic of Honduras,Honduras,10,9,111,Yucatan_Peninsula,0.054894,0.009514,0.001941,0.01327,0.003317
+141,HO,HND,340,Republic of Honduras,Honduras,10,9,135,Southern_Central_America,0.769054,0.133291,0.024054,0.185913,0.046476
+142,NU,NIC,558,Republic of Nicaragua,Nicaragua,10,9,135,Southern_Central_America,0.497023,0.086146,0.020286,0.120151,0.030038
+143,PM,PAN,591,Republic of Panama,Panama,10,9,135,Southern_Central_America,0.304683,0.052807,0.01091,0.073655,0.018414
+144,PM,PAN,591,Republic of Panama,Panama,10,9,143,Caribbean_Coast,0,0,1.40E-05,0,0
+145,PM,PAN,591,Republic of Panama,Panama,10,9,157,Colombia_Ecuador_Pacific_Coast,0.003707,6.42E-04,3.97E-04,8.96E-04,2.24E-04
+146,FO,FRO,234,Faroe Islands,Faroe Islands,3,13,16,Scotland,0,0,0,0,0
+147,GL,GRL,304,Greenland,Greenland,3,13,1,Arctic_Ocean_Islands,0,0,0,0,0
+148,GK,NA,0,Bailiwick of Guernsey,Guernsey,3,13,41,France_West_Coast,0,0,0,0,0
+149,IC,ISL,352,Republic of Iceland,Iceland,3,16,11,Iceland,0.024039,0.043123,4.80E-05,0.013667,8.42E-04
+150,EI,IRL,372,Ireland,Ireland,3,13,24,Ireland,0.353109,0.633454,0.05744,0.200786,0.012347
+151,IM,IMY,833,Isle of Man,United Kingdom,3,13,26,England_and_Wales,0,0,0,0,0
+152,JN,SJM,744,Jan Mayen,Svalbard and Jan Mayen,0,16,1,Arctic_Ocean_Islands,0,0,0,0,0
+153,JE,NA,0,Bailiwick of Jersey,United Kingdom,3,13,41,France_West_Coast,0,0,0,0,0
+154,UK,GBR,826,United Kingdom of Great Britain and Nort,United Kingdom,3,13,16,Scotland,0.766533,1.37511,0.017268,0.435863,0.026799
+155,UK,GBR,826,United Kingdom of Great Britain and Nort,United Kingdom,3,13,24,Ireland,0.165632,0.297134,0.016396,0.094184,0.005791
+156,UK,GBR,826,United Kingdom of Great Britain and Nort,United Kingdom,3,13,26,England_and_Wales,4.40829,7.90819,0.070073,2.50663,0.154129
+157,CV,CPV,132,Republic of Cape Verde,Cape Verde,9,5,142,Cape_Verde,0,0,0,0,0
+158,IV,CIV,384,Republic of Cote d'Ivoire,Cote d'Ivoire,9,5,142,Africa_West_Coast,0.496791,0.129898,0.012402,0.138616,0.052103
+159,IV,CIV,384,Republic of Cote d'Ivoire,Cote d'Ivoire,9,5,149,Niger,0.017314,0.004526,0.002158,0.00483,0.001816
+160,IV,CIV,384,Republic of Cote d'Ivoire,Cote d'Ivoire,9,5,160,Volta,0.011423,0.002986,3.83E-04,0.003187,0.001198
+161,GH,GHA,288,Republic of Ghana,Ghana,9,5,142,Africa_West_Coast,0.333945,0.087319,0.002794,0.093179,0.035025
+162,GH,GHA,288,Republic of Ghana,Ghana,9,5,160,Volta,0.337212,0.088174,0.01473,0.09409,0.035369
+163,GI,GIB,292,Gibraltar,Gibraltar,3,13,67,Spain_South_and_East_Coast,0,0,0,0,0
+164,LI,LBR,430,Republic of Liberia,Liberia,9,5,142,Africa_West_Coast,0.053976,0.014112,0.001092,0.015063,0.005659
+165,MO,MAR,504,Kingdom of Morocco,Morocco,9,3,80,Mediterranean_South_Coast,0.085058,0.022241,0.005168,0.023731,0.008923
+166,MO,MAR,504,Kingdom of Morocco,Morocco,9,3,86,Africa_North_West_Coast,0.656729,0.171724,0.035085,0.183237,0.068877
+167,MO,MAR,504,Kingdom of Morocco,Morocco,9,3,144,Africa_North_Interior,0.05581,0.014594,0.001377,0.01557,0.005854
+168,PO,PRT,620,Portuguese Republic,Portugal,3,13,60,Spain_Portugal_Atlantic_Coast,0.247718,0.444392,0.006261,0.140856,0.008659
+169,PO,PRT,620,Portuguese Republic,Portugal,3,13,71,Tagus,0.265638,0.476535,0.005462,0.151045,0.009288
+170,PO,PRT,620,Portuguese Republic,Portugal,3,13,74,Douro,0.107999,0.193743,0.003199,0.061411,0.003776
+171,PO,PRT,620,Portuguese Republic,Portugal,3,13,81,Guadiana,0.052444,0.094082,0.002476,0.029821,0.001833
+172,PO,PRT,620,Portuguese Republic,Portugal,3,13,86,Africa_North_West_Coast,0,0,0,0,0
+173,SP,ESP,724,Kingdom of Spain,Spain,3,13,41,France_West_Coast,0.00796,0.014279,8.27E-04,0.004526,2.78E-04
+174,SP,ESP,724,Kingdom of Spain,Spain,3,13,60,Spain_Portugal_Atlantic_Coast,0.41602,0.746311,0.019933,0.236557,0.014545
+175,SP,ESP,724,Kingdom of Spain,Spain,3,13,61,France_South_Coast,0,0,0,0,0
+176,SP,ESP,724,Kingdom of Spain,Spain,3,13,63,Mediterranean_Sea_Islands,0,0,0,0,0
+177,SP,ESP,724,Kingdom of Spain,Spain,3,13,64,Gironde,0,0,0,0,0
+178,SP,ESP,724,Kingdom of Spain,Spain,3,13,67,Spain_South_and_East_Coast,1.09273,1.96029,0.016473,0.621346,0.038208
+179,SP,ESP,724,Kingdom of Spain,Spain,3,13,71,Tagus,0.378599,0.679183,0.011115,0.215279,0.013239
+180,SP,ESP,724,Kingdom of Spain,Spain,3,13,73,Ebro,0.605971,1.08707,0.027926,0.344568,0.021184
+181,SP,ESP,724,Kingdom of Spain,Spain,3,13,74,Douro,0.507779,0.910923,0.016485,0.288735,0.01775
+182,SP,ESP,724,Kingdom of Spain,Spain,3,13,80,Mediterranean_South_Coast,0,0,0,0,0
+183,SP,ESP,724,Kingdom of Spain,Spain,3,13,81,Guadiana,0.19207,0.344558,0.00803,0.109213,0.006715
+184,SP,ESP,724,Kingdom of Spain,Spain,3,13,83,Guadalquivir,0.472293,0.847266,0.008464,0.268554,0.016513
+185,SP,ESP,724,Kingdom of Spain,Spain,3,13,86,Africa_North_West_Coast,0,0,0,0,0
+186,WI,ESH,732,Western Sahara,Western Sahara,9,3,86,Africa_North_West_Coast,0.057131,0.014939,2.80E-05,0.01594,0.005992
+187,WI,ESH,732,Western Sahara,Western Sahara,9,3,144,Africa_North_Interior,9.33E-04,2.44E-04,0,2.60E-04,9.80E-05
+188,UV,BFA,854,Burkina Faso,Burkina Faso,9,5,142,Africa_West_Coast,0.018122,0.004738,0.002128,0.005057,0.0019
+189,UV,BFA,854,Burkina Faso,Burkina Faso,9,5,149,Niger,0.113074,0.029565,0.022504,0.031549,0.011855
+190,UV,BFA,854,Burkina Faso,Burkina Faso,9,5,160,Volta,0.281872,0.073702,0.044675,0.078641,0.029557
+191,GV,GIN,324,Republic of Guinea,Guinea,9,5,142,Africa_West_Coast,0.193986,0.050721,0.019779,0.054125,0.020347
+192,GV,GIN,324,Republic of Guinea,Guinea,9,5,149,Niger,0.073657,0.019255,0.008473,0.02055,0.007726
+193,GV,GIN,324,Republic of Guinea,Guinea,9,5,152,Senegal,0.019076,0.004986,0.005795,0.005322,0.002001
+194,PU,GNB,624,Republic of Guinea-Bissau,Guinea-Bissau,9,5,142,Africa_West_Coast,0.026881,0.007029,0.004707,0.007501,0.00282
+195,ML,MLI,466,Republic of Mali,Mali,9,5,142,Africa_West_Coast,0.002465,6.44E-04,7.86E-04,6.88E-04,2.58E-04
+196,ML,MLI,466,Republic of Mali,Mali,9,5,144,Africa_North_Interior,0.011974,0.00313,0.002065,0.003344,0.001258
+197,ML,MLI,466,Republic of Mali,Mali,9,5,149,Niger,0.321862,0.084158,0.061059,0.089809,0.033756
+198,ML,MLI,466,Republic of Mali,Mali,9,5,152,Senegal,0.121754,0.031842,0.019808,0.033968,0.012769
+199,ML,MLI,466,Republic of Mali,Mali,9,5,160,Volta,0.026258,0.006865,0.005807,0.007328,0.002753
+200,MR,MRT,478,Islamic Republic of Mauritania,Mauritania,9,5,86,Africa_North_West_Coast,0.05474,0.014317,0.001737,0.015272,0.005742
+201,MR,MRT,478,Islamic Republic of Mauritania,Mauritania,9,5,144,Africa_North_Interior,0.008238,0.002157,0.002986,0.002297,8.64E-04
+202,MR,MRT,478,Islamic Republic of Mauritania,Mauritania,9,5,149,Niger,0,0,0,0,0
+203,MR,MRT,478,Islamic Republic of Mauritania,Mauritania,9,5,152,Senegal,0.045842,0.011991,0.021895,0.012787,0.004805
+204,SG,SEN,686,Republic of Senegal,Senegal,9,5,86,Africa_North_West_Coast,0,0,0,0,0
+205,SG,SEN,686,Republic of Senegal,Senegal,9,5,142,Africa_West_Coast,0.183193,0.047896,0.021682,0.051117,0.01921
+206,SG,SEN,686,Republic of Senegal,Senegal,9,5,152,Senegal,0.078339,0.020484,0.012287,0.021858,0.008213
+207,SL,SLE,694,Republic of Sierra Leone,Sierra Leone,9,5,142,Africa_West_Coast,0.115622,0.03023,0.005968,0.032261,0.012126
+208,SL,SLE,694,Republic of Sierra Leone,Sierra Leone,9,5,149,Niger,0,0,0,0,0
+209,GA,GMB,270,Republic of The Gambia,Gambia,9,5,142,Africa_West_Coast,0.021541,0.005633,0.003718,0.00601,0.002259
+210,DJ,DJI,262,Republic of Djibouti,Djibouti,9,2,100,Africa_Red_Sea_Gulf_of_Aden_Coast,0.023716,0.006201,0.002188,0.006617,0.002488
+211,DJ,DJI,262,Republic of Djibouti,Djibouti,9,2,179,Rift_Valley,0,0,0,0,0
+212,ER,ERI,232,State of Eritrea,Eritrea,9,2,87,Nile,0.048827,0.012767,0.008233,0.013624,0.005119
+213,ER,ERI,232,State of Eritrea,Eritrea,9,2,100,Africa_Red_Sea_Gulf_of_Aden_Coast,0.276567,0.072319,0.010904,0.077169,0.029008
+214,ER,ERI,232,State of Eritrea,Eritrea,9,2,179,Rift_Valley,0.003255,8.51E-04,0,9.08E-04,3.41E-04
+215,ET,ETH,231,Federal Democratic Republic of Ethiopia,Ethiopia,9,2,87,Nile,1.01884,0.266407,0.171623,0.284272,0.106846
+216,ET,ETH,231,Federal Democratic Republic of Ethiopia,Ethiopia,9,2,100,Africa_Red_Sea_Gulf_of_Aden_Coast,0.05032,0.01316,0.002334,0.014037,0.005279
+217,ET,ETH,231,Federal Democratic Republic of Ethiopia,Ethiopia,9,2,170,Shebelli_Juba,0.336189,0.087913,0.07915,0.093794,0.035261
+218,ET,ETH,231,Federal Democratic Republic of Ethiopia,Ethiopia,9,2,179,Rift_Valley,0.654133,0.171044,0.136521,0.182517,0.068605
+219,SU,SDN,736,Republic of the Sudan,Sudan,9,2,87,Nile,1.04827,0.27409,0.385672,0.292515,0.109916
+220,SU,SDN,736,Republic of the Sudan,Sudan,9,2,100,Africa_Red_Sea_Gulf_of_Aden_Coast,0.010027,0.002621,7.34E-04,0.002798,0.001051
+221,SU,SDN,736,Republic of the Sudan,Sudan,9,2,144,Africa_North_Interior,0.005675,0.001483,0.001362,0.001584,5.93E-04
+222,SU,SDN,736,Republic of the Sudan,Sudan,9,2,151,Lake_Chad,0.025136,0.006569,0.043254,0.007018,0.002634
+223,SU,SDN,736,Republic of the Sudan,Sudan,9,2,179,Rift_Valley,3.55E-04,9.30E-05,0.003473,9.90E-05,3.70E-05
+224,SU,SDN,736,Republic of the Sudan,Sudan,9,2,183,Congo,0,0,7.60E-05,0,0
+225,UG,UGA,800,Republic of Uganda,Uganda,9,2,87,Nile,0.338726,0.088572,0.073003,0.094512,0.035522
+226,UG,UGA,800,Republic of Uganda,Uganda,9,2,179,Rift_Valley,0,0,0,0,0
+227,UG,UGA,800,Republic of Uganda,Uganda,9,2,183,Congo,0,0,0,0,0
+228,GZ,PSE,0,Gaza Strip,"Palestinian Territory, Occupied",8,21,75,Mediterranean_Sea_East_Coast,0,0,0,0,0
+229,IZ,IRQ,368,Republic of Iraq,Iraq,8,21,72,Caspian_Sea_South_West_Coast,0,0,0,0,0
+230,IZ,IRQ,368,Republic of Iraq,Iraq,8,21,84,Tigris_Euphrates,2.23654,0.424201,0.019696,1.02222,0.081593
+231,IZ,IRQ,368,Republic of Iraq,Iraq,8,21,88,Persian_Gulf_Coast,0,0,0,0,0
+232,IZ,IRQ,368,Republic of Iraq,Iraq,8,21,94,Arabian_Peninsula,0,0,1.00E-05,0,0
+233,IZ,IRQ,368,Republic of Iraq,Iraq,8,21,99,Eastern_Jordan_Syria,0,0,0,0,0
+234,IS,ISR,376,State of Israel,Israel,8,21,75,Mediterranean_Sea_East_Coast,0.237071,0.044965,0.002476,0.108354,0.008648
+235,IS,ISR,376,State of Israel,Israel,8,21,95,Dead_Sea,0.049761,0.010305,6.18E-04,0.020594,0.002642
+236,IS,ISR,376,State of Israel,Israel,8,21,98,Sinai_Peninsula,0,0,0,0,0
+237,JO,JOR,400,Hashemite Kingdom of Jordan,Jordan,8,21,84,Tigris_Euphrates,0,0,0,0,0
+238,JO,JOR,400,Hashemite Kingdom of Jordan,Jordan,8,21,93,Red_Sea_East_Coast,0.009344,0.001772,5.00E-06,0.00427,3.41E-04
+239,JO,JOR,400,Hashemite Kingdom of Jordan,Jordan,8,21,95,Dead_Sea,0.457842,0.086837,0.002319,0.20926,0.016702
+240,JO,JOR,400,Hashemite Kingdom of Jordan,Jordan,8,21,98,Sinai_Peninsula,0.03789,0.007186,3.10E-05,0.017318,0.001382
+241,JO,JOR,400,Hashemite Kingdom of Jordan,Jordan,8,21,99,Eastern_Jordan_Syria,0.058715,0.011135,4.86E-04,0.026836,0.002142
+242,KZ,KAZ,398,Republic of Kazakhstan,Kazakhstan,6,10,18,Volga,0.003049,0.007347,6.30E-05,0.001907,4.16E-04
+243,KZ,KAZ,398,Republic of Kazakhstan,Kazakhstan,6,10,38,Ural,0.094693,0.228235,0.003327,0.059242,0.012895
+244,KZ,KAZ,398,Republic of Kazakhstan,Kazakhstan,6,10,42,Gobi_Interior,0.047746,0.110541,0.001584,0.029616,0.006129
+245,KZ,KAZ,398,Republic of Kazakhstan,Kazakhstan,6,10,45,Caspian_Sea_Coast,0.097626,0.235316,0.004402,0.061067,0.013293
+246,KZ,KAZ,398,Republic of Kazakhstan,Kazakhstan,6,10,52,Caspian_Sea_East_Coast,0.032113,0.077411,6.83E-04,0.020089,0.004372
+247,KZ,KAZ,398,Republic of Kazakhstan,Kazakhstan,6,10,56,Ob,0.574653,1.37536,0.020412,0.358962,0.077435
+248,KZ,KAZ,398,Republic of Kazakhstan,Kazakhstan,6,10,58,Amu_Darya,0.025428,0.061293,8.06E-04,0.015907,0.003461
+249,KZ,KAZ,398,Republic of Kazakhstan,Kazakhstan,6,10,68,Lake_Balkash,0.280802,0.676835,0.009143,0.17567,0.038222
+250,KZ,KAZ,398,Republic of Kazakhstan,Kazakhstan,6,10,76,Syr_Darya,0.493271,1.18893,0.019854,0.308584,0.067155
+251,KZ,KAZ,398,Republic of Kazakhstan,Kazakhstan,6,10,85,Tarim_Interior,0,0,1.30E-05,0,0
+252,NO,NOR,578,Kingdom of Norway,Norway,3,16,8,Scandinavia_North_Coast,0.356597,0.639727,0.00856,0.202767,0.012468
+253,NO,NOR,578,Kingdom of Norway,Norway,3,16,12,Sweden,0.006244,0.011202,6.24E-04,0.003549,2.18E-04
+254,RS,RUS,643,Russian Federation,Russian Federation,6,23,1,Arctic_Ocean_Islands,8.47E-04,0.002041,0,5.29E-04,1.15E-04
+255,RS,RUS,643,Russian Federation,Russian Federation,6,23,3,Siberia_North_Coast,0.035378,0.085217,1.05E-04,0.022101,0.004824
+256,RS,RUS,643,Russian Federation,Russian Federation,6,23,4,Siberia_West_Coast,0.447666,1.07867,0.00128,0.279879,0.060978
+257,RS,RUS,643,Russian Federation,Russian Federation,6,23,5,Kara_Sea_Coast,0.062536,0.150683,1.00E-06,0.039094,0.008517
+258,RS,RUS,643,Russian Federation,Russian Federation,6,23,6,Lena,0.466183,1.12336,0.00525,0.291466,0.063473
+259,RS,RUS,643,Russian Federation,Russian Federation,6,23,8,Scandinavia_North_Coast,0.209796,0.505112,5.16E-04,0.131183,0.028472
+260,RS,RUS,643,Russian Federation,Russian Federation,6,23,9,Russia_Barents_Sea_Coast,0.246288,0.593504,0.001285,0.154009,0.033534
+261,RS,RUS,643,Russian Federation,Russian Federation,6,23,13,Finland,0.014033,0.032408,2.02E-04,0.008646,0.001677
+262,RS,RUS,643,Russian Federation,Russian Federation,6,23,14,Northern_Dvina,0.205785,0.495949,0.002246,0.128714,0.028012
+263,RS,RUS,643,Russian Federation,Russian Federation,6,23,17,Neva,0.751463,1.81121,0.004494,0.470118,0.102291
+264,RS,RUS,643,Russian Federation,Russian Federation,6,23,18,Volga,4.71819,11.372,0.086849,2.95172,0.64226
+265,RS,RUS,643,Russian Federation,Russian Federation,6,23,20,Baltic_Sea_Coast,0.036946,0.089052,6.68E-04,0.023114,0.005029
+266,RS,RUS,643,Russian Federation,Russian Federation,6,23,22,Narva,0.055236,0.133132,0.001059,0.034554,0.007518
+267,RS,RUS,643,Russian Federation,Russian Federation,6,23,25,Daugava,0.039551,0.095327,9.66E-04,0.024744,0.005382
+268,RS,RUS,643,Russian Federation,Russian Federation,6,23,33,Poland_Coast,0.062225,0.145839,0.001849,0.03166,9.36E-04
+269,RS,RUS,643,Russian Federation,Russian Federation,6,23,35,Neman,0.003179,0.007662,1.78E-04,0.001989,4.33E-04
+270,RS,RUS,643,Russian Federation,Russian Federation,6,23,37,Russia_South_East_Coast,0.122285,0.293254,0.001494,0.076418,0.016526
+271,RS,RUS,643,Russian Federation,Russian Federation,6,23,38,Ural,0.248571,0.599125,0.007157,0.155513,0.033837
+272,RS,RUS,643,Russian Federation,Russian Federation,6,23,39,Dnieper,0.294193,0.709077,0.0079,0.184045,0.040049
+273,RS,RUS,643,Russian Federation,Russian Federation,6,23,42,Gobi_Interior,0.005171,0.011094,5.76E-04,0.003157,5.93E-04
+274,RS,RUS,643,Russian Federation,Russian Federation,6,23,43,Amur,0.799384,1.81778,0.010776,0.493998,0.09994
+275,RS,RUS,643,Russian Federation,Russian Federation,6,23,45,Caspian_Sea_Coast,0.292119,0.704084,0.012613,0.182754,0.039766
+276,RS,RUS,643,Russian Federation,Russian Federation,6,23,47,Black_Sea_North_Coast,0.257696,0.621116,0.008297,0.161219,0.035078
+277,RS,RUS,643,Russian Federation,Russian Federation,6,23,48,Yenisey,0.910928,2.18749,0.012606,0.569323,0.123362
+278,RS,RUS,643,Russian Federation,Russian Federation,6,23,53,Don,0.850872,2.05082,0.032812,0.532315,0.115824
+279,RS,RUS,643,Russian Federation,Russian Federation,6,23,56,Ob,2.14383,5.167,0.039394,1.34108,0.29185
+280,RS,RUS,643,Russian Federation,Russian Federation,6,23,70,Black_Sea_South_Coast,0.012104,0.029173,1.63E-04,0.007572,0.001648
+281,RS,RUS,643,Russian Federation,Russian Federation,6,23,72,Caspian_Sea_South_West_Coast,0,0,0,0,0
+282,RS,RUS,643,Russian Federation,Russian Federation,6,23,76,Syr_Darya,0.002149,0.005179,1.04E-04,0.001344,2.92E-04
+283,SW,SWE,752,Kingdom of Sweden,Sweden,3,13,8,Scandinavia_North_Coast,0.003241,0.005816,7.50E-05,0.001843,1.13E-04
+284,SW,SWE,752,Kingdom of Sweden,Sweden,3,13,12,Sweden,0.644066,1.1554,0.018754,0.366222,0.022516
+285,WE,NA,0,West Bank,"Palestinian Territory, Occupied",8,21,75,Mediterranean_Sea_East_Coast,0.126599,0.024011,2.80E-04,0.057863,0.004618
+286,WE,NA,0,West Bank,"Palestinian Territory, Occupied",8,21,95,Dead_Sea,0,0,0,0,0
+287,AG,DZA,12,People's Democratic Republic of Algeria,Algeria,9,3,80,Mediterranean_South_Coast,0.477434,0.12484,0.019265,0.133216,0.050074
+288,AG,DZA,12,People's Democratic Republic of Algeria,Algeria,9,3,86,Africa_North_West_Coast,0,0,3.90E-05,0,0
+289,AG,DZA,12,People's Democratic Republic of Algeria,Algeria,9,3,144,Africa_North_Interior,0.41109,0.107493,0.011844,0.114705,0.043118
+290,AG,DZA,12,People's Democratic Republic of Algeria,Algeria,9,3,149,Niger,0.006325,0.001654,1.80E-05,0.001765,6.64E-04
+291,AG,DZA,12,People's Democratic Republic of Algeria,Algeria,9,3,151,Lake_Chad,0.001009,2.64E-04,0,2.81E-04,1.06E-04
+292,AN,AND,20,Principality of Andorra,Andorra,3,13,73,Ebro,0,0,0,0,0
+293,LY,LBY,434,Great Socialist People's Libyan Arab Jam,Libyan Arab Jamahiriya,9,3,80,Mediterranean_South_Coast,0.067242,0.017583,0.003023,0.018762,0.007052
+294,LY,LBY,434,Great Socialist People's Libyan Arab Jam,Libyan Arab Jamahiriya,9,3,144,Africa_North_Interior,0.051417,0.013432,0.00179,0.014352,0.005398
+295,LY,LBY,434,Great Socialist People's Libyan Arab Jam,Libyan Arab Jamahiriya,9,3,151,Lake_Chad,0,0,0,0,0
+296,MN,MCO,492,Principality of Monaco,Monaco,3,13,61,France_South_Coast,0,0,0,0,0
+297,TS,TUN,788,Tunisian Republic,Tunisia,9,3,80,Mediterranean_South_Coast,0.286545,0.074925,0.01092,0.079953,0.030052
+298,TS,TUN,788,Tunisian Republic,Tunisia,9,3,144,Africa_North_Interior,0.042808,0.011193,8.08E-04,0.011946,0.004489
+299,BN,BEN,204,Republic of Benin,Benin,9,5,142,Africa_West_Coast,0.123296,0.03224,0.006811,0.034401,0.012932
+300,BN,BEN,204,Republic of Benin,Benin,9,5,149,Niger,0.049214,0.012867,0.009325,0.013731,0.005163
+301,BN,BEN,204,Republic of Benin,Benin,9,5,160,Volta,0.01048,0.00274,0.001541,0.002924,0.0011
+302,CM,CMR,120,Republic of Cameroon,Cameroon,9,5,149,Niger,0.076424,0.019984,0.017569,0.021322,0.008018
+303,CM,CMR,120,Republic of Cameroon,Cameroon,9,5,151,Lake_Chad,0.091143,0.023834,0.015302,0.025432,0.00956
+304,CM,CMR,120,Republic of Cameroon,Cameroon,9,5,162,Gulf_of_Guinea,0.316441,0.082748,0.018596,0.088301,0.033186
+305,CM,CMR,120,Republic of Cameroon,Cameroon,9,5,183,Congo,0.038586,0.010089,0.002873,0.010771,0.004046
+306,CT,CAF,140,Central African Republic,Central African Republic,9,5,87,Nile,4.44E-04,1.16E-04,2.34E-04,1.24E-04,4.70E-05
+307,CT,CAF,140,Central African Republic,Central African Republic,9,5,151,Lake_Chad,0.025451,0.006651,0.014776,0.007104,0.002668
+308,CT,CAF,140,Central African Republic,Central African Republic,9,5,162,Gulf_of_Guinea,0,0,0,0,0
+309,CT,CAF,140,Central African Republic,Central African Republic,9,5,183,Congo,0.146426,0.038284,0.020285,0.040861,0.015351
+310,CD,TCD,148,Republic of Chad,Chad,9,5,144,Africa_North_Interior,0.006188,0.001618,2.77E-04,0.001726,6.53E-04
+311,CD,TCD,148,Republic of Chad,Chad,9,5,149,Niger,0.022021,0.005758,0.003453,0.006144,0.002311
+312,CD,TCD,148,Republic of Chad,Chad,9,5,151,Lake_Chad,0.234161,0.061233,0.065306,0.065327,0.024587
+313,EK,GNQ,226,Republic of Equatorial Guinea,Equatorial Guinea,9,5,162,Gulf_of_Guinea,0.004465,0.001165,6.70E-05,0.001247,4.69E-04
+314,NG,NER,562,Republic of Niger,Niger,9,5,144,Africa_North_Interior,0,0,0,0,0
+315,NG,NER,562,Republic of Niger,Niger,9,5,149,Niger,0.364969,0.095426,0.032071,0.101832,0.038272
+316,NG,NER,562,Republic of Niger,Niger,9,5,151,Lake_Chad,0.147081,0.038456,0.015651,0.041041,0.015423
+317,NI,NGA,566,Federal Republic of Nigeria,Nigeria,9,5,142,Africa_West_Coast,0.981034,0.25652,0.009858,0.273731,0.102893
+318,NI,NGA,566,Federal Republic of Nigeria,Nigeria,9,5,149,Niger,2.37563,0.621202,0.157726,0.662856,0.249158
+319,NI,NGA,566,Federal Republic of Nigeria,Nigeria,9,5,151,Lake_Chad,0.778101,0.20346,0.062073,0.217104,0.081607
+320,NI,NGA,566,Federal Republic of Nigeria,Nigeria,9,5,162,Gulf_of_Guinea,0.283844,0.074219,0.0076,0.079199,0.02977
+321,TP,STP,678,Sao Tome and Principe,Sao Tome and Principe,9,5,162,Gulf_of_Guinea,0,0,0,0,0
+322,TO,TGO,768,Togolese Republic,Togo,9,5,142,Africa_West_Coast,0.129638,0.033897,0.002395,0.036172,0.013597
+323,TO,TGO,768,Togolese Republic,Togo,9,5,160,Volta,0.056411,0.014751,0.004411,0.015741,0.005917
+324,AL,ALB,8,Republic of Albania,Albania,12,15,54,Danube,0,0,0,0,0
+325,AL,ALB,8,Republic of Albania,Albania,12,15,55,Adriatic_Sea_Greece_Black_Sea_Coast,0.300404,0.681415,0.007448,0.155306,0.005343
+326,BK,BIH,70,Bosnia and Herzegovina,Bosnia and Herzegovina,12,15,54,Danube,0.233072,0.54626,0.00437,0.118584,0.003508
+327,BK,BIH,70,Bosnia and Herzegovina,Bosnia and Herzegovina,12,15,55,Adriatic_Sea_Greece_Black_Sea_Coast,0.094437,0.221336,0.001033,0.048048,0.001421
+328,HR,HRV,191,Republic of Croatia,Croatia,12,15,54,Danube,0.195911,0.459164,0.004688,0.099674,0.002948
+329,HR,HRV,191,Republic of Croatia,Croatia,12,15,55,Adriatic_Sea_Greece_Black_Sea_Coast,0.08708,0.204094,0.001373,0.044304,0.001311
+330,IT,ITA,380,Italian Republic,Italy,3,13,32,Rhine,0,0,0,0,0
+331,IT,ITA,380,Italian Republic,Italy,3,13,50,Italy_East_Coast,1.4456,2.60657,0.017672,0.820551,0.050063
+332,IT,ITA,380,Italian Republic,Italy,3,13,54,Danube,0,0,0,0,0
+333,IT,ITA,380,Italian Republic,Italy,3,13,55,Adriatic_Sea_Greece_Black_Sea_Coast,0,0,0,0,0
+334,IT,ITA,380,Italian Republic,Italy,3,13,57,Po,2.00753,3.60137,0.035953,1.14152,0.070189
+335,IT,ITA,380,Italian Republic,Italy,3,13,59,Italy_West_Coast,0.765669,1.37356,0.006902,0.435374,0.02677
+336,IT,ITA,380,Italian Republic,Italy,3,13,61,France_South_Coast,0,0,0,0,0
+337,IT,ITA,380,Italian Republic,Italy,3,13,62,Rhone,0,0,0,0,0
+338,IT,ITA,380,Italian Republic,Italy,3,13,63,Mediterranean_Sea_Islands,0.741604,1.33039,0.004896,0.42169,0.025929
+339,IT,ITA,380,Italian Republic,Italy,3,13,69,Tiber,0.453481,0.813515,0.00368,0.257857,0.015855
+340,MK,MKD,807,The Former Yugoslav Republic of Macedoni,"Macedonia, The Former Yugoslav Republic of",12,15,54,Danube,0,0,0,0,0
+341,MK,MKD,807,The Former Yugoslav Republic of Macedoni,"Macedonia, The Former Yugoslav Republic of",12,15,55,Adriatic_Sea_Greece_Black_Sea_Coast,0.17416,0.406206,0.004127,0.088827,0.002692
+342,MT,MLT,470,Republic of Malta,Malta,3,12,63,Mediterranean_Sea_Islands,0,0,0,0,0
+343,SM,SMR,674,Republic of San Marino,San Marino,3,13,50,Italy_East_Coast,0,0,0,0,0
+344,VT,NA,336,The Holy See (State of the Vatican City),Holy See (Vatican City State),3,13,69,Tiber,0,0,0,0,0
+345,BU,BGR,100,Republic of Bulgaria,Bulgaria,12,12,54,Danube,0.362878,0.850487,0.004952,0.184624,0.005462
+346,BU,BGR,100,Republic of Bulgaria,Bulgaria,12,12,55,Adriatic_Sea_Greece_Black_Sea_Coast,0.26104,0.586033,0.004876,0.135616,0.004862
+347,CY,CYP,196,Republic of Cyprus,Cyprus,3,12,75,Mediterranean_Sea_East_Coast,0.058387,0.104741,0.001238,0.0332,0.002041
+348,EG,EGY,818,Arab Republic of Egypt,Egypt,9,3,75,Mediterranean_Sea_East_Coast,0.1847,0.048296,0.001298,0.051536,0.019371
+349,EG,EGY,818,Arab Republic of Egypt,Egypt,9,3,80,Mediterranean_South_Coast,0.154773,0.040471,2.41E-04,0.043185,0.016231
+350,EG,EGY,818,Arab Republic of Egypt,Egypt,9,3,87,Nile,1.27576,0.333584,0.042805,0.355963,0.133799
+351,EG,EGY,818,Arab Republic of Egypt,Egypt,9,3,95,Dead_Sea,0,0,0,0,0
+352,EG,EGY,818,Arab Republic of Egypt,Egypt,9,3,98,Sinai_Peninsula,0.105375,0.027551,5.23E-04,0.029403,0.011053
+353,EG,EGY,818,Arab Republic of Egypt,Egypt,9,3,100,Africa_Red_Sea_Gulf_of_Aden_Coast,0.028999,0.007582,2.26E-04,0.008092,0.003041
+354,EG,EGY,818,Arab Republic of Egypt,Egypt,9,3,144,Africa_North_Interior,0.187791,0.049104,5.27E-04,0.052396,0.019693
+355,GG,GEO,268,Georgia,Georgia,6,10,45,Caspian_Sea_Coast,0.04495,0.10834,8.46E-04,0.028121,0.00612
+356,GG,GEO,268,Georgia,Georgia,6,10,47,Black_Sea_North_Coast,0,0,0,0,0
+357,GG,GEO,268,Georgia,Georgia,6,10,70,Black_Sea_South_Coast,0.156811,0.373941,0.004933,0.097732,0.020687
+358,GG,GEO,268,Georgia,Georgia,6,10,72,Caspian_Sea_South_West_Coast,0.260392,0.622798,0.006977,0.16246,0.034655
+359,GR,GRC,300,Hellenic Republic,Greece,3,13,55,Adriatic_Sea_Greece_Black_Sea_Coast,0.69629,1.2491,0.014187,0.395924,0.024344
+360,GR,GRC,300,Hellenic Republic,Greece,3,13,75,Mediterranean_Sea_East_Coast,0,0,0,0,0
+361,LE,LBN,422,Lebanese Republic,Lebanon,8,21,75,Mediterranean_Sea_East_Coast,0.434936,0.082493,0.001272,0.19879,0.015866
+362,LE,LBN,422,Lebanese Republic,Lebanon,8,21,95,Dead_Sea,0.038707,0.007341,5.01E-04,0.017691,0.001412
+363,LE,LBN,422,Lebanese Republic,Lebanon,8,21,99,Eastern_Jordan_Syria,0,0,0,0,0
+364,SY,SYR,760,Syrian Arab Republic,Syrian Arab Republic,8,21,75,Mediterranean_Sea_East_Coast,0.345858,0.065599,0.004065,0.158075,0.012617
+365,SY,SYR,760,Syrian Arab Republic,Syrian Arab Republic,8,21,84,Tigris_Euphrates,0.385103,0.073043,0.013804,0.176017,0.014051
+366,SY,SYR,760,Syrian Arab Republic,Syrian Arab Republic,8,21,95,Dead_Sea,0.11571,0.021947,0.001329,0.052886,0.004221
+367,SY,SYR,760,Syrian Arab Republic,Syrian Arab Republic,8,21,99,Eastern_Jordan_Syria,0.487062,0.092381,0.005644,0.222616,0.017769
+368,TU,TUR,792,Republic of Turkey,Turkey,3,15,55,Adriatic_Sea_Greece_Black_Sea_Coast,0.24218,0.434457,0.001536,0.137707,0.008465
+369,TU,TUR,792,Republic of Turkey,Turkey,3,15,70,Black_Sea_South_Coast,2.75732,4.94645,0.045902,1.56786,0.096403
+370,TU,TUR,792,Republic of Turkey,Turkey,3,15,72,Caspian_Sea_South_West_Coast,0.163594,0.274388,0.0068,0.091693,0.005738
+371,TU,TUR,792,Republic of Turkey,Turkey,3,15,75,Mediterranean_Sea_East_Coast,2.45571,4.40538,0.031365,1.39636,0.085862
+372,TU,TUR,792,Republic of Turkey,Turkey,3,15,84,Tigris_Euphrates,0.9144,1.48822,0.025462,0.509365,0.032113
+373,TU,TUR,792,Republic of Turkey,Turkey,3,15,99,Eastern_Jordan_Syria,0,0,0,0,0
+374,AU,AUT,40,Republic of Austria,Austria,3,13,31,Elbe,0,0,0,0,0
+375,AU,AUT,40,Republic of Austria,Austria,3,13,32,Rhine,0.018314,0.032853,7.18E-04,0.010413,6.40E-04
+376,AU,AUT,40,Republic of Austria,Austria,3,13,50,Italy_East_Coast,0,0,0,0,0
+377,AU,AUT,40,Republic of Austria,Austria,3,13,54,Danube,0.856228,1.56086,0.0224,0.484163,0.029039
+378,AU,AUT,40,Republic of Austria,Austria,3,13,57,Po,0,0,0,0,0
+379,EZ,CZE,203,Czech Republic,Czech Republic,12,12,29,Oder,0.078194,0.183269,0.001115,0.039784,0.001177
+380,EZ,CZE,203,Czech Republic,Czech Republic,12,12,30,Wisla,0,0,0,0,0
+381,EZ,CZE,203,Czech Republic,Czech Republic,12,12,31,Elbe,0.464889,1.06629,0.009748,0.239061,0.007841
+382,EZ,CZE,203,Czech Republic,Czech Republic,12,12,54,Danube,0.20746,0.465419,0.005045,0.107816,0.003877
+383,DA,DNK,208,Kingdom of Denmark,Denmark,3,13,12,Sweden,0,0,0,0,0
+384,DA,DNK,208,Kingdom of Denmark,Denmark,3,13,21,Denmark_Germany_Coast,0.429982,0.771359,0.027084,0.244494,0.015034
+385,HU,HUN,348,Republic of Hungary,Hungary,12,12,54,Danube,0.817241,1.9154,0.014848,0.415801,0.012299
+386,PL,POL,616,Republic of Poland,Poland,12,12,21,Denmark_Germany_Coast,0,0,0,0,0
+387,PL,POL,616,Republic of Poland,Poland,12,12,29,Oder,1.06934,2.4949,0.025412,0.545297,0.016507
+388,PL,POL,616,Republic of Poland,Poland,12,12,30,Wisla,1.4746,3.45663,0.041303,0.751236,0.023218
+389,PL,POL,616,Republic of Poland,Poland,12,12,31,Elbe,0,0,0,0,0
+390,PL,POL,616,Republic of Poland,Poland,12,12,33,Poland_Coast,0.25608,0.600185,0.008483,0.13029,0.003855
+391,PL,POL,616,Republic of Poland,Poland,12,12,35,Neman,0.006204,0.014541,0.000649,0.003157,9.30E-05
+392,PL,POL,616,Republic of Poland,Poland,12,12,39,Dnieper,0,0,0,0,0
+393,PL,POL,616,Republic of Poland,Poland,12,12,49,Dniester,0,0,0,0,0
+394,PL,POL,616,Republic of Poland,Poland,12,12,54,Danube,0,0,0,0,0
+395,LO,SVK,703,Slovak Republic,Slovakia,12,12,29,Oder,0,0,0,0,0
+396,LO,SVK,703,Slovak Republic,Slovakia,12,12,30,Wisla,0,0,0,0,0
+397,LO,SVK,703,Slovak Republic,Slovakia,12,12,54,Danube,0.363708,0.852442,0.006167,0.185046,0.005476
+398,SI,SVN,705,Republic of Slovenia,Slovenia,12,12,50,Italy_East_Coast,0,0,0,0,0
+399,SI,SVN,705,Republic of Slovenia,Slovenia,12,12,54,Danube,0.104456,0.244816,0.003887,0.053146,0.001572
+400,SI,SVN,705,Republic of Slovenia,Slovenia,12,12,55,Adriatic_Sea_Greece_Black_Sea_Coast,0.056886,0.133327,2.70E-04,0.028943,8.56E-04
+401,SV,SJM,744,Svalbard,Svalbard and Jan Mayen,3,16,1,Arctic_Ocean_Islands,0,0,0,0,0
+402,BE,BEL,56,Kingdom of Belgium,Belgium,3,13,32,Rhine,0.161119,0.289036,0.01042,0.091615,0.005633
+403,BE,BEL,56,Kingdom of Belgium,Belgium,3,13,36,Scheldt,0.6896,1.2371,0.017446,0.39212,0.024112
+404,BE,BEL,56,Kingdom of Belgium,Belgium,3,13,41,France_West_Coast,0,0,0,0,0
+405,BE,BEL,56,Kingdom of Belgium,Belgium,3,13,46,Seine,0,0,0,0,0
+406,FR,FRA,250,French Republic,France,3,13,32,Rhine,0.402733,0.72248,0.013011,0.229003,0.01408
+407,FR,FRA,250,French Republic,France,3,13,36,Scheldt,0.148982,0.267263,0.00284,0.084713,0.005209
+408,FR,FRA,250,French Republic,France,3,13,41,France_West_Coast,1.06094,1.90325,0.053753,0.603267,0.037094
+409,FR,FRA,250,French Republic,France,3,13,44,Loire,0.88196,1.58218,0.04582,0.501501,0.030835
+410,FR,FRA,250,French Republic,France,3,13,46,Seine,1.54807,2.77714,0.01747,0.880261,0.054125
+411,FR,FRA,250,French Republic,France,3,13,57,Po,0.013954,0.025032,3.09E-04,0.007934,4.88E-04
+412,FR,FRA,250,French Republic,France,3,13,60,Spain_Portugal_Atlantic_Coast,0,0,0,0,0
+413,FR,FRA,250,French Republic,France,3,13,61,France_South_Coast,0.588219,1.05523,0.007028,0.334474,0.020567
+414,FR,FRA,250,French Republic,France,3,13,62,Rhone,0.781583,1.40211,0.020971,0.444421,0.027327
+415,FR,FRA,250,French Republic,France,3,13,63,Mediterranean_Sea_Islands,0.076998,0.138129,0.001135,0.043782,0.002692
+416,FR,FRA,250,French Republic,France,3,13,64,Gironde,0.419303,0.752198,0.02724,0.238425,0.014657
+417,FR,FRA,250,French Republic,France,3,13,67,Spain_South_and_East_Coast,0,0,0,0,0
+418,FR,FRA,250,French Republic,France,3,13,73,Ebro,0,0,0,0,0
+419,GM,DEU,276,Federal Republic of Germany,Germany,3,13,21,Denmark_Germany_Coast,0.726208,1.30277,0.016245,0.412934,0.025393
+420,GM,DEU,276,Federal Republic of Germany,Germany,3,13,28,Ems_Weser,1.46225,2.62319,0.037288,0.831464,0.051125
+421,GM,DEU,276,Federal Republic of Germany,Germany,3,13,29,Oder,0.107811,0.193406,9.74E-04,0.061303,0.003769
+422,GM,DEU,276,Federal Republic of Germany,Germany,3,13,31,Elbe,1.96734,3.55895,0.026213,1.11544,0.067709
+423,GM,DEU,276,Federal Republic of Germany,Germany,3,13,32,Rhine,3.28337,5.89015,0.046453,1.86699,0.114796
+424,GM,DEU,276,Federal Republic of Germany,Germany,3,13,54,Danube,0.950862,1.70579,0.025013,0.540679,0.033245
+425,LS,LIE,438,Principality of Liechtenstein,Liechtenstein,3,16,32,Rhine,0,0,0,0,0
+426,LU,LUX,442,Grand Duchy of Luxembourg,Luxembourg,3,13,32,Rhine,0,0,0,0,0
+427,SZ,CHE,756,Swiss Confederation,Switzerland,3,16,32,Rhine,0.57249,1.02701,0.013616,0.32553,0.020018
+428,SZ,CHE,756,Swiss Confederation,Switzerland,3,16,54,Danube,0.015176,0.027225,2.32E-04,0.008629,5.31E-04
+429,SZ,CHE,756,Swiss Confederation,Switzerland,3,16,57,Po,0.040307,0.072306,5.50E-04,0.022919,0.001409
+430,SZ,CHE,756,Swiss Confederation,Switzerland,3,16,62,Rhone,0.122107,0.219053,0.00181,0.069432,0.004269
+431,US,USA,840,United States of America,United States,1,1,7,Pacific_and_Arctic_Coast,1.01791,0.071867,0.001461,0.3649,0.034701
+432,US,USA,840,United States of America,United States,1,1,23,Saskatchewan_Nelson,0.110576,0.001008,0.010059,0.022965,0.02185
+433,US,USA,840,United States of America,United States,1,1,27,Fraser,0.001771,0,7.31E-04,7.47E-04,0.002101
+434,US,USA,840,United States of America,United States,1,1,96,Mexico_Northwest_Coast,0.00634,8.80E-04,2.20E-04,1.20E-04,3.07E-04
+435,US,USA,840,United States of America,United States,1,1,101,Caribbean,0,0,0,0,0
+436,US,USA,840,United States of America,United States,1,1,105,North_Gulf,0,0,0,0,0
+437,US,USA,840,United States of America,United States,1,1,217,California_River_Basin,7.54907,0.347259,0.04737,0.079499,0.281677
+438,US,USA,840,United States of America,United States,1,1,218,Upper_Mississippi_Basin,5.00128,29.857,0.112138,1.91601,0.159875
+439,US,USA,840,United States of America,United States,1,1,219,Lower_Mississippi_River_Basin,1.81375,6.77605,0.018219,3.96577,0.071126
+440,US,USA,840,United States of America,United States,1,1,220,Upper_Colorado_River_Basin,0.268468,1.29275,0.010647,0.031737,0.01702
+441,US,USA,840,United States of America,United States,1,1,221,Lower_Colorado_River_Basin,2.22757,0.498829,0.010085,0.038531,0.04998
+442,US,USA,840,United States of America,United States,1,1,222,Great_Basin,1.1818,0.153994,0.010905,0.048873,0.025679
+443,US,USA,840,United States of America,United States,1,1,223,Missouri_River_Basin,2.89807,15.2721,0.223597,0.377025,0.151754
+444,US,USA,840,United States of America,United States,1,1,224,Arkansas_White_Red_Basin,2.20845,4.04899,0.157699,0.86963,0.107381
+445,US,USA,840,United States of America,United States,1,1,225,Texas_Gulf_Coast_Basin,5.49238,6.22277,0.088798,1.69081,0.136998
+446,US,USA,840,United States of America,United States,1,1,226,South_Atlantic_Gulf_Basin,8.92012,39.1288,0.079026,3.02906,0.225256
+447,US,USA,840,United States of America,United States,1,1,227,Great_Lakes_Basin,4.15686,19.914,0.037436,1.97923,0.183725
+448,US,USA,840,United States of America,United States,1,1,228,Ohio_River_Basin,4.55571,29.8644,0.060612,4.95475,0.128695
+449,US,USA,840,United States of America,United States,1,1,229,Pacific_Northwest_Basin,2.71862,0.248031,0.041634,0.929256,0.089488
+450,US,USA,840,United States of America,United States,1,1,230,Tennessee_River_Basin,1.01707,14.1054,0.01496,0.703724,0.023947
+451,US,USA,840,United States of America,United States,1,1,231,Rio_Grande_River_Basin,0.576454,0.025287,0.015092,0.07383,0.036524
+452,US,USA,840,United States of America,United States,1,1,232,New_England_Basin,2.1355,1.79088,0.00269,0.486341,0.087919
+453,US,USA,840,United States of America,United States,1,1,233,Mid_Atlantic_Basin,7.60622,19.7441,0.029143,1.90247,0.302038
+454,US,USA,840,United States of America,United States,1,1,234,Hawaii,0.292292,0,0,0.104599,0.00992
+455,BO,BLR,112,Republic of Belarus,Belarus,6,14,17,Neva,0,0,0,0,0
+456,BO,BLR,112,Republic of Belarus,Belarus,6,14,22,Narva,0,0,0,0,0
+457,BO,BLR,112,Republic of Belarus,Belarus,6,14,25,Daugava,0.115549,0.278504,0.002208,0.07229,0.015728
+458,BO,BLR,112,Republic of Belarus,Belarus,6,14,30,Wisla,0.040801,0.098344,0.003222,0.025526,0.005556
+459,BO,BLR,112,Republic of Belarus,Belarus,6,14,35,Neman,0.138158,0.332992,0.008538,0.086431,0.018808
+460,BO,BLR,112,Republic of Belarus,Belarus,6,14,39,Dnieper,0.642881,1.5495,0.027634,0.402194,0.087515
+461,EN,EST,233,Republic of Estonia,Estonia,6,12,20,Baltic_Sea_Coast,0.08895,0.214393,0.001706,0.05565,0.012108
+462,EN,EST,233,Republic of Estonia,Estonia,6,12,22,Narva,0.032786,0.079023,9.04E-04,0.020511,0.004462
+463,EN,EST,233,Republic of Estonia,Estonia,6,12,25,Daugava,0,0,0,0,0
+464,FI,FIN,246,Republic of Finland,Finland,3,13,8,Scandinavia_North_Coast,0.014881,0.026696,3.83E-04,0.008461,5.21E-04
+465,FI,FIN,246,Republic of Finland,Finland,3,13,12,Sweden,0.023954,0.042974,4.04E-04,0.013619,8.36E-04
+466,FI,FIN,246,Republic of Finland,Finland,3,13,13,Finland,0.473868,0.850086,0.00999,0.269452,0.016575
+467,FI,FIN,246,Republic of Finland,Finland,3,13,17,Neva,0.005394,0.01109,2.38E-04,0.003198,4.20E-04
+468,LG,LVA,428,Republic of Latvia,Latvia,6,12,20,Baltic_Sea_Coast,0.128726,0.310265,0.003458,0.080532,0.017523
+469,LG,LVA,428,Republic of Latvia,Latvia,6,12,22,Narva,0.002367,0.005705,5.90E-05,0.001481,3.22E-04
+470,LG,LVA,428,Republic of Latvia,Latvia,6,12,25,Daugava,0.099425,0.239639,9.99E-04,0.062202,0.013535
+471,LG,LVA,428,Republic of Latvia,Latvia,6,12,35,Neman,0,0,0,0,0
+472,LH,LTU,440,Republic of Lithuania,Lithuania,6,12,20,Baltic_Sea_Coast,0.077297,0.186302,0.001771,0.048357,0.010523
+473,LH,LTU,440,Republic of Lithuania,Lithuania,6,12,25,Daugava,0.003455,0.008328,9.30E-05,0.002162,4.70E-04
+474,LH,LTU,440,Republic of Lithuania,Lithuania,6,12,33,Poland_Coast,0,0,0,0,0
+475,LH,LTU,440,Republic of Lithuania,Lithuania,6,12,35,Neman,0.243251,0.5863,0.007334,0.152185,0.033113
+476,MD,MDA,498,Republic of Moldova,"Moldova, Republic of",6,14,47,Black_Sea_North_Coast,0.04288,0.103352,5.32E-04,0.026826,0.005837
+477,MD,MDA,498,Republic of Moldova,"Moldova, Republic of",6,14,49,Dniester,0.218481,0.526592,0.002005,0.136683,0.029741
+478,MD,MDA,498,Republic of Moldova,"Moldova, Republic of",6,14,54,Danube,0.144611,0.342746,0.002034,0.080275,0.009119
+479,RO,ROU,642,Romania,Romania,12,12,54,Danube,1.56052,3.65745,0.03825,0.793964,0.023483
+480,RO,ROU,642,Romania,Romania,12,12,55,Adriatic_Sea_Greece_Black_Sea_Coast,0.007441,0.017439,2.63E-04,0.003786,1.12E-04
+481,UP,UKR,804,Ukraine,Ukraine,6,14,30,Wisla,0.12844,0.308994,0.002101,0.079338,0.01643
+482,UP,UKR,804,Ukraine,Ukraine,6,14,39,Dnieper,2.33279,5.62263,0.040469,1.45942,0.317564
+483,UP,UKR,804,Ukraine,Ukraine,6,14,47,Black_Sea_North_Coast,0.838168,2.0202,0.014264,0.52437,0.114095
+484,UP,UKR,804,Ukraine,Ukraine,6,14,49,Dniester,0.3074,0.740917,0.008095,0.192316,0.041845
+485,UP,UKR,804,Ukraine,Ukraine,6,14,53,Don,0.701265,1.69024,0.005502,0.438721,0.095459
+486,UP,UKR,804,Ukraine,Ukraine,6,14,54,Danube,0.160722,0.382907,0.004095,0.092693,0.013738
+487,IN,IND,356,Republic of India,India,14,17,85,Tarim_Interior,0,0,0,0,0
+488,IN,IND,356,Republic of India,India,14,17,89,Indus,3.75838,1.78842,0.101842,0.502871,0.019091
+489,IN,IND,356,Republic of India,India,14,17,107,Sabarmati,6.4069,3.04236,0.280588,0.860777,0.03289
+490,IN,IND,356,Republic of India,India,14,17,110,Ganges_Bramaputra,20.5464,9.7106,1.24996,2.7859,0.107877
+491,IN,IND,356,Republic of India,India,14,17,113,Mahi,0.414343,0.197168,0.034942,0.055439,0.002105
+492,IN,IND,356,Republic of India,India,14,17,116,Bay_of_Bengal_North_East_Coast,0.122288,0.058191,0.00123,0.016362,6.22E-04
+493,IN,IND,356,Republic of India,India,14,17,117,Tapti,1.25228,0.595901,0.071071,0.167554,0.006363
+494,IN,IND,356,Republic of India,India,14,17,118,Yasai,1.97243,0.938586,0.102789,0.263912,0.010023
+495,IN,IND,356,Republic of India,India,14,17,120,Brahamani,1.13324,0.539256,0.050833,0.151626,0.005757
+496,IN,IND,356,Republic of India,India,14,17,122,Mahandi,3.30994,1.57504,0.138248,0.442868,0.016822
+497,IN,IND,356,Republic of India,India,14,17,123,Godavari,6.76168,3.21756,0.258493,0.904714,0.034355
+498,IN,IND,356,Republic of India,India,14,17,128,India_North_East_Coast,0.86243,0.41039,0.028953,0.115393,0.004381
+499,IN,IND,356,Republic of India,India,14,17,129,India_West_Coast,2.75652,1.3117,0.058701,0.368821,0.014008
+500,IN,IND,356,Republic of India,India,14,17,137,Irrawaddy,0.119972,0.057088,0.00552,0.016052,6.10E-04
+501,IN,IND,356,Republic of India,India,14,17,140,Krishna,5.70714,2.71576,0.206471,0.763613,0.028999
+502,IN,IND,356,Republic of India,India,14,17,141,Andaman_Nicobar_Islands,0,0,0,0,0
+503,IN,IND,356,Republic of India,India,14,17,145,India_East_Coast,1.58973,0.756478,0.063438,0.212704,0.00808
+504,IN,IND,356,Republic of India,India,14,17,147,Pennar,1.09671,0.52187,0.058215,0.146738,0.00557
+505,IN,IND,356,Republic of India,India,14,17,153,Cauvery,2.32832,1.10794,0.059163,0.311526,0.011828
+506,IN,IND,356,Republic of India,India,14,17,155,India_South_Coast,1.24881,0.594249,0.039228,0.167089,0.006346
+507,IN,IND,356,Republic of India,India,14,17,235,Narmada,1.38981,0.661348,0.07674,0.185956,0.007061
+508,MU,OMN,512,Sultanate of Oman,Oman,8,21,94,Arabian_Peninsula,0.209299,0.039701,0.002747,0.09566,0.007635
+509,SO,SOM,706,Somalia,Somalia,9,2,100,Africa_Red_Sea_Gulf_of_Aden_Coast,0.185249,0.048434,0.026181,0.051679,0.019437
+510,SO,SOM,706,Somalia,Somalia,9,2,163,Sumatra,0,0,0,0,0
+511,SO,SOM,706,Somalia,Somalia,9,2,170,Shebelli_Juba,0.19712,0.051539,0.034184,0.054993,0.020677
+512,SO,SOM,706,Somalia,Somalia,9,2,171,Africa_East_Central_Coast,0.01273,0.003329,0.005367,0.003552,0.001335
+513,SO,SOM,706,Somalia,Somalia,9,2,179,Rift_Valley,0,0,0,0,0
+514,CE,LKA,144,Democratic Socialist Republic of Sri Lan,Sri Lanka,11,27,154,Sri_Lanka,0.941588,0.207632,0.019964,0.259151,0.017357
+515,TX,TKM,795,Turkmenistan,Turkmenistan,6,10,52,Caspian_Sea_East_Coast,0.402233,0.74322,0.016838,0.231922,0.044334
+516,TX,TKM,795,Turkmenistan,Turkmenistan,6,10,58,Amu_Darya,0.053239,0.104825,0.00317,0.029547,0.005984
+517,UZ,UZB,860,Republic of Uzbekistan,Uzbekistan,6,10,45,Caspian_Sea_Coast,0.003899,0.009397,7.30E-05,0.002439,5.31E-04
+518,UZ,UZB,860,Republic of Uzbekistan,Uzbekistan,6,10,52,Caspian_Sea_East_Coast,0.208999,0.503745,0.001747,0.130754,0.028447
+519,UZ,UZB,860,Republic of Uzbekistan,Uzbekistan,6,10,58,Amu_Darya,1.13684,2.66087,0.041026,0.698548,0.150497
+520,UZ,UZB,860,Republic of Uzbekistan,Uzbekistan,6,10,76,Syr_Darya,0.823357,1.9845,0.023768,0.515101,0.112081
+521,YM,YEM,887,Republic of Yemen,Yemen,8,21,93,Red_Sea_East_Coast,1.42843,0.270921,0.018513,0.652867,0.052109
+522,YM,YEM,887,Republic of Yemen,Yemen,8,21,94,Arabian_Peninsula,0.207305,0.039319,0.001617,0.094748,0.007562
+523,YM,YEM,887,Republic of Yemen,Yemen,8,21,100,Africa_Red_Sea_Gulf_of_Aden_Coast,0,0,0,0,0
+524,AM,ARM,51,Republic of Armenia,Armenia,6,10,72,Caspian_Sea_South_West_Coast,0.306006,0.71658,0.005718,0.189851,0.040715
+525,AJ,AZE,31,Republic of Azerbaijan,Azerbaijan,6,10,45,Caspian_Sea_Coast,0.012638,0.030461,6.13E-04,0.007907,0.00172
+526,AJ,AZE,31,Republic of Azerbaijan,Azerbaijan,6,10,72,Caspian_Sea_South_West_Coast,0.685063,1.58849,0.028955,0.423825,0.090442
+527,BA,BHR,48,Kingdom of Bahrain,Bahrain,8,21,94,Arabian_Peninsula,0,0,0,0,0
+528,IR,IRN,364,Islamic Republic of Iran,"Iran, Islamic Republic of",8,21,52,Caspian_Sea_East_Coast,0.989497,0.187722,0.016507,0.451973,0.036065
+529,IR,IRN,364,Islamic Republic of Iran,"Iran, Islamic Republic of",8,21,72,Caspian_Sea_South_West_Coast,1.15613,0.252104,0.034715,0.530853,0.043267
+530,IR,IRN,364,Islamic Republic of Iran,"Iran, Islamic Republic of",8,21,82,Central_Iran,2.92104,0.554029,0.035838,1.33507,0.106558
+531,IR,IRN,364,Islamic Republic of Iran,"Iran, Islamic Republic of",8,21,84,Tigris_Euphrates,1.16427,0.220816,0.028566,0.532133,0.04247
+532,IR,IRN,364,Islamic Republic of Iran,"Iran, Islamic Republic of",8,21,88,Persian_Gulf_Coast,0.872053,0.165405,0.029792,0.398576,0.031812
+533,IR,IRN,364,Islamic Republic of Iran,"Iran, Islamic Republic of",8,21,90,Farahrud,0.038283,0.007652,2.31E-04,0.015194,0.001168
+534,IR,IRN,364,Islamic Republic of Iran,"Iran, Islamic Republic of",8,21,97,Helmand,0.044374,0.008416,1.00E-05,0.020281,0.001619
+535,IR,IRN,364,Islamic Republic of Iran,"Iran, Islamic Republic of",8,21,102,HamuniMashkel,0.053036,0.010085,6.90E-05,0.024099,0.00192
+536,IR,IRN,364,Islamic Republic of Iran,"Iran, Islamic Republic of",8,21,104,Arabian_Sea_Coast,0.150768,0.029442,3.57E-04,0.063928,0.005003
+537,KU,KWT,414,State of Kuwait,Kuwait,8,21,84,Tigris_Euphrates,0.006052,0.001148,9.60E-05,0.002766,2.21E-04
+538,KU,KWT,414,State of Kuwait,Kuwait,8,21,94,Arabian_Peninsula,0.121746,0.023092,6.22E-04,0.055645,0.004442
+539,QA,QAT,634,State of Qatar,Qatar,8,21,94,Arabian_Peninsula,0.052268,0.009913,2.98E-04,0.023889,0.001907
+540,SA,SAU,682,Kingdom of Saudi Arabia,Saudi Arabia,8,21,84,Tigris_Euphrates,0.046623,0.008844,1.66E-04,0.021309,0.001701
+541,SA,SAU,682,Kingdom of Saudi Arabia,Saudi Arabia,8,21,93,Red_Sea_East_Coast,0.7018,0.133108,0.003401,0.320763,0.0256
+542,SA,SAU,682,Kingdom of Saudi Arabia,Saudi Arabia,8,21,94,Arabian_Peninsula,1.34795,0.255663,0.008958,0.61608,0.04916
+543,SA,SAU,682,Kingdom of Saudi Arabia,Saudi Arabia,8,21,98,Sinai_Peninsula,0.002191,4.16E-04,0,0.001001,8.00E-05
+544,SA,SAU,682,Kingdom of Saudi Arabia,Saudi Arabia,8,21,99,Eastern_Jordan_Syria,0.040688,0.007717,3.60E-05,0.018596,0.001484
+545,AE,ARE,784,United Arab Emirates,United Arab Emirates,8,21,94,Arabian_Peninsula,0.161678,0.030665,0.002502,0.073897,0.005897
+546,AF,AFG,4,Islamic Republic of Afghanistan,Afghanistan,11,27,52,Caspian_Sea_East_Coast,0.206418,0.04552,0.006792,0.056806,0.003804
+547,AF,AFG,4,Islamic Republic of Afghanistan,Afghanistan,11,27,58,Amu_Darya,0.427529,0.094271,0.016879,0.11766,0.007879
+548,AF,AFG,4,Islamic Republic of Afghanistan,Afghanistan,11,27,85,Tarim_Interior,0,0,0,0,0
+549,AF,AFG,4,Islamic Republic of Afghanistan,Afghanistan,11,27,89,Indus,0.280198,0.06179,0.022665,0.077114,0.005165
+550,AF,AFG,4,Islamic Republic of Afghanistan,Afghanistan,11,27,90,Farahrud,0.087068,0.019063,0.001947,0.024765,0.001687
+551,AF,AFG,4,Islamic Republic of Afghanistan,Afghanistan,11,27,97,Helmand,0.440175,0.097066,0.010323,0.121141,0.008115
+552,AF,AFG,4,Islamic Republic of Afghanistan,Afghanistan,11,27,102,HamuniMashkel,0.039307,0.008668,2.10E-04,0.010817,7.23E-04
+553,KG,KGZ,417,Kyrgyz Republic,Kyrgyzstan,6,10,58,Amu_Darya,0.013196,0.031805,5.90E-05,0.008256,0.001796
+554,KG,KGZ,417,Kyrgyz Republic,Kyrgyzstan,6,10,68,Lake_Balkash,0.027537,0.066372,0.001111,0.017228,0.003747
+555,KG,KGZ,417,Kyrgyz Republic,Kyrgyzstan,6,10,76,Syr_Darya,0.384028,0.92495,0.012073,0.240219,0.052219
+556,KG,KGZ,417,Kyrgyz Republic,Kyrgyzstan,6,10,85,Tarim_Interior,0.04138,0.058855,5.05E-04,0.023613,0.002302
+557,NP,NPL,524,Kingdom of Nepal,Nepal,11,27,89,Indus,0,0,0,0,0
+558,NP,NPL,524,Kingdom of Nepal,Nepal,11,27,110,Ganges_Bramaputra,1.59199,0.468558,0.129961,0.373069,0.023215
+559,PK,PAK,586,Islamic Republic of Pakistan,Pakistan,11,22,58,Amu_Darya,0,0,0,0,0
+560,PK,PAK,586,Islamic Republic of Pakistan,Pakistan,11,22,85,Tarim_Interior,0.011901,0.002624,0,0.003275,2.19E-04
+561,PK,PAK,586,Islamic Republic of Pakistan,Pakistan,11,22,89,Indus,6.2186,1.42106,0.467096,1.68395,0.11205
+562,PK,PAK,586,Islamic Republic of Pakistan,Pakistan,11,22,97,Helmand,0.096421,0.02112,0.00103,0.027375,0.001862
+563,PK,PAK,586,Islamic Republic of Pakistan,Pakistan,11,22,102,HamuniMashkel,0.400304,0.08728,0.001284,0.116005,0.007958
+564,PK,PAK,586,Islamic Republic of Pakistan,Pakistan,11,22,104,Arabian_Sea_Coast,0.919915,0.20285,0.009929,0.253187,0.016962
+565,PK,PAK,586,Islamic Republic of Pakistan,Pakistan,11,22,107,Sabarmati,0.941566,0.246218,0.093229,0.237771,0.01534
+566,TI,TJK,762,Republic of Tajikistan,Tajikistan,6,10,58,Amu_Darya,0.485464,1.1064,0.012849,0.293521,0.062668
+567,TI,TJK,762,Republic of Tajikistan,Tajikistan,6,10,76,Syr_Darya,0.055458,0.133668,7.95E-04,0.034696,0.007549
+568,TI,TJK,762,Republic of Tajikistan,Tajikistan,6,10,85,Tarim_Interior,0,0,0,0,0
+569,BG,BGD,50,People's Republic of Bangladesh,Bangladesh,11,27,110,Ganges_Bramaputra,6.00274,1.36708,0.255685,1.62809,0.108405
+570,BG,BGD,50,People's Republic of Bangladesh,Bangladesh,11,27,116,Bay_of_Bengal_North_East_Coast,0.686495,0.151382,0.007857,0.188944,0.012658
+571,BT,BTN,64,Kingdom of Bhutan,Bhutan,11,27,110,Ganges_Bramaputra,0.292387,0.118635,0.008882,0.050476,0.002557
+572,BX,BRN,96,Negara Brunei Darussalam,Brunei Darussalam,11,29,159,North_Borneo_Coast,0.016647,0.003671,2.40E-04,0.004582,3.07E-04
+573,CH,CHN,156,People's Republic of China,China,7,11,37,Russia_South_East_Coast,0.31234,0.394394,0.005247,0.175457,0.013326
+574,CH,CHN,156,People's Republic of China,China,7,11,42,Gobi_Interior,3.34092,3.60729,0.068628,1.84271,0.092694
+575,CH,CHN,156,People's Republic of China,China,7,11,43,Amur,6.07824,6.56308,0.115657,3.35254,0.168698
+576,CH,CHN,156,People's Republic of China,China,7,11,56,Ob,0.148034,0.158721,0.006242,0.081587,0.004013
+577,CH,CHN,156,People's Republic of China,China,7,11,58,Amu_Darya,0,0,0,0,0
+578,CH,CHN,156,People's Republic of China,China,7,11,66,Bo_Hai_Korean_Bay_North_Coast,4.73679,5.07882,0.076638,2.61065,0.128564
+579,CH,CHN,156,People's Republic of China,China,7,11,68,Lake_Balkash,0.322366,0.345646,0.00855,0.17767,0.008748
+580,CH,CHN,156,People's Republic of China,China,7,11,76,Syr_Darya,0,0,0,0,0
+581,CH,CHN,156,People's Republic of China,China,7,11,77,Ziya_He_Interior,5.21461,5.59114,0.200362,2.87401,0.141537
+582,CH,CHN,156,People's Republic of China,China,7,11,78,China_Coast,7.12235,7.63662,0.204107,3.92544,0.193311
+583,CH,CHN,156,People's Republic of China,China,7,11,79,Huang_He,7.38815,7.92164,0.219387,4.07193,0.200529
+584,CH,CHN,156,People's Republic of China,China,7,11,85,Tarim_Interior,2.38807,2.56049,0.034872,1.31615,0.064791
+585,CH,CHN,156,People's Republic of China,China,7,11,89,Indus,0.225125,0.225825,8.60E-05,0.113187,0.005531
+586,CH,CHN,156,People's Republic of China,China,7,11,92,Plateau_of_Tibet_Interior,0.254791,0.273186,1.13E-04,0.14042,0.006911
+587,TW,TWN,158,Republic of China,Taiwan,7,30,103,Taiwan,0.739726,0.793138,0.010957,0.407696,0.020079
+588,CH,CHN,156,People's Republic of China,China,7,11,106,Yangtze,14.0251,15.0378,0.917396,7.72985,0.380657
+589,CH,CHN,156,People's Republic of China,China,7,11,108,Xun_Jiang,4.21465,4.51897,0.266617,2.32288,0.114391
+590,CH,CHN,156,People's Republic of China,China,7,11,109,Hong_(Red_River),0.580331,0.622234,0.039811,0.319842,0.015752
+591,CH,CHN,156,People's Republic of China,China,7,11,110,Ganges_Bramaputra,1.43254,1.40016,0.015031,0.711779,0.035083
+592,CH,CHN,156,People's Republic of China,China,7,11,112,South_China_Sea_Coast,0.627753,0.67308,0.03094,0.345982,0.017038
+593,CH,CHN,156,People's Republic of China,China,7,11,124,Hainan,0.508516,0.545235,0.019279,0.280267,0.013801
+594,CH,CHN,156,People's Republic of China,China,7,11,125,Mekong,0.966865,0.993441,0.036249,0.51887,0.025799
+595,CH,CHN,156,People's Republic of China,China,7,11,127,Salween,0.54636,0.570759,0.017599,0.296242,0.014676
+596,CH,CHN,156,People's Republic of China,China,7,11,137,Irrawaddy,0.067936,0.071896,0.00725,0.037135,0.001834
+597,MG,MNG,496,Mongolia,Mongolia,7,10,42,Gobi_Interior,0.065977,0.070772,0.022305,0.036389,0.001753
+598,MG,MNG,496,Mongolia,Mongolia,7,10,43,Amur,0.050475,0.054127,0.003924,0.027827,0.00136
+599,MG,MNG,496,Mongolia,Mongolia,7,10,48,Yenisey,0.07959,0.085354,0.0102,0.043875,0.002147
+600,MG,MNG,496,Mongolia,Mongolia,7,10,56,Ob,0.004124,0.004423,7.71E-04,0.002274,1.10E-04
+601,PS,PLW,585,Republic of Palau,Palau,11,29,158,Palau_and_East_Indonesia,0,0,0,0,0
+602,RP,PHL,608,Republic of the Philippines,Philippines,11,29,119,Philippines,3.35848,0.740598,0.055776,0.924349,0.061921
+603,CB,KHM,116,Kingdom of Cambodia,Cambodia,7,29,125,Mekong,0.435071,0.466503,0.031949,0.239788,0.011814
+604,CB,KHM,116,Kingdom of Cambodia,Cambodia,7,29,126,Viet_Nam_Coast,0.006992,0.007497,0.001331,0.003854,1.90E-04
+605,CB,KHM,116,Kingdom of Cambodia,Cambodia,7,29,148,Gulf_of_Thailand_Coast,0.085934,0.092139,0.002782,0.047361,0.002333
+606,LA,LAO,418,Lao People's Democratic Republic,Lao People's Democratic Repbulic,11,29,109,Hong_(Red_River),0.011809,0.002604,0.001274,0.00325,2.18E-04
+607,LA,LAO,418,Lao People's Democratic Republic,Lao People's Democratic Repbulic,11,29,125,Mekong,0.401361,0.096982,0.024069,0.113217,0.007484
+608,LA,LAO,418,Lao People's Democratic Republic,Lao People's Democratic Repbulic,11,29,126,Viet_Nam_Coast,0.05599,0.033476,0.002355,0.022256,0.001248
+609,LA,LAO,418,Lao People's Democratic Republic,Lao People's Democratic Repbulic,11,29,146,Chao_Phraya,0,0,0,0,0
+610,MY,MYS,458,Malaysia,Malaysia,11,29,139,Peninsula_Malaysia,1.07615,0.237308,0.007673,0.296189,0.01984
+611,MY,MYS,458,Malaysia,Malaysia,11,29,159,North_Borneo_Coast,0.338883,0.074726,0.004429,0.09327,0.006243
+612,MY,MYS,458,Malaysia,Malaysia,11,29,165,Kalimantan,0.023753,0.005238,2.78E-04,0.006537,4.38E-04
+613,BM,MMR,104,Union of Myanmar,Myanmar,11,29,110,Ganges_Bramaputra,0.01159,0.002556,4.39E-04,0.00319,2.14E-04
+614,BM,MMR,104,Union of Myanmar,Myanmar,11,29,116,Bay_of_Bengal_North_East_Coast,0.145006,0.031977,0.012335,0.03991,0.002674
+615,BM,MMR,104,Union of Myanmar,Myanmar,11,29,125,Mekong,0.085998,0.018963,0.003693,0.02367,0.001586
+616,BM,MMR,104,Union of Myanmar,Myanmar,11,29,127,Salween,0.532227,0.121917,0.026852,0.147953,0.009859
+617,BM,MMR,104,Union of Myanmar,Myanmar,11,29,137,Irrawaddy,1.28011,0.282284,0.093423,0.352315,0.023598
+618,BM,MMR,104,Union of Myanmar,Myanmar,11,29,138,Sittang,0.447749,0.098735,0.012724,0.123232,0.008256
+619,BM,MMR,104,Union of Myanmar,Myanmar,11,29,139,Peninsula_Malaysia,0.223554,0.049298,0.005978,0.061528,0.004123
+620,BM,MMR,104,Union of Myanmar,Myanmar,11,29,146,Chao_Phraya,0,0,0,0,0
+621,KN,PRK,408,Democratic People's Republic of Korea,"Korea, Democratic People's Republic of",7,29,37,Russia_South_East_Coast,0.041755,0.044772,0.001125,0.023014,0.001133
+622,KN,PRK,408,Democratic People's Republic of Korea,"Korea, Democratic People's Republic of",7,29,43,Amur,0,0,0,0,0
+623,KN,PRK,408,Democratic People's Republic of Korea,"Korea, Democratic People's Republic of",7,29,65,North_and_South_Korea,1.96941,1.06452,0.008595,1.31864,0.018907
+624,KN,PRK,408,Democratic People's Republic of Korea,"Korea, Democratic People's Republic of",7,29,66,Bo_Hai_Korean_Bay_North_Coast,0.145929,0.15647,0.00313,0.080429,0.003959
+625,SN,SGP,702,Republic of Singapore,Singapore,11,29,139,Peninsula_Malaysia,0,0,0,0,0
+626,KS,KOR,410,Republic of Korea,"Korea, Republic of",13,28,65,North_and_South_Korea,5.03139,1.27039,0.033662,3.69158,4.99E-04
+627,TH,THA,764,Kingdom of Thailand,Thailand,11,29,125,Mekong,1.15336,0.312451,0.041535,0.336265,0.021861
+628,TH,THA,764,Kingdom of Thailand,Thailand,11,29,127,Salween,0.061298,0.013518,0.003551,0.016871,0.00113
+629,TH,THA,764,Kingdom of Thailand,Thailand,11,29,139,Peninsula_Malaysia,0.549444,0.12116,0.01067,0.151221,0.01013
+630,TH,THA,764,Kingdom of Thailand,Thailand,11,29,146,Chao_Phraya,0.856513,0.188874,0.027412,0.235736,0.015791
+631,TH,THA,764,Kingdom of Thailand,Thailand,11,29,148,Gulf_of_Thailand_Coast,0.462231,0.101928,0.003072,0.127219,0.008523
+632,VM,VNM,704,Socialist Republic of Vietnam,Viet Nam,7,29,108,Xun_Jiang,0.129769,0.139139,0.005275,0.071521,0.003522
+633,VM,VNM,704,Socialist Republic of Vietnam,Viet Nam,7,29,109,Hong_(Red_River),1.5089,1.58442,0.04839,0.820791,0.040612
+634,VM,VNM,704,Socialist Republic of Vietnam,Viet Nam,7,29,112,South_China_Sea_Coast,0.048578,0.052086,0.001121,0.026774,0.001319
+635,VM,VNM,704,Socialist Republic of Vietnam,Viet Nam,7,29,125,Mekong,0.389322,0.417432,0.018454,0.214574,0.010567
+636,VM,VNM,704,Socialist Republic of Vietnam,Viet Nam,7,29,126,Viet_Nam_Coast,1.30988,1.31117,0.038064,0.691713,0.0346
+637,VM,VNM,704,Socialist Republic of Vietnam,Viet Nam,7,29,148,Gulf_of_Thailand_Coast,0,0,0,0,0
+638,GQ,GUM,316,Territory of Guam,Guam,11,29,121,North_Marina_Islands_and_Guam,0,0,0,0,0
+639,JA,JPN,392,Japan,Japan,4,19,51,Japan,14.0346,4.04561,0.051863,8.01187,1.00E-04
+640,RM,MHL,584,Republic of the Marshall Islands,Marshall Islands,11,29,150,Kiribati_Nauru,0,0,0,0,0
+641,FM,FSM,583,Federated States of Micronesia,"Micronesia, Federated States of",11,29,150,Micronesia,0,0,0,0,0
+642,CQ,MNP,580,Commonwealth of the Northern Mariana Isl,Northern Mariana Islands,11,29,121,North_Marina_Islands_and_Guam,0,0,0,0,0
+643,WQ,NA,581,Wake Island,United States Minor Outlying Islands,0,1,150,Kiribati_Nauru,0,0,0,0,0
+644,BC,BWA,72,Republic of Botswana,Botswana,9,4,188,Zambezi,3.22E-04,8.40E-05,5.75E-04,9.00E-05,3.40E-05
+645,BC,BWA,72,Republic of Botswana,Botswana,9,4,194,Orange,0.009634,0.002519,0.002114,0.002687,0.00101
+646,BC,BWA,72,Republic of Botswana,Botswana,9,4,197,Africa_South_Interior,0.021724,0.005679,0.008095,0.006065,0.002282
+647,BC,BWA,72,Republic of Botswana,Botswana,9,4,199,Limpopo,0.042326,0.011065,0.008561,0.011809,0.004439
+648,BY,BDI,108,Republic of Burundi,Burundi,9,2,87,Nile,0.098635,0.025791,0.002361,0.027521,0.010345
+649,BY,BDI,108,Republic of Burundi,Burundi,9,2,183,Congo,0.149153,0.039002,0.001979,0.041617,0.015643
+650,KE,KEN,404,Republic of Kenya,Kenya,9,2,87,Nile,0.234888,0.061421,0.046788,0.065539,0.024635
+651,KE,KEN,404,Republic of Kenya,Kenya,9,2,170,Shebelli_Juba,0.124941,0.032668,0.01989,0.034864,0.013108
+652,KE,KEN,404,Republic of Kenya,Kenya,9,2,171,Africa_East_Central_Coast,0.453032,0.118459,0.042189,0.126406,0.047518
+653,KE,KEN,404,Republic of Kenya,Kenya,9,2,179,Rift_Valley,0.207228,0.054184,0.028077,0.057822,0.021736
+654,RW,RWA,646,Republic of Rwanda,Rwanda,9,2,87,Nile,0.18784,0.049117,0.009618,0.052411,0.0197
+655,RW,RWA,646,Republic of Rwanda,Rwanda,9,2,183,Congo,0.042731,0.011173,9.66E-04,0.011923,0.004481
+656,TZ,TZA,834,United Republic of Tanzania,Tanzania,9,4,87,Nile,0.105075,0.027478,0.053703,0.029315,0.011017
+657,TZ,TZA,834,United Republic of Tanzania,Tanzania,9,4,171,Africa_East_Central_Coast,0.599742,0.156822,0.051518,0.167326,0.062898
+658,TZ,TZA,834,United Republic of Tanzania,Tanzania,9,4,179,Rift_Valley,0.163455,0.042742,0.044402,0.045601,0.01714
+659,TZ,TZA,834,United Republic of Tanzania,Tanzania,9,4,183,Congo,0.128022,0.033479,0.019489,0.035715,0.013424
+660,TZ,TZA,834,United Republic of Tanzania,Tanzania,9,4,188,Zambezi,0.050843,0.013293,0.001683,0.014187,0.005334
+661,ZA,ZMB,894,Republic of Zambia,Zambia,9,4,179,Rift_Valley,6.60E-04,1.73E-04,5.20E-05,1.84E-04,6.90E-05
+662,ZA,ZMB,894,Republic of Zambia,Zambia,9,4,183,Congo,0.07924,0.020729,0.001327,0.0221,0.008305
+663,ZA,ZMB,894,Republic of Zambia,Zambia,9,4,188,Zambezi,0.22908,0.059926,0.024037,0.063898,0.024014
+664,ZI,ZWE,716,Republic of Zimbabwe,Zimbabwe,9,4,188,Zambezi,0.251223,0.065686,0.025339,0.070096,0.026351
+665,ZI,ZWE,716,Republic of Zimbabwe,Zimbabwe,9,4,190,Africa_Indian_Ocean_Coast,0.131805,0.034464,0.017565,0.036779,0.013824
+666,ZI,ZWE,716,Republic of Zimbabwe,Zimbabwe,9,4,197,Africa_South_Interior,0.003578,9.35E-04,7.88E-04,9.98E-04,3.76E-04
+667,ZI,ZWE,716,Republic of Zimbabwe,Zimbabwe,9,4,199,Limpopo,0.0632,0.016525,0.007429,0.017634,0.00663
+668,BV,BVT,74,Bouvet Island,Bouvet Island,0,16,216,Antarctica,0,0,0,0,0
+669,CN,COM,174,Union of the Comoros,Comoros,9,2,177,Madasgacar,0,0,0,0,0
+670,FS,ATF,260,Territory of the French Southern and Ant,French Southern Territories,0,13,216,Antarctica,0,0,0,0,0
+671,HM,HMD,334,Territory of Heard Island and McDonald I,Heard Island and McDonald Islands,0,0,216,Antarctica,0,0,0,0,0
+672,JU,NA,0,Juan De Nova Island,Miscellaneous (French) Indian Ocean Islands,0,2,216,Antarctica,0,0,0,0,0
+673,MI,MWI,454,Republic of Malawi,Malawi,9,4,171,Africa_East_Central_Coast,0.057874,0.015133,8.13E-04,0.016149,0.006069
+674,MI,MWI,454,Republic of Malawi,Malawi,9,4,183,Congo,0,0,0,0,0
+675,MI,MWI,454,Republic of Malawi,Malawi,9,4,188,Zambezi,0.293532,0.076754,0.007599,0.081901,0.030784
+676,MZ,MOZ,508,Republic of Mozambique,Mozambique,9,4,171,Africa_East_Central_Coast,0.248964,0.065109,0.001331,0.06946,0.026126
+677,MZ,MOZ,508,Republic of Mozambique,Mozambique,9,4,188,Zambezi,0.107192,0.028034,0.004203,0.029908,0.011245
+678,MZ,MOZ,508,Republic of Mozambique,Mozambique,9,4,190,Africa_Indian_Ocean_Coast,0.137946,0.036072,0.003279,0.038489,0.014475
+679,MZ,MOZ,508,Republic of Mozambique,Mozambique,9,4,198,South_Africa_South_Coast,0.12536,0.032778,0.001758,0.03498,0.013148
+680,MZ,MOZ,508,Republic of Mozambique,Mozambique,9,4,199,Limpopo,0.04924,0.012877,0.002382,0.013736,0.005169
+681,AO,AGO,24,Republic of Angola,Angola,9,4,162,Gulf_of_Guinea,0.002541,6.65E-04,1.70E-05,7.09E-04,2.66E-04
+682,AO,AGO,24,Republic of Angola,Angola,9,4,182,Angola_Coast,0.194765,0.050927,0.023746,0.054311,0.020426
+683,AO,AGO,24,Republic of Angola,Angola,9,4,183,Congo,0.071904,0.018808,0.001041,0.020037,0.007542
+684,AO,AGO,24,Republic of Angola,Angola,9,4,188,Zambezi,0.040182,0.010508,7.66E-04,0.011199,0.004214
+685,AO,AGO,24,Republic of Angola,Angola,9,4,197,Africa_South_Interior,0.033475,0.008758,0.009159,0.009332,0.003511
+686,CF,COG,178,Republic of the Congo,Congo,9,5,162,Gulf_of_Guinea,0.017025,0.004454,6.32E-04,0.004747,0.001791
+687,CF,COG,178,Republic of the Congo,Congo,9,5,183,Congo,0.230436,0.060256,7.27E-04,0.06429,0.024179
+688,CG,COD,180,Democratic Republic of the Congo,"Congo, The Democratic Republic of the",9,5,87,Nile,0.027948,0.007308,4.99E-04,0.007799,0.002931
+689,CG,COD,180,Democratic Republic of the Congo,"Congo, The Democratic Republic of the",9,5,162,Gulf_of_Guinea,0.012814,0.00335,1.30E-04,0.003575,0.001344
+690,CG,COD,180,Democratic Republic of the Congo,"Congo, The Democratic Republic of the",9,5,183,Congo,2.04784,0.535463,0.013419,0.571404,0.214794
+691,CG,COD,180,Democratic Republic of the Congo,"Congo, The Democratic Republic of the",9,5,188,Zambezi,0,0,0,0,0
+692,GB,GAB,266,Gabonese Republic,Gabon,9,5,162,Gulf_of_Guinea,0.040906,0.010698,8.66E-04,0.011412,0.004288
+693,GB,GAB,266,Gabonese Republic,Gabon,9,5,183,Congo,0,0,0,0,0
+694,LT,LSO,426,Kingdom of Lesotho,Lesotho,9,4,194,Orange,0.061612,0.016111,0.00758,0.017193,0.006461
+695,LT,LSO,426,Kingdom of Lesotho,Lesotho,9,4,198,South_Africa_South_Coast,0,0,0,0,0
+696,WA,NAM,516,Republic of Namibia,Namibia,9,4,182,Angola_Coast,2.26E-04,5.90E-05,3.77E-04,6.30E-05,2.40E-05
+697,WA,NAM,516,Republic of Namibia,Namibia,9,4,188,Zambezi,7.60E-04,1.99E-04,0.001194,2.12E-04,8.00E-05
+698,WA,NAM,516,Republic of Namibia,Namibia,9,4,194,Orange,0.036826,0.009624,0.00539,0.010272,0.003863
+699,WA,NAM,516,Republic of Namibia,Namibia,9,4,196,Namibia_Coast,0.027526,0.007196,0.00311,0.007677,0.002887
+700,WA,NAM,516,Republic of Namibia,Namibia,9,4,197,Africa_South_Interior,0.009932,0.002596,0.021989,0.002769,0.001043
+701,NZ,NZL,554,New Zealand,New Zealand,5,6,201,New_Zealand,0.591484,0.692875,0.08499,0.325399,0.034688
+702,NZ,NZL,554,New Zealand,New Zealand,5,6,216,Antarctica,0,0,0,0,0
+703,SF,ZAF,710,Republic of South Africa,South Africa,9,24,194,Orange,0.460467,0.12041,0.057331,0.12846,0.048292
+704,SF,ZAF,710,Republic of South Africa,South Africa,9,24,196,Namibia_Coast,0,0,0,0,0
+705,SF,ZAF,710,Republic of South Africa,South Africa,9,24,198,South_Africa_South_Coast,0.314868,0.082335,0.061752,0.08785,0.033023
+706,SF,ZAF,710,Republic of South Africa,South Africa,9,24,199,Limpopo,0.688545,0.18004,0.023148,0.192121,0.072215
+707,SF,ZAF,710,Republic of South Africa,South Africa,9,24,204,South_Africa_West_Coast,0.138517,0.036221,0.00243,0.038646,0.014528
+708,WZ,SWZ,748,Kingdom of Swaziland,Swaziland,9,4,198,South_Africa_South_Coast,0.026386,0.006898,0.005364,0.007361,0.002767
+709,IO,IOT,86,British Indian Ocean Territory,British Indian Ocean Territory,0,13,129,India_West_Coast,0,0,0,0,0
+710,GO,NA,0,Glorioso Islands,Miscellaneous (French) Indian Ocean Islands,0,13,177,Mauritius,0,0,0,0,0
+711,MA,MDG,450,Republic of Madagascar,Madagascar,9,2,177,Madasgacar,0.570903,0.149281,0.08412,0.159302,0.05988
+712,MP,MUS,480,Republic of Mauritius,Mauritius,9,2,177,Mauritius,0,0,0,0,0
+713,MF,MYT,175,Territorial Collectivity of Mayotte,Mayotte,9,29,177,Madasgacar,0,0,0,0,0
+714,RE,REU,638,Department of Reunion,Reunion,9,2,41,France_West_Coast,0,0,0,0,0
+715,SE,SYC,690,Republic of Seychelles,Seychelles,9,29,177,Madasgacar,0,0,0,0,0
+716,AS,AUS,36,Commonwealth of Australia,Australia,5,6,184,Australia_North_Coast,0.09455,0.110735,0.030433,0.052057,0.005514
+717,AS,AUS,36,Commonwealth of Australia,Australia,5,6,189,Australia_East_Coast,2.14295,2.51026,0.12726,1.17894,0.125674
+718,AS,AUS,36,Commonwealth of Australia,Australia,5,6,191,Australia_West_Coast,0.362957,0.425157,0.020949,0.199712,0.021269
+719,AS,AUS,36,Commonwealth of Australia,Australia,5,6,193,Australia_Interior,0.16849,0.197343,0.037802,0.092767,0.009823
+720,AS,AUS,36,Commonwealth of Australia,Australia,5,6,202,Australia_South_Coast,0.286713,0.335854,0.011606,0.157746,0.016803
+721,AS,AUS,36,Commonwealth of Australia,Australia,5,6,208,Murray_Darling,0.375933,0.440339,0.109765,0.206838,0.022045
+722,AS,AUS,36,Commonwealth of Australia,Australia,5,6,211,Tasmania,0.070758,0.082886,0.00549,0.038928,0.004147
+723,KT,CXR,162,Territory of Christmas Island,Christmas Island,5,29,191,Australia_West_Coast,0,0,0,0,0
+724,CK,CCK,166,Territory of Cocos (Keeling) Islands,Cocos (Keeling) Islands,5,29,191,Australia_West_Coast,0,0,0,0,0
+725,ID,IDN,360,Republic of Indonesia,Indonesia,11,18,158,Palau_and_East_Indonesia,0.158552,0.034964,0.001798,0.043638,0.002923
+726,ID,IDN,360,Republic of Indonesia,Indonesia,11,18,159,North_Borneo_Coast,0.008751,0.00193,9.00E-05,0.002408,1.61E-04
+727,ID,IDN,360,Republic of Indonesia,Indonesia,11,18,163,Sumatra,1.89583,0.418051,0.027985,0.521783,0.034953
+728,ID,IDN,360,Republic of Indonesia,Indonesia,11,18,164,Sulawesi,0.735479,0.162185,0.039418,0.202426,0.013559
+729,ID,IDN,360,Republic of Indonesia,Indonesia,11,18,165,Kalimantan,1.41416,0.311842,0.012243,0.389214,0.026074
+730,ID,IDN,360,Republic of Indonesia,Indonesia,11,18,167,Irian_Jaya_Coast,1.50762,0.332456,0.007875,0.41494,0.027792
+731,ID,IDN,360,Republic of Indonesia,Indonesia,11,18,175,Java_Timor,1.89347,0.417537,0.036993,0.521137,0.034911
+732,ID,IDN,360,Republic of Indonesia,Indonesia,11,18,178,Sepik,0,0,0,0,0
+733,ID,IDN,360,Republic of Indonesia,Indonesia,11,18,181,Fly,0.00286,6.31E-04,3.00E-05,7.87E-04,5.30E-05
+734,TT,TLS,626,Democratic Republic of Timor-Leste,Timor-Leste,11,29,175,Java_Timor,0.086791,0.019138,0.003072,0.023887,0.0016
+735,FJ,FJI,242,Republic of the Fiji Islands,Fiji,11,29,185,South_Pacific_Islands,0.038113,0.008405,0,0.01049,7.02E-04
+736,NR,NRU,520,Republic of Nauru,Nauru,11,29,150,Kiribati_Nauru,0,0,0,0,0
+737,NC,NCL,540,Territory of New Caledonia and Dependenc,New Caledonia,11,29,185,South_Pacific_Islands,0,0,5.34E-04,0,0
+738,NF,NFK,574,Territory of Norfolk Island,Norfolk Island,5,29,189,Australia_East_Coast,0,0,0,0,0
+739,PP,PNG,598,Independent State of Papua New Guinea,Papua New Guinea,11,29,167,Irian_Jaya_Coast,0.009093,0.002006,1.10E-04,0.002503,1.67E-04
+740,PP,PNG,598,Independent State of Papua New Guinea,Papua New Guinea,11,29,173,Papua_New_Guinea_Coast,0.136939,0.030194,0.002328,0.037687,0.002522
+741,PP,PNG,598,Independent State of Papua New Guinea,Papua New Guinea,11,29,178,Sepik,0.036824,0.008118,5.35E-04,0.010134,6.79E-04
+742,PP,PNG,598,Independent State of Papua New Guinea,Papua New Guinea,11,29,181,Fly,0.013793,0.003044,3.06E-04,0.003794,2.52E-04
+743,PP,PNG,598,Independent State of Papua New Guinea,Papua New Guinea,11,29,185,South_Pacific_Islands,0,0,0,0,0
+744,BP,SLB,90,Solomon Islands,Solomon Islands,11,29,176,Solomon_Islands,0.003029,6.68E-04,9.40E-05,8.33E-04,5.50E-05
+745,BP,SLB,90,Solomon Islands,Solomon Islands,11,29,185,South_Pacific_Islands,0,0,0,0,0
+746,TV,TUV,798,Tuvalu,Tuvalu,11,29,176,Tuvalu,0,0,0,0,0
+747,NH,VUT,548,Republic of Vanuatu,Vanuatu,11,29,185,South_Pacific_Islands,0,0,0,0,0
+748,RB,SRB,688,Republic of Serbia,Serbia,12,15,54,Danube,0.692335,1.62265,0.014646,0.352248,0.010418
+749,RB,SRB,688,Republic of Serbia,Serbia,12,15,55,Adriatic_Sea_Greece_Black_Sea_Coast,0.028162,0.066006,0.001354,0.014329,4.24E-04
+750,MJ,MNE,499,Republic of Montenegro,Montenegro,12,15,54,Danube,0.032589,0.076379,8.12E-04,0.016581,4.91E-04
+751,MJ,MNE,499,Republic of Montenegro,Montenegro,12,15,55,Adriatic_Sea_Greece_Black_Sea_Coast,0,0,3.93E-04,0,0
+752,NL,NLD,528,Kingdom of the Netherlands,Netherlands,3,13,28,Ems_Weser,0,0,0,0,0
+753,NL,NLD,528,Kingdom of the Netherlands,Netherlands,3,13,32,Rhine,1.40068,2.51272,0.045317,0.796449,0.048974
+754,NL,NLD,528,Kingdom of the Netherlands,Netherlands,3,13,36,Scheldt,0.169186,0.303509,0.001546,0.096202,0.005915
+755,CA,CAN,124,Canada,Canada,2,8,23,Saskatchewan_Nelson,0,0,0,0,0
+756,CA,CAN,124,Canada,Canada,2,8,223,Missouri_River_Basin,0,0,0,0,0
+757,MX,MEX,484,United Mexican States,Mexico,10,20,217,California_River_Basin,0,0,0,0,0
+758,MX,MEX,484,United Mexican States,Mexico,10,20,221,Lower_Colorado_River_Basin,0,0,0,0,0
+759,US,USA,840,United States of America,United States,1,1,23,Saskatchewan_Nelson,0,0,0,0,0
+760,US,USA,840,United States of America,United States,1,1,218,Upper_Mississippi_Basin,0,0,0,0,0
+761,US,USA,840,United States of America,United States,1,1,23,Saskatchewan_Nelson,0,0,0,0,0
+762,US,USA,840,United States of America,United States,1,1,223,Missouri_River_Basin,0,0,0,0,0
+763,US,USA,840,United States of America,United States,1,1,96,Mexico_Northwest_Coast,0,0,0,0,0
+764,US,USA,840,United States of America,United States,1,1,221,Lower_Colorado_River_Basin,0,0,0,0,0
+765,US,USA,840,United States of America,United States,1,1,217,California_River_Basin,0,0,0,0,0
+766,US,USA,840,United States of America,United States,1,1,221,Lower_Colorado_River_Basin,0,0,0,0,0
+767,US,USA,840,United States of America,United States,1,1,218,Upper_Mississippi_Basin,0,0,0,0,0
+768,US,USA,840,United States of America,United States,1,1,227,Great_Lakes_Basin,0,0,0,0,0
+769,US,USA,840,United States of America,United States,1,1,220,Upper_Colorado_River_Basin,0,0,0,0,0
+770,US,USA,840,United States of America,United States,1,1,222,Great_Basin,0,0,0,0,0
+771,US,USA,840,United States of America,United States,1,1,220,Upper_Colorado_River_Basin,0,0,0,0,0
+772,US,USA,840,United States of America,United States,1,1,223,Missouri_River_Basin,0,0,0,0,0
+773,US,USA,840,United States of America,United States,1,1,220,Upper_Colorado_River_Basin,0,0,0,0,0
+774,US,USA,840,United States of America,United States,1,1,229,Pacific_Northwest_Basin,0,0,0,0,0
+775,US,USA,840,United States of America,United States,1,1,220,Upper_Colorado_River_Basin,0,0,0,0,0
+776,US,USA,840,United States of America,United States,1,1,231,Rio_Grande_River_Basin,0,0,0,0,0
+777,US,USA,840,United States of America,United States,1,1,221,Lower_Colorado_River_Basin,0,0,0,0,0
+778,US,USA,840,United States of America,United States,1,1,222,Great_Basin,0,0,0,0,0
+779,US,USA,840,United States of America,United States,1,1,221,Lower_Colorado_River_Basin,0,0,0,0,0
+780,US,USA,840,United States of America,United States,1,1,231,Rio_Grande_River_Basin,0,0,0,0,0
+781,US,USA,840,United States of America,United States,1,1,223,Missouri_River_Basin,0,0,0,0,0
+782,US,USA,840,United States of America,United States,1,1,229,Pacific_Northwest_Basin,0,0,0,0,0
+783,US,USA,840,United States of America,United States,1,1,224,Arkansas_White_Red_Basin,0,0,0,0,0
+784,US,USA,840,United States of America,United States,1,1,231,Rio_Grande_River_Basin,0,0,0,0,0
+785,US,USA,840,United States of America,United States,1,1,226,South_Atlantic_Gulf_Basin,0,0,0,0,0
+786,US,USA,840,United States of America,United States,1,1,228,Ohio_River_Basin,0,0,0,0,0
+787,US,USA,840,United States of America,United States,1,1,227,Great_Lakes_Basin,0,0,0,0,0
+788,US,USA,840,United States of America,United States,1,1,228,Ohio_River_Basin,0,0,0,0,0
+789,US,USA,840,United States of America,United States,1,1,228,Ohio_River_Basin,0,0,0,0,0
+790,US,USA,840,United States of America,United States,1,1,233,Mid_Atlantic_Basin,0,0,0,0,0

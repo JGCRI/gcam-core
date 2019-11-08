@@ -302,6 +302,7 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mInvestments[ period ], "investment", out, tabs );
     XMLWriteElement( mFixedInvestments[ period ], "FixedInvestment", out, tabs );
     XMLWriteElement( getCalibrationStatus( period ), "calibration-status", out, tabs );
+    XMLWriteElement( containsOnlyFixedOutputTechnologies( period ), "fixed-output-only", out, tabs );
 
     toDebugXMLDerived( period, out, tabs );
     // write out the Technology objects.
@@ -846,6 +847,7 @@ bool Subsector::allOutputFixed( const int period ) const {
             return false;
         }
     }
+    
     return true;
 }
 

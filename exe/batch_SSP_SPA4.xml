@@ -3,7 +3,6 @@
 	<ComponentSet name="base">
 		<FileSet name="GCAM_"> 
             <Value name = "climate">../input/gcamdata/xml/hector.xml</Value>
-			<Value name = "interest_rate">../input/gcamdata/xml/interest_rate.xml</Value>
 			<Value name = "socioeconomics">../input/gcamdata/xml/socioeconomics_gSSP2.xml</Value>
 			
 			<Value name = "resources">../input/gcamdata/xml/resources.xml</Value>
@@ -47,6 +46,7 @@
 			<Value name = "nonco2_aglu">../input/gcamdata/xml/all_aglu_emissions_IRR_MGMT.xml</Value>
 			
 			<Value name = "unlim_supply_water">../input/gcamdata/xml/unlimited_water_supply.xml</Value>
+			<Value name = "water_supply">../input/gcamdata/xml/water_supply_constrained.xml</Value>
 			<Value name = "water_mapping">../input/gcamdata/xml/water_mapping.xml</Value>
 			<Value name = "ag_water">../input/gcamdata/xml/ag_water_input_IRR_MGMT.xml</Value>
 			<Value name = "elec_water_coef">../input/gcamdata/xml/electricity_water_coefs.xml</Value>
@@ -112,12 +112,12 @@
 			<Value name="nonco2">../input/gcamdata/xml/ssp34_emissions_factors.xml</Value>
 			
 			<!-- POLICY -->
-			<Value name="tax">../input/policy/carbon_tax_tf_0.xml</Value>
+			<Value name="tax">../input/policy/carbon_tax_0.xml</Value>
 			<Value name="weak_policy">../input/policy/spa14_tax.xml</Value>
 			<Value name="link">../input/policy/2025_target_finder.xml</Value>
 			<Value name="bio_tax">../input/policy/regional_uct_spa4.xml</Value>
-			<Value name="bio_tax">../input/gcamdata/xml/ssp4_ag_bio_trade.xml</Value>
-            <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_spa4.xml</Value>
+			<Value name="bio_trade">../input/gcamdata/xml/ssp4_ag_bio_trade.xml</Value>
+            <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP4.xml</Value>
 		</FileSet>
 		
 	</ComponentSet>	
@@ -126,7 +126,7 @@
 		<Value name="_4p5">../input/policy/policy_target_4p5_spa4.xml</Value>
 		<Value name="_3p7">../input/policy/policy_target_3p7_spa4.xml</Value>
 		<Value name="_2p6">../input/policy/policy_target_2p6_spa4.xml</Value>
-		<Value name="_2p0">../input/policy/policy_target_2p0_spa4.xml</Value>
+		<Value name="_1p9">../input/policy/policy_target_1p9_spa4.xml</Value>
 	</runner-set>
 </BatchRunner>
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policy-target-runner name="old">
+	<target-value>1.9</target-value>
+	<target-tolerance>0.05</target-tolerance>
+	<target-type>forcing</target-type>
+    <first-tax-year>2040</first-tax-year>
+	<tax-name>CO2_LTG</tax-name>
+	<overshoot/>
+    <max-tax>8000</max-tax>
+</policy-target-runner>

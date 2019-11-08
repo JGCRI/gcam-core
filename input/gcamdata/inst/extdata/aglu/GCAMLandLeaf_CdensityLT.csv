@@ -24,8 +24,8 @@ OilCrop,Cropland
 OtherGrain,Cropland
 PalmFruit,Cropland
 Rice,Cropland
-Root_Tuber,Cropland
+RootTuber,Cropland
 SugarCrop,Cropland
 Wheat,Cropland
-biomass_grass,Pasture
-biomass_tree,Pasture
+biomassGrass,Pasture
+biomassTree,Pasture

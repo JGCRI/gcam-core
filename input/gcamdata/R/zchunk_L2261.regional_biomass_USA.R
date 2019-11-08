@@ -27,11 +27,13 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
     return(c(FILE = "energy/A21.sector",
              FILE = "energy/A26.sector",
              FILE = "gcam-usa/A28.sector",
+             FILE = "energy/calibrated_techs",
+             "L122.out_EJ_state_refining_F",
              "L202.CarbonCoef",
              "L221.GlobalTechCoef_en",
              "L221.SubsectorInterp_en",
              "L221.StubTech_en",
-             "L221.StubTechShrwt_bio",
+             "L221.StubTechShrwt_bioOil",
              "L221.StubTechFractProd_en",
              "L221.StubTechFractSecOut_en",
              "L221.Rsrc_en",
@@ -43,7 +45,10 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
              "L2234.StubTechMarket_elecS_USA",
              "L232.StubTechMarket_ind_USA",
              "L2321.StubTechMarket_cement_USA",
-             "L244.StubTechMarket_bld"))
+             "L244.StubTechMarket_bld",
+             "L221.StubTechFractCalPrice_en",
+             "L221.StubTechCalInput_bioOil",
+             "L221.StubTechInterp_bioOil"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2261.DeleteSupplysector_bio_USA",
              "L2261.Supplysector_bio_USA",
@@ -55,6 +60,9 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
              "L2261.StubTechShrwt_rbO_USA",
              "L2261.StubTechFractSecOut_bio_USA",
              "L2261.StubTechFractProd_bio_USA",
+             "L2261.StubTechFractCalPrice_bio_USA",
+             "L2261.StubTechCalInput_bio_USA",
+             "L2261.StubTechInterp_bio_USA",
              "L2261.Rsrc_DDGS_USA",
              "L2261.RsrcPrice_DDGS_USA",
              "L2261.Tech_rbm_USA",
@@ -79,17 +87,20 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
       minicam.non.energy.input <- output.unit <- price.unit <- region <- sector.name <- state <-
       stub.technology <- subsector <- supplysector <- technology <- to.year <- year <- traded <-
       subsector.name <- share.weight <- fractional.secondary.output <- price <- fraction.produced <-
-      PrimaryFuelCO2Coef.name <- PrimaryFuelCO2Coef <- minicam.energy.input <- NULL
+      PrimaryFuelCO2Coef.name <- PrimaryFuelCO2Coef <- minicam.energy.input <- sector <- calibrated.value <-
+      value <- share <- NULL
 
     # Load required inputs
     A21.sector <- get_data(all_data, "energy/A21.sector")
     A26.sector <- get_data(all_data, "energy/A26.sector")
     A28.sector <- get_data(all_data, "gcam-usa/A28.sector")
+    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
+    L122.out_EJ_state_refining_F <- get_data(all_data, "L122.out_EJ_state_refining_F")
     L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
     L221.GlobalTechCoef_en <- get_data(all_data, "L221.GlobalTechCoef_en")
     L221.SubsectorInterp_en <- get_data(all_data, "L221.SubsectorInterp_en")
     L221.StubTech_en <- get_data(all_data, "L221.StubTech_en")
-    L221.StubTechShrwt_bio <- get_data(all_data, "L221.StubTechShrwt_bio")
+    L221.StubTechShrwt_bioOil <- get_data(all_data, "L221.StubTechShrwt_bioOil")
     L221.StubTechFractProd_en <- get_data(all_data, "L221.StubTechFractProd_en")
     L221.StubTechFractSecOut_en <- get_data(all_data, "L221.StubTechFractSecOut_en")
     L221.Rsrc_en <- get_data(all_data, "L221.Rsrc_en")
@@ -102,6 +113,9 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
     L232.StubTechMarket_ind_USA <- get_data(all_data, "L232.StubTechMarket_ind_USA")
     L2321.StubTechMarket_cement_USA <- get_data(all_data, "L2321.StubTechMarket_cement_USA")
     L244.StubTechMarket_bld <- get_data(all_data, "L244.StubTechMarket_bld")
+    L221.StubTechFractCalPrice_en <- get_data(all_data, "L221.StubTechFractCalPrice_en")
+    L221.StubTechCalInput_bioOil <- get_data(all_data, "L221.StubTechCalInput_bioOil")
+    L221.StubTechInterp_bioOil <- get_data(all_data, "L221.StubTechInterp_bioOil")
 
     # ===================================================
     # Data Processing
@@ -172,11 +186,16 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES$StubTechMarket) -> L2261.StubTechMarket_bio_USA
 
     # Technology share-weights of state-level regional biomassOil sectors
-    L221.StubTechShrwt_bio %>%
-      filter(region == gcam.USA_REGION) %>%
-      select(-region) %>%
-      repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
-      select(LEVEL2_DATA_NAMES$StubTechYr, share.weight) -> L2261.StubTechShrwt_rbO_USA
+    L221.StubTechShrwt_bioOil %>%
+      # mutate that does nothing to ensure prior metadata is dropped
+      mutate(region = region) %>%
+      filter(region == gcam.USA_REGION) -> L2261.StubTechShrwt_rbO_USA
+    if(nrow(L2261.StubTechShrwt_rbO_USA) > 0) {
+      L2261.StubTechShrwt_rbO_USA %>%
+        select(-region) %>%
+        repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
+        select(LEVEL2_DATA_NAMES$StubTechYr, share.weight) -> L2261.StubTechShrwt_rbO_USA
+    }
 
     # Secondary (feed) outputs of global technologies for upstream (bio)energy
     # NOTE: secondary outputs are only considered in future time periods
@@ -199,6 +218,36 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
       select(LEVEL2_DATA_NAMES$StubTechYr, fractional.secondary.output, price, fraction.produced) -> L2261.StubTechFractProd_bio_USA
 
+    L221.StubTechFractCalPrice_en %>%
+      filter(region == gcam.USA_REGION) %>%
+      select(-region) %>%
+      repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
+      select(LEVEL2_DATA_NAMES$StubTechFractCalPrice) -> L2261.StubTechFractCalPrice_bio_USA
+
+    calibrated_techs %>%
+      # filter for biomass supply sectors
+      semi_join(A28.sector, by=c("minicam.energy.input" = "supplysector")) %>%
+      select(sector, minicam.energy.input) %>%
+      # filter for biomass energy only
+      inner_join(L122.out_EJ_state_refining_F, c("sector")) %>%
+      #filter(value != 0) %>%
+      select(-sector, -fuel) %>%
+      group_by(minicam.energy.input, year) %>%
+      mutate(share = value / sum(value),
+             share = if_else(is.na(share), 0, share)) %>%
+      ungroup() %>%
+      rename(supplysector = minicam.energy.input) %>%
+      # expand L221.StubTechCalInput_bioOil to the states, adjust calibrated.value by the state shares
+      left_join(filter(L221.StubTechCalInput_bioOil, region == gcam.USA_REGION), ., by=c("supplysector", "year")) %>%
+      mutate(calibrated.value = share * calibrated.value,
+             region = state) %>%
+      select(LEVEL2_DATA_NAMES$StubTechCalInput) -> L2261.StubTechCalInput_bio_USA
+
+    L221.StubTechInterp_bioOil %>%
+      filter(region == gcam.USA_REGION) %>%
+      select(-region) %>%
+      repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
+      select(LEVEL2_DATA_NAMES$StubTechInterp) -> L2261.StubTechInterp_bio_USA
 
     # Connecting state-level DDGS & feedcakes secondary outputs to USA sector
     # depletable resource info for state-level DDGS & feedcake secondary outputs
@@ -401,7 +450,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Technology share-weights for state-level regional biomassOil supply sectors") %>%
       add_legacy_name("L2261.StubTechShrwt_rbO_USA") %>%
-      add_precursors("L221.StubTechShrwt_bio") ->
+      add_precursors("L221.StubTechShrwt_bioOil") ->
       L2261.StubTechShrwt_rbO_USA
 
     L2261.StubTechFractSecOut_bio_USA %>%
@@ -423,6 +472,30 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
       add_precursors("gcam-usa/A28.sector",
                      "L221.StubTechFractProd_en") ->
       L2261.StubTechFractProd_bio_USA
+
+    L2261.StubTechFractCalPrice_bio_USA %>%
+      add_title("Calibrated historical price for DDGS") %>%
+      add_units("1975$/kg") %>%
+      add_comments("Value only relevant for share-weight calculation") %>%
+      add_precursors("L221.StubTechFractCalPrice_en") ->
+      L2261.StubTechFractCalPrice_bio_USA
+
+    L2261.StubTechCalInput_bio_USA %>%
+      add_title("Calibrated output of biomassOil by feedstock type") %>%
+      add_units("Mt/yr") %>%
+      add_comments("Calibration is necessary to allow regions to have multiple biomassOil feedstocks") %>%
+      add_precursors("energy/calibrated_techs",
+                     "gcam-usa/A28.sector",
+                     "L122.out_EJ_state_refining_F",
+                     "L221.StubTechCalInput_bioOil") ->
+      L2261.StubTechCalInput_bio_USA
+
+    L2261.StubTechInterp_bio_USA %>%
+      add_title("biomassOil technology (feedstock type) shareweight interpolation") %>%
+      add_units("unitless") %>%
+      add_comments("Regions with multiple feedstocks in the base year have their share-weights passed forward") %>%
+      add_precursors("L221.StubTechInterp_bioOil") ->
+      L2261.StubTechInterp_bio_USA
 
     L2261.Rsrc_DDGS_USA %>%
       add_title("Depletable Resource Information for State-level Biomass Supply Sector Secondary Feed Outputs") %>%
@@ -563,6 +636,9 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
                 L2261.StubTechShrwt_rbO_USA,
                 L2261.StubTechFractSecOut_bio_USA,
                 L2261.StubTechFractProd_bio_USA,
+                L2261.StubTechFractCalPrice_bio_USA,
+                L2261.StubTechCalInput_bio_USA,
+                L2261.StubTechInterp_bio_USA,
                 L2261.Rsrc_DDGS_USA,
                 L2261.RsrcPrice_DDGS_USA,
                 L2261.Tech_rbm_USA,

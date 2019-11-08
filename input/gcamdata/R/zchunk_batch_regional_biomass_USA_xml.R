@@ -20,6 +20,9 @@ module_gcamusa_batch_regional_biomass_USA_xml <- function(command, ...) {
              "L2261.StubTechShrwt_rbO_USA",
              "L2261.StubTechFractSecOut_bio_USA",
              "L2261.StubTechFractProd_bio_USA",
+             "L2261.StubTechFractCalPrice_bio_USA",
+             "L2261.StubTechCalInput_bio_USA",
+             "L2261.StubTechInterp_bio_USA",
              "L2261.Rsrc_DDGS_USA",
              "L2261.RsrcPrice_DDGS_USA",
              "L2261.Tech_rbm_USA",
@@ -52,6 +55,9 @@ module_gcamusa_batch_regional_biomass_USA_xml <- function(command, ...) {
     L2261.StubTechShrwt_rbO_USA <- get_data(all_data, "L2261.StubTechShrwt_rbO_USA")
     L2261.StubTechFractSecOut_bio_USA <- get_data(all_data, "L2261.StubTechFractSecOut_bio_USA")
     L2261.StubTechFractProd_bio_USA <- get_data(all_data, "L2261.StubTechFractProd_bio_USA")
+    L2261.StubTechFractCalPrice_bio_USA <- get_data(all_data, "L2261.StubTechFractCalPrice_bio_USA")
+    L2261.StubTechCalInput_bio_USA <- get_data(all_data, "L2261.StubTechCalInput_bio_USA")
+    L2261.StubTechInterp_bio_USA <- get_data(all_data, "L2261.StubTechInterp_bio_USA")
     L2261.Rsrc_DDGS_USA <- get_data(all_data, "L2261.Rsrc_DDGS_USA")
     L2261.RsrcPrice_DDGS_USA <- get_data(all_data, "L2261.RsrcPrice_DDGS_USA")
     L2261.Tech_rbm_USA <- get_data(all_data, "L2261.Tech_rbm_USA")
@@ -83,6 +89,9 @@ module_gcamusa_batch_regional_biomass_USA_xml <- function(command, ...) {
       add_xml_data(L2261.StubTechShrwt_rbO_USA, "StubTechShrwt") %>%
       add_xml_data(L2261.StubTechFractSecOut_bio_USA, "StubTechFractSecOut") %>%
       add_xml_data(L2261.StubTechFractProd_bio_USA, "StubTechFractProd") %>%
+      add_xml_data(L2261.StubTechFractCalPrice_bio_USA, "StubTechFractCalPrice") %>%
+      add_xml_data(L2261.StubTechCalInput_bio_USA, "StubTechCalInput") %>%
+      add_xml_data(L2261.StubTechInterp_bio_USA, "StubTechInterp") %>%
       add_xml_data(L2261.Rsrc_DDGS_USA, "Rsrc") %>%
       add_xml_data(L2261.RsrcPrice_DDGS_USA, "RsrcPrice") %>%
       add_xml_data(L2261.Tech_rbm_USA, "Tech") %>%
@@ -108,6 +117,9 @@ module_gcamusa_batch_regional_biomass_USA_xml <- function(command, ...) {
                      "L2261.StubTechShrwt_rbO_USA",
                      "L2261.StubTechFractSecOut_bio_USA",
                      "L2261.StubTechFractProd_bio_USA",
+                     "L2261.StubTechFractCalPrice_bio_USA",
+                     "L2261.StubTechCalInput_bio_USA",
+                     "L2261.StubTechInterp_bio_USA",
                      "L2261.Rsrc_DDGS_USA",
                      "L2261.RsrcPrice_DDGS_USA",
                      "L2261.Tech_rbm_USA",

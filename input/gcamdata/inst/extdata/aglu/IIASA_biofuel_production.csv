@@ -1,0 +1,34 @@
+# File: IIASA_biofuel_production.csv
+# Title: Biofuel production volumes by source (2010)
+# Units: Million liters
+# Source: IIASA (Hugo Valin) provided to Global Economics Subgroup 9/11/2012
+# Column types: ccccn 
+# ----------
+Region,Biofuel,Crop,Source,Production_ML
+EU-27,ethanol,Wheat,Domestic,1617
+EU-27,ethanol,Corn,Domestic,1876
+EU-27,ethanol,Corn,Imported,415
+EU-27,ethanol,Sugar cane,Imported,415
+EU-27,ethanol,Sugar beet,Domestic,896
+EU-27,biodiesel,Rapeseed,Domestic,6989
+EU-27,biodiesel,Soybean,Domestic,1236
+EU-27,biodiesel,Soybean,Imported,804
+EU-27,biodiesel,Sunflower,Domestic,169
+EU-27,biodiesel,Recycled vegetable oil,Domestic,730
+EU-27,biodiesel,Animal fats,Domestic,438
+EU-27,biodiesel,Palm oil,Domestic,1022
+EU-27,biodiesel,Palm oil,Imported,1206
+USA,ethanol,Corn,Domestic,50013
+USA,ethanol,Sugar cane,Imported,0
+USA,biodiesel,Soybean,Domestic,2470
+Brazil,ethanol,Sugar cane,Domestic,22162
+Brazil,biodiesel,Soybean,Domestic,1896
+Brazil,biodiesel,Animal fats,Domestic,394
+Brazil,biodiesel,Other vegetable oil,Domestic,172
+Argentina,biodiesel,Soybean,Domestic,571
+China,ethanol,Wheat,Domestic,383
+China,ethanol,Corn,Domestic,1575
+China,ethanol,Cassava,Domestic,170
+Canada,ethanol,Wheat,Domestic,948
+Canada,ethanol,Corn,Domestic,237
+Canada,ethanol,Corn,Imported,320

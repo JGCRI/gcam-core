@@ -844,6 +844,27 @@ inline void XMLWriteOpeningTag( const std::string& elementName, std::ostream& ou
     tabs->increaseIndent();
 }
 
+/*! \brief Write an opening XML tag.
+ * \details This function is used to write an opening XML tag and attributes specified as a map of strings
+ * where key is attribute name and value is attribute value. The function increases the indent level after
+ * writing the tag so that subsequent elements are correctly indented.
+ * \param aElementName Name of the element.
+ * \param aOut Stream to print to.
+ * \param aTabs The number of tabs to print before the element.
+ * \param aAttrs A map of attributes to include where key is attribute name and value is attribute value.
+ */
+inline void XMLWriteOpeningTag( const std::string& aElementName, std::ostream& aOut, Tabs* aTabs, const std::map<std::string, std::string>& aAttrs ) {
+    
+    aTabs->writeTabs( aOut );
+    aOut << "<" << aElementName;
+
+    for( auto iter = aAttrs.begin(); iter != aAttrs.end(); ++iter ) {
+        aOut << " " << (*iter).first << "=\"" << (*iter).second << "\"";
+    }
+    aOut << ">" << std::endl;
+    aTabs->increaseIndent();
+}
+
 /*!  \brief Write a closing XML tag.
 * \details This function is used to write a closing XML tag. It decreases the indent before writing the tag,
 * and adds a newline.
