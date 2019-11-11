@@ -105,25 +105,20 @@ int main( ) {
             cout << "E3SM-GCAM: Carbon scaling on" << endl;
             if ( READ_ELM_FROM_FILE ) {
                 // Read the ELM data from a file and then pass it to setDensityGCAM below
-                cout << "Read NPP" << endl;
                 // Read in average NPP
                 ASpatialData tempPFTData(NUM_LAT * NUM_LON * NUM_PFT);
                 tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false, gcaminpp);
                 
-                cout << "Read HR" << endl;
                 // Read in average HR
                 tempPFTData.readSpatialData("../cpl/data/hr_mean_pft.txt", true, true, false, gcamihr);
                 
-                cout << "Read PFT weight" << endl;
                 // Read in PFT weight in grid cell
                 tempPFTData.readSpatialData("../cpl/data/pft_wt.txt", true, true, false, gcamipftfract);
                 
-                cout << "Read area" << endl;
                 // Read in area of grid cell
                 ASpatialData tempData(NUM_LAT * NUM_LON);
                 tempData.readSpatialData("../cpl/data/area.txt", true, false, false, gcamiarea);
                 
-                cout << "Read land fract" << endl;
                 // Read in area of grid cell
                 tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
             }

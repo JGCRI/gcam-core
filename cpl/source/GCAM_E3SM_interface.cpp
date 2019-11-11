@@ -270,7 +270,6 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
         }
         // TODO: This should really be in an `else` block -- only do if you aren't reading scalars.
         // But, I'm leaving it on for testing/debugging
-        cout << "Read region map" << endl;
         e3sm2gcam.readRegionalMappingData(aMappingFile);
         e3sm2gcam.calcScalers(yyyymmdd, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
                               scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
