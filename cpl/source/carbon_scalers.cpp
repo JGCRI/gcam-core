@@ -146,10 +146,9 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
 }
 
 // Calculate scalers
-// TODO: Add outlier test/removal
 // TODO: Set the data in the passed vectors
 void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
+                                std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers) {
     // First, read spatial data
     readBaseYearData();
     
@@ -275,13 +274,16 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
         }
         
      }
-    
+}
+
+// Write scalar data to a file. This is for debugging purposes.
+void CarbonScalers::writeScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, int aLength) {
     // DEBUG: Write output
     // TODO: This should be moved to a separate method that will write output (if the boolean is set)
     ofstream oFile;
-    oFile.open("./test.txt");
-    for(const auto &curr : aboveScalar) {
-        oFile << curr.first.first << ", " << curr.first.second << ": " << curr.second << endl;
+    oFile.open(aFileName);
+    for(int i = 0; i < aLength; i++) {
+        oFile << aYears[i] << "," << aRegions[i] << "," << aLandTechs[i] << "," << aAboveScalers[i] << "," << aBelowScalers[i] << endl;
     }
     oFile.close();
 }
@@ -371,12 +373,18 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
     // Now, calculate upper and lower bounds as median +/- madLimit * mad
     double upperBound = median + madLimit * mad;
     double lowerBound = median - madLimit * mad;
+    double upperBoundHR = medianHR + madLimit * madHR;
+    double lowerBoundHR = medianHR - madLimit * madHR;
     
     // Remove Outliers. These are set to zero so they will be excluded from scaler calculation
     for( int i = 0; i < length; i++ ) {
-        if( scaledNPP[i] > upperBound || scaledNPP[i] < lowerBound) {
+        if( scaledNPP[i] > upperBound || scaledNPP[i] < lowerBound ) {
             aELMNPP[i] = 0;
             mBaseNPPVector[i] = 0;
+        }
+        if( scaledHR[i] > upperBoundHR || scaledHR[i] < lowerBoundHR ) {
+            aELMHR[i] = 0;
+            mBaseHRVector[i] = 0;
         }
     }
     
