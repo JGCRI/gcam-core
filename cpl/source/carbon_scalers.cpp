@@ -337,13 +337,17 @@ void CarbonScalers::readScalers(int *yyyymmdd, std::vector<int>& aYears, std::ve
 void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
     int length = mNumLat * mNumLon * mNumPFT;
     std::vector<double> scaledNPP(aELMNPP+0, aELMNPP+length);
+    std::vector<double> scaledHR(aELMHR+0, aELMHR+length);
     
     // Calculate raw scalars
     std::transform(scaledNPP.begin(), scaledNPP.end(), mBaseNPPVector.begin(), scaledNPP.begin(), std::divides<double>());
+    std::transform(scaledHR.begin(), scaledHR.end(), mBaseHRVector.begin(), scaledHR.begin(), std::divides<double>());
     
     // Remove zero and nan values -- ocean grid cells weren't included in the original data and cells with 0 base values were excluded
     std::vector<double>::iterator newIter = std::remove_if( scaledNPP.begin(), scaledNPP.end(), [](double x){return x == 0 || x != x;});
+    std::vector<double>::iterator newHRIter = std::remove_if( scaledHR.begin(), scaledHR.end(), [](double x){return x == 0 || x != x;});
     scaledNPP.resize( newIter -  scaledNPP.begin() );
+    scaledHR.resize( newHRIter -  scaledHR.begin() );
 
     // Compute the median and median absolute deviation
     // See: Davies, P.L. and Gather, U. (1993), "The identification of multiple outliers"
@@ -352,12 +356,17 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
 
     // First, sort the scaler and find median
     std::sort(scaledNPP.begin(), scaledNPP.end());
+    std::sort(scaledHR.begin(), scaledHR.end());
     double median = 0.5 * (scaledNPP[scaledNPP.size() / 2 - 1] + scaledNPP[scaledNPP.size() / 2]);
+    double medianHR = 0.5 * (scaledHR[scaledHR.size() / 2 - 1] + scaledHR[scaledHR.size() / 2]);
     
     // Then, find the median absolute deviation
     transform(scaledNPP.begin(), scaledNPP.end(), scaledNPP.begin(), [median](double x){return abs(x - median);});
+    transform(scaledHR.begin(), scaledHR.end(), scaledHR.begin(), [medianHR](double x){return abs(x - medianHR);});
     std::sort(scaledNPP.begin(), scaledNPP.end());
+    std::sort(scaledHR.begin(), scaledHR.end());
     double mad = 0.5 * (scaledNPP[scaledNPP.size() / 2 - 1] + scaledNPP[scaledNPP.size() / 2]);
+    double madHR = 0.5 * (scaledHR[scaledHR.size() / 2 - 1] + scaledHR[scaledHR.size() / 2]);
 
     // Now, calculate upper and lower bounds as median +/- madLimit * mad
     double upperBound = median + madLimit * mad;
