@@ -66,17 +66,14 @@ CarbonScalers::~CarbonScalers() {
 // This is used to calculate the scalar baseline.
 // ASpatialData::readSpatialData method and then copying the vectors.
 void CarbonScalers::readBaseYearData(){
-    cout << "Read Base NPP" << endl;
     // Read in average NPP
     readSpatialData("../cpl/data/base_npp_mean_pft.txt", true, true, false);
     mBaseNPPVector = getValueVector();
     
-    cout << "Read Base HR" << endl;
     // Read in average HR
     readSpatialData("../cpl/data/base_hr_mean_pft.txt", true, true, false);
     mBaseHRVector = getValueVector();
     
-    cout << "Read Base PFT weight" << endl;
     // Read in PFT weight in grid cell
     readSpatialData("../cpl/data/base_pft_wt.txt", true, true, false);
     mBasePFTFractVector = getValueVector();

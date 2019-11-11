@@ -114,8 +114,6 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, boo
         row++;
     }
     
-    cout << "Read " << row << " rows" << endl;
-    
     return total;
 }
 
@@ -172,8 +170,6 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, boo
         
         row++;
     }
-    
-    cout << "Read " << row << " rows" << endl;
     
     return total;
 }
