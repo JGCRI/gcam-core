@@ -257,7 +257,8 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     std::vector<int> scalarYears(17722);
     vector<std::string> scalarRegion(17722);
     vector<std::string> scalarLandTech(17722);
-    vector<double> scalarData(17722);
+    vector<double> aboveScalarData(17722);
+    vector<double> belowScalarData(17722);
     
     // Only set carbon densities during GCAM model years.
     if( modeltime->isModelYear( curryear )) {
@@ -265,17 +266,23 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
         
         // Get scaler information
         if ( aReadScalars ) {
-            e3sm2gcam.readScalers(yyyymmdd, scalarYears, scalarRegion, scalarLandTech, scalarData);
+            e3sm2gcam.readScalers(yyyymmdd, scalarYears, scalarRegion, scalarLandTech, aboveScalarData);
         }
         // TODO: This should really be in an `else` block -- only do if you aren't reading scalars.
         // But, I'm leaving it on for testing/debugging
         cout << "Read region map" << endl;
         e3sm2gcam.readRegionalMappingData(aMappingFile);
         e3sm2gcam.calcScalers(yyyymmdd, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
-                              scalarYears, scalarRegion, scalarLandTech, scalarData);
+                              scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
+        
+        // Optional: write scaler information to a file
+        // TODO: make the file name an input instead of hardcoded
+        if( aWriteScalars ) {
+            e3sm2gcam.writeScalers("./scalers.csv", scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData, 17722);
+        }
         
         // TODO: What happens if there is no scalarData or if the elements are blank?
-        SetDataHelper setScaler(scalarYears, scalarRegion, scalarLandTech, scalarData, "world/region[+name]/sector/subsector/technology[+name]/period[+year]/yield-scaler");
+        SetDataHelper setScaler(scalarYears, scalarRegion, scalarLandTech, aboveScalarData, "world/region[+name]/sector/subsector/technology[+name]/period[+year]/yield-scaler");
         setScaler.run(runner->getInternalScenario());
     }
     
