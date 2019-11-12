@@ -39,6 +39,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/trim.hpp>
 
 #include "util/base/include/auto_file.h"
 #include "../include/carbon_scalers.h"
@@ -117,7 +119,7 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
         subregion = token;
 
         // Create reion ID
-        string regID = region + "_" + subregion;
+        string regID = region + "." + subregion;
         
         // Add region ID to the mapping vector.
         // Note that there maybe more than one regID per gridID (hence, a vector)
@@ -157,10 +159,10 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
     std::map<std::pair<std::string,std::string>, double> baseTotalArea;
     std::map<std::pair<std::string,std::string>, double> totalNPP;
     std::map<std::pair<std::string,std::string>, double> baseTotalNPP;
-    std::map<std::pair<std::string,std::string>, double> aboveScalar;
+    std::map<std::pair<std::string,std::string>, double> aboveScalarMap;
     std::map<std::pair<std::string,std::string>, double> totalHR;
     std::map<std::pair<std::string,std::string>, double> baseTotalHR;
-    std::map<std::pair<std::string,std::string>, double> belowScalar;
+    std::map<std::pair<std::string,std::string>, double> belowScalarMap;
     
     // Loop over PFTs and grid cells to calculate weighted average NPP for each GCAM region
     int gridIndex = 0; // Index used for Grid vectors
@@ -255,9 +257,9 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
         
         // Calculate scalar
         if ( baseAvgNPP > 0 ) {
-            aboveScalar[std::make_pair(regID,crop)] = avgNPP / baseAvgNPP;
+            aboveScalarMap[std::make_pair(regID,crop)] = avgNPP / baseAvgNPP;
         } else {
-            aboveScalar[std::make_pair(regID,crop)] = 1.0;
+            aboveScalarMap[std::make_pair(regID,crop)] = 1.0;
         }
         
         // Calculate scalar
@@ -265,12 +267,47 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
             // The belowground scalar is a combination of NPP and HR...BUT HR needs to be "flipped" around 1
             // This is because higher heterotrophic respiration means lower C density, everything else being equal
             hrScalar = 2.0 - ( avgHR / baseAvgHR );
-            belowScalar[std::make_pair(regID,crop)] = ( aboveScalar[std::make_pair(regID,crop)] + hrScalar ) / 2.0;
+            belowScalarMap[std::make_pair(regID,crop)] = ( aboveScalarMap[std::make_pair(regID,crop)] + hrScalar ) / 2.0;
         } else {
-            belowScalar[std::make_pair(regID,crop)] = 1.0;
+            belowScalarMap[std::make_pair(regID,crop)] = 1.0;
         }
-        
      }
+    
+    createScalerVectors(ymd, aYears, aRegions, aLandTechs, aAboveScalers, aBelowScalers, aboveScalarMap, belowScalarMap);
+}
+
+
+// This function transforms the mappings used for internal scalar calculation
+// into the vectors needed to set data within GCAM
+void CarbonScalers::createScalerVectors(int *ymd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+                                        std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers,
+                                        std::map<std::pair<std::string,std::string>, double> aAboveScalarMap,
+                                        std::map<std::pair<std::string,std::string>, double> aBelowScalarMap) {
+    
+    // Loop through the map and create the vectors
+    std::string regID;
+    std::string crop;
+    std::vector<string> strs;
+    int row = 0;
+    for(const auto &curr : aAboveScalarMap) {
+        regID = curr.first.first;
+        crop = curr.first.second;
+
+        // Split the region name into region and basin
+        boost::split(strs, regID, boost::is_any_of("."));
+        
+        // Set values in each vector
+        // Note that we need to combine the basin with the crop name for the `aLandTechs` vector
+        // and separate the region from the basin for the `aRegions` vector.
+        // TODO: Set below ground scalar
+        aYears[row] = *ymd/10000;
+        aRegions[row] = strs[0];
+        aLandTechs[row] = crop + "_" + strs[1];
+        aAboveScalers[row] = curr.second;
+        
+        row++;
+    }
+    
 }
 
 // Write scalar data to a file. This is for debugging purposes.

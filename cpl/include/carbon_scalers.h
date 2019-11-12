@@ -50,6 +50,10 @@ public:
     void readScalers(int *ymd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers);
     void calcScalers(int *ymd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                      std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers);
+    void createScalerVectors(int *ymd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+                                            std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers,
+                                            std::map<std::pair<std::string,std::string>, double> aAboveScalarMap,
+                                            std::map<std::pair<std::string,std::string>, double> aBelowScalarMap);
     void writeScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, int aLength);
     void readBaseYearData();
     void readRegionalMappingData(std::string aFileName);
