@@ -304,7 +304,8 @@ void CarbonScalers::createScalerVectors(int *ymd, std::vector<int>& aYears, std:
         aRegions[row] = strs[0];
         aLandTechs[row] = crop + "_" + strs[1];
         aAboveScalers[row] = curr.second;
-        
+        aBelowScalers[row] = aBelowScalarMap[std::make_pair(regID,crop)];
+    
         row++;
     }
     

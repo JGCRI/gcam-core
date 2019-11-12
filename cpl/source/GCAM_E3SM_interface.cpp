@@ -281,7 +281,7 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
         }
         
         // TODO: What happens if there is no scalarData or if the elements are blank?
-        SetDataHelper setScaler(scalarYears, scalarRegion, scalarLandTech, aboveScalarData, "world/region[+name]/sector/subsector/technology[+name]/period[+year]/yield-scaler");
+        SetDataHelper setScaler(scalarYears, scalarRegion, scalarLandTech, aboveScalarData, "world/region[+name]/sector/subsector/technology[+NamedFilter,StringRegexMatches]/period[+year]/yield-scaler");
         setScaler.run(runner->getInternalScenario());
     }
     
