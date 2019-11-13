@@ -272,7 +272,7 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
             belowScalarMap[std::make_pair(regID,crop)] = 1.0;
         }
      }
-    
+     
     createScalerVectors(ymd, aYears, aRegions, aLandTechs, aAboveScalers, aBelowScalers, aboveScalarMap, belowScalarMap);
 }
 
@@ -413,11 +413,10 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
     
     // Remove Outliers. These are set to zero so they will be excluded from scaler calculation
     for( int i = 0; i < length; i++ ) {
-        if( scaledNPP[i] > upperBound || scaledNPP[i] < lowerBound ) {
+        if( scaledNPP[i] > upperBound || scaledNPP[i] < lowerBound ||
+            scaledHR[i] > upperBoundHR || scaledHR[i] < lowerBoundHR ) {
             aELMNPP[i] = 0;
             mBaseNPPVector[i] = 0;
-        }
-        if( scaledHR[i] > upperBoundHR || scaledHR[i] < lowerBoundHR ) {
             aELMHR[i] = 0;
             mBaseHRVector[i] = 0;
         }
