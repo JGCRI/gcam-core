@@ -164,7 +164,7 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
     L125.bcoc_tgbkm2_R_forest_2000 <- L125.bcoc_tgbkm2_R_forest_2000_calculations %>%
       select(GCAM_region_ID, Land_Type, Non.CO2, ForestFire, Deforest) %>%
       gather(technology, em_factor, -GCAM_region_ID, -Land_Type, -Non.CO2) %>%
-      replace_na(em_factor = 0) %>% # replace nas, nans, and infinite values with zero
+      replace_na(list(em_factor = 0)) %>% # replace nas, nans, and infinite values with zero
       mutate(em_factor = replace(em_factor, is.infinite(em_factor), 0),
              em_factor = replace(em_factor, is.nan(em_factor), 0)) %>%
       arrange(Non.CO2, Land_Type, GCAM_region_ID) %>%

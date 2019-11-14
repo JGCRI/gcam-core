@@ -128,8 +128,8 @@ enum DataFlags {
  */
 template<typename T, int DataFlagsDefinition>
 struct Data {
-    Data( T& aData, const char* aDataName ):mData( aData ), mDataName( aDataName ) {}
-    Data( T& aData, const std::string& aDataName ):mData( aData ), mDataName( aDataName.c_str() ) {}
+    Data( T& aData, const char* aDataName ):mDataName( aDataName ), mData( aData ){}
+    Data( T& aData, const std::string& aDataName ):mDataName( aDataName.c_str() ), mData( aData ){}
     /*! \note The Data struct does not manage any of it's member variables and
      *        instead simply holds reference to some original source.
      */

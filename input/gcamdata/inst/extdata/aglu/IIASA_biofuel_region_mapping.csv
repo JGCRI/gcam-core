@@ -1,0 +1,40 @@
+# File: IIASA_biofuel_region_mapping.csv
+# Title: Mapping of IIASA regions to ISO codes
+# Units: None
+# Source: IIASA (Hugo Valin) provided to Global Economics Subgroup 9/11/2012
+# Column types: cc
+# ----------,
+Region,iso
+EU-27,aut
+EU-27,bel
+EU-27,bgr
+EU-27,hrv
+EU-27,cyp
+EU-27,cze
+EU-27,dnk
+EU-27,est
+EU-27,fin
+EU-27,fra
+EU-27,deu
+EU-27,grc
+EU-27,hun
+EU-27,irl
+EU-27,ita
+EU-27,lva
+EU-27,ltu
+EU-27,lux
+EU-27,mlt
+EU-27,nld
+EU-27,pol
+EU-27,prt
+EU-27,rom
+EU-27,svk
+EU-27,svn
+EU-27,esp
+EU-27,swe
+EU-27,gbr
+USA,usa
+Brazil,bra
+Argentina,arg
+China,chn
+Canada,can

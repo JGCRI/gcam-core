@@ -1,5 +1,5 @@
-#ifndef _SUBRSRC_H_
-#define _SUBRSRC_H_
+#ifndef _SUBRESOURCE_H_
+#define _SUBRESOURCE_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -60,10 +60,12 @@ class GDP;
 class IInfo;
 class IVisitor;
 class Tabs;
+class ITechnologyContainer;
 
 // Need to forward declare the subclasses as well.
 class SubRenewableResource;
 class SmoothRenewableSubresource;
+class ReserveSubResource;
 
 /*! 
 * \ingroup Objects
@@ -80,15 +82,19 @@ public:
     SubResource();
     virtual ~SubResource();
     const std::string& getName() const;
-    void XMLParse( const xercesc::DOMNode* tempnode );
-    virtual void completeInit( const IInfo* aResourceInfo );
+    void XMLParse( const xercesc::DOMNode* aNode );
+    virtual void completeInit( const std::string& aRegionName, const std::string& aResourceName,
+                               const IInfo* aResourceInfo );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
-    virtual void cumulsupply( double aPrice, int aPeriod );
-    virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
+    virtual void cumulsupply( const std::string& aRegionName, const std::string& aResourceName,
+                              double aPrice, int aPeriod );
+    virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName,
+                           const IInfo* aResourceInfo, const int aPeriod );
     virtual void postCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
     virtual double getCumulProd( const int aPeriod ) const;
-    virtual void annualsupply( int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
+    virtual void annualsupply( const std::string& aRegionName, const std::string& aResourceName,
+                               int aPeriod, const GDP* aGdp, double aPrice );
     double getAnnualProd( int aPeriod ) const;
     double getAvailable( int aPeriod ) const;
     void updateAvailable( const int period );
@@ -99,13 +105,14 @@ public:
     virtual double getHighestPrice( const int aPeriod ) const;
 protected:
     virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ) = 0;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
 
     DEFINE_DATA(
         /* Declare all subclasses of SubResource to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( SubResource, SubRenewableResource, SmoothRenewableSubresource ),
+        DEFINE_SUBCLASS_FAMILY( SubResource, SubRenewableResource, SmoothRenewableSubresource,
+                                ReserveSubResource ),
         
         //! SubResource name.
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
@@ -131,40 +138,20 @@ protected:
         //! technical change
         DEFINE_VARIABLE( ARRAY, "techChange", mTechChange, objects::PeriodVector<Value> ),
         
-        //! Environmental costs
-        DEFINE_VARIABLE( ARRAY, "environCost", mEnvironCost, objects::PeriodVector<Value> ),
-        
-        //! Severance Tax (exogenous)
-        DEFINE_VARIABLE( ARRAY, "severanceTax", mSeveranceTax, objects::PeriodVector<Value> ),
-        
         //! price adder used for calibration purposes
         DEFINE_VARIABLE( ARRAY | STATE, "price-adder", mPriceAdder, objects::PeriodVector<Value> ),
     
         //! amount of SubResource for each grade
-        DEFINE_VARIABLE( CONTAINER, "grade", mGrade, std::vector<Grade*> )
+        DEFINE_VARIABLE( CONTAINER, "grade", mGrade, std::vector<Grade*> ),
+                
+        //! Technology container for producing this sub-resource which will handle
+        //! adding output to the marketplace, calculating emissions, and tacking on
+        //! additional costs if configured.
+        DEFINE_VARIABLE( CONTAINER, "technology", mTechnology, ITechnologyContainer* )
     )
     
     //!< The subsector's information store.
     std::auto_ptr<IInfo> mSubresourceInfo;
 };
 
-
-/*! 
-* \ingroup Objects
-* \brief A class which defines a SubDepletableResource object, which is a container for multiple grade objects.
-* \author Steve Smith
-*/
-class SubDepletableResource: public SubResource {
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
-};
-
-/*! 
-* \ingroup Objects
-* \brief A class which defines a SubFixedResource object, which is a container for multiple grade objects.
-* \author Steve Smith
-*/
-class SubFixedResource: public SubResource {
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
-};
-
-#endif // _SUBRSRC_H_
+#endif // _SUBRESOURCE_H_

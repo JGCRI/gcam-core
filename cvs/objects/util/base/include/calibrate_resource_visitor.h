@@ -64,13 +64,16 @@ public:
                                      const int aPeriod );
 
     virtual void endVisitResource( const AResource* aResource,
-                                     const int aPeriod );
+                                   const int aPeriod );
 
     virtual void startVisitSubResource( const SubResource* aSubResource,
-                                     const int aPeriod );
+                                        const int aPeriod );
+    
+    virtual void startVisitReserveSubResource( const ReserveSubResource* aSubResource,
+                                               const int aPeriod );
 
     virtual void startVisitSubRenewableResource( const SubRenewableResource* aSubResource,
-                                     const int aPeriod );
+                                                 const int aPeriod );
 
 private:
     //! Name of the Region the for which we are calibrating

@@ -46,7 +46,6 @@
 
 class ITechnology;
 class GCAMConsumer;
-class Resource;
 
 namespace objects {
     /*!
@@ -66,7 +65,6 @@ namespace objects {
 
         void initializeTechVintageVector( ITechnology* aContainer );
         void initializeTechVintageVector( GCAMConsumer* aContainer );
-        void initializeTechVintageVector( Resource* aContainer );
 
         // GCAMFusion callbacks
         template<typename T>

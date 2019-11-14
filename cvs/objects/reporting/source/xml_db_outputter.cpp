@@ -56,6 +56,7 @@
 #include "sectors/include/consumer_final_demand.hpp"
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
+#include "sectors/include/nesting_subsector.h"
 #include "technologies/include/technology.h"
 #include "emissions/include/aghg.h"
 #include "technologies/include/icapture_component.h"
@@ -65,6 +66,7 @@
 #include "climate/include/iclimate_model.h"
 #include "climate/include/magicc_model.h"
 #include "resources/include/subresource.h"
+#include "resources/include/reserve_subresource.h"
 #include "resources/include/renewable_subresource.h"
 #include "resources/include/smooth_renewable_subresource.h"
 #include "resources/include/grade.h"
@@ -181,7 +183,8 @@ XMLDBOutputter::JNIContainer::~JNIContainer() {
 */
 XMLDBOutputter::XMLDBOutputter():
 mTabs( new Tabs ),
-mGDP( 0 )
+mGDP( 0 ),
+mSubsectorDepth( 0 )
 #if( __HAVE_JAVA__ )
 ,mJNIContainer( createContainer( false ) )
 #endif
@@ -574,10 +577,6 @@ void XMLDBOutputter::startVisitResource( const AResource* aResource,
             aResource->getAnnualProd( mCurrentRegion, per ), per );
     }
 
-    // Ghgs are expecting to use the buffer stack to write results into
-    // so create one for them to write into.
-    mBufferStack.push( new stringstream );
-
     // We want to write the keywords last due to limitations in
     // XPath we could be searching for them using following-sibling
     if( !aResource->mKeywordMap.empty() ) {
@@ -588,18 +587,6 @@ void XMLDBOutputter::startVisitResource( const AResource* aResource,
 void XMLDBOutputter::endVisitResource( const AResource* aResource,
                                        const int aPeriod )
 {
-    // Write the ghgs which put their output into the buffer stack.  We
-    // are not too concerned with writing empty tags at the resource
-    // level so we are not doing the full parent child buffers as in
-    // technology.
-    ostream* childBuffer = popBufferStack();
-    if( childBuffer->rdbuf()->in_avail() ) {
-        mBuffer << childBuffer->rdbuf();
-    }
-    delete childBuffer;
-    // the buffer stack should be empty by now
-    assert( mBufferStack.empty() );
-
     // Write the closing resource tag.
     XMLWriteClosingTag( aResource->getXMLName(), mBuffer, mTabs.get() );
     // Clear the current resource.
@@ -627,6 +614,16 @@ void XMLDBOutputter::endVisitSubResource( const SubResource* aSubResource,
 {
     // Write the closing subresource tag.
     XMLWriteClosingTag( aSubResource->getXMLName(), mBuffer, mTabs.get() );
+}
+
+void XMLDBOutputter::startVisitReserveSubResource( const ReserveSubResource* aSubResource, const int aPeriod )
+{
+    startVisitSubResource( aSubResource, aPeriod );
+}
+
+void XMLDBOutputter::endVisitReserveSubResource( const ReserveSubResource* aSubResource, const int aPeriod )
+{
+    endVisitSubResource( aSubResource, aPeriod );
 }
 
 void XMLDBOutputter::startVisitSubRenewableResource( const SubRenewableResource* aSubResource,
@@ -722,8 +719,16 @@ void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
                                           const int aPeriod )
 {
     // Write the opening subsector tag and the type of the base class.
-    XMLWriteOpeningTag( aSubsector->getXMLName(), mBuffer, mTabs.get(),
-        aSubsector->getName(), 0, Subsector::getXMLNameStatic() );
+    map<string, string> attrs;
+    attrs["name"] = aSubsector->getName();
+    attrs["type"] = Subsector::getXMLNameStatic();
+    int currDepth = mSubsectorDepth++;
+    // optimization to avoid writing depth of zero, which is the vast majority
+    // of the cases, to save space in the DB.
+    if( currDepth > 0 ) {
+        attrs["depth"] = util::toString( currDepth );
+    }
+    XMLWriteOpeningTag( aSubsector->getXMLName(), mBuffer, mTabs.get(), attrs );
 
     // Loop over the periods to output subsector information.
     // The loops are separated so the types are grouped together, as is required for
@@ -743,8 +748,20 @@ void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
 void XMLDBOutputter::endVisitSubsector( const Subsector* aSubsector,
                                         const int aPeriod )
 {
+    --mSubsectorDepth;
     // Write the closing subsector tag.
     XMLWriteClosingTag( aSubsector->getXMLName(), mBuffer, mTabs.get() );
+}
+
+void XMLDBOutputter::startVisitNestingSubsector( const NestingSubsector* aSubsector,
+                                                 const int aPeriod )
+{
+    startVisitSubsector( aSubsector, aPeriod );
+}
+void XMLDBOutputter::endVisitNestingSubsector( const NestingSubsector* aSubsector,
+                                               const int aPeriod )
+{
+    endVisitSubsector( aSubsector, aPeriod );
 }
 
 void XMLDBOutputter::startVisitTranSubsector( const TranSubsector* aTranSubsector, const int aPeriod ) {
@@ -1671,6 +1688,8 @@ void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const
              aYear <= modeltime->getper_to_yr( modeltime->getmaxper() - 1 ) || aYear == modeltime->getper_to_yr( modeltime->getmaxper() - 1 ); 
              aYear += outputInterval ){
         writeItemUsingYear( "land-use-change-emission", "MtC/yr", aCarbonCalc->getNetLandUseChangeEmission( aYear ), aYear );
+        writeItemUsingYear( "above-land-use-change-emission", "MtC/yr", aCarbonCalc->getNetLandUseChangeEmissionAbove( aYear ), aYear );
+        writeItemUsingYear( "below-land-use-change-emission", "MtC/yr", aCarbonCalc->getNetLandUseChangeEmissionBelow( aYear ), aYear );
      }
     
     for( int aYear = modeltime->getStartYear(); 

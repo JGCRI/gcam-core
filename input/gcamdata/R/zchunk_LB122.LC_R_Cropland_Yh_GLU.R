@@ -103,13 +103,10 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       ungroup() ->
       L122.ag_HA_bm2_R_Y_GLU
 
-
-    # Lines 51-64 in original file
     # Calculating the average percent of cropland that is fallow in each region
     # using the average cropland, fallow land, and land in temporary crops from FAO RESOURCESTAT
-    # The time series is unreliable, so only using the last available year (and applying to all historical years)
-    # based on above old comment, get the last available year and set as fallowland_year:
-    fallowland_year <- max(aglu.AGLU_HISTORICAL_YEARS)
+    # The time series is unreliable, so using the average of all available years between 2008 and 2012
+    # (and applying to all historical years)
     # And continue with calculating average crop land, fallow land, land in temporary crops:
     # compile the ratio of "temporary crops" to total arable land in each region
     # make table with fallow land compared to total arable land
@@ -126,11 +123,11 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
 
     # Take the FAO cropland table, L100.FAO_CL_kha:
     L100.FAO_CL_kha %>%
-      # pull off only the fallowland_year data:
-      filter(year == fallowland_year) %>%
+      # only include data in the right fallow land year range
+      filter(year %in% aglu.FALLOW_YEARS) %>%
       # keep only the iso country and the value for each:
       select(iso, countries, cropland = value, year) %>%
-      # append in fallow land data in fallowland_year from FAO, L100.FAO_fallowland_kha, keeping NA values:
+      # append in fallow land data in aglu.FALLOW_YEARS from FAO, L100.FAO_fallowland_kha, keeping NA values:
       left_join(L100.FAO_fallowland_kha, by = c("iso", "countries", "year")) %>%
       # rename value to fallow and remove NAs:
       rename(fallow = value) %>%
@@ -158,13 +155,12 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
 
     # Take the FAO cropland table, L100.FAO_CL_kha:
     L100.FAO_CL_kha %>%
-      # pull off only the fallowland_year data:
-      filter(year == fallowland_year) %>%
+      # only include data in the right fallow land year range
+      filter(year %in% aglu.FALLOW_YEARS) %>%
       # keep only the iso country and the value for each:
       select(iso, countries, cropland = value, year) %>%
-      # append in cropped land data in fallowland_year from FAO, L100.FAO_harv_CL_kha, keeping NA values:
-      left_join(L100.FAO_harv_CL_kha[L100.FAO_harv_CL_kha[['year']] == fallowland_year, ],
-                by = c("iso", "countries", "year")) %>%
+      # append in cropped land data in aglu.FALLOW_YEARS from FAO, L100.FAO_harv_CL_kha, keeping NA values:
+      left_join(L100.FAO_harv_CL_kha, by = c("iso", "countries", "year")) %>%
       # rename value to cropped and remove NAs:
       rename(cropped = value) %>%
       na.omit() %>%

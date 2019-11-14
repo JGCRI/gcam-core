@@ -168,6 +168,14 @@ public:
     void setYear( const int aYear );
 
     /*!
+     * \brief Change a LinkedMarket to link to an alternative market
+     *        than the one it was originally created with.
+     * \details Note this method is only relevant for LinkedMarket
+     * \param aLinkedMarket The new Market to link to.
+     */
+    virtual void resetLinkedMarket( Market* aLinkedMarket ) { }
+
+    /*!
     * \brief Return the type of the market as defined by the IMarketTypeEnum
     *        which is unique for each derived market class.
     * \return The type of the market.
