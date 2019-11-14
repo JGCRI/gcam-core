@@ -1,0 +1,11 @@
+# File: comtrade_commodity_code.csv,,
+# Title: Comtrade commodity mapping,,
+# Source: UN Comtrade,,
+# Units: NA,,
+# Column types: ccc ,,
+# ----------,,
+Commodity.Code,Commodity,GCAM.Commodity
+2701,"Coal; briquettes, ovoids and similar solid fuels manufactured from coal",coal
+2709,Petroleum oils and oils obtained from bituminous minerals; crude,oil
+271111,"Petroleum gases and other gaseous hydrocarbons; liquefied, natural gas",natural gas
+271112,"Petroleum gases and other gaseous hydrocarbons; liquefied, propane",LNG
