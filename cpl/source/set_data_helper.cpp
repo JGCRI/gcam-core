@@ -33,6 +33,7 @@
 
 #include "util/base/include/gcam_fusion.hpp"
 #include "util/base/include/gcam_data_containers.h"
+#include <boost/algorithm/string/predicate.hpp>
 
 using namespace std;
 
@@ -43,9 +44,18 @@ public:
     virtual bool matchesString( const std::string& aStrToTest ) const {
         return mStr[mRow] == aStrToTest;
     }
-private:
+protected:
     const vector<string>& mStr;
     size_t& mRow;
+};
+
+class StringVecStartsWith : public StringVecEquals {
+public:
+    StringVecStartsWith( const vector<string>& aStr, size_t& row ):StringVecEquals( aStr, row ) { }
+    virtual ~StringVecStartsWith() { }
+    virtual bool matchesString( const std::string& aStrToTest ) const {
+        return boost::starts_with( aStrToTest, mStr[mRow] );
+    }
 };
 
 class IntVecEquals : public AMatchesValue {
@@ -112,7 +122,7 @@ FilterStep* SetDataHelper::parseFilterStepStr( const std::string& aFilterStepStr
             filterStep = new FilterStep( dataName, new NamedFilter( matcher ) );
         }
         else if( filterStr == "name" && aCol == 1) {
-            matcher = new StringVecEquals( mLandTechColumn, mRow );
+            matcher = new StringVecStartsWith( mLandTechColumn, mRow );
             filterStep = new FilterStep( dataName, new NamedFilter( matcher ) );
         }
         else if( filterStr == "year" ) {
