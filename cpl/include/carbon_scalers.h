@@ -82,23 +82,23 @@ private:
     //! Map PFTs to GCAM crops
     std::map<int, std::vector<std::string>> mPFT2GCAMCropMap {
         //{ 0, { "RockIceDesert", "UrbanLand" } },
-        { 1, { "Forest", "UnmanagedForest" } },
-        { 2, { "Forest", "UnmanagedForest" } },
-        { 3, { "Forest", "UnmanagedForest" } },
-        { 4, { "Forest", "UnmanagedForest", "PalmFruit", "willow", "eucalyptus" } },
-        { 5, { "Forest", "UnmanagedForest", "willow" } },
-        { 6, { "Forest", "UnmanagedForest", "PalmFruit", "willow", "eucalyptus" } },
-        { 7, { "Forest", "UnmanagedForest", "willow" } },
-        { 8, { "Forest", "UnmanagedForest" } },
-        { 9, { "Shrubland", "Jatropha" } },
-        { 10, { "Shrubland", "Jatropha" } },
-        { 11, { "Shrubland" } },
-        { 12, {  "Grassland", "Tundra", "Pasture", "UnmanagedPasture", "FodderGrass"} },
-        { 13, { "Grassland", "Pasture", "UnmanagedPasture", "FodderGrass" } },
-        { 14, { "Grassland", "Pasture", "UnmanagedPasture", "FodderGrass", "miscanthus" } },
+        { 1, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } },
+        { 2, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } },
+        { 3, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } },
+        { 4, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "PalmFruit", "biomass_tree" } },
+        { 5, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "biomass_tree" } },
+        { 6, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "PalmFruit", "biomass_tree" } },
+        { 7, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "biomass_tree" } },
+        { 8, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } },
+        { 9, { "Shrubland", "ProtectedShrubland" } },
+        { 10, { "Shrubland", "ProtectedShrubland" } },
+        { 11, { "Shrubland", "ProtectedShrubland" } },
+        { 12, {  "Grassland", "ProtectedGrassland", "Tundra", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass"} },
+        { 13, { "Grassland", "ProtectedGrassland", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass" } },
+        { 14, { "Grassland", "ProtectedGrassland", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass", "miscanthus" } },
         { 15, { "Corn", "SugarCrop", "Rice", "OtherArableLand" } },
         { 16, { "Wheat", "MiscCrop", "OtherGrain", "OilCrop", "FiberCrop",
-            "FodderHerb", "Root_Tuber", "OtherArableLand", "biomass" } }
+            "FodderHerb", "Root_Tuber", "OtherArableLand", "biomass_grass" } }
     };
 };
 
