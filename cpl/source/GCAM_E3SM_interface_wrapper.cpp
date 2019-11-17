@@ -15,8 +15,8 @@ extern "C" {
   }
     
   // Call the GCAM initialization
-  void initcgcam_(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap) {
-    p_obj->initGCAM(aCaseName, aGCAMConfig, aGCAM2ELMCO2Map, aGCAM2ELMLUCMap);
+  void initcgcam_(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap, std::string aGCAM2ELMWHMap) {
+    p_obj->initGCAM(aCaseName, aGCAMConfig, aGCAM2ELMCO2Map, aGCAM2ELMLUCMap, aGCAM2ELMWHMap);
   }
 
   // Set Carbon Densities in GCAM using scalers from E3SM

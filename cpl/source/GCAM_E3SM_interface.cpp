@@ -37,7 +37,7 @@ GCAM_E3SM_interface::~GCAM_E3SM_interface(){
  *  and base model information.  Create and setup scenario
  */
 
-void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap)
+void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap, std::string aGCAM2ELMWHMap)
 {
     
     // identify default file names for control input and logging controls
@@ -132,6 +132,12 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     success = XMLHelper<void>::parseXML(aGCAM2ELMLUCMap, &mLUCData);
     mLUCData.addYearColumn("Year", years, yearRemap);
     mLUCData.finalizeColumns();
+    
+    // Setup the land use change mappings
+    // TODO: Error checking?
+    success = XMLHelper<void>::parseXML(aGCAM2ELMWHMap, &mWoodHarvestData);
+    mWoodHarvestData.addYearColumn("Year", years, yearRemap);
+    mWoodHarvestData.finalizeColumns();
 
     // Clean up
     XMLHelper<void>::cleanupParser();
@@ -225,11 +231,20 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mLUCData);
         getLUC.run(runner->getInternalScenario());
         
+        cout << "Getting Wood harvest" << endl;
+        GetDataHelper getWH("world/region[+NamedFilter,MatchesAny]/sector[NamedFilter,StringEquals,Forest]/subsector/technology[+NamedFilter,MatchesAny]//output[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mWoodHarvestData);
+        getWH.run(runner->getInternalScenario());
+        
         // Set data in the gcamoluc* arrays
         const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
+        int row = 0;
         for(size_t i = 0; i < mLUCData.getArrayLength(); ++i) {
-            // TODO: Is this needed or can we directly copy?
             gcamoluc[i] = luc[i];
+            row++;
+        }
+        for(size_t i = 0; i < mWoodHarvestData.getArrayLength(); ++i) {
+            gcamoluc[row] = mWoodHarvestData.getData()[i];
+            row++;
         }
         
         // Downscale CO2 emissions
