@@ -165,15 +165,16 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
     std::map<std::pair<std::string,std::string>, double> belowScalarMap;
     
     // Loop over PFTs and grid cells to calculate weighted average NPP for each GCAM region
+    // Note: E3SM data will have longitude moving fastest, then latitude, then pft, so loop in that order
     int gridIndex = 0; // Index used for Grid vectors
     int valIndex = 0; // Index used for PFT x Grid vectors
     double scalar = 0.0; // Define the scalar
     double base_scalar = 0.0; // Define the base scalar
     for( int pft = 1; pft <= mNumPFT; pft++ ) {
-        for ( int j = 1; j <= mNumLon; j++ ) {
-            for ( int k = 1; k <= mNumLat; k++ ) {
-                gridIndex = ( j - 1 ) * mNumLat + ( k - 1 );
-                valIndex = ( pft - 1 ) * mNumLat * mNumLon + ( j - 1 ) * mNumLat + ( k - 1 );
+        for ( int k = 1; k <= mNumLat; k++ ) {
+            for ( int j = 1; j <= mNumLon; j++ ) {
+                gridIndex = ( k - 1 ) * mNumLon + ( j - 1 );
+                valIndex = ( pft - 1 ) * mNumLon * mNumLat + ( k - 1 ) * mNumLon + ( j - 1 );
                 // Get region, subregion, and pft for this entry
                 // TODO: What to do about grid cells with multiple entries?
                 string gridID = std::to_string(j) + "_" + std::to_string(k);
