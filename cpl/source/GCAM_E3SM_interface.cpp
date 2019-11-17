@@ -122,19 +122,16 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     }
     
     // Setup the CO2 mappings
-    // TODO: Error checking?
     success = XMLHelper<void>::parseXML(aGCAM2ELMCO2Map, &mCO2EmissData);
     mCO2EmissData.addYearColumn("Year", years, yearRemap);
     mCO2EmissData.finalizeColumns();
 
     // Setup the land use change mappings
-    // TODO: Error checking?
     success = XMLHelper<void>::parseXML(aGCAM2ELMLUCMap, &mLUCData);
     mLUCData.addYearColumn("Year", years, yearRemap);
     mLUCData.finalizeColumns();
     
-    // Setup the land use change mappings
-    // TODO: Error checking?
+    // Setup the wood harvest mappings
     success = XMLHelper<void>::parseXML(aGCAM2ELMWHMap, &mWoodHarvestData);
     mWoodHarvestData.addYearColumn("Year", years, yearRemap);
     mWoodHarvestData.finalizeColumns();
@@ -173,8 +170,6 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
 void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemis, std::string aBaseCO2File,
                                   int aNumLon, int aNumLat, bool aWriteCO2 )
 {
-    cout << "RUNNING GCAM" << endl;
-    
     // Get year only of the current date
     int curryear = *yyyymmdd/10000;
     bool success = false;
@@ -224,14 +219,14 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mCO2EmissData);
         getCo2.run(runner->getInternalScenario());
         
-        cout << "Getting LUC" << endl;
+        mainLog << "Getting LUC" << endl;
         double *luc = mLUCData.getData();
         // be sure to reset any data set previously
         fill(luc, luc+mLUCData.getArrayLength(), 0.0);
         GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mLUCData);
         getLUC.run(runner->getInternalScenario());
         
-        cout << "Getting Wood harvest" << endl;
+        mainLog << "Getting Wood harvest" << endl;
         GetDataHelper getWH("world/region[+NamedFilter,MatchesAny]/sector[NamedFilter,StringEquals,Forest]/subsector/technology[+NamedFilter,MatchesAny]//output[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mWoodHarvestData);
         getWH.run(runner->getInternalScenario());
         
@@ -248,7 +243,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         }
         
         // Downscale CO2 emissions
-        cout << "Downscaling CO2 emissions" << endl;
+        mainLog << "Downscaling CO2 emissions" << endl;
         EmissDownscale gcam2e3sm(aNumLon * aNumLat);
         double totalEmissions2010 = gcam2e3sm.readSpatialData(aBaseCO2File, false, false, true);
         gcam2e3sm.downscaleCO2Emissions(totalEmissions2010, co2[0]);
