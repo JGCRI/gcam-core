@@ -284,12 +284,11 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
         // Get scaler information
         if ( aReadScalars ) {
             e3sm2gcam.readScalers(yyyymmdd, scalarYears, scalarRegion, scalarLandTech, aboveScalarData);
+        } else {
+            e3sm2gcam.readRegionalMappingData(aMappingFile);
+            e3sm2gcam.calcScalers(yyyymmdd, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
+                                  scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
         }
-        // TODO: This should really be in an `else` block -- only do if you aren't reading scalars.
-        // But, I'm leaving it on for testing/debugging
-        e3sm2gcam.readRegionalMappingData(aMappingFile);
-        e3sm2gcam.calcScalers(yyyymmdd, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
-                              scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
         
         // Optional: write scaler information to a file
         // TODO: make the file name an input instead of hardcoded

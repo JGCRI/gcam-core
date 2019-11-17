@@ -59,7 +59,7 @@ int main( ) {
     std::string GCAM2ELM_LUC_MAPPING_FILE = "../cpl/mappings/luc.xml";
     std::string GCAM2ELM_WOODHARVEST_MAPPING_FILE = "../cpl/mappings/woodharvest.xml";
     std::string ELM2GCAM_MAPPING_FILE = "../cpl/mappings/regionmap.csv";
-    bool READ_SCALARS = true; // If FALSE, scalars are calculated from NPP/HR
+    bool READ_SCALARS = false; // If FALSE, scalars are calculated from NPP/HR
     bool READ_ELM_FROM_FILE = true; // If FALSE, ELM data (NPP, HR, Area, PFT weight) are passed from E3SM.
     bool WRITE_CO2 = true; // If TRUE, gridded CO2 emissions will be written to a file (in addition to passed in code).
     bool WRITE_SCALARS = true; // If TRUE, scalars will be written to a file.
