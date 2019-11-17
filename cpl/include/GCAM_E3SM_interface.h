@@ -34,7 +34,7 @@ class GCAM_E3SM_interface {
 public:
     GCAM_E3SM_interface();
     ~GCAM_E3SM_interface();
-    void initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap);
+    void initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap, std::string aGCAM2ELMWHMap);
     void runGCAM(int *yyyymmdd, double *gcamoluc, double *gcamoemis, std::string aBaseCO2File, int aNumLon, int aNumLat, bool aWriteCO2);
     void setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                         int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, bool aReadScalars, bool aWriteScalars);
@@ -45,6 +45,7 @@ public:
     
     ReMapData mCO2EmissData;
     ReMapData mLUCData;
+    ReMapData mWoodHarvestData;
     
 private:
     std::auto_ptr<IScenarioRunner> runner;
