@@ -251,6 +251,8 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     // Get year only of the current date
     int curryear = *yyyymmdd/10000;
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
+    const int finalCalibrationPeriod = modeltime->getFinalCalibrationPeriod();
+    const int finalCalibrationYear = modeltime->getper_to_yr(finalCalibrationPeriod);
     
     // Create scalar vectors
     // TODO: Find a better way to determine the length
@@ -260,8 +262,8 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     vector<double> aboveScalarData(17722);
     vector<double> belowScalarData(17722);
     
-    // Only set carbon densities during GCAM model years.
-    if( modeltime->isModelYear( curryear )) {
+    // Only set carbon densities during GCAM model years after the final calibration period.
+    if( modeltime->isModelYear( curryear ) && curryear >  finalCalibrationYear ) {
         CarbonScalers e3sm2gcam(aNumLon, aNumLat, aNumPFT);
         
         // Get scaler information
