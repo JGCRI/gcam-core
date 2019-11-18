@@ -218,6 +218,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         fill(co2, co2+mCO2EmissData.getArrayLength(), 0.0);
         GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mCO2EmissData);
         getCo2.run(runner->getInternalScenario());
+        mainLog << mCO2EmissData << endl;
         
         mainLog << "Getting LUC" << endl;
         double *luc = mLUCData.getData();
@@ -225,10 +226,15 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         fill(luc, luc+mLUCData.getArrayLength(), 0.0);
         GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mLUCData);
         getLUC.run(runner->getInternalScenario());
+        mainLog << mLUCData << endl;
         
         mainLog << "Getting Wood harvest" << endl;
-        GetDataHelper getWH("world/region[+NamedFilter,MatchesAny]/sector[NamedFilter,StringEquals,Forest]/subsector/technology[+NamedFilter,MatchesAny]//output[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mWoodHarvestData);
+        double *woodHarvest = mWoodHarvestData.getData();
+        // be sure to reset any data set previously
+        fill(woodHarvest, woodHarvest+mWoodHarvestData.getArrayLength(), 0.0);
+        GetDataHelper getWH("world/region[+NamedFilter,MatchesAny]/sector[NamedFilter,StringEquals,Forest]/subsector/technology[+NamedFilter,MatchesAny]//output[IndexFilter,IntEquals,0]/physical-output[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mWoodHarvestData);
         getWH.run(runner->getInternalScenario());
+        mainLog << mWoodHarvestData << endl;
         
         // Set data in the gcamoluc* arrays
         const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();

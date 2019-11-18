@@ -36,6 +36,8 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <map>
+#include <iostream>
 
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
@@ -64,7 +66,8 @@ public:
     void setData(std::vector<std::string>& aColValues, const int aYearValue, const double aValue);
     double* getData();
     bool XMLParse(const xercesc::DOMNode* aNode);
-    size_t getArrayLength();
+    size_t getArrayLength() const;
+    std::ostream& printAsTable(std::ostream& aOut) const;
 private:
     bool mIsInitialized;
     bool mLandNameColumn;
@@ -72,5 +75,7 @@ private:
     ReMapDataHelper<int> mYearColumn;
     double* mData;
 };
+
+std::ostream& operator<<(std::ostream& aOut, const ReMapData& aData);
 
 #endif // __REMAP_DATA__
