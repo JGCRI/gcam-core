@@ -329,7 +329,7 @@ double* ReMapData::getData() {
  *
  * \author Pralit Patel
  */
-size_t ReMapData::getArrayLength() {
+size_t ReMapData::getArrayLength() const {
     size_t size = mYearColumn.getStrideLength();
     for(auto col : mColumns) {
         size *= col.getStrideLength();
@@ -337,3 +337,68 @@ size_t ReMapData::getArrayLength() {
     
     return size;
 }
+
+/*!
+ * \brief The print the data as a table which may be useful for
+ *        diagnostics.
+ * \details This method will produce column headers and seperate
+ *          output with a comma.
+ * \param aOut The output stream to send data to.
+ * \return The given output stream for chaining
+ */
+ostream& ReMapData::printAsTable( ostream& aOut ) const {
+    const string DELIM = ",";
+    if( !mIsInitialized ) {
+        aOut << "No initialized." << endl;
+    }
+    else {
+        // print a header
+        for(auto col : mColumns) {
+            aOut << col.getName() << DELIM;
+        }
+        aOut << mYearColumn.getName() << DELIM << "value" << endl;
+
+        // print all data
+        const size_t rowLength = getArrayLength();
+        vector<size_t> colIndices(mColumns.size(), 0);
+        size_t yearIndex = 0;
+        for(size_t row = 0; row < rowLength; ++row) {
+            // update the index for each column where stride is increasing
+            // fastest from right to left of the tablej
+            bool incrColIndex = false;
+            // avoid incrementing indicies for the very first row
+            if(row > 0 && ++yearIndex == mYearColumn.mInOrderOutputNames.size()) {
+                yearIndex = 0;
+                incrColIndex = true;
+            }
+            for(size_t colIndex = mColumns.size(); colIndex-- > 0 && incrColIndex; ) {
+                if(++colIndices[colIndex] == mColumns[colIndex].mInOrderOutputNames.size()) {
+                    colIndices[colIndex] = 0;
+                }
+                else {
+                    incrColIndex = false;
+                }
+            }
+
+            // print values at the current indicies
+            for(size_t colIndex = 0; colIndex < mColumns.size(); ++colIndex) {
+                aOut << mColumns[colIndex].mInOrderOutputNames[colIndices[colIndex]] << DELIM;
+            }
+            aOut << mYearColumn.mInOrderOutputNames[yearIndex] << DELIM;
+            aOut << mData[ row ] << endl;
+        }
+    }
+    return aOut;
+}
+
+/*!
+ * \brief Overload the output stream operator for ReMapData.
+ * \details Simply calls ReMapData::printAsTable
+ * \param aOut The output stream to send data to.
+ * \param aData The instance of ReMapData to print.
+ * \return The given output stream for chaining
+ */
+ostream& operator<<( ostream& aOut, const ReMapData& aData ) {
+    return aData.printAsTable( aOut );
+}
+
