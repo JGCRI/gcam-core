@@ -75,7 +75,7 @@ int main( ) {
     int NUM_LON = 360; // Number of vertical grid cells
     int NUM_PFT = 16; // Number of PFTs in ELM
     int NUM_GCAM_ENERGY_REGIONS = 32;
-    int NUM_GCAM_LAND_REGIONS = 384;
+    int NUM_GCAM_LAND_REGIONS = 392;
     int NUM_IAC2ELM_LANDTYPES = 9;
     
     // Initialize Interface
