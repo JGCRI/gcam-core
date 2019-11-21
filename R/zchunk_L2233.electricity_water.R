@@ -11,7 +11,8 @@
 #'  \code{L2233.GlobalTechShrwt_elecPassthru}, \code{L2233.GlobalIntTechCapital_elec},
 #'  \code{L2233.GlobalTechCapital_elecPassthru}, \code{L2233.GlobalIntTechOMfixed_elec},
 #' \code{L2233.GlobalTechOMfixed_elecPassthru}, \code{L2233.GlobalIntTechOMvar_elec},
-#'  \code{L2233.GlobalTechOMvar_elecPassthru}, \code{L2233.PassThroughSector_elec_cool},
+#'  \code{L2233.GlobalTechOMvar_elecPassthru}, \code{L2233.GlobalTechInterp_elecPassthru},
+#'  \code{L2233.PassThroughSector_elec_cool},
 #' \code{L2233.Supplysector_elec_cool}, \code{L2233.ElecReserve_elec_cool},
 #' \code{L2233.SubsectorShrwtFllt_elec_cool}, \code{L2233.SubsectorLogit_elec_cool},
 #'  \code{L2233.StubTech_elec_cool}, \code{L2233.StubTechEff_elec_cool},
@@ -76,6 +77,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L2233.GlobalTechOMfixed_elecPassthru",
              "L2233.GlobalIntTechOMvar_elec",
              "L2233.GlobalTechOMvar_elecPassthru",
+             "L2233.GlobalTechInterp_elecPassthru",
              "L2233.PassThroughSector_elec_cool",
              "L2233.Supplysector_elec_cool",
              "L2233.ElecReserve_elec_cool",
@@ -101,7 +103,6 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L2233.GlobalTechCapFac_elec_cool",
              "L2233.GlobalTechCapture_elec_cool",
              "L2233.GlobalTechEff_elec_cool",
-             "L2233.GlobalTechInterp_elec_cool",
              "L2233.GlobalTechLifetime_elec_cool",
              "L2233.GlobalTechProfitShutdown_elec_cool",
              "L2233.GlobalTechSCurve_elec_cool",
@@ -309,16 +310,21 @@ module_water_L2233.electricity_water <- function(command, ...) {
     # ... system costs. Keeping these together would mean that cooling system decisions...
     # ... would be made on < 1% cost differences, which would require very high logit...
     # ... to get any behavior at all.
-    costFltr <- sapply(L2233.Elec_tables_globaltech, function(x)
+
+    # GPK edit 7/31/2019 - share-weight interpolation information also needs to stay in the pass-thru tech.
+    # Failure to do so will move the interpolation from competition between e.g. NGCC and NG single cycle
+    # to the cooling system types (e.g., competing once-through flow versus recirculating). See JIRA 340.
+    cost_SWInterp_Fltr <- sapply(L2233.Elec_tables_globaltech, function(x)
       grepl("Capital", get_legacy_name(x)) |
-        grepl("OM", get_legacy_name(x)))
-    L2233.Elec_tables_globaltech_cost <- L2233.Elec_tables_globaltech[costFltr]
-    # ^^ filters for tables with capital, fixed O&M and variable O&M
+        grepl("OM", get_legacy_name(x)) |
+        grepl("Interp", get_legacy_name(x)))
+    L2233.Elec_tables_globaltech_cost_interp <- L2233.Elec_tables_globaltech[cost_SWInterp_Fltr]
+    # ^^ filters for tables with capital, fixed O&M and variable O&M, and share-weight interpolation
 
     # We reset the intermittent technology to standard technologies that remain in ...
     # ... the electricity sector. For an intermittent technology to be moved to a new ...
     # ... sector, the new passtru tech in the electricity sector is no longer an ...
-    # ... intermittent technology (this would double count). Thus, for all L2233.Elec_tables_globaltech_cost, ...
+    # ... intermittent technology (this would double count). Thus, for all L2233.Elec_tables_globaltech_cost_interp, ...
     # ... we change "intermittent.technology" to "technology".
     elec_tech_water_map %>%
       select(-plant_type, - cooling_system, - water_type,
@@ -326,7 +332,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
       rename(sector.name = from.supplysector,
              subsector.name = from.subsector,
              technology = from.technology) %>%  unique -> elec_tech_water_map_
-    # ^^ reduce and rename elec_tech_water_map for joining to all tables in L2233.Elec_tables_globaltech_cost
+    # ^^ reduce and rename elec_tech_water_map for joining to all tables in L2233.Elec_tables_globaltech_cost_interp
 
     resetTech <- function(x) {
       names(x)[names(x) == "intermittent.technology"] <- "technology"
@@ -334,8 +340,8 @@ module_water_L2233.electricity_water <- function(command, ...) {
       # ^^ left_join_keep_first_only applied for to.technology column (maintaining arbitrary column from legacy code)
     }
 
-    L2233.Elec_tables_glbTechCost_expanded <- sapply(L2233.Elec_tables_globaltech_cost, resetTech)
-    # ^^ resetTech used to join tables in L2233.Elec_tables_globaltech_cost to elec_tech_water_map
+    L2233.Elec_tables_glbTechCost_expanded <- sapply(L2233.Elec_tables_globaltech_cost_interp, resetTech)
+    # ^^ resetTech used to join tables in L2233.Elec_tables_globaltech_cost_interp to elec_tech_water_map
 
     L2233.Elec_tables_glbTechCost_expanded$GlobalTechCapital_elec %>%
       bind_rows(L2233.Elec_tables_glbTechCost_expanded$GlobalIntTechCapital_elec) ->
@@ -347,6 +353,11 @@ module_water_L2233.electricity_water <- function(command, ...) {
       bind_rows(L2233.Elec_tables_glbTechCost_expanded$GlobalIntTechOMvar_elec) ->
       GlobalTechOMvar_elecPassthru
 
+    # 7/31/2019 note - none of the intermittent technologies currently have share-weight interpolation assumptions
+    # Check to make sure that this is the case
+    stopifnot(is.null(L2233.Elec_tables_glbTechCost_expanded$GlobalIntTechInterp_elec))
+    L2233.Elec_tables_glbTechCost_expanded$GlobalTechInterp_elec ->
+      GlobalTechInterp_elecPassThru
 
     # The following section partitions the intermittent and standard technologies.
     # Intermittent technologies are not moved to different supplysector/subsector/technology.
@@ -400,8 +411,12 @@ module_water_L2233.electricity_water <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechOMvar"]]) ->
       L2233.GlobalTechOMvar_elecPassthru # --OUTPUT--
 
-    # filter Elec_tables_globaltech for those *without* costs
-    L2233.Elec_tables_globaltech_nocost <- L2233.Elec_tables_globaltech[!costFltr]
+    GlobalTechInterp_elecPassThru %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechInterp"]]) ->
+      L2233.GlobalTechInterp_elecPassthru
+
+    # filter Elec_tables_globaltech for those *without* costs or share-weight interpolation
+    L2233.Elec_tables_globaltech_nocost <- L2233.Elec_tables_globaltech[!cost_SWInterp_Fltr]
 
     # Note: The following function is used to repeat manipulation of all 14 tables contained...
     # ... in L2233.Elec_tables_globaltech_nocost. All tables contain fewer technologies...
@@ -704,11 +719,6 @@ module_water_L2233.electricity_water <- function(command, ...) {
       add_units("Unitless") ->
       L2233.GlobalTechEff_elec_cool
 
-    L2233.Elec_tables_globaltech_nocost_$GlobalTechInterp_elec %>%
-      add_title("Table headers for temporal interpolation of shareweights") %>%
-      add_units("NA") ->
-      L2233.GlobalTechInterp_elec_cool
-
     L2233.Elec_tables_globaltech_nocost_$GlobalTechLifetime_elec %>%
       add_title("Lifetimes for standard electricity generating technologies") %>%
       add_units("Years") ->
@@ -899,6 +909,14 @@ module_water_L2233.electricity_water <- function(command, ...) {
                      "L223.GlobalTechOMvar_elec") ->
       L2233.GlobalTechOMvar_elecPassthru
 
+    L2233.GlobalTechInterp_elecPassthru %>%
+      add_title("Technology share-weight interpolation for standard electricity generating tech") %>%
+      add_units("unitless") %>%
+      add_comments("Composed directly from input data") %>%
+      add_precursors("water/elec_tech_water_map",
+                     "L223.GlobalTechInterp_elec") ->
+      L2233.GlobalTechInterp_elecPassthru
+
     L2233.StubTech_elecPassthru %>%
       add_title("Stub technologies for electricity sector") %>%
       add_units("NA") %>%
@@ -1044,6 +1062,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
                 L2233.GlobalTechOMfixed_elecPassthru,
                 L2233.GlobalIntTechOMvar_elec,
                 L2233.GlobalTechOMvar_elecPassthru,
+                L2233.GlobalTechInterp_elecPassthru,
                 L2233.PassThroughSector_elec_cool,
                 L2233.Supplysector_elec_cool,
                 L2233.ElecReserve_elec_cool,
@@ -1069,7 +1088,6 @@ module_water_L2233.electricity_water <- function(command, ...) {
                 L2233.GlobalTechCapFac_elec_cool,
                 L2233.GlobalTechCapture_elec_cool,
                 L2233.GlobalTechEff_elec_cool,
-                L2233.GlobalTechInterp_elec_cool,
                 L2233.GlobalTechLifetime_elec_cool,
                 L2233.GlobalTechProfitShutdown_elec_cool,
                 L2233.GlobalTechSCurve_elec_cool,

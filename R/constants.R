@@ -157,7 +157,8 @@ aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5
 aglu.SSP_DEMAND_YEARS       <- seq(2010, 2100, 5) # food demand in the SSPs is calculated at 5-yr intervals
 aglu.TRADE_CAL_YEARS        <- 2008:2012 # Years used for calculating base year gross trade. Should ideally include the final base year, but note that the trade data starts in 1986.
 aglu.TRADE_FINAL_BASE_YEAR  <- max(MODEL_BASE_YEARS) # The base year to which gross trade volumes are assigned. Should be within the aglu.TRADE_CAL_YEARS and equal to the final model calibration year
-aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "MiscCrop", "OilCrop", "OtherGrain", "PalmFruit", "Rice", "Root_Tuber", "SugarCrop", "Wheat")
+aglu.FALLOW_YEARS           <- 2008:2012 # Years used for calculating the % of fallow land
+aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "MiscCrop", "OilCrop", "OtherGrain", "PalmFruit", "Rice", "RootTuber", "SugarCrop", "Wheat")
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
 
@@ -316,12 +317,11 @@ aglu.MGMT_LOGIT_EXP  <- 0.5
 aglu.MGMT_LOGIT_TYPE <- "absolute-cost-logit"
 
 # XML-related constants
-aglu.CROP_DELIMITER       <- "_"  # delimiter between (some) crop names such as Root_Tuber, biomass_grass, biomass_tree
 aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
-  aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
+aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
 
 # AgLU digits constants to control the number of digits for rounding going into XMLs.
 aglu.DIGITS_AGPRODCHANGE  <- 4 # rate of change in yield values
@@ -428,9 +428,12 @@ energy.DIGITS_SPEED            <- 1
 energy.DIGITS_TECHCHANGE       <- 4
 
 # Policy assumptions for module_energy_L270.limits
+
 energy.NEG_EMISS_POLICY_NAME    <- "negative_emiss_budget"
+energy.NEG_EMISS_TARGET_GAS     <- "CO2_LTG" # the name of the gas to target in the negative emiss budget
 energy.NEG_EMISS_GDP_BUDGET_PCT <- 0.01 # Max fraction of GDP which may be given to subsidize net negative emissions
 energy.NEG_EMISS_MARKT_GLOBAL   <- TRUE # If the negative emissions budget is global (TRUE) or regional (FALSE)
+energy.OIL_CREDITS_MARKETNAME   <- "oil-credits"
 energy.OILFRACT_ELEC            <- 1.0 # Fraction of liquids for feedstocks that must come from oil
 energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity that must come from oil
 
@@ -464,6 +467,11 @@ socioeconomics.POP_DIGITS                <- 0
 
 # Water constants ======================================================================
 
+water.ALL_WATER_TYPES                     <- c("water consumption",
+                                               "water withdrawals",
+                                               "seawater",
+                                               "biophysical water consumption",
+                                               "desalination")
 water.AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
 water.COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
 water.COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
@@ -471,6 +479,8 @@ water.COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless
 water.DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
 water.DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+water.DEFAULT_BASEYEAR_WATER_PRICE        <- 0.001
+water.IRR_PRICE_SUBSIDY_MULT              <- 0.01  # Multiplier for irrigation price subsidy (OECD 2009 Managing Water for All)
 water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
 water.IRRIGATION                          <- "Irrigation"
 water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
@@ -479,6 +489,12 @@ names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
 water.WATER_UNITS_PRICE                   <- "1975$/m^3"
 water.WATER_UNITS_QUANTITY                <- "km^3"
 water.DIGITS_MUNI_WATER                   <- 4
+water.DESALINATION_PRICE                  <- 0.214  # 1975$/m3
+water.IRR_SHARE                           <- 1
+water.MAPPING_COEF                        <- 1
+water.MAPPING_PMULT                       <- 1
+water.NONIRRIGATION_SECTORS               <- c("Municipal", "Electricity", "Livestock", "Manufacturing", "Mining")
+water.LOGIT_EXP                           <- -6
 
 # GCAM intermediate sectors for which Vassolo + Doll assessed manufacturing water demands. In the paper, they indicate
 # chemicals, pulp and paper, pig iron, sugar, beer, cloth, cement, and crude steel. some industrial mfg does take place
@@ -491,6 +507,24 @@ water.GCAM_MFG_FUELS_EFW <- c("electricity")
 # the maximum portion of aquastat industrial (mfg + elec) water withdrawals that is allowed to be assigned to
 # manufacturing. Used to set a cap on derived manufacturing water withdrawals
 water.MAX_MFG_FRAC_OF_IND <- 0.85
+
+# Groundwater may be calibrated using either the "watergap" or "gleeson" historical groundwater depletion estimates.
+water.GROUNDWATER_CALIBRATION <- "watergap"  # "gleeson"
+water.GROUNDWATER_SCENARIO <- "25pct" # may be "05pct", "25pct", or "40pct" (i.e., 5, 25, 40 % of groundwater)
+
+# Groundwater depletable resource curve parameters (see Kim et al., 2016)
+water.GROUNDWATER_MAX_PRICE_INC <- 10000
+water.GROUNDWATER_UNIFORM_GRADES <- 10
+water.GROUNDWATER_BETA <- 1.0
+water.DIGITS_GROUND_WATER <- 6 #Digits for rounding
+water.DIGITS_GROUND_WATER_RSC <- 5 #Digits for rounding
+water.DIGITS_RENEW_WATER <- 3 #Digits for rounding
+water.GW_DEPLETION_HISTORICAL <- c(2005, 2010) # Historical years for groundwater depletion
+water.GW_DEPLETION_BASE_YEAR <- 1990 # Historical year for groundwater depletion calibration
+water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010) # Historical years for freshwater runoff
+water.RENEW.COST.GRADE1 <- 0.00001 #Renewable water grade1 cost
+water.RENEW.COST.GRADE2 <- 0.001 #Renewable water grade2 cost
+water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
 
 # Emissions constants ======================================================================
 

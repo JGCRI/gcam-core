@@ -7,5 +7,5 @@
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
 FodderHerb_Residue,Mt,Mt,1975$/kg,-1.5,
 Pasture_FodderGrass,Mt,Mt,1975$/kg,-1.5,
-FeedCrops,Mt,Mt,1975$/kg,-1.5,
+FeedCrops,Mt,Mt,1975$/kg,-2.5,
 Scavenging_Other,Mt,Mt,1975$/kg,-1.5,
