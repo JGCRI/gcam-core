@@ -208,27 +208,27 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     # L2252.LN5_HistMgdAllocation_crop: historical cropland allocation
     # in the fifth land nest ie for each crop-irr-mgmt combo in each region-glu-year.
     ALL_LAND_ALLOCATION %>%
-      filter(!grepl("biomass_grass", LandLeaf) & !grepl("biomass_tree", LandLeaf)) %>%
+      filter(!grepl("biomassGrass", LandLeaf) & !grepl("biomassTree", LandLeaf)) %>%
       filter(year %in% aglu.LAND_HISTORY_YEARS) ->
       L2252.LN5_HistMgdAllocation_crop
 
     # L2252.LN5_MgdAllocation_crop: cropland allocation
     # in the fifth land nest ie for each crop-irr-mgmt combo in each region-glu-year.
     ALL_LAND_ALLOCATION %>%
-      filter(!grepl("biomass_grass", LandLeaf), !grepl("biomass_tree", LandLeaf)) %>%
+      filter(!grepl("biomassGrass", LandLeaf), !grepl("biomassTree", LandLeaf)) %>%
       filter(year %in% MODEL_BASE_YEARS)  %>%
       remove_zero_production_land_leafs(prod = L2012.AgProduction_ag_irr_mgmt) ->
       L2252.LN5_MgdAllocation_crop
 
     # L2252.LN5_HistMgdAllocation_bio
     ALL_LAND_ALLOCATION %>%
-      filter(grepl("biomass_grass", LandLeaf) | grepl("biomass_tree", LandLeaf)) %>%
+      filter(grepl("biomassGrass", LandLeaf) | grepl("biomassTree", LandLeaf)) %>%
       filter(year %in% aglu.LAND_HISTORY_YEARS) ->
       L2252.LN5_HistMgdAllocation_bio
 
     # L2252.LN5_MgdAllocation_bio
     ALL_LAND_ALLOCATION %>%
-      filter(grepl("biomass_grass", LandLeaf) | grepl("biomass_tree", LandLeaf)) %>%
+      filter(grepl("biomassGrass", LandLeaf) | grepl("biomassTree", LandLeaf)) %>%
       filter(year %in% MODEL_BASE_YEARS) ->
       L2252.LN5_MgdAllocation_bio
 
@@ -276,11 +276,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     L2012.AgYield_bio_ref %>%
       filter(year == max(MODEL_BASE_YEARS)) %>%
       select(region, AgProductionTechnology, yield) %>%
-      mutate(AgProductionTechnology = sub("biomass_tree", "biomasstree", AgProductionTechnology),
-             AgProductionTechnology = sub("biomass_grass", "biomassgrass", AgProductionTechnology)) %>%
       separate(AgProductionTechnology, c("GCAM_commodity", "GLU", "Irr_Rfd", "level")) %>%
-      mutate(GCAM_commodity = sub("biomasstree", "biomass_tree", GCAM_commodity),
-             GCAM_commodity = sub("biomassgrass", "biomass_grass", GCAM_commodity)) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("GCAM_commodity" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
@@ -325,8 +321,8 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     L2252.LN5_MgdAllocation_bio %>%
       distinct(region, LandAllocatorRoot, LandNode1, LandNode2, LandNode3, LandNode4, LandNode5, LandLeaf) %>%
       mutate(tmp = LandLeaf) %>%
-      separate(tmp, c("crop1", "crop2", "GLU", "Irr_Rfd", "level")) %>%
-      select(-crop1, -crop2)  %>%
+      separate(tmp, c("crop1", "GLU", "Irr_Rfd", "level")) %>%
+      select(-crop1)  %>%
       # use left_join to keep NA's for further manipulation
       left_join(L2252.LandShare_R_bio_GLU_irr, by = c("region", "GLU", "Irr_Rfd", "level")) %>%
       mutate(ghost.unnormalized.share = round(landshare, aglu.DIGITS_GHOSTSHARE), year = aglu.BIO_START_YEAR) %>%

@@ -18,6 +18,7 @@
 		0E4247D2143D0DCC00A8BBD3 /* sector_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E4247D1143D0DCC00A8BBD3 /* sector_activity.cpp */; };
 		0E440957183C7EDF000DA5FF /* node_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E440956183C7EDF000DA5FF /* node_carbon_calc.cpp */; };
 		0E44096E183D501B000DA5FF /* no_emiss_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E44096D183D501B000DA5FF /* no_emiss_carbon_calc.cpp */; };
+		0E90E7BE23200F1E00B0454A /* nesting_subsector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E90E7BD23200F1E00B0454A /* nesting_subsector.cpp */; };
 		0EB5CE791C063E4B008CEF7D /* fractional_secondary_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EB5CE781C063E4B008CEF7D /* fractional_secondary_output.cpp */; };
 		0EDA1122220B739C0066113A /* reserve_subresource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EDA1121220B739C0066113A /* reserve_subresource.cpp */; };
 		0EDA1124220B73AA0066113A /* resource_reserve_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EDA1123220B73A90066113A /* resource_reserve_technology.cpp */; };
@@ -387,6 +388,8 @@
 		0E7338671CB4361700B1CD82 /* factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = factory.h; sourceTree = "<group>"; };
 		0E7338681CB4361700B1CD82 /* gcam_fusion.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = gcam_fusion.hpp; sourceTree = "<group>"; };
 		0E7338691CB5726200B1CD82 /* imodel_feedback_calc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imodel_feedback_calc.h; sourceTree = "<group>"; };
+		0E90E7BA23200F0C00B0454A /* nesting_subsector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nesting_subsector.h; sourceTree = "<group>"; };
+		0E90E7BD23200F1E00B0454A /* nesting_subsector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nesting_subsector.cpp; sourceTree = "<group>"; };
 		0EB5CE771C063E3E008CEF7D /* fractional_secondary_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fractional_secondary_output.h; sourceTree = "<group>"; };
 		0EB5CE781C063E4B008CEF7D /* fractional_secondary_output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fractional_secondary_output.cpp; sourceTree = "<group>"; };
 		0EDA1120220B73900066113A /* reserve_subresource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reserve_subresource.h; sourceTree = "<group>"; };
@@ -407,7 +410,7 @@
 		CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cumulative_emissions_target.cpp; sourceTree = "<group>"; };
 		CD2420002162D2250071DB2B /* initialize_tech_vector_helper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = initialize_tech_vector_helper.hpp; sourceTree = "<group>"; };
 		CD2420012162D2310071DB2B /* initialize_tech_vector_helper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = initialize_tech_vector_helper.cpp; sourceTree = "<group>"; };
-		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD299E9611B9C11800E6D196 /* gcam */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gcam; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD3B52C41BFE0E1F00179FDD /* hector_model.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = hector_model.hpp; sourceTree = "<group>"; };
 		CD3B52C51BFE0E2800179FDD /* hector_model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hector_model.cpp; sourceTree = "<group>"; };
 		CD42839E203F157000A75025 /* readin_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = readin_control.h; sourceTree = "<group>"; };
@@ -1088,7 +1091,7 @@
 		CD299E9711B9C11800E6D196 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CD299E9611B9C11800E6D196 /* objects */,
+				CD299E9611B9C11800E6D196 /* gcam */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1863,6 +1866,7 @@
 		CD4885E4122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				0E90E7BA23200F0C00B0454A /* nesting_subsector.h */,
 				CD8DFFDA1FA8D20600CB3719 /* negative_emissions_final_demand.h */,
 				CD8FDEC71C0647050099C752 /* pass_through_sector.h */,
 				CD4885E5122873C200F5A88A /* afinal_demand.h */,
@@ -1892,6 +1896,7 @@
 		CD488600122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				0E90E7BD23200F1E00B0454A /* nesting_subsector.cpp */,
 				CD8DFFDB1FA8D21700CB3719 /* negative_emissions_final_demand.cpp */,
 				CD8FDEC81C0647140099C752 /* pass_through_sector.cpp */,
 				CD488601122873C200F5A88A /* ag_supply_sector.cpp */,
@@ -2446,7 +2451,7 @@
 			name = objects;
 			productInstallPath = "$(HOME)/bin";
 			productName = objects;
-			productReference = CD299E9611B9C11800E6D196 /* objects */;
+			productReference = CD299E9611B9C11800E6D196 /* gcam */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -2667,6 +2672,7 @@
 				CD4887D7122873C200F5A88A /* bisect_all.cpp in Sources */,
 				CD4887D8122873C200F5A88A /* bisect_one.cpp in Sources */,
 				CD4887D9122873C200F5A88A /* bisect_policy.cpp in Sources */,
+				0E90E7BE23200F1E00B0454A /* nesting_subsector.cpp in Sources */,
 				CD8FDEC91C0647140099C752 /* pass_through_sector.cpp in Sources */,
 				CD4887DA122873C200F5A88A /* bisect_policy_nr_solver.cpp in Sources */,
 				CD4887DB122873C200F5A88A /* bisection_nr_solver.cpp in Sources */,
@@ -2843,7 +2849,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = objects;
+				PRODUCT_NAME = gcam;
 			};
 			name = Debug;
 		};
@@ -2856,7 +2862,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = objects;
+				PRODUCT_NAME = gcam;
 			};
 			name = Release;
 		};
@@ -3005,7 +3011,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = objects;
+				PRODUCT_NAME = gcam;
 			};
 			name = "Release - LAPACK";
 		};
@@ -3072,7 +3078,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = objects;
+				PRODUCT_NAME = gcam;
 			};
 			name = "Release - TBB";
 		};

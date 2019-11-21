@@ -129,6 +129,14 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
         L109.ag_ALL_Mt_R_C_Y
     }
 
+    # After these adjustments, crops may still have negative other uses if the bottom-up biofuel estimates exceed the
+    # domestic supply minus known (and fixed) food and feed quantities. This needs to be addressed on a case-by-case
+    # basis, but failure to address the issue here will result in negative calibration values being read to GCAM, and
+    # model solution failure.
+    if(any(L109.ag_ALL_Mt_R_C_Y$OtherUses_Mt < 0)){
+      stop("Negative other uses, possibly due to biofuel crop requirements exceeding available domestic supply")
+    }
+
     # Part 2: Animal commodities
     # List of all flows for animal products
     an_Flow_cols <- c("Prod_Mt", "NetExp_Mt", "Supply_Mt", "Food_Mt", "OtherUses_Mt")
