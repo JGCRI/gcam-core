@@ -1,8 +1,8 @@
-# File: comtrade_trade_flow_code_mapping.csv
+# File: comtrade_trade_flow.csv
 # Title: Mapping between Comtrade trade codes and trade values
 # Source: UN Comtrade
 # Units: NA
-# Column types: ic 
+# Column types: ic
 # ----------
 Trade_Flow_Code,Trade
 1,Import Quantity

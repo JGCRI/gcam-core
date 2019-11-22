@@ -1,10 +1,11 @@
-ï»¿# File: comtrade_countrycode_ISO.csv
+# File: comtrade_countrycode_ISO.csv
 # Title: Comtrade country code to ISO mapping
 # Source: UN Comtrade
 # Units: NA
+# Notes: The current (Nov 15th 2019) ISO for Romania is rou, however GCAM has it listed as rom. This change has been manually implemented here.
 # Column types: icc 
 # ----------
-Country Code,"Country Name, Full ",ISO3-digit Alpha
+Country_Code,Country_Name,ISO3_digit_Alpha
 4,Afghanistan,AFG
 472,"Africa CAMEU region, not elsewhere specified",N/A
 8,Albania,ALB
@@ -67,10 +68,10 @@ Country Code,"Country Name, Full ",ISO3-digit Alpha
 178,Congo,COG
 184,Cook Islands,COK
 188,Costa Rica,CRI
-384,CÃ´te d'Ivoire,CIV
+384,Côte d'Ivoire,CIV
 191,Croatia,HRV
 192,Cuba,CUB
-531,CuraÃ§ao,CUW
+531,Curaçao,CUW
 196,Cyprus,CYP
 203,Czechia,CZE
 200,Czechoslovakia,CSK
@@ -220,13 +221,13 @@ Country Code,"Country Name, Full ",ISO3-digit Alpha
 410,Republic of Korea,KOR
 498,Republic of Moldova,MDA
 636,"Rest of America, not elsewhere specified",N/A
-638,RÃ©union,REU
-642,Romania,ROU
+638,Réunion,REU
+642,Romania,ROM
 643,Russian Federation,RUS
 646,Rwanda,RWA
 647,Ryukyu Island,N/A
 461,Sabah,N/A
-652,Saint BarthÃ©lemy,BLM
+652,Saint Barthélemy,BLM
 654,Saint Helena,SHN
 659,Saint Kitts and Nevis,KNA
 658,"Saint Kitts, Nevis and Anguilla",KNA

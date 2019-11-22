@@ -1,0 +1,15 @@
+# File: A_ff_RegionalSubsector.csv
+# Title: Subsector assumptions for regional crop markets
+# Units: Various
+# Source: NA
+# Column types: ccncnccccc
+# ----------
+supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,interpolation.function,logit.type
+regional coal,domestic coal,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional coal,imported coal,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional crude oil,domestic crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional crude oil,imported crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional unconventional oil,domestic unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional unconventional oil,imported unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional natural gas,domestic natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional natural gas,imported natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,

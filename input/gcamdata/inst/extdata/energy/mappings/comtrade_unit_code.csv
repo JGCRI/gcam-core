@@ -4,6 +4,6 @@
 # Units: NA
 # Column types: ic
 # ----------
-Qty.Unit.Code,Qty.Unit
+Qty_Unit_Code,Qty_Unit
 1,No Quantity
 8,Weight in kilograms

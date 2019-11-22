@@ -4,7 +4,7 @@
 # Units: NA
 # Column types: iiiiccinnni 
 # ----------
-Year,Reporter Code,Trade Flow Code,Partner Code,Classification,Commodity Code,Quantity Unit Code,Supplementary Quantity,Netweight (kg),Value,Estimation Code
+Year,Reporter_Code,Trade_Flow_Code,Partner_Code,Classification,Commodity_Code,Quantity_Unit_Code,Supplementary_Quantity,Netweight_(kg),Value,Estimation_Code
 2012,8,1,0,HS,2701,8,99513041,99513041,14191494,0
 2012,8,2,0,HS,2701,8,222440,222440,17116,0
 2012,8,1,124,HS,2701,8,5916,5916,1694,0
