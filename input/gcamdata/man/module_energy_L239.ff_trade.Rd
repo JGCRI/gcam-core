@@ -20,11 +20,7 @@ Depends on \code{command}: either a vector of required inputs, a vector of outpu
   \code{L239.Production_reg_dom}.
 }
 \description{
-Model input for regional and (globally) traded agricultural commodities
-}
-\details{
-Build datasets for ssp4 agricultural trade: food and nonfood trade coefficients, feed trade
-coefficients, restricted agricultural trade, and trade regions.
+Model input for regional and (globally) traded fossil fuel commodities
 }
 \author{
 GPK February 2019

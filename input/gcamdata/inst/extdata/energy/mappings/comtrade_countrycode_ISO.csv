@@ -1,6 +1,7 @@
 # File: comtrade_countrycode_ISO.csv
 # Title: Comtrade country code to ISO mapping
 # Source: UN Comtrade
+# Comments:Nov 25th 2019: Note that as Taiwan is not recognized by the UN there is no TWN ISO specified in the comtrade_ISO mappings. According to COMTRADE code 490 is (in practice) only Taiwan, so it is listed as TWN here rather than NA, but when/if better data is available for Taiwan we may want to update
 # Units: NA
 # Notes: The current (Nov 15th 2019) ISO for Romania is rou, however GCAM has it listed as rom. This change has been manually implemented here.
 # Column types: icc 
@@ -204,7 +205,7 @@ Country_Code,Country_Name,ISO3_digit_Alpha
 527,"Oceania, not elsewhere specified",N/A
 512,Oman,OMN
 577,"Other Africa, not elsewhere specified",N/A
-490,"Other Asia, not elsewhere specified",N/A
+490,"Other Asia, not elsewhere specified",TWN
 568,"Other Europe, not elsewhere specified",N/A
 586,Pakistan,PAK
 585,Palau,PLW

@@ -102,16 +102,22 @@ module_aglu_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
     #Part 4: Adjust Comtrade's trade to match GCAM's calibrated data
 
     #NOTE: There are some LARGE discrepancies between GCAM's data and Comtrade's
-    # Enough so that I want to confirm how we're converting Comtrade's weight to energy and check
+    # enough so that I want to confirm how we're converting Comtrade's weight to energy and check
     # that there are no conversion factors we're missing
     L1011.ff_GrossTrade_EJ_R_C_Y %>%
+      complete(GCAM_Commodity = unique(L2011.ff_ALL_EJ_R_C_Y$fuel),
+               nesting(GCAM_region_ID, year)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join(L2011.ff_ALL_EJ_R_C_Y %>% select(region, fuel, year, GCAM_net_trade = net_trade),
                 by = c("region", "GCAM_Commodity" = "fuel", "year")) %>%
-      #rather than scaling either exports or imports we will scale both by the ratio between GCAM's net trade and comtrade's
+      #We are creating a traded structure for all fossil fuels even if we don't have data for them (just unconventional oil as of Nov 25th 2019)
       mutate(GCAM_net_trade = if_else(is.na(GCAM_net_trade), 0, GCAM_net_trade),
-             GrossExp_EJ = if_else(year == max(MODEL_BASE_YEARS), GrossExp_EJ * GCAM_net_trade/net_trade, if_else(GCAM_net_trade<=0, 0, GCAM_net_trade) ),
-             GrossImp_EJ = if_else(year == max(MODEL_BASE_YEARS), GrossImp_EJ * GCAM_net_trade/net_trade, if_else(GCAM_net_trade>=0, 0, GCAM_net_trade) ),
+             net_trade = if_else(is.na(net_trade), GCAM_net_trade, net_trade),
+             GrossExp_EJ = if_else(is.na(GrossExp_EJ), if_else(GCAM_net_trade<=0, 0, GCAM_net_trade), GrossExp_EJ ),
+             GrossImp_EJ = if_else(is.na(GrossImp_EJ), if_else(GCAM_net_trade>=0, 0, GCAM_net_trade), GrossImp_EJ )) %>%
+      #scale both imports and exports by the ratio between GCAM's net trade and comtrade's
+      mutate(GrossExp_EJ = if_else(year == max(MODEL_BASE_YEARS), if_else(!is.na(GrossExp_EJ * GCAM_net_trade/net_trade), GrossExp_EJ * GCAM_net_trade/net_trade, GrossExp_EJ), if_else(GCAM_net_trade<=0, 0, GCAM_net_trade) ),
+             GrossImp_EJ = if_else(year == max(MODEL_BASE_YEARS), if_else(!is.na(GrossImp_EJ * GCAM_net_trade/net_trade), GrossImp_EJ * GCAM_net_trade/net_trade, GrossImp_EJ), if_else(GCAM_net_trade>=0, 0, GCAM_net_trade) ),
              net_trade = GrossExp_EJ - GrossImp_EJ) %>%
       select(names(L1011.ff_GrossTrade_EJ_R_C_Y)) ->
       L2011.ff_GrossTrade_EJ_R_C_Y
