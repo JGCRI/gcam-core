@@ -1,4 +1,4 @@
-#' module_aglu_LB2011.ff_ALL_R_C_Y
+#' module_energy_LB2011.ff_ALL_R_C_Y
 #'
 #' Calculate fossil fuel energy balances, by region / commodity / year.
 #'
@@ -14,14 +14,13 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author JEH Nov 2019
-module_aglu_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
+module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              "L1011.en_bal_EJ_R_Si_Fi_Yh",
-             "L221.Production_unoil",
-             "L221.StubTechProd_oil_crude",
-             "L221.StubTechProd_oil_unoil",
-             "L210.RsrcCalProd",
+             "L121.in_EJ_R_TPES_crude_Yh",
+             "L121.in_EJ_R_TPES_unoil_Yh",
+             "L111.Prod_EJ_R_F_Yh",
              "L1011.ff_GrossTrade_EJ_R_C_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2011.ff_ALL_EJ_R_C_Y",
@@ -37,10 +36,9 @@ module_aglu_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
-    L221.Production_unoil <- get_data(all_data, "L221.Production_unoil")
-    L221.StubTechProd_oil_crude <- get_data(all_data, "L221.StubTechProd_oil_crude")
-    L221.StubTechProd_oil_unoil <- get_data(all_data, "L221.StubTechProd_oil_unoil")
-    L210.RsrcCalProd <- get_data(all_data, "L210.RsrcCalProd")
+    L121.in_EJ_R_TPES_crude_Yh <- get_data(all_data, "L121.in_EJ_R_TPES_crude_Yh")
+    L121.in_EJ_R_TPES_unoil_Yh <- get_data(all_data, "L121.in_EJ_R_TPES_unoil_Yh")
+    L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
     L1011.ff_GrossTrade_EJ_R_C_Y <- get_data(all_data, "L1011.ff_GrossTrade_EJ_R_C_Y")
 
     #There is no single file in GCAM that calculates net trade of fossil fuels. To build regional
@@ -49,54 +47,34 @@ module_aglu_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
 
     #This treats crude oil and unconventional oil as one fuel type
     # and natural gas and LNG as one fuel type, but that may need to be changed.
-    # Total production is taken from L210.RsrcCalProd and total consumption is calculated from
-    # L1011.en_bal_EJ_R_Si_Fi_Yh and L221.StubTechProd_oil_crude/unoil.
+    # Total production is taken from L111.Prod_EJ_R_F_Yh and total consumption is calculated from
+    # L1011.en_bal_EJ_R_Si_Fi_Yh and L121.in_EJ_R_TPES_crude_Yh/unoil.
 
     #Part 1: Calculate toal consumption of fuels by region
-    L221.StubTechProd_oil_crude %>%
-      mutate(fuel = "crude oil") %>%
-      select(region, fuel, year, consumption = calOutputValue) ->
-      crude_oil_consumption
-
-
-    L221.StubTechProd_oil_unoil %>%
-      mutate(fuel = "unconventional oil production") %>%
-      select(region, fuel, year, consumption = calOutputValue) ->
-      unconventional_oil_consumption
-
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    bind_rows(L1011.en_bal_EJ_R_Si_Fi_Yh,
+              L121.in_EJ_R_TPES_crude_Yh,
+              L121.in_EJ_R_TPES_unoil_Yh) %>%
       filter(sector == "TPES",
              year %in% HISTORICAL_YEARS,
-             fuel %in% c("gas", "coal")) %>%
+             fuel %in% c("gas", "coal", "crude oil", "unconventional oil")) %>%
       mutate(fuel = if_else(fuel == "gas", "natural gas", fuel)) %>%
       group_by(GCAM_region_ID, fuel, year) %>%
       summarise(value = sum(value)) %>%
       ungroup() %>%
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      select(region, fuel, year, consumption = value) ->
-      coal_gas_consumption
-
-    bind_rows(crude_oil_consumption,
-              unconventional_oil_consumption,
-              coal_gas_consumption) ->
+      select(GCAM_region_ID, fuel, year, consumption = value) ->
       ff_consumption
 
     #Part 2: Gather total production of fossil fuels
-    L221.Production_unoil %>%
-      mutate(region = gsub(" unconventional oil", "", subsector),
-             fuel = "unconventional oil production") %>%
-      select(region, fuel, year, production = calOutputValue) ->
-      unoil_production
-
-    L210.RsrcCalProd %>%
-      select(region, fuel = resource, year, production = cal.production) %>%
-      bind_rows(unoil_production) ->
+    L111.Prod_EJ_R_F_Yh %>%
+      select(GCAM_region_ID, fuel, year, production = value) ->
       ff_production
 
     #Part 3: Calculate net-trade by subtracting consumption from production by region and year
     ff_production %>%
-      left_join_error_no_match(ff_consumption, by = c("region", "fuel", "year")) %>%
-      mutate(net_trade = production - consumption) ->
+      left_join_error_no_match(ff_consumption, by = c("GCAM_region_ID", "fuel", "year")) %>%
+      mutate(net_trade = production - consumption) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      select(region, fuel, year, production, consumption, net_trade) ->
       L2011.ff_ALL_EJ_R_C_Y
 
     #Part 4: Adjust Comtrade's trade to match GCAM's calibrated data
@@ -129,9 +107,9 @@ module_aglu_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "L1011.en_bal_EJ_R_Si_Fi_Yh",
                      "L221.Production_unoil",
-                     "L221.StubTechProd_oil_crude",
-                     "L221.StubTechProd_oil_unoil",
-                     "L210.RsrcCalProd") ->
+                     "L121.in_EJ_R_TPES_crude_Yh",
+                     "L121.in_EJ_R_TPES_unoil_Yh",
+                     "L111.Prod_EJ_R_F_Yh") ->
       L2011.ff_ALL_EJ_R_C_Y
 
     L2011.ff_GrossTrade_EJ_R_C_Y %>%
@@ -141,9 +119,9 @@ module_aglu_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "L1011.en_bal_EJ_R_Si_Fi_Yh",
                      "L221.Production_unoil",
-                     "L221.StubTechProd_oil_crude",
-                     "L221.StubTechProd_oil_unoil",
-                     "L210.RsrcCalProd",
+                     "L121.in_EJ_R_TPES_crude_Yh",
+                     "L121.in_EJ_R_TPES_unoil_Yh",
+                     "L111.Prod_EJ_R_F_Yh",
                      "L1011.ff_GrossTrade_EJ_R_C_Y") ->
       L2011.ff_GrossTrade_EJ_R_C_Y
 
