@@ -60,7 +60,7 @@ module_aglu_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
 
 
     L221.StubTechProd_oil_unoil %>%
-      mutate(fuel = "unconventional oil") %>%
+      mutate(fuel = "unconventional oil production") %>%
       select(region, fuel, year, consumption = calOutputValue) ->
       unconventional_oil_consumption
 
@@ -84,7 +84,7 @@ module_aglu_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
     #Part 2: Gather total production of fossil fuels
     L221.Production_unoil %>%
       mutate(region = gsub(" unconventional oil", "", subsector),
-             fuel = "unconventional oil") %>%
+             fuel = "unconventional oil production") %>%
       select(region, fuel, year, production = calOutputValue) ->
       unoil_production
 
