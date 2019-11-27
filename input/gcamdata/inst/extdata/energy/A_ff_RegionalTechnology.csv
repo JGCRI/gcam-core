@@ -12,5 +12,7 @@ regional crude oil,domestic crude oil,domestic crude oil,crude oil,1,0,1,regiona
 regional crude oil,imported crude oil,imported crude oil,traded crude oil,1,0,1,USA
 regional unconventional oil,domestic unconventional oil,domestic unconventional oil,unconventional oil production,1,0,1,regional
 regional unconventional oil,imported unconventional oil,imported unconventional oil,traded unconventional oil,1,0,1,USA
+regional oil,unconventional oil,unconventional oil,regional unconventional oil,1,0,1,regional
+regional oil,crude oil,crude oil,regional crude oil,1,0,1,regional
 regional natural gas,domestic natural gas,domestic natural gas,natural gas,1,0,1,regional
 regional natural gas,imported natural gas,imported natural gas,traded natural gas,1,0,1,USA

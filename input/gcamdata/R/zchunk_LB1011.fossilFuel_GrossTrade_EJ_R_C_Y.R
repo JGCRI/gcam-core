@@ -170,14 +170,6 @@ module_energy_LB1011.ff_GrossTrade <- function(command, ...) {
       ungroup() ->
       L1011.ff_GrossTrade_EJ_R_C_Y
 
-    #Fill in 0s for all years where data isn't available (Note this defaults to previous practice)
-    L1011.ff_GrossTrade_EJ_R_C_Y %>%
-      group_by(GCAM_region_ID, GCAM_Commodity) %>%
-      complete(year = HISTORICAL_YEARS) %>%
-      replace_na(list("GrossExp_EJ" = 0, "GrossImp_EJ" = 0, "net_trade" = 0)) %>%
-      ungroup() ->
-      L1011.ff_GrossTrade_EJ_R_C_Y
-
     # Produce outputs
     L1011.ff_GrossTrade_EJ_R_C_Y %>%
       add_title("L1011.ff_GrossTrade_EJ_R_C_Y") %>%

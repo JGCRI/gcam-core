@@ -9,4 +9,5 @@ supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
 regional coal,EJ,EJ,1975$/GJ,-3,
 regional crude oil,EJ,EJ,1975$/GJ,-3,
 regional unconventional oil,EJ,EJ,1975$/GJ,-3,
+regional oil,EJ,EJ,1975$/GJ,-6,
 regional natural gas,EJ,EJ,1975$/GJ,-3,

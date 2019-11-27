@@ -11,5 +11,7 @@ regional crude oil,domestic crude oil,-6,start-year,1,share-weight,final-calibra
 regional crude oil,imported crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional unconventional oil,domestic unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional unconventional oil,imported unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional oil,unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional oil,crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional natural gas,domestic natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional natural gas,imported natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,

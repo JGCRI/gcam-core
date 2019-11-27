@@ -9,7 +9,7 @@
 #'   \code{L239.SectorUseTrialMarket_tra}, \code{L239.SubsectorAll_tra}, \code{L239.TechShrwt_tra},
 #'   \code{L239.TechCost_tra}, \code{L239.TechCoef_tra}, \code{L239.Production_tra}, \code{L239.Supplysector_reg},
 #'   \code{L239.SubsectorAll_reg}, \code{L239.TechShrwt_reg}, \code{L239.TechCoef_reg}, \code{L239.Production_reg_imp},
-#'   \code{L239.Production_reg_dom}.
+#'   \code{L239.Production_reg_dom}, \code{L239.Consumption_intraregional}.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter if_else left_join mutate rename select
 #' @importFrom tibble tibble
@@ -38,7 +38,8 @@ module_energy_L239.ff_trade <- function(command, ...) {
              "L239.TechShrwt_reg",
              "L239.TechCoef_reg",
              "L239.Production_reg_imp",
-             "L239.Production_reg_dom"))
+             "L239.Production_reg_dom",
+             "L239.Consumption_intraregional"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -57,6 +58,17 @@ module_energy_L239.ff_trade <- function(command, ...) {
     A_ff_TradedTechnology <- get_data(all_data, "energy/A_ff_TradedTechnology")
     L2011.ff_GrossTrade_EJ_R_C_Y <- get_data(all_data, "L2011.ff_GrossTrade_EJ_R_C_Y")
     L2011.ff_ALL_EJ_R_C_Y <- get_data(all_data, "L2011.ff_ALL_EJ_R_C_Y")
+
+    # In the structure of the model unconventional oil is upgraded before it is shipped out. The passthrough sector
+    # that upgrades uncon oil is called unconventional oil production, so to make sure we match we'll change
+    # the input here to the name of the passthrough sector.
+    L2011.ff_GrossTrade_EJ_R_C_Y %>%
+      mutate(GCAM_Commodity = if_else(GCAM_Commodity == "unconventional oil", "unconventional oil production", GCAM_Commodity)) ->
+      L2011.ff_GrossTrade_EJ_R_C_Y
+
+    L2011.ff_ALL_EJ_R_C_Y %>%
+      mutate(fuel = if_else(fuel == "unconventional oil", "unconventional oil production", fuel)) ->
+      L2011.ff_ALL_EJ_R_C_Y
 
     # 1. TRADED SECTOR / SUBSECTOR / TECHNOLOGY")
     # L239.Supplysector_tra: generic supplysector info for traded ff commodities
@@ -177,6 +189,21 @@ module_energy_L239.ff_trade <- function(command, ...) {
              tech.share.weight = subs.share.weight) %>%
       select(LEVEL2_DATA_NAMES[["Production"]])
 
+    # Regional oil competes regional crude oil and regional unconventional oil, but this is all done within a market
+    # We'll calibrate any intraregional competition here.
+    A_ff_RegionalTechnology_R_Y %>%
+      filter(year %in% MODEL_BASE_YEARS,
+             !grepl( "domestic", subsector),
+             !grepl("imported", subsector))  %>%
+      left_join(L2011.ff_ALL_EJ_R_C_Y %>% mutate(fuel = gsub(" production", "", fuel), fuel = paste0("regional ",fuel)),
+                by = c("region", minicam.energy.input = "fuel", "year")) %>%
+      mutate(calOutputValue = consumption,
+             share.weight.year = year,
+             subs.share.weight = if_else(calOutputValue > 0, 1, 0),
+             tech.share.weight = subs.share.weight) %>%
+      select(LEVEL2_DATA_NAMES[["Production"]])->
+      L239.Consumption_intraregional
+
     # Produce outputs
     L239.Supplysector_tra %>%
       add_title("Supplysector info for traded ff commodities") %>%
@@ -286,6 +313,14 @@ module_energy_L239.ff_trade <- function(command, ...) {
                      "L2011.ff_GrossTrade_EJ_R_C_Y") ->
       L239.Production_reg_dom
 
+    L239.Consumption_intraregional %>%
+      add_title("Technology calibration for intraregional ff commodities: competition between goods within a single market") %>%
+      add_units("EJ") %>%
+      add_comments("Consumption of commodities competed within-region") %>%
+      add_precursors("energy/A_ff_RegionalTechnology",
+                     "L2011.ff_ALL_EJ_R_C_Y") ->
+      L239.Consumption_intraregional
+
     return_data(L239.Supplysector_tra,
                 L239.SectorUseTrialMarket_tra,
                 L239.SubsectorAll_tra,
@@ -298,7 +333,8 @@ module_energy_L239.ff_trade <- function(command, ...) {
                 L239.TechShrwt_reg,
                 L239.TechCoef_reg,
                 L239.Production_reg_imp,
-                L239.Production_reg_dom)
+                L239.Production_reg_dom,
+                L239.Consumption_intraregional)
   } else {
     stop("Unknown command")
   }

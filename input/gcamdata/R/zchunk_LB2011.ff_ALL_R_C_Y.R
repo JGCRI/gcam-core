@@ -66,7 +66,12 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
 
     #Part 2: Gather total production of fossil fuels
     L111.Prod_EJ_R_F_Yh %>%
-      select(GCAM_region_ID, fuel, year, production = value) ->
+      select(GCAM_region_ID, fuel, year, production = value) %>%
+      complete(fuel = unique(ff_consumption$fuel),
+               GCAM_region_ID = unique(GCAM_region_names$GCAM_region_ID),
+               year = ff_consumption$year,
+               fill = list(production = 0)) %>%
+      select(GCAM_region_ID, fuel, year, production) ->
       ff_production
 
     #Part 3: Calculate net-trade by subtracting consumption from production by region and year
@@ -86,18 +91,45 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       complete(GCAM_Commodity = unique(L2011.ff_ALL_EJ_R_C_Y$fuel),
                nesting(GCAM_region_ID, year)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join(L2011.ff_ALL_EJ_R_C_Y %>% select(region, fuel, year, GCAM_net_trade = net_trade),
+      left_join_error_no_match(L2011.ff_ALL_EJ_R_C_Y %>% select(region, fuel, year, GCAM_net_trade = net_trade),
                 by = c("region", "GCAM_Commodity" = "fuel", "year")) %>%
       #We are creating a traded structure for all fossil fuels even if we don't have data for them (just unconventional oil as of Nov 25th 2019)
-      mutate(GCAM_net_trade = if_else(is.na(GCAM_net_trade), 0, GCAM_net_trade),
-             net_trade = if_else(is.na(net_trade), GCAM_net_trade, net_trade),
-             GrossExp_EJ = if_else(is.na(GrossExp_EJ), if_else(GCAM_net_trade<=0, 0, GCAM_net_trade), GrossExp_EJ ),
-             GrossImp_EJ = if_else(is.na(GrossImp_EJ), if_else(GCAM_net_trade>=0, 0, GCAM_net_trade), GrossImp_EJ )) %>%
-      #scale both imports and exports by the ratio between GCAM's net trade and comtrade's
-      mutate(GrossExp_EJ = if_else(year == max(MODEL_BASE_YEARS), if_else(!is.na(GrossExp_EJ * GCAM_net_trade/net_trade), GrossExp_EJ * GCAM_net_trade/net_trade, GrossExp_EJ), if_else(GCAM_net_trade<=0, 0, GCAM_net_trade) ),
-             GrossImp_EJ = if_else(year == max(MODEL_BASE_YEARS), if_else(!is.na(GrossImp_EJ * GCAM_net_trade/net_trade), GrossImp_EJ * GCAM_net_trade/net_trade, GrossImp_EJ), if_else(GCAM_net_trade>=0, 0, GCAM_net_trade) ),
+      mutate(net_trade = if_else(is.na(net_trade), GCAM_net_trade, net_trade),
+             GrossExp_EJ = if_else(is.na(GrossExp_EJ), if_else(GCAM_net_trade>0, GCAM_net_trade, 0), GrossExp_EJ ),
+             GrossImp_EJ = if_else(is.na(GrossImp_EJ), if_else(GCAM_net_trade<=0, -1*GCAM_net_trade, 0), GrossImp_EJ )) %>%
+      #We will hold GCAM's calibration values by scaling both imports and exports by the ratio between GCAM's net trade and comtrade's
+      mutate(GrossExp_EJ = if_else(!is.na(GrossExp_EJ * GCAM_net_trade/net_trade) & !is.infinite(GrossExp_EJ * GCAM_net_trade/net_trade), GrossExp_EJ * GCAM_net_trade/net_trade, GrossExp_EJ),
+             GrossImp_EJ = if_else(!is.na(GrossImp_EJ * GCAM_net_trade/net_trade) & !is.infinite(GrossImp_EJ * GCAM_net_trade/net_trade), GrossImp_EJ * GCAM_net_trade/net_trade, GrossImp_EJ),
+             net_trade = GrossExp_EJ - GrossImp_EJ) %>%
+      #There are a few rows where Comtrade says a region is an importer and GCAM says they're an exporter
+      #This discrepency makes the gross imports and exports negative which cannot happen.
+      #We turn the values positive and flip imports and exports to maintain GCAM's values
+      mutate(GrossExp_EJ_old = GrossExp_EJ,
+             GrossExp_EJ = if_else(GrossExp_EJ<0, -1*GrossImp_EJ, GrossExp_EJ),
+             GrossImp_EJ = if_else(GrossImp_EJ<0, -1*GrossExp_EJ_old, GrossImp_EJ),
              net_trade = GrossExp_EJ - GrossImp_EJ) %>%
       select(names(L1011.ff_GrossTrade_EJ_R_C_Y)) ->
+      L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year
+
+    # Regions cannot trade more product than they produce under this structure, so decrease
+    # Exports and Imports for any region where GrossExp is greater than production
+    L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(L2011.ff_ALL_EJ_R_C_Y %>% select(region, fuel, year, production),
+                               by = c("region", "GCAM_Commodity" = "fuel", "year")) %>%
+      mutate(GrossImp_EJ = if_else(GrossExp_EJ>production, GrossImp_EJ - (GrossExp_EJ-production), GrossImp_EJ),
+             GrossExp_EJ = if_else(GrossExp_EJ>production, production, GrossExp_EJ)) %>%
+      select(names(L1011.ff_GrossTrade_EJ_R_C_Y)) ->
+      L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year_adj
+
+    L2011.ff_ALL_EJ_R_C_Y %>%
+      left_join_error_no_match(GCAM_region_names, by = "region") %>%
+      filter(! year %in% L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year_adj$year) %>%
+      mutate(GrossExp_EJ = if_else(net_trade<=0, 0, net_trade),
+             GrossImp_EJ = if_else(net_trade<0, -1*net_trade, 0),
+             GCAM_Commodity = fuel) %>%
+      select(names(L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year_adj)) %>%
+      bind_rows(L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year_adj)->
       L2011.ff_GrossTrade_EJ_R_C_Y
 
     L2011.ff_ALL_EJ_R_C_Y %>%
@@ -106,7 +138,6 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       add_comments("Calculate fossil fuel net trade by GCAM region, commodity and year") %>%
       add_precursors("common/GCAM_region_names",
                      "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                     "L221.Production_unoil",
                      "L121.in_EJ_R_TPES_crude_Yh",
                      "L121.in_EJ_R_TPES_unoil_Yh",
                      "L111.Prod_EJ_R_F_Yh") ->
@@ -118,7 +149,6 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       add_comments("Adjust Comtrade fossil fuel net trade to match GCAM's calibrated values by GCAM region, commodity and year") %>%
       add_precursors("common/GCAM_region_names",
                      "L1011.en_bal_EJ_R_Si_Fi_Yh",
-                     "L221.Production_unoil",
                      "L121.in_EJ_R_TPES_crude_Yh",
                      "L121.in_EJ_R_TPES_unoil_Yh",
                      "L111.Prod_EJ_R_F_Yh",
