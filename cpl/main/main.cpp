@@ -147,7 +147,7 @@ int main( ) {
     // Finalize Interface
     delete p_obj;
 
-    // Return exit code based on whether the model succeeded(Non-zero is failure by convention).
+    // Return exit code based on whether the model succeeded (Non-zero is failure by convention).
     return 0;
 }
 
