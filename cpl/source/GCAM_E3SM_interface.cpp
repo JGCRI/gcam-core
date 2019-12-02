@@ -95,8 +95,7 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     Configuration* conf = Configuration::getInstance();
     success = XMLHelper<void>::parseXML( configurationFileName, conf );
     // TODO: Check if parsing succeeded.
-    // TODO: Use case name for scenario name
-    
+       
     // Initialize the timer.  Create an object of the Timer class.
     Timer timer;
     timer.start();
@@ -107,10 +106,13 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     
     //  create the scenario runner
     runner = ScenarioRunnerFactory::createDefault( exclusionList );
-    
+        
     // Setup the scenario.
     success = runner->setupScenarios( timer );
-
+    
+    // Overwrite the scenario name
+     runner->getInternalScenario()->setName( aCaseName );
+    
     // Note we will only allocate space to store GCAM results for one model period
     // at a time.
     // For that reason we will remap all model years to just zero
