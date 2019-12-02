@@ -113,10 +113,12 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
         // Parse Region ID
         getline(iss, token, ',');
         region = token;
+        region.erase( remove( region.begin(), region.end(), '\"' ), region.end() );
         
         // Parse SubRegion ID
         getline(iss, token, ',');
         subregion = token;
+        subregion.erase( remove( subregion.begin(), subregion.end(), '\"' ), subregion.end() );
 
         // Create reion ID
         string regID = region + "." + subregion;

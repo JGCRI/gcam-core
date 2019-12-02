@@ -280,12 +280,15 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     
     // Only set carbon densities during GCAM model years after the final calibration period.
     if( modeltime->isModelYear( curryear ) && curryear >  finalCalibrationYear ) {
+        cout << "Setting carbon density in year: " << curryear << endl;
         CarbonScalers e3sm2gcam(aNumLon, aNumLat, aNumPFT);
         
         // Get scaler information
         if ( aReadScalars ) {
+            cout << "Reading scalars from file." << endl;
             e3sm2gcam.readScalers(yyyymmdd, scalarYears, scalarRegion, scalarLandTech, aboveScalarData);
         } else {
+            cout << "Calculating scalers from data." << endl;
             e3sm2gcam.readRegionalMappingData(aMappingFile);
             e3sm2gcam.calcScalers(yyyymmdd, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
                                   scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
