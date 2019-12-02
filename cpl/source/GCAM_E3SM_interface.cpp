@@ -173,15 +173,15 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     // Get year only of the current date
     int curryear = *yyyymmdd/10000;
     bool success = false;
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::NOTICE );
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::NOTICE );
     
     if ( curryear < gcamStartYear ) {
-        mainLog << "returning from runGCAM: current date: " << *yyyymmdd << " is before GCAM starting date: " << gcamStartYear << endl;
+        coupleLog << "returning from runGCAM: current date: " << *yyyymmdd << " is before GCAM starting date: " << gcamStartYear << endl;
         return;
     }
     if ( curryear > gcamEndYear ) {
-        mainLog << "returning from runGCAM: current date: " << *yyyymmdd << " is after GCAM ending date: " << gcamEndYear << endl;
+        coupleLog << "returning from runGCAM: current date: " << *yyyymmdd << " is after GCAM ending date: " << gcamEndYear << endl;
         return;
     }
     
@@ -191,7 +191,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     int period = modeltime->getyr_to_per( curryear );
     int modelyear = modeltime->getper_to_yr( period );
     
-    mainLog << "Current Year is " << curryear << endl;
+    coupleLog << "Current Year is " << curryear << endl;
     
     
     if( modeltime->isModelYear( curryear )) {
@@ -199,10 +199,10 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         Timer timer;
         
         // TODO: is this necessary, it will be the same as currYear
-        mainLog << "Running GCAM for year " << modelyear;
-        mainLog << ", calculating period = " << period << endl;
+        coupleLog << "Running GCAM for year " << modelyear;
+        coupleLog << ", calculating period = " << period << endl;
         
-        mainLog.precision(20);
+        coupleLog.precision(20);
         
         // Initialize the timer.  Create an object of the Timer class.
         timer.start();
@@ -218,23 +218,23 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         fill(co2, co2+mCO2EmissData.getArrayLength(), 0.0);
         GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mCO2EmissData);
         getCo2.run(runner->getInternalScenario());
-        mainLog << mCO2EmissData << endl;
+        coupleLog << mCO2EmissData << endl;
         
-        mainLog << "Getting LUC" << endl;
+        coupleLog << "Getting LUC" << endl;
         double *luc = mLUCData.getData();
         // be sure to reset any data set previously
         fill(luc, luc+mLUCData.getArrayLength(), 0.0);
         GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mLUCData);
         getLUC.run(runner->getInternalScenario());
-        mainLog << mLUCData << endl;
+        coupleLog << mLUCData << endl;
         
-        mainLog << "Getting Wood harvest" << endl;
+        coupleLog << "Getting Wood harvest" << endl;
         double *woodHarvest = mWoodHarvestData.getData();
         // be sure to reset any data set previously
         fill(woodHarvest, woodHarvest+mWoodHarvestData.getArrayLength(), 0.0);
         GetDataHelper getWH("world/region[+NamedFilter,MatchesAny]/sector[NamedFilter,StringEquals,Forest]/subsector/technology[+NamedFilter,MatchesAny]//output[IndexFilter,IntEquals,0]/physical-output[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mWoodHarvestData);
         getWH.run(runner->getInternalScenario());
-        mainLog << mWoodHarvestData << endl;
+        coupleLog << mWoodHarvestData << endl;
         
         // Set data in the gcamoluc* arrays
         const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
@@ -249,7 +249,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         }
         
         // Downscale CO2 emissions
-        mainLog << "Downscaling CO2 emissions" << endl;
+        coupleLog << "Downscaling CO2 emissions" << endl;
         EmissDownscale gcam2e3sm(aNumLon * aNumLat);
         double totalEmissions2010 = gcam2e3sm.readSpatialData(aBaseCO2File, false, false, true);
         gcam2e3sm.downscaleCO2Emissions(totalEmissions2010, co2[0]);
@@ -278,17 +278,21 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     vector<double> aboveScalarData(17722);
     vector<double> belowScalarData(17722);
     
+    // Open the coupling log
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::NOTICE );
+    
     // Only set carbon densities during GCAM model years after the final calibration period.
     if( modeltime->isModelYear( curryear ) && curryear >  finalCalibrationYear ) {
-        cout << "Setting carbon density in year: " << curryear << endl;
+        coupleLog << "Setting carbon density in year: " << curryear << endl;
         CarbonScalers e3sm2gcam(aNumLon, aNumLat, aNumPFT);
         
         // Get scaler information
         if ( aReadScalars ) {
-            cout << "Reading scalars from file." << endl;
+            coupleLog << "Reading scalars from file." << endl;
             e3sm2gcam.readScalers(yyyymmdd, scalarYears, scalarRegion, scalarLandTech, aboveScalarData);
         } else {
-            cout << "Calculating scalers from data." << endl;
+            coupleLog << "Calculating scalers from data." << endl;
             e3sm2gcam.readRegionalMappingData(aMappingFile);
             e3sm2gcam.calcScalers(yyyymmdd, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
                                   scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
@@ -312,9 +316,9 @@ void GCAM_E3SM_interface::finalizeGCAM()
     Timer timer;
     // Initialize the timer.  Create an object of the Timer class.
     timer.start();
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "calling finalize" << endl;
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::NOTICE );
+    coupleLog << "calling finalize" << endl;
     runner->printOutput(timer);
     timer.stop();
 }
