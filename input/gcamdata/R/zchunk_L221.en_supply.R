@@ -394,7 +394,8 @@ module_energy_L221.en_supply <- function(command, ...) {
       select(-value) %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["TechCoef"]]), set_market = TRUE, has_traded = TRUE, apply_selected_only = FALSE,
                            GCAM_region_names = GCAM_region_names) %>%
-      filter(year %in% MODEL_YEARS) -> L221.TechCoef_en_Traded
+      filter(year %in% MODEL_YEARS) %>%
+      stats:::na.omit() -> L221.TechCoef_en_Traded
 
     # Costs of traded technologies
     A21.tradedtech_cost %>%
@@ -410,7 +411,8 @@ module_energy_L221.en_supply <- function(command, ...) {
       select(-value) %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["TechCost"]]), set_market = FALSE, has_traded = TRUE, apply_selected_only = FALSE,
                            GCAM_region_names = GCAM_region_names) %>%
-      filter(year %in% MODEL_YEARS) -> L221.TechCost_en_Traded
+      filter(year %in% MODEL_YEARS) %>%
+      stats:::na.omit() -> L221.TechCost_en_Traded
 
     # Shareweights of traded technologies
     A21.tradedtech_shrwt %>%
@@ -426,7 +428,8 @@ module_energy_L221.en_supply <- function(command, ...) {
       select(-value) %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["TechYr"]], "share.weight"), set_market = FALSE, has_traded = TRUE, apply_selected_only = FALSE,
                            GCAM_region_names = GCAM_region_names) %>%
-      filter(year %in% MODEL_YEARS) -> L221.TechShrwt_en_Traded
+      filter(year %in% MODEL_YEARS) %>%
+      stats:::na.omit() -> L221.TechShrwt_en_Traded
 
     # Calibration and region specific data
     # Coefficient and market name of stub technologies for importing traded unconventional oil

@@ -122,13 +122,13 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
       add_xml_data(L221.StubTechFractCalPrice_en, "StubTechFractCalPrice") %>%
       add_xml_data(L221.Rsrc_en, "Rsrc") %>%
       add_xml_data(L221.RsrcPrice_en, "RsrcPrice") %>%
-      add_xml_data(L221.TechCoef_en_Traded, "TechCoef") %>%
-      add_xml_data(L221.TechCost_en_Traded, "TechCost") %>%
-      add_xml_data(L221.TechShrwt_en_Traded, "TechShrwt") %>%
-      add_xml_data(L221.StubTechCoef_unoil, "StubTechCoef") %>%
-      add_xml_data(L221.Production_unoil, "Production", column_order_lookup = NULL) %>%
-      add_xml_data(L221.StubTechProd_oil_unoil, "StubTechProd", column_order_lookup = NULL) %>%
-      add_xml_data(L221.StubTechProd_oil_crude, "StubTechProd", column_order_lookup = NULL) %>%
+      # add_xml_data(L221.TechCoef_en_Traded, "TechCoef") %>%
+      # add_xml_data(L221.TechCost_en_Traded, "TechCost") %>%
+      # add_xml_data(L221.TechShrwt_en_Traded, "TechShrwt") %>%
+      # add_xml_data(L221.StubTechCoef_unoil, "StubTechCoef") %>%
+      # add_xml_data(L221.Production_unoil, "Production", column_order_lookup = NULL) %>%
+      # add_xml_data(L221.StubTechProd_oil_unoil, "StubTechProd", column_order_lookup = NULL) %>%
+      # add_xml_data(L221.StubTechProd_oil_crude, "StubTechProd", column_order_lookup = NULL) %>%
       add_xml_data(L221.StubTechCalInput_bioOil, "StubTechCalInput") %>%
       add_xml_data(L221.StubTechInterp_bioOil, "StubTechInterp") %>%
       add_xml_data(L221.StubTechShrwt_bioOil, "StubTechShrwt") %>%
