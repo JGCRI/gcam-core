@@ -9,7 +9,8 @@
 #' the generated outputs: \code{ff_trade.xml}.
 module_energy_batch_ff_trade_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L239.Supplysector_tra",
+    return(c("L239.PrimaryConsKeyword_en",
+             "L239.Supplysector_tra",
              "L239.SectorUseTrialMarket_tra",
              "L239.SubsectorAll_tra",
              "L239.TechShrwt_tra",
@@ -30,6 +31,7 @@ module_energy_batch_ff_trade_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    L239.PrimaryConsKeyword_en <- get_data(all_data, "L239.PrimaryConsKeyword_en")
     L239.Supplysector_tra <- get_data(all_data, "L239.Supplysector_tra")
     L239.SectorUseTrialMarket_tra <- get_data(all_data, "L239.SectorUseTrialMarket_tra")
     L239.SubsectorAll_tra <- get_data(all_data, "L239.SubsectorAll_tra")
@@ -63,7 +65,9 @@ module_energy_batch_ff_trade_xml <- function(command, ...) {
       add_xml_data(L239.Production_reg_imp, "Production") %>%
       add_xml_data(L239.Production_reg_dom, "Production") %>%
       add_xml_data(L239.Consumption_intraregional, "Production") %>%
-      add_precursors("L239.Supplysector_tra",
+      add_xml_data(L239.PrimaryConsKeyword_en, "PrimaryConsKeyword") %>%
+      add_precursors("L239.PrimaryConsKeyword_en",
+                     "L239.Supplysector_tra",
                      "L239.SectorUseTrialMarket_tra",
                      "L239.SubsectorAll_tra",
                      "L239.TechShrwt_tra",

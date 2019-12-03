@@ -13,7 +13,7 @@ module_energy_L239.ff_trade(command, ...)
 }
 \value{
 Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
-  \code{command} is "MAKE") all the generated outputs: \code{L239.Supplysector_tra},
+  \code{command} is "MAKE") all the generated outputs: \code{L239.PrimaryConsKeyword_en}, \code{L239.Supplysector_tra},
   \code{L239.SectorUseTrialMarket_tra}, \code{L239.SubsectorAll_tra}, \code{L239.TechShrwt_tra},
   \code{L239.TechCost_tra}, \code{L239.TechCoef_tra}, \code{L239.Production_tra}, \code{L239.Supplysector_reg},
   \code{L239.SubsectorAll_reg}, \code{L239.TechShrwt_reg}, \code{L239.TechCoef_reg}, \code{L239.Production_reg_imp},

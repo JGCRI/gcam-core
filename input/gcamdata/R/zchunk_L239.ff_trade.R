@@ -5,7 +5,7 @@
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
-#'   \code{command} is "MAKE") all the generated outputs: \code{L239.Supplysector_tra},
+#'   \code{command} is "MAKE") all the generated outputs: \code{L239.PrimaryConsKeyword_en}, \code{L239.Supplysector_tra},
 #'   \code{L239.SectorUseTrialMarket_tra}, \code{L239.SubsectorAll_tra}, \code{L239.TechShrwt_tra},
 #'   \code{L239.TechCost_tra}, \code{L239.TechCoef_tra}, \code{L239.Production_tra}, \code{L239.Supplysector_reg},
 #'   \code{L239.SubsectorAll_reg}, \code{L239.TechShrwt_reg}, \code{L239.TechCoef_reg}, \code{L239.Production_reg_imp},
@@ -17,6 +17,7 @@
 module_energy_L239.ff_trade <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
+             FILE = "energy/A21.globaltech_keyword_ff",
              FILE = "energy/A_ff_RegionalSector",
              FILE = "energy/A_ff_RegionalSubsector",
              FILE = "energy/A_ff_RegionalTechnology",
@@ -26,7 +27,8 @@ module_energy_L239.ff_trade <- function(command, ...) {
              "L2011.ff_GrossTrade_EJ_R_C_Y",
              "L2011.ff_ALL_EJ_R_C_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L239.Supplysector_tra",
+    return(c("L239.PrimaryConsKeyword_en",
+             "L239.Supplysector_tra",
              "L239.SectorUseTrialMarket_tra",
              "L239.SubsectorAll_tra",
              "L239.TechShrwt_tra",
@@ -50,6 +52,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
+    A21.globaltech_keyword_ff <- get_data(all_data, "energy/A21.globaltech_keyword_ff")
     A_ff_RegionalSector <- get_data(all_data, "energy/A_ff_RegionalSector")
     A_ff_RegionalSubsector <- get_data(all_data, "energy/A_ff_RegionalSubsector")
     A_ff_RegionalTechnology <- get_data(all_data, "energy/A_ff_RegionalTechnology")
@@ -69,6 +72,12 @@ module_energy_L239.ff_trade <- function(command, ...) {
     L2011.ff_ALL_EJ_R_C_Y %>%
       mutate(fuel = if_else(fuel == "unconventional oil", "unconventional oil production", fuel)) ->
       L2011.ff_ALL_EJ_R_C_Y
+
+    # Keywords of global technologies
+    A21.globaltech_keyword_ff %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
+      select(sector.name = supplysector, subsector.name = subsector, technology, primary.consumption, year) %>%
+      filter(year %in% MODEL_YEARS) -> L239.PrimaryConsKeyword_en
 
     # 1. TRADED SECTOR / SUBSECTOR / TECHNOLOGY")
     # L239.Supplysector_tra: generic supplysector info for traded ff commodities
@@ -204,7 +213,17 @@ module_energy_L239.ff_trade <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["Production"]])->
       L239.Consumption_intraregional
 
+
+
     # Produce outputs
+    L239.PrimaryConsKeyword_en %>%
+      add_title("Keywords of global technologies") %>%
+      add_units("unitless") %>%
+      add_comments("A21.globaltech_keyword_ff written to all model periods") %>%
+      add_legacy_name("L239.PrimaryConsKeyword_en") %>%
+      add_precursors("energy/A21.globaltech_keyword_ff") ->
+      L239.PrimaryConsKeyword_en
+
     L239.Supplysector_tra %>%
       add_title("Supplysector info for traded ff commodities") %>%
       add_units("None") %>%
@@ -321,7 +340,8 @@ module_energy_L239.ff_trade <- function(command, ...) {
                      "L2011.ff_ALL_EJ_R_C_Y") ->
       L239.Consumption_intraregional
 
-    return_data(L239.Supplysector_tra,
+    return_data(L239.PrimaryConsKeyword_en,
+                L239.Supplysector_tra,
                 L239.SectorUseTrialMarket_tra,
                 L239.SubsectorAll_tra,
                 L239.TechShrwt_tra,
