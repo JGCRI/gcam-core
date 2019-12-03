@@ -102,6 +102,19 @@ void Consumer::initCalc( const MoreSectorInfo* aMoreSectorInfo,
     mLeafInputs = FunctionUtils::getLeafInputs( mNestedInputRoot );
 }
 
+void Consumer::initCalc( const MoreSectorInfo* aMoreSectorInfo,
+                         const string& aRegionName,
+                         const string& aSectorName,
+                         NationalAccount& nationalAccount,
+                         const Demographic* aDemographics,
+                         const GDP* aGDP,
+                         const double aCapitalStock,
+                         const int aPeriod )
+{
+    initCalc( aMoreSectorInfo, aRegionName, aSectorName, nationalAccount, aDemographics,
+              aCapitalStock, aPeriod );
+}
+
 //! Calculate Demand
 void Consumer::calcInputDemand( double aConsumption, const string& aRegionName, 
                                 const string& aSectorName, int aPeriod ) 

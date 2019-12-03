@@ -57,15 +57,15 @@
 // parameters in the generated XML.
 namespace {
     const std::vector<std::string> pnames = {
-        "As",                   // A-staple
-        "An",                   // A-nonstaple
-        "g-ss",
-        "g-nn",
-        "g-cross",
-        "nu",
-        "lambda",
-        "kappa",
-        "pm",
+        "As",                   // scale-staple
+        "An",                   // scale-nonstaple
+        "g-ss", // price elasticity staple
+        "g-nn", // price elasticity non-staple
+        "g-cross", // price elasticitiy cross
+        "nu", // income elasticity
+        "lambda", // income - staple low
+        "kappa",  // income - staple max Q? (income at which reach max Q)
+        "pm", // price of materials
         "rgn-bias-staple",
         "rgn-bias-nonstaple"
     };
@@ -137,6 +137,10 @@ void FoodDemandSystem::calcDemand(
     double x = aGDP.getPPPGDPperCap(aPeriod) / pm;
     double ws = prices[0] / pm * psscl;
     double wn = prices[1] / pm * pnscl;
+    //std::cout << "pm: " << pm << std::endl;
+    //std::cout << "ws: " << ws << std::endl;
+    //std::cout << "wn: " << wn << std::endl;
+    //std::cout << "x: " << x << std::endl;
 
     // Get the trial budget fractions.  These will be used to calculate
     // price exponents in the demand equations.
@@ -167,6 +171,20 @@ void FoodDemandSystem::calcDemand(
     // Calculate actual budget fractions
     double alphas_actual = ws*Qs/x / psscl;
     double alphan_actual = wn*Qn/x / pnscl;
+    
+    //std::cout << "as: " << as << std::endl;
+    //std::cout << "qis: " << qis << std::endl;
+    //std::cout << "ess: " << ess << std::endl;
+    //std::cout << "esn: " << esn << std::endl;
+    //std::cout << "Qs: " << Qs << std::endl;
+    //std::cout << "alphas_actual: " << alphas_actual << std::endl;
+    
+    //std::cout << "an: " << an << std::endl;
+    //std::cout << "qin: " << qin << std::endl;
+    //std::cout << "enn: " << enn << std::endl;
+    //std::cout << "ens: " << ens << std::endl;
+    //std::cout << "Qn: " << Qn << std::endl;
+    //std::cout << "alphan_actual: " << alphan_actual << std::endl;
 
     // Check budget constraint.  If we're spending more than the total income on
     // food, then reduce nonstaples first, followed by staples.  We'll use the

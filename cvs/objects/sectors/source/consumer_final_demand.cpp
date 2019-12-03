@@ -48,6 +48,7 @@
 #include "util/base/include/model_time.h"
 #include "util/base/include/xml_helper.h"
 #include "demographics/include/demographic.h"
+#include "containers/include/market_dependency_finder.h"
 
 // Scenario is supplied as a global
 extern Scenario *scenario;
@@ -160,6 +161,11 @@ void ConsumerFinalDemand::getComponentNames( std::vector<std::string> &aOutCompo
 void ConsumerFinalDemand::completeInit( const std::string &aRegionName,
                                         const IInfo *aRegionInfo )
 {
+    MarketDependencyFinder *df = scenario->getMarketplace()->getDependencyFinder();
+    for(unsigned i=0; i<mDemandComponents.size(); ++i) {
+            df->addDependency( mName, aRegionName, mDemandComponents[i]->mSupplySectors,
+                           aRegionName );
+    }
     mDemandSys->completeInit( aRegionName, getName() ); 
 }
 

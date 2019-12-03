@@ -197,6 +197,9 @@ void EnergyInput::XMLParse( const xercesc::DOMNode* node ) {
         else if( nodeName == "flag" ) {
             setFlagsByName( XMLHelper<string>::getValue( curr ) );
         }
+        else if( nodeName == "fuel-C-coef" ) {
+            mCO2Coefficient = XMLHelper<Value>::getValue( curr );
+        }
         else if( nodeName == "keyword" ){
             DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
             for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
@@ -283,8 +286,11 @@ void EnergyInput::initCalc( const string& aRegionName,
     assert( !aRegionName.empty() );
 
     mPhysicalDemand[ aPeriod ].set( 0 );// initialize to 0 shk
-    // Initialize the coefficient from the marketplace.
-    mCO2Coefficient = FunctionUtils::getCO2Coef( mMarketName, mName, aPeriod );
+    // Initialize the C coefficient from the marketplace if one wasn't
+    // explicitly provided during XML parse.
+    if( !mCO2Coefficient.isInited() ) {
+        mCO2Coefficient = FunctionUtils::getCO2Coef( mMarketName, mName, aPeriod );
+    }
 
     // Set the coefficient for the current period if there is an explicit
     // coefficient read-in, or it was not initialized from the previous period.

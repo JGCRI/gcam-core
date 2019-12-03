@@ -49,6 +49,7 @@
 #include "functions/include/demand_input.h"
 #include "functions/include/trade_input.h"
 #include "functions/include/building_node_input.h"
+#include "functions/include/food_demand_input.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "functions/include/function_utils.h"
@@ -108,6 +109,12 @@ void NodeInput::XMLParse( const xercesc::DOMNode* node ) {
         }
         else if ( nodeName == BuildingNodeInput::getXMLNameStatic() ) {
             parseContainerNode( curr, mNestedInputs, new BuildingNodeInput() );
+        }
+        else if( nodeName == StaplesFoodDemandInput::getXMLNameStatic() ) {
+            parseContainerNode( curr, mNestedInputs, new StaplesFoodDemandInput() );
+        }
+        else if( nodeName == NonStaplesFoodDemandInput::getXMLNameStatic() ) {
+            parseContainerNode( curr, mNestedInputs, new NonStaplesFoodDemandInput() );
         }
         else if ( nodeName == "prodDmdFnType" ) {
             mProdDmdFnType = XMLHelper<string>::getValue( curr );
@@ -499,7 +506,7 @@ void NodeInput::calcLevelizedCost( const std::string& aRegionName, const std::st
     double tempPrice = mProdDmdFn->calcLevelizedCost( mChildInputsCache, aRegionName, aSectorName, aPeriod,
         aAlphaZero, mCurrentSigma );
 
-    setPricePaid( tempPrice, aPeriod );
+    //setPricePaid( tempPrice, aPeriod );
 
     // we only set the hack for the root so that we don't have to recurse through
     // the nest when it comes time to reset this flag
