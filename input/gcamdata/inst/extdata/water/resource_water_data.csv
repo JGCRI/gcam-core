@@ -34,8 +34,11 @@ nuclear.component,global,uranium.enrichment,Gaseous diffusion,12,12,145
 nuclear.component,global,uranium.enrichment,Centrifuge,2,18,36
 conventional.oil.onshore,global,onshore,conventional.oil.onshore,132.96,97.2,12924
 unconventional.oil.onshore,global,onshore,unconventional.oil.onshore,19.55,2.2,43
-crude oil,global,crude oil,crude oil,77.07,167.7,12924
+crude oil,global,domestic crude oil,domestic crude oil,77.07,167.7,12924
+crude oil,global,traded crude oil,traded crude oil,77.07,167.7,12924
 unconventional oil,global,unconventional oil production,unconventional oil production,11.17,3.85,43
-gas,global,regional natural gas,regional natural gas,0.015,93.1,1.4
-coal,global,regional coal,regional coal,6.67,166,1108
+gas,global,domestic natural gas,domestic natural gas,0.015,93.1,1.4
+gas,global,traded natural gas,traded natural gas,0.015,93.1,1.4
+coal,global,domestic coal,domestic coal,6.67,166,1108
+coal,global,traded coal,traded coal,6.67,166,1108
 nuclear,global,enrichedUranium,enrichedUranium,10.1,30,303
