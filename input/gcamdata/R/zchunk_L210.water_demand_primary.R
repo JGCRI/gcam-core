@@ -73,7 +73,10 @@ module_water_L210.water_demand_primary <- function(command, ...) {
              minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
       # Add in GCAM region names
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(market.name = region) ->
+      mutate(market.name = region,
+             subsector = if_else(grepl("traded", subsector), paste(region, subsector), subsector),
+             technology = if_else(grepl("traded", technology), paste(region, technology), technology),
+             region = if_else(grepl("traded", subsector), "USA", region)) ->
       L210.TechCoef
 
     # Repeat coefficients across all model years
