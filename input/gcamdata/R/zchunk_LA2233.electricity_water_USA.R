@@ -179,6 +179,7 @@ module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
                   mutate(technology=stub.technology)) %>%
       dplyr::select(region, supplysector, subsector, technology, year, minicam.energy.input, coefficient, market.name) %>%
       arrange(region, year) %>%
+      mutate(market.name=region)%>%
       rename(stub.technology = technology) ->
       L2233.StubTech_WaterCoef_ref
 
