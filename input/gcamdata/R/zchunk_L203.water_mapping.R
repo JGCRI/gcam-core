@@ -114,7 +114,7 @@ module_water_L203.water_mapping <- function(command, ...) {
     # Subsector share weights (which in this case are the mapping shares)
     L203.mapping_all %>%
       mutate(share.weight = share,
-              year.fillout = first(MODEL_YEARS)) %>%
+             year.fillout = first(MODEL_YEARS)) %>%
       select(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]]) ->
       L203.SubsectorShrwtFllt
 

@@ -15,6 +15,11 @@ base load generation,coal,coal_base_conv pul_fast_retire,electricity,coal,coal (
 base load generation,coal,coal_base_conv pul_fast_retire,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
 base load generation,coal,coal_base_conv pul_fast_retire,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
 base load generation,coal,coal_base_conv pul_fast_retire,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
+base load generation,coal,coal_base_conv pul_slow_retire before 1950,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
+base load generation,coal,coal_base_conv pul_slow_retire before 1950,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
+base load generation,coal,coal_base_conv pul_slow_retire before 1950,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
+base load generation,coal,coal_base_conv pul_slow_retire before 1950,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
+base load generation,coal,coal_base_conv pul_slow_retire before 1950,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
 base load generation,coal,coal_base_conv pul_slow_retire 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
 base load generation,coal,coal_base_conv pul_slow_retire 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
 base load generation,coal,coal_base_conv pul_slow_retire 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
@@ -90,6 +95,11 @@ intermediate generation,coal,coal_int_conv pul_fast_retire,electricity,coal,coal
 intermediate generation,coal,coal_int_conv pul_fast_retire,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
 intermediate generation,coal,coal_int_conv pul_fast_retire,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
 intermediate generation,coal,coal_int_conv pul_fast_retire,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
+intermediate generation,coal,coal_int_conv pul_slow_retire before 1950,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
+intermediate generation,coal,coal_int_conv pul_slow_retire before 1950,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
+intermediate generation,coal,coal_int_conv pul_slow_retire before 1950,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
+intermediate generation,coal,coal_int_conv pul_slow_retire before 1950,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
+intermediate generation,coal,coal_int_conv pul_slow_retire before 1950,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
 intermediate generation,coal,coal_int_conv pul_slow_retire 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
 intermediate generation,coal,coal_int_conv pul_slow_retire 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
 intermediate generation,coal,coal_int_conv pul_slow_retire 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
@@ -431,22 +441,22 @@ peak generation,nuclear,nuc_peak_Gen III,electricity,nuclear,Gen_III,Gen_III (on
 peak generation,nuclear,nuc_peak_Gen III,electricity,nuclear,Gen_III,Gen_III (seawater),nuclear,once through,seawater
 peak generation,nuclear,nuc_peak_Gen III,electricity,nuclear,Gen_III,Gen_III (recirculating),nuclear,recirculating,fresh
 peak generation,nuclear,nuc_peak_Gen III,electricity,nuclear,Gen_III,Gen_III (cooling pond),nuclear,cooling pond,fresh
-base load generation,wind,wind_base,electricity,wind,wind_storage,wind_storage,no cooling,none,none
-intermediate generation,wind,wind_int,electricity,wind,wind_storage,wind_storage,no cooling,none,none
-subpeak generation,wind,wind_subpeak,electricity,wind,wind_storage,wind_storage,no cooling,none,none
-peak generation,wind,wind_peak,electricity,wind,wind_storage,wind_storage,no cooling,none,none
-base load generation,solar,PV_base,electricity,PV,PV_storage,PV_storage,no cooling,none,fresh
-intermediate generation,solar,PV_int,electricity,PV,PV_storage,PV_storage,no cooling,none,fresh
-subpeak generation,solar,PV_subpeak,electricity,PV,PV_storage,PV_storage,no cooling,none,fresh
-peak generation,solar,PV_peak,electricity,PV,PV_storage,PV_storage,no cooling,none,fresh
-base load generation,solar,CSP_base,electricity,CSP,CSP_storage,CSP_storage (recirculating),CSP,recirculating,fresh
-base load generation,solar,CSP_base,electricity,CSP,CSP_storage,CSP_storage (dry_hybrid),CSP,dry_hybrid,fresh
-intermediate generation,solar,CSP_int,electricity,CSP,CSP_storage,CSP_storage (recirculating),CSP,recirculating,fresh
-intermediate generation,solar,CSP_int,electricity,CSP,CSP_storage,CSP_storage (dry_hybrid),CSP,dry_hybrid,fresh
-subpeak generation,solar,CSP_subpeak,electricity,CSP,CSP_storage,CSP_storage (recirculating),CSP,recirculating,fresh
-subpeak generation,solar,CSP_subpeak,electricity,CSP,CSP_storage,CSP_storage (dry_hybrid),CSP,dry_hybrid,fresh
-peak generation,solar,CSP_peak,electricity,CSP,CSP_storage,CSP_storage (recirculating),CSP,recirculating,fresh
-peak generation,solar,CSP_peak,electricity,CSP,CSP_storage,CSP_storage (dry_hybrid),CSP,dry_hybrid,fresh
+base load generation,wind,wind_base_storage,electricity,wind,wind_storage,wind_base_storage,no cooling,none,none
+base load generation,wind,wind_base,electricity,wind,wind_storage,wind_base,no cooling,none,none
+intermediate generation,wind,wind_int,electricity,wind,wind_storage,wind_int,no cooling,none,none
+subpeak generation,wind,wind_subpeak,electricity,wind,wind_storage,wind_subpeak,no cooling,none,none
+peak generation,wind,wind_peak,electricity,wind,wind_storage,wind_peak,no cooling,none,none
+base load generation,solar,PV_base_storage,electricity,PV,PV_storage,PV_base_storage,no cooling,none,fresh
+intermediate generation,solar,PV_int,electricity,PV,PV_storage,PV_int,no cooling,none,fresh
+subpeak generation,solar,PV_subpeak,electricity,PV,PV_storage,PV_subpeak,no cooling,none,fresh
+peak generation,solar,PV_peak,electricity,PV,PV_storage,PV_peak,no cooling,none,fresh
+base load generation,solar,CSP_base_storage,electricity,CSP,CSP_storage,CSP_base_storage,CSP,recirculating,fresh
+intermediate generation,solar,CSP_int,electricity,CSP,CSP_storage,CSP_int (recirculating),CSP,recirculating,fresh
+intermediate generation,solar,CSP_int,electricity,CSP,CSP_storage,CSP_int (dry_hybrid),CSP,dry_hybrid,fresh
+subpeak generation,solar,CSP_subpeak,electricity,CSP,CSP_storage,CSP_subpeak (recirculating),CSP,recirculating,fresh
+subpeak generation,solar,CSP_subpeak,electricity,CSP,CSP_storage,CSP_subpeak (dry_hybrid),CSP,dry_hybrid,fresh
+peak generation,solar,CSP_peak,electricity,CSP,CSP_storage,CSP_peak (recirculating),CSP,recirculating,fresh
+peak generation,solar,CSP_peak,electricity,CSP,CSP_storage,CSP_peak (dry_hybrid),CSP,dry_hybrid,fresh
 base load generation,geothermal,geo_base,electricity,geothermal,geothermal,geothermal (recirculating),geothermal,recirculating,fresh
 base load generation,geothermal,geo_base,electricity,geothermal,geothermal,geothermal (dry_hybrid),geothermal,dry_hybrid,fresh
 intermediate generation,geothermal,geo_int,electricity,geothermal,geothermal,geothermal (recirculating),geothermal,recirculating,fresh
@@ -455,7 +465,9 @@ subpeak generation,geothermal,geo_subpeak,electricity,geothermal,geothermal,geot
 subpeak generation,geothermal,geo_subpeak,electricity,geothermal,geothermal,geothermal (dry_hybrid),geothermal,dry_hybrid,fresh
 peak generation,geothermal,geo_peak,electricity,geothermal,geothermal,geothermal (recirculating),geothermal,recirculating,fresh
 peak generation,geothermal,geo_peak,electricity,geothermal,geothermal,geothermal (dry_hybrid),geothermal,dry_hybrid,fresh
-base load generation,hydro,hydro_base,electricity,hydro,hydro,hydro,no cooling,none,fresh
-intermediate generation,hydro,hydro_int,electricity,hydro,hydro,hydro,no cooling,none,fresh
-subpeak generation,hydro,hydro_subpeak,electricity,hydro,hydro,hydro,no cooling,none,fresh
-peak generation,hydro,hydro_peak,electricity,hydro,hydro,hydro,no cooling,none,fresh
+base load generation,hydro,hydro_base,electricity,hydro,hydro,hydro_base,no cooling,none,fresh
+intermediate generation,hydro,hydro_int,electricity,hydro,hydro,hydro_int,no cooling,none,fresh
+subpeak generation,hydro,hydro_subpeak,electricity,hydro,hydro,hydro_subpeak,no cooling,none,fresh
+peak generation,hydro,hydro_peak,electricity,hydro,hydro,hydro_peak,no cooling,none,fresh
+elect_td_bld,rooftop_pv,rooftop_pv,electricity,rooftop_pv,rooftop_pv,rooftop_pv,rooftop_pv,rooftop_pv,rooftop_pv
+peak generation,grid_storage,battery,grid_storage,grid_storage,grid_storage,grid_storage,battery,battery,battery

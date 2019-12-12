@@ -60,23 +60,23 @@ module_gcamusa_batch_solar_reeds_USA_xml <- function(command, ...) {
     # Produce outputs
 
     create_xml("solar_reeds_USA.xml") %>%
-      add_xml_data(L2238.DeleteStubTechMinicamEnergyInput_PV_reeds_USA, "DeleteStubTechMinicamEnergyInput") %>%
+      add_xml_data_generate_levels(L2238.DeleteStubTechMinicamEnergyInput_PV_reeds_USA%>% rename(stub.technology = technology), "DeleteStubTechMinicamEnergyInput","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data(L2238.RenewRsrc_PV_reeds_USA, "RenewRsrc") %>%
       add_xml_data(L2238.GrdRenewRsrcCurves_PV_reeds_USA, "GrdRenewRsrcCurves") %>%
       add_xml_data(L2238.GrdRenewRsrcMax_PV_reeds_USA, "GrdRenewRsrcMax") %>%
-      add_xml_data(L2238.StubTechEffFlag_PV_reeds_USA, "StubTechEffFlag") %>%
-      add_xml_data(L2238.StubTechCapFactor_PV_reeds_USA, "StubTechCapFactor") %>%
+      add_xml_data_generate_levels(L2238.StubTechEffFlag_PV_reeds_USA%>% rename(stub.technology = technology), "StubTechEffFlag","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2238.StubTechCapFactor_PV_reeds_USA%>% rename(stub.technology = technology), "StubTechCapFactor","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data(L2238.RenewRsrcTechChange_PV_reeds_USA, "RenewRsrcTechChange") %>%
-      add_xml_data(L2238.StubTechCost_PV_reeds_USA, "StubTechCost") %>%
+      add_xml_data_generate_levels(L2238.StubTechCost_PV_reeds_USA%>% rename(stub.technology = technology), "StubTechCost","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data(L2239.DeleteUnlimitRsrc_reeds_USA, "DeleteUnlimitRsrc") %>%
-      add_xml_data(L2239.DeleteStubTechMinicamEnergyInput_CSP_reeds_USA, "DeleteStubTechMinicamEnergyInput") %>%
+      add_xml_data_generate_levels(L2239.DeleteStubTechMinicamEnergyInput_CSP_reeds_USA%>% rename(stub.technology = technology), "DeleteStubTechMinicamEnergyInput","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data(L2239.RenewRsrc_CSP_reeds_USA, "RenewRsrc") %>%
       add_xml_data(L2239.GrdRenewRsrcCurves_CSP_reeds_USA, "GrdRenewRsrcCurves") %>%
       add_xml_data(L2239.GrdRenewRsrcMax_CSP_reeds_USA, "GrdRenewRsrcMax") %>%
-      add_xml_data(L2239.StubTechEffFlag_CSP_reeds_USA, "StubTechEffFlag") %>%
-      add_xml_data(L2239.StubTechCapFactor_CSP_reeds_USA, "StubTechCapFactor") %>%
+      add_xml_data_generate_levels(L2239.StubTechEffFlag_CSP_reeds_USA%>% rename(stub.technology = technology), "StubTechEffFlag","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2239.StubTechCapFactor_CSP_reeds_USA%>% rename(stub.technology = technology), "StubTechCapFactor","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data(L2239.RenewRsrcTechChange_CSP_reeds_USA, "RenewRsrcTechChange") %>%
-      add_xml_data(L2239.StubTechCost_CSP_reeds_USA, "StubTechCost") %>%
+      add_xml_data_generate_levels(L2239.StubTechCost_CSP_reeds_USA%>% rename(stub.technology = technology), "StubTechCost","subsector","nesting-subsector",1,FALSE) %>%
       add_node_equiv_xml("resource") %>%
       add_node_equiv_xml("subresource") %>%
       add_xml_data(L2238.ResTechShrwt_PV_reeds_USA, "ResTechShrwt") %>%

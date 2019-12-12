@@ -24,7 +24,7 @@ module_gcamusa_batch_nuclear_USA_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("nuclear_USA.xml") %>%
-      add_xml_data(L2244.StubTechSCurve_nuc_gen2_USA, "StubTechSCurve") %>%
+      add_xml_data_generate_levels(L2244.StubTechSCurve_nuc_gen2_USA%>% rename(stub.technology = technology), "StubTechSCurve","subsector","nesting-subsector",1,FALSE) %>%
       add_precursors("L2244.StubTechSCurve_nuc_gen2_USA") ->
       nuclear_USA.xml
 

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="AK">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="AL">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="AR">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="AZ">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="CA">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="CO">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="CT">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="DC">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="DE">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="FL">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="GA">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="HI">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="IA">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="ID">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="IL">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="IN">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="KS">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="KY">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="LA">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MA">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MD">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="ME">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MI">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MN">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MO">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MS">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="MT">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NC">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="ND">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NE">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NH">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NJ">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NM">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NV">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="NY">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="OH">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="OK">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="OR">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="PA">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="RI">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="SC">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="SD">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="TN">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="TX">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="UT">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="VA">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="VT">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="WA">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="WI">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="WV">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+      <region name="WY">
+         <ghgpolicy name="CO2">
+            <market>USA</market>
+         </ghgpolicy>
+      </region>
+   </world>
+</scenario>

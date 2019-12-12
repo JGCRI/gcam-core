@@ -31,6 +31,8 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
              "L245.TechShrwt_USA",
              "L245.TechCoef_USA",
              "L245.TechCost_USA",
+             "L245.DeleteSupplysector_USA",
+             "L245.DeleteFinalDemand_USA",
              "L245.PerCapitaBased_USA",
              "L245.BaseService_USA",
              "L245.IncomeElasticity_USA",
@@ -116,6 +118,19 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
       minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
       select(LEVEL2_DATA_NAMES$TechCoef) ->
       L245.TechCoef_USA  # municipal water technology withdrawals and consumption efficiencies
+
+    # Delete the USA region so that the modeled state level data can override it
+    L245.TechCoef_USA %>%
+      select(region, supplysector) %>%
+      mutate(region= gcam.USA_REGION,
+             energy.final.demand = supplysector) %>%
+      unique() ->
+      L245.DeleteSupplysector_USA
+
+    tibble(region = gcam.USA_REGION,
+           energy.final.demand = "municipal water") ->
+      L245.DeleteFinalDemand_USA
+
 
     # Municipal water non-energy cost
     L245.assumptions_all %>%
@@ -219,6 +234,20 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
                      "L145.municipal_water_cost_state_75USD_m3") ->
       L245.TechCost_USA
 
+    L245.DeleteSupplysector_USA %>%
+      add_title("Remove municipal water withdrawal and consumption of the USA region") %>%
+      add_units("Uniteless") %>%
+      add_comments("Remove the USA municipal demands to make way for state level") %>%
+      add_legacy_name("L2232.DeleteSupplysector_USA") ->
+      L245.DeleteSupplysector_USA
+
+    L245.DeleteFinalDemand_USA %>%
+      add_title("Remove municipal water withdrawal and consumption of the USA region") %>%
+      add_units("Uniteless") %>%
+      add_comments("Remove the USA municipal demands to make way for state level") %>%
+      add_legacy_name("L2232.DeleteSupplysector_USA") ->
+      L245.DeleteFinalDemand_USA
+
     L245.PerCapitaBased_USA %>%
       add_title("Per-capital based final energy demand switch (municipal water) for US states") %>%
       add_units("NA") %>%
@@ -261,7 +290,7 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
       L245.aeei_USA
 
     return_data(L245.Supplysector_USA, L245.SubsectorLogit_USA, L245.SubsectorShrwtFllt_USA,
-                L245.TechShrwt_USA, L245.TechCoef_USA, L245.TechCost_USA, L245.PerCapitaBased_USA,
+                L245.TechShrwt_USA, L245.TechCoef_USA, L245.TechCost_USA, L245.DeleteSupplysector_USA, L245.DeleteFinalDemand_USA, L245.PerCapitaBased_USA,
                 L245.BaseService_USA, L245.IncomeElasticity_USA, L245.PriceElasticity_USA, L245.aeei_USA)
   } else {
     stop("Unknown command")

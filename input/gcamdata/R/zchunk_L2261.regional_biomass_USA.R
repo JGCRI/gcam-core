@@ -27,6 +27,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
     return(c(FILE = "energy/A21.sector",
              FILE = "energy/A26.sector",
              FILE = "gcam-usa/A28.sector",
+             FILE = 'gcam-usa/A23.elecS_tech_mapping_cool',
              "L202.CarbonCoef",
              "L221.GlobalTechCoef_en",
              "L221.SubsectorInterp_en",
@@ -85,6 +86,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
     A21.sector <- get_data(all_data, "energy/A21.sector")
     A26.sector <- get_data(all_data, "energy/A26.sector")
     A28.sector <- get_data(all_data, "gcam-usa/A28.sector")
+    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
     L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
     L221.GlobalTechCoef_en <- get_data(all_data, "L221.GlobalTechCoef_en")
     L221.SubsectorInterp_en <- get_data(all_data, "L221.SubsectorInterp_en")
@@ -328,6 +330,25 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
     L2261.StubTechMarket_bld_USA <- set_state_biomass_markets(L244.StubTechMarket_bld)
 
 
+    ## To account for new nesting-subsector structure and to add cooling technologies, we must expand certain outputs
+    add_cooling_techs <- function(data){
+      data %>%
+        left_join(A23.elecS_tech_mapping_cool,
+                  by=c("stub.technology"="Electric.sector.technology",
+                       "supplysector"="Electric.sector","subsector")) %>%
+        select(-technology,-subsector_1)%>%
+        rename(technology = to.technology,
+               subsector0 = subsector,
+               subsector = stub.technology) -> data_new
+
+      data_new %>% filter(grepl("seawater",technology)) %>% filter(!(region %in% gcamusa.NO_SEAWATER_STATES)) %>%
+        bind_rows(data_new %>% filter(!grepl("seawater",technology))) %>%
+        arrange(region,year) -> data_new
+      return(data_new)
+    }
+    L2261.StubTechMarket_elecS_USA <- add_cooling_techs(L2261.StubTechMarket_elecS_USA)
+
+
     # ===================================================
     # Produce outputs
 
@@ -522,6 +543,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
       add_comments("Updating market information for biomass inputs to state-level electricity sectors") %>%
       add_comments("Now consuming from state-level biomass supply sectors") %>%
       add_precursors("gcam-usa/A28.sector",
+                     'gcam-usa/A23.elecS_tech_mapping_cool',
                      "L2234.StubTechMarket_elecS_USA") ->
       L2261.StubTechMarket_elecS_USA
 

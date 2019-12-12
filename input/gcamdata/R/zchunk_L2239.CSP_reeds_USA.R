@@ -23,6 +23,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
              FILE = 'gcam-usa/reeds_CSP_curve_capacity',
              FILE = 'gcam-usa/reeds_CSP_curve_CF',
              FILE = 'gcam-usa/reeds_CSP_curve_grid_cost',
+             FILE = 'gcam-usa/A23.elecS_tech_mapping_cool',
              'L2234.StubTechCapFactor_elecS_solar_USA',
              'L2234.StubTechMarket_elecS_USA',
              'L2247.GlobalIntTechCapitalOnly_elecS_USA',
@@ -48,6 +49,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
     reeds_CSP_curve_capacity <- get_data(all_data, 'gcam-usa/reeds_CSP_curve_capacity')
     reeds_CSP_curve_CF <- get_data(all_data, 'gcam-usa/reeds_CSP_curve_CF')
     reeds_CSP_curve_grid_cost <- get_data(all_data, 'gcam-usa/reeds_CSP_curve_grid_cost')
+    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
     L2234.StubTechCapFactor_elecS_solar_USA <- get_data(all_data, 'L2234.StubTechCapFactor_elecS_solar_USA')
     L2234.StubTechMarket_elecS_USA <- get_data(all_data, 'L2234.StubTechMarket_elecS_USA')
     L2247.GlobalIntTechCapitalOnly_elecS_USA <- get_data(all_data, 'L2247.GlobalIntTechCapitalOnly_elecS_USA')
@@ -67,6 +69,12 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
 
     # ===================================================
     # Data Processing
+    ##Change Global IntTech files back from nesting to previous version
+    L2247.GlobalIntTechCapitalOnly_elecS_USA %>%
+      select(-intermittent.technology) %>%
+      rename(intermittent.technology=subsector.name,
+             subsector.name=subsector.name0) %>% unique() ->
+      L2247.GlobalIntTechCapitalOnly_elecS_USA
 
     # L2239.CSP_CF: Capacity factors for CSP systems by class
     # Calculating average capacity factor by CSP class. Note that capacity factor data by region is not available.
@@ -332,6 +340,24 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
       L2239.ResTechShrwt_CSP_reeds_USA
 
+    ## To account for new nesting-subsector structure and to add cooling technologies, we must expand certain outputs
+    add_cooling_techs <- function(data){
+      data_new <- data %>%
+        left_join(A23.elecS_tech_mapping_cool,
+                  by=c("stub.technology"="Electric.sector.technology",
+                       "supplysector"="Electric.sector","subsector")) %>%
+        select(-technology,-subsector_1)%>%
+        rename(technology = to.technology,
+               subsector0 = subsector,
+               subsector = stub.technology)%>%
+        arrange(region,year)
+      return(data_new)
+    }
+    L2239.DeleteStubTechMinicamEnergyInput_CSP_reeds_USA <- add_cooling_techs(L2239.DeleteStubTechMinicamEnergyInput_CSP_reeds_USA)
+    L2239.StubTechEffFlag_CSP_reeds_USA <- add_cooling_techs(L2239.StubTechEffFlag_CSP_reeds_USA)
+    L2239.StubTechCapFactor_CSP_reeds_USA <- add_cooling_techs(L2239.StubTechCapFactor_CSP_reeds_USA)
+    L2239.StubTechCost_CSP_reeds_USA <- add_cooling_techs(L2239.StubTechCost_CSP_reeds_USA)
+
 
     # ===================================================
     # Produce outputs
@@ -358,6 +384,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
       add_precursors('gcam-usa/reeds_regions_states',
                      'gcam-usa/reeds_CSP_curve_capacity',
                      'gcam-usa/reeds_CSP_curve_CF',
+                     'gcam-usa/A23.elecS_tech_mapping_cool',
                      'L2234.StubTechMarket_elecS_USA',
                      'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
@@ -407,6 +434,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
       add_precursors('gcam-usa/reeds_regions_states',
                      'gcam-usa/reeds_CSP_curve_capacity',
                      'gcam-usa/reeds_CSP_curve_CF',
+                     'gcam-usa/A23.elecS_tech_mapping_cool',
                      'L2234.StubTechCapFactor_elecS_solar_USA',
                      'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
@@ -432,6 +460,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
                      'gcam-usa/reeds_CSP_curve_capacity',
                      'gcam-usa/reeds_CSP_curve_CF',
                      'gcam-usa/reeds_CSP_curve_grid_cost',
+                     'gcam-usa/A23.elecS_tech_mapping_cool',
                      'L2234.StubTechCapFactor_elecS_solar_USA',
                      'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',

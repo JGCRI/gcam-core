@@ -15,6 +15,8 @@ module_gcamusa_batch_water_demand_municipal_xml <- function(command, ...) {
               "L245.TechShrwt_USA",
               "L245.TechCoef_USA",
               "L245.TechCost_USA",
+              "L245.DeleteSupplysector_USA",
+              "L245.DeleteFinalDemand_USA",
               "L245.PerCapitaBased_USA",
               "L245.BaseService_USA",
               "L245.IncomeElasticity_USA",
@@ -33,6 +35,8 @@ module_gcamusa_batch_water_demand_municipal_xml <- function(command, ...) {
     L245.TechShrwt_USA <- get_data(all_data, "L245.TechShrwt_USA")
     L245.TechCoef_USA <- get_data(all_data, "L245.TechCoef_USA")
     L245.TechCost_USA <- get_data(all_data, "L245.TechCost_USA")
+    L245.DeleteSupplysector_USA <- get_data(all_data, "L245.DeleteSupplysector_USA")
+    L245.DeleteFinalDemand_USA <- get_data(all_data, "L245.DeleteFinalDemand_USA")
     L245.PerCapitaBased_USA <- get_data(all_data, "L245.PerCapitaBased_USA")
     L245.BaseService_USA <- get_data(all_data, "L245.BaseService_USA")
     L245.IncomeElasticity_USA <- get_data(all_data, "L245.IncomeElasticity_USA")
@@ -49,13 +53,15 @@ module_gcamusa_batch_water_demand_municipal_xml <- function(command, ...) {
       add_xml_data(L245.TechShrwt_USA, "TechShrwt") %>%
       add_xml_data(L245.TechCoef_USA, "TechCoef") %>%
       add_xml_data(L245.TechCost_USA, "TechCost") %>%
+      add_xml_data(L245.DeleteSupplysector_USA, "DeleteSupplysector") %>%
+      add_xml_data(L245.DeleteFinalDemand_USA, "DeleteFinalDemand") %>%
       add_xml_data(L245.PerCapitaBased_USA, "PerCapitaBased") %>%
       add_xml_data(L245.BaseService_USA, "BaseService") %>%
       add_xml_data(L245.IncomeElasticity_USA, "IncomeElasticity") %>%
       add_xml_data(L245.PriceElasticity_USA, "PriceElasticity") %>%
       add_xml_data(L245.aeei_USA, "aeei") %>%
       add_precursors("L245.Supplysector_USA", "L245.SubsectorLogit_USA", "L245.SubsectorShrwtFllt_USA",
-                     "L245.TechShrwt_USA", "L245.TechCoef_USA", "L245.TechCost_USA", "L245.PerCapitaBased_USA",
+                     "L245.TechShrwt_USA", "L245.TechCoef_USA", "L245.TechCost_USA", "L245.DeleteSupplysector_USA","L245.DeleteFinalDemand_USA", "L245.PerCapitaBased_USA",
                      "L245.BaseService_USA", "L245.IncomeElasticity_USA", "L245.PriceElasticity_USA", "L245.aeei_USA") ->
       water_demand_municipal_USA.xml
 
