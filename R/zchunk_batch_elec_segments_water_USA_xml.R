@@ -4,6 +4,7 @@
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
+#' @importFrom dplyr filter mutate select rename
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{electricity_water.xml}. The corresponding file in the
@@ -32,9 +33,11 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
              "L2233.GlobalIntTechOMfixed_elecS_cool_USA",
              "L2233.GlobalIntTechOMvar_elecS_cool_USA",
              "L2233.GlobalIntTechShrwt_elecS_cool_USA",
+             "L2233.GlobalIntTechCoef_elecS_cool_USA",
              "L2233.PrimaryRenewKeyword_elecS_cool_USA",
              "L2233.PrimaryRenewKeywordInt_elecS_cool_USA",
              "L2233.StubTechEff_elecS_cool_USA",
+             "L2233.StubTechCoef_elecS_cool_USA",
              "L2233.StubTechMarket_elecS_cool_USA",
              "L2233.StubTechProd_elecS_cool_USA",
              "L2233.StubTechSCurve_elecS_cool_USA",
@@ -44,24 +47,27 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
              "L2233.StubTechFixOut_elecS_cool_USA",
              "L2233.StubTechFixOut_hydro_elecS_cool_USA",
              "L2233.StubTechMarket_backup_elecS_cool_USA",
+             "L2233.StubTechProfitShutdown_elecS_cool_USA",
+             "L2233.StubTechSCurve_elecS_cool_USA",
              "L2233.StubTechLifetime_elecS_cool_USA",
+             "L2233.StubTechShrwt_elecS_cool_USA",
              "L2233.SubsectorLogit_elecS_USA",
              "L2233.SubsectorLogit_elecS_cool_USA",
              "L2233.SubsectorShrwt_elecS_USA",
              "L2233.SubsectorShrwt_elecS_cool_USA",
+             "L2233.SubsectorShrwtInterp_elecS_USA",
+             "L2233.SubsectorShrwtInterpTo_elecS_USA",
              "L2233.SubsectorShrwtInterp_elecS_cool_USA",
              "L2233.SubsectorShrwtInterpTo_elecS_cool_USA",
              "L2233.Supplysector_elecS_cool_USA",
-
+             "L2234.SubsectorShrwtFllt_elecS_grid_USA",
+             "L2234.SubsectorShrwtInterp_elecS_grid_USA",
              "L2234.PassThroughSector_elecS_USA",
              "L2234.PassThroughTech_elecS_grid_USA",
              "L2234.ElecReserve_elecS_USA",
              "L2234.TechShrwt_elecS_grid_USA",
              "L2234.TechCoef_elecS_grid_USA",
              "L2234.TechProd_elecS_grid_USA",
-             "L2234.SubsectorShrwtFllt_elecS_grid_USA",
-             "L2234.SubsectorShrwtInterp_elecS_grid_USA",
-
              "L2235.DeleteSupplysector_elec_USA",
              "L2235.InterestRate_FERC_USA",
              "L2235.Pop_FERC_USA",
@@ -121,11 +127,14 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
     L2233.GlobalIntTechOMfixed_elecS_cool_USA<- get_data(all_data,"L2233.GlobalIntTechOMfixed_elecS_cool_USA")
     L2233.GlobalIntTechOMvar_elecS_cool_USA<- get_data(all_data,"L2233.GlobalIntTechOMvar_elecS_cool_USA")
     L2233.GlobalIntTechShrwt_elecS_cool_USA <- get_data(all_data,"L2233.GlobalIntTechShrwt_elecS_cool_USA")
+    L2233.GlobalIntTechCoef_elecS_cool_USA <- get_data(all_data, "L2233.GlobalIntTechCoef_elecS_cool_USA")
     L2233.PrimaryRenewKeyword_elecS_cool_USA <- get_data(all_data,"L2233.PrimaryRenewKeyword_elecS_cool_USA")
     L2233.PrimaryRenewKeywordInt_elecS_cool_USA <- get_data(all_data,"L2233.PrimaryRenewKeywordInt_elecS_cool_USA")
     L2233.StubTechEff_elecS_cool_USA <- get_data(all_data,"L2233.StubTechEff_elecS_cool_USA")
+    L2233.StubTechCoef_elecS_cool_USA <- get_data(all_data, "L2233.StubTechCoef_elecS_cool_USA")
     L2233.StubTechMarket_elecS_cool_USA<- get_data(all_data,"L2233.StubTechMarket_elecS_cool_USA")
     L2233.StubTechProd_elecS_cool_USA<- get_data(all_data,"L2233.StubTechProd_elecS_cool_USA")
+    L2233.StubTechProfitShutdown_elecS_cool_USA <- get_data(all_data, "L2233.StubTechProfitShutdown_elecS_cool_USA")
     L2233.StubTechSCurve_elecS_cool_USA<- get_data(all_data,"L2233.StubTechSCurve_elecS_cool_USA")
     L2233.StubTechCapFactor_elecS_solar_USA <- get_data(all_data,"L2233.StubTechCapFactor_elecS_solar_USA")
     L2233.StubTechCapFactor_elecS_wind_USA<- get_data(all_data,"L2233.StubTechCapFactor_elecS_wind_USA")
@@ -134,23 +143,25 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
     L2233.StubTechFixOut_hydro_elecS_cool_USA<- get_data(all_data,"L2233.StubTechFixOut_hydro_elecS_cool_USA")
     L2233.StubTechMarket_backup_elecS_cool_USA <- get_data(all_data,"L2233.StubTechMarket_backup_elecS_cool_USA")
     L2233.StubTechLifetime_elecS_cool_USA <- get_data(all_data, "L2233.StubTechLifetime_elecS_cool_USA")
+    L2233.StubTechShrwt_elecS_cool_USA <- get_data(all_data, "L2233.StubTechShrwt_elecS_cool_USA")
     L2233.SubsectorLogit_elecS_USA <- get_data(all_data,"L2233.SubsectorLogit_elecS_USA")
     L2233.SubsectorLogit_elecS_cool_USA <- get_data(all_data,"L2233.SubsectorLogit_elecS_cool_USA")
     L2233.SubsectorShrwt_elecS_USA <- get_data(all_data,"L2233.SubsectorShrwt_elecS_USA")
     L2233.SubsectorShrwt_elecS_cool_USA <- get_data(all_data,"L2233.SubsectorShrwt_elecS_cool_USA")
+    L2233.SubsectorShrwtInterp_elecS_USA <- get_data(all_data,"L2233.SubsectorShrwtInterp_elecS_USA")
+    L2233.SubsectorShrwtInterpTo_elecS_USA<- get_data(all_data,"L2233.SubsectorShrwtInterpTo_elecS_USA")
     L2233.SubsectorShrwtInterp_elecS_cool_USA <- get_data(all_data,"L2233.SubsectorShrwtInterp_elecS_cool_USA")
     L2233.SubsectorShrwtInterpTo_elecS_cool_USA<- get_data(all_data,"L2233.SubsectorShrwtInterpTo_elecS_cool_USA")
     L2233.Supplysector_elecS_cool_USA<- get_data(all_data,"L2233.Supplysector_elecS_cool_USA")
 
-
-    L2234.PassThroughSector_elecS_USA <- get_data(all_data,"L2234.PassThroughSector_elecS_USA")
-    L2234.PassThroughTech_elecS_grid_USA<- get_data(all_data,"L2234.PassThroughTech_elecS_grid_USA")
-    L2234.ElecReserve_elecS_USA<- get_data(all_data,"L2234.ElecReserve_elecS_USA")
-    L2234.TechCoef_elecS_grid_USA <- get_data(all_data,"L2234.TechCoef_elecS_grid_USA")
-    L2234.TechShrwt_elecS_grid_USA <- get_data(all_data,"L2234.TechShrwt_elecS_grid_USA")
-    L2234.TechProd_elecS_grid_USA <- get_data(all_data,"L2234.TechProd_elecS_grid_USA")
-    L2234.SubsectorShrwtFllt_elecS_grid_USA <- get_data(all_data,"L2234.SubsectorShrwtFllt_elecS_grid_USA")
-    L2234.SubsectorShrwtInterp_elecS_grid_USA <- get_data(all_data,"L2234.SubsectorShrwtInterp_elecS_grid_USA")
+    L2234.SubsectorShrwtFllt_elecS_grid_USA <- get_data(all_data, "L2234.SubsectorShrwtFllt_elecS_grid_USA")
+    L2234.SubsectorShrwtInterp_elecS_grid_USA <- get_data(all_data, "L2234.SubsectorShrwtInterp_elecS_grid_USA")
+    L2234.PassThroughSector_elecS_USA <- get_data(all_data, "L2234.PassThroughSector_elecS_USA")
+    L2234.PassThroughTech_elecS_grid_USA <- get_data(all_data, "L2234.PassThroughTech_elecS_grid_USA")
+    L2234.ElecReserve_elecS_USA <- get_data(all_data, "L2234.ElecReserve_elecS_USA")
+    L2234.TechShrwt_elecS_grid_USA <- get_data(all_data, "L2234.TechShrwt_elecS_grid_USA")
+    L2234.TechCoef_elecS_grid_USA <- get_data(all_data, "L2234.TechCoef_elecS_grid_USA")
+    L2234.TechProd_elecS_grid_USA <- get_data(all_data, "L2234.TechProd_elecS_grid_USA")
 
     L2235.DeleteSupplysector_elec_USA <- get_data(all_data, "L2235.DeleteSupplysector_elec_USA")
     L2235.InterestRate_FERC_USA <- get_data(all_data, "L2235.InterestRate_FERC_USA")
@@ -183,13 +194,44 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
     L2235.Production_imports_FERC_USA <- get_data(all_data, "L2235.Production_imports_FERC_USA")
     L2235.Production_elec_gen_FERC_USA <- get_data(all_data, "L2235.Production_elec_gen_FERC_USA")
 
-
     # Silence package checks
     technology <- NULL
 
     L2234.PassThroughSector_elecS_USA <- rename(L2234.PassThroughSector_elecS_USA, pass.through.sector = passthrough.sector)
     L2234.PassThroughTech_elecS_grid_USA <- rename(L2234.PassThroughTech_elecS_grid_USA, pass.through.technology = technology)
-    # ===================================================
+
+    # Function to fix GlobalTech / GlobalIntTech sector & subsector names, which is a recurring issue
+    fix_global_tech_names <- function(data){
+      data_new <- data %>%
+        rename(sector.name = supplysector,
+               subsector.name = subsector,
+               subsector.name0 = subsector0)
+      return(data_new)
+    }
+
+
+    L2233.GlobalIntTechBackup_elecS_cool_USA<- fix_global_tech_names(L2233.GlobalIntTechBackup_elecS_cool_USA)
+    L2233.GlobalIntTechCapital_elecS_USA<- fix_global_tech_names(L2233.GlobalIntTechCapital_elecS_USA)
+    L2233.GlobalIntTechCapital_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechCapital_elecS_cool_USA)
+    L2233.GlobalIntTechEff_elecS_USA <- fix_global_tech_names(L2233.GlobalIntTechEff_elecS_USA)
+    L2233.GlobalIntTechEff_elecS_cool_USA<- fix_global_tech_names(L2233.GlobalIntTechEff_elecS_cool_USA)
+    L2233.GlobalIntTechLifetime_elecS_cool_USA<- fix_global_tech_names(L2233.GlobalIntTechLifetime_elecS_cool_USA)
+    L2233.GlobalIntTechOMfixed_elecS_cool_USA<- fix_global_tech_names(L2233.GlobalIntTechOMfixed_elecS_cool_USA)
+    L2233.GlobalIntTechOMvar_elecS_cool_USA<- fix_global_tech_names(L2233.GlobalIntTechOMvar_elecS_cool_USA)
+    L2233.GlobalIntTechCoef_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechCoef_elecS_cool_USA)
+    L2233.GlobalTechProfitShutdown_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalTechProfitShutdown_elecS_cool_USA)
+    L2233.GlobalTechSCurve_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalTechSCurve_elecS_cool_USA)
+    L2233.GlobalTechCapture_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalTechCapture_elecS_cool_USA)
+    L2233.GlobalTechLifetime_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalTechLifetime_elecS_cool_USA)
+    L2233.GlobalTechCoef_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalTechCoef_elecS_cool_USA)
+
+    L2233.PrimaryRenewKeywordInt_elecS_cool_USA <- rename(L2233.PrimaryRenewKeywordInt_elecS_cool_USA,  technology = intermittent.technology)
+    L2233.GlobalIntTechBackup_elecS_cool_USA <- rename(L2233.GlobalIntTechBackup_elecS_cool_USA, technology = intermittent.technology)
+    L2233.GlobalIntTechCoef_elecS_cool_USA <- rename(L2233.GlobalIntTechCoef_elecS_cool_USA,technology = intermittent.technology)
+
+    L2234.TechProd_elecS_grid_USA <- rename(L2234.TechProd_elecS_grid_USA, tech.share.weight = share.weight)
+
+  # ===================================================
 
 
     # Produce outputs
@@ -200,50 +242,59 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
       add_xml_data(L2234.PassThroughTech_elecS_grid_USA, "PassThroughTech") %>%
       add_logit_tables_xml(L2233.Supplysector_elecS_cool_USA, "Supplysector") %>%
       add_xml_data(L2234.ElecReserve_elecS_USA, "ElecReserve") %>%
-      add_logit_tables_xml(L2233.SubsectorLogit_elecS_USA, "SubsectorLogit") %>%
-      add_logit_tables_xml(L2233.SubsectorLogit_elecS_cool_USA, "SubsectorLogit") %>%
-      add_xml_data_generate_levels(L2233.GlobalTechShrwt_elecS_cool_USA, "GlobalTechShrwt","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalIntTechShrwt_elecS_cool_USA, "GlobalIntTechShrwt","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.PrimaryRenewKeyword_elecS_cool_USA, "PrimaryRenewKeyword","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.PrimaryRenewKeywordInt_elecS_cool_USA, "PrimaryRenewKeywordInt","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.AvgFossilEffKeyword_elecS_cool_USA, "AvgFossilEffKeyword","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalTechCapital_elecS_USA, "GlobalTechCapital","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalTechCapital_elecS_cool_USA, "GlobalTechCapital","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalIntTechCapital_elecS_USA, "GlobalIntTechCapital","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalIntTechCapital_elecS_cool_USA, "GlobalIntTechCapital","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalTechOMfixed_elecS_cool_USA, "GlobalTechOMfixed","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalIntTechOMfixed_elecS_cool_USA, "GlobalIntTechOMfixed","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalTechOMvar_elecS_cool_USA, "GlobalTechOMvar","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalIntTechOMvar_elecS_cool_USA, "GlobalIntTechOMvar","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalTechCapFac_elecS_cool_USA, "GlobalTechCapFac","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalTechEff_elecS_cool_USA, "GlobalTechEff","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalIntTechEff_elecS_USA, "GlobalIntTechEff","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalIntTechEff_elecS_cool_USA, "GlobalIntTechEff","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalTechLifetime_elecS_USA, "GlobalTechLifetime","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalIntTechLifetime_elecS_cool_USA, "GlobalIntTechLifetime","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalTechProfitShutdown_elecS_cool_USA, "GlobalTechProfitShutdown","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalTechSCurve_elecS_cool_USA, "GlobalTechSCurve","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalTechCapture_elecS_cool_USA, "GlobalTechCapture","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalTechLifetime_elecS_cool_USA, "GlobalTechLifetime","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.GlobalIntTechBackup_elecS_cool_USA, "GlobalIntTechBackup","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechMarket_elecS_cool_USA, "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechMarket_backup_elecS_cool_USA, "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechElecMarket_backup_elecS_cool_USA, "StubTechElecMarket","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechProd_elecS_cool_USA, "StubTechProd","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data(L2233.AvgFossilEffKeyword_elecS_cool_USA %>% rename(subsector.name = subsector), "AvgFossilEffKeyword") %>%
+      add_xml_data(L2233.GlobalTechCapital_elecS_USA, "GlobalTechCapital") %>%
+      add_xml_data(L2233.GlobalTechCapital_elecS_cool_USA, "GlobalTechCapital") %>%
+      add_xml_data(L2233.GlobalIntTechCapital_elecS_USA, "GlobalIntTechCapital") %>%
+      add_xml_data(L2233.GlobalIntTechCapital_elecS_cool_USA, "GlobalIntTechCapital") %>%
+      add_xml_data(L2233.GlobalTechOMfixed_elecS_cool_USA, "GlobalTechOMfixed") %>%
+      add_xml_data(L2233.GlobalIntTechOMfixed_elecS_cool_USA, "GlobalIntTechOMfixed") %>%
+      add_xml_data(L2233.GlobalTechOMvar_elecS_cool_USA, "GlobalTechOMvar") %>%
+      add_xml_data(L2233.GlobalIntTechOMvar_elecS_cool_USA, "GlobalIntTechOMvar") %>%
+      add_xml_data(L2233.GlobalTechCapFac_elecS_cool_USA, "GlobalTechCapFac") %>%
+      add_xml_data(L2233.GlobalTechEff_elecS_cool_USA, "GlobalTechEff") %>%
+      add_xml_data(L2233.GlobalTechCoef_elecS_cool_USA, "GlobalTechCoef") %>%
+      add_xml_data(L2233.GlobalIntTechEff_elecS_USA, "GlobalIntTechEff") %>%
+      add_xml_data(L2233.GlobalIntTechEff_elecS_cool_USA, "GlobalIntTechEff") %>%
+      add_xml_data(L2233.GlobalIntTechCoef_elecS_cool_USA, "GlobalIntTechCoef") %>%
+      add_xml_data(L2233.GlobalIntTechLifetime_elecS_cool_USA, "GlobalIntTechLifetime") %>%
+      add_xml_data(L2233.GlobalTechProfitShutdown_elecS_cool_USA, "GlobalTechProfitShutdown") %>%
+      add_xml_data(L2233.GlobalTechSCurve_elecS_cool_USA, "GlobalTechSCurve") %>%
+      add_xml_data(L2233.GlobalTechCapture_elecS_cool_USA, "GlobalTechCapture") %>%
+      add_xml_data(L2233.GlobalTechLifetime_elecS_cool_USA, "GlobalTechLifetime") %>%
+      add_xml_data(L2233.GlobalIntTechBackup_elecS_cool_USA, "GlobalIntTechBackup") %>%
+      add_xml_data(L2233.GlobalTechShrwt_elecS_cool_USA, "GlobalTechShrwt") %>%
+      add_xml_data(L2233.GlobalIntTechShrwt_elecS_cool_USA, "GlobalIntTechShrwt") %>%
+      add_logit_tables_xml_generate_levels(L2233.SubsectorLogit_elecS_cool_USA, "SubsectorLogit","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.SubsectorShrwt_elecS_cool_USA, "SubsectorShrwt","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.SubsectorShrwtInterp_elecS_cool_USA, "SubsectorInterp","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.SubsectorShrwtInterpTo_elecS_cool_USA, "SubsectorInterpTo","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechCapFactor_elecS_wind_USA, "StubTechCapFactor","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechCapFactor_elecS_solar_USA, "StubTechCapFactor","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechFixOut_elecS_cool_USA, "StubTechFixOut","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechEff_elecS_cool_USA, "StubTechEff","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechFixOut_hydro_elecS_cool_USA, "StubTechFixOut","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechLifetime_elecS_cool_USA, "StubTechLifetime", "subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2234.TechShrwt_elecS_grid_USA, "TechShrwt","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2234.TechCoef_elecS_grid_USA, "TechCoef","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2234.TechProd_elecS_grid_USA, "Production","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2234.SubsectorShrwtFllt_elecS_grid_USA, "SubsectorShrwtFllt","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2234.SubsectorShrwtInterp_elecS_grid_USA, "SubsectorInterp","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechMarket_elecS_cool_USA %>% rename(stub.technology = technology), "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechMarket_backup_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechElecMarket_backup_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechElecMarket","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechProd_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechProd","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechCapFactor_elecS_wind_USA%>% rename(stub.technology = technology), "StubTechCapFactor","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechCapFactor_elecS_solar_USA%>% rename(stub.technology = technology), "StubTechCapFactor","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechFixOut_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechFixOut","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechEff_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechEff","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechFixOut_hydro_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechFixOut","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechLifetime_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechLifetime", "subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechSCurve_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechSCurve", "subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechProfitShutdown_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechProfitShutdown", "subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechCoef_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechCoef", "subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechShrwt_elecS_cool_USA, "StubTechShrwt", "subsector","nesting-subsector",1,FALSE) %>%
+      add_node_equiv_xml("subsector") %>%
+      add_logit_tables_xml(L2233.SubsectorLogit_elecS_USA %>% rename(subsector = subsector0), "SubsectorLogit") %>%
+      add_xml_data(L2233.SubsectorShrwt_elecS_USA %>% rename(subsector=subsector0), "SubsectorShrwt") %>%
+      add_xml_data(L2233.SubsectorShrwtInterp_elecS_USA%>% rename(subsector=subsector0), "SubsectorInterp") %>%
+      add_xml_data(L2233.SubsectorShrwtInterpTo_elecS_USA%>% rename(subsector=subsector0), "SubsectorInterpTo") %>%
+      add_xml_data(L2233.PrimaryRenewKeyword_elecS_cool_USA%>% rename(subsector.name=subsector), "PrimaryRenewKeyword") %>%
+      add_xml_data(L2233.PrimaryRenewKeywordInt_elecS_cool_USA, "PrimaryRenewKeywordInt") %>%
+      add_xml_data(L2234.TechShrwt_elecS_grid_USA, "TechShrwt") %>%
+      add_xml_data(L2234.TechCoef_elecS_grid_USA, "TechCoef") %>%
+      add_xml_data(L2234.TechProd_elecS_grid_USA, "Production") %>%
+      add_xml_data(L2234.SubsectorShrwtFllt_elecS_grid_USA, "SubsectorShrwtFllt") %>%
+      add_xml_data(L2234.SubsectorShrwtInterp_elecS_grid_USA, "SubsectorInterp") %>%
       add_xml_data(L2235.DeleteSupplysector_elec_USA, "DeleteSupplysector") %>%
       add_xml_data(L2235.InterestRate_FERC_USA, "InterestRate") %>%
       add_xml_data(L2235.Pop_FERC_USA, "Pop") %>%
@@ -296,9 +347,11 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
                      "L2233.GlobalIntTechOMfixed_elecS_cool_USA",
                      "L2233.GlobalIntTechOMvar_elecS_cool_USA",
                      "L2233.GlobalIntTechShrwt_elecS_cool_USA",
+                     "L2233.GlobalIntTechCoef_elecS_cool_USA",
                      "L2233.PrimaryRenewKeyword_elecS_cool_USA",
                      "L2233.PrimaryRenewKeywordInt_elecS_cool_USA",
                      "L2233.StubTechEff_elecS_cool_USA",
+                     "L2233.StubTechCoef_elecS_cool_USA",
                      "L2233.StubTechMarket_elecS_cool_USA",
                      "L2233.StubTechProd_elecS_cool_USA",
                      "L2233.StubTechSCurve_elecS_cool_USA",
@@ -308,22 +361,27 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
                      "L2233.StubTechFixOut_elecS_cool_USA",
                      "L2233.StubTechFixOut_hydro_elecS_cool_USA",
                      "L2233.StubTechMarket_backup_elecS_cool_USA",
+                     "L2233.StubTechProfitShutdown_elecS_cool_USA",
+                     "L2233.StubTechSCurve_elecS_cool_USA",
+                     "L2233.StubTechLifetime_elecS_cool_USA",
+                     "L2233.StubTechShrwt_elecS_cool_USA",
                      "L2233.SubsectorLogit_elecS_USA",
                      "L2233.SubsectorLogit_elecS_cool_USA",
+                     "L2233.SubsectorShrwt_elecS_USA",
                      "L2233.SubsectorShrwt_elecS_cool_USA",
+                     "L2233.SubsectorShrwtInterp_elecS_USA",
+                     "L2233.SubsectorShrwtInterpTo_elecS_USA",
                      "L2233.SubsectorShrwtInterp_elecS_cool_USA",
                      "L2233.SubsectorShrwtInterpTo_elecS_cool_USA",
                      "L2233.Supplysector_elecS_cool_USA",
-
+                     "L2234.SubsectorShrwtFllt_elecS_grid_USA",
+                     "L2234.SubsectorShrwtInterp_elecS_grid_USA",
                      "L2234.PassThroughSector_elecS_USA",
                      "L2234.PassThroughTech_elecS_grid_USA",
                      "L2234.ElecReserve_elecS_USA",
                      "L2234.TechShrwt_elecS_grid_USA",
                      "L2234.TechCoef_elecS_grid_USA",
                      "L2234.TechProd_elecS_grid_USA",
-                     "L2234.SubsectorShrwtFllt_elecS_grid_USA",
-                     "L2234.SubsectorShrwtInterp_elecS_grid_USA",
-
                      "L2235.DeleteSupplysector_elec_USA",
                      "L2235.InterestRate_FERC_USA",
                      "L2235.Pop_FERC_USA",
