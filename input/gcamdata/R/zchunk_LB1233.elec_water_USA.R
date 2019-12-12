@@ -24,9 +24,9 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
              "L1231.out_EJ_state_elec_F_tech"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1233.out_EJ_state_elec_F_tech_cool",
-             "L1233.share_sR_elec_F_tech_cool",
-             "L1233.wdraw_km3_state_elec",
-             "L1233.wcons_km3_state_elec"))
+             "L1233.share_sR_elec_F_tech_cool"))
+           #"L1233.wdraw_km3_state_elec",
+           #"L1233.wcons_km3_state_elec"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -50,7 +50,7 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
 
     # adjust UCS database by resetting Michigan and Wisconsin power plant seawater use to surface water...
     UCS_Database %>%
-      mutate(`Reported Water Source (Type)` = if_else(State %in% c("MI", "WI") &
+      mutate(`Reported Water Source (Type)` = if_else(State %in% gcamusa.NO_SEAWATER_STATES &
                                                         `Reported Water Source (Type)` == "Ocean",
                                                       "Surface Water",
                                                       `Reported Water Source (Type)`)) %>%
@@ -63,9 +63,11 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
       # set water type to "none" for cases with no cooling system...
       mutate(water_type = if_else(cooling_system == "none", "none", water_type),
              # ...and change PV and hydro to fresh
-             water_type = if_else(technology %in% c("hydro", "PV"), "fresh", water_type)) %>%
-      dplyr::filter(!grepl("none",cooling_system)|technology %in% c("hydro", "PV"))->
-      # Filter out all non hydro & PV technologies which do not use cooling systems
+             water_type = if_else(technology %in% c("hydro", "PV"), "fresh", water_type),
+             cooling_system = if_else(water_type=="seawater","seawater",cooling_system)) %>%
+      dplyr::filter(!grepl("none",cooling_system)|technology %in% c("hydro", "PV"))%>%
+      filter(!grepl("binary",cooling_system))->
+      # Filter out all non hydro & PV technologies which do not use cooling systems and binary recirculation which we do not model
       USC_db_adj
 
     # aggregate and compute shares for states
@@ -100,16 +102,30 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
       L1233.out_MWh_sR_elec_F_tech_cool  # cooling technologies
 
     # calculate national averages, to be used as default values where data are missing
-    L1233.out_MWh_state_elec_F_tech %>% group_by(sector, fuel, technology) %>%
+    # we separate states with and without seawater availability to calculate separate shares for these states.
+    # therefore we have a national avg for non seawater states and for seawater states
+    L1233.out_MWh_state_elec_F_tech %>% filter(!(state %in%gcamusa.NO_SEAWATER_STATES)) %>% group_by(sector, fuel, technology) %>%
+      summarise(out_MWh_sea = sum(out_MWh_)) %>%
+      ungroup() ->
+      L1233.out_MWh_USA_elec_F_tech_sea
+    L1233.out_MWh_state_elec_F_tech %>% filter((state %in%gcamusa.NO_SEAWATER_STATES)) %>% group_by(sector, fuel, technology) %>%
       summarise(out_MWh_ = sum(out_MWh_)) %>%
       ungroup() ->
       L1233.out_MWh_USA_elec_F_tech
-    L1233.out_MWh_state_elec_F_tech_cool %>% group_by(sector, fuel, technology, cooling_system, water_type) %>%
+    L1233.out_MWh_USA_elec_F_tech_sea %>%
+      full_join(L1233.out_MWh_USA_elec_F_tech) %>% replace_na(list(out_MWh_sea = 0,out_MWh_=0)) ->
+      L1233.out_MWh_USA_elec_F_tech
+    L1233.out_MWh_state_elec_F_tech_cool %>% filter(!(state %in% gcamusa.NO_SEAWATER_STATES)) %>% group_by(sector, fuel, technology, cooling_system, water_type) %>%
+      summarise(out_MWh.sea = sum(out_MWh)) %>%
+      ungroup() -> L1233.out_MWh_state_elec_F_tech_cool_sea
+    L1233.out_MWh_state_elec_F_tech_cool %>% filter((state %in%gcamusa.NO_SEAWATER_STATES)) %>% group_by(sector, fuel, technology, cooling_system, water_type) %>%
       summarise(out_MWh = sum(out_MWh)) %>%
-      ungroup() %>%
+      ungroup() -> L1233.out_MWh_state_elec_F_tech_cool_nosea
+    L1233.out_MWh_state_elec_F_tech_cool_sea %>%
+      full_join(L1233.out_MWh_state_elec_F_tech_cool_nosea) %>% replace_na(list(out_MWh = 0,out_MWh.sea=0)) %>%
       left_join_error_no_match(L1233.out_MWh_USA_elec_F_tech,
                                by = c("sector", "fuel", "technology")) %>%
-      mutate(share_nat = out_MWh / out_MWh_) %>% select(-out_MWh_, -out_MWh) ->
+      mutate(share_nat.sea = out_MWh.sea / out_MWh_sea, share_nat =  out_MWh / out_MWh_) %>% select(-out_MWh_, -out_MWh,-out_MWh_sea, -out_MWh.sea) ->
       L1233.out_MWh_USA_elec_F_tech_cool
 
     # get all possible combinations of power plants, cooling system types, and water types in all states
@@ -127,21 +143,24 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
       group_by(state, sector, fuel, technology) %>%
       mutate(sum_share_tech = sum(share)) %>%
       ungroup() %>%
-      mutate(share = if_else(sum_share_tech == 0, share_nat, share)) %>%
-      select(-share_nat, -sum_share_tech) %>%
+      #### FIX THIS ####
+      mutate(share = if_else(sum_share_tech == 0&!(state %in% gcamusa.NO_SEAWATER_STATES), share_nat.sea,
+                             if_else(sum_share_tech == 0&(state %in% gcamusa.NO_SEAWATER_STATES), share_nat, share))) %>%
+      ## we want to make sure that states that do not have seawater available (i.e. inland states) do not get the national average added
+      select(-share_nat, -share_nat.sea, -sum_share_tech) %>%
       # multiply through by historical output
       left_join(L1231.out_EJ_state_elec_F_tech, by = c("sector", "fuel", "technology", "state")) %>%
       # ^^ non-restricted join used to allow for expanded rows for all historical years
-      mutate(value = value * share) %>% select(-share) ->
+      mutate(value = value * share) -> #%>% select(-share) ->
       L1233.out_EJ_state_elec_F_tech_cool
 
-      # Add GCAM-USA supplysector names and correct subsector vintages
-      L1233.out_EJ_state_elec_F_tech_cool %>%
+    # Add GCAM-USA supplysector names and correct subsector vintages
+    L1233.out_EJ_state_elec_F_tech_cool %>%
       left_join(A23.elecS_tech_mapping_new %>%
-      ## left_join here as numerous new rows are created due to vintages addition
-      select(technology, Electric.sector, Electric.sector.technology),
-                                by = c("technology"))  ->
-        L1233.out_EJ_state_elec_F_tech_cool
+                  ## left_join here as numerous new rows are created due to vintages addition
+                  select(technology, Electric.sector, Electric.sector.technology),
+                by = c("technology"))  ->
+      L1233.out_EJ_state_elec_F_tech_cool
 
 
     # Get shares by FERC subregion for new investment in future periods
@@ -160,44 +179,44 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
       mutate(share = if_else(sum_share_tech == 0, share_nat, share)) %>%
       select(-share_nat, -sum_share_tech, -out_MWh)%>%
       left_join(A23.elecS_tech_mapping_new %>%
-      select(technology, Electric.sector, Electric.sector.technology),
-                                by = c("technology")) %>%
-        select(-sector, -technology) %>%
-        rename(sector = Electric.sector,
-        technology = Electric.sector.technology) ->
+                  select(technology, Electric.sector, Electric.sector.technology),
+                by = c("technology")) %>%
+      select(-sector, -technology) %>%
+      rename(sector = Electric.sector,
+             technology = Electric.sector.technology) ->
       L1233.share_sR_elec_F_tech_cool
 
     # Calculate the withdrawals and consumption of water by power sector for post-2000
-    L1233.out_EJ_state_elec_F_tech_cool %>%
-      filter(year >= 2000) %>%
-      left_join_error_no_match(Macknick_elec_water_m3MWh,
-                               by = c("sector", "fuel", "technology", "cooling_system", "water_type"))%>%
-                                 select(-sector, -technology) %>%
-                                 rename(sector = Electric.sector,
-                                 technology = Electric.sector.technology) ->
-      L1233.out_wdraw_cons
+    #L1233.out_EJ_state_elec_F_tech_cool %>%
+    # filter(year >= 2000) %>%
+    #left_join_error_no_match(Macknick_elec_water_m3MWh,
+    #                         by = c("sector", "fuel", "technology", "cooling_system", "water_type"))%>%
+    #                           select(-sector, -technology) %>%
+    #                           rename(sector = Electric.sector,
+    #                           technology = Electric.sector.technology) ->
+    #L1233.out_wdraw_cons
 
     #Rename sector and subsectors based on GCAM-USA set-up
     L1233.out_EJ_state_elec_F_tech_cool %>%
-                                 select(-sector) %>%
-                                 rename(sector = Electric.sector,
-                                 subsector = Electric.sector.technology) ->
-    L1233.out_EJ_state_elec_F_tech_cool
+      select(-sector) %>%
+      rename(sector = Electric.sector,
+             subsector = Electric.sector.technology) ->
+      L1233.out_EJ_state_elec_F_tech_cool
 
 
-    L1233.out_wdraw_cons %>%
-      mutate(value = value * water_withdrawals / CONV_MWH_GJ) %>%
-      # ^^ conversion to GJ (as opposed to EJ) means result is in km3 (not m3)
-      filter(water_type != "none") %>%
-      group_by(state, sector, water_type, year) %>% summarise(value = sum(value)) %>%
-      ungroup() -> L1233.wdraw_km3_state_elec  # << withdrawal
+    #L1233.out_wdraw_cons %>%
+    #  mutate(value = value * water_withdrawals / CONV_MWH_GJ) %>%
+    #  # ^^ conversion to GJ (as opposed to EJ) means result is in km3 (not m3)
+    #  filter(water_type != "none") %>%
+    #  group_by(state, sector, water_type, year) %>% summarise(value = sum(value)) %>%
+    #  ungroup() -> L1233.wdraw_km3_state_elec  # << withdrawal
 
-    L1233.out_wdraw_cons %>%
-      mutate(value = value * water_consumption / CONV_MWH_GJ) %>%
-      # ^^ conversion to GJ (as opposed to EJ) means result is in km3 (not m3)
-      filter(water_type != "none") %>%
-      group_by(state, sector, water_type, year) %>% summarise(value = sum(value)) %>%
-      ungroup() -> L1233.wcons_km3_state_elec  # << consumption
+    #L1233.out_wdraw_cons %>%
+    #  mutate(value = value * water_consumption / CONV_MWH_GJ) %>%
+    #  # ^^ conversion to GJ (as opposed to EJ) means result is in km3 (not m3)
+    #  filter(water_type != "none") %>%
+    #  group_by(state, sector, water_type, year) %>% summarise(value = sum(value)) %>%
+    #  ungroup() -> L1233.wcons_km3_state_elec  # << consumption
 
     # ===================================================
 
@@ -226,33 +245,33 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
                      "gcam-usa/A23.elecS_tech_mapping_new") ->
       L1233.share_sR_elec_F_tech_cool
 
-    L1233.wdraw_km3_state_elec %>%
-      add_title("Water withdrawals for electricity generation by state / water type") %>%
-      add_units("km^3 (bm^3)") %>%
-      add_comments("Outputs multiplied by Macknick withdrawal coefficients") %>%
-      add_legacy_name("L1233.wdraw_km3_state_elec") %>%
-      add_precursors("L1231.out_EJ_state_elec_F_tech",
-                     "gcam-usa/states_subregions",
-                     "gcam-usa/UCS_tech_names",
-                     "gcam-usa/UCS_water_types",
-                     "gcam-usa/UCS_Database",
-                     "gcam-usa/Macknick_elec_water_m3MWh") ->
-      L1233.wdraw_km3_state_elec
+    #L1233.wdraw_km3_state_elec %>%
+    #  add_title("Water withdrawals for electricity generation by state / water type") %>%
+    #  add_units("km^3 (bm^3)") %>%
+    #  add_comments("Outputs multiplied by Macknick withdrawal coefficients") %>%
+    #  add_legacy_name("L1233.wdraw_km3_state_elec") %>%
+    #  add_precursors("L1231.out_EJ_state_elec_F_tech",
+    #                 "gcam-usa/states_subregions",
+    #                 "gcam-usa/UCS_tech_names",
+    #               "gcam-usa/UCS_water_types",
+    #                "gcam-usa/UCS_Database",
+    #                 "gcam-usa/Macknick_elec_water_m3MWh") ->
+    # L1233.wdraw_km3_state_elec
 
-    L1233.wcons_km3_state_elec %>%
-      add_title("Water consumption for electricity generation by state / water type") %>%
-      add_units("km^3 (bm^3)") %>%
-      add_comments("Outputs multiplied by Macknick consumption coefficients") %>%
-      add_legacy_name("L1233.wcons_km3_state_elec") %>%
-      add_precursors("L1231.out_EJ_state_elec_F_tech",
-                     "gcam-usa/states_subregions",
-                     "gcam-usa/UCS_tech_names",
-                     "gcam-usa/UCS_water_types",
-                     "gcam-usa/UCS_Database",
-                     "gcam-usa/Macknick_elec_water_m3MWh") ->
-      L1233.wcons_km3_state_elec
+    #L1233.wcons_km3_state_elec %>%
+    #  add_title("Water consumption for electricity generation by state / water type") %>%
+    #  add_units("km^3 (bm^3)") %>%
+    #  add_comments("Outputs multiplied by Macknick consumption coefficients") %>%
+    #  add_legacy_name("L1233.wcons_km3_state_elec") %>%
+    #  add_precursors("L1231.out_EJ_state_elec_F_tech",
+    #                 "gcam-usa/states_subregions",
+    #                 "gcam-usa/UCS_tech_names",
+    #                 "gcam-usa/UCS_water_types",
+    #                 "gcam-usa/UCS_Database",
+    #                 "gcam-usa/Macknick_elec_water_m3MWh") ->
+    #  L1233.wcons_km3_state_elec
 
-    return_data(L1233.out_EJ_state_elec_F_tech_cool, L1233.share_sR_elec_F_tech_cool, L1233.wdraw_km3_state_elec, L1233.wcons_km3_state_elec)
+    return_data(L1233.out_EJ_state_elec_F_tech_cool, L1233.share_sR_elec_F_tech_cool)#, L1233.wdraw_km3_state_elec, L1233.wcons_km3_state_elec)
   } else {
     stop("Unknown command")
   }
