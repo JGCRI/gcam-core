@@ -440,25 +440,25 @@ GCAM_DATA_MAP <- driver(return_data_map_only = TRUE)
 #' prebuilt versions of their outputs stored in this object.
 #' @author BBL
 PREBUILT_DATA <- driver(write_outputs = FALSE,
-                        write_xml = FALSE,
-                        return_data_names = c(
-                          # outputs of module_energy_LA101.en_bal_IEA
-                          "L101.en_bal_EJ_R_Si_Fi_Yh_full",
-                          "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
-                          "L101.in_EJ_ctry_trn_Fi_Yh",
-                          "L101.in_EJ_ctry_bld_Fi_Yh",
+                       write_xml = FALSE,
+                       return_data_names = c(
+                         # outputs of module_energy_LA101.en_bal_IEA
+                         "L101.en_bal_EJ_R_Si_Fi_Yh_full",
+                         "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
+                         "L101.in_EJ_ctry_trn_Fi_Yh",
+                         "L101.in_EJ_ctry_bld_Fi_Yh",
 
-                          # output of module_energy_LA111.rsrc_fos_Prod
-                          "L111.RsrcCurves_EJ_R_Ffos",
+                         # output of module_energy_LA111.rsrc_fos_Prod
+                         "L111.RsrcCurves_EJ_R_Ffos",
 
-                          # output of module_energy_LA118.hydro
-                          "L118.out_EJ_R_elec_hydro_Yfut",
+                         # output of module_energy_LA118.hydro
+                         "L118.out_EJ_R_elec_hydro_Yfut",
 
-                          # outputs of module_energy_LA121.oil
-                          "L121.in_EJ_R_unoil_F_Yh",
-                          "L121.in_EJ_R_TPES_crude_Yh",
-                          "L121.in_EJ_R_TPES_unoil_Yh"
-                        ))
+                         # outputs of module_energy_LA121.oil
+                         "L121.in_EJ_R_unoil_F_Yh",
+                         "L121.in_EJ_R_TPES_crude_Yh",
+                         "L121.in_EJ_R_TPES_unoil_Yh"
+                       ))
 
 
 # Save these objects for use as internal package data

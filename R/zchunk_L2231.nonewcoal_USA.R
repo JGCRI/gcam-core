@@ -19,11 +19,13 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/A23.elecS_tech_mapping",
              FILE = "gcam-usa/A23.elecS_tech_availability",
+             FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
              "L222.StubTechMarket_en_USA",
              "L222.StubTech_en",
              "L225.StubTech_h2"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2231.StubTechShrwt_nonewcoal_USA",
+             "L2231.StubTechShrwt_nonewcoal_nongen_USA",
              "L2231.StubTechShrwt_coal_delay_USA"))
   } else if(command == driver.MAKE) {
 
@@ -38,6 +40,7 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
     L225.StubTech_h2 <- get_data(all_data, "L225.StubTech_h2")
     A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping")
     A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability")
+    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
 
     # ===================================================
     # Perform computations
@@ -72,14 +75,38 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], share.weight) ->
       L2231.StubTechShrwt_en_USA
 
+    #First we eiliminate non coal vintages which are already addressed in elec_segments_water_USA
     bind_rows(L2231.StubTechShrwt_elec_USA,
               L2231.StubTechShrwt_refining_USA,
-              L2231.StubTechShrwt_en_USA) ->
+              L2231.StubTechShrwt_en_USA) %>%
+      filter(!grepl("conv pul",stub.technology))->
       L2231.StubTechShrwt_nonewcoal_USA
 
     L2231.StubTechShrwt_nonewcoal_USA %>%
       filter(year <= gcamusa.FIRST_NEW_COAL_YEAR) ->
       L2231.StubTechShrwt_coal_delay_USA
+
+    ## To account for new nesting-subsector structure and to add cooling technologies, we must expand certain outputs
+    add_cooling_techs <- function(data){
+      data %>%
+        left_join(A23.elecS_tech_mapping_cool,
+                  by=c("stub.technology"="Electric.sector.technology",
+                       "supplysector"="Electric.sector","subsector")) %>%
+        select(-technology,-subsector_1)%>%
+        rename(technology = to.technology,
+               subsector0 = subsector,
+               subsector = stub.technology) -> data_new
+
+      data_new %>% filter(grepl("seawater",technology)) %>% filter(!(region %in% gcamusa.NO_SEAWATER_STATES)) %>%
+        bind_rows(data_new %>% filter(!grepl("seawater",technology))) %>%
+        arrange(region,year) -> data_new
+      return(data_new)
+    }
+
+    L2231.StubTechShrwt_nonewcoal_nongen_USA <- L2231.StubTechShrwt_nonewcoal_USA %>% filter(!grepl("generation",supplysector))
+    L2231.StubTechShrwt_nonewcoal_USA <-add_cooling_techs(L2231.StubTechShrwt_nonewcoal_USA %>% filter(grepl("generation",supplysector)))
+
+    #L2231.StubTechShrwt_coal_delay_USA <- add_cooling_techs(L2231.StubTechShrwt_coal_delay_USA)
 
     # ===================================================
     # Produce outputs
@@ -91,10 +118,23 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
       add_legacy_name("L2231.StubTechShrwt_coal_USA") %>%
       add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
+                     "gcam-usa/A23.elecS_tech_mapping_cool",
                      "L222.StubTechMarket_en_USA",
                      "L222.StubTech_en",
                      "L225.StubTech_h2") ->
       L2231.StubTechShrwt_nonewcoal_USA
+
+    L2231.StubTechShrwt_nonewcoal_nongen_USA %>%
+      add_title("Share-weights for pulverized coal stub technologies in USA states") %>%
+      add_units("Unitless") %>%
+      add_comments("Set zero share-weights for all coal pulverized stub technologies in all USA states and future years") %>%
+      add_legacy_name("L2231.StubTechShrwt_coal_USA") %>%
+      add_precursors("gcam-usa/A23.elecS_tech_mapping",
+                     "gcam-usa/A23.elecS_tech_availability",
+                     "L222.StubTechMarket_en_USA",
+                     "L222.StubTech_en",
+                     "L225.StubTech_h2") ->
+      L2231.StubTechShrwt_nonewcoal_nongen_USA
 
     L2231.StubTechShrwt_coal_delay_USA %>%
       add_title("Share-weights for pulverized coal stub technologies in USA states") %>%
@@ -103,12 +143,14 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
       add_comments("New coal power deployment can begin in gcamusa.FIRST_NEW_COAL_YEAR (see constants.R; default is 2035) ") %>%
       add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
+                     "gcam-usa/A23.elecS_tech_mapping_cool",
                      "L222.StubTechMarket_en_USA",
                      "L222.StubTech_en",
                      "L225.StubTech_h2") ->
       L2231.StubTechShrwt_coal_delay_USA
 
     return_data(L2231.StubTechShrwt_nonewcoal_USA,
+                L2231.StubTechShrwt_nonewcoal_nongen_USA,
                 L2231.StubTechShrwt_coal_delay_USA)
   } else {
     stop("Unknown command")

@@ -284,6 +284,15 @@ add_xml_data_generate_levels <- function(dot, data, header, old_tag, new_tag, nu
     data <- data[, c(LEVEL2_DATA_NAMES[[column_order_lookup]], new_cols) ]
   }
 
+  # create a node equiv class for the new_tag for the various number of levels
+  # to ensure if we have tables that have not renamed back to new_tag they will
+  # still get merged into the same tag
+  tibble(group.name = new_tag, col = c("tag", paste0("tag", seq(1, num_levels))), tag = c(new_tag, paste0(new_tag, seq(0,num_levels-1)))) %>%
+    spread(col, tag) ->
+    equiv_table
+
+  dot <- add_xml_data(dot, equiv_table, "EQUIV_TABLE", NULL)
+
   # The "command" to add levels is just added to the base level (seperated by ',')
   # and itself is delimited by '/' as 'old_tag/new_tag/num_levels/rename_final'
   add_levels_command <- paste(old_tag, new_tag, num_levels, rename_final, sep="/")

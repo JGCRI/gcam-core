@@ -23,6 +23,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
              FILE = 'gcam-usa/reeds_PV_curve_capacity',
              FILE = 'gcam-usa/reeds_PV_curve_CF_avg',
              FILE = 'gcam-usa/reeds_PV_curve_grid_cost',
+             FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
              'L2234.StubTechCapFactor_elecS_solar_USA',
              'L2234.StubTechMarket_elecS_USA',
              'L2247.GlobalIntTechCapitalOnly_elecS_USA',
@@ -47,6 +48,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
     reeds_PV_curve_capacity <- get_data(all_data, 'gcam-usa/reeds_PV_curve_capacity')
     reeds_PV_curve_CF_avg <- get_data(all_data, 'gcam-usa/reeds_PV_curve_CF_avg')
     reeds_PV_curve_grid_cost <- get_data(all_data, 'gcam-usa/reeds_PV_curve_grid_cost')
+    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
     L2234.StubTechCapFactor_elecS_solar_USA <- get_data(all_data, 'L2234.StubTechCapFactor_elecS_solar_USA')
     L2234.StubTechMarket_elecS_USA <- get_data(all_data, 'L2234.StubTechMarket_elecS_USA')
     L2247.GlobalIntTechCapitalOnly_elecS_USA <- get_data(all_data, 'L2247.GlobalIntTechCapitalOnly_elecS_USA')
@@ -316,6 +318,26 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
       L2238.ResTechShrwt_PV_reeds_USA
 
+
+  ## To account for new nesting-subsector structure and to add cooling technologies, we must expand certain outputs
+    add_cooling_techs <- function(data){
+      data_new <- data %>%
+        left_join(A23.elecS_tech_mapping_cool,
+                  by=c("stub.technology"="Electric.sector.technology",
+                       "supplysector"="Electric.sector","subsector")) %>%
+        select(-technology,-subsector_1)%>%
+        rename(technology = to.technology,
+               subsector0 = subsector,
+               subsector = stub.technology)%>%
+        arrange(region,year)
+      return(data_new)
+    }
+    L2238.DeleteStubTechMinicamEnergyInput_PV_reeds_USA <- add_cooling_techs(L2238.DeleteStubTechMinicamEnergyInput_PV_reeds_USA)
+    L2238.StubTechEffFlag_PV_reeds_USA <- add_cooling_techs(L2238.StubTechEffFlag_PV_reeds_USA)
+    L2238.StubTechCapFactor_PV_reeds_USA <- add_cooling_techs(L2238.StubTechCapFactor_PV_reeds_USA)
+    L2238.StubTechCost_PV_reeds_USA <- add_cooling_techs(L2238.StubTechCost_PV_reeds_USA)
+
+
     # ===================================================
     # Produce outputs
 
@@ -328,6 +350,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       add_precursors('gcam-usa/reeds_regions_states',
                     'gcam-usa/reeds_PV_curve_capacity',
                     'gcam-usa/reeds_PV_curve_CF_avg',
+                    'gcam-usa/A23.elecS_tech_mapping_cool',
                     'L2234.StubTechMarket_elecS_USA',
                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                     'L223.GlobalIntTechCapital_elec',
@@ -380,6 +403,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       add_precursors('gcam-usa/reeds_regions_states',
                      'gcam-usa/reeds_PV_curve_capacity',
                      'gcam-usa/reeds_PV_curve_CF_avg',
+                     'gcam-usa/A23.elecS_tech_mapping_cool',
                      'L2234.StubTechCapFactor_elecS_solar_USA',
                      'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
@@ -403,6 +427,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
                      'gcam-usa/reeds_PV_curve_capacity',
                      'gcam-usa/reeds_PV_curve_CF_avg',
                      'gcam-usa/reeds_PV_curve_grid_cost',
+                     'gcam-usa/A23.elecS_tech_mapping_cool',
                      'L2234.StubTechCapFactor_elecS_solar_USA',
                      'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',

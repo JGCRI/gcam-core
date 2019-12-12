@@ -19,6 +19,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
              FILE = "water/basin_to_country_mapping",
              "L103.water_mapping_USA_R_LS_W_Ws_share",
              "L103.water_mapping_USA_R_PRI_W_Ws_share",
+             "L103.water_mapping_USA_R_GLU_W_Ws_share",
              "L103.water_mapping_USA_R_B_W_Ws_share",
              FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/state_and_basin",
@@ -43,6 +44,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     L103.water_mapping_USA_R_LS_W_Ws_share <- get_data(all_data, "L103.water_mapping_USA_R_LS_W_Ws_share")
     L103.water_mapping_USA_R_PRI_W_Ws_share <- get_data(all_data, "L103.water_mapping_USA_R_PRI_W_Ws_share")
+    L103.water_mapping_USA_R_GLU_W_Ws_share <- get_data(all_data,"L103.water_mapping_USA_R_GLU_W_Ws_share")
     L103.water_mapping_USA_R_B_W_Ws_share <- get_data(all_data,"L103.water_mapping_USA_R_B_W_Ws_share")
     GCAM_state_names <- get_data(all_data, "gcam-usa/states_subregions")
     state_and_basin <- get_data(all_data, "gcam-usa/state_and_basin")
@@ -64,15 +66,14 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       # Create mappings for the sectors that have production at the state level already.
       # These sectors: Domestic, Municipal, and Electricity will not need to be shared
       # from the USA region to the states, and thus will not have separate market names by region
-    state_and_basin_mapping %>%
-      left_join((GCAM_state_names %>% select(state)),by=c("region"="state")) %>%
-      repeat_add_columns(filter(A03.sector, !(water.sector %in% water.IRRIGATION)&!(water.sector %in% water.PRIMARY_ENERGY))) %>%
-      repeat_add_columns(tibble(water_type = water.MAPPED_WATER_TYPES)) %>%
-      mutate(supplysector = set_water_input_name(water.sector, water_type, A03.sector)) ->
+    L103.water_mapping_USA_R_B_W_Ws_share %>%
+      mutate(water_sector = gsub("Domestic","Municipal",water_sector)) %>%
+      left_join(A03.sector, by=c("water_sector" = "water.sector")) %>%
+      mutate(supplysector = set_water_input_name(water_sector, water_type, A03.sector)) ->
       L203.mapping_nonirr
 
       # Using irrigation shares, define water sector and add demand categories
-    L103.water_mapping_USA_R_B_W_Ws_share %>%
+    L103.water_mapping_USA_R_GLU_W_Ws_share %>%
       rename(state=region) %>%
       mutate(region=gcam.USA_REGION) %>%
       repeat_add_columns(filter(A03.sector, water.sector %in% water.IRRIGATION)) %>%
@@ -97,6 +98,16 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
              logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
       select(-share, -state) %>%
       arrange(region) ->
+      L203.mapping_irr_region
+
+    # We must now set all subsectors in USA from gcam-core and water_mapping.xml to 0 so that we do not double count
+    # demands
+    L203.mapping_irr_region %>%
+      bind_rows(L203.mapping_irr_region %>%
+                  mutate(subsector=basin_name,
+                         technology = basin_name,
+                         share.weight = 0,
+                         market.name = gcam.USA_REGION)) ->
       L203.mapping_irr_region
 
       # Isolate the states and define the basins which contribute water supplies to wach one.
@@ -143,29 +154,24 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       arrange(region)  ->
       L203.mapping_livestock
 
+    L203.mapping_livestock %>%
+      bind_rows(L203.mapping_livestock %>%
+        left_join(state_and_basin_mapping, by=c("subsector"="region")) %>%
+        mutate(share.weight = 0,
+             subsector = basin_name,
+             technology = basin_name,
+             market.name= gcam.USA_REGION) %>%
+          unique()
+        ) ->
+      L203.mapping_livestock
+
     # (d) primary energy sector
     # We use USGS withdrawal data for primary energy mining and ratios of fresh to saline water withdrawals to
     # map the demands from USA values to state level. This is done in 2 parts in order to specify differences in
     # subsectors at the state and national levels, as well as differences in share weights (i.e. mapping to states,
     # mapping of fresh to desal within a state)
 
-    L103.water_mapping_USA_R_PRI_W_Ws_share %>%
-      mutate(region=state) %>%
-      left_join(state_and_basin_mapping,by=c("region")) %>%
-      ##using left_join_error_no_match does not allow for number of rows to change, here we need them to
-      repeat_add_columns(filter(A03.sector, (water.sector %in% water.PRIMARY_ENERGY))) %>%
-      mutate(wt_short = if_else(water_type == "water consumption", "C", "W"),
-             supplysector = paste(supplysector, wt_short, sep = "_"),
-             coefficient = 1,
-             subsector = basin_name,
-             technology = basin_name,
-             share.weight = 1,
-             market.name=gcam.USA_REGION,
-             share.weight.year=year,
-             logit.year.fillout=first(MODEL_BASE_YEARS)) %>%
-      select(-wt_short, -state.to.country.share, -state) %>%
-      arrange(region)  ->
-      L203.mapping_primary_state
+
 
     L103.water_mapping_USA_R_PRI_W_Ws_share %>%
       mutate(region=gcam.USA_REGION) %>%
@@ -183,10 +189,21 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       arrange(region)  ->
       L203.mapping_primary_region
 
+    L203.mapping_primary_region %>%
+      bind_rows(L203.mapping_primary_region %>%
+                  left_join(state_and_basin_mapping, by=c("subsector"="region")) %>%
+                  mutate(share.weight = 0,
+                         subsector = basin_name,
+                         technology = basin_name,
+                         market.name= gcam.USA_REGION) %>%
+                  unique()
+      ) ->
+      L203.mapping_primary_region
+
     ## No values are present for DC, therefore NAs are created. These are replaced with
     ## zero shareweights
-    bind_rows(L203.mapping_primary_state,
-              L203.mapping_primary_region) %>%
+
+     L203.mapping_primary_region %>%
       replace_na(list(share.weight=0)) %>%
       replace_na(list(fresh.share=0))->
       L203.mapping_primary
@@ -199,7 +216,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                   mutate(coefficient = 1,
                          subsector = basin_name,
                          technology = basin_name,
-                         share.weight =1,
+                         share.weight =share,
                          logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
       arrange(region) %>%
       bind_rows(L203.mapping_livestock,L203.mapping_primary,L203.mapping_irr)%>%
@@ -210,8 +227,6 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     tibble(region = gcam.USA_REGION,
            supplysector = water.DELETE_DEMAND_TYPES) ->
       L203.DeleteSupplysector_USA
-
-
 
     # Sector information
     L203.mapping_all %>%
@@ -231,7 +246,6 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.mapping_all %>%
       gather_years("share.weight") %>%
       complete(nesting(region, supplysector, subsector, technology,water.sector,basin_name,water_type,coefficient), year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
-      mutate(share.weight = if_else(region==gcam.USA_REGION,share.weight,1)) %>%
       dplyr::filter(!is.na(year))%>%
       select(LEVEL2_DATA_NAMES[["SubsectorShrwt"]]) ->
       L203.SubsectorShrwt_USA
@@ -241,7 +255,6 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.mapping_all %>%
       gather_years("share.weight") %>%
       complete(nesting(region, supplysector, subsector, technology,water.sector,basin_name,water_type,coefficient), year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
-      mutate(share.weight = if_else(region==gcam.USA_REGION&water.sector==water.PRIMARY_ENERGY,1,1)) %>%
       dplyr::filter(!is.na(year))%>%
       select(LEVEL2_DATA_NAMES[["TechShrwt"]]) ->
       L203.TechShrwt_USA
@@ -251,8 +264,8 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.mapping_all %>%
       gather_years("share.weight") %>%
       complete(nesting(region, supplysector, subsector, technology,water.sector,basin_name,water_type,coefficient), year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
-      mutate(minicam.energy.input = case_when(region ==gcam.USA_REGION ~ supplysector, TRUE~paste0(basin_name,"_",water_type)),
-             market.name = case_when( region ==gcam.USA_REGION ~ subsector,TRUE~gcam.USA_REGION)) %>%
+      mutate(minicam.energy.input = case_when(region ==gcam.USA_REGION&grepl("water_td",technology) ~ supplysector, TRUE~paste0(basin_name,"_",water_type)),
+             market.name = case_when( region ==gcam.USA_REGION&grepl("water_td",technology) ~ subsector,TRUE~gcam.USA_REGION)) %>%
       dplyr::filter(!is.na(year))%>%
       select(LEVEL2_DATA_NAMES[["TechCoef"]]) ->
       L203.TechCoef_USA
@@ -294,7 +307,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
    # Produce outputs
     L203.DeleteSupplysector_USA %>%
       add_title("Remove the three sectors that are produced at the state level") %>%
-      add_units("Uniteless") %>%
+      add_units("Unitless") %>%
       add_comments("Remove the USA electricity, municipal, and industrial water_td's") %>%
       add_legacy_name("L2232.DeleteSubsector_USA") ->
       L203.DeleteSupplysector_USA
@@ -308,6 +321,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                      "water/basin_to_country_mapping",
                      "L103.water_mapping_USA_R_LS_W_Ws_share",
                      "L103.water_mapping_USA_R_PRI_W_Ws_share",
+                     "L103.water_mapping_USA_R_GLU_W_Ws_share",
                      "L103.water_mapping_USA_R_B_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "gcam-usa/state_and_basin",
@@ -322,6 +336,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                      "water/basin_to_country_mapping",
                      "L103.water_mapping_USA_R_LS_W_Ws_share",
                      "L103.water_mapping_USA_R_PRI_W_Ws_share",
+                     "L103.water_mapping_USA_R_GLU_W_Ws_share",
                      "L103.water_mapping_USA_R_B_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "gcam-usa/state_and_basin",
@@ -335,6 +350,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       add_precursors("water/basin_ID",
                      "water/basin_to_country_mapping",
                      "L103.water_mapping_USA_R_LS_W_Ws_share",
+                     "L103.water_mapping_USA_R_GLU_W_Ws_share",
                      "L103.water_mapping_USA_R_B_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "gcam-usa/state_and_basin",
@@ -349,6 +365,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       add_precursors("water/basin_ID",
                      "water/basin_to_country_mapping",
                      "L103.water_mapping_USA_R_LS_W_Ws_share",
+                     "L103.water_mapping_USA_R_GLU_W_Ws_share",
                      "L103.water_mapping_USA_R_B_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "gcam-usa/state_and_basin",
@@ -362,6 +379,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       add_precursors("water/basin_ID",
                      "water/basin_to_country_mapping",
                      "L103.water_mapping_USA_R_LS_W_Ws_share",
+                     "L103.water_mapping_USA_R_GLU_W_Ws_share",
                      "L103.water_mapping_USA_R_B_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "gcam-usa/state_and_basin",
@@ -425,7 +443,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                      "water/A03.sector") ->
       L203.TechDesalCost_USA
 
-    return_data(L203.DeleteSupplysector_USA, L203.Supplysector_USA, L203.SubsectorLogit_USA, L203.SubsectorShrwt_USA, L203.TechShrwt_USA, L203.TechCoef_USA,  L203.TechDesalCoef_USA, L203.TechDesalShrwt_USA, L203.TechDesalCost_USA) #L203.TechPmult_USA
+    return_data(L203.DeleteSupplysector_USA,  L203.Supplysector_USA, L203.SubsectorLogit_USA, L203.SubsectorShrwt_USA, L203.TechShrwt_USA, L203.TechCoef_USA,  L203.TechDesalCoef_USA, L203.TechDesalShrwt_USA, L203.TechDesalCost_USA) #L203.TechPmult_USA
   } else {
     stop("Unknown command")
   }
