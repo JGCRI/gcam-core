@@ -232,16 +232,18 @@ module_energy_L210.resources <- function(command, ...) {
                                  group_by(GCAM_region_ID, resource) %>%
                                  filter(extractioncost == max(extractioncost)) %>%
                                  ungroup() %>%
+                                 mutate(grade = "extended for reserve1",
+                                        extractioncost =  extractioncost* 1.1) %>%
                                  select(-available),
                                by = c("GCAM_region_ID", "resource")) ->
       RsrcCurve_ReserveDeficit
     RsrcCurve_ReserveDeficit %>%
       bind_rows(RsrcCurve_ReserveDeficit %>%
-                  mutate(grade = "extended for reserve") %>%
+                  mutate(grade = "extended for reserve2") %>%
                   # Note the factor here does not matter because this region + resource will completely
                   # deplete in the historical period and none will be available during model operation
                   # anyways.
-                  mutate(extractioncost = extractioncost * 1.1,
+                  mutate(extractioncost = extractioncost * 1.2,
                          available = 0)) %>%
       bind_rows(L111.RsrcCurves_EJ_R_Ffos, .) ->
       L111.RsrcCurves_EJ_R_Ffos
