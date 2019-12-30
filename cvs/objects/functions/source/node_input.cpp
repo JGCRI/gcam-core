@@ -119,7 +119,7 @@ void NodeInput::XMLParse( const xercesc::DOMNode* node ) {
         else if ( nodeName == "prodDmdFnType" ) {
             mProdDmdFnType = XMLHelper<string>::getValue( curr );
         }
-        else if ( nodeName == "price-recieved" ) {
+        else if ( nodeName == "price-received" ) {
             mPricePaid.set( XMLHelper<double>::getValue( curr ) );
         }
         else if ( nodeName == "Sigma1" ) {
