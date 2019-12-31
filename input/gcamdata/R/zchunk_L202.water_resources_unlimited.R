@@ -36,7 +36,7 @@ module_water_L202.water_resources_unlimited <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     year <- GCAM_region_ID <- water_type <- region <- unlimited.resource <- output.unit <- price.unit <-
-      market <- capacity.factor <- value <- price <- NULL  # silence package check notes
+      market <- capacity.factor <- value <- price <- GLU <- basin_id <- basin_name <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")

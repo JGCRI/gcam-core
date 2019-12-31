@@ -4,10 +4,16 @@
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
-#' @return Depends on \code{command}: either a vector of required inputs,
-#' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L203.SectorLogitTables[[ curr_table ]]$data}, \code{L203.Supplysector_demand}, \code{L203.SubsectorLogitTables[[ curr_table ]]$data}, \code{L203.SubsectorAll_demand}, \code{L203.StubTech_demand}, \code{L203.GlobalTechCoef_demand}, \code{L203.GlobalTechShrwt_demand}, \code{L203.StubTechProd_food_crop}, \code{L203.StubTechProd_food_meat}, \code{L203.StubTechProd_nonfood_crop}, \code{L203.StubTechProd_nonfood_meat}, \code{L203.StubTechProd_For}, \code{L203.StubTechFixOut_exp}, \code{L203.StubCalorieContent_crop}, \code{L203.StubCalorieContent_meat}, \code{L203.PerCapitaBased}, \code{L203.BaseService}, \code{L203.IncomeElasticity}, \code{L203.PriceElasticity}, \code{L203.FuelPrefElast_ssp1}, \code{L203.IncomeElasticity_SSP1}, \code{L203.IncomeElasticity_SSP2}, \code{L203.IncomeElasticity_SSP3}, \code{L203.IncomeElasticity_SSP4}, \code{L203.IncomeElasticity_SSP5}. The corresponding file in the
-#' original data system was \code{L203.demand_input.R} (aglu level2).
+#' @return Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
+#'   \code{command} is "MAKE") all the generated outputs: \code{L203.Supplysector_demand},
+#'   \code{L203.SubsectorAll_demand}, \code{L203.StubTech_demand}, \code{L203.SubregionalShares},
+#'   \code{L203.DemandFunction_food}, \code{L203.DemandStapleParams}, \code{L203.DemandNonStapleParams},
+#'   \code{L203.DemandStapleRegBias}, \code{L203.DemandNonStapleRegBias}, \code{L203.StapleBaseService},
+#'   \code{L203.NonStapleBaseService}, \code{L203.GlobalTechCoef_demand}, \code{L203.GlobalTechShrwt_demand},
+#'   \code{L203.StubTechProd_food}, \code{L203.StubTechProd_nonfood_crop}, \code{L203.StubTechProd_nonfood_meat},
+#'   \code{L203.StubTechProd_For}, \code{L203.StubTechFixOut_exp}, \code{L203.StubCalorieContent},
+#'   \code{L203.PerCapitaBased}, \code{L203.BaseService}, \code{L203.IncomeElasticity}, \code{L203.PriceElasticity}. The
+#'   corresponding file in the original data system was \code{L203.demand_input.R} (aglu level2).
 #' @details This chunk specifies the input tables for agriculture demand: generic information for supply sector, subsector and technology,
 #' food and non-food demand in calibration years, forest product demand, net exports and caloric contents in calibration and future years,
 #' income elasticities for future years in core and SSP scenarios, as well as price elasticities.

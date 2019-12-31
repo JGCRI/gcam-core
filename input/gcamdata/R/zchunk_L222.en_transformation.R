@@ -73,7 +73,8 @@ module_energy_L222.en_transformation <- function(command, ...) {
     median.shutdown.point <- minicam.energy.input <- minicam.non.energy.input <- object <-
     profit.shutdown.steepness <- region <- remove.fraction <- sector <- sector.name <- share.weight <-
     shutdown.rate <- steepness <- stub.technology <- subsector <- subsector.name <- supplysector <-
-    technology <- to.value <- value <- year <- year.fillout <- year.share.weight <- year.x <- year.y <- NULL
+    technology <- to.value <- value <- year <- year.fillout <- year.share.weight <- year.x <- year.y <-
+    primary.consumption <- NULL
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")

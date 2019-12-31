@@ -41,7 +41,10 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
              "L201.RsrcTechShrwt"))
   } else if(command == driver.MAKE) {
 
-    region <- NULL                      # silence package check.
+    region <- ISO <- iso <- GCAM_basin_ID <- Basin_name <- GCAM_region_ID <- basin_id <- GLU <- water_type <-
+      basin_name <- resource <- runoff_max <- renewresource <- year <- access_fraction <- sub.renewable.resource <-
+      grade <- available <- extractioncost <- price <- avail <- basin.id <- demand <- depletion <- runoff <-
+      accessible <- x <- spline <- . <- accessible_runoff <- deficit <- years <- deficit_total <- subresource <- NULL                      # silence package check.
 
     all_data <- list(...)[[1]]
 

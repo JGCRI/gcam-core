@@ -23,7 +23,7 @@ module_water_L102.water_supply_unlimited <- function(command, ...) {
              "L102.unlimited_nonmapped_water_price_R_W_Y_75USDm3"))
   } else if(command == driver.MAKE) {
 
-    region <- NULL                      # silence package check.
+    region <- water_type <- NULL                      # silence package check.
 
     all_data <- list(...)[[1]]
 

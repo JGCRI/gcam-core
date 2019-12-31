@@ -49,7 +49,8 @@ module_water_L203.water_mapping <- function(command, ...) {
 
     GCAM_region_ID <- GLU <- GLU_code <- GLU_name <- water.sector <-
       water_type <- supplysector <- field.eff <- conveyance.eff <-
-      coefficient <- region <- NULL  # silence package check notes
+      coefficient <- region <- GCAM_basin_ID <- water_sector <- wt_short <- basin_name <- pMult <-
+      share <- technology <- share.weight <- NULL  # silence package check notes
 
     # Create tibble with all possible mapping sectors...
 
