@@ -26,11 +26,11 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
               "L202.StubTechProd_in",
               "L202.Supplysector_an",
               "L202.SubsectorAll_an",
-              "L202.StubTech_an",
+              "L202.GlobalTechShrwt_an",
               "L202.StubTechInterp_an",
               "L202.StubTechProd_an",
               "L202.StubTechCoef_an",
-              "L202.GlobalTechCost_an",
+              "L202.StubTechCost_an",
               "L202.GlobalRenewTech_imp_an",
               "L202.StubTechFixOut_imp_an"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -56,11 +56,11 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
     L202.StubTechProd_in <- get_data(all_data, "L202.StubTechProd_in")
     L202.Supplysector_an <- get_data(all_data, "L202.Supplysector_an")
     L202.SubsectorAll_an <- get_data(all_data, "L202.SubsectorAll_an")
-    L202.StubTech_an <- get_data(all_data, "L202.StubTech_an")
+    L202.GlobalTechShrwt_an <- get_data(all_data, "L202.GlobalTechShrwt_an")
     L202.StubTechInterp_an <- get_data(all_data, "L202.StubTechInterp_an")
     L202.StubTechProd_an <- get_data(all_data, "L202.StubTechProd_an")
     L202.StubTechCoef_an <- get_data(all_data, "L202.StubTechCoef_an")
-    L202.GlobalTechCost_an <- get_data(all_data, "L202.GlobalTechCost_an")
+    L202.StubTechCost_an <- get_data(all_data, "L202.StubTechCost_an")
     L202.GlobalRenewTech_imp_an <- get_data(all_data, "L202.GlobalRenewTech_imp_an")
     L202.StubTechFixOut_imp_an <- get_data(all_data, "L202.StubTechFixOut_imp_an")
 
@@ -86,11 +86,11 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
       add_xml_data(L202.StubTechProd_in, "StubTechProd") %>%
       add_logit_tables_xml(L202.Supplysector_an, "Supplysector") %>%
       add_logit_tables_xml(L202.SubsectorAll_an, "SubsectorAll", "SubsectorLogit") %>%
-      add_xml_data(L202.StubTech_an, "StubTech") %>%
+      add_xml_data(L202.GlobalTechShrwt_an, "GlobalTechShrwt") %>%
       add_xml_data(L202.StubTechInterp_an, "StubTechInterp") %>%
       add_xml_data(L202.StubTechProd_an, "StubTechProd") %>%
       add_xml_data(L202.StubTechCoef_an, "StubTechCoef") %>%
-      add_xml_data(L202.GlobalTechCost_an, "GlobalTechCost") %>%
+      add_xml_data(L202.StubTechCost_an, "StubTechCost") %>%
       add_xml_data(L202.GlobalRenewTech_imp_an, "GlobalRenewTech") %>%
       add_xml_data(L202.StubTechFixOut_imp_an, "StubTechFixOut") %>%
       add_precursors("L202.RenewRsrc",
@@ -109,11 +109,11 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
                      "L202.StubTechProd_in",
                      "L202.Supplysector_an",
                      "L202.SubsectorAll_an",
-                     "L202.StubTech_an",
+                     "L202.GlobalTechShrwt_an",
                      "L202.StubTechInterp_an",
                      "L202.StubTechProd_an",
                      "L202.StubTechCoef_an",
-                     "L202.GlobalTechCost_an",
+                     "L202.StubTechCost_an",
                      "L202.GlobalRenewTech_imp_an",
                      "L202.StubTechFixOut_imp_an") ->
       an_input.xml

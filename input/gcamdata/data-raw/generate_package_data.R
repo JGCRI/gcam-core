@@ -282,6 +282,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["aeei"]] <- c("region", "energy.final.demand", "year", "aeei")
   level2_data_names[["FinalDemandInfo"]] <- c("region", "energy.final.demand", "perCapitaBased", "income.elasticity", "year", "base.service", "aeei")
   level2_data_names[["SubregionalShares"]] <- c("region", "gcam.consumer", "pop.year.fillout", "inc.year.fillout", "subregional.population.share", "subregional.income.share")
+  level2_data_names[["DemandFunction_food"]] <- c("region", "gcam.consumer", "nodeInput", "prodDmdFnType")
   level2_data_names[["DemandFunction_flsp"]] <- c("region", "gcam.consumer", "nodeInput", "prodDmdFnType")
   level2_data_names[["DemandFunction_serv"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "prodDmdFnType")
   level2_data_names[["Floorspace"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "year", "base.building.size")
@@ -303,6 +304,12 @@ generate_level2_data_names <- function() {
   level2_data_names[["DeleteGenericService"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "building.service.input", "supplysector")
   level2_data_names[["BldNodes"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input")
   level2_data_names[["NegEmissFinalDemand"]] <- c("region", "negative.emissions.final.demand", "policy.name")
+  level2_data_names[["DemandStapleParams"]] <- c("region", "gcam.consumer", "nodeInput", "staples.food.demand.input", "scale.param", "self.price.elasticity", "cross.price.elasticity", "income.elasticity", "income.max.term", "price.received")
+  level2_data_names[["DemandNonStapleParams"]] <- c("region", "gcam.consumer", "nodeInput", "non.staples.food.demand.input", "scale.param", "self.price.elasticity", "income.elasticity")
+  level2_data_names[["DemandStapleRegBias"]] <- c("region", "gcam.consumer", "nodeInput", "staples.food.demand.input", "regional.bias")
+  level2_data_names[["DemandNonStapleRegBias"]] <- c("region", "gcam.consumer", "nodeInput", "non.staples.food.demand.input", "regional.bias")
+  level2_data_names[["StapleBaseService"]] <- c("region", "gcam.consumer", "nodeInput", "staples.food.demand.input", "year", "base.service")
+  level2_data_names[["NonStapleBaseService"]] <- c("region", "gcam.consumer", "nodeInput", "non.staples.food.demand.input", "year", "base.service")
 
   # Land types
   level2_data_names[["LN0_Land"]] <- c("region", "LandAllocatorRoot", "year.fillout", "landAllocation")

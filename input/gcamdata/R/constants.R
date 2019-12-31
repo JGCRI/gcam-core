@@ -174,14 +174,14 @@ aglu.WEIGHT_COTTON_LINT <- 0.4
 # FDS-2008-01, Economic Research Service, United States Department of Agriculture. Available at http://usda.mannlib.cornell.edu/usda/ers/FDS-yearbook/2000s/2008/FDS-yearbook-05-23-2008_Special_Report.pdf
 aglu.PRICERATIO_GRASS_ALFALFA <- 0.7
 
+# Pasture (forage) prices are equal to the hay (foddergrass) price times this exogenous multiplier. Equal to the hay price minus mowing, bundling, and transport.
+aglu.PRICERATIO_PASTURE_HAY <- 0.5
+
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE    <- 0.45
 
 # Conversion from peak biomass to average biomass integrated over the course of the year
 aglu.CCONV_PEAK_AVG <- 0.5
-
-# Meat price elasticity in the USA
-aglu.FOOD_MEAT_P_ELAS_USA <- -0.09
 
 # Constraints for the minimum and maximum harvested:cropped ratios
 # Source: Dalrymple, D.G. 1971, Survey of Multiple Cropping in Less Developed Nations, Foreign Econ. Dev. Serv., U.S. Dep. of Agricul., Washington, D.C.

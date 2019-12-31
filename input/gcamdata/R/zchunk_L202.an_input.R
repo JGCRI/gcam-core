@@ -10,8 +10,8 @@
 #' \code{L202.RenewRsrcCurves}, \code{L202.ResTechShrwt}, \code{L202.UnlimitedRenewRsrcCurves}, \code{L202.UnlimitedRenewRsrcPrice},
 #' \code{L202.Supplysector_in}, \code{L202.SubsectorAll_in}, \code{L202.StubTech_in}, \code{L202.StubTechInterp_in},
 #' \code{L202.GlobalTechCoef_in}, \code{L202.GlobalTechShrwt_in}, \code{L202.StubTechProd_in},
-#' \code{L202.Supplysector_an}, \code{L202.SubsectorAll_an}, \code{L202.StubTech_an}, \code{L202.StubTechInterp_an},
-#' \code{L202.StubTechProd_an}, \code{L202.StubTechCoef_an}, \code{L202.GlobalTechCost_an},
+#' \code{L202.Supplysector_an}, \code{L202.SubsectorAll_an}, \code{L202.GlobalTechShrwt_an}, \code{L202.StubTechInterp_an},
+#' \code{L202.StubTechProd_an}, \code{L202.StubTechCoef_an}, \code{L202.StubTechCost_an},
 #' \code{L202.GlobalRenewTech_imp_an}, \code{L202.StubTechFixOut_imp_an}. The corresponding file in the
 #' original data system was \code{L202.an_input.R} (aglu level2).
 #' @details This chunk produces 22 animal-related resource tables: production, import, resource curves.
@@ -39,7 +39,9 @@ module_aglu_L202.an_input <- function(command, ...) {
              "L107.an_Feed_Mt_R_C_Sys_Fd_Y",
              "L108.ag_Feed_Mt_R_C_Y",
              "L109.an_ALL_Mt_R_C_Y",
-             "L132.ag_an_For_Prices"))
+             "L132.ag_an_For_Prices",
+             "L1321.ag_prP_R_C_75USDkg",
+             "L1321.an_prP_R_C_75USDkg"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L202.RenewRsrc",
              "L202.RenewRsrcPrice",
@@ -57,11 +59,11 @@ module_aglu_L202.an_input <- function(command, ...) {
              "L202.StubTechProd_in",
              "L202.Supplysector_an",
              "L202.SubsectorAll_an",
-             "L202.StubTech_an",
+             "L202.GlobalTechShrwt_an",
              "L202.StubTechInterp_an",
              "L202.StubTechProd_an",
              "L202.StubTechCoef_an",
-             "L202.GlobalTechCost_an",
+             "L202.StubTechCost_an",
              "L202.GlobalRenewTech_imp_an",
              "L202.StubTechFixOut_imp_an"))
   } else if(command == driver.MAKE) {
@@ -74,7 +76,8 @@ module_aglu_L202.an_input <- function(command, ...) {
       stub.technology <- output_supplysector <- grade <- extractioncost <- calPrice <- unit <- share_Fd <-
       feed <- wtd_price <- Feed_Mt <- FeedPrice_USDkg <- FeedCost_bilUSD <- CommodityPrice_USDkg <-
       FeedCost_USDkg <- nonFeedCost <- NetExp_Mt <- share.weight.year <- fixedOutput <- ethanol <-
-      biomassOil_tech <- biodiesel <- resource <- subresource <- NULL  # silence package check notes
+      biomassOil_tech <- biodiesel <- resource <- subresource <- default_price <- revenue <-
+      weight <- SalesRevenue_bilUSD <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -91,6 +94,8 @@ module_aglu_L202.an_input <- function(command, ...) {
     A_an_subsector <- get_data(all_data, "aglu/A_an_subsector")
     A_an_technology <- get_data(all_data, "aglu/A_an_technology")
     L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
+    L1321.ag_prP_R_C_75USDkg <- get_data(all_data, "L1321.ag_prP_R_C_75USDkg")
+    L1321.an_prP_R_C_75USDkg <- get_data(all_data, "L1321.an_prP_R_C_75USDkg")
 
     # 2. Build tables
     # Base table for resources - add region names to Level1 data tables (lines 49-70 old file)
@@ -170,11 +175,18 @@ module_aglu_L202.an_input <- function(command, ...) {
       L202.UnlimitedRenewRsrcCurves
 
     # L202.UnlimitedRenewRsrcPrice (105-112)
+    L202.an_prP_R_C_75USDkg <- left_join_error_no_match(L1321.an_prP_R_C_75USDkg,
+                                                         GCAM_region_names, by = "GCAM_region_ID") %>%
+      select(-GCAM_region_ID)
+
     A_agUnlimitedRsrcCurves %>%
-      gather_years(value_col = "price") %>%
       select(unlimited.resource, year, price) %>%
-      filter(year %in% MODEL_BASE_YEARS) %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["UnlimitRsrcPrice"]], GCAM_region_names) ->
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["UnlimitRsrcPrice"]], GCAM_region_names) %>%
+      # replace these default prices with the prices calculated in L1321
+      left_join(L202.an_prP_R_C_75USDkg, by = c("region", unlimited.resource = "GCAM_commodity")) %>%
+      mutate(price = if_else(!is.na(value), value, price)) %>%
+      select(LEVEL2_DATA_NAMES[["UnlimitRsrcPrice"]]) ->
       L202.UnlimitedRenewRsrcPrice
 
     # L202.Supplysector_in: generic supplysector info for inputs to animal production (114-122)
@@ -242,11 +254,14 @@ module_aglu_L202.an_input <- function(command, ...) {
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], LOGIT_TYPE_COLNAME), GCAM_region_names) ->
       L202.SubsectorAll_an
 
-    # L202.StubTech_an: identification of stub technologies for animal production (169-171)
+    # L202.GlobalTechShrwt_an: global technology default share-weights
     A_an_technology %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]], GCAM_region_names) %>%
-      rename(stub.technology = technology) ->
-      L202.StubTech_an
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(sector.name = supplysector,
+             subsector.name = subsector,
+             share.weight = 1) %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["GlobalTechShrwt"]], GCAM_region_names) ->
+      L202.GlobalTechShrwt_an
 
     # L202.StubTechInterp_an: shareweight interpolation for animal production technologies (173-175)
     A_an_technology %>%
@@ -313,70 +328,79 @@ module_aglu_L202.an_input <- function(command, ...) {
       L202.StubTechCoef_an
 
     # Supplemental calculation of non-input cost of animal production (216-261)
-    # Calculate non-feed costs of animal production based on US commodity prices and feed costs
+    # Calculate non-feed costs of animal production based on regional producer prices and feed costs
     # First, calculate the weighted average price across the different feed types (supplysectors)
-    Index_region <- GCAM_region_names$region[1]
     L202.StubTechProd_in %>%
-      filter(region == Index_region, year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
       select(region, supplysector, subsector, stub.technology, calOutputValue) ->
       L202.ag_Feed_P_share_R_C
 
-    L202.ag_Feed_P_share_R_C %>%
-      group_by(region, supplysector) %>%
-      summarise(output_supplysector = sum(calOutputValue)) ->
-      L202.ag_Feed_Mt_R_F
+    L202.prP_R_C_75USDkg <- bind_rows(L1321.ag_prP_R_C_75USDkg, L1321.an_prP_R_C_75USDkg) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      select(region, GCAM_commodity, price = value)
+    L202.rsrcP_R_C_75USDkg <- filter(A_agRsrcCurves, grade == "grade 2") %>%
+      select(GCAM_commodity = sub.renewable.resource, calPrice = extractioncost)
+
+    L202.ag_Feed_Prices <- L132.ag_an_For_Prices %>%
+      bind_rows(L202.rsrcP_R_C_75USDkg) %>%
+      write_to_all_regions(c("region", "GCAM_commodity", "calPrice"), GCAM_region_names) %>%
+      rename(default_price = calPrice) %>%
+      left_join(L202.prP_R_C_75USDkg, by = c("region", "GCAM_commodity")) %>%
+      mutate(price = if_else(is.na(price), default_price, price)) %>%
+      select(region, GCAM_commodity, price)
 
     L202.ag_Feed_P_share_R_C %>%
-      left_join_error_no_match(L202.ag_Feed_Mt_R_F, by = c("region", "supplysector")) %>%
-      mutate(share_Fd = calOutputValue / output_supplysector) %>%
-      # not all stub.technology values are present as commodities in L132.ag_an_For_Prices and A_agRsrcCurves, so use left_join
-      left_join(L132.ag_an_For_Prices, by = c("stub.technology" = "GCAM_commodity")) %>%
-      left_join(filter(A_agRsrcCurves, grade == "grade 2") %>% select(sub.renewable.resource, extractioncost),
-                by = c("stub.technology" = "sub.renewable.resource")) %>%
-      mutate(price = if_else(stub.technology %in% A_agRsrcCurves$sub.renewable.resource, extractioncost, calPrice)) %>%
-      select(-calPrice, -unit, -extractioncost) ->
+      # not all stub.technology values are present as commodities in the price data; DDGS and feedcakes return NA and are dropped
+      left_join(L202.ag_Feed_Prices, by = c("region", "stub.technology" = "GCAM_commodity")) %>%
+      drop_na(price) ->
       L202.ag_Feed_P_share_R_C
 
-    # Remaining NA's are the ddgs/feedcakes. Output is zero so no need for a price;
-    # still, go ahead and extract the name of this commodity for later use
+    #
     L202.ag_Feed_P_share_R_C %>%
-      filter(is.na(price)) %>%
-      select(supplysector, subsector, technology = stub.technology) %>%
-      distinct ->
-      L202.ddgs_names
-
-    L202.ag_Feed_P_share_R_C %>%
-      replace_na(list(price = 0)) %>%
       group_by(region, supplysector) %>%
-      summarise(wtd_price = sum(price * share_Fd)) ->
+      summarise(revenue = sum(price * calOutputValue),
+                weight = sum(calOutputValue)) %>%
+      ungroup() %>%
+      mutate(price = revenue / weight) %>%
+      select(region, supplysector, price) ->
       L202.ag_FeedCost_USDkg_R_F
 
     # Calculate the total cost of all inputs, for each animal commodity, first matching in the feed quantity and the price
     L202.an_Prod_Mt_R_C_Sys_Fd_Y.mlt %>%
-      filter(year == max(MODEL_BASE_YEARS), region == Index_region) %>%
+      filter(year == max(MODEL_BASE_YEARS),
+             !region %in% aglu.NO_AGLU_REGIONS) %>%
+      rename(Prod_Mt = value) %>%
       left_join_error_no_match(select(L202.an_Feed_Mt_R_C_Sys_Fd_Y.mlt, GCAM_region_ID, GCAM_commodity, system, feed, year, Feed_Mt = value),
                                by = c("GCAM_region_ID", "GCAM_commodity", "system", "feed", "year")) %>%
       left_join_error_no_match(L202.ag_FeedCost_USDkg_R_F, by = c("region", "feed" = "supplysector")) %>%
-      rename(FeedPrice_USDkg = wtd_price) %>%
-      # multiply price by quantity to calculate feed expenditure, and aggregat expenditure and production to get weighted avg cost
-      mutate(FeedCost_bilUSD = Feed_Mt * FeedPrice_USDkg) %>%
-      group_by(GCAM_region_ID, GCAM_commodity) %>%
-      summarise(value = sum(value), FeedCost_bilUSD = sum(FeedCost_bilUSD)) %>%
-      ungroup %>%
-      mutate(FeedCost_USDkg = FeedCost_bilUSD / value) %>%
-      left_join_error_no_match(select(L132.ag_an_For_Prices, GCAM_commodity, CommodityPrice_USDkg = calPrice), by = "GCAM_commodity") %>%
-      mutate(nonFeedCost = pmax(aglu.MIN_AN_NONINPUT_COST, CommodityPrice_USDkg - FeedCost_USDkg)) ->
-      L202.an_FeedCost_R_C
+      rename(FeedPrice_USDkg = price) %>%
+      left_join_error_no_match(L1321.an_prP_R_C_75USDkg, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
+      rename(CommodityPrice_USDkg = value) %>%
+      # multiply prices by quantities to calculate feed expenditures and commodity sales revenues
+      mutate(SalesRevenue_bilUSD = Prod_Mt * CommodityPrice_USDkg,
+             FeedCost_bilUSD = Feed_Mt * FeedPrice_USDkg) %>%
+      # group by region, meat commodity, and system (i.e., assuming the same non-feed cost for the 'mixed' and 'pastoral' systems
+      # irrespective of the feed type, but the costs can differ by region, commodity, and system)
+      group_by(region, GCAM_commodity, system) %>%
+      summarise(Prod_Mt = sum(Prod_Mt),
+                SalesRevenue_bilUSD = sum(SalesRevenue_bilUSD),
+                FeedCost_bilUSD = sum(FeedCost_bilUSD)) %>%
+      ungroup() %>%
+      mutate(nonFeedCost = if_else(Prod_Mt == 0, 0, (SalesRevenue_bilUSD - FeedCost_bilUSD) / Prod_Mt)) ->
+      L202.an_nonFeedCost_R_C
 
-    # L202.GlobalTechCost_an: costs of animal production technologies (263-270)
+    # L202.StubTechCost_an: costs of animal production technologies (263-270)
     A_an_technology %>%
-      repeat_add_columns(tibble(year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
-      mutate(sector.name = supplysector, subsector.name = subsector,
-             minicam.non.energy.input = "non-energy") %>%
-      left_join_error_no_match(select(L202.an_FeedCost_R_C, GCAM_commodity, nonFeedCost), by = c("supplysector" = "GCAM_commodity")) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(GCAM_region_names) %>%
+      filter(!region %in% aglu.NO_AGLU_REGIONS) %>%
+      mutate(stub.technology = technology,
+             minicam.non.energy.input = "non-feed") %>%
+      left_join_error_no_match(select(L202.an_nonFeedCost_R_C, region, GCAM_commodity, system, nonFeedCost),
+                               by = c("region", supplysector = "GCAM_commodity", subsector = "system")) %>%
       mutate(input.cost = round(nonFeedCost, aglu.DIGITS_CALPRICE)) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
-      L202.GlobalTechCost_an
+      select(LEVEL2_DATA_NAMES[["StubTechCost"]]) ->
+      L202.StubTechCost_an
 
     # L202.GlobalRenewTech_imp_an: generic technology info for animal imports (272-277)
     tibble::as_tibble(expand.grid(sector.name = A_an_supplysector$supplysector,
@@ -430,10 +454,10 @@ module_aglu_L202.an_input <- function(command, ...) {
       select(region) ->
       L202.no_ddgs_regions
 
-    L202.ddgs_names %>%
+    A_an_input_technology %>%
+      filter(grepl("DDGS", subsector)) %>%
       repeat_add_columns(L202.no_ddgs_regions) %>%
-      select(region, supplysector, subsector, technology) %>%
-      distinct ->
+      select(region, supplysector, subsector, technology) ->
       L202.no_ddgs_regions_subs
 
     L202.RenewRsrc <- filter(L202.RenewRsrc, !region %in% aglu.NO_AGLU_REGIONS)
@@ -464,7 +488,6 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     L202.Supplysector_an <- filter(L202.Supplysector_an, !region %in% aglu.NO_AGLU_REGIONS)
     L202.SubsectorAll_an <- filter(L202.SubsectorAll_an, !region %in% aglu.NO_AGLU_REGIONS)
-    L202.StubTech_an <- filter(L202.StubTech_an, !region %in% aglu.NO_AGLU_REGIONS)
     L202.StubTechInterp_an <- filter(L202.StubTechInterp_an, !region %in% aglu.NO_AGLU_REGIONS)
     L202.StubTechProd_an <- filter(L202.StubTechProd_an, !region %in% aglu.NO_AGLU_REGIONS)
     L202.StubTechCoef_an <- filter(L202.StubTechCoef_an, !region %in% aglu.NO_AGLU_REGIONS)
@@ -601,13 +624,12 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_precursors("aglu/A_an_subsector", "common/GCAM_region_names") ->
       L202.SubsectorAll_an
 
-    L202.StubTech_an %>%
-      add_title("Identification of stub technologies for animal production") %>%
+    L202.GlobalTechShrwt_an %>%
+      add_title("Default share-weights of global technologies for animal production") %>%
       add_units("NA") %>%
       add_comments("A_an_technology written to all regions") %>%
-      add_legacy_name("L202.StubTech_an") %>%
       add_precursors("aglu/A_an_technology", "common/GCAM_region_names") ->
-      L202.StubTech_an
+      L202.GlobalTechShrwt_an
 
     L202.StubTechInterp_an %>%
       add_title("Shareweight interpolation for animal production technologies") %>%
@@ -633,15 +655,16 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_precursors("aglu/A_an_technology", "L107.an_Prod_Mt_R_C_Sys_Fd_Y", "common/GCAM_region_names") ->
       L202.StubTechCoef_an
 
-    L202.GlobalTechCost_an %>%
+    L202.StubTechCost_an %>%
       add_title("Costs of animal production technologies") %>%
       add_units("1975$/kg") %>%
       add_comments("Animal feed cost, prices, and technology") %>%
       add_comments("This is the non-feed cost; i.e., all costs of producing animal commodities except for the feed.") %>%
-      add_legacy_name("L202.GlobalTechCost_an") %>%
+      add_legacy_name("L202.StubTechCost_an") %>%
       same_precursors_as(L202.StubTechCoef_an) %>%
-      add_precursors("L132.ag_an_For_Prices", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") ->
-      L202.GlobalTechCost_an
+      add_precursors("L132.ag_an_For_Prices", "L1321.ag_prP_R_C_75USDkg", "L1321.an_prP_R_C_75USDkg",
+                     "L107.an_Feed_Mt_R_C_Sys_Fd_Y") ->
+      L202.StubTechCost_an
 
     L202.GlobalRenewTech_imp_an %>%
       add_title("Generic technology info for animal imports") %>%
@@ -666,8 +689,8 @@ module_aglu_L202.an_input <- function(command, ...) {
                 L202.UnlimitedRenewRsrcCurves, L202.UnlimitedRenewRsrcPrice, L202.Supplysector_in,
                 L202.SubsectorAll_in, L202.StubTech_in, L202.StubTechInterp_in, L202.GlobalTechCoef_in,
                 L202.GlobalTechShrwt_in, L202.StubTechProd_in, L202.Supplysector_an, L202.SubsectorAll_an,
-                L202.StubTech_an, L202.StubTechInterp_an, L202.StubTechProd_an, L202.StubTechCoef_an,
-                L202.GlobalTechCost_an, L202.GlobalRenewTech_imp_an, L202.StubTechFixOut_imp_an)
+                L202.GlobalTechShrwt_an, L202.StubTechInterp_an, L202.StubTechProd_an, L202.StubTechCoef_an,
+                L202.StubTechCost_an, L202.GlobalRenewTech_imp_an, L202.StubTechFixOut_imp_an)
   } else {
     stop("Unknown command")
   }

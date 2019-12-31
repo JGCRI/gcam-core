@@ -1,0 +1,9 @@
+# File: A_demand_food_staples.csv
+# Title: Final demand (gcam-consumer) info
+# Units: Various
+# Description: Info related to gcam-consumer objects
+# Source: RYC STW and RPL analysis
+# Column types: ccccnnnnnn
+# ----------
+gcam.consumer,nodeInput,prodDmdFnType,staples.food.demand.input,scale.param,self.price.elasticity,cross.price.elasticity,income.elasticity,income.max.term,price.received
+FoodDemand,FoodDemand,food-demand-function,FoodDemand_Staples,1.2818,-0.186635,0.210314,0.0955194,2.765275,5.05801

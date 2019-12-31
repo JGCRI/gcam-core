@@ -19,16 +19,19 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
              FILE = "aglu/FAO/FAO_ag_items_TRADE",
              FILE = "aglu/FAO/FAO_ag_an_ProducerPrice",
              FILE = "aglu/FAO/FAO_ag_Prod_t_PRODSTAT",
-             FILE = "aglu/FAO/FAO_GDP_Deflators"))
+             FILE = "aglu/FAO/FAO_GDP_Deflators",
+             FILE = "aglu/FAO/FAO_an_Prod_t_PRODSTAT",
+             "L132.ag_an_For_Prices"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L1321.prP_R_C_75USDkg"))
+    return(c("L1321.ag_prP_R_C_75USDkg",
+             "L1321.an_prP_R_C_75USDkg"))
   } else if(command == driver.MAKE) {
 
     year <- value <- Year <- Value <- FAO_country <- iso <- deflator <-
       Area <- currentUSD_per_baseyearUSD <- item <- pp_commod <- Cottonseed <-
       `Cotton lint` <- item.codes <- production <- prod_commod <- item.code <-
       GCAM_commodity <- GCAM_region_ID <- revenue <- avg_prP_C <- prP <- prPmult <-
-      production_wt_prPmult <- prPmult_R <- countries <- NULL    # silence package check.
+      production_wt_prPmult <- prPmult_R <- countries <- `item codes` <- calPrice <- NULL    # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -39,6 +42,8 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     FAO_ag_an_ProducerPrice <- get_data(all_data, "aglu/FAO/FAO_ag_an_ProducerPrice")
     FAO_ag_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_Prod_t_PRODSTAT")
     FAO_GDP_Deflators <- get_data(all_data, "aglu/FAO/FAO_GDP_Deflators")
+    FAO_an_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_an_Prod_t_PRODSTAT")
+    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
 
     # 1. Producer prices
     # 1.1 GDP deflators (to 2005) by country and analysis year
@@ -48,7 +53,7 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     # year of 2005 to a multiplier with an exogenous base year. The deflator base year is the year in which relative
     # regional nominal prices are preserved in the constant dollar (i.e., 1975$ in this code) prices. For example, with
     # deflator base year set to 2010, prices are in 2010 Constant USD but expressed in terms of 1975 USD.
-    
+
     # Sudan (former) is re-set to Sudan for building the full time series
     # South Sudan is dropped as only a few data years are available and it isn't in the price data
     L1321.GDPdefl_ctry <- FAO_GDP_Deflators %>%
@@ -123,7 +128,7 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     # Average producer prices, aggregated from countries and FAO items by regions and commodities using production as
     # the weighting factor. The pipeline below is mostly just filtering and cleaning data, and preparing a table to be
     # joined in to the table of producer prices from above.
-    L1321.prod_kt_ctry_item <- FAO_ag_Prod_t_PRODSTAT %>%
+    L1321.ag_prod_kt_ctry_item <- FAO_ag_Prod_t_PRODSTAT %>%
       gather_years() %>%
       rename(production = value) %>%
       filter(year %in% aglu.TRADE_CAL_YEARS) %>%
@@ -136,15 +141,23 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     # The cotton commodity in the PRODSTAT database (Seed cotton) does not match the two in the price database
     # (Cotton lint and Cottonseed). The former is broken into the latter using default ratios.
 
-    L1321.prod_kt_ctry_CttnLnt <- filter(L1321.prod_kt_ctry_item, item == "Seed cotton") %>%
+    L1321.prod_kt_ctry_CttnLnt <- filter(L1321.ag_prod_kt_ctry_item, item == "Seed cotton") %>%
       mutate(item = "Cotton lint",
              production = production * aglu.WEIGHT_COTTON_LINT)
-    L1321.prod_kt_ctry_CttnSd <- filter(L1321.prod_kt_ctry_item, item == "Seed cotton") %>%
+    L1321.prod_kt_ctry_CttnSd <- filter(L1321.ag_prod_kt_ctry_item, item == "Seed cotton") %>%
       mutate(item = "Cottonseed",
              production = production * (1 - aglu.WEIGHT_COTTON_LINT))
-    L1321.prod_kt_ctry_item <- bind_rows(filter(L1321.prod_kt_ctry_item, item != "Seed cotton"),
+    L1321.ag_prod_kt_ctry_item <- bind_rows(filter(L1321.ag_prod_kt_ctry_item, item != "Seed cotton"),
                                          L1321.prod_kt_ctry_CttnLnt,
                                          L1321.prod_kt_ctry_CttnSd)
+
+    L1321.an_prod_kt_ctry_item <- FAO_an_Prod_t_PRODSTAT %>%
+      gather_years() %>%
+      rename(production = value) %>%
+      filter(year %in% aglu.TRADE_CAL_YEARS) %>%
+      left_join_keep_first_only(select(AGLU_ctry, FAO_country, iso),
+                                by = c(countries = "FAO_country")) %>%
+      select(iso, item, item.code = `item codes`, year, production)
 
     # 1.4. Join production weights into the producer price data
     # Subset only the items that map to GCAM commodities that are modeled as traded,
@@ -152,10 +165,18 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     FAO_ag_items_TRADE_pp <- filter(FAO_ag_items_TRADE, !is.na(pp_commod)) %>%
       select(pp_commod, prod_commod, item.code, GCAM_commodity)
 
-    L1321.prP_ctry_item_75USDkg <- L1321.prP_ctry_item_75USDkg %>%
+    L1321.ag_prP_ctry_item_75USDkg <- L1321.prP_ctry_item_75USDkg %>%
       left_join(FAO_ag_items_TRADE_pp, by = "pp_commod") %>%
       drop_na(GCAM_commodity) %>%
-      left_join(L1321.prod_kt_ctry_item,
+      left_join(L1321.ag_prod_kt_ctry_item,
+                by = c("iso", "item.code", "prod_commod" = "item", "year")) %>%
+      # some of the country/crop combinations have no production weights. Drop em.
+      drop_na(production)
+
+    L1321.an_prP_ctry_item_75USDkg <- L1321.prP_ctry_item_75USDkg %>%
+      left_join(FAO_ag_items_TRADE_pp, by = "pp_commod") %>%
+      drop_na(GCAM_commodity) %>%
+      left_join(L1321.an_prod_kt_ctry_item,
                 by = c("iso", "item.code", "prod_commod" = "item", "year")) %>%
       # some of the country/crop combinations have no production weights. Drop em.
       drop_na(production)
@@ -166,7 +187,8 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     # production weight volumes. Note that at this stage, years are included in the average prices. Averages between
     # years are calculated later on an un-weighted basis in order to remove any bias from inter-annual fluctuation in
     # yield (i.e., more productive years will have higher production weights and lower prices)
-    L1321.prP_R_C_Y_75USDkg <- L1321.prP_ctry_item_75USDkg %>%
+    L1321.prP_R_C_Y_75USDkg <- L1321.ag_prP_ctry_item_75USDkg %>%
+      bind_rows(L1321.an_prP_ctry_item_75USDkg) %>%
       mutate(revenue = value * production) %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID),
                                by = "iso") %>%
@@ -215,7 +237,6 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     # (note that individual years are kept here, so that this dataset can be used to estimate grass prices below)
 
     L1321.prP_R_C_Y_75USDkg <- L1321.prP_R_C_Y_75USDkg %>%
-      filter(GCAM_commodity %in% aglu.TRADED_CROPS) %>%
       complete(GCAM_region_ID, GCAM_commodity, year) %>%
       left_join_error_no_match(L1321.prP_C_75USDkg,
                                by = "GCAM_commodity") %>%
@@ -224,17 +245,31 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
       mutate(value = if_else(is.na(value), avg_prP_C * prPmult_R, value)) %>%
       select(GCAM_region_ID, GCAM_commodity, year, value)
 
-    # Final step - filter only traded crops and take the mean among years considered
+    # Take the unweighted average among years considered
     L1321.prP_R_C_75USDkg <- L1321.prP_R_C_Y_75USDkg %>%
-      filter(GCAM_commodity %in% aglu.TRADED_CROPS) %>%
       group_by(GCAM_region_ID, GCAM_commodity) %>%
       summarise(value = mean(value)) %>%
       ungroup %>%
       arrange(GCAM_region_ID, GCAM_commodity)
 
+    L1321.ag_prP_R_C_75USDkg <- L1321.prP_R_C_75USDkg %>%
+      filter(GCAM_commodity %in% aglu.TRADED_CROPS)
+
+    L1321.an_prP_R_C_75USDkg <- L1321.prP_R_C_75USDkg %>%
+      filter(GCAM_commodity %in% unique(L1321.an_prP_ctry_item_75USDkg$GCAM_commodity))
+
+    # Addendum - to improve feed prices and meat price calibration, compute and include regionally adjusted foddergrass and pasture prices
+    L1321.ag_prP_R_Grass_75USDkg <- L1321.prPmult_R %>%
+      repeat_add_columns(tibble(GCAM_commodity = c("Pasture", "FodderGrass"))) %>%
+      left_join_error_no_match(L132.ag_an_For_Prices, by = "GCAM_commodity") %>%
+      mutate(value = calPrice * prPmult_R) %>%
+      select(GCAM_region_ID, GCAM_commodity, value)
+
+    L1321.ag_prP_R_C_75USDkg <- bind_rows(L1321.ag_prP_R_C_75USDkg, L1321.ag_prP_R_Grass_75USDkg)
+
     # Produce outputs
-    L1321.prP_R_C_75USDkg %>%
-      add_title("Regional prices for all GCAM AGLU commodities") %>%
+    L1321.ag_prP_R_C_75USDkg %>%
+      add_title("Regional agricultural commodity prices for all traded primary GCAM AGLU commodities") %>%
       add_units("1975$/kg") %>%
       add_comments("Region-specific calibration prices by GCAM commodity and region") %>%
       add_precursors("common/iso_GCAM_regID",
@@ -242,10 +277,19 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
                      "aglu/FAO/FAO_ag_items_TRADE",
                      "aglu/FAO/FAO_ag_an_ProducerPrice",
                      "aglu/FAO/FAO_ag_Prod_t_PRODSTAT",
-                     "aglu/FAO/FAO_GDP_Deflators") ->
-      L1321.prP_R_C_75USDkg
+                     "aglu/FAO/FAO_GDP_Deflators",
+                     "L132.ag_an_For_Prices") ->
+      L1321.ag_prP_R_C_75USDkg
 
-    return_data(L1321.prP_R_C_75USDkg)
+    L1321.an_prP_R_C_75USDkg %>%
+      add_title("Regional animal commodity prices") %>%
+      add_units("1975$/kg") %>%
+      add_comments("Region-specific prices by GCAM commodity and region") %>%
+      same_precursors_as(L1321.ag_prP_R_C_75USDkg) %>%
+      add_precursors("aglu/FAO/FAO_an_Prod_t_PRODSTAT") ->
+      L1321.an_prP_R_C_75USDkg
+
+    return_data(L1321.ag_prP_R_C_75USDkg, L1321.an_prP_R_C_75USDkg)
   } else {
     stop("Unknown command")
   }

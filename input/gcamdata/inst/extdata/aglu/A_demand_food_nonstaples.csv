@@ -1,0 +1,9 @@
+# File: A_demand_food_nonstaples.csv
+# Title: Final demand (gcam-consumer) info
+# Units: Various
+# Description: Info related to gcam-consumer objects
+# Source: RYC STW and RPL analysis
+# Column types: cccnnn
+# ----------
+gcam.consumer,nodeInput,non.staples.food.demand.input,scale.param,self.price.elasticity,income.elasticity
+FoodDemand,FoodDemand,FoodDemand_NonStaples,1.13681,-0.334902,0.979294

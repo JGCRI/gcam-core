@@ -454,6 +454,8 @@ SubregionalShares, world/+{name}region, region/+{name}gcam-consumer, gcam-consum
 
 PriceExp_IntGains, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{year;fillout=1}price-exponent, building-node-input/+price-exponent, building-node-input/+internal-gains-market-name, building-node-input/+internal-gains-unit, scenario, scenario/world
 
+DemandFunction_food, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+prodDmdFnType, scenario, scenario/world
+
 DemandFunction_flsp, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+prodDmdFnType, scenario, scenario/world
 
 DemandFunction_serv, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+prodDmdFnType, scenario, scenario/world
@@ -485,6 +487,18 @@ Intgains_scalar, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer
 DeleteThermalService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name;delete=1}thermal-building-service-input, region/+{name;delete=1}supplysector, scenario, scenario/world
 
 DeleteGenericService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name;delete=1}building-service-input, region/+{name;delete=1}supplysector, scenario, scenario/world
+
+DemandStapleParams, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}staples-food-demand-input, staples-food-demand-input/+scale-param, staples-food-demand-input/+self-price-elasticity, staples-food-demand-input/+cross-price-elasticity, staples-food-demand-input/+income-elasticity, staples-food-demand-input/+income-max-term, nodeInput/+price-received, scenario, scenario/world
+
+DemandStapleRegBias, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}staples-food-demand-input, staples-food-demand-input/+regional-bias, scenario, scenario/world
+
+StapleBaseService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}staples-food-demand-input, staples-food-demand-input/+{year}base-service, staples-food-demand-input/+base-service, scenario, scenario/world
+
+DemandNonStapleParams, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}non-staples-food-demand-input, non-staples-food-demand-input/+scale-param, non-staples-food-demand-input/+self-price-elasticity, non-staples-food-demand-input/+income-elasticity, scenario, scenario/world
+
+DemandNonStapleRegBias, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}non-staples-food-demand-input, non-staples-food-demand-input/+regional-bias, scenario, scenario/world
+
+NonStapleBaseService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}non-staples-food-demand-input, non-staples-food-demand-input/+{year}base-service, non-staples-food-demand-input/+base-service, scenario, scenario/world
 
 
 #####, AGRICULTURE

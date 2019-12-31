@@ -27,7 +27,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
              "L123.ag_Prod_Mt_R_Past_Y_GLU",
              "L123.For_Prod_bm3_R_Y_GLU",
              "L132.ag_an_For_Prices",
-             "L1321.prP_R_C_75USDkg",
+             "L1321.ag_prP_R_C_75USDkg",
              "L161.ag_irrProd_Mt_R_C_Y_GLU",
              "L161.ag_rfdProd_Mt_R_C_Y_GLU",
              "L163.ag_irrBioYield_GJm2_R_GLU",
@@ -65,7 +65,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     L123.ag_Prod_Mt_R_Past_Y_GLU <- get_data(all_data, "L123.ag_Prod_Mt_R_Past_Y_GLU")
     L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "L123.For_Prod_bm3_R_Y_GLU")
     L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
-    L1321.prP_R_C_75USDkg <- get_data(all_data, "L1321.prP_R_C_75USDkg")
+    L1321.ag_prP_R_C_75USDkg <- get_data(all_data, "L1321.ag_prP_R_C_75USDkg")
     L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
     L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
     L163.ag_irrBioYield_GJm2_R_GLU <- get_data(all_data, "L163.ag_irrBioYield_GJm2_R_GLU")
@@ -75,9 +75,10 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
 
     # L2012.AgSupplySector: Generic AgSupplySector characteristics (units, calprice, market, logit)
     # Set up the regional price data to be joined in to the ag supplysector table
-    L2012.prP_R_C <- left_join_error_no_match(L1321.prP_R_C_75USDkg, GCAM_region_names,
+    L2012.prP_R_C <- left_join_error_no_match(L1321.ag_prP_R_C_75USDkg, GCAM_region_names,
                                               by = "GCAM_region_ID") %>%
-      select(region, GCAM_commodity, reg_calPrice = value)
+      mutate(reg_calPrice = round(value, aglu.DIGITS_CALPRICE)) %>%
+      select(region, GCAM_commodity, reg_calPrice)
 
     A_AgSupplySector %>%
       # At the supplysector (market) level, all regions get all supplysectors
@@ -403,7 +404,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
                      "water/basin_to_country_mapping",
                      "aglu/A_agSupplySector",
                      "L132.ag_an_For_Prices",
-                     "L1321.prP_R_C_75USDkg") ->
+                     "L1321.ag_prP_R_C_75USDkg") ->
       L2012.AgSupplySector
 
    L2012.AgSupplySubsector %>%

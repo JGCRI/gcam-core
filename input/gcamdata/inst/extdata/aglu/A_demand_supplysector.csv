@@ -3,12 +3,12 @@
 # Unit: Various
 # Description: Generic information for supply sectors of agricultural production
 # Source: GCAM assumptions
-# Column types: ccccciinc 
+# Column types: cccccninnc 
 # ----------
-supplysector,energy.final.demand,output.unit,input.unit,price.unit,logit.exponent,perCapitaBased,price.elasticity,logit.type
-FoodDemand_Crops,FoodDemand_Crops,Pcal,Mt,1975$/Mcal,0,1,-0.08,
-FoodDemand_Meat,FoodDemand_Meat,Pcal,Mt,1975$/Mcal,0,1,-0.15,
-NonFoodDemand_Crops,NonFoodDemand_Crops,Mt,Mt,1975$/kg,0,1,0,
-NonFoodDemand_Meat,NonFoodDemand_Meat,Mt,Mt,1975$/kg,0,1,0,
-NonFoodDemand_Forest,NonFoodDemand_Forest,billion m3,billion m3,1975$/m3,0,1,0,
-Exports_Meat,Exports_Meat,Mt,Mt,1975$/kg,0,0,0,
+supplysector,energy.final.demand,output.unit,input.unit,price.unit,logit.exponent,perCapitaBased,price.elasticity,income.elasticity,logit.type
+FoodDemand_Staples,,Pcal,Mt,1975$/Mcal,0,,,,
+FoodDemand_NonStaples,,Pcal,Mt,1975$/Mcal,0,,,,
+NonFoodDemand_Crops,NonFoodDemand_Crops,Mt,Mt,1975$/kg,0,1,0,0,
+NonFoodDemand_Meat,NonFoodDemand_Meat,Mt,Mt,1975$/kg,0,1,0,0,
+NonFoodDemand_Forest,NonFoodDemand_Forest,billion m3,billion m3,1975$/m3,0,1,0,0,
+Exports_Meat,Exports_Meat,Mt,Mt,1975$/kg,0,0,0,0,
