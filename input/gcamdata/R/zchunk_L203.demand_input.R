@@ -30,6 +30,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
              FILE = "aglu/A_demand_subsector",
              FILE = "aglu/A_demand_technology",
              FILE = "aglu/A_diet_bias_R",
+             FILE = "aglu/A_fuelprefElasticity_ssp1",
              "L101.ag_Food_Pcal_R_C_Y",
              "L101.ag_kcalg_R_C_Y",
              "L105.an_Food_Pcal_R_C_Y",
@@ -60,7 +61,8 @@ module_aglu_L203.demand_input <- function(command, ...) {
              "L203.PerCapitaBased",
              "L203.BaseService",
              "L203.IncomeElasticity",
-             "L203.PriceElasticity"))
+             "L203.PriceElasticity",
+             "L203.FuelPrefElast_ssp1"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -76,6 +78,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
     A_demand_supplysector <- get_data(all_data, "aglu/A_demand_supplysector")
     A_demand_subsector <- get_data(all_data, "aglu/A_demand_subsector")
     A_demand_technology <- get_data(all_data, "aglu/A_demand_technology")
+    A_fuelprefElasticity_ssp1 <- get_data(all_data, "aglu/A_fuelprefElasticity_ssp1")
     A_demand_food_staples <- get_data(all_data, "aglu/A_demand_food_staples")
     A_demand_food_nonstaples <- get_data(all_data, "aglu/A_demand_food_nonstaples")
     A_diet_bias_R <- get_data(all_data, "aglu/A_diet_bias_R")
@@ -268,6 +271,16 @@ module_aglu_L203.demand_input <- function(command, ...) {
       write_to_all_regions(LEVEL2_DATA_NAMES[["PriceElasticity"]], GCAM_region_names = GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) ->          # Remove any regions for which agriculture and land use are not modeled
       L203.PriceElasticity
+
+    # Fuel preference elasticity
+    # Build L203.FuelPrefElast_ssp1: Fuel preference elasticities for meat in SSP1
+    names_FuelPrefElasticity <- c("region", "supplysector", "subsector", "year.fillout", "fuelprefElasticity")
+    A_fuelprefElasticity_ssp1 %>%
+      mutate(year.fillout = min(MODEL_BASE_YEARS)) %>%
+      write_to_all_regions(names_FuelPrefElasticity, GCAM_region_names = GCAM_region_names) %>%
+      filter(!region %in% aglu.NO_AGLU_REGIONS) ->           # Remove any regions for which agriculture and land use are not modeled
+      L203.FuelPrefElast_ssp1
+
 
     # Build L203.BaseService: base service of (standard) final demands
     # This excludes food demands, which have a different demand formulation
@@ -501,6 +514,15 @@ module_aglu_L203.demand_input <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "aglu/A_demand_supplysector") ->
       L203.PriceElasticity
 
+    L203.FuelPrefElast_ssp1 %>%
+      add_title("Fuel preference elasticities for meat in SSP1") %>%
+      add_units("Unitless") %>%
+      add_comments("Specify the minimum base year value") %>%
+      add_comments("Remove any regions for which agriculture and land use are not modeled") %>%
+      add_legacy_name("L203.FuelPrefElast_ssp1") %>%
+      add_precursors("aglu/A_fuelprefElasticity_ssp1") ->
+      L203.FuelPrefElast_ssp1
+
     L203.SubregionalShares %>%
       add_title("Subregional population and income shares for food demand") %>%
       add_units("Unitless") %>%
@@ -563,7 +585,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
                 L203.GlobalTechShrwt_demand, L203.StubTechProd_food,
                 L203.StubTechProd_nonfood_crop, L203.StubTechProd_nonfood_meat, L203.StubTechProd_For,
                 L203.StubTechFixOut_exp, L203.StubCalorieContent,
-                L203.PerCapitaBased, L203.BaseService, L203.IncomeElasticity, L203.PriceElasticity,
+                L203.PerCapitaBased, L203.BaseService, L203.IncomeElasticity, L203.PriceElasticity, L203.FuelPrefElast_ssp1,
                 L203.SubregionalShares, L203.DemandFunction_food, L203.DemandStapleParams, L203.DemandNonStapleParams,
                 L203.DemandStapleRegBias, L203.DemandNonStapleRegBias, L203.StapleBaseService, L203.NonStapleBaseService)
   } else {

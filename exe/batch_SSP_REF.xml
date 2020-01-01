@@ -77,7 +77,6 @@
 			<Value name="bld">../input/gcamdata/xml/building_SSP4.xml</Value>
 			
 			<!-- AGLU -->			
-			<Value name="aglu">../input/gcamdata/xml/food_SSP4.xml</Value>
 			<Value name="aglu">../input/gcamdata/xml/ag_prodchange_ssp4_IRR_MGMT.xml</Value>
 			<Value name="aglu">../input/gcamdata/xml/pasture_ssp34.xml</Value>
 			
@@ -126,7 +125,6 @@
 			<Value name="bld">../input/gcamdata/xml/building_SSP5.xml</Value>
 			
 			<!-- AGLU -->
-			<Value name="aglu">../input/gcamdata/xml/food_SSP5.xml</Value>
 			<Value name="aglu">../input/gcamdata/xml/ag_prodchange_ssp5_IRR_MGMT.xml</Value>
 			
 			<!-- CCS -->
@@ -206,7 +204,6 @@
 			<Value name="trn">../input/extra/transportation_UCD_SSP2.xml</Value>
 			
 			<!-- AGLU -->
-			<Value name="aglu">../input/gcamdata/xml/food_SSP2.xml</Value>
 			<Value name="aglu">../input/gcamdata/xml/ag_prodchange_ssp2_IRR_MGMT.xml</Value>
 			
 			<!-- CCS -->
@@ -240,7 +237,6 @@
 			<Value name="bld">../input/gcamdata/xml/building_SSP3.xml</Value>
 			
 			<!-- AGLU -->
-			<Value name="aglu">../input/gcamdata/xml/food_SSP3.xml</Value>
 			<Value name="aglu">../input/gcamdata/xml/ag_prodchange_ssp3_IRR_MGMT.xml</Value>
 			<Value name="aglu">../input/gcamdata/xml/pasture_ssp34.xml</Value>
 			
