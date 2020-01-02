@@ -124,6 +124,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
              "L2233.StubTechProfitShutdown_elecS_cool_USA",
              "L2233.StubTechLifetime_elecS_cool_USA",
              "L2233.StubTechShrwt_elecS_cool_USA",
+             "L2233.StubTechInterp_elecS_cool_USA",
              "L2233.SubsectorLogit_elecS_USA",
              "L2233.SubsectorLogit_elecS_cool_USA",
              "L2233.SubsectorShrwt_elecS_USA",
@@ -796,6 +797,8 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       # Acknowledge that not all vintages are in each state, therefore shareweights and logits are
       # not needed for these vintages
       unique() %>%
+      #mutate(logit.exponent = -30) %>%
+      ## Experimental logit exponent at the power plant level
       arrange(supplysector) %>% select(-logit.year.fillout, -logit.exponent, -logit.type, everything())  ->
       L2233.SubsectorLogit_elecS_cool_USA
 
@@ -865,33 +868,68 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     # that share weights of cooling technologies for that particular state remain similar to the old power plant (e.g. Gen 3 will have the same cooling tech share weights as Gen 2)
     L2233.StubTechProd_elec_USA %>% dplyr::filter(year==max(MODEL_BASE_YEARS)) %>%
       select(-share.weight.year,-calOutputValue) %>%
-      left_join(L2233.SubsectorShrwtInterpTo_elecS_cool_USA %>% rename(share.weight=to.value) %>% group_by(region,supplysector,subsector0,subsector)  %>% ungroup(), by=c("region","supplysector","subsector0","subsector")) %>%
-      unique() %>% group_by(region,supplysector, subsector0,subsector) %>% mutate(share.weight.sum = sum(tech.share.weight)) %>% ungroup() %>%
-      left_join(elec_tech_water_map %>% select(cooling_system,to.technology), by=c("technology"="to.technology"))->
+      left_join(L2233.SubsectorShrwtInterpTo_elecS_cool_USA %>%
+                  rename(share.weight=to.value) %>%
+                  group_by(region,supplysector,subsector0,subsector)  %>%
+                  ungroup(), by=c("region","supplysector","subsector0","subsector")) %>%
+      unique() %>%
+      group_by(region,supplysector, subsector0,subsector) %>%
+      mutate(share.weight.sum = sum(tech.share.weight)) %>%
+      ungroup() %>%
+      left_join(elec_tech_water_map %>%
+                  select(cooling_system,to.technology), by=c("technology"="to.technology")) %>%
+      left_join(
+        bind_rows(L2233.GlobalTechShrwt_elec_cool_USA,
+                  L2233.GlobalIntTechShrwt_elecS_cool_USA %>% rename(technology=intermittent.technology)
+                  ) %>% rename(global.share.weight=share.weight, supplysector=sector.name, subsector0=subsector.name0, subsector=subsector.name), by=c("supplysector","subsector0","subsector","technology","year")
+        )->
       L2233.StubTechShrwt_elecS_cool_USA
 
-
-    L2233.StubTechShrwt_elecS_cool_USA%>%
-      na.omit() %>% filter(subs.share.weight>0) %>%
-       mutate(state.cooling.share.weight = if_else(share.weight>0&share.weight.sum>0,tech.share.weight,
+    #Initially remove all technologies that are not present in future periods so that there
+    #are no interpolation rules applied to these technologies
+    L2233.StubTechShrwt_elecS_cool_USA %>%
+      na.omit() %>%
+      filter(subs.share.weight>0) %>%
+      mutate(state.cooling.share.weight = if_else(share.weight>0&share.weight.sum>0,tech.share.weight,
                                                                             if_else(share.weight==0|tech.share.weight==0,0,1))) %>%
-      select(region,supplysector,subsector0,cooling_system,from.year,state.cooling.share.weight) %>% unique() %>%
-      group_by(region,supplysector,subsector0,cooling_system,from.year) %>% summarise(state.cooling.share.weight= sum(state.cooling.share.weight))%>% ungroup() %>%
+      select(region,supplysector,subsector0,cooling_system,from.year,state.cooling.share.weight) %>%
+      unique() %>%
+      group_by(region,supplysector,subsector0,cooling_system,from.year) %>%
+      summarise(state.cooling.share.weight= sum(state.cooling.share.weight))%>%
+      ungroup() %>%
       mutate(state.cooling.share.weight = if_else(state.cooling.share.weight>1,1,state.cooling.share.weight)) ->
       L2233.StubTechShrwt_state_elecS_cool_USA
 
     L2233.StubTechShrwt_elecS_cool_USA %>%
+      filter(global.share.weight>0) %>%
       left_join(L2233.StubTechShrwt_state_elecS_cool_USA, by=c("region","supplysector","subsector0","from.year","cooling_system")) %>%
       mutate(updated.share.weight = if_else(share.weight>0&share.weight.sum>0,tech.share.weight,
                                             if_else(share.weight==0,0,
                                                     if_else(share.weight>0&share.weight.sum==0&!is.na(state.cooling.share.weight),state.cooling.share.weight,
-                                                            if_else(share.weight>0&share.weight.sum==0&subs.share.weight>0&is.na(state.cooling.share.weight),0,1)))))  %>%
-      select(-subs.share.weight, -tech.share.weight, -share.weight, -share.weight.sum, -year, -apply.to, -interpolation.function, -cooling_system) %>%
-      group_by(region,supplysector,subsector0,subsector,technology) %>%
-      repeat_add_columns(tibble(new.year=MODEL_FUTURE_YEARS)) %>% filter(new.year<=to.year) %>% filter(new.year>=from.year) %>%
-      ungroup() %>%
-      select(-from.year, -to.year, -state.cooling.share.weight) %>% unique() %>%
-      rename(share.weight=updated.share.weight, year=new.year, stub.technology=technology)->
+                                                            if_else(share.weight>0&share.weight.sum==0&subs.share.weight>0&is.na(state.cooling.share.weight),0,1)))),
+             interpolation.function = if_else(share.weight.sum>0&from.year == max(MODEL_BASE_YEARS)&share.weight==1,"fixed",interpolation.function),
+             from.year = if_else(from.year==2015&to.year==2100&share.weight.sum>1&interpolation.function=="fixed",2010,as.double(from.year))) %>%
+             #interpolation.function = if_else((share.weight==updated.share.weight),"fixed",interpolation.function))  %>%
+      select(-subs.share.weight, -tech.share.weight, -share.weight, -share.weight.sum, -year,  -cooling_system) %>%
+      filter(from.year!=to.year) %>%
+      #group_by(region,supplysector,subsector0,subsector,technology) %>%
+      #repeat_add_columns(tibble(new.year=MODEL_FUTURE_YEARS)) %>%
+      select(-state.cooling.share.weight, -global.share.weight) %>% unique() %>%
+      rename(to.value=updated.share.weight, stub.technology=technology)->
+      L2233.StubTechInterp_elecS_cool_USA
+
+    L2233.StubTechInterp_elecS_cool_USA %>%
+      select(-interpolation.function,-apply.to) %>%
+      filter(from.year>=2015) %>%
+      mutate(year = if_else(from.year==2015,as.double(from.year),as.double(to.year))) %>%
+      bind_rows(L2233.StubTechInterp_elecS_cool_USA %>%
+                  filter(interpolation.function=="linear") %>%
+                  select(-interpolation.function,-apply.to) %>%
+                  mutate(year = to.year)
+
+      ) %>% select(-to.year, -from.year) %>%
+      unique() %>%
+      rename(share.weight=to.value)->
       L2233.StubTechShrwt_elecS_cool_USA
 
     # Only done to manipulate variable and not throw an error
@@ -1279,6 +1317,15 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                      "L2234.SubsectorShrwtInterpTo_elecS_USA") ->
       L2233.StubTechShrwt_elecS_cool_USA
 
+    L2233.StubTechInterp_elecS_cool_USA %>%
+      add_title("Electricity Load Segments Stub Tech Interpolation rules") %>%
+      add_units("none") %>%
+      add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
+      add_legacy_name("L2233.StubTechShrwt_elec") %>%
+      add_precursors("L2234.StubTechProd_elecS_USA",
+                     "L2234.SubsectorShrwtInterpTo_elecS_USA") ->
+      L2233.StubTechInterp_elecS_cool_USA
+
     L2233.SubsectorLogit_elecS_USA %>%
       add_title("Subsector Information for Horizontal Electricity Load Segments",overwrite=TRUE) %>%
       add_units("none") %>%
@@ -1392,6 +1439,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                     L2233.StubTechProfitShutdown_elecS_cool_USA,
                     L2233.StubTechLifetime_elecS_cool_USA,
                     L2233.StubTechShrwt_elecS_cool_USA,
+                    L2233.StubTechInterp_elecS_cool_USA,
                     L2233.SubsectorLogit_elecS_USA,
                     L2233.SubsectorLogit_elecS_cool_USA,
                     L2233.SubsectorShrwt_elecS_USA,
