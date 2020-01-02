@@ -31,7 +31,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
              "L203.SubsectorShrwt_USA",
              "L203.TechShrwt_USA",
              "L203.TechCoef_USA",
-             #"L203.TechPmult_USA",
+             "L203.TechPmult_USA",
              "L203.TechDesalCoef_USA",
              "L203.TechDesalShrwt_USA",
              "L203.TechDesalCost_USA"))
@@ -64,7 +64,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       state_and_basin_mapping
 
       # Create mappings for the sectors that have production at the state level already.
-      # These sectors: Domestic, Municipal, and Electricity will not need to be shared
+      # These sectors: Industrial, Municipal, and Electricity will not need to be shared
       # from the USA region to the states, and thus will not have separate market names by region
     L103.water_mapping_USA_R_B_W_Ws_share %>%
       mutate(water_sector = gsub("Domestic","Municipal",water_sector)) %>%
@@ -220,7 +220,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                          logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
       arrange(region) %>%
       bind_rows(L203.mapping_livestock,L203.mapping_primary,L203.mapping_irr)%>%
-      mutate(pMult = if_else(water.sector == water.IRRIGATION & water_type == "water withdrawals" & region==gcam.USA_REGION,
+      mutate(pMult = if_else(water.sector == water.IRRIGATION & water_type == "water withdrawals" & region!=gcam.USA_REGION,
                              water.IRR_PRICE_SUBSIDY_MULT, water.MAPPING_PMULT)) ->
       L203.mapping_all
 
@@ -235,9 +235,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
 
     # Subsector logit exponents for mapping sector
     L203.mapping_all %>%
-      mutate(logit.exponent = case_when(region!=gcam.USA_REGION&water.sector!=water.IRRIGATION ~ water.LOGIT_EXP,
-                                        region!=gcam.USA_REGION&water.sector==water.IRRIGATION ~ 0,
-                                        region==gcam.USA_REGION&water.sector==water.IRRIGATION ~ water.LOGIT_EXP, TRUE ~ 0 )) %>%
+      mutate(logit.exponent = case_when(region!=gcam.USA_REGION&water_sector!=water.IRRIGATION ~ water.LOGIT_EXP,TRUE~0)) %>%
       select(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME) ->
       L203.SubsectorLogit_USA
 
@@ -255,6 +253,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.mapping_all %>%
       gather_years("share.weight") %>%
       complete(nesting(region, supplysector, subsector, technology,water.sector,basin_name,water_type,coefficient), year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
+      mutate(share.weight=1) %>%
       dplyr::filter(!is.na(year))%>%
       select(LEVEL2_DATA_NAMES[["TechShrwt"]]) ->
       L203.TechShrwt_USA
@@ -271,16 +270,16 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       L203.TechCoef_USA
 
     # Pass-through technology water price adjust if there one
-    #L203.mapping_all %>%
-    #  gather_years("share.weight") %>%
-    #  complete(nesting(region, supplysector, subsector, technology,water.sector,basin_name,water_type,coefficient), year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
-    #  replace_na(list(pMult=1))
-    #  select(LEVEL2_DATA_NAMES[["TechPmult"]]) ->
-    #  L203.TechPmult
+    L203.mapping_all %>%
+      gather_years("share.weight") %>%
+      complete(nesting(region, supplysector, subsector, technology,water.sector,basin_name,water_type,coefficient), year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
+      replace_na(list(pMult=1)) %>%
+      select(LEVEL2_DATA_NAMES[["TechPmult"]]) ->
+      L203.TechPmult_USA
 
     L203.TechCoef_USA %>%
       filter(!grepl("_irr_", supplysector)) %>%
-      filter(region==gcam.USA_REGION) %>%
+      filter(region!=gcam.USA_REGION) %>%
       mutate(technology = "desalination",
              minicam.energy.input = "desalination",
              market.name=gcam.USA_REGION) %>%
@@ -289,7 +288,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
 
     L203.TechShrwt_USA %>%
       filter(!grepl("_irr_", supplysector)) %>%
-      filter(region==gcam.USA_REGION) %>%
+      filter(region!=gcam.USA_REGION) %>%
       mutate(technology = "desalination",
              share.weight = if_else(grepl("_pri_", supplysector),1, 1))  %>%
       dplyr::filter(!is.na(year))->
@@ -400,20 +399,20 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                      "water/A03.sector") ->
       L203.TechDesalCoef_USA
 
-   # L203.TechPmult %>%
-  #    add_title("Water technology price multipliers") %>%
-  #    add_units("Unitless") %>%
-  #    add_comments("Technology info expanded to GLU regions and water demand sectors") %>%
-  #    add_legacy_name("L203.TechCoef") %>%
-  #    add_precursors("water/basin_ID",
-  #                   "water/basin_to_country_mapping",
-  #                   "L103.water_mapping_USA_R_LS_W_Ws_share",
-  #                   "L103.water_mapping_USA_R_PRI_W_Ws_share",
-  #                   "L103.water_mapping_USA_R_B_W_Ws_share",
-  #                   "gcam-usa/states_subregions",
-  #                   "gcam-usa/state_and_basin",
-  #                   "water/A03.sector") ->
-  #    L203.TechPmult_USA
+    L203.TechPmult_USA %>%
+      add_title("Water technology price multipliers") %>%
+      add_units("Unitless") %>%
+      add_comments("Technology info expanded to GLU regions and water demand sectors") %>%
+      add_legacy_name("L203.TechCoef") %>%
+      add_precursors("water/basin_ID",
+                     "water/basin_to_country_mapping",
+                     "L103.water_mapping_USA_R_LS_W_Ws_share",
+                     "L103.water_mapping_USA_R_PRI_W_Ws_share",
+                     "L103.water_mapping_USA_R_B_W_Ws_share",
+                     "gcam-usa/states_subregions",
+                     "gcam-usa/state_and_basin",
+                     "water/A03.sector") ->
+      L203.TechPmult_USA
 
     L203.TechDesalShrwt_USA %>%
       add_title("Water technology desal shareweights") %>%
@@ -443,7 +442,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                      "water/A03.sector") ->
       L203.TechDesalCost_USA
 
-    return_data(L203.DeleteSupplysector_USA,  L203.Supplysector_USA, L203.SubsectorLogit_USA, L203.SubsectorShrwt_USA, L203.TechShrwt_USA, L203.TechCoef_USA,  L203.TechDesalCoef_USA, L203.TechDesalShrwt_USA, L203.TechDesalCost_USA) #L203.TechPmult_USA
+    return_data(L203.DeleteSupplysector_USA,  L203.Supplysector_USA, L203.SubsectorLogit_USA, L203.SubsectorShrwt_USA, L203.TechShrwt_USA, L203.TechCoef_USA,  L203.TechDesalCoef_USA, L203.TechDesalShrwt_USA, L203.TechDesalCost_USA, L203.TechPmult_USA)
   } else {
     stop("Unknown command")
   }

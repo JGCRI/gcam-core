@@ -51,6 +51,7 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
              "L2233.StubTechSCurve_elecS_cool_USA",
              "L2233.StubTechLifetime_elecS_cool_USA",
              "L2233.StubTechShrwt_elecS_cool_USA",
+             "L2233.StubTechInterp_elecS_cool_USA",
              "L2233.SubsectorLogit_elecS_USA",
              "L2233.SubsectorLogit_elecS_cool_USA",
              "L2233.SubsectorShrwt_elecS_USA",
@@ -144,6 +145,7 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
     L2233.StubTechMarket_backup_elecS_cool_USA <- get_data(all_data,"L2233.StubTechMarket_backup_elecS_cool_USA")
     L2233.StubTechLifetime_elecS_cool_USA <- get_data(all_data, "L2233.StubTechLifetime_elecS_cool_USA")
     L2233.StubTechShrwt_elecS_cool_USA <- get_data(all_data, "L2233.StubTechShrwt_elecS_cool_USA")
+    L2233.StubTechInterp_elecS_cool_USA <- get_data(all_data, "L2233.StubTechInterp_elecS_cool_USA")
     L2233.SubsectorLogit_elecS_USA <- get_data(all_data,"L2233.SubsectorLogit_elecS_USA")
     L2233.SubsectorLogit_elecS_cool_USA <- get_data(all_data,"L2233.SubsectorLogit_elecS_cool_USA")
     L2233.SubsectorShrwt_elecS_USA <- get_data(all_data,"L2233.SubsectorShrwt_elecS_USA")
@@ -283,6 +285,7 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
       add_xml_data_generate_levels(L2233.StubTechProfitShutdown_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechProfitShutdown", "subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.StubTechCoef_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechCoef", "subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.StubTechShrwt_elecS_cool_USA, "StubTechShrwt", "subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechInterp_elecS_cool_USA, "StubTechInterp", "subsector","nesting-subsector",1,FALSE) %>%
       add_node_equiv_xml("subsector") %>%
       add_logit_tables_xml(L2233.SubsectorLogit_elecS_USA %>% rename(subsector = subsector0), "SubsectorLogit") %>%
       add_xml_data(L2233.SubsectorShrwt_elecS_USA %>% rename(subsector=subsector0), "SubsectorShrwt") %>%
@@ -365,6 +368,7 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
                      "L2233.StubTechSCurve_elecS_cool_USA",
                      "L2233.StubTechLifetime_elecS_cool_USA",
                      "L2233.StubTechShrwt_elecS_cool_USA",
+                     "L2233.StubTechInterp_elecS_cool_USA",
                      "L2233.SubsectorLogit_elecS_USA",
                      "L2233.SubsectorLogit_elecS_cool_USA",
                      "L2233.SubsectorShrwt_elecS_USA",

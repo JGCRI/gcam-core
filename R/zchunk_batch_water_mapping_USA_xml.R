@@ -15,6 +15,7 @@ module_gcamusa_batch_water_mapping_USA_xml <- function(command, ...) {
              "L203.SubsectorShrwt_USA",
              "L203.TechShrwt_USA",
              "L203.TechCoef_USA",
+             "L203.TechPmult_USA",
              "L203.DeleteSupplysector_USA",
              "L203.TechDesalCoef_USA",
              "L203.TechDesalShrwt_USA",
@@ -31,6 +32,7 @@ module_gcamusa_batch_water_mapping_USA_xml <- function(command, ...) {
     L203.SubsectorShrwt_USA <- get_data(all_data, "L203.SubsectorShrwt_USA")
     L203.TechShrwt_USA <- get_data(all_data, "L203.TechShrwt_USA")
     L203.TechCoef_USA <- get_data(all_data, "L203.TechCoef_USA")
+    L203.TechPmult_USA <- get_data(all_data,"L203.TechPmult_USA")
     L203.DeleteSupplysector_USA <- get_data(all_data, "L203.DeleteSupplysector_USA")
     L203.TechDesalCoef_USA  <- get_data(all_data, "L203.TechDesalCoef_USA")
     L203.TechDesalShrwt_USA <- get_data(all_data, "L203.TechDesalShrwt_USA")
@@ -45,11 +47,12 @@ module_gcamusa_batch_water_mapping_USA_xml <- function(command, ...) {
       add_xml_data(L203.SubsectorShrwt_USA, "SubsectorShrwt") %>%
       add_xml_data(L203.TechShrwt_USA, "TechShrwt") %>%
       add_xml_data(L203.TechCoef_USA, "TechCoef") %>%
+      add_xml_data(L203.TechPmult_USA, "TechPmult") %>%
       add_xml_data(L203.TechDesalCoef_USA, "TechCoef") %>%
       add_xml_data(L203.TechDesalShrwt_USA, "TechShrwt") %>%
       add_xml_data(L203.TechDesalCost_USA, "TechCost") %>%
       add_precursors("L203.Supplysector_USA", "L203.SubsectorLogit_USA", "L203.DeleteSupplysector_USA", "L203.SubsectorShrwt_USA",
-                     "L203.TechShrwt_USA", "L203.TechCoef_USA","L203.TechDesalCoef_USA", "L203.TechDesalShrwt_USA", "L203.TechDesalCost_USA") ->
+                     "L203.TechShrwt_USA", "L203.TechCoef_USA","L203.TechPmult_USA","L203.TechDesalCoef_USA", "L203.TechDesalShrwt_USA", "L203.TechDesalCost_USA") ->
       water_mapping_USA.xml
 
     return_data(water_mapping_USA.xml)
