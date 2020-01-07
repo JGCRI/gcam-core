@@ -187,7 +187,7 @@ void HectorModel::completeInit( const string& aScenarioName ) {
           // delete all hector components
           mHcore->shutDown();
         }
-        mHcore.reset( new Hector::Core ); 
+        mHcore.reset( new Hector::Core(Hector::Logger::WARNING, true, true) );
         mHcore->init();
         climatelog << "Parsing ini file= " << mHectorIniFile << endl;
         Hector::INIToCoreReader coreParser( mHcore.get() );
@@ -351,7 +351,7 @@ void HectorModel::reset( const int aPeriod ) {
 
     // set up a new core
     climatelog << "Setting up new Hector core." << endl;
-    mHcore.reset( new Hector::Core );
+    mHcore.reset( new Hector::Core(Hector::Logger::WARNING, true, true) );
     mHcore->init();
     climatelog << "Parsing ini file= " << mHectorIniFile << endl;
     Hector::INIToCoreReader coreParser( mHcore.get() );
