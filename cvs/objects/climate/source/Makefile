@@ -20,11 +20,11 @@ endif
 climate_dir: $(TARGS)
 
 hector_dir:
-	$(MAKE) -C ./hector/source libhector.a
-	cp ./hector/source/libhector.a ../../build/linux/
+	$(MAKE) -C ./hector/src -f makefile.standalone libhector.a
+	cp -f ./hector/src/libhector.a ../../build/linux/
 
 -include $(DEPS)
 
 clean:
 	rm *.o *.d
-	$(MAKE) -C ./hector/source clean
+	$(MAKE) -C ./hector/src clean
