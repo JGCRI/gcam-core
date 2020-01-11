@@ -38,11 +38,11 @@
 
 
 /*! 
-* \file building_node_input.h
+* \file food_demand_input.h
 * \ingroup Objects
 * \brief FoodDemandInput class header file.
 * \author Pralit Patel
-* \author Jiyong Eom
+* \author Robert LInk
 */
 
 #include "util/base/include/definitions.h"
@@ -51,57 +51,68 @@
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 
-class IFunction;
-class SatiationDemandFunction;
+/*!
+* \ingroup Objects
+* \brief The Edmonds, et al. (2016) food demand system
 
-/*! 
- * \ingroup Objects
- * \brief An input which fits into the nested inputs framework to drive food demands.
- *
- * \details This is an abstract base class which 
- *
- *          <b>XML specification for FoodDemandInput</b>
- *          - XML name: \c FoodDemandInput::getXMLNameStatic()
- *          - Contained by: NodeInput
- *          - Parsing inherited from class: None
- *          - Attributes: \c name FoodDemandInput::mName
- *          - Elements:
- *              - \c BuildingServiceInput::getXMLNameStatic() FoodDemandInput::mNestedInputs
- *                   A building service input which will be added as a child to this node.
- *              - \c ThermalBuildingServiceInput::getXMLNameStatic() FoodDemandInput::mNestedInputs
- *                   A heating or cooling building service input which will be added as a
- *                   child to this node.
- *              - \c prodDmdFnType FoodDemandInput::mFunctionType
- *                   The name of the function that will calculate demand for the child inputs.
- *					 This will most likely be a building-service-function.
- *              - \c base-building-size FoodDemandInput::mBuildingSize
- *                   The base year size in terms of floorspace which can be utilized to back out
- *					 coefficients.
- *              - \c price-exponent FoodDemandInput::mPriceExponent
- *                   Price exponent by period to be used in calculating a demand for this
- *					 building type.
- *              - \c shell-conductance FoodDemandInput::mShellConductance
- *                   The building shell conductance by period which encapsulates technical change
- *					 characterisitics which affect heating and cooling service demand.
- *              - \c floor-to-surface-ratio FoodDemandInput::mFloorToSurfaceRatio
- *                   The building floor to surface area by period which building structual change
- *					 characterisitics which affect heating and cooling service demand.
- *              - \c internal-gains-market-name FoodDemandInput::mInternalGainsMarketname
- *                   A name to use when setting up a trial market for the internal gains of this
- *					 building type.
- *              - \c internal-gains-unit FoodDemandInput::mInternalGainsUnit
- *                   A string which describes the units for internal gains.
- *              - \c internal-gains-trial-supply FoodDemandInput::mInternalGainsTrialSupply
- *                   Initial trial supplies to set into the market for internal gains.  These
- *					 values are not necessary and only used to start the solver with a reasonable
- *					 trial supply.
- *              - \c SatiationDemandFunction::getXMLNameStatic() FoodDemandInput::mSatiationDemandFunction
- *                   The self contained satiation demand function which will parse it's own
- *                   parameters.
- *
- * \author Pralit Patel
- * \author Jiyong Eom
- */
+* \details This class implements the demand system for representing
+*          staple and nonstaple foods, as published by Edmonds, et
+*          al. (2016) in _Climate Change Economics_ (full cite to
+*          follow once the paper is accepted).  This demand system is
+*          a two-component model for demand.  The components are
+*          "staple foods", which are assumed to behave as inferior
+*          goods, and "nonstaple foods", which are assumed to behave
+*          as normal goods, but with demand eventually saturating at
+*          high per capita income levels.  The model also tracks
+*          internally "materials", a stand-in for everything else
+*          that consumers spend their budget on.  Materials demand is
+*          calculated as the residual of consumers' budget after
+*          their food needs are met.  GCAM doesn't use the materials
+*          demand, and the price for the materials component is fixed
+*          as a parameter of the model (i.e., it cannot be set as an
+*          input).  Therefore, we do not expose this third component
+*          to the rest of GCAM.
+*
+*          The model has 10 parameters: the 9 parameters given in
+*          Table 3 of the paper (in the same order as given in the
+*          table), and a tenth regional bias correction factor, as
+*          described in the Regional Bias Correction section of the
+*          paper.  (Note that since each region will have its own
+*          food demand sector, with its own instance of this class,
+*          it is only necessary to include the bias correction factor
+*          for a single region.)
+*
+*          The equations in this demand system make use of the budget
+*          fractions, \f$\alpha\f$, for the goods in the demand
+*          system.  These budget fractions are themselves computed
+*          fromt the demand quantities output by the system.  In
+*          stand-alone implementations of the demand system we use a
+*          nonlinear equation solver to solve for a self-consistent
+*          set of demands, but in GCAM we use the Trial Value
+*          mechanism.  During the `completeInit()` method we set up a
+*          trial value market for each of the two goods (staple and
+*          nonstaple foods) in the system.  The GCAM solver mechanism
+*          will use these to solve for self-consistent demand
+*          values.
+*
+*          The \f$\alpha\f$ values can range from 0 to 1; and we ask
+*          the solver keep to values within this range.
+*
+*          Output is calculated and set  in units of thousands of dietary
+*          calories, per capita, per day.  However rest of GCAM will be
+*          expecting Pcal/year so the units are transformed before
+*          being set or added to market.  For the purposes of reporting
+*          both will be available.
+*
+*          Although the demand system described in the paper is
+*          readily generalizable to an arbitrary number of
+*          components, we have not attempted to make this
+*          implementation similarly generalizable.  This is mostly due
+*          due to complications in deriving cross-price elasticities
+*          when the number of goods is more than two.  However in
+*          principal it can be done but we have not expended the effort
+*          to do so yet.
+*/
 class FoodDemandInput : public INestedInput
 {
 public:
@@ -109,9 +120,9 @@ public:
     virtual ~FoodDemandInput();
 
 	// FoodDemandInput specific methods
-	Value getSubregionalPopulation() const;
-
 	Value getSubregionalIncome() const;
+    
+    double getAnnualDemandConversionFactor( const int aPeriod ) const;
 
     std::string getTrialShareMarketName() const;
 
@@ -124,16 +135,6 @@ public:
 
     double getScaleTerm() const;
     
-    virtual double getCrossPriceElasticity( const FoodDemandInput* aOther,
-                                           const std::string& aRegionName,
-                                           const int aPeriod ) const = 0;
-
-    virtual double getPriceScaler() const = 0;
-
-    virtual double calcIncomeExponent( double aAdjIncome ) const = 0;
-    
-    virtual double calcIncomeExponentDerivative( double aAdjIncome ) const = 0;
-
     virtual double calcSelfPriceExponent( double aAdjIncome,
                                           const std::string& aRegionName,
                                           const int aPeriod ) const;
@@ -142,8 +143,20 @@ public:
                                            double aAdjIncome,
                                            const std::string& aRegionName,
                                            const int aPeriod) const;
+    
+    // The following food demand methods will have differing behavior for
+    // staples and non-staples.
+    virtual double getCrossPriceElasticity( const FoodDemandInput* aOther,
+                                            const std::string& aRegionName,
+                                            const int aPeriod ) const = 0;
 
-    //INestedInput methods
+    virtual double getPriceScaler() const = 0;
+
+    virtual double calcIncomeTerm( double aAdjIncome ) const = 0;
+    
+    virtual double calcIncomeTermDerivative( double aAdjIncome ) const = 0;
+
+    // INestedInput methods
     // define them to do nothing since a FoodDemandInput is a leaf in the nesting structure
     // this should be the end point for recursion
     virtual void removeEmptyInputs() {}
@@ -391,11 +404,12 @@ protected:
                             
         //! Regional bias correction term
         DEFINE_VARIABLE( SIMPLE, "regional-bias", mRegionalBias, Value ),
-                            
+        
+        //! The Subregional population.  Note that this is just a
         //! temporary value used during demand calculations
-        DEFINE_VARIABLE( SIMPLE, "subregional-population", mCurrentSubregionalPopulation, Value ),
+        DEFINE_VARIABLE( ARRAY, "subregional-population", mSubregionalPopulation, objects::PeriodVector<Value> ),
 
-        //! Current Subregional income.  Note that this is just a
+        //! Current Subregional income (in PPP).  Note that this is just a
         //! temporary value used during demand calculations
         DEFINE_VARIABLE( SIMPLE, "subregional-income", mCurrentSubregionalIncome, Value )
 
@@ -405,6 +419,9 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode ) = 0;
 };
 
+/*!
+  * \brief FoodDemand subclass with parameters and equations specific to a staple (inferior) good.
+ */
 class StaplesFoodDemandInput : public FoodDemandInput {
 public:
     StaplesFoodDemandInput();
@@ -414,23 +431,14 @@ public:
 
     // FoodDemandInput specific methods
     virtual double getCrossPriceElasticity( const FoodDemandInput* aOther,
-                                           const std::string& aRegionName,
-                                           const int aPeriod ) const;
+                                            const std::string& aRegionName,
+                                            const int aPeriod ) const;
 
     virtual double getPriceScaler() const;
 
-    virtual double calcIncomeExponent( double aAdjIncome ) const;
+    virtual double calcIncomeTerm( double aAdjIncome ) const;
     
-    virtual double calcIncomeExponentDerivative( double aAdjIncome ) const;
-
-    /*virtual double calcSelfPriceExponent( double aAdjIncome,
-                                          const std::string& aRegionName,
-                                          const int aPeriod ) const;
-
-    virtual double calcCrossPriceExponent( const FoodDemandInput* aOther,
-                                           double aAdjIncome,
-                                           const std::string& aRegionName,
-                                           const int aPeriod ) const*/;
+    virtual double calcIncomeTermDerivative( double aAdjIncome ) const;
     
     // IInput methods
     virtual IInput* clone() const;
@@ -458,6 +466,9 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode );
 };
 
+/*!
+ * \brief FoodDemand subclass with parameters and equations specific to a non-staple (normal) good.
+*/
 class NonStaplesFoodDemandInput : public FoodDemandInput {
 public:
     NonStaplesFoodDemandInput();
@@ -467,23 +478,14 @@ public:
 
     // FoodDemandInput specific methods
     virtual double getCrossPriceElasticity( const FoodDemandInput* aOther,
-                                           const std::string& aRegionName,
-                                           const int aPeriod ) const;
+                                            const std::string& aRegionName,
+                                            const int aPeriod ) const;
 
     virtual double getPriceScaler() const;
 
-    virtual double calcIncomeExponent( double aAdjIncome ) const;
+    virtual double calcIncomeTerm( double aAdjIncome ) const;
     
-    virtual double calcIncomeExponentDerivative( double aAdjIncome ) const;
-
-    /*virtual double calcSelfPriceExponent( double aAdjIncome,
-                                          const std::string& aRegionName,
-                                          const int aPeriod ) const;
-
-    virtual double calcCrossPriceExponent( const FoodDemandInput* aOther,
-                                           double aAdjIncome,
-                                           const std::string& aRegionName,
-                                           const int aPeriod ) const*/;
+    virtual double calcIncomeTermDerivative( double aAdjIncome ) const;
     
     // IInput methods
     virtual IInput* clone() const;

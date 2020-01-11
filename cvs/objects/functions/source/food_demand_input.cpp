@@ -36,7 +36,7 @@
 * \ingroup Objects
 * \brief The FoodDemandInput class source file.
 * \author Pralit Patel
-* \author Jiyong Eom
+* \author Robert Link
 */
 
 #include "util/base/include/definitions.h"
@@ -130,9 +130,13 @@ void FoodDemandInput::completeInit( const string& aRegionName,
                 << trialShareMarketName << endl;
     }
     
+    
     // TODO: hard wire some default prices for now since this really helps solution, what to do in the long run?
     for( int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ) {
         scenario->getMarketplace()->setPrice( trialShareMarketName, aRegionName, 0.1, period) ;
+        // Set meta data to let the solver know the trial share values should be between 0 and 1
+        // not that it explicitly respects this but the preconditioner will.
+        SectorUtils::setSupplyBehaviorBounds( trialShareMarketName, aRegionName, 0, 1, period );
     }
     
     depFinder->addDependency( aTechName, aRegionName, trialShareMarketName, aRegionName );
@@ -151,7 +155,7 @@ void FoodDemandInput::initCalc( const string& aRegionName,
     
     // Get the subregional population and income from the info object which is where
     // the consumer stored them.
-    mCurrentSubregionalPopulation = aTechInfo->getDouble( "subregional-population", true );
+    mSubregionalPopulation[ aPeriod ] = aTechInfo->getDouble( "subregional-population", true );
     mCurrentSubregionalIncome = aTechInfo->getDouble( "subregional-income-ppp", true );
 }
 
@@ -163,12 +167,6 @@ void FoodDemandInput::copyParam( const IInput* aInput,
      */
     assert( false );
 }
-
-/*IInput* FoodDemandInput::clone() const {
-    FoodDemandInput* retNodeInput = new FoodDemandInput;
-    retNodeInput->copy( *this );
-    return retNodeInput;
-}*/
 
 void FoodDemandInput::copy( const FoodDemandInput& aInput ) {
     mName = aInput.mName;
@@ -188,8 +186,9 @@ void FoodDemandInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs 
     XMLWriteOpeningTag ( getXMLReportingName(), aOut, aTabs, mName );
 
     XMLWriteElement( mFoodDemandQuantity[ aPeriod ], "service", aOut, aTabs );
-    XMLWriteElement( mCurrentSubregionalPopulation, "subregional-population", aOut, aTabs );
-    XMLWriteElement( mCurrentSubregionalIncome, "subregional-income0-ppp", aOut, aTabs );
+    XMLWriteElement( mFoodDemandQuantity[ aPeriod ] / getAnnualDemandConversionFactor( aPeriod ), "food-demand-percap", aOut, aTabs );
+    XMLWriteElement( mSubregionalPopulation[ aPeriod ], "subregional-population", aOut, aTabs );
+    XMLWriteElement( mCurrentSubregionalIncome, "subregional-income-ppp", aOut, aTabs );
 
     // write the closing tag.
     XMLWriteClosingTag( getXMLReportingName(), aOut, aTabs );
@@ -229,8 +228,7 @@ void FoodDemandInput::setPhysicalDemand( double aPhysicalDemand, const string& a
     // rejiggering to conform to GCAM unit conventions is a bit of a
     // pain.  Converting on input and again on output seems like the
     // least bad solution.
-    const double quantityUnitConversionFactor = 365.0 * 1e-9;
-    aPhysicalDemand *= quantityUnitConversionFactor * mCurrentSubregionalPopulation * 1000.0;
+    aPhysicalDemand *= getAnnualDemandConversionFactor( aPeriod );
     
     // We are storing the results in the same vector as the calibration data
     // generally the calculated value should match however it may not if the
@@ -255,7 +253,7 @@ double FoodDemandInput::getPrice( const string& aRegionName, const int aPeriod )
     // The price units in the food demand model are kind of a mess.  Price
     // * Quantity should be in units of thousands of dollars per year.
     // Since Quantity is in Mcal/day (and we don't want to convert it to
-    // Mcal/yr), that means we hae to absorb the 365 day/year conversion
+    // Mcal/yr), that means we have to absorb the 365 day/year conversion
     // factor into the prices.
     const double priceUnitConversionFactor =
         0.365 / FunctionUtils::DEFLATOR_1975_PER_DEFLATOR_2005();
@@ -297,17 +295,30 @@ void FoodDemandInput::accept( IVisitor* aVisitor, const int aPeriod ) const {
 }
 
 /*!
- * \brief Get the currently set Subregional Population.
- * \return Subregional population that has been set from
- *           the consumer.
+ * \brief Get the conversion factor to convert from the food demand untis to the
+ *        annualized units the supply sectors expect.
+ * \details The food demand system will calculate demands in term os Mcal / person / day
+ *          the supply sectors are expecting Pcal / year.  This method provides the conversion..
+ * \return The appropriate conversion factor.
  */
-Value FoodDemandInput::getSubregionalPopulation() const {
-    return mCurrentSubregionalPopulation;
+double FoodDemandInput::getAnnualDemandConversionFactor( const int aPeriod ) const {
+    // Quantity conversion factor on output.  Output quantities are in
+    // Mcal/day (per capita).  We need to convert to Pcal/year (also per
+    // capita).  This factor will be applied just before output.
+    // Importantly, it will be applied *after* the budget fraction is
+    // calculated.  In light of this, one might wonder why we didn't just
+    // work in converted units all the way through.  It's because the food
+    // demand model parameters were calibrated using *these* units, and
+    // rejiggering to conform to GCAM unit conventions is a bit of a
+    // pain.  Converting on input and again on output seems like the
+    // least bad solution.
+    const double quantityUnitConversionFactor = 365.0 * 1e-9;
+    return quantityUnitConversionFactor * mSubregionalPopulation[ aPeriod ] * 1000.0;
 }
 
 /*!
  * \brief Get the currently set Subregional income.  Note that this
- *          is the per capita income.
+ *          is the PPP per capita income.
  * \return Subregional income that has been set from
  *           the consumer.
  */
@@ -315,16 +326,32 @@ Value FoodDemandInput::getSubregionalIncome() const {
     return mCurrentSubregionalIncome;
 }
 
+/*!
+ * \brief Generates an appropriate name to use for the trial share market name.
+ */
 std::string FoodDemandInput::getTrialShareMarketName() const {
     return mName + "-budget-fraction";
 }
 
+/*!
+ * \brief Get the current trial share for this food demand input.
+ * \details Retrieves the current trial share value from the marketplace.
+ * \param aRegionName The region name used to look up the market.
+ * \param aPeriod The current model period.
+ * \return The trial share.
+ */
 double FoodDemandInput::getTrialShare( const string& aRegionName,
                                        const int aPeriod ) const
 {
     return SectorUtils::getTrialSupply( aRegionName, getTrialShareMarketName(), aPeriod );
 }
 
+/*!
+* \brief Set the actual share for this food demand input.
+* \details Updates the trial value market to let it know what the actual share value was.
+* \param aRegionName The region name used to look up the market.
+* \param aPeriod The current model period.
+*/
 void FoodDemandInput::setActualShare( double aShare,
                                       const string& aRegionName,
                                       const int aPeriod )
@@ -335,8 +362,46 @@ void FoodDemandInput::setActualShare( double aShare,
                                    mShare[ aPeriod ], aPeriod );
 }
 
+/*!
+ * \brief Get the scale term (A) for this food demand input.
+ */
 double FoodDemandInput::getScaleTerm() const {
     return mScaleParam * mRegionalBias;
+}
+
+/*!
+ * \brief Calculate the self price exponent (e_ii(x))
+ * \details The self price exponent is calculated as:
+ *          e_ii = g_ii - alpha_i * f(x)
+ * \param aAdjIncome The adjusted income (x).
+ * \param aRegionName The region name used to look up the trial share market.
+ * \param aPeriod The current model period.
+ * \return The value fo the self price exponent equation.
+ */
+double FoodDemandInput::calcSelfPriceExponent( double aAdjIncome,
+                                               const string& aRegionName,
+                                               const int aPeriod ) const
+{
+    return mSelfPriceElasticity -
+        getTrialShare( aRegionName, aPeriod ) * calcIncomeTermDerivative( aAdjIncome );
+}
+
+/*!
+* \brief Calculate the cross price exponent (e_ij(x))
+* \details The cross price exponent is calculated as:
+*          e_ij = g_ij - alpha_j * f(x)
+* \param aAdjIncome The adjusted income (x).
+* \param aRegionName The region name used to look up the trial share market.
+* \param aPeriod The current model period.
+* \return The value fo the cross price exponent equation.
+*/
+double FoodDemandInput::calcCrossPriceExponent( const FoodDemandInput* aOther,
+                                                double aAdjIncome,
+                                                const string& aRegionName,
+                                                const int aPeriod ) const
+{
+    return aOther->getCrossPriceElasticity( this, aRegionName, aPeriod ) -
+        aOther->getTrialShare( aRegionName, aPeriod ) * calcIncomeTermDerivative( aAdjIncome );
 }
 
 StaplesFoodDemandInput::StaplesFoodDemandInput()
@@ -354,71 +419,6 @@ const string& StaplesFoodDemandInput::getXMLNameStatic() {
 const string& StaplesFoodDemandInput::getXMLReportingName() const {
     return getXMLNameStatic();
 }
-
-double StaplesFoodDemandInput::getCrossPriceElasticity( const FoodDemandInput* aOther,
-                                                       const string& aRegionName,
-                                                       const int aPeriod ) const
-{
-    return mCrossPriceElasticity;
-}
-
-double StaplesFoodDemandInput::getPriceScaler() const {
-    // This scale factor below give us a little extra control over the shape of
-    // the demand functions.  Unlike the other model parameters, we didn't fit
-    // these; we fixed them ahead of time and then fit the other model
-    // parameters subject to those assumed values.  As such, they shouldn't be
-    // changed without re-fitting the model.  However, you shouldn't do that.
-    // If we ever want to consider changing these, we should add a scale
-    // parameter to the nonstaple demand and fit the model with that as an
-    // additional parameter.  Note that although each the staple and non-staple
-    // have their own values, only their ratio is significant.  Differences in
-    // the absolute levels will be absorbed into Pm during the fitting process.
-    const double psscl = 100.0;
-    return psscl;
-}
-
-double StaplesFoodDemandInput::calcIncomeExponent( double aAdjIncome ) const {
-    double k = exp( mIncomeMaxTerm );        // k-value from the R version of the model
-    // The limit as x-> 0 of the logarithmic derivative of this function is not
-    // well behaved.  However, the quantity is very small for k*x < ~1e-3, so
-    // we can replace this segment with a linear ramp and get essentially the same
-    // behavior.  The parameters below facilitate that.
-    //double x1 = 1.0e-3 / k;
-    double scale = pow(k, -mIncomeElasticity); // Normalization factor so that Qi(1) == 1
-    
-    //if(x > x1) {
-        double qis = scale * pow(k*aAdjIncome, mIncomeElasticity/aAdjIncome);
-    
-    return qis;
-}
-
-double StaplesFoodDemandInput::calcIncomeExponentDerivative( double aAdjIncome ) const {
-    double k = exp( mIncomeMaxTerm );        // k-value from the R version of the model
-    // The limit as x-> 0 of the logarithmic derivative of this function is not
-    // well behaved.  However, the quantity is very small for k*x < ~1e-3, so
-    // we can replace this segment with a linear ramp and get essentially the same
-    // behavior.  The parameters below facilitate that.
-    //double x1 = 1.0e-3 / k;
-    //double scale = pow(k, -mIncomeElasticity); // Normalization factor so that Qi(1) == 1
-    double etas = mIncomeElasticity*(1-log(k*aAdjIncome)) / aAdjIncome;
-    return etas;
-}
-
-double FoodDemandInput::calcSelfPriceExponent( double aAdjIncome,
-                                                      const string& aRegionName,
-                                                      const int aPeriod ) const
-{
-    return mSelfPriceElasticity - getTrialShare( aRegionName, aPeriod ) * calcIncomeExponentDerivative( aAdjIncome );
-}
-
-double FoodDemandInput::calcCrossPriceExponent( const FoodDemandInput* aOther,
-                                                       double aAdjIncome,
-                                                       const string& aRegionName,
-                                                       const int aPeriod ) const
-{
-    return aOther->getCrossPriceElasticity( this, aRegionName, aPeriod ) - aOther->getTrialShare( aRegionName, aPeriod ) * calcIncomeExponentDerivative( aAdjIncome );
-}
-
 
 IInput* StaplesFoodDemandInput::clone() const {
     StaplesFoodDemandInput* clone = new StaplesFoodDemandInput();
@@ -449,6 +449,93 @@ bool StaplesFoodDemandInput::XMLDerivedClassParse( const string& aNodeName, cons
     return true;
 }
 
+/*!
+ * \brief Get the cross price elasticity (g_ij)
+ * \details The cross price elasticity for staples is given as a read in parameter.
+ * \param aRegionName The region name used to look up the trial share market.
+ * \param aPeriod The current model period.
+ * \return The value for the cross price elasticity.
+ */
+double StaplesFoodDemandInput::getCrossPriceElasticity( const FoodDemandInput* aOther,
+                                                        const string& aRegionName,
+                                                        const int aPeriod ) const
+{
+    return mCrossPriceElasticity;
+}
+
+/*!
+ *\brief Get the appropriate price scaler.
+ */
+double StaplesFoodDemandInput::getPriceScaler() const {
+    // This scale factor below give us a little extra control over the shape of
+    // the demand functions.  Unlike the other model parameters, we didn't fit
+    // these; we fixed them ahead of time and then fit the other model
+    // parameters subject to those assumed values.  As such, they shouldn't be
+    // changed without re-fitting the model.  However, you shouldn't do that.
+    // If we ever want to consider changing these, we should add a scale
+    // parameter to the nonstaple demand and fit the model with that as an
+    // additional parameter.  Note that although each the staple and non-staple
+    // have their own values, only their ratio is significant.  Differences in
+    // the absolute levels will be absorbed into Pm during the fitting process.
+    const double psscl = 100.0;
+    return psscl;
+}
+
+/*!
+ * \brief Calculate the income term (x^h(x)).
+ * \details The income term for staples is calculated as:
+ *          Qi = x^(lam/x)*(1+kappa / ln(x))) * scale
+ *          where scale is calculated such that Qi(1) == 1
+ * \param aAdjIncome The adjusted income at which to calculate this term (x).
+ * \return The income term to use in the food demand system for a staple good.
+ */
+double StaplesFoodDemandInput::calcIncomeTerm( double aAdjIncome ) const {
+    double k = exp( mIncomeMaxTerm );        // k-value from the R version of the model
+    // TODO: worry about the follow given we are unlikey to get such small incomes in GCAM:
+    // The limit as x-> 0 of the logarithmic derivative of this function is not
+    // well behaved.  However, the quantity is very small for k*x < ~1e-3, so
+    // we can replace this segment with a linear ramp and get essentially the same
+    // behavior.  The parameters below facilitate that.
+    double x1 = 1.0e-3 / k;
+    double scale = pow(k, -mIncomeElasticity); // Normalization factor so that Qi(1) == 1
+    double qis;
+    
+    if(aAdjIncome > x1) {
+        qis = scale * pow(k*aAdjIncome, mIncomeElasticity/aAdjIncome);
+    }
+    else {
+        qis = scale * pow(k*x1, mIncomeElasticity/x1) / x1 * aAdjIncome;
+    }
+    
+    return qis;
+}
+
+/*!
+* \brief Calculate the derivative of thre income term f(x).
+* \details The derivative of the income term for staples is calculated as:
+*          f(x) = lam * (1 - log(e^kappa)) / x
+* \param aAdjIncome The adjusted income at which to calculate this term (x).
+* \return The derivative of the income term to use in the food demand system for a staple good.
+*/
+double StaplesFoodDemandInput::calcIncomeTermDerivative( double aAdjIncome ) const {
+    double k = exp( mIncomeMaxTerm );        // k-value from the R version of the model
+    // TODO: worry about the follow given we are unlikey to get such small incomes in GCAM:
+    // The limit as x-> 0 of the logarithmic derivative of this function is not
+    // well behaved.  However, the quantity is very small for k*x < ~1e-3, so
+    // we can replace this segment with a linear ramp and get essentially the same
+    // behavior.  The parameters below facilitate that.
+    double x1 = 1.0e-3 / k;
+    double etas;
+    
+    if(aAdjIncome > x1) {
+        etas = mIncomeElasticity*(1-log(k*aAdjIncome)) / aAdjIncome;
+    }
+    else {
+        etas = 1.0;
+    }
+    return etas;
+}
+
 NonStaplesFoodDemandInput::NonStaplesFoodDemandInput()
 {
 }
@@ -464,77 +551,6 @@ const string& NonStaplesFoodDemandInput::getXMLNameStatic() {
 const string& NonStaplesFoodDemandInput::getXMLReportingName() const {
     return getXMLNameStatic();
 }
-
-double NonStaplesFoodDemandInput::getCrossPriceElasticity( const FoodDemandInput* aOther,
-                                                          const string& aRegionName,
-                                                          const int aPeriod ) const
-{
-    // Get the trial budget fractions.  These will be used to calculate
-    // price exponents in the demand equations.
-    double alphas = aOther->getTrialShare( aRegionName, aPeriod );
-    double alphan = getTrialShare( aRegionName, aPeriod );
-
-    double amin = 0.1;          // For stability, we limit how small the alphas
-                                // can be when calculating the condition for the
-                                // cross-elasticity
-    return std::max(alphan, amin) / std::max(alphas, amin) * aOther->getCrossPriceElasticity( this, aRegionName, aPeriod );
-}
-
-double NonStaplesFoodDemandInput::getPriceScaler() const {
-    // This scale factor below give us a little extra control over the shape of
-    // the demand functions.  Unlike the other model parameters, we didn't fit
-    // these; we fixed them ahead of time and then fit the other model
-    // parameters subject to those assumed values.  As such, they shouldn't be
-    // changed without re-fitting the model.  However, you shouldn't do that.
-    // If we ever want to consider changing these, we should add a scale
-    // parameter to the nonstaple demand and fit the model with that as an
-    // additional parameter.  Note that although each the staple and non-staple
-    // have their own values, only their ratio is significant.  Differences in
-    // the absolute levels will be absorbed into Pm during the fitting process.
-    const double pnscl = 20.0;
-    return pnscl;
-}
-
-double NonStaplesFoodDemandInput::calcIncomeExponent( double aAdjIncome ) const {
-    double enu = exp(-mIncomeElasticity);
-    double delta = 1.0-aAdjIncome;
-    //double delta2 = delta*delta;
-    double scale = 1.0 / enu;   // normalization factor
-
-    //if(fabs(delta) > 1.0e-3/nu) {
-        double qin = scale * pow(aAdjIncome, mIncomeElasticity / delta);
-        // lim_x->0 etan = 1
-        //etan = x < 1.0e-4 ? 1 : 1/delta + x*log(x)/delta2;
-    return qin;
-}
-
-double NonStaplesFoodDemandInput::calcIncomeExponentDerivative( double aAdjIncome ) const {
-    //double enu = exp(-mIncomeElasticity);
-    double delta = 1.0-aAdjIncome;
-    double delta2 = delta*delta;
-    //double scale = 1.0 / enu;   // normalization factor
-
-    //if(fabs(delta) > 1.0e-3/nu) {
-        //double qin = scale * pow(aAdjIncome, mIncomeElasticity / delta);
-        // lim_x->0 etan = 1
-        double etan = aAdjIncome < 1.0e-4 ? 1 : 1/delta + aAdjIncome*log(aAdjIncome)/delta2;
-    return etan;
-}
-
-/*double NonStaplesFoodDemandInput::calcSelfPriceExponent( double aAdjIncome,
-                                                         const string& aRegionName,
-                                                         const int aPeriod ) const
-{
-    return mSelfPriceElasticity - getTrialShare( aRegionName, aPeriod ) * calcIncomeExponentDerivative( aAdjIncome );
-}
-
-double NonStaplesFoodDemandInput::calcCrossPriceExponent( const FoodDemandInput* aOther,
-                                                          double aAdjIncome,
-                                                          const string& aRegionName,
-                                                          const int aPeriod ) const
-{
-    return aOther->getCrossPriceElasticity( aOther, aRegionName, aPeriod ) - aOther->getTrialShare( aRegionName, aPeriod ) * calcIncomeExponentDerivative( aAdjIncome );
-}*/
 
 IInput* NonStaplesFoodDemandInput::clone() const {
     NonStaplesFoodDemandInput* clone = new NonStaplesFoodDemandInput();
@@ -555,4 +571,101 @@ bool NonStaplesFoodDemandInput::XMLDerivedClassParse( const string& aNodeName, c
         return false;
     }
     return true;
+}
+
+/*!
+* \brief Get the cross price elasticity (g_ij)
+* \details The cross price elasticity for non-staples is not a free parameter and it can be derived as:
+               g_nonstaples = (alpha_nonstaples / alpha_staples) * g_staples
+* \param aRegionName The region name used to look up the trial share market.
+* \param aPeriod The current model period.
+* \return The value for the cross price elasticity.
+*/
+double NonStaplesFoodDemandInput::getCrossPriceElasticity( const FoodDemandInput* aOther,
+                                                          const string& aRegionName,
+                                                          const int aPeriod ) const
+{
+    // Get the trial budget fractions.  These will be used to calculate
+    // price exponents in the demand equations.
+    double alphas = aOther->getTrialShare( aRegionName, aPeriod );
+    double alphan = getTrialShare( aRegionName, aPeriod );
+
+    double amin = 0.1;          // For stability, we limit how small the alphas
+                                // can be when calculating the condition for the
+                                // cross-elasticity
+    return std::max(alphan, amin) / std::max(alphas, amin) * aOther->getCrossPriceElasticity( this, aRegionName, aPeriod );
+}
+
+/*!
+*\brief Get the appropriate price scaler.
+*/
+double NonStaplesFoodDemandInput::getPriceScaler() const {
+    // This scale factor below give us a little extra control over the shape of
+    // the demand functions.  Unlike the other model parameters, we didn't fit
+    // these; we fixed them ahead of time and then fit the other model
+    // parameters subject to those assumed values.  As such, they shouldn't be
+    // changed without re-fitting the model.  However, you shouldn't do that.
+    // If we ever want to consider changing these, we should add a scale
+    // parameter to the nonstaple demand and fit the model with that as an
+    // additional parameter.  Note that although each the staple and non-staple
+    // have their own values, only their ratio is significant.  Differences in
+    // the absolute levels will be absorbed into Pm during the fitting process.
+    const double pnscl = 20.0;
+    return pnscl;
+}
+
+/*!
+* \brief Calculate the income term (x^h(x)).
+* \details The income term for non-staples is calculated as:
+*          Qi = x^(nu / (1 - x)) * scale
+*          where scale is calculated such that Qi(1) == 1
+* \param aAdjIncome The adjusted income at which to calculate this term (x).
+* \return The income term to use in the food demand system for a non-staple good.
+*/
+double NonStaplesFoodDemandInput::calcIncomeTerm( double aAdjIncome ) const {
+    double enu = exp(-mIncomeElasticity);
+    double delta = 1.0-aAdjIncome;
+    double delta2 = delta*delta;
+    double scale = 1.0 / enu;   // normalization factor
+    double qin;
+
+    // TODO: worry about the follow given we are unlikey to get such small incomes in GCAM:
+    if(fabs(delta) > 1.0e-3/mIncomeElasticity) {
+        qin = scale * pow(aAdjIncome, mIncomeElasticity / delta);
+    }
+    else {
+        // Represent q and eta near x==1 as a Taylor series
+        qin = scale * (enu -
+                       0.5 * mIncomeElasticity * enu * delta +
+                       1.0/24.0 * enu * mIncomeElasticity*(3.0*mIncomeElasticity-8.0) * delta2);
+    }
+    return qin;
+}
+
+/*!
+* \brief Calculate the derivative of thre income term f(x).
+* \details The derivative of the income term for non-staples is calculated as:
+*          f(x) = 1/(1-x) + x * log(x) / (1-x)^2
+* \param aAdjIncome The adjusted income at which to calculate this term (x).
+* \return The derivative of the income term to use in the food demand system for a non-staple good.
+*/
+double NonStaplesFoodDemandInput::calcIncomeTermDerivative( double aAdjIncome ) const {
+    double delta = 1.0-aAdjIncome;
+    double delta2 = delta*delta;
+    double etan;
+
+    // TODO: worry about the follow given we are unlikey to get such small incomes in GCAM:
+    if(fabs(delta) > 1.0e-3/mIncomeElasticity) {
+        // lim_x->0 etan = 1
+        etan = aAdjIncome < 1.0e-4 ? 1 : 1/delta + aAdjIncome*log(aAdjIncome)/delta2;
+    }
+    else {
+        // Represent q and eta near x==1 as a Taylor series
+        double delta3 = delta2*delta;
+        etan = mIncomeElasticity * (0.5 +
+                     1.0/6.0 * delta +
+                     1.0/12.0 * delta2 +
+                     1.0/20.0 * delta3);
+    }
+    return etan;
 }

@@ -504,9 +504,9 @@ void NodeInput::calcLevelizedCost( const std::string& aRegionName, const std::st
 
     // use the function to calculate our levelized costs
     double tempPrice = mProdDmdFn->calcLevelizedCost( mChildInputsCache, aRegionName, aSectorName, aPeriod,
-        aAlphaZero, mCurrentSigma );
+        aAlphaZero, mCurrentSigma, this );
 
-    //setPricePaid( tempPrice, aPeriod );
+    setPricePaid( tempPrice, aPeriod );
 
     // we only set the hack for the root so that we don't have to recurse through
     // the nest when it comes time to reset this flag

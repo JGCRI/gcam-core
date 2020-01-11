@@ -42,7 +42,7 @@
 * \ingroup Objects
 * \brief FoodDemandFunction class header file.
 * \author Pralit Patel
-* \author Jiyong Eom
+* \author Robert Link
 */
 
 #include <string>
@@ -53,15 +53,15 @@ class IInput;
 
 /*! 
  * \ingroup Objects
- * \brief A function which defines demand behavior for a building size in terms
- *         of floorspace given the income and energy service price changes.
- * \details The total floorspace is based off of a satiated demand function as follows:
- *           floorspace per capita  = ( satiation level - satiation adder ) 
- *                 * ( 1 - e^( -log(2) / satiation impedance * income
- *                 * ( price / initial price ) ^ price exponent ) ) + satiation adder
+ * \brief A function which drives the food demand system.
+ * \details The food demand system is based off of by Edmonds, et al. (2016) in .Climate Change Economics.
+*                         This drives the funciton contained in a nested input structure where we assume the child nodes
+ * this function drives the demand for are subtypes of the FoodDemandInput including StaplesFoodDemandInput and
+ *  NonStaplesFoodDemandInput.  The parent to this nest represents the "materials" from the paper.
  *
  * \author Pralit Patel
- * \author Jiyong Eom
+ * \author Robert Link
+ * \sa FoodDemandInput
  */
 class FoodDemandFunction : public AProductionFunction {
 public:
@@ -69,6 +69,10 @@ public:
                        const std::string& sectorName, const double aShutdownCoef, int period,
                        double capitalStock = 0, double alphaZero = 0, double sigma = 0, double IBT = 0,
                        const IInput* aParentInput = 0 ) const;
+    
+    virtual double calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
+                                      const std::string& aSectorName, int aPeriod, double aAlphaZero = 0,
+                                      double aSigma = 0, const IInput* aParentInput = 0 ) const;
     
     // AProductionFunction methods not implemented by this function
     double changeElasticity( InputSet& input, const std::string& aRegionName, double priceReceived,
@@ -126,13 +130,6 @@ private:
     double calcCoefficient( InputSet& input, double consumption, const std::string& regionName,
                             const std::string& sectorName, int period, double sigma = 0, double IBT = 0,
                             double capitalStock = 0, const IInput* aParentInput = 0 ) const
-    {
-        return 0;
-    }
-    
-    double calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
-                              const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
-                              const IInput* aParentInput ) const
     {
         return 0;
     }
