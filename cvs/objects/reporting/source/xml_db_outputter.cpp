@@ -53,7 +53,6 @@
 #include "resources/include/resource.h"
 #include "sectors/include/afinal_demand.h"
 #include "sectors/include/energy_final_demand.h"
-#include "sectors/include/consumer_final_demand.hpp"
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
 #include "sectors/include/nesting_subsector.h"
@@ -799,50 +798,6 @@ void XMLDBOutputter::endVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergy
     // Write the closing finalDemand tag.
     XMLWriteClosingTag( aEnergyFinalDemand->getXMLName(), mBuffer, mTabs.get() );
 }
-
-void XMLDBOutputter::startVisitConsumerFinalDemand( const ConsumerFinalDemand
-                                                    *aConsumerFinalDemand, int aPeriod )
-{
-    XMLWriteOpeningTag( aConsumerFinalDemand->getXMLName(), mBuffer,
-                        mTabs.get(), aConsumerFinalDemand->getName(),
-                        0, "" );
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    int nper = modeltime->getmaxper();
-    // array to hold output values
-    vector<vector<double> >demand(nper);
-    // array to hold unit names
-    vector<string> units;
-    aConsumerFinalDemand->getReportingUnits( units );
-    // array to hold component names 
-    vector<string> components;
-    aConsumerFinalDemand->getComponentNames( components );
-    
-    // Collect all of the demands, since this is done by period
-    for( int i=0; i < nper; ++i ) {
-        aConsumerFinalDemand->getDemand( demand[i] , i);
-    }
-
-    // Write out demands for each component in their own quasi-sector
-    // underneath this object.   
-    for( unsigned j=0; j < components.size(); ++j) {
-        XMLWriteOpeningTag("demand-component", mBuffer, mTabs.get(),
-                           components[j]);
-        for( int i=0; i < nper; ++i ) {
-            writeItem("demand", units[j], demand[i][j], i);
-        }
-        XMLWriteClosingTag("demand-component", mBuffer, mTabs.get());
-    }
-}
-
-
-void XMLDBOutputter::endVisitConsumerFinalDemand( const ConsumerFinalDemand
-                                                  *aConsumerFinalDemand, int aPeriod )
-{
-    XMLWriteClosingTag( aConsumerFinalDemand->getXMLNameStatic(),
-                        mBuffer, mTabs.get() );
-}
-
 
 void XMLDBOutputter::startVisitBaseTechnology( const BaseTechnology* aBaseTech, const int aPeriod ) {
     // writing blank technologies is not a big concern for sgm so just create a child buffer
