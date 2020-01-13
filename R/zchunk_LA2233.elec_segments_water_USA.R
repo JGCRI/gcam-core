@@ -131,7 +131,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
              "L2233.SubsectorShrwt_elecS_cool_USA",
              "L2233.SubsectorShrwtInterp_elecS_USA",
              "L2233.SubsectorShrwtInterpTo_elecS_USA",
-             "L2233.SubsectorShrwtInterp_elecS_cool_USA",
+             #"L2233.SubsectorShrwtInterp_elecS_cool_USA",
              "L2233.SubsectorShrwtInterpTo_elecS_cool_USA",
              "L2233.Supplysector_elecS_cool_USA"))
   } else if(command == driver.MAKE) {
@@ -713,9 +713,8 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       group_by(supplysector, subsector0, subsector, region, year) %>%
       mutate(calOutputValue = if_else(grepl("CSP",subsector),calOutputValue/2,
                                       if_else(subsector0=="wind"|grepl("PV",subsector), calOutputValue,calOutputValue*share))) %>% replace_na(list(calOutputValue=0)) %>%
-      ## dive by 2 for 2 cooling technology types in CSP. This will need to be addressed later
+      ## divide by 2 to account for recirculating and dry_cooling technology types in CSP. This will need to be addressed later
       select(-value, -share) %>%
-      ##split shares across all techs
       ungroup() %>%
       bind_rows(L2233.StubTechProd_elec_USA %>% filter(calOutputValue == 0)) %>%
       mutate(technology = if_else(subsector=="wind_base",subsector,technology),
@@ -835,10 +834,10 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       L2233.SubsectorShrwtInterp_elecS_USA
 
 
-      L2233.SubsectorShrwtInterp_elecS_USA %>%
-      left_join(L2233.SubsectorLogit_elecS_cool_USA %>% filter(region=="HI") %>% select(-logit.year.fillout, -logit.exponent, -logit.type), by= c("region","supplysector","subsector0")
-      ) ->
-      L2233.SubsectorShrwtInterp_elecS_cool_USA
+      #L2233.SubsectorShrwtInterp_elecS_USA %>%
+      #left_join(L2233.SubsectorLogit_elecS_cool_USA %>% filter(region=="HI") %>% select(-logit.year.fillout, -logit.exponent, -logit.type), by= c("region","supplysector","subsector0")
+      #) ->
+      #L2233.SubsectorShrwtInterp_elecS_cool_USA
 
     L2234.SubsectorShrwtInterpTo_elecS_USA %>%
       rename(subsector0=subsector)%>%
@@ -849,7 +848,8 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
 
       L2233.SubsectorShrwtInterpTo_elecS_USA %>%
       left_join(L2233.SubsectorLogit_elecS_cool_USA %>% select(-logit.year.fillout, -logit.exponent, -logit.type), by= c("region","supplysector","subsector0")
-      ) ->
+      ) %>% mutate(to.value = if_else(from.year>=2015&subsector=="nuc_base_Gen II",0,to.value))->
+        #Quick fix here to eliminate future nuclear Gen II from falsely being interpolated past 2030. Fix in future
       L2233.SubsectorShrwtInterpTo_elecS_cool_USA
 
       ## Add subsector shareweights in future periods to allow model to interpolate from 2015.
@@ -891,7 +891,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       na.omit() %>%
       filter(subs.share.weight>0) %>%
       mutate(state.cooling.share.weight = if_else(share.weight>0&share.weight.sum>0,tech.share.weight,
-                                                                            if_else(share.weight==0|tech.share.weight==0,0,1))) %>%
+                                                                            if_else(share.weight==0&tech.share.weight==0,0,1))) %>%
       select(region,supplysector,subsector0,cooling_system,from.year,state.cooling.share.weight) %>%
       unique() %>%
       group_by(region,supplysector,subsector0,cooling_system,from.year) %>%
@@ -1366,13 +1366,13 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
          add_precursors("L2234.SubsectorShrwtInterp_elecS_USA") ->
          L2233.SubsectorShrwtInterp_elecS_USA
 
-       L2233.SubsectorShrwtInterp_elecS_cool_USA %>%
-         add_title("Electricity Load Segments Subsector Shareweights") %>%
-         add_units("none") %>%
-         add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
-         add_legacy_name("L2233.SubsectorShrwtInterp_elec") %>%
-         add_precursors("L2234.SubsectorShrwtInterp_elecS_USA") ->
-         L2233.SubsectorShrwtInterp_elecS_cool_USA
+       #L2233.SubsectorShrwtInterp_elecS_cool_USA %>%
+         #add_title("Electricity Load Segments Subsector Shareweights") %>%
+         #add_units("none") %>%
+         #add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
+         #add_legacy_name("L2233.SubsectorShrwtInterp_elec") %>%
+         #add_precursors("L2234.SubsectorShrwtInterp_elecS_USA") ->
+         #L2233.SubsectorShrwtInterp_elecS_cool_USA
 
        L2233.SubsectorShrwtInterpTo_elecS_USA %>%
          add_title("Electricity Load Segments Nesting-Subsector Shareweights") %>%
@@ -1446,7 +1446,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                     L2233.SubsectorShrwt_elecS_cool_USA,
                     L2233.SubsectorShrwtInterp_elecS_USA,
                     L2233.SubsectorShrwtInterpTo_elecS_USA,
-                    L2233.SubsectorShrwtInterp_elecS_cool_USA,
+                    #L2233.SubsectorShrwtInterp_elecS_cool_USA,
                     L2233.SubsectorShrwtInterpTo_elecS_cool_USA,
                     L2233.Supplysector_elecS_cool_USA)
       } else {
