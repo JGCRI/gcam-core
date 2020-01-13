@@ -55,9 +55,11 @@ class IInput;
  * \ingroup Objects
  * \brief A function which drives the food demand system.
  * \details The food demand system is based off of by Edmonds, et al. (2016) in .Climate Change Economics.
-*                         This drives the funciton contained in a nested input structure where we assume the child nodes
- * this function drives the demand for are subtypes of the FoodDemandInput including StaplesFoodDemandInput and
- *  NonStaplesFoodDemandInput.  The parent to this nest represents the "materials" from the paper.
+ *          This drives the funciton contained in a nested input structure where
+ *          we assume the child nodes
+ *          this function drives the demand for are subtypes of the FoodDemandInput
+ *          including StaplesFoodDemandInput and NonStaplesFoodDemandInput.
+ *          The parent to this nest represents the "materials" from the paper.
  *
  * \author Pralit Patel
  * \author Robert Link

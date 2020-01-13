@@ -54,7 +54,7 @@
 /*!
 * \ingroup Objects
 * \brief The Edmonds, et al. (2016) food demand system
-
+*
 * \details This class implements the demand system for representing
 *          staple and nonstaple foods, as published by Edmonds, et
 *          al. (2016) in _Climate Change Economics_ (full cite to

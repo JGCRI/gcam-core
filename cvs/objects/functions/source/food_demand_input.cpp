@@ -219,7 +219,7 @@ double FoodDemandInput::getPhysicalDemand( const int aPeriod ) const {
 void FoodDemandInput::setPhysicalDemand( double aPhysicalDemand, const string& aRegionName, const int aPeriod )
 {
     // Quantity conversion factor on output.  Output quantities are in
-    // Mcal/day (per capita).  We need to convert to Pcal/year (also per
+    // Kcal/day (per capita).  We need to convert to Pcal/year (also per
     // capita).  This factor will be applied just before output.
     // Importantly, it will be applied *after* the budget fraction is
     // calculated.  In light of this, one might wonder why we didn't just
@@ -269,18 +269,18 @@ void FoodDemandInput::setPrice( const string& aRegionName,
 }
 
 /*! \brief Returns the price paid for each FoodDemandInput.
-* \param aRegionName Name of the containing region.
-* \param aPeriod Model period.
-*/
+ * \param aRegionName Name of the containing region.
+ * \param aPeriod Model period.
+ */
 double FoodDemandInput::getPricePaid( const string& aRegionName, const int aPeriod ) const{
     return getPrice( aRegionName, aPeriod );
 }
 
 /*! \brief Set the price paid for each FoodDemandInput.
-*
-* \param aPricePaid new price paid value
-* \param aPeriod Model period.
-*/
+ *
+ * \param aPricePaid new price paid value
+ * \param aPeriod Model period.
+ */
 void FoodDemandInput::setPricePaid( double aPricePaid, const int aPeriod ) {
     // The service price is set by the supply sector and so can not be set here.
 }
@@ -297,13 +297,13 @@ void FoodDemandInput::accept( IVisitor* aVisitor, const int aPeriod ) const {
 /*!
  * \brief Get the conversion factor to convert from the food demand untis to the
  *        annualized units the supply sectors expect.
- * \details The food demand system will calculate demands in term os Mcal / person / day
+ * \details The food demand system will calculate demands in term os Kcal / person / day
  *          the supply sectors are expecting Pcal / year.  This method provides the conversion..
  * \return The appropriate conversion factor.
  */
 double FoodDemandInput::getAnnualDemandConversionFactor( const int aPeriod ) const {
     // Quantity conversion factor on output.  Output quantities are in
-    // Mcal/day (per capita).  We need to convert to Pcal/year (also per
+    // Kcal/day (per capita).  We need to convert to Pcal/year (also per
     // capita).  This factor will be applied just before output.
     // Importantly, it will be applied *after* the budget fraction is
     // calculated.  In light of this, one might wonder why we didn't just
@@ -347,11 +347,11 @@ double FoodDemandInput::getTrialShare( const string& aRegionName,
 }
 
 /*!
-* \brief Set the actual share for this food demand input.
-* \details Updates the trial value market to let it know what the actual share value was.
-* \param aRegionName The region name used to look up the market.
-* \param aPeriod The current model period.
-*/
+ * \brief Set the actual share for this food demand input.
+ * \details Updates the trial value market to let it know what the actual share value was.
+ * \param aRegionName The region name used to look up the market.
+ * \param aPeriod The current model period.
+ */
 void FoodDemandInput::setActualShare( double aShare,
                                       const string& aRegionName,
                                       const int aPeriod )
@@ -387,14 +387,14 @@ double FoodDemandInput::calcSelfPriceExponent( double aAdjIncome,
 }
 
 /*!
-* \brief Calculate the cross price exponent (e_ij(x))
-* \details The cross price exponent is calculated as:
-*          e_ij = g_ij - alpha_j * f(x)
-* \param aAdjIncome The adjusted income (x).
-* \param aRegionName The region name used to look up the trial share market.
-* \param aPeriod The current model period.
-* \return The value fo the cross price exponent equation.
-*/
+ * \brief Calculate the cross price exponent (e_ij(x))
+ * \details The cross price exponent is calculated as:
+ *          e_ij = g_ij - alpha_j * f(x)
+ * \param aAdjIncome The adjusted income (x).
+ * \param aRegionName The region name used to look up the trial share market.
+ * \param aPeriod The current model period.
+ * \return The value fo the cross price exponent equation.
+ */
 double FoodDemandInput::calcCrossPriceExponent( const FoodDemandInput* aOther,
                                                 double aAdjIncome,
                                                 const string& aRegionName,
@@ -511,12 +511,12 @@ double StaplesFoodDemandInput::calcIncomeTerm( double aAdjIncome ) const {
 }
 
 /*!
-* \brief Calculate the derivative of thre income term f(x).
-* \details The derivative of the income term for staples is calculated as:
-*          f(x) = lam * (1 - log(e^kappa)) / x
-* \param aAdjIncome The adjusted income at which to calculate this term (x).
-* \return The derivative of the income term to use in the food demand system for a staple good.
-*/
+ * \brief Calculate the derivative of thre income term f(x).
+ * \details The derivative of the income term for staples is calculated as:
+ *          f(x) = lam * (1 - log(e^kappa)) / x
+ * \param aAdjIncome The adjusted income at which to calculate this term (x).
+ * \return The derivative of the income term to use in the food demand system for a staple good.
+ */
 double StaplesFoodDemandInput::calcIncomeTermDerivative( double aAdjIncome ) const {
     double k = exp( mIncomeMaxTerm );        // k-value from the R version of the model
     // TODO: worry about the follow given we are unlikey to get such small incomes in GCAM:
@@ -574,13 +574,13 @@ bool NonStaplesFoodDemandInput::XMLDerivedClassParse( const string& aNodeName, c
 }
 
 /*!
-* \brief Get the cross price elasticity (g_ij)
-* \details The cross price elasticity for non-staples is not a free parameter and it can be derived as:
-               g_nonstaples = (alpha_nonstaples / alpha_staples) * g_staples
-* \param aRegionName The region name used to look up the trial share market.
-* \param aPeriod The current model period.
-* \return The value for the cross price elasticity.
-*/
+ * \brief Get the cross price elasticity (g_ij)
+ * \details The cross price elasticity for non-staples is not a free parameter and it can be derived as:
+ *          g_nonstaples = (alpha_nonstaples / alpha_staples) * g_staples
+ * \param aRegionName The region name used to look up the trial share market.
+ * \param aPeriod The current model period.
+ * \return The value for the cross price elasticity.
+ */
 double NonStaplesFoodDemandInput::getCrossPriceElasticity( const FoodDemandInput* aOther,
                                                           const string& aRegionName,
                                                           const int aPeriod ) const
@@ -597,8 +597,8 @@ double NonStaplesFoodDemandInput::getCrossPriceElasticity( const FoodDemandInput
 }
 
 /*!
-*\brief Get the appropriate price scaler.
-*/
+ *\brief Get the appropriate price scaler.
+ */
 double NonStaplesFoodDemandInput::getPriceScaler() const {
     // This scale factor below give us a little extra control over the shape of
     // the demand functions.  Unlike the other model parameters, we didn't fit
@@ -615,13 +615,13 @@ double NonStaplesFoodDemandInput::getPriceScaler() const {
 }
 
 /*!
-* \brief Calculate the income term (x^h(x)).
-* \details The income term for non-staples is calculated as:
-*          Qi = x^(nu / (1 - x)) * scale
-*          where scale is calculated such that Qi(1) == 1
-* \param aAdjIncome The adjusted income at which to calculate this term (x).
-* \return The income term to use in the food demand system for a non-staple good.
-*/
+ * \brief Calculate the income term (x^h(x)).
+ * \details The income term for non-staples is calculated as:
+ *          Qi = x^(nu / (1 - x)) * scale
+ *          where scale is calculated such that Qi(1) == 1
+ * \param aAdjIncome The adjusted income at which to calculate this term (x).
+ * \return The income term to use in the food demand system for a non-staple good.
+ */
 double NonStaplesFoodDemandInput::calcIncomeTerm( double aAdjIncome ) const {
     double enu = exp(-mIncomeElasticity);
     double delta = 1.0-aAdjIncome;
@@ -643,12 +643,12 @@ double NonStaplesFoodDemandInput::calcIncomeTerm( double aAdjIncome ) const {
 }
 
 /*!
-* \brief Calculate the derivative of thre income term f(x).
-* \details The derivative of the income term for non-staples is calculated as:
-*          f(x) = 1/(1-x) + x * log(x) / (1-x)^2
-* \param aAdjIncome The adjusted income at which to calculate this term (x).
-* \return The derivative of the income term to use in the food demand system for a non-staple good.
-*/
+ * \brief Calculate the derivative of thre income term f(x).
+ * \details The derivative of the income term for non-staples is calculated as:
+ *          f(x) = 1/(1-x) + x * log(x) / (1-x)^2
+ * \param aAdjIncome The adjusted income at which to calculate this term (x).
+ * \return The derivative of the income term to use in the food demand system for a non-staple good.
+ */
 double NonStaplesFoodDemandInput::calcIncomeTermDerivative( double aAdjIncome ) const {
     double delta = 1.0-aAdjIncome;
     double delta2 = delta*delta;
@@ -669,3 +669,4 @@ double NonStaplesFoodDemandInput::calcIncomeTermDerivative( double aAdjIncome ) 
     }
     return etan;
 }
+
