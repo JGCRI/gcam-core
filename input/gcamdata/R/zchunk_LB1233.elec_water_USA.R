@@ -19,7 +19,7 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
              FILE = "gcam-usa/UCS_tech_names",
              FILE = "gcam-usa/UCS_water_types",
              FILE = "gcam-usa/A23.elecS_tech_mapping_new",
-             FILE = "gcam-usa/Macknick_elec_water_m3MWh",
+             #FILE = "gcam-usa/Macknick_elec_water_m3MWh",
              FILE = "gcam-usa/UCS_Database",
              "L1231.out_EJ_state_elec_F_tech"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -42,7 +42,7 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
     UCS_tech_names <- get_data(all_data, "gcam-usa/UCS_tech_names")
     UCS_water_types <- get_data(all_data, "gcam-usa/UCS_water_types")
     A23.elecS_tech_mapping_new <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_new")
-    Macknick_elec_water_m3MWh <- get_data(all_data, "gcam-usa/Macknick_elec_water_m3MWh")
+    #Macknick_elec_water_m3MWh <- get_data(all_data, "gcam-usa/Macknick_elec_water_m3MWh")
     UCS_Database <- get_data(all_data, "gcam-usa/UCS_Database")
     L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "L1231.out_EJ_state_elec_F_tech")
 
