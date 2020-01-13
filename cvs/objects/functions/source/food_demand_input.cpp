@@ -290,8 +290,8 @@ bool FoodDemandInput::hasTypeFlag( const int aTypeFlag ) const {
 }
 
 void FoodDemandInput::accept( IVisitor* aVisitor, const int aPeriod ) const {
-    //aVisitor->startVisitFoodDemandInput( this, aPeriod );
-    //aVisitor->endVisitFoodDemandInput( this, aPeriod );
+    aVisitor->startVisitFoodDemandInput( this, aPeriod );
+    aVisitor->endVisitFoodDemandInput( this, aPeriod );
 }
 
 /*!
