@@ -22,7 +22,7 @@ ENVLIBS         =
 ## should a user not be able to use Java they could concievably turn this off
 ## and set DEBUG_XML_DB in xml_db_outputter.ccp to just have the data written
 ## out as an XML file (having both disabled will send the output to nowhere)
-HAVE_JAVA = 1
+HAVE_JAVA = 0
 
 ## set this to a nonzero value to enable parallel execution (TBB required)
 ifndef USE_GCAM_PARALLEL
