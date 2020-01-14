@@ -282,7 +282,6 @@
         <output-data>Pakistan_Helmand</output-data>
         <output-data>Pakistan_IndusR</output-data>
         <output-data>Pakistan_SabarmatiR</output-data>
-        <output-data>Pakistan_Tamir</output-data>
         <output-data>Pakistan_Tarim</output-data>
         <output-data>Russia_AmurR</output-data>
         <output-data>Russia_ArcticIsl</output-data>
@@ -395,6 +394,11 @@
         <output-data>USA_UsaCstNE</output-data>
         <output-data>USA_UsaCstSE</output-data>
         <output-data>USA_UsaPacNW</output-data>
+        <output-data>EU-12_MeditIsl</output-data>
+        <output-data>EU-15_Caribbean</output-data>
+        <output-data>EU-15_MeditS</output-data>
+        <output-data>Southeast Asia_Madagascar</output-data>
+        <output-data>Taiwan_Taiwan</output-data>
     </column>
     <column name="land-type">
         <output-data>Forest</output-data>
