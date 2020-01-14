@@ -52,7 +52,7 @@
 int main( ) {
     // Define base control variables.
     // In fully coupled mode, these are defined in an E3SM namelist.
-    std::string CASE_NAME = "Test";
+    std::string CASE_NAME = "Impacts";
     std::string GCAM_CONFIG = "configuration.xml";
     std::string BASE_CO2_FILE = "../cpl/data/gridded_co2.2010";
     std::string GCAM2ELM_CO2_MAPPING_FILE = "../cpl/mappings/co2.xml";

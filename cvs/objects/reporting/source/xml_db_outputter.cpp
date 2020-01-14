@@ -107,7 +107,7 @@
 
 // Whether to write a text file with the contents that are to be inserted
 // into the XML database.
-#define DEBUG_XML_DB 0
+#define DEBUG_XML_DB 1
 
 #ifdef DEBUG_XML_DB
 #include <boost/iostreams/tee.hpp>
@@ -179,8 +179,9 @@ mSubsectorDepth( 0 )
 #endif
 {
 #if( DEBUG_XML_DB )
+    std::string fileName = "GCAMDBOutput_" + scenario->getName() + ".xml";
     // Have data written to mBuffer go to the debug_db file as well.
-    file_sink debugDBSink( "debug_db.xml" );
+    file_sink debugDBSink( fileName );
     // Use a "tee" filter to ensure data gets to all sinks.
     tee_filter<file_sink> teeDebugFilter( debugDBSink );
     mBuffer.push( teeDebugFilter );
