@@ -134,21 +134,17 @@ public:
                          const int aPeriod );
 
     double getScaleTerm() const;
-    
-    virtual double calcSelfPriceExponent( double aAdjIncome,
-                                          const std::string& aRegionName,
-                                          const int aPeriod ) const;
 
-    virtual double calcCrossPriceExponent( const FoodDemandInput* aOther,
-                                           double aAdjIncome,
-                                           const std::string& aRegionName,
-                                           const int aPeriod) const;
+    virtual double calcPriceExponent( const FoodDemandInput* aOther,
+                                      double aAdjIncome,
+                                      const std::string& aRegionName,
+                                      const int aPeriod) const;
     
     // The following food demand methods will have differing behavior for
     // staples and non-staples.
-    virtual double getCrossPriceElasticity( const FoodDemandInput* aOther,
-                                            const std::string& aRegionName,
-                                            const int aPeriod ) const = 0;
+    virtual double getPriceElasticity( const FoodDemandInput* aOther,
+                                       const std::string& aRegionName,
+                                       const int aPeriod ) const = 0;
 
     virtual double getPriceScaler() const = 0;
 
@@ -430,9 +426,9 @@ public:
     static const std::string& getXMLNameStatic();
 
     // FoodDemandInput specific methods
-    virtual double getCrossPriceElasticity( const FoodDemandInput* aOther,
-                                            const std::string& aRegionName,
-                                            const int aPeriod ) const;
+    virtual double getPriceElasticity( const FoodDemandInput* aOther,
+                                       const std::string& aRegionName,
+                                       const int aPeriod ) const;
 
     virtual double getPriceScaler() const;
 
@@ -477,9 +473,9 @@ public:
     static const std::string& getXMLNameStatic();
 
     // FoodDemandInput specific methods
-    virtual double getCrossPriceElasticity( const FoodDemandInput* aOther,
-                                            const std::string& aRegionName,
-                                            const int aPeriod ) const;
+    virtual double getPriceElasticity( const FoodDemandInput* aOther,
+                                       const std::string& aRegionName,
+                                       const int aPeriod ) const;
 
     virtual double getPriceScaler() const;
 

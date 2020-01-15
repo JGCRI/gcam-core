@@ -363,44 +363,28 @@ void FoodDemandInput::setActualShare( double aShare,
 }
 
 /*!
- * \brief Get the scale term (A) for this food demand input.
+ * \brief Get the scale term (A) * regional bias for this food demand input.
  */
 double FoodDemandInput::getScaleTerm() const {
     return mScaleParam * mRegionalBias;
 }
 
 /*!
- * \brief Calculate the self price exponent (e_ii(x))
- * \details The self price exponent is calculated as:
- *          e_ii = g_ii - alpha_i * f(x)
- * \param aAdjIncome The adjusted income (x).
- * \param aRegionName The region name used to look up the trial share market.
- * \param aPeriod The current model period.
- * \return The value fo the self price exponent equation.
- */
-double FoodDemandInput::calcSelfPriceExponent( double aAdjIncome,
-                                               const string& aRegionName,
-                                               const int aPeriod ) const
-{
-    return mSelfPriceElasticity -
-        getTrialShare( aRegionName, aPeriod ) * calcIncomeTermDerivative( aAdjIncome );
-}
-
-/*!
  * \brief Calculate the cross price exponent (e_ij(x))
  * \details The cross price exponent is calculated as:
  *          e_ij = g_ij - alpha_j * f(x)
+ * \param aOther The instance of FoodDemandInput for j.
  * \param aAdjIncome The adjusted income (x).
  * \param aRegionName The region name used to look up the trial share market.
  * \param aPeriod The current model period.
- * \return The value fo the cross price exponent equation.
+ * \return The value for the price exponent equation.
  */
-double FoodDemandInput::calcCrossPriceExponent( const FoodDemandInput* aOther,
-                                                double aAdjIncome,
-                                                const string& aRegionName,
-                                                const int aPeriod ) const
+double FoodDemandInput::calcPriceExponent( const FoodDemandInput* aOther,
+                                           double aAdjIncome,
+                                           const string& aRegionName,
+                                           const int aPeriod ) const
 {
-    return aOther->getCrossPriceElasticity( this, aRegionName, aPeriod ) -
+    return getPriceElasticity( aOther, aRegionName, aPeriod ) -
         aOther->getTrialShare( aRegionName, aPeriod ) * calcIncomeTermDerivative( aAdjIncome );
 }
 
@@ -450,17 +434,18 @@ bool StaplesFoodDemandInput::XMLDerivedClassParse( const string& aNodeName, cons
 }
 
 /*!
- * \brief Get the cross price elasticity (g_ij)
- * \details The cross price elasticity for staples is given as a read in parameter.
+ * \brief Get the price elasticity (g_ij)
+ * \details If this == aOther then returns self price elasticity otherwise the cross both of which are just read in from input.
+ * \param aOther The instance of FoodDemandInput for j.
  * \param aRegionName The region name used to look up the trial share market.
  * \param aPeriod The current model period.
- * \return The value for the cross price elasticity.
+ * \return The value for the price elasticity.
  */
-double StaplesFoodDemandInput::getCrossPriceElasticity( const FoodDemandInput* aOther,
-                                                        const string& aRegionName,
-                                                        const int aPeriod ) const
+double StaplesFoodDemandInput::getPriceElasticity( const FoodDemandInput* aOther,
+                                                   const string& aRegionName,
+                                                   const int aPeriod ) const
 {
-    return mCrossPriceElasticity;
+    return this == aOther ? mSelfPriceElasticity : mCrossPriceElasticity;
 }
 
 /*!
@@ -513,7 +498,7 @@ double StaplesFoodDemandInput::calcIncomeTerm( double aAdjIncome ) const {
 /*!
  * \brief Calculate the derivative of thre income term f(x).
  * \details The derivative of the income term for staples is calculated as:
- *          f(x) = lam * (1 - log(e^kappa)) / x
+ *          f(x) = lam * (1 - log(x*e^kappa)) / x
  * \param aAdjIncome The adjusted income at which to calculate this term (x).
  * \return The derivative of the income term to use in the food demand system for a staple good.
  */
@@ -574,26 +559,32 @@ bool NonStaplesFoodDemandInput::XMLDerivedClassParse( const string& aNodeName, c
 }
 
 /*!
- * \brief Get the cross price elasticity (g_ij)
- * \details The cross price elasticity for non-staples is not a free parameter and it can be derived as:
+ * \brief Get the price elasticity (g_ij)
+ * \details If this == aOther then returns mSelfPriceElasticity which is just read in from input otherwise calculate
  *          g_nonstaples = (alpha_nonstaples / alpha_staples) * g_staples
+ * \param aOther The instance of FoodDemandInput for j.
  * \param aRegionName The region name used to look up the trial share market.
  * \param aPeriod The current model period.
- * \return The value for the cross price elasticity.
+ * \return The value for the price elasticity.
  */
-double NonStaplesFoodDemandInput::getCrossPriceElasticity( const FoodDemandInput* aOther,
-                                                          const string& aRegionName,
-                                                          const int aPeriod ) const
+double NonStaplesFoodDemandInput::getPriceElasticity( const FoodDemandInput* aOther,
+                                                      const string& aRegionName,
+                                                      const int aPeriod ) const
 {
-    // Get the trial budget fractions.  These will be used to calculate
-    // price exponents in the demand equations.
-    double alphas = aOther->getTrialShare( aRegionName, aPeriod );
-    double alphan = getTrialShare( aRegionName, aPeriod );
+    if( this == aOther ) {
+        return mSelfPriceElasticity;
+    }
+    else {
+        // Get the trial budget fractions.  These will be used to calculate
+        // price exponents in the demand equations.
+        double alphas = aOther->getTrialShare( aRegionName, aPeriod );
+        double alphan = getTrialShare( aRegionName, aPeriod );
 
-    double amin = 0.1;          // For stability, we limit how small the alphas
-                                // can be when calculating the condition for the
-                                // cross-elasticity
-    return std::max(alphan, amin) / std::max(alphas, amin) * aOther->getCrossPriceElasticity( this, aRegionName, aPeriod );
+        double amin = 0.1;          // For stability, we limit how small the alphas
+                                    // can be when calculating the condition for the
+                                    // cross-elasticity
+        return std::max(alphan, amin) / std::max(alphas, amin) * aOther->getPriceElasticity( this, aRegionName, aPeriod );
+    }
 }
 
 /*!

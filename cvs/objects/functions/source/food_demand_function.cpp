@@ -130,12 +130,9 @@ double FoodDemandFunction::calcDemand( InputSet& aInput, double income, const st
         // calculate the first part of the equation: A * x^h(x) (note calcIncomeTerm will
         // calculate all of x^h(x) as there is implicitly a scale term included there)
         double currDemand = foodInputs[i]->getScaleTerm() * foodInputs[i]->calcIncomeTerm( adjIncome );
-        // calculate the price terms of the equations MULT_j(w_j ^ e_j(x))
+        // calculate the price terms of the equations MULT_j(w_j ^ e_ij(x))
         for( size_t j = 0; j < aInput.size(); ++j ) {
-            // if i == j we are doing the self price term, otherwise the cross price term
-            currDemand *= pow( adjPrices[j], i == j ?
-                               foodInputs[i]->calcSelfPriceExponent( adjIncome, aRegionName, aPeriod ) :
-                               foodInputs[i]->calcCrossPriceExponent( foodInputs[j], adjIncome, aRegionName, aPeriod ) );
+            currDemand *= pow( adjPrices[j], foodInputs[i]->calcPriceExponent( foodInputs[j], adjIncome, aRegionName, aPeriod ) );
         }
         demands[i] = currDemand;
         // the demand for materials is just the residual of the food demand:
