@@ -5,13 +5,13 @@
 # Column types: ccncnccccc
 # ----------
 supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,interpolation.function,logit.type
-regional coal,domestic coal,-6,start-year,1,share-weight,final-calibration-year,end-year,linear,
-regional coal,imported coal,-6,start-year,1,share-weight,final-calibration-year,end-year,linear,
-regional crude oil,domestic crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,linear,
-regional crude oil,imported crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,linear,
-regional unconventional oil,domestic unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,linear,
-regional unconventional oil,imported unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,linear,
-regional oil,unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,linear,
-regional oil,crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,linear,
-regional natural gas,domestic natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,linear,
-regional natural gas,imported natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,linear,
+regional coal,domestic coal,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
+regional coal,imported coal,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
+regional crude oil,domestic crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
+regional crude oil,imported crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
+regional unconventional oil,domestic unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
+regional unconventional oil,imported unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
+regional oil,unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
+regional oil,crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
+regional natural gas,domestic natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
+regional natural gas,imported natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
