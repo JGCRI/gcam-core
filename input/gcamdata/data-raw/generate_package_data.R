@@ -90,6 +90,7 @@ generate_level2_data_names <- function() {
   # Subsectors
   level2_data_names[["Subsector"]] <- c("region", "supplysector", "subsector")
   level2_data_names[["SubsectorAll"]] <- c(level2_data_names[["Subsector"]], "logit.year.fillout", "logit.exponent", "year.fillout", "share.weight", "apply.to", "from.year", "to.year", "interpolation.function")
+  level2_data_names[["SubsectorAllTo"]] <- c(level2_data_names[["Subsector"]], "logit.year.fillout", "logit.exponent", "year.fillout", "share.weight", "apply.to", "from.year", "to.year", "to.value", "interpolation.function")
   level2_data_names[["SubsectorLogit"]] <- c(level2_data_names[["Subsector"]], "logit.year.fillout", "logit.exponent")
   level2_data_names[["SubsectorLogitType"]] <- c(level2_data_names[["Subsector"]], LOGIT_TYPE_COLNAME)
   level2_data_names[["SubsectorLogit_absolute-cost-logit"]] <- c("region", "supplysector", "subsector", LOGIT_TYPE_COLNAME)

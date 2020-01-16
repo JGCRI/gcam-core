@@ -2,16 +2,16 @@
 # Title: Subsector assumptions for regional crop markets
 # Units: Various
 # Source: NA
-# Column types: ccncnccccc
+# Column types: ccncncccncc
 # ----------
-supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,interpolation.function,logit.type
-regional coal,domestic coal,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
-regional coal,imported coal,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
-regional crude oil,domestic crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
-regional crude oil,imported crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
-regional unconventional oil,domestic unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
-regional unconventional oil,imported unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
-regional oil,unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
-regional oil,crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
-regional natural gas,domestic natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
-regional natural gas,imported natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,s-curve,
+supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,to.value,interpolation.function,logit.type
+regional coal,domestic coal,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
+regional coal,imported coal,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
+regional crude oil,domestic crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
+regional crude oil,imported crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
+regional unconventional oil,domestic unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
+regional unconventional oil,imported unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
+regional oil,unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
+regional oil,crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
+regional natural gas,domestic natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
+regional natural gas,imported natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,

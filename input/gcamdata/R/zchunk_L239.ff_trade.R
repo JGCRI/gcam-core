@@ -95,7 +95,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
     # L239.SubsectorAll_tra: generic subsector info for traded ff commodities
     # Traded commodities have the region set to USA and the subsector gets the region name pre-pended
     L239.SubsectorAll_tra <- write_to_all_regions(A_ff_TradedSubsector,
-                                                  c(LEVEL2_DATA_NAMES[["SubsectorAll"]], "logit.type"),
+                                                  c(LEVEL2_DATA_NAMES[["SubsectorAllTo"]], "logit.type"),
                                                   GCAM_region_names,
                                                   has_traded = TRUE)
 
@@ -142,7 +142,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
 
     # L239.SubsectorAll_reg: generic subsector info for regional ff commodities (competing domestic prod vs intl imports)
     L239.SubsectorAll_reg <- write_to_all_regions(A_ff_RegionalSubsector,
-                                                  c(LEVEL2_DATA_NAMES[["SubsectorAll"]], "logit.type"),
+                                                  c(LEVEL2_DATA_NAMES[["SubsectorAllTo"]], "logit.type"),
                                                   GCAM_region_names)
 
     # Base technology-level table for several tables to be written out")

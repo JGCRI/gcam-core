@@ -53,13 +53,13 @@ module_energy_batch_ff_trade_xml <- function(command, ...) {
     create_xml("ff_trade.xml") %>%
       add_logit_tables_xml(L239.Supplysector_tra, "Supplysector") %>%
       add_xml_data(L239.SectorUseTrialMarket_tra, "SectorUseTrialMarket") %>%
-      add_logit_tables_xml(L239.SubsectorAll_tra, "SubsectorAll", base_logit_header = "SubsectorLogit") %>%
+      add_logit_tables_xml(L239.SubsectorAll_tra, "SubsectorAllTo", base_logit_header = "SubsectorLogit") %>%
       add_xml_data(L239.TechShrwt_tra, "TechShrwt") %>%
       add_xml_data(L239.TechCost_tra, "TechCost") %>%
       add_xml_data(L239.TechCoef_tra, "TechCoef") %>%
       add_xml_data(L239.Production_tra, "Production") %>%
       add_logit_tables_xml(L239.Supplysector_reg, "Supplysector") %>%
-      add_logit_tables_xml(L239.SubsectorAll_reg, "SubsectorAll", base_logit_header = "SubsectorLogit") %>%
+      add_logit_tables_xml(L239.SubsectorAll_reg, "SubsectorAllTo", base_logit_header = "SubsectorLogit") %>%
       add_xml_data(L239.TechShrwt_reg, "TechShrwt") %>%
       add_xml_data(L239.TechCoef_reg, "TechCoef") %>%
       add_xml_data(L239.Production_reg_imp, "Production") %>%
