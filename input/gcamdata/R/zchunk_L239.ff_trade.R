@@ -1,6 +1,6 @@
 #' module_energy_L239.ff_trade
 #'
-#' Model input for regional and (globally) traded fossil fuel commodities
+#' Model input for regionally and globally traded fossil fuel commodities
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -158,7 +158,6 @@ module_energy_L239.ff_trade <- function(command, ...) {
     L239.TechCoef_reg <- select(A_ff_RegionalTechnology_R_Y, LEVEL2_DATA_NAMES[["TechCoef"]])
 
     # L239.Production_reg_imp: Output (flow) of gross imports
-    # Imports are equal to the gross imports calculated in L1091
     L239.GrossImports_EJ_R_C_Y <- left_join_error_no_match(L2011.ff_GrossTrade_EJ_R_C_Y,
                                                            GCAM_region_names,
                                                            by = "GCAM_region_ID") %>%
@@ -198,7 +197,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
              tech.share.weight = subs.share.weight) %>%
       select(LEVEL2_DATA_NAMES[["Production"]])
 
-    # Regional oil competes regional crude oil and regional unconventional oil, but this is all done within a market
+    # Regional oil competes regional crude oil and regional unconventional oil, but this is all done within a region
     # We'll calibrate any intraregional competition here.
     A_ff_RegionalTechnology_R_Y %>%
       filter(year %in% MODEL_BASE_YEARS,

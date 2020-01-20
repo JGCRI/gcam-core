@@ -1,7 +1,7 @@
 # File: A_ff_RegionalTechnology.csv
-# Title: Technology-level assumptions of regional crop markets
+# Title: Technology-level assumptions of regional fossil fuel markets
 # Units: Various
-# Comments: pass-through subsectors; there is no technology competition
+# Comments: pass-through subsectors; there is no technology competition. Traded markets happen in the US by convention. The traded market is a global market, so there is no reason they happen in the US (it could happen in any region) but by convention this is where the market is held.
 # Source: NA
 # Column types: ccccnnnc 
 # ----------

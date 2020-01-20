@@ -17,10 +17,10 @@ a vector of output names, or (if \code{command} is "MAKE") all
 the generated outputs: \code{L1011.ff_GrossTrade_EJ_R_C_Y} (energy level1)
 }
 \description{
-Calculate primary fossil fuel (coal, natural gas, crude oil) product mass balances, by region / commodity / year.
+Calculate primary fossil fuel (coal, natural gas, crude oil) product balances, by region / commodity / year.
 }
 \details{
-This chunk processes the bi-lateral trade flow data matrix from UN Comtrade, in order to differentiate trade of
+This chunk processes the bi-lateral trade flow data matrix from UN Comtrade, in order to identify trade of
   fossil fuels between GCAM regions.
 }
 \author{

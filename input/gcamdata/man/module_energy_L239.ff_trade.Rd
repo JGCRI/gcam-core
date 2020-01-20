@@ -20,7 +20,7 @@ Depends on \code{command}: either a vector of required inputs, a vector of outpu
   \code{L239.Production_reg_dom}, \code{L239.Consumption_intraregional}.
 }
 \description{
-Model input for regional and (globally) traded fossil fuel commodities
+Model input for regionally and globally traded fossil fuel commodities
 }
 \author{
 GPK February 2019

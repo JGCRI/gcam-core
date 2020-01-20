@@ -1,6 +1,6 @@
 #' module_energy_LB2011.ff_ALL_R_C_Y
 #'
-#' Calculate fossil fuel energy balances, by region / commodity / year.
+#' Calculate fossil fuel energy balances, by region / commodity / year and harmonize GCAM's data to Comtrade's.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -42,11 +42,10 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
     L1011.ff_GrossTrade_EJ_R_C_Y <- get_data(all_data, "L1011.ff_GrossTrade_EJ_R_C_Y")
 
     #There is no single file in GCAM that calculates net trade of fossil fuels. To build regional
-    # markets for fossil fuels (gas, oil, coal) we need to maintain GCAM's calibrations, so we need
-    # to calculate a net-trade to maintain.
+    # markets for fossil fuels (gas, oil, coal) we need to maintain GCAM's calibrations, so we
+    # calculate GCAM's implied net-trade to maintain.
 
-    #This treats crude oil and unconventional oil as one fuel type
-    # and natural gas and LNG as one fuel type, but that may need to be changed.
+    #This treats natural gas and LNG as one fuel type, but that should be changed in the future.
     # Total production is taken from L111.Prod_EJ_R_F_Yh and total consumption is calculated from
     # L1011.en_bal_EJ_R_Si_Fi_Yh and L121.in_EJ_R_TPES_crude_Yh/unoil.
 
@@ -97,7 +96,7 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       mutate(net_trade = if_else(is.na(net_trade), GCAM_net_trade, net_trade),
              GrossExp_EJ = if_else(is.na(GrossExp_EJ), if_else(GCAM_net_trade>0, GCAM_net_trade, 0), GrossExp_EJ ),
              GrossImp_EJ = if_else(is.na(GrossImp_EJ), if_else(GCAM_net_trade<=0, -1*GCAM_net_trade, 0), GrossImp_EJ )) %>%
-      #We will hold GCAM's calibration values by scaling both imports and exports by the ratio between GCAM's net trade and comtrade's
+      #We will maintain GCAM's calibration values and harmonize net_trade by scaling Comtrade's imports and exports by the ratio between GCAM's net trade and comtrade's
       mutate(GrossExp_EJ = if_else(!is.na(GrossExp_EJ * GCAM_net_trade/net_trade) & !is.infinite(GrossExp_EJ * GCAM_net_trade/net_trade), GrossExp_EJ * GCAM_net_trade/net_trade, GrossExp_EJ),
              GrossImp_EJ = if_else(!is.na(GrossImp_EJ * GCAM_net_trade/net_trade) & !is.infinite(GrossImp_EJ * GCAM_net_trade/net_trade), GrossImp_EJ * GCAM_net_trade/net_trade, GrossImp_EJ),
              net_trade = GrossExp_EJ - GrossImp_EJ) %>%
@@ -111,7 +110,7 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       select(names(L1011.ff_GrossTrade_EJ_R_C_Y)) ->
       L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year
 
-    # Regions cannot trade more product than they produce under this structure, so decrease
+    # This structure does not allow regions to trade more product than they produce, so decrease
     # Exports and Imports for any region where GrossExp is greater than production
     L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
@@ -122,6 +121,8 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       select(names(L1011.ff_GrossTrade_EJ_R_C_Y)) ->
       L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year_adj
 
+    #Only the final calibration period's calibration matters, so for earlier periods simply assume that
+    # each region is solely an importer or an exporter.
     L2011.ff_ALL_EJ_R_C_Y %>%
       left_join_error_no_match(GCAM_region_names, by = "region") %>%
       filter(! year %in% L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year_adj$year) %>%
@@ -132,6 +133,7 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       bind_rows(L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year_adj)->
       L2011.ff_GrossTrade_EJ_R_C_Y
 
+    #Produce outputs
     L2011.ff_ALL_EJ_R_C_Y %>%
       add_title("L2011.ff_ALL_EJ_R_C_Y") %>%
       add_units("EJ") %>%

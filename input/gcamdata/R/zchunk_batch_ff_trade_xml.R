@@ -1,6 +1,6 @@
 #' module_energy_batch_ff_trade_xml
 #'
-#' Construct XML data structure for \code{ag_trade.xml}.
+#' Construct XML data structure for \code{ff_trade.xml}.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

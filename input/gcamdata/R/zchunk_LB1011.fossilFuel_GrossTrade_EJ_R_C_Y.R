@@ -1,13 +1,13 @@
 #' module_energy_LB1011.ff_GrossTrade
 #'
-#' Calculate primary fossil fuel (coal, natural gas, crude oil) product mass balances, by region / commodity / year.
+#' Calculate primary fossil fuel (coal, natural gas, crude oil) product balances, by region / commodity / year.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L1011.ff_GrossTrade_EJ_R_C_Y} (energy level1)
-#' @details This chunk processes the bi-lateral trade flow data matrix from UN Comtrade, in order to differentiate trade of
+#' @details This chunk processes the bi-lateral trade flow data matrix from UN Comtrade, in order to identify trade of
 #'   fossil fuels between GCAM regions.
 #' @importFrom dplyr anti_join bind_rows distinct filter group_by inner_join left_join mutate rename select ungroup
 #' @importFrom tidyr complete drop_na replace_na spread
@@ -46,6 +46,7 @@ module_energy_LB1011.ff_GrossTrade <- function(command, ...) {
     comtrade_trade_flow <- get_data(all_data, "energy/mappings/comtrade_trade_flow")
     comtrade_ff_trade <- get_data(all_data, "energy/comtrade_ff_trade")
 
+    #Round a number to closest base divisible number
     mround <- function(x,base){
       base*round(x/base)
     }
@@ -53,7 +54,8 @@ module_energy_LB1011.ff_GrossTrade <- function(command, ...) {
     # 1: Filter and prepare the bi-lateral trade flow volume data by country and comtrade commodity
 
     # Select columns, filter to the import and export quantity variables, and filter to traded GCAM commodities
-    # Note this data set was particularly selected for refined liquids trade. Alterations will be necessary if other commodities are added
+    # Note this data set was particularly selected for fossil fuel trade.
+    # Additional data and mappings will need to be gathered at comtrade's website (https://comtrade.un.org/db/dqBasicQuery.aspx) if other commodities are added
 
     L1011.comtrade_ff_BiTrade_y_ctry_item <- select(comtrade_ff_trade, Year, Reporter_Code, Partner_Code, Trade_Flow_Code, Commodity_Code, `Netweight_(kg)`) %>%
       left_join(comtrade_trade_flow, by = c("Trade_Flow_Code" = "Trade_Flow_Code")) %>%
@@ -61,8 +63,6 @@ module_energy_LB1011.ff_GrossTrade <- function(command, ...) {
       # Note also - this uses left_join_keep_first_only for countries like the USSR with multiple associated present-day
       # iso codes. We wouldn't want to repeat the trade data by each post-dissolution country, and since none of these
       # actually exist during the time frame for which gross trade is being assessed, there's no benefit to downscaling.
-      # Comtrade has several ISOs that GCAM doesn't use/need (e.g. wld to represent net trade by country). These are filtered
-      # out to keep only relevent countries. All filtered regions are small (minor outlying islands) or unneccessary (wld)
       left_join_keep_first_only(comtrade_ISO%>%select(Country_Code, ISO3=ISO3_digit_Alpha), by=c("Reporter_Code" = "Country_Code")) %>%
       rename(iso.reporter = ISO3) %>%
       left_join_keep_first_only(comtrade_ISO%>%select(Country_Code, ISO3=ISO3_digit_Alpha), by=c("Partner_Code" = "Country_Code")) %>%

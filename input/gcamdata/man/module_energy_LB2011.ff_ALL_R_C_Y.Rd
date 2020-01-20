@@ -17,7 +17,7 @@ a vector of output names, or (if \code{command} is "MAKE") all
 the generated outputs: \code{L2011.ff_ALL_EJ_R_C_Y} \code{L2011.ff_GrossTrade_EJ_R_C_Y}.
 }
 \description{
-Calculate fossil fuel energy balances, by region / commodity / year.
+Calculate fossil fuel energy balances, by region / commodity / year and harmonize GCAM's data to Comtrade's.
 }
 \details{
 This chunk combines fossil fuel production and consumption to calculate energy balances by

@@ -17,5 +17,5 @@ a vector of output names, or (if \code{command} is "MAKE") all
 the generated outputs: \code{ff_trade.xml}.
 }
 \description{
-Construct XML data structure for \code{ag_trade.xml}.
+Construct XML data structure for \code{ff_trade.xml}.
 }
