@@ -624,6 +624,26 @@ double SolutionInfo::getForecastDemand() const
     return linkedMarket->getForecastDemand();
 }
 
+void SolutionInfo::setForecastPrice(const double aPrice) {
+    linkedMarket->setForecastPrice(aPrice);
+}
+
+void SolutionInfo::setForecastDemand(const double aDemand) {
+    linkedMarket->setForecastDemand(aDemand);
+}
+
+double SolutionInfo::getCorrectionSlope() const {
+    const string SLOPE_KEY = "correction-slope";
+    return linkedMarket->getMarketInfo()->hasValue( SLOPE_KEY ) ?
+        linkedMarket->getMarketInfo()->getDouble( SLOPE_KEY, true ) :
+        1.0;
+}
+
+void SolutionInfo::setCorrectionSlope(const double aSlope) {
+    const string SLOPE_KEY = "correction-slope";
+    linkedMarket->getMarketInfo()->setDouble( SLOPE_KEY, aSlope );
+}
+
 int SolutionInfo::getSerialNumber( void ) const
 {
     return linkedMarket->getSerialNumber();

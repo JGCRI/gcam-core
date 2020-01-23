@@ -51,7 +51,7 @@ extern Scenario* scenario;
 
 const double LogEDFun::PMAX = 1.0e24;
 const double LogEDFun::ARGMAX = 55.262042; // log(PMAX)
-const double LogEDFun::MINXSCL = 1.0e-3;
+const double LogEDFun::MINXSCL = 1.0e-5;
 
 // constructor
 LogEDFun::LogEDFun(SolutionInfoSet &sisin,
@@ -59,7 +59,8 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
     mkts(sisin.getSolvableSet()),
     solnset(sisin),
     world(w), mktplc(m), period(per),
-    mLogPricep(aLogPricep)
+    mLogPricep(aLogPricep),
+    slope(mkts.size(), 1.0)
 {
     na=nr=mkts.size();
     mdiagnostic=false;
@@ -72,6 +73,7 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
         // linear prices & outputs, so x0 is the price, and fx0 is
         // 1/demand(forecast), for all markets
         for(int i=0; i<na; ++i) {
+            slope[i] = mkts[i].getCorrectionSlope();
             // forecast demands has been constrained so that it
             // doesn't give nonsensical results here, but forecast
             // price is used for other things and so hasn't been
@@ -81,7 +83,7 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
             {
                 mxscl[i] = mkts[i].getUpperBoundSupplyPrice();
             }
-            else if( mkts[i].getType() == IMarketType::RES && ( mkts[i].getForecastPrice() < mkts[i].getLowerBoundSupplyPrice() ) )
+            else if( (mkts[i].getType() == IMarketType::RES || mkts[i].getType() == IMarketType::SUBSIDY) && ( mkts[i].getForecastPrice() <= mkts[i].getLowerBoundSupplyPrice() ) )
             {
                 mxscl[i] = 1.0;
             } else {
@@ -143,6 +145,17 @@ void LogEDFun::partial(int ip)
 double LogEDFun::partialSize(int ip) const
 {
   return double(mkts[ip].getDependencies().size()) / double(world->getGlobalOrderingSize());
+}
+
+void LogEDFun::setSlope(UBVECTOR<double>& adx) {
+    assert(adx.size() == mkts.size());
+    for(int i = 0; i < mkts.size(); ++i) {
+        if(mkts[i].getType() == IMarketType::SUBSIDY && (mkts[i].getPrice() > 0 && mkts[i].getPrice() < 5)) {
+            double newSlope = abs(adx[i]);
+            slope[i] = newSlope;
+            mkts[i].setCorrectionSlope(newSlope);
+        }
+    }
 }
 
 void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, const int partj)
@@ -303,14 +316,14 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
       double p  = x[i]>=ARGMAX ? PMAX : exp(x[i]);
       double c  = std::max(0.0, p0-p);
       double fxi = log(d/s);
-      if(c>0.0) {
+      /*if(c>0.0) {
         ILogger &solverlog = ILogger::getLogger("solver_log");
         solverlog.setLevel(ILogger::DEBUG);
         solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << p
                   << "  p0= " << p0 << "  c= " << c
                   << "  unmodified fx= " << fxi << "  modified fx= " << fxi+c
                   << "\n";
-      }      
+      }      */
       fx[i] = log(d/s)+c;
     }
     else if(mkts[i].getType() == IMarketType::NORMAL) { // LINEAR CASE (NORMAL markets only)
@@ -328,13 +341,13 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
         double c = s == 0 ? std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]) : 0;
         // give difference as a fraction of demand
         fx[i] = d - s + c;          // == d-(s-c); i.e., the correction subtracts from supply
-        if(c>0.0) {
+        /*if(c>0.0) {
           ILogger &solverlog = ILogger::getLogger("solver_log");
           solverlog.setLevel(ILogger::DEBUG);
           solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << x[i]
                     << "  p0= " << p0 << "  c= " << c << "  modified supply= " << s-c
                     << "\n";
-        }
+        }*/
     }
     else if(!mLogPricep && ( mkts[i].getType() == IMarketType::RES  // LINEAR CASE (constraint type markets only)
             || mkts[i].getType() == IMarketType::TAX
@@ -350,16 +363,16 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
         // zero) below which the policy is considered non-binding in which case the correction
         // is essentially adding extra demand to meet the constraint.
         double p0 = mkts[i].getLowerBoundSupplyPrice();
-        double c = std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]);
+        double c = std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]) * slope[i];
         // give difference as a fraction of demand
         fx[i] = d - s + c;          // == d-(s-c); i.e., the correction subtracts from supply
-        if(c>0.0) {
+        /*if(c>0.0) {
           ILogger &solverlog = ILogger::getLogger("solver_log");
           solverlog.setLevel(ILogger::DEBUG);
           solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << x[i]
                     << "  p0= " << p0 << "  c= " << c << "  s= " << s << " d= " << d << " modified F(x)= " << fx[i]
                     << "\n";
-        }
+        }*/
     }
     else {                      // Markets that are neither normal nor constraint types.
       // for other types of markets (mostly price, demand, and

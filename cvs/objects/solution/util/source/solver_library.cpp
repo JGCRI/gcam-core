@@ -63,6 +63,9 @@
 #include "solution/util/include/ublas-helpers.hpp"
 #include "containers/include/iactivity.h"
 
+#include "solution/util/include/edfun.hpp"
+#include "solution/util/include/functor-subs.hpp"
+
 using namespace std;
 
 #define NO_REGIONAL_DERIVATIVES 0
@@ -339,12 +342,26 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
         return code = true;
     }
     aSolutionSet.resetBrackets();
+    
+    using UBVECTOR = boost::numeric::ublas::vector<double>;
+    LogEDFun edFun(aSolutionSet, aWorld, aMarketplace, aPeriod, false);
+    FdotF<double, double> F(edFun);
+    UBVECTOR x(aSolutionSet.getNumSolvable());
+    UBVECTOR prev_x(aSolutionSet.getNumSolvable());
+    UBVECTOR dx(aSolutionSet.getNumSolvable());
+    for(int i = 0; i < aSolutionSet.getNumSolvable(); ++i) {
+        x[i] = aSolutionSet.getSolvable(i).getPrice();
+    }
+    edFun.scaleInitInputs(x);
+    double currFX = F(x);
+    double prevFX;
 
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
     solverLog << "Entering bracketing" << endl;
     solverLog.setLevel( ILogger::DEBUG );
     solverLog << aSolutionSet << endl;
+    solverLog << endl << "Initial FX: " << currFX << endl;
     
     if( aSolutionSet.getNumSolvable() == 0 ) {
         solverLog << "Exiting bracketing early due to empty solvable set." << endl;
@@ -356,6 +373,8 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
     // Loop is done at least once.
     unsigned int iterationCount = 1;
     do {
+        prev_x = x;
+        prevFX = currFX;
         aSolutionSet.printMarketInfo( "Bracket All", aCalcCounter->getPeriodCount(), singleLog );
 
         // Iterate through each market.
@@ -442,14 +461,26 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
                     }
                 }
             } // END: if statement testing if currSol is bracketed with XL == XR
+            x[i] = currSol.getPrice();
         } // end for loop
 
-        aMarketplace->nullSuppliesAndDemands( aPeriod );
+        /*aMarketplace->nullSuppliesAndDemands( aPeriod );
 #if GCAM_PARALLEL_ENABLED
         aWorld->calc( aPeriod, aWorld->getGlobalFlowGraph() );
 #else
         aWorld->calc( aPeriod );
-#endif
+#endif*/
+        edFun.scaleInitInputs(x);
+        currFX = F(x);
+        solverLog << "Current FX: " << currFX << endl;
+        double stepMult = 1.0;
+        dx = x - prev_x;
+        while(currFX > (prevFX * 10.0)) {
+            stepMult /= 2.0;
+            x = prev_x + dx * stepMult;
+            currFX = F(x);
+            solverLog << "Walked back: " << stepMult << ", Current FX: " << currFX << endl;
+        }
         solverLog.setLevel( ILogger::NOTICE );
         solverLog << "Completed an iteration of bracket: " << iterationCount << endl;
         solverLog << aSolutionSet << endl;

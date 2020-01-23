@@ -208,7 +208,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
 
     for(int pass=0; pass<mItmax; ++pass) {
         solverLog << "pass " << pass << "\n";
-        solverLog << "p0      \tp1      \tpold     \t pnew    \tsold    \tdold    \tName\n";
+        solverLog << "p0      \tp1      \tpold     \tpnew    \tsold    \tdold    \tfp    \tfd    \tName\n";
 
         int nchg = 0;
         for(int i=0; i<nmkt; ++i) {
@@ -218,6 +218,13 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
             double newprice = oldprice;
             bool chg = false;
             double lb,ub;       // only used for normal markets, but need to be declared up here.
+            
+            if(pass > 1) {
+                if(solvable[i].getRelativeED() < mFTOL) {
+                    solvable[i].setForecastPrice(oldprice);
+                    solvable[i].setForecastDemand(olddmnd);
+                }
+            }
 
             if(!util::isValidNumber(oldprice) || !util::isValidNumber(oldsply) ||
                !util::isValidNumber(olddmnd) || fabs(oldprice) > 1.0e16) {
@@ -366,6 +373,8 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     } 
                     break; 
                 case IMarketType::TAX:
+                case IMarketType::RES:
+                case IMarketType::SUBSIDY:
                     lb = solvable[i].getLowerBoundSupplyPrice();
                     ub = solvable[i].getUpperBoundSupplyPrice();
                     if( olddmnd <= 0.0 && olddmnd < oldsply && oldprice > ub ) {
@@ -373,17 +382,24 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         solvable[i].setPrice(newprice);
                         chg = true;
                         ++nchg;
-                    } else if(olddmnd > 0.0 && oldprice < lb ) {
+                    /*} else if(olddmnd > 0.0 && oldprice < lb ) {
                         newprice = lb + 0.01;
                         solvable[i].setPrice(newprice);
                         chg = true;
-                        ++nchg;
+                        ++nchg;*/
                     } else if(oldprice > ub && olddmnd < oldsply) {
                         newprice = ub - 0.1;
                         solvable[i].setPrice(newprice);
                         chg = true;
                         ++nchg;
                     }
+                    else if(oldprice > lb && solvable[i].getForecastPrice() < lb && olddmnd < oldsply) {
+                        newprice = solvable[i].getForecastPrice();
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    }
+
                     break;
 
                 default:

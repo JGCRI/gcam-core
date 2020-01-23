@@ -105,6 +105,7 @@ public:
   virtual void partial(int ip);
   virtual double partialSize(int ip) const;
   void scaleInitInputs(UBVECTOR<double> &ax);
+  void setSlope(UBVECTOR<double> &adx);
 
   // Constants to protect against overflow: 
   static const double PMAX;            //!< Greatest allowable price
@@ -116,6 +117,7 @@ protected:
   // scale factors for input and output
   UBVECTOR<double> mxscl;
   UBVECTOR<double> mfxscl;
+  UBVECTOR<double> slope;
     
 };  
 

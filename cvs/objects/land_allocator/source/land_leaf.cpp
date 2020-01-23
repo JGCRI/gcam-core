@@ -436,7 +436,7 @@ double LandLeaf::getLandConstraintCost( const string& aRegionName, const int aPe
             mainLog << "Invalid policy type for the LandConstraintCost. Defaulting to subsidy." << endl;
         }
         
-        return landPrice;
+        return landPrice * 1e6;
     }
 }
 
