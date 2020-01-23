@@ -261,9 +261,10 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
     
     // Run the model without a tax target once to get a baseline for the
     // solver and to calculate the initial non-tax periods.
-    logRunID();
+    bool success;
+    /*logRunID();
     bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS,
-                                                  true, aTimer );
+                                                  true, aTimer );*/
     
     // Allow the use of an existing tax, note that taxes after mFirstTaxYear will
     // be overridden.
@@ -271,12 +272,12 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
     const Marketplace* marketplace = getInternalScenario()->getMarketplace();
     const int firstTaxPeriod = modeltime->getyr_to_per( mFirstTaxYear );
     vector<double> taxes( modeltime->getmaxper(), 0.0 );
-    for( int period = modeltime->getFinalCalibrationPeriod() + 1; period < firstTaxPeriod; ++period ) {
+    /*or( int period = modeltime->getFinalCalibrationPeriod() + 1; period < firstTaxPeriod; ++period ) {
         double tax = marketplace->getPrice( mTaxName, "USA", period, false );
         if( tax != Marketplace::NO_MARKET_PRICE ) {
             taxes[ period ] = tax;
         }
-    }
+    }*/
     setTrialTaxes( taxes );
 
     // TODO: This is only necessary because the cost calculator has trouble solving
@@ -404,6 +405,7 @@ bool PolicyTargetRunner::solveInitialTarget( vector<double>& aTaxes,
     const double initialTax = aTaxes[ firstTaxPeriod ];
     
     const int finalModelYear = getInternalScenario()->getModeltime()->getEndYear();
+    const int finalModelPeriod = getInternalScenario()->getModeltime()->getmaxper() - 1;
 
     // Run the model without a tax target once to get a baseline for the
     // solver and to calculate the initial non-tax periods.
@@ -463,11 +465,14 @@ bool PolicyTargetRunner::solveInitialTarget( vector<double>& aTaxes,
                                          aTaxes );
 
         setTrialTaxes( aTaxes );
+        for( int period = firstTaxPeriod; period <= finalModelPeriod; ++period ) {
+            getInternalScenario()->invalidatePeriod( period );
+        }
 
         // Run the scenario at the trial tax.
         // TODO: If the run failed to solve then the target status may be unreliable.
         logRunID();
-        success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS, false, aTimer );
+        success = mSingleScenario->runScenarios( finalModelPeriod, false, aTimer );
 
         targetLog << "Scenario run complete.  Return status = " << success << endl;
     }
@@ -826,19 +831,23 @@ void PolicyTargetRunner::logRunID() {
     ILogger& targetLog = ILogger::getLogger( "target_finder_log" );
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     ILogger& mainLog = ILogger::getLogger( "main_log" );
+    ILogger& climateLog = ILogger::getLogger( "climate-log" );
 
     ILogger::WarningLevel oldTargetLevel = targetLog.setLevel( ILogger::NOTICE );
     ILogger::WarningLevel oldSolverLevel = solverLog.setLevel( ILogger::NOTICE );
     ILogger::WarningLevel oldMainLevel = mainLog.setLevel( ILogger::NOTICE );
+    ILogger::WarningLevel oldClimateLog = climateLog.setLevel( ILogger::NOTICE );
 
     targetLog << "Policy Target Runner:  scenario dispatch #" << mRunID << endl << endl;
     solverLog << "Policy Target Runner:  scenario dispatch #" << mRunID  << endl << endl;
     mainLog   << "Policy Target Runner:  scenario dispatch #" << mRunID  << endl << endl;
+    climateLog   << "Policy Target Runner:  scenario dispatch #" << mRunID  << endl << endl;
 
     mRunID++;
     
     targetLog.setLevel( oldTargetLevel );
     solverLog.setLevel( oldSolverLevel );
-    mainLog.setLevel( oldMainLevel ); 
+    mainLog.setLevel( oldMainLevel );
+    climateLog.setLevel( oldClimateLog ); 
 }
 
