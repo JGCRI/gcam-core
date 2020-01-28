@@ -37,7 +37,7 @@
                                           cut down on the total number of iterations
                                           significantly.
      -->
-    <initial-tax-guess>5</initial-tax-guess>
+    <initial-tax-guess>5.0</initial-tax-guess>
     <!-- forward-look | default: 0 | Allow forward looking behavior by skipping
          this many periods.
      -->
