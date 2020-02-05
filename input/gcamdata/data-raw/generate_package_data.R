@@ -223,6 +223,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["StubTechElecMarket"]] <- c(level2_data_names[["StubTechYr"]], "electric.sector.market")
   level2_data_names[["StubTechFractSecOut"]] <- c(level2_data_names[["StubTechYr"]], "fractional.secondary.output", "output.ratio")
   level2_data_names[["StubTechFractProd"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "fractional.secondary.output", "price", "fraction.produced")
+  level2_data_names[["StubTechFractCalPrice"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "fractional.secondary.output", "calPrice")
   level2_data_names[["StubTechIntGainOutputRatio"]] <- c("region", "supplysector", "subsector", "technology", "year", "internal.gains.output.ratio", "internal.gains.market.name")
   level2_data_names[["StubTechSecOut"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "secondary.output.name", "secondary.output")
   level2_data_names[["StubTechSecMarket"]] <- c(level2_data_names[["StubTechYr"]], "secondary.output", "market.name")
@@ -380,6 +381,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["LN5_NodeGhostShare"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "year", "ghost.unnormalized.share")
   level2_data_names[["LN5_LeafGhostShare"]]<- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "LandLeaf", "year", "ghost.unnormalized.share")
   level2_data_names[["LN1_Delete"]] <- c("region", "LandAllocatorRoot", "LandNode1")
+  level2_data_names[["LandRootNegEmissMkt"]] <- c("region", "LandAllocatorRoot", "negative.emiss.market")
+  level2_data_names[["LandLeafNegEmissMkt"]] <- c("region", "LandAllocatorRoot", "LandNode" ,"LandLeaf", "negative.emiss.market")
 
   # NonCO2
   level2_data_names[["ResEmissCoef"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "emiss.coef")
@@ -465,10 +468,11 @@ PREBUILT_DATA <- driver(write_outputs = FALSE,
                           # output of module_energy_LA118.hydro
                           "L118.out_EJ_R_elec_hydro_Yfut",
 
-                          # outputs of module_energy_LA121.oil
+                          # outputs of module_energy_LA121.liquids
                           "L121.in_EJ_R_unoil_F_Yh",
                           "L121.in_EJ_R_TPES_crude_Yh",
-                          "L121.in_EJ_R_TPES_unoil_Yh"
+                          "L121.in_EJ_R_TPES_unoil_Yh",
+                          "L121.share_R_TPES_biofuel_tech"
                         ))
 
 # Save these objects for use as internal package data

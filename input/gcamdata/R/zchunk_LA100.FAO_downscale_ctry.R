@@ -142,6 +142,29 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     # as necessary, expand the animal stocks data to 2012
     if(!"2012" %in% names(FAO_an_Stocks)) FAO_an_Stocks$`2012` <- FAO_an_Stocks$`2011`
 
+    # Fodder data only goes through 2011, but won't be extrapolated to 2012 in
+    # the function below because the column `2012` exists.
+    # Fill in the Fodder 2012 data here.
+    FAO_ag_HA_ha_PRODSTAT %>%
+      filter(grepl("forage", item) | grepl("Fodder", item) | grepl("silage", item)) %>%
+      mutate(`2012` = `2011`) ->
+      FAO_fodder_HA_ha_PRODSTAT
+
+    FAO_ag_HA_ha_PRODSTAT %>%
+      filter(!grepl("forage", item) & !grepl("Fodder", item) & !grepl("silage", item)) %>%
+      bind_rows(FAO_fodder_HA_ha_PRODSTAT) ->
+      FAO_ag_HA_ha_PRODSTAT
+
+    FAO_ag_Prod_t_PRODSTAT %>%
+      filter(grepl("forage", item) | grepl("Fodder", item) | grepl("silage", item)) %>%
+      mutate(`2012` = `2011`) ->
+      FAO_fodder_Prod_t_PRODSTAT
+
+    FAO_ag_Prod_t_PRODSTAT %>%
+      filter(!grepl("forage", item) & !grepl("Fodder", item) & !grepl("silage", item)) %>%
+      bind_rows(FAO_fodder_Prod_t_PRODSTAT) ->
+      FAO_ag_Prod_t_PRODSTAT
+
     # Not all databases go to 2012. Extrapolate each dataset to 2012, repeating
     # the data for 2009/10. Where missing 1961, substitute 1962
     list("FAO_ag_Exp_t_SUA" = FAO_ag_Exp_t_SUA,
@@ -158,9 +181,6 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
          "FAO_Fert_Prod_tN_RESOURCESTAT" = FAO_Fert_Prod_tN_RESOURCESTAT,
          "FAO_ag_HA_ha_PRODSTAT" = FAO_ag_HA_ha_PRODSTAT,
          "FAO_ag_Prod_t_PRODSTAT" = FAO_ag_Prod_t_PRODSTAT,
-         "FAO_CL_kha_RESOURCESTAT" = FAO_CL_kha_RESOURCESTAT,
-         "FAO_fallowland_kha_RESOURCESTAT" = FAO_fallowland_kha_RESOURCESTAT,
-         "FAO_harv_CL_kha_RESOURCESTAT" = FAO_harv_CL_kha_RESOURCESTAT,
          "FAO_For_Exp_m3_FORESTAT" = FAO_For_Exp_m3_FORESTAT,
          "FAO_For_Imp_m3_FORESTAT" = FAO_For_Imp_m3_FORESTAT,
          "FAO_For_Prod_m3_FORESTAT" = FAO_For_Prod_m3_FORESTAT) %>%
@@ -168,8 +188,8 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       lapply(FUN = function(df) {
         if(!"1961" %in% colnames(df)) df$`1961` <- df$`1962`
         if(!"2010" %in% colnames(df)) df$`2010` <- df$`2009`
-        if(!"2011" %in% colnames(df)) df$`2011` <- df$`2009`
-        if(!"2012" %in% colnames(df)) df$`2011` <- df$`2009`
+        if(!"2011" %in% colnames(df)) df$`2011` <- df$`2010`
+        if(!"2012" %in% colnames(df)) df$`2012` <- df$`2011`
         df$element <- NULL
         df
       }) %>%
@@ -263,26 +283,47 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     # change list names to match the legacy
     # names
     fixup <- function(irows, legacy.name) {
-
-      # If the name of the table being added is L100.FAO_ag_Food_t or L100.FAO_CL_kha it is
-      # self tested and does not need the test flags, see https://github.com/JGCRI/gcamdata/issues/918 for more
-      # details.
-      if(legacy.name %in% c("L100.FAO_ag_Food_t", "L100.FAO_CL_kha")) {
-
         FAO_data_ALL_5yr[irows,] %>%
           add_comments("Downscale countries; calculate 5-yr averages") %>%
           add_legacy_name(legacy.name)
-
-      } else {
-
-        FAO_data_ALL_5yr[irows,] %>%
-          add_comments("Downscale countries; calculate 5-yr averages") %>%
-          add_legacy_name(legacy.name)
-
-      }
-
     }
     L100.FAOlist <- Map(fixup, L100.FAOlist, names(L100.FAOlist))
+
+    # Fallow land data sets are missing lots of years, so we don't include them in the 5yr average
+    # They need to be reshaped and written out now for use downstream
+    FAO_CL_kha_RESOURCESTAT %>%
+      left_join(distinct(AGLU_ctry, FAO_country, .keep_all = TRUE), by = c("countries" = "FAO_country")) %>%
+      rename(country.codes = `country codes`,
+             element.codes = `element codes`,
+             item.codes = `item codes`) %>%
+      gather_years() %>%
+      add_legacy_name("L100.FAO_CL_kha") %>%
+      na.omit() %>%
+      mutate(value = as.numeric(value)) %>%
+      add_comments("Downscale countries") ->
+      L100.FAO_CL_kha
+    FAO_fallowland_kha_RESOURCESTAT %>%
+      left_join(distinct(AGLU_ctry, FAO_country, .keep_all = TRUE), by = c("countries" = "FAO_country")) %>%
+      rename(country.codes = `country codes`,
+             element.codes = `element codes`,
+             item.codes = `item codes`) %>%
+      gather_years()  %>%
+      add_legacy_name("L100.FAO_fallowland_kha") %>%
+      na.omit() %>%
+      mutate(value = as.numeric(value)) %>%
+      add_comments("Downscale countries") ->
+      L100.FAO_fallowland_kha
+    FAO_harv_CL_kha_RESOURCESTAT %>%
+      left_join(distinct(AGLU_ctry, FAO_country, .keep_all = TRUE), by = c("countries" = "FAO_country")) %>%
+      rename(country.codes = `country codes`,
+             element.codes = `element codes`,
+             item.codes = `item codes`) %>%
+      gather_years() %>%
+      add_legacy_name("L100.FAO_harv_CL_kha") %>%
+      na.omit() %>%
+      mutate(value = as.numeric(value)) %>%
+      add_comments("Downscale countries") ->
+      L100.FAO_harv_CL_kha
 
     # Add description, units, process (done above), and precursor information
     L100.FAOlist[["L100.FAO_ag_HA_ha"]] %>%
@@ -345,17 +386,17 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       add_units("number") %>%
       add_precursors("aglu/FAO/FAO_an_Dairy_Stocks", "aglu/AGLU_ctry") ->
       L100.FAO_an_Dairy_Stocks
-    L100.FAOlist[["L100.FAO_CL_kha"]] %>%
+    L100.FAO_CL_kha %>%
       add_title("FAO cropland area by country, year") %>%
       add_units("kha") %>%
       add_precursors("aglu/FAO/FAO_CL_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_CL_kha
-    L100.FAOlist[["L100.FAO_fallowland_kha"]] %>%
+    L100.FAO_fallowland_kha %>%
       add_title("FAO fallow land area by country, year") %>%
       add_units("kha") %>%
       add_precursors("aglu/FAO/FAO_fallowland_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_fallowland_kha
-    L100.FAOlist[["L100.FAO_harv_CL_kha"]] %>%
+    L100.FAO_harv_CL_kha %>%
       add_title("FAO harvested cropland (temporary crops) area by country, year") %>%
       add_units("kha") %>%
       add_precursors("aglu/FAO/FAO_harv_CL_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->

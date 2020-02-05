@@ -66,6 +66,7 @@ module_water_L100.water_supply_runoff <- function(command, ...) {
       rename(basin_id = id) %>%
       mutate(year = 2000) %>% #temp year written over by following line
       complete(year = MODEL_YEARS, nesting(basin_id, runoff_max)) %>%
+      filter(year %in% MODEL_YEARS) %>%
       arrange(basin_id) ->
       L100.runoff_max_bm3
 

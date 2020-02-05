@@ -496,13 +496,17 @@ void MarketDependencyFinder::createOrdering() {
                     // with the ag supply sectors to set supplies into the marketplace.
                     // So we imply that any time the land allocator is recalculated then
                     // all of the items which directly depend on it must also be recalculated.
-                    (*it)->getLastPriceVertex()->mOutEdges.push_back( (*dependIt)->getFirstDemandVertex() );
-                    ++numDependencies[ (*dependIt)->getFirstDemandVertex() ];
-                    (*dependIt)->getLastDemandVertex()->mOutEdges.push_back( (*it)->getFirstDemandVertex() );
-                    ++numDependencies[ (*it)->getFirstDemandVertex() ];
-                    // These implied in edges will be added to the list of verticies to calculate
-                    // any time the land-allocator needs to be recalculated for any reason.
-                    //(*dependIt)->getLastDemandVertex()->mImpliedInEdges.insert( (*it)->getLastPriceVertex() );
+                    if( !(*it)->mPriceVertices.empty() ) {
+                        (*it)->getLastPriceVertex()->mOutEdges.push_back( (*dependIt)->getFirstDemandVertex() );
+                        ++numDependencies[ (*dependIt)->getFirstDemandVertex() ];
+                        (*dependIt)->getLastDemandVertex()->mOutEdges.push_back( (*it)->getFirstDemandVertex() );
+                        ++numDependencies[ (*it)->getFirstDemandVertex() ];
+                    }
+                    else {
+                        // These implied in edges will be added to the list of verticies to calculate
+                        // any time the land-allocator needs to be recalculated for any reason.
+                        (*mrktIter)->mImpliedVertices.insert( (*dependIt)->getFirstDemandVertex() );
+                    }
                 }
                 else {
                     if( !(*dependIt)->mPriceVertices.empty() ) {

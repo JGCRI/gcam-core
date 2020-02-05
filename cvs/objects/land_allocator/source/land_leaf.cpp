@@ -78,7 +78,8 @@ LandLeaf::LandLeaf( const ALandAllocatorItem* aParent, const std::string &aName 
     mCarbonPriceIncreaseRate( Value( 0.0 ) ),
     mLandUseHistory( 0 ),
     mReadinLandAllocation( Value( 0.0 ) ),
-    mLastCalcCO2Value( 0.0 )
+    mLastCalcCO2Value( 0.0 ),
+    mLandConstraintPolicy( "" )
 {
 }
 
@@ -170,7 +171,12 @@ bool LandLeaf::XMLParse( const xercesc::DOMNode* aNode ){
             mLandExpansionCostName = XMLHelper<string>::getValue( curr );
             mIsLandExpansionCost = true;
         }
-
+        else if( nodeName == "negative-emiss-market" ) {
+            mNegEmissMarketName = XMLHelper<string>::getValue( curr );
+        }
+        else if( nodeName == "land-constraint-policy" ){
+            mLandConstraintPolicy = XMLHelper<string>::getValue( curr );
+        }
         else if ( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -229,6 +235,20 @@ void LandLeaf::completeInit( const string& aRegionName,
                                                                           aRegionName,
                                                                           mLandExpansionCostName,
                                                                           aRegionName );
+    }
+
+    // if a user hasn't explicitly set a negative emissions policy 
+    // the set the one from the root
+    if( mNegEmissMarketName.empty() ) {
+        mNegEmissMarketName = aRegionInfo->getString( "negative-emiss-market", true );
+    }
+    
+    // Add dependency for to expansion constraint policy if it is being used.
+    if( mLandConstraintPolicy != "" ) {
+        scenario->getMarketplace()->getDependencyFinder()->addDependency( "land-allocator",
+                                                                         aRegionName,
+                                                                         mLandConstraintPolicy,
+                                                                         aRegionName );
     }
 }
 
@@ -324,7 +344,8 @@ void LandLeaf::setProfitRate( const string& aRegionName,
         adjustedProfitRate = aProfitRate - expansionCost;
     }
 
-    mProfitRate[ aPeriod ] = adjustedProfitRate + getCarbonSubsidy( aRegionName, aPeriod );
+    mProfitRate[ aPeriod ] = adjustedProfitRate + getCarbonSubsidy( aRegionName, aPeriod )
+                                                + getLandConstraintCost( aRegionName, aPeriod );
 }
 
 
@@ -367,12 +388,56 @@ double LandLeaf::getCarbonSubsidy( const string& aRegionName, const int aPeriod 
             * carbonPrice * ( mSocialDiscountRate - mCarbonPriceIncreaseRate[ aPeriod ] )* conversionFactor;
 
         assert( carbonSubsidy >= 0.0 );
+        
+        // potentially scale back the carbon subsidy if we have a binding negative
+        // emissions budget in place
+        if( !mNegEmissMarketName.empty() ) {
+            double taxFraction = marketplace->getPrice( mNegEmissMarketName, aRegionName, aPeriod, false );
+            taxFraction = taxFraction == Marketplace::NO_MARKET_PRICE ?
+                1.0 : (1.0 - taxFraction);
+            carbonSubsidy *= taxFraction;
+        }
 
         return carbonSubsidy;
     }
 
     // If no market price
     return 0.0;
+}
+
+/*!
+ * \brief Calculates the subsidy or tax per hectare for this land leaf.
+ * \details Uses in combination with the policy-land-constraint to keep
+           land area above or below a particular threshold.
+ * \author Kate Calvin
+ * \param aRegionName Region name.
+ * \param aPeriod Model period.
+ */
+double LandLeaf::getLandConstraintCost( const string& aRegionName, const int aPeriod ) const {
+    
+    // Check whether a constraint cost has been read in
+    if ( mLandConstraintPolicy == "") {
+        return 0.0;
+    } else {
+        // Get the cost from the marketplace
+        const Marketplace* marketplace = scenario->getMarketplace();
+        double landPrice = marketplace->getPrice( mLandConstraintPolicy, aRegionName, aPeriod, false );
+        
+        // Only two policy types are permitted, "tax" and "subsidy".
+        // Since this value is added to the profit rate of the LandLeaf later, we need to ensure it is the correct sign.
+        // If the market is a tax, then we convert to a negative value so that it is effectively subtracted from the profit.
+        // Otherwise, we keep it positive.
+        std::string type = marketplace->getMarketInfo( mLandConstraintPolicy, aRegionName, 0, true)->getString( "policy-type", true);
+        if ( type == "tax" ) {
+            landPrice *= -1.0;
+        } else if ( type != "subsidy" ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Invalid policy type for the LandConstraintCost. Defaulting to subsidy." << endl;
+        }
+        
+        return landPrice;
+    }
 }
 
 void LandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,  
@@ -470,6 +535,21 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
         Marketplace* marketplace = scenario->getMarketplace();
         marketplace->addToDemand( mLandExpansionCostName, aRegionName,
             mLandAllocation[ aPeriod ], aPeriod, true );
+    }
+    
+    // compute any demands for land use constraint policies
+    if ( mLandConstraintPolicy != "" ) {
+        Marketplace* marketplace = scenario->getMarketplace();
+        std::string type = marketplace->getMarketInfo( mLandConstraintPolicy, aRegionName, 0, true)->getString( "policy-type", true);
+        if ( type == "tax" ) {
+            marketplace->addToDemand( mLandConstraintPolicy, aRegionName,
+                                     mLandAllocation[ aPeriod ], aPeriod, true );
+
+        } else if ( type == "subsidy" ) {
+            marketplace->addToSupply( mLandConstraintPolicy, aRegionName,
+                                     mLandAllocation[ aPeriod ], aPeriod, true );
+
+        }
     }
 
 }
