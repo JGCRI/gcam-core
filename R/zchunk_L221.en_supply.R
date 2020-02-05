@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L221.SectorLogitTables[[ curr_table ]]$data}, \code{L221.Supplysector_en}, \code{L221.SectorUseTrialMarket_en}, \code{L221.SubsectorLogitTables[[ curr_table ]]$data}, \code{L221.SubsectorLogit_en}, \code{L221.SubsectorShrwt_en}, \code{L221.SubsectorShrwtFllt_en}, \code{L221.SubsectorInterp_en}, \code{L221.SubsectorInterpTo_en}, \code{L221.StubTech_en}, \code{L221.GlobalTechCoef_en}, \code{L221.GlobalTechCost_en}, \code{L221.GlobalTechShrwt_en}, \code{L221.PrimaryConsKeyword_en}, \code{L221.StubTechFractSecOut_en}, \code{L221.StubTechFractProd_en}, \code{L221.Rsrc_en}, \code{L221.RsrcPrice_en}, \code{L221.TechCoef_en_Traded}, \code{L221.TechCost_en_Traded}, \code{L221.TechShrwt_en_Traded}, \code{L221.StubTechCoef_unoil}, \code{L221.Production_unoil}, \code{L221.StubTechProd_oil_unoil}, \code{L221.StubTechProd_oil_crude}, \code{L221.StubTechShrwt_bio}. The corresponding file in the
+#' the generated outputs: \code{L221.SectorLogitTables[[ curr_table ]]$data}, \code{L221.Supplysector_en}, \code{L221.SectorUseTrialMarket_en}, \code{L221.SubsectorLogitTables[[ curr_table ]]$data}, \code{L221.SubsectorLogit_en}, \code{L221.SubsectorShrwt_en}, \code{L221.SubsectorShrwtFllt_en}, \code{L221.SubsectorInterp_en}, \code{L221.SubsectorInterpTo_en}, \code{L221.StubTech_en}, \code{L221.GlobalTechCoef_en}, \code{L221.GlobalTechCost_en}, \code{L221.GlobalTechShrwt_en}, \code{L221.PrimaryConsKeyword_en}, \code{L221.StubTechFractSecOut_en}, \code{L221.StubTechFractProd_en}, \code{L221.StubTechFractCalPrice_en}, \code{L221.Rsrc_en}, \code{L221.RsrcPrice_en}, \code{L221.TechCoef_en_Traded}, \code{L221.TechCost_en_Traded}, \code{L221.TechShrwt_en_Traded}, \code{L221.StubTechCoef_unoil}, \code{L221.Production_unoil}, \code{L221.StubTechProd_oil_unoil}, \code{L221.StubTechProd_oil_crude}. The corresponding file in the
 #' original data system was \code{L221.en_supply.R} (energy level2).
 #' @details This chunk creates level 2 output files for energy supply. It creates supply sector information,
 #' subsector logit exponents, subsector shareweight and interpolation, and stubtech info by writing assumption file
@@ -21,7 +21,7 @@
 module_energy_L221.en_supply <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             FILE = "energy/calibrated_techs",
+             FILE = "aglu/A_agRegionalTechnology",
              FILE = "energy/A21.sector",
              FILE = "energy/A_regions",
              FILE = "energy/A21.subsector_logit",
@@ -39,6 +39,7 @@ module_energy_L221.en_supply <- function(command, ...) {
              "L111.Prod_EJ_R_F_Yh",
              "L121.in_EJ_R_TPES_unoil_Yh",
              "L121.in_EJ_R_TPES_crude_Yh",
+             "L122.in_Mt_R_C_Yh",
              FILE = "aglu/A_an_input_subsector",
              "L108.ag_Feed_Mt_R_C_Y",
              "L132.ag_an_For_Prices"))
@@ -57,6 +58,7 @@ module_energy_L221.en_supply <- function(command, ...) {
              "L221.PrimaryConsKeyword_en",
              "L221.StubTechFractSecOut_en",
              "L221.StubTechFractProd_en",
+             "L221.StubTechFractCalPrice_en",
              "L221.Rsrc_en",
              "L221.RsrcPrice_en",
              "L221.TechCoef_en_Traded",
@@ -66,7 +68,9 @@ module_energy_L221.en_supply <- function(command, ...) {
              "L221.Production_unoil",
              "L221.StubTechProd_oil_unoil",
              "L221.StubTechProd_oil_crude",
-             "L221.StubTechShrwt_bio"))
+             "L221.StubTechCalInput_bioOil",
+             "L221.StubTechInterp_bioOil",
+             "L221.StubTechShrwt_bioOil"))
   } else if(command == driver.MAKE) {
 
     # Silence global variable package check
@@ -78,13 +82,14 @@ module_energy_L221.en_supply <- function(command, ...) {
     subsector.name <- subsector.share.weight <- supplysector <- technology <-
     to.value <- tradbio_region <- traded <- unit <- value <- value_2010 <- variable <- year <-
     year.fillout <- year.share.weight <- GCAM_commodity <- GCAM_region_ID <-
-    GCAM_region_ID.x <- GCAM_region_ID.y <- P0 <- NULL
+    GCAM_region_ID.x <- GCAM_region_ID.y <- P0 <- calibrated.value <- tech.share.weight <-
+      market.name <- passthru_tech_input <- NULL
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
+    A_agRegionalTechnology <- get_data(all_data, "aglu/A_agRegionalTechnology")
     A21.sector <- get_data(all_data, "energy/A21.sector")
     A_regions <- get_data(all_data, "energy/A_regions")
     A21.subsector_logit <- get_data(all_data, "energy/A21.subsector_logit")
@@ -102,6 +107,7 @@ module_energy_L221.en_supply <- function(command, ...) {
     L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
     L121.in_EJ_R_TPES_unoil_Yh <- get_data(all_data, "L121.in_EJ_R_TPES_unoil_Yh")
     L121.in_EJ_R_TPES_crude_Yh <- get_data(all_data, "L121.in_EJ_R_TPES_crude_Yh")
+    L122.in_Mt_R_C_Yh <- get_data(all_data, "L122.in_Mt_R_C_Yh")
     A_an_input_subsector <- get_data(all_data, "aglu/A_an_input_subsector")
     L108.ag_Feed_Mt_R_C_Y <- get_data(all_data, "L108.ag_Feed_Mt_R_C_Y")
     L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
@@ -237,43 +243,44 @@ module_energy_L221.en_supply <- function(command, ...) {
       filter(year %in% MODEL_YEARS) -> L221.PrimaryConsKeyword_en
 
     # Secondary feed outputs of biofuel production technologies
-    # NOTE: secondary outputs are only considered in future time periods
     # NOTE: secondary outputs are only written for the regions/technologies where applicable, so the global tech database can not be used
     # to get the appropriate region/tech combinations written out, first repeat by all regions, then subset as appropriate
-    A21.globaltech_secout %>%
-      repeat_add_columns(tibble(region = GCAM_region_names$region)) %>%
-      left_join(calibrated_techs %>%
-                  select(minicam.energy.input, sector), by = c("supplysector" = "minicam.energy.input")) -> L221.globaltech_secout_R
 
-    # For corn ethanol, region + sector is checked. For biodiesel, need to also include the region-specific feedstocks (to exclude palm oil biodiesel producing regions)
-    L221.globaltech_secout_R %>%
-      # comparison of region + sector for corn ethanol
-      left_join(A_regions %>%
-                  select(region, ethanol, GCAM_region_ID) %>%
-                  rename(sector = ethanol), by = c("region", "sector")) %>%
-      # comparison of region + technology for biodeisel
-      left_join(A_regions %>%
-                  select(region, biodiesel, biomassOil_tech, GCAM_region_ID) %>%
-                  rename(sector = biodiesel, technology = biomassOil_tech), by = c("region", "sector", "technology")) %>%
-      # filtering for regions with corn ethanol, biodiesel feedstocks
-      filter(!is.na(GCAM_region_ID.x) | !is.na(GCAM_region_ID.y)) %>%
-      mutate(GCAM_region_ID = if_else(!is.na(GCAM_region_ID.x), GCAM_region_ID.x, GCAM_region_ID.y)) %>%
-      select(-GCAM_region_ID.x, -GCAM_region_ID.y) -> L221.globaltech_secout_R
+    # First build the table with the available technologies.
+    # GCAM_commodity -> regional crop name (if a traded crop) -> passthrough supplysector/subsector/technology
+    biofuel_feedstock_cropname <- filter(A_agRegionalTechnology, market.name == "regional") %>%
+      select(passthru_tech_input = "supplysector", GCAM_commodity = "minicam.energy.input")
+
+    L221.biofuel_types_region <- distinct(L122.in_Mt_R_C_Yh, GCAM_region_ID, GCAM_commodity) %>%
+      # join in the regional crop name (resetting to default gcam commodity for crops that aren't traded)
+      left_join(biofuel_feedstock_cropname, by = "GCAM_commodity") %>%
+      mutate(passthru_tech_input = if_else(is.na(passthru_tech_input), GCAM_commodity, passthru_tech_input)) %>%
+      # join in the supplysector/subsector/technology names
+      left_join_error_no_match(distinct(select(A21.globaltech_coef, supplysector, subsector, technology, minicam.energy.input)),
+                               by = c(passthru_tech_input = "minicam.energy.input")) %>%
+      # join in the region names
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      select(region, supplysector, subsector, technology)
+
+    A21.globaltech_secout %>%
+      # use inner join in order to drop processing transformations that don't produce animal feed (e.g., sugar cane ethanol, palm oil biodiesel)
+      inner_join(L221.biofuel_types_region, by = c("supplysector", "subsector", "technology")) ->
+      L221.globaltech_secout_R
 
     # Store these regions in a separate object
     L221.globaltech_secout_R %>%
-      distinct(GCAM_region_ID) -> L221.ddgs_regions
+      distinct(region) -> L221.ddgs_regions
 
     L221.globaltech_secout_R %>%
-      select(supplysector, subsector, technology, fractional.secondary.output, region, sector, GCAM_region_ID) %>%
+      select(supplysector, subsector, technology, fractional.secondary.output, region) %>%
       distinct %>%
       # Interpolate to all years
-      repeat_add_columns(tibble(year = c(MODEL_FUTURE_YEARS))) %>%
+      repeat_add_columns(tibble(year = c(MODEL_YEARS))) %>%
       left_join(L221.globaltech_secout_R %>%
                   gather_years("value"),
-                by = c("supplysector", "subsector", "technology", "fractional.secondary.output", "region", "sector", "GCAM_region_ID", "year")) %>%
-      group_by(supplysector, subsector, technology, fractional.secondary.output, region, sector, GCAM_region_ID) %>%
-      mutate(output.ratio = round(approx_fun(year, value, rule = 2))) %>%
+                by = c("region", "supplysector", "subsector", "technology", "fractional.secondary.output", "year")) %>%
+      group_by(region, supplysector, subsector, technology, fractional.secondary.output) %>%
+      mutate(output.ratio = round(approx_fun(year, value, rule = 2), energy.DIGITS_COEFFICIENT)) %>%
       ungroup() %>%
       filter(year %in% MODEL_YEARS) %>%
       select(supplysector, subsector, stub.technology = technology, fractional.secondary.output,
@@ -285,8 +292,10 @@ module_energy_L221.en_supply <- function(command, ...) {
     A_an_input_subsector %>%
       filter(supplysector == "FeedCrops") -> A_an_input_subsector
 
+    # Subset (filter) only the feed items that have tracked prices (i.e., don't include DDGS and feedcakes in this calc)
     L108.ag_Feed_Mt_R_C_Y %>%
-      filter(GCAM_commodity %in% A_an_input_subsector$subsector) -> L221.ag_Feed_Mt_R_C_Y
+      filter(GCAM_commodity %in% A_an_input_subsector$subsector,
+             GCAM_commodity %in% L132.ag_an_For_Prices$GCAM_commodity) -> L221.ag_Feed_Mt_R_C_Y
 
     L221.ag_Feed_Mt_R_C_Y %>%
       filter(year == max(HISTORICAL_YEARS)) %>%
@@ -324,12 +333,18 @@ module_energy_L221.en_supply <- function(command, ...) {
       mutate(fraction.produced = as.numeric( sub("P", "", variable ) )) %>%
       select(-variable, -feed_price, -GCAM_region_ID) -> L221.StubTechFractProd_en
 
+      # Calibrate the price (as a fixed price, not a point on a supply curve) in the base year
+      L221.StubTechFractSecOut_en %>%
+        filter(year %in% MODEL_BASE_YEARS) %>%                                 # In the base years the fractional secondary outputs are de-activated in order to calibrate the flows
+        select(-output.ratio) %>%
+        left_join(L221.ag_FeedPrice_R_Yf, by = "region") %>%
+        mutate(calPrice = round(feed_price, digits = energy.DIGITS_COST)) %>%
+        select(LEVEL2_DATA_NAMES[["StubTechFractCalPrice"]]) -> L221.StubTechFractCalPrice_en
+
+
     # Final tables for feedcrop secondary output: the resource
     A21.rsrc_info %>%
-      repeat_add_columns(tibble(region = c(L221.ddgs_regions$GCAM_region_ID))) %>%
-      rename(GCAM_region_ID = region) %>%
-      left_join_error_no_match(A_regions %>%
-                  select(region, GCAM_region_ID), by = "GCAM_region_ID") %>%
+      repeat_add_columns(L221.ddgs_regions) %>%
       select(region, resource, output.unit = "output-unit", price.unit = "price-unit", market) %>%
       mutate(market = region) -> L221.Rsrc_en
 
@@ -346,8 +361,6 @@ module_energy_L221.en_supply <- function(command, ...) {
       filter(year %in% MODEL_YEARS) %>%
       select(-value) %>%
       repeat_add_columns(L221.ddgs_regions) %>%
-      left_join(A_regions %>%
-                  select(region, GCAM_region_ID), by = c("GCAM_region_ID")) %>%
       select(region, resource, year, price) -> L221.RsrcPrice_en
 
     # Coefficients of traded technologies
@@ -461,35 +474,42 @@ module_energy_L221.en_supply <- function(command, ...) {
              share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       select(region, supplysector, subsector, stub.technology, year, calOutputValue, year.share.weight, subsector.share.weight, share.weight) -> L221.StubTechProd_oil_crude
 
-    # Region-specific technology shareweights for biomassOil passthrough sector
-    A21.globaltech_shrwt %>%
-      select(supplysector, subsector, technology) %>%
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
-      left_join(A21.globaltech_shrwt, by = c("supplysector", "subsector", "technology", "year")) %>%
-      group_by(supplysector, subsector, technology) %>%
-      mutate(share.weight = approx_fun(year, share.weight, rule = 2)) %>%
-      ungroup() %>%
-      filter(supplysector == "regional biomassOil") %>%
-      filter(year %in% MODEL_YEARS) -> L221.globaltech_shrwt_bio
+    # GPK 4/26/2019: Region-specific calibrated output of biomassOil technologies
+    # Because multiple feedstocks for producing biomassOil are allowed, the quantities are calibrated
+    L221.StubTechCalInput_bioOil <- L122.in_Mt_R_C_Yh %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
+      inner_join(distinct(select(A21.globaltech_coef, supplysector, subsector, technology, minicam.energy.input)),
+                 by = c(GCAM_commodity = "technology")) %>%
+      rename(stub.technology = GCAM_commodity) %>%
+      mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      set_subsector_shrwt(value_col = "calibrated.value") %>%
+      mutate(share.weight.year = year,
+             tech.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechCalInput"]])
 
-    L221.globaltech_shrwt_bio %>%
-      write_to_all_regions(c("supplysector", "subsector", "technology", "year", "share.weight", "region"),
-                           GCAM_region_names = GCAM_region_names) %>%
-      rename(stub.technology = technology) %>%
-      full_join(A_regions %>%
-                  select(region, biomassOil_tech), by = c("region")) %>%
-      mutate(share.weight = if_else(biomassOil_tech == stub.technology, 1, 0)) %>%
-      filter(year %in% MODEL_YEARS) %>%
-      distinct() %>%
-      select(region, supplysector, subsector, stub.technology, year, share.weight) %>%
-      anti_join(L221.globaltech_shrwt_bio %>%
-                  rename(stub.technology = technology) %>%
-                  select(stub.technology, year, share.weight), by = c("stub.technology", "year", "share.weight")) %>%
-      filter(!is.na(share.weight)) -> L221.StubTechShrwt_bio
+    # Technology share-weight interpolation - for regions with positive calibration values,
+    # carry the share-weights forward. All others will get default values (below)
+    L221.StubTechInterp_bioOil <- filter(L221.StubTechCalInput_bioOil,
+                                         year == max(MODEL_BASE_YEARS),
+                                         tech.share.weight == 1) %>%
+      mutate(apply.to = "share-weight",
+             from.year = max(MODEL_BASE_YEARS),
+             to.year = max(MODEL_YEARS),
+             interpolation.function = "fixed") %>%
+      select(LEVEL2_DATA_NAMES[["StubTechInterp"]])
+
+    # Technology share-weights for regions without calibration values
+    L221.StubTechShrwt_bioOil <- filter(L221.StubTechCalInput_bioOil,
+                                        year == max(MODEL_BASE_YEARS),
+                                        tech.share.weight == 0) %>%
+      select(region, supplysector, subsector, stub.technology) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
+      mutate(share.weight = 1)
 
     # For regions with no agricultural and land use sector (Taiwan), need to remove the passthrough supplysectors for first-gen biofuels
     ag_en <- c("regional corn for ethanol", "regional sugar for ethanol", "regional biomassOil")
-    aglu.NO_AGLU_REGIONS
+
     L221.SubsectorLogit_en %>%
       filter(!(region %in% aglu.NO_AGLU_REGIONS & supplysector %in% ag_en)) -> L221.SubsectorLogit_en
 
@@ -657,9 +677,9 @@ module_energy_L221.en_supply <- function(command, ...) {
     L221.StubTechFractSecOut_en %>%
       add_title("Secondary feed outputs of biofuel production technologies") %>%
       add_units("fractions") %>%
-      add_comments("A21.globaltech_secout is written out to all regions, then subsetted to relevant region/technologies") %>%
+      add_comments("Secondary outputs are only written out to relevant regions and technologies") %>%
       add_legacy_name("L221.StubTechFractSecOut_en") %>%
-      add_precursors("energy/A21.globaltech_secout", "common/GCAM_region_names", "energy/calibrated_techs") ->
+      add_precursors("aglu/A_agRegionalTechnology", "energy/A21.globaltech_secout", "common/GCAM_region_names", "L122.in_Mt_R_C_Yh") ->
       L221.StubTechFractSecOut_en
 
     L221.StubTechFractProd_en %>%
@@ -669,6 +689,13 @@ module_energy_L221.en_supply <- function(command, ...) {
       add_legacy_name("L221.StubTechFractProd_en") %>%
       add_precursors("L108.ag_Feed_Mt_R_C_Y", "L132.ag_an_For_Prices", "aglu/A_an_input_subsector") ->
       L221.StubTechFractProd_en
+
+    L221.StubTechFractCalPrice_en %>%
+      add_title("Calibrated prices of secondary outputs of feed from energy technologies (DDGS and feedcakes)") %>%
+      add_units("1975$/kg") %>%
+      add_comments("Value only relevant for share-weight calculation") %>%
+      add_precursors("L108.ag_Feed_Mt_R_C_Y", "L132.ag_an_For_Prices", "aglu/A_an_input_subsector") ->
+      L221.StubTechFractCalPrice_en
 
     L221.Rsrc_en %>%
       add_title("Resource table for feedcrop secondary output") %>%
@@ -742,22 +769,36 @@ module_energy_L221.en_supply <- function(command, ...) {
       add_precursors("L121.in_EJ_R_TPES_crude_Yh", "energy/A21.globaltech_shrwt", "common/GCAM_region_names", "energy/A_regions") ->
       L221.StubTechProd_oil_crude
 
-    L221.StubTechShrwt_bio %>%
-      add_title("Region-specific technology shareweights for biomassOil passthrough sector") %>%
+    L221.StubTechCalInput_bioOil %>%
+      add_title("Calibrated output of biomassOil by feedstock type") %>%
+      add_units("Mt/yr") %>%
+      add_comments("Calibration is necessary to allow regions to have multiple biomassOil feedstocks") %>%
+      add_precursors("L122.in_Mt_R_C_Yh", "energy/A21.globaltech_coef", "common/GCAM_region_names") ->
+      L221.StubTechCalInput_bioOil
+
+    L221.StubTechInterp_bioOil %>%
+      add_title("biomassOil technology (feedstock type) shareweight interpolation") %>%
       add_units("unitless") %>%
-      add_comments("A21.globaltech_shrwt interpolated to all years and written to all regions for biomassOil tech") %>%
-      add_legacy_name("L221.StubTechShrwt_bio") %>%
-      add_precursors("energy/A21.globaltech_shrwt", "common/GCAM_region_names") ->
-      L221.StubTechShrwt_bio
+      add_comments("Regions with multiple feedstocks in the base year have their share-weights passed forward") %>%
+      same_precursors_as(L221.StubTechCalInput_bioOil) ->
+      L221.StubTechInterp_bioOil
+
+    L221.StubTechShrwt_bioOil %>%
+      add_title("biomassOil technology (feedstock type) shareweights") %>%
+      add_units("unitless") %>%
+      add_comments("Regions with zero production in the base year have exogenous share-weights in future years") %>%
+      same_precursors_as(L221.StubTechCalInput_bioOil) ->
+      L221.StubTechShrwt_bioOil
 
     return_data(L221.Supplysector_en, L221.SectorUseTrialMarket_en, L221.SubsectorLogit_en,
                 L221.SubsectorShrwt_en, L221.SubsectorShrwtFllt_en, L221.SubsectorInterp_en,
                 L221.SubsectorInterpTo_en, L221.StubTech_en, L221.GlobalTechCoef_en,
                 L221.GlobalTechCost_en, L221.GlobalTechShrwt_en, L221.PrimaryConsKeyword_en,
-                L221.StubTechFractSecOut_en, L221.StubTechFractProd_en, L221.Rsrc_en,
+                L221.StubTechFractSecOut_en, L221.StubTechFractProd_en, L221.StubTechFractCalPrice_en, L221.Rsrc_en,
                 L221.RsrcPrice_en, L221.TechCoef_en_Traded, L221.TechCost_en_Traded,
                 L221.TechShrwt_en_Traded, L221.StubTechCoef_unoil, L221.Production_unoil,
-                L221.StubTechProd_oil_unoil, L221.StubTechProd_oil_crude, L221.StubTechShrwt_bio)
+                L221.StubTechProd_oil_unoil, L221.StubTechProd_oil_crude, L221.StubTechCalInput_bioOil,
+                L221.StubTechInterp_bioOil, L221.StubTechShrwt_bioOil)
   } else {
     stop("Unknown command")
   }

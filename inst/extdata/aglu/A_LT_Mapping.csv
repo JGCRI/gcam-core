@@ -8,7 +8,7 @@
 LandNode1,LandNode2,LandNode3,Land_Type,LandLeaf,GCAM_commodity
 AgroForestLand,AgroForest_NonPasture,AllForestLand,Forest,Forest,Forest
 AgroForestLand,AgroForest_NonPasture,AllForestLand,UnmanagedForest,UnmanagedForest,
-AgroForestLand,AgroForest_NonPasture,AllForestLand,biomass_tree,biomass_tree,biomass_tree
+AgroForestLand,AgroForest_NonPasture,AllForestLand,biomassTree,biomassTree,biomassTree
 AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,Corn,Corn
 AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,FiberCrop,FiberCrop
 AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,FodderGrass,FodderGrass
@@ -18,10 +18,10 @@ AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,OilCrop,OilCrop
 AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,OtherGrain,OtherGrain
 AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,PalmFruit,PalmFruit
 AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,Rice,Rice
-AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,Root_Tuber,Root_Tuber
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,RootTuber,RootTuber
 AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,SugarCrop,SugarCrop
 AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,Wheat,Wheat
-AgroForestLand,AgroForest_NonPasture,CropLand,biomass_grass,biomass_grass,biomass_grass
+AgroForestLand,AgroForest_NonPasture,CropLand,biomassGrass,biomassGrass,biomassGrass
 AgroForestLand,AgroForest_NonPasture,CropLand,OtherArableLand,OtherArableLand,
 AgroForestLand,AgroForest_NonPasture,GrassShrubLand,Grassland,Grassland,
 AgroForestLand,AgroForest_NonPasture,GrassShrubLand,Shrubland,Shrubland,

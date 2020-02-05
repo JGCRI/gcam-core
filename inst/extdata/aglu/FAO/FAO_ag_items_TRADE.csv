@@ -383,19 +383,19 @@
 30,"Rice",,,"Rice - total  (Rice milled equivalent)"
 36,"Rice",,,"Oil, rice bran"
 37,"Rice",,,"Cake, rice bran"
-116,"Root_Tuber","Potatoes","Potatoes","Potatoes"
-117,"Root_Tuber",,,"Flour, potatoes"
-118,"Root_Tuber",,,"Potatoes, frozen"
-120,"Root_Tuber",,,"Potato offals"
-122,"Root_Tuber","Sweet potatoes","Sweet potatoes","Sweet potatoes"
-125,"Root_Tuber","Cassava","Cassava","Cassava"
-128,"Root_Tuber",,,"Cassava dried"
-129,"Root_Tuber",,,"Starch, cassava"
-135,"Root_Tuber","Yautia (cocoyam)","Yautia (cocoyam)",
-136,"Root_Tuber","Taro (cocoyam)","Taro (cocoyam)",
-137,"Root_Tuber","Yams","Yams",
-149,"Root_Tuber","Roots and tubers, nes","Roots and tubers, nes","Roots and tubers, nes"
-150,"Root_Tuber",,,"Flour, roots and tubers nes"
+116,"RootTuber","Potatoes","Potatoes","Potatoes"
+117,"RootTuber",,,"Flour, potatoes"
+118,"RootTuber",,,"Potatoes, frozen"
+120,"RootTuber",,,"Potato offals"
+122,"RootTuber","Sweet potatoes","Sweet potatoes","Sweet potatoes"
+125,"RootTuber","Cassava","Cassava","Cassava"
+128,"RootTuber",,,"Cassava dried"
+129,"RootTuber",,,"Starch, cassava"
+135,"RootTuber","Yautia (cocoyam)","Yautia (cocoyam)",
+136,"RootTuber","Taro (cocoyam)","Taro (cocoyam)",
+137,"RootTuber","Yams","Yams",
+149,"RootTuber","Roots and tubers, nes","Roots and tubers, nes","Roots and tubers, nes"
+150,"RootTuber",,,"Flour, roots and tubers nes"
 977,"SheepGoat","Meat, sheep","Meat, sheep","Meat, sheep"
 1017,"SheepGoat","Meat, goat","Meat, goat","Meat, goat"
 156,"SugarCrop","Sugar cane","Sugar cane",

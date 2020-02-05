@@ -238,17 +238,20 @@ write_to_all_states <- function(data, names, region_list = gcamusa.STATES) {
 #' Calculate subsector shareweights in calibration periods, where subsectors may have multiple technologies
 #'
 #' @param data Tibble to operate on
+#' @param value_col Column with values to be used in setting subsector share-weights
 #' @return Tibble returned with a new column of calculated subsector shareweights.
-set_subsector_shrwt <- function(data) {
+set_subsector_shrwt <- function(data, value_col = "calOutputValue") {
+
+  value_col <- rlang::sym(value_col)
 
   assert_that(is_tibble(data))
 
-  region <- supplysector <- subsector <- year <- calOutputValue_agg <- calOutputValue <-
+  region <- supplysector <- subsector <- year <- calOutputValue_agg <-
     subs.share.weight <- NULL  # silence package check notes
 
   data_aggregated <- data %>%
     group_by(region, supplysector, subsector, year) %>%
-    summarise(calOutputValue_agg = sum(calOutputValue)) %>%
+    summarise(calOutputValue_agg = sum(!!value_col)) %>%
     ungroup
 
   data %>%

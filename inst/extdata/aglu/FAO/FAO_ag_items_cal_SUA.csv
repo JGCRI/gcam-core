@@ -16,7 +16,7 @@ Beer,,,0
 "Beverages, Alcoholic",,,0
 "Beverages, Fermented",,,0
 Brans,,,0
-Cassava and products,Root_Tuber,CASSAVA,1090
+Cassava and products,RootTuber,CASSAVA,1090
 "Cereals, Other",OtherGrain,CEREALS NES,3400
 "Citrus, Other",MiscCrop,CITRUS FRUIT NES,260
 Cloves,MiscCrop,CLOVES,3230
@@ -64,7 +64,7 @@ Pepper,MiscCrop,PEPPER WHITE/LONG/BLACK,2760
 Pimento,MiscCrop,PIMENTO,3180
 Pineapples and products,MiscCrop,PINEAPPLES,260
 Plantains,MiscCrop,PLANTAINS,750
-Potatoes and products,Root_Tuber,POTATOES,670
+Potatoes and products,RootTuber,POTATOES,670
 "Pulses, Other and products",MiscCrop,PULSES NES,3400
 Rape and Mustard Cake,OilCrop,,0
 Rape and Mustard Oil,OilCrop,OIL OF RAPESEED,8840
@@ -73,7 +73,7 @@ Rice (Milled Equivalent),,,0
 Rice (Paddy Equivalent),Rice,RICE PADDY,2800
 Ricebran Oil,Rice,OIL OF RICE BRAN,8840
 Roots & Tuber Dry Equiv,,,0
-"Roots, Other",Root_Tuber,"ROOTS, TUBERS NES",910
+"Roots, Other",RootTuber,"ROOTS, TUBERS NES",910
 Rubber,,,0
 Rye and products,OtherGrain,RYE,3190
 Sesame seed,OilCrop,SESAME SEED,5730
@@ -95,7 +95,7 @@ Sugar non-centrifugal,,,0
 Sunflower seed,OilCrop,SUNFLOWER SEED,3080
 Sunflowerseed Cake,OilCrop,,0
 Sunflowerseed Oil,OilCrop,OIL OF SUNFLOWER SEED,8840
-Sweet potatoes,Root_Tuber,SWEET POTATOES,920
+Sweet potatoes,RootTuber,SWEET POTATOES,920
 "Sweeteners, Other",,,0
 Tea (including mate),MiscCrop,TEA,400
 Tobacco,,,0
@@ -103,4 +103,4 @@ Tomatoes and products,MiscCrop,TOMATOES,170
 "Vegetables, Other",MiscCrop,VEGETABLES NES FRESH,220
 Wheat and products,Wheat,WHEAT,3340
 Wine,,,0
-Yams,Root_Tuber,YAMS,1010
+Yams,RootTuber,YAMS,1010
