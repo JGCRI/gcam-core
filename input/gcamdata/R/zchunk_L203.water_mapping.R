@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L203.water_mapping
 #'
 #' Mapping of water consumption/withdrawal to sectoral demands.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L102.water_supply_unlimited
 #'
 #' Build out unlimited water prices using defaults in Constants.R.

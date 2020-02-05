@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L101.water_supply_groundwater
 #'
 #' Prepare GCAM basin groundwater supply curves
