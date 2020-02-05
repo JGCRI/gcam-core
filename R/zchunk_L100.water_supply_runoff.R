@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L100.water_supply_runoff
 #'
 #' Prepare GCAM basin runoff and accessible water fractions using Xanthos output.

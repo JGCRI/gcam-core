@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_LB1233.Elec_water_Update
 #'
 #' Compute water withdrawals/consumption coefficients by state, fuel, technology, and cooling system type.

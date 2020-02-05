@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L201.water_resources_constrained
 #'
 #' Constrained surface and groudwater.

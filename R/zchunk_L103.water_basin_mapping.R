@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L103.water_basin_mapping
 #'
 #' Calculate percentage shares to map water demands by region / sector to basin.
