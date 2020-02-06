@@ -317,6 +317,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         # ^^ join the historical demand
         mutate(deficit = demand - accessible_runoff,
                deficit = if_else(deficit <=0, 0, deficit)) %>%
+        filter(year %in% MODEL_BASE_YEARS) %>%
         # ^^ determine how much water needs to be met by groundwater depletion
         left_join_error_no_match(tibble(year = MODEL_BASE_YEARS[MODEL_BASE_YEARS >= water.GW_DEPLETION_BASE_YEAR],
                          years = diff(MODEL_BASE_YEARS)), by = "year") %>%
