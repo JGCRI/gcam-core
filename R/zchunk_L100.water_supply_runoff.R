@@ -12,8 +12,8 @@
 #' original data system was \code{L100.water_supply_runoff.R} (Water level1).
 #' @details Reads Xanthos outputs and converts to maximum and accessible runoff water for all GCAM model years.
 #' @importFrom tibble tibble
-#' @import dplyr
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange filter group_by mutate rename summarise ungroup
+#' @importFrom tidyr complete gather nesting
 #' @author ST September 2018
 module_water_L100.water_supply_runoff <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L210.resources_USA.R
 \name{module_gcamusa_L210.resources_USA}
 \alias{module_gcamusa_L210.resources_USA}
-\title{module_gcamusa_L210.resources_USA}
+\title{module_gcam.usa_L210.resources_USA}
 \usage{
 module_gcamusa_L210.resources_USA(command, ...)
 }

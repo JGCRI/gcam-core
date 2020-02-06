@@ -13,7 +13,7 @@
 #' @details  The share of AWB emissions within each region is calculated on the basis of excess dry biomass estimated from production, harvest index, and water content. EDGAR AWB emissions are then used to estimate emissions for each GCAM production technology
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author KD May 2017
 module_emissions_L121.nonco2_awb_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -12,7 +12,7 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{FAO_BilateralTrade}.
-#' @importFrom dplyr filter select
+#' @importFrom dplyr filter if_else mutate select
 #' @author PLP
 module_data_FAO_BilateralTrade <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

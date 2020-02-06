@@ -21,7 +21,7 @@
 #' Calibrated outputs for gas processing and oil refining as well as I:O coefficients are interpolated from historical values to base model years.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select semi_join
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting
 #' @author CWR Sept 2017
 module_energy_L222.en_transformation <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

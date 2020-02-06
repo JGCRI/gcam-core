@@ -17,7 +17,6 @@
 #' The land area changing rates (bm2 per year) are checked to make sure they are within certain tolerances.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter group_by lag mutate select summarise
-#' @importFrom tidyr gather spread
 #' @author MC May 2017
 module_aglu_LB125.LC_tot <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

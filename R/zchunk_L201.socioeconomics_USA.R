@@ -13,7 +13,6 @@
 #' @details Interest rate, population, and GDP for GCAM-USA.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter lag mutate select
-#' @importFrom tidyr gather spread
 #' @author RLH October 2017
 module_gcamusa_L201.socioeconomics_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

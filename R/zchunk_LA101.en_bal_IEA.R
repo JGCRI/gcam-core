@@ -14,7 +14,7 @@
 #' by (generally) iso and/or region, sector, fuel, and year.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows distinct filter funs if_else group_by left_join matches mutate select summarise summarise_all
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author FF and BBL July 2017
 module_energy_LA101.en_bal_IEA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

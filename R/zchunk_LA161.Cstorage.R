@@ -13,7 +13,7 @@
 #' @details Build carbon storage supply curves by region.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter group_by mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather
 #' @author RLH November 2017
 module_energy_LA161.Cstorage <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

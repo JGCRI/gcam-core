@@ -14,7 +14,6 @@
 #' with information of supplysector, subsector, technology, minicam.energy.input and market.name.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter left_join mutate select
-#' @importFrom tidyr gather spread
 #' @author YL May 2017
 module_water_L210.water_demand_primary <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

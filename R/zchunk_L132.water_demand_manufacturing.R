@@ -14,7 +14,7 @@
 #' all regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter if_else group_by inner_join left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete gather
 #' @author GPK June 2018
 module_water_L132.water_demand_manufacturing <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

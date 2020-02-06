@@ -14,7 +14,6 @@
 #' @details  Fuel inputs to heat were added to building energy use in regions where heat is not modeled as a final fuel
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join mutate pull select summarise
-#' @importFrom tidyr gather spread
 #' @author AS May 2017
 module_energy_LA142.building_agg <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

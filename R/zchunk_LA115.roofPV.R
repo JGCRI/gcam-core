@@ -13,7 +13,6 @@
 #' @details Rooftop PV resources are given in the input file according to the 14 GCAM regions, i.e., "region_GCAM3." Because some regions span mutliple GCAM region IDs, population in 2010 was used to allocate proportionally.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter group_by mutate select summarise
-#' @importFrom tidyr gather spread
 #' @author AJS April 2017
 module_energy_LA115.roofPV <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

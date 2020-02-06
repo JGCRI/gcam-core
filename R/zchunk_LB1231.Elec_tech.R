@@ -13,7 +13,7 @@
 #' @details Downscaling electricity by state/fuel to state/fuel/technology
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter left_join mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author RLH August 2017
 module_gcamusa_LB1231.Elec_tech<- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

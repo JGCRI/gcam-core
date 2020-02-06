@@ -24,7 +24,7 @@
 #' and SSP4 are adjusted to reflect the trade frictions in the SSP storylines.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter full_join if_else group_by left_join mutate select summarize
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author KVC July 2017
 module_aglu_L243.bio_trade_input <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -14,7 +14,7 @@
 #' SAGE data to produce tables giving, for each GCAM region and land use type, data on these variables.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr spread
 #' @importFrom stats weighted.mean
 #' @author BBL April 2017
 module_aglu_LB121.Carbon_LT <- function(command, ...) {

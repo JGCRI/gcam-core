@@ -13,7 +13,7 @@
 #' @details Combine and downscale (back in time, for USSR and Yugoslavia) the CDIAC emissions and sequestration data.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows distinct filter group_by mutate right_join select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather replace_na spread
 #' @author BBL April 2017
 module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

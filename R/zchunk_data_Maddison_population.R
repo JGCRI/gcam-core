@@ -15,7 +15,6 @@
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
 #' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
 #' @author BBL
 module_data_Maddison_population <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -29,7 +29,7 @@
 #' @details The chunk provides final energy keyword, supplysector/subsector information, supplysector/subsector interpolation information, supplysector/subsector share weights, global technology share weight, global technology efficiency, global technology coefficients, global technology cost, price elasticity, stub technology information, stub technology interpolation information, stub technology calibrated inputs, and etc.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join arrange bind_rows distinct filter if_else group_by lag left_join mutate right_join select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting
 #' @author LF October 2017
 module_energy_L232.industry <- function(command, ...) {
 

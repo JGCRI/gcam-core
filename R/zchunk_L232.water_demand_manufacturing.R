@@ -13,7 +13,7 @@
 #' @details Water widthdrawal and consumption coefficients for manufacturing for GCAM regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange distinct filter if_else group_by left_join mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting
 #' @author GPK June 2018
 module_water_L232.water_demand_manufacturing <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

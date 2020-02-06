@@ -13,7 +13,7 @@
 #' @details This chunk downscales total harvested cropland by GCAM region / commodity / year / GLU to irrigated/rainfed according to irrigated/rainfed shares in the base year, and calculates the economic yields as production divided by cropland.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter full_join if_else group_by left_join mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr nesting
 #' @author RC May 2017
 module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

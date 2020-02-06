@@ -14,7 +14,6 @@
 #' used in each region by the supply curve amount in the global assumption supply curve
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange filter group_by mutate select summarise
-#' @importFrom tidyr gather spread
 #' @author RH March 2017
 module_energy_LA117.tradbio <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

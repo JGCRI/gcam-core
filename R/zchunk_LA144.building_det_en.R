@@ -13,7 +13,7 @@
 #' @details Calculates building energy consumption, non-energy costs, energy output by service, internal gains, and end-use technology and shell efficiency
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join lag mutate pull select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete replace_na
 #' @author AJS July 2017
 module_energy_LA144.building_det_en <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

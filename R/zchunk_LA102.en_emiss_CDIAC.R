@@ -16,7 +16,6 @@
 #' global (L102.Ccoef_kgCGJ_F_Yh) emissions coefficients
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter if_else group_by mutate select summarise
-#' @importFrom tidyr gather spread
 #' @author CWR July 2017
 
 module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {

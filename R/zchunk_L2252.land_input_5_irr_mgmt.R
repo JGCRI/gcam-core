@@ -32,7 +32,7 @@
 #' }
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows distinct filter full_join if_else group_by left_join mutate select semi_join summarize
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na separate
 #' @author ACS September 2017
 module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

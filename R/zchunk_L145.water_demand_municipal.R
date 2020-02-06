@@ -13,7 +13,7 @@
 #' @details Generate municipal water withdrawals, municipal water base delivery cost, and municipal water use efficiency.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter full_join if_else group_by left_join matches mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete  drop_na gather
 #' @author YL May 2017
 module_water_L145.water_demand_municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

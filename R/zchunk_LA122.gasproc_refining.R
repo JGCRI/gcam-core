@@ -13,7 +13,7 @@
 #' @details This chunk creates gasproc, oil refining and crops inputs, outputs and IO "input-output" coefficients for refining.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows distinct filter if_else left_join mutate right_join select semi_join
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete gather nesting
 #' @author FF, May 2017
 module_energy_LA122.gasproc_refining <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

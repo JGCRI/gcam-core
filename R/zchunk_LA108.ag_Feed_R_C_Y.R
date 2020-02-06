@@ -17,7 +17,7 @@
 #' This information is used to calculate net exports of FodderHerb too.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else group_by left_join mutate right_join select summarize
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting replace_na
 #' @author KVC April 2017
 module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

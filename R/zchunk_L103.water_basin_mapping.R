@@ -14,7 +14,7 @@
 #' @details  Water demands by sector and region to basins.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather
 #' @author ST Oct 2018
 module_water_L103.water_basin_mapping <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

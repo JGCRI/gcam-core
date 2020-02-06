@@ -25,7 +25,7 @@
 #'
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author ACS August 2017
 module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

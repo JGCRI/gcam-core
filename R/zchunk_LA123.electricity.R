@@ -13,7 +13,6 @@
 #' @details This script creates electricity generation and inputs by fuel, region and historical year. Estimates are adjusted by efficiency factors.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter full_join funs if_else group_by left_join mutate select semi_join summarise summarise_all
-#' @importFrom tidyr gather spread
 #' @author FF April 2017
 module_energy_LA123.electricity <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

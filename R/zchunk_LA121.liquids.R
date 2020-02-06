@@ -15,8 +15,8 @@
 #'   It also uses data from IIASA to downscale ethanol and biodiesel consumption to modeled technologies and feedstocks.
 #' @note If the (proprietary) IEA data aren't available, pre-built summaries are used.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr arrange distinct filter group_by inner_join left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange distinct filter group_by if_else inner_join left_join mutate select summarise
+#' @importFrom tidyr complete nesting
 #' @author JDH June 2017, ed GPK April 2019
 module_energy_LA121.liquids <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

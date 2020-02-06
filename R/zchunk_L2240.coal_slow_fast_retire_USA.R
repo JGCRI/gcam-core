@@ -18,8 +18,8 @@
 #' forces that generation to retire in 2015. It also tempers retirement assumptions for the remaining coal fleet to allow
 #' most 2015 generation to continue through mid-century.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join distinct filter mutate select semi_join
+#' @importFrom tidyr complete nesting
 #' @author RC Aug 2018
 module_gcamusa_L2240.coal_slow_fast_retire_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

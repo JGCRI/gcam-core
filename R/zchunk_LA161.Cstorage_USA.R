@@ -13,7 +13,6 @@
 #' @details Calculates onshore CO2 storage by grid region.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter group_by lag mutate select
-#' @importFrom tidyr gather spread
 #' @author RLH October 2017
 
 module_gcamusa_LA161.Cstorage <- function(command, ...) {

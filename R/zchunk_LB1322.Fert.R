@@ -17,7 +17,7 @@
 #' of hydrogen production technologies.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter group_by left_join mutate pull select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete fill gather replace_na spread
 #' @author AJS July 2017
 module_energy_LB1322.Fert <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

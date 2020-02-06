@@ -19,8 +19,7 @@
 #' The corresponding file in the original data system was \code{L210.resources.R} (energy level2).
 #' @details Resource market information, prices, TechChange parameters, supply curves, and environmental costs.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr bind_rows distinct filter if_else mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter if_else mutate select semi_join
 #' @author RLH November 2017
 module_energy_L210.resources <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

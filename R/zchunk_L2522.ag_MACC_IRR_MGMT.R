@@ -13,7 +13,7 @@
 #' @details Add new technology data from A_MACC_TechChange to the animal and agricultural marginal abatement cost "MAC" curves.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr distinct filter select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather unite
 #' @author KD Aug 2017
 module_emissions_L2522.ag_MACC_IRR_MGMT <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

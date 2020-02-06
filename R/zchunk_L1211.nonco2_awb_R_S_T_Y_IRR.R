@@ -15,9 +15,9 @@
 #' Third, we divide the irrigated and rainfed production shares over the historical years to get the share of irrigated and rainfed production within region, GLU, and crop.
 #' Finally, we multiply non-CO2 emissions within region, GLU, and crop by irrigated and rainfed production shares.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr bind_rows filter group_by mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter group_by intersect mutate select summarise
 #' @importFrom data.table data.table
+#' @importFrom tidyr replace_na
 #' @author CDL April 2017
 module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -80,7 +80,7 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
     L121.nonco2_tg_R_awb_C_Y_GLU %>%
       ## Need to filter for historical years to ensure the join will work, ie. there will be a 1 to 1 match
       ## Note this step was NOT in the original data system
-      filter(year %in% dplyr::intersect(HISTORICAL_YEARS, emissions.EDGAR_YEARS)) %>%
+      filter(year %in% intersect(HISTORICAL_YEARS, emissions.EDGAR_YEARS)) %>%
       repeat_add_columns(tibble::tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
       fast_left_join(L1211.ag_irrShare_R_C_Y_GLU_irr,
                      by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year", "Irr_Rfd")) %>%

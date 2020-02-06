@@ -26,7 +26,7 @@
 #' other land use types (determined in different code chunks).
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join arrange bind_rows distinct filter if_else group_by left_join mutate select summarise summarise_all
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author ACS April 2017
 module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

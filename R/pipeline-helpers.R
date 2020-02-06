@@ -24,6 +24,7 @@ PH_year_value_historical <- function(d) {
 #' @return Joined data.
 #' @details Restrictive version of dplyr::left_join meant for replacing `match` calls.
 # Ensures that number of rows of data doesn't change, and everything has matched data.
+#' @importFrom dplyr left_join
 #' @export
 left_join_error_no_match <- function(d, ..., ignore_columns = NULL) {
   assertthat::assert_that(tibble::is.tibble(d))
@@ -177,6 +178,7 @@ approx_fun <- function(year, value, rule = 1) {
 #' @return A repeated \code{x} with columns from \code{y} added.
 #' @details This corresponds to \code{repeat_and_add_vector} in the old data system.
 #' @importFrom assertthat assert_that
+#' @importFrom dplyr full_join mutate
 #' @author BBL
 #' @export
 #' @examples

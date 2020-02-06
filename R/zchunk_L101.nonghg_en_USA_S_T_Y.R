@@ -18,7 +18,7 @@
 #' any historical year (i.e., any year 1971-2010), representing subsequent historical years
 #'as future model time periods in order to check model performance against the observed data.
 #' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na spread
 #' @author BBL April 2017
 module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

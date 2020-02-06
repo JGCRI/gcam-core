@@ -19,7 +19,7 @@
 #' @details Prepare level 2 industry sector files for USA.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else group_by left_join mutate select semi_join summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting
 #' @author ST October 2017
 module_gcamusa_L232.industry_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

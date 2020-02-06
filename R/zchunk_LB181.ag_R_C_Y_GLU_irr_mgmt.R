@@ -16,7 +16,7 @@
 #' yield mutipliers and land shares for each region / commodity / GLU / irrigation level.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter left_join mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather
 #' @author RC May 2017
 module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

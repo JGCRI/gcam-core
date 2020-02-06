@@ -16,8 +16,8 @@
 #' @details This chunk calculates the Input-Output coefficients of irrigation water withdrawals and consumption, and biophysical water consumption of irrigated and rainfed crops,
 #' for each primary and dedicated bioenergy crop by region / year / GLU / management level.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr bind_rows filter full_join group_by left_join mutate right_join select semi_join summarise
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter full_join group_by if_else left_join mutate right_join select semi_join summarise
+#' @importFrom tidyr complete nesting replace_na separate
 #' @author RC July 2017
 module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -91,7 +91,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       rename(value = GreenRfd_m3kg) ->
       L2072.Bio_RFD_IO_R_C_GLU
 
-    # Following are repeated processing steps for the three files, so combine them all togather
+    # Following are repeated processing steps for the three files, so combine them all together
     L2072.Blue_IRR_IO_R_C_GLU %>%
       bind_rows(L2072.Bio_IRR_IO_R_C_GLU, L2072.Bio_RFD_IO_R_C_GLU) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%

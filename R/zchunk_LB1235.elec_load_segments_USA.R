@@ -15,8 +15,8 @@
 #' The corresponding file in the original data system was \code{LB1235.elec_load_segments.R} (gcam-usa level1).
 #' @details Compute load curve related parameters and nitial estimate of generation by fuel in the horizontal segments.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter mutate select summarise_at summarise_if
+#' @importFrom tidyr gather
 #' @author MTB August 2018
 module_gcamusa_LB1235.elec_load_segments_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

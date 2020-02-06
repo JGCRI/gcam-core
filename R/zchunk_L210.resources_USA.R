@@ -17,7 +17,6 @@
 #' @details GCAM-USA resource market information, prices, TechChange parameters, and supply curves.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join filter if_else group_by lag mutate select summarise
-#' @importFrom tidyr gather spread
 #' @author RLH November 2017
 
 module_gcamusa_L210.resources_USA <- function(command, ...) {

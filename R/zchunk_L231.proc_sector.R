@@ -18,7 +18,6 @@
 #' Regional technology calibration values created with constant. Industry input-output coefficient file created.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows distinct filter group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
 #' @author RLH July 2017
 module_emissions_L231.proc_sector <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

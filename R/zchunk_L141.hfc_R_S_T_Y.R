@@ -14,7 +14,7 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter funs group_by left_join matches mutate select summarise vars
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author RMH Aug 2017
 module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
