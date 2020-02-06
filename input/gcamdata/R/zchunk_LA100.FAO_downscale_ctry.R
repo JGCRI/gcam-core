@@ -69,7 +69,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
 
     iso <- FAO_country <- `country codes` <- `element codes` <- `item codes` <-
       year <- value <- countries <- country.codes <- item <- item.codes <-
-      element <- element.codes <- NULL # silence package chck.
+      element <- element.codes <- `2011` <- NULL # silence package chck.
 
     all_data <- list(...)[[1]]
 

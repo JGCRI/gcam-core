@@ -102,7 +102,8 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       soil_c <- veg_c <- LC_bm2 <- LV_milUSD75 <- LV_USD75_bm2 <- LV_USD75_m2 <- HarvCropLand_bm2 <-
       unManagedLandValue <- LandAllocatorRoot <- hist.veg.carbon.density <- hist.soil.carbon.density <-
       veg.carbon.density <- soil.carbon.density <- allocation <- Land_Type.y <- mature.age.year.fillout <-
-      min.veg.carbon.density <- min.soil.carbon.density <- no.emiss.carbon.calc <- . <- NULL
+      min.veg.carbon.density <- min.soil.carbon.density <- no.emiss.carbon.calc <- . <- min_allocation <-
+      base_allocation <- NULL
 
 
     # Process inputs
