@@ -144,7 +144,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       # the USSR and separated countries thereafter, resulting in unrealistic fuel shares.
       USSR_YUG_SPLIT_YEAR <- 1990
       USSR_YUG_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < USSR_YUG_SPLIT_YEAR]
-      POST_USSR_YUG_YEARS_IEA <- as.character(HISTORICAL_YEARS[HISTORICAL_YEARS >= USSR_YUG_SPLIT_YEAR])
+      POST_USSR_YUG_YEARS_IEA <- HISTORICAL_YEARS[HISTORICAL_YEARS >= USSR_YUG_SPLIT_YEAR]
       L100.USSR_Yug <- filter(L100.IEAcomposite, COUNTRY %in% c("Former Soviet Union (if no detail)",
                                                                 "Former Yugoslavia (if no detail)"))
 
@@ -209,7 +209,7 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
       POST_USSR_YUG_YEARS_IEA <- intersect(POST_USSR_YUG_YEARS_IEA, names(L100.USSR_Yug_ctry))
       L100.USSR_Yug_ctry %>%
         select(iso, FLOW, PRODUCT, IEAcomposite, POST_USSR_YUG_YEARS_IEA) %>%
-        left_join_keep_first_only(select(L100.USSR_Yug, one_of("COUNTRY", "FLOW", "PRODUCT", as.character(USSR_YUG_YEARS))),
+        left_join_keep_first_only(select(L100.USSR_Yug, one_of("COUNTRY", "FLOW", "PRODUCT", USSR_YUG_YEARS)),
                                   by = c("IEAcomposite" = "COUNTRY", "FLOW", "PRODUCT")) %>%
         left_join_keep_first_only(select(L100.USSR_Yug_ctry_FLOW_PRODUCT_1990, iso, PRODUCT, `1990_share`),
                                   by = c("iso", "PRODUCT")) ->

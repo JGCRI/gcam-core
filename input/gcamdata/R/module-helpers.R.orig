@@ -84,8 +84,7 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
     # pull so2_map information into SO2 data
     select(region, SO2_name) %>%
     left_join_error_no_match(data_so2, ., by = "region") %>%
-    mutate(Non.CO2 = SO2_name) %>%
-    select(-SO2_name) %>%
+    rename(Non.CO2 = SO2_name) %>%
     bind_rows(data_notso2)
 }
 
