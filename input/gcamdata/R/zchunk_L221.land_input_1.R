@@ -32,7 +32,6 @@
 #' }
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr distinct filter left_join mutate select
-#' @importFrom tidyr gather spread
 #' @author ACS August 2017
 module_aglu_L221.land_input_1 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

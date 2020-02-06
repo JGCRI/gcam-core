@@ -17,7 +17,7 @@
 #' @details Make the logit and input tables for the cement sector in gcam-usa
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange distinct filter if_else group_by left_join mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting spread
 #' @author KD  November 2017
 module_gcamusa_L2321.cement_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -20,7 +20,7 @@
 #' with LDS harvested area and production data to calculate cost.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na spread
 #' @author ACS May 2017
 module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

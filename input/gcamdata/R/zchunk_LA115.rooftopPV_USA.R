@@ -12,8 +12,7 @@
 #' original data system was \code{LA115.RooftopPV.R} (gcam-usa level1).
 #' @details Prepare resource curves for rooftop PV (commercial and residential combined).
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr arrange bind_rows filter group_by mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter first group_by mutate select summarise
 #' @author ST September 2017
 module_gcamusa_LA115.rooftopPV <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

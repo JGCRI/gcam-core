@@ -13,7 +13,7 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_cols filter if_else group_by left_join mutate one_of select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete
 #' @author ST August 2017
 module_water_L245.water_demand_municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

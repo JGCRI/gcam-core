@@ -14,7 +14,7 @@
 #' @details In most cases, a growth potential for each country was calculated, multiplied by its share in the region, and added to the base-year ouput
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate pull select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr fill spread
 #' @author AS May 2017
 module_energy_LA118.hydro <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -16,8 +16,7 @@
 #' within that region; maximum prices are calculated to be the price where supply is 95% that of the available resource,
 #' and the highest maximum price within the region is then used. The rest of the price points are filled out in equal increments.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr arrange bind_rows filter group_by mutate pull select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter group_by mutate pull row_number select summarise
 #' @author AJS June 2017
 module_energy_LA114.wind <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -166,7 +165,7 @@ module_energy_LA114.wind <- function(command, ...) {
         filter(supply >= half_max_resource) %>%
         # The first price point most closely corresponds to the mid.price, which is the price at which
         # supply is half of the maximum resource. Select the first row to get the mid.price.
-        filter(dplyr::row_number() == 1) %>%
+        filter(row_number() == 1) %>%
         pull(price) ->
         mid.price
 

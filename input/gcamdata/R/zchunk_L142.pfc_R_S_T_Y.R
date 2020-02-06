@@ -15,7 +15,7 @@
 #' were calculated by suming emissions over region, sector, technology, and gas by year.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join mutate right_join select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author CDL June 2017
 module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

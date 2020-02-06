@@ -14,7 +14,7 @@
 #' @details Generates input emissions by energy technology, GHG, and base historical year. Writes out max emissions reductions and steepness to all energy technologies and regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter if_else left_join mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather
 #' @author RH July 2017
 module_emissions_L232.prc_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

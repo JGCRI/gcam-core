@@ -13,7 +13,7 @@
 #' @details This chunk produces tables to create the N fertilizer sector in GCAM-USA.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr distinct filter if_else left_join mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr unite
 #' @author KD October 2017
 module_gcamusa_L2322.Fert_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -13,7 +13,6 @@
 #' @details Use RCP year 2000 BC and OC emissions from agricultural waste burning on fields (AWB) to calculate emission factors for each ag production technology. Allocates regional AWB emissions to GCAM technology according to above-ground non-harvested biomass.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter funs group_by left_join mutate select summarize_if
-#' @importFrom tidyr gather spread
 #' @author SJS May 2017
 module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

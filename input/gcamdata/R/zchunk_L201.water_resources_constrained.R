@@ -13,8 +13,9 @@
 #' original data system was \code{L102.water_supply_unlimited.R} (water level1).
 #' @details  Genereates water resource input files for region + basin which includes runoff and groundwater.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join case_when distinct filter if_else inner_join mutate pull right_join select
+#' @importFrom tidyr complete nesting
+#' @importFrom stats spline
 #' @author ST Oct 2018
 module_water_L201.water_resources_constrained <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

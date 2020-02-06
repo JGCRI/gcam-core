@@ -30,8 +30,8 @@
 #' original data system was \code{L2233.electricity_water.R} (water level2).
 #' @details Disaggregates electricity sector for all cooling system types.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr bind_rows filter if_else group_by left_join mutate right_join select summarise first
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter first if_else group_by left_join mutate right_join select summarise first
+#' @importFrom tidyr complete gather nesting
 #' @author ST June 2017
 module_water_L2233.electricity_water <- function(command, ...) {
 

@@ -13,8 +13,7 @@
 #' original data system was \code{L102.water_supply_unlimited.R} (water level1).
 #' @details  Generates unlimited water supply for all combinations of basin / region and water_type.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr case_when filter mutate select
 #' @author ST Oct 2018
 module_water_L102.water_supply_unlimited <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

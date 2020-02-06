@@ -16,8 +16,8 @@
 #' The corresponding file in the original data system was \code{L2239.CSP_reeds_USA.R} (gcam-usa level2).
 #' @details Create state-level solar CSP resource supply curves
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select row_number
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr distinct filter if_else lag mutate select row_number
+#' @importFrom tidyr gather replace_na
 #' @author MTB September 2018
 module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

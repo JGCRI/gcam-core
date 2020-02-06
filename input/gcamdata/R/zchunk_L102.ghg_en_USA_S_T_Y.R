@@ -13,7 +13,6 @@
 #' @details Divides CH4 and N2O emissions from EPA GHG inventory by GCAM energy sector activity to get emissions factors for a single historical year 2005 in the US.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange filter if_else group_by left_join mutate select summarize summarize_if
-#' @importFrom tidyr gather spread
 #' @author HCM April 2017
 module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

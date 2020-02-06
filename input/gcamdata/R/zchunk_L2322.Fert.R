@@ -15,7 +15,7 @@
 #' energy inputs and coefficients, global fertilizer manufacturing technologies, etc. for the fertilizer sector.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting
 #' @author LF September 2017
 module_energy_L2322.Fert <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -13,7 +13,7 @@
 #' @details Calculate shareweights, cost, price elasticity, calibrated, and other data for the transportation sector
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter if_else group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting
 #' @author AJS August 2017
 module_energy_L252.transportation <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

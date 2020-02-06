@@ -15,7 +15,7 @@
 #' Adjust nonLandVariableCost to remove the now explicitly computed fertilizer cost.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else left_join mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author KVC June 2017
 module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

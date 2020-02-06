@@ -17,8 +17,7 @@
 #' source data were developed for the 14 regions of GCAM 3.0 and prior, they are first
 #' downscaled to the nation level on the basis of land area, and aggregated to the current GCAM regions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter full_join group_by mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr distinct filter full_join group_by mutate select summarise
 #' @author GPK April 2017
 module_energy_LA116.geo <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

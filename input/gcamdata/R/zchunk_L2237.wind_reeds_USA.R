@@ -14,8 +14,8 @@
 #' The corresponding file in the original data system was \code{L2237.wind_reeds_USA.R} (gcam-usa level2).
 #' @details Create state-level wind resource supply curves
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select row_number
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr distinct filter lag mutate select row_number semi_join summarise_if
+#' @importFrom tidyr gather
 #' @author MTB September 2018
 module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -107,7 +107,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
     L2237.wind_potential_EJ %>%
       left_join_error_no_match(L2237.wind_CF, by = c("State", "Wind.Class")) %>%
       group_by(State) %>%
-      arrange(State, desc(CF)) %>%
+      arrange(State, dplyr::desc(CF)) %>%
       mutate(CFmax = max(CF),
              supply = cumsum(resource.potential.EJ)) %>%
       ungroup() %>%
@@ -163,7 +163,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
     L2237.wind_curve %>%
       mutate(percent.supply = supply / maxSubResource) %>%
       group_by(State) %>%
-      arrange(State, desc(price)) %>%
+      arrange(State, dplyr::desc(price)) %>%
       # filter for the supply point with just less than 50% of the maxSubResource, in order to calculate the mid-price
       filter(percent.supply <= 0.5) %>%
       # NOTE: separate filter calls are needed here; combining filters in same call requires both

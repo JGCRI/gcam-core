@@ -17,7 +17,7 @@
 #' @details Creates marginal abatement cost curves "MACC", for fossil resources, agriculture, animals, and processing.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows distinct filter left_join matches mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather
 #' @author RH August 2017
 module_emissions_L252.MACC <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -15,7 +15,6 @@
 #' # or 3. region-specific average emissions coefficients based on CDIAC inventory and IEA energy balances.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter if_else left_join mutate select
-#' @importFrom tidyr gather spread
 #' @author JDH Sept 2017
 
 module_energy_L202.Ccoef <- function(command, ...) {

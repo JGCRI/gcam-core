@@ -26,8 +26,8 @@
 #' @details This chunk generates input files to create an electricity generation sector with multiple load segments
 #' for each state and creates the demand for the state-level electricity sectors in the grid regions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join distinct filter if_else mutate select semi_join summarise_if
+#' @importFrom tidyr complete nesting replace_na
 #' @author MTB Aug 2018
 module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

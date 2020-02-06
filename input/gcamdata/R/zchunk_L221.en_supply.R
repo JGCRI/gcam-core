@@ -15,8 +15,8 @@
 #' information to all model periods and regions. It creates global tech coef, costs, and shareweights
 #' by interpolating assumptions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr anti_join distinct filter full_join if_else group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join distinct filter full_join if_else group_by inner_join left_join mutate select summarise
+#' @importFrom tidyr gather
 #' @author JDH Nov 2017
 module_energy_L221.en_supply <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

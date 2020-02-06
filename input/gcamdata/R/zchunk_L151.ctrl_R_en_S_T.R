@@ -18,7 +18,7 @@
 #' technology / emission species.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else left_join mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather
 #' @author BBL April 2017
 module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

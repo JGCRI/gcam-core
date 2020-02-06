@@ -13,7 +13,7 @@
 #' original data system was \code{LB1233.Elec_water.R} (gcam-usa level1).
 #' @details Compute water withdrawals/consumption coefficients by state, fuel, technology, and cooling system type.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr distinct filter if_else mutate select
 #' @importFrom tidyr gather spread
 #' @author Zarrar Khan September 2018
 module_gcamusa_LB1233.Elec_water_Update <- function(command, ...) {

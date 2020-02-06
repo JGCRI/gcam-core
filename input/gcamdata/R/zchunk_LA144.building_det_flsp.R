@@ -16,7 +16,7 @@
 #' Floorspace prices were calculated by dividing an assumed fraction of GDP for buildings by residential floorspace.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join matches mutate pull select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete gather spread
 #' @author AJS July 2017
 module_energy_LA144.building_det_flsp <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

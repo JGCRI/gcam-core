@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L222.en_transformation_USA.R
 \name{module_gcamusa_L222.en_transformation_USA}
 \alias{module_gcamusa_L222.en_transformation_USA}
-\title{module_gcamusa_L222.en_transformation_USA}
+\title{module_gcam.usa_L222.en_transformation_USA}
 \usage{
 module_gcamusa_L222.en_transformation_USA(command, ...)
 }

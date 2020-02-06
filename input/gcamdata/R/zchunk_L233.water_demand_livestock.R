@@ -15,7 +15,6 @@
 #' subsector,technology, and energy input.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr inner_join left_join mutate select
-#' @importFrom tidyr gather spread
 #' @author YL July 2017
 module_water_L233.water_demand_livestock <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

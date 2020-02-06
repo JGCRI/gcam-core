@@ -13,7 +13,7 @@
 #' @details Water withdrawal and consumption coefficients by livestock using head count.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else group_by inner_join left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author KRD November 2017
 module_water_L133.water_demand_livestock <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

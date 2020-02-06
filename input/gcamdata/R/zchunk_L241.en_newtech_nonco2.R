@@ -13,7 +13,7 @@
 #' @details Generate input tables of non-CO2 emission coefficients.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter left_join mutate right_join select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr unite
 #' @author KD August 2017
 module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

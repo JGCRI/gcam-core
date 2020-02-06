@@ -24,9 +24,8 @@
 #' generic information to all regions. Instead, technology information is read from the global UCD transportation
 #' technology database, and supplysector and subsector attributes are matched in from lookup tables.
 #' @importFrom assertthat assert_that
-#' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join arrange bind_rows filter if_else group_by left_join mutate one_of pull select semi_join summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting
 #' @author AJS September 2017
 module_energy_L254.transportation_UCD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

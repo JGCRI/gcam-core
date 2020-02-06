@@ -13,7 +13,6 @@
 #' @details Uses per-capita GDP data for SSP scenarios to generate transportation income elasticity using linear interpolation of assumption data.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter left_join mutate select transmute
-#' @importFrom tidyr gather spread
 #' @importFrom stats approx
 #' @author RH May 2017
 module_socioeconomics_L252.Trn_Inc_Elas_scenarios <- function(command, ...) {

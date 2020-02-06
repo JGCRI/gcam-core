@@ -18,7 +18,9 @@ the generated outputs: \code{FAO_BilateralTrade}.
 }
 \description{
 Read the FAO_BilateralTrade trade from file and reduce / summarize as soon as possible to
-keep it's memory footprint small
+keep its memory footprint small.  NOTE: we do not market the FAO_BilateralTrade as
+INPUT in order to have more control of when it gets loaded and minimize the amount of
+time it is loaded in memory.
 }
 \author{
 PLP

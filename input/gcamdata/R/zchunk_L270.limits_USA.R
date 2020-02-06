@@ -17,7 +17,7 @@
 #' @details Add 50 states to USA market for GCAM policy constraints which enforce limits
 #' to liquid feedstocks and the amount of subsidies given for net negative emissions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter
+#' @importFrom dplyr anti_join filter
 #' @author PLP June 2018
 module_gcamusa_L270.limits_USA <- function(command, ...) {
   negative_emiss_input_names <- paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)) )

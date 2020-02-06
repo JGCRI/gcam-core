@@ -13,7 +13,7 @@
 #' @details Computes capacity factors for wind by US state.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate pull select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete
 #' @author ST September 2017
 module_gcamusa_LA114.wind <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

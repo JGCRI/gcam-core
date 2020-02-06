@@ -34,7 +34,7 @@
 #' parameters read in, and perform a bunch of hard-wired unit conversions between inputs and outputs.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select semi_join summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author RC Oct 2017
 module_gcamusa_L254.transportation_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

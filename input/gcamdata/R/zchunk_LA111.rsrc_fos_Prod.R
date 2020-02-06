@@ -18,7 +18,7 @@
 #' for unconventional oil resources.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete replace_na
 #' @author BBL August 2017
 module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

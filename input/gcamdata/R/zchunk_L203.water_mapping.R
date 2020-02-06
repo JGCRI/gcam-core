@@ -13,8 +13,7 @@
 #' original data system was \code{L203.water_mapping.R} (water level2).
 #' @details Generates water mapping input files that map demands by sectors to basins.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select first
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter first if_else mutate select first
 #' @author ST August 2017 / ST Oct 2018
 module_water_L203.water_mapping <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

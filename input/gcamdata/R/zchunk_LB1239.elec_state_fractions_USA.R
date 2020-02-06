@@ -14,8 +14,7 @@
 #' The corresponding file in the original data system was \code{LB1239.elec_state_fractions.R} (gcam-usa level1).
 #' @details Calculates the fraction of electricity generation by fuel, by horizontal load segment, by state.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr distinct filter left_join mutate select semi_join
 #' @author MTB August 2018
 module_gcamusa_LB1239.elec_state_fractions_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

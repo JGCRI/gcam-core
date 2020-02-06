@@ -18,7 +18,6 @@
 #' of yield. Agronomy Journal 102: 1158-1168. doi:10.2134/agronj2010.0087.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr distinct filter group_by inner_join mutate pull select summarise
-#' @importFrom tidyr gather spread
 #' @author BBL June 2017
 module_aglu_LB113.bio_Yield_R_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

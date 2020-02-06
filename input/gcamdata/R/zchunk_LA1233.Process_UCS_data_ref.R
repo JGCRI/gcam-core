@@ -13,7 +13,7 @@
 #' @details This script reads in and processes "Union of Concerned Scientists. 2012. UCS EW3 Energy-Water
 #' Database V.1.3" - Main Data.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select case_when
+#' @importFrom dplyr distinct filter full_join mutate select case_when
 #' @importFrom tidyr gather spread
 #' @importFrom tibble as_tibble tibble
 #' @author LL March 2017, ZK Sep 2019

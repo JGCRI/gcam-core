@@ -17,7 +17,7 @@
 #' @details See above
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread fill
+#' @importFrom tidyr fill
 #' @author AS April 2017
 module_gcamusa_LA101.EIA_SEDS <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
