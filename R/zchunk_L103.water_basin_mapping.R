@@ -28,7 +28,9 @@ module_water_L103.water_basin_mapping <- function(command, ...) {
              "L103.water_mapping_R_B_W_Ws_share"))
   } else if(command == driver.MAKE) {
 
-    region <- NULL                      # silence package check.
+    region <- GCAM_region_ID <- GLU <- water_type <- GCAM_ID_1 <- ISO_3DIGIT <-
+      iso <- water_sector <- value <- basin_id <- demand <- demand_total <-
+      share <- NULL                      # silence package check.
 
     all_data <- list(...)[[1]]
 

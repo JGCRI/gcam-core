@@ -142,7 +142,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
       tech.share <- supplysector.y <- supplysector.x <- segment <- share.weight.x <- year.x <- year.y <- State <-
       period <- capital.cost <- fcr <- fixed.om <- variable.om <- coefficient <- passthrough.sector <-
       marginal.revenue.sector <- marginal.revenue.market <- Geothermal_Hydrothermal_GWh <- geo_state_noresource <-
-      fuel <- NULL # silence package check notes
+      fuel <- n <- NULL # silence package check notes
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
