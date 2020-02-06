@@ -77,8 +77,8 @@ module_water_L203.water_mapping <- function(command, ...) {
     left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join(A03.sector, by = c("water_sector" = "water.sector")) %>%
       # ^^ non-restrictive join required (NA values generated for logit type)
-      mutate(wt_short = if_else(water_type == "water consumption", "C", "W")) %>%
-      mutate(supplysector = if_else(water_sector != water.IRRIGATION,
+      mutate(wt_short = if_else(water_type == "water consumption", "C", "W"),
+             supplysector = if_else(water_sector != water.IRRIGATION,
              paste(supplysector, wt_short, sep = "_"),
              paste(supplysector, GLU, wt_short, sep = "_"))) %>%
       left_join_error_no_match(basin_ID, by = "basin_id") %>%
