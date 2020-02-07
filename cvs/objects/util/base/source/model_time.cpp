@@ -65,7 +65,8 @@ Modeltime::Modeltime() :
 mStartYear( -1 ),
 mEndYear( -1 ),
 mFinalCalibrationYear( 2015 ),
-mIsInitialized( false )
+mIsInitialized( false ),
+mCarbonModelStartYear( -1 )
 {
 }
 
@@ -136,6 +137,9 @@ bool Modeltime::XMLParse( const DOMNode* aNode ) {
                         << ").\n" << endl;
             }
         } 
+        else if( nodeName == "carbon-model-start-year" ) {
+            mCarbonModelStartYear = XMLHelper<int>::getValue( curr );
+        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -166,6 +170,8 @@ void Modeltime::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) cons
         XMLWriteElementWithAttributes( mPeriodToYear[ aPeriod ], "inter-year", aOut, aTabs, attrs );
     }
     XMLWriteElement( mFinalCalibrationYear, "final-calibration-year", aOut, aTabs );
+    XMLWriteElementCheckDefault( mCarbonModelStartYear, "carbon-model-start-year", aOut, aTabs, 1975 );
+
 
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -352,3 +358,6 @@ int Modeltime::getFinalCalibrationPeriod() const {
     return getyr_to_per( mFinalCalibrationYear );
 }
 
+int Modeltime::getCarbonModelStartYear() const {
+    return mCarbonModelStartYear;
+}
