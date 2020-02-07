@@ -75,6 +75,7 @@
 #include "util/logger/include/logger_factory.h"
 #include "util/base/include/timer.h"
 #include "util/base/include/version.h"
+#include "util/base/include/util.h"
 
 using namespace std;
 using namespace xercesc;
@@ -190,8 +191,14 @@ int main( int argc, char *argv[] ) {
     // configuration options with the defaults being to run all periods and print debug
     // information.
     const int stopPeriod = conf->getInt( "stop-period", Scenario::RUN_ALL_PERIODS );
+    const int stopYear = conf->getInt( "stop-year", Scenario::RUN_ALL_PERIODS );
+    
+    // Choose stopPeriod from stopYear and stopPeriod options.
+    // If both are specified, then stopYear sets the time period
+    int finalPeriod = util::reconcilePeriodandYear( runner->getInternalScenario()->getModeltime(),
+                                                   stopPeriod, stopYear );
     const bool printDebug = conf->shouldWriteFile( "xmlDebugFileName" );
-    success = runner->runScenarios( stopPeriod, printDebug, timer );
+    success = runner->runScenarios( finalPeriod, printDebug, timer );
 
     // Print the output.
     runner->printOutput( timer );

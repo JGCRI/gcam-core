@@ -76,6 +76,8 @@
 #include "util/logger/include/ilogger.h"
 #endif
 
+class Modeltime;
+
 // Boost static asserts do not work when included from multiple namespaces.
 // Separate them into their own unique namespace.
 namespace conditionsCheck {
@@ -612,6 +614,8 @@ namespace objects {
    tm* getGMTime( const time_t& aTime );
    tm* getLocalTime( const time_t& aTime );
    void printTime( const time_t& aTime, std::ostream& aOut );
+
+   int reconcilePeriodandYear( const Modeltime* aModeltime, const int aPeriod, const int aYear );
    
 } // End util namespace.
 

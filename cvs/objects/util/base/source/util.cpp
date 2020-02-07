@@ -41,6 +41,7 @@
 #include "util/base/include/definitions.h"
 #include "util/base/include/util.h"
 #include "containers/include/scenario.h"
+#include "util/base/include/model_time.h"
 
 #include <string>
 #include <ctime>
@@ -272,4 +273,57 @@ void printTime( const time_t& aTime, ostream& aOut ){
     delete[] buffer;
 #endif
     }
+
+
+int reconcilePeriodandYear( const Modeltime* aModeltime, const int aPeriod, const int aYear ) {
+    // Get the main log file.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::WARNING );
+    
+    // Declare the new period
+    int newPeriod = aPeriod;
+    
+    // Check whether ONLY aPeriod is set.
+    if ( aYear == -1 ) {
+        // Use aPeriod, whether it was set or not.
+        newPeriod = aPeriod;
+    }
+    else if ( aPeriod == -1 ) {
+        // Only aYear was set, so use that.
+        if ( aModeltime->isModelYear( aYear ) ){
+            // If aYear is a valid model period, use that for the newPeriod
+            newPeriod = aModeltime->getyr_to_per( aYear );
+        }
+        else {
+            // If aYear is an invalid model year, then abort
+            mainLog.setLevel( ILogger::SEVERE );
+            mainLog << "Invalid Year Specified:  " << aYear << endl;
+            abort();
+        }
+    }
+    else {
+        // Both aYear and aPeriod were set.
+        // We will use aYear, but warn if they are inconsistent
+        if ( aModeltime->isModelYear( aYear ) ){
+            // If aYear is a valid model period, use that for the finalPeriod
+            newPeriod = aModeltime->getyr_to_per( aYear );
+            if ( newPeriod != aPeriod ) {
+                // If the two specifications are inconsistent, print a notice, but use aYear.
+                mainLog.setLevel( ILogger::NOTICE );
+                mainLog << "Year and period are specified inconsistently. Using year." << endl;
+            }
+        }
+        else {
+            // If aYear is an invalid model year, then abort
+            mainLog.setLevel( ILogger::SEVERE );
+            mainLog << "Invalid Year Specified:  " << aYear << endl;
+            abort();
+        }
+    }
+    
+    return newPeriod;
 }
+
+
+}
+
