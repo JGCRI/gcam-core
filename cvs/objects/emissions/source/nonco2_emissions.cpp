@@ -53,8 +53,6 @@
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/iinfo.h"
-#include "technologies/include/ioutput.h"
-#include "functions/include/function_utils.h"
 #include "marketplace/include/cached_market.h"
 #include "technologies/include/icapture_component.h"
 
@@ -193,7 +191,7 @@ bool NonCO2Emissions::XMLDerivedClassParse( const string& aNodeName, const DOMNo
         mInputEmissions = XMLHelper<Value>::getValue( aCurrNode );
     }
     else if( EmissionsDriverFactory::isEmissionsDriverNode( aNodeName ) ){
-        mEmissionsDriver = EmissionsDriverFactory::create( aNodeName );
+        parseSingleNode( aCurrNode, mEmissionsDriver, EmissionsDriverFactory::create( aNodeName ).release() );
     }
     else if( EmissionsControlFactory::isEmissionsControlNode( aNodeName ) ) {
         parseContainerNode( aCurrNode, mEmissionsControls, EmissionsControlFactory::create( aNodeName ).release() );
@@ -332,21 +330,8 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
         mGDP = aGDP;
     }
     
-    // Primary output is always stored at position zero and used to drive
-    // emissions.
-    assert( aOutputs.size() > 0 && aOutputs[ 0 ] );
-    double primaryOutput = aOutputs[ 0 ]->getPhysicalOutput( aPeriod );
-    
-    /*!
-     * \warning This is a crude way to determine the input driver. This is problematic
-     *          since different input units are not accounted for (although as a driver,
-     *          this is less relevant because all inputs currently scale to each other)
-     *          but also does not allow an unambiguous definition of an emissions factor.
-     * \todo Need to add some way to flag the input objects (or perhaps give the input name
-     *       to the GHG) to identify which object is the driver to be used for emissions.
-     */
-    const double totalInput = FunctionUtils::getPhysicalDemandSum( aInputs, aPeriod );
-    const double emissDriver = mEmissionsDriver->calcEmissionsDriver( totalInput, primaryOutput );
+    // calculate the emissions driver
+    const double emissDriver = mEmissionsDriver->calcEmissionsDriver( aInputs, aOutputs, aPeriod );
     
     // If emissions were read in and this is an appropraite period, compute emissions coefficient
     if( mShouldCalibrateEmissCoef ) {

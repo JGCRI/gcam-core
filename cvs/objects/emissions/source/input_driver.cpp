@@ -40,13 +40,24 @@
 
 #include "util/base/include/definitions.h"
 
+#include <cassert>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
+
 #include "emissions/include/input_driver.h"
+#include "functions/include/iinput.h"
+#include "functions/include/function_utils.h"
+#include "util/base/include/xml_helper.h"
 
 using namespace std;
+using namespace xercesc;
 
-double InputDriver::calcEmissionsDriver( const double aInputIn,
-                                         const double aOutputIn ) const {
-    return aInputIn;
+double InputDriver::calcEmissionsDriver( const vector<IInput*>& aInputs,
+                                         const vector<IOutput*>& aOutputs,
+                                         const int aPeriod ) const
+{
+    IInput* inputToDrive = FunctionUtils::getInput( aInputs, mInputName );
+    return inputToDrive ? inputToDrive->getPhysicalDemand( aPeriod ) : 0.0;
 }
 
 InputDriver* InputDriver::clone() const {
@@ -60,4 +71,33 @@ const string& InputDriver::getXMLName() const {
 const string& InputDriver::getXMLNameStatic(){
     static const string XML_NAME = "input-driver";
     return XML_NAME;
+}
+
+bool InputDriver::XMLParse( const xercesc::DOMNode* aNode ) {
+    /*! \pre Assume we are passed a valid node. */
+    assert( aNode );
+
+    DOMNodeList* nodeList = aNode->getChildNodes();
+    
+    bool parsingSuccessful = true;
+
+    for( unsigned int i = 0; i < nodeList->getLength(); ++i ) {
+        DOMNode* curr = nodeList->item( i );
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+
+        if( nodeName == XMLHelper<void>::text() ){
+            continue;
+        }
+        else if( nodeName == "input-name" ){
+            mInputName = XMLHelper<string>::getValue( curr );
+        }
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing" << getXMLName() << endl;
+            parsingSuccessful = false;
+        }
+    }
+    
+    return parsingSuccessful;
 }

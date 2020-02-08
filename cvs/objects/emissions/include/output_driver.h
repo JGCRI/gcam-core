@@ -55,10 +55,13 @@
 class OutputDriver: public AEmissionsDriver {
 
 public:
-    double calcEmissionsDriver( const double aInputIn, const double aOutputIn ) const;
+    virtual double calcEmissionsDriver( const std::vector<IInput*>& aInputs,
+                                        const std::vector<IOutput*>& aOutputs,
+                                        const int aPeriod ) const;
     virtual OutputDriver* clone() const;
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
+    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 };
 
 

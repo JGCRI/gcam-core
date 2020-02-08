@@ -44,6 +44,13 @@
  * \author Jim Naslund
  */
 
+#include <xercesc/dom/DOMNode.hpp>
+#include <vector>
+#include <string>
+
+// Forward declaration
+class IInput;
+class IOutput;
 
 /*! 
  * \ingroup Objects
@@ -58,7 +65,9 @@ public:
     /* \brief Returns an appropriate emissions driver.
      * \return A double representing an appropriate emissions driver.
      */
-    virtual double calcEmissionsDriver( const double aInputIn, const double aOutputIn ) const = 0;
+    virtual double calcEmissionsDriver( const std::vector<IInput*>& aInputs,
+                                        const std::vector<IOutput*>& aOutputs,
+                                        const int aPeriod ) const = 0;
     //! Clone operator.
     virtual AEmissionsDriver* clone() const = 0;
     /*
@@ -66,6 +75,9 @@ public:
      * \return A string representing the type of driver.
      */
     virtual const std::string& getXMLName() const = 0;
+    
+    //! XML parse
+    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
 };
 
 
