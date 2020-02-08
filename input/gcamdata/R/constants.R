@@ -585,6 +585,7 @@ emissions.TRN_INTL_SECTORS   <- c("trn_intl_ship", "trn_intl_air")
 emissions.USE_GV_MAC           <- 1
 emissions.USE_GCAM3_CCOEFS     <- 1 # Select whether to use GCAM3 fuel carbon coefficients
 emissions.USE_GLOBAL_CCOEFS    <- 1 # Select whether to use global average carbon coefficients on fuels, or region-specific carbon coefficients
+emissions.UNMGD_LAND_INPUT_NAME <- "land-input"
 
 # Digits for rounding into XMLs
 emissions.DIGITS_CO2COEF   <- 1

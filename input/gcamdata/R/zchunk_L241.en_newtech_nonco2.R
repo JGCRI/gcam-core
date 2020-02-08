@@ -23,6 +23,12 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
              FILE = "emissions/A41.tech_coeff",
              FILE = "emissions/A51.max_reduction",
              FILE = "emissions/A51.steepness",
+             # the following files to be able to map in the input.name to
+             # use for the input-driver
+             FILE = "energy/calibrated_techs",
+             FILE = "energy/A22.globaltech_coef",
+             FILE = "energy/A23.globaltech_eff",
+             FILE = "energy/A25.globaltech_eff",
              "L111.nonghg_tgej_R_en_S_F_Yh",
              "L112.ghg_tgej_R_en_S_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -40,13 +46,31 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     A41.tech_coeff <- get_data(all_data, "emissions/A41.tech_coeff")
     A51.max_reduction <- get_data(all_data, "emissions/A51.max_reduction")
     A51.steepness <- get_data(all_data, "emissions/A51.steepness")
+    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
 
     L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh")
     L112.ghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L112.ghg_tgej_R_en_S_F_Yh")
 
     year <- value <- GCAM_region_ID <- supplysector <- subsector <- stub.technology <- Non.CO2 <-
       exception <- exception_tech <- may.be.historic <- region <- sector_tech_id <- region_eth <-
-      ethanol <- region_bio <- biodiesel <- emiss.coeff <- NULL  # silence package check notes
+      ethanol <- region_bio <- biodiesel <- emiss.coeff <- technology <-minicam.energy.input <-
+      input.name <- NULL  # silence package check notes
+
+    # make a complete mapping to be able to look up with sector + subsector + tech the
+    # input name to use for an input-driver
+    # for technologies that use multiple inputs we are going to select the primary input to be
+    # the input emissions driver
+    calibrated_techs %>%
+      bind_rows(
+        get_data(all_data, "energy/A22.globaltech_coef") %>% filter(grepl('CCS', technology)) %>% select(supplysector, subsector, technology, minicam.energy.input),
+        get_data(all_data, "energy/A23.globaltech_eff") %>% filter(grepl('(CCS|CC\\))', technology)) %>% select(supplysector, subsector, technology, minicam.energy.input),
+        get_data(all_data, "energy/A25.globaltech_eff") %>% select(supplysector, subsector, technology, minicam.energy.input)) %>%
+      group_by(supplysector, subsector, technology) %>%
+      summarize(minicam.energy.input = first(minicam.energy.input)) %>%
+      ungroup() %>%
+      rename(stub.technology = technology,
+             input.name = minicam.energy.input) ->
+      EnTechInputMap
 
     # ===================================================
     # Assign new technology emission factors to all GCAM regions
@@ -217,7 +241,8 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     L241.nonco2_tech_coeff %>%
       unite(region_bio, region, stub.technology, sep = "~", remove = FALSE) %>%
       filter(!stub.technology %in% L241.firstgenbio_techs | region_bio %in% region_biofuels) %>%
-      select(-region_bio) ->
+      select(-region_bio) %>%
+      left_join_error_no_match(EnTechInputMap, by = c("supplysector", "subsector", "stub.technology")) ->
       L241.nonco2_tech_coeff
 
     L241.nonco2_max_reduction %>%
@@ -244,6 +269,10 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "emissions/A_regions",
                      "energy/A_regions",
                      "emissions/A41.tech_coeff",
+                     "energy/calibrated_techs",
+                     "energy/A22.globaltech_coef",
+                     "energy/A23.globaltech_eff",
+                     "energy/A25.globaltech_eff",
                      "L111.nonghg_tgej_R_en_S_F_Yh",
                      "L112.ghg_tgej_R_en_S_F_Yh")  ->
       L241.nonco2_tech_coeff
