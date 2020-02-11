@@ -123,11 +123,11 @@
 		
 	</ComponentSet>	
 	<runner-set name="policy-target-runner">
-		<Value name="6p0">../input/policy/policy_target_6p0_spa1.xml</Value>
-		<Value name="4p5">../input/policy/policy_target_4p5_spa1.xml</Value>
-		<Value name="3p7">../input/policy/policy_target_3p7_spa1.xml</Value>
-		<Value name="2p6">../input/policy/policy_target_2p6_spa1.xml</Value>
-		<Value name="1p9">../input/policy/policy_target_1p9_spa1.xml</Value>
+		<Value name="_6p0">../input/policy/policy_target_6p0_spa1.xml</Value>
+		<Value name="_4p5">../input/policy/policy_target_4p5_spa1.xml</Value>
+		<Value name="_3p7">../input/policy/policy_target_3p7_spa1.xml</Value>
+		<Value name="_2p6">../input/policy/policy_target_2p6_spa1.xml</Value>
+		<Value name="_1p9">../input/policy/policy_target_1p9_spa1.xml</Value>
 	</runner-set>
 </BatchRunner>
 
