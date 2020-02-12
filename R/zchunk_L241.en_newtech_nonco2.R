@@ -30,9 +30,11 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
              FILE = "energy/A23.globaltech_eff",
              FILE = "energy/A25.globaltech_eff",
              "L111.nonghg_tgej_R_en_S_F_Yh",
-             "L112.ghg_tgej_R_en_S_F_Yh"))
+             "L112.ghg_tgej_R_en_S_F_Yh",
+             "L223.GlobalTechEff_elec"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L241.nonco2_tech_coeff",
+             "L241.OutputEmissCoeff_elec",
              "L241.nonco2_max_reduction",
              "L241.nonco2_steepness"))
   } else if(command == driver.MAKE) {
@@ -50,11 +52,12 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
 
     L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh")
     L112.ghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L112.ghg_tgej_R_en_S_F_Yh")
+    L223.GlobalTechEff_elec <- get_data(all_data, "L223.GlobalTechEff_elec")
 
     year <- value <- GCAM_region_ID <- supplysector <- subsector <- stub.technology <- Non.CO2 <-
       exception <- exception_tech <- may.be.historic <- region <- sector_tech_id <- region_eth <-
-      ethanol <- region_bio <- biodiesel <- emiss.coeff <- technology <-minicam.energy.input <-
-      input.name <- NULL  # silence package check notes
+      ethanol <- region_bio <- biodiesel <- emiss.coeff <- technology <- minicam.energy.input <-
+      input.name <- efficiency <- NULL  # silence package check notes
 
     # make a complete mapping to be able to look up with sector + subsector + tech the
     # input name to use for an input-driver
@@ -245,6 +248,23 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       left_join_error_no_match(EnTechInputMap, by = c("supplysector", "subsector", "stub.technology")) ->
       L241.nonco2_tech_coeff
 
+    # Convert electricty to use output-driver instead.  We do this, despite the addional hoops, because it makes it
+    # easier to swap out a different structure for electricity which requires pass-through technologies such as to
+    # add cooling technologies
+    # L241.OutputEmissCoeff_elec: we need to be careful with the processing here as we need to adjust the input coef
+    # according to the fuel IO-ceofficient which will change over time.  We can get that data from L223.GlobalTechEff_elec
+    L241.nonco2_tech_coeff %>%
+      filter(supplysector == "electricity") %>%
+      left_join_error_no_match(L223.GlobalTechEff_elec,
+                               by = c("supplysector" = "sector.name",
+                                      "subsector" = "subsector.name",
+                                      "stub.technology" = "technology",
+                                      "year")) %>%
+      mutate(emiss.coeff = round(emiss.coeff / efficiency, 7)) %>%
+      select(LEVEL2_DATA_NAMES[["OutputEmissCoeff"]]) ->
+      L241.OutputEmissCoeff_elec
+    L241.nonco2_tech_coeff <- filter(L241.nonco2_tech_coeff, supplysector != "electricity")
+
     L241.nonco2_max_reduction %>%
       unite(region_bio, region, stub.technology, sep = "~", remove = FALSE) %>%
       filter(!stub.technology %in% L241.firstgenbio_techs | region_bio %in% region_biofuels) %>%
@@ -277,6 +297,20 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
                      "L112.ghg_tgej_R_en_S_F_Yh")  ->
       L241.nonco2_tech_coeff
 
+    L241.OutputEmissCoeff_elec %>%
+      add_title("Non-CO2 new technology emission coefficients for the electricity sector") %>%
+      add_units("NA") %>%
+      add_comments("Combine historical and expect emission coefficients for non-CO2 emissions for new energy technologies") %>%
+      add_comments("We've seperated electricity out to be driven by output-driver so we") %>%
+      add_comments("more easily re-configure the strucutre of the sector to swap in cooling") %>%
+      add_comments("technology choice which is implemented with pass-through sector/tech") %>%
+      add_precursors("common/GCAM_region_names", "emissions/A_regions",
+                     "energy/A_regions",
+                     "L111.nonghg_tgej_R_en_S_F_Yh",
+                     "L112.ghg_tgej_R_en_S_F_Yh",
+                     "L223.GlobalTechEff_elec") ->
+      L241.OutputEmissCoeff_elec
+
     L241.nonco2_max_reduction %>%
       add_title("Max reduction of non-CO2 emissions by supply sector") %>%
       add_units("NA") %>%
@@ -305,7 +339,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
                      "L112.ghg_tgej_R_en_S_F_Yh")  ->
       L241.nonco2_steepness
 
-    return_data(L241.nonco2_tech_coeff, L241.nonco2_max_reduction, L241.nonco2_steepness)
+    return_data(L241.nonco2_tech_coeff, L241.OutputEmissCoeff_elec, L241.nonco2_max_reduction, L241.nonco2_steepness)
   } else {
     stop("Unknown command")
   }
