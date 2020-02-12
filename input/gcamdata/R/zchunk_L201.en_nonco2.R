@@ -29,6 +29,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
              "L151.nonghg_ctrl_R_en_S_T",
              FILE = "emissions/A51.steepness",
              "L244.DeleteThermalService",
+             "L223.StubTechEff_elec",
              # the following to be able to map in the input.name to
              # use for the input-driver
              FILE = "energy/calibrated_techs",
@@ -38,6 +39,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     return(c("L201.en_pol_emissions",
              "L201.en_ghg_emissions",
              "L201.en_bcoc_emissions",
+             "L201.OutputEmissions_elec",
+             "L201.OutputEmissCoeff_elec",
              "L201.nonghg_max_reduction",
              "L201.nonghg_steepness",
              "L201.nonghg_max_reduction_res",
@@ -52,7 +55,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       input.emissions <- `2000` <- emiss.coef <- ctrl.name <- max_reduction <- variable <-
       steepness <- SO2 <- NOx <- CO <- BC <- OC <- NMVOC <- resource <- has_district_heat <-
       . <- region <- supplysector <- max.reduction <- technology <- minicam.energy.input <-
-      tranSubsector <- tranTechnology <- input.name <- NULL  # silence package check notes
+      tranSubsector <- tranTechnology <- input.name <- efficiency <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -67,6 +70,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L151.nonghg_ctrl_R_en_S_T <- get_data(all_data, "L151.nonghg_ctrl_R_en_S_T")
     A51.steepness <- get_data(all_data, "emissions/A51.steepness")
     L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService")
+    L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec")
 
     # make a complete mapping to be able to look up with sector + subsector + tech the
     # input name to use for an input-driver
@@ -112,6 +116,32 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       select(region, supplysector, subsector, stub.technology, year, emiss.coef = `2000`, Non.CO2, input.name) %>%
       mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
       L201.en_bcoc_emissions
+
+    # Convert electricty to use output-driver instead.  We do this, despite the addional hoops, because it makes it
+    # easier to swap out a different structure for electricity which requires pass-through technologies such as to
+    # add cooling technologies
+
+    # L201.OutputEmissions_elec: processing is straightforward here, just move electricity rows out of the InputEmissions
+    # table into the OutputEmissions
+    bind_rows(filter(L201.en_pol_emissions, supplysector == "electricity"),
+              filter(L201.en_ghg_emissions, supplysector == "electricity")) %>%
+      select(LEVEL2_DATA_NAMES[["OutputEmissions"]]) ->
+      L201.OutputEmissions_elec
+    L201.en_pol_emissions <- filter(L201.en_pol_emissions, supplysector != "electricity")
+    L201.en_ghg_emissions <- filter(L201.en_ghg_emissions, supplysector != "electricity")
+
+    # L201.OutputEmissCoeff_elec: we need to be more careful with the processing here as we need to adjust the input coef
+    # according to the fuel IO-ceofficient which will change over time.  We can get that data from L223.StubTechEff_elec
+    L201.en_bcoc_emissions %>%
+      filter(supplysector == "electricity") %>%
+      left_join_error_no_match(L223.StubTechEff_elec,
+                               by = c("region", "supplysector", "subsector", "stub.technology", "year")) %>%
+      # ^^ bring in efficiency data from L223.StubTechEff_elec
+      mutate(emiss.coeff = round(emiss.coef / efficiency, 7)) %>%
+      select(LEVEL2_DATA_NAMES[["OutputEmissCoeff"]]) ->
+      L201.OutputEmissCoeff_elec
+    L201.en_bcoc_emissions <- filter(L201.en_bcoc_emissions, supplysector != "electricity")
+
 
     # L201.nonghg_max_reduction: maximum reduction for energy technologies in all regions
     L151.nonghg_ctrl_R_en_S_T %>%
@@ -219,6 +249,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
 
     # Rename to regional SO2
     L201.en_pol_emissions <- rename_SO2(L201.en_pol_emissions, A_regions, FALSE)
+    L201.OutputEmissions_elec <- rename_SO2(L201.OutputEmissions_elec, A_regions, FALSE)
     L201.nonghg_max_reduction <- rename_SO2(L201.nonghg_max_reduction, A_regions, FALSE)
     L201.nonghg_steepness <- rename_SO2(L201.nonghg_steepness, A_regions, FALSE)
     L201.nonghg_res <- rename_SO2(L201.nonghg_res, A_regions, FALSE)
@@ -299,6 +330,31 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "L244.DeleteThermalService") ->
       L201.en_bcoc_emissions
 
+    L201.OutputEmissions_elec %>%
+      add_title("GHG and pollutant emissions for the electricity sector") %>%
+      add_units("Tg") %>%
+      add_comments("We've seperated electricity out to be driven by output-driver so we") %>%
+      add_comments("more easily re-configure the strucutre of the sector to swap in cooling") %>%
+      add_comments("technology choice which is implemented with pass-through sector/tech") %>%
+      add_precursors("common/GCAM_region_names",
+                     "emissions/A_regions", "energy/A_regions",
+                     "L111.nonghg_tg_R_en_S_F_Yh") ->
+      L201.OutputEmissions_elec
+
+    L201.OutputEmissCoeff_elec %>%
+      add_title("BC/OC emissions factors for the electricity sector") %>%
+      add_units("Tg/EJ") %>%
+      add_comments("Take BC/OC input-emissions factors and convert output-emissions factors") %>%
+      add_comments("by mapping in the historical fuel efficiencies to convert.") %>%
+      add_comments("We've seperated electricity out to be driven by output-driver so we") %>%
+      add_comments("more easily re-configure the strucutre of the sector to swap in cooling") %>%
+      add_comments("technology choice which is implemented with pass-through sector/tech") %>%
+      add_precursors("common/GCAM_region_names",
+                     "energy/A_regions",
+                     "L114.bcoc_tgej_R_en_S_F_2000",
+                     "L223.StubTechEff_elec") ->
+      L201.OutputEmissCoeff_elec
+
     L201.nonghg_max_reduction %>%
       rename(max.reduction = max_reduction) %>% # no idea why old data system renamed this
       add_title("Maximum emissions reduction rates for energy technologies in all regions") %>%
@@ -364,7 +420,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "L112.ghg_tgej_R_en_S_F_Yh") ->
       L201.ghg_res
 
-    return_data(L201.en_pol_emissions, L201.en_ghg_emissions, L201.en_bcoc_emissions, L201.nonghg_max_reduction, L201.nonghg_steepness, L201.nonghg_max_reduction_res, L201.nonghg_steepness_res, L201.nonghg_res, L201.ghg_res)
+    return_data(L201.en_pol_emissions, L201.en_ghg_emissions, L201.en_bcoc_emissions, L201.OutputEmissions_elec, L201.OutputEmissCoeff_elec, L201.nonghg_max_reduction, L201.nonghg_steepness, L201.nonghg_max_reduction_res, L201.nonghg_steepness_res, L201.nonghg_res, L201.ghg_res)
   } else {
     stop("Unknown command")
   }
