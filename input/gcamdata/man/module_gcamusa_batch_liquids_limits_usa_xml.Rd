@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_batch_liquids_limits_usa_xml.R
 \name{module_gcamusa_batch_liquids_limits_usa_xml}
 \alias{module_gcamusa_batch_liquids_limits_usa_xml}
-\title{module_gcamusa_batch_liquids_limits_usa_xml}
+\title{module_gcam.usa_batch_liquids_limits_usa_xml}
 \usage{
 module_gcamusa_batch_liquids_limits_usa_xml(command, ...)
 }

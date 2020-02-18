@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_LA1233.Process_UCS_data_ref
 #'
 #' This script reads in and processes "Union of Concerned Scientists. 2012. UCS EW3 Energy-Water Database V.1.3" www.ucsusa.org/ew3database - Main Data.
@@ -11,7 +13,7 @@
 #' @details This script reads in and processes "Union of Concerned Scientists. 2012. UCS EW3 Energy-Water
 #' Database V.1.3" - Main Data.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr distinct filter full_join mutate select case_when
 #' @importFrom tidyr gather spread
 #' @importFrom tibble as_tibble tibble
 #' @author LL March 2017, ZK Sep 2019

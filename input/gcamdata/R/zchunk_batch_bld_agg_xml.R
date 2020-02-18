@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socio_batch_bld_agg_xml
 #'
 #' Construct XML data structure for \code{bld_agg.xml} and all the SSP and gSSP ones as well.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L133.water_demand_livestock
 #'
 #' Calculate livestock water coefficients by region ID / GCAM_commodity/ water type
@@ -10,8 +12,8 @@
 #' original data system was \code{L133.water_demand_livestock.R} (water level1).
 #' @details Water withdrawal and consumption coefficients by livestock using head count.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter if_else group_by inner_join left_join mutate select summarise
+#' @importFrom tidyr replace_na
 #' @author KRD November 2017
 module_water_L133.water_demand_livestock <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

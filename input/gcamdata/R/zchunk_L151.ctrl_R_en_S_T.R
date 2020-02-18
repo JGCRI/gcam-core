@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L151.ctrl_R_en_S_T
 #'
 #' Compute maximum reduction by region / sector / gas.
@@ -15,8 +17,8 @@
 #' region / technology / emissions species) to the exogenous minimum coefficient for each
 #' technology / emission species.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter if_else left_join mutate select
+#' @importFrom tidyr gather
 #' @author BBL April 2017
 module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

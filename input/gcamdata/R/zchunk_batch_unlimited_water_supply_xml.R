@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_batch_unlimited_water_supply_xml
 #'
 #' Construct XML data structure for \code{unlimited_water_supply.xml}.

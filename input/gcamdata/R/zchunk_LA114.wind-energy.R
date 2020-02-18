@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA114.wind
 #'
 #' Calculate regional supply curves for wind using country-level supply curves.
@@ -14,8 +16,7 @@
 #' within that region; maximum prices are calculated to be the price where supply is 95% that of the available resource,
 #' and the highest maximum price within the region is then used. The rest of the price points are filled out in equal increments.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter group_by mutate pull row_number select summarise
 #' @author AJS June 2017
 module_energy_LA114.wind <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

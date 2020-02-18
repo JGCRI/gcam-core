@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr
 #'
 #' Calculate irrigated/rainfed harvested cropland cover and economic yields by GCAM region / commodity / year / GLU.
@@ -10,8 +12,8 @@
 #' original data system was \code{LB171.LC_R_Cropland_Yh_GLU_irr.R} (aglu level1).
 #' @details This chunk downscales total harvested cropland by GCAM region / commodity / year / GLU to irrigated/rainfed according to irrigated/rainfed shares in the base year, and calculates the economic yields as production divided by cropland.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter full_join if_else group_by left_join mutate select
+#' @importFrom tidyr nesting
 #' @author RC May 2017
 module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

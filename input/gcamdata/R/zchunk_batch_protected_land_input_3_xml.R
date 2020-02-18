@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_batch_protected_land_input_3_xml
 #'
 #' Construct XML data structure for \code{protected_land_input_3.xml}.

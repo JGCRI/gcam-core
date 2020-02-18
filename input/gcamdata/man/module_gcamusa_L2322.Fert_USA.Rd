@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L2322.Fert_USA.R
 \name{module_gcamusa_L2322.Fert_USA}
 \alias{module_gcamusa_L2322.Fert_USA}
-\title{module_gcamusa_L2322.Fert_USA}
+\title{module_gcam.usa_L2322.Fert_USA}
 \usage{
 module_gcamusa_L2322.Fert_USA(command, ...)
 }

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L231.proc_sector
 #'
 #' Writes urban & industrial processing sector outputs.
@@ -15,8 +17,7 @@
 #' Outputs urban processing demand using constants. StubTech mapping file created from assumption mappings.
 #' Regional technology calibration values created with constant. Industry input-output coefficient file created.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter group_by left_join mutate select summarise
 #' @author RLH July 2017
 module_emissions_L231.proc_sector <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

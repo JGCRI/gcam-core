@@ -2,7 +2,7 @@ Package: gcamdata
 Type: Package
 Title: Build the GCAM Input Datasets
 Version: 5.1
-Date: 2019-01-01
+Date: 2019-07-06
 Authors@R: c(person("Ben", "Bond-Lamberty", 
                 email = "bondlamberty@pnnl.gov", 
                 role = c("cre", "aut"), 
@@ -40,6 +40,7 @@ Depends: R (>= 3.1.2)
 Imports:
     assertthat (>= 0.2),
     dplyr (>= 0.7.0),
+    methods,
     magrittr (>= 1.5),
     tibble (>= 1.1),
     tidyr (>= 0.7.1),

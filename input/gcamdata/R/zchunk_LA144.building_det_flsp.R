@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA144.building_det_flsp
 #'
 #' Calculate residential and commercial floorspace - and floorspace prices - by GCAM region and historical year.
@@ -13,8 +15,8 @@
 #' Floorspace for countries that did not have country-level data was calculated using GCAM 3.0 assumptions.
 #' Floorspace prices were calculated by dividing an assumed fraction of GDP for buildings by residential floorspace.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter group_by left_join matches mutate pull select summarise
+#' @importFrom tidyr complete gather spread
 #' @author AJS July 2017
 module_energy_LA144.building_det_flsp <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

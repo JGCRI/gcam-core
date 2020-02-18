@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L226.en_distribution
 #'
 #' Generate the level 2 data tables for the energy distribution sector,
@@ -12,8 +14,8 @@
 #' @details Prepares Level 2 data on energy distribution sector for the generation of en_distribution.xml.
 #' Creates global technology database info--cost, shareweight, logit, efficiencies, and interpolations--and regional values where applicable for electricity net ownuse, gas pipelines, and transmission and distribution.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter group_by left_join mutate select
+#' @importFrom tidyr complete nesting
 #' @author CWR August 2017
 module_energy_L226.en_distribution <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

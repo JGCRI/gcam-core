@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LB126.Gas_ElecTD.R
 \name{module_gcamusa_LB126.Gas_ElecTD}
 \alias{module_gcamusa_LB126.Gas_ElecTD}
-\title{module_gcamusa_LB126.Gas_ElecTD}
+\title{module_gcam.usa_LB126.Gas_ElecTD}
 \usage{
 module_gcamusa_LB126.Gas_ElecTD(command, ...)
 }

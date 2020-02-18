@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2261.regional_biomass_USA
 #'
 #' Create biomass supply sectors at the state level.
@@ -19,8 +21,7 @@
 #' @details Create biomass supply sectors at the state level, in order ensure that biomass carbon-tracking is
 #' contained entirely within the consuming region (state).
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr distinct filter inner_join if_else mutate select semi_join
 #' @author MTB Aug 2018
 module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -88,7 +89,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
       stub.technology <- subsector <- supplysector <- technology <- to.year <- year <- traded <-
       subsector.name <- share.weight <- fractional.secondary.output <- price <- fraction.produced <-
       PrimaryFuelCO2Coef.name <- PrimaryFuelCO2Coef <- minicam.energy.input <- sector <- calibrated.value <-
-      value <- share <- NULL
+      value <- share <- fuel <- . <- NULL
 
     # Load required inputs
     A21.sector <- get_data(all_data, "energy/A21.sector")
