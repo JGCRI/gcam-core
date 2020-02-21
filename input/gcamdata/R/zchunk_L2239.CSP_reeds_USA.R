@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcamusa_L2239.CSP_reeds_USA
+#' module_gcam.usa_L2239.CSP_reeds_USA
 #'
 #' Create updated solar CSP resource supply curves consistent with ReEDS.
 #'

@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_energy_LA120.offshore_wind_USA
+#' module_gcam.usa_LA120.offshore_wind_reeds_USA
 #'
 #' Takes in data on country-level offshore wind energy potential and global offshore wind capital cost assumptions and generates tables containing region-level offshore wind data.
 #'
