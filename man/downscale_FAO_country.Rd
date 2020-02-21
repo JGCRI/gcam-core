@@ -4,8 +4,12 @@
 \alias{downscale_FAO_country}
 \title{downscale_FAO_country}
 \usage{
-downscale_FAO_country(data, country_name, dissolution_year,
-  years = aglu.AGLU_HISTORICAL_YEARS)
+downscale_FAO_country(
+  data,
+  country_name,
+  dissolution_year,
+  years = aglu.AGLU_HISTORICAL_YEARS
+)
 }
 \arguments{
 \item{data}{Data to downscale, tibble}
