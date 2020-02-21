@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L101.water_supply_groundwater
 #'
 #' Prepare GCAM basin groundwater supply curves
@@ -11,8 +13,8 @@
 #' original data system was \code{L100.water_supply_runoff.R} (Water level1).
 #' @details Prepares groundwater resource curves and sets up groundwater calibration data.
 #' @importFrom tibble tibble
-#' @import dplyr
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter group_by mutate rename row_number select ungroup
+#' @importFrom tidyr spread
 #' @author ST September 2018
 module_water_L101.water_supply_groundwater <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -71,7 +73,7 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       arrange(basin.id, price) %>%
       select(basin.id, price, avail) %>%
       group_by(basin.id) %>%
-      mutate(avail = lead(avail, default = 0.0),
+      mutate(avail = dplyr::lead(avail, default = 0.0),
              grade = paste0("grade", row_number())) %>%
       ungroup() ->
       gw_uniform_unadjusted

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L152.MACC
 #'
 #' Create Marginal Abatement Cost Curves, in percent reduction by 1990 USD abatement costs from EPA cost curves.
@@ -11,7 +13,7 @@
 #' @details Create Marginal abatement cost curves, in percent reduction by 1990 USD costs from EPA cost curves.
 #' Choose between 2020 or 2030 data in constants file - emissions.EPA_MACC_YEAR.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter group_by left_join mutate select vars summarize_at
 #' @importFrom tidyr gather spread
 #' @author RMH May 2017
 

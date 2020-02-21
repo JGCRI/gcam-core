@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_batch_Cstorage_USA_xml
 #'
 #' Construct XML data structure for \code{Cstorage_USA.xml}.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L252.MACC
 #'
 #' Creates marginal abatement cost curves "MACC", for fossil resources, agriculture, animals, and processing.
@@ -14,8 +16,8 @@
 #' original data system was \code{L252.MACC.R} (emissions level2).
 #' @details Creates marginal abatement cost curves "MACC", for fossil resources, agriculture, animals, and processing.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows distinct filter left_join matches mutate select
+#' @importFrom tidyr gather
 #' @author RH August 2017
 module_emissions_L252.MACC <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -92,7 +94,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       df <- df %>%
         # Add tax values
         repeat_add_columns(tibble(tax = MAC_taxes)) %>%
-        arrange_("region", order) %>%
+        dplyr::arrange_("region", order) %>%
         # Join in EPA regions
         left_join_error_no_match(A_regions %>%
                                    select(region, EPA_region = MAC_region),

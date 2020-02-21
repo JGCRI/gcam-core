@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_batch_delete_gdp_control_xml
 #'
 #' Construct XML data structure for \code{delete_gdp_control.xml}.

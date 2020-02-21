@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB113.bio_Yield_R_GLU
 #'
 #' Calculate base year bioenergy yields by GCAM region and GLU
@@ -15,8 +17,7 @@
 #' Biomass production in switchgrass across the United States: database description and determinants
 #' of yield. Agronomy Journal 102: 1158-1168. doi:10.2134/agronj2010.0087.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr distinct filter group_by inner_join mutate pull select summarise
 #' @author BBL June 2017
 module_aglu_LB113.bio_Yield_R_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

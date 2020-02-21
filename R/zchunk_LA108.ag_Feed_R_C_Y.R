@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA108.ag_Feed_R_C_Y
 #'
 #' Compute (1) feed by GCAM commodity, region, and year, and (2) net exports of FodderHerb.
@@ -14,8 +16,8 @@
 #' Excess supply is mapped to OtherUses. Excess demand is mapped to other sources (Residue, Pasture).
 #' This information is used to calculate net exports of FodderHerb too.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter if_else group_by left_join mutate right_join select summarize
+#' @importFrom tidyr complete nesting replace_na
 #' @author KVC April 2017
 module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socio_batch_SSP_xml
 #'
 #' Construct XML data structure for all the \code{socioeconomics_[g]SSP[1-5].xml} files.

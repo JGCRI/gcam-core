@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L145.water_demand_municipal
 #'
 #' Generate municipal water withdrawals, municipal water base delivery cost, and municipal water use efficiency.
@@ -10,8 +12,8 @@
 #' original data system was \code{L145.water_demand_municipal.R} (water level1).
 #' @details Generate municipal water withdrawals, municipal water base delivery cost, and municipal water use efficiency.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter full_join if_else group_by left_join matches mutate select summarise
+#' @importFrom tidyr complete  drop_na gather
 #' @author YL May 2017
 module_water_L145.water_demand_municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

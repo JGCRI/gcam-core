@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L225.hydrogen
 #'
 #' Provides supply sector information, subsector information, technology information for hydrogen sectors.
@@ -10,8 +12,8 @@
 #' original data system was \code{L225.hydrogen.R} (energy level2).
 #' @details Provides supply sector information, subsector information, technology information for hydrogen sectors.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange filter group_by mutate select
+#' @importFrom tidyr complete nesting
 #' @author LF Augest 2017
 module_energy_L225.hydrogen <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L115.nh3_an_R_S_T_Y
 #'
 #' Annual animal NH3 emissions by GCAM region, sector and technology.
@@ -10,8 +12,8 @@
 #' original data system was \code{L115.nh3_an_R_S_T_Y.R} (emissions level1).
 #' @details This chunk uses EPA emissions and FAO data to estimate agricultural NH3 emissions which are scaled to regional values using EDGAR data.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread unite separate
+#' @importFrom dplyr arrange group_by left_join mutate select summarise
+#' @importFrom tidyr replace_na separate
 #' @author KD May 2017
 module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -74,7 +76,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     # Calculate total hybrid emissions for sector and region
     L115.nh3_tg_R_C_Sys_Fd_yr_pro_G_emf_hyb_sec %>%
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
-      summarize(total_hybrid_emissions = sum(hybrid_emissions)) %>%
+      summarise(total_hybrid_emissions = sum(hybrid_emissions)) %>%
       ungroup %>%
       arrange(year) ->
       L115.nh3_tg_R_G_sec_yr_tHyb

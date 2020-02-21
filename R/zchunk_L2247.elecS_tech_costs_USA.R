@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2247.elecS_tech_costs_USA
 #'
 #' Generates add-ons to harmonize reference case generation technology costs for multiple load segments with AEO-2016.
@@ -19,7 +21,7 @@
 #' This chunk also creates add-ons for ITC and PTC policies for multiple load segments technologies.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting replace_na
 #' @author RC Sep 2018
 module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

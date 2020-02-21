@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L112.ghg_en_R_S_T_Y
 #'
 #' Calculates emissions and emissions factors using EPA emissions factors and scales to EDGAR emissions.
@@ -10,8 +12,8 @@
 #' original data system was \code{L112.ghg_en_R_S_T_Y.R} (emissions level1).
 #' @details Calculates emissions using EPA emissions factors and energy data. Then scales to EDGAR emissions and calculates emissions factors.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise
+#' @importFrom tidyr gather replace_na
 #' @author RH July 2017
 module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socioeconomics_L252.Trn_Inc_Elas_scenarios
 #'
 #' Calculates transportation income elasticity for SSP scenarios using linear interpolation of assumption data
@@ -10,8 +12,7 @@
 #' original data system was \code{L252.Trn_Inc_Elas_scenarios.R} (socioeconomics level2).
 #' @details Uses per-capita GDP data for SSP scenarios to generate transportation income elasticity using linear interpolation of assumption data.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter left_join mutate select transmute
 #' @importFrom stats approx
 #' @author RH May 2017
 module_socioeconomics_L252.Trn_Inc_Elas_scenarios <- function(command, ...) {

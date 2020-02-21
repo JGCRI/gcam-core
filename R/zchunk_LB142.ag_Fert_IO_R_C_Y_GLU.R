@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU
 #'
 #' Calculate the adjusted fertilizer production by country / year, fertilizer net exports by GCAM region / year,
@@ -13,8 +15,8 @@
 #' fertilizer net exports by GCAM region / year as production minus consumption, and fertilizer input-output coefficients
 #' by GCAM region / commodity / year / GLU.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter full_join group_by left_join mutate right_join select semi_join summarise
+#' @importFrom tidyr complete replace_na
 #' @author RC June 2017
 module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
