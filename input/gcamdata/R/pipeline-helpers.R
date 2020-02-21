@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 # pipeline-helpers.R
 
 # Pipeline shortcuts we use a lot
@@ -22,6 +24,7 @@ PH_year_value_historical <- function(d) {
 #' @return Joined data.
 #' @details Restrictive version of dplyr::left_join meant for replacing `match` calls.
 # Ensures that number of rows of data doesn't change, and everything has matched data.
+#' @importFrom dplyr left_join
 #' @export
 left_join_error_no_match <- function(d, ..., ignore_columns = NULL) {
   assertthat::assert_that(tibble::is.tibble(d))
@@ -31,7 +34,7 @@ left_join_error_no_match <- function(d, ..., ignore_columns = NULL) {
   if(nrow(d) != drows) {
     stop("left_join_no_match: number of rows in data changed")
   }
-  names_to_check <- setdiff(names(d), dnames) %>% setdiff(ignore_columns)
+  names_to_check <- dplyr::setdiff(names(d), dnames) %>% dplyr::setdiff(ignore_columns)
   if(any(is.na(d[names_to_check]))) {
     stop("left_join_no_match: NA values in new data columns")
   }
@@ -62,13 +65,14 @@ left_join_error_no_match <- function(d, ..., ignore_columns = NULL) {
 #' supplied explicitly.
 #' @return Joined table.  In case of multiple matches, only the first will be
 #' included.
+#' @importFrom dplyr left_join
 left_join_keep_first_only <- function(x, y, by) {
   ## Our strategy is to use "distinct" to filter y to a single element for
   ## each match category, then join that to x.
   . <- NULL                           # silence notes on package check
   ll <- as.list(by)
   names(ll) <- NULL
-  do.call(distinct_, c(list(y), ll, list(.keep_all = TRUE))) %>%
+  do.call(dplyr::distinct_, c(list(y), ll, list(.keep_all = TRUE))) %>%
     left_join(x, ., by = by)
 }
 
@@ -174,6 +178,7 @@ approx_fun <- function(year, value, rule = 1) {
 #' @return A repeated \code{x} with columns from \code{y} added.
 #' @details This corresponds to \code{repeat_and_add_vector} in the old data system.
 #' @importFrom assertthat assert_that
+#' @importFrom dplyr full_join mutate
 #' @author BBL
 #' @export
 #' @examples
@@ -335,9 +340,12 @@ gdp_deflator <- function(year, base_year) {
 #' @param d Data frame to operate on (a tibble)
 #' @param value_col Name of the resulting (gathered) value column, string or unquoted column name
 #' @param year_pattern Year pattern to match against
+#' @param na.rm Remove NAs flag passed on to tidyr::gather
 #' @return The gathered (reshaped) data frame.
+#' @importFrom dplyr matches mutate
+#' @importFrom tidyr gather
 #' @export
-gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN) {
+gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN, na.rm = FALSE) {
   assert_that(is_tibble(d))
   assert_that(is.character(value_col))
   assert_that(is.character(year_pattern))
@@ -345,7 +353,7 @@ gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN) {
   . <- year <- value <- NULL  # silence package check notes
 
   d %>%
-    gather(year, value, matches(year_pattern)) %>%
+    gather(year, value, matches(year_pattern), na.rm = na.rm) %>%
     mutate(year = as.integer(year)) %>%
     stats::setNames(sub("value", value_col, names(.)))
 }

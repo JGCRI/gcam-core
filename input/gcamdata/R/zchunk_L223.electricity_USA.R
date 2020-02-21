@@ -1,4 +1,6 @@
-#' module_gcamusa_L223.electricity_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L223.electricity_USA
 #'
 #' Generates GCAM-USA model inputs for electrcity sector by grid regions and states.
 #'
@@ -24,8 +26,7 @@
 #' @details This chunk generates input files to create an annualized electricity generation sector for each state
 #' and creates the demand for the state-level electricity sectors in the grid regions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join matches mutate select semi_join summarise transmute
 #' @author RC Oct 2017
 module_gcamusa_L223.electricity_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

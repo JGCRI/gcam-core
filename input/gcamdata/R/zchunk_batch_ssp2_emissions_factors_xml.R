@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_batch_ssp2_emissions_factors_xml
 #'
 #' Construct XML data structure for \code{ssp2_emissions_factors.xml}.

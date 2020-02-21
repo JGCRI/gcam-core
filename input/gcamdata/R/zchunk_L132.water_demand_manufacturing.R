@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L132.water_demand_manufacturing
 #'
 #' Computes manufacturing water withdrawals and consumption by nation/region and historical year
@@ -11,8 +13,8 @@
 #' @details Computes manufacturing water withdrawal and consumption coefficients for
 #' all regions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter if_else group_by inner_join left_join mutate select summarise
+#' @importFrom tidyr complete gather
 #' @author GPK June 2018
 module_water_L132.water_demand_manufacturing <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

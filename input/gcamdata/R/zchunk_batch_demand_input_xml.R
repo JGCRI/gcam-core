@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_batch_demand_input_xml
 #'
 #' Construct XML data structure for \code{demand_input.xml}.

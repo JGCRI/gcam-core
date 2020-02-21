@@ -1,4 +1,6 @@
-#' module_gcamusa_LA100.Socioeconomics
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LA100.Socioeconomics
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -11,8 +13,8 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
-#' @import dplyr
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows bind_rows filter first group_by left_join mutate rename right_join select ungroup
+#' @importFrom tidyr complete nesting
 #' @author BBL
 module_gcamusa_LA100.Socioeconomics <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2242.land_input_4_irr_mgmt
 #'
 #' Generate logit exponent of the fourth land node that specifies crop commodity and GLU by region,
@@ -12,8 +14,8 @@
 #' @details This chunk generates the logit exponent of the fourth land nest that specifies crop commodity and GLU by region,
 #' and the ghost node share for the bionenergy node in future years, and specifies whether the bionenergy ghost node share is relative.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter if_else left_join mutate select
+#' @importFrom tidyr separate
 #' @author RC August 2017
 module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

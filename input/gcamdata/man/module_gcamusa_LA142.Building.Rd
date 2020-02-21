@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA142.Building.R
 \name{module_gcamusa_LA142.Building}
 \alias{module_gcamusa_LA142.Building}
-\title{module_gcamusa_LA142.Building}
+\title{module_gcam.usa_LA142.Building}
 \usage{
 module_gcamusa_LA142.Building(command, ...)
 }

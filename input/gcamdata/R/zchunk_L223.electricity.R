@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L223.electricity
 #'
 #' Prepares assumptions and calibrated inputs and outputs for the electricity sector.
@@ -33,8 +35,8 @@
 #' Solar and wind capacity factor assumptions are scaled using data on irradiance and available wind resource. It also determines future fixed outputs of hydropower.
 #' This also prepares alternate low- and high-tech capital costs, which are then saved to their own xmls and can be used to overwrite default capital costs.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join arrange bind_rows filter if_else group_by left_join mutate select semi_join summarise
+#' @importFrom tidyr complete nesting replace_na
 #' @author CWR October 2017/BBL July 2017
 module_energy_L223.electricity <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

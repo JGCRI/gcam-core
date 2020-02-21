@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA100.0_LDS_preprocessing
 #'
 #' Read in and process LDS (Land Data System) files.
@@ -15,8 +17,7 @@
 #' land resource projection using the Global Change Assessment Model? Environmental
 #' Modelling & Software 85, 246-265. http://dx.doi.org/10.1016/j.envsoft.2016.08.016.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter mutate semi_join summarise
 #' @author BBL March 2017
 module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
 
@@ -94,7 +95,7 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
           d$iso[d$iso == "twn"] <- "chn"
           d %>%
             # group by everything EXCEPT for value and sum up
-            group_by_(.dots = names(d)[-grep("value", names(d))]) %>%
+            dplyr::group_by_(.dots = names(d)[-grep("value", names(d))]) %>%
             summarise(value = sum(value)) %>%
             ungroup() %>%
             # summarise() produces a new tibble, but we don't want to lose file info

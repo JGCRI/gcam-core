@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L251.en_ssp_nonco2
 #'
 #' Produce regional non-CO2 emissions coefficient data for SSPs 1/5, 2, and 3/4 as well as a GDP control.
@@ -14,8 +16,7 @@
 #' Then, add columns that have regional SO2 emission species.
 #' A GDP control of regional non-CO2 emissions in all regions is also created.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter group_by left_join mutate select semi_join
 #' @author CDL May 2017
 module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

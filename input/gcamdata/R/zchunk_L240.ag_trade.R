@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L240.ag_trade
 #'
 #' Model input for regional and (globally) traded agricultural commodities

@@ -4,6 +4,8 @@
 	<target-tolerance>0.05</target-tolerance>
 	<target-type>forcing</target-type>
     <first-tax-year>2025</first-tax-year>
+    <!-- Note, the value chosen here is the solved price from the last GCAM release. -->
+    <initial-tax-guess>32.5</initial-tax-guess>
 	<tax-name>CO2_LTG</tax-name>
 	<max-tax>8000</max-tax>
 	<overshoot/>

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_batch_building_agg_xml
 #'
 #' Construct XML data structure for \code{building_agg.xml}.

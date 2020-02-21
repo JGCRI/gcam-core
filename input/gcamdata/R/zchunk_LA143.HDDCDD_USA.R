@@ -1,4 +1,6 @@
-#' module_gcamusa_LA143.HDDCDD
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LA143.HDDCDD
 #'
 #' Estimate heating and cooling degree days for gcam-usa.
 #'
@@ -10,8 +12,8 @@
 #' original data system was \code{LA143.HDDCDD.R} (gcam-usa level1).
 #' @details Estimate heating and cooling degree days for gcam-usa.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows distinct filter if_else group_by inner_join left_join mutate select summarise
+#' @importFrom tidyr complete nesting separate
 #' @author KRD Nov 2017
 module_gcamusa_LA143.HDDCDD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

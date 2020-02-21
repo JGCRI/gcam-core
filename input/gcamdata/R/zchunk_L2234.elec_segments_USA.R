@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2234.elec_segments_USA
 #'
 #' Generates GCAM-USA model inputs for multiple load segments electricity sector by state.
@@ -24,8 +26,8 @@
 #' @details This chunk generates input files to create an electricity generation sector with multiple load segments
 #' for each state and creates the demand for the state-level electricity sectors in the grid regions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join distinct filter if_else mutate select semi_join summarise_if
+#' @importFrom tidyr complete nesting replace_na
 #' @author MTB Aug 2018
 module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -142,7 +144,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
       tech.share <- supplysector.y <- supplysector.x <- segment <- share.weight.x <- year.x <- year.y <- State <-
       period <- capital.cost <- fcr <- fixed.om <- variable.om <- coefficient <- passthrough.sector <-
       marginal.revenue.sector <- marginal.revenue.market <- Geothermal_Hydrothermal_GWh <- geo_state_noresource <-
-      fuel <- NULL # silence package check notes
+      fuel <- n <- NULL # silence package check notes
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
