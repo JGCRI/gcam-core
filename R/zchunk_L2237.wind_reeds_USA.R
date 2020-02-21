@@ -14,7 +14,7 @@
 #' The corresponding file in the original data system was \code{L2237.wind_reeds_USA.R} (gcam-usa level2).
 #' @details Create state-level wind resource supply curves
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr distinct filter lag mutate select row_number semi_join summarise_if
+#' @importFrom dplyr distinct filter lag mutate select row_number semi_join summarise_if group_by bind_rows
 #' @importFrom tidyr gather
 #' @author MTB September 2018
 module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
