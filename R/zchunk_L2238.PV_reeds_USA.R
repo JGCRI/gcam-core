@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcamusa_L2238.PV_reeds_USA
+#' module_gcam.usa_L2238.PV_reeds_USA
 #'
 #' Create updated solar PV resource supply curves consistent with ReEDS.
 #'
