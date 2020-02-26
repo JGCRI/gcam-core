@@ -655,11 +655,13 @@ void Technology::initCalc( const string& aRegionName,
             mProductionState[ aPeriod ]->isNewInvestment() ){
             // Reinitialize share weight to 1 for competing technology with non-zero read-in share weight
             // for calibration periods only.
+            /*
             if( mShareWeight > 0 && mShareWeight != 1.0 ){
                 // Reinitialize to 1 to remove bias, calculate new share weights and
                 // normalize in postCalc to anchor to dominant technology.
                 mShareWeight = 1.0;
             }
+            */
 
             // If there is a calibration value re-set 0 shareweight to 1 so that calibration 
             // can occur.
