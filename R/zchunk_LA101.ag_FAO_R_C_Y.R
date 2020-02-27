@@ -20,7 +20,7 @@
 #' year (around 2000) to disaggregate to basin, in multi-country regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join arrange bind_rows distinct filter full_join if_else group_by inner_join left_join mutate right_join select summarise
-#' @importFrom tidyr gather spread complete
+#' @importFrom tidyr complete drop_na replace_na
 #' @author KVC March 2017 (revised August 2018 by GPK)
 module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

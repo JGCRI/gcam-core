@@ -15,7 +15,7 @@
 #' Creates global technology database info--cost, shareweight, logit, efficiencies, and interpolations--and regional values where applicable for electricity net ownuse, gas pipelines, and transmission and distribution.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter group_by left_join mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting
 #' @author CWR August 2017
 module_energy_L226.en_distribution <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

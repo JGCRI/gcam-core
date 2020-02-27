@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L261.carbon_storage_USA.R
 \name{module_gcamusa_L261.carbon_storage_USA}
 \alias{module_gcamusa_L261.carbon_storage_USA}
-\title{module_gcamusa_L261.carbon_storage_USA}
+\title{module_gcam.usa_L261.carbon_storage_USA}
 \usage{
 module_gcamusa_L261.carbon_storage_USA(command, ...)
 }

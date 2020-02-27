@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L270.limits_USA.R
 \name{module_gcamusa_L270.limits_USA}
 \alias{module_gcamusa_L270.limits_USA}
-\title{module_gcamusa_L270.limits_USA}
+\title{module_gcam.usa_L270.limits_USA}
 \usage{
 module_gcamusa_L270.limits_USA(command, ...)
 }
@@ -15,7 +15,7 @@ module_gcamusa_L270.limits_USA(command, ...)
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
 the generated outputs: \code{L270.CreditMkt_USA}, \code{L270.CreditInput_elecS_USA}, \code{L270.NegEmissBudgetMaxPrice_USA},
-\code{paste0( "L270.NegEmissBudget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)) )}.
+\code{paste0( "L270.NegEmissBudget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)) )}.
 }
 \description{
 Add the 50 states to the USA market in each of the L270 limits polices.  In

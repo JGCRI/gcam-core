@@ -1,0 +1,8 @@
+# File: A21.globaltech_interp.csv
+# Title: Primary energy handling technology share-weight interpolation
+# Units: Unitless
+# Column types: ccccnnn 
+# ----------
+supplysector,subsector,technology,apply.to,from.year,to.year,to.value,interpolation.function
+regional biomassOil,regional biomassOil,OilCrop,share-weight,final-calibration-year,end-year,,fixed
+regional biomassOil,regional biomassOil,PalmFruit,share-weight,final-calibration-year,end-year,,fixed

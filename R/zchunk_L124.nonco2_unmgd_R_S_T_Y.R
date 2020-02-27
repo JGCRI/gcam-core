@@ -17,7 +17,7 @@
 #' Note: File does not calculate emissions from BC/OC (separate chunk) or NH3 (seemingly omitted)
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else group_by inner_join left_join mutate select summarize
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather replace_na spread
 #' @author KVC May 2017
 module_emissions_L124.nonco2_unmgd_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

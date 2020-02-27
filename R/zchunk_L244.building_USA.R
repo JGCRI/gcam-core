@@ -22,7 +22,7 @@
 #' @details Creates GCAM-USA building output files for writing to xml.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select semi_join summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete gather nesting replace_na
 #' @author RLH November 2017
 
 module_gcamusa_L244.building_USA <- function(command, ...) {

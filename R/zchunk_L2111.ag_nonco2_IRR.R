@@ -15,7 +15,6 @@
 #' ag waste burning BC/OC coefficients, non-GHG maximum coefficient reduction, and non-GHG steepness by agricultural technology.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
 #' @author RLH July 2017
 module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

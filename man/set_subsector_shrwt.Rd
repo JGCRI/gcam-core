@@ -4,10 +4,12 @@
 \alias{set_subsector_shrwt}
 \title{set_subsector_shrwt}
 \usage{
-set_subsector_shrwt(data)
+set_subsector_shrwt(data, value_col = "calOutputValue")
 }
 \arguments{
 \item{data}{Tibble to operate on}
+
+\item{value_col}{Column with values to be used in setting subsector share-weights}
 }
 \value{
 Tibble returned with a new column of calculated subsector shareweights.

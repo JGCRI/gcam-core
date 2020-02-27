@@ -16,7 +16,7 @@ FeedCrops,OilCrop,-6,start-year,1,share-weight,final-calibration-year,end-year,f
 FeedCrops,OtherGrain,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 FeedCrops,PalmFruit,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 FeedCrops,Rice,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-FeedCrops,Root_Tuber,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FeedCrops,RootTuber,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 FeedCrops,SugarCrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 FeedCrops,Wheat,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 FeedCrops,DDGS and feedcakes,-6,initial-future-year,1,share-weight,initial-future-year,end-year,fixed,

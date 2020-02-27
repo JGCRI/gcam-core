@@ -16,7 +16,6 @@
 #' \code{\link{module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR}}.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr left_join mutate select
-#' @importFrom tidyr gather spread
 #' @author RMH AUG 2017
 module_emissions_L1221.ghg_agr_R_S_T_Y_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

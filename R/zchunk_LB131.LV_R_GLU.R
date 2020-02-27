@@ -14,7 +14,6 @@
 #' and harvested cropland area.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter group_by left_join mutate select summarize
-#' @importFrom tidyr gather spread
 #' @author KVC April 2017
 module_aglu_LB131.LV_R_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

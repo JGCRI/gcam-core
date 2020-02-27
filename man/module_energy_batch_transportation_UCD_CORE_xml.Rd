@@ -14,9 +14,9 @@ module_energy_batch_transportation_UCD_CORE_xml(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{transportation_UCD_CORE.xml}. The corresponding file in the
+the generated outputs: \code{transportation_UCD_*.xml}. The corresponding file in the
 original data system was \code{batch_transportation_UCD_CORE.xml} (energy XML).
 }
 \description{
-Construct XML data structure for \code{transportation_UCD_CORE.xml}.
+Construct XML data structure for \code{transportation_UCD_*.xml}.
 }

@@ -11,7 +11,8 @@
 #' @details This chunk calculates average prices over calibration years by GCAM commodity and region. Averages across
 #'   years are unweighted; averages over FAO item are weighted by production.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr bind_rows filter if_else left_join mutate rename select
+#' @importFrom dplyr bind_rows filter if_else inner_join left_join mutate rename select
+#' @importFrom tidyr  complete drop_na gather nesting spread
 #' @importFrom tibble tibble
 #' @author GPK/RC/STW February 2019
 module_aglu_LB1321.regional_ag_prices <- function(command, ...) {

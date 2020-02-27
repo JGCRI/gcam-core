@@ -17,7 +17,6 @@
 #' A GDP control of regional non-CO2 emissions in all regions is also created.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter group_by left_join mutate select semi_join
-#' @importFrom tidyr gather spread
 #' @author CDL May 2017
 module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -174,6 +173,14 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
     L251.ssp15_ef_vin <- rename_SO2(L251.ssp15_ef_vin, A_regions, FALSE)
     L251.ssp2_ef_vin <- rename_SO2(L251.ssp2_ef_vin, A_regions, FALSE)
     L251.ssp34_ef_vin <- rename_SO2(L251.ssp34_ef_vin, A_regions, FALSE)
+
+    # This section removes historical years (e.g., 2010) to ensure consistency with the CORE.
+    L251.ssp15_ef <- L251.ssp15_ef %>% filter(year %in% MODEL_FUTURE_YEARS)
+    L251.ssp2_ef <- L251.ssp2_ef %>% filter(year %in% MODEL_FUTURE_YEARS)
+    L251.ssp34_ef <- L251.ssp34_ef %>% filter(year %in% MODEL_FUTURE_YEARS)
+    L251.ssp15_ef_vin <- L251.ssp15_ef_vin %>% filter(year %in% MODEL_FUTURE_YEARS)
+    L251.ssp2_ef_vin <- L251.ssp2_ef_vin %>% filter(year %in% MODEL_FUTURE_YEARS)
+    L251.ssp34_ef_vin <- L251.ssp34_ef_vin %>% filter(year %in% MODEL_FUTURE_YEARS)
 
     # This section performs a filtering join that discards rows that do not have a SSP emission GDP control steepness value.
     L251.ctrl.delete %>%

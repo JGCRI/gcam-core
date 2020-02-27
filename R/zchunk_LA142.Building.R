@@ -13,7 +13,6 @@
 #' @details Scaled national-level building energy consumption by portion of total US building energy use by fuel for each state and sector from the SEDS table.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter group_by mutate select summarise
-#' @importFrom tidyr gather spread
 #' @author KD September 2017
 
 module_gcamusa_LA142.Building <- function(command, ...) {

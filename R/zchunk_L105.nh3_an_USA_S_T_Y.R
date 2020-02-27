@@ -16,7 +16,6 @@
 #' All historical NH3 Emission factors use US values.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter funs group_by left_join mutate select rename summarize summarize_at vars
-#' @importFrom tidyr gather spread
 #' @author RMH April 2017
 module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

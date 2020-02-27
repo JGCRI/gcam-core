@@ -12,8 +12,8 @@
 #' original data system was \code{L100.Population_downscale_ctry.R} (socioeconomics level1).
 #' @details (1) Cleans Maddison historical population data and interpolates to country and year (1700-2010). (2) Cleans SSP population scenarios for smooth join with final base year population.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr bind_rows filter full_join if_else group_by left_join mutate select summarize
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter full_join if_else group_by left_join mutate order_by select summarize
+#' @importFrom tidyr complete nesting replace_na
 #' @author STW May 2017
 module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

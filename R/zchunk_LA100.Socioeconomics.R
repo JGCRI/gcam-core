@@ -13,8 +13,8 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
-#' @importFrom dplyr arrange bind_rows bind_rows filter group_by left_join mutate rename right_join select ungroup
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows bind_rows filter first group_by left_join mutate rename right_join select ungroup
+#' @importFrom tidyr complete nesting
 #' @author BBL
 module_gcamusa_LA100.Socioeconomics <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

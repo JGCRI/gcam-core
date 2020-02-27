@@ -14,7 +14,7 @@
 #' @details Transportation nonmotor data was downscaled in proportion to state population
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting replace_na
 #' @author AJS June 2017
 module_gcamusa_LA154.Transport <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

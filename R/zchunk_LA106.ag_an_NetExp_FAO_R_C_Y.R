@@ -14,7 +14,7 @@
 #' Regional gross exports are adjusted so that global net exports are zero of each commodity / year.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join mutate select semi_join summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete spread
 #' @author RC June 2017
 module_aglu_LA106.ag_an_NetExp_FAO_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -15,7 +15,7 @@
 #' @details The input-out coefficients were downscaled to the states in proportation to the national data.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate pull select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather
 #' @author AS May 2017
 module_gcamusa_LA1321.cement <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

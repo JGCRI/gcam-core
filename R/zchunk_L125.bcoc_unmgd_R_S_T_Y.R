@@ -17,7 +17,7 @@
 #' Note: Non-CO2s are calculated in a separate chunk.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter funs group_by left_join mutate select summarise summarise_all summarise_at vars
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather replace_na spread
 #' @author RMH May 2017
 module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

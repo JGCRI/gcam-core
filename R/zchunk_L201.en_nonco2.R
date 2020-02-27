@@ -14,7 +14,7 @@
 #' This includes historical emissions, drivers (input or output), and pollution controls.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter full_join left_join mutate pull select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather
 #' @author BBL July 2017
 module_emissions_L201.en_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

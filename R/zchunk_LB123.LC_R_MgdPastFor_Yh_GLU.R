@@ -16,7 +16,7 @@
 #' and yields are increased so that production stays unchanged for those regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join mutate right_join select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author RC August 2017
 module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

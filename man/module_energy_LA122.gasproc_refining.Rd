@@ -14,7 +14,7 @@ module_energy_LA122.gasproc_refining(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L122.out_EJ_R_gasproc_F_Yh}, \code{L122.in_EJ_R_gasproc_F_Yh}, \code{L122.IO_R_oilrefining_F_Yh}, \code{L122.out_EJ_R_refining_F_Yh}, \code{L122.in_EJ_R_refining_F_Yh}, \code{L122.in_Mt_R_C_Yh}. The corresponding file in the
+the generated outputs: \code{L122.out_EJ_R_gasproc_F_Yh}, \code{L122.in_EJ_R_gasproc_F_Yh}, \code{L122.IO_R_oilrefining_F_Yh}, \code{L122.out_EJ_R_refining_F_Yh}, \code{L122.in_EJ_R_refining_F_Yh}, \code{L122.in_Mt_R_C_Yh}, \code{L122.FeedOut_Mt_R_C_Yh}. The corresponding file in the
 original data system was \code{LA122.gasproc_refining.R} (energy level1).
 }
 \description{

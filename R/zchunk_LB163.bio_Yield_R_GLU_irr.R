@@ -16,7 +16,6 @@
 #' then multiplied by a base yield (calculated from USA yields) to get bioenergy yields for each region-GLU-irrigation.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join mutate pull select summarise
-#' @importFrom tidyr gather spread
 #' @author ACS June 2017
 module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

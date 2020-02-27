@@ -20,7 +20,7 @@
 #' commodity.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_cols bind_rows filter group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr spread
 #' @importFrom stats glm predict
 #' @author ACS June 2017
 module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {

@@ -13,7 +13,6 @@
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
 #' @importFrom dplyr mutate bind_rows
-#' @importFrom tidyr gather spread
 #' @author BBL May 2017
 module_data_EDGAR_gases <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

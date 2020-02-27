@@ -15,7 +15,7 @@
 #' income elasticities for future years in core and SSP scenarios, as well as price elasticities.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else group_by lag left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather replace_na spread
 #' @author RC July 2017
 module_aglu_L203.demand_input <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

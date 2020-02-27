@@ -24,7 +24,7 @@
 #' @details Creates level2 data for the building sector.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select semi_join summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete gather nesting unite
 #' @author RLH September 2017
 
 module_energy_L244.building_det <- function(command, ...) {

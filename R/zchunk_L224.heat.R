@@ -17,7 +17,6 @@
 #' outputs from elec and modified costs.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select
-#' @importFrom tidyr gather spread
 #' @author JDH August 2017
 module_energy_L224.heat <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

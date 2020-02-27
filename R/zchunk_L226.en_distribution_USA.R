@@ -29,7 +29,7 @@
 #' The corresponding file in the original data system was \code{L226.en_distribution_USA.R} (gcam-usa level2).
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select summarize
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather replace_na separate
 #' @author ACS Oct 2017
 module_gcamusa_L226.en_distribution_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

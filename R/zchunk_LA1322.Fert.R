@@ -13,7 +13,6 @@
 #' @details Calculate input-output intensity coefficients and input energy for state fertilizer production from state shares of national values.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr distinct filter left_join mutate select
-#' @importFrom tidyr gather spread
 #' @author KD September 2017
 module_gcamusa_LA1322.Fert <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

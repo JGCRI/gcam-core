@@ -14,7 +14,7 @@
 #' based on production share by GLU and GTAP commodity class.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr distinct filter group_by left_join mutate right_join select summarise summarise_if
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @importFrom stats na.omit
 #' @author RC April 2017
 module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {

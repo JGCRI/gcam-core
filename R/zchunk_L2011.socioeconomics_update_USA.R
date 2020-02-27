@@ -20,8 +20,8 @@
 #' @details Updated state-level population and labor productivity for GCAM-USA.  Updated USA-region  population and labor productivity
 #' to match the sum-of-states population and GDP when running GCAM-USA.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join distinct filter if_else lag mutate select
+#' @importFrom tidyr complete gather nesting
 #' @author MTB August 2018
 module_gcamusa_L2011.socioeconomics_update_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

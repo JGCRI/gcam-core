@@ -13,7 +13,7 @@
 #' @details Disaggregates agricultural emissions the basis of production by scaling emissions by a technology factor
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na unite
 #' @author KD July 2017
 module_emissions_L2112.ag_nonco2_IRR_MGMT <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

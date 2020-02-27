@@ -13,7 +13,6 @@
 #' @details This chunk selects the subsectors to be removed from the hydrogen sectors in GCAM USA on the national level.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
 #' @author KD September 2017
 module_gcamusa_L225.hydrogen_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

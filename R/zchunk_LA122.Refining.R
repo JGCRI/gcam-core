@@ -13,7 +13,7 @@
 #' @details Downscales crude oil, corn ethanol, and biodiesel refining inputs and outputs to state-level.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows distinct filter group_by left_join mutate select transmute
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author RLH September 2017
 module_gcamusa_LA122.refining <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

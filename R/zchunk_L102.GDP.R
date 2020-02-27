@@ -55,7 +55,7 @@ join.gdp.ts <- function(past, future, grouping) {
   }
 
   ## Find the base year
-  base.year <- max(dplyr::intersect(past$year, future$year))
+  base.year <- max(intersect(past$year, future$year))
   assert_that(is.finite(base.year))
 
   ## Base year gdp from the future dataset
@@ -108,8 +108,8 @@ join.gdp.ts <- function(past, future, grouping) {
 #' the generated outputs: \code{L102.gdp_mil90usd_Scen_R_Y}, \code{L102.pcgdp_thous90USD_Scen_R_Y}, \code{L102.gdp_mil90usd_GCAM3_R_Y}, \code{L102.gdp_mil90usd_GCAM3_ctry_Y}, \code{L102.pcgdp_thous90USD_GCAM3_R_Y}, \code{L102.pcgdp_thous90USD_GCAM3_ctry_Y}, \code{L102.PPP_MER_R}. The corresponding file in the
 #' original data system was \code{L102.GDP.R} (socioeconomics level1).
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr arrange bind_rows distinct filter full_join if_else group_by left_join mutate one_of select summarise transmute
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows distinct filter full_join if_else intersect group_by left_join mutate one_of select summarise transmute
+#' @importFrom tidyr complete gather nesting replace_na
 #' @author RPL March 2017
 module_socioeconomics_L102.GDP <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

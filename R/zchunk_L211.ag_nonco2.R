@@ -19,7 +19,6 @@
 #' a shape parameter that reduces emissions coefficient as function of per-capita GDP, by region and ag sector/technology.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows distinct filter mutate select
-#' @importFrom tidyr gather spread
 #' @author RH July 2017
 module_emissions_L211.ag_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

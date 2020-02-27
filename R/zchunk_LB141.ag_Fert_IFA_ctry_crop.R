@@ -16,7 +16,7 @@
 #' the bottom up estimates and scale the bottom-up estimates, making the final output.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr distinct filter if_else group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread drop_na
+#' @importFrom tidyr gather drop_na replace_na
 #' @author ACS May 2017
 module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

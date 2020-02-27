@@ -15,7 +15,7 @@
 #' remaps USSR data to Russia, and removes coal-to-gas from natural gas TPES.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange distinct filter if_else group_by inner_join left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting replace_na
 #' @author JDH July 2017
 module_energy_LA1011.en_bal_adj <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
