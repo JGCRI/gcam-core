@@ -130,6 +130,10 @@ CONV_TBTU_EJ <- 0.0010551 # TeraBTU to EJ
 CONV_MJ_BTU <- 947.777
 CONV_BTU_KJ <- 1.0551
 
+# Distance
+CONV_MILE_KM <- 1.60934 # Mile to km
+CONV_NMILE_KM <- 1.852 # Nautical mile to km
+
 # Other
 CONV_MCAL_PCAL <- 1e-9
 CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
@@ -405,6 +409,10 @@ energy.PV_LIFETIME             <- 30       # years
 energy.PV_RESID_INSTALLED_COST <- 9500     # 2005USD per kw
 energy.PV_RESID_OM             <- 100      # 2005USD per kw per year
 
+# Wind related constants
+energy.WIND_CURVE_MIDPOINT <- 0.5
+energy.WIND_MIN_POTENTIAL <- 0.001
+
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT        <- 7
 energy.DIGITS_CALPRODUCTION    <- 7
@@ -432,7 +440,6 @@ energy.DIGITS_SPEED            <- 1
 energy.DIGITS_TECHCHANGE       <- 4
 
 # Policy assumptions for module_energy_L270.limits
-
 energy.NEG_EMISS_POLICY_NAME    <- "negative_emiss_budget"
 energy.NEG_EMISS_TARGET_GAS     <- "CO2_LTG" # the name of the gas to target in the negative emiss budget
 energy.NEG_EMISS_GDP_BUDGET_PCT <- 0.01 # Max fraction of GDP which may be given to subsidize net negative emissions
@@ -667,7 +674,7 @@ gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale
 
 
 # Resources that will be modeled at the state level
-gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource")
+gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource", "offshore wind resource")
 gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
 # Define sector(s) used in L222.en_transformation_USA

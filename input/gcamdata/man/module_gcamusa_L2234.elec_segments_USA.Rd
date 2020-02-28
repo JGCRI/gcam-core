@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L2234.elec_segments_USA.R
 \name{module_gcamusa_L2234.elec_segments_USA}
 \alias{module_gcamusa_L2234.elec_segments_USA}
-\title{module_gcamusa_L2234.elec_segments_USA}
+\title{module_gcam.usa_L2234.elec_segments_USA}
 \usage{
 module_gcamusa_L2234.elec_segments_USA(command, ...)
 }
@@ -26,7 +26,7 @@ the generated outputs: \code{L2234.Supplysector_elecS_USA}, \code{L2234.ElecRese
 \code{L2234.GlobalTechLifetime_elecS_USA}, \code{L2234.GlobalIntTechLifetime_elecS_USA}, \code{L2234.GlobalTechProfitShutdown_elecS_USA},
 \code{L2234.GlobalTechSCurve_elecS_USA}, \code{L2234.GlobalTechCapture_elecS_USA}, \code{L2234.GlobalIntTechBackup_elecS_USA},
 \code{L2234.StubTechMarket_elecS_USA}, \code{L2234.StubTechMarket_backup_elecS_USA}, \code{L2234.StubTechElecMarket_backup_elecS_USA},
-\code{L2234.StubTechProd_elecS_USA}, \code{L2234.StubTechFixOut_elecS_USA}, \code{L2234.StubTechFixOut_hydro_elecS_USA},
+\code{L2234.StubTechProd_elecS_USA}, \code{L2234.StubTechFixOut_elecS_USA}, \code{L2234.StubTechFixOut_hydro_elecS_USA}, \code{L2234.StubTechCost_offshore_wind_elecS_USA},
 \code{L2234.TechShrwt_elecS_grid_USA}, \code{L2234.TechCoef_elecS_grid_USA}, \code{L2234.TechProd_elecS_grid_USA}.
 The corresponding file in the original data system was \code{L2234.elec_segments_USA.R} (gcam-usa level2).
 }
