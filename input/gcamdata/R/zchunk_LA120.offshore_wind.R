@@ -27,7 +27,8 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
              FILE = "energy/A20.offshore_wind_depth_cap_cost",
              FILE = "energy/NREL_offshore_energy",
              FILE = "energy/NREL_wind_energy_distance_range",
-             FILE = "energy/offshore_wind_grid_cost"))
+             FILE = "energy/offshore_wind_grid_cost",
+             FILE = "energy/offshore_wind_potential_scaler"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L120.RsrcCurves_EJ_R_offshore_wind",
              "L120.TechChange_offshore_wind",
@@ -44,7 +45,7 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
       capacity.factor <- capital.overnight.lag <- capital.tech.change.5yr <- kl  <- tech.change.5yr <- tech.change <- bin <-
       cost <- Wind_Resource_Region <- Wind_Class <- grid.cost <- total <- value <- CF <- percent.supply <- P2 <- Q2 <- resource <-
       subresource <- k1 <- k2 <- potential <- region <- rep_dist_for_bin <- share <- cost_per_kW_km <- capital.tech.change.period <-
-      tech.change.period <- time.change <- NULL    # silence package check notes
+      tech.change.period <- time.change <- reason <- scaler <- NULL    # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -56,7 +57,7 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
     NREL_offshore_energy  <- get_data(all_data, "energy/NREL_offshore_energy")
     NREL_wind_energy_distance_range <- get_data(all_data, "energy/NREL_wind_energy_distance_range")
     offshore_wind_grid_cost <- get_data(all_data, "energy/offshore_wind_grid_cost")
-
+    offshore_wind_potential_scaler <- get_data(all_data, "energy/offshore_wind_potential_scaler")
 
     # -----------------------------------------------------------------------------
     # Perform computations
@@ -112,18 +113,19 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
 
     # Assigning additional resource to the USA because the global dataset does not include any resource for Alaska,
     # even though initial estimates suggest that its resource potential could be very large.
-    # Each supply point is simply increased by 5%; thus, Alaska's resource is assumed to be a representative
+    # Each supply point is simply increased by 5% (specified in offshore_wind_potential_scaler); thus, Alaska's resource is assumed to be a representative
     # sample of the total USA resource.
     L120.offshore_wind_matrix %>%
-      mutate(supply = if_else(GCAM_region_ID == 1, supply * 1.05, supply)) -> L120.offshore_wind_matrix
+      left_join_error_no_match(offshore_wind_potential_scaler %>%
+                                 select(-reason),
+                               by = "GCAM_region_ID") %>%
+      mutate(supply = supply * scaler) -> L120.offshore_wind_matrix
 
     # Calculate maxSubResource, base.price, and Pvar.
     # base.price represents the minimum cost of generating electricity from the resource.
     # base.price comprises of the cost of generating power at the most optimal location.
     # Pvar represents costs that are expected to increase from base.price as deployment increases.
     # This models the increase in costs as more optimal locations are used first.
-    # NOTE:  Dropping states with maxSubResource < .01 EJ.  This removes two states (MS & NH) which have
-    # only one wind resource data point.
 
     L120.offshore_wind_matrix %>%
       group_by(GCAM_region_ID) %>%
@@ -142,9 +144,9 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
     L120.offshore_wind_curve %>%
       mutate(percent.supply = supply/maxSubResource) %>%
       group_by(GCAM_region_ID) %>%
-      arrange(GCAM_region_ID, desc(price)) %>%
-      filter(percent.supply <= 0.5) %>%
-      filter(row_number() == 1) %>%
+      filter(percent.supply <= energy.WIND_CURVE_MIDPOINT) %>%
+      # filter for highest price point below 50% of total resource
+      filter(Pvar == max(Pvar)) %>%
       ungroup() %>%
       select(GCAM_region_ID, P1 = Pvar, Q1 = supply, maxSubResource) -> L120.mid.price_1
 
@@ -152,8 +154,9 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
     L120.offshore_wind_curve %>%
       mutate(percent.supply = supply/maxSubResource) %>%
       group_by(GCAM_region_ID) %>%
-      filter(percent.supply >= 0.5) %>%
-      filter(row_number() == 1) %>%
+      filter(percent.supply >= energy.WIND_CURVE_MIDPOINT) %>%
+      # filter for lowest price point above 50% of total resource
+      filter(Pvar == min(Pvar)) %>%
       ungroup() %>%
       select(GCAM_region_ID, P2 = Pvar, Q2 = supply) -> L120.mid.price_2
 
@@ -187,8 +190,7 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
 
       L120.offshore_wind_curve_region$curve.exponent <-  round(L120.error_min_curve.exp$minimum,energy.DIGITS_MAX_SUB_RESOURCE)
       L120.offshore_wind_curve_region %>%
-        select(GCAM_region_ID, curve.exponent) %>%
-        filter(row_number() == 1) -> L120.curve.exponent_region
+        distinct(GCAM_region_ID, curve.exponent) -> L120.curve.exponent_region
 
       L120.curve.exponent %>%
         bind_rows(L120.curve.exponent_region) -> L120.curve.exponent
@@ -323,7 +325,8 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
       add_comments("Offshore wind resource curve by region") %>%
       add_precursors("common/iso_GCAM_regID", "common/GCAM_region_names", "energy/NREL_offshore_energy",
                      "energy/A20.wind_class_CFs", "energy/A23.globaltech_capital",
-                     "energy/A23.globaltech_OMfixed", "energy/A20.offshore_wind_depth_cap_cost") ->
+                     "energy/A23.globaltech_OMfixed", "energy/A20.offshore_wind_depth_cap_cost",
+                     "energy/offshore_wind_potential_scaler") ->
       L120.RsrcCurves_EJ_R_offshore_wind
 
     L120.TechChange_offshore_wind %>%

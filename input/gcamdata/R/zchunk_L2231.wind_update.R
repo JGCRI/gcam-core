@@ -135,9 +135,9 @@ module_energy_L2231.wind_update <- function(command, ...) {
     L2231.onshore_wind_curve %>%
       mutate(percent.supply = supply / maxSubResource) %>%
       group_by(region) %>%
-      arrange(region, desc(price)) %>%
-      filter(percent.supply <= 0.5) %>%
-      filter(row_number() == 1) %>%
+      filter(percent.supply <= energy.WIND_CURVE_MIDPOINT) %>%
+      # filter for highest price point below 50% of total resource
+      filter(Pvar == max(Pvar)) %>%
       ungroup() %>%
       select(region, P1 = Pvar, Q1 = supply, maxSubResource) -> L2231.mid.price_1
 
@@ -145,8 +145,9 @@ module_energy_L2231.wind_update <- function(command, ...) {
     L2231.onshore_wind_curve %>%
       mutate(percent.supply = supply / maxSubResource) %>%
       group_by(region) %>%
-      filter(percent.supply >= 0.5) %>%
-      filter(row_number() == 1) %>%
+      filter(percent.supply >= energy.WIND_CURVE_MIDPOINT) %>%
+      # filter for lowest price point above 50% of total resource
+      filter(Pvar == min(Pvar)) %>%
       ungroup() %>%
       select(region, P2 = Pvar, Q2 = supply) -> L2231.mid.price_2
 
@@ -180,8 +181,7 @@ module_energy_L2231.wind_update <- function(command, ...) {
 
       L2231.onshore_wind_curve_region$curve.exponent <-  round(L2231.error_min_curve.exp$minimum,energy.DIGITS_MAX_SUB_RESOURCE)
       L2231.onshore_wind_curve_region %>%
-        select(region, curve.exponent) %>%
-        filter(row_number() == 1) -> L2231.curve.exponent_region
+        distinct(region, curve.exponent) -> L2231.curve.exponent_region
 
       L2231.curve.exponent %>%
         bind_rows(L2231.curve.exponent_region) -> L2231.curve.exponent

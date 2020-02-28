@@ -637,23 +637,24 @@ downscale_FAO_country <- function(data, country_name, dissolution_year, years = 
 #'
 #' Helper function to calculate the smooth renewable resource supply available at a particular price point from
 #' the relevant smooth renewable resource curve parameters (curve exponent, mid-price, maximum sub-resource).
-#' supply = (p - base.price) ^ curve.exponent / (mid.price ^ curve.exponent + (p - base.price) ^ curve.exponent * maxSubResource
+#' supply = ((p - base.price) ^ curve.exponent) / (mid.price ^ curve.exponent + ((p - base.price) ^ curve.exponent)) * maxSubResource
 #' Note that all of these can be vectors
 #' The functional form of GCAM's smooth renewable resource curve is documented at:
 #' http://jgcri.github.io/gcam-doc/energy.html#renewable-resources
-#'
 #' @param data Data with curve parameters, tibble
 #' @param curve.exponent smooth renewable resource curve shape parameter, numeric
-#' @param mid.price the price at which 50% of the maximum available resource is produced, numeric
+#' @param mid.price the price at which 50 percent of the maximum available resource is produced, numeric
 #' @param base.price the minimum cost of producing (generating electricity from) the resource
 #' @param maxSubResource the maximum quantity of energy that could be produced at any price, numeric
 #' @param p price, numeric
 #' @return quantity of the resource supplied (i.e. quantity of electricity produced from said resource)
 evaluate_smooth_res_curve <- function(curve.exponent, mid.price, base.price, maxSubResource, p) {
+
   supply <- ((p - base.price) ^ curve.exponent) / (mid.price ^ curve.exponent + ((p - base.price) ^ curve.exponent)) * maxSubResource
   # zero out the supply where the price was less than the base.price
   supply[p < base.price] <- 0
   supply
+
 }
 
 
@@ -668,13 +669,15 @@ evaluate_smooth_res_curve <- function(curve.exponent, mid.price, base.price, max
 #' http://jgcri.github.io/gcam-doc/energy.html#renewable-resources
 #'
 #' @param curve.exponent smooth renewable resource curve shape parameter, numeric
-#' @param mid.price the price at which 50% of the maximum available resource is produced, numeric
+#' @param mid.price the price at which 50 percent of the maximum available resource is produced, numeric
 #' @param base.price the minimum cost of producing (generating electricity from) the resource
 #' @param maxSubResource the maximum quantity of energy that could be produced at any price, numeric
 #' @param supply_points a tibble of price and supply points along a resource curve in a region, numeric
 #' @return cross product of errors
 smooth_res_curve_approx_error <- function(curve.exponent, mid.price, base.price, maxSubResource, supply_points) {
+
   f_p <- evaluate_smooth_res_curve(curve.exponent, mid.price, base.price, maxSubResource, supply_points$price)
   error <- f_p - supply_points$supply
   crossprod(error, error)
+
 }
