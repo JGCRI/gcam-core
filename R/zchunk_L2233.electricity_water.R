@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L2233.electricity_water
 #'
 #' Generates GCAM model inputs for electricity sector with cooling system types disaggregated.
@@ -28,8 +30,8 @@
 #' original data system was \code{L2233.electricity_water.R} (water level2).
 #' @details Disaggregates electricity sector for all cooling system types.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select first
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter first if_else group_by left_join mutate right_join select summarise first
+#' @importFrom tidyr complete gather nesting
 #' @author ST June 2017
 module_water_L2233.electricity_water <- function(command, ...) {
 

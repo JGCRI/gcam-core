@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 # driver.R
 
 
@@ -75,7 +77,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 
   # Every input should be a precursor for something
   if(!all(chunk_inputs %in% pc_all)) {
-    message("Inputs ", paste(setdiff(chunk_inputs, pc_all), collapse = ", "),
+    message("Inputs ", paste(dplyr::setdiff(chunk_inputs, pc_all), collapse = ", "),
             " don't appear as precursors for any outputs - chunk ", chunk)
   }
 
@@ -145,7 +147,7 @@ tibbelize_outputs <- function(chunk_data, chunk_name) {
 #' the relevant wiki page at \url{ https://github.com/bpbond/gcamdata/wiki/Driver}.
 #' @importFrom magrittr "%>%"
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows filter group_by inner_join select summarise
 #' @export
 #' @author BBL
 driver <- function(all_data = empty_data(),
@@ -196,7 +198,7 @@ driver <- function(all_data = empty_data(),
   # Keep track of chunk inputs for later pruning
   chunkinputs %>%
     group_by(input) %>%
-    summarise(n = n()) ->
+    summarise(n = dplyr::n()) ->
     chunk_input_counts
   cic <- chunk_input_counts$n
   names(cic) <- chunk_input_counts$input

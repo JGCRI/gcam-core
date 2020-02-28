@@ -1,4 +1,6 @@
-#' module_gcamusa_L2321.cement_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L2321.cement_USA
 #'
 #' Make the logit and input tables for the cement sector in gcam-usa
 #'
@@ -14,8 +16,8 @@
 #'  The corresponding file in the original data system was \code{L2321.cement_USA.R} (gcam-usa level2).
 #' @details Make the logit and input tables for the cement sector in gcam-usa
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange distinct filter if_else group_by left_join mutate select
+#' @importFrom tidyr complete nesting spread
 #' @author KD  November 2017
 module_gcamusa_L2321.cement_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

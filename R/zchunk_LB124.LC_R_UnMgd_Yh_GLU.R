@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB124.LC_R_UnMgd_Yh_GLU
 #'
 #' Adjust land cover data for unmanaged land types (shrub, grass, unmgd pasture, unmgd forest) in L120.LC_bm2_R_LT_Yh_GLU to deduct
@@ -22,8 +24,8 @@
 #' minus managed forest area in L123.LC_bm2_R_MgdFor_Yh_GLU.
 #'
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise
+#' @importFrom tidyr replace_na
 #' @author ACS August 2017
 module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

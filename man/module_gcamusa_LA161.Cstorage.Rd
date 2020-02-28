@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA161.Cstorage_USA.R
 \name{module_gcamusa_LA161.Cstorage}
 \alias{module_gcamusa_LA161.Cstorage}
-\title{module_gcamusa_LA161.Cstorage}
+\title{module_gcam.usa_LA161.Cstorage}
 \usage{
 module_gcamusa_LA161.Cstorage(command, ...)
 }

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L221.land_input_1
 #'
 #' Produce L221.LN0_Logit, L221.LN0_Land, L221.LN0_SoilTimeScale, L221.LN1_ValueLogit,
@@ -29,8 +31,7 @@
 #' from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT assumptions."}
 #' }
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr distinct filter left_join mutate select
 #' @author ACS August 2017
 module_aglu_L221.land_input_1 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

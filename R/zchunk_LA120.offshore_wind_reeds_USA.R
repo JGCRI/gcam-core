@@ -1,4 +1,6 @@
-#' module_energy_LA120.offshore_wind_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LA120.offshore_wind_reeds_USA
 #'
 #' Takes in data on country-level offshore wind energy potential and global offshore wind capital cost assumptions and generates tables containing region-level offshore wind data.
 #'
@@ -11,8 +13,8 @@
 #' original data system was \code{LA120.offshore_wind_reeds_USA.R} (gcam_usa level1).
 #' @details Takes in data on US-level offshore wind energy potential and global offshore wind capital cost assumptions and generates tables containing state-level offshore wind data.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter mutate select group_by summarise distinct arrange bind_rows
+#' @importFrom tidyr gather
 #' @importFrom stats optimize
 #' @author MB GI AJS March 2019
 module_energy_LA120.offshore_wind_USA <- function(command, ...) {

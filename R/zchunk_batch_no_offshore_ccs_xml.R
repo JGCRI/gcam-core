@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_batch_no_offshore_ccs_xml
 #'
 #' Construct XML data structure for \code{no_offshore_ccs.xml}.

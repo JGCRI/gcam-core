@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA101.en_bal_IEA
 #'
 #' Rename IEA products and flows to intermediate fuels and sectors used for constructing GCAM's fuel and sector calibration.
@@ -11,8 +13,8 @@
 #' @details Assign IEA product and flow data to nomenclature used in GCAM (fuel and sector, respectively), summarizing
 #' by (generally) iso and/or region, sector, fuel, and year.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter funs if_else group_by left_join matches mutate select summarise summarise_all
+#' @importFrom tidyr replace_na
 #' @author FF and BBL July 2017
 module_energy_LA101.en_bal_IEA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

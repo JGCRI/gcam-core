@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L1221.ghg_agr_R_S_T_Y_IRR
 #'
 #' Downscale emissions to irrigated/rainfed technologies on the basis of production share.
@@ -13,8 +15,7 @@
 #' which are both calculated in \code{\link{module_emissions_L122.ghg_agr_R_S_T_Y}} and
 #' \code{\link{module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR}}.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr left_join mutate select
 #' @author RMH AUG 2017
 module_emissions_L1221.ghg_agr_R_S_T_Y_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

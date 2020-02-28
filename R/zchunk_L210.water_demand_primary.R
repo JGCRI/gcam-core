@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L210.water_demand_primary
 #'
 #' Generate (water demand) technology coefficients for each GCAM region for base years and future years.
@@ -11,8 +13,7 @@
 #' @details This chunk generate (water demand) technology coefficients for each GCAM region for base years and future years,
 #' with information of supplysector, subsector, technology, minicam.energy.input and market.name.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter left_join mutate select
 #' @author YL May 2017
 module_water_L210.water_demand_primary <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

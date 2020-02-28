@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_batch_ag_water_input_IRR_MGMT_xml
 #'
 #' Construct XML data structure for \code{ag_water_input_IRR_MGMT.xml}.

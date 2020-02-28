@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L123.bcoc_awb_R_S_T_Y
 #'
 #' Produces BC and OC AWB emission factors for each Ag production technology.
@@ -10,8 +12,7 @@
 #' original data system was \code{L123.bcoc_awb_R_S_T_Y.R} (emissions level1).
 #' @details Use RCP year 2000 BC and OC emissions from agricultural waste burning on fields (AWB) to calculate emission factors for each ag production technology. Allocates regional AWB emissions to GCAM technology according to above-ground non-harvested biomass.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter funs group_by left_join mutate select summarize_if
 #' @author SJS May 2017
 module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -77,7 +78,7 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
       mutate(emfact = awb_emission / value) %>%
       select(-awb_emission, -value, -AWB_emiss_share, -awb) %>%
       # Replace NaNs with zeros
-      mutate_all(funs(replace(., is.na(.), 0))) ->
+      dplyr::mutate_all(funs(replace(., is.na(.), 0))) ->
       L121.AWB_Emissions_FactorR_C_Y_GLU
 
     # Produce outputs

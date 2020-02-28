@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB152.ag_GTAP_R_C_GLU_irr
 #'
 #' Aggregate the irrigated/rainfed harvest area and production data by GCAM region / commodity / GLU.
@@ -10,8 +12,7 @@
 #' original data system was \code{LB152.ag_GTAP_R_C_GLU_irr.R} (aglu level1).
 #' @details This chunk aggregates the irrigated/rainfed harvest area and production data from country and GTAP crop to GCAM region and commodity by each GLU.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr group_by left_join mutate select summarise
 #' @author RC May 2017
 module_aglu_LB152.ag_GTAP_R_C_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

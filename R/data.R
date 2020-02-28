@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' A list of column orderings keyed by the ModelInterface header so that we
 #' can ensure tables being sent to be converted to XML by the ModelInterface
 #' have their columns arranged in the order the ModelInterface is expecting them.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_batch_industry_USA_xml
 #'
 #' Construct XML data structure for \code{industry_USA.xml}.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA120.offshore_wind_reeds_USA.R
 \name{module_energy_LA120.offshore_wind_USA}
 \alias{module_energy_LA120.offshore_wind_USA}
-\title{module_energy_LA120.offshore_wind_USA}
+\title{module_gcam.usa_LA120.offshore_wind_reeds_USA}
 \usage{
 module_energy_LA120.offshore_wind_USA(command, ...)
 }

@@ -1,8 +1,10 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 
 #' chunk_readylist
 #'
 #' @return Returns a list of disabled chunks: their lines of code, inputs and available inputs, dependencies
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter group_by left_join mutate right_join select summarise
 #' @importFrom tidyr gather spread
 #' @export
 chunk_readylist <- function() {
@@ -55,7 +57,7 @@ count_downstream_dependencies <- function(chunkname, chunklist, ci, co, recurse 
     outputlist
 
   depnames <- unique(outputlist$name)
-  deps <- length(setdiff(depnames, excludes))
+  deps <- length(dplyr::setdiff(depnames, excludes))
 
   if(recurse) {
     for(i in unique(outputlist$chunk)) {

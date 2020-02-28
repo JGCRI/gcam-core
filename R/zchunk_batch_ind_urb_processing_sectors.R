@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_batch_ind_urb_processing_sectors.xml
 #'
 #' Construct XML data structure for \code{ind_urb_processing_sectors.xml}.

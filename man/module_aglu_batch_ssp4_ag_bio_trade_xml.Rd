@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_batch_ssp4_ag_bio_trade_xml.R
 \name{module_aglu_batch_ssp4_ag_bio_trade_xml}
 \alias{module_aglu_batch_ssp4_ag_bio_trade_xml}
-\title{module_aglu_batch_ssp4_ag_bio_trade_xml}
+\title{module_aglu_batch_ssp4_bio_trade_xml}
 \usage{
 module_aglu_batch_ssp4_ag_bio_trade_xml(command, ...)
 }

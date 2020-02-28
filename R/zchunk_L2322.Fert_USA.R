@@ -1,4 +1,6 @@
-#' module_gcamusa_L2322.Fert_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L2322.Fert_USA
 #'
 #' Produce tables to create the N fertilizer sector in GCAM-USA.
 #'
@@ -10,8 +12,8 @@
 #'  The corresponding file in the original data system was \code{L2322.Fert_USA.R} (gcam-usa level2).
 #' @details This chunk produces tables to create the N fertilizer sector in GCAM-USA.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr distinct filter if_else left_join mutate select
+#' @importFrom tidyr unite
 #' @author KD October 2017
 module_gcamusa_L2322.Fert_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

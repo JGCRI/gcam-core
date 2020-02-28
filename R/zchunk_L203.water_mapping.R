@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L203.water_mapping
 #'
 #' Mapping of water consumption/withdrawal to sectoral demands.
@@ -11,8 +13,7 @@
 #' original data system was \code{L203.water_mapping.R} (water level2).
 #' @details Generates water mapping input files that map demands by sectors to basins.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select first
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter first if_else mutate select first
 #' @author ST August 2017 / ST Oct 2018
 module_water_L203.water_mapping <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -49,7 +50,8 @@ module_water_L203.water_mapping <- function(command, ...) {
 
     GCAM_region_ID <- GLU <- GLU_code <- GLU_name <- water.sector <-
       water_type <- supplysector <- field.eff <- conveyance.eff <-
-      coefficient <- region <- NULL  # silence package check notes
+      coefficient <- region <- GCAM_basin_ID <- water_sector <- wt_short <-
+      basin_name <- pMult <- share <- technology <- share.weight <- NULL  # silence package check notes
 
     # Create tibble with all possible mapping sectors...
 
@@ -75,8 +77,8 @@ module_water_L203.water_mapping <- function(command, ...) {
     left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join(A03.sector, by = c("water_sector" = "water.sector")) %>%
       # ^^ non-restrictive join required (NA values generated for logit type)
-      mutate(wt_short = if_else(water_type == "water consumption", "C", "W")) %>%
-      mutate(supplysector = if_else(water_sector != water.IRRIGATION,
+      mutate(wt_short = if_else(water_type == "water consumption", "C", "W"),
+             supplysector = if_else(water_sector != water.IRRIGATION,
              paste(supplysector, wt_short, sep = "_"),
              paste(supplysector, GLU, wt_short, sep = "_"))) %>%
       left_join_error_no_match(basin_ID, by = "basin_id") %>%

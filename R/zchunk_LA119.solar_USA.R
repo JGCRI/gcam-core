@@ -1,4 +1,6 @@
-#' module_gcamusa_LA119.solar
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LA119.Solar
 #'
 #' Compute scalars by state to vary capacity factors by state.
 #'
@@ -10,8 +12,8 @@
 #' original data system was \code{LA119.Solar.R} (gcam-usa level1).
 #' @details This chunk computes scalars by state to vary capacity factors for central station PV and CSP technologies by state.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter funs if_else group_by mutate select summarise summarise_at vars
+#' @importFrom tidyr gather
 #' @author GI, FF, AS Apr 2017
 module_gcamusa_LA119.solar <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
