@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA144.Residential.R
 \name{module_gcamusa_LA144.Residential}
 \alias{module_gcamusa_LA144.Residential}
-\title{module_gcamusa_LA144.Residential}
+\title{module_gcam.usa_LA144.Residential}
 \usage{
 module_gcamusa_LA144.Residential(command, ...)
 }

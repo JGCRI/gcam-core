@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L1233.Elec_water
 #'
 #' Water consumption and withdrawals for electricity.
@@ -10,8 +12,8 @@
 #' original data system was \code{L1233.Elec_water.R} (water level1).
 #' @details Categorizes electricity generating technologies by cooling water type, and computes water withdrawals and consumption.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select last
-#' @importFrom tidyr gather spread complete fill
+#' @importFrom dplyr arrange filter if_else group_by left_join mutate right_join select semi_join summarise
+#' @importFrom tidyr complete fill nesting replace_na
 #' @author SWDT May 2017
 module_water_L1233.Elec_water <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA122.gasproc_refining
 #'
 #' Create gasproc, oil refining and crops inputs, outputs and IO "input-output" coefficients for refining.
@@ -10,8 +12,8 @@
 #' original data system was \code{LA122.gasproc_refining.R} (energy level1).
 #' @details This chunk creates gasproc, oil refining and crops inputs, outputs and IO "input-output" coefficients for refining.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter if_else left_join mutate right_join select semi_join
+#' @importFrom tidyr complete gather nesting
 #' @author FF, May 2017
 module_energy_LA122.gasproc_refining <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

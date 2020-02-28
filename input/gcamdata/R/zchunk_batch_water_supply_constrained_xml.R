@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_batch_water_supply_constrained_xml
 #'
 #' Construct XML data structure for \code{water_supply_constrained.xml}.
@@ -34,6 +36,7 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
     L201.RenewRsrcTechShrwt <- get_data(all_data, "L201.RenewRsrcTechShrwt")
     L201.RsrcTechShrwt <- get_data(all_data, "L201.RsrcTechShrwt")
 
+    resource <- NULL    # silence package check notes
 
     # ===================================================
 

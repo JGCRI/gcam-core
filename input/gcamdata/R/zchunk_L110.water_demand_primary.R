@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L110.water_demand_primary
 #'
 #' Gets water use coefficients for primary energy production.
@@ -11,8 +13,7 @@
 #' @details Gets water use coefficients for primary energy production using regional
 #' fractions of saline and freshwater shares.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select arrange left_join
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter if_else left_join mutate select
 #' @importFrom tibble as_tibble
 #' @author SWDT April 2017
 module_water_L110.water_demand_primary <- function(command, ...) {

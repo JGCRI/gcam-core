@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB164.ag_Costs_USA_C_2005_irr
 #'
 #' This module calculates production costs of GCAM commodities not including purchased irrigation water.
@@ -17,8 +19,8 @@
 #' is adjusted as LB133_cost * (1 - water cost fraction) = production cost - purchased irrigation water for each
 #' commodity.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_cols bind_rows filter group_by left_join mutate select summarise
+#' @importFrom tidyr spread
 #' @importFrom stats glm predict
 #' @author ACS June 2017
 module_aglu_LB164.ag_Costs_USA_C_2005_irr <- function(command, ...) {

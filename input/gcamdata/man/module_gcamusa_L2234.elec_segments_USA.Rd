@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L2234.elec_segments_USA.R
 \name{module_gcamusa_L2234.elec_segments_USA}
 \alias{module_gcamusa_L2234.elec_segments_USA}
-\title{module_gcamusa_L2234.elec_segments_USA}
+\title{module_gcam.usa_L2234.elec_segments_USA}
 \usage{
 module_gcamusa_L2234.elec_segments_USA(command, ...)
 }

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_batch_food_SSP5_xml
 #'
 #' Construct XML data structure for \code{food_SSP5.xml}.

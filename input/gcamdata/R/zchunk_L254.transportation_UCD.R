@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L254.transportation_UCD
 #'
 #' Calculate transportation data using information from the global UCD transportation technology database.
@@ -22,9 +24,8 @@
 #' generic information to all regions. Instead, technology information is read from the global UCD transportation
 #' technology database, and supplysector and subsector attributes are matched in from lookup tables.
 #' @importFrom assertthat assert_that
-#' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join arrange bind_rows filter if_else group_by left_join mutate one_of pull select semi_join summarise
+#' @importFrom tidyr complete nesting
 #' @author AJS September 2017
 module_energy_L254.transportation_UCD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -464,7 +465,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     # L254.StubTechCalInput_passthru: calibrated input of passthrough technologies
     # First, need to calculate the service output for all tranTechnologies (= calInput * loadFactor * unit_conversion / (coef * unit conversion))
     L254.StubTranTechCalInput %>%
-      select(-contains("share")) %>%
+      select(-dplyr::contains("share")) %>%
       left_join_error_no_match(L254.StubTranTechLoadFactor, by = c("region", "supplysector", "tranSubsector",
                                                                    "stub.technology", "year")) %>%
       left_join_error_no_match(L254.StubTranTechCoef, by = c("region", "supplysector", "tranSubsector",
@@ -500,7 +501,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       # remove the technologies that are not pass-through sectors
       semi_join(L254.StubTech_passthru, by = c("region", "supplysector", "tranSubsector", "stub.technology")) %>%
       # compute cumulative sum for use below
-      arrange(desc(minicam.energy.input)) %>%
+      arrange(dplyr::desc(minicam.energy.input)) %>%
       group_by(region, year) %>%
       mutate(output_cum = cumsum(output_agg)) %>%
       ungroup() ->

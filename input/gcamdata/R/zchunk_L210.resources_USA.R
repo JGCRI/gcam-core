@@ -1,4 +1,6 @@
-#' module_gcamusa_L210.resources_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L210.resources_USA
 #'
 #' GCAM-USA resource market information, prices, TechChange parameters, and supply curves.
 #'
@@ -14,8 +16,7 @@
 #' original data system was \code{L210.resources_USA.R} (gcam-usa level2).
 #' @details GCAM-USA resource market information, prices, TechChange parameters, and supply curves.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join filter if_else group_by lag mutate select summarise bind_rows
 #' @author RLH November 2017
 
 module_gcamusa_L210.resources_USA <- function(command, ...) {

@@ -1,4 +1,6 @@
-#' module_gcamusa_batch_liquids_limits_usa_xml
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_batch_liquids_limits_usa_xml
 #'
 #' Construct XML data structure for \code{liquids_limits.xml}.
 #'

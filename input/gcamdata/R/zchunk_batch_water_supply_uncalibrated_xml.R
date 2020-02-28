@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_batch_water_supply_uncalibrated_xml
 #'
 #' Construct XML data structure for \code{water_supply_uncalibrated.xml}.
@@ -30,6 +32,7 @@ module_water_batch_water_supply_uncalibrated_xml <- function(command, ...) {
     L201.GrdRenewRsrcMax_runoff <- get_data(all_data, "L201.GrdRenewRsrcMax_runoff")
     L201.DepRsrcCurves_ground_uniform <- get_data(all_data, "L201.DepRsrcCurves_ground_uniform")
 
+    resource <- NULL    # silence package check notes
 
     # ===================================================
 

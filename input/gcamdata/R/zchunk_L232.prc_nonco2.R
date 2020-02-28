@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L232.prc_nonco2
 #'
 #' Generates input emissions by energy technology, GHG, and base historical year.
@@ -11,8 +13,8 @@
 #' original data system was \code{L232.prc_nonco2.R} (emissions level2).
 #' @details Generates input emissions by energy technology, GHG, and base historical year. Writes out max emissions reductions and steepness to all energy technologies and regions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter if_else left_join mutate select
+#' @importFrom tidyr gather
 #' @author RH July 2017
 module_emissions_L232.prc_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

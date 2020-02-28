@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L261.Cstorage
 #'
 #' Calculate carbon storage resource supply curves, shareweights, technology coefficients and costs, and other carbon storage information.
@@ -27,8 +29,8 @@
 #'  \item{Shareweights of offshore carbon storage technologies}
 #' }
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter mutate select
+#' @importFrom tidyr complete nesting
 #' @author AJS August 2017
 module_energy_L261.Cstorage <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

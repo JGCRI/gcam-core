@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L2239.CSP_reeds_USA.R
 \name{module_gcamusa_L2239.CSP_reeds_USA}
 \alias{module_gcamusa_L2239.CSP_reeds_USA}
-\title{module_gcamusa_L2239.CSP_reeds_USA}
+\title{module_gcam.usa_L2239.CSP_reeds_USA}
 \usage{
 module_gcamusa_L2239.CSP_reeds_USA(command, ...)
 }

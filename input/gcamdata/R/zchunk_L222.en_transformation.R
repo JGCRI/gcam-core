@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L222.en_transformation
 #'
 #' Prepare the assumptions and calibrated outputs for energy transformation supplysectors, subsectors, and technologies.
@@ -18,8 +20,8 @@
 #' @details This chunk sets up the energy transformation global technology database as well as writing out assumptions to all regions for shareweights and logits.
 #' Calibrated outputs for gas processing and oil refining as well as I:O coefficients are interpolated from historical values to base model years.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select semi_join
+#' @importFrom tidyr complete nesting
 #' @author CWR Sept 2017
 module_energy_L222.en_transformation <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -73,7 +75,8 @@ module_energy_L222.en_transformation <- function(command, ...) {
     median.shutdown.point <- minicam.energy.input <- minicam.non.energy.input <- object <-
     profit.shutdown.steepness <- region <- remove.fraction <- sector <- sector.name <- share.weight <-
     shutdown.rate <- steepness <- stub.technology <- subsector <- subsector.name <- supplysector <-
-    technology <- to.value <- value <- year <- year.fillout <- year.share.weight <- year.x <- year.y <- NULL
+    technology <- to.value <- value <- year <- year.fillout <- year.share.weight <- year.x <- year.y <-
+      primary.consumption <- NULL
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")

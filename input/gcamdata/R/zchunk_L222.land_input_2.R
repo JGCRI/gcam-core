@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L222.land_input_2
 #'
 #' Produce L222.LN2_Logit, L222.LN2_HistUnmgdAllocation, L222.LN2_UnmgdAllocation,
@@ -43,8 +45,7 @@
 #' AgLU regions are given externally defined constant logit information. From L222.LN1_UnmgdAllocation_prot"}
 #' }
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr distinct filter left_join mutate select
 #' @author ACS August 2017
 module_aglu_L222.land_input_2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

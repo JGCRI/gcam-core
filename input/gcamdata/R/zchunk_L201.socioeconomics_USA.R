@@ -1,4 +1,6 @@
-#' module_gcamusa_L201.socioeconomics_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L201.socioeconomics_USA
 #'
 #' Interest rate, population, and GDP for GCAM-USA.
 #'
@@ -10,8 +12,7 @@
 #' original data system was \code{L201.socioeconomics_USA.R} (gcam-usa level2).
 #' @details Interest rate, population, and GDP for GCAM-USA.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter lag mutate select
 #' @author RLH October 2017
 module_gcamusa_L201.socioeconomics_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

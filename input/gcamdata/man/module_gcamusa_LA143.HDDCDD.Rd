@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA143.HDDCDD_USA.R
 \name{module_gcamusa_LA143.HDDCDD}
 \alias{module_gcamusa_LA143.HDDCDD}
-\title{module_gcamusa_LA143.HDDCDD}
+\title{module_gcam.usa_LA143.HDDCDD}
 \usage{
 module_gcamusa_LA143.HDDCDD(command, ...)
 }

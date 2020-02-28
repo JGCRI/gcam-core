@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L103.water_basin_mapping
 #'
 #' Calculate percentage shares to map water demands by region / sector to basin.
@@ -12,7 +14,7 @@
 #' @details  Water demands by sector and region to basins.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather
 #' @author ST Oct 2018
 module_water_L103.water_basin_mapping <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -26,7 +28,9 @@ module_water_L103.water_basin_mapping <- function(command, ...) {
              "L103.water_mapping_R_B_W_Ws_share"))
   } else if(command == driver.MAKE) {
 
-    region <- NULL                      # silence package check.
+    region <- GCAM_region_ID <- GLU <- water_type <- GCAM_ID_1 <- ISO_3DIGIT <-
+      iso <- water_sector <- value <- basin_id <- demand <- demand_total <-
+      share <- NULL                      # silence package check.
 
     all_data <- list(...)[[1]]
 

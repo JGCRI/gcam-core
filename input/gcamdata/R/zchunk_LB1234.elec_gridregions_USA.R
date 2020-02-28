@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_LB1234.elec_gridregions_USA
 #'
 #' Calculate electricity fuel consumption and electricity generation by grid region.
@@ -11,7 +13,6 @@
 #' @details By grid region, calculates electricity fuel consumption and electricity generation.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
 #' @author MTB August 2018
 module_gcamusa_LB1234.elec_gridregions_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
