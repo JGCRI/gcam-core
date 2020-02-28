@@ -10,7 +10,7 @@ evaluate_smooth_res_curve(curve.exponent, mid.price, base.price,
 \arguments{
 \item{curve.exponent}{smooth renewable resource curve shape parameter, numeric}
 
-\item{mid.price}{the price at which 50% of the maximum available resource is produced, numeric}
+\item{mid.price}{the price at which 50 percent of the maximum available resource is produced, numeric}
 
 \item{base.price}{the minimum cost of producing (generating electricity from) the resource}
 
@@ -26,7 +26,7 @@ quantity of the resource supplied (i.e. quantity of electricity produced from sa
 \description{
 Helper function to calculate the smooth renewable resource supply available at a particular price point from
 the relevant smooth renewable resource curve parameters (curve exponent, mid-price, maximum sub-resource).
-supply = (p - base.price) ^ curve.exponent / (mid.price ^ curve.exponent + (p - base.price) ^ curve.exponent * maxSubResource
+supply = ((p - base.price) ^ curve.exponent) / (mid.price ^ curve.exponent + ((p - base.price) ^ curve.exponent)) * maxSubResource
 Note that all of these can be vectors
 The functional form of GCAM's smooth renewable resource curve is documented at:
 http://jgcri.github.io/gcam-doc/energy.html#renewable-resources

@@ -10,7 +10,7 @@ smooth_res_curve_approx_error(curve.exponent, mid.price, base.price,
 \arguments{
 \item{curve.exponent}{smooth renewable resource curve shape parameter, numeric}
 
-\item{mid.price}{the price at which 50% of the maximum available resource is produced, numeric}
+\item{mid.price}{the price at which 50 percent of the maximum available resource is produced, numeric}
 
 \item{base.price}{the minimum cost of producing (generating electricity from) the resource}
 

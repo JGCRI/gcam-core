@@ -401,6 +401,10 @@ energy.PV_LIFETIME             <- 30       # years
 energy.PV_RESID_INSTALLED_COST <- 9500     # 2005USD per kw
 energy.PV_RESID_OM             <- 100      # 2005USD per kw per year
 
+# Wind related constants
+energy.WIND_CURVE_MIDPOINT <- 0.5
+energy.WIND_MIN_POTENTIAL <- 0.001
+
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT        <- 7
 energy.DIGITS_CALPRODUCTION    <- 7
@@ -428,7 +432,6 @@ energy.DIGITS_SPEED            <- 1
 energy.DIGITS_TECHCHANGE       <- 4
 
 # Policy assumptions for module_energy_L270.limits
-
 energy.NEG_EMISS_POLICY_NAME    <- "negative_emiss_budget"
 energy.NEG_EMISS_TARGET_GAS     <- "CO2_LTG" # the name of the gas to target in the negative emiss budget
 energy.NEG_EMISS_GDP_BUDGET_PCT <- 0.01 # Max fraction of GDP which may be given to subsidize net negative emissions

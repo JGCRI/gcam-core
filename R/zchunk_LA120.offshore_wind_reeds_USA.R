@@ -24,7 +24,8 @@ module_energy_LA120.offshore_wind_USA <- function(command, ...) {
              FILE = "energy/A20.offshore_wind_depth_cap_cost",
              FILE = "gcam-usa/reeds_offshore_wind_curve_capacity",
              FILE = "gcam-usa/reeds_offshore_wind_curve_grid_cost",
-             FILE = "gcam-usa/reeds_offshore_wind_curve_CF_avg"))
+             FILE = "gcam-usa/reeds_offshore_wind_curve_CF_avg",
+             FILE = "gcam-usa/offshore_wind_potential_missing"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L120.RsrcCurves_EJ_R_offshore_wind_USA",
              "L120.GridCost_offshore_wind_USA",
@@ -39,7 +40,7 @@ module_energy_LA120.offshore_wind_USA <- function(command, ...) {
       supplysector <- subsector.name <- subsector <- intermittent.technology <- year <- input.capital <- capital.overnight <-
       capacity.factor <- capital.overnight.lag <- capital.tech.change.5yr <- kl  <- tech.change.5yr <- tech.change <- bin <- cost <-
       Wind_Resource_Region <- Wind_Class <- grid.cost <- TRG <- wsc1 <- wsc2 <- wsc3 <- wsc4 <- wsc5 <- renewresource <-
-      smooth.renewable.subresource <- Wind_Type <- CF <- value <- percent.supply <- P2 <- Q2 <- Region <- NULL  # silence package check notes
+      smooth.renewable.subresource <- Wind_Type <- CF <- value <- percent.supply <- P2 <- Q2 <- Region <- rsrc_frac <- state <- NULL  # silence package check notes
 
     # Load required inputs
     reeds_regions_states <- get_data(all_data, "gcam-usa/reeds_regions_states")
@@ -50,6 +51,7 @@ module_energy_LA120.offshore_wind_USA <- function(command, ...) {
     reeds_offshore_wind_curve_capacity  <- get_data(all_data, "gcam-usa/reeds_offshore_wind_curve_capacity")
     reeds_offshore_wind_curve_grid_cost <- get_data(all_data, "gcam-usa/reeds_offshore_wind_curve_grid_cost")
     reeds_offshore_wind_curve_CF_avg <- get_data(all_data, "gcam-usa/reeds_offshore_wind_curve_CF_avg")
+    offshore_wind_potential_missing  <- get_data(all_data, "gcam-usa/offshore_wind_potential_missing")
 
     # -----------------------------------------------------------------------------
     # Perform computations
@@ -112,9 +114,9 @@ module_energy_LA120.offshore_wind_USA <- function(command, ...) {
       ungroup() %>%
       select(State, price, supply, CFmax) -> L120.offshore_wind_matrix
 
-    # Assigning resource to Alaska because the dataset does not include a resource estimate for Alaska.
-    # Alaska is assigned 5% of each supply point; thus, Alaska's resource is assumed to be a representative
-    # sample of the total USA resource.
+    # Assigning resource to states missing from the ReEDS dataset (currently only Alaska).
+    # Alaska is assigned 5% of each supply point (this assumption is defined in offshore_wind_potential_missing).
+    # Note that this approach assumes that a missing state's resource is a representative sample of the total USA resource.
     L120.CFmax.average <- L120.offshore_wind_matrix %>%
       summarise(CFmax = mean(CFmax))
     L120.CFmax.average <- as.numeric(L120.CFmax.average)
@@ -125,15 +127,16 @@ module_energy_LA120.offshore_wind_USA <- function(command, ...) {
       mutate(fcr = L120.offshore_wind_fcr,
              OM.fixed = L120.offshore_wind_OMfixed) %>%
       mutate(price = fcr * capital.overnight / CF / CONV_YEAR_HOURS / CONV_KWH_GJ + OM.fixed / CF / CONV_YEAR_HOURS / CONV_KWH_GJ) %>%
+      select(-State) %>%
       arrange(price) %>%
-      mutate(resource.potential.EJ = resource.potential.EJ * .05,
-             State = "AK",
+      repeat_add_columns(offshore_wind_potential_missing) %>%
+      mutate(resource.potential.EJ = resource.potential.EJ * rsrc_frac,
              supply = cumsum(resource.potential.EJ),
              CFmax = L120.CFmax.average) %>%
-      select(State, price, supply, CFmax) -> L120.offshore_wind_matrix.AK
+      select(State = state, price, supply, CFmax) -> L120.offshore_wind_matrix_missing
 
     L120.offshore_wind_matrix %>%
-      bind_rows(L120.offshore_wind_matrix.AK) -> L120.offshore_wind_matrix
+      bind_rows(L120.offshore_wind_matrix_missing) -> L120.offshore_wind_matrix
 
     # Calculate maxSubResource, base.price, and Pvar.
     # base.price represents the minimum cost of generating electricity from the resource.
@@ -158,9 +161,9 @@ module_energy_LA120.offshore_wind_USA <- function(command, ...) {
     L120.offshore_wind_curve %>%
       mutate(percent.supply = supply / maxSubResource) %>%
       group_by(State) %>%
-      arrange(State, desc(price)) %>%
-      filter(percent.supply <= 0.5) %>%
-      filter(row_number() == 1) %>%
+      filter(percent.supply <= energy.WIND_CURVE_MIDPOINT) %>%
+      # filter for highest price point below 50% of total resource
+      filter(Pvar == max(Pvar)) %>%
       ungroup() %>%
       select(State, P1 = Pvar, Q1 = supply, maxSubResource) -> L120.mid.price_1
 
@@ -168,8 +171,9 @@ module_energy_LA120.offshore_wind_USA <- function(command, ...) {
     L120.offshore_wind_curve %>%
       mutate(percent.supply = supply/maxSubResource) %>%
       group_by(State) %>%
-      filter( percent.supply >= 0.5) %>%
-      filter(row_number() == 1) %>%
+      filter(percent.supply >= energy.WIND_CURVE_MIDPOINT) %>%
+      # filter for lowest price point above 50% of total resource
+      filter(Pvar == min(Pvar)) %>%
       ungroup() %>%
       select(State, P2 = Pvar, Q2 = supply) -> L120.mid.price_2
 
@@ -190,11 +194,14 @@ module_energy_LA120.offshore_wind_USA <- function(command, ...) {
     L120.dropped.states %>%
       bind_rows(L120.dropped.states %>%
                   group_by(State) %>%
-                  arrange(State, price) %>%
-                  filter(row_number() == 1) %>%
+                  # select the lowest price point for each state
+                  filter(price == min(price)) %>%
                   ungroup() %>%
-                  mutate(price = price * .99,
-                         supply = supply * .01)) %>%
+                  # add a data point with price = 99% of base.price & supply = 1% of supply at base.price
+                  # so that we can calculate a mid.price for states where the first point on the
+                  # resource curve contains > 50% of the total resource
+                  mutate(price = price * 0.99,
+                         supply = supply * 0.01)) %>%
       group_by(State) %>%
       arrange(State, price) %>%
       mutate(base.price = min(price),
@@ -206,17 +213,18 @@ module_energy_LA120.offshore_wind_USA <- function(command, ...) {
     L120.offshore_wind_curve_adj %>%
       mutate(percent.supply = supply/maxSubResource) %>%
       group_by(State) %>%
-      arrange(State, desc(price)) %>%
-      filter(percent.supply <= 0.5) %>%
-      filter(row_number() == 1) %>%
+      filter(percent.supply <= energy.WIND_CURVE_MIDPOINT) %>%
+      # filter for highest price point below 50% of total resource
+      filter(Pvar == max(Pvar)) %>%
       ungroup() %>%
       select(State, P1 = Pvar, Q1 = supply, maxSubResource) -> L120.mid.price_1_adj
 
     L120.offshore_wind_curve_adj %>%
       mutate(percent.supply = supply/maxSubResource) %>%
       group_by(State) %>%
-      filter( percent.supply >= 0.5) %>%
-      filter(row_number() == 1) %>%
+      filter(percent.supply >= energy.WIND_CURVE_MIDPOINT) %>%
+      # filter for lowest price point above 50% of total resource
+      filter(Pvar == min(Pvar)) %>%
       ungroup() %>%
       select(State, P2 = Pvar, Q2 = supply) -> L120.mid.price_2_adj
 
@@ -242,7 +250,7 @@ module_energy_LA120.offshore_wind_USA <- function(command, ...) {
 
     # Dropping regions with maxSubResource < .001 (i.e. NH, 0.00048 EJ), to avoid potential solution errors
     L120.offshore_wind_curve %>%
-      filter(maxSubResource > .001) -> L120.offshore_wind_curve
+      filter(maxSubResource > energy.WIND_MIN_POTENTIAL) -> L120.offshore_wind_curve
 
     # Defining variables to be used later. Note that the ReEDS data includes information for the 48 contiguous states only.
     # For now, since this script creates add-on files, we'll assume that the existing curves in the remaining states are good enough.
@@ -265,8 +273,7 @@ module_energy_LA120.offshore_wind_USA <- function(command, ...) {
 
       L120.offshore_wind_curve_state$curve.exponent <-  round(L120.error_min_curve.exp$minimum,energy.DIGITS_MAX_SUB_RESOURCE)
       L120.offshore_wind_curve_state %>%
-        select(State, curve.exponent) %>%
-        filter(row_number() == 1) -> L120.curve.exponent_state
+        distinct(State, curve.exponent) -> L120.curve.exponent_state
 
       L120.curve.exponent %>%
         bind_rows(L120.curve.exponent_state) -> L120.curve.exponent
@@ -330,7 +337,8 @@ module_energy_LA120.offshore_wind_USA <- function(command, ...) {
                      "energy/A20.offshore_wind_depth_cap_cost",
                      "gcam-usa/reeds_offshore_wind_curve_capacity",
                      "gcam-usa/reeds_offshore_wind_curve_grid_cost",
-                     "gcam-usa/reeds_offshore_wind_curve_CF_avg") ->
+                     "gcam-usa/reeds_offshore_wind_curve_CF_avg",
+                     "gcam-usa/offshore_wind_potential_missing") ->
       L120.RsrcCurves_EJ_R_offshore_wind_USA
 
     L120.GridCost_offshore_wind_USA %>%
