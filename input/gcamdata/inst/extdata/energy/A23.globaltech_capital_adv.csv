@@ -1,34 +1,34 @@
 # File: A23.globaltech_capital_adv.csv
 # Title: Electricity technology capital costs
 # Units: 1975$/kW
-# Source: GCAM assumptions; developed from assumptions to NEMS model in support of the Annual Energy Outlook (https://www.eia.gov/outlooks/aeo/assumptions/pdf/electricity.pdf).
+# Source: NREL ATB Low Cost Scenario (2019). Improvement rate and improvement max based on 2015 and 2050 values.
 # Future improvement is based on the maximum % reduction that the literature deems likely and a rate corresponding to the maturity level of the technology
 # Note that some technologies are the same as another with additional equipment (i.e. CCS) for those technologies the improvement is on the additional equipment
 # Column types: ccccnnnnnnnnc 
 # ----------
 supplysector,subsector,technology,input-capital,fixed.charge.rate,1971,1990,2005,2010,2015,improvement.max,improvement.rate,improvement.shadow.technology
-electricity,coal,coal (conv pul),capital,0.13,730,730,800,850,898.4983353,0.75,0.01,
-electricity,coal,coal (conv pul CCS),capital,0.13,1796.996671,1796.996671,1796.996671,1796.996671,1796.996671,0.6,0.05,coal (conv pul)
-electricity,coal,coal (IGCC),capital,0.13,1239.308049,1239.308049,1239.308049,1239.308049,1239.308049,0.7,0.03,
-electricity,coal,coal (IGCC CCS),capital,0.13,2044.85828,2044.85828,2044.85828,2044.85828,2044.85828,0.6,0.05,coal (IGCC)
-electricity,gas,gas (steam/CT),capital,0.13,150,150,150,150,232.3702591,0.75,0.01,
-electricity,gas,gas (CC),capital,0.13,320,320,320,320,325.3183628,0.75,0.01,
-electricity,gas,gas (CC CCS),capital,0.13,650.6367256,650.6367256,650.6367256,650.6367256,650.6367256,0.6,0.05,gas (CC)
-electricity,refined liquids,refined liquids (steam/CT),capital,0.13,232.3702591,232.3702591,232.3702591,232.3702591,232.3702591,0.75,0.01,
-electricity,refined liquids,refined liquids (CC),capital,0.13,325.3183628,325.3183628,325.3183628,325.3183628,325.3183628,0.75,0.01,
-electricity,refined liquids,refined liquids (CC CCS),capital,0.13,774.3493424,774.3493424,774.3493424,774.3493424,774.3493424,0.6,0.05,refined liquids (CC)
-electricity,biomass,biomass (conv),capital,0.13,1239.308049,1239.308049,1239.308049,1239.308049,1239.308049,0.75,0.01,
-electricity,biomass,biomass (conv CCS),capital,0.13,1996.284668,1996.284668,1996.284668,1996.284668,1996.284668,0.6,0.05,biomass (conv)
-electricity,biomass,biomass (IGCC),capital,0.13,1858.962073,1858.962073,1858.962073,1858.962073,1858.962073,0.7,0.03,
-electricity,biomass,biomass (IGCC CCS),capital,0.13,2537.630766,2537.630766,2537.630766,2537.630766,2537.630766,0.6,0.05,biomass (IGCC)
-electricity,nuclear,Gen_II_LWR,capital,0.13,1650,1650,1650,1650,1704.048567,1,0,
-electricity,nuclear,Gen_III,capital,0.13,1704.048567,1704.048567,1704.048567,1704.048567,1704.048567,0.7,0.03,
-electricity,wind,wind,capital,0.13,642.2,494,380,619.6540244,619.6540244,0.6,0.05,
-electricity,wind,wind_storage,capital,0.13,1548.04,1190.8,916,1642.083165,1642.083165,0.6,0.05,wind
-electricity,solar,PV,capital,0.13,619.6540244,619.6540244,619.6540244,619.6540244,619.6540244,0.6,0.05,
-electricity,solar,PV_storage,capital,0.13,1301.273451,1301.273451,1301.273451,1301.273451,1301.273451,0.6,0.05,PV
-electricity,solar,CSP,capital,0.13,1487.169658,1487.169658,1487.169658,1487.169658,1487.169658,0.3,0.07,
-electricity,solar,CSP_storage,capital,0.13,2478.616097,2478.616097,2478.616097,2478.616097,2478.616097,0.6,0.05,CSP
-electricity,geothermal,geothermal,capital,0.13,1363.238854,1363.238854,1363.238854,1363.238854,1363.238854,0.7,0.03,
-elect_td_bld,rooftop_pv,rooftop_pv,capital,0.1,1456.186957,1456.186957,1456.186957,1456.186957,1456.186957,0.6,0.05,
-electricity,wind,wind_offshore,capital,0.13,1039,1039,1039,1039,1039,0.6,0.05,
+electricity,biomass,biomass (conv CCS),capital,0.13,2385.667994,2385.667994,2385.667994,2242.92248,2242.92248,0.68,0.05,biomass (conv)
+electricity,biomass,biomass (conv),capital,0.13,1239.308049,1239.308049,1239.308049,1131.867579,1131.867579,0.83,0.03, 
+electricity,biomass,biomass (IGCC CCS),capital,0.13,2741.969058,2741.969058,2741.969058,2577.921071,2577.921071,0.63,0.05,biomass (IGCC)
+electricity,biomass,biomass (IGCC),capital,0.13,1858.962073,1858.962073,1858.962073,1747.409671,1747.409671,0.67,0.04, 
+electricity,coal,coal (conv pul CCS),capital,0.13,1796.996671,1796.996671,1796.996671,1586.325242,1586.325242,0.8,0.03,coal (conv pul)
+electricity,coal,coal (conv pul),capital,0.13,1027.804187,1027.804187,1027.804187,1027.804187,1027.804187,0.88,0.03, 
+electricity,coal,coal (IGCC CCS),capital,0.13,2339.573138,2339.573138,2339.573138,2339.573138,2339.573138,0.68,0.04,coal (IGCC)
+electricity,coal,coal (IGCC),capital,0.13,1239.308049,1239.308049,1239.308049,1123.029319,1123.029319,0.8,0.04, 
+electricity,gas,gas (CC CCS),capital,0.13,650.6367256,650.6367256,650.6367256,620.9590902,620.9590902,0.7,0.04,gas (CC)
+electricity,gas,gas (CC),capital,0.13,320,320,320,287.9562356,287.9562356,0.74,0.06, 
+electricity,gas,gas (steam/CT),capital,0.13,246.3308787,246.3308787,246.3308787,246.3308787,246.3308787,0.87,0.03, 
+electricity,geothermal,geothermal,capital,0.13,1363.238854,1363.238854,1363.238854,1335.147575,1335.147575,0.73,1, 
+electricity,nuclear,Gen_II_LWR,capital,0.13,1704.048567,1704.048567,1704.048567,1704.048567,1704.048567,1,0, 
+electricity,nuclear,Gen_III,capital,0.13,1717.188522,1717.188522,1717.188522,1717.188522,1717.188522,0.77,0.03, 
+electricity,refined liquids,refined liquids (CC CCS),capital,0.13,774.3493424,774.3493424,774.3493424,761.2308406,761.2308406,0.66,0.04,refined liquids (CC)
+electricity,refined liquids,refined liquids (CC),capital,0.13,325.3183628,325.3183628,325.3183628,287.9562356,287.9562356,0.74,0.06, 
+electricity,refined liquids,refined liquids (steam/CT),capital,0.13,246.3308787,246.3308787,246.3308787,246.3308787,246.3308787,0.87,0.03, 
+elect_td_bld,rooftop_pv,rooftop_pv,capital,0.1,1456.186957,1456.186957,1456.186957,1083.114593,1083.114593,0.13,0.09, 
+electricity,solar,CSP,capital,0.13,1487.169658,1487.169658,1487.169658,880.4048074,880.4048074,0.33,0.07, 
+electricity,solar,CSP_storage,capital,0.13,2478.616097,2478.616097,2478.616097,2270.292578,2270.292578,0.27,0.07,CSP
+electricity,solar,PV,capital,0.13,666.8610247,666.8610247,666.8610247,666.8610247,666.8610247,0.13,0.08, 
+electricity,solar,PV_storage,capital,0.13,2434.238854,2434.238854,2434.238854,2360,2360,0.13,0.07,PV
+electricity,wind,wind,capital,0.13,642.2,494,451.0364007,451.0364007,451.0364007,0.43,0.05, 
+electricity,wind,wind_storage,capital,0.13,2205,2205,2205,2144,2144,0.2,0.07,wind
+electricity,wind,wind_offshore,capital,0.13,1138,1138,1138,1138,1138,0.23,0.06,

@@ -3,7 +3,7 @@
 # Units: Unitless share-weights
 # Source: None (GCAM assumptions)
 # Note: These may be over-written by interpolation rules which take precedence
-# Column types: cccci 
+# Column types: ccccn 
 # ----------
 supplysector,subsector,year.fillout,year,share.weight
 electricity,coal,start-year,,1
@@ -11,8 +11,8 @@ electricity,gas,start-year,,1
 electricity,biomass,2100,,1
 electricity,nuclear,start-year,,0
 electricity,hydro,start-year,,0
-electricity,wind,2100,,1
-electricity,solar,2100,,1
+electricity,wind,2030,,1
+electricity,solar,2030,,1
 electricity,geothermal,2100,,1
 elect_td_bld,rooftop_pv,start-year,,0
 elect_td_bld,rooftop_pv,2100,,1
