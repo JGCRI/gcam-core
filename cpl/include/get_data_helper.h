@@ -34,6 +34,7 @@
  */
 
 #include <vector>
+#include <string>
 
 class Scenario;
 class FilterStep;
