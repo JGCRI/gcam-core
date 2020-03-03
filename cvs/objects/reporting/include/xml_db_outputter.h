@@ -50,7 +50,7 @@
 #include <boost/iostreams/filtering_stream.hpp>
 #include "util/base/include/default_visitor.h"
 
-#if( __HAVE_JAVA__ )
+#if( HAVE_JAVA )
 #include <jni.h>
 #include <boost/iostreams/concepts.hpp>
 #endif
@@ -274,7 +274,7 @@ private:
     //! Subsector nesting depth output to help querying
     int mSubsectorDepth;
 
-#if( __HAVE_JAVA__ )
+#if( HAVE_JAVA )
     /*!
      * \brief Contains all objects necessary to interact with Java.
      * \details Interacting with Java through the Java Native Interface (JNI) can
@@ -328,7 +328,7 @@ private:
     
     std::iostream* popBufferStack();
 
-#if( __HAVE_JAVA__ )
+#if( HAVE_JAVA )
     /*!
      * \brief A boost IO "sink" which will transfer XML as it is written to mBuffer
      *        to the Java class responsible for writing it to the database.
