@@ -58,8 +58,8 @@
 
 
 //! A flag which turns on or off the compilation of the XML database code.
-#ifndef __HAVE_JAVA__
-#define __HAVE_JAVA__ 1
+#ifndef HAVE_JAVA
+#define HAVE_JAVA 1
 #endif
 
 //! A flag which turns on or off the compilation of the hector climate model code.

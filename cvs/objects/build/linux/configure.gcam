@@ -120,8 +120,8 @@ JAVALIB =
 JAVA_RPATH =
 JAVALINK =
 JARSLIB = 
-# override default in GCAM that has Java enabled (__HAVE_JAVA__ = 1)
-CXXBASEOPTS += -D__HAVE_JAVA__=0
+# override default in GCAM that has Java enabled (HAVE_JAVA = 1)
+CXXBASEOPTS += -DHAVE_JAVA=0
 endif
 
 ### locations of library include files
