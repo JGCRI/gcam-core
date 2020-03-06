@@ -31,4 +31,4 @@ electricity,solar,PV,capital,0.13,666.8610247,666.8610247,666.8610247,666.861024
 electricity,solar,PV_storage,capital,0.13,2434.238854,2434.238854,2434.238854,2360,2360,0.13,0.07,PV
 electricity,wind,wind,capital,0.13,642.2,494,451.0364007,451.0364007,451.0364007,0.43,0.05, 
 electricity,wind,wind_storage,capital,0.13,2205,2205,2205,2144,2144,0.2,0.07,wind
-electricity,wind,wind_offshore,capital,0.13,1138,1138,1138,1138,1138,0.23,0.06,
+electricity,wind,wind_offshore,capital,0.13,1039,1039,1039,979,979,0.17,0.06,
