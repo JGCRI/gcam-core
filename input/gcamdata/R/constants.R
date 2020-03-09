@@ -215,7 +215,7 @@ aglu.HIGH_GROWTH_PCGDP <- 12.275   # GDP per capita high threshold for SSP4 regi
 aglu.LOW_GROWTH_PCGDP  <- 2.75     # GDP per capita low threshold for SSP4 region groupings, thousand 2010$ per person
 
 # AgLu mulitpliers
-aglu.MGMT_YIELD_ADJ <- 0.1       # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number.
+aglu.MGMT_YIELD_ADJ <- 0.2       # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number.
 aglu.HI_PROD_GROWTH_MULT <- 1.5  # Multipliers for high ag prod growth scenarios
 aglu.LOW_PROD_GROWTH_MULT <- 0.5 # Multipliers for low ag prod growth scenarios
 
@@ -324,7 +324,7 @@ aglu.LN1_PROTUNMGD_LOGIT_EXP  <- 0
 aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 
 # default logit exponent and type for LN5, the competition betweein high and lo management
-aglu.MGMT_LOGIT_EXP  <- 0.5
+aglu.MGMT_LOGIT_EXP  <- 2.5
 aglu.MGMT_LOGIT_TYPE <- "absolute-cost-logit"
 
 # XML-related constants
