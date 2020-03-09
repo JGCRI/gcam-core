@@ -195,7 +195,7 @@ int main( int argc, char *argv[] ) {
     
     // Choose stopPeriod from stopYear and stopPeriod options.
     // If both are specified, then stopYear sets the time period
-    int finalPeriod = util::reconcilePeriodandYear( runner->getInternalScenario()->getModeltime(),
+    int finalPeriod = util::reconcilePeriodandYear( Modeltime::getInstance()/*runner->getInternalScenario()->getModeltime()*/,
                                                    stopPeriod, stopYear );
     const bool printDebug = conf->shouldWriteFile( "xmlDebugFileName" );
     success = runner->runScenarios( finalPeriod, printDebug, timer );
