@@ -254,9 +254,15 @@ bool BatchRunner::runSingleScenario( IScenarioRunner* aScenarioRunner,
     
     // Cleanup parser and associated memory now to save space while the scenario is running.
     XMLHelper<void>::cleanupParser();
+    
+    // the value for aSinglePeriod may not have been properly set because in batch mode
+    // the model time may not have been available
+    // reset it if is uninitialized
+    const int runPeriod = aSinglePeriod == Scenario::UNINITIALIZED_RUN_PERIODS ?
+        util::getConfigRunPeriod( "stop" ) : aSinglePeriod;
 
     // Run the scenario.
-    success = mInternalRunner->runScenarios( aSinglePeriod, false, aTimer );
+    success = mInternalRunner->runScenarios( runPeriod, false, aTimer );
     
     // Print the output.
     mInternalRunner->printOutput( aTimer );

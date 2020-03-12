@@ -108,6 +108,8 @@ public:
 
     static const std::string& getXMLNameStatic();
     
+    bool isInitialized() const { return mIsInitialized; }
+    
     int getBasePeriod() const;
     int getStartYear() const;
     int getEndYear() const;

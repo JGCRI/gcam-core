@@ -615,7 +615,7 @@ namespace objects {
    tm* getLocalTime( const time_t& aTime );
    void printTime( const time_t& aTime, std::ostream& aOut );
 
-   int reconcilePeriodandYear( const Modeltime* aModeltime, const int aPeriod, const int aYear );
+   int getConfigRunPeriod( const std::string aKey );
    
 } // End util namespace.
 

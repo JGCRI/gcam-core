@@ -190,13 +190,9 @@ int main( int argc, char *argv[] ) {
     // Run the scenario and print debugging information as controlled by the following
     // configuration options with the defaults being to run all periods and print debug
     // information.
-    const int stopPeriod = conf->getInt( "stop-period", Scenario::RUN_ALL_PERIODS );
-    const int stopYear = conf->getInt( "stop-year", Scenario::RUN_ALL_PERIODS );
-    
-    // Choose stopPeriod from stopYear and stopPeriod options.
-    // If both are specified, then stopYear sets the time period
-    int finalPeriod = util::reconcilePeriodandYear( Modeltime::getInstance()/*runner->getInternalScenario()->getModeltime()*/,
-                                                   stopPeriod, stopYear );
+    // Note because a user can choose to set the final period by stop-period or stop-year
+    // we use the util::getConfigRunPeriod to decipher the appropriate value to use.
+    int finalPeriod = util::getConfigRunPeriod( "stop" );
     const bool printDebug = conf->shouldWriteFile( "xmlDebugFileName" );
     success = runner->runScenarios( finalPeriod, printDebug, timer );
 

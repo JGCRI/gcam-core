@@ -114,6 +114,7 @@ public:
     ManageStateVariables* getManageStateVariables() const;
 
     //! Constant which when passed to the run method means to run all model periods.
+    const static int UNINITIALIZED_RUN_PERIODS = -2;
     const static int RUN_ALL_PERIODS = -1;
 protected:
     
