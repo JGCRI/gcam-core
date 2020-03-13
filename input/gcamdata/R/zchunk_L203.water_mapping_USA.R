@@ -220,8 +220,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                          logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
       arrange(region) %>%
       bind_rows(L203.mapping_livestock,L203.mapping_primary,L203.mapping_irr)%>%
-      mutate(pMult = if_else(water.sector == water.IRRIGATION & water_type == "water withdrawals" & region!=gcam.USA_REGION,
-                             water.IRR_PRICE_SUBSIDY_MULT, water.MAPPING_PMULT)) ->
+      mutate(pMult = if_else(water.sector == water.IRRIGATION & water_type == "water withdrawals" & region!=gcam.USA_REGION, water.IRR_PRICE_SUBSIDY_MULT, water.MAPPING_PMULT)) ->
       L203.mapping_all
 
     tibble(region = gcam.USA_REGION,
@@ -235,7 +234,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
 
     # Subsector logit exponents for mapping sector
     L203.mapping_all %>%
-      mutate(logit.exponent = case_when(region!=gcam.USA_REGION&water_sector!=water.IRRIGATION ~ water.LOGIT_EXP,TRUE~0)) %>%
+    mutate(logit.exponent = case_when(region!=gcam.USA_REGION&water_sector!=water.IRRIGATION ~ water.LOGIT_EXP,TRUE~0)) %>%
       select(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME) ->
       L203.SubsectorLogit_USA
 
@@ -278,7 +277,6 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       L203.TechPmult_USA
 
     L203.TechCoef_USA %>%
-      filter(!grepl("_irr_", supplysector)) %>%
       filter(region!=gcam.USA_REGION) %>%
       mutate(technology = "desalination",
              minicam.energy.input = "desalination",
@@ -286,11 +284,12 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       dplyr::filter(!is.na(year))->
       L203.TechDesalCoef_USA
 
+    ## Set shareweight of desalination technologies to 0 in all non-coastal states
     L203.TechShrwt_USA %>%
       filter(!grepl("_irr_", supplysector)) %>%
       filter(region!=gcam.USA_REGION) %>%
       mutate(technology = "desalination",
-             share.weight = if_else(grepl("_pri_", supplysector),1, 1))  %>%
+             share.weight = if_else((region %in% gcamusa.NO_SEAWATER_STATES)|grepl("Rio",subsector),0, 1))  %>%
       dplyr::filter(!is.na(year))->
       L203.TechDesalShrwt_USA
 
