@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L141.hfc_R_S_T_Y
 #'
 #' Calculate HFC emissions from EDGAR, by residential and commercial cooling shares,
@@ -11,8 +13,8 @@
 #' original data system was \code{L141.hfc_R_S_T_Y.R} (emissions level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter funs group_by left_join matches mutate select summarise vars
+#' @importFrom tidyr replace_na
 #' @author RMH Aug 2017
 module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -107,7 +109,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
 
     L141.EDGAR_HFC <- bind_rows(F_gases_formatted) %>%
       group_by(GCAM_region_ID, EDGAR_agg_sector, Non.CO2,  year) %>%
-      summarize(emissions = sum(emissions))
+      summarise(emissions = sum(emissions))
 
     # Map to other f-gas sector, which varies by gas
     L141.EDGAR_hfc_R_S_T_Yh_rest <- L141.EDGAR_HFC %>%
@@ -141,7 +143,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
     # Group by GCAM region and ID and year in new data frame (use to calculate share of total later)
     L141.R_cooling_Yh <-  L141.R_cooling_T_Yh.long %>%
       group_by(GCAM_region_ID,year) %>%
-      summarize(total = sum(value))
+      summarise(total = sum(value))
     # Join in the totals we just calculated and calulate the shares
     L141.R_cooling_T_Yh.long <- left_join_error_no_match(L141.R_cooling_T_Yh.long,L141.R_cooling_Yh, by = c("GCAM_region_ID", "year")) %>%
       mutate(share = value / total) %>%
@@ -172,12 +174,12 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
     # Add SSP2 values to EDGAR HFC emissions then calculate scalar
     L141.hfc_scaler <- L141.hfc_R_S_T_Yh_share %>%
       group_by(year, Non.CO2) %>%
-      summarize(EDGAR_tot = sum(emissions))%>%
+      summarise(EDGAR_tot = sum(emissions))%>%
       arrange(Non.CO2, year) %>%
       left_join(HFC_Inventory_GV, by = c("year" = "Year", "Non.CO2" = "Species")) %>% # some entries not in GUUS data, default to scaler =1
       mutate(scaler = SSP2_tot / EDGAR_tot) %>%
       replace_na(list(scaler = 1)) %>%
-      mutate_at(vars(), funs(replace(., is.infinite(.), 1))) %>% # replace na and Infinite values with 1.
+      dplyr::mutate_at(vars(), funs(replace(., is.infinite(.), 1))) %>% # replace na and Infinite values with 1.
       # If a real scalar isn't calculated (ie: no GV value or EDGAR = 0) to match to GV data, keep the EDGAR value.
       select(year, Non.CO2, scaler)
 

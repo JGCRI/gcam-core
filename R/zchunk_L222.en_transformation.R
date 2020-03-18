@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L222.en_transformation
 #'
 #' Prepare the assumptions and calibrated outputs for energy transformation supplysectors, subsectors, and technologies.
@@ -18,8 +20,8 @@
 #' @details This chunk sets up the energy transformation global technology database as well as writing out assumptions to all regions for shareweights and logits.
 #' Calibrated outputs for gas processing and oil refining as well as I:O coefficients are interpolated from historical values to base model years.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select semi_join
+#' @importFrom tidyr complete nesting
 #' @author CWR Sept 2017
 module_energy_L222.en_transformation <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -38,6 +40,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
              FILE = "energy/A22.globaltech_interp",
              FILE = "energy/A22.globaltech_co2capture",
              FILE = "energy/A22.globaltech_retirement",
+             FILE = "energy/A22.globaltech_keyword",
              "L122.out_EJ_R_gasproc_F_Yh",
              "L122.out_EJ_R_refining_F_Yh",
              "L122.IO_R_oilrefining_F_Yh"))
@@ -58,6 +61,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
              "L222.GlobalTechSCurve_en",
              "L222.GlobalTechLifetime_en",
              "L222.GlobalTechProfitShutdown_en",
+             "L222.GlobalTechKeyword_en",
              "L222.StubTechProd_gasproc",
              "L222.StubTechProd_refining",
              "L222.StubTechCoef_refining",
@@ -71,7 +75,8 @@ module_energy_L222.en_transformation <- function(command, ...) {
     median.shutdown.point <- minicam.energy.input <- minicam.non.energy.input <- object <-
     profit.shutdown.steepness <- region <- remove.fraction <- sector <- sector.name <- share.weight <-
     shutdown.rate <- steepness <- stub.technology <- subsector <- subsector.name <- supplysector <-
-    technology <- to.value <- value <- year <- year.fillout <- year.share.weight <- year.x <- year.y <- NULL
+    technology <- to.value <- value <- year <- year.fillout <- year.share.weight <- year.x <- year.y <-
+      primary.consumption <- NULL
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -88,6 +93,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     A22.globaltech_interp <- get_data(all_data, "energy/A22.globaltech_interp")
     A22.globaltech_co2capture <- get_data(all_data, "energy/A22.globaltech_co2capture")
     A22.globaltech_retirement <- get_data(all_data, "energy/A22.globaltech_retirement")
+    A22.globaltech_keyword <- get_data(all_data, "energy/A22.globaltech_keyword")
     L122.out_EJ_R_gasproc_F_Yh <- get_data(all_data, "L122.out_EJ_R_gasproc_F_Yh")
     L122.out_EJ_R_refining_F_Yh <- get_data(all_data, "L122.out_EJ_R_refining_F_Yh")
     L122.IO_R_oilrefining_F_Yh <- get_data(all_data, "L122.IO_R_oilrefining_F_Yh")
@@ -291,6 +297,14 @@ module_energy_L222.en_transformation <- function(command, ...) {
         select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "median.shutdown.point", "profit.shutdown.steepness") ->
         L222.GlobalTechProfitShutdown_en
     }
+
+    # L222.GlobalTechKeyword_en: Global tech primary energy keywords to ensure first gen
+    # biomass gets picked up by the primary energy queries
+    A22.globaltech_keyword %>%
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
+      select(sector.name = supplysector, subsector.name = subsector, technology, primary.consumption, year) %>%
+      filter(year %in% MODEL_YEARS) ->
+      L222.GlobalTechKeyword_en
 
     #2d. Calibration and region-specific data
     #  generate base year calibrated outputs of gas processing by interpolating from historical values
@@ -570,6 +584,14 @@ module_energy_L222.en_transformation <- function(command, ...) {
         L222.GlobalTechProfitShutdown_en
     }
 
+    L222.GlobalTechKeyword_en %>%
+        add_title("Global tech keywords") %>%
+        add_units("NA") %>%
+        add_comments("Primary energy keywords to ensure first get bio fuels get picked up in") %>%
+        add_comments("the primary energy queries") %>%
+        add_precursors("energy/A22.globaltech_keyword") ->
+        L222.GlobalTechKeyword_en
+
     L222.StubTechProd_gasproc %>%
       add_title("Historical calibrated output of gas processing technologies") %>%
       add_units("EJ") %>%
@@ -608,7 +630,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
                 L222.GlobalTechShrwt_en, L222.GlobalTechCapture_en, L222.GlobalTechShutdown_en,
                 L222.GlobalTechSCurve_en, L222.GlobalTechLifetime_en, L222.GlobalTechProfitShutdown_en,
                 L222.StubTechProd_gasproc, L222.StubTechProd_refining, L222.StubTechCoef_refining,
-                L222.GlobalTechCost_low_en)
+                L222.GlobalTechCost_low_en, L222.GlobalTechKeyword_en)
   } else {
     stop("Unknown command")
   }

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_batch_geo_low_xml
 #'
 #' Construct XML data structure for \code{geo_low.xml}.

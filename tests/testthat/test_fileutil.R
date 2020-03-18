@@ -49,6 +49,11 @@ test_that("loads test file", {
   expect_is(get_title(f2), "character")
 })
 
+test_that("errors on coltype mismatch", {
+  fn <- "tests/bad_A_agRsrc.csv"
+  expect_error(load_csv_files(fn, optionals = FALSE, quiet = FALSE))
+})
+
 test_that("save_chunkdata saves", {
   df <- tibble(x = 1L:3L)
   all_data <- add_data(return_data(df), empty_data())

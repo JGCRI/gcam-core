@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2252.land_input_5_irr_mgmt
 #'
 #' Produce the inputs for the lowest level of the land nest, including disaggregated crop technologies:
@@ -29,8 +31,8 @@
 #' \item{"L2252.LN5_NodeGhostShare: Ghost share of the nest 4 nodes (irrigated versus rainfed)."}
 #' }
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter full_join if_else group_by left_join mutate select semi_join summarize
+#' @importFrom tidyr replace_na separate
 #' @author ACS September 2017
 module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -90,7 +92,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       crop2 <- landshare <- lev <- . <- ghost.unnormalized.share <- HarvestIndex.x <- HarvestIndex.y <-
       Root_Shoot.x <- Root_Shoot.y <- WaterContent.x <- WaterContent.y <- yield <- HarvestIndex <-
       WaterContent <- Root_Shoot <- total_land <- gcam5_hist.veg.carbon.density <- new_hist.veg.carbon.density <-
-      gcam5_veg.carbon.density <- new_veg.carbon.density <- dif_hist.veg <- dif_veg<- NULL
+      gcam5_veg.carbon.density <- new_veg.carbon.density <- dif_hist.veg <- dif_veg<- id <- NULL
 
     # 1. Process inputs
 
@@ -208,27 +210,27 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     # L2252.LN5_HistMgdAllocation_crop: historical cropland allocation
     # in the fifth land nest ie for each crop-irr-mgmt combo in each region-glu-year.
     ALL_LAND_ALLOCATION %>%
-      filter(!grepl("biomass_grass", LandLeaf) & !grepl("biomass_tree", LandLeaf)) %>%
+      filter(!grepl("biomassGrass", LandLeaf) & !grepl("biomassTree", LandLeaf)) %>%
       filter(year %in% aglu.LAND_HISTORY_YEARS) ->
       L2252.LN5_HistMgdAllocation_crop
 
     # L2252.LN5_MgdAllocation_crop: cropland allocation
     # in the fifth land nest ie for each crop-irr-mgmt combo in each region-glu-year.
     ALL_LAND_ALLOCATION %>%
-      filter(!grepl("biomass_grass", LandLeaf), !grepl("biomass_tree", LandLeaf)) %>%
+      filter(!grepl("biomassGrass", LandLeaf), !grepl("biomassTree", LandLeaf)) %>%
       filter(year %in% MODEL_BASE_YEARS)  %>%
       remove_zero_production_land_leafs(prod = L2012.AgProduction_ag_irr_mgmt) ->
       L2252.LN5_MgdAllocation_crop
 
     # L2252.LN5_HistMgdAllocation_bio
     ALL_LAND_ALLOCATION %>%
-      filter(grepl("biomass_grass", LandLeaf) | grepl("biomass_tree", LandLeaf)) %>%
+      filter(grepl("biomassGrass", LandLeaf) | grepl("biomassTree", LandLeaf)) %>%
       filter(year %in% aglu.LAND_HISTORY_YEARS) ->
       L2252.LN5_HistMgdAllocation_bio
 
     # L2252.LN5_MgdAllocation_bio
     ALL_LAND_ALLOCATION %>%
-      filter(grepl("biomass_grass", LandLeaf) | grepl("biomass_tree", LandLeaf)) %>%
+      filter(grepl("biomassGrass", LandLeaf) | grepl("biomassTree", LandLeaf)) %>%
       filter(year %in% MODEL_BASE_YEARS) ->
       L2252.LN5_MgdAllocation_bio
 
@@ -276,11 +278,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     L2012.AgYield_bio_ref %>%
       filter(year == max(MODEL_BASE_YEARS)) %>%
       select(region, AgProductionTechnology, yield) %>%
-      mutate(AgProductionTechnology = sub("biomass_tree", "biomasstree", AgProductionTechnology),
-             AgProductionTechnology = sub("biomass_grass", "biomassgrass", AgProductionTechnology)) %>%
       separate(AgProductionTechnology, c("GCAM_commodity", "GLU", "Irr_Rfd", "level")) %>%
-      mutate(GCAM_commodity = sub("biomasstree", "biomass_tree", GCAM_commodity),
-             GCAM_commodity = sub("biomassgrass", "biomass_grass", GCAM_commodity)) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("GCAM_commodity" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
@@ -325,8 +323,8 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     L2252.LN5_MgdAllocation_bio %>%
       distinct(region, LandAllocatorRoot, LandNode1, LandNode2, LandNode3, LandNode4, LandNode5, LandLeaf) %>%
       mutate(tmp = LandLeaf) %>%
-      separate(tmp, c("crop1", "crop2", "GLU", "Irr_Rfd", "level")) %>%
-      select(-crop1, -crop2)  %>%
+      separate(tmp, c("crop1", "GLU", "Irr_Rfd", "level")) %>%
+      select(-crop1)  %>%
       # use left_join to keep NA's for further manipulation
       left_join(L2252.LandShare_R_bio_GLU_irr, by = c("region", "GLU", "Irr_Rfd", "level")) %>%
       mutate(ghost.unnormalized.share = round(landshare, aglu.DIGITS_GHOSTSHARE), year = aglu.BIO_START_YEAR) %>%

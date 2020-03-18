@@ -1,4 +1,6 @@
-#' module_gcamusa_L201.socioeconomics_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L201.socioeconomics_USA
 #'
 #' Interest rate, population, and GDP for GCAM-USA.
 #'
@@ -10,8 +12,7 @@
 #' original data system was \code{L201.socioeconomics_USA.R} (gcam-usa level2).
 #' @details Interest rate, population, and GDP for GCAM-USA.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter lag mutate select
 #' @author RLH October 2017
 module_gcamusa_L201.socioeconomics_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -20,8 +21,7 @@ module_gcamusa_L201.socioeconomics_USA <- function(command, ...) {
              "L100.GDP_mil90usd_state",
              "L102.pcgdp_thous90USD_GCAM3_ctry_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L201.InterestRate_GCAMUSA",
-             "L201.Pop_GCAMUSA",
+    return(c("L201.Pop_GCAMUSA",
              "L201.BaseGDP_GCAMUSA",
              "L201.LaborForceFillout_GCAMUSA",
              "L201.LaborProductivity_GCAMUSA"))
@@ -40,9 +40,6 @@ module_gcamusa_L201.socioeconomics_USA <- function(command, ...) {
 
     # ===================================================
     # NOTE: Socioeconomics for grid regions are dealt with in module_gcam.usa_L223.electricity_USA
-
-    # L201.InterestRate: Interest rates by region
-    L201.InterestRate <- tibble(region = states_subregions$state, interest.rate = socioeconomics.DEFAULT_INTEREST_RATE)
 
     # L201.Pop_GCAMUSA: Population by region from the GCAM 3.0 core scenario
     L201.Pop_GCAMUSA <- L100.Pop_thous_state %>%
@@ -85,14 +82,6 @@ module_gcamusa_L201.socioeconomics_USA <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
-    L201.InterestRate %>%
-      add_title("Interest rates by state") %>%
-      add_units("Unitless") %>%
-      add_comments("Constant assumed for all states") %>%
-      add_legacy_name("L201.InterestRate_GCAMUSA") %>%
-      add_precursors("gcam-usa/states_subregions") ->
-      L201.InterestRate_GCAMUSA
-
     L201.Pop_GCAMUSA %>%
       add_title("Population by state") %>%
       add_units("thousand persons") %>%
@@ -127,7 +116,7 @@ module_gcamusa_L201.socioeconomics_USA <- function(command, ...) {
       L201.LaborProductivity_GCAMUSA
 
 
-    return_data(L201.InterestRate_GCAMUSA, L201.Pop_GCAMUSA, L201.BaseGDP_GCAMUSA, L201.LaborForceFillout_GCAMUSA, L201.LaborProductivity_GCAMUSA)
+    return_data(L201.Pop_GCAMUSA, L201.BaseGDP_GCAMUSA, L201.LaborForceFillout_GCAMUSA, L201.LaborProductivity_GCAMUSA)
   } else {
     stop("Unknown command")
   }

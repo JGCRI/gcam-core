@@ -1,0 +1,11 @@
+# File: offshore_wind_grid_cost.csv
+# Title: Grid Connection Costs for Offshore Wind
+# Units: 2013 USD per kW of capacity and km from shore , 2013$/kW-km. Applicable distance in km. The lower cost is applicable to distances less than or equal to 70 km, and the higer one is applicable to distances greater than 70 km
+# Comments:  Calculated from data in NREL Wind Vision 2015 Report. Representative distances are midpoints are on the basis of NREL's distance from shore bins.
+# Source:  https://www.nrel.gov/docs/fy15osti/63197-3.pdf 
+# Column types: cnn
+# ----------
+technology,cost_per_kW-km,rep_dist_for_bin
+offshore_wind,8.1,23
+offshore_wind,8.1,65
+offshore_wind,13.49,139

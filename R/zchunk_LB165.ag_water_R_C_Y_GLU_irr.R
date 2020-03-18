@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB165.ag_water_R_C_Y_GLU_irr
 #'
 #' Compute irrigation efficiency (by GCAM region) and blue, green, and total consumption coefficients (by region, commodity, and GLU).
@@ -16,8 +18,8 @@
 #' in the inventory data. For rainfed crops, total biophysical = green, and for irrigated crops,
 #' total biophysical = blue + green.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter if_else group_by left_join mutate right_join select summarise summarise_at vars
+#' @importFrom tidyr gather replace_na spread
 #' @author BBL April 2017
 module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

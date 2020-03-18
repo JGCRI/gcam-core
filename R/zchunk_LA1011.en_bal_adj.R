@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA1011.en_bal_adj
 #'
 #' Adjustments to the IEA energy balance for shipping fuel consumption, Russia, and natural
@@ -12,8 +14,8 @@
 #' @details This chunk replaces IEA international shipping fuel consumption estimates with EIA estimates,
 #' remaps USSR data to Russia, and removes coal-to-gas from natural gas TPES.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange distinct filter if_else group_by inner_join left_join mutate select summarise
+#' @importFrom tidyr complete nesting replace_na
 #' @author JDH July 2017
 module_energy_LA1011.en_bal_adj <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -119,7 +121,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
 
     L1011.in_EJ_ctry_intlship_TOT_Yh %>%
       group_by(GCAM_region_ID, year) %>%
-      summarize(value = sum(value)) -> L1011.in_EJ_R_intlship_Yh
+      summarise(value = sum(value)) -> L1011.in_EJ_R_intlship_Yh
 
     # Filter for historical years
     L101.en_bal_EJ_R_Si_Fi_Yh_full %>%

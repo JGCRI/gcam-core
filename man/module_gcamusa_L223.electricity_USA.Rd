@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L223.electricity_USA.R
 \name{module_gcamusa_L223.electricity_USA}
 \alias{module_gcamusa_L223.electricity_USA}
-\title{module_gcamusa_L223.electricity_USA}
+\title{module_gcam.usa_L223.electricity_USA}
 \usage{
 module_gcamusa_L223.electricity_USA(command, ...)
 }
@@ -27,8 +27,8 @@ the generated outputs: \code{L223.DeleteSubsector_USAelec},
 \code{L223.StubTech_elec_USA}, \code{L223.StubTechEff_elec_USA}, \code{L223.StubTechCapFactor_elec_USA},
 \code{L223.StubTechFixOut_elec_USA}, \code{L223.StubTechFixOut_hydro_USA}, \code{L223.StubTechProd_elec_USA},
 \code{L223.StubTechMarket_elec_USA}, \code{L223.StubTechMarket_backup_USA}, \code{L223.StubTechElecMarket_backup_USA},
-\code{L223.StubTechCapFactor_elec_wind_USA}, \code{L223.StubTechCapFactor_elec_solar_USA}. The corresponding file in the
-original data system was \code{L223.electricity_USA.R} (gcam-usa level2).
+\code{L223.StubTechCapFactor_elec_wind_USA}, \code{L223.StubTechCapFactor_elec_solar_USA}, \code{L223.StubTechCost_offshore_wind_USA}.
+The corresponding file in the original data system was \code{L223.electricity_USA.R} (gcam-usa level2).
 }
 \description{
 Generates GCAM-USA model inputs for electrcity sector by grid regions and states.

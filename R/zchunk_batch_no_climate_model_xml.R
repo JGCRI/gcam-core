@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_batch_no_climate_model_xml
 #'
 #' Construct XML data structure for \code{no_climate_model.xml}.

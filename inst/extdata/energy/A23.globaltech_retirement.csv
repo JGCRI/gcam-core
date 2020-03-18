@@ -43,3 +43,5 @@ electricity,solar,PV_storage,initial-future-year,30,,,,,
 electricity,solar,CSP,initial-future-year,30,,,,,
 electricity,solar,CSP_storage,initial-future-year,30,,,,,
 electricity,geothermal,geothermal,initial-future-year,30,,,,-0.1,6
+electricity,wind,wind_offshore,final-calibration-year,25,,,,,
+electricity,wind,wind_offshore,initial-future-year,25,,,,,

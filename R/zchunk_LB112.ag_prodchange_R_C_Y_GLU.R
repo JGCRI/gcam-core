@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB112.ag_prodchange_R_C_Y_GLU
 #'
 #' Calculate yield change ratios and yield change rates by GCAM commodity / region / future years.
@@ -12,8 +14,7 @@
 #' and calculates the annual productivity change rates by GCAM commodity / region / future years to 2100.
 #' Yield improvement rates are based on FAO estimates up to 2050 and the default agriculture productivity change assumptions beyond 2050.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join bind_rows filter full_join if_else group_by left_join mutate pull select summarise
 #' @importFrom stats median
 #' @author RC April 2017
 module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {

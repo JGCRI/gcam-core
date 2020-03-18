@@ -1,4 +1,6 @@
-#' module_gcamusa_LA132.industry
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LA132.Industry
 #'
 #' Provides industrial energy consumption and industrial feedstock consumption by region/fuel/historical year.
 #'
@@ -10,8 +12,7 @@
 #' original data system was \code{LA132.Industry.R} (gcam-usa level1).
 #' @details Provides for each US state industrial energy consumption and industrial feedstock consumption by region/fuel/historical year.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter if_else group_by mutate select summarise
 #' @author ST September 2017
 module_gcamusa_LA132.industry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

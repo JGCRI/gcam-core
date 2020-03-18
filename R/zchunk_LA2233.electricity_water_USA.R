@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_LA2233.electricity_water_USA
 #'
 #' Weighted water coefficient for reference scenario and load segment classification
@@ -10,7 +12,10 @@
 #' The corresponding file in the
 #' original data system was \code{LA2233.electricity_water_USA} (gcam-usa level2)
 #' @details Weighted water coefficient for reference scenario and load segment classification
+#' @importFrom dplyr anti_join inner_join
+#' @importFrom tidyr gather
 #' @author Zarrar Khan September 2018, NTG Aug 2019
+
 module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",

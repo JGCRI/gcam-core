@@ -31,3 +31,4 @@ electricity,solar,CSP,OM-fixed,16.62,16.62,16.62,17.04048567,17.04048567,0.6,0.0
 electricity,solar,CSP_storage,OM-fixed,16.62,16.62,16.62,20.13875579,20.13875579,0.7,0.03,CSP
 electricity,geothermal,geothermal,OM-fixed,23.54,23.54,23.54,30.98270122,30.98270122,0.75,0.01,
 elect_td_bld,rooftop_pv,rooftop_pv,OM-fixed,46.77,46.77,46.77,18.58962073,18.58962073,0.7,0.03,
+electricity,wind,wind_offshore,OM-fixed,38,38,38,38,38,0.7,0.03,

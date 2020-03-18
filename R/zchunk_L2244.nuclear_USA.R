@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2244.nuclear_USA
 #'
 #' Generates an add-on file to update nuclear assumptions in GCAM-USA.
@@ -13,8 +15,8 @@
 #' The current and future power generation data from existing nuclear plants in the USA is based on US Nuclear Regulatory Commission (NRC) of
 #' nuclear reactor characteristic and operational history from January 2011, with additional updates to operating licenses and plant closures.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join filter lag mutate select
+#' @importFrom tidyr gather
 #' @author RC Sep 2018; edited MB Sep 2018
 module_gcamusa_L2244.nuclear_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

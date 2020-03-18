@@ -14,3 +14,4 @@ distributed_solar,renewresource,distributed_solar,smooth-renewable-subresource
 geothermal,renewresource,hydrothermal,sub-renewable-resource
 onshore wind resource,renewresource,onshore wind resource,smooth-renewable-subresource
 traditional biomass,renewresource,traditional biomass,sub-renewable-resource
+offshore wind resource,renewresource,offshore wind resource,smooth-renewable-subresource

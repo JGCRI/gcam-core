@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA100.IMAGE_downscale_ctry_yr
 #'
 #' Extrapolate IMAGE data to all AGLU historical years and countries.
@@ -10,8 +12,8 @@
 #' original data system was \code{LA100.IMAGE_downscale_ctry_yr.R} (aglu level1).
 #' @details Each IMAGE table is extrapolated to all AGLU historical years and then downscaled from IMAGE region to all AGLU countries.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select union
+#' @importFrom tidyr complete gather nesting spread
 #' @author BBL June 2017
 module_aglu_LA100.IMAGE_downscale_ctry_yr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

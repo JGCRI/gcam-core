@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L101.nonghg_en_USA_S_T_Y
 #'
 #' Compute historical emissions factors for energy by GCAM technology, from EPA emissions data and IEA energy balances.
@@ -15,8 +17,8 @@
 #' as far as 1971, so we extrapolate in order to retain the capacity to run the model from
 #' any historical year (i.e., any year 1971-2010), representing subsequent historical years
 #'as future model time periods in order to check model performance against the observed data.
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select summarise
+#' @importFrom tidyr replace_na spread
 #' @author BBL April 2017
 module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -80,7 +82,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
               spread(L1321.in_EJ_R_cement_F_Y, year, value),
               spread(L124.in_EJ_R_heat_F_Yh, year, value),
               spread(L111.Prod_EJ_R_F_Yh, year, value),
-              spread(L144.in_EJ_R_bld_serv_F_Yh, year, value) %>% rename(sector = service)) %>%
+              spread(L144.in_EJ_R_bld_serv_F_Yh, year, value) %>% select(-sector) %>% rename(sector = service)) %>%
       mutate(technology = fuel) ->
       temp
 

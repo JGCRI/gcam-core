@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2242.elec_hydro_USA
 #'
 #' Update hydro-electricity fixed output to match historical data for 2015 and AEO-2018 for the future.
@@ -10,8 +12,8 @@
 #' The corresponding file in the original data system was \code{L2242.elec_hydro_USA.R} (gcam-usa level2).
 #' @details Update state-level hydro-electricity fixed outputs
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr distinct filter lag mutate select semi_join
+#' @importFrom tidyr complete nesting
 #' @author MTB September 2018
 module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

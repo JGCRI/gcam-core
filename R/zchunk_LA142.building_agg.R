@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA142.building_agg
 #'
 #' Calculate building sector energy consumption, producing the following output table: Building energy consumption by GCAM region / fuel / historical year
@@ -11,8 +13,7 @@
 #' @details  Building sector energy consumption was obtained from end use energy consumption data
 #' @details  Fuel inputs to heat were added to building energy use in regions where heat is not modeled as a final fuel
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter group_by left_join mutate pull select summarise
 #' @author AS May 2017
 module_energy_LA142.building_agg <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

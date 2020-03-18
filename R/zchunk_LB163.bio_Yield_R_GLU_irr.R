@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB163.bio_Yield_R_GLU_irr
 #'
 #' Compute base year rainfed and irrigated bioenergy crop yields for each GCAM region and GLU.
@@ -13,8 +15,7 @@
 #' region-GLU-irrigation level and are used to calculate a YieldIndex for each region-GLU-irrigation. This YieldIndex is
 #' then multiplied by a base yield (calculated from USA yields) to get bioenergy yields for each region-GLU-irrigation.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter group_by left_join mutate pull select summarise
 #' @author ACS June 2017
 module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

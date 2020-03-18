@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_batch_ccs_supply_low_xml
 #'
 #' Construct XML data structure for \code{ccs_supply_low.xml}.
@@ -33,3 +35,4 @@ module_energy_batch_ccs_supply_low_xml <- function(command, ...) {
     stop("Unknown command")
   }
 }
+

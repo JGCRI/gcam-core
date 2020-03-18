@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 # module-helpers.R
 # Module specific helper functions
 
@@ -13,8 +15,7 @@
 #' by looking up using a mapping to the water.sector and water_type. The minicam.energy.input
 #' name to use will have to be some water mapping sector for water_types that are "mapped".
 #' @return A vector of names of form supplysector_watertype or supplysector_GLU_watertype.
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr if_else mutate select
 #' @importFrom assertthat assert_that
 #' @author BBL April 2017
 set_water_input_name <- function(water_sector, water_type, water_mapping, GLU = NA_character_) {
@@ -63,6 +64,7 @@ set_water_input_name <- function(water_sector, water_type, water_mapping, GLU = 
 #' as Hector considers the geographic location of sulfur emissions. Any code writing out CSVs for conversion to XML
 #' handling SO2 related data should use this function. Agricultural waste burning emissions already have a suffix
 #' assigned (_AWB), so in this case, the SO2 region number is assigned between the "SO2" and "AWB" strings.
+#' @importFrom dplyr bind_rows filter mutate rename select
 #' @importFrom tibble is_tibble
 #' @author BBL May 2017
 rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
@@ -82,7 +84,8 @@ rename_SO2 <- function(x, so2_map, is_awb = FALSE) {
     # pull so2_map information into SO2 data
     select(region, SO2_name) %>%
     left_join_error_no_match(data_so2, ., by = "region") %>%
-    rename(Non.CO2 = SO2_name) %>%
+    mutate(Non.CO2 = SO2_name) %>%
+    select(-SO2_name) %>%
     bind_rows(data_notso2)
 }
 
@@ -207,6 +210,7 @@ set_years <- function(data) {
 #' @note Contains an argument which allows user to specify a different region list.
 #' @note For example, this is occasionally used to write all USA data to GCAM-USA grid regions.
 #' @return Tibble with data written out to all USA states
+#' @importFrom dplyr mutate select
 write_to_all_states <- function(data, names, region_list = gcamusa.STATES) {
 
   assert_that(is_tibble(data))
@@ -236,17 +240,21 @@ write_to_all_states <- function(data, names, region_list = gcamusa.STATES) {
 #' Calculate subsector shareweights in calibration periods, where subsectors may have multiple technologies
 #'
 #' @param data Tibble to operate on
+#' @param value_col Column with values to be used in setting subsector share-weights
 #' @return Tibble returned with a new column of calculated subsector shareweights.
-set_subsector_shrwt <- function(data) {
+#' @importFrom dplyr group_by mutate select summarise ungroup
+set_subsector_shrwt <- function(data, value_col = "calOutputValue") {
+
+  value_col <- rlang::sym(value_col)
 
   assert_that(is_tibble(data))
 
-  region <- supplysector <- subsector <- year <- calOutputValue_agg <- calOutputValue <-
+  region <- supplysector <- subsector <- year <- calOutputValue_agg <-
     subs.share.weight <- NULL  # silence package check notes
 
   data_aggregated <- data %>%
     group_by(region, supplysector, subsector, year) %>%
-    summarise(calOutputValue_agg = sum(calOutputValue)) %>%
+    summarise(calOutputValue_agg = sum(!!value_col)) %>%
     ungroup
 
   data %>%
@@ -349,6 +357,7 @@ replace_GLU <- function(d, map, GLU_pattern = "^GLU[0-9]{3}$") {
 #' @param carbon_info_table = table with veg and soil carbon densities, and mature.age
 #' @param matchvars =  a character vector for by = in left_join(data, carbon_info_table, by = ...)
 #' @return the original table with carbon density info added
+#' @importFrom dplyr left_join mutate rename
 add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "GLU", "Cdensity_LT" = "Land_Type")) {
 
   GCAM_region_names <- veg_c <- soil_c <- hist.veg.carbon.density <- hist.soil.carbon.density <-
@@ -383,6 +392,7 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "G
 #' @param LTfor Land_Type name to use for Forest land types
 #' @param LTpast Land_Type name to use for Pasture land types
 #' @return The original table with carbon density adjusted for the managed land types
+#' @importFrom dplyr mutate
 reduce_mgd_carbon <- function( data, LTfor = "Forest", LTpast = "Pasture") {
 
   Land_Type <- hist.veg.carbon.density <- veg.carbon.density <-
@@ -411,6 +421,7 @@ reduce_mgd_carbon <- function( data, LTfor = "Forest", LTpast = "Pasture") {
 #' @param ssp_filter A string indicating which SSP to filter to (SSP4 by default)
 #' @param year_filter An integer indicating which year to use (2010 by default)
 #' @return A character vector of region names belonging to the specified income group.
+#' @importFrom dplyr filter mutate select
 get_ssp_regions <- function(pcGDP, reg_names, income_group,
                             ssp_filter = "SSP4", year_filter = 2010) {
   assert_that(is_tibble(pcGDP))
@@ -466,8 +477,8 @@ get_ssp_regions <- function(pcGDP, reg_names, income_group,
 #' column and will include all values in \code{out_years} and the filled in values will
 #' be in the \code{value} column.  All extrapolation parameters will be cleaned out.
 #' @importFrom tibble has_name
-#' @importFrom dplyr filter mutate select setdiff rename ungroup
-#' @importFrom tidyr gather complete
+#' @importFrom dplyr bind_rows filter mutate rename select ungroup
+#' @importFrom tidyr complete
 #' @importFrom assertthat assert_that
 #' @author Pralit Patel
 fill_exp_decay_extrapolate <- function(d, out_years) {
@@ -528,7 +539,7 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
     d_no_extrap
 
   d %>%
-    setdiff(d_no_extrap) ->
+    dplyr::setdiff(d_no_extrap) ->
     d_extrap
 
   # First partition the technologies that are not "shadowing" another technology
@@ -574,7 +585,7 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
                              (1.0 - improvement.rate) ^ (year - year_base),
                            value)) %>%
     # drop the extra columns created for the shadow / exp decay calculation
-    select_(.dots = paste0('`', names(d_nonshadowed), '`')) %>%
+    dplyr::select_(.dots = paste0('`', names(d_nonshadowed), '`')) %>%
     ungroup() ->
     d_shadowed
 
@@ -594,6 +605,7 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
 #' @param country_name Pre-dissolution country name, character
 #' @param dissolution_year Year of country dissolution, integer
 #' @param years Years to operate on, integer vector
+#' @importFrom dplyr filter group_by select summarise_all ungroup
 #' @importFrom stats aggregate
 #' @return Downscaled data.
 downscale_FAO_country <- function(data, country_name, dissolution_year, years = aglu.AGLU_HISTORICAL_YEARS) {
@@ -627,4 +639,54 @@ downscale_FAO_country <- function(data, country_name, dissolution_year, years = 
                      paste(data_ratio[["item"]], data_ratio[["element"]])), newyrs]
   data_new[newyrs][is.na(data_new[newyrs])] <- 0
   data_new
+}
+
+
+#' evaluate_smooth_res_curve
+#'
+#' Helper function to calculate the smooth renewable resource supply available at a particular price point from
+#' the relevant smooth renewable resource curve parameters (curve exponent, mid-price, maximum sub-resource).
+#' supply = ((p - base.price) ^ curve.exponent) / (mid.price ^ curve.exponent + ((p - base.price) ^ curve.exponent)) * maxSubResource
+#' Note that all of these can be vectors
+#' The functional form of GCAM's smooth renewable resource curve is documented at:
+#' http://jgcri.github.io/gcam-doc/energy.html#renewable-resources
+#' @param data Data with curve parameters, tibble
+#' @param curve.exponent smooth renewable resource curve shape parameter, numeric
+#' @param mid.price the price at which 50 percent of the maximum available resource is produced, numeric
+#' @param base.price the minimum cost of producing (generating electricity from) the resource
+#' @param maxSubResource the maximum quantity of energy that could be produced at any price, numeric
+#' @param p price, numeric
+#' @return quantity of the resource supplied (i.e. quantity of electricity produced from said resource)
+evaluate_smooth_res_curve <- function(curve.exponent, mid.price, base.price, maxSubResource, p) {
+
+  supply <- ((p - base.price) ^ curve.exponent) / (mid.price ^ curve.exponent + ((p - base.price) ^ curve.exponent)) * maxSubResource
+  # zero out the supply where the price was less than the base.price
+  supply[p < base.price] <- 0
+  supply
+
+}
+
+
+#' smooth_res_curve_approx_error
+#'
+#' Helper function to check how well a set of smooth renewable curve parameters matches the supply-points
+#' from which the curve parameters are generated.
+#' In gcamdata, this function is used in combination with stats::optimize to minimize the error of the
+#' smooth renewable curve fit relative to the supply-points. Note that the first argument
+#' (curve.exponent) is the one that is changed by optimize when trying to minimize the error.
+#' The functional form of GCAM's smooth renewable resource curve is documented at:
+#' http://jgcri.github.io/gcam-doc/energy.html#renewable-resources
+#'
+#' @param curve.exponent smooth renewable resource curve shape parameter, numeric
+#' @param mid.price the price at which 50 percent of the maximum available resource is produced, numeric
+#' @param base.price the minimum cost of producing (generating electricity from) the resource
+#' @param maxSubResource the maximum quantity of energy that could be produced at any price, numeric
+#' @param supply_points a tibble of price and supply points along a resource curve in a region, numeric
+#' @return cross product of errors
+smooth_res_curve_approx_error <- function(curve.exponent, mid.price, base.price, maxSubResource, supply_points) {
+
+  f_p <- evaluate_smooth_res_curve(curve.exponent, mid.price, base.price, maxSubResource, supply_points$price)
+  error <- f_p - supply_points$supply
+  crossprod(error, error)
+
 }

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L142.pfc_R_S_T_Y
 #'
 #' Map HFC emission shares by region, sector, technology, gas, and year for years 1971-2008.
@@ -12,8 +14,8 @@
 #' Then, regional and sector information was added.  And finally, HFC emission shares
 #' were calculated by suming emissions over region, sector, technology, and gas by year.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter group_by left_join mutate right_join select summarise
+#' @importFrom tidyr replace_na
 #' @author CDL June 2017
 module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -125,7 +127,7 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
 
     L142.R_cooling_T_Yh %>%
       group_by(GCAM_region_ID, year) %>%
-      summarize(value = sum(value)) %>%
+      summarise(value = sum(value)) %>%
       ungroup() ->
       L142.R_cooling_Yh
 
@@ -145,7 +147,7 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       replace_na(list(share = 1)) %>%
       mutate(emissions = EDGAR_emissions * share) %>%
       group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
-      summarize(emissions = sum(emissions)) %>%
+      summarise(emissions = sum(emissions)) %>%
       ungroup() %>%
       replace_na(list(emissions = 0)) %>%
       rename(value = emissions) ->

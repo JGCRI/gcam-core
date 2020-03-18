@@ -1,4 +1,6 @@
-#' module_gcamusa_LA100.Socioeconomics
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LA100.Socioeconomics
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -11,8 +13,8 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
-#' @import dplyr
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows bind_rows filter first group_by left_join mutate rename right_join select ungroup
+#' @importFrom tidyr complete nesting
 #' @author BBL
 module_gcamusa_LA100.Socioeconomics <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -120,6 +122,7 @@ module_gcamusa_LA100.Socioeconomics <- function(command, ...) {
       mutate(population = as.numeric(population)) %>%
       # interpolate any missing data from end of history into future
       complete(nesting(state), year = c(socioeconomics.FINAL_HIST_YEAR, MODEL_FUTURE_YEARS)) %>%
+      filter(year %in% c(socioeconomics.FINAL_HIST_YEAR, MODEL_FUTURE_YEARS)) %>%
       group_by(state) %>%
       mutate(population = approx_fun(year, population)) %>%
       arrange(state, year) %>%

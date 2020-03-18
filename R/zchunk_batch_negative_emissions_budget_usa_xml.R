@@ -1,4 +1,6 @@
-#' module_gcamusa_batch_negative_emissions_budget_usa_xml
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_batch_negative_emissions_budget_usa_xml
 #'
 #' Construct XML data structure for \code{paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), ".xml")}.
 #'
@@ -6,13 +8,13 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)), ".xml")}.
+#' the generated outputs: \code{paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), ".xml")}.
 module_gcamusa_batch_negative_emissions_budget_usa_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( paste0("L270.NegEmissBudget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5))),
+    return(c( paste0("L270.NegEmissBudget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5))),
            "L270.NegEmissBudgetMaxPrice_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    xml_files = paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)), ".xml")
+    xml_files = paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), ".xml")
     names(xml_files) <- rep("XML", length(xml_files))
     return(xml_files)
   } else if(command == driver.MAKE) {
@@ -26,8 +28,8 @@ module_gcamusa_batch_negative_emissions_budget_usa_xml <- function(command, ...)
 
     # ===================================================
 
-    scenarios <- c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5))
-    xml_files = paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5), paste0("spa", 1:5)), ".xml")
+    scenarios <- c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5))
+    xml_files = paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), ".xml")
 
     # Produce outputs
     ret_data <- c()

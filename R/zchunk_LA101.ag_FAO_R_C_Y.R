@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA101.ag_FAO_R_C_Y
 #'
 #' Aggregate FAO food consumption, ag production, and harvested area
@@ -17,8 +19,8 @@
 #' to basin PRIOR to aggregation by GCAM region. This reduces the bias from using a single
 #' year (around 2000) to disaggregate to basin, in multi-country regions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select left_join
-#' @importFrom tidyr gather spread complete
+#' @importFrom dplyr anti_join arrange bind_rows distinct filter full_join if_else group_by inner_join left_join mutate right_join select summarise
+#' @importFrom tidyr complete drop_na replace_na
 #' @author KVC March 2017 (revised August 2018 by GPK)
 module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -71,7 +73,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       filter(!is.na(GCAM_commodity)) %>%                                                                          # Remove commodities not included in GCAM
       mutate(value = value * CONV_TON_MEGATON) %>%                                                               # Convert from tons to Mt
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%                                                          # Group by region, commodity, year
-      summarize(value = sum(value)) %>%                                                                           # Aggregate then map to appropriate data frame
+      summarise(value = sum(value)) %>%                                                                           # Aggregate then map to appropriate data frame
       ungroup() %>%                                                                                               # Ungroup before complete
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
                GCAM_commodity, year, fill = list(value = 0)) ->                                                   # Fill in missing region/commodity combinations with 0
@@ -85,7 +87,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       filter(!is.na(GCAM_commodity)) %>%                                                                          # Remove commodities not included in GCAM
       mutate(value = value * Mcal_t * CONV_MCAL_PCAL) %>%                                                        # Convert from tons to Pcal
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%                                                          # Group by region, commodity, year
-      summarize(value = sum(value)) %>%                                                                           # Aggregate then map to appropriate data frame
+      summarise(value = sum(value)) %>%                                                                           # Aggregate then map to appropriate data frame
       ungroup() %>%                                                                                               # Ungroup before complete
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
                GCAM_commodity, year, fill = list(value = 0)) ->                                                   # Fill in missing region/commodity combinations with 0
@@ -103,7 +105,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       select(-countries, -country.codes, -item.codes, -element, -element.codes) %>%                             # Remove unnecessary columns
       mutate(iso = if_else(iso %in% c("srb", "mne"), "scg", iso)) %>%                                           # Re-map Serbia (srb) and Montenegro (mne) to the iso code for the single country (scg)
       group_by(item, iso, year) %>%                                                                             # scg is the iso code in the Monfreda data because its base year is ~2000
-      summarize(value = sum(value)) ->                                                                          # Aggregate by ISO, item, and region (some iso codes apply to multiple lines in data)
+      summarise(value = sum(value)) ->                                                                          # Aggregate by ISO, item, and region (some iso codes apply to multiple lines in data)
       FAO_ag_HA_ha
 
     L100.FAO_ag_Prod_t %>%
@@ -112,7 +114,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
                              value / 4, value),                                                                 # Divide USA Alfalfa production by 4 "for consistency with USDA"
              iso = if_else(iso %in% c("srb", "mne"), "scg", iso)) %>%                                           # Re-map Serbia (srb) and Montenegro (mne) to the iso code for the single country (scg)
       group_by(item, iso, year) %>%                                                                             # scg is the iso code in the Monfreda data because its base year is ~2000
-      summarize(value = sum(value)) ->                                                                          # Aggregate by ISO, item, and region (some iso codes apply to multiple lines in data)
+      summarise(value = sum(value)) ->                                                                          # Aggregate by ISO, item, and region (some iso codes apply to multiple lines in data)
       FAO_ag_Prod_t
 
     # Set production to zero when harvested area is zero and vice versa
@@ -230,7 +232,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       rename(value = production) %>%                                                                            # Rename column since tests are expecting "value"
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                                                  # Map in ISO codes
       group_by(GCAM_region_ID, GCAM_commodity, GLU, year) %>%                                                   # Group by region, commodity, GLU, year
-      summarize(value = sum(value)) %>%                                                                         # Aggregate then map to appropriate data frame
+      summarise(value = sum(value)) %>%                                                                         # Aggregate then map to appropriate data frame
       mutate(value = value * CONV_TON_MEGATON) %>%                                                              # Convert from tons to Mt
       ungroup() ->                                                                                              # Ungroup before complete
       L101.ag_Prod_Mt_R_C_Y_GLU
@@ -250,7 +252,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       rename(value = harvested.area) %>%                                                                      # Rename column since tests are expecting "value"
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                                               # Map in ISO codes
       group_by(GCAM_region_ID, GCAM_commodity, GLU, year) %>%                                                      # Group by region, commodity, GLU, year
-      summarize(value = sum(value)) %>%                                                                       # Aggregate then map to appropriate data frame
+      summarise(value = sum(value)) %>%                                                                       # Aggregate then map to appropriate data frame
       mutate(value = value * CONV_HA_BM2) %>%                                                                # Convert from hectares to billion m2
       ungroup() ->                                                                                           # Ungroup before complete
       L101.ag_HA_bm2_R_C_Y_GLU

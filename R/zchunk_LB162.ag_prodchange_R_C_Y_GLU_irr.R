@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr
 #'
 #' This module calculates the first level production/yield change assumptions that are exogenous to GCAM. These rates are calculated for each commodity
@@ -15,8 +17,8 @@
 #' (Yield Rate(year i) = Yield Ratio(year i) / Yield ratio(year i-1) ). Externally defined default yield rates are used to fill in missing data at the GCAM
 #' region-commodity-glu-irrigation level for all model years.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows distinct filter first group_by left_join mutate select semi_join summarise
+#' @importFrom tidyr complete nesting
 #' @author ACS June 2017
 module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -110,7 +112,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       rename(yield_kgHa = Yield_kgHa_rainfed) %>%
       bind_rows(L162.ag_irrYield_kgHa_Rcrs_Ccrs_Y) %>%
       # add the missing aglu.SPEC_AG_PROD_YEARS and interpolate the yields
-      tidyr::complete(year = c(year, aglu.SPEC_AG_PROD_YEARS) ,
+      complete(year = c(year, aglu.SPEC_AG_PROD_YEARS) ,
                       CROSIT_ctry, CROSIT_crop, Irr_Rfd) %>%
       select(CROSIT_ctry, CROSIT_crop, Irr_Rfd, year, yield_kgHa) %>%
       arrange(year) %>%
@@ -287,7 +289,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     # Step 1: make a table of default improvement rates by interpolating available rates to relevant years.
     A_defaultYieldRate %>%
       gather_years %>%
-      tidyr::complete(year = unique(c(year, max(HISTORICAL_YEARS), FUTURE_YEARS)),
+      complete(year = unique(c(year, max(HISTORICAL_YEARS), FUTURE_YEARS)),
                       GCAM_commodity) %>%
       arrange(year) %>%
       group_by(GCAM_commodity) %>%
@@ -352,7 +354,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
     # Step 4: Expand to future years by applying the default rate in each year
     L162.agbio_YieldRate_R_C_Y_GLU_irr %>%
-      tidyr::complete(year = c(max(HISTORICAL_YEARS),FUTURE_YEARS), nesting(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd)) %>%
+      complete(year = c(max(HISTORICAL_YEARS),FUTURE_YEARS), nesting(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd)) %>%
       left_join_error_no_match(L162.defaultYieldRate, by = c("year", "GCAM_commodity")) %>%
       # replace NA's - which correspond to years we just filled in - with the default yield for that year we just joined
       group_by(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd, year) %>%
