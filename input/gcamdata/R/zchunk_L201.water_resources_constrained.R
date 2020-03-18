@@ -329,9 +329,14 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       groundwater_hist
 
       bind_rows(
-        L201.region_basin_home %>%
+        L201.region_basin %>%
+          group_by(basin_id) %>%
+          mutate(n = n()) %>%
+          ungroup() %>%
           left_join(L101.groundwater_grades_constrained_bm3,
-                    by = c("basin_id" = "basin.id")),
+                    by = c("basin_id" = "basin.id")) %>%
+          mutate(available = available / n) %>%
+          select(-n),
         # ^^ non-restrictive join required (NA values generated for unused basins)
         L201.region_basin_home %>%
           left_join(groundwater_hist,
@@ -357,6 +362,18 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
           filter(available > 0),
         L201.DepRsrcCurves_ground_last ) %>%
         arrange(region, resource, extractioncost) ->
+        L201.DepRsrcCurves_ground
+
+      L201.DepRsrcCurves_ground %>%
+        mutate(subresource = grade) %>%
+        group_by(region, resource) %>%
+        mutate(grade = lead(grade),
+               available = 0,
+               extractioncost = lead(extractioncost)) %>%
+        filter(!is.na(grade)) %>%
+        ungroup() %>%
+        bind_rows(L201.DepRsrcCurves_ground %>% mutate(subresource = grade), .) %>%
+        filter(subresource != "grade24") ->
         L201.DepRsrcCurves_ground
 
       # Create an empty technology for all water resources and subresources.
