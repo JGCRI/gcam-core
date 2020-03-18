@@ -1,0 +1,19 @@
+# File: IIASA_biofuel_tech_mapping.csv
+# Title: Mapping of IIASA biofuel production technologies
+# Units: None
+# Source: IIASA (Hugo Valin) provided to Global Economics Subgroup 9/11/2012
+# Column types: cccc
+# ----------
+Biofuel,Crop,technology,GCAM_commodity
+ethanol,Cassava,,
+ethanol,Corn,corn ethanol,Corn
+ethanol,Sugar cane,sugar cane ethanol,SugarCrop
+ethanol,Sugar beet,,
+ethanol,Wheat,,
+biodiesel,Animal fats,,
+biodiesel,Other vegetable oil,,
+biodiesel,Palm oil,biodiesel,PalmFruit
+biodiesel,Rapeseed,biodiesel,OilCrop
+biodiesel,Recycled vegetable oil,,
+biodiesel,Soybean,biodiesel,OilCrop
+biodiesel,Sunflower,biodiesel,OilCrop

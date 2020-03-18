@@ -1,4 +1,6 @@
-#' module_gcamusa_L226.en_distribution_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L226.en_distribution_USA
 #'
 #' Create a variety of energy and electricity outputs for USA at the state and/or grid_region level.
 #'
@@ -26,8 +28,8 @@
 #' }
 #' The corresponding file in the original data system was \code{L226.en_distribution_USA.R} (gcam-usa level2).
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select summarize
+#' @importFrom tidyr gather replace_na separate
 #' @author ACS Oct 2017
 module_gcamusa_L226.en_distribution_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

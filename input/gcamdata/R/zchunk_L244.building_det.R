@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L244.building_det
 #'
 #' Creates level2 data for the building sector.
@@ -21,8 +23,8 @@
 #' The corresponding file in the original data system was \code{L244.building_det.R} (energy level2).
 #' @details Creates level2 data for the building sector.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select semi_join summarise
+#' @importFrom tidyr complete gather nesting unite
 #' @author RLH September 2017
 
 module_energy_L244.building_det <- function(command, ...) {
@@ -339,7 +341,7 @@ module_energy_L244.building_det <- function(command, ...) {
     # First, separate the thermal from the generic services. Generic services will be assumed to produce
     # internal gain energy, so anything in the internal gains assumptions table will be assumed generic
     generic_services <- unique(A44.internal_gains$supplysector)
-    thermal_services <- setdiff(unique(A44.sector$supplysector), generic_services)
+    thermal_services <- dplyr::setdiff(unique(A44.sector$supplysector), generic_services)
 
     # Base-service: filter only the model base years and change names as indicated in calibrated_techs_bld_det
     L244.base_service <- L144.base_service_EJ_serv %>%

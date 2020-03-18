@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2231.nonewcoal_USA
 #'
 #' Generates optional moratorium on new pulverized coal plants in USA states.
@@ -12,8 +14,7 @@
 #' @details This chunk sets zero share-weights of pulverized coal technologies, which assumes
 #' no new pulverized coal plants without CCS will be built in USA states.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join distinct filter mutate select
 #' @author RC Aug 2018
 module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

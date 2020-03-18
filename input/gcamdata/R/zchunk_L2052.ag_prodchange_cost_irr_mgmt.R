@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2052.ag_prodchange_cost_irr_mgmt
 #'
 #' Specify production costs and future agricultural productivity changes for all technologies.
@@ -11,8 +13,8 @@
 #' @details This chunk maps the production costs of crops, biomass and forest to all four technologies (irrigated / rainfed; high / low),
 #' and calculates future productivity change of crops and biomass for all technologies along reference, high, low and SSP4 scenarios.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter mutate one_of pull select
+#' @importFrom tidyr replace_na separate
 #' @author RC July 2017
 module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -118,7 +120,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       unique() %>%
       bind_rows(unique(select(L201.AgYield_bio_tree, one_of(names_AgTech)))) %>%
       mutate(nonLandVariableCost = aglu.BIO_GRASS_COST_75USD_GJ,
-             nonLandVariableCost = replace(nonLandVariableCost, grepl("tree", AgProductionTechnology),
+             nonLandVariableCost = replace(nonLandVariableCost, grepl("Tree", AgProductionTechnology),
                                            aglu.BIO_TREE_COST_75USD_GJ)) %>%
       # Copy coefficients to all four technologies
       repeat_add_columns(tibble(IRR_RFD = c("IRR", "RFD"))) %>%
@@ -186,7 +188,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       # Copy to both irrigated and rainfed technologies
       repeat_add_columns(tibble(IRR_RFD = c("IRR", "RFD"))) %>%
       # Separate the AgProductionTechnology variable to get GLU names for matching in the yield change rates
-      separate(AgProductionTechnology, c("biomass", "type", "GLU_name"), sep = "_") %>%
+      separate(AgProductionTechnology, c("biomass", "GLU_name"), sep = "_") %>%
       # Map in yield change rates, the same values for bioenergy crops are applied equally to grass and tree crops.
       left_join(L2051.AgProdChange_bio_irr_ref[c("region", "GLU_name", "Irr_Rfd", "year", "AgProdChange")],
                 by = c("region", "GLU_name", "IRR_RFD" = "Irr_Rfd", "year")) %>%

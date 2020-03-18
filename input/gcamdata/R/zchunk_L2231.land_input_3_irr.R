@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2231.land_input_3_irr
 #'
 #' Produce L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation,
@@ -48,8 +50,7 @@
 #' \item{"L2231.LN1_Logit_prot: Logit info for protected lands in the first land nest by region"}
 #' }
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter if_else left_join mutate select
 #' @author ACS September 2017
 module_aglu_L2231.land_input_3_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -101,7 +102,8 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       soil_c <- veg_c <- LC_bm2 <- LV_milUSD75 <- LV_USD75_bm2 <- LV_USD75_m2 <- HarvCropLand_bm2 <-
       unManagedLandValue <- LandAllocatorRoot <- hist.veg.carbon.density <- hist.soil.carbon.density <-
       veg.carbon.density <- soil.carbon.density <- allocation <- Land_Type.y <- mature.age.year.fillout <-
-      min.veg.carbon.density <- min.soil.carbon.density <- no.emiss.carbon.calc <- . <- NULL
+      min.veg.carbon.density <- min.soil.carbon.density <- no.emiss.carbon.calc <- . <- min_allocation <-
+      base_allocation <- NULL
 
 
     # Process inputs
@@ -251,42 +253,82 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # remove OtherArableLand types from UnmanageLandLeaf and adjust allocation
     # grepl is used in filtering out OtherArableLand from UnmanagedLandLeaf
     # because entries in UnmanagedLandLeaf are formatted as landtype_basin.
-    create_noprot_unmgd <- function(data) {
+    # Note: because of the NodeCarbonCalc, the use of protected lands for forests
+    # alters land use change emissions. To minimize the consequences,
+    # we'd like to keep protected lands constant in the historical period and
+    # equal to the aglu.PROTECT_LAND_FRACT * base_allocation (i.e., value in the final historical year).
+    # However, in some cases that results in negative land allocation. In those cases,
+    # we revert to calculating protected area as aglu.PROTECT_LAND_FRACT * allocation in the current year
+    create_noprot_unmgd <- function(data, base_data, min_data) {
       data %>%
         filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
-        mutate(allocation = (1 - aglu.PROTECT_LAND_FRACT) * allocation)
+        left_join(base_data, by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
+        left_join(min_data, by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
+        mutate(allocation = if_else(min_allocation < aglu.PROTECT_LAND_FRACT * base_allocation,
+                                    (1 - aglu.PROTECT_LAND_FRACT) * allocation,
+                                    allocation - aglu.PROTECT_LAND_FRACT * base_allocation)) %>%
+        select(-base_allocation, -min_allocation)
     } # end create_noprot
 
+    # Find unmanaged land allocation in the base year. This is used
+    # to set the amount of protected land (if possible)
+    L223.LN3_UnmgdAllocation %>%
+      filter(!grepl("OtherArable", UnmanagedLandLeaf),
+             year == max(MODEL_BASE_YEARS)) %>%
+      rename(base_allocation = allocation) %>%
+      select(-year) ->
+      BYUnmgdAllocation
+
+    # Find the minimum amount of land in the entire historical period
+    # by land type and region. This is used to determine how protected
+    # lands in the historical period are calculated (either as fraction of
+    # current year or as a fraction of final historical year)
+    bind_rows(L223.LN3_HistUnmgdAllocation, L223.LN3_UnmgdAllocation) %>%
+      filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
+      group_by(region, LandAllocatorRoot, LandNode1, LandNode2, LandNode3, UnmanagedLandLeaf) %>%
+      summarize(min_allocation = min(allocation)) %>%
+      ungroup() ->
+      MINUnmgdAllocation
 
     # L223.LN3_HistUnmgdAllocation_noprot: historical unmanaged land cover, no protect
-    L223.LN3_HistUnmgdAllocation_noprot <- create_noprot_unmgd(L223.LN3_HistUnmgdAllocation)
-
+    L223.LN3_HistUnmgdAllocation_noprot <- create_noprot_unmgd(L223.LN3_HistUnmgdAllocation, BYUnmgdAllocation, MINUnmgdAllocation)
 
     # L223.LN3_UnmgdAllocation_noprot: unmanaged land cover, no protect
-    L223.LN3_UnmgdAllocation_noprot <- create_noprot_unmgd(L223.LN3_UnmgdAllocation)
+    L223.LN3_UnmgdAllocation_noprot <- create_noprot_unmgd(L223.LN3_UnmgdAllocation, BYUnmgdAllocation, MINUnmgdAllocation)
 
 
     # PROTECTED LANDS in the first nest
     # modified land allocations, different names, different nesting structure
 
     # function to process protected lands
-    create_prot_unmgd <- function(data) {
+    # Note: because of the NodeCarbonCalc, the use of protected lands for forests
+    # alters land use change emissions. To minimize the consequences,
+    # we'd like to keep protected lands constant in the historical period and
+    # equal to the aglu.PROTECT_LAND_FRACT * base_allocation (i.e., value in the final historical year).
+    # However, in some cases that results in negative land allocation. In those cases,
+    # we revert to calculating protected area as aglu.PROTECT_LAND_FRACT * allocation in the current year
+    create_prot_unmgd <- function(data, base_data, min_data) {
       data %>%
         filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
+        left_join(base_data, by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
+        left_join(min_data, by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
         mutate(UnmanagedLandLeaf = paste0("Protected", UnmanagedLandLeaf),
                LandNode1 = UnmanagedLandLeaf,
                LandNode2 = NULL,
                LandNode3 = NULL,
-               allocation = aglu.PROTECT_LAND_FRACT * allocation)
+               allocation = if_else(min_allocation < aglu.PROTECT_LAND_FRACT * base_allocation,
+                                      aglu.PROTECT_LAND_FRACT * allocation,
+                                      aglu.PROTECT_LAND_FRACT * base_allocation)) %>%
+        select(-base_allocation, -min_allocation)
     }
 
 
     # L223.LN1_HistUnmgdAllocation_prot: historical unmanaged land cover, protected
-    L223.LN1_HistUnmgdAllocation_prot <- create_prot_unmgd(L223.LN3_HistUnmgdAllocation)
+    L223.LN1_HistUnmgdAllocation_prot <- create_prot_unmgd(L223.LN3_HistUnmgdAllocation, BYUnmgdAllocation, MINUnmgdAllocation)
 
 
     # L223.LN1_UnmgdAllocation_prot: unmanaged land cover, protected
-    L223.LN1_UnmgdAllocation_prot <- create_prot_unmgd(L223.LN3_UnmgdAllocation)
+    L223.LN1_UnmgdAllocation_prot <- create_prot_unmgd(L223.LN3_UnmgdAllocation, BYUnmgdAllocation, MINUnmgdAllocation)
 
 
     # L223.LN1_UnmgdCarbon_prot: unmanaged carbon info, protected

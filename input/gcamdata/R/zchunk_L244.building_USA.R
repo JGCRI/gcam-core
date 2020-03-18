@@ -1,4 +1,6 @@
-#' module_gcamusa_L244.building_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L244.building_USA
 #'
 #' Creates GCAM-USA building output files for writing to xml.
 #'
@@ -19,8 +21,8 @@
 #' The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
 #' @details Creates GCAM-USA building output files for writing to xml.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select semi_join summarise
+#' @importFrom tidyr complete gather nesting replace_na
 #' @author RLH November 2017
 
 module_gcamusa_L244.building_USA <- function(command, ...) {
@@ -246,7 +248,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
     # First, separate the thermal from the generic services. Generic services will be assumed to produce
     # internal gain energy, so anything in the internal gains assumptions table will be assumed generic
     generic_services <- unique(A44.globaltech_intgains$supplysector)
-    thermal_services <- setdiff(unique(A44.sector$supplysector), generic_services)
+    thermal_services <- dplyr::setdiff(unique(A44.sector$supplysector), generic_services)
 
     # L244.HDDCDD: Heating and cooling degree days by scenario
     L244.HDDCDD_scen_state <- L143.HDDCDD_scen_state %>%

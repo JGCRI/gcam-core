@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <policy-target-runner name="forcing_2p6">
     <!-- tax-name | default: CO2 | The market name to change the price on --> 
-	<tax-name>CO2</tax-name> 
+	<tax-name>CO2_LTG</tax-name> 
     <!-- target-value | no default | The target value such as concentration 
          or forcing.
      -->
@@ -32,6 +32,13 @@
     <target-type>forcing</target-type>
     <!-- first-tax-year | default: 2020 | The first year to start a tax in -->
     <first-tax-year>2020</first-tax-year>
+    <!-- initial-tax-guess | default: 5 | The first tax value to try, if a user
+                                          can provide a good initial guess it may
+                                          cut down on the total number of iterations
+                                          significantly.
+     -->
+    <!-- Note, the value chosen here is the solved price from the last GCAM release. -->
+    <initial-tax-guess>105.0</initial-tax-guess>
     <!-- forward-look | default: 0 | Allow forward looking behavior by skipping
          this many periods.
      -->

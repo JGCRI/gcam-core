@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socioeconomics_L201.Pop_GDP_scenarios
 #'
 #' Labor productivity and population by scenario and region.
@@ -11,8 +13,7 @@
 #' @details Produces default interest rate by region, historical and future population by region and SSP scenario,
 #' and uses per-capita GDP to calculate labor productivity by region and scenario.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter group_by lag mutate order_by select transmute
 #' @author HM & RH June 2017
 module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -25,8 +26,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
              "L101.Pop_thous_GCAM3_R_Y",
              "L102.gdp_mil90usd_GCAM3_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L201.InterestRate",
-             "L201.BaseGDP_Scen",
+    return(c("L201.BaseGDP_Scen",
              "L201.LaborForceFillout",
              "L201.PPPConvert",
              paste0("L201.Pop_gSSP", seq(1, 5)),
@@ -60,11 +60,6 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y")
 
     # ===================================================
-    # Set default interest rate for all regions
-    L201.InterestRate <- GCAM_region_names %>%
-      select(region) %>%
-      mutate(interest.rate = socioeconomics.DEFAULT_INTEREST_RATE)
-
     # Stitch together history and future population
     # First, repeat hisotry for all scenarios
     L101.Pop_thous_Scen_R_Y <- L101.Pop_thous_R_Yh %>%
@@ -183,13 +178,6 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
-    L201.InterestRate %>%
-      add_title("Interest Rate by region") %>%
-      add_units("Unitless") %>%
-      add_comments("Default interest rate applied to all regions") %>%
-      add_legacy_name("L201.InterestRate") %>%
-      add_precursors("common/GCAM_region_names") ->
-      L201.InterestRate
     L201.LaborForceFillout %>%
       add_title("Labor force participation and productivity for all scenarios") %>%
       add_units("Unitless") %>%
@@ -239,7 +227,7 @@ module_socioeconomics_L201.Pop_GDP_scenarios <- function(command, ...) {
       L201.Pop_GCAM3
 
 
-    return_data(L201.InterestRate, L201.LaborForceFillout, L201.PPPConvert, L201.BaseGDP_Scen,
+    return_data(L201.LaborForceFillout, L201.PPPConvert, L201.BaseGDP_Scen,
                 L201.Pop_gSSP1, L201.Pop_gSSP2, L201.Pop_gSSP3, L201.Pop_gSSP4, L201.Pop_gSSP5,
                 L201.Pop_SSP1, L201.Pop_SSP2, L201.Pop_SSP3, L201.Pop_SSP4, L201.Pop_SSP5,
                 L201.LaborProductivity_gSSP1, L201.LaborProductivity_gSSP2, L201.LaborProductivity_gSSP3, L201.LaborProductivity_gSSP4, L201.LaborProductivity_gSSP5,

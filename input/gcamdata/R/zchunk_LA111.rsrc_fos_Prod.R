@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA111.rsrc_fos_Prod
 #'
 #' Calculate historical fossil energy production and fossil resource supply curves.
@@ -15,8 +17,8 @@
 #' resource production) and aggregate by the new GCAM regions, using crude oil production shares as a proxy
 #' for unconventional oil resources.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select summarise
+#' @importFrom tidyr complete replace_na
 #' @author BBL August 2017
 module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -82,6 +84,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       gather_years %>%
       # interpolate production to all historical years
       complete(iso, year = HISTORICAL_YEARS) %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
       arrange(iso, year) %>%
       group_by(iso) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%

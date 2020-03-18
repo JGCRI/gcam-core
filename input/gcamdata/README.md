@@ -10,3 +10,5 @@ The increasing data requirements of complex models demand robust, reproducible, 
 Instructions for installing and running the data system can be found [in the wiki](https://github.com/JGCRI/gcamdata/wiki/Getting-Started).
 
 ![](https://github.com/bpbond/gcamdata/blob/master/figures/network_current.png)
+
+Copyright 2019 Battelle Memorial Institute; see the LICENSE file.

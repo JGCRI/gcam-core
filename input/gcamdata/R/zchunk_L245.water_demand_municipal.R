@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L245.water_demand_municipal
 #'
 #' Expands municipal water information (cost, efficiency, coefficients) across regions and model years
@@ -10,8 +12,8 @@
 #' original data system was \code{L245.water_demand_municipal.R} (water level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_cols filter if_else group_by left_join mutate one_of select
+#' @importFrom tidyr complete
 #' @author ST August 2017
 module_water_L245.water_demand_municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

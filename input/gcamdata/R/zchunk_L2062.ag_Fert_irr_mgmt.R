@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2062.ag_Fert_irr_mgmt
 #'
 #' Specifies fertilizer coefficients for all technologies; adjusts nonLandVariableCost to remove fertilizer cost.
@@ -12,8 +14,8 @@
 #' We assume coefficients (in kgN per kgCrop) are equal for all four technologies (irr v rfd; hi v lo).
 #' Adjust nonLandVariableCost to remove the now explicitly computed fertilizer cost.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter if_else left_join mutate select
+#' @importFrom tidyr replace_na
 #' @author KVC June 2017
 module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -78,7 +80,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
 
     # Calculate fertilizer coefficients for grassy bioenergy crops
     A_Fodderbio_chars %>%
-      filter(GCAM_commodity == "biomass_grass") %>%
+      filter(GCAM_commodity == "biomassGrass") %>%
       mutate(coefficient = (aglu.BIO_GRASS_FERT_IO_GNM2 * CONV_G_KG / aglu.BIO_GRASS_YIELD_KGCM2    # Convert from application per unit area to per unit carbon
                             * aglu.CCONTENT_CELLULOSE * (1 - WaterContent))                         # Convert from carbon to wet biomass
              / (aglu.BIO_ENERGY_CONTENT_GJT * CONV_KG_T)) ->                         # Convert from biomass to energy
@@ -86,7 +88,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
 
     # Calculate fertilizer coefficients for tree bioenergy crops
     A_Fodderbio_chars %>%
-      filter(GCAM_commodity == "biomass_tree") %>%
+      filter(GCAM_commodity == "biomassTree") %>%
       mutate(coefficient = (aglu.BIO_TREE_FERT_IO_GNM2 * CONV_G_KG / aglu.BIO_TREE_YIELD_KGCM2    # Convert from application per unit area to per unit carbon
                             * aglu.CCONTENT_CELLULOSE * (1 - WaterContent))                         # Convert from carbon to wet biomass
              / (aglu.BIO_ENERGY_CONTENT_GJT * CONV_KG_T)) ->                         # Convert from biomass to energy
@@ -96,7 +98,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     L2052.AgCost_bio_irr_mgmt %>%
       select(-nonLandVariableCost) %>%                  # We are just using this data.frame to get the region/sector/tech names
       mutate(minicam.energy.input = "N fertilizer",
-             coefficient = if_else(grepl("^biomass_grass", AgSupplySubsector),
+             coefficient = if_else(grepl("^biomassGrass", AgSupplySubsector),
                                    bio_grass_coef$coefficient, bio_tree_coef$coefficient)) ->
       L2062.AgCoef_Fert_bio_irr_mgmt
 

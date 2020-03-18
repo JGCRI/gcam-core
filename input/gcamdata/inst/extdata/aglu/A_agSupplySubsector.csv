@@ -15,10 +15,10 @@ OilCrop,OilCrop,-6,start-year,1
 OtherGrain,OtherGrain,-6,start-year,1
 PalmFruit,PalmFruit,-6,start-year,1
 Rice,Rice,-6,start-year,1
-Root_Tuber,Root_Tuber,-6,start-year,1
+RootTuber,RootTuber,-6,start-year,1
 SugarCrop,SugarCrop,-6,start-year,1
 Wheat,Wheat,-6,start-year,1
 Forest,Forest,-6,start-year,1
-biomass,biomass_grass,-6,start-year,1
-biomass,biomass_tree,-6,start-year,1
+biomass,biomassGrass,-6,start-year,1
+biomass,biomassTree,-6,start-year,1
 Pasture,Pasture,-6,start-year,1

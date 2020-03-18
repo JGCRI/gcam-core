@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L202.an_input
 #'
 #' Produce a wide range of animal-related resource tables: production, import, resource curves.
@@ -16,8 +18,8 @@
 #' original data system was \code{L202.an_input.R} (aglu level2).
 #' @details This chunk produces 22 animal-related resource tables: production, import, resource curves.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join bind_rows distinct filter if_else group_by left_join mutate select summarise
+#' @importFrom tidyr complete replace_na
 #' @author BBL August 2017
 module_aglu_L202.an_input <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -225,9 +227,6 @@ module_aglu_L202.an_input <- function(command, ...) {
       # not every region/technology/year has a match, so need to use left_join
       left_join(L202.ag_Feed_Mt_R_C_Y.mlt, by = c("region", "technology" = "GCAM_commodity", "year")) %>%
       mutate(calOutputValue = round(value, aglu.DIGITS_CALOUTPUT)) %>%
-      # the DDGS/feedcake rows at this point are all missing values, as they are not
-      # available in the historical years; set them to zero
-      replace_na(list(calOutputValue = 0)) %>%
       # subsector and technology shareweights (subsector requires the year as well)
       mutate(share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),

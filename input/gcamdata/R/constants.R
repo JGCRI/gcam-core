@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 # General behavior constants ======================================================================
 
 OUTPUTS_DIR              <- "outputs/"
@@ -19,10 +21,16 @@ FLAG_XML             <- "FLAG_XML"              # xml data
 
 # Time constants ======================================================================
 
-HISTORICAL_YEARS        <- 1971:2010                            # historical years for data processing
-FUTURE_YEARS            <- 2011:2100                            # future years for data processing
-MODEL_BASE_YEARS        <- c(1975, 1990, 2005, 2010)            # calibrated periods in the model
-MODEL_FUTURE_YEARS      <- seq(2015, 2100, 5)                   # future (i.e., not calibrated) time periods in the model
+# Historical years for level 1 data processing. All chunks that produce historical data
+# for model calibration are required to produce annual data covering this entire span.
+HISTORICAL_YEARS        <- 1971:2010
+# Future years for level 1 data processing, for the few chunks that
+# produce future data (e.g., population projections)
+FUTURE_YEARS            <- 2011:2100
+# Calibrated periods in the model. Only level 2 chunks should reference these
+MODEL_BASE_YEARS        <- c(1975, 1990, 2005, 2010)
+# Future (not calibrated) model periods. Only level 2 chunks should reference these
+MODEL_FUTURE_YEARS      <- seq(2015, 2100, 5)
 MODEL_YEARS             <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
 
 
@@ -122,6 +130,10 @@ CONV_TBTU_EJ <- 0.0010551 # TeraBTU to EJ
 CONV_MJ_BTU <- 947.777
 CONV_BTU_KJ <- 1.0551
 
+# Distance
+CONV_MILE_KM <- 1.60934 # Mile to km
+CONV_NMILE_KM <- 1.852 # Nautical mile to km
+
 # Other
 CONV_MCAL_PCAL <- 1e-9
 CONV_M3_BM3 <- 1e-09 # Cubic meters (m3) to billion cubic meters (bm3)
@@ -153,7 +165,8 @@ aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5
 aglu.SSP_DEMAND_YEARS       <- seq(2010, 2100, 5) # food demand in the SSPs is calculated at 5-yr intervals
 aglu.TRADE_CAL_YEARS        <- 2008:2012 # Years used for calculating base year gross trade. Should ideally include the final base year, but note that the trade data starts in 1986.
 aglu.TRADE_FINAL_BASE_YEAR  <- max(MODEL_BASE_YEARS) # The base year to which gross trade volumes are assigned. Should be within the aglu.TRADE_CAL_YEARS and equal to the final model calibration year
-aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "MiscCrop", "OilCrop", "OtherGrain", "PalmFruit", "Rice", "Root_Tuber", "SugarCrop", "Wheat")
+aglu.FALLOW_YEARS           <- 2008:2012 # Years used for calculating the % of fallow land
+aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "MiscCrop", "OilCrop", "OtherGrain", "PalmFruit", "Rice", "RootTuber", "SugarCrop", "Wheat")
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
 
@@ -312,12 +325,11 @@ aglu.MGMT_LOGIT_EXP  <- 0.5
 aglu.MGMT_LOGIT_TYPE <- "absolute-cost-logit"
 
 # XML-related constants
-aglu.CROP_DELIMITER       <- "_"  # delimiter between (some) crop names such as Root_Tuber, biomass_grass, biomass_tree
 aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
 aglu.GLU_NDIGITS          <- 3    # number of digits in the geographic land unit identifier codes
 aglu.IRR_DELIMITER        <- "_"  # delimiter between the appended crop x GLU and irrigation level
 aglu.LT_GLU_DELIMITER     <-      # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
-  aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
+aglu.MGMT_DELIMITER       <- "_"  # delimiter between appended tech name and management level
 
 # AgLU digits constants to control the number of digits for rounding going into XMLs.
 aglu.DIGITS_AGPRODCHANGE  <- 4 # rate of change in yield values
@@ -397,6 +409,10 @@ energy.PV_LIFETIME             <- 30       # years
 energy.PV_RESID_INSTALLED_COST <- 9500     # 2005USD per kw
 energy.PV_RESID_OM             <- 100      # 2005USD per kw per year
 
+# Wind related constants
+energy.WIND_CURVE_MIDPOINT <- 0.5
+energy.WIND_MIN_POTENTIAL <- 0.001
+
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT        <- 7
 energy.DIGITS_CALPRODUCTION    <- 7
@@ -425,8 +441,10 @@ energy.DIGITS_TECHCHANGE       <- 4
 
 # Policy assumptions for module_energy_L270.limits
 energy.NEG_EMISS_POLICY_NAME    <- "negative_emiss_budget"
+energy.NEG_EMISS_TARGET_GAS     <- "CO2_LTG" # the name of the gas to target in the negative emiss budget
 energy.NEG_EMISS_GDP_BUDGET_PCT <- 0.01 # Max fraction of GDP which may be given to subsidize net negative emissions
 energy.NEG_EMISS_MARKT_GLOBAL   <- TRUE # If the negative emissions budget is global (TRUE) or regional (FALSE)
+energy.OIL_CREDITS_MARKETNAME   <- "oil-credits"
 energy.OILFRACT_ELEC            <- 1.0 # Fraction of liquids for feedstocks that must come from oil
 energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity that must come from oil
 
@@ -662,7 +680,7 @@ gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale
 
 
 # Resources that will be modeled at the state level
-gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource")
+gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource", "offshore wind resource")
 gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
 
 # Define sector(s) used in L222.en_transformation_USA

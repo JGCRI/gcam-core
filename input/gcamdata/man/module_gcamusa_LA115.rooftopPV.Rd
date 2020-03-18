@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA115.rooftopPV_USA.R
 \name{module_gcamusa_LA115.rooftopPV}
 \alias{module_gcamusa_LA115.rooftopPV}
-\title{module_gcamusa_LA115.rooftopPV}
+\title{module_gcam.usa_LA115.RooftopPV}
 \usage{
 module_gcamusa_LA115.rooftopPV(command, ...)
 }

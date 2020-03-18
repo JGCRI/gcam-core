@@ -7,7 +7,7 @@
 # ----------
 LandNode1,LandNode2,LandNode3,LandLeaf
 AgroForestLand,AgroForest_NonPasture,AllForestLand,Forest
-AgroForestLand,AgroForest_NonPasture,AllForestLand,biomass_tree
+AgroForestLand,AgroForest_NonPasture,AllForestLand,biomassTree
 AgroForestLand,AgroForest_NonPasture,CropLand,Corn
 AgroForestLand,AgroForest_NonPasture,CropLand,FiberCrop
 AgroForestLand,AgroForest_NonPasture,CropLand,FodderGrass
@@ -17,7 +17,7 @@ AgroForestLand,AgroForest_NonPasture,CropLand,OilCrop
 AgroForestLand,AgroForest_NonPasture,CropLand,OtherGrain
 AgroForestLand,AgroForest_NonPasture,CropLand,PalmFruit
 AgroForestLand,AgroForest_NonPasture,CropLand,Rice
-AgroForestLand,AgroForest_NonPasture,CropLand,Root_Tuber
+AgroForestLand,AgroForest_NonPasture,CropLand,RootTuber
 AgroForestLand,AgroForest_NonPasture,CropLand,SugarCrop
 AgroForestLand,AgroForest_NonPasture,CropLand,Wheat
-AgroForestLand,AgroForest_NonPasture,CropLand,biomass_grass
+AgroForestLand,AgroForest_NonPasture,CropLand,biomassGrass

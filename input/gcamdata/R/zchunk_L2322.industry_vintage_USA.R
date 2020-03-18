@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2322.industry_vintage_USA
 #'
 #' Creates a vintage structure and retirement parameters for U.S. industrial energy use
@@ -11,7 +13,6 @@
 #' @details This chunk creates a vintage structure and retirement parameters for U.S. industrial energy use.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
 #' @author KD August 2018; edited MTB October 2018
 module_gcamusa_L2322.industry_vintage_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

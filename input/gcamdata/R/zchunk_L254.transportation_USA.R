@@ -1,4 +1,6 @@
-#' module_gcamusa_L254.transportation_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L254.transportation_USA
 #'
 #' Generates GCAM-USA model inputs for transportation sector by states.
 #'
@@ -31,8 +33,8 @@
 #' pass-through technologies are normal, standard GCAM technologies, not "tranTechnologies" which have different
 #' parameters read in, and perform a bunch of hard-wired unit conversions between inputs and outputs.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select semi_join summarise
+#' @importFrom tidyr replace_na
 #' @author RC Oct 2017
 module_gcamusa_L254.transportation_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -289,7 +291,7 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
       # Some of the technologies are sub-totals, assign zero value now, will be calculated below
       replace_na(list(output_agg = 0)) %>%
       # Arrange input sectors so that sub-total sector is behind the subsectors
-      arrange(desc(minicam.energy.input)) %>%
+      arrange(dplyr::desc(minicam.energy.input)) %>%
       group_by(region, year) %>%
       # Calculate the cumulative for sub-total sector
       mutate(output_cum = cumsum(output_agg)) %>%

@@ -1,4 +1,6 @@
-#' module_gcamusa_LA1321.cement
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_LA1321.Cement
 #'
 #' Allocate across the states national cement production, input-output cofficients, and energy inputs to cement production
 #'
@@ -12,8 +14,8 @@
 #' @details The state shares were determined by the states' relative values of cement shipments.
 #' @details The input-out coefficients were downscaled to the states in proportation to the national data.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter mutate pull select summarise
+#' @importFrom tidyr gather
 #' @author AS May 2017
 module_gcamusa_LA1321.cement <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

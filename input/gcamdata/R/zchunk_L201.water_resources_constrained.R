@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L201.water_resources_constrained
 #'
 #' Constrained surface and groudwater.
@@ -11,8 +13,9 @@
 #' original data system was \code{L102.water_supply_unlimited.R} (water level1).
 #' @details  Genereates water resource input files for region + basin which includes runoff and groundwater.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join case_when distinct filter if_else inner_join mutate pull right_join select
+#' @importFrom tidyr complete nesting
+#' @importFrom stats spline
 #' @author ST Oct 2018
 module_water_L201.water_resources_constrained <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -41,7 +44,12 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
              "L201.RsrcTechShrwt"))
   } else if(command == driver.MAKE) {
 
-    region <- NULL                      # silence package check.
+    region <- ISO <- iso <- GCAM_basin_ID <- Basin_name <- GCAM_region_ID <-
+      basin_id <- GLU <- water_type <- basin_name <- resource <- runoff_max <-
+      renewresource <- year <- access_fraction <- sub.renewable.resource <-
+      grade <- available <- extractioncost <- price <- avail <- basin.id <-
+      demand <- depletion <- runoff <- accessible <- x <- . <- accessible_runoff <-
+      deficit <- years <- deficit_total <- subresource <- NULL                      # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -248,8 +256,9 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         grade == "grade2" & is.na(accessible) == FALSE ~ accessible,
         grade == "grade1" | grade == "grade3" ~ available
       )) %>% select(-accessible) %>%
-      group_by(resource) %>% mutate(x = cumsum(available)) %>%
-      mutate(available = if_else(x >= 2, x, available)) %>%
+      group_by(resource) %>%
+      mutate(x = cumsum(available),
+             available = if_else(x >= 2, x, available)) %>%
       select(-x) %>%
       ungroup() ->
       accessible_water_unsmoothed
@@ -308,6 +317,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         # ^^ join the historical demand
         mutate(deficit = demand - accessible_runoff,
                deficit = if_else(deficit <=0, 0, deficit)) %>%
+        filter(year %in% MODEL_BASE_YEARS) %>%
         # ^^ determine how much water needs to be met by groundwater depletion
         left_join_error_no_match(tibble(year = MODEL_BASE_YEARS[MODEL_BASE_YEARS >= water.GW_DEPLETION_BASE_YEAR],
                          years = diff(MODEL_BASE_YEARS)), by = "year") %>%

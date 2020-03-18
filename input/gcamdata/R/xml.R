@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 # xml.R
 
 #' The basis to start a pipeline to convert data to an XML file.

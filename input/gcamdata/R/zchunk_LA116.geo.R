@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA116.geo
 #'
 #' Generate geothermal (hydrothermal and engineered geothermal systems (EGS)) supply curves by GCAM region
@@ -15,8 +17,7 @@
 #' source data were developed for the 14 regions of GCAM 3.0 and prior, they are first
 #' downscaled to the nation level on the basis of land area, and aggregated to the current GCAM regions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr distinct filter full_join group_by mutate select summarise
 #' @author GPK April 2017
 module_energy_LA116.geo <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -50,10 +51,10 @@ module_energy_LA116.geo <- function(command, ...) {
     # is the standard in GCAM as long as the model has existed, but still this needs to be
     # confirmed in this initial check
 
-    if(n_distinct(A16.geo_curves[ c("grade", "extractioncost")]) > n_distinct(A16.geo_curves$grade)) {
+    if(dplyr::n_distinct(A16.geo_curves[ c("grade", "extractioncost")]) > dplyr::n_distinct(A16.geo_curves$grade)) {
       stop("The geothermal (hydrothermal) supply curves have regionally differentiated price points")
     }
-    if(n_distinct(A16.EGS_curves[ c("grade", "extractioncost")]) > n_distinct( A16.EGS_curves$grade)) {
+    if(dplyr::n_distinct(A16.EGS_curves[ c("grade", "extractioncost")]) > dplyr::n_distinct( A16.EGS_curves$grade)) {
       stop("The geothermal (EGS) supply curves have regionally differentiated price points")
     }
 
@@ -95,7 +96,7 @@ module_energy_LA116.geo <- function(command, ...) {
 
     # Aggregate country-level hydrothermal geothermal resource supply curves by GCAM region
     L116.geothermal_ctry %>%
-      group_by_(GCAM_REGION_ID, "resource", "subresource", "grade", "extractioncost") %>%
+      dplyr::group_by_(GCAM_REGION_ID, "resource", "subresource", "grade", "extractioncost") %>%
       summarise(available = sum(available)) %>%
       ungroup() ->
       L116.geothermal_rgn
@@ -123,7 +124,7 @@ module_energy_LA116.geo <- function(command, ...) {
 
     # Aggregate country-level EGS geothermal resource supply curves by GCAM region
     L116.EGS_ctry %>%
-      group_by_(GCAM_REGION_ID, "resource", "subresource", "grade", "extractioncost") %>%
+      dplyr::group_by_(GCAM_REGION_ID, "resource", "subresource", "grade", "extractioncost") %>%
       summarise(available = sum(available)) %>%
       ungroup() ->
       L116.EGS_rgn

@@ -326,6 +326,14 @@ double ASimpleCarbonCalc::getNetLandUseChangeEmission( const int aYear ) const {
     return mTotalEmissions[ aYear ];
 }
 
+double ASimpleCarbonCalc::getNetLandUseChangeEmissionAbove( const int aYear ) const {
+    return mTotalEmissionsAbove[ aYear ];
+}
+
+double ASimpleCarbonCalc::getNetLandUseChangeEmissionBelow( const int aYear ) const {
+    return mTotalEmissionsBelow[ aYear ];
+}
+
 void ASimpleCarbonCalc::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitCarbonCalc( this, aPeriod );
     

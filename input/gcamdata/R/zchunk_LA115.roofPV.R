@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA115.roofPV
 #'
 #' Convert rooftop PV resources from the 14 GCAM regions, i.e., "region_GCAM3", to the 32 GCAM region IDs.
@@ -10,8 +12,7 @@
 #' original data system was \code{LA115.roofPV.R} (energy level1).
 #' @details Rooftop PV resources are given in the input file according to the 14 GCAM regions, i.e., "region_GCAM3." Because some regions span mutliple GCAM region IDs, population in 2010 was used to allocate proportionally.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter group_by mutate select summarise
 #' @author AJS April 2017
 module_energy_LA115.roofPV <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

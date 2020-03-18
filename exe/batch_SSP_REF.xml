@@ -3,7 +3,6 @@
 	<ComponentSet name="base">
 		<FileSet name="GCAM_"> 
             <Value name = "climate">../input/gcamdata/xml/hector.xml</Value>
-			<Value name = "interest_rate">../input/gcamdata/xml/interest_rate.xml</Value>
 			<Value name = "socioeconomics">../input/gcamdata/xml/socioeconomics_gSSP2.xml</Value>
 			
 			<Value name = "resources">../input/gcamdata/xml/resources.xml</Value>
@@ -59,6 +58,7 @@
 			
             <Value name = "bio_feedstock_limit">../input/gcamdata/xml/liquids_limits.xml</Value>
             <Value name = "bio_elec_w_feed_limit">../input/gcamdata/xml/water_elec_liquids_limits.xml</Value>
+			<Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
 			<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 		</FileSet>
 	</ComponentSet>

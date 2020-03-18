@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L241.en_newtech_nonco2
 #'
 #' Produce emission coefficient tables for model input tables related to new energy technology.
@@ -10,8 +12,8 @@
 #' original data system was \code{L241.en_newtech_nonco2.R} (emissions level2).
 #' @details Generate input tables of non-CO2 emission coefficients.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter left_join mutate right_join select
+#' @importFrom tidyr unite
 #' @author KD August 2017
 module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

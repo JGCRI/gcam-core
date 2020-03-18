@@ -1,23 +1,29 @@
-#' module_energy_LA121.oil
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_energy_LA121.liquids
 #'
 #' Process historical oil data and separate into unconventional oil, crude oil, and energy inputs to oil.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
-#' @return Depends on \code{command}: either a vector of required inputs,
-#' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L121.in_EJ_R_unoil_F_Yh}, \code{L121.in_EJ_R_TPES_crude_Yh}, \code{L121.in_EJ_R_TPES_unoil_Yh}. The corresponding file in the
-#' original data system was \code{LA121.oil.R} (energy level1).
-#' @details This chunk uses energy production data to determine the energy inputs to the oil sector. It uses
-#' the IEA energy balance to separate out unconventional oil production and crude oil (total liquids - unconventional oil).
+#' @return Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
+#'   \code{command} is "MAKE") all the generated outputs: \code{L121.in_EJ_R_unoil_F_Yh},
+#'   \code{L121.in_EJ_R_TPES_crude_Yh}, \code{L121.in_EJ_R_TPES_unoil_Yh}, \code{L121.share_R_TPES_biofuel_tech}. The
+#'   corresponding file in the original data system was \code{LA121.oil.R} (energy level1).
+#' @details This chunk uses energy production data to determine the energy inputs to the oil sector. It uses the IEA
+#'   energy balance to separate out unconventional oil production and crude oil (total liquids - unconventional oil).
+#'   It also uses data from IIASA to downscale ethanol and biodiesel consumption to modeled technologies and feedstocks.
 #' @note If the (proprietary) IEA data aren't available, pre-built summaries are used.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
-#' @author JDH June 2017
-module_energy_LA121.oil <- function(command, ...) {
+#' @importFrom dplyr arrange distinct filter group_by if_else inner_join left_join mutate select summarise
+#' @importFrom tidyr complete nesting
+#' @author JDH June 2017, ed GPK April 2019
+module_energy_LA121.liquids <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
+             FILE = "aglu/IIASA_biofuel_production",
+             FILE = "aglu/IIASA_biofuel_tech_mapping",
+             FILE = "aglu/IIASA_biofuel_region_mapping",
              FILE = "energy/calibrated_techs",
              FILE = "energy/mappings/IEA_product_rsrc",
              FILE = "energy/A21.unoil_demandshares",
@@ -28,7 +34,8 @@ module_energy_LA121.oil <- function(command, ...) {
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L121.in_EJ_R_unoil_F_Yh",
              "L121.in_EJ_R_TPES_crude_Yh",
-             "L121.in_EJ_R_TPES_unoil_Yh"))
+             "L121.in_EJ_R_TPES_unoil_Yh",
+             "L121.share_R_TPES_biofuel_tech"))
   } else if(command == driver.MAKE) {
 
     ## silence package check.
@@ -36,12 +43,16 @@ module_energy_LA121.oil <- function(command, ...) {
       share_ctry_RG3 <- value_unoil <- GCAM_region_ID <- calibration <-
       secondary.output <- supplysector <- region_GCAM3 <- value_RG3 <-
       share <- share_RG3_world <- subsector <- technology <- minicam.energy.input <-
-      value_coef <- fuel.y <- value_coef_gas <- resource <- NULL
+      value_coef <- fuel.y <- value_coef_gas <- resource <- Production_ML <-
+      Biofuel <- GCAM_commodity <- NULL
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
+    IIASA_biofuel_production <- get_data(all_data, "aglu/IIASA_biofuel_production")
+    IIASA_biofuel_tech_mapping <- get_data(all_data, "aglu/IIASA_biofuel_tech_mapping")
+    IIASA_biofuel_region_mapping <- get_data(all_data, "aglu/IIASA_biofuel_region_mapping")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     IEA_product_rsrc <- get_data(all_data, "energy/mappings/IEA_product_rsrc")
     A21.unoil_demandshares <- get_data(all_data, "energy/A21.unoil_demandshares")
@@ -57,6 +68,7 @@ module_energy_LA121.oil <- function(command, ...) {
       L121.in_EJ_R_unoil_F_Yh <- prebuilt_data("L121.in_EJ_R_unoil_F_Yh")
       L121.in_EJ_R_TPES_crude_Yh <- prebuilt_data("L121.in_EJ_R_TPES_crude_Yh")
       L121.in_EJ_R_TPES_unoil_Yh <- prebuilt_data("L121.in_EJ_R_TPES_unoil_Yh")
+      L121.share_R_TPES_biofuel_tech <- prebuilt_data("L121.share_R_TPES_biofuel_tech")
     } else {
 
       L100.IEA_en_bal_ctry_hist %>%
@@ -154,6 +166,40 @@ module_energy_LA121.oil <- function(command, ...) {
         mutate(value = value - value_unoil) %>%
         select(GCAM_region_ID, sector, fuel, year, value) -> L121.in_EJ_R_TPES_crude_Yh
 
+      # 4/23/2019 addendum - GPK.
+      # Downscale biofuel consumption to specific technologies, per data from IIASA
+      L121.share_ctry_biofuel_tech <- left_join(IIASA_biofuel_production,
+                                             IIASA_biofuel_tech_mapping,
+                                             by = c("Biofuel", "Crop")) %>%
+        left_join(IIASA_biofuel_region_mapping, by = "Region") %>%
+        filter(!is.na(technology),
+               Production_ML > 0) %>%
+        group_by(iso, Biofuel, technology, GCAM_commodity) %>%
+        summarise(Production_ML = sum(Production_ML)) %>%
+        ungroup() %>%
+        group_by(iso, Biofuel) %>%
+        mutate(share = Production_ML / sum(Production_ML)) %>%
+        ungroup() %>%
+        select(iso, Biofuel, technology, GCAM_commodity, share)
+
+      L121.share_R_TPES_biofuel_tech <- filter(L100.IEA_en_bal_ctry_hist,
+                                               iso %in% L121.share_ctry_biofuel_tech$iso,
+                                               FLOW == "TPES",
+                                               PRODUCT %in% c("Biogasoline", "Biodiesels"),
+                                               year == max(HISTORICAL_YEARS),
+                                               value > 0) %>%
+        mutate(Biofuel = if_else(PRODUCT == "Biogasoline", "ethanol", "biodiesel")) %>%
+        inner_join(L121.share_ctry_biofuel_tech, by = c("iso", "Biofuel")) %>%
+        mutate(value = value * share) %>%
+        left_join_error_no_match(select(iso_GCAM_regID, GCAM_region_ID, iso), by = "iso") %>%
+        group_by(GCAM_region_ID, Biofuel, technology, GCAM_commodity) %>%
+        summarise(value = sum(value)) %>%
+        ungroup() %>%
+        group_by(GCAM_region_ID, Biofuel) %>%
+        mutate(share = value / sum(value)) %>%
+        ungroup() %>%
+        select(GCAM_region_ID, Biofuel, technology, GCAM_commodity, share)
+
       # ===================================================
       # Produce outputs
       L121.in_EJ_R_unoil_F_Yh %>%
@@ -184,13 +230,25 @@ module_energy_LA121.oil <- function(command, ...) {
                        "energy/mappings/IEA_product_rsrc") ->
         L121.in_EJ_R_TPES_unoil_Yh
 
+      L121.share_R_TPES_biofuel_tech %>%
+        add_title("Share of biofuel consumption by region / technology / feedstock", overwrite = TRUE) %>%
+        add_units("unitless") %>%
+        add_comments("Ethanol and biodiesel consumption assigned to feedstock shares") %>%
+        add_precursors("aglu/IIASA_biofuel_production", "aglu/IIASA_biofuel_region_mapping",
+                       "aglu/IIASA_biofuel_tech_mapping", "L100.IEA_en_bal_ctry_hist", "common/iso_GCAM_regID") ->
+        L121.share_R_TPES_biofuel_tech
+
       # At this point the objects should be identical to the prebuilt objects
       verify_identical_prebuilt(L121.in_EJ_R_unoil_F_Yh,
                                 L121.in_EJ_R_TPES_crude_Yh,
-                                L121.in_EJ_R_TPES_unoil_Yh)
+                                L121.in_EJ_R_TPES_unoil_Yh,
+                                L121.share_R_TPES_biofuel_tech)
     }
 
-    return_data(L121.in_EJ_R_unoil_F_Yh, L121.in_EJ_R_TPES_crude_Yh, L121.in_EJ_R_TPES_unoil_Yh)
+    return_data(L121.in_EJ_R_unoil_F_Yh,
+                L121.in_EJ_R_TPES_crude_Yh,
+                L121.in_EJ_R_TPES_unoil_Yh,
+                L121.share_R_TPES_biofuel_tech)
   } else {
     stop("Unknown command")
   }

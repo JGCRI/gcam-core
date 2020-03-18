@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB132.ag_an_For_Prices_USA_C_2005
 #'
 #' Calculate the calibration prices for all GCAM AGLU commodities.
@@ -11,7 +13,7 @@
 #' @details This chunk calculates average prices over calibration years by GCAM commodity.
 #' Averages across years are unweighted; averages over FAO item are weighted by production.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr bind_rows distinct filter if_else group_by inner_join left_join mutate pull select summarise summarise_at vars
 #' @importFrom tidyr gather spread
 #' @author RC April 2017
 module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
@@ -49,7 +51,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     # to normalize each to constant 1975$
     tibble(year = aglu.MODEL_PRICE_YEARS) %>%
       group_by(year) %>%
-      summarize(deflator = gdp_deflator(1975, year)) ->
+      summarise(deflator = gdp_deflator(1975, year)) ->
       conv_Price_DollarYear
 
     # Converting cotton back to primary equivalent (seed cotton)
@@ -104,7 +106,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       filter(item != "Sorghum") %>%
       # Aggregate revenue and production by GCAM commodity
       group_by(GCAM_commodity, year) %>%
-      summarize_at(vars(V_USD, prod), sum, na.rm = TRUE) %>%
+      summarise_at(vars(V_USD, prod), sum, na.rm = TRUE) %>%
       ungroup() %>%
       # Calculate production weighted average price for each GCAM commodity
       mutate(Price_USDt = V_USD / prod) %>%
@@ -115,7 +117,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       select(-deflator) %>%
       # Aggregate by GCAM crop names and compute average prices
       group_by(GCAM_commodity) %>%
-      summarize(Price_USDt = mean(Price_USDt)) %>%
+      summarise(Price_USDt = mean(Price_USDt)) %>%
       ungroup() ->
       Price_ag
 
@@ -134,7 +136,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       filter(!is.na(GCAM_commodity)) %>%
       # Aggregate revenue and production by GCAM commodity
       group_by(GCAM_commodity, year) %>%
-      summarize_at(vars(V_USD, prod), sum, na.rm = TRUE) %>%
+      summarise_at(vars(V_USD, prod), sum, na.rm = TRUE) %>%
       ungroup() %>%
       # Calculate production weighted average price for each GCAM commodity
       mutate(Price_USDt = V_USD / prod) %>%
@@ -144,7 +146,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       select(-deflator) %>%
       # Aggregate by GCAM commodity and compute average prices
       group_by(GCAM_commodity) %>%
-      summarize(Price_USDt = mean(Price_USDt)) %>%
+      summarise(Price_USDt = mean(Price_USDt)) %>%
       ungroup() %>%
       # Convert to model units
       mutate(calPrice = round(Price_USDt / CONV_T_KG, digits = aglu.DIGITS_CALPRICE)) %>%
@@ -197,7 +199,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       select(-deflator) %>%
       # Calculate a single unweighted average export value and a single unweighted average export quantity over price years
       group_by(GCAM_commodity) %>%
-      summarize(Price_USDm3 = mean(Price_USDm3)) %>%
+      summarise(Price_USDm3 = mean(Price_USDm3)) %>%
       ungroup() %>%
       # Convert to model units
       mutate(calPrice = round(Price_USDm3, digits = aglu.DIGITS_CALPRICE)) %>%

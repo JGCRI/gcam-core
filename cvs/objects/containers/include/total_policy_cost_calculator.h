@@ -82,6 +82,10 @@ private:
 
     //! The name of the GHG for which to calculate the marginal abatement curve.
     std::string mGHGName;
+    
+    //! The list of gasses to sum+weight for the emissions quantities which may be
+    //! more than one GHG if for instance we are calculating a CO2-equivalent policy
+    std::vector<std::string> mGHGQuantityNames;
 
     //! The scenario runner which controls running the initial scenario, and all
     //! fixed taxed scenarios after. This is a weak reference.
@@ -111,5 +115,6 @@ private:
     void createCostCurvesByPeriod();
     void createRegionalCostCurves();
     const std::string createXMLOutputString() const;
+    RegionCurves getEmissionsQuantityCurve() const;
 };
 #endif // _TOTAL_POLICY_COST_CALCULATOR_H_
