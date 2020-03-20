@@ -88,6 +88,7 @@ electricity,nuclear,Gen_III,elec_Gen_III,Gen_III,Gen_III (recirculating),nuclear
 electricity,nuclear,Gen_III,elec_Gen_III,Gen_III,Gen_III (cooling pond),nuclear,cooling pond,fresh,electricity generation,nuclear,Gen_III,nuclearFuelGenIII
 electricity,hydro,hydro,electricity,hydro,hydro,no cooling,none,fresh,electricity generation,hydro,hydro,
 electricity,wind,wind_storage,electricity,wind,wind_storage,no cooling,none,none,electricity generation,wind,wind_storage,onshore wind resource
+electricity,wind,wind_storage,electricity,wind,wind_storage,no cooling,none,none,electricity generation,wind,wind_storage,offshore wind resource
 electricity,solar,PV_storage,electricity,solar,PV_storage,no cooling,none,fresh,electricity generation,solar PV,PV_storage,global solar resource
 electricity,solar,CSP_storage,elec_CSP_storage,CSP_storage,CSP_storage (recirculating),CSP,recirculating,fresh,electricity generation,solar CSP,CSP_storage,global solar resource
 electricity,solar,CSP_storage,elec_CSP_storage,CSP_storage,CSP_storage (dry_hybrid),CSP,dry_hybrid,fresh,electricity generation,solar CSP,CSP_storage,global solar resource

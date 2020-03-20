@@ -442,6 +442,7 @@ peak generation,nuclear,nuc_peak_Gen III,electricity,nuclear,Gen_III,Gen_III (se
 peak generation,nuclear,nuc_peak_Gen III,electricity,nuclear,Gen_III,Gen_III (recirculating),nuclear,recirculating,fresh
 peak generation,nuclear,nuc_peak_Gen III,electricity,nuclear,Gen_III,Gen_III (cooling pond),nuclear,cooling pond,fresh
 base load generation,wind,wind_base_storage,electricity,wind,wind_storage,wind_base_storage,no cooling,none,none
+base load generation,wind,wind_base_offshore,electricity,wind,wind_storage,wind_base_offshore,no cooling,none,none
 base load generation,wind,wind_base,electricity,wind,wind_storage,wind_base,no cooling,none,none
 intermediate generation,wind,wind_int,electricity,wind,wind_storage,wind_int,no cooling,none,none
 subpeak generation,wind,wind_subpeak,electricity,wind,wind_storage,wind_subpeak,no cooling,none,none
