@@ -2,7 +2,7 @@
 # Title: Municipal water withdrawals by USA state
 # Units: km3
 # Source: USGS domestic water withdrawals (https://water.usgs.gov/watuse/data/1990/index.html) includes domestic freshwater withdrawals and all freshwater withdrawals in public service
-# Column types: ccnnnnnn
+# Column types: ccnnnn
 # ----------
 state,water_type,1990,2005,2010,2015
 AK,water withdrawal,0.1367295,0.12413002,0.12965612,0.15279666

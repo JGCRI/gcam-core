@@ -61,6 +61,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
              "L2234.SubsectorShrwtInterp_elecS_USA",
              "L2234.SubsectorShrwtInterpTo_elecS_USA",
              "L2234.Supplysector_elecS_USA",
+             "L2234.StubTechCost_offshore_wind_elecS_USA",
              "L2240.GlobalTechCapFac_elec_coalret_USA",
              "L2240.GlobalTechCapital_elec_coalret_USA",
              "L2240.GlobalTechEff_elec_coalret_USA",
@@ -125,6 +126,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
              "L2233.StubTechLifetime_elecS_cool_USA",
              "L2233.StubTechShrwt_elecS_cool_USA",
              "L2233.StubTechInterp_elecS_cool_USA",
+             "L2233.StubTechCost_offshore_wind_elecS_cool_USA",
              "L2233.SubsectorLogit_elecS_USA",
              "L2233.SubsectorLogit_elecS_cool_USA",
              "L2233.SubsectorShrwt_elecS_USA",
@@ -195,6 +197,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     L2234.SubsectorShrwtInterp_elecS_USA <- get_data(all_data,"L2234.SubsectorShrwtInterp_elecS_USA")
     L2234.SubsectorShrwtInterpTo_elecS_USA <- get_data(all_data,"L2234.SubsectorShrwtInterpTo_elecS_USA")
     L2234.Supplysector_elecS_USA <- get_data(all_data,"L2234.Supplysector_elecS_USA")
+    L2234.StubTechCost_offshore_wind_elecS_USA <- get_data(all_data,"L2234.StubTechCost_offshore_wind_elecS_USA")
     L2240.GlobalTechCapFac_elec_coalret_USA <- get_data(all_data, "L2240.GlobalTechCapFac_elec_coalret_USA")
     L2240.GlobalTechCapital_elec_coalret_USA <- get_data(all_data,"L2240.GlobalTechCapital_elec_coalret_USA")
     L2240.GlobalTechEff_elec_coalret_USA <- get_data(all_data,"L2240.GlobalTechEff_elec_coalret_USA")
@@ -682,7 +685,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                 L2240.StubTechMarket_elec_coalret_USA) %>%
       add_cooling_techs()%>%
       mutate(technology = if_else(grepl("base_storage",subsector0),subsector0,
-                                  if_else(subsector=="wind_base",subsector,technology)))->
+                                  if_else(grepl("wind_base",subsector),subsector,technology)))->
       # temporary placement of base_storage cooling techs = nesting subsector
       L2233.StubTechMarket_elec_USA
 
@@ -717,8 +720,8 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       select(-value, -share) %>%
       ungroup() %>%
       bind_rows(L2233.StubTechProd_elec_USA %>% filter(calOutputValue == 0)) %>%
-      mutate(technology = if_else(subsector=="wind_base",subsector,technology),
-             subs.share.weight = tech.share.weight,
+      mutate(technology = if_else(grepl("wind_base",subsector),subsector,technology),
+             subs.share.weight = if_else(grepl("offshore",subsector),subs.share.weight,tech.share.weight),
              tech.share.weight = if_else(calOutputValue == 0,0,tech.share.weight)) %>%
       arrange(region,supplysector,subsector0,year) ->
       L2233.StubTechProd_elec_USA
@@ -748,12 +751,12 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
 
     L2234.StubTechCapFactor_elecS_wind_USA %>%
       add_cooling_techs()%>%
-      mutate(technology = if_else(subsector=="wind_base",subsector,technology))->
+      mutate(technology = if_else(grepl("wind_base",subsector),subsector,technology))->
       L2233.StubTechCapFactor_elecS_wind_USA
 
     L2234.StubTechElecMarket_backup_elecS_USA %>%
       add_cooling_techs() %>%
-      mutate( technology = ifelse(subsector=="rooftop_pv"|subsector=="wind_base",subsector,technology)) ->
+      mutate( technology = ifelse(subsector=="rooftop_pv"|grepl("wind_base",subsector),subsector,technology)) ->
       L2233.StubTechElecMarket_backup_elecS_USA
 
     L2234.StubTechFixOut_elecS_USA %>%
@@ -766,9 +769,12 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
 
     L2234.StubTechMarket_backup_elecS_USA %>%
       add_cooling_techs()%>%
-      mutate( technology = ifelse(subsector=="rooftop_pv"|subsector=="wind_base",subsector,technology))  ->
+      mutate( technology = ifelse(subsector=="rooftop_pv"|grepl("wind_base",subsector),subsector,technology))  ->
       L2233.StubTechMarket_backup_elecS_USA
 
+    L2234.StubTechCost_offshore_wind_elecS_USA %>%
+      add_cooling_techs() ->
+      L2233.StubTechCost_offshore_wind_elecS_USA
 
     L2246.StubTechLifetime_coal_vintage_USA %>%
       add_cooling_techs() %>%
@@ -798,7 +804,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       unique() %>%
       #mutate(logit.exponent = -30) %>%
       ## Experimental logit exponent at the power plant level
-      arrange(supplysector) %>% select(-logit.year.fillout, -logit.exponent, -logit.type, everything())  ->
+      arrange(supplysector) %>% select(-logit.year.fillout, -logit.exponent, -logit.type, dplyr::everything())  ->
       L2233.SubsectorLogit_elecS_cool_USA
 
     L2233.GlobalTechCoef_elecS_cool_USA %>%
@@ -858,7 +864,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                        mutate(year = if_else(interpolation.function=="linear",to.year,from.year),
                               share.weight = to.value) %>% select(-apply.to, -from.year, -to.year, -to.value, -interpolation.function)
                      ) %>%
-           arrange(region,supplysector,year) ->
+           arrange(region,supplysector,year) %>% unique() ->
            L2233.SubsectorShrwt_elecS_cool_USA
 
     ## We want to do a couple of manipulations to make sure that future cooling technologies are in line with state-level historical representations
@@ -880,7 +886,9 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                   select(cooling_system,to.technology), by=c("technology"="to.technology")) %>%
       left_join(
         bind_rows(L2233.GlobalTechShrwt_elec_cool_USA,
-                  L2233.GlobalIntTechShrwt_elecS_cool_USA %>% rename(technology=intermittent.technology)
+                  L2233.GlobalIntTechShrwt_elecS_cool_USA %>% rename(technology=intermittent.technology) %>%
+                  mutate(share.weight = if_else(subsector.name=="wind_base_offshore",1,share.weight))
+                  ##Fix to make sure that the share weight of offshore wind is properly handled and carried through the rest of the script
                   ) %>% rename(global.share.weight=share.weight, supplysector=sector.name, subsector0=subsector.name0, subsector=subsector.name), by=c("supplysector","subsector0","subsector","technology","year")
         )->
       L2233.StubTechShrwt_elecS_cool_USA
@@ -906,7 +914,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       mutate(updated.share.weight = if_else(share.weight>0&share.weight.sum>0,tech.share.weight,
                                             if_else(share.weight==0,0,
                                                     if_else(share.weight>0&share.weight.sum==0&!is.na(state.cooling.share.weight),state.cooling.share.weight,
-                                                            if_else(share.weight>0&share.weight.sum==0&subs.share.weight>0&is.na(state.cooling.share.weight),0,1)))),
+                                                            if_else(share.weight>0&share.weight.sum==0&subs.share.weight>0&is.na(state.cooling.share.weight)&!grepl("offshore",subsector),0,1)))),
              interpolation.function = if_else(share.weight.sum>0&from.year == max(MODEL_BASE_YEARS)&share.weight==1,"fixed",interpolation.function),
              from.year = if_else(from.year==2015&to.year==2100&share.weight.sum>1&interpolation.function=="fixed",2010,as.double(from.year))) %>%
              #interpolation.function = if_else((share.weight==updated.share.weight),"fixed",interpolation.function))  %>%
@@ -1290,6 +1298,15 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                      "gcam-usa/A23.elecS_tech_mapping_cool") ->
       L2233.StubTechFixOut_hydro_elecS_cool_USA
 
+    L2233.StubTechCost_offshore_wind_elecS_USA %>%
+      add_title("Electricity Load Segments Offshore Wind Cost Adjustment") %>%
+      add_units("none") %>%
+      add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
+      add_legacy_name("L2233.StubTechCost_offshore_wind_elec_USA") %>%
+      add_precursors("L2234.StubTechCost_offshore_wind_elecS_USA",
+                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+      L2233.StubTechCost_offshore_wind_elecS_cool_USA
+
     L2233.StubTechMarket_backup_elecS_USA %>%
       add_title("Backup Energy Inputs for Electricity Load Segments Intermittent Technologies") %>%
       add_units("none") %>%
@@ -1445,6 +1462,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                     L2233.SubsectorShrwt_elecS_USA,
                     L2233.SubsectorShrwt_elecS_cool_USA,
                     L2233.SubsectorShrwtInterp_elecS_USA,
+                    L2233.StubTechCost_offshore_wind_elecS_cool_USA,
                     L2233.SubsectorShrwtInterpTo_elecS_USA,
                     #L2233.SubsectorShrwtInterp_elecS_cool_USA,
                     L2233.SubsectorShrwtInterpTo_elecS_cool_USA,
