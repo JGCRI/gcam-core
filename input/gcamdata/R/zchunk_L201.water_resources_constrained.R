@@ -2,7 +2,7 @@
 
 #' module_water_L201.water_resources_constrained
 #'
-#' Constrained surface and groudwater.
+#' Constrained surface and groundwater.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -367,14 +367,14 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         L201.DepRsrcCurves_ground
 
       L201.DepRsrcCurves_ground %>%
-        mutate(subresource = grade) %>%
+        mutate(subresource = paste(subresource, grade)) %>%
         group_by(region, resource) %>%
-        mutate(grade = lead(grade),
+        mutate(grade = dplyr::lead(grade),
                available = 0,
-               extractioncost = lead(extractioncost)) %>%
+               extractioncost = dplyr::lead(extractioncost)) %>%
         filter(!is.na(grade)) %>%
         ungroup() %>%
-        bind_rows(L201.DepRsrcCurves_ground %>% mutate(subresource = grade), .) %>%
+        bind_rows(L201.DepRsrcCurves_ground %>% mutate(subresource = paste(subresource, grade)), .) %>%
         filter(subresource != "grade24") ->
         L201.DepRsrcCurves_ground
 
