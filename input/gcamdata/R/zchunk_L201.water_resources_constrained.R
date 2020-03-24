@@ -13,14 +13,13 @@
 #' original data system was \code{L102.water_supply_unlimited.R} (water level1).
 #' @details  Genereates water resource input files for region + basin which includes runoff and groundwater.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr anti_join case_when distinct filter if_else inner_join mutate pull right_join select
+#' @importFrom dplyr anti_join case_when distinct filter if_else inner_join lead mutate pull right_join select
 #' @importFrom tidyr complete nesting
 #' @importFrom stats spline
 #' @author ST Oct 2018
 module_water_L201.water_resources_constrained <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "water/basin_ID",
-             FILE = "water/basin_to_country_mapping",
+    return(c(FILE = "water/basin_to_country_mapping",
              FILE = "common/GCAM_region_names",
              FILE = "common/iso_GCAM_regID",
              FILE = "water/basin_water_demand_1990_2010",
@@ -28,7 +27,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
              "L100.runoff_max_bm3",
              "L101.groundwater_depletion_bm3",
              "L101.groundwater_grades_constrained_bm3",
-             "L101.groundwater_grades_uniform_bm3",
+             "L101.DepRsrcCurves_ground_uniform_bm3",
              "L103.water_mapping_R_GLU_B_W_Ws_share",
              "L103.water_mapping_R_B_W_Ws_share"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -45,9 +44,9 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     region <- ISO <- iso <- GCAM_basin_ID <- Basin_name <- GCAM_region_ID <-
-      basin_id <- GLU <- water_type <- basin_name <- resource <- runoff_max <-
+      GLU <- water_type <- basin_name <- resource <- runoff_max <-
       renewresource <- year <- access_fraction <- sub.renewable.resource <-
-      grade <- available <- extractioncost <- price <- avail <- basin.id <-
+      grade <- available <- extractioncost <- price <- avail <-
       demand <- depletion <- runoff <- accessible <- x <- . <- accessible_runoff <-
       deficit <- years <- deficit_total <- subresource <- NULL                      # silence package check.
 
@@ -57,17 +56,14 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    basin_ids <- get_data(all_data, "water/basin_ID")
-    water_mapping_R_GLU_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_GLU_B_W_Ws_share")
-    water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
+    L103.water_mapping_R_GLU_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_GLU_B_W_Ws_share")
+    L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
     L100.runoff_max_bm3 <- get_data(all_data, "L100.runoff_max_bm3")
     L100.runoff_accessible <- get_data(all_data, "L100.runoff_accessible")
     L101.groundwater_depletion_bm3 <- get_data(all_data, "L101.groundwater_depletion_bm3")
-    L101.DepRsrcCurves_ground_uniform_bm3 <- get_data(all_data, "L101.groundwater_grades_uniform_bm3")
+    L101.DepRsrcCurves_ground_uniform_bm3 <- get_data(all_data, "L101.DepRsrcCurves_ground_uniform_bm3")
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
     basin_water_demand_1990_2010 <- get_data(all_data, "water/basin_water_demand_1990_2010")
-    L103.water_mapping_R_GLU_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_GLU_B_W_Ws_share")
-    L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
 
     # Basin_to_country_mapping table include only one set of distinct basins
@@ -82,9 +78,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       # basins without gcam region mapping excluded (right join)
       # Antarctica not assigned
       right_join(GCAM_region_names, by = "GCAM_region_ID") %>%
-      rename(basin_id = GCAM_basin_ID,
-             basin_name = Basin_name) %>%
-      select(GCAM_region_ID, region, basin_id) %>%
+      select(GCAM_region_ID, region, GCAM_basin_ID) %>%
       arrange(region) ->
       RegionBasinHome
 
@@ -101,13 +95,13 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     # create full set of region/basin combinations
     # some basins overlap multiple regions
     # Use left join to ensure only those basins in use by GCAM regions are included
-    bind_rows(water_mapping_R_GLU_B_W_Ws_share %>%
-                rename(basin_id = GLU),
-              water_mapping_R_B_W_Ws_share) %>%
-      select(GCAM_region_ID, basin_id, water_type) %>%
+    bind_rows(L103.water_mapping_R_GLU_B_W_Ws_share %>%
+                rename(GCAM_basin_ID = GLU),
+              L103.water_mapping_R_B_W_Ws_share) %>%
+      select(GCAM_region_ID, GCAM_basin_ID, water_type) %>%
       filter(water_type == "water withdrawals") %>%
       distinct() %>%
-      left_join(basin_ids, by = "basin_id") %>%
+      left_join(select(basin_to_country_mapping, GCAM_basin_ID, basin_name = GLU_name), by = "GCAM_basin_ID") %>%
       # ^^ non-restrictive join required (NA values generated for unused basins)
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(water_type = "water withdrawals",
@@ -118,7 +112,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     # create unique set of region/basin combination with
     # basin contained by home region (region with largest basin area)
     L201.region_basin %>%
-      inner_join(RegionBasinHome, by = c("basin_id","GCAM_region_ID","region")) %>%
+      inner_join(RegionBasinHome, by = c("GCAM_basin_ID","GCAM_region_ID","region")) %>%
       arrange(region, basin_name) ->
       L201.region_basin_home
 
@@ -154,7 +148,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     # home region.
     # Runoff table includes basins not in use by GCAM regions.
     L201.region_basin_home %>%
-      left_join(L100.runoff_max_bm3, by = "basin_id") %>% #only basins with withdrawals are used
+      left_join(L100.runoff_max_bm3, by = "GCAM_basin_ID") %>% #only basins with withdrawals are used
       # ^^ non-restrictive join required (NA values generated for unused basins)
       mutate(sub.renewable.resource = "runoff") %>%
       rename(renewresource = resource,
@@ -169,7 +163,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     # basin accessible fraction of total runoff
     L201.region_basin_home %>%
       #only basins with withdrawals are used
-      left_join(L100.runoff_accessible, by = "basin_id") ->
+      left_join(L100.runoff_accessible, by = "GCAM_basin_ID") ->
       # ^^ non-restrictive join required (NA values generated for unused basins)
       access_fraction_uncalibrated
 
@@ -193,10 +187,10 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       arrange(region, resource, grade) ->
       L201.RenewRsrcCurves_uncalibrated
 
-    # depleteable ground water supply curve for uniform resources
+    # depletable ground water supply curve for uniform resources
     L201.region_basin_home %>%
       # not all basin groundwater curves are in used
-      left_join(L101.DepRsrcCurves_ground_uniform_bm3, by = c("basin_id" = "basin.id")) %>%
+      left_join(L101.DepRsrcCurves_ground_uniform_bm3, by = "GCAM_basin_ID") %>%
       # ^^ non-restrictive join required (NA values generated for unused basins)
       mutate(subresource = "groundwater") %>%
       arrange(region, resource, price) %>%
@@ -218,14 +212,14 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     # Step 1
     basin_water_demand_1990_2010 %>%
       filter(year %in% water.GW_DEPLETION_HISTORICAL) %>%
-      arrange(basin.id, year) %>%
-      group_by(basin.id) %>% summarise(demand = mean(demand)) %>%
+      arrange(GCAM_basin_ID, year) %>%
+      group_by(GCAM_basin_ID) %>% summarise(demand = mean(demand)) %>%
       ungroup() ->
       basin_water_demand_2000_2010
 
     L100.runoff_max_bm3 %>%
       filter(year %in% water.GW_DEPLETION_HISTORICAL) %>%
-      group_by(basin_id) %>% summarise(runoff = mean(runoff_max)) %>%
+      group_by(GCAM_basin_ID) %>% summarise(runoff = mean(runoff_max)) %>%
       ungroup() ->
       basin_max_runoff_2000_2010
 
@@ -233,21 +227,21 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     # ^^ non-restrictive join required (NA values generated for unused basins)
     left_join(basin_water_demand_2000_2010,
               basin_max_runoff_2000_2010,
-              by = c("basin.id" = "basin_id")) ->
+              by = "GCAM_basin_ID") ->
       demand_runoff_cal
 
     # Step 2
     L101.groundwater_depletion_bm3 %>%
-      right_join(demand_runoff_cal, by = "basin.id") %>%
+      right_join(demand_runoff_cal, by = "GCAM_basin_ID") %>%
       mutate(accessible = (demand - depletion) / runoff,
             accessible = if_else(accessible < 0, NA_real_, accessible)) %>%
-      select(basin_id = basin.id, accessible) ->
+      select(GCAM_basin_ID, accessible) ->
       accessible_water
 
     # Step 3
     L201.region_basin_home %>%
       # not all basin runoff water are in used
-      left_join(accessible_water, by= "basin_id") %>%
+      left_join(accessible_water, by= "GCAM_basin_ID") %>%
       # ^^ non-restrictive join required (NA values generated for unused basins)
       select(resource, accessible) %>%
       right_join(L201.RenewRsrcCurves_uncalibrated, by = "resource") %>%
@@ -284,36 +278,44 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
              extractioncost = rnw_spline$y)
     }
 
-    # apply smoothing across all basins
-    # filter out Arctic Ocean basin since no water demand
+    # replace 3-point curve with 20-point curve in all basins, except those whose demand is lower than a threshold fraction
+    # of total max runoff. Such basins can cause solution difficulties in the model due to the flatness of the supply curves
+    # at the relevant point.
+    three_point_supply_curve_resources <- demand_runoff_cal %>%
+      mutate(demand_frac = demand / runoff) %>%
+      filter(demand_frac < water.DEMAND_FRAC_THRESHOLD) %>%
+      left_join_error_no_match(select(L201.region_basin_home, GCAM_basin_ID, resource),
+                               by = "GCAM_basin_ID") %>%
+      pull(resource)
+
     accessible_water_unsmoothed %>%
-      filter(!grepl("Arctic Ocean", resource)) %>%
+      filter(!resource %in% three_point_supply_curve_resources) %>%
       lapply(unique(pull(., resource)), get_smooth_renewresource, .) %>%
       bind_rows(filter(accessible_water_unsmoothed,
-                       grepl("Arctic Ocean", resource))) ->
+                       resource %in% three_point_supply_curve_resources)) ->
       L201.RenewRsrcCurves_calib
 
     # Step 5
     L100.runoff_max_bm3 %>%
       filter(year %in% water.RUNOFF_HISTORICAL) %>%
-      group_by(basin_id) %>% summarise(runoff = mean(runoff_max)) %>%
+      group_by(GCAM_basin_ID) %>% summarise(runoff = mean(runoff_max)) %>%
       ungroup() %>%
       #keep only basins in use
-      filter(basin_id %in% L201.region_basin_home$basin_id) ->
+      filter(GCAM_basin_ID %in% L201.region_basin_home$GCAM_basin_ID) ->
       runoff_mean_hist
 
     access_fraction_uncalibrated %>%
-        select(basin_id, access_fraction) %>%
-        left_join(accessible_water, by = "basin_id") %>%
+        select(GCAM_basin_ID, access_fraction) %>%
+        left_join(accessible_water, by = "GCAM_basin_ID") %>%
         # ^^ non-restrictive join required (NA values generated for unused basins)
-        left_join_error_no_match(runoff_mean_hist, by = "basin_id") %>%
+        left_join_error_no_match(runoff_mean_hist, by = "GCAM_basin_ID") %>%
         mutate(accessible = if_else(is.na(accessible),
                                     access_fraction,
                                     accessible),
                accessible_runoff = runoff * accessible) %>%
         # ^^ get runoff volumes available
-        select(basin.id = basin_id, accessible_runoff) %>%
-        right_join(basin_water_demand_1990_2010, by = "basin.id") %>%
+        select(GCAM_basin_ID, accessible_runoff) %>%
+        right_join(basin_water_demand_1990_2010, by = "GCAM_basin_ID") %>%
         # ^^ join the historical demand
         mutate(deficit = demand - accessible_runoff,
                deficit = if_else(deficit <=0, 0, deficit)) %>%
@@ -322,7 +324,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         left_join_error_no_match(tibble(year = MODEL_BASE_YEARS[MODEL_BASE_YEARS >= water.GW_DEPLETION_BASE_YEAR],
                          years = diff(MODEL_BASE_YEARS)), by = "year") %>%
         mutate(deficit_total = deficit * years) %>%
-        group_by(basin.id) %>% summarise(available = sum(deficit_total)) %>%
+        group_by(GCAM_basin_ID) %>% summarise(available = sum(deficit_total)) %>%
         ungroup() %>%
         filter(available > 0) %>%
         mutate(grade = "grade hist", price = water.DEFAULT_BASEYEAR_WATER_PRICE) ->
@@ -330,17 +332,17 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
 
       bind_rows(
         L201.region_basin %>%
-          group_by(basin_id) %>%
+          group_by(GCAM_basin_ID) %>%
           mutate(n = n()) %>%
           ungroup() %>%
           left_join(L101.groundwater_grades_constrained_bm3,
-                    by = c("basin_id" = "basin.id")) %>%
+                    by = "GCAM_basin_ID") %>%
           mutate(available = available / n) %>%
           select(-n),
         # ^^ non-restrictive join required (NA values generated for unused basins)
         L201.region_basin_home %>%
           left_join(groundwater_hist,
-                    by = c("basin_id" = "basin.id")) %>%
+                    by = "GCAM_basin_ID") %>%
           # ^^ non-restrictive join required (NA values generated for unused basins)
           filter(!is.na(grade))) %>%
         rename(extractioncost = price) %>%
@@ -405,7 +407,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         add_units("NA") %>%
         add_comments("") %>%
         add_legacy_name("L201.DeleteUnlimitRsrc") %>%
-        add_precursors("water/basin_ID",
+        add_precursors("water/basin_to_country_mapping",
                        "common/GCAM_region_names",
                        "L103.water_mapping_R_GLU_B_W_Ws_share",
                        "L103.water_mapping_R_B_W_Ws_share") ->
@@ -416,8 +418,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         add_units("NA") %>%
         add_comments("") %>%
         add_legacy_name("L201.Rsrc") %>%
-        add_precursors("water/basin_ID",
-                       "water/basin_to_country_mapping",
+        add_precursors("water/basin_to_country_mapping",
                        "common/GCAM_region_names",
                        "common/iso_GCAM_regID",
                        "L103.water_mapping_R_GLU_B_W_Ws_share",
@@ -429,8 +430,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         add_units("1975$") %>%
         add_comments("") %>%
         add_legacy_name("L201.RsrcPrice") %>%
-        add_precursors("water/basin_ID",
-                       "water/basin_to_country_mapping",
+        add_precursors("water/basin_to_country_mapping",
                        "common/GCAM_region_names",
                        "common/iso_GCAM_regID",
                        "L103.water_mapping_R_GLU_B_W_Ws_share",
@@ -458,7 +458,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         add_units("bm^3, 1975$") %>%
         add_comments("") %>%
         add_legacy_name("L201.DepRsrcCurves_ground_uniform") %>%
-        add_precursors("L101.groundwater_grades_uniform_bm3") ->
+        add_precursors("L101.DepRsrcCurves_ground_uniform_bm3") ->
         L201.DepRsrcCurves_ground_uniform
 
       L201.RenewRsrcCurves_calib %>%

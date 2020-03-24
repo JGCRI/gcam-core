@@ -5,7 +5,7 @@
 # Units: km^3/yr
 # Column types: iin
 # ----------
-basin.id,year,demand
+GCAM_basin_ID,year,demand
 55,1990,15.0914
 55,2005,17.3037
 55,2010,17.1995

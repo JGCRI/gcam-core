@@ -548,6 +548,7 @@ water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010) # Historical years for freshwater
 water.RENEW.COST.GRADE1 <- 0.00001 #Renewable water grade1 cost
 water.RENEW.COST.GRADE2 <- 0.001 #Renewable water grade2 cost
 water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
+water.DEMAND_FRAC_THRESHOLD <- 1e-4 #Demand fraction of total runoff below which we use a 3-point supply curve to help model solution
 
 # Energy-for-water constants ======================================================================
 

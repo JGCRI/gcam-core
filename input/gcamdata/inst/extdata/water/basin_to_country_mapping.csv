@@ -5,7 +5,7 @@
 # Source: NA
 # Column types: iccccici
 # ----------
-GCAM_basin_ID,Basin_name,GLU_code,GLU_name,ISO,ISO_NUM,Country_name,desal
+GCAM_basin_ID,Basin_long_name,GLU_code,GLU_name,ISO,ISO_NUM,Country_name,desal
 1,Arctic_Ocean_Islands,GLU001,ArcticIsl,GRL,304,Greenland,0
 2,Northwest_Territories,GLU002,NWTerr,CAN,124,Canada,0
 3,Siberia_North_Coast,GLU003,SiberiaN,RUS,643,Russian Federation,0

@@ -21,6 +21,8 @@ module_water_L203.water_td <- function(command, ...) {
              FILE = "water/A03.sector",
              FILE = "water/basin_to_country_mapping",
              FILE = "water/water_td_sectors",
+             "L103.water_mapping_R_GLU_B_W_Ws_share",
+             "L103.water_mapping_R_B_W_Ws_share",
              "L125.LC_bm2_R_GLU",
              "L132.water_km3_R_ind_Yh",
              "L145.municipal_water_R_W_Yh_km3",
@@ -45,6 +47,8 @@ module_water_L203.water_td <- function(command, ...) {
     A03.sector <- get_data(all_data, "water/A03.sector")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     water_td_sectors <- get_data(all_data, "water/water_td_sectors")
+    L103.water_mapping_R_GLU_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_GLU_B_W_Ws_share")
+    L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
     L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU")
     L132.water_km3_R_ind_Yh <- get_data(all_data, "L132.water_km3_R_ind_Yh")
     L145.municipal_water_R_W_Yh_km3 <- get_data(all_data, "L145.municipal_water_R_W_Yh_km3")
@@ -66,16 +70,23 @@ module_water_L203.water_td <- function(command, ...) {
       mutate(water.sector = water.IRRIGATION) %>%
       left_join_error_no_match(water_td_sectors, by = "water.sector") %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c(GLU = "GLU_code")) %>%
+      left_join_error_no_match(select(basin_to_country_mapping, GCAM_basin_ID, GLU_code, GLU_name), by = c(GLU = "GLU_code")) %>%
+      mutate(basin_name = GLU_name) %>%
       repeat_add_columns(tibble(water_type = c("water withdrawals", "water consumption"))) %>%
+      left_join_error_no_match(L103.water_mapping_R_GLU_B_W_Ws_share,
+                               by = c("GCAM_region_ID", GCAM_basin_ID = "GLU", "water_type", water.sector = "water_sector")) %>%
       mutate(supplysector_root = supplysector,
              supplysector = set_water_input_name(water.sector, water_type, water_td_sectors, GLU = GLU_name),
              subsector = water_type,
              technology = water_type)
 
-    L203.water_td_info <- filter(water_td_sectors, water.sector != water.IRRIGATION) %>%
-      repeat_add_columns(GCAM_region_names) %>%
-      repeat_add_columns(tibble(water_type = c("water withdrawals", "water consumption"))) %>%
+    L203.water_td_info <- L103.water_mapping_R_B_W_Ws_share %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(select(basin_to_country_mapping, GCAM_basin_ID, GLU_code, GLU_name), by = "GCAM_basin_ID") %>%
+      mutate(basin_name = GLU_name) %>%
+      rename(water.sector = water_sector,
+             GLU = GLU_code) %>%
+      left_join_error_no_match(water_td_sectors, by = "water.sector") %>%
       mutate(supplysector_root = supplysector,
              supplysector = set_water_input_name(water.sector, water_type, water_td_sectors),
              subsector = water_type,

@@ -5,7 +5,7 @@
 # Units: price in 1975USD; available in km3
 # Column types: inncc
 # ----------
-basin.id,price,available,grade,scenario
+GCAM_basin_ID,price,available,grade,scenario
 1,0.002,51.2907,grade1,05pct
 1,0.022,61.3486,grade2,05pct
 1,0.044,21.5911,grade3,05pct

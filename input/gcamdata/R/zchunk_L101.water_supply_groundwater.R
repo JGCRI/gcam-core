@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L101.groundwater_grades_uniform_bm3},
+#' the generated outputs: \code{L101.DepRsrcCurves_ground_uniform_bm3},
 #' \code{L101.groundwater_grades_constrained_bm3}, \code{L101.groundwater_depletion_bm3}. The corresponding file in the
 #' original data system was \code{L100.water_supply_runoff.R} (Water level1).
 #' @details Prepares groundwater resource curves and sets up groundwater calibration data.
@@ -18,19 +18,18 @@
 #' @author ST September 2018
 module_water_L101.water_supply_groundwater <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "water/basin_ID",
-             FILE = "water/groundwater_uniform",
+    return(c(FILE = "water/groundwater_uniform",
              FILE = "water/groundwater_constrained",
              FILE = "water/groundwater_trend_gleeson",
              FILE = "water/groundwater_trend_watergap"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L101.groundwater_grades_uniform_bm3",
+    return(c("L101.DepRsrcCurves_ground_uniform_bm3",
              "L101.groundwater_grades_constrained_bm3",
              "L101.groundwater_depletion_bm3"))
   } else if(command == driver.MAKE) {
 
     . <- base.rsc <- price <- base.prc <-
-      alpha <- base.cum <- basin.id <-
+      alpha <- base.cum <- GCAM_basin_ID <-
       avail <- hist.use <- hist.price <-
       grade <- scenario <- trend_km3PerYr <-
       hi <- nhi <- human_only <- depletion <-
@@ -40,7 +39,6 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
 
     # Step 1. Load required inputs
 
-    basin_ids <- get_data(all_data, "water/basin_ID")
     gw_uniform <- get_data(all_data, "water/groundwater_uniform")
     gw_constrained <- get_data(all_data, "water/groundwater_constrained")
 
@@ -70,9 +68,9 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
     gw_uniform_grade_expand %>%
       mutate(avail = base.rsc * (price / base.prc) ^
                (alpha * water.GROUNDWATER_BETA) - base.cum) %>%
-      arrange(basin.id, price) %>%
-      select(basin.id, price, avail) %>%
-      group_by(basin.id) %>%
+      arrange(GCAM_basin_ID, price) %>%
+      select(GCAM_basin_ID, price, avail) %>%
+      group_by(GCAM_basin_ID) %>%
       mutate(avail = dplyr::lead(avail, default = 0.0),
              grade = paste0("grade", row_number())) %>%
       ungroup() ->
@@ -83,10 +81,10 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       rename(price = hist.price,
              avail = hist.use) %>%
       mutate(grade = "grade hist") %>%
-      select(basin.id, price, avail, grade) %>%
+      select(GCAM_basin_ID, price, avail, grade) %>%
       bind_rows(gw_uniform_unadjusted) %>%
-      arrange(basin.id, price) ->
-      L101.groundwater_grades_uniform_bm3
+      arrange(GCAM_basin_ID, price) ->
+      L101.DepRsrcCurves_ground_uniform_bm3
 
 
     # Step 3: Prepare constrained groundwater
@@ -107,7 +105,7 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
         filter(human_only < 0, hi < 0) %>%
         rename(depletion = human_only) %>%
         mutate(depletion = round(-depletion, water.DIGITS_GROUND_WATER)) %>%
-        select(basin.id, depletion) ->
+        select(GCAM_basin_ID, depletion) ->
         L101.groundwater_depletion_bm3
     }
 
@@ -116,28 +114,26 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
         rename(depletion = netDepletion) %>%
         filter(depletion > 0) %>%
         mutate(depletion = round(depletion, water.DIGITS_GROUND_WATER)) %>%
-        arrange(basin.id) %>% select(basin.id, depletion) ->
+        arrange(GCAM_basin_ID) %>% select(GCAM_basin_ID, depletion) ->
         L101.groundwater_depletion_bm3
     }
 
     # Prepare outputs
 
-    L101.groundwater_grades_uniform_bm3 %>%
+    L101.DepRsrcCurves_ground_uniform_bm3 %>%
       add_title("Uniform groundwater non-renewable resource curves") %>%
       add_units("km^3/yr") %>%
       add_comments("These curves are not based on estimates of actual groundwater volumes") %>%
-      add_legacy_name("L101.groundwater_grades_uniform_bm3") %>%
-      add_precursors("water/basin_ID",
-                     "water/groundwater_uniform") ->
-      L101.groundwater_grades_uniform_bm3
+      add_legacy_name("L101.DepRsrcCurves_ground_uniform_bm3") %>%
+      add_precursors("water/groundwater_uniform") ->
+      L101.DepRsrcCurves_ground_uniform_bm3
 
     L101.groundwater_grades_constrained_bm3 %>%
       add_title("Realistic groundwater non-renewable resource curves") %>%
       add_units("km^3/yr") %>%
       add_comments("These curves are based on global estimates of groundwater volumes") %>%
       add_legacy_name("L101.groundwater_grades_constrained_bm3") %>%
-      add_precursors("water/basin_ID",
-                     "water/groundwater_constrained") ->
+      add_precursors("water/groundwater_constrained") ->
       L101.groundwater_grades_constrained_bm3
 
     L101.groundwater_depletion_bm3 %>%
@@ -150,7 +146,7 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       L101.groundwater_depletion_bm3
 
 
-    return_data(L101.groundwater_grades_uniform_bm3,
+    return_data(L101.DepRsrcCurves_ground_uniform_bm3,
                 L101.groundwater_grades_constrained_bm3,
                 L101.groundwater_depletion_bm3)
 
