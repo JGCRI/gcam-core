@@ -29,7 +29,8 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
              "L101.groundwater_grades_constrained_bm3",
              "L101.DepRsrcCurves_ground_uniform_bm3",
              "L103.water_mapping_R_GLU_B_W_Ws_share",
-             "L103.water_mapping_R_B_W_Ws_share"))
+             "L103.water_mapping_R_B_W_Ws_share",
+             "L125.LC_bm2_R_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L201.DeleteUnlimitRsrc",
              "L201.Rsrc",
@@ -65,6 +66,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
     basin_water_demand_1990_2010 <- get_data(all_data, "water/basin_water_demand_1990_2010")
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
+    L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU")
 
     # Basin_to_country_mapping table include only one set of distinct basins
     # that are mapped to a single country with largest basin share.
@@ -330,15 +332,24 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         mutate(grade = "grade hist", price = water.DEFAULT_BASEYEAR_WATER_PRICE) ->
       groundwater_hist
 
+    # Parse out groundwater supply curves by basin to basin and region on the basis of land area shares
+    region_within_basin_shares <- L125.LC_bm2_R_GLU %>%
+      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GCAM_basin_ID),
+                               by = c(GLU = "GLU_code")) %>%
+      group_by(GCAM_basin_ID) %>%
+      mutate(share = value / sum(value)) %>%
+      ungroup() %>%
+      select(GCAM_region_ID, GCAM_basin_ID, share)
+
       bind_rows(
         L201.region_basin %>%
-          group_by(GCAM_basin_ID) %>%
-          mutate(n = n()) %>%
-          ungroup() %>%
+          left_join(region_within_basin_shares, by = c("GCAM_region_ID", "GCAM_basin_ID")) %>%
+          # Assign zero groundwater share where our estimated region/basin land area is 0
+          replace_na(list(share = 0)) %>%
           left_join(L101.groundwater_grades_constrained_bm3,
                     by = "GCAM_basin_ID") %>%
-          mutate(available = available / n) %>%
-          select(-n),
+          mutate(available = available * share) %>%
+          select(-share),
         # ^^ non-restrictive join required (NA values generated for unused basins)
         L201.region_basin_home %>%
           left_join(groundwater_hist,
@@ -478,7 +489,8 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         add_comments("Includes historical grades") %>%
         add_legacy_name("L201.DepRsrcCurves_ground") %>%
         add_precursors("water/basin_water_demand_1990_2010",
-                       "L101.groundwater_grades_constrained_bm3") ->
+                       "L101.groundwater_grades_constrained_bm3",
+                       "L125.LC_bm2_R_GLU") ->
         L201.DepRsrcCurves_ground
 
       L201.RenewRsrcTechShrwt %>%
