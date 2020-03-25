@@ -490,8 +490,7 @@ socioeconomics.POP_DIGITS                <- 0
 water.ALL_WATER_TYPES                     <- c("water consumption",
                                                "water withdrawals",
                                                "seawater",
-                                               "biophysical water consumption",
-                                               "desalination")
+                                               "biophysical water consumption")
 water.AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
 water.COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
 water.COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
@@ -512,7 +511,6 @@ water.DESAL                               <- "desalinated water"
 water.WATER_UNITS_PRICE                   <- "1975$/m^3"
 water.WATER_UNITS_QUANTITY                <- "km^3"
 water.DIGITS_MUNI_WATER                   <- 4
-water.DESALINATION_PRICE                  <- 0.214  # 1975$/m3
 water.IRR_SHARE                           <- 1
 water.MAPPING_COEF                        <- 1
 water.MAPPING_PMULT                       <- 1
