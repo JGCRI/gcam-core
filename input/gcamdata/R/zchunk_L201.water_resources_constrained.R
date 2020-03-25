@@ -337,7 +337,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GCAM_basin_ID),
                                by = c(GLU = "GLU_code")) %>%
       group_by(GCAM_basin_ID) %>%
-      mutate(share = value / sum(value)) %>%
+      mutate(share = LC_bm2 / sum(LC_bm2)) %>%
       ungroup() %>%
       select(GCAM_region_ID, GCAM_basin_ID, share)
 
