@@ -22,9 +22,11 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
              FILE = "water/LivestockWaterFootprint_MH2010",
              FILE = "water/FAO_an_items_Stocks",
              "L100.FAO_an_Stocks",
-             "L100.FAO_an_Dairy_Stocks"))
+             "L100.FAO_an_Dairy_Stocks",
+             "L103.water_mapping_R_B_W_Ws_share"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L133.water_demand_livestock_R_C_W_km3_Mt"))
+    return(c("L133.water_demand_livestock_R_C_W_km3_Mt",
+             "L133.water_demand_livestock_R_B_W_km3"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -36,6 +38,7 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
     FAO_an_items_Stocks <- get_data(all_data, "water/FAO_an_items_Stocks")
     L100.FAO_an_Stocks <- get_data(all_data, "L100.FAO_an_Stocks")
     L100.FAO_an_Dairy_Stocks <- get_data(all_data, "L100.FAO_an_Dairy_Stocks")
+    L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
 
     # Silence package checks
     year <- iso <- item <- value <- dairy.to.total <- dairy.adj <-
@@ -146,6 +149,17 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
       select(GCAM_region_ID, GCAM_commodity, water_type, coefficient) ->
       L133.water_demand_livestock_R_C_W_km3_Mt
 
+    L133.water_demand_livestock_R_B_W_km3 <- L105.an_Prod_Mt_R_C_Y %>%
+      inner_join(L133.water_demand_livestock_R_C_W_km3_Mt,
+                by = c("GCAM_region_ID", "GCAM_commodity")) %>%
+      left_join(filter(L103.water_mapping_R_B_W_Ws_share, water_sector == "Livestock"),
+                by = c("GCAM_region_ID", "water_type")) %>%
+      mutate(value = value * coefficient * share) %>%
+      group_by(GCAM_region_ID, GCAM_basin_ID, water_type, year) %>%
+      summarise(value = sum(value)) %>%
+      ungroup()
+
+
 
     # ===================================================
 
@@ -164,7 +178,15 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
                      "L100.FAO_an_Dairy_Stocks") ->
       L133.water_demand_livestock_R_C_W_km3_Mt
 
-    return_data(L133.water_demand_livestock_R_C_W_km3_Mt)
+    L133.water_demand_livestock_R_B_W_km3 %>%
+      add_title("Livestock water demands by region ID / GCAM_commodity/ water type / year") %>%
+      add_units("km^3") %>%
+      add_comments("Calculated by multiplying commodity production by water demand coefficients and basin-wise shares") %>%
+      same_precursors_as(L133.water_demand_livestock_R_C_W_km3_Mt) %>%
+      add_precursors("L103.water_mapping_R_B_W_Ws_share") ->
+      L133.water_demand_livestock_R_B_W_km3
+
+    return_data(L133.water_demand_livestock_R_C_W_km3_Mt, L133.water_demand_livestock_R_B_W_km3)
   } else {
     stop("Unknown command")
   }

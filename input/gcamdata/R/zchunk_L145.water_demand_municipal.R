@@ -19,17 +19,20 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "water/aquastat_ctry",
+             FILE = "water/basin_to_country_mapping",
              FILE = "water/FAO_municipal_water_AQUASTAT",
              FILE = "water/IBNET_municipal_water_cost_USDm3",
              FILE = "water/municipal_water_use_efficiency",
              FILE = "water/mfg_water_mapping",
+             FILE = "water/nonirrigation_withdrawal",
              "L100.Pop_thous_ctry_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L145.municipal_water_ctry_W_Yh_km3",
              "L145.municipal_water_R_W_Yh_km3",
              "L145.municipal_water_cost_R_75USD_m3",
              "L145.municipal_water_eff_ctry_Yh",
-             "L145.municipal_water_eff_R_Yh"))
+             "L145.municipal_water_eff_R_Yh",
+             "L145.municipal_water_R_B_W_Yh_km3"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -41,10 +44,12 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     aquastat_ctry <- get_data(all_data, "water/aquastat_ctry")
+    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     FAO_municipal_water_AQUASTAT <- get_data(all_data, "water/FAO_municipal_water_AQUASTAT")
     IBNET_municipal_water_cost_USDm3 <- get_data(all_data, "water/IBNET_municipal_water_cost_USDm3")
     municipal_water_use_efficiency <- get_data(all_data, "water/municipal_water_use_efficiency")
     mfg_water_mapping <- get_data(all_data, "water/mfg_water_mapping")
+    nonirrigation_withdrawal <- get_data(all_data, "water/nonirrigation_withdrawal")
 
     L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
 
@@ -142,6 +147,32 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
     L145.municipal_water_eff_ctry_Yh <- select(L145.municipal_water_ctry_ALL_Yh_km3, iso, year, efficiency)
     L145.municipal_water_eff_R_Yh <- select(L145.municipal_water_R_ALL_Yh_km3, GCAM_region_ID, year, efficiency)
 
+    # Final step - downscaling manufacturing water flow volumes to basins
+    # Note - this downscaling step is normally performed using the output of module_water_L103.water_basin_mapping
+    # That does not work in this case because that file is ultimately dependent on this one
+
+    # Note - Since the muni flow table has only withdrawals, this is all that is being processed here
+    nonirrigation_withdrawal %>%
+      select(GCAM_basin_ID = GCAM_ID_1, iso = ISO_3DIGIT, Municipal) %>%
+      mutate(iso = tolower(iso)) %>%
+      left_join(select(iso_GCAM_regID, iso, GCAM_region_ID),
+                by = "iso") %>%
+      filter(!is.na(GCAM_region_ID)) %>%
+      group_by(GCAM_region_ID, GCAM_basin_ID) %>%
+      summarise(demand = sum(Municipal)) %>%
+      ungroup() %>%
+      group_by(GCAM_region_ID) %>%
+      mutate(share = demand / sum(demand)) %>%
+      ungroup() %>%
+      filter(share > 0) %>%
+      select(-demand) ->
+      L145.muni_water_basin_shares
+
+    L145.municipal_water_R_B_W_Yh_km3 <- L145.municipal_water_R_W_Yh_km3 %>%
+      left_join(L145.muni_water_basin_shares, by = c("GCAM_region_ID")) %>%
+      mutate(withdrawals = withdrawals * share) %>%
+      select(GCAM_region_ID, GCAM_basin_ID, year, withdrawals)
+
     # Produce outputs
     L145.municipal_water_ctry_W_Yh_km3 %>%
       add_title("Municipal water withdrawals by GCAM_region_ID for all historical years ") %>%
@@ -199,11 +230,23 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
                      "water/IBNET_municipal_water_cost_USDm3") ->
       L145.municipal_water_cost_R_75USD_m3
 
+    L145.municipal_water_R_B_W_Yh_km3 %>%
+      add_title("Municipal water withdrawals by GCAM_region_ID and basin for all historical years ") %>%
+      add_units("km^3") %>%
+      add_comments("Municipal water demands by region downscaled to basin") %>%
+      same_precursors_as(L145.municipal_water_R_W_Yh_km3) %>%
+      add_precursors("water/basin_to_country_mapping",
+                     "water/aquastat_ctry",
+                     "water/nonirrigation_withdrawal") ->
+      L145.municipal_water_R_B_W_Yh_km3
+
+
     return_data(L145.municipal_water_ctry_W_Yh_km3,
                 L145.municipal_water_R_W_Yh_km3,
                 L145.municipal_water_eff_ctry_Yh,
                 L145.municipal_water_eff_R_Yh,
-                L145.municipal_water_cost_R_75USD_m3)
+                L145.municipal_water_cost_R_75USD_m3,
+                L145.municipal_water_R_B_W_Yh_km3)
   } else {
     stop("Unknown command")
   }
