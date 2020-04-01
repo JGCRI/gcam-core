@@ -64,7 +64,8 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     L101.groundwater_depletion_bm3 <- get_data(all_data, "L101.groundwater_depletion_bm3")
     L101.DepRsrcCurves_ground_uniform_bm3 <- get_data(all_data, "L101.DepRsrcCurves_ground_uniform_bm3")
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
-    basin_water_demand_1990_2010 <- get_data(all_data, "water/basin_water_demand_1990_2010")
+    basin_water_demand_1990_2010 <- get_data(all_data, "water/basin_water_demand_1990_2010") %>%
+      gather_years(value_col = "demand")
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
     L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU")
 
@@ -286,7 +287,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     three_point_supply_curve_resources <- demand_runoff_cal %>%
       mutate(demand_frac = demand / runoff) %>%
       filter(demand_frac < water.DEMAND_FRAC_THRESHOLD) %>%
-      left_join_error_no_match(select(L201.region_basin_home, GCAM_basin_ID, resource),
+      inner_join(select(L201.region_basin_home, GCAM_basin_ID, resource),
                                by = "GCAM_basin_ID") %>%
       pull(resource)
 
