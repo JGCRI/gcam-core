@@ -1207,7 +1207,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
       add_legacy_name("L2233.StubTechCoef_elec") %>%
       add_precursors("L2233.GlobalTechCoef_elec_cool",
-                     "gcam-usa/A23.elecS_tech_mapping_cool")
+                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
       L2233.StubTechCoef_elecS_cool_USA
 
     L2233.StubTechMarket_elec_USA %>%

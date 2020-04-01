@@ -234,7 +234,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
 
     # Subsector logit exponents for mapping sector
     L203.mapping_all %>%
-      mutate(logit.exponent = case_when(region!=gcam.USA_REGION&water_sector!=water.IRRIGATION ~ water.LOGIT_EXP,TRUE~0)) %>%
+      mutate(logit.exponent = case_when(region!=gcam.USA_REGION ~ water.LOGIT_EXP,TRUE~0)) %>%
       select(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME) ->
       L203.SubsectorLogit_USA
 
@@ -286,11 +286,19 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       L203.TechDesalCoef_USA
 
     ## Set shareweight of desalination technologies to 0 in all non-coastal states
+    ## and basins that do not come in contact with the ocean. This removes the possibility
+    ## of having desalination required in Texas, but coming from the Rio Grande which does not
+    ## have access to seawater without inland transportation.
+    ##
+    ## Additionally, desalination is now allowed for all sectors, including irrigation.
+    ## Given the price subsidy on agricultural water, desalination should never come
+    ## for irrigated agriculture as the price required would exceed the limits defined in
+    ## water_supply_constrained.xml
     L203.TechShrwt_USA %>%
       #filter(!grepl("_irr_", supplysector)) %>%
       filter(region!=gcam.USA_REGION) %>%
       mutate(technology = "desalination",
-             share.weight = if_else((region %in% gcamusa.NO_SEAWATER_STATES)|grepl("Rio",subsector),0, 1))  %>%
+             share.weight = if_else((region %in% gcamusa.NO_SEAWATER_STATES)|!(subsector %in% gcamusa.SEAWATER_BASINS),0, 1))  %>%
       dplyr::filter(!is.na(year))->
       L203.TechDesalShrwt_USA
 
