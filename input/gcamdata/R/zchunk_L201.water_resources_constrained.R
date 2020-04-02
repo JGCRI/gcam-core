@@ -22,7 +22,6 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     return(c(FILE = "water/basin_to_country_mapping",
              FILE = "common/GCAM_region_names",
              FILE = "common/iso_GCAM_regID",
-             FILE = "water/basin_water_demand_1990_2010",
              "L100.runoff_accessible",
              "L100.runoff_max_bm3",
              "L101.groundwater_depletion_bm3",
@@ -30,7 +29,14 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
              "L101.DepRsrcCurves_ground_uniform_bm3",
              "L103.water_mapping_R_GLU_B_W_Ws_share",
              "L103.water_mapping_R_B_W_Ws_share",
-             "L125.LC_bm2_R_GLU"))
+             "L125.LC_bm2_R_GLU",
+             "L103.water_mapping_R_B_W_Ws_share",
+             "L110.in_km3_water_primary_basin",
+             "L1233.wdraw_km3_R_B_elec",
+             "L133.water_demand_livestock_R_B_W_km3",
+             "L165.ag_IrrEff_R",
+             "L165.IrrWithd_km3_R_B_Y",
+             "L203.Production_watertd"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L201.DeleteUnlimitRsrc",
              "L201.Rsrc",
@@ -64,10 +70,15 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     L101.groundwater_depletion_bm3 <- get_data(all_data, "L101.groundwater_depletion_bm3")
     L101.DepRsrcCurves_ground_uniform_bm3 <- get_data(all_data, "L101.DepRsrcCurves_ground_uniform_bm3")
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
-    basin_water_demand_1990_2010 <- get_data(all_data, "water/basin_water_demand_1990_2010") %>%
-      gather_years(value_col = "demand")
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
     L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU")
+    L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
+    L110.in_km3_water_primary_basin <- get_data(all_data, "L110.in_km3_water_primary_basin")
+    L1233.wdraw_km3_R_B_elec <- get_data(all_data, "L1233.wdraw_km3_R_B_elec")
+    L133.water_demand_livestock_R_B_W_km3 <- get_data(all_data, "L133.water_demand_livestock_R_B_W_km3")
+    L165.ag_IrrEff_R <- get_data(all_data, "L165.ag_IrrEff_R")
+    L165.IrrWithd_km3_R_B_Y <- get_data(all_data, "L165.IrrWithd_km3_R_B_Y")
+    L203.Production_watertd <- get_data(all_data, "L203.Production_watertd")
 
     # Basin_to_country_mapping table include only one set of distinct basins
     # that are mapped to a single country with largest basin share.
@@ -213,12 +224,50 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     # Step 5: Determine historical grade groundwater based to be allowed and combine with depletion curves
 
     # Step 1
-    basin_water_demand_1990_2010 %>%
+    # Historical water demand by basin
+    # This part is somewhat confusing for industrial and munipal uses. Where most of the water demands are equal to the
+    # "water withdrawals" by region multiplied by basin-level shares, calculated in L1 chunks, industrial and municipal
+    # demands can't be assigned to basin at that stage, as they need to have their desalination-related water use
+    # deducted. That is, the withdrawals by basin are equal to total regional withdrawals minus desal, then multiplied
+    # by basin-wise shares. For this reason, the industrial and municipal quantities are pulled from the calibration
+    # quantities read to the model.
+
+    # Pre-process the basin-level data on water demands for binding together
+    L110.in_km3_water_primary_basin <- filter(L110.in_km3_water_primary_basin, water_type == "water withdrawals")
+    L133.water_demand_livestock_R_B_W_km3 <- filter(L133.water_demand_livestock_R_B_W_km3, water_type == "water withdrawals")
+    L165.IrrWithd_km3_R_B_Y <- L165.IrrWithd_km3_R_B_Y %>%
+      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GCAM_basin_ID),
+                               by = c(GLU = "GLU_code")) %>%
+      left_join_error_no_match(select(L165.ag_IrrEff_R, GCAM_region_ID, conveyance.eff),
+                               by = "GCAM_region_ID") %>%
+      mutate(value = IrrWithd_km3 / conveyance.eff)
+    L203.Production_watertd <- filter(L203.Production_watertd, technology != water.DESAL) %>%
+      left_join_error_no_match(GCAM_region_names, by = "region") %>%
+      left_join_error_no_match(select(basin_to_country_mapping, GLU_name, GCAM_basin_ID),
+                               by = c(technology = "GLU_name")) %>%
+      select(GCAM_region_ID, GCAM_basin_ID, year, value = calOutputValue)
+
+    basin_water_demand_1990_2010 <- bind_rows(L1233.wdraw_km3_R_B_elec,
+                                              L133.water_demand_livestock_R_B_W_km3,
+                                              L110.in_km3_water_primary_basin,
+                                              L165.IrrWithd_km3_R_B_Y,
+                                              L203.Production_watertd) %>%
+      filter(year %in% MODEL_BASE_YEARS,
+             year >= water.GW_DEPLETION_BASE_YEAR) %>%
+      left_join_error_no_match(select(basin_to_country_mapping, GCAM_basin_ID, GLU_name),
+                               by = "GCAM_basin_ID") %>%
+      group_by(GCAM_basin_ID, GLU_name, year) %>%
+      summarise(demand = sum(value)) %>%
+      ungroup()
+
+    basin_water_demand_2000_2010 <- basin_water_demand_1990_2010 %>%
       filter(year %in% water.GW_DEPLETION_HISTORICAL) %>%
-      arrange(GCAM_basin_ID, year) %>%
-      group_by(GCAM_basin_ID) %>% summarise(demand = mean(demand)) %>%
-      ungroup() ->
-      basin_water_demand_2000_2010
+      group_by(GCAM_basin_ID, year) %>%
+      summarise(demand = sum(demand)) %>%
+      ungroup() %>%
+      group_by(GCAM_basin_ID) %>%
+      summarise(demand = mean(demand)) %>%
+      ungroup()
 
     L100.runoff_max_bm3 %>%
       filter(year %in% water.GW_DEPLETION_HISTORICAL) %>%
@@ -478,7 +527,13 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         add_units("bm^3, 1975$") %>%
         add_comments("Calibrated to ensure observed groundwater is taken in calibration years") %>%
         add_legacy_name("L201.RenewRsrcCurves_calib") %>%
-        add_precursors("water/basin_water_demand_1990_2010",
+        add_precursors("L103.water_mapping_R_B_W_Ws_share",
+                       "L110.in_km3_water_primary_basin",
+                       "L1233.wdraw_km3_R_B_elec",
+                       "L133.water_demand_livestock_R_B_W_km3",
+                       "L165.ag_IrrEff_R",
+                       "L165.IrrWithd_km3_R_B_Y",
+                       "L203.Production_watertd",
                        "L101.groundwater_depletion_bm3",
                        "L100.runoff_accessible",
                        "L100.runoff_max_bm3") ->
@@ -489,7 +544,13 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         add_units("bm^3, 1975$") %>%
         add_comments("Includes historical grades") %>%
         add_legacy_name("L201.DepRsrcCurves_ground") %>%
-        add_precursors("water/basin_water_demand_1990_2010",
+        add_precursors("L103.water_mapping_R_B_W_Ws_share",
+                       "L110.in_km3_water_primary_basin",
+                       "L1233.wdraw_km3_R_B_elec",
+                       "L133.water_demand_livestock_R_B_W_km3",
+                       "L165.ag_IrrEff_R",
+                       "L165.IrrWithd_km3_R_B_Y",
+                       "L203.Production_watertd",
                        "L101.groundwater_grades_constrained_bm3",
                        "L125.LC_bm2_R_GLU") ->
         L201.DepRsrcCurves_ground

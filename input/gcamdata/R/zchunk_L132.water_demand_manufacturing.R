@@ -20,18 +20,14 @@ module_water_L132.water_demand_manufacturing <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "water/aquastat_ctry",
-             FILE = "water/basin_to_country_mapping",
              FILE = "water/FAO_industrial_water_AQUASTAT",
              FILE = "water/mfg_water_ratios",
              FILE = "water/mfg_water_mapping",
-             FILE = "water/nonirrigation_consumption",
-             FILE = "water/nonirrigation_withdrawal",
              FILE = "water/Vassolo_mfg_water",
              "L101.en_bal_EJ_ctry_Si_Fi_Yh_full"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L132.water_km3_ctry_ind_Yh",
-             "L132.water_km3_R_ind_Yh",
-             "L132.water_km3_R_B_ind_Yh"))
+             "L132.water_km3_R_ind_Yh"))
   } else if(command == driver.MAKE) {
 
     year <- value <- GCAM_region_ID <- sector <- fuel <- continent <-
@@ -45,12 +41,9 @@ module_water_L132.water_demand_manufacturing <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     aquastat_ctry <- get_data(all_data, "water/aquastat_ctry")
-    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     FAO_industrial_water_AQUASTAT <- get_data(all_data, "water/FAO_industrial_water_AQUASTAT")
     mfg_water_ratios <- get_data(all_data, "water/mfg_water_ratios")
     mfg_water_mapping <- get_data(all_data, "water/mfg_water_mapping")
-    nonirrigation_consumption <- get_data(all_data, "water/nonirrigation_consumption")
-    nonirrigation_withdrawal <- get_data(all_data, "water/nonirrigation_withdrawal")
     Vassolo_mfg_water <- get_data(all_data, "water/Vassolo_mfg_water")
 
 
@@ -145,37 +138,6 @@ module_water_L132.water_demand_manufacturing <- function(command, ...) {
       summarise(water_km3 = sum(water_km3)) %>%
       ungroup()
 
-    # Final step - downscaling manufacturing water flow volumes to basins
-    # Note - this downscaling step is normally performed using the output of module_water_L103.water_basin_mapping
-    # That does not work in this case because that file is ultimately dependent on this one
-    bind_rows(
-      nonirrigation_consumption %>%
-        select(GCAM_basin_ID = GCAM_ID_1, iso = ISO_3DIGIT, Manufacturing) %>%
-        mutate(water_type = "water consumption"),
-      nonirrigation_withdrawal %>%
-        select(GCAM_basin_ID = GCAM_ID_1, iso = ISO_3DIGIT, Manufacturing) %>%
-        mutate(water_type = "water withdrawals")
-    ) %>%
-      mutate(iso = tolower(iso)) %>%
-      left_join(select(iso_GCAM_regID, iso, GCAM_region_ID),
-                by = "iso") %>%
-      filter(!is.na(GCAM_region_ID)) %>%
-      group_by(GCAM_region_ID, GCAM_basin_ID, water_type) %>%
-      summarise(demand = sum(Manufacturing)) %>%
-      ungroup() %>%
-      group_by(GCAM_region_ID, water_type) %>%
-      mutate(share = demand / sum(demand)) %>%
-      ungroup() %>%
-      filter(share > 0) %>%
-      select(-demand) ->
-      L132.mfg_water_basin_shares
-
-    L132.water_km3_R_B_ind_Yh <- L132.water_km3_R_ind_Yh %>%
-      left_join(L132.mfg_water_basin_shares, by = c("GCAM_region_ID", "water_type")) %>%
-      mutate(water_km3 = water_km3 * share) %>%
-      select(GCAM_region_ID, GCAM_basin_ID, water_type, year, water_km3)
-
-
     # ===================================================
 
     L132.water_km3_ctry_ind_Yh %>%
@@ -209,17 +171,7 @@ module_water_L132.water_demand_manufacturing <- function(command, ...) {
                      "L101.en_bal_EJ_ctry_Si_Fi_Yh_full") ->
       L132.water_km3_R_ind_Yh
 
-    L132.water_km3_R_B_ind_Yh %>%
-      add_title("Manufacturing water withdrawals by GCAM region, GCAM basin, and water type") %>%
-      add_units("km^3/yr") %>%
-      add_comments("based on regional estimates, downscaled to basin based on external data on water demands") %>%
-      same_precursors_as(L132.water_km3_R_ind_Yh) %>%
-      add_precursors("water/basin_to_country_mapping",
-                     "water/nonirrigation_consumption",
-                     "water/nonirrigation_withdrawal") ->
-      L132.water_km3_R_B_ind_Yh
-
-    return_data(L132.water_km3_ctry_ind_Yh, L132.water_km3_R_ind_Yh, L132.water_km3_R_B_ind_Yh)
+    return_data(L132.water_km3_ctry_ind_Yh, L132.water_km3_R_ind_Yh)
   } else {
     stop("Unknown command")
   }

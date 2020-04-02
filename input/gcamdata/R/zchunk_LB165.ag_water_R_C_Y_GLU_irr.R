@@ -39,7 +39,8 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
              "L165.TotIrr_m3kg_R_C_GLU",
              "L165.GreenRfd_m3kg_R_C_GLU",
              "L165.ag_IrrEff_R",
-             "L165.IrrWithd_km3_R_Y"))
+             "L165.IrrWithd_km3_R_Y",
+             "L165.IrrWithd_km3_R_B_Y"))
   } else if(command == driver.MAKE) {
 
     ## Silence package check.
@@ -402,6 +403,11 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       summarise(IrrWithd_km3 = sum(IrrWithd_km3)) %>%
       ungroup()
 
+    # aggregate by region and basin
+    L165.IrrWithd_km3_R_B_Y <- group_by(L165.IrrWithd_km3_R_C_Y_GLU, GCAM_region_ID, GLU, year) %>%
+      summarise(IrrWithd_km3 = sum(IrrWithd_km3)) %>%
+      ungroup()
+
     # Produce outputs
     L165.BlueIrr_m3kg_R_C_GLU %>%
       add_title("Blue water consumption coefficients for irrigated crops by GCAM region / commodity / GLU") %>%
@@ -462,11 +468,19 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       add_precursors("L161.ag_irrProd_Mt_R_C_Y_GLU")->
       L165.IrrWithd_km3_R_Y
 
+    L165.IrrWithd_km3_R_B_Y %>%
+      add_title("Irrigation water withdrawals by GCAM region and GLU") %>%
+      add_units("km^3") %>%
+      add_comments("All irrigation water provided to agricultural sector by land use region (GCAM region and GLU)") %>%
+      same_precursors_as(L165.IrrWithd_km3_R_Y) ->
+      L165.IrrWithd_km3_R_B_Y
+
       return_data(L165.BlueIrr_m3kg_R_C_GLU,
                   L165.TotIrr_m3kg_R_C_GLU,
                   L165.GreenRfd_m3kg_R_C_GLU,
                   L165.ag_IrrEff_R,
-                  L165.IrrWithd_km3_R_Y)
+                  L165.IrrWithd_km3_R_Y,
+                  L165.IrrWithd_km3_R_B_Y)
   } else {
     stop("Unknown command")
   }
