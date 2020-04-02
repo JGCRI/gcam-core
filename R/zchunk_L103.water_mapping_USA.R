@@ -81,7 +81,7 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
       filter(year==max(MODEL_BASE_YEARS)) %>%
       complete(nesting(basin_id,basin_name,state_abbr,volume), year = MODEL_FUTURE_YEARS) %>%
       bind_rows(
-        irrigation_shares
+        irrigation_shares %>% filter(year<max(MODEL_BASE_YEARS))
       ) %>%
       left_join_error_no_match(basin_to_country_mapping,by=c("basin_id"="GCAM_basin_ID")) %>%
       select(-basin_name, -Basin_name) %>%
