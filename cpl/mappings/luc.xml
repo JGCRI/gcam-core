@@ -394,11 +394,6 @@
         <output-data>USA_UsaCstNE</output-data>
         <output-data>USA_UsaCstSE</output-data>
         <output-data>USA_UsaPacNW</output-data>
-        <output-data>EU-12_MeditIsl</output-data>
-        <output-data>EU-15_Caribbean</output-data>
-        <output-data>EU-15_MeditS</output-data>
-        <output-data>Southeast Asia_Madagascar</output-data>
-        <output-data>Taiwan_Taiwan</output-data>
     </column>
     <column name="land-type">
         <output-data>Shrubland</output-data>
