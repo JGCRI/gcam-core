@@ -58,7 +58,7 @@ int main( ) {
     std::string GCAM2ELM_CO2_MAPPING_FILE = "../cpl/mappings/co2.xml";
     std::string GCAM2ELM_LUC_MAPPING_FILE = "../cpl/mappings/luc.xml";
     std::string GCAM2ELM_WOODHARVEST_MAPPING_FILE = "../cpl/mappings/woodharvest.xml";
-    std::string ELM2GCAM_MAPPING_FILE = "../cpl/mappings/regionmap_1x1.csv";
+    std::string ELM2GCAM_MAPPING_FILE = "../cpl/mappings/elm0.9x1.25togcam_mapping.csv";
     bool READ_SCALARS = false; // If FALSE, scalars are calculated from NPP/HR
     bool READ_ELM_FROM_FILE = true; // If FALSE, ELM data (NPP, HR, Area, PFT weight) are passed from E3SM.
     bool WRITE_CO2 = true; // If TRUE, gridded CO2 emissions will be written to a file (in addition to passed in code).
@@ -75,7 +75,7 @@ int main( ) {
     int NUM_LON = 360; // Number of vertical grid cells
     int NUM_PFT = 16; // Number of PFTs in ELM
     int NUM_GCAM_ENERGY_REGIONS = 32;
-    int NUM_GCAM_LAND_REGIONS = 392;
+    int NUM_GCAM_LAND_REGIONS = 391;
     int NUM_IAC2ELM_LANDTYPES = 9;
     
     // Initialize Interface
