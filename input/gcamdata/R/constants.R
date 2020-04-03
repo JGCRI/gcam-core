@@ -513,6 +513,7 @@ water.MAPPING_COEF                        <- 1
 water.MAPPING_PMULT                       <- 1
 water.NONIRRIGATION_SECTORS               <- c("Municipal", "Electricity", "Livestock", "Manufacturing", "Mining")
 water.LOGIT_EXP                           <- -6
+water.GW_HIST_MULTIPLIER                  <- 1.01   # Multiplier for the "available" in the "grade hist" grade of groundwater supply curves. Needed to prevent the model from pulling from higher grades in historical periods due to solution tolerance
 
 # GCAM intermediate sectors for which Vassolo + Doll assessed manufacturing water demands. In the paper, they indicate
 # chemicals, pulp and paper, pig iron, sugar, beer, cloth, cement, and crude steel. some industrial mfg does take place

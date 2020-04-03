@@ -322,7 +322,8 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         left_join_error_no_match(tibble(year = MODEL_BASE_YEARS[MODEL_BASE_YEARS >= water.GW_DEPLETION_BASE_YEAR],
                          years = diff(MODEL_BASE_YEARS)), by = "year") %>%
         mutate(deficit_total = deficit * years) %>%
-        group_by(basin.id) %>% summarise(available = sum(deficit_total)) %>%
+        group_by(basin.id) %>%
+        summarise(available = sum(deficit_total) * water.GW_HIST_MULTIPLIER) %>%
         ungroup() %>%
         filter(available > 0) %>%
         mutate(grade = "grade hist", price = water.DEFAULT_BASEYEAR_WATER_PRICE) ->
