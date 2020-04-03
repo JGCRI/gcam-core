@@ -46,7 +46,7 @@ endif
 
 #### flag indicating whether or not to use hector
 #### If we are using hector, there are some other variables to set.
-USE_HECTOR = 1
+USE_HECTOR = 0
 
 ifeq ($(USE_HECTOR),1)
 
