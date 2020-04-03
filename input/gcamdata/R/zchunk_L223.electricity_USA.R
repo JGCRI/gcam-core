@@ -33,7 +33,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",
              FILE = "gcam-usa/NREL_us_re_technical_potential",
-             FILE = "energy/A23.globaltech_eff",
+			 "L113.Globaltech_eff_ATB",
              "L114.CapacityFactor_wind_state",
              "L119.CapFacScaler_PV_state",
              "L119.CapFacScaler_CSP_state",
@@ -112,7 +112,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")
-    A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
+    L113.Globaltech_eff_ATB <- get_data(all_data, "L113.Globaltech_eff_ATB")
     L114.CapacityFactor_wind_state <- get_data(all_data, "L114.CapacityFactor_wind_state")
     L119.CapFacScaler_PV_state <- get_data(all_data, "L119.CapFacScaler_PV_state")
     L119.CapFacScaler_CSP_state <- get_data(all_data, "L119.CapFacScaler_CSP_state")
@@ -418,7 +418,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
     L223.StubTech_elec_USA %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       # For rooftop_pv (technology), match in distributed_solar instead of backup_electricity (minicam.energy.input)
-      left_join_keep_first_only(select(A23.globaltech_eff, supplysector, subsector, technology, minicam.energy.input),
+      left_join_keep_first_only(select(L113.Globaltech_eff_ATB, supplysector, subsector, technology, minicam.energy.input),
                                 by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
       # Remove NA rows for hydro
       na.omit %>%
@@ -821,7 +821,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_comments("Re-set markets from USA to regional grid markets for selected fuels") %>%
       add_legacy_name("L223.StubTechMarket_elec_USA") %>%
       same_precursors_as("L223.StubTech_elec_USA") %>%
-      add_precursors("energy/A23.globaltech_eff",
+      add_precursors("L113.Globaltech_eff_ATB",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.StubTechMarket_elec_USA
 

@@ -1,0 +1,32 @@
+# File: A23.globaltech_atb_capital_adv.csv
+# Title: Global technologies overnight capital cost by technology and year from NREL 2019 ATB. Advanced scenario
+# Units: $2015/kW for 2015, $2017/kW for other values.
+# Source: NREL 2019 Annual Technology Baseline. Low costs assumed for a given technology. (https://atb.nrel.gov/electricity/2019/)
+# Comments: Technology names are as-is from ATB and require a separate mapping file to ensure that these are mapped to GCAM technologies. All technologies ending with est. are not actually in ATB but estimated based on their relationship with common GCAM-ATB technologies in the older capital cost version.
+# Column types: cnnnnnnnn
+# ----------
+atb.technology,2015,2020,2025,2030,2035,2040,2045,2050
+Land Based Wind TRG 5,1582,1465,1283,1100,1043,982,916,847
+Solar Utility PV (any city),2339,1047,852,655,562,490,447,413
+CSP est.,3088,3043,2316,1528,1452,1376,1300,1224
+Land Based Wind TRG 5 + Battery Backup (4h/30y),7520,6112,4156,3043,2796,2545,2289,2030
+Solar Utility PV (any city) + Battery Backup (4h/30y),8277,5694,3725,2598,2315,2054,1820,1596
+CSP including 10 hrs TES ,7963,6622,4929,3197,3038,2879,2720,2561
+Solar PV Dist. (avg. of Comm and Resid - any city),3799,2028,1451,925,812,700,646,635
+Geothermal Hydro/Flash,4683,4104,3767,3431,3431,3431,3431,3431
+Biomass Dedicated,3889,3749,3730,3667,3594,3519,3450,3349
+biomass (conv CCS) est.,7867,7201,6841,6592,6368,6176,6015,5825
+biomass (IGCC) est.,6129,5654,5395,5202,5023,4860,4716,4551
+biomass (IGCC CCS) est.,9042,8205,7729,7385,7075,6810,6590,6347
+Coal-new-High CF,3711,3660,3594,3558,3512,3463,3420,3346
+Coal-CCS 90%- Avg CF,5728,5618,5463,5353,5228,5100,4979,4815
+Coal-IGCC-High CF,4055,3948,3753,3649,3565,3494,3434,3344
+coal (IGCC CCS) est.,8447,7918,7450,7124,6831,6584,6388,6162
+gas-CT-High CF,864,903,855,833,818,807,798,782
+gas-CC-High CF,1010,887,851,833,818,807,798,782
+gas-CC-CCS-High CF,2242,2174,2031,1943,1872,1811,1758,1688
+refined liquids (CC) est.,1010,887,851,833,818,807,798,782
+refined liquids (steam/CT) est.,864,903,855,833,818,807,798,782
+refined liquids (CC CCS) est.,2670,2572,2389,2278,2185,2104,2041,1956
+Nuclear,6200,6069,5882,5744,5589,5431,5281,5085
+Offshore Wind TRG 4,3434,2491,2116,1798,1527,1297,1102,936

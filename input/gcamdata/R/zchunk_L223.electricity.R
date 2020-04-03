@@ -54,15 +54,15 @@ module_energy_L223.electricity <- function(command, ...) {
              FILE = "energy/A23.globaltech_shrwt",
              FILE = "energy/A23.globaltech_interp",
              FILE = "energy/A23.globaltech_keyword",
-             FILE = "energy/A23.globaltech_eff",
-             FILE = "energy/A23.globaltech_capital",
-             FILE = "energy/A23.globaltech_capacity_factor",
-             FILE = "energy/A23.globaltech_capital_adv",
-             FILE = "energy/A23.globaltech_capital_low",
+			 FILE = "energy/A23.globaltech_capacity_factor",
              FILE = "energy/A23.globaltech_OMfixed",
              FILE = "energy/A23.globaltech_OMvar",
              FILE = "energy/A23.globaltech_retirement",
              FILE = "energy/A23.globaltech_co2capture",
+			 "L113.Globaltech_eff_ATB",
+			 "L113.Globaltech_capital_ATB",
+			 "L113.Globaltech_capital_ATB_adv",
+			 "L113.Globaltech_capital_ATB_low",
              "L114.RsrcCurves_EJ_R_wind",
              "L118.out_EJ_R_elec_hydro_Yfut",
              "L119.Irradiance_rel_R",
@@ -159,11 +159,11 @@ module_energy_L223.electricity <- function(command, ...) {
     A23.globaltech_shrwt <- get_data(all_data, "energy/A23.globaltech_shrwt")
     A23.globaltech_interp <- get_data(all_data, "energy/A23.globaltech_interp")
     A23.globaltech_keyword <- get_data(all_data, "energy/A23.globaltech_keyword")
-    A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
+    L113.Globaltech_eff_ATB <- get_data(all_data, "L113.Globaltech_eff_ATB")
     A23.globaltech_capacity_factor <- get_data(all_data, "energy/A23.globaltech_capacity_factor")
-    A23.globaltech_capital <- get_data(all_data, "energy/A23.globaltech_capital")
-    A23.globaltech_capital_adv <- get_data(all_data, "energy/A23.globaltech_capital_adv")
-    A23.globaltech_capital_low <- get_data(all_data, "energy/A23.globaltech_capital_low")
+    L113.Globaltech_capital_ATB <- get_data(all_data, "L113.Globaltech_capital_ATB")
+    L113.Globaltech_capital_ATB_adv <- get_data(all_data, "L113.Globaltech_capital_ATB_adv")
+    L113.Globaltech_capital_ATB_low <- get_data(all_data, "L113.Globaltech_capital_ATB_low")
     A23.globaltech_OMfixed <- get_data(all_data, "energy/A23.globaltech_OMfixed")
     A23.globaltech_OMvar <- get_data(all_data, "energy/A23.globaltech_OMvar")
     A23.globaltech_retirement <- get_data(all_data, "energy/A23.globaltech_retirement")
@@ -322,8 +322,9 @@ module_energy_L223.electricity <- function(command, ...) {
     # --------------------------------------------------------------------------------------------------------------------------
 
     # Extrapolate efficiency values to all model years and round to appropriate number of digits
-    ### A23.globaltech_eff ASSUMPTION FILE HAS TWO ADDITIONAL ROWS IN OLD DATA SYSTEM (backup electricity for CSP and PV)
-    A23.globaltech_eff %>%
+    ### L113.Globaltech_eff_ATB ASSUMPTION FILE HAS TWO ADDITIONAL ROWS IN OLD DATA SYSTEM (backup electricity for CSP and PV)
+    L113.Globaltech_eff_ATB %>%
+      select(-improvement.shadow.technology) %>%
       fill_exp_decay_extrapolate(MODEL_YEARS) %>%
       rename(sector.name = supplysector, subsector.name = subsector, efficiency = value) %>%
       mutate(efficiency = round(efficiency, energy.DIGITS_EFFICIENCY)) ->
@@ -370,7 +371,7 @@ module_energy_L223.electricity <- function(command, ...) {
     # Calculate base case capital costs of global electricity generation technologies in L223.GlobalTechCapital_elec
     # --------------------------------------------------------------------------------------------------------------
 
-    A23.globaltech_capital %>%
+    L113.Globaltech_capital_ATB %>%
       fill_exp_decay_extrapolate(MODEL_YEARS) %>%
       rename(sector.name = supplysector, subsector.name = subsector, capital.overnight = value, input.capital = `input-capital`) %>%
       mutate(capital.overnight = round(capital.overnight, energy.DIGITS_CAPITAL)) ->
@@ -393,7 +394,7 @@ module_energy_L223.electricity <- function(command, ...) {
     # ----------------------------------------------------------------------------------------------------------------------------
 
     # Extrapolate capital cost assumptions to all future years and round them
-    A23.globaltech_capital_adv %>%
+    L113.Globaltech_capital_ATB_adv %>%
       fill_exp_decay_extrapolate(MODEL_YEARS) %>%
       rename(sector.name = supplysector, subsector.name = subsector, capital.overnight = value, input.capital = `input-capital`) %>%
       mutate(capital.overnight = round(capital.overnight, energy.DIGITS_CAPITAL)) ->
@@ -439,7 +440,7 @@ module_energy_L223.electricity <- function(command, ...) {
     # ----------------------------------------------------------------------------------------------------------
 
     # Extrapolate capital cost assumptions to all model years and then round to appropriate number of digits
-    A23.globaltech_capital_low %>%
+    L113.Globaltech_capital_ATB_low %>%
       fill_exp_decay_extrapolate(MODEL_YEARS) %>%
       rename(sector.name = supplysector, subsector.name = subsector, capital.overnight = value, input.capital = `input-capital`) %>%
       mutate(capital.overnight = round(capital.overnight, energy.DIGITS_CAPITAL)) ->
@@ -793,7 +794,7 @@ module_energy_L223.electricity <- function(command, ...) {
       mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT), share.weight.year = year) %>%
       set_subsector_shrwt() %>%
       mutate(tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      left_join(A23.globaltech_eff, by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
+      left_join(L113.Globaltech_eff_ATB, by = c("supplysector", "subsector", "stub.technology" = "technology")) %>%
       rename(calibrated.value = calOutputValue) ->
       L223.StubTechCalInput_elec
     L223.StubTechCalInput_elec <- L223.StubTechCalInput_elec[LEVEL2_DATA_NAMES[["StubTechCalInput"]]]
@@ -891,7 +892,7 @@ module_energy_L223.electricity <- function(command, ...) {
       select(sector, fuel, supplysector, subsector, technology) %>%
       # left_join because the join changes the number of rows, multiple matches in electricity for every calibrated tech.
       left_join(L223.eff_R_elec_F_tech_Yh, by = c("sector", "fuel", "technology")) %>%
-      left_join(A23.globaltech_eff, by = c("supplysector", "subsector", "technology")) %>%
+      left_join(L113.Globaltech_eff_ATB, by = c("supplysector", "subsector", "technology")) %>%
       mutate(value = round(value, energy.DIGITS_CALOUTPUT), market.name = region) %>% # old data system rounds to caloutput. should we round to efficiency?
       rename(stub.technology = technology, efficiency = value) ->
       L223.StubTechEff_elec
@@ -981,7 +982,7 @@ module_energy_L223.electricity <- function(command, ...) {
     # Regional non-energy cost adder for offshore wind grid connection cost
     gcam_regions <- unique(GCAM_region_names$region)
 
-    A23.globaltech_capital %>%
+    L113.Globaltech_capital_ATB %>%
       filter(technology == "wind_offshore") %>%
       select(supplysector, subsector, technology) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
@@ -1100,7 +1101,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Filtered for intermittent technologies and extrapolated using an exponential function") %>%
       add_legacy_name("L223.GlobalIntTechEff_elec") %>%
-      add_precursors("energy/A23.globaltech_eff", "energy/A23.globalinttech") ->
+      add_precursors("L113.Globaltech_eff_ATB", "energy/A23.globalinttech") ->
       L223.GlobalIntTechEff_elec
 
     L223.GlobalTechEff_elec %>%
@@ -1108,7 +1109,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Filtered for technologies not requiring intermittent backup and extrapolated using an exponential function") %>%
       add_legacy_name("L223.GlobalTechEff_elec") %>%
-      add_precursors("energy/A23.globaltech_eff", "energy/A23.globalinttech") ->
+      add_precursors("L113.Globaltech_eff_ATB", "energy/A23.globalinttech") ->
       L223.GlobalTechEff_elec
 
     L223.GlobalTechCapFac_elec %>%
@@ -1130,19 +1131,19 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.GlobalTechCapital_elec %>%
       add_title("Overnight capital costs for non-intermittent electricity sector technologies") %>%
       add_units("1975$US/kw") %>%
-      add_comments("Non-intermittent technologies from A23.globaltech_capital and values interpolated from assumptions") %>%
+      add_comments("Non-intermittent technologies from L113.Globaltech_capital_ATB and values interpolated from assumptions") %>%
       add_comments("Values determined by an exponential function with terms for minimum achievable cost and pace of reduction") %>%
       add_legacy_name("L223.GlobalTechCapital_elec") %>%
-      add_precursors("energy/A23.globaltech_capital", "energy/A23.globalinttech") ->
+      add_precursors("L113.Globaltech_capital_ATB", "energy/A23.globalinttech") ->
       L223.GlobalTechCapital_elec
 
     L223.GlobalIntTechCapital_elec %>%
       add_title("Overnight capital costs for intermittent electricity sector technologies") %>%
       add_units("1975$US/kW") %>%
-      add_comments("Intermittent technologies from A23.globaltech_capital and values interpolated from assumptions") %>%
+      add_comments("Intermittent technologies from L113.Globaltech_capital_ATB and values interpolated from assumptions") %>%
       add_comments("Values determined by an exponential function with terms for minimum achievable cost and pace of reduction") %>%
       add_legacy_name("L223.GlobalIntTechCapital_elec") %>%
-      add_precursors("energy/A23.globaltech_capital", "energy/A23.globalinttech") ->
+      add_precursors("L113.Globaltech_capital_ATB", "energy/A23.globalinttech") ->
       L223.GlobalIntTechCapital_elec
 
     L223.GlobalTechOMfixed_elec %>%
@@ -1246,14 +1247,14 @@ module_energy_L223.electricity <- function(command, ...) {
       add_units("unitless fraction") %>%
       add_comments("Average annual utilization of renewable technologies, calculated using regional solar irradiance data and wind resource curves to adjust default assumptions") %>%
       add_legacy_name("L223.StubTechCapFactor_elec") %>%
-      add_precursors("common/GCAM_region_names", "L114.RsrcCurves_EJ_R_wind", "L119.Irradiance_rel_R", "energy/A23.globaltech_capital", "energy/A23.globaltech_OMfixed", "energy/A23.globaltech_OMvar", "energy/A23.globalinttech") ->
+      add_precursors("common/GCAM_region_names", "L114.RsrcCurves_EJ_R_wind", "L119.Irradiance_rel_R", "L113.Globaltech_capital_ATB", "energy/A23.globaltech_OMfixed", "energy/A23.globaltech_OMvar", "energy/A23.globalinttech") ->
       L223.StubTechCapFactor_elec
 
     L223.StubTechCost_offshore_wind %>%
       add_title("Cost of offshore wind") %>%
       add_units("unitless") %>%
       add_comments("Regional non-energy cost adder for offshore wind grid connection cost") %>%
-      add_precursors("common/GCAM_region_names", "L114.RsrcCurves_EJ_R_wind", "L119.Irradiance_rel_R", "energy/A23.globaltech_capital", "energy/A23.globaltech_OMfixed", "energy/A23.globaltech_OMvar", "energy/A23.globalinttech", "L223.StubTechCapFactor_elec", "L120.RegCapFactor_offshore_wind", "L120.GridCost_offshore_wind") ->
+      add_precursors("common/GCAM_region_names", "L114.RsrcCurves_EJ_R_wind", "L119.Irradiance_rel_R", "L113.Globaltech_capital_ATB", "energy/A23.globaltech_OMfixed", "energy/A23.globaltech_OMvar", "energy/A23.globalinttech", "L223.StubTechCapFactor_elec", "L120.RegCapFactor_offshore_wind", "L120.GridCost_offshore_wind") ->
       L223.StubTechCost_offshore_wind
 
     if(exists("L223.GlobalTechShutdown_elec")) {
@@ -1405,7 +1406,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("") %>%
       add_legacy_name("L223.StubTechEff_elec") %>%
-      add_precursors("energy/calibrated_techs", "common/GCAM_region_names", "L1231.eff_R_elec_F_tech_Yh", "energy/A23.globaltech_eff") ->
+      add_precursors("energy/calibrated_techs", "common/GCAM_region_names", "L1231.eff_R_elec_F_tech_Yh", "L113.Globaltech_eff_ATB") ->
       L223.StubTechEff_elec
 
     L223.GlobalTechCapital_sol_adv %>%
@@ -1414,7 +1415,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Capacity factor - average percent use of maximum rated output") %>%
       add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_sol_adv") %>%
-      add_precursors("energy/A23.globaltech_capital_adv") ->
+      add_precursors("L113.Globaltech_capital_ATB_adv") ->
       L223.GlobalTechCapital_sol_adv
 
     L223.GlobalIntTechCapital_sol_adv %>%
@@ -1423,7 +1424,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Capacity factor - average percent use of maximum rated output") %>%
       add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalIntTechCapital_sol_adv") %>%
-      add_precursors("energy/A23.globaltech_capital_adv") ->
+      add_precursors("L113.Globaltech_capital_ATB_adv") ->
       L223.GlobalIntTechCapital_sol_adv
 
     L223.GlobalTechCapital_wind_adv %>%
@@ -1432,7 +1433,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Capacity factor - average percent use of maximum rated output") %>%
       add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_wind_adv") %>%
-      add_precursors("energy/A23.globaltech_capital_adv") ->
+      add_precursors("L113.Globaltech_capital_ATB_adv") ->
       L223.GlobalTechCapital_wind_adv
 
     L223.GlobalIntTechCapital_wind_adv %>%
@@ -1441,7 +1442,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Capacity factor - average percent use of maximum rated output") %>%
       add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalIntTechCapital_wind_adv") %>%
-      add_precursors("energy/A23.globaltech_capital_adv") ->
+      add_precursors("L113.Globaltech_capital_ATB_adv") ->
       L223.GlobalIntTechCapital_wind_adv
 
     L223.GlobalTechCapital_geo_adv %>%
@@ -1450,7 +1451,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Capacity factor - average percent use of maximum rated output") %>%
       add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_geo_adv") %>%
-      add_precursors("energy/A23.globaltech_capital_adv") ->
+      add_precursors("L113.Globaltech_capital_ATB_adv") ->
       L223.GlobalTechCapital_geo_adv
 
     L223.GlobalTechCapital_nuc_adv %>%
@@ -1459,7 +1460,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Capacity factor - average percent use of maximum rated output") %>%
       add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_nuc_adv") %>%
-      add_precursors("energy/A23.globaltech_capital_adv") ->
+      add_precursors("L113.Globaltech_capital_ATB_adv") ->
       L223.GlobalTechCapital_nuc_adv
 
     L223.GlobalTechCapital_sol_low %>%
@@ -1468,7 +1469,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Capacity factor - average percent use of maximum rated output") %>%
       add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_sol_low") %>%
-      add_precursors("energy/A23.globaltech_capital_low") ->
+      add_precursors("L113.Globaltech_capital_ATB_low") ->
       L223.GlobalTechCapital_sol_low
 
     L223.GlobalIntTechCapital_sol_low %>%
@@ -1477,7 +1478,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Capacity factor - average percent use of maximum rated output") %>%
       add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalIntTechCapital_sol_low") %>%
-      add_precursors("energy/A23.globaltech_capital_low") ->
+      add_precursors("L113.Globaltech_capital_ATB_low") ->
       L223.GlobalIntTechCapital_sol_low
 
     L223.GlobalTechCapital_wind_low %>%
@@ -1486,7 +1487,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Capacity factor - average percent use of maximum rated output") %>%
       add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_wind_low") %>%
-      add_precursors("energy/A23.globaltech_capital_low") ->
+      add_precursors("L113.Globaltech_capital_ATB_low") ->
       L223.GlobalTechCapital_wind_low
 
     L223.GlobalIntTechCapital_wind_low %>%
@@ -1495,7 +1496,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Capacity factor - average percent use of maximum rated output") %>%
       add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalIntTechCapital_wind_low") %>%
-      add_precursors("energy/A23.globaltech_capital_low") ->
+      add_precursors("L113.Globaltech_capital_ATB_low") ->
       L223.GlobalIntTechCapital_wind_low
 
     L223.GlobalTechCapital_geo_low %>%
@@ -1504,7 +1505,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Capacity factor - average percent use of maximum rated output") %>%
       add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_geo_low") %>%
-      add_precursors("energy/A23.globaltech_capital_low") ->
+      add_precursors("L113.Globaltech_capital_ATB_low") ->
       L223.GlobalTechCapital_geo_low
 
     L223.GlobalTechCapital_nuc_low %>%
@@ -1513,7 +1514,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Capacity factor - average percent use of maximum rated output") %>%
       add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_legacy_name("L223.GlobalTechCapital_nuc_low") %>%
-      add_precursors("energy/A23.globaltech_capital_low") ->
+      add_precursors("L113.Globaltech_capital_ATB_low") ->
       L223.GlobalTechCapital_nuc_low
 
     L223.GlobalTechCapital_bio_low %>%
@@ -1523,7 +1524,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Fixed charge rate - conversion from overnight capital cost to amortized annual payment") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L223.GlobalTechCapital_bio_low") %>%
-      add_precursors("energy/A23.globaltech_capital_low") ->
+      add_precursors("L113.Globaltech_capital_ATB_low") ->
       L223.GlobalTechCapital_bio_low
 
     return_data(L223.Supplysector_elec, L223.ElecReserve, L223.SubsectorLogit_elec, L223.SubsectorShrwt_elec,

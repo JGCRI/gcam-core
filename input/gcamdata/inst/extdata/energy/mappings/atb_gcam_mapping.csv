@@ -1,0 +1,33 @@
+# File: atb_gcam_mapping.csv
+# Title: ATB to GCAM Technology mapping
+# Units: NA
+# Description: mapping between technology descriptions in ATB from where data is used and equivalent GCAM technology
+# Source: NA
+# Column types: cc
+# ----------
+atb.technology,technology
+Land Based Wind TRG 5,wind
+Solar Utility PV (any city),PV
+CSP est.,CSP
+Land Based Wind TRG 5 + Battery Backup (4h/30y),wind_storage
+Solar Utility PV (any city) + Battery Backup (4h/30y),PV_storage
+CSP including 10 hrs TES ,CSP_storage
+Solar PV Dist. (avg. of Comm and Resid - any city),rooftop_pv
+Geothermal Hydro/Flash,geothermal
+Biomass Dedicated,biomass (conv)
+biomass (conv CCS) est.,biomass (conv CCS)
+biomass (IGCC) est.,biomass (IGCC)
+biomass (IGCC CCS) est.,biomass (IGCC CCS)
+Coal-new-High CF,coal (conv pul)
+Coal-CCS 90%- Avg CF,coal (conv pul CCS)
+Coal-IGCC-High CF,coal (IGCC)
+coal (IGCC CCS) est.,coal (IGCC CCS)
+gas-CT-High CF,gas (steam/CT)
+gas-CC-High CF,gas (CC)
+gas-CC-CCS-High CF,gas (CC CCS)
+refined liquids (CC) est.,refined liquids (CC)
+refined liquids (steam/CT) est.,refined liquids (steam/CT)
+refined liquids (CC CCS) est.,refined liquids (CC CCS)
+Nuclear,Gen_III
+Offshore Wind TRG 4,wind_offshore
+Storage,battery

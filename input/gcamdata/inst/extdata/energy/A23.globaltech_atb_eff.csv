@@ -1,0 +1,22 @@
+# File: A23.globaltech_atb_eff.csv
+# Title: Global technologies efficiencies by technology.
+# Units: Unitless
+# Source: Based on existing literature forecasts for coal and gas, and then everything else is based on proportional responses from the older data system numbers. ATB numbers beyond the first one are not useful because efficiencies stop improving after 2030. 
+# Comments: Technology names are as-is from ATB and require a separate mapping file to ensure that these are mapped to GCAM technologies. All technologies ending with est. are not actually in ATB but estimated based on their relationship with common GCAM-ATB technologies in the older efficiency version.
+# Column types: cnn
+# ----------
+atb.technology,2015,2100
+Coal-new-High CF,0.396656458,0.5
+Coal-CCS 90%- Avg CF,0.29227318,0.48
+Coal-IGCC-High CF,0.407094786,0.52
+coal (IGCC CCS) est.,0.334026491,0.5
+gas-CT-High CF,0.376667869,0.45
+gas-CC-High CF,0.565001803,0.65
+gas-CC-CCS-High CF,0.465295603,0.63
+refined liquids (CC) est.,0.362756407,0.44
+refined liquids (steam/CT) est.,0.554803917,0.63
+refined liquids (CC CCS) est.,0.419929971,0.6
+Biomass Dedicated,0.26625,0.37
+biomass (conv CCS) est.,0.196184211,0.35
+biomass (IGCC) est.,0.3195,0.44
+biomass (IGCC CCS) est.,0.262153846,0.42

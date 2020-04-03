@@ -18,8 +18,8 @@
 
 module_energy_LA1231.elec_tech<- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "energy/A23.globaltech_eff",
-             FILE = "energy/calibrated_techs",
+    return(c(FILE = "energy/calibrated_techs",
+			 "L113.Globaltech_eff_ATB",
              "L123.in_EJ_R_elec_F_Yh",
              "L123.out_EJ_R_elec_F_Yh",
              "L123.eff_R_elec_F_Yh"))
@@ -39,7 +39,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
+    L113.Globaltech_eff_ATB <- get_data(all_data, "L113.Globaltech_eff_ATB")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
     L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
@@ -81,7 +81,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
 
     # Perform interpolation for gas technologies efficiencies , max, and rate
     # Interpolation is needed since efficiencies are given for 1971, 1990, 2005 and 2010 only. Not for every historical year.
-    A23.globaltech_eff %>%
+    L113.Globaltech_eff_ATB %>%
       filter(subsector == "gas") %>%
       semi_join(calibrated_techs, by = c("supplysector", "subsector", "technology")) %>%
       gather_years(value_col = "efficiency_tech") %>%
@@ -203,7 +203,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       add_comments("Written by LA1231.electech.R") %>%
       add_comments("Inputs are calculated based on L123.in_EJ_R_elec_F_Yh and calibrated_techs. For gas technologies, the share of each has was estimated") %>%
       add_legacy_name("L1231.in_EJ_R_elec_F_tech_Yh") %>%
-      add_precursors("energy/A23.globaltech_eff", "energy/calibrated_techs", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.eff_R_elec_F_Yh") ->
+      add_precursors("L113.Globaltech_eff_ATB", "energy/calibrated_techs", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.eff_R_elec_F_Yh") ->
       L1231.in_EJ_R_elec_F_tech_Yh
     L1231.out_EJ_R_elec_F_tech_Yh %>%
       add_title("Outputs of electricity by by Region / fuel / technology.") %>%
@@ -211,7 +211,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       add_comments("Written by LA1231.electech.R") %>%
       add_comments("Outputs by fuel and coresponding technologies are adjusted based on the efficiency and input estimates")%>%
       add_legacy_name("L1231.out_EJ_R_elec_F_tech_Yh") %>%
-      add_precursors("energy/A23.globaltech_eff", "energy/calibrated_techs", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.eff_R_elec_F_Yh") ->
+      add_precursors("L113.Globaltech_eff_ATB", "energy/calibrated_techs", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.eff_R_elec_F_Yh") ->
       L1231.out_EJ_R_elec_F_tech_Yh
     L1231.eff_R_elec_F_tech_Yh %>%
       add_title("Electricity efficiency by by Region / fuel / technology") %>%
@@ -219,7 +219,7 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
       add_comments("Written by LA1231.electech.R") %>%
       add_comments("Efficiencies for technologies other than gas technologies are based on L123.eff_R_elec_F_Yh. For gas technologies, their efficiences were adjusted when the average efficiency was outside of the range of the two technologies") %>%
       add_legacy_name("L1231.eff_R_elec_F_tech_Yh") %>%
-      add_precursors("energy/A23.globaltech_eff", "energy/calibrated_techs", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.eff_R_elec_F_Yh") ->
+      add_precursors("L113.Globaltech_eff_ATB", "energy/calibrated_techs", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "L123.eff_R_elec_F_Yh") ->
       L1231.eff_R_elec_F_tech_Yh
 
     return_data(L1231.in_EJ_R_elec_F_tech_Yh, L1231.out_EJ_R_elec_F_tech_Yh, L1231.eff_R_elec_F_tech_Yh)

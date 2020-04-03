@@ -47,6 +47,16 @@ GCAM_REGION_ID      <- "GCAM_region_ID"
 # If users do not have an estimate for a starting price this is a safe one to set
 gcam.DEFAULT_PRICE <- 1.0
 
+# All ATB-related constants including column names that are years ====================================
+
+year_target <- 2035
+year_target_eff <- 2100
+year_base <- 2015
+max_year <- 2100
+increment <- 5
+number_of_periods <- (max_year - year_base)/increment
+battery <- "battery"
+
 
 # Driver constants ======================================================================
 

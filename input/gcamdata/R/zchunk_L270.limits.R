@@ -23,7 +23,7 @@
 module_energy_L270.limits <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             FILE = "energy/A23.globaltech_eff",
+             "L113.Globaltech_eff_ATB",
              "L102.gdp_mil90usd_GCAM3_R_Y",
              "L102.gdp_mil90usd_Scen_R_Y",
              "L221.GlobalTechCoef_en",
@@ -51,7 +51,7 @@ module_energy_L270.limits <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
+    L113.Globaltech_eff_ATB <- get_data(all_data, "L113.Globaltech_eff_ATB")
     L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y")
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
@@ -70,7 +70,8 @@ module_energy_L270.limits <- function(command, ...) {
       L270.CreditOutput
 
     # L270.CreditInput_elec: minicam-energy-input of oil credits for electricity techs
-    A23.globaltech_eff %>%
+    L113.Globaltech_eff_ATB %>%
+	  select(-improvement.shadow.technology) %>%
       fill_exp_decay_extrapolate(MODEL_YEARS) %>%
       mutate(value = round(value, energy.DIGITS_EFFICIENCY)) %>%
       filter(subsector == "refined liquids") %>%
@@ -190,7 +191,7 @@ module_energy_L270.limits <- function(command, ...) {
       add_comments("Consumes oil-credits limiting the blend of refined") %>%
       add_comments("liquids that can be used generate electricity") %>%
       add_legacy_name("L270.CreditInput_elec") %>%
-      add_precursors("energy/A23.globaltech_eff") ->
+      add_precursors("L113.Globaltech_eff_ATB") ->
       L270.CreditInput_elec
 
     L270.CreditInput_feedstocks %>%
