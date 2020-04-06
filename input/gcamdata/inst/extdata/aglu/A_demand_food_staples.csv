@@ -6,4 +6,4 @@
 # Column types: ccccnnnnnn
 # ----------
 gcam.consumer,nodeInput,prodDmdFnType,staples.food.demand.input,scale.param,self.price.elasticity,cross.price.elasticity,income.elasticity,income.max.term,price.received
-FoodDemand,FoodDemand,food-demand-function,FoodDemand_Staples,1.2818,-0.186635,0.210314,0.0955194,2.765275,5.05801
+FoodDemand,FoodDemand,food-demand-function,FoodDemand_Staples,1.26,-0.19045,0.08,0.11,2.772588,5.06
