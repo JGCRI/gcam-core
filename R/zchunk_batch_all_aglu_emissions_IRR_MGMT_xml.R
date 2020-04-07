@@ -21,7 +21,7 @@ module_emissions_batch_all_aglu_emissions_IRR_MGMT_xml <- function(command, ...)
               "L2112.AWB_BCOC_EmissCoeff",
               "L2112.nonghg_max_reduction",
               "L2112.nonghg_steepness",
-              "L2522.AgMAC"))
+              "L252.AgMAC"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "all_aglu_emissions_IRR_MGMT.xml"))
   } else if(command == driver.MAKE) {
@@ -38,7 +38,7 @@ module_emissions_batch_all_aglu_emissions_IRR_MGMT_xml <- function(command, ...)
     L2112.AWB_BCOC_EmissCoeff <- get_data(all_data, "L2112.AWB_BCOC_EmissCoeff")
     L2112.nonghg_max_reduction <- get_data(all_data, "L2112.nonghg_max_reduction")
     L2112.nonghg_steepness <- get_data(all_data, "L2112.nonghg_steepness")
-    L2522.AgMAC <- get_data(all_data, "L2522.AgMAC")
+    L252.AgMAC <- get_data(all_data, "L252.AgMAC")
 
     bio_N20_coef <- compVal <- bio_N2O_coef<- NULL # Silence package checks
 
@@ -57,7 +57,7 @@ module_emissions_batch_all_aglu_emissions_IRR_MGMT_xml <- function(command, ...)
       add_xml_data(L2112.AWBEmissions, "OutputEmissionsAg") %>%
       add_xml_data(L2112.AGREmissions, "OutputEmissionsAg") %>%
       add_xml_data(L252.MAC_an, "MAC") %>%
-      add_xml_data(L2522.AgMAC, "AgMAC") %>%
+      add_xml_data(L252.AgMAC, "AgMAC") %>%
       add_precursors("L2112.AWBEmissions",
                      "L2112.AGREmissions",
                      "L211.AnEmissions",
@@ -67,7 +67,7 @@ module_emissions_batch_all_aglu_emissions_IRR_MGMT_xml <- function(command, ...)
                      "L2112.AWB_BCOC_EmissCoeff",
                      "L2112.nonghg_max_reduction",
                      "L2112.nonghg_steepness",
-                     "L2522.AgMAC") ->
+                     "L252.AgMAC") ->
         all_aglu_emissions_IRR_MGMT.xml
 
     return_data(all_aglu_emissions_IRR_MGMT.xml)
