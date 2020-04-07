@@ -23,6 +23,7 @@ module_emissions_L252.MACC <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_regions",
              FILE = "emissions/A_MACC_TechChange",
+             FILE = "emissions/A_MACC_TechChange_SSP_Mult",
              FILE = "emissions/mappings/GCAM_sector_tech",
              FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              FILE = "emissions/HFC_Abate_GV",
@@ -67,6 +68,7 @@ module_emissions_L252.MACC <- function(command, ...) {
     # Load required inputs
     A_regions <- get_data(all_data, "emissions/A_regions")
     A_MACC_TechChange <- get_data(all_data, "emissions/A_MACC_TechChange")
+    A_MACC_TechChange_SSP_Mult <- get_data(all_data, "emissions/A_MACC_TechChange_SSP_Mult")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     if (energy.TRAN_UCD_MODE == "rev.mode"){
       GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
@@ -125,7 +127,8 @@ module_emissions_L252.MACC <- function(command, ...) {
     # NOTE: only applying the fossil resource MAC curves to the CH4 emissions
     L252.ResMAC_fos <- L201.ghg_res %>%
       select(-emiss.coef) %>%
-      filter(Non.CO2 == "CH4") %>%
+      filter(Non.CO2 == "CH4",
+             year == min(year)) %>%
       # Add in mac.control
       left_join_error_no_match(GCAM_sector_tech %>%
                                  filter(sector == "out_resources") %>%
@@ -152,6 +155,9 @@ module_emissions_L252.MACC <- function(command, ...) {
       mac_reduction_adder(order = "AgProductionTechnology") %>%
       # Add column for market variable
       mutate(market.name = emissions.MAC_MARKET) %>%
+      repeat_add_columns(tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
+      repeat_add_columns(tibble(lvl = c("lo", "hi"))) %>%
+      unite(AgProductionTechnology, AgProductionTechnology, Irr_Rfd, lvl, sep = "_") %>%
       # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, Non.CO2,
              mac.control, tax, mac.reduction, market.name)
@@ -244,12 +250,42 @@ module_emissions_L252.MACC <- function(command, ...) {
       L252.MAC_higwp <- bind_rows( L252.MAC_pfc,L252.MAC_hfc)
     }
 
+    # Put the tech change pipeline into a helper function since it will be repeated for each
+    # of the emissions sectors
+    calc_tech_change <- function(df) {
+      df %>%
+        # Use group_by_at to select a range instead of explicitly naming because some of the
+        # df will have AgSupplySector and other supplysector for instance
+        dplyr::group_by_at(dplyr::vars(region:mac.control)) %>%
+        # The tech change assumptions give what is thought to be the maximum reduction that
+        # could be achieved by some year so we will need to back calculate the rate of change
+        # from the max value in the MAC curve
+        summarize(mac.reduction = max(mac.reduction)) %>%
+        ungroup() %>%
+        # The assumptions file will have just the base gas name so let's create a column in
+        # df with that for the purposes of joining
+        mutate(Non.CO2.match = sub('_AGR', '', Non.CO2)) %>%
+        left_join_error_no_match(A_MACC_TechChange, by=c("Non.CO2.match" = "Non.CO2", "mac.control" = "MAC")) %>%
+        # Back calculate improvement rate so that the max matches the assumed reduction in the given year
+        mutate(tc1 = (LUCAS_2050 / mac.reduction)^(1.0/(2050.0 - dplyr::last(MODEL_BASE_YEARS))) - 1.0,
+               tc2 = (LUCAS_2100 / LUCAS_2050)^(1.0/(2100.0-2050.0)) - 1.0) %>%
+        gather(tech.change.year, tech.change, starts_with("tc")) %>%
+        # We want to start the improvement in the first model future year and switch rates after 2050
+        mutate(tech.change.year = if_else(tech.change.year == "tc1", MODEL_FUTURE_YEARS[1], MODEL_FUTURE_YEARS[MODEL_FUTURE_YEARS > 2050][1])) %>%
+        select(-Non.CO2.match, -mac.reduction, -LUCAS_2050, -LUCAS_2100) %>%
+        # Different SSPs will have differing abilities to achive this assumed maximum and is
+        # provided in a seperate assumptions file so we join that on here and adjust the
+        # tech change by scenario accordingly
+        repeat_add_columns(tibble(scenario = A_MACC_TechChange_SSP_Mult$scenario)) %>%
+        left_join_error_no_match(A_MACC_TechChange_SSP_Mult, by = c("scenario")) %>%
+        mutate(tech.change = tech.change * multiplier) %>%
+        select(-multiplier)
+    }
+
     # L252.MAC_TC: Tech Change on MACCs
     # For all tibbles, add in scenarios and tech change, then split by scenario and add in documentation
     L252.MAC_Ag_TC <- L252.AgMAC %>%
-      repeat_add_columns(tibble(scenario = unique(A_MACC_TechChange$scenario))) %>%
-      left_join_error_no_match(A_MACC_TechChange %>% rename(tech.change = tech_change),
-                               by = c("scenario", "mac.control" = "MAC")) %>%
+      calc_tech_change() %>%
       split(.$scenario) %>%
       lapply(function(df) {
         df %>%
@@ -258,15 +294,14 @@ module_emissions_L252.MACC <- function(command, ...) {
           add_comments("Category data from L211.AGREmissions and L211.AGRBio given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
           add_comments("Technology change data added in from A_MACC_TechChange") %>%
           add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised",
-                         "L152.MAC_pct_R_S_Proc_EPA", "L211.AGREmissions", "L211.AGRBio", "emissions/A_MACC_TechChange") %>%
+                         "L152.MAC_pct_R_S_Proc_EPA", "L211.AGREmissions", "L211.AGRBio", "emissions/A_MACC_TechChange",
+                         "emissions/A_MACC_TechChange_SSP_Mult") %>%
           select(-scenario)
       })
 
 
     L252.MAC_An_TC <- L252.MAC_an %>%
-      repeat_add_columns(tibble(scenario = unique(A_MACC_TechChange$scenario))) %>%
-      left_join_error_no_match(A_MACC_TechChange %>% rename(tech.change = tech_change),
-                               by = c("scenario", "mac.control" = "MAC")) %>%
+      calc_tech_change() %>%
       split(.$scenario) %>%
       lapply(function(df) {
         df %>%
@@ -275,15 +310,14 @@ module_emissions_L252.MACC <- function(command, ...) {
           add_comments("Category data from L211.AnEmissions given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
           add_comments("Technology change data added in from A_MACC_TechChange") %>%
           add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised",
-                         "L152.MAC_pct_R_S_Proc_EPA", "L211.AnEmissions", "emissions/A_MACC_TechChange") %>%
+                         "L152.MAC_pct_R_S_Proc_EPA", "L211.AnEmissions", "emissions/A_MACC_TechChange",
+                         "emissions/A_MACC_TechChange_SSP_Mult") %>%
           select(-scenario)
       })
 
     L252.MAC_prc_TC <- L252.MAC_prc %>%
-      repeat_add_columns(tibble(scenario = unique(A_MACC_TechChange$scenario))) %>%
-      left_join(A_MACC_TechChange %>% rename(tech.change = tech_change),
-                by = c("scenario", "mac.control" = "MAC")) %>%
-      na.omit %>%
+      filter(mac.control %in% unique(A_MACC_TechChange$MAC)) %>%
+      calc_tech_change() %>%
       split(.$scenario) %>%
       lapply(function(df) {
         df %>%
@@ -292,14 +326,13 @@ module_emissions_L252.MACC <- function(command, ...) {
           add_comments("Category data from L232.nonco2_prc given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
           add_comments("Technology change data added in from A_MACC_TechChange") %>%
           add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised",
-                         "L152.MAC_pct_R_S_Proc_EPA", "L232.nonco2_prc", "emissions/A_MACC_TechChange") %>%
+                         "L152.MAC_pct_R_S_Proc_EPA", "L232.nonco2_prc", "emissions/A_MACC_TechChange",
+                         "emissions/A_MACC_TechChange_SSP_Mult") %>%
           select(-scenario)
       })
 
     L252.MAC_res_TC <- L252.ResMAC_fos %>%
-      repeat_add_columns(tibble(scenario = unique(A_MACC_TechChange$scenario))) %>%
-      left_join_error_no_match(A_MACC_TechChange %>% rename(tech.change = tech_change),
-                               by = c("scenario", "mac.control" = "MAC")) %>%
+      calc_tech_change() %>%
       split(.$scenario) %>%
       lapply(function(df) {
         df %>%
@@ -308,7 +341,8 @@ module_emissions_L252.MACC <- function(command, ...) {
           add_comments("Category data from L201.ghg_res given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
           add_comments("Technology change data added in from A_MACC_TechChange") %>%
           add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised",
-                         "L152.MAC_pct_R_S_Proc_EPA", "L201.ghg_res", "emissions/A_MACC_TechChange") %>%
+                         "L152.MAC_pct_R_S_Proc_EPA", "L201.ghg_res", "emissions/A_MACC_TechChange",
+                         "emissions/A_MACC_TechChange_SSP_Mult") %>%
           select(-scenario)
       })
     # ===================================================

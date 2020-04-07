@@ -138,7 +138,7 @@
 			<!-- NON-CO2 -->
 			<Value name="nonco2">../input/gcamdata/xml/delete_gdp_control.xml</Value>
 			<Value name="nonco2">../input/gcamdata/xml/ssp15_emissions_factors.xml</Value>
-			<Value name="nonco2">../input/gcamdata/xml/MACC_TC_SSP5_IRR_MGMT.xml</Value>
+			<Value name="nonco2">../input/gcamdata/xml/MACC_TC_SSP5.xml</Value>
 
             <!-- NEG EMISS BUDGET -->
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP5.xml</Value>
@@ -188,7 +188,7 @@
 			<!-- NON-CO2 -->
 			<Value name="nonco2">../input/gcamdata/xml/delete_gdp_control.xml</Value>
 			<Value name="nonco2">../input/gcamdata/xml/ssp15_emissions_factors.xml</Value>
-			<Value name="nonco2">../input/gcamdata/xml/MACC_TC_SSP1_IRR_MGMT.xml</Value>
+			<Value name="nonco2">../input/gcamdata/xml/MACC_TC_SSP1.xml</Value>
 
             <!-- NEG EMISS BUDGET -->
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP1.xml</Value>
@@ -219,7 +219,7 @@
 			<!-- NON-CO2 -->
 			<Value name="nonco2">../input/gcamdata/xml/delete_gdp_control.xml</Value>
 			<Value name="nonco2">../input/gcamdata/xml/ssp2_emissions_factors.xml</Value>
-			<Value name="nonco2">../input/gcamdata/xml/MACC_TC_SSP2_IRR_MGMT.xml</Value>
+			<Value name="nonco2">../input/gcamdata/xml/MACC_TC_SSP2.xml</Value>
 			
             <!-- NEG EMISS BUDGET -->
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP2.xml</Value>
