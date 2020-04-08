@@ -19,13 +19,14 @@
 #' @importFrom dplyr filter group_by left_join mutate select semi_join
 #' @author CDL May 2017
 module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
+  UCD_tech_map_name <- if_else(energy.TRAN_UCD_MODE == 'rev.mode', "energy/mappings/UCD_techs_revised", "energy/mappings/UCD_techs")
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_regions",
              # the following files to be able to map in the input.name to
              # use for the input-driver
              FILE = "energy/calibrated_techs",
              FILE = "energy/calibrated_techs_bld_det",
-             FILE = "energy/mappings/UCD_techs",
+             FILE = UCD_tech_map_name,
              "L161.SSP2_EF",
              "L161.SSP15_EF",
              "L161.SSP34_EF",
@@ -69,7 +70,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
     bind_rows(
       get_data(all_data, "energy/calibrated_techs") %>% select(supplysector, subsector, technology, minicam.energy.input),
       get_data(all_data, "energy/calibrated_techs_bld_det") %>% select(supplysector, subsector, technology, minicam.energy.input),
-      get_data(all_data, "energy/mappings/UCD_techs") %>% select(supplysector, subsector = tranSubsector, technology = tranTechnology, minicam.energy.input)
+      get_data(all_data, UCD_tech_map_name) %>% select(supplysector, subsector = tranSubsector, technology = tranTechnology, minicam.energy.input)
     ) %>%
       rename(stub.technology = technology,
              input.name = minicam.energy.input) %>%
@@ -275,7 +276,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                      "emissions/A_regions",
                      "energy/calibrated_techs",
                      "energy/calibrated_techs_bld_det",
-                     "energy/mappings/UCD_techs") ->
+                     UCD_tech_map_name) ->
       L251.ssp15_ef
     L251.ssp2_ef %>%
       add_title("Regional non-CO2 emissions coefficient data for SSP2.") %>%
@@ -287,7 +288,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                      "emissions/A_regions",
                      "energy/calibrated_techs",
                      "energy/calibrated_techs_bld_det",
-                     "energy/mappings/UCD_techs") ->
+                     UCD_tech_map_name) ->
       L251.ssp2_ef
     L251.ssp34_ef %>%
       add_title("Regional non-CO2 emissions coefficient data for SSP3 and SSP4.") %>%
@@ -299,7 +300,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                      "emissions/A_regions",
                      "energy/calibrated_techs",
                      "energy/calibrated_techs_bld_det",
-                     "energy/mappings/UCD_techs") ->
+                     UCD_tech_map_name) ->
       L251.ssp34_ef
     L251.ssp15_ef_elec %>%
       add_title("Regional electricity sector non-CO2 emissions coefficient data for SSP1 and SSP5.") %>%
