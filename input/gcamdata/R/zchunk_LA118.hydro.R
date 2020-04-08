@@ -116,7 +116,6 @@ module_energy_LA118.hydro <- function(command, ...) {
 
       # Downscaling of GCAM 3.0 scenario to the country level: Assign future growth according to shares of growth potential by country
       # Interpolate any between years, and use the final year as a proxy for years thereafter
-      # Drop 2020 because it is lower than 2010 in many regions
 
       # First, convert A18.hydro_output to long form
       A18.hydro_output %>%
@@ -125,8 +124,7 @@ module_energy_LA118.hydro <- function(command, ...) {
 
       # Now combine with L118.out_EJ_RG3_elec_hydro_fby
       L118.out_EJ_RG3_elec_hydro_fby %>%
-        bind_rows(A18.hydro_output_long) %>%
-        filter(year != 2020) -> # Dropping 2020, as described above
+        bind_rows(A18.hydro_output_long) ->
         L118.out_EJ_RG3_elec_hydro_Y_with_values
 
       # Create a table from 2010 to 2100 in all "FUTURE_YEARS" and interpolate for the missing values
@@ -153,7 +151,8 @@ module_energy_LA118.hydro <- function(command, ...) {
         filter(year != max(HISTORICAL_YEARS)) %>% # Deleting historical max year to be used in another column
         left_join(L118.out_EJ_RG3_elec_hydro_Y_interp_maxhist, by = "region_GCAM3") %>%
         # Calculate growth, which is total value (interpolated) minus the base (historical max)
-        mutate(value_growth = value_interpolated - value_max_hist) %>%
+        # For regions whose 2015 output is higher than GCAM3's estimated 2100 output, don't allow the output to decrease
+        mutate(value_growth = pmax(0, value_interpolated - value_max_hist)) %>%
         select(-value_interpolated, -value_max_hist) ->
         L118.growth_EJ_RG3_elec_hydro_Y
 

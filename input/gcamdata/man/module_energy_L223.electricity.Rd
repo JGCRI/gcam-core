@@ -15,7 +15,8 @@ module_energy_L223.electricity(command, ...)
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
 the generated outputs: \code{L223.Supplysector_elec}, \code{L223.ElecReserve}, \code{L223.SubsectorLogit_elec},
-\code{L223.SubsectorShrwt_elec}, \code{L223.SubsectorShrwtFllt_elec}, \code{L223.SubsectorShrwt_nuc},
+\code{L223.SubsectorShrwt_elec}, \code{L223.SubsectorShrwtFllt_elec},
+\code{L223.SubsectorShrwt_coal}, \code{L223.SubsectorShrwt_nuc},
 \code{L223.SubsectorShrwt_renew}, \code{L223.SubsectorInterp_elec}, \code{L223.SubsectorInterpTo_elec},
 \code{L223.StubTech_elec}, \code{L223.GlobalIntTechEff_elec}, \code{L223.GlobalTechEff_elec},
 \code{L223.GlobalTechCapFac_elec}, \code{L223.GlobalIntTechCapFac_elec}, \code{L223.GlobalTechCapital_elec},

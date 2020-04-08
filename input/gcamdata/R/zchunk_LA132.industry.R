@@ -18,8 +18,8 @@
 module_energy_LA132.industry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A_regions",
-             FILE = "energy/enduse_fuel_aggregation",
-             FILE = "energy/enduse_sector_aggregation",
+             FILE = "energy/mappings/enduse_fuel_aggregation",
+             FILE = "energy/mappings/enduse_sector_aggregation",
              "L121.in_EJ_R_unoil_F_Yh",
              "L122.in_EJ_R_refining_F_Yh",
              "L122.in_EJ_R_gasproc_F_Yh",
@@ -37,8 +37,8 @@ module_energy_LA132.industry <- function(command, ...) {
 
     # Load required inputs
     A_regions <- get_data(all_data, "energy/A_regions")
-    enduse_fuel_aggregation <- get_data(all_data, "energy/enduse_fuel_aggregation")
-    enduse_sector_aggregation <- get_data(all_data, "energy/enduse_sector_aggregation")
+    enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
+    enduse_sector_aggregation <- get_data(all_data, "energy/mappings/enduse_sector_aggregation")
     L121.in_EJ_R_unoil_F_Yh <- get_data(all_data, "L121.in_EJ_R_unoil_F_Yh")
     L122.in_EJ_R_refining_F_Yh <- get_data(all_data, "L122.in_EJ_R_refining_F_Yh")
     L122.in_EJ_R_gasproc_F_Yh <- get_data(all_data, "L122.in_EJ_R_gasproc_F_Yh")
@@ -193,7 +193,7 @@ module_energy_LA132.industry <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Industrial energy consumption (not including CHP) by GCAM region / fuel / historical year") %>%
       add_legacy_name("L132.in_EJ_R_indenergy_F_Yh") %>%
-      add_precursors("energy/A_regions", "energy/enduse_sector_aggregation", "energy/enduse_fuel_aggregation",
+      add_precursors("energy/A_regions", "energy/mappings/enduse_sector_aggregation", "energy/mappings/enduse_fuel_aggregation",
                      "L131.in_EJ_R_Senduse_F_Yh", "L121.in_EJ_R_unoil_F_Yh", "L122.in_EJ_R_gasproc_F_Yh",
                      "L122.in_EJ_R_gasproc_F_Yh", "L122.out_EJ_R_gasproc_F_Yh", "L122.in_EJ_R_refining_F_Yh",
                      "L123.in_EJ_R_indchp_F_Yh", "L131.share_R_Senduse_heat_Yh", "L124.in_EJ_R_heat_F_Yh") ->
@@ -204,7 +204,7 @@ module_energy_LA132.industry <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Industrial feedstock consumption by GCAM region / fuel / historical year") %>%
       add_legacy_name("L132.in_EJ_R_indfeed_F_Yh") %>%
-      add_precursors("L131.in_EJ_R_Senduse_F_Yh", "energy/enduse_sector_aggregation", "energy/enduse_fuel_aggregation") ->
+      add_precursors("L131.in_EJ_R_Senduse_F_Yh", "energy/mappings/enduse_sector_aggregation", "energy/mappings/enduse_fuel_aggregation") ->
       L132.in_EJ_R_indfeed_F_Yh
 
     return_data(L132.in_EJ_R_indenergy_F_Yh, L132.in_EJ_R_indfeed_F_Yh)

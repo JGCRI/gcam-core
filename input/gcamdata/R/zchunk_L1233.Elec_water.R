@@ -19,7 +19,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "energy/calibrated_techs",
-             FILE = "energy/enduse_fuel_aggregation",
+             FILE = "energy/mappings/enduse_fuel_aggregation",
              "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
              "L1231.in_EJ_R_elec_F_tech_Yh",
              "L1231.out_EJ_R_elec_F_tech_Yh",
@@ -46,7 +46,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    enduse_fuel_aggregation <- get_data(all_data, "energy/enduse_fuel_aggregation")
+    enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     A23.CoolingSystemShares_RG3 <- get_data(all_data, "water/A23.CoolingSystemShares_RG3")
     elec_tech_water_map <- get_data(all_data, "water/elec_tech_water_map")
     Macknick_elec_water_m3MWh <- get_data(all_data, "water/Macknick_elec_water_m3MWh")
@@ -228,7 +228,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
       add_legacy_name("L1233.out_EJ_R_elec_F_tech_Yh_cool") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
-                     "energy/enduse_fuel_aggregation",
+                     "energy/mappings/enduse_fuel_aggregation",
                      "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
                      "L1231.in_EJ_R_elec_F_tech_Yh",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
@@ -243,7 +243,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
       add_legacy_name("L1233.in_EJ_R_elec_F_tech_Yh_cool") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
-                     "energy/enduse_fuel_aggregation",
+                     "energy/mappings/enduse_fuel_aggregation",
                      "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
                      "L1231.in_EJ_R_elec_F_tech_Yh",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
@@ -258,7 +258,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
       add_legacy_name("L1233.wdraw_km3_R_elec") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
-                     "energy/enduse_fuel_aggregation",
+                     "energy/mappings/enduse_fuel_aggregation",
                      "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
                      "water/A23.CoolingSystemShares_RG3",
@@ -273,7 +273,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
       add_legacy_name("L1233.wcons_km3_R_elec") %>%
       add_precursors("common/iso_GCAM_regID",
                      "energy/calibrated_techs",
-                     "energy/enduse_fuel_aggregation",
+                     "energy/mappings/enduse_fuel_aggregation",
                      "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
                      "L1231.out_EJ_R_elec_F_tech_Yh",
                      "water/A23.CoolingSystemShares_RG3",

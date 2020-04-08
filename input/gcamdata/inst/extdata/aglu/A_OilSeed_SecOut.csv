@@ -1,0 +1,11 @@
+# File: A_OilSeed_SecOut.csv
+# Title: Oilseed crushing input-output coefficients (kg crop / GJ oil) and secondary output ratios (kg feedcakes / GJ oil)
+# Units: kg / GJ
+# Comments: IOcoef: 1 / OilContent * 25.6 kg / GJ. OilContent = 43.4% for Rapeseed, Sunflower, and 18% for Soybean. SecOutRatio = (IOcoef - 25.6 kg/GJ oil) * (1 - losses). Losses = 4% for soybean, 16% for sunflower, 3% for Rapeseed.
+# Source: Fine et al. 2015, Food losses and waste in the French oilcrops sector. DOI: 10.1051/ocl/2015012
+# Column types: cnn
+# ----------
+Crop,IOcoef,SecOutRatio
+Rapeseed,59,32
+Soybean,142.57,112
+Sunflower,59,28

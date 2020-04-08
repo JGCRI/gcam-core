@@ -23,7 +23,7 @@
 module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "energy/IEA_product_rsrc",
+             FILE = "energy/mappings/IEA_product_rsrc",
              FILE = "energy/rsrc_unconv_oil_prod_bbld",
              FILE = "energy/A11.fos_curves",
              "L100.IEA_en_bal_ctry_hist",
@@ -41,7 +41,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    IEA_product_rsrc <- get_data(all_data, "energy/IEA_product_rsrc")
+    IEA_product_rsrc <- get_data(all_data, "energy/mappings/IEA_product_rsrc")
     rsrc_unconv_oil_prod_bbld <- get_data(all_data, "energy/rsrc_unconv_oil_prod_bbld")
     A11.fos_curves <- get_data(all_data, "energy/A11.fos_curves")
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
@@ -213,7 +213,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
         add_comments("Use crude oil production shares as a proxy for unconventional oil resources.") %>%
         add_legacy_name("L111.RsrcCurves_EJ_R_Ffos") %>%
         add_precursors("common/iso_GCAM_regID", "energy/A11.fos_curves",
-                       "energy/IEA_product_rsrc", "L100.IEA_en_bal_ctry_hist",
+                       "energy/mappings/IEA_product_rsrc", "L100.IEA_en_bal_ctry_hist",
                        "L1011.en_bal_EJ_R_Si_Fi_Yh") ->
         L111.RsrcCurves_EJ_R_Ffos
     }

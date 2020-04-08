@@ -111,7 +111,7 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
         L101.groundwater_depletion_bm3
     }
 
-    if(water.GROUNDWATER_CALIBRATION == "Gleeson"){
+    if(water.GROUNDWATER_CALIBRATION == "gleeson"){
       gw_dep %>%
         rename(depletion = netDepletion) %>%
         filter(depletion > 0) %>%

@@ -2,15 +2,15 @@
 # Title: Electricity subsector shareweight interpolation
 # Units: Unitless share-weights
 # Source: None (GCAM assumptions)
-# Column types: cccciic 
+# Column types: cccccic 
 # ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 electricity,coal,share-weight,final-calibration-year,2300,1,s-curve
 electricity,gas,share-weight,final-calibration-year,2300,1,s-curve
 electricity,refined liquids,share-weight,final-calibration-year,2100,,linear
 electricity,biomass,share-weight,final-calibration-year,2100,,linear
-electricity,nuclear,share-weight,final-calibration-year,2015,,linear
-electricity,nuclear,share-weight,2020,2035,,linear
+electricity,nuclear,share-weight,final-calibration-year,initial-future-year,,linear
+electricity,nuclear,share-weight,initial-future-year,2035,,linear
 electricity,nuclear,share-weight,2035,2050,,linear
 electricity,nuclear,share-weight,2050,2300,1,s-curve
 electricity,wind,share-weight,final-calibration-year,2100,,linear

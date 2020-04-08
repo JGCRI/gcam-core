@@ -67,7 +67,7 @@ using namespace xercesc;
 BisectAll::BisectAll( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ):SolverComponent( marketplaceIn, worldIn, calcCounterIn ),
 mMaxIterations( 30 ),
 mDefaultBracketInterval( 0.4 ),
-mBracketTolerance( 1.0e-6 ),
+mBracketTolerance( 1.0e-8 ),
 mMaxBracketIterations( 40 )
 {
 }

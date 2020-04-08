@@ -1,8 +1,8 @@
-# File: IEA_product_rsrc.csv,
-# Title: Mapping from IEA product names to intermediate fuel names,
-# Units: NA,
-# Source: IEA,
-# Column types: cc 
+# File: IEA_product_rsrc.csv
+# Title: Mapping from IEA product names to intermediate fuel names
+# Units: NA
+# Source: IEA
+# Column types: cc
 # ----------
 PRODUCT,resource
 Crude/NGL/feedstocks (if no detail),crude oil
@@ -19,3 +19,14 @@ Coking coal,coal
 Other bituminous coal,coal
 Sub-bituminous coal,coal
 Lignite,coal
+Patent fuel,coal
+Coke oven coke,coal
+Gas coke,coal
+Coal tar,coal
+BKB,coal
+Coke oven gas,coal
+Blast furnace gas,coal
+Other recovered gases,coal
+Peat,coal
+Peat products,coal
+Oil shale and oil sands,coal

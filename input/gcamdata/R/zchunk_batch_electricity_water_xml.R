@@ -19,6 +19,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
               "L223.SubsectorInterp_elec",
               "L223.SubsectorInterpTo_elec",
               "L223.SubsectorLogit_elec",
+              "L223.SubsectorShrwt_coal",
               "L223.SubsectorShrwt_nuc",
               "L223.SubsectorShrwt_renew",
               "L2233.AvgFossilEffKeyword_elec_cool",
@@ -74,6 +75,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
     L223.SubsectorInterp_elec <- get_data(all_data, "L223.SubsectorInterp_elec")
     L223.SubsectorInterpTo_elec <- get_data(all_data, "L223.SubsectorInterpTo_elec")
     L223.SubsectorLogit_elec <- get_data(all_data, "L223.SubsectorLogit_elec")
+    L223.SubsectorShrwt_coal <- get_data(all_data, "L223.SubsectorShrwt_coal")
     L223.SubsectorShrwt_nuc <- get_data(all_data, "L223.SubsectorShrwt_nuc")
     L223.SubsectorShrwt_renew <- get_data(all_data, "L223.SubsectorShrwt_renew")
     L2233.AvgFossilEffKeyword_elec_cool <- get_data(all_data, "L2233.AvgFossilEffKeyword_elec_cool")
@@ -141,6 +143,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
       add_xml_data(L223.SubsectorInterp_elec, "SubsectorInterp") %>%
       add_xml_data(L223.SubsectorInterpTo_elec, "SubsectorInterpTo") %>%
       add_logit_tables_xml(L223.SubsectorLogit_elec, "SubsectorLogit") %>%
+      add_xml_data(L223.SubsectorShrwt_coal, "SubsectorShrwt") %>%
       add_xml_data(L223.SubsectorShrwt_nuc, "SubsectorShrwt") %>%
       add_xml_data(L223.SubsectorShrwt_renew, "SubsectorShrwt") %>%
       add_xml_data(L2233.AvgFossilEffKeyword_elec_cool, "AvgFossilEffKeyword") %>%
@@ -189,6 +192,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
                       "L223.SubsectorInterp_elec",
                       "L223.SubsectorInterpTo_elec",
                       "L223.SubsectorLogit_elec",
+                      "L223.SubsectorShrwt_coal",
                       "L223.SubsectorShrwt_nuc",
                       "L223.SubsectorShrwt_renew",
                       "L2233.AvgFossilEffKeyword_elec_cool",

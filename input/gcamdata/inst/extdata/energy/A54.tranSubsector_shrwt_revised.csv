@@ -1,0 +1,33 @@
+# File: A54.tranSubsector_shrwt_revised.csv
+# Title: Transportation default subsector shareweights
+# Source: Documented in JIRA issue https://jira.pnnl.gov/jira/browse/JGCRI-358?src=confmacro.
+# Units: Unitless
+# Column types: ccccn 
+# ----------
+supplysector,tranSubsector,year.fillout,year,share.weight
+trn_aviation_intl,International Aviation,start-year,,1
+trn_freight,Domestic Ship,start-year,,1
+trn_freight,Freight Rail,start-year,,1
+trn_freight_road,Light truck,start-year,,1
+trn_freight_road,Medium truck,start-year,,1
+trn_freight_road,Heavy truck,start-year,,1
+trn_pass,Cycle,start-year,,1
+trn_pass,Domestic Aviation,start-year,,1
+trn_pass,HSR,,final-calibration-year,0
+trn_pass,HSR,initial-future-year,,0.001
+trn_pass,Passenger Rail,start-year,,1
+trn_pass,Walk,start-year,,1
+trn_pass_road,Bus,start-year,,1
+trn_pass_road_bus,Heavy Bus,start-year,,1
+trn_pass_road_bus,Light Bus,start-year,,1
+trn_pass_road_LDV,2W and 3W,start-year,,1
+trn_pass_road_LDV_4W,Car,start-year,,1
+trn_pass_road_LDV_4W,Large Car and Truck,start-year,,1
+trn_pass_road_LDV_4W,Mini Car,start-year,,1
+trn_shipping_intl,International Ship,start-year,,1
+# Passthrough tranSubsectors are listed below
+trn_pass,road,start-year,,1
+trn_pass_road,LDV,start-year,,1
+trn_pass_road_LDV,4W,start-year,,1
+trn_pass_road_LDV,2W,start-year,,1
+trn_freight,road,start-year,,1
