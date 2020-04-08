@@ -1,0 +1,33 @@
+# File: A54.tranSubsector_logit_revised.csv
+# Title: Transportation default subsector logit exponents
+# Source: Documented in JIRA issue https://jira.pnnl.gov/jira/browse/JGCRI-358?src=confmacro.
+# Units: Unitless
+# Column types: ccicc 
+# ----------
+supplysector,tranSubsector,logit.exponent,logit.factor,logit.type
+trn_aviation_intl,International Aviation,-6,,absolute-cost-logit
+trn_freight,Domestic Ship,-6,,absolute-cost-logit
+trn_freight,Freight Rail,-1,Fuel types and efficiency levels,absolute-cost-logit
+trn_freight_road,Light truck,-8,Fuel types,absolute-cost-logit
+trn_freight_road,Medium truck,-8,Fuel types,absolute-cost-logit
+trn_freight_road,Heavy truck,-8,Fuel types,absolute-cost-logit
+trn_pass,Cycle,-6,,absolute-cost-logit
+trn_pass,Domestic Aviation,-6,,absolute-cost-logit
+trn_pass,HSR,-6,,absolute-cost-logit
+trn_pass,Passenger Rail,-1,Fuel types and efficiency levels,absolute-cost-logit
+trn_pass,Walk,-6,,absolute-cost-logit
+trn_pass_road,Bus,-3,Fuel types,absolute-cost-logit
+trn_pass_road_bus,Heavy Bus,-3,Fuel types,absolute-cost-logit
+trn_pass_road_bus,Light Bus,-3,Fuel types,absolute-cost-logit
+trn_pass_road_LDV,2W and 3W,-8,Fuel types,absolute-cost-logit
+trn_pass_road_LDV_4W,Car,-8,Fuel types and ICE efficiency levels,absolute-cost-logit
+trn_pass_road_LDV_4W,Large Car and Truck,-8,Fuel types and ICE efficiency levels,absolute-cost-logit
+trn_pass_road_LDV_4W,Mini Car,-8,Fuel types and ICE efficiency levels,absolute-cost-logit
+trn_shipping_intl,International Ship,-6,,absolute-cost-logit
+# Passthrough tranSubsectors are listed belowabsolute-cost-logit
+trn_pass,road,-6,,absolute-cost-logit
+trn_pass_road,LDV,-6,,absolute-cost-logit
+trn_pass_road,bus,-6,,absolute-cost-logit
+trn_pass_road_LDV,4W,-6,,absolute-cost-logit
+trn_pass_road_LDV,2W,-6,,absolute-cost-logit
+trn_freight,road,-6,,absolute-cost-logit
