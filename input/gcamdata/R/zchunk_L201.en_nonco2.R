@@ -17,6 +17,7 @@
 #' @importFrom tidyr gather
 #' @author BBL July 2017
 module_emissions_L201.en_nonco2 <- function(command, ...) {
+  UCD_tech_map_name <- if_else(energy.TRAN_UCD_MODE == 'rev.mode', "energy/mappings/UCD_techs_revised", "energy/mappings/UCD_techs")
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "emissions/A_regions",
@@ -34,7 +35,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
              # use for the input-driver
              FILE = "energy/calibrated_techs",
              FILE = "energy/calibrated_techs_bld_det",
-             FILE = "energy/mappings/UCD_techs"))
+             FILE = UCD_tech_map_name))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L201.en_pol_emissions",
              "L201.en_ghg_emissions",
@@ -77,7 +78,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     bind_rows(
       get_data(all_data, "energy/calibrated_techs") %>% select(supplysector, subsector, technology, minicam.energy.input),
       get_data(all_data, "energy/calibrated_techs_bld_det") %>% select(supplysector, subsector, technology, minicam.energy.input),
-      get_data(all_data, "energy/mappings/UCD_techs") %>% select(supplysector, subsector = tranSubsector, technology = tranTechnology, minicam.energy.input)
+      get_data(all_data, UCD_tech_map_name) %>% select(supplysector, subsector = tranSubsector, technology = tranTechnology, minicam.energy.input)
       ) %>%
       rename(stub.technology = technology,
              input.name = minicam.energy.input) %>%
@@ -293,7 +294,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "emissions/A_regions", "energy/A_regions",
                      "energy/calibrated_techs",
                      "energy/calibrated_techs_bld_det",
-                     "energy/mappings/UCD_techs",
+                     UCD_tech_map_name,
                      "L111.nonghg_tg_R_en_S_F_Yh",
                      "L244.DeleteThermalService") ->
       L201.en_pol_emissions
@@ -309,7 +310,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "energy/A_regions",
                      "energy/calibrated_techs",
                      "energy/calibrated_techs_bld_det",
-                     "energy/mappings/UCD_techs",
+                     UCD_tech_map_name,
                      "L112.ghg_tg_R_en_S_F_Yh",
                      "L244.DeleteThermalService") ->
       L201.en_ghg_emissions
@@ -325,7 +326,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "energy/A_regions",
                      "energy/calibrated_techs",
                      "energy/calibrated_techs_bld_det",
-                     "energy/mappings/UCD_techs",
+                     UCD_tech_map_name,
                      "L114.bcoc_tgej_R_en_S_F_2000",
                      "L244.DeleteThermalService") ->
       L201.en_bcoc_emissions
