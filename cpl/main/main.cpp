@@ -54,7 +54,7 @@ int main( ) {
     // In fully coupled mode, these are defined in an E3SM namelist.
     std::string CASE_NAME = "Impacts";
     std::string GCAM_CONFIG = "configuration.xml";
-    std::string BASE_CO2_FILE = "../cpl/data/gridded_co2.2010";
+    std::string BASE_CO2_FILE = "../cpl/data/gcam_CO2-em-anthro_0.9x1.25_201401-201412_c20200406.txt";
     std::string GCAM2ELM_CO2_MAPPING_FILE = "../cpl/mappings/co2.xml";
     std::string GCAM2ELM_LUC_MAPPING_FILE = "../cpl/mappings/luc.xml";
     std::string GCAM2ELM_WOODHARVEST_MAPPING_FILE = "../cpl/mappings/woodharvest.xml";
@@ -71,8 +71,8 @@ int main( ) {
     
     // Define size control variables
     // These integers define the length of the various arrays used in the coupling
-    int NUM_LAT = 180; // Number of horizontal grid cells
-    int NUM_LON = 360; // Number of vertical grid cells
+    int NUM_LAT = 192; // Number of horizontal grid cells
+    int NUM_LON = 288; // Number of vertical grid cells
     int NUM_PFT = 16; // Number of PFTs in ELM
     int NUM_GCAM_ENERGY_REGIONS = 32;
     int NUM_GCAM_LAND_REGIONS = 391;
@@ -93,7 +93,7 @@ int main( ) {
     double *gcaminpp = new double [NUM_LAT * NUM_LON * NUM_PFT]();
     double *gcamihr = new double [NUM_LAT * NUM_LON * NUM_PFT]();
     double *gcamoluc = new double [NUM_GCAM_LAND_REGIONS * NUM_IAC2ELM_LANDTYPES]();
-    double *gcamoemis = new double [NUM_LAT * NUM_LON]();
+    double *gcamoemis = new double [NUM_LAT * NUM_LON * 12](); // Emissions data is monthly
     
     // Run GCAM
     for( int yr = 1975; yr < 2025; yr++ ){
