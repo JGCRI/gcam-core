@@ -1,0 +1,60 @@
+# File: EIA_elect_td_ownuse.csv
+# Title: EIA State Electricity Profiles 2018
+# Description: Electricity Profiles by State
+# Source: https://www.eia.gov/electricity/state/alabama/index.php
+# Units: In column names
+# Column types: cci
+# ----------
+State_name,State,DirectUse_MWh
+Alabama,AL,5037015
+Alaska,AK,236992
+Arizona,AZ,19859
+Arkansas,AR,1400990
+California,CA,12859245
+Colorado,CO,75593
+Connecticut,CT,1007910
+Delaware,DE,721471
+District of Columbia,DC,106635
+Florida,FL,5133102
+Georgia,GA,5278713
+Hawaii,HI,431799
+Idaho,ID,582881
+Illinois,IL,4109450
+Indiana,IN,6819691
+Iowa,IA,2370432
+Kansas,KS,105372
+Kentucky,KY,368558
+Louisiana,LA,19913457
+Maine,ME,2032518
+Maryland,MD,1054698
+Massachusetts,MA,804930
+Michigan,MI,2528022
+Minnesota,MN,1485718
+Mississippi,MS,1842491
+Missouri,MO,276831
+Montana,MT,98302
+Nebraska,NE,492206
+Nevada,NV,161998
+New Hampshire,NH,113833
+New Jersey,NJ,1503967
+New Mexico,NM,184972
+New York,NY,1881954
+North Carolina,NC,2112054
+North Dakota,ND,182019
+Ohio,OH,1193347
+Oklahoma,OK,1290067
+Oregon,OR,503543
+Pennsylvania,PA,5388503
+Rhode Island,RI,213519
+South Carolina,SC,2275751
+South Dakota,SD,40
+Tennessee,TN,2487343
+Texas,TX,38490458
+Utah,UT,755713
+Vermont,VT,9682
+Virginia,VA,2789651
+Washington,WA,987941
+West Virginia,WV,473128
+Wisconsin,WI,1937935
+Wyoming,WY,1592698
+United States,US,144113808

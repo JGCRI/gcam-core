@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LA101.EIA_SEDS
+#' module_gcamusa_LA101.EIA_SEDS
 #'
 #' Produce two ouput tables from the EIA state energy database:
 #' \itemize{
@@ -32,13 +32,17 @@ module_gcamusa_LA101.EIA_SEDS <- function(command, ...) {
 
     year <- value <- Data_Status <- State <- MSN <- GCAM_fuel <- GCAM_sector <-
       state <- sector <- fuel <- conv_Bbtu_EJ <- EIA_fuel <- EIA_sector <-
-      description.x <- description.y <- NULL # silence package check.
+      description <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    EIA_SEDS_fuels <- get_data(all_data, "gcam-usa/EIA_SEDS_fuels")
-    EIA_SEDS_sectors <- get_data(all_data, "gcam-usa/EIA_SEDS_sectors")
+    EIA_SEDS_fuels <- get_data(all_data, "gcam-usa/EIA_SEDS_fuels") %>%
+      select(-description) %>%
+      filter(!is.na(GCAM_fuel))
+    EIA_SEDS_sectors <- get_data(all_data, "gcam-usa/EIA_SEDS_sectors") %>%
+      select(-description) %>%
+      filter(!is.na(GCAM_sector))
     EIA_use_all_Bbtu <- get_data(all_data, "gcam-usa/EIA_use_all_Bbtu")
     A_fuel_conv <- get_data(all_data, "gcam-usa/A_fuel_conv")
 
@@ -49,8 +53,11 @@ module_gcamusa_LA101.EIA_SEDS <- function(command, ...) {
       gather_years %>%
       mutate(EIA_fuel = substr(MSN, 1, 2),  # First and second digits of MSN is energy code
              EIA_sector = substr(MSN, 3, 4)) %>% # Third and fourth digits of MSN is sector code
-      left_join(EIA_SEDS_fuels, by = "EIA_fuel") %>%
-      left_join(EIA_SEDS_sectors, by = "EIA_sector") %>%
+      # use semi-join to filter out irrelevant fuel & sector codes
+      semi_join(EIA_SEDS_fuels, by = "EIA_fuel") %>%
+      semi_join(EIA_SEDS_sectors, by = "EIA_sector") %>%
+      left_join_error_no_match(EIA_SEDS_fuels, by = "EIA_fuel") %>%
+      left_join_error_no_match(EIA_SEDS_sectors, by = "EIA_sector") %>%
       filter(State != "US") %>%
       mutate(state = State, fuel = GCAM_fuel, sector = GCAM_sector) ->
       Bbtu_with_GCAM_names
@@ -69,13 +76,13 @@ module_gcamusa_LA101.EIA_SEDS <- function(command, ...) {
 
     # Create other output table: leave units as billion BTU, getting rid of missing values: prior to 1980, lots are missing. These data are only used for state-wise allocations
     Bbtu_with_GCAM_names %>%
-      select(Data_Status, state, MSN, year, value, EIA_fuel, EIA_sector, sector, fuel, -State, -description.x, -description.y) %>%
+      select(Data_Status, state, MSN, year, value, EIA_fuel, EIA_sector, sector, fuel, -State) %>%
       arrange(Data_Status, state, MSN, EIA_fuel, EIA_sector, sector, fuel, -year) -> # Year needs to be in descending order to use fill function
       Bbtu_with_GCAM_names_intermediate
 
     # To create this second output table, I need to split the dataframe and recombine
     Bbtu_with_GCAM_names_intermediate %>%
-      filter(year %in% 1971:2011) %>% # Custom year range, want to keep NAs in 1960-1970
+      filter(year %in% 1971:2017) %>% # Custom year range, want to keep NAs in 1960-1970 #nk &kbn 2019/11/18 - The years here need to be changed to constants.
       fill(value) %>% # Replace NAs in 1971-1979 with values from one year more recent
       bind_rows(filter(Bbtu_with_GCAM_names_intermediate, year %in% 1960:1970)) %>% # Reattaching 1960-1970 rows
       arrange(Data_Status, state, MSN, EIA_fuel, EIA_sector, sector, fuel, -year) ->

@@ -348,6 +348,27 @@ module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
           select(grid_share_fuel) %>%
           pull(grid_share_fuel) -> L1236.hydro_frac
 
+        #kbn 2019 : Adding wind_frac and solar_frac
+        L1236.out_EJ_grid_elec_F %>%
+          filter(grid_region == L1236.region & fuel == "wind" & year == segment_year) %>%
+          select(grid_share_fuel) %>%
+          pull(grid_share_fuel) -> L1236.wind_frac
+
+        L1236.out_EJ_grid_elec_F %>%
+          filter(grid_region == L1236.region & fuel == "solar" & year == segment_year) %>%
+          select(grid_share_fuel) %>%
+          pull(grid_share_fuel) -> L1236.solar_frac
+
+        L1236.out_EJ_grid_elec_F %>%
+          filter(grid_region == L1236.region & fuel == "nuclear" & year == segment_year) %>%
+          select(grid_share_fuel) %>%
+          pull(grid_share_fuel) -> L1236.nuclear_frac
+
+        L1236.out_EJ_grid_elec_F %>%
+          filter(grid_region == L1236.region & fuel == "geothermal" & year == segment_year) %>%
+          select(grid_share_fuel) %>%
+          pull(grid_share_fuel) -> L1236.geothermal_frac
+
         if (segment_year %in% c(2005, 1990)) {
           # For years 2005 & 1990, we use solved fractions from the most recent year as a starting point
           # for calculating the fuel fractions for the current year.
@@ -369,7 +390,8 @@ module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
 
         }
 
-        if (segment_year %in% c(2010, 2005) & L1236.oil_frac > 0.5) {
+        if (segment_year %in% c(2015,2010, 2005) & L1236.oil_frac > 0.5) {
+          #Updating above with 2015 kbn
           # For oil heavy regions such as Hawaii grid, solve for oil fractions.
           # This will allow for some oil in baseload and intermediate segments.
           # Solve for oil fractions
@@ -487,7 +509,9 @@ module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
           L1236.grid_elec_supply %>%
             replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
 
-        } else if (segment_year == 2010 & L1236.gas_frac > 0.2) {
+        } else if (segment_year %in% c(2010) & L1236.gas_frac > 0.2 ) {
+          #kbn 2019
+
           # If a grid region has 20% or more gas, first assign refined liquids to the baseload segment, then solve for gas fractions.
           L1236.grid_elec_supply %>%
             replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_BASE, 1) %>%
@@ -532,7 +556,216 @@ module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
           L1236.grid_elec_supply %>%
             replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
 
-        } else if (segment_year == 2005 & L1236.gas_frac > 0.2 & L1236.coal_frac < 0.5) {
+        }else if (segment_year %in% c(2015) & L1236.gas_frac > 0.2 & L1236.region %in% c("Mid-Atlantic grid","Northwest grid")  ) {
+          #kbn 2019 shift nuclear out of base into other segments
+
+          # If a grid region has 20% or more gas, first assign refined liquids to the baseload segment, then solve for gas fractions.
+          L1236.grid_elec_supply %>%
+            replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_BASE, 1) %>%
+            replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_INT, 0) %>%
+            replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_SUBPEAK, 0) %>%
+            replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_PEAK, 0) -> L1236.grid_elec_supply
+
+          L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_BASE, "coal")
+
+          L1236.grid_elec_supply %>%
+            replace_fraction("coal", gcamusa.ELEC_SEGMENT_BASE, L1236.solved_fraction$root) -> L1236.grid_elec_supply
+
+          L1236.grid_elec_supply %>%
+            calc_non_segment_frac("coal", gcamusa.ELEC_SEGMENT_INT) -> L1236.non_int
+
+          L1236.grid_elec_supply %>%
+            replace_fraction("coal", gcamusa.ELEC_SEGMENT_INT, 1 - L1236.non_int) -> L1236.grid_elec_supply
+
+          # Solve for gas fractions in intermediate, subpeak and peak
+          L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_INT, "gas")
+
+          L1236.grid_elec_supply %>%
+            replace_fraction("gas", gcamusa.ELEC_SEGMENT_INT, L1236.solved_fraction$root) -> L1236.grid_elec_supply
+
+          L1236.grid_elec_supply %>%
+            calc_non_segment_frac("gas", gcamusa.ELEC_SEGMENT_PEAK) -> L1236.non_peak
+
+          L1236.grid_elec_supply %>%
+            replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
+
+          L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_SUBPEAK, "gas")
+
+          L1236.grid_elec_supply %>%
+            replace_fraction("gas", gcamusa.ELEC_SEGMENT_SUBPEAK, L1236.solved_fraction$root) -> L1236.grid_elec_supply
+
+          L1236.grid_elec_supply %>%
+            calc_non_segment_frac("gas", gcamusa.ELEC_SEGMENT_PEAK) -> L1236.non_peak
+
+          L1236.grid_elec_supply %>%
+            replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
+
+
+
+
+        }#kbn 2019
+        #Adding new solve statement  for 2015
+        else if (segment_year %in% c(2015) & L1236.gas_frac > 0.20 & abs(L1236.gas_frac-L1236.coal_frac) >0.064) {
+        #Make adjustment for nuclear in Mid-Atlantic
+
+          #if (abs(L1236.gas_frac-L1236.coal_frac) <0.064){
+
+
+          #}
+
+
+
+          if (L1236.hydro_frac >0.35){
+
+            L1236.grid_elec_supply %>%
+              replace_fraction("hydro", gcamusa.ELEC_SEGMENT_BASE, 0.6) %>%
+              replace_fraction("hydro", gcamusa.ELEC_SEGMENT_INT, 0.25) %>%
+              replace_fraction("hydro", gcamusa.ELEC_SEGMENT_SUBPEAK, 0.25) -> L1236.grid_elec_supply}
+
+
+          if (L1236.nuclear_frac >0.35){
+
+            L1236.grid_elec_supply %>%
+              replace_fraction("nuclear", gcamusa.ELEC_SEGMENT_BASE, 0.8) %>%
+              replace_fraction("nuclear", gcamusa.ELEC_SEGMENT_INT, 0.1) %>%
+              replace_fraction("nuclear", gcamusa.ELEC_SEGMENT_SUBPEAK, 0.1) -> L1236.grid_elec_supply}
+
+
+
+          #Make adjustment for solar in California
+          if (L1236.solar_frac >0.09){
+
+            L1236.grid_elec_supply %>%
+              replace_fraction("solar", gcamusa.ELEC_SEGMENT_BASE, 0) %>%
+              replace_fraction("solar", gcamusa.ELEC_SEGMENT_INT, 0.8) %>%
+              replace_fraction("solar", gcamusa.ELEC_SEGMENT_SUBPEAK, 0.2) -> L1236.grid_elec_supply}
+
+          if (L1236.region %in% c('California grid')){
+
+
+
+
+        #tRYING FIX FOR NUCLEAR
+          }
+
+
+
+
+
+
+
+          # allocate some wind into intermediate, and subpeak segments,and (for 2005) assign some refined liquids into the subpeak.
+          #Some locations where solver is failing have high levels of wind energy. So adjusting for that.
+          if (L1236.wind_frac >0.1){
+
+          L1236.grid_elec_supply %>%
+            replace_fraction("wind", gcamusa.ELEC_SEGMENT_BASE, 0.6) %>%
+            replace_fraction("wind", gcamusa.ELEC_SEGMENT_INT, 0.25) %>%
+            replace_fraction("wind", gcamusa.ELEC_SEGMENT_SUBPEAK, 0.15) -> L1236.grid_elec_supply}
+          #kbn:Testing fix for Mid-atlantic
+          if (segment_year == 2015 & (L1236.gas_frac - L1236.coal_frac)<0.1 ){
+
+
+
+          }
+          #In case coal is higher than gas, use the adjustment from 1990,
+          if (segment_year == 2015 & L1236.coal_frac > L1236.gas_frac & L1236.coal_frac < 0.60) {
+            # For regions with moderate levels of coal such as Southeast grid, Northwest grid, and Central Southwest grid,
+            # move refined liquids to subpeak. Then solve for coal in base load and allocate remaining coal to intermediate.
+            # Assign some gas and refined liquids into the intermediate and subpeak segments.
+            L1236.grid_elec_supply %>%
+              replace_fraction("gas", gcamusa.ELEC_SEGMENT_BASE, 0)  %>%
+              replace_fraction("gas", gcamusa.ELEC_SEGMENT_INT, 0.6)  %>%
+              replace_fraction("gas", gcamusa.ELEC_SEGMENT_SUBPEAK, 0.25)  %>%
+              replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 0.15) %>%
+              replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_BASE, 0.2)  %>%
+              replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_INT, 0.8)  %>%
+              replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_SUBPEAK, 0)  %>%
+              replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_PEAK, 0) -> L1236.grid_elec_supply
+
+            # Solve for coal fractions
+            # Solve for coal in baseload and assign the remaining to intermediate
+            L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_BASE, "coal")
+
+            L1236.grid_elec_supply %>%
+              replace_fraction("coal", gcamusa.ELEC_SEGMENT_BASE, L1236.solved_fraction$root) -> L1236.grid_elec_supply
+
+            L1236.grid_elec_supply %>%
+              calc_non_segment_frac("coal", gcamusa.ELEC_SEGMENT_INT) -> L1236.non_int
+
+            L1236.grid_elec_supply %>%
+              replace_fraction("coal", gcamusa.ELEC_SEGMENT_INT, 1 - L1236.non_int) -> L1236.grid_elec_supply
+
+            # Solve for gas fractions in intermediate, subpeak and peak
+            L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_INT, "gas")
+
+            L1236.grid_elec_supply %>%
+              replace_fraction("gas", gcamusa.ELEC_SEGMENT_INT, L1236.solved_fraction$root) -> L1236.grid_elec_supply
+
+            L1236.grid_elec_supply %>%
+              calc_non_segment_frac("gas", gcamusa.ELEC_SEGMENT_PEAK) -> L1236.non_peak
+
+            L1236.grid_elec_supply %>%
+              replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
+
+            L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_SUBPEAK, "gas")
+
+            L1236.grid_elec_supply %>%
+              replace_fraction("gas", gcamusa.ELEC_SEGMENT_SUBPEAK, L1236.solved_fraction$root) -> L1236.grid_elec_supply
+
+            L1236.grid_elec_supply %>%
+              calc_non_segment_frac("gas", gcamusa.ELEC_SEGMENT_PEAK) -> L1236.non_peak
+
+            L1236.grid_elec_supply %>%
+              replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
+
+          }else{
+
+        # If a grid region has 20% or more gas, first assign refined liquids to the baseload segment, then solve for gas fractions.
+        L1236.grid_elec_supply %>%
+          replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_BASE, 1) %>%
+          replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_INT, 0) %>%
+          replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_SUBPEAK, 0) %>%
+          replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_PEAK, 0) -> L1236.grid_elec_supply
+
+        L1236.grid_elec_supply %>%
+          mutate(generation = tot_generation * fraction) -> L1236.grid_elec_supply
+
+        # Solve for gas fractions
+        L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_BASE)
+
+        L1236.grid_elec_supply %>%
+          replace_fraction("gas", gcamusa.ELEC_SEGMENT_BASE, L1236.solved_fraction$root) -> L1236.grid_elec_supply
+
+        L1236.grid_elec_supply %>%
+          calc_non_segment_frac("gas", gcamusa.ELEC_SEGMENT_PEAK) -> L1236.non_peak
+
+        L1236.grid_elec_supply %>%
+          replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
+
+        L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_INT)
+
+        L1236.grid_elec_supply %>%
+          replace_fraction("gas", gcamusa.ELEC_SEGMENT_INT, L1236.solved_fraction$root) -> L1236.grid_elec_supply
+
+        L1236.grid_elec_supply %>%
+          calc_non_segment_frac("gas", gcamusa.ELEC_SEGMENT_PEAK) -> L1236.non_peak
+
+        L1236.grid_elec_supply %>%
+          replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
+
+        L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_SUBPEAK)
+
+        L1236.grid_elec_supply %>%
+          replace_fraction("gas", gcamusa.ELEC_SEGMENT_SUBPEAK, L1236.solved_fraction$root) -> L1236.grid_elec_supply
+
+        L1236.grid_elec_supply %>%
+          calc_non_segment_frac("gas", gcamusa.ELEC_SEGMENT_PEAK) -> L1236.non_peak
+
+        L1236.grid_elec_supply %>%
+          replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
+
+      }}else if (segment_year %in% c(2005) & L1236.gas_frac > 0.2 & L1236.coal_frac < 0.5) {
           # If a grid region has 20% or more gas and less than 50% coal, solve for gas fractions.
           # To reduce solution error, increase coal in base load and assign some oil to base load.
           L1236.grid_elec_supply %>%
@@ -622,7 +855,7 @@ module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
           L1236.grid_elec_supply %>%
             replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
 
-        } else if (segment_year == 2010 & L1236.coal_frac > L1236.gas_frac & L1236.coal_frac < 0.55) {
+        } else if (segment_year %in%  c(2010) & L1236.coal_frac > L1236.gas_frac & L1236.coal_frac < 0.55) {
 
           # For regions with moderate levels of coal such as Southeast grid, Northwest grid, Mid-Atlantic grid, and Central Southwest grid,
           # allocate some coal to intermediate.  Solve for coal in baseload and assign the remaining to the intermediate segment.
@@ -761,6 +994,61 @@ module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
             replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
 
         } else if (segment_year %in% c(2010, 2005)) {
+          # In regions with high levels of coal such as Central Northeast, Central East, Central Northwest and Sothwest grids,
+          # allocate some wind into intermediate, and subpeak segments,and (for 2005) assign some refined liquids into the subpeak.
+          # Note that we also read in different load curves for these regions with lower peak demand.
+          L1236.grid_elec_supply %>%
+            replace_fraction("wind", gcamusa.ELEC_SEGMENT_BASE, 0.6) %>%
+            replace_fraction("wind", gcamusa.ELEC_SEGMENT_INT, 0.25) %>%
+            replace_fraction("wind", gcamusa.ELEC_SEGMENT_SUBPEAK, 0.15) -> L1236.grid_elec_supply
+
+          if (segment_year == 2005) {
+            # Assigning all refined liquids into subpeak
+            L1236.grid_elec_supply  %>%
+              replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_SUBPEAK, 1) %>%
+              replace_fraction("refined liquids", gcamusa.ELEC_SEGMENT_PEAK, 0) -> L1236.grid_elec_supply
+          }
+
+          # Solve for coal in baseload and assign the remaining to intermediate
+          L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_BASE, "coal")
+
+          L1236.grid_elec_supply %>%
+            replace_fraction("coal", gcamusa.ELEC_SEGMENT_BASE, L1236.solved_fraction$root) -> L1236.grid_elec_supply
+
+          L1236.grid_elec_supply %>%
+            calc_non_segment_frac("coal", gcamusa.ELEC_SEGMENT_INT) -> L1236.non_int
+
+          L1236.grid_elec_supply %>%
+            replace_fraction("coal", gcamusa.ELEC_SEGMENT_INT, 1 - L1236.non_int) -> L1236.grid_elec_supply
+
+          # Solve for gas fractions in intermediate, subpeak and peak
+          L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_INT, "gas")
+
+          L1236.grid_elec_supply %>%
+            replace_fraction("gas", gcamusa.ELEC_SEGMENT_INT, L1236.solved_fraction$root) -> L1236.grid_elec_supply
+
+          L1236.grid_elec_supply %>%
+            calc_non_segment_frac("gas", gcamusa.ELEC_SEGMENT_PEAK) -> L1236.non_peak
+
+          L1236.grid_elec_supply %>%
+            replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
+
+          L1236.solved_fraction <- uniroot(check_elec_segments, c(0, 1), L1236.region, gcamusa.ELEC_SEGMENT_SUBPEAK, "gas")
+
+          L1236.grid_elec_supply %>%
+            replace_fraction("gas", gcamusa.ELEC_SEGMENT_SUBPEAK, L1236.solved_fraction$root) -> L1236.grid_elec_supply
+
+          L1236.grid_elec_supply %>%
+            calc_non_segment_frac("gas", gcamusa.ELEC_SEGMENT_PEAK) -> L1236.non_peak
+
+          L1236.grid_elec_supply %>%
+            replace_fraction("gas", gcamusa.ELEC_SEGMENT_PEAK, 1 - L1236.non_peak) -> L1236.grid_elec_supply
+
+        }#kbn 2019 : Adding statement for coal solving in Central East and Central NorthEast
+        else if (segment_year %in% c(2015) & L1236.coal_frac>0.5 & L1236.gas_frac<0.25) {
+          #kbn 2019
+
+
           # In regions with high levels of coal such as Central Northeast, Central East, Central Northwest and Sothwest grids,
           # allocate some wind into intermediate, and subpeak segments,and (for 2005) assign some refined liquids into the subpeak.
           # Note that we also read in different load curves for these regions with lower peak demand.

@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LA144.Residential
+#' module_gcamusa_LA144.Residential
 #'
 #' Calculate residential floorspace by state and residential energy consumption by state/fuel/end use.
 #'
@@ -12,16 +12,16 @@
 #' original data system was \code{LA144.Residential.R} (gcam-usa level1).
 #' @details Calculate residential floorspace by state and residential energy consumption by state/fuel/end use.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate order_by select summarise union
-#' @importFrom tidyr gather replace_na
-#' @author RLH September 2017
+#' @importFrom dplyr filter mutate select lead lag
+#' @importFrom tidyr gather spread
+#' @author RLH September 2017; PK and NK, January 2020,   updated for RECS 2015
 module_gcamusa_LA144.Residential <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/RECS_variables",
              FILE = "gcam-usa/EIA_AEO_fuels",
              FILE = "gcam-usa/EIA_AEO_services",
-             FILE = "gcam-usa/Census_pop_hist",
+             FILE = "gcam-usa/Census_pop",
              FILE = "gcam-usa/AEO_2015_flsp",
              FILE = "gcam-usa/EIA_AEO_Tab4",
              FILE = "gcam-usa/RECS_1979",
@@ -32,6 +32,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
              FILE = "gcam-usa/RECS_2001",
              FILE = "gcam-usa/RECS_2005",
              FILE = "gcam-usa/RECS_2009",
+             FILE = "gcam-usa/RECS_2015",
              "L142.in_EJ_state_bld_F",
              "L143.share_state_Pop_CDD_sR13",
              "L143.share_state_Pop_HDD_sR13"))
@@ -44,7 +45,8 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
     year <- value <- subregion9 <- DIVISION2009 <- DIVISION <- subregion13 <- LRGSTATE <- subregion13 <- REPORTABLE_DOMAIN <-
       state <- subregion9 <- year <- variable <- HOUSEHOLDS <- NWEIGHT <- . <- value.x <- value.y <- variable <- pcflsp_m2 <-
       pcflsp_m2.x <- pcflsp_m2.y <- conv_9_13 <- sector <- fuel <- service <- DIVISION <- val_1993 <- conv <- val_1990 <-
-      Fuel <- Service <- tv_1995 <- fuel_sum <- share <- service.x <- Sector <- RECS_flspc_2010 <- scaler <- EIA_sector <- NULL
+      Fuel <- Service <- tv_1995 <- fuel_sum <- share <- service.x <- Sector <- RECS_flspc_2010 <- scaler <- EIA_sector <-
+      val_2009 <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -53,7 +55,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
     RECS_variables <- get_data(all_data, "gcam-usa/RECS_variables")
     EIA_AEO_fuels <- get_data(all_data, "gcam-usa/EIA_AEO_fuels")
     EIA_AEO_services <- get_data(all_data, "gcam-usa/EIA_AEO_services")
-    Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist") %>%
+    Census_pop <- get_data(all_data, "gcam-usa/Census_pop") %>%
       gather_years
     AEO_2015_flsp <- get_data(all_data, "gcam-usa/AEO_2015_flsp")
     EIA_AEO_Tab4 <- get_data(all_data, "gcam-usa/EIA_AEO_Tab4") %>%
@@ -66,6 +68,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
     RECS_2001 <- get_data(all_data, "gcam-usa/RECS_2001")
     RECS_2005 <- get_data(all_data, "gcam-usa/RECS_2005")
     RECS_2009 <- get_data(all_data, "gcam-usa/RECS_2009")
+    RECS_2015 <- get_data(all_data, "gcam-usa/RECS_2015")
     L142.in_EJ_state_bld_F <- get_data(all_data, "L142.in_EJ_state_bld_F")
     L143.share_state_Pop_CDD_sR13 <- get_data(all_data, "L143.share_state_Pop_CDD_sR13")
     L143.share_state_Pop_HDD_sR13 <- get_data(all_data, "L143.share_state_Pop_HDD_sR13")
@@ -73,28 +76,29 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
     # ===================================================
     # a) PREPARATION AND CLEANING OF RECS DATABASES
     # All RECS data has different columns, so we create a list rather than bind_rows
-    L144.RECS_all <- list(RECS_1979, RECS_1984, RECS_1990, RECS_1993, RECS_1997, RECS_2001, RECS_2005, RECS_2009)
-    names(L144.RECS_all) <- paste0("RECS", c(1979, 1984, 1990, 1993, 1997, 2001, 2005, 2009))
+    L144.RECS_all <- list(RECS_1979, RECS_1984, RECS_1990, RECS_1993, RECS_1997, RECS_2001, RECS_2005, RECS_2009, RECS_2015)
+    names(L144.RECS_all) <- paste0("RECS", c(1979, 1984, 1990, 1993, 1997, 2001, 2005, 2009, 2015))
 
     # Add year column to each tibble in list
     for(i in seq_along(L144.RECS_all)) {
       L144.RECS_all[[i]]$year <- substr(names(L144.RECS_all[i]), 5, 8) %>% as.integer()
     }
 
-    # Add a vector specifying the census division (subregion9)
+    # Add a vector specifying the census division (subregion9) in 2015. DIVISION2009 is from the mapping file "states_subregions.csv" and is the same for 2015
     L144.RECS_all <- L144.RECS_all %>%
-      lapply(function(df) {
-        # 2009 had different census division numbers
-        if(unique(df$year) == 2009) {
-          left_join_error_no_match(df,
-                                   states_subregions %>% select(subregion9, DIVISION2009) %>% distinct,
-                                   by = c("DIVISION" = "DIVISION2009"))
-        } else {
-          left_join_error_no_match(df,
-                                   states_subregions %>% select(subregion9, DIVISION) %>% distinct,
-                                   by = "DIVISION")
-        }
-      })
+     lapply(function(df) {
+       if(unique(df$year) %in% c(2015,2009)) {
+
+         left_join_error_no_match(df,
+                                  states_subregions %>% select(subregion9, DIVISION2009) %>% distinct,
+                                  by = c("DIVISION" = "DIVISION2009"))
+       } else {
+         left_join_error_no_match(df,
+                                  states_subregions %>% select(subregion9, DIVISION) %>% distinct,
+                                  by = "DIVISION")
+       }
+     })
+
 
     # Add a vector specifying the census division plus four large states (subregion13)
     L144.RECS_all <- L144.RECS_all %>%
@@ -117,23 +121,24 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
       left_join_error_no_match(states_subregions %>%
                                  select(subregion13, REPORTABLE_DOMAIN) %>%
                                  distinct(), by = "REPORTABLE_DOMAIN")
-
     # Convert all missing value strings to 0 in all databases
     L144.RECS_all[["RECS1990"]][L144.RECS_all[["RECS1990"]] == 9999999] <- 0
     L144.RECS_all[["RECS2005"]][L144.RECS_all[["RECS2005"]] == 9999999] <- 0
+    L144.RECS_all[["RECS2015"]][L144.RECS_all[["RECS2015"]] == 9999999] <- 0
     L144.RECS_all[["RECS2005"]][is.na(L144.RECS_all[["RECS2005"]]) ] <- 0
+    L144.RECS_all[["RECS2015"]][is.na(L144.RECS_all[["RECS2015"]]) ] <- 0
 
     # Aggregate population to the subregion9 and subregion13 levels for calculation of per-capita values
-    L144.Census_pop_hist <- Census_pop_hist %>%
+    L144.Census_pop <- Census_pop %>%
       left_join_error_no_match(states_subregions, by = "state") %>%
       select(state, year, value, subregion9, subregion13)
 
-    L144.pop_sR13 <- L144.Census_pop_hist %>%
+    L144.pop_sR13 <- L144.Census_pop %>%
       group_by(subregion13, year) %>%
       summarise(value = sum(value)) %>%
       ungroup()
 
-    L144.pop_sR9 <- L144.Census_pop_hist %>%
+    L144.pop_sR9 <- L144.Census_pop %>%
       group_by(subregion9, year) %>%
       summarise(value = sum(value)) %>%
       ungroup()
@@ -198,7 +203,8 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
       select(year, subregion13, pcflsp_m2)
 
     # Downscale 1990 and 1984 floorspace to subregion13, using the ratios of per-capita floorspace
-    L144.flsp_conv_9_13 <- L144.flsp_bm2_sR13 %>%
+    # GPK - also do this from the 2009 to the 2015 years b/c 2015 doesn't have LRGSTATE
+    L144.flsp_conv_9_13_EARLY <- L144.flsp_bm2_sR13 %>%
       filter(year == 1993) %>%
       left_join_error_no_match(states_subregions %>%
                                  select(subregion9, subregion13) %>%
@@ -207,17 +213,39 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
       mutate(conv_9_13 = pcflsp_m2.x / pcflsp_m2.y) %>%
       select(subregion13, subregion9, conv_9_13)
 
+    L144.flsp_conv_9_13_RECENT <- L144.flsp_bm2_sR13 %>%
+      filter(year == 2009) %>%
+      left_join_error_no_match(states_subregions %>%
+                                 select(subregion9, subregion13) %>%
+                                 distinct(), by = "subregion13") %>%
+      left_join_error_no_match(L144.flsp_bm2_sR9, by = c("year", "subregion9")) %>%
+      mutate(conv_9_13 = pcflsp_m2.x / pcflsp_m2.y) %>%
+      select(subregion13, subregion9, conv_9_13)
+
+
     # Find years that don't have subregion13
     conv_years <- dplyr::setdiff(unique(L144.flsp_bm2_sR9$year), unique(L144.flsp_bm2_sR13$year))
     allRECS_year <- union(unique(L144.flsp_bm2_sR9$year), unique(L144.flsp_bm2_sR13$year))
+    EARLY_years <- conv_years[conv_years < 1993]
+    RECENT_years <- conv_years[conv_years > 2009]
 
     # Multiplying the per-capita floorspace ratios from subregion9 to subregion13, to expand from 9 to 13
-    L144.flsp_bm2_sR13 <- L144.flsp_conv_9_13 %>%
+    L144.flsp_bm2_sR13_EARLY <- L144.flsp_conv_9_13_EARLY %>%
       # Using left_join b/c not all years have subregion13 value yet
-      left_join(L144.flsp_bm2_sR9 %>% filter(year %in% conv_years), by = "subregion9") %>%
+      left_join(L144.flsp_bm2_sR9 %>% filter(year %in% EARLY_years), by = "subregion9") %>%
       mutate(pcflsp_m2 = pcflsp_m2 * conv_9_13) %>%
-      select(subregion13, year, pcflsp_m2) %>%
-      bind_rows(L144.flsp_bm2_sR13)
+      select(subregion13, year, pcflsp_m2)
+    L144.flsp_bm2_sR13_RECENT <- L144.flsp_conv_9_13_RECENT %>%
+      # Using left_join b/c not all years have subregion13 value yet
+      left_join(L144.flsp_bm2_sR9 %>% filter(year %in% RECENT_years), by = "subregion9") %>%
+      mutate(pcflsp_m2 = pcflsp_m2 * conv_9_13) %>%
+      select(subregion13, year, pcflsp_m2)
+
+    # Bind the early, the years with LRGSTATE, and the recent data frames
+    L144.flsp_bm2_sR13 <- bind_rows(L144.flsp_bm2_sR13_EARLY,
+                                    L144.flsp_bm2_sR13,
+                                    L144.flsp_bm2_sR13_RECENT)
+
 
     # Interpolate to all historical years
     L144.pcflsp_m2_sR13_RECS <- tidyr::crossing(subregion13 = unique(L144.flsp_bm2_sR13$subregion13),
@@ -229,7 +257,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
       ungroup()
 
     # Expand to states: multiply per-capita floorspace in each subregion13 times the population of each state
-    L144.flsp_bm2_state_res <- L144.Census_pop_hist %>%
+    L144.flsp_bm2_state_res <- L144.Census_pop %>%
       filter(year %in% HISTORICAL_YEARS) %>%
       mutate(sector = "resid") %>%
       left_join_error_no_match(L144.pcflsp_m2_sR13_RECS, by = c("year", "subregion13")) %>%
@@ -257,10 +285,10 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
 
     # c) ENERGY CONSUMPTION BY STATE, SERVICE, AND YEAR
     # Aggregating energy consumption by sampling weights
-    # First, do 1990 and 1993 by subregion9
+    # First, do 1990, 1993 and 2015 by subregion9
     L144.in_EJ_sR9 <- L144.RECS_all %>%
       lapply(function(df) {
-        if(unique(df$year) %in% c(1990, 1993)) {
+        if(unique(df$year) %in% c(1990, 1993, 2009, 2015)) {
           df %>%
             gather(variable, value, -NWEIGHT, -year, -subregion9) %>%
             filter(variable %in% unique(RECS_variables$variable)) %>%
@@ -275,10 +303,10 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
       }) %>%
       do.call(bind_rows, .)
 
-    # Then, aggregate 1993 to 2009 in at the subregion13 level
+    # Then, aggregate from 1993 to 2009 in at the subregion13 level
     L144.in_EJ_sR13 <- L144.RECS_all %>%
       lapply(function(df) {
-        if(unique(df$year) > 1990) {
+        if(unique(df$year) %in% c(1993:2009)) {
           df %>%
             gather(variable, value, -NWEIGHT, -year, -subregion13) %>%
             filter(variable %in% unique(RECS_variables$variable)) %>%
@@ -326,7 +354,9 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
     L144.in_EJ_sR9_res_F_U_Y <- L144.in_EJ_sR9_res_F_U_Y %>%
       bind_rows(L144.RECS_1979) %>%
       group_by(subregion9, fuel, service) %>%
-      mutate(conv = value / dplyr::lead(value, n = 1L, order_by = year)) %>%
+      mutate(conv = if_else(year < 2009,
+                            value / lead(value, n = 1L, order_by = year),
+                            value / lag(value, n = 1L, order_by = year))) %>%
       ungroup() %>%
       replace_na(list(conv = 1))
 
@@ -349,10 +379,13 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
       # Add in subregion9 value for 1990 and 1993
       left_join(L144.in_EJ_sR9_res_F_U_Y, by = c("fuel", "service", "subregion9", "year")) %>%
       group_by(subregion13, fuel, service, subregion9) %>%
-      mutate(val_1993 = value.x[year == 1993]) %>%
+      mutate(val_1993 = value.x[year == 1993],
+             val_2009 = value.x[year == 2009]) %>%
       ungroup() %>%
       # If year is 1990, replace it with 1993 value * conversion factor
-      mutate(value.x = if_else(year == 1990, val_1993 * conv, value.x)) %>%
+      mutate(value.x = if_else(year == 1990, val_1993 * conv, value.x),
+             value.x = if_else(year == 2015, val_2009 * conv, value.x)) %>%
+      # Next go from 1990 back to 1979. Need to re-group to get the val_1990 (which wasn't available above)
       group_by(subregion13, fuel, service, subregion9) %>%
       mutate(val_1990 = value.x[year == 1990]) %>%
       ungroup() %>%
@@ -375,7 +408,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
     # NOTE: The national averages of appliances and other energy are assumed constant in all states
     # NOTE: The national estimate for lighting energy increased substantially from 1999 to 2000 because a different method was used
     # NOTE: We double the lighting energy in the prior years, deducting the balance from Other Uses
-    EIA_AEO_years <- seq(1993, 2010)
+    EIA_AEO_years <- seq(1993, 2015)
     lgt_adj_years <- seq(1993, 1999)
     L144.EIA_AEO_Tab4_lighting_fix <- EIA_AEO_Tab4 %>%
       filter(Fuel == "Electricity", Service %in% c("Other Uses", "Lighting")) %>%
@@ -475,7 +508,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
 
     # Downscaling water heating energy to states according to population
     # First calculate state share of subregion13 population
-    L144.state_pop_share_sR13 <- L144.Census_pop_hist %>%
+    L144.state_pop_share_sR13 <- L144.Census_pop %>%
       filter(year %in% HISTORICAL_YEARS) %>%
       left_join_error_no_match(L144.pop_sR13, by = c("subregion13", "year")) %>%
       mutate(value = value.x / value.y) %>%
@@ -550,7 +583,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
       add_comments("RECS data interpolated and downscaled to state based on population ratios") %>%
       add_legacy_name("L144.flsp_bm2_state_res") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/Census_pop",
                      "gcam-usa/AEO_2015_flsp",
                      "gcam-usa/RECS_1979",
                      "gcam-usa/RECS_1984",
@@ -559,7 +592,8 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
                      "gcam-usa/RECS_1997",
                      "gcam-usa/RECS_2001",
                      "gcam-usa/RECS_2005",
-                     "gcam-usa/RECS_2009") ->
+                     "gcam-usa/RECS_2009", #2019/12/06 nk: add 2015
+                     "gcam-usa/RECS_2015") ->
       L144.flsp_bm2_state_res
 
     L144.in_EJ_state_res_F_U_Y %>%
@@ -571,7 +605,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
                      "gcam-usa/RECS_variables",
                      "gcam-usa/EIA_AEO_fuels",
                      "gcam-usa/EIA_AEO_services",
-                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/Census_pop",
                      "gcam-usa/EIA_AEO_Tab4",
                      "gcam-usa/RECS_1979",
                      "gcam-usa/RECS_1984",
@@ -581,6 +615,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
                      "gcam-usa/RECS_2001",
                      "gcam-usa/RECS_2005",
                      "gcam-usa/RECS_2009",
+                     "gcam-usa/RECS_2015", #2019/12/06 nk: add 2015
                      "L142.in_EJ_state_bld_F",
                      "L143.share_state_Pop_CDD_sR13",
                      "L143.share_state_Pop_HDD_sR13") ->

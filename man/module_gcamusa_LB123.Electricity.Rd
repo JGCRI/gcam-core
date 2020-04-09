@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LB123.Electricity.R
 \name{module_gcamusa_LB123.Electricity}
 \alias{module_gcamusa_LB123.Electricity}
-\title{module_gcam.usa_LB123.Electricity}
+\title{module_gcamusa_LB123.Electricity}
 \usage{
 module_gcamusa_LB123.Electricity(command, ...)
 }

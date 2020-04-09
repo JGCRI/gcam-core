@@ -32,6 +32,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
              "L122.out_EJ_state_refining_F",
              "L202.CarbonCoef",
              "L221.GlobalTechCoef_en",
+             "L221.StubTechCoef_bioOil",
              "L221.SubsectorInterp_en",
              "L221.StubTech_en",
              "L221.StubTechShrwt_bioOil",
@@ -58,6 +59,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
              "L2261.SubsectorLogit_bio_USA",
              "L2261.StubTech_bio_USA",
              "L2261.StubTechMarket_bio_USA",
+             "L2261.StubTechCoef_bioOil_USA",
              "L2261.StubTechShrwt_rbO_USA",
              "L2261.StubTechFractSecOut_bio_USA",
              "L2261.StubTechFractProd_bio_USA",
@@ -89,7 +91,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
       stub.technology <- subsector <- supplysector <- technology <- to.year <- year <- traded <-
       subsector.name <- share.weight <- fractional.secondary.output <- price <- fraction.produced <-
       PrimaryFuelCO2Coef.name <- PrimaryFuelCO2Coef <- minicam.energy.input <- sector <- calibrated.value <-
-      value <- share <- fuel <- . <- NULL
+      value <- share <- fuel <- . <- output.ratio <- subs.share.weight <- tech.share.weight <- NULL
 
     # Load required inputs
     A21.sector <- get_data(all_data, "energy/A21.sector")
@@ -99,6 +101,8 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
     L122.out_EJ_state_refining_F <- get_data(all_data, "L122.out_EJ_state_refining_F")
     L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
     L221.GlobalTechCoef_en <- get_data(all_data, "L221.GlobalTechCoef_en")
+    #Adding in country level co-efficients for regional oil crop
+    L221.StubTechCoef_bioOil<- get_data(all_data, "L221.StubTechCoef_bioOil")
     L221.SubsectorInterp_en <- get_data(all_data, "L221.SubsectorInterp_en")
     L221.StubTech_en <- get_data(all_data, "L221.StubTech_en")
     L221.StubTechShrwt_bioOil <- get_data(all_data, "L221.StubTechShrwt_bioOil")
@@ -179,6 +183,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES$StubTech) -> L2261.StubTech_bio_USA
 
     # Technology inputs & markets of state-level biomass sectors
+    #kbn 2020-
     L221.GlobalTechCoef_en %>%
       rename(supplysector = sector.name, subsector = subsector.name, stub.technology = technology) %>%
       semi_join(L2261.StubTech_bio_USA, by = c("supplysector", "subsector", "stub.technology")) %>%
@@ -186,11 +191,21 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
       mutate(market.name = gcam.USA_REGION) %>%
       select(LEVEL2_DATA_NAMES$StubTechMarket) -> L2261.StubTechMarket_bio_USA
 
+    # kbn 2020
+    L221.StubTechCoef_bioOil %>%
+      filter(region=="USA") %>%
+      select(-region) %>%
+      repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
+      mutate(market.name = gcam.USA_REGION) %>%
+      select(LEVEL2_DATA_NAMES$StubTechCoef)->L2261.StubTechCoef_bioOil_USA
+
     # Technology share-weights of state-level regional biomassOil sectors
+    # kbn 2020-03-29 No longer writing out share-weights for some regions. But we need this for GCAM-USA
     L221.StubTechShrwt_bioOil %>%
       # mutate that does nothing to ensure prior metadata is dropped
       mutate(region = region) %>%
       filter(region == gcam.USA_REGION) -> L2261.StubTechShrwt_rbO_USA
+
     if(nrow(L2261.StubTechShrwt_rbO_USA) > 0) {
       L2261.StubTechShrwt_rbO_USA %>%
         select(-region) %>%
@@ -446,6 +461,16 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
                      "L221.StubTech_en") ->
       L2261.StubTechMarket_bio_USA
 
+    L2261.StubTechCoef_bioOil_USA %>%
+      add_title("Technology coefficients specific crops at State-level Biomass Supply Sectors") %>%
+      add_units("NA") %>%
+      add_comments("Technology coefficients specific crops at State-level Biomass Supply Sectors") %>%
+      add_legacy_name("L2261.StubTechCoef_bioOil_USA") %>%
+      add_precursors("gcam-usa/A28.sector",
+                     "L221.StubTechCoef_bioOil") ->L2261.StubTechCoef_bioOil_USA
+
+
+
     L2261.StubTechShrwt_rbO_USA %>%
       add_title("Technology Shareweights for State-level Regional Biomass Oil Supply Sectors") %>%
       add_units("unitless") %>%
@@ -634,6 +659,7 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
                 L2261.SubsectorLogit_bio_USA,
                 L2261.StubTech_bio_USA,
                 L2261.StubTechMarket_bio_USA,
+                L2261.StubTechCoef_bioOil_USA,
                 L2261.StubTechShrwt_rbO_USA,
                 L2261.StubTechFractSecOut_bio_USA,
                 L2261.StubTechFractProd_bio_USA,

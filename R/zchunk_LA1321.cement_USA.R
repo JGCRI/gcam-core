@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LA1321.Cement
+#' module_gcamusa_LA1321.Cement
 #'
 #' Allocate across the states national cement production, input-output cofficients, and energy inputs to cement production
 #'
