@@ -252,9 +252,10 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         
         // Downscale CO2 emissions
         coupleLog << "Downscaling CO2 emissions" << endl;
-        EmissDownscale gcam2e3sm(aNumLon * aNumLat);
-        double totalEmissions2010 = gcam2e3sm.readSpatialData(aBaseCO2File, false, false, true);
-        gcam2e3sm.downscaleCO2Emissions(totalEmissions2010, co2[0]);
+        EmissDownscale gcam2e3sm(aNumLon * aNumLat * 12); // Emissions data is monthly now
+        double gcamBaseYearEmissions = 9725.7847; // TODO: Move this to namelist.
+        gcam2e3sm.readSpatialData(aBaseCO2File, true, true, true);
+        gcam2e3sm.downscaleCO2Emissions(gcamBaseYearEmissions, co2[0]);
         if ( aWriteCO2 ) {
             // TODO: Set name of file based on case name?
             gcam2e3sm.writeSpatialData("./gridded_co2.txt", false);

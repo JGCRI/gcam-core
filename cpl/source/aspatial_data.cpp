@@ -62,6 +62,7 @@ ASpatialData::~ASpatialData() {
 // Note: this is used for diagnostics and testing. In fully coupled E3SM-GCAM, this data
 // are passed in code to the wrapper
 double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal) {
+
     // Create a double to store totals (if aCalcTotal == true)
     double total = 0.0;
     
@@ -79,6 +80,15 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, boo
         string token;
         double value;
         
+        if ( aHasID ) {
+            int id;
+            
+            // Parse ID
+            getline(iss, token, ' ');
+            id = std::stoi(token);
+            mIDVector.at(row) = id;
+         }
+        
         if ( aHasLatLon ) {
             double lon;
             int lat;
@@ -94,20 +104,11 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, boo
             mLatVector[row] = lat;
         }
         
-        if ( aHasID ) {
-            int id;
-            
-            // Parse ID
-            getline(iss, token, ' ');
-            id = std::stoi(token);
-            mIDVector.at(row) = id;
-        }
-        
         // Parse Value
-        getline(iss, token, ',');
+        getline(iss, token, ' ');
         value = std::stod(token);
         mValueVector[row] = value;
-        
+         
         // if aCalcTotal == true, then add this to the total
         total += value;
         
@@ -119,6 +120,7 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, boo
 
 // Read in spatial data from a csv file directly into an array
 double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal, double *aValueArray) {
+
     // Create a double to store totals (if aCalcTotal == true)
     double total = 0.0;
     
@@ -136,6 +138,15 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, boo
         string token;
         double value;
         
+        if ( aHasID ) {
+            int id;
+            
+            // Parse ID
+            getline(iss, token, ' ');
+            id = std::stoi(token);
+            mIDVector.at(row) = id;
+        }
+        
         if ( aHasLatLon ) {
             double lon;
             int lat;
@@ -151,17 +162,8 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, boo
             mLatVector[row] = lat;
         }
         
-        if ( aHasID ) {
-            int id;
-            
-            // Parse ID
-            getline(iss, token, ' ');
-            id = std::stoi(token);
-            mIDVector.at(row) = id;
-        }
-        
         // Parse Value
-        getline(iss, token, ',');
+        getline(iss, token, ' ');
         value = std::stod(token);
         aValueArray[row] = value;
         
@@ -170,14 +172,14 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, boo
         
         row++;
     }
-    
+
     return total;
 }
 
 void ASpatialData::writeSpatialData(std::string aFileName, bool aWriteID) {
     ofstream oFile;
     oFile.open(aFileName);
-    for (int i = 0; i < 64800; i++) {
+    for (int i = 0; i < mValueVector.size(); i++) {
         if( aWriteID ) {
             oFile << mLonVector[i] << "," << mLatVector[i] << "," << mIDVector[i] << ",";
         }
