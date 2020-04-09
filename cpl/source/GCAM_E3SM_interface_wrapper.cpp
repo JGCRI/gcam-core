@@ -21,14 +21,14 @@ extern "C" {
 
   // Set Carbon Densities in GCAM using scalers from E3SM
   void setdensitycgcam_(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                          int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, bool aReadScalars, bool aWriteScalars) {
+                          int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, int aFirstCoupledYear, bool aReadScalars, bool aWriteScalars) {
       p_obj->setDensityGCAM(yyyymmdd, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
-                            aNumLon, aNumLat, aNumPFT, aMappingFile, aReadScalars, aWriteScalars);
+                            aNumLon, aNumLat, aNumPFT, aMappingFile, aFirstCoupledYear, aReadScalars, aWriteScalars);
   }
     
   // Run GCAM
-  void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemis, std::string aBaseCO2File, int aNumLon, int aNumLat, bool aWriteCO2) {
-    p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemis, aBaseCO2File, aNumLon, aNumLat, aWriteCO2);
+  void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemis, std::string aBaseCO2File, double aBaseCO2EmissSfc, int aNumLon, int aNumLat, bool aWriteCO2) {
+    p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemis, aBaseCO2File, aBaseCO2EmissSfc, aNumLon, aNumLat, aWriteCO2);
   }
     
   // Finalize GCAM

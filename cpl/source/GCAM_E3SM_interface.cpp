@@ -169,7 +169,7 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
  * \param sneakermode integer indicating sneakernet mode is on
  * \param write_rest integer indicating restarts should be written
  */
-void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemis, std::string aBaseCO2File,
+void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemis, std::string aBaseCO2File, double aBaseCO2EmissSfc,
                                   int aNumLon, int aNumLat, bool aWriteCO2 )
 {
     // Get year only of the current date
@@ -253,9 +253,8 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         // Downscale CO2 emissions
         coupleLog << "Downscaling CO2 emissions" << endl;
         EmissDownscale gcam2e3sm(aNumLon * aNumLat * 12); // Emissions data is monthly now
-        double gcamBaseYearEmissions = 9725.7847; // TODO: Move this to namelist.
         gcam2e3sm.readSpatialData(aBaseCO2File, true, true, true);
-        gcam2e3sm.downscaleCO2Emissions(gcamBaseYearEmissions, co2[0]);
+        gcam2e3sm.downscaleCO2Emissions(aBaseCO2EmissSfc, co2[0]);
         if ( aWriteCO2 ) {
             // TODO: Set name of file based on case name?
             gcam2e3sm.writeSpatialData("./gridded_co2.txt", false);
@@ -266,7 +265,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
 }
 
 void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                         int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, bool aReadScalars, bool aWriteScalars) {
+                                         int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, int aFirstCoupledYear, bool aReadScalars, bool aWriteScalars) {
     // Get year only of the current date
     int curryear = *yyyymmdd/10000;
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
@@ -285,8 +284,8 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
     
-    // Only set carbon densities during GCAM model years after the final calibration period.
-    if( modeltime->isModelYear( curryear ) && curryear >  finalCalibrationYear ) {
+    // Only set carbon densities during GCAM model years after the first coupled year
+    if( modeltime->isModelYear( curryear ) && curryear >=  aFirstCoupledYear ) {
         coupleLog << "Setting carbon density in year: " << curryear << endl;
         CarbonScalers e3sm2gcam(aNumLon, aNumLat, aNumPFT);
         
