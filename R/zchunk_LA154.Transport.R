@@ -105,9 +105,7 @@ module_gcamusa_LA154.Transport <- function(command, ...) {
       # Creating the first of the three output tables
       Transportation_energy_consumption %>%
         repeat_add_columns(tibble::tibble(state = list_states)) %>%
-        #nk & kbn 2019/11/18 Switching from left_join_error_no_match to left join below since we do not have data from EIA for 1 fuel, sector class
-        left_join(EIA_transportation_state_share, by = c("state", "EIA_fuel", "EIA_sector", "year")) %>%
-        replace_na(list(value_share = 0)) %>%
+        left_join_error_no_match(EIA_transportation_state_share, by = c("state", "EIA_fuel", "EIA_sector", "year")) %>%
         mutate(value = value * value_share) %>% # Allocating across the states
         select(state, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, fuel, year, value) ->
         L154.in_EJ_state_trn_m_sz_tech_F
