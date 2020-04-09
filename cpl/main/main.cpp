@@ -68,6 +68,8 @@ int main( ) {
     // These booleans define what is passed between GCAM & E3SM.
     bool ELM_IAC_CARBON_SCALING = true; // If TRUE, changes in land productivity from ELM are used in GCAM.
     bool IAC_ELM_CO2_EMISSIONS = true; // If TRUE, energy system CO2 is passed from GCAM to EAM.
+    int FIRST_COUPLED_YEAR = 2016; // First year to include feedbacks from E3SM in GCAM.
+    double BASE_CO2EMISS_SURFACE = 9725.7847; // Global surface CO2 emissions in the base year. This should be GCAM's emissions in the year of the BASE_CO2_FILE
     
     // Define size control variables
     // These integers define the length of the various arrays used in the coupling
@@ -124,11 +126,11 @@ int main( ) {
                 tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
             }
             p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamilfract, gcamipftfract, gcaminpp, gcamihr,
-                                  NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, READ_SCALARS, WRITE_SCALARS);
+                                  NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS);
         }
         
         // Run model
-        p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemis, BASE_CO2_FILE, NUM_LON, NUM_LAT, WRITE_CO2);
+        p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemis, BASE_CO2_FILE, BASE_CO2EMISS_SURFACE, NUM_LON, NUM_LAT, WRITE_CO2);
         
     }
     
