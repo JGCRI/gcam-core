@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LA144.Commercial
+#' module_gcamusa_LA144.Commercial
 #'
 #' Calculates commercial floorspace by state and energy consumption by state/fuel/end use
 #'
@@ -18,7 +18,7 @@
 module_gcamusa_LA144.Commercial <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
-             FILE = "gcam-usa/Census_pop_hist",
+             FILE = "gcam-usa/Census_pop",
              FILE = "gcam-usa/CBECS_variables",
              FILE = "gcam-usa/EIA_AEO_fuels",
              FILE = "gcam-usa/EIA_AEO_services",
@@ -32,6 +32,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
              FILE = "gcam-usa/CBECS_1995",
              FILE = "gcam-usa/CBECS_1999",
              FILE = "gcam-usa/CBECS_2003",
+             FILE = "gcam-usa/CBECS_2012",
              "L142.in_EJ_state_bld_F",
              "L143.share_state_Pop_CDD_sR9",
              "L143.share_state_Pop_HDD_sR9"))
@@ -53,7 +54,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions") %>%
       select(subregion4, subregion9, REGION, DIVISION, state) %>%
       distinct()
-    Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist") %>%
+    Census_pop <- get_data(all_data, "gcam-usa/Census_pop") %>%
       gather_years
     CBECS_variables <- get_data(all_data, "gcam-usa/CBECS_variables")
     EIA_AEO_Tab5 <- get_data(all_data, "gcam-usa/EIA_AEO_Tab5") %>%
@@ -67,6 +68,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
     CBECS_1995 <- get_data(all_data, "gcam-usa/CBECS_1995")
     CBECS_1999 <- get_data(all_data, "gcam-usa/CBECS_1999")
     CBECS_2003 <- get_data(all_data, "gcam-usa/CBECS_2003")
+    CBECS_2012 <- get_data(all_data, "gcam-usa/CBECS_2012")
     EIA_AEO_services <- get_data(all_data, "gcam-usa/EIA_AEO_services")
     EIA_AEO_fuels <- get_data(all_data, "gcam-usa/EIA_AEO_fuels")
     L142.in_EJ_state_bld_F <- get_data(all_data, "L142.in_EJ_state_bld_F")
@@ -77,8 +79,8 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
     # a) PREPARATION AND CLEANING OF CBECS DATA (Commercial Buildings Energy Consumption Survey)
     # The 1979 and 1983 only have floorspace by census region
     # We can't bind_rows because all CBECS have different columns
-    L144.CBECS_all <- list(CBECS_1986, CBECS_1989, CBECS_1992, CBECS_1995, CBECS_1999, CBECS_2003)
-    names(L144.CBECS_all) <- paste0("CBECS", c(1986, 1989, 1992, 1995, 1999, 2003))
+    L144.CBECS_all <- list(CBECS_1986, CBECS_1989, CBECS_1992, CBECS_1995, CBECS_1999, CBECS_2003, CBECS_2012)
+    names(L144.CBECS_all) <- paste0("CBECS", c(1986, 1989, 1992, 1995, 1999, 2003, 2012))
 
     # In order to be able to work with these data across years, the "edition" number needs to be removed from all
     # variable names. E.g., re-naming square footage from "SQFT3" in 1986 and "SQFT4" in 1989 to "SQFT" in all.
@@ -106,20 +108,21 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
     # In CBECS1995, missing values are indicated with 1e14
     L144.CBECS_all[["CBECS1995"]][L144.CBECS_all[["CBECS1995"]] == 1e14] <- 0
     L144.CBECS_all[["CBECS2003"]][is.na(L144.CBECS_all[["CBECS2003"]])] <- 0
+    L144.CBECS_all[["CBECS2012"]][is.na(L144.CBECS_all[["CBECS2012"]])] <- 0
 
     # Add subregions to census population for aggregating
-    L144.Census_pop_hist <- Census_pop_hist %>%
+    L144.Census_pop <- Census_pop %>%
       left_join_error_no_match(states_subregions, by = "state") %>%
       filter(year %in% HISTORICAL_YEARS)
 
     # Aggregate population to subregion4
-    L144.pop_sR4 <- L144.Census_pop_hist %>%
+    L144.pop_sR4 <- L144.Census_pop %>%
       group_by(subregion4, year) %>%
       summarise(value = sum(value)) %>%
       ungroup()
 
     # Aggregate population to subregion9
-    L144.pop_sR9 <- L144.Census_pop_hist %>%
+    L144.pop_sR9 <- L144.Census_pop %>%
       group_by(subregion9, year) %>%
       summarise(value = sum(value)) %>%
       ungroup()
@@ -135,6 +138,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
       mutate(pcflsp_m2 = if_else(year == 1979, SQFT1 / value * CONV_MILFT2_M2, SQFT2 / value * CONV_MILFT2_M2))
 
     # Add in a year column to CBECS data so that we can bind rows later
+    # nk 2019/12/5 change 6, 9 to 6, 12 (start, stop)
     for (i in seq_along(L144.CBECS_all)) {
       df <- L144.CBECS_all[[i]]
       data_year <- substr(names(L144.CBECS_all[i]), 6, 9)
@@ -145,6 +149,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
     # Aggregate CBECS floorspace data by year and subregion
     L144.flsp_bm2_sR4 <- L144.CBECS_all %>%
       # For each tibble, select sqft, weights for summing, year, and subregions
+      # in CBECS 2013: ADJWT is called "Final full sample building weight"
       lapply(function(df) {
         df %>%
           select(SQFT, ADJWT, subregion4, subregion9, year)
@@ -206,7 +211,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
       ungroup()
 
     # Expand to states: multiply per-capita floorspace in each subregion9 times the population of each state
-    L144.flsp_bm2_state_comm <- L144.Census_pop_hist %>%
+    L144.flsp_bm2_state_comm <- L144.Census_pop %>%
       left_join_error_no_match(L144.pcflsp_m2_sR9_comm, by = c("subregion9", "year")) %>%
       transmute(state, year, subregion9,
                 # Floorspace = population * per-capita floorspace
@@ -430,7 +435,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
     first_year_commext <- min(PNNL_Commext_elec$Year)
     last_year_commext <- max(PNNL_Commext_elec$Year)
 
-    commext_Census_pop_hist <- Census_pop_hist %>%
+    commext_Census_pop_hist <- Census_pop %>%
       group_by(year) %>%
       summarise(sum = sum(value)) %>%
       ungroup() %>%
@@ -438,9 +443,9 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
       transmute(year,
                 pre = sum / sum[year == first_year_commext])
 
-    # One more adjustment - set 2010 comm exterior other ("comm non-building") electricity use equal to 
+    # One more adjustment - set 2010 comm exterior other ("comm non-building") electricity use equal to
     # AEO_target minus unscaled aggregated 2010 value for "comm other". Interpolate back.
-    # This separates out "comm non-building" from "comm other" to provide a better estimate of 
+    # This separates out "comm non-building" from "comm other" to provide a better estimate of
     # "comm non-building" in 2010 (which is outside the time scope of PNNL_Commext_elec) than the
     # previous method of scaling by population growth.
     comm_ext_2010 <- L144.scaler_USA_comm_F_U_2010 %>%
@@ -466,7 +471,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
       select(service, year, value_EJ)
 
     # Population ratio of each state by year
-    L144.pct_state_commext_elec_Y <- Census_pop_hist %>%
+    L144.pct_state_commext_elec_Y <- Census_pop %>%
       filter(year %in% HISTORICAL_YEARS) %>%
       group_by(year) %>%
       mutate(value = value / sum(value)) %>%
@@ -495,6 +500,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
      L144.in_EJ_state_commint_F <- L142.in_EJ_state_bld_F %>%
        filter(sector == "comm", fuel != "electricity") %>%
        bind_rows(L144.in_EJ_state_commint_elec)
+
 
      # This energy can now be apportioned to the end-use services
      L144.in_EJ_state_commint_F_U_Y <- L144.pct_state_comm_F_U_Y %>%
@@ -527,7 +533,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
       add_comments("Most recent values scaled by ratio of national value from CBECS data to AEO estimates") %>%
       add_legacy_name("L144.flsp_bm2_state_comm") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/Census_pop",
                      "gcam-usa/EIA_AEO_Tab5",
                      "gcam-usa/CBECS_1979_1983",
                      "gcam-usa/CBECS_1986",
@@ -535,7 +541,8 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
                      "gcam-usa/CBECS_1992",
                      "gcam-usa/CBECS_1995",
                      "gcam-usa/CBECS_1999",
-                     "gcam-usa/CBECS_2003") ->
+                     "gcam-usa/CBECS_2003",
+                     "gcam-usa/CBECS_2012") ->
       L144.flsp_bm2_state_comm
 
     L144.in_EJ_state_comm_F_U_Y %>%
@@ -545,7 +552,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
       add_comments("For commercial non-building use, expands PNNL_Commext_elec to all states and historical years ") %>%
       add_legacy_name("L144.in_EJ_state_comm_F_U_Y") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/Census_pop",
                      "gcam-usa/CBECS_variables",
                      "gcam-usa/EIA_AEO_fuels",
                      "gcam-usa/EIA_AEO_services",
@@ -559,6 +566,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
                      "gcam-usa/CBECS_1995",
                      "gcam-usa/CBECS_1999",
                      "gcam-usa/CBECS_2003",
+                     "gcam-usa/CBECS_2012",
                      "L142.in_EJ_state_bld_F",
                      "L143.share_state_Pop_CDD_sR9",
                      "L143.share_state_Pop_HDD_sR9") ->

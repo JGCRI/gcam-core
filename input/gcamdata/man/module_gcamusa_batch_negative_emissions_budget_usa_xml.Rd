@@ -3,7 +3,7 @@
 %   R/zchunk_batch_negative_emissions_budget_usa_xml.R
 \name{module_gcamusa_batch_negative_emissions_budget_usa_xml}
 \alias{module_gcamusa_batch_negative_emissions_budget_usa_xml}
-\title{module_gcam.usa_batch_negative_emissions_budget_usa_xml}
+\title{module_gcamusa_batch_negative_emissions_budget_usa_xml}
 \usage{
 module_gcamusa_batch_negative_emissions_budget_usa_xml(command, ...)
 }

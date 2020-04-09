@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LB1231.Elec_tech
+#' module_gcamusa_LB1231.Elec_tech
 #'
 #' Downscaling electricity by state/fuel to state/fuel/technology
 #'

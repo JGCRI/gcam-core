@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_L223.electricity_USA
+#' module_gcamusa_L223.electricity_USA
 #'
 #' Generates GCAM-USA model inputs for electrcity sector by grid regions and states.
 #'
@@ -105,7 +105,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       region <- supplysector <- subsector <- technology <- year <- value <-
       sector <- calOutputValue <- fuel <- elec <- share <- avg.share <- pref <-
       share.weight.mult <- share.weight <- market.name <- sector.name <- subsector.name <-
-      minicam.energy.input <- calibration <- secondary.output <- stub.technology <-
+      minicam.energy.input <- calibration <- secondary.output <- stub.technology <- tech <-
       capacity.factor <- scaler <- capacity.factor.capital <- . <- CFmax <- grid.cost <- NULL  # silence package check notes
 
     # Load required inputs
@@ -153,6 +153,13 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       transmute(geo_state_noresource = paste(state, "geothermal", sep = " ")) %>%
       unlist ->
       geo_states_noresource
+
+    # A vector indicating states where CSP electric technologies will not be created
+    L119.CapFacScaler_CSP_state %>%
+      # states with effectively no resource are assigned a capacity factor scalar of 0.001
+      # remove these states to avoid creating CSP technologies there
+      filter(scaler <= 0.01) %>%
+      pull(state) -> CSP_states_noresource
 
     # PART 2: THE FERC REGIONS
     # NOTE: FERC grid regions function in similar fashion to the USA region:
@@ -301,6 +308,11 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
           filter(!paste(region, subsector) %in% geo_states_noresource)
       }
 
+      if("stub.technology" %in% names(data_new)) {
+        data_new <- data_new %>%
+          filter(!(region %in% CSP_states_noresource) | !grepl("CSP", stub.technology))
+      }
+
       # Re-set markets from USA to regional markets, if called for in the GCAM-USA assumptions for selected fuels
       if("market.name" %in% names(data_new)) {
         data_new <- data_new %>%
@@ -411,7 +423,8 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       mutate(share.weight.year = year) %>%
       set_subsector_shrwt %>%
       mutate(share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      filter(!paste(region, subsector) %in% geo_states_noresource) ->
+      filter(!paste(region, subsector) %in% geo_states_noresource) %>%
+      filter(!(region %in% CSP_states_noresource) | !grepl("CSP", stub.technology)) ->
       L223.StubTechProd_elec_USA
 
     # L223.StubTechMarket_elec_USA: market names of inputs to state electricity sectors
@@ -440,6 +453,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
     L223.GlobalIntTechBackup_elec %>%
       mutate(supplysector = sector.name, subsector = subsector.name) %>%
       write_to_all_states(names = c(names(.), 'region')) %>%
+      filter(!(region %in% CSP_states_noresource) | !grepl("CSP", technology)) %>%
       mutate(market.name = gcam.USA_REGION, stub.technology = technology) %>%
       select(LEVEL2_DATA_NAMES[["StubTechMarket"]]) ->
       L223.StubTechMarket_backup_USA
@@ -480,6 +494,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       left_join_error_no_match(L223.CapFacScaler_solar_state,
                                by = c("region" = "state", "supplysector", "subsector", "tech" = "technology")) %>%
       mutate(capacity.factor = round(capacity.factor * scaler, digits = energy.DIGITS_COST)) %>%
+      filter(!(region %in% CSP_states_noresource) | !grepl("CSP", tech)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCapFactor"]]) ->
       L223.StubTechCapFactor_elec_solar_USA
 
@@ -542,12 +557,12 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       L223.DeleteSubsector_USAelec
 
     missing_data() %>%
-      add_legacy_name("L223.Supplysector_USAelec") ->
-      L223.Supplysector_USAelec
+        add_legacy_name("L223.Supplysector_USAelec") ->
+        L223.Supplysector_USAelec
 
     missing_data() %>%
-      add_legacy_name("L223.SubsectorShrwtFllt_USAelec") ->
-      L223.SubsectorShrwtFllt_USAelec
+        add_legacy_name("L223.SubsectorShrwtFllt_USAelec") ->
+        L223.SubsectorShrwtFllt_USAelec
 
     missing_data() %>%
       add_legacy_name("L223.SubsectorInterp_USAelec") ->
@@ -765,7 +780,8 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_comments("States with no geothermal resource are deleted for the subsector") %>%
       add_legacy_name("L223.StubTech_elec_USA") %>%
       add_precursors("L223.StubTech_elec",
-                     "gcam-usa/NREL_us_re_technical_potential") ->
+                     "gcam-usa/NREL_us_re_technical_potential",
+                     "L119.CapFacScaler_CSP_state") ->
       L223.StubTech_elec_USA
 
     L223.StubTechEff_elec_USA %>%
@@ -775,7 +791,8 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_comments("Re-set markets from USA to regional grid markets for selected fuels") %>%
       add_legacy_name("L223.StubTechEff_elec_USA") %>%
       add_precursors("L223.StubTechEff_elec",
-                     "gcam-usa/NREL_us_re_technical_potential") ->
+                     "gcam-usa/NREL_us_re_technical_potential",
+                     "L119.CapFacScaler_CSP_state") ->
       L223.StubTechEff_elec_USA
 
     L223.StubTechCapFactor_elec_USA %>%
@@ -784,7 +801,8 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L223.StubTechCapFactor_elec_USA") %>%
       add_precursors("L223.StubTechCapFactor_elec",
-                     "gcam-usa/NREL_us_re_technical_potential") ->
+                     "gcam-usa/NREL_us_re_technical_potential",
+                     "L119.CapFacScaler_CSP_state") ->
       L223.StubTechCapFactor_elec_USA
 
     L223.StubTechFixOut_elec_USA %>%
@@ -812,7 +830,8 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_precursors("L1231.in_EJ_state_elec_F_tech",
                      "L1231.out_EJ_state_elec_F_tech",
                      "energy/calibrated_techs",
-                     "gcam-usa/NREL_us_re_technical_potential") ->
+                     "gcam-usa/NREL_us_re_technical_potential",
+                     "L119.CapFacScaler_CSP_state") ->
       L223.StubTechProd_elec_USA
 
     L223.StubTechMarket_elec_USA %>%
@@ -822,7 +841,8 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_legacy_name("L223.StubTechMarket_elec_USA") %>%
       same_precursors_as("L223.StubTech_elec_USA") %>%
       add_precursors("energy/A23.globaltech_eff",
-                     "gcam-usa/NREL_us_re_technical_potential") ->
+                     "gcam-usa/NREL_us_re_technical_potential",
+                     "L119.CapFacScaler_CSP_state") ->
       L223.StubTechMarket_elec_USA
 
     L223.StubTechMarket_backup_USA %>%
@@ -831,7 +851,8 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_comments("Set market as USA") %>%
       add_legacy_name("L223.StubTechMarket_backup_USA") %>%
       add_precursors("L223.GlobalIntTechBackup_elec",
-                     "gcam-usa/states_subregions") ->
+                     "gcam-usa/states_subregions",
+                     "L119.CapFacScaler_CSP_state") ->
       L223.StubTechMarket_backup_USA
 
     if(exists("L223.StubTechElecMarket_backup_USA")) {
@@ -868,7 +889,8 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_precursors("L119.CapFacScaler_PV_state",
                      "L119.CapFacScaler_CSP_state",
                      "energy/calibrated_techs",
-                     "gcam-usa/states_subregions") ->
+                     "gcam-usa/states_subregions",
+                     "L119.CapFacScaler_CSP_state") ->
       L223.StubTechCapFactor_elec_solar_USA
 
     L223.StubTechCost_offshore_wind_USA %>%

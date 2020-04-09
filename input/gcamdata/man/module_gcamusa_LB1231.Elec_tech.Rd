@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LB1231.Elec_tech.R
 \name{module_gcamusa_LB1231.Elec_tech}
 \alias{module_gcamusa_LB1231.Elec_tech}
-\title{module_gcam.usa_LB1231.Elec_tech}
+\title{module_gcamusa_LB1231.Elec_tech}
 \usage{
 module_gcamusa_LB1231.Elec_tech(command, ...)
 }

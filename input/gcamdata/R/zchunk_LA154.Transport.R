@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LA154.Transport
+#' module_gcamusa_LA154.Transport
 #'
 #' Downscale transportation energy consumption and nonmotor data to the state level, generating three ouput tables.
 #'
@@ -105,7 +105,9 @@ module_gcamusa_LA154.Transport <- function(command, ...) {
       # Creating the first of the three output tables
       Transportation_energy_consumption %>%
         repeat_add_columns(tibble::tibble(state = list_states)) %>%
-        left_join_error_no_match(EIA_transportation_state_share, by = c("state", "EIA_fuel", "EIA_sector", "year")) %>%
+        #nk & kbn 2019/11/18 Switching from left_join_error_no_match to left join below since we do not have data from EIA for 1 fuel, sector class
+        left_join(EIA_transportation_state_share, by = c("state", "EIA_fuel", "EIA_sector", "year")) %>%
+        replace_na(list(value_share = 0)) %>%
         mutate(value = value * value_share) %>% # Allocating across the states
         select(state, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, fuel, year, value) ->
         L154.in_EJ_state_trn_m_sz_tech_F
@@ -152,7 +154,10 @@ module_gcamusa_LA154.Transport <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Transportation energy consumption data was downscaled to the state level using EIA state energy data") %>%
       add_legacy_name("L154.in_EJ_state_trn_m_sz_tech_F") %>%
-      add_precursors("L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") ->
+      add_precursors("gcam-usa/trnUCD_EIA_mapping_revised",
+                     "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
+                     "gcam-usa/trnUCD_EIA_mapping",
+                     "L101.EIA_use_all_Bbtu") ->
       L154.in_EJ_state_trn_m_sz_tech_F
 
     L154.out_mpkm_state_trn_nonmotor_Yh %>%
@@ -168,7 +173,10 @@ module_gcamusa_LA154.Transport <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Transportation energy consumption was aggregated by fuel, and the sector was named transportation") %>%
       add_legacy_name("L154.in_EJ_state_trn_F") %>%
-      add_precursors("L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") ->
+      add_precursors("gcam-usa/trnUCD_EIA_mapping_revised",
+                     "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
+                     "gcam-usa/trnUCD_EIA_mapping",
+                     "L101.EIA_use_all_Bbtu") ->
       L154.in_EJ_state_trn_F
 
     return_data(L154.in_EJ_state_trn_m_sz_tech_F, L154.out_mpkm_state_trn_nonmotor_Yh, L154.in_EJ_state_trn_F)

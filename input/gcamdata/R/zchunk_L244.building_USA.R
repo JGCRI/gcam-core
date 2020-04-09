@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_L244.building_USA
+#' module_gcamusa_L244.building_USA
 #'
 #' Creates GCAM-USA building output files for writing to xml.
 #'

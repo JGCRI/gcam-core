@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA132.industry_USA.R
 \name{module_gcamusa_LA132.industry}
 \alias{module_gcamusa_LA132.industry}
-\title{module_gcam.usa_LA132.Industry}
+\title{module_gcamusa_LA132.Industry}
 \usage{
 module_gcamusa_LA132.industry(command, ...)
 }

@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LB1232.Elec_subregions
+#' module_gcamusa_LB1232.Elec_subregions
 #'
 #' Aggregates USA state electricity generation to electricity subregions.
 #'
