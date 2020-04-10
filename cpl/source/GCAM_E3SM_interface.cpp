@@ -169,8 +169,7 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
  * \param sneakermode integer indicating sneakernet mode is on
  * \param write_rest integer indicating restarts should be written
  */
-void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemis, std::string aBaseCO2File, double aBaseCO2EmissSfc,
-                                  int aNumLon, int aNumLat, bool aWriteCO2 )
+void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemiss, int aNumLon, int aNumLat )
 {
     // Get year only of the current date
     int curryear = *yyyymmdd/10000;
@@ -215,11 +214,13 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         // Stop the timer
         timer.stop();
         
+        coupleLog << "Getting CO2 Emissions" << endl;
         double *co2 = mCO2EmissData.getData();
         // be sure to reset any data set previously
         fill(co2, co2+mCO2EmissData.getArrayLength(), 0.0);
         GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mCO2EmissData);
         getCo2.run(runner->getInternalScenario());
+        std::copy(co2, co2+mCO2EmissData.getArrayLength(), gcamoemiss);
         coupleLog << mCO2EmissData << endl;
         
         coupleLog << "Getting LUC" << endl;
@@ -249,19 +250,8 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             gcamoluc[row] = mWoodHarvestData.getData()[i];
             row++;
         }
-        
-        // Downscale CO2 emissions
-        coupleLog << "Downscaling CO2 emissions" << endl;
-        EmissDownscale gcam2e3sm(aNumLon * aNumLat * 12); // Emissions data is monthly now
-        gcam2e3sm.readSpatialData(aBaseCO2File, true, true, true);
-        gcam2e3sm.downscaleCO2Emissions(aBaseCO2EmissSfc, co2[0]);
-        if ( aWriteCO2 ) {
-            // TODO: Set name of file based on case name?
-            gcam2e3sm.writeSpatialData("./gridded_co2.txt", false);
-        }
-        // Set gcamoemis to the output of this
-        gcamoemis = gcam2e3sm.getValueVector().data();
     }
+        
 }
 
 void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
@@ -312,6 +302,31 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     }
     
 }
+
+void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss, double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar,
+                                                 double *gcamoco2sfcapr, double *gcamoco2sfcmay, double *gcamoco2sfcjun, double *gcamoco2sfcjul,
+                                                 double *gcamoco2sfcaug, double *gcamoco2sfcsep, double *gcamoco2sfcoct, double *gcamoco2sfcnov,
+                                                 double *gcamoco2sfcdec, std::string aBaseCO2File, double aBaseCO2EmissSfc, int aNumLon, int aNumLat, bool aWriteCO2) {
+    // Downscale CO2 emissions
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::NOTICE );
+    coupleLog << "Downscaling CO2 emissions" << endl;
+    EmissDownscale gcam2e3sm(aNumLon * aNumLat * 12); // Emissions data is monthly now
+    gcam2e3sm.readSpatialData(aBaseCO2File, true, true, true);
+    gcam2e3sm.downscaleCO2Emissions(aBaseCO2EmissSfc, gcamoemiss[0]);
+    if ( aWriteCO2 ) {
+        // TODO: Set name of file based on case name?
+        gcam2e3sm.writeSpatialData("./gridded_co2.txt", false);
+    }
+    
+    // Set the gcamoco2 data to the output of this
+    gcam2e3sm.separateMonthlyEmissions(gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
+                                       gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
+                                       gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec, aNumLon, aNumLat);
+    
+    
+}
+
 
 void GCAM_E3SM_interface::finalizeGCAM()
 {

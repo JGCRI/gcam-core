@@ -27,9 +27,24 @@ extern "C" {
   }
     
   // Run GCAM
-  void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemis, std::string aBaseCO2File, double aBaseCO2EmissSfc, int aNumLon, int aNumLat, bool aWriteCO2) {
-    p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemis, aBaseCO2File, aBaseCO2EmissSfc, aNumLon, aNumLat, aWriteCO2);
+  void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, int aNumLon, int aNumLat) {
+    
+    p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, aNumLon, aNumLat);
   }
+
+  // Downscale Emissions
+  void downscaleemissionscgcam_(double *gcamoemiss, double *gcamoco2sfcjan, double *gcamoco2sfcfeb,
+                              double *gcamoco2sfcmar, double *gcamoco2sfcapr, double *gcamoco2sfcmay, double *gcamoco2sfcjun,
+                              double *gcamoco2sfcjul, double *gcamoco2sfcaug, double *gcamoco2sfcsep, double *gcamoco2sfcoct,
+                              double *gcamoco2sfcnov, double *gcamoco2sfcdec, std::string aBaseCO2File, double aBaseCO2Emiss,
+                              int aNumLon, int aNumLat, bool aWriteCO2) {
+    
+    p_obj->downscaleEmissionsGCAM(gcamoemiss, gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
+                   gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug, gcamoco2sfcsep,
+                   gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec, aBaseCO2File, aBaseCO2Emiss,
+                   aNumLon, aNumLat, aWriteCO2);
+  }
+
     
   // Finalize GCAM
   void finalizecgcam_() {

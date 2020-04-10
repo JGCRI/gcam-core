@@ -49,6 +49,11 @@ public:
     ~EmissDownscale();
     // TODO: Eventually these will need to be vectors of regional emissions instead of global totals
     void downscaleCO2Emissions(double aBaseYearEmissions, double aCurrYearEmissions);
+    void separateMonthlyEmissions(double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar,
+                                  double *gcamoco2sfcapr, double *gcamoco2sfcmay, double *gcamoco2sfcjun,
+                                  double *gcamoco2sfcjul, double *gcamoco2sfcaug, double *gcamoco2sfcsep,
+                                  double *gcamoco2sfcoct, double *gcamoco2sfcnov, double *gcamoco2sfcdec,
+                                  int aNumLon, int aNumLat);
 private:
     std::vector<double> mBaseYearEmissVector;
     std::vector<double> mCurrYearEmissVector;
