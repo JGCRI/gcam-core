@@ -79,6 +79,9 @@ int main( ) {
     int NUM_GCAM_ENERGY_REGIONS = 32;
     int NUM_GCAM_LAND_REGIONS = 391;
     int NUM_IAC2ELM_LANDTYPES = 9;
+    int NUM_EMISS_SECTORS = 1;
+    int NUM_EMISS_REGIONS = 1;
+    int NUM_EMISS_GASES = 1;
     
     // Initialize Interface
     GCAM_E3SM_interface *p_obj;
@@ -95,7 +98,19 @@ int main( ) {
     double *gcaminpp = new double [NUM_LAT * NUM_LON * NUM_PFT]();
     double *gcamihr = new double [NUM_LAT * NUM_LON * NUM_PFT]();
     double *gcamoluc = new double [NUM_GCAM_LAND_REGIONS * NUM_IAC2ELM_LANDTYPES]();
-    double *gcamoemis = new double [NUM_LAT * NUM_LON * 12](); // Emissions data is monthly
+    double *gcamoemiss = new double [NUM_EMISS_SECTORS * NUM_EMISS_REGIONS * NUM_EMISS_GASES]();
+    double *gcamoco2sfcjan = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
+    double *gcamoco2sfcfeb = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
+    double *gcamoco2sfcmar = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
+    double *gcamoco2sfcapr = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
+    double *gcamoco2sfcmay = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
+    double *gcamoco2sfcjun = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
+    double *gcamoco2sfcjul = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
+    double *gcamoco2sfcaug = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
+    double *gcamoco2sfcsep = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
+    double *gcamoco2sfcoct = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
+    double *gcamoco2sfcnov = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
+    double *gcamoco2sfcdec = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
     
     // Run GCAM
     for( int yr = 1975; yr < 2025; yr++ ){
@@ -130,8 +145,13 @@ int main( ) {
         }
         
         // Run model
-        p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemis, BASE_CO2_FILE, BASE_CO2EMISS_SURFACE, NUM_LON, NUM_LAT, WRITE_CO2);
+        p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, NUM_LON, NUM_LAT);
         
+        p_obj->downscaleEmissionsGCAM(gcamoemiss, gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
+                       gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug, gcamoco2sfcsep,
+                       gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec, BASE_CO2_FILE, BASE_CO2EMISS_SURFACE,
+                       NUM_LON, NUM_LAT, WRITE_CO2);
+
     }
     
     // Finalize GCAM
@@ -144,7 +164,19 @@ int main( ) {
     delete [] gcaminpp;
     delete [] gcamihr;
     delete [] gcamoluc;
-    delete [] gcamoemis;
+    delete [] gcamoemiss;
+    delete [] gcamoco2sfcjan;
+    delete [] gcamoco2sfcfeb;
+    delete [] gcamoco2sfcmar;
+    delete [] gcamoco2sfcapr;
+    delete [] gcamoco2sfcmay;
+    delete [] gcamoco2sfcjun;
+    delete [] gcamoco2sfcjul;
+    delete [] gcamoco2sfcaug;
+    delete [] gcamoco2sfcsep;
+    delete [] gcamoco2sfcoct;
+    delete [] gcamoco2sfcnov;
+    delete [] gcamoco2sfcdec;
     
     // Finalize Interface
     delete p_obj;

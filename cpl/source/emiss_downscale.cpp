@@ -73,3 +73,37 @@ void EmissDownscale::downscaleCO2Emissions(double aBaseYearEmissions, double aCu
     
     return;
 }
+
+// Separate the emissions vectors into individual months
+void EmissDownscale::separateMonthlyEmissions(double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar,
+                              double *gcamoco2sfcapr, double *gcamoco2sfcmay, double *gcamoco2sfcjun,
+                              double *gcamoco2sfcjul, double *gcamoco2sfcaug, double *gcamoco2sfcsep,
+                              double *gcamoco2sfcoct, double *gcamoco2sfcnov, double *gcamoco2sfcdec,
+                              int aNumLon, int aNumLat) {
+    
+    int gridPerMonth = aNumLat * aNumLon;
+    std::copy(mCurrYearEmissVector.begin(),
+              mCurrYearEmissVector.begin() + gridPerMonth - 1, gcamoco2sfcjan);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth,
+              mCurrYearEmissVector.begin() + gridPerMonth * 2 - 1, gcamoco2sfcfeb);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 2,
+              mCurrYearEmissVector.begin() + gridPerMonth * 3 - 1, gcamoco2sfcmar);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 3,
+              mCurrYearEmissVector.begin() + gridPerMonth * 4 - 1, gcamoco2sfcapr);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 4,
+              mCurrYearEmissVector.begin() + gridPerMonth * 5 - 1, gcamoco2sfcmay);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 5,
+              mCurrYearEmissVector.begin() + gridPerMonth * 6 - 1, gcamoco2sfcjun);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 6,
+              mCurrYearEmissVector.begin() + gridPerMonth * 7 - 1, gcamoco2sfcjul);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 7,
+              mCurrYearEmissVector.begin() + gridPerMonth * 8 - 1, gcamoco2sfcaug);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 8,
+              mCurrYearEmissVector.begin() + gridPerMonth * 9 - 1, gcamoco2sfcsep);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 9,
+              mCurrYearEmissVector.begin() + gridPerMonth * 10 - 1, gcamoco2sfcoct);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 10,
+              mCurrYearEmissVector.begin() + gridPerMonth * 11 - 1, gcamoco2sfcnov);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 11,
+              mCurrYearEmissVector.begin() + gridPerMonth * 12 - 1, gcamoco2sfcdec);
+ }
