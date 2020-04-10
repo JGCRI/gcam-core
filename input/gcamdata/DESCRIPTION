@@ -44,7 +44,11 @@ Imports:
     tibble (>= 1.1),
     tidyr (>= 0.7.1),
     readr (>= 1.3.1),
-    data.table (>= 1.10.4)
+    data.table (>= 1.10.4),
+    nleqslv (>= 3.2),
+    reshape2 (>= 1.4.3),
+    ggplot2 (>= 2.2.1),
+    cluster (>= 2.0)
 Suggests:
     igraph (>= 1.0.1),
     mockr (>= 0.1),

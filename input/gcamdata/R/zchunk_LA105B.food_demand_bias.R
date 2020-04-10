@@ -13,7 +13,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author RC June 2017
+#' @author KBN April 2020
 module_aglu_LA105B.food_demand_bias <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -43,14 +43,16 @@ module_aglu_LA105B.food_demand_bias <- function(command, ...) {
     # Process Demand Data
 
     Food_Demand_Training_Data %>%
-      #Some cleaning. This is also applied when calculating the parameters
-      #filter(Tot_cal>1.7) %>%
-      #filter(ns_usd_p1000cal<20) %>%
       #Join in ISO
       left_join(iso_GCAM_regID %>% select(iso,GCAM_region_ID),by= c("iso")) %>%
       na.omit() %>%
       #Now group_by GCAM_region_ID, year and calculate values
       group_by(GCAM_region_ID,year) %>%
+      # Y is the GDP per capita at PPP
+      # Ps is the price of staples which is calculated as total consumption of staples multiplied by consumption price divided by calories
+      # Pn is the price of non-staples which is calculated just like Ps above but for non-staples
+      # QS is the demand for staple calories. Calculated using calories and population
+      # Qn is the demand for non-staple calories. Calculated using calories and population
       mutate(Y = sum(pop_thous*gdp_pcap_thous2005usd)/sum(pop_thous),
              Ps = (sum(s_cons_thous_t*cons_price_s)/sum(s_cal_pcap_day_thous*pop_thous*365))*0.365,
              Pn = (sum(ns_cons_thous_t*cons_price_ns)/sum(ns_cal_pcap_day_thous*pop_thous*365))*0.365,
@@ -60,10 +62,13 @@ module_aglu_LA105B.food_demand_bias <- function(command, ...) {
       select(GCAM_region_ID,year,Ps,Pn,Qs,Qn,Y) %>%
       distinct()->Food_demand_Data_agg
 
+    #Store the region IDs here. We will need these later.
     region_id <- c(unique(Food_demand_Data_agg$GCAM_region_ID))
 
+    #Store tha parameters as a vector
     parameter_vector <- vec2param(Food_demand_parameters$params_vector.par)
 
+    #This is the function to compute the bias corrections.Just adding for illustration
     compute.bias.corrections <- function(params, obs)
     {
       . <- NULL
@@ -73,11 +78,14 @@ module_aglu_LA105B.food_demand_bias <- function(command, ...) {
       params$bc <- sapply(obs, . %>% compute.bc.rgn(params))
     }
 
-    Food_Demand_Bias <- compute.bias.corrections(params=parameter_vector,obs = Food_demand_Data_agg %>% rename(rgn= GCAM_REGION_ID) %>% filter(year<= 2010))
+    #Compute bias corrections
+    Food_Demand_Bias <- compute.bias.corrections(params=parameter_vector,obs = Food_demand_Data_agg %>% rename(rgn= GCAM_REGION_ID) %>% filter(year<= max(MODEL_BASE_YEARS)))
 
+    #Convert it to tibble and add regions
     L105B.Food_Demand_Bias <- as_tibble(t(Food_Demand_Bias))
     L105B.Food_Demand_Bias$GCAM_region_ID <- region_id
 
+    #We don't have data for Taiwan and S Korea in the demand data. So, we just add a bias correction of 1 for these regions.
     L105B.Food_Demand_Bias %>%
       rename (FoodDemand_Staples=s, FoodDemand_NonStaples=n) %>%
       add_row(GCAM_region_ID= 28, FoodDemand_Staples=1, FoodDemand_NonStaples=1) %>%
