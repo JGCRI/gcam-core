@@ -29,7 +29,6 @@ module_aglu_L203.demand_input <- function(command, ...) {
              FILE = "aglu/A_demand_supplysector",
              FILE = "aglu/A_demand_subsector",
              FILE = "aglu/A_demand_technology",
-             FILE = "aglu/A_diet_bias_R",
              FILE = "aglu/A_fuelprefElasticity_ssp1",
              "L101.ag_Food_Pcal_R_C_Y",
              "L101.ag_kcalg_R_C_Y",
@@ -37,7 +36,8 @@ module_aglu_L203.demand_input <- function(command, ...) {
              "L105.an_kcalg_R_C_Y",
              "L109.ag_ALL_Mt_R_C_Y",
              "L109.an_ALL_Mt_R_C_Y",
-             "L110.For_ALL_bm3_R_Y"))
+             "L110.For_ALL_bm3_R_Y",
+             "L105B.Food_Demand_Bias"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L203.Supplysector_demand",
              "L203.SubsectorAll_demand",
@@ -81,7 +81,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
     A_fuelprefElasticity_ssp1 <- get_data(all_data, "aglu/A_fuelprefElasticity_ssp1")
     A_demand_food_staples <- get_data(all_data, "aglu/A_demand_food_staples")
     A_demand_food_nonstaples <- get_data(all_data, "aglu/A_demand_food_nonstaples")
-    A_diet_bias_R <- get_data(all_data, "aglu/A_diet_bias_R")
+    L105B.Food_Demand_Bias <- get_data(all_data, "L105B.Food_Demand_Bias")
     L101.ag_Food_Pcal_R_C_Y <- get_data(all_data, "L101.ag_Food_Pcal_R_C_Y")
     L101.ag_kcalg_R_C_Y <- get_data(all_data, "L101.ag_kcalg_R_C_Y")
     L105.an_Food_Pcal_R_C_Y <- get_data(all_data, "L105.an_Food_Pcal_R_C_Y")
@@ -322,7 +322,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
       write_to_all_regions(LEVEL2_DATA_NAMES[["DemandNonStapleParams"]], GCAM_region_names = GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS)
 
-    L203.diet_bias_R <- gather(A_diet_bias_R, demand_type, value = "regional.bias", -GCAM_region_ID) %>%
+    L203.diet_bias_R <- gather(L105B.Food_Demand_Bias, demand_type, value = "regional.bias", -GCAM_region_ID) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID")
 
     L203.DemandStapleRegBias <- select(L203.DemandStapleParams, region, gcam.consumer, nodeInput, staples.food.demand.input) %>%
@@ -555,14 +555,14 @@ module_aglu_L203.demand_input <- function(command, ...) {
       add_title("Food demand function regional bias parameters for staples") %>%
       add_units("Unitless") %>%
       add_comments("Values taken from assumptions; computed offline in ancillary analysis") %>%
-      add_precursors("aglu/A_demand_food_staples", "aglu/A_diet_bias_R") ->
+      add_precursors("aglu/A_demand_food_staples", "L105B.Food_Demand_Bias") ->
       L203.DemandStapleRegBias
 
     L203.DemandNonStapleRegBias %>%
       add_title("Food demand function regional bias parameters for non-staples") %>%
       add_units("Unitless") %>%
       add_comments("Values taken from assumptions; computed offline in ancillary analysis") %>%
-      add_precursors("aglu/A_demand_food_nonstaples", "aglu/A_diet_bias_R") ->
+      add_precursors("aglu/A_demand_food_nonstaples", "L105B.Food_Demand_Bias") ->
       L203.DemandNonStapleRegBias
 
     L203.StapleBaseService %>%

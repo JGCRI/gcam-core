@@ -1,0 +1,17 @@
+# File: Food_demand_parameters.csv
+# Title: Food_demand_parameters
+# Description: Parameters for the food demand model for staples and non-staples
+# Original source: analysis by RYC STW RPL and KBN
+# Units: NA
+# Column types: cn
+# ----------
+parameter_names,params_vector.par
+A_s,1.172373409
+A_n,1.347840914
+xi_ss,-0.000967317
+xi_cross,0.006662008
+xi_nn,-0.011287573
+nu1_n,0.353317688
+lambda_s,0.075159394
+k_s,14.00537377
+Pm,3.923768339
