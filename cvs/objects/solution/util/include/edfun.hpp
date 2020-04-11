@@ -117,6 +117,7 @@ protected:
   // scale factors for input and output
   UBVECTOR<double> mxscl;
   UBVECTOR<double> mfxscl;
+  // supply correction slope to use for prices below the "lower bound"
   UBVECTOR<double> slope;
     
 };  

@@ -254,30 +254,12 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
                                        const bool aPrintDebugging,
                                        Timer& aTimer )
 {
-    // Perform the initial run.
     ILogger& targetLog = ILogger::getLogger( "target_finder_log" );
     targetLog.setLevel( ILogger::NOTICE );
-    targetLog << "Performing the baseline run." << endl;
-    
-    // Run the model without a tax target once to get a baseline for the
-    // solver and to calculate the initial non-tax periods.
+
     bool success;
-    /*logRunID();
-    bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS,
-                                                  true, aTimer );*/
-    
-    // Allow the use of an existing tax, note that taxes after mFirstTaxYear will
-    // be overridden.
     const Modeltime* modeltime = getInternalScenario()->getModeltime();
-    const Marketplace* marketplace = getInternalScenario()->getMarketplace();
-    const int firstTaxPeriod = modeltime->getyr_to_per( mFirstTaxYear );
     vector<double> taxes( modeltime->getmaxper(), 0.0 );
-    /*or( int period = modeltime->getFinalCalibrationPeriod() + 1; period < firstTaxPeriod; ++period ) {
-        double tax = marketplace->getPrice( mTaxName, "USA", period, false );
-        if( tax != Marketplace::NO_MARKET_PRICE ) {
-            taxes[ period ] = tax;
-        }
-    }*/
     setTrialTaxes( taxes );
 
     // TODO: This is only necessary because the cost calculator has trouble solving

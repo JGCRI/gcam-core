@@ -76,8 +76,6 @@
 #include "util/logger/include/ilogger.h"
 #endif
 
-class Modeltime;
-
 // Boost static asserts do not work when included from multiple namespaces.
 // Separate them into their own unique namespace.
 namespace conditionsCheck {

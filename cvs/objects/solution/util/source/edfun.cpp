@@ -147,14 +147,40 @@ double LogEDFun::partialSize(int ip) const
   return double(mkts[ip].getDependencies().size()) / double(world->getGlobalOrderingSize());
 }
 
+
+/*!
+ * \brief Set the slope to use for the negative correction supply which
+ *        is applied when prices are below the lower bound of supply behavior.
+ * \details In theory we would want the correction slope to match the slope
+ *          just above the lower bound price point so that the function is
+ *          continous.  However to explicitly calculate this would require
+ *          a lot of extra iterations just to get this information.  Instead
+ *          this method will be called each time we have a new derivative and
+ *          we will update the slope if the price happens to be "close" to just
+ *          above the lower bound price.
+ * \param adx The vector of self derivatives for all markets which was just calculated.
+ */
 void LogEDFun::setSlope(UBVECTOR<double>& adx) {
     assert(adx.size() == mkts.size());
     for(int i = 0; i < mkts.size(); ++i) {
-        if(mkts[i].getType() == IMarketType::SUBSIDY && (mkts[i].getPrice() > 0 && mkts[i].getPrice() < 5)) {
-            double newSlope = abs(adx[i]);
+        double newSlope = abs(adx[i]);
+        // compare scaled prices to ensure consistent hueristics accross markets
+        double p0 = mkts[i].getLowerBoundSupplyPrice() / mxscl[i];
+        double p = mkts[i].getPrice() / mxscl[i];
+        if(( mkts[i].getType() == IMarketType::RES  // (constraint type markets only)
+            || mkts[i].getType() == IMarketType::TAX
+            || mkts[i].getType() == IMarketType::SUBSIDY ) && (p > p0 && p < (p0 + 0.5)))
+        {
             slope[i] = newSlope;
             mkts[i].setCorrectionSlope(newSlope);
         }
+        else if(( mkts[i].getType() == IMarketType::NORMAL) && (p > p0 && p < (p0 + 0.1)))
+        {
+            slope[i] = newSlope;
+            mkts[i].setCorrectionSlope(newSlope);
+        }
+        // other markets would be PRICE and DEMAND type markets for which the slope should
+        // always be 1
     }
 }
 
@@ -316,14 +342,14 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
       double p  = x[i]>=ARGMAX ? PMAX : exp(x[i]);
       double c  = std::max(0.0, p0-p);
       double fxi = log(d/s);
-      /*if(c>0.0) {
+      if(c>0.0) {
         ILogger &solverlog = ILogger::getLogger("solver_log");
         solverlog.setLevel(ILogger::DEBUG);
         solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << p
                   << "  p0= " << p0 << "  c= " << c
                   << "  unmodified fx= " << fxi << "  modified fx= " << fxi+c
                   << "\n";
-      }      */
+      }
       fx[i] = log(d/s)+c;
     }
     else if(mkts[i].getType() == IMarketType::NORMAL) { // LINEAR CASE (NORMAL markets only)
@@ -338,16 +364,16 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
         // if the supply was indeed zero.  If the actual lower bound price is significantly
         // different than the estimated this may generate a discontinuity.
         double p0 = mkts[i].getLowerBoundSupplyPrice();
-        double c = s == 0 ? std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]) : 0;
+        double c = s == 0 ? std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]) * slope[i] : 0;
         // give difference as a fraction of demand
         fx[i] = d - s + c;          // == d-(s-c); i.e., the correction subtracts from supply
-        /*if(c>0.0) {
+        if(c>0.0) {
           ILogger &solverlog = ILogger::getLogger("solver_log");
           solverlog.setLevel(ILogger::DEBUG);
           solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << x[i]
                     << "  p0= " << p0 << "  c= " << c << "  modified supply= " << s-c
                     << "\n";
-        }*/
+        }
     }
     else if(!mLogPricep && ( mkts[i].getType() == IMarketType::RES  // LINEAR CASE (constraint type markets only)
             || mkts[i].getType() == IMarketType::TAX
@@ -366,13 +392,13 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
         double c = std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]) * slope[i];
         // give difference as a fraction of demand
         fx[i] = d - s + c;          // == d-(s-c); i.e., the correction subtracts from supply
-        /*if(c>0.0) {
+        if(c>0.0) {
           ILogger &solverlog = ILogger::getLogger("solver_log");
           solverlog.setLevel(ILogger::DEBUG);
           solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << x[i]
                     << "  p0= " << p0 << "  c= " << c << "  s= " << s << " d= " << d << " modified F(x)= " << fx[i]
                     << "\n";
-        }*/
+        }
     }
     else {                      // Markets that are neither normal nor constraint types.
       // for other types of markets (mostly price, demand, and

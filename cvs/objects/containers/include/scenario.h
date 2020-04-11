@@ -113,8 +113,9 @@ public:
     void invalidatePeriod( const int aPeriod );
     ManageStateVariables* getManageStateVariables() const;
 
-    //! Constant which when passed to the run method means to run all model periods.
+    //! Constant which when passed to the run method indicates the run period could not be determined  yet and will generate a warning..
     const static int UNINITIALIZED_RUN_PERIODS = -2;
+    //! Constant which when passed to the run method means to run all model periods.
     const static int RUN_ALL_PERIODS = -1;
 protected:
     

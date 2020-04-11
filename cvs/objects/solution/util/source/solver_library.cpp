@@ -342,7 +342,19 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
         return code = true;
     }
     aSolutionSet.resetBrackets();
+
+    ILogger& solverLog = ILogger::getLogger( "solver_log" );
+    solverLog.setLevel( ILogger::NOTICE );
+    solverLog << "Entering bracketing" << endl;
     
+    if( aSolutionSet.getNumSolvable() == 0 ) {
+        solverLog << "Exiting bracketing early due to empty solvable set." << endl;
+        return true;
+    }
+    
+    // Set up the EDFun wrapper which we will use to do the model evaluations.
+    // This way we can re-use the same concepts to backtrack on a bracket step
+    // similar to how we do it in the linesearch algorithm used in NR.
     using UBVECTOR = boost::numeric::ublas::vector<double>;
     LogEDFun edFun(aSolutionSet, aWorld, aMarketplace, aPeriod, false);
     FdotF<double, double> F(edFun);
@@ -355,18 +367,10 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
     edFun.scaleInitInputs(x);
     double currFX = F(x);
     double prevFX;
-
-    ILogger& solverLog = ILogger::getLogger( "solver_log" );
-    solverLog.setLevel( ILogger::NOTICE );
-    solverLog << "Entering bracketing" << endl;
+    
     solverLog.setLevel( ILogger::DEBUG );
     solverLog << aSolutionSet << endl;
     solverLog << endl << "Initial FX: " << currFX << endl;
-    
-    if( aSolutionSet.getNumSolvable() == 0 ) {
-        solverLog << "Exiting bracketing early due to empty solvable set." << endl;
-        return true;
-    }
 
     ILogger& singleLog = ILogger::getLogger( "single_market_log" );
 
@@ -464,18 +468,17 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
             x[i] = currSol.getPrice();
         } // end for loop
 
-        /*aMarketplace->nullSuppliesAndDemands( aPeriod );
-#if GCAM_PARALLEL_ENABLED
-        aWorld->calc( aPeriod, aWorld->getGlobalFlowGraph() );
-#else
-        aWorld->calc( aPeriod );
-#endif*/
+        // Rescale prices to be normalized then run an iteration
         edFun.scaleInitInputs(x);
         currFX = F(x);
         solverLog << "Current FX: " << currFX << endl;
+        
+        // Check if this bracket step has increased the "error" F dot F by more than the
+        // allowable threshold and walk back the step by half until it no longer does.
+        const double FX_INCREASE_THRESHOLD = 10.0;
         double stepMult = 1.0;
         dx = x - prev_x;
-        while(currFX > (prevFX * 10.0)) {
+        while(currFX > (prevFX * FX_INCREASE_THRESHOLD)) {
             stepMult /= 2.0;
             x = prev_x + dx * stepMult;
             currFX = F(x);

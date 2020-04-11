@@ -709,7 +709,7 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
         }
             
         solverLog << "New Jacobian:  diag( B )=\n" << jdiag << "\n";
-    static_cast<LogEDFun&>(F).setSlope(jdiag);
+        static_cast<LogEDFun&>(F).setSlope(jdiag);
         
       }
       else {
