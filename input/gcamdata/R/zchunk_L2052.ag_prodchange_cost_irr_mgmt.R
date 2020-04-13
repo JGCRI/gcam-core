@@ -26,6 +26,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
              "L162.ag_YieldRate_R_C_Y_GLU_irr",
              "L162.bio_YieldRate_R_Y_GLU_irr",
              "L164.ag_Cost_75USDkg_C",
+             "L132.ag_an_For_Prices",
              "L2012.AgSupplySector",
              "L201.AgYield_bio_grass",
              "L201.AgYield_bio_tree",
@@ -58,6 +59,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     L162.ag_YieldRate_R_C_Y_GLU_irr <- get_data(all_data, "L162.ag_YieldRate_R_C_Y_GLU_irr")
     L162.bio_YieldRate_R_Y_GLU_irr <- get_data(all_data, "L162.bio_YieldRate_R_Y_GLU_irr")
     L164.ag_Cost_75USDkg_C <- get_data(all_data, "L164.ag_Cost_75USDkg_C")
+    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
     L2012.AgSupplySector <- get_data(all_data, "L2012.AgSupplySector")
     L201.AgYield_bio_grass <- get_data(all_data, "L201.AgYield_bio_grass")
     L201.AgYield_bio_tree <- get_data(all_data, "L201.AgYield_bio_tree")
@@ -97,14 +99,19 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     # take this into account will result in inconsistency between cost assumptions (which are based on the USA) and
     # crop prices, which may return distorted and potentially negative profit rates.
 
+    # 9/23/2019 modification - the producer price data in L132 comes from a direct query of the "United States of
+    # America" country in FAOSTAT, whereas the L1321 and L2012 data come from a global query with regions mapped
+    # according to AGLU_ctry. For this reason, the latter datasets include Puerto Rico within the USA region. This
+    # causes a mismatch in computing costs and prices, and can lead to negative profit rates for crops that (a) tend to
+    # be grown in Puerto Rico, and (b) have lower producer prices in Puerto Rico than in the USA.
+
     # Specifically, the method applies the cost:price ratio of each crop in the USA to each crop in all regions
-    L2052.AgCostRatio_USA <- filter(L2012.AgSupplySector,
-                                    region == gcam.USA_REGION,
-                                    AgSupplySector %in% L164.ag_Cost_75USDkg_C$GCAM_commodity) %>%
-      select(region, AgSupplySector, calPrice) %>%
-      left_join_error_no_match(L164.ag_Cost_75USDkg_C, by = c(AgSupplySector = "GCAM_commodity")) %>%
+    L132.ag_an_For_Prices %>% filter(GCAM_commodity %in% L164.ag_Cost_75USDkg_C$GCAM_commodity) %>%
+      mutate(region = gcam.USA_REGION) %>%
+      select(region, GCAM_commodity, calPrice) %>%
+      left_join_error_no_match(L164.ag_Cost_75USDkg_C, by = "GCAM_commodity") %>%
       mutate(cost_PrP_ratio = Cost_75USDkg / calPrice) %>%
-      select(AgSupplySector, cost_PrP_ratio)
+      select(AgSupplySector = GCAM_commodity, cost_PrP_ratio)->L2052.AgCostRatio_USA
 
     L2052.AgCost_ag_irr_mgmt <- left_join_error_no_match(L2052.AgCost_ag_irr_mgmt, L2052.AgCostRatio_USA,
                                      by = "AgSupplySector") %>%
@@ -259,6 +266,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
                      "L161.ag_irrProd_Mt_R_C_Y_GLU",
                      "L161.ag_rfdProd_Mt_R_C_Y_GLU",
                      "L164.ag_Cost_75USDkg_C",
+                     "L132.ag_an_For_Prices",
                      "L2012.AgSupplySector") ->
       L2052.AgCost_ag_irr_mgmt
 

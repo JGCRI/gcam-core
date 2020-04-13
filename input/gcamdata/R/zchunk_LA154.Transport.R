@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LA154.Transport
+#' module_gcamusa_LA154.Transport
 #'
 #' Downscale transportation energy consumption and nonmotor data to the state level, generating three ouput tables.
 #'
@@ -19,6 +19,7 @@
 module_gcamusa_LA154.Transport <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/trnUCD_EIA_mapping",
+             FILE="gcam-usa/trnUCD_EIA_mapping_revised",
              "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
              "L154.out_mpkm_R_trn_nonmotor_Yh",
              "L100.Pop_thous_state",
@@ -32,7 +33,13 @@ module_gcamusa_LA154.Transport <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    trnUCD_EIA_mapping <- get_data(all_data, "gcam-usa/trnUCD_EIA_mapping")
+    #kbn 2019-11-10- Extending transportation changes made in the CORE to introduce revised size classes to GCAM-USA. If the
+    #user has chosen the new modes and size classes, use the revised mapping file that will map the UCD data to the new modes and size classes.
+    if (toString(energy.TRAN_UCD_MODE)=='rev.mode'){
+      trnUCD_EIA_mapping <- get_data(all_data, "gcam-usa/trnUCD_EIA_mapping_revised")
+    }
+    else{trnUCD_EIA_mapping <- get_data(all_data, "gcam-usa/trnUCD_EIA_mapping")}
+
     L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "L154.in_EJ_R_trn_m_sz_tech_F_Yh")
     L154.out_mpkm_R_trn_nonmotor_Yh <- get_data(all_data, "L154.out_mpkm_R_trn_nonmotor_Yh")
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state")
@@ -145,7 +152,10 @@ module_gcamusa_LA154.Transport <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Transportation energy consumption data was downscaled to the state level using EIA state energy data") %>%
       add_legacy_name("L154.in_EJ_state_trn_m_sz_tech_F") %>%
-      add_precursors("L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") ->
+      add_precursors("gcam-usa/trnUCD_EIA_mapping_revised",
+                     "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
+                     "gcam-usa/trnUCD_EIA_mapping",
+                     "L101.EIA_use_all_Bbtu") ->
       L154.in_EJ_state_trn_m_sz_tech_F
 
     L154.out_mpkm_state_trn_nonmotor_Yh %>%
@@ -161,7 +171,10 @@ module_gcamusa_LA154.Transport <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Transportation energy consumption was aggregated by fuel, and the sector was named transportation") %>%
       add_legacy_name("L154.in_EJ_state_trn_F") %>%
-      add_precursors("L154.in_EJ_R_trn_m_sz_tech_F_Yh", "gcam-usa/trnUCD_EIA_mapping", "L101.EIA_use_all_Bbtu") ->
+      add_precursors("gcam-usa/trnUCD_EIA_mapping_revised",
+                     "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
+                     "gcam-usa/trnUCD_EIA_mapping",
+                     "L101.EIA_use_all_Bbtu") ->
       L154.in_EJ_state_trn_F
 
     return_data(L154.in_EJ_state_trn_m_sz_tech_F, L154.out_mpkm_state_trn_nonmotor_Yh, L154.in_EJ_state_trn_F)

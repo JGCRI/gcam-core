@@ -20,10 +20,10 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "energy/A_regions",
-             FILE = "energy/IEA_flow_sector",
-             FILE = "energy/IEA_product_fuel",
-             FILE = "energy/IEA_sector_fuel_modifications",
-             FILE = "energy/enduse_fuel_aggregation",
+             FILE = "energy/mappings/IEA_flow_sector",
+             FILE = "energy/mappings/IEA_product_fuel",
+             FILE = "energy/mappings/IEA_sector_fuel_modifications",
+             FILE = "energy/mappings/enduse_fuel_aggregation",
              "L100.IEA_en_bal_ctry_hist"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L101.en_bal_EJ_R_Si_Fi_Yh_full",
@@ -41,10 +41,10 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     A_regions <- get_data(all_data, "energy/A_regions")
-    IEA_flow_sector <- get_data(all_data, "energy/IEA_flow_sector")
-    IEA_product_fuel <- get_data(all_data, "energy/IEA_product_fuel")
-    IEA_sector_fuel_modifications <- get_data(all_data, "energy/IEA_sector_fuel_modifications")
-    enduse_fuel_aggregation <- get_data(all_data, "energy/enduse_fuel_aggregation")
+    IEA_flow_sector <- get_data(all_data, "energy/mappings/IEA_flow_sector")
+    IEA_product_fuel <- get_data(all_data, "energy/mappings/IEA_product_fuel")
+    IEA_sector_fuel_modifications <- get_data(all_data, "energy/mappings/IEA_sector_fuel_modifications")
+    enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
 
     # L100.IEA_en_bal_ctry_hist might be null (meaning the data system is running
@@ -229,8 +229,8 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("L101.en_bal_EJ_R_Si_Fi_Yh_full includes energy balances and assumptions for total primary energy supply (TPES)") %>%
       add_legacy_name("L101.en_bal_EJ_R_Si_Fi_Yh_full") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/A_regions", "energy/IEA_flow_sector", "energy/IEA_product_fuel",
-                     "energy/IEA_sector_fuel_modifications", "energy/enduse_fuel_aggregation",
+      add_precursors("common/iso_GCAM_regID", "energy/A_regions", "energy/mappings/IEA_flow_sector", "energy/mappings/IEA_product_fuel",
+                     "energy/mappings/IEA_sector_fuel_modifications", "energy/mappings/enduse_fuel_aggregation",
                      "L100.IEA_en_bal_ctry_hist") ->
       L101.en_bal_EJ_R_Si_Fi_Yh_full
 

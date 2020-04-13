@@ -1,0 +1,61 @@
+# File: A54.globaltranTech_retire_revised.csv
+# Title: Transportation technology retirement parameters. Only applies to vintaged technologies
+# Units: Years for lifetime and half.life; Unitless for steepness
+# Source: Documented in JIRA issue https://jira.pnnl.gov/jira/browse/JGCRI-358?src=confmacro.
+# Comments: maximum lifetime of cohort. If no retirement function is used; the entire cohort is retired in this number of years.
+# half.life: number of years at which 50% of the cohort is retired; using the s-curve-shutdown-decider retirement function.
+# steepness: shape parameter used by the s-curve-shutdown-decider retirement function.
+# Column types: cccciin 
+# ----------
+supplysector,tranSubsector,tranTechnology,year,lifetime,half.life,steepness
+trn_freight_road,Medium truck,Liquids,final-calibration-year,25,12,0.193
+trn_freight_road,Medium truck,NG,final-calibration-year,25,12,0.193
+trn_freight_road,Heavy truck,Liquids,final-calibration-year,25,12,0.193
+trn_freight_road,Heavy truck,NG,final-calibration-year,25,12,0.193
+trn_freight_road,Light truck,Liquids,final-calibration-year,25,12,0.193
+trn_freight_road,Light truck,NG,final-calibration-year,25,12,0.193
+trn_freight_road,Light truck,Liquids,final-calibration-year,25,12,0.193
+trn_freight_road,Light truck,NG,final-calibration-year,25,12,0.193
+trn_pass_road_LDV_4W,Car,BEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Car,FCEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Car,Hybrid Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Car,Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Car,NG,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Large Car and Truck,BEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Large Car and Truck,FCEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Large Car and Truck,NG,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Large Car and Truck,BEV,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Large Car and Truck,FCEV,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Large Car and Truck,NG,final-calibration-year,25,11,0.23
+trn_pass_road_LDV_4W,Mini Car,BEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Mini Car,FCEV,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Mini Car,Liquids,final-calibration-year,25,11,0.218
+trn_pass_road_LDV_4W,Mini Car,NG,final-calibration-year,25,11,0.218
+trn_freight_road,Medium truck,Liquids,initial-future-year,25,12,0.193
+trn_freight_road,Medium truck,NG,initial-future-year,25,12,0.193
+trn_freight_road,Heavy truck,Liquids,initial-future-year,25,12,0.193
+trn_freight_road,Heavy truck,NG,initial-future-year,25,12,0.193
+trn_freight_road,Light truck,Liquids,initial-future-year,25,12,0.193
+trn_freight_road,Light truck,NG,initial-future-year,25,12,0.193
+trn_freight_road,Light truck,Liquids,initial-future-year,25,12,0.193
+trn_freight_road,Light truck,NG,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Car,BEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Car,FCEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Car,Hybrid Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Car,Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Car,NG,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car and Truck,BEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car and Truck,FCEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Large Car and Truck,NG,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Mini Car,BEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Mini Car,FCEV,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Mini Car,Liquids,initial-future-year,25,12,0.193
+trn_pass_road_LDV_4W,Mini Car,NG,initial-future-year,25,12,0.193

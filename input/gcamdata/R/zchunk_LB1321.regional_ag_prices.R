@@ -42,6 +42,8 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     FAO_ag_an_ProducerPrice <- get_data(all_data, "aglu/FAO/FAO_ag_an_ProducerPrice")
     FAO_ag_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_Prod_t_PRODSTAT")
     FAO_GDP_Deflators <- get_data(all_data, "aglu/FAO/FAO_GDP_Deflators")
+    #kbn 2019/09/23 added AGLU_Ctry_Unique since using AGLU_Ctry was causing extra rows to be added.
+    AGLU_Ctry_Unique<-distinct(AGLU_ctry,FAO_country,.keep_all = TRUE)
 
     # 1. Producer prices
     # 1.1 GDP deflators (to 2005) by country and analysis year
@@ -51,7 +53,7 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     # year of 2005 to a multiplier with an exogenous base year. The deflator base year is the year in which relative
     # regional nominal prices are preserved in the constant dollar (i.e., 1975$ in this code) prices. For example, with
     # deflator base year set to 2010, prices are in 2010 Constant USD but expressed in terms of 1975 USD.
-    
+
     # Sudan (former) is re-set to Sudan for building the full time series
     # South Sudan is dropped as only a few data years are available and it isn't in the price data
     L1321.GDPdefl_ctry <- FAO_GDP_Deflators %>%
@@ -62,7 +64,8 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
       mutate(currentUSD_per_baseyearUSD = (Value / Value[year == aglu.DEFLATOR_BASE_YEAR])) %>%
       ungroup() %>%
       filter(year %in% aglu.TRADE_CAL_YEARS) %>%
-      left_join_error_no_match(select(AGLU_ctry, FAO_country, iso),
+      #kbn 2019/09/23 added AGLU_Ctry_Unique since using AGLU_Ctry was causing extra rows to be added.
+      left_join_error_no_match(select(AGLU_Ctry_Unique, FAO_country, iso),
                                by = c(Area = "FAO_country")) %>%
       select(iso, countries = Area, year, currentUSD_per_baseyearUSD)
 

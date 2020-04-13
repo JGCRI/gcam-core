@@ -1,0 +1,12 @@
+# File: A54.globaltech_passthru_revised.csv
+# Title: Transportation technology defaults (all parameters; pass-through technologies only)
+# Source: Documented in JIRA issue https://jira.pnnl.gov/jira/browse/JGCRI-358?src=confmacro.
+# Units: Unitless
+# Column types: ccccii 
+# ----------
+supplysector,tranSubsector,technology,minicam.energy.input,coefficient,share.weight
+trn_pass,road,road,trn_pass_road,1,1
+trn_pass_road,LDV,LDV,trn_pass_road_LDV,1,1
+trn_pass_road,bus,bus,trn_pass_road_bus,1,1
+trn_pass_road_LDV,4W,4W,trn_pass_road_LDV_4W,1,1
+trn_freight,road,road,trn_freight_road,1,1

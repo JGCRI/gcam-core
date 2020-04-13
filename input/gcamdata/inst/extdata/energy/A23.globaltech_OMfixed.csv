@@ -21,9 +21,9 @@ electricity,biomass,biomass (conv),OM-fixed,9.09,9.09,9.09,29.43356616,29.433566
 electricity,biomass,biomass (conv CCS),OM-fixed,35.95922667,35.95922667,35.95922667,35.95922667,35.95922667,0.6,0.05,biomass (conv)
 electricity,biomass,biomass (IGCC),OM-fixed,12.77,12.77,12.77,43.37578171,43.37578171,0.7,0.03,
 electricity,biomass,biomass (IGCC CCS),OM-fixed,14.33,14.33,14.33,52.51170642,52.51170642,0.6,0.05,biomass (IGCC)
-electricity,nuclear,Gen_II_LWR,OM-fixed,22.02,22.02,22.02,32.53183628,32.53183628,1,0,
+electricity,nuclear,Gen_II_LWR,OM-fixed,22.02,22.02,22.02,29.43356616,29.43356616,1,0,
 electricity,nuclear,Gen_III,OM-fixed,21.77,21.77,21.77,29.43356616,29.43356616,0.75,0.01,
-electricity,wind,wind,OM-fixed,3.75,3.75,3.75,15.49135061,15.49135061,0.7,0.03,
+electricity,wind,wind,OM-fixed,3.75,3.75,3.75,15.49135061,15.49135061,0.75,0.01,
 electricity,wind,wind_storage,OM-fixed,8.63,8.63,8.63,18.58962073,18.58962073,0.7,0.03,wind
 electricity,solar,PV,OM-fixed,8.93,8.93,8.93,12.39308049,12.39308049,0.7,0.03,
 electricity,solar,PV_storage,OM-fixed,17.42,17.42,17.42,14.87169658,14.87169658,0.7,0.03,PV

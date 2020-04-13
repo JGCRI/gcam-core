@@ -20,6 +20,7 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
     return(c(FILE = 'gcam-usa/EIA_elec_gen_hydro',
              FILE = 'gcam-usa/AEO_2018_elec_gen_hydro',
              FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
+             FILE = 'gcam-usa/AEO_2020_elec_gen_hydro',
              'L2234.StubTechFixOut_elecS_USA'))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2242.StubTechFixOut_hydro_USA"))
@@ -31,6 +32,7 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
     EIA_elec_gen_hydro <- get_data(all_data, 'gcam-usa/EIA_elec_gen_hydro')
     AEO_2018_elec_gen_hydro <- get_data(all_data, 'gcam-usa/AEO_2018_elec_gen_hydro')
     A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
+    AEO_2020_elec_gen_hydro <- get_data(all_data, 'gcam-usa/AEO_2020_elec_gen_hydro')
     L2234.StubTechFixOut_elecS_USA <- get_data(all_data, 'L2234.StubTechFixOut_elecS_USA')
 
     # Silence package checks
@@ -75,7 +77,7 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
 
     # Apply the national level ratio of AEO future years to 2015 to GCAM fixed output and create table through 2050.
     # The same ratio is assumed for all states
-    AEO_2018_elec_gen_hydro %>%
+    AEO_2020_elec_gen_hydro %>%
       mutate(AEO_2015_ratio = (AEO * CONV_TWH_EJ) / L2242.hydro_EIA_US_2015) %>%
       filter(year %in% MODEL_YEARS,
              year >= gcamusa.HYDRO_HIST_YEAR) %>%
@@ -137,6 +139,7 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
       add_precursors('gcam-usa/EIA_elec_gen_hydro',
                      'gcam-usa/AEO_2018_elec_gen_hydro',
                      "gcam-usa/A23.elecS_tech_mapping_cool",
+                     'gcam-usa/AEO_2020_elec_gen_hydro',
                      'L2234.StubTechFixOut_elecS_USA') ->
       L2242.StubTechFixOut_hydro_USA
 

@@ -40,7 +40,7 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
     return(paste0("L100.", namelist))
   } else if(command == driver.MAKE) {
 
-    . <- value <- iso <- NULL             # silence package check.
+    . <- value <- iso <- GTAP_crop <- GLU <- MIRCA_crop <- NULL             # silence package check.
     L100.Land_type_area_ha <- L100.LDS_value_milUSD <- L100.MIRCA_irrHA_ha <-
         L100.MIRCA_rfdHA_ha <- L100.Mueller_yield_levels <-
         L100.Ref_veg_carbon_Mg_per_ha <- L100.Water_footprint_m3 <- NULL
@@ -92,7 +92,6 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
         d <- LDSfiles[[nm]]
         if(nm != "Ref_veg_carbon_Mg_per_ha") {
           at <- attributes(d)
-          d$iso[d$iso == "twn"] <- "chn"
           d %>%
             # group by everything EXCEPT for value and sum up
             dplyr::group_by_(.dots = names(d)[-grep("value", names(d))]) %>%
@@ -100,14 +99,13 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
             ungroup() %>%
             # summarise() produces a new tibble, but we don't want to lose file info
             same_attributes_as(d) %>%
-            add_comments("Taiwan ISO collapsed into China") ->
+            add_comments("Since 2015 BY update, data available for Taiwan as an agricultural region.")->
             LDSfiles[[nm]]
         }
         # Drop Taiwan from the carbon contents
         if(nm == "Ref_veg_carbon_Mg_per_ha") {
           d %>%
-            filter(iso != "twn") %>%
-            add_comments("Removed data with Taiwan ISO") ->
+            add_comments("Since 2015 BY update, data available for Taiwan as an agricultural region.") ->
             LDSfiles[[nm]]
         }
       }
@@ -132,6 +130,57 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
     L100.LDS_ag_prod_t %>%
       semi_join(L100.LDS_ag_HA_ha, by = c("iso", aglu.GLU, "GTAP_crop")) ->
       L100.LDS_ag_prod_t
+
+    ## 9/30/2019 modification (gpk, kbn)
+    # Taiwan is now included but has some discrepancies between FAOSTAT and Monfreda that cause issues in one of the
+    # land use regions. Specifically, Flax Fiber and Tow has about 1000 ha in FAOSTAT, and 1 in Monfreda, which is assigned
+    # to the smaller land use region. Also, wheat harvested area has a significant dip in the years around 2000; the FAOSTAT
+    # estimate in the trough years is ~50 whereas otherwise it is about 1000. Monfreda allocates 100% of this area to the smaller
+    # land use region. The steps below insert quantities for harvested area and production...
+    #  - Flax fiber and tow: assign a value to GLU103 of similar magnitude to the data in FAOSTAT
+    #  - Wheat: re-assign the production from GLU078 to GLU103
+
+
+    #1. Adjustment for wheat
+    #a. Get Taiwan's data for GLU078 for wheat for production, harvested area and MIRCA
+    GLUDataforWheat = subset(L100.LDS_ag_HA_ha,GTAP_crop=='Wheat'& GLU=='GLU078'& iso=="twn")
+    Value = GLUDataforWheat$value
+
+    GLUProdDataforWheat = subset(L100.LDS_ag_prod_t,GTAP_crop=='Wheat'& GLU=='GLU078'& iso=="twn")
+    ProdValue=GLUProdDataforWheat$value
+
+    GLUIRRDataforWheat=subset(L100.MIRCA_rfdHA_ha,MIRCA_crop==1 & GLU=='GLU078'& iso=="twn")
+    irrValue=GLUIRRDataforWheat$value
+    #b. Transfer data into GLU103, assign a small seed value to GLU078 to avoid null values.MIRCA also bifurcates arable land by irrigated and rainfed.
+    #We have adjusted both below.
+    if (Value > 0){
+
+      L100.LDS_ag_HA_ha<-add_row(L100.LDS_ag_HA_ha,iso="twn",GLU="GLU103",GTAP_crop='Wheat',value=Value)
+      L100.LDS_ag_HA_ha<-L100.LDS_ag_HA_ha[!(L100.LDS_ag_HA_ha$iso =="twn" & L100.LDS_ag_HA_ha$GLU=="GLU078" & L100.LDS_ag_HA_ha$GTAP_crop=="Wheat"),]
+      L100.LDS_ag_HA_ha<-add_row(L100.LDS_ag_HA_ha,iso="twn",GLU="GLU078",GTAP_crop='Wheat',value=1)
+
+      L100.LDS_ag_prod_t<-add_row(L100.LDS_ag_prod_t,iso="twn",GLU="GLU103",GTAP_crop='Wheat',value=Value)
+      L100.LDS_ag_prod_t<-L100.LDS_ag_prod_t[!(L100.LDS_ag_prod_t$iso =="twn" & L100.LDS_ag_prod_t$GLU=="GLU078" & L100.LDS_ag_prod_t$GTAP_crop=="Wheat"),]
+      L100.LDS_ag_prod_t<-add_row(L100.LDS_ag_prod_t,iso="twn",GLU="GLU078",GTAP_crop='Wheat',value=1)
+
+      L100.MIRCA_rfdHA_ha<-add_row(L100.MIRCA_rfdHA_ha,iso="twn",GLU="GLU103",MIRCA_crop=1,value=Value)
+      L100.MIRCA_rfdHA_ha<-L100.MIRCA_rfdHA_ha[!(L100.MIRCA_rfdHA_ha$iso =="twn" & L100.MIRCA_rfdHA_ha$GLU=="GLU078" & L100.MIRCA_rfdHA_ha$MIRCA_crop==1),]
+      L100.MIRCA_rfdHA_ha<-add_row(L100.MIRCA_rfdHA_ha,iso="twn",GLU="GLU078",MIRCA_crop=1,value=1)
+
+      L100.MIRCA_irrHA_ha<-add_row(L100.MIRCA_irrHA_ha,iso="twn",GLU="GLU078",MIRCA_crop=1,value=0)
+
+    }
+
+    #2. Adjustment for Flax
+    #Add rows for production and harvested area for GLU103 with values that are commensurate with FAOSTAT.
+    GLUDataforFlax = subset(L100.LDS_ag_HA_ha,GTAP_crop=='FlaxFibr_Tow'& GLU=='GLU078'& iso=="twn")
+    Value = GLUDataforFlax$value
+
+    if (Value > 0){
+
+      L100.LDS_ag_HA_ha<-add_row(L100.LDS_ag_HA_ha,iso="twn",GLU="GLU103",GTAP_crop='FlaxFibr_Tow',value=2000)
+      L100.LDS_ag_prod_t<-add_row(L100.LDS_ag_prod_t,iso="twn",GLU="GLU103",GTAP_crop='FlaxFibr_Tow',value=1000)
+    }
 
     # And we're done
     return_data(L100.Land_type_area_ha,

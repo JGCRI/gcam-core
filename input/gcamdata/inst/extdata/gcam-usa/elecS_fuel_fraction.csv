@@ -3,42 +3,42 @@
 # Units: unitless (fraction)
 # Comments: This table provides initial estimates of the fractions of electricity generation by fuel by horizontal segment. The starting assumption is that 87.14% of coal is available for baseload generation and the remaining 12.85% is available for intermediate generation.
 # Source: reasonable initial values for heuristic algorithm to begin
-# Column types: ccnnnn 
+# Column types: ccnnnnn 
 # ----------
-fuel,segment,fraction1975,fraction1990,fraction2005,fraction2010
-coal,base load generation,0.80336,0.80336,0.87143,0.87143
-coal,intermediate generation,0.19664,0.19664,0.12857,0.12857
-coal,subpeak generation,0,0,0,0
-coal,peak generation,0,0,0,0
-gas,base load generation,0.03,0.03,0.1505,0.1505
-gas,intermediate generation,0.45092,0.45092,0.50204,0.50204
-gas,subpeak generation,0.26455,0.26455,0.17668,0.17668
-gas,peak generation,0.25453,0.25453,0.17078,0.17078
-refined liquids,base load generation,0,0,0,0
-refined liquids,intermediate generation,0,0,0,0
-refined liquids,subpeak generation,0.5,0.5,0.5,0.5
-refined liquids,peak generation,0.5,0.5,0.5,0.5
-biomass,base load generation,0.3,0.3,0.5,0.5
-biomass,intermediate generation,0.7,0.7,0.5,0.5
-biomass,subpeak generation,0,0,0,0
-biomass,peak generation,0,0,0,0
-nuclear,base load generation,1,1,1,1
-nuclear,intermediate generation,0,0,0,0
-nuclear,subpeak generation,0,0,0,0
-nuclear,peak generation,0,0,0,0
-wind,base load generation,1,1,1,1
-wind,intermediate generation,0,0,0,0
-wind,subpeak generation,0,0,0,0
-wind,peak generation,0,0,0,0
-solar,base load generation,0,0,0,0
-solar,intermediate generation,0,0,0,0
-solar,subpeak generation,1,1,1,1
-solar,peak generation,0,0,0,0
-hydro,base load generation,1,1,1,1
-hydro,intermediate generation,0,0,0,0
-hydro,subpeak generation,0,0,0,0
-hydro,peak generation,0,0,0,0
-geothermal,base load generation,1,1,1,1
-geothermal,intermediate generation,0,0,0,0
-geothermal,subpeak generation,0,0,0,0
-geothermal,peak generation,0,0,0,0
+fuel,segment,fraction1975,fraction1990,fraction2005,fraction2010,fraction2015
+coal,base load generation,0.80336,0.80336,0.87143,0.87143,0.87143
+coal,intermediate generation,0.19664,0.19664,0.12857,0.12857,0.12857
+coal,subpeak generation,0,0,0,0,0
+coal,peak generation,0,0,0,0,0
+gas,base load generation,0.03,0.03,0.1505,0.1505,0.1505
+gas,intermediate generation,0.45092,0.45092,0.50204,0.50204,0.50204
+gas,subpeak generation,0.26455,0.26455,0.17668,0.17668,0.17668
+gas,peak generation,0.25453,0.25453,0.17078,0.17078,0.17078
+refined liquids,base load generation,0,0,0,0,0
+refined liquids,intermediate generation,0,0,0,0,0
+refined liquids,subpeak generation,0.5,0.5,0.5,0.5,0.5
+refined liquids,peak generation,0.5,0.5,0.5,0.5,0.5
+biomass,base load generation,0.3,0.3,0.5,0.5,0.5
+biomass,intermediate generation,0.7,0.7,0.5,0.5,0.5
+biomass,subpeak generation,0,0,0,0,0
+biomass,peak generation,0,0,0,0,0
+nuclear,base load generation,1,1,1,1,1
+nuclear,intermediate generation,0,0,0,0,0
+nuclear,subpeak generation,0,0,0,0,0
+nuclear,peak generation,0,0,0,0,0
+wind,base load generation,1,1,1,1,1
+wind,intermediate generation,0,0,0,0,0
+wind,subpeak generation,0,0,0,0,0
+wind,peak generation,0,0,0,0,0
+solar,base load generation,0,0,0,0,0
+solar,intermediate generation,0,0,0,0,0
+solar,subpeak generation,1,1,1,1,1
+solar,peak generation,0,0,0,0,0
+hydro,base load generation,1,1,1,1,1
+hydro,intermediate generation,0,0,0,0,0
+hydro,subpeak generation,0,0,0,0,0
+hydro,peak generation,0,0,0,0,0
+geothermal,base load generation,1,1,1,1,1
+geothermal,intermediate generation,0,0,0,0,0
+geothermal,subpeak generation,0,0,0,0,0
+geothermal,peak generation,0,0,0,0,0

@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LA114.Wind
+#' module_gcamusa_LA114.Wind
 #'
 #' Compute capacity factors for wind by US state.
 #'

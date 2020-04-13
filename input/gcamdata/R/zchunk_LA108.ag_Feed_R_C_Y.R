@@ -23,6 +23,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/FAO/FAO_ag_items_cal_SUA",
+             FILE = "aglu/A_recent_feed_modifications",
              "L100.FAO_ag_Feed_t",
              "L101.ag_Prod_Mt_R_C_Y",
              "L107.an_Feed_Mt_R_C_Sys_Fd_Y",
@@ -43,6 +44,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     FAO_ag_items_cal_SUA <- get_data(all_data, "aglu/FAO/FAO_ag_items_cal_SUA")
+    A_recent_feed_modifications <- get_data(all_data, "aglu/A_recent_feed_modifications")
     L100.FAO_ag_Feed_t <- get_data(all_data, "L100.FAO_ag_Feed_t")
     L101.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y")
     L107.an_Feed_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Feed_Mt_R_C_Sys_Fd_Y")
@@ -78,6 +80,9 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
 
     L100.FAO_ag_Feed_t %>%
       select(iso, item, year, value) %>%
+      left_join(A_recent_feed_modifications, by = c("iso", "item", "year")) %>%                    # Swap in modified feed data where relevant
+      mutate(value = if_else(is.na(feed), value, feed)) %>%
+      select(-feed) %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                                     # Map in GCAM region ID
       left_join(select(FAO_ag_items_cal_SUA, item, GCAM_commodity), by = "item") %>%               # Map in GCAM commodity
       filter(!is.na(GCAM_commodity)) %>%                                                           # Remove entries that are not GCAM comodities
@@ -264,7 +269,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       add_comments("FodderHerb: based on FAO production, but adjusted if this exceeds FodderHerb_Residue demand in IMAGE") %>%
       add_comments("Note: excess FodderGrass and FodderHerb production are mapped to OtherUses") %>%
       add_legacy_name("L108.ag_Feed_Mt_R_C_Y") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/FAO/FAO_ag_items_cal_SUA", "L100.FAO_ag_Feed_t",
+      add_precursors("common/iso_GCAM_regID", "aglu/FAO/FAO_ag_items_cal_SUA", "aglu/A_recent_feed_modifications", "L100.FAO_ag_Feed_t",
                      "L101.ag_Prod_Mt_R_C_Y", "L107.an_Feed_Mt_R_C_Sys_Fd_Y", "L122.FeedOut_Mt_R_C_Yh") ->
       L108.ag_Feed_Mt_R_C_Y
 

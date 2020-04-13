@@ -1,0 +1,549 @@
+# File: AEO_2019_regional_pcGDP_ratio.csv
+# Title: AEO 2019 Gross Regional Product Assumptions
+# Units: unitless ratio (GDP/capita in curerent period : GDP/capita in previous period)
+# Comments: Per-capita GDP growth assumptions by US Census Division in 5 year time-steps from 2015-2050.
+# Region names modified to match subregion9 names in states_subregions.csv.
+# Source: U.S. Energy Information Administration.  Assumptions correspond to regional economic assumptions employed in Annual Energy Outlook 2019.
+# Column types: cin
+# ----------
+region,year,pcGDPratio
+New England,1991,0.98574
+New England,1992,1.03368
+New England,1993,1.00110
+New England,1994,1.02616
+New England,1995,1.04282
+New England,1996,1.03603
+New England,1997,1.04718
+New England,1998,1.03566
+New England,1999,1.03150
+New England,2000,1.06339
+New England,2001,0.99318
+New England,2002,0.99022
+New England,2003,1.04106
+New England,2004,1.03027
+New England,2005,1.00017
+New England,2006,1.02099
+New England,2007,1.01943
+New England,2008,0.97609
+New England,2009,0.98975
+New England,2010,1.02748
+New England,2011,1.00662
+New England,2012,1.00675
+New England,2013,1.01531
+New England,2014,1.02272
+New England,2015,1.01649
+New England,2016,1.00846
+New England,2017,1.02252
+New England,2018,1.02485
+New England,2019,1.01811
+New England,2020,1.01673
+New England,2021,1.00756
+New England,2022,1.01492
+New England,2023,1.01480
+New England,2024,1.00990
+New England,2025,1.01703
+New England,2026,1.01825
+New England,2027,1.01140
+New England,2028,1.01905
+New England,2029,1.01789
+New England,2030,1.01889
+New England,2031,1.01146
+New England,2032,1.01745
+New England,2033,1.01881
+New England,2034,1.01732
+New England,2035,1.01743
+New England,2036,1.01697
+New England,2037,1.01739
+New England,2038,1.01739
+New England,2039,1.01747
+New England,2040,1.02401
+New England,2041,1.01731
+New England,2042,1.01829
+New England,2043,1.01713
+New England,2044,1.01848
+New England,2045,1.02414
+New England,2046,1.01830
+New England,2047,1.01790
+New England,2048,1.01803
+New England,2049,1.01778
+New England,2050,1.01790
+Atlantic-N,1991,0.98834
+Atlantic-N,1992,1.02530
+Atlantic-N,1993,1.01114
+Atlantic-N,1994,1.00208
+Atlantic-N,1995,1.01857
+Atlantic-N,1996,1.03569
+Atlantic-N,1997,1.05287
+Atlantic-N,1998,1.02249
+Atlantic-N,1999,1.03360
+Atlantic-N,2000,1.02257
+Atlantic-N,2001,1.00904
+Atlantic-N,2002,1.00515
+Atlantic-N,2003,1.02655
+Atlantic-N,2004,1.02096
+Atlantic-N,2005,1.03464
+Atlantic-N,2006,1.02530
+Atlantic-N,2007,1.01389
+Atlantic-N,2008,0.97149
+Atlantic-N,2009,0.97957
+Atlantic-N,2010,1.01803
+Atlantic-N,2011,1.01336
+Atlantic-N,2012,1.00379
+Atlantic-N,2013,1.02226
+Atlantic-N,2014,1.01948
+Atlantic-N,2015,1.01724
+Atlantic-N,2016,1.01234
+Atlantic-N,2017,1.02142
+Atlantic-N,2018,1.02181
+Atlantic-N,2019,1.02138
+Atlantic-N,2020,1.01079
+Atlantic-N,2021,1.01054
+Atlantic-N,2022,1.01106
+Atlantic-N,2023,1.00849
+Atlantic-N,2024,1.01277
+Atlantic-N,2025,1.01308
+Atlantic-N,2026,1.01185
+Atlantic-N,2027,1.01414
+Atlantic-N,2028,1.01505
+Atlantic-N,2029,1.01397
+Atlantic-N,2030,1.01490
+Atlantic-N,2031,1.01657
+Atlantic-N,2032,1.01352
+Atlantic-N,2033,1.01486
+Atlantic-N,2034,1.01334
+Atlantic-N,2035,1.01596
+Atlantic-N,2036,1.01311
+Atlantic-N,2037,1.01592
+Atlantic-N,2038,1.01590
+Atlantic-N,2039,1.01343
+Atlantic-N,2040,1.01579
+Atlantic-N,2041,1.01570
+Atlantic-N,2042,1.01660
+Atlantic-N,2043,1.01542
+Atlantic-N,2044,1.01668
+Atlantic-N,2045,1.01561
+Atlantic-N,2046,1.01648
+Atlantic-N,2047,1.01626
+Atlantic-N,2048,1.01621
+Atlantic-N,2049,1.01309
+Atlantic-N,2050,1.01557
+Central-NE,1991,1.00124
+Central-NE,1992,1.05438
+Central-NE,1993,1.01564
+Central-NE,1994,1.05805
+Central-NE,1995,0.98936
+Central-NE,1996,1.02989
+Central-NE,1997,1.00400
+Central-NE,1998,1.04149
+Central-NE,1999,1.02265
+Central-NE,2000,1.01081
+Central-NE,2001,0.97201
+Central-NE,2002,1.02684
+Central-NE,2003,1.03511
+Central-NE,2004,1.00584
+Central-NE,2005,1.00655
+Central-NE,2006,0.99746
+Central-NE,2007,1.01575
+Central-NE,2008,0.96284
+Central-NE,2009,0.98058
+Central-NE,2010,1.02244
+Central-NE,2011,1.01172
+Central-NE,2012,1.00522
+Central-NE,2013,1.02598
+Central-NE,2014,1.02028
+Central-NE,2015,1.01621
+Central-NE,2016,1.01147
+Central-NE,2017,1.02146
+Central-NE,2018,1.02055
+Central-NE,2019,1.01808
+Central-NE,2020,1.01014
+Central-NE,2021,1.00764
+Central-NE,2022,1.00828
+Central-NE,2023,1.01035
+Central-NE,2024,1.01003
+Central-NE,2025,1.01036
+Central-NE,2026,1.01155
+Central-NE,2027,1.01148
+Central-NE,2028,1.01451
+Central-NE,2029,1.01130
+Central-NE,2030,1.01433
+Central-NE,2031,1.01140
+Central-NE,2032,1.01292
+Central-NE,2033,1.01418
+Central-NE,2034,1.01053
+Central-NE,2035,1.01276
+Central-NE,2036,1.01226
+Central-NE,2037,1.01268
+Central-NE,2038,1.01476
+Central-NE,2039,1.01259
+Central-NE,2040,1.01246
+Central-NE,2041,1.01449
+Central-NE,2042,1.01325
+Central-NE,2043,1.01412
+Central-NE,2044,1.01326
+Central-NE,2045,1.01428
+Central-NE,2046,1.01473
+Central-NE,2047,1.01186
+Central-NE,2048,1.01379
+Central-NE,2049,1.01318
+Central-NE,2050,1.01326
+Central-NW,1991,1.01546
+Central-NW,1992,1.04342
+Central-NW,1993,0.99234
+Central-NW,1994,1.06829
+Central-NW,1995,1.00381
+Central-NW,1996,1.04571
+Central-NW,1997,1.01836
+Central-NW,1998,1.02939
+Central-NW,1999,1.02329
+Central-NW,2000,1.03476
+Central-NW,2001,0.97840
+Central-NW,2002,1.02355
+Central-NW,2003,1.05062
+Central-NW,2004,1.01462
+Central-NW,2005,1.01185
+Central-NW,2006,0.99445
+Central-NW,2007,1.02659
+Central-NW,2008,0.98854
+Central-NW,2009,0.99846
+Central-NW,2010,1.02110
+Central-NW,2011,1.00843
+Central-NW,2012,1.00428
+Central-NW,2013,1.01579
+Central-NW,2014,1.02083
+Central-NW,2015,1.01335
+Central-NW,2016,1.01458
+Central-NW,2017,1.01214
+Central-NW,2018,1.02013
+Central-NW,2019,1.02112
+Central-NW,2020,1.01286
+Central-NW,2021,1.01008
+Central-NW,2022,1.01055
+Central-NW,2023,1.01034
+Central-NW,2024,1.01198
+Central-NW,2025,1.01228
+Central-NW,2026,1.01333
+Central-NW,2027,1.01326
+Central-NW,2028,1.01862
+Central-NW,2029,1.01295
+Central-NW,2030,1.01396
+Central-NW,2031,1.01323
+Central-NW,2032,1.01266
+Central-NW,2033,1.01841
+Central-NW,2034,1.01243
+Central-NW,2035,1.01263
+Central-NW,2036,1.01663
+Central-NW,2037,1.01266
+Central-NW,2038,1.01271
+Central-NW,2039,1.01705
+Central-NW,2040,1.01258
+Central-NW,2041,1.01684
+Central-NW,2042,1.01345
+Central-NW,2043,1.01656
+Central-NW,2044,1.01355
+Central-NW,2045,1.01673
+Central-NW,2046,1.01734
+Central-NW,2047,1.01246
+Central-NW,2048,1.01655
+Central-NW,2049,1.01576
+Central-NW,2050,1.01118
+Atlantic-S,1991,1.00054
+Atlantic-S,1992,1.03039
+Atlantic-S,1993,1.02076
+Atlantic-S,1994,1.02380
+Atlantic-S,1995,1.00769
+Atlantic-S,1996,1.02528
+Atlantic-S,1997,1.02876
+Atlantic-S,1998,1.03374
+Atlantic-S,1999,1.04149
+Atlantic-S,2000,1.00739
+Atlantic-S,2001,1.00686
+Atlantic-S,2002,1.00311
+Atlantic-S,2003,1.03806
+Atlantic-S,2004,1.01309
+Atlantic-S,2005,1.03524
+Atlantic-S,2006,1.00119
+Atlantic-S,2007,0.99940
+Atlantic-S,2008,0.94892
+Atlantic-S,2009,0.99319
+Atlantic-S,2010,1.01907
+Atlantic-S,2011,1.00663
+Atlantic-S,2012,1.00591
+Atlantic-S,2013,1.01954
+Atlantic-S,2014,1.02005
+Atlantic-S,2015,1.01112
+Atlantic-S,2016,1.01131
+Atlantic-S,2017,1.01819
+Atlantic-S,2018,1.02260
+Atlantic-S,2019,1.01733
+Atlantic-S,2020,1.00915
+Atlantic-S,2021,1.00806
+Atlantic-S,2022,1.00712
+Atlantic-S,2023,1.00701
+Atlantic-S,2024,1.00888
+Atlantic-S,2025,1.01064
+Atlantic-S,2026,1.01040
+Atlantic-S,2027,1.01173
+Atlantic-S,2028,1.01119
+Atlantic-S,2029,1.01154
+Atlantic-S,2030,1.01111
+Atlantic-S,2031,1.01174
+Atlantic-S,2032,1.01112
+Atlantic-S,2033,1.01244
+Atlantic-S,2034,1.00956
+Atlantic-S,2035,1.01104
+Atlantic-S,2036,1.01062
+Atlantic-S,2037,1.01232
+Atlantic-S,2038,1.01101
+Atlantic-S,2039,1.01098
+Atlantic-S,2040,1.01089
+Atlantic-S,2041,1.01209
+Atlantic-S,2042,1.01168
+Atlantic-S,2043,1.01052
+Atlantic-S,2044,1.01299
+Atlantic-S,2045,1.01062
+Atlantic-S,2046,1.01223
+Atlantic-S,2047,1.01131
+Atlantic-S,2048,1.01095
+Atlantic-S,2049,1.01020
+Atlantic-S,2050,1.01009
+Central-SE,1991,1.04173
+Central-SE,1992,1.05810
+Central-SE,1993,1.01653
+Central-SE,1994,1.02814
+Central-SE,1995,1.01179
+Central-SE,1996,1.01441
+Central-SE,1997,1.01440
+Central-SE,1998,1.03029
+Central-SE,1999,1.02600
+Central-SE,2000,0.97405
+Central-SE,2001,1.00303
+Central-SE,2002,1.02613
+Central-SE,2003,1.03430
+Central-SE,2004,1.01972
+Central-SE,2005,1.01252
+Central-SE,2006,1.00948
+Central-SE,2007,0.99256
+Central-SE,2008,0.98201
+Central-SE,2009,0.98837
+Central-SE,2010,1.01795
+Central-SE,2011,1.01008
+Central-SE,2012,1.00931
+Central-SE,2013,1.02137
+Central-SE,2014,1.02640
+Central-SE,2015,1.01298
+Central-SE,2016,1.01243
+Central-SE,2017,1.01958
+Central-SE,2018,1.02804
+Central-SE,2019,1.02025
+Central-SE,2020,1.01207
+Central-SE,2021,1.00951
+Central-SE,2022,1.01000
+Central-SE,2023,1.00980
+Central-SE,2024,1.01169
+Central-SE,2025,1.01209
+Central-SE,2026,1.01832
+Central-SE,2027,1.01308
+Central-SE,2028,1.01390
+Central-SE,2029,1.01298
+Central-SE,2030,1.01891
+Central-SE,2031,1.01313
+Central-SE,2032,1.01255
+Central-SE,2033,1.01885
+Central-SE,2034,1.01232
+Central-SE,2035,1.01259
+Central-SE,2036,1.01707
+Central-SE,2037,1.01263
+Central-SE,2038,1.01761
+Central-SE,2039,1.01765
+Central-SE,2040,1.01267
+Central-SE,2041,1.01745
+Central-SE,2042,1.01353
+Central-SE,2043,1.01731
+Central-SE,2044,1.01856
+Central-SE,2045,1.01267
+Central-SE,2046,1.01828
+Central-SE,2047,1.01788
+Central-SE,2048,1.01315
+Central-SE,2049,1.01740
+Central-SE,2050,1.01263
+Central-SW,1991,1.01613
+Central-SW,1992,1.00845
+Central-SW,1993,1.03027
+Central-SW,1994,1.03298
+Central-SW,1995,1.01518
+Central-SW,1996,1.03150
+Central-SW,1997,1.03050
+Central-SW,1998,1.04518
+Central-SW,1999,1.01487
+Central-SW,2000,1.00149
+Central-SW,2001,1.01297
+Central-SW,2002,1.00272
+Central-SW,2003,1.01525
+Central-SW,2004,1.04500
+Central-SW,2005,0.98026
+Central-SW,2006,1.03456
+Central-SW,2007,1.00788
+Central-SW,2008,0.95988
+Central-SW,2009,1.00442
+Central-SW,2010,1.02207
+Central-SW,2011,1.00799
+Central-SW,2012,1.00882
+Central-SW,2013,1.01597
+Central-SW,2014,1.01744
+Central-SW,2015,1.00831
+Central-SW,2016,1.00987
+Central-SW,2017,1.01657
+Central-SW,2018,1.02054
+Central-SW,2019,1.02144
+Central-SW,2020,1.01553
+Central-SW,2021,1.01033
+Central-SW,2022,1.01084
+Central-SW,2023,1.01060
+Central-SW,2024,1.01245
+Central-SW,2025,1.01270
+Central-SW,2026,1.01386
+Central-SW,2027,1.01603
+Central-SW,2028,1.01464
+Central-SW,2029,1.01354
+Central-SW,2030,1.01674
+Central-SW,2031,1.01381
+Central-SW,2032,1.01324
+Central-SW,2033,1.01675
+Central-SW,2034,1.01311
+Central-SW,2035,1.01544
+Central-SW,2036,1.01296
+Central-SW,2037,1.01550
+Central-SW,2038,1.01554
+Central-SW,2039,1.01555
+Central-SW,2040,1.01355
+Central-SW,2041,1.01552
+Central-SW,2042,1.01643
+Central-SW,2043,1.01534
+Central-SW,2044,1.01473
+Central-SW,2045,1.01563
+Central-SW,2046,1.01640
+Central-SW,2047,1.01606
+Central-SW,2048,1.01571
+Central-SW,2049,1.01459
+Central-SW,2050,1.01428
+Mountain,1991,1.01253
+Mountain,1992,1.05768
+Mountain,1993,1.04147
+Mountain,1994,1.03441
+Mountain,1995,1.01758
+Mountain,1996,1.04399
+Mountain,1997,1.04841
+Mountain,1998,1.04097
+Mountain,1999,1.04883
+Mountain,2000,1.02388
+Mountain,2001,1.00176
+Mountain,2002,0.99329
+Mountain,2003,1.03374
+Mountain,2004,1.02123
+Mountain,2005,1.03925
+Mountain,2006,1.01412
+Mountain,2007,1.00794
+Mountain,2008,0.95398
+Mountain,2009,0.98152
+Mountain,2010,1.01393
+Mountain,2011,1.00945
+Mountain,2012,1.00147
+Mountain,2013,1.01490
+Mountain,2014,1.01765
+Mountain,2015,1.00978
+Mountain,2016,1.00892
+Mountain,2017,1.01708
+Mountain,2018,1.01652
+Mountain,2019,1.02653
+Mountain,2020,1.01805
+Mountain,2021,1.01132
+Mountain,2022,1.01555
+Mountain,2023,1.01133
+Mountain,2024,1.01689
+Mountain,2025,1.01706
+Mountain,2026,1.01434
+Mountain,2027,1.01797
+Mountain,2028,1.01521
+Mountain,2029,1.01771
+Mountain,2030,1.01857
+Mountain,2031,1.01430
+Mountain,2032,1.01717
+Mountain,2033,1.01502
+Mountain,2034,1.01693
+Mountain,2035,1.01704
+Mountain,2036,1.01332
+Mountain,2037,1.01704
+Mountain,2038,1.01710
+Mountain,2039,1.01385
+Mountain,2040,1.01706
+Mountain,2041,1.01699
+Mountain,2042,1.01479
+Mountain,2043,1.01683
+Mountain,2044,1.01812
+Mountain,2045,1.01408
+Mountain,2046,1.01784
+Mountain,2047,1.01453
+Mountain,2048,1.01738
+Mountain,2049,1.01376
+Mountain,2050,1.01644
+Pacific,1991,0.97991
+Pacific,1992,1.00007
+Pacific,1993,1.00372
+Pacific,1994,1.00795
+Pacific,1995,1.02344
+Pacific,1996,1.03796
+Pacific,1997,1.04075
+Pacific,1998,1.05529
+Pacific,1999,1.06095
+Pacific,2000,1.03478
+Pacific,2001,0.96447
+Pacific,2002,1.01566
+Pacific,2003,1.04372
+Pacific,2004,1.03292
+Pacific,2005,1.04001
+Pacific,2006,1.02481
+Pacific,2007,1.00816
+Pacific,2008,0.96221
+Pacific,2009,0.98985
+Pacific,2010,1.01798
+Pacific,2011,1.00729
+Pacific,2012,1.00462
+Pacific,2013,1.01913
+Pacific,2014,1.01797
+Pacific,2015,1.01246
+Pacific,2016,1.01104
+Pacific,2017,1.01834
+Pacific,2018,1.02154
+Pacific,2019,1.02054
+Pacific,2020,1.01024
+Pacific,2021,1.00746
+Pacific,2022,1.00968
+Pacific,2023,1.00766
+Pacific,2024,1.01125
+Pacific,2025,1.00973
+Pacific,2026,1.01267
+Pacific,2027,1.01261
+Pacific,2028,1.01355
+Pacific,2029,1.01248
+Pacific,2030,1.01350
+Pacific,2031,1.01276
+Pacific,2032,1.01219
+Pacific,2033,1.01520
+Pacific,2034,1.01201
+Pacific,2035,1.01386
+Pacific,2036,1.01187
+Pacific,2037,1.01400
+Pacific,2038,1.01413
+Pacific,2039,1.01258
+Pacific,2040,1.01426
+Pacific,2041,1.01429
+Pacific,2042,1.01371
+Pacific,2043,1.01426
+Pacific,2044,1.01563
+Pacific,2045,1.01463
+Pacific,2046,1.01526
+Pacific,2047,1.01460
+Pacific,2048,1.01285
+Pacific,2049,1.01380
+Pacific,2050,1.01393

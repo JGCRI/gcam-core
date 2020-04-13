@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LA132.Industry
+#' module_gcamusa_LA132.Industry
 #'
 #' Provides industrial energy consumption and industrial feedstock consumption by region/fuel/historical year.
 #'

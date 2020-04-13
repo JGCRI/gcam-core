@@ -1,9 +1,10 @@
-# File: A23.subsector_interp_R.csv,
-# Title: Region-specific electric subsector shareweights interpolation rules by GCAM4 region,
-# WARNING: These are hard coding GCAM 4 region names (i.e. 32 regions).  If the region definitions change this file may not match.,
-# Units: Unitless share-weights,
-# Source: GCAM assumptions; documented in proposal 210_GCAM4p1_Electricity Generation Assumptions.pdf (page 23),
-# Column types: cccccinc 
+# File: A23.subsector_interp_R.csv
+# Title: Region-specific electric subsector shareweights interpolation rules by GCAM4 region
+# WARNING: These are hard coding GCAM 4 region names (i.e. 32 regions).  If the region definitions change this file may not match.
+# Units: Unitless share-weights
+# Source: GCAM assumptions; documented in proposal 210_GCAM4p1_Electricity Generation Assumptions.pdf (page 23)
+# Comment: Share-weight interpolation for USA to turn off coal in 2020 only
+# Column types: ccccccnc 
 # ----------
 region,supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 USA,electricity,refined liquids,share-weight,final-calibration-year,2100,,fixed
@@ -38,3 +39,10 @@ Southeast Asia,electricity,refined liquids,share-weight,final-calibration-year,2
 Taiwan,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
 Argentina,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
 Colombia,electricity,refined liquids,share-weight,final-calibration-year,2100,1,linear
+USA,electricity,coal,share-weight,final-calibration-year,initial-future-year,,linear
+USA,electricity,coal,share-weight,initial-future-year,2035,,linear
+USA,electricity,coal,share-weight,2035,2300,1,s-curve
+European Free Trade Association,electricity,gas,share-weight,final-calibration-year,2200,1,s-curve
+European Free Trade Association,electricity,nuclear,share-weight,final-calibration-year,initial-future-year,,linear
+European Free Trade Association,electricity,nuclear,share-weight,initial-future-year,2050,,linear
+European Free Trade Association,electricity,nuclear,share-weight,2050,2200,1,s-curve

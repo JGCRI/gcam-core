@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_L232.industry_USA
+#' module_gcamusa_L232.industry_USA
 #'
 #' Prepare level 2 industry sector files for USA.
 #'

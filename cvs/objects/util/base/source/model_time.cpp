@@ -64,7 +64,7 @@ const Modeltime* Modeltime::getInstance() {
 Modeltime::Modeltime() :
 mStartYear( -1 ),
 mEndYear( -1 ),
-mFinalCalibrationYear( 2010 ),
+mFinalCalibrationYear( 2015 ),
 mIsInitialized( false )
 {
 }
@@ -118,13 +118,22 @@ bool Modeltime::XMLParse( const DOMNode* aNode ) {
         }
         else if ( nodeName == "final-calibration-year" ){
             int tempCalibrationYear = XMLHelper<int>::getValue( curr ); 
-            // mFinalCalibrationYear is initialized to 2010
-            if ( tempCalibrationYear != mFinalCalibrationYear ){
+            // mFinalCalibrationYear is initialized to 2015
+            if ( tempCalibrationYear < mFinalCalibrationYear ){
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Using read in final-calibration-year (" << tempCalibrationYear
-                    << ") and not the last historical year (" << mFinalCalibrationYear << ")." << endl;
+                mainLog << "\nRead in final-calibration-year (" << tempCalibrationYear << ") "
+                        << "earlier than last historical year (" << mFinalCalibrationYear << ").\n"
+                        << "Running in HINDCASTING MODE with (" << tempCalibrationYear
+                        << ") as the final calibration year.\n" << endl;
                 mFinalCalibrationYear = tempCalibrationYear;
+            }
+            else if (tempCalibrationYear > mFinalCalibrationYear ){
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "\nHistorical calibration to (" << tempCalibrationYear << ") is not possible! "
+                        << "Setting final calibration year to default year (" << mFinalCalibrationYear
+                        << ").\n" << endl;
             }
         } 
         else {

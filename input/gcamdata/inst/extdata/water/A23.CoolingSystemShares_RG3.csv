@@ -2,384 +2,384 @@
 # Title: Cooling system shares for GCAM3 regions
 # Units: Unitless
 # Source: Various sources. USA values are from UCS data. WEUR future are from Schakel inventory.
-# Column types: ccccnnnnn 
+# Column types: ccccnnnnnn 
 # ----------
-region_GCAM3,plant_type,cooling_system,water_type,1971,2005,2010,2015,2100
-USA,coal,once through,fresh,0.3592,0.3592,0.3592,0,0
-USA,coal,once through,seawater,0.02,0.02,0.02,0.05,0.05
-USA,coal,recirculating,fresh,0.4833,0.4833,0.4833,0.75,0.75
-USA,coal,cooling pond,fresh,0.1347,0.1347,0.1347,0.1,0.1
-USA,coal,dry cooling,fresh,0.0028,0.0028,0.0028,0.1,0.1
-USA,fossil non-coal,once through,fresh,0.2014,0.2014,0.2014,0,0
-USA,fossil non-coal,once through,seawater,0.1175,0.1175,0.1175,0.05,0.05
-USA,fossil non-coal,recirculating,fresh,0.1392,0.1392,0.1392,0.25,0.25
-USA,fossil non-coal,cooling pond,fresh,0.0806,0.0806,0.0806,0.1,0.1
-USA,fossil non-coal,dry cooling,fresh,0.4613,0.4613,0.4613,0.5,0.5
-USA,combined cycle,once through,fresh,0.0343,0.0343,0.0343,0,0
-USA,combined cycle,once through,seawater,0.0765,0.0765,0.0765,0.05,0.05
-USA,combined cycle,recirculating,fresh,0.7121,0.7121,0.7121,0.3,0.3
-USA,combined cycle,cooling pond,fresh,0.0672,0.0672,0.0672,0,0
-USA,combined cycle,dry cooling,fresh,0.1099,0.1099,0.1099,0.65,0.65
-USA,nuclear,once through,fresh,0.2944,0.2944,0.2944,0,0
-USA,nuclear,once through,seawater,0.1466,0.1466,0.1466,0.1,0.1
-USA,nuclear,recirculating,fresh,0.4052,0.4052,0.4052,0.8,0.8
-USA,nuclear,cooling pond,fresh,0.1538,0.1538,0.1538,0.1,0.1
-USA,IGCC,once through,fresh,0.2737,0.2737,0.2737,0,0
-USA,IGCC,once through,seawater,0.1173,0.1173,0.1173,0.05,0.05
-USA,IGCC,recirculating,fresh,0.607,0.607,0.607,0.75,0.75
-USA,IGCC,dry cooling,fresh,0.002,0.002,0.002,0.1,0.1
-USA,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-USA,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-USA,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-USA,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
-Canada,coal,once through,fresh,0.639,0.639,0.639,0.09,0.09
-Canada,coal,once through,seawater,0.071,0.071,0.071,0.01,0.01
-Canada,coal,recirculating,fresh,0.29,0.29,0.29,0.9,0.9
-Canada,coal,cooling pond,fresh,0,0,0,0,0
-Canada,coal,dry cooling,fresh,0,0,0,0,0
-Canada,fossil non-coal,once through,fresh,0.639,0.639,0.639,0.09,0.09
-Canada,fossil non-coal,once through,seawater,0.071,0.071,0.071,0.01,0.01
-Canada,fossil non-coal,recirculating,fresh,0.29,0.29,0.29,0.9,0.9
-Canada,fossil non-coal,cooling pond,fresh,0,0,0,0,0
-Canada,fossil non-coal,dry cooling,fresh,0,0,0,0,0
-Canada,combined cycle,once through,fresh,0.639,0.639,0.639,0.09,0.09
-Canada,combined cycle,once through,seawater,0.071,0.071,0.071,0.01,0.01
-Canada,combined cycle,recirculating,fresh,0.29,0.29,0.29,0.9,0.9
-Canada,combined cycle,cooling pond,fresh,0,0,0,0,0
-Canada,combined cycle,dry cooling,fresh,0,0,0,0,0
-Canada,nuclear,once through,fresh,0.639,0.639,0.639,0.09,0.09
-Canada,nuclear,once through,seawater,0.071,0.071,0.071,0.01,0.01
-Canada,nuclear,recirculating,fresh,0.29,0.29,0.29,0.9,0.9
-Canada,nuclear,cooling pond,fresh,0,0,0,0,0
-Canada,IGCC,once through,fresh,0.639,0.639,0.639,0.09,0.09
-Canada,IGCC,once through,seawater,0.071,0.071,0.071,0.01,0.01
-Canada,IGCC,recirculating,fresh,0.29,0.29,0.29,0.9,0.9
-Canada,IGCC,dry cooling,fresh,0,0,0,0,0
-Canada,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-Canada,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-Canada,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-Canada,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
-Western Europe,coal,once through,fresh,0.2216,0.2216,0.2216,0.1,0.1
-Western Europe,coal,once through,seawater,0.0554,0.0554,0.0554,0.23,0.23
-Western Europe,coal,recirculating,fresh,0.695636538,0.695636538,0.695636538,0.64,0.64
-Western Europe,coal,cooling pond,fresh,0,0,0,0,0
-Western Europe,coal,dry cooling,fresh,0.027363462,0.027363462,0.027363462,0.03,0.03
-Western Europe,fossil non-coal,once through,fresh,0.2216,0.2216,0.2216,0.2216,0.2216
-Western Europe,fossil non-coal,once through,seawater,0.0554,0.0554,0.0554,0.0554,0.0554
-Western Europe,fossil non-coal,recirculating,fresh,0.695636538,0.695636538,0.695636538,0.695636538,0.695636538
-Western Europe,fossil non-coal,cooling pond,fresh,0,0,0,0,0
-Western Europe,fossil non-coal,dry cooling,fresh,0.027363462,0.027363462,0.027363462,0.027363462,0.027363462
-Western Europe,combined cycle,once through,fresh,0.2216,0.2216,0.2216,0.2216,0.2216
-Western Europe,combined cycle,once through,seawater,0.0554,0.0554,0.0554,0.41,0.41
-Western Europe,combined cycle,recirculating,fresh,0.695636538,0.695636538,0.695636538,0.341036538,0.341036538
-Western Europe,combined cycle,cooling pond,fresh,0,0,0,0,0
-Western Europe,combined cycle,dry cooling,fresh,0.027363462,0.027363462,0.027363462,0.027363462,0.027363462
-Western Europe,nuclear,once through,fresh,0.2216,0.2216,0.2216,0.2,0.2
-Western Europe,nuclear,once through,seawater,0.0554,0.0554,0.0554,0.2,0.2
-Western Europe,nuclear,recirculating,fresh,0.723,0.723,0.723,0.6,0.6
-Western Europe,nuclear,cooling pond,fresh,0,0,0,0,0
-Western Europe,IGCC,once through,fresh,0.2216,0.2216,0.2216,0.1,0.1
-Western Europe,IGCC,once through,seawater,0.0554,0.0554,0.0554,0.23,0.23
-Western Europe,IGCC,recirculating,fresh,0.695636538,0.695636538,0.695636538,0.64,0.64
-Western Europe,IGCC,dry cooling,fresh,0.027363462,0.027363462,0.027363462,0.03,0.03
-Western Europe,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-Western Europe,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-Western Europe,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-Western Europe,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
-Japan,coal,once through,fresh,0.027,0.027,0.027,0.027,0.027
-Japan,coal,once through,seawater,0.873,0.873,0.873,0.873,0.873
-Japan,coal,recirculating,fresh,0.064587507,0.064587507,0.064587507,0.064587507,0.064587507
-Japan,coal,cooling pond,fresh,0,0,0,0,0
-Japan,coal,dry cooling,fresh,0.035412493,0.035412493,0.035412493,0.035412493,0.035412493
-Japan,fossil non-coal,once through,fresh,0.027,0.027,0.027,0.027,0.027
-Japan,fossil non-coal,once through,seawater,0.873,0.873,0.873,0.873,0.873
-Japan,fossil non-coal,recirculating,fresh,0.064587507,0.064587507,0.064587507,0.064587507,0.064587507
-Japan,fossil non-coal,cooling pond,fresh,0,0,0,0,0
-Japan,fossil non-coal,dry cooling,fresh,0.035412493,0.035412493,0.035412493,0.035412493,0.035412493
-Japan,combined cycle,once through,fresh,0.027,0.027,0.027,0.027,0.027
-Japan,combined cycle,once through,seawater,0.873,0.873,0.873,0.873,0.873
-Japan,combined cycle,recirculating,fresh,0.064587507,0.064587507,0.064587507,0.064587507,0.064587507
-Japan,combined cycle,cooling pond,fresh,0,0,0,0,0
-Japan,combined cycle,dry cooling,fresh,0.035412493,0.035412493,0.035412493,0.035412493,0.035412493
-Japan,nuclear,once through,fresh,0,0,0,0,0
-Japan,nuclear,once through,seawater,1,1,1,1,1
-Japan,nuclear,recirculating,fresh,0,0,0,0,0
-Japan,nuclear,cooling pond,fresh,0,0,0,0,0
-Japan,IGCC,once through,fresh,0.027,0.027,0.027,0.027,0.027
-Japan,IGCC,once through,seawater,0.873,0.873,0.873,0.873,0.873
-Japan,IGCC,recirculating,fresh,0.064587507,0.064587507,0.064587507,0.064587507,0.064587507
-Japan,IGCC,dry cooling,fresh,0.035412493,0.035412493,0.035412493,0.035412493,0.035412493
-Japan,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-Japan,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-Japan,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-Japan,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
-Australia_NZ,coal,once through,fresh,0.12512,0.12512,0.12512,0.17,0.17
-Australia_NZ,coal,once through,seawater,0.24288,0.24288,0.24288,0.33,0.33
-Australia_NZ,coal,recirculating,fresh,0.563240299,0.563240299,0.563240299,0.2,0.2
-Australia_NZ,coal,cooling pond,fresh,0,0,0,0,0
-Australia_NZ,coal,dry cooling,fresh,0.068753867,0.068753867,0.068753867,0.3,0.3
-Australia_NZ,fossil non-coal,once through,fresh,0.34,0.34,0.34,0.17,0.17
-Australia_NZ,fossil non-coal,once through,seawater,0.66,0.66,0.66,0.33,0.33
-Australia_NZ,fossil non-coal,recirculating,fresh,0,0,0,0.2,0.2
-Australia_NZ,fossil non-coal,cooling pond,fresh,0,0,0,0,0
-Australia_NZ,fossil non-coal,dry cooling,fresh,0,0,0,0.3,0.3
-Australia_NZ,combined cycle,once through,fresh,0.169694,0.169694,0.169694,0.17,0.17
-Australia_NZ,combined cycle,once through,seawater,0.329406,0.329406,0.329406,0.33,0.33
-Australia_NZ,combined cycle,recirculating,fresh,0.500924947,0.500924947,0.500924947,0.2,0.2
-Australia_NZ,combined cycle,cooling pond,fresh,0,0,0,0,0
-Australia_NZ,combined cycle,dry cooling,fresh,0,0,0,0.3,0.3
-Australia_NZ,nuclear,once through,fresh,0,0,0,0,0
-Australia_NZ,nuclear,once through,seawater,1,1,1,1,1
-Australia_NZ,nuclear,recirculating,fresh,0,0,0,0,0
-Australia_NZ,nuclear,cooling pond,fresh,0,0,0,0,0
-Australia_NZ,IGCC,once through,fresh,0.12512,0.12512,0.12512,0.17,0.17
-Australia_NZ,IGCC,once through,seawater,0.24288,0.24288,0.24288,0.33,0.33
-Australia_NZ,IGCC,recirculating,fresh,0.563240299,0.563240299,0.563240299,0.2,0.2
-Australia_NZ,IGCC,dry cooling,fresh,0.068753867,0.068753867,0.068753867,0.3,0.3
-Australia_NZ,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-Australia_NZ,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-Australia_NZ,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-Australia_NZ,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
-Former Soviet Union,coal,once through,fresh,0.3366,0.3366,0.3366,0.09,0.09
-Former Soviet Union,coal,once through,seawater,0.0374,0.0374,0.0374,0.01,0.01
-Former Soviet Union,coal,recirculating,fresh,0.626,0.626,0.626,0.9,0.9
-Former Soviet Union,coal,cooling pond,fresh,0,0,0,0,0
-Former Soviet Union,coal,dry cooling,fresh,0,0,0,0,0
-Former Soviet Union,fossil non-coal,once through,fresh,0.3366,0.3366,0.3366,0.09,0.09
-Former Soviet Union,fossil non-coal,once through,seawater,0.0374,0.0374,0.0374,0.01,0.01
-Former Soviet Union,fossil non-coal,recirculating,fresh,0.626,0.626,0.626,0.9,0.9
-Former Soviet Union,fossil non-coal,cooling pond,fresh,0,0,0,0,0
-Former Soviet Union,fossil non-coal,dry cooling,fresh,0,0,0,0,0
-Former Soviet Union,combined cycle,once through,fresh,0.3366,0.3366,0.3366,0.09,0.09
-Former Soviet Union,combined cycle,once through,seawater,0.0374,0.0374,0.0374,0.01,0.01
-Former Soviet Union,combined cycle,recirculating,fresh,0.626,0.626,0.626,0.9,0.9
-Former Soviet Union,combined cycle,cooling pond,fresh,0,0,0,0,0
-Former Soviet Union,combined cycle,dry cooling,fresh,0,0,0,0,0
-Former Soviet Union,nuclear,once through,fresh,0.3366,0.3366,0.3366,0.09,0.09
-Former Soviet Union,nuclear,once through,seawater,0.0374,0.0374,0.0374,0.01,0.01
-Former Soviet Union,nuclear,recirculating,fresh,0.626,0.626,0.626,0.9,0.9
-Former Soviet Union,nuclear,cooling pond,fresh,0,0,0,0,0
-Former Soviet Union,IGCC,once through,fresh,0.3366,0.3366,0.3366,0.09,0.09
-Former Soviet Union,IGCC,once through,seawater,0.0374,0.0374,0.0374,0.01,0.01
-Former Soviet Union,IGCC,recirculating,fresh,0.626,0.626,0.626,0.9,0.9
-Former Soviet Union,IGCC,dry cooling,fresh,0,0,0,0,0
-Former Soviet Union,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-Former Soviet Union,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-Former Soviet Union,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-Former Soviet Union,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
-China,coal,once through,fresh,0.174,0.174,0.1,0.05,0.05
-China,coal,once through,seawater,0.026,0.026,0.026,0.075,0.075
-China,coal,recirculating,fresh,0.73,0.65,0.604,0.375,0.375
-China,coal,cooling pond,fresh,0.07,0.07,0.07,0.07,0.07
-China,coal,dry cooling,fresh,0,0.08,0.2,0.43,0.43
-China,fossil non-coal,once through,fresh,0.174,0.174,0.174,0.174,0.174
-China,fossil non-coal,once through,seawater,0.026,0.026,0.026,0.026,0.026
-China,fossil non-coal,recirculating,fresh,0.6489,0.6489,0.6489,0.6489,0.6489
-China,fossil non-coal,cooling pond,fresh,0.07,0.07,0.07,0.07,0.07
-China,fossil non-coal,dry cooling,fresh,0.0811,0.0811,0.0811,0.0811,0.0811
-China,combined cycle,once through,fresh,0.174,0.174,0.174,0.174,0.174
-China,combined cycle,once through,seawater,0.026,0.026,0.026,0.026,0.026
-China,combined cycle,recirculating,fresh,0.6489,0.6489,0.6489,0.6489,0.6489
-China,combined cycle,cooling pond,fresh,0.07,0.07,0.07,0.07,0.07
-China,combined cycle,dry cooling,fresh,0.0811,0.0811,0.0811,0.0811,0.0811
-China,nuclear,once through,fresh,0.174,0.174,0.174,0.1,0.1
-China,nuclear,once through,seawater,0.026,0.026,0.026,0.026,0.026
-China,nuclear,recirculating,fresh,0.73,0.73,0.73,0.804,0.804
-China,nuclear,cooling pond,fresh,0.07,0.07,0.07,0.07,0.07
-China,IGCC,once through,fresh,0.1,0.1,0.1,0.05,0.05
-China,IGCC,once through,seawater,0.026,0.026,0.026,0.075,0.075
-China,IGCC,recirculating,fresh,0.444,0.444,0.444,0.445,0.445
-China,IGCC,dry cooling,fresh,0.43,0.43,0.43,0.43,0.43
-China,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-China,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-China,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-China,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
-Middle East,coal,once through,fresh,0.024,0.024,0.024,0,0
-Middle East,coal,once through,seawater,0.576,0.576,0.576,0.5,0.5
-Middle East,coal,recirculating,fresh,0.382340476,0.382340476,0.382340476,0.2,0.2
-Middle East,coal,cooling pond,fresh,0,0,0,0,0
-Middle East,coal,dry cooling,fresh,0.017659524,0.017659524,0.017659524,0.3,0.3
-Middle East,fossil non-coal,once through,fresh,0.024,0.024,0.024,0,0
-Middle East,fossil non-coal,once through,seawater,0.576,0.576,0.576,0.5,0.5
-Middle East,fossil non-coal,recirculating,fresh,0.382340476,0.382340476,0.382340476,0.2,0.2
-Middle East,fossil non-coal,cooling pond,fresh,0,0,0,0,0
-Middle East,fossil non-coal,dry cooling,fresh,0.017659524,0.017659524,0.017659524,0.3,0.3
-Middle East,combined cycle,once through,fresh,0.024,0.024,0.024,0,0
-Middle East,combined cycle,once through,seawater,0.576,0.576,0.576,0.5,0.5
-Middle East,combined cycle,recirculating,fresh,0.382340476,0.382340476,0.382340476,0.2,0.2
-Middle East,combined cycle,cooling pond,fresh,0,0,0,0,0
-Middle East,combined cycle,dry cooling,fresh,0.017659524,0.017659524,0.017659524,0.3,0.3
-Middle East,nuclear,once through,fresh,0.024,0.024,0.024,0,0
-Middle East,nuclear,once through,seawater,0.576,0.576,0.576,1,1
-Middle East,nuclear,recirculating,fresh,0.4,0.4,0.4,0,0
-Middle East,nuclear,cooling pond,fresh,0,0,0,0,0
-Middle East,IGCC,once through,fresh,0.024,0.024,0.024,0,0
-Middle East,IGCC,once through,seawater,0.576,0.576,0.576,0.5,0.5
-Middle East,IGCC,recirculating,fresh,0.382340476,0.382340476,0.382340476,0.2,0.2
-Middle East,IGCC,dry cooling,fresh,0.017659524,0.017659524,0.017659524,0.3,0.3
-Middle East,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-Middle East,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-Middle East,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-Middle East,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
-Africa,coal,once through,fresh,0.084,0.084,0.084,0.07,0.07
-Africa,coal,once through,seawater,0.036,0.036,0.036,0.03,0.03
-Africa,coal,recirculating,fresh,0.76,0.76,0.76,0.78,0.78
-Africa,coal,cooling pond,fresh,0,0,0,0,0
-Africa,coal,dry cooling,fresh,0.12,0.12,0.12,0.12,0.12
-Africa,fossil non-coal,once through,fresh,0.084,0.084,0.084,0.07,0.07
-Africa,fossil non-coal,once through,seawater,0.036,0.036,0.036,0.03,0.03
-Africa,fossil non-coal,recirculating,fresh,0.76,0.76,0.76,0.78,0.78
-Africa,fossil non-coal,cooling pond,fresh,0,0,0,0,0
-Africa,fossil non-coal,dry cooling,fresh,0.12,0.12,0.12,0.12,0.12
-Africa,combined cycle,once through,fresh,0.084,0.084,0.084,0.07,0.07
-Africa,combined cycle,once through,seawater,0.036,0.036,0.036,0.03,0.03
-Africa,combined cycle,recirculating,fresh,0.76,0.76,0.76,0.78,0.78
-Africa,combined cycle,cooling pond,fresh,0,0,0,0,0
-Africa,combined cycle,dry cooling,fresh,0.12,0.12,0.12,0.12,0.12
-Africa,nuclear,once through,fresh,0.168,0.168,0.168,0.07,0.07
-Africa,nuclear,once through,seawater,0.072,0.072,0.072,0.03,0.03
-Africa,nuclear,recirculating,fresh,0.76,0.76,0.76,0.9,0.9
-Africa,nuclear,cooling pond,fresh,0,0,0,0,0
-Africa,IGCC,once through,fresh,0.024,0.024,0.024,0.07,0.07
-Africa,IGCC,once through,seawater,0.576,0.576,0.576,0.03,0.03
-Africa,IGCC,recirculating,fresh,0.382340476,0.382340476,0.382340476,0.78,0.78
-Africa,IGCC,dry cooling,fresh,0.017659524,0.017659524,0.017659524,0.12,0.12
-Africa,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-Africa,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-Africa,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-Africa,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
-Latin America,coal,once through,fresh,0.126,0.126,0.126,0.07,0.07
-Latin America,coal,once through,seawater,0.054,0.054,0.054,0.03,0.03
-Latin America,coal,recirculating,fresh,0.7791,0.7791,0.7791,0.859,0.859
-Latin America,coal,cooling pond,fresh,0,0,0,0,0
-Latin America,coal,dry cooling,fresh,0.0409,0.0409,0.0409,0.041,0.041
-Latin America,fossil non-coal,once through,fresh,0.126,0.126,0.126,0.07,0.07
-Latin America,fossil non-coal,once through,seawater,0.054,0.054,0.054,0.03,0.03
-Latin America,fossil non-coal,recirculating,fresh,0.7791,0.7791,0.7791,0.859,0.859
-Latin America,fossil non-coal,cooling pond,fresh,0,0,0,0,0
-Latin America,fossil non-coal,dry cooling,fresh,0.0409,0.0409,0.0409,0.041,0.041
-Latin America,combined cycle,once through,fresh,0.126,0.126,0.126,0.07,0.07
-Latin America,combined cycle,once through,seawater,0.054,0.054,0.054,0.03,0.03
-Latin America,combined cycle,recirculating,fresh,0.7791,0.7791,0.7791,0.859,0.859
-Latin America,combined cycle,cooling pond,fresh,0,0,0,0,0
-Latin America,combined cycle,dry cooling,fresh,0.0409,0.0409,0.0409,0.041,0.041
-Latin America,nuclear,once through,fresh,0.126,0.126,0.126,0.07,0.07
-Latin America,nuclear,once through,seawater,0.054,0.054,0.054,0.03,0.03
-Latin America,nuclear,recirculating,fresh,0.82,0.82,0.82,0.9,0.9
-Latin America,nuclear,cooling pond,fresh,0,0,0,0,0
-Latin America,IGCC,once through,fresh,0.126,0.126,0.126,0.07,0.07
-Latin America,IGCC,once through,seawater,0.054,0.054,0.054,0.03,0.03
-Latin America,IGCC,recirculating,fresh,0.7791,0.7791,0.7791,0.859,0.859
-Latin America,IGCC,dry cooling,fresh,0.0409,0.0409,0.0409,0.041,0.041
-Latin America,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-Latin America,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-Latin America,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-Latin America,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
-Southeast Asia,coal,once through,fresh,0.0975,0.0975,0.0975,0.1,0.1
-Southeast Asia,coal,once through,seawater,0.6525,0.6525,0.6525,0.65,0.65
-Southeast Asia,coal,recirculating,fresh,0.2146,0.2146,0.2146,0.215,0.215
-Southeast Asia,coal,cooling pond,fresh,0,0,0,0,0
-Southeast Asia,coal,dry cooling,fresh,0.0354,0.0354,0.0354,0.035,0.035
-Southeast Asia,fossil non-coal,once through,fresh,0.065,0.065,0.065,0.06,0.06
-Southeast Asia,fossil non-coal,once through,seawater,0.435,0.435,0.435,0.44,0.44
-Southeast Asia,fossil non-coal,recirculating,fresh,0.4646,0.4646,0.4646,0.465,0.465
-Southeast Asia,fossil non-coal,cooling pond,fresh,0,0,0,0,0
-Southeast Asia,fossil non-coal,dry cooling,fresh,0.0354,0.0354,0.0354,0.035,0.035
-Southeast Asia,combined cycle,once through,fresh,0.065,0.065,0.065,0.06,0.06
-Southeast Asia,combined cycle,once through,seawater,0.435,0.435,0.435,0.44,0.44
-Southeast Asia,combined cycle,recirculating,fresh,0.4646,0.4646,0.4646,0.465,0.465
-Southeast Asia,combined cycle,cooling pond,fresh,0,0,0,0,0
-Southeast Asia,combined cycle,dry cooling,fresh,0.0354,0.0354,0.0354,0.035,0.035
-Southeast Asia,nuclear,once through,fresh,0,0,0,0,0
-Southeast Asia,nuclear,once through,seawater,0.95,0.95,0.95,0.95,0.95
-Southeast Asia,nuclear,recirculating,fresh,0.05,0.05,0.05,0.05,0.05
-Southeast Asia,nuclear,cooling pond,fresh,0,0,0,0,0
-Southeast Asia,IGCC,once through,fresh,0.0975,0.0975,0.0975,0.1,0.1
-Southeast Asia,IGCC,once through,seawater,0.6525,0.6525,0.6525,0.65,0.65
-Southeast Asia,IGCC,recirculating,fresh,0.2146,0.2146,0.2146,0.215,0.215
-Southeast Asia,IGCC,dry cooling,fresh,0.0354,0.0354,0.0354,0.035,0.035
-Southeast Asia,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-Southeast Asia,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-Southeast Asia,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-Southeast Asia,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
-Eastern Europe,coal,once through,fresh,0.3105,0.3105,0.3105,0.09,0.09
-Eastern Europe,coal,once through,seawater,0.0345,0.0345,0.0345,0.01,0.01
-Eastern Europe,coal,recirculating,fresh,0.655,0.655,0.655,0.9,0.9
-Eastern Europe,coal,cooling pond,fresh,0,0,0,0,0
-Eastern Europe,coal,dry cooling,fresh,0,0,0,0,0
-Eastern Europe,fossil non-coal,once through,fresh,0.3105,0.3105,0.3105,0.09,0.09
-Eastern Europe,fossil non-coal,once through,seawater,0.0345,0.0345,0.0345,0.01,0.01
-Eastern Europe,fossil non-coal,recirculating,fresh,0.655,0.655,0.655,0.9,0.9
-Eastern Europe,fossil non-coal,cooling pond,fresh,0,0,0,0,0
-Eastern Europe,fossil non-coal,dry cooling,fresh,0,0,0,0,0
-Eastern Europe,combined cycle,once through,fresh,0.3105,0.3105,0.3105,0.09,0.09
-Eastern Europe,combined cycle,once through,seawater,0.0345,0.0345,0.0345,0.01,0.01
-Eastern Europe,combined cycle,recirculating,fresh,0.655,0.655,0.655,0.9,0.9
-Eastern Europe,combined cycle,cooling pond,fresh,0,0,0,0,0
-Eastern Europe,combined cycle,dry cooling,fresh,0,0,0,0,0
-Eastern Europe,nuclear,once through,fresh,0.3105,0.3105,0.3105,0.09,0.09
-Eastern Europe,nuclear,once through,seawater,0.0345,0.0345,0.0345,0.01,0.01
-Eastern Europe,nuclear,recirculating,fresh,0.655,0.655,0.655,0.9,0.9
-Eastern Europe,nuclear,cooling pond,fresh,0,0,0,0,0
-Eastern Europe,IGCC,once through,fresh,0.3105,0.3105,0.3105,0.09,0.09
-Eastern Europe,IGCC,once through,seawater,0.0345,0.0345,0.0345,0.01,0.01
-Eastern Europe,IGCC,recirculating,fresh,0.655,0.655,0.655,0.9,0.9
-Eastern Europe,IGCC,dry cooling,fresh,0,0,0,0,0
-Eastern Europe,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-Eastern Europe,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-Eastern Europe,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-Eastern Europe,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
-Korea,coal,once through,fresh,0.006,0.006,0.006,0,0
-Korea,coal,once through,seawater,0.194,0.194,0.194,0.2,0.2
-Korea,coal,recirculating,fresh,0.7646,0.7646,0.7646,0.765,0.765
-Korea,coal,cooling pond,fresh,0,0,0,0,0
-Korea,coal,dry cooling,fresh,0.0354,0.0354,0.0354,0.035,0.035
-Korea,fossil non-coal,once through,fresh,0.006,0.006,0.006,0,0
-Korea,fossil non-coal,once through,seawater,0.194,0.194,0.194,0.2,0.2
-Korea,fossil non-coal,recirculating,fresh,0.7646,0.7646,0.7646,0.765,0.765
-Korea,fossil non-coal,cooling pond,fresh,0,0,0,0,0
-Korea,fossil non-coal,dry cooling,fresh,0.0354,0.0354,0.0354,0.035,0.035
-Korea,combined cycle,once through,fresh,0.006,0.006,0.006,0,0
-Korea,combined cycle,once through,seawater,0.194,0.194,0.194,0.2,0.2
-Korea,combined cycle,recirculating,fresh,0.7646,0.7646,0.7646,0.765,0.765
-Korea,combined cycle,cooling pond,fresh,0,0,0,0,0
-Korea,combined cycle,dry cooling,fresh,0.0354,0.0354,0.0354,0.035,0.035
-Korea,nuclear,once through,fresh,0,0,0,0,0
-Korea,nuclear,once through,seawater,1,1,1,1,1
-Korea,nuclear,recirculating,fresh,0,0,0,0,0
-Korea,nuclear,cooling pond,fresh,0,0,0,0,0
-Korea,IGCC,once through,fresh,0.006,0.006,0.006,0,0
-Korea,IGCC,once through,seawater,0.194,0.194,0.194,0.2,0.2
-Korea,IGCC,recirculating,fresh,0.7646,0.7646,0.7646,0.765,0.765
-Korea,IGCC,dry cooling,fresh,0.0354,0.0354,0.0354,0.035,0.035
-Korea,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-Korea,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-Korea,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-Korea,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
-India,coal,once through,fresh,0.329,0.329,0.229,0.07,0.07
-India,coal,once through,seawater,0.141,0.141,0.241,0.25,0.25
-India,coal,recirculating,fresh,0.4946,0.4946,0.4946,0.645,0.645
-India,coal,cooling pond,fresh,0,0,0,0,0
-India,coal,dry cooling,fresh,0.0354,0.0354,0.0354,0.035,0.035
-India,fossil non-coal,once through,fresh,0.329,0.329,0.329,0.07,0.07
-India,fossil non-coal,once through,seawater,0.141,0.141,0.141,0.03,0.03
-India,fossil non-coal,recirculating,fresh,0.4946,0.4946,0.4946,0.865,0.865
-India,fossil non-coal,cooling pond,fresh,0,0,0,0,0
-India,fossil non-coal,dry cooling,fresh,0.0354,0.0354,0.0354,0.035,0.035
-India,combined cycle,once through,fresh,0.329,0.329,0.329,0.07,0.07
-India,combined cycle,once through,seawater,0.141,0.141,0.141,0.03,0.03
-India,combined cycle,recirculating,fresh,0.4946,0.4946,0.4946,0.865,0.865
-India,combined cycle,cooling pond,fresh,0,0,0,0,0
-India,combined cycle,dry cooling,fresh,0.0354,0.0354,0.0354,0.035,0.035
-India,nuclear,once through,fresh,0.329,0.329,0.329,0.07,0.07
-India,nuclear,once through,seawater,0.141,0.141,0.141,0.03,0.03
-India,nuclear,recirculating,fresh,0.53,0.53,0.53,0.9,0.9
-India,nuclear,cooling pond,fresh,0,0,0,0,0
-India,IGCC,once through,fresh,0.329,0.329,0.329,0.07,0.07
-India,IGCC,once through,seawater,0.141,0.141,0.141,0.03,0.03
-India,IGCC,recirculating,fresh,0.4946,0.4946,0.4946,0.865,0.865
-India,IGCC,dry cooling,fresh,0.0354,0.0354,0.0354,0.035,0.035
-India,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6
-India,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4
-India,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5
-India,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5
+region_GCAM3,plant_type,cooling_system,water_type,1971,2005,2010,2015,2020,2100
+USA,coal,once through,fresh,0.3592,0.3592,0.3592,0.3592,0,0
+USA,coal,once through,seawater,0.02,0.02,0.02,0.02,0.05,0.05
+USA,coal,recirculating,fresh,0.4833,0.4833,0.4833,0.4833,0.75,0.75
+USA,coal,cooling pond,fresh,0.1347,0.1347,0.1347,0.1347,0.1,0.1
+USA,coal,dry cooling,fresh,0.0028,0.0028,0.0028,0.0028,0.1,0.1
+USA,fossil non-coal,once through,fresh,0.2014,0.2014,0.2014,0.2014,0,0
+USA,fossil non-coal,once through,seawater,0.1175,0.1175,0.1175,0.1175,0.05,0.05
+USA,fossil non-coal,recirculating,fresh,0.1392,0.1392,0.1392,0.1392,0.25,0.25
+USA,fossil non-coal,cooling pond,fresh,0.0806,0.0806,0.0806,0.0806,0.1,0.1
+USA,fossil non-coal,dry cooling,fresh,0.4613,0.4613,0.4613,0.4613,0.5,0.5
+USA,combined cycle,once through,fresh,0.0343,0.0343,0.0343,0.0343,0,0
+USA,combined cycle,once through,seawater,0.0765,0.0765,0.0765,0.0765,0.05,0.05
+USA,combined cycle,recirculating,fresh,0.7121,0.7121,0.7121,0.7121,0.3,0.3
+USA,combined cycle,cooling pond,fresh,0.0672,0.0672,0.0672,0.0672,0,0
+USA,combined cycle,dry cooling,fresh,0.1099,0.1099,0.1099,0.1099,0.65,0.65
+USA,nuclear,once through,fresh,0.2944,0.2944,0.2944,0.2944,0,0
+USA,nuclear,once through,seawater,0.1466,0.1466,0.1466,0.1466,0.1,0.1
+USA,nuclear,recirculating,fresh,0.4052,0.4052,0.4052,0.4052,0.8,0.8
+USA,nuclear,cooling pond,fresh,0.1538,0.1538,0.1538,0.1538,0.1,0.1
+USA,IGCC,once through,fresh,0.2737,0.2737,0.2737,0.2737,0,0
+USA,IGCC,once through,seawater,0.1173,0.1173,0.1173,0.1173,0.05,0.05
+USA,IGCC,recirculating,fresh,0.607,0.607,0.607,0.607,0.75,0.75
+USA,IGCC,dry cooling,fresh,0.002,0.002,0.002,0.002,0.1,0.1
+USA,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+USA,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+USA,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+USA,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Canada,coal,once through,fresh,0.639,0.639,0.639,0.639,0.09,0.09
+Canada,coal,once through,seawater,0.071,0.071,0.071,0.071,0.01,0.01
+Canada,coal,recirculating,fresh,0.29,0.29,0.29,0.29,0.9,0.9
+Canada,coal,cooling pond,fresh,0,0,0,0,0,0
+Canada,coal,dry cooling,fresh,0,0,0,0,0,0
+Canada,fossil non-coal,once through,fresh,0.639,0.639,0.639,0.639,0.09,0.09
+Canada,fossil non-coal,once through,seawater,0.071,0.071,0.071,0.071,0.01,0.01
+Canada,fossil non-coal,recirculating,fresh,0.29,0.29,0.29,0.29,0.9,0.9
+Canada,fossil non-coal,cooling pond,fresh,0,0,0,0,0,0
+Canada,fossil non-coal,dry cooling,fresh,0,0,0,0,0,0
+Canada,combined cycle,once through,fresh,0.639,0.639,0.639,0.639,0.09,0.09
+Canada,combined cycle,once through,seawater,0.071,0.071,0.071,0.071,0.01,0.01
+Canada,combined cycle,recirculating,fresh,0.29,0.29,0.29,0.29,0.9,0.9
+Canada,combined cycle,cooling pond,fresh,0,0,0,0,0,0
+Canada,combined cycle,dry cooling,fresh,0,0,0,0,0,0
+Canada,nuclear,once through,fresh,0.639,0.639,0.639,0.639,0.09,0.09
+Canada,nuclear,once through,seawater,0.071,0.071,0.071,0.071,0.01,0.01
+Canada,nuclear,recirculating,fresh,0.29,0.29,0.29,0.29,0.9,0.9
+Canada,nuclear,cooling pond,fresh,0,0,0,0,0,0
+Canada,IGCC,once through,fresh,0.639,0.639,0.639,0.639,0.09,0.09
+Canada,IGCC,once through,seawater,0.071,0.071,0.071,0.071,0.01,0.01
+Canada,IGCC,recirculating,fresh,0.29,0.29,0.29,0.29,0.9,0.9
+Canada,IGCC,dry cooling,fresh,0,0,0,0,0,0
+Canada,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+Canada,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+Canada,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Canada,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Western Europe,coal,once through,fresh,0.2216,0.2216,0.2216,0.2216,0.1,0.1
+Western Europe,coal,once through,seawater,0.0554,0.0554,0.0554,0.0554,0.23,0.23
+Western Europe,coal,recirculating,fresh,0.695636538,0.695636538,0.695636538,0.695636538,0.64,0.64
+Western Europe,coal,cooling pond,fresh,0,0,0,0,0,0
+Western Europe,coal,dry cooling,fresh,0.027363462,0.027363462,0.027363462,0.027363462,0.03,0.03
+Western Europe,fossil non-coal,once through,fresh,0.2216,0.2216,0.2216,0.2216,0.2216,0.2216
+Western Europe,fossil non-coal,once through,seawater,0.0554,0.0554,0.0554,0.0554,0.0554,0.0554
+Western Europe,fossil non-coal,recirculating,fresh,0.695636538,0.695636538,0.695636538,0.695636538,0.695636538,0.695636538
+Western Europe,fossil non-coal,cooling pond,fresh,0,0,0,0,0,0
+Western Europe,fossil non-coal,dry cooling,fresh,0.027363462,0.027363462,0.027363462,0.027363462,0.027363462,0.027363462
+Western Europe,combined cycle,once through,fresh,0.2216,0.2216,0.2216,0.2216,0.2216,0.2216
+Western Europe,combined cycle,once through,seawater,0.0554,0.0554,0.0554,0.0554,0.41,0.41
+Western Europe,combined cycle,recirculating,fresh,0.695636538,0.695636538,0.695636538,0.695636538,0.341036538,0.341036538
+Western Europe,combined cycle,cooling pond,fresh,0,0,0,0,0,0
+Western Europe,combined cycle,dry cooling,fresh,0.027363462,0.027363462,0.027363462,0.027363462,0.027363462,0.027363462
+Western Europe,nuclear,once through,fresh,0.2216,0.2216,0.2216,0.2216,0.2,0.2
+Western Europe,nuclear,once through,seawater,0.0554,0.0554,0.0554,0.0554,0.2,0.2
+Western Europe,nuclear,recirculating,fresh,0.723,0.723,0.723,0.723,0.6,0.6
+Western Europe,nuclear,cooling pond,fresh,0,0,0,0,0,0
+Western Europe,IGCC,once through,fresh,0.2216,0.2216,0.2216,0.2216,0.1,0.1
+Western Europe,IGCC,once through,seawater,0.0554,0.0554,0.0554,0.0554,0.23,0.23
+Western Europe,IGCC,recirculating,fresh,0.695636538,0.695636538,0.695636538,0.695636538,0.64,0.64
+Western Europe,IGCC,dry cooling,fresh,0.027363462,0.027363462,0.027363462,0.027363462,0.03,0.03
+Western Europe,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+Western Europe,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+Western Europe,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Western Europe,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Japan,coal,once through,fresh,0.027,0.027,0.027,0.027,0.027,0.027
+Japan,coal,once through,seawater,0.873,0.873,0.873,0.873,0.873,0.873
+Japan,coal,recirculating,fresh,0.064587507,0.064587507,0.064587507,0.064587507,0.064587507,0.064587507
+Japan,coal,cooling pond,fresh,0,0,0,0,0,0
+Japan,coal,dry cooling,fresh,0.035412493,0.035412493,0.035412493,0.035412493,0.035412493,0.035412493
+Japan,fossil non-coal,once through,fresh,0.027,0.027,0.027,0.027,0.027,0.027
+Japan,fossil non-coal,once through,seawater,0.873,0.873,0.873,0.873,0.873,0.873
+Japan,fossil non-coal,recirculating,fresh,0.064587507,0.064587507,0.064587507,0.064587507,0.064587507,0.064587507
+Japan,fossil non-coal,cooling pond,fresh,0,0,0,0,0,0
+Japan,fossil non-coal,dry cooling,fresh,0.035412493,0.035412493,0.035412493,0.035412493,0.035412493,0.035412493
+Japan,combined cycle,once through,fresh,0.027,0.027,0.027,0.027,0.027,0.027
+Japan,combined cycle,once through,seawater,0.873,0.873,0.873,0.873,0.873,0.873
+Japan,combined cycle,recirculating,fresh,0.064587507,0.064587507,0.064587507,0.064587507,0.064587507,0.064587507
+Japan,combined cycle,cooling pond,fresh,0,0,0,0,0,0
+Japan,combined cycle,dry cooling,fresh,0.035412493,0.035412493,0.035412493,0.035412493,0.035412493,0.035412493
+Japan,nuclear,once through,fresh,0,0,0,0,0,0
+Japan,nuclear,once through,seawater,1,1,1,1,1,1
+Japan,nuclear,recirculating,fresh,0,0,0,0,0,0
+Japan,nuclear,cooling pond,fresh,0,0,0,0,0,0
+Japan,IGCC,once through,fresh,0.027,0.027,0.027,0.027,0.027,0.027
+Japan,IGCC,once through,seawater,0.873,0.873,0.873,0.873,0.873,0.873
+Japan,IGCC,recirculating,fresh,0.064587507,0.064587507,0.064587507,0.064587507,0.064587507,0.064587507
+Japan,IGCC,dry cooling,fresh,0.035412493,0.035412493,0.035412493,0.035412493,0.035412493,0.035412493
+Japan,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+Japan,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+Japan,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Japan,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Australia_NZ,coal,once through,fresh,0.12512,0.12512,0.12512,0.12512,0.17,0.17
+Australia_NZ,coal,once through,seawater,0.24288,0.24288,0.24288,0.24288,0.33,0.33
+Australia_NZ,coal,recirculating,fresh,0.563240299,0.563240299,0.563240299,0.563240299,0.2,0.2
+Australia_NZ,coal,cooling pond,fresh,0,0,0,0,0,0
+Australia_NZ,coal,dry cooling,fresh,0.068753867,0.068753867,0.068753867,0.068753867,0.3,0.3
+Australia_NZ,fossil non-coal,once through,fresh,0.34,0.34,0.34,0.34,0.17,0.17
+Australia_NZ,fossil non-coal,once through,seawater,0.66,0.66,0.66,0.66,0.33,0.33
+Australia_NZ,fossil non-coal,recirculating,fresh,0,0,0,0,0.2,0.2
+Australia_NZ,fossil non-coal,cooling pond,fresh,0,0,0,0,0,0
+Australia_NZ,fossil non-coal,dry cooling,fresh,0,0,0,0,0.3,0.3
+Australia_NZ,combined cycle,once through,fresh,0.169694,0.169694,0.169694,0.169694,0.17,0.17
+Australia_NZ,combined cycle,once through,seawater,0.329406,0.329406,0.329406,0.329406,0.33,0.33
+Australia_NZ,combined cycle,recirculating,fresh,0.500924947,0.500924947,0.500924947,0.500924947,0.2,0.2
+Australia_NZ,combined cycle,cooling pond,fresh,0,0,0,0,0,0
+Australia_NZ,combined cycle,dry cooling,fresh,0,0,0,0,0.3,0.3
+Australia_NZ,nuclear,once through,fresh,0,0,0,0,0,0
+Australia_NZ,nuclear,once through,seawater,1,1,1,1,1,1
+Australia_NZ,nuclear,recirculating,fresh,0,0,0,0,0,0
+Australia_NZ,nuclear,cooling pond,fresh,0,0,0,0,0,0
+Australia_NZ,IGCC,once through,fresh,0.12512,0.12512,0.12512,0.12512,0.17,0.17
+Australia_NZ,IGCC,once through,seawater,0.24288,0.24288,0.24288,0.24288,0.33,0.33
+Australia_NZ,IGCC,recirculating,fresh,0.563240299,0.563240299,0.563240299,0.563240299,0.2,0.2
+Australia_NZ,IGCC,dry cooling,fresh,0.068753867,0.068753867,0.068753867,0.068753867,0.3,0.3
+Australia_NZ,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+Australia_NZ,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+Australia_NZ,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Australia_NZ,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Former Soviet Union,coal,once through,fresh,0.3366,0.3366,0.3366,0.3366,0.09,0.09
+Former Soviet Union,coal,once through,seawater,0.0374,0.0374,0.0374,0.0374,0.01,0.01
+Former Soviet Union,coal,recirculating,fresh,0.626,0.626,0.626,0.626,0.9,0.9
+Former Soviet Union,coal,cooling pond,fresh,0,0,0,0,0,0
+Former Soviet Union,coal,dry cooling,fresh,0,0,0,0,0,0
+Former Soviet Union,fossil non-coal,once through,fresh,0.3366,0.3366,0.3366,0.3366,0.09,0.09
+Former Soviet Union,fossil non-coal,once through,seawater,0.0374,0.0374,0.0374,0.0374,0.01,0.01
+Former Soviet Union,fossil non-coal,recirculating,fresh,0.626,0.626,0.626,0.626,0.9,0.9
+Former Soviet Union,fossil non-coal,cooling pond,fresh,0,0,0,0,0,0
+Former Soviet Union,fossil non-coal,dry cooling,fresh,0,0,0,0,0,0
+Former Soviet Union,combined cycle,once through,fresh,0.3366,0.3366,0.3366,0.3366,0.09,0.09
+Former Soviet Union,combined cycle,once through,seawater,0.0374,0.0374,0.0374,0.0374,0.01,0.01
+Former Soviet Union,combined cycle,recirculating,fresh,0.626,0.626,0.626,0.626,0.9,0.9
+Former Soviet Union,combined cycle,cooling pond,fresh,0,0,0,0,0,0
+Former Soviet Union,combined cycle,dry cooling,fresh,0,0,0,0,0,0
+Former Soviet Union,nuclear,once through,fresh,0.3366,0.3366,0.3366,0.3366,0.09,0.09
+Former Soviet Union,nuclear,once through,seawater,0.0374,0.0374,0.0374,0.0374,0.01,0.01
+Former Soviet Union,nuclear,recirculating,fresh,0.626,0.626,0.626,0.626,0.9,0.9
+Former Soviet Union,nuclear,cooling pond,fresh,0,0,0,0,0,0
+Former Soviet Union,IGCC,once through,fresh,0.3366,0.3366,0.3366,0.3366,0.09,0.09
+Former Soviet Union,IGCC,once through,seawater,0.0374,0.0374,0.0374,0.0374,0.01,0.01
+Former Soviet Union,IGCC,recirculating,fresh,0.626,0.626,0.626,0.626,0.9,0.9
+Former Soviet Union,IGCC,dry cooling,fresh,0,0,0,0,0,0
+Former Soviet Union,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+Former Soviet Union,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+Former Soviet Union,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Former Soviet Union,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+China,coal,once through,fresh,0.174,0.174,0.1,0.1,0.05,0.05
+China,coal,once through,seawater,0.026,0.026,0.026,0.026,0.075,0.075
+China,coal,recirculating,fresh,0.73,0.65,0.604,0.604,0.375,0.375
+China,coal,cooling pond,fresh,0.07,0.07,0.07,0.07,0.07,0.07
+China,coal,dry cooling,fresh,0,0.08,0.2,0.2,0.43,0.43
+China,fossil non-coal,once through,fresh,0.174,0.174,0.174,0.174,0.174,0.174
+China,fossil non-coal,once through,seawater,0.026,0.026,0.026,0.026,0.026,0.026
+China,fossil non-coal,recirculating,fresh,0.6489,0.6489,0.6489,0.6489,0.6489,0.6489
+China,fossil non-coal,cooling pond,fresh,0.07,0.07,0.07,0.07,0.07,0.07
+China,fossil non-coal,dry cooling,fresh,0.0811,0.0811,0.0811,0.0811,0.0811,0.0811
+China,combined cycle,once through,fresh,0.174,0.174,0.174,0.174,0.174,0.174
+China,combined cycle,once through,seawater,0.026,0.026,0.026,0.026,0.026,0.026
+China,combined cycle,recirculating,fresh,0.6489,0.6489,0.6489,0.6489,0.6489,0.6489
+China,combined cycle,cooling pond,fresh,0.07,0.07,0.07,0.07,0.07,0.07
+China,combined cycle,dry cooling,fresh,0.0811,0.0811,0.0811,0.0811,0.0811,0.0811
+China,nuclear,once through,fresh,0.174,0.174,0.174,0.174,0.1,0.1
+China,nuclear,once through,seawater,0.026,0.026,0.026,0.026,0.026,0.026
+China,nuclear,recirculating,fresh,0.73,0.73,0.73,0.73,0.804,0.804
+China,nuclear,cooling pond,fresh,0.07,0.07,0.07,0.07,0.07,0.07
+China,IGCC,once through,fresh,0.1,0.1,0.1,0.1,0.05,0.05
+China,IGCC,once through,seawater,0.026,0.026,0.026,0.026,0.075,0.075
+China,IGCC,recirculating,fresh,0.444,0.444,0.444,0.444,0.445,0.445
+China,IGCC,dry cooling,fresh,0.43,0.43,0.43,0.43,0.43,0.43
+China,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+China,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+China,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+China,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Middle East,coal,once through,fresh,0.024,0.024,0.024,0.024,0,0
+Middle East,coal,once through,seawater,0.576,0.576,0.576,0.576,0.5,0.5
+Middle East,coal,recirculating,fresh,0.382340476,0.382340476,0.382340476,0.382340476,0.2,0.2
+Middle East,coal,cooling pond,fresh,0,0,0,0,0,0
+Middle East,coal,dry cooling,fresh,0.017659524,0.017659524,0.017659524,0.017659524,0.3,0.3
+Middle East,fossil non-coal,once through,fresh,0.024,0.024,0.024,0.024,0,0
+Middle East,fossil non-coal,once through,seawater,0.576,0.576,0.576,0.576,0.5,0.5
+Middle East,fossil non-coal,recirculating,fresh,0.382340476,0.382340476,0.382340476,0.382340476,0.2,0.2
+Middle East,fossil non-coal,cooling pond,fresh,0,0,0,0,0,0
+Middle East,fossil non-coal,dry cooling,fresh,0.017659524,0.017659524,0.017659524,0.017659524,0.3,0.3
+Middle East,combined cycle,once through,fresh,0.024,0.024,0.024,0.024,0,0
+Middle East,combined cycle,once through,seawater,0.576,0.576,0.576,0.576,0.5,0.5
+Middle East,combined cycle,recirculating,fresh,0.382340476,0.382340476,0.382340476,0.382340476,0.2,0.2
+Middle East,combined cycle,cooling pond,fresh,0,0,0,0,0,0
+Middle East,combined cycle,dry cooling,fresh,0.017659524,0.017659524,0.017659524,0.017659524,0.3,0.3
+Middle East,nuclear,once through,fresh,0.024,0.024,0.024,0.024,0,0
+Middle East,nuclear,once through,seawater,0.576,0.576,0.576,0.576,1,1
+Middle East,nuclear,recirculating,fresh,0.4,0.4,0.4,0.4,0,0
+Middle East,nuclear,cooling pond,fresh,0,0,0,0,0,0
+Middle East,IGCC,once through,fresh,0.024,0.024,0.024,0.024,0,0
+Middle East,IGCC,once through,seawater,0.576,0.576,0.576,0.576,0.5,0.5
+Middle East,IGCC,recirculating,fresh,0.382340476,0.382340476,0.382340476,0.382340476,0.2,0.2
+Middle East,IGCC,dry cooling,fresh,0.017659524,0.017659524,0.017659524,0.017659524,0.3,0.3
+Middle East,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+Middle East,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+Middle East,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Middle East,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Africa,coal,once through,fresh,0.084,0.084,0.084,0.084,0.07,0.07
+Africa,coal,once through,seawater,0.036,0.036,0.036,0.036,0.03,0.03
+Africa,coal,recirculating,fresh,0.76,0.76,0.76,0.76,0.78,0.78
+Africa,coal,cooling pond,fresh,0,0,0,0,0,0
+Africa,coal,dry cooling,fresh,0.12,0.12,0.12,0.12,0.12,0.12
+Africa,fossil non-coal,once through,fresh,0.084,0.084,0.084,0.084,0.07,0.07
+Africa,fossil non-coal,once through,seawater,0.036,0.036,0.036,0.036,0.03,0.03
+Africa,fossil non-coal,recirculating,fresh,0.76,0.76,0.76,0.76,0.78,0.78
+Africa,fossil non-coal,cooling pond,fresh,0,0,0,0,0,0
+Africa,fossil non-coal,dry cooling,fresh,0.12,0.12,0.12,0.12,0.12,0.12
+Africa,combined cycle,once through,fresh,0.084,0.084,0.084,0.084,0.07,0.07
+Africa,combined cycle,once through,seawater,0.036,0.036,0.036,0.036,0.03,0.03
+Africa,combined cycle,recirculating,fresh,0.76,0.76,0.76,0.76,0.78,0.78
+Africa,combined cycle,cooling pond,fresh,0,0,0,0,0,0
+Africa,combined cycle,dry cooling,fresh,0.12,0.12,0.12,0.12,0.12,0.12
+Africa,nuclear,once through,fresh,0.168,0.168,0.168,0.168,0.07,0.07
+Africa,nuclear,once through,seawater,0.072,0.072,0.072,0.072,0.03,0.03
+Africa,nuclear,recirculating,fresh,0.76,0.76,0.76,0.76,0.9,0.9
+Africa,nuclear,cooling pond,fresh,0,0,0,0,0,0
+Africa,IGCC,once through,fresh,0.024,0.024,0.024,0.024,0.07,0.07
+Africa,IGCC,once through,seawater,0.576,0.576,0.576,0.576,0.03,0.03
+Africa,IGCC,recirculating,fresh,0.382340476,0.382340476,0.382340476,0.382340476,0.78,0.78
+Africa,IGCC,dry cooling,fresh,0.017659524,0.017659524,0.017659524,0.017659524,0.12,0.12
+Africa,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+Africa,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+Africa,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Africa,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Latin America,coal,once through,fresh,0.126,0.126,0.126,0.126,0.07,0.07
+Latin America,coal,once through,seawater,0.054,0.054,0.054,0.054,0.03,0.03
+Latin America,coal,recirculating,fresh,0.7791,0.7791,0.7791,0.7791,0.859,0.859
+Latin America,coal,cooling pond,fresh,0,0,0,0,0,0
+Latin America,coal,dry cooling,fresh,0.0409,0.0409,0.0409,0.0409,0.041,0.041
+Latin America,fossil non-coal,once through,fresh,0.126,0.126,0.126,0.126,0.07,0.07
+Latin America,fossil non-coal,once through,seawater,0.054,0.054,0.054,0.054,0.03,0.03
+Latin America,fossil non-coal,recirculating,fresh,0.7791,0.7791,0.7791,0.7791,0.859,0.859
+Latin America,fossil non-coal,cooling pond,fresh,0,0,0,0,0,0
+Latin America,fossil non-coal,dry cooling,fresh,0.0409,0.0409,0.0409,0.0409,0.041,0.041
+Latin America,combined cycle,once through,fresh,0.126,0.126,0.126,0.126,0.07,0.07
+Latin America,combined cycle,once through,seawater,0.054,0.054,0.054,0.054,0.03,0.03
+Latin America,combined cycle,recirculating,fresh,0.7791,0.7791,0.7791,0.7791,0.859,0.859
+Latin America,combined cycle,cooling pond,fresh,0,0,0,0,0,0
+Latin America,combined cycle,dry cooling,fresh,0.0409,0.0409,0.0409,0.0409,0.041,0.041
+Latin America,nuclear,once through,fresh,0.126,0.126,0.126,0.126,0.07,0.07
+Latin America,nuclear,once through,seawater,0.054,0.054,0.054,0.054,0.03,0.03
+Latin America,nuclear,recirculating,fresh,0.82,0.82,0.82,0.82,0.9,0.9
+Latin America,nuclear,cooling pond,fresh,0,0,0,0,0,0
+Latin America,IGCC,once through,fresh,0.126,0.126,0.126,0.126,0.07,0.07
+Latin America,IGCC,once through,seawater,0.054,0.054,0.054,0.054,0.03,0.03
+Latin America,IGCC,recirculating,fresh,0.7791,0.7791,0.7791,0.7791,0.859,0.859
+Latin America,IGCC,dry cooling,fresh,0.0409,0.0409,0.0409,0.0409,0.041,0.041
+Latin America,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+Latin America,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+Latin America,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Latin America,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Southeast Asia,coal,once through,fresh,0.0975,0.0975,0.0975,0.0975,0.1,0.1
+Southeast Asia,coal,once through,seawater,0.6525,0.6525,0.6525,0.6525,0.65,0.65
+Southeast Asia,coal,recirculating,fresh,0.2146,0.2146,0.2146,0.2146,0.215,0.215
+Southeast Asia,coal,cooling pond,fresh,0,0,0,0,0,0
+Southeast Asia,coal,dry cooling,fresh,0.0354,0.0354,0.0354,0.0354,0.035,0.035
+Southeast Asia,fossil non-coal,once through,fresh,0.065,0.065,0.065,0.065,0.06,0.06
+Southeast Asia,fossil non-coal,once through,seawater,0.435,0.435,0.435,0.435,0.44,0.44
+Southeast Asia,fossil non-coal,recirculating,fresh,0.4646,0.4646,0.4646,0.4646,0.465,0.465
+Southeast Asia,fossil non-coal,cooling pond,fresh,0,0,0,0,0,0
+Southeast Asia,fossil non-coal,dry cooling,fresh,0.0354,0.0354,0.0354,0.0354,0.035,0.035
+Southeast Asia,combined cycle,once through,fresh,0.065,0.065,0.065,0.065,0.06,0.06
+Southeast Asia,combined cycle,once through,seawater,0.435,0.435,0.435,0.435,0.44,0.44
+Southeast Asia,combined cycle,recirculating,fresh,0.4646,0.4646,0.4646,0.4646,0.465,0.465
+Southeast Asia,combined cycle,cooling pond,fresh,0,0,0,0,0,0
+Southeast Asia,combined cycle,dry cooling,fresh,0.0354,0.0354,0.0354,0.0354,0.035,0.035
+Southeast Asia,nuclear,once through,fresh,0,0,0,0,0,0
+Southeast Asia,nuclear,once through,seawater,0.95,0.95,0.95,0.95,0.95,0.95
+Southeast Asia,nuclear,recirculating,fresh,0.05,0.05,0.05,0.05,0.05,0.05
+Southeast Asia,nuclear,cooling pond,fresh,0,0,0,0,0,0
+Southeast Asia,IGCC,once through,fresh,0.0975,0.0975,0.0975,0.0975,0.1,0.1
+Southeast Asia,IGCC,once through,seawater,0.6525,0.6525,0.6525,0.6525,0.65,0.65
+Southeast Asia,IGCC,recirculating,fresh,0.2146,0.2146,0.2146,0.2146,0.215,0.215
+Southeast Asia,IGCC,dry cooling,fresh,0.0354,0.0354,0.0354,0.0354,0.035,0.035
+Southeast Asia,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+Southeast Asia,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+Southeast Asia,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Southeast Asia,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Eastern Europe,coal,once through,fresh,0.3105,0.3105,0.3105,0.3105,0.09,0.09
+Eastern Europe,coal,once through,seawater,0.0345,0.0345,0.0345,0.0345,0.01,0.01
+Eastern Europe,coal,recirculating,fresh,0.655,0.655,0.655,0.655,0.9,0.9
+Eastern Europe,coal,cooling pond,fresh,0,0,0,0,0,0
+Eastern Europe,coal,dry cooling,fresh,0,0,0,0,0,0
+Eastern Europe,fossil non-coal,once through,fresh,0.3105,0.3105,0.3105,0.3105,0.09,0.09
+Eastern Europe,fossil non-coal,once through,seawater,0.0345,0.0345,0.0345,0.0345,0.01,0.01
+Eastern Europe,fossil non-coal,recirculating,fresh,0.655,0.655,0.655,0.655,0.9,0.9
+Eastern Europe,fossil non-coal,cooling pond,fresh,0,0,0,0,0,0
+Eastern Europe,fossil non-coal,dry cooling,fresh,0,0,0,0,0,0
+Eastern Europe,combined cycle,once through,fresh,0.3105,0.3105,0.3105,0.3105,0.09,0.09
+Eastern Europe,combined cycle,once through,seawater,0.0345,0.0345,0.0345,0.0345,0.01,0.01
+Eastern Europe,combined cycle,recirculating,fresh,0.655,0.655,0.655,0.655,0.9,0.9
+Eastern Europe,combined cycle,cooling pond,fresh,0,0,0,0,0,0
+Eastern Europe,combined cycle,dry cooling,fresh,0,0,0,0,0,0
+Eastern Europe,nuclear,once through,fresh,0.3105,0.3105,0.3105,0.3105,0.09,0.09
+Eastern Europe,nuclear,once through,seawater,0.0345,0.0345,0.0345,0.0345,0.01,0.01
+Eastern Europe,nuclear,recirculating,fresh,0.655,0.655,0.655,0.655,0.9,0.9
+Eastern Europe,nuclear,cooling pond,fresh,0,0,0,0,0,0
+Eastern Europe,IGCC,once through,fresh,0.3105,0.3105,0.3105,0.3105,0.09,0.09
+Eastern Europe,IGCC,once through,seawater,0.0345,0.0345,0.0345,0.0345,0.01,0.01
+Eastern Europe,IGCC,recirculating,fresh,0.655,0.655,0.655,0.655,0.9,0.9
+Eastern Europe,IGCC,dry cooling,fresh,0,0,0,0,0,0
+Eastern Europe,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+Eastern Europe,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+Eastern Europe,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Eastern Europe,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Korea,coal,once through,fresh,0.006,0.006,0.006,0.006,0,0
+Korea,coal,once through,seawater,0.194,0.194,0.194,0.194,0.2,0.2
+Korea,coal,recirculating,fresh,0.7646,0.7646,0.7646,0.7646,0.765,0.765
+Korea,coal,cooling pond,fresh,0,0,0,0,0,0
+Korea,coal,dry cooling,fresh,0.0354,0.0354,0.0354,0.0354,0.035,0.035
+Korea,fossil non-coal,once through,fresh,0.006,0.006,0.006,0.006,0,0
+Korea,fossil non-coal,once through,seawater,0.194,0.194,0.194,0.194,0.2,0.2
+Korea,fossil non-coal,recirculating,fresh,0.7646,0.7646,0.7646,0.7646,0.765,0.765
+Korea,fossil non-coal,cooling pond,fresh,0,0,0,0,0,0
+Korea,fossil non-coal,dry cooling,fresh,0.0354,0.0354,0.0354,0.0354,0.035,0.035
+Korea,combined cycle,once through,fresh,0.006,0.006,0.006,0.006,0,0
+Korea,combined cycle,once through,seawater,0.194,0.194,0.194,0.194,0.2,0.2
+Korea,combined cycle,recirculating,fresh,0.7646,0.7646,0.7646,0.7646,0.765,0.765
+Korea,combined cycle,cooling pond,fresh,0,0,0,0,0,0
+Korea,combined cycle,dry cooling,fresh,0.0354,0.0354,0.0354,0.0354,0.035,0.035
+Korea,nuclear,once through,fresh,0,0,0,0,0,0
+Korea,nuclear,once through,seawater,1,1,1,1,1,1
+Korea,nuclear,recirculating,fresh,0,0,0,0,0,0
+Korea,nuclear,cooling pond,fresh,0,0,0,0,0,0
+Korea,IGCC,once through,fresh,0.006,0.006,0.006,0.006,0,0
+Korea,IGCC,once through,seawater,0.194,0.194,0.194,0.194,0.2,0.2
+Korea,IGCC,recirculating,fresh,0.7646,0.7646,0.7646,0.7646,0.765,0.765
+Korea,IGCC,dry cooling,fresh,0.0354,0.0354,0.0354,0.0354,0.035,0.035
+Korea,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+Korea,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+Korea,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+Korea,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+India,coal,once through,fresh,0.329,0.329,0.229,0.229,0.07,0.07
+India,coal,once through,seawater,0.141,0.141,0.241,0.241,0.25,0.25
+India,coal,recirculating,fresh,0.4946,0.4946,0.4946,0.4946,0.645,0.645
+India,coal,cooling pond,fresh,0,0,0,0,0,0
+India,coal,dry cooling,fresh,0.0354,0.0354,0.0354,0.0354,0.035,0.035
+India,fossil non-coal,once through,fresh,0.329,0.329,0.329,0.329,0.07,0.07
+India,fossil non-coal,once through,seawater,0.141,0.141,0.141,0.141,0.03,0.03
+India,fossil non-coal,recirculating,fresh,0.4946,0.4946,0.4946,0.4946,0.865,0.865
+India,fossil non-coal,cooling pond,fresh,0,0,0,0,0,0
+India,fossil non-coal,dry cooling,fresh,0.0354,0.0354,0.0354,0.0354,0.035,0.035
+India,combined cycle,once through,fresh,0.329,0.329,0.329,0.329,0.07,0.07
+India,combined cycle,once through,seawater,0.141,0.141,0.141,0.141,0.03,0.03
+India,combined cycle,recirculating,fresh,0.4946,0.4946,0.4946,0.4946,0.865,0.865
+India,combined cycle,cooling pond,fresh,0,0,0,0,0,0
+India,combined cycle,dry cooling,fresh,0.0354,0.0354,0.0354,0.0354,0.035,0.035
+India,nuclear,once through,fresh,0.329,0.329,0.329,0.329,0.07,0.07
+India,nuclear,once through,seawater,0.141,0.141,0.141,0.141,0.03,0.03
+India,nuclear,recirculating,fresh,0.53,0.53,0.53,0.53,0.9,0.9
+India,nuclear,cooling pond,fresh,0,0,0,0,0,0
+India,IGCC,once through,fresh,0.329,0.329,0.329,0.329,0.07,0.07
+India,IGCC,once through,seawater,0.141,0.141,0.141,0.141,0.03,0.03
+India,IGCC,recirculating,fresh,0.4946,0.4946,0.4946,0.4946,0.865,0.865
+India,IGCC,dry cooling,fresh,0.0354,0.0354,0.0354,0.0354,0.035,0.035
+India,geothermal,recirculating,fresh,0.6,0.6,0.6,0.6,0.6,0.6
+India,geothermal,dry_hybrid,fresh,0.4,0.4,0.4,0.4,0.4,0.4
+India,CSP,recirculating,fresh,0.5,0.5,0.5,0.5,0.5,0.5
+India,CSP,dry_hybrid,fresh,0.5,0.5,0.5,0.5,0.5,0.5

@@ -22,7 +22,7 @@
 module_energy_LB1322.Fert <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "energy/IEA_ctry",
+             FILE = "energy/mappings/IEA_ctry",
              FILE = "energy/IEA_Fert_fuel_data",
              FILE = "energy/H2A_Prod_Tech",
              "L142.ag_Fert_Prod_MtN_ctry_Y",
@@ -53,7 +53,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    IEA_ctry <- get_data(all_data, "energy/IEA_ctry")
+    IEA_ctry <- get_data(all_data, "energy/mappings/IEA_ctry")
     IEA_Fert_fuel_data <- get_data(all_data, "energy/IEA_Fert_fuel_data")
     H2A_Prod_Tech <- get_data(all_data, "energy/H2A_Prod_Tech")
     L142.ag_Fert_Prod_MtN_ctry_Y <- get_data(all_data, "L142.ag_Fert_Prod_MtN_ctry_Y")
@@ -383,7 +383,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Generic fertilizer production data was broken down using country-level fuel share and energy intensity data.") %>%
       add_comments("Shares of fertilizer production were modified so that industrial energy/feedstock for any fuels were not negative for any country, before aggregating to the regional level.") %>%
       add_legacy_name("L1322.Fert_Prod_MtN_R_F_Y") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
+      add_precursors("common/iso_GCAM_regID", "energy/mappings/IEA_ctry", "energy/IEA_Fert_fuel_data",
                      "L142.ag_Fert_Prod_MtN_ctry_Y") ->
       L1322.Fert_Prod_MtN_R_F_Y
 
@@ -393,7 +393,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Generic fertilizer production data was broken down using country-level fuel share and energy intensity data.") %>%
       add_comments("Re-allocation of energy use between energy and feedstock quantities for the industrial sector was done to avoid negative values at the country level, before aggregating to the regional level.") %>%
       add_legacy_name("L1322.IO_R_Fert_F_Yh") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
+      add_precursors("common/iso_GCAM_regID", "energy/mappings/IEA_ctry", "energy/IEA_Fert_fuel_data",
                      "L142.ag_Fert_Prod_MtN_ctry_Y", "L1321.in_EJ_R_indenergy_F_Yh",
                      "L132.in_EJ_R_indfeed_F_Yh") ->
       L1322.IO_R_Fert_F_Yh
@@ -404,7 +404,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Industrial energy use was calculated using country-level fuel share and energy intensity data to break down generic fertilizer production data.") %>%
       add_comments("Re-allocation of energy use between energy and feedstock quantities for the industrial sector was done to avoid negative values at the country level, before aggregating to the regional level.") %>%
       add_legacy_name("L1322.in_EJ_R_indenergy_F_Yh") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
+      add_precursors("common/iso_GCAM_regID", "energy/mappings/IEA_ctry", "energy/IEA_Fert_fuel_data",
                      "L142.ag_Fert_Prod_MtN_ctry_Y", "L1321.in_EJ_R_indenergy_F_Yh",
                      "L132.in_EJ_R_indfeed_F_Yh") ->
       L1322.in_EJ_R_indenergy_F_Yh
@@ -415,7 +415,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Industrial feedstock use was calculated using country-level fuel share and energy intensity data to break down generic fertilizer production data.") %>%
       add_comments("Re-allocation of energy use between energy and feedstock quantities for the industrial sector was done to avoid negative values at the country level, before aggregating to the regional level.") %>%
       add_legacy_name("L1322.in_EJ_R_indfeed_F_Yh") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/IEA_ctry", "energy/IEA_Fert_fuel_data",
+      add_precursors("common/iso_GCAM_regID", "energy/mappings/IEA_ctry", "energy/IEA_Fert_fuel_data",
                      "L142.ag_Fert_Prod_MtN_ctry_Y", "L1321.in_EJ_R_indenergy_F_Yh",
                      "L132.in_EJ_R_indfeed_F_Yh") ->
       L1322.in_EJ_R_indfeed_F_Yh
