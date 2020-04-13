@@ -5301,6 +5301,20 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                 and contains(@name,'water_td') and ends-with(@name,'_W')]/physical-output/node()</xPath>
             <comments/>
         </supplyDemandQuery>
+        <supplyDemandQuery title="water consumption by state, sector, basin">
+            <axis1 name="subsector">subsector</axis1>
+            <axis2 name="Year">physical-output[@vintage]</axis2>
+            <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']//*[@type='output' (:collapse:)
+                and contains(@name,'water_td') and ends-with(@name,'_C')]/physical-output/node()</xPath>
+            <comments/>
+        </supplyDemandQuery>
+        <supplyDemandQuery title="water consumption by state, sector, basin (includes desal)">
+            <axis1 name="technology">technology</axis1>
+            <axis2 name="Year">physical-output[@vintage]</axis2>
+            <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[@type='output' (:collapse:)
+                and contains(@name,'water_td') and ends-with(@name,'_C')]/physical-output/node()</xPath>
+            <comments/>
+        </supplyDemandQuery>
     </queryGroup>
     </queryGroup>
 </queries>
