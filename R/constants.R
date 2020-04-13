@@ -7,8 +7,8 @@ XML_DIR                  <- "xml/"
 COMMENT_CHAR             <- "#"
 UNDER_TIMESHIFT          <- FALSE
 YEAR_PATTERN             <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
-LOGIT_TYPE_COLNAME        <- "logit.type"        # will be removed by test code before old-new comparison
-
+LOGIT_TYPE_COLNAME       <- "logit.type"        # will be removed by test code before old-new comparison
+DISABLED_MODULES         <- "NONE"
 
 # Flags ======================================================================
 
@@ -23,16 +23,16 @@ FLAG_XML             <- "FLAG_XML"              # xml data
 
 # Historical years for level 1 data processing. All chunks that produce historical data
 # for model calibration are required to produce annual data covering this entire span.
-HISTORICAL_YEARS        <- 1971:2010
+HISTORICAL_YEARS        <- 1971:2015
 # Future years for level 1 data processing, for the few chunks that
 # produce future data (e.g., population projections)
-FUTURE_YEARS            <- 2011:2100
+FUTURE_YEARS            <- 2016:2100
 # Calibrated periods in the model. Only level 2 chunks should reference these
-MODEL_BASE_YEARS        <- c(1975, 1990, 2005, 2010)
+MODEL_BASE_YEARS        <- c(1975, 1990, 2005, 2010,2015)
 # Future (not calibrated) model periods. Only level 2 chunks should reference these
-MODEL_FUTURE_YEARS      <- seq(2015, 2100, 5)
+MODEL_FUTURE_YEARS      <- seq(2020, 2100, 5)
 MODEL_YEARS             <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
-
+MODEL_FINAL_BASE_YEAR   <- 2015
 
 # GCAM constants ======================================================================
 
@@ -147,28 +147,29 @@ CONV_FT2_M2 <- 0.0929 # Square feet to square meters
 # AgLU constants ======================================================================
 
 # Time
-aglu.AGLU_HISTORICAL_YEARS  <- 1971:2010
+aglu.AGLU_HISTORICAL_YEARS  <- 1971:2015
 aglu.BASE_YEAR_IFA          <- 2006      # Base year of International Fertilizer Industry Association (IFA) fertilizer application data KD does this belong here???
 aglu.BIO_START_YEAR         <- 2020
 aglu.CROSIT_HISTORICAL_YEAR <- 2005      # Historical year from the CROSIT data
 aglu.DIET_YEARS             <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5)
-aglu.FAO_HISTORICAL_YEARS   <- 1961:2012
+aglu.FAO_HISTORICAL_YEARS   <- 1961:2015
 aglu.FAO_LDS_YEARS          <- 1998:2002  # Years for which FAO harvested area data is averaged over for use in the land data system (LDS)
 aglu.GTAP_HISTORICAL_YEAR   <- 2000      # Is the year that the GTAP data is based on.
 aglu.LAND_HISTORY_YEARS     <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
 aglu.LAND_COVER_YEARS       <- sort(unique(c(aglu.LAND_HISTORY_YEARS, aglu.AGLU_HISTORICAL_YEARS)))
-aglu.MODEL_COST_YEARS       <- 2008:2011
-aglu.MODEL_PRICE_YEARS      <- 2008:2011
+aglu.MODEL_COST_YEARS       <- 2008:2016
+aglu.MODEL_PRICE_YEARS      <- 2008:2016
 aglu.PREAGLU_YEARS          <- c(1700, 1750,1800, 1850, 1900, 1950)          # Cropland cover years prior to first aglu historical year to use in climate model component
-aglu.DEFLATOR_BASE_YEAR     <- 2010                                          # year used as the basis for computing regional price deflators
+aglu.DEFLATOR_BASE_YEAR     <- 2015                                          # year used as the basis for computing regional price deflators
 aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years, KD i think this might need a better comment
-aglu.SSP_DEMAND_YEARS       <- seq(2010, 2100, 5) # food demand in the SSPs is calculated at 5-yr intervals
+aglu.SSP_DEMAND_YEARS       <- seq(2015, 2100, 5) # food demand in the SSPs is calculated at 5-yr intervals
 aglu.TRADE_CAL_YEARS        <- 2008:2012 # Years used for calculating base year gross trade. Should ideally include the final base year, but note that the trade data starts in 1986.
 aglu.TRADE_FINAL_BASE_YEAR  <- max(MODEL_BASE_YEARS) # The base year to which gross trade volumes are assigned. Should be within the aglu.TRADE_CAL_YEARS and equal to the final model calibration year
 aglu.FALLOW_YEARS           <- 2008:2012 # Years used for calculating the % of fallow land
 aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "MiscCrop", "OilCrop", "OtherGrain", "PalmFruit", "Rice", "RootTuber", "SugarCrop", "Wheat")
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
+aglu.MAX_FAO_LDS_SCALER <- 5   # Unitless max multiplier in reconciling LDS harvested area with FAO harvested area by country and crop. Useful for preventing bad allocations of N fert in AFG, TWN, several others
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
@@ -251,7 +252,8 @@ aglu.MAX_BIO_YIELD_THA <- 20
 aglu.BIO_ENERGY_CONTENT_GJT <- 17.5
 
 # Regions in which agriculture and land use are not modeled
-aglu.NO_AGLU_REGIONS <- "Taiwan"
+#kbn 2019/09/25 Took taiwan out from below since we have data for Taiwan now.
+aglu.NO_AGLU_REGIONS <- ""
 
 # Define GCAM category name of fertilizer
 aglu.FERT_NAME <- "N fertilizer"
@@ -358,8 +360,6 @@ energy.SATIATION_YEAR             <- max(MODEL_BASE_YEARS) # Needs to be the las
 energy.UCD_EN_YEAR                <- 2005        # UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
 energy.WIND.BASE.COST.YEAR        <- 2005        # Base cost year for wind, used in capacity factor calculations
 
-# Constant to select SSP database to use for transportation UCD
-energy.TRN_SSP <- "CORE"
 
 energy.MIN_WEIGHT_EJ <- 1e-08
 
@@ -421,7 +421,7 @@ energy.DIGITS_CAPITAL          <- 0
 energy.DIGITS_COEFFICIENT      <- 7
 energy.DIGITS_COST             <- 4
 energy.DIGITS_CURVE_EXPONENT   <- 3
-energy.DIGITS_RESOURCE      <- 1
+energy.DIGITS_RESOURCE      <- 2
 energy.DIGITS_EFFICIENCY       <- 3
 energy.DIGITS_FLOORSPACE       <- 3
 energy.DIGITS_GDP_SUPPLY_ELAST <- 3
@@ -448,22 +448,27 @@ energy.OIL_CREDITS_MARKETNAME   <- "oil-credits"
 energy.OILFRACT_ELEC            <- 1.0 # Fraction of liquids for feedstocks that must come from oil
 energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity that must come from oil
 
+#kbn 2019-10-11 Adding constant for transportation type. Set this to rev.mode to use revised mode classes, rev_size.class to use revised size classes.
+
+energy.TRAN_UCD_MODE<-'rev.mode'
+energy.TRAN_UCD_SIZE_CLASS<-'rev_size.class'
+
 
 # Socioeconomics constants ======================================================================
 
 # Population years - note that these sequences shouldn't have any overlap,
 # and should contain all historical years used by other modules
 socioeconomics.MADDISON_HISTORICAL_YEARS <- seq(1700, 1900, 50) # Years for which to use Maddison data
-socioeconomics.UN_HISTORICAL_YEARS       <- c(1950, 1971:2010)  # Years for which to use UN data
+socioeconomics.UN_HISTORICAL_YEARS       <- c(1950, 1971:2015)  # Years for which to use UN data
 
 # Final historical year, we use this because it's also the first year of the SSP database.
 # Using a different year if the final historical year in the UN historical years changes, this would result in
 # different SSP projections. (Because the SSP scenarios begin to diverge in 2015, so we'd have to reconsider how
 # we do the SSP scenarios if we update to UN 2015 population.)
-socioeconomics.FINAL_HIST_YEAR <- 2010
+socioeconomics.FINAL_HIST_YEAR <- 2015
 
 # Sets the years during which the IMF projections are used over-riding the default (generally SSP) assumptions.
-socioeconomics.IMF_GDP_YEARS <- 2010:2020
+socioeconomics.IMF_GDP_YEARS <- 2015:2024
 
 socioeconomics.BASE_POP_SCEN         <- "SSP2"
 socioeconomics.BASE_GDP_SCENARIO     <- "SSP2"
@@ -596,7 +601,8 @@ emissions.DIGITS_EMISSIONS <- 10
 # GCAM-USA Constants for Processing UCS Database. As of 04/22/19, only used in chunk zchunk_LA1233.Process_UCS_data_ref.R
 gcamusa.UCS_WATER_COEFFICIENTS_FIRST_HISTORICAL_YEAR   <- 1970
 gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR   <- 2008
-gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR <- 2010
+#kbn and nz updated below to 2015
+gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR <- 2015
 gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR <- 2020
 gcamusa.UCS_WATER_COEFFICIENTS_FINAL_FUTURE_YEAR <- 2100
 gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_RECIRCULATING <- 0.85
@@ -612,15 +618,11 @@ gcamusa.HYDRO_FINAL_AEO_YEAR <- 2050
 gcamusa.SE_HIST_YEAR <- 2015  # year to which historical socioeconomic data (pop & GDP) are used in GCAM-USA
 gcamusa.SE_NEAR_TERM_YEAR <- 2030  # year after which projected growth rates from various socio-economic data sources are used as-is
 # (until this year, growth rates are interpolated from 2015 historical values to prevent spikey near-term behavior)
-gcamusa.AEO_SE_YEAR <- 2040   # year to which AEO 2016 socioeconomic assumptions run
+gcamusa.AEO_SE_YEAR <- 2050   # year to which AEO 2019 socioeconomic assumptions run
 
 # Assumptions related to coal
-# Define assumptions about lifetimes for generators/units without retirement information.
-# Existing coal units built before 1970 will retire at the average lifetime of their vintage group.
-gcamusa.COAL_REMAINING_LIFETIME <- 20   # The max remaining lifetime of coal units built before 1970.
-
-# Vintage groups built after 1970 will retire based on the S-curve.
-# Assumed lifetime and S-curve parametetrs for coal units built after 1970:
+# Vintage groups built before 2015 will retire based on an S-curve.
+# Assumed lifetime and S-curve parametetrs for coal units:
 gcamusa.AVG_COAL_PLANT_LIFETIME <- 80
 gcamusa.AVG_COAL_PLANT_HALFLIFE <- 70
 gcamusa.COAL_RETIRE_STEEPNESS <- 0.3
@@ -642,6 +644,10 @@ gcamusa.FIRST_NEW_COAL_YEAR <- 2035
 gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
                     "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
                     "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
+
+# USA states with ocean coastline, which can be reasonably assigned offshore carbon storage
+gcamusa.COASTAL_STATES <- c("AK", "AL", "CA", "CT", "DE", "FL", "GA", "HI", "LA", "MA", "MD", "ME", "MS",
+                            "NC", "NH", "NJ", "NY", "OR", "RI", "SC", "TX", "VA", "WA")
 
 # GCAM-USA grid regions
 gcamusa.GRID_REGIONS <- c("Alaska grid", "California grid", "Central East grid", "Central Northeast grid",  "Central Northwest grid",
@@ -711,7 +717,7 @@ gcamusa.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA tran
 gcamusa.DIGITS_EMISSIONS          <- 5
 
 # Electricity load segments
-gcamusa.LOAD_SEG_CAL_YEARS <- c(2010, 2005, 1990)       # Years for which electricity load segments are calibrated
+gcamusa.LOAD_SEG_CAL_YEARS <- c(2015, 2010, 2005, 1990)       # Years for which electricity load segments are calibrated
 gcamusa.ELEC_SEGMENT_BASE <- "base load generation"
 gcamusa.ELEC_SEGMENT_INT <- "intermediate generation"
 gcamusa.ELEC_SEGMENT_SUBPEAK <- "subpeak generation"

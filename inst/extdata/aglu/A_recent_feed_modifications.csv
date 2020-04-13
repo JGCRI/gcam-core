@@ -1,0 +1,19 @@
+# File: A_recent_feed_modifications.csv
+# Title: Updates feed data for selected countries and commodities whose data cut-off years lead to mass balance issues
+# Comments: Calculated as the last available year (2009), plus the additional secondary output from biodiesel production in subsequent years. Assumes 112 kg of soybean feedcakes per GJ of biodiesel
+# Units: tons
+# Column types: ccin
+# ----------
+iso,item,year,feed
+bra,Soyabean Cake,2010,14211886
+bra,Soyabean Cake,2011,14802614
+bra,Soyabean Cake,2012,14235328
+bra,Soyabean Cake,2013,13818067
+bra,Soyabean Cake,2014,14966706
+bra,Soyabean Cake,2015,17310866
+arg,Soyabean Cake,2010,4310034
+arg,Soyabean Cake,2011,5397724
+arg,Soyabean Cake,2012,5946257
+arg,Soyabean Cake,2013,5988452
+arg,Soyabean Cake,2014,6091595
+arg,Soyabean Cake,2015,6283816

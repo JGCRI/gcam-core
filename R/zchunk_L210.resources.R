@@ -138,6 +138,14 @@ module_energy_L210.resources <- function(command, ...) {
     L120.TechChange_offshore_wind <- get_data(all_data, "L120.TechChange_offshore_wind" )
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
+    # Check for calibrated resource prices for final historical model year.
+    # Otherwise, price behavior is undefinded, and so stop process.
+    # There should be calibrated prices for all historical model years for
+    # full consistency, however.
+    if(!(MODEL_FINAL_BASE_YEAR %in% c(unique(A10.rsrc_info$year)))){
+      stop("No calibrated prices for resources in final historical year")
+    }
+
     # ===================================================
     # ------- FOSSIL RESOURCE RESERVE ADDITIONS
     # Kind of a level 1.5 we are going to calculate / update historical energy

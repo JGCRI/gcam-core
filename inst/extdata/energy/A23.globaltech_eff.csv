@@ -6,20 +6,20 @@
 # Column types: ccccnnnnnnnnc 
 # ----------
 supplysector,subsector,technology,minicam.energy.input,1971,1990,2005,2010,2015,2100,improvement.max,improvement.rate,improvement.shadow.technology
-electricity,coal,coal (conv pul),regional coal,0.3,0.35,0.391,0.396656458,0.396656458,,1.462222505,0.015,
-electricity,coal,coal (conv pul CCS),regional coal,0.29227318,0.29227318,0.29227318,0.29227318,0.29227318,,-0.256609245,0.05,coal (conv pul)
-electricity,coal,coal (IGCC),regional coal,0.426,0.426,0.426,0.407094786,0.407094786,,1.473858228,0.02,
-electricity,coal,coal (IGCC CCS),regional coal,0.356329323,0.356329323,0.356329323,0.334026491,0.334026491,,-0.149688726,0.05,coal (IGCC)
-electricity,gas,gas (steam/CT),wholesale gas,0.25,0.3,0.33,0.376667869,0.376667869,,1.433623743,0.01,
-electricity,gas,gas (CC),wholesale gas,0.45,0.45,0.5,0.57608027,0.565001803,,1.292031275,0.015,
-electricity,gas,gas (CC CCS),wholesale gas,0.487201482,0.487201482,0.487201482,0.465295603,0.465295603,,-0.10745857,0.05,gas (CC)
-electricity,refined liquids,refined liquids (steam/CT),refined liquids industrial,0.3,0.35,0.384,0.362756407,0.362756407,,1.488602239,0.01,
-electricity,refined liquids,refined liquids (CC),refined liquids industrial,0.426,0.426,0.426,0.554803917,0.554803917,,1.315780184,0.015,
-electricity,refined liquids,refined liquids (CC CCS),refined liquids industrial,0.36,0.36,0.36,0.417573266,0.419929971,,-0.119067472,0.05,refined liquids (CC)
-electricity,biomass,biomass (conv),regional biomass,0.3,0.35,0.382,0.26625,0.26625,,1.596244131,0.015,
-electricity,biomass,biomass (conv CCS),regional biomass,0.196184211,0.196184211,0.196184211,0.196184211,0.196184211,,-0.382293763,0.05,biomass (conv)
-electricity,biomass,biomass (IGCC),regional biomass,0.416,0.416,0.416,0.3195,0.3195,,1.564945227,0.02,
-electricity,biomass,biomass (IGCC CCS),regional biomass,0.356852457,0.356852457,0.356852457,0.262153846,0.262153846,,-0.1907277,0.05,biomass (IGCC)
+electricity,coal,coal (conv pul),regional coal,0.3,0.35,0.391,0.397,0.397,,1.46,0.015,
+electricity,coal,coal (conv pul CCS),regional coal,0.292,0.292,0.292,0.292,0.292,,-0.257,0.05,coal (conv pul)
+electricity,coal,coal (IGCC),regional coal,0.407,0.407,0.407,0.407,0.407,,1.47,0.02,
+electricity,coal,coal (IGCC CCS),regional coal,0.334,0.334,0.334,0.334,0.334,,-0.150,0.05,coal (IGCC)
+electricity,gas,gas (steam/CT),wholesale gas,0.25,0.3,0.33,0.377,0.377,,1.43,0.01,
+electricity,gas,gas (CC),wholesale gas,0.45,0.45,0.5,0.565,0.565,,1.29,0.015,
+electricity,gas,gas (CC CCS),wholesale gas,0.465,0.465,0.465,0.465,0.465,,-0.107,0.05,gas (CC)
+electricity,refined liquids,refined liquids (steam/CT),refined liquids industrial,0.3,0.35,0.363,0.363,0.363,,1.49,0.01,
+electricity,refined liquids,refined liquids (CC),refined liquids industrial,0.426,0.426,0.426,0.555,0.555,,1.32,0.015,
+electricity,refined liquids,refined liquids (CC CCS),refined liquids industrial,0.36,0.36,0.36,0.418,0.420,,-0.119,0.05,refined liquids (CC)
+electricity,biomass,biomass (conv),regional biomass,0.266,0.266,0.266,0.266,0.266,,1.60,0.015,
+electricity,biomass,biomass (conv CCS),regional biomass,0.196,0.196,0.196,0.196,0.196,,-0.382,0.05,biomass (conv)
+electricity,biomass,biomass (IGCC),regional biomass,0.416,0.416,0.416,0.320,0.320,,1.56,0.02,
+electricity,biomass,biomass (IGCC CCS),regional biomass,0.262,0.262,0.262,0.262,0.262,,-0.191,0.05,biomass (IGCC)
 electricity,nuclear,Gen_II_LWR,nuclearFuelGenII,0.333,0.333,0.333,0.333,0.333,0.333,,,
 electricity,nuclear,Gen_III,nuclearFuelGenIII,0.333,0.333,0.333,0.333,0.333,0.333,,,
 electricity,wind,wind,onshore wind resource,1,1,1,1,1,1,,,

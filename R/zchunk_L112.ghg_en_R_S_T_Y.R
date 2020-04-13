@@ -21,6 +21,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
              FILE = "emissions/EDGAR/EDGAR_sector",
              FILE = "emissions/mappings/EPA_ghg_tech",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              "L101.in_EJ_R_en_Si_F_Yh",
              "L102.ghg_tgej_USA_en_Sepa_F_2005",
              FILE = "emissions/EDGAR/EDGAR_CH4",
@@ -42,6 +43,12 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
     EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
     L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh") %>%
       gather_years(value_col = "energy")
     L102.ghg_tgej_USA_en_Sepa_F_2005 <- get_data(all_data, "L102.ghg_tgej_USA_en_Sepa_F_2005") %>%
@@ -137,7 +144,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
       add_comments("Emissions calculated with EPA emissions factors and scaled to EDGAR totals") %>%
       add_legacy_name("L112.ghg_tg_R_en_S_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "emissions/mappings/EPA_ghg_tech",
-                     "emissions/mappings/GCAM_sector_tech", "L101.in_EJ_R_en_Si_F_Yh",
+                     "emissions/mappings/GCAM_sector_tech", "L101.in_EJ_R_en_Si_F_Yh","emissions/mappings/GCAM_sector_tech_Revised",
                      "L102.ghg_tgej_USA_en_Sepa_F_2005", "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O") ->
       L112.ghg_tg_R_en_S_F_Yh
 
@@ -148,7 +155,7 @@ module_emissions_L112.ghg_en_R_S_T_Y <- function(command, ...) {
       add_comments("Then, emissions factors computed by dividing calculated emissions by energy data") %>%
       add_legacy_name("L112.ghg_tgej_R_en_S_F_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "emissions/mappings/EPA_ghg_tech",
-                     "emissions/mappings/GCAM_sector_tech", "L101.in_EJ_R_en_Si_F_Yh",
+                     "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised", "L101.in_EJ_R_en_Si_F_Yh",
                      "L102.ghg_tgej_USA_en_Sepa_F_2005", "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O") ->
       L112.ghg_tgej_R_en_S_F_Yh
 

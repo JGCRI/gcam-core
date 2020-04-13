@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L2238.PV_reeds_USA.R
 \name{module_gcamusa_L2238.PV_reeds_USA}
 \alias{module_gcamusa_L2238.PV_reeds_USA}
-\title{module_gcam.usa_L2238.PV_reeds_USA}
+\title{module_gcamusa_L2238.PV_reeds_USA}
 \usage{
 module_gcamusa_L2238.PV_reeds_USA(command, ...)
 }
@@ -23,10 +23,11 @@ The corresponding file in the original data system was \code{L2238.PV_reeds_USA.
 }
 \description{
 Create updated solar PV resource supply curves consistent with ReEDS.
+Also add non-ReEDS states (AK,DC,HI) based on NREL technical potential data.
 }
 \details{
 Create state-level solar PV resource supply curves
 }
 \author{
-MTB September 2018
+MTB September 2018; AJS June 2019
 }

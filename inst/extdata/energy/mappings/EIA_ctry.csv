@@ -1,12 +1,11 @@
-# File: EIA_ctry.csv,
-# Title: Mapping between iso codes and country names in EIA data,
-# Source: NA,
-# Units: NA,
-# Column types: cc 
-# ----------
+# File: EIA_ctry.csv
+# Title: Mapping between iso codes and country names in EIA data
+# Source: NA
+# Units: NA
+# Column types: cc
+# ----------,
 EIA_ctry,iso
 Afghanistan,afg
-Africa,
 Albania,alb
 Algeria,dza
 American Samoa,asm
@@ -16,7 +15,6 @@ Antigua and Barbuda,atg
 Argentina,arg
 Armenia,arm
 Aruba,abw
-Asia & Oceania,
 Australia,aus
 Austria,aut
 Azerbaijan,aze
@@ -44,7 +42,6 @@ Cameroon,cmr
 Canada,can
 Cape Verde,cpv
 Cayman Islands,cym
-Central & South America,
 Central African Republic,caf
 Chad,tcd
 Chile,chl
@@ -71,8 +68,6 @@ Equatorial Guinea,gnq
 Eritrea,eri
 Estonia,est
 Ethiopia,eth
-Eurasia,
-Europe,
 Falkland Islands (Islas Malvinas),flk
 Faroe Islands,fro
 Fiji,fji
@@ -122,6 +117,7 @@ Kenya,ken
 Kiribati,kir
 "Korea, North",prk
 "Korea, South",kor
+Kosovo,srb
 Kuwait,kwt
 Kyrgyzstan,kgz
 Laos,lao
@@ -144,7 +140,7 @@ Martinique,mtq
 Mauritania,mrt
 Mauritius,mus
 Mexico,mex
-Middle East,
+Micronesia,fsm
 Moldova,mda
 Mongolia,mng
 Montenegro,mne
@@ -162,11 +158,10 @@ Nicaragua,nic
 Niger,ner
 Nigeria,nga
 Niue,niu
-North America,
 Norway,nor
 Oman,omn
 Pakistan,pak
-Palestine,pse
+Palestinian Territories,pse
 Panama,pan
 Papua New Guinea,png
 Paraguay,pry
@@ -200,7 +195,7 @@ Somalia,som
 South Africa,zaf
 Spain,esp
 Sri Lanka,lka
-Sudan and South Sudan,sdn
+Sudan,sdn
 Suriname,sur
 Swaziland,swz
 Sweden,swe
@@ -218,6 +213,7 @@ Tunisia,tun
 Turkey,tur
 Turkmenistan,tkm
 Turks and Caicos Islands,tca
+Tuvalu,tuv
 U.S. Pacific Islands,mhl
 Uganda,uga
 Ukraine,ukr
@@ -232,6 +228,10 @@ Vietnam,vnm
 "Virgin Islands,  U.S.",vir
 "Virgin Islands, British",vgb
 Wake Island,usa
+Western Sahara,esh
+Yemen,yem
+Zambia,zmb
+Zimbabwe,zwe
 Western Sahara,esh
 World,
 Yemen,yem

@@ -16,8 +16,8 @@
 #' @author BBL April 2017
 module_energy_LA152.transportation <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "energy/enduse_fuel_aggregation",
-             FILE = "energy/enduse_sector_aggregation",
+    return(c(FILE = "energy/mappings/enduse_fuel_aggregation",
+             FILE = "energy/mappings/enduse_sector_aggregation",
              "L131.in_EJ_R_Senduse_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L152.in_EJ_R_trn_F_Yh"))
@@ -29,8 +29,8 @@ module_energy_LA152.transportation <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    enduse_fuel_aggregation <- get_data(all_data, "energy/enduse_fuel_aggregation")
-    enduse_sector_aggregation <- get_data(all_data, "energy/enduse_sector_aggregation")
+    enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
+    enduse_sector_aggregation <- get_data(all_data, "energy/mappings/enduse_sector_aggregation")
     L131.in_EJ_R_Senduse_F_Yh <- get_data(all_data, "L131.in_EJ_R_Senduse_F_Yh")
 
     # Calculation of transportation sector energy consumption
@@ -55,8 +55,8 @@ module_energy_LA152.transportation <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Transportation energy consumption aggregated by fuel and sector lookups.") %>%
       add_legacy_name("L152.in_EJ_R_trn_F_Yh") %>%
-      add_precursors("energy/enduse_fuel_aggregation",
-                     "energy/enduse_sector_aggregation",
+      add_precursors("energy/mappings/enduse_fuel_aggregation",
+                     "energy/mappings/enduse_sector_aggregation",
                      "L131.in_EJ_R_Senduse_F_Yh")  ->
       L152.in_EJ_R_trn_F_Yh
 

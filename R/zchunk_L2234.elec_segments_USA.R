@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_L2234.elec_segments_USA
+#' module_gcamusa_L2234.elec_segments_USA
 #'
 #' Generates GCAM-USA model inputs for multiple load segments electricity sector by state.
 #'
@@ -50,6 +50,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
              FILE = "gcam-usa/A23.elecS_subsector_shrwt_interpto_state_adj",
              FILE = "gcam-usa/NREL_us_re_technical_potential",
              FILE = "gcam-usa/elecS_time_fraction",
+             "L119.CapFacScaler_CSP_state",
              "L1239.state_elec_supply_USA",
              "L223.StubTechEff_elec_USA",
              "L223.StubTechMarket_elec_USA",
@@ -144,7 +145,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
       tech.share <- supplysector.y <- supplysector.x <- segment <- share.weight.x <- year.x <- year.y <- State <-
       period <- capital.cost <- fcr <- fixed.om <- variable.om <- coefficient <- passthrough.sector <-
       marginal.revenue.sector <- marginal.revenue.market <- Geothermal_Hydrothermal_GWh <- geo_state_noresource <-
-      fuel <- n <- NULL # silence package check notes
+      fuel <- scaler <- n <- NULL # silence package check notes
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
@@ -169,6 +170,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
     A23.elecS_subsector_shrwt_interpto_state_adj <- get_data(all_data, "gcam-usa/A23.elecS_subsector_shrwt_interpto_state_adj")
     NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")
     elecS_time_fraction <- get_data(all_data, "gcam-usa/elecS_time_fraction")
+    L119.CapFacScaler_CSP_state <- get_data(all_data, "L119.CapFacScaler_CSP_state")
     L1239.state_elec_supply_USA <- get_data(all_data, "L1239.state_elec_supply_USA")
     L223.StubTechEff_elec_USA <- get_data(all_data, "L223.StubTechEff_elec_USA")
     L223.StubTechMarket_elec_USA <- get_data(all_data, "L223.StubTechMarket_elec_USA")
@@ -844,6 +846,18 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
     L2234.StubTechEff_elecS_USA <- L2234.geo.tables_rev[["L2234.StubTechEff_elecS_USA"]]
     L2234.StubTechProd_elecS_USA <- L2234.geo.tables_rev[["L2234.StubTechProd_elecS_USA"]]
 
+    # Remove CSP technologies from regions with no CSP resource
+    # This is only a problem in L2234.StubTechProd_elecS_USA
+    # A vector indicating states where CSP electric technologies will not be created
+    L119.CapFacScaler_CSP_state %>%
+      # states with effectively no resource are assigned a capacity factor scalar of 0.001
+      # remove these states to avoid creating CSP technologies there
+      filter(scaler <= 0.01) %>%
+      pull(state) -> CSP_states_noresource
+
+    L2234.StubTechProd_elecS_USA %>%
+      filter(!(region %in% CSP_states_noresource) | !grepl("CSP", stub.technology)) -> L2234.StubTechProd_elecS_USA
+
     # Create tables for non-energy and energy inputs for any new technologies such as battery
     # and append them with corresponding tables
     A23.elecS_globaltech_non_energy_inputs %>%
@@ -1438,6 +1452,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
                      "gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/NREL_us_re_technical_potential",
+                     "L119.CapFacScaler_CSP_state",
                      "L223.StubTechProd_elec_USA",
                      "L1239.state_elec_supply_USA") ->
       L2234.StubTechProd_elecS_USA

@@ -6,8 +6,8 @@
 # ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 resid heating,biomass,share-weight,final-calibration-year,end-year,,fixed
-resid heating,coal,share-weight,final-calibration-year,2020,0,linear
-resid heating,coal,share-weight,2020,end-year,,fixed
+resid heating,coal,share-weight,final-calibration-year,initial-future-year,0,linear
+resid heating,coal,share-weight,initial-future-year,end-year,,fixed
 resid heating,gas,share-weight,final-calibration-year,end-year,,fixed
 resid heating,electricity,share-weight,final-calibration-year,end-year,,fixed
 resid heating,refined liquids,share-weight,final-calibration-year,2050,0.1,linear
@@ -32,8 +32,8 @@ resid other,gas,share-weight,final-calibration-year,end-year,,fixed
 resid other,electricity,share-weight,final-calibration-year,end-year,,fixed
 resid other,refined liquids,share-weight,final-calibration-year,end-year,,fixed
 comm heating,biomass,share-weight,final-calibration-year,end-year,,fixed
-comm heating,coal,share-weight,final-calibration-year,2020,0,linear
-comm heating,coal,share-weight,2020,end-year,,fixed
+comm heating,coal,share-weight,final-calibration-year,initial-future-year,0,linear
+comm heating,coal,share-weight,initial-future-year,end-year,,fixed
 comm heating,gas,share-weight,final-calibration-year,end-year,,fixed
 comm heating,electricity,share-weight,final-calibration-year,end-year,,fixed
 comm heating,refined liquids,share-weight,final-calibration-year,2050,0.1,s-curve

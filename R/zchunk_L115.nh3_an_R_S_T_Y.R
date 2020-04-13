@@ -20,6 +20,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              "L105.nh3_tgmt_USA_an_Yh",
              FILE = "emissions/EDGAR/EDGAR_NH3"))
@@ -40,6 +41,13 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
+
     L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
     L105.nh3_tgmt_USA_an_Yh <- get_data(all_data, "L105.nh3_tgmt_USA_an_Yh")
     EDGAR_NH3 <- get_data(all_data, "emissions/EDGAR/EDGAR_NH3")
@@ -149,7 +157,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       add_legacy_name("L115.nh3_tg_R_an_C_Sys_Fd_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector",
                      "emissions/mappings/GCAM_sector_tech", "L107.an_Prod_Mt_R_C_Sys_Fd_Y", "L105.nh3_tgmt_USA_an_Yh",
-                     "emissions/EDGAR/EDGAR_NH3") ->
+                     "emissions/EDGAR/EDGAR_NH3","emissions/mappings/GCAM_sector_tech_Revised") ->
       L115.nh3_tg_R_an_C_Sys_Fd_Yh
 
     return_data(L115.nh3_tg_R_an_C_Sys_Fd_Yh)

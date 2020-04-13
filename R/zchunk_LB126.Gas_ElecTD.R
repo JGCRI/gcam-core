@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LB126.Gas_ElecTD
+#' module_gcamusa_LB126.Gas_ElecTD
 #'
 #' Calculates inputs and outputs of: gas processing by fuel and state, gas pipeline by state, and transmission and distribution of electricity by state.
 #'
@@ -16,8 +16,9 @@
 #' @author RLH September 2017
 module_gcamusa_LB126.Gas_ElecTD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L122.in_EJ_R_gasproc_F_Yh",
-              "L122.out_EJ_R_gasproc_F_Yh",
+    return(c(
+      "L122.in_EJ_R_gasproc_F_Yh",
+             "L122.out_EJ_R_gasproc_F_Yh",
               "L126.in_EJ_R_gaspipe_F_Yh",
               "L126.out_EJ_R_gaspipe_F_Yh",
               "L126.IO_R_electd_F_Yh",
@@ -33,7 +34,8 @@ module_gcamusa_LB126.Gas_ElecTD <- function(command, ...) {
               "L142.in_EJ_state_bld_F",
               "L154.in_EJ_state_trn_F"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L126.out_EJ_state_pipeline_gas",
+    return(c(
+      "L126.out_EJ_state_pipeline_gas",
              "L126.in_EJ_state_pipeline_gas",
              "L126.out_EJ_state_gasproc_F",
              "L126.in_EJ_state_gasproc_F",
@@ -48,15 +50,15 @@ module_gcamusa_LB126.Gas_ElecTD <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L122.in_EJ_R_gasproc_F_Yh <- get_data(all_data, "L122.in_EJ_R_gasproc_F_Yh") %>%
-      filter(GCAM_region_ID == gcam.USA_CODE) %>%
-      select(-GCAM_region_ID)
+   L122.in_EJ_R_gasproc_F_Yh <- get_data(all_data, "L122.in_EJ_R_gasproc_F_Yh") %>%
+     filter(GCAM_region_ID == gcam.USA_CODE) %>%
+     select(-GCAM_region_ID)
     L122.out_EJ_R_gasproc_F_Yh <- get_data(all_data, "L122.out_EJ_R_gasproc_F_Yh") %>%
       filter(GCAM_region_ID == gcam.USA_CODE) %>%
       select(-GCAM_region_ID)
     L126.in_EJ_R_gaspipe_F_Yh <- get_data(all_data, "L126.in_EJ_R_gaspipe_F_Yh") %>%
       filter(GCAM_region_ID == gcam.USA_CODE)
-    L126.out_EJ_R_gaspipe_F_Yh <- get_data(all_data, "L126.out_EJ_R_gaspipe_F_Yh") %>%
+   L126.out_EJ_R_gaspipe_F_Yh <- get_data(all_data, "L126.out_EJ_R_gaspipe_F_Yh") %>%
       filter(GCAM_region_ID == gcam.USA_CODE)
     L126.IO_R_electd_F_Yh <- get_data(all_data, "L126.IO_R_electd_F_Yh") %>%
       filter(GCAM_region_ID == gcam.USA_CODE) %>%
@@ -85,7 +87,8 @@ module_gcamusa_LB126.Gas_ElecTD <- function(command, ...) {
 
     # Calculate net pipeline energy use as total value * state shares of pipeline energy use
     L126.net_EJ_state_pipeline_gas <- L101.inEIA_EJ_state_S_F %>%
-      filter(sector == "gas pipeline",
+      # the sector below was "gas pipeline", but since there is no such category in SEDS anymore, we leave it empty. NK 2019/11/20
+      filter(sector == " ",
              fuel == "gas") %>%
       group_by(year) %>%
       # Pct share = state/year value divided by total USA value for that year
@@ -114,16 +117,17 @@ module_gcamusa_LB126.Gas_ElecTD <- function(command, ...) {
 
     # Pipeline output
     L126.out_EJ_state_pipeline_gas <- L126.in_EJ_state_F %>%
-      filter(fuel == "gas") %>%
+     #  the fuel below was "gas", but since there is no category "gas pipeline" in SEDS anymore, we leave it empty. NK 2019/11/20
+       filter(fuel == "") %>%
       mutate(sector = "gas pipeline") %>%
       select(state, sector, fuel, year, value)
 
     # Gas pipeline input = output plus pipeline energy use
-    L126.in_EJ_state_pipeline_gas <- L126.out_EJ_state_pipeline_gas %>%
-      left_join_error_no_match(L126.net_EJ_state_pipeline_gas,
-                               by = c("state", "sector", "fuel", "year")) %>%
-      # Input energy = output energy + net energy
-      mutate(value = value.x + value.y) %>%
+   L126.in_EJ_state_pipeline_gas <- L126.out_EJ_state_pipeline_gas %>%
+     left_join_error_no_match(L126.net_EJ_state_pipeline_gas,
+                              by = c("state", "sector", "fuel", "year")) %>%
+     # Input energy = output energy + net energy
+     mutate(value = value.x + value.y) %>%
       select(state, sector, fuel, year, value)
 
     # GAS PROCESSING
@@ -266,7 +270,6 @@ module_gcamusa_LB126.Gas_ElecTD <- function(command, ...) {
                      "L142.in_EJ_state_bld_F",
                      "L154.in_EJ_state_trn_F") ->
       L126.out_EJ_state_gasproc_F
-
     L126.in_EJ_state_gasproc_F %>%
       add_title("Inputs to gas processing sector by state and technology") %>%
       add_units("EJ") %>%
@@ -289,7 +292,6 @@ module_gcamusa_LB126.Gas_ElecTD <- function(command, ...) {
                      "L142.in_EJ_state_bld_F",
                      "L154.in_EJ_state_trn_F") ->
       L126.in_EJ_state_gasproc_F
-
     L126.out_EJ_state_td_elec %>%
       add_title("Output of electricity T&D sector by state") %>%
       add_units("EJ") %>%
@@ -324,8 +326,10 @@ module_gcamusa_LB126.Gas_ElecTD <- function(command, ...) {
                      "L126.IO_R_electd_F_Yh") ->
       L126.in_EJ_state_td_elec
 
-    return_data(L126.out_EJ_state_pipeline_gas, L126.in_EJ_state_pipeline_gas, L126.out_EJ_state_gasproc_F, L126.in_EJ_state_gasproc_F, L126.out_EJ_state_td_elec, L126.in_EJ_state_td_elec)
-  } else {
+
+ return_data(L126.out_EJ_state_pipeline_gas, L126.in_EJ_state_pipeline_gas, L126.out_EJ_state_gasproc_F, L126.in_EJ_state_gasproc_F, L126.out_EJ_state_td_elec, L126.in_EJ_state_td_elec)
+
+      } else {
     stop("Unknown command")
   }
 }

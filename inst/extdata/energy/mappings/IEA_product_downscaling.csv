@@ -3,7 +3,7 @@
 # Source: NA
 # Units: NA
 # Description: This mapping table assigns a FLOW (i.e., sector or process) to each PRODUCT (fuel) to be used for downscaling from composite countries like the USSR to the 15 countries, in years when only values for the composite nation are reported. This assignment is designed to address the very large discrepancies in sectoral attribution of fuels that occurred over the time series.
-# Column types: cc 
+# Column types: cc
 # ----------
 PRODUCT,FLOW
 Hard coal (if no detail),TPES
@@ -17,14 +17,14 @@ Patent fuel,TPATFUEL
 Coke oven coke,TCOKEOVS
 Gas coke,TPES
 Coal tar,TPES
-BKB/peat briquettes,TBKB
+BKB,TBKB
+Peat products,TPES
 Gas works gas,TGASWKS
 Coke oven gas,TCOKEOVS
 Blast furnace gas,TBLASTFUR
 Other recovered gases,TPES
 Peat,TPES
 Natural gas,TPES
-Natural Gas,TPES
 Crude/NGL/feedstocks (if no detail),TPES
 Crude oil,TPES
 Natural gas liquids,TPES
@@ -34,13 +34,12 @@ Other hydrocarbons,TPES
 Refinery gas,TREFINER
 Ethane,TFC
 Liquefied petroleum gases (LPG),TFC
-Motor gasoline,TFC
+Motor gasoline excl. biofuels,TFC
 Aviation gasoline,TFC
 Gasoline type jet fuel,TFC
-Kerosene type jet fuel,TFC
+Kerosene type jet fuel excl. biofuels,TFC
 Other kerosene,TFC
-Other Kerosene,TFC
-Gas/diesel oil,TFC
+Gas/diesel oil excl. biofuels,TFC
 Fuel oil,TFC
 Naphtha,TFC
 White spirit & SBP,TFC
@@ -48,12 +47,14 @@ Lubricants,TFC
 Bitumen,TFC
 Paraffin waxes,TFC
 Petroleum coke,TFC
-Non-specified oil products,TFC
+Other oil products,TFC
+Oil shale and oil sands,TPES
 Industrial waste,TPES
 Municipal waste (renewable),TPES
 Municipal waste (non-renewable),TPES
 Primary solid biofuels,TPES
 Biogases,TPES
+Bio jet kerosene,TPES
 Biogasoline,TPES
 Biodiesels,TPES
 Other liquid biofuels,TPES
@@ -72,5 +73,4 @@ Other sources,TPES
 Electricity,TFC
 Heat,TFC
 Total,TPES
-Total of all energy sources,TPES
 Memo: Renewables,TPES

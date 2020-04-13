@@ -16,7 +16,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
 #' @importFrom stats aggregate
-#' @importFrom dplyr bind_rows distinct filter full_join left_join rename select
+#' @importFrom dplyr bind_rows distinct filter full_join left_join rename select add_row
 #' @importFrom tidyr gather replace_na spread
 #' @author BBL
 module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
@@ -71,6 +71,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       year <- value <- countries <- country.codes <- item <- item.codes <-
       element <- element.codes <- `2011` <- NULL # silence package chck.
 
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -105,6 +106,76 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     itel_colnames <- c("item", "item codes", "element", "element codes")
     coitel_colnames <- c("countries", "country codes", itel_colnames)
     FAO_histyear_cols <- as.character(aglu.FAO_HISTORICAL_YEARS)
+
+
+    #kbn 2019/11/04 Write function to fill holes for base year-
+    #This function will fill holes from the specified cut-off year to the base year for any region, comoditty combination
+    #that is missing data in any year. It will not fill in data if no data exists for a region commoditty combination before the cut-off year.
+    #It will not add new commoditties or regions.If Printlog is set to TRUE, the function will print out,how many data points you are missing in the
+    #base year, how many points could be filled in and how many points could not be filled in.Current cut-off year is set to 2007. 1961 is the first year of FAO
+    #data.
+
+    get_baseyear_or_mostrecent_FAO<-function(df,BaseYear=MODEL_FINAL_BASE_YEAR,StartYear=1961,CutOff=2007,Printlog=FALSE){
+
+      #Step 1: Get values for start year, last year and dataset name
+      StartYear<-toString(StartYear)
+      LastYear<-colnames(df)[ncol(df)]
+      name<-deparse(substitute(df))
+
+      #Step 2: Convert from tibble to dataframe for processing.Will convert back to tibble in the last step.
+     df<-as.data.frame(df)
+
+     #Step 3: Create a list of required years
+    Yrs<-seq(CutOff+1,BaseYear,1)
+
+      #Step 4: If there is no column, create it.
+      for (i in Yrs){
+        if (!toString(i) %in% c(colnames(df))){
+          df[,toString(i)]<-NA_integer_
+        }
+      }
+
+      #Step 5: Print first warning message
+      if (Printlog==TRUE){
+
+        print(paste("No data found in dataset ",name," for ",(sum(is.na((df[,toString(BaseYear)]))))," values.",sep = ""))}
+
+
+      #Step 6: Fill with neighbor
+
+      for (i in Yrs){
+        df[,toString(i)]<-if_else(is.na(df[,toString(i)]),df[,toString(i-1)],df[,toString(i)])
+      }
+
+
+      if (Printlog==TRUE){
+        #Step7: Print second warning message
+        print(paste("Could not fill in data for base year ",name," for ",sum(is.na(df[,toString(BaseYear)]))," values. There was no data available after ", CutOff,sep = ""))}
+
+    #Step 8: Convert back to tibble
+
+    df<-as_tibble(df)
+
+      return(df)
+    }
+
+
+    #kbn 2019/12/16 Adding in hole-filling for all FAO data.
+    FAO_ag_HA_ha_PRODSTAT <- get_baseyear_or_mostrecent_FAO(FAO_ag_HA_ha_PRODSTAT)
+    FAO_ag_Prod_t_PRODSTAT <- get_baseyear_or_mostrecent_FAO(FAO_ag_Prod_t_PRODSTAT)
+    FAO_ag_Exp_t_SUA <- get_baseyear_or_mostrecent_FAO(FAO_ag_Exp_t_SUA)
+    FAO_ag_Feed_t_SUA <- get_baseyear_or_mostrecent_FAO(FAO_ag_Feed_t_SUA)
+    FAO_ag_Food_t_SUA <- get_baseyear_or_mostrecent_FAO(FAO_ag_Food_t_SUA)
+    FAO_ag_Imp_t_SUA <- get_baseyear_or_mostrecent_FAO(FAO_ag_Imp_t_SUA)
+    FAO_an_Exp_t_SUA <- get_baseyear_or_mostrecent_FAO(FAO_an_Exp_t_SUA)
+    FAO_an_Food_t_SUA <- get_baseyear_or_mostrecent_FAO(FAO_an_Food_t_SUA)
+    FAO_an_Imp_t_SUA <- get_baseyear_or_mostrecent_FAO(FAO_an_Imp_t_SUA)
+    FAO_an_Prod_t_SUA <- get_baseyear_or_mostrecent_FAO(FAO_an_Prod_t_SUA)
+    FAO_fallowland_kha_RESOURCESTAT <- get_baseyear_or_mostrecent_FAO(FAO_fallowland_kha_RESOURCESTAT)
+    FAO_harv_CL_kha_RESOURCESTAT <- get_baseyear_or_mostrecent_FAO(FAO_harv_CL_kha_RESOURCESTAT)
+    FAO_Fert_Cons_tN_RESOURCESTAT <- get_baseyear_or_mostrecent_FAO(FAO_Fert_Cons_tN_RESOURCESTAT)
+    FAO_Fert_Prod_tN_RESOURCESTAT<- get_baseyear_or_mostrecent_FAO(FAO_Fert_Prod_tN_RESOURCESTAT)
+
 
     # Replace the item and element code names with what is used in the more recent datasets
     FAO_Fert_Cons_tN_RESOURCESTAT_archv[itel_colnames] <- FAO_Fert_Cons_tN_RESOURCESTAT[1, itel_colnames]
@@ -187,9 +258,9 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       # apply the following function over all list elements
       lapply(FUN = function(df) {
         if(!"1961" %in% colnames(df)) df$`1961` <- df$`1962`
-        if(!"2010" %in% colnames(df)) df$`2010` <- df$`2009`
-        if(!"2011" %in% colnames(df)) df$`2011` <- df$`2010`
-        if(!"2012" %in% colnames(df)) df$`2012` <- df$`2011`
+        if(!"2013" %in% colnames(df)) df$`2013` <- df$`2012`
+        if(!"2014" %in% colnames(df)) df$`2014` <- df$`2013`
+        if(!"2015" %in% colnames(df)) df$`2015` <- df$`2014`
         df$element <- NULL
         df
       }) %>%

@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LA142.Building
+#' module_gcamusa_LA142.Building
 #'
 #' Downscaling each state and sector's shares of USA building energy use by fuel
 #'
