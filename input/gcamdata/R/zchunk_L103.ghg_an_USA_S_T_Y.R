@@ -21,6 +21,7 @@ module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/mappings/EPA_ghg_tech",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              FILE = "emissions/EPA_FCCC_AG_2005"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -37,6 +38,13 @@ module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
+
     L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
     EPA_FCCC_AG_2005 <- get_data(all_data, "emissions/EPA_FCCC_AG_2005")
 
@@ -89,6 +97,7 @@ module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "emissions/mappings/EPA_ghg_tech",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
                      "emissions/EPA_FCCC_AG_2005") ->
       L103.ghg_tgmt_USA_an_Sepa_F_2005

@@ -1,166 +1,175 @@
 # File: FAO_Fert_Prod_tN_RESOURCESTAT.csv
 # Title: FAO fertilizer production by country, year
 # Units: tons N
-# Column types: ciciciiiiiiiiii 
+# Column types: ciciciiiiiiiiiiiiiiiii
 # ----------
-countries,country codes,item,item codes,element,element codes,2002,2003,2004,2005,2006,2007,2008,2009,2010
-Afghanistan,2,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,23414,16206,19458,15631,17636,16973,15278,13603,12022
-Albania,3,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Algeria,4,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,72600,99660,153790,83100,27440,137780,11040,6600,17100
-Angola,7,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Antigua and Barbuda,8,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Argentina,9,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,523700,607492,627693,574741,659115,468938,405948,514223,433113
-Armenia,1,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,3000,0,0,0,0,0,0,0,0
-Australia,10,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,354464,314751,326123,338588,337240,392912,330489,543309,545000
-Austria,11,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Azerbaijan,52,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Bahrain,13,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,290260,260820,234600,258086,287353,268990,304060,300840,289340
-Bangladesh,16,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1155433,952070,923410,880646,815701,855556,557040,512840,616216
-Barbados,14,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Belarus,57,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,644420,635865,665034,682065,711548,749944,727975,731378,771295
-Belize,23,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Benin,53,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Bhutan,18,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Bolivia (Plurinational State of),19,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Bosnia and Herzegovina,80,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Brazil,21,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,956346,914247,916809,985312,1051386,983761,921577,892611,627454
-Brunei Darussalam,26,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Bulgaria,27,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,270353,288200,331300,348700,237540,262130,281953,282000,282000
-Burkina Faso,233,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Burundi,29,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Cambodia,115,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Cameroon,32,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Canada,33,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,3087621,2905009,3048059,3109020,2309320,3234810,3192990,3129160,3272175
-Chile,40,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,115000,167555,120370,130750,122776,167056,207643,198198,240000
-China,351,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,27608754,28862920,27816728,28014560,31181567,35359259,35584817,38776538,0
-Colombia,44,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,84200,90400,66400,205916,272659,301478,209677,268003,250158
-Congo,46,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Cook Islands,47,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Costa Rica,48,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Cote dIvoire,107,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Croatia,98,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,262000,286064,335148,323223,407108,429221,444633,388883,305572
-Cuba,49,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,8533,10023,19856,12733,17373,17494,16936,9818,13711
-Cyprus,50,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Czech Republic,167,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,274249,291252,304941,305246,332600,333000,333000,220677,221000
-Democratic Republic of the Congo,250,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Denmark,54,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,116165,148459,92787,0,0,0,0,0,0
-Dominica,55,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Dominican Republic,56,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Ecuador,58,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Egypt,59,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1557510,1558830,1584400,1552008,1750977,2286460,2618560,2723590,2806040
-El Salvador,60,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Eritrea,178,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Estonia,63,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,24264,34000,66601,100985,99350,96405,91750,784,721
-Ethiopia,238,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Fiji,66,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Finland,67,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,274000,278658,278658,291755,221100,272773,279566,228944,244079
-France,68,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1000000,1228351,2850854,3044423,2181793,1026961,1246683,1067184,1018673
-French Polynesia,70,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Gabon,74,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Gambia,75,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Georgia,73,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,83000,76903,94075,110403,127478,131822,133887,134725,119963
-Germany,79,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1256291,1120999,1160639,1253773,1185726,1504452,961882,1224687,1305210
-Ghana,81,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Greece,84,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,110771,209625,110771,93051,45171,35117,31970,21961,21000
-Guatemala,89,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Guinea,90,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Guyana,91,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Honduras,95,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Hungary,97,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,210134,205301,266070,311302,302000,222968,189687,232212,241782
-Iceland,99,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-India,100,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,10391719,10468657,11205586,11218193,10934856,10400408,10430846,11376729,12051735
-Indonesia,101,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1974661,2119780,2309142,2875658,2808307,2947267,3189118,3591165,3536585
-Iran (Islamic Republic of),102,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,767513,748077,746126,703884,652378,777797,1041458,928750,791954
-Iraq,103,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,98454,138940,151720,110220,149300,141220,96600
-Ireland,104,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,208000,0,0,0,0,0,0,0,0
-Israel,105,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,96547,97385,91556,97173,94627,111662,83133,57382,100477
-Italy,106,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,400200,483828,609629,425187,303378,258432,335794,224158,225000
-Jamaica,109,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Japan,110,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,828913,771490,796224,767305,770545,769924,647184,732178,650283
-Jordan,112,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,102960,90540,118440,118260,162260,158760,150020,119790,148770
-Kazakhstan,108,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,16400,20894,37985,4619,15753,71228,65736,48000,48000
-Kenya,114,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Kuwait,118,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,255300,350520,336720,374440,455400,424120,442520,337640,443900
-Kyrgyzstan,113,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Latvia,119,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Lebanon,121,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Libya,124,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,388700,379500,381340,384100,380420,359260,276920,250000,370000
-Lithuania,126,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,506617,548341,569801,670206,631092,751488,695420,676770,646686
-Luxembourg,256,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Madagascar,129,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Malawi,130,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,146,130,182,180,0
-Malaysia,131,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,554300,510140,458160,593860,622311,638903,837393,1096985,1000000
-Maldives,132,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Mali,133,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,84742,23393,23569,58033,26388,20854,13966
-Malta,134,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Marshall Islands,127,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Mauritius,137,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,15300,8599,2597,0,0,0,0,0,0
-Mexico,138,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,273628,204562,275000,368249,248415,308843,358990,323928,328233
-Mongolia,141,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Montenegro,273,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,0,0,0,0,0
-Morocco,143,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,338650,308000,329160,264100,298940,275500,197940,336880,463450
-Mozambique,144,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Myanmar,28,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,20400,30000,40000,46058,52925,50614,48823,32097,16235
-Namibia,147,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Nepal,149,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Netherlands,150,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1478365,1427083,1584753,1534664,1536210,1491179,1493790,1397882,1475708
-New Caledonia,153,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-New Zealand,156,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,113994,119960,184454,174012,129765,95020,88790,104934,101600
-Nicaragua,157,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Niger,158,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Nigeria,159,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Norway,162,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,327397,477114,498599,453397,492053,497739,465639,357677,419310
-Oman,221,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,478860,778780,875380,897920,933340,955420
-Pakistan,165,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,2192000,2260071,2267285,2424785,2464737,2442411,2544877,2586309,2710434
-Panama,166,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Papua New Guinea,168,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Paraguay,169,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Peru,170,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Philippines,171,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,207839,157353,135343,138545,117025,111400,38438,27168,5224
-Poland,173,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1035118,1128539,1647406,1735461,1714254,1832856,1715577,1545840,1637458
-Portugal,174,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,123400,59933,65804,89663,55414,48650,38222,45933,87317
-Qatar,179,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,798698,818892,1029802,1370248,1338140,1363440,1378620,1379080,1384600
-Republic of Korea,117,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,224666,237936,399447,416432,337805,372534,348364,463266,511978
-Republic of Moldova,146,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Romania,183,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,806103,1035000,772281,1194130,818909,756184,946084,618053,789628
-Russian Federation,185,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,5968000,5995000,6591000,6725000,6830000,7203000,6890000,7402000,7624000
-Rwanda,184,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Saint Kitts and Nevis,188,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Samoa,244,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Saudi Arabia,194,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1289980,1299660,1250310,1368540,1472370,1826600,1712020,1590680,1701570
-Senegal,195,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,15000,32028,24893,15856,2599,5903,4812,1470,1500
-Serbia,272,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,104146,155873,93721,87769,84445
-Serbia and Montenegro,186,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,111864,87688,199317,184512,,,,,
-Seychelles,196,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Singapore,200,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Slovakia,199,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,213800,220100,261100,249700,221500,196209,167784,183383,185000
-Slovenia,198,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,351,295,375,27,0,0,0,0,0
-South Africa,202,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,298400,310038,259191,281482,166900,154149,118081,220466,105075
-Spain,203,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,772116,790871,761124,794693,715644,710298,628297,620177,714928
-Sri Lanka,38,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Sudan (former),206,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Suriname,207,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Sweden,210,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,62900,57113,59226,53224,79600,79281,0,0,0
-Switzerland,211,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Syrian Arab Republic,212,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,154520,131190,112497,129192,133478,140547,141927,134610,145820
-Tajikistan,208,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,8000,8100,14858,11270,10580,0,0
-Thailand,216,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,108000,108972,130875,110982,137200,137000,137000,137000,137000
-The former Yugoslav Republic of Macedonia,154,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Togo,217,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Tonga,219,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Trinidad and Tobago,220,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,310433,297891,251407,344308,316624,327996,294406,320568,326030
-Tunisia,222,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,273660,286980,265148,234051,246242,205030,220076,250326,280998
-Turkey,223,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,651700,839321,807224,835865,649065,596764,612743,572382,776939
-Uganda,226,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Ukraine,230,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,2239295,2424259,2310187,2561330,3269850,2720310,2532440,2068890,2079380
-United Arab Emirates,225,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,284740,300840,289800,264500,297540,298310,287730,214430,320230
-United Kingdom,229,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,679415,668287,653438,660394,634400,408570,410000,373505,203544
-United Republic of Tanzania,215,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-United States of America,231,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,9386500,8583681,8969917,8317466,8168644,8516272,7848311,7684841,8268475
-Uruguay,234,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Uzbekistan,235,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,812100,874900,916600,919700,900000
-Venezuela (Bolivarian Republic of),236,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,539500,542198,715701,704965,514890,732360,835180,621790,658680
-Viet Nam,237,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,49200,68099,485874,388194,363860,443610,431273,439463,479454
-Yemen,249,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Zambia,251,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0
-Zimbabwe,181,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,61100,55417,46717,41485,37129,37200,37200,37200,37200
+countries,country codes,item,item codes,element,element codes,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017
+Armenia,1,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,3000,,,,,,,,,,,0,0,0,0,0
+Afghanistan,2,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,23414,16206,19458,15631,17636,16973,15324,13606,12022,17555,15776,15694,14416,14416,14416,14416
+Albania,3,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Algeria,4,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,72600,99660,153790,83100,27440,137780,11040,13400,20800,19500,24500,68000,438300,777600,1043200,1043200
+Angola,7,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Antigua and Barbuda,8,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Argentina,9,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,523700,607492,627693,574741,659115,468938,405948,514000,433113,533256,542503,630491,470858,431740,542945,696686
+Australia,10,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,354464,314751,326123,338588,337240,392912,330489,543309,285633,317961,237495,716831,342300,413300,423400,423400
+Bahamas,12,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,,,,,0
+Bahrain,13,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,310946,286136,269620,272497,296899,290464,306168,292727,290142,280463,290015,303539,365118,330960,373899,341460
+Barbados,14,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Bangladesh,16,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1155433,952070,923410,880646,815701,855556,692900,594020,491520,425340,437820,477460,394580,415220,482040,482040
+Bermuda,17,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,,0,0,0,0
+Bhutan,18,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Bolivia (Plurinational State of),19,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Botswana,20,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,0,0,0,0,0,0,0,0,0
+Brazil,21,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,894759,841991,909389,916965,919394,824270,837947,724633,927493,888308,797713,848885,813012,831223,796192,587310
+Belize,23,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Brunei Darussalam,26,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Bulgaria,27,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,270353,288200,331300,348700,237540,262130,281953,190288,264177,368944,258000,185988,210008,319561,318761,264388
+Myanmar,28,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,20400,30000,40000,46058,52925,50614,48823,32097,16235,76273,95963,77034,78269,66539,36228,23023
+Burundi,29,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Cameroon,32,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,,,0
+Canada,33,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,3087621,2905009,3048059,3109020,2309320,3234810,3192990,3129160,3361936,3443253,3358080,3820380,3707220,3994220,4122960,3735920
+Central African Republic,37,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Sri Lanka,38,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Chile,40,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,115000,167555,120370,130750,122776,167056,207643,198198,190000,150000,130000,106000,106000,106000,106000,106000
+Colombia,44,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,84200,90400,66400,205916,272659,301478,203375,268003,250158,274288,280340,157877,157437,168099,167312,167312
+Congo,46,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,,,,,0
+Cook Islands,47,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,0,0,0,0,0,0,0,0,0,,,0
+Costa Rica,48,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Cuba,49,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,8532,10022,19855,12732,17373,17493,16935,9817,13551,18548,22570,23611,22113,22113,22113,22113
+Cyprus,50,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Azerbaijan,52,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,,0,0,0,0
+Benin,53,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Denmark,54,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,116165,148459,92787,0,0,0,0,0,0,0,0,0,0,0,0,0
+Dominica,55,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,,,0
+Dominican Republic,56,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Belarus,57,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,644420,635865,665034,682065,711548,749944,727975,731378,771295,813922,832766,833096,841911,861185,843010,854320
+Ecuador,58,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Egypt,59,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1557510,1558830,1584400,1552008,1750977,2286460,2618560,2723590,2800020,2687430,2391830,2660000,2660000,2200000,1800000,2800000
+El Salvador,60,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,,,,,,,,,0
+Estonia,63,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,24264,34000,66601,100985,99350,96405,91750,9784,721,261,264,365,241,118,111,247
+Fiji,66,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Finland,67,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,267709,190123,251045,262213,229908,279459,305032,256052,312274,261087,298159,370900,203117,283410,250602,195806
+France,68,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1101414,1030127,1074917,985119,1430539,1792211,1553683,1360195,1358154,324190,345291,524849,279091,469045,361926,354212
+French Polynesia,70,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Georgia,73,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,83000,76903,94075,110403,127478,131822,133887,134725,119963,190593,186057,202113,196889,194312,155920,162844
+Gabon,74,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Gambia,75,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,0,0,0,0,0,0,0,0,,,0,0,0,0,0
+Germany,79,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1256291,1120999,1160639,1253773,1185726,1504452,961882,1224687,1279619,1145336,1306175,1316100,1316100,1253300,1253300,1253300
+Bosnia and Herzegovina,80,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,44310,31717,84343,63279,48908,67363,77138,43843,49908
+Ghana,81,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Greece,84,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,110771,209625,110771,93051,45171,35117,31970,21961,80421,207705,119737,98237,128936,163168,167497,194372
+Guatemala,89,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Guinea,90,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Guyana,91,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Honduras,95,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+"China, Hong Kong SAR",96,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Hungary,97,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,210134,205301,266070,311302,302000,222968,212387,229268,233354,300576,249222,294404,341921,341921,341921,341921
+Croatia,98,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,262000,286064,335148,323223,332406,350988,353180,305455,357342,379467,345669,328380,342968,351518,309831,309831
+Iceland,99,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,0,0,0,0,0,0,0,0,0
+India,100,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,10391719,10468657,11205586,11218193,10934856,10400408,10430846,11376729,12087720,12192878,12159007,12408600,12433700,13475900,13376800,13422600
+Indonesia,101,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1974661,2119780,2309142,2875658,2808307,2947267,3182809,3599348,3536584,3605437,3781955,3634209,3680263,3778013,3546273,3805696
+Iran (Islamic Republic of),102,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,963082,950811,931657,971530,1081184,850324,1190218,1203181,1334870,1395631,1781295,1651464,1320919,1613275,1439611,1826568
+Iraq,103,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,98454,138940,151720,110220,149300,141220,96600,128800,123280,135240,47464,31392,114212,114212
+Ireland,104,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,208000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Israel,105,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,91718,80736,97489,79189,85094,81782,97267,39783,92511,48408,56049,55644,58785,42460,31726,0
+Italy,106,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,400200,483828,609629,425187,303378,258432,335794,374394,580801,186955,321824,420147,418602,401139,484723,397715
+Cote dIvoire,107,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,,,,,0
+Kazakhstan,108,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,16400,20894,37985,4619,15753,71228,65736,48000,49743,69169,49941,90157,130589,139370,139370,139370
+Jamaica,109,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,,,,,0
+Japan,110,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,828913,771490,796224,767305,770545,769924,647184,621908,650283,610674,603223,596072,547850,536731,567975,556577
+Jordan,112,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,102960,90540,118440,118260,162260,158760,150020,119790,148770,159520,128860,132530,145790,122840,122840,122840
+Kyrgyzstan,113,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,0,0,0,0,0,0,0,0,0
+Kenya,114,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Cambodia,115,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,,,,,0
+Republic of Korea,117,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,388882,335359,378028,403587,327412,353603,323982,310606,332050,298683,181027,228789,143548,108324,156865,202084
+Kuwait,118,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,255300,350520,336720,374440,455400,424120,442520,337640,443900,434700,402500,457240,378580,473500,473500,473500
+Latvia,119,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Lebanon,121,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Libya,124,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,389600,422300,383900,384100,340400,357400,276900,280600,415000,75000,20000,219000,100700,169700,112200,112200
+Lithuania,126,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,506617,548341,569801,670206,631092,751488,695420,676769,646986,849503,834331,688390,796073,796073,796073,796073
+Marshall Islands,127,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"China, Macao SAR",128,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,3338,3263,11759,14135,9943
+Madagascar,129,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Malawi,130,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,146,130,182,180,,0,0,0,0,0,0,0
+Malaysia,131,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,554300,510140,458160,593860,622311,638903,837393,1096985,690000,460000,408020,621200,570800,599800,599800,599800
+Maldives,132,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Mali,133,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,84742,23393,23569,58033,26517,22289,17771,39281,46757,46757,46757,46757,46757,46757
+Malta,134,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Mauritius,137,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,15300,8599,2597,0,0,0,0,0,0,0,0,0,0,0,0,0
+Mexico,138,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,273628,204562,275000,368249,248415,308843,359578,327245,443561,473416,501456,840790,792007,601737,691462,593556
+Mongolia,141,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Morocco,143,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,338650,308000,329160,264100,298940,275500,197940,336880,498332,562687,641867,540007,572898,537676,917800,917800
+Mozambique,144,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Republic of Moldova,146,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,,,,,0
+Namibia,147,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,,,,,0
+Nauru,148,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Nepal,149,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Netherlands,150,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1478365,1427083,1584753,1534664,1536210,1491179,1493790,1397882,1475708,1468636,1650206,1734418,1878333,2022248,2166163,2166163
+New Caledonia,153,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,,,,,0
+The former Yugoslav Republic of Macedonia,154,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,,,,,0
+New Zealand,156,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,113994,119960,184454,174012,129765,95020,88790,104934,101600,100000,100000,103400,125100,109400,109400,109400
+Nicaragua,157,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Niger,158,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,,,,,0
+Nigeria,159,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,,,,54743,31998,65940,170159,108000,78200,129605,319700,653349
+Norway,162,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,459180,433288,454405,420185,497047,521170,499168,341414,516685,504870,511352,581576,549618,589824,540532,501035
+Pakistan,165,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,2192000,2260071,2267285,2424785,2464737,2442411,2544878,2579587,2707356,2613167,2235192,2455549,2621809,2927796,3213797,3063037
+Panama,166,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Czech Republic,167,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,151212,225427,219162,187601,204493,229851,168859,233449,216718,173193,266251,162592,119148,173903,166095,145490
+Papua New Guinea,168,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Paraguay,169,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Peru,170,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Philippines,171,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,207839,157353,135343,138545,117025,111400,39451,27890,5224,93124,143919,46027,46839,45734,44629,44629
+Poland,173,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1305000,1626000,1644000,1735000,1714000,1833000,1716000,1545000,1637000,1766000,1880000,1834000,1948991,2010160,1966820,2057909
+Portugal,174,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,157000,152739,148478,144216,139955,168465,143489,73613,111061,124766,117560,91240,114383,113688,102733,104933
+Eritrea,178,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Qatar,179,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,798698,818892,1029802,1370248,1338140,1363440,1378620,1379080,1384600,1479820,2095300,2870000,2971680,2971680,2971680,2971680
+Zimbabwe,181,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,61100,55417,46717,41485,37129,37200,37200,37200,37200,31000,25000,31500,37700,32300,14700,14700
+Romania,183,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,762800,715200,941400,1170700,970400,991000,898000,909300,656664,588155,595484,673083,707853,406330,326741,326741
+Rwanda,184,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Russian Federation,185,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,5968000,5995000,6591000,6725000,6830000,7203000,6890000,5463668,7583682,7776514,7706191,8237800,8216800,8732400,9474800,10051400
+Serbia and Montenegro,186,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,111864,87688,199317,184512,,,,,,,,,,,,
+Saint Kitts and Nevis,188,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,0,0,0,0,0,0,0,0,,,0,0,0,0,0
+Saint Lucia,189,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Saudi Arabia,194,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,1426800,1426800,1418600,1459600,1640000,2132000,2132000,2132000,2132000,2132000,2132000,2573298,1999436,3264787,3097721,2176720
+Senegal,195,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,15000,32028,24893,15856,2599,5903,4812,1470,2291,12,4325,5216,6909,4932,11384,26959
+Seychelles,196,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Slovenia,198,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,351,295,375,27,0,0,0,0,0,0,0,0,0,0,0,0
+Slovakia,199,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,213800,220100,261100,249700,221500,196209,167784,183383,187393,273976,236390,332394,244524,328549,279635,279712
+Singapore,200,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+South Africa,202,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,298400,310038,259191,281482,166900,154149,118081,259939,101883,46109,87681,202200,219400,167400,167400,167400
+Spain,203,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,772116,790871,761124,794693,715644,710298,628297,620177,714928,718130,748875,709999,691125,724247,703822,727980
+Sudan (former),206,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,,,,0,,,,,,
+Suriname,207,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,0,,,,,,,,,,0,0,0,0,0
+Tajikistan,208,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,8000,8100,14858,11270,10580,0,0,0,0,0,0,0,0,0
+Sweden,210,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,62900,57113,59226,53224,79600,79281,0,0,0,0,0,0,0,0,0,0
+Switzerland,211,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Syrian Arab Republic,212,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,154520,131190,112497,129192,133478,140547,141927,134610,145820,154100,77550,23760,23760,0,0,0
+"China, Taiwan Province of",214,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,94754,66920,110728,111560,103567,104259,95817,93528,105327,99641,105147,99792,93261,75682,85017,85017
+United Republic of Tanzania,215,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Thailand,216,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,108000,108972,130875,110982,137200,137000,137000,137000,137000,100000,110000,106700,106500,108800,113600,113600
+Togo,217,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,0,0,0,0,,,,,,0,0,0,0,0
+Tonga,219,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Trinidad and Tobago,220,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,310223,297710,284938,344131,318967,326375,292560,314115,734938,743541,697572,646600,608273,695513,674884,661919
+Oman,221,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,371357,843919,863463,848925,1116946,1498811,1178398,1367395,1712577,687553,1194117,1288228,1509238
+Tunisia,222,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,305582,334202,279386,263567,266176,226288,226451,267852,324920,124827,186047,186124,191245,133651,132749,201199
+Turkey,223,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,651700,839321,807224,835865,649065,596764,612743,625072,768588,891695,867014,865777,821860,867370,775026,876701
+United Arab Emirates,225,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,363260,388680,379660,471500,377200,377200,377200,377200,377200,381300,326360,658460,933160,933160,933160,933160
+Uganda,226,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,,,,,0
+United Kingdom,229,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,579000,495000,483000,458200,411300,489400,342000,336000,374000,358000,323500,310100,326800,360900,360900,360900
+Ukraine,230,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,2239295,2424259,2310187,2561330,3269850,2720310,2532440,2068890,2079380,2753950,2745150,3474586,2446716,2164800,1675916,976948
+United States of America,231,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,9386500,8583681,8969917,8317466,8168644,8516272,8063062,7632797,8233925,8590263,8391946,8897875,9132640,9452873,9969020,11339030
+Burkina Faso,233,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Uruguay,234,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,0,,,,,,,,,,0,0,0,0,0
+Uzbekistan,235,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,623000,682400,718700,710900,812100,874900,916600,919700,925966,932232,977650,913649,976398,939560,951615,867238
+Venezuela (Bolivarian Republic of),236,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,539500,533300,697400,689100,514890,732360,832480,623190,656580,626144,597289,472876,508842,426925,598700,598700
+Viet Nam,237,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,205382,229476,303959,388194,363636,443609,431272,439462,462488,461328,754400,967380,1011080,1039140,935502,993508
+Ethiopia,238,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Samoa,244,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Yemen,249,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Democratic Republic of the Congo,250,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Zambia,251,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Belgium,255,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,790000,790000,840200,922600,958600,1004300,888400,884300,946500,955600,931700,1053300,1027100,1044000,1002300,1002300
+Serbia,272,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,104146,155873,86162,119442,138202,176497,187003,192232,103510,74132,66569,79238
+Montenegro,273,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,,0,0,0,0,0
+Sudan,11,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,,,,,,,,,,,0,0,0,0,0,0
+China,351,Nitrogen Fertilizers (N total nutrients),3102,Production Quantity in nutrients (tonnes of nutrients),5515,23447106,25833600,27718904,27043617,27837301,31357046,31037963,31059147,34034088,33956549,35339720,36241614,39692311,40625679,37609722,34980115

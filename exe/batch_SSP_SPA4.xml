@@ -76,7 +76,7 @@
 			<Value name="cement">../input/gcamdata/xml/cement_incelas_ssp4.xml</Value>
 			
 			<!-- TRANSPORTATION -->
-			<Value name="trn">../input/extra/transportation_UCD_SSP3.xml</Value>
+			<Value name="trn">../input/gcamdata/xml/transportation_UCD_SSP3.xml</Value>
 			
 			<!-- BUILDINGS -->
 			<Value name="bld">../input/gcamdata/xml/building_SSP4.xml</Value>

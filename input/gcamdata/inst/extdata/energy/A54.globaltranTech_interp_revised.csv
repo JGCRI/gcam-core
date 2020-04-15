@@ -1,0 +1,46 @@
+# File: A54.globaltranTech_interp_revised.csv
+# Title: Transportation technology default shareweights. Not including single-technology subsectors
+# Source: Documented in JIRA issue https://jira.pnnl.gov/jira/browse/JGCRI-358?src=confmacro.
+# Units: NA
+# Column types: ccccccc 
+# ----------
+supplysector,tranSubsector,tranTechnology,apply.to,from.year,to.year,interpolation.function
+trn_freight,Freight Rail,Adv-Electric,share-weight,final-calibration-year,end-year,fixed
+trn_freight,Freight Rail,Adv-Liquid,share-weight,final-calibration-year,end-year,fixed
+trn_freight,Freight Rail,Coal,share-weight,final-calibration-year,initial-future-year,linear
+trn_freight,Freight Rail,Electric,share-weight,final-calibration-year,end-year,fixed
+trn_freight,Freight Rail,Liquids,share-weight,final-calibration-year,end-year,fixed
+trn_freight_road,Light truck,Liquids,share-weight,final-calibration-year,end-year,fixed
+trn_freight_road,Light truck,NG,share-weight,final-calibration-year,end-year,linear
+trn_freight_road,Medium truck,Liquids,share-weight,final-calibration-year,end-year,fixed
+trn_freight_road,Medium truck,NG,share-weight,final-calibration-year,2050,linear
+trn_freight_road,Heavy truck,Liquids,share-weight,final-calibration-year,end-year,fixed
+trn_freight_road,Heavy truck,NG,share-weight,final-calibration-year,2050,linear
+trn_freight_road,Light truck,NG,share-weight,final-calibration-year,2050,linear
+trn_pass,Passenger Rail,Electric,share-weight,final-calibration-year,end-year,fixed
+trn_pass,Passenger Rail,Liquids,share-weight,final-calibration-year,end-year,fixed
+trn_pass,Passenger Rail,Tech-Adv-Electric,share-weight,final-calibration-year,end-year,fixed
+trn_pass,Passenger Rail,Tech-Adv-Liquid,share-weight,final-calibration-year,end-year,fixed
+trn_pass_road,Bus,Liquids,share-weight,final-calibration-year,end-year,fixed
+trn_pass_road,Bus,NG,share-weight,final-calibration-year,end-year,linear
+trn_pass_road_bus,Bus,Liquids,share-weight,final-calibration-year,end-year,fixed
+trn_pass_road_bus,Bus,NG,share-weight,final-calibration-year,end-year,linear
+trn_pass_road_LDV,2W and 3W,Liquids,share-weight,final-calibration-year,end-year,fixed
+trn_pass_road_LDV,2W and 3W,NG,share-weight,final-calibration-year,end-year,fixed
+trn_pass_road_LDV,2W and 3W,BEV,share-weight,final-calibration-year,2050,linear
+trn_pass_road_LDV,2W and 3W,LA-BEV,share-weight,final-calibration-year,2050,linear
+trn_pass_road_LDV_4W,Car,BEV,share-weight,final-calibration-year,2050,linear
+trn_pass_road_LDV_4W,Car,FCEV,share-weight,final-calibration-year,end-year,linear
+trn_pass_road_LDV_4W,Car,Hybrid Liquids,share-weight,final-calibration-year,initial-future-year,linear
+trn_pass_road_LDV_4W,Car,Liquids,share-weight,final-calibration-year,end-year,fixed
+trn_pass_road_LDV_4W,Car,NG,share-weight,final-calibration-year,end-year,linear
+trn_pass_road_LDV_4W,Large Car and Truck,BEV,share-weight,final-calibration-year,2050,linear
+trn_pass_road_LDV_4W,Large Car and Truck,FCEV,share-weight,final-calibration-year,end-year,linear
+trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,share-weight,final-calibration-year,initial-future-year,linear
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,share-weight,final-calibration-year,end-year,fixed
+trn_pass_road_LDV_4W,Large Car and Truck,NG,share-weight,final-calibration-year,end-year,linear
+trn_pass_road_LDV_4W,Mini Car,BEV,share-weight,final-calibration-year,2050,linear
+trn_pass_road_LDV_4W,Mini Car,FCEV,share-weight,final-calibration-year,end-year,linear
+trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,share-weight,final-calibration-year,initial-future-year,linear
+trn_pass_road_LDV_4W,Mini Car,Liquids,share-weight,final-calibration-year,end-year,fixed
+trn_pass_road_LDV_4W,Mini Car,NG,share-weight,final-calibration-year,end-year,linear

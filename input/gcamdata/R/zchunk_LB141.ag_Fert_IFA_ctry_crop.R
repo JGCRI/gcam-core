@@ -115,7 +115,8 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       left_join(L141.FAO, by = c("iso", "item")) %>%
       replace_na(list(FAO = 0)) %>%
       # Calculate the FAO_LDS scaler value = FAO/LDS
-      mutate(scaler = FAO / LDS) %>%
+      # Set an upper bound to prevent extremely high fertilizer allocations to potentially low production volume GLUs
+      mutate(scaler = pmin(aglu.MAX_FAO_LDS_SCALER, FAO / LDS)) %>%
       # join back in the GTAP crop, which will be used for the remainder of the processing
       # Because the FAO item "Grasses nes for forage;Sil" is assigned to two GTAP crops ("GrsNESFrgSlg" and "MxGrss_Lgm"),
       # the "item" column will get longer. This is OK.
