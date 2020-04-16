@@ -43,6 +43,7 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/configuration.h"
+#include "util/logger/include/ilogger.h"
 
 #include <string>
 #include <ctime>
