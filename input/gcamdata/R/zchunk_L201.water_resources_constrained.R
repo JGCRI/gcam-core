@@ -11,7 +11,7 @@
 #' the generated outputs: \code{L201.RenewRsrcCurves_calib},
 #' \code{201.GrdRenewRsrcMax_runoff}, \code{L201.DepRsrcCurves_ground}. The corresponding file in the
 #' original data system was \code{L102.water_supply_unlimited.R} (water level1).
-#' @details  Genereates water resource input files for region + basin which includes runoff and groundwater.
+#' @details  Generates water resource input files for region + basin which includes runoff and groundwater.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join case_when distinct filter if_else inner_join lead mutate pull right_join select
 #' @importFrom tidyr complete nesting
@@ -31,9 +31,6 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
              "L103.water_mapping_R_B_W_Ws_share",
              "L125.LC_bm2_R_GLU",
              "L103.water_mapping_R_B_W_Ws_share",
-             "L110.in_km3_water_primary_basin",
-             "L1233.wdraw_km3_R_B_elec",
-             "L133.water_demand_livestock_R_B_W_km3",
              "L165.ag_IrrEff_R",
              "L165.IrrWithd_km3_R_B_Y",
              "L203.Production_watertd"))
@@ -73,9 +70,6 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
     L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU")
     L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
-    L110.in_km3_water_primary_basin <- get_data(all_data, "L110.in_km3_water_primary_basin")
-    L1233.wdraw_km3_R_B_elec <- get_data(all_data, "L1233.wdraw_km3_R_B_elec")
-    L133.water_demand_livestock_R_B_W_km3 <- get_data(all_data, "L133.water_demand_livestock_R_B_W_km3")
     L165.ag_IrrEff_R <- get_data(all_data, "L165.ag_IrrEff_R")
     L165.IrrWithd_km3_R_B_Y <- get_data(all_data, "L165.IrrWithd_km3_R_B_Y")
     L203.Production_watertd <- get_data(all_data, "L203.Production_watertd")
@@ -206,17 +200,17 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       # not all basin groundwater curves are in used
       left_join(L101.DepRsrcCurves_ground_uniform_bm3, by = "GCAM_basin_ID") %>%
       # ^^ non-restrictive join required (NA values generated for unused basins)
-      mutate(subresource = "groundwater") %>%
+      mutate(subresource = "groundwater",
+             extractioncost = round(price, water.DIGITS_GROUND_WATER_RSC),
+             available = round(avail, water.DIGITS_GROUND_WATER_RSC)) %>%
       arrange(region, resource, price) %>%
-      rename(extractioncost = price,
-             available = avail) %>%
       select(LEVEL2_DATA_NAMES[["RsrcCurves"]]) ->
       L201.DepRsrcCurves_ground_uniform
 
     # ==========================================================#
     # CREATE INPUTS FOR THE CALIBRATED WATER SUPPLY XML
 
-    # Calibration procedure (this will be deprecated when the water supply is switched to logits)
+    # Calibration procedure
     # Step 1: For basins with groundwater depletion... get historical (2000 - 2010) runoff, demand, and groundwater depletion
     # Step 2: Assume no unconventional water withdrawals; back-calculate withdrawn runoff fraction using demand and groundwater depletion
     # Step 3: Combine with uncalibrated accessible water (used for basins where there is no groundwater depletion historically)
@@ -225,33 +219,29 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
 
     # Step 1
     # Historical water demand by basin
-    # This part is somewhat confusing for industrial and munipal uses. Where most of the water demands are equal to the
+    # Where most of the water demands are available in L1 tables of
     # "water withdrawals" by region multiplied by basin-level shares, calculated in L1 chunks, industrial and municipal
-    # demands can't be assigned to basin at that stage, as they need to have their desalination-related water use
-    # deducted. That is, the withdrawals by basin are equal to total regional withdrawals minus desal, then multiplied
-    # by basin-wise shares. For this reason, the industrial and municipal quantities are pulled from the calibration
-    # quantities read to the model.
+    # demands can't be assigned to basin from that stage, as they need to have their desalination-related water use
+    # deducted. For this reason, we use the calibration data generated in L203. This doesn't have ag.
 
     # Pre-process the basin-level data on water demands for binding together
-    L110.in_km3_water_primary_basin <- filter(L110.in_km3_water_primary_basin, water_type == "water withdrawals")
-    L133.water_demand_livestock_R_B_W_km3 <- filter(L133.water_demand_livestock_R_B_W_km3, water_type == "water withdrawals")
-    L165.IrrWithd_km3_R_B_Y <- L165.IrrWithd_km3_R_B_Y %>%
+    L201.IrrWithd_km3_R_B_Y <- L165.IrrWithd_km3_R_B_Y %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GCAM_basin_ID),
                                by = c(GLU = "GLU_code")) %>%
       left_join_error_no_match(select(L165.ag_IrrEff_R, GCAM_region_ID, conveyance.eff),
                                by = "GCAM_region_ID") %>%
       mutate(value = IrrWithd_km3 / conveyance.eff)
-    L203.Production_watertd <- filter(L203.Production_watertd, technology != water.DESAL) %>%
+    L201.NonIrrWithd_km3_R_B_Y <- L203.Production_watertd %>%
+      filter(technology != water.DESAL,
+             technology != "water consumption") %>%
       left_join_error_no_match(GCAM_region_names, by = "region") %>%
       left_join_error_no_match(select(basin_to_country_mapping, GLU_name, GCAM_basin_ID),
-                               by = c(technology = "GLU_name")) %>%
+                               by = c(subsector = "GLU_name")) %>%
       select(GCAM_region_ID, GCAM_basin_ID, year, value = calOutputValue)
 
-    basin_water_demand_1990_2010 <- bind_rows(L1233.wdraw_km3_R_B_elec,
-                                              L133.water_demand_livestock_R_B_W_km3,
-                                              L110.in_km3_water_primary_basin,
-                                              L165.IrrWithd_km3_R_B_Y,
-                                              L203.Production_watertd) %>%
+    basin_water_demand_1990_2010 <- bind_rows(L201.IrrWithd_km3_R_B_Y,
+                                              L201.NonIrrWithd_km3_R_B_Y) %>%
       filter(year %in% MODEL_BASE_YEARS,
              year >= water.GW_DEPLETION_BASE_YEAR) %>%
       left_join_error_no_match(select(basin_to_country_mapping, GCAM_basin_ID, GLU_name),
@@ -326,8 +316,8 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
              resource = resource,
              sub.renewable.resource = "runoff",
              grade = paste0("grade", 1:20),
-             available = rnw_spline$x,
-             extractioncost = rnw_spline$y)
+             available = round(rnw_spline$x, water.DIGITS_RENEW_WATER_RSC),
+             extractioncost = round(rnw_spline$y, water.DIGITS_RENEW_WATER_RSC))
     }
 
     # replace 3-point curve with 20-point curve in all basins, except those whose demand is lower than a threshold fraction
@@ -529,9 +519,6 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         add_comments("Calibrated to ensure observed groundwater is taken in calibration years") %>%
         add_legacy_name("L201.RenewRsrcCurves_calib") %>%
         add_precursors("L103.water_mapping_R_B_W_Ws_share",
-                       "L110.in_km3_water_primary_basin",
-                       "L1233.wdraw_km3_R_B_elec",
-                       "L133.water_demand_livestock_R_B_W_km3",
                        "L165.ag_IrrEff_R",
                        "L165.IrrWithd_km3_R_B_Y",
                        "L203.Production_watertd",
@@ -546,9 +533,6 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         add_comments("Includes historical grades") %>%
         add_legacy_name("L201.DepRsrcCurves_ground") %>%
         add_precursors("L103.water_mapping_R_B_W_Ws_share",
-                       "L110.in_km3_water_primary_basin",
-                       "L1233.wdraw_km3_R_B_elec",
-                       "L133.water_demand_livestock_R_B_W_km3",
                        "L165.ag_IrrEff_R",
                        "L165.IrrWithd_km3_R_B_Y",
                        "L203.Production_watertd",

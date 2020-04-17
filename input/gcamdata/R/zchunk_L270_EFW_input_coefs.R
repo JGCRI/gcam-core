@@ -59,10 +59,10 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
     # the irrelevant inputs to technologies that use desalinated water (e.g., water abstraction and treatment energy use
     # are already accounted in the desalinated water production sector)
     L270.TechCoef_EFW_init <- L203.TechCoef_watertd %>%
-      filter(minicam.energy.input != "water consumption") %>%
-      mutate(water.supplysector = str_extract(supplysector, "[a-z]+_[a-z]+_[a-z]+")) %>%
+      filter(technology != "water consumption") %>%
+      mutate(water.supplysector = stringr::str_extract(supplysector, "[a-z]+_[a-z]+_[a-z]+")) %>%
       inner_join(L270.EFW_mapping, by = c(water.supplysector = "supplysector")) %>%
-      filter(!(minicam.energy.input == water.DESAL & apply.to.desal.water == 0)) %>%
+      filter(!(technology == water.DESAL & apply.to.desal.water == 0)) %>%
       mutate(minicam.energy.input = EFW_input)
 
     # Because not all water withdrawn is later treated as wastewater, the wastewater treatment coefficients should be

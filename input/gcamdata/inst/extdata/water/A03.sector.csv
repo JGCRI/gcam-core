@@ -1,7 +1,7 @@
 # File: A03.sector.csv
 # Title: Water t&d supplysector information  (units and logit exponents)
 # Units: NA
-# Column types: ccccic 
+# Column types: ccccic
 # ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
 water_td_irr,km^3,km^3,1975$/m^3,0,

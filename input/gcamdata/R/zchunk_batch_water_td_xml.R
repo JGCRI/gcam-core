@@ -16,7 +16,12 @@ module_water_batch_water_td_xml <- function(command, ...) {
              "L203.SubsectorInterp_watertd",
              "L203.TechShrwt_watertd",
              "L203.TechCoef_watertd",
-             "L203.Production_watertd"))
+             "L203.Production_watertd",
+             "L203.Supplysector_desal_basin",
+             "L203.SubsectorLogit_desal_basin",
+             "L203.SubsectorShrwtFllt_desal_basin",
+             "L203.TechShrwt_desal_basin",
+             "L203.TechCoef_desal_basin"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "water_td.xml"))
   } else if(command == driver.MAKE) {
@@ -31,6 +36,11 @@ module_water_batch_water_td_xml <- function(command, ...) {
     L203.TechShrwt_watertd <- get_data(all_data, "L203.TechShrwt_watertd")
     L203.TechCoef_watertd <- get_data(all_data, "L203.TechCoef_watertd")
     L203.Production_watertd <- get_data(all_data, "L203.Production_watertd")
+    L203.Supplysector_desal_basin <- get_data(all_data, "L203.Supplysector_desal_basin")
+    L203.SubsectorLogit_desal_basin <- get_data(all_data, "L203.SubsectorLogit_desal_basin")
+    L203.SubsectorShrwtFllt_desal_basin <- get_data(all_data, "L203.SubsectorShrwtFllt_desal_basin")
+    L203.TechShrwt_desal_basin <- get_data(all_data, "L203.TechShrwt_desal_basin")
+    L203.TechCoef_desal_basin <- get_data(all_data, "L203.TechCoef_desal_basin")
 
     # ===================================================
 
@@ -43,9 +53,15 @@ module_water_batch_water_td_xml <- function(command, ...) {
       add_xml_data(L203.TechShrwt_watertd, "TechShrwt") %>%
       add_xml_data(L203.TechCoef_watertd, "TechCoef") %>%
       add_xml_data(L203.Production_watertd, "Production") %>%
+      add_logit_tables_xml(L203.Supplysector_desal_basin, "Supplysector") %>%
+      add_logit_tables_xml(L203.SubsectorLogit_desal_basin, "SubsectorLogit") %>%
+      add_xml_data(L203.SubsectorShrwtFllt_desal_basin, "SubsectorShrwtFllt") %>%
+      add_xml_data(L203.TechShrwt_desal_basin, "TechShrwt") %>%
+      add_xml_data(L203.TechCoef_desal_basin, "TechCoef") %>%
       add_precursors("L203.Supplysector_watertd", "L203.SubsectorLogit_watertd", "L203.SubsectorShrwtFllt_watertd",
                      "L203.SubsectorInterp_watertd", "L203.TechShrwt_watertd", "L203.TechCoef_watertd",
-                     "L203.Production_watertd") ->
+                     "L203.Production_watertd", "L203.Supplysector_desal_basin", "L203.SubsectorLogit_desal_basin",
+                     "L203.SubsectorShrwtFllt_desal_basin", "L203.TechShrwt_desal_basin", "L203.TechCoef_desal_basin") ->
       water_td.xml
 
     return_data(water_td.xml)

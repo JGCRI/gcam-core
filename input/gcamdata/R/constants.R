@@ -517,6 +517,7 @@ water.MAPPING_PMULT                       <- 1
 water.NONIRRIGATION_SECTORS               <- c("Municipal", "Electricity", "Livestock", "Manufacturing", "Mining")
 water.LOGIT_EXP                           <- -6
 water.GW_HIST_MULTIPLIER                  <- 1.01   # Multiplier for the "available" in the "grade hist" grade of groundwater supply curves. Needed to prevent the model from pulling from higher grades in historical periods due to solution tolerance
+water.DIGITS_TD_FLOWS                     <- 9     # Need a large number of digits here due to a large number of tiny numbers
 
 # GCAM intermediate sectors for which Vassolo + Doll assessed manufacturing water demands. In the paper, they indicate
 # chemicals, pulp and paper, pig iron, sugar, beer, cloth, cement, and crude steel. some industrial mfg does take place
@@ -538,9 +539,10 @@ water.GROUNDWATER_SCENARIO <- "25pct" # may be "05pct", "25pct", or "40pct" (i.e
 water.GROUNDWATER_MAX_PRICE_INC <- 10000
 water.GROUNDWATER_UNIFORM_GRADES <- 10
 water.GROUNDWATER_BETA <- 1.0
-water.DIGITS_GROUND_WATER <- 6 #Digits for rounding
-water.DIGITS_GROUND_WATER_RSC <- 5 #Digits for rounding
-water.DIGITS_RENEW_WATER <- 3 #Digits for rounding
+water.DIGITS_GROUND_WATER <- 6 #Digits for rounding estimates of historical groundwater depletion
+water.DIGITS_GROUND_WATER_RSC <- 5 #Digits for rounding groundwater supply curves (available, extractioncost)
+water.DIGITS_RENEW_WATER <- 3 #Digits for rounding historical averages of runoff and access fraction
+water.DIGITS_RENEW_WATER_RSC <- 7 #Digits for rounding renewable resource supply curves (available, extractioncost)
 water.GW_DEPLETION_HISTORICAL <- c(2005, 2010) # Historical years for groundwater depletion
 water.GW_DEPLETION_BASE_YEAR <- 1990 # Historical year for groundwater depletion calibration
 water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010) # Historical years for freshwater runoff

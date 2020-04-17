@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
 #'   \code{command} is "MAKE") all the generated outputs: \code{L171.out_km3_R_desalfromelec_Yh},
-#'   \code{L171.out_km3_R_desal_basin_Yh}, \code{L171.out_km3_R_desal_F_tech_Yh}, \code{L171.in_km3_ctry_desal_Yh},
+#'   \code{L171.share_R_desal_basin}, \code{L171.out_km3_R_desal_F_tech_Yh}, \code{L171.in_km3_ctry_desal_Yh},
 #'   \code{L171.in_EJ_R_desal_F_Yh}.
 #' @details Generate estimates of desalinated water production for municipal and industrial purposes, by various cuts:
 #'   by country, by GCAM region, by technology, by basin, and also estimate the desalinated water production at combined
@@ -18,20 +18,22 @@
 module_water_L171.desalination <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
+             FILE = "aglu/LDS/Land_type_area_ha",
              FILE = "water/A71.globaltech_coef",
              FILE = "water/AusNWC_desal_techs",
-             FILE = "water/A_desal_basin_share",
              FILE = "water/EFW_mapping",
              FILE = "water/aquastat_ctry",
              FILE = "water/basin_to_country_mapping",
+             FILE = "water/DesalData_capacity_basin",
              FILE = "water/FAO_desal_AQUASTAT",
              FILE = "water/FAO_desal_missing_AQUASTAT",
+             FILE = "water/nonirrigation_withdrawal",
              "L1011.en_bal_EJ_R_Si_Fi_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L171.in_km3_ctry_desal_Yh",
              "L171.out_km3_R_desalfromelec_Yh",
              "L171.out_km3_R_desal_F_tech_Yh",
-             "L171.out_km3_R_desal_basin_Yh",
+             "L171.share_R_desal_basin",
              "L171.in_EJ_R_desal_F_Yh"))
   } else if(command == driver.MAKE) {
 
@@ -43,14 +45,16 @@ module_water_L171.desalination <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
+    Land_type_area_ha <- get_data(all_data, "aglu/LDS/Land_type_area_ha")
     A71.globaltech_coef <- get_data(all_data, "water/A71.globaltech_coef")
     AusNWC_desal_techs <- get_data(all_data, "water/AusNWC_desal_techs")
-    A_desal_basin_share <- get_data(all_data, "water/A_desal_basin_share")
     EFW_mapping <- get_data(all_data, "water/EFW_mapping")
     aquastat_ctry <- get_data(all_data, "water/aquastat_ctry")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
+    DesalData_capacity_basin <- get_data(all_data, "water/DesalData_capacity_basin")
     FAO_desal_AQUASTAT <- get_data(all_data, "water/FAO_desal_AQUASTAT")
     FAO_desal_missing_AQUASTAT <- get_data(all_data, "water/FAO_desal_missing_AQUASTAT")
+    nonirrigation_withdrawal <- get_data(all_data, "water/nonirrigation_withdrawal")
 
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
 
@@ -168,23 +172,7 @@ module_water_L171.desalination <- function(command, ...) {
       mutate(desal_km3 = value * share) %>%
       select(GCAM_region_ID, sector, fuel, technology, year, "desal_km3")
 
-    # Part 3: Downscaling country-level desal production to basin
-    # Note that because this is for calibration of the demands of desalinated water, there is no need to preserve technology-level detail
-    # Note also - using left_join in the first step here because we want the data table to expand to fit all country x basin combinations
-    # Not full join b/c the A_desal_basin_share assumptions may include countries that aren't applicable
-    L171.out_km3_R_desal_basin_Yh <- left_join(L171.out_km3_ctry_desal_tech_Yh,
-                                               select(A_desal_basin_share, iso, GLU_code, share),
-                                               by = "iso") %>%
-      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name),
-                               by = "GLU_code") %>%
-      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID),
-                               by = "iso") %>%
-      mutate(value = value * share) %>%
-      group_by(GCAM_region_ID, GLU_name, year) %>%
-      summarise(value = sum(value)) %>%
-      ungroup()
-
-    # Part 4: Computing energy requirements for desalinated water production
+    # Part 3: Computing energy requirements for desalinated water production
     # The information from this series of steps will be used to modify the energy balance tables
     # First get the energy-related coefficients that convert from water production volumes to energy requirements
     # Note - using inner_join b/c the coef table also includes the seawater inputs to desalination technologies
@@ -205,6 +193,49 @@ module_water_L171.desalination <- function(command, ...) {
                                by = c("sector", "fuel", "technology", "year")) %>%
       mutate(energy_EJ = desal_km3 * coefficient) %>%
       select(GCAM_region_ID, sector, fuel, technology, year, energy_EJ)
+
+    # Part 4: Downscaling desalinated water consumption to basin
+    # The method here starts with available combinations of basin+country, filters to countries that produce desalinated
+    # water (according to FAO Aquastat) while expanding to historical years, then joins in basin-level capacity
+    # (expanding as necessary) in order to assign shares from country to country+basin. Inner joins are used to drop
+    # non-applicable combinations in the process of the expansions.
+    # Note that the land area data do not have Maldives and Seychelles, so they are added
+    # manually (assigned to GCAM_basin_ID 154, Sri Lanka)
+    DesalData_capacity_basin <- DesalData_capacity_basin %>%
+      select(GCAM_basin_ID = glu_ID, total_basin_capacity = desal_capacity_m3_d)
+
+    iso_basin <- distinct(Land_type_area_ha, iso, glu_code) %>%
+      rename(GCAM_basin_ID = glu_code)
+    if(!"mdv" %in% iso_basin) iso_basin <- bind_rows(iso_basin, tibble(iso = "mdv", GCAM_basin_ID = as.integer(154)))
+    if(!"syc" %in% iso_basin) iso_basin <- bind_rows(iso_basin, tibble(iso = "mdv", GCAM_basin_ID = as.integer(154)))
+
+    # Restrict the downscaling to region+basin to region+basins that have non-zero non-irrigation withdrawals
+    region_basin_filter <- nonirrigation_withdrawal[rowSums(nonirrigation_withdrawal[water.NONIRRIGATION_SECTORS]) > 0,] %>%
+      mutate(iso = tolower(ISO_3DIGIT),
+             iso = if_else(iso == "rou", "rom", iso),
+             iso = if_else(LONG_NAME == "West Bank", "pse", iso),
+             GCAM_basin_ID = GCAM_ID_1) %>%
+      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
+      select(GCAM_region_ID, GCAM_basin_ID) %>%
+      distinct()
+
+    L171.share_R_desal_basin <- iso_basin %>%
+      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
+      semi_join(region_basin_filter, by = c("GCAM_region_ID", "GCAM_basin_ID")) %>%
+      inner_join(filter(L171.in_km3_ctry_desal_Yh, year == max(HISTORICAL_YEARS)), by = "iso") %>%
+      inner_join(DesalData_capacity_basin, by = "GCAM_basin_ID") %>%
+      group_by(iso) %>%
+      mutate(basin_share = total_basin_capacity / sum(total_basin_capacity)) %>%
+      ungroup() %>%
+      mutate(value = value * basin_share) %>%
+      group_by(GCAM_region_ID, GCAM_basin_ID) %>%
+      summarise(value = sum(value)) %>%
+      ungroup() %>%
+      group_by(GCAM_region_ID) %>%
+      mutate(share = value / sum(value)) %>%
+      ungroup() %>%
+      select(GCAM_region_ID, GCAM_basin_ID, share)
+
 
     # ===================================================
 
@@ -237,14 +268,16 @@ module_water_L171.desalination <- function(command, ...) {
                      "L1011.en_bal_EJ_R_Si_Fi_Yh") ->
       L171.out_km3_R_desal_F_tech_Yh
 
-    L171.out_km3_R_desal_basin_Yh %>%
-      add_title("Desalinated seawater production by region / basin / historical year") %>%
+    L171.share_R_desal_basin %>%
+      add_title("Desalinated seawater consumption by region / basin / historical year") %>%
       add_units("km^3") %>%
-      add_comments("This does not include secondary output from electric + desal plants") %>%
-      same_precursors_as(L171.out_km3_R_desal_F_tech_Yh) %>%
-      add_precursors("water/A_desal_basin_share",
-                     "water/basin_to_country_mapping") ->
-      L171.out_km3_R_desal_basin_Yh
+      add_comments("This includes secondary output from electric + desal plants") %>%
+      same_precursors_as(L171.in_km3_ctry_desal_Yh) %>%
+      add_precursors("aglu/LDS/Land_type_area_ha",
+                     "water/basin_to_country_mapping",
+                     "water/DesalData_capacity_basin",
+                     "water/nonirrigation_withdrawal") ->
+      L171.share_R_desal_basin
 
     L171.in_EJ_R_desal_F_Yh %>%
       add_title("Desalination energy consumption by region / fuel / historical year") %>%
@@ -256,7 +289,7 @@ module_water_L171.desalination <- function(command, ...) {
     return_data(L171.in_km3_ctry_desal_Yh,
                 L171.out_km3_R_desalfromelec_Yh,
                 L171.out_km3_R_desal_F_tech_Yh,
-                L171.out_km3_R_desal_basin_Yh,
+                L171.share_R_desal_basin,
                 L171.in_EJ_R_desal_F_Yh)
   } else {
     stop("Unknown command")

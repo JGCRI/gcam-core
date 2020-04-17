@@ -138,7 +138,7 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
 
     #Compile data to be written out in the final format, selecting the appropriate columns
     L145.municipal_water_ctry_W_Yh_km3 <- select(L145.municipal_water_ctry_ALL_Yh_km3, iso, year, withdrawals)
-    L145.municipal_water_R_W_Yh_km3 <- select(L145.municipal_water_R_ALL_Yh_km3, GCAM_region_ID, year, withdrawals)
+    L145.municipal_water_R_W_Yh_km3 <- select(L145.municipal_water_R_ALL_Yh_km3, GCAM_region_ID, year, withdrawals, consumption)
     L145.municipal_water_eff_ctry_Yh <- select(L145.municipal_water_ctry_ALL_Yh_km3, iso, year, efficiency)
     L145.municipal_water_eff_R_Yh <- select(L145.municipal_water_R_ALL_Yh_km3, GCAM_region_ID, year, efficiency)
 
