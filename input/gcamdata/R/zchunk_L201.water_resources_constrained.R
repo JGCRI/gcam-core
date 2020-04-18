@@ -354,7 +354,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
 
       bind_rows(
         L201.DepRsrcCurves_ground %>%
-          filter(available > 0),
+          filter(grade == "grade1" | available > 0),
         L201.DepRsrcCurves_ground_last ) %>%
         arrange(region, resource, extractioncost) ->
         L201.DepRsrcCurves_ground
