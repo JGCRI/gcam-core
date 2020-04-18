@@ -43,6 +43,7 @@ module_water_L203.water_td <- function(command, ...) {
              "L203.TechShrwt_watertd",
              "L203.TechInterp_watertd",
              "L203.TechCoef_watertd",
+             "L203.TechPmult_watertd",
              "L203.Production_watertd",
              "L203.Supplysector_desal_basin",
              "L203.SubsectorLogit_desal_basin",
@@ -192,6 +193,11 @@ module_water_L203.water_td <- function(command, ...) {
     L203.TechShrwt_watertd <- mutate(L203.water_td_info, share.weight = 1) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       select(LEVEL2_DATA_NAMES[["TechShrwt"]])
+
+    L203.TechPmult_watertd <- subset(L203.water_td_info, water.sector == "Irrigation" & water_type == "water withdrawals") %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(pMult = water.IRR_PRICE_SUBSIDY_MULT) %>%
+      select(LEVEL2_DATA_NAMES[["TechPmult"]])
 
     # Calibrated flows of water through the T&D sectors
     # Calibration quantities are only read in for non-irrigation sectors, as the irrigation sectors are just pass-thru
@@ -393,6 +399,13 @@ module_water_L203.water_td <- function(command, ...) {
       same_precursors_as(L203.TechCoef_watertd) ->
       L203.TechShrwt_watertd
 
+    L203.TechPmult_watertd %>%
+      add_title("Water t&d sector price multipliers") %>%
+      add_units("Unitless") %>%
+      add_comments("Subsidies implemented as multipliers") %>%
+      same_precursors_as(L203.TechCoef_watertd) ->
+      L203.TechPmult_watertd
+
     L203.Production_watertd %>%
       add_title("Water technology calibration") %>%
       add_units("km3/yr") %>%
@@ -456,6 +469,7 @@ module_water_L203.water_td <- function(command, ...) {
                 L203.TechShrwt_watertd,
                 L203.TechInterp_watertd,
                 L203.TechCoef_watertd,
+                L203.TechPmult_watertd,
                 L203.Production_watertd,
                 L203.Supplysector_desal_basin,
                 L203.SubsectorLogit_desal_basin,

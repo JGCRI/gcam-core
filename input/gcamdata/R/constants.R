@@ -495,11 +495,11 @@ water.AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
 water.COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
 water.COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
 water.COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless)
-water.DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.00001 # 1975$/m3. This excludes water abstraction costs explicitly modeled.
+water.DEFAULT_IRR_WATER_PRICE             <- 0.001 # 1975$/m3. This excludes water abstraction costs explicitly modeled.
 water.DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.00001 # 1975$/m3. This excludes water abstraction costs explicitly modeled.
 water.DEFAULT_BASEYEAR_WATER_PRICE        <- 0.001
-water.IRR_PRICE_SUBSIDY_MULT              <- 0.01  # Multiplier for irrigation price subsidy (OECD 2009 Managing Water for All)
+water.IRR_PRICE_SUBSIDY_MULT              <- 0.5  # Multiplier for irrigation water price (OECD 2009 Managing Water for All; aiming for 1% of muni water price)
 water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
 water.IRRIGATION                          <- "Irrigation"
 water.MANUFACTURING                       <- "Manufacturing"

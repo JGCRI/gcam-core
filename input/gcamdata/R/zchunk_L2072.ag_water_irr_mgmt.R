@@ -236,8 +236,10 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       # Calculate water price and water cost, including abstraction-related energy costs
       left_join_error_no_match(L2071.Coef_GJm3_IrrEnergy_R,
                                by = c("region", "year")) %>%
-      mutate(WaterCost = coefficient * (water.DEFAULT_UNLIMITED_IRR_WATER_PRICE +
-                                          (elec_GJm3 * efw.DEFAULT_IRR_ELEC_PRICE_75USDGJ)) / conveyance.eff) %>%
+      # Calculate water price and water cost
+      mutate(WaterCost = coefficient * (water.DEFAULT_IRR_WATER_PRICE +
+                                          (elec_GJm3 * efw.DEFAULT_IRR_ELEC_PRICE_75USDGJ * water.IRR_PRICE_SUBSIDY_MULT)) /
+               conveyance.eff) %>%
       # Join in non-land variable costs
       left_join_error_no_match(L2052.AgCost_ag_irr_mgmt,
                                by = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year")) %>%
