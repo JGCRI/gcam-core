@@ -256,7 +256,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       summarise(demand = sum(demand)) %>%
       ungroup() %>%
       group_by(GCAM_basin_ID) %>%
-      summarise(demand = mean(demand)) %>%
+      summarise(demand = max(demand)) %>%
       ungroup()
 
     L100.runoff_max_bm3 %>%
@@ -413,7 +413,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
 
       bind_rows(
         L201.DepRsrcCurves_ground %>%
-          filter(available > 0),
+          filter(grade == "grade1" | available > 0),
         L201.DepRsrcCurves_ground_last ) %>%
         arrange(region, resource, extractioncost) ->
         L201.DepRsrcCurves_ground
