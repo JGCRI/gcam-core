@@ -203,7 +203,8 @@ module_aglu_L203.demand_input <- function(command, ...) {
       # Create NAs for future years, use left_join instead
       left_join(L203.ag_an_ALL_Mt_R_C_Y, by = c("region", "technology" = "GCAM_commodity", "year")) %>%
       # Replace negative net exports with zero
-      mutate(fixedOutput = pmax(0, round(NetExp_Mt, aglu.DIGITS_CALOUTPUT))) %>%
+      mutate(fixedOutput = if_else(subsector %in% aglu.TRADED_MEATS, 0,
+                                   pmax(0, round(NetExp_Mt, aglu.DIGITS_CALOUTPUT)))) %>%
       # For each region / commodity
       group_by(region, subsector) %>%
       # Hold the animal exports constant in the future, so set value for future years at the final base year value
