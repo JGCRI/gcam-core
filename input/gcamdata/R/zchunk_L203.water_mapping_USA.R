@@ -216,9 +216,17 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                   mutate(coefficient = 1,
                          subsector = basin_name,
                          technology = basin_name,
-                         share.weight =share,
+                         share.weight = share,
                          logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
       arrange(region) %>%
+      bind_rows(L203.mapping_nonirr %>% filter(year==2010) %>%
+                  mutate(year=max(MODEL_BASE_YEARS),
+                         coefficient = 1,
+                         subsector = basin_name,
+                         technology = basin_name,
+                         share.weight = share,
+                         logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
+                  arrange(region))%>%
       bind_rows(L203.mapping_livestock,L203.mapping_primary,L203.mapping_irr)%>%
       mutate(pMult = if_else(water.sector == water.IRRIGATION & water_type == "water withdrawals" & region!=gcam.USA_REGION, water.IRR_PRICE_SUBSIDY_MULT, water.MAPPING_PMULT)) ->
       L203.mapping_all
@@ -242,11 +250,10 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     # will drive competition between the basins at the state level
     L203.mapping_all %>%
       gather_years("share.weight") %>%
-      complete(nesting(region, supplysector, subsector, technology,water.sector,basin_name,water_type,coefficient), year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
+      complete(nesting(region, supplysector, subsector, technology,water.sector,basin_name,water_type,coefficient,share,share.weight), year = c(year,MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       dplyr::filter(!is.na(year))%>%
       select(LEVEL2_DATA_NAMES[["SubsectorShrwt"]]) ->
       L203.SubsectorShrwt_USA
-
 
     # Technology share weights, defined by state and sector
     L203.mapping_all %>%

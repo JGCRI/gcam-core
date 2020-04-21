@@ -724,6 +724,7 @@ gcamusa.ELEC_SEGMENT_SUBPEAK <- "subpeak generation"
 gcamusa.ELEC_SEGMENT_PEAK <- "peak generation"
 
 # Water mapping assumptions
+gcamusa.FINAL_MAPPING_YEAR <- 2010 #    Water mappings are conducted from the Huang et al. (2018) dataset which are through 2010, not the final historical year
 gcamusa.LIVESTOCK_FIRST_YEAR <- 1997  #  Initial year in which USDA Census data is available surrounding the year 2000
 gcamusa.LIVESTOCK_FINAL_YEAR <- 2002  #  Final year in which USDA Census data is available surrounding the year 2000
 gcamusa.LIVESTOCK_NO_EXIST <- c("RABBITS")  # Livestock types that currently do not map to a Mekonnen and Hoekstra WF type
