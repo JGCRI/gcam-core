@@ -47,14 +47,14 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
     # Copy shares for 1990 to 1975, and then from 2015 through end of century
     USGS_livestock_water_withdrawals %>%
       select(-water_type) %>%
-      filter(year==first(MODEL_FUTURE_YEARS)) %>%
+      filter(year==max(MODEL_BASE_YEARS)) %>%
       complete(nesting(state,value), year = MODEL_FUTURE_YEARS) %>%
       bind_rows(
         USGS_livestock_water_withdrawals %>%
           select(-water_type) %>%
           filter(year==min(year)) %>%
           complete(nesting(state,value), year = first(MODEL_BASE_YEARS)),
-        USGS_livestock_water_withdrawals %>% select(-water_type)
+        USGS_livestock_water_withdrawals %>% filter(year<max(MODEL_BASE_YEARS))%>% select(-water_type)
       ) %>%
       arrange(state,year) %>%
       repeat_add_columns(tibble(water_type=water.MAPPED_WATER_TYPES)) ->
@@ -63,13 +63,13 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
     # Mining shares are precalculated as total withdrawals in historical periods at the state level from USGS data.
     # Copy shares for 1990 to 1975, and then from 2015 through end of century
     USGS_mining_water_shares %>%
-      filter(year==first(MODEL_FUTURE_YEARS)) %>%
+      filter(year==max(MODEL_BASE_YEARS)) %>%
       complete(nesting(state,state.to.country.share,fresh.share,saline.share), year = MODEL_FUTURE_YEARS) %>%
       bind_rows(
         USGS_mining_water_shares %>%
           filter(year==min(year)) %>%
           complete(nesting(state,state.to.country.share,fresh.share,saline.share), year = first(MODEL_BASE_YEARS)),
-        USGS_mining_water_shares
+        USGS_mining_water_shares %>% filter(year<max(MODEL_BASE_YEARS))
       ) %>%
       arrange(state,year) %>%
       repeat_add_columns(tibble(water_type=water.MAPPED_WATER_TYPES)) ->
@@ -78,11 +78,14 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
     # Calculate shares from basin level Irrigation to state level using Huang et al. (2018) grid-level data.
     # Input file is generated from R package created by Chris Vernon with modifications by NTG
     irrigation_shares %>%
-      filter(year==max(MODEL_BASE_YEARS)) %>%
+      filter(year==gcamusa.FINAL_MAPPING_YEAR) %>%
       complete(nesting(basin_id,basin_name,state_abbr,volume), year = MODEL_FUTURE_YEARS) %>%
       filter(year %in% MODEL_FUTURE_YEARS) %>%
       bind_rows(
-        irrigation_shares
+        irrigation_shares,
+        ##Copy shares from 2010 to 2015
+        irrigation_shares %>% filter(year==gcamusa.FINAL_MAPPING_YEAR) %>% mutate(year=max(MODEL_BASE_YEARS))
+
       ) %>%
       left_join_error_no_match(basin_to_country_mapping,by=c("basin_id"="GCAM_basin_ID")) %>%
       select(-basin_name, -Basin_name) %>%
