@@ -30,7 +30,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
              FILE = "aglu/A_demand_subsector",
              FILE = "aglu/A_demand_technology",
              FILE = "aglu/A_fuelprefElasticity_ssp1",
-             FILE = "aglu/A_diet_bias_R",
+             FILE = "aglu/A_diet_bias",
              "L101.ag_Food_Pcal_R_C_Y",
              "L101.ag_kcalg_R_C_Y",
              "L105.an_Food_Pcal_R_C_Y",
@@ -82,7 +82,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
     A_fuelprefElasticity_ssp1 <- get_data(all_data, "aglu/A_fuelprefElasticity_ssp1")
     A_demand_food_staples <- get_data(all_data, "aglu/A_demand_food_staples")
     A_demand_food_nonstaples <- get_data(all_data, "aglu/A_demand_food_nonstaples")
-    A_diet_bias_R <- get_data(all_data, "aglu/A_diet_bias_R")
+    A_diet_bias <- get_data(all_data, "aglu/A_diet_bias")
     L101.ag_Food_Pcal_R_C_Y <- get_data(all_data, "L101.ag_Food_Pcal_R_C_Y")
     L101.ag_kcalg_R_C_Y <- get_data(all_data, "L101.ag_kcalg_R_C_Y")
     L105.an_Food_Pcal_R_C_Y <- get_data(all_data, "L105.an_Food_Pcal_R_C_Y")
@@ -324,12 +324,12 @@ module_aglu_L203.demand_input <- function(command, ...) {
       filter(!region %in% aglu.NO_AGLU_REGIONS)
 
     L203.DemandStapleRegBias <- select(L203.DemandStapleParams, region, gcam.consumer, nodeInput, staples.food.demand.input) %>%
-      left_join_error_no_match(A_diet_bias_R,
+      left_join_error_no_match(A_diet_bias,
                                by = c(staples.food.demand.input = "demand_type")) %>%
       select(LEVEL2_DATA_NAMES[["DemandStapleRegBias"]])
 
     L203.DemandNonStapleRegBias <- select(L203.DemandNonStapleParams, region, gcam.consumer, nodeInput, non.staples.food.demand.input) %>%
-      left_join_error_no_match(A_diet_bias_R,
+      left_join_error_no_match(A_diet_bias,
                                by = c(non.staples.food.demand.input = "demand_type")) %>%
       select(LEVEL2_DATA_NAMES[["DemandNonStapleRegBias"]])
 
@@ -553,14 +553,14 @@ module_aglu_L203.demand_input <- function(command, ...) {
       add_title("Food demand function regional bias parameters for staples") %>%
       add_units("Unitless") %>%
       add_comments("Values taken from assumptions; computed offline in ancillary analysis") %>%
-      add_precursors("aglu/A_demand_food_staples", "aglu/A_diet_bias_R") ->
+      add_precursors("aglu/A_demand_food_staples", "aglu/A_diet_bias") ->
       L203.DemandStapleRegBias
 
     L203.DemandNonStapleRegBias %>%
       add_title("Food demand function regional bias parameters for non-staples") %>%
       add_units("Unitless") %>%
       add_comments("Values taken from assumptions; computed offline in ancillary analysis") %>%
-      add_precursors("aglu/A_demand_food_nonstaples", "aglu/A_diet_bias_R") ->
+      add_precursors("aglu/A_demand_food_nonstaples", "aglu/A_diet_bias") ->
       L203.DemandNonStapleRegBias
 
     L203.StapleBaseService %>%

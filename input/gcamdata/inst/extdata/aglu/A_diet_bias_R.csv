@@ -1,9 +1,0 @@
-# File: A_diet_bias_R.csv
-# Title: A_diet_bias_R
-# Description: Bias value for staples and non_staples along with a convergence year and value to converge to 
-# Units: NA
-# Column types: cnnn
-# ----------
-demand_type,regional.bias,convergence.year,convergence.value
-FoodDemand_Staples,1.5,2100,1
-FoodDemand_NonStaples,1.5,2100,1
