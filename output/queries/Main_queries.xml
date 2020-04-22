@@ -4823,7 +4823,17 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                share-weight/text()</xPath>
                     <comments/>
                 </supplyDemandQuery>
-                <supplyDemandQuery title="elec share-weights by tech">
+                <supplyDemandQuery title="elec share-weights by gen tech">
+                    <axis1 name="subsector">subsector</axis1>
+                    <axis2 name="Year">share-weight</axis2>
+                    <xPath buildList="true" dataName="share-weight"
+                        group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='base load generation' or 
+               @name='intermediate generation' or @name='subpeak generation' or @name='peak generation' or @name='elect_td_bld')]//
+               *[@type='subsector' and not (@name='elect_td_bld' or @name='biomass' or @name='coal' or @name='gas' or @name='geothermal' or 
+               @name='grid_storage' or @name='hydro' or @name='nuclear' or @name='refined liquids' or @name='solar' or @name='wind')]/share-weight/node()</xPath>
+                    <comments/>
+                </supplyDemandQuery>
+                <supplyDemandQuery title="elec share-weights by cooling tech">
                     <axis1 name="technology">technology</axis1>
                     <axis2 name="Year">technology</axis2>
                     <xPath buildList="true" dataName="share-weight" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='base load generation' or 
