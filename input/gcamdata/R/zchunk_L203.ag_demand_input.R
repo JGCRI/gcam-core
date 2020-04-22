@@ -1,4 +1,4 @@
-#' module_aglu_L203.demand_input
+#' module_aglu_L203.ag_demand_input
 #'
 #' Builds agriculture demand inputs for the core and each SSP scenario.
 #'
@@ -21,7 +21,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC July 2017
-module_aglu_L203.demand_input <- function(command, ...) {
+module_aglu_L203.ag_demand_input <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "aglu/A_demand_food_staples",

@@ -1,14 +1,14 @@
-#' module_aglu_batch_demand_input_xml
+#' module_aglu_batch_ag_demand_input_xml
 #'
-#' Construct XML data structure for \code{demand_input.xml}.
+#' Construct XML data structure for \code{ag_demand_input.xml}.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{demand_input.xml}. The corresponding file in the
+#' the generated outputs: \code{ag_demand_input.xml}. The corresponding file in the
 #' original data system was \code{batch_demand_input_xml.R} (aglu XML).
-module_aglu_batch_demand_input_xml <- function(command, ...) {
+module_aglu_batch_ag_demand_input_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L203.Supplysector_demand",
               "L203.SubsectorAll_demand",
@@ -34,7 +34,7 @@ module_aglu_batch_demand_input_xml <- function(command, ...) {
               "L203.StapleBaseService",
               "L203.NonStapleBaseService"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "demand_input.xml"))
+    return(c(XML = "ag_demand_input.xml"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -67,7 +67,7 @@ module_aglu_batch_demand_input_xml <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
-    create_xml("demand_input.xml") %>%
+    create_xml("ag_demand_input.xml") %>%
       add_logit_tables_xml(L203.Supplysector_demand, "Supplysector") %>%
       add_logit_tables_xml(L203.SubsectorAll_demand, "SubsectorAll", "SubsectorLogit") %>%
       add_xml_data(L203.StubTech_demand, "StubTech") %>%
@@ -99,9 +99,9 @@ module_aglu_batch_demand_input_xml <- function(command, ...) {
                      "L203.SubregionalShares", "L203.DemandFunction_food", "L203.DemandStapleParams",
                      "L203.DemandNonStapleParams", "L203.DemandStapleRegBias", "L203.DemandNonStapleRegBias",
                      "L203.StapleBaseService", "L203.NonStapleBaseService") ->
-      demand_input.xml
+      ag_demand_input.xml
 
-    return_data(demand_input.xml)
+    return_data(ag_demand_input.xml)
   } else {
     stop("Unknown command")
   }
