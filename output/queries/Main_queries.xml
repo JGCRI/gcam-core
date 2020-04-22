@@ -3600,6 +3600,30 @@ element input {
             demand-physical/node()</xPath>
             <comments/>
          </supplyDemandQuery>
+         <supplyDemandQuery title="food demand prices">
+            <axis1 name="input">input[@name]</axis1>
+            <axis2 name="Year">price-paid[@vintage]</axis2>
+            <xPath buildList="true" dataName="price" group="false" sumAll="false">gcam-consumer[@name='FoodDemand']//*[@type='input']/price-paid/node()</xPath>
+            <comments/>
+         </supplyDemandQuery>
+         <supplyDemandQuery title="food demand">
+            <axis1 name="input">input[@name]</axis1>
+            <axis2 name="Year">demand-physical[@vintage]</axis2>
+            <xPath buildList="true" dataName="demand" group="false" sumAll="false">gcam-consumer[@name='FoodDemand']//*[@type='input']/demand-physical/node()</xPath>
+            <comments/>
+         </supplyDemandQuery>
+         <supplyDemandQuery title="food demand per capita">
+            <axis1 name="input">input[@name]</axis1>
+            <axis2 name="Year">demand-percap[@year]</axis2>
+            <xPath buildList="true" dataName="demand per cap" group="false" sumAll="false">gcam-consumer[@name='FoodDemand']//*[@type='input']/demand-percap/node()</xPath>
+            <comments/>
+         </supplyDemandQuery>
+         <supplyDemandQuery title="food demand regional bias">
+            <axis1 name="input">input[@name]</axis1>
+            <axis2 name="Year">regional-bias[@year]</axis2>
+            <xPath buildList="true" dataName="regional-bias" group="false" sumAll="false">gcam-consumer[@name='FoodDemand']//*[@type='input']/regional-bias/node()</xPath>
+            <comments/>
+         </supplyDemandQuery>
       </queryGroup>
    </queryGroup>
    <queryGroup name="emissions">
