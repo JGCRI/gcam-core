@@ -106,7 +106,7 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
     # Input file is generated from R package created by Chris Vernon with modifications by NTG
     nonirrigation_shares %>%
       gather(water_sector, value, -basin_id, -basin_name, -state_abbr, -year) %>%
-      filter(year==max(MODEL_BASE_YEARS)) %>%
+      filter(year==gcamusa.FINAL_MAPPING_YEAR) %>%
       complete(nesting(basin_id,basin_name,state_abbr,water_sector,value), year = MODEL_FUTURE_YEARS) %>%
       bind_rows(
         nonirrigation_shares%>%
