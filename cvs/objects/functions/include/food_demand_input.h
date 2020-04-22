@@ -115,6 +115,7 @@
 */
 class FoodDemandInput : public INestedInput
 {
+    friend class XMLDBOutputter;
 public:
     FoodDemandInput();
     virtual ~FoodDemandInput();
@@ -133,7 +134,7 @@ public:
                          const std::string& aRegionName,
                          const int aPeriod );
 
-    double getScaleTerm() const;
+    double getScaleTerm( const int aPeriod ) const;
 
     virtual double calcPriceExponent( const FoodDemandInput* aOther,
                                       double aAdjIncome,
@@ -399,7 +400,7 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE, "share", mShare, objects::PeriodVector<Value> ),
                             
         //! Regional bias correction term
-        DEFINE_VARIABLE( SIMPLE, "regional-bias", mRegionalBias, Value ),
+        DEFINE_VARIABLE( ARRAY | STATE, "regional-bias", mRegionalBias, objects::PeriodVector<Value> ),
         
         //! The Subregional population.  Note that this is just a
         //! temporary value used during demand calculations

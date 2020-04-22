@@ -2041,6 +2041,8 @@ void XMLDBOutputter::startVisitFoodDemandInput( const FoodDemandInput* aFoodDema
             writeItemToBuffer( perCapDemand, "demand-percap",
                 *mBufferStack.top(), mTabs.get(), per, "Kcal/per/day" );
         }
+        writeItemToBuffer( aFoodDemandInput->mRegionalBias[ per ], "regional-bias",
+            *mBufferStack.top(), mTabs.get(), per, "none" );
     }
 }
 

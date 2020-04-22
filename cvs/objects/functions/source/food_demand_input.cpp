@@ -97,7 +97,7 @@ void FoodDemandInput::XMLParse( const DOMNode* aNode ) {
             mSelfPriceElasticity = XMLHelper<Value>::getValue( curr );
         }
         else if( nodeName == "regional-bias" ) {
-            mRegionalBias = XMLHelper<Value>::getValue( curr );
+            XMLHelper<Value>::insertValueIntoVector( curr, mRegionalBias, scenario->getModeltime() );
         }
         else if( !XMLDerivedClassParse( nodeName, curr ) ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -157,6 +157,26 @@ void FoodDemandInput::initCalc( const string& aRegionName,
     // the consumer stored them.
     mSubregionalPopulation[ aPeriod ] = aTechInfo->getDouble( "subregional-population", true );
     mCurrentSubregionalIncome = aTechInfo->getDouble( "subregional-income-ppp", true );
+    
+    if( aPeriod == ( scenario->getModeltime()->getFinalCalibrationPeriod() + 1 ) ) {
+        // Do some consistency checking on the final regional bias value calculated
+        // during calibration.  If it is too far away from 1 we should issue a warning
+        // as something may have structurally changed in GCAM and new parameter values
+        // should be generated accordingly.
+        const double REGIONAL_BIAS_THRESHOLD = 1.6;
+        if( mRegionalBias[ aPeriod - 1 ] >= REGIONAL_BIAS_THRESHOLD ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Calibrated regional bias " << mRegionalBias[ aPeriod - 1 ]
+                    << " for " << aRegionName << ", " << mName
+                    << " is outside the range of expected values." << endl;
+        }
+        
+        // Fill in regional bias values for future model periods which may just copy
+        // forward the calibrated value if no values were parsed or linearly converge
+        // them otherwise.
+        SectorUtils::fillMissingPeriodVectorInterpolated( mRegionalBias );
+    }
 }
 
 void FoodDemandInput::copyParam( const IInput* aInput,
@@ -189,6 +209,7 @@ void FoodDemandInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs 
     XMLWriteElement( mFoodDemandQuantity[ aPeriod ] / getAnnualDemandConversionFactor( aPeriod ), "food-demand-percap", aOut, aTabs );
     XMLWriteElement( mSubregionalPopulation[ aPeriod ], "subregional-population", aOut, aTabs );
     XMLWriteElement( mCurrentSubregionalIncome, "subregional-income-ppp", aOut, aTabs );
+    XMLWriteElement( mRegionalBias[ aPeriod ], "regional-bias", aOut, aTabs );
 
     // write the closing tag.
     XMLWriteClosingTag( getXMLReportingName(), aOut, aTabs );
@@ -236,6 +257,11 @@ void FoodDemandInput::setPhysicalDemand( double aPhysicalDemand, const string& a
     // reseting these values in calibration years.
     if( aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod() ) {
         mFoodDemandQuantity[ aPeriod ].set( aPhysicalDemand );
+    }
+    else {
+        // In the calibration periods we calibrate the regional bias as the
+        // ratio between the actual demand versus the modeled value.
+        mRegionalBias[ aPeriod ] = mFoodDemandQuantity[ aPeriod ] / aPhysicalDemand;
     }
     
     scenario->getMarketplace()->addToDemand( mName, aRegionName,
@@ -364,9 +390,14 @@ void FoodDemandInput::setActualShare( double aShare,
 
 /*!
  * \brief Get the scale term (A) * regional bias for this food demand input.
+ * \param aPeriod The current model period.
  */
-double FoodDemandInput::getScaleTerm() const {
-    return mScaleParam * mRegionalBias;
+double FoodDemandInput::getScaleTerm( const int aPeriod ) const {
+    // In the calibration periods we calibrate the regional bias
+    // so it should not be applied here.
+    double regionalBias = aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ?
+        1.0 : mRegionalBias[ aPeriod ];
+    return mScaleParam * regionalBias;
 }
 
 /*!

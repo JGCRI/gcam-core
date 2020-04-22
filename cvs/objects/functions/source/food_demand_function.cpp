@@ -129,7 +129,7 @@ double FoodDemandFunction::calcDemand( InputSet& aInput, double income, const st
     for( size_t i = 0; i < aInput.size(); ++i ) {
         // calculate the first part of the equation: A * x^h(x) (note calcIncomeTerm will
         // calculate all of x^h(x) as there is implicitly a scale term included there)
-        double currDemand = foodInputs[i]->getScaleTerm() * foodInputs[i]->calcIncomeTerm( adjIncome );
+        double currDemand = foodInputs[i]->getScaleTerm( aPeriod ) * foodInputs[i]->calcIncomeTerm( adjIncome );
         // calculate the price terms of the equations MULT_j(w_j ^ e_ij(x))
         for( size_t j = 0; j < aInput.size(); ++j ) {
             currDemand *= pow( adjPrices[j], foodInputs[i]->calcPriceExponent( foodInputs[j], adjIncome, aRegionName, aPeriod ) );
