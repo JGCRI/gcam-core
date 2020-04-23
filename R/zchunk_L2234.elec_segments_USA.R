@@ -850,7 +850,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
     # This is only a problem in L2234.StubTechProd_elecS_USA
     # A vector indicating states where CSP electric technologies will not be created
     L119.CapFacScaler_CSP_state %>%
-      # states with effectively no resource are assigned a capacity factor scalar of 0.001
+      # states with effectively no resource are assigned a capacity factor scalar of 0.01
       # remove these states to avoid creating CSP technologies there
       filter(scaler <= 0.01) %>%
       pull(state) -> CSP_states_noresource

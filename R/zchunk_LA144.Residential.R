@@ -87,7 +87,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
     # Add a vector specifying the census division (subregion9) in 2015. DIVISION2009 is from the mapping file "states_subregions.csv" and is the same for 2015
     L144.RECS_all <- L144.RECS_all %>%
      lapply(function(df) {
-       if(unique(df$year) %in% c(2015,2009)) {
+       if(unique(df$year) %in% gcamusa.RECS_YEARS) {
 
          left_join_error_no_match(df,
                                   states_subregions %>% select(subregion9, DIVISION2009) %>% distinct,
@@ -592,7 +592,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
                      "gcam-usa/RECS_1997",
                      "gcam-usa/RECS_2001",
                      "gcam-usa/RECS_2005",
-                     "gcam-usa/RECS_2009", #2019/12/06 nk: add 2015
+                     "gcam-usa/RECS_2009",
                      "gcam-usa/RECS_2015") ->
       L144.flsp_bm2_state_res
 
