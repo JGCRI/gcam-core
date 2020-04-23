@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L161.nonghg_en_ssp_R_S_T_Y
 #'
 #' Produce future non-GHG emissions factors by SSP scenario.
@@ -11,13 +13,14 @@
 #' @details Scales future GAINS, Greenhouse Gas - Air Pollution Interactions and Synergies model, non-GHG emissions factors to L111/L114 base year emissions factors,
 #' then applies future emissions factors to some GCAM years based on SSP-specific rules.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter if_else group_by lag left_join mutate order_by select summarise
+#' @importFrom tidyr complete gather nesting replace_na
 #' @author RLH July 2017
 module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_regions",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              FILE = "emissions/mappings/gains_to_gcam_sector",
              FILE = "emissions/GAINS_activities",
              FILE = "emissions/GAINS_emissions",
@@ -47,6 +50,13 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
     # Load required inputs
     A_regions <- get_data(all_data, "emissions/A_regions")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
+
     GAINS_sector <- get_data(all_data, "emissions/mappings/gains_to_gcam_sector")
     GAINS_activities <- get_data(all_data, "emissions/GAINS_activities")
     GAINS_emissions <- get_data(all_data, "emissions/GAINS_emissions") %>%
@@ -248,6 +258,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       add_legacy_name("L161.SSP15_EF") %>%
       add_precursors("emissions/A_regions",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "emissions/mappings/gains_to_gcam_sector",
                      "emissions/GAINS_activities",
                      "emissions/GAINS_emissions",
@@ -264,6 +275,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       add_legacy_name("L161.SSP2_EF") %>%
       add_precursors("emissions/A_regions",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "emissions/mappings/gains_to_gcam_sector",
                      "emissions/GAINS_activities",
                      "emissions/GAINS_emissions",
@@ -280,6 +292,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       add_legacy_name("L161.SSP34_EF") %>%
       add_precursors("emissions/A_regions",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "emissions/mappings/gains_to_gcam_sector",
                      "emissions/GAINS_activities",
                      "emissions/GAINS_emissions",

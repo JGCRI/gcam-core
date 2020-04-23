@@ -1,4 +1,6 @@
-#' module_gcamusa_L223.electricity_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L223.electricity_USA
 #'
 #' Generates GCAM-USA model inputs for electrcity sector by grid regions and states.
 #'
@@ -19,13 +21,12 @@
 #' \code{L223.StubTech_elec_USA}, \code{L223.StubTechEff_elec_USA}, \code{L223.StubTechCapFactor_elec_USA},
 #' \code{L223.StubTechFixOut_elec_USA}, \code{L223.StubTechFixOut_hydro_USA}, \code{L223.StubTechProd_elec_USA},
 #' \code{L223.StubTechMarket_elec_USA}, \code{L223.StubTechMarket_backup_USA}, \code{L223.StubTechElecMarket_backup_USA},
-#' \code{L223.StubTechCapFactor_elec_wind_USA}, \code{L223.StubTechCapFactor_elec_solar_USA}. The corresponding file in the
-#' original data system was \code{L223.electricity_USA.R} (gcam-usa level2).
+#' \code{L223.StubTechCapFactor_elec_wind_USA}, \code{L223.StubTechCapFactor_elec_solar_USA}, \code{L223.StubTechCost_offshore_wind_USA}.
+#' The corresponding file in the original data system was \code{L223.electricity_USA.R} (gcam-usa level2).
 #' @details This chunk generates input files to create an annualized electricity generation sector for each state
 #' and creates the demand for the state-level electricity sectors in the grid regions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join matches mutate select semi_join summarise transmute rename
 #' @author RC Oct 2017
 module_gcamusa_L223.electricity_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -50,7 +51,10 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
              "L223.GlobalIntTechBackup_elec",
              "L1231.in_EJ_state_elec_F_tech",
              "L1231.out_EJ_state_elec_F_tech",
-             "L1232.out_EJ_sR_elec"))
+             "L1232.out_EJ_sR_elec",
+             "L120.RsrcCurves_EJ_R_offshore_wind_USA",
+             "L120.RegCapFactor_offshore_wind_USA",
+             "L120.GridCost_offshore_wind_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L223.DeleteSubsector_USAelec",
              "L223.Supplysector_USAelec",
@@ -91,7 +95,8 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
              "L223.StubTechMarket_backup_USA",
              "L223.StubTechElecMarket_backup_USA",
              "L223.StubTechCapFactor_elec_wind_USA",
-             "L223.StubTechCapFactor_elec_solar_USA"))
+             "L223.StubTechCapFactor_elec_solar_USA",
+             "L223.StubTechCost_offshore_wind_USA"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -101,7 +106,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       sector <- calOutputValue <- fuel <- elec <- share <- avg.share <- pref <-
       share.weight.mult <- share.weight <- market.name <- sector.name <- subsector.name <-
       minicam.energy.input <- calibration <- secondary.output <- stub.technology <-
-      capacity.factor <- scaler <- capacity.factor.capital <- . <- NULL  # silence package check notes
+      capacity.factor <- scaler <- capacity.factor.capital <- . <- CFmax <- grid.cost <- NULL  # silence package check notes
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
@@ -126,6 +131,9 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
     L1231.in_EJ_state_elec_F_tech <- get_data(all_data, "L1231.in_EJ_state_elec_F_tech")
     L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "L1231.out_EJ_state_elec_F_tech")
     L1232.out_EJ_sR_elec <- get_data(all_data, "L1232.out_EJ_sR_elec")
+    L120.RsrcCurves_EJ_R_offshore_wind_USA <- get_data(all_data, "L120.RsrcCurves_EJ_R_offshore_wind_USA")
+    L120.RegCapFactor_offshore_wind_USA <- get_data(all_data, "L120.RegCapFactor_offshore_wind_USA")
+    L120.GridCost_offshore_wind_USA <- get_data(all_data, "L120.GridCost_offshore_wind_USA")
 
 
     # A vector of USA grid region names
@@ -475,6 +483,57 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["StubTechCapFactor"]]) ->
       L223.StubTechCapFactor_elec_solar_USA
 
+    # Modifications for offshore wind
+    # Remove states with no offshore wind resources
+    offshore_wind_states <- unique(L120.RsrcCurves_EJ_R_offshore_wind_USA$region)
+
+    L223.StubTech_elec_USA %>%
+      filter(stub.technology != "wind_offshore") %>%
+      bind_rows(L223.StubTech_elec_USA %>%
+                  filter(stub.technology == "wind_offshore",
+                         region %in% offshore_wind_states)) -> L223.StubTech_elec_USA
+
+    L223.StubTechCapFactor_elec_USA %>%
+      filter(stub.technology != "wind_offshore") %>%
+      bind_rows(L223.StubTechCapFactor_elec_USA %>%
+                  filter(stub.technology == "wind_offshore",
+                         region %in% offshore_wind_states)) -> L223.StubTechCapFactor_elec_USA
+
+    L223.StubTechMarket_elec_USA %>%
+      filter(stub.technology != "wind_offshore") %>%
+      bind_rows(L223.StubTechMarket_elec_USA %>%
+                  filter(stub.technology == "wind_offshore",
+                         region %in% offshore_wind_states)) -> L223.StubTechMarket_elec_USA
+
+    L223.StubTechMarket_backup_USA %>%
+      filter(stub.technology != "wind_offshore") %>%
+      bind_rows(L223.StubTechMarket_backup_USA %>%
+                  filter(stub.technology == "wind_offshore",
+                         region %in% offshore_wind_states)) -> L223.StubTechMarket_backup_USA
+
+    # Replacing with correct state-specific offshore wind capacity factors
+    L223.StubTechCapFactor_elec_wind_USA %>%
+      filter(stub.technology == "wind_offshore",
+             region %in% offshore_wind_states) %>%
+      select(-capacity.factor) %>%
+      left_join_error_no_match(L120.RegCapFactor_offshore_wind_USA,
+                               by= c("region" = "State")) %>%
+      mutate(capacity.factor= round(CFmax,energy.DIGITS_CAPACITY_FACTOR)) %>%
+      select(region, supplysector, subsector, stub.technology, year,
+             capacity.factor) -> L223.StubTechCapFactor_elec_offshore_wind_USA
+
+    L223.StubTechCapFactor_elec_wind_USA %>%
+      filter(stub.technology != "wind_offshore") %>%
+      bind_rows(L223.StubTechCapFactor_elec_offshore_wind_USA) -> L223.StubTechCapFactor_elec_wind_USA
+
+    # L223.StubTechCost_offshore_wind_USA: State-specific non-energy cost adder for offshore wind grid connection cost
+    L223.StubTechCapFactor_elec_wind_USA %>%
+      filter(stub.technology == "wind_offshore") %>%
+      select(region, supplysector, subsector, stub.technology, year) %>%
+      mutate(minicam.non.energy.input = "regional price adjustment") %>%
+      left_join(L120.GridCost_offshore_wind_USA, by = c("region" = "State")) %>%
+      rename(input.cost = grid.cost) -> L223.StubTechCost_offshore_wind_USA
+
 
     # Produce outputs
 
@@ -483,12 +542,12 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       L223.DeleteSubsector_USAelec
 
     missing_data() %>%
-        add_legacy_name("L223.Supplysector_USAelec") ->
-        L223.Supplysector_USAelec
+      add_legacy_name("L223.Supplysector_USAelec") ->
+      L223.Supplysector_USAelec
 
     missing_data() %>%
-        add_legacy_name("L223.SubsectorShrwtFllt_USAelec") ->
-        L223.SubsectorShrwtFllt_USAelec
+      add_legacy_name("L223.SubsectorShrwtFllt_USAelec") ->
+      L223.SubsectorShrwtFllt_USAelec
 
     missing_data() %>%
       add_legacy_name("L223.SubsectorInterp_USAelec") ->
@@ -812,6 +871,30 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
                      "gcam-usa/states_subregions") ->
       L223.StubTechCapFactor_elec_solar_USA
 
+    L223.StubTechCost_offshore_wind_USA %>%
+      add_title("State-specific non-energy cost adder for offshore wind grid connection cost") %>%
+      add_units("Unitless") %>%
+      add_comments("Adder") %>%
+      add_precursors("L114.CapacityFactor_wind_state",
+                     "L223.Supplysector_elec",
+                     "L223.ElecReserve",
+                     "L223.SubsectorLogit_elec",
+                     "L223.SubsectorShrwtFllt_elec",
+                     "L223.SubsectorShrwt_renew",
+                     "L223.SubsectorInterp_elec",
+                     "L223.SubsectorInterpTo_elec",
+                     "L223.StubTech_elec",
+                     "L223.StubTechEff_elec",
+                     "L223.StubTechCapFactor_elec",
+                     "L223.GlobalIntTechBackup_elec",
+                     "L1231.in_EJ_state_elec_F_tech",
+                     "L1231.out_EJ_state_elec_F_tech",
+                     "L1232.out_EJ_sR_elec",
+                     "L120.RsrcCurves_EJ_R_offshore_wind_USA",
+                     "L120.RegCapFactor_offshore_wind_USA",
+                     "L120.GridCost_offshore_wind_USA")->
+      L223.StubTechCost_offshore_wind_USA
+
     return_data(L223.DeleteSubsector_USAelec,
                 L223.Supplysector_USAelec,
                 L223.SubsectorShrwtFllt_USAelec,
@@ -851,7 +934,8 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
                 L223.StubTechMarket_backup_USA,
                 L223.StubTechElecMarket_backup_USA,
                 L223.StubTechCapFactor_elec_wind_USA,
-                L223.StubTechCapFactor_elec_solar_USA)
+                L223.StubTechCapFactor_elec_solar_USA,
+                L223.StubTechCost_offshore_wind_USA)
   } else {
     stop("Unknown command")
   }

@@ -1,0 +1,10 @@
+# File: offshore_wind_potential_missing.csv
+# Title: States with Missing Offshore Wind Resource Potential
+# Units: fraction of total USA offshore wind resource assigned to state
+# Comments:  This file list states not included in original offshore wind resource potential data (reeds_offshore_wind_curve_capacity.csv) 
+# which are being assigned some resource. rsrc_frac is the fraction of the total USA offshore wind resource assigned to that state.
+# Source:  assumption, informed by fact that Alaksa resource is not reflected in the original data set (reeds_offshore_wind_curve_capacity.csv)
+# Column types: cn
+# ----------
+state,rsrc_frac
+AK,0.05

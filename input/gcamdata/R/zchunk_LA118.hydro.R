@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA118.hydro
 #'
 #' Calculate hydro potential in EJ from 2010 to 2100 by GCAM region ID
@@ -11,8 +13,8 @@
 #' @details Different proxies are used to calculate hydro potential.
 #' @details In most cases, a growth potential for each country was calculated, multiplied by its share in the region, and added to the base-year ouput
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate pull select summarise
+#' @importFrom tidyr fill spread
 #' @author AS May 2017
 module_energy_LA118.hydro <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -65,7 +67,7 @@ module_energy_LA118.hydro <- function(command, ...) {
       # Calculate a translation from Technical potential to Economic potential, using weighted average among regions where both are reported
       # First, for countries reporting in MW, convert to GWh (most countries have potentials as GWh but some are in MW)
       Hydropower_potential %>%
-        mutate_if(is.integer, as.numeric) %>% # Convert columns that are getting read in as integers to numbers
+        dplyr::mutate_if(is.integer, as.numeric) %>% # Convert columns that are getting read in as integers to numbers
         mutate(Technical_GWh = replace(Technical_GWh, is.na(Technical_GWh), (Technical_MW * CONV_YEAR_HOURS * CONV_MIL_BIL * Hydro_capfac)[is.na(Technical_GWh)]),
                Economic_GWh = replace(Economic_GWh, is.na(Economic_GWh), (Economic_MW * CONV_YEAR_HOURS * CONV_MIL_BIL * Hydro_capfac)[is.na(Economic_GWh)])) ->
         Hydropower_potential
@@ -114,7 +116,6 @@ module_energy_LA118.hydro <- function(command, ...) {
 
       # Downscaling of GCAM 3.0 scenario to the country level: Assign future growth according to shares of growth potential by country
       # Interpolate any between years, and use the final year as a proxy for years thereafter
-      # Drop 2020 because it is lower than 2010 in many regions
 
       # First, convert A18.hydro_output to long form
       A18.hydro_output %>%
@@ -123,8 +124,7 @@ module_energy_LA118.hydro <- function(command, ...) {
 
       # Now combine with L118.out_EJ_RG3_elec_hydro_fby
       L118.out_EJ_RG3_elec_hydro_fby %>%
-        bind_rows(A18.hydro_output_long) %>%
-        filter(year != 2020) -> # Dropping 2020, as described above
+        bind_rows(A18.hydro_output_long) ->
         L118.out_EJ_RG3_elec_hydro_Y_with_values
 
       # Create a table from 2010 to 2100 in all "FUTURE_YEARS" and interpolate for the missing values
@@ -151,7 +151,8 @@ module_energy_LA118.hydro <- function(command, ...) {
         filter(year != max(HISTORICAL_YEARS)) %>% # Deleting historical max year to be used in another column
         left_join(L118.out_EJ_RG3_elec_hydro_Y_interp_maxhist, by = "region_GCAM3") %>%
         # Calculate growth, which is total value (interpolated) minus the base (historical max)
-        mutate(value_growth = value_interpolated - value_max_hist) %>%
+        # For regions whose 2015 output is higher than GCAM3's estimated 2100 output, don't allow the output to decrease
+        mutate(value_growth = pmax(0, value_interpolated - value_max_hist)) %>%
         select(-value_interpolated, -value_max_hist) ->
         L118.growth_EJ_RG3_elec_hydro_Y
 

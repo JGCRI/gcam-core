@@ -1,7 +1,7 @@
 # File: A31.rsrc_info.csv
 # Title: Resource Information
 # Units: Unknown
-# Column types: ccccciiiiii 
+# Column types: cccccnnnnnnn
 # ----------
-resource,resource_type,market,output-unit,price-unit,capacity.factor,1971,1975,1990,2005,2010
-misc emissions sources,unlimited-resource,global,NA,NA,0,0,0,0,0,0
+resource,resource_type,market,output-unit,price-unit,capacity.factor,1971,1975,1990,2005,2010,2015
+misc emissions sources,unlimited-resource,global,NA,NA,0,0,0,0,0,0,0

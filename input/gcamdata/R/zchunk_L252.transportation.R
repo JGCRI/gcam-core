@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L252.transportation
 #'
 #' Calculate supply sector, subsector, and technology information for the transportation sector
@@ -10,8 +12,8 @@
 #' original data system was \code{L252.transportation.R} (energy level2).
 #' @details Calculate shareweights, cost, price elasticity, calibrated, and other data for the transportation sector
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter if_else group_by left_join mutate select summarise
+#' @importFrom tidyr complete nesting
 #' @author AJS August 2017
 module_energy_L252.transportation <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -193,7 +195,11 @@ module_energy_L252.transportation <- function(command, ...) {
       filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       # Match in supplysector, subsector, technology
-      left_join_error_no_match(calibrated_techs_trn_agg, by = c("sector", "fuel")) %>%
+      #kbn 2019-10-23- The IEA World Energy Balances no longer report data on gas for international shipping.
+      #That sector will contain NAs. To avoid the same, switching to a left_join and na.omit(). This was available in a previous
+      #iteration of the dataset as 0's.
+      left_join(calibrated_techs_trn_agg, by = c("sector", "fuel")) %>%
+      na.omit()%>%
       # Aggregate as indicated in the supplysector/subsector/technology mapping (dropping fuel)
       group_by(region, supplysector, subsector, stub.technology = technology, year) %>%
       summarise(value = sum(value)) %>%

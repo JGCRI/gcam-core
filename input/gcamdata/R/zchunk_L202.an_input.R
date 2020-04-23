@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L202.an_input
 #'
 #' Produce a wide range of animal-related resource tables: production, import, resource curves.
@@ -16,8 +18,8 @@
 #' original data system was \code{L202.an_input.R} (aglu level2).
 #' @details This chunk produces 22 animal-related resource tables: production, import, resource curves.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join bind_rows distinct filter if_else group_by left_join mutate select summarise
+#' @importFrom tidyr complete replace_na
 #' @author BBL August 2017
 module_aglu_L202.an_input <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

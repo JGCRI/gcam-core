@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_batch_HDDCDD_A2_GFDL_USA_xml.R
 \name{module_gcamusa_batch_HDDCDD_A2_GFDL_USA_xml}
 \alias{module_gcamusa_batch_HDDCDD_A2_GFDL_USA_xml}
-\title{module_gcamusa_batch_HDDCDD_A2_GFDL_USA_xml}
+\title{module_gcamusa_batch_HDDCDD_A2_GFDL_USA.xml}
 \usage{
 module_gcamusa_batch_HDDCDD_A2_GFDL_USA_xml(command, ...)
 }

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L252.MACC
 #'
 #' Creates marginal abatement cost curves "MACC", for fossil resources, agriculture, animals, and processing.
@@ -14,14 +16,15 @@
 #' original data system was \code{L252.MACC.R} (emissions level2).
 #' @details Creates marginal abatement cost curves "MACC", for fossil resources, agriculture, animals, and processing.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows distinct filter left_join matches mutate select
+#' @importFrom tidyr gather
 #' @author RH August 2017
 module_emissions_L252.MACC <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_regions",
              FILE = "emissions/A_MACC_TechChange",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              FILE = "emissions/HFC_Abate_GV",
              FILE = "emissions/GV_mac_reduction",
              "L152.MAC_pct_R_S_Proc_EPA",
@@ -65,6 +68,12 @@ module_emissions_L252.MACC <- function(command, ...) {
     A_regions <- get_data(all_data, "emissions/A_regions")
     A_MACC_TechChange <- get_data(all_data, "emissions/A_MACC_TechChange")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
+
     HFC_Abate_GV <- get_data(all_data, "emissions/HFC_Abate_GV")
     GV_mac_reduction <- get_data(all_data, "emissions/GV_mac_reduction")
     L152.MAC_pct_R_S_Proc_EPA <- get_data(all_data, "L152.MAC_pct_R_S_Proc_EPA")
@@ -92,7 +101,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       df <- df %>%
         # Add tax values
         repeat_add_columns(tibble(tax = MAC_taxes)) %>%
-        arrange_("region", order) %>%
+        dplyr::arrange_("region", order) %>%
         # Join in EPA regions
         left_join_error_no_match(A_regions %>%
                                    select(region, EPA_region = MAC_region),
@@ -248,7 +257,7 @@ module_emissions_L252.MACC <- function(command, ...) {
           add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change: Unitless") %>%
           add_comments("Category data from L211.AGREmissions and L211.AGRBio given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
           add_comments("Technology change data added in from A_MACC_TechChange") %>%
-          add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+          add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised",
                          "L152.MAC_pct_R_S_Proc_EPA", "L211.AGREmissions", "L211.AGRBio", "emissions/A_MACC_TechChange") %>%
           select(-scenario)
       })
@@ -265,7 +274,7 @@ module_emissions_L252.MACC <- function(command, ...) {
           add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change: Unitless") %>%
           add_comments("Category data from L211.AnEmissions given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
           add_comments("Technology change data added in from A_MACC_TechChange") %>%
-          add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+          add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised",
                          "L152.MAC_pct_R_S_Proc_EPA", "L211.AnEmissions", "emissions/A_MACC_TechChange") %>%
           select(-scenario)
       })
@@ -282,7 +291,7 @@ module_emissions_L252.MACC <- function(command, ...) {
           add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change: Unitless") %>%
           add_comments("Category data from L232.nonco2_prc given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
           add_comments("Technology change data added in from A_MACC_TechChange") %>%
-          add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+          add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised",
                          "L152.MAC_pct_R_S_Proc_EPA", "L232.nonco2_prc", "emissions/A_MACC_TechChange") %>%
           select(-scenario)
       })
@@ -298,7 +307,7 @@ module_emissions_L252.MACC <- function(command, ...) {
           add_units("tax: 1990 USD; mac.reduction: % reduction; tech_change: Unitless") %>%
           add_comments("Category data from L201.ghg_res given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
           add_comments("Technology change data added in from A_MACC_TechChange") %>%
-          add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+          add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised",
                          "L152.MAC_pct_R_S_Proc_EPA", "L201.ghg_res", "emissions/A_MACC_TechChange") %>%
           select(-scenario)
       })
@@ -310,7 +319,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
       add_comments("Category data from L201.ghg_res given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
       add_legacy_name("L252.ResMAC_fos") %>%
-      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised",
                      "L152.MAC_pct_R_S_Proc_EPA", "L201.ghg_res") ->
       L252.ResMAC_fos
 
@@ -319,7 +328,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
       add_comments("Category data from L211.AGREmissions and L211.AGRBio given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
       add_legacy_name("L252.AgMAC") %>%
-      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised",
                      "L152.MAC_pct_R_S_Proc_EPA", "L211.AGREmissions", "L211.AGRBio") ->
       L252.AgMAC
 
@@ -328,7 +337,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
       add_comments("Category data from L211.AnEmissions given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
       add_legacy_name("L252.MAC_an") %>%
-      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised",
                      "L152.MAC_pct_R_S_Proc_EPA", "L211.AnEmissions") ->
       L252.MAC_an
 
@@ -337,7 +346,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
       add_comments("Category data from L232.nonco2_prc given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
       add_legacy_name("L252.MAC_prc") %>%
-      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised",
                      "L152.MAC_pct_R_S_Proc_EPA", "L232.nonco2_prc") ->
       L252.MAC_prc
 
@@ -347,7 +356,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       add_comments("Category data from L241.hfc_all and L241.pfc_all given tax and mac.reduction data from L152.MAC_pct_R_S_Proc_EPA") %>%
       add_comments("If using Guus Velders data, tax and mac.reduction values taken from HFC_Abate_GV and GV_mac_reduction") %>%
       add_legacy_name("L252.MAC_higwp") %>%
-      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech",
+      add_precursors("emissions/A_regions", "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised",
                      "L152.MAC_pct_R_S_Proc_EPA", "L241.hfc_all", "L241.pfc_all",
                      "emissions/HFC_Abate_GV", "emissions/GV_mac_reduction") ->
       L252.MAC_higwp

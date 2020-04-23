@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L223.electricity
 #'
 #' Prepares assumptions and calibrated inputs and outputs for the electricity sector.
@@ -7,15 +9,16 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L223.Supplysector_elec}, \code{L223.ElecReserve}, \code{L223.SubsectorLogit_elec},
-#' \code{L223.SubsectorShrwt_elec}, \code{L223.SubsectorShrwtFllt_elec}, \code{L223.SubsectorShrwt_nuc},
+#' \code{L223.SubsectorShrwt_elec}, \code{L223.SubsectorShrwtFllt_elec},
+#' \code{L223.SubsectorShrwt_coal}, \code{L223.SubsectorShrwt_nuc},
 #' \code{L223.SubsectorShrwt_renew}, \code{L223.SubsectorInterp_elec}, \code{L223.SubsectorInterpTo_elec},
 #' \code{L223.StubTech_elec}, \code{L223.GlobalIntTechEff_elec}, \code{L223.GlobalTechEff_elec},
-#' \code{L223.GlobalTechCapFac_elec}, \code{L223.GlobalIntTechCapFac_elec},
-#' \code{L223.GlobalTechCapital_elec}, \code{L223.GlobalIntTechCapital_elec}, \code{L223.GlobalTechOMfixed_elec},
-#' \code{L223.GlobalIntTechOMfixed_elec}, \code{L223.GlobalTechOMvar_elec}, \code{L223.GlobalIntTechOMvar_elec},
-#' \code{L223.GlobalTechShrwt_elec}, \code{L223.GlobalTechInterp_elec}, \code{L223.GlobalIntTechShrwt_elec},
-#' \code{L223.PrimaryRenewKeyword_elec}, \code{L223.PrimaryRenewKeywordInt_elec}, \code{L223.AvgFossilEffKeyword_elec},
-#' \code{L223.GlobalTechCapture_elec}, \code{L223.GlobalIntTechBackup_elec}, \code{L223.StubTechCapFactor_elec},
+#' \code{L223.GlobalTechCapFac_elec}, \code{L223.GlobalIntTechCapFac_elec}, \code{L223.GlobalTechCapital_elec},
+#' \code{L223.GlobalIntTechCapital_elec}, \code{L223.GlobalTechOMfixed_elec}, \code{L223.GlobalIntTechOMfixed_elec},
+#' \code{L223.GlobalTechOMvar_elec}, \code{L223.GlobalIntTechOMvar_elec}, \code{L223.GlobalTechShrwt_elec},
+#' \code{L223.GlobalTechInterp_elec}, \code{L223.GlobalIntTechShrwt_elec}, \code{L223.PrimaryRenewKeyword_elec},
+#' \code{L223.PrimaryRenewKeywordInt_elec}, \code{L223.AvgFossilEffKeyword_elec}, \code{L223.GlobalTechCapture_elec},
+#' \code{L223.GlobalIntTechBackup_elec}, \code{L223.StubTechCapFactor_elec}, \code{L223.StubTechCost_offshore_wind},
 #' \code{L223.GlobalTechShutdown_elec}, \code{L223.GlobalIntTechShutdown_elec}, \code{L223.GlobalTechSCurve_elec},
 #' \code{L223.GlobalIntTechSCurve_elec}, \code{L223.GlobalTechLifetime_elec}, \code{L223.GlobalIntTechLifetime_elec},
 #' \code{L223.GlobalTechProfitShutdown_elec}, \code{L223.GlobalIntTechProfitShutdown_elec},
@@ -33,8 +36,8 @@
 #' Solar and wind capacity factor assumptions are scaled using data on irradiance and available wind resource. It also determines future fixed outputs of hydropower.
 #' This also prepares alternate low- and high-tech capital costs, which are then saved to their own xmls and can be used to overwrite default capital costs.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join arrange bind_rows filter if_else group_by left_join mutate select semi_join summarise rename
+#' @importFrom tidyr complete nesting replace_na
 #' @author CWR October 2017/BBL July 2017
 module_energy_L223.electricity <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -46,6 +49,7 @@ module_energy_L223.electricity <- function(command, ...) {
              FILE = "energy/A23.subsector_shrwt",
              FILE = "energy/A23.subsector_interp",
              FILE = "energy/A23.subsector_interp_R",
+             FILE = "energy/A23.subsector_shrwt_coal_R",
              FILE = "energy/A23.subsector_shrwt_nuc_R",
              FILE = "energy/A23.subsector_shrwt_renew_R",
              FILE = "energy/A23.globalinttech",
@@ -67,6 +71,8 @@ module_energy_L223.electricity <- function(command, ...) {
              "L1231.in_EJ_R_elec_F_tech_Yh",
              "L1231.out_EJ_R_elec_F_tech_Yh",
              "L1231.eff_R_elec_F_tech_Yh",
+             "L120.GridCost_offshore_wind",
+             "L120.RegCapFactor_offshore_wind",
              "L102.gdp_mil90usd_GCAM3_ctry_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L223.Supplysector_elec",
@@ -74,6 +80,7 @@ module_energy_L223.electricity <- function(command, ...) {
              "L223.SubsectorLogit_elec",
              "L223.SubsectorShrwt_elec",
              "L223.SubsectorShrwtFllt_elec",
+             "L223.SubsectorShrwt_coal",
              "L223.SubsectorShrwt_nuc",
              "L223.SubsectorShrwt_renew",
              "L223.SubsectorInterp_elec",
@@ -98,6 +105,7 @@ module_energy_L223.electricity <- function(command, ...) {
              "L223.GlobalTechCapture_elec",
              "L223.GlobalIntTechBackup_elec",
              "L223.StubTechCapFactor_elec",
+             "L223.StubTechCost_offshore_wind",
              "L223.GlobalTechShutdown_elec",
              "L223.GlobalIntTechShutdown_elec",
              "L223.GlobalTechSCurve_elec",
@@ -136,7 +144,8 @@ module_energy_L223.electricity <- function(command, ...) {
       intermittent.technology <- irradiance_avg_rel <- iso <-
       primary.renewable <- region <- region_GCAM3 <- remove.fraction <- sector <-
       sector.name <- share.weight <- stub.technology <- subsector <- subsector.name <-
-      supplysector <- technology <- value <- weight <- year <- year.fillout <- year.x <- year.y <- NULL
+      supplysector <- technology <- value <- weight <- year <- year.fillout <- year.x <- year.y <-
+      CFmax <- grid.cost <- input.cost <- minicam.non.energy.input <- NULL
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -147,6 +156,7 @@ module_energy_L223.electricity <- function(command, ...) {
     A23.subsector_shrwt <- get_data(all_data, "energy/A23.subsector_shrwt")
     A23.subsector_interp <- get_data(all_data, "energy/A23.subsector_interp")
     A23.subsector_interp_R <- get_data(all_data, "energy/A23.subsector_interp_R")
+    A23.subsector_shrwt_coal_R <- get_data(all_data, "energy/A23.subsector_shrwt_coal_R")
     A23.subsector_shrwt_nuc_R <- get_data(all_data, "energy/A23.subsector_shrwt_nuc_R")
     A23.subsector_shrwt_renew_R <- get_data(all_data, "energy/A23.subsector_shrwt_renew_R")
     A23.globalinttech <- get_data(all_data, "energy/A23.globalinttech")
@@ -165,6 +175,8 @@ module_energy_L223.electricity <- function(command, ...) {
     L114.RsrcCurves_EJ_R_wind <- get_data(all_data, "L114.RsrcCurves_EJ_R_wind")
     L118.out_EJ_R_elec_hydro_Yfut <- get_data(all_data, "L118.out_EJ_R_elec_hydro_Yfut")
     L119.Irradiance_rel_R <- get_data(all_data, "L119.Irradiance_rel_R")
+    L120.GridCost_offshore_wind <- get_data(all_data, "L120.GridCost_offshore_wind")
+    L120.RegCapFactor_offshore_wind <- get_data(all_data, "L120.RegCapFactor_offshore_wind")
     L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
     L1231.eff_R_elec_F_tech_Yh <- get_data(all_data, "L1231.eff_R_elec_F_tech_Yh")
@@ -202,6 +214,17 @@ module_energy_L223.electricity <- function(command, ...) {
         write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names) ->
         L223.SubsectorShrwtFllt_elec
     }
+
+    # Assumed coal electricity subsector shareweights by region to generate L223.SubsectorShrwt_coal
+    # This is intended to override default coal electricty subsector shareweights for specific regions and years.
+    A23.subsector_shrwt_coal_R %>%
+      gather_years(value_col = "share.weight") %>%
+      # Interpolate to model time periods, and add columns specifying the final format
+      complete(nesting(region, supplysector, subsector), year = MODEL_FUTURE_YEARS[MODEL_FUTURE_YEARS >= min(year) & MODEL_FUTURE_YEARS <= max(year)]) %>%
+      arrange(region,supplysector,subsector,year) %>%
+      mutate(share.weight = approx_fun(year, share.weight, rule = 1),year = as.integer(year))->
+      L223.SubsectorShrwt_coal
+    L223.SubsectorShrwt_coal <- L223.SubsectorShrwt_coal[LEVEL2_DATA_NAMES[["SubsectorShrwt"]]]
 
     # Calculate subsector shareweights of nuclear electricity to generate L223.SubsectorShrwt_nuc
     # -------------------------------------------------------------------------------------------
@@ -649,77 +672,77 @@ module_energy_L223.electricity <- function(command, ...) {
       L223.globaltech_retirement
 
     # PHASED RETIREMENT
-      # Subsets the phased retirement function
-      L223.globaltech_retirement %>%
-        filter(!is.na(L223.globaltech_retirement$shutdown.rate)) %>%
-        select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "shutdown.rate") ->
-        L223.GlobalTechShutdown_elec_all
+    # Subsets the phased retirement function
+    L223.globaltech_retirement %>%
+      filter(!is.na(L223.globaltech_retirement$shutdown.rate)) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "shutdown.rate") ->
+      L223.GlobalTechShutdown_elec_all
 
-      # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
-      L223.GlobalTechShutdown_elec_all %>%
-        semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
-        rename(intermittent.technology = technology) ->
-        L223.GlobalIntTechShutdown_elec
+    # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
+    L223.GlobalTechShutdown_elec_all %>%
+      semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
+      rename(intermittent.technology = technology) ->
+      L223.GlobalIntTechShutdown_elec
 
-      # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
-      L223.GlobalTechShutdown_elec_all %>%
-        anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
-        L223.GlobalTechShutdown_elec
+    # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
+    L223.GlobalTechShutdown_elec_all %>%
+      anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
+      L223.GlobalTechShutdown_elec
 
     # S-CURVE RETIREMENT
-      # Subsets the S-Curve retirement function
-      L223.globaltech_retirement %>%
-        filter(!is.na(L223.globaltech_retirement$half.life)) %>%
-        select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "steepness", "half.life") ->
-        L223.GlobalTechSCurve_elec_all
+    # Subsets the S-Curve retirement function
+    L223.globaltech_retirement %>%
+      filter(!is.na(L223.globaltech_retirement$half.life)) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "steepness", "half.life") ->
+      L223.GlobalTechSCurve_elec_all
 
-      # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
-      L223.GlobalTechSCurve_elec_all %>%
-        semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
-        rename(intermittent.technology = technology) ->
-        L223.GlobalIntTechSCurve_elec
+    # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
+    L223.GlobalTechSCurve_elec_all %>%
+      semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
+      rename(intermittent.technology = technology) ->
+      L223.GlobalIntTechSCurve_elec
 
-      # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
-      L223.GlobalTechSCurve_elec_all %>%
-        anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
-        L223.GlobalTechSCurve_elec
+    # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
+    L223.GlobalTechSCurve_elec_all %>%
+      anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
+      L223.GlobalTechSCurve_elec
 
     # NO RETIREMENT FUNCTION (FULL LIFETIME)
-      # Subsets the remaining with no retirement function
-      L223.globaltech_retirement %>%
-        filter(is.na(L223.globaltech_retirement$shutdown.rate) & is.na(L223.globaltech_retirement$half.life)) %>%
-        select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime") ->
-        L223.GlobalTechLifetime_elec_all
+    # Subsets the remaining with no retirement function
+    L223.globaltech_retirement %>%
+      filter(is.na(L223.globaltech_retirement$shutdown.rate) & is.na(L223.globaltech_retirement$half.life)) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime") ->
+      L223.GlobalTechLifetime_elec_all
 
-      # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
-      L223.GlobalTechLifetime_elec_all %>%
-        semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
-        rename(intermittent.technology = technology) ->
-        L223.GlobalIntTechLifetime_elec
+    # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
+    L223.GlobalTechLifetime_elec_all %>%
+      semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
+      rename(intermittent.technology = technology) ->
+      L223.GlobalIntTechLifetime_elec
 
-      # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
-      L223.GlobalTechLifetime_elec_all %>%
-        anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
-        L223.GlobalTechLifetime_elec
+    # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
+    L223.GlobalTechLifetime_elec_all %>%
+      anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
+      L223.GlobalTechLifetime_elec
 
 
     # PROFIT-BASED SHUTDOWN PARAMETERS
-      # Subsets any technologies with a shutdown parameter based on profitability
-      L223.globaltech_retirement %>%
-        filter(!is.na(L223.globaltech_retirement$median.shutdown.point)) %>%
-        select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "median.shutdown.point", "profit.shutdown.steepness") ->
-        L223.GlobalTechProfitShutdown_elec_all
+    # Subsets any technologies with a shutdown parameter based on profitability
+    L223.globaltech_retirement %>%
+      filter(!is.na(L223.globaltech_retirement$median.shutdown.point)) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "median.shutdown.point", "profit.shutdown.steepness") ->
+      L223.GlobalTechProfitShutdown_elec_all
 
-      # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
-      L223.GlobalTechProfitShutdown_elec_all %>%
-        semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
-        rename(intermittent.technology = technology) ->
-        L223.GlobalIntTechProfitShutdown_elec
+    # Subsets the intermittent technologies by checking it against the list in A23.globalinttech
+    L223.GlobalTechProfitShutdown_elec_all %>%
+      semi_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) %>%
+      rename(intermittent.technology = technology) ->
+      L223.GlobalIntTechProfitShutdown_elec
 
-      # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
-      L223.GlobalTechProfitShutdown_elec_all %>%
-        anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
-        L223.GlobalTechProfitShutdown_elec
+    # Subsets the non-intermittent technologies by checking against any not listed in A23.globalinttech
+    L223.GlobalTechProfitShutdown_elec_all %>%
+      anti_join(A23.globalinttech, by = c("sector.name" = "supplysector", "subsector.name" = "subsector", "technology")) ->
+      L223.GlobalTechProfitShutdown_elec
 
     # Removes any empty data frames (if above subsets return 0 rows)
     if(nrow(L223.GlobalIntTechShutdown_elec) == 0) {
@@ -830,7 +853,7 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.out_EJ_R_elec_F_tech_Yh %>%
       filter(calibration == "output" & year %in% MODEL_BASE_YEARS) %>%
       select(-calibration) %>%
-    # Cleaning up and setting shareweights for L223.StubTechProd_elec: calibrated output of electricity generation technologies
+      # Cleaning up and setting shareweights for L223.StubTechProd_elec: calibrated output of electricity generation technologies
       mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT), share.weight.year = year, share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       set_subsector_shrwt() ->
       L223.StubTechProd_elec
@@ -910,7 +933,7 @@ module_energy_L223.electricity <- function(command, ...) {
       # Calculate a new capacity factor to match the regional base.price, append region names and duplicate over all model years.
       # This fixes the capacity factor for all future years and is inconsistent if future capacity factors are assumed to change.
       mutate(capacity.factor = round((capital.overnight * fixed.charge.rate +
-                                           OM.fixed) / (CONV_KWH_GJ * CONV_YEAR_HOURS) / (base.price - (OM.var / (1000 * CONV_KWH_GJ))), energy.DIGITS_CAPACITY_FACTOR)) %>%
+                                        OM.fixed) / (CONV_KWH_GJ * CONV_YEAR_HOURS) / (base.price - (OM.var / (1000 * CONV_KWH_GJ))), energy.DIGITS_CAPACITY_FACTOR)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       rename(supplysector = sector.name, subsector = subsector.name, stub.technology = intermittent.technology) ->
@@ -952,6 +975,39 @@ module_energy_L223.electricity <- function(command, ...) {
     L223.StubTechCapFactor_elec %>%
       bind_rows(L223.StubTechCapFactor_solar) ->
       L223.StubTechCapFactor_elec
+
+    # Adding offshore wind capacity factors
+    # Adding regions to capacity factor first
+    L120.RegCapFactor_offshore_wind %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") -> L120.RegCapFactor_offshore_wind
+
+    # Adding capacity factors to the main electricity table
+    L223.StubTechCapFactor_elec %>%
+      filter(stub.technology == "wind") %>%
+      mutate(stub.technology = "wind_offshore") %>%
+      left_join_error_no_match(L120.RegCapFactor_offshore_wind ,
+                               by = c("region")) %>%
+      mutate(capacity.factor = round(CFmax, energy.DIGITS_CAPACITY_FACTOR)) %>%
+      select(region, supplysector, subsector, stub.technology, year, capacity.factor) -> L223.StubTechCapFactor_elec_offshore_wind
+
+    L223.StubTechCapFactor_elec %>%
+      bind_rows(L223.StubTechCapFactor_elec_offshore_wind) -> L223.StubTechCapFactor_elec
+
+    # Regional non-energy cost adder for offshore wind grid connection cost
+    gcam_regions <- unique(GCAM_region_names$region)
+
+    A23.globaltech_capital %>%
+      filter(technology == "wind_offshore") %>%
+      select(supplysector, subsector, technology) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(region = gcam_regions)) %>%
+      mutate(minicam.non.energy.input = "regional price adjustment") %>%
+      left_join_error_no_match(L120.GridCost_offshore_wind, by = c("region")) %>%
+      rename(input.cost = grid.cost) %>%
+      filter(!is.na(input.cost)) %>%
+      mutate(input.cost = round(input.cost, energy.DIGITS_COST)) %>%
+      select(region, supplysector, subsector, stub.technology = technology,
+             year, minicam.non.energy.input, input.cost) -> L223.StubTechCost_offshore_wind
 
     # ===================================================
 
@@ -1010,6 +1066,13 @@ module_energy_L223.electricity <- function(command, ...) {
         add_legacy_name("L223.SubsectorShrwtFllt_elec") ->
         L223.SubsectorShrwtFllt_elec
     }
+
+    L223.SubsectorShrwt_coal %>%
+      add_title("Subsector Shareweights for regions for coal electricity technologies") %>%
+      add_units("unitless") %>%
+      add_comments("Assumptions in A23.subsector_shrwt_coal_R are used to override region shareweights") %>%
+      add_precursors("energy/A23.subsector_shrwt_coal_R") ->
+      L223.SubsectorShrwt_coal
 
     L223.SubsectorShrwt_nuc %>%
       add_title("Subsector Shareweights for all regions for nuclear electricity technologies") %>%
@@ -1207,6 +1270,13 @@ module_energy_L223.electricity <- function(command, ...) {
       add_legacy_name("L223.StubTechCapFactor_elec") %>%
       add_precursors("common/GCAM_region_names", "L114.RsrcCurves_EJ_R_wind", "L119.Irradiance_rel_R", "energy/A23.globaltech_capital", "energy/A23.globaltech_OMfixed", "energy/A23.globaltech_OMvar", "energy/A23.globalinttech") ->
       L223.StubTechCapFactor_elec
+
+    L223.StubTechCost_offshore_wind %>%
+      add_title("Cost of offshore wind") %>%
+      add_units("unitless") %>%
+      add_comments("Regional non-energy cost adder for offshore wind grid connection cost") %>%
+      add_precursors("common/GCAM_region_names", "L114.RsrcCurves_EJ_R_wind", "L119.Irradiance_rel_R", "energy/A23.globaltech_capital", "energy/A23.globaltech_OMfixed", "energy/A23.globaltech_OMvar", "energy/A23.globalinttech", "L223.StubTechCapFactor_elec", "L120.RegCapFactor_offshore_wind", "L120.GridCost_offshore_wind") ->
+      L223.StubTechCost_offshore_wind
 
     if(exists("L223.GlobalTechShutdown_elec")) {
       L223.GlobalTechShutdown_elec %>%
@@ -1478,7 +1548,25 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_bio_low
 
-    return_data(L223.Supplysector_elec, L223.ElecReserve, L223.SubsectorLogit_elec, L223.SubsectorShrwt_elec, L223.SubsectorShrwtFllt_elec, L223.SubsectorShrwt_nuc, L223.SubsectorShrwt_renew, L223.SubsectorInterp_elec, L223.SubsectorInterpTo_elec, L223.StubTech_elec, L223.GlobalIntTechEff_elec, L223.GlobalTechEff_elec, L223.GlobalTechCapFac_elec, L223.GlobalIntTechCapFac_elec, L223.GlobalTechCapital_elec, L223.GlobalIntTechCapital_elec, L223.GlobalTechOMfixed_elec, L223.GlobalIntTechOMfixed_elec, L223.GlobalTechOMvar_elec, L223.GlobalIntTechOMvar_elec, L223.GlobalTechShrwt_elec, L223.GlobalTechInterp_elec, L223.GlobalIntTechShrwt_elec, L223.PrimaryRenewKeyword_elec, L223.PrimaryRenewKeywordInt_elec, L223.AvgFossilEffKeyword_elec, L223.GlobalTechCapture_elec, L223.GlobalIntTechBackup_elec, L223.StubTechCapFactor_elec, L223.GlobalTechShutdown_elec, L223.GlobalIntTechShutdown_elec, L223.GlobalTechSCurve_elec, L223.GlobalIntTechSCurve_elec, L223.GlobalTechLifetime_elec, L223.GlobalIntTechLifetime_elec, L223.GlobalTechProfitShutdown_elec, L223.GlobalIntTechProfitShutdown_elec, L223.StubTechCalInput_elec, L223.StubTechFixOut_elec, L223.StubTechFixOut_hydro, L223.StubTechProd_elec, L223.StubTechEff_elec, L223.GlobalTechCapital_sol_adv, L223.GlobalIntTechCapital_sol_adv, L223.GlobalTechCapital_wind_adv, L223.GlobalIntTechCapital_wind_adv, L223.GlobalTechCapital_geo_adv, L223.GlobalTechCapital_nuc_adv, L223.GlobalTechCapital_sol_low, L223.GlobalIntTechCapital_sol_low, L223.GlobalTechCapital_wind_low, L223.GlobalIntTechCapital_wind_low, L223.GlobalTechCapital_geo_low, L223.GlobalTechCapital_nuc_low, L223.GlobalTechCapital_bio_low)
+    return_data(L223.Supplysector_elec, L223.ElecReserve, L223.SubsectorLogit_elec, L223.SubsectorShrwt_elec,
+     L223.SubsectorShrwtFllt_elec, L223.SubsectorShrwt_coal, L223.SubsectorShrwt_nuc, L223.SubsectorShrwt_renew,
+      L223.SubsectorInterp_elec, L223.SubsectorInterpTo_elec, L223.StubTech_elec,
+      L223.GlobalIntTechEff_elec, L223.GlobalTechEff_elec, L223.GlobalTechCapFac_elec,
+      L223.GlobalIntTechCapFac_elec, L223.GlobalTechCapital_elec, L223.GlobalIntTechCapital_elec,
+      L223.GlobalTechOMfixed_elec, L223.GlobalIntTechOMfixed_elec, L223.GlobalTechOMvar_elec,
+      L223.GlobalIntTechOMvar_elec, L223.GlobalTechShrwt_elec, L223.GlobalTechInterp_elec,
+      L223.GlobalIntTechShrwt_elec, L223.PrimaryRenewKeyword_elec, L223.PrimaryRenewKeywordInt_elec,
+       L223.AvgFossilEffKeyword_elec, L223.GlobalTechCapture_elec, L223.GlobalIntTechBackup_elec,
+       L223.StubTechCapFactor_elec,L223.StubTechCost_offshore_wind, L223.GlobalTechShutdown_elec,
+       L223.GlobalIntTechShutdown_elec, L223.GlobalTechSCurve_elec, L223.GlobalIntTechSCurve_elec,
+       L223.GlobalTechLifetime_elec, L223.GlobalIntTechLifetime_elec, L223.GlobalTechProfitShutdown_elec,
+       L223.GlobalIntTechProfitShutdown_elec, L223.StubTechCalInput_elec, L223.StubTechFixOut_elec,
+       L223.StubTechFixOut_hydro, L223.StubTechProd_elec, L223.StubTechEff_elec,
+       L223.GlobalTechCapital_sol_adv, L223.GlobalIntTechCapital_sol_adv, L223.GlobalTechCapital_wind_adv,
+        L223.GlobalIntTechCapital_wind_adv, L223.GlobalTechCapital_geo_adv, L223.GlobalTechCapital_nuc_adv,
+        L223.GlobalTechCapital_sol_low, L223.GlobalIntTechCapital_sol_low, L223.GlobalTechCapital_wind_low,
+        L223.GlobalIntTechCapital_wind_low, L223.GlobalTechCapital_geo_low, L223.GlobalTechCapital_nuc_low,
+        L223.GlobalTechCapital_bio_low)
   } else {
     stop("Unknown command")
   }

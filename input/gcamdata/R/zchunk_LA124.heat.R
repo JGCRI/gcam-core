@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA124.heat
 #'
 #' Process historical heat data into input, output from district heat, output from CHP, CHP ratio
@@ -11,15 +13,15 @@
 #' @details This chunk takes in the energy balance, electricity output and mapping files on technology and fuel aggregations.
 #' From this, it creates tables of heat input and output and uses the electricity gen. to determine heat from CHP.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange distinct filter if_else group_by left_join mutate select summarise
+#' @importFrom tidyr complete nesting replace_na
 #' @author JDH April 2017
 module_energy_LA124.heat <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A_regions",
              FILE = "energy/A24.globaltech_coef",
              FILE = "energy/calibrated_techs",
-             FILE = "energy/enduse_fuel_aggregation",
+             FILE = "energy/mappings/enduse_fuel_aggregation",
              "L1011.en_bal_EJ_R_Si_Fi_Yh",
              "L1231.out_EJ_R_elec_F_tech_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -41,7 +43,7 @@ module_energy_LA124.heat <- function(command, ...) {
     A_regions <- get_data(all_data, "energy/A_regions")
     A24.globaltech_coef <- get_data(all_data, "energy/A24.globaltech_coef")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    enduse_fuel_aggregation <- get_data(all_data, "energy/enduse_fuel_aggregation")
+    enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
 
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
@@ -198,7 +200,7 @@ module_energy_LA124.heat <- function(command, ...) {
       add_comments("Input heat is extracted from energy balance, aggregated based on aggregate fuel types") %>%
       add_comments("To avoid processing failure, 0 years have base year (2010) * 1e-3 added") %>%
       add_legacy_name("L124.in_EJ_R_heat_F_Yh") %>%
-      add_precursors("energy/A_regions", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") ->
+      add_precursors("energy/A_regions", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/mappings/enduse_fuel_aggregation") ->
       L124.in_EJ_R_heat_F_Yh
 
     L124.out_EJ_R_heat_F_Yh %>%
@@ -215,7 +217,7 @@ module_energy_LA124.heat <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Data on heat from CHP is read in, aggregated") %>%
       add_legacy_name("L124.out_EJ_R_heatfromelec_F_Yh") %>%
-      add_precursors("energy/A_regions", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/enduse_fuel_aggregation") ->
+      add_precursors("energy/A_regions", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/mappings/enduse_fuel_aggregation") ->
       L124.out_EJ_R_heatfromelec_F_Yh
 
     L124.heatoutratio_R_elec_F_tech_Yh %>%

@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L270.limits_USA.R
 \name{module_gcamusa_L270.limits_USA}
 \alias{module_gcamusa_L270.limits_USA}
-\title{module_gcamusa_L270.limits_USA}
+\title{module_gcam.usa_L270.limits_USA}
 \usage{
 module_gcamusa_L270.limits_USA(command, ...)
 }

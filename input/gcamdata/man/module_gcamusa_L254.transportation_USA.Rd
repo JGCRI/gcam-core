@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L254.transportation_USA.R
 \name{module_gcamusa_L254.transportation_USA}
 \alias{module_gcamusa_L254.transportation_USA}
-\title{module_gcamusa_L254.transportation_USA}
+\title{module_gcam.usa_L254.transportation_USA}
 \usage{
 module_gcamusa_L254.transportation_USA(command, ...)
 }

@@ -1,0 +1,8 @@
+# File: A23.subsector_shrwt_coal_R.csv
+# Title: Region-specific coal electric subsector shareweights by region (GCAM 4 region names)
+# Units: Unitless share-weights
+# Source: GCAM assumptions; intended consistency with current trends
+# Column types: cccnnn 
+# ----------
+region,supplysector,subsector,2015,2020,2035
+USA,electricity,coal,1,0,1

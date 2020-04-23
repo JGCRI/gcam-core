@@ -1,7 +1,7 @@
 # File: A21.rsrc_info.csv
 # Title: Name and characteristics of resource for secondary outputs from refining
 # Units: 1975$/kg
-# Column types: ccccnn
+# Column types: ccccnnn
 # ----------
-resource,market,output-unit,price-unit,1971,2010
-DDGS and feedcakes,regional,Mt,1975$/kg,0.077,0.077
+resource,market,output-unit,price-unit,1971,2010,2015
+DDGS and feedcakes,regional,Mt,1975$/kg,0.05,0.05,0.05

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2235.elec_segments_FERC_USA
 #'
 #' Creates the vertical segment supplysectors in the grid regions and also the domestic supply and
@@ -22,8 +24,7 @@
 #' @details This chunk generates input files to create the vertical segment supplysectors in the grid regions
 #' and also the domestic supply and electricity trade sectors for the grid regions.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr anti_join distinct filter if_else mutate select
 #' @author MTB Aug 2018
 module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

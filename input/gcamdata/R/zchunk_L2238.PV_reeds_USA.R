@@ -1,4 +1,6 @@
-#' module_gcamusa_L2238.PV_reeds_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L2238.PV_reeds_USA
 #'
 #' Create updated solar PV resource supply curves consistent with ReEDS.
 #'
@@ -14,8 +16,8 @@
 #' The corresponding file in the original data system was \code{L2238.PV_reeds_USA.R} (gcam-usa level2).
 #' @details Create state-level solar PV resource supply curves
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr distinct filter lag mutate select row_number summarise_if
+#' @importFrom tidyr gather
 #' @author MTB September 2018
 module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -132,7 +134,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       summarise(resource.potential.EJ = sum(resource.potential.EJ)) %>%
       ungroup() %>%
       group_by(State) %>%
-      arrange(State, desc(CF)) %>%
+      arrange(State, dplyr::desc(CF)) %>%
       mutate(CFmax = max(CF)) %>%
       ungroup() -> L2238.PV_matrix
 

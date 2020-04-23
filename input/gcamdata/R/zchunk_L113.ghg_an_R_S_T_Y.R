@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L113.ghg_an_R_S_T_Y
 #'
 #'  Calculate the animal GHG emissions (CH4 and N2O)
@@ -16,8 +18,8 @@
 #' then compute EDGAR emissions by region and sector and lastly, scale the EPA emissions
 #' by tech to match EDGAR. Note that file L115, handles NH3."
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise
+#' @importFrom tidyr replace_na
 #' @author CH July 2017
 module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -25,6 +27,7 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
              FILE = "emissions/EDGAR/EDGAR_sector",
              FILE = "emissions/mappings/EPA_ghg_tech",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              "L103.ghg_tgmt_USA_an_Sepa_F_2005",
              FILE = "emissions/EDGAR/EDGAR_CH4",
@@ -46,6 +49,11 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
     EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
     L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
     L103.ghg_tgmt_USA_an_Sepa_F_2005 <- get_data(all_data, "L103.ghg_tgmt_USA_an_Sepa_F_2005")
     EDGAR_CH4 <- get_data(all_data, "emissions/EDGAR/EDGAR_CH4")
@@ -71,7 +79,7 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
     # Aggregate by sector and region
     L113.ghg_tg_R_an_C_Sys_Fd_Yh.mlt %>%
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
-      summarize(EPA_emissions = sum(epa_emissions)) %>%
+      summarise(EPA_emissions = sum(epa_emissions)) %>%
       ungroup() ->
       L113.ghg_tg_R_an_C_Yh.mlt
 
@@ -127,7 +135,7 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
       add_comments("Fifth: scale EPA emissions by tech to match EDGAR") %>%
       add_legacy_name("L113.ghg_tg_R_an_C_Sys_Fd_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector", "emissions/mappings/EPA_ghg_tech",
-                     "emissions/mappings/GCAM_sector_tech", "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
+                     "emissions/mappings/GCAM_sector_tech","emissions/mappings/GCAM_sector_tech_Revised", "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
                      "L103.ghg_tgmt_USA_an_Sepa_F_2005", "emissions/EDGAR/EDGAR_CH4", "emissions/EDGAR/EDGAR_N2O") ->
       L113.ghg_tg_R_an_C_Sys_Fd_Yh
 

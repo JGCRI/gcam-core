@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L111.nonghg_en_R_S_T_Y
 #'
 #' Calculate non-ghg emission totals and non-ghg emission shares of total emissions.
@@ -13,8 +15,8 @@
 #' shipping & aviation emission data calculated based on total emission and total emission shares. Finally, non-ghg emission
 #' totals and shares are calculated by GCAM sector, fuel, technology, and driver type for EDGAR historical years.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter group_by left_join mutate right_join select summarise summarise_if
+#' @importFrom tidyr gather replace_na
 #' @author RC April 2018
 module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -23,6 +25,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
              FILE = "emissions/EDGAR/EDGAR_nation",
              FILE = "emissions/mappings/EPA_tech",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              "L101.in_EJ_R_en_Si_F_Yh",
              "L101.so2_tgej_USA_en_Sepa_F_Yh",
              "L101.co_tgej_USA_en_Sepa_F_Yh",
@@ -54,6 +57,12 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
     EDGAR_nation <- get_data(all_data, "emissions/EDGAR/EDGAR_nation")
     EPA_tech <- get_data(all_data, "emissions/mappings/EPA_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
 
     L101.co_tgej_USA_en_Sepa_F_Yh  <- get_data(all_data, "L101.co_tgej_USA_en_Sepa_F_Yh")
     L101.so2_tgej_USA_en_Sepa_F_Yh <- get_data(all_data, "L101.so2_tgej_USA_en_Sepa_F_Yh")
@@ -137,7 +146,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
     L111.EDGAR.agg <- L111.EDGAR %>%
       na.omit %>%
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector) %>%
-      summarize_if(is.numeric, sum) %>%
+      summarise_if(is.numeric, sum) %>%
       ungroup %>%
       gather(year, EDGAR_emissions, -GCAM_region_ID, -Non.CO2, -EDGAR_agg_sector) %>%
       mutate(year = as.integer(year)) %>%
@@ -237,6 +246,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_nation",
                      "emissions/mappings/EPA_tech",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "L101.in_EJ_R_en_Si_F_Yh",
                      "L101.so2_tgej_USA_en_Sepa_F_Yh",
                      "L101.co_tgej_USA_en_Sepa_F_Yh",

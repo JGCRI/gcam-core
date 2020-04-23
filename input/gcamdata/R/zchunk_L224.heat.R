@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L224.heat
 #'
 #' Write district heat sector outputs.
@@ -14,8 +16,7 @@
 #' by interpolating assumptions. From the level 1 heat data, this chunk computes stub tech calibrated inputs, secondary
 #' outputs from elec and modified costs.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter if_else group_by left_join mutate select
 #' @author JDH August 2017
 module_energy_L224.heat <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

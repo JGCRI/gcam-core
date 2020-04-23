@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L131.nonco2_proc_R_S_T_Y
 #'
 #' Calculate historical emissions from the processing sector by GCAM technology, computed from EDGAR emissions data and EPA emissions factors.
@@ -13,8 +15,8 @@
 #' Second: Compute share of sectoral emissions in each subsector using EPA data. Third: Group by and then join by sector, subsector,
 #' and Non.CO2. Fourth: Disaggregate EDGAR emissions to subsectors. Fifth: map in all data and compute emissions (EDGAR emissions*tech_share)
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise
+#' @importFrom tidyr gather replace_na spread
 #' @author CH May 2017
 module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -23,6 +25,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
              FILE = "emissions/EDGAR/EDGAR_sector",
              FILE = "emissions/mappings/EPA_ghg_tech",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              "EDGAR_gases",
              FILE = "emissions/EPA_FCCC_IndProc_2005"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -45,6 +48,13 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
     EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
+
     EPA_Ind <- get_data(all_data, "emissions/EPA_FCCC_IndProc_2005")
     EDGAR_gases <- get_data(all_data, "EDGAR_gases")
 
@@ -150,6 +160,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_sector",
                      "emissions/mappings/EPA_ghg_tech",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "EDGAR_gases",
                      "emissions/EPA_FCCC_IndProc_2005") ->
       L131.nonco2_tg_R_prc_S_S_Yh

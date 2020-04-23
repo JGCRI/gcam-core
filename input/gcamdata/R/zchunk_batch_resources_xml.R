@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_batch_resources_xml
 #'
 #' Construct XML data structure for \code{resources.xml}.
@@ -18,12 +20,14 @@ module_energy_batch_resources_xml <- function(command, ...) {
              "L210.UnlimitRsrcPrice",
              "L210.RsrcTechChange",
              "L210.SmthRenewRsrcTechChange",
+             "L210.SmthRenewRsrcTechChange_offshore_wind",
              "L210.RsrcCalProd",
              "L210.ReserveCalReserve",
              "L210.RsrcCurves_fos",
              "L210.RsrcCurves_U",
              "L210.SmthRenewRsrcCurves_MSW",
              "L210.SmthRenewRsrcCurves_wind",
+             "L210.SmthRenewRsrcCurves_offshore_wind",
              "L210.SmthRenewRsrcCurvesGdpElast_roofPV",
              "L210.GrdRenewRsrcCurves_geo",
              "L210.GrdRenewRsrcMax_geo",
@@ -50,12 +54,14 @@ module_energy_batch_resources_xml <- function(command, ...) {
     L210.UnlimitRsrcPrice <- get_data(all_data, "L210.UnlimitRsrcPrice")
     L210.RsrcTechChange <- get_data(all_data, "L210.RsrcTechChange")
     L210.SmthRenewRsrcTechChange <- get_data(all_data, "L210.SmthRenewRsrcTechChange")
+    L210.SmthRenewRsrcTechChange_offshore_wind <- get_data(all_data, "L210.SmthRenewRsrcTechChange_offshore_wind")
     L210.RsrcCalProd <- get_data(all_data, "L210.RsrcCalProd")
     L210.ReserveCalReserve <- get_data(all_data, "L210.ReserveCalReserve")
     L210.RsrcCurves_fos <- get_data(all_data, "L210.RsrcCurves_fos")
     L210.RsrcCurves_U <- get_data(all_data, "L210.RsrcCurves_U")
     L210.SmthRenewRsrcCurves_MSW <- get_data(all_data, "L210.SmthRenewRsrcCurves_MSW")
     L210.SmthRenewRsrcCurves_wind <- get_data(all_data, "L210.SmthRenewRsrcCurves_wind")
+    L210.SmthRenewRsrcCurves_offshore_wind <- get_data(all_data, "L210.SmthRenewRsrcCurves_offshore_wind")
     L210.SmthRenewRsrcCurvesGdpElast_roofPV <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElast_roofPV")
     L210.GrdRenewRsrcCurves_geo <- get_data(all_data, "L210.GrdRenewRsrcCurves_geo")
     L210.GrdRenewRsrcMax_geo <- get_data(all_data, "L210.GrdRenewRsrcMax_geo")
@@ -89,11 +95,13 @@ module_energy_batch_resources_xml <- function(command, ...) {
       add_xml_data(L210.UnlimitRsrcPrice, "UnlimitRsrcPrice") %>%
       add_xml_data(L210.RsrcTechChange, "RsrcTechChange") %>%
       add_xml_data(L210.SmthRenewRsrcTechChange, "SmthRenewRsrcTechChange") %>%
+      add_xml_data(L210.SmthRenewRsrcTechChange_offshore_wind, "SmthRenewRsrcTechChange") %>%
       add_xml_data(L210.RsrcCalProd, "RsrcCalProd") %>%
       add_xml_data(L210.RsrcCurves_fos, "RsrcCurves") %>%
       add_xml_data(L210.RsrcCurves_U, "RsrcCurves") %>%
       add_xml_data(L210.SmthRenewRsrcCurves_MSW, "SmthRenewRsrcCurvesGdpElast") %>%
       add_xml_data(L210.SmthRenewRsrcCurves_wind, "SmthRenewRsrcCurves") %>%
+      add_xml_data(L210.SmthRenewRsrcCurves_offshore_wind, "SmthRenewRsrcCurves") %>%
       add_xml_data(L210.SmthRenewRsrcCurvesGdpElast_roofPV, "SmthRenewRsrcCurvesGdpElast") %>%
       add_xml_data(L210.GrdRenewRsrcCurves_geo, "GrdRenewRsrcCurves") %>%
       add_xml_data(L210.GrdRenewRsrcMax_geo, "GrdRenewRsrcMax") %>%
@@ -101,8 +109,8 @@ module_energy_batch_resources_xml <- function(command, ...) {
       add_xml_data(L210.GrdRenewRsrcMax_tradbio, "GrdRenewRsrcMax") %>%
       add_xml_data(L210.ResTechShrwt, "ResTechShrwt") %>%
       add_precursors("L210.Rsrc", "L210.RenewRsrc", "L210.UnlimitRsrc", "L210.RsrcPrice", "L210.RenewRsrcPrice",
-                     "L210.UnlimitRsrcPrice", "L210.RsrcTechChange", "L210.SmthRenewRsrcTechChange", "L210.RsrcCalProd", "L210.ReserveCalReserve",
-                     "L210.RsrcCurves_fos", "L210.RsrcCurves_U", "L210.SmthRenewRsrcCurves_MSW", "L210.SmthRenewRsrcCurves_wind",
+                     "L210.UnlimitRsrcPrice", "L210.RsrcTechChange", "L210.SmthRenewRsrcTechChange", "L210.SmthRenewRsrcTechChange_offshore_wind", "L210.RsrcCalProd", "L210.ReserveCalReserve",
+                     "L210.RsrcCurves_fos", "L210.RsrcCurves_U", "L210.SmthRenewRsrcCurves_MSW", "L210.SmthRenewRsrcCurves_wind", "L210.SmthRenewRsrcCurves_offshore_wind",
                      "L210.SmthRenewRsrcCurvesGdpElast_roofPV", "L210.GrdRenewRsrcCurves_geo", "L210.GrdRenewRsrcMax_geo",
                      "L210.GrdRenewRsrcCurves_tradbio", "L210.GrdRenewRsrcMax_tradbio", "L210.ResSubresourceProdLifetime", "L210.SubresourcePriceAdder",
                      "L210.ResReserveTechLifetime", "L210.ResReserveTechDeclinePhase", "L210.ResReserveTechProfitShutdown", "L210.ResTechShrwt") ->

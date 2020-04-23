@@ -52,8 +52,8 @@
 #include <vector>
 
 #include "climate/include/iclimate_model.h"
-#include "climate/source/hector/headers/core/core.hpp"
-#include "climate/source/hector/headers/visitors/csv_outputstream_visitor.hpp"
+#include "climate/source/hector/inst/include/core.hpp"
+#include "climate/source/hector/inst/include/csv_outputstream_visitor.hpp"
 
 class IVisitor;
 

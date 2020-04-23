@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L115.nh3_an_R_S_T_Y
 #'
 #' Annual animal NH3 emissions by GCAM region, sector and technology.
@@ -10,14 +12,15 @@
 #' original data system was \code{L115.nh3_an_R_S_T_Y.R} (emissions level1).
 #' @details This chunk uses EPA emissions and FAO data to estimate agricultural NH3 emissions which are scaled to regional values using EDGAR data.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread unite separate
+#' @importFrom dplyr arrange group_by left_join mutate select summarise
+#' @importFrom tidyr replace_na separate
 #' @author KD May 2017
 module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              "L105.nh3_tgmt_USA_an_Yh",
              FILE = "emissions/EDGAR/EDGAR_NH3"))
@@ -38,6 +41,13 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
+
     L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
     L105.nh3_tgmt_USA_an_Yh <- get_data(all_data, "L105.nh3_tgmt_USA_an_Yh")
     EDGAR_NH3 <- get_data(all_data, "emissions/EDGAR/EDGAR_NH3")
@@ -74,7 +84,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     # Calculate total hybrid emissions for sector and region
     L115.nh3_tg_R_C_Sys_Fd_yr_pro_G_emf_hyb_sec %>%
       group_by(GCAM_region_ID, Non.CO2, EDGAR_agg_sector, year) %>%
-      summarize(total_hybrid_emissions = sum(hybrid_emissions)) %>%
+      summarise(total_hybrid_emissions = sum(hybrid_emissions)) %>%
       ungroup %>%
       arrange(year) ->
       L115.nh3_tg_R_G_sec_yr_tHyb
@@ -147,7 +157,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
       add_legacy_name("L115.nh3_tg_R_an_C_Sys_Fd_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "emissions/EDGAR/EDGAR_sector",
                      "emissions/mappings/GCAM_sector_tech", "L107.an_Prod_Mt_R_C_Sys_Fd_Y", "L105.nh3_tgmt_USA_an_Yh",
-                     "emissions/EDGAR/EDGAR_NH3") ->
+                     "emissions/EDGAR/EDGAR_NH3","emissions/mappings/GCAM_sector_tech_Revised") ->
       L115.nh3_tg_R_an_C_Sys_Fd_Yh
 
     return_data(L115.nh3_tg_R_an_C_Sys_Fd_Yh)

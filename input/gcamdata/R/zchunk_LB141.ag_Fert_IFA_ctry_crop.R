@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB141.ag_Fert_IFA_ctry_crop
 #'
 #' Reconcile disparate IFA fertilizer consumption data to calculate fertilizer consumption (demand) for each GTAP country/crop.
@@ -13,8 +15,8 @@
 #' Top down estimates are calculated using IFA fertilizer data, and the top down estimates are used to fill in missing data from
 #' the bottom up estimates and scale the bottom-up estimates, making the final output.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread drop_na
+#' @importFrom dplyr distinct filter if_else group_by left_join mutate select summarise
+#' @importFrom tidyr gather drop_na replace_na
 #' @author ACS May 2017
 module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -113,7 +115,8 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       left_join(L141.FAO, by = c("iso", "item")) %>%
       replace_na(list(FAO = 0)) %>%
       # Calculate the FAO_LDS scaler value = FAO/LDS
-      mutate(scaler = FAO / LDS) %>%
+      # Set an upper bound to prevent extremely high fertilizer allocations to potentially low production volume GLUs
+      mutate(scaler = pmin(aglu.MAX_FAO_LDS_SCALER, FAO / LDS)) %>%
       # join back in the GTAP crop, which will be used for the remainder of the processing
       # Because the FAO item "Grasses nes for forage;Sil" is assigned to two GTAP crops ("GrsNESFrgSlg" and "MxGrss_Lgm"),
       # the "item" column will get longer. This is OK.

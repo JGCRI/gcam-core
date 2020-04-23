@@ -1,9 +1,7 @@
 # File: IEA_ctry.csv
-# Title: Mapping from IEA countries or composite regions to country ISO codes.
-# Source: NA
+# Title: Mapping between iso codes and country names in IEA databases
 # Units: NA
-# Description: IEA_ctry refers to the name of the country or country group in the IEA Energy Balances. IEA_Fert_reg corresponds to the world region for which ammonia production volumes and energy intensities are reported in Table 4.15 of IEA (2007); Tracking Industrial Energy Efficiency and CO2 Emissions, https://www.iea.org/publications/freepublications/publication/tracking_emissions.pdf
-# Column types: ccc 
+# Column types: ccc
 # ----------
 IEA_ctry,iso,IEA_Fert_reg
 Albania,alb,Central European countries
@@ -19,7 +17,7 @@ Bangladesh,bgd,Other Asia
 Belarus,blr,CIS
 Belgium,bel,Western Europe
 Benin,ben,Africa
-Bolivia,bol,Latin America
+Plurinational State of Bolivia,bol,Latin America
 Bosnia and Herzegovina,bih,Central European countries
 Botswana,bwa,Africa
 Brazil,bra,Latin America
@@ -31,7 +29,7 @@ Canada,can,North America
 Chile,chl,Latin America
 Chinese Taipei,twn,Other Asia
 Colombia,col,Latin America
-Congo,cog,Africa
+Republic of the Congo,cog,Africa
 Costa Rica,cri,Latin America
 Cote dIvoire,civ,Africa
 Croatia,hrv,Central European countries
@@ -39,7 +37,7 @@ Cuba,cub,Latin America
 Cyprus,cyp,Western Europe
 Czech Republic,cze,Central European countries
 Dem. Peoples Rep. of Korea,prk,China
-Democratic Republic of Congo,cod,Africa
+Democratic Republic of the Congo,cod,Africa
 Denmark,dnk,Western Europe
 Dominican Republic,dom,Latin America
 Ecuador,ecu,Latin America
@@ -49,7 +47,7 @@ Eritrea,eri,Africa
 Estonia,est,CIS
 Ethiopia,eth,Africa
 Finland,fin,Western Europe
-Former Yugoslav Republic of Macedonia,mkd,Central European countries
+Republic of North Macedonia,mkd,Central European countries
 France,fra,Western Europe
 Gabon,gab,Africa
 Georgia,geo,CIS
@@ -60,7 +58,7 @@ Greece,grc,Western Europe
 Guatemala,gtm,Latin America
 Haiti,hti,Latin America
 Honduras,hnd,Latin America
-"Hong Kong, China",hkg,Other Asia
+Hong Kong (China),hkg,Other Asia
 Hungary,hun,Central European countries
 Iceland,isl,Western Europe
 India,ind,India
@@ -86,6 +84,7 @@ Lithuania,ltu,CIS
 Luxembourg,lux,Western Europe
 Malaysia,mys,Other Asia
 Malta,mlt,Western Europe
+Mauritius,mus,Africa
 Mexico,mex,Latin America
 Mongolia,mng,China
 Montenegro,mne,Central European countries
@@ -95,9 +94,9 @@ Myanmar,mmr,Other Asia
 Namibia,nam,Africa
 Nepal,npl,Other Asia
 Netherlands,nld,Western Europe
-Netherlands Antilles,ant,Latin America
 New Zealand,nzl,Oceania
 Nicaragua,nic,Latin America
+Niger,ner,Africa
 Nigeria,nga,Africa
 Norway,nor,Western Europe
 Oman,omn,Middle East
@@ -121,9 +120,11 @@ Singapore,sgp,Other Asia
 Slovak Republic,svk,Central European countries
 Slovenia,svn,Central European countries
 South Africa,zaf,Africa
+South Sudan,ssd,Africa
 Spain,esp,Western Europe
 Sri Lanka,lka,Other Asia
 Sudan,sdn,Africa
+Suriname,sur,Latin America
 Sweden,swe,Western Europe
 Switzerland,che,Western Europe
 Syrian Arab Republic,syr,Middle East
@@ -141,32 +142,32 @@ United Republic of Tanzania,tza,Africa
 United States,usa,North America
 Uruguay,ury,Latin America
 Uzbekistan,uzb,CIS
-Venezuela,ven,Latin America
-Vietnam,vnm,China
+Bolivarian Republic of Venezuela,ven,Latin America
+Viet Nam,vnm,China
 Yemen,yem,Middle East
 Zambia,zmb,Africa
 Zimbabwe,zwe,Africa
-Former Soviet Union (if no detail),arm,CIS
-Former Soviet Union (if no detail),aze,CIS
-Former Soviet Union (if no detail),blr,CIS
-Former Soviet Union (if no detail),est,CIS
-Former Soviet Union (if no detail),geo,CIS
-Former Soviet Union (if no detail),kaz,CIS
-Former Soviet Union (if no detail),kgz,CIS
-Former Soviet Union (if no detail),ltu,CIS
-Former Soviet Union (if no detail),lva,CIS
-Former Soviet Union (if no detail),mda,CIS
-Former Soviet Union (if no detail),rus,CIS
-Former Soviet Union (if no detail),tjk,CIS
-Former Soviet Union (if no detail),tkm,CIS
-Former Soviet Union (if no detail),ukr,CIS
-Former Soviet Union (if no detail),uzb,CIS
-Former Yugoslavia (if no detail),bih,Central European countries
-Former Yugoslavia (if no detail),hrv,Central European countries
-Former Yugoslavia (if no detail),mkd,Central European countries
-Former Yugoslavia (if no detail),mne,Central European countries
-Former Yugoslavia (if no detail),srb,Central European countries
-Former Yugoslavia (if no detail),svn,Central European countries
+Former Soviet Union (If no detail),arm,CIS
+Former Soviet Union (If no detail),aze,CIS
+Former Soviet Union (If no detail),blr,CIS
+Former Soviet Union (If no detail),est,CIS
+Former Soviet Union (If no detail),geo,CIS
+Former Soviet Union (If no detail),kaz,CIS
+Former Soviet Union (If no detail),kgz,CIS
+Former Soviet Union (If no detail),ltu,CIS
+Former Soviet Union (If no detail),lva,CIS
+Former Soviet Union (If no detail),mda,CIS
+Former Soviet Union (If no detail),rus,CIS
+Former Soviet Union (If no detail),tjk,CIS
+Former Soviet Union (If no detail),tkm,CIS
+Former Soviet Union (If no detail),ukr,CIS
+Former Soviet Union (If no detail),uzb,CIS
+Former Yugoslavia (If no detail),bih,Central European countries
+Former Yugoslavia (If no detail),hrv,Central European countries
+Former Yugoslavia (If no detail),mkd,Central European countries
+Former Yugoslavia (If no detail),mne,Central European countries
+Former Yugoslavia (If no detail),srb,Central European countries
+Former Yugoslavia (If no detail),svn,Central European countries
 Other Africa,bdi,Africa
 Other Africa,bfa,Africa
 Other Africa,caf,Africa
@@ -183,9 +184,7 @@ Other Africa,lso,Africa
 Other Africa,mdg,Africa
 Other Africa,mli,Africa
 Other Africa,mrt,Africa
-Other Africa,mus,Africa
 Other Africa,mwi,Africa
-Other Africa,ner,Africa
 Other Africa,reu,Africa
 Other Africa,rwa,Africa
 Other Africa,sle,Africa
@@ -195,38 +194,38 @@ Other Africa,swz,Africa
 Other Africa,syc,Africa
 Other Africa,tcd,Africa
 Other Africa,uga,Africa
-Other Non-OECD Americas,abw,Latin America
-Other Non-OECD Americas,atg,Latin America
-Other Non-OECD Americas,bhs,Latin America
-Other Non-OECD Americas,blz,Latin America
-Other Non-OECD Americas,bmu,Western Europe
-Other Non-OECD Americas,brb,Latin America
-Other Non-OECD Americas,cym,Latin America
-Other Non-OECD Americas,dma,Latin America
-Other Non-OECD Americas,flk,Latin America
-Other Non-OECD Americas,glp,Latin America
-Other Non-OECD Americas,grd,Latin America
-Other Non-OECD Americas,guf,Latin America
-Other Non-OECD Americas,guy,Latin America
-Other Non-OECD Americas,kna,Latin America
-Other Non-OECD Americas,lca,Latin America
-Other Non-OECD Americas,msr,Latin America
-Other Non-OECD Americas,sur,Latin America
-Other Non-OECD Americas,tca,Latin America
-Other Non-OECD Americas,vct,Latin America
-Other Non-OECD Americas,vgb,Latin America
-Other Asia,afg,Other Asia
-Other Asia,btn,Other Asia
-Other Asia,fji,Other Asia
-Other Asia,kir,Other Asia
-Other Asia,lao,Other Asia
-Other Asia,mac,Other Asia
-Other Asia,mdv,Other Asia
-Other Asia,ncl,Other Asia
-Other Asia,plw,Other Asia
-Other Asia,png,Other Asia
-Other Asia,slb,Other Asia
-Other Asia,tls,Other Asia
-Other Asia,ton,Other Asia
-Other Asia,vut,Other Asia
-Other Asia,wsm,Other Asia
+Other non-OECD Americas,abw,Latin America
+Other non-OECD Americas,ant,Latin America
+Other non-OECD Americas,atg,Latin America
+Other non-OECD Americas,bhs,Latin America
+Other non-OECD Americas,blz,Latin America
+Other non-OECD Americas,bmu,Western Europe
+Other non-OECD Americas,brb,Latin America
+Other non-OECD Americas,cym,Latin America
+Other non-OECD Americas,dma,Latin America
+Other non-OECD Americas,flk,Latin America
+Other non-OECD Americas,glp,Latin America
+Other non-OECD Americas,grd,Latin America
+Other non-OECD Americas,guf,Latin America
+Other non-OECD Americas,guy,Latin America
+Other non-OECD Americas,kna,Latin America
+Other non-OECD Americas,lca,Latin America
+Other non-OECD Americas,msr,Latin America
+Other non-OECD Americas,tca,Latin America
+Other non-OECD Americas,vct,Latin America
+Other non-OECD Americas,vgb,Latin America
+Other non-OECD Asia,afg,Other Asia
+Other non-OECD Asia,btn,Other Asia
+Other non-OECD Asia,fji,Other Asia
+Other non-OECD Asia,kir,Other Asia
+Other non-OECD Asia,lao,Other Asia
+Other non-OECD Asia,mac,Other Asia
+Other non-OECD Asia,mdv,Other Asia
+Other non-OECD Asia,ncl,Other Asia
+Other non-OECD Asia,plw,Other Asia
+Other non-OECD Asia,png,Other Asia
+Other non-OECD Asia,slb,Other Asia
+Other non-OECD Asia,tls,Other Asia
+Other non-OECD Asia,ton,Other Asia
+Other non-OECD Asia,vut,Other Asia
+Other non-OECD Asia,wsm,Other Asia

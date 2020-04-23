@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA142.building_agg
 #'
 #' Calculate building sector energy consumption, producing the following output table: Building energy consumption by GCAM region / fuel / historical year
@@ -11,14 +13,13 @@
 #' @details  Building sector energy consumption was obtained from end use energy consumption data
 #' @details  Fuel inputs to heat were added to building energy use in regions where heat is not modeled as a final fuel
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows filter group_by left_join mutate pull select summarise
 #' @author AS May 2017
 module_energy_LA142.building_agg <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A_regions",
-             FILE = "energy/enduse_fuel_aggregation",
-             FILE = "energy/enduse_sector_aggregation",
+             FILE = "energy/mappings/enduse_fuel_aggregation",
+             FILE = "energy/mappings/enduse_sector_aggregation",
              "L124.in_EJ_R_heat_F_Yh",
              "L131.in_EJ_R_Senduse_F_Yh",
              "L131.share_R_Senduse_heat_Yh"))
@@ -30,8 +31,8 @@ module_energy_LA142.building_agg <- function(command, ...) {
 
     # Load required inputs
     A_regions <- get_data(all_data, "energy/A_regions")
-    enduse_fuel_aggregation <- get_data(all_data, "energy/enduse_fuel_aggregation")
-    enduse_sector_aggregation <- get_data(all_data, "energy/enduse_sector_aggregation")
+    enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
+    enduse_sector_aggregation <- get_data(all_data, "energy/mappings/enduse_sector_aggregation")
     L124.in_EJ_R_heat_F_Yh <- get_data(all_data, "L124.in_EJ_R_heat_F_Yh")
     L131.in_EJ_R_Senduse_F_Yh <- get_data(all_data, "L131.in_EJ_R_Senduse_F_Yh")
     L131.share_R_Senduse_heat_Yh <- get_data(all_data, "L131.share_R_Senduse_heat_Yh")
@@ -130,7 +131,7 @@ module_energy_LA142.building_agg <- function(command, ...) {
       add_comments("Building sector energy consumption was obtained from end use energy consumption data") %>%
       add_comments("Fuel inputs to heat were added to building energy use in regions where heat is not modeled as a final fuel") %>%
       add_legacy_name("L142.in_EJ_R_bld_F_Yh") %>%
-      add_precursors("energy/A_regions", "energy/enduse_fuel_aggregation", "energy/enduse_sector_aggregation",
+      add_precursors("energy/A_regions", "energy/mappings/enduse_fuel_aggregation", "energy/mappings/enduse_sector_aggregation",
                      "L124.in_EJ_R_heat_F_Yh", "L131.in_EJ_R_Senduse_F_Yh", "L131.share_R_Senduse_heat_Yh") ->
       L142.in_EJ_R_bld_F_Yh
 

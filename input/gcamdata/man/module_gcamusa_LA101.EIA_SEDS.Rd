@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA101.EIA_SEDS.R
 \name{module_gcamusa_LA101.EIA_SEDS}
 \alias{module_gcamusa_LA101.EIA_SEDS}
-\title{module_gcamusa_LA101.EIA_SEDS}
+\title{module_gcam.usa_LA101.EIA_SEDS}
 \usage{
 module_gcamusa_LA101.EIA_SEDS(command, ...)
 }

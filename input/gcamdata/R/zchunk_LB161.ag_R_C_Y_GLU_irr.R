@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB161.ag_R_C_Y_GLU_irr
 #'
 #' Calculates irrigated and rainfed agriculture production, harvested area and yields by GCAM region / commodity / GLU / year.
@@ -12,8 +14,8 @@
 #' agriculture production, harvested area and yields by GCAM region / commodity / GLU / year. The same irrigated and rainfed fraction
 #' is applied to all historical years for each commodity, region and GLU.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr if_else left_join mutate right_join select
+#' @importFrom tidyr replace_na
 #' @author RC August 2017
 module_aglu_LB161.ag_R_C_Y_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

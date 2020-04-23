@@ -1,4 +1,6 @@
-#' module_gcamusa_L254.transportation_USA
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
+#' module_gcam.usa_L254.transportation_USA
 #'
 #' Generates GCAM-USA model inputs for transportation sector by states.
 #'
@@ -31,8 +33,8 @@
 #' pass-through technologies are normal, standard GCAM technologies, not "tranTechnologies" which have different
 #' parameters read in, and perform a bunch of hard-wired unit conversions between inputs and outputs.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate select semi_join summarise
+#' @importFrom tidyr replace_na
 #' @author RC Oct 2017
 module_gcamusa_L254.transportation_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -40,6 +42,8 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
              FILE = "energy/A54.globaltech_nonmotor",
              FILE = "energy/A54.globaltech_passthru",
              FILE = "energy/A54.sector",
+             FILE=  "common/UCD_size_class_revisions",
+             FILE=  "common/UCD_techs_revised",
              FILE = "gcam-usa/states_subregions",
              "L254.Supplysector_trn",
              "L254.FinalEnergyKeyword_trn",
@@ -100,10 +104,29 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
       size.class <- state <- tranSubsector <- tranTechnology <- calibrated.value <- stub.technology <-
       output <- output_agg <- output_cum <- share.weight <- subs.share.weight <- share.weight.year <-
       tech.share.weight <- calOutputValue <- energy.final.demand <- base.service <- year.fillout <-
-      fuelprefElasticity <- income.elasticity <- . <- NULL
+      fuelprefElasticity <- income.elasticity <- UCD_region <- . <- NULL
 
     # Load required inputs
+    #kbn 2019-10-14 Making same changes here for UCD techs that we made in L254:
+    Size_class_New<- get_data(all_data, "common/UCD_size_class_revisions") %>%
+      select(-UCD_region) %>%
+      distinct()
+
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs") # Mapping file of transportation technology from the UC Davis report (Mishra et al. 2013)
+
+    if (toString(energy.TRAN_UCD_MODE)=='rev.mode'){
+
+      UCD_techs <- get_data(all_data, "common/UCD_techs_revised")
+
+      UCD_techs<-UCD_techs %>%
+        inner_join(Size_class_New, by=c("mode","size.class"))%>%
+        select(-mode,-size.class)%>%
+        distinct()
+
+      colnames(UCD_techs)[colnames(UCD_techs)=='rev_size.class']<-'size.class'
+      colnames(UCD_techs)[colnames(UCD_techs)=='rev.mode']<-'mode'
+    }
+
     A54.globaltech_nonmotor <- get_data(all_data, "energy/A54.globaltech_nonmotor")
     A54.globaltech_passthru <- get_data(all_data, "energy/A54.globaltech_passthru")
     A54.sector <- get_data(all_data, "energy/A54.sector")
@@ -202,11 +225,12 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
 
     # Calibration
     # L254.StubTranTechCalInput_USA: calibrated energy consumption by all technologies
+    #kbn 2019-10-14 Switching to left_join_keep_first
     L154.in_EJ_state_trn_m_sz_tech_F %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calibrated.value = round(value, digits = energy.DIGITS_CALOUTPUT),
              region = state) %>%
-      left_join_error_no_match(select(UCD_techs, UCD_sector, mode, size.class, UCD_technology, UCD_fuel,
+      left_join_keep_first_only(select(UCD_techs, UCD_sector, mode, size.class, UCD_technology, UCD_fuel,
                                       supplysector, tranSubsector, stub.technology = tranTechnology, minicam.energy.input),
                                by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")) %>%
       select(LEVEL2_DATA_NAMES[["StubTranTech"]], year, minicam.energy.input, calibrated.value) ->
@@ -289,7 +313,7 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
       # Some of the technologies are sub-totals, assign zero value now, will be calculated below
       replace_na(list(output_agg = 0)) %>%
       # Arrange input sectors so that sub-total sector is behind the subsectors
-      arrange(desc(minicam.energy.input)) %>%
+      arrange(dplyr::desc(minicam.energy.input)) %>%
       group_by(region, year) %>%
       # Calculate the cumulative for sub-total sector
       mutate(output_cum = cumsum(output_agg)) %>%

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' Join past GDP time series to future.
 #'
 #' When we have to join two GDP time series, we usually find that they don't
@@ -53,7 +55,7 @@ join.gdp.ts <- function(past, future, grouping) {
   }
 
   ## Find the base year
-  base.year <- max(dplyr::intersect(past$year, future$year))
+  base.year <- max(intersect(past$year, future$year))
   assert_that(is.finite(base.year))
 
   ## Base year gdp from the future dataset
@@ -106,8 +108,8 @@ join.gdp.ts <- function(past, future, grouping) {
 #' the generated outputs: \code{L102.gdp_mil90usd_Scen_R_Y}, \code{L102.pcgdp_thous90USD_Scen_R_Y}, \code{L102.gdp_mil90usd_GCAM3_R_Y}, \code{L102.gdp_mil90usd_GCAM3_ctry_Y}, \code{L102.pcgdp_thous90USD_GCAM3_R_Y}, \code{L102.pcgdp_thous90USD_GCAM3_ctry_Y}, \code{L102.PPP_MER_R}. The corresponding file in the
 #' original data system was \code{L102.GDP.R} (socioeconomics level1).
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows distinct filter full_join if_else intersect group_by left_join mutate one_of select summarise transmute
+#' @importFrom tidyr complete gather nesting replace_na
 #' @author RPL March 2017
 module_socioeconomics_L102.GDP <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -173,7 +175,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       change_iso_code('rou', 'rom') %>%
       left_join_error_no_match(iso_region32_lookup, by = 'iso') %>%
       protect_integer_cols %>%
-      select_if(function(x) {!any(is.na(x))}) %>% # apparently the SSP database has some missing in it; filter these out.
+      dplyr::select_if(function(x) {!any(is.na(x))}) %>% # apparently the SSP database has some missing in it; filter these out.
       unprotect_integer_cols %>%
       select(-MODEL, -iso, -VARIABLE, -UNIT) %>%
       gather_years(value_col = "gdp") %>%
@@ -206,7 +208,8 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       mutate(gdp.rate = if_else(gdp.rate == 'n/a', '0', gdp.rate), # Treat string 'n/a' as missing.
              year = as.integer(year),
              gdp.rate = as.numeric(gdp.rate)) %>%
-      replace_na(list(year = 2010)) %>% # have to do this for `complete` to work as expected.
+      #kbn 2020-03-26 Updated below to the last year in the IMF_GDP_YEARS so that latest GDP growth rates are picked up
+      replace_na(list(year =  max(socioeconomics.IMF_GDP_YEARS))) %>% # have to do this for `complete` to work as expected.
       complete(iso, year) %>%
       replace_na(list(gdp.rate = 0.0))
 
@@ -219,12 +222,14 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       # that join.gdp.ts() can work with it.
       select(iso, year, gdp)
 
+
+    gdp.mil90usd.imf.country.yr <-
     gdp_mil90usd_ctry %>%
       # filter gdp data so that it ends right at the first year of the IMF ratio data
       filter(year <= min(imfgdp.ratio$year), year >= min(HISTORICAL_YEARS)) %>%
       select(iso, year, gdp) %>%
-      join.gdp.ts(imfgdp.ratio, 'iso') ->
-      gdp.mil90usd.imf.country.yr
+      join.gdp.ts(imfgdp.ratio, 'iso')
+
     ## columns: iso, year, gdp
 
     ## Aggregate by GCAM region
@@ -272,10 +277,11 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       mutate(pcgdp = gdp / population) %>%
       select(scenario, GCAM_region_ID, year, pcgdp)
 
-    ## Calculate the PPP-MER conversion factor in 2010 for each region.
+    ## Calculate the PPP-MER conversion factor in base year for each region.
     ## Our PPP values are in billions of 2005$, so we make that conversion
     ## here too.
-    PPP.MER.baseyr <- 2010
+    #kbn 2020-03-26 Using model final base year here below
+    PPP.MER.baseyr <- MODEL_FINAL_BASE_YEAR
     mer.rgn <- gdp_mil90usd_ctry %>%
       filter(year == PPP.MER.baseyr) %>%
       group_by(GCAM_region_ID) %>%

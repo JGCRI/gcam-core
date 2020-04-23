@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L2231.land_input_3_irr
 #'
 #' Produce L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation,
@@ -48,8 +50,7 @@
 #' \item{"L2231.LN1_Logit_prot: Logit info for protected lands in the first land nest by region"}
 #' }
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr bind_rows distinct filter if_else left_join mutate select
 #' @author ACS September 2017
 module_aglu_L2231.land_input_3_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

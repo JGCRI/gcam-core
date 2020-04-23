@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_LB1236.elec_load_segments_solver_USA
 #'
 #' Calculate the fraction of electricity generation by fuel by horizontal load segment such that the total supply
@@ -12,8 +14,7 @@
 #' The corresponding file in the original data system was \code{LB1236.elec_load_segments_solver_2010.R} (gcam-usa level1).
 #' @details Calculates the fraction of electricity generation by fuel, by horizontal load segment, by grid region, in 2010.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr distinct filter mutate pull select
 #' @author MTB August 2018
 module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

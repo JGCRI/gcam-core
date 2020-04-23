@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_batch_Cstorage.xml
 #'
 #' Construct XML data structure for \code{Cstorage.xml}.
@@ -8,7 +10,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{Cstorage.xml}. The corresponding file in the
 #' original data system was \code{batch_Cstorage.xml.R} (energy XML).
-module_energy_batch_Cstorage.xml <- function(command, ...) {
+module_energy_batch_Cstorage_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L261.Rsrc",
               "L261.UnlimitRsrc",

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L202.Ccoef
 #'
 #' Create the file of CO2 coefficients (carbon emissions/GJ energy consumed) for primary energy sources.
@@ -12,8 +14,7 @@
 #' # based on 1. GCAM 3.0 assumptions 2. global average emissions coefficients based on CDIAC inventory and IEA energy balances
 #' # or 3. region-specific average emissions coefficients based on CDIAC inventory and IEA energy balances.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter if_else left_join mutate select
 #' @author JDH Sept 2017
 
 module_energy_L202.Ccoef <- function(command, ...) {

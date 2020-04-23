@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB1321.regional_ag_prices
 #'
 #' Calculate the calibration prices for all GCAM AGLU commodities.
@@ -9,7 +11,8 @@
 #' @details This chunk calculates average prices over calibration years by GCAM commodity and region. Averages across
 #'   years are unweighted; averages over FAO item are weighted by production.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr bind_rows filter if_else left_join mutate rename select
+#' @importFrom dplyr bind_rows filter if_else inner_join left_join mutate rename select
+#' @importFrom tidyr  complete drop_na gather nesting spread
 #' @importFrom tibble tibble
 #' @author GPK/RC/STW February 2019
 module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
@@ -42,8 +45,8 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     FAO_ag_an_ProducerPrice <- get_data(all_data, "aglu/FAO/FAO_ag_an_ProducerPrice")
     FAO_ag_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_Prod_t_PRODSTAT")
     FAO_GDP_Deflators <- get_data(all_data, "aglu/FAO/FAO_GDP_Deflators")
-    FAO_an_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_an_Prod_t_PRODSTAT")
-    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
+    #kbn 2019/09/23 added AGLU_Ctry_Unique since using AGLU_Ctry was causing extra rows to be added.
+    AGLU_Ctry_Unique<-distinct(AGLU_ctry,FAO_country,.keep_all = TRUE)
 
     # 1. Producer prices
     # 1.1 GDP deflators (to 2005) by country and analysis year
@@ -64,7 +67,8 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
       mutate(currentUSD_per_baseyearUSD = (Value / Value[year == aglu.DEFLATOR_BASE_YEAR])) %>%
       ungroup() %>%
       filter(year %in% aglu.TRADE_CAL_YEARS) %>%
-      left_join_error_no_match(select(AGLU_ctry, FAO_country, iso),
+      #kbn 2019/09/23 added AGLU_Ctry_Unique since using AGLU_Ctry was causing extra rows to be added.
+      left_join_error_no_match(select(AGLU_Ctry_Unique, FAO_country, iso),
                                by = c(Area = "FAO_country")) %>%
       select(iso, countries = Area, year, currentUSD_per_baseyearUSD)
 

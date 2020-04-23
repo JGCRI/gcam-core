@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L103.ghg_an_USA_S_T_Y
 #'
 #' Calculates methane emissions factors for animals by GCAM technology,
@@ -12,14 +14,14 @@
 #' @details Calculated methane emissions factors for animal production by GCAM technology (animal type) from EPA
 #' emissions estimates and FAO production data for the US in 2005.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter funs group_by left_join mutate select summarise summarise_if
 #' @author RH April 2017
 module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/mappings/EPA_ghg_tech",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              FILE = "emissions/EPA_FCCC_AG_2005"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -36,6 +38,13 @@ module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
+
     L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
     EPA_FCCC_AG_2005 <- get_data(all_data, "emissions/EPA_FCCC_AG_2005")
 
@@ -50,11 +59,11 @@ module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
     EPA_FCCC_AG_2005 %>%
       left_join(EPA_ghg_tech, by = "Source_Category") %>%
       group_by(sector, fuel) %>%
-      summarize_if(is.numeric, sum, na.rm = TRUE) %>%
+      summarise_if(is.numeric, sum, na.rm = TRUE) %>%
       filter(!is.na(sector), !is.na(fuel)) %>%
       ungroup() %>%
-      mutate_all( funs( replace(., is.na(.), 0))) %>%
-      mutate_if(is.numeric, funs(. * CONV_GG_TG)) ->
+      dplyr::mutate_all( funs( replace(., is.na(.), 0))) %>%
+      dplyr::mutate_if(is.numeric, funs(. * CONV_GG_TG)) ->
       L103.ghg_tg_USA_an_Sepa_F_2005
 
     # Map FAO production to EPA sectors and aggregate
@@ -88,6 +97,7 @@ module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "emissions/mappings/EPA_ghg_tech",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
                      "emissions/EPA_FCCC_AG_2005") ->
       L103.ghg_tgmt_USA_an_Sepa_F_2005
