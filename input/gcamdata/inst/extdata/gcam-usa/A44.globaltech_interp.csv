@@ -1,10 +1,10 @@
-# File: A44.globaltech_interp.csv,,,,,,,
-# Title: Share-weight interpolation rule over-writes for selected technologies,,,,,,,
-# Units: NA,,,,,,,
-# Comments:  Can be useful for smoothing behavior of efficiency-partitioned technologies,,,,,,,
-# Source: None (GCAM assumptions),,,,,,,
-# Column types: cccccicn ,,,,,,,
-# ----------,,,,,,,
+# File: A44.globaltech_interp.csv
+# Title: Share-weight interpolation rule over-writes for selected technologies
+# Units: NA
+# Comments:  Can be useful for smoothing behavior of efficiency-partitioned technologies
+# Source: None (GCAM assumptions)
+# Column types: cccccccn 
+# ----------
 supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,to.value
 resid hot water,electricity,electric heat pump water heater,share-weight,final-calibration-year,2050,s-curve,1
 resid lighting,electricity,incandescent,share-weight,final-calibration-year,initial-future-year,s-curve,1
