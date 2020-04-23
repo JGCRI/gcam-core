@@ -44,8 +44,6 @@ module_gcamusa_L2241.coal_retire_USA <- function(command, ...) {
              FILE = "gcam-usa/EIA_923_generator_gen_fuel_2018"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2241.StubTechProd_elec_coalret_USA",
-             # "L2241.coal_conv_pul_delete_USA",
-             # "L2241.StubTechProd_elecS_coal_USA",
              "L2241.StubTechEff_elec_coalret_USA",
              "L2241.StubTechSCurve_elec_coalret_USA",
              "L2241.StubTechMarket_elec_coalret_USA",
@@ -58,7 +56,6 @@ module_gcamusa_L2241.coal_retire_USA <- function(command, ...) {
              "L2241.GlobalTechProfitShutdown_elec_coalret_USA",
              "L2241.StubTechProd_coal_vintage_USA",
              "L2241.StubTechEff_coal_vintage_USA",
-             # "L2241.StubTechLifetime_coal_vintage_USA",
              "L2241.StubTechSCurve_coal_vintage_USA",
              "L2241.StubTechProfitShutdown_coal_vintage_USA",
              "L2241.StubTechMarket_coal_vintage_USA",
@@ -105,7 +102,6 @@ module_gcamusa_L2241.coal_retire_USA <- function(command, ...) {
     prime_mover_map <- get_data(all_data, "gcam-usa/prime_mover_map")
     eia_860_data_2018 <- get_data(all_data, "gcam-usa/EIA_860_generators_existing_2018")
     eia_923_data_2018 <- get_data(all_data, "gcam-usa/EIA_923_generator_gen_fuel_2018")
-    # eia_860_retired_2018 <- get_data(all_data, "gcam-usa/EIA_860_generators_retired_2018")
 
     # ===================================================
     # Perform computations
@@ -561,16 +557,6 @@ module_gcamusa_L2241.coal_retire_USA <- function(command, ...) {
       add_precursors("L2241.StubTechEff_elec_coalret_USA") ->
       L2241.StubTechEff_coal_vintage_USA
 
-    # L2241.StubTechLifetime_coal_vintage_USA %>%
-    #   add_title("Lifetime of slow_retire conventional coal electricity plants from 2010 by detailed vintage and state") %>%
-    #   add_units("Years") %>%
-    #   add_comments("Average lifetime for each vintage group is weighted by capacity, based on EIA unit-level 2015 data") %>%
-    #   add_comments("Only for vintage groups with 20 or fewer years of lifetime remaining") %>%
-    #   add_legacy_name("L2241.StubTechLifetime_coal_vintage_USA") %>%
-    #   same_precursors_as("L2241.StubTechProd_coal_vintage_USA") %>%
-    #   add_precursors("gcam-usa/EIA_860_generators_retired_2018") ->
-    #   L2241.StubTechLifetime_coal_vintage_USA
-
     L2241.StubTechSCurve_coal_vintage_USA %>%
       add_title("Lifetime and retirement parameters for slow_retire conventional coal electricity plants from 2010 by detailed vintage and state") %>%
       add_units("Years") %>%
@@ -649,9 +635,6 @@ module_gcamusa_L2241.coal_retire_USA <- function(command, ...) {
       add_precursors("L2241.GlobalTechOMvar_elec_coalret_USA") ->
       L2241.GlobalTechOMvar_coal_vintage_USA
 
-
-    # return_data(L2241.coal_conv_pul_delete_USA,
-                # L2241.StubTechProd_elecS_coal_USA,
     return_data(L2241.StubTechProd_elec_coalret_USA,
                 L2241.StubTechEff_elec_coalret_USA,
                 L2241.StubTechSCurve_elec_coalret_USA,
@@ -666,7 +649,6 @@ module_gcamusa_L2241.coal_retire_USA <- function(command, ...) {
                 # vintage of existing techs
                 L2241.StubTechProd_coal_vintage_USA,
                 L2241.StubTechEff_coal_vintage_USA,
-                # L2241.StubTechLifetime_coal_vintage_USA,
                 L2241.StubTechSCurve_coal_vintage_USA,
                 L2241.StubTechProfitShutdown_coal_vintage_USA,
                 L2241.StubTechMarket_coal_vintage_USA,
