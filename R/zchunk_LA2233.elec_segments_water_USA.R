@@ -133,8 +133,6 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
              "L2233.SubsectorShrwt_elecS_cool_USA",
              "L2233.SubsectorShrwtInterp_elecS_USA",
              "L2233.SubsectorShrwtInterpTo_elecS_USA",
-             #"L2233.SubsectorShrwtInterp_elecS_cool_USA",
-             "L2233.SubsectorShrwtInterpTo_elecS_cool_USA",
              "L2233.Supplysector_elecS_cool_USA"))
   } else if(command == driver.MAKE) {
 
@@ -283,17 +281,17 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     # currently located in separate files
     # This also adds each cooling technology and trasfers coefficients calculated for cooling techs if needed
     # All variables here are global
-   L2234.GlobalTechEff_elecS_USA %>%
+    L2234.GlobalTechEff_elecS_USA %>%
 
       bind_rows((L2241.GlobalTechEff_coal_vintage_USA %>%
-                  rename(supplysector = sector.name,
-                         subsector = subsector.name)),
+                   rename(supplysector = sector.name,
+                          subsector = subsector.name)),
                 L2241.GlobalTechEff_elec_coalret_USA)  %>%
       add_global_cooling_techs() %>%
-     select(-efficiency) %>%
-     # Bring in global cooling tech efficiencies from GCAM-core
+      select(-efficiency) %>%
+      # Bring in global cooling tech efficiencies from GCAM-core
       left_join_keep_first_only(L2233.GlobalTechEff_elec_cool %>% mutate(technology = gsub("_storage.*","_base_storage",technology)) %>%
-                  select(technology, efficiency,year), by=c("technology","year")) %>%
+                                  select(technology, efficiency,year), by=c("technology","year")) %>%
       arrange(sector.name,year)->
       L2233.GlobalTechEff_elec_cool_USA
 
@@ -304,8 +302,8 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       left_join(A23.elecS_tech_mapping_cool,
                 by=c("technology"="Electric.sector.technology",
                      "sector.name"="Electric.sector","subsector.name" ="subsector")) %>%
-                select(-subsector_1, -technology.y)%>%
-                rename(subsector.name0=subsector.name, subsector.name = technology, technology = to.technology)%>%
+      select(-subsector_1, -technology.y)%>%
+      rename(subsector.name0=subsector.name, subsector.name = technology, technology = to.technology)%>%
       mutate(technology = if_else(subsector.name0=="wind"|subsector.name0=="solar",subsector.name,
                                   if_else(subsector.name0=="grid_storage",subsector.name0,technology))) %>%
       arrange(sector.name,year) ->
@@ -314,15 +312,15 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     # Add all vintages to profit shutdown tibbles as they initially exist at state level, not global
     L2234.GlobalTechProfitShutdown_elecS_USA %>%
 
-                bind_rows(L2241.GlobalTechProfitShutdown_elec_coalret_USA
-                          ) %>%
-                          left_join(A23.elecS_tech_mapping_cool,
-                                    by=c("technology"="Electric.sector.technology",
-                                         "supplysector"="Electric.sector","subsector")) %>%
+      bind_rows(L2241.GlobalTechProfitShutdown_elec_coalret_USA
+      ) %>%
+      left_join(A23.elecS_tech_mapping_cool,
+                by=c("technology"="Electric.sector.technology",
+                     "supplysector"="Electric.sector","subsector")) %>%
       select(-subsector_1, -median.shutdown.point, -technology.y)%>%
       rename(subsector0=subsector, subsector = technology, technology = to.technology)%>%
       left_join_keep_first_only(L2233.GlobalTechProfitShutdown_elec_cool %>%
-                  select(technology, median.shutdown.point), by=c("technology")) %>%
+                                  select(technology, median.shutdown.point), by=c("technology")) %>%
       arrange(supplysector,year) %>%
       mutate(technology = if_else(subsector0=="wind"|subsector0=="solar",subsector,
                                   if_else(subsector0=="grid_storage",subsector0,technology))) ->
@@ -363,7 +361,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       left_join_keep_first_only(
         bind_rows(L2233.GlobalTechCapital_elec_cool %>% mutate(technology=gsub("storage","base_storage",technology)),
                   L2233.GlobalTechCapital_elecPassthru%>% mutate(technology=gsub("storage","base_storage",technology))) %>%
-                  select(technology, input.capital, capital.overnight, fixed.charge.rate),by=c("technology")) %>%
+          select(technology, input.capital, capital.overnight, fixed.charge.rate),by=c("technology")) %>%
       arrange(sector.name,year) %>%
       mutate(technology = if_else(subsector.name0=="wind"|subsector.name0=="solar",subsector.name,
                                   if_else(subsector.name0=="grid_storage",subsector.name0,technology))) %>%
@@ -400,10 +398,10 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       na.omit() %>%
       bind_rows(
         L2233.GlobalTechCoef_elec_cool %>%
-                  left_join(A23.elecS_tech_mapping_cool,
-                            by=c("subsector.name"="technology")) %>%
-                            filter(grepl("base_storage",to.technology)) %>%
-                  select(-sector.name,-subsector_1,-subsector.name, -technology) %>%
+          left_join(A23.elecS_tech_mapping_cool,
+                    by=c("subsector.name"="technology")) %>%
+          filter(grepl("base_storage",to.technology)) %>%
+          select(-sector.name,-subsector_1,-subsector.name, -technology) %>%
           rename(technology=to.technology) %>% na.omit(),
         L2233.GlobalTechCoef_elec_cool %>%
           left_join(A23.elecS_tech_mapping_cool,
@@ -489,8 +487,8 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     L2234.GlobalIntTechCapital_elecS_USA %>%
       filter(grepl("CSP",intermittent.technology)) %>%
       left_join(A23.elecS_tech_mapping_cool,
-               by=c("intermittent.technology"="Electric.sector.technology",
-                    "supplysector"="Electric.sector", "subsector")) %>%
+                by=c("intermittent.technology"="Electric.sector.technology",
+                     "supplysector"="Electric.sector", "subsector")) %>%
       select(-technology,-subsector_1,)%>%
       rename(subsector0=subsector,
              subsector = intermittent.technology,
@@ -671,9 +669,9 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     L1233.out_EJ_state_elec_F_tech_cool %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
       left_join(select(elec_tech_water_map,
-                                      -from.supplysector, -from.subsector, -from.technology, -minicam.energy.input, -sector, -to.subsector,-to.supplysector),
-                               by = c("fuel", "technology", "cooling_system", "water_type")) %>%
-      select(-plant_type,-technology,-cooling_system,-water_type,) %>%
+                       -from.supplysector, -from.subsector, -from.technology, -minicam.energy.input, -sector, -to.subsector,-to.supplysector),
+                by = c("fuel", "technology", "cooling_system", "water_type")) %>%
+      select(-plant_type,-technology,-cooling_system,-water_type) %>%
       rename(supplysector = sector, subsector0 = fuel,  technology=to.technology, region=state) %>%
       ungroup()->
       L1233.out_EJ_state_elec_F_tech_cool
@@ -687,7 +685,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     }
 
     L2234.StubTechProd_elecS_USA %>% rename(tech.share.weight=share.weight) %>%
-    coal_stub_filter() %>%
+      coal_stub_filter() %>%
       bind_rows(L2241.StubTechProd_coal_vintage_USA,
                 L2241.StubTechProd_elec_coalret_USA) %>%
       add_cooling_techs() ->
@@ -761,10 +759,10 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       add_cooling_techs() ->
       L2233.StubTechCost_offshore_wind_elecS_USA
 
-      #L2241.StubTechLifetime_coal_vintage_USA %>%
-      #add_cooling_techs() %>%
-      #arrange(supplysector,year)->
-      #L2233.StubTechLifetime_elecS_cool_USA
+    #L2241.StubTechLifetime_coal_vintage_USA %>%
+    #add_cooling_techs() %>%
+    #arrange(supplysector,year)->
+    #L2233.StubTechLifetime_elecS_cool_USA
 
     L2234.SubsectorLogit_elecS_USA %>%
       rename(subsector0=subsector) %>%
@@ -783,7 +781,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                   L2233.StubTechFixOut_hydro_elecS_USA %>% select(subsector,region,technology),
                   L2233.StubTechEff_elec_USA %>% filter(subsector=="battery") %>% select(subsector,region,technology)),
         ## Including all possible technologies here
-                 by=c("subsector","region","to.technology"="technology"))%>%
+        by=c("subsector","region","to.technology"="technology"))%>%
       select(-subsector_1,-technology, -to.technology, region,supplysector,subsector0,subsector, logit.year.fillout, logit.exponent,logit.type)%>%
       # Acknowledge that not all vintages are in each state, therefore shareweights and logits are
       # not needed for these vintages
@@ -793,8 +791,8 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
 
     L2233.GlobalTechCoef_elecS_cool_USA %>%
       right_join(L2233.SubsectorLogit_elecS_cool_USA %>% select(region,supplysector,subsector0,subsector),
-                by=c("supplysector","subsector0","subsector")) %>%
-    mutate(market.name = if_else(minicam.energy.input=="seawater",gcam.USA_REGION,region)) %>%
+                 by=c("supplysector","subsector0","subsector")) %>%
+      mutate(market.name = if_else(minicam.energy.input=="seawater",gcam.USA_REGION,region)) %>%
       na.omit() -> L2233.StubTechCoef_elecS_cool_USA
 
     L2233.StubTechCoef_elecS_cool_USA %>%
@@ -830,20 +828,35 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       arrange(supplysector) ->
       L2233.SubsectorShrwtInterpTo_elecS_USA
 
-      L2233.SubsectorShrwtInterpTo_elecS_USA %>%
-      left_join(L2233.SubsectorLogit_elecS_cool_USA %>% select(-logit.year.fillout, -logit.exponent, -logit.type), by= c("region","supplysector","subsector0")
-      ) %>% mutate(to.value = if_else(from.year>=min(MODEL_FUTURE_YEARS)&subsector=="nuc_base_Gen II",0,to.value))->
-        #eliminate future nuclear Gen II from falsely being interpolated past 2030
-      L2233.SubsectorShrwtInterpTo_elecS_cool_USA
+    # Subsector shareweights are really generation technology shareweights
+    # These use the global tech object in L2234, so copy to all regions
+    # No interpolation function is needed
+    L2233.StubTechProd_elec_USA %>%
+      # calculate historical subsector (generation technology) shareweights
+      group_by(region, supplysector, subsector0, subsector, year) %>%
+      summarise(calOutputValue = sum(calOutputValue)) %>%
+      ungroup() %>%
+      # if no historical production, assign 0 shareweight; otherwise, assign 1 shareweight
+      mutate(share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+      select(-calOutputValue) -> L2233.SubsectorShrwt_elecS_cool_USA_hist
 
-      ## Add subsector shareweights in future periods to allow model to interpolate from 2015.
-         L2233.SubsectorShrwt_elecS_cool_USA %>%
-           bind_rows(L2233.SubsectorShrwtInterpTo_elecS_cool_USA %>%
-                       mutate(year = if_else(interpolation.function=="linear",to.year,from.year),
-                              share.weight = to.value) %>% select(-apply.to, -from.year, -to.year, -to.value, -interpolation.function)
-                     ) %>%
-           arrange(region,supplysector,year) %>% unique() ->
-           L2233.SubsectorShrwt_elecS_cool_USA
+    L2234.GlobalTechShrwt_elecS_USA %>%
+      bind_rows(L2234.GlobalIntTechShrwt_elecS_USA %>%
+                  rename(technology = intermittent.technology)) %>%
+      repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
+      rename(supplysector = sector.name,
+             subsector0 = subsector.name,
+             subsector = technology) %>%
+      # we only want future years here, because past years are dictated by state-level production
+      filter(year %in% MODEL_FUTURE_YEARS)  %>%
+      # semi_join historical table to filter out techs that shouldn't be created,
+      # such as CSP and geothermal in regions without this resource
+      semi_join(L2233.SubsectorShrwt_elecS_cool_USA_hist,
+                by = c("region", "supplysector", "subsector0", "subsector")) %>%
+      select(region, supplysector, subsector0, subsector, year, share.weight) -> L2233.SubsectorShrwt_elecS_cool_USA_fut
+
+    L2233.SubsectorShrwt_elecS_cool_USA_hist %>%
+      bind_rows(L2233.SubsectorShrwt_elecS_cool_USA_fut) -> L2233.SubsectorShrwt_elecS_cool_USA
 
     ## We want to do a couple of manipulations to make sure that
     ## future cooling technologies are in line with state-level historical representations.
@@ -855,7 +868,18 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     ## but switches to a new power plant type (i.e. Nuclear Gen 2 -> Gen 3), we assume
     ## that share weights of cooling technologies for that particular state remain similar
     ## to the old power plant (e.g. Gen 3 will have the same cooling tech share weights as Gen 2)
-    L2233.StubTechProd_elec_USA %>% dplyr::filter(year==max(MODEL_BASE_YEARS)) %>%
+
+    # MB:  need to get a handle on how this is being done
+    L2233.SubsectorShrwtInterpTo_elecS_USA %>%
+      left_join(L2233.SubsectorLogit_elecS_cool_USA %>%
+                  select(-logit.year.fillout, -logit.exponent, -logit.type),
+                by= c("region","supplysector","subsector0")) %>%
+      mutate(to.value = if_else(from.year >= min(MODEL_FUTURE_YEARS) & subsector == "nuc_base_Gen II", 0, to.value)) ->
+      # eliminate future nuclear Gen II from falsely being interpolated past 2030
+      L2233.SubsectorShrwtInterpTo_elecS_cool_USA
+
+    L2233.StubTechProd_elec_USA %>%
+      dplyr::filter(year==max(MODEL_BASE_YEARS)) %>%
       select(-share.weight.year) %>%
       left_join(L2233.SubsectorShrwtInterpTo_elecS_cool_USA %>%
                   rename(share.weight=to.value) %>%
@@ -873,10 +897,10 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       left_join(
         bind_rows(L2233.GlobalTechShrwt_elec_cool_USA,
                   L2233.GlobalIntTechShrwt_elecS_cool_USA %>% rename(technology=intermittent.technology) %>%
-                  mutate(share.weight = if_else(subsector.name=="wind_base_offshore",1,share.weight))
+                    mutate(share.weight = if_else(subsector.name=="wind_base_offshore",1,share.weight))
                   ##Fix to make sure that the share weight of offshore wind is properly handled and carried through the rest of the script
-                  ) %>% rename(global.share.weight=share.weight, supplysector=sector.name, subsector0=subsector.name0, subsector=subsector.name), by=c("supplysector","subsector0","subsector","technology","year")
-        )->
+        ) %>% rename(global.share.weight=share.weight, supplysector=sector.name, subsector0=subsector.name0, subsector=subsector.name), by=c("supplysector","subsector0","subsector","technology","year")
+      )->
       L2233.StubTechShrwt_elecS_cool_USA
 
     #Initially remove all technologies that are not present in future periods so that there
@@ -885,7 +909,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       na.omit() %>%
       filter(subs.share.weight>0) %>%
       mutate(state.cooling.share.weight = if_else(share.weight>0&share.weight.sum>0,tech.share.weight,
-                                                                            if_else(share.weight==0&tech.share.weight==0,0,1))) %>%
+                                                  if_else(share.weight==0&tech.share.weight==0,0,1))) %>%
       select(region,supplysector,subsector0,cooling_system,from.year,state.cooling.share.weight) %>%
       unique() %>%
       group_by(region,supplysector,subsector0,cooling_system,from.year) %>%
@@ -1060,13 +1084,13 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       L2233.GlobalTechCapture_elecS_cool_USA
 
     L2233.GlobalTechLifetime_elecS_cool_USA %>%
-    add_title("Electricity Lifetime") %>%
+      add_title("Electricity Lifetime") %>%
       add_units("none") %>%
       add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
       add_legacy_name("L2233.GlobalTechLifetime_elec_cool") %>%
       add_precursors("L2234.GlobalTechLifetime_elecS_USA",
                      "gcam-usa/A23.elecS_tech_mapping_cool")->
-    L2233.GlobalTechLifetime_elecS_cool_USA
+      L2233.GlobalTechLifetime_elecS_cool_USA
 
     L2233.AvgFossilEffKeyword_elecS_USA %>%
       add_title("Average Fossil Efficiency Keywords for Electricity Load Segments Technologies") %>%
@@ -1157,13 +1181,13 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       L2233.GlobalIntTechShrwt_elecS_cool_USA
 
     L2233.GlobalIntTechCoef_elecS_cool_USA %>%
-    add_title("Water demand coefs for int techs") %>%
+      add_title("Water demand coefs for int techs") %>%
       add_units("none") %>%
       add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
       add_legacy_name("L2233.GlobalIntTechCoef_elec_cool") %>%
       add_precursors("L2233.GlobalIntTechCoef_elec_cool",
                      "gcam-usa/A23.elecS_tech_mapping_cool") ->
-    L2233.GlobalIntTechCoef_elecS_cool_USA
+      L2233.GlobalIntTechCoef_elecS_cool_USA
 
     L2233.PrimaryRenewKeyword_elecS_cool_USA %>%
       add_title("Primary Renewable Keywords for Electricity Load Segments Technologies") %>%
@@ -1307,14 +1331,14 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                      "gcam-usa/A23.elecS_tech_mapping_cool") ->
       L2233.StubTechMarket_backup_elecS_cool_USA
 
-      #L2233.StubTechLifetime_elecS_cool_USA %>%
-      #add_title("Backup Energy Inputs for Electricity Load Segments Intermittent Technologies") %>%
-      #add_units("none") %>%
-      #add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
-      #add_legacy_name("L2233.GlobalTechLifetime_elec_cool") %>%
-      #add_precursors("L2241.StubTechLifetime_coal_vintage_USA",
-      #               "gcam-usa/A23.elecS_tech_mapping_cool") ->
-      #L2233.StubTechLifetime_elecS_cool_USA
+    #L2233.StubTechLifetime_elecS_cool_USA %>%
+    #add_title("Backup Energy Inputs for Electricity Load Segments Intermittent Technologies") %>%
+    #add_units("none") %>%
+    #add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
+    #add_legacy_name("L2233.GlobalTechLifetime_elec_cool") %>%
+    #add_precursors("L2241.StubTechLifetime_coal_vintage_USA",
+    #               "gcam-usa/A23.elecS_tech_mapping_cool") ->
+    #L2233.StubTechLifetime_elecS_cool_USA
 
     L2233.StubTechShrwt_elecS_cool_USA %>%
       add_title("Electricity Load Segments Stub Tech Shareweights") %>%
@@ -1358,46 +1382,37 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       add_precursors("L2234.SubsectorShrwt_elecS_USA") ->
       L2233.SubsectorShrwt_elecS_USA
 
-    L2233.SubsectorShrwt_elecS_cool_USA%>%
+    L2233.SubsectorShrwt_elecS_cool_USA %>%
       add_title("Electricity Load Segments Subsector Shareweights") %>%
       add_units("none") %>%
       add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
       add_legacy_name("L2233.SubsectorShrwt_elec") %>%
       add_precursors("L2234.StubTechProd_elecS_USA") ->
-    L2233.SubsectorShrwt_elecS_cool_USA
+      L2233.SubsectorShrwt_elecS_cool_USA
 
-     L2233.SubsectorShrwtInterp_elecS_USA %>%
-         add_title("Electricity Load Segments Nesting-Subsector Shareweights") %>%
-         add_units("none") %>%
-         add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
-         add_legacy_name("L2233.SubsectorShrwtInterp_elec") %>%
-         add_precursors("L2234.SubsectorShrwtInterp_elecS_USA") ->
-         L2233.SubsectorShrwtInterp_elecS_USA
+    L2233.SubsectorShrwtInterp_elecS_USA %>%
+      add_title("Electricity Load Segments Nesting-Subsector Shareweights") %>%
+      add_units("none") %>%
+      add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
+      add_legacy_name("L2233.SubsectorShrwtInterp_elec") %>%
+      add_precursors("L2234.SubsectorShrwtInterp_elecS_USA") ->
+      L2233.SubsectorShrwtInterp_elecS_USA
 
-       #L2233.SubsectorShrwtInterp_elecS_cool_USA %>%
-         #add_title("Electricity Load Segments Subsector Shareweights") %>%
-         #add_units("none") %>%
-         #add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
-         #add_legacy_name("L2233.SubsectorShrwtInterp_elec") %>%
-         #add_precursors("L2234.SubsectorShrwtInterp_elecS_USA") ->
-         #L2233.SubsectorShrwtInterp_elecS_cool_USA
+    #L2233.SubsectorShrwtInterp_elecS_cool_USA %>%
+    #add_title("Electricity Load Segments Subsector Shareweights") %>%
+    #add_units("none") %>%
+    #add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
+    #add_legacy_name("L2233.SubsectorShrwtInterp_elec") %>%
+    #add_precursors("L2234.SubsectorShrwtInterp_elecS_USA") ->
+    #L2233.SubsectorShrwtInterp_elecS_cool_USA
 
-       L2233.SubsectorShrwtInterpTo_elecS_USA %>%
-         add_title("Electricity Load Segments Nesting-Subsector Shareweights") %>%
-         add_units("none") %>%
-         add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
-         add_legacy_name("L2233.SubsectorShrwtInterpTo_elec") %>%
-         add_precursors("L2234.SubsectorShrwtInterpTo_elecS_USA") ->
-         L2233.SubsectorShrwtInterpTo_elecS_USA
-
-       L2233.SubsectorShrwtInterpTo_elecS_cool_USA %>%
-         add_title("Electricity Load Segments Subsector Shareweights") %>%
-         add_units("none") %>%
-         add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
-         add_legacy_name("L2233.SubsectorShrwtInterpTo_elec") %>%
-         add_precursors("L2234.SubsectorShrwtInterpTo_elecS_USA") ->
-         L2233.SubsectorShrwtInterpTo_elecS_cool_USA
-
+    L2233.SubsectorShrwtInterpTo_elecS_USA %>%
+      add_title("Electricity Load Segments Nesting-Subsector Shareweights") %>%
+      add_units("none") %>%
+      add_comments("Generated using zchunk_LA2233.elec_segments_water_USA") %>%
+      add_legacy_name("L2233.SubsectorShrwtInterpTo_elec") %>%
+      add_precursors("L2234.SubsectorShrwtInterpTo_elecS_USA") ->
+      L2233.SubsectorShrwtInterpTo_elecS_USA
 
     L2233.Supplysector_elecS_USA %>%
       add_title("Supply Sector Information for Electricity Load Segments") %>%
@@ -1408,57 +1423,55 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       L2233.Supplysector_elecS_cool_USA
 
 
-     return_data(L2233.GlobalTechEff_elecS_cool_USA,
-                    L2233.GlobalTechShrwt_elecS_cool_USA,
-                    L2233.GlobalTechProfitShutdown_elecS_cool_USA,
-                    L2233.GlobalTechOMvar_elecS_cool_USA,
-                    L2233.GlobalTechOMfixed_elecS_cool_USA,
-                    L2233.GlobalTechCapital_elecS_USA,
-                    L2233.GlobalTechCapital_elecS_cool_USA,
-                    L2233.GlobalTechCapFac_elecS_cool_USA,
-                    L2233.GlobalTechSCurve_elecS_cool_USA,
-                    L2233.GlobalTechCoef_elecS_cool_USA,
-                    L2233.GlobalTechCapture_elecS_cool_USA,
-                    L2233.GlobalTechLifetime_elecS_cool_USA,
-                    L2233.AvgFossilEffKeyword_elecS_cool_USA,
-                    L2233.GlobalIntTechBackup_elecS_cool_USA,
-                    L2233.GlobalIntTechCapital_elecS_USA,
-                    L2233.GlobalIntTechCapital_elecS_cool_USA,
-                    L2233.GlobalIntTechEff_elecS_USA,
-                    L2233.GlobalIntTechEff_elecS_cool_USA,
-                    L2233.GlobalIntTechLifetime_elecS_cool_USA,
-                    L2233.GlobalIntTechOMfixed_elecS_cool_USA,
-                    L2233.GlobalIntTechOMvar_elecS_cool_USA,
-                    L2233.GlobalIntTechShrwt_elecS_cool_USA,
-                    L2233.GlobalIntTechCoef_elecS_cool_USA,
-                    L2233.PrimaryRenewKeyword_elecS_cool_USA,
-                    L2233.PrimaryRenewKeywordInt_elecS_cool_USA,
-                    L2233.StubTechEff_elecS_cool_USA,
-                    L2233.StubTechCoef_elecS_cool_USA,
-                    L2233.StubTechMarket_elecS_cool_USA,
-                    L2233.StubTechProd_elecS_cool_USA,
-                    L2233.StubTechSCurve_elecS_cool_USA,
-                    L2233.StubTechCapFactor_elecS_solar_USA,
-                    L2233.StubTechCapFactor_elecS_wind_USA,
-                    L2233.StubTechElecMarket_backup_elecS_cool_USA,
-                    L2233.StubTechFixOut_elecS_cool_USA,
-                    L2233.StubTechFixOut_hydro_elecS_cool_USA,
-                    L2233.StubTechMarket_backup_elecS_cool_USA,
-                    L2233.StubTechProfitShutdown_elecS_cool_USA,
-                    #L2233.StubTechLifetime_elecS_cool_USA,
-                    L2233.StubTechShrwt_elecS_cool_USA,
-                    L2233.StubTechInterp_elecS_cool_USA,
-                    L2233.SubsectorLogit_elecS_USA,
-                    L2233.SubsectorLogit_elecS_cool_USA,
-                    L2233.SubsectorShrwt_elecS_USA,
-                    L2233.SubsectorShrwt_elecS_cool_USA,
-                    L2233.SubsectorShrwtInterp_elecS_USA,
-                    L2233.StubTechCost_offshore_wind_elecS_cool_USA,
-                    L2233.SubsectorShrwtInterpTo_elecS_USA,
-                    #L2233.SubsectorShrwtInterp_elecS_cool_USA,
-                    L2233.SubsectorShrwtInterpTo_elecS_cool_USA,
-                    L2233.Supplysector_elecS_cool_USA)
-      } else {
-        stop("Unknown command")
-      }
-    }
+    return_data(L2233.GlobalTechEff_elecS_cool_USA,
+                L2233.GlobalTechShrwt_elecS_cool_USA,
+                L2233.GlobalTechProfitShutdown_elecS_cool_USA,
+                L2233.GlobalTechOMvar_elecS_cool_USA,
+                L2233.GlobalTechOMfixed_elecS_cool_USA,
+                L2233.GlobalTechCapital_elecS_USA,
+                L2233.GlobalTechCapital_elecS_cool_USA,
+                L2233.GlobalTechCapFac_elecS_cool_USA,
+                L2233.GlobalTechSCurve_elecS_cool_USA,
+                L2233.GlobalTechCoef_elecS_cool_USA,
+                L2233.GlobalTechCapture_elecS_cool_USA,
+                L2233.GlobalTechLifetime_elecS_cool_USA,
+                L2233.AvgFossilEffKeyword_elecS_cool_USA,
+                L2233.GlobalIntTechBackup_elecS_cool_USA,
+                L2233.GlobalIntTechCapital_elecS_USA,
+                L2233.GlobalIntTechCapital_elecS_cool_USA,
+                L2233.GlobalIntTechEff_elecS_USA,
+                L2233.GlobalIntTechEff_elecS_cool_USA,
+                L2233.GlobalIntTechLifetime_elecS_cool_USA,
+                L2233.GlobalIntTechOMfixed_elecS_cool_USA,
+                L2233.GlobalIntTechOMvar_elecS_cool_USA,
+                L2233.GlobalIntTechShrwt_elecS_cool_USA,
+                L2233.GlobalIntTechCoef_elecS_cool_USA,
+                L2233.PrimaryRenewKeyword_elecS_cool_USA,
+                L2233.PrimaryRenewKeywordInt_elecS_cool_USA,
+                L2233.StubTechEff_elecS_cool_USA,
+                L2233.StubTechCoef_elecS_cool_USA,
+                L2233.StubTechMarket_elecS_cool_USA,
+                L2233.StubTechProd_elecS_cool_USA,
+                L2233.StubTechSCurve_elecS_cool_USA,
+                L2233.StubTechCapFactor_elecS_solar_USA,
+                L2233.StubTechCapFactor_elecS_wind_USA,
+                L2233.StubTechElecMarket_backup_elecS_cool_USA,
+                L2233.StubTechFixOut_elecS_cool_USA,
+                L2233.StubTechFixOut_hydro_elecS_cool_USA,
+                L2233.StubTechMarket_backup_elecS_cool_USA,
+                L2233.StubTechProfitShutdown_elecS_cool_USA,
+                #L2233.StubTechLifetime_elecS_cool_USA,
+                L2233.StubTechShrwt_elecS_cool_USA,
+                L2233.StubTechInterp_elecS_cool_USA,
+                L2233.SubsectorLogit_elecS_USA,
+                L2233.SubsectorLogit_elecS_cool_USA,
+                L2233.SubsectorShrwt_elecS_USA,
+                L2233.SubsectorShrwt_elecS_cool_USA,
+                L2233.SubsectorShrwtInterp_elecS_USA,
+                L2233.StubTechCost_offshore_wind_elecS_cool_USA,
+                L2233.SubsectorShrwtInterpTo_elecS_USA,
+                L2233.Supplysector_elecS_cool_USA)
+  } else {
+    stop("Unknown command")
+  }
+}
