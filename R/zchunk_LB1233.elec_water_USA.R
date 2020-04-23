@@ -112,20 +112,27 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
       summarise(out_MWh_ = sum(out_MWh_)) %>%
       ungroup() ->
       L1233.out_MWh_USA_elec_F_tech
+
     L1233.out_MWh_USA_elec_F_tech_sea %>%
-      full_join(L1233.out_MWh_USA_elec_F_tech) %>% replace_na(list(out_MWh_sea = 0,out_MWh_=0)) ->
+      full_join(L1233.out_MWh_USA_elec_F_tech, by = c("sector", "fuel", "technology")) %>%
+      replace_na(list(out_MWh_sea = 0,out_MWh_=0)) ->
       L1233.out_MWh_USA_elec_F_tech
+
     L1233.out_MWh_state_elec_F_tech_cool %>% filter(!(state %in% gcamusa.NO_SEAWATER_STATES)) %>% group_by(sector, fuel, technology, cooling_system, water_type) %>%
       summarise(out_MWh.sea = sum(out_MWh)) %>%
       ungroup() -> L1233.out_MWh_state_elec_F_tech_cool_sea
     L1233.out_MWh_state_elec_F_tech_cool %>% filter((state %in%gcamusa.NO_SEAWATER_STATES)) %>% group_by(sector, fuel, technology, cooling_system, water_type) %>%
       summarise(out_MWh = sum(out_MWh)) %>%
       ungroup() -> L1233.out_MWh_state_elec_F_tech_cool_nosea
+
     L1233.out_MWh_state_elec_F_tech_cool_sea %>%
-      full_join(L1233.out_MWh_state_elec_F_tech_cool_nosea) %>% replace_na(list(out_MWh = 0,out_MWh.sea=0)) %>%
+      full_join(L1233.out_MWh_state_elec_F_tech_cool_nosea,
+                by = c("sector", "fuel", "technology", "cooling_system", "water_type")) %>%
+      replace_na(list(out_MWh = 0, out_MWh.sea=0)) %>%
       left_join_error_no_match(L1233.out_MWh_USA_elec_F_tech,
                                by = c("sector", "fuel", "technology")) %>%
-      mutate(share_nat.sea = out_MWh.sea / out_MWh_sea, share_nat =  out_MWh / out_MWh_) %>% select(-out_MWh_, -out_MWh,-out_MWh_sea, -out_MWh.sea) ->
+      mutate(share_nat.sea = out_MWh.sea / out_MWh_sea, share_nat =  out_MWh / out_MWh_) %>%
+      select(-out_MWh_, -out_MWh, -out_MWh_sea, -out_MWh.sea) ->
       L1233.out_MWh_USA_elec_F_tech_cool
 
     # get all possible combinations of power plants, cooling system types, and water types in all states
