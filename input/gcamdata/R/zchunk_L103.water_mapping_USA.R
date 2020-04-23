@@ -57,7 +57,8 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
         USGS_livestock_water_withdrawals %>% filter(year<max(MODEL_BASE_YEARS))%>% select(-water_type)
       ) %>%
       arrange(state,year) %>%
-      repeat_add_columns(tibble(water_type=water.MAPPED_WATER_TYPES)) ->
+      repeat_add_columns(tibble(water_type=water.MAPPED_WATER_TYPES)) %>%
+      unique() ->
       L103.water_mapping_USA_R_LS_W_Ws_share
 
     # Mining shares are precalculated as total withdrawals in historical periods at the state level from USGS data.
@@ -72,7 +73,8 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
         USGS_mining_water_shares %>% filter(year<max(MODEL_BASE_YEARS))
       ) %>%
       arrange(state,year) %>%
-      repeat_add_columns(tibble(water_type=water.MAPPED_WATER_TYPES)) ->
+      repeat_add_columns(tibble(water_type=water.MAPPED_WATER_TYPES)) %>%
+      unique()->
       L103.water_mapping_USA_R_PRI_W_Ws_share
 
     # Calculate shares from basin level Irrigation to state level using Huang et al. (2018) grid-level data.
