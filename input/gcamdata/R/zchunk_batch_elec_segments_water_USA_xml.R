@@ -59,8 +59,6 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
              "L2233.SubsectorShrwt_elecS_cool_USA",
              "L2233.SubsectorShrwtInterp_elecS_USA",
              "L2233.SubsectorShrwtInterpTo_elecS_USA",
-             #"L2233.SubsectorShrwtInterp_elecS_cool_USA",
-             "L2233.SubsectorShrwtInterpTo_elecS_cool_USA",
              "L2233.Supplysector_elecS_cool_USA",
              "L2234.SubsectorShrwtFllt_elecS_grid_USA",
              "L2234.SubsectorShrwtInterp_elecS_grid_USA",
@@ -154,8 +152,6 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
     L2233.SubsectorShrwt_elecS_cool_USA <- get_data(all_data,"L2233.SubsectorShrwt_elecS_cool_USA")
     L2233.SubsectorShrwtInterp_elecS_USA <- get_data(all_data,"L2233.SubsectorShrwtInterp_elecS_USA")
     L2233.SubsectorShrwtInterpTo_elecS_USA<- get_data(all_data,"L2233.SubsectorShrwtInterpTo_elecS_USA")
-    #L2233.SubsectorShrwtInterp_elecS_cool_USA <- get_data(all_data,"L2233.SubsectorShrwtInterp_elecS_cool_USA")
-    L2233.SubsectorShrwtInterpTo_elecS_cool_USA<- get_data(all_data,"L2233.SubsectorShrwtInterpTo_elecS_cool_USA")
     L2233.Supplysector_elecS_cool_USA<- get_data(all_data,"L2233.Supplysector_elecS_cool_USA")
 
     L2234.SubsectorShrwtFllt_elecS_grid_USA <- get_data(all_data, "L2234.SubsectorShrwtFllt_elecS_grid_USA")
@@ -271,8 +267,6 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
       add_xml_data(L2233.GlobalIntTechShrwt_elecS_cool_USA, "GlobalIntTechShrwt") %>%
       add_logit_tables_xml_generate_levels(L2233.SubsectorLogit_elecS_cool_USA, "SubsectorLogit","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.SubsectorShrwt_elecS_cool_USA, "SubsectorShrwt","subsector","nesting-subsector",1,FALSE) %>%
-      #add_xml_data_generate_levels(L2233.SubsectorShrwtInterp_elecS_cool_USA, "SubsectorInterp","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.SubsectorShrwtInterpTo_elecS_cool_USA, "SubsectorInterpTo","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.StubTechMarket_elecS_cool_USA %>% rename(stub.technology = technology), "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.StubTechMarket_backup_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.StubTechElecMarket_backup_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechElecMarket","subsector","nesting-subsector",1,FALSE) %>%
@@ -379,8 +373,6 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
                      "L2233.SubsectorShrwt_elecS_cool_USA",
                      "L2233.SubsectorShrwtInterp_elecS_USA",
                      "L2233.SubsectorShrwtInterpTo_elecS_USA",
-                     #"L2233.SubsectorShrwtInterp_elecS_cool_USA",
-                     "L2233.SubsectorShrwtInterpTo_elecS_cool_USA",
                      "L2233.Supplysector_elecS_cool_USA",
                      "L2234.SubsectorShrwtFllt_elecS_grid_USA",
                      "L2234.SubsectorShrwtInterp_elecS_grid_USA",
