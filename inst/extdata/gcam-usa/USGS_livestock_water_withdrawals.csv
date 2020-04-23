@@ -1,7 +1,7 @@
 # File: USGS_livestock_water_withdrawals.csv
 # Title: Livestock water withdrawals by USA state
 # Units: km3
-# Source: USGS domestic water withdrawals https://water.usgs.gov/watuse/data/1990/us90st.txt
+# Source: USGS livestock water withdrawals https://water.usgs.gov/watuse/data/1990/us90st.txt
 # Column types: ccnnnn
 # ----------
 state,water_type,1990,2005,2010,2015
