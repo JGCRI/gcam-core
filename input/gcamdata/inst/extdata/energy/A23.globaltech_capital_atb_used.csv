@@ -1,0 +1,41 @@
+# File: A23.globaltech_capital_atb_used.csv
+# Title: Mapping of ATB tehcnologies actually used from list of all available
+# Units: NA
+# Source: NREL ATB 2019 
+# Variations in ATB technologies ("Resource") are chosen based on their closest analogues to existing GCAM technologies. 
+# Note that some technologies in ATB have the same cost for multiple variations (e.g. Coal, Gas) and for them only one variation is represented.
+# Column types: cccc
+# ----------
+Scenario,Technology,Used_Resource,gcam.technology
+Mid,Offshore Wind,TRG 4 - Mid,wind_offshore
+Mid,Land-Based Wind,TRG 5 - Mid,wind
+Mid,Solar - Utility PV,Mid,PV
+Mid,Solar - PV Dist. Comm,Mid,rooftop_pv_comm
+Mid,Solar - PV Dist. Res,Mid,rooftop_pv_resid
+Mid,Solar - CSP,Mid,CSP
+Mid,Geothermal,Hydro / Flash - Mid,geothermal
+Mid,Coal CCS,Coal CCS 90% -Mid,coal (conv pul CCS)
+Mid,Coal IGCC,Coal IGCC-Mid,coal (IGCC)
+Mid,Coal new,Coal new-Mid,coal (conv pul)
+Mid,Gas CC CCS,Gas CC CCS- Mid,gas (CC CCS)
+Mid,Gas CC,Gas CC- Mid,gas (CC)
+Mid,Gas CT,Gas CT- Mid,gas (steam/CT)
+Mid,Nuclear,Nuclear Gen III,Gen_III
+Mid,Biopower,Dedicated - Mid,biomass (conv)
+Mid,Storage,Battery Storage - Mid,battery
+Low,Offshore Wind,TRG 4 - Low,wind_offshore
+Low,Land-Based Wind,TRG 5 - Low,wind
+Low,Solar - Utility PV,Low,PV
+Low,Solar - PV Dist. Comm,Low,rooftop_pv_comm
+Low,Solar - PV Dist. Res,Low,rooftop_pv_resid
+Low,Solar - CSP,Low,CSP
+Low,Geothermal,Hydro / Flash - Low,geothermal
+Low,Coal CCS,Coal CCS 90% -Low,coal (conv pul CCS)
+Low,Coal IGCC,Coal IGCC-Low,coal (IGCC)
+Low,Coal new,Coal new-Low,coal (conv pul)
+Low,Gas CC CCS,Gas CC CCS- Low,gas (CC CCS)
+Low,Gas CC,Gas CC- Low,gas (CC)
+Low,Gas CT,Gas CT- Low,gas (steam/CT)
+Low,Nuclear,Nuclear Gen III,Gen_III
+Low,Biopower,Dedicated - Low,biomass (conv)
+Low,Storage,Battery Storage - Low,battery

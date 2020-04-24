@@ -57,7 +57,13 @@ max_year <- 2100
 increment <- 5
 number_of_periods <- (max_year - year_base)/increment
 battery <- "battery"
-
+medium <- "Mid"
+low <- "Low"
+storage_multiplier <- 4
+ACDC_conversion <- 1/0.85
+Rooftop_Average <- 0.5
+ATB_years <- seq(2015, 2050, 5)
+ATB_eff_years<- c("2015","2100")
 
 # Driver constants ======================================================================
 

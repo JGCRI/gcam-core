@@ -1,0 +1,10 @@
+# File: A23.globaltech_eff_raw.csv
+# Title: Raw efficiency estimates (improved).
+# Units: Unitless
+# Source: Based on existing literature forecasts for coal and gas, ATB numbers beyond the first one are not useful because efficiencies stop improving after 2030. 
+# Comments: Technology names are as-is from ATB and require a separate mapping file to ensure that these are mapped to GCAM technologies. 
+# Column types: cnn
+# ----------
+atb.technology,2015,2100
+Coal new,0.396656458,0.5
+Gas CC,0.565001803,0.65
