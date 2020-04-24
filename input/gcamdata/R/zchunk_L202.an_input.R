@@ -376,7 +376,9 @@ module_aglu_L202.an_input <- function(command, ...) {
                                by = c("GCAM_region_ID", "GCAM_commodity", "system", "feed", "year")) %>%
       left_join_error_no_match(L202.ag_FeedCost_USDkg_R_F, by = c("region", "feed" = "supplysector")) %>%
       rename(FeedPrice_USDkg = price) %>%
-      left_join_error_no_match(L1321.an_prP_R_C_75USDkg, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
+      #kbn 2020-04-23 We don't have data for Taiwan here. Set that to 0.
+      left_join(L1321.an_prP_R_C_75USDkg, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
+      mutate(value= if_else(is.na(value),0,value)) %>%
       rename(CommodityPrice_USDkg = value) %>%
       # multiply prices by quantities to calculate feed expenditures and commodity sales revenues
       mutate(SalesRevenue_bilUSD = Prod_Mt * CommodityPrice_USDkg,

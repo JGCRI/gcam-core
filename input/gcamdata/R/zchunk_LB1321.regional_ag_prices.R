@@ -45,6 +45,8 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     FAO_ag_an_ProducerPrice <- get_data(all_data, "aglu/FAO/FAO_ag_an_ProducerPrice")
     FAO_ag_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_Prod_t_PRODSTAT")
     FAO_GDP_Deflators <- get_data(all_data, "aglu/FAO/FAO_GDP_Deflators")
+    FAO_an_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_an_Prod_t_PRODSTAT")
+    L132.ag_an_For_Prices <- get_data(all_data,"L132.ag_an_For_Prices")
     #kbn 2019/09/23 added AGLU_Ctry_Unique since using AGLU_Ctry was causing extra rows to be added.
     AGLU_Ctry_Unique<-distinct(AGLU_ctry,FAO_country,.keep_all = TRUE)
 

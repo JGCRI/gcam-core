@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_aglu_L203.demand_input
+#' module_aglu_L203.ag_demand_input
 #'
 #' Builds agriculture demand inputs for the core and each SSP scenario.
 #'
@@ -330,10 +330,12 @@ module_aglu_L203.ag_demand_input <- function(command, ...) {
                                by = c(staples.food.demand.input = "demand_type")) %>%
       select(LEVEL2_DATA_NAMES[["DemandStapleRegBias"]])
 
+
     L203.DemandNonStapleRegBias <- select(L203.DemandNonStapleParams, region, gcam.consumer, nodeInput, non.staples.food.demand.input) %>%
       left_join_error_no_match(A_diet_bias,
                                by = c(non.staples.food.demand.input = "demand_type")) %>%
       select(LEVEL2_DATA_NAMES[["DemandNonStapleRegBias"]])
+      #select(c("region", "gcam.consumer", "nodeInput", "non.staples.food.demand.input", "regional.bias.year", "regional.bias"))
 
     L203.Demand <- L203.StubTechProd_food %>%
       group_by(region, supplysector, year) %>%
