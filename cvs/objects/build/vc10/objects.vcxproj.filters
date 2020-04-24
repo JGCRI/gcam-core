@@ -1073,6 +1073,12 @@
     <ClCompile Include="..\..\sectors\source\nesting_subsector.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\functions\source\food_demand_function.cpp">
+      <Filter>Source Files\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\functions\source\food_demand_input.cpp">
+      <Filter>Source Files\functions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -2205,6 +2211,12 @@
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\nesting_subsector.h">
       <Filter>Header Files\sectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\functions\include\food_demand_function.h">
+      <Filter>Header Files\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\functions\include\food_demand_input.h">
+      <Filter>Header Files\functions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

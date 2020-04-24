@@ -594,6 +594,8 @@
     <ClCompile Include="..\..\functions\source\building_service_input.cpp" />
     <ClCompile Include="..\..\functions\source\ctax_input.cpp" />
     <ClCompile Include="..\..\functions\source\discrete_choice_factory.cpp" />
+    <ClCompile Include="..\..\functions\source\food_demand_function.cpp" />
+    <ClCompile Include="..\..\functions\source\food_demand_input.cpp" />
     <ClCompile Include="..\..\functions\source\relative_cost_logit.cpp" />
     <ClCompile Include="..\..\functions\source\satiation_demand_function.cpp" />
     <ClCompile Include="..\..\functions\source\thermal_building_service_input.cpp" />
@@ -908,6 +910,8 @@
     <ClInclude Include="..\..\functions\include\building_service_input.h" />
     <ClInclude Include="..\..\functions\include\ctax_input.h" />
     <ClInclude Include="..\..\functions\include\discrete_choice_factory.hpp" />
+    <ClInclude Include="..\..\functions\include\food_demand_function.h" />
+    <ClInclude Include="..\..\functions\include\food_demand_input.h" />
     <ClInclude Include="..\..\functions\include\idiscrete_choice.hpp" />
     <ClInclude Include="..\..\functions\include\relative_cost_logit.hpp" />
     <ClInclude Include="..\..\functions\include\satiation_demand_function.h" />
