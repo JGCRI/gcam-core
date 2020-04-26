@@ -577,7 +577,10 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
       if(!lsfail) {
         solverLog << "**Failed line search. Evaluating fdjac\n";
         lsfail = true;
-        fdjac(F,x,fx,B);
+        // call fdjac such that it re-calculates the model at x as linesearch will
+        // have left off on some other price vector thus we could have bad state
+        // data from which we calculate derivatives
+        fdjac(F,x,B);
         neval += x.size();
         ageB = 0;  // reset the age on B
 
@@ -586,6 +589,7 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
             jdiag[j] = B(j,j);
         }
         solverLog << "New Jacobian: diag( B )=\n" << jdiag << "\n";
+        static_cast<LogEDFun&>(F).setSlope(jdiag);
 
         // start the next iteration *without* updating x
         continue;
@@ -699,7 +703,9 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
       // old, try a finite-difference jacobian to get us back on track.
       if(ageB > 0) {
         solverLog << "Insufficient progress with Broyden formula.  Resetting the Jacobian.\n(f0= " << f0 << ", fnew= " << fnew << ")\n";
-        fdjac(F,xnew,fxnew,B);
+        // just in case call fdjac such that it re-calculates the model at xnew
+        // otherwise we could have bad state data from which we calculate derivatives
+        fdjac(F,xnew,B);
         neval += x.size();
         ageB = 0;
 

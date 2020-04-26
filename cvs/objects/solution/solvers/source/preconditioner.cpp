@@ -220,7 +220,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
             double lb,ub;       // only used for normal markets, but need to be declared up here.
             
             if(pass > 1) {
-                if(solvable[i].getRelativeED() < mFTOL) {
+                if(solvable[i].getRelativeED() < mFTOL && !(solvable[i].getType() == IMarketType::TAX || solvable[i].getType() == IMarketType::SUBSIDY)) {
                     solvable[i].setForecastPrice(oldprice);
                     solvable[i].setForecastDemand(olddmnd);
                 }
