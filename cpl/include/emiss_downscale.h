@@ -54,6 +54,15 @@ public:
                                   double *gcamoco2sfcjul, double *gcamoco2sfcaug, double *gcamoco2sfcsep,
                                   double *gcamoco2sfcoct, double *gcamoco2sfcnov, double *gcamoco2sfcdec,
                                   int aNumLon, int aNumLat);
+    void separateMonthlyEmissionsWithVertical(double *gcamoco2airlojan, double *gcamoco2airlofeb, double *gcamoco2airlomar,
+                                                              double *gcamoco2airloapr, double *gcamoco2airlomay, double *gcamoco2airlojun,
+                                                              double *gcamoco2airlojul, double *gcamoco2airloaug, double *gcamoco2airlosep,
+                                                              double *gcamoco2airlooct, double *gcamoco2airlonov, double *gcamoco2airlodec,
+                                                              double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar,
+                                                              double *gcamoco2airhiapr, double *gcamoco2airhimay, double *gcamoco2airhijun,
+                                                              double *gcamoco2airhijul, double *gcamoco2airhiaug, double *gcamoco2airhisep,
+                                                              double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
+                                                              int aNumLon, int aNumLat);
 private:
     std::vector<double> mBaseYearEmissVector;
     std::vector<double> mCurrYearEmissVector;

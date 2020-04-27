@@ -33,17 +33,32 @@ extern "C" {
   }
 
   // Downscale Emissions
-  void downscaleemissionscgcam_(double *gcamoemiss, double *gcamoco2sfcjan, double *gcamoco2sfcfeb,
-                              double *gcamoco2sfcmar, double *gcamoco2sfcapr, double *gcamoco2sfcmay, double *gcamoco2sfcjun,
-                              double *gcamoco2sfcjul, double *gcamoco2sfcaug, double *gcamoco2sfcsep, double *gcamoco2sfcoct,
-                              double *gcamoco2sfcnov, double *gcamoco2sfcdec, std::string aBaseCO2File, double aBaseCO2Emiss,
+  void downscaleemissionscgcam_(double *gcamoemiss,
+                              double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar, double *gcamoco2sfcapr,
+                              double *gcamoco2sfcmay, double *gcamoco2sfcjun, double *gcamoco2sfcjul, double *gcamoco2sfcaug,
+                              double *gcamoco2sfcsep, double *gcamoco2sfcoct, double *gcamoco2sfcnov, double *gcamoco2sfcdec,
+                              double *gcamoco2airlojan, double *gcamoco2airlofeb, double *gcamoco2airlomar, double *gcamoco2airloapr,
+                              double *gcamoco2airlomay, double *gcamoco2airlojun, double *gcamoco2airlojul, double *gcamoco2airloaug,
+                              double *gcamoco2airlosep, double *gcamoco2airlooct, double *gcamoco2airlonov, double *gcamoco2airlodec,
+                              double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar, double *gcamoco2airhiapr,
+                              double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
+                              double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
+                              std::string aBaseCO2SfcFile, double aBaseCO2EmissSfc, std::string aBaseCO2AirFile, double aBaseCO2EmissAir,
                               int aNumLon, int aNumLat, bool aWriteCO2) {
     
-    p_obj->downscaleEmissionsGCAM(gcamoemiss, gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
-                   gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug, gcamoco2sfcsep,
-                   gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec, aBaseCO2File, aBaseCO2Emiss,
-                   aNumLon, aNumLat, aWriteCO2);
-  }
+    p_obj->downscaleEmissionsGCAM(gcamoemiss,
+                                  gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
+                                  gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
+                                  gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec,
+                                  gcamoco2airlojan, gcamoco2airlofeb, gcamoco2airlomar, gcamoco2airloapr,
+                                  gcamoco2airlomay, gcamoco2airlojun, gcamoco2airlojul, gcamoco2airloaug,
+                                  gcamoco2airlosep, gcamoco2airlooct, gcamoco2airlonov, gcamoco2airlodec,
+                                  gcamoco2airhijan, gcamoco2airhifeb, gcamoco2airhimar, gcamoco2airhiapr,
+                                  gcamoco2airhimay, gcamoco2airhijun, gcamoco2airhijul, gcamoco2airhiaug,
+                                  gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
+                                  aBaseCO2SfcFile, aBaseCO2EmissSfc, aBaseCO2AirFile, aBaseCO2EmissAir,
+                                  aNumLon, aNumLat, aWriteCO2);
+}
 
     
   // Finalize GCAM
