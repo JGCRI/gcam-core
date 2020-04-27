@@ -38,48 +38,49 @@
         <map from="Colombia" to="Global"/>
     </column>
     <column name="sector">
-        <output-data>total</output-data>
-        <map from="H2 central production" to="total"/>
-        <map from="H2 forecourt production" to="total"/>
-        <map from="N fertilizer" to="total"/>
-        <map from="backup_electricity" to="total"/>
-        <map from="cement" to="total"/>
-        <map from="comm cooling" to="total"/>
-        <map from="comm heating" to="total"/>
-        <map from="comm others" to="total"/>
-        <map from="csp_backup" to="total"/>
-        <map from="district heat" to="total"/>
-        <map from="elec_biomass (IGCC)" to="total"/>
-        <map from="elec_biomass (conv)" to="total"/>
-        <map from="elec_coal (IGCC)" to="total"/>
-        <map from="elec_coal (conv pul)" to="total"/>
-        <map from="elec_gas (CC)" to="total"/>
-        <map from="elec_gas (steam/CT)" to="total"/>
-        <map from="elec_refined liquids (CC)" to="total"/>
-        <map from="elec_refined liquids (steam/CT)" to="total"/>
-        <map from="gas pipeline" to="total"/>
-        <map from="gas processing" to="total"/>
-        <map from="industrial energy use" to="total"/>
-        <map from="industrial feedstocks" to="total"/>
-        <map from="process heat cement" to="total"/>
-        <map from="refining" to="total"/>
-        <map from="regional biomass" to="total"/>
-        <map from="regional biomassOil" to="total"/>
-        <map from="regional corn for ethanol" to="total"/>
-        <map from="regional sugar for ethanol" to="total"/>
-        <map from="resid cooling" to="total"/>
-        <map from="resid heating" to="total"/>
-        <map from="resid others" to="total"/>
-        <map from="trn_aviation_intl" to="total"/>
-        <map from="trn_freight" to="total"/>
-        <map from="trn_freight_road" to="total"/>
-        <map from="trn_pass" to="total"/>
-        <map from="trn_pass_road" to="total"/>
-        <map from="trn_pass_road_LDV" to="total"/>
-        <map from="trn_pass_road_LDV_2W" to="total"/>
-        <map from="trn_pass_road_LDV_4W" to="total"/>
-        <map from="trn_pass_road_bus" to="total"/>
-        <map from="trn_shipping_intl" to="total"/>
-        <map from="unconventional oil production" to="total"/>
+        <output-data>surface</output-data>
+        <output-data>aircraft</output-data>
+        <map from="H2 central production" to="surface"/>
+        <map from="H2 forecourt production" to="surface"/>
+        <map from="N fertilizer" to="surface"/>
+        <map from="backup_electricity" to="surface"/>
+        <map from="cement" to="surface"/>
+        <map from="comm cooling" to="surface"/>
+        <map from="comm heating" to="surface"/>
+        <map from="comm others" to="surface"/>
+        <map from="csp_backup" to="surface"/>
+        <map from="district heat" to="surface"/>
+        <map from="elec_biomass (IGCC)" to="surface"/>
+        <map from="elec_biomass (conv)" to="surface"/>
+        <map from="elec_coal (IGCC)" to="surface"/>
+        <map from="elec_coal (conv pul)" to="surface"/>
+        <map from="elec_gas (CC)" to="surface"/>
+        <map from="elec_gas (steam/CT)" to="surface"/>
+        <map from="elec_refined liquids (CC)" to="surface"/>
+        <map from="elec_refined liquids (steam/CT)" to="surface"/>
+        <map from="gas pipeline" to="surface"/>
+        <map from="gas processing" to="surface"/>
+        <map from="industrial energy use" to="surface"/>
+        <map from="industrial feedstocks" to="surface"/>
+        <map from="process heat cement" to="surface"/>
+        <map from="refining" to="surface"/>
+        <map from="regional biomass" to="surface"/>
+        <map from="regional biomassOil" to="surface"/>
+        <map from="regional corn for ethanol" to="surface"/>
+        <map from="regional sugar for ethanol" to="surface"/>
+        <map from="resid cooling" to="surface"/>
+        <map from="resid heating" to="surface"/>
+        <map from="resid others" to="surface"/>
+        <map from="trn_aviation_intl" to="aircraft"/>
+        <map from="trn_freight" to="surface"/>
+        <map from="trn_freight_road" to="surface"/>
+        <map from="trn_pass" to="surface"/>
+        <map from="trn_pass_road" to="surface"/>
+        <map from="trn_pass_road_LDV" to="surface"/>
+        <map from="trn_pass_road_LDV_2W" to="surface"/>
+        <map from="trn_pass_road_LDV_4W" to="surface"/>
+        <map from="trn_pass_road_bus" to="surface"/>
+        <map from="trn_shipping_intl" to="surface"/>
+        <map from="unconventional oil production" to="surface"/>
     </column>
 </remap-data>

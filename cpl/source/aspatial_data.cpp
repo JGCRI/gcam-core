@@ -62,13 +62,15 @@ ASpatialData::~ASpatialData() {
 // Note: this is used for diagnostics and testing. In fully coupled E3SM-GCAM, this data
 // are passed in code to the wrapper
 double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal) {
-
     // Create a double to store totals (if aCalcTotal == true)
     double total = 0.0;
     
     ifstream data(aFileName);
     if (!data.is_open())
     {
+        ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+        coupleLog.setLevel( ILogger::ERROR );
+        coupleLog << "File not found: " << aFileName << endl;
         exit(EXIT_FAILURE);
     }
     string str;
@@ -111,7 +113,7 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, boo
          
         // if aCalcTotal == true, then add this to the total
         total += value;
-        
+                
         row++;
     }
     
@@ -120,13 +122,15 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, boo
 
 // Read in spatial data from a csv file directly into an array
 double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal, double *aValueArray) {
-
     // Create a double to store totals (if aCalcTotal == true)
     double total = 0.0;
     
     ifstream data(aFileName);
     if (!data.is_open())
     {
+        ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+        coupleLog.setLevel( ILogger::ERROR );
+        coupleLog << "File not found: " << aFileName << endl;
         exit(EXIT_FAILURE);
     }
     string str;

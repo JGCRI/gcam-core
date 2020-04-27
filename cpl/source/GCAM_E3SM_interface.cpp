@@ -303,26 +303,53 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     
 }
 
-void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss, double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar,
-                                                 double *gcamoco2sfcapr, double *gcamoco2sfcmay, double *gcamoco2sfcjun, double *gcamoco2sfcjul,
-                                                 double *gcamoco2sfcaug, double *gcamoco2sfcsep, double *gcamoco2sfcoct, double *gcamoco2sfcnov,
-                                                 double *gcamoco2sfcdec, std::string aBaseCO2File, double aBaseCO2EmissSfc, int aNumLon, int aNumLat, bool aWriteCO2) {
-    // Downscale CO2 emissions
+void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
+                                                 double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar, double *gcamoco2sfcapr,
+                                                 double *gcamoco2sfcmay, double *gcamoco2sfcjun, double *gcamoco2sfcjul, double *gcamoco2sfcaug,
+                                                 double *gcamoco2sfcsep, double *gcamoco2sfcoct, double *gcamoco2sfcnov, double *gcamoco2sfcdec,
+                                                 double *gcamoco2airlojan, double *gcamoco2airlofeb, double *gcamoco2airlomar, double *gcamoco2airloapr,
+                                                 double *gcamoco2airlomay, double *gcamoco2airlojun, double *gcamoco2airlojul, double *gcamoco2airloaug,
+                                                 double *gcamoco2airlosep, double *gcamoco2airlooct, double *gcamoco2airlonov, double *gcamoco2airlodec,
+                                                 double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar, double *gcamoco2airhiapr,
+                                                 double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
+                                                 double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
+                                                 std::string aBaseCO2SfcFile, double aBaseCO2EmissSfc, std::string aBaseCO2AirFile, double aBaseCO2EmissAir,
+                                                 int aNumLon, int aNumLat, bool aWriteCO2) {
+    // Downscale surface CO2 emissions
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
     coupleLog << "Downscaling CO2 emissions" << endl;
-    EmissDownscale gcam2e3sm(aNumLon * aNumLat * 12); // Emissions data is monthly now
-    gcam2e3sm.readSpatialData(aBaseCO2File, true, true, true);
-    gcam2e3sm.downscaleCO2Emissions(aBaseCO2EmissSfc, gcamoemiss[0]);
+    EmissDownscale surfaceCO2(aNumLon * aNumLat * 12); // Emissions data is monthly now
+    surfaceCO2.readSpatialData(aBaseCO2SfcFile, true, true, false);
+    surfaceCO2.downscaleCO2Emissions(aBaseCO2EmissSfc, gcamoemiss[0]);
     if ( aWriteCO2 ) {
         // TODO: Set name of file based on case name?
-        gcam2e3sm.writeSpatialData("./gridded_co2.txt", false);
+        surfaceCO2.writeSpatialData("./gridded_co2_sfc.txt", false);
+    }
+    
+    // Set the gcamoco2 monthly vector data to the output of this
+    surfaceCO2.separateMonthlyEmissions(gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
+                                       gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
+                                       gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec, aNumLon, aNumLat);
+    
+    
+    EmissDownscale aircraftCO2(aNumLon * aNumLat * 12 * 2); // Emissions data is monthly now; we're using two different height levels for aircraft
+    aircraftCO2.readSpatialData(aBaseCO2AirFile, true, true, false);
+    aircraftCO2.downscaleCO2Emissions(aBaseCO2EmissAir, gcamoemiss[1]);
+    if ( aWriteCO2 ) {
+        // TODO: Set name of file based on case name?
+        aircraftCO2.writeSpatialData("./gridded_co2_air.txt", false);
     }
     
     // Set the gcamoco2 data to the output of this
-    gcam2e3sm.separateMonthlyEmissions(gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
-                                       gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
-                                       gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec, aNumLon, aNumLat);
+    aircraftCO2.separateMonthlyEmissionsWithVertical( gcamoco2airlojan, gcamoco2airlofeb, gcamoco2airlomar, gcamoco2airloapr,
+                                         gcamoco2airlomay, gcamoco2airlojun, gcamoco2airlojul, gcamoco2airloaug,
+                                         gcamoco2airlosep, gcamoco2airlooct, gcamoco2airlonov, gcamoco2airlodec,
+                                         gcamoco2airhijan, gcamoco2airhifeb, gcamoco2airhimar, gcamoco2airhiapr,
+                                         gcamoco2airhimay, gcamoco2airhijun, gcamoco2airhijul, gcamoco2airhiaug,
+                                         gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
+                                         aNumLon, aNumLat);
+    
     
     
 }

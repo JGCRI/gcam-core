@@ -107,3 +107,68 @@ void EmissDownscale::separateMonthlyEmissions(double *gcamoco2sfcjan, double *gc
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 11,
               mCurrYearEmissVector.begin() + gridPerMonth * 12 - 1, gcamoco2sfcdec);
  }
+
+// Separate the emissions vectors into individual months
+void EmissDownscale::separateMonthlyEmissionsWithVertical(double *gcamoco2airlojan, double *gcamoco2airlofeb, double *gcamoco2airlomar,
+                                                          double *gcamoco2airloapr, double *gcamoco2airlomay, double *gcamoco2airlojun,
+                                                          double *gcamoco2airlojul, double *gcamoco2airloaug, double *gcamoco2airlosep,
+                                                          double *gcamoco2airlooct, double *gcamoco2airlonov, double *gcamoco2airlodec,
+                                                          double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar,
+                                                          double *gcamoco2airhiapr, double *gcamoco2airhimay, double *gcamoco2airhijun,
+                                                          double *gcamoco2airhijul, double *gcamoco2airhiaug, double *gcamoco2airhisep,
+                                                          double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
+                                                          int aNumLon, int aNumLat) {
+    
+    int gridPerMonth = aNumLat * aNumLon;
+    std::copy(mCurrYearEmissVector.begin(),
+              mCurrYearEmissVector.begin() + gridPerMonth - 1, gcamoco2airlojan);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth,
+              mCurrYearEmissVector.begin() + gridPerMonth * 2 - 1, gcamoco2airlofeb);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 2,
+              mCurrYearEmissVector.begin() + gridPerMonth * 3 - 1, gcamoco2airlomar);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 3,
+              mCurrYearEmissVector.begin() + gridPerMonth * 4 - 1, gcamoco2airloapr);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 4,
+              mCurrYearEmissVector.begin() + gridPerMonth * 5 - 1, gcamoco2airlomay);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 5,
+              mCurrYearEmissVector.begin() + gridPerMonth * 6 - 1, gcamoco2airlojun);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 6,
+              mCurrYearEmissVector.begin() + gridPerMonth * 7 - 1, gcamoco2airlojul);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 7,
+              mCurrYearEmissVector.begin() + gridPerMonth * 8 - 1, gcamoco2airloaug);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 8,
+              mCurrYearEmissVector.begin() + gridPerMonth * 9 - 1, gcamoco2airlosep);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 9,
+              mCurrYearEmissVector.begin() + gridPerMonth * 10 - 1, gcamoco2airlooct);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 10,
+              mCurrYearEmissVector.begin() + gridPerMonth * 11 - 1, gcamoco2airlonov);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 11,
+              mCurrYearEmissVector.begin() + gridPerMonth * 12 - 1, gcamoco2airlodec);
+    
+    int gridPerYear = gridPerMonth * 12; // Offset for the second height emissions
+    std::copy(gridPerYear + mCurrYearEmissVector.begin(),
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth - 1, gcamoco2airhijan);
+    std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth,
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 2 - 1, gcamoco2airhifeb);
+    std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 2,
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 3 - 1, gcamoco2airhimar);
+    std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 3,
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 4 - 1, gcamoco2airhiapr);
+    std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 4,
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 5 - 1, gcamoco2airhimay);
+    std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 5,
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 6 - 1, gcamoco2airhijun);
+    std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 6,
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 7 - 1, gcamoco2airhijul);
+    std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 7,
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 8 - 1, gcamoco2airhiaug);
+    std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 8,
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 9 - 1, gcamoco2airhisep);
+    std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 9,
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 10 - 1, gcamoco2airhioct);
+    std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 10,
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 11 - 1, gcamoco2airhinov);
+    std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 11,
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 12 - 1, gcamoco2airhidec);
+    
+ }
