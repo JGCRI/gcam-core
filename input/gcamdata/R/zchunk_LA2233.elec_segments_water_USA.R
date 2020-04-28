@@ -842,7 +842,9 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
 
     L2234.GlobalTechShrwt_elecS_USA %>%
       bind_rows(L2234.GlobalIntTechShrwt_elecS_USA %>%
-                  rename(technology = intermittent.technology)) %>%
+                  rename(technology = intermittent.technology),
+                L2241.GlobalTechShrwt_elec_coalret_USA,
+                L2241.GlobalTechShrwt_coal_vintage_USA) %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
       rename(supplysector = sector.name,
              subsector0 = subsector.name,
