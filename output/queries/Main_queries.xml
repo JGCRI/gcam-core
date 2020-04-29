@@ -2366,12 +2366,12 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                demand-physical[@vintage=parent::*/parent::*/@year]/node()</xPath>
                <comments/>
             </supplyDemandQuery>
-                <supplyDemandQuery title="transport service output by service">
-                    <axis1 name="final-demand">final-demand</axis1>
-                    <axis2 name="Year">service</axis2>
-                    <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='final-demand' and contains(@name,'trn_')]/service/text()</xPath>
-                    <comments/>
-                </supplyDemandQuery>
+            <supplyDemandQuery title="transport service output by service">
+               <axis1 name="final-demand">final-demand</axis1>
+               <axis2 name="Year">service</axis2>
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='final-demand' and contains(@name,'trn_')]/service/text()</xPath>
+               <comments/>
+            </supplyDemandQuery>
             <supplyDemandQuery title="transport service output by mode">
                <axis1 name="mode">subsector</axis1>
                <axis2 name="Year">physical-output[@vintage]</axis2>
