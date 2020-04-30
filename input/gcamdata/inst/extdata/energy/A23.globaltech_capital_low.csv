@@ -22,7 +22,7 @@ electricity,biomass,biomass (conv CCS),capital,0.13,,,,,,0.6,0.05,biomass (conv)
 electricity,biomass,biomass (IGCC),capital,0.13,,,,,,0.7,0.03,
 electricity,biomass,biomass (IGCC CCS),capital,0.13,,,,,,0.6,0.05,biomass (IGCC)
 electricity,nuclear,Gen_II_LWR,capital,0.13,1650,1650,1650,1650,1704.048567,1,0,
-electricity,nuclear,Gen_III,capital,0.13,,,,,,1,0,
+electricity,nuclear,Gen_III,capital,0.13,1704.048567,1704.048567,1704.048567,1704.048567,1704.048567,1,0,
 electricity,wind,wind,capital,0.13,,,,,,0.75,0.01,
 electricity,wind,wind_storage,capital,0.13,,,,,,0.75,0.01,wind
 electricity,solar,PV,capital,0.13,,,,,,0.75,0.01,

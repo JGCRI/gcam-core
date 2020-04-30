@@ -14,9 +14,10 @@ module_energy_LA113.atb_cost_efficiency(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L113.Globaltech_capital_ATB}, \code{L113.Globaltech_capital_ATB_low}, \code{L113.Globaltech_capital_ATB_adv},
-\code{L113.elecS_globaltech_battery_capital}, \code{L113.Globaltech_eff_ATB}. There was no corresponding file in the
-original data system.
+the generated outputs: \code{L113.globaltech_capital_ATB}, \code{L113.globaltech_capital_ATB_adv},
+\code{L113.globaltech_capital_ATB_low}, \code{L113.elecS_globaltech_capital_battery_ATB},
+\code{L113.globaltech_OMfixed_ATB}, \code{L113.globaltech_OMvar_ATB}.
+There was no corresponding file in the original data system.
 }
 \description{
 Generates costs and efficiency input files based on 2019 ATB data and calibrated inputs and outputs for the electricity sector.

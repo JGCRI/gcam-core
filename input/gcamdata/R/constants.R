@@ -35,6 +35,7 @@ MODEL_FUTURE_YEARS      <- seq(2020, 2100, 5)
 MODEL_YEARS             <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
 MODEL_FINAL_BASE_YEAR   <- 2015
 
+
 # GCAM constants ======================================================================
 
 gcam.USA_CODE            <- 1
@@ -48,22 +49,6 @@ GCAM_REGION_ID      <- "GCAM_region_ID"
 # If users do not have an estimate for a starting price this is a safe one to set
 gcam.DEFAULT_PRICE <- 1.0
 
-# All ATB-related constants including column names that are years ====================================
-
-year_target <- 2035
-year_target_eff <- 2100
-year_base <- 2015
-max_year <- 2100
-increment <- 5
-number_of_periods <- (max_year - year_base)/increment
-battery <- "battery"
-medium <- "Mid"
-low <- "Low"
-storage_multiplier <- 4
-ACDC_conversion <- 1/0.85
-Rooftop_Average <- 0.5
-ATB_years <- seq(2015, 2050, 5)
-ATB_eff_years<- c("2015","2100")
 
 # Driver constants ======================================================================
 
@@ -470,6 +455,18 @@ energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity
 energy.TRAN_UCD_MODE<-'rev.mode'
 energy.TRAN_UCD_SIZE_CLASS<-'rev_size.class'
 
+# Constants related to ATB power sector technology costs
+energy.ATB_2017_YEARS <- c(2015:2016)
+energy.ATB_BASE_YEAR <- 2015
+energy.ATB_MID_YEAR <- 2035
+energy.ATB_TARGET_YEAR <- 2035
+gcamusa.STORAGE_TECH <- "battery"
+energy.COSTS_MID_CASE <- "central"
+energy.COSTS_ADV_CASE <- "adv tech"
+energy.COSTS_LOW_CASE <- "low tech"
+energy.CAPITAL_INPUT <- "capital"
+energy.OM_FIXED_INPUT <- "OM-fixed"
+energy.OM_VAR_INPUT <- "OM-var"
 
 # Socioeconomics constants ======================================================================
 

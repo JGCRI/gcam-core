@@ -8,623 +8,452 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L113.Globaltech_capital_ATB}, \code{L113.Globaltech_capital_ATB_low}, \code{L113.Globaltech_capital_ATB_adv},
-#' \code{L113.elecS_globaltech_battery_capital}, \code{L113.Globaltech_eff_ATB}. There was no corresponding file in the
-#' original data system.
+#' the generated outputs: \code{L113.globaltech_capital_ATB}, \code{L113.globaltech_capital_ATB_adv},
+#' \code{L113.globaltech_capital_ATB_low}, \code{L113.elecS_globaltech_capital_battery_ATB},
+#' \code{L113.globaltech_OMfixed_ATB}, \code{L113.globaltech_OMvar_ATB}.
+#' There was no corresponding file in the original data system.
 #' @details Includes ATB capital cost data as starting point, improvement rate and improvement max data generated based on cost pathway.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select pull left_join anti_join bind_rows arrange rename
 #' @author AJS March 2019
 module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c( FILE = "energy/A23.globaltech_capital_atb_raw",
-              FILE = "energy/A23.globaltech_capital_atb_used",
-              FILE = "energy/A23.globaltech_capital",
-			  FILE = "energy/A23.globaltech_capital_old",
-              FILE = "energy/A23.globaltech_capital_low",
-              FILE = "energy/A23.globaltech_capital_adv",
-              FILE = "energy/A23.globaltech_capital_adv_old",
-              FILE = "energy/A23.globaltech_eff",
-              FILE = "energy/A23.globaltech_eff_old",
-			  FILE = "energy/A23.globaltech_eff_raw",
-              FILE = "gcam-usa/A23.elecS_globaltech_non_energy_inputs",
-              FILE = "energy/mappings/atb_gcam_mapping"))
+    return(c(FILE = "energy/A23.globaltech_capital",
+             FILE = "energy/A23.globaltech_capital_adv",
+             FILE = "energy/A23.globaltech_capital_low",
+             FILE = "energy/A23.globaltech_OMfixed",
+             FILE = "energy/A23.globaltech_OMvar",
+             FILE = "gcam-usa/A23.elecS_globaltech_non_energy_inputs",
+             FILE = "energy/Muratori_globaltech_capital",
+             FILE = "energy/Muratori_globaltech_capital_adv",
+             FILE = "energy/Muratori_globaltech_capital_low",
+             FILE = "energy/Muratori_globaltech_OMfixed",
+             FILE = "energy/Muratori_globaltech_OMvar",
+             FILE = "energy/NREL_ATB_capital",
+             FILE = "energy/NREL_ATB_OMfixed",
+             FILE = "energy/NREL_ATB_OMvar",
+             FILE = "energy/atb_gcam_mapping"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L113.Globaltech_capital_ATB",
-             "L113.Globaltech_capital_ATB_low",
-             "L113.Globaltech_capital_ATB_adv",
-             "L113.elecS_globaltech_battery_capital",
-             "L113.Globaltech_eff_ATB"))
+    return(c("L113.globaltech_capital_ATB",
+             "L113.globaltech_capital_ATB_adv",
+             "L113.globaltech_capital_ATB_low",
+             "L113.elecS_globaltech_capital_battery_ATB",
+             "L113.globaltech_OMfixed_ATB",
+             "L113.globaltech_OMvar_ATB"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Silence global package checks
-    supplysector <- subsector <- technology <- minicam.energy.input <- `1971` <- `1990` <- `2005` <- `2010` <- `2015` <- `2100` <- improvement.max <- improvement.rate <- improvement.shadow.technology <-
-	`input-capital` <- fixed.charge.rate <- period <- lifetime <- steepness <- half.life <- variable.om <- fixed.om <- fcr <- capacity.factor <- atb.technology <- `2020` <- `2025` <- `230` <- `2035` <-
-	`2040` <- `2045` <- `2050` <- NULL
+    supplysector <- subsector <- technology <- minicam.energy.input <- improvement.max <- improvement.rate <-
+      improvement.shadow.technology <- `input-capital` <- fixed.charge.rate <- period <- lifetime <-
+      steepness <- half.life <- variable.om <- fixed.om <- fcr <- capacity.factor <- atb.technology <- NULL
 
     # Load required inputs
-    A23.globaltech_capital_atb_raw <- get_data(all_data, "energy/A23.globaltech_capital_atb_raw")
-    A23.globaltech_capital_atb_used <- get_data(all_data, "energy/A23.globaltech_capital_atb_used")
+    # A23. shell files
     A23.globaltech_capital <- get_data(all_data, "energy/A23.globaltech_capital")
-	A23.globaltech_capital_old <- get_data(all_data, "energy/A23.globaltech_capital_old")
-    A23.globaltech_capital_low <- get_data(all_data, "energy/A23.globaltech_capital_low")
     A23.globaltech_capital_adv <- get_data(all_data, "energy/A23.globaltech_capital_adv")
-	A23.globaltech_capital_adv_old <- get_data(all_data, "energy/A23.globaltech_capital_adv_old")
-    A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
-    A23.globaltech_eff_old <- get_data(all_data, "energy/A23.globaltech_eff_old")
-	A23.globaltech_eff_raw <- get_data(all_data, "energy/A23.globaltech_eff_raw")
+    A23.globaltech_capital_low <- get_data(all_data, "energy/A23.globaltech_capital_low")
     A23.elecS_globaltech_non_energy_inputs <- get_data(all_data, "gcam-usa/A23.elecS_globaltech_non_energy_inputs")
-    atb_gcam_mapping <- get_data(all_data, "energy/mappings/atb_gcam_mapping")
+    A23.globaltech_OMfixed <- get_data(all_data, "energy/A23.globaltech_OMfixed")
+    A23.globaltech_OMvar <- get_data(all_data, "energy/A23.globaltech_OMvar")
+
+    # Legacy (Muratori) assumptions
+    Muratori_globaltech_capital <- get_data(all_data, "energy/Muratori_globaltech_capital")
+    Muratori_globaltech_capital_adv <- get_data(all_data, "energy/Muratori_globaltech_capital_adv")
+    Muratori_globaltech_capital_low <- get_data(all_data, "energy/Muratori_globaltech_capital_low")
+    Muratori_globaltech_OMfixed <- get_data(all_data, "energy/Muratori_globaltech_OMfixed")
+    Muratori_globaltech_OMvar <- get_data(all_data, "energy/Muratori_globaltech_OMvar")
+
+    # NREL files
+    NREL_ATB_capital <- get_data(all_data, "energy/NREL_ATB_capital") %>%
+      gather_years()
+    NREL_ATB_OMfixed <- get_data(all_data, "energy/NREL_ATB_OMfixed") %>%
+      gather_years()
+    NREL_ATB_OMvar <- get_data(all_data, "energy/NREL_ATB_OMvar") %>%
+      gather_years()
+
+    # Mapping
+    atb_gcam_mapping_MB <- get_data(all_data, "energy/atb_gcam_mapping") %>%
+      select(-inferred)
 
     # ===================================================
 
-	# First we process the ATB baseline costs
+    # Pre-process data so capital & OM costs can be processed together
+    # Start with NREL cost data
+    # For capital costs, we want central, advanced tech (low cost), and low tech (high / constant cost) scenarios
+    NREL_ATB_capital %>%
+      # For O&M costs, we want central scenario only
+      bind_rows(NREL_ATB_OMfixed %>%
+                  filter(case == energy.COSTS_MID_CASE),
+                NREL_ATB_OMvar %>%
+                  filter(case == energy.COSTS_MID_CASE)) %>%
+      # clean up cost case part of technology names, since mapping file doesn't include this detail
+      mutate(tech_detail = gsub(" - Mid", "", tech_detail),
+             tech_detail = gsub(" - Low", "", tech_detail),
+             tech_detail = gsub(" - Constant", "", tech_detail),
+             tech_detail = gsub(" - High", "", tech_detail), # only natural gas technologies in ATB
+             tech_detail = gsub("-Mid", "", tech_detail),
+             tech_detail = gsub("-Low", "", tech_detail),
+             tech_detail = gsub("-Constant", "", tech_detail)) -> NREL_ATB_cost_assumptions
 
-		# Get appopriate technologies that will be used from all available ATB technologies
-			A23.globaltech_capital_atb_used %>% 
-				filter(Scenario == medium) -> A23.globaltech_capital_atb_used_medium
-			A23.globaltech_capital_atb_raw %>%
-				semi_join(A23.globaltech_capital_atb_used_medium, by=c("Technology","Resource"="Used_Resource")) -> A23.globaltech_capital_atb_raw_medium
+    # Pre-process legacy (Muratori et al.) cost data so capital & OM costs can be processed together
+    Muratori_globaltech_capital %>%
+      fill_exp_decay_extrapolate(MODEL_YEARS) %>%
+      rename(input = 'input-capital') %>%
+      mutate(case = energy.COSTS_MID_CASE) %>%
+      bind_rows(Muratori_globaltech_capital_adv %>%
+                  fill_exp_decay_extrapolate(MODEL_YEARS) %>%
+                  rename(input = 'input-capital') %>%
+                  mutate(case = energy.COSTS_ADV_CASE),
+                Muratori_globaltech_capital_low %>%
+                  fill_exp_decay_extrapolate(MODEL_YEARS) %>%
+                  rename(input = 'input-capital') %>%
+                  mutate(case = energy.COSTS_LOW_CASE),
+                Muratori_globaltech_OMfixed %>%
+                  fill_exp_decay_extrapolate(MODEL_YEARS) %>%
+                  rename(input = input.OM.fixed) %>%
+                  mutate(case = energy.COSTS_MID_CASE),
+                Muratori_globaltech_OMvar %>%
+                  fill_exp_decay_extrapolate(MODEL_YEARS) %>%
+                  rename(input = input.OM.var) %>%
+                  mutate(case = energy.COSTS_MID_CASE)) -> GCAM_legacy_cost_assumptions
 
-		 # Now to do technology-specific calculations. To make these easier, we turn technologies into columns
-			A23.globaltech_capital_atb_raw_medium %>% 
-				select(-Resource) %>%
-				gather(year,value,-Technology) %>%
-				spread(Technology,value) -> A23.globaltech_capital_atb_raw_medium_spread
+    # Establish some year constants for data processing
+    ATB_years <- unique(NREL_ATB_cost_assumptions$year)
 
-		 # Generate old costs for every technology in GCAM
-			A23.globaltech_capital_old %>%
-				fill_exp_decay_extrapolate(MODEL_YEARS) %>%
-				rename(sector.name = supplysector, subsector.name = subsector, capital.overnight = value, input.capital = `input-capital`) %>%
-				mutate(capital.overnight = round(capital.overnight, energy.DIGITS_CAPITAL)) %>%
-				select(technology,year,capital.overnight) %>%
-				filter(year %in% ATB_years) %>%
-				spread(technology,capital.overnight) -> A23.globaltech_capital_old_spread
-				
-		 # Generate appropriate cost ratios from old data, which will be used to generate ATB approximations whenever a technology is absent in ATB
-			A23.globaltech_capital_old_spread %>%
-				mutate(CSP_ratio = CSP/CSP_storage,
-					   Biomass_IGCC_ratio = `biomass (IGCC)`/`biomass (conv)`,
-					   Biomass_CCS_ratio = `biomass (conv CCS)`/`biomass (conv)`,
-					   Biomass_IGCC_CCS_ratio = `biomass (IGCC CCS)`/`biomass (IGCC)`,
-					   Coal_IGCC_CCS_ratio = `coal (IGCC CCS)`/`coal (IGCC)`,
-					   Refined_CC_ratio = `refined liquids (CC)`/ `gas (CC)`,
-					   Refined_CT_ratio = `refined liquids (steam/CT)`/ `gas (steam/CT)`,
-					   Refined_CC_CCS_ratio= `refined liquids (CC CCS)`/ `gas (CC CCS)`) -> A23.globaltech_capital_old_ratios
+    A23_years <- A23.globaltech_capital %>%
+      gather_years() %>%
+      distinct(year)
+    A23_years <- unique(A23_years$year)
 
-		 # Final Cost Calculations  
-			# a. Battery = Quadruple storage costs in order to match lifetime and storage duration assumptions with GCAM
-			A23.globaltech_capital_atb_raw_medium_spread %>%
-				mutate(battery = storage_multiplier * Storage) -> A23.globaltech_capital_atb_raw_medium_a
-			# b. Rooftop PV costs are the average of ATB Residential and Commercial costs
-			A23.globaltech_capital_atb_raw_medium_a %>%
-				mutate(rooftop_pv = Rooftop_Average * (`Solar - PV Dist. Comm` + `Solar - PV Dist. Res`)) -> A23.globaltech_capital_atb_raw_medium_b
-			# c. PV technology costs are in DC and AC/DC conversion must be accounted for
-			A23.globaltech_capital_atb_raw_medium_b %>%
-				mutate(PV = ACDC_conversion * `Solar - Utility PV`, rooftop_pv = ACDC_conversion * rooftop_pv) -> A23.globaltech_capital_atb_raw_medium_c
-			# d. CSP costs to be estimated based on the ratio of Old GCAM CSP and CSP Storage costs
-			A23.globaltech_capital_atb_raw_medium_c %>%
-				mutate(CSP =  A23.globaltech_capital_old_ratios$CSP_ratio * `Solar - CSP`) -> A23.globaltech_capital_atb_raw_medium_d
-			# e. Biomass IGCC costs to be estimated based on the ratio of Old GCAM Biomass IGCC and Biomass conv costs
-				A23.globaltech_capital_atb_raw_medium_d %>%
-				mutate(`biomass (IGCC)` =  A23.globaltech_capital_old_ratios$Biomass_IGCC_ratio * Biopower) -> A23.globaltech_capital_atb_raw_medium_e
-			# f. Biomass CCS costs to be estimated based on the ratio of Old GCAM Biomass CCS and Biomass conv costs
-				A23.globaltech_capital_atb_raw_medium_e %>%
-				mutate(`biomass (conv CCS)` =  A23.globaltech_capital_old_ratios$Biomass_CCS_ratio * Biopower) -> A23.globaltech_capital_atb_raw_medium_f
-			# g. Biomass IGCC CCS costs to be estimated based on the ratio of Old GCAM Biomass IGCC CCS and Biomass IGCC costs
-				A23.globaltech_capital_atb_raw_medium_f %>%
-				mutate(`biomass (IGCC CCS)` =  A23.globaltech_capital_old_ratios$Biomass_IGCC_CCS_ratio * `biomass (IGCC)`) -> A23.globaltech_capital_atb_raw_medium_g
-			# h. Coal IGCC CCS costs to be estimated based on the ratio of Old GCAM Coal IGCC CCS and Coal IGCC costs
-				A23.globaltech_capital_atb_raw_medium_g %>%
-				mutate(`coal (IGCC CCS)` =  A23.globaltech_capital_old_ratios$Coal_IGCC_CCS_ratio * `Coal IGCC`) -> A23.globaltech_capital_atb_raw_medium_h
-			# i. Refided CC costs to be estimated based on the ratio of Old GCAM Refined CC and Gas CC costs
-				A23.globaltech_capital_atb_raw_medium_h %>%
-				mutate(`refined liquids (CC)` =  A23.globaltech_capital_old_ratios$Refined_CC_ratio * `Gas CC`) -> A23.globaltech_capital_atb_raw_medium_i
-			# j. Refined CT to be estimated based on the ratio of Old GCAM Refined CT and Gas CT costs
-				A23.globaltech_capital_atb_raw_medium_i %>%
-				mutate(`refined liquids (steam/CT)` =  A23.globaltech_capital_old_ratios$Refined_CT_ratio * `Gas CT`) -> A23.globaltech_capital_atb_raw_medium_j
-			# k. Refined CC CCS to be estimated based on the ratio of Old GCAM Refined CC CCS and Gas CC CCS costs
-				A23.globaltech_capital_atb_raw_medium_j %>%
-				mutate(`refined liquids (CC CCS)` =  A23.globaltech_capital_old_ratios$Refined_CC_CCS_ratio * `Gas CC CCS`) -> A23.globaltech_capital_atb_raw_medium_k
-			# i. Calculate PV storage cost from PV cost and battery cost
-				A23.globaltech_capital_atb_raw_medium_k %>%
-				mutate(PV_storage =  PV + battery) -> A23.globaltech_capital_atb_raw_medium_l
-			# j. Calculate Wind (onshore) storage cost from Wind onshore cost and battery cost
-				A23.globaltech_capital_atb_raw_medium_l %>%
-				mutate(wind_storage =  `Land-Based Wind` + battery) -> A23.globaltech_capital_atb_raw_medium_m
-			
-		 # Data formatting and mapping ATB technology names to GCAM ones 
-				A23.globaltech_capital_atb_raw_medium_m %>%
-				gather(atb.technology, value, - year) %>%
-				right_join(atb_gcam_mapping, by="atb.technology") %>%
-				filter(!is.na(year)) %>%
-				select(technology,year,value) %>%
-				spread(year,value) -> A23.globaltech_atb_capital
+    # Some GCAM technologies are not included in the ATB database
+    # For these, we calculate the cost ratio from the previous GCAM cost assumptions
+    # and apply these ratios to the costs for technologies that are in the ATB database.
+    # Below are the relevant technologies and the ratios used to infer their costs.
+    # This info can also be found in energy/atb_gcam_mapping_MB
+    # CSP ratio = CSP / CSP_storage
+    # biomass (IGCC) ratio = biomass (IGCC) / biomass (conv)
+    # biomass (conv CCS) ratio = biomass (conv CCS) / biomass (conv)
+    # biomass (IGCC CCS) ratio = biomass (IGCC CCS) / biomass (IGCC)
+    # coal (IGCC CCS) ratio = coal (IGCC CCS) / coal (IGCC)
+    # refined liquids (steam/CT) ratio = refined liquids (steam/CT) / gas (steam/CT)
+    # refined liquids (CC) ratio = refined liquids (CC) / gas (CC)
+    # refined liquids (CC CCS) ratio = refined liquids (CC CCS) / gas (CC CCS)
 
-		# From ATB file - calculate the improvement rate from 2015 to 2035 and from 2035 to 2050
-		A23.globaltech_atb_capital %>%
-			mutate(improvement3515 = (`2035` - `2015`)/`2015`, improvement5035 = (`2050`- `2035`)/`2035`) -> A23.globaltech_atb_capital
-		# Estimate 2100 value from 2050 value on the basis of the 2035-2050 improvement rate, and then calculate the 2015-2100 improvement rate
-		A23.globaltech_atb_capital %>%
-			mutate(`2100`  = `2050`* (1+improvement5035), improvement0015 = abs((`2100` - `2015`)/`2015`)) -> A23.globaltech_atb_capital
-		# Set up a list of technologies that will be used for looping purposes
-		A23.globaltech_atb_capital %>%
-			select(technology) %>%
-			pull() -> technology_list
-		 # Setting up a functional form that replicates the function structure of cost generation. This has the following main components
-		 # The 2015 ATB value
-		 # improvement.max = improvement0015
-		 # The 2035 ATB value, the last year of high improvement
-		 # improvement.rate = a rate of improvement such that the function gets as close to the 2035 ATB value as possible.
-		 # This needs to be set up for all technologies
-		 # Specifying the improvement max as a fraction of the original (2015) value that can be attained through improvement
-		A23.globaltech_atb_capital %>%
-			mutate(improvement.max = 1 - improvement0015) -> A23.globaltech_atb_capital
-		# Create baseline improvement rate values assuming average linear reduction
-		A23.globaltech_atb_capital %>%
-			mutate(improvement.rate.base = (`2015`- `2100`)/number_of_periods/`2015`) -> A23.globaltech_atb_capital
-		# Create a function to replace the baseline improvement rate values with the updated ones
-			replace_fraction <- function(data, tech, new_fraction) {
-			  data %>%
-				mutate(improvement.rate.base = replace(improvement.rate.base, technology == tech,
-										  new_fraction))
-			}
-		# Create a function for all technologies to determine the improvement rate given the 2100 target that will lead to the correct capital cost in 2035
-		# Year_Target is 2035, Year_Base is 2015.
-		 f<- function(improvement.rate, tech) {
-		A23.globaltech_atb_capital %>%
-			filter(technology == tech) %>%
-			mutate(check = `2015` * improvement.max + (`2015` - `2015` * improvement.max) *
-									 (1.0 - improvement.rate) ^ (year_target - year_base) - `2035`) %>%
-			pull(check) -> check
+    # Isolate technologies which require a shadow technology to infer costs from ATB data set.
+    atb_gcam_mapping_MB %>%
+      filter(!is.na(shadow_tech)) %>%
+      select(technology, shadow_tech) -> atb_gcam_mapping_ratios
 
-		check
-		}
-		# Loop the function for all technologies, using uniroot to ensure that the correct improvement rate is  found and then is replaced in the main table
-		for (i in seq_along(technology_list)) {
-				tech <- technology_list[i]
+    # Build a list of costs for shadow techologies
+    GCAM_legacy_cost_assumptions %>%
+      # filter for technologies that are considered shadow techs
+      semi_join(atb_gcam_mapping_ratios, by = c("technology" = "shadow_tech")) %>%
+      select(shadow_tech = technology, year, shadow_tech_cost = value, input, case)  -> L113.cost_shadow
 
-		solved.improvement.rate <- uniroot(f, c(0,1), tech)
-		A23.globaltech_atb_capital %>%
-			replace_fraction(tech, solved.improvement.rate$root) -> A23.globaltech_atb_capital
+    # Calculate cost ratios for technologies which require a shadow tech to infer costs from ATB data
+    GCAM_legacy_cost_assumptions %>%
+      # filter for technologies which need a shadow tech to calculate a cost ratio
+      semi_join(atb_gcam_mapping_ratios, by = "technology") %>%
+      left_join_error_no_match(atb_gcam_mapping_ratios, by = "technology") %>%
+      left_join_error_no_match(L113.cost_shadow, by = c("shadow_tech", "year", "input", "case")) %>%
+      mutate(cost_ratio = value / shadow_tech_cost) %>%
+      select(technology, year, cost_ratio, input, case) %>%
+      # fill out for all ATB years
+      complete(nesting(technology, input, case), year = c(ATB_years)) %>%
+      group_by(technology, input, case) %>%
+      mutate(cost_ratio = approx_fun(year, cost_ratio)) %>%
+      ungroup() -> L113.cost_shadow_ratio
 
-		}
+    NREL_ATB_cost_assumptions %>%
+      # isolate technologies which map to GCAM technologies
+      semi_join(atb_gcam_mapping_MB, by = c("tech_type", "tech_detail")) %>%
+      # Convert to 1975$.  2015-2016 costs are in 2015$; 2017-2050 costs are in 2017$.
+      mutate(value = if_else(year %in% energy.ATB_2017_YEARS, value * gdp_deflator(1975, 2015), value * gdp_deflator(1975, 2017))) %>%
+      # some techs, like battery, don't have costs back to 2015
+      # use approx_fun rule 2 to carry nearest year values backwards
+      group_by(tech_type, tech_detail, input, case) %>%
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      ungroup %>%
+      # join is intended to duplicate rows - some GCAM tech costs are composites of multiple ATB techs
+      # LJENM throws an error, left_join is used
+      left_join(atb_gcam_mapping_MB, by = c("tech_type", "tech_detail")) %>%
+      # not every technology requires a shadow technology to compute costs from the ATB data set
+      # LJENM errors because of NAs (not all techs are in RHS), NAs are dealt with below, left_join is used
+      left_join(L113.cost_shadow_ratio, by = c("technology", "year", "input", "case")) %>%
+      mutate(conversion = if_else(is.na(conversion), cost_ratio, conversion)) %>%
+      mutate(value = value * conversion) %>%
+      group_by(technology, year, input, case) %>%
+      summarise(value = sum(value)) %>%
+      ungroup() -> L113.costs_ATB
 
-		# Clean up the ATB table in order to properly merge with the old globaltech_capital table. Convert 2015 value to 1975 dollars.
-		A23.globaltech_atb_capital %>%
-			select(technology,`2015`,improvement.max,improvement.rate=improvement.rate.base) %>%
-			mutate(improvement.max=round(improvement.max,energy.DIGITS_CAPACITY_FACTOR), improvement.rate=round(improvement.rate,energy.DIGITS_CAPACITY_FACTOR), `2015`= `2015`*gdp_deflator(1975, 2015)) -> A23.globaltech_atb_capital
+    # Calculate the improvement rate from 2015 to 2035 and from 2035 to 2050
+    L113.costs_ATB %>%
+      group_by(technology, input, case) %>%
+      # calculate simple near term and mid term annual improvement rates as % reduction / # years
+      mutate(initial_ATB_cost = value[year==min(year)],
+             mid_ATB_cost = value[year==energy.ATB_MID_YEAR],
+             final_ATB_cost = value[year==max(year)],
+             target_ATB_cost = value[year==energy.ATB_TARGET_YEAR],
+             near_term_improvement = ((initial_ATB_cost - mid_ATB_cost) / min(year)) / (energy.ATB_MID_YEAR - min(year)),
+             long_term_improvement = ((mid_ATB_cost - final_ATB_cost) / energy.ATB_MID_YEAR) / (max(year) - energy.ATB_MID_YEAR),
+             # calculate 2100 value based on extending long-term improvement rate
+             cost_end_year = final_ATB_cost - (final_ATB_cost * (long_term_improvement * (max(FUTURE_YEARS) - max(year)))),
+             # calculate maximum improvement based on extrapolated 2100 cost : 2015 cost
+             improvement.max = cost_end_year / value[year==min(year)],
+             # calculate baseline improvement rate values assuming average linear reduction
+             # this is just a starting point for the exponential function below
+             improvement.rate.base = (initial_ATB_cost - cost_end_year) / (max(year) - min(year)) / initial_ATB_cost) %>%
+      ungroup() %>%
+      distinct(technology, input, case, initial_ATB_cost, target_ATB_cost, improvement.max, improvement.rate.base) %>%
+      # filter out techs with no cost in ATB - nuclear adv / low tech capital costs, CSP variable O&M
+      filter(!is.na(initial_ATB_cost)) %>%
+      # techs with no variable O&M have NAN improvement.max & improvement.rate.base - set to 0
+      replace_na(list(improvement.max = 0, improvement.rate.base = 0)) %>%
+      # for technologies where costs increase (very marginal increases), reset this
+      mutate(target_ATB_cost = if_else(target_ATB_cost > initial_ATB_cost, initial_ATB_cost, target_ATB_cost),
+             improvement.max = if_else(improvement.max > 1, 1, improvement.max),
+             improvement.rate.base = if_else(improvement.rate.base < 0, 0, improvement.rate.base)) -> L113.costs_ATB_params
 
-		# Extract technologies from the original A23 file that have a valid 2015 data (i.e. not NAs). These technologies will take priority over ATB technologies if there's a conflict.
-		A23.globaltech_capital %>%
-			filter(!is.na(`2015`)) -> A23.globaltech_capital_keep
+    # Setting up a functional form that replicates the function structure of cost generation. This has the following main components:
+    # initial_ATB_cost: the base (2015) ATB value
+    # improvement.max: maximum improvement from 2015 - 2100
+    # The target year (2035) ATB value - the year deemed the inflection point between near and long-term improvement rates
+    # improvement.rate = a rate of improvement such that the function gets as close to the target year ATB value as possible
+    # This needs to be calculated for all technologies
 
-		# Filter out capital cost data from ATB if already present in A23.globaltech_capital_keep. We also filter out battery technology because that will only be used in GCAM-USA.
-		A23.globaltech_atb_capital %>%
-			anti_join(A23.globaltech_capital_keep, by="technology") %>%
-			filter(technology != battery) -> A23.globaltech_atb_capital_medium
+    # Create a function for all technologies to determine the improvement rate that will
+    # yield the desired capital cost (target_ATB_cost) in energy.ATB_TARGET_YEAR (default = 2035)
+    calc_improvement_rate <- function(improvement.rate, tech, component, level) {
+      L113.costs_ATB_params %>%
+        filter(technology == tech,
+              input == component,
+              case == level) %>%
+        mutate(check = initial_ATB_cost * improvement.max + (initial_ATB_cost - initial_ATB_cost * improvement.max) *
+                 (1.0 - improvement.rate) ^ (energy.ATB_TARGET_YEAR - energy.ATB_BASE_YEAR) - target_ATB_cost) %>%
+        pull(check) -> check
+      check
+    }
 
-		# Merge ATB data with the globaltech_capital file. Populate historical years with 2015 ATB data. Proprerly format the column order and row order.
-		A23.globaltech_capital %>%
-			select(-`2015`,-improvement.max,-improvement.rate) %>%
-			left_join(A23.globaltech_atb_capital_medium, by="technology") %>%
-			bind_rows(A23.globaltech_capital_keep) %>%
-			filter(!is.na(`2015`)) %>%
-			mutate(`2010` = `2015`, `2005` = `2015`, `1990` = `2005`, `1971` = `2005`, improvement.max=as.numeric(improvement.max), improvement.rate=as.numeric(improvement.rate)) %>%
-			select(supplysector,subsector,technology,`input-capital`,fixed.charge.rate,`1971`,`1990`,`2005`,`2010`,`2015`,improvement.max,improvement.rate,improvement.shadow.technology) %>%
-			arrange(subsector,technology) -> L113.Globaltech_capital_ATB
+    # Loop the function for all technologies / input costs (component) / cases (level),
+    # using uniroot to ensure that the correct improvement rate is found and entered in the main table
+    for (rn in rownames(L113.costs_ATB_params)) {
+      L113.costs_ATB_params %>%
+        filter(row_number() == rn) -> L113.TEMP
 
-	# Next we process the ATB advanced technology costs
-	
-	  # Get appopriate technologies that will be used from all available ATB technologies
-	    A23.globaltech_capital_atb_used %>% 
-		    filter(Scenario == low) -> A23.globaltech_capital_atb_used_low
-	    A23.globaltech_capital_atb_raw %>%
-		    semi_join(A23.globaltech_capital_atb_used_low, by=c("Technology","Resource"="Used_Resource")) -> A23.globaltech_capital_atb_raw_adv
+      tech <- L113.TEMP$technology
+      component <- L113.TEMP$input
+      level <- L113.TEMP$case
 
-	 # Now to do technology-specific calculations. To make these easier, we turn technologies into columns
-		A23.globaltech_capital_atb_raw_adv %>% 
-			select(-Resource) %>%
-			gather(year,value,-Technology) %>%
-			spread(Technology,value) -> A23.globaltech_capital_atb_raw_adv_spread
+      solved.improvement.rate <- uniroot(calc_improvement_rate, c(0, 1), tech, component, level)
 
-	 # Generate old costs for every technology in GCAM
-		A23.globaltech_capital_adv_old %>%
-			fill_exp_decay_extrapolate(MODEL_YEARS) %>%
-			rename(sector.name = supplysector, subsector.name = subsector, capital.overnight = value, input.capital = `input-capital`) %>%
-			mutate(capital.overnight = round(capital.overnight, energy.DIGITS_CAPITAL)) %>%
-			select(technology,year,capital.overnight) %>%
-			filter(year %in% ATB_years) %>%
-			spread(technology,capital.overnight) -> A23.globaltech_capital_adv_old_spread
-			
-	 # Generate appropriate cost ratios from old data, which will be used to generate ATB approximations whenever a technology is absent in ATB
-		A23.globaltech_capital_adv_old_spread %>%
-			mutate(CSP_ratio = CSP/CSP_storage,
-				   Biomass_IGCC_ratio = `biomass (IGCC)`/`biomass (conv)`,
-				   Biomass_CCS_ratio = `biomass (conv CCS)`/`biomass (conv)`,
-				   Biomass_IGCC_CCS_ratio = `biomass (IGCC CCS)`/`biomass (IGCC)`,
-				   Coal_IGCC_CCS_ratio = `coal (IGCC CCS)`/`coal (IGCC)`,
-				   Refined_CC_ratio = `refined liquids (CC)`/ `gas (CC)`,
-				   Refined_CT_ratio = `refined liquids (steam/CT)`/ `gas (steam/CT)`,
-				   Refined_CC_CCS_ratio= `refined liquids (CC CCS)`/ `gas (CC CCS)`) -> A23.globaltech_capital_adv_old_ratios
+      L113.costs_ATB_params %>%
+        mutate(improvement.rate.base = replace(improvement.rate.base,
+                                               technology == tech & input == component & case == level,
+                                               solved.improvement.rate$root)) -> L113.costs_ATB_params
 
-	 # Final Cost Calculations  
-		# a. Battery = Quadruple storage costs in order to match lifetime and storage duration assumptions with GCAM
-		A23.globaltech_capital_atb_raw_adv_spread %>%
-			mutate(battery = storage_multiplier * Storage) -> A23.globaltech_capital_atb_raw_adv_a
-		# b. Rooftop PV costs are the average of ATB Residential and Commercial costs
-		A23.globaltech_capital_atb_raw_adv_a %>%
-			mutate(rooftop_pv = Rooftop_Average * (`Solar - PV Dist. Comm` + `Solar - PV Dist. Res`)) -> A23.globaltech_capital_atb_raw_adv_b
-		# c. PV technology costs are in DC and AC/DC conversion must be accounted for
-		A23.globaltech_capital_atb_raw_adv_b %>%
-			mutate(PV = ACDC_conversion * `Solar - Utility PV`, rooftop_pv = ACDC_conversion * rooftop_pv) -> A23.globaltech_capital_atb_raw_adv_c
-		# d. CSP costs to be estimated based on the ratio of Old GCAM CSP and CSP Storage costs
-		A23.globaltech_capital_atb_raw_adv_c %>%
-			mutate(CSP =  A23.globaltech_capital_adv_old_ratios$CSP_ratio * `Solar - CSP`) -> A23.globaltech_capital_atb_raw_adv_d
-		# e. Biomass IGCC costs to be estimated based on the ratio of Old GCAM Biomass IGCC and Biomass conv costs
-			A23.globaltech_capital_atb_raw_adv_d %>%
-			mutate(`biomass (IGCC)` =  A23.globaltech_capital_adv_old_ratios$Biomass_IGCC_ratio * Biopower) -> A23.globaltech_capital_atb_raw_adv_e
-		# f. Biomass CCS costs to be estimated based on the ratio of Old GCAM Biomass CCS and Biomass conv costs
-			A23.globaltech_capital_atb_raw_adv_e %>%
-			mutate(`biomass (conv CCS)` =  A23.globaltech_capital_adv_old_ratios$Biomass_CCS_ratio * Biopower) -> A23.globaltech_capital_atb_raw_adv_f
-		# g. Biomass IGCC CCS costs to be estimated based on the ratio of Old GCAM Biomass IGCC CCS and Biomass IGCC costs
-			A23.globaltech_capital_atb_raw_adv_f %>%
-			mutate(`biomass (IGCC CCS)` =  A23.globaltech_capital_adv_old_ratios$Biomass_IGCC_CCS_ratio * `biomass (IGCC)`) -> A23.globaltech_capital_atb_raw_adv_g
-		# h. Coal IGCC CCS costs to be estimated based on the ratio of Old GCAM Coal IGCC CCS and Coal IGCC costs
-			A23.globaltech_capital_atb_raw_adv_g %>%
-			mutate(`coal (IGCC CCS)` =  A23.globaltech_capital_adv_old_ratios$Coal_IGCC_CCS_ratio * `Coal IGCC`) -> A23.globaltech_capital_atb_raw_adv_h
-		# i. Refided CC costs to be estimated based on the ratio of Old GCAM Refined CC and Gas CC costs
-			A23.globaltech_capital_atb_raw_adv_h %>%
-			mutate(`refined liquids (CC)` =  A23.globaltech_capital_adv_old_ratios$Refined_CC_ratio * `Gas CC`) -> A23.globaltech_capital_atb_raw_adv_i
-		# j. Refined CT to be estimated based on the ratio of Old GCAM Refined CT and Gas CT costs
-			A23.globaltech_capital_atb_raw_adv_i %>%
-			mutate(`refined liquids (steam/CT)` =  A23.globaltech_capital_adv_old_ratios$Refined_CT_ratio * `Gas CT`) -> A23.globaltech_capital_atb_raw_adv_j
-		# k. Refined CC CCS to be estimated based on the ratio of Old GCAM Refined CC CCS and Gas CC CCS costs
-			A23.globaltech_capital_atb_raw_adv_j %>%
-			mutate(`refined liquids (CC CCS)` =  A23.globaltech_capital_adv_old_ratios$Refined_CC_CCS_ratio * `Gas CC CCS`) -> A23.globaltech_capital_atb_raw_adv_k
-		# i. Calculate PV storage cost from PV cost and battery cost
-			A23.globaltech_capital_atb_raw_adv_k %>%
-			mutate(PV_storage =  PV + battery) -> A23.globaltech_capital_atb_raw_adv_l
-		# j. Calculate Wind (onshore) storage cost from Wind onshore cost and battery cost
-			A23.globaltech_capital_atb_raw_adv_l %>%
-			mutate(wind_storage =  `Land-Based Wind` + battery) -> A23.globaltech_capital_atb_raw_adv_m
-		
-	 # Data formatting and mapping ATB technology names to GCAM ones 
-			A23.globaltech_capital_atb_raw_adv_m %>%
-			gather(atb.technology, value, - year) %>%
-			right_join(atb_gcam_mapping, by="atb.technology") %>%
-			filter(!is.na(year)) %>%
-			select(technology,year,value) %>%
-			spread(year,value) -> A23.globaltech_atb_capital_adv
+    }
 
-		# From ATB file - calculate the improvement rate from 2015 to 2035 and from 2035 to 2050
-		A23.globaltech_atb_capital_adv %>%
-			mutate(improvement3515 = (`2035` - `2015`)/`2015`, improvement5035 = (`2050`- `2035`)/`2035`) -> A23.globaltech_atb_capital_adv
-		# Estimate 2100 value from 2050 value on the basis of the 2035-2050 improvement rate, and then calculate the 2015-2100 improvement rate
-		A23.globaltech_atb_capital_adv %>%
-			mutate(`2100`  = `2050`* (1+improvement5035), improvement0015 = abs((`2100` - `2015`)/`2015`)) -> A23.globaltech_atb_capital_adv
-		# Set up a list of technologies that will be used for looping purposes
-		A23.globaltech_atb_capital_adv %>%
-			select(technology) %>%
-			pull() -> technology_list
-		 # Setting up a functional form that replicates the function structure of cost generation. This has the following main components
-		 # The 2015 ATB value
-		 # improvement.max = improvement0015
-		 # The 2035 ATB value, the last year of high improvement
-		 # improvement.rate = a rate of improvement such that the function gets as close to the 2035 ATB value as possible.
-		 # This needs to be set up for all technologies
-		 # Specifying the improvement max as a fraction of the original (2015) value that can be attained through improvement
-		A23.globaltech_atb_capital_adv %>%
-			mutate(improvement.max = 1 - improvement0015) -> A23.globaltech_atb_capital_adv
-		# Create baseline improvement rate values assuming average linear reduction
-		A23.globaltech_atb_capital_adv %>%
-			mutate(improvement.rate.base = (`2015`- `2100`)/number_of_periods/`2015`) -> A23.globaltech_atb_capital_adv
-		# Create a function to replace the baseline improvement rate values with the updated ones
-			replace_fraction <- function(data, tech, new_fraction) {
-			  data %>%
-				mutate(improvement.rate.base = replace(improvement.rate.base, technology== tech,
-										  new_fraction))
-			}
-		# Create a function for all technologies to determine the improvement rate given the 2100 target that will lead to the correct capital cost in 2035
-		# Year_Target is 2035, Year_Base is 2015.
-		 f<- function(improvement.rate, tech) {
-		A23.globaltech_atb_capital_adv %>%
-			filter(technology== tech) %>%
-			mutate(check = `2015` * improvement.max + (`2015` - `2015` * improvement.max) *
-									 (1.0 - improvement.rate) ^ (year_target - year_base) - `2035`) %>%
-			pull(check) -> check
+    # Clean up the ATB table in order to properly merge with the old globaltech_capital table.
+    L113.costs_ATB_params %>%
+      select(technology, input, case, value = initial_ATB_cost, improvement.max, improvement.rate = improvement.rate.base) %>%
+      mutate(year = energy.ATB_BASE_YEAR,
+             improvement.max = round(improvement.max, energy.DIGITS_CAPACITY_FACTOR),
+             improvement.rate = round(improvement.rate, energy.DIGITS_CAPACITY_FACTOR)) -> L113.globaltech_cost_atb
 
-		check
-		}
-		# Loop the function for all technologies, using uniroot to ensure that the correct improvement rate is  found and then is replaced in the main table
-		for (i in seq_along(technology_list)) {
-				tech <- technology_list[i]
+    # Extract technologies from the original A23 file that have a valid 2015 data (i.e. not NAs).
+    # These technologies will take priority over ATB technologies if there's a conflict.
+    A23.globaltech_capital %>%
+      rename(input = 'input-capital') %>%
+      mutate(case = energy.COSTS_MID_CASE) %>%
+      bind_rows(A23.globaltech_capital_adv  %>%
+                  rename(input = 'input-capital') %>%
+                  mutate(case = energy.COSTS_ADV_CASE),
+                A23.globaltech_capital_low  %>%
+                  rename(input = 'input-capital') %>%
+                  mutate(case = energy.COSTS_LOW_CASE),
+                A23.globaltech_OMfixed  %>%
+                  rename(input = input.OM.fixed) %>%
+                  mutate(case = energy.COSTS_MID_CASE),
+                A23.globaltech_OMvar %>%
+                  rename(input = input.OM.var) %>%
+                  mutate(case = energy.COSTS_MID_CASE)) %>%
+      gather_years() -> A23.globaltech_cost
 
-		solved.improvement.rate <- uniroot(f, c(0,1), tech)
-		A23.globaltech_atb_capital_adv %>%
-			replace_fraction(tech, solved.improvement.rate$root) -> A23.globaltech_atb_capital_adv
+    A23.globaltech_cost %>%
+      group_by(technology, input, case) %>%
+      filter(!is.na(value[year==energy.ATB_BASE_YEAR])) %>%
+      ungroup() -> A23.globaltech_cost_keep
 
-		}
+    # Filter out capital cost data from ATB if already present in A23.globaltech_capital_keep.
+    # We also filter out battery technology because that will only be used in GCAM-USA.
+    L113.globaltech_cost_atb %>%
+      anti_join(A23.globaltech_cost_keep, by = c("technology", "input", "case")) -> L113.globaltech_cost_atb_temp
 
-		# Clean up the ATB table in order to properly merge with the old globaltech_capital table. Convert 2015 value to 1975 dollars.
-		A23.globaltech_atb_capital_adv %>%
-			select(technology,`2015`,improvement.max,improvement.rate=improvement.rate.base) %>%
-			mutate(improvement.max=round(improvement.max,energy.DIGITS_CAPACITY_FACTOR), improvement.rate=round(improvement.rate,energy.DIGITS_CAPACITY_FACTOR), `2015`= `2015`*gdp_deflator(1975, 2015)) -> A23.globaltech_atb_capital_adv
+    # Merge ATB data with the original globaltech_capital file. Populate historical years with 2015 ATB data.
+    # Proprerly format the column order and row order.
+    A23.globaltech_cost %>%
+      gather_years() %>%
+      filter(year==energy.ATB_BASE_YEAR) %>%
+      group_by(technology, input, case) %>%
+      # get rid of values that will be overridden by user defined values in A23 files
+      filter(is.na(value[year==energy.ATB_BASE_YEAR])) %>%
+      ungroup() %>%
+      select(-year, -value, -improvement.max, -improvement.rate) %>%
+      left_join(L113.globaltech_cost_atb_temp, by = c("technology", "input", "case")) %>%
+      # add in user defined values from A23 files
+      bind_rows(A23.globaltech_cost_keep) %>%
+      # fill out for all years in original A23. file
+      complete(nesting(supplysector, subsector, technology, input, case, fixed.charge.rate,
+                       improvement.shadow.technology, improvement.max, improvement.rate),
+               year = c(A23_years)) %>%
+      group_by(technology, input, case) %>%
+      # copy 2015 costs backwards
+      mutate(value = if_else(is.na(value), value[year==energy.ATB_BASE_YEAR], value)) %>%
+      ungroup() %>%
+      # get rid of shadow technology
+      select(-improvement.shadow.technology) %>%
+      arrange(subsector, technology, input, case) %>%
+      spread(year, value) -> L113.globaltech_cost
 
-		# Extract technologies from the original A23 file that have a valid improvement rate and other data (i.e. not NAs). These technologies will take priority over ATB technologies if there's a conflict.
-		A23.globaltech_capital_adv %>%
-			filter(!is.na(`2015`)) -> A23.globaltech_capital_adv_keep
+    L113.globaltech_cost %>%
+      # Filter for correct cost case
+      filter(input == energy.CAPITAL_INPUT,
+             case == energy.COSTS_MID_CASE) %>%
+      rename('input-capital' = input) %>%
+      select(-case) -> L113.globaltech_capital_ATB
 
-		# Filter out capital cost data from ATB if already present in A23.globaltech_capital_adv_keep. We also filter out battery technology because that will only be used in GCAM-USA.
-		A23.globaltech_atb_capital_adv %>%
-			anti_join(A23.globaltech_capital_adv_keep, by="technology") %>%
-			filter(technology != battery)-> A23.globaltech_atb_capital_adv
+    L113.globaltech_cost  %>%
+      # Filter for correct cost case
+      filter(input == energy.CAPITAL_INPUT,
+             case == energy.COSTS_ADV_CASE) %>%
+      rename('input-capital' = input) %>%
+      select(-case) -> L113.globaltech_capital_ATB_adv
 
-		# Merge ATB data with the globaltech_capital file. Populate historical years with 2015 ATB data. Proprerly format the column order and row order.
-		A23.globaltech_capital_adv %>%
-			select(-`2015`,-improvement.max,-improvement.rate) %>%
-			left_join(A23.globaltech_atb_capital_adv, by="technology") %>%
-			bind_rows(A23.globaltech_capital_adv_keep) %>%
-			filter(!is.na(`2015`)) %>%
-			mutate(`2010` = `2015`, `2005` = `2015`, `1990` = `2005`, `1971` = `2005`, improvement.max=as.numeric(improvement.max), improvement.rate=as.numeric(improvement.rate)) %>%
-			select(supplysector,subsector,technology,`input-capital`,fixed.charge.rate,`1971`,`1990`,`2005`,`2010`,`2015`,improvement.max,improvement.rate,improvement.shadow.technology) %>%
-			arrange(subsector,technology) -> L113.Globaltech_capital_ATB_adv
+    L113.globaltech_cost %>%
+    # Filter for correct cost case
+    filter(input == energy.CAPITAL_INPUT,
+           case == energy.COSTS_LOW_CASE) %>%
+      rename('input-capital' = input) %>%
+      select(-case) -> L113.globaltech_capital_ATB_low
 
-	# Then we process the ATB low technology costs. These are simply the 2015 ATB values paired with the improvement rate and improvement max from the older low technology scenario.
+    L113.globaltech_cost %>%
+      # Filter for correct cost case
+      filter(input == energy.OM_FIXED_INPUT,
+             case == energy.COSTS_MID_CASE) %>%
+      rename(input.OM.fixed = input) %>%
+      select(-case) -> L113.globaltech_OMfixed_ATB
 
-		# Extract technologies from the original A23 file that have a valid improvement rate and other data (i.e. not NAs). These technologies will take priority over ATB technologies if there's a conflict.
-		A23.globaltech_capital_low %>%
-			filter(!is.na(`2015`)) -> A23.globaltech_capital_low_keep
+    L113.globaltech_cost%>%
+      # Filter for correct cost case
+      filter(input == energy.OM_VAR_INPUT,
+             case == energy.COSTS_MID_CASE) %>%
+      rename(input.OM.var = input) %>%
+      select(-case) -> L113.globaltech_OMvar_ATB
 
-		# Filter out capital cost data from ATB if already present in A23.globaltech_capital_low_keep. We also filter out battery technology because that will only be used in GCAM-USA.
-		A23.globaltech_atb_capital %>%
-			anti_join(A23.globaltech_capital_low_keep, by="technology") %>%
-			filter(technology != battery) -> A23.globaltech_atb_capital_low
+    # Filter out battery technology data
+    L113.globaltech_cost_atb %>%
+      filter(technology == gcamusa.STORAGE_TECH,
+             input %in% c(energy.CAPITAL_INPUT, energy.OM_FIXED_INPUT, energy.OM_VAR_INPUT),
+             case == energy.COSTS_MID_CASE) %>%
+      # Prepare the table in the format which can be used by the exponential decay function
+      # in order to generate a full set of cost forecasts
+      complete(nesting(technology, input, case, improvement.max, improvement.rate),
+               year = c(A23_years)) %>%
+      group_by(technology, input, case) %>%
+      # copy 2015 costs backwards
+      mutate(value = if_else(is.na(value), value[year==energy.ATB_BASE_YEAR], value)) %>%
+      ungroup() %>%
+      # Use exponential decay function to extrapolate costs till 2100
+      fill_exp_decay_extrapolate(MODEL_YEARS) %>%
+      # NAs are from variable OM, which is zero in all time periods
+      replace_na(list(value = 0)) %>%
+      rename(period = year) %>%
+      select(technology, period, input, value) %>%
+      spread(input, value) %>%
+      rename(capital.cost = capital,
+             fixed.om = `OM-fixed`,
+             variable.om = `OM-var`) %>%
+      mutate(capital.cost = round(capital.cost, energy.DIGITS_CAPITAL),
+             fixed.om = round(fixed.om, energy.DIGITS_OM),
+             variable.om = round(variable.om, energy.DIGITS_OM)) -> A23.globaltech_capital_atb_battery
 
-		# Merge ATB data with the globaltech_capital file. Populate historical years with 2015 ATB data. Proprerly format the column order and row order.
-		A23.globaltech_capital_low %>%
-			select(-`2015`) %>%
-			left_join(A23.globaltech_atb_capital_low, by="technology") %>%
-			bind_rows(A23.globaltech_capital_low_keep) %>%
-			filter(!is.na(`2015`)) %>%
-			mutate(`2010` = `2015`, `2005` = `2015`, `1990` = `2005`, `1971` = `2005`, improvement.max=as.numeric(improvement.max), improvement.rate=as.numeric(improvement.rate)) %>%
-			select(supplysector,subsector,technology,`input-capital`,fixed.charge.rate,`1971`,`1990`,`2005`,`2010`,`2015`,improvement.max,improvement.rate,improvement.shadow.technology) %>%
-			arrange(subsector,technology) -> L113.Globaltech_capital_ATB_low
+    # Merge cost data with GCAM_USA battery cost structure file
+    A23.elecS_globaltech_non_energy_inputs %>%
+      select(-capital.cost, -fixed.om, -variable.om) %>%
+      left_join_error_no_match(A23.globaltech_capital_atb_battery,
+                               by = c("technology", "period")) -> L113.elecS_globaltech_capital_battery_ATB
 
-	# Next we process the GCAM_USA battery costs. This is taken from ATB Baseline cost scenario as there's only set of battery costs that are used as GCAM-USA inputs
 
-		# Filter out battery technology data
-			A23.globaltech_atb_capital %>%
-				filter(technology == battery) -> A23.globaltech_atb_battery
-
-		# Prepare the table in the format which can be used by the exponential decay function in order to generate a full set of cost forecasts.
-			A23.globaltech_atb_battery %>%
-				mutate(`2010` = `2015`, `2005` = `2015`, `1990` = `2005`, `1971` = `2005`) -> A23.globaltech_capital_atb_battery
-
-		# Use exponential decay function to extrapolate costs till 2100
-			A23.globaltech_capital_atb_battery %>%
-				fill_exp_decay_extrapolate(MODEL_YEARS) %>%
-				rename(period = year, capital.cost = value) %>%
-				select(technology,period,capital.cost) %>%
-				mutate(capital.cost = round(capital.cost, energy.DIGITS_CAPITAL)) -> A23.globaltech_capital_atb_battery
-
-		# Merge cost data with GCAM_USA battery cost structure file
-			A23.elecS_globaltech_non_energy_inputs %>%
-				select(-capital.cost) %>%
-				left_join_error_no_match(A23.globaltech_capital_atb_battery, by =c("technology","period")) -> L113.elecS_globaltech_battery_capital
-
-	# Finally we process the ATB Efficiencies
-	
-		# To do technology-specific calculations. To make these easier, we turn technologies into columns
-		A23.globaltech_eff_raw %>% 
-			gather(year,value,-atb.technology) %>%
-			spread(atb.technology,value) -> A23.globaltech_eff_raw_spread
-			
-		 # Generate old efficiency for every fuel-based technology in GCAM. Filter out 2015 and 2100 data only.
-			A23.globaltech_eff_old %>%
-				filter(is.na(`2100`)) %>%
-				fill_exp_decay_extrapolate(MODEL_YEARS) %>%
-				rename(sector.name = supplysector, subsector.name = subsector, efficiency = value) %>%
-				mutate(efficiency = round(efficiency, energy.DIGITS_EFFICIENCY)) %>%
-				select(technology,year,efficiency) %>%
-				filter(year %in% ATB_eff_years) %>%
-				spread(technology,efficiency) -> A23.globaltech_eff_old_spread
-				
-		 # Generate appropriate efficiency ratios from old data, which will be used to generate approximations for other technologies
-			A23.globaltech_eff_old_spread %>%
-				mutate(Coal_IGCC_ratio = `coal (IGCC)`/`coal (conv pul)`,
-					   Coal_CCS_ratio = `coal (conv pul CCS)`/`coal (conv pul)`,
-					   Coal_IGCC_CCS_ratio = `coal (IGCC CCS)`/`coal (IGCC)`,
-					   gas_CT_ratio = `gas (steam/CT)`/ `gas (CC)`,
-					   gas_CC_CCS_ratio = `gas (CC CCS)`/ `gas (CC)`,
-					   Biomass_ratio = `biomass (conv)`/ `coal (conv pul)`,
-					   Biomass_IGCC_ratio = `biomass (IGCC)`/`biomass (conv)`,
-					   Biomass_CCS_ratio = `biomass (conv CCS)`/`biomass (conv)`,
-					   Biomass_IGCC_CCS_ratio = `biomass (IGCC CCS)`/`biomass (IGCC)`,
-					   Refined_CC_ratio = `refined liquids (CC)`/ `gas (CC)`,
-					   Refined_CT_ratio = `refined liquids (steam/CT)`/ `gas (steam/CT)`,
-					   Refined_CC_CCS_ratio= `refined liquids (CC CCS)`/ `gas (CC CCS)`) -> A23.globaltech_eff_old_ratios
-
-		 # Final Efficiency Calculations  
-			# a. Coal IGCC efficiency to be estimated based on the ratio of Old GCAM Coal IGCC and Coal conv efficiency
-			A23.globaltech_eff_raw_spread %>%
-				mutate(`coal (IGCC)` =  A23.globaltech_eff_old_ratios$Coal_IGCC_ratio * `Coal new`) -> A23.globaltech_eff_raw_a
-			# b. Coal  CCS efficiency to be estimated based on the ratio of Old GCAM Coal CCS and Coal conv efficiency
-			A23.globaltech_eff_raw_a %>%
-				mutate(`coal (conv pul CCS)` =  A23.globaltech_eff_old_ratios$Coal_CCS_ratio * `Coal new`) -> A23.globaltech_eff_raw_b
-			# c. Coal IGCC CCS efficiency to be estimated based on the ratio of Old GCAM Coal IGCC CCS and Coal IGCC efficiency
-				A23.globaltech_eff_raw_b %>%
-				mutate(`coal (IGCC CCS)` =  A23.globaltech_eff_old_ratios$Coal_IGCC_CCS_ratio * `coal (IGCC)`) -> A23.globaltech_eff_raw_c
-			# d. Gas CT to be estimated based on the ratio of Old GCAM Gas CT and Gas CC efficiency
-			A23.globaltech_eff_raw_c %>%
-				mutate(`gas (steam/CT)` =  A23.globaltech_eff_old_ratios$gas_CT_ratio * `Gas CC`) -> A23.globaltech_eff_raw_d
-			# e. Gas CCS to be estimated based on the ratio of Old GCAM Gas CCS and Gas CC efficiency
-			A23.globaltech_eff_raw_d %>%
-				mutate(`gas (CC CCS)` =  A23.globaltech_eff_old_ratios$gas_CC_CCS_ratio * `Gas CC`) -> A23.globaltech_eff_raw_e
-			# f. Biomass conv efficiency to be estimated based on the ratio of Old GCAM Biomass conv and Coal conv efficiency
-			A23.globaltech_eff_raw_e %>%
-				mutate(`biomass (conv)` =  A23.globaltech_eff_old_ratios$Biomass_ratio * `Coal new`) -> A23.globaltech_eff_raw_f
-			# g. Biomass IGCC efficiency to be estimated based on the ratio of Old GCAM Biomass IGCC and Biomass conv efficiency
-				A23.globaltech_eff_raw_f %>%
-				mutate(`biomass (IGCC)` =  A23.globaltech_eff_old_ratios$Biomass_IGCC_ratio * `biomass (conv)`) -> A23.globaltech_eff_raw_g
-			# h. Biomass CCS efficiency to be estimated based on the ratio of Old GCAM Biomass CCS and Biomass conv efficiency
-				A23.globaltech_eff_raw_g %>%
-				mutate(`biomass (conv CCS)` =  A23.globaltech_eff_old_ratios$Biomass_CCS_ratio * `biomass (conv)`) -> A23.globaltech_eff_raw_h
-			# i. Biomass IGCC CCS efficiency to be estimated based on the ratio of Old GCAM Biomass IGCC CCS and Biomass IGCC efficiency
-				A23.globaltech_eff_raw_h %>%
-				mutate(`biomass (IGCC CCS)` =  A23.globaltech_eff_old_ratios$Biomass_IGCC_CCS_ratio * `biomass (IGCC)`) -> A23.globaltech_eff_raw_i
-			# j. Refided CC efficiency to be estimated based on the ratio of Old GCAM Refined CC and Gas CC efficiency
-				A23.globaltech_eff_raw_i %>%
-				mutate(`refined liquids (CC)` =  A23.globaltech_eff_old_ratios$Refined_CC_ratio * `Gas CC`) -> A23.globaltech_eff_raw_j
-			# k. Refined CT to be estimated based on the ratio of Old GCAM Refined CT and Gas CT efficiency
-				A23.globaltech_eff_raw_j %>%
-				mutate(`refined liquids (steam/CT)` =  A23.globaltech_eff_old_ratios$Refined_CT_ratio * `gas (steam/CT)`) -> A23.globaltech_eff_raw_k
-			# l. Refined CC CCS to be estimated based on the ratio of Old GCAM Refined CC CCS and Gas CC CCS efficiency
-				A23.globaltech_eff_raw_k %>%
-				mutate(`refined liquids (CC CCS)` =  A23.globaltech_eff_old_ratios$Refined_CC_CCS_ratio * `gas (CC CCS)`) -> A23.globaltech_eff_raw_l
-
-		 # Data formatting and mapping ATB technology names to GCAM ones 
-				A23.globaltech_eff_raw_l %>%
-				gather(atb.technology, value, - year) %>%
-				left_join(atb_gcam_mapping, by="atb.technology") %>%
-				select(technology,year,value) %>%
-				spread(year,value) -> A23.globaltech_atb_eff
-	
-		# Set up a list of technologies
-		A23.globaltech_atb_eff %>%
-			select(technology) %>% pull() -> technology_list
-		# Separate non-fossil/biomass technologies
-		A23.globaltech_eff %>%
-			filter (technology %in% technology_list) -> A23.globaltech_eff_fossil
-		A23.globaltech_eff %>%
-			filter (!technology %in% technology_list) -> A23.globaltech_eff_nonfossil
-		# For fossils/biomass, get rid of shadow technologies, and create aggregate improvement max for CCS technologies
-		A23.globaltech_eff_fossil %>%
-			select(technology,improvement.max,improvement.shadow.technology) -> A23.globaltech_eff_fossil1
-
-		A23.globaltech_eff_fossil1 %>%
-			filter(is.na(improvement.shadow.technology)) %>%
-			select(-improvement.shadow.technology) %>%
-			rename(improvement.shadow.technology = technology) -> A23.globaltech_eff_fossil2
-
-		A23.globaltech_eff_fossil1 %>%
-			left_join(A23.globaltech_eff_fossil2, by="improvement.shadow.technology") %>%
-			replace(., is.na(.), 0) %>%
-			mutate(improvement.max = abs(improvement.max.x) + improvement.max.y) %>%
-			select(technology,improvement.max) -> A23.globaltech_eff_fossil3
-
-		A23.globaltech_eff_fossil %>%
-			select(-improvement.max,-improvement.shadow.technology) %>%
-			left_join_error_no_match(A23.globaltech_eff_fossil3, by="technology") %>%
-			mutate(improvement.shadow.technology = NA) -> A23.globaltech_eff_fossil
-
-		# We need to set up a functional form that replicates the function structure of cost generation. This has the following main components
-		 # The 2015 value
-		 # improvement.max = from fossil fuel table
-		 # The 2100 value, the last projected year
-		 # improvement.rate = a rate of improvement such that the function yields the correct 2100 value.
-		# This needs to be set up for all technologies
-		A23.globaltech_eff_fossil %>%
-		  select(technology,improvement.max) %>%
-		  right_join(A23.globaltech_atb_eff, by="technology") -> A23.globaltech_atb_eff
-		# Create baseline improvement rate values assuming average linear reduction
-		A23.globaltech_atb_eff %>%
-			mutate(improvement.rate.base = abs((`2015` - `2100`)/number_of_periods/`2015`)) -> A23.globaltech_atb_eff
-		# Create a function to replace the baseline improvement rate values with the updated ones
-			replace_fraction <- function(data, tech, new_fraction) {
-			  data %>%
-				mutate(improvement.rate.base = replace(improvement.rate.base, technology == tech,
-										  new_fraction))
-			}
-		# Create a function for all technologies to determine the improvement rate given the 2100 target that will lead to the correct efficiency in 2100
-		 f<- function(improvement.rate, tech) {
-		A23.globaltech_atb_eff %>%
-			filter(technology == tech) %>%
-			mutate(check = `2015` * improvement.max + (`2015` - `2015` * improvement.max) *
-									 (1.0 - improvement.rate) ^ (year_target_eff - year_base) - `2100`) %>%
-			pull(check) -> check
-
-		check
-		}
-		# Loop the function for all technologies, using uniroot to ensure that the correct improvement rate is  found and then is replaced in the main table.
-		# There are some cases when the root is too difficult so solve. So in those cases we resort to the default values.
-		for (i in seq_along(technology_list)) {
-				tech <- technology_list[i]
-
-		solved.improvement.rate <- tryCatch(uniroot(f, c(0,1), tech), error= function(e) list(root=pull(subset(A23.globaltech_eff_fossil, technology==tech, select=improvement.rate))))
-		A23.globaltech_atb_eff %>%
-			replace_fraction(tech, solved.improvement.rate$root) -> A23.globaltech_atb_eff
-
-		}
-
-		# Clean up the file in order to properly merge with the globaltech_eff_fossil file
-		A23.globaltech_atb_eff %>%
-			rename(improvement.rate=improvement.rate.base) %>%
-			mutate(improvement.rate=round(improvement.rate,energy.DIGITS_CAPACITY_FACTOR)) -> A23.globaltech_atb_eff
-
-		# Extract fossi fuel technologies from the original A23 file that have a valid 2015 data (i.e. not NAs). These technologies will take priority over ATB technologies if there's a conflict.
-		A23.globaltech_eff_fossil %>%
-			filter(!is.na(`2015`)) -> A23.globaltech_eff_fossil_keep
-
-		# Filter out capital cost data from ATB if already present in A23.globaltech_eff_fossil_keep.
-		A23.globaltech_atb_eff %>%
-			anti_join(A23.globaltech_eff_fossil_keep, by="technology") -> A23.globaltech_atb_eff
-
-		# Merge new information with the globaltech_eff_fossil file
-		A23.globaltech_eff_fossil %>%
-			select(-`2015`,-`2100`,-improvement.rate,-improvement.max) %>%
-			left_join_error_no_match(A23.globaltech_atb_eff, by="technology") -> A23.globaltech_eff_fossil_revised
-
-		# Combine with the non-fossil file
-		A23.globaltech_eff_fossil_revised %>%
-			bind_rows(A23.globaltech_eff_nonfossil) -> A23.globaltech_eff
-
-		# Replace NAs and fix numerical columns being read as characters
-
-		A23.globaltech_eff %>%
-			replace(.,is.na(.)," ") %>%
-			mutate(improvement.max=as.numeric(improvement.max), improvement.rate=as.numeric(improvement.rate))-> L113.Globaltech_eff_ATB
-
+    # ===================================================
     # Produce outputs
 
-    L113.Globaltech_capital_ATB %>%
+    L113.globaltech_capital_ATB %>%
       add_title("2019 ATB-based capital cost structure for GCAM") %>%
       add_units("1975$/kW") %>%
       add_comments("Will be used in place of A23.globaltech_capital by relevant chunks") %>%
-      add_precursors("energy/A23.globaltech_capital", "energy/A23.globaltech_capital_atb_raw", "energy/A23.globaltech_capital_atb_used", "energy/A23.globaltech_capital_old", "energy/mappings/atb_gcam_mapping") ->
-      L113.Globaltech_capital_ATB
+      add_precursors("energy/A23.globaltech_capital",
+                     "energy/Muratori_globaltech_capital",
+                     "energy/NREL_ATB_capital",
+                     "energy/atb_gcam_mapping") ->
+      L113.globaltech_capital_ATB
 
-    L113.Globaltech_capital_ATB_low %>%
-      add_title("2019 ATB-based capital cost structure for GCAM - Low improvement scenario") %>%
-      add_units("1975$/kW") %>%
-      add_comments("Will be used in place of A23.globaltech_capital_low by relevant chunks") %>%
-      add_precursors("energy/A23.globaltech_capital_low", "energy/A23.globaltech_capital_atb_raw", "energy/A23.globaltech_capital_atb_used", "energy/A23.globaltech_capital_old") ->
-      L113.Globaltech_capital_ATB_low
-
-    L113.Globaltech_capital_ATB_adv %>%
+    L113.globaltech_capital_ATB_adv %>%
       add_title("2019 ATB-based capital cost structure for GCAM - Advanced improvement scenario") %>%
       add_units("1975$/kW") %>%
       add_comments("Will be used in place of A23.globaltech_capital_adv by relevant chunks") %>%
-      add_precursors("energy/A23.globaltech_capital_adv", "energy/A23.globaltech_capital_atb_raw", "energy/A23.globaltech_capital_atb_used", "energy/A23.globaltech_capital_adv_old", "energy/mappings/atb_gcam_mapping") ->
-      L113.Globaltech_capital_ATB_adv
+      add_precursors("energy/A23.globaltech_capital_adv",
+                     "energy/Muratori_globaltech_capital_adv",
+                     "energy/NREL_ATB_capital",
+                     "energy/atb_gcam_mapping") ->
+      L113.globaltech_capital_ATB_adv
 
-    L113.elecS_globaltech_battery_capital %>%
+    L113.globaltech_capital_ATB_low %>%
+      add_title("2019 ATB-based capital cost structure for GCAM - Low improvement scenario") %>%
+      add_units("1975$/kW") %>%
+      add_comments("Will be used in place of A23.globaltech_capital_low by relevant chunks") %>%
+      add_precursors("energy/A23.globaltech_capital_low",
+                     "energy/Muratori_globaltech_capital_low",
+                     "energy/NREL_ATB_capital",
+                     "energy/atb_gcam_mapping") ->
+      L113.globaltech_capital_ATB_low
+
+    L113.elecS_globaltech_capital_battery_ATB %>%
       add_title("Battery technology costs to be used by GCAM USA") %>%
       add_units("1975$/kW") %>%
       add_comments("Will be used in place of A23.elecS_globaltech_non_energy_inputs by relevant chunks") %>%
-      add_precursors("energy/A23.globaltech_capital_atb_raw", "energy/A23.globaltech_capital_atb_used", "gcam-usa/A23.elecS_globaltech_non_energy_inputs") ->
-      L113.elecS_globaltech_battery_capital
+      add_precursors("gcam-usa/A23.elecS_globaltech_non_energy_inputs",
+                     "energy/NREL_ATB_capital",
+                     "energy/atb_gcam_mapping") ->
+      L113.elecS_globaltech_capital_battery_ATB
 
-    L113.Globaltech_eff_ATB %>%
-      add_title("Updated technology efficiency numbers partially based on ATB for GCAM") %>%
-      add_units("unitless") %>%
-      add_comments("Will be used in place of A23.globaltech_eff by relevant chunks") %>%
-      add_precursors("energy/A23.globaltech_eff_raw", "energy/A23.globaltech_eff", "energy/A23.globaltech_eff_old", "energy/mappings/atb_gcam_mapping") ->
-      L113.Globaltech_eff_ATB
+    L113.globaltech_OMfixed_ATB %>%
+      add_title("2019 ATB-based capital cost structure for GCAM - Advanced improvement scenario") %>%
+      add_units("1975$/kW") %>%
+      add_comments("Will be used in place of A23.globaltech_capital_adv by relevant chunks") %>%
+      add_precursors("energy/A23.globaltech_OMfixed",
+                     "energy/Muratori_globaltech_OMfixed",
+                     "energy/NREL_ATB_OMfixed",
+                     "energy/atb_gcam_mapping") ->
+      L113.globaltech_OMfixed_ATB
 
-    return_data(L113.Globaltech_capital_ATB, L113.Globaltech_capital_ATB_low, L113.Globaltech_capital_ATB_adv, L113.elecS_globaltech_battery_capital, L113.Globaltech_eff_ATB)
+    L113.globaltech_OMvar_ATB %>%
+      add_title("2019 ATB-based capital cost structure for GCAM - Advanced improvement scenario") %>%
+      add_units("1975$/kW") %>%
+      add_comments("Will be used in place of A23.globaltech_capital_adv by relevant chunks") %>%
+      add_precursors("energy/A23.globaltech_OMvar",
+                     "energy/Muratori_globaltech_OMvar",
+                     "energy/NREL_ATB_OMvar",
+                     "energy/atb_gcam_mapping") ->
+      L113.globaltech_OMvar_ATB
+
+    return_data(L113.globaltech_capital_ATB,
+                L113.globaltech_capital_ATB_adv,
+                L113.globaltech_capital_ATB_low,
+                L113.elecS_globaltech_capital_battery_ATB,
+                L113.globaltech_OMfixed_ATB,
+                L113.globaltech_OMvar_ATB)
   } else {
     stop("Unknown command")
   }
