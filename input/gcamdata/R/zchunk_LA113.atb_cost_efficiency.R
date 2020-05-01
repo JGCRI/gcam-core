@@ -32,7 +32,7 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
              FILE = "energy/NREL_ATB_capital",
              FILE = "energy/NREL_ATB_OMfixed",
              FILE = "energy/NREL_ATB_OMvar",
-             FILE = "energy/atb_gcam_mapping"))
+             FILE = "energy/mappings/atb_gcam_mapping"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L113.globaltech_capital_ATB",
              "L113.globaltech_capital_ATB_adv",
@@ -74,7 +74,7 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
       gather_years()
 
     # Mapping
-    atb_gcam_mapping_MB <- get_data(all_data, "energy/atb_gcam_mapping") %>%
+    atb_gcam_mapping <- get_data(all_data, "energy/mappings/atb_gcam_mapping") %>%
       select(-inferred)
 
     # ===================================================
@@ -131,7 +131,7 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
     # For these, we calculate the cost ratio from the previous GCAM cost assumptions
     # and apply these ratios to the costs for technologies that are in the ATB database.
     # Below are the relevant technologies and the ratios used to infer their costs.
-    # This info can also be found in energy/atb_gcam_mapping_MB
+    # This info can also be found in energy/mappings/atb_gcam_mapping
     # CSP ratio = CSP / CSP_storage
     # biomass (IGCC) ratio = biomass (IGCC) / biomass (conv)
     # biomass (conv CCS) ratio = biomass (conv CCS) / biomass (conv)
@@ -142,7 +142,7 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
     # refined liquids (CC CCS) ratio = refined liquids (CC CCS) / gas (CC CCS)
 
     # Isolate technologies which require a shadow technology to infer costs from ATB data set.
-    atb_gcam_mapping_MB %>%
+    atb_gcam_mapping %>%
       filter(!is.na(shadow_tech)) %>%
       select(technology, shadow_tech) -> atb_gcam_mapping_ratios
 
@@ -168,7 +168,7 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
 
     NREL_ATB_cost_assumptions %>%
       # isolate technologies which map to GCAM technologies
-      semi_join(atb_gcam_mapping_MB, by = c("tech_type", "tech_detail")) %>%
+      semi_join(atb_gcam_mapping, by = c("tech_type", "tech_detail")) %>%
       # Convert to 1975$.  2015-2016 costs are in 2015$; 2017-2050 costs are in 2017$.
       mutate(value = if_else(year %in% energy.ATB_2017_YEARS, value * gdp_deflator(1975, 2015), value * gdp_deflator(1975, 2017))) %>%
       # some techs, like battery, don't have costs back to 2015
@@ -178,7 +178,7 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
       ungroup %>%
       # join is intended to duplicate rows - some GCAM tech costs are composites of multiple ATB techs
       # LJENM throws an error, left_join is used
-      left_join(atb_gcam_mapping_MB, by = c("tech_type", "tech_detail")) %>%
+      left_join(atb_gcam_mapping, by = c("tech_type", "tech_detail")) %>%
       # not every technology requires a shadow technology to compute costs from the ATB data set
       # LJENM errors because of NAs (not all techs are in RHS), NAs are dealt with below, left_join is used
       left_join(L113.cost_shadow_ratio, by = c("technology", "year", "input", "case")) %>%
@@ -396,7 +396,7 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
       add_precursors("energy/A23.globaltech_capital",
                      "energy/Muratori_globaltech_capital",
                      "energy/NREL_ATB_capital",
-                     "energy/atb_gcam_mapping") ->
+                     "energy/mappings/atb_gcam_mapping") ->
       L113.globaltech_capital_ATB
 
     L113.globaltech_capital_ATB_adv %>%
@@ -406,7 +406,7 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
       add_precursors("energy/A23.globaltech_capital_adv",
                      "energy/Muratori_globaltech_capital_adv",
                      "energy/NREL_ATB_capital",
-                     "energy/atb_gcam_mapping") ->
+                     "energy/mappings/atb_gcam_mapping") ->
       L113.globaltech_capital_ATB_adv
 
     L113.globaltech_capital_ATB_low %>%
@@ -416,7 +416,7 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
       add_precursors("energy/A23.globaltech_capital_low",
                      "energy/Muratori_globaltech_capital_low",
                      "energy/NREL_ATB_capital",
-                     "energy/atb_gcam_mapping") ->
+                     "energy/mappings/atb_gcam_mapping") ->
       L113.globaltech_capital_ATB_low
 
     L113.elecS_globaltech_capital_battery_ATB %>%
@@ -425,7 +425,7 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
       add_comments("Will be used in place of A23.elecS_globaltech_non_energy_inputs by relevant chunks") %>%
       add_precursors("gcam-usa/A23.elecS_globaltech_non_energy_inputs",
                      "energy/NREL_ATB_capital",
-                     "energy/atb_gcam_mapping") ->
+                     "energy/mappings/atb_gcam_mapping") ->
       L113.elecS_globaltech_capital_battery_ATB
 
     L113.globaltech_OMfixed_ATB %>%
@@ -435,7 +435,7 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
       add_precursors("energy/A23.globaltech_OMfixed",
                      "energy/Muratori_globaltech_OMfixed",
                      "energy/NREL_ATB_OMfixed",
-                     "energy/atb_gcam_mapping") ->
+                     "energy/mappings/atb_gcam_mapping") ->
       L113.globaltech_OMfixed_ATB
 
     L113.globaltech_OMvar_ATB %>%
@@ -445,7 +445,7 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
       add_precursors("energy/A23.globaltech_OMvar",
                      "energy/Muratori_globaltech_OMvar",
                      "energy/NREL_ATB_OMvar",
-                     "energy/atb_gcam_mapping") ->
+                     "energy/mappings/atb_gcam_mapping") ->
       L113.globaltech_OMvar_ATB
 
     return_data(L113.globaltech_capital_ATB,
