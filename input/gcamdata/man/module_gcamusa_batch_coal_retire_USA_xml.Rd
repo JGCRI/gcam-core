@@ -14,9 +14,8 @@ module_gcamusa_batch_coal_retire_USA_xml(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{coal_retire_USA.xml}. The corresponding file in the
-original data system was \code{batch_coal_retire_USA.xml} (gcamusa xml-batch).
+the generated outputs: \code{coal_retire_vintage_USA.xml}.
 }
 \description{
-Construct XML data structure for \code{coal_retire_USA.xml}.
+Construct XML data structure for \code{coal_retire_vintage_USA.xml}.
 }

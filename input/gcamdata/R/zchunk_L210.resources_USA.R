@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_L210.resources_USA
+#' module_gcamusa_L210.resources_USA
 #'
 #' GCAM-USA resource market information, prices, TechChange parameters, and supply curves.
 #'

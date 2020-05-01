@@ -8,8 +8,7 @@ COMMENT_CHAR             <- "#"
 UNDER_TIMESHIFT          <- FALSE
 YEAR_PATTERN             <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
 LOGIT_TYPE_COLNAME       <- "logit.type"        # will be removed by test code before old-new comparison
-DISABLED_MODULES         <- "(gcamusa)"
-
+DISABLED_MODULES         <- "NONE"
 
 # Flags ======================================================================
 
@@ -609,7 +608,7 @@ emissions.DIGITS_EMISSIONS <- 10
 # GCAM-USA Constants for Processing UCS Database. As of 04/22/19, only used in chunk zchunk_LA1233.Process_UCS_data_ref.R
 gcamusa.UCS_WATER_COEFFICIENTS_FIRST_HISTORICAL_YEAR   <- 1970
 gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR   <- 2008
-gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR <- 2010
+gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR <- 2015
 gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR <- 2020
 gcamusa.UCS_WATER_COEFFICIENTS_FINAL_FUTURE_YEAR <- 2100
 gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_RECIRCULATING <- 0.85
@@ -618,6 +617,7 @@ gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_COOLING_POND <- 0.05
 gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_ONCE_THROUGH_SEAWATER <- 0.05
 
 # GCAM-USA time
+gcamusa.SEDS_DATA_YEARS <- 1971:2017 # years for which we'll use EIA SEDS data in module_gcamusa_LA101.EIA_SEDS
 gcamusa.WIND_BASE_COST_YEAR   <- 2005
 gcamusa.HYDRO_HIST_YEAR <- 2015
 gcamusa.HYDRO_FINAL_AEO_YEAR <- 2050
@@ -625,15 +625,11 @@ gcamusa.HYDRO_FINAL_AEO_YEAR <- 2050
 gcamusa.SE_HIST_YEAR <- 2015  # year to which historical socioeconomic data (pop & GDP) are used in GCAM-USA
 gcamusa.SE_NEAR_TERM_YEAR <- 2030  # year after which projected growth rates from various socio-economic data sources are used as-is
 # (until this year, growth rates are interpolated from 2015 historical values to prevent spikey near-term behavior)
-gcamusa.AEO_SE_YEAR <- 2040   # year to which AEO 2016 socioeconomic assumptions run
+gcamusa.AEO_SE_YEAR <- 2050   # year to which AEO 2019 socioeconomic assumptions run
 
 # Assumptions related to coal
-# Define assumptions about lifetimes for generators/units without retirement information.
-# Existing coal units built before 1970 will retire at the average lifetime of their vintage group.
-gcamusa.COAL_REMAINING_LIFETIME <- 20   # The max remaining lifetime of coal units built before 1970.
-
-# Vintage groups built after 1970 will retire based on the S-curve.
-# Assumed lifetime and S-curve parametetrs for coal units built after 1970:
+# Vintage groups built before 2015 will retire based on an S-curve.
+# Assumed lifetime and S-curve parametetrs for coal units:
 gcamusa.AVG_COAL_PLANT_LIFETIME <- 80
 gcamusa.AVG_COAL_PLANT_HALFLIFE <- 70
 gcamusa.COAL_RETIRE_STEEPNESS <- 0.3
@@ -655,6 +651,10 @@ gcamusa.FIRST_NEW_COAL_YEAR <- 2035
 gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
                     "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR",
                     "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY")
+
+# USA states with ocean coastline, which can be reasonably assigned offshore carbon storage
+gcamusa.COASTAL_STATES <- c("AK", "AL", "CA", "CT", "DE", "FL", "GA", "HI", "LA", "MA", "MD", "ME", "MS",
+                            "NC", "NH", "NJ", "NY", "OR", "RI", "SC", "TX", "VA", "WA")
 
 # GCAM-USA grid regions
 gcamusa.GRID_REGIONS <- c("Alaska grid", "California grid", "Central East grid", "Central Northeast grid",  "Central Northwest grid",
@@ -712,6 +712,10 @@ gcamusa.BASE_HDD_USA <- 4524 # https://www.eia.gov/totalenergy/data/annual/showt
 gcamusa.BASE_CDD_USA <- 1215 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb010
 gcamusa.AEO_DD_YEARS <- seq(2010, 2040, 5)
 
+
+#Years to be adjusted for RECS
+gcamusa.RECS_YEARS <- c(2009,2015)
+
 gcamusa.GAS_ADJ_THRESH      <- 5
 
 # Some xml delimiter
@@ -724,7 +728,7 @@ gcamusa.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA tran
 gcamusa.DIGITS_EMISSIONS          <- 5
 
 # Electricity load segments
-gcamusa.LOAD_SEG_CAL_YEARS <- c(2010, 2005, 1990)       # Years for which electricity load segments are calibrated
+gcamusa.LOAD_SEG_CAL_YEARS <- c(2015, 2010, 2005, 1990)       # Years for which electricity load segments are calibrated
 gcamusa.ELEC_SEGMENT_BASE <- "base load generation"
 gcamusa.ELEC_SEGMENT_INT <- "intermediate generation"
 gcamusa.ELEC_SEGMENT_SUBPEAK <- "subpeak generation"

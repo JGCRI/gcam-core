@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA114.wind_USA.R
 \name{module_gcamusa_LA114.wind}
 \alias{module_gcamusa_LA114.wind}
-\title{module_gcam.usa_LA114.Wind}
+\title{module_gcamusa_LA114.Wind}
 \usage{
 module_gcamusa_LA114.wind(command, ...)
 }
