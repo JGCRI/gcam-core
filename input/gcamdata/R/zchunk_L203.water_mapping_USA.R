@@ -219,7 +219,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                          share.weight = share,
                          logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
       arrange(region) %>%
-      bind_rows(L203.mapping_nonirr %>% filter(year==2010) %>%
+      bind_rows(L203.mapping_nonirr %>% filter(year==gcamusa.FINAL_MAPPING_YEAR) %>%
                   mutate(year=max(MODEL_BASE_YEARS),
                          coefficient = 1,
                          subsector = basin_name,
@@ -257,10 +257,11 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       L203.SubsectorShrwt_USA
 
     # Technology share weights, defined by state and sector
+    # Zero out technology shareweights in the USA region to make sure values are not counted multiple times
     L203.mapping_all %>%
       gather_years("share.weight") %>%
       complete(nesting(region, supplysector, subsector, technology,water.sector,basin_name,water_type,coefficient), year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
-      mutate(share.weight=1) %>%
+      mutate(share.weight=if_else(region==gcam.USA_REGION&!(subsector %in% gcamusa.STATES)&!grepl("irr",supplysector),0,1)) %>%
       dplyr::filter(!is.na(year))%>%
       select(LEVEL2_DATA_NAMES[["TechShrwt"]]) ->
       L203.TechShrwt_USA
