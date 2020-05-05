@@ -56,6 +56,10 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
           complete(nesting(state,value), year = first(MODEL_BASE_YEARS)),
         USGS_livestock_water_withdrawals %>% filter(year<max(MODEL_BASE_YEARS))%>% select(-water_type)
       ) %>%
+      group_by(year) %>% mutate(sum = sum(value)) %>%
+      ungroup() %>%
+      mutate(value=value/sum) %>%
+      select(-sum) %>%
       arrange(state,year) %>%
       repeat_add_columns(tibble(water_type=water.MAPPED_WATER_TYPES)) %>%
       unique() ->
@@ -65,7 +69,7 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
     # Copy shares for 1990 to 1975, and then from 2015 through end of century
     USGS_mining_water_shares %>%
       filter(year==max(MODEL_BASE_YEARS)) %>%
-      complete(nesting(state,state.to.country.share,fresh.share,saline.share), year = MODEL_FUTURE_YEARS) %>%
+      complete(nesting(state,state.to.country.share,fresh.share,saline.share), year = c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
       bind_rows(
         USGS_mining_water_shares %>%
           filter(year==min(year)) %>%
@@ -81,7 +85,7 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
     # Input file is generated from R package created by Chris Vernon with modifications by NTG
     irrigation_shares %>%
       filter(year==gcamusa.FINAL_MAPPING_YEAR) %>%
-      complete(nesting(basin_id,basin_name,state_abbr,volume), year = MODEL_FUTURE_YEARS) %>%
+      complete(nesting(basin_id,basin_name,state_abbr,volume), year = c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
       filter(year %in% MODEL_FUTURE_YEARS) %>%
       bind_rows(
         irrigation_shares,
