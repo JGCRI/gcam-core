@@ -87,6 +87,7 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
     # enough so that I want to confirm how we're converting Comtrade's weight to energy and check
     # that there are no conversion factors we're missing
     L1011.ff_GrossTrade_EJ_R_C_Y %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       complete(GCAM_Commodity = unique(L2011.ff_ALL_EJ_R_C_Y$fuel),
                nesting(GCAM_region_ID, year)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
