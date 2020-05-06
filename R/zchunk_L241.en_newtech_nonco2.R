@@ -251,7 +251,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
                                       "subsector" = "subsector.name",
                                       "stub.technology" = "technology",
                                       "year")) %>%
-      mutate(emiss.coeff = round(emiss.coeff / efficiency, 7)) %>%
+      mutate(emiss.coeff = round(emiss.coeff / efficiency, emissions.DIGITS_EMISS_COEF)) %>%
       select(LEVEL2_DATA_NAMES[["OutputEmissCoeff"]]) ->
       L241.OutputEmissCoeff_elec
     L241.nonco2_tech_coeff <- filter(L241.nonco2_tech_coeff, supplysector != "electricity")
