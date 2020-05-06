@@ -27,7 +27,7 @@ PH_year_value_historical <- function(d) {
 #' @importFrom dplyr left_join
 #' @export
 left_join_error_no_match <- function(d, ..., ignore_columns = NULL) {
-  assertthat::assert_that(tibble::is.tibble(d))
+  assertthat::assert_that(tibble::is_tibble(d))
   dnames <- names(d)
   drows <- nrow(d)
   d <- left_join(d, ...)
