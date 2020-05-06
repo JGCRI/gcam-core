@@ -48,6 +48,7 @@
 #include "functions/include/iinput.h"
 #include "functions/include/function_utils.h"
 #include "util/base/include/xml_helper.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -57,7 +58,16 @@ double InputDriver::calcEmissionsDriver( const vector<IInput*>& aInputs,
                                          const int aPeriod ) const
 {
     IInput* inputToDrive = FunctionUtils::getInput( aInputs, mInputName );
-    return inputToDrive ? inputToDrive->getPhysicalDemand( aPeriod ) : 0.0;
+    
+    // the input name must exist
+    if( !inputToDrive ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << getXMLName() << " could not find input name " << mInputName << " to drive emissions." << endl;
+        abort();
+    }
+    
+    return inputToDrive->getPhysicalDemand( aPeriod );
 }
 
 InputDriver* InputDriver::clone() const {
@@ -100,4 +110,10 @@ bool InputDriver::XMLParse( const xercesc::DOMNode* aNode ) {
     }
     
     return parsingSuccessful;
+}
+
+void InputDriver::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
+    XMLWriteOpeningTag( getXMLName(), aOut, aTabs );
+    XMLWriteElement( mInputName, "input-name", aOut, aTabs );
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }

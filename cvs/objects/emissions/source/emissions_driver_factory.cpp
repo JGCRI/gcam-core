@@ -46,30 +46,23 @@
 #include "emissions/include/input_output_driver.h"
 #include "emissions/include/input_driver.h"
 #include "emissions/include/output_driver.h"
+#include "util/base/include/factory.h"
 
 using namespace std;
 
+// Use the generic Factory class to generate the code for us
+using FactoryType = Factory<IEmissionsDriver::SubClassFamilyVector>;
+
 /*!
  * \brief Return a new instance of a component of the requested type.
- * \return A newly created EmissionsDriver wrapped in an auto_ptr. The pointer
+ * \return A newly created EmissionsDriver. The pointer
  *         is null if the type is unknown.
  */
-auto_ptr<AEmissionsDriver> EmissionsDriverFactory::create( const string& aType ){
-    if( aType == InputDriver::getXMLNameStatic() ){
-        return auto_ptr<AEmissionsDriver>( new InputDriver );
-    }
-    if( aType == OutputDriver::getXMLNameStatic() ){
-        return auto_ptr<AEmissionsDriver>( new OutputDriver );
-    }
-    if( aType == InputOutputDriver::getXMLNameStatic() ){
-        return auto_ptr<AEmissionsDriver>( new InputOutputDriver );
-    }
-    return auto_ptr<AEmissionsDriver>();
+IEmissionsDriver* EmissionsDriverFactory::create( const string& aType ){
+    return FactoryType::createType( aType );
 }
 
 bool EmissionsDriverFactory::isEmissionsDriverNode( const string& aNodeName ){
-    return aNodeName == InputDriver::getXMLNameStatic() 
-           || aNodeName == OutputDriver::getXMLNameStatic()
-           || aNodeName == InputOutputDriver::getXMLNameStatic();
+    return FactoryType::canCreateType( aNodeName );
 }
 

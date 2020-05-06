@@ -63,8 +63,6 @@
 class GDP;
 class IInfo;
 class IOutput;
-class AEmissionsDriver;
-class AEmissionsControl;
 class ICaptureComponent;
 class IInput;
 class CachedMarket;

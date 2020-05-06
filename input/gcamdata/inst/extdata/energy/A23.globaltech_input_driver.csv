@@ -1,0 +1,29 @@
+# File: A23.globaltech_input_driver.csv
+# Title: Electricity primary input name to drive non-co2 emissions
+# Units: Unitless
+# Comments: Used to identify which is the appropriate input to drive non-co2 emissions
+# Column types: cccc
+# ----------
+supplysector,subsector,technology,input.name
+electricity,biomass,biomass (conv CCS),regional biomass
+electricity,biomass,biomass (conv),regional biomass
+electricity,biomass,biomass (IGCC CCS),regional biomass
+electricity,biomass,biomass (IGCC),regional biomass
+electricity,coal,coal (conv pul CCS),regional coal
+electricity,coal,coal (conv pul),regional coal
+electricity,coal,coal (IGCC CCS),regional coal
+electricity,coal,coal (IGCC),regional coal
+electricity,gas,gas (CC CCS),wholesale gas
+electricity,gas,gas (CC),wholesale gas
+electricity,gas,gas (steam/CT),wholesale gas
+electricity,geothermal,geothermal,geothermal
+electricity,nuclear,Gen_II_LWR,nuclearFuelGenII
+electricity,nuclear,Gen_III,nuclearFuelGenIII
+electricity,refined liquids,refined liquids (CC CCS),refined liquids industrial
+electricity,refined liquids,refined liquids (CC),refined liquids industrial
+electricity,refined liquids,refined liquids (steam/CT),refined liquids industrial
+electricity,solar,CSP,global solar resource
+electricity,solar,PV,global solar resource
+electricity,wind,wind,onshore wind resource
+electricity,wind,wind_offshore,offshore wind resource
+elect_td_bld,rooftop_pv,rooftop_pv,distributed_solar
