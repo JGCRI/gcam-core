@@ -96,7 +96,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       # Now add regional information.
       left_join_error_no_match(A_regions, by = "GCAM_region_ID") %>%
       # Emission coefficients values are too long, so we round to the 10th decimal point.
-      mutate(emiss.coeff = round(value, 10)) %>%
+      mutate(emiss.coeff = round(value, emissions.DIGITS_EMISSIONS)) %>%
       ungroup() %>%
       left_join_error_no_match(EnTechInputNameMap, by = c("supplysector", "subsector", "stub.technology")) %>%
       # Discard columns that are not needed.  Resulting table retains 7 columns.
@@ -117,7 +117,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       # Now add regional information.
       left_join_error_no_match(A_regions, by = "GCAM_region_ID") %>%
       # Emission coefficients values are too long, so we round to the 10th decimal point.
-      mutate(emiss.coeff = round(value, 10)) %>%
+      mutate(emiss.coeff = round(value, emissions.DIGITS_EMISSIONS)) %>%
       ungroup() %>%
       left_join_error_no_match(EnTechInputNameMap, by = c("supplysector", "subsector", "stub.technology")) %>%
       # Discard columns that are not needed.
@@ -136,7 +136,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       # Now add regional information.
       left_join_error_no_match(A_regions, by = "GCAM_region_ID") %>%
       # Emission coefficients values are too long, so we round to the 10th decimal point.
-      mutate(emiss.coeff = round(value, 10)) %>%
+      mutate(emiss.coeff = round(value, emissions.DIGITS_EMISSIONS)) %>%
       ungroup() %>%
       left_join_error_no_match(EnTechInputNameMap, by = c("supplysector", "subsector", "stub.technology")) %>%
       # Discard columns that are not needed.
@@ -220,7 +220,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                                                                "subsector" = "subsector.name",
                                                                "stub.technology" = "technology",
                                                                "year")) %>%
-      mutate(emiss.coeff = round(emiss.coeff / efficiency, 7)) %>%
+      mutate(emiss.coeff = round(emiss.coeff / efficiency, emissions.DIGITS_EMISS_COEF)) %>%
       select(LEVEL2_DATA_NAMES[["OutputEmissCoeff"]]) ->
       L251.ssp15_ef_elec
     L251.ssp15_ef <- filter(L251.ssp15_ef, supplysector != "electricity")
@@ -230,7 +230,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                                                                "subsector" = "subsector.name",
                                                                "stub.technology" = "technology",
                                                                "year")) %>%
-      mutate(emiss.coeff = round(emiss.coeff / efficiency, 7)) %>%
+      mutate(emiss.coeff = round(emiss.coeff / efficiency, emissions.DIGITS_EMISS_COEF)) %>%
       select(LEVEL2_DATA_NAMES[["OutputEmissCoeff"]]) ->
       L251.ssp2_ef_elec
     L251.ssp2_ef <- filter(L251.ssp2_ef, supplysector != "electricity")
@@ -240,7 +240,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                                                                "subsector" = "subsector.name",
                                                                "stub.technology" = "technology",
                                                                "year")) %>%
-      mutate(emiss.coeff = round(emiss.coeff / efficiency, 7)) %>%
+      mutate(emiss.coeff = round(emiss.coeff / efficiency, emissions.DIGITS_EMISS_COEF)) %>%
       select(LEVEL2_DATA_NAMES[["OutputEmissCoeff"]]) ->
       L251.ssp34_ef_elec
     L251.ssp34_ef <- filter(L251.ssp34_ef, supplysector != "electricity")

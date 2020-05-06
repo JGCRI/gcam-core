@@ -118,7 +118,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
       L201.en_bcoc_emissions
 
-    # Convert electricty to use output-driver instead.  We do this, despite the addional hoops, because it makes it
+    # Convert electricity to use output-driver instead.  We do this, despite the addional hoops, because it makes it
     # easier to swap out a different structure for electricity which requires pass-through technologies such as to
     # add cooling technologies
 
@@ -138,7 +138,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       left_join_error_no_match(L223.StubTechEff_elec,
                                by = c("region", "supplysector", "subsector", "stub.technology", "year")) %>%
       # ^^ bring in efficiency data from L223.StubTechEff_elec
-      mutate(emiss.coeff = round(emiss.coef / efficiency, 7)) %>%
+      mutate(emiss.coeff = round(emiss.coef / efficiency, emissions.DIGITS_EMISS_COEF)) %>%
       select(LEVEL2_DATA_NAMES[["OutputEmissCoeff"]]) ->
       L201.OutputEmissCoeff_elec
     L201.en_bcoc_emissions <- filter(L201.en_bcoc_emissions, supplysector != "electricity")
