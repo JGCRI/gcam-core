@@ -220,6 +220,15 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
             double lb,ub;       // only used for normal markets, but need to be declared up here.
             
             if(pass > 1) {
+                // If this market is close to solved update the "forecast" price and demand which
+                // in this context does not affect the initial price guess anymore but rather just
+                // the price and demand/supply normalization factor.  Doing this helps ensure that
+                // prices and quantities get normalized close to 1 which is beneficial for the NR
+                // algorithms as well as for checking various hueristics through out the solver.
+                // We can't be sure that prices and demands won't change significantly again after
+                // this but we can always update the normalization factors again later.
+                // Note we do not ever update the normalization factor for TAX and SUBSIDY markets
+                // because being constraints we already know what the scale should be.
                 if(solvable[i].getRelativeED() < mFTOL && !(solvable[i].getType() == IMarketType::TAX || solvable[i].getType() == IMarketType::SUBSIDY)) {
                     solvable[i].setForecastPrice(oldprice);
                     solvable[i].setForecastDemand(olddmnd);
