@@ -118,7 +118,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
       L201.en_bcoc_emissions
 
-    # Convert electricty to use output-driver instead.  We do this, despite the addional hoops, because it makes it
+    # Convert electricity to use output-driver instead.  We do this, despite the addional hoops, because it makes it
     # easier to swap out a different structure for electricity which requires pass-through technologies such as to
     # add cooling technologies
 
