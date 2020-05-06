@@ -1,0 +1,11 @@
+# File: non_reeds_PV_grid_cost.csv
+# Title: Mapping File for Solar PV Grid Connection Costs for States not included in ReEDS
+# Units: NA
+# Comments: States not present in the reeds_PV_curve_grid_cost data set are mapped to states with comparable geography
+# Source:  assumption
+# Column types: cc
+# ----------
+non_reeds_state,comparison_state
+AK,ME
+DC,VA
+HI,CA

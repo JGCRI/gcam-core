@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LA119.Solar
+#' module_gcamusa_LA119.Solar
 #'
 #' Compute scalars by state to vary capacity factors by state.
 #'

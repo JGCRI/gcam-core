@@ -5,7 +5,7 @@
 # Source: None (GCAM assumptions)
 # Column types: cccnnnnn 
 # ----------
-supplysector,subsector,technology,1971,2010,2011,2030,2100
+supplysector,subsector,technology,1971,2015,2016,2030,2100
 base load generation,wind,wind_base,1,1,1,1,1
 intermediate generation,wind,wind_int,1,1,0,0,0
 subpeak generation,wind,wind_subpeak,1,1,0,0,0

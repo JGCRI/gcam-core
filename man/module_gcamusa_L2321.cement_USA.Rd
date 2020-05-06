@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L2321.cement_USA.R
 \name{module_gcamusa_L2321.cement_USA}
 \alias{module_gcamusa_L2321.cement_USA}
-\title{module_gcam.usa_L2321.cement_USA}
+\title{module_gcamusa_L2321.cement_USA}
 \usage{
 module_gcamusa_L2321.cement_USA(command, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA100.Socioeconomics.R
 \name{module_gcamusa_LA100.Socioeconomics}
 \alias{module_gcamusa_LA100.Socioeconomics}
-\title{module_gcam.usa_LA100.Socioeconomics}
+\title{module_gcamusa_LA100.Socioeconomics}
 \usage{
 module_gcamusa_LA100.Socioeconomics(command, ...)
 }

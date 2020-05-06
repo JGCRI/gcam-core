@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_L226.en_distribution_USA.R
 \name{module_gcamusa_L226.en_distribution_USA}
 \alias{module_gcamusa_L226.en_distribution_USA}
-\title{module_gcam.usa_L226.en_distribution_USA}
+\title{module_gcamusa_L226.en_distribution_USA}
 \usage{
 module_gcamusa_L226.en_distribution_USA(command, ...)
 }

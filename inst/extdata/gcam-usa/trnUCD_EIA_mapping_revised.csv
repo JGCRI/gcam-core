@@ -6,7 +6,7 @@
 mode,fuel,EIA_sector,EIA_fuel
 Air Domestic,refined liquids,AC,JF
 Air International,refined liquids,AC,JF
-Bus,gas,VH,NG
+Bus,gas,AC,NG
 Bus,refined liquids,AC,DF
 HSR,electricity,AC,ES
 LDV_2W_3W,electricity,AC,ES
