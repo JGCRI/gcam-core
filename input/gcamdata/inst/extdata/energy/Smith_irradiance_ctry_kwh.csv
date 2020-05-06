@@ -1,6 +1,6 @@
 # File: Smith_irradiance_ctry_kwh.csv
-# Title: Average and direct normal irradiance suitable for weighting regional solar capacity
-# Units: kwh/m2/day for Irradiance; m2 for area
+# Title: Average latitude-tilted total irradiance and direct normal irradiance suitable for weighting regional solar capacity
+# Units: kwh/day for Irradiance; km2 for area
 # Column types: cnnnn 
 # ----------
 iso,irradiance,irradiance.area,dni,dni.area

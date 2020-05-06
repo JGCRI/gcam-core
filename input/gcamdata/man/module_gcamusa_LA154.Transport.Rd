@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA154.Transport.R
 \name{module_gcamusa_LA154.Transport}
 \alias{module_gcamusa_LA154.Transport}
-\title{module_gcam.usa_LA154.Transport}
+\title{module_gcamusa_LA154.Transport}
 \usage{
 module_gcamusa_LA154.Transport(command, ...)
 }

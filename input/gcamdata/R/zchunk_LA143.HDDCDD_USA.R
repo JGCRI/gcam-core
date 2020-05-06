@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LA143.HDDCDD
+#' module_gcamusa_LA143.HDDCDD
 #'
 #' Estimate heating and cooling degree days for gcam-usa.
 #'
@@ -18,7 +18,7 @@
 module_gcamusa_LA143.HDDCDD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
-             FILE = "gcam-usa/Census_pop_hist",
+             FILE = "gcam-usa/Census_pop",
              FILE = "gcam-usa/GIS/HDD_His",
              FILE = "gcam-usa/GIS/HDD_hist_constdds",
              FILE = "gcam-usa/GIS/HDD_GFDL_A2",
@@ -38,7 +38,7 @@ module_gcamusa_LA143.HDDCDD <- function(command, ...) {
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    Census_pop_hist <- get_data(all_data, "gcam-usa/Census_pop_hist")
+    Census_pop <- get_data(all_data, "gcam-usa/Census_pop")
     CDD_His <- get_data(all_data, "gcam-usa/GIS/CDD_His")
     CDD_hist_constdds <- get_data(all_data, "gcam-usa/GIS/CDD_hist_constdds")
     CDD_GFDL_A2 <- get_data(all_data, "gcam-usa/GIS/CDD_GFDL_A2")
@@ -60,7 +60,7 @@ module_gcamusa_LA143.HDDCDD <- function(command, ...) {
     # Add subregion13 (for RECS) and subregion9 (for CBECS) columns to the population by state tibble
     # and transform to long format. This tibble will be used to calculate the share of person heating
     # degree days within census division (subregion) and state.
-    Census_pop_hist %>%
+    Census_pop %>%
       left_join_error_no_match(states_subregions %>%
                                  select(state, subregion9, subregion13),
                                by = "state") %>%
@@ -299,7 +299,7 @@ module_gcamusa_LA143.HDDCDD <- function(command, ...) {
       L143.HDDCDD_scen_state
 
     # AEO harmonization by census division and year, to 2040
-    Census_pop_hist %>%
+    Census_pop %>%
       gather_years("pop") %>%
       filter(year == max(HISTORICAL_YEARS)) %>%
       left_join_error_no_match(states_subregions %>%
@@ -327,7 +327,7 @@ module_gcamusa_LA143.HDDCDD <- function(command, ...) {
       mutate(value_AEO = value_AEO / DD) -> L143.DDmult_sR9_Y_AEO
 
     # Apply these multipliers by subregion9 to the state-level historical HDDCDD data,
-    # to create a scenario to 2040
+    # to create a scenario to 2050
     # historical years first
     DD_His %>%
       select(-subregion13, -historical_value) %>%
@@ -349,7 +349,7 @@ module_gcamusa_LA143.HDDCDD <- function(command, ...) {
                 by = c("subregion9", "variable")) %>%
       mutate(value = value * value_AEO) -> L143.HDDCDD_AEO_AEO_years
 
-    # HDD / CDD values are held constant at 2040 values past 2040 (final AEO year)
+    # HDD / CDD values are held constant at 2050 values past 2050 (final AEO year)
     L143.HDDCDD_AEO_AEO_years %>%
       filter(year == max(gcamusa.AEO_DD_YEARS)) %>%
       distinct(state, subregion9, variable, value) %>%
@@ -377,7 +377,7 @@ module_gcamusa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Divide state cooling degree days by the census subregion 9 total population") %>%
       add_legacy_name("L143.share_state_Pop_CDD_sR9") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/Census_pop",
                      "gcam-usa/GIS/CDD_His") ->
       L143.share_state_Pop_CDD_sR9
 
@@ -388,7 +388,7 @@ module_gcamusa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Divide state cooling degree days by the census subregion 13 total population.") %>%
       add_legacy_name("L143.share_state_Pop_CDD_sR13") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/Census_pop",
                      "gcam-usa/GIS/CDD_His") ->
       L143.share_state_Pop_CDD_sR13
 
@@ -399,7 +399,7 @@ module_gcamusa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Divide state heating degree days by the census subregion 9 total population.") %>%
       add_legacy_name("L143.share_state_Pop_HDD_sR9") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/Census_pop",
                      "gcam-usa/GIS/HDD_His") ->
       L143.share_state_Pop_HDD_sR9
 
@@ -410,7 +410,7 @@ module_gcamusa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Divide state heating degree days by the census subregion 13 total population.") %>%
       add_legacy_name("L143.share_state_Pop_HDD_sR13") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/Census_pop",
                      "gcam-usa/GIS/HDD_His") ->
       L143.share_state_Pop_HDD_sR13
 
@@ -422,7 +422,7 @@ module_gcamusa_LA143.HDDCDD <- function(command, ...) {
       add_comments("Includes a scenario with HDD / CDD harmonized to AEO 2015") %>%
       add_legacy_name("L143.HDDCDD_scen_state") %>%
       add_precursors("gcam-usa/states_subregions",
-                     "gcam-usa/Census_pop_hist",
+                     "gcam-usa/Census_pop",
                      "gcam-usa/GIS/CDD_His",
                      "gcam-usa/GIS/HDD_His",
                      "gcam-usa/GIS/CDD_hist_constdds",
