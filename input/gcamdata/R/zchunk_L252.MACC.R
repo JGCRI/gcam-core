@@ -155,9 +155,9 @@ module_emissions_L252.MACC <- function(command, ...) {
       mac_reduction_adder(order = "AgProductionTechnology") %>%
       # Add column for market variable
       mutate(market.name = emissions.MAC_MARKET) %>%
-      repeat_add_columns(tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
-      repeat_add_columns(tibble(lvl = c("lo", "hi"))) %>%
-      unite(AgProductionTechnology, AgProductionTechnology, Irr_Rfd, lvl, sep = "_") %>%
+      repeat_add_columns(tibble(Irr_Rfd = paste0(aglu.IRR_DELIMITER, c("IRR", "RFD")))) %>%
+      repeat_add_columns(tibble(mgmt = paste0(aglu.MGMT_DELIMITER, c("lo", "hi")))) %>%
+      unite(AgProductionTechnology, AgProductionTechnology, Irr_Rfd, mgmt, sep = "") %>%
       # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, Non.CO2,
              mac.control, tax, mac.reduction, market.name)
