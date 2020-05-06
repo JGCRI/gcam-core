@@ -588,8 +588,10 @@ emissions.USE_GLOBAL_CCOEFS    <- 1 # Select whether to use global average carbo
 emissions.UNMGD_LAND_INPUT_NAME <- "land-input"
 
 # Digits for rounding into XMLs
-emissions.DIGITS_CO2COEF   <- 1
-emissions.DIGITS_EMISSIONS <- 10
+emissions.DIGITS_CO2COEF       <- 1
+emissions.DIGITS_EMISS_COEF    <- 7
+emissions.DIGITS_EMISSIONS     <- 10
+emissions.DIGITS_MACC          <- 3
 
 
 # GCAM-USA constants ======================================================================

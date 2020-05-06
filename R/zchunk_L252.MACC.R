@@ -113,12 +113,12 @@ module_emissions_L252.MACC <- function(command, ...) {
         # Usually we use left_join_error_no_match
         df <- df %>%
           left_join_error_no_match(L252.MAC_pct_R_S_Proc_EPA, by = c("EPA_region", "mac.control", "tax")) %>%
-          mutate(mac.reduction = round(mac.reduction, 3))
+          mutate(mac.reduction = round(mac.reduction, emissions.DIGITS_MACC))
       } else {
         # There are times where the data does not match, so using left_join is necessary
         df <- df %>%
           left_join(L252.MAC_pct_R_S_Proc_EPA, by = c("EPA_region", "mac.control", "tax")) %>%
-                      mutate(mac.reduction = round(mac.reduction, 3))
+                      mutate(mac.reduction = round(mac.reduction, emissions.DIGITS_MACC))
       }
       return(df)
     }
