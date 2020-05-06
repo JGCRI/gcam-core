@@ -885,7 +885,7 @@
     <ClInclude Include="..\..\demographics\include\population_sgm_fixed.h" />
     <ClInclude Include="..\..\demographics\include\population_sgm_rate.h" />
     <ClInclude Include="..\..\emissions\include\aemissions_control.h" />
-    <ClInclude Include="..\..\emissions\include\aemissions_driver.h" />
+    <ClInclude Include="..\..\emissions\include\iemissions_driver.h" />
     <ClInclude Include="..\..\emissions\include\aghg.h" />
     <ClInclude Include="..\..\emissions\include\co2_emissions.h" />
     <ClInclude Include="..\..\emissions\include\emissions_control_factory.h" />

@@ -43,7 +43,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 
 #include "emissions/include/nonco2_emissions.h"
-#include "emissions/include/aemissions_driver.h"
+#include "emissions/include/iemissions_driver.h"
 #include "emissions/include/emissions_driver_factory.h"
 #include "emissions/include/aemissions_control.h"
 #include "emissions/include/emissions_control_factory.h"
@@ -64,6 +64,7 @@ extern Scenario* scenario;
 //! Default constructor.
 NonCO2Emissions::NonCO2Emissions():
 AGHG(),
+mEmissionsDriver( 0 ),
 mShouldCalibrateEmissCoef( false ),
 mGDP( 0 )
 {
@@ -89,6 +90,7 @@ void NonCO2Emissions::clear() {
         delete *controlIt;
     }
     mEmissionsControls.clear();
+    delete mEmissionsDriver;
 }
 
 //! Copy helper function.
@@ -99,8 +101,9 @@ void NonCO2Emissions::copy( const NonCO2Emissions& aOther ) {
     mGDP = aOther.mGDP;
     
     // Deep copy the auto_ptr
-    if( aOther.mEmissionsDriver.get() ){
-        mEmissionsDriver.reset( aOther.mEmissionsDriver->clone() );
+    if( aOther.mEmissionsDriver ){
+        delete mEmissionsDriver;
+        mEmissionsDriver = aOther.mEmissionsDriver->clone();
     }
     
     /*!
@@ -125,8 +128,8 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
         abort();
     }
     
-    if( !mEmissionsDriver.get() ) {
-        mEmissionsDriver.reset( prevComplexGHG->mEmissionsDriver->clone() );
+    if( !mEmissionsDriver ) {
+        mEmissionsDriver = prevComplexGHG->mEmissionsDriver->clone();
     }
     else if ( mEmissionsDriver->getXMLName() != prevComplexGHG->mEmissionsDriver->getXMLName() ){
         // Print a warning if driver has changed
@@ -191,7 +194,7 @@ bool NonCO2Emissions::XMLDerivedClassParse( const string& aNodeName, const DOMNo
         mInputEmissions = XMLHelper<Value>::getValue( aCurrNode );
     }
     else if( EmissionsDriverFactory::isEmissionsDriverNode( aNodeName ) ){
-        parseSingleNode( aCurrNode, mEmissionsDriver, EmissionsDriverFactory::create( aNodeName ).release() );
+        parseSingleNode( aCurrNode, mEmissionsDriver, EmissionsDriverFactory::create( aNodeName ) );
     }
     else if( EmissionsControlFactory::isEmissionsControlNode( aNodeName ) ) {
         parseContainerNode( aCurrNode, mEmissionsControls, EmissionsControlFactory::create( aNodeName ).release() );
@@ -207,7 +210,7 @@ void NonCO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs*
     XMLWriteElement( mInputEmissions, "input-emissions", aOut, aTabs );
     XMLWriteElement( mAdjustedEmissCoef [ aPeriod ], "control-adjusted-emiss-coef", aOut, aTabs );
     
-    XMLWriteElement( "", mEmissionsDriver->getXMLName(), aOut, aTabs );
+    mEmissionsDriver->toDebugXML( aPeriod, aOut, aTabs );
     
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
         (*controlIt)->toDebugXML( aPeriod, aOut, aTabs );
@@ -260,7 +263,7 @@ void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aTechInf
     }
     
     
-    if ( !mEmissionsDriver.get() ) {
+    if ( !mEmissionsDriver ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "No emissions driver set for " << getName()

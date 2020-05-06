@@ -96,3 +96,8 @@ bool OutputDriver::XMLParse( const xercesc::DOMNode* aNode ) {
     
     return parsingSuccessful;
 }
+
+void OutputDriver::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
+    XMLWriteOpeningTag( getXMLName(), aOut, aTabs );
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
+}

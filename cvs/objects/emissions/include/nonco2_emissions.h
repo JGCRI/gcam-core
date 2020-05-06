@@ -51,7 +51,7 @@
 #include "util/base/include/value.h"
 
 // Forward declaration
-class AEmissionsDriver;
+class IEmissionsDriver;
 class AEmissionsControl;
 class IInfo;
 
@@ -121,6 +121,9 @@ protected:
                                 
         //! Set of emissions controls
         DEFINE_VARIABLE( CONTAINER, "emissions-control", mEmissionsControls, std::vector<AEmissionsControl*> ),
+        
+        //! Emissions driver delegate
+        DEFINE_VARIABLE( CONTAINER, "emissions-driver", mEmissionsDriver, IEmissionsDriver* ),
                                 
         //! Stored Emissions Coefficient (needed for some control technologies)
         //! The emissions coefficient is the current ratio of emissions to driver, accounting for any controls   
@@ -134,10 +137,6 @@ protected:
     //! A weark reference to the regional GDP object which needs to be stashed to be
     //! able to calculate the emissions controls.
     const GDP* mGDP;
-
-    //! Emissions driver delegate
-    //! Include this in DEFINE_DATA?  These currently have no data at all and are simply "tags".
-    std::auto_ptr<AEmissionsDriver> mEmissionsDriver;
 
     // typdef to help simplify code
     typedef std::vector<AEmissionsControl*>::const_iterator CControlIterator;

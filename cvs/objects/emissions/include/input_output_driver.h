@@ -44,7 +44,7 @@
  * \author Jim Naslund
  */
 
-#include "emissions/include/aemissions_driver.h"
+#include "emissions/include/iemissions_driver.h"
 
 
 /*! 
@@ -53,7 +53,7 @@
  *        minus output.
  * \author Jim Naslund
  */
-class InputOutputDriver: public AEmissionsDriver {
+class InputOutputDriver: public IEmissionsDriver {
 
 public:
     virtual double calcEmissionsDriver( const std::vector<IInput*>& aInputs,
@@ -63,10 +63,17 @@ public:
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
     
-private:
-    //! The name of the input which should be the driver
-    std::string mInputName;
+protected:
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IEmissionsDriver,
+        
+        //! The name of the input which should be the driver
+        DEFINE_VARIABLE( SIMPLE, "input-name", mInputName, std::string )
+    )
 };
 
 
