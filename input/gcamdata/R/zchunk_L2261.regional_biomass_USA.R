@@ -92,7 +92,8 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
       stub.technology <- subsector <- supplysector <- technology <- to.year <- year <- traded <-
       subsector.name <- share.weight <- fractional.secondary.output <- price <- fraction.produced <-
       PrimaryFuelCO2Coef.name <- PrimaryFuelCO2Coef <- minicam.energy.input <- sector <- calibrated.value <-
-      value <- share <- fuel <- . <- output.ratio <- subs.share.weight <- tech.share.weight <- NULL
+      value <- share <- fuel <- . <- output.ratio <- subs.share.weight <- tech.share.weight <-
+      subsector_1 <- to.technology <- NULL
 
     # Load required inputs
     A21.sector <- get_data(all_data, "energy/A21.sector")

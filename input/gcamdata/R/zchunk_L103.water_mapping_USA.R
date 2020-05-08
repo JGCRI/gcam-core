@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L103.water_mapping_USA
 #'
 #' Calculate percentage shares to map water demands from USA regional level to state and basin.
@@ -6,9 +8,9 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L103.water_mapping_R_GLU_B_W_Ws_share},
-#' \code{L103.water_mapping_R_B_W_Ws_share}. There was no corresponding file in the
-#' original data system.
+#' the generated outputs: \code{L103.water_mapping_R_GLU_B_W_Ws_share}, \code{L103.water_mapping_R_LS_W_Ws_share},
+#' \code{L103.water_mapping_R_B_W_Ws_share},  \code{L103.water_mapping_R_PRI_W_Ws_share}
+#' There was no corresponding file in the original data system.
 #' @details  Water demands by USA region / sector to basin and state.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -30,7 +32,8 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     region <- state  <- year <- water_type <- water_sector <- demand <- demand_total <- Value <- state.to.country.share <-
-    fresh.share <- saline.share <- NULL        # silence package check.
+    fresh.share <- saline.share <- value <- basin_id <- basin_name <- state_abbr <- volume <- Basin_name <-
+    GLU_name <- share <- NULL        # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -140,7 +143,7 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
     L103.water_mapping_USA_R_LS_W_Ws_share %>%
       add_title("Water mapping for livestock by state / water type ") %>%
       add_units("NA") %>%
-      add_comments("") %>%
+      add_comments("Water mapping for livestock by state / water type") %>%
       add_legacy_name("L103.water_mapping_R_B_W_Ws_share") %>%
       add_precursors("gcam-usa/USGS_livestock_water_withdrawals") ->
       L103.water_mapping_USA_R_LS_W_Ws_share
@@ -148,7 +151,7 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
     L103.water_mapping_USA_R_PRI_W_Ws_share %>%
       add_title("Water mapping for primary energy mining by state / water type ") %>%
       add_units("NA") %>%
-      add_comments("") %>%
+      add_comments("Water mapping for primary energy mining by state / water type ") %>%
       add_legacy_name("L103.water_mapping_R_B_W_Ws_share") %>%
       add_precursors("gcam-usa/USGS_mining_water_shares") ->
       L103.water_mapping_USA_R_PRI_W_Ws_share
@@ -156,7 +159,7 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
     L103.water_mapping_USA_R_GLU_W_Ws_share %>%
       add_title("Water mapping for irrigation sectors by state/ basin / water type") %>%
       add_units("NA") %>%
-      add_comments("") %>%
+      add_comments("Water mapping for irrigation sectors by state/ basin / water type") %>%
       add_legacy_name("L103.water_mapping_R_B_W_Ws_share") %>%
       add_precursors("water/basin_ID",
                      "gcam-usa/irrigation_shares_0p5degree",
@@ -166,7 +169,7 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
     L103.water_mapping_USA_R_B_W_Ws_share %>%
       add_title("Water mapping for nonirrigation sectors by state/ basin / water type") %>%
       add_units("NA") %>%
-      add_comments("") %>%
+      add_comments("Water mapping for nonirrigation sectors by state/ basin / water type") %>%
       add_legacy_name("L103.water_mapping_R_B_W_Ws_share") %>%
       add_precursors("water/basin_ID",
                      "gcam-usa/nonirrigation_shares_0p5degree",
