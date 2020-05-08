@@ -45,7 +45,7 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
     value <- subsector <- supplysector <- year <- GCAM_region_ID <- sector.name <-
       region <- scenario <- constraint <- . <- subsector_1 <- Electric.sector <-
       subsector.name<- Electric.sector.technology <- minicam.energy.input <-
-      coefficient<- NULL # silence package check notes
+      coefficient<- to.technology <- NULL # silence package check notes
 
     all_data <- list(...)[[1]]
 

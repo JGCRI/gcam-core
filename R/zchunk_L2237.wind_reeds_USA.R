@@ -59,7 +59,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       tech.change <- Wind.Type <- bin <- cost <- grid.cost <- Region <- renewresource <-
       smooth.renewable.subresource <- year.fillout <- capacity.factor <- input.cost <-
       capital.tech.change.period <- tech.change.period <- time.change <-
-      subresource <- NULL
+      subresource <- technology <- subsector_1 <- to.technology <- NULL
 
     # ===================================================
     # Data Processing
