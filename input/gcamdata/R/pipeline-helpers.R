@@ -161,7 +161,7 @@ approx_fun <- function(year, value, rule = 1) {
   assert_that(is.numeric(value))
 
   if(rule == 1 | rule == 2) {
-    tryCatch(stats::approx(as.vector(year), value, rule = rule, xout = year)$y,
+    tryCatch(stats::approx(as.vector(year), value, rule = rule, xout = year, ties = mean)$y,
              error = function(e) NA)
 
   } else {
