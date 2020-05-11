@@ -1,29 +1,21 @@
-# File: A_MACC_TechChange.csv,
-# Title: MAC curve technology change parameters,
-# Description: Specifies SSP-specific tech change parameters for the MAC curves. These increase the portion of emissions abated for a given carbon price.,
-# Units: Unitless,
-# Source: Lucas et al. 2007. Environmental Science & Policy.,
-# Column types: ccn 
+# File: A_MACC_TechChange.csv
+# Title: MAC curve technology max reduction meant to be used in conjunction with A_MACC_TechChange_SSP_Mult to make scenario specific tech change scenarios.
+# Description: Specifies NonCO2 and sector maximum MAC reductions which will be used back calculate tech change to converge to these values in the SSPs
+# Units: percent
+# Source: Lucas et al. 2007. Environmental Science & Policy.
+# Column types: ccnn
 # ----------
-scenario,MAC,tech_change
-SSP1,Livestock,0.03
-SSP1,Cropland Management,0.019
-SSP1,Rice Cultivation,0.021
-SSP1,Coal Mining Activities,0.006
-SSP1,Natural Gas and Oil Systems,0.008
-SSP1,Nitric and Adipic Acid Production,0.003
-SSP1,Wastewater,0.043
-SSP5,Livestock,0.015
-SSP5,Cropland Management,0.0095
-SSP5,Rice Cultivation,0.0105
-SSP5,Coal Mining Activities,0.003
-SSP5,Natural Gas and Oil Systems,0.004
-SSP5,Nitric and Adipic Acid Production,0.0015
-SSP5,Wastewater,0.0215
-SSP2,Livestock,0.03
-SSP2,Cropland Management,0.019
-SSP2,Rice Cultivation,0.021
-SSP2,Coal Mining Activities,0.006
-SSP2,Natural Gas and Oil Systems,0.008
-SSP2,Nitric and Adipic Acid Production,0.003
-SSP2,Wastewater,0.043
+Non.CO2,MAC,LUCAS_2050,LUCAS_2100
+CH4,Livestock,0.5,0.6
+CH4,Rice Cultivation,0.8,0.9
+CH4,Coal Mining Activities,0.9,0.9
+CH4,Natural Gas and Oil Systems,0.75,0.9
+CH4,Nitric and Adipic Acid Production,0.9,0.95
+CH4,Wastewater,0.8,0.9
+CH4,Landfilling of Solid Waste,0.9,0.9
+N2O,Livestock,0.35,0.45
+N2O,Cropland Management,0.35,0.4
+N2O,Rice Cultivation,0.8,0.9
+N2O,Nitric and Adipic Acid Production,0.98,0.98
+N2O,Wastewater,0.8,0.9
+N2O,Landfilling of Solid Waste,0.9,0.9

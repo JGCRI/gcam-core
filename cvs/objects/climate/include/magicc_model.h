@@ -112,8 +112,6 @@ public:
 
     double getNetLandUseChangeEmission( const int aYear ) const;
 
-    virtual int getCarbonModelStartYear() const;
-
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
     static const std::string& getnetDefor80sName();
@@ -179,10 +177,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "oc-unit-forcing", mOCUnitForcing, double ),
         
         //! Use read-in default emissions up until this year
-        DEFINE_VARIABLE( SIMPLE, "last-historical-year", mLastHistoricalYear, int ),
-        
-        //! The year the carbon model should start running.
-        DEFINE_VARIABLE( SIMPLE, "carbon-model-start-year", mCarbonModelStartYear, int )
+        DEFINE_VARIABLE( SIMPLE, "last-historical-year", mLastHistoricalYear, int )
     )
     
     //! Number of historical data points read in.

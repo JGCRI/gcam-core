@@ -51,7 +51,7 @@ extern Scenario* scenario;
 
 const double LogEDFun::PMAX = 1.0e24;
 const double LogEDFun::ARGMAX = 55.262042; // log(PMAX)
-const double LogEDFun::MINXSCL = 1.0e-3;
+const double LogEDFun::MINXSCL = 1.0e-5;
 
 // constructor
 LogEDFun::LogEDFun(SolutionInfoSet &sisin,
@@ -59,7 +59,8 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
     mkts(sisin.getSolvableSet()),
     solnset(sisin),
     world(w), mktplc(m), period(per),
-    mLogPricep(aLogPricep)
+    mLogPricep(aLogPricep),
+    slope(mkts.size(), 1.0)
 {
     na=nr=mkts.size();
     mdiagnostic=false;
@@ -72,6 +73,7 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
         // linear prices & outputs, so x0 is the price, and fx0 is
         // 1/demand(forecast), for all markets
         for(int i=0; i<na; ++i) {
+            slope[i] = mkts[i].getCorrectionSlope();
             // forecast demands has been constrained so that it
             // doesn't give nonsensical results here, but forecast
             // price is used for other things and so hasn't been
@@ -81,7 +83,7 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
             {
                 mxscl[i] = mkts[i].getUpperBoundSupplyPrice();
             }
-            else if( mkts[i].getType() == IMarketType::RES && ( mkts[i].getForecastPrice() < mkts[i].getLowerBoundSupplyPrice() ) )
+            else if( (mkts[i].getType() == IMarketType::RES || mkts[i].getType() == IMarketType::SUBSIDY) && ( mkts[i].getForecastPrice() <= mkts[i].getLowerBoundSupplyPrice() ) )
             {
                 mxscl[i] = 1.0;
             } else {
@@ -143,6 +145,43 @@ void LogEDFun::partial(int ip)
 double LogEDFun::partialSize(int ip) const
 {
   return double(mkts[ip].getDependencies().size()) / double(world->getGlobalOrderingSize());
+}
+
+
+/*!
+ * \brief Set the slope to use for the negative correction supply which
+ *        is applied when prices are below the lower bound of supply behavior.
+ * \details In theory we would want the correction slope to match the slope
+ *          just above the lower bound price point so that the function is
+ *          continous.  However to explicitly calculate this would require
+ *          a lot of extra iterations just to get this information.  Instead
+ *          this method will be called each time we have a new derivative and
+ *          we will update the slope if the price happens to be "close" to just
+ *          above the lower bound price.
+ * \param adx The vector of self derivatives for all markets which was just calculated.
+ */
+void LogEDFun::setSlope(UBVECTOR<double>& adx) {
+    assert(adx.size() == mkts.size());
+    for(int i = 0; i < mkts.size(); ++i) {
+        double newSlope = abs(adx[i]);
+        // compare scaled prices to ensure consistent hueristics accross markets
+        double p0 = mkts[i].getLowerBoundSupplyPrice() / mxscl[i];
+        double p = mkts[i].getPrice() / mxscl[i];
+        if(( mkts[i].getType() == IMarketType::RES  // (constraint type markets only)
+            || mkts[i].getType() == IMarketType::TAX
+            || mkts[i].getType() == IMarketType::SUBSIDY ) && (p > p0 && p < (p0 + 0.5)))
+        {
+            slope[i] = newSlope;
+            mkts[i].setCorrectionSlope(newSlope);
+        }
+        else if(( mkts[i].getType() == IMarketType::NORMAL) && (p > p0 && p < (p0 + 0.1)))
+        {
+            slope[i] = newSlope;
+            mkts[i].setCorrectionSlope(newSlope);
+        }
+        // other markets would be PRICE and DEMAND type markets for which the slope should
+        // always be 1
+    }
 }
 
 void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, const int partj)
@@ -310,7 +349,7 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
                   << "  p0= " << p0 << "  c= " << c
                   << "  unmodified fx= " << fxi << "  modified fx= " << fxi+c
                   << "\n";
-      }      
+      }
       fx[i] = log(d/s)+c;
     }
     else if(mkts[i].getType() == IMarketType::NORMAL) { // LINEAR CASE (NORMAL markets only)
@@ -325,7 +364,7 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
         // if the supply was indeed zero.  If the actual lower bound price is significantly
         // different than the estimated this may generate a discontinuity.
         double p0 = mkts[i].getLowerBoundSupplyPrice();
-        double c = s == 0 ? std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]) : 0;
+        double c = s == 0 ? std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]) * slope[i] : 0;
         // give difference as a fraction of demand
         fx[i] = d - s + c;          // == d-(s-c); i.e., the correction subtracts from supply
         if(c>0.0) {
@@ -350,7 +389,7 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
         // zero) below which the policy is considered non-binding in which case the correction
         // is essentially adding extra demand to meet the constraint.
         double p0 = mkts[i].getLowerBoundSupplyPrice();
-        double c = std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]);
+        double c = std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]) * slope[i];
         // give difference as a fraction of demand
         fx[i] = d - s + c;          // == d-(s-c); i.e., the correction subtracts from supply
         if(c>0.0) {

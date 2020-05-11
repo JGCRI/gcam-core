@@ -75,6 +75,7 @@
 #include "util/logger/include/logger_factory.h"
 #include "util/base/include/timer.h"
 #include "util/base/include/version.h"
+#include "util/base/include/util.h"
 
 using namespace std;
 using namespace xercesc;
@@ -189,9 +190,11 @@ int main( int argc, char *argv[] ) {
     // Run the scenario and print debugging information as controlled by the following
     // configuration options with the defaults being to run all periods and print debug
     // information.
-    const int stopPeriod = conf->getInt( "stop-period", Scenario::RUN_ALL_PERIODS );
+    // Note because a user can choose to set the final period by stop-period or stop-year
+    // we use the util::getConfigRunPeriod to decipher the appropriate value to use.
+    int finalPeriod = util::getConfigRunPeriod( "stop" );
     const bool printDebug = conf->shouldWriteFile( "xmlDebugFileName" );
-    success = runner->runScenarios( stopPeriod, printDebug, timer );
+    success = runner->runScenarios( finalPeriod, printDebug, timer );
 
     // Print the output.
     runner->printOutput( timer );

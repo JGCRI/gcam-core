@@ -612,6 +612,8 @@ namespace objects {
    tm* getGMTime( const time_t& aTime );
    tm* getLocalTime( const time_t& aTime );
    void printTime( const time_t& aTime, std::ostream& aOut );
+
+   int getConfigRunPeriod( const std::string aKey );
    
 } // End util namespace.
 
