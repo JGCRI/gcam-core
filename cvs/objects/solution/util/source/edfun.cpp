@@ -45,8 +45,6 @@
 
 #include "util/base/include/timer.h"
 
-#define UBVECTOR boost::numeric::ublas::vector 
-
 extern Scenario* scenario;
 
 const double LogEDFun::PMAX = 1.0e24;
@@ -115,7 +113,7 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
  *          applies the scale vector we get back the initial guess
  *          values that the solver intended to use.
  */
-void LogEDFun::scaleInitInputs(UBVECTOR<double> &ax)
+void LogEDFun::scaleInitInputs(UBVECTOR &ax)
 {
     for(unsigned i=0; i<ax.size(); ++i)
         ax[i] /= mxscl[i];
@@ -160,7 +158,7 @@ double LogEDFun::partialSize(int ip) const
  *          above the lower bound price.
  * \param adx The vector of self derivatives for all markets which was just calculated.
  */
-void LogEDFun::setSlope(UBVECTOR<double>& adx) {
+void LogEDFun::setSlope(UBVECTOR& adx) {
     assert(adx.size() == mkts.size());
     for(int i = 0; i < mkts.size(); ++i) {
         double newSlope = abs(adx[i]);
@@ -184,7 +182,7 @@ void LogEDFun::setSlope(UBVECTOR<double>& adx) {
     }
 }
 
-void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, const int partj)
+void LogEDFun::operator()(const UBVECTOR &ax, UBVECTOR &fx, const int partj)
 {
   assert(ax.size() == mkts.size());
   assert(fx.size() == mkts.size());
@@ -198,7 +196,7 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx, cons
   // is probably going to incur enough overhead that we will
   // eventually want to do the scaling inline when we assign the
   // prices, but this is easier for now.
-  UBVECTOR<double> x(ax.size()); 
+  UBVECTOR x(ax.size()); 
   for(unsigned int i=0; i<x.size(); ++i)
       x[i] = ax[i]*mxscl[i];
   

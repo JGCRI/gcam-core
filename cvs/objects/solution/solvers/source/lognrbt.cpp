@@ -59,12 +59,11 @@
 #include "solution/util/include/solution_info_filter_factory.h"
 #include "solution/util/include/solvable_nr_solution_info_filter.h"
 
-#include "solution/util/include/functor-subs.hpp"
-#include "solution/util/include/linesearch.hpp"
-#include "solution/util/include/fdjac.hpp" 
+//#include "solution/util/include/linesearch.hpp"
+//#include "solution/util/include/fdjac.hpp" 
 #include "solution/util/include/edfun.hpp"
 #include "solution/util/include/ublas-helpers.hpp"
-#include "solution/util/include/jacobian-precondition.hpp" 
+#include "solution/util/include/jacobian-precondition.hpp"
 #include "util/base/include/fltcmp.hpp"
 
 #if USE_LAPACK
@@ -84,13 +83,6 @@ using namespace std;
 using namespace xercesc;
 
 std::string LogNRbt::SOLVER_NAME = "log-newton-raphson-backtracking-solver-component";
-
-#if USE_LAPACK
-#define UBMATRIX boost::numeric::ublas::matrix<double,boost::numeric::ublas::column_major>
-#else
-#define UBMATRIX boost::numeric::ublas::matrix<double>
-#endif
-#define UBVECTOR boost::numeric::ublas::vector<double>
 
 namespace {
   // helper functions for the std::transform algorithm
@@ -225,7 +217,7 @@ SolverComponent::ReturnCode LogNRbt::solve( SolutionInfoSet& solnset, int period
     // Precondition the x values to avoid singular columns in the Jacobian
     solverLog.setLevel(ILogger::DEBUG);
     UBMATRIX J(F.narg(),F.nrtn());
-    fdjac(F, x, fx, J, true);
+    //fdjac(F, x, fx, J, true);
     int pcfail = jacobian_precondition(x,fx,J,F,&solverLog, mLogPricep);
 
     if(pcfail) {
@@ -275,9 +267,10 @@ SolverComponent::ReturnCode LogNRbt::solve( SolutionInfoSet& solnset, int period
 }
 
 
-int LogNRbt::nrsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J,
+int LogNRbt::nrsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J,
                      int &neval)
 {
+#if 0
 #if !USE_LAPACK
   using boost::numeric::ublas::permutation_matrix;
   using boost::numeric::ublas::lu_factorize;
@@ -318,7 +311,7 @@ int LogNRbt::nrsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx, UBMAT
 
   // We create a functor that computes f(x) = F(x)*F(x).  It also
   // stores the value of F that it produces as an intermediate.
-  FdotF<double,double> fnorm(F);
+  //FdotF<double,double> fnorm(F);
   double f0 = inner_prod(fx,fx); // already have a value of F on input, so no need to call fnorm yet
   if(f0 < FTINY)
     // Guard against F=0 since it can cause a NaN in our solver.  This
@@ -435,7 +428,7 @@ int LogNRbt::nrsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx, UBMAT
     // dx now holds the newton step.  Execute the line search along
     // that direction.
     double fnew;
-    int lserr = linesearch(fnorm,x,f0,gx,dx, xnew,fnew, neval);
+    int lserr = linesearch(F,x,f0,gx,dx, xnew,fnew, neval);
 
     if(lserr != 0) {
       // line search failed.  This means that the descent direction
@@ -467,7 +460,7 @@ int LogNRbt::nrsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx, UBMAT
               << "\n";
     f0 = fnew;
     x  = xnew;
-    fnorm.lastF(fx);            // get the last value of big-F
+      F(x,fx);//fnorm.lastF(fx);            // get the last value of big-F
     solverLog << "\nxnew: " << xnew << "\nfxnew: " << fx << "\n";
     
   
@@ -492,5 +485,6 @@ int LogNRbt::nrsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx, UBMAT
   // iterations allowed us.  Return an error code
   solverLog << "\n****************Maximum solver iterations exceeded.\nlastx: " << x
             << "\nlastF: " << fx << "\n";
+#endif
   return -1;
 }

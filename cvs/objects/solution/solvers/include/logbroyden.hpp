@@ -49,13 +49,7 @@
 #include <boost/numeric/ublas/matrix.hpp>
 #include "solution/util/include/solvable_nr_solution_info_filter.h"
 #include "solution/util/include/edfun.hpp"
-
-#define UBLAS boost::numeric::ublas
-#if USE_LAPACK
-#define UBMATRIX UBLAS::matrix<double,boost::numeric::ublas::column_major>
-#else
-#define UBMATRIX UBLAS::matrix<double>
-#endif
+#include "solution/util/include/ublas-helpers.hpp"
 
 class CalcCounter; 
 class Marketplace;
@@ -101,12 +95,12 @@ public:
 
 protected:
   //! Perform the Broyden's method iterations.
-  int bsolve(VecFVec<double,double> &F, UBLAS::vector<double> &x, UBLAS::vector<double> &fx,
+  int bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
              UBMATRIX &B, int &neval);
   //! Additional logging for visualizing solver progress.
-  void reportVec(const std::string &aname, const UBLAS::vector<double> &av, const std::vector<int> &amktids,
+  void reportVec(const std::string &aname, const UBVECTOR &av, const std::vector<int> &amktids,
                  const std::vector<bool> &aissolvable);
-  void reportPSD(UBLAS::vector<double> &arptvec, const std::vector<int> &amktids, const std::vector<bool> &aissolvable);
+  void reportPSD(UBVECTOR &arptvec, const std::vector<int> &amktids, const std::vector<bool> &aissolvable);
 
   //! Maximum number of main-loop iterations for the root-finding algorithm
   unsigned int mMaxIter;
@@ -133,9 +127,6 @@ protected:
 private:
   static std::string SOLVER_NAME;
 };
-
-#undef UBLAS
-#undef UBMATRIX
 
 #endif  // LOGBROYDEN_HPP_
 

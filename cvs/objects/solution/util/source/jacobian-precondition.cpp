@@ -37,8 +37,8 @@
 #include <boost/numeric/bindings/lapack/gesvd.hpp>
 #endif
 #include <boost/numeric/ublas/operation.hpp>
-#include "solution/util/include/functor-subs.hpp"
-#include "solution/util/include/fdjac.hpp" 
+#include "solution/util/include/functor.hpp"
+//#include "solution/util/include/fdjac.hpp"
 #include "util/base/include/util.h"
 #include "solution/util/include/ublas-helpers.hpp"
 
@@ -47,17 +47,10 @@
 
 #include "util/base/include/timer.h"
 
-#if USE_LAPACK
-#define UBMATRIX boost::numeric::ublas::matrix<double,boost::numeric::ublas::column_major>
-#else
-#define UBMATRIX boost::numeric::ublas::matrix<double>
-#endif
-#define UBVECTOR boost::numeric::ublas::vector<double> 
-
 
 /* ensure that markets going into a solver that uses a jacobian start
    off in price regimes that produce nonsingular jacobians. */
-int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec<double,double> &F,
+int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec &F,
                           std::ostream *diagnostic, bool loginputsp, double FTOL)
 {
   const double JPCMIN = util::getVerySmallNumber(); // if max column value is less than this, the column is "singular".
@@ -188,8 +181,12 @@ int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec<double
   Timer& jacPreJacTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::JAC_PRE_JAC );
   jacPreJacTimer.start();
               
-  if(change)
+  /*if(change)
     fdjac(F,x,fx,J,true); // recalculate the jacobian
+   */
+    if(change) {
+        fail = 2;
+    }
 
   jacPreJacTimer.stop();
   jacPreTimer.stop();
@@ -198,7 +195,7 @@ int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec<double
 }
 
 
-void broyden_singular_B_reset(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &B, VecFVec<double,double> &F,
+void broyden_singular_B_reset(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &B, VecFVec &F,
                              std::ostream *diagnostic, double FTOL)
 {
   const double JPCMIN = util::getVerySmallNumber(); // if diagonal value is less than this, the column is "singular".

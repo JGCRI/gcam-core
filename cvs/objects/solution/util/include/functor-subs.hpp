@@ -35,6 +35,7 @@
 */
 
 
+#if 0
 /*!
  * @file functor-subs.hpp
  * @ingroup Solution
@@ -83,4 +84,5 @@ public:
 
 #undef UBLAS
 
+#endif 
 #endif

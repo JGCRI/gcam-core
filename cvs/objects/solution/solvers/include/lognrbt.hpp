@@ -46,16 +46,9 @@
 * \author Robert Link
 */
 #include <string>
-#include <boost/numeric/ublas/matrix.hpp>
 #include "solution/util/include/solvable_nr_solution_info_filter.h"
 #include "solution/util/include/edfun.hpp"
-
-#define UBLAS boost::numeric::ublas
-#if USE_LAPACK
-#define UBMATRIX UBLAS::matrix<double,boost::numeric::ublas::column_major>
-#else
-#define UBMATRIX UBLAS::matrix<double>
-#endif
+#include "solution/util/include/ublas-helpers.hpp"
 
 class CalcCounter; 
 class Marketplace;
@@ -98,8 +91,8 @@ public:
     static const std::string & getXMLNameStatic(void) {return SOLVER_NAME;}
   
 protected:
-    int nrsolve(VecFVec<double,double> &F, UBLAS::vector<double> &x,
-                UBLAS::vector<double> &fx, UBMATRIX &J, int &neval);
+    int nrsolve(VecFVec &F, UBVECTOR &x,
+                UBVECTOR &fx, UBMATRIX &J, int &neval);
     //! Max iterations for the Newton-Raphson algorithm 
     unsigned int mMaxIter;
   
@@ -132,8 +125,5 @@ protected:
 private:
     static std::string SOLVER_NAME;
 };
-
-#undef UBLAS
-#undef UBMATRIX
 
 #endif // LOGNRBT_HPP_

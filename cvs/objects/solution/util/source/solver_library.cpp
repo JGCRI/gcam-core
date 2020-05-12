@@ -64,7 +64,6 @@
 #include "containers/include/iactivity.h"
 
 #include "solution/util/include/edfun.hpp"
-#include "solution/util/include/functor-subs.hpp"
 
 using namespace std;
 
@@ -355,9 +354,9 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
     // Set up the EDFun wrapper which we will use to do the model evaluations.
     // This way we can re-use the same concepts to backtrack on a bracket step
     // similar to how we do it in the linesearch algorithm used in NR.
-    using UBVECTOR = boost::numeric::ublas::vector<double>;
     LogEDFun edFun(aSolutionSet, aWorld, aMarketplace, aPeriod, false);
-    FdotF<double, double> F(edFun);
+    //FdotF<double, double> F(edFun);
+    UBVECTOR fx(aSolutionSet.getNumSolvable());
     UBVECTOR x(aSolutionSet.getNumSolvable());
     UBVECTOR prev_x(aSolutionSet.getNumSolvable());
     UBVECTOR dx(aSolutionSet.getNumSolvable());
@@ -365,7 +364,8 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
         x[i] = aSolutionSet.getSolvable(i).getPrice();
     }
     edFun.scaleInitInputs(x);
-    double currFX = F(x);
+    edFun(x,fx);
+    double currFX = inner_prod(fx,fx);
     double prevFX;
     
     solverLog.setLevel( ILogger::DEBUG );
@@ -470,7 +470,8 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
 
         // Rescale prices to be normalized then run an iteration
         edFun.scaleInitInputs(x);
-        currFX = F(x);
+        edFun(x, fx);
+        currFX = inner_prod(fx, fx);
         solverLog << "Current FX: " << currFX << endl;
         
         // Check if this bracket step has increased the "error" F dot F by more than the
@@ -481,7 +482,8 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
         while(currFX > (prevFX * FX_INCREASE_THRESHOLD)) {
             stepMult /= 2.0;
             x = prev_x + dx * stepMult;
-            currFX = F(x);
+            edFun(x, fx);
+            currFX = inner_prod(fx, fx);
             solverLog << "Walked back: " << stepMult << ", Current FX: " << currFX << endl;
         }
         solverLog.setLevel( ILogger::NOTICE );
