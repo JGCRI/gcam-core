@@ -32,7 +32,8 @@ module_gcamusa_L2244.nuclear_USA <- function(command, ...) {
 
     region <- year <- supplysector <- Electric.sector <- sector <- subsector <- technology <- time <-
       Electric.sector.technology <- gen <- plant <- Units <- base_year_data <- evaluated_data <- data <-
-      steepness <- half.life <- t <- isfirst_zero <- lifetime <- optim <- NULL # silence package check notes
+      steepness <- half.life <- t <- isfirst_zero <- lifetime <- optim <- subsector_1 <- to.technology <-
+      stub.technology <- NULL # silence package check notes
 
     # Load required inputs
     nuc_gen2 <- get_data(all_data, "gcam-usa/nuc_gen2")

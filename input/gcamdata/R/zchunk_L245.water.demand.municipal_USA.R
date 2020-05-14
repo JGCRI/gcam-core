@@ -43,7 +43,8 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     logit.type <- state <- water_type <- coefficient <-
-      water_sector <- year <- value <- efficiency <- withdrawals <- NULL  # silence package check notes
+      water_sector <- year <- value <- efficiency <- withdrawals <-
+      region <- supplysector <- NULL  # silence package check notes
 
     # Load required inputs
     A03.sector <- get_data(all_data, "water/A03.sector")

@@ -78,7 +78,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
       renewresource <- sub.renewable.resource <- year.fillout <- minicam.energy.input <- efficiency <-
       market.name <- flag <- capacity.factor <- input.cost <- capital.tech.change.period <-
       tech.change.period <- time.change <- subresource <- CSP_GWh <- CSP <- resource <- value <-
-      non_reeds_state <- NULL
+      non_reeds_state <- technology <- subsector_1 <- to.technology <- subsector.name0 <- NULL
 
     # ===================================================
     # Data Processing

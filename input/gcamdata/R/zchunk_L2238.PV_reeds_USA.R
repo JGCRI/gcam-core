@@ -79,7 +79,8 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       minicam.energy.input <- efficiency <- market.name <- flag <- capacity.factor <-
       input.cost <- capital.tech.change.period <- tech.change.period <- time.change <-
       subresource <- Urban_Utility_scale_PV_GWh <- Rural_Utility_scale_PV_GWh <- Urban_Utility_scale_PV <-
-      Rural_Utility_scale_PV <- Total_Utility_scale_PV_GWh <- resource <- value <- non_reeds_state <- NULL
+      Rural_Utility_scale_PV <- Total_Utility_scale_PV_GWh <- resource <- value <- non_reeds_state <-
+      technology <- subsector_1 <- to.technology <- NULL
 
     # ===================================================
     # Data Processing

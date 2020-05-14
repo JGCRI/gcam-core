@@ -29,7 +29,7 @@ module_gcamusa_L145.water.demand.municipal <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     GCAM_region_ID <- year <- value <- water_pc <- water_km3 <- water_type <-
-      sector <- state <- NULL  # silence package check notes
+      sector <- state <- input.cost <- NULL  # silence package check notes
 
     # Load required inputs
     USGS_municipal_water_withdrawal_USA <- get_data(all_data, "gcam-usa/USGS_municipal_water_withdrawal_USA") %>%

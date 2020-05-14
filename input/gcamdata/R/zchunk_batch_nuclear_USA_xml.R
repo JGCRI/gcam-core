@@ -19,6 +19,8 @@ module_gcamusa_batch_nuclear_USA_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    technology <- NULL  # silence package check notes
+
     # Load required inputs
     L2244.StubTechSCurve_nuc_gen2_USA <- get_data(all_data, "L2244.StubTechSCurve_nuc_gen2_USA")
 

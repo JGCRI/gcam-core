@@ -36,7 +36,7 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
 
     iso <- aquastat_ctry <- GCAM_region_ID <- Area <- Year <- Value <- cost <- consumption <-
       expenditure <- input.cost <- year <- value <- population <- value_pc <- value_pc_filled <-
-      efficiency <- withdrawals <- NULL  # silence package check notes
+      efficiency <- withdrawals <- deflator <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
