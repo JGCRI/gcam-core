@@ -584,7 +584,13 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
       left_join(L2234.fuelfractions_segment_USA, by = c("region", "supplysector", "subsector", "year")) %>%
       mutate(calOutputValue = subscalOutputValue * fraction * tech.share) %>%
       select(-fraction, -tech.share, -subscalOutputValue) %>%
-      replace_na(list(calOutputValue = 0)) -> L2234.StubTechProd_elecS_USA
+      replace_na(list(calOutputValue = 0)) %>%
+      # load segment solver returns a negative fuel share for one grid / segment / fuel combination
+      # (Central East grid / peak generation / gas in 2015)
+      # reset these calibrated values to zero
+      mutate(calOutputValue = if_else(calOutputValue < 0, 0, calOutputValue),
+             # round calibrated output values to appropriate digits
+             calOutputValue = round(calOutputValue, energy.DIGITS_CALOUTPUT)) -> L2234.StubTechProd_elecS_USA
 
     # Adjust subsector share-weights to read in zero share-weights for subsectors and technologies
     # in base-years with zero base-year calibration values
