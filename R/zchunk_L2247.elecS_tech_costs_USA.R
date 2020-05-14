@@ -62,7 +62,9 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       sector.name <- subsector.name <- technology <- intermittent.technology <- Electric.sector.technology <-
       Electric.sector.intermittent.technology <- capital.overnight <- overnight.cost<- fixed.charge.rate <-
       GCAM.technology <- itc <- ptc <- OM.fixed <- OM.var <- OM.fixed.x <- OM.var.x <- OM.fixed.y <- OM.var.y <-
-      input.cost <- minicam.non.energy.input <- adv.ratio <- OM <- input.OM.fixed <- input.OM.var <- NULL
+      input.cost <- minicam.non.energy.input <- adv.ratio <- OM <- input.OM.fixed <- input.OM.var <-
+      technology.y <- to.technology <- subsector.name0 <- plant_type <- cooling_system <- water_type <-
+      to.technology <- NULL
 
     # Load required inputs
     A23.itc_USA <- get_data(all_data, "gcam-usa/A23.itc_USA")

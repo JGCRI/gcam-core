@@ -27,7 +27,7 @@ module_gcamusa_L232.water.demand.industry <- function(command, ...) {
 
     water_sector <- water_type <- region <- supplysector <- subsector <- technology <-
       year <- minicam.energy.input <- coefficient <- market.name <- calOutputValue <-
-      water_km3 <- energy_EJ <- NULL  # silence package check notes
+      water_km3 <- energy_EJ <- state <- NULL  # silence package check notes
 
     # Load required inputs
     A03.sector <- get_data(all_data, "water/A03.sector")

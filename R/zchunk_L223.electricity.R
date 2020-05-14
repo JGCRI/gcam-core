@@ -145,7 +145,7 @@ module_energy_L223.electricity <- function(command, ...) {
       primary.renewable <- region <- region_GCAM3 <- remove.fraction <- sector <-
       sector.name <- share.weight <- stub.technology <- subsector <- subsector.name <-
       supplysector <- technology <- value <- weight <- year <- year.fillout <- year.x <- year.y <-
-      CFmax <- grid.cost <- input.cost <- minicam.non.energy.input <- NULL
+      CFmax <- grid.cost <- input.cost <- minicam.non.energy.input <- from.year <- to.year <- NULL
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")

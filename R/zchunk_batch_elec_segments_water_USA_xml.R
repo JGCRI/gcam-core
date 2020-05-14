@@ -104,6 +104,9 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    passthrough.sector <- supplysector <- subsector <- subsector0 <- intermittent.technology <-
+      share.weight <- NULL  # silence package check notes
+
     # Load required inputs
     L2233.GlobalTechEff_elecS_cool_USA<- get_data(all_data,"L2233.GlobalTechEff_elecS_cool_USA")
     L2233.GlobalTechShrwt_elecS_cool_USA<- get_data(all_data,"L2233.GlobalTechShrwt_elecS_cool_USA")

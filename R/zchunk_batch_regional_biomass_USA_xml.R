@@ -47,6 +47,8 @@ module_gcamusa_batch_regional_biomass_USA_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    technology <- NULL  # silence package check notes
+
     # Load required inputs
     L2261.DeleteSupplysector_bio_USA <- get_data(all_data, "L2261.DeleteSupplysector_bio_USA")
     L2261.Supplysector_bio_USA <- get_data(all_data, "L2261.Supplysector_bio_USA")

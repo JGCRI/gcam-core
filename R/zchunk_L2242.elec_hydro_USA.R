@@ -36,7 +36,8 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
     # Silence package checks
     subsector <- year <- fixedOutput <- state <- EIA <- EIA_ratio <- fixedOutput_2015 <-
       AEO <- AEO_2015_ratio <- region <- supplysector <- stub.technology <-
-      share.weight.year <- subs.share.weight <- tech.share.weight <- NULL
+      share.weight.year <- subs.share.weight <- tech.share.weight <-
+      technology <- subsector_1 <- to.technology <- NULL
 
     # ===================================================
     # Data Processing

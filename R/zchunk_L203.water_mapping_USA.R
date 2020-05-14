@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L203.water_mapping_USA
 #'
 #' Mapping of water consumption/withdrawal to sectoral demands at the state level.
@@ -6,13 +8,15 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L203.Supplysector}, \code{L203.SubsectorLogit}, \code{L203.SubsectorShrwtFllt}, \code{L203.TechShrwt}, \code{L203.TechCoef}. The corresponding file in the
-#' original data system was \code{L203.water.mapping.R} (water level2).
+#' the generated outputs: \code{L203.DeleteSupplysector_USA}, \code{L203.Supplysector_USA}, \code{L203.SubsectorLogit_USA},
+#' \code{L203.SubsectorShrwt_USA}, \code{L203.TechShrwt_USA}, \code{L203.TechCoef_USA}, \code{L203.TechPmult_USA},
+#' \code{L203.TechDesalCoef_USA}, \code{L203.TechDesalShrwt_USA}, \code{L203.TechDesalCost_USA"
+#' The corresponding file in the original data system was \code{L203.water.mapping.R} (water level2).
 #' @details Generates water mapping sector input files to group demands by sectors.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author NTG Oct 2019
+#' @author NTG May 2020
 module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_ID",
@@ -52,7 +56,11 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
 
     GLU <- GLU_code <- GLU_name <- water.sector <-
       water_type <- supplysector <- field.eff <- conveyance.eff <-
-      coefficient <- region <- state <- share <- NULL  # silence package check notes
+      coefficient <- region <- state <- share <- basin_name <- Basin_name <-
+      basin_id <- state_abbr <- water_sector <- year <- wt_short <- value <-
+      state.to.country.share <- subsector <- technology <- share.weight <-
+      price.unit <- input.unit <- output.unit <- logit.exponent <- logit.type <-
+      logit.year.fillout <- NULL  # silence package check notes
 
       # Define in which states GCAM water basins exist by using data from R package created by Chris Vernon
     state_and_basin %>%
@@ -331,7 +339,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.Supplysector_USA %>%
       add_title("Water sector information") %>%
       add_units("Unitless") %>%
-      add_comments("Supply sector info expanded to GLU regions and water demand sectors") %>%
+      add_comments("Supply sector info expanded to USA and state regions for water demand sectors") %>%
       add_legacy_name("L203.Supplysector") %>%
       add_precursors("water/basin_ID",
                      "water/basin_to_country_mapping",
@@ -346,7 +354,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.SubsectorLogit_USA %>%
       add_title("Water subsector logit exponents for mapping sector") %>%
       add_units("Unitless") %>%
-      add_comments("Subsector info expanded to GLU regions and water demand sectors") %>%
+      add_comments("Subsector info expanded to USA and state regions for water demand sectors") %>%
       add_legacy_name("L203.SubsectorLogit") %>%
       add_precursors("water/basin_ID",
                      "water/basin_to_country_mapping",
@@ -361,7 +369,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.SubsectorShrwt_USA %>%
       add_title("Water subsector share weights") %>%
       add_units("Unitless") %>%
-      add_comments("Subsector shareweights expanded to GLU regions and water demand sectors") %>%
+      add_comments("Subsector shareweights expanded to USA and state regions for water demand sectors") %>%
       add_legacy_name("L203.SubsectorShrwtFllt") %>%
       add_precursors("water/basin_ID",
                      "water/basin_to_country_mapping",
@@ -375,7 +383,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.TechShrwt_USA %>%
       add_title("Water technology shareweights") %>%
       add_units("Unitless") %>%
-      add_comments("Technology shareweights expanded to GLU regions and water demand sectors") %>%
+      add_comments("Technology shareweights expanded to USA and state regions for water demand sectors") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L203.TechShrwt") %>%
       add_precursors("water/basin_ID",
@@ -390,7 +398,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.TechCoef_USA%>%
       add_title("Water technology coefficients") %>%
       add_units("Unitless") %>%
-      add_comments("Technology info expanded to GLU regions and water demand sectors") %>%
+      add_comments("Technology coefficients expanded to USA and state regions for water demand sectors") %>%
       add_legacy_name("L203.TechCoef") %>%
       add_precursors("water/basin_ID",
                      "water/basin_to_country_mapping",
@@ -405,7 +413,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.TechDesalCoef_USA %>%
       add_title("Water technology desal coefficients") %>%
       add_units("Unitless") %>%
-      add_comments("filtered for non-irrigation") %>%
+      add_comments("Desalination Coefficients for USA region and states. Available only for coastal states and basins") %>%
       add_legacy_name("L203.TechCoef") %>%
       add_precursors("water/basin_ID",
                      "water/basin_to_country_mapping",
@@ -419,7 +427,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.TechPmult_USA %>%
       add_title("Water technology price multipliers") %>%
       add_units("Unitless") %>%
-      add_comments("Technology info expanded to GLU regions and water demand sectors") %>%
+      add_comments("Water price subsidy applied at USA and state level") %>%
       add_legacy_name("L203.TechCoef") %>%
       add_precursors("water/basin_ID",
                      "water/basin_to_country_mapping",
@@ -434,7 +442,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.TechDesalShrwt_USA %>%
       add_title("Water technology desal shareweights") %>%
       add_units("Unitless") %>%
-      add_comments("filtered for non-irrigation") %>%
+      add_comments("Desalination Shareweights for USA region and states. Available only for coastal states and basins") %>%
       add_legacy_name("L203.TechCoef") %>%
       add_precursors("water/basin_ID",
                      "water/basin_to_country_mapping",
@@ -448,7 +456,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.TechDesalCost_USA %>%
       add_title("Water technology desal costs") %>%
       add_units("Unitless") %>%
-      add_comments("filtered for non-irrigation") %>%
+      add_comments("Desalination fixed costs") %>%
       add_legacy_name("L203.TechCoef") %>%
       add_precursors("water/basin_ID",
                      "water/basin_to_country_mapping",
