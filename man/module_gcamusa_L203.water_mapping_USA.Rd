@@ -11,12 +11,6 @@ module_gcamusa_L203.water_mapping_USA(command, ...)
 
 \item{...}{other optional parameters, depending on command}
 }
-\value{
-Depends on \code{command}: either a vector of required inputs,
-a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L203.Supplysector}, \code{L203.SubsectorLogit}, \code{L203.SubsectorShrwtFllt}, \code{L203.TechShrwt}, \code{L203.TechCoef}. The corresponding file in the
-original data system was \code{L203.water.mapping.R} (water level2).
-}
 \description{
 Mapping of water consumption/withdrawal to sectoral demands at the state level.
 }
@@ -24,5 +18,5 @@ Mapping of water consumption/withdrawal to sectoral demands at the state level.
 Generates water mapping sector input files to group demands by sectors.
 }
 \author{
-NTG Oct 2019
+NTG May 2020
 }

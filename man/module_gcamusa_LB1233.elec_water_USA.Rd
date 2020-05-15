@@ -14,7 +14,7 @@ module_gcamusa_LB1233.elec_water_USA(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L1233.out_EJ_state_elec_F_tech_cool}, \code{L1233.share_sR_elec_F_tech_cool}, \code{L1233.wdraw_km3_state_elec}, \code{L1233.wcons_km3_state_elec}. The corresponding file in the
+the generated outputs: \code{L1233.out_EJ_state_elec_F_tech_cool}, \code{L1233.share_sR_elec_F_tech_cool}. The corresponding file in the
 original data system was \code{LB1233.Elec_water.R} (gcam-usa level1).
 }
 \description{
@@ -24,5 +24,5 @@ Compute water withdrawals/consumption by state, fuel, technology, and cooling sy
 Compute water withdrawals/consumption by state, fuel, technology, and cooling system type.
 }
 \author{
-ST October 2017, NTG Oct 2019
+ST October 2017, NTG May 2020
 }

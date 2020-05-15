@@ -990,7 +990,10 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
           L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_3,
           L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_4) %>%
       rename(stub.technology=technology) %>%
-      select(-share.weight) ->
+      select(-share.weight) %>%
+      filter(!(from.year==min(MODEL_FUTURE_YEARS) & to.year==min(MODEL_FUTURE_YEARS)))->
+      ## Eliminates an error for once through that caused an interpolation from 2020 to 2020
+      ## thus causing an error when running the model
       L2233.StubTechInterp_elecS_cool_USA
 
     ## Alter interpolation such that we filter out unnecessary years for our share weight interpolations.

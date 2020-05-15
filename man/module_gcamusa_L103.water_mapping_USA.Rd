@@ -14,9 +14,9 @@ module_gcamusa_L103.water_mapping_USA(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L103.water_mapping_R_GLU_B_W_Ws_share},
-\code{L103.water_mapping_R_B_W_Ws_share}. There was no corresponding file in the
-original data system.
+the generated outputs: \code{L103.water_mapping_R_GLU_B_W_Ws_share}, \code{L103.water_mapping_R_LS_W_Ws_share},
+\code{L103.water_mapping_R_B_W_Ws_share},  \code{L103.water_mapping_R_PRI_W_Ws_share}
+There was no corresponding file in the original data system.
 }
 \description{
 Calculate percentage shares to map water demands from USA regional level to state and basin.
