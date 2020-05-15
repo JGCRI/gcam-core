@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="Africa_Eastern">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Africa_Eastern</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Africa_Northern">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Africa_Northern</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Africa_Southern">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Africa_Southern</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Africa_Western">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Africa_Western</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Argentina">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Argentina</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Australia_NZ">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Australia_NZ</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Brazil">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Brazil</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Canada">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Canada</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Central America and Caribbean">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Central America and Caribbean</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Central Asia">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Central Asia</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="China">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>China</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Colombia">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Colombia</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="EU-12">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>EU-12</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="EU-15">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>EU-15</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Europe_Eastern">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Europe_Eastern</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Europe_Non_EU">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Europe_Non_EU</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="European Free Trade Association">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>European Free Trade Association</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="India">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>India</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Indonesia">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Indonesia</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Japan">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Japan</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Mexico">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Mexico</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Middle East">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Middle East</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Pakistan">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Pakistan</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Russia">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Russia</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="South Africa">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>South Africa</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="South America_Northern">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>South America_Northern</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="South America_Southern">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>South America_Southern</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="South Asia">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>South Asia</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="South Korea">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>South Korea</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Southeast Asia">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Southeast Asia</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="Taiwan">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>Taiwan</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+      <region name="USA">
+         <ghgpolicy name="CO2_NearTerm">
+            <market>USA</market>
+            <fixedTax year="2020">0.00</fixedTax>
+         </ghgpolicy>
+      </region>
+   </world>
+</scenario>

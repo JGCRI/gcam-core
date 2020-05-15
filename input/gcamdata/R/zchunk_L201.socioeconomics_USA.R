@@ -87,7 +87,7 @@ module_gcamusa_L201.socioeconomics_USA <- function(command, ...) {
       select(region = state, year, laborproductivity)
 
 
-    # Add USA-region udpates
+    # Add USA-region updates
     # Updated USA-region population
     L201.Pop_GCAMUSA %>%
       group_by(year) %>%

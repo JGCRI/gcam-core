@@ -48,7 +48,7 @@ module_emissions_batch_MACC_TC_SSP_xml <- function(command, ...) {
         add_xml_data(L252.MAC_Ag_TC_SSP, "AgMACTC") %>%
         add_xml_data(L252.MAC_An_TC_SSP, "MACTC") %>%
         add_xml_data(L252.MAC_prc_TC_SSP, "MACTC") %>%
-        add_xml_data(L252.MAC_res_TC_SSP, "ResMAC") %>%
+        add_xml_data(L252.MAC_res_TC_SSP, "ResMACTC") %>%
         add_precursors(ag_MAC, an_MAC, prc_MAC, res_MAC) ->
         xml_obj
 

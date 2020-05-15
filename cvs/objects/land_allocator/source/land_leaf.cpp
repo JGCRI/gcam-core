@@ -436,7 +436,11 @@ double LandLeaf::getLandConstraintCost( const string& aRegionName, const int aPe
             mainLog << "Invalid policy type for the LandConstraintCost. Defaulting to subsidy." << endl;
         }
         
-        return landPrice;
+        // Rescale the constraint price to allow the price of the market to be close to 1
+        // while profit rates will be in the range of 1e6.  While this isn't required it helps
+        // solution performance so it doesn't have to waste iterations determining what the
+        // proper scale is.
+        return landPrice * 1e6;
     }
 }
 

@@ -72,6 +72,9 @@ private:
 
     //! Maximum number of model periods (calculated).
     int mMaxPeriod;
+    
+    //! The year the carbon model should start running.
+    int mCarbonModelStartYear;
 
     //! Index of time steps.
     std::vector<int> mPeriodToTimeStep;
@@ -105,6 +108,8 @@ public:
 
     static const std::string& getXMLNameStatic();
     
+    bool isInitialized() const { return mIsInitialized; }
+    
     int getBasePeriod() const;
     int getStartYear() const;
     int getEndYear() const;
@@ -117,6 +122,15 @@ public:
     bool isModelYear( const int aYear ) const;
 
     int getFinalCalibrationPeriod() const;
+    
+    /*!
+     * \brief Returns the year to start running the carbon model.
+     * \details The carbon model should start running at the first year
+     *          of land-use history.  This is typically around 1750.
+     * \return the year to start running the carbon model.
+     */
+    int getCarbonModelStartYear() const;
+
 };
 
 #endif // _MODEL_TIME_H_

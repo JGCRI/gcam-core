@@ -138,7 +138,7 @@ module_gcamusa_LA144.Commercial <- function(command, ...) {
       mutate(pcflsp_m2 = if_else(year == 1979, SQFT1 / value * CONV_MILFT2_M2, SQFT2 / value * CONV_MILFT2_M2))
 
     # Add in a year column to CBECS data so that we can bind rows later
-    # nk 2019/12/5 change 6, 9 to 6, 12 (start, stop)
+    #Note that the 6, 9 below will get the correct year names from the columns.
     for (i in seq_along(L144.CBECS_all)) {
       df <- L144.CBECS_all[[i]]
       data_year <- substr(names(L144.CBECS_all[i]), 6, 9)

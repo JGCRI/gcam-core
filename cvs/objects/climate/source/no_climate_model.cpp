@@ -84,9 +84,6 @@ void NoClimateModel::XMLParse( const DOMNode* aNode ) {
         if( chname == XMLHelper<void>::text() ) {
             continue;
         }
-        else if( chname == "carbon-model-start-year" ) {
-            mCarbonModelStartYear = XMLHelper<int>::getValue( chnode );
-        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
@@ -97,7 +94,6 @@ void NoClimateModel::XMLParse( const DOMNode* aNode ) {
 
 void NoClimateModel::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLName(), aOut, aTabs );
-    XMLWriteElementCheckDefault( mCarbonModelStartYear, "carbon-model-start-year", aOut, aTabs, 1975 );
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 } 
 
@@ -150,10 +146,6 @@ double NoClimateModel::getNetTerrestrialUptake( const int aYear ) const {
 
 double NoClimateModel::getNetOceanUptake(const int aYear ) const {
     return 0.0;
-}
-
-int NoClimateModel::getCarbonModelStartYear() const {
-    return mCarbonModelStartYear;
 }
 
 void NoClimateModel::accept( IVisitor* aVisitor, const int aPeriod ) const {

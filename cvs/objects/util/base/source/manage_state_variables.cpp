@@ -209,8 +209,17 @@ void ManageStateVariables::collectState() {
     }
     
     // if configured, reset initial state data from a restart file
-    const int restartPeriod = Configuration::getInstance()->getInt( "restart-period", -1, false );
-    if(  restartPeriod != -1 && mPeriodToCollect < restartPeriod ) {
+    // note because the value could be specified via restart-period or restart-year
+    // we use the util::getConfigRunPeriod to reconcile the two.
+    int newRestartPeriod = util::getConfigRunPeriod( "restart" );
+    
+    if( newRestartPeriod == Scenario::UNINITIALIZED_RUN_PERIODS ) {
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Could not determine restart period, no restart will be used." << endl;
+        newRestartPeriod = -1;
+    }
+    
+    if( newRestartPeriod != -1 && mPeriodToCollect < newRestartPeriod ) {
         loadRestartFile();
     }
     

@@ -17,6 +17,7 @@
 #' @importFrom dplyr arrange bind_rows distinct filter if_else group_by left_join mutate select summarise group_by select
 #' @importFrom tidyr gather replace_na spread
 #' @importFrom data.table as.data.table setorderv rbindlist
+#' @importFrom rlang :=
 #' @author RH May 2017
 module_energy_LA154.transportation_UCD <- function(command, ...) {
 
@@ -59,6 +60,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       population <- pkm_percap <- country_name <- year.x <- rev.mode <- rev_size.class <-
       mode.y <- size.class.y <- sce <- ':=' <- weight_EJ_core <- intensity_CORE <-
       loadfactor_CORE <- non_fuel_cost_core <- NULL
+
+
 
     all_data <- list(...)[[1]]
 

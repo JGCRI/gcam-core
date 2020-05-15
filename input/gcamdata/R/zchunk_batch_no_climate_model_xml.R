@@ -19,7 +19,7 @@ module_batch_no_climate_model_xml <- function(command, ...) {
 
     # ===================================================
 
-    no_climate_data <- tibble(carbon.model.start.year = modeltime.MAGICC_C_START_YEAR)
+    no_climate_data <- tibble(no.climate.model = 1)
     delete_climate <- tibble(delete = 1)
 
     # Produce outputs

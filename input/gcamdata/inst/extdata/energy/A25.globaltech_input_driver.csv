@@ -1,0 +1,19 @@
+# File: A25.globaltech_input_driver.csv
+# Title: Hydrogen primary input name to drive non-co2 emissions
+# Units: Unitless
+# Comments: Used to identify which is the appropriate input to drive non-co2 emissions
+# Column types: cccc
+# ----------
+supplysector,subsector,technology,input.name
+H2 central production,coal,coal chemical,regional coal
+H2 central production,coal,coal chemical CCS,regional coal
+H2 central production,gas,natural gas steam reforming,regional natural gas
+H2 central production,gas,natural gas steam reforming CCS,regional natural gas
+H2 central production,biomass,biomass to H2,regional biomass
+H2 central production,biomass,biomass to H2 CCS,regional biomass
+H2 central production,nuclear,thermal splitting,nuclearFuelGenIII
+H2 central production,electricity,electrolysis,elect_td_ind
+H2 central production,wind,electrolysis,onshore wind resource
+H2 central production,solar,electrolysis,global solar resource
+H2 forecourt production,gas,natural gas steam reforming,delivered gas
+H2 forecourt production,electricity,electrolysis,elect_td_trn

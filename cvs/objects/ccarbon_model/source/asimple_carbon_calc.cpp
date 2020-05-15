@@ -84,13 +84,6 @@ void ASimpleCarbonCalc::initCalc( const int aPeriod ) {
     if( aPeriod > 0 && mLandLeaf->hasLandAllocationCalculated( aPeriod ) ) {
         calc( aPeriod, CarbonModelUtils::getEndYear(), eReverseCalc );
     }
-    
-    // save some information in case we need to run the calc in reverse again
-    const Modeltime* modeltime = scenario->getModeltime();
-    if( aPeriod != ( modeltime->getmaxper() - 1 ) ) {
-        mSavedCarbonStock[ aPeriod + 1 ] = mCarbonStock[ modeltime->getper_to_yr( aPeriod ) ];
-    }
-    mSavedLandAllocation[ aPeriod ] = mLandLeaf->getLandAllocation( mLandLeaf->getName(), aPeriod );
 }
 
 double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const CarbonCalcMode aCalcMode ) {
@@ -151,7 +144,7 @@ double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const Car
             // when we are intending to calculate in eReverseCalc as the previous timestep may have
             // already calculated in eStoreResults
             calcAboveGroundCarbonEmission( aCalcMode == eReverseCalc && (year - 1) == prevModelYear ?
-                                          mSavedCarbonStock[ aPeriod ] :
+                                          mSavedCarbonStock[ aPeriod - 1 ] :
                                           mCarbonStock[ year - 1 ], prevLand, currLand, getActualAboveGroundCarbonDensity( year ), year, aEndYear, currEmissionsAbove );
             calcBelowGroundCarbonEmission( prevCarbonBelow - currCarbonBelow, year, aEndYear, currEmissionsBelow );
 
@@ -168,6 +161,8 @@ double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const Car
                 mTotalEmissionsBelow[ year ] += currEmissionsBelow[ year ];
                 mTotalEmissions[ year ] = mTotalEmissionsAbove[ year ] + mTotalEmissionsBelow[ year ];
             }
+            mSavedCarbonStock[ aPeriod - 1 ] = mCarbonStock[ prevModelYear ];
+            mSavedLandAllocation[ aPeriod - 1 ] = mLandLeaf->getLandAllocation( mLandLeaf->getName(), aPeriod - 1 );
         }
         else if( aCalcMode == eReverseCalc ) {
             // back out the current emissions from the total

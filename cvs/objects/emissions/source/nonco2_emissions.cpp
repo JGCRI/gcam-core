@@ -43,7 +43,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 
 #include "emissions/include/nonco2_emissions.h"
-#include "emissions/include/aemissions_driver.h"
+#include "emissions/include/iemissions_driver.h"
 #include "emissions/include/emissions_driver_factory.h"
 #include "emissions/include/aemissions_control.h"
 #include "emissions/include/emissions_control_factory.h"
@@ -53,8 +53,6 @@
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/iinfo.h"
-#include "technologies/include/ioutput.h"
-#include "functions/include/function_utils.h"
 #include "marketplace/include/cached_market.h"
 #include "technologies/include/icapture_component.h"
 
@@ -66,6 +64,7 @@ extern Scenario* scenario;
 //! Default constructor.
 NonCO2Emissions::NonCO2Emissions():
 AGHG(),
+mEmissionsDriver( 0 ),
 mShouldCalibrateEmissCoef( false ),
 mGDP( 0 )
 {
@@ -91,6 +90,7 @@ void NonCO2Emissions::clear() {
         delete *controlIt;
     }
     mEmissionsControls.clear();
+    delete mEmissionsDriver;
 }
 
 //! Copy helper function.
@@ -101,8 +101,9 @@ void NonCO2Emissions::copy( const NonCO2Emissions& aOther ) {
     mGDP = aOther.mGDP;
     
     // Deep copy the auto_ptr
-    if( aOther.mEmissionsDriver.get() ){
-        mEmissionsDriver.reset( aOther.mEmissionsDriver->clone() );
+    if( aOther.mEmissionsDriver ){
+        delete mEmissionsDriver;
+        mEmissionsDriver = aOther.mEmissionsDriver->clone();
     }
     
     /*!
@@ -127,8 +128,8 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
         abort();
     }
     
-    if( !mEmissionsDriver.get() ) {
-        mEmissionsDriver.reset( prevComplexGHG->mEmissionsDriver->clone() );
+    if( !mEmissionsDriver ) {
+        mEmissionsDriver = prevComplexGHG->mEmissionsDriver->clone();
     }
     else if ( mEmissionsDriver->getXMLName() != prevComplexGHG->mEmissionsDriver->getXMLName() ){
         // Print a warning if driver has changed
@@ -193,7 +194,7 @@ bool NonCO2Emissions::XMLDerivedClassParse( const string& aNodeName, const DOMNo
         mInputEmissions = XMLHelper<Value>::getValue( aCurrNode );
     }
     else if( EmissionsDriverFactory::isEmissionsDriverNode( aNodeName ) ){
-        mEmissionsDriver = EmissionsDriverFactory::create( aNodeName );
+        parseSingleNode( aCurrNode, mEmissionsDriver, EmissionsDriverFactory::create( aNodeName ) );
     }
     else if( EmissionsControlFactory::isEmissionsControlNode( aNodeName ) ) {
         parseContainerNode( aCurrNode, mEmissionsControls, EmissionsControlFactory::create( aNodeName ).release() );
@@ -209,7 +210,7 @@ void NonCO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs*
     XMLWriteElement( mInputEmissions, "input-emissions", aOut, aTabs );
     XMLWriteElement( mAdjustedEmissCoef [ aPeriod ], "control-adjusted-emiss-coef", aOut, aTabs );
     
-    XMLWriteElement( "", mEmissionsDriver->getXMLName(), aOut, aTabs );
+    mEmissionsDriver->toDebugXML( aPeriod, aOut, aTabs );
     
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
         (*controlIt)->toDebugXML( aPeriod, aOut, aTabs );
@@ -262,7 +263,7 @@ void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aTechInf
     }
     
     
-    if ( !mEmissionsDriver.get() ) {
+    if ( !mEmissionsDriver ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "No emissions driver set for " << getName()
@@ -332,21 +333,8 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
         mGDP = aGDP;
     }
     
-    // Primary output is always stored at position zero and used to drive
-    // emissions.
-    assert( aOutputs.size() > 0 && aOutputs[ 0 ] );
-    double primaryOutput = aOutputs[ 0 ]->getPhysicalOutput( aPeriod );
-    
-    /*!
-     * \warning This is a crude way to determine the input driver. This is problematic
-     *          since different input units are not accounted for (although as a driver,
-     *          this is less relevant because all inputs currently scale to each other)
-     *          but also does not allow an unambiguous definition of an emissions factor.
-     * \todo Need to add some way to flag the input objects (or perhaps give the input name
-     *       to the GHG) to identify which object is the driver to be used for emissions.
-     */
-    const double totalInput = FunctionUtils::getPhysicalDemandSum( aInputs, aPeriod );
-    const double emissDriver = mEmissionsDriver->calcEmissionsDriver( totalInput, primaryOutput );
+    // calculate the emissions driver
+    const double emissDriver = mEmissionsDriver->calcEmissionsDriver( aInputs, aOutputs, aPeriod );
     
     // If emissions were read in and this is an appropraite period, compute emissions coefficient
     if( mShouldCalibrateEmissCoef ) {

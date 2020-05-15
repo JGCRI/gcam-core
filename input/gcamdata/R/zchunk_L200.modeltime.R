@@ -31,10 +31,11 @@ module_modeltime_L200.modeltime <- function(command, ...) {
     # Calculate the read-in timesteps in the model
     GCAM_timesteps <- diff(MODEL_YEARS)
 
-    tibble(start.year.timestep    = GCAM_timesteps[1],
-           start.year             = min(MODEL_BASE_YEARS),
-           final.calibration.year = max(MODEL_BASE_YEARS),
-           end.year               = max(MODEL_FUTURE_YEARS)) %>%
+    tibble(start.year.timestep     = GCAM_timesteps[1],
+           start.year              = min(MODEL_BASE_YEARS),
+           final.calibration.year  = max(MODEL_BASE_YEARS),
+           end.year                = max(MODEL_FUTURE_YEARS),
+           carbon.model.start.year = modeltime.MAGICC_C_START_YEAR) %>%
       add_title("GCAM time information") %>%
       add_units("years") %>%
       add_legacy_name("L200.ModelTime") %>%
@@ -56,8 +57,7 @@ module_modeltime_L200.modeltime <- function(command, ...) {
 
     tibble(last.historical.year    = modeltime.MAGICC_LAST_HISTORICAL_YEAR,
            bc.unit.forcing         = modeltime.MAGICC_BC_UNIT_FORCING,
-           default.emiss.file      = modeltime.MAGICC_DEFAULT_EMISS_FILE,
-           carbon.model.start.year = modeltime.MAGICC_C_START_YEAR) %>%
+           default.emiss.file      = modeltime.MAGICC_DEFAULT_EMISS_FILE) %>%
       add_title("MAGICC time information") %>%
       add_units("years") %>%
       add_legacy_name("L200.MAGICC") %>%
@@ -66,8 +66,7 @@ module_modeltime_L200.modeltime <- function(command, ...) {
 
     tibble(hector.end.year         = modeltime.HECTOR_END_YEAR,
            emissions.switch.year   = modeltime.HECTOR_EMISSIONS_YEAR,
-           hector.ini.file         = modeltime.HECTOR_INI_FILE,
-           carbon.model.start.year = modeltime.MAGICC_C_START_YEAR) %>%
+           hector.ini.file         = modeltime.HECTOR_INI_FILE) %>%
       add_title("Hector time and INI file information") %>%
       add_units("various") %>%
       add_legacy_name("L200.hector") %>%

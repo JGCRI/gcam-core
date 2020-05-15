@@ -36,9 +36,6 @@
 *
 */
 
-
-#include <memory>
-
 /*!
  * \file emissions_driver_factory.h
  * \ingroup Objects
@@ -46,7 +43,7 @@
  * \author Jim Naslund
  */
 
-class AEmissionsDriver;
+class IEmissionsDriver;
 
 /*! 
  * \ingroup Objects
@@ -58,7 +55,7 @@ class AEmissionsDriver;
 class EmissionsDriverFactory{
 
 public:
-    static std::auto_ptr<AEmissionsDriver> create( const std::string& aType );
+    static IEmissionsDriver* create( const std::string& aType );
     static bool isEmissionsDriverNode( const std::string& aNodeName );
 
 };

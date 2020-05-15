@@ -172,13 +172,20 @@ bool SingleScenarioRunner::runScenarios( const int aSinglePeriod,
                                         Timer& aTimer )
 {
     ILogger& mainLog = ILogger::getLogger( "main_log" );
+    if( aSinglePeriod == Scenario::UNINITIALIZED_RUN_PERIODS ) {
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Model run period was left uninitialized, will default to run all periods." << endl;
+    }
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Starting a model run. Running ";
-    if( aSinglePeriod == -1 ){
+    int runPeriod;
+    if( aSinglePeriod < 0 ){
         mainLog << "all periods.";
+        runPeriod = Scenario::RUN_ALL_PERIODS;
     }
     else {
         mainLog << "period " << aSinglePeriod;
+        runPeriod = aSinglePeriod;
     }
     mainLog << endl;
 
@@ -187,7 +194,7 @@ bool SingleScenarioRunner::runScenarios( const int aSinglePeriod,
 	bool success = false;
 	if( mScenario.get() ){
 		// Perform the initial run of the scenario.
-        success = mScenario->run( aSinglePeriod, aPrintDebugging,
+        success = mScenario->run( runPeriod, aPrintDebugging,
                                   mScenario->getName() );
 
         // Compute model run time.
