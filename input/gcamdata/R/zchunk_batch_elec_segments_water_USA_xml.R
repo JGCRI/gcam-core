@@ -10,7 +10,7 @@
 #' the generated outputs: \code{electricity_water.xml}. The corresponding file in the
 #' original data system was \code{batch_electricity_water.xml.R} (water XML).
 module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
-    if(command == driver.DECLARE_INPUTS) {
+  if(command == driver.DECLARE_INPUTS) {
     return(c("L2233.GlobalTechEff_elecS_cool_USA",
              "L2233.GlobalTechShrwt_elecS_cool_USA",
              "L2233.GlobalTechProfitShutdown_elecS_cool_USA",
@@ -49,7 +49,6 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
              "L2233.StubTechMarket_backup_elecS_cool_USA",
              "L2233.StubTechProfitShutdown_elecS_cool_USA",
              "L2233.StubTechSCurve_elecS_cool_USA",
-             #"L2233.StubTechLifetime_elecS_cool_USA",
              "L2233.StubTechShrwt_elecS_cool_USA",
              "L2233.StubTechInterp_elecS_cool_USA",
              "L2233.StubTechCost_offshore_wind_elecS_cool_USA",
@@ -145,7 +144,6 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
     L2233.StubTechFixOut_elecS_cool_USA<- get_data(all_data,"L2233.StubTechFixOut_elecS_cool_USA")
     L2233.StubTechFixOut_hydro_elecS_cool_USA<- get_data(all_data,"L2233.StubTechFixOut_hydro_elecS_cool_USA")
     L2233.StubTechMarket_backup_elecS_cool_USA <- get_data(all_data,"L2233.StubTechMarket_backup_elecS_cool_USA")
-    #L2233.StubTechLifetime_elecS_cool_USA <- get_data(all_data, "L2233.StubTechLifetime_elecS_cool_USA")
     L2233.StubTechShrwt_elecS_cool_USA <- get_data(all_data, "L2233.StubTechShrwt_elecS_cool_USA")
     L2233.StubTechInterp_elecS_cool_USA <- get_data(all_data, "L2233.StubTechInterp_elecS_cool_USA")
     L2233.StubTechCost_offshore_wind_elecS_cool_USA <- get_data(all_data,"L2233.StubTechCost_offshore_wind_elecS_cool_USA")
@@ -234,7 +232,7 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
 
     L2234.TechProd_elecS_grid_USA <- rename(L2234.TechProd_elecS_grid_USA, tech.share.weight = share.weight)
 
-  # ===================================================
+    # ===================================================
 
 
     # Produce outputs
@@ -279,7 +277,6 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
       add_xml_data_generate_levels(L2233.StubTechFixOut_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechFixOut","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.StubTechEff_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechEff","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.StubTechFixOut_hydro_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechFixOut","subsector","nesting-subsector",1,FALSE) %>%
-      #add_xml_data_generate_levels(L2233.StubTechLifetime_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechLifetime", "subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.StubTechSCurve_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechSCurve", "subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.StubTechProfitShutdown_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechProfitShutdown", "subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.StubTechCoef_elecS_cool_USA%>% rename(stub.technology = technology), "StubTechCoef", "subsector","nesting-subsector",1,FALSE) %>%
@@ -366,7 +363,6 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
                      "L2233.StubTechMarket_backup_elecS_cool_USA",
                      "L2233.StubTechProfitShutdown_elecS_cool_USA",
                      "L2233.StubTechSCurve_elecS_cool_USA",
-                     #"L2233.StubTechLifetime_elecS_cool_USA",
                      "L2233.StubTechShrwt_elecS_cool_USA",
                      "L2233.StubTechInterp_elecS_cool_USA",
                      "L2233.StubTechCost_offshore_wind_elecS_cool_USA",

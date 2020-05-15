@@ -154,7 +154,8 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     region<- supplysector <- subsector <-  technology <- year <- minicam.energy.input <-
       coefficient<- market.name <- Electric.sector <- Electric.sector.intermittent.technology <-
       intermittent.technology <- subsector_1 <- sector <- fuel <- Electric.sector.technology <-
-      water_sector <- water_type <- state <- state_name <- ':=' <- x <- plant_type <- State <- value <- Basin_name <- Electric.sector <- Electric.sector.technology <- GLU_name
+      water_sector <- water_type <- state <- state_name <- ':=' <- x <- plant_type <- State <-
+      value <- Basin_name <- Electric.sector <- Electric.sector.technology <-
       apply.to <- basin_id <- basin_name <- calOutputValue <- capital.overnight <-
       cooling_system <- deflator <- efficiency <- fixed.charge.rate <- from.subsector <-
       from.supplysector <- from.technology <- from.year <- global.share.weight <-
@@ -721,19 +722,13 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       ## divide by 2 to account for recirculating and dry_cooling technology types in CSP. This will need to be addressed later
       select(-value, -share) %>%
       ungroup() %>%
+      unique() %>%
       bind_rows(L2233.StubTechProd_elec_USA %>% filter(calOutputValue == 0)) %>%
       mutate(technology = if_else(grepl("wind_base",subsector),subsector,technology),
              subs.share.weight = if_else(grepl("offshore",subsector),subs.share.weight,tech.share.weight),
              tech.share.weight = if_else(calOutputValue == 0,0,tech.share.weight)) %>%
       arrange(region,supplysector,subsector0,year) ->
       L2233.StubTechProd_elec_USA
-
-    L2233.StubTechProd_elec_USA %>%
-      select(-technology, -tech.share.weight,-share.weight.year) %>%
-      rename(share.weight=subs.share.weight) %>%
-      unique() %>%
-      select(-calOutputValue) ->
-      L2233.SubsectorShrwt_elecS_cool_USA
 
 
     # State level s-curves, combining vintages and initial slow and fast retire plants
@@ -872,21 +867,13 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       select(region, supplysector, subsector0, subsector, year, share.weight) -> L2233.SubsectorShrwt_elecS_cool_USA_fut
 
     L2233.SubsectorShrwt_elecS_cool_USA_hist %>%
-      bind_rows(L2233.SubsectorShrwt_elecS_cool_USA_fut) -> L2233.SubsectorShrwt_elecS_cool_USA
+      bind_rows(L2233.SubsectorShrwt_elecS_cool_USA_fut) %>%
+      arrange(region,supplysector,year)-> L2233.SubsectorShrwt_elecS_cool_USA
 
-    ## We want to do a couple of manipulations to make sure that
-    ## future cooling technologies are in line with state-level historical representations.
-    ## First, we set an assumption that if the power plant exists in the historical period,
-    ## the cooling technology share weights will continue into the future
-    ## Second, if that fuel type did not exist in the historical period (i.e. solar),
-    ## then the share weights for all available cooling technologies will be set to 1
-    ## Finally, if a fuel and power plant combination did exist in the historical period,
-    ## but switches to a new power plant type (i.e. Nuclear Gen 2 -> Gen 3), we assume
-    ## that share weights of cooling technologies for that particular state remain similar
-    ## to the old power plant (e.g. Gen 3 will have the same cooling tech share weights as Gen 2)
-
-    # MB:  need to get a handle on how this is being done
+    # Prepare load + fuel type interpolation rules for all power plant + cooloing system combinations
     L2233.SubsectorShrwtInterpTo_elecS_USA %>%
+      filter(!(region=="HI"&subsector0=="refined liquids"))%>%
+      rbind(L2233.SubsectorShrwtInterp_elecS_USA %>% mutate(to.value=1)) %>%
       left_join(L2233.SubsectorLogit_elecS_cool_USA %>%
                   select(-logit.year.fillout, -logit.exponent, -logit.type),
                 by= c("region","supplysector","subsector0")) %>%
@@ -894,60 +881,119 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       # eliminate future nuclear Gen II from falsely being interpolated past 2030
       L2233.SubsectorShrwtInterpTo_elecS_cool_USA
 
+    ## We want to do a couple of manipulations to make sure that
+    ## future cooling technologies are in line with state-level historical representations.
+    ## This requires making assumptions about how the stub.technologies will behave.
+    ## First, we set an assumption that if the power plant exists in the historical period,
+    ## and is projected to continue into future periods the cooling technology shares
+    ## will continue into the future, with the exception that once through cooling share weights
+    ## will be 0 from 2020-2100 to mirror GCAM-core
+
     L2233.StubTechProd_elec_USA %>%
-      dplyr::filter(year==max(MODEL_BASE_YEARS)) %>%
-      select(-share.weight.year) %>%
-      left_join(L2233.SubsectorShrwtInterpTo_elecS_cool_USA %>%
-                  rename(share.weight=to.value) %>%
-                  group_by(region,supplysector,subsector0,subsector)  %>%
-                  ungroup(), by=c("region","supplysector","subsector0","subsector")) %>%
-      unique() %>%
-      mutate(share.weight = if_else(calOutputValue>0&share.weight==0&from.year==max(MODEL_BASE_YEARS),1,share.weight)) %>%
-      ## fixes an error that zeroes out share-weights for refined liquids in 2015
-      select(-calOutputValue) %>%
-      group_by(region,supplysector, subsector0,subsector) %>%
-      mutate(share.weight.sum = sum(tech.share.weight)) %>%
+      group_by(region,supplysector,subsector0,subsector,technology) %>%
+      summarise(tech.share.weight = sum(tech.share.weight)) %>%
       ungroup() %>%
-      left_join(elec_tech_water_map %>%
-                  select(cooling_system,to.technology), by=c("technology"="to.technology")) %>%
       left_join(
-        bind_rows(L2233.GlobalTechShrwt_elec_cool_USA,
-                  L2233.GlobalIntTechShrwt_elecS_cool_USA %>% rename(technology=intermittent.technology) %>%
-                    mutate(share.weight = if_else(subsector.name=="wind_base_offshore",1,share.weight))
-                  ##Fix to make sure that the share weight of offshore wind is properly handled and carried through the rest of the script
-        ) %>% rename(global.share.weight=share.weight, supplysector=sector.name, subsector0=subsector.name0, subsector=subsector.name), by=c("supplysector","subsector0","subsector","technology","year")
-      )->
-      L2233.StubTechShrwt_elecS_cool_USA
+        L2233.StubTechProd_elec_USA %>%
+          group_by(region,supplysector,subsector0) %>%
+          summarise(subs.share.weight = sum(subs.share.weight)) %>%
+          ungroup(), by=c("region","supplysector","subsector0")
+      ) %>%
+      left_join_keep_first_only(
+        L2233.SubsectorShrwt_elecS_cool_USA %>% filter(year>=first(MODEL_FUTURE_YEARS)) %>% group_by(region,supplysector,subsector0,subsector) %>%
+          mutate(future.sub.share=sum(share.weight)) %>% ungroup() %>% select(-year), by=c("region","supplysector","subsector0","subsector")) ->
+      L2233.StubTechShrwt_elecS_cool_USA_fut
 
-    #Initially remove all technologies that are not present in future periods so that there
-    #are no interpolation rules applied to these technologies
-    L2233.StubTechShrwt_elecS_cool_USA %>%
-      na.omit() %>%
-      filter(subs.share.weight>0) %>%
-      mutate(state.cooling.share.weight = if_else(share.weight>0&share.weight.sum>0,tech.share.weight,
-                                                  if_else(share.weight==0&tech.share.weight==0,0,1))) %>%
-      select(region,supplysector,subsector0,cooling_system,from.year,state.cooling.share.weight) %>%
-      unique() %>%
-      group_by(region,supplysector,subsector0,cooling_system,from.year) %>%
-      summarise(state.cooling.share.weight= sum(state.cooling.share.weight))%>%
-      ungroup() %>%
-      mutate(state.cooling.share.weight = if_else(state.cooling.share.weight>1,1,state.cooling.share.weight)) ->
-      L2233.StubTechShrwt_state_elecS_cool_USA
+    L2233.StubTechShrwt_elecS_cool_USA_fut %>%
+      filter(tech.share.weight > 0 & future.sub.share > 0 & subs.share.weight > 0) ->
+      L2233.StubTechShrwt_elecS_cool_USA_case_1
 
-    L2233.StubTechShrwt_elecS_cool_USA %>%
-      filter(global.share.weight>0) %>%
-      left_join(L2233.StubTechShrwt_state_elecS_cool_USA, by=c("region","supplysector","subsector0","from.year","cooling_system")) %>%
-      mutate(updated.share.weight = if_else(share.weight>0&share.weight.sum>0,tech.share.weight,
-                                            if_else(share.weight==0,0,
-                                                    if_else(share.weight>0&share.weight.sum==0&!is.na(state.cooling.share.weight),state.cooling.share.weight,
-                                                            if_else(share.weight>0&share.weight.sum==0&subs.share.weight>0&is.na(state.cooling.share.weight)&!grepl("offshore",subsector),0,1)))),
-             interpolation.function = if_else(share.weight.sum>0&from.year == max(MODEL_BASE_YEARS)&share.weight==1,"fixed",interpolation.function),
-             from.year = if_else(from.year==max(MODEL_BASE_YEARS)&to.year==max(MODEL_FUTURE_YEARS)&share.weight.sum>1&interpolation.function=="fixed",gcamusa.FINAL_MAPPING_YEAR,as.double(from.year))) %>%
-      select(-subs.share.weight, -tech.share.weight, -share.weight, -share.weight.sum, -year,  -cooling_system) %>%
-      filter(from.year!=to.year) %>%
-      select(-state.cooling.share.weight, -global.share.weight) %>% unique() %>%
-      rename(to.value=updated.share.weight, stub.technology=technology)->
+    L2233.StubTechShrwt_elecS_cool_USA_case_1 %>%
+      left_join(L2233.SubsectorShrwtInterpTo_elecS_cool_USA %>% mutate(from.year= as.double(from.year)), by=c("region","supplysector","subsector0","subsector")) %>%
+      select(-tech.share.weight,-future.sub.share,-subs.share.weight) %>%
+      filter(to.year==max(MODEL_FUTURE_YEARS)) %>%
+      mutate(to.value = if_else(grepl("once through",technology),0,to.value),
+             share.weight = if_else(grepl("once through",technology),0,share.weight),
+             from.year = if_else(grepl("once through",technology),min(MODEL_FUTURE_YEARS),max(MODEL_BASE_YEARS)),
+             interpolation.function = if_else(grepl("once through",technology),"fixed",interpolation.function)) ->
+      L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_1
+
+    ## Second, if that fuel type did not exist in the historical period (i.e. solar, IGCC, etc.),
+    ## but exists in the future, then the share weights for all non-once through cooling technologies
+    ## will be set to 1
+
+    L2233.StubTechShrwt_elecS_cool_USA_fut %>%
+      filter(tech.share.weight == 0 & future.sub.share > 0 & subs.share.weight == 0) ->
+      L2233.StubTechShrwt_elecS_cool_USA_case_2
+
+    L2233.StubTechShrwt_elecS_cool_USA_case_2 %>%
+      left_join(L2233.SubsectorShrwtInterpTo_elecS_cool_USA %>% mutate(from.year= as.double(from.year)), by=c("region","supplysector","subsector0","subsector")) %>%
+      select(-tech.share.weight,-future.sub.share,-subs.share.weight) %>%
+      mutate(to.value = if_else(grepl("once through",technology),0,to.value),
+             share.weight = if_else(grepl("once through",technology),0,share.weight),
+             from.year = if_else(grepl("once through",technology),min(MODEL_FUTURE_YEARS),from.year),
+             interpolation.function = if_else(grepl("once through",technology),"fixed",interpolation.function)) ->
+      L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_2
+
+    ## Third, if a fuel and power plant combination did exist in the historical period,
+    ## but switches to a new power plant type (i.e. Nuclear Gen 2 -> Gen 3), we assume
+    ## that share weights of cooling technologies for that particular state remain similar
+    ## to the old power plant (e.g. Gen 3 will have the same cooling tech share weights as Gen 2)
+
+    L2233.StubTechShrwt_elecS_cool_USA_fut %>%
+      filter(tech.share.weight == 0 & future.sub.share > 0 & subs.share.weight > 0) %>%
+      left_join(elec_tech_water_map %>% select(to.technology, cooling_system), by=c("technology" = "to.technology"))->
+      L2233.StubTechShrwt_elecS_cool_USA_case_3
+
+    ## Find historical technologies that have share.weights to make sure we continue these into the future
+
+    L2233.StubTechShrwt_elecS_cool_USA_fut %>%
+      filter(tech.share.weight > 0 & subs.share.weight > 0) %>%
+      mutate(hist.share = 1) %>%
+      left_join(elec_tech_water_map %>% select(to.technology, cooling_system), by=c("technology" = "to.technology")) %>%
+      select(-tech.share.weight,-future.sub.share,-subs.share.weight, -share.weight, -subsector, -technology)->
+      L2233.StubTechShrwt_elecS_cool_USA_case_3a
+
+    ## Combine new power plant types with old and replace share weights from old type to new.
+
+    L2233.StubTechShrwt_elecS_cool_USA_case_3 %>%
+      left_join_keep_first_only(L2233.StubTechShrwt_elecS_cool_USA_case_3a, by =c("region","supplysector","subsector0","cooling_system")) %>%
+      select(-cooling_system,-tech.share.weight,-future.sub.share,-subs.share.weight) %>%
+      left_join(L2233.SubsectorShrwtInterpTo_elecS_cool_USA %>% mutate(from.year= as.double(from.year)), by=c("region","supplysector","subsector0","subsector")) %>%
+      replace_na(list(hist.share=0)) %>%
+      mutate(to.value = hist.share,
+             share.weight=hist.share,
+             to.value = if_else(grepl("once through",technology),0,to.value),
+             share.weight = if_else(grepl("once through",technology),0,share.weight),
+             from.year = if_else(grepl("once through",technology)|(from.year==max(MODEL_BASE_YEARS)&to.year==max(MODEL_FUTURE_YEARS)),min(MODEL_FUTURE_YEARS),from.year),
+             interpolation.function = if_else(grepl("once through",technology),"fixed",interpolation.function)) %>%
+      select(-hist.share)->
+      L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_3
+
+    ## Finally, all power plant and cooling technology combinations that do not exist in
+    ## in future years are given 0 share weights in the future periods
+
+    L2233.StubTechShrwt_elecS_cool_USA_fut %>%
+      filter(future.sub.share == 0) ->
+      L2233.StubTechShrwt_elecS_cool_USA_case_4
+
+    L2233.StubTechShrwt_elecS_cool_USA_case_4 %>%
+      left_join(L2233.SubsectorShrwtInterpTo_elecS_cool_USA %>% mutate(from.year= as.double(from.year)), by=c("region","supplysector","subsector0","subsector")) %>%
+      select(-tech.share.weight,-future.sub.share,-subs.share.weight) %>%
+      mutate(to.value = share.weight) ->
+      L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_4
+
+    ## Combine all Interpolation cases
+
+    rbind(L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_1,
+          L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_2,
+          L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_3,
+          L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_4) %>%
+      rename(stub.technology=technology) %>%
+      select(-share.weight) ->
       L2233.StubTechInterp_elecS_cool_USA
+
+    ## Alter interpolation such that we filter out unnecessary years for our share weight interpolations.
 
     L2233.StubTechInterp_elecS_cool_USA %>%
       select(-interpolation.function,-apply.to) %>%
@@ -955,7 +1001,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       mutate(year = if_else(from.year==max(MODEL_BASE_YEARS)|from.year==min(MODEL_FUTURE_YEARS),as.double(from.year),as.double(to.year))) %>%
       bind_rows( L2233.StubTechInterp_elecS_cool_USA %>%
                    select(-interpolation.function,-apply.to) %>%
-                   filter(from.year==min(MODEL_FUTURE_YEARS)&subsector0=="refined liquids") %>%
+                   filter(from.year==min(MODEL_FUTURE_YEARS)&subsector0=="refined liquids"&region!="HI") %>%
                    mutate(year = as.double(to.year))
       ) %>%
       ## fixes refined liquids share weight not being zeroed out in 2020. New since BYU
@@ -967,7 +1013,8 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
 
       ) %>% select(-to.year, -from.year) %>%
       unique() %>%
-      rename(share.weight=to.value)->
+      rename(share.weight=to.value) %>%
+      filter(year>=first(MODEL_FUTURE_YEARS)) ->
       L2233.StubTechShrwt_elecS_cool_USA
 
 
