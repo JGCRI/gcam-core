@@ -11,19 +11,13 @@ module_gcamusa_LA2233.elec_segments_water_USA(command, ...)
 
 \item{...}{other optional parameters, depending on command}
 }
-\value{
-Depends on \code{command}: either a vector of required inputs,
-a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2233.StubTech_WaterCoef_ref}
-The corresponding file in the
-original data system was \code{LA2233.electricity_water_USA} (gcam-usa level2)
-}
 \description{
-Weighted water coefficient for reference scenario and load segment classification
+Generates GCAM-USA model inputs for multiple load segments electricity sector and cooling systems by state.
 }
 \details{
-Weighted water coefficient for reference scenario and load segment classification
+This chunk generates input files to create an electricity generation sector with multiple load segments
+for each state and creates the demand by load, fuel, power plant, and cooling system type.
 }
 \author{
-NTG December 2019
+NTG May 2020
 }
