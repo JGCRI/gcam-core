@@ -19,15 +19,15 @@ generate_level2_data_names <- function() {
   level2_data_names <- list()
 
   # Modeltime
-  level2_data_names[["ModelTime"]] <- c("start.year.timestep", "start.year", "final.calibration.year", "end.year")
+  level2_data_names[["ModelTime"]] <- c("start.year.timestep", "start.year", "final.calibration.year", "end.year", "carbon.model.start.year")
   level2_data_names[["ModelTimeInterYears"]] <- c("inter.year.timestep", "inter.year", "dummy.tag")
 
   # Climate
-  level2_data_names[["MAGICC"]] <- c("last.historical.year", "bc.unit.forcing", "default.emiss.file", "carbon.model.start.year")
-  level2_data_names[["hector"]] <- c("hector.end.year", "emissions.switch.year", "hector.ini.file", "carbon.model.start.year")
-  level2_data_names[["NoClimateModel"]] <- c("carbon.model.start.year")
+  level2_data_names[["MAGICC"]] <- c("last.historical.year", "bc.unit.forcing", "default.emiss.file")
+  level2_data_names[["hector"]] <- c("hector.end.year", "emissions.switch.year", "hector.ini.file")
   level2_data_names[["DeleteMAGICC"]] <- c("delete")
   level2_data_names[["DeleteHector"]] <- c("delete")
+  level2_data_names[["NoClimateModel"]] <- c("no.climate.model")
 
   # Socioeconomics
   level2_data_names[["Pop"]] <- c("region", "year", "totalPop")
@@ -378,11 +378,12 @@ generate_level2_data_names <- function() {
   level2_data_names[["GDPCtrlMaxRes"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "ctrl.name", "max.reduction")
   level2_data_names[["GDPCtrlSteepRes"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "ctrl.name", "steepness")
   level2_data_names[["ResMAC"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
+  level2_data_names[["ResMACTC"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "mac.control", "tech.change.year", "tech.change")
   level2_data_names[["StubTechNonCO2"]] <- c(level2_data_names[["StubTechYr"]], "Non.CO2")
   level2_data_names[["StubTechEmissUnits"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emissions.unit")
-  level2_data_names[["InputEmissCoeff"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emiss.coef")
+  level2_data_names[["InputEmissCoeff"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emiss.coef", "input.name")
   level2_data_names[["OutputEmissCoeff"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emiss.coeff")
-  level2_data_names[["InputEmissions"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "input.emissions")
+  level2_data_names[["InputEmissions"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "input.emissions", "input.name")
   level2_data_names[["OutputEmissions"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "input.emissions")
   level2_data_names[["StbTechOutputEmissions"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "input.emissions")
   level2_data_names[["ReadInControl"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "future.emiss.coeff.name", "future.emiss.coeff.year", "emiss.coeff")
@@ -390,20 +391,20 @@ generate_level2_data_names <- function() {
   level2_data_names[["GDPCtrlSteep"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "ctrl.name", "steepness")
   level2_data_names[["DelEmCtrl"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "ctrl.name")
   level2_data_names[["MAC"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
-  level2_data_names[["MACTC"]] <- c(level2_data_names[["MAC"]], "tech.change")
+  level2_data_names[["MACTC"]] <- c(level2_data_names[["StubTechNonCO2"]], "mac.control", "tech.change.year", "tech.change")
   level2_data_names[["MAC_NC"]] <- level2_data_names[["MAC"]]
   level2_data_names[["MAC_NoBelowZero"]] <- level2_data_names[["MAC"]]
-  level2_data_names[["InputEmFactUnmgd"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "Non.CO2", "emiss.coef")
+  level2_data_names[["InputEmFactUnmgd"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "Non.CO2", "emiss.coef", "input.name")
   level2_data_names[["OutputEmFactUnmgd"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "Non.CO2", "emiss.coef")
   level2_data_names[["OutputEmissCoeffAg"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "emiss.coef")
-  level2_data_names[["InputEmissionsUnmgd"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "Non.CO2", "input.emissions")
+  level2_data_names[["InputEmissionsUnmgd"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "Non.CO2", "input.emissions", "input.name")
   level2_data_names[["OutputEmissionsAg"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "input.emissions")
   level2_data_names[["OutputEmissionsUnmgd"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "Non.CO2", "input.emissions")
   level2_data_names[["AgGDPCtrlMax"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "ctrl.name", "max.reduction")
   level2_data_names[["AgGDPCtrlSteep"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "ctrl.name", "steepness")
   level2_data_names[["AgMAC"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
-  level2_data_names[["AgMACTC"]] <- c(level2_data_names[["AgMAC"]], "tech.change")
-  level2_data_names[["TrnInputEmissCoeff"]] <- c("region", "supplysector", "tranSubsector", "stub.technology", "year", "Non.CO2", "emiss.coef")
+  level2_data_names[["AgMACTC"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "mac.control", "tech.change.year", "tech.change")
+  level2_data_names[["TrnInputEmissCoeff"]] <- c("region", "supplysector", "tranSubsector", "stub.technology", "year", "Non.CO2", "emiss.coef", "input.name")
   level2_data_names[["LinearCtrlInc"]] <- c("region", "supplysector", "tranSubsector","stub.technology", "year", "Non.CO2", "linear.control", "start.year", "end.year", "final.emissions.coefficient")
 
   # Policy

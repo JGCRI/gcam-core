@@ -25,7 +25,6 @@ module_gcamusa_batch_coal_retire_USA_xml <- function(command, ...) {
              # coal vintage
              "L2241.StubTechProd_coal_vintage_USA",
              "L2241.StubTechEff_coal_vintage_USA",
-             # "L2241.StubTechLifetime_coal_vintage_USA",
              "L2241.StubTechSCurve_coal_vintage_USA",
              "L2241.StubTechProfitShutdown_coal_vintage_USA",
              "L2241.StubTechMarket_coal_vintage_USA",
@@ -65,7 +64,6 @@ module_gcamusa_batch_coal_retire_USA_xml <- function(command, ...) {
     # coal vintage
     L2241.StubTechProd_coal_vintage_USA <- get_data(all_data, "L2241.StubTechProd_coal_vintage_USA")
     L2241.StubTechEff_coal_vintage_USA <- get_data(all_data, "L2241.StubTechEff_coal_vintage_USA")
-    # L2241.StubTechLifetime_coal_vintage_USA <- get_data(all_data, "L2241.StubTechLifetime_coal_vintage_USA")
     L2241.StubTechSCurve_coal_vintage_USA <- get_data(all_data, "L2241.StubTechSCurve_coal_vintage_USA")
     L2241.StubTechProfitShutdown_coal_vintage_USA <- get_data(all_data, "L2241.StubTechProfitShutdown_coal_vintage_USA")
     L2241.StubTechMarket_coal_vintage_USA <- get_data(all_data, "L2241.StubTechMarket_coal_vintage_USA")
@@ -92,7 +90,6 @@ module_gcamusa_batch_coal_retire_USA_xml <- function(command, ...) {
       # coal vintage
       add_xml_data(L2241.StubTechProd_coal_vintage_USA, "StubTechProd") %>%
       add_xml_data(L2241.StubTechEff_coal_vintage_USA, "StubTechEff") %>%
-      # add_xml_data(L2241.StubTechLifetime_coal_vintage_USA, "StubTechLifetime") %>%
       add_xml_data(L2241.StubTechSCurve_coal_vintage_USA, "StubTechSCurve") %>%
       add_xml_data(L2241.StubTechProfitShutdown_coal_vintage_USA, "StubTechProfitShutdown") %>%
       add_xml_data(L2241.StubTechMarket_coal_vintage_USA, "StubTechMarket") %>%
@@ -116,7 +113,6 @@ module_gcamusa_batch_coal_retire_USA_xml <- function(command, ...) {
                      # coal vintage
                      "L2241.StubTechProd_coal_vintage_USA",
                      "L2241.StubTechEff_coal_vintage_USA",
-                     # "L2241.StubTechLifetime_coal_vintage_USA",
                      "L2241.StubTechSCurve_coal_vintage_USA",
                      "L2241.StubTechProfitShutdown_coal_vintage_USA",
                      "L2241.StubTechMarket_coal_vintage_USA",

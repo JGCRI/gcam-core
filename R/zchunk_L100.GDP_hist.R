@@ -31,7 +31,7 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
 
     # Load required inputs
     usda_gdp_mer <- get_data(all_data, "socioeconomics/USDA_GDP_MER")
-    assert_that(tibble::is.tibble(usda_gdp_mer))
+    assert_that(tibble::is_tibble(usda_gdp_mer))
 
     # Convert to long form, filter to historical years, convert units
     usda_gdp_mer %>%

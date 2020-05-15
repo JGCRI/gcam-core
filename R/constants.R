@@ -214,7 +214,7 @@ aglu.HIGH_GROWTH_PCGDP <- 12.275   # GDP per capita high threshold for SSP4 regi
 aglu.LOW_GROWTH_PCGDP  <- 2.75     # GDP per capita low threshold for SSP4 region groupings, thousand 2010$ per person
 
 # AgLu mulitpliers
-aglu.MGMT_YIELD_ADJ <- 0.1       # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number.
+aglu.MGMT_YIELD_ADJ <- 0.2       # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number.
 aglu.HI_PROD_GROWTH_MULT <- 1.5  # Multipliers for high ag prod growth scenarios
 aglu.LOW_PROD_GROWTH_MULT <- 0.5 # Multipliers for low ag prod growth scenarios
 
@@ -323,7 +323,7 @@ aglu.LN1_PROTUNMGD_LOGIT_EXP  <- 0
 aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 
 # default logit exponent and type for LN5, the competition betweein high and lo management
-aglu.MGMT_LOGIT_EXP  <- 0.5
+aglu.MGMT_LOGIT_EXP  <- 2.5
 aglu.MGMT_LOGIT_TYPE <- "absolute-cost-logit"
 
 # XML-related constants
@@ -590,10 +590,13 @@ emissions.TRN_INTL_SECTORS   <- c("trn_intl_ship", "trn_intl_air")
 emissions.USE_GV_MAC           <- 1
 emissions.USE_GCAM3_CCOEFS     <- 1 # Select whether to use GCAM3 fuel carbon coefficients
 emissions.USE_GLOBAL_CCOEFS    <- 1 # Select whether to use global average carbon coefficients on fuels, or region-specific carbon coefficients
+emissions.UNMGD_LAND_INPUT_NAME <- "land-input"
 
 # Digits for rounding into XMLs
-emissions.DIGITS_CO2COEF   <- 1
-emissions.DIGITS_EMISSIONS <- 10
+emissions.DIGITS_CO2COEF       <- 1
+emissions.DIGITS_EMISS_COEF    <- 7
+emissions.DIGITS_EMISSIONS     <- 10
+emissions.DIGITS_MACC          <- 3
 
 
 # GCAM-USA constants ======================================================================
@@ -601,7 +604,6 @@ emissions.DIGITS_EMISSIONS <- 10
 # GCAM-USA Constants for Processing UCS Database. As of 04/22/19, only used in chunk zchunk_LA1233.Process_UCS_data_ref.R
 gcamusa.UCS_WATER_COEFFICIENTS_FIRST_HISTORICAL_YEAR   <- 1970
 gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR   <- 2008
-#kbn and nz updated below to 2015
 gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR <- 2015
 gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR <- 2020
 gcamusa.UCS_WATER_COEFFICIENTS_FINAL_FUTURE_YEAR <- 2100
@@ -611,6 +613,7 @@ gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_COOLING_POND <- 0.05
 gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_ONCE_THROUGH_SEAWATER <- 0.05
 
 # GCAM-USA time
+gcamusa.SEDS_DATA_YEARS <- 1971:2017 # years for which we'll use EIA SEDS data in module_gcamusa_LA101.EIA_SEDS
 gcamusa.WIND_BASE_COST_YEAR   <- 2005
 gcamusa.HYDRO_HIST_YEAR <- 2015
 gcamusa.HYDRO_FINAL_AEO_YEAR <- 2050
@@ -704,6 +707,10 @@ gcamusa.STORAGE_TECH_LIST <- c("CSP_storage", "PV_storage", "wind_storage")
 gcamusa.BASE_HDD_USA <- 4524 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb0107
 gcamusa.BASE_CDD_USA <- 1215 # https://www.eia.gov/totalenergy/data/annual/showtext.php?t=ptb010
 gcamusa.AEO_DD_YEARS <- seq(2010, 2040, 5)
+
+
+#Years to be adjusted for RECS
+gcamusa.RECS_YEARS <- c(2009,2015)
 
 gcamusa.GAS_ADJ_THRESH      <- 5
 

@@ -82,7 +82,7 @@ module_gcamusa_LA101.EIA_SEDS <- function(command, ...) {
 
     # To create this second output table, I need to split the dataframe and recombine
     Bbtu_with_GCAM_names_intermediate %>%
-      filter(year %in% 1971:2017) %>% # Custom year range, want to keep NAs in 1960-1970 #nk &kbn 2019/11/18 - The years here need to be changed to constants.
+      filter(year %in% gcamusa.SEDS_DATA_YEARS) %>% # Custom year range (1971:2017), want to keep NAs in 1960-1970
       fill(value) %>% # Replace NAs in 1971-1979 with values from one year more recent
       bind_rows(filter(Bbtu_with_GCAM_names_intermediate, year %in% 1960:1970)) %>% # Reattaching 1960-1970 rows
       arrange(Data_Status, state, MSN, EIA_fuel, EIA_sector, sector, fuel, -year) ->

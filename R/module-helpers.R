@@ -186,6 +186,9 @@ set_traded_names <- function(data, GCAM_region_names, apply_selected_only = TRUE
 #' @return Modified tibble with 'numerical' values instead of text.
 #' @note The returned 'numerical' values are actually characters; this helper function doesn't touch column types.
 set_years <- function(data) {
+  ## silence package check.
+  . <- NULL
+
   assert_that(is_tibble(data))
   year_recode <- c("start-year" =  min(MODEL_BASE_YEARS),
                    "final-calibration-year" = max(MODEL_BASE_YEARS),
@@ -653,7 +656,6 @@ downscale_FAO_country <- function(data, country_name, dissolution_year, years = 
 #' Note that all of these can be vectors
 #' The functional form of GCAM's smooth renewable resource curve is documented at:
 #' http://jgcri.github.io/gcam-doc/energy.html#renewable-resources
-#' @param data Data with curve parameters, tibble
 #' @param curve.exponent smooth renewable resource curve shape parameter, numeric
 #' @param mid.price the price at which 50 percent of the maximum available resource is produced, numeric
 #' @param base.price the minimum cost of producing (generating electricity from) the resource
