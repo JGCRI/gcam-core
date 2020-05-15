@@ -35,7 +35,7 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     region <- year <- supplysector <- subsector <- stub.technology <- share.weight <-
-      Electric.sector.technology <- Electric.sector <- NULL  # silence package check notes
+      Electric.sector.technology <- Electric.sector <- subsector0 <- NULL  # silence package check notes
 
     # Load required inputs
     L222.StubTechMarket_en_USA <- get_data(all_data, "L222.StubTechMarket_en_USA")
