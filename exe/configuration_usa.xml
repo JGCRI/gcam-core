@@ -63,7 +63,6 @@
 		<Value name = "water_mapping_usa">../input/gcamdata/xml/water_mapping_USA.xml</Value>
 		<Value name = "ag_water">../input/gcamdata/xml/ag_water_input_IRR_MGMT.xml</Value>
 		<Value name = "elec_water_coef">../input/gcamdata/xml/electricity_water_coefs.xml</Value>
-		<Value name = "nonco2_elec_water">../input/gcamdata/xml/water_elec_emissions.xml</Value>
 		<Value name = "ind_water">../input/gcamdata/xml/water_demand_industry.xml</Value>
 		<Value name = "an_water">../input/gcamdata/xml/water_demand_livestock.xml</Value>
 		<Value name = "municipal_water">../input/gcamdata/xml/water_demand_municipal.xml</Value>
