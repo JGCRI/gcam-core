@@ -10,7 +10,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L203.DeleteSupplysector_USA}, \code{L203.Supplysector_USA}, \code{L203.SubsectorLogit_USA},
 #' \code{L203.SubsectorShrwt_USA}, \code{L203.TechShrwt_USA}, \code{L203.TechCoef_USA}, \code{L203.TechPmult_USA},
-#' \code{L203.TechDesalCoef_USA}, \code{L203.TechDesalShrwt_USA}, \code{L203.TechDesalCost_USA"
+#' \code{L203.TechDesalCoef_USA}, \code{L203.TechDesalShrwt_USA}, \code{L203.TechDesalCost_USA}.
 #' The corresponding file in the original data system was \code{L203.water.mapping.R} (water level2).
 #' @details Generates water mapping sector input files to group demands by sectors.
 #' @importFrom assertthat assert_that
