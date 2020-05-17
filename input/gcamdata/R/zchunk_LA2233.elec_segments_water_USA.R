@@ -19,7 +19,7 @@
 #' \code{L2233.StubTechCapFactor_elecS_wind_USA}, \code{L2233.StubTechElecMarket_backup_elecS_cool_USA}, \code{L2233.StubTechFixOut_elecS_cool_USA}, \code{L2233.StubTechFixOut_hydro_elecS_cool_USA},
 #' \code{L2233.StubTechMarket_backup_elecS_cool_USA}, \code{L2233.StubTechProfitShutdown_elecS_cool_USA}, \code{L2233.StubTechShrwt_elecS_cool_USA}, \code{L2233.StubTechInterp_elecS_cool_USA},
 #' \code{L2233.StubTechCost_offshore_wind_elecS_cool_USA}, \code{L2233.SubsectorLogit_elecS_USA}, \code{L2233.SubsectorLogit_elecS_cool_USA}, \code{L2233.SubsectorShrwt_elecS_USA},
-#' \code{L2233.SubsectorShrwt_elecS_cool_USA}, \code{L2233.SubsectorShrwtInterp_elecS_USA}, \code{L2233.SubsectorShrwtInterpTo_elecS_USA}, \code{L2233.Supplysector_elecS_cool_USA"
+#' \code{L2233.SubsectorShrwt_elecS_cool_USA}, \code{L2233.SubsectorShrwtInterp_elecS_USA}, \code{L2233.SubsectorShrwtInterpTo_elecS_USA}, \code{L2233.Supplysector_elecS_cool_USA}.
 #' The corresponding file in the original data system was \code{LA2233.electricity_water_USA} (gcam-usa level2)
 #' @details This chunk generates input files to create an electricity generation sector with multiple load segments
 #' for each state and creates the demand by load, fuel, power plant, and cooling system type.
