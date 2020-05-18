@@ -64,8 +64,8 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
              # ...and change PV and hydro to fresh
              water_type = if_else(technology %in% c("hydro", "PV"), "fresh", water_type),
              cooling_system = if_else(water_type=="seawater","seawater",cooling_system)) %>%
-      dplyr::filter(!grepl("none",cooling_system)|technology %in% c("hydro", "PV"))%>%
-      filter(!grepl("binary",cooling_system))->
+      dplyr::filter(!grepl("none",cooling_system)|technology %in% c("hydro", "PV")) %>%
+      filter(!grepl("binary",cooling_system)) ->
       # Filter out all non hydro & PV technologies which do not use cooling systems and binary recirculation which we do not model
       USC_db_adj
 
@@ -103,24 +103,33 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
     # calculate national averages, to be used as default values where data are missing
     # we separate states with and without seawater availability to calculate separate shares for these states.
     # therefore we have a national avg for non seawater states and for seawater states
-    L1233.out_MWh_state_elec_F_tech %>% filter(!(state %in%gcamusa.NO_SEAWATER_STATES)) %>% group_by(sector, fuel, technology) %>%
+    L1233.out_MWh_state_elec_F_tech %>%
+      filter(!(state %in%gcamusa.NO_SEAWATER_STATES)) %>%
+      group_by(sector, fuel, technology) %>%
       summarise(out_MWh_sea = sum(out_MWh_)) %>%
       ungroup() ->
       L1233.out_MWh_USA_elec_F_tech_sea
-    L1233.out_MWh_state_elec_F_tech %>% filter((state %in%gcamusa.NO_SEAWATER_STATES)) %>% group_by(sector, fuel, technology) %>%
+    L1233.out_MWh_state_elec_F_tech %>%
+      filter((state %in%gcamusa.NO_SEAWATER_STATES)) %>%
+      group_by(sector, fuel, technology) %>%
       summarise(out_MWh_ = sum(out_MWh_)) %>%
       ungroup() ->
       L1233.out_MWh_USA_elec_F_tech
 
     L1233.out_MWh_USA_elec_F_tech_sea %>%
-      full_join(L1233.out_MWh_USA_elec_F_tech, by = c("sector", "fuel", "technology")) %>%
+      full_join(L1233.out_MWh_USA_elec_F_tech,
+                by = c("sector", "fuel", "technology")) %>%
       replace_na(list(out_MWh_sea = 0,out_MWh_=0)) ->
       L1233.out_MWh_USA_elec_F_tech
 
-    L1233.out_MWh_state_elec_F_tech_cool %>% filter(!(state %in% gcamusa.NO_SEAWATER_STATES)) %>% group_by(sector, fuel, technology, cooling_system, water_type) %>%
+    L1233.out_MWh_state_elec_F_tech_cool %>%
+      filter(!(state %in% gcamusa.NO_SEAWATER_STATES)) %>%
+      group_by(sector, fuel, technology, cooling_system, water_type) %>%
       summarise(out_MWh.sea = sum(out_MWh)) %>%
       ungroup() -> L1233.out_MWh_state_elec_F_tech_cool_sea
-    L1233.out_MWh_state_elec_F_tech_cool %>% filter((state %in%gcamusa.NO_SEAWATER_STATES)) %>% group_by(sector, fuel, technology, cooling_system, water_type) %>%
+    L1233.out_MWh_state_elec_F_tech_cool %>%
+      filter((state %in%gcamusa.NO_SEAWATER_STATES)) %>%
+      group_by(sector, fuel, technology, cooling_system, water_type) %>%
       summarise(out_MWh = sum(out_MWh)) %>%
       ungroup() -> L1233.out_MWh_state_elec_F_tech_cool_nosea
 
@@ -136,28 +145,31 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
 
     # get all possible combinations of power plants, cooling system types, and water types in all states
     L1233.out_MWh_state_elec_F_tech_cool %>%
-      select(-out_MWh, -share, -state) %>% unique -> L1233.elec_tech_cool
+      select(-out_MWh, -share, -state) %>% unique ->
+      L1233.elec_tech_cool
+
     L1233.elec_tech_cool %>%
       repeat_add_columns(tibble(state = gcamusa.STATES)) %>%
       left_join_keep_first_only(L1233.out_MWh_state_elec_F_tech_cool,
                                 by = c("state", "sector", "fuel", "technology", "cooling_system", "water_type")) %>%
       # ^^ lots of NAs induced in the above join... most should be zeros; where technologies have all zeros, replace with national averages
-      replace_na(list(share = 0)) %>% select(-out_MWh) %>%
+      replace_na(list(share = 0)) %>%
+      select(-out_MWh) %>%
       left_join_error_no_match(L1233.out_MWh_USA_elec_F_tech_cool,
                                by = c("sector", "fuel", "technology", "cooling_system", "water_type")) %>%
       # ^^ brings in national average data
       group_by(state, sector, fuel, technology) %>%
       mutate(sum_share_tech = sum(share)) %>%
       ungroup() %>%
-      #### FIX THIS ####
       mutate(share = if_else(sum_share_tech == 0&!(state %in% gcamusa.NO_SEAWATER_STATES), share_nat.sea,
                              if_else(sum_share_tech == 0&(state %in% gcamusa.NO_SEAWATER_STATES), share_nat, share))) %>%
       ## we want to make sure that states that do not have seawater available (i.e. inland states) do not get the national average added
       select(-share_nat, -share_nat.sea, -sum_share_tech) %>%
       # multiply through by historical output
-      left_join(L1231.out_EJ_state_elec_F_tech, by = c("sector", "fuel", "technology", "state")) %>%
+      left_join(L1231.out_EJ_state_elec_F_tech,
+                by = c("sector", "fuel", "technology", "state")) %>%
       # ^^ non-restricted join used to allow for expanded rows for all historical years
-      mutate(value = value * share) -> #%>% select(-share) ->
+      mutate(value = value * share) ->
       L1233.out_EJ_state_elec_F_tech_cool
 
     # Add GCAM-USA supplysector names and correct subsector vintages
@@ -165,7 +177,7 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
       left_join(A23.elecS_tech_mapping_cool %>%
                   ## left_join here as numerous new rows are created due to vintages addition
                   select(technology, Electric.sector, Electric.sector.technology),
-                by = c("technology"))  ->
+                by = c("technology")) ->
       L1233.out_EJ_state_elec_F_tech_cool
 
 
