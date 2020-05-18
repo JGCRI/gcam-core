@@ -408,7 +408,6 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       arrange(supplysector,year) ->
       L2233.GlobalTechSCurve_elecS_USA
 
-    ## ADD DESCRIPTION OF WHAT THIS IS DOING
     L2233.GlobalTechCoef_elec_cool %>%
       left_join(A23.elecS_tech_mapping_cool,
                 by=c("subsector.name"="technology",
@@ -895,8 +894,9 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     ## will be 0 from 2020-2100 to mirror GCAM-core
 
     L2233.StubTechProd_elec_USA %>%
-      group_by(region,supplysector,subsector0,subsector,technology) %>%
-      summarise(tech.share.weight = sum(tech.share.weight)) %>%
+      group_by(region,subsector0,technology) %>%
+      mutate(tech.share.weight = sum(tech.share.weight)) %>%
+      select(-subs.share.weight) %>%
       ungroup() %>%
       left_join(
         L2233.StubTechProd_elec_USA %>%
@@ -926,7 +926,10 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       filter(to.year==max(MODEL_FUTURE_YEARS)) %>%
       mutate(to.value = if_else(grepl("once through",technology),0,to.value),
              share.weight = if_else(grepl("once through",technology),0,share.weight),
-             from.year = if_else(grepl("once through",technology),min(MODEL_FUTURE_YEARS),max(MODEL_BASE_YEARS)),
+             from.year = if_else(grepl("once through",technology)|calOutputValue==0,min(MODEL_FUTURE_YEARS),max(MODEL_BASE_YEARS)),
+             ## using calOutputValue of 0 shows that some techs exist in the historical period by have 0 values in 2015, yet continue
+             ## into the future (example gas_base_CC in OK). This rule will change the interpolation year to 2020 and in turn change the
+             ## share weight to make sure the technology continues
              interpolation.function = if_else(grepl("once through",technology),"fixed",interpolation.function)) ->
       L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_1
 
@@ -973,8 +976,10 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     ## Combine new power plant types with old and replace share weights from old type to new.
 
     L2233.StubTechShrwt_elecS_cool_USA_case_3 %>%
-      left_join_keep_first_only(L2233.StubTechShrwt_elecS_cool_USA_case_3a, by =c("region","supplysector","subsector0","cooling_system")) %>%
-      select(-cooling_system,-tech.share.weight,-future.sub.share,-subs.share.weight) %>%
+      select(-tech.share.weight,-future.sub.share,-subs.share.weight, -calOutputValue) %>%
+      left_join_keep_first_only(L2233.StubTechShrwt_elecS_cool_USA_case_3a %>%
+                                  select(-calOutputValue, -share.weight.year, -year),
+                                by =c("region","supplysector","subsector0","cooling_system")) %>%
       left_join(L2233.SubsectorShrwtInterpTo_elecS_cool_USA %>% mutate(from.year= as.double(from.year)), by=c("region","supplysector","subsector0","subsector")) %>%
       replace_na(list(hist.share=0)) %>%
       mutate(to.value = hist.share,
@@ -983,6 +988,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
              share.weight = if_else(grepl("once through",technology),0,share.weight),
              from.year = if_else(grepl("once through",technology)|(from.year==max(MODEL_BASE_YEARS)&to.year==max(MODEL_FUTURE_YEARS)),min(MODEL_FUTURE_YEARS),from.year),
              interpolation.function = if_else(grepl("once through",technology),"fixed",interpolation.function)) %>%
+      filter(!(grepl("once through",technology) & to.year<max(MODEL_FUTURE_YEARS))) %>%
       select(-hist.share) ->
       L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_3
 
@@ -1007,6 +1013,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
           L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_2,
           L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_3,
           L2233.StubTechShrwtInterpTo_elecS_cool_USA_case_4) %>%
+      filter(year==max(MODEL_BASE_YEARS)) %>%
       rename(stub.technology=technology) %>%
       select(-share.weight) %>%
       filter(!(from.year==min(MODEL_FUTURE_YEARS) & to.year==min(MODEL_FUTURE_YEARS))) ->
