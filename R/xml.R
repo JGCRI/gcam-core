@@ -264,7 +264,7 @@ add_node_equiv_xml <- function(dot, equiv_class) {
 #' @param old_tag The XML tag which is being expanded to add more levels
 #' @param new_tag The XML tag which will serve as the additional levels
 #' @param num_levels The number of additional levels to generate
-#' @param rename_final Whether to rename the final \code{old_tag} to
+#' @param rename_file Whether to rename the final \code{old_tag} to
 #' \code{new_tag} in the original header
 #' @param column_name The base name of the column in \code{data} which will get
 #' expanded by appending \code{paste0(column_name, (seq_len(num_levels) - 1))}
@@ -293,7 +293,7 @@ add_xml_data_generate_levels <- function(dot, data, header, old_tag, new_tag, nu
     spread(col, tag) ->
     equiv_table
 
-  rename_final <- tag <- NULL  # silence package check notes
+  #rename_final <- tag <- NULL  # silence package check notes
 
   dot <- add_xml_data(dot, equiv_table, "EQUIV_TABLE", NULL)
 
@@ -323,7 +323,7 @@ add_xml_data_generate_levels <- function(dot, data, header, old_tag, new_tag, nu
 #' @param old_tag The XML tag which is being expanded to add more levels
 #' @param new_tag The XML tag which will serve as the additional levels
 #' @param num_levels The number of additional levels to generate
-#' @param rename_final Whether to rename the final \code{old_tag} to
+#' @param rename_file Whether to rename the final \code{old_tag} to
 #' \code{new_tag} in the original header
 #' @param column_name The base name of the column in \code{data} which will get
 #' expanded by appending \code{paste0(column_name, (seq_len(num_levels) - 1))}
@@ -354,7 +354,7 @@ add_logit_tables_xml_generate_levels <- function(dot, data, header, old_tag, new
   #    actually read in any data but sets the proper XML name.
   # 3) Finally data with the logit.type column dropped.
 
-  logit.type <- rename_final <- . <- NULL  # silence package check notes
+  logit.type <- . <- NULL  # silence package check notes
 
   dot <- add_node_equiv_xml(dot, "discrete-choice")
 
