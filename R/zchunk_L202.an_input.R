@@ -13,9 +13,8 @@
 #' \code{L202.Supplysector_in}, \code{L202.SubsectorAll_in}, \code{L202.StubTech_in}, \code{L202.StubTechInterp_in},
 #' \code{L202.GlobalTechCoef_in}, \code{L202.GlobalTechShrwt_in}, \code{L202.StubTechProd_in},
 #' \code{L202.Supplysector_an}, \code{L202.SubsectorAll_an}, \code{L202.StubTech_an}, \code{L202.StubTechInterp_an},
-#' \code{L202.StubTechProd_an}, \code{L202.StubTechCoef_an}, \code{L202.GlobalTechCost_an},
-#' \code{L202.GlobalRenewTech_imp_an}. The corresponding file in the
-#' original data system was \code{L202.an_input.R} (aglu level2).
+#' \code{L202.StubTechProd_an}, \code{L202.StubTechCoef_an}, \code{L202.GlobalTechCost_an}.
+#' The corresponding file in the original data system was \code{L202.an_input.R} (aglu level2).
 #' @details This chunk produces 22 animal-related resource tables: production, import, resource curves.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join bind_rows distinct filter if_else group_by left_join mutate select summarise
@@ -63,8 +62,7 @@ module_aglu_L202.an_input <- function(command, ...) {
              "L202.StubTechInterp_an",
              "L202.StubTechProd_an",
              "L202.StubTechCoef_an",
-             "L202.GlobalTechCost_an",
-             "L202.GlobalRenewTech_imp_an"))
+             "L202.GlobalTechCost_an"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -379,15 +377,6 @@ module_aglu_L202.an_input <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
       L202.GlobalTechCost_an
 
-    # L202.GlobalRenewTech_imp_an: generic technology info for animal imports (272-277)
-    tibble::as_tibble(expand.grid(sector.name = A_an_supplysector$supplysector,
-                                  subsector.name = "Imports",
-                                  technology = "Imports",
-                                  renewable.input = "renewable",
-                                  year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["GlobalRenewTech"]], GCAM_region_names) ->
-      L202.GlobalRenewTech_imp_an
-
 
     # Remove any regions for which agriculture and land use are not modeled (308-320)
     # Also, remove DDGS and feedcake subsectors and technologies in regions where these commodities are not available
@@ -611,20 +600,12 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_precursors("L132.ag_an_For_Prices", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") ->
       L202.GlobalTechCost_an
 
-    L202.GlobalRenewTech_imp_an %>%
-      add_title("Generic technology info for animal imports") %>%
-      add_units("NA") %>%
-      add_comments("A_an_supplysector written to all model years and regions") %>%
-      add_legacy_name("L202.GlobalRenewTech_imp_an") %>%
-      add_precursors("aglu/A_an_supplysector", "common/GCAM_region_names") ->
-      L202.GlobalRenewTech_imp_an
-
     return_data(L202.RenewRsrc, L202.RenewRsrcPrice, L202.maxSubResource, L202.RenewRsrcCurves, L202.ResTechShrwt,
                 L202.UnlimitedRenewRsrcCurves, L202.UnlimitedRenewRsrcPrice, L202.Supplysector_in,
                 L202.SubsectorAll_in, L202.StubTech_in, L202.StubTechInterp_in, L202.GlobalTechCoef_in,
                 L202.GlobalTechShrwt_in, L202.StubTechProd_in, L202.Supplysector_an, L202.SubsectorAll_an,
                 L202.StubTech_an, L202.StubTechInterp_an, L202.StubTechProd_an, L202.StubTechCoef_an,
-                L202.GlobalTechCost_an, L202.GlobalRenewTech_imp_an)
+                L202.GlobalTechCost_an)
   } else {
     stop("Unknown command")
   }
