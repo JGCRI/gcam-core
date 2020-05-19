@@ -22,8 +22,6 @@ evaluate_smooth_res_curve(
 \item{maxSubResource}{the maximum quantity of energy that could be produced at any price, numeric}
 
 \item{p}{price, numeric}
-
-\item{data}{Data with curve parameters, tibble}
 }
 \value{
 quantity of the resource supplied (i.e. quantity of electricity produced from said resource)

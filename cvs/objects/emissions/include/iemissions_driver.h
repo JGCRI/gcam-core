@@ -1,5 +1,5 @@
-#ifndef _AEMISSONS_DRIVER_H_
-#define _AEMISSONS_DRIVER_H_
+#ifndef _IEMISSONS_DRIVER_H_
+#define _IEMISSONS_DRIVER_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -38,12 +38,27 @@
 
 
 /*!
- * \file aemissions_driver.h
+ * \file iemissions_driver.h
  * \ingroup Objects
- * \brief AEmissionsDriver header file.
+ * \brief IEmissionsDriver header file.
  * \author Jim Naslund
  */
 
+#include <xercesc/dom/DOMNode.hpp>
+#include <vector>
+#include <string>
+
+#include "util/base/include/data_definition_util.h"
+
+// Forward declaration
+class IInput;
+class IOutput;
+class Tabs;
+
+// Need to forward declare the subclasses as well.
+class InputDriver;
+class OutputDriver;
+class InputOutputDriver;
 
 /*! 
  * \ingroup Objects
@@ -52,21 +67,39 @@
  *          The class has one method and no members.
  * \author Jim Naslund
  */
-class AEmissionsDriver{
+class IEmissionsDriver{
 
 public:
+    //! Virtual inline destructor
+    virtual ~IEmissionsDriver() {}
+    
     /* \brief Returns an appropriate emissions driver.
      * \return A double representing an appropriate emissions driver.
      */
-    virtual double calcEmissionsDriver( const double aInputIn, const double aOutputIn ) const = 0;
+    virtual double calcEmissionsDriver( const std::vector<IInput*>& aInputs,
+                                        const std::vector<IOutput*>& aOutputs,
+                                        const int aPeriod ) const = 0;
     //! Clone operator.
-    virtual AEmissionsDriver* clone() const = 0;
+    virtual IEmissionsDriver* clone() const = 0;
     /*
      * \brief Static method to get a string representing the type of driver.
      * \return A string representing the type of driver.
      */
     virtual const std::string& getXMLName() const = 0;
+    
+    //! XML parse
+    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
+    
+    virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
+    
+protected:
+    DEFINE_DATA(
+        /* Declare all subclasses of IEmissionsDriver to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( IEmissionsDriver, InputDriver, OutputDriver, InputOutputDriver )
+    )
 };
 
 
-#endif // _AEMISSONS_DRIVER_H_
+#endif // _IEMISSONS_DRIVER_H_

@@ -127,7 +127,6 @@ MagiccModel::MagiccModel()
     mBCUnitForcing = 0;
     mOCUnitForcing = 0; // initialize to zero since -1 is a legit value
     mLastHistoricalYear = 0; // default to zero -- use only model data
-    mCarbonModelStartYear = 1975; // Need to have first model year here, but should be 1990 for MAGICC. FIX.
     mNumberHistoricalDataPoints = 0; // internal counter
 }
 
@@ -286,9 +285,6 @@ void MagiccModel::XMLParse( const DOMNode* node ){
         else if ( nodeName == "base-so2ind-forcing" ){
             mSO2Ind1990 = XMLHelper<double>::getValue( curr );
         }
-        else if( nodeName == "carbon-model-start-year" ){
-            mCarbonModelStartYear = XMLHelper<int>::getValue( curr );
-        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -328,9 +324,6 @@ void MagiccModel::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
     XMLWriteElement( mSO2Ind1990, "base-so2ind-forcing", out, tabs );
     XMLWriteElement( mBCUnitForcing, "bc-unit-forcing", out, tabs );
     XMLWriteElement( mOCUnitForcing, "oc-unit-forcing", out, tabs );
-
-    // Write out Carbon model start year.
-    XMLWriteElement( mCarbonModelStartYear, "carbon-model-start-year", out, tabs );
     
     XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
@@ -828,11 +821,6 @@ double MagiccModel::getTotalForcing( const int aYear ) const {
     int year = aYear;
     int gasNumber = 0; // global forcing
     return GETFORCING( gasNumber, year );
-}
-
-
-int MagiccModel::getCarbonModelStartYear() const {
-    return mCarbonModelStartYear;
 }
 
 /*! \brief Updates a visitor with information from the the climate model.

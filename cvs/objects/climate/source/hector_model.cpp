@@ -137,9 +137,6 @@ void HectorModel::XMLParse( const DOMNode* node ) {
         else if( chname == "hector-ini-file" ) {
             mHectorIniFile = XMLHelper<string>::getValue( chnode );
         }
-        else if( chname == "carbon-model-start-year" ) {
-            mCarbonModelStartYear = XMLHelper<int>::getValue( chnode );
-        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
@@ -806,10 +803,6 @@ double HectorModel::getNetTerrestrialUptake( const int aYear ) const {
 double HectorModel::getNetOceanUptake(const int aYear ) const {
     // Is this the same thing as ocean flux?
     return mOceanFlux[ yearlyDataIndex( aYear ) ];
-}
-
-int HectorModel::getCarbonModelStartYear() const {
-    return mCarbonModelStartYear;
 }
 
 void HectorModel::accept( IVisitor* aVisitor, const int aPeriod ) const {

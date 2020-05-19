@@ -3,15 +3,15 @@
 
 #####, SCENARIO
 
-ModelTime, modeltime/+{time-step}start-year, modeltime/+start-year, modeltime/+final-calibration-year, modeltime/+end-year, scenario, scenario/modeltime
+ModelTime, modeltime/+{time-step}start-year, modeltime/+start-year, modeltime/+final-calibration-year, modeltime/+end-year, modeltime/+carbon-model-start-year, scenario, scenario/modeltime
 
 ModelTimeInterYears, modeltime/+{time-step}inter-year, modeltime/+inter-year, modeltime/+{dummy-tag}inter-year, scenario, scenario/modeltime
 
-MAGICC, MagiccModel/+last-historical-year, MagiccModel/+bc-unit-forcing, MagiccModel/+ghgInputFileName, MagiccModel/+carbon-model-start-year, scenario, scenario/world, world/MagiccModel
+MAGICC, MagiccModel/+last-historical-year, MagiccModel/+bc-unit-forcing, MagiccModel/+ghgInputFileName, scenario, scenario/world, world/MagiccModel
 
-hector, HectorModel/+hector-end-year, HectorModel/+emissions-switch-year, HectorModel/+hector-ini-file, HectorModel/+carbon-model-start-year, scenario, scenario/world, world/HectorModel
+hector, HectorModel/+hector-end-year, HectorModel/+emissions-switch-year, HectorModel/+hector-ini-file, scenario, scenario/world, world/HectorModel
 
-NoClimateModel, no-climate-model/+carbon-model-start-year, scenario, scenario/world, world/no-climate-model
+NoClimateModel, world/no-climate-model, scenario, scenario/world, 
 
 DeleteMAGICC, world/{delete=1}MagiccModel, scenario, scenario/world
 
@@ -679,17 +679,17 @@ NodeRename, NODE_RENAME
 #####, EMISSIONS
 
 
-InputEmissions, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+input-emissions, Non-CO2/input-driver, scenario, scenario/world
+InputEmissions, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+input-emissions, input-driver/+input-name, Non-CO2/input-driver, scenario, scenario/world
 
-InputEmissCoeff, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/input-driver, scenario, scenario/world
+InputEmissCoeff, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, input-driver/+input-name, Non-CO2/input-driver, scenario, scenario/world
 
 OutputEmissionsAg, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+input-emissions, Non-CO2/output-driver, scenario, scenario/world
 
-InputEmissionsUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+input-emissions, Non-CO2/input-driver, scenario, scenario/world
+InputEmissionsUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+input-emissions, input-driver/+input-name, Non-CO2/input-driver, scenario, scenario/world
 
 OutputEmissionsUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+input-emissions, Non-CO2/output-driver, scenario, scenario/world
 
-InputEmFactUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/input-driver, scenario, scenario/world
+InputEmFactUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, input-driver/+input-name, Non-CO2/input-driver, scenario, scenario/world
 
 OutputEmFactUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/output-driver, scenario, scenario/world
 
@@ -709,15 +709,17 @@ MAC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{
 
 MAC_NC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/+market-name, scenario, scenario/world
 
-MACTC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/+market-name, mac-control/+{year=1975;fillout=1}tech-change, scenario, scenario/world
+MACTC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name;nocreate=1}mac-control, mac-control/+{year;fillout=1}tech-change, mac-control/+tech-change, scenario, scenario/world
 
 MAC_NoBelowZero, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/no-zero-cost-reductions, mac-control/+market-name, scenario, scenario/world
 
 AgMAC, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/+market-name, scenario, scenario/world
 
-AgMACTC, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/+market-name, mac-control/+{year=1975;fillout=1}tech-change, scenario, scenario/world
+AgMACTC, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name;nocreate=1}mac-control, mac-control/+{year;fillout=1}tech-change, mac-control/+tech-change, scenario, scenario/world
 
 ResMAC, world/+{name}region, region/+{name;nocreate=1}resource, resource/+{name}subresource, subresource/+{name}technology, technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/+market-name, scenario, scenario/world
+
+ResMACTC, world/+{name}region, region/+{name;nocreate=1}resource, resource/+{name;nocreate=1}subresource, subresource/+{name;nocreate=1}technology, technology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name;nocreate=1}mac-control, mac-control/+{year;fillout=1}tech-change, mac-control/+tech-change, scenario, scenario/world
 
 FinalDemandInfo, world/+{name}region, region/+{name}energy-final-demand, energy-final-demand/+perCapitaBased, energy-final-demand/+{year=2020;fillout=1}income-elasticity, energy-final-demand/+{year}base-service, energy-final-demand/+base-service, final-energy-consumer/+{year=1975;fillout=1}aeei, energy-final-demand/final-energy-consumer, scenario, scenario/world
 
@@ -745,7 +747,7 @@ ReadInControl, world/+{name}region, region/+{name;nocreate=1}supplysector, suppl
 
 StubTechEmissUnits, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emissions-unit, scenario, scenario/world
 
-TrnInputEmissCoeff, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}tranSubsector, tranSubsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/input-driver, scenario, scenario/world
+TrnInputEmissCoeff, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}tranSubsector, tranSubsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, input-driver/+input-name, Non-CO2/input-driver, scenario, scenario/world
 
 LinearCtrlInc, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}tranSubsector, tranSubsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}linear-control, linear-control/+start-year, linear-control/+end-year, linear-control/+final-emissions-coefficient, linear-control/allow-ef-increase, scenario, scenario/world
 

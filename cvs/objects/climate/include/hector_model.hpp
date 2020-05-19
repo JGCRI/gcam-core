@@ -103,7 +103,6 @@ public:
     virtual double getTotalForcing( const int aYear ) const;
     virtual double getNetTerrestrialUptake( const int aYear ) const;
     virtual double getNetOceanUptake( const int aYear ) const;
-    virtual int getCarbonModelStartYear() const;
     virtual void accept( IVisitor *aVisitor, const int aPeriod ) const;
 
     // xml name
@@ -127,12 +126,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "last-calc-year", mLastYear, int ),
 
         //! Hector initialization file
-        DEFINE_VARIABLE( SIMPLE, "hector-ini-file", mHectorIniFile, std::string ),
-
-        //! The year the carbon model should start running.
-        //! \note This is a GCAM carbon cycle parameter and does not really
-        //! have anything to do with hector.
-        DEFINE_VARIABLE( SIMPLE, "carbon-model-start-year", mCarbonModelStartYear, int )
+        DEFINE_VARIABLE( SIMPLE, "hector-ini-file", mHectorIniFile, std::string )
     )
 
 private:

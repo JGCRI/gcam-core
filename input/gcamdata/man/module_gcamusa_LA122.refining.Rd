@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA122.Refining.R
 \name{module_gcamusa_LA122.refining}
 \alias{module_gcamusa_LA122.refining}
-\title{module_gcam.usa_LA122.Refining}
+\title{module_gcamusa_LA122.Refining}
 \usage{
 module_gcamusa_LA122.refining(command, ...)
 }

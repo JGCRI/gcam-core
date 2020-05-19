@@ -41,6 +41,9 @@
 #include "util/base/include/definitions.h"
 #include "util/base/include/util.h"
 #include "containers/include/scenario.h"
+#include "util/base/include/model_time.h"
+#include "util/base/include/configuration.h"
+#include "util/logger/include/ilogger.h"
 
 #include <string>
 #include <ctime>
@@ -272,4 +275,73 @@ void printTime( const time_t& aTime, ostream& aOut ){
     delete[] buffer;
 #endif
     }
+
+/*!
+ * \brief Gets the appropriate value to pass to runScenarios by checking the configuration for
+ *        a stop/restart -period or -year.
+ * \details This method will reconcile between -period and -year using the following rules:
+ *            - If year is not set then then the period is used (even if it is -1 which indicates RUN_ALL_YEARS).
+ *            - If no model time is available, which may happen when running in batch mode, then
+ *              Scenario::UNINITIALIZED_RUN_PERIODS is returned.
+ *            - If year is set but not a valid year then Scenario::UNINITIALIZED_RUN_PERIODS
+ *            - If only year is set then it will be converted to period using the model time and be used.
+ *            - If both are set the year will be converted to period and used but a warning will be issued if
+ *              they are inconsistent.
+ * \param aKey The base key to look up from the configuration, i.e. "start" to check for "start-period" and
+ *             "start-year".
+ * \return The appropriate period value to use.
+ */
+int getConfigRunPeriod( const string aKey ) {
+    // Get the main log file.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::WARNING );
+    
+    // Get the run period and year, defaulting to -1 which indicates not set.
+    const int configPeriod = Configuration::getInstance()->getInt( aKey + "-period", -1, false );
+    const int configYear = Configuration::getInstance()->getInt( aKey + "-year", -1, false );
+    
+    // Get the model time, note getting it this way is safer then through the scenario
+    // object as this method could potentially be called before a scenario is initialized.
+    const Modeltime* modeltime = Modeltime::getInstance();
+    
+    // Declare the new period
+    int newPeriod = configPeriod;
+    
+    // Check whether ONLY aPeriod is set.
+    if ( configYear == -1 ) {
+        // Use aPeriod, whether it was set or not.
+        newPeriod = configPeriod;
+    }
+    else if( !modeltime->isInitialized() ) {
+        // The model time is not yet initialized.  This can happen if we are running
+        // in batch mode for instance.  We will return uninitialized for now and give
+        // the batch runner a second chance.  If the uninitialized value persists 
+        // to the point of use a warning will be generated at that point.
+        newPeriod = Scenario::UNINITIALIZED_RUN_PERIODS;
+    }
+    else if( !modeltime->isModelYear( configYear ) ) {
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Invalid Year Specified:  " << configYear << endl;
+        newPeriod = Scenario::UNINITIALIZED_RUN_PERIODS;
+    }
+    else if ( configPeriod == -1 ) {
+        // Only aYear was set, so use that.
+        newPeriod = modeltime->getyr_to_per( configYear );
+    }
+    else {
+        // Both aYear and aPeriod were set.
+        // We will use aYear, but warn if they are inconsistent
+        newPeriod = modeltime->getyr_to_per( configYear );
+        if ( newPeriod != configPeriod ) {
+            // If the two specifications are inconsistent, print a notice, but use aYear.
+            mainLog.setLevel( ILogger::NOTICE );
+            mainLog << "Year and period are specified inconsistently. Using year." << endl;
+        }
+    }
+    
+    return newPeriod;
 }
+
+
+}
+

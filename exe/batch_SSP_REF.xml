@@ -50,7 +50,6 @@
 			<Value name = "water_mapping">../input/gcamdata/xml/water_mapping.xml</Value>
 			<Value name = "ag_water">../input/gcamdata/xml/ag_water_input_IRR_MGMT.xml</Value>
 			<Value name = "elec_water_coef">../input/gcamdata/xml/electricity_water_coefs.xml</Value>
-			<Value name = "nonco2_elec_water">../input/gcamdata/xml/water_elec_emissions.xml</Value>
 			<Value name = "ind_water">../input/gcamdata/xml/water_demand_industry.xml</Value>
 			<Value name = "an_water">../input/gcamdata/xml/water_demand_livestock.xml</Value>
 			<Value name = "municipal_water">../input/gcamdata/xml/water_demand_municipal.xml</Value>
@@ -137,7 +136,7 @@
 			<!-- NON-CO2 -->
 			<Value name="nonco2">../input/gcamdata/xml/delete_gdp_control.xml</Value>
 			<Value name="nonco2">../input/gcamdata/xml/ssp15_emissions_factors.xml</Value>
-			<Value name="nonco2">../input/gcamdata/xml/MACC_TC_SSP5_IRR_MGMT.xml</Value>
+			<Value name="nonco2">../input/gcamdata/xml/MACC_TC_SSP5.xml</Value>
 
             <!-- NEG EMISS BUDGET -->
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP5.xml</Value>
@@ -187,7 +186,7 @@
 			<!-- NON-CO2 -->
 			<Value name="nonco2">../input/gcamdata/xml/delete_gdp_control.xml</Value>
 			<Value name="nonco2">../input/gcamdata/xml/ssp15_emissions_factors.xml</Value>
-			<Value name="nonco2">../input/gcamdata/xml/MACC_TC_SSP1_IRR_MGMT.xml</Value>
+			<Value name="nonco2">../input/gcamdata/xml/MACC_TC_SSP1.xml</Value>
 
             <!-- NEG EMISS BUDGET -->
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP1.xml</Value>
@@ -217,7 +216,7 @@
 			<!-- NON-CO2 -->
 			<Value name="nonco2">../input/gcamdata/xml/delete_gdp_control.xml</Value>
 			<Value name="nonco2">../input/gcamdata/xml/ssp2_emissions_factors.xml</Value>
-			<Value name="nonco2">../input/gcamdata/xml/MACC_TC_SSP2_IRR_MGMT.xml</Value>
+			<Value name="nonco2">../input/gcamdata/xml/MACC_TC_SSP2.xml</Value>
 			
             <!-- NEG EMISS BUDGET -->
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP2.xml</Value>

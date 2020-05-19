@@ -5,18 +5,18 @@
 # Column types: cccci 
 # ----------
 region,supplysector,subsector,year,share.weight
-USA,base load generation,coal,initial-future-year,1
-USA,intermediate generation,coal,initial-future-year,1
-USA,subpeak generation,coal,initial-future-year,1
-USA,peak generation,coal,initial-future-year,1
+USA,base load generation,coal,2030,1
+USA,intermediate generation,coal,2030,1
+USA,subpeak generation,coal,2030,1
+USA,peak generation,coal,2030,1
 USA,base load generation,coal,end-year,1
 USA,intermediate generation,coal,end-year,1
 USA,subpeak generation,coal,end-year,1
 USA,peak generation,coal,end-year,1
-USA,base load generation,gas,initial-future-year,1
-USA,intermediate generation,gas,initial-future-year,1
-USA,subpeak generation,gas,initial-future-year,1
-USA,peak generation,gas,initial-future-year,1
+USA,base load generation,gas,2030,1
+USA,intermediate generation,gas,2030,1
+USA,subpeak generation,gas,2030,1
+USA,peak generation,gas,2030,1
 USA,base load generation,gas,end-year,1
 USA,intermediate generation,gas,end-year,1
 USA,subpeak generation,gas,end-year,1

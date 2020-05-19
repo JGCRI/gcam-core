@@ -2,18 +2,26 @@
 # Title: Multiple Load Segments Subsector Shareweights
 # Units: unitless
 # Comments: Subsector shareweights for subsectors that are not fixed at calibration values. 
-# These subsectors need a "to-value" which specifies the value to which the shareweight is being interpolated.
+# These subsectors need a to-value which specifies the value to which the shareweight is being interpolated.
 # Column types: ccccccic 
 # ----------
 region,supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
-USA,base load generation,coal,share-weight,initial-future-year,end-year,1,fixed
-USA,intermediate generation,coal,share-weight,initial-future-year,end-year,1,fixed
-USA,subpeak generation,coal,share-weight,initial-future-year,end-year,1,fixed
-USA,peak generation,coal,share-weight,initial-future-year,end-year,1,fixed
-USA,base load generation,gas,share-weight,initial-future-year,end-year,1,fixed
-USA,intermediate generation,gas,share-weight,initial-future-year,end-year,1,fixed
-USA,subpeak generation,gas,share-weight,initial-future-year,end-year,1,fixed
-USA,peak generation,gas,share-weight,initial-future-year,end-year,1,fixed
+USA,base load generation,coal,share-weight,final-calibration-year,2030,1,linear
+USA,intermediate generation,coal,share-weight,final-calibration-year,2030,1,linear
+USA,subpeak generation,coal,share-weight,final-calibration-year,2030,1,linear
+USA,peak generation,coal,share-weight,final-calibration-year,2030,1,linear
+USA,base load generation,coal,share-weight,2030,end-year,1,fixed
+USA,intermediate generation,coal,share-weight,2030,end-year,1,fixed
+USA,subpeak generation,coal,share-weight,2030,end-year,1,fixed
+USA,peak generation,coal,share-weight,2030,end-year,1,fixed
+USA,base load generation,gas,share-weight,final-calibration-year,2030,1,linear
+USA,intermediate generation,gas,share-weight,final-calibration-year,2030,1,linear
+USA,subpeak generation,gas,share-weight,final-calibration-year,2030,1,linear
+USA,peak generation,gas,share-weight,final-calibration-year,2030,1,linear
+USA,base load generation,gas,share-weight,2030,end-year,1,fixed
+USA,intermediate generation,gas,share-weight,2030,end-year,1,fixed
+USA,subpeak generation,gas,share-weight,2030,end-year,1,fixed
+USA,peak generation,gas,share-weight,2030,end-year,1,fixed
 USA,base load generation,biomass,share-weight,final-calibration-year,end-year,1,linear
 USA,intermediate generation,biomass,share-weight,final-calibration-year,end-year,1,linear
 USA,subpeak generation,biomass,share-weight,final-calibration-year,end-year,1,linear

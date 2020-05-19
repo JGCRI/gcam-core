@@ -1,32 +1,40 @@
 # File: EIA_SEDS_fuels.csv
-# Title: Convert EIA_fuel code to GCAM_fuel name
+# Title: Convert EIA_fuel code to GCAM_fuel name https://www.eia.gov/state/seds/sep_use/total/csv/use_csv_doc.pdf
 # Units: NA
-# Column types: ccc 
+# Column types: ccc
 # ----------
 EIA_fuel,GCAM_fuel,description
 AB,refined liquids,aviation gasoline blending components
 AR,refined liquids (const feed),asphalt and road oil
+AS,,asphalt
 AV,refined liquids,aviation gasoline
-BM,,
+BM,,biomass
+BQ,,normal butane
+BY,,butylene
+CC,,coal coke
 CL,coal,coal
 CO,crude oil,"crude oil, including lease condensate"
 DF,refined liquids,distillate fuel oil
-DK,refined liquids,"distillate fuel oil, including kerosene-type jet fuel"
+DK,,"distillate fuel oil, including kerosene-type jet fuel (empty)"
 EL,electricity,electricity
 EM,refined liquids (ethanol),"fuel ethanol, excluding denaturant"
+EN,,"fuel ethanol, including denaturant"
+EQ,,ethane
 ES,electricity,electricity sales
+EY,,ethylene
 FF,,fossil fuels
 FN,refined liquids (petchem feed),"petrochemical feedstocks, naphtha less than 401o F"
 FO,refined liquids (petchem feed),"petrochemical feedstocks, other oils equal to or greater than 401o F"
 FS,refined liquids (petchem feed),"petrochemical feedstocks, still gas"
 GD,,GDP
 GE,geothermal,geothermal energy
+HL,refined liquids,hydrocarbon gas liquids (Ethane; Propane; normal butane and isobutane; Natural gasoline or pentanes plus; Ethylene; Propylene; Normal butylene and isobutylene)
 HY,hydro,"hydroelectric power, all types"
+IQ,,isobutane
+IY,,isobutylene
 JF,refined liquids,jet fuel
-JK,,"jet fuel, kerosene-type"
-JN,,"jet fuel, naphtha-type"
 KS,refined liquids,kerosene
-LG,refined liquids,liquefied petroleum gases
+LG,refined liquids,liquefied petroleum gases. No such category in the new EIA file 
 LO,,electrical system energy losses
 LU,,lubricants
 MB,crude oil,motor gasoline blending components
@@ -37,13 +45,15 @@ NA,,natural gasoline (including isopentane)
 NG,gas,natural gas (including supplemental gaseous fuels)
 NN,,natural gas (excluding supplemental gaseous fuels)
 NU,nuclear,nuclear electric power
-P1,,"asphalt and road oil, aviation gasoline, kerosene, lubricants, and ñother petroleum productsî"
+OP,,other petroleum products
+P1,,"asphalt and road oil, aviation gasoline, kerosene, lubricants, and other petroleum products"
 PA,,all petroleum products
 PC,refined liquids,petroleum coke
 PL,refined liquids,plant condensate
 PM,,"all petroleum products, excluding fuel ethanol"
-PO,,other petroleum products
-PP,refined liquids,pentanes plus
+PP,,pentanes plus
+PQ,,propane
+PY,,propylene
 RE,,renewable energy
 RF,refined liquids,residual fuel oil
 SF,,supplemental gaseous fuels

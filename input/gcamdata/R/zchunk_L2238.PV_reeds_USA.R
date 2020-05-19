@@ -1,8 +1,9 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_L2238.PV_reeds_USA
+#' module_gcamusa_L2238.PV_reeds_USA
 #'
 #' Create updated solar PV resource supply curves consistent with ReEDS.
+#' Also add non-ReEDS states (AK,DC,HI) based on NREL technical potential data.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -16,15 +17,20 @@
 #' The corresponding file in the original data system was \code{L2238.PV_reeds_USA.R} (gcam-usa level2).
 #' @details Create state-level solar PV resource supply curves
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr distinct filter lag mutate select row_number summarise_if
-#' @importFrom tidyr gather
-#' @author MTB September 2018
+#' @importFrom dplyr filter mutate select
+#' @importFrom tidyr gather spread
+#' @author MTB September 2018; AJS June 2019
 module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = 'gcam-usa/reeds_regions_states',
+    return(c(FILE = 'energy/A10.rsrc_info',
+             FILE = 'gcam-usa/states_subregions',
+             FILE = 'gcam-usa/reeds_regions_states',
              FILE = 'gcam-usa/reeds_PV_curve_capacity',
              FILE = 'gcam-usa/reeds_PV_curve_CF_avg',
              FILE = 'gcam-usa/reeds_PV_curve_grid_cost',
+             FILE = 'gcam-usa/non_reeds_PV_grid_cost',
+             FILE = 'gcam-usa/NREL_us_re_technical_potential',
+             FILE = 'gcam-usa/NREL_us_re_capacity_factors',
              'L2234.StubTechCapFactor_elecS_solar_USA',
              'L2234.StubTechMarket_elecS_USA',
              'L2247.GlobalIntTechCapitalOnly_elecS_USA',
@@ -45,10 +51,15 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    A10.rsrc_info <- get_data(all_data, 'energy/A10.rsrc_info')
+    states_subregions <- get_data(all_data, 'gcam-usa/states_subregions')
     reeds_regions_states <- get_data(all_data, 'gcam-usa/reeds_regions_states')
     reeds_PV_curve_capacity <- get_data(all_data, 'gcam-usa/reeds_PV_curve_capacity')
     reeds_PV_curve_CF_avg <- get_data(all_data, 'gcam-usa/reeds_PV_curve_CF_avg')
     reeds_PV_curve_grid_cost <- get_data(all_data, 'gcam-usa/reeds_PV_curve_grid_cost')
+    non_reeds_PV_grid_cost <- get_data(all_data, 'gcam-usa/non_reeds_PV_grid_cost')
+    NREL_us_re_technical_potential <- get_data(all_data, 'gcam-usa/NREL_us_re_technical_potential')
+    NREL_us_re_capacity_factors <- get_data(all_data, 'gcam-usa/NREL_us_re_capacity_factors')
     L2234.StubTechCapFactor_elecS_solar_USA <- get_data(all_data, 'L2234.StubTechCapFactor_elecS_solar_USA')
     L2234.StubTechMarket_elecS_USA <- get_data(all_data, 'L2234.StubTechMarket_elecS_USA')
     L2247.GlobalIntTechCapitalOnly_elecS_USA <- get_data(all_data, 'L2247.GlobalIntTechCapitalOnly_elecS_USA')
@@ -65,10 +76,65 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       bin <- cost <- grid.cost <- renewresource <- sub.renewable.resource <- year.fillout <-
       minicam.energy.input <- efficiency <- market.name <- flag <- capacity.factor <-
       input.cost <- capital.tech.change.period <- tech.change.period <- time.change <-
-      subresource <- NULL
+      subresource <- Urban_Utility_scale_PV_GWh <- Rural_Utility_scale_PV_GWh <- Urban_Utility_scale_PV <-
+      Rural_Utility_scale_PV <- Total_Utility_scale_PV_GWh <- resource <- value <- non_reeds_state <- NULL
 
     # ===================================================
     # Data Processing
+
+    # First, process the states not included in the REEDS data, so they can be easily merged into the ReEDS data
+    # and associated processing pipeline
+
+    # L2238.non_reeds_states: Create a list of states not in the ReEDS data
+    reeds_regions_states %>%
+      distinct(State) -> reeds_states
+
+    states_subregions %>%
+      select(State=state) %>%
+      anti_join(reeds_states, by = "State") %>%
+      pull(State) -> L2238.non_reeds_states
+
+    # L2238.non_reeds_states_PV_technical_potential : Total technical potential (urban + rural)
+    # for non-ReEDS states from the NREL RE Technical Potential Database
+    NREL_us_re_technical_potential %>%
+      # semi-join states_subregions to filter out "TOTAL" row
+      semi_join(states_subregions, by = c("State" = "state_name")) %>%
+      left_join_error_no_match(states_subregions, by = c("State" = "state_name")) %>%
+      select(State = state, Urban_Utility_scale_PV_GWh, Rural_Utility_scale_PV_GWh) %>%
+      filter(State %in% L2238.non_reeds_states) %>%
+      mutate(Total_Utility_scale_PV_GWh = Urban_Utility_scale_PV_GWh + Rural_Utility_scale_PV_GWh) ->
+      L2238.non_reeds_states_PV_technical_potential
+
+    # L2238.non_reeds_states_PV_capacity_factor - combined (weighted for urban / rural potential contribution)
+    # capacity factor for non-ReEDS states from the NREL RE Capacity Factor Database
+    NREL_us_re_capacity_factors %>%
+      # semi-join states_subregions to filter out "TOTAL" row
+      semi_join(states_subregions, by = c("State" = "state_name")) %>%
+      left_join_error_no_match(states_subregions, by = c("State" = "state_name")) %>%
+      select(State = state, Urban_Utility_scale_PV, Rural_Utility_scale_PV) %>%
+      filter(State %in% L2238.non_reeds_states) %>%
+      left_join_error_no_match(L2238.non_reeds_states_PV_technical_potential, by = "State") %>%
+      mutate(CF = Urban_Utility_scale_PV * (Urban_Utility_scale_PV_GWh / Total_Utility_scale_PV_GWh) +
+               Rural_Utility_scale_PV * (Rural_Utility_scale_PV_GWh / Total_Utility_scale_PV_GWh)) %>%
+      select(State, CF) -> L2238.non_reeds_states_PV_capacity_factor
+
+    # L2238.PV_potential_EJ_non_reeds_states: NREL data set does not include resource class, which is needed for data processing below
+    # Create a Dummy Class for Resource Potential - assume a Class 4 resource, which is the lowest starting class for most other states
+    # Also convert GWh to EJ values
+    L2238.non_reeds_states_PV_technical_potential %>%
+      select(State, Total_Utility_scale_PV_GWh) %>%
+      mutate(PV.class = "class4",
+             resource.potential.EJ = Total_Utility_scale_PV_GWh * CONV_GWH_EJ) %>%
+      select(-Total_Utility_scale_PV_GWh) -> L2238.PV_potential_EJ_non_reeds_states
+
+    # L2238.PV_CF_non_reeds_states: Process data for capacity factor.
+    # The class data will be joined from the potential table in order to create a capacity factor table by state and class
+    L2238.non_reeds_states_PV_capacity_factor %>%
+      left_join_error_no_match(L2238.PV_potential_EJ_non_reeds_states, by = "State") %>%
+      select(State, PV.class, CF) -> L2238.PV_CF_non_reeds_states
+
+
+    # Second, process ReEDS data and combine with data from other states
 
     # L2238.PV_CF: Capacity factor by state and PV class
     reeds_PV_curve_CF_avg %>%
@@ -79,6 +145,11 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       group_by(State, PV.class) %>%
       summarise_if(is.numeric, mean) %>%
       ungroup() -> L2238.PV_CF
+
+    # Merge capacity factor data from non-ReEDS states
+    L2238.PV_CF %>%
+      bind_rows(L2238.PV_CF_non_reeds_states) -> L2238.PV_CF
+
 
     # L2238.PV_potential_EJ: Resource potential in EJ by state and class
     # We first calculate the resource potential in EJ in each ReEDS region and class using the
@@ -97,8 +168,11 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       summarise_if(is.numeric, sum) %>%
       ungroup() -> L2238.PV_potential_EJ
 
-    # L2238.PV_matrix: Creating a matrix of costs (1975$/GJ) and resource potential (EJ) by state and class
+    # Merge potential data from non-ReEDS states
+    L2238.PV_potential_EJ %>%
+      bind_rows(L2238.PV_potential_EJ_non_reeds_states) -> L2238.PV_potential_EJ
 
+    # L2238.PV_matrix: Create a matrix of costs (1975$/GJ) and resource potential (EJ) by state and class
     L2247.GlobalIntTechCapitalOnly_elecS_USA %>%
       filter(intermittent.technology == "PV_peak",
              year == max(MODEL_BASE_YEARS)) %>%
@@ -174,11 +248,44 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       # which has just 0.00012 EJ of resource and thus the same available fraction (1) as grade 4.
       distinct(State, available, .keep_all = TRUE) -> L2238.PV_curve
 
+    # L2238.single_grade_states: Create a list of states with only a single PV resource
+    L2238.PV_curve %>%
+      filter(grade == "grade 2") %>%
+      select(State) -> L2238.multi_grade_states
+
+    L2238.PV_curve %>%
+      distinct(State) %>%
+      anti_join(L2238.multi_grade_states, by = "State") %>%
+      pull(State) -> L2238.single_grade_states
+
+    # L2238.PV_curve_single_grade: Extract the relevant states from the graded curves
+    L2238.PV_curve %>%
+      filter(State %in% L2238.single_grade_states) -> L2238.PV_curve_single_grade
+
+    # We get the unlimited global solar resource price which will be applied to the one grade states
+    # by creating a dummy second grade which will utilize the maxsubresource for the given state
+    A10.rsrc_info %>%
+      gather_years() %>%
+      filter(resource == "global solar resource",
+             year == max(year)) %>%
+      pull(value) -> A10_solar_cost
+
+    # Make a second grade for all the single grade states by using full the maxsubresource percentage
+    # as available value and global solar resource price as extraction cost
+    L2238.PV_curve_single_grade %>%
+      mutate(grade = "grade 2",
+             available = maxSubResource / maxSubResource,
+             extractioncost = A10_solar_cost) -> L2238.PV_curve_single_grade
+
+    # Add the second grade to back into the main PV resource curve table
+    L2238.PV_curve %>%
+      bind_rows(L2238.PV_curve_single_grade) -> L2238.PV_curve
+
     # Technological change in the supply curve is related to assumed improvements in capital cost.
     # If capital cost changes from CC to a.CC, then every price point of the curve will scale by a factor a' given as follows:
-    # a' = (k1.a.CC + k2. OM-fixed) / (k1.CC + k2. OM-fixed) where k1 = FCR / (CONV_YEAR_HOURS * kWh_GJ) and k2 = 1 / (CONV_YEAR_HOURS * kWh_GJ)
+    # a' = (k1.a.CC + k2. OM-fixed) / (k1.CC + k2. OM-fixed), where
+    # k1 = FCR / (CONV_YEAR_HOURS * kWh_GJ) and k2 = 1 / (CONV_YEAR_HOURS * kWh_GJ)
     # Thus, we calculate model input parameter techChange (which is the reduction per year) as 1 - a'^ (1/5)
-
     L2247.GlobalIntTechCapitalOnly_elecS_USA %>%
       filter(intermittent.technology == "PV_peak") %>%
       select(year, capital.overnight) %>%
@@ -198,40 +305,42 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
     # Grid connection costs are read in as fixed non-energy cost adders (in $/GJ) that vary by state.
     # Our starting data comprises of grid connection costs in $/MW by ReEDS region and PV class.
     # This data also categorizes the connection cost into five bins in each region and class.
-    # We first calculate the average cost for a region and class.Using this data, we then obtain grid connection cost
-    # in $/GJ for each region and class as FCR * (grid connection cost in $/MW) / (CONV_YEAR_HOURS * CF * MWh_GJ).
-    # Costs are then obtained for a state by averaging.
+    # We first calculate the minimum cost for a region and class.
+    # Using this data, we then obtain grid connection cost in $/GJ for each region and class as
+    # FCR * (grid connection cost in $/MW) / (CONV_YEAR_HOURS * CF * MWh_GJ).
+    # Costs are then obtained for a state by taking the minimum.
     # In the future, we might think about a separate state-level curve for grid connection costs.
     reeds_PV_curve_grid_cost %>%
       gather(bin, cost, -BA, -PV.class) %>%
       group_by(BA, PV.class) %>%
-      summarise(cost = mean(cost)) %>%
+      summarise(cost = min(cost[cost>0])) %>%
       ungroup() %>%
       left_join_error_no_match(reeds_PV_curve_CF_avg, by = c("BA", "PV.class")) %>%
       mutate(fcr = L2238.fcr,
              grid.cost = fcr * cost / (CONV_YEAR_HOURS * CF * CONV_MWH_GJ),
-             grid.cost = grid.cost * gdp_deflator(1975, 2005)) %>%
+             grid.cost = grid.cost * gdp_deflator(1975, 2005))  %>%
       left_join_error_no_match(reeds_regions_states %>%
                                  distinct(BA, State),
                                by = "BA") %>%
       select(State, BA, PV.class, grid.cost) %>%
       group_by(State) %>%
-      summarise(grid.cost = mean(grid.cost)) %>%
+      summarise(grid.cost = min(grid.cost)) %>%
       ungroup() %>%
-      mutate(grid.cost = round(grid.cost, energy.DIGITS_COST)) -> L2238.grid.cost
+      mutate(grid.cost = round(grid.cost, energy.DIGITS_COST)) -> L2238.grid_cost
 
-    # Formatting tables for output
-    # First populate the list of states we will be creating supply cuvres for.
-    # These are the states with at least two points.
-    # For all other states, we will assume constant marginal costs regardless of deployment.
-    L2238.PV_curve %>%
-      filter(grade == "grade 2") %>%
-      distinct(State) -> states_list_curve
-    states_list_curve <- states_list_curve$State
+    # L2238.grid_cost_non_reeds_states: Calculate grid costs for non-ReEDS states
+    # grid costs based on mapping to states with similar geography or grid costs
+    # these assumptions can be changed in gcam-usa/non_reeds_PV_grid_cost
+    non_reeds_PV_grid_cost %>%
+      left_join_error_no_match(L2238.grid_cost, by = c("comparison_state" = "State")) %>%
+      select(State = non_reeds_state, grid.cost) -> L2238.grid_cost_non_reeds_states
 
-    # Capacity factors at the technology level need to be updated for all states that have the resource available.
-    # Hence, creating a list of all states.
-    states_list_CF <- unique(L2238.PV_curve$State)
+    # Bind tables
+    L2238.grid_cost %>%
+      bind_rows(L2238.grid_cost_non_reeds_states) -> L2238.grid_cost
+
+
+    # Format tables for output
 
     # Table to read in renewresource, output.unit, price.unit and market
     L2238.PV_curve %>%
@@ -240,16 +349,15 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       mutate(renewresource = "PV_resource",
              output.unit = "EJ",
              price.unit = "1975$/GJ",
-             market = region) %>%
-      filter(region %in% states_list_curve) -> L2238.RenewRsrc_PV_reeds_USA
+             market = region) -> L2238.RenewRsrc_PV_reeds_USA
 
     # Table to create the graded resource curves
     L2238.PV_curve %>%
       mutate(renewresource = "PV_resource",
              sub.renewable.resource = "PV_resource",
              available = round(available, energy.DIGITS_MAX_SUB_RESOURCE)) %>%
-      select(region = State, renewresource, sub.renewable.resource, grade, available, extractioncost) %>%
-      filter(region %in% states_list_curve) -> L2238.GrdRenewRsrcCurves_PV_reeds_USA
+      select(region = State, renewresource, sub.renewable.resource, grade, available, extractioncost) ->
+      L2238.GrdRenewRsrcCurves_PV_reeds_USA
 
     # Table to read in maximum resource
     L2238.maxSubResource_PV %>%
@@ -257,21 +365,19 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
              sub.renewable.resource = "PV_resource",
              year.fillout = min(MODEL_YEARS),
              maxSubResource = round(maxSubResource, energy.DIGITS_MAX_SUB_RESOURCE)) %>%
-      select(region = State, renewresource, sub.renewable.resource, year.fillout, maxSubResource ) %>%
-      filter(region %in% states_list_curve) -> L2238.GrdRenewRsrcMax_PV_reeds_USA
+      select(region = State, renewresource, sub.renewable.resource, year.fillout, maxSubResource) ->
+      L2238.GrdRenewRsrcMax_PV_reeds_USA
 
     # Table to delete global solar resource minicam-energy-input
     L2234.StubTechMarket_elecS_USA %>%
-      filter(region %in% states_list_curve,
-             grepl("PV", stub.technology)) %>%
+      filter(grepl("PV", stub.technology)) %>%
       mutate(minicam.energy.input = "global solar resource") %>%
       select(region, supplysector, subsector, stub.technology, year, minicam.energy.input) ->
       L2238.DeleteStubTechMinicamEnergyInput_PV_reeds_USA
 
     # Table to read in energy inputs at the technology level
     L2234.StubTechMarket_elecS_USA %>%
-      filter(region %in% states_list_curve,
-             grepl("PV",stub.technology )) %>%
+      filter(grepl("PV",stub.technology )) %>%
       mutate(minicam.energy.input = "PV_resource",
              market.name = region,
              efficiency = 1,
@@ -281,8 +387,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
              minicam.energy.input, efficiency, market.name, flag) -> L2238.StubTechEffFlag_PV_reeds_USA
 
     L2234.StubTechCapFactor_elecS_solar_USA %>%
-      filter(region %in% states_list_CF,
-             grepl("PV", stub.technology)) %>%
+      filter(grepl("PV", stub.technology)) %>%
       left_join_error_no_match(L2238.PV_curve %>%
                                  distinct(State, CFmax),
                                by = c("region" = "State")) %>%
@@ -293,7 +398,6 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
     # Copying tech change to all states and filtering out only the contiguous states
     L2238.RenewRsrcTechChange_PV_reeds_USA <- write_to_all_states(L2238.PV_curve_tech_change, c("region", "year","tech.change"))
     L2238.RenewRsrcTechChange_PV_reeds_USA %>%
-      filter(region %in% states_list_curve) %>%
       mutate(renewresource = "PV_resource",
              sub.renewable.resource = "PV_resource") %>%
       select(region,renewresource, sub.renewable.resource, year.fillout = year,
@@ -301,15 +405,15 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
 
     # Reading the grid connection cost as a state-level non-energy cost adder
     L2234.StubTechCapFactor_elecS_solar_USA %>%
-      filter(region %in% states_list_CF,
-             grepl("PV", stub.technology )) %>%
+      filter(grepl("PV", stub.technology )) %>%
       select(region, supplysector, subsector, stub.technology, year) %>%
       mutate(minicam.non.energy.input = "regional price adjustment") %>%
-      left_join_error_no_match(L2238.grid.cost, by = c("region" = "State")) %>%
+      left_join_error_no_match(L2238.grid_cost, by = c("region" = "State")) %>%
       rename(input.cost = grid.cost) %>%
       filter(!is.na(input.cost)) -> L2238.StubTechCost_PV_reeds_USA
 
-    L2238.GrdRenewRsrcMax_PV_reeds_USA %>%
+	# Establishing shareweights
+	L2238.GrdRenewRsrcMax_PV_reeds_USA %>%
       select(region, resource = renewresource, subresource = sub.renewable.resource) %>%
       unique() %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
@@ -325,25 +429,33 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       add_title("Delete global solar resource Energy Input for PV Technologies") %>%
       add_units("NA") %>%
       add_comments("global solar resource input deleted; will be replaced by PV_resource") %>%
-      add_comments("Only applies to 45 states in ReEDS PV data set") %>%
+      add_comments("Applies to all states") %>%
       add_legacy_name("L2238.DeleteStubTechMinicamEnergyInput_PV_USA_reeds") %>%
       add_precursors('gcam-usa/reeds_regions_states',
-                    'gcam-usa/reeds_PV_curve_capacity',
-                    'gcam-usa/reeds_PV_curve_CF_avg',
-                    'L2234.StubTechMarket_elecS_USA',
-                    'L2247.GlobalIntTechCapitalOnly_elecS_USA',
-                    'L223.GlobalIntTechCapital_elec',
-                    'L223.GlobalIntTechOMfixed_elec') ->
+                     'gcam-usa/states_subregions',
+                     'gcam-usa/reeds_PV_curve_capacity',
+                     'gcam-usa/reeds_PV_curve_CF_avg',
+                     'gcam-usa/NREL_us_re_technical_potential',
+                     'gcam-usa/NREL_us_re_capacity_factors',
+                     'energy/A10.rsrc_info',
+                     'L2234.StubTechMarket_elecS_USA',
+                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+                     'L223.GlobalIntTechCapital_elec',
+                     'L223.GlobalIntTechOMfixed_elec') ->
       L2238.DeleteStubTechMinicamEnergyInput_PV_reeds_USA
 
     L2238.RenewRsrc_PV_reeds_USA %>%
       add_title("Market Information for Solar PV Resources") %>%
       add_units("NA") %>%
-      add_comments("Only applies to 45 states in ReEDS PV data set") %>%
+      add_comments("Applies to all states") %>%
       add_legacy_name("L2238.RenewRsrc_PV_USA_reeds") %>%
       add_precursors('gcam-usa/reeds_regions_states',
+                     'gcam-usa/states_subregions',
                      'gcam-usa/reeds_PV_curve_capacity',
                      'gcam-usa/reeds_PV_curve_CF_avg',
+                     'gcam-usa/NREL_us_re_technical_potential',
+                     'gcam-usa/NREL_us_re_capacity_factors',
+                     'energy/A10.rsrc_info',
                      'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
@@ -380,8 +492,11 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       add_comments("Data from ReEDS") %>%
       add_legacy_name("L2238.StubTechCapFactor_PV_USA_reeds") %>%
       add_precursors('gcam-usa/reeds_regions_states',
+                     'gcam-usa/states_subregions',
                      'gcam-usa/reeds_PV_curve_capacity',
                      'gcam-usa/reeds_PV_curve_CF_avg',
+                     'gcam-usa/NREL_us_re_technical_potential',
+                     'gcam-usa/NREL_us_re_capacity_factors',
                      'L2234.StubTechCapFactor_elecS_solar_USA',
                      'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
@@ -402,9 +517,13 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       add_comments("Data from ReEDS") %>%
       add_legacy_name("L2238.StubTechCost_PV_USA_reeds") %>%
       add_precursors('gcam-usa/reeds_regions_states',
+                     'gcam-usa/states_subregions',
                      'gcam-usa/reeds_PV_curve_capacity',
                      'gcam-usa/reeds_PV_curve_CF_avg',
+                     'gcam-usa/NREL_us_re_technical_potential',
+                     'gcam-usa/NREL_us_re_capacity_factors',
                      'gcam-usa/reeds_PV_curve_grid_cost',
+                     'gcam-usa/non_reeds_PV_grid_cost',
                      'L2234.StubTechCapFactor_elecS_solar_USA',
                      'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
@@ -417,7 +536,6 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       add_comments("Mostly just to provide a shell of a technology for the resource to use") %>%
       same_attributes_as(L2238.GrdRenewRsrcMax_PV_reeds_USA) ->
       L2238.ResTechShrwt_PV_reeds_USA
-
 
     return_data(L2238.DeleteStubTechMinicamEnergyInput_PV_reeds_USA,
                 L2238.RenewRsrc_PV_reeds_USA,
