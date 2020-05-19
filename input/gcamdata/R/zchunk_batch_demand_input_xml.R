@@ -22,7 +22,6 @@ module_aglu_batch_demand_input_xml <- function(command, ...) {
               "L203.StubTechProd_nonfood_crop",
               "L203.StubTechProd_nonfood_meat",
               "L203.StubTechProd_For",
-              "L203.StubTechFixOut_exp",
               "L203.StubCalorieContent_crop",
               "L203.StubCalorieContent_meat",
               "L203.PerCapitaBased",
@@ -46,7 +45,6 @@ module_aglu_batch_demand_input_xml <- function(command, ...) {
     L203.StubTechProd_nonfood_crop <- get_data(all_data, "L203.StubTechProd_nonfood_crop")
     L203.StubTechProd_nonfood_meat <- get_data(all_data, "L203.StubTechProd_nonfood_meat")
     L203.StubTechProd_For <- get_data(all_data, "L203.StubTechProd_For")
-    L203.StubTechFixOut_exp <- get_data(all_data, "L203.StubTechFixOut_exp")
     L203.StubCalorieContent_crop <- get_data(all_data, "L203.StubCalorieContent_crop")
     L203.StubCalorieContent_meat <- get_data(all_data, "L203.StubCalorieContent_meat")
     L203.PerCapitaBased <- get_data(all_data, "L203.PerCapitaBased")
@@ -68,14 +66,13 @@ module_aglu_batch_demand_input_xml <- function(command, ...) {
       add_xml_data(L203.StubTechProd_nonfood_crop, "StubTechProd") %>%
       add_xml_data(L203.StubTechProd_nonfood_meat, "StubTechProd") %>%
       add_xml_data(L203.StubTechProd_For, "StubTechProd") %>%
-      add_xml_data(L203.StubTechFixOut_exp, "StubTechFixOut") %>%
       add_xml_data(L203.StubCalorieContent_crop, "StubCalorieContent") %>%
       add_xml_data(L203.StubCalorieContent_meat, "StubCalorieContent") %>%
       add_xml_data(L203.PerCapitaBased, "PerCapitaBased") %>%
       add_xml_data(L203.BaseService, "BaseService") %>%
       add_xml_data(L203.IncomeElasticity, "IncomeElasticity") %>%
       add_xml_data(L203.PriceElasticity, "PriceElasticity") %>%
-      add_precursors("L203.Supplysector_demand", "L203.SubsectorAll_demand", "L203.StubTech_demand", "L203.GlobalTechCoef_demand", "L203.GlobalTechShrwt_demand", "L203.StubTechProd_food_crop", "L203.StubTechProd_food_meat", "L203.StubTechProd_nonfood_crop", "L203.StubTechProd_nonfood_meat", "L203.StubTechProd_For", "L203.StubTechFixOut_exp", "L203.StubCalorieContent_crop", "L203.StubCalorieContent_meat", "L203.PerCapitaBased", "L203.BaseService", "L203.IncomeElasticity", "L203.PriceElasticity") ->
+      add_precursors("L203.Supplysector_demand", "L203.SubsectorAll_demand", "L203.StubTech_demand", "L203.GlobalTechCoef_demand", "L203.GlobalTechShrwt_demand", "L203.StubTechProd_food_crop", "L203.StubTechProd_food_meat", "L203.StubTechProd_nonfood_crop", "L203.StubTechProd_nonfood_meat", "L203.StubTechProd_For", "L203.StubCalorieContent_crop", "L203.StubCalorieContent_meat", "L203.PerCapitaBased", "L203.BaseService", "L203.IncomeElasticity", "L203.PriceElasticity") ->
       demand_input.xml
 
     return_data(demand_input.xml)
