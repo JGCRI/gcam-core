@@ -13,5 +13,10 @@ electricity,gas,gas (steam/CT),share-weight,final-calibration-year,end-year,s-cu
 electricity,gas,gas (CC),share-weight,final-calibration-year,end-year,s-curve
 electricity,refined liquids,refined liquids (CC),share-weight,final-calibration-year,end-year,s-curve
 electricity,refined liquids,refined liquids (steam/CT),share-weight,final-calibration-year,end-year,s-curve
-electricity,solar,CSP,share-weight,final-calibration-year,end-year,s-curve
-electricity,solar,PV,share-weight,final-calibration-year,end-year,s-curve
+electricity,solar,CSP,share-weight,final-calibration-year,2050,s-curve
+electricity,solar,CSP_storage,share-weight,final-calibration-year,2050,s-curve
+electricity,solar,PV,share-weight,final-calibration-year,2050,s-curve
+electricity,solar,PV_storage,share-weight,final-calibration-year,2050,s-curve
+electricity,wind,wind,share-weight,final-calibration-year,2050,s-curve
+electricity,wind,wind_storage,share-weight,final-calibration-year,2050,s-curve
+electricity,wind,wind_offshore,share-weight,final-calibration-year,2050,s-curve
