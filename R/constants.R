@@ -663,6 +663,10 @@ gcamusa.DEFAULT_LOGIT_TYPE  <- NA  # default logit type
 gcamusa.DEFAULT_LOGITEXP    <- -3
 gcamusa.DEFAULT_MARKET      <- gcam.USA_REGION
 gcamusa.DEFAULT_SHAREWEIGHT <- 1
+gcamusa.FIXED_SHAREWEIGHT <- "fixed"
+gcamusa.LINEAR_SHAREWEIGHT <- "linear"
+gcamusa.DISALLOWED_COOLING_TECH <- "once through"
+gcamusa.INTERP_APPLY_TO <- "share-weight"
 
 # Logit exponent regulating competition between different grid regions in USA electricity market
 # (single market approach only)
