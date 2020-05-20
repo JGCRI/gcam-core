@@ -60,7 +60,6 @@ electricity,biomass,biomass (conv),elec_biomass (conv),biomass (conv),biomass (c
 electricity,biomass,biomass (IGCC),elec_biomass (IGCC),biomass (IGCC),biomass (IGCC) (once through),IGCC,once through,fresh,electricity generation,biomass,biomass (IGCC),regional biomass
 electricity,biomass,biomass (IGCC),elec_biomass (IGCC),biomass (IGCC),biomass (IGCC) (seawater),IGCC,seawater,seawater,electricity generation,biomass,biomass (IGCC),regional biomass
 electricity,biomass,biomass (IGCC),elec_biomass (IGCC),biomass (IGCC),biomass (IGCC) (recirculating),IGCC,recirculating,fresh,electricity generation,biomass,biomass (IGCC),regional biomass
-electricity,biomass,biomass (IGCC),elec_biomass (IGCC),biomass (IGCC),biomass (IGCC) (dry cooling),IGCC,cooling pond,fresh,electricity generation,biomass,biomass (IGCC),regional biomass
 electricity,biomass,biomass (IGCC),elec_biomass (IGCC),biomass (IGCC),biomass (IGCC) (dry cooling),IGCC,dry cooling,fresh,electricity generation,biomass,biomass (IGCC),regional biomass
 electricity,biomass,biomass (conv CCS),elec_biomass (conv CCS),biomass (conv CCS),biomass (conv CCS) (once through),conv (CCS),once through,fresh,electricity generation,biomass,biomass (conv CCS),regional biomass
 electricity,biomass,biomass (conv CCS),elec_biomass (conv CCS),biomass (conv CCS),biomass (conv CCS) (seawater),conv (CCS),seawater,seawater,electricity generation,biomass,biomass (conv CCS),regional biomass
