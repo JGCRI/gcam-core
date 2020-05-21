@@ -32,6 +32,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
              FILE = "gcam-usa/elec_tech_water_map",
+             FILE = "gcam-usa/A23.elecS_tech_mapping_cool_shares_fut",
              "L1233.out_EJ_state_elec_F_tech_cool",
              "L2233.GlobalTechEff_elec_cool",
              "L2233.GlobalTechShrwt_elec_cool",
@@ -179,6 +180,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     # Load required inputs
     A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
     elec_tech_water_map <- get_data(all_data, "gcam-usa/elec_tech_water_map")
+    A23.elecS_tech_mapping_cool_shares_fut <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool_shares_fut")
     L1233.out_EJ_state_elec_F_tech_cool <- get_data(all_data, "L1233.out_EJ_state_elec_F_tech_cool")
     L2233.GlobalTechEff_elec_cool <- get_data(all_data, "L2233.GlobalTechEff_elec_cool")
     L2233.GlobalTechShrwt_elec_cool <- get_data(all_data, "L2233.GlobalTechShrwt_elec_cool")
@@ -990,30 +992,55 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     # but switches to a new power plant type (i.e. Nuclear Gen 2 -> Gen 3), we assume
     # that share weights of cooling technologies for that particular state remain similar
     # to the old power plant (e.g. Gen 3 will have the same cooling tech share weights as Gen 2).
+
+    # Create a table with future techs whose cooling shares we can infer from existing ones
     L2233.StubTechProd_elec_cool_SW_USA %>%
       filter(!grepl(gcamusa.DISALLOWED_COOLING_TECH, technology),
-             subsector0 == "nuclear") %>%
-      # calculate historical calibrated production by generation technology
-      group_by(region, subsector0, subsector, year) %>%
-      mutate(gen_tech_calOuput = sum(calOutputValue)) %>%
-      ungroup() %>%
+             subs.share.weight == 0 & future.subs.shrwt > 0) %>%
+      # Get rid of info related to calibrated values, which we've just confirmed are zero
+      select(-calOutputValue, -share.weight.year, -subs.share.weight, -tech.share.weight) %>%
+      semi_join(A23.elecS_tech_mapping_cool_shares_fut,
+                by = "subsector") %>%
+      left_join_error_no_match(A23.elecS_tech_mapping_cool_shares_fut,
+                               by = "subsector") %>%
       left_join_error_no_match(elec_tech_water_map %>%
-                  select(to.technology, cooling_system),
-                by = c("technology" = "to.technology")) %>%
-      mutate(cooling_share = calOutputValue / gen_tech_calOuput) %>%
-      replace_na(list(cooling_share = 0)) %>%
-      group_by(region, subsector0, year, cooling_system) %>%
-      mutate(share.weight = if_else(subsector == "nuc_base_Gen III", cooling_share[subsector=="nuc_base_Gen II"], tech.share.weight)) %>%
+                                 select(to.technology, cooling_system),
+                               by = c("technology" = "to.technology")) -> L2233.elec_cool_SW_future_techs_USA
+
+    # Create a table with existing techs whose cooling shares we can use to inform future ones
+    L2233.StubTechProd_elec_cool_SW_USA %>%
+      filter(!grepl(gcamusa.DISALLOWED_COOLING_TECH, technology)) %>%
+      semi_join(A23.elecS_tech_mapping_cool_shares_fut,
+                by = c("subsector" = "mapped_subsector")) %>%
+      left_join_error_no_match(elec_tech_water_map %>%
+                                 select(to.technology, cooling_system),
+                               by = c("technology" = "to.technology")) -> L2233.elec_cool_SW_mapped_techs_USA
+
+    # Join tables and match up share info
+    L2233.elec_cool_SW_future_techs_USA %>%
+      left_join_error_no_match(L2233.elec_cool_SW_mapped_techs_USA %>%
+                                 select(-technology, -future.subs.shrwt),
+                               by = c("region", "supplysector", "subsector0", "year",
+                                      "mapped_subsector" = "subsector", "cooling_system")) %>%
+      group_by(region, supplysector, subsector0, subsector) %>%
+      # check if a generation tech has non-zero share-weight in any future period (i.e. sum > 0)
+      mutate(subs.share.weight = ifelse(sum(calOutputValue) > 0, 1, 0)) %>%
+      # Remove any generation techs with zero generation by mapped technologies,
+      # which will result in zero shares for every cooling tech.
+      # This could happen if once through had 100% share historically, since
+      # once through is not included in this (future-oriented) table.
+      filter(subs.share.weight != 0) %>%
+      # calculate new cooling tech shares (share weights) without once through
+      mutate(share.weight = round(calOutputValue / sum(calOutputValue), energy.DIGITS_SHRWT)) %>%
       ungroup() %>%
-      mutate(share.weight = if_else(subsector == "nuc_base_Gen III" & grepl(gcamusa.DISALLOWED_COOLING_TECH, technology), 0, share.weight)) %>%
       mutate(from.year = min(MODEL_FUTURE_YEARS),
              to.year = max(MODEL_YEARS),
              interpolation.function = gcamusa.FIXED_SHAREWEIGHT,
-             to.value = share.weight) %>%
+             to.value = share.weight,
+             apply.to = gcamusa.INTERP_APPLY_TO) %>%
       rename(stub.technology = technology) %>%
-      mutate(apply.to = gcamusa.INTERP_APPLY_TO) %>%
       select(region, supplysector, subsector0, subsector, stub.technology, apply.to,
-             from.year, to.year, to.value, interpolation.function) -> L2233.StubTechInterpTo_elecS_nuc_USA
+             from.year, to.year, to.value, interpolation.function) -> L2233.StubTechInterpTo_elecS_mapped_USA
 
     # Finally, all power plant and cooling technology combinations that do not exist in
     # in future years are given 0 share weights in the future periods.
@@ -1032,8 +1059,12 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     # Combine all "InterpTo" cases which specify a particular future shareweight value
     L2233.StubTechInterpTo_elecS_oncethrough_USA %>%
       bind_rows(L2233.StubTechInterpTo_elecS_fut_USA,
-                L2233.StubTechInterpTo_elecS_nuc_USA,
                 L2233.StubTechInterpTo_elecS_nofut_USA) %>%
+      # use anti-join to avoid duplicates, since the scope of L2233.StubTechInterpTo_elecS_mapped_USA
+      # overlaps with that of L2233.StubTechInterpTo_elecS_nofut_USA
+      anti_join(L2233.StubTechInterpTo_elecS_mapped_USA,
+                by = c("region", "supplysector", "subsector0", "subsector", "stub.technology")) %>%
+      bind_rows(L2233.StubTechInterpTo_elecS_mapped_USA) %>%
       # use anti-join to remove any technologies which are fixed at calibration values
       anti_join(L2233.StubTechInterp_elecS_cool_USA,
                 by = c("region", "supplysector", "subsector0", "subsector", "stub.technology")) ->
@@ -1433,7 +1464,8 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       add_comments("Electricity Load Segments Stub Tech Interpolation Rules - fixed at calibration values") %>%
       add_legacy_name("L2233.StubTechShrwt_elec") %>%
       same_precursors_as(L2233.StubTechProd_elec_USA) %>%
-      same_precursors_as(L2233.SubsectorShrwt_elecS_cool_USA) ->
+      same_precursors_as(L2233.SubsectorShrwt_elecS_cool_USA) %>%
+      add_precursors("gcam-usa/A23.elecS_tech_mapping_cool_shares_fut") ->
       L2233.StubTechInterp_elecS_cool_USA
 
     L2233.StubTechShrwt_elecS_cool_USA %>%

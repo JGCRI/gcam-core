@@ -665,8 +665,11 @@ gcamusa.DEFAULT_MARKET      <- gcam.USA_REGION
 gcamusa.DEFAULT_SHAREWEIGHT <- 1
 gcamusa.FIXED_SHAREWEIGHT <- "fixed"
 gcamusa.LINEAR_SHAREWEIGHT <- "linear"
-gcamusa.DISALLOWED_COOLING_TECH <- "once through"
 gcamusa.INTERP_APPLY_TO <- "share-weight"
+
+# Water related constants for GCAM-USA
+gcamusa.DISALLOWED_COOLING_TECH <- "once through"
+gcamusa.MUNICIPAL_SECTOR <- "Municipal"
 
 # Logit exponent regulating competition between different grid regions in USA electricity market
 # (single market approach only)
@@ -713,7 +716,7 @@ gcamusa.BASE_CDD_USA <- 1215 # https://www.eia.gov/totalenergy/data/annual/showt
 gcamusa.AEO_DD_YEARS <- seq(2010, 2040, 5)
 
 
-#Years to be adjusted for RECS
+# Years to be adjusted for RECS
 gcamusa.RECS_YEARS <- c(2009,2015)
 
 gcamusa.GAS_ADJ_THRESH      <- 5
