@@ -176,8 +176,10 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
     L1233.out_EJ_state_elec_F_tech_cool %>%
       left_join(A23.elecS_tech_mapping_cool %>%
                   ## left_join here as numerous new rows are created due to vintages addition
-                  select(technology, Electric.sector, Electric.sector.technology, cooling_system, water_type),
-                by = c("technology","cooling_system","water_type")) ->
+                  select(technology, Electric.sector, Electric.sector.technology, water_type),
+                by = c("technology","water_type")) %>%
+      filter(year %in% MODEL_YEARS) %>%
+      unique() ->
       L1233.out_EJ_state_elec_F_tech_cool
 
 
@@ -197,8 +199,9 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
       mutate(share = if_else(sum_share_tech == 0, share_nat, share)) %>%
       select(-share_nat, -sum_share_tech, -out_MWh)%>%
       left_join(A23.elecS_tech_mapping_cool %>%
-                  select(technology, Electric.sector, Electric.sector.technology, cooling_system, water_type),
-                by = c("technology","cooling_system","water_type")) %>%
+                  select(technology, Electric.sector, Electric.sector.technology),
+                by = c("technology")) %>%
+      unique() %>%
       select(-sector, -technology) %>%
       rename(sector = Electric.sector,
              technology = Electric.sector.technology) ->
