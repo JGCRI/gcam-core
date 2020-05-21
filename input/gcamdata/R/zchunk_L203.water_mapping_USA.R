@@ -62,44 +62,47 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       price.unit <- input.unit <- output.unit <- logit.exponent <- logit.type <-
       logit.year.fillout <- NULL  # silence package check notes
 
-      # Define in which states GCAM water basins exist by using data from R package created by Chris Vernon
+    # Define in which states GCAM water basins exist by using data from R package created by Chris Vernon
     state_and_basin %>%
-      left_join_error_no_match(basin_to_country_mapping,by=c("basin_id"="GCAM_basin_ID")) %>%
+      left_join_error_no_match(basin_to_country_mapping, by = c("basin_id" = "GCAM_basin_ID")) %>%
       select(-basin_name, -Basin_name) %>%
-      left_join_error_no_match(basin_ID,by=c("basin_id")) %>%
+      left_join_error_no_match(basin_ID, by = c("basin_id")) %>%
       ## Replaces incorrect basin naming to match resouces in unlimited_water_supply.xml
-      select(basin_id,GLU_name,basin_name,state_abbr) %>% rename(region=state_abbr) ->
+      select(basin_id, GLU_name, basin_name, state_abbr) %>%
+      rename(region = state_abbr) ->
       state_and_basin_mapping
 
-      # Create mappings for the sectors that have production at the state level already.
-      # These sectors: Industrial, Municipal, and Electricity will not need to be shared
-      # from the USA region to the states, and thus will not have separate market names by region
+    # Create mappings for the sectors that have production at the state level already.
+    # These sectors: Industrial, Municipal, and Electricity will not need to be shared
+    # from the USA region to the states, and thus will not have separate market names by region
     L103.water_mapping_USA_R_B_W_Ws_share %>%
-      mutate(water_sector = gsub("Domestic","Municipal",water_sector)) %>%
-      left_join(A03.sector, by=c("water_sector" = "water.sector")) %>%
+      mutate(water_sector = gsub("Domestic", "Municipal", water_sector)) %>%
+      # LJENM returns error because A03.sector has NAs in logit.type column
+      # this is expected and not a problem, so left_join() is used
+      left_join(A03.sector, by = c("water_sector" = "water.sector")) %>%
       mutate(supplysector = set_water_input_name(water_sector, water_type, A03.sector)) ->
       L203.mapping_nonirr
 
-      # Using irrigation shares, define water sector and add demand categories
+    # Using irrigation shares, define water sector and add demand categories
     L103.water_mapping_USA_R_GLU_W_Ws_share %>%
-      rename(state=region) %>%
-      mutate(region=gcam.USA_REGION) %>%
+      rename(state = region) %>%
+      mutate(region = gcam.USA_REGION) %>%
       repeat_add_columns(filter(A03.sector, water.sector %in% water.IRRIGATION)) %>%
       mutate(supplysector = set_water_input_name(water.sector, water_type, A03.sector, GLU_name)) ->
       L203.mapping_irr
 
-      # Isolate the USA region which will share basin level demands in the USA region to
-      # States which are defined as subsectors
+    # Isolate the USA region which will share basin level demands in the USA region to
+    # States which are defined as subsectors
     L203.mapping_irr %>%
       mutate(subsector = state,
              technology = supplysector,
              coefficient = if_else(water.sector == water.IRRIGATION & water_type == "water withdrawals",
-                                   1/gcamusa.CONVEYANCE_LOSSES, 1),
-      ## ^^ conveyance losses for irrigation--applied to withdrawals only
-      # Note: Conveyance losses are taken out of agriculture withdrawals and...
-      # ... instead applied to water distribution sectors (water_td_irr). This means that to get total...
-      # ... ag withdrawals for reporting (i.e., when querying GCAM results)...
-      # ... it is necessary to include the conveyance loss.
+                                   1 / gcamusa.CONVEYANCE_LOSSES, 1),
+             ## ^^ conveyance losses for irrigation--applied to withdrawals only
+             # Note: Conveyance losses are taken out of agriculture withdrawals and...
+             # ... instead applied to water distribution sectors (water_td_irr). This means that to get total...
+             # ... ag withdrawals for reporting (i.e., when querying GCAM results)...
+             # ... it is necessary to include the conveyance loss.
              share.weight = share,
              market.name = state,
              share.weight.year = year,
@@ -118,27 +121,26 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                          market.name = gcam.USA_REGION)) ->
       L203.mapping_irr_region
 
-      # Isolate the states and define the basins which contribute water supplies to wach one.
+    # Isolate the states and define the basins which contribute water supplies to wach one.
     L203.mapping_irr %>%
       select(-region) %>%
       mutate(region = state,
              subsector = basin_name,
              technology = basin_name,
-             coefficient = 1,
-             share.weight = 1,
+             coefficient = gcamusa.DEFAULT_COEFFICIENT,
+             share.weight = gcamusa.DEFAULT_SHAREWEIGHT,
              market.name = gcam.USA_REGION,
              logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
       select(-share, -state) %>%
       arrange(region) ->
       L203.mapping_irr_state
 
-      # Combine state and USA region irrigation mappings
+    # Combine state and USA region irrigation mappings
     bind_rows(
       L203.mapping_irr_region,
       L203.mapping_irr_state
     ) ->
       L203.mapping_irr
-
 
 
     # Livestock sector:
@@ -151,7 +153,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       repeat_add_columns(filter(A03.sector, (water.sector %in% water.LIVESTOCK))) %>%
       mutate(wt_short = if_else(water_type == "water consumption", "C", "W"),
              supplysector = paste(supplysector, wt_short, sep = "_"),
-             coefficient = 1,
+             coefficient = gcamusa.DEFAULT_COEFFICIENT,
              subsector = state,
              technology = supplysector,
              share.weight = value,
@@ -164,13 +166,16 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
 
     L203.mapping_livestock %>%
       bind_rows(L203.mapping_livestock %>%
-        left_join(state_and_basin_mapping, by=c("subsector"="region")) %>%
-        mutate(share.weight = 0,
-             subsector = basin_name,
-             technology = basin_name,
-             market.name = gcam.USA_REGION) %>%
-          unique()
-        ) ->
+                  # LJENM returns error because number of rows in data changes.
+                  # The join is intended to duplicate rows because some states
+                  # are mapped to multiple basisn.  Thus, left_join() is used.
+                  left_join(state_and_basin_mapping, by = c("subsector" = "region")) %>%
+                  mutate(share.weight = 0,
+                         subsector = basin_name,
+                         technology = basin_name,
+                         market.name = gcam.USA_REGION) %>%
+                  unique()
+      ) ->
       L203.mapping_livestock
 
     # (d) primary energy sector
@@ -180,11 +185,11 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     # mapping of fresh to desal within a state)
 
     L103.water_mapping_USA_R_PRI_W_Ws_share %>%
-      mutate(region=gcam.USA_REGION) %>%
+      mutate(region = gcam.USA_REGION) %>%
       repeat_add_columns(filter(A03.sector, (water.sector %in% water.PRIMARY_ENERGY))) %>%
       mutate(wt_short = if_else(water_type == "water consumption", "C", "W"),
              supplysector = paste(supplysector, wt_short, sep = "_"),
-             coefficient = 1,
+             coefficient = gcamusa.DEFAULT_COEFFICIENT,
              subsector = state,
              technology = supplysector,
              share.weight = state.to.country.share,
@@ -197,7 +202,10 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
 
     L203.mapping_primary_region %>%
       bind_rows(L203.mapping_primary_region %>%
-                  left_join(state_and_basin_mapping, by=c("subsector"="region")) %>%
+                  # LJENM returns error because number of rows in data changes.
+                  # The join is intended to duplicate rows because some states
+                  # are mapped to multiple basisn.  Thus, left_join() is used.
+                  left_join(state_and_basin_mapping, by = c("subsector" = "region")) %>%
                   mutate(share.weight = 0,
                          subsector = basin_name,
                          technology = basin_name,
@@ -206,12 +214,12 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       ) ->
       L203.mapping_primary_region
 
-    ## No values are present for DC, therefore NAs are created. These are replaced with
-    ## zero shareweights
+    # No values are present for DC, therefore NAs are created. These are replaced with
+    # zero shareweights
 
-     L203.mapping_primary_region %>%
-      replace_na(list(share.weight=0)) %>%
-      replace_na(list(fresh.share=0)) ->
+    L203.mapping_primary_region %>%
+      replace_na(list(share.weight = 0)) %>%
+      replace_na(list(fresh.share = 0)) ->
       L203.mapping_primary
 
 
@@ -219,25 +227,29 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     # subsector share weights, additional mapping is used for all other final outputs
 
     L203.mapping_nonirr %>%
-                  mutate(coefficient = 1,
-                         subsector = basin_name,
-                         technology = basin_name,
-                         share.weight = share,
-                         logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
+      mutate(coefficient = gcamusa.DEFAULT_COEFFICIENT,
+             subsector = basin_name,
+             technology = basin_name,
+             share.weight = share,
+             logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
       arrange(region) %>%
-      bind_rows(L203.mapping_nonirr %>% filter(year==gcamusa.FINAL_MAPPING_YEAR) %>%
+      bind_rows(L203.mapping_nonirr %>%
+                  filter(year == gcamusa.FINAL_MAPPING_YEAR) %>%
                   mutate(year=max(MODEL_BASE_YEARS),
-                         coefficient = 1,
+                         coefficient = gcamusa.DEFAULT_COEFFICIENT,
                          subsector = basin_name,
                          technology = basin_name,
                          share.weight = share,
                          logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
                   arrange(region)) %>%
       gather_years("share.weight") %>%
-      complete(nesting(region, supplysector, subsector, technology,water.sector,basin_name,water_type,coefficient,share,share.weight,price.unit,input.unit,output.unit,logit.exponent,logit.type,logit.year.fillout), year = c(year,MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
+      complete(nesting(region, supplysector, subsector, technology, water.sector, basin_name, water_type, coefficient, share,
+                       share.weight, price.unit, input.unit, output.unit, logit.exponent, logit.type, logit.year.fillout),
+               year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       dplyr::filter(!is.na(year)) %>%
-      bind_rows(L203.mapping_livestock,L203.mapping_primary,L203.mapping_irr) %>%
-      mutate(pMult = if_else(water.sector == water.IRRIGATION & water_type == "water withdrawals" & region!=gcam.USA_REGION, water.IRR_PRICE_SUBSIDY_MULT, water.MAPPING_PMULT)) ->
+      bind_rows(L203.mapping_livestock, L203.mapping_primary, L203.mapping_irr) %>%
+      mutate(pMult = if_else(water.sector == water.IRRIGATION & water_type == "water withdrawals" & region != gcam.USA_REGION,
+                             water.IRR_PRICE_SUBSIDY_MULT, water.MAPPING_PMULT)) ->
       L203.mapping_all
 
     tibble(region = gcam.USA_REGION,
@@ -251,7 +263,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
 
     # Subsector logit exponents for mapping sector
     L203.mapping_all %>%
-      mutate(logit.exponent = case_when(region!=gcam.USA_REGION ~ water.LOGIT_EXP,TRUE~0)) %>%
+      mutate(logit.exponent = case_when(region != gcam.USA_REGION ~ water.LOGIT_EXP, TRUE~0)) %>%
       select(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME) ->
       L203.SubsectorLogit_USA
 
@@ -265,8 +277,9 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     # Zero out technology shareweights in the USA region to make sure values are not counted multiple times
     L203.mapping_all %>%
       gather_years("share.weight") %>%
-      complete(nesting(region, supplysector, subsector, technology,water.sector,basin_name,water_type,coefficient), year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
-      mutate(share.weight=if_else(region==gcam.USA_REGION&!(subsector %in% gcamusa.STATES)&!grepl("irr",supplysector),0,1)) %>%
+      complete(nesting(region, supplysector, subsector, technology, water.sector, basin_name, water_type, coefficient),
+               year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
+      mutate(share.weight = if_else(region == gcam.USA_REGION & !(subsector %in% gcamusa.STATES) & !grepl("irr", supplysector), 0, 1)) %>%
       dplyr::filter(!is.na(year)) %>%
       select(LEVEL2_DATA_NAMES[["TechShrwt"]]) ->
       L203.TechShrwt_USA
@@ -275,9 +288,11 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     # produced at the state level or is we map from USA region to state
     L203.mapping_all %>%
       gather_years("share.weight") %>%
-      complete(nesting(region, supplysector, subsector, technology,water.sector,basin_name,water_type,coefficient), year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
-      mutate(minicam.energy.input = case_when(region ==gcam.USA_REGION&grepl("water_td",technology) ~ supplysector, TRUE~paste0(basin_name,"_",water_type)),
-             market.name = case_when( region ==gcam.USA_REGION&grepl("water_td",technology) ~ subsector,TRUE~gcam.USA_REGION)) %>%
+      complete(nesting(region, supplysector, subsector, technology, water.sector, basin_name, water_type, coefficient),
+               year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
+      mutate(minicam.energy.input = case_when(region == gcam.USA_REGION & grepl("water_td", technology) ~ supplysector,
+                                              TRUE~paste0(basin_name, "_", water_type)),
+             market.name = case_when(region == gcam.USA_REGION & grepl("water_td", technology) ~ subsector, TRUE~gcam.USA_REGION)) %>%
       dplyr::filter(!is.na(year)) %>%
       select(LEVEL2_DATA_NAMES[["TechCoef"]]) ->
       L203.TechCoef_USA
@@ -285,34 +300,33 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     # Pass-through technology water price adjust if there one
     L203.mapping_all %>%
       gather_years("share.weight") %>%
-      complete(nesting(region, supplysector, subsector, technology,water.sector,basin_name,water_type,coefficient), year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
+      complete(nesting(region, supplysector, subsector, technology, water.sector, basin_name, water_type, coefficient),
+               year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       replace_na(list(pMult=1)) %>%
       select(LEVEL2_DATA_NAMES[["TechPmult"]]) ->
       L203.TechPmult_USA
 
     L203.TechCoef_USA %>%
-    #filter(!grepl("_irr_", supplysector)) %>%
       filter(region!=gcam.USA_REGION) %>%
       mutate(technology = "desalination",
              minicam.energy.input = "desalination",
-             market.name=gcam.USA_REGION) %>%
+             market.name = gcam.USA_REGION) %>%
       dplyr::filter(!is.na(year))->
       L203.TechDesalCoef_USA
 
-    ## Set shareweight of desalination technologies to 0 in all non-coastal states
-    ## and basins that do not come in contact with the ocean. This removes the possibility
-    ## of having desalination required in Texas, but coming from the Rio Grande which does not
-    ## have access to seawater without inland transportation.
-    ##
-    ## Additionally, desalination is now allowed for all sectors, including irrigation.
-    ## Given the price subsidy on agricultural water, desalination should never come
-    ## for irrigated agriculture as the price required would exceed the limits defined in
-    ## water_supply_constrained.xml
+    # Set shareweight of desalination technologies to 0 in all non-coastal states
+    # and basins that do not come in contact with the ocean. This removes the possibility
+    # of having desalination required in Texas, but coming from the Rio Grande which does not
+    # have access to seawater without inland transportation.
+    #
+    # Additionally, desalination is now allowed for all sectors, including irrigation.
+    # Given the price subsidy on agricultural water, desalination should never come
+    # for irrigated agriculture as the price required would exceed the limits defined in
+    # water_supply_constrained.xml
     L203.TechShrwt_USA %>%
-      #filter(!grepl("_irr_", supplysector)) %>%
-      filter(region!=gcam.USA_REGION) %>%
+      filter(region != gcam.USA_REGION) %>%
       mutate(technology = "desalination",
-             share.weight = if_else((region %in% gcamusa.NO_SEAWATER_STATES)|!(subsector %in% gcamusa.SEAWATER_BASINS),0, 1))  %>%
+             share.weight = if_else((region %in% gcamusa.NO_SEAWATER_STATES) | !(subsector %in% gcamusa.SEAWATER_BASINS), 0, 1))  %>%
       dplyr::filter(!is.na(year)) ->
       L203.TechDesalShrwt_USA
 
@@ -324,8 +338,8 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       L203.TechDesalCost_USA
 
 
-   # ===================================================
-   # Produce outputs
+    # ===================================================
+    # Produce outputs
     L203.DeleteSupplysector_USA %>%
       add_title("Remove the three sectors that are produced at the state level") %>%
       add_units("Unitless") %>%
@@ -468,7 +482,16 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                      "water/A03.sector") ->
       L203.TechDesalCost_USA
 
-    return_data(L203.DeleteSupplysector_USA,  L203.Supplysector_USA, L203.SubsectorLogit_USA, L203.SubsectorShrwt_USA, L203.TechShrwt_USA, L203.TechCoef_USA,  L203.TechDesalCoef_USA, L203.TechDesalShrwt_USA, L203.TechDesalCost_USA, L203.TechPmult_USA)
+    return_data(L203.DeleteSupplysector_USA,
+                L203.Supplysector_USA,
+                L203.SubsectorLogit_USA,
+                L203.SubsectorShrwt_USA,
+                L203.TechShrwt_USA,
+                L203.TechCoef_USA,
+                L203.TechDesalCoef_USA,
+                L203.TechDesalShrwt_USA,
+                L203.TechDesalCost_USA,
+                L203.TechPmult_USA)
   } else {
     stop("Unknown command")
   }

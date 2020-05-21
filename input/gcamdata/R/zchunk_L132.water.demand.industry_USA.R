@@ -48,7 +48,7 @@ module_gcamusa_L132.water.demand.industry <- function(command, ...) {
     # Second, join water demand and energy consumption to calculate coefficients
     USGS_industry_water_demand_km3 %>%
       complete(nesting(state, sector, water_type), year = L132.in_EJ_state_ind$year) %>%
-      left_join(L132.in_EJ_state_ind, by = c("state", "year")) %>%
+      left_join_error_no_match(L132.in_EJ_state_ind, by = c("state", "year")) %>%
       # Calculate water demand coefficients
       mutate(coefficient = water_km3 / energy_EJ) %>%
       group_by(state, water_type) %>%

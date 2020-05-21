@@ -177,7 +177,6 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
 
     # ===================================================
 
-
     # PART A: BUILDING TRANSPORTATION SECTORS FROM THE TECHNOLOGY LEVEL UP
     # L254.StubTranTech: Transportation stub technologies (built from technologies with coefficients in the UCD database)
 
