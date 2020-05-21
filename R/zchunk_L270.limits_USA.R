@@ -45,7 +45,7 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
     value <- subsector <- supplysector <- year <- GCAM_region_ID <- sector.name <-
       region <- scenario <- constraint <- . <- subsector_1 <- Electric.sector <-
       subsector.name<- Electric.sector.technology <- minicam.energy.input <-
-      coefficient<- to.technology <- NULL # silence package check notes
+      coefficient <- to.technology <- NULL # silence package check notes
 
     all_data <- list(...)[[1]]
 
@@ -76,8 +76,7 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
       # left_join_error_no_match throws error, so left_join is used
       # Altered to include cooling technologies in the global tech database
       left_join(A23.elecS_tech_mapping_cool,
-                by=c("technology",
-                     "sector.name"="supplysector","subsector.name" ="subsector")) %>%
+                by = c("technology", "sector.name" = "supplysector", "subsector.name" = "subsector")) %>%
       select(-subsector_1, -sector.name)%>%
       # There are several electricity load segment / technology combinations that we think
       # do not make sense. These combinations are outlined in A23.elecS_tech_availability,
@@ -88,15 +87,14 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
                         "technology" = "stub.technology")) %>%
       select(Electric.sector, subsector.name, Electric.sector.technology, to.technology,
              year, minicam.energy.input, coefficient) %>%
-      rename(sector.name = Electric.sector,subsector.name0=subsector.name, subsector.name = Electric.sector.technology, technology = to.technology)-> L270.CreditInput_elecS_USA
+      rename(sector.name = Electric.sector, subsector.name0 = subsector.name,
+             subsector.name = Electric.sector.technology, technology = to.technology) ->
+      L270.CreditInput_elecS_USA
 
     L270.NegEmissBudgetMaxPrice %>%
       filter(region == gcam.USA_REGION) %>%
       write_to_all_states(names(L270.NegEmissBudgetMaxPrice)) ->
       L270.NegEmissBudgetMaxPrice_USA
-
-
-
 
     # ===================================================
     # Produce outputs

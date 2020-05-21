@@ -61,7 +61,7 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
     A45.sector %>%
       left_join_error_no_match(A45.tech_cost, by = "supplysector") %>%
       bind_cols(A45.demand) %>%
-      mutate(logit.year.fillout = MODEL_YEARS[1]) %>%
+      mutate(logit.year.fillout = min(MODEL_YEARS)) %>%
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
       mutate(logit.type = NA) ->
       L245.assumptions_all
@@ -79,14 +79,15 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
     # Subsector shareweights
     L245.assumptions_all %>%
       # share weights are 1 due to no competition
-      mutate(year.fillout = MODEL_YEARS[1], share.weight = 1) %>%
+      mutate(year.fillout = min(MODEL_YEARS),
+             share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
       select(LEVEL2_DATA_NAMES$SubsectorShrwtFllt) ->
       L245.SubsectorShrwtFllt_USA
 
     # Technology shareweights
     L245.assumptions_all %>%
       # share weights are 1 due to no competition
-      mutate(share.weight = 1) %>%
+      mutate(share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       select(LEVEL2_DATA_NAMES$TechShrwt) ->
       L245.TechShrwt_USA
@@ -112,18 +113,18 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
       # ^^ repeats tibble for consumption and withdrawal coefficients
       repeat_add_columns(tibble(water_type = c("water consumption", "water withdrawals"))) %>%
       # ^^ withdrawal coefficient is 1; consumption coefficient is fraction of withdrawal
-      mutate(coefficient = 1,
+      mutate(coefficient = gcamusa.DEFAULT_COEFFICIENT,
              coefficient = replace(coefficient, water_type == "water consumption",
                                    round(value[water_type == "water consumption"], water.DIGITS_MUNI_WATER)),
-      water_sector = "Municipal",
-      minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
+             water_sector = gcamusa.MUNICIPAL_SECTOR,
+             minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
       select(LEVEL2_DATA_NAMES$TechCoef) ->
       L245.TechCoef_USA  # municipal water technology withdrawals and consumption efficiencies
 
     # Delete the USA region so that the modeled state level data can override it
     L245.TechCoef_USA %>%
       select(region, supplysector) %>%
-      mutate(region= gcam.USA_REGION,
+      mutate(region = gcam.USA_REGION,
              energy.final.demand = supplysector) %>%
       unique() ->
       L245.DeleteSupplysector_USA

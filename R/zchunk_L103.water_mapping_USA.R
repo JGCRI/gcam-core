@@ -32,8 +32,8 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     region <- state  <- year <- water_type <- water_sector <- demand <- demand_total <- Value <- state.to.country.share <-
-    fresh.share <- saline.share <- value <- basin_id <- basin_name <- state_abbr <- volume <- Basin_name <-
-    GLU_name <- share <- NULL        # silence package check.
+      fresh.share <- saline.share <- value <- basin_id <- basin_name <- state_abbr <- volume <- Basin_name <-
+      GLU_name <- share <- NULL        # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -46,6 +46,9 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
     USGS_livestock_water_withdrawals <- get_data(all_data, "gcam-usa/USGS_livestock_water_withdrawals") %>%
       gather_years()
 
+    # ===================================================
+    # Data Processing
+
     # Livestock mappings are precalculated as total withdrawals in historical periods at the state level from USGS data.
     # Copy shares for 1990 to 1975, and then from 2015 through end of century
     USGS_livestock_water_withdrawals %>%
@@ -55,10 +58,10 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
       bind_rows(
         USGS_livestock_water_withdrawals %>%
           select(-water_type) %>%
-          filter(year==min(year)) %>%
-          complete(nesting(state,value), year = first(MODEL_BASE_YEARS)),
+          filter(year == min(year)) %>%
+          complete(nesting(state, value), year = first(MODEL_BASE_YEARS)),
         USGS_livestock_water_withdrawals %>%
-          filter(year<max(MODEL_BASE_YEARS)) %>%
+          filter(year < max(MODEL_BASE_YEARS)) %>%
           select(-water_type)
       ) %>%
       group_by(year) %>%
@@ -66,7 +69,7 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
       ungroup() %>%
       mutate(value = value / sum) %>%
       select(-sum) %>%
-      arrange(state,year) %>%
+      arrange(state, year) %>%
       repeat_add_columns(tibble(water_type = water.MAPPED_WATER_TYPES)) %>%
       unique() ->
       L103.water_mapping_USA_R_LS_W_Ws_share
@@ -74,78 +77,80 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
     # Mining shares are precalculated as total withdrawals in historical periods at the state level from USGS data.
     # Copy shares for 1990 to 1975, and then from 2015 through end of century
     USGS_mining_water_shares %>%
-      filter(year==max(MODEL_BASE_YEARS)) %>%
-      complete(nesting(state,state.to.country.share,fresh.share,saline.share), year = c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
+      complete(nesting(state, state.to.country.share, fresh.share, saline.share), year = c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
       bind_rows(
         USGS_mining_water_shares %>%
-          filter(year==min(year)) %>%
-          complete(nesting(state,state.to.country.share,fresh.share,saline.share), year = first(MODEL_BASE_YEARS)),
-        USGS_mining_water_shares %>% filter(year<max(MODEL_BASE_YEARS))
+          filter(year == min(year)) %>%
+          complete(nesting(state, state.to.country.share, fresh.share, saline.share), year = first(MODEL_BASE_YEARS)),
+        USGS_mining_water_shares %>%
+          filter(year < max(MODEL_BASE_YEARS))
       ) %>%
-      arrange(state,year) %>%
-      repeat_add_columns(tibble(water_type=water.MAPPED_WATER_TYPES)) %>%
+      arrange(state, year) %>%
+      repeat_add_columns(tibble(water_type = water.MAPPED_WATER_TYPES)) %>%
       unique() ->
       L103.water_mapping_USA_R_PRI_W_Ws_share
 
     # Calculate shares from basin level Irrigation to state level using Huang et al. (2018) grid-level data.
     # Input file is generated from R package created by Chris Vernon with modifications by NTG
     irrigation_shares %>%
-      filter(year==gcamusa.FINAL_MAPPING_YEAR) %>%
-      complete(nesting(basin_id,basin_name,state_abbr,volume), year = MODEL_FUTURE_YEARS) %>%
+      filter(year == gcamusa.FINAL_MAPPING_YEAR) %>%
+      complete(nesting(basin_id, basin_name, state_abbr, volume), year = MODEL_FUTURE_YEARS) %>%
       filter(year %in% MODEL_FUTURE_YEARS) %>%
       bind_rows(
         irrigation_shares,
-        ##Copy shares from 2010 to 2015
+        # Copy shares from 2010 to 2015
         irrigation_shares %>% filter(year==gcamusa.FINAL_MAPPING_YEAR) %>% mutate(year=max(MODEL_BASE_YEARS))
-
       ) %>%
-      left_join_error_no_match(basin_to_country_mapping,by=c("basin_id"="GCAM_basin_ID")) %>%
+      left_join_error_no_match(basin_to_country_mapping, by = c("basin_id" = "GCAM_basin_ID")) %>%
       select(-basin_name, -Basin_name) %>%
-      left_join_error_no_match(basin_ID,by=c("basin_id")) %>%
-      #Basin names are slightly different in the data from CV, so we swap them to match the resource name in GCAM
-      select(GLU_name,basin_name,state_abbr,volume,year) %>% rename(region=state_abbr) %>%
-     group_by(basin_name,year) %>%
+      left_join_error_no_match(basin_ID, by = c("basin_id")) %>%
+      # Basin names are slightly different in the data from CV, so we swap them to match the resource name in GCAM
+      select(GLU_name, basin_name, state_abbr, volume, year) %>%
+      rename(region = state_abbr) %>%
+      group_by(basin_name, year) %>%
       mutate(demand_total = sum(volume),
-             share = volume/demand_total) %>% ungroup() %>%
+             share = volume / demand_total) %>%
+      ungroup() %>%
       filter(share > 0) %>%
       select(-volume, -demand_total) %>%
-      arrange(region,year) %>%
-      repeat_add_columns(tibble(water_type=water.MAPPED_WATER_TYPES)) ->
+      arrange(region, year) %>%
+      repeat_add_columns(tibble(water_type = water.MAPPED_WATER_TYPES)) ->
       L103.water_mapping_USA_R_GLU_W_Ws_share
-
 
     # Calculate shares from state level nonirrigation sectors to basin level using Huang et al. (2018) grid-level data.
     # Input file is generated from R package created by Chris Vernon with modifications by NTG
     nonirrigation_shares %>%
       gather(water_sector, value, -basin_id, -basin_name, -state_abbr, -year) %>%
-      filter(year==gcamusa.FINAL_MAPPING_YEAR) %>%
-      complete(nesting(basin_id,basin_name,state_abbr,water_sector,value), year = MODEL_FUTURE_YEARS) %>%
+      filter(year == gcamusa.FINAL_MAPPING_YEAR) %>%
+      complete(nesting(basin_id, basin_name, state_abbr, water_sector, value), year = MODEL_FUTURE_YEARS) %>%
       bind_rows(
         nonirrigation_shares %>%
           gather(water_sector, value, -basin_id, -basin_name, -state_abbr, -year)
       ) %>%
-      left_join_error_no_match(basin_to_country_mapping,by=c("basin_id"="GCAM_basin_ID")) %>%
+      left_join_error_no_match(basin_to_country_mapping, by = c("basin_id" = "GCAM_basin_ID")) %>%
       select(-basin_name, -Basin_name) %>%
-      left_join_error_no_match(basin_ID,by=c("basin_id")) %>%
-      #Basin names are slightly different in the data from CV, so we swap them to match the resource name in GCAM
-      rename(region=state_abbr) %>%
-      group_by(basin_name, basin_id, region, water_sector,year) %>%
+      left_join_error_no_match(basin_ID, by = c("basin_id")) %>%
+      # Basin names are slightly different in the data from CV, so we swap them to match the resource name in GCAM
+      rename(region = state_abbr) %>%
+      group_by(basin_name, basin_id, region, water_sector, year) %>%
       summarise(demand = sum(value)) %>%
       ungroup() %>%
       group_by(region, year, water_sector) %>%
       mutate(demand_total = sum(demand),
-             share = demand / demand_total) %>% ungroup() %>%
+             share = demand / demand_total) %>%
+      ungroup() %>%
       filter(share > 0) %>%
       select(-demand, -demand_total) %>%
-      arrange(region,year) %>%
-      repeat_add_columns(tibble(water_type=water.MAPPED_WATER_TYPES)) ->
+      arrange(region, year) %>%
+      repeat_add_columns(tibble(water_type = water.MAPPED_WATER_TYPES)) ->
       L103.water_mapping_USA_R_B_W_Ws_share
 
     # ===================================================
-
     # Produce outputs
+
     L103.water_mapping_USA_R_LS_W_Ws_share %>%
-      add_title("Water mapping for livestock by state / water type ") %>%
+      add_title("Water mapping for livestock by state / water type") %>%
       add_units("NA") %>%
       add_comments("Water mapping for livestock by state / water type") %>%
       add_legacy_name("L103.water_mapping_R_B_W_Ws_share") %>%
@@ -153,7 +158,7 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
       L103.water_mapping_USA_R_LS_W_Ws_share
 
     L103.water_mapping_USA_R_PRI_W_Ws_share %>%
-      add_title("Water mapping for primary energy mining by state / water type ") %>%
+      add_title("Water mapping for primary energy mining by state / water type") %>%
       add_units("NA") %>%
       add_comments("Water mapping for primary energy mining by state / water type ") %>%
       add_legacy_name("L103.water_mapping_R_B_W_Ws_share") %>%
@@ -180,9 +185,10 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
                      "water/basin_to_country_mapping") ->
       L103.water_mapping_USA_R_B_W_Ws_share
 
-
-    return_data(L103.water_mapping_USA_R_LS_W_Ws_share, L103.water_mapping_USA_R_PRI_W_Ws_share,L103.water_mapping_USA_R_GLU_W_Ws_share, L103.water_mapping_USA_R_B_W_Ws_share)
-
+    return_data(L103.water_mapping_USA_R_LS_W_Ws_share,
+                L103.water_mapping_USA_R_PRI_W_Ws_share,
+                L103.water_mapping_USA_R_GLU_W_Ws_share,
+                L103.water_mapping_USA_R_B_W_Ws_share)
 
   } else {
     stop("Unknown command")

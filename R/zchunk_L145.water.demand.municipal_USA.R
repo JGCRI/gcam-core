@@ -44,13 +44,13 @@ module_gcamusa_L145.water.demand.municipal <- function(command, ...) {
     USGS_municipal_water_withdrawal_USA %>%
       rename(water_km3 = value) %>%
       complete(nesting(state, water_type), year = HISTORICAL_YEARS) %>%
-      left_join(L100.Pop_thous_state, by = c("state", "year")) %>%
+      left_join_error_no_match(L100.Pop_thous_state, by = c("state", "year")) %>%
       # Calculate per capita water demand
       mutate(water_pc = water_km3 / value) %>%
       group_by(state) %>%
       mutate(water_pc = approx_fun(year, water_pc, rule = 2),
              water_km3 = replace(water_km3, is.na(water_km3), water_pc[is.na(water_km3)] * value[is.na(water_km3)]),
-             sector = "Municipal") %>%
+             sector = gcamusa.MUNICIPAL_SECTOR) %>%
       ungroup %>%
       select(state, sector, water_type, year, value = water_km3) ->
       L145.municipal_water_state_W_Yh_km3
