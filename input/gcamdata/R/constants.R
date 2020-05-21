@@ -28,7 +28,7 @@ HISTORICAL_YEARS        <- 1971:2015
 # produce future data (e.g., population projections)
 FUTURE_YEARS            <- 2016:2100
 # Calibrated periods in the model. Only level 2 chunks should reference these
-MODEL_BASE_YEARS        <- c(1975, 1990, 2005, 2010,2015)
+MODEL_BASE_YEARS        <- c(1975, 1990, 2005, 2010, 2015)
 # Future (not calibrated) model periods. Only level 2 chunks should reference these
 MODEL_FUTURE_YEARS      <- seq(2020, 2100, 5)
 MODEL_YEARS             <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
@@ -167,6 +167,8 @@ aglu.TRADE_CAL_YEARS        <- 2008:2012 # Years used for calculating base year 
 aglu.TRADE_FINAL_BASE_YEAR  <- max(MODEL_BASE_YEARS) # The base year to which gross trade volumes are assigned. Should be within the aglu.TRADE_CAL_YEARS and equal to the final model calibration year
 aglu.FALLOW_YEARS           <- 2008:2012 # Years used for calculating the % of fallow land
 aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "MiscCrop", "OilCrop", "OtherGrain", "PalmFruit", "Rice", "RootTuber", "SugarCrop", "Wheat")
+aglu.TRADED_MEATS           <- c("Beef", "Dairy", "Pork", "Poultry", "SheepGoat")
+aglu.TRADED_AG_AN           <- c(aglu.TRADED_CROPS, aglu.TRADED_MEATS)
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
 aglu.MAX_FAO_LDS_SCALER <- 5   # Unitless max multiplier in reconciling LDS harvested area with FAO harvested area by country and crop. Useful for preventing bad allocations of N fert in AFG, TWN, several others

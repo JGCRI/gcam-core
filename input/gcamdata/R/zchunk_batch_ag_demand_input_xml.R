@@ -21,7 +21,6 @@ module_aglu_batch_ag_demand_input_xml <- function(command, ...) {
               "L203.StubTechProd_nonfood_crop",
               "L203.StubTechProd_nonfood_meat",
               "L203.StubTechProd_For",
-              "L203.StubTechFixOut_exp",
               "L203.StubCalorieContent",
               "L203.PerCapitaBased",
               "L203.BaseService",
@@ -51,7 +50,6 @@ module_aglu_batch_ag_demand_input_xml <- function(command, ...) {
     L203.StubTechProd_nonfood_crop <- get_data(all_data, "L203.StubTechProd_nonfood_crop")
     L203.StubTechProd_nonfood_meat <- get_data(all_data, "L203.StubTechProd_nonfood_meat")
     L203.StubTechProd_For <- get_data(all_data, "L203.StubTechProd_For")
-    L203.StubTechFixOut_exp <- get_data(all_data, "L203.StubTechFixOut_exp")
     L203.StubCalorieContent <- get_data(all_data, "L203.StubCalorieContent")
     L203.PerCapitaBased <- get_data(all_data, "L203.PerCapitaBased")
     L203.BaseService <- get_data(all_data, "L203.BaseService")
@@ -79,7 +77,6 @@ module_aglu_batch_ag_demand_input_xml <- function(command, ...) {
       add_xml_data(L203.StubTechProd_nonfood_crop, "StubTechProd") %>%
       add_xml_data(L203.StubTechProd_nonfood_meat, "StubTechProd") %>%
       add_xml_data(L203.StubTechProd_For, "StubTechProd") %>%
-      add_xml_data(L203.StubTechFixOut_exp, "StubTechFixOut") %>%
       add_xml_data(L203.StubCalorieContent, "StubCalorieContent") %>%
       add_xml_data(L203.PerCapitaBased, "PerCapitaBased") %>%
       add_xml_data(L203.BaseService, "BaseService") %>%
@@ -96,7 +93,7 @@ module_aglu_batch_ag_demand_input_xml <- function(command, ...) {
       add_precursors("L203.Supplysector_demand", "L203.SubsectorAll_demand", "L203.StubTech_demand",
                      "L203.GlobalTechCoef_demand", "L203.GlobalTechShrwt_demand", "L203.StubTechProd_food",
                      "L203.StubTechProd_nonfood_crop", "L203.StubTechProd_nonfood_meat",
-                     "L203.StubTechProd_For", "L203.StubTechFixOut_exp", "L203.StubCalorieContent", "L203.PerCapitaBased",
+                     "L203.StubTechProd_For",  "L203.StubCalorieContent", "L203.PerCapitaBased",
                      "L203.BaseService", "L203.IncomeElasticity", "L203.PriceElasticity",
                      "L203.SubregionalShares", "L203.DemandFunction_food", "L203.DemandStapleParams",
                      "L203.DemandNonStapleParams", "L203.DemandStapleRegBias", "L203.DemandNonStapleRegBias",
