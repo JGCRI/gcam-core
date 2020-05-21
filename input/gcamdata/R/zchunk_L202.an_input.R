@@ -13,9 +13,8 @@
 #' \code{L202.Supplysector_in}, \code{L202.SubsectorAll_in}, \code{L202.StubTech_in}, \code{L202.StubTechInterp_in},
 #' \code{L202.GlobalTechCoef_in}, \code{L202.GlobalTechShrwt_in}, \code{L202.StubTechProd_in},
 #' \code{L202.Supplysector_an}, \code{L202.SubsectorAll_an}, \code{L202.StubTech_an}, \code{L202.StubTechInterp_an},
-#' \code{L202.StubTechProd_an}, \code{L202.StubTechCoef_an}, \code{L202.GlobalTechCost_an},
-#' \code{L202.GlobalRenewTech_imp_an}, \code{L202.StubTechFixOut_imp_an}. The corresponding file in the
-#' original data system was \code{L202.an_input.R} (aglu level2).
+#' \code{L202.StubTechProd_an}, \code{L202.StubTechCoef_an}, \code{L202.GlobalTechCost_an}.
+#' The corresponding file in the original data system was \code{L202.an_input.R} (aglu level2).
 #' @details This chunk produces 22 animal-related resource tables: production, import, resource curves.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join bind_rows distinct filter if_else group_by left_join mutate select summarise
@@ -63,9 +62,7 @@ module_aglu_L202.an_input <- function(command, ...) {
              "L202.StubTechInterp_an",
              "L202.StubTechProd_an",
              "L202.StubTechCoef_an",
-             "L202.GlobalTechCost_an",
-             "L202.GlobalRenewTech_imp_an",
-             "L202.StubTechFixOut_imp_an"))
+             "L202.GlobalTechCost_an"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -380,47 +377,6 @@ module_aglu_L202.an_input <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
       L202.GlobalTechCost_an
 
-    # L202.GlobalRenewTech_imp_an: generic technology info for animal imports (272-277)
-    tibble::as_tibble(expand.grid(sector.name = A_an_supplysector$supplysector,
-                                  subsector.name = "Imports",
-                                  technology = "Imports",
-                                  renewable.input = "renewable",
-                                  year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["GlobalRenewTech"]], GCAM_region_names) ->
-      L202.GlobalRenewTech_imp_an
-
-    # L202.StubTechFixOut_imp_an: animal imports for net importing regions in all periods (279-291)
-    tibble(supplysector = A_an_supplysector$supplysector,
-           subsector = "Imports",
-           stub.technology = "Imports") %>%
-      # write to all regions before repeating by years so that future year values will copy correctly
-      write_to_all_regions(LEVEL2_DATA_NAMES[["StubTech"]], GCAM_region_names) %>%
-      repeat_add_columns(tibble(year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
-      # not every region and supplysector is present in L202.an_ALL_Mt_R_C_Y so use left_join
-      left_join(select(L202.an_ALL_Mt_R_C_Y, region, GCAM_commodity, year, NetExp_Mt),
-                by = c("region", "supplysector" = "GCAM_commodity", "year")) %>%
-      mutate(fixedOutput = pmax(0, round(-1 * NetExp_Mt, aglu.DIGITS_CALOUTPUT)),
-             share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) %>%
-      select(LEVEL2_DATA_NAMES[["StubTechFixOut"]]) ->
-      L202.StubTechFixOut_imp_an
-
-    # For values beyond the final base year, copy the final base year forward (293-306)
-    # NOTE: This is complicated. Currently the base-service read in to the model is not used in years after the final
-    # calibration year. If actual historical values are used here in historical years after the final calibration year,
-    # the model will not solve as the supply of the Exports_* markets will be set while the demand will be purely inelastic,
-    # carried forward with no changes from the final calibration year. This could theoretically be overcome in most
-    # instances by reading in time- and region-specific income elasticities that return the correct values for each
-    # historical year after the final calibration year. This is not done, and is not recommended, as any regions that switch
-    # between imports and exports will have elasiticies of +/- Inf; the historical data cannot be represented.
-    final_an_exp_year <- max(MODEL_BASE_YEARS)
-    final_an_exp_year_data <- filter(L202.StubTechFixOut_imp_an, year == final_an_exp_year) %>% select(-year, -share.weight.year)
-    L202.StubTechFixOut_imp_an %>%
-      filter(year > final_an_exp_year) %>%
-      select(-fixedOutput) %>%
-      left_join_error_no_match(final_an_exp_year_data, by = c("region", "supplysector", "subsector", "stub.technology", "subs.share.weight", "tech.share.weight")) %>%
-      bind_rows(filter(L202.StubTechFixOut_imp_an, ! year > final_an_exp_year)) %>%
-      select(LEVEL2_DATA_NAMES[["StubTechFixOut"]]) ->
-      L202.StubTechFixOut_imp_an
 
     # Remove any regions for which agriculture and land use are not modeled (308-320)
     # Also, remove DDGS and feedcake subsectors and technologies in regions where these commodities are not available
@@ -470,7 +426,6 @@ module_aglu_L202.an_input <- function(command, ...) {
     L202.StubTechInterp_an <- filter(L202.StubTechInterp_an, !region %in% aglu.NO_AGLU_REGIONS)
     L202.StubTechProd_an <- filter(L202.StubTechProd_an, !region %in% aglu.NO_AGLU_REGIONS)
     L202.StubTechCoef_an <- filter(L202.StubTechCoef_an, !region %in% aglu.NO_AGLU_REGIONS)
-    L202.StubTechFixOut_imp_an <- filter(L202.StubTechFixOut_imp_an, !region %in% aglu.NO_AGLU_REGIONS)
 
     # Produce outputs
     L202.RenewRsrc %>%
@@ -645,31 +600,12 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_precursors("L132.ag_an_For_Prices", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") ->
       L202.GlobalTechCost_an
 
-    L202.GlobalRenewTech_imp_an %>%
-      add_title("Generic technology info for animal imports") %>%
-      add_units("NA") %>%
-      add_comments("A_an_supplysector written to all model years and regions") %>%
-      add_legacy_name("L202.GlobalRenewTech_imp_an") %>%
-      add_precursors("aglu/A_an_supplysector", "common/GCAM_region_names") ->
-      L202.GlobalRenewTech_imp_an
-
-    L202.StubTechFixOut_imp_an %>%
-      add_title("Animal imports for net importing regions in all periods") %>%
-      add_units("Mt") %>%
-      add_comments("A_an_supplysector and animal product mass balances written to all model years and regions") %>%
-      add_comments("Prescribed trajectory of animal commodity imports by region; the final base year's values are
-                   copied forward to all future model time periods (imports and exports of these secondary
-                   commodities are not represented from economic competition).") %>%
-      add_legacy_name("L202.StubTechFixOut_imp_an") %>%
-      add_precursors("aglu/A_an_supplysector", "L109.an_ALL_Mt_R_C_Y", "common/GCAM_region_names") ->
-      L202.StubTechFixOut_imp_an
-
     return_data(L202.RenewRsrc, L202.RenewRsrcPrice, L202.maxSubResource, L202.RenewRsrcCurves, L202.ResTechShrwt,
                 L202.UnlimitedRenewRsrcCurves, L202.UnlimitedRenewRsrcPrice, L202.Supplysector_in,
                 L202.SubsectorAll_in, L202.StubTech_in, L202.StubTechInterp_in, L202.GlobalTechCoef_in,
                 L202.GlobalTechShrwt_in, L202.StubTechProd_in, L202.Supplysector_an, L202.SubsectorAll_an,
                 L202.StubTech_an, L202.StubTechInterp_an, L202.StubTechProd_an, L202.StubTechCoef_an,
-                L202.GlobalTechCost_an, L202.GlobalRenewTech_imp_an, L202.StubTechFixOut_imp_an)
+                L202.GlobalTechCost_an)
   } else {
     stop("Unknown command")
   }
