@@ -59,6 +59,7 @@ module_aglu_L203.ag_demand_input <- function(command, ...) {
              "L203.StubTechProd_nonfood_crop",
              "L203.StubTechProd_nonfood_meat",
              "L203.StubTechProd_For",
+             "L203.StubTechFixOut_exp",
              "L203.StubCalorieContent",
              "L203.PerCapitaBased",
              "L203.BaseService",
@@ -187,6 +188,25 @@ module_aglu_L203.ag_demand_input <- function(command, ...) {
       filter(year %in% MODEL_BASE_YEARS) ->                         # Also subset the calibration tables to only the model base years
       L203.StubTechProd_nonfood
 
+    # Build L203.StubTechFixOut_exp: animal exports for net exporting regions in all periods
+    A_demand_technology_R_Y %>%
+      filter(supplysector == "Exports_Meat") %>%
+      # Create NAs for future years, use left_join instead
+      left_join(L203.ag_an_ALL_Mt_R_C_Y, by = c("region", "technology" = "GCAM_commodity", "year")) %>%
+      # Replace negative net exports with zero
+      mutate(fixedOutput = pmax(0, round(NetExp_Mt, aglu.DIGITS_CALOUTPUT))) %>%
+      # For each region / commodity
+      group_by(region, subsector) %>%
+      # Hold the animal exports constant in the future, so set value for future years at the final base year value
+      mutate(fixedOutput = replace(fixedOutput, year > max(MODEL_BASE_YEARS), fixedOutput[year == max(MODEL_BASE_YEARS)]),
+             share.weight.year = year,
+             # Subsector and technology shareweights (subsector requires the year as well)
+             subs.share.weight = 0, tech.share.weight = 0) %>%
+      ungroup() %>%
+      select(LEVEL2_DATA_NAMES[["StubTechFixOut"]]) %>%
+      filter(!region %in% aglu.NO_AGLU_REGIONS) ->           # Remove any regions for which agriculture and land use are not modeled
+      L203.StubTechFixOut_exp
+
     # Build L203.StubTechProd_For: Forest product demand by technology and region
     L110.For_ALL_bm3_R_Y %>%
       unique() %>%
@@ -268,8 +288,11 @@ module_aglu_L203.ag_demand_input <- function(command, ...) {
     # Build L203.BaseService: base service of (standard) final demands
     # This excludes food demands, which have a different demand formulation
     Prod_colnames <- c("region", "supplysector", "year", "calOutputValue")
+    L203.StubTechFixOut_exp %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
+      rename(calOutputValue = fixedOutput) %>%
+      select(Prod_colnames) %>%
       # Combine all food and nonfood demand
-    L203.StubTechProd_food[Prod_colnames] %>%
       bind_rows(L203.StubTechProd_nonfood[Prod_colnames], L203.StubTechProd_For[Prod_colnames]) %>%
       group_by(region, supplysector, year) %>%
       # Sum the total of all commodities by region and supply sector
@@ -425,6 +448,19 @@ module_aglu_L203.ag_demand_input <- function(command, ...) {
                      "L110.For_ALL_bm3_R_Y") ->
       L203.StubTechProd_For
 
+    L203.StubTechFixOut_exp %>%
+      add_title("Animal exports for net exporting regions in all periods") %>%
+      add_units("Mt") %>%
+      add_comments("Map in animal products exports in calibartion years by region / commodity") %>%
+      add_comments("Net importing countries are set to zero") %>%
+      add_comments("Future years are set to the final base year value") %>%
+      add_comments("Remove any regions for which agriculture and land use are not modeled") %>%
+      add_legacy_name("L203.StubTechFixOut_exp") %>%
+      add_precursors("common/GCAM_region_names",
+                     "aglu/A_demand_technology",
+                     "L109.an_ALL_Mt_R_C_Y") ->
+      L203.StubTechFixOut_exp
+
     L203.StubCalorieContent %>%
       add_title("Caloric content of food crops") %>%
       add_units("kcal/g") %>%
@@ -550,7 +586,7 @@ module_aglu_L203.ag_demand_input <- function(command, ...) {
     return_data(L203.Supplysector_demand, L203.SubsectorAll_demand, L203.StubTech_demand, L203.GlobalTechCoef_demand,
                 L203.GlobalTechShrwt_demand, L203.StubTechProd_food,
                 L203.StubTechProd_nonfood_crop, L203.StubTechProd_nonfood_meat, L203.StubTechProd_For,
-                 L203.StubCalorieContent,
+                L203.StubTechFixOut_exp, L203.StubCalorieContent,
                 L203.PerCapitaBased, L203.BaseService, L203.IncomeElasticity, L203.PriceElasticity, L203.FuelPrefElast_ssp1,
                 L203.SubregionalShares, L203.DemandFunction_food, L203.DemandStapleParams, L203.DemandNonStapleParams,
                 L203.DemandStapleRegBias, L203.DemandNonStapleRegBias, L203.StapleBaseService, L203.NonStapleBaseService)

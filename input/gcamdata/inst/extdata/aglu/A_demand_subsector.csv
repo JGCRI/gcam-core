@@ -41,3 +41,8 @@ NonFoodDemand_Meat,Poultry,-6,start-year,1,share-weight,final-calibration-year,e
 NonFoodDemand_Meat,SheepGoat,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 NonFoodDemand_Meat,OtherMeat_Fish,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 NonFoodDemand_Forest,Forest,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+Exports_Meat,Beef,-6,start-year,0,share-weight,final-calibration-year,end-year,fixed,
+Exports_Meat,Dairy,-6,start-year,0,share-weight,final-calibration-year,end-year,fixed,
+Exports_Meat,Pork,-6,start-year,0,share-weight,final-calibration-year,end-year,fixed,
+Exports_Meat,Poultry,-6,start-year,0,share-weight,final-calibration-year,end-year,fixed,
+Exports_Meat,SheepGoat,-6,start-year,0,share-weight,final-calibration-year,end-year,fixed,
