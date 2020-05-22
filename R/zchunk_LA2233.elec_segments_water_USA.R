@@ -249,31 +249,36 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     L2241.StubTechProfitShutdown_coal_vintage_USA <- get_data(all_data,"L2241.StubTechProfitShutdown_coal_vintage_USA")
     L2241.StubTechSCurve_coal_vintage_USA <- get_data(all_data,"L2241.StubTechSCurve_coal_vintage_USA")
 
-    # -----------------------------------------------------------------------------
+
+    # ===================================================
+    # Process data
+
     A23.elecS_tech_mapping_cool %>%
       select(-supplysector, -water_type, -cooling_system, -plant_type) ->
       A23.elecS_tech_mapping_cool
 
-    ### Define several filtering and renaming fuctions that will be applied
-    ### throughout the zchunk
+    ## Define several filtering and renaming fuctions that will be applied
+    ## throughout the zchunk
 
-    ## To account for new nesting-subsector structure and to add cooling technologies,
-    ## we must expand certain outputs
+    # To account for new nesting-subsector structure and to add cooling technologies,
+    # we must expand certain outputs
     add_cooling_techs <- function(data){
       data %>%
         left_join(A23.elecS_tech_mapping_cool,
-                  ## Left_join used as each power plant type will now be multiplied
-                  ## by up to five cooling technologies, thus increasing tibble size
-                  by=c("stub.technology"="Electric.sector.technology",
-                       "supplysector"="Electric.sector","subsector")) %>%
-        select(-technology,-subsector_1)%>%
+                  # Left_join used as each power plant type will now be multiplied
+                  # by up to five cooling technologies, thus increasing tibble size
+                  by = c("stub.technology" = "Electric.sector.technology",
+                         "supplysector" = "Electric.sector","subsector")) %>%
+        select(-technology, -subsector_1)%>%
         rename(technology = to.technology,
                subsector0 = subsector,
                subsector = stub.technology) -> data_new
 
-      data_new %>% filter(grepl("seawater",technology)) %>%
-        filter(!(region %in% gcamusa.NO_SEAWATER_STATES)) %>%
-        bind_rows(data_new %>% filter(!grepl("seawater",technology))) %>%
+      data_new %>%
+        filter(grepl(gcamusa.WATER_TYPE_SEAWATER,technology),
+               !(region %in% gcamusa.NO_SEAWATER_STATES)) %>%
+        bind_rows(data_new %>%
+                    filter(!grepl(gcamusa.WATER_TYPE_SEAWATER,technology))) %>%
         arrange(region,year) -> data_new
       return(data_new)
     }
@@ -281,15 +286,19 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     add_global_cooling_techs <- function(data){
       data %>%
         left_join(A23.elecS_tech_mapping_cool,
-                  ## Left_join used as each power plant type will now be multiplied
-                  ## by up to five cooling technologies, thus increasing tibble size
-                  by=c("technology"="Electric.sector.technology",
-                       "supplysector"="Electric.sector","subsector")) %>%
+                  # Left_join used as each power plant type will now be multiplied
+                  # by up to five cooling technologies, thus increasing tibble size
+                  by = c("technology" = "Electric.sector.technology",
+                         "supplysector" = "Electric.sector",
+                         "subsector")) %>%
         select(-subsector_1, -technology.y) %>%
-        rename(sector.name = supplysector, subsector.name0=subsector,subsector.name = technology, technology = to.technology) %>%
-        arrange(sector.name,year) %>%
-        mutate(technology = if_else(subsector.name0=="wind"|subsector.name0=="solar",subsector.name,
-                                    if_else(subsector.name0=="grid_storage",subsector.name0,technology))) ->
+        rename(sector.name = supplysector,
+               subsector.name0 = subsector,
+               subsector.name = technology,
+               technology = to.technology) %>%
+        arrange(sector.name, year) %>%
+        mutate(technology = if_else(subsector.name0 == "wind" | subsector.name0 == "solar", subsector.name,
+                                    if_else(subsector.name0 == "grid_storage", subsector.name0, technology))) ->
         data_new
       return(data_new)
     }
@@ -297,12 +306,14 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     add_int_cooling_techs <- function(data){
       data %>%
         left_join(A23.elecS_tech_mapping_cool,
-                  ## Left_join used as each power plant type will now be multiplied
-                  ## by up to five cooling technologies, thus increasing tibble size
-                  by=c("supplysector"="Electric.sector", "intermittent.technology"="Electric.sector.technology", "subsector")) %>%
+                  # Left_join used as each power plant type will now be multiplied
+                  # by up to five cooling technologies, thus increasing tibble size
+                  by = c("supplysector" = "Electric.sector",
+                         "intermittent.technology" = "Electric.sector.technology",
+                         "subsector")) %>%
         select(-technology, -subsector_1)%>%
-        rename(subsector0=subsector,
-               subsector=intermittent.technology,
+        rename(subsector0 = subsector,
+               subsector = intermittent.technology,
                intermittent.technology = to.technology) ->
         data_new
       return(data_new)
@@ -321,8 +332,10 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       add_global_cooling_techs() %>%
       select(-efficiency) %>%
       # Bring in global cooling tech efficiencies from GCAM-core
-      left_join_keep_first_only(L2233.GlobalTechEff_elec_cool %>% mutate(technology = gsub("_storage.*","_base_storage",technology)) %>%
-                                  select(technology, efficiency,year), by=c("technology","year")) %>%
+      left_join_keep_first_only(L2233.GlobalTechEff_elec_cool %>%
+                                  mutate(technology = gsub("_storage.*", "_base_storage", technology)) %>%
+                                  select(technology, efficiency,year),
+                                by = c("technology", "year")) %>%
       arrange(sector.name,year)->
       L2233.GlobalTechEff_elec_cool_USA
 
@@ -330,33 +343,35 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       bind_rows(L2241.GlobalTechShrwt_coal_vintage_USA,
                 L2241.GlobalTechShrwt_elec_coalret_USA) %>%
       left_join(A23.elecS_tech_mapping_cool,
-                ## Left_join used as each power plant type will now be multiplied
-                ## by up to five cooling technologies, thus increasing tibble size
-                by=c("technology"="Electric.sector.technology",
-                     "sector.name"="Electric.sector","subsector.name" ="subsector")) %>%
+                # Left_join used as each power plant type will now be multiplied
+                # by up to five cooling technologies, thus increasing tibble size
+                by = c("technology" = "Electric.sector.technology",
+                       "sector.name" = "Electric.sector",
+                       "subsector.name" = "subsector")) %>%
       select(-subsector_1, -technology.y) %>%
-      rename(subsector.name0=subsector.name, subsector.name = technology, technology = to.technology) %>%
-      mutate(technology = if_else(subsector.name0=="wind"|subsector.name0=="solar",subsector.name,
-                                  if_else(subsector.name0=="grid_storage",subsector.name0,technology))) %>%
+      rename(subsector.name0 = subsector.name, subsector.name = technology, technology = to.technology) %>%
+      mutate(technology = if_else(subsector.name0 == "wind" | subsector.name0 == "solar", subsector.name,
+                                  if_else(subsector.name0 == "grid_storage", subsector.name0, technology))) %>%
       arrange(sector.name,year) ->
       L2233.GlobalTechShrwt_elec_cool_USA
 
     # Add all vintages to profit shutdown tibbles as they initially exist at state level, not global
     L2234.GlobalTechProfitShutdown_elecS_USA %>%
-      bind_rows(L2241.GlobalTechProfitShutdown_elec_coalret_USA
-      ) %>%
+      bind_rows(L2241.GlobalTechProfitShutdown_elec_coalret_USA) %>%
       left_join(A23.elecS_tech_mapping_cool,
-                ## Left_join used as each power plant type will now be multiplied
-                ## by up to five cooling technologies, thus increasing tibble size
-                by=c("technology"="Electric.sector.technology",
-                     "supplysector"="Electric.sector","subsector")) %>%
+                # Left_join used as each power plant type will now be multiplied
+                # by up to five cooling technologies, thus increasing tibble size
+                by = c("technology" = "Electric.sector.technology",
+                       "supplysector" = "Electric.sector",
+                       "subsector")) %>%
       select(-subsector_1, -median.shutdown.point, -technology.y) %>%
-      rename(subsector0=subsector, subsector = technology, technology = to.technology)%>%
+      rename(subsector0 = subsector, subsector = technology, technology = to.technology)%>%
       left_join_keep_first_only(L2233.GlobalTechProfitShutdown_elec_cool %>%
-                                  select(technology, median.shutdown.point), by=c("technology")) %>%
-      arrange(supplysector,year) %>%
-      mutate(technology = if_else(subsector0=="wind"|subsector0=="solar",subsector,
-                                  if_else(subsector0=="grid_storage",subsector0,technology))) ->
+                                  select(technology, median.shutdown.point),
+                                by=c("technology")) %>%
+      arrange(supplysector, year) %>%
+      mutate(technology = if_else(subsector0 == "wind" | subsector0 == "solar", subsector,
+                                  if_else(subsector0 == "grid_storage", subsector0, technology))) ->
       L2233.GlobalTechProfitShutdown_elec_cool_USA
 
     L2234.GlobalTechOMvar_elecS_USA %>%
@@ -365,7 +380,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                          subsector = subsector.name),
                 L2241.GlobalTechOMvar_elec_coalret_USA) %>%
       add_global_cooling_techs() %>%
-      arrange(sector.name,year) ->
+      arrange(sector.name, year) ->
       L2233.GlobalTechOMvar_elec_USA
 
     L2234.GlobalTechOMfixed_elecS_USA %>%
@@ -374,7 +389,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                          subsector = subsector.name),
                 L2241.GlobalTechOMfixed_elec_coalret_USA) %>%
       add_global_cooling_techs() %>%
-      arrange(sector.name,year) ->
+      arrange(sector.name, year) ->
       L2233.GlobalTechOMfixed_elec_USA
 
     L2234.GlobalTechCapital_elecS_USA %>%
@@ -383,20 +398,21 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                          subsector = subsector.name),
                 L2241.GlobalTechCapital_elec_coalret_USA) %>%
       add_global_cooling_techs() %>%
-      arrange(sector.name,year) ->
+      arrange(sector.name, year) ->
       L2233.GlobalTechCapital_elec_USA
 
     L2233.GlobalTechCapital_elec_USA %>%
-      select(-input.capital, - capital.overnight, - fixed.charge.rate) %>%
+      select(-input.capital, -capital.overnight, -fixed.charge.rate) %>%
       left_join_keep_first_only(
         bind_rows(L2233.GlobalTechCapital_elec_cool %>%
-                    mutate(technology=gsub("storage","base_storage",technology)),
+                    mutate(technology = gsub("storage", "base_storage", technology)),
                   L2233.GlobalTechCapital_elecPassthru %>%
-                    mutate(technology=gsub("storage","base_storage",technology))) %>%
-          select(technology, input.capital, capital.overnight, fixed.charge.rate),by=c("technology")) %>%
+                    mutate(technology=gsub("storage", "base_storage", technology))) %>%
+          select(technology, input.capital, capital.overnight, fixed.charge.rate),
+        by = c("technology")) %>%
       arrange(sector.name,year) %>%
-      mutate(technology = if_else(subsector.name0=="wind"|subsector.name0=="solar",subsector.name,
-                                  if_else(subsector.name0=="grid_storage",subsector.name0,technology))) %>%
+      mutate(technology = if_else(subsector.name0 == "wind" | subsector.name0 == "solar", subsector.name,
+                                  if_else(subsector.name0 == "grid_storage", subsector.name0, technology))) %>%
       na.omit()->
       # remove base_storage options as they have no cooling options
       L2233.GlobalTechCapital_elec_cool_USA
@@ -407,7 +423,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                          subsector = subsector.name),
                 L2241.GlobalTechCapFac_elec_coalret_USA) %>%
       add_global_cooling_techs() %>%
-      arrange(sector.name,year) ->
+      arrange(sector.name, year) ->
       L2233.GlobalTechCapFac_elec_USA
 
 
@@ -415,71 +431,73 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     # we will assume that they follow the predefined lifetime and s-curves for all other techs
     L2234.GlobalTechSCurve_elecS_USA %>%
       add_global_cooling_techs() %>%
-      rename(supplysector=sector.name) %>%
-      arrange(supplysector,year) ->
+      rename(supplysector = sector.name) %>%
+      arrange(supplysector, year) ->
       L2233.GlobalTechSCurve_elecS_USA
 
-    ## Assume that global tech coefficients map to all segments
+    # Assume that global tech coefficients map to all segments
     L2233.GlobalTechCoef_elec_cool %>%
       left_join(A23.elecS_tech_mapping_cool,
-                ## Left_join used as each power plant type will now be multiplied
-                ## by up to five cooling technologies, thus increasing tibble size
-                by=c("subsector.name"="technology",
-                     "technology"="to.technology")) %>%
-      select(-sector.name,-subsector_1,-subsector.name) %>%
+                # Left_join used as each power plant type will now be multiplied
+                # by up to five cooling technologies, thus increasing tibble size
+                by = c("subsector.name" = "technology",
+                       "technology" = "to.technology")) %>%
+      select(-sector.name, -subsector_1, -subsector.name) %>%
       na.omit() %>%
       bind_rows(
         L2233.GlobalTechCoef_elec_cool %>%
+          # Left_join used as each power plant type will now be multiplied
+          # by up to five cooling technologies, thus increasing tibble size
           left_join(A23.elecS_tech_mapping_cool,
-                    ## Left_join used as each power plant type will now be multiplied
-                    ## by up to five cooling technologies, thus increasing tibble size
-                    by=c("subsector.name"="technology")) %>%
-          filter(grepl("base_storage",to.technology)) %>%
-          select(-sector.name,-subsector_1,-subsector.name, -technology) %>%
-          rename(technology=to.technology) %>% na.omit(),
+                    by = c("subsector.name" = "technology")) %>%
+          filter(grepl("base_storage", to.technology)) %>%
+          select(-sector.name, -subsector_1, -subsector.name, -technology) %>%
+          rename(technology = to.technology) %>%
+          na.omit(),
         L2233.GlobalTechCoef_elec_cool %>%
+          # Left_join used as each power plant type will now be multiplied
+          # by up to five cooling technologies, thus increasing tibble size
           left_join(A23.elecS_tech_mapping_cool,
-                    ## Left_join used as each power plant type will now be multiplied
-                    ## by up to five cooling technologies, thus increasing tibble size
-                    by=c("technology")) %>%
-          filter(grepl("hydro",to.technology)|grepl("PV_base_storage",to.technology)) %>%
-          select(-sector.name,-subsector_1,-subsector.name, -technology) %>%
-          rename(technology=to.technology)) %>%
-      rename(supplysector=Electric.sector,
-             subsector0=subsector,
-             subsector=Electric.sector.technology) %>%
+                    by = c("technology")) %>%
+          filter(grepl("hydro", to.technology) | grepl("PV_base_storage", to.technology)) %>%
+          select(-sector.name, -subsector_1, -subsector.name, -technology) %>%
+          rename(technology = to.technology)) %>%
+      rename(supplysector = Electric.sector,
+             subsector0 = subsector,
+             subsector = Electric.sector.technology) %>%
       right_join(L2233.GlobalTechEff_elec_cool_USA %>%
-                   ## Add all fuel, power plant, cooling tech, and all years
+                   # Add all fuel, power plant, cooling tech, and all years
                    select(sector.name,subsector.name0,subsector.name,technology),
-                 by=c("supplysector"="sector.name",
-                      "subsector0"="subsector.name0",
-                      "subsector"="subsector.name",
-                      "technology")) %>%
-      arrange(supplysector,subsector0,subsector,technology,year) %>%
+                 by = c("supplysector" = "sector.name",
+                        "subsector0" = "subsector.name0",
+                        "subsector" = "subsector.name",
+                        "technology")) %>%
+      arrange(supplysector, subsector0, subsector, technology, year) %>%
       na.omit() %>%
       unique() ->
       L2233.GlobalTechCoef_elecS_cool_USA
 
     L2234.GlobalTechCapture_elecS_USA %>%
       add_global_cooling_techs() %>%
-      rename(supplysector=sector.name) %>%
-      arrange(supplysector,year) ->
+      rename(supplysector = sector.name) %>%
+      arrange(supplysector, year) ->
       L2233.GlobalTechCapture_elecS_USA
 
     # Coal vintage lifetimes are added at state level, therefore we remove all coal conv pul from the Global Lifetime values
     L2234.GlobalTechLifetime_elecS_USA %>%
       add_global_cooling_techs() %>%
-      rename(supplysector=sector.name) %>%
-      arrange(supplysector,year) ->
+      rename(supplysector = sector.name) %>%
+      arrange(supplysector, year) ->
       L2233.GlobalTechLifetime_elecS_cool_USA
 
     L2234.AvgFossilEffKeyword_elecS_USA %>%
       left_join(A23.elecS_tech_mapping_cool,
-                ## Left_join used as each power plant type will now be multiplied
-                ## by up to five cooling technologies, thus increasing tibble size
-                by=c("technology"="Electric.sector.technology",
-                     "sector.name"="Electric.sector","subsector.name"="subsector")) %>%
-      select(-subsector_1,-technology.y) %>%
+                # Left_join used as each power plant type will now be multiplied
+                # by up to five cooling technologies, thus increasing tibble size
+                by = c("technology" = "Electric.sector.technology",
+                       "sector.name" = "Electric.sector",
+                       "subsector.name" = "subsector")) %>%
+      select(-subsector_1, -technology.y) %>%
       rename(subsector = technology,
              technology = to.technology,
              subsector.name0 = subsector.name) %>%
@@ -488,14 +506,14 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
 
     # Introduce GlobalInt techs
 
-    ## We filter out all non-csp techs initially as these are these are the techs
-    ## are the ones which need cooling techs added
+    # We filter out all non-csp techs initially as these are these are the techs
+    # are the ones which need cooling techs added
     csp_filter <- function(data){
       data %>%
-        filter(!grepl("CSP",intermittent.technology)) %>%
-        rename(subsector0=subsector,
+        filter(!grepl("CSP", intermittent.technology)) %>%
+        rename(subsector0 = subsector,
                subsector = intermittent.technology) %>%
-        mutate(intermittent.technology=subsector) ->
+        mutate(intermittent.technology = subsector) ->
         data_new
       return(data_new)
     }
@@ -504,18 +522,18 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     L2234.GlobalIntTechBackup_elecS_USA %>%
       csp_filter() %>%
       bind_rows(L2234.GlobalIntTechBackup_elecS_USA %>%
-                  filter(grepl("CSP",intermittent.technology)) %>%
+                  filter(grepl("CSP", intermittent.technology)) %>%
                   left_join(A23.elecS_tech_mapping_cool,
-                            ## Left_join used as each power plant type will now be multiplied
-                            ## by up to five cooling technologies, thus increasing tibble size
-                            by=c("supplysector"="Electric.sector", "intermittent.technology"="Electric.sector.technology", "subsector")) %>%
+                            # Left_join used as each power plant type will now be multiplied
+                            # by up to five cooling technologies, thus increasing tibble size
+                            by = c("supplysector" = "Electric.sector",
+                                   "intermittent.technology" = "Electric.sector.technology",
+                                   "subsector")) %>%
                   select(-technology, -subsector_1) %>%
-                  rename(subsector0=subsector,
-                         subsector=intermittent.technology,
-                         intermittent.technology = to.technology)
-
-      ) %>%
-      arrange(supplysector,subsector0,subsector,intermittent.technology,year)->
+                  rename(subsector0 = subsector,
+                         subsector = intermittent.technology,
+                         intermittent.technology = to.technology)) %>%
+      arrange(supplysector, subsector0, subsector, intermittent.technology, year)->
       L2233.GlobalIntTechBackup_elecS_USA
 
     # isolate int techs that do not have cooling techs associated
@@ -525,35 +543,35 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
 
     # Isolate CSP techs that have two capital costs
     L2234.GlobalIntTechCapital_elecS_USA %>%
-      filter(grepl("CSP",intermittent.technology)) %>%
+      filter(grepl("CSP", intermittent.technology)) %>%
+      # Left_join used as each power plant type will now be multiplied
+      # by up to five cooling technologies, thus increasing tibble size
       left_join(A23.elecS_tech_mapping_cool,
-                ## Left_join used as each power plant type will now be multiplied
-                ## by up to five cooling technologies, thus increasing tibble size
-                by=c("intermittent.technology"="Electric.sector.technology",
-                     "supplysector"="Electric.sector", "subsector")) %>%
-      select(-technology,-subsector_1) %>%
-      rename(subsector0=subsector,
+                by = c("intermittent.technology" = "Electric.sector.technology",
+                       "supplysector" = "Electric.sector", "subsector")) %>%
+      select(-technology, -subsector_1) %>%
+      rename(subsector0 = subsector,
              subsector = intermittent.technology,
              intermittent.technology = to.technology) %>%
-      arrange(supplysector,year) ->
+      arrange(supplysector, year) ->
       L2233.GlobalIntTechCapital_elecS_cool_USA
 
     L2233.GlobalIntTechCapital_elec_cool %>%
+      # Left_join used as each power plant type will now be multiplied
+      # by up to five cooling technologies, thus increasing tibble size
       left_join(A23.elecS_tech_mapping_cool,
-                ## Left_join used as each power plant type will now be multiplied
-                ## by up to five cooling technologies, thus increasing tibble size
-                by=c("subsector.name"="subsector_1")) %>%
-      select(-sector.name,-subsector.name,-technology.x,-technology.y) %>%
-      rename(supplysector=Electric.sector,
-             subsector0=subsector,
-             subsector=Electric.sector.technology,
-             intermittent.technology=to.technology) %>%
+                by = c("subsector.name" = "subsector_1")) %>%
+      select(-sector.name, -subsector.name, -technology.x, -technology.y) %>%
+      rename(supplysector = Electric.sector,
+             subsector0 = subsector,
+             subsector = Electric.sector.technology,
+             intermittent.technology = to.technology) %>%
       bind_rows(L2233.GlobalIntTechCapital_elecS_USA,
                 L2233.GlobalIntTechCapital_elecS_cool_USA) %>%
-      filter(!grepl("CSP_base",subsector)) %>%
+      filter(!grepl("CSP_base", subsector)) %>%
       # There are no additional cases of CSP_base across other Int Techs, therefore, we will remove
       # as this has been introduced by calling gcam-core file L2233.GlobalIntTechCapital_elec_cool
-      arrange(supplysector,subsector0,subsector,intermittent.technology,year)->
+      arrange(supplysector, subsector0, subsector, intermittent.technology, year)->
       L2233.GlobalIntTechCapital_elecS_cool_USA
 
     # isolate CSP sectors which will need cooling tech layer added
@@ -562,142 +580,137 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       L2233.GlobalIntTechEff_elecS_USA
 
     L2233.GlobalIntTechEff_elec_cool %>%
-      filter(grepl("CSP",technology)) %>%
-      mutate(technology = gsub("CSP","CSP_storage",technology)) %>%
+      filter(grepl("CSP", technology)) %>%
+      mutate(technology = gsub("CSP", "CSP_storage", technology)) %>%
+      # Left_join used as each power plant type will now be multiplied
+      # by up to five cooling technologies, thus increasing tibble size
       left_join(A23.elecS_tech_mapping_cool,
-                ## Left_join used as each power plant type will now be multiplied
-                ## by up to five cooling technologies, thus increasing tibble size
-                by=c("subsector.name"="subsector_1")) %>%
-      select(-sector.name,-subsector.name,-technology.y, -technology.x) %>%
-      filter((grepl("dry_hybrid",to.technology) & efficiency<0.96)) %>%
-      ## As we are not matching CSP names directly here, we want to make sure that the
-      ## efficiency designated to dry_hybrid, 0.95, is the one that is adopted for all CSP (dry_hybrid)
-      ## segments
-      bind_rows( L2233.GlobalIntTechEff_elec_cool %>%
-                   filter(grepl("CSP",technology)) %>%
-                   mutate(technology = gsub("CSP","CSP_storage",technology)) %>%
-                   left_join(A23.elecS_tech_mapping_cool,
-                             ## Left_join used as each power plant type will now be multiplied
-                             ## by up to five cooling technologies, thus increasing tibble size
-                             by=c("subsector.name"="subsector_1")) %>%
-                   select(-sector.name,-subsector.name,-technology.y, -technology.x) %>%
-                   filter((grepl("recirculating",to.technology) & efficiency>0.96))
-                 ## As we are not matching CSP names directly here, we want to make sure that the
-                 ## efficiency designated to recirculating, 1, is the one that is adopted for all CSP (recirculating)
-                 ## segments
-
-      ) %>%
-      rename(supplysector=Electric.sector,
-             subsector0=subsector,
-             subsector=Electric.sector.technology,
+                by = c("subsector.name" = "subsector_1")) %>%
+      select(-sector.name, -subsector.name, -technology.y, -technology.x) %>%
+      filter((grepl("dry_hybrid", to.technology) & efficiency < 0.96)) %>%
+      # As we are not matching CSP names directly here, we want to make sure that the efficiency
+      # designated to dry_hybrid, 0.95, is the one that is adopted for all CSP (dry_hybrid) segments
+      bind_rows(L2233.GlobalIntTechEff_elec_cool %>%
+                  filter(grepl("CSP", technology)) %>%
+                  mutate(technology = gsub("CSP", "CSP_storage", technology)) %>%
+                  # Left_join used as each power plant type will now be multiplied
+                  # by up to five cooling technologies, thus increasing tibble size
+                  left_join(A23.elecS_tech_mapping_cool,
+                            by = c("subsector.name" = "subsector_1")) %>%
+                  select(-sector.name, -subsector.name, -technology.y, -technology.x) %>%
+                  # As we are not matching CSP names directly here, we want to make sure that the efficiency
+                  # designated to dry_hybrid, 0.95, is the one that is adopted for all CSP (dry_hybrid) segments
+                  filter((grepl("recirculating", to.technology) & efficiency > 0.96))) %>%
+      rename(supplysector = Electric.sector,
+             subsector0 = subsector,
+             subsector = Electric.sector.technology,
              intermittent.technology = to.technology) %>%
       bind_rows(L2233.GlobalIntTechEff_elecS_USA) %>%
-      filter(subsector!="CSP_base") %>%
+      filter(subsector != "CSP_base") %>%
       # There are no additional cases of CSP_base across other Int Techs, therefore, we will remove
       # as this has been introduced by calling gcam-core file L2233.GlobalIntTechEff_elec_cool
-      arrange(supplysector,subsector0,subsector,intermittent.technology,year) ->
+      arrange(supplysector, subsector0, subsector, intermittent.technology, year) ->
       L2233.GlobalIntTechEff_elecS_cool_USA
 
     # Add global water coefs from gcam-core to GCAM-USA. Maintain the global coefs
     # Recommended to create state level water demand coefs in the future as state-level coefs are not currently applied
     L2233.GlobalIntTechCoef_elec_cool %>%
-      mutate(subsector.name = if_else(grepl("solar",subsector.name),technology,subsector.name)) %>%
-      ## GCAM-core data has the subsector names for PV = solar, yet CSP = CSP, so we change the subsector
-      ## name to allow for the mapping to be applied to PV as well
+      # GCAM-core data has the subsector names for PV = solar, yet CSP = CSP, so we change the subsector
+      # name to allow for the mapping to be applied to PV as well
+      mutate(subsector.name = if_else(grepl("solar", subsector.name), technology, subsector.name)) %>%
+      # Left_join used as each power plant type will now be multiplied
+      # by up to five cooling technologies, thus increasing tibble size
       left_join(A23.elecS_tech_mapping_cool,
-                ## Left_join used as each power plant type will now be multiplied
-                ## by up to five cooling technologies, thus increasing tibble size
-                by=c("subsector.name"="subsector_1")) %>%
-      select(-sector.name,-subsector.name,-technology.y, -technology.x) %>%
-      rename(supplysector=Electric.sector,
-             subsector0=subsector,
-             subsector=Electric.sector.technology,
+                by = c("subsector.name" = "subsector_1")) %>%
+      select(-sector.name, -subsector.name, -technology.y, -technology.x) %>%
+      rename(supplysector = Electric.sector,
+             subsector0 = subsector,
+             subsector = Electric.sector.technology,
              intermittent.technology = to.technology) %>%
-      filter(!grepl("base_storage",subsector)) %>%
+      filter(!grepl("base_storage", subsector)) %>%
       # PV and CSP base storage are not intermittent techs, therefore, we will remove
       # as these have been introduced by calling gcam-core file L2233.GlobalIntTechEff_elec_cool
-      arrange(supplysector,subsector0,subsector,intermittent.technology,year) ->
+      arrange(supplysector, subsector0, subsector, intermittent.technology, year) ->
       L2233.GlobalIntTechCoef_elecS_cool_USA
 
     L2234.GlobalIntTechLifetime_elecS_USA %>%
       csp_filter() %>%
       bind_rows(L2234.GlobalIntTechLifetime_elecS_USA %>%
-                  filter(grepl("CSP",intermittent.technology)) %>%
-                  add_int_cooling_techs
-
-      ) %>%
-      arrange(supplysector,subsector0,subsector,intermittent.technology,year) ->
+                  filter(grepl("CSP", intermittent.technology)) %>%
+                  add_int_cooling_techs) %>%
+      arrange(supplysector, subsector0, subsector, intermittent.technology, year) ->
       L2233.GlobalIntTechLifetime_elecS_cool_USA
 
     L2234.GlobalIntTechOMfixed_elecS_USA %>%
       csp_filter() %>%
       bind_rows(L2234.GlobalIntTechOMfixed_elecS_USA %>%
-                  filter(grepl("CSP",intermittent.technology)) %>%
-                  add_int_cooling_techs
-
-      ) %>%
-      arrange(supplysector,subsector0,subsector,intermittent.technology,year) ->
+                  filter(grepl("CSP", intermittent.technology)) %>%
+                  add_int_cooling_techs) %>%
+      arrange(supplysector, subsector0, subsector, intermittent.technology, year) ->
       L2233.GlobalIntTechOMfixed_elecS_cool_USA
 
     L2234.GlobalIntTechOMvar_elecS_USA %>%
-      mutate(subsector0=subsector, subsector = intermittent.technology) ->
+      mutate(subsector0 = subsector,
+             subsector = intermittent.technology) ->
       L2233.GlobalIntTechOMvar_elecS_cool_USA
 
     L2234.GlobalIntTechOMvar_elecS_USA %>%
-      mutate(subsector0=subsector, subsector = intermittent.technology) ->
+      mutate(subsector0 = subsector,
+             subsector = intermittent.technology) ->
       L2233.GlobalIntTechOMvar_elecS_cool_USA
 
     L2234.GlobalIntTechShrwt_elecS_USA %>%
-      filter(!grepl("CSP",intermittent.technology)) %>%
-      rename(subsector.name0=subsector.name,
+      filter(!grepl("CSP", intermittent.technology)) %>%
+      rename(subsector.name0 = subsector.name,
              subsector.name = intermittent.technology) %>%
-      mutate(intermittent.technology=subsector.name) %>%
+      mutate(intermittent.technology = subsector.name) %>%
       bind_rows(L2234.GlobalIntTechShrwt_elecS_USA %>%
-                  filter(grepl("CSP",intermittent.technology)) %>%
+                  filter(grepl("CSP", intermittent.technology)) %>%
                   left_join(A23.elecS_tech_mapping_cool,
-                            ## Left_join used as each power plant type will now be multiplied
-                            ## by up to five cooling technologies, thus increasing tibble size
-                            by=c("sector.name"="Electric.sector", "intermittent.technology"="Electric.sector.technology", "subsector.name"= "subsector")) %>%
+                            # Left_join used as each power plant type will now be multiplied
+                            # by up to five cooling technologies, thus increasing tibble size
+                            by = c("sector.name" = "Electric.sector",
+                                   "intermittent.technology" = "Electric.sector.technology",
+                                   "subsector.name" = "subsector")) %>%
                   select(-technology, -subsector_1) %>%
-                  rename(subsector.name0=subsector.name,
-                         subsector.name=intermittent.technology,
-                         intermittent.technology = to.technology)
-
-      ) %>%
-      arrange(sector.name,subsector.name0,subsector.name,intermittent.technology,year) ->
+                  rename(subsector.name0 = subsector.name,
+                         subsector.name = intermittent.technology,
+                         intermittent.technology = to.technology)) %>%
+      arrange(sector.name, subsector.name0, subsector.name, intermittent.technology, year) ->
       L2233.GlobalIntTechShrwt_elecS_cool_USA
 
     L2234.PrimaryRenewKeyword_elecS_USA %>%
+      # Left_join used as each power plant type will now be multiplied
+      # by up to five cooling technologies, thus increasing tibble size
       left_join(A23.elecS_tech_mapping_cool,
-                ## Left_join used as each power plant type will now be multiplied
-                ## by up to five cooling technologies, thus increasing tibble size
-                by=c("technology"="Electric.sector.technology",
-                     "sector.name"="Electric.sector","subsector.name"="subsector")) %>%
-      select(-subsector_1,-technology.y) %>%
+                by=c("technology" = "Electric.sector.technology",
+                     "sector.name" = "Electric.sector",
+                     "subsector.name" = "subsector")) %>%
+      select(-subsector_1, -technology.y) %>%
       rename(subsector = technology,
              technology = to.technology,
              subsector.name0 = subsector.name) %>%
-      arrange(sector.name,year) ->
+      arrange(sector.name, year) ->
       L2233.PrimaryRenewKeyword_elecS_cool_USA
 
     L2234.PrimaryRenewKeywordInt_elecS_USA %>%
-      filter(!grepl("CSP",intermittent.technology)) %>%
-      rename(subsector.name0=subsector.name,
+      filter(!grepl("CSP", intermittent.technology)) %>%
+      rename(subsector.name0 = subsector.name,
              subsector.name = intermittent.technology) %>%
-      mutate(intermittent.technology=subsector.name) %>%
+      mutate(intermittent.technology = subsector.name) %>%
       bind_rows(L2234.PrimaryRenewKeywordInt_elecS_USA %>%
-                  filter(grepl("CSP",intermittent.technology)) %>%
+                  filter(grepl("CSP", intermittent.technology)) %>%
                   left_join(A23.elecS_tech_mapping_cool,
-                            ## Left_join used as each power plant type will now be multiplied
-                            ## by up to five cooling technologies, thus increasing tibble size
-                            by=c("sector.name"="Electric.sector", "intermittent.technology"="Electric.sector.technology","subsector.name" ="subsector")) %>%
+                            # Left_join used as each power plant type will now be multiplied
+                            # by up to five cooling technologies, thus increasing tibble size
+                            by = c("sector.name" = "Electric.sector",
+                                   "intermittent.technology" = "Electric.sector.technology",
+                                   "subsector.name" = "subsector")) %>%
                   select(-technology, -subsector_1) %>%
-                  rename(subsector.name0=subsector.name,
-                         subsector.name=intermittent.technology,
-                         intermittent.technology = to.technology)
-
-      ) %>%
-      arrange(sector.name,subsector.name0,subsector.name,intermittent.technology,year) ->
+                  rename(subsector.name0 = subsector.name,
+                         subsector.name = intermittent.technology,
+                         intermittent.technology = to.technology)) %>%
+      arrange(sector.name, subsector.name0, subsector.name, intermittent.technology, year) ->
       L2233.PrimaryRenewKeywordInt_elecS_cool_USA
 
     # We can now look to state level data, once again combining vintages and adding cooling technologies
@@ -707,26 +720,26 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       bind_rows(L2241.StubTechEff_coal_vintage_USA,
                 L2241.StubTechEff_elec_coalret_USA) %>%
       add_cooling_techs() %>%
-      mutate(technology = if_else(subsector0=="grid_storage", subsector0,technology)) ->
+      mutate(technology = if_else(subsector0 == "grid_storage", subsector0, technology)) ->
       L2233.StubTechEff_elec_USA
 
     L2234.StubTechMarket_elecS_USA %>%
       bind_rows(L2241.StubTechMarket_coal_vintage_USA,
                 L2241.StubTechMarket_elec_coalret_USA) %>%
       add_cooling_techs() %>%
-      mutate(technology = if_else(grepl("base_storage",subsector0),subsector0,
-                                  if_else(grepl("wind_base",subsector),subsector,technology))) ->
+      mutate(technology = if_else(grepl("base_storage", subsector0), subsector0,
+                                  if_else(grepl("wind_base", subsector), subsector, technology))) ->
       # temporary placement of base_storage cooling techs = nesting subsector
       L2233.StubTechMarket_elec_USA
 
-
     L1233.out_EJ_state_elec_F_tech_cool %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      left_join_error_no_match(select(elec_tech_water_map,
-                       -from.supplysector, -from.subsector, -from.technology, -minicam.energy.input, -sector, -to.subsector,-to.supplysector),
-                by = c("fuel", "technology", "cooling_system", "water_type")) %>%
-      select(-plant_type,-technology,-cooling_system,-water_type) %>%
-      rename(supplysector = sector, subsector0 = fuel,  technology=to.technology, region=state) %>%
+      left_join_error_no_match(elec_tech_water_map %>%
+                                 select(-from.supplysector, -from.subsector, -from.technology,
+                                        -minicam.energy.input, -sector, -to.subsector,-to.supplysector),
+                               by = c("fuel", "technology", "cooling_system", "water_type")) %>%
+      select(-plant_type, -technology, -cooling_system, -water_type) %>%
+      rename(supplysector = sector, subsector0 = fuel,  technology = to.technology, region = state) %>%
       ungroup() ->
       L1233.out_EJ_state_elec_F_tech_cool
 
@@ -736,7 +749,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       # use anti join to filter out entries in elec segments table which will be
       # overwritten by coal retire technologies
       anti_join(L2241.StubTechProd_elec_coalret_USA,
-                 by = c("region", "supplysector", "subsector", "stub.technology", "year")) %>%
+                by = c("region", "supplysector", "subsector", "stub.technology", "year")) %>%
       bind_rows(L2241.StubTechProd_elec_coalret_USA) %>%
       # use anti join to filter out entries in table which will be overwritten
       # by coal vintage technologies
@@ -749,7 +762,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     L2233.StubTechProd_elec_USA %>%
       filter(calOutputValue > 0) %>%
       left_join_keep_first_only(L1233.out_EJ_state_elec_F_tech_cool,
-                by = c("supplysector", "subsector0", "subsector", "technology", "region", "share.weight.year"="year")) %>%
+                                by = c("supplysector", "subsector0", "subsector", "technology", "region", "share.weight.year" = "year")) %>%
       replace_na(list(share = 0)) %>%
       group_by(supplysector, subsector0, subsector, region, year) %>%
       # Divide by 2 to account for recirculating and dry_cooling technology types in CSP.
@@ -787,12 +800,12 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
 
     L2234.StubTechCapFactor_elecS_wind_USA %>%
       add_cooling_techs() %>%
-      mutate(technology = if_else(grepl("wind_base",subsector),subsector,technology)) ->
+      mutate(technology = if_else(grepl("wind_base", subsector), subsector, technology)) ->
       L2233.StubTechCapFactor_elecS_wind_USA
 
     L2234.StubTechElecMarket_backup_elecS_USA %>%
       add_cooling_techs() %>%
-      mutate( technology = if_else(subsector=="rooftop_pv"|grepl("wind_base",subsector),subsector,technology)) ->
+      mutate(technology = if_else(subsector == "rooftop_pv" | grepl("wind_base", subsector), subsector, technology)) ->
       L2233.StubTechElecMarket_backup_elecS_USA
 
     L2234.StubTechFixOut_elecS_USA %>%
@@ -805,7 +818,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
 
     L2234.StubTechMarket_backup_elecS_USA %>%
       add_cooling_techs() %>%
-      mutate( technology = if_else(subsector=="rooftop_pv"|grepl("wind_base",subsector),subsector,technology)) ->
+      mutate(technology = if_else(subsector == "rooftop_pv" | grepl("wind_base", subsector), subsector, technology)) ->
       L2233.StubTechMarket_backup_elecS_USA
 
     L2234.StubTechCost_offshore_wind_elecS_USA %>%
@@ -813,76 +826,80 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       L2233.StubTechCost_offshore_wind_elecS_USA
 
     L2234.SubsectorLogit_elecS_USA %>%
-      rename(subsector0=subsector) %>%
+      rename(subsector0 = subsector) %>%
       mutate(subsector.1 = subsector0) %>%
       select(-subsector.1) %>%
       arrange(supplysector) ->
       L2233.SubsectorLogit_elecS_USA
 
+    # HERE
+
     L2234.SubsectorLogit_elecS_USA %>%
       left_join(A23.elecS_tech_mapping_cool,
-                ## Left_join used as each power plant type will now be multiplied
-                ## by up to five cooling technologies, thus increasing tibble size
-                by=c("supplysector"="Electric.sector","subsector")) %>%
-      rename(subsector0=subsector,
-             subsector=Electric.sector.technology) %>%
-      right_join(
-        bind_rows(L2233.StubTechMarket_elec_USA %>%
-                    select(subsector,region,technology),
-                  L2233.StubTechFixOut_hydro_elecS_USA %>%
-                    select(subsector,region,technology),
-                  L2233.StubTechEff_elec_USA %>%
-                    filter(subsector=="battery") %>%
-                    select(subsector,region,technology)),
-        ## Including all possible technologies here
-        by=c("subsector","region","to.technology"="technology")) %>%
-      select(-subsector_1,-technology, -to.technology, region,supplysector,subsector0,subsector, logit.year.fillout, logit.exponent,logit.type) %>%
+                # Left_join used as each power plant type will now be multiplied
+                # by up to five cooling technologies, thus increasing tibble size
+                by = c("supplysector" = "Electric.sector", "subsector")) %>%
+      rename(subsector0 = subsector,
+             subsector = Electric.sector.technology) %>%
+      right_join(bind_rows(L2233.StubTechMarket_elec_USA %>%
+                             select(subsector, region, technology),
+                           L2233.StubTechFixOut_hydro_elecS_USA %>%
+                             select(subsector, region, technology),
+                           L2233.StubTechEff_elec_USA %>%
+                             filter(subsector == "battery") %>%
+                             select(subsector, region, technology)),
+                 # Including all possible technologies here
+                 by = c("subsector", "region", "to.technology" = "technology")) %>%
+      select(region, supplysector, subsector0, subsector, logit.year.fillout, logit.exponent,logit.type) %>%
       # Acknowledge that not all vintages are in each state, therefore shareweights and logits are
       # not needed for these vintages
       unique() %>%
-      arrange(supplysector) %>%
-      select(-logit.year.fillout, -logit.exponent, -logit.type, dplyr::everything()) ->
+      arrange(supplysector) ->
       L2233.SubsectorLogit_elecS_cool_USA
 
     L2233.SubsectorLogit_elecS_cool_USA %>%
-      select(region,supplysector,subsector0,subsector) %>%
-      ## select which load segment fuel + power plant exist in each state
+      select(region, supplysector, subsector0, subsector) %>%
+      # select which load segment fuel + power plant exist in each state
       left_join(L2233.GlobalTechCoef_elecS_cool_USA,
-                 by=c("supplysector","subsector0","subsector")) %>%
-      mutate(market.name = if_else(minicam.energy.input=="seawater",gcam.USA_REGION,region)) %>%
+                by = c("supplysector", "subsector0", "subsector")) %>%
+      mutate(market.name = if_else(minicam.energy.input == gcamusa.WATER_TYPE_SEAWATER, gcam.USA_REGION, region)) %>%
       na.omit() ->
       L2233.StubTechCoef_elecS_cool_USA
 
     L2233.StubTechCoef_elecS_cool_USA %>%
-      filter(grepl("seawater",technology)) %>% filter(!(region %in% gcamusa.NO_SEAWATER_STATES)) %>%
-      bind_rows(L2233.StubTechCoef_elecS_cool_USA %>% filter(!grepl("seawater",technology))) %>%
-      arrange(region,year) ->
-      ## Not all techs have cooling options, therefore we remove these
+      filter(grepl(gcamusa.WATER_TYPE_SEAWATER, technology),
+             !(region %in% gcamusa.NO_SEAWATER_STATES)) %>%
+      bind_rows(L2233.StubTechCoef_elecS_cool_USA %>%
+                  filter(!grepl(gcamusa.WATER_TYPE_SEAWATER, technology))) %>%
+      arrange(region, year) ->
+      # Not all techs have cooling options, therefore we remove these
       L2233.StubTechCoef_elecS_cool_USA
 
     L2234.SubsectorShrwt_elecS_USA %>%
-      rename(subsector0=subsector) %>%
+      rename(subsector0 = subsector) %>%
       bind_rows(
-        L2234.StubTechProd_elecS_USA %>% select(region, supplysector, subsector, year, subs.share.weight) %>%
-          rename(share.weight= subs.share.weight, subsector0=subsector) %>%
+        L2234.StubTechProd_elecS_USA %>%
+          select(region, supplysector, subsector, year, subs.share.weight) %>%
+          rename(share.weight = subs.share.weight, subsector0 = subsector) %>%
           unique(),
-        L2234.StubTechFixOut_elecS_USA %>% select(region, supplysector, subsector, year, subs.share.weight) %>%
-          rename(share.weight= subs.share.weight, subsector0=subsector) %>%
+        L2234.StubTechFixOut_elecS_USA %>%
+          select(region, supplysector, subsector, year, subs.share.weight) %>%
+          rename(share.weight = subs.share.weight,
+                 subsector0 = subsector) %>%
           unique()
       ) %>%
-      arrange(region,supplysector,year) ->
+      arrange(region, supplysector, year) ->
       L2233.SubsectorShrwt_elecS_USA
 
-
     L2234.SubsectorShrwtInterp_elecS_USA %>%
-      rename(subsector0=subsector) %>%
+      rename(subsector0 = subsector) %>%
       mutate(subsector.1 = subsector0) %>%
       select(-subsector.1) %>%
       arrange(supplysector) ->
       L2233.SubsectorShrwtInterp_elecS_USA
 
     L2234.SubsectorShrwtInterpTo_elecS_USA %>%
-      rename(subsector0=subsector) %>%
+      rename(subsector0 = subsector) %>%
       mutate(subsector.1 = subsector0) %>%
       select(-subsector.1) %>%
       arrange(supplysector) ->
@@ -999,6 +1016,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
              subs.share.weight == 0 & future.subs.shrwt > 0) %>%
       # Get rid of info related to calibrated values, which we've just confirmed are zero
       select(-calOutputValue, -share.weight.year, -subs.share.weight, -tech.share.weight) %>%
+      # use semi_join to filter for future generation technologies which are mapped to current gen techs
       semi_join(A23.elecS_tech_mapping_cool_shares_fut,
                 by = "subsector") %>%
       left_join_error_no_match(A23.elecS_tech_mapping_cool_shares_fut,
@@ -1010,6 +1028,8 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     # Create a table with existing techs whose cooling shares we can use to inform future ones
     L2233.StubTechProd_elec_cool_SW_USA %>%
       filter(!grepl(gcamusa.DISALLOWED_COOLING_TECH, technology)) %>%
+      # use semi_join to filter for current generation technologies which are used to inform
+      # future gen tech cooling shares
       semi_join(A23.elecS_tech_mapping_cool_shares_fut,
                 by = c("subsector" = "mapped_subsector")) %>%
       left_join_error_no_match(elec_tech_water_map %>%
@@ -1089,7 +1109,10 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       select(-supplysector.1) ->
       L2233.Supplysector_elecS_USA
 
-    # Outputs
+
+    # ===================================================
+    # Produce outputs
+
     L2233.GlobalTechEff_elec_cool_USA %>%
       add_title("Electricity Load Segments Technology Efficiencies") %>%
       add_units("none") %>%
