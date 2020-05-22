@@ -425,7 +425,8 @@ module_aglu_L202.an_input <- function(command, ...) {
       # not every region and supplysector is present in L202.an_ALL_Mt_R_C_Y so use left_join
       left_join(select(L202.an_ALL_Mt_R_C_Y, region, GCAM_commodity, year, NetExp_Mt),
                 by = c("region", "supplysector" = "GCAM_commodity", "year")) %>%
-      mutate(fixedOutput = pmax(0, round(-1 * NetExp_Mt, aglu.DIGITS_CALOUTPUT)),
+      mutate(fixedOutput = if_else(supplysector %in% aglu.TRADED_MEATS, 0,
+                                   pmax(0, round(-1 * NetExp_Mt, aglu.DIGITS_CALOUTPUT))),
              share.weight.year = year, subs.share.weight = 0, tech.share.weight = 0) %>%
       select(LEVEL2_DATA_NAMES[["StubTechFixOut"]]) ->
       L202.StubTechFixOut_imp_an
@@ -445,7 +446,8 @@ module_aglu_L202.an_input <- function(command, ...) {
       select(-fixedOutput) %>%
       left_join_error_no_match(final_an_exp_year_data, by = c("region", "supplysector", "subsector", "stub.technology", "subs.share.weight", "tech.share.weight")) %>%
       bind_rows(filter(L202.StubTechFixOut_imp_an, ! year > final_an_exp_year)) %>%
-      select(LEVEL2_DATA_NAMES[["StubTechFixOut"]]) ->
+      select(LEVEL2_DATA_NAMES[["StubTechFixOut"]]) %>%
+      filter(!supplysector %in% aglu.TRADED_MEATS) ->
       L202.StubTechFixOut_imp_an
 
     # Remove any regions for which agriculture and land use are not modeled (308-320)
