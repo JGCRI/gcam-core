@@ -601,20 +601,9 @@ emissions.DIGITS_MACC          <- 3
 
 # GCAM-USA constants ======================================================================
 
-# GCAM-USA Constants for Processing UCS Database. As of 04/22/19, only used in chunk zchunk_LA1233.Process_UCS_data_ref.R
-gcamusa.UCS_WATER_COEFFICIENTS_FIRST_HISTORICAL_YEAR   <- 1970
-gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR   <- 2008
-gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR <- 2015
-gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR <- 2020
-gcamusa.UCS_WATER_COEFFICIENTS_FINAL_FUTURE_YEAR <- 2100
-gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_RECIRCULATING <- 0.85
-gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_DRY_COOLING <- 0.05
-gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_COOLING_POND <- 0.05
-gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_ONCE_THROUGH_SEAWATER <- 0.05
-
 # GCAM-USA time
 gcamusa.SEDS_DATA_YEARS <- 1971:2017 # years for which we'll use EIA SEDS data in module_gcamusa_LA101.EIA_SEDS
-gcamusa.WIND_BASE_COST_YEAR   <- 2005
+gcamusa.WIND_BASE_COST_YEAR <- 2005
 gcamusa.HYDRO_HIST_YEAR <- 2015
 gcamusa.HYDRO_FINAL_AEO_YEAR <- 2050
 
@@ -670,6 +659,15 @@ gcamusa.INTERP_APPLY_TO <- "share-weight"
 # Water related constants for GCAM-USA
 gcamusa.DISALLOWED_COOLING_TECH <- "once through"
 gcamusa.MUNICIPAL_SECTOR <- "Municipal"
+gcamusa.UCS_WATER_TYPE_OCEAN <- "Ocean"
+gcamusa.UCS_WATER_TYPE_SURFACE <- "Surface Water"
+gcamusa.WATER_TYPE_FRESH <- "fresh"
+gcamusa.WATER_TYPE_SEAWATER <- "seawater"
+gcamusa.ELEC_COOLING_SYSTEM_NONE <- "none"
+gcamusa.ELEC_COOLING_SYSTEM_BINARY <- "binary"
+gcamusa.ELEC_TECHS_NO_COOLING <- c("hydro", "PV", "wind")
+gcamusa.ELEC_TECHS_NO_COOLING_FRESH <- c("hydro", "PV") # electricity technologies with no cooling system, still mapped to "fresh" water type
+gcamusa.UCS_WATER_FIRST_YEAR <- 2000 # we calculate cooling shares based on power plants built this century
 
 # Logit exponent regulating competition between different grid regions in USA electricity market
 # (single market approach only)
