@@ -116,8 +116,8 @@ double CarbonModelUtils::getLandUse( const unsigned int aYear,
  * \return The start year.
  */
 int CarbonModelUtils::getStartYear(){
-    const static int START_YEAR = scenario->getClimateModel()
-        ? scenario->getClimateModel()->getCarbonModelStartYear() : scenario->getModeltime()->getStartYear();
+    const static int START_YEAR = scenario->getModeltime()->getCarbonModelStartYear() != -1
+        ? scenario->getModeltime()->getCarbonModelStartYear() : scenario->getModeltime()->getStartYear();
     return START_YEAR;
 }
 

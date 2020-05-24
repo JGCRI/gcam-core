@@ -145,7 +145,7 @@ module_energy_L223.electricity <- function(command, ...) {
       primary.renewable <- region <- region_GCAM3 <- remove.fraction <- sector <-
       sector.name <- share.weight <- stub.technology <- subsector <- subsector.name <-
       supplysector <- technology <- value <- weight <- year <- year.fillout <- year.x <- year.y <-
-      CFmax <- grid.cost <- input.cost <- minicam.non.energy.input <- NULL
+      CFmax <- grid.cost <- input.cost <- minicam.non.energy.input <- from.year <- to.year <- NULL
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -221,6 +221,7 @@ module_energy_L223.electricity <- function(command, ...) {
       gather_years(value_col = "share.weight") %>%
       # Interpolate to model time periods, and add columns specifying the final format
       complete(nesting(region, supplysector, subsector), year = MODEL_FUTURE_YEARS[MODEL_FUTURE_YEARS >= min(year) & MODEL_FUTURE_YEARS <= max(year)]) %>%
+      filter(year %in% MODEL_FUTURE_YEARS[MODEL_FUTURE_YEARS >= min(year) & MODEL_FUTURE_YEARS <= max(year)]) %>%
       arrange(region,supplysector,subsector,year) %>%
       mutate(share.weight = approx_fun(year, share.weight, rule = 1),year = as.integer(year))->
       L223.SubsectorShrwt_coal
@@ -261,6 +262,7 @@ module_energy_L223.electricity <- function(command, ...) {
 
       # Interpolate to model time periods, and add columns specifying the final format
       complete(GCAM_region_ID, year = MODEL_FUTURE_YEARS[MODEL_FUTURE_YEARS >= min(year) & MODEL_FUTURE_YEARS <= max(year)]) %>%
+      filter(year %in% MODEL_FUTURE_YEARS[MODEL_FUTURE_YEARS >= min(year) & MODEL_FUTURE_YEARS <= max(year)]) %>%
       arrange(GCAM_region_ID, year) %>%
       mutate(share.weight = approx_fun(year, value, rule = 1)) %>%
       # applies consistent supplysector and subsector names (electricity, nuclear)
@@ -302,7 +304,10 @@ module_energy_L223.electricity <- function(command, ...) {
     # First write global interpolation rules to all regions, then any global interp rules that match by region + sector + subsector name will be
     # replaced by a regionally specific interpolation rule by first removing those rules from L223.SubsectorInterp_elec and then replacing them
     if(any(is.na(A23.subsector_interp$to.value))) {
-      L223.SubsectorInterp_elec <- write_to_all_regions(A23.subsector_interp[is.na(A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names)
+      L223.SubsectorInterp_elec <- write_to_all_regions(A23.subsector_interp[is.na(A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names) %>%
+        # convert back to char for now as we will need to merge assumptions files on which will have it as char still
+        mutate(from.year = as.character(from.year),
+               to.year = as.character(to.year))
 
       L223.SubsectorInterp_elec %>%
         anti_join(A23.subsector_interp_R, by = c("region", "supplysector", "subsector")) %>%
@@ -313,7 +318,10 @@ module_energy_L223.electricity <- function(command, ...) {
 
     # Same process for interpolation rules using a to.value
     if(any(!is.na(A23.subsector_interp$to.value))) {
-      L223.SubsectorInterpTo_elec <- write_to_all_regions(A23.subsector_interp[!is.na(A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names)
+      L223.SubsectorInterpTo_elec <- write_to_all_regions(A23.subsector_interp[!is.na(A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names) %>%
+        # convert back to char for now as we will need to merge assumptions files on which will have it as char still
+        mutate(from.year = as.character(from.year),
+               to.year = as.character(to.year))
 
       L223.SubsectorInterpTo_elec %>%
         anti_join(A23.subsector_interp_R, by = c("region", "supplysector", "subsector")) %>%

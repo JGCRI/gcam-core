@@ -28,7 +28,7 @@ HISTORICAL_YEARS        <- 1971:2015
 # produce future data (e.g., population projections)
 FUTURE_YEARS            <- 2016:2100
 # Calibrated periods in the model. Only level 2 chunks should reference these
-MODEL_BASE_YEARS        <- c(1975, 1990, 2005, 2010,2015)
+MODEL_BASE_YEARS        <- c(1975, 1990, 2005, 2010, 2015)
 # Future (not calibrated) model periods. Only level 2 chunks should reference these
 MODEL_FUTURE_YEARS      <- seq(2020, 2100, 5)
 MODEL_YEARS             <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
@@ -168,6 +168,8 @@ aglu.TRADE_CAL_YEARS        <- 2008:2012 # Years used for calculating base year 
 aglu.TRADE_FINAL_BASE_YEAR  <- max(MODEL_BASE_YEARS) # The base year to which gross trade volumes are assigned. Should be within the aglu.TRADE_CAL_YEARS and equal to the final model calibration year
 aglu.FALLOW_YEARS           <- 2008:2012 # Years used for calculating the % of fallow land
 aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "MiscCrop", "OilCrop", "OtherGrain", "PalmFruit", "Rice", "RootTuber", "SugarCrop", "Wheat")
+aglu.TRADED_MEATS           <- c("Beef", "Dairy", "Pork", "Poultry", "SheepGoat")
+aglu.TRADED_AG_AN           <- c(aglu.TRADED_CROPS, aglu.TRADED_MEATS)
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
 aglu.MAX_FAO_LDS_SCALER <- 5   # Unitless max multiplier in reconciling LDS harvested area with FAO harvested area by country and crop. Useful for preventing bad allocations of N fert in AFG, TWN, several others
@@ -215,7 +217,7 @@ aglu.HIGH_GROWTH_PCGDP <- 12.275   # GDP per capita high threshold for SSP4 regi
 aglu.LOW_GROWTH_PCGDP  <- 2.75     # GDP per capita low threshold for SSP4 region groupings, thousand 2010$ per person
 
 # AgLu mulitpliers
-aglu.MGMT_YIELD_ADJ <- 0.1       # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number.
+aglu.MGMT_YIELD_ADJ <- 0.2       # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number.
 aglu.HI_PROD_GROWTH_MULT <- 1.5  # Multipliers for high ag prod growth scenarios
 aglu.LOW_PROD_GROWTH_MULT <- 0.5 # Multipliers for low ag prod growth scenarios
 
@@ -324,7 +326,7 @@ aglu.LN1_PROTUNMGD_LOGIT_EXP  <- 0
 aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 
 # default logit exponent and type for LN5, the competition betweein high and lo management
-aglu.MGMT_LOGIT_EXP  <- 0.5
+aglu.MGMT_LOGIT_EXP  <- 2.5
 aglu.MGMT_LOGIT_TYPE <- "absolute-cost-logit"
 
 # XML-related constants
@@ -597,10 +599,13 @@ emissions.TRN_INTL_SECTORS   <- c("trn_intl_ship", "trn_intl_air")
 emissions.USE_GV_MAC           <- 1
 emissions.USE_GCAM3_CCOEFS     <- 1 # Select whether to use GCAM3 fuel carbon coefficients
 emissions.USE_GLOBAL_CCOEFS    <- 1 # Select whether to use global average carbon coefficients on fuels, or region-specific carbon coefficients
+emissions.UNMGD_LAND_INPUT_NAME <- "land-input"
 
 # Digits for rounding into XMLs
-emissions.DIGITS_CO2COEF   <- 1
-emissions.DIGITS_EMISSIONS <- 10
+emissions.DIGITS_CO2COEF       <- 1
+emissions.DIGITS_EMISS_COEF    <- 7
+emissions.DIGITS_EMISSIONS     <- 10
+emissions.DIGITS_MACC          <- 3
 
 
 # GCAM-USA constants ======================================================================

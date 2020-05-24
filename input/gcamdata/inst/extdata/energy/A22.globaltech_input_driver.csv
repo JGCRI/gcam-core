@@ -1,0 +1,21 @@
+# File: A22.globaltech_input_driver.csv
+# Title: Refining primary input name to drive non-co2 emissions
+# Units: Unitless
+# Comments: Used to identify which is the appropriate input to drive non-co2 emissions
+# Column types: cccc
+# ----------
+supplysector,subsector,technology,input.name
+refining,biomass liquids,biodiesel,regional biomassOil
+refining,biomass liquids,cellulosic ethanol,regional biomass
+refining,biomass liquids,cellulosic ethanol CCS level 1,regional biomass
+refining,biomass liquids,cellulosic ethanol CCS level 2,regional biomass
+refining,biomass liquids,corn ethanol,regional corn for ethanol
+refining,biomass liquids,FT biofuels,regional biomass
+refining,biomass liquids,FT biofuels CCS level 1,regional biomass
+refining,biomass liquids,FT biofuels CCS level 2,regional biomass
+refining,biomass liquids,sugar cane ethanol,regional sugar for ethanol
+refining,coal to liquids,coal to liquids,regional coal
+refining,coal to liquids,coal to liquids CCS level 1,regional coal
+refining,coal to liquids,coal to liquids CCS level 2,regional coal
+refining,gas to liquids,gas to liquids,regional natural gas
+refining,oil refining,oil refining,regional oil

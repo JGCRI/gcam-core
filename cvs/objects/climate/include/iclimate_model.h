@@ -257,14 +257,6 @@ public:
     */
     virtual double getNetOceanUptake( const int aYear ) const = 0;
 
-    /*!
-     * \brief Returns the year to start running the carbon model.
-     * \details The carbon model should start running at the first year
-     *          of land-use history.  This is typically around 1750.
-     * \return the year to start running the carbon model.
-     */
-    virtual int getCarbonModelStartYear() const = 0;
-
     /*! \brief Update a visitor with information from the climate model.
     * \param aVisitor Vistor to update.
     * \param aPeriod Period for which to perform the update, -1 means all

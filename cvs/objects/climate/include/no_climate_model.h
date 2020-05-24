@@ -108,8 +108,6 @@ public:
 
     virtual double getNetOceanUptake( const int aYear ) const;
 
-    virtual int getCarbonModelStartYear() const;
-
 	virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;
     
@@ -117,12 +115,7 @@ protected:
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
     DEFINE_DATA_WITH_PARENT(
-        IClimateModel,
-        
-        //! The year the carbon model should start running.
-        //! \note This is a GCAM carbon cycle parameter and does not really
-        //! have anything to do with the climate model.
-        DEFINE_VARIABLE( SIMPLE, "carbon-model-start-year", mCarbonModelStartYear, int )
+        IClimateModel
     )
 };
 

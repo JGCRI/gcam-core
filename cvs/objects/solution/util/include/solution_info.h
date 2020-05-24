@@ -131,6 +131,10 @@ public:
     double getUpperBoundSupplyPrice() const;
     double getForecastPrice() const;
     double getForecastDemand() const;
+    void setForecastPrice( const double aPrice );
+    void setForecastDemand( const double aDemand );
+    double getCorrectionSlope() const;
+    void setCorrectionSlope( const double aSlope );
 
     int getSerialNumber( void ) const;
     
