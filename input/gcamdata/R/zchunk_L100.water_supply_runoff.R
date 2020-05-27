@@ -56,7 +56,6 @@ module_water_L100.water_supply_runoff <- function(command, ...) {
       mutate(access_fraction = accessible_water / runoff) %>%
       group_by(id) %>% summarise(access_fraction = mean(access_fraction)) %>%
       ungroup() %>%
-      mutate(access_fraction = round(access_fraction, water.DIGITS_RENEW_WATER)) %>%
       rename(basin_id = id) ->
       L100.runoff_accessible
 
@@ -64,7 +63,7 @@ module_water_L100.water_supply_runoff <- function(command, ...) {
     # (this will have to be updated for climate change runs from Xanthos)
     runoff_historical %>%
       group_by(id) %>%
-      summarise(runoff_max = round(mean(runoff), water.DIGITS_RENEW_WATER)) %>%
+      summarise(runoff_max = mean(runoff)) %>%
       ungroup() %>%
       rename(basin_id = id) %>%
       mutate(year = 2000) %>% #temp year written over by following line

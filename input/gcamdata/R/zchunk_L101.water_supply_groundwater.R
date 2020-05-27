@@ -106,7 +106,7 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
         mutate(human_only = hi - nhi) %>%
         filter(human_only < 0, hi < 0) %>%
         rename(depletion = human_only) %>%
-        mutate(depletion = round(-depletion, water.DIGITS_GROUND_WATER)) %>%
+        mutate(depletion = -1 * depletion) %>%
         select(basin.id, depletion) ->
         L101.groundwater_depletion_bm3
     }
@@ -115,7 +115,6 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       gw_dep %>%
         rename(depletion = netDepletion) %>%
         filter(depletion > 0) %>%
-        mutate(depletion = round(depletion, water.DIGITS_GROUND_WATER)) %>%
         arrange(basin.id) %>% select(basin.id, depletion) ->
         L101.groundwater_depletion_bm3
     }

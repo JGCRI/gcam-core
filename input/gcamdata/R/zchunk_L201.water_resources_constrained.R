@@ -156,9 +156,9 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     L201.region_basin_home %>%
       left_join(L100.runoff_max_bm3, by = "basin_id") %>% #only basins with withdrawals are used
       # ^^ non-restrictive join required (NA values generated for unused basins)
-      mutate(sub.renewable.resource = "runoff") %>%
-      rename(renewresource = resource,
-             maxSubResource = runoff_max) %>%
+      mutate(sub.renewable.resource = "runoff",
+             renewresource = resource,
+             maxSubResource = round(runoff_max, water.DIGITS_GROUND_WATER_RSC)) %>%
       arrange(region, renewresource, year) %>%
       select(LEVEL2_DATA_NAMES[["GrdRenewRsrcMaxNoFillOut"]]) ->
       L201.GrdRenewRsrcMax_runoff
@@ -181,7 +181,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
                nesting(region, resource, sub.renewable.resource)) %>%
       mutate(available = case_when( #accessible fraction
         grade == "grade1" ~ 0, #none available
-        grade == "grade2" ~ available,
+        grade == "grade2" ~ round(available, water.DIGITS_RENEW_WATER),
         grade == "grade3" ~ 1 #100% available
         ) ) %>%
       mutate(extractioncost = case_when(
@@ -200,8 +200,8 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       # ^^ non-restrictive join required (NA values generated for unused basins)
       mutate(subresource = "groundwater") %>%
       arrange(region, resource, price) %>%
-      rename(extractioncost = price,
-             available = avail) %>%
+      mutate(extractioncost = round(price, water.DIGITS_GROUND_WATER),
+             available = round(avail, water.DIGITS_GROUND_WATER)) %>%
       select(LEVEL2_DATA_NAMES[["RsrcCurves"]]) ->
       L201.DepRsrcCurves_ground_uniform
 
@@ -280,8 +280,8 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
              resource = resource,
              sub.renewable.resource = "runoff",
              grade = paste0("grade", 1:20),
-             available = rnw_spline$x,
-             extractioncost = rnw_spline$y)
+             available = round(rnw_spline$x, water.DIGITS_GROUND_WATER),
+             extractioncost = round(rnw_spline$y, water.DIGITS_GROUND_WATER))
     }
 
     # apply smoothing across all basins
