@@ -407,8 +407,8 @@ module_gcamusa_L2261.regional_biomass_USA <- function(command, ...) {
                subsector0 = subsector,
                subsector = stub.technology) -> data_new
 
-      data_new %>% filter(grepl("seawater",technology)) %>% filter(!(region %in% gcamusa.NO_SEAWATER_STATES)) %>%
-        bind_rows(data_new %>% filter(!grepl("seawater",technology))) %>%
+      data_new %>% filter(grepl(gcamusa.WATER_TYPE_SEAWATER,technology)) %>% filter(!(region %in% gcamusa.NO_SEAWATER_STATES)) %>%
+        bind_rows(data_new %>% filter(!grepl(gcamusa.WATER_TYPE_SEAWATER,technology))) %>%
         arrange(region,year) -> data_new
       return(data_new)
     }
