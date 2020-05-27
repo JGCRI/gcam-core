@@ -158,9 +158,9 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     L201.region_basin_home %>%
       left_join(L100.runoff_max_bm3, by = "GCAM_basin_ID") %>% #only basins with withdrawals are used
       # ^^ non-restrictive join required (NA values generated for unused basins)
-      mutate(sub.renewable.resource = "runoff") %>%
-      rename(renewresource = resource,
-             maxSubResource = runoff_max) %>%
+      mutate(sub.renewable.resource = "runoff",
+             renewresource = resource,
+             maxSubResource = round(runoff_max, water.DIGITS_GROUND_WATER_RSC)) %>%
       arrange(region, renewresource, year) %>%
       select(LEVEL2_DATA_NAMES[["GrdRenewRsrcMaxNoFillOut"]]) ->
       L201.GrdRenewRsrcMax_runoff
@@ -183,7 +183,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
                nesting(region, resource, sub.renewable.resource)) %>%
       mutate(available = case_when( #accessible fraction
         grade == "grade1" ~ 0, #none available
-        grade == "grade2" ~ available,
+        grade == "grade2" ~ round(available, water.DIGITS_RENEW_WATER),
         grade == "grade3" ~ 1 #100% available
         ) ) %>%
       mutate(extractioncost = case_when(
