@@ -272,14 +272,14 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
         select(-technology, -subsector_1)%>%
         rename(technology = to.technology,
                subsector0 = subsector,
-               subsector = stub.technology) -> data_new
+               subsector = stub.technology)  -> data_new
 
       data_new %>%
         filter(grepl(gcamusa.WATER_TYPE_SEAWATER,technology),
                !(region %in% gcamusa.NO_SEAWATER_STATES)) %>%
         bind_rows(data_new %>%
                     filter(!grepl(gcamusa.WATER_TYPE_SEAWATER,technology))) %>%
-        arrange(region,year) -> data_new
+        arrange(region,year)  -> data_new
       return(data_new)
     }
 
@@ -296,7 +296,6 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                subsector.name0 = subsector,
                subsector.name = technology,
                technology = to.technology) %>%
-        arrange(sector.name, year) %>%
         mutate(technology = if_else(subsector.name0 == "wind" | subsector.name0 == "solar", subsector.name,
                                     if_else(subsector.name0 == "grid_storage", subsector.name0, technology))) ->
         data_new
@@ -367,6 +366,10 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       select(-subsector_1, -median.shutdown.point, -technology.y) %>%
       rename(subsector0 = subsector, subsector = technology, technology = to.technology)%>%
       left_join_keep_first_only(L2233.GlobalTechProfitShutdown_elec_cool %>%
+                                  ## Keep_first_only is used to avoid unnessary
+                                  ## multiplication of rows. We only want to bring
+                                  ## in the global profit shutdowns for the technologies
+                                  ## defined
                                   select(technology, median.shutdown.point),
                                 by=c("technology")) %>%
       arrange(supplysector, year) %>%
@@ -404,6 +407,8 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     L2233.GlobalTechCapital_elec_USA %>%
       select(-input.capital, -capital.overnight, -fixed.charge.rate) %>%
       left_join_keep_first_only(
+        ## keep first only allows for capital costs to be pulled in the GCAM-core
+        ## without unnecessary duplication caused by LJ. LJENM throws error.
         bind_rows(L2233.GlobalTechCapital_elec_cool %>%
                     mutate(technology = gsub("storage", "base_storage", technology)),
                   L2233.GlobalTechCapital_elecPassthru %>%
@@ -414,7 +419,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       mutate(technology = if_else(subsector.name0 == "wind" | subsector.name0 == "solar", subsector.name,
                                   if_else(subsector.name0 == "grid_storage", subsector.name0, technology))) %>%
       na.omit()->
-      # remove base_storage options as they have no cooling options
+      # remove battery options as they have no cooling options
       L2233.GlobalTechCapital_elec_cool_USA
 
     L2234.GlobalTechCapFac_elecS_USA %>%
@@ -552,8 +557,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       select(-technology, -subsector_1) %>%
       rename(subsector0 = subsector,
              subsector = intermittent.technology,
-             intermittent.technology = to.technology) %>%
-      arrange(supplysector, year) ->
+             intermittent.technology = to.technology) ->
       L2233.GlobalIntTechCapital_elecS_cool_USA
 
     L2233.GlobalIntTechCapital_elec_cool %>%
@@ -832,7 +836,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       arrange(supplysector) ->
       L2233.SubsectorLogit_elecS_USA
 
-    # HERE
+    # Create logit table at subsector level by including all possible fule types (i.e. hydro, battery, etc.)
 
     L2234.SubsectorLogit_elecS_USA %>%
       left_join(A23.elecS_tech_mapping_cool,
@@ -861,6 +865,9 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       select(region, supplysector, subsector0, subsector) %>%
       # select which load segment fuel + power plant exist in each state
       left_join(L2233.GlobalTechCoef_elecS_cool_USA,
+                ## LJ used as coefficients are added for all historical years for only the
+                ## load segement, fuel, and power plants that exist. This increases data set size,
+                ## requiring LJ.
                 by = c("supplysector", "subsector0", "subsector")) %>%
       mutate(market.name = if_else(minicam.energy.input == gcamusa.WATER_TYPE_SEAWATER, gcam.USA_REGION, region)) %>%
       na.omit() ->
