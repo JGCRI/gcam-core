@@ -304,6 +304,10 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( getCalibrationStatus( period ), "calibration-status", out, tabs );
     XMLWriteElement( containsOnlyFixedOutputTechnologies( period ), "fixed-output-only", out, tabs );
 
+    for( CInterpRuleIterator ruleIt = mShareWeightInterpRules.begin(); ruleIt != mShareWeightInterpRules.end(); ++ruleIt ) {
+        (*ruleIt)->toDebugXML( period, out, tabs );
+    }
+    
     toDebugXMLDerived( period, out, tabs );
     // write out the Technology objects.
 

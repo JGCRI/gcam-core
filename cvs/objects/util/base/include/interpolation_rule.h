@@ -146,6 +146,8 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
+    virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
+
 protected:
     
     DEFINE_DATA(
@@ -180,6 +182,9 @@ protected:
     //! Flag to check if the interpolation function is fixed in which
     //! case we enable the hack to set the value in the from-year as well
     bool mIsFixedFunction;
+    
+    //! Internal variable to save apply-to attribute so it can be written out to the debug file
+    std::string mApplyTo;
     
     void copy( const InterpolationRule& aOther );
 

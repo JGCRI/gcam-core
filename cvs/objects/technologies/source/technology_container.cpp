@@ -294,6 +294,13 @@ void TechnologyContainer::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aT
     for( CVintageIterator vintageIt = mVintages.begin(); vintageIt != mVintages.end(); ++vintageIt ) {
         ( *vintageIt ).second->toDebugXML( aPeriod, aOut, aTabs );
     }
+
+    // Only write out if a rule is present
+    if ( mShareWeightInterpRules.begin() != mShareWeightInterpRules.end() ) {
+        for( CInterpRuleIterator ruleIt = mShareWeightInterpRules.begin(); ruleIt != mShareWeightInterpRules.end(); ++ruleIt ) {
+            (*ruleIt)->toDebugXML( aPeriod, aOut, aTabs );
+        }
+    }
 }
 
 const string& TechnologyContainer::getName() const {
