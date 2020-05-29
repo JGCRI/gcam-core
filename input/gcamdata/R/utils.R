@@ -500,7 +500,7 @@ outputs_of <- function(chunks) {
 screen_forbidden <- function(fn) {
   forbidden <- c("(?<!error_no_)match(?!es)", "ifelse",
                  "melt", "cast",
-                 "rbind(?!list)", "cbind", "merge",
+                 "rbind", "cbind", "merge",
                  "read\\.csv", "write\\.csv",
                  "summarise_each", "mutate_each")
 
