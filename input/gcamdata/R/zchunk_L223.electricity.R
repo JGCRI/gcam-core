@@ -288,6 +288,10 @@ module_energy_L223.electricity <- function(command, ...) {
 
     # Calculate subsector shareweight interpolation rules within electricity sector for L223.SubsectorInterp_elec and L223.SubsectorInterpTo_elec
     # -------------------------------------------------------------------------------------------------------------------------------------------
+    # Convert year columns to character to preven errors with more recent versions of tidyverse
+    A23.subsector_interp_R %>%
+      mutate(from.year = as.character(from.year),
+             to.year = as.character(to.year)) -> A23.subsector_interp_R_mod
 
     # First write global interpolation rules to all regions, then any global interp rules that match by region + sector + subsector name will be
     # replaced by a regionally specific interpolation rule by first removing those rules from L223.SubsectorInterp_elec and then replacing them
@@ -298,8 +302,8 @@ module_energy_L223.electricity <- function(command, ...) {
                to.year = as.character(to.year))
 
       L223.SubsectorInterp_elec %>%
-        anti_join(A23.subsector_interp_R, by = c("region", "supplysector", "subsector")) %>%
-        bind_rows(A23.subsector_interp_R[, names(L223.SubsectorInterp_elec)]) %>%
+        anti_join(A23.subsector_interp_R_mod, by = c("region", "supplysector", "subsector")) %>%
+        bind_rows(A23.subsector_interp_R_mod[, names(L223.SubsectorInterp_elec)]) %>%
         set_years() ->
         L223.SubsectorInterp_elec
     }
@@ -312,8 +316,8 @@ module_energy_L223.electricity <- function(command, ...) {
                to.year = as.character(to.year))
 
       L223.SubsectorInterpTo_elec %>%
-        anti_join(A23.subsector_interp_R, by = c("region", "supplysector", "subsector")) %>%
-        bind_rows(A23.subsector_interp_R[!is.na(A23.subsector_interp_R$to.value), names(L223.SubsectorInterpTo_elec)]) %>%
+        anti_join(A23.subsector_interp_R_mod, by = c("region", "supplysector", "subsector")) %>%
+        bind_rows(A23.subsector_interp_R_mod[!is.na(A23.subsector_interp_R_mod$to.value), names(L223.SubsectorInterpTo_elec)]) %>%
         set_years() ->
         L223.SubsectorInterpTo_elec
     }
