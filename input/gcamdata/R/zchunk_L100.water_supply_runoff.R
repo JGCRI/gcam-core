@@ -30,19 +30,17 @@ module_water_L100.water_supply_runoff <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    # historical runoff and accessible water by basin for 1970 - 2010
+    # historical runoff and accessible water by basin for 1961 - 2016
     xanthos_runoff <- get_data(all_data, "water/xanthos_basin_runoff")
     xanthos_access <- get_data(all_data, "water/xanthos_accessible_water")
 
     # convert data to long form
     xanthos_runoff %>%
-      gather(year, runoff, -name, -id) %>%
-      filter(year < max(MODEL_BASE_YEARS)) ->
+      gather(year, runoff, -name, -id) ->
       runoff_historical
 
     xanthos_access %>%
-      gather(year, accessible_water, -name, -id) %>%
-      filter(year < max(MODEL_BASE_YEARS)) ->
+      gather(year, accessible_water, -name, -id) ->
       accessible_historical
 
     # compute the accessible fraction as the average ...
