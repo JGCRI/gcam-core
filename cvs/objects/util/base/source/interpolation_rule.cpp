@@ -193,7 +193,7 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
 
 void InterpolationRule::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
     aTabs->writeTabs( aOut );
-    aOut << "<" << getXMLNameStatic() << "\" apply-to=\"" << mApplyTo
+    aOut << "<" << getXMLNameStatic() << " apply-to=\"" << mApplyTo
          << "\" from-year=\"" << mFromYear
          << "\" to-year=\"" <<  mToYear
          << "\">" << endl;
