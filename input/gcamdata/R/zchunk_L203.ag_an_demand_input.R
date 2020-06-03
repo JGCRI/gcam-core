@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_aglu_L203.ag_demand_input
+#' module_aglu_L203.ag_an_demand_input
 #'
 #' Builds agriculture demand inputs for the core and each SSP scenario.
 #'
@@ -23,7 +23,7 @@
 #' @importFrom dplyr bind_rows filter if_else group_by lag left_join mutate select summarise
 #' @importFrom tidyr gather replace_na spread
 #' @author RC July 2017
-module_aglu_L203.ag_demand_input <- function(command, ...) {
+module_aglu_L203.ag_an_demand_input <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "aglu/A_demand_food_staples",

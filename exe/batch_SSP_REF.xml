@@ -35,7 +35,7 @@
 			<Value name = "land3">../input/gcamdata/xml/land_input_3_IRR.xml</Value>
 			<Value name = "land4">../input/gcamdata/xml/land_input_4_IRR_MGMT.xml</Value>
 			<Value name = "land5">../input/gcamdata/xml/land_input_5_IRR_MGMT.xml</Value>
-			<Value name = "demand">../input/gcamdata/xml/ag_demand_input.xml</Value>
+			<Value name = "demand">../input/gcamdata/xml/ag_an_demand_input.xml</Value>
 			<Value name = "bio_trade">../input/gcamdata/xml/bio_trade.xml</Value>
 			<Value name = "ag_trade">../input/gcamdata/xml/ag_trade.xml</Value>
 			
