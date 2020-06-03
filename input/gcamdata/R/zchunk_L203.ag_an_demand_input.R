@@ -305,6 +305,9 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       L203.BaseService
 
     # FOOD DEMAND MODEL
+    # Sub-regional population and income shares can be used to sub-divide a region's consumers into classes (e.g., by income
+    # group, urban/rural, etc). Shares are required to be read in, but as no sub-divisions are currently used, the shares
+    # in all regions are 1.
     L203.SubregionalShares <- A_demand_food_staples %>%
       select(gcam.consumer, nodeInput) %>%
       mutate(pop.year.fillout = min(MODEL_BASE_YEARS),
