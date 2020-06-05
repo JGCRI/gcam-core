@@ -27,7 +27,7 @@ module_gcamusa_LA142.Building <- function(command, ...) {
 
     # Load required inputs
     L142.in_EJ_R_bld_F_Yh <- get_data(all_data, "L142.in_EJ_R_bld_F_Yh")
-    L101.inEIA_EJ_state_S_F <- get_data(all_data, "L101.inEIA_EJ_state_S_F")
+    L101.inEIA_EJ_state_S_F <- get_data(all_data, "L101.inEIA_EJ_state_S_F", strip_attributes = TRUE)
 
     # Silence package checks
     sector <- fuel <- year <- value <- state_val <- usa_val <-

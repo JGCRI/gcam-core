@@ -32,7 +32,7 @@ module_energy_LA117.tradbio <- function(command, ...) {
 
     # Load required inputs
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
-    A17.tradbio_curves <- get_data(all_data, "energy/A17.tradbio_curves")
+    A17.tradbio_curves <- get_data(all_data, "energy/A17.tradbio_curves", strip_attributes = TRUE)
 
     # ===================================================
 

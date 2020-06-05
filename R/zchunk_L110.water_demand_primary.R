@@ -35,7 +35,7 @@ module_water_L110.water_demand_primary <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
+    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names", strip_attributes = TRUE)
     A227.resource_water_coef_mapping <- get_data(all_data, "water/A227.resource_water_coef_mapping")
     resource_water_data <- get_data(all_data, "water/resource_water_data")
     resource_water_share <- get_data(all_data, "water/resource_water_share")

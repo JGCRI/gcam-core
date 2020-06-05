@@ -47,7 +47,7 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
     FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
     FAO_ag_CROSIT <- get_data(all_data, "aglu/FAO/FAO_ag_CROSIT")
-    L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
+    L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha", strip_attributes = TRUE)
     L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
     L100.MIRCA_irrHA_ha <- get_data(all_data, "L100.MIRCA_irrHA_ha")
     L100.MIRCA_rfdHA_ha <- get_data(all_data, "L100.MIRCA_rfdHA_ha")

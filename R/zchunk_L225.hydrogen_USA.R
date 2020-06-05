@@ -26,7 +26,7 @@ module_gcamusa_L225.hydrogen_USA <- function(command, ...) {
     region <- subsector <- supplysector <- NULL  # silence package check notes
 
     # Load required inputs
-    L225.SubsectorLogit_h2 <- get_data(all_data, "L225.SubsectorLogit_h2")
+    L225.SubsectorLogit_h2 <- get_data(all_data, "L225.SubsectorLogit_h2", strip_attributes = TRUE)
 
     # ===================================================
     # This chunk selects the subsectors to be removed from the

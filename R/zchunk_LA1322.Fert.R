@@ -28,9 +28,9 @@ module_gcamusa_LA1322.Fert <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    Census_ind_VoS_state <- get_data(all_data, "gcam-usa/Census_ind_VoS_state")
+    Census_ind_VoS_state <- get_data(all_data, "gcam-usa/Census_ind_VoS_state", strip_attributes = TRUE)
     L1322.Fert_Prod_MtN_R_F_Y <- get_data(all_data, "L1322.Fert_Prod_MtN_R_F_Y")
-    L1322.IO_R_Fert_F_Yh <- get_data(all_data, "L1322.IO_R_Fert_F_Yh")
+    L1322.IO_R_Fert_F_Yh <- get_data(all_data, "L1322.IO_R_Fert_F_Yh", strip_attributes = TRUE)
 
     # Silence package check
     IO_coeff <- NAICS_code <- VoS_thousUSD <- year <- GCAM_region_ID <-
