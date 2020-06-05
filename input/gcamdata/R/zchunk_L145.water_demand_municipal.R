@@ -82,7 +82,7 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
       # putting in missing values in all years. The sequence below achieves a simple rule = 2 extrapolation, but is
       # capable of extrapolation from a single observation
       mutate(value_pc_filled = approx_fun(year = year, value = value_pc, rule = 2),
-             value_pc_filled = if_else(is.na(value_pc_filled), median(value_pc, na.rm = TRUE), value_pc_filled)) %>%
+             value_pc_filled = if_else(is.na(value_pc_filled), median(value_pc, na.rm = TRUE), as.numeric(value_pc_filled))) %>%
       ungroup() %>%
       mutate(value = round(population * value_pc_filled, digits = water.DIGITS_MUNI_WATER)) %>%
       select(iso, year, value)

@@ -51,9 +51,9 @@ module_gcamusa_LB1236.elec_load_segments_solver_USA <- function(command, ...) {
     # Load required inputs
     elecS_horizontal_to_vertical_map <- get_data(all_data, "gcam-usa/elecS_horizontal_to_vertical_map")
     L1234.out_EJ_grid_elec_F <- get_data(all_data, "L1234.out_EJ_grid_elec_F")
-    L1235.grid_elec_supply_USA <- get_data(all_data, "L1235.grid_elec_supply_USA")
+    L1235.grid_elec_supply_USA <- get_data(all_data, "L1235.grid_elec_supply_USA", strip_attributes = TRUE)
     L1235.elecS_demand_fraction_USA <- get_data(all_data, "L1235.elecS_demand_fraction_USA")
-    L1235.elecS_horizontal_vertical_USA <- get_data(all_data, "L1235.elecS_horizontal_vertical_USA")
+    L1235.elecS_horizontal_vertical_USA <- get_data(all_data, "L1235.elecS_horizontal_vertical_USA", strip_attributes = TRUE)
 
     # ===================================================
     # Data Processing

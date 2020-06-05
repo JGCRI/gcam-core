@@ -39,7 +39,7 @@ module_emissions_L232.prc_nonco2 <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions <- get_data(all_data, "emissions/A_regions") %>%
       select(region, SO2_name)
-    L131.nonco2_tg_R_prc_S_S_Yh <- get_data(all_data, "L131.nonco2_tg_R_prc_S_S_Yh")
+    L131.nonco2_tg_R_prc_S_S_Yh <- get_data(all_data, "L131.nonco2_tg_R_prc_S_S_Yh", strip_attributes = TRUE)
     A32.max_reduction <- get_data(all_data, "emissions/A32.max_reduction")
     A32.steepness <- get_data(all_data, "emissions/A32.steepness")
 

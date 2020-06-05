@@ -60,7 +60,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
     A10.rsrc_info <- get_data(all_data, "energy/A10.rsrc_info")
     A21.globaltech_cost <- get_data(all_data, "energy/A21.globaltech_cost")
     A22.globaltech_cost <- get_data(all_data, "energy/A22.globaltech_cost")
-    L1321.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1321.in_EJ_R_indenergy_F_Yh")
+    L1321.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1321.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
     L132.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L132.in_EJ_R_indfeed_F_Yh")
 
 
