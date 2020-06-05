@@ -48,7 +48,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     A23.CoolingSystemShares_RG3 <- get_data(all_data, "water/A23.CoolingSystemShares_RG3")
-    elec_tech_water_map <- get_data(all_data, "water/elec_tech_water_map")
+    elec_tech_water_map <- get_data(all_data, "water/elec_tech_water_map", strip_attributes = TRUE)
     Macknick_elec_water_m3MWh <- get_data(all_data, "water/Macknick_elec_water_m3MWh")
     L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")

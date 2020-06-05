@@ -41,9 +41,9 @@ module_energy_LA1231.elec_tech<- function(command, ...) {
     # Load required inputs
     A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
-    L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
-    L123.eff_R_elec_F_Yh <- get_data(all_data, "L123.eff_R_elec_F_Yh")
+    L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh", strip_attributes = TRUE)
+    L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh", strip_attributes = TRUE)
+    L123.eff_R_elec_F_Yh <- get_data(all_data, "L123.eff_R_elec_F_Yh", strip_attributes = TRUE)
 
     # ===================================================
     # Obtaining supply sector, gas technologies, minicam.energy.input and creating template to be used to create L1231.eff_R_elec_gas_tech
