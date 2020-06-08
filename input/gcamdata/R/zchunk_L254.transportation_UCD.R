@@ -109,13 +109,13 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")
-    A54.demand <- get_data(all_data, "energy/A54.demand") %>% mutate(sce=paste0("CORE"))
+    A54.demand <- get_data(all_data, "energy/A54.demand", strip_attributes = TRUE) %>% mutate(sce=paste0("CORE"))
     # This is a special case for SSP1, and the way this is executed will likely change in the future.
     # Note that the variable is defined in constants.R
     A54.demand_SSP1 <- get_data(all_data, "energy/A54.demand_ssp1")%>% mutate(sce=paste0("SSP1"))
     A54.demand<-bind_rows(A54.demand,A54.demand_SSP1)
 
-    A54.sector <- get_data(all_data, "energy/A54.sector")
+    A54.sector <- get_data(all_data, "energy/A54.sector", strip_attributes = TRUE)
     #kbn 2019-10-11 Insert code to use revised versions for subsectors below
     Size_class_New<- get_data(all_data, "energy/mappings/UCD_size_class_revisions") %>%
                      select(-UCD_region) %>%
@@ -134,46 +134,45 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       colnames(UCD_techs)[colnames(UCD_techs)=='rev.mode']<-'mode'
     }
     if (toString(energy.TRAN_UCD_MODE)=='rev.mode'){
-      A54.tranSubsector_logit <- get_data(all_data, "energy/A54.tranSubsector_logit_revised")
-      A54.tranSubsector_shrwt <- get_data(all_data, "energy/A54.tranSubsector_shrwt_revised")
-      A54.tranSubsector_interp <- get_data(all_data, "energy/A54.tranSubsector_interp_revised")
-      A54.tranSubsector_VOTT <- get_data(all_data, "energy/A54.tranSubsector_VOTT_revised") %>% mutate(sce=paste0("CORE"))
+      A54.tranSubsector_logit <- get_data(all_data, "energy/A54.tranSubsector_logit_revised", strip_attributes = TRUE)
+      A54.tranSubsector_shrwt <- get_data(all_data, "energy/A54.tranSubsector_shrwt_revised", strip_attributes = TRUE)
+      A54.tranSubsector_interp <- get_data(all_data, "energy/A54.tranSubsector_interp_revised", strip_attributes = TRUE)
+      A54.tranSubsector_VOTT <- get_data(all_data, "energy/A54.tranSubsector_VOTT_revised", strip_attributes = TRUE) %>% mutate(sce=paste0("CORE"))
 
       A54.tranSubsector_VOTT_SSP1 <- get_data(all_data, "energy/A54.tranSubsector_VOTT_ssp1_revised") %>% mutate(sce=paste0("SSP1"))
       A54.tranSubsector_VOTT<- bind_rows(A54.tranSubsector_VOTT,A54.tranSubsector_VOTT_SSP1)
 
-      A54.globaltranTech_retire <- get_data(all_data, "energy/A54.globaltranTech_retire_revised")
-      A54.globaltranTech_shrwt <- get_data(all_data, "energy/A54.globaltranTech_shrwt_revised")
-      A54.globaltranTech_interp <- get_data(all_data, "energy/A54.globaltranTech_interp_revised")
-      A54.globaltech_passthru <- get_data(all_data, "energy/A54.globaltech_passthru_revised")
+      A54.globaltranTech_retire <- get_data(all_data, "energy/A54.globaltranTech_retire_revised", strip_attributes = TRUE)
+      A54.globaltranTech_shrwt <- get_data(all_data, "energy/A54.globaltranTech_shrwt_revised", strip_attributes = TRUE)
+      A54.globaltranTech_interp <- get_data(all_data, "energy/A54.globaltranTech_interp_revised", strip_attributes = TRUE)
+      A54.globaltech_passthru <- get_data(all_data, "energy/A54.globaltech_passthru_revised", strip_attributes = TRUE)
     }
-    else {A54.tranSubsector_logit <- get_data(all_data, "energy/A54.tranSubsector_logit")
-    A54.tranSubsector_shrwt <- get_data(all_data, "energy/A54.tranSubsector_shrwt")
-    A54.tranSubsector_interp <- get_data(all_data, "energy/A54.tranSubsector_interp")
-    A54.tranSubsector_VOTT <- get_data(all_data, "energy/A54.tranSubsector_VOTT")
+    else {A54.tranSubsector_logit <- get_data(all_data, "energy/A54.tranSubsector_logit", strip_attributes = TRUE)
+    A54.tranSubsector_shrwt <- get_data(all_data, "energy/A54.tranSubsector_shrwt", strip_attributes = TRUE)
+    A54.tranSubsector_interp <- get_data(all_data, "energy/A54.tranSubsector_interp", strip_attributes = TRUE)
 
-    A54.tranSubsector_VOTT <- get_data(all_data, "energy/A54.tranSubsector_VOTT")
+    A54.tranSubsector_VOTT <- get_data(all_data, "energy/A54.tranSubsector_VOTT", strip_attributes = TRUE)
     A54.tranSubsector_VOTT_SSP1 <- get_data(all_data, "energy/A54.tranSubsector_VOTT_ssp1") %>% mutate(sce=paste0("SSP1"))
     A54.tranSubsector_VOTT<- bind_rows(A54.tranSubsector_VOTT,A54.tranSubsector_VOTT_SSP1)
 
-    A54.globaltranTech_retire <- get_data(all_data, "energy/A54.globaltranTech_retire")
-    A54.globaltranTech_shrwt <- get_data(all_data, "energy/A54.globaltranTech_shrwt")
-    A54.globaltranTech_interp <- get_data(all_data, "energy/A54.globaltranTech_interp")
-    A54.globaltech_passthru <- get_data(all_data, "energy/A54.globaltech_passthru")
+    A54.globaltranTech_retire <- get_data(all_data, "energy/A54.globaltranTech_retire", strip_attributes = TRUE)
+    A54.globaltranTech_shrwt <- get_data(all_data, "energy/A54.globaltranTech_shrwt", strip_attributes = TRUE)
+    A54.globaltranTech_interp <- get_data(all_data, "energy/A54.globaltranTech_interp", strip_attributes = TRUE)
+    A54.globaltech_passthru <- get_data(all_data, "energy/A54.globaltech_passthru", strip_attributes = TRUE)
     }
 
 
 
-    A54.globaltech_nonmotor <- get_data(all_data, "energy/A54.globaltech_nonmotor")
+    A54.globaltech_nonmotor <- get_data(all_data, "energy/A54.globaltech_nonmotor", strip_attributes = TRUE)
 
 
 
-    L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "L154.in_EJ_R_trn_m_sz_tech_F_Yh")
-    L154.cost_usdvkm_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.cost_usdvkm_R_trn_m_sz_tech_F_Y")
-    L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y")
-    L154.loadfactor_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.loadfactor_R_trn_m_sz_tech_F_Y")
-    L154.speed_kmhr_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.speed_kmhr_R_trn_m_sz_tech_F_Y")
-    L154.out_mpkm_R_trn_nonmotor_Yh <- get_data(all_data, "L154.out_mpkm_R_trn_nonmotor_Yh")
+    L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "L154.in_EJ_R_trn_m_sz_tech_F_Yh", strip_attributes = TRUE)
+    L154.cost_usdvkm_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.cost_usdvkm_R_trn_m_sz_tech_F_Y", strip_attributes = TRUE)
+    L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y", strip_attributes = TRUE)
+    L154.loadfactor_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.loadfactor_R_trn_m_sz_tech_F_Y", strip_attributes = TRUE)
+    L154.speed_kmhr_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.speed_kmhr_R_trn_m_sz_tech_F_Y", strip_attributes = TRUE)
+    L154.out_mpkm_R_trn_nonmotor_Yh <- get_data(all_data, "L154.out_mpkm_R_trn_nonmotor_Yh", strip_attributes = TRUE)
 
     # ===================================================
 
