@@ -555,7 +555,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
                       subs.share.weight = 0,
                       share.weight = 0)) %>%
       group_by(region, supplysector, subsector, year) %>%
-      mutate(count_tech = n()) %>%
+      mutate(count_tech = dplyr::n()) %>%
       ungroup() %>%
       group_by(region, supplysector, subsector, year) %>%
       mutate(tech.share = if_else(count_tech == 1, 1, calOutputValue / sum(calOutputValue)),
@@ -759,7 +759,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
 
     L2234.StubTechEff_elecS_USA %>%
       group_by (region, supplysector, subsector, year) %>%
-      mutate(count_tech = n()) %>%
+      mutate(count_tech = dplyr::n()) %>%
       ungroup() %>%
       left_join_error_no_match(L2234.fuel_eff_actual %>%
                                  select(-GCAM_region_ID, -sector), by = c("subsector" = "fuel", "year" )) %>%
