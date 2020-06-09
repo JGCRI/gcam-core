@@ -306,7 +306,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     L202.StubTechCoef_an %>%
       filter(year > final_coef_year) %>%
       select(-coefficient) %>%
-      left_join(final_coef_year_data, by = c("region", "supplysector", "subsector", "stub.technology", "minicam.energy.input", "market.name", "stub.technology")) %>%
+      left_join(final_coef_year_data, by = c("region", "supplysector", "subsector", "stub.technology", "minicam.energy.input", "market.name")) %>%
       bind_rows(filter(L202.StubTechCoef_an, ! year > final_coef_year)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
       L202.StubTechCoef_an
