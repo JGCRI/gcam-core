@@ -817,6 +817,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
                      "L223.StubTech_elec") ->
       L2233.SubsectorLogit_elec_cool
 
+    attr(L2233.GlobalIntTechCapital_elec, ATTR_PRECURSORS) <- NULL
     L2233.GlobalIntTechCapital_elec %>%
       add_title("Capital costs for intermittent electricity generating tech", overwrite = TRUE) %>%
       add_units("1975$US/kW") %>%
@@ -827,6 +828,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
                      "L223.GlobalIntTechCapital_elec") ->
       L2233.GlobalIntTechCapital_elec
 
+    attr(L2233.GlobalTechCapital_elecPassthru, ATTR_PRECURSORS) <- NULL
     L2233.GlobalTechCapital_elecPassthru %>%
       add_title("Capital costs for standard electricity generating tech", overwrite = TRUE) %>%
       add_units("1975$US/kW") %>%
@@ -837,6 +839,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
                      "L223.GlobalTechCapital_elec") ->
       L2233.GlobalTechCapital_elecPassthru
 
+    attr(L2233.GlobalIntTechOMfixed_elec, ATTR_PRECURSORS) <- NULL
     L2233.GlobalIntTechOMfixed_elec %>%
       add_title("Operation and maintainance costs (fixed) for intermittent electricity generating tech", overwrite = TRUE) %>%
       add_units("1975$US/kW/yr") %>%
@@ -847,6 +850,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
                      "L223.GlobalIntTechOMfixed_elec") ->
       L2233.GlobalIntTechOMfixed_elec
 
+    attr(L2233.GlobalTechOMfixed_elecPassthru, ATTR_PRECURSORS) <- NULL
     L2233.GlobalTechOMfixed_elecPassthru %>%
       add_title("Operation and maintainance costs (fixed) for standard electricity generating tech", overwrite = TRUE) %>%
       add_units("1975$US/kW/year") %>%
@@ -857,6 +861,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
                      "L223.GlobalTechOMfixed_elec") ->
       L2233.GlobalTechOMfixed_elecPassthru
 
+    attr(L2233.GlobalIntTechOMvar_elec, ATTR_PRECURSORS) <- NULL
     L2233.GlobalIntTechOMvar_elec %>%
       add_title("Operation and maintainance costs (variable) for intermittent electricity generating tech", overwrite = TRUE) %>%
       add_units("1975$US/MWh") %>%
@@ -867,6 +872,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
                      "L223.GlobalIntTechOMvar_elec") ->
       L2233.GlobalIntTechOMvar_elec
 
+    attr(L2233.GlobalTechOMvar_elecPassthru, ATTR_PRECURSORS) <- NULL
     L2233.GlobalTechOMvar_elecPassthru %>%
       add_title("Operation and maintainance costs (variable) for standard electricity generating tech", overwrite = TRUE) %>%
       add_units("1975$US/MWh") %>%
@@ -877,6 +883,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
                      "L223.GlobalTechOMvar_elec") ->
       L2233.GlobalTechOMvar_elecPassthru
 
+    attr(L2233.GlobalTechInterp_elecPassthru, ATTR_PRECURSORS) <- NULL
     L2233.GlobalTechInterp_elecPassthru %>%
       add_title("Technology share-weight interpolation for standard electricity generating tech", overwrite = TRUE) %>%
       add_units("unitless") %>%
