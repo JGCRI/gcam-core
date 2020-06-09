@@ -65,18 +65,18 @@ module_gcamusa_L2321.cement_USA <- function(command, ...) {
     A321.globaltech_coef <- get_data(all_data, "energy/A321.globaltech_coef")
 
     # The following lines will be un commented when #789 is merged.
-    L2321.Supplysector_cement <- get_data(all_data, "L2321.Supplysector_cement")
-    L2321.FinalEnergyKeyword_cement <- get_data(all_data, "L2321.FinalEnergyKeyword_cement")
-    L2321.SubsectorLogit_cement <- get_data(all_data, "L2321.SubsectorLogit_cement")
-    L2321.SubsectorShrwtFllt_cement <- get_data(all_data, "L2321.SubsectorShrwtFllt_cement")
-    L2321.SubsectorInterp_cement <- get_data(all_data, "L2321.SubsectorInterp_cement")
-    L2321.StubTech_cement <- get_data(all_data, "L2321.StubTech_cement")
-    L2321.PerCapitaBased_cement <- get_data(all_data, "L2321.PerCapitaBased_cement")
-    L2321.PriceElasticity_cement <- get_data(all_data, "L2321.PriceElasticity_cement")
-    L2321.IncomeElasticity_cement_gcam3 <- get_data(all_data, "L2321.IncomeElasticity_cement_gcam3")
-    L1321.in_EJ_state_cement_F_Y <- get_data(all_data, "L1321.in_EJ_state_cement_F_Y")
-    L1321.IO_GJkg_state_cement_F_Yh <- get_data(all_data, "L1321.IO_GJkg_state_cement_F_Yh")
-    L1321.out_Mt_state_cement_Yh <- get_data(all_data, "L1321.out_Mt_state_cement_Yh")
+    L2321.Supplysector_cement <- get_data(all_data, "L2321.Supplysector_cement", strip_attributes = TRUE)
+    L2321.FinalEnergyKeyword_cement <- get_data(all_data, "L2321.FinalEnergyKeyword_cement", strip_attributes = TRUE)
+    L2321.SubsectorLogit_cement <- get_data(all_data, "L2321.SubsectorLogit_cement", strip_attributes = TRUE)
+    L2321.SubsectorShrwtFllt_cement <- get_data(all_data, "L2321.SubsectorShrwtFllt_cement", strip_attributes = TRUE)
+    L2321.SubsectorInterp_cement <- get_data(all_data, "L2321.SubsectorInterp_cement", strip_attributes = TRUE)
+    L2321.StubTech_cement <- get_data(all_data, "L2321.StubTech_cement", strip_attributes = TRUE)
+    L2321.PerCapitaBased_cement <- get_data(all_data, "L2321.PerCapitaBased_cement", strip_attributes = TRUE)
+    L2321.PriceElasticity_cement <- get_data(all_data, "L2321.PriceElasticity_cement", strip_attributes = TRUE)
+    L2321.IncomeElasticity_cement_gcam3 <- get_data(all_data, "L2321.IncomeElasticity_cement_gcam3", strip_attributes = TRUE)
+    L1321.in_EJ_state_cement_F_Y <- get_data(all_data, "L1321.in_EJ_state_cement_F_Y", strip_attributes = TRUE)
+    L1321.IO_GJkg_state_cement_F_Yh <- get_data(all_data, "L1321.IO_GJkg_state_cement_F_Yh", strip_attributes = TRUE)
+    L1321.out_Mt_state_cement_Yh <- get_data(all_data, "L1321.out_Mt_state_cement_Yh", strip_attributes = TRUE)
 
     # Silence package checks
     state <- region <- supplysector <- energy.final.demand <- region <- year <-
