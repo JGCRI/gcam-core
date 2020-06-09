@@ -38,8 +38,8 @@ module_water_L103.water_basin_mapping <- function(command, ...) {
     basin_ids <- get_data(all_data, "water/basin_ID")
     nonirr_cons <- get_data(all_data, "water/nonirrigation_consumption")
     nonirr_wthd <- get_data(all_data, "water/nonirrigation_withdrawal")
-    iso_GCAM_mapping <- get_data(all_data, "common/iso_GCAM_regID")
-    L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU")
+    iso_GCAM_mapping <- get_data(all_data, "common/iso_GCAM_regID", strip_attributes = TRUE)
+    L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU", strip_attributes = TRUE)
 
     # expand all GLUs for each water type
     expand.grid(GLU = basin_ids$basin_id,

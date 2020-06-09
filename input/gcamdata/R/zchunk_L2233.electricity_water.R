@@ -124,24 +124,24 @@ module_water_L2233.electricity_water <- function(command, ...) {
       share.weight.year <- emiss.coef <- efficiency <- emiss.coeff <- NULL  # silence package check notes
 
     # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    A23.globalinttech <- get_data(all_data, "energy/A23.globalinttech")
-    A23.globaltech_shrwt <- get_data(all_data, "energy/A23.globaltech_shrwt")
-    A23.sector <- get_data(all_data, "energy/A23.sector")
-    elec_tech_water_map <- get_data(all_data, "water/elec_tech_water_map")
-    A03.sector <- get_data(all_data, "water/A03.sector")
-    A23.CoolingSystemCosts <- get_data(all_data, "water/A23.CoolingSystemCosts")
-    Macknick_elec_water_m3MWh <- get_data(all_data, "water/Macknick_elec_water_m3MWh")
-    L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
-    L1233.out_EJ_R_elec_F_tech_Yh_cool <- get_data(all_data, "L1233.out_EJ_R_elec_F_tech_Yh_cool")
-    L1233.shrwt_R_elec_cool_Yf <- get_data(all_data, "L1233.shrwt_R_elec_cool_Yf")
-    L223.StubTech_elec <- get_data(all_data, "L223.StubTech_elec")
-    L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec")
-    L270.CreditInput_elec <- get_data(all_data, "L270.CreditInput_elec")
+    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names", strip_attributes = TRUE)
+    calibrated_techs <- get_data(all_data, "energy/calibrated_techs", strip_attributes = TRUE)
+    A23.globalinttech <- get_data(all_data, "energy/A23.globalinttech", strip_attributes = TRUE)
+    A23.globaltech_shrwt <- get_data(all_data, "energy/A23.globaltech_shrwt", strip_attributes = TRUE)
+    A23.sector <- get_data(all_data, "energy/A23.sector", strip_attributes = TRUE)
+    elec_tech_water_map <- get_data(all_data, "water/elec_tech_water_map", strip_attributes = TRUE)
+    A03.sector <- get_data(all_data, "water/A03.sector", strip_attributes = TRUE)
+    A23.CoolingSystemCosts <- get_data(all_data, "water/A23.CoolingSystemCosts", strip_attributes = TRUE)
+    Macknick_elec_water_m3MWh <- get_data(all_data, "water/Macknick_elec_water_m3MWh", strip_attributes = TRUE)
+    L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh", strip_attributes = TRUE)
+    L1233.out_EJ_R_elec_F_tech_Yh_cool <- get_data(all_data, "L1233.out_EJ_R_elec_F_tech_Yh_cool", strip_attributes = TRUE)
+    L1233.shrwt_R_elec_cool_Yf <- get_data(all_data, "L1233.shrwt_R_elec_cool_Yf", strip_attributes = TRUE)
+    L223.StubTech_elec <- get_data(all_data, "L223.StubTech_elec", strip_attributes = TRUE)
+    L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec", strip_attributes = TRUE)
+    L270.CreditInput_elec <- get_data(all_data, "L270.CreditInput_elec", strip_attributes = TRUE)
 
     # Use get_data function with sapply to read in all "L223." inputs at once
-    get_data_rev <- function(name, all_data) get_data(all_data, name)
+    get_data_rev <- function(name, all_data) get_data(all_data, name, strip_attributes = TRUE)
     L223_data <- sapply(paste0("L223.", L223_fileNames), get_data_rev, all_data = all_data)
     names(L223_data) <- L223_fileNames
 

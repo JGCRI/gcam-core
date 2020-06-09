@@ -53,15 +53,15 @@ module_gcamusa_L2322.Fert_USA <- function(command, ...) {
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    A322.globaltech_coef <- get_data(all_data, "energy/A322.globaltech_coef")
-    L2322.Supplysector_Fert <- get_data(all_data, "L2322.Supplysector_Fert")
-    L2322.FinalEnergyKeyword_Fert <- get_data(all_data, "L2322.FinalEnergyKeyword_Fert")
-    L2322.SubsectorLogit_Fert <- get_data(all_data, "L2322.SubsectorLogit_Fert")
-    L2322.SubsectorShrwtFllt_Fert <- get_data(all_data, "L2322.SubsectorShrwtFllt_Fert")
-    L2322.SubsectorInterp_Fert <- get_data(all_data, "L2322.SubsectorInterp_Fert")
-    L2322.StubTech_Fert <- get_data(all_data, "L2322.StubTech_Fert")
-    L1322.IO_GJkg_state_Fert_F_Yh <- get_data(all_data, "L1322.IO_GJkg_state_Fert_F_Yh")
-    L1322.out_Mt_state_Fert_Yh <- get_data(all_data, "L1322.out_Mt_state_Fert_Yh")
+    A322.globaltech_coef <- get_data(all_data, "energy/A322.globaltech_coef", strip_attributes = TRUE)
+    L2322.Supplysector_Fert <- get_data(all_data, "L2322.Supplysector_Fert", strip_attributes = TRUE)
+    L2322.FinalEnergyKeyword_Fert <- get_data(all_data, "L2322.FinalEnergyKeyword_Fert", strip_attributes = TRUE)
+    L2322.SubsectorLogit_Fert <- get_data(all_data, "L2322.SubsectorLogit_Fert", strip_attributes = TRUE)
+    L2322.SubsectorShrwtFllt_Fert <- get_data(all_data, "L2322.SubsectorShrwtFllt_Fert", strip_attributes = TRUE)
+    L2322.SubsectorInterp_Fert <- get_data(all_data, "L2322.SubsectorInterp_Fert", strip_attributes = TRUE)
+    L2322.StubTech_Fert <- get_data(all_data, "L2322.StubTech_Fert", strip_attributes = TRUE)
+    L1322.IO_GJkg_state_Fert_F_Yh <- get_data(all_data, "L1322.IO_GJkg_state_Fert_F_Yh", strip_attributes = TRUE)
+    L1322.out_Mt_state_Fert_Yh <- get_data(all_data, "L1322.out_Mt_state_Fert_Yh", strip_attributes = TRUE)
 
     # Silence package checks
     regions <- supplysector <- subsector <- state <- value <- year <- subs.share.weights <-
