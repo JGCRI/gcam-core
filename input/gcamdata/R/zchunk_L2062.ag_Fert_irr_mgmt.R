@@ -43,9 +43,9 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     A_Fodderbio_chars <- get_data(all_data, "aglu/A_Fodderbio_chars")
-    L142.ag_Fert_IO_R_C_Y_GLU <- get_data(all_data, "L142.ag_Fert_IO_R_C_Y_GLU")
-    L2052.AgCost_ag_irr_mgmt <- get_data(all_data, "L2052.AgCost_ag_irr_mgmt")
-    L2052.AgCost_bio_irr_mgmt <- get_data(all_data, "L2052.AgCost_bio_irr_mgmt")
+    L142.ag_Fert_IO_R_C_Y_GLU <- get_data(all_data, "L142.ag_Fert_IO_R_C_Y_GLU", strip_attributes = TRUE)
+    L2052.AgCost_ag_irr_mgmt <- get_data(all_data, "L2052.AgCost_ag_irr_mgmt", strip_attributes = TRUE)
+    L2052.AgCost_bio_irr_mgmt <- get_data(all_data, "L2052.AgCost_bio_irr_mgmt", strip_attributes = TRUE)
 
     # Process Fertilizer Coefficients: Copy coefficients to all four technologies (irr/rfd + hi/lo)
     L142.ag_Fert_IO_R_C_Y_GLU %>%

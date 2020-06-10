@@ -47,16 +47,16 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     A_regions <- get_data(all_data, "emissions/A_regions")
-    L1211.nonco2_tg_R_awb_C_Y_GLU_IRR <- get_data(all_data, "L1211.nonco2_tg_R_awb_C_Y_GLU_IRR") %>%
+    L1211.nonco2_tg_R_awb_C_Y_GLU_IRR <- get_data(all_data, "L1211.nonco2_tg_R_awb_C_Y_GLU_IRR", strip_attributes = TRUE) %>%
       # Replace GLU code with GLU name
       replace_GLU(basin_to_country_mapping)
-    L1221.ghg_tg_R_agr_C_Y_GLU_IRR <- get_data(all_data, "L1221.ghg_tg_R_agr_C_Y_GLU_IRR") %>%
+    L1221.ghg_tg_R_agr_C_Y_GLU_IRR <- get_data(all_data, "L1221.ghg_tg_R_agr_C_Y_GLU_IRR", strip_attributes = TRUE) %>%
       # Replace GLU code with GLU name
       replace_GLU(basin_to_country_mapping)
-    L211.AGRBio <- get_data(all_data, "L211.AGRBio")
-    L211.AWB_BCOC_EmissCoeff <- get_data(all_data, "L211.AWB_BCOC_EmissCoeff")
-    L211.nonghg_max_reduction <- get_data(all_data, "L211.nonghg_max_reduction")
-    L211.nonghg_steepness <- get_data(all_data, "L211.nonghg_steepness")
+    L211.AGRBio <- get_data(all_data, "L211.AGRBio", strip_attributes = TRUE)
+    L211.AWB_BCOC_EmissCoeff <- get_data(all_data, "L211.AWB_BCOC_EmissCoeff", strip_attributes = TRUE)
+    L211.nonghg_max_reduction <- get_data(all_data, "L211.nonghg_max_reduction", strip_attributes = TRUE)
+    L211.nonghg_steepness <- get_data(all_data, "L211.nonghg_steepness", strip_attributes = TRUE)
 
     # ===================================================
     # L2111.AWBEmissions: AWB emissions in all regions
