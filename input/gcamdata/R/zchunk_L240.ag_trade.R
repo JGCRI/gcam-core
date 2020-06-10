@@ -54,12 +54,12 @@ module_aglu_L240.ag_trade <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A_agRegionalSector <- get_data(all_data, "aglu/A_agRegionalSector")
-    A_agRegionalSubsector <- get_data(all_data, "aglu/A_agRegionalSubsector")
-    A_agRegionalTechnology <- get_data(all_data, "aglu/A_agRegionalTechnology")
-    A_agTradedSector <- get_data(all_data, "aglu/A_agTradedSector")
-    A_agTradedSubsector <- get_data(all_data, "aglu/A_agTradedSubsector")
-    A_agTradedTechnology <- get_data(all_data, "aglu/A_agTradedTechnology")
+    A_agRegionalSector <- get_data(all_data, "aglu/A_agRegionalSector", strip_attributes = TRUE)
+    A_agRegionalSubsector <- get_data(all_data, "aglu/A_agRegionalSubsector", strip_attributes = TRUE)
+    A_agRegionalTechnology <- get_data(all_data, "aglu/A_agRegionalTechnology", strip_attributes = TRUE)
+    A_agTradedSector <- get_data(all_data, "aglu/A_agTradedSector", strip_attributes = TRUE)
+    A_agTradedSubsector <- get_data(all_data, "aglu/A_agTradedSubsector", strip_attributes = TRUE)
+    A_agTradedTechnology <- get_data(all_data, "aglu/A_agTradedTechnology", strip_attributes = TRUE)
     L109.ag_ALL_Mt_R_C_Y <- get_data(all_data, "L109.ag_ALL_Mt_R_C_Y")
     L109.an_ALL_Mt_R_C_Y <- get_data(all_data, "L109.an_ALL_Mt_R_C_Y")
     L1091.GrossTrade_Mt_R_C_Y <- get_data(all_data, "L1091.GrossTrade_Mt_R_C_Y")

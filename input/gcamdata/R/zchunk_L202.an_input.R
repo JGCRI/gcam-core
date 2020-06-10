@@ -78,17 +78,17 @@ module_aglu_L202.an_input <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions <- get_data(all_data, "energy/A_regions")
-    A_agRsrc <- get_data(all_data, "aglu/A_agRsrc")
-    A_agSubRsrc <- get_data(all_data, "aglu/A_agSubRsrc")
-    A_agRsrcCurves <- get_data(all_data, "aglu/A_agRsrcCurves")
-    A_agUnlimitedRsrcCurves <- get_data(all_data, "aglu/A_agUnlimitedRsrcCurves")
-    A_an_input_supplysector <- get_data(all_data, "aglu/A_an_input_supplysector")
-    A_an_input_subsector <- get_data(all_data, "aglu/A_an_input_subsector")
-    A_an_input_technology <- get_data(all_data, "aglu/A_an_input_technology")
+    A_agRsrc <- get_data(all_data, "aglu/A_agRsrc", strip_attributes = TRUE)
+    A_agSubRsrc <- get_data(all_data, "aglu/A_agSubRsrc", strip_attributes = TRUE)
+    A_agRsrcCurves <- get_data(all_data, "aglu/A_agRsrcCurves", strip_attributes = TRUE)
+    A_agUnlimitedRsrcCurves <- get_data(all_data, "aglu/A_agUnlimitedRsrcCurves", strip_attributes = TRUE)
+    A_an_input_supplysector <- get_data(all_data, "aglu/A_an_input_supplysector", strip_attributes = TRUE)
+    A_an_input_subsector <- get_data(all_data, "aglu/A_an_input_subsector", strip_attributes = TRUE)
+    A_an_input_technology <- get_data(all_data, "aglu/A_an_input_technology", strip_attributes = TRUE)
     A_an_input_globaltech_shrwt <- get_data(all_data, "aglu/A_an_input_globaltech_shrwt")
-    A_an_supplysector <- get_data(all_data, "aglu/A_an_supplysector")
-    A_an_subsector <- get_data(all_data, "aglu/A_an_subsector")
-    A_an_technology <- get_data(all_data, "aglu/A_an_technology")
+    A_an_supplysector <- get_data(all_data, "aglu/A_an_supplysector", strip_attributes = TRUE)
+    A_an_subsector <- get_data(all_data, "aglu/A_an_subsector", strip_attributes = TRUE)
+    A_an_technology <- get_data(all_data, "aglu/A_an_technology", strip_attributes = TRUE)
     L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
 
     # 2. Build tables
@@ -128,18 +128,11 @@ module_aglu_L202.an_input <- function(command, ...) {
     # In this computation, we're using the sub.renewable.resource for name matching because the resource
     # for scavenging is assigned a different name from the corresponding commodity and supplysector
     # (to avoid having two markets with the same name)
-    L202.an_ALL_Mt_R_C_Y %>%
-      filter(GCAM_commodity %in% A_agRsrcCurves$sub.renewable.resource) %>%
-      group_by(region, GCAM_region_ID, GCAM_commodity) %>%
-      summarise(maxSubResource = max(Prod_Mt)) ->
-      L202.maxSubResource_an
-
     L202.ag_Feed_Mt_R_C_Y.mlt %>%
       filter(GCAM_commodity %in% A_agRsrcCurves$sub.renewable.resource) %>%
       group_by(region, GCAM_region_ID, GCAM_commodity) %>%
       summarise(maxSubResource = max(value)) %>%
       # bind the two tables together, re-name the columns to the appropriate headers, and add in a sub.renewable.resource category
-      bind_rows(L202.maxSubResource_an) %>%
       ungroup %>%
       mutate(sub.renewable.resource = GCAM_commodity,
              maxSubResource = round(maxSubResource, aglu.DIGITS_CALOUTPUT),

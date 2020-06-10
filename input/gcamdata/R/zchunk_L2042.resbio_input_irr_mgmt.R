@@ -63,12 +63,12 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    A_demand_technology <- get_data(all_data, "aglu/A_demand_technology")
+    A_demand_technology <- get_data(all_data, "aglu/A_demand_technology", strip_attributes = TRUE)
     A_resbio_curves <- get_data(all_data, "aglu/A_resbio_curves")
     A_bio_frac_prod_R <- get_data(all_data, "aglu/A_bio_frac_prod_R")
     L111.ag_resbio_R_C <- get_data(all_data, "L111.ag_resbio_R_C")
-    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU")
-    L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "L123.For_Prod_bm3_R_Y_GLU")
+    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU", strip_attributes = TRUE)
+    L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "L123.For_Prod_bm3_R_Y_GLU", strip_attributes = TRUE)
 
     # the following lines convert basin identification from the current GLU### level 1 names to the
     # level 2 names.
