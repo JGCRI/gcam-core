@@ -39,7 +39,7 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
     # ===================================================
     # Data Processing
 
-    # Isolate GCAM 2010 hydro fixedOutput
+    # Isolate GCAM 2015 hydro fixedOutput
     L2234.StubTechFixOut_elecS_USA %>%
       filter(subsector == "hydro",
              year == max(year),
