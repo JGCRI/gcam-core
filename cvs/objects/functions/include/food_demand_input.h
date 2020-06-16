@@ -57,8 +57,8 @@
 *
 * \details This class implements the demand system for representing
 *          staple and nonstaple foods, as published by Edmonds, et
-*          al. (2016) in _Climate Change Economics_ (full cite to
-*          follow once the paper is accepted).  This demand system is
+*          al. (2017) in _Climate Change Economics DOI:
+*          10.1142/S2010007817500129. This demand system is
 *          a two-component model for demand.  The components are
 *          "staple foods", which are assumed to behave as inferior
 *          goods, and "nonstaple foods", which are assumed to behave
@@ -134,7 +134,7 @@ public:
                          const std::string& aRegionName,
                          const int aPeriod );
 
-    double getScaleTerm( const int aPeriod ) const;
+    double getScaleParam( const int aPeriod ) const;
 
     virtual double calcPriceExponent( const FoodDemandInput* aOther,
                                       double aAdjIncome,

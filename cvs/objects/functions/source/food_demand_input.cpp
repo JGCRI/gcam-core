@@ -155,6 +155,9 @@ void FoodDemandInput::initCalc( const string& aRegionName,
     
     // Get the subregional population and income from the info object which is where
     // the consumer stored them.
+    // We need to save these values here as we won't have access to the socioeconomic
+    // drivers when calculating demands. We will need to income to run the food demand
+    // equations and the population to convert from per capita demands to total.
     mSubregionalPopulation[ aPeriod ] = aTechInfo->getDouble( "subregional-population", true );
     mCurrentSubregionalIncome = aTechInfo->getDouble( "subregional-income-ppp", true );
     
@@ -242,13 +245,8 @@ void FoodDemandInput::setPhysicalDemand( double aPhysicalDemand, const string& a
     // Quantity conversion factor on output.  Output quantities are in
     // Kcal/day (per capita).  We need to convert to Pcal/year (also per
     // capita).  This factor will be applied just before output.
-    // Importantly, it will be applied *after* the budget fraction is
-    // calculated.  In light of this, one might wonder why we didn't just
-    // work in converted units all the way through.  It's because the food
-    // demand model parameters were calibrated using *these* units, and
-    // rejiggering to conform to GCAM unit conventions is a bit of a
-    // pain.  Converting on input and again on output seems like the
-    // least bad solution.
+    // We didn't just work in converted units all the way through because
+    // the food demand model parameters were calibrated using *these* units.
     aPhysicalDemand *= getAnnualDemandConversionFactor( aPeriod );
     
     // We are storing the results in the same vector as the calibration data
@@ -276,11 +274,9 @@ void FoodDemandInput::setPhysicalDemand( double aPhysicalDemand, const string& a
  */
 double FoodDemandInput::getPrice( const string& aRegionName, const int aPeriod ) const {
     // Price conversion factor.  Input prices are in 1975$ per Mcal.
-    // The price units in the food demand model are kind of a mess.  Price
-    // * Quantity should be in units of thousands of dollars per year.
-    // Since Quantity is in Mcal/day (and we don't want to convert it to
-    // Mcal/yr), that means we have to absorb the 365 day/year conversion
-    // factor into the prices.
+    // In the food demand equations the Price * Quantity should be in units of
+    // thousands of dollars per year. Since Quantity is in Mcal/day, that means
+    // we have to absorb the 365 day/year conversion factor into the prices.
     const double priceUnitConversionFactor =
         0.365 / FunctionUtils::DEFLATOR_1975_PER_DEFLATOR_2005();
     return scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod ) *
@@ -331,13 +327,8 @@ double FoodDemandInput::getAnnualDemandConversionFactor( const int aPeriod ) con
     // Quantity conversion factor on output.  Output quantities are in
     // Kcal/day (per capita).  We need to convert to Pcal/year (also per
     // capita).  This factor will be applied just before output.
-    // Importantly, it will be applied *after* the budget fraction is
-    // calculated.  In light of this, one might wonder why we didn't just
-    // work in converted units all the way through.  It's because the food
-    // demand model parameters were calibrated using *these* units, and
-    // rejiggering to conform to GCAM unit conventions is a bit of a
-    // pain.  Converting on input and again on output seems like the
-    // least bad solution.
+    // We didn't just work in converted units all the way through because
+    // the food demand model parameters were calibrated using *these* units.
     const double quantityUnitConversionFactor = 365.0 * 1e-9;
     return quantityUnitConversionFactor * mSubregionalPopulation[ aPeriod ] * 1000.0;
 }
@@ -389,10 +380,12 @@ void FoodDemandInput::setActualShare( double aShare,
 }
 
 /*!
- * \brief Get the scale term (A) * regional bias for this food demand input.
+ * \brief Get the scale parameter (A) * regional bias for this food demand input.
+ * \details We apply the regional bias here for convenience as it too is a multiplicative
+ *          term in the food demand equation.
  * \param aPeriod The current model period.
  */
-double FoodDemandInput::getScaleTerm( const int aPeriod ) const {
+double FoodDemandInput::getScaleParam( const int aPeriod ) const {
     // In the calibration periods we calibrate the regional bias
     // so it should not be applied here.
     double regionalBias = aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ?
@@ -404,6 +397,10 @@ double FoodDemandInput::getScaleTerm( const int aPeriod ) const {
  * \brief Calculate the cross price exponent (e_ij(x))
  * \details The cross price exponent is calculated as:
  *          e_ij = g_ij - alpha_j * f(x)
+ *          Where:
+ *          g_ij: The price elasticity; either self or cross as appropriate for the type of aOther.
+ *          alpha_j: The share of total budget for j.
+ *          f(x): The derivative of the income term, \sa calcIncomeTermDerivative
  * \param aOther The instance of FoodDemandInput for j.
  * \param aAdjIncome The adjusted income (x).
  * \param aRegionName The region name used to look up the trial share market.
@@ -501,7 +498,11 @@ double StaplesFoodDemandInput::getPriceScaler() const {
  * \brief Calculate the income term (x^h(x)).
  * \details The income term for staples is calculated as:
  *          Qi = x^(lam/x)*(1+kappa / ln(x))) * scale
- *          where scale is calculated such that Qi(1) == 1
+ *          Where:
+ *          x: adjusted income
+ *          lam: income elasticity
+ *          kappa: income at which the maximum quantity is demanded
+ *          scale: calculated such that at an income level of 1 the above equation returns 1; Qi(1) = 1.
  * \param aAdjIncome The adjusted income at which to calculate this term (x).
  * \return The income term to use in the food demand system for a staple good.
  */
@@ -527,7 +528,7 @@ double StaplesFoodDemandInput::calcIncomeTerm( double aAdjIncome ) const {
 }
 
 /*!
- * \brief Calculate the derivative of thre income term f(x).
+ * \brief Calculate the derivative of the income term f(x).
  * \details The derivative of the income term for staples is calculated as:
  *          f(x) = lam * (1 - log(x*e^kappa)) / x
  * \param aAdjIncome The adjusted income at which to calculate this term (x).
@@ -608,13 +609,13 @@ double NonStaplesFoodDemandInput::getPriceElasticity( const FoodDemandInput* aOt
     else {
         // Get the trial budget fractions.  These will be used to calculate
         // price exponents in the demand equations.
-        double alphas = aOther->getTrialShare( aRegionName, aPeriod );
-        double alphan = getTrialShare( aRegionName, aPeriod );
+        double alphaStaple = aOther->getTrialShare( aRegionName, aPeriod );
+        double alphaNonstaple = getTrialShare( aRegionName, aPeriod );
 
-        double amin = 0.1;          // For stability, we limit how small the alphas
+        double alphaMin = 0.1;      // For stability, we limit how small the alphas
                                     // can be when calculating the condition for the
                                     // cross-elasticity
-        return std::max(alphan, amin) / std::max(alphas, amin) * aOther->getPriceElasticity( this, aRegionName, aPeriod );
+        return std::max(alphaNonstaple, alphaMin) / std::max(alphaStaple, alphaMin) * aOther->getPriceElasticity( this, aRegionName, aPeriod );
     }
 }
 
@@ -640,14 +641,16 @@ double NonStaplesFoodDemandInput::getPriceScaler() const {
  * \brief Calculate the income term (x^h(x)).
  * \details The income term for non-staples is calculated as:
  *          Qi = x^(nu / (1 - x)) * scale
- *          where scale is calculated such that Qi(1) == 1
+ *          Where:
+ *          x: adjusted income
+ *          nu: income elasticity
+ *          scale: calculated such that at an income level of 1 the above equation returns 1; Qi(1) = 1.
  * \param aAdjIncome The adjusted income at which to calculate this term (x).
  * \return The income term to use in the food demand system for a non-staple good.
  */
 double NonStaplesFoodDemandInput::calcIncomeTerm( double aAdjIncome ) const {
     double enu = exp(-mIncomeElasticity);
     double delta = 1.0-aAdjIncome;
-    double delta2 = delta*delta;
     double scale = 1.0 / enu;   // normalization factor
     double qin;
 
@@ -656,16 +659,16 @@ double NonStaplesFoodDemandInput::calcIncomeTerm( double aAdjIncome ) const {
         qin = scale * pow(aAdjIncome, mIncomeElasticity / delta);
     }
     else {
-        // Represent q and eta near x==1 as a Taylor series
+        // Represent q near x==1 as a Taylor series
         qin = scale * (enu -
                        0.5 * mIncomeElasticity * enu * delta +
-                       1.0/24.0 * enu * mIncomeElasticity*(3.0*mIncomeElasticity-8.0) * delta2);
+                       1.0/24.0 * enu * mIncomeElasticity*(3.0*mIncomeElasticity-8.0) * pow(delta, 2));
     }
     return qin;
 }
 
 /*!
- * \brief Calculate the derivative of thre income term f(x).
+ * \brief Calculate the derivative of the income term f(x).
  * \details The derivative of the income term for non-staples is calculated as:
  *          f(x) = 1/(1-x) + x * log(x) / (1-x)^2
  * \param aAdjIncome The adjusted income at which to calculate this term (x).
@@ -673,21 +676,19 @@ double NonStaplesFoodDemandInput::calcIncomeTerm( double aAdjIncome ) const {
  */
 double NonStaplesFoodDemandInput::calcIncomeTermDerivative( double aAdjIncome ) const {
     double delta = 1.0-aAdjIncome;
-    double delta2 = delta*delta;
     double etan;
 
     // TODO: worry about the follow given we are unlikey to get such small incomes in GCAM:
     if(fabs(delta) > 1.0e-3/mIncomeElasticity) {
         // lim_x->0 etan = 1
-        etan = aAdjIncome < 1.0e-4 ? 1 : 1/delta + aAdjIncome*log(aAdjIncome)/delta2;
+        etan = aAdjIncome < 1.0e-4 ? 1 : 1/delta + aAdjIncome*log(aAdjIncome)/pow(delta, 2);
     }
     else {
-        // Represent q and eta near x==1 as a Taylor series
-        double delta3 = delta2*delta;
+        // Represent the income term derivative near x==1 as a Taylor series
         etan = mIncomeElasticity * (0.5 +
                      1.0/6.0 * delta +
-                     1.0/12.0 * delta2 +
-                     1.0/20.0 * delta3);
+                     1.0/12.0 * pow(delta, 2) +
+                     1.0/20.0 * pow(delta, 3));
     }
     return etan;
 }

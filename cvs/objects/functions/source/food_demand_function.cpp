@@ -48,6 +48,7 @@
 #include "functions/include/food_demand_function.h"
 #include "functions/include/iinput.h"
 #include "functions/include/food_demand_input.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
@@ -129,7 +130,7 @@ double FoodDemandFunction::calcDemand( InputSet& aInput, double income, const st
     for( size_t i = 0; i < aInput.size(); ++i ) {
         // calculate the first part of the equation: A * x^h(x) (note calcIncomeTerm will
         // calculate all of x^h(x) as there is implicitly a scale term included there)
-        double currDemand = foodInputs[i]->getScaleTerm( aPeriod ) * foodInputs[i]->calcIncomeTerm( adjIncome );
+        double currDemand = foodInputs[i]->getScaleParam( aPeriod ) * foodInputs[i]->calcIncomeTerm( adjIncome );
         // calculate the price terms of the equations MULT_j(w_j ^ e_ij(x))
         for( size_t j = 0; j < aInput.size(); ++j ) {
             currDemand *= pow( adjPrices[j], foodInputs[i]->calcPriceExponent( foodInputs[j], adjIncome, aRegionName, aPeriod ) );
@@ -143,25 +144,17 @@ double FoodDemandFunction::calcDemand( InputSet& aInput, double income, const st
         alphaTotal += alphaActual[i];
     }
     
-    // Check budget constraint.  If we're spending more than the total income on
-    // food, then reduce nonstaples first, followed by staples.  We'll use the
-    // actuals for this calculation.
+    // Check budget constraint, if we're spending more than the total income.
+    // This should not happen unless something is really wrong so instead of
+    // making adhoc adjustments we just generate a warning.
     double budget = 1.0;        // Fraction of income available for food. We
                                 // didn't expermient with changing this in the
                                 // original model development.
     
     if(alphaTotal > budget) {
-        if(alphaActual[1] < budget) {
-            alphaActual[0] = budget - alphaActual[1];
-        }
-        else {
-            alphaActual[0] = 0.0;
-            alphaActual[1] = budget;
-        }
-        // Recalculate quantities based on the new budget fractions
-        for( size_t i = 0; i < aInput.size(); ++i ) {
-            demands[i] = alphaActual[i] * adjIncome/adjPrices[i] * foodInputs[i]->getPriceScaler();
-        }
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Share of budget spent on FoodDemand: " << alphaTotal << " exceeds total income in " << aRegionName << endl;
     }
     
     // Set the final demands and actual shares into the inputs which will
