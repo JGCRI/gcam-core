@@ -37,7 +37,7 @@ module_gcamusa_batch_solar_reeds_USA_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    technology <- NULL  # silence package check notes
+    technology <- stub.technology <- NULL  # silence package check notes
 
     # Load required inputs
     L2238.DeleteStubTechMinicamEnergyInput_PV_reeds_USA <- get_data(all_data, "L2238.DeleteStubTechMinicamEnergyInput_PV_reeds_USA")

@@ -19,7 +19,7 @@ module_gcamusa_batch_elec_hydro_USA_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    technology <- NULL  # silence package check notes
+    technology <- stub.technology <- NULL  # silence package check notes
 
     # Load required inputs
     L2242.StubTechFixOut_hydro_USA <- get_data(all_data, "L2242.StubTechFixOut_hydro_USA")

@@ -23,7 +23,7 @@ module_gcamusa_batch_wind_reeds_USA_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    technology <- NULL  # silence package check notes
+    technology <- stub.technology <- NULL  # silence package check notes
 
     # Load required inputs
     L2237.SmthRenewRsrcCurves_wind_reeds_USA <- get_data(all_data, "L2237.SmthRenewRsrcCurves_wind_reeds_USA")
