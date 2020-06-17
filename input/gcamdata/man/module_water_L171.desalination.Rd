@@ -14,7 +14,7 @@ module_water_L171.desalination(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
   \code{command} is "MAKE") all the generated outputs: \code{L171.out_km3_R_desalfromelec_Yh},
-  \code{L171.out_km3_R_desal_basin_Yh}, \code{L171.out_km3_R_desal_F_tech_Yh}, \code{L171.in_km3_ctry_desal_Yh},
+  \code{L171.share_R_desal_basin}, \code{L171.out_km3_R_desal_F_tech_Yh}, \code{L171.in_km3_ctry_desal_Yh},
   \code{L171.in_EJ_R_desal_F_Yh}.
 }
 \description{

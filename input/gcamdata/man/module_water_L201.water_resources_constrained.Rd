@@ -19,10 +19,10 @@ the generated outputs: \code{L201.RenewRsrcCurves_calib},
 original data system was \code{L102.water_supply_unlimited.R} (water level1).
 }
 \description{
-Constrained surface and groudwater.
+Constrained surface and groundwater.
 }
 \details{
-Genereates water resource input files for region + basin which includes runoff and groundwater.
+Generates water resource input files for region + basin which includes runoff and groundwater.
 }
 \author{
 ST Oct 2018
