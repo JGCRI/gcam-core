@@ -399,7 +399,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
           filter(!is.na(grade))) %>%
         rename(extractioncost = price) %>%
         mutate(subresource = "groundwater",
-               available = round(available, water.DIGITS_GROUND_WATER_RSC),
+               available = round(available * water.GW_HIST_MULTIPLIER, water.DIGITS_GROUND_WATER_RSC),
                extractioncost = round(extractioncost, water.DIGITS_GROUND_WATER_RSC)) %>%
         select(LEVEL2_DATA_NAMES[["RsrcCurves"]]) %>%
         arrange(region, resource, extractioncost) ->
@@ -411,11 +411,24 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         filter(grade == "grade24" & available == 0) ->
         L201.DepRsrcCurves_ground_last
 
+      # drop grades with 0 availability in order to avoid having "flat" portions of the supply curve, where changes in
+      # price do not change the quantity supplied. keep the grade1 points even where availability is zero in order to
+      # ensure that the "grade hist" prices remain at desired levels.
       bind_rows(
         L201.DepRsrcCurves_ground %>%
           filter(grade == "grade1" | available > 0),
         L201.DepRsrcCurves_ground_last ) %>%
         arrange(region, resource, extractioncost) ->
+        L201.DepRsrcCurves_ground
+
+      # Remove any discontinuities in the supply curve (0 available between 2 grades) at the first grade by assigning
+      # a small amount of water.
+      min_grade1_available <- min(L201.DepRsrcCurves_ground$available[L201.DepRsrcCurves_ground$grade == "grade1" &
+                                                                        L201.DepRsrcCurves_ground$available > 0])
+      L201.DepRsrcCurves_ground %>%
+        mutate(available = if_else(grade == "grade1" & available == 0,
+                                   min_grade1_available,
+                                   available)) ->
         L201.DepRsrcCurves_ground
 
       L201.DepRsrcCurves_ground %>%
