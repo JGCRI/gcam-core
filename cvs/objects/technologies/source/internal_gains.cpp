@@ -167,7 +167,6 @@ void InternalGains::initCalc( const string& aRegionName,
                               const string& aSectorName,
                               const int aPeriod )
 {
-    SectorUtils::setSupplyBehaviorBounds(SectorUtils::getTrialMarketName( mTrialMarketName ), aRegionName, 0.0, util::getLargeNumber(), aPeriod);
 }
 
 void InternalGains::postCalc( const string& aRegionName,
