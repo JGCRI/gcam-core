@@ -430,8 +430,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     # PART D: TECHNOLOGY INFORMATION - GLOBAL TRANTECHNOLOGIES
     # L254.GlobalTranTechInterp: Shareweight interpolation of global tranTechnologies
     A54.globaltranTech_interp %>%
-      mutate(supplysector = supplysector) %>%  # create new tibble, stripping attributes
-      mutate(sce = "CORE") %>%
+      mutate(supplysector = supplysector,  # create new tibble, stripping attributes
+              sce = "CORE") %>%
       set_years() %>%
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTranTechInterp"]]) ->
