@@ -56,6 +56,7 @@ add_comments <- function(x, comments) {
 #'
 #' @param x An object
 #' @param legacy_name Legacy name (character)
+#' @param overwrite Allow overwrite of legacy_name? Logical
 #' @return \code{x} with legacy name set.
 add_legacy_name <- function(x, legacy_name, overwrite = FALSE) {
   assertthat::assert_that(is.character(legacy_name) | is.null(legacy_name))
@@ -197,6 +198,8 @@ get_reference <- function(x) { attr(x, ATTR_REFERENCE) }
 #'
 #' @param all_data Data structure
 #' @param name Name of data to return
+#' @param strip_attributes Boolean indicating that `gcamdata` attributes should be
+#'                         removed when this data chunk is loaded.
 #' @return Data object (currently, a tibble or data frame). If the object was marked
 #' \code{NA} in the data store, indicating an optional input that was not found,
 #' a \code{NULL} is returned.
