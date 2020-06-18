@@ -96,7 +96,8 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
     L2242.StubTechFixOut_hydro_USA_2050 %>%
       complete(year = MODEL_FUTURE_YEARS, nesting(region, supplysector, subsector, stub.technology,
                                             subs.share.weight, tech.share.weight)) %>%
-      filter(year >= gcamusa.HYDRO_HIST_YEAR) %>%
+      filter(year >= gcamusa.HYDRO_HIST_YEAR,
+             year %in% MODEL_FUTURE_YEARS) %>%
       group_by(region, supplysector, subsector, stub.technology) %>%
       mutate(fixedOutput = replace(fixedOutput, year > gcamusa.HYDRO_FINAL_AEO_YEAR,
                                    fixedOutput[year == gcamusa.HYDRO_FINAL_AEO_YEAR])) %>%
