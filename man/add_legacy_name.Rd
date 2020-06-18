@@ -4,12 +4,14 @@
 \alias{add_legacy_name}
 \title{add_legacy_name}
 \usage{
-add_legacy_name(x, legacy_name)
+add_legacy_name(x, legacy_name, overwrite = FALSE)
 }
 \arguments{
 \item{x}{An object}
 
 \item{legacy_name}{Legacy name (character)}
+
+\item{overwrite}{Allow overwrite of legacy_name? Logical}
 }
 \value{
 \code{x} with legacy name set.
