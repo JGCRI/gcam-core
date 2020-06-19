@@ -990,7 +990,6 @@ module_energy_L223.electricity <- function(command, ...) {
       bind_rows(L223.StubTechCapFactor_solar) ->
       L223.StubTechCapFactor_elec
 
-<<<<<<< HEAD
     # Adding offshore wind capacity factors
     # Adding regions to capacity factor first
     L120.RegCapFactor_offshore_wind %>%
@@ -1023,7 +1022,7 @@ module_energy_L223.electricity <- function(command, ...) {
       mutate(input.cost = round(input.cost, energy.DIGITS_COST)) %>%
       select(region, supplysector, subsector, stub.technology = technology,
              year, minicam.non.energy.input, input.cost) -> L223.StubTechCost_offshore_wind
-=======
+
     # L223.StubTechSecOut_desal: secondary output of desalinated seawater from electricity technologies
     # Note that this only applies in selected regions that have combined electric + desalination plants
     L223.StubTechSecOut_desal <- filter(L1232.desalsecout_R_elec_F_tech, year %in% MODEL_BASE_YEARS) %>%
@@ -1034,7 +1033,6 @@ module_energy_L223.electricity <- function(command, ...) {
       mutate(secondary.output = water.DESAL,
              output.ratio = round(secout_coef, energy.DIGITS_CALOUTPUT)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechSecOut"]])
->>>>>>> main energy-for-water commit. in addition the commit includes:
 
     # ===================================================
 
@@ -1457,6 +1455,13 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("energy/calibrated_techs", "common/GCAM_region_names", "L1231.eff_R_elec_F_tech_Yh", "energy/A23.globaltech_eff") ->
       L223.StubTechEff_elec
 
+    L223.StubTechSecOut_desal %>%
+      add_title("secondary output of desalinated water from the electricity sector") %>%
+      add_units("m^3/GJ") %>%
+      add_comments("This only applies in regions with combined electric + desalination plants") %>%
+      add_precursors("energy/calibrated_techs", "common/GCAM_region_names", "water/EFW_mapping", "L1232.desalsecout_R_elec_F_tech") ->
+      L223.StubTechSecOut_desal
+
     L223.GlobalTechCapital_sol_adv %>%
       add_title("high tech/low cost solar capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
@@ -1575,7 +1580,6 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("energy/A23.globaltech_capital_low") ->
       L223.GlobalTechCapital_bio_low
 
-<<<<<<< HEAD
     return_data(L223.Supplysector_elec, L223.ElecReserve, L223.SubsectorLogit_elec, L223.SubsectorShrwt_elec,
      L223.SubsectorShrwtFllt_elec, L223.SubsectorShrwt_coal, L223.SubsectorShrwt_nuc, L223.SubsectorShrwt_renew,
       L223.SubsectorInterp_elec, L223.SubsectorInterpTo_elec, L223.StubTech_elec,
@@ -1589,22 +1593,12 @@ module_energy_L223.electricity <- function(command, ...) {
        L223.GlobalIntTechShutdown_elec, L223.GlobalTechSCurve_elec, L223.GlobalIntTechSCurve_elec,
        L223.GlobalTechLifetime_elec, L223.GlobalIntTechLifetime_elec, L223.GlobalTechProfitShutdown_elec,
        L223.GlobalIntTechProfitShutdown_elec, L223.StubTechCalInput_elec, L223.StubTechFixOut_elec,
-       L223.StubTechFixOut_hydro, L223.StubTechProd_elec, L223.StubTechEff_elec,
+       L223.StubTechFixOut_hydro, L223.StubTechProd_elec, L223.StubTechEff_elec, L223.StubTechSecOut_desal,
        L223.GlobalTechCapital_sol_adv, L223.GlobalIntTechCapital_sol_adv, L223.GlobalTechCapital_wind_adv,
         L223.GlobalIntTechCapital_wind_adv, L223.GlobalTechCapital_geo_adv, L223.GlobalTechCapital_nuc_adv,
         L223.GlobalTechCapital_sol_low, L223.GlobalIntTechCapital_sol_low, L223.GlobalTechCapital_wind_low,
         L223.GlobalIntTechCapital_wind_low, L223.GlobalTechCapital_geo_low, L223.GlobalTechCapital_nuc_low,
         L223.GlobalTechCapital_bio_low)
-=======
-    L223.StubTechSecOut_desal %>%
-      add_title("secondary output of desalinated water from the electricity sector") %>%
-      add_units("m^3/GJ") %>%
-      add_comments("This only applies in regions with combined electric + desalination plants") %>%
-      add_precursors("energy/calibrated_techs", "common/GCAM_region_names", "water/EFW_mapping", "L1232.desalsecout_R_elec_F_tech") ->
-      L223.StubTechSecOut_desal
-
-    return_data(L223.Supplysector_elec, L223.ElecReserve, L223.SubsectorLogit_elec, L223.SubsectorShrwt_elec, L223.SubsectorShrwtFllt_elec, L223.SubsectorShrwt_nuc, L223.SubsectorShrwt_renew, L223.SubsectorInterp_elec, L223.SubsectorInterpTo_elec, L223.StubTech_elec, L223.GlobalIntTechEff_elec, L223.GlobalTechEff_elec, L223.GlobalTechCapFac_elec, L223.GlobalIntTechCapFac_elec, L223.GlobalTechCapital_elec, L223.GlobalIntTechCapital_elec, L223.GlobalTechOMfixed_elec, L223.GlobalIntTechOMfixed_elec, L223.GlobalTechOMvar_elec, L223.GlobalIntTechOMvar_elec, L223.GlobalTechShrwt_elec, L223.GlobalTechInterp_elec, L223.GlobalIntTechShrwt_elec, L223.PrimaryRenewKeyword_elec, L223.PrimaryRenewKeywordInt_elec, L223.AvgFossilEffKeyword_elec, L223.GlobalTechCapture_elec, L223.GlobalIntTechBackup_elec, L223.StubTechCapFactor_elec, L223.GlobalTechShutdown_elec, L223.GlobalIntTechShutdown_elec, L223.GlobalTechSCurve_elec, L223.GlobalIntTechSCurve_elec, L223.GlobalTechLifetime_elec, L223.GlobalIntTechLifetime_elec, L223.GlobalTechProfitShutdown_elec, L223.GlobalIntTechProfitShutdown_elec, L223.StubTechCalInput_elec, L223.StubTechFixOut_elec, L223.StubTechFixOut_hydro, L223.StubTechProd_elec, L223.StubTechEff_elec, L223.StubTechSecOut_desal, L223.GlobalTechCapital_sol_adv, L223.GlobalIntTechCapital_sol_adv, L223.GlobalTechCapital_wind_adv, L223.GlobalIntTechCapital_wind_adv, L223.GlobalTechCapital_geo_adv, L223.GlobalTechCapital_nuc_adv, L223.GlobalTechCapital_sol_low, L223.GlobalIntTechCapital_sol_low, L223.GlobalTechCapital_wind_low, L223.GlobalIntTechCapital_wind_low, L223.GlobalTechCapital_geo_low, L223.GlobalTechCapital_nuc_low, L223.GlobalTechCapital_bio_low)
->>>>>>> main energy-for-water commit. in addition the commit includes:
   } else {
     stop("Unknown command")
   }

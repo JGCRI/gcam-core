@@ -59,10 +59,15 @@ module_water_L172.EFW_irrigation <- function(command, ...) {
              ag_energy_sw = ag * pow_irr_sf * efw.SW_ABSTRACTION_EFW,
              ag_energy = ag_energy_gw + ag_energy_sw)
 
+    # Calculate the weighted average irrigation-related EFW from country to region.
+    # For any GCAM regions constructed entirely of countries not in the inventory, back-fill with the median value
     L172.Coef_GJm3_IrrEnergy_R <- group_by(L172.Liu_EFW_inventory, GCAM_region_ID) %>%
       summarise(ag = sum(ag),
                 ag_energy = sum(ag_energy)) %>%
-      mutate(coefficient = ag_energy / ag)
+      mutate(coefficient = ag_energy / ag) %>%
+      select(GCAM_region_ID, coefficient) %>%
+      complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID)) %>%
+      mutate(coefficient = if_else(is.na(coefficient), median(coefficient, na.rm = T), coefficient))
 
     # Part 2: Estimating the electricity consumption of irrigation water abstraction by region
     # This is somewhat complicated. The irrigation withdrawal volume computed in the aglu module is the irrigation water

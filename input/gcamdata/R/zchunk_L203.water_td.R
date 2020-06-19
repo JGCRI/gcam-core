@@ -131,7 +131,7 @@ module_water_L203.water_td <- function(command, ...) {
       distinct()
 
     L203.water_td_info <- bind_rows(L203.water_td_info, L203.water_td_info_desal) %>%
-      select(region, water.sector, supplysector_root, supplysector, subsector, technology, water_type)
+      select(-has.desal.input)
 
     # Sector information
     L203.Supplysector_watertd <- left_join_error_no_match(L203.water_td_info, A03.sector,

@@ -19,7 +19,7 @@ module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",
-             FILE = "water/A03.sector",
+             FILE = "water/water_td_sectors",
              FILE = "gcam-usa/A23.elecS_inttech_mapping",
              FILE = "gcam-usa/A23.elecS_tech_mapping",
              FILE = "gcam-usa/A23.elec_tech_mapping_coal_retire",
@@ -46,7 +46,7 @@ module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    A03.sector <- get_data(all_data, "water/A03.sector")
+    water_td_sectors <- get_data(all_data, "water/water_td_sectors")
     A23.elecS_inttech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_inttech_mapping")
     A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping")
     A23.elec_tech_mapping_coal_retire <- get_data(all_data, "gcam-usa/A23.elec_tech_mapping_coal_retire")%>%
@@ -92,7 +92,7 @@ module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
              fuel = gsub("solar PV", "solar", fuel),
              water_sector = "Electricity",
              water_type = "water withdrawals",
-             minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) ->
+             minicam.energy.input = set_water_input_name(water_sector, water_type, water_td_sectors)) ->
       L2233.StubTech_WaterCoef_ref.wdraw
 
     L1233.wcons_coef_R_elec_F_tech_Yh_ref %>%
@@ -100,7 +100,7 @@ module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
              fuel = gsub("solar PV", "solar", fuel),
              water_sector = "Electricity",
              water_type = "water consumption",
-             minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) ->
+             minicam.energy.input = set_water_input_name(water_sector, water_type, water_td_sectors)) ->
       L2233.StubTech_WaterCoef_ref.wcons
 
     # Bind wdraw and wcons and add missing years.
@@ -178,7 +178,7 @@ module_gcamusa_LA2233.electricity_water_USA <- function(command, ...) {
       add_legacy_name("L2233.StubTech_WaterCoef_ref") %>%
       add_precursors("gcam-usa/states_subregions",
                      "energy/calibrated_techs",
-                     "water/A03.sector",
+                     "water/water_td_sectors",
                      "gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elec_tech_mapping_coal_retire",

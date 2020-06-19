@@ -201,7 +201,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
              minicam.energy.input = gsub(".{1}$", "W", minicam.energy.input)) %>%
       # Remove extra columns
       select(LEVEL2_DATA_NAMES[["AgCoef"]]) ->
-      L2072.AgCoef_IrrWaterWdraw_ag_mgmt
+      L2072.AgCoef_IrrWaterWdraw_mgmt
 
     # Separate table of water withdrawals IO coefs into 2: one for bioenergy crops, another for non-bio crops
     L2072.AgCoef_IrrWaterWdraw_mgmt %>%
@@ -234,7 +234,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       right_join(L2072.AgCoef_IrrWaterWdraw_ag_mgmt, by = "region") %>%
       # Calculate water price and water cost, including abstraction-related energy costs
-      left_join_error_no_match(L2071.Coef_GJm3_IrrEnergy_R,
+      left_join_error_no_match(L2072.Coef_GJm3_IrrEnergy_R,
                                by = c("region", "year")) %>%
       # Calculate water price and water cost
       mutate(WaterCost = coefficient * (water.DEFAULT_IRR_WATER_PRICE +
