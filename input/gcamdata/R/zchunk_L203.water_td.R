@@ -152,7 +152,7 @@ module_water_L203.water_td <- function(command, ...) {
     # Default subsector share weights (fill out 1 from start-year)
     L203.SubsectorShrwtFllt_watertd <- L203.SubsectorLogit_watertd %>%
       mutate(year.fillout = min(MODEL_BASE_YEARS),
-             share.weight = 1) %>%
+             share.weight = 1.0) %>%
     select(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]])
 
     # Subsector share-weight interpolation (for competition between basins - fixed share-weighte interpolation)
@@ -172,7 +172,6 @@ module_water_L203.water_td <- function(command, ...) {
 
     L203.TechCoef_watertd <- L203.water_td_info %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      rename(minicam.energy.input = water_type) %>%
       left_join(L203.ag_IrrEff_R, by = "region") %>%
       mutate(minicam.energy.input = paste(subsector, water_type, sep = "_"),
              coefficient = if_else(water.sector == water.IRRIGATION,
