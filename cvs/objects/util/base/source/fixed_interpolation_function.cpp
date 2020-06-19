@@ -106,6 +106,10 @@ bool FixedInterpolationFunction::XMLParse( const DOMNode* aNode ) {
     return true;
 }
 
+void FixedInterpolationFunction::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
+    XMLWriteElement("", IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, 0, getXMLAttrNameStatic() );
+}
+
 double FixedInterpolationFunction::interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,
                                                 const double aXValue ) const
 {
