@@ -27,7 +27,8 @@ module_gcamusa_batch_nonewcoal_USA_xml <- function(command, ...) {
     # Produce outputs
     create_xml("nonewcoal_USA.xml") %>%
       add_xml_data(L2231.StubTechShrwt_nonewcoal_nongen_USA, "StubTechShrwt") %>%
-      add_xml_data_generate_levels(L2231.SubsectorShrwt_nonewcoal_elecS_cool_USA, "SubsectorShrwt", "subsector", "nesting-subsector", 1, FALSE) %>%
+      add_xml_data_generate_levels(L2231.SubsectorShrwt_nonewcoal_elecS_cool_USA,
+                                   "SubsectorShrwt", "subsector", "nesting-subsector", 1, FALSE) %>%
       add_precursors("L2231.SubsectorShrwt_nonewcoal_elecS_cool_USA",
                      "L2231.StubTechShrwt_nonewcoal_nongen_USA") ->
       nonewcoal_USA.xml
