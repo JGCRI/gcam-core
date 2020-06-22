@@ -288,23 +288,40 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
       add_xml_data(L2233.GlobalIntTechBackup_elecS_cool_USA, "GlobalIntTechBackup") %>%
       add_xml_data(L2233.GlobalTechShrwt_elecS_cool_USA, "GlobalTechShrwt") %>%
       add_xml_data(L2233.GlobalIntTechShrwt_elecS_cool_USA, "GlobalIntTechShrwt") %>%
-      add_logit_tables_xml_generate_levels(L2233.SubsectorLogit_elecS_cool_USA, "SubsectorLogit","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.SubsectorShrwt_elecS_cool_USA, "SubsectorShrwt","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechMarket_elecS_cool_USA, "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechMarket_backup_elecS_cool_USA, "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechElecMarket_backup_elecS_cool_USA, "StubTechElecMarket","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechProd_elecS_cool_USA, "StubTechProd","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechCapFactor_elecS_wind_USA, "StubTechCapFactor","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechCapFactor_elecS_solar_USA, "StubTechCapFactor","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechFixOut_elecS_cool_USA, "StubTechFixOut","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechEff_elecS_cool_USA, "StubTechEff","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechFixOut_hydro_elecS_cool_USA, "StubTechFixOut","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechSCurve_elecS_cool_USA, "StubTechSCurve", "subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechProfitShutdown_elecS_cool_USA, "StubTechProfitShutdown", "subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechCoef_elecS_cool_USA, "StubTechCoef", "subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechCost_offshore_wind_elecS_cool_USA, "StubTechCost", "subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechShrwt_elecS_cool_USA, "StubTechShrwt", "subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechInterp_elecS_cool_USA, "StubTechInterp", "subsector","nesting-subsector",1,FALSE) %>%
+      add_logit_tables_xml_generate_levels(L2233.SubsectorLogit_elecS_cool_USA,
+                                           "SubsectorLogit","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.SubsectorShrwt_elecS_cool_USA,
+                                   "SubsectorShrwt","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechMarket_elecS_cool_USA,
+                                   "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechMarket_backup_elecS_cool_USA,
+                                   "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechElecMarket_backup_elecS_cool_USA,
+                                   "StubTechElecMarket","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechProd_elecS_cool_USA,
+                                   "StubTechProd","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechCapFactor_elecS_wind_USA,
+                                   "StubTechCapFactor","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechCapFactor_elecS_solar_USA,
+                                   "StubTechCapFactor","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechFixOut_elecS_cool_USA,
+                                   "StubTechFixOut","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechEff_elecS_cool_USA,
+                                   "StubTechEff","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechFixOut_hydro_elecS_cool_USA,
+                                   "StubTechFixOut","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechSCurve_elecS_cool_USA,
+                                   "StubTechSCurve", "subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechProfitShutdown_elecS_cool_USA,
+                                   "StubTechProfitShutdown", "subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechCoef_elecS_cool_USA,
+                                   "StubTechCoef", "subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechCost_offshore_wind_elecS_cool_USA,
+                                   "StubTechCost", "subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechShrwt_elecS_cool_USA,
+                                   "StubTechShrwt", "subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L2233.StubTechInterp_elecS_cool_USA,
+                                   "StubTechInterp", "subsector","nesting-subsector",1,FALSE) %>%
       add_node_equiv_xml("subsector") %>%
       add_logit_tables_xml(L2233.SubsectorLogit_elecS_USA, "SubsectorLogit") %>%
       add_xml_data(L2233.SubsectorShrwt_elecS_USA, "SubsectorShrwt") %>%
