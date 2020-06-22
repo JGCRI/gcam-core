@@ -34,12 +34,11 @@
 #define UBLAS_HELPERS_HPP_
 
 #include <iostream>
-#include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
+#include <Eigen/Core>
 
 //#define UBLAS boost::numeric::ublas
-using UBVECTOR = boost::numeric::ublas::vector<double>;
-using UBMATRIX = boost::numeric::ublas::matrix<double>;
+using UBVECTOR = Eigen::VectorXd;
+using UBMATRIX = Eigen::MatrixXd;
 
 std::ostream & operator<<(std::ostream &ostrm, const UBVECTOR &v);
 std::ostream & operator<<(std::ostream &ostrm, const UBMATRIX &M);

@@ -365,7 +365,7 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
     }
     edFun.scaleInitInputs(x);
     edFun(x,fx);
-    double currFX = inner_prod(fx,fx);
+    double currFX = fx.dot(fx);
     double prevFX;
     
     solverLog.setLevel( ILogger::DEBUG );
@@ -471,7 +471,7 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
         // Rescale prices to be normalized then run an iteration
         edFun.scaleInitInputs(x);
         edFun(x, fx);
-        currFX = inner_prod(fx, fx);
+        currFX = fx.dot(fx);
         solverLog << "Current FX: " << currFX << endl;
         
         // Check if this bracket step has increased the "error" F dot F by more than the
@@ -483,7 +483,7 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
             stepMult /= 2.0;
             x = prev_x + dx * stepMult;
             edFun(x, fx);
-            currFX = inner_prod(fx, fx);
+            currFX = fx.dot(fx);
             solverLog << "Walked back: " << stepMult << ", Current FX: " << currFX << endl;
         }
         solverLog.setLevel( ILogger::NOTICE );

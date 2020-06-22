@@ -82,7 +82,7 @@ int linesearch(VecFVec &f, const UBVECTOR &x0,
   // contemplate using this function in a single-precision
   // application, we are going to have to adjust this tolerance.
   int n = x0.size();
-  double g0dx=inner_prod(g0,dx); // initial rate of decrease, df/dlambda
+  double g0dx=g0.dot(dx); // initial rate of decrease, df/dlambda
   double lambda = 1.0;           // start with full step
   double maxval = 0.0;
   UBVECTOR fxVec(x0.size());
@@ -111,7 +111,7 @@ int linesearch(VecFVec &f, const UBVECTOR &x0,
   while(lambda > lmin) {
     x  = x0 + lambda*dx;
     f(x, fxVec);
-    fx = inner_prod(fxVec, fxVec);
+    fx = fxVec.dot(fxVec);
     neval++;
 
     if(solverlog) {
@@ -153,7 +153,5 @@ int linesearch(VecFVec &f, const UBVECTOR &x0,
   // the Jacobian.  Otherwise, try starting with a new initial guess.
   return 1;              
 }
-
-#undef UBLAS
 
 #endif

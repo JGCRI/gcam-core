@@ -324,13 +324,6 @@
 			remoteGlobalIDString = 8DD76F6C0486A84900D96B5E;
 			remoteInfo = hector;
 		};
-		CD966E6F1D92F1BB00A93938 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CD966E671D92F1BB00A93938 /* hector.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CD706AC2124BA91A00C0C6D5;
-			remoteInfo = "hector-unit-tests";
-		};
 		CD966E711D92F1BB00A93938 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CD966E671D92F1BB00A93938 /* hector.xcodeproj */;
@@ -2394,7 +2387,6 @@
 			isa = PBXGroup;
 			children = (
 				CD966E6E1D92F1BB00A93938 /* hector */,
-				CD966E701D92F1BB00A93938 /* hector-unit-tests */,
 				CD966E721D92F1BB00A93938 /* libhector-lib.a */,
 			);
 			name = Products;
@@ -2494,13 +2486,6 @@
 			fileType = "compiled.mach-o.executable";
 			path = hector;
 			remoteRef = CD966E6D1D92F1BB00A93938 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CD966E701D92F1BB00A93938 /* hector-unit-tests */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = "hector-unit-tests";
-			remoteRef = CD966E6F1D92F1BB00A93938 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CD966E721D92F1BB00A93938 /* libhector-lib.a */ = {
@@ -2924,6 +2909,7 @@
 					NDEBUG,
 					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
 					"FUSION_MAX_VECTOR_SIZE=30",
+					EIGEN_MPL2_ONLY,
 				);
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2933,6 +2919,7 @@
 					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
 					../../../../libs/java/include/darwin,
+					../../../../libs/eigen,
 				);
 				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs";
 				LIBRARY_SEARCH_PATHS = (

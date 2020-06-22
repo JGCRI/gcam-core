@@ -68,6 +68,7 @@
 #include "util/base/include/fltcmp.hpp"
 #include "solution/util/include/jacobian-precondition.hpp"
 
+/*
 #if USE_LAPACK
 #include <boost/numeric/bindings/traits/ublas_vector.hpp>
 #include <boost/numeric/bindings/traits/ublas_matrix.hpp>
@@ -77,7 +78,10 @@
 #else
 #include <boost/numeric/ublas/operation.hpp>
 #include <boost/numeric/ublas/lu.hpp>
-#endif 
+#endif
+ */
+#include <Eigen/LU>
+#include <Eigen/SVD>
 
 #include "util/base/include/timer.h"
 
@@ -372,15 +376,9 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
 #endif
   using boost::numeric::ublas::axpy_prod;
   using boost::numeric::ublas::inner_prod;
-  int nrow = B.size1(), ncol = B.size2();
+  int nrow = B.size(), ncol = B.size();
   int ageB = 0;   // number of iterations since the last reset on B
   // svd decomposition elements (note nrow == ncol)
-#if USE_LAPACK
-  UBMATRIX Usv(nrow,ncol),VTsv(ncol,ncol);
-  UBVECTOR Ssv( ncol );
-#else
-  permutation_matrix<int> p(F.narg()); // permutation vector for pivoting in L-U decomposition
-#endif
 
   UBMATRIX Btmp(nrow, ncol);
   ILogger &solverLog = ILogger::getLogger("solver_log");
@@ -438,7 +436,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
   // We create a functor that computes f( x ) = F( x )*F( x ).  It also
   // stores the value of F that it produces as an intermediate.
   //FdotF<double,double> fnorm( F );
-  double f0 = inner_prod(fx,fx); // already have a value of F on input, so no need to call fnorm yet
+  double f0 = fx.dot(fx); // already have a value of F on input, so no need to call fnorm yet
   if(f0 < FTINY) {
     // Guard against F=0 since it can cause a NaN in our solver.  This
     // is a more stringent test than our regular convergence test
@@ -457,7 +455,9 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       // jdiag[j] = bjj;
       jdiag[j] = B(j,j);
     }
+      if(iter == 0) {
     static_cast<LogEDFun&>(F).setSlope(jdiag);
+      }
     double jdmax=0.0, jdmin=0.0;
     int jdjmax=0, jdjmin=0;
     locate_vector_minmax(jdiag, jdmax, jdmin, jdjmax, jdjmin);
@@ -465,7 +465,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     solverLog << "maxval= " << jdmax << " jmax= " << jdjmax << "  "
               << "minval= " << jdmin << "  jmin= " << jdjmin << "\n";
     
-    axpy_prod(fx,B,gx);         // compute the gradient of F*F (= fx^T * B == B^T * fx)
+    gx = B.transpose() * fx;         // compute the gradient of F*F (= fx^T * B == B^T * fx)
                                 // axpy_prod clears gx on entry, so we don't have to do it.
                                 // NB: the order of fx and B in that last call is significant!
 
@@ -473,13 +473,25 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     // from which we are unlikely to escape.  We will need to try
     // again with a different initial guess.  (This should be very
     // uncommon)
-    double gmag2 = inner_prod(gx,gx);
+    double gmag2 = gx.dot(gx);
     if(gmag2 / (f0+FTINY) < mFTOL) {
       solverLog << "**** ||gx|| = 0.  Returning.\n";
       return -3;
     }
 
     Btmp = B;                   // save the jacobian approximant
+      dx = fx * -1.0;
+      if(B.determinant() == 0) {
+          std::cout << "Doing SVD: " << std::endl;
+          Eigen::BDCSVD<UBMATRIX> svdSolver(B, Eigen::ComputeThinU | Eigen::ComputeThinV);
+          const double small = 1.0e-8;
+          svdSolver.setThreshold(small);
+          dx = svdSolver.solve(dx);
+      }
+      else {
+          dx = B.lu().solve(dx);
+      }
+#if 0
 #if USE_LAPACK /* Solve using SVD */
     int ierr = boost::numeric::bindings::lapack::gesvd('O','A','A', // control parameters
                                                        B,           // input matrix
@@ -556,9 +568,10 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     }
     solverLog << "dx: " << dx << "\n"; 
 #endif /* USE_LAPACK */
+#endif
 
     // log the proposal step
-    solverLog << "Proposal step magnitude dxmag= " << sqrt(inner_prod(dx,dx)) << "\n\n";
+    solverLog << "Proposal step magnitude dxmag= " << sqrt(dx.dot(dx)) << "\n\n";
     reportVec("dxprop", dx, mktids_solv, issolvable_solv);    
 
     
@@ -577,6 +590,10 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       if(!lsfail) {
         solverLog << "**Failed line search. Evaluating fdjac\n";
         lsfail = true;
+          if((iter+1) < mMaxIter) {
+              // no point in re-calculating a jacobian if we won't get a chance
+              // to use it
+              
         // call fdjac such that it re-calculates the model at x as linesearch will
         // have left off on some other price vector thus we could have bad state
         // data from which we calculate derivatives
@@ -590,6 +607,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
         }
         solverLog << "New Jacobian: diag( B )=\n" << jdiag << "\n";
         static_cast<LogEDFun&>(F).setSlope(jdiag);
+          }
 
         // start the next iteration *without* updating x
         continue;
@@ -601,6 +619,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       // test and return if we have a "close enough" solution.
       double msf = f0/fx.size();
       if(msf < mFTOL) {
+          std::cout << "Relaxed success" << std::endl;
         // basically, we're letting ourselves converge to the sqrt of
         // our intended tolerance.
         return 0;
@@ -629,7 +648,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
 
     UBVECTOR fxnew(fx.size());
       F(xnew, fxnew);//fnorm.lastF( fxnew );            // get the last value of big-F
-    solverLog << "\nxnew: " << xnew << "\nfxnew: " << fxnew << "\n";
+    //solverLog << "\nxnew: " << xnew << "\nfxnew: " << fxnew << "\n";
     UBVECTOR fxstep(fxnew -fx); // change in F( x ).  We will need this for the secant update
 
     // log the worst market info
@@ -657,7 +676,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     solverLog << "\tx[i]= " << xnew[imaxval] << "  dx[i]= " << dx[imaxval] << "  xstep[i]= "
               << xstep[imaxval] << "\n";
     if(maxval <= mFTOL) {
-      solverLog << "Solution successful.\n";
+      solverLog << "Solution successful -- max.\n";
       x = xnew;
       fx = fxnew;
       return 0;                 // SUCCESS 
@@ -687,15 +706,17 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
 #endif
     
     // update B for next iteration
-    double fratio_cutoff = 1.0 - 1.0/nrow;
-    if(fnew/f0 < fratio_cutoff) { // making adequate progress with the Broyden formula
-      double dx2 = inner_prod(xstep,xstep);
+      double fratio_cutoff = 1.0 - 1.0/nrow;
+    if(fnew/f0 < fratio_cutoff || iter == 0) { // making adequate progress with the Broyden formula
+      double dx2 = xstep.dot(xstep);
       UBVECTOR Bdx(F.nrtn());
       B = Btmp;
-      fxstep -= axpy_prod(B, xstep, Bdx);
+        fxstep -= B * xstep;//axpy_prod(B, xstep, Bdx);
       fxstep /= dx2;
-      B += outer_prod(fxstep, xstep);
+        B += fxstep * xstep.transpose();//outer_prod(fxstep, xstep);
+        if(iter >0) {
       ageB++;                // increment the age of B
+        }
     }
     else {
       // Progress using the Broyden formula is anemic.  This usually
@@ -705,6 +726,9 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
         solverLog << "Insufficient progress with Broyden formula.  Resetting the Jacobian.\n(f0= " << f0 << ", fnew= " << fnew << ")\n";
         // just in case call fdjac such that it re-calculates the model at xnew
         // otherwise we could have bad state data from which we calculate derivatives
+          if((iter+1) < mMaxIter) {
+              // no point in re-calculating a jacobian if we won't get a chance
+              // to use it
         fdjac(F,xnew,B);
         neval += x.size();
         ageB = 0;
@@ -716,6 +740,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
             
         solverLog << "New Jacobian:  diag( B )=\n" << jdiag << "\n";
         static_cast<LogEDFun&>(F).setSlope(jdiag);
+          }
         
       }
       else {
@@ -852,8 +877,8 @@ std::ostream & operator<<(std::ostream &ostrm, const UBVECTOR &v) {
 
 //template <class FTYPE, class MTRAIT>
 std::ostream & operator<<(std::ostream &ostrm, const UBMATRIX &M) {
-    int m = M.size1();
-    int n = M.size2();
+    int m = M.size();
+    int n = M.size();
     
     for(int i=0;i<m;++i) {
         ostrm << i << ":   ";

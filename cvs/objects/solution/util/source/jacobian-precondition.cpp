@@ -81,10 +81,10 @@ int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec &F,
     // space.
     double diagval = fabs(J(j,j));
 
-    if(diagnostic) {
+    /*if(diagnostic) {
         (*diagnostic) << "\tj= " << j << "  x[j] = " << x[j] << "  fx[j]= " << fx[j] << "  J(j,j) = " << J(j,j)
                       << std::endl;
-    }
+    }*/
     
     if(diagval < JPCMIN && fabs(fx[j]) > FTOL) {
         // Tiny derivative on the diagonal, which will likely cause
@@ -205,7 +205,7 @@ void broyden_singular_B_reset(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &B, VecFVec &F
      since we know that "normally" an increase a market's in price
      reduces excess demand in that market, we just set any deficient
      diagonal terms to -JPCMIN and keep on trucking. */
-  int nrow = B.size1(), ncol = B.size2();
+  int nrow = B.size(), ncol = B.size();
 
   for(int j=0;j<nrow;++j)
     if(fabs(B(j,j)) < JPCMIN && fabs(fx[j]) > FTOL) {

@@ -43,7 +43,5 @@ int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec &F,
 void broyden_singular_B_reset(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &B, VecFVec &F,
                              std::ostream *diagnostic, double FTOL=1.0e-4);
 
-#undef UBMATRIX
-#undef UBVECTOR
 
 #endif
