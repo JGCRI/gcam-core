@@ -23,6 +23,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
              FILE = 'gcam-usa/reeds_wind_curve_capacity',
              FILE = 'gcam-usa/reeds_wind_curve_CF_avg',
              FILE = 'gcam-usa/reeds_wind_curve_grid_cost',
+             FILE = "gcam-usa/A10.renewable_resource_delete",
              'L2234.StubTechCapFactor_elecS_wind_USA',
              'L2247.GlobalIntTechCapitalOnly_elecS_USA',
              'L223.GlobalIntTechCapital_elec',
@@ -42,6 +43,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
     reeds_wind_curve_capacity <- get_data(all_data, 'gcam-usa/reeds_wind_curve_capacity')
     reeds_wind_curve_CF_avg <- get_data(all_data, 'gcam-usa/reeds_wind_curve_CF_avg')
     reeds_wind_curve_grid_cost <- get_data(all_data, 'gcam-usa/reeds_wind_curve_grid_cost')
+    A10.renewable_resource_delete <- get_data(all_data, "gcam-usa/A10.renewable_resource_delete")
     L2234.StubTechCapFactor_elecS_wind_USA <- get_data(all_data, 'L2234.StubTechCapFactor_elecS_wind_USA')
     L2247.GlobalIntTechCapitalOnly_elecS_USA <- get_data(all_data, 'L2247.GlobalIntTechCapitalOnly_elecS_USA')
     L223.GlobalIntTechCapital_elec <- get_data(all_data, 'L223.GlobalIntTechCapital_elec')
@@ -252,7 +254,11 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
              smooth.renewable.subresource = "onshore wind resource",
              year.fillout = min(MODEL_YEARS)) %>%
       select(region = State, renewresource, smooth.renewable.subresource, year.fillout,
-             maxSubResource, mid.price, curve.exponent) -> L2237.SmthRenewRsrcCurves_wind_reeds_USA
+             maxSubResource, mid.price, curve.exponent) %>%
+      # Wind power is assumed to be infeasible in DC. Thus, it should not be assigned "onshore wind resource".
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete, by = c("region", "renewresource" = "resource_elec_subsector")) ->
+      L2237.SmthRenewRsrcCurves_wind_reeds_USA
 
     L2234.StubTechCapFactor_elecS_wind_USA %>%
       # using semi_join to filter out states not included in the ReEDS data set,
@@ -272,8 +278,12 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       filter(region %in% states_list) %>%
       mutate(renewresource = "onshore wind resource",
              smooth.renewable.subresource = "onshore wind resource") %>%
-      select(region,renewresource, smooth.renewable.subresource, year.fillout = year,
-             techChange = tech.change) -> L2237.SmthRenewRsrcTechChange_wind_reeds_USA
+      select(region, renewresource, smooth.renewable.subresource, year.fillout = year,
+             techChange = tech.change) %>%
+      # Wind power is assumed to be infeasible in DC. Thus, it should not be assigned "onshore wind resource".
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete, by = c("region", "renewresource" = "resource_elec_subsector")) ->
+      L2237.SmthRenewRsrcTechChange_wind_reeds_USA
 
     # Reading the grid connection cost as a state-level non-energy cost adder
     L2234.StubTechCapFactor_elecS_wind_USA %>%
@@ -306,6 +316,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       add_precursors('gcam-usa/reeds_regions_states',
                      'gcam-usa/reeds_wind_curve_capacity',
                      'gcam-usa/reeds_wind_curve_CF_avg',
+                     'gcam-usa/A10.renewable_resource_delete',
                      'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
@@ -330,7 +341,8 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Technological change in the supply curve is related to assumed improvements in capital cost") %>%
       add_legacy_name("L2237.SmthRenewRsrcTechChange_wind_USA_reeds") %>%
-      add_precursors('L2247.GlobalIntTechCapitalOnly_elecS_USA',
+      add_precursors('gcam-usa/A10.renewable_resource_delete',
+                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
       L2237.SmthRenewRsrcTechChange_wind_reeds_USA
