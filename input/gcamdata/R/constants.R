@@ -751,13 +751,6 @@ water.DELETE_DEMAND_TYPES              <- c("water_td_elec_W","water_td_elec_C",
 water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
 
-gcamusa.NO_SEAWATER_STATES <- c("ID", "NV", "AZ", "NM", "UT", "CO", "WY", "MT", "ND", "SD", "NE",
-                                "KS", "OK", "AR", "MO", "IA", "MN", "MI", "WI", "IL", "IN", "OH",
-                                "KY", "TN", "WV", "PA", "VT", "DC")
-gcamusa.SEAWATER_BASINS <- c("Pacific and Arctic Coast","South Atlantic Gulf","Lower Mississippi River","Pacific Northwest",
-                             "California River","Mid Atlantic","New England","Texas Gulf Coast")
-
-
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions
 # # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
