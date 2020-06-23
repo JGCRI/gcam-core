@@ -33,6 +33,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     return(c(FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
              FILE = "gcam-usa/elec_tech_water_map",
              FILE = "gcam-usa/A23.elecS_tech_mapping_cool_shares_fut",
+             FILE = "gcam-usa/usa_seawater_states_basins",
              "L1233.out_EJ_state_elec_F_tech_cool",
              "L2233.GlobalTechEff_elec_cool",
              "L2233.GlobalTechShrwt_elec_cool",
@@ -181,6 +182,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
     A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
     elec_tech_water_map <- get_data(all_data, "gcam-usa/elec_tech_water_map")
     A23.elecS_tech_mapping_cool_shares_fut <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool_shares_fut")
+    usa_seawater_states_basins <- get_data(all_data, "gcam-usa/usa_seawater_states_basins")
     L1233.out_EJ_state_elec_F_tech_cool <- get_data(all_data, "L1233.out_EJ_state_elec_F_tech_cool")
     L2233.GlobalTechEff_elec_cool <- get_data(all_data, "L2233.GlobalTechEff_elec_cool")
     L2233.GlobalTechShrwt_elec_cool <- get_data(all_data, "L2233.GlobalTechShrwt_elec_cool")
@@ -251,6 +253,11 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
 
 
     # ===================================================
+    # Define unique states and basins that have access to seawater that will
+    # allow for seawate cooling
+
+    seawater_states_basins <- unique(usa_seawater_states_basins$seawater_region)
+
     # Process data
 
     A23.elecS_tech_mapping_cool %>%
@@ -276,7 +283,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
 
       data_new %>%
         filter(grepl(gcamusa.WATER_TYPE_SEAWATER,technology),
-               !(region %in% gcamusa.NO_SEAWATER_STATES)) %>%
+               (region %in% seawater_states_basins)) %>%
         bind_rows(data_new %>%
                     filter(!grepl(gcamusa.WATER_TYPE_SEAWATER,technology))) %>%
         arrange(region,year)  -> data_new
@@ -875,7 +882,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
 
     L2233.StubTechCoef_elecS_cool_USA %>%
       filter(grepl(gcamusa.WATER_TYPE_SEAWATER, technology),
-             !(region %in% gcamusa.NO_SEAWATER_STATES)) %>%
+             (region %in% seawater_states_basins)) %>%
       bind_rows(L2233.StubTechCoef_elecS_cool_USA %>%
                   filter(!grepl(gcamusa.WATER_TYPE_SEAWATER, technology))) %>%
       arrange(region, year) ->
@@ -1370,6 +1377,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       add_precursors("L2234.StubTechEff_elecS_USA",
                      "L2241.StubTechEff_coal_vintage_USA",
                      "L2241.StubTechEff_elec_coalret_USA",
+                     "gcam-usa/usa_seawater_states_basins",
                      "gcam-usa/A23.elecS_tech_mapping_cool") ->
       L2233.StubTechEff_elecS_cool_USA
 
@@ -1379,6 +1387,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       add_comments("Water demand coefficients at state level for Electricity Load Segments") %>%
       add_legacy_name("L2233.StubTechCoef_elec") %>%
       add_precursors("L2233.GlobalTechCoef_elec_cool",
+                     "gcam-usa/usa_seawater_states_basins",
                      "gcam-usa/A23.elecS_tech_mapping_cool") ->
       L2233.StubTechCoef_elecS_cool_USA
 
@@ -1390,6 +1399,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       add_precursors("L2234.StubTechMarket_elecS_USA",
                      "L2241.StubTechMarket_coal_vintage_USA",
                      "L2241.StubTechMarket_elec_coalret_USA",
+                     "gcam-usa/usa_seawater_states_basins",
                      "gcam-usa/A23.elecS_tech_mapping_cool") ->
       L2233.StubTechMarket_elecS_cool_USA
 
@@ -1403,6 +1413,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                      "L2241.StubTechProd_elec_coalret_USA",
                      "gcam-usa/A23.elecS_tech_mapping_cool",
                      "L1233.out_EJ_state_elec_F_tech_cool",
+                     "gcam-usa/usa_seawater_states_basins",
                      "gcam-usa/elec_tech_water_map") ->
       L2233.StubTechProd_elecS_cool_USA
 
@@ -1413,6 +1424,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       add_legacy_name("L2233.StubTechSCurve_elec") %>%
       add_precursors("L2241.StubTechSCurve_coal_vintage_USA",
                      "L2241.StubTechSCurve_elec_coalret_USA",
+                     "gcam-usa/usa_seawater_states_basins",
                      "gcam-usa/A23.elecS_tech_mapping_cool") ->
       L2233.StubTechSCurve_elecS_cool_USA
 
@@ -1422,6 +1434,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       add_comments("Electricity Load Segment and Cooling Technology Profit Shutdown Decider") %>%
       add_legacy_name("L2233.StubTechSCurve_elec") %>%
       add_precursors("L2241.StubTechProfitShutdown_coal_vintage_USA",
+                     "gcam-usa/usa_seawater_states_basins",
                      "gcam-usa/A23.elecS_tech_mapping_cool") ->
       L2233.StubTechProfitShutdown_elecS_cool_USA
 
@@ -1431,6 +1444,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       add_comments("State-specific Capacity Factors for Electricity Load Segments Solar and Cooling Technologies") %>%
       add_legacy_name("L2233.StubTechCapFactor_elec_solar") %>%
       add_precursors("L2234.StubTechCapFactor_elecS_solar_USA",
+                     "gcam-usa/usa_seawater_states_basins",
                      "gcam-usa/A23.elecS_tech_mapping_cool") ->
       L2233.StubTechCapFactor_elecS_solar_USA
 
@@ -1440,6 +1454,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       add_comments("State-specific Capacity Factors for Electricity Load Segments Wind Technologies") %>%
       add_legacy_name("L2233.StubTechCapFactor_elec_wind") %>%
       add_precursors("L2234.StubTechCapFactor_elecS_wind_USA",
+                     "gcam-usa/usa_seawater_states_basins",
                      "gcam-usa/A23.elecS_tech_mapping_cool") ->
       L2233.StubTechCapFactor_elecS_wind_USA
 
@@ -1449,6 +1464,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       add_comments("Electricity Load Segments Sector Name for Backup Markets") %>%
       add_legacy_name("L2233.StubTechElecMarket_backup_elec") %>%
       add_precursors("L2234.StubTechElecMarket_backup_elecS_USA",
+                     "gcam-usa/usa_seawater_states_basins",
                      "gcam-usa/A23.elecS_tech_mapping_cool") ->
       L2233.StubTechElecMarket_backup_elecS_cool_USA
 

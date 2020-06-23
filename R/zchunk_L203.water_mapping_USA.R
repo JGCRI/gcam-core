@@ -27,6 +27,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
              "L103.water_mapping_USA_R_B_W_Ws_share",
              FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/state_and_basin",
+             FILE = "gcam-usa/usa_seawater_states_basins",
              FILE = "water/A03.sector"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L203.DeleteSupplysector_USA",
@@ -52,6 +53,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L103.water_mapping_USA_R_B_W_Ws_share <- get_data(all_data,"L103.water_mapping_USA_R_B_W_Ws_share")
     GCAM_state_names <- get_data(all_data, "gcam-usa/states_subregions")
     state_and_basin <- get_data(all_data, "gcam-usa/state_and_basin")
+    usa_seawater_states_basins <- get_data(all_data, "gcam-usa/usa_seawater_states_basins")
     A03.sector <- get_data(all_data, "water/A03.sector")
 
     GLU <- GLU_code <- GLU_name <- water.sector <-
@@ -61,6 +63,11 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       state.to.country.share <- subsector <- technology <- share.weight <-
       price.unit <- input.unit <- output.unit <- logit.exponent <- logit.type <-
       logit.year.fillout <- NULL  # silence package check notes
+
+    # Define unique states and basins that have access to seawater that will
+    # allow for seawate cooling
+
+    seawater_states_basins <- unique(usa_seawater_states_basins$seawater_region)
 
     # Define in which states GCAM water basins exist by using data from R package created by Chris Vernon
     state_and_basin %>%
@@ -326,7 +333,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L203.TechShrwt_USA %>%
       filter(region != gcam.USA_REGION) %>%
       mutate(technology = "desalination",
-             share.weight = if_else((region %in% gcamusa.NO_SEAWATER_STATES) | !(subsector %in% gcamusa.SEAWATER_BASINS), 0, 1))  %>%
+             share.weight = if_else(!(region %in% seawater_states_basins), 0, 1))  %>%
       dplyr::filter(!is.na(year)) ->
       L203.TechDesalShrwt_USA
 
@@ -465,6 +472,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                      "L103.water_mapping_USA_R_PRI_W_Ws_share",
                      "gcam-usa/states_subregions",
                      "gcam-usa/state_and_basin",
+                     "gcam-usa/usa_seawater_states_basins",
                      "water/A03.sector") ->
       L203.TechDesalShrwt_USA
 

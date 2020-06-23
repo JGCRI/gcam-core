@@ -22,6 +22,7 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
              FILE = "gcam-usa/UCS_water_types",
              FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
              FILE = "gcam-usa/UCS_Database",
+             FILE = "gcam-usa/usa_seawater_states_basins",
              "L1231.out_EJ_state_elec_F_tech"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1233.out_EJ_state_elec_F_tech_cool",
@@ -31,7 +32,7 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     State <- `Reported Water Source (Type)` <- reported_water_source <- `Estimated Generation (MWh)` <-
-      `Technology Code` <- cooling_system <- water_type <- technology <-
+      `Technology Code` <- cooling_system <- water_type <- technology <- state <-
       state <- sector <- fuel <- out_MWh <- out_MWh_ <- `First Year of Operation` <-
       grid_region <- share <- sum_share_tech <- share_nat <- value <-
       year <- water_withdrawals <- water_consumption <- out_MWh.sea <-
@@ -43,9 +44,15 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
     UCS_water_types <- get_data(all_data, "gcam-usa/UCS_water_types")
     A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
     UCS_Database <- get_data(all_data, "gcam-usa/UCS_Database")
+    usa_seawater_states_basins <- get_data(all_data, "gcam-usa/usa_seawater_states_basins")
     L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "L1231.out_EJ_state_elec_F_tech")
 
     # ===================================================
+
+    # Define unique states and basins that have access to seawater that will
+    # allow for seawate cooling
+
+    seawater_states_basins <- unique(usa_seawater_states_basins$seawater_region)
 
     # inital processing of UCS database
     UCS_Database %>%
@@ -56,7 +63,7 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
       # filter out entries with no technology detail
       filter(!is.na(`Generation Technology`)) %>%
       # reset Michigan and Wisconsin power plant seawater use to surface water
-      mutate(reported_water_source = if_else(state %in% gcamusa.NO_SEAWATER_STATES &
+      mutate(reported_water_source = if_else(!(state %in% seawater_states_basins) &
                                                reported_water_source == gcamusa.UCS_WATER_TYPE_OCEAN,
                                              gcamusa.UCS_WATER_TYPE_SURFACE,
                                              reported_water_source)) %>%
@@ -119,14 +126,14 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
     # we separate states with and without seawater availability to calculate separate shares for these states.
     # therefore we have a national avg for non seawater states and for seawater states
     L1233.out_MWh_state_elec_F_tech %>%
-      filter(!(state %in% gcamusa.NO_SEAWATER_STATES)) %>%
+      filter(state %in% seawater_states_basins) %>%
       group_by(sector, fuel, technology) %>%
       summarise(out_MWh_sea = sum(out_MWh_)) %>%
       ungroup() ->
       L1233.out_MWh_USA_elec_F_tech_sea
 
     L1233.out_MWh_state_elec_F_tech %>%
-      filter(state %in% gcamusa.NO_SEAWATER_STATES) %>%
+      filter(!(state %in% seawater_states_basins)) %>%
       group_by(sector, fuel, technology) %>%
       summarise(out_MWh_ = sum(out_MWh_)) %>%
       ungroup() ->
@@ -139,13 +146,13 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
       L1233.out_MWh_USA_elec_F_tech
 
     L1233.out_MWh_state_elec_F_tech_cool %>%
-      filter(!(state %in% gcamusa.NO_SEAWATER_STATES)) %>%
+      filter(state %in% seawater_states_basins) %>%
       group_by(sector, fuel, technology, cooling_system, water_type) %>%
       summarise(out_MWh.sea = sum(out_MWh)) %>%
       ungroup() -> L1233.out_MWh_state_elec_F_tech_cool_sea
 
     L1233.out_MWh_state_elec_F_tech_cool %>%
-      filter(state %in% gcamusa.NO_SEAWATER_STATES) %>%
+      filter(!(state %in% seawater_states_basins)) %>%
       group_by(sector, fuel, technology, cooling_system, water_type) %>%
       summarise(out_MWh = sum(out_MWh)) %>%
       ungroup() -> L1233.out_MWh_state_elec_F_tech_cool_nosea
@@ -183,8 +190,8 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
       group_by(state, sector, fuel, technology) %>%
       mutate(sum_share_tech = sum(share)) %>%
       ungroup() %>%
-      mutate(share = if_else(sum_share_tech == 0 & !(state %in% gcamusa.NO_SEAWATER_STATES), share_nat.sea,
-                             if_else(sum_share_tech == 0 & (state %in% gcamusa.NO_SEAWATER_STATES), share_nat, share))) %>%
+      mutate(share = if_else(sum_share_tech == 0 & (state %in% seawater_states_basins), share_nat.sea,
+                             if_else(sum_share_tech == 0 & !(state %in% seawater_states_basins), share_nat, share))) %>%
       # we want to make sure that states that do not have seawater available (i.e. inland states) do not get the national average added
       select(-share_nat, -share_nat.sea, -sum_share_tech) %>%
       # multiply through by historical output
@@ -249,6 +256,7 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
                      "gcam-usa/UCS_tech_names",
                      "gcam-usa/UCS_water_types",
                      "gcam-usa/UCS_Database",
+                     "gcam-usa/usa_seawater_states_basins",
                      "L1231.out_EJ_state_elec_F_tech",
                      "gcam-usa/A23.elecS_tech_mapping_cool") ->
       L1233.out_EJ_state_elec_F_tech_cool
@@ -262,6 +270,7 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
                      "gcam-usa/UCS_tech_names",
                      "gcam-usa/UCS_water_types",
                      "gcam-usa/UCS_Database",
+                     "gcam-usa/usa_seawater_states_basins",
                      "gcam-usa/A23.elecS_tech_mapping_cool") ->
       L1233.share_sR_elec_F_tech_cool
 
