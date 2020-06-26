@@ -29,6 +29,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
              FILE = 'gcam-usa/non_reeds_CSP_grid_cost',
              FILE = 'gcam-usa/NREL_us_re_technical_potential',
              FILE = 'gcam-usa/NREL_us_re_capacity_factors',
+             FILE = "gcam-usa/A10.renewable_resource_delete",
              FILE = 'energy/A10.rsrc_info',
              'L2234.StubTechCapFactor_elecS_solar_USA',
              'L2234.StubTechMarket_elecS_USA',
@@ -59,6 +60,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
     NREL_us_re_capacity_factors <- get_data(all_data, 'gcam-usa/NREL_us_re_capacity_factors')
     non_reeds_CSP_grid_cost <- get_data(all_data, 'gcam-usa/non_reeds_CSP_grid_cost')
     reeds_CSP_curve_grid_cost <- get_data(all_data, 'gcam-usa/reeds_CSP_curve_grid_cost')
+    A10.renewable_resource_delete <- get_data(all_data, "gcam-usa/A10.renewable_resource_delete")
     A10.rsrc_info <- get_data(all_data, 'energy/A10.rsrc_info')
     L2234.StubTechCapFactor_elecS_solar_USA <- get_data(all_data, 'L2234.StubTechCapFactor_elecS_solar_USA')
     L2234.StubTechMarket_elecS_USA <- get_data(all_data, 'L2234.StubTechMarket_elecS_USA')
@@ -330,7 +332,12 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
     # all states which have CSP technologies have a CSP_resource
     states_subregions %>%
       distinct(region = state) %>%
-      mutate(unlimited.resource = "global solar resource") -> L2239.DeleteUnlimitRsrc_reeds_USA
+      mutate(unlimited.resource = "global solar resource") %>%
+      # Utility-scale (i.e. non-rooftop) solar is assumed to be infeasible in DC.
+      # Thus, it is never assigned a "global solar resource".
+      # Use anti_join to remove DC from this table.
+      anti_join(A10.renewable_resource_delete, by = c("region", "unlimited.resource" = "resource_elec_subsector")) ->
+      L2239.DeleteUnlimitRsrc_reeds_USA
 
     # Table to read in renewresource, output.unit, price.unit and market
     L2239.CSP_curve %>%
@@ -455,6 +462,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
                      'gcam-usa/reeds_CSP_curve_CF',
                      'gcam-usa/NREL_us_re_technical_potential',
                      'gcam-usa/NREL_us_re_capacity_factors',
+                     "gcam-usa/A10.renewable_resource_delete",
                      'energy/A10.rsrc_info',
                      'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
