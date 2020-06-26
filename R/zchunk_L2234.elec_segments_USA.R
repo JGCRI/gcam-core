@@ -50,6 +50,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
              FILE = "gcam-usa/A23.elecS_subsector_shrwt_interpto_state_adj",
              FILE = "gcam-usa/NREL_us_re_technical_potential",
              FILE = "gcam-usa/elecS_time_fraction",
+             FILE = "gcam-usa/A10.renewable_resource_delete",
              "L119.CapFacScaler_CSP_state",
              "L1239.state_elec_supply_USA",
              "L223.StubTechEff_elec_USA",
@@ -149,11 +150,8 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    # A23.elec_delete <- get_data(all_data, "gcam-usa/A23.elec_delete")
     A23.elecS_sector <- get_data(all_data, "gcam-usa/A23.elecS_sector")
-    # A23.elecS_sector_vertical <- get_data(all_data, "gcam-usa/A23.elecS_sector_vertical")
     A23.elecS_metainfo <- get_data(all_data, "gcam-usa/A23.elecS_metainfo")
-    # A23.elecS_metainfo_vertical <- get_data(all_data, "gcam-usa/A23.elecS_metainfo_vertical")
     A23.elecS_subsector_logit <- get_data(all_data, "gcam-usa/A23.elecS_subsector_logit")
     A23.elecS_subsector_shrwt <- get_data(all_data, "gcam-usa/A23.elecS_subsector_shrwt")
     A23.elecS_subsector_shrwt_interp <- get_data(all_data, "gcam-usa/A23.elecS_subsector_shrwt_interp")
@@ -170,6 +168,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
     A23.elecS_subsector_shrwt_interpto_state_adj <- get_data(all_data, "gcam-usa/A23.elecS_subsector_shrwt_interpto_state_adj")
     NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")
     elecS_time_fraction <- get_data(all_data, "gcam-usa/elecS_time_fraction")
+    A10.renewable_resource_delete <- get_data(all_data, "gcam-usa/A10.renewable_resource_delete")
     L119.CapFacScaler_CSP_state <- get_data(all_data, "L119.CapFacScaler_CSP_state")
     L1239.state_elec_supply_USA <- get_data(all_data, "L1239.state_elec_supply_USA")
     L223.StubTechEff_elec_USA <- get_data(all_data, "L223.StubTechEff_elec_USA")
@@ -276,29 +275,49 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
     # Supplysector information
     # Create horizontal generation supplysectors
     L2234.Supplysector_elecS_USA <-
-      write_to_all_states( A23.elecS_sector, c("region", "supplysector", "output.unit", "input.unit", "price.unit",
-                                               "logit.year.fillout", "logit.exponent", "logit.type" ) )
+      write_to_all_states(A23.elecS_sector, c("region", "supplysector", "output.unit", "input.unit", "price.unit",
+                                               "logit.year.fillout", "logit.exponent", "logit.type" ))
 
     L2234.ElecReserve_elecS_USA <-
-      write_to_all_states( A23.elecS_metainfo, c("region", "supplysector","electricity.reserve.margin",
-                                                 "average.grid.capacity.factor") )
+      write_to_all_states(A23.elecS_metainfo, c("region", "supplysector","electricity.reserve.margin",
+                                                 "average.grid.capacity.factor"))
 
     # 2b. Subsector information
     L2234.SubsectorLogit_elecS_USA <-
-      write_to_all_states( A23.elecS_subsector_logit, c("region", "supplysector", "subsector", "logit.year.fillout",
-                                                        "logit.exponent" , "logit.type" ) )
+      write_to_all_states(A23.elecS_subsector_logit, c("region", "supplysector", "subsector", "logit.year.fillout",
+                                                        "logit.exponent" , "logit.type" ))  %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector"))
 
     # Note that the subsector share-weights are updated after processing calibration year output values.
     L2234.SubsectorShrwt_elecS_USA <-
-      write_to_all_states( A23.elecS_subsector_shrwt, c("region", "supplysector","subsector","year", "share.weight") )
+      write_to_all_states(A23.elecS_subsector_shrwt, c("region", "supplysector","subsector","year", "share.weight"))  %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector"))
 
     L2234.SubsectorShrwtInterp_elecS_USA <-
-      write_to_all_states( A23.elecS_subsector_shrwt_interp, c("region", "supplysector","subsector","apply.to",
-                                                               "from.year","to.year", "interpolation.function") )
+      write_to_all_states(A23.elecS_subsector_shrwt_interp, c("region", "supplysector","subsector","apply.to",
+                                                               "from.year","to.year", "interpolation.function"))  %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector"))
 
     L2234.SubsectorShrwtInterpTo_elecS_USA <-
-      write_to_all_states( A23.elecS_subsector_shrwt_interpto, c("region", "supplysector","subsector", "apply.to",
-                                                                 "from.year","to.year","to.value", "interpolation.function") )
+      write_to_all_states(A23.elecS_subsector_shrwt_interpto, c("region", "supplysector","subsector", "apply.to",
+                                                                 "from.year","to.year","to.value", "interpolation.function"))  %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector"))
 
     # Filter out hydro since it is dealt with separately in the fixed output tables
     L2234.SubsectorShrwt_elecS_USA %>%
@@ -862,7 +881,12 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
       pull(state) -> CSP_states_noresource
 
     L2234.StubTechProd_elecS_USA %>%
-      filter(!(region %in% CSP_states_noresource) | !grepl("CSP", stub.technology)) -> L2234.StubTechProd_elecS_USA
+      filter(!(region %in% CSP_states_noresource) | !grepl("CSP", stub.technology)) %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) -> L2234.StubTechProd_elecS_USA
 
     # Create tables for non-energy and energy inputs for any new technologies such as battery
     # and append them with corresponding tables
@@ -1095,6 +1119,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
                      "gcam-usa/A23.elecS_subsector_logit",
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/A23.elecS_sector",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L2234.SubsectorLogit_elecS_USA
 
@@ -1107,6 +1132,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/A23.elecS_subsector_shrwt_interp",
                      "gcam-usa/A23.elecS_subsector_shrwt_interp_state_adj",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L2234.SubsectorShrwtInterp_elecS_USA
 
@@ -1122,6 +1148,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
                      "gcam-usa/NREL_us_re_technical_potential",
                      "gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_inttech_mapping",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "L223.StubTechProd_elec_USA",
                      "L1239.state_elec_supply_USA") ->
       L2234.SubsectorShrwtInterpTo_elecS_USA
@@ -1138,6 +1165,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
                      "gcam-usa/NREL_us_re_technical_potential",
                      "gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_inttech_mapping",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "L223.StubTechProd_elec_USA",
                      "L1239.state_elec_supply_USA") ->
       L2234.SubsectorShrwt_elecS_USA
@@ -1457,6 +1485,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
                      "gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "gcam-usa/NREL_us_re_technical_potential",
                      "L119.CapFacScaler_CSP_state",
                      "L223.StubTechProd_elec_USA",

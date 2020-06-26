@@ -32,6 +32,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
              FILE = 'gcam-usa/non_reeds_PV_grid_cost',
              FILE = 'gcam-usa/NREL_us_re_technical_potential',
              FILE = 'gcam-usa/NREL_us_re_capacity_factors',
+             FILE = "gcam-usa/A10.renewable_resource_delete",
              'L2234.StubTechCapFactor_elecS_solar_USA',
              'L2234.StubTechMarket_elecS_USA',
              'L2247.GlobalIntTechCapitalOnly_elecS_USA',
@@ -62,6 +63,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
     non_reeds_PV_grid_cost <- get_data(all_data, 'gcam-usa/non_reeds_PV_grid_cost')
     NREL_us_re_technical_potential <- get_data(all_data, 'gcam-usa/NREL_us_re_technical_potential')
     NREL_us_re_capacity_factors <- get_data(all_data, 'gcam-usa/NREL_us_re_capacity_factors')
+    A10.renewable_resource_delete <- get_data(all_data, "gcam-usa/A10.renewable_resource_delete")
     L2234.StubTechCapFactor_elecS_solar_USA <- get_data(all_data, 'L2234.StubTechCapFactor_elecS_solar_USA')
     L2234.StubTechMarket_elecS_USA <- get_data(all_data, 'L2234.StubTechMarket_elecS_USA')
     L2247.GlobalIntTechCapitalOnly_elecS_USA <- get_data(all_data, 'L2247.GlobalIntTechCapitalOnly_elecS_USA')
@@ -352,14 +354,23 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       mutate(renewresource = "PV_resource",
              output.unit = "EJ",
              price.unit = "1975$/GJ",
-             market = region) -> L2238.RenewRsrc_PV_reeds_USA
+             market = region) %>%
+      # Utility-scale (i.e. non-rooftop) solar is assumed to be infeasible in DC.
+      # Thus, it should not be assigned "PV_resource".
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete, by = c("region", "renewresource" = "resource_elec_subsector")) ->
+      L2238.RenewRsrc_PV_reeds_USA
 
     # Table to create the graded resource curves
     L2238.PV_curve %>%
       mutate(renewresource = "PV_resource",
              sub.renewable.resource = "PV_resource",
              available = round(available, energy.DIGITS_MAX_SUB_RESOURCE)) %>%
-      select(region = State, renewresource, sub.renewable.resource, grade, available, extractioncost) ->
+      select(region = State, renewresource, sub.renewable.resource, grade, available, extractioncost) %>%
+      # Utility-scale (i.e. non-rooftop) solar is assumed to be infeasible in DC.
+      # Thus, it should not be assigned "PV_resource".
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete, by = c("region", "renewresource" = "resource_elec_subsector")) ->
       L2238.GrdRenewRsrcCurves_PV_reeds_USA
 
     # Table to read in maximum resource
@@ -368,7 +379,11 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
              sub.renewable.resource = "PV_resource",
              year.fillout = min(MODEL_YEARS),
              maxSubResource = round(maxSubResource, energy.DIGITS_MAX_SUB_RESOURCE)) %>%
-      select(region = State, renewresource, sub.renewable.resource, year.fillout, maxSubResource) ->
+      select(region = State, renewresource, sub.renewable.resource, year.fillout, maxSubResource) %>%
+      # Utility-scale (i.e. non-rooftop) solar is assumed to be infeasible in DC.
+      # Thus, it should not be assigned "PV_resource".
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete, by = c("region", "renewresource" = "resource_elec_subsector")) ->
       L2238.GrdRenewRsrcMax_PV_reeds_USA
 
     # Table to delete global solar resource minicam-energy-input
@@ -380,7 +395,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
 
     # Table to read in energy inputs at the technology level
     L2234.StubTechMarket_elecS_USA %>%
-      filter(grepl("PV",stub.technology )) %>%
+      filter(grepl("PV", stub.technology)) %>%
       mutate(minicam.energy.input = "PV_resource",
              market.name = region,
              efficiency = 1,
@@ -404,7 +419,12 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       mutate(renewresource = "PV_resource",
              sub.renewable.resource = "PV_resource") %>%
       select(region,renewresource, sub.renewable.resource, year.fillout = year,
-             techChange = tech.change) -> L2238.RenewRsrcTechChange_PV_reeds_USA
+             techChange = tech.change) %>%
+      # Utility-scale (i.e. non-rooftop) solar is assumed to be infeasible in DC.
+      # Thus, it should not be assigned "PV_resource".
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete, by = c("region", "renewresource" = "resource_elec_subsector")) ->
+      L2238.RenewRsrcTechChange_PV_reeds_USA
 
     # Reading the grid connection cost as a state-level non-energy cost adder
     L2234.StubTechCapFactor_elecS_solar_USA %>%
@@ -416,12 +436,16 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       filter(!is.na(input.cost)) -> L2238.StubTechCost_PV_reeds_USA
 
 	# Establishing shareweights
-	L2238.GrdRenewRsrcMax_PV_reeds_USA %>%
+    L2238.GrdRenewRsrcMax_PV_reeds_USA %>%
       select(region, resource = renewresource, subresource = sub.renewable.resource) %>%
       unique() %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(technology = subresource,
              share.weight = 1.0) %>%
+      # Utility-scale (i.e. non-rooftop) solar is assumed to be infeasible in DC.
+      # Thus, it should not be assigned "PV_resource".
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete, by = c("region", "resource" = "resource_elec_subsector")) %>%
       select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
       L2238.ResTechShrwt_PV_reeds_USA
 
@@ -478,6 +502,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
                      'gcam-usa/reeds_PV_curve_CF_avg',
                      'gcam-usa/NREL_us_re_technical_potential',
                      'gcam-usa/NREL_us_re_capacity_factors',
+                     'gcam-usa/A10.renewable_resource_delete',
                      'energy/A10.rsrc_info',
                      'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',

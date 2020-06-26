@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L203.SectorLogitTables[[ curr_table ]]$data}, \code{L203.Supplysector_demand}, \code{L203.SubsectorLogitTables[[ curr_table ]]$data}, \code{L203.SubsectorAll_demand}, \code{L203.StubTech_demand}, \code{L203.GlobalTechCoef_demand}, \code{L203.GlobalTechShrwt_demand}, \code{L203.StubTechProd_food_crop}, \code{L203.StubTechProd_food_meat}, \code{L203.StubTechProd_nonfood_crop}, \code{L203.StubTechProd_nonfood_meat}, \code{L203.StubTechProd_For}, \code{L203.StubTechFixOut_exp}, \code{L203.StubCalorieContent_crop}, \code{L203.StubCalorieContent_meat}, \code{L203.PerCapitaBased}, \code{L203.BaseService}, \code{L203.IncomeElasticity}, \code{L203.PriceElasticity}, \code{L203.FuelPrefElast_ssp1}, \code{L203.IncomeElasticity_SSP1}, \code{L203.IncomeElasticity_SSP2}, \code{L203.IncomeElasticity_SSP3}, \code{L203.IncomeElasticity_SSP4}, \code{L203.IncomeElasticity_SSP5}. The corresponding file in the
+#' the generated outputs: \code{L203.SectorLogitTables[[ curr_table ]]$data}, \code{L203.Supplysector_demand}, \code{L203.SubsectorLogitTables[[ curr_table ]]$data}, \code{L203.SubsectorAll_demand}, \code{L203.StubTech_demand}, \code{L203.GlobalTechCoef_demand}, \code{L203.GlobalTechShrwt_demand}, \code{L203.StubTechProd_food_crop}, \code{L203.StubTechProd_food_meat}, \code{L203.StubTechProd_nonfood_crop}, \code{L203.StubTechProd_nonfood_meat}, \code{L203.StubTechProd_For}, \code{L203.StubCalorieContent_crop}, \code{L203.StubCalorieContent_meat}, \code{L203.PerCapitaBased}, \code{L203.BaseService}, \code{L203.IncomeElasticity}, \code{L203.PriceElasticity}, \code{L203.FuelPrefElast_ssp1}, \code{L203.IncomeElasticity_SSP1}, \code{L203.IncomeElasticity_SSP2}, \code{L203.IncomeElasticity_SSP3}, \code{L203.IncomeElasticity_SSP4}, \code{L203.IncomeElasticity_SSP5}. The corresponding file in the
 #' original data system was \code{L203.demand_input.R} (aglu level2).
 #' @details This chunk specifies the input tables for agriculture demand: generic information for supply sector, subsector and technology,
 #' food and non-food demand in calibration years, forest product demand, net exports and caloric contents in calibration and future years,
@@ -50,7 +50,6 @@ module_aglu_L203.demand_input <- function(command, ...) {
              "L203.StubTechProd_nonfood_crop",
              "L203.StubTechProd_nonfood_meat",
              "L203.StubTechProd_For",
-             "L203.StubTechFixOut_exp",
              "L203.StubCalorieContent_crop",
              "L203.StubCalorieContent_meat",
              "L203.PerCapitaBased",
@@ -197,25 +196,6 @@ module_aglu_L203.demand_input <- function(command, ...) {
       filter(year %in% MODEL_BASE_YEARS) ->                         # Also subset the calibration tables to only the model base years
       L203.StubTechProd_nonfood
 
-    # Build L203.StubTechFixOut_exp: animal exports for net exporting regions in all periods
-    A_demand_technology_R_Y %>%
-      filter(supplysector == "Exports_Meat") %>%
-      # Create NAs for future years, use left_join instead
-      left_join(L203.ag_an_ALL_Mt_R_C_Y, by = c("region", "technology" = "GCAM_commodity", "year")) %>%
-      # Replace negative net exports with zero
-      mutate(fixedOutput = pmax(0, round(NetExp_Mt, aglu.DIGITS_CALOUTPUT))) %>%
-      # For each region / commodity
-      group_by(region, subsector) %>%
-      # Hold the animal exports constant in the future, so set value for future years at the final base year value
-      mutate(fixedOutput = replace(fixedOutput, year > max(MODEL_BASE_YEARS), fixedOutput[year == max(MODEL_BASE_YEARS)]),
-             share.weight.year = year,
-             # Subsector and technology shareweights (subsector requires the year as well)
-             subs.share.weight = 0, tech.share.weight = 0) %>%
-      ungroup() %>%
-      select(LEVEL2_DATA_NAMES[["StubTechFixOut"]]) %>%
-      filter(!region %in% aglu.NO_AGLU_REGIONS) ->           # Remove any regions for which agriculture and land use are not modeled
-      L203.StubTechFixOut_exp
-
     # Build L203.StubTechProd_For: Forest product demand by technology and region
     L110.For_ALL_bm3_R_Y %>%
       unique() %>%
@@ -271,12 +251,9 @@ module_aglu_L203.demand_input <- function(command, ...) {
 
     # Build L203.BaseService: base service of final demands
     Prod_colnames <- c("region", "supplysector", "year", "calOutputValue")
-    L203.StubTechFixOut_exp %>%
-      filter(year %in% MODEL_BASE_YEARS) %>%
-      rename(calOutputValue = fixedOutput) %>%
-      select(Prod_colnames) %>%
       # Combine all food and nonfood demand
-      bind_rows(L203.StubTechProd_food[Prod_colnames], L203.StubTechProd_nonfood[Prod_colnames], L203.StubTechProd_For[Prod_colnames]) %>%
+    L203.StubTechProd_food[Prod_colnames] %>%
+      bind_rows(L203.StubTechProd_nonfood[Prod_colnames], L203.StubTechProd_For[Prod_colnames]) %>%
       group_by(region, supplysector, year) %>%
       # Sum the total of all commodities by region and supply sector
       summarise(calOutputValue = sum(calOutputValue)) %>%
@@ -494,19 +471,6 @@ module_aglu_L203.demand_input <- function(command, ...) {
                      "L110.For_ALL_bm3_R_Y") ->
       L203.StubTechProd_For
 
-    L203.StubTechFixOut_exp %>%
-      add_title("Animal exports for net exporting regions in all periods") %>%
-      add_units("Mt") %>%
-      add_comments("Map in animal products exports in calibartion years by region / commodity") %>%
-      add_comments("Net importing countries are set to zero") %>%
-      add_comments("Future years are set to the final base year value") %>%
-      add_comments("Remove any regions for which agriculture and land use are not modeled") %>%
-      add_legacy_name("L203.StubTechFixOut_exp") %>%
-      add_precursors("common/GCAM_region_names",
-                     "aglu/A_demand_technology",
-                     "L109.an_ALL_Mt_R_C_Y") ->
-      L203.StubTechFixOut_exp
-
     L203.StubCalorieContent %>%
       filter(supplysector == "FoodDemand_Crops") %>%
       add_title("Caloric content of food crops") %>%
@@ -666,7 +630,7 @@ module_aglu_L203.demand_input <- function(command, ...) {
                      "L102.pcgdp_thous90USD_Scen_R_Y") ->
       L203.IncomeElasticity_SSP5
 
-    return_data(L203.Supplysector_demand, L203.SubsectorAll_demand, L203.StubTech_demand, L203.GlobalTechCoef_demand, L203.GlobalTechShrwt_demand, L203.StubTechProd_food_crop, L203.StubTechProd_food_meat, L203.StubTechProd_nonfood_crop, L203.StubTechProd_nonfood_meat, L203.StubTechProd_For, L203.StubTechFixOut_exp, L203.StubCalorieContent_crop, L203.StubCalorieContent_meat, L203.PerCapitaBased, L203.BaseService, L203.IncomeElasticity, L203.PriceElasticity, L203.FuelPrefElast_ssp1, L203.IncomeElasticity_SSP1, L203.IncomeElasticity_SSP2, L203.IncomeElasticity_SSP3, L203.IncomeElasticity_SSP4, L203.IncomeElasticity_SSP5)
+    return_data(L203.Supplysector_demand, L203.SubsectorAll_demand, L203.StubTech_demand, L203.GlobalTechCoef_demand, L203.GlobalTechShrwt_demand, L203.StubTechProd_food_crop, L203.StubTechProd_food_meat, L203.StubTechProd_nonfood_crop, L203.StubTechProd_nonfood_meat, L203.StubTechProd_For, L203.StubCalorieContent_crop, L203.StubCalorieContent_meat, L203.PerCapitaBased, L203.BaseService, L203.IncomeElasticity, L203.PriceElasticity, L203.FuelPrefElast_ssp1, L203.IncomeElasticity_SSP1, L203.IncomeElasticity_SSP2, L203.IncomeElasticity_SSP3, L203.IncomeElasticity_SSP4, L203.IncomeElasticity_SSP5)
   } else {
     stop("Unknown command")
   }
