@@ -47,8 +47,10 @@
 
 #include "util/base/include/iparsable.h"
 #include "util/base/include/data_definition_util.h"
+#include <xercesc/dom/DOMNode.hpp>
 
 class DataPoint;
+class Tabs;
 
 // Need to forward declare the subclasses as well.
 class LinearInterpolationFunction;
@@ -96,6 +98,11 @@ public:
         const static std::string XML_NAME = "interpolation-function";
         return XML_NAME;
     }
+
+    /*!
+     * \brief Write out object information to debug file.
+     */
+    virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
     
 protected:
     

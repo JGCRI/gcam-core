@@ -124,6 +124,15 @@ bool SCurveInterpolationFunction::XMLParse( const DOMNode* aNode ) {
     return true;
 }
 
+void SCurveInterpolationFunction::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
+    XMLWriteOpeningTag( IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, getXMLAttrNameStatic() );
+
+    XMLWriteElement( mSteepness, "steepness", aOut, aTabs );
+    XMLWriteElement( mMedianXValue, "median-x-value", aOut, aTabs );
+
+    XMLWriteClosingTag( IInterpolationFunction::getXMLNameStatic(), aOut, aTabs );
+}
+
 double SCurveInterpolationFunction::interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,
                                                  const double aXValue ) const
 {
