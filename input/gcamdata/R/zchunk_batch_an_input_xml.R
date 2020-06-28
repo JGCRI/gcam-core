@@ -32,9 +32,8 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
               "L202.StubTechInterp_an",
               "L202.StubTechProd_an",
               "L202.StubTechCoef_an",
-              "L202.StubTechCost_an",
-              "L202.GlobalRenewTech_imp_an",
-              "L202.StubTechFixOut_imp_an"))
+              "L202.StubTechCost_an"
+              ))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "an_input.xml"))
   } else if(command == driver.MAKE) {
@@ -63,8 +62,7 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
     L202.StubTechProd_an <- get_data(all_data, "L202.StubTechProd_an")
     L202.StubTechCoef_an <- get_data(all_data, "L202.StubTechCoef_an")
     L202.StubTechCost_an <- get_data(all_data, "L202.StubTechCost_an")
-    L202.GlobalRenewTech_imp_an <- get_data(all_data, "L202.GlobalRenewTech_imp_an")
-    L202.StubTechFixOut_imp_an <- get_data(all_data, "L202.StubTechFixOut_imp_an")
+
 
     # ===================================================
 
@@ -93,8 +91,6 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
       add_xml_data(L202.StubTechProd_an, "StubTechProd") %>%
       add_xml_data(L202.StubTechCoef_an, "StubTechCoef") %>%
       add_xml_data(L202.StubTechCost_an, "StubTechCost") %>%
-      add_xml_data(L202.GlobalRenewTech_imp_an, "GlobalRenewTech") %>%
-      add_xml_data(L202.StubTechFixOut_imp_an, "StubTechFixOut") %>%
       add_precursors("L202.RenewRsrc",
                      "L202.RenewRsrcPrice",
                      "L202.maxSubResource",
@@ -115,9 +111,8 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
                      "L202.StubTechInterp_an",
                      "L202.StubTechProd_an",
                      "L202.StubTechCoef_an",
-                     "L202.StubTechCost_an",
-                     "L202.GlobalRenewTech_imp_an",
-                     "L202.StubTechFixOut_imp_an") ->
+                     "L202.StubTechCost_an"
+                     ) ->
       an_input.xml
 
     return_data(an_input.xml)

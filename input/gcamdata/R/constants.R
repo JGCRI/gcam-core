@@ -621,15 +621,9 @@ gcamusa.SE_NEAR_TERM_YEAR <- 2030  # year after which projected growth rates fro
 gcamusa.AEO_SE_YEAR <- 2050   # year to which AEO 2019 socioeconomic assumptions run
 
 # Assumptions related to coal
-# Define assumptions about lifetimes for generators/units without retirement information.
 
-
-# Define assumptions about lifetimes for generators/units without retirement information.
-# Existing coal units built before 1970 will retire at the average lifetime of their vintage group.
-gcamusa.COAL_REMAINING_LIFETIME <- 20   # The max remaining lifetime of coal units built before 1970.
-
-# Vintage groups built after 1970 will retire based on the S-curve.
-# Assumed lifetime and S-curve parametetrs for coal units built after 1970:
+# Vintage groups built before 2015 will retire based on an S-curve.
+# Assumed lifetime and S-curve parametetrs for coal units:
 gcamusa.AVG_COAL_PLANT_LIFETIME <- 80
 gcamusa.AVG_COAL_PLANT_HALFLIFE <- 70
 gcamusa.COAL_RETIRE_STEEPNESS <- 0.3
