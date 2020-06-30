@@ -31,6 +31,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
              FILE = "water/A03.sector"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L203.DeleteSupplysector_USA",
+             "L203.DeleteSubsector_USA",
              "L203.Supplysector_USA",
              "L203.SubsectorLogit_USA",
              "L203.SubsectorShrwt_USA",
@@ -144,7 +145,8 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
 
     # Combine state and USA region irrigation mappings
     bind_rows(
-      L203.mapping_irr_region,
+      L203.mapping_irr_region %>%
+        filter(subsector %in% gcamusa.STATES),
       L203.mapping_irr_state
     ) ->
       L203.mapping_irr
@@ -254,7 +256,12 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                        share.weight, price.unit, input.unit, output.unit, logit.exponent, logit.type, logit.year.fillout),
                year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       dplyr::filter(!is.na(year)) %>%
-      bind_rows(L203.mapping_livestock, L203.mapping_primary, L203.mapping_irr) %>%
+      bind_rows(L203.mapping_livestock %>%
+                  ## Filter out basin names in subsectors as these are deleted later
+                  filter(subsector %in% gcamusa.STATES),
+                L203.mapping_primary %>%
+                  filter(subsector %in% gcamusa.STATES),
+                L203.mapping_irr) %>%
       mutate(pMult = if_else(water.sector == water.IRRIGATION & water_type == "water withdrawals" & region != gcam.USA_REGION,
                              water.IRR_PRICE_SUBSIDY_MULT, water.MAPPING_PMULT)) ->
       L203.mapping_all
@@ -262,6 +269,25 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     tibble(region = gcam.USA_REGION,
            supplysector = water.DELETE_DEMAND_TYPES) ->
       L203.DeleteSupplysector_USA
+
+    ## We delete the basin level subsectors in the USA region
+    ## to eliminate double counting of irrigation, livestock,
+    ## and primary energy. This overrides the mappings from
+    ## water_mapping.XML and maps directly to the states.
+    L203.mapping_irr_region %>%
+      filter(!subsector %in% gcamusa.STATES) %>%
+      select(region,supplysector,subsector) %>%
+      bind_rows(
+        L203.mapping_primary_region %>%
+          filter(!subsector %in% gcamusa.STATES) %>%
+          select(region,supplysector,subsector),
+        L203.mapping_livestock%>%
+          filter(!subsector %in% gcamusa.STATES) %>%
+          select(region,supplysector,subsector)
+      ) %>%
+      unique()->
+      L203.DeleteSubsector_USA
+
 
     # Sector information
     L203.mapping_all %>%
@@ -353,6 +379,13 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       add_comments("Remove the USA electricity, municipal, and industrial water_td's") %>%
       add_legacy_name("L2232.DeleteSubsector_USA") ->
       L203.DeleteSupplysector_USA
+
+    L203.DeleteSubsector_USA %>%
+      add_title("Remove the three sectors that are produced at the state level") %>%
+      add_units("Unitless") %>%
+      add_comments("Remove the USA electricity, municipal, and industrial water_td's") %>%
+      add_legacy_name("L2232.DeleteSubsector_USA") ->
+      L203.DeleteSubsector_USA
 
     L203.Supplysector_USA %>%
       add_title("Water sector information") %>%
@@ -491,6 +524,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       L203.TechDesalCost_USA
 
     return_data(L203.DeleteSupplysector_USA,
+                L203.DeleteSubsector_USA,
                 L203.Supplysector_USA,
                 L203.SubsectorLogit_USA,
                 L203.SubsectorShrwt_USA,
