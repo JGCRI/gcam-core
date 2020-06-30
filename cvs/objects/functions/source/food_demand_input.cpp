@@ -166,14 +166,14 @@ void FoodDemandInput::initCalc( const string& aRegionName,
         // during calibration.  If it is too far away from 1 we should issue a warning
         // as something may have structurally changed in GCAM and new parameter values
         // should be generated accordingly.
-        const double REGIONAL_BIAS_THRESHOLD = 1.6;
+        /*const double REGIONAL_BIAS_THRESHOLD = 1.6;
         if( mRegionalBias[ aPeriod - 1 ] >= REGIONAL_BIAS_THRESHOLD ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Calibrated regional bias " << mRegionalBias[ aPeriod - 1 ]
                     << " for " << aRegionName << ", " << mName
                     << " is outside the range of expected values." << endl;
-        }
+        }*/
         
         // Fill in regional bias values for future model periods which may just copy
         // forward the calibrated value if no values were parsed or linearly converge
@@ -257,9 +257,12 @@ void FoodDemandInput::setPhysicalDemand( double aPhysicalDemand, const string& a
         mFoodDemandQuantity[ aPeriod ].set( aPhysicalDemand );
     }
     else {
-        // In the calibration periods we calibrate the regional bias as the
-        // ratio between the actual demand versus the modeled value.
-        mRegionalBias[ aPeriod ] = mFoodDemandQuantity[ aPeriod ] / aPhysicalDemand;
+        // In the calibration periods we calibrate the regional bias the
+        // difference between the actual demand versus the modeled value.
+        // Note the regional bias will be applied prior to annualization so
+        // we need to convert the difference back from Pcal/year to
+        // Kcal/day (per capita)
+        mRegionalBias[ aPeriod ] = ( mFoodDemandQuantity[ aPeriod ] - aPhysicalDemand ) / getAnnualDemandConversionFactor( aPeriod );
     }
     
     scenario->getMarketplace()->addToDemand( mName, aRegionName,
@@ -380,17 +383,24 @@ void FoodDemandInput::setActualShare( double aShare,
 }
 
 /*!
- * \brief Get the scale parameter (A) * regional bias for this food demand input.
- * \details We apply the regional bias here for convenience as it too is a multiplicative
- *          term in the food demand equation.
+ * \brief Get the additive regional bias correction.
+ * \details The regional bias is an additive calibration term.
  * \param aPeriod The current model period.
+ * \return The value for the current regional bias value.
  */
-double FoodDemandInput::getScaleParam( const int aPeriod ) const {
+double FoodDemandInput::getRegionalBias( const int aPeriod ) const {
     // In the calibration periods we calibrate the regional bias
     // so it should not be applied here.
-    double regionalBias = aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ?
-        1.0 : mRegionalBias[ aPeriod ];
-    return mScaleParam * regionalBias;
+    return aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ?
+        0.0 : mRegionalBias[ aPeriod ];
+}
+
+/*!
+ * \brief Get the scale parameter (A) for this food demand input.
+ * \details This just gets the multiplicative term in the food demand equation.
+ */
+double FoodDemandInput::getScaleParam() const {
+    return mScaleParam;
 }
 
 /*!

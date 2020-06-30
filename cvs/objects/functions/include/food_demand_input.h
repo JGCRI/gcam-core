@@ -133,8 +133,10 @@ public:
     void setActualShare( double aShare,
                          const std::string& aRegionName,
                          const int aPeriod );
+    
+    double getRegionalBias( const int aPeriod ) const;
 
-    double getScaleParam( const int aPeriod ) const;
+    double getScaleParam() const;
 
     virtual double calcPriceExponent( const FoodDemandInput* aOther,
                                       double aAdjIncome,
