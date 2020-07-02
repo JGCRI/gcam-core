@@ -247,8 +247,7 @@ double NestingSubsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
         /*!
          * \note Negative prices may be produced and are valid.
          */
-        // Subsectors with no share cannot affect price. The getPrice function
-        // is constant so skipping it will not avoid any side effects. What?
+        // Subsectors with no share cannot affect price.
         if( techShares[ i ] > util::getSmallNumber() ){
             subsectorPrice += techShares[ i ] * currCost;
             sharesum += techShares[i];
