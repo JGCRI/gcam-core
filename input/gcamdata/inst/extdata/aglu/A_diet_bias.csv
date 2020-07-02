@@ -5,5 +5,3 @@
 # Column types: cnn
 # ----------
 demand_type,regional.bias.year,regional.bias
-FoodDemand_Staples,2100,0
-FoodDemand_NonStaples,2100,0

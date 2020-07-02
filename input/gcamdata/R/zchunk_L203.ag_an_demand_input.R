@@ -306,17 +306,27 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       write_to_all_regions(LEVEL2_DATA_NAMES[["DemandNonStapleParams"]], GCAM_region_names = GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS)
 
+    if(nrow(A_diet_bias) > 0) {
     L203.DemandStapleRegBias <- select(L203.DemandStapleParams, region, gcam.consumer, nodeInput, staples.food.demand.input) %>%
       left_join_error_no_match(A_diet_bias,
                                by = c(staples.food.demand.input = "demand_type")) %>%
       select(LEVEL2_DATA_NAMES[["DemandStapleRegBias"]])
+    } else {
+      # no convergence values, just return an empty tibble
+      L203.DemandStapleRegBias <- as_tibble(sapply(LEVEL2_DATA_NAMES[['DemandStapleRegBias']], function(d) {character()}))
+    }
 
 
+    if(nrow(A_diet_bias) > 0) {
     L203.DemandNonStapleRegBias <- select(L203.DemandNonStapleParams, region, gcam.consumer, nodeInput, non.staples.food.demand.input) %>%
       left_join_error_no_match(A_diet_bias,
                                by = c(non.staples.food.demand.input = "demand_type")) %>%
       select(LEVEL2_DATA_NAMES[["DemandNonStapleRegBias"]])
       #select(c("region", "gcam.consumer", "nodeInput", "non.staples.food.demand.input", "regional.bias.year", "regional.bias"))
+    } else {
+      # no convergence values, just return an empty tibble
+      L203.DemandNonStapleRegBias <- as_tibble(sapply(LEVEL2_DATA_NAMES[['DemandNonStapleRegBias']], function(d) {character()}))
+    }
 
     L203.Demand <- L203.StubTechProd_food %>%
       group_by(region, supplysector, year) %>%
