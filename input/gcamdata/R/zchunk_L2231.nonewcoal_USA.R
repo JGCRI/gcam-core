@@ -89,31 +89,25 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
 
     # With endogenous cooling technologies, generation techs (e.g. coal conv pul, coal IGCC) are actually
     # nested subsectors.  Adjust to account for this new nesting-subsector structure.
-    add_cooling_techs <- function(data){
-      data %>%
-        left_join(A23.elecS_tech_mapping_cool,
-                  by = c("stub.technology" = "Electric.sector.technology",
-                         "supplysector" = "Electric.sector","subsector")) %>%
-        rename(subsector0 = subsector,
-               subsector = stub.technology) %>%
-        distinct(region, supplysector, subsector0, subsector, year, share.weight) -> data_new
-
-      return(data_new)
-    }
 
     # No new coal
     L2231.StubTechShrwt_nonewcoal_nongen_USA <- L2231.StubTechShrwt_nonewcoal_USA %>%
       filter(!grepl("generation", supplysector))
 
-    L2231.SubsectorShrwt_nonewcoal_elecS_cool_USA <- add_cooling_techs(L2231.StubTechShrwt_nonewcoal_USA %>%
-                                                              filter(grepl("generation", supplysector)))
+    L2231.StubTechShrwt_nonewcoal_USA %>%
+      rename(subsector0 = subsector,
+             subsector = stub.technology) %>%
+      filter(grepl("generation", supplysector)) -> L2231.SubsectorShrwt_nonewcoal_elecS_cool_USA
 
     # Coal delay
     L2231.StubTechShrwt_coal_delay_nongen_USA <- L2231.StubTechShrwt_coal_delay_USA %>%
       filter(!grepl("generation", supplysector))
 
-    L2231.SubsectorShrwt_coal_delay_elecS_cool_USA <- add_cooling_techs(L2231.StubTechShrwt_coal_delay_USA %>%
-                                                                         filter(grepl("generation", supplysector)))
+    L2231.StubTechShrwt_coal_delay_USA %>%
+      rename(subsector0 = subsector,
+             subsector = stub.technology) %>%
+      filter(grepl("generation", supplysector)) -> L2231.SubsectorShrwt_coal_delay_elecS_cool_USA
+
 
     # ===================================================
     # Produce outputs

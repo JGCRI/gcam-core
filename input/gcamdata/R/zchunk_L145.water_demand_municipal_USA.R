@@ -1,4 +1,4 @@
-#' module_gcamusa_L145.water.demand.municipal
+#' module_gcamusa_L145.water_demand_municipal
 #'
 #' Generate US state municipal water withdrawals, municipal water base delivery cost, and municipal water use efficiency.
 #'
@@ -14,7 +14,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC March 2019
-module_gcamusa_L145.water.demand.municipal <- function(command, ...) {
+module_gcamusa_L145.water_demand_municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/USGS_municipal_water_withdrawal_USA",
              FILE = "gcam-usa/municipal_water_use_efficiency_USA",

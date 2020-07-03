@@ -65,10 +65,8 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
           select(-water_type)
       ) %>%
       group_by(year) %>%
-      mutate(sum = sum(value)) %>%
+      mutate(value = value / sum(value)) %>%
       ungroup() %>%
-      mutate(value = value / sum) %>%
-      select(-sum) %>%
       arrange(state, year) %>%
       repeat_add_columns(tibble(water_type = water.MAPPED_WATER_TYPES)) %>%
       unique() ->

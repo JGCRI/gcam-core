@@ -87,7 +87,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       mutate(water_sector = gsub("Domestic", "Municipal", water_sector)) %>%
       # LJENM returns error because A03.sector has NAs in logit.type column
       # this is expected and not a problem, so left_join() is used
-      left_join(A03.sector, by = c("water_sector" = "water.sector")) %>%
+      left_join_error_no_match(A03.sector, by = c("water_sector" = "water.sector"), ignore_columns = c("logit.type")) %>%
       mutate(supplysector = set_water_input_name(water_sector, water_type, A03.sector)) ->
       L203.mapping_nonirr
 
@@ -146,6 +146,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     # Combine state and USA region irrigation mappings
     bind_rows(
       L203.mapping_irr_region %>%
+        ## filter out basin name subsectors
         filter(subsector %in% gcamusa.STATES),
       L203.mapping_irr_state
     ) ->
@@ -160,7 +161,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L103.water_mapping_USA_R_LS_W_Ws_share %>%
       mutate(region=gcam.USA_REGION) %>%
       repeat_add_columns(filter(A03.sector, (water.sector %in% water.LIVESTOCK))) %>%
-      mutate(wt_short = if_else(water_type == "water consumption", "C", "W"),
+      mutate(wt_short = water.MAPPED_WATER_TYPES_SHORT[water_type],
              supplysector = paste(supplysector, wt_short, sep = "_"),
              coefficient = gcamusa.DEFAULT_COEFFICIENT,
              subsector = state,
@@ -196,7 +197,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     L103.water_mapping_USA_R_PRI_W_Ws_share %>%
       mutate(region = gcam.USA_REGION) %>%
       repeat_add_columns(filter(A03.sector, (water.sector %in% water.PRIMARY_ENERGY))) %>%
-      mutate(wt_short = if_else(water_type == "water consumption", "C", "W"),
+      mutate(wt_short = water.MAPPED_WATER_TYPES_SHORT[water_type],
              supplysector = paste(supplysector, wt_short, sep = "_"),
              coefficient = gcamusa.DEFAULT_COEFFICIENT,
              subsector = state,
@@ -251,7 +252,6 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                          share.weight = share,
                          logit.year.fillout = first(MODEL_BASE_YEARS)) %>%
                   arrange(region)) %>%
-      gather_years("share.weight") %>%
       complete(nesting(region, supplysector, subsector, technology, water.sector, basin_name, water_type, coefficient, share,
                        share.weight, price.unit, input.unit, output.unit, logit.exponent, logit.type, logit.year.fillout),
                year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
@@ -296,7 +296,7 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
 
     # Subsector logit exponents for mapping sector
     L203.mapping_all %>%
-      mutate(logit.exponent = case_when(region != gcam.USA_REGION ~ water.LOGIT_EXP, TRUE~0)) %>%
+      mutate(logit.exponent = if_else(region != gcam.USA_REGION, water.LOGIT_EXP, 0)) %>%
       select(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME) ->
       L203.SubsectorLogit_USA
 
@@ -309,7 +309,6 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     # Technology share weights, defined by state and sector
     # Zero out technology shareweights in the USA region to make sure values are not counted multiple times
     L203.mapping_all %>%
-      gather_years("share.weight") %>%
       complete(nesting(region, supplysector, subsector, technology, water.sector, basin_name, water_type, coefficient),
                year = c(year, MODEL_BASE_YEARS,MODEL_FUTURE_YEARS)) %>%
       mutate(share.weight = if_else(region == gcam.USA_REGION & !(subsector %in% gcamusa.STATES) & !grepl("irr", supplysector), 0, 1)) %>%
@@ -320,19 +319,18 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
     # Define market name and minicam energy input dependent upon whether the sector is
     # produced at the state level or is we map from USA region to state
     L203.mapping_all %>%
-      gather_years("share.weight") %>%
       complete(nesting(region, supplysector, subsector, technology, water.sector, basin_name, water_type, coefficient),
                year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
-      mutate(minicam.energy.input = case_when(region == gcam.USA_REGION & grepl("water_td", technology) ~ supplysector,
-                                              TRUE~paste0(basin_name, "_", water_type)),
-             market.name = case_when(region == gcam.USA_REGION & grepl("water_td", technology) ~ subsector, TRUE~gcam.USA_REGION)) %>%
+      mutate(minicam.energy.input = if_else((region == gcam.USA_REGION & grepl("water_td", technology)),
+                                            supplysector,
+                                            paste0(basin_name, "_", water_type)),
+             market.name = if_else((region == gcam.USA_REGION & grepl("water_td", technology)), subsector, gcam.USA_REGION)) %>%
       dplyr::filter(!is.na(year)) %>%
       select(LEVEL2_DATA_NAMES[["TechCoef"]]) ->
       L203.TechCoef_USA
 
     # Pass-through technology water price adjust if there one
     L203.mapping_all %>%
-      gather_years("share.weight") %>%
       complete(nesting(region, supplysector, subsector, technology, water.sector, basin_name, water_type, coefficient),
                year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       replace_na(list(pMult=1)) %>%

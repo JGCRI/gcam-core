@@ -1,4 +1,4 @@
-#' module_gcamusa_L132.water.demand.industry
+#' module_gcamusa_L132.water_demand_industry
 #'
 #' Computes industrial water withdrawals and consumption by US state and historical year.
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC March 2019
-module_gcamusa_L132.water.demand.industry <- function(command, ...) {
+module_gcamusa_L132.water_demand_industry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/USGS_industry_water_demand_km3",
              "L101.inEIA_EJ_state_S_F"))
