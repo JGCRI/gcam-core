@@ -968,7 +968,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                                  filter(year %in% (MODEL_FUTURE_YEARS)) %>%
                                  group_by(region, supplysector, subsector0, subsector) %>%
                                  # check if a generation tech has non-zero share-weight in any future period (i.e. sum > 0)
-                                 summarise(future.subs.shrwt = ifelse(sum(share.weight) > 0, 1, 0)) %>%
+                                 summarise(future.subs.shrwt = if_else(sum(share.weight) > 0, 1, 0)) %>%
                                  ungroup(),
                                by = c("region", "supplysector", "subsector0", "subsector")) -> L2233.StubTechProd_elec_cool_SW_USA
 
@@ -1058,7 +1058,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
                                       "mapped_subsector" = "subsector", "cooling_system")) %>%
       group_by(region, supplysector, subsector0, subsector) %>%
       # check if a generation tech has non-zero share-weight in any future period (i.e. sum > 0)
-      mutate(subs.share.weight = ifelse(sum(calOutputValue) > 0, 1, 0)) %>%
+      mutate(subs.share.weight = if_else(sum(calOutputValue) > 0, 1, 0)) %>%
       # Remove any generation techs with zero generation by mapped technologies,
       # which will result in zero shares for every cooling tech.
       # This could happen if once through had 100% share historically, since

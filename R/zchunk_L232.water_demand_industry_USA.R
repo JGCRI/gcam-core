@@ -1,4 +1,4 @@
-#' module_gcamusa_L232.water.demand.industry
+#' module_gcamusa_L232.water_demand_industry
 #'
 #' Computes industrial water withdrawal/consumption coefficients (m3/GJ output) by US state and year.
 #'
@@ -13,7 +13,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC March 2019
-module_gcamusa_L232.water.demand.industry <- function(command, ...) {
+module_gcamusa_L232.water_demand_industry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/A03.sector",
              FILE = "energy/A32.globaltech_coef",
@@ -51,7 +51,7 @@ module_gcamusa_L232.water.demand.industry <- function(command, ...) {
       mutate(water_sector = "Manufacturing",
              minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector),
              market.name = region) %>%
-      select(LEVEL2_DATA_NAMES$TechCoef) %>%
+      select(LEVEL2_DATA_NAMES[["TechCoef"]]) %>%
       # Fill out the values in the final base year to all future years
       group_by(region, supplysector, subsector, technology, minicam.energy.input, market.name) %>%
       complete(year = MODEL_YEARS) %>%

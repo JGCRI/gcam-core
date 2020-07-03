@@ -1,4 +1,4 @@
-#' module_gcamusa_L245.water.demand.municipal
+#' module_gcamusa_L245.water_demand_municipal
 #'
 #' Genereate GCAM-USA municipal water sector input files.
 #'
@@ -15,7 +15,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC March 2019
-module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
+module_gcamusa_L245.water_demand_municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/A03.sector",
              FILE = "water/A45.sector",
@@ -60,20 +60,22 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
     # Join up all the assumptions into a single tibble and expand for all US states
     A45.sector %>%
       left_join_error_no_match(A45.tech_cost, by = "supplysector") %>%
+      #First build on single row of all municipal assumptions.
       bind_cols(A45.demand) %>%
       mutate(logit.year.fillout = min(MODEL_YEARS)) %>%
+      #Expand assumptions in a single tibble across all states
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
-      mutate(logit.type = NA) ->
+      mutate(logit.type = gcamusa.DEFAULT_LOGIT_TYPE) ->
       L245.assumptions_all
 
     # Supply sector information
     L245.assumptions_all %>%
-      select(LEVEL2_DATA_NAMES$Supplysector, logit.type) ->
+      select(LEVEL2_DATA_NAMES[["Supplysector"]], logit.type) ->
       L245.Supplysector_USA
 
     # Subsector logit detail
     L245.assumptions_all %>%
-      select(LEVEL2_DATA_NAMES$SubsectorLogit, logit.type) ->
+      select(LEVEL2_DATA_NAMES[["SubsectorLogit"]], logit.type) ->
       L245.SubsectorLogit_USA
 
     # Subsector shareweights
@@ -81,7 +83,7 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
       # share weights are 1 due to no competition
       mutate(year.fillout = min(MODEL_YEARS),
              share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
-      select(LEVEL2_DATA_NAMES$SubsectorShrwtFllt) ->
+      select(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]]) ->
       L245.SubsectorShrwtFllt_USA
 
     # Technology shareweights
@@ -89,7 +91,7 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
       # share weights are 1 due to no competition
       mutate(share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      select(LEVEL2_DATA_NAMES$TechShrwt) ->
+      select(LEVEL2_DATA_NAMES[["TechShrwt"]]) ->
       L245.TechShrwt_USA
 
     # Expand the municipal water efficiencies to all model years
@@ -97,6 +99,8 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
     L145.municipal_water_eff_state_Yh %>%
       group_by(state) %>%
       complete(year = sort(unique(c(HISTORICAL_YEARS, MODEL_YEARS)))) %>%
+      #Make sure no unwanted years are present
+      filter(year %in% unique(c(HISTORICAL_YEARS, MODEL_YEARS))) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
       ungroup() %>%
       filter(year %in% MODEL_YEARS) ->
@@ -111,14 +115,14 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
       left_join(L245.municipal_water_eff_state_Y, by = c("region" = "state")) %>%
       mutate(market.name = region) %>%
       # ^^ repeats tibble for consumption and withdrawal coefficients
-      repeat_add_columns(tibble(water_type = c("water consumption", "water withdrawals"))) %>%
+      repeat_add_columns(tibble(water_type = water.MAPPED_WATER_TYPES)) %>%
       # ^^ withdrawal coefficient is 1; consumption coefficient is fraction of withdrawal
       mutate(coefficient = gcamusa.DEFAULT_COEFFICIENT,
              coefficient = replace(coefficient, water_type == "water consumption",
                                    round(value[water_type == "water consumption"], water.DIGITS_MUNI_WATER)),
              water_sector = gcamusa.MUNICIPAL_SECTOR,
              minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
-      select(LEVEL2_DATA_NAMES$TechCoef) ->
+      select(LEVEL2_DATA_NAMES[["TechCoef"]]) ->
       L245.TechCoef_USA  # municipal water technology withdrawals and consumption efficiencies
 
     # Delete the USA region so that the modeled state level data can override it
@@ -130,7 +134,7 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
       L245.DeleteSupplysector_USA
 
     tibble(region = gcam.USA_REGION,
-           energy.final.demand = "municipal water") ->
+           energy.final.demand = A45.sector$supplysector) ->
       L245.DeleteFinalDemand_USA
 
 
@@ -138,12 +142,12 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
     L245.assumptions_all %>%
       left_join_error_no_match(L145.municipal_water_cost_state_75USD_m3, by = c("region" = "state")) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      select(LEVEL2_DATA_NAMES$TechCost) ->
+      select(LEVEL2_DATA_NAMES[["TechCost"]]) ->
       L245.TechCost_USA
 
     # Set final demand as per-capita based
     L245.assumptions_all %>%
-      select(LEVEL2_DATA_NAMES$PerCapitaBased) ->
+      select(LEVEL2_DATA_NAMES[["PerCapitaBased"]]) ->
       L245.PerCapitaBased_USA
 
     # Municipal water withdrawals for base years
@@ -152,25 +156,25 @@ module_gcamusa_L245.water.demand.municipal <- function(command, ...) {
       left_join(L145.municipal_water_state_W_Yh_km3, by = c("region" = "state")) %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
       rename(base.service = value) %>%
-      select(LEVEL2_DATA_NAMES$BaseService) ->
+      select(LEVEL2_DATA_NAMES[["BaseService"]]) ->
       L245.BaseService_USA
 
     # Income elasticity projections
     L245.assumptions_all %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
-      select(LEVEL2_DATA_NAMES$IncomeElasticity) ->
+      select(LEVEL2_DATA_NAMES[["IncomeElasticity"]]) ->
       L245.IncomeElasticity_USA
 
     # Price elasticity projections
     L245.assumptions_all %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
-      select(LEVEL2_DATA_NAMES$PriceElasticity) ->
+      select(LEVEL2_DATA_NAMES[["PriceElasticity"]]) ->
       L245.PriceElasticity_USA
 
     # Demand efficiency projections
     L245.assumptions_all %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
-      select(LEVEL2_DATA_NAMES$aeei) ->
+      select(LEVEL2_DATA_NAMES[["aeei"]]) ->
       L245.aeei_USA
 
 
