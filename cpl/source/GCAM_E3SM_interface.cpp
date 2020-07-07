@@ -21,6 +21,8 @@ ofstream outFile;
 // Pointer for a scenario
 Scenario* scenario; // model scenario info
 
+int restartPeriod; // Restart period is set externally and used in manage state variables
+
 /*! \brief Constructor
  * \details This is the constructor for the E3SM_driver class.
  */
@@ -39,7 +41,6 @@ GCAM_E3SM_interface::~GCAM_E3SM_interface(){
 
 void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap, std::string aGCAM2ELMWHMap)
 {
-    
     // identify default file names for control input and logging controls
     string configurationArg = aGCAMConfig;
     string loggerFactoryArg = "log_conf.xml";
@@ -111,7 +112,7 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     success = runner->setupScenarios( timer );
     
     // Overwrite the scenario name
-     runner->getInternalScenario()->setName( aCaseName );
+    runner->getInternalScenario()->setName( aCaseName );
     
     // Note we will only allocate space to store GCAM results for one model period
     // at a time.
@@ -190,13 +191,15 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     
     int finalCalibrationYear = modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() );
     int period = modeltime->getyr_to_per( curryear );
-    int modelyear = modeltime->getper_to_yr( period );
+    int modelyear = modeltime->getper_to_yr( period );   
     
     coupleLog << "Current Year is " << curryear << endl;
     
     
     if( modeltime->isModelYear( curryear )) {
-        
+        // set restart period
+        restartPeriod = period;
+
         Timer timer;
         
         // TODO: is this necessary, it will be the same as currYear
