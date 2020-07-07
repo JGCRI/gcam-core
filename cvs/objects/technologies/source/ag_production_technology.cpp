@@ -491,9 +491,19 @@ double AgProductionTechnology::calcSupply( const string& aRegionName,
                                              const int aPeriod ) const
 {
     double landAllocation = mProductLeaf->getLandAllocation( mName, aPeriod );
+    
+    // Adjust yield for changes in carbon density.
+    // Note that we want to make sure this adjustment is for this year's yield only,
+    // so this is done after the yield is set in the market info object but before
+    // supply is calculated. Also, needs to be done post initCalc so the restarts
+    // will work correctly
+    if ( aPeriod == 6 && aRegionName == "USA" && aProductName == "Corn") {
+        cout << getName() << ": " << mYieldScaler << endl;
+    }
+    double actualYield = mYield * mYieldScaler;
 
-    // Set output to yield times amount of land.
-    return mYield * landAllocation;
+    // Set output to actual yield times amount of land.
+    return actualYield * landAllocation;
 }
 
 void AgProductionTechnology::doInterpolations( const Technology* aPrevTech, const Technology* aNextTech ) {

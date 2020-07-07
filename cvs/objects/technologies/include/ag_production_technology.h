@@ -127,7 +127,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "yield", mYield, double ),
                             
         //! optional input of yield scaler to adjust
-        DEFINE_VARIABLE( SIMPLE, "yield-scaler", mYieldScaler, double ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "yield-scaler", mYieldScaler, Value ),
         
         //! the technological change factor
         DEFINE_VARIABLE( SIMPLE, "agProdChange", mAgProdChange, double ),
