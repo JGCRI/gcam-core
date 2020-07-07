@@ -57,6 +57,7 @@
 using namespace std;
 
 extern Scenario* scenario;
+extern int restartPeriod;
 
 // Note we must static initialize static class member variables in a cpp file and
 // since Value is header only and these particular fields are just as related to
@@ -215,18 +216,9 @@ void ManageStateVariables::collectState() {
         ++currEncodedId;
     }
     
-    // if configured, reset initial state data from a restart file
-    // note because the value could be specified via restart-period or restart-year
-    // we use the util::getConfigRunPeriod to reconcile the two.
-    int newRestartPeriod = util::getConfigRunPeriod( "restart" );
-    
-    if( newRestartPeriod == Scenario::UNINITIALIZED_RUN_PERIODS ) {
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Could not determine restart period, no restart will be used." << endl;
-        newRestartPeriod = -1;
-    }
-    
-    if( newRestartPeriod != -1 && mPeriodToCollect < newRestartPeriod ) {
+    // Note in the GCAM-E3SM coupling, the restart period is set in the wrapper.
+    // The value in the configuration file is ignored.
+    if(  restartPeriod != -1 && mPeriodToCollect < restartPeriod ) {
         loadRestartFile();
     }
     
