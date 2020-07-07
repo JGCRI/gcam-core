@@ -51,12 +51,18 @@
         <map from="csp_backup" to="surface"/>
         <map from="district heat" to="surface"/>
         <map from="elec_biomass (IGCC)" to="surface"/>
+        <map from="elec_biomass (IGCC CCS)" to="surface"/>
         <map from="elec_biomass (conv)" to="surface"/>
+        <map from="elec_biomass (conv CCS)" to="surface"/>
         <map from="elec_coal (IGCC)" to="surface"/>
         <map from="elec_coal (conv pul)" to="surface"/>
+        <map from="elec_coal (IGCC CCS)" to="surface"/>
+        <map from="elec_coal (conv pul CCS)" to="surface"/>
         <map from="elec_gas (CC)" to="surface"/>
+        <map from="elec_gas (CC CCS)" to="surface"/>
         <map from="elec_gas (steam/CT)" to="surface"/>
         <map from="elec_refined liquids (CC)" to="surface"/>
+        <map from="elec_refined liquids (CC CCS)" to="surface"/>
         <map from="elec_refined liquids (steam/CT)" to="surface"/>
         <map from="gas pipeline" to="surface"/>
         <map from="gas processing" to="surface"/>
