@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA154.transportation_UCD
 #'
 #' Generates transportation energy and other data using UCD transportation database and IEA data.
@@ -13,7 +15,7 @@
 #' to GCAM regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows distinct filter if_else group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather replace_na spread
 #' @author RH May 2017
 module_energy_LA154.transportation_UCD <- function(command, ...) {
 

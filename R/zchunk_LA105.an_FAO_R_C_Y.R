@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA105.an_FAO_R_C_Y
 #'
 #' Aggregates FAO animal products consumption and production data to GCAM region / commodity.
@@ -12,7 +14,7 @@
 #' and calculates the average animal products caloric content by GCAM region / commodity / year.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter if_else group_by left_join mutate select summarize
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete
 #' @author RC June 2017
 module_aglu_LA105.an_FAO_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

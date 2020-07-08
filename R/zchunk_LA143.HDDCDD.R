@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA143.HDDCDD
 #'
 #' Reads in country level heating and cooling degree day data and returns GCAM region degree days via population weighting
@@ -11,7 +13,6 @@
 #' @details Population weights HDDCDD from country level to GCAM region
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
 #' @author RH April 2017
 module_energy_LA143.HDDCDD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

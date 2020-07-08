@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA124.heat
 #'
 #' Process historical heat data into input, output from district heat, output from CHP, CHP ratio
@@ -12,7 +14,7 @@
 #' From this, it creates tables of heat input and output and uses the electricity gen. to determine heat from CHP.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange distinct filter if_else group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting replace_na
 #' @author JDH April 2017
 module_energy_LA124.heat <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

@@ -1,0 +1,11 @@
+# File: A10.ResReserveTechDeclinePhase.csv
+# Title: A parameter to control when to decline production when a reserve is running out
+# Units: fraction
+# Source: Assumption, loosely based on https://www.netl.doe.gov/sites/default/files/netl-file/CO2_EOR_Primer.pdf
+# Column types: cccn
+# ----------
+resource,reserve.subresource,resource.reserve.technology,decline.phase.percent
+coal,coal,coal,0.3
+crude oil,crude oil,crude oil,0.3
+natural gas,natural gas,natural gas,0.3
+unconventional oil,unconventional oil,unconventional oil,0.3

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L2521.MACC_IRR
 #'
 #' Adds technologies and tech changes to marginal abatement cost curves, MACC, for animals and agriculture.
@@ -11,7 +13,6 @@
 #' @details Adds agricultural technology to agriculture marginal abatement cost curves, MACC. Adds SSP-specific tech changes to animal and agriculture MAC curves.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr left_join mutate select
-#' @importFrom tidyr gather spread
 #' @author RH July 2017
 module_emissions_L2521.MACC_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

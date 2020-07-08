@@ -1,6 +1,6 @@
-# File: EIA_AEO_fuels.csv,
-# Title: Mapping EIA Fuel to GCAM fuel,
-# Units: NA,
+# File: EIA_AEO_fuels.csv
+# Title: Mapping EIA Fuel to GCAM fuel
+# Units: NA
 # Column types: cc 
 # ----------
 EIA_fuel,fuel

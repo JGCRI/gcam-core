@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LA100.0_LDS_preprocessing
 #'
 #' Read in and process LDS (Land Data System) files.
@@ -16,7 +18,6 @@
 #' Modelling & Software 85, 246-265. http://dx.doi.org/10.1016/j.envsoft.2016.08.016.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate semi_join summarise
-#' @importFrom tidyr gather spread
 #' @author BBL March 2017
 module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
 

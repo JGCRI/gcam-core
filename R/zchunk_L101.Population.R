@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_socioeconomics_L101.Population
 #'
 #' Compute population for historical and future years, by region and SSP.
@@ -12,7 +14,7 @@
 #' country and/or region and/or SPP as necessary.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter group_by mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting spread
 #' @author BBL April 2017
 module_socioeconomics_L101.Population <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

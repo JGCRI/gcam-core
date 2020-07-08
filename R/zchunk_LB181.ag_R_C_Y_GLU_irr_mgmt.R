@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt
 #'
 #' Calculates the economic yields, cropland cover and production by GCAM region / commodity / year / GLU / irrigation / mgmt level.
@@ -14,7 +16,7 @@
 #' yield mutipliers and land shares for each region / commodity / GLU / irrigation level.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter left_join mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather
 #' @author RC May 2017
 module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -88,7 +90,8 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       rename(yield = value) %>%
       left_join_error_no_match(L181.LC_bm2_R_C_Yh_GLU_irr_level,
                                by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "Irr_Rfd", "year", "level")) %>%
-      mutate(value = yield * value) %>%
+      # apply land area rounding (and cutoff) for production consistency
+      mutate(value = round(value, digits = aglu.DIGITS_LAND_USE) * yield) %>%
       select(-yield) ->
       L181.ag_Prod_Mt_R_C_Y_GLU_irr_level
 

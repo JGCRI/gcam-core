@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_data_EDGAR_gases
 #'
 #' Dedicated data chunk to read \code{EDGAR} csv files.
@@ -11,7 +13,6 @@
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
 #' @importFrom dplyr mutate bind_rows
-#' @importFrom tidyr gather spread
 #' @author BBL May 2017
 module_data_EDGAR_gases <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

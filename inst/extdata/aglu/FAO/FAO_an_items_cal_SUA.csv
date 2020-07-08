@@ -9,10 +9,10 @@ item,GCAM_commodity,crop_cal,Mcal_t
 "Aquatic Animals, Others",OtherMeat_Fish,AQUATIC ANIMALS NES FRESH,300
 Aquatic Plants,,,0
 Bovine Meat,Beef,BEEF BONELESS,1500
-"Butter, Ghee",,GHEE FROM COW MILK,8730
+"Butter, Ghee",Dairy,GHEE FROM COW MILK,8730
 Cephalopods,OtherMeat_Fish,CEPHALOPODS FRESH,660
 Cheese,,CHEESE WHOLE COW MILK,3870
-Cream,,"CREAM, FRESH",1950
+Cream,Dairy,"CREAM, FRESH",1950
 Crustaceans,OtherMeat_Fish,CRUSTACEANS FRESH,470
 Demersal Fish,OtherMeat_Fish,DEMERSAL FISH FRESH,420
 Eggs,Poultry,HEN EGGS,1390
@@ -21,7 +21,7 @@ Fish Meal,OtherMeat_Fish,FRESHWATER DIADROM. FISH PREPARED NES,2620
 "Fish, Body Oil",OtherMeat_Fish,MARINE FISH NES BODY OIL,9020
 "Fish, Liver Oil",OtherMeat_Fish,MARINE FISH L221NES LIVER OIL,9020
 Freshwater Fish,OtherMeat_Fish,FRESHWATER DIADROMOUS FISH FRESH,690
-Hides & Skins,,,0
+Hides and skins,,,0
 Honey,,,0
 "Marine Fish, Other",OtherMeat_Fish,MARINE FISH NES FRESH,640
 Meat Meal,OtherMeat_Fish,MEAT PREPARED NES,2420

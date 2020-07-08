@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_LA142.Building
 #'
 #' Downscaling each state and sector's shares of USA building energy use by fuel
@@ -11,10 +13,9 @@
 #' @details Scaled national-level building energy consumption by portion of total US building energy use by fuel for each state and sector from the SEDS table.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter group_by mutate select summarise
-#' @importFrom tidyr gather spread
 #' @author KD September 2017
 
-module_gcam.usa_LA142.Building <- function(command, ...) {
+module_gcamusa_LA142.Building <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L142.in_EJ_R_bld_F_Yh",
               "L101.inEIA_EJ_state_S_F"))

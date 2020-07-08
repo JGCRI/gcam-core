@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_L242.ssp34_pasture
 #'
 #' Construct the managed and unmanaged pasture allocation datasets for SSP3 and SSP4
@@ -12,7 +14,6 @@
 #' We do this for both historical and model base periods, isolating low-growth regions (defined by \code{aglu.LOW_GROWTH_PCGDP}).
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter left_join mutate pull select
-#' @importFrom tidyr gather spread
 #' @author BBL June 2017
 module_aglu_L242.ssp34_pasture <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

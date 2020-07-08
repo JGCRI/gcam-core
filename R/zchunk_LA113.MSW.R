@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA113.MSW
 #'
 #' Generate municipal solid waste data.
@@ -11,8 +13,7 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
-#' @importFrom dplyr filter full_join group_by mutate full_join summarise
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr filter full_join group_by mutate summarise
 #' @author BBL
 module_energy_LA113.MSW <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

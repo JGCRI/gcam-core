@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB110.For_FAO_R_Y
 #'
 #' Build FAO forestry production, export, import, and consumption data for every GCAM region in each year.
@@ -14,7 +16,6 @@
 #' at the Region level such that Global Production equals Consumption.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by mutate select summarise summarise_all
-#' @importFrom tidyr gather spread
 #' @author MC and ACS March 2017
 module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

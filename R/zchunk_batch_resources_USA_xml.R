@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_batch_resources_USA_xml
 #'
 #' Construct XML data structure for \code{resources_USA.xml}.
@@ -20,7 +22,8 @@ module_gcamusa_batch_resources_USA_xml <- function(command, ...) {
              "L210.SmthRenewRsrcCurves_wind_USA",
              "L210.GrdRenewRsrcCurves_geo_USA",
              "L210.GrdRenewRsrcMax_geo_USA",
-             "L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA"))
+             "L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA",
+             "L210.ResTechShrwt_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "resources_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -39,6 +42,7 @@ module_gcamusa_batch_resources_USA_xml <- function(command, ...) {
     L210.GrdRenewRsrcCurves_geo_USA <- get_data(all_data, "L210.GrdRenewRsrcCurves_geo_USA")
     L210.GrdRenewRsrcMax_geo_USA <- get_data(all_data, "L210.GrdRenewRsrcMax_geo_USA")
     L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA")
+    L210.ResTechShrwt_USA <- get_data(all_data, "L210.ResTechShrwt_USA")
 
     # ===================================================
 
@@ -54,6 +58,9 @@ module_gcamusa_batch_resources_USA_xml <- function(command, ...) {
       add_xml_data(L210.GrdRenewRsrcCurves_geo_USA, "GrdRenewRsrcCurves") %>%
       add_xml_data(L210.GrdRenewRsrcMax_geo_USA, "GrdRenewRsrcMax") %>%
       add_xml_data(L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA, "SmthRenewRsrcCurvesGdpElast") %>%
+      add_node_equiv_xml("resource") %>%
+      add_node_equiv_xml("subresource") %>%
+      add_xml_data(L210.ResTechShrwt_USA, "ResTechShrwt") %>%
       add_precursors("L210.DeleteRenewRsrc_USArsrc",
                      "L210.DeleteUnlimitRsrc_USArsrc",
                      "L210.DeleteUnlimitRsrc_USArsrc",
@@ -64,7 +71,8 @@ module_gcamusa_batch_resources_USA_xml <- function(command, ...) {
                      "L210.SmthRenewRsrcCurves_wind_USA",
                      "L210.GrdRenewRsrcCurves_geo_USA",
                      "L210.GrdRenewRsrcMax_geo_USA",
-                     "L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA") ->
+                     "L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA",
+                     "L210.ResTechShrwt_USA") ->
       resources_USA.xml
 
     return_data(resources_USA.xml)

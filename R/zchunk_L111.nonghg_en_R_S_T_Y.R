@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L111.nonghg_en_R_S_T_Y
 #'
 #' Calculate non-ghg emission totals and non-ghg emission shares of total emissions.
@@ -14,7 +16,7 @@
 #' totals and shares are calculated by GCAM sector, fuel, technology, and driver type for EDGAR historical years.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter group_by left_join mutate right_join select summarise summarise_if
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather replace_na
 #' @author RC April 2018
 module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

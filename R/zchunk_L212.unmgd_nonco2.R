@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L212.unmgd_nonco2
 #'
 #' Outputs unmanaged land emissions and emissions coefficients for forest fires, deforestation, and grassland fires.
@@ -17,7 +19,6 @@
 #' @details Outputs unmanaged land emissions and emissions coefficients for forest fires, deforestation, and grassland fires.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows distinct filter left_join mutate select
-#' @importFrom tidyr gather spread
 #' @author RLH August 2017
 module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

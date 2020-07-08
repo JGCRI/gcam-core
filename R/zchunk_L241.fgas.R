@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L241.fgas
 #'
 #' Format fgases emission inputs for GCAM and estimates future emission factors for f gases for the SSP scenarios.

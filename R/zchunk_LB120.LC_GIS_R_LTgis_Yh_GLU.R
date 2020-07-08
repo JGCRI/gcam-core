@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU
 #'
 #' Land cover by GCAM region / aggregate land type / historical year / GLU.
@@ -13,7 +15,7 @@
 #' zero values (i.e. they only report nonzero land use combinations).
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange distinct filter group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread nesting
+#' @importFrom tidyr complete nesting
 #' @author BBL April 2017
 module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

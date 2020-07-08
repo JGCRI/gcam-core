@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA126.distribution
 #'
 #' Adjust for onsite, transmission, and distribution losses for electricity and gas. Energy input, output, and input/output ratio are calculated for the following three processes:
@@ -17,7 +19,7 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author AS May 2017
 module_energy_LA126.distribution <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

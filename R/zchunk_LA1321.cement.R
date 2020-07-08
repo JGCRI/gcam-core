@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA1321.cement
 #'
 #' Sets up input, output, and IO coefficients for cement and subtracts input energy from industry energy use
@@ -14,7 +16,7 @@
 #' are dealt with by moving their accounting to the cement sector.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter group_by left_join mutate select semi_join summarise summarise_all
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete gather nesting
 #' @author CWR Nov 2017
 module_energy_LA1321.cement <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

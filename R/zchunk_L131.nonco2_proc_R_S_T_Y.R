@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L131.nonco2_proc_R_S_T_Y
 #'
 #' Calculate historical emissions from the processing sector by GCAM technology, computed from EDGAR emissions data and EPA emissions factors.
@@ -14,7 +16,7 @@
 #' and Non.CO2. Fourth: Disaggregate EDGAR emissions to subsectors. Fifth: map in all data and compute emissions (EDGAR emissions*tech_share)
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather replace_na spread
 #' @author CH May 2017
 module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

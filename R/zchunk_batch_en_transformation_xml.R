@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_batch_en_transformation_xml
 #'
 #' Construct XML data structure for \code{en_transformation.xml}.
@@ -22,6 +24,7 @@ module_energy_batch_en_transformation_xml <- function(command, ...) {
              "L222.GlobalTechCapture_en",
              "L222.GlobalTechSCurve_en",
              "L222.GlobalTechProfitShutdown_en",
+             "L222.GlobalTechKeyword_en",
              "L222.StubTechProd_gasproc",
              "L222.StubTechProd_refining",
              "L222.StubTechCoef_refining"))
@@ -44,6 +47,7 @@ module_energy_batch_en_transformation_xml <- function(command, ...) {
     L222.GlobalTechCapture_en <- get_data(all_data, "L222.GlobalTechCapture_en")
     L222.GlobalTechSCurve_en <- get_data(all_data, "L222.GlobalTechSCurve_en")
     L222.GlobalTechProfitShutdown_en <- get_data(all_data, "L222.GlobalTechProfitShutdown_en")
+    L222.GlobalTechKeyword_en <- get_data(all_data, "L222.GlobalTechKeyword_en")
     L222.StubTechProd_gasproc <- get_data(all_data, "L222.StubTechProd_gasproc")
     L222.StubTechProd_refining <- get_data(all_data, "L222.StubTechProd_refining")
     L222.StubTechCoef_refining <- get_data(all_data, "L222.StubTechCoef_refining")
@@ -68,6 +72,7 @@ module_energy_batch_en_transformation_xml <- function(command, ...) {
       add_xml_data(L222.GlobalTechCapture_en, "GlobalTechCapture") %>%
       add_xml_data(L222.GlobalTechSCurve_en, "GlobalTechSCurve") %>%
       add_xml_data(L222.GlobalTechProfitShutdown_en, "GlobalTechProfitShutdown") %>%
+      add_xml_data(L222.GlobalTechKeyword_en, "PrimaryConsKeyword") %>%
       add_xml_data(L222.StubTechProd_gasproc, "StubTechProd") %>%
       add_xml_data(L222.StubTechProd_refining, "StubTechProd") %>%
       add_xml_data(L222.StubTechCoef_refining, "StubTechCoef") %>%
@@ -83,6 +88,7 @@ module_energy_batch_en_transformation_xml <- function(command, ...) {
                      "L222.GlobalTechCapture_en",
                      "L222.GlobalTechSCurve_en",
                      "L222.GlobalTechProfitShutdown_en",
+                     "L222.GlobalTechKeyword_en",
                      "L222.StubTechProd_gasproc",
                      "L222.StubTechProd_refining",
                      "L222.StubTechCoef_refining") ->

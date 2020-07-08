@@ -1,0 +1,30 @@
+# File: A23.elecS_stubtech_energy_inputs.csv
+# Title: Energy Inputs for Technologies Specific to the Multiple Load Segments Electricity Sector
+# Units: unitless
+# Comments: Energy inputs for new technologies that are not included in the energy system global technology database. Leave market-name empty if it equal to the state.
+# Source: battery assumptions compiled from several sources (Lazard, 2016) (Schmidt et al., 2017) (Rastler, 2010) (Chen et al., 2009)"
+# Column types: cccciccn 
+# ----------
+region,supplysector,subsector,stub.technology,period,minicam.energy.input,market.name,efficiency
+USA,peak generation,grid_storage,battery,1975,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,1990,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2005,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2010,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2015,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2020,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2025,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2030,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2035,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2040,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2045,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2050,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2055,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2060,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2065,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2070,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2075,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2080,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2085,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2090,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2095,off peak electricity,grid_region,0.89
+USA,peak generation,grid_storage,battery,2100,off peak electricity,grid_region,0.89

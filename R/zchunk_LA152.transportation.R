@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA152.transportation
 #'
 #' Calculate transportation sector energy consumption.
@@ -11,7 +13,6 @@
 #' @details Calculate transportation sector energy consumption by GCAM region, sector, fuel, and year.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter group_by mutate select summarise
-#' @importFrom tidyr gather spread
 #' @author BBL April 2017
 module_energy_LA152.transportation <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

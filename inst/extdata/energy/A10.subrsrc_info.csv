@@ -1,14 +1,14 @@
 # File: A10.subrsrc_info.csv
 # Title: Information about resources types in each region
 # Units: NA
-# Column types: cccc 
+# Column types: cccc
 # ----------
 resource,resource_type,subresource,subresource_type
-coal,depresource,coal,subresource
-crude oil,depresource,crude oil,subresource
-natural gas,depresource,natural gas,subresource
-unconventional oil,depresource,unconventional oil,subresource
-uranium,depresource,uranium,subresource
+coal,resource,coal,subresource
+crude oil,resource,crude oil,subresource
+natural gas,resource,natural gas,subresource
+unconventional oil,resource,unconventional oil,subresource
+uranium,resource,uranium,subresource
 biomass,renewresource,generic waste biomass,smooth-renewable-subresource
 distributed_solar,renewresource,distributed_solar,smooth-renewable-subresource
 geothermal,renewresource,hydrothermal,sub-renewable-resource

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcam.usa_LB123.Electricity
 #'
 #' Calculate electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse
@@ -12,9 +14,9 @@
 #' @details By state, calculates electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join mutate select summarise transmute
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr replace_na
 #' @author RLH August 2017
-module_gcam.usa_LB123.Electricity <- function(command, ...) {
+module_gcamusa_LB123.Electricity <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/NREL_us_re_technical_potential",

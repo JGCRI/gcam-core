@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_batch_industry_incelas_SSP_xml
 #'
 #' Construct XML data structures for all the \code{industry_incelas_SSP.xml} files.
