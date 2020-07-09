@@ -86,6 +86,8 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
+    virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
+    
 protected:
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
