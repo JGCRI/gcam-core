@@ -312,8 +312,6 @@ module_energy_LA113.atb_cost <- function(command, ...) {
       # copy 2015 costs backwards
       mutate(value = if_else(is.na(value), value[year==energy.ATB_BASE_YEAR], value)) %>%
       ungroup() %>%
-      # # replace NA values for shadow technologym, which cause LJENM errors down the line
-      # replace_na(list(improvement.shadow.technology = "")) %>%
       arrange(subsector, technology, input, case) %>%
       spread(year, value) -> L113.globaltech_cost
 
