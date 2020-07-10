@@ -8,27 +8,27 @@
 # ----------
 supplysector,subsector,technology,input-capital,fixed.charge.rate,1971,1990,2005,2010,2015,improvement.max,improvement.rate,improvement.shadow.technology
 electricity,coal,coal (conv pul),capital,0.13,,,,,,,,
-electricity,coal,coal (conv pul CCS),capital,0.13,,,,,,,,coal (conv pul)
+electricity,coal,coal (conv pul CCS),capital,0.13,,,,,,,,
 electricity,coal,coal (IGCC),capital,0.13,,,,,,,,
-electricity,coal,coal (IGCC CCS),capital,0.13,,,,,,,,coal (IGCC)
+electricity,coal,coal (IGCC CCS),capital,0.13,,,,,,,,
 electricity,gas,gas (steam/CT),capital,0.13,,,,,,,,
 electricity,gas,gas (CC),capital,0.13,,,,,,,,
-electricity,gas,gas (CC CCS),capital,0.13,,,,,,,,gas (CC)
+electricity,gas,gas (CC CCS),capital,0.13,,,,,,,,
 electricity,refined liquids,refined liquids (steam/CT),capital,0.13,,,,,,,,
 electricity,refined liquids,refined liquids (CC),capital,0.13,,,,,,,,
-electricity,refined liquids,refined liquids (CC CCS),capital,0.13,,,,,,,,refined liquids (CC)
+electricity,refined liquids,refined liquids (CC CCS),capital,0.13,,,,,,,,
 electricity,biomass,biomass (conv),capital,0.13,,,,,,,,
-electricity,biomass,biomass (conv CCS),capital,0.13,,,,,,,,biomass (conv)
+electricity,biomass,biomass (conv CCS),capital,0.13,,,,,,,,
 electricity,biomass,biomass (IGCC),capital,0.13,,,,,,,,
-electricity,biomass,biomass (IGCC CCS),capital,0.13,,,,,,,,biomass (IGCC)
+electricity,biomass,biomass (IGCC CCS),capital,0.13,,,,,,,,
 electricity,nuclear,Gen_II_LWR,capital,0.13,1650,1650,1650,1650,1704.048567,1,0,
 electricity,nuclear,Gen_III,capital,0.13,,,,,,,,
 electricity,wind,wind,capital,0.13,,,,,,,,
-electricity,wind,wind_storage,capital,0.13,,,,,,,,wind
+electricity,wind,wind_storage,capital,0.13,,,,,,,,
 electricity,solar,PV,capital,0.13,,,,,,,,
-electricity,solar,PV_storage,capital,0.13,,,,,,,,PV
+electricity,solar,PV_storage,capital,0.13,,,,,,,,
 electricity,solar,CSP,capital,0.13,,,,,,,,
-electricity,solar,CSP_storage,capital,0.13,,,,,,,,CSP
+electricity,solar,CSP_storage,capital,0.13,,,,,,,,
 electricity,geothermal,geothermal,capital,0.13,,,,,,,,
 elect_td_bld,rooftop_pv,rooftop_pv,capital,0.1,,,,,,,,
-electricity,wind,wind_offshore,capital,0.13,,,,,,,,
+electricity,wind,wind_offshore,capital,0.13,,,,,,,,wind

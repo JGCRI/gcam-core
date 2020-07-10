@@ -1,8 +1,8 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_energy_LA113.atb_cost_efficiency
+#' module_energy_LA113.atb_cost
 #'
-#' Generates costs and efficiency input files based on 2019 ATB data and calibrated inputs and outputs for the electricity sector.
+#' Generates power sector cost input files based on 2019 ATB data.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -16,7 +16,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select pull left_join anti_join bind_rows arrange rename
 #' @author AJS March 2019
-module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
+module_energy_LA113.atb_cost <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A23.globaltech_capital",
              FILE = "energy/A23.globaltech_capital_adv",
@@ -228,8 +228,8 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
     calc_improvement_rate <- function(improvement.rate, tech, component, level) {
       L113.costs_ATB_params %>%
         filter(technology == tech,
-              input == component,
-              case == level) %>%
+               input == component,
+               case == level) %>%
         mutate(check = initial_ATB_cost * improvement.max + (initial_ATB_cost - initial_ATB_cost * improvement.max) *
                  (1.0 - improvement.rate) ^ (energy.ATB_TARGET_YEAR - energy.ATB_BASE_YEAR) - target_ATB_cost) %>%
         pull(check) -> check
@@ -312,8 +312,8 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
       # copy 2015 costs backwards
       mutate(value = if_else(is.na(value), value[year==energy.ATB_BASE_YEAR], value)) %>%
       ungroup() %>%
-      # get rid of shadow technology
-      select(-improvement.shadow.technology) %>%
+      # # replace NA values for shadow technologym, which cause LJENM errors down the line
+      # replace_na(list(improvement.shadow.technology = "")) %>%
       arrange(subsector, technology, input, case) %>%
       spread(year, value) -> L113.globaltech_cost
 
@@ -332,9 +332,9 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
       select(-case) -> L113.globaltech_capital_ATB_adv
 
     L113.globaltech_cost %>%
-    # Filter for correct cost case
-    filter(input == energy.CAPITAL_INPUT,
-           case == energy.COSTS_LOW_CASE) %>%
+      # Filter for correct cost case
+      filter(input == energy.CAPITAL_INPUT,
+             case == energy.COSTS_LOW_CASE) %>%
       rename('input-capital' = input) %>%
       select(-case) -> L113.globaltech_capital_ATB_low
 
@@ -345,7 +345,7 @@ module_energy_LA113.atb_cost_efficiency <- function(command, ...) {
       rename(input.OM.fixed = input) %>%
       select(-case) -> L113.globaltech_OMfixed_ATB
 
-    L113.globaltech_cost%>%
+    L113.globaltech_cost %>%
       # Filter for correct cost case
       filter(input == energy.OM_VAR_INPUT,
              case == energy.COSTS_MID_CASE) %>%

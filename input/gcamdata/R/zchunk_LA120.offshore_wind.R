@@ -215,8 +215,11 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
 
     # First, calculate capital cost over time for "wind_offshore" technology
     L113.globaltech_capital_ATB %>%
-      filter(technology == "wind_offshore") %>%
+      # filter for wind and offshore wind technologies; wind is needed because it serves
+      # as a "shadow technology" for offshore wind in fill_exp_decay_extrapolate function
+      filter(technology %in% c("wind", "wind_offshore")) %>%
       fill_exp_decay_extrapolate(c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
+      filter(technology == "wind_offshore") %>%
       rename(capital.overnight=value, intermittent.technology=technology) -> L120.offshore_wind_cap_cost
 
     # Second, calculate technological change

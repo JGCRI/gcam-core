@@ -347,7 +347,6 @@ module_energy_L223.electricity <- function(command, ...) {
     # Extrapolate efficiency values to all model years and round to appropriate number of digits
     ### A23.globaltech_eff ASSUMPTION FILE HAS TWO ADDITIONAL ROWS IN OLD DATA SYSTEM (backup electricity for CSP and PV)
     A23.globaltech_eff %>%
-      select(-improvement.shadow.technology) %>%
       fill_exp_decay_extrapolate(MODEL_YEARS) %>%
       rename(sector.name = supplysector, subsector.name = subsector, efficiency = value) %>%
       mutate(efficiency = round(efficiency, energy.DIGITS_EFFICIENCY)) ->
