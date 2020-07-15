@@ -140,9 +140,7 @@
 		<Value name="climateOutputInterval">5</Value>
 		<Value name="parallel-grain-size">50</Value>
 		<Value name="stop-period">-1</Value>
-		<Value name="stop-year">-1</Value>
 		<Value name="restart-period">-1</Value>
-		<Value name="restart-year">-1</Value>
 	</Ints>
 	<Doubles>
 	</Doubles>
