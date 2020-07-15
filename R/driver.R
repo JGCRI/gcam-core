@@ -365,21 +365,43 @@ driver <- function(all_data = empty_data(),
 #' @importFrom tibble tibble
 #' @importFrom drake make
 #' @export
-driver_drake <- function() {
-  stop_before = NULL
-  stop_after = NULL
-  return_inputs_of = stop_before
-  return_outputs_of = stop_after
+driver_drake <- function(
+  stop_before = NULL,
+  stop_after = NULL,
+  return_inputs_of = stop_before,
+  return_outputs_of = stop_after,
   return_data_names = union(inputs_of(return_inputs_of),
-                            outputs_of(return_outputs_of))
-  return_data_map_only = FALSE
-  write_outputs = !return_data_map_only
-  write_xml = write_outputs
-  outdir = OUTPUTS_DIR
-  xmldir = XML_DIR
-  quiet = FALSE
+                            outputs_of(return_outputs_of)),
+  return_data_map_only = FALSE,
+  write_outputs = !return_data_map_only,
+  write_xml = write_outputs,
+  outdir = OUTPUTS_DIR,
+  xmldir = XML_DIR,
+  quiet = FALSE){
+
+  # If users ask to stop after a chunk, but also specify they want particular inputs,
+  # or if they ask to stop before a chunk, while asking for outputs, that's confusing.
+  if(missing(return_outputs_of) && !missing(return_inputs_of) && !missing(stop_after)) {
+    return_outputs_of <- NULL  # in this case don't want default of stop_before
+  }
+  if(missing(return_inputs_of) && !missing(return_outputs_of) && !missing(stop_before)) {
+    return_inputs_of <- NULL  # in this case don't want default of stop_after
+  }
+  if(missing(return_data_names)) {
+    return_data_names <- union(inputs_of(return_inputs_of), outputs_of(return_outputs_of))
+  }
 
   optional <- input <- from_file <- name <- NULL    # silence notes from package check.
+
+  assert_that(is.null(stop_before) | is.character(stop_before))
+  assert_that(is.null(stop_after) | is.character(stop_after))
+  assert_that(is.null(return_inputs_of) | is.character(return_inputs_of))
+  assert_that(is.null(return_outputs_of) | is.character(return_outputs_of))
+  assert_that(is.null(return_data_names) | is.character(return_data_names))
+  assert_that(is.logical(return_data_map_only))
+  assert_that(is.logical(write_outputs))
+  assert_that(is.logical(write_xml))
+  assert_that(is.logical(quiet))
 
   if(!quiet) cat("GCAM Data System v", as.character(utils::packageVersion("gcamdata")), "\n", sep = "")
 
@@ -430,27 +452,27 @@ driver_drake <- function() {
   metadata_info <- list()
 
   # Initialize some stuff before we start to run the chunks
-  # if(!missing(stop_before) || !missing(stop_after)) {
-  #   if(!missing(stop_after)) {
-  #     run_chunks <- stop_after
-  #   } else {
-  #     run_chunks <- stop_before
-  #   }
-  #   # calc min list
-  #   name.x <- name.y <- NULL  # silence package check note
-  #   verts <- inner_join(bind_rows(chunkoutputs,
-  #                                 tibble(name = unfound_inputs$input,
-  #                                        output = unfound_inputs$input,
-  #                                        to_xml = FALSE)),
-  #                       chunkinputs, by=c("output" = "input")) %>%
-  #     select(name.x, name.y) %>%
-  #     unique()
-  #
-  #   chunks_to_run <- dstrace_chunks(run_chunks, verts)
-  # }
-  # else {
+   if(!missing(stop_before) || !missing(stop_after)) {
+     if(!missing(stop_after)) {
+       run_chunks <- stop_after
+     } else {
+       run_chunks <- stop_before
+     }
+     # calc min list
+     name.x <- name.y <- NULL  # silence package check note
+     verts <- inner_join(bind_rows(chunkoutputs,
+                                   tibble(name = unfound_inputs$input,
+                                          output = unfound_inputs$input,
+                                          to_xml = FALSE)),
+                         chunkinputs, by=c("output" = "input")) %>%
+       select(name.x, name.y) %>%
+       unique()
+
+     chunks_to_run <- dstrace_chunks(run_chunks, verts)
+   }
+   else {
     chunks_to_run <- c(unfound_inputs$input, chunklist$name)
-  #}
+  }
 
   removed_count <- 0
   #save_chunkdata(empty_data(), create_dirs = TRUE, write_outputs=write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir) # clear directories
@@ -500,11 +522,19 @@ driver_drake <- function() {
 
   #if(!quiet && (write_outputs || write_xml)) cat("Writing chunk data...\n")
   #save_chunkdata(all_data, write_outputs = write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir)
-  plan <- tibble(target = target, command = command)
+  #plan <- tibble(target = target, command = command)
+  plan <- tibble(target = target, command = command) %>%
+    group_by(target) %>% summarize(command = unique(command)) %>% ungroup()
 
-  #future::plan(future::multisession)
-  options(clustermq.scheduler = "multicore")
-  make(plan, parallelism = "clustermq", jobs=4, caching = "worker", memory_strategy = "speed")
+   if (require(future)){
+     future::plan(future::multisession, persistent=TRUE)
+     make(plan, parallelism = "future", caching = "worker", memory_strategy = "speed")
+   }
+   else {
+     make(plan, memory_strategy = "speed")
+   }
+
+  if(!quiet) cat("All done.\n")
 }
 
 #' set_xml_file_helper
