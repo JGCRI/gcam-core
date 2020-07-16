@@ -47,6 +47,8 @@ module_gcamusa_batch_regional_biomass_USA_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    technology <- stub.technology <- NULL  # silence package check notes
+
     # Load required inputs
     L2261.DeleteSupplysector_bio_USA <- get_data(all_data, "L2261.DeleteSupplysector_bio_USA")
     L2261.Supplysector_bio_USA <- get_data(all_data, "L2261.Supplysector_bio_USA")
@@ -108,7 +110,9 @@ module_gcamusa_batch_regional_biomass_USA_xml <- function(command, ...) {
       add_xml_data(L2261.TechCost_dbm_USA, "TechCost") %>%
       add_xml_data(L2261.CarbonCoef_bio_USA, "CarbonCoef") %>%
       add_xml_data(L2261.StubTechMarket_en_USA, "StubTechMarket") %>%
-      add_xml_data(L2261.StubTechMarket_elecS_USA, "StubTechMarket") %>%
+      add_xml_data_generate_levels(L2261.StubTechMarket_elecS_USA %>%
+                                     rename(stub.technology = technology),
+                                   "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data(L2261.StubTechMarket_ind_USA, "StubTechMarket") %>%
       add_xml_data(L2261.StubTechMarket_cement_USA, "StubTechMarket") %>%
       add_xml_data(L2261.StubTechMarket_bld_USA, "StubTechMarket") %>%

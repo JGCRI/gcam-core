@@ -422,7 +422,7 @@ double Sector::getPrice( const GDP* aGDP, const int aPeriod ) const {
     double sumSubsecShares = 0;
     for ( unsigned int i = 0; i < mSubsectors.size(); ++i ){
         // Subsectors with no share cannot affect price. The getPrice function
-        // is constant so skipping it will not avoid any side effects. What?
+        // is constant so skipping it will not have any side effects.
         if( subsecShares[ i ] > util::getSmallNumber() ){
             sumSubsecShares += subsecShares[ i ];
             double currPrice = mSubsectors[ i ]->getPrice( aGDP, aPeriod );
