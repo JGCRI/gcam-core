@@ -33,7 +33,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
              FILE = 'energy/A10.rsrc_info',
              'L2234.StubTechCapFactor_elecS_solar_USA',
              'L2234.StubTechMarket_elecS_USA',
-             'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+             'L2234.GlobalIntTechCapital_elecS_USA',
              'L223.GlobalIntTechCapital_elec',
              'L223.GlobalIntTechOMfixed_elec'))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -64,7 +64,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
     A10.rsrc_info <- get_data(all_data, 'energy/A10.rsrc_info')
     L2234.StubTechCapFactor_elecS_solar_USA <- get_data(all_data, 'L2234.StubTechCapFactor_elecS_solar_USA')
     L2234.StubTechMarket_elecS_USA <- get_data(all_data, 'L2234.StubTechMarket_elecS_USA')
-    L2247.GlobalIntTechCapitalOnly_elecS_USA <- get_data(all_data, 'L2247.GlobalIntTechCapitalOnly_elecS_USA')
+    L2234.GlobalIntTechCapital_elecS_USA <- get_data(all_data, 'L2234.GlobalIntTechCapital_elecS_USA')
     L223.GlobalIntTechCapital_elec <- get_data(all_data, 'L223.GlobalIntTechCapital_elec')
     L223.GlobalIntTechOMfixed_elec <- get_data(all_data, 'L223.GlobalIntTechOMfixed_elec')
 
@@ -167,7 +167,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
       bind_rows(L2239.CSP_potential_EJ_non_reeds_states) -> L2239.CSP_potential_EJ
 
     # L2239.CSP_matrix: Creating a matrix of costs (1975$/GJ) and resource potential (EJ) by state and class
-    L2247.GlobalIntTechCapitalOnly_elecS_USA %>%
+    L2234.GlobalIntTechCapital_elecS_USA %>%
       filter(intermittent.technology == "CSP_peak",
              year == max(MODEL_BASE_YEARS)) %>%
       select(capital.overnight) -> L2239.CSP_capital
@@ -265,7 +265,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
     # k1 = FCR / (CONV_YEAR_HOURS * kWh_GJ) and k2 = 1 / (CONV_YEAR_HOURS * kWh_GJ)
     # Thus, we calculate model input parameter techChange (which is the reduction per year) as 1 - a'^(1/5).
     # This approach ignores changes in fixed OM costs over time.
-    L2247.GlobalIntTechCapitalOnly_elecS_USA %>%
+    L2234.GlobalIntTechCapital_elecS_USA %>%
       filter(intermittent.technology == "CSP_peak") %>%
       select(year, capital.overnight) %>%
       mutate(capital.tech.change.period = lag(capital.overnight, 1) / capital.overnight,
@@ -464,7 +464,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
                      'gcam-usa/NREL_us_re_capacity_factors',
                      "gcam-usa/A10.renewable_resource_delete",
                      'energy/A10.rsrc_info',
-                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+                     'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
       L2239.DeleteUnlimitRsrc_reeds_USA
@@ -483,7 +483,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
                      'gcam-usa/NREL_us_re_capacity_factors',
                      'energy/A10.rsrc_info',
                      'L2234.StubTechMarket_elecS_USA',
-                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+                     'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
       L2239.DeleteStubTechMinicamEnergyInput_CSP_reeds_USA
@@ -535,7 +535,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
                      'gcam-usa/NREL_us_re_technical_potential',
                      'gcam-usa/NREL_us_re_capacity_factors',
                      'L2234.StubTechCapFactor_elecS_solar_USA',
-                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+                     'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
       L2239.StubTechCapFactor_CSP_reeds_USA
@@ -564,7 +564,7 @@ module_gcamusa_L2239.CSP_reeds_USA <- function(command, ...) {
                      'gcam-usa/reeds_CSP_curve_grid_cost',
                      'gcam-usa/non_reeds_CSP_grid_cost',
                      'L2234.StubTechCapFactor_elecS_solar_USA',
-                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+                     'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
       L2239.StubTechCost_CSP_reeds_USA
