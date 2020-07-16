@@ -500,7 +500,8 @@ double StaplesFoodDemandInput::getPriceScaler() const {
     // additional parameter.  Note that although each the staple and non-staple
     // have their own values, only their ratio is significant.  Differences in
     // the absolute levels will be absorbed into Pm during the fitting process.
-    const double psscl = 100.0;
+    // KVC: Test price scaler of 1
+    const double psscl = 1.0;
     return psscl;
 }
 
@@ -643,7 +644,8 @@ double NonStaplesFoodDemandInput::getPriceScaler() const {
     // additional parameter.  Note that although each the staple and non-staple
     // have their own values, only their ratio is significant.  Differences in
     // the absolute levels will be absorbed into Pm during the fitting process.
-    const double pnscl = 20.0;
+    // KVC: Test price scaler of 1
+    const double pnscl = 1.0;
     return pnscl;
 }
 
