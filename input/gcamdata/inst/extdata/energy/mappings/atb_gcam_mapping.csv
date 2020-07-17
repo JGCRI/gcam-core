@@ -16,7 +16,7 @@
 # Wind and PV with dedicated storage costs are assumed to equal costs of the underlying technologies plus four times the cost of ATB 2019's battery storage.
 # This is because ATB reports costs for a 4-hour battery with 15-year lifetime. We assume an 8-hour battery with 30-year lifetime to be more consistent with storage requirements and technology lifetimes in GCAM.
 # rooftop_pv costs represent a simple average of commerical and residential rooftop PV.
-# PV and rooftop PV technolgies entail a 1$/kW DC : 0.85$/kW AC conversion because Overnight Capital Cost; Fixed O&M; and Variable O&M costs represent $/kW(h) DC; all other techs are reported in $/kW(h) AC.			
+# PV and rooftop PV technolgies entail a 1$/kW DC : 0.85$/kW AC conversion because Overnight Capital Cost; Fixed O&M; and Variable O&M costs represent $/kW(h) DC; all other techs are reported in $/kW(h) AC.
 # Column types: cccncc 
 # ----------
 technology,tech_type,tech_detail,conversion,shadow_tech,inferred
@@ -32,7 +32,7 @@ refined liquids (CC),Natural Gas,Gas-CC-HighCF,,gas (CC),x
 refined liquids (CC CCS),Natural Gas,Gas-CC-CCS-HighCF,,gas (CC CCS),x
 biomass (conv),Biopower,Dedicated,1,,
 biomass (conv CCS),Biopower,Dedicated,,biomass (conv),x
-biomass (IGCC),Coal,Coal-IGCC-HighCF,,biomass (conv),x
+biomass (IGCC),Biopower,Dedicated,,biomass (conv),x
 biomass (IGCC CCS),Biopower,Dedicated,,biomass (conv),x
 Gen_III,Nuclear,Nuclear,1,,
 wind,Land-Based Wind,TRG 5,1,,
