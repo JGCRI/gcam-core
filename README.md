@@ -1,4 +1,4 @@
-# Global Change Assessment Model (GCAM)
+# Global Change Analysis Model (GCAM)
 
 The Joint Global Change Research Institute (JGCRI) is the home and
 primary development institution for GCAM, an integrated assessment

@@ -34,6 +34,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
              FILE = "energy/calibrated_techs",
              FILE = "gcam-usa/NREL_us_re_technical_potential",
              FILE = "energy/A23.globaltech_eff",
+             FILE = "gcam-usa/A10.renewable_resource_delete",
              "L114.CapacityFactor_wind_state",
              "L119.CapFacScaler_PV_state",
              "L119.CapFacScaler_CSP_state",
@@ -112,6 +113,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions", strip_attributes = TRUE)
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")
+    A10.renewable_resource_delete <- get_data(all_data, "gcam-usa/A10.renewable_resource_delete")
     A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
     L114.CapacityFactor_wind_state <- get_data(all_data, "L114.CapacityFactor_wind_state")
     L119.CapFacScaler_PV_state <- get_data(all_data, "L119.CapFacScaler_PV_state")
@@ -316,7 +318,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       # Re-set markets from USA to regional markets, if called for in the GCAM-USA assumptions for selected fuels
       if("market.name" %in% names(data_new)) {
         data_new <- data_new %>%
-          left_join_error_no_match(select(states_subregions,state, grid_region), by = c("region" = "state")) %>%
+          left_join_error_no_match(select(states_subregions, state, grid_region), by = c("region" = "state")) %>%
           mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
                                        grid_region[minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS])) %>%
           select(-grid_region)
@@ -326,16 +328,72 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
     }
 
     process_USA_to_states(L223.Supplysector_elec) -> L223.Supplysector_elec_USA
+
     process_USA_to_states(L223.ElecReserve) -> L223.ElecReserve_USA
-    process_USA_to_states(L223.SubsectorLogit_elec) -> L223.SubsectorLogit_elec_USA
-    process_USA_to_states(L223.SubsectorShrwtFllt_elec) -> L223.SubsectorShrwtFllt_elec_USA
+
+    process_USA_to_states(L223.SubsectorLogit_elec) %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) ->
+      L223.SubsectorLogit_elec_USA
+
+    process_USA_to_states(L223.SubsectorShrwtFllt_elec) %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) ->
+      L223.SubsectorShrwtFllt_elec_USA
+
     process_USA_to_states(L223.SubsectorShrwt_nuc) -> L223.SubsectorShrwt_nuc_USA
-    process_USA_to_states(L223.SubsectorShrwt_renew) -> L223.SubsectorShrwt_renew_USA
-    process_USA_to_states(L223.SubsectorInterp_elec) -> L223.SubsectorInterp_elec_USA
-    process_USA_to_states(L223.SubsectorInterpTo_elec) -> L223.SubsectorInterpTo_elec_USA
-    process_USA_to_states(L223.StubTech_elec) -> L223.StubTech_elec_USA
-    process_USA_to_states(L223.StubTechEff_elec) -> L223.StubTechEff_elec_USA
-    process_USA_to_states(L223.StubTechCapFactor_elec) -> L223.StubTechCapFactor_elec_USA
+
+    process_USA_to_states(L223.SubsectorShrwt_renew) %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) -> L223.SubsectorShrwt_renew_USA
+
+    process_USA_to_states(L223.SubsectorInterp_elec) %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) -> L223.SubsectorInterp_elec_USA
+
+    process_USA_to_states(L223.SubsectorInterpTo_elec) %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) ->
+      L223.SubsectorInterpTo_elec_USA
+
+    process_USA_to_states(L223.StubTech_elec) %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) ->
+      L223.StubTech_elec_USA
+
+    process_USA_to_states(L223.StubTechEff_elec) %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) ->
+      L223.StubTechEff_elec_USA
+
+    process_USA_to_states(L223.StubTechCapFactor_elec) %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) ->
+      L223.StubTechCapFactor_elec_USA
 
     # NOTE: Modify the share-weight path for nuclear to include state preferences
     L1231.out_EJ_state_elec_F_tech %>%
@@ -424,7 +482,12 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       set_subsector_shrwt %>%
       mutate(share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       filter(!paste(region, subsector) %in% geo_states_noresource) %>%
-      filter(!(region %in% CSP_states_noresource) | !grepl("CSP", stub.technology)) ->
+      filter(!(region %in% CSP_states_noresource) | !grepl("CSP", stub.technology)) %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) ->
       L223.StubTechProd_elec_USA
 
     # L223.StubTechMarket_elec_USA: market names of inputs to state electricity sectors
@@ -455,6 +518,11 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       write_to_all_states(names = c(names(.), 'region')) %>%
       filter(!(region %in% CSP_states_noresource) | !grepl("CSP", technology)) %>%
       mutate(market.name = gcam.USA_REGION, stub.technology = technology) %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) %>%
       select(LEVEL2_DATA_NAMES[["StubTechMarket"]]) ->
       L223.StubTechMarket_backup_USA
 
@@ -495,6 +563,11 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
                                by = c("region" = "state", "supplysector", "subsector", "tech" = "technology")) %>%
       mutate(capacity.factor = round(capacity.factor * scaler, digits = energy.DIGITS_COST)) %>%
       filter(!(region %in% CSP_states_noresource) | !grepl("CSP", tech)) %>%
+      # Utility-scale (i.e. non-rooftop) solar is assumed to be infeasible in DC.
+      # Thus, no solar subsector should be created in DC's electricity sector.
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCapFactor"]]) ->
       L223.StubTechCapFactor_elec_solar_USA
 
@@ -539,7 +612,13 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
 
     L223.StubTechCapFactor_elec_wind_USA %>%
       filter(stub.technology != "wind_offshore") %>%
-      bind_rows(L223.StubTechCapFactor_elec_offshore_wind_USA) -> L223.StubTechCapFactor_elec_wind_USA
+      bind_rows(L223.StubTechCapFactor_elec_offshore_wind_USA) %>%
+      # Wind is assumed to be infeasible in DC. Thus, no wind subsector
+      # should be created in DC's electricity sector.
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) ->
+      L223.StubTechCapFactor_elec_wind_USA
 
     # L223.StubTechCost_offshore_wind_USA: State-specific non-energy cost adder for offshore wind grid connection cost
     L223.StubTechCapFactor_elec_wind_USA %>%
@@ -547,7 +626,8 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       select(region, supplysector, subsector, stub.technology, year) %>%
       mutate(minicam.non.energy.input = "regional price adjustment") %>%
       left_join(L120.GridCost_offshore_wind_USA, by = c("region" = "State")) %>%
-      rename(input.cost = grid.cost) -> L223.StubTechCost_offshore_wind_USA
+      rename(input.cost = grid.cost) ->
+      L223.StubTechCost_offshore_wind_USA
 
 
     # Produce outputs
@@ -720,6 +800,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_comments("States with no geothermal resource are deleted for the subsector") %>%
       add_legacy_name("L223.SubsectorLogit_elec_USA") %>%
       add_precursors("L223.SubsectorLogit_elec",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorLogit_elec_USA
 
@@ -729,7 +810,8 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_comments("The same USA region values are repeated for each state") %>%
       add_comments("States with no geothermal resource are deleted for the subsector") %>%
       add_legacy_name("L223.SubsectorShrwtFllt_elec_USA") %>%
-      add_precursors("L223.SubsectorShrwtFllt_elec") ->
+      add_precursors("L223.SubsectorShrwtFllt_elec",
+                     "gcam-usa/A10.renewable_resource_delete") ->
       L223.SubsectorShrwtFllt_elec_USA
 
     L223.SubsectorShrwt_nuc_USA %>%
@@ -750,6 +832,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_comments("States with no geothermal resource are deleted for the subsector") %>%
       add_legacy_name("L223.SubsectorShrwt_renew_USA") %>%
       add_precursors("L223.SubsectorShrwt_renew",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorShrwt_renew_USA
 
@@ -760,6 +843,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_comments("States with no geothermal resource are deleted for the subsector") %>%
       add_legacy_name("L223.SubsectorInterp_elec_USA") %>%
       add_precursors("L223.SubsectorInterp_elec",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorInterp_elec_USA
 
@@ -770,6 +854,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_comments("States with no geothermal resource are deleted for the subsector") %>%
       add_legacy_name("L223.SubsectorInterpTo_elec_USA") %>%
       add_precursors("L223.SubsectorInterpTo_elec",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "gcam-usa/NREL_us_re_technical_potential") ->
       L223.SubsectorInterpTo_elec_USA
 
@@ -780,6 +865,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_comments("States with no geothermal resource are deleted for the subsector") %>%
       add_legacy_name("L223.StubTech_elec_USA") %>%
       add_precursors("L223.StubTech_elec",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "gcam-usa/NREL_us_re_technical_potential",
                      "L119.CapFacScaler_CSP_state") ->
       L223.StubTech_elec_USA
@@ -791,6 +877,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_comments("Re-set markets from USA to regional grid markets for selected fuels") %>%
       add_legacy_name("L223.StubTechEff_elec_USA") %>%
       add_precursors("L223.StubTechEff_elec",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "gcam-usa/NREL_us_re_technical_potential",
                      "L119.CapFacScaler_CSP_state") ->
       L223.StubTechEff_elec_USA
@@ -801,6 +888,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_comments("The same USA region values are repeated for each state") %>%
       add_legacy_name("L223.StubTechCapFactor_elec_USA") %>%
       add_precursors("L223.StubTechCapFactor_elec",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "gcam-usa/NREL_us_re_technical_potential",
                      "L119.CapFacScaler_CSP_state") ->
       L223.StubTechCapFactor_elec_USA
@@ -830,6 +918,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_precursors("L1231.in_EJ_state_elec_F_tech",
                      "L1231.out_EJ_state_elec_F_tech",
                      "energy/calibrated_techs",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "gcam-usa/NREL_us_re_technical_potential",
                      "L119.CapFacScaler_CSP_state") ->
       L223.StubTechProd_elec_USA
@@ -852,6 +941,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_legacy_name("L223.StubTechMarket_backup_USA") %>%
       add_precursors("L223.GlobalIntTechBackup_elec",
                      "gcam-usa/states_subregions",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "L119.CapFacScaler_CSP_state") ->
       L223.StubTechMarket_backup_USA
 
@@ -878,7 +968,8 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_legacy_name("L223.StubTechCapFactor_elec_wind_USA") %>%
       add_precursors("L114.CapacityFactor_wind_state",
                      "energy/calibrated_techs",
-                     "gcam-usa/states_subregions") ->
+                     "gcam-usa/states_subregions",
+                     "gcam-usa/A10.renewable_resource_delete") ->
       L223.StubTechCapFactor_elec_wind_USA
 
     L223.StubTechCapFactor_elec_solar_USA %>%
@@ -890,6 +981,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
                      "L119.CapFacScaler_CSP_state",
                      "energy/calibrated_techs",
                      "gcam-usa/states_subregions",
+                     "gcam-usa/A10.renewable_resource_delete",
                      "L119.CapFacScaler_CSP_state") ->
       L223.StubTechCapFactor_elec_solar_USA
 

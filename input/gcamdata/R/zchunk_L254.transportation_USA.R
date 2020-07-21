@@ -205,7 +205,11 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
     process_USA_to_states(L254.tranSubsectorLogit) -> L254.tranSubsectorLogit_USA
     process_USA_to_states(L254.tranSubsectorShrwtFllt) -> L254.tranSubsectorShrwtFllt_USA
     process_USA_to_states(L254.tranSubsectorInterp) -> L254.tranSubsectorInterp_USA
-    process_USA_to_states(L254.tranSubsectorSpeed) -> L254.tranSubsectorSpeed_USA
+
+    process_USA_to_states(L254.tranSubsectorSpeed) %>%
+      # parent file (L254.tranSubsectorSpeed) contains duplicate values... remove these
+      distinct()-> L254.tranSubsectorSpeed_USA
+
     process_USA_to_states(L254.tranSubsectorSpeed_passthru) -> L254.tranSubsectorSpeed_passthru_USA
     process_USA_to_states(L254.tranSubsectorSpeed_noVOTT) -> L254.tranSubsectorSpeed_noVOTT_USA
     process_USA_to_states(L254.tranSubsectorSpeed_nonmotor) -> L254.tranSubsectorSpeed_nonmotor_USA
@@ -216,10 +220,12 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
     process_USA_to_states(L254.StubTech_nonmotor) -> L254.StubTranTech_nonmotor_USA
     process_USA_to_states(L254.StubTranTechLoadFactor) -> L254.StubTranTechLoadFactor_USA
     process_USA_to_states(L254.StubTranTechCost) -> L254.StubTranTechCost_USA
+
     L254.StubTranTechCoef %>%
       mutate(coefficient = round(coefficient, digits = gcamusa.DIGITS_TRNUSA_DEFAULT)) %>%
       process_USA_to_states ->
       L254.StubTranTechCoef_USA
+
     process_USA_to_states(L254.PerCapitaBased_trn) -> L254.PerCapitaBased_trn_USA
     process_USA_to_states(L254.PriceElasticity_trn) -> L254.PriceElasticity_trn_USA
     process_USA_to_states(L254.IncomeElasticity_trn) -> L254.IncomeElasticity_trn_USA
