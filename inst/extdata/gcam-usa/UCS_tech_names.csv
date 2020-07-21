@@ -1,7 +1,7 @@
 # File: UCS_tech_names.csv
 # Title: Union of Concerned Scientists (UCS) technology names
 # Units: NA
-# Column types: ccccc 
+# Column types: ccccc
 # ----------
 Technology.Code,sector,fuel,technology,cooling_system
 "BP, BG-DR-ST",electricity generation,biomass,biomass (conv),dry cooling
