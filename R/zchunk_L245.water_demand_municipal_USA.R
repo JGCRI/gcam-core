@@ -48,9 +48,9 @@ module_gcamusa_L245.water_demand_municipal <- function(command, ...) {
 
     # Load required inputs
     A03.sector <- get_data(all_data, "water/A03.sector")
-    A45.sector <- get_data(all_data, "water/A45.sector")
-    A45.tech_cost <- get_data(all_data, "water/A45.tech_cost")
-    A45.demand <- get_data(all_data, "water/A45.demand")
+    A45.sector <- get_data(all_data, "water/A45.sector", strip_attributes = TRUE)
+    A45.tech_cost <- get_data(all_data, "water/A45.tech_cost", strip_attributes = TRUE)
+    A45.demand <- get_data(all_data, "water/A45.demand", strip_attributes = TRUE)
     L145.municipal_water_state_W_Yh_km3 <- get_data(all_data, "L145.municipal_water_state_W_Yh_km3")
     L145.municipal_water_cost_state_75USD_m3 <- get_data(all_data, "L145.municipal_water_cost_state_75USD_m3")
     L145.municipal_water_eff_state_Yh <- get_data(all_data, "L145.municipal_water_eff_state_Yh")
