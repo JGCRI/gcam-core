@@ -51,12 +51,12 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
-    A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability")
-    L270.CreditMkt <- get_data(all_data, "L270.CreditMkt")
-    L270.CreditOutput <- get_data(all_data, "L270.CreditOutput")
-    L270.CreditInput_elec <- get_data(all_data, "L270.CreditInput_elec")
-    L270.NegEmissBudgetMaxPrice <- get_data(all_data, "L270.NegEmissBudgetMaxPrice")
+    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool", strip_attributes = TRUE)
+    A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability", strip_attributes = TRUE)
+    L270.CreditMkt <- get_data(all_data, "L270.CreditMkt", strip_attributes = TRUE)
+    L270.CreditOutput <- get_data(all_data, "L270.CreditOutput", strip_attributes = TRUE)
+    L270.CreditInput_elec <- get_data(all_data, "L270.CreditInput_elec", strip_attributes = TRUE)
+    L270.NegEmissBudgetMaxPrice <- get_data(all_data, "L270.NegEmissBudgetMaxPrice", strip_attributes = TRUE)
 
     # ===================================================
     # Data Processing
@@ -148,7 +148,7 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
     # environment to just outside of the loop:
     curr_env <- environment()
     for(i in seq_along(negative_emiss_input_names)) {
-      curr_data <- get_data(all_data, negative_emiss_input_names[i])
+      curr_data <- get_data(all_data, negative_emiss_input_names[i], strip_attributes = TRUE)
       curr_data %>%
         filter(region == gcam.USA_REGION) %>%
         write_to_all_states(names(curr_data)) %>%

@@ -69,7 +69,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
     RECS_2005 <- get_data(all_data, "gcam-usa/RECS_2005")
     RECS_2009 <- get_data(all_data, "gcam-usa/RECS_2009")
     RECS_2015 <- get_data(all_data, "gcam-usa/RECS_2015")
-    L142.in_EJ_state_bld_F <- get_data(all_data, "L142.in_EJ_state_bld_F")
+    L142.in_EJ_state_bld_F <- get_data(all_data, "L142.in_EJ_state_bld_F", strip_attributes = TRUE)
     L143.share_state_Pop_CDD_sR13 <- get_data(all_data, "L143.share_state_Pop_CDD_sR13")
     L143.share_state_Pop_HDD_sR13 <- get_data(all_data, "L143.share_state_Pop_HDD_sR13")
 

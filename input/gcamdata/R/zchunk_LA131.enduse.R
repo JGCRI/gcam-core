@@ -44,7 +44,7 @@ module_energy_LA131.enduse <- function(command, ...) {
 
     enduse_sector_aggregation <- get_data(all_data, "energy/mappings/enduse_sector_aggregation")
 
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
 
 
      get_data(all_data, "L121.in_EJ_R_unoil_F_Yh") %>%

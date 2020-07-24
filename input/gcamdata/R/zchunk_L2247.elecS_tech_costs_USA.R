@@ -67,21 +67,21 @@ module_gcamusa_L2247.elecS_tech_costs_USA <- function(command, ...) {
       to.technology <- NULL
 
     # Load required inputs
-    A23.itc_USA <- get_data(all_data, "gcam-usa/A23.itc_USA")
-    A23.ptc_USA <- get_data(all_data, "gcam-usa/A23.ptc_USA")
-    A23.ptc_inttech_USA <- get_data(all_data, "gcam-usa/A23.ptc_inttech_USA")
-    A23.elec_overnight_costs_USA <- get_data(all_data, "gcam-usa/A23.elec_overnight_costs_USA")
-    A23.elec_overnight_costs_adv_USA <- get_data(all_data, "gcam-usa/A23.elec_overnight_costs_adv_USA")
-    A23.elec_OM_adv_USA <- get_data(all_data, "gcam-usa/A23.elec_OM_adv_USA")
-    A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping")
-    A23.elecS_inttech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_inttech_mapping")
-    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
-    L2234.GlobalTechCapital_elecS_USA <- get_data(all_data, "L2234.GlobalTechCapital_elecS_USA")
-    L2234.GlobalIntTechCapital_elecS_USA <- get_data(all_data, "L2234.GlobalIntTechCapital_elecS_USA")
-    L2234.GlobalTechOMfixed_elecS_USA <- get_data(all_data, "L2234.GlobalTechOMfixed_elecS_USA")
-    L2234.GlobalIntTechOMfixed_elecS_USA <- get_data(all_data, "L2234.GlobalIntTechOMfixed_elecS_USA")
-    L2234.GlobalTechOMvar_elecS_USA <- get_data(all_data, "L2234.GlobalTechOMvar_elecS_USA")
-    L2234.GlobalIntTechOMvar_elecS_USA <- get_data(all_data, "L2234.GlobalIntTechOMvar_elecS_USA")
+    A23.itc_USA <- get_data(all_data, "gcam-usa/A23.itc_USA", strip_attributes = TRUE)
+    A23.ptc_USA <- get_data(all_data, "gcam-usa/A23.ptc_USA", strip_attributes = TRUE)
+    A23.ptc_inttech_USA <- get_data(all_data, "gcam-usa/A23.ptc_inttech_USA", strip_attributes = TRUE)
+    A23.elec_overnight_costs_USA <- get_data(all_data, "gcam-usa/A23.elec_overnight_costs_USA", strip_attributes = TRUE)
+    A23.elec_overnight_costs_adv_USA <- get_data(all_data, "gcam-usa/A23.elec_overnight_costs_adv_USA", strip_attributes = TRUE)
+    A23.elec_OM_adv_USA <- get_data(all_data, "gcam-usa/A23.elec_OM_adv_USA", strip_attributes = TRUE)
+    A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping", strip_attributes = TRUE)
+    A23.elecS_inttech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_inttech_mapping", strip_attributes = TRUE)
+    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool", strip_attributes = TRUE)
+    L2234.GlobalTechCapital_elecS_USA <- get_data(all_data, "L2234.GlobalTechCapital_elecS_USA", strip_attributes = TRUE)
+    L2234.GlobalIntTechCapital_elecS_USA <- get_data(all_data, "L2234.GlobalIntTechCapital_elecS_USA", strip_attributes = TRUE)
+    L2234.GlobalTechOMfixed_elecS_USA <- get_data(all_data, "L2234.GlobalTechOMfixed_elecS_USA", strip_attributes = TRUE)
+    L2234.GlobalIntTechOMfixed_elecS_USA <- get_data(all_data, "L2234.GlobalIntTechOMfixed_elecS_USA", strip_attributes = TRUE)
+    L2234.GlobalTechOMvar_elecS_USA <- get_data(all_data, "L2234.GlobalTechOMvar_elecS_USA", strip_attributes = TRUE)
+    L2234.GlobalIntTechOMvar_elecS_USA <- get_data(all_data, "L2234.GlobalIntTechOMvar_elecS_USA", strip_attributes = TRUE)
 
     # -----------------------------------------------------------------------------
     # 2. Build tables for CSVs

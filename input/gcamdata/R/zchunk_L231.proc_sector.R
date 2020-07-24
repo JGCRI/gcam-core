@@ -68,10 +68,10 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     A_regions <- get_data(all_data, "emissions/A_regions")
     A31.rsrc_info <- get_data(all_data, "emissions/A31.rsrc_info") %>%
       gather_years
-    A31.sector <- get_data(all_data, "emissions/A31.sector")
-    A31.subsector_logit <- get_data(all_data, "emissions/A31.subsector_logit")
-    A31.subsector_shrwt <- get_data(all_data, "emissions/A31.subsector_shrwt")
-    A31.subsector_interp <- get_data(all_data, "emissions/A31.subsector_interp")
+    A31.sector <- get_data(all_data, "emissions/A31.sector", strip_attributes = TRUE)
+    A31.subsector_logit <- get_data(all_data, "emissions/A31.subsector_logit", strip_attributes = TRUE)
+    A31.subsector_shrwt <- get_data(all_data, "emissions/A31.subsector_shrwt", strip_attributes = TRUE)
+    A31.subsector_interp <- get_data(all_data, "emissions/A31.subsector_interp", strip_attributes = TRUE)
     A31.globaltech_shrwt <- get_data(all_data, "emissions/A31.globaltech_shrwt") %>%
       gather_years(value_col = "share.weight")
     A31.globaltech_eff <- get_data(all_data, "emissions/A31.globaltech_eff") %>%

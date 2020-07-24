@@ -36,7 +36,7 @@ module_gcamusa_L145.water_demand_municipal <- function(command, ...) {
       gather_years()
     municipal_water_use_efficiency_USA <- get_data(all_data, "gcam-usa/municipal_water_use_efficiency_USA") %>%
       gather_years()
-    L145.municipal_water_cost_R_75USD_m3 <- get_data(all_data, "L145.municipal_water_cost_R_75USD_m3")
+    L145.municipal_water_cost_R_75USD_m3 <- get_data(all_data, "L145.municipal_water_cost_R_75USD_m3", strip_attributes = TRUE)
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state")
 
     # Complete municipal water demand data, using linear interpolation of per-capita demands in years between known data points,

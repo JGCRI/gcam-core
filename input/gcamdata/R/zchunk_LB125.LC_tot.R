@@ -49,7 +49,7 @@ module_aglu_LB125.LC_tot <- function(command, ...) {
     L122.LC_bm2_R_OtherArableLand_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_OtherArableLand_Yh_GLU")
     L123.LC_bm2_R_MgdPast_Yh_GLU <- get_data(all_data, "L123.LC_bm2_R_MgdPast_Yh_GLU")
     L123.LC_bm2_R_MgdFor_Yh_GLU <- get_data(all_data, "L123.LC_bm2_R_MgdFor_Yh_GLU")
-    L124.LC_bm2_R_Shrub_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_Shrub_Yh_GLU_adj")
+    L124.LC_bm2_R_Shrub_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_Shrub_Yh_GLU_adj", strip_attributes = TRUE)
     L124.LC_bm2_R_Grass_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_Grass_Yh_GLU_adj")
     L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj")
     L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj <- get_data(all_data, "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj")
