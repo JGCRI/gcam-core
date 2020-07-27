@@ -221,10 +221,16 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
   assert_that(is.logical(optional))
   assert_that(is.logical(quiet))
 
-  extensions <- c("", ".csv", ".csv.gz")
+  #separate 'filename' into folder(s) and file
+  folder <- gsub("/[^/]+$", "", filename)
+  file <- gsub(".*/", "", filename)
+
+  extensions <- c(".csv", ".csv.gz", "")
   for(ex in extensions) {
-    fqfn <- system.file("extdata", paste0(filename, ex), package = "gcamdata")
-    if(fqfn != "") {
+    #fqfn <- system.file("extdata", paste0(filename, ex), package = "gcamdata")
+    fqfn <- list.files(paste0("inst/extdata/", folder), paste0("^", file, ex, "$"), full.names = TRUE)
+
+    if(!identical(fqfn,character(0))) {
       if(!quiet) cat("Found", fqfn, "\n")
       return(fqfn)  # found it
     }

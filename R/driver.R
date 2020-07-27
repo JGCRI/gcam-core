@@ -377,7 +377,8 @@ driver_drake <- function(
   write_xml = write_outputs,
   outdir = OUTPUTS_DIR,
   xmldir = XML_DIR,
-  quiet = FALSE){
+  quiet = FALSE,
+  ...){
 
   # If users ask to stop after a chunk, but also specify they want particular inputs,
   # or if they ask to stop before a chunk, while asking for outputs, that's confusing.
@@ -526,13 +527,15 @@ driver_drake <- function(
   plan <- tibble(target = target, command = command) %>%
     group_by(target) %>% summarize(command = unique(command)) %>% ungroup()
 
-   if (require(future)){
-     future::plan(future::multisession, persistent=TRUE)
-     make(plan, parallelism = "future", caching = "worker", memory_strategy = "speed")
-   }
-   else {
-     make(plan, memory_strategy = "speed")
-   }
+   #if (require(future)){
+   #  future::plan(future::multisession, persistent=TRUE)
+   #  make(plan, parallelism = "future", caching = "worker", memory_strategy = "speed")
+   #}
+   #else {
+      make(plan, ...)
+   #}
+   #options(clustermq.scheduler="multiprocess")
+   #make(plan, parallelism = "clustermq", jobs = 4)
 
   if(!quiet) cat("All done.\n")
 }
