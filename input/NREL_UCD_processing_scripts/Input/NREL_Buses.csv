@@ -1,0 +1,113 @@
+"","UCD_region","Subsector","UCD_sector","mode","size.class","variable","unit","UCD_technology","UCD_fuel","Year","Value","ratio","Value_diff"
+"1","Africa","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,0.981948372344906,761677.093064542
+"2","Australia_NZ","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,0.981948372344906,761677.093064542
+"3","Brazil","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,0.981956779589626,761683.614390814
+"4","Canada","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,1.08430110114929,841069.993076968
+"5","China","Buses","Passenger","Bus","Heavy Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,0.981948372344906,761677.093064542
+"6","China","Buses","Passenger","Bus","Light Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,0.654612190865877,507769.170626212
+"7","Eastern Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,1.91605993140381,1486248.15702275
+"8","Former Soviet Union","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,1.88049822492328,1458663.67500785
+"9","India","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,0.981948372344906,761677.093064542
+"10","Japan","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,2.10566219387448,1633318.7201851
+"11","Korea","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,1,775679.368199009
+"12","Latin America","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,0.981948372344906,761677.093064542
+"13","Middle East","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,0.981948372344906,761677.093064542
+"14","Southeast Asia","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,0.981948372344906,761677.093064542
+"15","USA","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,1,775679.368199009
+"16","Western Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2005",775679.368199009,1.00980805102593,783287.271022069
+"17","Africa","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,0.981948372344906,716809.386111482
+"18","Australia_NZ","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,0.981948372344906,716809.386111482
+"19","Brazil","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,0.981956779589626,716815.52328946
+"20","Canada","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,1.08430110114929,791525.530836994
+"21","China","Buses","Passenger","Bus","Heavy Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,0.762199891690234,556395.887853063
+"22","China","Buses","Passenger","Bus","Light Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,0.654612190865877,477858.282462578
+"23","Eastern Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,1.91605993140381,1398698.52821545
+"24","Former Soviet Union","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,1.88049822492328,1372738.95059477
+"25","India","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,0.981948372344906,716809.386111482
+"26","Japan","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,2.10566219387448,1537105.68402385
+"27","Korea","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,1,729986.836680355
+"28","Latin America","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,0.981948372344906,716809.386111482
+"29","Middle East","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,0.981948372344906,716809.386111482
+"30","Southeast Asia","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,0.981948372344906,716809.386111482
+"31","USA","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,1,729986.836680355
+"32","Western Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2020",729986.836680355,1.00980805102593,737146.584822776
+"33","Africa","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,0.981948372344906,668317.30819446
+"34","Australia_NZ","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,0.981948372344906,668317.30819446
+"35","Brazil","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,0.981956779589626,668323.030193008
+"36","Canada","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,1.08430110114929,737978.913760903
+"37","China","Buses","Passenger","Bus","Heavy Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,0.762199891690234,518755.765849576
+"38","China","Buses","Passenger","Bus","Light Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,0.654612190865877,445531.221021358
+"39","Eastern Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,1.91605993140381,1304076.72313476
+"40","Former Soviet Union","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,1.88049822492328,1279873.3081496
+"41","India","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,0.981948372344906,668317.30819446
+"42","Japan","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,2.10566219387448,1433120.6497308
+"43","Korea","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,1,680603.30564886
+"44","Latin America","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,0.981948372344906,668317.30819446
+"45","Middle East","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,0.981948372344906,668317.30819446
+"46","Southeast Asia","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,0.981948372344906,668317.30819446
+"47","USA","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,1,680603.30564886
+"48","Western Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2035",680603.30564886,1.00980805102593,687278.697599083
+"49","Africa","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,0.981948372344906,649765.686066679
+"50","Australia_NZ","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,0.981948372344906,649765.686066679
+"51","Brazil","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,0.981956779589626,649771.249229964
+"52","Canada","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,1.08430110114929,717493.575765767
+"53","China","Buses","Passenger","Bus","Heavy Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,0.762199891690234,504355.778258877
+"54","China","Buses","Passenger","Bus","Light Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,0.654612190865877,433163.85187324
+"55","Eastern Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,1.91605993140381,1267877.24379075
+"56","Former Soviet Union","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,1.88049822492328,1244345.6842304
+"57","India","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,0.981948372344906,649765.686066679
+"58","Japan","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,2.10566219387448,1393339.07826566
+"59","Korea","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,1,661710.640158229
+"60","Latin America","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,0.981948372344906,649765.686066679
+"61","Middle East","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,0.981948372344906,649765.686066679
+"62","Southeast Asia","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,0.981948372344906,649765.686066679
+"63","USA","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,1,661710.640158229
+"64","Western Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2050",661710.640158229,1.00980805102593,668200.731881304
+"65","Africa","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,0.981948372344906,649251.75599422
+"66","Australia_NZ","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,0.981948372344906,649251.75599422
+"67","Brazil","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,0.981956779589626,649257.314757339
+"68","Canada","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,1.08430110114929,716926.076537523
+"69","China","Buses","Passenger","Bus","Heavy Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,0.762199891690234,503956.85968373
+"70","China","Buses","Passenger","Bus","Light Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,0.654612190865877,432821.242322515
+"71","Eastern Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,1.91605993140381,1266874.42037649
+"72","Former Soviet Union","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,1.88049822492328,1243361.47302723
+"73","India","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,0.981948372344906,649251.75599422
+"74","Japan","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,2.10566219387448,1392237.02121832
+"75","Korea","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,1,661187.26226288
+"76","Latin America","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,0.981948372344906,649251.75599422
+"77","Middle East","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,0.981948372344906,649251.75599422
+"78","Southeast Asia","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,0.981948372344906,649251.75599422
+"79","USA","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,1,661187.26226288
+"80","Western Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2065",661187.26226288,1.00980805102593,667672.220668852
+"81","Africa","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,0.981948372344906,649237.967626422
+"82","Australia_NZ","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,0.981948372344906,649237.967626422
+"83","Brazil","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,0.981956779589626,649243.526271488
+"84","Canada","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,1.08430110114929,716910.850948473
+"85","China","Buses","Passenger","Bus","Heavy Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,0.762199891690234,503946.15699025
+"86","China","Buses","Passenger","Bus","Light Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,0.654612190865877,432812.050358959
+"87","Eastern Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,1.91605993140381,1266847.51535806
+"88","Former Soviet Union","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,1.88049822492328,1243335.0673608
+"89","India","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,0.981948372344906,649237.967626422
+"90","Japan","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,2.10566219387448,1392207.45383412
+"91","Korea","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,1,661173.220416907
+"92","Latin America","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,0.981948372344906,649237.967626422
+"93","Middle East","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,0.981948372344906,649237.967626422
+"94","Southeast Asia","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,0.981948372344906,649237.967626422
+"95","USA","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,1,661173.220416907
+"96","Western Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2080",661173.220416907,1.00980805102593,667658.041099738
+"97","Africa","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,0.981948372344906,649237.903385163
+"98","Australia_NZ","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,0.981948372344906,649237.903385163
+"99","Brazil","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,0.981956779589626,649243.462029679
+"100","Canada","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,1.08430110114929,716910.780011069
+"101","China","Buses","Passenger","Bus","Heavy Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,0.762199891690234,503946.107125428
+"102","China","Buses","Passenger","Bus","Light Bus","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,0.654612190865877,432812.007532765
+"103","Eastern Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,1.91605993140381,1266847.39000513
+"104","Former Soviet Union","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,1.88049822492328,1243334.9443344
+"105","India","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,0.981948372344906,649237.903385163
+"106","Japan","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,2.10566219387448,1392207.31607699
+"107","Korea","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,1,661173.15499467
+"108","Latin America","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,0.981948372344906,649237.903385163
+"109","Middle East","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,0.981948372344906,649237.903385163
+"110","Southeast Asia","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,0.981948372344906,649237.903385163
+"111","USA","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,1,661173.15499467
+"112","Western Europe","Buses","Passenger","Bus","All","CAPEX and non-fuel OPEX","2005$/veh","BEV","Electricity","X2095",661173.15499467,1.00980805102593,667657.975035836

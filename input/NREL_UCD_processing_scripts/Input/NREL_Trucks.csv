@@ -1,0 +1,351 @@
+"","UCD_region","UCD_sector","mode","size.class","variable","Year","Subsector","unit","UCD_technology","UCD_fuel","median","Value"
+"1","Africa","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","1",68669.4956868743
+"2","Africa","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",89490.2863616103
+"3","Africa","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2005","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",147788.500250871
+"4","Africa","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",259633.3094694
+"5","Australia_NZ","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",68669.4956868743
+"6","Australia_NZ","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",89490.2863616103
+"7","Australia_NZ","Freight","Truck","Truck (6-30t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","18",377429.098173131
+"8","Canada","Freight","Truck","Truck (0-4.5t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","2.25",68669.4956868743
+"9","Canada","Freight","Truck","Truck (4.5-15t)","CAPEX and non-fuel OPEX","X2005","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",200735.415117534
+"10","Canada","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",463098.762684935
+"11","China","Freight","Truck","Truck (0-6t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","3",81161.9700917159
+"12","China","Freight","Truck","Truck (6-14t)","CAPEX and non-fuel OPEX","X2005","Medium Duty Trucks","2005$/veh","BEV","Electricity","10",206089.769149522
+"13","China","Freight","Truck","Truck (>14t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23",463098.762684935
+"14","Eastern Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",68669.4956868743
+"15","Eastern Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",463098.762684935
+"16","Eastern Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2005","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",200735.415117534
+"17","Eastern Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",463098.762684935
+"18","Former Soviet Union","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",68669.4956868743
+"19","Former Soviet Union","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",463098.762684935
+"20","Former Soviet Union","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2005","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",200735.415117534
+"21","Former Soviet Union","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",463098.762684935
+"22","India","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","1",68669.4956868743
+"23","India","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",89490.2863616103
+"24","India","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2005","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",147788.500250871
+"25","India","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",259633.3094694
+"26","Japan","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",68669.4956868743
+"27","Japan","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",89490.2863616103
+"28","Korea","Freight","Truck","Truck","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","16",334594.265917228
+"29","Latin America","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",68669.4956868743
+"30","Latin America","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2005","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",216798.477213497
+"31","Latin America","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",463098.762684935
+"32","Middle East","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","1",68669.4956868743
+"33","Middle East","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",89490.2863616103
+"34","Middle East","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2005","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",147788.500250871
+"35","Middle East","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",259633.3094694
+"36","Southeast Asia","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","1",68669.4956868743
+"37","Southeast Asia","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",89490.2863616103
+"38","Southeast Asia","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2005","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",147788.500250871
+"39","Southeast Asia","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",259633.3094694
+"40","USA","Freight","Truck","Truck (0-2.7t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","1.35",68669.4956868743
+"41","USA","Freight","Truck","Truck (2.7-4.5t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","3.6",91155.9496155892
+"42","USA","Freight","Truck","Truck (4.5-12t)","CAPEX and non-fuel OPEX","X2005","Medium Duty Trucks","2005$/veh","BEV","Electricity","8.25",168609.290925607
+"43","USA","Freight","Truck","Truck (>12t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","22",463098.762684935
+"44","Western Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",68669.4956868743
+"45","Western Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",463098.762684935
+"46","Western Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2005","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",200735.415117534
+"47","Western Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",463098.762684935
+"48","Brazil","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2005","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",68669.4956868743
+"49","Brazil","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2005","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",216798.477213497
+"50","Brazil","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2005","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",463098.762684935
+"51","Africa","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","1",49211.4528448589
+"52","Africa","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",69903.2896481684
+"53","Africa","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2020","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",127840.432697435
+"54","Africa","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",228270.796459363
+"55","Australia_NZ","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",49211.4528448589
+"56","Australia_NZ","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",69903.2896481684
+"57","Australia_NZ","Freight","Truck","Truck (6-30t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","18",331461.831346987
+"58","Canada","Freight","Truck","Truck (0-4.5t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","2.25",49211.4528448589
+"59","Canada","Freight","Truck","Truck (4.5-15t)","CAPEX and non-fuel OPEX","X2020","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",176675.279015551
+"60","Canada","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",406509.856719805
+"61","China","Freight","Truck","Truck (0-6t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","3",61626.5549268446
+"62","China","Freight","Truck","Truck (6-14t)","CAPEX and non-fuel OPEX","X2020","Medium Duty Trucks","2005$/veh","BEV","Electricity","10",181365.780601352
+"63","China","Freight","Truck","Truck (>14t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23",406509.856719805
+"64","Eastern Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",49211.4528448589
+"65","Eastern Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",406509.856719805
+"66","Eastern Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2020","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",176675.279015551
+"67","Eastern Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",406509.856719805
+"68","Former Soviet Union","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",49211.4528448589
+"69","Former Soviet Union","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",406509.856719805
+"70","Former Soviet Union","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2020","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",176675.279015551
+"71","Former Soviet Union","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",406509.856719805
+"72","India","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","1",49211.4528448589
+"73","India","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",69903.2896481684
+"74","India","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2020","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",127840.432697435
+"75","India","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",228270.796459363
+"76","Japan","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",49211.4528448589
+"77","Japan","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",69903.2896481684
+"78","Korea","Freight","Truck","Truck","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","16",293937.818660578
+"79","Latin America","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",49211.4528448589
+"80","Latin America","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2020","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",190746.783772954
+"81","Latin America","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",406509.856719805
+"82","Middle East","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","1",49211.4528448589
+"83","Middle East","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",69903.2896481684
+"84","Middle East","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2020","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",127840.432697435
+"85","Middle East","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",228270.796459363
+"86","Southeast Asia","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","1",49211.4528448589
+"87","Southeast Asia","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",69903.2896481684
+"88","Southeast Asia","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2020","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",127840.432697435
+"89","Southeast Asia","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",228270.796459363
+"90","USA","Freight","Truck","Truck (0-2.7t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","1.35",49211.4528448589
+"91","USA","Freight","Truck","Truck (2.7-4.5t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","3.6",71558.6365924331
+"92","USA","Freight","Truck","Truck (4.5-12t)","CAPEX and non-fuel OPEX","X2020","Medium Duty Trucks","2005$/veh","BEV","Electricity","8.25",148532.269500744
+"93","USA","Freight","Truck","Truck (>12t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","22",406509.856719805
+"94","Western Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",49211.4528448589
+"95","Western Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",406509.856719805
+"96","Western Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2020","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",176675.279015551
+"97","Western Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",406509.856719805
+"98","Brazil","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2020","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",49211.4528448589
+"99","Brazil","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2020","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",190746.783772954
+"100","Brazil","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2020","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",406509.856719805
+"101","Africa","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","1",38460.1663382966
+"102","Africa","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",56871.2661135749
+"103","Africa","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2035","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",108422.345484354
+"104","Africa","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",194374.849288553
+"105","Australia_NZ","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",38460.1663382966
+"106","Australia_NZ","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",56871.2661135749
+"107","Australia_NZ","Freight","Truck","Truck (6-30t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","18",281781.37214951
+"108","Canada","Freight","Truck","Truck (0-4.5t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","2.25",38460.1663382966
+"109","Canada","Freight","Truck","Truck (4.5-15t)","CAPEX and non-fuel OPEX","X2035","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",150671.587858075
+"110","Canada","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",345349.752412024
+"111","China","Freight","Truck","Truck (0-6t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","3",49506.8262034636
+"112","China","Freight","Truck","Truck (6-14t)","CAPEX and non-fuel OPEX","X2035","Medium Duty Trucks","2005$/veh","BEV","Electricity","10",154644.611624482
+"113","China","Freight","Truck","Truck (>14t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23",345349.752412024
+"114","Eastern Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",38460.1663382966
+"115","Eastern Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",345349.752412024
+"116","Eastern Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2035","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",150671.587858075
+"117","Eastern Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",345349.752412024
+"118","Former Soviet Union","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",38460.1663382966
+"119","Former Soviet Union","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",345349.752412024
+"120","Former Soviet Union","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2035","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",150671.587858075
+"121","Former Soviet Union","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",345349.752412024
+"122","India","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","1",38460.1663382966
+"123","India","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",56871.2661135749
+"124","India","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2035","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",108422.345484354
+"125","India","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",194374.849288553
+"126","Japan","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",38460.1663382966
+"127","Japan","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",56871.2661135749
+"128","Korea","Freight","Truck","Truck","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","16",249997.182018253
+"129","Latin America","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",38460.1663382966
+"130","Latin America","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2035","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",162590.659157296
+"131","Latin America","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",345349.752412024
+"132","Middle East","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","1",38460.1663382966
+"133","Middle East","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",56871.2661135749
+"134","Middle East","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2035","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",108422.345484354
+"135","Middle East","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",194374.849288553
+"136","Southeast Asia","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","1",38460.1663382966
+"137","Southeast Asia","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",56871.2661135749
+"138","Southeast Asia","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2035","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",108422.345484354
+"139","Southeast Asia","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",194374.849288553
+"140","USA","Freight","Truck","Truck (0-2.7t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","1.35",38460.1663382966
+"141","USA","Freight","Truck","Truck (2.7-4.5t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","3.6",58344.1540955972
+"142","USA","Freight","Truck","Truck (4.5-12t)","CAPEX and non-fuel OPEX","X2035","Medium Duty Trucks","2005$/veh","BEV","Electricity","8.25",126833.445259632
+"143","USA","Freight","Truck","Truck (>12t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","22",345349.752412024
+"144","Western Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",38460.1663382966
+"145","Western Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",345349.752412024
+"146","Western Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2035","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",150671.587858075
+"147","Western Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",345349.752412024
+"148","Brazil","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2035","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",38460.1663382966
+"149","Brazil","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2035","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",162590.659157296
+"150","Brazil","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2035","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",345349.752412024
+"151","Africa","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35748.229116236
+"152","Africa","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52994.8735803643
+"153","Africa","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2050","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101285.478079924
+"154","Africa","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181407.271271951
+"155","Australia_NZ","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35748.229116236
+"156","Australia_NZ","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52994.8735803643
+"157","Australia_NZ","Freight","Truck","Truck (6-30t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","18",262775.110802174
+"158","Canada","Freight","Truck","Truck (0-4.5t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","2.25",35748.229116236
+"159","Canada","Freight","Truck","Truck (4.5-15t)","CAPEX and non-fuel OPEX","X2050","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140723.35150684
+"160","Canada","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",321951.721369609
+"161","China","Freight","Truck","Truck (0-6t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","3",46096.215794713
+"162","China","Freight","Truck","Truck (6-14t)","CAPEX and non-fuel OPEX","X2050","Medium Duty Trucks","2005$/veh","BEV","Electricity","10",144421.889667305
+"163","China","Freight","Truck","Truck (>14t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23",321951.721369609
+"164","Eastern Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",35748.229116236
+"165","Eastern Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",321951.721369609
+"166","Eastern Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2050","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140723.35150684
+"167","Eastern Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",321951.721369609
+"168","Former Soviet Union","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",35748.229116236
+"169","Former Soviet Union","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",321951.721369609
+"170","Former Soviet Union","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2050","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140723.35150684
+"171","Former Soviet Union","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",321951.721369609
+"172","India","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35748.229116236
+"173","India","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52994.8735803643
+"174","India","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2050","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101285.478079924
+"175","India","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181407.271271951
+"176","Japan","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35748.229116236
+"177","Japan","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52994.8735803643
+"178","Korea","Freight","Truck","Truck","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","16",233186.805518457
+"179","Latin America","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35748.229116236
+"180","Latin America","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2050","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",151818.965988234
+"181","Latin America","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",321951.721369609
+"182","Middle East","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35748.229116236
+"183","Middle East","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52994.8735803643
+"184","Middle East","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2050","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101285.478079924
+"185","Middle East","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181407.271271951
+"186","Southeast Asia","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35748.229116236
+"187","Southeast Asia","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52994.8735803643
+"188","Southeast Asia","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2050","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101285.478079924
+"189","Southeast Asia","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181407.271271951
+"190","USA","Freight","Truck","Truck (0-2.7t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","1.35",35748.229116236
+"191","USA","Freight","Truck","Truck (2.7-4.5t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","3.6",54374.6051374946
+"192","USA","Freight","Truck","Truck (4.5-12t)","CAPEX and non-fuel OPEX","X2050","Medium Duty Trucks","2005$/veh","BEV","Electricity","8.25",118532.122544052
+"193","USA","Freight","Truck","Truck (>12t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","22",321951.721369609
+"194","Western Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",35748.229116236
+"195","Western Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",321951.721369609
+"196","Western Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2050","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140723.35150684
+"197","Western Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",321951.721369609
+"198","Brazil","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2050","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35748.229116236
+"199","Brazil","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2050","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",151818.965988234
+"200","Brazil","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2050","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",321951.721369609
+"201","Africa","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35675.4794950768
+"202","Africa","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52889.3699062739
+"203","Africa","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2065","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101088.263057626
+"204","Africa","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181048.034313383
+"205","Australia_NZ","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35675.4794950768
+"206","Australia_NZ","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52889.3699062739
+"207","Australia_NZ","Freight","Truck","Truck (6-30t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","18",262248.585994579
+"208","Canada","Freight","Truck","Truck (0-4.5t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","2.25",35675.4794950768
+"209","Canada","Freight","Truck","Truck (4.5-15t)","CAPEX and non-fuel OPEX","X2065","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140447.758472786
+"210","Canada","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",321303.532671812
+"211","China","Freight","Truck","Truck (0-6t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","3",46003.8137417951
+"212","China","Freight","Truck","Truck (6-14t)","CAPEX and non-fuel OPEX","X2065","Medium Duty Trucks","2005$/veh","BEV","Electricity","10",144138.692640113
+"213","China","Freight","Truck","Truck (>14t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23",321303.532671812
+"214","Eastern Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",35675.4794950768
+"215","Eastern Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",321303.532671812
+"216","Eastern Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2065","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140447.758472786
+"217","Eastern Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",321303.532671812
+"218","Former Soviet Union","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",35675.4794950768
+"219","Former Soviet Union","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",321303.532671812
+"220","Former Soviet Union","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2065","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140447.758472786
+"221","Former Soviet Union","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",321303.532671812
+"222","India","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35675.4794950768
+"223","India","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52889.3699062739
+"224","India","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2065","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101088.263057626
+"225","India","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181048.034313383
+"226","Japan","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35675.4794950768
+"227","Japan","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52889.3699062739
+"228","Korea","Freight","Truck","Truck","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","16",232721.112655962
+"229","Latin America","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35675.4794950768
+"230","Latin America","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2065","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",151520.560974767
+"231","Latin America","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",321303.532671812
+"232","Middle East","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35675.4794950768
+"233","Middle East","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52889.3699062739
+"234","Middle East","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2065","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101088.263057626
+"235","Middle East","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181048.034313383
+"236","Southeast Asia","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35675.4794950768
+"237","Southeast Asia","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52889.3699062739
+"238","Southeast Asia","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2065","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101088.263057626
+"239","Southeast Asia","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181048.034313383
+"240","USA","Freight","Truck","Truck (0-2.7t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","1.35",35675.4794950768
+"241","USA","Freight","Truck","Truck (2.7-4.5t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","3.6",54266.4811391697
+"242","USA","Freight","Truck","Truck (4.5-12t)","CAPEX and non-fuel OPEX","X2065","Medium Duty Trucks","2005$/veh","BEV","Electricity","8.25",118302.153468823
+"243","USA","Freight","Truck","Truck (>12t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","22",321303.532671812
+"244","Western Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",35675.4794950768
+"245","Western Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",321303.532671812
+"246","Western Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2065","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140447.758472786
+"247","Western Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",321303.532671812
+"248","Brazil","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2065","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35675.4794950768
+"249","Brazil","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2065","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",151520.560974767
+"250","Brazil","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2065","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",321303.532671812
+"251","Africa","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35673.5276759725
+"252","Africa","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52886.5393198959
+"253","Africa","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2080","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101082.971922881
+"254","Africa","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181038.396248641
+"255","Australia_NZ","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35673.5276759725
+"256","Australia_NZ","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52886.5393198959
+"257","Australia_NZ","Freight","Truck","Truck (6-30t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","18",262234.459719253
+"258","Canada","Freight","Truck","Truck (0-4.5t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","2.25",35673.5276759725
+"259","Canada","Freight","Truck","Truck (4.5-15t)","CAPEX and non-fuel OPEX","X2080","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140440.364513335
+"260","Canada","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",321286.142243335
+"261","China","Freight","Truck","Truck (0-6t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","3",46001.3346623265
+"262","China","Freight","Truck","Truck (6-14t)","CAPEX and non-fuel OPEX","X2080","Medium Duty Trucks","2005$/veh","BEV","Electricity","10",144131.09467109
+"263","China","Freight","Truck","Truck (>14t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23",321286.142243335
+"264","Eastern Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",35673.5276759725
+"265","Eastern Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",321286.142243335
+"266","Eastern Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2080","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140440.364513335
+"267","Eastern Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",321286.142243335
+"268","Former Soviet Union","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",35673.5276759725
+"269","Former Soviet Union","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",321286.142243335
+"270","Former Soviet Union","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2080","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140440.364513335
+"271","Former Soviet Union","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",321286.142243335
+"272","India","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35673.5276759725
+"273","India","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52886.5393198959
+"274","India","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2080","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101082.971922881
+"275","India","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181038.396248641
+"276","Japan","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35673.5276759725
+"277","Japan","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52886.5393198959
+"278","Korea","Freight","Truck","Truck","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","16",232708.618457213
+"279","Latin America","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35673.5276759725
+"280","Latin America","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2080","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",151512.554986601
+"281","Latin America","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",321286.142243335
+"282","Middle East","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35673.5276759725
+"283","Middle East","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52886.5393198959
+"284","Middle East","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2080","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101082.971922881
+"285","Middle East","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181038.396248641
+"286","Southeast Asia","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35673.5276759725
+"287","Southeast Asia","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52886.5393198959
+"288","Southeast Asia","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2080","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101082.971922881
+"289","Southeast Asia","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181038.396248641
+"290","USA","Freight","Truck","Truck (0-2.7t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","1.35",35673.5276759725
+"291","USA","Freight","Truck","Truck (2.7-4.5t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","3.6",54263.5802514098
+"292","USA","Freight","Truck","Truck (4.5-12t)","CAPEX and non-fuel OPEX","X2080","Medium Duty Trucks","2005$/veh","BEV","Electricity","8.25",118295.983566805
+"293","USA","Freight","Truck","Truck (>12t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","22",321286.142243335
+"294","Western Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",35673.5276759725
+"295","Western Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",321286.142243335
+"296","Western Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2080","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140440.364513335
+"297","Western Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",321286.142243335
+"298","Brazil","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2080","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35673.5276759725
+"299","Brazil","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2080","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",151512.554986601
+"300","Brazil","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2080","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",321286.142243335
+"301","Africa","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35673.5185822699
+"302","Africa","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52886.5261319366
+"303","Africa","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2095","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101082.947271004
+"304","Africa","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181038.351344021
+"305","Australia_NZ","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35673.5185822699
+"306","Australia_NZ","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52886.5261319366
+"307","Australia_NZ","Freight","Truck","Truck (6-30t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","18",262234.393903652
+"308","Canada","Freight","Truck","Truck (0-4.5t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","2.25",35673.5185822699
+"309","Canada","Freight","Truck","Truck (4.5-15t)","CAPEX and non-fuel OPEX","X2095","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140440.330064206
+"310","Canada","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",321286.061219747
+"311","China","Freight","Truck","Truck (0-6t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","3",46001.3231120699
+"312","China","Freight","Truck","Truck (6-14t)","CAPEX and non-fuel OPEX","X2095","Medium Duty Trucks","2005$/veh","BEV","Electricity","10",144131.059271462
+"313","China","Freight","Truck","Truck (>14t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23",321286.061219747
+"314","Eastern Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",35673.5185822699
+"315","Eastern Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",321286.061219747
+"316","Eastern Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2095","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140440.330064206
+"317","Eastern Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",321286.061219747
+"318","Former Soviet Union","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",35673.5185822699
+"319","Former Soviet Union","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",321286.061219747
+"320","Former Soviet Union","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2095","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140440.330064206
+"321","Former Soviet Union","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",321286.061219747
+"322","India","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35673.5185822699
+"323","India","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52886.5261319366
+"324","India","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2095","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101082.947271004
+"325","India","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181038.351344021
+"326","Japan","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35673.5185822699
+"327","Japan","Freight","Truck","Truck (1-6t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52886.5261319366
+"328","Korea","Freight","Truck","Truck","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","16",232708.560245605
+"329","Latin America","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35673.5185822699
+"330","Latin America","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2095","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",151512.517685974
+"331","Latin America","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",321286.061219747
+"332","Middle East","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35673.5185822699
+"333","Middle East","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52886.5261319366
+"334","Middle East","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2095","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101082.947271004
+"335","Middle East","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181038.351344021
+"336","Southeast Asia","Freight","Truck","Truck (0-2t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","1",35673.5185822699
+"337","Southeast Asia","Freight","Truck","Truck (2-5t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","3.5",52886.5261319366
+"338","Southeast Asia","Freight","Truck","Truck (5-9t)","CAPEX and non-fuel OPEX","X2095","Medium Duty Trucks","2005$/veh","BEV","Electricity","7",101082.947271004
+"339","Southeast Asia","Freight","Truck","Truck (9-16t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","12.5",181038.351344021
+"340","USA","Freight","Truck","Truck (0-2.7t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","1.35",35673.5185822699
+"341","USA","Freight","Truck","Truck (2.7-4.5t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","3.6",54263.56673591
+"342","USA","Freight","Truck","Truck (4.5-12t)","CAPEX and non-fuel OPEX","X2095","Medium Duty Trucks","2005$/veh","BEV","Electricity","8.25",118295.95482067
+"343","USA","Freight","Truck","Truck (>12t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","22",321286.061219747
+"344","Western Europe","Freight","Truck","Truck (0-3.5t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","1.75",35673.5185822699
+"345","Western Europe","Freight","Truck","Truck (16-32t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","24",321286.061219747
+"346","Western Europe","Freight","Truck","Truck (3.5-16t)","CAPEX and non-fuel OPEX","X2095","Medium Duty Trucks","2005$/veh","BEV","Electricity","9.75",140440.330064206
+"347","Western Europe","Freight","Truck","Truck (>32t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","32",321286.061219747
+"348","Brazil","Freight","Truck","Truck (0-1t)","CAPEX and non-fuel OPEX","X2095","Light Duty Trucks","2005$/veh","BEV","Electricity","0.5",35673.5185822699
+"349","Brazil","Freight","Truck","Truck (6-15t)","CAPEX and non-fuel OPEX","X2095","Medium Duty Trucks","2005$/veh","BEV","Electricity","10.5",151512.517685974
+"350","Brazil","Freight","Truck","Truck (>15t)","CAPEX and non-fuel OPEX","X2095","Heavy Duty Trucks","2005$/veh","BEV","Electricity","23.5",321286.061219747
