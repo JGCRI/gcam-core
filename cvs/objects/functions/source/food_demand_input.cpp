@@ -490,18 +490,22 @@ double StaplesFoodDemandInput::getPriceElasticity( const FoodDemandInput* aOther
  *\brief Get the appropriate price scaler.
  */
 double StaplesFoodDemandInput::getPriceScaler() const {
-    // This scale factor below give us a little extra control over the shape of
-    // the demand functions.  Unlike the other model parameters, we didn't fit
-    // these; we fixed them ahead of time and then fit the other model
-    // parameters subject to those assumed values.  As such, they shouldn't be
-    // changed without re-fitting the model.  However, you shouldn't do that.
-    // If we ever want to consider changing these, we should add a scale
-    // parameter to the nonstaple demand and fit the model with that as an
-    // additional parameter.  Note that although each the staple and non-staple
-    // have their own values, only their ratio is significant.  Differences in
-    // the absolute levels will be absorbed into Pm during the fitting process.
-    // KVC: Test price scaler of 1
-    const double psscl = 1.0;
+    // This scale factor alters the price of food from what is specified in
+    // the marketplace. The adjusted price is equal to the market price divided by
+    // the price of material times this price scaler.
+    // The scaler affects the shape of the demand curve. Different values
+    // for this scaler will alter the amount of food consumed as income increases
+    // for a given set of prices. The value below was estimated in the
+    // offline food demand model; however, the prior specified in that model
+    // has a strong effect on the resulting values of the price scalers.
+    // The priors chosen here maximized the likelihood over the set of priors
+    // tested; however, these were not systematically tested.
+    // Note that if this number is changed the food demand parameters
+    // would need to be reestimated. Also note that this scaler is both
+    // read into the data system and specified here.
+    // Both the absolute value and the ratio to the non-staple scaler
+    // affect food demand.
+    const double psscl = 100.0;
     return psscl;
 }
 
@@ -634,18 +638,22 @@ double NonStaplesFoodDemandInput::getPriceElasticity( const FoodDemandInput* aOt
  *\brief Get the appropriate price scaler.
  */
 double NonStaplesFoodDemandInput::getPriceScaler() const {
-    // This scale factor below give us a little extra control over the shape of
-    // the demand functions.  Unlike the other model parameters, we didn't fit
-    // these; we fixed them ahead of time and then fit the other model
-    // parameters subject to those assumed values.  As such, they shouldn't be
-    // changed without re-fitting the model.  However, you shouldn't do that.
-    // If we ever want to consider changing these, we should add a scale
-    // parameter to the nonstaple demand and fit the model with that as an
-    // additional parameter.  Note that although each the staple and non-staple
-    // have their own values, only their ratio is significant.  Differences in
-    // the absolute levels will be absorbed into Pm during the fitting process.
-    // KVC: Test price scaler of 1
-    const double pnscl = 1.0;
+    // This scale factor alters the price of food from what is specified in
+    // the marketplace. The adjusted price is equal to the market price divided by
+    // the price of material times this price scaler.
+    // The scaler affects the shape of the demand curve. Different values
+    // for this scaler will alter the amount of food consumed as income increases
+    // for a given set of prices. The value below was estimated in the
+    // offline food demand model; however, the prior specified in that model
+    // has a strong effect on the resulting values of the price scalers.
+    // The priors chosen here maximized the likelihood over the set of priors
+    // tested; however, these were not systematically tested.
+    // Note that if this number is changed the food demand parameters
+    // would need to be reestimated. Also note that this scaler is both
+    // read into the data system and specified here.
+    // Both the absolute value and the ratio to the staple scaler
+    // affect food demand.
+    const double pnscl = 20.1;
     return pnscl;
 }
 
