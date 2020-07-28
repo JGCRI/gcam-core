@@ -5,8 +5,8 @@
 ..Rcheck/
 .Rapp.history
 
-# Remake files
-.remake/
+# Drake files
+.drake/
 
 # Files produced by data system
 outputs/

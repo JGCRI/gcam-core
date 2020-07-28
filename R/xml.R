@@ -31,6 +31,17 @@ create_xml <- function(xml_file, mi_header = NULL) {
     invisible()
 }
 
+#' set_xml_file_helper
+#'
+#' @param xml The xml pipeline object
+#' @param fq_name The full path to the XML file
+#' @return The updated XML object.
+set_xml_file_helper <- function(xml, fq_name) {
+  xml$xml_file <- fq_name
+
+  invisible(xml)
+}
+
 #' Add a table to an XML pipeline to include for conversion to XML.
 #'
 #' We need the tibble to convert and a header tag which can be looked up in

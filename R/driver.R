@@ -359,11 +359,33 @@ driver <- function(all_data = empty_data(),
 
 #' driver_drake
 #'
-#' Test running the driver with drake.
+#' Run the entire data system using drake to manage the process which
+#' gives us a number of feature, most notably the "make" capabilities
+#' so that subsequent invokations only need to rebuild targets that
+#' have actually changed.
 #'
-#' @details test
-#' @importFrom tibble tibble
-#' @importFrom drake make
+#' The interface mostly mimics that of \code{driver} with the exception
+#' that writing outputs is not optional since drake needs to include all
+#' outputs in the cache as a matter of course.  In addition we allow users
+#' to pass any additional arguments to \code{driver_drake} which will be
+#' forwarded on to \code{drake::make}.
+#'
+#' @param quiet Suppress output?
+#' @param stop_before Stop immediately before this chunk (character)
+#' @param stop_after Stop immediately after this chunk  (character)
+#' @param return_inputs_of Return the data objects that are inputs for these chunks (character).
+#' If \code{stop_before} is specified, by default that chunk's inputs are returned
+#' @param return_outputs_of Return the data objects that are output from these chunks (character)
+#' If \code{stop_after} is specified, by default that chunk's outputs are returned
+#' @param return_data_names Return these data objects (character). By default this is the union of \code{return_inputs_of} and \code{return_outputs_of}
+#' @param return_data_map_only Return only the precursor information? (logical) This overrides
+#' the other \code{return_*} parameters above
+#' @param write_xml Write XML Batch chunk outputs to disk?
+#' @param xmldir Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})
+#' @return A list of all built data (or a data map tibble if requested).
+#' @importFrom magrittr "%>%"
+#' @importFrom assertthat assert_that
+#' @importFrom dplyr bind_rows filter group_by inner_join select summarise
 #' @export
 driver_drake <- function(
   stop_before = NULL,
@@ -373,12 +395,16 @@ driver_drake <- function(
   return_data_names = union(inputs_of(return_inputs_of),
                             outputs_of(return_outputs_of)),
   return_data_map_only = FALSE,
-  write_outputs = !return_data_map_only,
-  write_xml = write_outputs,
-  outdir = OUTPUTS_DIR,
+  write_xml = !return_data_map_only,
   xmldir = XML_DIR,
   quiet = FALSE,
   ...){
+
+  # We merley suggest drake as we can still run the data system via driver
+  # with out it.  Ensure we have it before proceeding.
+  if(!require(drake)) {
+    stop("The `drake` package is required to run `driver_drake()`.  Either install it or fall back to `driver()`")
+  }
 
   # If users ask to stop after a chunk, but also specify they want particular inputs,
   # or if they ask to stop before a chunk, while asking for outputs, that's confusing.
@@ -400,7 +426,6 @@ driver_drake <- function(
   assert_that(is.null(return_outputs_of) | is.character(return_outputs_of))
   assert_that(is.null(return_data_names) | is.character(return_data_names))
   assert_that(is.logical(return_data_map_only))
-  assert_that(is.logical(write_outputs))
   assert_that(is.logical(write_xml))
   assert_that(is.logical(quiet))
 
@@ -430,9 +455,6 @@ driver_drake <- function(
   if(any(dupes)) {
     stop("Outputs appear multiple times: ", chunkoutputs$output[dupes])
   }
-
-  target <- c()
-  command <- c()
 
   # If there are any unaccounted for input requirements,
   # try to load them from csv files
@@ -475,82 +497,114 @@ driver_drake <- function(
     chunks_to_run <- c(unfound_inputs$input, chunklist$name)
   }
 
-  removed_count <- 0
-  #save_chunkdata(empty_data(), create_dirs = TRUE, write_outputs=write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir) # clear directories
 
-    for(chunk in chunks_to_run) {
+  # Loop over each chunk and add a target for it and the command to build it
+  # as appropriate for if it is just loading a FILE or running an actual chunk.
+  target <- c()
+  command <- c()
+  for(chunk in chunks_to_run) {
 
-      inputs <- filter(chunkinputs, name == chunk)
-      input_names <- inputs$input
-      required_inputs <- filter(inputs, !optional)
+    inputs <- filter(chunkinputs, name == chunk)
+    input_names <- inputs$input
 
-
-      if(chunk %in% unfound_inputs$input) {
-        unfound_chunk = unfound_inputs[unfound_inputs$input == chunk, ]
-        #chunk_data <- load_csv_files(unfound_chunk$input, unfound_chunk$optional, quiet = TRUE)
-        optional <- all(unfound_chunk$optional)
-        fqfn <- find_csv_file(chunk, optional, quiet = TRUE)
-        target <- c(target, gsub('[/-]', '.', chunk))
-        if(is.null(fqfn) && optional) {
-          assert_that(optional)
-          command <- c(command, paste0("list(\"", chunk, "\" = missing_data())"))
-        }
-        else {
-          command <- c(command, paste0("load_csv_files(\"", chunk, "\", ", optional, ", quiet = TRUE, dummy = file_in(\"", fqfn, "\"))"))
-        }
+    # chunk is "unfound" aka loaded from file
+    if(chunk %in% unfound_inputs$input) {
+      # get the file details including if it was optional and the actual file name
+      unfound_chunk = unfound_inputs[unfound_inputs$input == chunk, ]
+      optional <- all(unfound_chunk$optional)
+      fqfn <- find_csv_file(chunk, optional, quiet = TRUE)
+      # add the chunk to the target list
+      target <- c(target, sanitize_drake_target_name(chunk))
+      if(is.null(fqfn)) {
+        assert_that(optional)
+        # In the case of optional missing data just set it to missing with command:
+        # `target <- list( chunk = missing_data() )`
+        command <- c(command, paste0("list(\"", chunk, "\" = missing_data())"))
       }
       else {
-        #chunk_data <- run_chunk(chunk, all_data[input_names])
-        po <- subset(chunkoutputs, name == chunk)$output  # promised outputs
-        target <- c(target, chunk)
-        #command <- c(command, paste0("run_chunk('", chunk, "', c(", paste(gsub("[/-]", ".", input_names), collapse = ","), "))"))
-        command <- c(command, paste0("gcamdata:::", chunk, "(\"MAKE\", c(", paste(gsub("[/-]", ".", input_names), collapse = ","), "))"))
-        target <- c(target, po)
-        command <- c(command, paste(chunk, '["', po, '"]', sep = ""))
-        po_xml <- subset(chunkoutputs, name == chunk & to_xml)$output
-        if(length(po_xml) > 0) {
-          target <- c(target, paste0("xml/", po_xml))
-          #command <- c(command, paste0("set_xml_file_helper(", "`", po_xml, "`, file_out(\"", paste0("xml/",po_xml), "\")) %>% run_xml_conversion()"))
-          command <- c(command, paste0("run_xml_conversion(set_xml_file_helper(", po_xml, "[[1]], file_out(\"", paste0("xml/",po_xml), "\")))"))
-        }
+        # We have a file to load so generate the load_csv_files command:
+        # `target <- load_csv_files( chunk, optional, quiet = TRUE, dummy = file_in(fqfn) )`
+        # Note the dummy = file_in is a work around so that we can signal to drake that
+        # target is actually coming from a file in the file system since the chunk names
+        # as we use them in gcamdata would not themselves be sufficient to tell drake where
+        # to find it.
+        command <- c(command, paste0("load_csv_files(\"", chunk, "\", ", optional, ", quiet = TRUE, dummy = file_in(\"", fqfn, "\"))"))
       }
+    }
+    else {
+      po <- subset(chunkoutputs, name == chunk)$output  # promised outputs
+      # add the chunk to the target list
+      target <- c(target, chunk)
+      # Generate the command to run the chunk as:
+      # `target <- gcamdata:::chunk( "MAKE", c(input1, input2, inputN) )`
+      # Note we need bypass run_chunk here otherwise drake isn't able to associate
+      # the source code for the chunk with the command and the "make" functionality
+      # would break.
+      # Also note we explicitly list just the inputs required for the chunk which is
+      # different than in driver where we give `all_data`, again this is for drake so it
+      # can match up target names to commands and develop the dependencies between them.
+      command <- c(command, paste0("gcamdata:::", chunk, "(\"", driver.MAKE, "\", c(", paste(sanitize_drake_target_name(input_names), collapse = ","), "))"))
+
+      # A chunk should in principal generate many output targets however drake assumes
+      # one target per command.  We get around this by unpacking the list of outputs
+      # from a chunk as an explicit target+command:
+      # ```
+      # output1 <- chunk["output1"]
+      # output2 <- chunk["output2"]
+      # outputN <- chunk["outputN"]
+      #```
+      # The downside is data is likely to be duplicated in the cache.
+      target <- c(target, po)
+      command <- c(command, paste(chunk, '["', po, '"]', sep = ""))
+
+      # We need to seperate out XML outputs so that we can add commands
+      # to actually run the XML conversion and write out the gcam inputs
+      po_xml <- subset(chunkoutputs, name == chunk & to_xml)$output
+      if(write_xml && length(po_xml) > 0) {
+        # Add the xmldir to the XML output name and include those in the
+        # target list.
+        target <- c(target, sanitize_drake_target_name(paste0(xmldir, po_xml)))
+        # Generate the command to run the XML conversion:
+        # `xml/out1.xml <- run_xml_conversion(set_xml_file_helper(out1.xml, file_out("xml/out1.xml")))`
+        # Note, the `file_out()` wrapper notifies drake the XML file is an output
+        # of this plan and allows it to know to re-produce missing/altered XML files
+        command <- c(command, paste0("run_xml_conversion(set_xml_file_helper(", po_xml, "[[1]], file_out(\"", paste0(xmldir, po_xml), "\")))"))
+      }
+    }
 
 
-    } # for
+  } # for
 
 
-  # Finish up: write outputs, determine return data format
 
-  #if(!quiet && (write_outputs || write_xml)) cat("Writing chunk data...\n")
-  #save_chunkdata(all_data, write_outputs = write_outputs, write_xml = write_xml, outputs_dir = outdir, xml_dir = xmldir)
-  #plan <- tibble(target = target, command = command)
-  plan <- tibble(target = target, command = command) %>%
-    group_by(target) %>% summarize(command = unique(command)) %>% ungroup()
+  # At this point we can pull the target and command list together
+  # as a "plan" tibble which can be passed to drake::make.
+  # We may have duplicate targets at this point from loading files
+  # which drake will not allow.  We can "summarize" with unique
+  # to collapase those while still maintaining some error checking
+  # in case we somehow specified different commands for them.
+  gcamdata_plan <- tibble(target = target, command = command) %>%
+    group_by(target) %>%
+    summarise(command = unique(command)) %>%
+    ungroup()
 
-   #if (require(future)){
-   #  future::plan(future::multisession, persistent=TRUE)
-   #  make(plan, parallelism = "future", caching = "worker", memory_strategy = "speed")
-   #}
-   #else {
-      make(plan, ...)
-   #}
-   #options(clustermq.scheduler="multiprocess")
-   #make(plan, parallelism = "clustermq", jobs = 4)
+  # Have drake figure out what needs to be done and do it!
+  # Any additional arguments given are passed directly on to make
+  drake::make(gcamdata_plan, ...)
+
+  if(return_data_map_only) {
+    # user requested data map only so create it from the cache
+    x <- create_datamap_from_cache(gcamdata_plan)
+  }
+  else {
+    # return any requested data by loading it from the cache
+    x <- load_from_cache(return_data_names)
+  }
 
   if(!quiet) cat("All done.\n")
+
+  invisible(x)
 }
-
-#' set_xml_file_helper
-#'
-#' @param xml The xml pipeline object
-#' @param fq_name The full path to the XML file
-#' @return The updated XML object.
-set_xml_file_helper <- function(xml, fq_name) {
-  xml$xml_file <- fq_name
-
-  xml
-}
-
 
 #' warn_data_injects
 #'

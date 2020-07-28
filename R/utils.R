@@ -501,3 +501,95 @@ screen_forbidden <- function(fn) {
   }
   rslt
 }
+
+# some utils specific for dealing with drake
+
+#' sanitize_drake_target_name
+#'
+#' Clean up potential target names so they do not include any
+#' characters which drake does not allow.  At the moment this
+#' just means replacing slashes, which we include in FILE or XML
+#' chunk inputs / outputs, with a '.'
+#'
+#' @param chunk_names A character vector of chunk names to clean
+#' @return A cleaned up \code{chunk_names} which can be used as
+#' targets in drake.
+#' @importFrom assertthat assert_that
+sanitize_drake_target_name <- function(chunk_names) {
+  assert_that(is.character(chunk_names))
+
+  gsub('[/-]', '.', chunk_names)
+}
+
+#' load_from_cache
+#'
+#' Load the given chunk inputs / outputs from the drake cache.  The
+#' names given can come from \code{inputs_of} or \code{outputs_of} for
+#' instance.
+#'
+#' @param return_data_names The names of the data to return.
+#' @param ... Parameters to pass directly to drake::readd to allow
+#' users to specify a non-default cache for instance.
+#' @return The data loaded from cache returned as a list in the
+#' same format as all_data.
+#' @export
+load_from_cache <- function(return_data_names, ...) {
+  # gracefully handle an empty request
+  if(length(return_data_names) == 0) {
+    return(c())
+  }
+
+  # convert to drake target names
+  sanitized_names <- sanitize_drake_target_name(return_data_names)
+
+  # readd can only one target at a time so we need to wrap it in an apply
+  # also by default is interpreting the target as symbol so we must force
+  # character_only = TRUE
+  ret_data <- sapply(sanitized_names, drake::readd, character_only = TRUE, ...)
+  # reset names to the gcamdata names as users would otherwise expect
+  names(ret_data) <- return_data_names
+
+  invisible(ret_data)
+}
+
+#' create_datamap_from_cache
+#'
+#' Re-creates the GCAM data map by pulling the data out of cache and processing
+#' it's metadata.  We need to know the plan to be able to identify which data to
+#' to pull and the chunk names that generated them.
+#'
+#' @param gcamdata_plan The drake plan that generated the outputs
+#' @param ... Parameters to pass directly to drake::readd to allow
+#' users to specify a non-default cache for instance.
+#' @return The full GCAM data map
+#' @importFrom magrittr "%>%"
+#' @importFrom dplyr pull mutate if_else select group_by bind_rows
+create_datamap_from_cache <- function(gcamdata_plan, ...) {
+  target <- command <- chunk <- data <- NULL    # silence notes on package check.
+
+  # a helper function to use in an lapply to combine the steps:
+  # 1) decay a tibble of targets to a character vector
+  # 2) load data from cache
+  # 3) run the data through tibbelize_outputs
+  load_and_tibbilize_helper <- function(target_df, chunk, ...) {
+    tibbelize_outputs(load_from_cache(pull(target_df, target), ...), chunk)
+  }
+
+  gcamdata_plan %>%
+    # only need targets that load inputs or are outputs of a chunk
+    # we can find those by knowing:
+    # INPUT have commands that start with load_csv_files
+    # chunks outputs have commands that look like chunk['chunk_output_name']
+    mutate(chunk = if_else(grepl("load_csv_files", command), "INPUT", sub('\\[.*', '', command))) %>%
+    filter(chunk == "INPUT" | grepl("]$", command)) %>%
+    select(-command) %>%
+    # we would like to "nest" targets by chunk so we can call tibbelize_outputs
+    # for each chunk and a vector of "targets" which are related
+    tidyr::nest(target) %>%
+    # also group by to ensure we call load_and_tibbilize_helper once per chunk
+    group_by(chunk) %>%
+    mutate(data = lapply(data, load_and_tibbilize_helper, chunk, ...)) %>%
+    # pull all of the metadata into a single tibble
+    pull(data) %>%
+    bind_rows()
+}
