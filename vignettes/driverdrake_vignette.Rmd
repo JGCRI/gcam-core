@@ -1,0 +1,177 @@
+---
+title: "Running GCAM Data System with drake"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{driverdrake-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+```{r, include = FALSE}
+devtools::load_all(".")
+driver_drake()
+
+```
+
+## Introduction
+<!-- focus on why ppl want to use drake, time saved -added-->
+<!-- give examples (changing file/chunk) -added -->
+<!-- more sophisticated than standard make. checks content instead of just changes -added(gave example)  -->
+<!-- keeping track of output xmls, get original xmls back -added(as example) -->
+<!-- drake documentation is really good!! -added-->
+<!-- talking more about drake cache - is it always safe to delete .drake folder- added -->
+<!-- link to drake cache documentation - added -->
+
+`driver_drake()`, located in `R/driver.R`, runs the GCAM data system, like `driver()`. However, unlike `driver()`, `driver_drake()` skips steps that are already up-to-date, saving time. The central function of `drake` is `make()`, which builds the data system. `drake's` `make` is more sophisticated than the standard `make` because it checks changes to content instead of any changes that were made, and only runs steps that are affected by the latest changes since the previous `make()`.
+
+
+### Timing
+
+Using `driver_drake()` significantly speeds up the process for making changes after the initial data system build. On a local Windows machine, the initial run of `driver_drake()` took 25 minutes and 11 seconds, while the initial run of `driver()` took 17 minutes and 4 seconds. After editing a single input file, `A10.TechChange.csv`, `driver_drake` updated 44 targets and took 1 minute and 7 seconds to run. With `driver()`, the full data system would have to be rerun.  
+
+### `drake`'s cache
+When running `make()`, `drake` stores your targets in a hidden cache with default name `.drake`. For recovery purposes, drake keeps all targets from all runs of `make()`. To delete this cache and rerun the data system from scratch, you can delete the `.drake` folder. 
+
+### Documentation
+The `drake` package has many features that can be used with `gcamdata` that are not discussed here. `drake`'s documentation is very good and includes many helpful resources. To learn more about what `drake` can do and how it works, the [The drake R Package Users Manual](https://books.ropensci.org/drake/) is a good place to start. 
+
+### Examples
+Let's explore two different edits of a chunk and see how `driver_drake()` responds. 
+
+First, let's edit `zchunk_l210.resources.R` by multiplying `value` by 2. 
+
+```{r}
+#Multiply value by 2 in zchunk_L210.resources.R
+driver_drake()
+```
+Since changing `value` affects chunks downstream, `driver_drake()` runs all  of the dependencies. 
+Time = 51 seconds.
+
+
+Next we will change a comment in that same chunk. 
+```{r}
+#Modify a comment in zchunk_l210.resources.R
+driver_drake()
+
+```
+Since the outputs of `zchunk_210.resources` did not change, `driver_drake()` did not need to update any dependencies. 
+Time = 44 seconds.
+
+
+Additionally, if you edit an XML file, you can quickly and easily get the original file back by running `driver_drake()`. 
+```{r}
+#Edit wind_reeds_USA.xml 
+driver_drake()
+
+```
+Only the xml file was updated. 
+Time =  41.5 seconds. 
+
+<!-- The central function of `drake` is `make()`, which builds the data system based on a `drake` `plan`. The `plan` is a data frame with columns “target” and “command”. Each row is a step in the workflow and the target is the return value of the corresponding command. `drake` understands the dependency relationships between targets and commands in the plan, regardless of the order they are written. The `make()` function runs the targets in the correct order and stores the results in a hidden cache, `.drake`. It skips steps that are up-to-date and only runs steps that have changed since the previous `make()`. See [The drake R Package Users Manual](https://books.ropensci.org/drake/) for more information on `drake` and it's available options.  -->
+
+## Arguments to `driver_drake()` 
+
+`driver_drake()` supports the same arguments as `driver()` (see `?driver`). This includes options such as `stop_before` and `write_xml`. Additionally, users can specify options to `make()` in `driver_drake()` including, 
+
+* `verbose`: integer, controls printing to the console/terminal
+    * 0: print nothing
+    * 1: print target names as they build
+    * 2: show a progress bar to track what percent of targets have been completed. Also shows a spinner bar during preprocessing tasks
+    
+* `history`: logical, whether to record the build history of targets. If you need to recover old data, version control can take care of this so we recommend setting this to `FALSE`. 
+<!-- (more explanation here - version control takes care of a lot of this) -->
+
+* `memory_strategy`: character scalar, name of the strategy `drake` uses to load/unload a target's dependencies in memory. Some options include
+    * `"speed"`: default, maximizes speed but hogs memory. Recommended for users with (give recommendation for users who are memory constrained)
+    * `"autoclean"`: conserves memory but sacrifices speed. This behavior is similar to that of `driver()`.
+* See `?drake::make` for all available options
+  
+
+### Examples
+```{r}
+#run the driver with a progress bar
+driver_drake(verbose = 2)
+
+#run the driver, stop before a chunk and conserve memory
+driver_drake(stop_before = "module_aglu_LA100.FAO_downscale_ctry", memory_stategy = "autoclean")
+
+```
+
+
+## Parallel Computing
+Parallel computing is supported on `drake`. The two primary backends that are used are `clustermq` and `future`. However, we found that when using the `multisession` type with either package, you must reinstall the `gcamdata` package each time you change a target for the targets to update and build correctly. Also, the multicore option is not supported on Windows.  
+
+### Options
+When running `driver_drake()` with parallelism, the following arguments to `make()` should be specified in `driver_drake()`
+
+* jobs: integer, maximum number of parallel workers for processing targets 
+<!-- should we give jobs recommendation? -->
+* caching: character string, should be set to `"worker"` as to avoid wasting time doing synchronization
+
+<!-- - give time from PIC, from my computer -->
+<!-- - why (not) future, why clustermq -->
+<!--    - what is not possible on Windows -->
+<!--    - using clustermq  -->
+<!--    - multisession = install, multicore not but not possible on Windows -->
+<!--    - how many parallel tasks given by jobs argument -->
+
+<!-- running w parallelism, caching = "worker" otherwise waste time doing synchronization  -->
+
+### The `clustermq` backend
+See the `clustermq` [installation guide](https://cran.r-project.org/web/packages/clustermq/vignettes/userguide.html) for installation instructions and options. 
+
+<!-- - explain how to install clustermq package on PIC -->
+
+
+```{r}
+#run driver_drake with clustermq, type multicore
+options(clustermq.scheduler = "multicore")
+driver_drake(plan, parallelism = "clustermq", jobs = 4)
+```
+Recall, `multicore` is not supported on Windows. 
+
+On PIC, we had good performance with `clustermq`, type `multicore`, and `jobs = 48`.  The initial build took 5 minutes and 40 seconds as opposed to just over 30 minutes for the `driver_drake()` build without parallelism. For reference, the build with `driver()` on PIC took  22 minutes and 41 seconds. 
+
+
+### The `future` backend 
+
+We did not have good performance with future. On a local Windows machine, the initial build with `parallelism = future` and type `multisession` took 1 hour and 14 seconds. On PIC, 
+
+To use this backend, install the `future` package and then select a future plan. 
+```{r}
+#run driver_drake with future plan multisession
+future::plan(future::multisession)
+driver_drake(plan, parallelism = "future", jobs = 4)
+```
+See `?future::plan` for all strategy options and explanations. 
+
+
+## Additional Features
+
+See the `drake` documentation for other features. Some that may be useful with gcamdata include
+
+* `vis_drake_graph(plan)`: produces an interactive graph that displays targets and dependencies
+<!-- give working example, go downstream, manageable figure -->
+
+```{r}
+#display downstream targets from target L210.RenewRsrc 
+vis_drake_graph(plan, from = "L210.RenewRsrc", mode = "out")
+
+```
+
+* `outdated(plan)`: lists all of the targets that are outdated
+* `predict_runtime(plan)`: `drake` records the time it takes to build each target and uses this to predict the runtime of the next `make()`
+
+
+
+
+
+
