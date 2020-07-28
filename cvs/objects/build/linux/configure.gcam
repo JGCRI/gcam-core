@@ -162,7 +162,7 @@ AR              = ar ru
 #MAKE            = make -i -r
 RANLIB          = ranlib
 LIB             = ${ENVLIBS} $(LIBDIR) -lxerces-c $(JAVALINK) $(HECTOR_LIB) $(TBB_LIB) $(LAPACKLINK) -lm
-INCLUDE         = -I$(BOOSTINC) $(JAVAINC) $(TBB_INCLUDE) $(BOOSTBIND) $(HECTOR_INCLUDE) \
+INCLUDE         = -I$(BOOSTINC) $(JAVAINC) $(TBB_INCLUDE) $(BOOSTBIND) $(HECTOR_INCLUDE) -I$(EIGEN_INCLUDE) \
 		 -I$(XERCESINC) \
 		 -I${PATHOFFSET} \
 		 -I${HOME}/include \

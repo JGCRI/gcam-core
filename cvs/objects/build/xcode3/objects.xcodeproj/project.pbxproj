@@ -2874,12 +2874,14 @@
 					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
 					../../../../libs/java/include/darwin,
+					../../../../libs/tbb/include,
 				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs";
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs ../libs/tbb/lib";
 				LIBRARY_SEARCH_PATHS = (
 					../../../../libs/xercesc/lib,
 					../../../../libs/java/lib,
 					"../../../../libs/boost-lib/stage/lib",
+					../../../../libs/tbb/lib,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -2910,6 +2912,7 @@
 					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
 					"FUSION_MAX_VECTOR_SIZE=30",
 					EIGEN_MPL2_ONLY,
+					GCAM_PARALLEL_ENABLED,
 				);
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2920,12 +2923,14 @@
 					../../../../libs/java/include,
 					../../../../libs/java/include/darwin,
 					../../../../libs/eigen,
+					../../../../libs/tbb/include,
 				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs";
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs ../libs/tbb/lib";
 				LIBRARY_SEARCH_PATHS = (
 					../../../../libs/xercesc/lib,
 					../../../../libs/java/lib,
 					"../../../../libs/boost-lib/stage/lib",
+					../../../../libs/tbb/lib,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -2933,6 +2938,9 @@
 					"-ljvm",
 					"-lboost_system",
 					"-lboost_filesystem",
+					"-ltbb",
+					"-ltbbmalloc",
+					"-ltbbmalloc_proxy",
 				);
 				PREBINDING = NO;
 				SDKROOT = "";
@@ -2967,7 +2975,7 @@
 					../../../../libs/java/include/darwin,
 					"../../../../libs/boost-numeric-bindings",
 				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs";
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs ../libs/tbb/lib";
 				LIBRARY_SEARCH_PATHS = (
 					../../../../libs/xercesc/lib,
 					../../../../libs/java/lib,
@@ -3030,7 +3038,7 @@
 					"../../../../libs/boost-numeric-bindings",
 					../../../../libs/tbb/include,
 				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs";
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs ../libs/tbb/lib";
 				LIBRARY_SEARCH_PATHS = (
 					../../../../libs/xercesc/lib,
 					../../../../libs/java/lib,
