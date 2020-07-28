@@ -59,7 +59,7 @@ class GcamFlowGraph {
     friend class MarketDependencyFinder;
 private:
     //! Private constructor to only allow select classes to create flow graphs.
-    GcamFlowGraph() : mTBBFlowGraph(), mHead( mTBBFlowGraph ), mPeriod( 0 ), mCalcList( 0 ) {}
+    GcamFlowGraph() : mTBBFlowGraph(), mHead( mTBBFlowGraph )/*, mPeriod( 0 ), mCalcList( 0 )*/ {}
     
     //! The TBB calculation flow graph.
     tbb::flow::graph mTBBFlowGraph;
@@ -67,14 +67,15 @@ private:
     //! The broadcast node which can be used to kick off calculations.
     tbb::flow::broadcast_node<tbb::flow::continue_msg> mHead;
 
+public:
     //! The model period which will be calculated when called.
-    int mPeriod;
+    static int mPeriod;
     
     //! A list of items which actually need to be calculated which may be a subset
     //! of the total activities.  This can be used when individual flow graphs have
     //! not be calculated for sub-graphs.  Note when null it implies all activities
     //! will be calculated.
-    const std::vector<IActivity*>* mCalcList;
+    //const std::vector<IActivity*>* mCalcList;
 };
 
 /*!
@@ -89,27 +90,27 @@ public:
     /* Types */
 
     //! Typedef for the type of a vertex in the flow graph
-    typedef IActivity* FlowGraphNodeType;
+    //typedef IActivity* FlowGraphNodeType;
 
     //! Flow graph of calc vertex dependencies for parallel analysis
-    typedef digraph<FlowGraphNodeType> FlowGraph;
+    //typedef digraph<FlowGraphNodeType> FlowGraph;
     
     GcamParallel();
     
     /* Graph analysis and parsing methods */
-    void makeGCAMFlowGraph( const MarketDependencyFinder& aDependencyFinder, FlowGraph& aGCAMFlowGraph );
+    //void makeGCAMFlowGraph( const MarketDependencyFinder& aDependencyFinder, FlowGraph& aGCAMFlowGraph );
     
-    void graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, FlowGraph& aGrainGraph );
+    //void graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, FlowGraph& aGrainGraph );
     
-    void graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, FlowGraph& aGrainGraph,
-                                 const std::vector<FlowGraphNodeType>& aCalcItems );
+    //void graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, FlowGraph& aGrainGraph,
+    //                             const std::vector<FlowGraphNodeType>& aCalcItems );
     
-    void makeTBBFlowGraph( const FlowGraph& aGrainGraph, const FlowGraph& aTopology,
+    void makeTBBFlowGraph( const MarketDependencyFinder& aDependencyFinder,
                            GcamFlowGraph& aTBBGraph );
   
 protected:
     //! Helper class for sorting lists in topological order
-    struct TopologicalComparator {
+    /*struct TopologicalComparator {
         TopologicalComparator(const FlowGraph& aGraph ) : mTopology( aGraph ) {}
         
         bool operator()( const FlowGraphNodeType& aLHS, const FlowGraphNodeType& aRHS ) {
@@ -118,7 +119,7 @@ protected:
         
         //! A flow graph which can be used to check topological indices.
         const FlowGraph& mTopology;
-    };
+    };*/
     
     /*!
      * \brief Body structure for tbb::flow_graph
@@ -132,7 +133,7 @@ protected:
      * that we can create a list that is sorted in topological order.
      * After that, the body struct no longer needs the graph.
      */
-    struct TBBFlowGraphBody {
+    /*struct TBBFlowGraphBody {
         TBBFlowGraphBody( const std::set<FlowGraphNodeType>& aNodes, const FlowGraph& aTopology,
                           const GcamFlowGraph& aGraph );
         
@@ -144,7 +145,7 @@ protected:
         
         //! A reference to the TBB flow graph to which this node belongs.
         const GcamFlowGraph& mGraph;
-    };
+    };*/
     
     /* data members */
     
@@ -156,10 +157,10 @@ protected:
      *          parallelism, and less overhead.  Smaller gsize will result
      *          in the opposite.  The default is 30.
      */
-    int mGrainSizeTarget;
+    //int mGrainSizeTarget;
     
     //! Default grain size
-    static const int DEFAULT_GRAIN_SIZE;
+    //static const int DEFAULT_GRAIN_SIZE;
     
     // right now, grain size is the only parameter in the heuristics.
     // We may add more later.

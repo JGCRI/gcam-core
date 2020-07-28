@@ -276,13 +276,14 @@ GcamFlowGraph* MarketDependencyFinder::getFlowGraph( const int aMarketNumber ) {
         if( !mTBBGraphGlobal ) {
             // reads parameters from the global configuration
             GcamParallel config;
-            GcamParallel::FlowGraph gcamFlowGraph;
-            GcamParallel::FlowGraph grainGraph;
+            //GcamParallel::FlowGraph gcamFlowGraph;
+            //GcamParallel::FlowGraph grainGraph;
 
-            // convert dependency table to flow graph 
-            config.makeGCAMFlowGraph( *this, gcamFlowGraph );
+            // convert dependency table to flow graph
+            mTBBGraphGlobal = new GcamFlowGraph();
+            config.makeTBBFlowGraph( *this, *mTBBGraphGlobal );
             // parse flow graph
-            config.graphParseGrainCollect( gcamFlowGraph, grainGraph ); 
+            /*config.graphParseGrainCollect( gcamFlowGraph, grainGraph );
             if( !gcamFlowGraph.topology_valid() ) {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::ERROR );
@@ -290,8 +291,8 @@ GcamFlowGraph* MarketDependencyFinder::getFlowGraph( const int aMarketNumber ) {
                 abort();
             }
             // build the tbb graph structure
-            mTBBGraphGlobal = new GcamFlowGraph();
-            config.makeTBBFlowGraph( grainGraph, gcamFlowGraph, *mTBBGraphGlobal ); 
+
+            config.( grainGraph, gcamFlowGraph,  );*/
         }
         return mTBBGraphGlobal;
     }
@@ -316,7 +317,7 @@ GcamFlowGraph* MarketDependencyFinder::getFlowGraph( const int aMarketNumber ) {
         // We must generate the flow graph following the same procedure as the global graph.
         // It may be a good idea to make some of these tempararies members to avoid recalculating
         // them over and over.
-        GcamParallel config;
+        /*GcamParallel config;
         GcamParallel::FlowGraph gcamFlowGraph;
         GcamParallel::FlowGraph grainGraph;
         
@@ -333,7 +334,9 @@ GcamFlowGraph* MarketDependencyFinder::getFlowGraph( const int aMarketNumber ) {
         }
         // build the tbb graph structure
         (*mrktIter)->mFlowGraph = new GcamFlowGraph();
-        config.makeTBBFlowGraph( grainGraph, gcamFlowGraph, *(*mrktIter)->mFlowGraph );
+        config.makeTBBFlowGraph( grainGraph, gcamFlowGraph, *(*mrktIter)->mFlowGraph );*/
+        cout << "Fail!" << endl;
+        abort();
         return (*mrktIter)->mFlowGraph;
     }
 }

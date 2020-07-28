@@ -32,6 +32,8 @@
 
 #if GCAM_PARALLEL_ENABLED
 #include <map>
+#include <vector>
+#include <Eigen/SparseCore>
 /* gcam headers */
 #include "parallel/include/gcam_parallel.hpp"
 #include "util/base/include/configuration.h"
@@ -49,7 +51,8 @@
 
 using namespace std;
 
-const int GcamParallel::DEFAULT_GRAIN_SIZE = 30;
+//const int GcamParallel::DEFAULT_GRAIN_SIZE = 30;
+int GcamFlowGraph::mPeriod = 0;
 
 /*!
  * \brief Default constructor
@@ -64,7 +67,7 @@ const int GcamParallel::DEFAULT_GRAIN_SIZE = 30;
  */
 GcamParallel::GcamParallel()
 {
-    mGrainSizeTarget = Configuration::getInstance()->getInt( "parallel-grain-size", DEFAULT_GRAIN_SIZE );
+    //mGrainSizeTarget = Configuration::getInstance()->getInt( "parallel-grain-size", DEFAULT_GRAIN_SIZE );
 }
   
 
@@ -82,7 +85,7 @@ GcamParallel::GcamParallel()
  *                             object. 
  * \pre aDependencyFinder.createOrdering() has been run
  */
-void GcamParallel::makeGCAMFlowGraph( const MarketDependencyFinder& aDependencyFinder, FlowGraph& aGCAMFlowGraph )
+/*void GcamParallel::makeGCAMFlowGraph( const MarketDependencyFinder& aDependencyFinder, FlowGraph& aGCAMFlowGraph )
 {
     // Basic procedure: 
     // *  For each dependency item, d:
@@ -139,7 +142,7 @@ void GcamParallel::makeGCAMFlowGraph( const MarketDependencyFinder& aDependencyF
     ILogger &mainlog = ILogger::getLogger("main_log");
     mainlog.setLevel(ILogger::DEBUG);
     graphtimer.print(mainlog, "Graph analysis in makeGCAMFlowGraph:  ");
-}
+}*/
 
 
 /*!
@@ -159,7 +162,7 @@ void GcamParallel::makeGCAMFlowGraph( const MarketDependencyFinder& aDependencyF
  * \param[out] aGrainGraph: The graph of computational grains.  On input it
  *                          should be empty. 
  */
-void GcamParallel::graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, FlowGraph& aGrainGraph )
+/*void GcamParallel::graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, FlowGraph& aGrainGraph )
 {
     // some intermediate types involving "clans".  These will hold the
     // intermediate results of the parsing.
@@ -195,7 +198,7 @@ void GcamParallel::graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, Flow
 
     parsetimer.print(mainlog, "Graph parse in graphParseGrainCollect:  ");
     graintimer.print(mainlog, "Grain collect in graphParseGrainCollect:  ");
-}
+}*/
 
 /*!
  * \brief Parse the GCAM flow graph and collect IActivies into computational grains 
@@ -207,7 +210,7 @@ void GcamParallel::graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, Flow
  *                          should be empty. 
  * \param[in] aCalcItems: The list of items to use to subset aGCAMFlowGraph.
  */
-void GcamParallel::graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, FlowGraph& aGrainGraph,
+/*void GcamParallel::graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, FlowGraph& aGrainGraph,
                                            const vector<FlowGraphNodeType>& aCalcItems )
 {
     FlowGraph::nodelist_t fullGraph = aGCAMFlowGraph.nodelist();
@@ -217,7 +220,7 @@ void GcamParallel::graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, Flow
     }
     FlowGraph subFlowGraph( subGraph, aGCAMFlowGraph.title() );
     graphParseGrainCollect( subFlowGraph, aGrainGraph );
-}
+}*/
 
 /*!
  * \brief Build the TBB flow graph for an input grain structure and topology 
@@ -247,7 +250,7 @@ void GcamParallel::graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, Flow
  *             probably live in World, Scenario, or some similarly long-lived
  *             object.
  */
-void GcamParallel::makeTBBFlowGraph( const FlowGraph& aGrainGraph, const FlowGraph& aTopology,
+void GcamParallel::makeTBBFlowGraph( const MarketDependencyFinder& aDependencyFinder,
                                      GcamFlowGraph& aTBBGraph )
 {
     using tbb::flow::continue_node;
@@ -259,9 +262,66 @@ void GcamParallel::makeTBBFlowGraph( const FlowGraph& aGrainGraph, const FlowGra
     ILogger& pgLog = ILogger::getLogger( "parallel-grain-log" );
     pgLog.setLevel( ILogger::NOTICE );
     
+    vector<IActivity*> globalOrdering = aDependencyFinder.getOrdering();
+    vector<MarketDependencyFinder::CalcVertex*> calcVertexList( globalOrdering.size(), 0 );
+    vector<bool> isSourceNode( globalOrdering.size(), true );
+    using TripletType = Eigen::Triplet<bool>;
+    vector<TripletType> adjTriplets;
+    adjTriplets.reserve( globalOrdering.size() * 3 );
+    
+    for( MarketDependencyFinder::DependencyItem* item : aDependencyFinder.getDependencyItems() ) {
+        for( MarketDependencyFinder::CalcVertex* vertex : item->mPriceVertices ) {
+            calcVertexList[ vertex->mUID ] = vertex;
+            for( MarketDependencyFinder::CalcVertex* outEdge : vertex->mOutEdges ) {
+                isSourceNode[ outEdge->mUID ] = false;
+                adjTriplets.push_back(TripletType(vertex->mUID, outEdge->mUID, true));
+            }
+        }
+        for( MarketDependencyFinder::CalcVertex* vertex : item->mDemandVertices ) {
+            calcVertexList[ vertex->mUID ] = vertex;
+            for( MarketDependencyFinder::CalcVertex* outEdge : vertex->mOutEdges ) {
+                isSourceNode[ outEdge->mUID ] = false;
+                adjTriplets.push_back(TripletType(vertex->mUID, outEdge->mUID, true));
+            }
+        }
+    }
+    
+    Eigen::SparseMatrix<bool> adjMatrix( globalOrdering.size(), globalOrdering.size());
+    adjMatrix.setFromTriplets( adjTriplets.begin(), adjTriplets.end() );
+    
+    /*Eigen::SparseMatrix<bool> adjMatrixTransClosure = adjMatrix;
+    for (int k=0; k<adjMatrix.outerSize(); ++k) {
+        adjMatrixTransClosure = adjMatrix * adjMatrix;
+    }
+    
+    // transative reduction
+    adjMatrix = (adjMatrix - adjMatrixTransClosure).pruned();*/
+    
+    vector<continue_node<continue_msg>*> tbbVert;
+    tbbVert.reserve( calcVertexList.size() );
+    for( MarketDependencyFinder::CalcVertex* vert : calcVertexList ) {
+        IActivity* activity = vert->mCalcItem;
+        tbbVert.push_back(new continue_node<continue_msg>(tbbFlowGraph, [activity](continue_msg) {
+            activity->calc(GcamFlowGraph::mPeriod);
+        }));
+    }
+    for (int k=0; k<adjMatrix.outerSize(); ++k) {
+        for (Eigen::SparseMatrix<bool>::InnerIterator it(adjMatrix,k); it; ++it) {
+            //if(it.value()) {
+            pgLog << calcVertexList[it.row()]->mCalcItem->getDescription() << " -> " << calcVertexList[it.col()]->mCalcItem->getDescription() << endl;
+            make_edge(*tbbVert[it.row()], *tbbVert[it.col()]);
+            //}
+        }
+        if(isSourceNode[k]) {
+            pgLog << " head -> " << calcVertexList[k]->mCalcItem->getDescription() << endl;
+            make_edge(head, *tbbVert[k]);
+        }
+    }
+            
+    
     // We need a place to stash all of the TBB flow graph nodes, and we need to be
     // able to find them from the node identifiers.
-    map<FlowGraphNodeType, continue_node<continue_msg>* > nodeTable;
+    /*map<FlowGraphNodeType, continue_node<continue_msg>* > nodeTable;
     map<FlowGraphNodeType, int> nodeSizeTable;
     
     // The TBB flow graph structures don't automatically create nodes, so we'll do
@@ -314,10 +374,11 @@ void GcamParallel::makeTBBFlowGraph( const FlowGraph& aGrainGraph, const FlowGra
         tbb::flow::make_edge( head, *nodeTable[ *srcIt ] );
         pgLog << "start node found:  " << nodeTable[ *srcIt ] << "_" << nodeSizeTable[ *srcIt ] << endl;
     }
+     */
     // TBB flow graph is ready to go.
 }
 
-void GcamParallel::TBBFlowGraphBody::operator()( tbb::flow::continue_msg aMessage )
+/*void GcamParallel::TBBFlowGraphBody::operator()( tbb::flow::continue_msg aMessage )
 {
     for( list<FlowGraphNodeType>::const_iterator nodeIt = mNodes.begin();
          nodeIt != mNodes.end(); ++nodeIt )
@@ -359,7 +420,7 @@ GcamParallel::TBBFlowGraphBody::TBBFlowGraphBody( const std::set<FlowGraphNodeTy
         pgLog << (*it)->getDescription() << ", ";
     }
     pgLog << endl;
-}
+}*/
 
 /*!
  * \brief A helper method used by digraph-output to pretty print
@@ -367,10 +428,10 @@ GcamParallel::TBBFlowGraphBody::TBBFlowGraphBody( const std::set<FlowGraphNodeTy
  * \param aOut The output stream to write to.
  * \param aActivity The IActivity * to print with it's label.
  */
-template<>
+/*template<>
 void print_id_with_label<IActivity*>( ostream& aOut, IActivity* aActivity ) {
     aOut << (size_t)aActivity << "[label=\"" << aActivity->getDescription() << "\"]";
-}
+}*/
 
 /*!
  * \brief A helper method used by digraph-output to pretty print
@@ -378,9 +439,9 @@ void print_id_with_label<IActivity*>( ostream& aOut, IActivity* aActivity ) {
  * \param aOut The output stream to write to.
  * \param aActivity The IActivity * to print.
  */
-template<>
+/*template<>
 void print_id<IActivity*>( ostream& aOut, IActivity* aActivity ) {
     aOut << (size_t)aActivity;
-}
+}*/
 
 #endif // GCAM_PARALLEL_ENABLED
