@@ -65,10 +65,10 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
     A_LandNode_logit <- get_data(all_data, "aglu/A_LandNode_logit")
     A_LandLeaf_Unmgd1 <- get_data(all_data, "aglu/A_LandLeaf_Unmgd1")
     A_LT_Mapping <- get_data(all_data, "aglu/A_LT_Mapping")
-    A_soil_time_scale_R <- get_data(all_data, "aglu/A_soil_time_scale_R")
+    A_soil_time_scale_R <- get_data(all_data, "aglu/A_soil_time_scale_R", strip_attributes = TRUE)
     L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
-    L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU")
-    L125.LC_bm2_R <- get_data(all_data, "L125.LC_bm2_R")
+    L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU", strip_attributes = TRUE)
+    L125.LC_bm2_R <- get_data(all_data, "L125.LC_bm2_R", strip_attributes = TRUE)
     L131.LV_USD75_m2_R_GLU <- get_data(all_data, "L131.LV_USD75_m2_R_GLU")
 
 

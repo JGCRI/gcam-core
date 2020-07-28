@@ -60,19 +60,19 @@ module_energy_L2322.Fert <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    A322.sector <- get_data(all_data, "energy/A322.sector")
-    A322.subsector_interp <- get_data(all_data, "energy/A322.subsector_interp")
-    A322.subsector_logit <- get_data(all_data, "energy/A322.subsector_logit")
-    A322.subsector_shrwt <- get_data(all_data, "energy/A322.subsector_shrwt")
+    A322.sector <- get_data(all_data, "energy/A322.sector", strip_attributes = TRUE)
+    A322.subsector_interp <- get_data(all_data, "energy/A322.subsector_interp", strip_attributes = TRUE)
+    A322.subsector_logit <- get_data(all_data, "energy/A322.subsector_logit", strip_attributes = TRUE)
+    A322.subsector_shrwt <- get_data(all_data, "energy/A322.subsector_shrwt", strip_attributes = TRUE)
     A322.globaltech_coef <- get_data(all_data, "energy/A322.globaltech_coef")
-    A322.globaltech_shrwt <- get_data(all_data, "energy/A322.globaltech_shrwt")
+    A322.globaltech_shrwt <- get_data(all_data, "energy/A322.globaltech_shrwt", strip_attributes = TRUE)
     A322.globaltech_co2capture <- get_data(all_data, "energy/A322.globaltech_co2capture")
     A322.globaltech_renew <- get_data(all_data, "energy/A322.globaltech_renew")
-    A322.globaltech_retirement <- get_data(all_data, "energy/A322.globaltech_retirement")
-    L1322.Fert_Prod_MtN_R_F_Y <- get_data(all_data, "L1322.Fert_Prod_MtN_R_F_Y")
-    L1322.IO_R_Fert_F_Yh <- get_data(all_data, "L1322.IO_R_Fert_F_Yh")
+    A322.globaltech_retirement <- get_data(all_data, "energy/A322.globaltech_retirement", strip_attributes = TRUE)
+    L1322.Fert_Prod_MtN_R_F_Y <- get_data(all_data, "L1322.Fert_Prod_MtN_R_F_Y", strip_attributes = TRUE)
+    L1322.IO_R_Fert_F_Yh <- get_data(all_data, "L1322.IO_R_Fert_F_Yh", strip_attributes = TRUE)
     L1322.Fert_NEcost_75USDkgN_F <- get_data(all_data, "L1322.Fert_NEcost_75USDkgN_F")
-    L142.ag_Fert_NetExp_MtN_R_Y <- get_data(all_data, "L142.ag_Fert_NetExp_MtN_R_Y")
+    L142.ag_Fert_NetExp_MtN_R_Y <- get_data(all_data, "L142.ag_Fert_NetExp_MtN_R_Y", strip_attributes = TRUE)
 
     # ===================================================
     # 0. Give binding for variable names used in pipeline

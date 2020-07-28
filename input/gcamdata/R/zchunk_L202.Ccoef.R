@@ -36,7 +36,7 @@ module_energy_L202.Ccoef <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A_PrimaryFuelCCoef <- get_data(all_data, "emissions/A_PrimaryFuelCCoef")
+    A_PrimaryFuelCCoef <- get_data(all_data, "emissions/A_PrimaryFuelCCoef", strip_attributes = TRUE)
     fuel_to_Ccoef <- get_data(all_data, "emissions/mappings/fuel_to_Ccoef")
     L102.Ccoef_kgCGJ_F_Yh <- get_data(all_data, "L102.Ccoef_kgCGJ_F_Yh")
     L102.Ccoef_kgCGJ_R_F_Yh <- get_data(all_data, "L102.Ccoef_kgCGJ_R_F_Yh")

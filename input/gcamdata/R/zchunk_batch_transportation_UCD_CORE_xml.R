@@ -58,6 +58,8 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    sce <- year <- . <- NULL #silence package notes
+
     # Load required inputs
     L254.tranSubsectorSpeed <- get_data(all_data, "L254.tranSubsectorSpeed")
     L254.StubTranTech <- get_data(all_data, "L254.StubTranTech")

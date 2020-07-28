@@ -18,6 +18,7 @@
 module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = 'gcam-usa/EIA_elec_gen_hydro',
+             FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
              FILE = 'gcam-usa/AEO_2020_elec_gen_hydro',
              'L2234.StubTechFixOut_elecS_USA'))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -28,42 +29,26 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
 
     # Load required inputs
     EIA_elec_gen_hydro <- get_data(all_data, 'gcam-usa/EIA_elec_gen_hydro')
+    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
     AEO_2020_elec_gen_hydro <- get_data(all_data, 'gcam-usa/AEO_2020_elec_gen_hydro')
     L2234.StubTechFixOut_elecS_USA <- get_data(all_data, 'L2234.StubTechFixOut_elecS_USA')
 
     # Silence package checks
     subsector <- year <- fixedOutput <- state <- EIA <- EIA_ratio <- fixedOutput_2015 <-
       AEO <- AEO_2015_ratio <- region <- supplysector <- stub.technology <-
-      share.weight.year <- subs.share.weight <- tech.share.weight <- NULL
+      share.weight.year <- subs.share.weight <- tech.share.weight <-
+      technology <- subsector_1 <- to.technology <- NULL
 
     # ===================================================
     # Data Processing
 
-    # Isolate GCAM 2010 hydro fixedOutput
+    # Isolate GCAM 2015 hydro fixedOutput
     L2234.StubTechFixOut_elecS_USA %>%
       filter(subsector == "hydro",
              year == max(year),
-             fixedOutput != 0) -> L2242.hydro_2010_fixedOutput
+             fixedOutput != 0) -> L2242.hydro_fixedOutput_baseyear
 
-    # Filter EIA data to get annual hydro net generation for 2010, 2015
-    # Compute ratio of 2015 EIA to 2010 EIA
-    EIA_elec_gen_hydro %>%
-      filter(year %in% MODEL_YEARS) %>%
-      group_by(state) %>%
-      mutate(EIA_ratio =  EIA / lag(EIA)) %>%
-      filter(year == gcamusa.HYDRO_HIST_YEAR) %>%
-      distinct(state, EIA_ratio) %>%
-      ungroup() -> L2242.hydro_EIA_ratio
-
-    # Apply the ratio to GCAM 2010 fixed output to calculate 2015 fixed output
-    L2242.hydro_2010_fixedOutput %>%
-      left_join_error_no_match(L2242.hydro_EIA_ratio, by = c("region" = "state")) %>%
-      mutate(fixedOutput = fixedOutput * EIA_ratio,
-             year = gcamusa.HYDRO_HIST_YEAR,
-             share.weight.year = year) %>%
-      select(-EIA_ratio) -> L2242.hydro_fixedOutput_2015
-
-    # Compute ratio of AEO-2018 hydro generation relative to EIA 2015 at the national level
+    # Compute ratio of AEO 2020 hydro generation relative to EIA 2015 at the national level
     EIA_elec_gen_hydro %>%
       filter(year == gcamusa.HYDRO_HIST_YEAR) %>%
       group_by(year) %>%
@@ -80,8 +65,8 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
       select(year, AEO_2015_ratio) %>%
       repeat_add_columns(tibble::tibble(region = gcamusa.STATES)) %>%
       # filtering out states with no hydro generation
-      semi_join(L2242.hydro_2010_fixedOutput, by = c("region")) %>%
-      left_join_error_no_match(L2242.hydro_fixedOutput_2015 %>%
+      semi_join(L2242.hydro_fixedOutput_baseyear, by = c("region")) %>%
+      left_join_error_no_match(L2242.hydro_fixedOutput_baseyear %>%
                                  rename(fixedOutput_2015 = fixedOutput) %>%
                                  select(-year),
                                by = c("region")) %>%
@@ -89,24 +74,38 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
              share.weight.year = year) %>%
       select(region, supplysector, subsector, stub.technology, year, fixedOutput,
              share.weight.year, subs.share.weight, tech.share.weight) %>%
-      bind_rows(L2242.hydro_fixedOutput_2015) %>%
       arrange(region, year) -> L2242.StubTechFixOut_hydro_USA_2050
 
     # Copy 2050 values for the remaining years
     L2242.StubTechFixOut_hydro_USA_2050 %>%
       complete(year = MODEL_FUTURE_YEARS, nesting(region, supplysector, subsector, stub.technology,
                                             subs.share.weight, tech.share.weight)) %>%
-      filter(year >= gcamusa.HYDRO_HIST_YEAR) %>%
+      filter(year >= gcamusa.HYDRO_HIST_YEAR,
+             year %in% MODEL_FUTURE_YEARS) %>%
       group_by(region, supplysector, subsector, stub.technology) %>%
-      mutate(fixedOutput = replace(fixedOutput, year > gcamusa.HYDRO_FINAL_AEO_YEAR,
-                                   fixedOutput[year == gcamusa.HYDRO_FINAL_AEO_YEAR])) %>%
+      mutate(fixedOutput = approx_fun(year, fixedOutput, rule = 2)) %>%
       ungroup() %>%
       mutate(share.weight.year = year,
              fixedOutput = round(fixedOutput, energy.DIGITS_CALOUTPUT)) %>%
       select(region, supplysector, subsector, stub.technology, year, fixedOutput,
              share.weight.year, subs.share.weight, tech.share.weight) %>%
+      filter(year %in% MODEL_FUTURE_YEARS) %>%
       arrange(region, year) -> L2242.StubTechFixOut_hydro_USA
 
+    ## To account for new nesting-subsector structure and to add cooling technologies, we must expand certain outputs
+    add_cooling_techs <- function(data){
+      data_new <- data %>%
+        left_join(A23.elecS_tech_mapping_cool,
+                  by=c("stub.technology"="Electric.sector.technology",
+                       "supplysector"="Electric.sector","subsector")) %>%
+        select(-technology,-subsector_1)%>%
+        rename(technology = to.technology,
+               subsector0 = subsector,
+               subsector = stub.technology)%>%
+        arrange(region,year)
+      return(data_new)
+    }
+      L2242.StubTechFixOut_hydro_USA <- add_cooling_techs(L2242.StubTechFixOut_hydro_USA)
 
     # ===================================================
     # Produce outputs
@@ -119,6 +118,7 @@ module_gcamusa_L2242.elec_hydro_USA <- function(command, ...) {
       add_comments("Post-2015 values based on USA-level hydro electricity growth from AEO-2018") %>%
       add_legacy_name("L2242.StubTechFixOut_hydro_USA") %>%
       add_precursors('gcam-usa/EIA_elec_gen_hydro',
+                     "gcam-usa/A23.elecS_tech_mapping_cool",
                      'gcam-usa/AEO_2020_elec_gen_hydro',
                      'L2234.StubTechFixOut_elecS_USA') ->
       L2242.StubTechFixOut_hydro_USA

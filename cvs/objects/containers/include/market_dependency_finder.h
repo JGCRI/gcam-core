@@ -191,7 +191,8 @@ public:
     struct DependencyItem {
         DependencyItem( const std::string& aName, const std::string& aLocatedInRegion )
         :mName( aName ), mLocatedInRegion( aLocatedInRegion ), mIsSolved( false ),
-        mLinkedMarket( -1 ), mCanBreakCycle( true ), mHasSelfDependence( false ) {}
+        mLinkedMarket( -1 ), mCanBreakCycle( true ), mHasSelfDependence( false ),
+        mHasIncomingDependency( false ){}
         ~DependencyItem();
         
         //! A name of a dependency which will correspond to a sector or resource, etc.
@@ -226,6 +227,27 @@ public:
         //! flag is set then the item must be converted to a solved market by creating
         //! trial markets.
         bool mHasSelfDependence;
+        
+        //! A flag to indicate if any other DependencyItem has listed this in it's
+        //! mDependentList which can then be used for error checking
+        bool mHasIncomingDependency;
+
+        /*!
+         * \brief Adds the given dependency item as an outgoing dependence
+         * \return If the dependency item has already been added or not.
+         */
+        bool insertDependent( DependencyItem* aDependentItem ) {
+            // Set the flag on the given dependency item that it has
+            // at least one incoming dependency.
+            // Note that this flag is just used for error checking and
+            // by default *all* technologies will get an incoming dependency
+            // on CO2 but for the purposes of error checking we don't
+            // want to count that.
+            if( mName != "CO2" ) {
+                aDependentItem->mHasIncomingDependency = true;
+            }
+            return mDependentList.insert( aDependentItem ).second;
+        }
         
         /*!
          * \brief Helper function to clean up syntax in accessing the first price

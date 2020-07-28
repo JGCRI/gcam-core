@@ -76,14 +76,14 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       non.staples.food.demand.input <- subsector <- NULL   # silence package check notes
 
     # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A_demand_supplysector <- get_data(all_data, "aglu/A_demand_supplysector")
-    A_demand_subsector <- get_data(all_data, "aglu/A_demand_subsector")
-    A_demand_technology <- get_data(all_data, "aglu/A_demand_technology")
-    A_fuelprefElasticity_ssp1 <- get_data(all_data, "aglu/A_fuelprefElasticity_ssp1")
-    A_demand_food_staples <- get_data(all_data, "aglu/A_demand_food_staples")
-    A_demand_food_nonstaples <- get_data(all_data, "aglu/A_demand_food_nonstaples")
-    A_diet_bias <- get_data(all_data, "aglu/A_diet_bias")
+    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names", strip_attributes = TRUE)
+    A_demand_supplysector <- get_data(all_data, "aglu/A_demand_supplysector", strip_attributes = TRUE)
+    A_demand_subsector <- get_data(all_data, "aglu/A_demand_subsector", strip_attributes = TRUE)
+    A_demand_technology <- get_data(all_data, "aglu/A_demand_technology", strip_attributes = TRUE)
+    A_fuelprefElasticity_ssp1 <- get_data(all_data, "aglu/A_fuelprefElasticity_ssp1", strip_attributes = TRUE)
+    A_demand_food_staples <- get_data(all_data, "aglu/A_demand_food_staples", strip_attributes = TRUE)
+    A_demand_food_nonstaples <- get_data(all_data, "aglu/A_demand_food_nonstaples", strip_attributes = TRUE)
+    A_diet_bias <- get_data(all_data, "aglu/A_diet_bias", strip_attributes = TRUE)
     L101.ag_Food_Pcal_R_C_Y <- get_data(all_data, "L101.ag_Food_Pcal_R_C_Y")
     L101.ag_kcalg_R_C_Y <- get_data(all_data, "L101.ag_kcalg_R_C_Y")
     L105.an_Food_Pcal_R_C_Y <- get_data(all_data, "L105.an_Food_Pcal_R_C_Y")

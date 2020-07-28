@@ -83,6 +83,7 @@ void InterpolationRule::copy( const InterpolationRule& aOther ) {
     mFromValue = aOther.mFromValue;
     mToYear = aOther.mToYear;
     mToValue = aOther.mToValue;
+    mApplyTo = aOther.mApplyTo;
     mOverwritePolicy = aOther.mOverwritePolicy;
     mWarnWhenOverwritting = aOther.mWarnWhenOverwritting;
     mIsFixedFunction = aOther.mIsFixedFunction;
@@ -114,6 +115,7 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
     // get the year-range this rule is applicable from the attributes
     mFromYear = XMLHelper<int>::getAttr( aNode, "from-year" );
     mToYear = XMLHelper<int>::getAttr( aNode, "to-year" );
+    mApplyTo = XMLHelper<string>::getAttr( aNode, "apply-to" );
     
     // replace to year if it is equal to the last model year flag
     if( mToYear == getLastModelYearConstant() ) {
@@ -187,6 +189,34 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
         }
     }
     return true;
+}
+
+void InterpolationRule::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
+    aTabs->writeTabs( aOut );
+    aOut << "<" << getXMLNameStatic() << " apply-to=\"" << mApplyTo
+         << "\" from-year=\"" << mFromYear
+         << "\" to-year=\"" <<  mToYear
+         << "\">" << endl;
+    aTabs->increaseIndent();
+
+    // only write out a value to this element if one was parsed
+    if( mFromValue.isInited() ) {
+        XMLWriteElement( mFromValue, "from-value", aOut, aTabs );
+    }
+
+    // only write out a value to this element if one was parsed
+    if( mToValue.isInited() ) {
+        XMLWriteElement( mToValue, "to-value", aOut, aTabs );
+    }
+
+    mInterpolationFunction->toDebugXML( aPeriod, aOut, aTabs );
+
+    map<string, bool> attrs;
+    attrs[ "warn" ] = mWarnWhenOverwritting;
+    XMLWriteElementWithAttributes( overwritePolicyEnumToStr( mOverwritePolicy ),
+        "overwrite-policy", aOut, aTabs, attrs );
+
+    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 /*!

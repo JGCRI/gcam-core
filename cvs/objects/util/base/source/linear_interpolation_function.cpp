@@ -48,6 +48,8 @@
 #include "util/base/include/xml_helper.h"
 #include "util/logger/include/ilogger.h"
 
+class Tabs;
+
 using namespace std;
 using namespace xercesc;
 
@@ -104,6 +106,10 @@ bool LinearInterpolationFunction::XMLParse( const DOMNode* aNode ) {
         }
     }
     return true;
+}
+
+void LinearInterpolationFunction::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
+    XMLWriteElement("", IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, 0, getXMLAttrNameStatic() );
 }
 
 double LinearInterpolationFunction::interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,
