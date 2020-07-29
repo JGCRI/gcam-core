@@ -77,22 +77,6 @@ class IFunction;
  *                   Sigma exponent to use for new capital vintage technology.
  *              - \c Sigma2 NodeInput::mSigmaOldCapital
  *                   Sigma exponent to use for old capital vintage technology.
- *              - \c alpha-utility-param NodeInput::mAlphaUtilityParam
- *                   Alpha utility demand function paramater.
- *                   TODO: This would only be used when we have a UtilityDemandFunction
- *                         however to keep the interfaces generic we stuck this paramater
- *                         in here.
- *              - \c beta-utility-param NodeInput::mBetaUtilityParam
- *                   Beta utility demand function paramater.
- *                   TODO: This would only be used when we have a UtilityDemandFunction
- *                         however to keep the interfaces generic we stuck this paramater
- *                         in here.
- *              - \c gamma-utility-param NodeInput::mAlphaCoef
- *                   Gamma utility demand function paramater.  Note we are putting it into
- *                   mAlphaCoef due to a hack in UtilityDemandFunction.
- *                   TODO: This would only be used when we have a UtilityDemandFunction
- *                         however to keep the interfaces generic we stuck this paramater
- *                         in here.
  *              - \c technicalChange NodeInput::mTechChange
  *                   Tech change specific to this node.  This tech change would only be 
  *                   applied in the intial period this nest operates.
@@ -327,13 +311,6 @@ protected:
 
         //! Price paid in the base year, for the root this would be price recieved
         DEFINE_VARIABLE( SIMPLE, "base-price-paid", mBasePricePaid, Value ),
-
-        // TODO: these shouldn't really be in here, they are specific to the UtilityDemandFunction
-        //! Alpha param
-        DEFINE_VARIABLE( SIMPLE, "alpha-utility-param", mAlphaUtilityParam, Value ),
-
-        //! Beta param
-        DEFINE_VARIABLE( SIMPLE, "beta-utility-param", mBetaUtilityParam, Value ),
 
         /*! 
          * The technical change that would get applied to the node.  Note that it

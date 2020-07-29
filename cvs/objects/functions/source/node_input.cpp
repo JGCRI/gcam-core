@@ -109,17 +109,6 @@ void NodeInput::XMLParse( const xercesc::DOMNode* node ) {
         else if ( nodeName == "Sigma2" ) {
             mSigmaOldCapital.set( XMLHelper<double>::getValue( curr ) );
         }
-        // TODO: these shouldn't really be in here, they are specific to the UtilityDemandFunction
-        else if ( nodeName == "alpha-utility-param" ) {
-            mAlphaUtilityParam.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if ( nodeName == "beta-utility-param" ) {
-            mBetaUtilityParam.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if ( nodeName == "gamma-utility-param" ) {
-            // putting gamma in here due to hack in UtilityDemandFunction
-            mAlphaCoef.set( XMLHelper<double>::getValue( curr ) );
-        }
         else if ( nodeName == "technicalChange" ) {
             mTechChange.set( XMLHelper<double>::getValue( curr ) );
         }
@@ -143,22 +132,8 @@ void NodeInput::completeInit( const string& aRegionName,
     // it would ideally be created somwhere else such as with in the function itself
     // however it does not have a completeInit method.
     if( !mProdDmdFnType.empty() ) {
+        // TODO: Is this still needed?
         mProdDmdFn = FunctionManager::getFunction( mProdDmdFnType );
-        // TODO: a better way to create this market that is less hackish
-        if( mProdDmdFnType == "UtilityDemandFunction" ) {
-            Marketplace* marketplace = scenario->getMarketplace();
-            const string utilityMarketName = aSectorName+"-utility";
-            bool createdUtilityMarket = marketplace->createMarket( aRegionName, aRegionName, utilityMarketName,
-                IMarketType::NORMAL );
-            // it may not have created the market if it was created by another input in say an earlier
-            // consumer
-            if( createdUtilityMarket && !Configuration::getInstance()->getBool( "CalibrationActive" ) ){
-                const Modeltime* modeltime = scenario->getModeltime();
-                for( int period = 0; period < modeltime->getmaxper(); ++period ){
-                    marketplace->setMarketToSolve( utilityMarketName, aRegionName, period );
-                }
-            }
-        }
     }
     // Initially set the current sigma to new capital even though we technically have old vintage
     // technologies in the base year.  Theoritically the base year should be read in balanced
@@ -231,9 +206,6 @@ void NodeInput::copyParamsInto( NodeInput& aInput, const int aPeriod ) const {
 
     aInput.mBasePricePaid.set( mBasePricePaid );
 
-    aInput.mAlphaUtilityParam = mAlphaUtilityParam;
-    aInput.mBetaUtilityParam = mBetaUtilityParam;
-
     // copy children
     CNestedInputIterator itThis = mNestedInputs.begin();
     NestedInputIterator itArg = aInput.mNestedInputs.begin();
@@ -281,9 +253,6 @@ void NodeInput::copy( const NodeInput& aNodeInput ) {
     mProdDmdFnType = aNodeInput.mProdDmdFnType;
     mProdDmdFn = aNodeInput.mProdDmdFn;
     mBasePricePaid.set( aNodeInput.mBasePricePaid );
-
-    mAlphaUtilityParam = aNodeInput.mAlphaUtilityParam;
-    mBetaUtilityParam = aNodeInput.mBetaUtilityParam;
 
     // copy children
     for( CNestedInputIterator it = aNodeInput.mNestedInputs.begin(); it != aNodeInput.mNestedInputs.end(); ++it ) {
@@ -737,13 +706,11 @@ double NodeInput::getCalibrationQuantity( const int aPeriod ) const {
 }
 
 double NodeInput::getPriceElasticity( const int aPeriod ) const {
-    // TODO: should not be here
-    return mAlphaUtilityParam;
+    return 0;
 }
 
 double NodeInput::getIncomeElasticity( const int aPeriod ) const {
-    // TODO: should not be here
-    return mBetaUtilityParam;
+    return 0;
 }
 
 double NodeInput::getTechChange( const int aPeriod ) const {

@@ -1733,9 +1733,6 @@ void XMLDBOutputter::startVisitNodeInput( const NodeInput* aNodeInput, const int
     if( !objects::isEqual<double>( aNodeInput->getPriceElasticity( 0 ), 0.0 ) ||
         !objects::isEqual<double>( aNodeInput->getIncomeElasticity( 0 ), 0.0 ) ) {
         // we have AIDADS/LES paramaters so write them out
-        XMLWriteElement( aNodeInput->getPriceElasticity( 0 ), "alpha-utility-param", *childBuffer, mTabs.get() );
-        XMLWriteElement( aNodeInput->getIncomeElasticity( 0 ), "beta-utility-param", *childBuffer, mTabs.get() );
-        XMLWriteElement( aNodeInput->getCoefficient( aPeriod ), "gamma-utility-param", *childBuffer, mTabs.get() );
         XMLWriteElement( aNodeInput->getPricePaid( "", aPeriod ), "price", *childBuffer, mTabs.get() );
         XMLWriteElement( aNodeInput->getPhysicalDemand( aPeriod ), "demand", *childBuffer, mTabs.get() );
     }
