@@ -187,9 +187,6 @@ public:
     void startVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod );
     void endVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod );
 
-    virtual void startVisitSGMInput( const SGMInput* aInput, const int aPeriod );
-    virtual void endVisitSGMInput( const SGMInput* aInput, const int aPeriod );
-
     virtual void startVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod );
     virtual void endVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod );
 

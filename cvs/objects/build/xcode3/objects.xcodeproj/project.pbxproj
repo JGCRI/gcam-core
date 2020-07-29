@@ -77,7 +77,6 @@
 		CD488762122873C200F5A88A /* ademand_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884F5122873C100F5A88A /* ademand_function.cpp */; };
 		CD488763122873C200F5A88A /* aproduction_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884F6122873C100F5A88A /* aproduction_function.cpp */; };
 		CD488765122873C200F5A88A /* ces_production_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884F8122873C100F5A88A /* ces_production_function.cpp */; };
-		CD488766122873C200F5A88A /* demand_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884F9122873C100F5A88A /* demand_input.cpp */; };
 		CD488767122873C200F5A88A /* efficiency.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884FA122873C100F5A88A /* efficiency.cpp */; };
 		CD488768122873C200F5A88A /* energy_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884FB122873C100F5A88A /* energy_input.cpp */; };
 		CD488769122873C200F5A88A /* function_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884FC122873C100F5A88A /* function_manager.cpp */; };
@@ -100,11 +99,7 @@
 		CD48877A122873C200F5A88A /* nested_ces_production_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48850D122873C100F5A88A /* nested_ces_production_function.cpp */; };
 		CD48877B122873C200F5A88A /* node_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48850E122873C100F5A88A /* node_input.cpp */; };
 		CD48877C122873C200F5A88A /* non_energy_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48850F122873C100F5A88A /* non_energy_input.cpp */; };
-		CD48877D122873C200F5A88A /* production_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488510122873C100F5A88A /* production_input.cpp */; };
 		CD48877E122873C200F5A88A /* renewable_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488511122873C100F5A88A /* renewable_input.cpp */; };
-		CD48877F122873C200F5A88A /* sgm_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488512122873C100F5A88A /* sgm_input.cpp */; };
-		CD488780122873C200F5A88A /* trade_demand_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488513122873C100F5A88A /* trade_demand_function.cpp */; };
-		CD488781122873C200F5A88A /* trade_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488514122873C100F5A88A /* trade_input.cpp */; };
 		CD488782122873C200F5A88A /* utility_demand_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488515122873C100F5A88A /* utility_demand_function.cpp */; };
 		CD488783122873C200F5A88A /* accelerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48852A122873C100F5A88A /* accelerator.cpp */; };
 		CD488784122873C200F5A88A /* get_distributed_investment_visitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48852B122873C100F5A88A /* get_distributed_investment_visitor.cpp */; };
@@ -324,13 +319,6 @@
 			remoteGlobalIDString = 8DD76F6C0486A84900D96B5E;
 			remoteInfo = hector;
 		};
-		CD966E6F1D92F1BB00A93938 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CD966E671D92F1BB00A93938 /* hector.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CD706AC2124BA91A00C0C6D5;
-			remoteInfo = "hector-unit-tests";
-		};
 		CD966E711D92F1BB00A93938 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CD966E671D92F1BB00A93938 /* hector.xcodeproj */;
@@ -530,7 +518,6 @@
 		CD4884CF122873C100F5A88A /* ademand_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ademand_function.h; sourceTree = "<group>"; };
 		CD4884D0122873C100F5A88A /* aproduction_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aproduction_function.h; sourceTree = "<group>"; };
 		CD4884D2122873C100F5A88A /* ces_production_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ces_production_function.h; sourceTree = "<group>"; };
-		CD4884D3122873C100F5A88A /* demand_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = demand_input.h; sourceTree = "<group>"; };
 		CD4884D4122873C100F5A88A /* efficiency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = efficiency.h; sourceTree = "<group>"; };
 		CD4884D5122873C100F5A88A /* energy_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = energy_input.h; sourceTree = "<group>"; };
 		CD4884D6122873C100F5A88A /* function_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = function_manager.h; sourceTree = "<group>"; };
@@ -557,16 +544,11 @@
 		CD4884EB122873C100F5A88A /* nested_ces_production_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nested_ces_production_function.h; sourceTree = "<group>"; };
 		CD4884EC122873C100F5A88A /* node_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node_input.h; sourceTree = "<group>"; };
 		CD4884ED122873C100F5A88A /* non_energy_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = non_energy_input.h; sourceTree = "<group>"; };
-		CD4884EE122873C100F5A88A /* production_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = production_input.h; sourceTree = "<group>"; };
 		CD4884EF122873C100F5A88A /* renewable_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = renewable_input.h; sourceTree = "<group>"; };
-		CD4884F0122873C100F5A88A /* sgm_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgm_input.h; sourceTree = "<group>"; };
-		CD4884F1122873C100F5A88A /* trade_demand_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trade_demand_function.h; sourceTree = "<group>"; };
-		CD4884F2122873C100F5A88A /* trade_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trade_input.h; sourceTree = "<group>"; };
 		CD4884F3122873C100F5A88A /* utility_demand_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility_demand_function.h; sourceTree = "<group>"; };
 		CD4884F5122873C100F5A88A /* ademand_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ademand_function.cpp; sourceTree = "<group>"; };
 		CD4884F6122873C100F5A88A /* aproduction_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aproduction_function.cpp; sourceTree = "<group>"; };
 		CD4884F8122873C100F5A88A /* ces_production_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ces_production_function.cpp; sourceTree = "<group>"; };
-		CD4884F9122873C100F5A88A /* demand_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = demand_input.cpp; sourceTree = "<group>"; };
 		CD4884FA122873C100F5A88A /* efficiency.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = efficiency.cpp; sourceTree = "<group>"; };
 		CD4884FB122873C100F5A88A /* energy_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = energy_input.cpp; sourceTree = "<group>"; };
 		CD4884FC122873C100F5A88A /* function_manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = function_manager.cpp; sourceTree = "<group>"; };
@@ -589,11 +571,7 @@
 		CD48850D122873C100F5A88A /* nested_ces_production_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nested_ces_production_function.cpp; sourceTree = "<group>"; };
 		CD48850E122873C100F5A88A /* node_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = node_input.cpp; sourceTree = "<group>"; };
 		CD48850F122873C100F5A88A /* non_energy_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = non_energy_input.cpp; sourceTree = "<group>"; };
-		CD488510122873C100F5A88A /* production_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = production_input.cpp; sourceTree = "<group>"; };
 		CD488511122873C100F5A88A /* renewable_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = renewable_input.cpp; sourceTree = "<group>"; };
-		CD488512122873C100F5A88A /* sgm_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgm_input.cpp; sourceTree = "<group>"; };
-		CD488513122873C100F5A88A /* trade_demand_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trade_demand_function.cpp; sourceTree = "<group>"; };
-		CD488514122873C100F5A88A /* trade_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trade_input.cpp; sourceTree = "<group>"; };
 		CD488515122873C100F5A88A /* utility_demand_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utility_demand_function.cpp; sourceTree = "<group>"; };
 		CD488518122873C100F5A88A /* accelerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = accelerator.h; sourceTree = "<group>"; };
 		CD488519122873C100F5A88A /* get_distributed_investment_visitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = get_distributed_investment_visitor.h; sourceTree = "<group>"; };
@@ -1501,7 +1479,6 @@
 				CD4884CF122873C100F5A88A /* ademand_function.h */,
 				CD4884D0122873C100F5A88A /* aproduction_function.h */,
 				CD4884D2122873C100F5A88A /* ces_production_function.h */,
-				CD4884D3122873C100F5A88A /* demand_input.h */,
 				CD4884D4122873C100F5A88A /* efficiency.h */,
 				CD4884D5122873C100F5A88A /* energy_input.h */,
 				CD4884D6122873C100F5A88A /* function_manager.h */,
@@ -1528,11 +1505,7 @@
 				CD4884EB122873C100F5A88A /* nested_ces_production_function.h */,
 				CD4884EC122873C100F5A88A /* node_input.h */,
 				CD4884ED122873C100F5A88A /* non_energy_input.h */,
-				CD4884EE122873C100F5A88A /* production_input.h */,
 				CD4884EF122873C100F5A88A /* renewable_input.h */,
-				CD4884F0122873C100F5A88A /* sgm_input.h */,
-				CD4884F1122873C100F5A88A /* trade_demand_function.h */,
-				CD4884F2122873C100F5A88A /* trade_input.h */,
 				CD4884F3122873C100F5A88A /* utility_demand_function.h */,
 				CDCBBF0B14BB6339008B5F4D /* thermal_building_service_input.h */,
 			);
@@ -1554,7 +1527,6 @@
 				CD4884F5122873C100F5A88A /* ademand_function.cpp */,
 				CD4884F6122873C100F5A88A /* aproduction_function.cpp */,
 				CD4884F8122873C100F5A88A /* ces_production_function.cpp */,
-				CD4884F9122873C100F5A88A /* demand_input.cpp */,
 				CD4884FA122873C100F5A88A /* efficiency.cpp */,
 				CD4884FB122873C100F5A88A /* energy_input.cpp */,
 				CD4884FC122873C100F5A88A /* function_manager.cpp */,
@@ -1577,11 +1549,7 @@
 				CD48850D122873C100F5A88A /* nested_ces_production_function.cpp */,
 				CD48850E122873C100F5A88A /* node_input.cpp */,
 				CD48850F122873C100F5A88A /* non_energy_input.cpp */,
-				CD488510122873C100F5A88A /* production_input.cpp */,
 				CD488511122873C100F5A88A /* renewable_input.cpp */,
-				CD488512122873C100F5A88A /* sgm_input.cpp */,
-				CD488513122873C100F5A88A /* trade_demand_function.cpp */,
-				CD488514122873C100F5A88A /* trade_input.cpp */,
 				CD488515122873C100F5A88A /* utility_demand_function.cpp */,
 				CDCBBF0C14BB6658008B5F4D /* thermal_building_service_input.cpp */,
 			);
@@ -2394,7 +2362,6 @@
 			isa = PBXGroup;
 			children = (
 				CD966E6E1D92F1BB00A93938 /* hector */,
-				CD966E701D92F1BB00A93938 /* hector-unit-tests */,
 				CD966E721D92F1BB00A93938 /* libhector-lib.a */,
 			);
 			name = Products;
@@ -2496,13 +2463,6 @@
 			remoteRef = CD966E6D1D92F1BB00A93938 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD966E701D92F1BB00A93938 /* hector-unit-tests */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = "hector-unit-tests";
-			remoteRef = CD966E6F1D92F1BB00A93938 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		CD966E721D92F1BB00A93938 /* libhector-lib.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2568,7 +2528,6 @@
 				CD8DFFDC1FA8D21700CB3719 /* negative_emissions_final_demand.cpp in Sources */,
 				CD488763122873C200F5A88A /* aproduction_function.cpp in Sources */,
 				CD488765122873C200F5A88A /* ces_production_function.cpp in Sources */,
-				CD488766122873C200F5A88A /* demand_input.cpp in Sources */,
 				CD488767122873C200F5A88A /* efficiency.cpp in Sources */,
 				CD488768122873C200F5A88A /* energy_input.cpp in Sources */,
 				CD488769122873C200F5A88A /* function_manager.cpp in Sources */,
@@ -2592,11 +2551,7 @@
 				CD48877A122873C200F5A88A /* nested_ces_production_function.cpp in Sources */,
 				CD48877B122873C200F5A88A /* node_input.cpp in Sources */,
 				CD48877C122873C200F5A88A /* non_energy_input.cpp in Sources */,
-				CD48877D122873C200F5A88A /* production_input.cpp in Sources */,
 				CD48877E122873C200F5A88A /* renewable_input.cpp in Sources */,
-				CD48877F122873C200F5A88A /* sgm_input.cpp in Sources */,
-				CD488780122873C200F5A88A /* trade_demand_function.cpp in Sources */,
-				CD488781122873C200F5A88A /* trade_input.cpp in Sources */,
 				CD5162A721909920005B351E /* no_climate_model.cpp in Sources */,
 				CD488782122873C200F5A88A /* utility_demand_function.cpp in Sources */,
 				CD488783122873C200F5A88A /* accelerator.cpp in Sources */,

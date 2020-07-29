@@ -88,7 +88,6 @@
 #include "technologies/include/ag_production_technology.h"
 #include "technologies/include/expenditure.h"
 #include "technologies/include/production_technology.h"
-#include "functions/include/sgm_input.h"
 #include "functions/include/node_input.h"
 #include "consumers/include/household_consumer.h"
 #include "consumers/include/govt_consumer.h"
@@ -1713,21 +1712,6 @@ void XMLDBOutputter::endVisitExpenditure( const Expenditure* aExpenditure, const
     
     // clean up any extra buffers
     delete childBuffer;
-    delete parentBuffer;
-}
-
-void XMLDBOutputter::startVisitSGMInput( const SGMInput* aInput, const int aPeriod ) {
-    stringstream* parentBuffer = new stringstream();
-    mBufferStack.push( parentBuffer );
-    startVisitInput( aInput, aPeriod );
-}
-
-void XMLDBOutputter::endVisitSGMInput( const SGMInput* aInput, const int aPeriod ) {
-    endVisitInput( aInput, aPeriod );
-    iostream* parentBuffer = popBufferStack();
-    if( parentBuffer->rdbuf()->in_avail() ) {
-        mBuffer << parentBuffer->rdbuf();
-    }
     delete parentBuffer;
 }
 

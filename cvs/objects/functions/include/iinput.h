@@ -63,10 +63,7 @@ class Expenditure;
 
 // Need to forward declare the subclasses as well.
 class MiniCAMInput;
-class DemandInput;
-class ProductionInput;
 class NodeInput;
-class TradeInput;
 class EnergyInput;
 class NonEnergyInput;
 class RenewableInput;
@@ -455,16 +452,7 @@ public:
                                    const int aNextYear, const IInput* aPreviousInput,
                                    const IInput* aNextInput ) = 0;
     
-    virtual void copyParamsInto( ProductionInput& aInput,
-                                 const int aPeriod ) const = 0;
-
-    virtual void copyParamsInto( DemandInput& aInput,
-                                 const int aPeriod ) const = 0;
-
     virtual void copyParamsInto( NodeInput& aInput,
-                                 const int aPeriod ) const = 0;
-
-    virtual void copyParamsInto( TradeInput& aInput,
                                  const int aPeriod ) const = 0;
 
     virtual void copyParamsInto( EnergyInput& aInput,

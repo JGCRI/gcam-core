@@ -63,9 +63,6 @@ class GovtConsumer;
 class InvestConsumer;
 class TradeConsumer;
 class ProductionTechnology;
-class DemandInput;
-class ProductionInput;
-class SGMInput;
 class FactorSupply;
 class ProductionSector;
 class AResource;
@@ -250,21 +247,12 @@ public:
     virtual void startVisitInput( const IInput* aInput, const int aPeriod ) = 0;
     virtual void endVisitInput( const IInput* aInput, const int aPeriod ) = 0;
 
-    virtual void startVisitProductionInput( const ProductionInput* aProductionInput, const int aPeriod ) = 0;
-    virtual void endVisitProductionInput( const ProductionInput* aProductionInput, const int aPeriod ) = 0;
-
-    virtual void startVisitDemandInput( const DemandInput* aDemandInput, const int aPeriod ) = 0;
-    virtual void endVisitDemandInput( const DemandInput* aDemandInput, const int aPeriod ) = 0;
-
     virtual void startVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ) = 0;
     virtual void endVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ) = 0;
 
     virtual void startVisitMiniCAMInput( const MiniCAMInput* aInput, const int aPeriod ) = 0;
     virtual void endVisitMiniCAMInput( const MiniCAMInput* aInput, const int aPeriod ) = 0;
 
-    virtual void startVisitSGMInput( const SGMInput* aSGMInput, const int aPeriod ) = 0;
-    virtual void endVisitSGMInput( const SGMInput* aSGMInput, const int aPeriod ) = 0;
-    
     virtual void startVisitOutput( const IOutput* aOutput, const int aPeriod ) = 0;
     virtual void endVisitOutput( const IOutput* aOutput, const int aPeriod ) = 0;
 

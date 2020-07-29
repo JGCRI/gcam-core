@@ -97,9 +97,7 @@ class IFunction;
  *                   Tech change specific to this node.  This tech change would only be 
  *                   applied in the intial period this nest operates.
  *              - \c ProductionInput::getXMLNameStatic(),
- *                      DemandInput::getXMLNameStatic(),
- *                      TradeInput::getXMLNameStatic(),
- *                      NodeInput::getXMLNameStatic() NodeInput::mNestedInputs
+                     NodeInput::getXMLNameStatic() NodeInput::mNestedInputs
  *                   Inputs which can be parsed a children to this node.
  *                   TODO: shouldn't there be a factory for these?
  *
@@ -261,15 +259,6 @@ public:
                                    const int aNextYear, const IInput* aPreviousInput,
                                    const IInput* aNextInput ) {}
     
-    virtual void copyParamsInto( ProductionInput& aInput,
-        const int aPeriod ) const {}
-
-    virtual void copyParamsInto( DemandInput& aInput,
-        const int aPeriod ) const {}
-
-    virtual void copyParamsInto( TradeInput& aInput,
-        const int aPeriod ) const {}
-
     virtual void copyParamsInto( EnergyInput& aInput,
         const int aPeriod ) const {}
 

@@ -176,20 +176,11 @@ public:
     virtual void startVisitInput( const IInput* aInput, const int aPeriod ){}
     virtual void endVisitInput( const IInput* aInput, const int aPeriod ){}
 
-    virtual void startVisitProductionInput( const ProductionInput* aProductionInput, const int aPeriod ){}
-    virtual void endVisitProductionInput( const ProductionInput* aProductionInput, const int aPeriod ){}
-
-    virtual void startVisitDemandInput( const DemandInput* aDemandInput, const int aPeriod ){}
-    virtual void endVisitDemandInput( const DemandInput* aDemandInput, const int aPeriod ){}
-
     virtual void startVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ){}
     virtual void endVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ){}
 
     virtual void startVisitMiniCAMInput( const MiniCAMInput* aInput, const int aPeriod ){}
     virtual void endVisitMiniCAMInput( const MiniCAMInput* aInput, const int aPeriod ){}
-
-    virtual void startVisitSGMInput( const SGMInput* aSGMInput, const int aPeriod ){}
-    virtual void endVisitSGMInput( const SGMInput* aSGMInput, const int aPeriod ){}
 
     virtual void startVisitOutput( const IOutput* aOutput, const int aPeriod ){}
     virtual void endVisitOutput( const IOutput* aOutput, const int aPeriod ){}

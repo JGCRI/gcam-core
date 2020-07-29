@@ -45,9 +45,6 @@
 
 #include "functions/include/node_input.h"
 #include "functions/include/ifunction.h"
-#include "functions/include/production_input.h"
-#include "functions/include/demand_input.h"
-#include "functions/include/trade_input.h"
 #include "functions/include/building_node_input.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
@@ -94,16 +91,7 @@ void NodeInput::XMLParse( const xercesc::DOMNode* node ) {
         }
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
-        if ( nodeName == ProductionInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new ProductionInput() );
-        }
-        else if ( nodeName == DemandInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new DemandInput() );
-        }
-        else if ( nodeName == TradeInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new TradeInput() );
-        }
-        else if ( nodeName == NodeInput::getXMLNameStatic() ) {
+        if ( nodeName == NodeInput::getXMLNameStatic() ) {
             parseContainerNode( curr, mNestedInputs, new NodeInput() );
         }
         else if ( nodeName == BuildingNodeInput::getXMLNameStatic() ) {

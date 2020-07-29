@@ -164,15 +164,6 @@ public:
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
-    virtual void copyParamsInto( ProductionInput& aInput,
-                                 const int aPeriod ) const;
-
-    virtual void copyParamsInto( DemandInput& aInput,
-                                 const int aPeriod ) const;
-
-    virtual void copyParamsInto( TradeInput& aInput,
-                                 const int aPeriod ) const;
-
     virtual void copyParamsInto( NodeInput& aInput,
                                  const int aPeriod ) const;
 
