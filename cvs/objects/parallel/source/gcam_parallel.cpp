@@ -54,6 +54,18 @@ using namespace std;
 //const int GcamParallel::DEFAULT_GRAIN_SIZE = 30;
 int GcamFlowGraph::mPeriod = 0;
 
+GcamFlowGraph::GcamFlowGraph() : mTBBFlowGraph(), mHead( mTBBFlowGraph ), mParallelismConfig( 0 )
+{
+    const int maxParallelism = Configuration::getInstance()->getInt( "max-parallelism", -1 );
+    if( maxParallelism > 0) {
+        mParallelismConfig = new tbb::global_control( tbb::global_control::max_allowed_parallelism, maxParallelism );
+    }
+}
+
+GcamFlowGraph::~GcamFlowGraph() {
+    delete mParallelismConfig;
+}
+
 /*!
  * \brief Default constructor
  *
@@ -69,8 +81,10 @@ GcamParallel::GcamParallel()
 {
     //mGrainSizeTarget = Configuration::getInstance()->getInt( "parallel-grain-size", DEFAULT_GRAIN_SIZE );
 }
-  
 
+
+GcamParallel::~GcamParallel() {
+}
 
 /*!
  * \brief Build the GCAM flow graph from the information in the MarketDependencyFinder 

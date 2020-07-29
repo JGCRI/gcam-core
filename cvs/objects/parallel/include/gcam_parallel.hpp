@@ -44,6 +44,7 @@
 
 /* TBB headers */
 #include <tbb/flow_graph.h>
+#include <tbb/global_control.h>
 
 // Forward declare when possible
 class IActivity;
@@ -59,15 +60,19 @@ class GcamFlowGraph {
     friend class MarketDependencyFinder;
 private:
     //! Private constructor to only allow select classes to create flow graphs.
-    GcamFlowGraph() : mTBBFlowGraph(), mHead( mTBBFlowGraph )/*, mPeriod( 0 ), mCalcList( 0 )*/ {}
+    GcamFlowGraph();/* : mTBBFlowGraph(), mHead( mTBBFlowGraph ), mPeriod( 0 ), mCalcList( 0 ) {}*/
     
     //! The TBB calculation flow graph.
     tbb::flow::graph mTBBFlowGraph;
     
     //! The broadcast node which can be used to kick off calculations.
     tbb::flow::broadcast_node<tbb::flow::continue_msg> mHead;
+    
+    tbb::global_control* mParallelismConfig;
 
 public:
+    
+    ~GcamFlowGraph();
     //! The model period which will be calculated when called.
     static int mPeriod;
     
@@ -96,6 +101,8 @@ public:
     //typedef digraph<FlowGraphNodeType> FlowGraph;
     
     GcamParallel();
+    
+    ~GcamParallel();
     
     /* Graph analysis and parsing methods */
     //void makeGCAMFlowGraph( const MarketDependencyFinder& aDependencyFinder, FlowGraph& aGCAMFlowGraph );
