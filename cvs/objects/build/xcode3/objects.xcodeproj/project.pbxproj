@@ -472,17 +472,6 @@
 		CD48848A122873C000F5A88A /* male.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = male.cpp; sourceTree = "<group>"; };
 		CD48848B122873C000F5A88A /* population.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = population.cpp; sourceTree = "<group>"; };
 		CD48848C122873C000F5A88A /* population_mini_cam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = population_mini_cam.cpp; sourceTree = "<group>"; };
-		CD488491122873C000F5A88A /* Derivatives.xls */ = {isa = PBXFileReference; lastKnownFileType = file; path = Derivatives.xls; sourceTree = "<group>"; };
-		CD488493122873C000F5A88A /* UsingAndCompilingFortranLibraries.doc */ = {isa = PBXFileReference; lastKnownFileType = file; path = UsingAndCompilingFortranLibraries.doc; sourceTree = "<group>"; };
-		CD488495122873C000F5A88A /* CurveModel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CurveModel.png; sourceTree = "<group>"; };
-		CD488496122873C000F5A88A /* CurveModel.xmi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CurveModel.xmi; sourceTree = "<group>"; };
-		CD488497122873C000F5A88A /* CurveModel.zuml */ = {isa = PBXFileReference; lastKnownFileType = file; path = CurveModel.zuml; sourceTree = "<group>"; };
-		CD488498122873C000F5A88A /* CurveModel.zuml.bak.0 */ = {isa = PBXFileReference; lastKnownFileType = file; path = CurveModel.zuml.bak.0; sourceTree = "<group>"; };
-		CD488499122873C000F5A88A /* CurveModel.zuml.bak.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = CurveModel.zuml.bak.1; sourceTree = "<group>"; };
-		CD48849A122873C000F5A88A /* FutureSolutionModel.zuml */ = {isa = PBXFileReference; lastKnownFileType = file; path = FutureSolutionModel.zuml; sourceTree = "<group>"; };
-		CD48849B122873C000F5A88A /* GlobalTechs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GlobalTechs.png; sourceTree = "<group>"; };
-		CD48849C122873C000F5A88A /* GlobalTechs.zuml */ = {isa = PBXFileReference; lastKnownFileType = file; path = GlobalTechs.zuml; sourceTree = "<group>"; };
-		CD48849D122873C000F5A88A /* SolverDiagram.zargo */ = {isa = PBXFileReference; lastKnownFileType = file; path = SolverDiagram.zargo; sourceTree = "<group>"; };
 		CD48849F122873C000F5A88A /* doxygenInfo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = doxygenInfo.txt; sourceTree = "<group>"; };
 		CD4884A0122873C000F5A88A /* FAQ.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FAQ.txt; sourceTree = "<group>"; };
 		CD4884A1122873C000F5A88A /* ReviewChecklist.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReviewChecklist.txt; sourceTree = "<group>"; };
@@ -1062,7 +1051,6 @@
 				CD488440122873C000F5A88A /* consumers */,
 				CD48844F122873C000F5A88A /* containers */,
 				CD48847A122873C000F5A88A /* demographics */,
-				CD48848F122873C000F5A88A /* documentation */,
 				CD48849E122873C000F5A88A /* doxygen */,
 				CD4884A3122873C000F5A88A /* emissions */,
 				CD4884CD122873C100F5A88A /* functions */,
@@ -1318,48 +1306,6 @@
 				CD48848C122873C000F5A88A /* population_mini_cam.cpp */,
 			);
 			path = source;
-			sourceTree = "<group>";
-		};
-		CD48848F122873C000F5A88A /* documentation */ = {
-			isa = PBXGroup;
-			children = (
-				CD488490122873C000F5A88A /* charts */,
-				CD488492122873C000F5A88A /* reports */,
-				CD488494122873C000F5A88A /* uml_diagrams */,
-			);
-			path = documentation;
-			sourceTree = "<group>";
-		};
-		CD488490122873C000F5A88A /* charts */ = {
-			isa = PBXGroup;
-			children = (
-				CD488491122873C000F5A88A /* Derivatives.xls */,
-			);
-			path = charts;
-			sourceTree = "<group>";
-		};
-		CD488492122873C000F5A88A /* reports */ = {
-			isa = PBXGroup;
-			children = (
-				CD488493122873C000F5A88A /* UsingAndCompilingFortranLibraries.doc */,
-			);
-			path = reports;
-			sourceTree = "<group>";
-		};
-		CD488494122873C000F5A88A /* uml_diagrams */ = {
-			isa = PBXGroup;
-			children = (
-				CD488495122873C000F5A88A /* CurveModel.png */,
-				CD488496122873C000F5A88A /* CurveModel.xmi */,
-				CD488497122873C000F5A88A /* CurveModel.zuml */,
-				CD488498122873C000F5A88A /* CurveModel.zuml.bak.0 */,
-				CD488499122873C000F5A88A /* CurveModel.zuml.bak.1 */,
-				CD48849A122873C000F5A88A /* FutureSolutionModel.zuml */,
-				CD48849B122873C000F5A88A /* GlobalTechs.png */,
-				CD48849C122873C000F5A88A /* GlobalTechs.zuml */,
-				CD48849D122873C000F5A88A /* SolverDiagram.zargo */,
-			);
-			path = uml_diagrams;
 			sourceTree = "<group>";
 		};
 		CD48849E122873C000F5A88A /* doxygen */ = {
