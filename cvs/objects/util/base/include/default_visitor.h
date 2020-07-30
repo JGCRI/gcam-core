@@ -110,9 +110,6 @@ public:
     virtual void startVisitSector( const Sector* aSector, const int aPeriod ){}
     virtual void endVisitSector( const Sector* aSector, const int aPeriod ){}
 
-    virtual void startVisitProductionSector( const ProductionSector* aProdSector, const int aPeriod ){}
-    virtual void endVisitProductionSector( const ProductionSector* aProdSector, const int aPeriod ){}
-
     virtual void startVisitSubsector( const Subsector* aSubsector, const int aPeriod ){}
     virtual void endVisitSubsector( const Subsector* aSubsector, const int aPeriod ){}
     

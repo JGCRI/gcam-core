@@ -52,7 +52,6 @@
 #include "containers/include/region.h"
 
 // Forward declare headers
-class ProductionSector;
 class FinalDemandSector;
 class FactorSupply;
 class IVisitor;

@@ -47,7 +47,6 @@
 
 #include "containers/include/region_cge.h"
 #include "demographics/include/demographic.h"
-#include "sectors/include/production_sector.h"
 #include "resources/include/resource.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
@@ -141,9 +140,6 @@ bool RegionCGE::XMLDerivedClassParse( const string& nodeName, const DOMNode* cur
     }
     else if( nodeName == FactorSupply::getXMLNameStatic() ){
         parseContainerNode( curr, factorSupply, new FactorSupply() );
-    }
-    else if( nodeName == ProductionSector::getXMLNameStatic() ){
-        parseContainerNode( curr, mSupplySector, new ProductionSector( mName ) );
     }
     else if( nodeName == NationalAccount::getXMLNameStatic() ){
         int per = scenario->getModeltime()->getyr_to_per( XMLHelper<int>::getAttr( curr, "year" ) );

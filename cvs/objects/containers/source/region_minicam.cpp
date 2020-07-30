@@ -61,7 +61,6 @@
 // TODO: This needs a factory.
 #include "sectors/include/sector.h"
 #include "sectors/include/supply_sector.h"
-#include "sectors/include/production_sector.h"
 #include "sectors/include/ag_supply_sector.h"
 #include "sectors/include/energy_final_demand.h"
 #include "sectors/include/negative_emissions_final_demand.h"

@@ -64,7 +64,6 @@ class InvestConsumer;
 class TradeConsumer;
 class ProductionTechnology;
 class FactorSupply;
-class ProductionSector;
 class AResource;
 class Technology;
 class AFinalDemand;
@@ -185,9 +184,6 @@ public:
     virtual void startVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergyFinalDemand, const int aPeriod ) = 0;
     virtual void endVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergyFinalDemand, const int aPeriod ) = 0;
 
-    virtual void startVisitProductionSector( const ProductionSector* aProdSector, const int aPeriod ) = 0;
-    virtual void endVisitProductionSector( const ProductionSector* aProdSector, const int aPeriod ) = 0;
-    
     virtual void startVisitSubsector( const Subsector* aSubsector, const int aPeriod ) = 0;
     virtual void endVisitSubsector( const Subsector* aSubsector, const int aPeriod ) = 0;
     
