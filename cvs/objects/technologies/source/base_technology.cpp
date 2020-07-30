@@ -49,7 +49,6 @@
 #include "technologies/include/base_technology.h"
 #include "functions/include/iinput.h"
 #include "technologies/include/ioutput.h"
-#include "technologies/include/sgm_output.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
@@ -189,9 +188,6 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
         if( nodeName == "#text" ) {
             continue;
         }
-        else if ( nodeName == SGMOutput::getXMLReportingNameStatic() ) {
-            parseContainerNode( curr, mOutputs, new SGMOutput("") );
-        }
         else if ( nodeName == "categoryName" ) {
             categoryName = XMLHelper<string>::getValue( curr );
         }
@@ -275,16 +271,6 @@ void BaseTechnology::completeInit( const string& aRegionName,
         // (*ghg)->completeInit();
     }
 
-    // Create the primary output for this technology if it does not 
-    // already exist. All technologies will have a primary output.
-    // Always insert the primary output at position 0.
-    if( mOutputs.size() == 0 ) {
-        mOutputs.insert( mOutputs.begin(), new SGMOutput( aSectorName ) );    
-    }
-        
-    for( unsigned int i = 0; i < mOutputs.size(); ++i ){
-        mOutputs[ i ]->completeInit( aSectorName, aRegionName, 0, true );
-    }
 }
 
 void BaseTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,

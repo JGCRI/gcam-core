@@ -203,7 +203,6 @@
 		CD488813122873C200F5A88A /* residue_biomass_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886B9122873C200F5A88A /* residue_biomass_output.cpp */; };
 		CD488814122873C200F5A88A /* retired_production_state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886BA122873C200F5A88A /* retired_production_state.cpp */; };
 		CD488815122873C200F5A88A /* secondary_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886BB122873C200F5A88A /* secondary_output.cpp */; };
-		CD488816122873C200F5A88A /* sgm_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886BC122873C200F5A88A /* sgm_output.cpp */; };
 		CD488817122873C200F5A88A /* shutdown_decider_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886BD122873C200F5A88A /* shutdown_decider_factory.cpp */; };
 		CD488818122873C200F5A88A /* solar_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886BE122873C200F5A88A /* solar_technology.cpp */; };
 		CD488819122873C200F5A88A /* standard_capture_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886BF122873C200F5A88A /* standard_capture_component.cpp */; };
@@ -733,7 +732,6 @@
 		CD48868E122873C200F5A88A /* residue_biomass_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = residue_biomass_output.h; sourceTree = "<group>"; };
 		CD48868F122873C200F5A88A /* retired_production_state.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = retired_production_state.h; sourceTree = "<group>"; };
 		CD488690122873C200F5A88A /* secondary_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = secondary_output.h; sourceTree = "<group>"; };
-		CD488691122873C200F5A88A /* sgm_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgm_output.h; sourceTree = "<group>"; };
 		CD488692122873C200F5A88A /* shutdown_decider_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shutdown_decider_factory.h; sourceTree = "<group>"; };
 		CD488693122873C200F5A88A /* solar_technology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = solar_technology.h; sourceTree = "<group>"; };
 		CD488694122873C200F5A88A /* standard_capture_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = standard_capture_component.h; sourceTree = "<group>"; };
@@ -769,7 +767,6 @@
 		CD4886B9122873C200F5A88A /* residue_biomass_output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = residue_biomass_output.cpp; sourceTree = "<group>"; };
 		CD4886BA122873C200F5A88A /* retired_production_state.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = retired_production_state.cpp; sourceTree = "<group>"; };
 		CD4886BB122873C200F5A88A /* secondary_output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = secondary_output.cpp; sourceTree = "<group>"; };
-		CD4886BC122873C200F5A88A /* sgm_output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgm_output.cpp; sourceTree = "<group>"; };
 		CD4886BD122873C200F5A88A /* shutdown_decider_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shutdown_decider_factory.cpp; sourceTree = "<group>"; };
 		CD4886BE122873C200F5A88A /* solar_technology.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = solar_technology.cpp; sourceTree = "<group>"; };
 		CD4886BF122873C200F5A88A /* standard_capture_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = standard_capture_component.cpp; sourceTree = "<group>"; };
@@ -1922,7 +1919,6 @@
 				CD48868E122873C200F5A88A /* residue_biomass_output.h */,
 				CD48868F122873C200F5A88A /* retired_production_state.h */,
 				CD488690122873C200F5A88A /* secondary_output.h */,
-				CD488691122873C200F5A88A /* sgm_output.h */,
 				CD488692122873C200F5A88A /* shutdown_decider_factory.h */,
 				CD488693122873C200F5A88A /* solar_technology.h */,
 				CD488694122873C200F5A88A /* standard_capture_component.h */,
@@ -1974,7 +1970,6 @@
 				CD4886B9122873C200F5A88A /* residue_biomass_output.cpp */,
 				CD4886BA122873C200F5A88A /* retired_production_state.cpp */,
 				CD4886BB122873C200F5A88A /* secondary_output.cpp */,
-				CD4886BC122873C200F5A88A /* sgm_output.cpp */,
 				CD4886BD122873C200F5A88A /* shutdown_decider_factory.cpp */,
 				CD4886BE122873C200F5A88A /* solar_technology.cpp */,
 				CD4886BF122873C200F5A88A /* standard_capture_component.cpp */,
@@ -2462,7 +2457,6 @@
 				CD488813122873C200F5A88A /* residue_biomass_output.cpp in Sources */,
 				CD488814122873C200F5A88A /* retired_production_state.cpp in Sources */,
 				CD488815122873C200F5A88A /* secondary_output.cpp in Sources */,
-				CD488816122873C200F5A88A /* sgm_output.cpp in Sources */,
 				CD488817122873C200F5A88A /* shutdown_decider_factory.cpp in Sources */,
 				CD488818122873C200F5A88A /* solar_technology.cpp in Sources */,
 				CD488819122873C200F5A88A /* standard_capture_component.cpp in Sources */,

@@ -33,7 +33,6 @@
 
 /*! 
 * \file demographic.cpp
-* \ingroup Objects-SGM
 * \brief Demographic class source file.
 * \author Sonny Kim
 * \author Katherine Chung

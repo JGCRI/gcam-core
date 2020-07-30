@@ -925,8 +925,7 @@ void XMLDBOutputter::startVisitInput( const IInput* aInput, const int aPeriod ) 
     map<string, string> attrs;
 
     // children of input go in the child buffer
-    // note minicam is using real periods at this point where as sgm is
-    // always using -1 
+    // note minicam is using real periods at this point 
     double maxPer = aPeriod == -1 ? modeltime->getmaxper() -1 : aPeriod;
     for( int i = 0; i <= maxPer; ++i ) {
         // isTechnologyOperating will crash for sgm so avoid calling it

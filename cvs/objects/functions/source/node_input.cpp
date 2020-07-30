@@ -481,36 +481,6 @@ void NodeInput::resetCalcLevelizedCostFlag() {
     mNodePriceSet = false;
 }
 
-/*
-void NodeInput::calcCapitalPrice( const std::string& aRegionName, const std::string& aSectorName,
-        const int aPeriod, const double aAlphaZero ) {
-    // we must have a price by now to calculate the price for the capital path
-    assert( mPricePaid.isInited() );
-    assert( hasCapitalInput() );
-
-    //ILogger& sgmLog = ILogger::getLogger( "sgm_debug_log" );
-    //sgmLog.setLevel( ILogger::DEBUG );
-    // TODO: this math should be in a production function
-    double r = 1 - mCurrentSigma;
-    double siblingSum = 0.0;
-    for( NestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
-        if( it != mCapitalPath ) {
-            siblingSum += pow( (*it)->getPricePaid( aRegionName, aPeriod ) / 
-                (*it)->getCoefficient( aPeriod ), r );
-        }
-    }
-    double capitalPathPricePaid = pow( getPricePaid( aRegionName, aPeriod ) * aAlphaZero, r );
-    capitalPathPricePaid -= siblingSum;
-    if( capitalPathPricePaid < 0 ) {
-        //cout << "went < 0 here " << endl;
-        capitalPathPricePaid = 0;
-    }
-    capitalPathPricePaid = pow( capitalPathPricePaid, 1 / r ) * (*mCapitalPath)->getCoefficient( aPeriod );
-    //sgmLog << "calc cap  p: " << capitalPathPricePaid << endl;
-    (*mCapitalPath)->setPricePaid( capitalPathPricePaid, aPeriod );
-    (*mCapitalPath)->calcCapitalPrice( aRegionName, aSectorName, aPeriod, aAlphaZero );
-}
-*/
 
 double NodeInput::calcInputDemand( const std::string& aRegionName, const std::string& aSectorName,
         const int aPeriod, const double aPhysicalOutput, const double aUtilityParameterA,

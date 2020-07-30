@@ -56,9 +56,7 @@ class ICaptureComponent;
  * \ingroup Objects
  * \brief Defines a single input to a MiniCAM production function.
  * \details This is the abstract base class for inputs to a MiniCAM production
- *          function. This class has stub implementations for functions that
- *          having meaning in SGM but not yet in MiniCAM. This class contains no
- *          actual functionality itself.
+ *          function. This class contains no actual functionality itself.
  *
  *          <b>XML specification for MiniCAMInput</b>
  *          - XML name: None.

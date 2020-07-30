@@ -33,7 +33,6 @@
 
 /*! 
 * \file age_cohort.cpp
-* \ingroup Objects-SGM
 * \brief AgeCohort class source file.
 * \author Sonny Kim
 * \author Katherine Chung
