@@ -57,7 +57,6 @@
 #include "consumers/include/gcam_consumer.h"
 #include "containers/include/gdp.h"
 #include "containers/include/region.h"
-#include "containers/include/region_cge.h"
 #include "containers/include/region_minicam.h"
 #include "containers/include/scenario.h"
 #include "containers/include/world.h"

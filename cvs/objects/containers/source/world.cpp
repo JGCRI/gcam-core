@@ -52,7 +52,6 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/world.h"
 #include "containers/include/region_minicam.h"
-#include "containers/include/region_cge.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
@@ -152,10 +151,6 @@ void World::XMLParse( const DOMNode* node ){
             parseSingleNode( curr, mClimateModel, new HectorModel() );
         }
 #endif
-		// SGM regions
-        else if( nodeName == RegionCGE::getXMLNameStatic() ){
-            parseContainerNode( curr, mRegions, new RegionCGE() );
-        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );

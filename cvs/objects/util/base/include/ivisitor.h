@@ -48,7 +48,6 @@
 
 class World;
 class Region;
-class RegionCGE;
 class RegionMiniCAM;
 class NationalAccount;
 class Demographic;
@@ -62,7 +61,6 @@ class HouseholdConsumer;
 class GovtConsumer;
 class InvestConsumer;
 class TradeConsumer;
-class ProductionTechnology;
 class FactorSupply;
 class AResource;
 class Technology;
@@ -136,9 +134,6 @@ public:
     virtual void endVisitRegionMiniCAM( const RegionMiniCAM* aRegion,
                                         const int aPeriod ) = 0;
 
-    virtual void startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ) = 0;
-    virtual void endVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ) = 0;
-    
     virtual void startVisitDemographic( const Demographic* aDemographic, const int aPeriod ) = 0;
     virtual void endVisitDemographic( const Demographic* aDemographic, const int aPeriod ) = 0;
 
@@ -220,11 +215,6 @@ public:
 
     virtual void startVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod ) = 0;
     virtual void endVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod ) = 0;
-
-    virtual void startVisitProductionTechnology( const ProductionTechnology* aProductionTechnology, 
-        const int aPeriod ) = 0;
-    virtual void endVisitProductionTechnology( const ProductionTechnology* aProductionTechnology, 
-        const int aPeriod ) = 0;
 
     virtual void startVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) = 0;
     virtual void endVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) = 0;

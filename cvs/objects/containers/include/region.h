@@ -69,7 +69,6 @@ class Tabs;
 
 // Need to forward declare the subclasses as well.
 class RegionMiniCAM;
-class RegionCGE;
 
 /*! 
 * \ingroup Objects
@@ -108,7 +107,7 @@ protected:
         /* Declare all subclasses of Region to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( Region, RegionMiniCAM, RegionCGE ),
+        DEFINE_SUBCLASS_FAMILY( Region, RegionMiniCAM ),
                 
         /*! \brief Region name */
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),

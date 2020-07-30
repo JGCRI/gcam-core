@@ -85,9 +85,6 @@ public:
     void startVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod );
     void endVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod );
 
-    void startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod );
-    void endVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod );
-
     void startVisitResource( const AResource* aResource, const int aPeriod );
     void endVisitResource( const AResource* aResource, const int aPeriod );
 
@@ -197,11 +194,6 @@ public:
 
     virtual void startVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod );
     virtual void endVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod );
-
-    virtual void startVisitProductionTechnology( const ProductionTechnology* aProductionTechnology, 
-        const int aPeriod );
-    virtual void endVisitProductionTechnology( const ProductionTechnology* aProductionTechnology, 
-        const int aPeriod );
 
     virtual void startVisitFactorSupply( const FactorSupply* aFactorySupply, const int aPeriod );
     virtual void endVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod );

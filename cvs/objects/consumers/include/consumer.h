@@ -95,30 +95,7 @@ public:
     virtual void postCalc( const std::string& aRegionName, const std::string& aSectorName, 
                            const int aPeriod );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    
-    // Consumer should be contained directly in Subsector and then all these functions could be removed.
-    double getExpectedProfitRate( const NationalAccount& aNationalAccount,
-                                  const std::string& aRegionName,
-                                  const std::string& aSectorName,
-                                  const IExpectedProfitRateCalculator* aExpProfitRateCalc,
-                                  const double aInvestmentLogitExp,
-                                  const bool aIsShareCalc,
-                                  const bool aIsDistributing,
-                                  const int aPeriod ) const
-    { 
-        return 0; 
-    }
-
-    double getCapitalOutputRatio( const IDistributor* aDistributor,
-                                  const IExpectedProfitRateCalculator* aExpProfitRateCalc,
-                                  const NationalAccount& aNationalAccount,
-                                  const std::string& aRegionName,
-                                  const std::string& aSectorName, 
-                                  const int aPeriod ) const
-    {
-        return 0;
-    }
-
+  
     double getAnnualInvestment( const int aPeriod ) const { 
         return 0;
     }
@@ -127,25 +104,12 @@ public:
     { 
         return 0; 
     }
-    double getFixedInvestment( const int aPeriod ) const {
-        return 0;
-    }
     double getOutput( const int aPeriod ) const {
         return 0;
     }
     double getCapitalStock() const {
         return 0;
     }
-    double distributeInvestment( const IDistributor* aDistributor,
-        NationalAccount& aNationalAccount,
-        const IExpectedProfitRateCalculator* aExpProfitRateCalc,
-        const std::string& aRegionName,
-        const std::string& aSectorName,
-        const double aNewInvestment,
-        const int aPeriod )
-    {
-        return 0;
-    };
     void setTypeHelper( TechnologyType* aTechType ){}
 
 protected:

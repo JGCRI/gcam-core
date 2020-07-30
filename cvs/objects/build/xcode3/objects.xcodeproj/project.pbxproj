@@ -49,7 +49,6 @@
 		CD488739122873C200F5A88A /* mac_generator_scenario_runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846D122873C000F5A88A /* mac_generator_scenario_runner.cpp */; };
 		CD48873B122873C200F5A88A /* national_account.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846F122873C000F5A88A /* national_account.cpp */; };
 		CD48873D122873C200F5A88A /* region.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488471122873C000F5A88A /* region.cpp */; };
-		CD48873E122873C200F5A88A /* region_cge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488472122873C000F5A88A /* region_cge.cpp */; };
 		CD48873F122873C200F5A88A /* region_minicam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488473122873C000F5A88A /* region_minicam.cpp */; };
 		CD488740122873C200F5A88A /* scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488474122873C000F5A88A /* scenario.cpp */; };
 		CD488741122873C200F5A88A /* scenario_runner_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488475122873C000F5A88A /* scenario_runner_factory.cpp */; };
@@ -95,18 +94,6 @@
 		CD48877B122873C200F5A88A /* node_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48850E122873C100F5A88A /* node_input.cpp */; };
 		CD48877C122873C200F5A88A /* non_energy_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48850F122873C100F5A88A /* non_energy_input.cpp */; };
 		CD48877E122873C200F5A88A /* renewable_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488511122873C100F5A88A /* renewable_input.cpp */; };
-		CD488783122873C200F5A88A /* accelerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48852A122873C100F5A88A /* accelerator.cpp */; };
-		CD488784122873C200F5A88A /* get_distributed_investment_visitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48852B122873C100F5A88A /* get_distributed_investment_visitor.cpp */; };
-		CD488785122873C200F5A88A /* investable_counter_visitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48852C122873C100F5A88A /* investable_counter_visitor.cpp */; };
-		CD488786122873C200F5A88A /* investment_growth_calculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48852D122873C100F5A88A /* investment_growth_calculator.cpp */; };
-		CD488787122873C200F5A88A /* investment_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48852E122873C100F5A88A /* investment_utils.cpp */; };
-		CD488788122873C200F5A88A /* levelized_cost_calculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48852F122873C100F5A88A /* levelized_cost_calculator.cpp */; };
-		CD488789122873C200F5A88A /* market_based_investment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488530122873C100F5A88A /* market_based_investment.cpp */; };
-		CD48878A122873C200F5A88A /* output_growth_calculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488531122873C100F5A88A /* output_growth_calculator.cpp */; };
-		CD48878B122873C200F5A88A /* output_share_levelized_cost_calculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488532122873C100F5A88A /* output_share_levelized_cost_calculator.cpp */; };
-		CD48878C122873C200F5A88A /* rate_logit_distributor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488533122873C100F5A88A /* rate_logit_distributor.cpp */; };
-		CD48878D122873C200F5A88A /* set_share_weight_visitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488534122873C100F5A88A /* set_share_weight_visitor.cpp */; };
-		CD48878E122873C200F5A88A /* simple_expected_profit_calculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488535122873C100F5A88A /* simple_expected_profit_calculator.cpp */; };
 		CD48878F122873C200F5A88A /* aland_allocator_item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488541122873C100F5A88A /* aland_allocator_item.cpp */; };
 		CD488790122873C200F5A88A /* carbon_land_leaf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488542122873C100F5A88A /* carbon_land_leaf.cpp */; };
 		CD488791122873C200F5A88A /* land_allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488543122873C100F5A88A /* land_allocator.cpp */; };
@@ -212,7 +199,6 @@
 		CD48880E122873C200F5A88A /* power_plant_capture_component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886B4122873C200F5A88A /* power_plant_capture_component.cpp */; };
 		CD48880F122873C200F5A88A /* primary_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886B5122873C200F5A88A /* primary_output.cpp */; };
 		CD488810122873C200F5A88A /* production_state_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886B6122873C200F5A88A /* production_state_factory.cpp */; };
-		CD488811122873C200F5A88A /* production_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886B7122873C200F5A88A /* production_technology.cpp */; };
 		CD488812122873C200F5A88A /* profit_shutdown_decider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886B8122873C200F5A88A /* profit_shutdown_decider.cpp */; };
 		CD488813122873C200F5A88A /* residue_biomass_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886B9122873C200F5A88A /* residue_biomass_output.cpp */; };
 		CD488814122873C200F5A88A /* retired_production_state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886BA122873C200F5A88A /* retired_production_state.cpp */; };
@@ -431,7 +417,6 @@
 		CD488459122873C000F5A88A /* mac_generator_scenario_runner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mac_generator_scenario_runner.h; sourceTree = "<group>"; };
 		CD48845B122873C000F5A88A /* national_account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = national_account.h; sourceTree = "<group>"; };
 		CD48845D122873C000F5A88A /* region.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = region.h; sourceTree = "<group>"; };
-		CD48845E122873C000F5A88A /* region_cge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = region_cge.h; sourceTree = "<group>"; };
 		CD48845F122873C000F5A88A /* region_minicam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = region_minicam.h; sourceTree = "<group>"; };
 		CD488460122873C000F5A88A /* scenario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scenario.h; sourceTree = "<group>"; };
 		CD488461122873C000F5A88A /* scenario_runner_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scenario_runner_factory.h; sourceTree = "<group>"; };
@@ -448,7 +433,6 @@
 		CD48846D122873C000F5A88A /* mac_generator_scenario_runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mac_generator_scenario_runner.cpp; sourceTree = "<group>"; };
 		CD48846F122873C000F5A88A /* national_account.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = national_account.cpp; sourceTree = "<group>"; };
 		CD488471122873C000F5A88A /* region.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = region.cpp; sourceTree = "<group>"; };
-		CD488472122873C000F5A88A /* region_cge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = region_cge.cpp; sourceTree = "<group>"; };
 		CD488473122873C000F5A88A /* region_minicam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = region_minicam.cpp; sourceTree = "<group>"; };
 		CD488474122873C000F5A88A /* scenario.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scenario.cpp; sourceTree = "<group>"; };
 		CD488475122873C000F5A88A /* scenario_runner_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scenario_runner_factory.cpp; sourceTree = "<group>"; };
@@ -541,35 +525,6 @@
 		CD48850E122873C100F5A88A /* node_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = node_input.cpp; sourceTree = "<group>"; };
 		CD48850F122873C100F5A88A /* non_energy_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = non_energy_input.cpp; sourceTree = "<group>"; };
 		CD488511122873C100F5A88A /* renewable_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = renewable_input.cpp; sourceTree = "<group>"; };
-		CD488518122873C100F5A88A /* accelerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = accelerator.h; sourceTree = "<group>"; };
-		CD488519122873C100F5A88A /* get_distributed_investment_visitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = get_distributed_investment_visitor.h; sourceTree = "<group>"; };
-		CD48851A122873C100F5A88A /* idistributor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idistributor.h; sourceTree = "<group>"; };
-		CD48851B122873C100F5A88A /* iexpected_profit_calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iexpected_profit_calculator.h; sourceTree = "<group>"; };
-		CD48851C122873C100F5A88A /* igrowth_calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = igrowth_calculator.h; sourceTree = "<group>"; };
-		CD48851D122873C100F5A88A /* iinvestable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iinvestable.h; sourceTree = "<group>"; };
-		CD48851E122873C100F5A88A /* iinvestor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iinvestor.h; sourceTree = "<group>"; };
-		CD48851F122873C100F5A88A /* investable_counter_visitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = investable_counter_visitor.h; sourceTree = "<group>"; };
-		CD488520122873C100F5A88A /* investment_growth_calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = investment_growth_calculator.h; sourceTree = "<group>"; };
-		CD488521122873C100F5A88A /* investment_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = investment_utils.h; sourceTree = "<group>"; };
-		CD488522122873C100F5A88A /* levelized_cost_calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = levelized_cost_calculator.h; sourceTree = "<group>"; };
-		CD488523122873C100F5A88A /* market_based_investment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = market_based_investment.h; sourceTree = "<group>"; };
-		CD488524122873C100F5A88A /* output_growth_calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = output_growth_calculator.h; sourceTree = "<group>"; };
-		CD488525122873C100F5A88A /* output_share_levelized_cost_calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = output_share_levelized_cost_calculator.h; sourceTree = "<group>"; };
-		CD488526122873C100F5A88A /* rate_logit_distributor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rate_logit_distributor.h; sourceTree = "<group>"; };
-		CD488527122873C100F5A88A /* set_share_weight_visitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = set_share_weight_visitor.h; sourceTree = "<group>"; };
-		CD488528122873C100F5A88A /* simple_expected_profit_calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_expected_profit_calculator.h; sourceTree = "<group>"; };
-		CD48852A122873C100F5A88A /* accelerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = accelerator.cpp; sourceTree = "<group>"; };
-		CD48852B122873C100F5A88A /* get_distributed_investment_visitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = get_distributed_investment_visitor.cpp; sourceTree = "<group>"; };
-		CD48852C122873C100F5A88A /* investable_counter_visitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = investable_counter_visitor.cpp; sourceTree = "<group>"; };
-		CD48852D122873C100F5A88A /* investment_growth_calculator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = investment_growth_calculator.cpp; sourceTree = "<group>"; };
-		CD48852E122873C100F5A88A /* investment_utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = investment_utils.cpp; sourceTree = "<group>"; };
-		CD48852F122873C100F5A88A /* levelized_cost_calculator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = levelized_cost_calculator.cpp; sourceTree = "<group>"; };
-		CD488530122873C100F5A88A /* market_based_investment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = market_based_investment.cpp; sourceTree = "<group>"; };
-		CD488531122873C100F5A88A /* output_growth_calculator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = output_growth_calculator.cpp; sourceTree = "<group>"; };
-		CD488532122873C100F5A88A /* output_share_levelized_cost_calculator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = output_share_levelized_cost_calculator.cpp; sourceTree = "<group>"; };
-		CD488533122873C100F5A88A /* rate_logit_distributor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rate_logit_distributor.cpp; sourceTree = "<group>"; };
-		CD488534122873C100F5A88A /* set_share_weight_visitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = set_share_weight_visitor.cpp; sourceTree = "<group>"; };
-		CD488535122873C100F5A88A /* simple_expected_profit_calculator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_expected_profit_calculator.cpp; sourceTree = "<group>"; };
 		CD488538122873C100F5A88A /* aland_allocator_item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aland_allocator_item.h; sourceTree = "<group>"; };
 		CD488539122873C100F5A88A /* carbon_land_leaf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = carbon_land_leaf.h; sourceTree = "<group>"; };
 		CD48853A122873C100F5A88A /* iland_allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iland_allocator.h; sourceTree = "<group>"; };
@@ -774,7 +729,6 @@
 		CD488689122873C200F5A88A /* power_plant_capture_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = power_plant_capture_component.h; sourceTree = "<group>"; };
 		CD48868A122873C200F5A88A /* primary_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = primary_output.h; sourceTree = "<group>"; };
 		CD48868B122873C200F5A88A /* production_state_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = production_state_factory.h; sourceTree = "<group>"; };
-		CD48868C122873C200F5A88A /* production_technology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = production_technology.h; sourceTree = "<group>"; };
 		CD48868D122873C200F5A88A /* profit_shutdown_decider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = profit_shutdown_decider.h; sourceTree = "<group>"; };
 		CD48868E122873C200F5A88A /* residue_biomass_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = residue_biomass_output.h; sourceTree = "<group>"; };
 		CD48868F122873C200F5A88A /* retired_production_state.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = retired_production_state.h; sourceTree = "<group>"; };
@@ -811,7 +765,6 @@
 		CD4886B4122873C200F5A88A /* power_plant_capture_component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = power_plant_capture_component.cpp; sourceTree = "<group>"; };
 		CD4886B5122873C200F5A88A /* primary_output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = primary_output.cpp; sourceTree = "<group>"; };
 		CD4886B6122873C200F5A88A /* production_state_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = production_state_factory.cpp; sourceTree = "<group>"; };
-		CD4886B7122873C200F5A88A /* production_technology.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = production_technology.cpp; sourceTree = "<group>"; };
 		CD4886B8122873C200F5A88A /* profit_shutdown_decider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = profit_shutdown_decider.cpp; sourceTree = "<group>"; };
 		CD4886B9122873C200F5A88A /* residue_biomass_output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = residue_biomass_output.cpp; sourceTree = "<group>"; };
 		CD4886BA122873C200F5A88A /* retired_production_state.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = retired_production_state.cpp; sourceTree = "<group>"; };
@@ -1048,7 +1001,6 @@
 				CD48849E122873C000F5A88A /* doxygen */,
 				CD4884A3122873C000F5A88A /* emissions */,
 				CD4884CD122873C100F5A88A /* functions */,
-				CD488516122873C100F5A88A /* investment */,
 				CD488536122873C100F5A88A /* land_allocator */,
 				CD488557122873C100F5A88A /* main */,
 				CD48855A122873C100F5A88A /* marketplace */,
@@ -1217,7 +1169,6 @@
 				CD488459122873C000F5A88A /* mac_generator_scenario_runner.h */,
 				CD48845B122873C000F5A88A /* national_account.h */,
 				CD48845D122873C000F5A88A /* region.h */,
-				CD48845E122873C000F5A88A /* region_cge.h */,
 				CD48845F122873C000F5A88A /* region_minicam.h */,
 				CD488460122873C000F5A88A /* scenario.h */,
 				CD488461122873C000F5A88A /* scenario_runner_factory.h */,
@@ -1248,7 +1199,6 @@
 				CD48846D122873C000F5A88A /* mac_generator_scenario_runner.cpp */,
 				CD48846F122873C000F5A88A /* national_account.cpp */,
 				CD488471122873C000F5A88A /* region.cpp */,
-				CD488472122873C000F5A88A /* region_cge.cpp */,
 				CD488473122873C000F5A88A /* region_minicam.cpp */,
 				CD488474122873C000F5A88A /* scenario.cpp */,
 				CD488475122873C000F5A88A /* scenario_runner_factory.cpp */,
@@ -1459,58 +1409,6 @@
 				CD48850F122873C100F5A88A /* non_energy_input.cpp */,
 				CD488511122873C100F5A88A /* renewable_input.cpp */,
 				CDCBBF0C14BB6658008B5F4D /* thermal_building_service_input.cpp */,
-			);
-			path = source;
-			sourceTree = "<group>";
-		};
-		CD488516122873C100F5A88A /* investment */ = {
-			isa = PBXGroup;
-			children = (
-				CD488517122873C100F5A88A /* include */,
-				CD488529122873C100F5A88A /* source */,
-			);
-			path = investment;
-			sourceTree = "<group>";
-		};
-		CD488517122873C100F5A88A /* include */ = {
-			isa = PBXGroup;
-			children = (
-				CD488518122873C100F5A88A /* accelerator.h */,
-				CD488519122873C100F5A88A /* get_distributed_investment_visitor.h */,
-				CD48851A122873C100F5A88A /* idistributor.h */,
-				CD48851B122873C100F5A88A /* iexpected_profit_calculator.h */,
-				CD48851C122873C100F5A88A /* igrowth_calculator.h */,
-				CD48851D122873C100F5A88A /* iinvestable.h */,
-				CD48851E122873C100F5A88A /* iinvestor.h */,
-				CD48851F122873C100F5A88A /* investable_counter_visitor.h */,
-				CD488520122873C100F5A88A /* investment_growth_calculator.h */,
-				CD488521122873C100F5A88A /* investment_utils.h */,
-				CD488522122873C100F5A88A /* levelized_cost_calculator.h */,
-				CD488523122873C100F5A88A /* market_based_investment.h */,
-				CD488524122873C100F5A88A /* output_growth_calculator.h */,
-				CD488525122873C100F5A88A /* output_share_levelized_cost_calculator.h */,
-				CD488526122873C100F5A88A /* rate_logit_distributor.h */,
-				CD488527122873C100F5A88A /* set_share_weight_visitor.h */,
-				CD488528122873C100F5A88A /* simple_expected_profit_calculator.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		CD488529122873C100F5A88A /* source */ = {
-			isa = PBXGroup;
-			children = (
-				CD48852A122873C100F5A88A /* accelerator.cpp */,
-				CD48852B122873C100F5A88A /* get_distributed_investment_visitor.cpp */,
-				CD48852C122873C100F5A88A /* investable_counter_visitor.cpp */,
-				CD48852D122873C100F5A88A /* investment_growth_calculator.cpp */,
-				CD48852E122873C100F5A88A /* investment_utils.cpp */,
-				CD48852F122873C100F5A88A /* levelized_cost_calculator.cpp */,
-				CD488530122873C100F5A88A /* market_based_investment.cpp */,
-				CD488531122873C100F5A88A /* output_growth_calculator.cpp */,
-				CD488532122873C100F5A88A /* output_share_levelized_cost_calculator.cpp */,
-				CD488533122873C100F5A88A /* rate_logit_distributor.cpp */,
-				CD488534122873C100F5A88A /* set_share_weight_visitor.cpp */,
-				CD488535122873C100F5A88A /* simple_expected_profit_calculator.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -2020,7 +1918,6 @@
 				CD488689122873C200F5A88A /* power_plant_capture_component.h */,
 				CD48868A122873C200F5A88A /* primary_output.h */,
 				CD48868B122873C200F5A88A /* production_state_factory.h */,
-				CD48868C122873C200F5A88A /* production_technology.h */,
 				CD48868D122873C200F5A88A /* profit_shutdown_decider.h */,
 				CD48868E122873C200F5A88A /* residue_biomass_output.h */,
 				CD48868F122873C200F5A88A /* retired_production_state.h */,
@@ -2073,7 +1970,6 @@
 				CD4886B4122873C200F5A88A /* power_plant_capture_component.cpp */,
 				CD4886B5122873C200F5A88A /* primary_output.cpp */,
 				CD4886B6122873C200F5A88A /* production_state_factory.cpp */,
-				CD4886B7122873C200F5A88A /* production_technology.cpp */,
 				CD4886B8122873C200F5A88A /* profit_shutdown_decider.cpp */,
 				CD4886B9122873C200F5A88A /* residue_biomass_output.cpp */,
 				CD4886BA122873C200F5A88A /* retired_production_state.cpp */,
@@ -2398,7 +2294,6 @@
 				CD488739122873C200F5A88A /* mac_generator_scenario_runner.cpp in Sources */,
 				CD48873B122873C200F5A88A /* national_account.cpp in Sources */,
 				CD48873D122873C200F5A88A /* region.cpp in Sources */,
-				CD48873E122873C200F5A88A /* region_cge.cpp in Sources */,
 				CD48873F122873C200F5A88A /* region_minicam.cpp in Sources */,
 				CD488740122873C200F5A88A /* scenario.cpp in Sources */,
 				CD488741122873C200F5A88A /* scenario_runner_factory.cpp in Sources */,
@@ -2449,18 +2344,6 @@
 				CD48877C122873C200F5A88A /* non_energy_input.cpp in Sources */,
 				CD48877E122873C200F5A88A /* renewable_input.cpp in Sources */,
 				CD5162A721909920005B351E /* no_climate_model.cpp in Sources */,
-				CD488783122873C200F5A88A /* accelerator.cpp in Sources */,
-				CD488784122873C200F5A88A /* get_distributed_investment_visitor.cpp in Sources */,
-				CD488785122873C200F5A88A /* investable_counter_visitor.cpp in Sources */,
-				CD488786122873C200F5A88A /* investment_growth_calculator.cpp in Sources */,
-				CD488787122873C200F5A88A /* investment_utils.cpp in Sources */,
-				CD488788122873C200F5A88A /* levelized_cost_calculator.cpp in Sources */,
-				CD488789122873C200F5A88A /* market_based_investment.cpp in Sources */,
-				CD48878A122873C200F5A88A /* output_growth_calculator.cpp in Sources */,
-				CD48878B122873C200F5A88A /* output_share_levelized_cost_calculator.cpp in Sources */,
-				CD48878C122873C200F5A88A /* rate_logit_distributor.cpp in Sources */,
-				CD48878D122873C200F5A88A /* set_share_weight_visitor.cpp in Sources */,
-				CD48878E122873C200F5A88A /* simple_expected_profit_calculator.cpp in Sources */,
 				CD48878F122873C200F5A88A /* aland_allocator_item.cpp in Sources */,
 				CD488790122873C200F5A88A /* carbon_land_leaf.cpp in Sources */,
 				CD488791122873C200F5A88A /* land_allocator.cpp in Sources */,
@@ -2575,7 +2458,6 @@
 				CD48880E122873C200F5A88A /* power_plant_capture_component.cpp in Sources */,
 				CD48880F122873C200F5A88A /* primary_output.cpp in Sources */,
 				CD488810122873C200F5A88A /* production_state_factory.cpp in Sources */,
-				CD488811122873C200F5A88A /* production_technology.cpp in Sources */,
 				CD488812122873C200F5A88A /* profit_shutdown_decider.cpp in Sources */,
 				CD488813122873C200F5A88A /* residue_biomass_output.cpp in Sources */,
 				CD488814122873C200F5A88A /* retired_production_state.cpp in Sources */,

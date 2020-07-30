@@ -44,7 +44,6 @@
 #include "util/base/include/util.h"
 #include "technologies/include/technology_type.h"
 #include "technologies/include/base_technology.h"
-#include "investment/include/investment_utils.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"

@@ -81,8 +81,6 @@ class ProfitShutdownDecider: public IShutdownDecider
 {
     friend class ShutdownDeciderFactory;
 
-    // Allow SGM technology to create the ProfitShutdownDecider directly.
-    friend class ProductionTechnology;
 public:
     ~ProfitShutdownDecider();
     

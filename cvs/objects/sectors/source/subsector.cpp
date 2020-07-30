@@ -67,13 +67,9 @@
 #include "consumers/include/govt_consumer.h"
 #include "consumers/include/trade_consumer.h"
 #include "consumers/include/invest_consumer.h"
-#include "technologies/include/production_technology.h"
 #include "util/base/include/ivisitor.h"
 #include "technologies/include/technology_type.h"
-#include "investment/include/idistributor.h"
-#include "investment/include/iexpected_profit_calculator.h"
 #include "sectors/include/sector_utils.h"
-#include "investment/include/investment_utils.h"
 #include "util/base/include/interpolation_rule.h"
 #include "functions/include/idiscrete_choice.hpp"
 #include "functions/include/discrete_choice_factory.hpp"
@@ -200,10 +196,6 @@ void Subsector::XMLParse( const DOMNode* node ) {
         // government consumer object for final demands
         else if( nodeName == InvestConsumer::getXMLNameStatic() ) {
             parseBaseTechHelper( curr, new InvestConsumer() );
-        }
-        // production technology object for production sectors
-        else if( nodeName == ProductionTechnology::getXMLNameStatic() ) {
-            parseBaseTechHelper( curr, new ProductionTechnology() );
         }
         else if( nodeName == InterpolationRule::getXMLNameStatic() && XMLHelper<string>::getAttr( curr, "apply-to" ) == "share-weight" ) {
             // if the delete flag is set then for interpolation rules that means to clear
@@ -950,93 +942,7 @@ double Subsector::getAnnualInvestment( const int aPeriod ) const {
     return totalInvestment;
 }
 
-/*! \brief Distribute new investment determined by the SectorInvestment object.
-* \param aDistributor An object which contains the algorithm for distributing
-*        investment.
-* \param aNationalAccount National account object needed to calculate share.
-* \param aExpProfitRateCalc An object which contains the algorithm for
-*        calculating expected profits.
-* \param aRegionName The mName of the region containing this subsector.
-* \param aSectorName The name of the sector containing this subsector.
-* \param aNewInvestment The new subsector investment to be distributed.
-* \param aPeriod The period in which to add investment. 
-* \return The actual amount of annual investment distributed.
-*/
-double Subsector::distributeInvestment( const IDistributor* aDistributor,
-                                        NationalAccount& aNationalAccount,
-                                        const IExpectedProfitRateCalculator* aExpProfitRateCalc,
-                                        const string& aRegionName,
-                                        const string& aSectorName,
-                                        const double aNewInvestment,
-                                        const int aPeriod )
-{
-    // This function is not used.  I've retained the shell so that we
-    // don't need to rewrite the interface class.
-    std::cerr << "Subsector::distributeInvestment called.  That shouldn't happen!" << std::endl;
-    abort();
-
-    return 0.0;
-}
-
-/*! \brief Return the  expected profit rate.
-* \param aNationalAccount The regional accounting object.
-* \param aRegionName The name of the region containing this subsector.
-* \param aSectorName The name of the sector containing this subsector.
-* \param aExpProfitRateCalc The calculator of expected profit rates.
-* \param aInvestmentLogitExp The investment logit exponential.
-* \param aIsShareCalc Whether this expected profit rate is being used to
-*        calculate shares. Not great.
-* \param aIsDistributing Whether this expected profit rate is being used
-*        to distribute investment.
-* \param aPeriod The period for which to get the expected profit rate.
-* \return The expected profit rate for the subsector.
-* \author Josh Lurz
-*/
-double Subsector::getExpectedProfitRate( const NationalAccount& aNationalAccount,
-                                         const string& aRegionName,
-                                         const string& aSectorName,
-                                         const IExpectedProfitRateCalculator* aExpProfitRateCalc,
-                                         const double aInvestmentLogitExp,
-                                         const bool aIsShareCalc,
-                                         const bool aIsDistributing,
-                                         const int aPeriod ) const
-{   
-    // No longer used.  I've retained the shell so that we don't have
-    // to rewrite the IInvestable interface.
-    std::cerr << "Subsector::getExpectedProfitRate called.  That shouldn't happen!" << std::endl;
-    abort();
-    
-    return 0;
-}
-
-/*! \brief Get the capital output ratio.
-* \param aRegionName The name of the region containing this subsector.
-* \param aSectorName The name of the sector containing this subsector.
-* \param aPeriod The period.
-* \return The capital output ratio.
-* \author Josh Lurz
-*/
-double Subsector::getCapitalOutputRatio( const IDistributor* aDistributor,
-                                         const IExpectedProfitRateCalculator* aExpProfitRateCalc,
-                                         const NationalAccount& aNationalAccount,
-                                         const string& aRegionName,
-                                         const string& aSectorName, 
-                                         const int aPeriod ) const
-{
-    assert( aDistributor );
-    // Use the passed in investment distributor to calculate the share weighted average
-    // capital to output ratio for the subsector.
-    const double capOutputRatio = aDistributor->calcCapitalOutputRatio( 
-                                    InvestmentUtils::getTechInvestables( baseTechs, aPeriod ),
-                                    aExpProfitRateCalc,
-                                    aNationalAccount,
-                                    aRegionName,
-                                    aSectorName,
-                                    aPeriod );
-    assert( capOutputRatio >= 0 );
-    return capOutputRatio;
-}
-/*! \brief Operate the capital in the base technologies for this subsector. 
+/*! \brief Operate the capital in the base technologies for this subsector.
 * \author Josh Lurz
 * \param aMode Whether or not to operate all capital.
 * \param aPeriod Period to operate in.
@@ -1105,25 +1011,6 @@ void Subsector::accept( IVisitor* aVisitor, const int period ) const {
     }
             
     aVisitor->endVisitSubsector( this, period );
-}
-
-/*! \brief Return fixed investment.
-* \param aPeriod Period to return fixed investment for.
-* \return Subsector level fixed investment.
-* \todo Can't have a zero investment subsector.
-*/
-double Subsector::getFixedInvestment( const int aPeriod ) const {
-    // Return amount of subsector fixed investment.
-    if( mFixedInvestments[ aPeriod ] != -1 ){
-        return mFixedInvestments[ aPeriod ];
-    }
-    // Sum any fixed investment at the vintage level.
-    double totalFixedTechInvestment = InvestmentUtils::sumFixedInvestment( 
-                                      InvestmentUtils::getTechInvestables( baseTechs, aPeriod ), aPeriod );
-    
-    /*! \post Fixed investment must be positive */
-    assert( totalFixedTechInvestment >= 0 );
-    return totalFixedTechInvestment;
 }
 
 bool Subsector::hasCalibrationMarket() const {

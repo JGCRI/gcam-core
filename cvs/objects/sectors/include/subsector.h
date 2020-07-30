@@ -52,7 +52,6 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
-#include "investment/include/iinvestable.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -68,7 +67,6 @@ class Demographic;
 class MoreSectorInfo;
 class IExpectedProfitRateCalculator;
 class TechnologyType;
-class IDistributor;
 class Tabs;
 class ILandAllocator;
 class Demographics;
@@ -91,16 +89,12 @@ class NestingSubsector;
 */
 
 class Subsector: public INamed,
-                 public IInvestable,
                  private boost::noncopyable
 {
     friend class XMLDBOutputter;
-    // needs to be friend so that it can set the doCalibration flag
-    friend class InvestableCounterVisitor;
-    // needs to be friend so that it can set a new share weight directly into
+     // needs to be friend so that it can set a new share weight directly into
     // shrwts, note that if there was a setShare weight method this would not
     // be necessary
-    friend class SetShareWeightVisitor;
     friend class CalibrateShareWeightVisitor;
     friend class NestingSubsector;
 protected:
@@ -215,38 +209,13 @@ public:
     virtual double getEnergyInput( const int aPeriod ) const;
 
     double getAnnualInvestment( const int aPeriod ) const;
-
-    double distributeInvestment( const IDistributor* aDistributor,
-                                 NationalAccount& aNationalAccount,
-                                 const IExpectedProfitRateCalculator* aExpProfitRateCalc,
-                                 const std::string& aRegionName,
-                                 const std::string& aSectorName,
-                                 const double aNewInvestment,
-                                 const int aPeriod );
-    
-    double getExpectedProfitRate( const NationalAccount& aNationalAccount,
-                                  const std::string& aRegionName,
-                                  const std::string& aSectorName,
-                                  const IExpectedProfitRateCalculator* aExpProfitRateCalc,
-                                  const double aInvestmentLogitExp,
-                                  const bool aIsShareCalc,
-                                  const bool aIsDistributing,
-                                  const int aPeriod ) const;
-    
-    double getCapitalOutputRatio( const IDistributor* aDistributor,
-                                  const IExpectedProfitRateCalculator* aExpProfitRateCalc,
-                                  const NationalAccount& aNationalAccount,
-                                  const std::string& aRegionName,
-                                  const std::string& aSectorName, 
-                                  const int aPeriod ) const;
-
+ 
     void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
                   const MoreSectorInfo* aMoreSectorInfo, const bool isNewVintageMode, const int aPeriod );
     
     void updateMarketplace( const int period );
     virtual void postCalc( const int aPeriod );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    double getFixedInvestment( const int aPeriod ) const;
     bool hasCalibrationMarket() const;
 };
 #endif // _SUBSECTOR_H_

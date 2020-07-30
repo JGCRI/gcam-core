@@ -15,7 +15,6 @@ OBJS       = batch_runner.o \
              mac_generator_scenario_runner.o \
              national_account.o \
              region.o \
-             region_cge.o \
              region_minicam.o \
              scenario.o \
              scenario_runner_factory.o \

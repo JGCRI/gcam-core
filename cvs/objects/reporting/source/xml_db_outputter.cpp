@@ -48,7 +48,6 @@
 #include "containers/include/world.h"
 #include "containers/include/region.h"
 #include "containers/include/region_minicam.h"
-#include "containers/include/region_cge.h"
 #include "containers/include/iinfo.h"
 #include "resources/include/resource.h"
 #include "sectors/include/afinal_demand.h"
@@ -85,7 +84,6 @@
 #include "technologies/include/base_technology.h"
 #include "technologies/include/ag_production_technology.h"
 #include "technologies/include/expenditure.h"
-#include "technologies/include/production_technology.h"
 #include "functions/include/node_input.h"
 #include "consumers/include/household_consumer.h"
 #include "consumers/include/govt_consumer.h"
@@ -538,21 +536,6 @@ void XMLDBOutputter::endVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM,
 
     // Write the closing region tag.
     XMLWriteClosingTag( aRegionMiniCAM->getXMLName(), mBuffer, mTabs.get() );
-}
-
-void XMLDBOutputter::startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ) {
-       // Write the opening region tag and the type of the base class.
-    XMLWriteOpeningTag( aRegionCGE->getXMLName(), mBuffer, mTabs.get(),
-        aRegionCGE->getName(), 0, Region::getXMLNameStatic() );
-}
-
-void XMLDBOutputter::endVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ) {
-    assert( !mCurrentRegion.empty() );
-    // Clear the region name.
-    mCurrentRegion.clear();
-
-    // Write the closing region tag.
-    XMLWriteClosingTag( aRegionCGE->getXMLName(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitResource( const AResource* aResource,
@@ -1819,40 +1802,6 @@ void XMLDBOutputter::startVisitInvestConsumer( const InvestConsumer* aInvestCons
 
 void XMLDBOutputter::endVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod ) {
     XMLWriteClosingTag( aInvestConsumer->getXMLName(), mBuffer, mTabs.get() );
-}
-
-void XMLDBOutputter::startVisitProductionTechnology( const ProductionTechnology* aProductionTechnology,
-                                                    const int aPeriod )
-{
-    XMLWriteOpeningTag( aProductionTechnology->getXMLName(), mBuffer, mTabs.get(), aProductionTechnology->getName(),
-        aProductionTechnology->getYear(), "baseTechnology" );
-
-    // could this info have been found elsewhere?
-    XMLWriteElement( aProductionTechnology->mCapitalStock, "capital-stock", mBuffer, mTabs.get());
-
-    XMLWriteElement( aProductionTechnology->mExpectedProfitRateReporting, "expected-profit-rate", mBuffer, mTabs.get());
-
-    XMLWriteElement( aProductionTechnology->mAnnualInvestment, "annual-investment", mBuffer, mTabs.get() );
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int i = 0; i < modeltime->getmaxper(); ++i ) {
-        double value = aProductionTechnology->mProfits[ i ];
-        if( !objects::isEqual<double>( value, 0.0 ) ) {
-            XMLWriteElement( value, "profit", mBuffer, mTabs.get(),
-                modeltime->getper_to_yr( i ) );
-        }
-        value = aProductionTechnology->mCostsReporting[ i ];
-        if( !objects::isEqual<double>( value, 0.0 ) ) {
-            XMLWriteElement( value, "cost", mBuffer, mTabs.get(),
-                modeltime->getper_to_yr( i ) );
-        }
-    }
-}
-
-void XMLDBOutputter::endVisitProductionTechnology( const ProductionTechnology* aProductionTechnology,
-                                                  const int aPeriod )
-{
-    XMLWriteClosingTag( aProductionTechnology->getXMLName(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) {
