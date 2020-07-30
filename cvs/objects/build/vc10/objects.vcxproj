@@ -370,8 +370,8 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\..\..\libs\xercesc\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\java\include;..\..\..\..\libs\java\include\win32;..\..;..\..\climate\source\hector\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;FUSION_MAX_VECTOR_SIZE=30;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\libs\xercesc\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\java\include;..\..\..\..\libs\java\include\win32;..\..;..\..\climate\source\hector\headers;..\..\..\..\libs\tbb\include;..\..\..\..\libs\Eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;FUSION_MAX_VECTOR_SIZE=30;BOOST_MATH_TR1_NO_LIB;NDEBUG;EIGEN_MPL2_ONLY;GCAM_PARALLEL_ENABLED;_WINDOWS;_AFXDLL;NOGDI;NOMINMAX;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -380,15 +380,17 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>..\..\..\..\libs\xercesc\lib;..\..\..\..\libs\java\lib;..\..\..\..\libs\boost-lib\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\libs\xercesc\lib;..\..\..\..\libs\java\lib;..\..\..\..\libs\boost-lib\stage\lib;..\..\..\..\libs\tbb\lib\intel64\vc14;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalDependencies>xerces-c_3.lib;jvm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>xerces-c_3.lib;jvm.lib;tbb.lib;tbbmalloc.lib;tbbmalloc_proxy.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/INCLUDE:"__TBB_malloc_proxy" %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'">

@@ -376,7 +376,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
 #endif
   using boost::numeric::ublas::axpy_prod;
   using boost::numeric::ublas::inner_prod;
-  int nrow = B.size(), ncol = B.size();
+  int nrow = B.rows(), ncol = B.cols();
   int ageB = 0;   // number of iterations since the last reset on B
   // svd decomposition elements (note nrow == ncol)
 
@@ -484,8 +484,8 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       if(B.determinant() == 0) {
           std::cout << "Doing SVD: " << std::endl;
           Eigen::BDCSVD<UBMATRIX> svdSolver(B, Eigen::ComputeThinU | Eigen::ComputeThinV);
-          const double small = 1.0e-8;
-          svdSolver.setThreshold(small);
+          const double small_threshold = 1.0e-8;
+          svdSolver.setThreshold(small_threshold);
           dx = svdSolver.solve(dx);
       }
       else {
@@ -877,8 +877,8 @@ std::ostream & operator<<(std::ostream &ostrm, const UBVECTOR &v) {
 
 //template <class FTYPE, class MTRAIT>
 std::ostream & operator<<(std::ostream &ostrm, const UBMATRIX &M) {
-    int m = M.size();
-    int n = M.size();
+    int m = M.rows();
+    int n = M.cols();
     
     for(int i=0;i<m;++i) {
         ostrm << i << ":   ";

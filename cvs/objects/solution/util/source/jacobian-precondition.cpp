@@ -205,7 +205,7 @@ void broyden_singular_B_reset(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &B, VecFVec &F
      since we know that "normally" an increase a market's in price
      reduces excess demand in that market, we just set any deficient
      diagonal terms to -JPCMIN and keep on trucking. */
-  int nrow = B.size(), ncol = B.size();
+  int nrow = B.rows(), ncol = B.cols();
 
   for(int j=0;j<nrow;++j)
     if(fabs(B(j,j)) < JPCMIN && fabs(fx[j]) > FTOL) {
