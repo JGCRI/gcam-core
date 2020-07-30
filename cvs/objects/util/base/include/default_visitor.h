@@ -80,12 +80,6 @@ public:
     virtual void startVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod ){}
     virtual void endVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod ){}
 
-    virtual void startVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod ){}
-    virtual void endVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod ){}
-
-    virtual void startVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod ){}
-    virtual void endVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod ){}
-
     virtual void startVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod ){}
     virtual void endVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod ){}
     

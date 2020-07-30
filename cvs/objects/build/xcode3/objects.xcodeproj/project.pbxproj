@@ -64,8 +64,6 @@
 		CD48874A122873C200F5A88A /* male.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48848A122873C000F5A88A /* male.cpp */; };
 		CD48874B122873C200F5A88A /* population.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48848B122873C000F5A88A /* population.cpp */; };
 		CD48874C122873C200F5A88A /* population_mini_cam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48848C122873C000F5A88A /* population_mini_cam.cpp */; };
-		CD48874D122873C200F5A88A /* population_sgm_fixed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48848D122873C000F5A88A /* population_sgm_fixed.cpp */; };
-		CD48874E122873C200F5A88A /* population_sgm_rate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48848E122873C000F5A88A /* population_sgm_rate.cpp */; };
 		CD488752122873C200F5A88A /* aghg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884BD122873C100F5A88A /* aghg.cpp */; };
 		CD488754122873C200F5A88A /* co2_emissions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884BF122873C100F5A88A /* co2_emissions.cpp */; };
 		CD488755122873C200F5A88A /* emissions_driver_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884C0122873C100F5A88A /* emissions_driver_factory.cpp */; };
@@ -467,8 +465,6 @@
 		CD488480122873C000F5A88A /* male.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = male.h; sourceTree = "<group>"; };
 		CD488481122873C000F5A88A /* population.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = population.h; sourceTree = "<group>"; };
 		CD488482122873C000F5A88A /* population_mini_cam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = population_mini_cam.h; sourceTree = "<group>"; };
-		CD488483122873C000F5A88A /* population_sgm_fixed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = population_sgm_fixed.h; sourceTree = "<group>"; };
-		CD488484122873C000F5A88A /* population_sgm_rate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = population_sgm_rate.h; sourceTree = "<group>"; };
 		CD488486122873C000F5A88A /* age_cohort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = age_cohort.cpp; sourceTree = "<group>"; };
 		CD488487122873C000F5A88A /* demographic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = demographic.cpp; sourceTree = "<group>"; };
 		CD488488122873C000F5A88A /* female.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = female.cpp; sourceTree = "<group>"; };
@@ -476,8 +472,6 @@
 		CD48848A122873C000F5A88A /* male.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = male.cpp; sourceTree = "<group>"; };
 		CD48848B122873C000F5A88A /* population.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = population.cpp; sourceTree = "<group>"; };
 		CD48848C122873C000F5A88A /* population_mini_cam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = population_mini_cam.cpp; sourceTree = "<group>"; };
-		CD48848D122873C000F5A88A /* population_sgm_fixed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = population_sgm_fixed.cpp; sourceTree = "<group>"; };
-		CD48848E122873C000F5A88A /* population_sgm_rate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = population_sgm_rate.cpp; sourceTree = "<group>"; };
 		CD488491122873C000F5A88A /* Derivatives.xls */ = {isa = PBXFileReference; lastKnownFileType = file; path = Derivatives.xls; sourceTree = "<group>"; };
 		CD488493122873C000F5A88A /* UsingAndCompilingFortranLibraries.doc */ = {isa = PBXFileReference; lastKnownFileType = file; path = UsingAndCompilingFortranLibraries.doc; sourceTree = "<group>"; };
 		CD488495122873C000F5A88A /* CurveModel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CurveModel.png; sourceTree = "<group>"; };
@@ -1308,8 +1302,6 @@
 				CD488480122873C000F5A88A /* male.h */,
 				CD488481122873C000F5A88A /* population.h */,
 				CD488482122873C000F5A88A /* population_mini_cam.h */,
-				CD488483122873C000F5A88A /* population_sgm_fixed.h */,
-				CD488484122873C000F5A88A /* population_sgm_rate.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -1324,8 +1316,6 @@
 				CD48848A122873C000F5A88A /* male.cpp */,
 				CD48848B122873C000F5A88A /* population.cpp */,
 				CD48848C122873C000F5A88A /* population_mini_cam.cpp */,
-				CD48848D122873C000F5A88A /* population_sgm_fixed.cpp */,
-				CD48848E122873C000F5A88A /* population_sgm_rate.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -2487,8 +2477,6 @@
 				CD48874A122873C200F5A88A /* male.cpp in Sources */,
 				CD48874B122873C200F5A88A /* population.cpp in Sources */,
 				CD48874C122873C200F5A88A /* population_mini_cam.cpp in Sources */,
-				CD48874D122873C200F5A88A /* population_sgm_fixed.cpp in Sources */,
-				CD48874E122873C200F5A88A /* population_sgm_rate.cpp in Sources */,
 				CD488752122873C200F5A88A /* aghg.cpp in Sources */,
 				CD488754122873C200F5A88A /* co2_emissions.cpp in Sources */,
 				CD488755122873C200F5A88A /* emissions_driver_factory.cpp in Sources */,

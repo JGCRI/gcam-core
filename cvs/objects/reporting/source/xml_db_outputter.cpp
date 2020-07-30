@@ -72,8 +72,6 @@
 #include "demographics/include/demographic.h"
 #include "demographics/include/population.h"
 #include "demographics/include/population_mini_cam.h"
-#include "demographics/include/population_sgm_rate.h"
-#include "demographics/include/population_sgm_fixed.h"
 #include "demographics/include/age_cohort.h"
 #include "demographics/include/gender.h"
 #include "util/base/include/configuration.h"
@@ -1502,24 +1500,6 @@ void XMLDBOutputter::startVisitPopulationMiniCAM( const PopulationMiniCAM* aPopu
 
 void XMLDBOutputter::endVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod ){
     XMLWriteClosingTag( PopulationMiniCAM::getXMLNameStatic(), mBuffer, mTabs.get() );
-}
-
-void XMLDBOutputter::startVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod ){
-    XMLWriteOpeningTag( PopulationSGMRate::getXMLNameStatic(), mBuffer, mTabs.get(),
-                        "", aPopulation->getYear() );
-}
-
-void XMLDBOutputter::endVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod ){
-    XMLWriteClosingTag( PopulationSGMRate::getXMLNameStatic(), mBuffer, mTabs.get() );
-}
-
-void XMLDBOutputter::startVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod ){
-    XMLWriteOpeningTag( PopulationSGMFixed::getXMLNameStatic(), mBuffer, mTabs.get(),
-                        "", aPopulation->getYear() );
-}
-
-void XMLDBOutputter::endVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod ){
-    XMLWriteClosingTag( PopulationSGMFixed::getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod ){

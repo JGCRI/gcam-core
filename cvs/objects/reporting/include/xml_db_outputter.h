@@ -160,12 +160,6 @@ public:
     void startVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod );
     void endVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod );
 
-    void startVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod );
-    void endVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod );
-
-    void startVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod );
-    void endVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod );
-
     void startVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod );
     void endVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod );
 

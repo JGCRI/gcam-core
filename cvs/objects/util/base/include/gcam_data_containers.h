@@ -64,8 +64,6 @@
 #include "demographics/include/demographic.h"
 #include "demographics/include/population.h"
 #include "demographics/include/population_mini_cam.h"
-#include "demographics/include/population_sgm_fixed.h"
-#include "demographics/include/population_sgm_rate.h"
 #include "emissions/include/iemissions_driver.h"
 #include "emissions/include/input_driver.h"
 #include "emissions/include/output_driver.h"

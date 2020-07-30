@@ -81,8 +81,6 @@ class SubRenewableResource;
 class Grade;
 class Population;
 class PopulationMiniCAM;
-class PopulationSGMFixed;
-class PopulationSGMRate;
 class AgeCohort;
 class Gender;
 class Male;
@@ -150,12 +148,6 @@ public:
 
     virtual void startVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod ) = 0;
     virtual void endVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod ) = 0;
-
-    virtual void startVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod ) = 0;
-    virtual void endVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod ) = 0;
-
-    virtual void startVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod ) = 0;
-    virtual void endVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod ) = 0;
 
     virtual void startVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod ) = 0;
     virtual void endVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod ) = 0;
