@@ -74,7 +74,6 @@ class IDiscreteChoice;
 // Need to forward declare the subclasses as well.
 class SupplySector;
 class AgSupplySector;
-class ExportSector;
 class PassThroughSector;
 
 /*! 
@@ -102,7 +101,7 @@ protected:
         /* Declare all subclasses of Sector to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( Sector, SupplySector, AgSupplySector, ExportSector,
+        DEFINE_SUBCLASS_FAMILY( Sector, SupplySector, AgSupplySector, 
                                 PassThroughSector ),
 
         //! Sector name
