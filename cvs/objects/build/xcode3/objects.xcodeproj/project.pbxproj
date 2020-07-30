@@ -35,12 +35,7 @@
 		CD48872B122873C200F5A88A /* carbon_model_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488432122873C000F5A88A /* carbon_model_utils.cpp */; };
 		CD48872C122873C200F5A88A /* land_carbon_densities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488433122873C000F5A88A /* land_carbon_densities.cpp */; };
 		CD48872D122873C200F5A88A /* magicc_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488439122873C000F5A88A /* magicc_model.cpp */; };
-		CD48872E122873C200F5A88A /* calc_capital_good_price_visitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488449122873C000F5A88A /* calc_capital_good_price_visitor.cpp */; };
 		CD48872F122873C200F5A88A /* consumer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48844A122873C000F5A88A /* consumer.cpp */; };
-		CD488730122873C200F5A88A /* govt_consumer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48844B122873C000F5A88A /* govt_consumer.cpp */; };
-		CD488731122873C200F5A88A /* household_consumer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48844C122873C000F5A88A /* household_consumer.cpp */; };
-		CD488732122873C200F5A88A /* invest_consumer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48844D122873C000F5A88A /* invest_consumer.cpp */; };
-		CD488733122873C200F5A88A /* trade_consumer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48844E122873C000F5A88A /* trade_consumer.cpp */; };
 		CD488734122873C200F5A88A /* batch_runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488468122873C000F5A88A /* batch_runner.cpp */; };
 		CD488735122873C200F5A88A /* dependency_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488469122873C000F5A88A /* dependency_finder.cpp */; };
 		CD488736122873C200F5A88A /* gdp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846A122873C000F5A88A /* gdp.cpp */; };
@@ -393,18 +388,8 @@
 		CD48843D122873C000F5A88A /* configuration_template.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = configuration_template.xml; sourceTree = "<group>"; };
 		CD48843E122873C000F5A88A /* log_conf_template.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = log_conf_template.xml; sourceTree = "<group>"; };
 		CD48843F122873C000F5A88A /* simple_path_finder_template.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = simple_path_finder_template.xml; sourceTree = "<group>"; };
-		CD488442122873C000F5A88A /* calc_capital_good_price_visitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = calc_capital_good_price_visitor.h; sourceTree = "<group>"; };
 		CD488443122873C000F5A88A /* consumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = consumer.h; sourceTree = "<group>"; };
-		CD488444122873C000F5A88A /* govt_consumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = govt_consumer.h; sourceTree = "<group>"; };
-		CD488445122873C000F5A88A /* household_consumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = household_consumer.h; sourceTree = "<group>"; };
-		CD488446122873C000F5A88A /* invest_consumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = invest_consumer.h; sourceTree = "<group>"; };
-		CD488447122873C000F5A88A /* trade_consumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trade_consumer.h; sourceTree = "<group>"; };
-		CD488449122873C000F5A88A /* calc_capital_good_price_visitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = calc_capital_good_price_visitor.cpp; sourceTree = "<group>"; };
 		CD48844A122873C000F5A88A /* consumer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = consumer.cpp; sourceTree = "<group>"; };
-		CD48844B122873C000F5A88A /* govt_consumer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = govt_consumer.cpp; sourceTree = "<group>"; };
-		CD48844C122873C000F5A88A /* household_consumer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = household_consumer.cpp; sourceTree = "<group>"; };
-		CD48844D122873C000F5A88A /* invest_consumer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = invest_consumer.cpp; sourceTree = "<group>"; };
-		CD48844E122873C000F5A88A /* trade_consumer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trade_consumer.cpp; sourceTree = "<group>"; };
 		CD488451122873C000F5A88A /* batch_runner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = batch_runner.h; sourceTree = "<group>"; };
 		CD488452122873C000F5A88A /* dependency_finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dependency_finder.h; sourceTree = "<group>"; };
 		CD488453122873C000F5A88A /* gdp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gdp.h; sourceTree = "<group>"; };
@@ -1117,12 +1102,7 @@
 			isa = PBXGroup;
 			children = (
 				CDE074A01468959200432712 /* gcam_consumer.h */,
-				CD488442122873C000F5A88A /* calc_capital_good_price_visitor.h */,
 				CD488443122873C000F5A88A /* consumer.h */,
-				CD488444122873C000F5A88A /* govt_consumer.h */,
-				CD488445122873C000F5A88A /* household_consumer.h */,
-				CD488446122873C000F5A88A /* invest_consumer.h */,
-				CD488447122873C000F5A88A /* trade_consumer.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -1131,12 +1111,7 @@
 			isa = PBXGroup;
 			children = (
 				CDE074A31468959600432712 /* gcam_consumer.cpp */,
-				CD488449122873C000F5A88A /* calc_capital_good_price_visitor.cpp */,
 				CD48844A122873C000F5A88A /* consumer.cpp */,
-				CD48844B122873C000F5A88A /* govt_consumer.cpp */,
-				CD48844C122873C000F5A88A /* household_consumer.cpp */,
-				CD48844D122873C000F5A88A /* invest_consumer.cpp */,
-				CD48844E122873C000F5A88A /* trade_consumer.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -2273,12 +2248,7 @@
 				CD48872B122873C200F5A88A /* carbon_model_utils.cpp in Sources */,
 				CD48872C122873C200F5A88A /* land_carbon_densities.cpp in Sources */,
 				CD48872D122873C200F5A88A /* magicc_model.cpp in Sources */,
-				CD48872E122873C200F5A88A /* calc_capital_good_price_visitor.cpp in Sources */,
 				CD48872F122873C200F5A88A /* consumer.cpp in Sources */,
-				CD488730122873C200F5A88A /* govt_consumer.cpp in Sources */,
-				CD488731122873C200F5A88A /* household_consumer.cpp in Sources */,
-				CD488732122873C200F5A88A /* invest_consumer.cpp in Sources */,
-				CD488733122873C200F5A88A /* trade_consumer.cpp in Sources */,
 				CD488734122873C200F5A88A /* batch_runner.cpp in Sources */,
 				CD488735122873C200F5A88A /* dependency_finder.cpp in Sources */,
 				CD488736122873C200F5A88A /* gdp.cpp in Sources */,

@@ -181,20 +181,6 @@ public:
     virtual void startVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod );
     virtual void endVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod );
 
-    virtual void startVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, 
-        const int aPeriod );
-    virtual void endVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, 
-        const int aPeriod );
-
-    virtual void startVisitGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod );
-    virtual void endVisitGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod );
-
-    virtual void startVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod );
-    virtual void endVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod );
-
-    virtual void startVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod );
-    virtual void endVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod );
-
     virtual void startVisitFactorSupply( const FactorSupply* aFactorySupply, const int aPeriod );
     virtual void endVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod );
 

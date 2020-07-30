@@ -57,10 +57,6 @@ class NestingSubsector;
 class BuildingDemandSubSector;
 class BaseTechnology;
 class Consumer;
-class HouseholdConsumer;
-class GovtConsumer;
-class InvestConsumer;
-class TradeConsumer;
 class FactorSupply;
 class AResource;
 class Technology;
@@ -201,20 +197,6 @@ public:
 
     virtual void startVisitConsumer( const Consumer* aConsumer, const int aPeriod ) = 0;
     virtual void endVisitConsumer( const Consumer* aConsumer, const int aPeriod ) = 0;
-
-    virtual void startVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, 
-        const int aPeriod ) = 0;
-    virtual void endVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, 
-        const int aPeriod ) = 0;
-
-    virtual void startVisitGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod ) = 0;
-    virtual void endVisitGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod ) = 0;
-
-    virtual void startVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod ) = 0;
-    virtual void endVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod ) = 0;
-
-    virtual void startVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod ) = 0;
-    virtual void endVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod ) = 0;
 
     virtual void startVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) = 0;
     virtual void endVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) = 0;

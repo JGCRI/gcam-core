@@ -85,10 +85,6 @@
 #include "technologies/include/ag_production_technology.h"
 #include "technologies/include/expenditure.h"
 #include "functions/include/node_input.h"
-#include "consumers/include/household_consumer.h"
-#include "consumers/include/govt_consumer.h"
-#include "consumers/include/trade_consumer.h"
-#include "consumers/include/invest_consumer.h"
 #include "sectors/include/factor_supply.h"
 #include "containers/include/national_account.h"
 #include "sectors/include/more_sector_info.h"
@@ -925,7 +921,7 @@ void XMLDBOutputter::startVisitInput( const IInput* aInput, const int aPeriod ) 
     map<string, string> attrs;
 
     // children of input go in the child buffer
-    // note minicam is using real periods at this point 
+    // note minicam is using real periods at this point
     double maxPer = aPeriod == -1 ? modeltime->getmaxper() -1 : aPeriod;
     for( int i = 0; i <= maxPer; ++i ) {
         // isTechnologyOperating will crash for sgm so avoid calling it
@@ -1719,88 +1715,6 @@ void XMLDBOutputter::endVisitNodeInput( const NodeInput* aNodeInput, const int a
     // clean up any extra buffers
     delete childBuffer;
     delete parentBuffer;
-}
-
-void XMLDBOutputter::startVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer,
-                                                 const int aPeriod )
-{
-    XMLWriteOpeningTag( aHouseholdConsumer->getXMLName(), mBuffer, mTabs.get(), aHouseholdConsumer->getName(),
-        aHouseholdConsumer->getYear(), "baseTechnology" );
-
-    XMLWriteElement( aHouseholdConsumer->landDemand, "land-demand", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->laborDemand, "labor-demand", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->householdLandDemand, "household-land-demand", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->householdLaborDemand, "household-labor-demand", mBuffer, mTabs.get() );
-
-    XMLWriteElement( aHouseholdConsumer->socialSecurityTaxRate, "social-security-taxrate", mBuffer, mTabs.get() );
-    //XMLWriteElement( aHouseholdConsumer->incomeTaxRate, "income-tax-rate", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->personsPerHousehold, "persons-per-household", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->numberOfHouseholds, "number-of-households", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->totalLandArea, "total-land-area", mBuffer, mTabs.get() );
-
-    // label as govt-transfer?
-    XMLWriteElement( aHouseholdConsumer->transfer, "transfer", mBuffer, mTabs.get() );
-
-    XMLWriteElement( aHouseholdConsumer->landSupply, "land-supply", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->laborSupplyMaleUnSkLab, "unskilled-labor-supply-male", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->laborSupplyFemaleUnSkLab, "unskilled-labor-supply-female", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->laborSupplyMaleSkLab, "skilled-labor-supply-male", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->laborSupplyFemaleSkLab, "skilled-labor-supply-female", mBuffer, mTabs.get() );
-
-    XMLWriteElement( aHouseholdConsumer->workingAgePopMale, "working-age-pop-male", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->workingAgePopFemale, "working-age-pop-female", mBuffer, mTabs.get() );
-
-    // need to put a buffer on the stack for the node inputs to write AIDADS/LES params
-    stringstream* parentBuffer = new stringstream();
-    mBufferStack.push( parentBuffer );
-}
-
-void XMLDBOutputter::endVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer,
-                                               const int aPeriod )
-{
-    // the node inputs would have written themselves so we just need to pop the stack
-    // and copy the data to mBuffer
-    iostream* parentBuffer = popBufferStack();
-    if( parentBuffer->rdbuf()->in_avail() ) {
-        mBuffer << parentBuffer->rdbuf();
-    }
-    delete parentBuffer;
-
-    XMLWriteClosingTag( aHouseholdConsumer->getXMLName(), mBuffer, mTabs.get() );
-}
-
-void XMLDBOutputter::startVisitGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod ) {
-    XMLWriteOpeningTag( aGovtConsumer->getXMLName(), mBuffer, mTabs.get(), aGovtConsumer->getName(),
-        aGovtConsumer->getYear(), "baseTechnology" );
-
-    XMLWriteElement( aGovtConsumer->mTaxProportional.get(), "proportional-tax", mBuffer, mTabs.get() );
-    XMLWriteElement( aGovtConsumer->mTaxAdditive.get(), "additive-tax", mBuffer, mTabs.get() );
-    XMLWriteElement( aGovtConsumer->mTaxCorporate.get(), "corporate-income-tax", mBuffer, mTabs.get() );
-    XMLWriteElement( aGovtConsumer->mTaxIBT.get(), "indirect-buisness-tax", mBuffer, mTabs.get() );
-    XMLWriteElement( aGovtConsumer->mRho.get(), "rho", mBuffer, mTabs.get() );
-}
-
-void XMLDBOutputter::endVisitGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod ) {
-    XMLWriteClosingTag( aGovtConsumer->getXMLName(), mBuffer, mTabs.get() );
-}
-
-void XMLDBOutputter::startVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod ) {
-    XMLWriteOpeningTag( aTradeConsumer->getXMLName(), mBuffer, mTabs.get(), aTradeConsumer->getName(),
-        aTradeConsumer->getYear(), "baseTechnology" );
-}
-
-void XMLDBOutputter::endVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod ) {
-    XMLWriteClosingTag( aTradeConsumer->getXMLName(), mBuffer, mTabs.get() );
-}
-
-void XMLDBOutputter::startVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod ) {
-    XMLWriteOpeningTag( aInvestConsumer->getXMLName(), mBuffer, mTabs.get(), aInvestConsumer->getName(),
-        aInvestConsumer->getYear(), "baseTechnology" );
-    XMLWriteElement( aInvestConsumer->mCapitalGoodPrice, "capital-good-price", mBuffer, mTabs.get() );
-}
-
-void XMLDBOutputter::endVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod ) {
-    XMLWriteClosingTag( aInvestConsumer->getXMLName(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) {

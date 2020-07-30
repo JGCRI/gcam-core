@@ -63,10 +63,6 @@
 #include "containers/include/iinfo.h"
 #include "technologies/include/base_technology.h"
 #include "consumers/include/consumer.h"
-#include "consumers/include/household_consumer.h"
-#include "consumers/include/govt_consumer.h"
-#include "consumers/include/trade_consumer.h"
-#include "consumers/include/invest_consumer.h"
 #include "util/base/include/ivisitor.h"
 #include "technologies/include/technology_type.h"
 #include "sectors/include/sector_utils.h"
@@ -180,22 +176,6 @@ void Subsector::XMLParse( const DOMNode* node ) {
         // Fixed investment
         else if( nodeName == "FixedInvestment" ){
             XMLHelper<double>::insertValueIntoVector( curr, mFixedInvestments, scenario->getModeltime() );
-        }
-        // household consumer object for final demands
-        else if( nodeName == HouseholdConsumer::getXMLNameStatic() ) {
-            parseBaseTechHelper( curr, new HouseholdConsumer() );
-        }
-        // government consumer object for final demands
-        else if( nodeName == GovtConsumer::getXMLNameStatic() ) {
-            parseBaseTechHelper( curr, new GovtConsumer() );
-        }
-        // Trade consumer object for final demands
-        else if( nodeName == TradeConsumer::getXMLNameStatic() ) {
-            parseBaseTechHelper( curr, new TradeConsumer() );
-        }
-        // government consumer object for final demands
-        else if( nodeName == InvestConsumer::getXMLNameStatic() ) {
-            parseBaseTechHelper( curr, new InvestConsumer() );
         }
         else if( nodeName == InterpolationRule::getXMLNameStatic() && XMLHelper<string>::getAttr( curr, "apply-to" ) == "share-weight" ) {
             // if the delete flag is set then for interpolation rules that means to clear

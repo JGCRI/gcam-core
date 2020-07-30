@@ -66,10 +66,6 @@ class MoreSectorInfo;
 class Demographic;
 class NationalAccount;
 class Consumer;
-class HouseholdConsumer;
-class GovtConsumer;
-class TradeConsumer;
-class InvestConsumer;
 class IVisitor;
 class AGHG;
 class IExpectedProfitRateCalculator;
@@ -133,18 +129,6 @@ public:
 
     virtual void copyParam( const BaseTechnology* baseTechIn,
                             const int aPeriod ) = 0;
-
-    virtual void copyParamsInto( GovtConsumer& govtConsumerIn,
-                                 const int aPeriod ) const { assert( false ); }
-
-    virtual void copyParamsInto( TradeConsumer& tradeConsumerIn,
-                                 const int aPeriod ) const { assert( false ); }
-
-    virtual void copyParamsInto( InvestConsumer& investConsumerIn,
-                                 const int aPeriod ) const { assert( false ); }
-
-     virtual void copyParamsInto( HouseholdConsumer& householdConsumerIn,
-                                 const int aPeriod ) const { assert( false ); }
 
     virtual void copyParamsInto( Consumer& consumerIn,
                                  const int aPeriod ) const { assert( false ); }
