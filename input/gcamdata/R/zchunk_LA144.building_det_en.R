@@ -47,7 +47,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     A_regions <- get_data(all_data, "energy/A_regions")
     calibrated_techs_bld_det <- get_data(all_data, "energy/calibrated_techs_bld_det")
-    A44.cost_efficiency <- get_data(all_data, "energy/A44.cost_efficiency")
+    A44.cost_efficiency <- get_data(all_data, "energy/A44.cost_efficiency", strip_attributes = TRUE)
     A44.internal_gains <- get_data(all_data, "energy/A44.internal_gains")
     A44.share_serv_fuel <- get_data(all_data, "energy/A44.share_serv_fuel")
     A44.shell_eff_mult_RG3 <- get_data(all_data, "energy/A44.shell_eff_mult_RG3")

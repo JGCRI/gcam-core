@@ -58,8 +58,10 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       intensity <- Tvkm <- `load factor` <- `non-fuel costs` <- size.class.x <- Tpkm <-
       Tusd <- Thr <- intensity_MJvkm <- loadfactor <- cost_usdvkm <- speed_kmhr <- variable  <-
       population <- pkm_percap <- country_name <- year.x <- rev.mode <- rev_size.class <-
-      mode.y <- size.class.y <- sce <- weight_EJ_core <- intensity_CORE <- loadfactor_CORE <-
-      non_fuel_cost_core <- NULL
+      mode.y <- size.class.y <- sce <- ':=' <- weight_EJ_core <- intensity_CORE <-
+      loadfactor_CORE <- non_fuel_cost_core <- NULL
+
+
 
     all_data <- list(...)[[1]]
 

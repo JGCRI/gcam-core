@@ -39,7 +39,7 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
     socioeconomics_ctry <- get_data(all_data, "socioeconomics/socioeconomics_ctry")
     Maddison_population <- get_data(all_data, "Maddison_population")
     SSP_database_v9 <- get_data(all_data, "socioeconomics/SSP_database_v9")
-    UN_popTot <- get_data(all_data, "socioeconomics/UN_popTot")
+    UN_popTot <- get_data(all_data, "socioeconomics/UN_popTot", strip_attributes = TRUE)
 
     # ===================================================
 

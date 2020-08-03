@@ -65,14 +65,14 @@ module_gcamusa_L2232.electricity_FERC_USA <- function(command, ...) {
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    A23.sector <- get_data(all_data, "energy/A23.sector")
-    A232.structure <- get_data(all_data, "gcam-usa/A232.structure")
+    A23.sector <- get_data(all_data, "energy/A23.sector", strip_attributes = TRUE)
+    A232.structure <- get_data(all_data, "gcam-usa/A232.structure", strip_attributes = TRUE)
     L123.in_EJ_state_ownuse_elec <- get_data(all_data, "L123.in_EJ_state_ownuse_elec")
     L123.out_EJ_state_ownuse_elec <- get_data(all_data, "L123.out_EJ_state_ownuse_elec")
     L126.in_EJ_state_td_elec <- get_data(all_data, "L126.in_EJ_state_td_elec")
     L132.out_EJ_state_indchp_F <- get_data(all_data, "L132.out_EJ_state_indchp_F")
     L1232.out_EJ_sR_elec <- get_data(all_data, "L1232.out_EJ_sR_elec")
-    L223.StubTechMarket_backup_USA <- get_data(all_data, "L223.StubTechMarket_backup_USA")
+    L223.StubTechMarket_backup_USA <- get_data(all_data, "L223.StubTechMarket_backup_USA", strip_attributes = TRUE)
 
     # This chunk builds the electric sector model with demand resolved at the grid region level.
 

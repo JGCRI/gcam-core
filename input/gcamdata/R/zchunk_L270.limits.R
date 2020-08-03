@@ -52,10 +52,10 @@ module_energy_L270.limits <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
-    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y")
+    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y", strip_attributes = TRUE)
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
-    L221.GlobalTechCoef_en <- get_data(all_data, "L221.GlobalTechCoef_en")
+    L221.GlobalTechCoef_en <- get_data(all_data, "L221.GlobalTechCoef_en", strip_attributes = TRUE)
     L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
 
     # Limit bioliquids for feedstocks and electricity
@@ -71,7 +71,6 @@ module_energy_L270.limits <- function(command, ...) {
 
     # L270.CreditInput_elec: minicam-energy-input of oil credits for electricity techs
     A23.globaltech_eff %>%
-	  select(-improvement.shadow.technology) %>%
       fill_exp_decay_extrapolate(MODEL_YEARS) %>%
       mutate(value = round(value, energy.DIGITS_EFFICIENCY)) %>%
       filter(subsector == "refined liquids") %>%

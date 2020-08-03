@@ -22,6 +22,8 @@ module_gcamusa_L2244.nuclear_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/nuc_gen2",
              FILE = "gcam-usa/A23.elecS_tech_mapping",
+             FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
+             FILE = "gcam-usa/usa_seawater_states_basins",
              FILE = "gcam-usa/A23.elecS_tech_availability"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2244.StubTechSCurve_nuc_gen2_USA"))
@@ -31,12 +33,15 @@ module_gcamusa_L2244.nuclear_USA <- function(command, ...) {
 
     region <- year <- supplysector <- Electric.sector <- sector <- subsector <- technology <- time <-
       Electric.sector.technology <- gen <- plant <- Units <- base_year_data <- evaluated_data <- data <-
-      steepness <- half.life <- t <- isfirst_zero <- lifetime <- optim <- NULL # silence package check notes
+      steepness <- half.life <- t <- isfirst_zero <- lifetime <- optim <- subsector_1 <- to.technology <-
+      stub.technology <- NULL # silence package check notes
 
     # Load required inputs
     nuc_gen2 <- get_data(all_data, "gcam-usa/nuc_gen2")
-    A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping")
+    A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping", strip_attributes = TRUE)
+    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
     A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability")
+    usa_seawater_states_basins <- get_data(all_data, "gcam-usa/usa_seawater_states_basins")
 
     # -----------------------------------------------------------------------------
     # Function to evaluate the output fraction for a smooth s-curve retirement function as coded in the model.
@@ -127,6 +132,31 @@ module_gcamusa_L2244.nuclear_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["StubTechSCurve"]]) ->
       L2244.StubTechSCurve_nuc_gen2_USA
 
+
+    ## To account for new nesting-subsector structure and to add cooling technologies, we must expand certain outputs
+
+    # Define unique states and basins that have access to seawater that will
+    # allow for seawate cooling
+
+    seawater_states_basins <- unique(usa_seawater_states_basins$seawater_region)
+
+    add_cooling_techs <- function(data){
+      data %>%
+        left_join(A23.elecS_tech_mapping_cool,
+                  by=c("stub.technology"="Electric.sector.technology",
+                       "supplysector"="Electric.sector","subsector")) %>%
+        select(-technology,-subsector_1)%>%
+        rename(technology = to.technology,
+               subsector0 = subsector,
+               subsector = stub.technology) -> data_new
+
+      data_new %>% filter(grepl(gcamusa.WATER_TYPE_SEAWATER,technology)) %>% filter((region %in% seawater_states_basins)) %>%
+        bind_rows(data_new %>% filter(!grepl(gcamusa.WATER_TYPE_SEAWATER,technology))) %>%
+        arrange(region,year) -> data_new
+      return(data_new)
+    }
+      L2244.StubTechSCurve_nuc_gen2_USA <- add_cooling_techs(L2244.StubTechSCurve_nuc_gen2_USA)
+
     # -----------------------------------------------------------------------------
     # Produce outputs
     L2244.StubTechSCurve_nuc_gen2_USA %>%
@@ -137,6 +167,8 @@ module_gcamusa_L2244.nuclear_USA <- function(command, ...) {
       add_legacy_name("L2244.StubTechSCurve_nuc_gen2_USA") %>%
       add_precursors("gcam-usa/nuc_gen2",
                      "gcam-usa/A23.elecS_tech_availability",
+                     "gcam-usa/A23.elecS_tech_mapping_cool",
+                     "gcam-usa/usa_seawater_states_basins",
                      "gcam-usa/A23.elecS_tech_mapping") ->
       L2244.StubTechSCurve_nuc_gen2_USA
 

@@ -51,14 +51,14 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A25.sector <- get_data(all_data, "energy/A25.sector")
-    A25.subsector_logit <- get_data(all_data, "energy/A25.subsector_logit")
-    A25.subsector_shrwt <- get_data(all_data, "energy/A25.subsector_shrwt")
-    A25.globaltech_eff <- get_data(all_data, "energy/A25.globaltech_eff")
-    A25.globaltech_cost <- get_data(all_data, "energy/A25.globaltech_cost")
-    A25.globaltech_shrwt <- get_data(all_data, "energy/A25.globaltech_shrwt")
-    A25.globaltech_keyword <- get_data(all_data, "energy/A25.globaltech_keyword")
-    A25.globaltech_co2capture <- get_data(all_data, "energy/A25.globaltech_co2capture")
+    A25.sector <- get_data(all_data, "energy/A25.sector", strip_attributes = TRUE)
+    A25.subsector_logit <- get_data(all_data, "energy/A25.subsector_logit", strip_attributes = TRUE)
+    A25.subsector_shrwt <- get_data(all_data, "energy/A25.subsector_shrwt", strip_attributes = TRUE)
+    A25.globaltech_eff <- get_data(all_data, "energy/A25.globaltech_eff", strip_attributes = TRUE)
+    A25.globaltech_cost <- get_data(all_data, "energy/A25.globaltech_cost", strip_attributes = TRUE)
+    A25.globaltech_shrwt <- get_data(all_data, "energy/A25.globaltech_shrwt", strip_attributes = TRUE)
+    A25.globaltech_keyword <- get_data(all_data, "energy/A25.globaltech_keyword", strip_attributes = TRUE)
+    A25.globaltech_co2capture <- get_data(all_data, "energy/A25.globaltech_co2capture", strip_attributes = TRUE)
 
     # ===================================================
 

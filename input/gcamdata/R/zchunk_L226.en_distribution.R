@@ -58,16 +58,16 @@ module_energy_L226.en_distribution <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
+    calibrated_techs <- get_data(all_data, "energy/calibrated_techs", strip_attributes = TRUE)
     A_regions <- get_data(all_data, "energy/A_regions")
-    A26.sector <- get_data(all_data, "energy/A26.sector")
-    A26.subsector_logit <- get_data(all_data, "energy/A26.subsector_logit")
-    A26.subsector_shrwt <- get_data(all_data, "energy/A26.subsector_shrwt")
-    A26.subsector_interp <- get_data(all_data, "energy/A26.subsector_interp")
+    A26.sector <- get_data(all_data, "energy/A26.sector", strip_attributes = TRUE)
+    A26.subsector_logit <- get_data(all_data, "energy/A26.subsector_logit", strip_attributes = TRUE)
+    A26.subsector_shrwt <- get_data(all_data, "energy/A26.subsector_shrwt", strip_attributes = TRUE)
+    A26.subsector_interp <- get_data(all_data, "energy/A26.subsector_interp", strip_attributes = TRUE)
     A26.globaltech_eff <- get_data(all_data, "energy/A26.globaltech_eff")
     A26.globaltech_cost <- get_data(all_data, "energy/A26.globaltech_cost")
-    A26.globaltech_shrwt <- get_data(all_data, "energy/A26.globaltech_shrwt")
-    L126.IO_R_elecownuse_F_Yh <- get_data(all_data, "L126.IO_R_elecownuse_F_Yh")
+    A26.globaltech_shrwt <- get_data(all_data, "energy/A26.globaltech_shrwt", strip_attributes = TRUE)
+    L126.IO_R_elecownuse_F_Yh <- get_data(all_data, "L126.IO_R_elecownuse_F_Yh", strip_attributes = TRUE)
     L126.IO_R_electd_F_Yh <- get_data(all_data, "L126.IO_R_electd_F_Yh")
     L126.IO_R_gaspipe_F_Yh <- get_data(all_data, "L126.IO_R_gaspipe_F_Yh")
 

@@ -39,8 +39,8 @@ module_gcamusa_L201.socioeconomics_USA <- function(command, ...) {
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state")
-    L100.GDP_mil90usd_state <- get_data(all_data, "L100.GDP_mil90usd_state")
+    L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state", strip_attributes = TRUE)
+    L100.GDP_mil90usd_state <- get_data(all_data, "L100.GDP_mil90usd_state", strip_attributes = TRUE)
 
     # ===================================================
     # NOTE: Socioeconomics for grid regions are dealt with in module_gcamusa_L223.electricity_USA

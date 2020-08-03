@@ -45,11 +45,11 @@ module_socioeconomics_L252.Trn_Inc_Elas_scenarios <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A52.inc_elas <- get_data(all_data, "socioeconomics/A52.inc_elas")
-    L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y") %>%
+    L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y", strip_attributes = TRUE) %>%
       rename(pcgdp_90thousUSD = value) %>%
       mutate(year = as.integer(year))
     L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
-    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y")
+    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y", strip_attributes = TRUE)
     # ===================================================
     # For SSP scenarios, linearly interpolate income elasticity at each level of per-capita GDP
     L252.IncomeElasticity_trn_SSP <- L102.pcgdp_thous90USD_Scen_R_Y %>%
@@ -63,7 +63,8 @@ module_socioeconomics_L252.Trn_Inc_Elas_scenarios <- function(command, ...) {
       mutate(income.elasticity = round(income.elasticity, energy.DIGITS_INCELAS_TRN)) %>%
       # Add in region names
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      ungroup(GCAM_region_ID) %>%
+      # KVC: previously this had `ungroup(GCAM_region_ID)`, but that isn't supported
+      ungroup() %>%
       select(-pcgdp_90thousUSD, -GCAM_region_ID)
 
     # Split by scenario - turns into list of tibbles

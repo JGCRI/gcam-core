@@ -31,7 +31,7 @@ module_gcamusa_LA114.wind <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    us_state_wind <- get_data(all_data, "gcam-usa/us_state_wind")
+    us_state_wind <- get_data(all_data, "gcam-usa/us_state_wind", strip_attributes = TRUE)
     L113.globaltech_capital_ATB <- get_data(all_data, "L113.globaltech_capital_ATB")
     L113.globaltech_OMfixed_ATB <- get_data(all_data, "L113.globaltech_OMfixed_ATB")
     L113.globaltech_OMvar_ATB <- get_data(all_data, "L113.globaltech_OMvar_ATB")

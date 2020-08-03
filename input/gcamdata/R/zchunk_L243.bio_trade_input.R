@@ -67,12 +67,12 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       value <- Cropland <- year.fillout <- trade.region <- NULL  # silence package check notes
 
     # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A_bio_supplysector <- get_data(all_data, "aglu/A_bio_supplysector")
-    A_bio_subsector_logit <- get_data(all_data, "aglu/A_bio_subsector_logit")
+    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names", strip_attributes = TRUE)
+    A_bio_supplysector <- get_data(all_data, "aglu/A_bio_supplysector", strip_attributes = TRUE)
+    A_bio_subsector_logit <- get_data(all_data, "aglu/A_bio_subsector_logit", strip_attributes = TRUE)
     A_bio_subsector <- get_data(all_data, "aglu/A_bio_subsector")
-    A_agRegionalSector <- get_data(all_data, "aglu/A_agRegionalSector")
-    A_agTradedSubsector <- get_data(all_data, "aglu/A_agTradedSubsector")
+    A_agRegionalSector <- get_data(all_data, "aglu/A_agRegionalSector", strip_attributes = TRUE)
+    A_agTradedSubsector <- get_data(all_data, "aglu/A_agTradedSubsector", strip_attributes = TRUE)
     L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
