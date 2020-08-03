@@ -7,17 +7,13 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r, setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
+  comment = "#>"
+  #eval = FALSE
 )
-```
-
-```{r, include = FALSE}
-devtools::load_all(".")
-driver_drake()
+knitr::opts_knit$set(root.dir = '..')
 
 ```
 
@@ -46,40 +42,54 @@ The `drake` package has many features that can be used with `gcamdata` that are 
 ### Examples
 Let's explore two different edits of a chunk and see how `driver_drake()` responds. 
 
-First, let's edit `zchunk_l210.resources.R` by multiplying `value` by 2. 
+First, let's edit the input, `FAO_municipal_water_AQUASTAT.csv` by adding a row at the bottom with a positive value (3.28). The values from this file get aggregated in ???, so adding a non-zero value affects other chunks. 
 
 ```{r}
-#Multiply value by 2 in zchunk_L210.resources.R
+#copy the file so we can get it back later
+file.copy(from = "inst/extdata/water/FAO_municipal_water_AQUASTAT.csv", to = "inst/extdata/water/FAO_municipal_water_AQUASTAT_copy.csv")
+
+#Add a row to the end of the file with value = 3.28
+cat("Taiwan,,Municipal water withdrawal,4251,2010,3.28,,\n", file = "inst/extdata/water/FAO_municipal_water_AQUASTAT.csv", append = TRUE)
+
+#Load and run driver_drake(). Print run time. 
+devtools::load_all(".")
+t1 <- Sys.time()
 driver_drake()
+print(Sys.time()-t1)
 ```
-Since changing `value` affects chunks downstream, `driver_drake()` runs all  of the dependencies. 
-Time = 51 seconds.
 
-
-Next we will change a comment in that same chunk. 
+Next, we will append another row to the bottom of that same file, but this time, we will give it a value of 0, which should not affect the aggregation. 
 ```{r}
-#Modify a comment in zchunk_l210.resources.R
+#Add a row but with value = 0
+cat("Taiwan,,Municipal water withdrawal,4251,2010,0,,\n", file = "inst/extdata/water/FAO_municipal_water_AQUASTAT.csv", append = TRUE)
+
+#Load and run driver_drake(). Print run time. 
+devtools::load_all(".")
+t1 <- Sys.time()
 driver_drake()
+print(Sys.time()-t1)
 
 ```
-Since the outputs of `zchunk_210.resources` did not change, `driver_drake()` did not need to update any dependencies. 
-Time = 44 seconds.
 
-
-Additionally, if you edit an XML file, you can quickly and easily get the original file back by running `driver_drake()`. 
+Additionally, if you edit or delete an XML file, you can quickly and easily get the original file back by running `driver_drake()`. 
 ```{r}
-#Edit wind_reeds_USA.xml 
+#Delete wind_reeds_USA.xml 
+file.remove("xml/wind_reeds_USA.xml")
+
+#Load and run driver_drake(). Print run time. 
+devtools::load_all(".")
+t1 <- Sys.time()
 driver_drake()
+print(Sys.time()-t1)
 
 ```
-Only the xml file was updated. 
-Time =  41.5 seconds. 
+Now we have our file back without re-running the entire datasystem. 
 
 <!-- The central function of `drake` is `make()`, which builds the data system based on a `drake` `plan`. The `plan` is a data frame with columns “target” and “command”. Each row is a step in the workflow and the target is the return value of the corresponding command. `drake` understands the dependency relationships between targets and commands in the plan, regardless of the order they are written. The `make()` function runs the targets in the correct order and stores the results in a hidden cache, `.drake`. It skips steps that are up-to-date and only runs steps that have changed since the previous `make()`. See [The drake R Package Users Manual](https://books.ropensci.org/drake/) for more information on `drake` and it's available options.  -->
 
 ## Arguments to `driver_drake()` 
 
-`driver_drake()` supports the same arguments as `driver()` (see `?driver`). This includes options such as `stop_before` and `write_xml`. Additionally, users can specify options to `make()` in `driver_drake()` including, 
+`driver_drake()` supports the same arguments as `driver()` (see `?driver`), except `write_outputs` since `drake` includes all outputs in the cache. Users can also pass additional arguments to `driver_drake()` which will be forwarded on to `make()`. See `?drake::make` for all available options, but some useful ones include
 
 * `verbose`: integer, controls printing to the console/terminal
     * 0: print nothing
@@ -92,11 +102,12 @@ Time =  41.5 seconds.
 * `memory_strategy`: character scalar, name of the strategy `drake` uses to load/unload a target's dependencies in memory. Some options include
     * `"speed"`: default, maximizes speed but hogs memory. Recommended for users with (give recommendation for users who are memory constrained)
     * `"autoclean"`: conserves memory but sacrifices speed. This behavior is similar to that of `driver()`.
-* See `?drake::make` for all available options
+
   
 
 ### Examples
-```{r}
+Here are more ways to use `driver_drake()`
+```{r, eval = FALSE}
 #run the driver with a progress bar
 driver_drake(verbose = 2)
 
@@ -126,12 +137,12 @@ When running `driver_drake()` with parallelism, the following arguments to `make
 <!-- running w parallelism, caching = "worker" otherwise waste time doing synchronization  -->
 
 ### The `clustermq` backend
-See the `clustermq` [installation guide](https://cran.r-project.org/web/packages/clustermq/vignettes/userguide.html) for installation instructions and options. 
+See the `clustermq` [installation guide](https://cran.r-project.org/web/packages/clustermq/vignettes/userguide.html) for installation instructions and options. `clustermq` requires `R version 3.5` or greater.  
 
 <!-- - explain how to install clustermq package on PIC -->
+On PIC, use `R3.5.1` or `R4.0.2`.
 
-
-```{r}
+```{r, eval = FALSE}
 #run driver_drake with clustermq, type multicore
 options(clustermq.scheduler = "multicore")
 driver_drake(plan, parallelism = "clustermq", jobs = 4)
@@ -146,7 +157,7 @@ On PIC, we had good performance with `clustermq`, type `multicore`, and `jobs = 
 We did not have good performance with future. On a local Windows machine, the initial build with `parallelism = future` and type `multisession` took 1 hour and 14 seconds. On PIC, 
 
 To use this backend, install the `future` package and then select a future plan. 
-```{r}
+```{r, eval = FALSE}
 #run driver_drake with future plan multisession
 future::plan(future::multisession)
 driver_drake(plan, parallelism = "future", jobs = 4)
@@ -158,17 +169,27 @@ See `?future::plan` for all strategy options and explanations.
 
 See the `drake` documentation for other features. Some that may be useful with gcamdata include
 
-* `vis_drake_graph(plan)`: produces an interactive graph that displays targets and dependencies
+* `vis_drake_graph(plan)`: produces an interactive graph that displays targets and dependencies. See `?vis_drake_graph` for all graph options. 
 <!-- give working example, go downstream, manageable figure -->
 
 ```{r}
 #display downstream targets from target L210.RenewRsrc 
-vis_drake_graph(plan, from = "L210.RenewRsrc", mode = "out")
-
+#vis_drake_graph(plan, from = "L210.RenewRsrc", mode = "out")
 ```
 
 * `outdated(plan)`: lists all of the targets that are outdated
 * `predict_runtime(plan)`: `drake` records the time it takes to build each target and uses this to predict the runtime of the next `make()`
+
+
+Let's get our original file back from the first example. 
+```{r}
+#get file back from the copy we made 
+file.copy(from = "inst/extdata/water/FAO_municipal_water_AQUASTAT_copy.csv", to = "inst/extdata/water/FAO_municipal_water_AQUASTAT.csv", overwrite = TRUE)
+
+#remove the copied file
+file.remove("inst/extdata/water/FAO_municipal_water_AQUASTAT_copy.csv")
+
+```
 
 
 
