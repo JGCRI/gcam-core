@@ -41,7 +41,7 @@ test_that("loads test file", {
   expect_output(find_csv_file(fn, optional = FALSE, quiet = FALSE))
   expect_silent(find_csv_file(fn, optional = FALSE, quiet = TRUE))
   f2 <- load_csv_files(fn, optionals = FALSE, quiet = TRUE)[[1]]
-  expect_equal(f1, f2)
+  expect_equivalent(f1, f2)
 
   expect_output(load_csv_files(fn, optionals = FALSE, quiet = FALSE))
 
@@ -63,7 +63,7 @@ test_that("save_chunkdata saves", {
   out <- file.path(td, "df.csv")
   expect_true(file.exists(out))
   df2 <- readr::read_csv(out, col_types = "i")  # stupid readr
-  expect_equal(df, df2)
+  expect_equivalent(df, df2)
 
   # Handles missing_data in data list
   NAdf <- missing_data()
