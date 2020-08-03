@@ -48,6 +48,7 @@
 #include "functions/include/food_demand_function.h"
 #include "functions/include/iinput.h"
 #include "functions/include/food_demand_input.h"
+#include "sectors/include/sector_utils.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
@@ -106,6 +107,7 @@ double FoodDemandFunction::calcDemand( InputSet& aInput, double income, const st
 
     vector<FoodDemandInput*> foodInputs( aInput.size() );
     vector<double> adjPrices( aInput.size() );
+    vector<double> adjPricesCapped( aInput.size() );
     for( size_t i = 0; i < aInput.size(); ++i ) {
         // we are expecting the child nodes to be subclasses of FoodDemandInput
         foodInputs[i] = static_cast<FoodDemandInput*>( aInput[i] );
@@ -117,6 +119,8 @@ double FoodDemandFunction::calcDemand( InputSet& aInput, double income, const st
         
         // calculate the adjusted prices for each food demand type (w)
         adjPrices[i] = foodInputs[i]->getPrice( aRegionName, aPeriod ) / priceMaterials * foodInputs[i]->getPriceScaler();
+        // guard against negative prices which have made their way to the final demand
+        adjPricesCapped[i] = std::max( adjPrices[i], SectorUtils::getDemandPriceThreshold() );
     }
     
     // calculate the adjusted income (x)
@@ -133,14 +137,21 @@ double FoodDemandFunction::calcDemand( InputSet& aInput, double income, const st
         double currDemand = foodInputs[i]->getRegionalBias( aPeriod ) + foodInputs[i]->getScaleParam() * foodInputs[i]->calcIncomeTerm( adjIncome );
         // calculate the price terms of the equations MULT_j(w_j ^ e_ij(x))
         for( size_t j = 0; j < aInput.size(); ++j ) {
-            currDemand *= pow( adjPrices[j], foodInputs[i]->calcPriceExponent( foodInputs[j], adjIncome, aRegionName, aPeriod ) );
+            currDemand *= pow( adjPricesCapped[j], foodInputs[i]->calcPriceExponent( foodInputs[j], adjIncome, aRegionName, aPeriod ) );
+        }
+        if( adjPrices[i] < adjPricesCapped[i] ) {
+            // we have been sent negative prices, since we have capped prices
+            // in the demand calculations above we need to apply some penalty
+            // to send a signal to the solver such that the more negative a price
+            // becomes, the higher the demand
+            currDemand = SectorUtils::adjustDemandForNegativePrice( currDemand, adjPrices[i] );
         }
         demands[i] = currDemand;
         // the demand for materials is just the residual of the food demand:
         // q_m = x - SUM_i(w_i * q_i)
-        demandMaterials -= adjPrices[i] * currDemand;
+        demandMaterials -= adjPricesCapped[i] * currDemand;
         // calculate what the actual shares ended up being too
-        alphaActual[i] = adjPrices[i] * currDemand / adjIncome / foodInputs[i]->getPriceScaler();
+        alphaActual[i] = adjPricesCapped[i] * currDemand / adjIncome / foodInputs[i]->getPriceScaler();
         alphaTotal += alphaActual[i];
     }
     
