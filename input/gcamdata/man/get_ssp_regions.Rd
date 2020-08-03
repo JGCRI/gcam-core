@@ -4,13 +4,8 @@
 \alias{get_ssp_regions}
 \title{get_ssp_regions}
 \usage{
-get_ssp_regions(
-  pcGDP,
-  reg_names,
-  income_group,
-  ssp_filter = "SSP4",
-  year_filter = 2010
-)
+get_ssp_regions(pcGDP, reg_names, income_group, ssp_filter = "SSP4",
+  year_filter = 2010)
 }
 \arguments{
 \item{pcGDP}{A tibble with per capita GDP estimates, including columns \code{GCAM_region_ID},
