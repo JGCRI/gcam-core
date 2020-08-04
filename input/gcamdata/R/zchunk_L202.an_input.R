@@ -40,7 +40,9 @@ module_aglu_L202.an_input <- function(command, ...) {
              "L107.an_FeedIO_R_C_Sys_Fd_Y",
              "L107.an_Feed_Mt_R_C_Sys_Fd_Y",
              "L108.ag_Feed_Mt_R_C_Y",
+             "L109.ag_ALL_Mt_R_C_Y",
              "L109.an_ALL_Mt_R_C_Y",
+             "L1091.GrossTrade_Mt_R_C_Y",
              "L132.ag_an_For_Prices",
              "L1321.ag_prP_R_C_75USDkg",
              "L1321.an_prP_R_C_75USDkg"))
@@ -78,7 +80,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       feed <- wtd_price <- Feed_Mt <- FeedPrice_USDkg <- FeedCost_bilUSD <- CommodityPrice_USDkg <-
       FeedCost_USDkg <- nonFeedCost <- NetExp_Mt <- share.weight.year <- fixedOutput <- ethanol <-
       biomassOil_tech <- biodiesel <- resource <- subresource <- default_price <- revenue <-
-      weight <- SalesRevenue_bilUSD <- NULL  # silence package check notes
+      weight <- SalesRevenue_bilUSD <- tradedP <- Exp_wtd_price <- ImpShare <- PrP <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -95,6 +97,8 @@ module_aglu_L202.an_input <- function(command, ...) {
     A_an_subsector <- get_data(all_data, "aglu/A_an_subsector", strip_attributes = TRUE)
     A_an_technology <- get_data(all_data, "aglu/A_an_technology", strip_attributes = TRUE)
     L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
+    L109.ag_ALL_Mt_R_C_Y <- get_data(all_data, "L109.ag_ALL_Mt_R_C_Y")
+    L1091.GrossTrade_Mt_R_C_Y <- get_data(all_data, "L1091.GrossTrade_Mt_R_C_Y")
     L1321.ag_prP_R_C_75USDkg <- get_data(all_data, "L1321.ag_prP_R_C_75USDkg")
     L1321.an_prP_R_C_75USDkg <- get_data(all_data, "L1321.an_prP_R_C_75USDkg")
 
@@ -329,7 +333,36 @@ module_aglu_L202.an_input <- function(command, ...) {
       select(region, supplysector, subsector, stub.technology, calOutputValue) ->
       L202.ag_Feed_P_share_R_C
 
-    L202.prP_R_C_75USDkg <- bind_rows(L1321.ag_prP_R_C_75USDkg, L1321.an_prP_R_C_75USDkg) %>%
+    # Use the producer prices of crops in each exporting region to calculate the global "traded" crop prices
+    L202.ag_tradedP_C_75USDkg <- filter(L1091.GrossTrade_Mt_R_C_Y, year == max(MODEL_BASE_YEARS)) %>%
+      inner_join(L1321.ag_prP_R_C_75USDkg, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
+      mutate(Exp_wtd_price = GrossExp_Mt * value) %>%
+      group_by(GCAM_commodity) %>%
+      summarise(GrossExp_Mt = sum(GrossExp_Mt),
+                Exp_wtd_price = sum(Exp_wtd_price)) %>%
+      ungroup() %>%
+      mutate(tradedP = Exp_wtd_price / GrossExp_Mt) %>%
+      select(GCAM_commodity, tradedP)
+
+    # Calculate the share of domestic supply (i.e., total consumption) that is from imports
+    L202.ag_ImpShare_Mt_R_C_Y <- filter(L109.ag_ALL_Mt_R_C_Y, year == max(MODEL_BASE_YEARS)) %>%
+      select(GCAM_region_ID, GCAM_commodity, year, Supply_Mt) %>%
+      left_join(L1091.GrossTrade_Mt_R_C_Y, by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
+      mutate(ImpShare = if_else(is.na(GrossImp_Mt), 0, GrossImp_Mt / Supply_Mt)) %>%
+      select(GCAM_region_ID, GCAM_commodity, ImpShare)
+
+    # Calculate the weighted average regional crop prices, as the global traded crop price times the
+    # import share plus the local producer price times the domestic source share (1 - ImpShare)
+    L202.ag_consP_R_C_75USDkg <- L1321.ag_prP_R_C_75USDkg %>%
+      rename(PrP = value) %>%
+      left_join_error_no_match(L202.ag_ImpShare_Mt_R_C_Y, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
+      left_join_error_no_match(L202.ag_tradedP_C_75USDkg, by = "GCAM_commodity", ignore_columns = "tradedP") %>%
+      mutate(value = if_else(is.na(tradedP),
+                             PrP,
+                             PrP * (1 - ImpShare) + tradedP * ImpShare)) %>%
+      select(GCAM_region_ID, GCAM_commodity, value)
+
+    L202.prP_R_C_75USDkg <- bind_rows(L202.ag_consP_R_C_75USDkg, L1321.an_prP_R_C_75USDkg) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       select(region, GCAM_commodity, price = value)
     L202.rsrcP_R_C_75USDkg <- filter(A_agRsrcCurves, grade == "grade 2") %>%
@@ -620,7 +653,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_legacy_name("L202.StubTechCost_an") %>%
       same_precursors_as(L202.StubTechCoef_an) %>%
       add_precursors("L132.ag_an_For_Prices", "L1321.ag_prP_R_C_75USDkg", "L1321.an_prP_R_C_75USDkg",
-                     "L107.an_Feed_Mt_R_C_Sys_Fd_Y") ->
+                     "L107.an_Feed_Mt_R_C_Sys_Fd_Y", "L1091.GrossTrade_Mt_R_C_Y", "L109.ag_ALL_Mt_R_C_Y") ->
       L202.StubTechCost_an
 
 
