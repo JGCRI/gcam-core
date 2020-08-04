@@ -18,8 +18,8 @@
 
 module_energy_LA1231.elec_tech<- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "energy/calibrated_techs",
-             FILE = "energy/A23.globaltech_eff",
+    return(c(FILE = "energy/A23.globaltech_eff",
+             FILE = "energy/calibrated_techs",
              "L123.in_EJ_R_elec_F_Yh",
              "L123.out_EJ_R_elec_F_Yh",
              "L123.eff_R_elec_F_Yh"))

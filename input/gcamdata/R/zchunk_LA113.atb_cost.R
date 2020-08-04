@@ -47,16 +47,21 @@ module_energy_LA113.atb_cost <- function(command, ...) {
     # Silence global package checks
     supplysector <- subsector <- technology <- minicam.energy.input <- improvement.max <- improvement.rate <-
       improvement.shadow.technology <- `input-capital` <- fixed.charge.rate <- period <- lifetime <-
-      steepness <- half.life <- variable.om <- fixed.om <- fcr <- capacity.factor <- atb.technology <- NULL
+      steepness <- half.life <- variable.om <- fixed.om <- fcr <- capacity.factor <- atb.technology <-
+      `OM-fixed` <- `OM-var` <- capital <- capital.cost <- case  <- conversion <- cost_end_year <- cost_ratio <-
+      final_ATB_cost <- improvement.rate.base <- inferred <- initial_ATB_cost <- input <- input.OM.fixed <-
+      input.OM.var <- long_term_improvement <- mid_ATB_cost <- shadow_tech <- shadow_tech_cost <-
+      target_ATB_cost <- tech_detail <- tech_type <- uniroot <- value <- year <- NULL
 
     # Load required inputs
     # A23. shell files
-    A23.globaltech_capital <- get_data(all_data, "energy/A23.globaltech_capital")
-    A23.globaltech_capital_adv <- get_data(all_data, "energy/A23.globaltech_capital_adv")
-    A23.globaltech_capital_low <- get_data(all_data, "energy/A23.globaltech_capital_low")
-    A23.elecS_globaltech_non_energy_inputs <- get_data(all_data, "gcam-usa/A23.elecS_globaltech_non_energy_inputs")
-    A23.globaltech_OMfixed <- get_data(all_data, "energy/A23.globaltech_OMfixed")
-    A23.globaltech_OMvar <- get_data(all_data, "energy/A23.globaltech_OMvar")
+    A23.globaltech_capital <- get_data(all_data, "energy/A23.globaltech_capital", strip_attributes = TRUE)
+    A23.globaltech_capital_adv <- get_data(all_data, "energy/A23.globaltech_capital_adv", strip_attributes = TRUE)
+    A23.globaltech_capital_low <- get_data(all_data, "energy/A23.globaltech_capital_low", strip_attributes = TRUE)
+    A23.elecS_globaltech_non_energy_inputs <- get_data(all_data, "gcam-usa/A23.elecS_globaltech_non_energy_inputs",
+                                                       strip_attributes = TRUE)
+    A23.globaltech_OMfixed <- get_data(all_data, "energy/A23.globaltech_OMfixed", strip_attributes = TRUE)
+    A23.globaltech_OMvar <- get_data(all_data, "energy/A23.globaltech_OMvar", strip_attributes = TRUE)
 
     # Legacy (Muratori) assumptions
     Muratori_globaltech_capital <- get_data(all_data, "energy/Muratori_globaltech_capital")
@@ -182,8 +187,8 @@ module_energy_LA113.atb_cost <- function(command, ...) {
       # not every technology requires a shadow technology to compute costs from the ATB data set
       # LJENM errors because of NAs (not all techs are in RHS), NAs are dealt with below, left_join is used
       left_join(L113.cost_shadow_ratio, by = c("technology", "year", "input", "case")) %>%
-      mutate(conversion = if_else(is.na(conversion), cost_ratio, conversion)) %>%
-      mutate(value = value * conversion) %>%
+      mutate(conversion = if_else(is.na(conversion), cost_ratio, conversion),
+             value = value * conversion) %>%
       group_by(technology, year, input, case) %>%
       summarise(value = sum(value)) %>%
       ungroup() -> L113.costs_ATB
@@ -301,7 +306,7 @@ module_energy_LA113.atb_cost <- function(command, ...) {
       filter(is.na(value[year==energy.ATB_BASE_YEAR])) %>%
       ungroup() %>%
       select(-year, -value, -improvement.max, -improvement.rate) %>%
-      left_join(L113.globaltech_cost_atb_temp, by = c("technology", "input", "case")) %>%
+      left_join_error_no_match(L113.globaltech_cost_atb_temp, by = c("technology", "input", "case")) %>%
       # add in user defined values from A23 files
       bind_rows(A23.globaltech_cost_keep) %>%
       # fill out for all years in original A23. file

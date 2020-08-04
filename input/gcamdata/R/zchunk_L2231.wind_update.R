@@ -23,11 +23,11 @@ module_energy_L2231.wind_update <- function(command, ...) {
              FILE = "common/GCAM_region_names",
              FILE = "energy/mappings/fuel_energy_input",
              FILE = "energy/A20.wind_class_CFs",
-             "L113.globaltech_OMfixed_ATB",
              FILE = "energy/NREL_onshore_energy",
              FILE = "energy/onshore_wind_grid_cost",
              FILE = "energy/NREL_wind_energy_distance_range",
              "L113.globaltech_capital_ATB",
+             "L113.globaltech_OMfixed_ATB",
              "L223.StubTechCapFactor_elec"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2231.SmthRenewRsrcCurves_onshore_wind",

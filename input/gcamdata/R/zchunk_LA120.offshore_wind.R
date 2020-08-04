@@ -23,14 +23,14 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "common/GCAM_region_names",
-             "L113.globaltech_OMfixed_ATB",
              FILE = "energy/A20.wind_class_CFs",
              FILE = "energy/A20.offshore_wind_depth_cap_cost",
              FILE = "energy/NREL_offshore_energy",
              FILE = "energy/NREL_wind_energy_distance_range",
              FILE = "energy/offshore_wind_grid_cost",
              FILE = "energy/offshore_wind_potential_scaler",
-             "L113.globaltech_capital_ATB"))
+             "L113.globaltech_capital_ATB",
+             "L113.globaltech_OMfixed_ATB"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L120.RsrcCurves_EJ_R_offshore_wind",
              "L120.TechChange_offshore_wind",

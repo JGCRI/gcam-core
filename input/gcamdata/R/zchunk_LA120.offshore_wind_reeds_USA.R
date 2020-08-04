@@ -20,14 +20,14 @@
 module_gcamusa_LA120.offshore_wind_reeds_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/reeds_regions_states",
-             "L113.globaltech_OMfixed_ATB",
              FILE = "gcam-usa/A20.offshore_wind_class_depth",
              FILE = "energy/A20.offshore_wind_depth_cap_cost",
              FILE = "gcam-usa/reeds_offshore_wind_curve_capacity",
              FILE = "gcam-usa/reeds_offshore_wind_curve_grid_cost",
              FILE = "gcam-usa/reeds_offshore_wind_curve_CF_avg",
              FILE = "gcam-usa/offshore_wind_potential_missing",
-             "L113.globaltech_capital_ATB"))
+             "L113.globaltech_capital_ATB",
+             "L113.globaltech_OMfixed_ATB"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L120.RsrcCurves_EJ_R_offshore_wind_USA",
              "L120.GridCost_offshore_wind_USA",

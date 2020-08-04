@@ -57,14 +57,14 @@ module_energy_L223.electricity <- function(command, ...) {
              FILE = "energy/A23.globaltech_interp",
              FILE = "energy/A23.globaltech_keyword",
              FILE = "energy/A23.globaltech_capacity_factor",
-             "L113.globaltech_OMfixed_ATB",
-             "L113.globaltech_OMvar_ATB",
              FILE = "energy/A23.globaltech_retirement",
              FILE = "energy/A23.globaltech_co2capture",
              FILE = "energy/A23.globaltech_eff",
              "L113.globaltech_capital_ATB",
              "L113.globaltech_capital_ATB_adv",
              "L113.globaltech_capital_ATB_low",
+             "L113.globaltech_OMfixed_ATB",
+             "L113.globaltech_OMvar_ATB",
              "L114.RsrcCurves_EJ_R_wind",
              "L118.out_EJ_R_elec_hydro_Yfut",
              "L119.Irradiance_rel_R",
@@ -165,12 +165,12 @@ module_energy_L223.electricity <- function(command, ...) {
     A23.globaltech_keyword <- get_data(all_data, "energy/A23.globaltech_keyword", strip_attributes = TRUE)
     A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
     A23.globaltech_capacity_factor <- get_data(all_data, "energy/A23.globaltech_capacity_factor")
-    L113.globaltech_capital_ATB <- get_data(all_data, "L113.globaltech_capital_ATB")
-    L113.globaltech_capital_ATB_adv <- get_data(all_data, "L113.globaltech_capital_ATB_adv")
-    L113.globaltech_capital_ATB_low <- get_data(all_data, "L113.globaltech_capital_ATB_low")
+    L113.globaltech_capital_ATB <- get_data(all_data, "L113.globaltech_capital_ATB", strip_attributes = TRUE)
+    L113.globaltech_capital_ATB_adv <- get_data(all_data, "L113.globaltech_capital_ATB_adv", strip_attributes = TRUE)
+    L113.globaltech_capital_ATB_low <- get_data(all_data, "L113.globaltech_capital_ATB_low", strip_attributes = TRUE)
     L113.globaltech_OMfixed_ATB <- get_data(all_data, "L113.globaltech_OMfixed_ATB")
     L113.globaltech_OMvar_ATB <- get_data(all_data, "L113.globaltech_OMvar_ATB")
-    A23.globaltech_retirement <- get_data(all_data, "energy/A23.globaltech_retirement")
+    A23.globaltech_retirement <- get_data(all_data, "energy/A23.globaltech_retirement", strip_attributes = TRUE)
     A23.globaltech_co2capture <- get_data(all_data, "energy/A23.globaltech_co2capture")
     L114.RsrcCurves_EJ_R_wind <- get_data(all_data, "L114.RsrcCurves_EJ_R_wind")
     L118.out_EJ_R_elec_hydro_Yfut <- get_data(all_data, "L118.out_EJ_R_elec_hydro_Yfut")
