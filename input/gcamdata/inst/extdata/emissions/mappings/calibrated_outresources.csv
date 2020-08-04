@@ -1,0 +1,9 @@
+# File: calibrated_outresources.csv
+# Title: Mapping out_resource sectors from calibrated intermediate sectors and fuels to supplysector / subsector / technology / input in GCAM
+# Units: n/a
+# Column types: cccccccc
+# ----------
+sector,fuel,supplysector,subsector,technology,minicam.energy.input,calibration,secondary.output
+out_resources,coal,out_resources,coal,coal,,,
+out_resources,crude oil,out_resources,crude oil,crude oil,,,
+out_resources,natural gas,out_resources,natural gas,natural gas,,,

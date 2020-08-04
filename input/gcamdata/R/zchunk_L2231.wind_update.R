@@ -70,7 +70,7 @@ module_energy_L2231.wind_update <- function(command, ...) {
 
     NREL_onshore_energy %>%
       select(-total) %>%
-      left_join_error_no_match(iso_GCAM_regID %>%
+      inner_join(iso_GCAM_regID %>%
                                  select(country_name, GCAM_region_ID),
                                by = c("IAM_country" = "country_name")) %>%
       left_join_error_no_match(GCAM_region_names, by = c("GCAM_region_ID")) %>%
@@ -248,7 +248,7 @@ module_energy_L2231.wind_update <- function(command, ...) {
     # First, get share of potential by each distance bin for each GCAM region
     NREL_onshore_energy %>%
       select(IAM_country, distance, total) %>%
-      left_join_error_no_match(iso_GCAM_regID %>%
+      inner_join(iso_GCAM_regID %>%
                                  select(country_name, GCAM_region_ID),
                                by = c("IAM_country" = "country_name")) %>%
       left_join_error_no_match(GCAM_region_names, by = c("GCAM_region_ID")) %>%

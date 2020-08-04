@@ -1,0 +1,201 @@
+# File: EPA_CH4_Landfill.csv
+# Title: CH4 emissions from Landfills
+# Units: MtCO2eq
+# Description: Sector Waste
+# Column types: cnnnnnnnnnccc
+Country,1990,1995,2000,2005,2010,2015,2020,2025,2030,Rest_of_Region,Main_Region,Secondary_Region
+Afghanistan,2.5,2.8,3.2,3.7,4.3,4.9,5.6,6.3,7,Non-OECD Asia,,
+Albania,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,,Non-OECD Europe & Eurasia,
+Algeria,3.8,4.7,7.5,8.1,8.6,9.1,9.6,10,10.3,,Africa,OPEC
+Andorra,0,0,0,0,0,0.1,0.1,0.1,0.1,Non-OECD Europe & Eurasia,,
+Angola,0.4,0.4,0.5,0.8,0.8,0.9,1,1.1,1.2,Africa,,OPEC
+Antigua and Barbuda,0.1,0.1,0.1,0.1,0.1,0.1,0.2,0.2,0.2,Central and South America,,
+Argentina,4.4,5.2,7.5,7.9,8.3,8.7,9.1,9.5,9.8,,Central and South America,
+Armenia,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,,Non-OECD Europe & Eurasia,
+Australia,14.2,13.5,11.9,10.6,11.2,11.8,12.4,13,13.5,,OECD,
+Austria,3.3,2.8,2.2,1.9,1.5,1.5,1.5,1.5,1.4,,OECD,EU
+Azerbaijan,1.3,1.4,1.5,1.5,1.6,1.6,1.7,1.8,1.8,,Non-OECD Europe & Eurasia,
+Bahamas,0.1,0.1,0.1,0.1,0.1,0.2,0.2,0.2,0.2,Central and South America,,
+Bahrain,0.4,0.4,0.4,0.5,0.5,0.6,0.6,0.6,0.6,Middle East,,
+Bangladesh,1.2,1.3,1.5,1.6,1.7,1.8,2,2.1,2.2,,Non-OECD Asia,
+Barbados,0.1,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,Central and South America,,
+Belarus,2.3,1.9,2.7,4.4,6,5.9,5.7,5.6,5.5,,Non-OECD Europe & Eurasia,
+Belgium,2.6,2.4,1.7,0.8,0.4,0.4,0.4,0.4,0.4,,OECD,EU
+Belize,0,0,0,0,0,0,0,0,0,Central and South America,,
+Benin,0.1,0.2,0,0,0,0,0.1,0.1,0.1,Africa,,
+Bhutan,0,0,0,0,0,0,0.1,0.1,0.1,Non-OECD Asia,,
+Bolivia,0.1,0.4,0.7,0.8,0.9,1,1.1,1.1,1.2,,Central and South America,
+Bosnia and Herzegovina,1,0.8,0.9,1,1,1,1,1,1,Non-OECD Europe & Eurasia,,
+Botswana,0.1,0.2,0.2,0.2,0.2,0.3,0.3,0.3,0.3,Africa,,
+Brazil,16.6,19.3,22.3,23.2,24.7,26,27.3,28.4,29.5,,Central and South America,
+Brunei,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,Non-OECD Asia,,
+Bulgaria,4.7,5.1,4.8,4.3,3.8,3.7,3.5,3.4,3.2,,Non-OECD Europe & Eurasia,EU
+Burkina Faso,0.2,0.2,0.2,0.3,0.3,0.4,0.5,0.5,0.6,Africa,,
+Burma,3.7,4.1,4.5,4.9,5.3,5.7,6.1,6.5,6.9,,Non-OECD Asia,
+Burundi,0,0,0,0,0,0,0,0,0,Africa,,
+Cambodia,0.1,0.1,0.1,0.2,0.2,0.2,0.2,0.2,0.2,,Non-OECD Asia,
+Cameroon,1,1.1,1.2,1.4,1.5,1.7,1.9,2,2.2,Africa,,
+Canada,17.3,18,18.8,20.2,21.1,21.9,22.7,23.5,24.1,,OECD,
+Cape Verde,0,0,0,0,0,0,0,0,0,Africa,,
+Central African Republic,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.2,0.2,Africa,,
+Chad,0.3,0.3,0.4,0.4,0.5,0.5,0.6,0.6,0.7,Africa,,
+Chile,1.5,1.6,1.8,2.2,2.3,2.4,2.5,2.6,2.7,,OECD,
+China,40.7,43.1,44.7,46,47.1,48.2,49,49.4,49.3,,Non-OECD Asia,
+Colombia,6.5,7.4,8.2,9.2,9.8,10.3,10.9,11.3,11.7,,Central and South America,
+Comoros,0,0,0,0,0,0,0,0,0,Africa,,
+Congo (Brazzaville),0.1,0.1,0.1,0.1,0.1,0.2,0.2,0.2,0.2,Africa,,
+Congo (Kinshasa),5.2,6.1,7,8.1,9.6,11.1,12.9,14.8,16.8,,Africa,
+Cook Islands,0,0,0,0,0,0,0,0,0,Non-OECD Asia,,
+Costa Rica,0.3,0.7,0.6,0.7,0.7,0.8,0.8,0.8,0.9,Central and South America,,
+Cote d'Ivoire,7.6,8.9,9.8,11,12.3,13.6,14.9,16.1,17.3,Africa,,
+Croatia,0.2,0.3,0.4,0.5,0.7,0.7,0.7,0.7,0.7,,Non-OECD Europe & Eurasia,
+Cuba,1.5,1.2,1.2,1.2,1.2,1.3,1.3,1.3,1.3,Central and South America,,
+Cyprus,0.2,0.2,0.2,0.2,0.2,0.3,0.3,0.3,0.4,Non-OECD Europe & Eurasia,,EU
+Czech Republic,1.7,2,2.2,2.3,2.5,2.6,2.6,2.6,2.7,,OECD,EU
+Denmark,1.1,1.1,1.1,1,1.1,1.1,1.1,1.1,1.1,,OECD,EU
+Djibouti,0,0,0,0,0,0,0,0.1,0.1,Africa,,
+Dominica,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,Central and South America,,
+Dominican Republic,1.2,1.9,0.7,0.8,0.8,0.9,0.9,1,1,Central and South America,,
+Ecuador,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5,1.5,,Central and South America,OPEC
+Egypt,5.5,8.6,11.7,13,14.4,15.9,17.3,18.6,19.9,,Africa,
+El Salvador,0.5,0.5,0.6,0.6,0.6,0.6,0.6,0.6,0.6,Central and South America,,
+Equatorial Guinea,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,Africa,,
+Eritrea,0.1,0.1,0.1,0.1,0.1,0.2,0.2,0.2,0.2,Africa,,
+Estonia,0.6,0.5,0.7,0.6,0.5,0.5,0.4,0.4,0.4,,Non-OECD Europe & Eurasia,EU
+Ethiopia,0.5,0.6,0.7,0.8,1,1.1,1.3,1.5,1.8,,Africa,
+Fiji,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,Non-OECD Asia,,
+Finland,3.6,3.6,2.9,2,1.9,1.9,1.9,1.8,1.8,,OECD,EU
+France,8.9,11.7,14.6,16.5,17.4,17.8,18.1,18.4,18.6,,OECD,EU
+Gabon,0.1,0.1,0.2,0.2,0.3,0.3,0.3,0.4,0.4,Africa,,
+Gambia,0.2,0.2,0.3,0.3,0.3,0.4,0.4,0.5,0.5,Africa,,
+Georgia,1,1,0.9,0.9,0.9,0.9,0.9,0.9,0.8,,Non-OECD Europe & Eurasia,
+Germany,38.6,36.3,23.8,14.3,7,5,3.7,2.5,1.3,,OECD,EU
+Ghana,0.4,0.6,1,1.6,1.8,1.9,2.1,2.2,2.4,Africa,,
+Greece,1.9,2.2,2.4,2.5,2.1,1.8,1.5,1.2,0.9,,OECD,EU
+Grenada,1.4,1.5,1.5,1.6,1.6,1.7,1.7,1.7,1.8,Central and South America,,
+Guatemala,0.6,0.7,0.8,0.8,0.9,1,1.1,1.2,1.3,Central and South America,,
+Guinea,0.3,0.4,0.4,0.4,0.5,0.6,0.6,0.7,0.8,Africa,,
+Guinea-Bissau,0,0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,Africa,,
+Guyana,0,0,0,0,0,0,0,0,0,Central and South America,,
+Haiti,0.1,0.1,0.1,0.1,0.1,0.2,0.2,0.2,0.2,Central and South America,,
+Holy See,0,0,0,0,0,0,0,0,0,Non-OECD Europe & Eurasia,,
+Honduras,0.3,0.3,0.4,0.4,0.5,0.5,0.5,0.6,0.6,Central and South America,,
+Hungary,2.3,2.6,2.9,3.1,3,2.9,2.9,2.8,2.8,,OECD,EU
+Iceland,0.1,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,,OECD,
+India,11.3,12.3,12.4,12.6,13.2,14.1,15,15.8,16.5,,Non-OECD Asia,
+Indonesia,19.2,21.5,23.8,26,28.3,30.5,32.9,35.3,37.8,,Non-OECD Asia,
+Iran,5.9,6.9,10.4,10.7,11.1,11.6,12.2,12.7,13,,Middle East,OPEC
+Iraq,2.7,3.1,3.6,4.2,4.8,5.5,6.3,7.1,8,,Middle East,OPEC
+Ireland,1.2,1.4,1.3,1.2,1.2,2,2.1,2.2,2.2,,OECD,EU
+Israel,6.3,7.5,8,5,5.5,5.9,6.4,6.7,7.1,,OECD,
+Italy,15.3,15.9,18.4,15.5,11.6,11,10.6,10.2,9.7,,OECD,EU
+Jamaica,0.3,0.3,0.3,0.3,0.4,0.4,0.4,0.4,0.4,Central and South America,,
+Japan,7.6,7.1,5.9,4.5,3.3,3.2,3.2,3.1,3,,OECD,
+Jordan,6.2,6.9,2.5,2.8,3.4,3.6,3.9,4.3,4.6,,Middle East,
+Kazakhstan,3.6,3.7,3.7,3.8,3.8,3.9,4,4,4,,Non-OECD Europe & Eurasia,
+Kenya,0.1,0.1,0.2,0.2,0.2,0.2,0.3,0.3,0.3,Africa,,
+Kiribati,0,0,0,0,0,0,0,0,0,Non-OECD Asia,,
+Kuwait,0.3,0.4,0.4,0.5,0.5,0.6,0.7,0.9,1,,Middle East,OPEC
+Kyrgyzstan,1.6,0.8,0.6,0.5,0.6,0.6,0.6,0.7,0.7,,Non-OECD Europe & Eurasia,
+Laos,0.2,0.3,0.3,0.3,0.4,0.4,0.5,0.5,0.6,,Non-OECD Asia,
+Latvia,0.4,0.5,0.6,0.5,0.6,0.6,0.6,0.5,0.5,,Non-OECD Europe & Eurasia,EU
+Lebanon,0.9,1,1.6,1.7,1.8,1.8,1.8,1.9,1.9,Middle East,,
+Lesotho,0,0,0,0,0,0,0,0,0,Africa,,
+Liberia,0.2,0.2,0.2,0.3,0.3,0.4,0.5,0.5,0.6,Africa,,
+Libya,0.4,0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,Africa,,OPEC
+Liechtenstein,0,0,0,0,0,0,0,0,0,Non-OECD Europe & Eurasia,,
+Lithuania,0.8,0.8,0.8,0.8,0.9,0.9,0.9,0.8,0.8,,Non-OECD Europe & Eurasia,EU
+Luxembourg,0.1,0.1,0.1,0,0,0,0,0,0,,OECD,EU
+Macedonia,0.7,0.7,0.7,0.8,0.9,0.9,0.9,0.9,0.9,,Non-OECD Europe & Eurasia,
+Madagascar,0.2,0.2,0.3,0.3,0.3,0.4,0.5,0.5,0.6,Africa,,
+Malawi,0.1,0.1,0.1,0.1,0.1,0.1,0.2,0.2,0.2,Africa,,
+Malaysia,20,22.4,24.9,27.4,29.9,32.5,35.1,37.8,40.3,Non-OECD Asia,,
+Maldives,0,0,0,0,0,0,0,0,0,Non-OECD Asia,,
+Mali,0.1,0.1,0.1,0.2,0.2,0.2,0.2,0.3,0.3,Africa,,
+Malta,0.1,0.1,0.1,0.2,0.2,0.2,0.2,0.2,0.2,Non-OECD Europe & Eurasia,,EU
+Marshall Islands,0,0,0,0,0,0,0,0,0,Non-OECD Asia,,
+Mauritania,0.2,0.2,0,0,0,0,0,0,0,Africa,,
+Mauritius,0.1,0.1,0.4,0.6,0.7,0.8,0.8,0.8,0.8,Africa,,
+Mexico,16.3,25.8,32.5,49.1,56.4,59.5,62.5,65.2,67.7,,OECD,
+Micronesia (Federated States of),0,0,0,0,0,0,0,0,0,Non-OECD Asia,,
+Moldova,1.3,1.6,1.5,1.2,1.2,1.2,1.2,1.1,1.1,,Non-OECD Europe & Eurasia,
+Monaco,0,0,0,0,0,0,0,0,0,,Non-OECD Europe & Eurasia,
+Mongolia,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,,Non-OECD Asia,
+Montenegro,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,Non-OECD Europe & Eurasia,,
+Morocco,1.8,2,2.4,2.5,2.7,2.8,2.9,3.1,3.2,Africa,,
+Mozambique,0.4,1.7,1.9,2.1,2.3,2.5,2.8,3,3.3,Africa,,
+Namibia,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,Africa,,
+Nauru,0,0,0,0,0,0,0,0,0,Non-OECD Asia,,
+Nepal,0.2,0.2,0.2,0.2,0.3,0.3,0.3,0.3,0.4,,Non-OECD Asia,
+Netherlands,12,10.5,8.1,6.1,4.7,4.7,4.8,4.9,4.9,,OECD,EU
+New Zealand,1.5,1.5,1.5,1.5,1.4,1.5,1.5,1.6,1.6,,OECD,
+Nicaragua,0.2,0.3,0.5,0.6,0.6,0.7,0.8,0.8,0.9,Central and South America,,
+Niger,0.6,0.7,0.8,1,1.2,1.4,1.6,2,2.3,Africa,,
+Nigeria,3.7,4.2,4.7,5.3,5.8,6.4,7,7.6,8.1,,Africa,OPEC
+Niue,0,0,0,0,0,0,0,0,0,Non-OECD Asia,,
+North Korea,1.4,1.5,1.5,1.5,1.6,1.6,1.6,1.6,1.6,,Non-OECD Asia,
+Norway,1.7,1.6,1.3,1.1,1.1,1.1,1.1,1.1,1.1,,OECD,
+Oman,0.3,0.3,0.4,0.5,0.5,0.6,0.7,0.8,0.9,Middle East,,
+Pakistan,1.8,2,2.2,2.5,2.7,2.9,3.1,3.3,3.5,,Non-OECD Asia,
+Palau,0,0,0,0,0,0,0,0,0,Non-OECD Asia,,
+Panama,0.5,0.5,0.6,0.6,0.7,0.7,0.8,0.8,0.9,Central and South America,,
+Papua New Guinea,1.3,1.5,1.7,1.9,2.1,2.4,2.6,2.9,3.1,Non-OECD Asia,,
+Paraguay,0.2,0.2,0.2,0.2,0.3,0.3,0.3,0.3,0.3,Central and South America,,
+Peru,1.9,2.7,6.2,6.7,7.1,7.5,7.9,8.2,8.5,,Central and South America,
+Philippines,3.9,4.4,4.9,5.4,6,6.6,7.2,7.7,8.3,,Non-OECD Asia,
+Poland,6.4,6.7,7.4,7,6.4,6.5,6.8,7,7.2,,OECD,EU
+Portugal,3,3.8,4,4.6,5.3,5.4,5.4,5.3,5.3,,OECD,EU
+Qatar,0.2,0.2,0.3,0.3,0.3,0.4,0.4,0.4,0.4,Middle East,,OPEC
+Romania,2.4,3,4.1,3.7,3.3,3.3,3.2,3.2,3.1,,Non-OECD Europe & Eurasia,EU
+Russia,28.2,31.1,34.7,40,47.2,46.1,44.8,43.4,42.1,,Non-OECD Europe & Eurasia,
+Rwanda,0.9,1,1.1,1.2,1.4,1.6,1.8,2.1,2.4,Africa,,
+Saint Kitts and Nevis,0,0,0,0.1,0.1,0.1,0.1,0.1,0.1,Central and South America,,
+Saint Lucia,0.6,0.6,0.6,0.6,0.6,0.7,0.7,0.7,0.7,Central and South America,,
+Saint Vincent and the Grenadines,0,0,0,0,0,0,0,0,0,Central and South America,,
+Samoa,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,Non-OECD Asia,,
+San Marino,0,0,0,0,0,0,0,0,0,Non-OECD Europe & Eurasia,,
+Sao Tome and Principe,0,0,0,0,0,0,0,0,0,Africa,,
+Saudi Arabia,12.5,14.3,16.1,18.3,20.3,21.9,23.3,24.8,26.5,,Middle East,OPEC
+Senegal,1.4,1.6,1.9,2.2,2.5,2.8,3.2,3.6,4,,Africa,
+Serbia,1.7,2.2,2.4,2.4,2.3,2.3,2.2,2.2,2.1,Non-OECD Europe & Eurasia,,
+Seychelles,0,0,0,0,0.1,0.1,0.1,0.1,0.1,Africa,,
+Sierra Leone,1.4,1.5,1.4,1.6,1.8,2,2.3,2.6,2.9,Africa,,
+Singapore,0.5,0.6,0.8,1,1.2,1.4,1.6,1.8,2.1,,Non-OECD Asia,
+Slovakia,0.5,0.6,1.2,1.7,1.9,1.8,1.8,1.7,1.7,,OECD,EU
+Slovenia,0.3,0.4,0.4,0.5,0.4,0.4,0.4,0.3,0.3,,OECD,EU
+Solomon Islands,0.1,0.1,0.2,0.2,0.2,0.2,0.3,0.3,0.3,Non-OECD Asia,,
+Somalia,0.6,0.7,0.8,0.9,1,1.1,1.3,1.5,1.7,Africa,,
+South Africa,14.1,15.4,16.4,17.3,17.9,17.6,17.7,17.7,17.8,,Africa,
+South Korea,4.2,6.7,9.2,9.9,10,10.1,10.1,10.1,10.1,,OECD,
+Spain,4.8,6.8,8.8,9.9,11.9,11.9,11.8,11.7,11.5,,OECD,EU
+Sri Lanka,9.4,10,10.5,11.1,11.6,12.1,12.5,12.8,13.1,Non-OECD Asia,,
+Sudan,0.5,0.5,0.6,0.7,0.7,0.8,0.9,1,1.1,Africa,,
+Suriname,0,0,0,0,0,0,0,0,0,Central and South America,,
+Swaziland,0,0,0,0,0,0,0,0,0,Africa,,
+Sweden,2.9,2.7,2.4,1.9,1.4,1.4,1.4,1.4,1.4,,OECD,EU
+Switzerland,0.7,0.5,0.4,0.3,0.2,0.2,0.2,0.2,0.2,,OECD,
+Syria,1.6,1.9,2.3,2.7,3.1,3.6,4,4.5,4.9,Middle East,,
+Tajikistan,0.7,0.6,0.4,0.5,0.5,0.5,0.6,0.6,0.7,,Non-OECD Europe & Eurasia,
+Tanzania,0.3,0.4,0.4,0.5,0.5,0.6,0.6,0.6,0.7,Africa,,
+Thailand,0.4,1.2,4.9,5,5.2,5.4,5.5,5.6,5.6,,Non-OECD Asia,
+Timor-Leste,0.1,0.1,0.1,0.1,0.1,0.1,0.2,0.2,0.2,Non-OECD Asia,,
+Togo,0,0,0.1,0.1,0.1,0.1,0.2,0.2,0.2,Africa,,
+Tonga,0,0,0,0,0,0,0,0,0,Non-OECD Asia,,
+Trinidad and Tobago,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,Central and South America,,
+Tunisia,0.6,0.7,0.7,0.8,0.8,0.8,0.9,0.9,0.9,Africa,,
+Turkey,6.4,20.3,29,29.8,30.6,32.4,34.1,35.5,36.8,,OECD,
+Turkmenistan,0.3,0.3,0.4,0.5,0.5,0.6,0.6,0.6,0.7,,Non-OECD Europe & Eurasia,
+Tuvalu,0,0,0,0,0,0,0,0,0,Non-OECD Asia,,
+Uganda,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.2,0.2,,Africa,
+Ukraine,5.3,5.8,6.1,6.7,7.2,6.9,6.7,6.5,6.2,,Non-OECD Europe & Eurasia,
+United Arab Emirates,1.2,1.6,2.1,2.6,3.2,3.7,4.2,4.6,4.8,,Middle East,OPEC
+United Kingdom,56.2,43.7,29.4,17.9,18.9,17.8,16.9,16,15.1,,OECD,EU
+United States,147.4,139.4,111.7,112.5,129.7,128.4,127.7,128,128,,OECD,
+Uruguay,1,1,1.1,1.1,1.1,1.1,1.1,1.2,1.2,,Central and South America,
+Uzbekistan,3.3,3.5,3.7,3.8,4,4.2,4.4,4.6,4.7,,Non-OECD Europe & Eurasia,
+Vanuatu,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,Non-OECD Asia,,
+Venezuela,4.9,5.5,5.9,6.4,6.9,7.4,7.9,8.4,8.8,,Central and South America,OPEC
+Vietnam,1.3,2.1,5.6,6,6.3,6.7,7,7.2,7.5,,Non-OECD Asia,
+Yemen,0.5,0.5,0.6,0.7,0.9,1,1.1,1.2,1.3,Middle East,,
+Zambia,0.3,0.4,0.4,0.5,0.5,0.5,0.6,0.6,0.7,Africa,,
+Zimbabwe,0.5,0.5,0.5,0.5,0.5,0.7,0.7,0.8,0.9,Africa,,

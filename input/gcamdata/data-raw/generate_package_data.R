@@ -458,9 +458,12 @@ GCAM_DATA_MAP <- driver(return_data_map_only = TRUE)
 PREBUILT_DATA <- driver(write_outputs = FALSE,
                         write_xml = FALSE,
                         return_data_names = c(
-                           #outputs of module_energy_LA101.en_bal_IEA
-                         "L101.en_bal_EJ_R_Si_Fi_Yh_full",
-                         "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
+                          # outputs of module_emissions_L102.nonco2_ceds_R_S_Y
+                          "L102.ceds_GFED_nonco2_tg_R_S_F",
+
+                          # outputs of module_energy_LA101.en_bal_IEA
+                          "L101.en_bal_EJ_R_Si_Fi_Yh_full",
+                          "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
                           "L101.in_EJ_ctry_trn_Fi_Yh",
                          "L101.in_EJ_ctry_bld_Fi_Yh",
 

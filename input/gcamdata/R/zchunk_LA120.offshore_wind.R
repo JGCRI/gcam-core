@@ -68,7 +68,7 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
     # aggregate by GCAM region/ wind class/ depth class
     NREL_offshore_energy %>%
       select(-total) %>%
-      left_join_error_no_match(iso_GCAM_regID %>%
+      inner_join(iso_GCAM_regID %>%
                                  select(country_name, GCAM_region_ID),
                                by = c("IAM_country" = "country_name")) %>%
       gather(wind_class, resource.potential.PWh, -IAM_country, -GCAM_region_ID, -depth_class, -distance_to_shore) %>%
@@ -241,7 +241,7 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
     # not expected that regions would be able to exhaust the potential offered by the highest capacity class available.
     NREL_offshore_energy %>%
       select(-depth_class,-distance_to_shore,-total) %>%
-      left_join_error_no_match(iso_GCAM_regID %>%
+      inner_join(iso_GCAM_regID %>%
                                  select(country_name, GCAM_region_ID),
                                by = c("IAM_country" = "country_name")) %>%
       left_join_error_no_match(GCAM_region_names, by = c("GCAM_region_ID")) %>%
@@ -270,7 +270,7 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
     # First, get share of potential by each distance bin for each GCAM region
     NREL_offshore_energy %>%
       select(IAM_country, distance_to_shore, total) %>%
-      left_join_error_no_match(iso_GCAM_regID %>%
+      inner_join(iso_GCAM_regID %>%
                                  select(country_name, GCAM_region_ID),
                                by = c("IAM_country" = "country_name")) %>%
       left_join_error_no_match(GCAM_region_names, by = c("GCAM_region_ID")) %>%

@@ -62,7 +62,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       get_data(all_data, "energy/A22.globaltech_input_driver"),
       get_data(all_data, "energy/A23.globaltech_input_driver"),
       get_data(all_data, "energy/A25.globaltech_input_driver")
-      ) %>%
+    ) %>%
       rename(stub.technology = technology) ->
       EnTechInputMap
 
@@ -86,7 +86,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       filter(exception == "CO", Non.CO2 == "CO") %>%
       # Use left_join here to pass the time shift test.
       left_join(select(L241.co_tgej_R_en_S_F_fy, -subsector),
-                               by = c("region", "Non.CO2", "supplysector", "exception_tech" = "stub.technology")) %>%
+                by = c("region", "Non.CO2", "supplysector", "exception_tech" = "stub.technology")) %>%
       select(-GCAM_region_ID, -year) %>%
       rename(emiss.coeff = value) ->
       L241.co_tech_coeff_except
@@ -104,7 +104,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       filter(exception == "CH4", Non.CO2 == "CH4") %>%
       # Use left_join here to pass the time shift test.
       left_join(select(L241.ch4_tgej_R_en_S_F_fy, value, region, Non.CO2, stub.technology),
-                               by = c("region", "Non.CO2", "exception_tech" = "stub.technology")) %>%
+                by = c("region", "Non.CO2", "exception_tech" = "stub.technology")) %>%
       rename(emiss.coeff = value) ->
       L241.ch4_tech_coeff_except
 

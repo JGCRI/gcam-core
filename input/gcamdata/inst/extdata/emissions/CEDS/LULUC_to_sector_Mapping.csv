@@ -1,0 +1,12 @@
+# File: LULUC_to_sector_Mapping.csv
+# Title: LULUC Emissions Map
+# Units: NA
+# Description: Mapping file for CMIP6/GFED agricultural waste and unmanaged land fires for emissions
+# Column types: ccc
+# ----------
+LULUC_sector_abr,sector_definition,CEDS_sector
+BORF,boreal forest fires,11B_Forest-fires
+AGRI,agricultural waste burning,3F_Agricultural-residue-burning-on-fields
+DEFO,fires used in deforestation,11B_Deforestation
+SAVA,savanna grassland and shrubland fires,11B_Grassland-fires
+TEMF,temperate forest fires,11B_Forest-fires
