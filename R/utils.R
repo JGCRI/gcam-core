@@ -221,16 +221,16 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
   assert_that(is.logical(optional))
   assert_that(is.logical(quiet))
 
-  #separate 'filename' into folder(s) and file
-  folder <- gsub("/[^/]+$", "", filename)
-  file <- gsub(".*/", "", filename)
-
   extensions <- c(".csv", ".csv.gz", "")
   for(ex in extensions) {
-    #fqfn <- system.file("extdata", paste0(filename, ex), package = "gcamdata")
-    fqfn <- list.files(paste0("inst/extdata/", folder), paste0("^", file, ex, "$"), full.names = TRUE)
-
-    if(!identical(fqfn,character(0))) {
+    fqfn <- system.file("extdata", paste0(filename, ex), package = "gcamdata")
+    if(fqfn != "") {
+      # check if a relative path to the file is shorter than the absolute in
+      # hopes of being able to stay within windows file path length limits
+      fn_rel <- get_relative_to_workdir(fqfn)
+      if(nchar(fn_rel) < nchar(fqfn)) {
+        fqfn <- fn_rel
+      }
       if(!quiet) cat("Found", fqfn, "\n")
       return(fqfn)  # found it
     }
@@ -240,6 +240,43 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
   } else {
     stop("Couldn't find required data ", filename)
   }
+}
+
+#' Normalize file path to the working directory
+#'
+#' On Windows we may run into the MAX_PATH file path limit when referencing
+#' files using the absolute path.  This method will normalize the file path
+#' to the working directory which _may_ be shorter.
+#'
+#' @param fqfn The full path of the file to normalize.
+#' @return A relative path to \code{fqfn} from the current working directory
+#' given by \code{getwd()}.
+get_relative_to_workdir <- function(fqfn) {
+  # split the paths using the path separator '/' which R uses consistently
+  # across platforms
+  fqfn_split <- strsplit(fqfn, '/')[[1]]
+  wd_split <- c(strsplit(getwd(), '/')[[1]])
+
+  # figure out where the file paths diverge
+  wd_match <- wd_split == fqfn_split[seq_along(wd_split)]
+  diverge_index <- which(!wd_match, arr.ind = TRUE)
+  if(length(diverge_index) == 0) {
+    # case where the entire working dir path matches
+    diverge_index <- length(wd_split) + 1
+  } else {
+    # only part of the path matches
+    # we need to make sure we get first / earliest divergence
+    diverge_index <- diverge_index[1]
+  }
+
+  # to make the path relative we need to:
+  # 1) add as many .. as the number of dirs that diverged in the working directory
+  # 2) remove all dirs from fqfn prior to diverge_index
+  # 3) paste it all together with the path separator '/'
+  fqfn_rel <- paste0(c(rep('..', times = length(wd_split) - diverge_index + 1),
+                       fqfn_split[diverge_index:length(fqfn_split)]), collapse = '/')
+
+  fqfn_rel
 }
 
 
