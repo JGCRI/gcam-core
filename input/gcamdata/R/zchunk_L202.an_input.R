@@ -392,6 +392,18 @@ module_aglu_L202.an_input <- function(command, ...) {
       select(region, supplysector, price) ->
       L202.ag_FeedCost_USDkg_R_F
 
+    # gpk 8/5/2020 - compute default animal commodity prices in case of missing values
+    # China prices, to be used in Taiwan
+    L202.ChinaAnPrices <- L1321.an_prP_R_C_75USDkg %>%
+      filter(GCAM_region_ID == GCAM_region_names$GCAM_region_ID[GCAM_region_names$region == "China"]) %>%
+      select(GCAM_commodity, ChinaCommodityPrice_USDkg = value)
+
+    # Median prices, to be used elsewhere
+    L202.DefaultAnPrices <- L1321.an_prP_R_C_75USDkg %>%
+      group_by(GCAM_commodity) %>%
+      summarise(DefaultCommodityPrice_USDkg = median(value)) %>%
+      ungroup()
+
     # Calculate the total cost of all inputs, for each animal commodity, first matching in the feed quantity and the price
     L202.an_Prod_Mt_R_C_Sys_Fd_Y.mlt %>%
       filter(year == max(MODEL_BASE_YEARS),
@@ -401,10 +413,13 @@ module_aglu_L202.an_input <- function(command, ...) {
                                by = c("GCAM_region_ID", "GCAM_commodity", "system", "feed", "year")) %>%
       left_join_error_no_match(L202.ag_FeedCost_USDkg_R_F, by = c("region", "feed" = "supplysector")) %>%
       rename(FeedPrice_USDkg = price) %>%
-      #kbn 2020-04-23 We don't have data for Taiwan here. Set that to 0.
       left_join(L1321.an_prP_R_C_75USDkg, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
-      mutate(value= if_else(is.na(value),0,value)) %>%
-      rename(CommodityPrice_USDkg = value) %>%
+      # gpk 2020-08-05 We don't have animal commodity price data for Taiwan here. Set that to China's data, and for any
+      # other regions that may have missing data, use the median values computed above as defaults
+      left_join_error_no_match(L202.ChinaAnPrices, by = "GCAM_commodity") %>%
+      left_join_error_no_match(L202.DefaultAnPrices, by = "GCAM_commodity") %>%
+      mutate(CommodityPrice_USDkg = if_else(region == "Taiwan" & is.na(value), ChinaCommodityPrice_USDkg, value),
+             CommodityPrice_USDkg = if_else(is.na(CommodityPrice_USDkg), DefaultCommodityPrice_USDkg, CommodityPrice_USDkg)) %>%
       # multiply prices by quantities to calculate feed expenditures and commodity sales revenues
       mutate(SalesRevenue_bilUSD = Prod_Mt * CommodityPrice_USDkg,
              FeedCost_bilUSD = Feed_Mt * FeedPrice_USDkg) %>%
