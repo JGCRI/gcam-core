@@ -197,19 +197,19 @@ module_energy_LA113.atb_cost <- function(command, ...) {
     L113.costs_ATB %>%
       group_by(technology, input, case) %>%
       # calculate simple near term and mid term annual improvement rates as % reduction / # years
-      mutate(initial_ATB_cost = value[year==min(year)],
+      mutate(initial_ATB_cost = value[year==energy.ATB_BASE_YEAR],
              mid_ATB_cost = value[year==energy.ATB_MID_YEAR],
              final_ATB_cost = value[year==max(year)],
              target_ATB_cost = value[year==energy.ATB_TARGET_YEAR],
-             near_term_improvement = ((initial_ATB_cost - mid_ATB_cost) / min(year)) / (energy.ATB_MID_YEAR - min(year)),
+             near_term_improvement = ((initial_ATB_cost - mid_ATB_cost) / energy.ATB_BASE_YEAR) / (energy.ATB_MID_YEAR - energy.ATB_BASE_YEAR),
              long_term_improvement = ((mid_ATB_cost - final_ATB_cost) / energy.ATB_MID_YEAR) / (max(year) - energy.ATB_MID_YEAR),
              # calculate 2100 value based on extending long-term improvement rate
              cost_end_year = final_ATB_cost - (final_ATB_cost * (long_term_improvement * (max(FUTURE_YEARS) - max(year)))),
              # calculate maximum improvement based on extrapolated 2100 cost : 2015 cost
-             improvement.max = cost_end_year / value[year==min(year)],
+             improvement.max = cost_end_year / value[year==energy.ATB_BASE_YEAR],
              # calculate baseline improvement rate values assuming average linear reduction
              # this is just a starting point for the exponential function below
-             improvement.rate.base = (initial_ATB_cost - cost_end_year) / (max(year) - min(year)) / initial_ATB_cost) %>%
+             improvement.rate.base = (initial_ATB_cost - cost_end_year) / (max(year) - energy.ATB_BASE_YEAR) / initial_ATB_cost) %>%
       ungroup() %>%
       distinct(technology, input, case, initial_ATB_cost, target_ATB_cost, improvement.max, improvement.rate.base) %>%
       # filter out techs with no cost in ATB - nuclear adv / low tech capital costs, CSP variable O&M

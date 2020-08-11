@@ -397,7 +397,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         chg = true;
                         ++nchg;
                     }
-                    else if(oldprice > lb && solvable[i].getForecastPrice() < lb && olddmnd < oldsply) {
+                    else if(oldprice > lb && solvable[i].getForecastPrice() <= lb && olddmnd < oldsply) {
                         // reset the price back to "unconstrained" if it wasn't constraining in the last period
                         // and it still is not now
                         newprice = solvable[i].getForecastPrice();

@@ -4,31 +4,31 @@
 # Source: Muratori et al. (2017), Renewable and Sustaible Energy Reviews v 77, pp 861–874
 # Future improvement is based on the maximum % reduction that the literature deems likely and a rate corresponding to the maturity level of the technology
 # Note that some technologies are the same as another with additiol equipment (i.e. CCS) for those technologies the improvement is on the additiol equipment
-# Column types: ccccnnnnnnnnc 
+# Column types: ccccnnnnnnnnnc 
 # ----------
-supplysector,subsector,technology,input-capital,fixed.charge.rate,1971,1990,2005,2010,2015,improvement.max,improvement.rate,improvement.shadow.technology
-electricity,coal,coal (conv pul),capital,0.13,,,,,,,,
-electricity,coal,coal (conv pul CCS),capital,0.13,,,,,,,,
-electricity,coal,coal (IGCC),capital,0.13,,,,,,,,
-electricity,coal,coal (IGCC CCS),capital,0.13,,,,,,,,
-electricity,gas,gas (steam/CT),capital,0.13,,,,,,,,
-electricity,gas,gas (CC),capital,0.13,,,,,,,,
-electricity,gas,gas (CC CCS),capital,0.13,,,,,,,,
-electricity,refined liquids,refined liquids (steam/CT),capital,0.13,,,,,,,,
-electricity,refined liquids,refined liquids (CC),capital,0.13,,,,,,,,
-electricity,refined liquids,refined liquids (CC CCS),capital,0.13,,,,,,,,
-electricity,biomass,biomass (conv),capital,0.13,,,,,,,,
-electricity,biomass,biomass (conv CCS),capital,0.13,,,,,,,,
-electricity,biomass,biomass (IGCC),capital,0.13,,,,,,,,
-electricity,biomass,biomass (IGCC CCS),capital,0.13,,,,,,,,
-electricity,nuclear,Gen_II_LWR,capital,0.13,1650,1650,1650,1650,1704.048567,1,0,
-electricity,nuclear,Gen_III,capital,0.13,,,,,,,,
-electricity,wind,wind,capital,0.13,,,,,,,,
-electricity,wind,wind_storage,capital,0.13,,,,,,,,
-electricity,solar,PV,capital,0.13,,,,,,,,
-electricity,solar,PV_storage,capital,0.13,,,,,,,,
-electricity,solar,CSP,capital,0.13,,,,,,,,
-electricity,solar,CSP_storage,capital,0.13,,,,,,,,
-electricity,geothermal,geothermal,capital,0.13,,,,,,,,
-elect_td_bld,rooftop_pv,rooftop_pv,capital,0.1,,,,,,,,
-electricity,wind,wind_offshore,capital,0.13,,,,,,,,wind
+supplysector,subsector,technology,input-capital,fixed.charge.rate,1971,1990,2005,2010,2015,2020,improvement.max,improvement.rate,improvement.shadow.technology
+electricity,coal,coal (conv pul),capital,0.13,,,,,,,,,
+electricity,coal,coal (conv pul CCS),capital,0.13,,,,,,,,,
+electricity,coal,coal (IGCC),capital,0.13,,,,,,,,,
+electricity,coal,coal (IGCC CCS),capital,0.13,,,,,,,,,
+electricity,gas,gas (steam/CT),capital,0.13,,,,,,,,,
+electricity,gas,gas (CC),capital,0.13,,,,,,,,,
+electricity,gas,gas (CC CCS),capital,0.13,,,,,,,,,
+electricity,refined liquids,refined liquids (steam/CT),capital,0.13,,,,,,,,,
+electricity,refined liquids,refined liquids (CC),capital,0.13,,,,,,,,,
+electricity,refined liquids,refined liquids (CC CCS),capital,0.13,,,,,,,,,
+electricity,biomass,biomass (conv),capital,0.13,,,,,,,,,
+electricity,biomass,biomass (conv CCS),capital,0.13,,,,,,,,,
+electricity,biomass,biomass (IGCC),capital,0.13,,,,,,,,,
+electricity,biomass,biomass (IGCC CCS),capital,0.13,,,,,,,,,
+electricity,nuclear,Gen_II_LWR,capital,0.13,1650,1650,1650,1650,1704.048567,1704.048567,1,0,
+electricity,nuclear,Gen_III,capital,0.13,,,,,,,,,
+electricity,wind,wind,capital,0.13,,,,,,,,,
+electricity,wind,wind_storage,capital,0.13,,,,,,,,,
+electricity,solar,PV,capital,0.13,,,,,,,,,
+electricity,solar,PV_storage,capital,0.13,,,,,,,,,
+electricity,solar,CSP,capital,0.13,,,,,,,,,
+electricity,solar,CSP_storage,capital,0.13,,,,,,,,,
+electricity,geothermal,geothermal,capital,0.13,,,,,,,,,
+elect_td_bld,rooftop_pv,rooftop_pv,capital,0.1,,,,,,,,,
+electricity,wind,wind_offshore,capital,0.13,,,,,,,,,wind
