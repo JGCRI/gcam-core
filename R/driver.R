@@ -395,12 +395,14 @@ driver_drake <- function(
   return_data_names = union(inputs_of(return_inputs_of),
                             outputs_of(return_outputs_of)),
   return_data_map_only = FALSE,
+  return_plan_only = FALSE,
   write_xml = !return_data_map_only,
   xmldir = XML_DIR,
   quiet = FALSE,
   ...){
 
-  # We merley suggest drake as we can still run the data system via driver
+
+  # We merely suggest drake as we can still run the data system via driver
   # with out it.  Ensure we have it before proceeding.
   if(!require(drake)) {
     stop("The `drake` package is required to run `driver_drake()`.  Either install it or fall back to `driver()`")
@@ -426,8 +428,13 @@ driver_drake <- function(
   assert_that(is.null(return_outputs_of) | is.character(return_outputs_of))
   assert_that(is.null(return_data_names) | is.character(return_data_names))
   assert_that(is.logical(return_data_map_only))
+  assert_that(is.logical(return_plan_only))
   assert_that(is.logical(write_xml))
   assert_that(is.logical(quiet))
+
+  if(return_plan_only) {
+    assert_that(!return_data_map_only)
+  }
 
   if(!quiet) cat("GCAM Data System v", as.character(utils::packageVersion("gcamdata")), "\n", sep = "")
 
@@ -496,7 +503,6 @@ driver_drake <- function(
    else {
     chunks_to_run <- c(unfound_inputs$input, chunklist$name)
   }
-
 
   # Loop over each chunk and add a target for it and the command to build it
   # as appropriate for if it is just loading a FILE or running an actual chunk.
@@ -590,16 +596,22 @@ driver_drake <- function(
 
   # Have drake figure out what needs to be done and do it!
   # Any additional arguments given are passed directly on to make
-  drake::make(gcamdata_plan, ...)
+ if(!return_plan_only){
+   drake::make(gcamdata_plan, ...)
+ }
 
   if(return_data_map_only) {
     # user requested data map only so create it from the cache
     x <- create_datamap_from_cache(gcamdata_plan)
   }
+  else if (return_plan_only){
+    x <- gcamdata_plan
+  }
   else {
     # return any requested data by loading it from the cache
     x <- load_from_cache(return_data_names)
   }
+
 
   if(!quiet) cat("All done.\n")
 
