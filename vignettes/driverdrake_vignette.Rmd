@@ -47,20 +47,19 @@ Error in file.rename() :
   expanded 'to' name too long
 ```
 
-
 Next, we'll explore two different edits of a chunk and see how `driver_drake()` responds. 
 
 ### Example 1
 
-First, let's edit the input, `FAO_municipal_water_AQUASTAT.csv` by duplicating its final row. This adds another value of 3.28 to the file. The values from this file get aggregated, so adding a non-zero value affects other chunks. 
+First, let's edit the input, `FAO_municipal_water_AQUASTAT.csv` by duplicating its final row. This adds another value of 0.4877 to the file. The values from this file get aggregated, so adding a non-zero value affects other chunks. 
 
 ```{r}
 #copy the file so we can get it back later
 example_file <- find_csv_file("water/FAO_municipal_water_AQUASTAT", FALSE)[[1]]
 file.copy(from = example_file, to = paste0(example_file, ".bak"))
 
-#Add a row to the end of the file with value = 3.28
-cat("Taiwan,,Municipal water withdrawal,4251,2010,3.28,,\n", file = example_file, append = TRUE)
+#Add a row to the end of the file with value = 0.4877
+cat("\nZimbabwe,181,Municipal water withdrawal,4251,2017,0.4877,,", file = example_file, append = TRUE)
 
 #Load and run driver_drake(). Print run time. 
 devtools::load_all(".")
@@ -76,19 +75,23 @@ As expected, `driver_drake()` runs all dependencies of `FAO_municipal_water_AQUA
 Next, we will append another row to the bottom of that same file, but this time, we will give it a value of 0, which after aggregation should have no further effect. 
 ```{r}
 #Add a row but with value = 0
-cat("Taiwan,,Municipal water withdrawal,4251,2010,0,,\n", file = example_file, append = TRUE)
+cat("\nZimbabwe,181,Municipal water withdrawal,4251,2017,0,,", file = example_file, append = TRUE)
 
 #Load and run driver_drake(). Print run time. 
 devtools::load_all(".")
 t1 <- Sys.time()
 driver_drake()
 print(Sys.time()-t1)
-
-#Finally clean up the changes from this example
-file.rename(paste0(example_file, ".bak"), example_file)
-
 ```
 This time, `driver_drake()` only ran `FAO_municipal_water_AQUASTAT` and it's `R` chunk since adding a 0 affects nothing downstream. 
+
+Let's get our original file back and run `driver_drake`. 
+```{r, echo = TRUE, results = "hide", warning = FALSE, message = FALSE}
+#Finally clean up the changes from this example
+file.rename(paste0(example_file, ".bak"), example_file)
+driver_drake() 
+
+```
 
 ### Example 3
 If you edit or delete an XML file, you can quickly and easily get the original file back by running `driver_drake()`. 
@@ -234,7 +237,7 @@ devtools::load_all()
 plan <- driver_drake(return_plan_only = TRUE)
 
 #display the dependency graph downstream from module L210.RenewRscr 
-vis_drake_graph(plan, from = gcamata:::sanitize_drake_target_name("L210.RenewRsrc"))
+vis_drake_graph(plan, from = gcamdata:::sanitize_drake_target_name("L210.RenewRsrc"))
 
 ```
 
