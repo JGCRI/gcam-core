@@ -131,9 +131,15 @@ void FoodDemandInput::completeInit( const string& aRegionName,
     }
     
     
-    // TODO: hard wire some default prices for now since this really helps solution, what to do in the long run?
     for( int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ) {
-        scenario->getMarketplace()->setPrice( trialShareMarketName, aRegionName, 0.1, period) ;
+        // We set some initial trial share guess to ensure the solver starts in a
+        // reasonable range which helps speed up solution in the historical years.
+        // We could attempt to do better by calculating what the actual shares would
+        // be in the data system and read them in.  However, it turned out to be fairly
+        // involved to do and ultimately didn't help with solution much so we just stuck
+        // with the constant initial guess.
+        const double INITIAL_PRICE_GUESS = 0.1;
+        scenario->getMarketplace()->setPrice( trialShareMarketName, aRegionName, INITIAL_PRICE_GUESS, period) ;
         // Set meta data to let the solver know the trial share values should be between 0 and 1
         // not that it explicitly respects this but the preconditioner will.
         SectorUtils::setSupplyBehaviorBounds( trialShareMarketName, aRegionName, 0, 1, period );
@@ -163,17 +169,21 @@ void FoodDemandInput::initCalc( const string& aRegionName,
     
     if( aPeriod == ( scenario->getModeltime()->getFinalCalibrationPeriod() + 1 ) ) {
         // Do some consistency checking on the final regional bias value calculated
-        // during calibration.  If it is too far away from 1 we should issue a warning
+        // during calibration.  If it is too far away from 0 we should issue a warning
         // as something may have structurally changed in GCAM and new parameter values
         // should be generated accordingly.
-        /*const double REGIONAL_BIAS_THRESHOLD = 1.6;
-        if( mRegionalBias[ aPeriod - 1 ] >= REGIONAL_BIAS_THRESHOLD ) {
+        // Do the error checking as relative to be able to use a consistent threshold
+        // across regions.
+        const double REGIONAL_BIAS_THRESHOLD = 0.6;
+        double relativeBias = abs( mRegionalBias[ aPeriod - 1 ] ) / ( mFoodDemandQuantity[ aPeriod - 1 ] / getAnnualDemandConversionFactor( aPeriod - 1 ) );
+        if( relativeBias >= REGIONAL_BIAS_THRESHOLD ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Calibrated regional bias " << mRegionalBias[ aPeriod - 1 ]
+            mainLog << "Calibrated regional bias " << mRegionalBias[ aPeriod - 1 ] << " (absolute), "
+                    << relativeBias << " (relative)"
                     << " for " << aRegionName << ", " << mName
                     << " is outside the range of expected values." << endl;
-        }*/
+        }
         
         // Fill in regional bias values for future model periods which may just copy
         // forward the calibrated value if no values were parsed or linearly converge
@@ -320,10 +330,10 @@ void FoodDemandInput::accept( IVisitor* aVisitor, const int aPeriod ) const {
 }
 
 /*!
- * \brief Get the conversion factor to convert from the food demand untis to the
+ * \brief Get the conversion factor to convert from the food demand units to the
  *        annualized units the supply sectors expect.
- * \details The food demand system will calculate demands in term os Kcal / person / day
- *          the supply sectors are expecting Pcal / year.  This method provides the conversion..
+ * \details The food demand system will calculate demands in term of Kcal / person / day
+ *          the supply sectors are expecting Pcal / year.  This method provides the conversion.
  * \return The appropriate conversion factor.
  */
 double FoodDemandInput::getAnnualDemandConversionFactor( const int aPeriod ) const {
@@ -523,7 +533,6 @@ double StaplesFoodDemandInput::getPriceScaler() const {
  */
 double StaplesFoodDemandInput::calcIncomeTerm( double aAdjIncome ) const {
     double k = exp( mIncomeMaxTerm );        // k-value from the R version of the model
-    // TODO: worry about the follow given we are unlikey to get such small incomes in GCAM:
     // The limit as x-> 0 of the logarithmic derivative of this function is not
     // well behaved.  However, the quantity is very small for k*x < ~1e-3, so
     // we can replace this segment with a linear ramp and get essentially the same
@@ -551,7 +560,6 @@ double StaplesFoodDemandInput::calcIncomeTerm( double aAdjIncome ) const {
  */
 double StaplesFoodDemandInput::calcIncomeTermDerivative( double aAdjIncome ) const {
     double k = exp( mIncomeMaxTerm );        // k-value from the R version of the model
-    // TODO: worry about the follow given we are unlikey to get such small incomes in GCAM:
     // The limit as x-> 0 of the logarithmic derivative of this function is not
     // well behaved.  However, the quantity is very small for k*x < ~1e-3, so
     // we can replace this segment with a linear ramp and get essentially the same
@@ -674,7 +682,6 @@ double NonStaplesFoodDemandInput::calcIncomeTerm( double aAdjIncome ) const {
     double scale = 1.0 / enu;   // normalization factor
     double qin;
 
-    // TODO: worry about the follow given we are unlikey to get such small incomes in GCAM:
     if(fabs(delta) > 1.0e-3/mIncomeElasticity) {
         qin = scale * pow(aAdjIncome, mIncomeElasticity / delta);
     }
@@ -698,7 +705,6 @@ double NonStaplesFoodDemandInput::calcIncomeTermDerivative( double aAdjIncome ) 
     double delta = 1.0-aAdjIncome;
     double etan;
 
-    // TODO: worry about the follow given we are unlikey to get such small incomes in GCAM:
     if(fabs(delta) > 1.0e-3/mIncomeElasticity) {
         // lim_x->0 etan = 1
         etan = aAdjIncome < 1.0e-4 ? 1 : 1/delta + aAdjIncome*log(aAdjIncome)/pow(delta, 2);

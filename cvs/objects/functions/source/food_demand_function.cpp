@@ -55,7 +55,7 @@ using namespace std;
 
 /*!
  * \brief Calculate the price of the parent node form the bottom up.
- * \details In the food demand system the price of the parent is the price of "marerials" which is just
+ * \details In the food demand system the price of the parent is the price of "materials" which is just
  *          held constant so this method just returns that price unchanged.
  */
 double FoodDemandFunction::calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
@@ -72,7 +72,7 @@ double FoodDemandFunction::calcLevelizedCost( const InputSet& aInputs, const std
  *          q = A * (x^h(x)) * (w_self^e_self(x)) * (w_cross^e_cross(x))
  *          where:
  *          A: The scale parameter
- *          x: income diveded by price of materials
+ *          x: income divided by price of materials
  *          x^h(x): calculated all together depending on the type of FoodDemandInput,
  *                 see StaplesFoodDemandInput::calcIncomeTerm,
  *                 NonStaplesFoodDemandInput::calcIncomeTerm)
@@ -159,7 +159,7 @@ double FoodDemandFunction::calcDemand( InputSet& aInput, double income, const st
     // This should not happen unless something is really wrong so instead of
     // making adhoc adjustments we just generate a warning.
     double budget = 1.0;        // Fraction of income available for food. We
-                                // didn't expermient with changing this in the
+                                // didn't experiment with changing this in the
                                 // original model development.
     
     if(alphaTotal > budget) {
