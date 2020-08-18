@@ -3,27 +3,27 @@
 # Units: NA
 # Comments:  Can be useful for smoothing behavior of efficiency-partitioned technologies
 # Source: None (GCAM assumptions)
-# Column types: cccccicn 
+# Column types: cccccccn 
 # ----------
 supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,to.value
 resid hot water,electricity,electric heat pump water heater,share-weight,final-calibration-year,2050,s-curve,1
-resid lighting,electricity,incandescent,share-weight,final-calibration-year,2015,s-curve,1
-resid lighting,electricity,incandescent,share-weight,2015,2025,s-curve,1
+resid lighting,electricity,incandescent,share-weight,final-calibration-year,initial-future-year,s-curve,1
+resid lighting,electricity,incandescent,share-weight,final-calibration-year,2025,s-curve,1
 resid lighting,electricity,fluorescent,share-weight,final-calibration-year,2025,s-curve,1
 resid lighting,electricity,solid state,share-weight,final-calibration-year,2025,s-curve,1
-resid refrigerators,electricity,refrigerator hi-eff,share-weight,final-calibration-year,2020,s-curve,1
-resid freezers,electricity,freezer hi-eff,share-weight,final-calibration-year,2020,s-curve,1
-resid dishwashers,electricity,dishwasher hi-eff,share-weight,final-calibration-year,2020,s-curve,1
-resid cooking,gas,gas oven hi-eff,share-weight,final-calibration-year,2020,s-curve,1
-resid cooking,refined liquids,lpg oven hi-eff,share-weight,final-calibration-year,2020,s-curve,1
-resid clothes dryers,electricity,clothes dryer hi-eff,share-weight,final-calibration-year,2020,s-curve,1
-resid clothes washers,electricity,clothes washer hi-eff,share-weight,final-calibration-year,2020,s-curve,1
+resid refrigerators,electricity,refrigerator hi-eff,share-weight,final-calibration-year,initial-future-year,s-curve,1
+resid freezers,electricity,freezer hi-eff,share-weight,final-calibration-year,initial-future-year,s-curve,1
+resid dishwashers,electricity,dishwasher hi-eff,share-weight,final-calibration-year,initial-future-year,s-curve,1
+resid cooking,gas,gas oven hi-eff,share-weight,final-calibration-year,initial-future-year,s-curve,1
+resid cooking,refined liquids,lpg oven hi-eff,share-weight,final-calibration-year,initial-future-year,s-curve,1
+resid clothes dryers,electricity,clothes dryer hi-eff,share-weight,final-calibration-year,initial-future-year,s-curve,1
+resid clothes washers,electricity,clothes washer hi-eff,share-weight,final-calibration-year,initial-future-year,s-curve,1
 comm hot water,electricity,electric heat pump water heater,share-weight,final-calibration-year,2050,s-curve,1
 comm ventilation,electricity,ventilation hi-eff,share-weight,final-calibration-year,2050,s-curve,0.25
 comm ventilation,electricity,ventilation hi-eff,share-weight,2050,2100,fixed,0.25
-comm cooking,gas,gas range hi-eff,share-weight,final-calibration-year,2020,s-curve,1
-comm cooking,electricity,electric range hi-eff,share-weight,final-calibration-year,2020,s-curve,1
-comm lighting,electricity,incandescent,share-weight,final-calibration-year,2020,s-curve,1
-comm lighting,electricity,fluorescent,share-weight,final-calibration-year,2020,s-curve,1
-comm lighting,electricity,solid state,share-weight,final-calibration-year,2020,s-curve,1
-comm refrigeration,electricity,refrigeration hi-eff,share-weight,final-calibration-year,2020,s-curve,1
+comm cooking,gas,gas range hi-eff,share-weight,final-calibration-year,initial-future-year,s-curve,1
+comm cooking,electricity,electric range hi-eff,share-weight,final-calibration-year,initial-future-year,s-curve,1
+comm lighting,electricity,incandescent,share-weight,final-calibration-year,initial-future-year,s-curve,1
+comm lighting,electricity,fluorescent,share-weight,final-calibration-year,initial-future-year,s-curve,1
+comm lighting,electricity,solid state,share-weight,final-calibration-year,initial-future-year,s-curve,1
+comm refrigeration,electricity,refrigeration hi-eff,share-weight,final-calibration-year,initial-future-year,s-curve,1

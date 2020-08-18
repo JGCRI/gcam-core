@@ -68,12 +68,12 @@ test_that("set_years", {
   d <- tibble(x = c("start-year", "final-calibration-year", "final-historical-year",
                     "initial-future-year", "initial-nonhistorical-year", "end-year"))
   d1 <- set_years(d)
-  expect_identical(d1$x, as.character(c(min(MODEL_BASE_YEARS),
-                                        max(MODEL_BASE_YEARS),
-                                        max(HISTORICAL_YEARS),
-                                        min(MODEL_FUTURE_YEARS),
-                                        min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)]),
-                                        max(MODEL_FUTURE_YEARS))))
+  expect_identical(d1$x, c(min(MODEL_BASE_YEARS),
+                           max(MODEL_BASE_YEARS),
+                           max(HISTORICAL_YEARS),
+                           min(MODEL_FUTURE_YEARS),
+                           min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)]),
+                           max(MODEL_FUTURE_YEARS)))
 
   # Handles an empty tibble
   expect_silent(set_years(tibble()))
@@ -326,7 +326,7 @@ test_that("downscale_FAO_country", {
   expect_equal(ncol(d), ncol(dnew))
   expect_equal(nrow(d) - 1, nrow(dnew))  # post-dissolution country should be gone
   # ungrouped return
-  expect_null(dplyr::groups(dnew))
+  expect_equal(dplyr::groups(dnew), list())
 
   # Pre-dissolution year should be calculated from ratio of dissolution year data
   expect_equal(dnew[as.character(yrs[yrs < dy])], tibble(`1998` = c(1, 2), `1999` = c(2/3, 4/3)))
@@ -355,11 +355,11 @@ test_that("write_to_all_states", {
               price.exp.year.fillout = "price.exp.year.fillout")
   dout <- write_to_all_states(d, names = c("region", "logit.year.fillout", "price.exp.year.fillout"))
   expect_equal(dim(dout), c(length(gcamusa.STATES), ncol(d)))
-  expect_identical(dout$logit.year.fillout, as.character(rep(min(MODEL_BASE_YEARS), nrow(dout))))
-  expect_identical(dout$price.exp.year.fillout, as.character(rep(min(MODEL_BASE_YEARS), nrow(dout))))
+  expect_identical(dout$logit.year.fillout, rep(min(MODEL_BASE_YEARS), nrow(dout)))
+  expect_identical(dout$price.exp.year.fillout, rep(min(MODEL_BASE_YEARS), nrow(dout)))
 
   # ungrouped return
-  expect_null(dplyr::groups(dout))
+  expect_equal(dplyr::groups(dout), list())
 })
 
 test_that("set_subsector_shrwt", {
@@ -385,5 +385,5 @@ test_that("set_subsector_shrwt", {
   expect_equal(dout$subs.share.weight, 1)
 
   # ungrouped return
-  expect_null(dplyr::groups(dout))
+  expect_equal(dplyr::groups(dout), list())
 })

@@ -1,0 +1,16 @@
+# File: A10.renewable_resource_delete.csv
+# Title: Regions and renewable resource / technology combinations for which utilization is deemed infeasible
+# Units: NA
+# Comments: Washington, DC is assumed unable to develop any wind or utility scale (i.e. non-rooftop) solar energy potential due to limited land area; population density; and land values
+# resource_elec_subsector contains both renewable resource names and names of corresponding electricity subsectors
+# Source: assumption
+# Column types: cc
+# ----------
+region,resource_elec_subsector
+DC,global solar resource
+DC,PV_resource
+DC,CSP_resource
+DC,onshore wind resource
+DC,offshore wind resource
+DC,solar
+DC,wind

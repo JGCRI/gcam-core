@@ -23,10 +23,11 @@ The corresponding file in the original data system was \code{L2238.PV_reeds_USA.
 }
 \description{
 Create updated solar PV resource supply curves consistent with ReEDS.
+Also add non-ReEDS states (AK,DC,HI) based on NREL technical potential data.
 }
 \details{
 Create state-level solar PV resource supply curves
 }
 \author{
-MTB September 2018
+MTB September 2018; AJS June 2019
 }

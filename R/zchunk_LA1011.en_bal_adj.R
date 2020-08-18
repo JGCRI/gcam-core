@@ -46,7 +46,7 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
     EIA_TOT_intlship_kbbld <- get_data(all_data, "energy/EIA_TOT_intlship_kbbld")
     EIA_ctry <- get_data(all_data, "energy/mappings/EIA_ctry")
     A22.globaltech_coef <- get_data(all_data, "energy/A22.globaltech_coef")
-    L101.en_bal_EJ_R_Si_Fi_Yh_full <- get_data(all_data, "L101.en_bal_EJ_R_Si_Fi_Yh_full")
+    L101.en_bal_EJ_R_Si_Fi_Yh_full <- get_data(all_data, "L101.en_bal_EJ_R_Si_Fi_Yh_full", strip_attributes = TRUE)
 
     EIA_RFO_intlship_kbbld %>%
       gather_years -> EIA_RFO_intlship_kbbld

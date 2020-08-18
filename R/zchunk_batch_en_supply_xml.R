@@ -21,6 +21,7 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
              "L221.SubsectorInterpTo_en",
              "L221.StubTech_en",
              "L221.GlobalTechCoef_en",
+             "L221.StubTechCoef_bioOil",
              "L221.GlobalTechCost_en",
              "L221.GlobalTechShrwt_en",
              "L221.PrimaryConsKeyword_en",
@@ -55,6 +56,7 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
     L221.SubsectorInterpTo_en <- get_data(all_data, "L221.SubsectorInterpTo_en")
     L221.StubTech_en <- get_data(all_data, "L221.StubTech_en")
     L221.GlobalTechCoef_en <- get_data(all_data, "L221.GlobalTechCoef_en")
+    L221.StubTechCoef_bioOil <- get_data(all_data, "L221.StubTechCoef_bioOil")
     L221.GlobalTechCost_en <- get_data(all_data, "L221.GlobalTechCost_en")
     L221.GlobalTechShrwt_en <- get_data(all_data, "L221.GlobalTechShrwt_en")
     L221.PrimaryConsKeyword_en <- get_data(all_data, "L221.PrimaryConsKeyword_en")
@@ -111,6 +113,7 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
     en_supply.xml %>%
       add_xml_data(L221.StubTech_en, "StubTech") %>%
       add_xml_data(L221.GlobalTechCoef_en, "GlobalTechCoef") %>%
+      add_xml_data(L221.StubTechCoef_bioOil, "StubTechCoef") %>%
       add_xml_data(L221.GlobalTechCost_en, "GlobalTechCost") %>%
       add_xml_data(L221.GlobalTechShrwt_en, "GlobalTechShrwt") %>%
       add_xml_data(L221.PrimaryConsKeyword_en, "PrimaryConsKeyword") %>%
@@ -131,7 +134,7 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
       add_xml_data(L221.StubTechShrwt_bioOil, "StubTechShrwt") %>%
       add_precursors("L221.Supplysector_en", "L221.SectorUseTrialMarket_en", "L221.SubsectorLogit_en",
                      "L221.SubsectorShrwt_en", "L221.SubsectorShrwtFllt_en", "L221.SubsectorInterp_en",
-                     "L221.SubsectorInterpTo_en", "L221.StubTech_en", "L221.GlobalTechCoef_en",
+                     "L221.SubsectorInterpTo_en", "L221.StubTech_en", "L221.GlobalTechCoef_en", "L221.StubTechCoef_bioOil",
                      "L221.GlobalTechCost_en", "L221.GlobalTechShrwt_en", "L221.PrimaryConsKeyword_en",
                      "L221.StubTechFractSecOut_en", "L221.StubTechFractProd_en", "L221.StubTechFractCalPrice_en",
                      "L221.Rsrc_en", "L221.RsrcPrice_en", "L221.TechCoef_en_Traded", "L221.TechCost_en_Traded",

@@ -43,7 +43,7 @@ module_aglu_LB124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
+    L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU", strip_attributes = TRUE)
     L122.LC_bm2_R_ExtraCropLand_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_ExtraCropLand_Yh_GLU")
     L123.LC_bm2_R_MgdPast_Yh_GLU <- get_data(all_data, "L123.LC_bm2_R_MgdPast_Yh_GLU")
     L123.LC_bm2_R_MgdFor_Yh_GLU <- get_data(all_data, "L123.LC_bm2_R_MgdFor_Yh_GLU")

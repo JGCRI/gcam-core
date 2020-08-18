@@ -2,7 +2,7 @@
 
 #' module_aglu_L240.ag_trade
 #'
-#' Model input for regional and (globally) traded agricultural commodities
+#' Model input for regional and (globally) traded agricultural crops and livestock commodities
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -28,6 +28,7 @@ module_aglu_L240.ag_trade <- function(command, ...) {
              FILE = "aglu/A_agTradedSubsector",
              FILE = "aglu/A_agTradedTechnology",
              "L109.ag_ALL_Mt_R_C_Y",
+             "L109.an_ALL_Mt_R_C_Y",
              "L1091.GrossTrade_Mt_R_C_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L240.Supplysector_tra",
@@ -49,18 +50,25 @@ module_aglu_L240.ag_trade <- function(command, ...) {
 
     year <- region <- supplysector <- subsector <- GCAM_commodity <- GrossExp_Mt <-
       calOutputValue <- subs.share.weight <- market.name <- minicam.energy.input <-
-      GrossImp_Mt <- Prod_Mt <- NULL # silence package check notes
+      GrossImp_Mt <- Prod_Mt <- GCAM_region_ID <- NetExp_Mt <- NULL # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A_agRegionalSector <- get_data(all_data, "aglu/A_agRegionalSector")
-    A_agRegionalSubsector <- get_data(all_data, "aglu/A_agRegionalSubsector")
-    A_agRegionalTechnology <- get_data(all_data, "aglu/A_agRegionalTechnology")
-    A_agTradedSector <- get_data(all_data, "aglu/A_agTradedSector")
-    A_agTradedSubsector <- get_data(all_data, "aglu/A_agTradedSubsector")
-    A_agTradedTechnology <- get_data(all_data, "aglu/A_agTradedTechnology")
+    A_agRegionalSector <- get_data(all_data, "aglu/A_agRegionalSector", strip_attributes = TRUE)
+    A_agRegionalSubsector <- get_data(all_data, "aglu/A_agRegionalSubsector", strip_attributes = TRUE)
+    A_agRegionalTechnology <- get_data(all_data, "aglu/A_agRegionalTechnology", strip_attributes = TRUE)
+    A_agTradedSector <- get_data(all_data, "aglu/A_agTradedSector", strip_attributes = TRUE)
+    A_agTradedSubsector <- get_data(all_data, "aglu/A_agTradedSubsector", strip_attributes = TRUE)
+    A_agTradedTechnology <- get_data(all_data, "aglu/A_agTradedTechnology", strip_attributes = TRUE)
     L109.ag_ALL_Mt_R_C_Y <- get_data(all_data, "L109.ag_ALL_Mt_R_C_Y")
+    L109.an_ALL_Mt_R_C_Y <- get_data(all_data, "L109.an_ALL_Mt_R_C_Y")
     L1091.GrossTrade_Mt_R_C_Y <- get_data(all_data, "L1091.GrossTrade_Mt_R_C_Y")
+
+    # 0: Bind crops and livestock for prod and netexp
+    L109.ag_an_ALL_Mt_R_C_Y <- L109.ag_ALL_Mt_R_C_Y %>%
+      select(GCAM_region_ID, GCAM_commodity, year, Prod_Mt, NetExp_Mt) %>%
+      bind_rows(L109.an_ALL_Mt_R_C_Y %>%
+                  select(GCAM_region_ID, GCAM_commodity, year, Prod_Mt, NetExp_Mt))
 
     # 1. TRADED SECTOR / SUBSECTOR / TECHNOLOGY")
     # L240.Supplysector_tra: generic supplysector info for traded ag commodities
@@ -167,7 +175,7 @@ module_aglu_L240.ag_trade <- function(command, ...) {
                                                            GCAM_region_names,
                                                            by = "GCAM_region_ID") %>%
       select(region, GCAM_commodity, year, GrossExp_Mt)
-    L240.Prod_Mt_R_C_Y <- left_join_error_no_match(L109.ag_ALL_Mt_R_C_Y,
+    L240.Prod_Mt_R_C_Y <- left_join_error_no_match(L109.ag_an_ALL_Mt_R_C_Y,
                                                    GCAM_region_names,
                                                    by = "GCAM_region_ID") %>%
       select(region, GCAM_commodity, year, Prod_Mt)
@@ -290,6 +298,7 @@ module_aglu_L240.ag_trade <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "aglu/A_agRegionalTechnology",
                      "L109.ag_ALL_Mt_R_C_Y",
+                     "L109.an_ALL_Mt_R_C_Y",
                      "L1091.GrossTrade_Mt_R_C_Y") ->
       L240.Production_reg_dom
 

@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_L210.resources_USA
+#' module_gcamusa_L210.resources_USA
 #'
 #' GCAM-USA resource market information, prices, TechChange parameters, and supply curves.
 #'
@@ -9,14 +9,14 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L210.DeleteRenewRsrc_USArsrc}, \code{L210.DeleteUnlimitRsrc_USArsrc}, \code{L210.RenewRsrc_USA},
-#' \code{L210.UnlimitRsrc_USA}, \code{L210.UnlimitRsrcPrice_USA}, \code{L210.SmthRenewRsrcTechChange_USA},
-#' \code{L210.SmthRenewRsrcCurves_wind_USA}, \code{L210.GrdRenewRsrcCurves_geo_USA}, \code{L210.GrdRenewRsrcMax_geo_USA},
+#' \code{L210.UnlimitRsrc_USA}, \code{L210.UnlimitRsrcPrice_USA}, \code{L210.SmthRenewRsrcTechChange_USA}, \code{L210.SmthRenewRsrcTechChange_offshore_wind_USA},
+#' \code{L210.SmthRenewRsrcCurves_wind_USA}, \code{L210.SmthRenewRsrcCurves_offshore_wind_USA}, \code{L210.GrdRenewRsrcCurves_geo_USA}, \code{L210.GrdRenewRsrcMax_geo_USA},
 #' \code{L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA}, \code{L210.DeleteUnlimitRsrc_USAlimestone},
 #' \code{L210.UnlimitRsrc_limestone_USA}, \code{L210.UnlimitRsrcPrice_limestone_USA}, \code{L210.ResTechShrwt_USA}. The corresponding file in the
 #' original data system was \code{L210.resources_USA.R} (gcam-usa level2).
 #' @details GCAM-USA resource market information, prices, TechChange parameters, and supply curves.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr anti_join filter if_else group_by lag mutate select summarise
+#' @importFrom dplyr anti_join filter if_else group_by lag mutate select summarise bind_rows
 #' @author RLH November 2017
 
 module_gcamusa_L210.resources_USA <- function(command, ...) {
@@ -25,7 +25,9 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
              FILE = "energy/calibrated_techs",
              FILE = "gcam-usa/NREL_us_re_technical_potential",
              FILE = "gcam-usa/us_state_wind",
+             FILE = "gcam-usa/A10.renewable_resource_delete",
              "L115.rsrc_state_rooftopPV",
+             "L120.RsrcCurves_EJ_R_offshore_wind_USA",
              "L1231.out_EJ_state_elec_F_tech",
              "L1321.out_Mt_state_cement_Yh",
              "L210.RenewRsrc",
@@ -35,7 +37,8 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
              "L210.SmthRenewRsrcCurves_wind",
              "L210.SmthRenewRsrcCurvesGdpElast_roofPV",
              "L210.GrdRenewRsrcCurves_geo",
-             "L210.GrdRenewRsrcMax_geo"))
+             "L210.GrdRenewRsrcMax_geo",
+             "L210.SmthRenewRsrcTechChange_offshore_wind"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L210.DeleteRenewRsrc_USArsrc", #
              "L210.DeleteUnlimitRsrc_USArsrc", #
@@ -43,7 +46,9 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
              "L210.UnlimitRsrc_USA", #
              "L210.UnlimitRsrcPrice_USA", #
              "L210.SmthRenewRsrcTechChange_USA", #
+             "L210.SmthRenewRsrcTechChange_offshore_wind_USA", #
              "L210.SmthRenewRsrcCurves_wind_USA", #
+             "L210.SmthRenewRsrcCurves_offshore_wind_USA", #
              "L210.GrdRenewRsrcCurves_geo_USA", #
              "L210.GrdRenewRsrcMax_geo_USA", #
              "L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA", #
@@ -67,20 +72,26 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")
     us_state_wind <- get_data(all_data, "gcam-usa/us_state_wind")
+    A10.renewable_resource_delete <- get_data(all_data, "gcam-usa/A10.renewable_resource_delete")
     L115.rsrc_state_rooftopPV <- get_data(all_data, "L115.rsrc_state_rooftopPV")
+    L120.RsrcCurves_EJ_R_offshore_wind_USA <- get_data(all_data, "L120.RsrcCurves_EJ_R_offshore_wind_USA", strip_attributes = TRUE)
     L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "L1231.out_EJ_state_elec_F_tech")
     L1321.out_Mt_state_cement_Yh <- get_data(all_data, "L1321.out_Mt_state_cement_Yh")
-    L210.RenewRsrc <- get_data(all_data, "L210.RenewRsrc")
-    L210.UnlimitRsrc <- get_data(all_data, "L210.UnlimitRsrc")
-    L210.UnlimitRsrcPrice <- get_data(all_data, "L210.UnlimitRsrcPrice")
-    L210.SmthRenewRsrcTechChange <- get_data(all_data, "L210.SmthRenewRsrcTechChange")
-    L210.SmthRenewRsrcCurves_wind <- get_data(all_data, "L210.SmthRenewRsrcCurves_wind")
-    L210.SmthRenewRsrcCurvesGdpElast_roofPV <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElast_roofPV")
+    L210.RenewRsrc <- get_data(all_data, "L210.RenewRsrc", strip_attributes = TRUE)
+    L210.UnlimitRsrc <- get_data(all_data, "L210.UnlimitRsrc", strip_attributes = TRUE)
+    L210.UnlimitRsrcPrice <- get_data(all_data, "L210.UnlimitRsrcPrice", strip_attributes = TRUE)
+    L210.SmthRenewRsrcTechChange <- get_data(all_data, "L210.SmthRenewRsrcTechChange", strip_attributes = TRUE)
+    L210.SmthRenewRsrcCurves_wind <- get_data(all_data, "L210.SmthRenewRsrcCurves_wind", strip_attributes = TRUE)
+    L210.SmthRenewRsrcCurvesGdpElast_roofPV <- get_data(all_data, "L210.SmthRenewRsrcCurvesGdpElast_roofPV", strip_attributes = TRUE)
     L210.GrdRenewRsrcCurves_geo <- get_data(all_data, "L210.GrdRenewRsrcCurves_geo")
-    L210.GrdRenewRsrcMax_geo <- get_data(all_data, "L210.GrdRenewRsrcMax_geo")
+    L210.GrdRenewRsrcMax_geo <- get_data(all_data, "L210.GrdRenewRsrcMax_geo", strip_attributes = TRUE)
+    L210.SmthRenewRsrcTechChange_offshore_wind <- get_data(all_data, "L210.SmthRenewRsrcTechChange_offshore_wind", strip_attributes = TRUE)
     # ===================================================
     # States that produce cement
     cement_states <- unique(L1321.out_Mt_state_cement_Yh$state)
+
+    # States which have offshore wind resource
+    offshore_wind_states <- unique(L120.RsrcCurves_EJ_R_offshore_wind_USA$region)
 
     # NOTE: geothermal resource is not created in the states considered to have zero hydrothermal production available
     NREL_us_re_technical_potential <- NREL_us_re_technical_potential %>%
@@ -107,8 +118,8 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
       filter(region == gcam.USA_REGION,
              renewresource %in% gcamusa.STATE_RENEWABLE_RESOURCES) %>%
       select(region, renewresource) %>%
-    # filtering and selecting was not removing attributes from L210.RenewRsrc, so we add this meaningless mutate
-    mutate(region = region)
+      # filtering and selecting was not removing attributes from L210.RenewRsrc, so we add this meaningless mutate
+      mutate(region = region)
 
     # L210.DeleteUnlimitRsrc_USArsrc: remove selected renewable resources from the USA region
     L210.DeleteUnlimitRsrc_USArsrc <- L210.UnlimitRsrc %>%
@@ -134,11 +145,25 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
       anti_join(geo_states_noresource, by = c("region", "renewresource")) %>%
       mutate(market = region)
 
+    # Remove offshore wind in states with no resource
+    L210.RenewRsrc_USA %>%
+      filter(renewresource != "offshore wind resource") %>%
+      bind_rows(L210.RenewRsrc_USA %>%
+                  filter(renewresource == "offshore wind resource", region %in% offshore_wind_states)) %>%
+      # Wind power is assumed to be infeasible in DC. Thus, it should not be assigned "onshore wind resource".
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete, by = c("region", "renewresource" = "resource_elec_subsector")) ->
+      L210.ResTechShrwt_USA-> L210.RenewRsrc_USA
+
     # L210.UnlimitRsrc_USA: unlimited resource info in the states
     L210.UnlimitRsrc_USA <- L210.UnlimitRsrc %>%
       filter(region == gcam.USA_REGION,
              unlimited.resource %in% gcamusa.STATE_UNLIMITED_RESOURCES) %>%
-      write_to_all_states(LEVEL2_DATA_NAMES[["UnlimitRsrc"]])
+      write_to_all_states(LEVEL2_DATA_NAMES[["UnlimitRsrc"]]) %>%
+      # Utility-scale (i.e. non-rooftop) solar is assumed to be infeasible in DC.
+      # Thus, it should not be assigned "global solar resource".
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete, by = c("region", "unlimited.resource" = "resource_elec_subsector"))
 
     L210.UnlimitRsrc_limestone_USA <- L210.UnlimitRsrc_USA %>%
       filter(unlimited.resource == "limestone",
@@ -151,7 +176,11 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
     L210.UnlimitRsrcPrice_USA <- L210.UnlimitRsrcPrice %>%
       filter(region == gcam.USA_REGION,
              unlimited.resource %in% gcamusa.STATE_UNLIMITED_RESOURCES) %>%
-      write_to_all_states(LEVEL2_DATA_NAMES[["UnlimitRsrcPrice"]])
+      write_to_all_states(LEVEL2_DATA_NAMES[["UnlimitRsrcPrice"]]) %>%
+      # Utility-scale (i.e. non-rooftop) solar is assumed to be infeasible in DC.
+      # Thus, it should not be assigned "global solar resource".
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete, by = c("region", "unlimited.resource" = "resource_elec_subsector"))
 
     L210.UnlimitRsrcPrice_limestone_USA <- L210.UnlimitRsrcPrice_USA %>%
       filter(unlimited.resource == "limestone",
@@ -168,6 +197,12 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
       # If geothermal is included in this table, remove states that don't exist
       anti_join(geo_states_noresource, by = c("region", "renewresource"))
 
+    # L210.SmthRenewRsrcTechChange_offshore_wind_USA: technological change for offshore wind
+    L210.SmthRenewRsrcTechChange_offshore_wind_USA <- L210.SmthRenewRsrcTechChange_offshore_wind %>%
+      filter(region == gcam.USA_REGION) %>%
+      write_to_all_states(LEVEL2_DATA_NAMES[["SmthRenewRsrcTechChange"]]) %>%
+      filter(region %in% offshore_wind_states)
+
     # L210.SmthRenewRsrcCurves_wind_USA: wind resource curves in the states
     L210.SmthRenewRsrcCurves_wind_USA <- L210.SmthRenewRsrcCurves_wind %>%
       filter(region == gcam.USA_REGION) %>%
@@ -177,7 +212,14 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
       # Convert us_state_wind units from 2007$/kWh to 1975$/GJ
       mutate(mid_price = mid_price * gdp_deflator(1975, 2007) / CONV_KWH_GJ) %>%
       select(region = state, renewresource, smooth.renewable.subresource, year.fillout,
-             maxSubResource = maxResource, mid.price = mid_price, curve.exponent = curve_exponent)
+             maxSubResource = maxResource, mid.price = mid_price, curve.exponent = curve_exponent) %>%
+      # Wind power is assumed to be infeasible in DC. Thus, it should not be assigned "onshore wind resource".
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete, by = c("region", "renewresource" = "resource_elec_subsector"))
+
+    # L210.SmthRenewRsrcCurves_offshore_wind_USA: supply curves of offshore wind resources in the states
+    L210.SmthRenewRsrcCurves_offshore_wind_USA <- L120.RsrcCurves_EJ_R_offshore_wind_USA %>%
+      mutate(year.fillout = min(MODEL_BASE_YEARS))
 
     # L210.GrdRenewRsrcCurves_geo_USA: geothermal resource curves in the states
     L210.GrdRenewRsrcCurves_geo_USA <- L210.GrdRenewRsrcCurves_geo %>%
@@ -233,11 +275,16 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
       select(region, resource = renewresource, subresource = smooth.renewable.subresource) %>%
       bind_rows(select(L210.GrdRenewRsrcMax_geo_USA, region, resource = renewresource, subresource = sub.renewable.resource)) %>%
       bind_rows(select(L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA, region, resource = renewresource, subresource = smooth.renewable.subresource)) %>%
+      bind_rows(select(L210.SmthRenewRsrcCurves_offshore_wind_USA, region, resource = renewresource, subresource = smooth.renewable.subresource)) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(technology = subresource,
              share.weight = 1.0) %>%
-      select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
+      select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) %>%
+      # Wind power is assumed to be infeasible in DC. Thus, it should not be assigned "onshore wind resource".
+      # Use anti_join to remove it from the table.
+      anti_join(A10.renewable_resource_delete, by = c("region", "resource" = "resource_elec_subsector")) ->
       L210.ResTechShrwt_USA
+
     # ===================================================
 
     # Produce outputs
@@ -270,7 +317,10 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("L210.RenewRsrc filtered and written to all states") %>%
       add_legacy_name("L210.RenewRsrc_USA") %>%
-      add_precursors("L210.RenewRsrc", "gcam-usa/NREL_us_re_technical_potential", "gcam-usa/states_subregions") ->
+      add_precursors("L210.RenewRsrc",
+                     "gcam-usa/NREL_us_re_technical_potential",
+                     "gcam-usa/states_subregions",
+                     "gcam-usa/A10.renewable_resource_delete") ->
       L210.RenewRsrc_USA
 
     L210.UnlimitRsrc_USA %>%
@@ -278,7 +328,8 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("L210.UnlimitRsrc filtered and written to all states") %>%
       add_legacy_name("L210.UnlimitRsrc_USA") %>%
-      add_precursors("L210.UnlimitRsrc") ->
+      add_precursors("L210.UnlimitRsrc",
+                     "gcam-usa/A10.renewable_resource_delete") ->
       L210.UnlimitRsrc_USA
 
     L210.UnlimitRsrc_limestone_USA %>%
@@ -286,7 +337,8 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("L210.UnlimitRsrc filtered and written to all states") %>%
       add_legacy_name("L210.UnlimitRsrc_limestone_USA") %>%
-      add_precursors("L210.UnlimitRsrc", "L1321.out_Mt_state_cement_Yh") ->
+      add_precursors("L210.UnlimitRsrc",
+                     "L1321.out_Mt_state_cement_Yh") ->
       L210.UnlimitRsrc_limestone_USA
 
     L210.UnlimitRsrcPrice_USA %>%
@@ -294,7 +346,8 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
       add_units("1975$/GJ") %>%
       add_comments("L210.UnlimitRsrcPrice filtered and written to all states") %>%
       add_legacy_name("L210.UnlimitRsrcPrice_USA") %>%
-      add_precursors("L210.UnlimitRsrcPrice") ->
+      add_precursors("L210.UnlimitRsrcPrice",
+                     "gcam-usa/A10.renewable_resource_delete") ->
       L210.UnlimitRsrcPrice_USA
 
     L210.UnlimitRsrcPrice_limestone_USA %>%
@@ -302,7 +355,8 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
       add_units("1975$/kg") %>%
       add_comments("L210.UnlimitRsrcPrice filtered and written to all states") %>%
       add_legacy_name("L210.UnlimitRsrcPrice_limestone_USA") %>%
-      add_precursors("L210.UnlimitRsrcPrice", "L1321.out_Mt_state_cement_Yh") ->
+      add_precursors("L210.UnlimitRsrcPrice",
+                     "L1321.out_Mt_state_cement_Yh") ->
       L210.UnlimitRsrcPrice_limestone_USA
 
     L210.SmthRenewRsrcTechChange_USA %>%
@@ -310,23 +364,44 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("L210.SmthRenewRsrcTechChange filtered and written to all states") %>%
       add_legacy_name("L210.SmthRenewRsrcTechChange_USA") %>%
-      add_precursors("L210.SmthRenewRsrcTechChange", "energy/calibrated_techs") ->
+      add_precursors("L210.SmthRenewRsrcTechChange",
+                     "energy/calibrated_techs") ->
       L210.SmthRenewRsrcTechChange_USA
+
+    L210.SmthRenewRsrcTechChange_offshore_wind_USA %>%
+      add_title("Smooth renewable resource tech change for offshore wind: USA") %>%
+      add_units("Unitless") %>%
+      add_comments("L210.SmthRenewRsrcTechChange filtered and written to all states") %>%
+      add_precursors("L210.SmthRenewRsrcTechChange",
+                     "L210.SmthRenewRsrcTechChange_offshore_wind",
+                     "energy/calibrated_techs") ->
+      L210.SmthRenewRsrcTechChange_offshore_wind_USA
 
     L210.SmthRenewRsrcCurves_wind_USA %>%
       add_title("Wind resource curves in the states") %>%
       add_units("maxSubResource: EJ; mid.price: 1975$/GJ") %>%
       add_comments("L210.SmthRenewRsrcCurves_wind filtered and written to all states") %>%
       add_legacy_name("L210.SmthRenewRsrcCurves_wind_USA") %>%
-      add_precursors("L210.SmthRenewRsrcCurves_wind", "gcam-usa/us_state_wind") ->
+      add_precursors("L210.SmthRenewRsrcCurves_wind",
+                     "gcam-usa/us_state_wind",
+                     "gcam-usa/A10.renewable_resource_delete") ->
       L210.SmthRenewRsrcCurves_wind_USA
+
+    L210.SmthRenewRsrcCurves_offshore_wind_USA %>%
+      add_title("Offshore wind resource curve USA") %>%
+      add_units("maxSubResource: EJ; mid.price: 1975$/GJ") %>%
+      add_comments("Copy of L120.RsrcCurves_EJ_R_offshore_wind_USA") %>%
+      add_precursors("L120.RsrcCurves_EJ_R_offshore_wind_USA") ->
+      L210.SmthRenewRsrcCurves_offshore_wind_USA
 
     L210.GrdRenewRsrcCurves_geo_USA %>%
       add_title("Geothermal resource curves in the states") %>%
       add_units("available: EJ; extractioncost: 1975$/GJ") %>%
       add_comments("USA data from L210.GrdRenewRsrcCurves_geo shared out with NREL_us_re_technical_potential") %>%
       add_legacy_name("L210.GrdRenewRsrcCurves_geo_USA") %>%
-      add_precursors("L210.GrdRenewRsrcCurves_geo", "gcam-usa/NREL_us_re_technical_potential", "L1231.out_EJ_state_elec_F_tech") ->
+      add_precursors("L210.GrdRenewRsrcCurves_geo",
+                     "gcam-usa/NREL_us_re_technical_potential",
+                     "L1231.out_EJ_state_elec_F_tech") ->
       L210.GrdRenewRsrcCurves_geo_USA
 
     L210.GrdRenewRsrcMax_geo_USA %>%
@@ -342,22 +417,37 @@ module_gcamusa_L210.resources_USA <- function(command, ...) {
       add_units("maxSubResource: EJ; mid.price = 1975$/GJ") %>%
       add_comments("Values from L115.rsrc_state_rooftopPV added to categories from L210.SmthRenewRsrcCurvesGdpElast_roofPV") %>%
       add_legacy_name("L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA") %>%
-      add_precursors("L210.SmthRenewRsrcCurvesGdpElast_roofPV", "L115.rsrc_state_rooftopPV") ->
+      add_precursors("L210.SmthRenewRsrcCurvesGdpElast_roofPV",
+                     "L115.rsrc_state_rooftopPV") ->
       L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA
 
     L210.ResTechShrwt_USA %>%
       add_title("Technology share-weights for the renewable resources") %>%
       add_units("NA") %>%
       add_comments("Mostly just to provide a shell of a technology for the resource to use") %>%
-      add_precursors("L210.SmthRenewRsrcCurves_wind", "gcam-usa/us_state_wind",
-                     "L210.GrdRenewRsrcMax_geo", "L210.SmthRenewRsrcCurvesGdpElast_roofPV",
-                     "L115.rsrc_state_rooftopPV") ->
+      add_precursors("L210.SmthRenewRsrcCurves_wind",
+                     "gcam-usa/us_state_wind",
+                     "L210.GrdRenewRsrcMax_geo",
+                     "L210.SmthRenewRsrcCurvesGdpElast_roofPV",
+                     "L115.rsrc_state_rooftopPV",
+                     "gcam-usa/A10.renewable_resource_delete") ->
       L210.ResTechShrwt_USA
 
-    return_data(L210.DeleteRenewRsrc_USArsrc, L210.DeleteUnlimitRsrc_USArsrc, L210.RenewRsrc_USA, L210.UnlimitRsrc_USA,
-                L210.UnlimitRsrcPrice_USA, L210.SmthRenewRsrcTechChange_USA, L210.SmthRenewRsrcCurves_wind_USA,
-                L210.GrdRenewRsrcCurves_geo_USA, L210.GrdRenewRsrcMax_geo_USA, L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA,
-                L210.DeleteUnlimitRsrc_USAlimestone, L210.UnlimitRsrc_limestone_USA, L210.UnlimitRsrcPrice_limestone_USA,
+    return_data(L210.DeleteRenewRsrc_USArsrc,
+                L210.DeleteUnlimitRsrc_USArsrc,
+                L210.RenewRsrc_USA,
+                L210.UnlimitRsrc_USA,
+                L210.UnlimitRsrcPrice_USA,
+                L210.SmthRenewRsrcTechChange_USA,
+                L210.SmthRenewRsrcTechChange_offshore_wind_USA,
+                L210.SmthRenewRsrcCurves_wind_USA,
+                L210.SmthRenewRsrcCurves_offshore_wind_USA,
+                L210.GrdRenewRsrcCurves_geo_USA,
+                L210.GrdRenewRsrcMax_geo_USA,
+                L210.SmthRenewRsrcCurvesGdpElast_roofPV_USA,
+                L210.DeleteUnlimitRsrc_USAlimestone,
+                L210.UnlimitRsrc_limestone_USA,
+                L210.UnlimitRsrcPrice_limestone_USA,
                 L210.ResTechShrwt_USA)
   } else {
     stop("Unknown command")

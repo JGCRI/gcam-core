@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_L222.en_transformation_USA
+#' module_gcamusa_L222.en_transformation_USA
 #'
 #' Prepare the assumptions and calibrated outputs for energy transformation supplysectors, subsectors, and technologies specific to USA sectors and/or states.
 #'
@@ -69,21 +69,16 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     SEDS_refining_feedstock_prod <- get_data(all_data, "gcam-usa/SEDS_refining_feedstock_prod")
     L222.Supplysector_en <- get_data(all_data, "L222.Supplysector_en")
-    L222.SubsectorLogit_en <- get_data(all_data, "L222.SubsectorLogit_en")
-    L222.StubTech_en <- get_data(all_data, "L222.StubTech_en")
-    L222.StubTechCoef_refining <- get_data(all_data, "L222.StubTechCoef_refining")
-    L222.GlobalTechInterp_en <- get_data(all_data, "L222.GlobalTechInterp_en")
-    L222.GlobalTechCoef_en <- get_data(all_data, "L222.GlobalTechCoef_en")
-    L222.GlobalTechCost_en <- get_data(all_data, "L222.GlobalTechCost_en")
-    L222.GlobalTechShrwt_en <- get_data(all_data, "L222.GlobalTechShrwt_en")
-    L222.GlobalTechCapture_en <- get_data(all_data, "L222.GlobalTechCapture_en")
-    # L222.GlobalTechShutdownProfit_en <- get_data(all_data, "L222.GlobalTechShutdownProfit_en")
-    # L222.GlobalTechShutdown_en <- get_data(all_data, "L222.GlobalTechShutdown_en")
-    # L222.GlobalTechSCurveProfit_en <- get_data(all_data, "L222.GlobalTechSCurveProfit_en")
-    L222.GlobalTechSCurve_en <- get_data(all_data, "L222.GlobalTechSCurve_en")
-    # L222.GlobalTechLifetimeProfit_en <- get_data(all_data, "L222.GlobalTechLifetimeProfit_en")
-    # L222.GlobalTechLifetime_en <- get_data(all_data, "L222.GlobalTechLifetime_en")
-    L122.out_EJ_state_refining_F <- get_data(all_data, "L122.out_EJ_state_refining_F")
+    L222.SubsectorLogit_en <- get_data(all_data, "L222.SubsectorLogit_en", strip_attributes = TRUE)
+    L222.StubTech_en <- get_data(all_data, "L222.StubTech_en", strip_attributes = TRUE)
+    L222.StubTechCoef_refining <- get_data(all_data, "L222.StubTechCoef_refining", strip_attributes = TRUE)
+    L222.GlobalTechInterp_en <- get_data(all_data, "L222.GlobalTechInterp_en", strip_attributes = TRUE)
+    L222.GlobalTechCoef_en <- get_data(all_data, "L222.GlobalTechCoef_en", strip_attributes = TRUE)
+    L222.GlobalTechCost_en <- get_data(all_data, "L222.GlobalTechCost_en", strip_attributes = TRUE)
+    L222.GlobalTechShrwt_en <- get_data(all_data, "L222.GlobalTechShrwt_en", strip_attributes = TRUE)
+    L222.GlobalTechCapture_en <- get_data(all_data, "L222.GlobalTechCapture_en", strip_attributes = TRUE)
+    L222.GlobalTechSCurve_en <- get_data(all_data, "L222.GlobalTechSCurve_en", strip_attributes = TRUE)
+    L122.out_EJ_state_refining_F <- get_data(all_data, "L122.out_EJ_state_refining_F", strip_attributes = TRUE)
     L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
 
     # silence check package notes

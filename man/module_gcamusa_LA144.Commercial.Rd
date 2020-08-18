@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA144.Commercial.R
 \name{module_gcamusa_LA144.Commercial}
 \alias{module_gcamusa_LA144.Commercial}
-\title{module_gcam.usa_LA144.Commercial}
+\title{module_gcamusa_LA144.Commercial}
 \usage{
 module_gcamusa_LA144.Commercial(command, ...)
 }

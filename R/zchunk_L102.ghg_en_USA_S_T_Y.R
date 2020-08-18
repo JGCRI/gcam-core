@@ -21,6 +21,7 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
              FILE = "energy/mappings/IEA_product_fuel",
              FILE = "emissions/mappings/EPA_ghg_tech",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              "L101.in_EJ_R_en_Si_F_Yh",
              FILE = "emissions/EPA_FCCC_GHG_2005"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -39,6 +40,13 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
     IEA_product_fuel <- get_data(all_data, "energy/mappings/IEA_product_fuel")
     EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
+
     get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh") %>%
       gather_years(value_col = "energy") ->
       L101.in_EJ_R_en_Si_F_Yh
@@ -93,6 +101,7 @@ module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
                      "energy/mappings/IEA_product_fuel",
                      "emissions/mappings/EPA_ghg_tech",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "emissions/EPA_FCCC_GHG_2005",
                      "L101.in_EJ_R_en_Si_F_Yh") ->
       L102.ghg_tgej_USA_en_Sepa_F_2005

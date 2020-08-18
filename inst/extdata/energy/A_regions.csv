@@ -34,6 +34,6 @@ GCAM_region_ID,region,tradbio_region,ethanol,biodiesel,biomassOil_tech,elect_td_
 27,South Asia,1,corn ethanol,biodiesel,OilCrop,0.00025,0,E
 28,South Korea,0,corn ethanol,biodiesel,OilCrop,0.0001,0,D
 29,Southeast Asia,1,sugar cane ethanol,biodiesel,PalmFruit,0.00025,0,E
-30,Taiwan,0,cellulosic ethanol,FT biofuels,,0.0001,0,D
+30,Taiwan,0,sugar cane ethanol,biodiesel,OilCrop,0.0001,0,D
 31,Argentina,1,corn ethanol,biodiesel,OilCrop,0.00075,0,D
 32,Colombia,1,sugar cane ethanol,biodiesel,OilCrop,0.00075,0,D

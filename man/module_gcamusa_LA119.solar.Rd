@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LA119.solar_USA.R
 \name{module_gcamusa_LA119.solar}
 \alias{module_gcamusa_LA119.solar}
-\title{module_gcam.usa_LA119.Solar}
+\title{module_gcamusa_LA119.Solar}
 \usage{
 module_gcamusa_LA119.solar(command, ...)
 }

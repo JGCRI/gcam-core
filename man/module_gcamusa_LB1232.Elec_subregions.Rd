@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_LB1232.Elec_subregions.R
 \name{module_gcamusa_LB1232.Elec_subregions}
 \alias{module_gcamusa_LB1232.Elec_subregions}
-\title{module_gcam.usa_LB1232.Elec_subregions}
+\title{module_gcamusa_LB1232.Elec_subregions}
 \usage{
 module_gcamusa_LB1232.Elec_subregions(command, ...)
 }

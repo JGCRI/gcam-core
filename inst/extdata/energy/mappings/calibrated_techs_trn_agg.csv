@@ -1,8 +1,8 @@
-# File: calibrated_techs_trn_agg.csv,
-# Title: Aggregate transportation and UCD category mapping,
-# Units: NA,
-# Description: mapping between sector / fuel to supplysector/subsector/technology in aggregate transportation and UCD_category,
-# Source: Mishra et al. 2013,
+# File: calibrated_techs_trn_agg.csv
+# Title: Aggregate transportation and UCD category mapping
+# Units: NA
+# Description: mapping between sector / fuel to supplysector/subsector/technology in aggregate transportation and UCD_category
+# Source: Mishra et al. 2013
 # Column types: cccccccc 
 # ----------
 sector,fuel,supplysector,subsector,technology,minicam.energy.input,calibration,UCD_category

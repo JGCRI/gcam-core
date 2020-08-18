@@ -17,6 +17,7 @@ module_energy_batch_electricity_xml <- function(command, ...) {
               "L223.SubsectorLogit_elec",
               "L223.SubsectorShrwtFllt_elec",
               "L223.SubsectorShrwt_elec",
+              "L223.SubsectorShrwt_coal",
               "L223.SubsectorShrwt_nuc",
               "L223.SubsectorShrwt_renew",
               "L223.SubsectorInterp_elec",
@@ -41,6 +42,7 @@ module_energy_batch_electricity_xml <- function(command, ...) {
               "L223.GlobalTechCapture_elec",
               "L223.GlobalIntTechBackup_elec",
               "L223.StubTechCapFactor_elec",
+              "L223.StubTechCost_offshore_wind",
               "L223.GlobalTechSCurve_elec",
               "L223.GlobalTechLifetime_elec",
               "L223.GlobalIntTechLifetime_elec",
@@ -62,6 +64,7 @@ module_energy_batch_electricity_xml <- function(command, ...) {
     L223.SubsectorLogit_elec <- get_data(all_data, "L223.SubsectorLogit_elec")
     L223.SubsectorShrwtFllt_elec <- get_data(all_data, "L223.SubsectorShrwtFllt_elec")
     L223.SubsectorShrwt_elec <- get_data(all_data, "L223.SubsectorShrwt_elec")
+    L223.SubsectorShrwt_coal <- get_data(all_data, "L223.SubsectorShrwt_coal")
     L223.SubsectorShrwt_nuc <- get_data(all_data, "L223.SubsectorShrwt_nuc")
     L223.SubsectorShrwt_renew <- get_data(all_data, "L223.SubsectorShrwt_renew")
     L223.SubsectorInterp_elec <- get_data(all_data, "L223.SubsectorInterp_elec")
@@ -86,6 +89,7 @@ module_energy_batch_electricity_xml <- function(command, ...) {
     L223.GlobalTechCapture_elec <- get_data(all_data, "L223.GlobalTechCapture_elec")
     L223.GlobalIntTechBackup_elec <- get_data(all_data, "L223.GlobalIntTechBackup_elec")
     L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec")
+    L223.StubTechCost_offshore_wind<- get_data(all_data, "L223.StubTechCost_offshore_wind")
     L223.GlobalTechSCurve_elec <- get_data(all_data, "L223.GlobalTechSCurve_elec")
     L223.GlobalTechLifetime_elec <- get_data(all_data, "L223.GlobalTechLifetime_elec")
     L223.GlobalIntTechLifetime_elec <- get_data(all_data, "L223.GlobalIntTechLifetime_elec")
@@ -113,6 +117,7 @@ module_energy_batch_electricity_xml <- function(command, ...) {
       add_logit_tables_xml(L223.SubsectorLogit_elec, "SubsectorLogit") %>%
       add_xml_data(L223.SubsectorShrwtFllt_elec, "SubsectorShrwtFllt") %>%
       add_xml_data(L223.SubsectorShrwt_elec, "SubsectorShrwt") %>%
+      add_xml_data(L223.SubsectorShrwt_coal, "SubsectorShrwt") %>%
       add_xml_data(L223.SubsectorShrwt_nuc, "SubsectorShrwt") %>%
       add_xml_data(L223.SubsectorShrwt_renew, "SubsectorShrwt") %>%
       add_xml_data(L223.SubsectorInterp_elec, "SubsectorInterp") %>%
@@ -137,6 +142,7 @@ module_energy_batch_electricity_xml <- function(command, ...) {
       add_xml_data(L223.GlobalTechCapture_elec, "GlobalTechCapture") %>%
       add_xml_data(L223.GlobalIntTechBackup_elec, "GlobalIntTechBackup") %>%
       add_xml_data(L223.StubTechCapFactor_elec, "StubTechCapFactor") %>%
+      add_xml_data(L223.StubTechCost_offshore_wind, "StubTechCost") %>%
       add_xml_data(L223.GlobalTechSCurve_elec, "GlobalTechSCurve") %>%
       add_xml_data(L223.GlobalTechLifetime_elec, "GlobalTechLifetime") %>%
       add_xml_data(L223.GlobalIntTechLifetime_elec, "GlobalIntTechLifetime") %>%
@@ -151,6 +157,7 @@ module_energy_batch_electricity_xml <- function(command, ...) {
                      "L223.SubsectorLogit_elec",
                      "L223.SubsectorShrwtFllt_elec",
                      "L223.SubsectorShrwt_elec",
+                     "L223.SubsectorShrwt_coal",
                      "L223.SubsectorShrwt_nuc",
                      "L223.SubsectorShrwt_renew",
                      "L223.SubsectorInterp_elec",
@@ -175,6 +182,7 @@ module_energy_batch_electricity_xml <- function(command, ...) {
                      "L223.GlobalTechCapture_elec",
                      "L223.GlobalIntTechBackup_elec",
                      "L223.StubTechCapFactor_elec",
+                     "L223.StubTechCost_offshore_wind",
                      "L223.GlobalTechSCurve_elec",
                      "L223.GlobalTechLifetime_elec",
                      "L223.GlobalIntTechLifetime_elec",

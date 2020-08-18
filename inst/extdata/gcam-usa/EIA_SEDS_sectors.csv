@@ -1,35 +1,50 @@
 # File: EIA_SEDS_sectors.csv
-# Title: Convert EIA_sector code to GCAM_sector name
+# Title: Convert EIA_sector code to GCAM_sector name, https://www.eia.gov/state/seds/CDF/Codes_and_Descriptions.xlsx
 # Units: NA
-# Column types: ccc 
+# Column types: ccc
 # ----------
 EIA_sector,GCAM_sector,description
 AC,trn_all,transportation sector consumption
 AP,,transportation sector per capita consumption
+AS,,fuel consumed by the transportation sector adjusted for process fuel
 CC,comm,commercial sector consumption
 CP,,commercial sector per capita consumption
+CS,," fuel consumed by the commercial sector, adjusted for process fuel, intermediate products, and fuels with no direct cost"
+CT,,"factor converting petroleum coke, catalyst coke physical units to Btu, United States only"
+CX,,fuel consumed in the commercial sector at no cost
 EG,electricity_output,electric power sector generation
 EI,electricity_input,electric power sector consumption
 ET,,"electricity ""total"" (equal to generation)"
 EX,,electricity exports to outside the US
+FD,,inputs (feedstock) for the production of fuel ethanol
+GD,,energy expenditures as percent of current-dollar GDP
 HC,,"distributed photovoltaic and solar thermal energy consumed by the residential, commercial, and industrial sectors, other than power generated at commercial and industrial facilities with capacity of 1 megawatt or greater"
 IC,industry,industrial sector consumption
 IM,,electricity imports from other countries
 IN,,"industrial sector, for supplemental gases only"
 IP,,industrial sector per capita consumption
 IS,electricity dom imports,net electricity imports from other states (positive = import; negative = export)
+IX,,fuel consumed in the industrial sector at no cost
 KC,,coke plants
 LC,corn ethanol,biofuels energy losses and coproducts
 LP,,lease and plant fuel
+MK,,"factor converting petroleum coke, marketable coke physical units to Btu, United States only"
+MP,, marketed production
 NI,electricity intl imports,net electricity imports from other countries (positive = import; negative = export)
 OC,,other industrial users
 OP,,population query
-PR,,GDP variable name
+OS,,coal consumed by the industrial sector other than coke plants excluding refinery fuel
+PF,,total energy used as process fuel and other consumption that has no direct fuel costs
+PR,,fuel production
 PZ,gas pipeline,gas pipeline losses
+R7,,solar photovoltaic electricity generation by small-scale applications in the residential sector
 RC,resid,residential sector consumption
+RF,,fuel consumed as refinery fuel
 RP,,residential sector per capita consumption
+RS,,"fuel consumed by the residential sector, adjusted for process fuel, intermediate products, and fuels with no direct cost"
+SC,,fuel total consumption adjusted for process fuel
+RX,,wood consumed in the residential sector at no cost
 TC,,total consumption of all sectors
 TG,,total GDP (used for computing energy intensity)
 TP,,total population (used for computing energy use per capita)
 TX,,total end-use energy consumption
-VH,trn_bus_CNG,vehicle consumption (natural gas only)

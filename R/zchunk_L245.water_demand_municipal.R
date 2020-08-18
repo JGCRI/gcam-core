@@ -42,12 +42,13 @@ module_water_L245.water_demand_municipal <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     logit.type <- GCAM_region_ID <- region <- water_type <- coefficient <-
-      water_sector <- year <- value <- efficiency <- withdrawals <- NULL  # silence package check notes
+      water_sector <- year <- value <- efficiency <- withdrawals <-
+      supplysector <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A03.sector <- get_data(all_data, "water/A03.sector")
-    A45.sector <- get_data(all_data, "water/A45.sector")
+    A45.sector <- get_data(all_data, "water/A45.sector", strip_attributes = TRUE)
     A45.tech_cost <- get_data(all_data, "water/A45.tech_cost")
     A45.demand <- get_data(all_data, "water/A45.demand")
     L145.municipal_water_R_W_Yh_km3 <- get_data(all_data, "L145.municipal_water_R_W_Yh_km3")

@@ -19,6 +19,8 @@ module_gcamusa_batch_elec_hydro_USA_xml <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    technology <- stub.technology <- NULL  # silence package check notes
+
     # Load required inputs
     L2242.StubTechFixOut_hydro_USA <- get_data(all_data, "L2242.StubTechFixOut_hydro_USA")
 
@@ -26,7 +28,8 @@ module_gcamusa_batch_elec_hydro_USA_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("elec_hydro_USA.xml") %>%
-      add_xml_data(L2242.StubTechFixOut_hydro_USA, "StubTechFixOut") %>%
+      add_xml_data_generate_levels(L2242.StubTechFixOut_hydro_USA%>% rename(stub.technology = technology),
+                                   "StubTechFixOut","subsector","nesting-subsector",1,FALSE) %>%
       add_precursors("L2242.StubTechFixOut_hydro_USA") ->
       elec_hydro_USA.xml
 

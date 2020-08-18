@@ -28,8 +28,8 @@ module_gcamusa_L2322.industry_vintage_USA <- function(command, ...) {
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    A32.ind_retirement_USA <- get_data(all_data, "gcam-usa/A32.ind_retirement_USA")
-    L232.StubTechMarket_ind_USA <- get_data(all_data, "L232.StubTechMarket_ind_USA")
+    A32.ind_retirement_USA <- get_data(all_data, "gcam-usa/A32.ind_retirement_USA", strip_attributes = TRUE)
+    L232.StubTechMarket_ind_USA <- get_data(all_data, "L232.StubTechMarket_ind_USA", strip_attributes = TRUE)
 
     # Silence package checks
     palette <- region <- supplysector <- subsector <- stub.technology <-

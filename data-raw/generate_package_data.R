@@ -1,6 +1,5 @@
 library(usethis)
 library(gcamdata)
-LOGIT_TYPE_COLNAME <- gcamdata:::LOGIT_TYPE_COLNAME
 
 # Note: the methods below explicitly name XML tags as expected by GCAM and/or
 # the model interface headers thus will need to be maintained to be consistent.
@@ -20,15 +19,15 @@ generate_level2_data_names <- function() {
   level2_data_names <- list()
 
   # Modeltime
-  level2_data_names[["ModelTime"]] <- c("start.year.timestep", "start.year", "final.calibration.year", "end.year")
+  level2_data_names[["ModelTime"]] <- c("start.year.timestep", "start.year", "final.calibration.year", "end.year", "carbon.model.start.year")
   level2_data_names[["ModelTimeInterYears"]] <- c("inter.year.timestep", "inter.year", "dummy.tag")
 
   # Climate
-  level2_data_names[["MAGICC"]] <- c("last.historical.year", "bc.unit.forcing", "default.emiss.file", "carbon.model.start.year")
-  level2_data_names[["hector"]] <- c("hector.end.year", "emissions.switch.year", "hector.ini.file", "carbon.model.start.year")
-  level2_data_names[["NoClimateModel"]] <- c("carbon.model.start.year")
+  level2_data_names[["MAGICC"]] <- c("last.historical.year", "bc.unit.forcing", "default.emiss.file")
+  level2_data_names[["hector"]] <- c("hector.end.year", "emissions.switch.year", "hector.ini.file")
   level2_data_names[["DeleteMAGICC"]] <- c("delete")
   level2_data_names[["DeleteHector"]] <- c("delete")
+  level2_data_names[["NoClimateModel"]] <- c("no.climate.model")
 
   # Socioeconomics
   level2_data_names[["Pop"]] <- c("region", "year", "totalPop")
@@ -79,9 +78,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["Supplysector"]] <- c("region", "supplysector", "output.unit", "input.unit", "price.unit", "logit.year.fillout", "logit.exponent")
   level2_data_names[["FinalEnergyKeyword"]] <- c("region", "supplysector", "final.energy")
   level2_data_names[["SupplysectorPrice"]] <- c("region", "supplysector", "year", "price")
-  level2_data_names[["SupplysectorLogitType"]] <- c("region", "supplysector", LOGIT_TYPE_COLNAME)
-  level2_data_names[["Supplysector_absolute-cost-logit"]] <- c("region", "supplysector", LOGIT_TYPE_COLNAME)
-  level2_data_names[["Supplysector_relative-cost-logit"]] <- c("region", "supplysector", LOGIT_TYPE_COLNAME)
+  level2_data_names[["Supplysector_absolute-cost-logit"]] <- c("region", "supplysector")
+  level2_data_names[["Supplysector_relative-cost-logit"]] <- c("region", "supplysector")
   level2_data_names[["PassThroughSector"]] <- c("region", "pass.through.sector", "marginal.revenue.sector", "marginal.revenue.market")
   level2_data_names[["ElecReserve"]] <- c("region", "supplysector", "electricity.reserve.margin", "average.grid.capacity.factor")
   level2_data_names[["SectorUseTrialMarket"]] <- c("region", "supplysector", "use.trial.market")
@@ -91,9 +89,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["Subsector"]] <- c("region", "supplysector", "subsector")
   level2_data_names[["SubsectorAll"]] <- c(level2_data_names[["Subsector"]], "logit.year.fillout", "logit.exponent", "year.fillout", "share.weight", "apply.to", "from.year", "to.year", "interpolation.function")
   level2_data_names[["SubsectorLogit"]] <- c(level2_data_names[["Subsector"]], "logit.year.fillout", "logit.exponent")
-  level2_data_names[["SubsectorLogitType"]] <- c(level2_data_names[["Subsector"]], LOGIT_TYPE_COLNAME)
-  level2_data_names[["SubsectorLogit_absolute-cost-logit"]] <- c("region", "supplysector", "subsector", LOGIT_TYPE_COLNAME)
-  level2_data_names[["SubsectorLogit_relative-cost-logit"]] <- c("region", "supplysector", "subsector", LOGIT_TYPE_COLNAME)
+  level2_data_names[["SubsectorLogit_absolute-cost-logit"]] <- c("region", "supplysector", "subsector")
+  level2_data_names[["SubsectorLogit_relative-cost-logit"]] <- c("region", "supplysector", "subsector")
   level2_data_names[["SubsectorShrwt"]] <- c(level2_data_names[["Subsector"]], "year", "share.weight")
   level2_data_names[["SubsectorShrwtFllt"]] <- c(level2_data_names[["Subsector"]], "year.fillout", "share.weight")
   level2_data_names[["SubsectorInterp"]] <- c(level2_data_names[["Subsector"]], "apply.to", "from.year", "to.year", "interpolation.function")
@@ -107,8 +104,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["tranSubsectorShrwtFllt"]] <- c("region", "supplysector", "tranSubsector", "year.fillout", "share.weight")
   level2_data_names[["tranSubsectorSpeed"]] <- c("region", "supplysector", "tranSubsector", "year", "speed")
   level2_data_names[["tranSubsectorVOTT"]] <- c("region", "supplysector", "tranSubsector", "addTimeValue", "year.fillout", "time.value.multiplier")
-  level2_data_names[["tranSubsector_absolute-cost-logit"]] <- c("region", "supplysector", "tranSubsector", LOGIT_TYPE_COLNAME)
-  level2_data_names[["tranSubsector_relative-cost-logit"]] <- c("region", "supplysector", "tranSubsector", LOGIT_TYPE_COLNAME)
+  level2_data_names[["tranSubsector_absolute-cost-logit"]] <- c("region", "supplysector", "tranSubsector")
+  level2_data_names[["tranSubsector_relative-cost-logit"]] <- c("region", "supplysector", "tranSubsector")
   level2_data_names[["DeleteSubsector"]] <- level2_data_names[["Subsector"]]
 
   # Technologies
@@ -244,13 +241,11 @@ generate_level2_data_names <- function() {
   # Agricultural sectors, subsectors, and technologies
   level2_data_names[["AgSupplySector"]] <- c("region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.year.fillout", "logit.exponent")
   level2_data_names[["AgMkt"]] <- c("region", "AgSupplySector", "market")
-  level2_data_names[["AgSupplySectorLogitType"]] <- c("region", "AgSupplySector", LOGIT_TYPE_COLNAME)
-  level2_data_names[["AgSupplySector_absolute-cost-logit"]] <- c("region", "AgSupplySector", LOGIT_TYPE_COLNAME)
-  level2_data_names[["AgSupplySector_relative-cost-logit"]] <- c("region", "AgSupplySector", LOGIT_TYPE_COLNAME)
+  level2_data_names[["AgSupplySector_absolute-cost-logit"]] <- c("region", "AgSupplySector")
+  level2_data_names[["AgSupplySector_relative-cost-logit"]] <- c("region", "AgSupplySector")
   level2_data_names[["AgSupplySubsector"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "logit.year.fillout", "logit.exponent")
-  level2_data_names[["AgSupplySubsectorLogitType"]] <- c("region", "AgSupplySector", "AgSupplySubsector", LOGIT_TYPE_COLNAME)
-  level2_data_names[["AgSupplySubsector_absolute-cost-logit"]] <- c("region", "AgSupplySector", "AgSupplySubsector", LOGIT_TYPE_COLNAME)
-  level2_data_names[["AgSupplySubsector_relative-cost-logit"]] <- c("region", "AgSupplySector", "AgSupplySubsector", LOGIT_TYPE_COLNAME)
+  level2_data_names[["AgSupplySubsector_absolute-cost-logit"]] <- c("region", "AgSupplySector", "AgSupplySubsector")
+  level2_data_names[["AgSupplySubsector_relative-cost-logit"]] <- c("region", "AgSupplySector", "AgSupplySubsector")
   level2_data_names[["AgSupplySubsectorAll"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "logit.year.fillout", "logit.exponent", "year.fillout", "share.weight")
   level2_data_names[["AgTech"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology")
   level2_data_names[["AgTechInterp"]] <- c(level2_data_names[["AgTech"]], "apply.to", "from.year", "to.year", "interpolation.function")
@@ -307,22 +302,19 @@ generate_level2_data_names <- function() {
   # Land types
   level2_data_names[["LN0_Land"]] <- c("region", "LandAllocatorRoot", "year.fillout", "landAllocation")
   level2_data_names[["LN0_Logit"]] <- c("region", "LandAllocatorRoot", "logit.year.fillout", "logit.exponent")
-  level2_data_names[["LN0_LogitType"]] <- c("region", "LandAllocatorRoot", LOGIT_TYPE_COLNAME)
-  level2_data_names[["LN0_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", LOGIT_TYPE_COLNAME)
-  level2_data_names[["LN0_Logit_relative-cost-logit"]] <- c("region", "LandAllocatorRoot", LOGIT_TYPE_COLNAME)
+  level2_data_names[["LN0_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot")
+  level2_data_names[["LN0_Logit_relative-cost-logit"]] <- c("region", "LandAllocatorRoot")
   level2_data_names[["LN0_SoilTimeScale"]] <- c("region", "LandAllocatorRoot", "soilTimeScale")
   level2_data_names[["LN1_ValueLogit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "unManagedLandValue", "logit.year.fillout", "logit.exponent")
-  level2_data_names[["LN1_LogitType"]] <- c("region", "LandAllocatorRoot", "LandNode1", LOGIT_TYPE_COLNAME)
-  level2_data_names[["LN1_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", LOGIT_TYPE_COLNAME)
-  level2_data_names[["LN1_Logit_relative-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", LOGIT_TYPE_COLNAME)
+  level2_data_names[["LN1_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1")
+  level2_data_names[["LN1_Logit_relative-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1")
   level2_data_names[["LN1_HistUnmgdAllocation"]] <- c("region", "LandAllocatorRoot", "LandNode1", "UnmanagedLandLeaf", "year", "allocation")
   level2_data_names[["LN1_UnmgdAllocation"]] <- level2_data_names[["LN1_HistUnmgdAllocation"]]
   level2_data_names[["LN1_UnmgdCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
                                               "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
   level2_data_names[["LN2_Logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "logit.year.fillout", "logit.exponent")
-  level2_data_names[["LN2_LogitType"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", LOGIT_TYPE_COLNAME)
-  level2_data_names[["LN2_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", LOGIT_TYPE_COLNAME)
-  level2_data_names[["LN2_Logit_relative-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", LOGIT_TYPE_COLNAME)
+  level2_data_names[["LN2_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2")
+  level2_data_names[["LN2_Logit_relative-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2")
   level2_data_names[["LN2_HistUnmgdAllocation"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "UnmanagedLandLeaf", "year", "allocation")
   level2_data_names[["LN2_UnmgdAllocation"]] <- level2_data_names[["LN2_HistUnmgdAllocation"]]
   level2_data_names[["LN2_HistMgdAllocation"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandLeaf", "year", "allocation")
@@ -332,9 +324,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["LN2_MgdCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
                                             "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density")
   level2_data_names[["LN3_Logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "logit.year.fillout", "logit.exponent")
-  level2_data_names[["LN3_LogitType"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", LOGIT_TYPE_COLNAME)
-  level2_data_names[["LN3_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", LOGIT_TYPE_COLNAME)
-  level2_data_names[["LN3_Logit_relative-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", LOGIT_TYPE_COLNAME)
+  level2_data_names[["LN3_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3")
+  level2_data_names[["LN3_Logit_relative-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3")
   level2_data_names[["LN3_NodeGhostShare"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "year", "ghost.unnormalized.share")
   level2_data_names[["LN3_Leaf"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf")
   level2_data_names[["LN3_LeafGhostShare"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "year", "ghost.unnormalized.share")
@@ -351,9 +342,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["LN3_NodeCarbon"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "node.carbon.calc", "extra")
   level2_data_names[["LN3_NewTech"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "year.fillout", "isNewTechnology")
   level2_data_names[["LN4_Logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "logit.year.fillout", "logit.exponent")
-  level2_data_names[["LN4_LogitType"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", LOGIT_TYPE_COLNAME)
-  level2_data_names[["LN4_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", LOGIT_TYPE_COLNAME)
-  level2_data_names[["LN4_Logit_relative-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", LOGIT_TYPE_COLNAME)
+  level2_data_names[["LN4_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4")
+  level2_data_names[["LN4_Logit_relative-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4")
   level2_data_names[["LN4_HistUnmgdAllocation"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "UnmanagedLandLeaf", "year", "allocation")
   level2_data_names[["LN4_UnmgdAllocation"]] <- level2_data_names[["LN4_HistUnmgdAllocation"]]
   level2_data_names[["LN4_HistMgdAllocation"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", "year", "allocation")
@@ -367,9 +357,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["LN4_NodeIsGhostShareRel"]]<- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "is.ghost.share.relative")
 
   level2_data_names[["LN5_Logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "logit.year.fillout", "logit.exponent")
-  level2_data_names[["LN5_LogitType"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", LOGIT_TYPE_COLNAME)
-  level2_data_names[["LN5_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", LOGIT_TYPE_COLNAME)
-  level2_data_names[["LN5_Logit_relative-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", LOGIT_TYPE_COLNAME)
+  level2_data_names[["LN5_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5")
+  level2_data_names[["LN5_Logit_relative-cost-logit"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5")
   level2_data_names[["LN5_HistUnmgdAllocation"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "UnmanagedLandLeaf", "year", "allocation")
   level2_data_names[["LN5_UnmgdAllocation"]] <- level2_data_names[["LN5_HistUnmgdAllocation"]]
   level2_data_names[["LN5_HistMgdAllocation"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "LandLeaf", "year", "allocation")
@@ -389,11 +378,12 @@ generate_level2_data_names <- function() {
   level2_data_names[["GDPCtrlMaxRes"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "ctrl.name", "max.reduction")
   level2_data_names[["GDPCtrlSteepRes"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "ctrl.name", "steepness")
   level2_data_names[["ResMAC"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
+  level2_data_names[["ResMACTC"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "mac.control", "tech.change.year", "tech.change")
   level2_data_names[["StubTechNonCO2"]] <- c(level2_data_names[["StubTechYr"]], "Non.CO2")
   level2_data_names[["StubTechEmissUnits"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emissions.unit")
-  level2_data_names[["InputEmissCoeff"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emiss.coef")
+  level2_data_names[["InputEmissCoeff"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emiss.coef", "input.name")
   level2_data_names[["OutputEmissCoeff"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emiss.coeff")
-  level2_data_names[["InputEmissions"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "input.emissions")
+  level2_data_names[["InputEmissions"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "input.emissions", "input.name")
   level2_data_names[["OutputEmissions"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "input.emissions")
   level2_data_names[["StbTechOutputEmissions"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "input.emissions")
   level2_data_names[["ReadInControl"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "future.emiss.coeff.name", "future.emiss.coeff.year", "emiss.coeff")
@@ -401,20 +391,20 @@ generate_level2_data_names <- function() {
   level2_data_names[["GDPCtrlSteep"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "ctrl.name", "steepness")
   level2_data_names[["DelEmCtrl"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "ctrl.name")
   level2_data_names[["MAC"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
-  level2_data_names[["MACTC"]] <- c(level2_data_names[["MAC"]], "tech.change")
+  level2_data_names[["MACTC"]] <- c(level2_data_names[["StubTechNonCO2"]], "mac.control", "tech.change.year", "tech.change")
   level2_data_names[["MAC_NC"]] <- level2_data_names[["MAC"]]
   level2_data_names[["MAC_NoBelowZero"]] <- level2_data_names[["MAC"]]
-  level2_data_names[["InputEmFactUnmgd"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "Non.CO2", "emiss.coef")
+  level2_data_names[["InputEmFactUnmgd"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "Non.CO2", "emiss.coef", "input.name")
   level2_data_names[["OutputEmFactUnmgd"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "Non.CO2", "emiss.coef")
   level2_data_names[["OutputEmissCoeffAg"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "emiss.coef")
-  level2_data_names[["InputEmissionsUnmgd"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "Non.CO2", "input.emissions")
+  level2_data_names[["InputEmissionsUnmgd"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "Non.CO2", "input.emissions", "input.name")
   level2_data_names[["OutputEmissionsAg"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "input.emissions")
   level2_data_names[["OutputEmissionsUnmgd"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "Non.CO2", "input.emissions")
   level2_data_names[["AgGDPCtrlMax"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "ctrl.name", "max.reduction")
   level2_data_names[["AgGDPCtrlSteep"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "ctrl.name", "steepness")
   level2_data_names[["AgMAC"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
-  level2_data_names[["AgMACTC"]] <- c(level2_data_names[["AgMAC"]], "tech.change")
-  level2_data_names[["TrnInputEmissCoeff"]] <- c("region", "supplysector", "tranSubsector", "stub.technology", "year", "Non.CO2", "emiss.coef")
+  level2_data_names[["AgMACTC"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "mac.control", "tech.change.year", "tech.change")
+  level2_data_names[["TrnInputEmissCoeff"]] <- c("region", "supplysector", "tranSubsector", "stub.technology", "year", "Non.CO2", "emiss.coef", "input.name")
   level2_data_names[["LinearCtrlInc"]] <- c("region", "supplysector", "tranSubsector","stub.technology", "year", "Non.CO2", "linear.control", "start.year", "end.year", "final.emissions.coefficient")
 
   # Policy
@@ -445,6 +435,7 @@ LEVEL2_DATA_NAMES <- generate_level2_data_names()
 #' @author BBL
 GCAM_DATA_MAP <- driver(return_data_map_only = TRUE)
 
+
 #' PREBUILT_DATA
 #'
 #' A list of prebuilt data objects. These are used when the proprietary IEA
@@ -454,26 +445,30 @@ GCAM_DATA_MAP <- driver(return_data_map_only = TRUE)
 #' prebuilt versions of their outputs stored in this object.
 #' @author BBL
 PREBUILT_DATA <- driver(write_outputs = FALSE,
-                        write_xml = FALSE,
-                        return_data_names = c(
-                          # outputs of module_energy_LA101.en_bal_IEA
-                          "L101.en_bal_EJ_R_Si_Fi_Yh_full",
-                          "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
-                          "L101.in_EJ_ctry_trn_Fi_Yh",
-                          "L101.in_EJ_ctry_bld_Fi_Yh",
 
-                          # output of module_energy_LA111.rsrc_fos_Prod
-                          "L111.RsrcCurves_EJ_R_Ffos",
+                      write_xml = FALSE,
+                       return_data_names = c(
+                           #outputs of module_energy_LA101.en_bal_IEA
+                       "L101.en_bal_EJ_R_Si_Fi_Yh_full",
+                        "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
+                         "L101.in_EJ_ctry_trn_Fi_Yh",
+                        "L101.in_EJ_ctry_bld_Fi_Yh",
 
-                          # output of module_energy_LA118.hydro
-                          "L118.out_EJ_R_elec_hydro_Yfut",
+                         # output of module_energy_LA111.rsrc_fos_Prod
+                      "L111.RsrcCurves_EJ_R_Ffos",
 
-                          # outputs of module_energy_LA121.liquids
-                          "L121.in_EJ_R_unoil_F_Yh",
-                          "L121.in_EJ_R_TPES_crude_Yh",
-                          "L121.in_EJ_R_TPES_unoil_Yh",
-                          "L121.share_R_TPES_biofuel_tech"
-                        ))
+                         # output of module_energy_LA118.hydro
+                      "L118.out_EJ_R_elec_hydro_Yfut",
+
+                        # outputs of module_energy_LA121.liquids
+                     "L121.in_EJ_R_unoil_F_Yh",
+                      "L121.in_EJ_R_TPES_crude_Yh",
+                      "L121.in_EJ_R_TPES_unoil_Yh",
+                      "L121.share_R_TPES_biofuel_tech",
+                     "L121.BiomassOilRatios_kgGJ_R_C"
+                    ))
+
 
 # Save these objects for use as internal package data
 usethis::use_data(GCAM_DATA_MAP, LEVEL2_DATA_NAMES, PREBUILT_DATA, overwrite = TRUE, internal = TRUE)
+

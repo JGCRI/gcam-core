@@ -1,8 +1,0 @@
-# File: A23.coal_conv_pul_delete.csv
-# Title: Technologies to be deleted from the existing electricity generation sectors in USA
-# Units: Unitless
-# Column types: cccc 
-# ----------
-region,supplysector,subsector,stub.technology
-USA,peak generation,coal,coal_peak_conv pul
-USA,subpeak generation,coal,coal_subpeak_conv pul

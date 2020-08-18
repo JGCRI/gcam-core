@@ -334,7 +334,7 @@ find_chunks <- function(pattern = "^module_[a-zA-Z\\.]*_.*$", include_disabled =
 
   ls(name = parent.env(environment()), pattern = pattern) %>%
     tibble::tibble(name = .,
-                   disabled = grepl("_DISABLED$", name)) %>%
+                   disabled = grepl("_DISABLED$", name) | grepl(paste0("^module_.*", DISABLED_MODULES), name)) %>%
     filter(include_disabled | !disabled) %>%
     tidyr::separate(name, into = c("x", "module", "chunk"), remove = FALSE,
                     sep = "_", extra = "merge") %>%
@@ -454,7 +454,7 @@ outputs_of <- function(chunks) {
 screen_forbidden <- function(fn) {
   forbidden <- c("(?<!error_no_)match(?!es)", "ifelse",
                  "melt", "cast",
-                 "rbind", "cbind", "merge",
+                 "rbind(?!list)", "cbind", "merge",
                  "read\\.csv", "write\\.csv",
                  "summarise_each", "mutate_each")
 
