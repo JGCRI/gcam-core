@@ -602,14 +602,14 @@ driver_drake <- function(
 
   if(return_data_map_only) {
     # user requested data map only so create it from the cache
-    x <- create_datamap_from_cache(gcamdata_plan)
+    x <- create_datamap_from_cache(gcamdata_plan, ...)
   }
   else if (return_plan_only){
     x <- gcamdata_plan
   }
   else {
     # return any requested data by loading it from the cache
-    x <- load_from_cache(return_data_names)
+    x <- load_from_cache(return_data_names, ...)
   }
 
 

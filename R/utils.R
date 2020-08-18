@@ -579,10 +579,18 @@ load_from_cache <- function(return_data_names, ...) {
   # convert to drake target names
   sanitized_names <- sanitize_drake_target_name(return_data_names)
 
-  # readd can only one target at a time so we need to wrap it in an apply
-  # also by default is interpreting the target as symbol so we must force
+  # we need to filter the ... arguments to only those that rake::readd take
+  all_ellipsis_args <- list(...)
+  readd_args <- all_ellipsis_args[names(all_ellipsis_args) %in% names(formals(drake::readd))]
+  # by default readd is interpreting the target as symbol so we must force
   # character_only = TRUE
-  ret_data <- sapply(sanitized_names, drake::readd, character_only = TRUE, ...)
+  readd_args[["character_only"]] <- TRUE
+
+  # readd can only one target at a time so we need to wrap it in an apply
+  ret_data <- sapply(sanitized_names, function(target) {
+    readd_args[["target"]] <- target
+    do.call(drake::readd, readd_args)
+  })
   # reset names to the gcamdata names as users would otherwise expect
   names(ret_data) <- return_data_names
 
