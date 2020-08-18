@@ -167,24 +167,7 @@ void FoodDemandInput::initCalc( const string& aRegionName,
     mSubregionalPopulation[ aPeriod ] = aTechInfo->getDouble( "subregional-population", true );
     mCurrentSubregionalIncome = aTechInfo->getDouble( "subregional-income-ppp", true );
     
-    if( aPeriod == ( scenario->getModeltime()->getFinalCalibrationPeriod() + 1 ) ) {
-        // Do some consistency checking on the final regional bias value calculated
-        // during calibration.  If it is too far away from 0 we should issue a warning
-        // as something may have structurally changed in GCAM and new parameter values
-        // should be generated accordingly.
-        // Do the error checking as relative to be able to use a consistent threshold
-        // across regions.
-        const double REGIONAL_BIAS_THRESHOLD = 0.6;
-        double relativeBias = abs( mRegionalBias[ aPeriod - 1 ] ) / ( mFoodDemandQuantity[ aPeriod - 1 ] / getAnnualDemandConversionFactor( aPeriod - 1 ) );
-        if( relativeBias >= REGIONAL_BIAS_THRESHOLD ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Calibrated regional bias " << mRegionalBias[ aPeriod - 1 ] << " (absolute), "
-                    << relativeBias << " (relative)"
-                    << " for " << aRegionName << ", " << mName
-                    << " is outside the range of expected values." << endl;
-        }
-        
+    if( aPeriod == ( scenario->getModeltime()->getFinalCalibrationPeriod() + 1 ) ) {        
         // Fill in regional bias values for future model periods which may just copy
         // forward the calibrated value if no values were parsed or linearly converge
         // them otherwise.
