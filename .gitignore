@@ -19,8 +19,7 @@ Rplots.pdf
 inst/doc
 
 # Proprietary files
-en_nonOECD.*
-en_OECD.*
+IEA_EnergyBalances_2019.csv.gz
 
 # OS files
 .DS_Store

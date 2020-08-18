@@ -1,0 +1,11 @@
+# File: A_MACC_TechChange_SSP_Mult.csv
+# Title: MAC curve tech change improvement multiplier by SSP
+# Description: MAC curve tech change improvement multiplier to adjuet for SSP scenario assumptions
+# Units: percent
+# Source: Assumption
+# Column types: cn
+# ----------
+scenario,multiplier
+SSP1,1.0
+SSP2,0.5
+SSP5,1.0

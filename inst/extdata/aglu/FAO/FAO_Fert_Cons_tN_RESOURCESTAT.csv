@@ -1,166 +1,176 @@
 # File: FAO_Fert_Cons_tN_RESOURCESTAT.csv
 # Title: FAO fertilizer consumption by country, year
 # Units: tons N
-# Column types: ciciciiiiiiiiii 
+# Column types: ciciciiiiiiiiiiiiiiiii
 # ----------
-countries,country codes,item,item codes,element,element codes,2002,2003,2004,2005,2006,2007,2008,2009,2010
-Afghanistan,2,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,23446,20320,23383,25096,49032,28205,23243,35232,33159
-Albania,3,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,37986,37155,35785,36866,30014,30978,28153,33501,30818
-Algeria,4,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,28036,17076,104717,4086,43847,36626,23102,21006,45520
-Angola,7,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2757,1787,7187,3682,6641,5584,8172,3024,4701
-Antigua and Barbuda,8,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,10,33,0,17,9,2,9,23,4
-Argentina,9,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,534592,740659,796423,640406,787677,981351,761959,477061,912645
-Armenia,1,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,15700,10450,13187,10251,12377,6799,8036,13233,10408
-Australia,10,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,980100,932900,1056200,952300,858000,848800,835000,849800,1241167
-Austria,11,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,170974,298844,96091,101756,97220,82632,84110,79667,86153
-Azerbaijan,52,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,15751,12586,19645,17575,20356,16783,29670,19277,12812
-Bahrain,13,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,17751,0,0,4182,13620,1057,2271,1223,2542
-Bangladesh,16,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1079064,951340,954039,993327,1098892,1048507,1168420,1404800,914982
-Barbados,14,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,587,673,2756,1232,1200,1127,1523,423,435
-Belarus,57,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,247200,310000,346300,406000,479300,447300,523500,553600,529900
-Belize,23,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,12140,20694,2594,4109,2861,2594,1668,5858,2340
-Benin,53,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,23558,1318,145,413,11,576,357,5308,19
-Bhutan,18,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,783,787,818,887,768,800,774,1608,686
-Bolivia (Plurinational State of),19,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,6040,6198,6260,12192,8709,11883,13473,13810,19565
-Bosnia and Herzegovina,80,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,18600,10768,33671,24647,15500,21396,11700,22677,17985
-Brazil,21,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1834733,2407558,2281346,2072214,2192739,2948784,2483683,2452676,2854819
-Brunei Darussalam,26,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,19,78,101,299,82,442,115,203,111
-Bulgaria,27,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,283556,315624,240614,189946,146882,200117,213562,370072,287952
-Burkina Faso,233,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2010,26620,29081,35435,30000,23580,30584,28392,41122
-Burundi,29,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,514,282,429,1098,1488,809,997,885,1212
-Cambodia,115,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,7763,5209,7467,11053,10657,8590,12447,16905,21022
-Cameroon,32,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,20791,19370,33167,22773,25383,22299,22895,23646,11642
-Canada,33,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1642988,1649912,1539450,1776685,1371962,2068032,1909243,1914550,1984068
-Chile,40,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,246316,221073,292680,240708,271154,324391,394599,345707,412511
-China,351,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,29147258,28450218,26547641,28043533,31174342,32593579,33214918,36902118,35069088
-Colombia,44,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,356650,369721,351921,481592,543964,574625,465215,547712,526311
-Congo,46,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,0,734,9,24,64,252,913,110
-Cook Islands,47,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,14,15,12,19,28,4,18,8,7
-Costa Rica,48,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,37310,65179,61342,88828,71161,66196,67845,71363,57102
-Cote dIvoire,107,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,30009,19994,40558,16180,10962,25909,17606,21396,27037
-Croatia,98,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,129821,123597,145499,124858,191158,212374,263430,175508,66830
-Cuba,49,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,67343,24850,41829,30744,43638,51783,58322,28384,47068
-Cyprus,50,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,8629,9591,8209,7225,6638,6340,4496,7040,8475
-Czech Republic,167,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,191778,218390,206576,215130,223684,237875,221667,225982,255423
-Democratic Republic of the Congo,250,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,1075,795,376,1627,2943,4314,2416,3711
-Denmark,54,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,158370,218132,182171,179046,190309,192937,218223,186981,178694
-Dominica,55,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,157,247,347,408,158,616,203,190,72
-Dominican Republic,56,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,51430,40693,41808,36841,49254,44450,43134,37227,55077
-Ecuador,58,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,132311,119857,135632,116291,126268,118168,156382,151263,159097
-Egypt,59,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1070036,1598386,1378793,1468102,1038377,1106359,1562670,1205636,1424975
-El Salvador,60,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,34510,36496,46957,68253,52360,64920,59338,56703,61858
-Eritrea,178,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2835,684,3,1436,7,660,0,540,259
-Estonia,63,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,16700,23255,24833,20083,22610,24982,35455,27328,28628
-Ethiopia,238,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,97647,34075,81860,80503,84628,106019,111773,118364,156141
-Fiji,66,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,9377,3178,7659,6593,4220,4025,6758,2747,2435
-Finland,67,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,179000,163880,173881,192488,158282,184209,223830,172814,210967
-France,68,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2203200,2375400,2324000,2205000,2204665,2402000,2099000,1907000,2050015
-French Polynesia,70,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,388,335,383,293,320,333,454,270,359
-Gabon,74,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,553,190,680,580,799,890,820,883,593
-Gambia,75,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,1739,1200,1671,1672,1520,835,1365,1785
-Georgia,73,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,21400,11124,14100,24117,21410,18451,16881,19122,12913
-Germany,79,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1787833,1827767,1778438,1784996,1599788,1807176,1550625,1569045,1786485
-Ghana,81,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,4330,8559,5702,11105,30171,25924,18374,24844,12433
-Greece,84,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,271991,284707,225050,203847,172621,136564,175038,131884,145780
-Guatemala,89,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,84157,118070,140350,131425,145722,133081,88314,120544,142138
-Guinea,90,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1794,1663,1674,1970,1978,3178,2795,1259,2457
-Guyana,91,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,13610,9619,19117,6180,8300,6364,18262,6704,14136
-Honduras,95,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,32539,51670,70653,75381,89464,83396,44657,50910,32495
-Hungary,97,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,303000,289000,293000,260000,289000,320000,294000,275000,281000
-Iceland,99,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,11085,10344,9889,9775,12342,13832,15321,12000,7669
-India,100,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,10469210,11077861,11712729,12723910,13760868,14417665,14863815,15558372,16549642
-Indonesia,101,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1974661,2119780,2309142,2411944,2435520,2503269,2675620,2929034,2784606
-Iran (Islamic Republic of),102,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,835038,850146,1048561,946814,1204120,967971,1065216,786579,390374
-Iraq,103,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,0,102714,153880,167020,126420,164120,171846,107980
-Ireland,104,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,468352,391200,238364,229325,277519,308960,306806,362395,372553
-Israel,105,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,44700,50200,52400,48800,47500,59400,45900,36100,30200
-Italy,106,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,845003,846812,866469,800697,798807,812480,670261,486728,498605
-Jamaica,109,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,8209,9752,9829,6417,4844,3800,4936,4603,4826
-Japan,110,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,531031,543757,561300,553543,528306,514482,468524,553449,456390
-Jordan,112,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,88819,56317,21529,21884,11650,36936,22219,5149,15799
-Kazakhstan,108,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,12800,19600,24800,20500,27800,37500,16300,29500,22500
-Kenya,114,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,62724,68061,64724,72514,77667,79441,73071,67372,70788
-Kuwait,118,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,21160,0,0,47840,23000,0,14260,0,6440
-Kyrgyzstan,113,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,9232,31383,27232,29589,26842,26141,22530,24523,25252
-Latvia,119,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,36047,24159,39300,40900,42700,47748,50228,53508,58643
-Lebanon,121,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,19678,16791,17487,8724,7990,13184,9752,12608,15124
-Libya,124,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,76120,32363,47060,75580,36940,68680,42840,47493,47308
-Lithuania,126,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,13653,38736,50448,0,31249,0,27261,50018,106716
-Luxembourg,256,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,26053,12905,16355,14230,14034,13312,13334,16748,21134
-Madagascar,129,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2645,4095,2716,7257,3744,4413,7627,4439,4482
-Malawi,130,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,60083,60989,71630,66172,82959,84330,89264,70671,86098
-Malaysia,131,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,450453,429347,565937,634719,587260,690240,902956,963116,998124
-Maldives,132,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,9,12,20,34,119,256,64,19,9
-Mali,133,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,0,152803,59289,66469,87331,55817,30377,89259
-Malta,134,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,598,521,643,578,926,571,339,390,333
-Marshall Islands,127,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,0,0,0,0,0,0,0,0
-Mauritius,137,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,11028,10742,10499,9908,8614,8815,7300,6950,5349
-Mexico,138,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,886067,912583,942528,1219457,1057564,1141863,938889,1027400,1205659
-Mongolia,141,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,4448,3986,5873,3657,6511,5981,6921,7520,11023
-Montenegro,273,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,,,,1738,1389,1319,1089,1360
-Morocco,143,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,248163,207532,231504,337370,321350,304810,275060,195952,136427
-Mozambique,144,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,17700,1836,3414,6400,17168,11464,41860,15133,43385
-Myanmar,28,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,32292,68839,102012,53794,67020,80495,62235,50692,49903
-Namibia,147,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2920,805,1973,1003,1892,1337,210,1268,0
-Nepal,149,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,21838,5465,8118,2856,8781,1939,2910,28331,17748
-Netherlands,150,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,292195,290559,300495,279246,287767,241217,231058,224188,217959
-New Caledonia,153,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,728,1502,601,785,633,789,539,356,559
-New Zealand,156,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,308091,346880,299697,309801,268811,277473,256416,244007,246235
-Nicaragua,157,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,35236,36667,33379,35608,42671,41872,34115,47383,39944
-Niger,158,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,6525,2519,2117,2786,4049,2508,1558,3304,4829
-Nigeria,159,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,125131,167778,116343,213221,216854,70115,140846,44847,80140
-Norway,162,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,99174,102587,103384,105549,103046,106319,101700,96840,63315
-Oman,221,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,4065,3547,5480,30055,14683,930,8830,15823,0
-Pakistan,165,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2384980,2456009,2570230,2818779,2868984,2714053,2820763,3473751,3270531
-Panama,166,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,15171,17622,15233,15618,17682,14506,15453,17304,21740
-Papua New Guinea,168,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,4983,6869,14752,13832,11317,12198,13695,19011,15968
-Paraguay,169,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,34934,41662,50723,41897,47891,76839,58789,58908,81616
-Peru,170,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,210580,204092,210640,180300,203041,246705,203051,261876,223422
-Philippines,171,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,445244,572571,629808,544134,474332,519960,409905,433616,586861
-Poland,173,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,831700,895000,895300,996500,1056200,1142300,1095400,1028000,1294223
-Portugal,174,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,163902,110132,125844,102663,87391,110477,96343,100000,126637
-Qatar,179,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,0,49353,7349,0,70380,0,38180,81880
-Republic of Korea,117,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,363412,335863,385933,417303,304404,347381,311796,245611,215328
-Republic of Moldova,146,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,14700,13300,14200,14800,12811,17147,19924,14578,16400
-Romania,183,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,239071,252139,270131,299195,252201,265487,279886,296055,305757
-Russian Federation,185,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,654204,846330,838270,863240,914660,1043750,1209760,1236770,1192680
-Rwanda,184,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,877,709,1214,589,2573,2799,535,94
-Saint Kitts and Nevis,188,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,199,27,27,42,22,22,23,24
-Samoa,244,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,4,7,14,12,9,16,18,11,6
-Saudi Arabia,194,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,98246,250293,230710,182780,228660,255990,180390,129260,165900
-Senegal,195,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,19400,13095,19616,12194,1611,1446,1845,8955,26845
-Serbia,272,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,,,,236395,313794,235744,316917,157460
-Serbia and Montenegro,186,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,192367,167082,304430,276952,,,,,
-Seychelles,196,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,8,3,10,4,25,14,24,10
-Singapore,200,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1485,6930,9322,9077,10694,9697,6766,2542,0
-Slovakia,199,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,81300,79911,81317,78681,88935,87737,77058,86873,90577
-Slovenia,198,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,33001,34035,29974,28864,29947,29220,24883,28026,27102
-South Africa,202,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,477072,420827,427571,347260,428719,439480,424123,414304,398192
-Spain,203,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1026546,1198606,1072948,923764,969783,985857,739757,781069,941100
-Sri Lanka,38,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,188317,150656,163234,181556,175249,161607,209393,181732,166096
-Sudan (former),206,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,54415,57500,74649,39710,44770,55810,55810,86170,0
-Suriname,207,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,3912,5593,6279,4208,7524,5167,14450,7562,9844
-Sweden,210,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,184800,180100,176800,161500,160300,167100,186500,142400,168000
-Switzerland,211,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,40542,43182,45864,53275,53171,48587,52885,51055,50862
-Syrian Arab Republic,212,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,221594,241249,226386,266418,275613,263117,270207,210362,119175
-Tajikistan,208,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,0,26408,28633,54500,55300,52200,48176,45490
-Thailand,216,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1018849,1253606,1146244,1042692,1063402,1188173,1195815,1406155,1584887
-The former Yugoslav Republic of Macedonia,154,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,8969,12030,15030,18092,17074,18897,15677,17412,19444
-Togo,217,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,4895,6173,4247,6884,4276,5492,201,937,1070
-Tonga,219,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,29,3760,765,526,304,6,105,4374,3212
-Trinidad and Tobago,220,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,22647,3189,1386,2327,1626,0,19736,4743,71861
-Tunisia,222,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,37462,52620,48463,61771,64447,39245,58760,76540,69224
-Turkey,223,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1198855,1340566,1366302,1372053,1406323,1357105,1133068,1413793,1343698
-Uganda,226,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,3651,4328,3951,2578,4389,3968,10644,7046,6366
-Ukraine,230,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,443492,359617,345280,376880,466820,578160,735780,702783,748365
-United Arab Emirates,225,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,38920,49115,22598,4127,41700,46120,19900,64310,29350
-United Kingdom,229,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1182622,1125000,1061000,1003000,1008000,1006000,913000,1016000,1029000
-United Republic of Tanzania,215,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,22192,26590,34469,33530,39222,41448,43426,66942,58341
-United States of America,231,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,10945100,11536600,11398600,11013700,11625400,11585100,10727000,10898500,11488400
-Uruguay,234,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,25998,65918,84440,73884,96465,92564,92584,105213,151476
-Uzbekistan,235,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,0,0,0,540000,541967,571907,607761,739263
-Venezuela (Bolivarian Republic of),236,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,258320,327050,261588,268924,196110,207230,293430,262980,285240
-Viet Nam,237,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1150277,1231476,1532517,1047222,977045,1124727,1008572,1529841,1091601
-Yemen,249,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,11300,4918,16965,3945,8923,26220,17020,13800,23920
-Zambia,251,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,40335,42816,60177,51637,49225,55754,53215,64145,77617
-Zimbabwe,181,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,70742,77499,51594,48403,60543,57419,51871,65707,71197
+countries,country codes,item,item codes,element,element codes,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017
+Armenia,1,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,15700,10450,13187,10251,57900,26808,24331,39541,29587,35946,57446,58593,48635,63282,146292,90106
+Afghanistan,2,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,24523,20407,22339,20466,20463,16377,14432,14155,12929,22970,17065,34903,73872,21075,96670,140775
+Albania,3,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,38216,37378,36119,37210,30333,31483,28744,33940,31292,36892,34944,30711,30711,36803,42896,39184
+Algeria,4,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,28036,17076,104717,4086,43847,36626,23102,37100,60100,56300,72600,64000,76500,74400,70200,70200
+Angola,7,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2757,1787,7187,3682,6641,5584,8172,10468,17369,16381,19423,20439,27612,25494,20776,26714
+Antigua and Barbuda,8,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,10,33,0,17,9,2,9,23,4,4,26,32,20,8,61,8
+Argentina,9,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,534592,740659,796423,640406,787677,981351,761959,477061,771245,857190,734890,788154,784091,603481,929563,975843
+Australia,10,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,980100,932900,1056200,952300,858000,848800,835000,849800,981800,1098900,1124600,1222100,1253496,1171515,1054102,1090472
+Austria,11,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,170974,298844,96091,101756,97220,82632,84110,79667,86153,86173,106000,108558,115715,120426,117840,114347
+Bahamas,12,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,,,,,,,,,,696,489,555,662,662,662
+Bahrain,13,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,827,2267,3272,2812,2710,1153,2326,1261,2580,3450,3329,3530,3774,2163,206,156
+Barbados,14,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,587,673,2756,1232,1200,1127,1523,423,435,791,1178,1220,670,411,281,541
+Bangladesh,16,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1079064,951340,954039,993327,1098892,1048507,1287000,1156139,1166810,1274820,1129780,1111740,1230260,1320940,1172300,1240440
+NA,17,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,,,,,,,,,,,53,44,41,22,24
+Bhutan,18,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,783,787,818,887,768,800,774,1608,686,845,776,758,888,920,791,791
+Bolivia (Plurinational State of),19,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,6040,6198,6260,12192,8709,11883,13473,13825,17962,20426,19266,24037,23819,23120,20107,14217
+Botswana,20,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,,,,,,,13631,19939,8460,15152,21983,21156,21156,21156,21156
+Brazil,21,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1977904,2279335,2607760,2200284,2345762,3094425,2821756,2430181,3091463,3822966,3456071,4067449,4529776,3502211,4352698,5172706
+Belize,23,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,12140,20694,2594,4109,2861,2594,1668,5858,2280,5701,6095,13685,17786,17614,16811,13578
+Brunei Darussalam,26,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,19,78,101,299,82,442,126,172,604,263,293,70,243,243,243,243
+Bulgaria,27,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,283556,315624,240614,189946,146882,200117,213562,278360,270129,371015,245000,292381,296591,329546,333620,334565
+Myanmar,28,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,32292,68839,102012,53794,67020,80495,62235,57701,51300,116065,131001,185009,236030,220851,138500,256268
+Burundi,29,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,514,282,429,1098,1488,809,997,1049,1942,2673,3167,3938,5613,4617,8086,10147
+Cameroon,32,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,20791,19370,33167,22773,25383,22299,22895,25297,25457,36977,28128,37118,26009,42522,39758,46470
+Canada,33,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1642988,1649912,1539450,1776685,1371962,2068032,1909243,1914550,2051264,2490486,2787716,2461000,2543000,2581000,2461000,2471000
+Central African Republic,37,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,0,11,245,300,349,176,190,221,402,226,113,0,219,210,86
+Sri Lanka,38,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,188317,150656,163234,181556,175249,161607,209393,181732,166096,209380,164271,127751,227848,225428,117776,109729
+Chile,40,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,246316,221073,292680,240708,271154,324391,394599,354384,348444,276078,273403,288847,279778,328963,263680,263680
+Colombia,44,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,356650,369721,351921,481592,543964,574625,458489,544869,538735,608745,691109,501840,560552,581462,566529,696986
+Congo,46,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,,734,9,24,64,252,913,110,282,681,637,290,304,318,332
+Cook Islands,47,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,14,15,12,19,28,4,18,19,7,7,15,7,7,25,32,13
+Costa Rica,48,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,54917,77398,63074,68020,71534,74154,81537,45373,61204,94606,87871,89977,77922,85645,98943,90742
+Cuba,49,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,67343,24850,41829,30744,43638,51783,58322,30563,46159,72158,66349,77567,100583,86165,63639,67895
+Cyprus,50,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,8629,9591,8209,7225,6638,6340,4785,7031,8437,7408,8791,6979,6242,7940,7968,7972
+Azerbaijan,52,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,15751,12586,19645,17575,20356,16783,29670,19277,12812,22512,27541,25389,37957,4259,26370,8670
+Benin,53,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,23558,1318,145,413,11,576,357,5794,12079,4130,8936,5029,14764,184,14183,45
+Denmark,54,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,158370,218132,182171,179046,190309,192937,218223,186981,180105,183151,189000,178564,204668,225054,228139,219353
+Dominica,55,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,157,247,347,408,158,616,203,121,114,186,119,292,56,315,93,103
+Dominican Republic,56,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,51430,40693,41808,36841,49254,44450,43134,45787,54065,45215,33805,36689,43907,49992,42024,68901
+Belarus,57,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,247200,310000,346300,406000,479300,447300,523500,553600,529900,601100,557307,534836,456071,443777,348508,406846
+Ecuador,58,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,132311,119857,135632,116291,126268,118168,156382,151261,159096,178586,172934,161466,173443,147557,172511,180267
+Egypt,59,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1070036,1598386,1378793,1468102,1038377,1106359,1562670,1205636,1419020,1351710,1234310,1361285,1369790,1369790,1369790,1369790
+El Salvador,60,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,34510,36496,46957,68253,52360,64920,74283,65253,73674,82652,71085,69169,49633,58579,54190,60360
+Estonia,63,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,16700,23255,24833,20083,22610,24982,35455,27328,28628,29803,32978,33659,35806,36276,36390,37333
+Fiji,66,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,9377,3178,7659,6593,4220,4025,6758,2747,2435,3533,3963,3707,2787,5831,4219,5064
+Finland,67,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,179000,163880,173881,192488,158282,184209,223830,172814,210967,138900,138900,138136,147373,143479,138128,138948
+France,68,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2203200,2375400,2324000,2205000,2204665,2402000,2099000,1900820,2043000,1944450,2024929,2168441,2159477,2239842,2191727,2233881
+French Polynesia,70,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,388,335,383,293,320,333,454,270,359,349,247,246,227,343,343,343
+Georgia,73,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,21400,11124,14100,24117,21410,18451,16881,19122,12913,43300,49500,64600,50800,49900,51000,39700
+Gabon,74,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,553,190,680,580,799,890,820,883,593,381,1300,1277,1852,3879,3664,7746
+Gambia,75,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,1739,1200,1671,1672,1520,835,1365,1785,2628,453,56,25,141,128,37
+Germany,79,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1787833,1827767,1778438,1784996,1599788,1807176,1550625,1569045,1786485,1640414,1648828,1675289,1822791,1710616,1658837,1496649
+Bosnia and Herzegovina,80,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,18600,10768,33671,24647,15500,21396,11700,63431,61304,84152,101451,85024,104702,112139,86574,89163
+Ghana,81,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,4330,8559,5702,11105,30171,25924,18374,21160,24835,10738,42320,45343,38177,42681,63124,63124
+Greece,84,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,271991,284707,225050,203847,172621,136564,175038,114160,177135,269202,176000,189208,179850,164463,173123,181726
+Guatemala,89,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,84157,118070,140350,131425,145722,133081,88314,120544,142138,180502,185574,181937,162338,181639,167286,174189
+Guinea,90,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1794,1663,1674,1970,1978,3178,2795,1259,2528,5098,5378,2723,2920,2412,6383,23395
+Guyana,91,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,13610,9619,19117,6180,8300,6364,18262,6704,14136,6373,11312,16594,14284,17224,11114,459
+Honduras,95,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,32539,51670,70653,75381,89464,83396,44657,50904,50346,83377,75439,90325,74041,75362,96084,110243
+"China, Hong Kong SAR",96,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1699,675,957,1083,748,697,396,152,1546,2376,3471,1853,5775,7029,7416,8166
+Hungary,97,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,303000,289000,293000,260000,289000,320000,316912,272056,272572,303445,312940,342949,326753,358421,366043,392698
+Croatia,98,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,129821,123597,145499,124858,191158,212374,263430,93224,117400,139848,106884,77920,73680,87428,72320,98412
+Iceland,99,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,11085,10344,9889,9775,12342,13832,15321,7535,7590,8670,9429,8616,10793,11374,10831,13066
+India,100,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,10469210,11077861,11712729,12723910,13760868,14417665,14863815,15558372,16450653,17367540,16820900,16750100,16949600,17372300,16735900,16959300
+Indonesia,101,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1974661,2119780,2309142,2411944,2435520,2503269,2700006,2935774,2784573,2933822,2947039,2791106,2909405,2818598,2964027,2951991
+Iran (Islamic Republic of),102,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,947120,998278,1043417,1089424,1355646,1116791,1193567,1033931,943706,559006,670332,626029,701509,564053,564911,564911
+Iraq,103,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,,102714,153880,167020,126420,164120,171846,107980,138340,158685,159833,80172,63236,104472,180937
+Ireland,104,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,468352,391200,352165,345154,321588,308960,306806,362395,313649,296536,353044,331782,312090,322393,302390,344238
+Israel,105,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,44700,50200,52400,48800,47500,59400,45900,36100,30200,44800,45100,46900,46400,45100,46800,50200
+Italy,106,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,845003,846812,866469,800697,798807,812480,670261,514480,498605,516543,591000,600600,574016,605236,602730,602110
+Cote dIvoire,107,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,30009,19994,40558,16180,10962,25909,17606,21396,26724,25236,32530,33455,44188,42564,46627,33026
+Kazakhstan,108,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,12800,19600,24800,20500,27800,37500,16300,29500,40701,47523,105264,55742,80654,91532,91532,91532
+Jamaica,109,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,8209,9752,9829,6417,4844,4471,4403,4505,4826,4729,6362,4801,4840,2668,3133,3757
+Japan,110,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,531031,543757,561300,553543,528306,514482,468524,434730,449471,439801,372500,367000,395800,359100,380300,380300
+Jordan,112,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,88819,56317,21529,21884,11650,36936,22219,5149,15799,32808,0,24817,18639,34523,22113,19936
+Kyrgyzstan,113,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,9232,31383,27232,29589,26842,26141,22530,25887,25714,22447,26908,29124,35748,32774,35217,24015
+Kenya,114,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,62724,68061,64724,72514,77667,79441,73071,67372,70788,111969,91571,128865,228927,132816,99552,83791
+Cambodia,115,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,7763,5209,7467,11053,10657,8590,12447,16905,21022,33388,57218,51502,64264,81045,55834,55834
+Republic of Korea,117,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,355981,360970,385933,417303,306923,347381,286511,225992,213320,220060,302709,238257,235181,225604,228215,216849
+Kuwait,118,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,0,0,374440,5100,13507,28630,21955,0,448,0,0,0,98411,0,0
+Latvia,119,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,36047,24159,39300,40900,42700,47748,50228,53508,58643,61875,65204,69696,72935,75820,78285,77441
+Lebanon,121,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,19844,23604,24935,14606,9453,14443,9863,15530,17606,18390,18649,19966,19099,18924,20758,22908
+Libya,124,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,30800,23800,29600,32000,32000,32000,32000,32000,32000,31900,32400,31200,17500,14000,15600,15600
+Lithuania,126,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,13653,38736,50448,0,31249,0,27094,50017,107016,52682,153000,157226,163200,162813,160237,167149
+Marshall Islands,127,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,0,0,1,0,0,440,0,0,0,0,0,0,0,0,0
+"China, Macao SAR",128,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,31,35,42,46,39,26,22,2,,2,0,0,0,0,0,0
+Madagascar,129,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2683,4686,2861,7463,3821,4502,7502,4410,4577,8660,16838,0,0,0,0,31388
+Malawi,130,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,60083,60989,71630,66172,82959,84330,98191,72041,96533,84938,58424,58784,118305,71207,71207,71207
+Malaysia,131,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,450453,429347,565937,634719,587260,690240,902997,951465,660849,211212,396716,264796,318809,303405,280611,280611
+Maldives,132,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,9,12,20,34,119,256,64,141,127,70,302,256,203,237,338,350
+Mali,133,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,,152803,59289,66469,87331,89292,26683,77893,110299,114410,127424,136659,152018,167377,149692
+Malta,134,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,598,521,643,578,926,571,339,415,410,460,1965,3391,3866,4087,2122,623
+Mauritius,137,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,11028,10742,10499,9908,8614,8815,7300,6954,5125,7745,10445,7594,10657,6569,9055,8378
+Mexico,138,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,886067,912583,942528,1219457,1057564,1141863,939477,1038669,1074653,1100656,1439333,1732783,961265,919369,1491238,1455988
+Mongolia,141,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,4448,3986,5873,3657,6511,5981,6921,7520,11026,13933,16935,25365,19127,20685,22963,35672
+Morocco,143,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,248163,207532,231504,337370,321350,304810,275060,195952,220293,221434,185385,238977,233016,243242,243242,243242
+Mozambique,144,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,17700,1836,3414,6400,17168,11464,41860,15133,43385,32590,23787,26629,33555,12068,19192,22609
+Republic of Moldova,146,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,14700,13300,14200,14800,12811,17147,19924,14578,16355,19208,26900,34000,40155,70204,92438,97906
+Namibia,147,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2920,805,1973,1003,1892,1337,210,1268,2849,4866,10503,7729,3874,10368,19648,18840
+Nauru,148,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,,,,,,,,,,0,0,0,0,0,0
+Nepal,149,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,21838,5465,8118,2856,8781,1939,2790,28331,43148,54769,45950,78287,96717,105798,98716,91633
+Netherlands,150,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,292195,290559,300495,279246,287767,241217,231058,224188,217959,212312,231000,201997,221682,241367,261053,261053
+New Caledonia,153,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,728,1502,601,785,633,789,539,356,559,686,773,499,559,559,562,562
+The former Yugoslav Republic of Macedonia,154,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,8969,12030,15030,18092,17074,18897,15677,17412,19444,18143,16738,19314,20428,19644,22523,20996
+New Zealand,156,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,308091,346880,299697,309801,268811,277473,265240,252658,246235,290277,301482,308382,327602,433000,433000,433000
+Nicaragua,157,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,35236,36667,33379,35608,42671,41872,34115,47285,39863,54979,65379,36289,50567,55976,59452,77641
+Niger,158,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,6525,2519,2117,2786,4049,2508,1558,3304,4829,3813,12812,7123,12602,6721,6440,6440
+Nigeria,159,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,125131,167778,116343,213221,216854,70115,125033,99589,263151,138428,192598,269528,242150,196103,288746,444698
+Norway,162,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,99174,102587,103384,105549,103046,106319,107703,92742,85366,96000,94463,95522,99206,102598,102195,99318
+Pakistan,165,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2384980,2456009,2570230,2818779,2868984,2714053,2928057,3451900,3270531,3187339,2850771,3239557,3139263,3160507,3241907,3446922
+Panama,166,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,15171,17622,15233,15618,17682,14506,15453,17296,21601,13158,22714,26681,15953,16303,9545,12002
+Czech Republic,167,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,191778,218390,206576,215130,223684,237875,221667,225982,238554,248024,339655,331997,328627,397136,404184,366044
+Papua New Guinea,168,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,4983,6869,14752,13832,11317,12198,13695,19011,15968,11561,16131,16529,17021,20682,21004,26359
+Paraguay,169,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,34934,41662,50723,41897,47891,76839,58789,58908,81616,100585,97575,115423,134521,122302,120237,133803
+Peru,170,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,210580,204092,210640,180300,203041,246705,203064,261885,223425,251242,266346,253006,249814,282128,289320,330068
+Philippines,171,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,445244,572571,629808,544134,474332,519960,401297,428140,593226,518448,470000,527459,595539,529365,624136,766460
+Poland,173,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,831700,895000,895300,996500,1056200,1142300,1095400,1023700,1091100,1094700,1179100,1098400,1003600,1043000,1150600,1179000
+Portugal,174,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,163902,110132,125844,102663,87391,113005,105131,97293,100249,95088,106864,110643,129991,117906,105459,101503
+Eritrea,178,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2835,684,3,1436,7,660,,540,280,565,617,820,942,1602,1922,1774
+Qatar,179,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,0,0,49353,7349,0,70380,0,38180,81880,143060,91080,91080,96600,96600,96600,96600
+Zimbabwe,181,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,70742,77499,51594,48403,60543,57419,48551,66135,70502,59563,41000,37200,50200,42600,58100,58100
+Romania,183,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,239071,252139,270131,299195,252201,265487,279886,296055,305757,313333,289963,344468,303562,357352,344311,344311
+Rwanda,184,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,877,709,1214,589,2573,2799,535,94,77,2306,6721,6936,11095,4334,4334
+Russian Federation,185,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,654204,846330,838270,863240,914660,1043750,1209760,1237290,1192680,1262820,1179790,1166600,1194490,1263420,1445212,1512790
+Serbia and Montenegro,186,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,192367,167082,304430,276952,,,,,,,,,,,,
+Saint Kitts and Nevis,188,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,27,27,27,27,42,22,34,23,23,24,24,0,42,8,16,12
+Saint Lucia,189,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,,,,,,15,92,252,155,316,205,400,429,283,125
+Saudi Arabia,194,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,224300,235000,238000,194000,206000,221000,140000,130000,125000,127500,122000,176600,170100,202700,210700,210700
+Senegal,195,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,19400,13095,19616,12194,1611,1446,1845,18489,27170,19847,19370,21340,21450,28300,28300,28300
+Seychelles,196,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,8,3,10,4,25,14,24,10,30,38,26,36,57,47,50
+Slovenia,198,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,33001,34035,29974,28864,29947,29220,24883,27068,27328,26999,26300,27263,28612,28319,27097,27083
+Slovakia,199,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,81300,79911,81317,78681,88935,87737,77058,86873,92969,101004,113581,113581,119036,114773,126236,122541
+Singapore,200,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,3439,10429,12937,12505,15136,12327,12309,12261,27555,25314,8807,8233,0,18343,16877,22532
+South Africa,202,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,477072,420827,427571,347260,428719,439480,424123,453777,395000,419000,430000,416500,447547,402792,402792,402792
+Spain,203,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1026546,1198606,1072948,923764,969783,985857,739757,781069,941100,846700,843410,961507,1101895,1068103,982155,1079321
+Sudan (former),206,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,54415,57500,74649,39710,44770,55810,55810,86170,129410,87550,,,,,,
+Suriname,207,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,3912,5593,6279,4208,7524,5167,14450,7562,9844,9242,6066,6470,9491,10823,12155,12417
+Tajikistan,208,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,,26408,28633,54500,55300,52200,48176,45490,49274,51678,51294,58315,59567,52455,61385
+Sweden,210,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,184800,180100,176800,161500,160300,167100,186500,142400,167194,171444,148097,161052,181090,190228,186042,198459
+Switzerland,211,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,40542,43182,45864,53275,53171,48587,52896,51055,50829,46548,39348,48830,49155,49731,52560,48560
+Syrian Arab Republic,212,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,221594,241249,226386,266418,275613,263117,270207,210362,119175,132969,111714,25128,28950,26161,17772,6364
+"China, Taiwan Province of",214,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,215829,186325,199948,186582,186966,184172,169260,168812,171046,162115,166808,161180,157796,152879,154736,154736
+United Republic of Tanzania,215,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,22192,26590,34469,33530,39222,41448,43426,66942,66380,67717,56531,108181,84009,76565,107567,106012
+Thailand,216,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1082695,1258556,1160649,1053555,1072427,1251920,1197529,1497437,1607075,1589221,1619915,1644860,1543450,1374673,1481566,1481566
+Togo,217,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,4895,6173,4247,6884,4276,5492,0,3768,9227,13308,6872,9173,1558,573,12341,4270
+Tonga,219,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,29,3760,765,526,304,6,105,4374,3212,612,2832,2997,49,56,100,113
+Trinidad and Tobago,220,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2800,2800,5300,5300,5300,5300,4900,5200,5100,5000,6000,6000,6500,6500,6500,6500
+Oman,221,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1715,1715,1715,1715,1715,1255,1255,1255,1255,795,5855,7235,9535,9535,9535,9535
+Tunisia,222,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,91385,113598,79032,95058,73509,84590,80469,79410,130297,73577,93158,74003,110196,105430,58109,115032
+Turkey,223,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1198855,1340566,1366302,1372053,1406323,1357105,1133068,1529581,1427716,1259055,1431615,1583872,1492839,1486568,1896479,1764638
+United Arab Emirates,225,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,32140,32140,32140,32140,31260,32490,32950,22830,26050,25130,19610,16850,12450,15146,15146,15146
+Uganda,226,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,3651,4328,3951,2578,4389,3968,10644,7046,6366,7609,8048,9595,6638,2095,8538,7607
+United Kingdom,229,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1131000,1125000,1061000,1003000,1008000,1001000,948000,1016000,1022000,1000000,999000,1060000,1049000,1026000,1040000,1033000
+Ukraine,230,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,443492,359617,345280,376880,466820,578160,735780,634910,774610,898880,930100,1042910,1021160,984960,1197380,1365310
+United States of America,231,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,10945100,11536600,11398600,11013700,11625400,11585100,11084292,10625115,11056708,12045967,12217093,12187114,11975665,11829381,11798322,11649324
+Burkina Faso,233,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,2010,26620,29081,35435,30000,23580,30584,28392,41122,29705,47525,50680,48799,51093,67638,58292
+Uruguay,234,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,25998,65918,84440,73884,96465,92564,92584,105213,151476,141136,217044,208205,176051,109649,156574,155489
+Uzbekistan,235,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,559000,559000,473000,523000,540000,541967,571907,607761,632735,657710,634364,675765,699059,709484,721316,721316
+Venezuela (Bolivarian Republic of),236,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,190000,192000,205000,220000,181000,220750,309150,277380,297320,280203,255442,240495,234654,234375,252200,252200
+Viet Nam,237,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,1135656,1241192,1308247,1101644,989618,1147662,726655,1552711,1196158,989467,1185980,1628285,1363886,1695781,1548983,1548799
+Ethiopia,238,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,97647,34075,81860,80503,84628,106019,111773,118364,156141,155201,248889,172037,237305,139535,154857,156994
+Samoa,244,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,4,7,14,12,9,16,18,11,6,4,0,8,6,1,12,3
+Yemen,249,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,11300,4918,16965,3945,8923,26220,17020,13800,23920,13800,13412,26797,23552,951,18731,13199
+Democratic Republic of the Congo,250,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,1075,795,376,1627,2943,4314,2930,4676,3514,3445,7084,15180,18084,11312,16043
+Zambia,251,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,40335,42816,60177,51637,49225,55754,53215,64145,77617,116486,99337,140743,137980,165524,188107,210689
+Belgium,255,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,151095,153095,146645,144770,139966,152688,136671,155616,171234,166554,165325,167414,175892,177198,171826,170448
+Serbia,272,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,,,,236395,313794,220750,334086,213441,242884,333984,313740,205125,202034,243994,228286
+Montenegro,273,Nitrogen Fertilizers (N total nutrients),3102,Consumption in nutrients (tonnes of nutrients),5155,,,,,1738,1389,1319,1089,1360,1166,1275,1414,1324,1287,1323,1043
+Sudan,276,,,,,,,,,,,,,,,28719,45644,40533,76925,178844,163914
+China,351,,,,,25258492,25385359,26433180,26824539,27432226,28166902,28560475,29130299,29704416,30295612,30802380,30963738,31145238,31028242,30624152,29781903

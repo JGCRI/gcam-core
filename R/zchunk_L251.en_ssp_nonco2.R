@@ -19,18 +19,28 @@
 #' @importFrom dplyr filter group_by left_join mutate select semi_join
 #' @author CDL May 2017
 module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
+  UCD_tech_map_name <- if_else(energy.TRAN_UCD_MODE == 'rev.mode', "energy/mappings/UCD_techs_revised", "energy/mappings/UCD_techs")
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_regions",
+             # the following files to be able to map in the input.name to
+             # use for the input-driver
+             FILE = "energy/calibrated_techs",
+             FILE = "energy/calibrated_techs_bld_det",
+             FILE = UCD_tech_map_name,
              "L161.SSP2_EF",
              "L161.SSP15_EF",
              "L161.SSP34_EF",
-             "L201.nonghg_steepness"))
+             "L201.nonghg_steepness",
+             "L223.GlobalTechEff_elec"))
 
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L251.ctrl.delete",
              "L251.ssp15_ef",
              "L251.ssp2_ef",
              "L251.ssp34_ef",
+             "L251.ssp15_ef_elec",
+             "L251.ssp2_ef_elec",
+             "L251.ssp34_ef_elec",
              "L251.ssp15_ef_vin",
              "L251.ssp2_ef_vin",
              "L251.ssp34_ef_vin"))
@@ -38,7 +48,8 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
 
     year <- value <- GCAM_region_ID <- Non.CO2 <- supplysector <- subsector <-
       stub.technology <- agg_sector <- MAC_region <- bio_N2O_coef <-
-      SO2_name <- GAINS_region <- emiss.coeff <- NULL # silence package check.
+      SO2_name <- GAINS_region <- emiss.coeff <- technology <- minicam.energy.input <-
+      tranSubsector <- tranTechnology <- input.name <- efficiency <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -52,6 +63,19 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
     get_data(all_data, "L161.SSP34_EF") ->
       L161.SSP34_EF
     get_data(all_data, "L201.nonghg_steepness") -> L201.nonghg_steepness
+    L223.GlobalTechEff_elec <- get_data(all_data, "L223.GlobalTechEff_elec")
+
+    # make a complete mapping to be able to look up with sector + subsector + tech the
+    # input name to use for an input-driver
+    bind_rows(
+      get_data(all_data, "energy/calibrated_techs") %>% select(supplysector, subsector, technology, minicam.energy.input),
+      get_data(all_data, "energy/calibrated_techs_bld_det") %>% select(supplysector, subsector, technology, minicam.energy.input),
+      get_data(all_data, UCD_tech_map_name) %>% select(supplysector, subsector = tranSubsector, technology = tranTechnology, minicam.energy.input)
+    ) %>%
+      rename(stub.technology = technology,
+             input.name = minicam.energy.input) %>%
+      distinct() ->
+      EnTechInputNameMap
 
     # ===================================================
 
@@ -72,8 +96,9 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       # Now add regional information.
       left_join_error_no_match(A_regions, by = "GCAM_region_ID") %>%
       # Emission coefficients values are too long, so we round to the 10th decimal point.
-      mutate(emiss.coeff = round(value, 10)) %>%
+      mutate(emiss.coeff = round(value, emissions.DIGITS_EMISSIONS)) %>%
       ungroup() %>%
+      left_join_error_no_match(EnTechInputNameMap, by = c("supplysector", "subsector", "stub.technology")) %>%
       # Discard columns that are not needed.  Resulting table retains 7 columns.
       # Columns include "region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", and "emiss.coeff".
       # This applies to the next 2 tables as well.
@@ -92,8 +117,9 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       # Now add regional information.
       left_join_error_no_match(A_regions, by = "GCAM_region_ID") %>%
       # Emission coefficients values are too long, so we round to the 10th decimal point.
-      mutate(emiss.coeff = round(value, 10)) %>%
+      mutate(emiss.coeff = round(value, emissions.DIGITS_EMISSIONS)) %>%
       ungroup() %>%
+      left_join_error_no_match(EnTechInputNameMap, by = c("supplysector", "subsector", "stub.technology")) %>%
       # Discard columns that are not needed.
       select(-MAC_region, -bio_N2O_coef, -SO2_name, -GAINS_region, -GCAM_region_ID, -agg_sector, -value) ->
       L251.ssp2_ef
@@ -110,8 +136,9 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       # Now add regional information.
       left_join_error_no_match(A_regions, by = "GCAM_region_ID") %>%
       # Emission coefficients values are too long, so we round to the 10th decimal point.
-      mutate(emiss.coeff = round(value, 10)) %>%
+      mutate(emiss.coeff = round(value, emissions.DIGITS_EMISSIONS)) %>%
       ungroup() %>%
+      left_join_error_no_match(EnTechInputNameMap, by = c("supplysector", "subsector", "stub.technology")) %>%
       # Discard columns that are not needed.
       select(-MAC_region, -bio_N2O_coef, -SO2_name, -GAINS_region, -GCAM_region_ID, -agg_sector, -value) ->
       L251.ssp34_ef
@@ -182,6 +209,42 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
     L251.ssp2_ef_vin <- L251.ssp2_ef_vin %>% filter(year %in% MODEL_FUTURE_YEARS)
     L251.ssp34_ef_vin <- L251.ssp34_ef_vin %>% filter(year %in% MODEL_FUTURE_YEARS)
 
+    # Convert electricty to use output-driver instead.  We do this, despite the addional hoops, because it makes it
+    # easier to swap out a different structure for electricity which requires pass-through technologies such as to
+    # add cooling technologies
+    # We need to be careful with the processing here as we need to adjust the input coef according to the fuel IO-ceofficient
+    # which will change over time.  We can get that data from L223.GlobalTechEff_elec
+    L251.ssp15_ef %>%
+      filter(supplysector == "electricity") %>%
+      left_join_error_no_match(L223.GlobalTechEff_elec, by = c("supplysector" = "sector.name",
+                                                               "subsector" = "subsector.name",
+                                                               "stub.technology" = "technology",
+                                                               "year")) %>%
+      mutate(emiss.coeff = round(emiss.coeff / efficiency, emissions.DIGITS_EMISS_COEF)) %>%
+      select(LEVEL2_DATA_NAMES[["OutputEmissCoeff"]]) ->
+      L251.ssp15_ef_elec
+    L251.ssp15_ef <- filter(L251.ssp15_ef, supplysector != "electricity")
+    L251.ssp2_ef %>%
+      filter(supplysector == "electricity") %>%
+      left_join_error_no_match(L223.GlobalTechEff_elec, by = c("supplysector" = "sector.name",
+                                                               "subsector" = "subsector.name",
+                                                               "stub.technology" = "technology",
+                                                               "year")) %>%
+      mutate(emiss.coeff = round(emiss.coeff / efficiency, emissions.DIGITS_EMISS_COEF)) %>%
+      select(LEVEL2_DATA_NAMES[["OutputEmissCoeff"]]) ->
+      L251.ssp2_ef_elec
+    L251.ssp2_ef <- filter(L251.ssp2_ef, supplysector != "electricity")
+    L251.ssp34_ef %>%
+      filter(supplysector == "electricity") %>%
+      left_join_error_no_match(L223.GlobalTechEff_elec, by = c("supplysector" = "sector.name",
+                                                               "subsector" = "subsector.name",
+                                                               "stub.technology" = "technology",
+                                                               "year")) %>%
+      mutate(emiss.coeff = round(emiss.coeff / efficiency, emissions.DIGITS_EMISS_COEF)) %>%
+      select(LEVEL2_DATA_NAMES[["OutputEmissCoeff"]]) ->
+      L251.ssp34_ef_elec
+    L251.ssp34_ef <- filter(L251.ssp34_ef, supplysector != "electricity")
+
     # This section performs a filtering join that discards rows that do not have a SSP emission GDP control steepness value.
     L251.ctrl.delete %>%
       semi_join(L201.nonghg_steepness,
@@ -210,7 +273,10 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       add_comments("Then, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp15_ef") %>%
       add_precursors("L161.SSP15_EF",
-                     "emissions/A_regions") ->
+                     "emissions/A_regions",
+                     "energy/calibrated_techs",
+                     "energy/calibrated_techs_bld_det",
+                     UCD_tech_map_name) ->
       L251.ssp15_ef
     L251.ssp2_ef %>%
       add_title("Regional non-CO2 emissions coefficient data for SSP2.") %>%
@@ -219,7 +285,10 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       add_comments("Then, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp2_ef") %>%
       add_precursors("L161.SSP2_EF",
-                     "emissions/A_regions") ->
+                     "emissions/A_regions",
+                     "energy/calibrated_techs",
+                     "energy/calibrated_techs_bld_det",
+                     UCD_tech_map_name) ->
       L251.ssp2_ef
     L251.ssp34_ef %>%
       add_title("Regional non-CO2 emissions coefficient data for SSP3 and SSP4.") %>%
@@ -228,8 +297,47 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       add_comments("Then, regional non-CO2 emission species information is added.") %>%
       add_legacy_name("L251.ssp34_ef") %>%
       add_precursors("L161.SSP34_EF",
-                     "emissions/A_regions") ->
+                     "emissions/A_regions",
+                     "energy/calibrated_techs",
+                     "energy/calibrated_techs_bld_det",
+                     UCD_tech_map_name) ->
       L251.ssp34_ef
+    L251.ssp15_ef_elec %>%
+      add_title("Regional electricity sector non-CO2 emissions coefficient data for SSP1 and SSP5.") %>%
+      add_units("Tg / EJ") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 1/5 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("Then, regional non-CO2 emission species information is added.") %>%
+      add_comments("We've seperated electricity out to be driven by output-driver so we") %>%
+      add_comments("more easily re-configure the strucutre of the sector to swap in cooling") %>%
+      add_comments("technology choice which is implemented with pass-through sector/tech") %>%
+      add_precursors("L161.SSP15_EF",
+                     "emissions/A_regions",
+                     "L223.GlobalTechEff_elec") ->
+      L251.ssp15_ef_elec
+    L251.ssp2_ef_elec %>%
+      add_title("Regional electricity sector non-CO2 emissions coefficient data for SSP2.") %>%
+      add_units("Tg / EJ") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 2 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("Then, regional non-CO2 emission species information is added.") %>%
+      add_comments("We've seperated electricity out to be driven by output-driver so we") %>%
+      add_comments("more easily re-configure the strucutre of the sector to swap in cooling") %>%
+      add_comments("technology choice which is implemented with pass-through sector/tech") %>%
+      add_precursors("L161.SSP2_EF",
+                     "emissions/A_regions",
+                     "L223.GlobalTechEff_elec") ->
+      L251.ssp2_ef_elec
+    L251.ssp34_ef_elec %>%
+      add_title("Regional electricity sector non-CO2 emissions coefficient data for SSP3 and SSP4.") %>%
+      add_units("Tg / EJ") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 3/4 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("Then, regional non-CO2 emission species information is added.") %>%
+      add_comments("We've seperated electricity out to be driven by output-driver so we") %>%
+      add_comments("more easily re-configure the strucutre of the sector to swap in cooling") %>%
+      add_comments("technology choice which is implemented with pass-through sector/tech") %>%
+      add_precursors("L161.SSP34_EF",
+                     "emissions/A_regions",
+                     "L223.GlobalTechEff_elec") ->
+      L251.ssp34_ef_elec
     L251.ssp15_ef_vin %>%
       add_title("Regional SO2 emissions coefficient data of vintaged electric technologies for SSP1 and SSP5.") %>%
       add_units("Tg / EJ") %>%
@@ -261,7 +369,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                      "emissions/A_regions") ->
       L251.ssp34_ef_vin
 
-    return_data(L251.ctrl.delete, L251.ssp15_ef, L251.ssp2_ef, L251.ssp34_ef, L251.ssp15_ef_vin, L251.ssp2_ef_vin, L251.ssp34_ef_vin)
+    return_data(L251.ctrl.delete, L251.ssp15_ef, L251.ssp2_ef, L251.ssp34_ef, L251.ssp15_ef_elec, L251.ssp2_ef_elec, L251.ssp34_ef_elec, L251.ssp15_ef_vin, L251.ssp2_ef_vin, L251.ssp34_ef_vin)
   } else {
     stop("Unknown command")
   }

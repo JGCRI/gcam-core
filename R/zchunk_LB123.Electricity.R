@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LB123.Electricity
+#' module_gcamusa_LB123.Electricity
 #'
 #' Calculate electricity fuel consumption, electricity generation, and inputs and outputs of net ownuse
 #' (the electricity used by production/transformation facilities) by state.
@@ -22,7 +22,7 @@ module_gcamusa_LB123.Electricity <- function(command, ...) {
              FILE = "gcam-usa/NREL_us_re_technical_potential",
              "L123.in_EJ_R_elec_F_Yh",
              "L123.out_EJ_R_elec_F_Yh",
-             FILE = "gcam-usa/EIA_elect_td_ownuse_prices",
+             FILE = "gcam-usa/EIA_elect_td_ownuse",
              "L126.in_EJ_R_elecownuse_F_Yh",
              "L126.out_EJ_R_elecownuse_F_Yh",
              "L101.inEIA_EJ_state_S_F",
@@ -52,7 +52,7 @@ module_gcamusa_LB123.Electricity <- function(command, ...) {
       filter(GCAM_region_ID == gcam.USA_CODE)
     L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh") %>%
       filter(GCAM_region_ID == gcam.USA_CODE)
-    EIA_elect_td_ownuse_prices <- get_data(all_data, "gcam-usa/EIA_elect_td_ownuse_prices")
+    EIA_elect_td_ownuse <- get_data(all_data, "gcam-usa/EIA_elect_td_ownuse")
     L126.in_EJ_R_elecownuse_F_Yh <- get_data(all_data, "L126.in_EJ_R_elecownuse_F_Yh") %>%
       filter(GCAM_region_ID == gcam.USA_CODE)
     L126.out_EJ_R_elecownuse_F_Yh <- get_data(all_data, "L126.out_EJ_R_elecownuse_F_Yh") %>%
@@ -129,7 +129,7 @@ module_gcamusa_LB123.Electricity <- function(command, ...) {
                                                  fuel = "electricity",
                                                  year = HISTORICAL_YEARS) %>%
       # Add in ownuse by state
-      left_join_error_no_match(EIA_elect_td_ownuse_prices %>%
+      left_join_error_no_match(EIA_elect_td_ownuse %>%
                                  select(State, DirectUse_MWh), by = c("state" = "State")) %>%
       group_by(sector, fuel, year) %>%
       # Compute state share of total
@@ -191,11 +191,11 @@ module_gcamusa_LB123.Electricity <- function(command, ...) {
       add_title("Output of electricity net ownuse by state") %>%
       add_units("EJ") %>%
       add_comments("Input values from L123.in_EJ_state_ownuse_elec subtracted by net values") %>%
-      add_comments("Net values created with states shares from EIA_elect_td_ownuse_prices and USA total net from L126 files") %>%
+      add_comments("Net values created with states shares from EIA_elect_td_ownuse and USA total net from L126 files") %>%
       add_legacy_name("L123.out_EJ_state_ownuse_elec") %>%
       add_precursors("L101.inEIA_EJ_state_S_F", "gcam-usa/NREL_us_re_technical_potential",
                      "gcam-usa/states_subregions", "L123.out_EJ_R_elec_F_Yh", "L132.out_EJ_state_indchp_F",
-                     "L126.in_EJ_R_elecownuse_F_Yh", "L126.out_EJ_R_elecownuse_F_Yh", "gcam-usa/EIA_elect_td_ownuse_prices")  ->
+                     "L126.in_EJ_R_elecownuse_F_Yh", "L126.out_EJ_R_elecownuse_F_Yh", "gcam-usa/EIA_elect_td_ownuse")  ->
       L123.out_EJ_state_ownuse_elec
 
     return_data(L123.in_EJ_state_elec_F, L123.out_EJ_state_elec_F, L123.in_EJ_state_ownuse_elec, L123.out_EJ_state_ownuse_elec)

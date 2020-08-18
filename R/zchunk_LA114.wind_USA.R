@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_LA114.Wind
+#' module_gcamusa_LA114.Wind
 #'
 #' Compute capacity factors for wind by US state.
 #'
@@ -31,7 +31,7 @@ module_gcamusa_LA114.wind <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    us_state_wind <- get_data(all_data, "gcam-usa/us_state_wind")
+    us_state_wind <- get_data(all_data, "gcam-usa/us_state_wind", strip_attributes = TRUE)
     A23.globaltech_capital <- get_data(all_data, "energy/A23.globaltech_capital")
     A23.globaltech_OMfixed <- get_data(all_data, "energy/A23.globaltech_OMfixed")
     A23.globaltech_OMvar <- get_data(all_data, "energy/A23.globaltech_OMvar")

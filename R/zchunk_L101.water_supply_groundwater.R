@@ -41,8 +41,8 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
     # Step 1. Load required inputs
 
     basin_ids <- get_data(all_data, "water/basin_ID")
-    gw_uniform <- get_data(all_data, "water/groundwater_uniform")
-    gw_constrained <- get_data(all_data, "water/groundwater_constrained")
+    gw_uniform <- get_data(all_data, "water/groundwater_uniform", strip_attributes = TRUE)
+    gw_constrained <- get_data(all_data, "water/groundwater_constrained", strip_attributes = TRUE)
 
     # throw error if water.GROUNDWATER_CALIBRATION is incorrectly referenced in constants.R
     if(!(water.GROUNDWATER_CALIBRATION %in% c("watergap", "gleeson"))){
@@ -111,7 +111,7 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
         L101.groundwater_depletion_bm3
     }
 
-    if(water.GROUNDWATER_CALIBRATION == "Gleeson"){
+    if(water.GROUNDWATER_CALIBRATION == "gleeson"){
       gw_dep %>%
         rename(depletion = netDepletion) %>%
         filter(depletion > 0) %>%

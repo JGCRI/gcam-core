@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_L261.carbon_storage_USA
+#' module_gcamusa_L261.carbon_storage_USA
 #'
 #' Generates GCAM-USA input files of carbon storage resource supply curves, shareweights, technology coefficients and costs, and other carbon storage information.
 #'
@@ -46,12 +46,12 @@ module_gcamusa_L261.carbon_storage_USA <- function(command, ...) {
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    L161.Cstorage_FERC <- get_data(all_data, "L161.Cstorage_FERC")
-    L261.Rsrc <- get_data(all_data, "L261.Rsrc")
-    L261.Supplysector_C <- get_data(all_data, "L261.Supplysector_C")
-    L261.SubsectorLogit_C <- get_data(all_data, "L261.SubsectorLogit_C")
-    L261.SubsectorShrwtFllt_C <- get_data(all_data, "L261.SubsectorShrwtFllt_C")
-    L261.StubTech_C <- get_data(all_data, "L261.StubTech_C")
+    L161.Cstorage_FERC <- get_data(all_data, "L161.Cstorage_FERC", strip_attributes = TRUE)
+    L261.Rsrc <- get_data(all_data, "L261.Rsrc", strip_attributes = TRUE)
+    L261.Supplysector_C <- get_data(all_data, "L261.Supplysector_C", strip_attributes = TRUE)
+    L261.SubsectorLogit_C <- get_data(all_data, "L261.SubsectorLogit_C", strip_attributes = TRUE)
+    L261.SubsectorShrwtFllt_C <- get_data(all_data, "L261.SubsectorShrwtFllt_C", strip_attributes = TRUE)
+    L261.StubTech_C <- get_data(all_data, "L261.StubTech_C", strip_attributes = TRUE)
     L261.GlobalTechCoef_C <- get_data(all_data, "L261.GlobalTechCoef_C")
 
     # Create a vector of FERC grid regions with non-zero storage curves
@@ -124,7 +124,9 @@ module_gcamusa_L261.carbon_storage_USA <- function(command, ...) {
       write_to_all_states(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME)) %>%
       left_join_error_no_match(select(states_subregions, state, grid_region), by = c("region" = "state")) %>%
       # Drop the states where no carbon storage resources may exist at the grid level
-      filter(!paste(grid_region, subsector) %in% grid_Cstorage_nonexist) ->
+      filter(!(paste(grid_region, subsector) %in% grid_Cstorage_nonexist),
+             # Drop offshore carbon storage for states without ocean coastline
+             grepl("onshore", subsector) | (region %in% gcamusa.COASTAL_STATES & grepl("offshore", subsector))) ->
       L261.SubsectorLogit_C_USA
 
     # L261.SubsectorShrwtFllt_C_USA: subsector shareweight information in the states
@@ -133,7 +135,9 @@ module_gcamusa_L261.carbon_storage_USA <- function(command, ...) {
       write_to_all_states(c(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]])) %>%
       left_join_error_no_match(select(states_subregions, state, grid_region), by = c("region" = "state")) %>%
       # Drop the states where no carbon storage resources may exist at the grid level
-      filter(!paste(grid_region, subsector) %in% grid_Cstorage_nonexist) ->
+      filter(!paste(grid_region, subsector) %in% grid_Cstorage_nonexist,
+             # Drop offshore carbon storage for states without ocean coastline
+             grepl("onshore", subsector) | (region %in% gcamusa.COASTAL_STATES & grepl("offshore", subsector))) ->
       L261.SubsectorShrwtFllt_C_USA
 
     # L261.StubTech_C_USA: stub technology information for the states
@@ -142,7 +146,9 @@ module_gcamusa_L261.carbon_storage_USA <- function(command, ...) {
       write_to_all_states(c(LEVEL2_DATA_NAMES[["StubTech"]])) %>%
       left_join_error_no_match(select(states_subregions, state, grid_region), by = c("region" = "state")) %>%
       # Drop the states where no carbon storage resources may exist at the grid level
-      filter(!paste(grid_region, stub.technology) %in% grid_Cstorage_nonexist) %>%
+      filter(!paste(grid_region, stub.technology) %in% grid_Cstorage_nonexist,
+             # Drop offshore carbon storage for states without ocean coastline
+             grepl("onshore", subsector) | (region %in% gcamusa.COASTAL_STATES & grepl("offshore", subsector))) %>%
       select(one_of(c(LEVEL2_DATA_NAMES[["StubTech"]])))->
       L261.StubTech_C_USA
 

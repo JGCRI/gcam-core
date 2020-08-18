@@ -25,6 +25,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
     return(c(FILE = "energy/mappings/IEA_flow_sector",
              FILE = "energy/mappings/IEA_product_fuel",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              FILE = "emissions/mappings/EPA_tech",
              "L1231.in_EJ_R_elec_F_tech_Yh",
              "L1322.in_EJ_R_indenergy_F_Yh",
@@ -60,6 +61,11 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
     IEA_flow_sector <- get_data(all_data, "energy/mappings/IEA_flow_sector")
     IEA_product_fuel <- get_data(all_data, "energy/mappings/IEA_product_fuel")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
     EPA_tech <- get_data(all_data, "emissions/mappings/EPA_tech")
     EPA_SO2 <- get_data(all_data, "emissions/EPA_SO2")
     EPA_CO <- get_data(all_data, "emissions/EPA_CO")
@@ -193,6 +199,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       add_precursors("energy/mappings/IEA_flow_sector",
                      "energy/mappings/IEA_product_fuel",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "emissions/mappings/EPA_tech",
                      "L1231.in_EJ_R_elec_F_tech_Yh",
                      "L1322.in_EJ_R_indenergy_F_Yh",

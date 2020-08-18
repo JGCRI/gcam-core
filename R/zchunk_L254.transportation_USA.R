@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcam.usa_L254.transportation_USA
+#' module_gcamusa_L254.transportation_USA
 #'
 #' Generates GCAM-USA model inputs for transportation sector by states.
 #'
@@ -42,6 +42,8 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
              FILE = "energy/A54.globaltech_nonmotor",
              FILE = "energy/A54.globaltech_passthru",
              FILE = "energy/A54.sector",
+             FILE=  "energy/mappings/UCD_size_class_revisions",
+             FILE=  "energy/mappings/UCD_techs_revised",
              FILE = "gcam-usa/states_subregions",
              "L254.Supplysector_trn",
              "L254.FinalEnergyKeyword_trn",
@@ -102,36 +104,56 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
       size.class <- state <- tranSubsector <- tranTechnology <- calibrated.value <- stub.technology <-
       output <- output_agg <- output_cum <- share.weight <- subs.share.weight <- share.weight.year <-
       tech.share.weight <- calOutputValue <- energy.final.demand <- base.service <- year.fillout <-
-      fuelprefElasticity <- income.elasticity <- . <- NULL
+      fuelprefElasticity <- income.elasticity <- UCD_region <- sce <- . <- NULL
 
     # Load required inputs
+    #kbn 2019-10-14 Making same changes here for UCD techs that we made in L254:
+    Size_class_New<- get_data(all_data, "energy/mappings/UCD_size_class_revisions") %>%
+      select(-UCD_region) %>%
+      distinct()
+
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs") # Mapping file of transportation technology from the UC Davis report (Mishra et al. 2013)
-    A54.globaltech_nonmotor <- get_data(all_data, "energy/A54.globaltech_nonmotor")
-    A54.globaltech_passthru <- get_data(all_data, "energy/A54.globaltech_passthru")
-    A54.sector <- get_data(all_data, "energy/A54.sector")
-    states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    L254.Supplysector_trn <- get_data(all_data, "L254.Supplysector_trn")
-    L254.FinalEnergyKeyword_trn <- get_data(all_data, "L254.FinalEnergyKeyword_trn")
-    L254.tranSubsectorLogit <- get_data(all_data, "L254.tranSubsectorLogit")
-    L254.tranSubsectorShrwtFllt <- get_data(all_data, "L254.tranSubsectorShrwtFllt")
-    L254.tranSubsectorInterp <- get_data(all_data, "L254.tranSubsectorInterp")
-    L254.tranSubsectorSpeed <- get_data(all_data, "L254.tranSubsectorSpeed")
-    L254.tranSubsectorSpeed_passthru <- get_data(all_data, "L254.tranSubsectorSpeed_passthru")
-    L254.tranSubsectorSpeed_noVOTT <- get_data(all_data, "L254.tranSubsectorSpeed_noVOTT")
-    L254.tranSubsectorSpeed_nonmotor <- get_data(all_data, "L254.tranSubsectorSpeed_nonmotor")
-    L254.tranSubsectorVOTT <- get_data(all_data, "L254.tranSubsectorVOTT")
-    L254.tranSubsectorFuelPref <- get_data(all_data, "L254.tranSubsectorFuelPref")
-    L254.StubTranTech <- get_data(all_data, "L254.StubTranTech")
-    L254.StubTech_passthru <- get_data(all_data, "L254.StubTech_passthru")
-    L254.StubTech_nonmotor <- get_data(all_data, "L254.StubTech_nonmotor")
-    L254.StubTranTechLoadFactor <- get_data(all_data, "L254.StubTranTechLoadFactor")
-    L254.StubTranTechCost <- get_data(all_data, "L254.StubTranTechCost")
-    L254.StubTranTechCoef <- get_data(all_data, "L254.StubTranTechCoef")
-    L254.PerCapitaBased_trn <- get_data(all_data, "L254.PerCapitaBased_trn")
-    L254.PriceElasticity_trn <- get_data(all_data, "L254.PriceElasticity_trn")
-    L254.IncomeElasticity_trn <- get_data(all_data, "L254.IncomeElasticity_trn")
-    L154.in_EJ_state_trn_m_sz_tech_F <- get_data(all_data, "L154.in_EJ_state_trn_m_sz_tech_F")
-    L154.out_mpkm_state_trn_nonmotor_Yh <- get_data(all_data, "L154.out_mpkm_state_trn_nonmotor_Yh")
+
+    if (toString(energy.TRAN_UCD_MODE)=='rev.mode'){
+
+      UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs_revised")
+
+      UCD_techs<-UCD_techs %>%
+        inner_join(Size_class_New, by=c("mode","size.class"))%>%
+        select(-mode,-size.class)%>%
+        distinct()
+
+      colnames(UCD_techs)[colnames(UCD_techs)=='rev_size.class']<-'size.class'
+      colnames(UCD_techs)[colnames(UCD_techs)=='rev.mode']<-'mode'
+    }
+
+    A54.globaltech_nonmotor <- get_data(all_data, "energy/A54.globaltech_nonmotor", strip_attributes = TRUE)
+    A54.globaltech_passthru <- get_data(all_data, "energy/A54.globaltech_passthru", strip_attributes = TRUE)
+    A54.sector <- get_data(all_data, "energy/A54.sector", strip_attributes = TRUE)
+    states_subregions <- get_data(all_data, "gcam-usa/states_subregions", strip_attributes = TRUE)
+    #kbn 2020-02-27 Making changes to select the CORE scenario for transportation in GCAM USA
+    L254.Supplysector_trn <- get_data(all_data, "L254.Supplysector_trn", strip_attributes = TRUE) %>% filter(sce=="CORE") %>% select(-sce)
+    L254.FinalEnergyKeyword_trn <- get_data(all_data, "L254.FinalEnergyKeyword_trn", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.tranSubsectorLogit <- get_data(all_data, "L254.tranSubsectorLogit", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.tranSubsectorShrwtFllt <- get_data(all_data, "L254.tranSubsectorShrwtFllt", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.tranSubsectorInterp <- get_data(all_data, "L254.tranSubsectorInterp", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.tranSubsectorSpeed <- get_data(all_data, "L254.tranSubsectorSpeed", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.tranSubsectorSpeed_passthru <- get_data(all_data, "L254.tranSubsectorSpeed_passthru", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.tranSubsectorSpeed_noVOTT <- get_data(all_data, "L254.tranSubsectorSpeed_noVOTT", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.tranSubsectorSpeed_nonmotor <- get_data(all_data, "L254.tranSubsectorSpeed_nonmotor", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.tranSubsectorVOTT <- get_data(all_data, "L254.tranSubsectorVOTT", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.tranSubsectorFuelPref <- get_data(all_data, "L254.tranSubsectorFuelPref", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.StubTranTech <- get_data(all_data, "L254.StubTranTech", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.StubTech_passthru <- get_data(all_data, "L254.StubTech_passthru", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.StubTech_nonmotor <- get_data(all_data, "L254.StubTech_nonmotor", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.StubTranTechLoadFactor <- get_data(all_data, "L254.StubTranTechLoadFactor", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.StubTranTechCost <- get_data(all_data, "L254.StubTranTechCost", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.StubTranTechCoef <- get_data(all_data, "L254.StubTranTechCoef", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.PerCapitaBased_trn <- get_data(all_data, "L254.PerCapitaBased_trn", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.PriceElasticity_trn <- get_data(all_data, "L254.PriceElasticity_trn", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L254.IncomeElasticity_trn <- get_data(all_data, "L254.IncomeElasticity_trn", strip_attributes = TRUE)%>% filter(sce=="CORE") %>% select(-sce)
+    L154.in_EJ_state_trn_m_sz_tech_F <- get_data(all_data, "L154.in_EJ_state_trn_m_sz_tech_F", strip_attributes = TRUE)
+    L154.out_mpkm_state_trn_nonmotor_Yh <- get_data(all_data, "L154.out_mpkm_state_trn_nonmotor_Yh", strip_attributes = TRUE)
 
     # Need to delete the transportation sector in the USA region (energy-final-demands and supplysectors)
     # L254.DeleteSupplysector_USAtrn: Delete transportation supplysectors of the USA region
@@ -183,7 +205,11 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
     process_USA_to_states(L254.tranSubsectorLogit) -> L254.tranSubsectorLogit_USA
     process_USA_to_states(L254.tranSubsectorShrwtFllt) -> L254.tranSubsectorShrwtFllt_USA
     process_USA_to_states(L254.tranSubsectorInterp) -> L254.tranSubsectorInterp_USA
-    process_USA_to_states(L254.tranSubsectorSpeed) -> L254.tranSubsectorSpeed_USA
+
+    process_USA_to_states(L254.tranSubsectorSpeed) %>%
+      # parent file (L254.tranSubsectorSpeed) contains duplicate values... remove these
+      distinct()-> L254.tranSubsectorSpeed_USA
+
     process_USA_to_states(L254.tranSubsectorSpeed_passthru) -> L254.tranSubsectorSpeed_passthru_USA
     process_USA_to_states(L254.tranSubsectorSpeed_noVOTT) -> L254.tranSubsectorSpeed_noVOTT_USA
     process_USA_to_states(L254.tranSubsectorSpeed_nonmotor) -> L254.tranSubsectorSpeed_nonmotor_USA
@@ -194,21 +220,24 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
     process_USA_to_states(L254.StubTech_nonmotor) -> L254.StubTranTech_nonmotor_USA
     process_USA_to_states(L254.StubTranTechLoadFactor) -> L254.StubTranTechLoadFactor_USA
     process_USA_to_states(L254.StubTranTechCost) -> L254.StubTranTechCost_USA
+
     L254.StubTranTechCoef %>%
       mutate(coefficient = round(coefficient, digits = gcamusa.DIGITS_TRNUSA_DEFAULT)) %>%
       process_USA_to_states ->
       L254.StubTranTechCoef_USA
+
     process_USA_to_states(L254.PerCapitaBased_trn) -> L254.PerCapitaBased_trn_USA
     process_USA_to_states(L254.PriceElasticity_trn) -> L254.PriceElasticity_trn_USA
     process_USA_to_states(L254.IncomeElasticity_trn) -> L254.IncomeElasticity_trn_USA
 
     # Calibration
     # L254.StubTranTechCalInput_USA: calibrated energy consumption by all technologies
+    #kbn 2019-10-14 Switching to left_join_keep_first
     L154.in_EJ_state_trn_m_sz_tech_F %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calibrated.value = round(value, digits = energy.DIGITS_CALOUTPUT),
              region = state) %>%
-      left_join_error_no_match(select(UCD_techs, UCD_sector, mode, size.class, UCD_technology, UCD_fuel,
+      left_join_keep_first_only(select(UCD_techs, UCD_sector, mode, size.class, UCD_technology, UCD_fuel,
                                       supplysector, tranSubsector, stub.technology = tranTechnology, minicam.energy.input),
                                by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")) %>%
       select(LEVEL2_DATA_NAMES[["StubTranTech"]], year, minicam.energy.input, calibrated.value) ->
@@ -529,7 +558,8 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
       add_legacy_name("L254.StubTranTechCalInput_USA") %>%
       same_precursors_as("L254.StubTranTechCoef_USA") %>%
       add_precursors("L154.in_EJ_state_trn_m_sz_tech_F",
-                     "energy/mappings/UCD_techs") ->
+                     "energy/mappings/UCD_techs",
+                     "energy/mappings/UCD_techs_revised") ->
       L254.StubTranTechCalInput_USA
 
     L254.StubTranTechProd_nonmotor_USA %>%
@@ -564,7 +594,8 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
       same_precursors_as("L254.StubTranTechLoadFactor_USA") %>%
       same_precursors_as("L254.StubTranTechCoef_USA") %>%
       same_precursors_as("L254.StubTranTechProd_nonmotor_USA") %>%
-      add_precursors("energy/A54.sector") ->
+      add_precursors("energy/A54.sector",
+                     "energy/mappings/UCD_size_class_revisions") ->
       L254.BaseService_trn_USA
 
     return_data(L254.DeleteSupplysector_USAtrn, L254.DeleteFinalDemand_USAtrn,

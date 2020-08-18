@@ -8,62 +8,62 @@
 # LRGSTATE: Large states (CA, FL, NY, TX) specifically indicated in 1993-2005 versions of # the Residential Energy Consumption Survey (n=4)
 # REGION: Census region (n=4)
 # subregion13: Census divisions with 4 large states broken out (n=13)
-# DIVISION2009: Revised census divisions in 2009 (n=10) Breaks up the Mountain division into Northern (CO, ID, MT, UT, WY) and Southern components (AZ, NM, NV).
+# DIVISION2009: Revised census divisions in 2009 (n=10) Breaks up the Mountain division into Northern (CO, ID, MT, UT, WY) and Southern components (AZ, NM, NV)
 # subregion9: named census divisions (n=9)
 # subregion4: named census regions (n=4)
 # REPORTABLE_DOMAIN: most resolved state groupings in 2009 Residential Energy Consumption Survey (n=27)
 # subregion27: named reportable domains (n=27)
-# Column types: ccciiiciccicc 
+# Column types: ccciiiciccicci
 # ----------
-state,state_name,grid_region,DIVISION,LRGSTATE,REGION,subregion13,DIVISION2009,subregion9,subregion4,REPORTABLE_DOMAIN,subregion27,NEMS
-AK,Alaska,Alaska grid,9,0,4,Pacific,10,Pacific,West,27,Other Pacific,NWP
-AL,Alabama,Southeast grid,6,0,3,Central-SE,6,Central-SE,South,18,Other Central-SE,STV
-AR,Arkansas,Southeast grid,7,0,3,Central-SW,7,Central-SW,South,20,Other Central-SW,SPP
-AZ,Arizona,Southwest grid,8,0,4,Mountain,9,Mountain,West,24,Arizona,RA
-CA,California,California grid,9,2,4,California,10,Pacific,West,26,California,CNV
-CO,Colorado,Southwest grid,8,0,4,Mountain,8,Mountain,West,22,Colorado,RA
-CT,Connecticut,New England grid,1,0,1,New England,1,New England,Northeast,1,Other Northeast,NE_SR
-DC,District of Columbia,Mid-Atlantic grid,5,0,3,Atlantic-S,5,Atlantic-S,South,14,Other Atlantic-S,MAAC
-DE,Delaware,Mid-Atlantic grid,5,0,3,Atlantic-S,5,Atlantic-S,South,14,Other Atlantic-S,MAAC
-FL,Florida,Florida grid,5,4,3,Florida,5,Atlantic-S,South,17,Florida,FL_SR
-GA,Georgia,Southeast grid,5,0,3,Atlantic-S,5,Atlantic-S,South,15,Georgia,STV
-HI,Hawaii,Hawaii grid,9,0,4,Pacific,10,Pacific,West,27,Other Pacific,NWP
-IA,Iowa,Central Northwest grid,4,0,2,Central-NW,4,Central-NW,Midwest,10,Other Central-NW,MAPP
-ID,Idaho,Northwest grid,8,0,4,Mountain,8,Mountain,West,23,Other Mountain-N,NWP
-IL,Illinois,Central Northeast grid,3,0,2,Central-NE,3,Central-NE,Midwest,6,Illinois,MAIN
-IN,Indiana,Central East grid,3,0,2,Central-NE,3,Central-NE,Midwest,7,Other Central-NE,ECAR
-KS,Kansas,Central Southwest grid,4,0,2,Central-NW,4,Central-NW,Midwest,11,Kansas and Nebraska,SPP
-KY,Kentucky,Central East grid,6,0,3,Central-SE,6,Central-SE,South,18,Other Central-SE,ECAR
-LA,Louisiana,Southeast grid,7,0,3,Central-SW,7,Central-SW,South,20,Other Central-SW,SPP
-MA,Massachusetts,New England grid,1,0,1,New England,1,New England,Northeast,2,Massachusetts,NE_SR
-MD,Maryland,Mid-Atlantic grid,5,0,3,Atlantic-S,5,Atlantic-S,South,14,Other Atlantic-S,MAAC
-ME,Maine,New England grid,1,0,1,New England,1,New England,Northeast,1,Other Northeast,NE_SR
-MI,Michigan,Central East grid,3,0,2,Central-NE,3,Central-NE,Midwest,8,Michigan,ECAR
-MN,Minnesota,Central Northwest grid,4,0,2,Central-NW,4,Central-NW,Midwest,10,Other Central-NW,MAPP
-MO,Missouri,Central Northeast grid,4,0,2,Central-NW,4,Central-NW,Midwest,12,Missouri,MAIN
-MS,Mississippi,Southeast grid,6,0,3,Central-SE,6,Central-SE,South,18,Other Central-SE,STV
-MT,Montana,Northwest grid,8,0,4,Mountain,8,Mountain,West,23,Other Mountain-N,NWP
-NC,North Carolina,Southeast grid,5,0,3,Atlantic-S,5,Atlantic-S,South,16,Carolinas,STV
-ND,North Dakota,Central Northwest grid,4,0,2,Central-NW,4,Central-NW,Midwest,10,Other Central-NW,MAPP
-NE,Nebraska,Central Northwest grid,4,0,2,Central-NW,4,Central-NW,Midwest,11,Kansas and Nebraska,MAPP
-NH,New Hampshire,New England grid,1,0,1,New England,1,New England,Northeast,1,Other Northeast,NE_SR
-NJ,New Jersey,Mid-Atlantic grid,2,0,1,Atlantic-N,2,Atlantic-N,Northeast,4,New Jersey,MAAC
-NM,New Mexico,Southwest grid,8,0,4,Mountain,9,Mountain,West,25,Other Mountain-S,RA
-NV,Nevada,Northwest grid,8,0,4,Mountain,9,Mountain,West,25,Other Mountain-S,NWP
-NY,New York,New York grid,2,1,1,New York,2,Atlantic-N,Northeast,3,New York,NY_SR
-OH,Ohio,Central East grid,3,0,2,Central-NE,3,Central-NE,Midwest,7,Other Central-NE,ECAR
-OK,Oklahoma,Central Southwest grid,7,0,3,Central-SW,7,Central-SW,South,20,Other Central-SW,SPP
-OR,Oregon,Northwest grid,9,0,4,Pacific,10,Pacific,West,27,Other Pacific,NWP
-PA,Pennsylvania,Mid-Atlantic grid,2,0,1,Atlantic-N,2,Atlantic-N,Northeast,5,Pennsylvania,MAAC
-RI,Rhode Island,New England grid,1,0,1,New England,1,New England,Northeast,1,Other Northeast,NE_SR
-SC,South Carolina,Southeast grid,5,0,3,Atlantic-S,5,Atlantic-S,South,16,Carolinas,STV
-SD,South Dakota,Central Northwest grid,4,0,2,Central-NW,4,Central-NW,Midwest,10,Other Central-NW,MAPP
-TN,Tennessee,Southeast grid,6,0,3,Central-SE,6,Central-SE,South,19,Tennessee,STV
-TX,Texas,Texas grid,7,3,3,Texas,7,Central-SW,South,21,Texas,ERCOT
-UT,Utah,Northwest grid,8,0,4,Mountain,8,Mountain,West,23,Other Mountain-N,NWP
-VA,Virginia,Southeast grid,5,0,3,Atlantic-S,5,Atlantic-S,South,13,Virginia,STV
-VT,Vermont,New England grid,1,0,1,New England,1,New England,Northeast,1,Other Northeast,NE_SR
-WA,Washington,Northwest grid,9,0,4,Pacific,10,Pacific,West,27,Other Pacific,NWP
-WI,Wisconsin,Central Northeast grid,3,0,2,Central-NE,3,Central-NE,Midwest,9,Wisconsin,MAIN
-WV,West Virginia,Central East grid,5,0,3,Atlantic-S,5,Atlantic-S,South,14,Other Atlantic-S,ECAR
-WY,Wyoming,Southwest grid,8,0,4,Mountain,8,Mountain,West,23,Other Mountain-N,RA
+state,state_name,grid_region,DIVISION,LRGSTATE,REGION,subregion13,DIVISION2009,subregion9,subregion4,REPORTABLE_DOMAIN,subregion27,NEMS,RECS2015_DIVISION
+AK,Alaska,Alaska grid,9,0,4,Pacific,10,Pacific,West,27,Other Pacific,NWP,10
+AL,Alabama,Southeast grid,6,0,3,Central-SE,6,Central-SE,South,18,Other Central-SE,STV,6
+AR,Arkansas,Southeast grid,7,0,3,Central-SW,7,Central-SW,South,20,Other Central-SW,SPP,7
+AZ,Arizona,Southwest grid,8,0,4,Mountain,9,Mountain,West,24,Arizona,RA,9
+CA,California,California grid,9,2,4,California,10,Pacific,West,26,California,CNV,10
+CO,Colorado,Southwest grid,8,0,4,Mountain,8,Mountain,West,22,Colorado,RA,9
+CT,Connecticut,New England grid,1,0,1,New England,1,New England,Northeast,1,Other Northeast,NE_SR,1
+DC,District of Columbia,Mid-Atlantic grid,5,0,3,Atlantic-S,5,Atlantic-S,South,14,Other Atlantic-S,MAAC,5
+DE,Delaware,Mid-Atlantic grid,5,0,3,Atlantic-S,5,Atlantic-S,South,14,Other Atlantic-S,MAAC,5
+FL,Florida,Florida grid,5,4,3,Florida,5,Atlantic-S,South,17,Florida,FL_SR,5
+GA,Georgia,Southeast grid,5,0,3,Atlantic-S,5,Atlantic-S,South,15,Georgia,STV,5
+HI,Hawaii,Hawaii grid,9,0,4,Pacific,10,Pacific,West,27,Other Pacific,NWP,10
+IA,Iowa,Central Northwest grid,4,0,2,Central-NW,4,Central-NW,Midwest,10,Other Central-NW,MAPP,4
+ID,Idaho,Northwest grid,8,0,4,Mountain,8,Mountain,West,23,Other Mountain-N,NWP,8
+IL,Illinois,Central Northeast grid,3,0,2,Central-NE,3,Central-NE,Midwest,6,Illinois,MAIN,3
+IN,Indiana,Central East grid,3,0,2,Central-NE,3,Central-NE,Midwest,7,Other Central-NE,ECAR,3
+KS,Kansas,Central Southwest grid,4,0,2,Central-NW,4,Central-NW,Midwest,11,Kansas and Nebraska,SPP,4
+KY,Kentucky,Central East grid,6,0,3,Central-SE,6,Central-SE,South,18,Other Central-SE,ECAR,6
+LA,Louisiana,Southeast grid,7,0,3,Central-SW,7,Central-SW,South,20,Other Central-SW,SPP,7
+MA,Massachusetts,New England grid,1,0,1,New England,1,New England,Northeast,2,Massachusetts,NE_SR,1
+MD,Maryland,Mid-Atlantic grid,5,0,3,Atlantic-S,5,Atlantic-S,South,14,Other Atlantic-S,MAAC,5
+ME,Maine,New England grid,1,0,1,New England,1,New England,Northeast,1,Other Northeast,NE_SR,1
+MI,Michigan,Central East grid,3,0,2,Central-NE,3,Central-NE,Midwest,8,Michigan,ECAR,3
+MN,Minnesota,Central Northwest grid,4,0,2,Central-NW,4,Central-NW,Midwest,10,Other Central-NW,MAPP,4
+MO,Missouri,Central Northeast grid,4,0,2,Central-NW,4,Central-NW,Midwest,12,Missouri,MAIN,4
+MS,Mississippi,Southeast grid,6,0,3,Central-SE,6,Central-SE,South,18,Other Central-SE,STV,6
+MT,Montana,Northwest grid,8,0,4,Mountain,8,Mountain,West,23,Other Mountain-N,NWP,8
+NC,North Carolina,Southeast grid,5,0,3,Atlantic-S,5,Atlantic-S,South,16,Carolinas,STV,5
+ND,North Dakota,Central Northwest grid,4,0,2,Central-NW,4,Central-NW,Midwest,10,Other Central-NW,MAPP,4
+NE,Nebraska,Central Northwest grid,4,0,2,Central-NW,4,Central-NW,Midwest,11,Kansas and Nebraska,MAPP,4
+NH,New Hampshire,New England grid,1,0,1,New England,1,New England,Northeast,1,Other Northeast,NE_SR,1
+NJ,New Jersey,Mid-Atlantic grid,2,0,1,Atlantic-N,2,Atlantic-N,Northeast,4,New Jersey,MAAC,2
+NM,New Mexico,Southwest grid,8,0,4,Mountain,9,Mountain,West,25,Other Mountain-S,RA,9
+NV,Nevada,Northwest grid,8,0,4,Mountain,9,Mountain,West,25,Other Mountain-S,NWP,9
+NY,New York,New York grid,2,1,1,New York,2,Atlantic-N,Northeast,3,New York,NY_SR,2
+OH,Ohio,Central East grid,3,0,2,Central-NE,3,Central-NE,Midwest,7,Other Central-NE,ECAR,3
+OK,Oklahoma,Central Southwest grid,7,0,3,Central-SW,7,Central-SW,South,20,Other Central-SW,SPP,7
+OR,Oregon,Northwest grid,9,0,4,Pacific,10,Pacific,West,27,Other Pacific,NWP,10
+PA,Pennsylvania,Mid-Atlantic grid,2,0,1,Atlantic-N,2,Atlantic-N,Northeast,5,Pennsylvania,MAAC,2
+RI,Rhode Island,New England grid,1,0,1,New England,1,New England,Northeast,1,Other Northeast,NE_SR,1
+SC,South Carolina,Southeast grid,5,0,3,Atlantic-S,5,Atlantic-S,South,16,Carolinas,STV,5
+SD,South Dakota,Central Northwest grid,4,0,2,Central-NW,4,Central-NW,Midwest,10,Other Central-NW,MAPP,4
+TN,Tennessee,Southeast grid,6,0,3,Central-SE,6,Central-SE,South,19,Tennessee,STV,6
+TX,Texas,Texas grid,7,3,3,Texas,7,Central-SW,South,21,Texas,ERCOT,7
+UT,Utah,Northwest grid,8,0,4,Mountain,8,Mountain,West,23,Other Mountain-N,NWP,9
+VA,Virginia,Southeast grid,5,0,3,Atlantic-S,5,Atlantic-S,South,13,Virginia,STV,5
+VT,Vermont,New England grid,1,0,1,New England,1,New England,Northeast,1,Other Northeast,NE_SR,1
+WA,Washington,Northwest grid,9,0,4,Pacific,10,Pacific,West,27,Other Pacific,NWP,10
+WI,Wisconsin,Central Northeast grid,3,0,2,Central-NE,3,Central-NE,Midwest,9,Wisconsin,MAIN,3
+WV,West Virginia,Central East grid,5,0,3,Atlantic-S,5,Atlantic-S,South,14,Other Atlantic-S,ECAR,5
+WY,Wyoming,Southwest grid,8,0,4,Mountain,8,Mountain,West,23,Other Mountain-N,RA,8

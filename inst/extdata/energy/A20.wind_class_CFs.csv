@@ -1,0 +1,16 @@
+# File: A20.wind_class_CFs.csv
+# Title: Capacity factor assumptions for global offshore wind classes
+# Units: Unitless
+# Source: Eurek et. al (2017); https://doi.org/10.1016/j.eneco.2016.11.015; raw data at https://catalog.data.gov/dataset/global-cfdda-based-onshore-and-offshore-wind-potential-supply-curves-by-country-class-and-
+# Column types: cn
+#  ----------
+wind_class,CF
+c1,0.09
+c2,0.2
+c3,0.24
+c4,0.28
+c5,0.32
+c6,0.36
+c7,0.4
+c8,0.44
+c9,0.48

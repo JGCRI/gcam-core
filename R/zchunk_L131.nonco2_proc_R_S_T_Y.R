@@ -25,6 +25,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
              FILE = "emissions/EDGAR/EDGAR_sector",
              FILE = "emissions/mappings/EPA_ghg_tech",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              "EDGAR_gases",
              FILE = "emissions/EPA_FCCC_IndProc_2005"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -47,6 +48,13 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
     EDGAR_sector <- get_data(all_data, "emissions/EDGAR/EDGAR_sector")
     EPA_ghg_tech <- get_data(all_data, "emissions/mappings/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
+
     EPA_Ind <- get_data(all_data, "emissions/EPA_FCCC_IndProc_2005")
     EDGAR_gases <- get_data(all_data, "EDGAR_gases")
 
@@ -152,6 +160,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_sector",
                      "emissions/mappings/EPA_ghg_tech",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "EDGAR_gases",
                      "emissions/EPA_FCCC_IndProc_2005") ->
       L131.nonco2_tg_R_prc_S_S_Yh

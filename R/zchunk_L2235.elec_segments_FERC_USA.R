@@ -94,21 +94,21 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
       net.exports <- imports <- exports <- ownuse_coef <- net.supply <- NULL  # silence package check notes
 
     # Load required inputs
-    states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    A232.structure <- get_data(all_data, "gcam-usa/A232.structure")
-    A232.elec_subsector_shrwt_grid_adj <- get_data(all_data, "gcam-usa/A232.elec_subsector_shrwt_grid_adj")
-    A232.elec_subsector_shrwt_interpto_grid_adj <- get_data(all_data, "gcam-usa/A232.elec_subsector_shrwt_interpto_grid_adj")
-    A23.elec_delete <- get_data(all_data, "gcam-usa/A23.elec_delete")
-    A23.elecS_sector_vertical <- get_data(all_data, "gcam-usa/A23.elecS_sector_vertical")
-    A23.elecS_metainfo_vertical <- get_data(all_data, "gcam-usa/A23.elecS_metainfo_vertical")
-    L1235.elecS_demand_fraction_USA <- get_data(all_data, "L1235.elecS_demand_fraction_USA")
-    L1235.elecS_horizontal_vertical_GCAM_coeff_USA <- get_data(all_data, "L1235.elecS_horizontal_vertical_GCAM_coeff_USA") %>%
+    states_subregions <- get_data(all_data, "gcam-usa/states_subregions", strip_attributes = TRUE)
+    A232.structure <- get_data(all_data, "gcam-usa/A232.structure", strip_attributes = TRUE)
+    A232.elec_subsector_shrwt_grid_adj <- get_data(all_data, "gcam-usa/A232.elec_subsector_shrwt_grid_adj", strip_attributes = TRUE)
+    A232.elec_subsector_shrwt_interpto_grid_adj <- get_data(all_data, "gcam-usa/A232.elec_subsector_shrwt_interpto_grid_adj", strip_attributes = TRUE)
+    A23.elec_delete <- get_data(all_data, "gcam-usa/A23.elec_delete", strip_attributes = TRUE)
+    A23.elecS_sector_vertical <- get_data(all_data, "gcam-usa/A23.elecS_sector_vertical", strip_attributes = TRUE)
+    A23.elecS_metainfo_vertical <- get_data(all_data, "gcam-usa/A23.elecS_metainfo_vertical", strip_attributes = TRUE)
+    L1235.elecS_demand_fraction_USA <- get_data(all_data, "L1235.elecS_demand_fraction_USA", strip_attributes = TRUE)
+    L1235.elecS_horizontal_vertical_GCAM_coeff_USA <- get_data(all_data, "L1235.elecS_horizontal_vertical_GCAM_coeff_USA", strip_attributes = TRUE) %>%
       rename(region = grid_region)
-    L123.in_EJ_state_ownuse_elec <- get_data(all_data, "L123.in_EJ_state_ownuse_elec")
-    L123.out_EJ_state_ownuse_elec <- get_data(all_data, "L123.out_EJ_state_ownuse_elec")
-    L126.in_EJ_state_td_elec <- get_data(all_data, "L126.in_EJ_state_td_elec")
-    L132.out_EJ_state_indchp_F <- get_data(all_data, "L132.out_EJ_state_indchp_F")
-    L1232.out_EJ_sR_elec <- get_data(all_data, "L1232.out_EJ_sR_elec")
+    L123.in_EJ_state_ownuse_elec <- get_data(all_data, "L123.in_EJ_state_ownuse_elec", strip_attributes = TRUE)
+    L123.out_EJ_state_ownuse_elec <- get_data(all_data, "L123.out_EJ_state_ownuse_elec", strip_attributes = TRUE)
+    L126.in_EJ_state_td_elec <- get_data(all_data, "L126.in_EJ_state_td_elec", strip_attributes = TRUE)
+    L132.out_EJ_state_indchp_F <- get_data(all_data, "L132.out_EJ_state_indchp_F", strip_attributes = TRUE)
+    L1232.out_EJ_sR_elec <- get_data(all_data, "L1232.out_EJ_sR_elec", strip_attributes = TRUE)
 
     # ===================================================
     # Data Processing

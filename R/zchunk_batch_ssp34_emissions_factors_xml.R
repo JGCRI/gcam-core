@@ -13,6 +13,7 @@
 module_emissions_batch_ssp34_emissions_factors_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L251.ssp34_ef",
+             "L251.ssp34_ef_elec",
               "L251.ssp34_ef_vin"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "ssp34_emissions_factors.xml"))
@@ -22,6 +23,7 @@ module_emissions_batch_ssp34_emissions_factors_xml <- function(command, ...) {
 
     # Load required inputs
     L251.ssp34_ef <- get_data(all_data, "L251.ssp34_ef")
+    L251.ssp34_ef_elec <- get_data(all_data, "L251.ssp34_ef_elec")
     L251.ssp34_ef_vin <- get_data(all_data, "L251.ssp34_ef_vin")
 
     # Silence package checks
@@ -37,8 +39,9 @@ module_emissions_batch_ssp34_emissions_factors_xml <- function(command, ...) {
     # Produce outputs
     create_xml("ssp34_emissions_factors.xml") %>%
       add_xml_data(L251.ssp34_ef, "InputEmissCoeff") %>%
+      add_xml_data(L251.ssp34_ef_elec, "OutputEmissCoeff") %>%
       add_xml_data(L251.ssp34_ef_vin, "ReadInControl") %>%
-      add_precursors("L251.ssp34_ef", "L251.ssp34_ef_vin") ->
+      add_precursors("L251.ssp34_ef", "L251.ssp34_ef_elec", "L251.ssp34_ef_vin") ->
       ssp34_emissions_factors.xml
 
     return_data(ssp34_emissions_factors.xml)

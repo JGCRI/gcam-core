@@ -51,14 +51,14 @@ module_energy_L252.transportation <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     calibrated_techs_trn_agg <- get_data(all_data, "energy/mappings/calibrated_techs_trn_agg")
-    A52.sector <- get_data(all_data, "energy/A52.sector")
-    A52.subsector_interp <- get_data(all_data, "energy/A52.subsector_interp")
-    A52.subsector_logit <- get_data(all_data, "energy/A52.subsector_logit")
-    A52.subsector_shrwt <- get_data(all_data, "energy/A52.subsector_shrwt")
+    A52.sector <- get_data(all_data, "energy/A52.sector", strip_attributes = TRUE)
+    A52.subsector_interp <- get_data(all_data, "energy/A52.subsector_interp", strip_attributes = TRUE)
+    A52.subsector_logit <- get_data(all_data, "energy/A52.subsector_logit", strip_attributes = TRUE)
+    A52.subsector_shrwt <- get_data(all_data, "energy/A52.subsector_shrwt", strip_attributes = TRUE)
     A52.globaltech_cost <- get_data(all_data, "energy/A52.globaltech_cost")
     A52.globaltech_eff <- get_data(all_data, "energy/A52.globaltech_eff")
-    A52.globaltech_shrwt <- get_data(all_data, "energy/A52.globaltech_shrwt")
-    A52.demand <- get_data(all_data, "energy/A52.demand")
+    A52.globaltech_shrwt <- get_data(all_data, "energy/A52.globaltech_shrwt", strip_attributes = TRUE)
+    A52.demand <- get_data(all_data, "energy/A52.demand", strip_attributes = TRUE)
     L152.in_EJ_R_trn_F_Yh <- get_data(all_data, "L152.in_EJ_R_trn_F_Yh")
 
     # ===================================================
@@ -195,7 +195,11 @@ module_energy_L252.transportation <- function(command, ...) {
       filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       # Match in supplysector, subsector, technology
-      left_join_error_no_match(calibrated_techs_trn_agg, by = c("sector", "fuel")) %>%
+      #kbn 2019-10-23- The IEA World Energy Balances no longer report data on gas for international shipping.
+      #That sector will contain NAs. To avoid the same, switching to a left_join and na.omit(). This was available in a previous
+      #iteration of the dataset as 0's.
+      left_join(calibrated_techs_trn_agg, by = c("sector", "fuel")) %>%
+      na.omit()%>%
       # Aggregate as indicated in the supplysector/subsector/technology mapping (dropping fuel)
       group_by(region, supplysector, subsector, stub.technology = technology, year) %>%
       summarise(value = sum(value)) %>%

@@ -25,6 +25,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
              FILE = "emissions/EDGAR/EDGAR_nation",
              FILE = "emissions/mappings/EPA_tech",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              "L101.in_EJ_R_en_Si_F_Yh",
              "L101.so2_tgej_USA_en_Sepa_F_Yh",
              "L101.co_tgej_USA_en_Sepa_F_Yh",
@@ -56,6 +57,12 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
     EDGAR_nation <- get_data(all_data, "emissions/EDGAR/EDGAR_nation")
     EPA_tech <- get_data(all_data, "emissions/mappings/EPA_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
 
     L101.co_tgej_USA_en_Sepa_F_Yh  <- get_data(all_data, "L101.co_tgej_USA_en_Sepa_F_Yh")
     L101.so2_tgej_USA_en_Sepa_F_Yh <- get_data(all_data, "L101.so2_tgej_USA_en_Sepa_F_Yh")
@@ -239,6 +246,7 @@ module_emissions_L111.nonghg_en_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_nation",
                      "emissions/mappings/EPA_tech",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "L101.in_EJ_R_en_Si_F_Yh",
                      "L101.so2_tgej_USA_en_Sepa_F_Yh",
                      "L101.co_tgej_USA_en_Sepa_F_Yh",

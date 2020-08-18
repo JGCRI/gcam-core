@@ -1,0 +1,310 @@
+# File: UCD_size_class_revisions.csv
+#Description: Revised size classes and modes to be used for UCD datasets as an alternative to GCAM's old mapping.
+# Title: Freight truck and 4-wheel LDV size class revisions
+#Source: Documented in JIRA issue https://jira.pnnl.gov/jira/browse/JGCRI-358?src=confmacro. 
+# Units: Unitless
+# Column types: ccccc
+# ----------
+UCD_region,mode,size.class,rev.mode,rev_size.class
+Africa,LDV_4W,Mini Car,LDV_4W,Mini Car
+Africa,LDV_4W,Subcompact Car,LDV_4W,Car
+Africa,LDV_4W,Compact Car,LDV_4W,Car
+Africa,LDV_4W,Multipurpose Vehicle,LDV_4W,Large Car and Truck
+Australia_NZ,LDV_4W,Compact Car,LDV_4W,Car
+Australia_NZ,LDV_4W,Midsize Car,LDV_4W,Car
+Australia_NZ,LDV_4W,Large Car,LDV_4W,Large Car and Truck
+Australia_NZ,LDV_4W,Light Truck and SUV,LDV_4W,Large Car and Truck
+Brazil,LDV_4W,Mini Car,LDV_4W,Mini Car
+Brazil,LDV_4W,Subcompact Car,LDV_4W,Car
+Brazil,LDV_4W,Compact Car,LDV_4W,Car
+Brazil,LDV_4W,Large Car and SUV,LDV_4W,Large Car and Truck
+Canada,LDV_4W,Midsize Car,LDV_4W,Car
+Canada,LDV_4W,Van,LDV_4W,Large Car and Truck
+Canada,LDV_4W,Light Truck and SUV,LDV_4W,Large Car and Truck
+China,LDV_4W,Mini Car,LDV_4W,Mini Car
+China,LDV_4W,Subcompact Car,LDV_4W,Car
+China,LDV_4W,Compact Car,LDV_4W,Car
+China,LDV_4W,Large Car and SUV,LDV_4W,Large Car and Truck
+Eastern Europe,LDV_4W,Subcompact Car,LDV_4W,Car
+Eastern Europe,LDV_4W,Compact Car,LDV_4W,Car
+Eastern Europe,LDV_4W,Van,LDV_4W,Car
+Eastern Europe,LDV_4W,Large Car and SUV,LDV_4W,Car
+Former Soviet Union,LDV_4W,Subcompact Car,LDV_4W,Car
+Former Soviet Union,LDV_4W,Compact Car,LDV_4W,Car
+Former Soviet Union,LDV_4W,Midsize Car,LDV_4W,Car
+Former Soviet Union,LDV_4W,Large Car and SUV,LDV_4W,Large Car and Truck
+India,LDV_4W,Mini Car,LDV_4W,Mini Car
+India,LDV_4W,Subcompact Car,LDV_4W,Car
+India,LDV_4W,Compact Car,LDV_4W,Car
+India,LDV_4W,Multipurpose Vehicle,LDV_4W,Large Car and Truck
+Japan,LDV_4W,Mini Car,LDV_4W,Mini Car
+Japan,LDV_4W,Subcompact Car,LDV_4W,Car
+Japan,LDV_4W,Compact Car,LDV_4W,Car
+Japan,LDV_4W,Large Car and SUV,LDV_4W,Large Car and Truck
+Korea,LDV_4W,Subcompact Car,LDV_4W,Car
+Korea,LDV_4W,Compact Car,LDV_4W,Car
+Korea,LDV_4W,Large Car,LDV_4W,Car
+Korea,LDV_4W,Light Truck and SUV,LDV_4W,Large Car and Truck
+Latin America,LDV_4W,Mini Car,LDV_4W,Mini Car
+Latin America,LDV_4W,Subcompact Car,LDV_4W,Car
+Latin America,LDV_4W,Compact Car,LDV_4W,Car
+Latin America,LDV_4W,Large Car and SUV,LDV_4W,Large Car and Truck
+Middle East,LDV_4W,Mini Car,LDV_4W,Mini Car
+Middle East,LDV_4W,Subcompact Car,LDV_4W,Car
+Middle East,LDV_4W,Compact Car,LDV_4W,Car
+Middle East,LDV_4W,Large Car and SUV,LDV_4W,Large Car and Truck
+Southeast Asia,LDV_4W,Mini Car,LDV_4W,Mini Car
+Southeast Asia,LDV_4W,Subcompact Car,LDV_4W,Car
+Southeast Asia,LDV_4W,Compact Car,LDV_4W,Car
+Southeast Asia,LDV_4W,Multipurpose Vehicle,LDV_4W,Large Car and Truck
+USA,LDV_4W,Compact Car,LDV_4W,Car
+USA,LDV_4W,Midsize Car,LDV_4W,Car
+USA,LDV_4W,Large Car,LDV_4W,Large Car and Truck
+USA,LDV_4W,Light Truck and SUV,LDV_4W,Large Car and Truck
+Western Europe,LDV_4W,Subcompact Car,LDV_4W,Car
+Western Europe,LDV_4W,Compact Car,LDV_4W,Car
+Western Europe,LDV_4W,Van,LDV_4W,Large Car and Truck
+Western Europe,LDV_4W,Large Car and SUV,LDV_4W,Large Car and Truck
+Africa,Truck,Truck (0-2t),Truck,Light truck
+Africa,Truck,Truck (2-5t),Truck,Light truck
+Africa,Truck,Truck (5-9t),Truck,Medium truck
+Africa,Truck,Truck (9-16t),Truck,Heavy truck
+Australia_NZ,Truck,Truck (0-1t),Truck,Light truck
+Australia_NZ,Truck,Truck (1-6t),Truck,Light truck
+Australia_NZ,Truck,Truck (6-30t),Truck,Heavy truck
+Canada,Truck,Truck (0-4.5t),Truck,Light truck
+Canada,Truck,Truck (4.5-15t),Truck,Medium truck
+Canada,Truck,Truck (>15t),Truck,Heavy truck
+China,Truck,3W Rural,Truck,Light truck
+China,Truck,Truck (0-6t),Truck,Light truck
+China,Truck,Truck (6-14t),Truck,Medium truck
+China,Truck,Truck (>14t),Truck,Heavy truck
+Eastern Europe,Truck,Truck (0-3.5t),Truck,Light truck
+Eastern Europe,Truck,Truck (3.5-16t),Truck,Medium truck
+Eastern Europe,Truck,Truck (16-32t),Truck,Heavy truck
+Eastern Europe,Truck,Truck (>32t),Truck,Heavy truck
+Former Soviet Union,Truck,Truck (0-3.5t),Truck,Light truck
+Former Soviet Union,Truck,Truck (3.5-16t),Truck,Medium truck
+Former Soviet Union,Truck,Truck (16-32t),Truck,Heavy truck
+Former Soviet Union,Truck,Truck (>32t),Truck,Heavy truck
+India,Truck,Truck (0-2t),Truck,Light truck
+India,Truck,Truck (2-5t),Truck,Light truck
+India,Truck,Truck (5-9t),Truck,Medium truck
+India,Truck,Truck (9-16t),Truck,Heavy truck
+Japan,Truck,Truck (0-1t),Truck,Light truck
+Japan,Truck,Truck (1-6t),Truck,Light truck
+Korea,Truck,Truck,Truck,Medium truck
+Latin America,Truck,Truck (0-1t),Truck,Light truck
+Latin America,Truck,Truck (6-15t),Truck,Medium truck
+Latin America,Truck,Truck (>15t),Truck,Heavy truck
+Middle East,Truck,Truck (0-2t),Truck,Light truck
+Middle East,Truck,Truck (2-5t),Truck,Light truck
+Middle East,Truck,Truck (5-9t),Truck,Medium truck
+Middle East,Truck,Truck (9-16t),Truck,Heavy truck
+Southeast Asia,Truck,Truck (0-2t),Truck,Light truck
+Southeast Asia,Truck,Truck (2-5t),Truck,Light truck
+Southeast Asia,Truck,Truck (5-9t),Truck,Medium truck
+Southeast Asia,Truck,Truck (9-16t),Truck,Heavy truck
+USA,Truck,Truck (0-2.7t),Truck,Light truck
+USA,Truck,Truck (2.7-4.5t),Truck,Medium truck
+USA,Truck,Truck (4.5-12t),Truck,Medium truck
+USA,Truck,Truck (>12t),Truck,Heavy truck
+Western Europe,Truck,Truck (0-3.5t),Truck,Light truck
+Western Europe,Truck,Truck (3.5-16t),Truck,Medium truck
+Western Europe,Truck,Truck (16-32t),Truck,Heavy truck
+Western Europe,Truck,Truck (>32t),Truck,Heavy truck
+Brazil,Truck,Truck (0-1t),Truck,Light truck
+Brazil,Truck,Truck (6-15t),Truck,Medium truck
+Brazil,Truck,Truck (>15t),Truck,Heavy truck
+Africa,LDV_2W,Motorcycle (50-250cc),LDV_2W_3W,2W and 3W
+Africa,LDV_3W,Three-Wheeler,LDV_2W_3W,2W and 3W
+Australia_NZ,LDV_2W,Motorcycle (>250cc),LDV_2W_3W,2W and 3W
+Canada,LDV_2W,Motorcycle (>250cc),LDV_2W_3W,2W and 3W
+China,LDV_2W,Motorcycle (50-250cc),LDV_2W_3W,2W and 3W
+China,LDV_3W,Three-Wheeler,LDV_2W_3W,2W and 3W
+Eastern Europe,LDV_2W,Moped,LDV_2W_3W,2W and 3W
+Eastern Europe,LDV_2W,Motorcycle (50-250cc),LDV_2W_3W,2W and 3W
+Eastern Europe,LDV_2W,Motorcycle (>250cc),LDV_2W_3W,2W and 3W
+Former Soviet Union,LDV_2W,Moped,LDV_2W_3W,2W and 3W
+Former Soviet Union,LDV_2W,Motorcycle (50-250cc),LDV_2W_3W,2W and 3W
+Former Soviet Union,LDV_2W,Motorcycle (>250cc),LDV_2W_3W,2W and 3W
+India,LDV_2W,Moped,LDV_2W_3W,2W and 3W
+India,LDV_2W,Scooter,LDV_2W_3W,2W and 3W
+India,LDV_2W,Motorcycle (50-250cc),LDV_2W_3W,2W and 3W
+India,LDV_3W,Three-Wheeler,LDV_2W_3W,2W and 3W
+Japan,LDV_2W,Moped,LDV_2W_3W,2W and 3W
+Japan,LDV_2W,Motorcycle (50-250cc),LDV_2W_3W,2W and 3W
+Japan,LDV_2W,Motorcycle (>250cc),LDV_2W_3W,2W and 3W
+Korea,LDV_2W,Motorcycle (50-250cc),LDV_2W_3W,2W and 3W
+Latin America,LDV_2W,Moped,LDV_2W_3W,2W and 3W
+Latin America,LDV_2W,Motorcycle (50-250cc),LDV_2W_3W,2W and 3W
+Latin America,LDV_2W,Motorcycle (>250cc),LDV_2W_3W,2W and 3W
+Middle East,LDV_2W,Motorcycle (50-250cc),LDV_2W_3W,2W and 3W
+Southeast Asia,LDV_2W,Moped,LDV_2W_3W,2W and 3W
+Southeast Asia,LDV_2W,Scooter,LDV_2W_3W,2W and 3W
+Southeast Asia,LDV_2W,Motorcycle (50-250cc),LDV_2W_3W,2W and 3W
+Southeast Asia,LDV_3W,Three-Wheeler,LDV_2W_3W,2W and 3W
+USA,LDV_2W,Motorcycle (>250cc),LDV_2W_3W,2W and 3W
+Western Europe,LDV_2W,Moped,LDV_2W_3W,2W and 3W
+Western Europe,LDV_2W,Motorcycle (50-250cc),LDV_2W_3W,2W and 3W
+Western Europe,LDV_2W,Motorcycle (>250cc),LDV_2W_3W,2W and 3W
+Brazil,LDV_2W,Moped,LDV_2W_3W,2W and 3W
+Brazil,LDV_2W,Motorcycle (50-250cc),LDV_2W_3W,2W and 3W
+Brazil,LDV_2W,Motorcycle (>250cc),LDV_2W_3W,2W and 3W
+China,Bus,Heavy Bus,Bus,All
+China,Bus,Light Bus,Bus,All
+Africa,Air Domestic,All,Air Domestic,All
+Africa,Air International,All,Air International,All
+Australia_NZ,Air Domestic,All,Air Domestic,All
+Australia_NZ,Air International,All,Air International,All
+Canada,Air Domestic,All,Air Domestic,All
+Canada,Air International,All,Air International,All
+China,Air Domestic,All,Air Domestic,All
+China,Air International,All,Air International,All
+Eastern Europe,Air Domestic,All,Air Domestic,All
+Eastern Europe,Air International,All,Air International,All
+Former Soviet Union,Air Domestic,All,Air Domestic,All
+Former Soviet Union,Air International,All,Air International,All
+India,Air Domestic,All,Air Domestic,All
+India,Air International,All,Air International,All
+Japan,Air Domestic,All,Air Domestic,All
+Japan,Air International,All,Air International,All
+Korea,Air Domestic,All,Air Domestic,All
+Korea,Air International,All,Air International,All
+Latin America,Air Domestic,All,Air Domestic,All
+Latin America,Air International,All,Air International,All
+Middle East,Air Domestic,All,Air Domestic,All
+Middle East,Air International,All,Air International,All
+Southeast Asia,Air Domestic,All,Air Domestic,All
+Southeast Asia,Air International,All,Air International,All
+USA,Air Domestic,All,Air Domestic,All
+USA,Air International,All,Air International,All
+Western Europe,Air Domestic,All,Air Domestic,All
+Western Europe,Air International,All,Air International,All
+Africa,Bus,All,Bus,All
+Africa,HSR,All,HSR,All
+Africa,Rail,All,Rail,All
+Africa,Ship Domestic,All,Ship Domestic,All
+Africa,Ship International,All,Ship International,All
+Australia_NZ,Bus,All,Bus,All
+Australia_NZ,HSR,All,HSR,All
+Australia_NZ,Rail,All,Rail,All
+Australia_NZ,Ship Domestic,All,Ship Domestic,All
+Australia_NZ,Ship International,All,Ship International,All
+Canada,Bus,All,Bus,All
+Canada,HSR,All,HSR,All
+Canada,Rail,All,Rail,All
+Canada,Ship Domestic,All,Ship Domestic,All
+Canada,Ship International,All,Ship International,All
+China,HSR,All,HSR,All
+China,Rail,All,Rail,All
+China,Ship Domestic,All,Ship Domestic,All
+China,Ship International,All,Ship International,All
+Eastern Europe,Bus,All,Bus,All
+Eastern Europe,HSR,All,HSR,All
+Eastern Europe,Rail,All,Rail,All
+Eastern Europe,Ship Domestic,All,Ship Domestic,All
+Eastern Europe,Ship International,All,Ship International,All
+Former Soviet Union,Bus,All,Bus,All
+Former Soviet Union,HSR,All,HSR,All
+Former Soviet Union,Rail,All,Rail,All
+Former Soviet Union,Ship Domestic,All,Ship Domestic,All
+Former Soviet Union,Ship International,All,Ship International,All
+India,Bus,All,Bus,All
+India,HSR,All,HSR,All
+India,Rail,All,Rail,All
+India,Ship Domestic,All,Ship Domestic,All
+India,Ship International,All,Ship International,All
+Japan,Bus,All,Bus,All
+Japan,HSR,All,HSR,All
+Japan,Rail,All,Rail,All
+Japan,Ship Domestic,All,Ship Domestic,All
+Japan,Ship International,All,Ship International,All
+Korea,Bus,All,Bus,All
+Korea,HSR,All,HSR,All
+Korea,Rail,All,Rail,All
+Korea,Ship Domestic,All,Ship Domestic,All
+Korea,Ship International,All,Ship International,All
+Latin America,Bus,All,Bus,All
+Latin America,HSR,All,HSR,All
+Latin America,Rail,All,Rail,All
+Latin America,Ship Domestic,All,Ship Domestic,All
+Latin America,Ship International,All,Ship International,All
+Middle East,Bus,All,Bus,All
+Middle East,HSR,All,HSR,All
+Middle East,Rail,All,Rail,All
+Middle East,Ship Domestic,All,Ship Domestic,All
+Middle East,Ship International,All,Ship International,All
+Southeast Asia,Bus,All,Bus,All
+Southeast Asia,HSR,All,HSR,All
+Southeast Asia,Rail,All,Rail,All
+Southeast Asia,Ship Domestic,All,Ship Domestic,All
+Southeast Asia,Ship International,All,Ship International,All
+USA,Bus,All,Bus,All
+USA,HSR,All,HSR,All
+USA,Rail,All,Rail,All
+USA,Ship Domestic,All,Ship Domestic,All
+USA,Ship International,All,Ship International,All
+Western Europe,Bus,All,Bus,All
+Western Europe,HSR,All,HSR,All
+Western Europe,Rail,All,Rail,All
+Western Europe,Ship Domestic,All,Ship Domestic,All
+Western Europe,Ship International,All,Ship International,All
+Africa,Walk,All,Walk,All
+Africa,Cycle,All,Cycle,All
+Australia_NZ,Walk,All,Walk,All
+Australia_NZ,Cycle,All,Cycle,All
+Canada,Walk,All,Walk,All
+Canada,Cycle,All,Cycle,All
+China,Walk,All,Walk,All
+China,Cycle,All,Cycle,All
+Eastern Europe,Walk,All,Walk,All
+Eastern Europe,Cycle,All,Cycle,All
+Former Soviet Union,Walk,All,Walk,All
+Former Soviet Union,Cycle,All,Cycle,All
+India,Walk,All,Walk,All
+India,Cycle,All,Cycle,All
+Japan,Walk,All,Walk,All
+Japan,Cycle,All,Cycle,All
+Korea,Walk,All,Walk,All
+Korea,Cycle,All,Cycle,All
+Latin America,Walk,All,Walk,All
+Latin America,Cycle,All,Cycle,All
+Middle East,Walk,All,Walk,All
+Middle East,Cycle,All,Cycle,All
+Southeast Asia,Walk,All,Walk,All
+Southeast Asia,Cycle,All,Cycle,All
+USA,Walk,All,Walk,All
+USA,Cycle,All,Cycle,All
+Western Europe,Walk,All,Walk,All
+Western Europe,Cycle,All,Cycle,All
+Africa,LDV_3W,All,LDV_3W,All
+Africa,LDV_4W,All,LDV_4W,All
+Australia_NZ,LDV_4W,All,LDV_4W,All
+Canada,LDV_4W,All,LDV_4W,All
+China,LDV_3W,All,LDV_3W,All
+China,LDV_4W,All,LDV_4W,All
+Eastern Europe,LDV_4W,All,LDV_4W,All
+Former Soviet Union,LDV_4W,All,LDV_4W,All
+India,LDV_2W,Motorcycle (>250cc),LDV_2W_3W,2W and 3W
+India,LDV_3W,All,LDV_3W,All
+India,LDV_4W,All,LDV_4W,All
+Japan,LDV_4W,All,LDV_4W,All
+Korea,LDV_4W,All,LDV_4W,All
+Latin America,LDV_4W,All,LDV_4W,All
+Middle East,LDV_4W,All,LDV_4W,All
+Southeast Asia,LDV_2W,Motorcycle (>250cc),LDV_2W_3W,2W and 3W
+Southeast Asia,LDV_3W,All,LDV_3W,All
+Southeast Asia,LDV_4W,All,LDV_4W,All
+USA,LDV_4W,All,LDV_4W,All
+Western Europe,LDV_4W,All,LDV_4W,All
+Brazil,Air Domestic,All,Air Domestic,All
+Brazil,Air International,All,Air International,All
+Brazil,Bus,All,Bus,All
+Brazil,HSR,All,HSR,All
+Brazil,Rail,All,Rail,All
+Brazil,Ship Domestic,All,Ship Domestic,All
+Brazil,Ship International,All,Ship International,All
+Brazil,Walk,All,Walk,All
+Brazil,Cycle,All,Cycle,All
+Brazil,LDV_4W,All,LDV_4W,All

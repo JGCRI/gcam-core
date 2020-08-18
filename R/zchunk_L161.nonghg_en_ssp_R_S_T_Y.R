@@ -20,6 +20,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A_regions",
              FILE = "emissions/mappings/GCAM_sector_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech_Revised",
              FILE = "emissions/mappings/gains_to_gcam_sector",
              FILE = "emissions/GAINS_activities",
              FILE = "emissions/GAINS_emissions",
@@ -49,6 +50,13 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
     # Load required inputs
     A_regions <- get_data(all_data, "emissions/A_regions")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
+
+    if (energy.TRAN_UCD_MODE == "rev.mode"){
+      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_Revised")
+
+    }
+
+
     GAINS_sector <- get_data(all_data, "emissions/mappings/gains_to_gcam_sector")
     GAINS_activities <- get_data(all_data, "emissions/GAINS_activities")
     GAINS_emissions <- get_data(all_data, "emissions/GAINS_emissions") %>%
@@ -250,6 +258,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       add_legacy_name("L161.SSP15_EF") %>%
       add_precursors("emissions/A_regions",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "emissions/mappings/gains_to_gcam_sector",
                      "emissions/GAINS_activities",
                      "emissions/GAINS_emissions",
@@ -266,6 +275,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       add_legacy_name("L161.SSP2_EF") %>%
       add_precursors("emissions/A_regions",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "emissions/mappings/gains_to_gcam_sector",
                      "emissions/GAINS_activities",
                      "emissions/GAINS_emissions",
@@ -282,6 +292,7 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
       add_legacy_name("L161.SSP34_EF") %>%
       add_precursors("emissions/A_regions",
                      "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/GCAM_sector_tech_Revised",
                      "emissions/mappings/gains_to_gcam_sector",
                      "emissions/GAINS_activities",
                      "emissions/GAINS_emissions",
