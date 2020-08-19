@@ -179,12 +179,10 @@ void TranSubsector::completeInit( const IInfo* aSectorInfo,
 * \author Steve Smith, Sonny Kim
 * \param aNationalAccount National accounts container.
 * \param aDemographics Regional demographics container.
-* \param aMoreSectorInfo sector info object.
 * \param aPeriod Model period
 */
 void TranSubsector::initCalc( NationalAccount* aNationalAccount,
 							 const Demographic* aDemographics,
-							 const MoreSectorInfo* aMoreSectorInfo,
 							 const int aPeriod )
 {
     // Check if illegal values have been read in
@@ -200,7 +198,7 @@ void TranSubsector::initCalc( NationalAccount* aNationalAccount,
     // TODO: revise access to population to avoid statement below
     mPopulation[ aPeriod ] = aDemographics->getTotal( aPeriod );
 
-    Subsector::initCalc( aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
+    Subsector::initCalc( aNationalAccount, aDemographics, aPeriod );
 }
 
 /*! \brief returns the subsector price.

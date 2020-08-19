@@ -136,9 +136,6 @@ public:
     virtual void startVisitConsumer( const Consumer* aConsumer, const int aPeriod ){}
     virtual void endVisitConsumer( const Consumer* aConsumer, const int aPeriod ){}
 
-    virtual void startVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ){}
-    virtual void endVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ){}
-
     virtual void startVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ){}
     virtual void endVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ){}
 

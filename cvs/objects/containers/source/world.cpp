@@ -261,13 +261,6 @@ const string& World::getName() const {
 void World::initCalc( const int period ) {
 
     for( vector<Region*>::iterator i = mRegions.begin(); i != mRegions.end(); i++ ){
-        // Add supplies and demands to the marketplace in the base year for checking data consistency
-        // and for getting demand and supply totals.
-        // Need to update markets here after markets have been null by scenario.
-        // TODO: This should be combined with check data.
-        if( period == 0 ){
-            ( *i )->updateMarketplace( period );
-        }
         ( *i )->initCalc( period );
     }
     

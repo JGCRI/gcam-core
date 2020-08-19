@@ -61,10 +61,7 @@
 #include "containers/include/gdp.h"
 #include "containers/include/info_factory.h"
 #include "containers/include/iinfo.h"
-#include "technologies/include/base_technology.h"
-#include "consumers/include/consumer.h"
 #include "util/base/include/ivisitor.h"
-#include "technologies/include/technology_type.h"
 #include "sectors/include/sector_utils.h"
 #include "util/base/include/interpolation_rule.h"
 #include "functions/include/idiscrete_choice.hpp"
@@ -82,18 +79,11 @@ extern Scenario* scenario;
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-Subsector::Subsector( const string& aRegionName, const string& aSectorName ):
-    doCalibration( false )
+Subsector::Subsector( const string& aRegionName, const string& aSectorName )
 {
     mRegionName = aRegionName;
     mSectorName = aSectorName;
     mDiscreteChoiceModel = 0;
-    
-    // resize vectors.
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    mInvestments.resize( maxper );
-    mFixedInvestments.resize( maxper, -1 );
 }
 
 /*! \brief Default destructor.
@@ -112,14 +102,6 @@ void Subsector::clear(){
         delete *techIter;
     }
     
-    for( BaseTechIterator delTech = baseTechs.begin(); delTech != baseTechs.end(); ++delTech ){
-        delete *delTech;
-    }
-    for( map<string, TechnologyType*>::iterator techType = mTechTypes.begin(); techType != mTechTypes.end();
-        ++techType )
-    {
-        delete techType->second;
-    }
     delete mDiscreteChoiceModel;
     clearInterpolationRules();
 }
@@ -173,10 +155,6 @@ void Subsector::XMLParse( const DOMNode* node ) {
         else if( nodeName == "fuelprefElasticity" ){
             XMLHelper<double>::insertValueIntoVector( curr, mFuelPrefElasticity, modeltime );  
         }
-        // Fixed investment
-        else if( nodeName == "FixedInvestment" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mFixedInvestments, scenario->getModeltime() );
-        }
         else if( nodeName == InterpolationRule::getXMLNameStatic() && XMLHelper<string>::getAttr( curr, "apply-to" ) == "share-weight" ) {
             // if the delete flag is set then for interpolation rules that means to clear
             // out any previously parsed rules
@@ -200,47 +178,6 @@ void Subsector::XMLParse( const DOMNode* node ) {
             mainLog.setLevel(ILogger::WARNING);
             mainLog << "Unknown element " << nodeName << " encountered while parsing " << getXMLName() << endl;
         }
-    }
-}
-
-//! Helper function which parses any type of base Technology correctly.
-void Subsector::parseBaseTechHelper( const DOMNode* aCurr, BaseTechnology* aNewTech ){
-    // Ensure a valid technology was passed.
-    assert( aNewTech );
-
-    // Use an auto_ptr to take responsibility for the memory.
-    auto_ptr<BaseTechnology> newTech( aNewTech );
-    
-    // Check if the base technology already exists.
-    const string id = BaseTechnology::createIdentifier( XMLHelper<string>::getAttr( aCurr, "name" ),
-                      XMLHelper<int>::getAttr( aCurr, "year" ) );
-
-    map<string,int>::const_iterator baseTechMapIter = baseTechNameMap.find( id );
-    if( baseTechMapIter != baseTechNameMap.end() ) { 
-        // already exists, so tell the existing one to parse
-        baseTechs[ baseTechMapIter->second ]->XMLParse( aCurr );
-    }
-    else { 
-        // doesn't exist so use the new passed in base Technology type.
-        newTech->XMLParse( aCurr );
-
-        // Add the new Technology to the vector and the map.
-        baseTechs.push_back( newTech.release() ); // Releases ownership of the memory.
-        baseTechNameMap[ baseTechs.back()->getIdentifier() ] = static_cast<int>( baseTechs.size() ) - 1;
-
-        // the Technology type may not exist yet.
-        map<string,TechnologyType*>::iterator typePos = mTechTypes.find( baseTechs.back()->getName() );
-        if( typePos == mTechTypes.end() ){
-            // create the tech type, set the iterator to the new item.
-            // Insert returns the pair of the iterator position the item was inserted in and whether 
-            // the item was inserted, so set the iterator to the first spot in the pair.
-            typePos = mTechTypes.insert( make_pair( baseTechs.back()->getName(), new TechnologyType ) ).first;
-        }
-        typePos->second->addVintage( baseTechs.back() );
-
-        // Set the Technology type helper object to the Technology. This may be moved to the constructor
-        // or removed if Technology type is made to inherit from IInvestable.
-        baseTechs.back()->setTypeHelper( typePos->second );
     }
 }
 
@@ -271,9 +208,6 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( getEnergyInput( period ), "input", out, tabs );
     XMLWriteElement( getOutput( period ), "output", out, tabs );
     XMLWriteElement( getTotalCalOutputs( period ), "total-cal-outputs", out, tabs );
-    XMLWriteElement( mInvestments[ period ], "investment", out, tabs );
-    XMLWriteElement( mFixedInvestments[ period ], "FixedInvestment", out, tabs );
-    XMLWriteElement( getCalibrationStatus( period ), "calibration-status", out, tabs );
     XMLWriteElement( containsOnlyFixedOutputTechnologies( period ), "fixed-output-only", out, tabs );
 
     for( CInterpRuleIterator ruleIt = mShareWeightInterpRules.begin(); ruleIt != mShareWeightInterpRules.end(); ++ruleIt ) {
@@ -282,13 +216,6 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
     toDebugXMLDerived( period, out, tabs );
     // write out the Technology objects.
-
-    for ( unsigned int j = 0; j < baseTechs.size(); j++ ) {
-        // This isn't right, techs with years other the current year could change output.
-        if (baseTechs[j]->getYear() == scenario->getModeltime()->getper_to_yr( period ) ) {
-            baseTechs[j]->toDebugXML( period, out, tabs );
-        }
-    }
     
     for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
         (*techIter)->toDebugXML( period, out, tabs );
@@ -346,22 +273,6 @@ void Subsector::completeInit( const IInfo* aSectorInfo,
 
     mSubsectorInfo.reset( InfoFactory::constructInfo( aSectorInfo, mRegionName + "-" + mSectorName + "-" + mName ) );
     
-    for( unsigned int i = 0; i < baseTechs.size(); i++) {
-        baseTechs[i]->completeInit( mRegionName, mSectorName, mName );
-    }
-    // TODO: make sure that isInitialYear() flag on the baseTechs is consistent
-    // They would be consisitent if exactly one technology per tech name had the 
-    // flag set to true.
-
-    for( unsigned int j = 0; j < baseTechs.size(); ++j ){
-        // Remove empty inputs for the initial year of the tech only.
-        // removing unecessary inputs into the future will be handled
-        // by the nested input structure in the technology
-        if( baseTechs[ j ]->isInitialYear() ){
-            baseTechs[ j ]->removeEmptyInputs();
-        }
-    }
-    
     for ( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
         (*techIter)->completeInit( mRegionName, mSectorName, mName, mSubsectorInfo.get(), aLandAllocator );
     }    
@@ -386,12 +297,10 @@ void Subsector::completeInit( const IInfo* aSectorInfo,
 * \author Steve Smith, Sonny Kim
 * \param aNationalAccount National accounts container.
 * \param aDemographics Regional demographics container.
-* \param aMoreSectorInfo SGM sector info object.
 * \param aPeriod Model period
 */
 void Subsector::initCalc( NationalAccount* aNationalAccount,
                           const Demographic* aDemographics,
-                          const MoreSectorInfo* aMoreSectorInfo,
                           const int aPeriod )
 {
     mDiscreteChoiceModel->initCalc( mRegionName, mName, false, aPeriod );
@@ -399,40 +308,6 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
     // Initialize all technologies.
     for( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
         (*techIter)->initCalc( mRegionName, mSectorName, mSubsectorInfo.get(), aDemographics, aPeriod );
-    }
-
-    // Initialize the baseTechs. This might be better as a loop over tech types. 
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( unsigned int j = 0; j < baseTechs.size(); j++ ){
-        if( aPeriod == 0 && baseTechs[ j ]->isInitialYear() ){
-            // TODO: remove capital stock as it is no longer used
-            double totalCapital = 0;
-            baseTechs[ j ]->initCalc( aMoreSectorInfo, mRegionName, mSectorName, *aNationalAccount,
-                                      aDemographics, totalCapital, aPeriod );
-        
-            // copy base year tech to old vintages
-            mTechTypes[ baseTechs[ j ]->getName() ]->initializeTechsFromBase( baseTechs[ j ]->getYear(),
-                                      aMoreSectorInfo, mRegionName, mSectorName, *aNationalAccount,
-                                      aDemographics, totalCapital );
-        }
-        // If the current tech is from the previous period, initialize the current tech with its parameters.
-        else if ( aPeriod > 0 && baseTechs[ j ]->getYear() == modeltime->getper_to_yr( aPeriod - 1 ) ) {
-            BaseTechnology* newTech = mTechTypes[ baseTechs[ j ]->getName() ]->initOrCreateTech( modeltime->getper_to_yr( aPeriod ), baseTechs[ j ]->getYear() );
-            // Check if initOrCreate created a Technology which needs to be added to the base tech vector and map.
-            if( newTech ){
-                // If the tech already existed, it will get initCalc called on it later in this loop. 
-                baseTechs.push_back( newTech );
-                baseTechNameMap[ baseTechs.back()->getName() + util::toString( baseTechs.back()->getYear() ) ] = static_cast<int>( baseTechs.size() ) - 1;
-            }
-        } 
-    }
-
-    if(aPeriod > 0){
-        for( unsigned int j = 0; j < baseTechs.size(); j++ ){
-            if( baseTechs[ j ]->getYear() <= modeltime->getper_to_yr( aPeriod ) ){
-                baseTechs[ j ]->initCalc( aMoreSectorInfo, mRegionName, mSectorName, *aNationalAccount, aDemographics, 0, aPeriod );
-            }
-        }
     }
 
     // If calibration is active, reinitialize share weights.
@@ -452,7 +327,7 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
         // Reinitialize share weights to 1 for competing subsector with non-zero read-in share weight
         // for calibration periods only, but only if calibration values are read in any of the technologies
         // in this subsector (as there are cases where you want to fix these shares on a pass-through sector).
-        else if( mShareWeights[ aPeriod ] != 0 && aPeriod <= modeltime->getFinalCalibrationPeriod() 
+        else if( mShareWeights[ aPeriod ] != 0 && aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod()
                 && getTotalCalOutputs( aPeriod ) > 0.0 ){
             // Reinitialize to 1 to remove bias, calculate new share weights and
             // normalize in postCalc to anchor to dominant subsector.
@@ -504,25 +379,6 @@ double Subsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
     else {
         return subsectorPrice;
     }
-}
-
-/*! \brief Returns whether the subsector should be calibrated.
-* \details If either the Subsector output, or the output of all the technologies
-*          under this Subsector (not including those with zero output) are
-*          calibrated, then the Subsector should calibrate.
-* \author Steve Smith
-* \param aPeriod Model period
-*/
-bool Subsector::getCalibrationStatus( const int aPeriod ) const {
-    
-    // Check all the technologies for the period.
-    for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
-        // Check whether there is any calibration input, not one for a specific fuel.
-        if ( mTechContainers[ i ]->getNewVintageTechnology( aPeriod )->hasCalibratedValue( aPeriod) ) {
-            return true;
-        }
-    }
-    return false;
 }
 
 
@@ -883,10 +739,6 @@ double Subsector::getOutput( const int period ) const {
         }
     }
 
-    // Add on the base techs output too.
-    for( CBaseTechIterator currTech = baseTechs.begin(); currTech != baseTechs.end(); ++currTech ){
-        outputSum += (*currTech)->getOutput( period );
-    }
     /*! \post Total subsector output is positive. */
     assert( outputSum >= 0 );
     return outputSum;
@@ -908,49 +760,6 @@ double Subsector::getEnergyInput( const int aPeriod ) const {
     return totalEnergy;
 }
 
-
-/*! \brief Return the total annual investment in all technologies for a given period.
-* \param aPeriod Period in which to determine total investmetn.
-* \return Total investment for a given period.
-* \author Josh Lurz
-*/
-double Subsector::getAnnualInvestment( const int aPeriod ) const {
-    double totalInvestment = 0;
-    for( CBaseTechIterator tech = baseTechs.begin(); tech != baseTechs.end(); ++tech ){
-        totalInvestment += (*tech)->getAnnualInvestment( aPeriod );
-    }
-    return totalInvestment;
-}
-
-/*! \brief Operate the capital in the base technologies for this subsector.
-* \author Josh Lurz
-* \param aMode Whether or not to operate all capital.
-* \param aPeriod Period to operate in.
-*/
-void Subsector::operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, const MoreSectorInfo* aMoreSectorInfo, const bool isNewVintageMode, const int aPeriod ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    typedef vector<BaseTechnology*>::iterator BaseTechIterator;
-    for( BaseTechIterator currTech = baseTechs.begin(); currTech != baseTechs.end(); ++currTech ){
-        // SHK only operate for technology vintages up to current period
-        if ( (*currTech)->getYear() <= modeltime->getper_to_yr( aPeriod ) ){
-            (*currTech)->operate( aNationalAccount, aDemographic, aMoreSectorInfo, mRegionName, mSectorName, isNewVintageMode, aPeriod );
-        }
-    }
-}
-
-/*! \brief Initialize the marketplaces in the base year to get initial demands from each Technology
- * \author Pralit Patel
- * \param period The period will most likely be the base period
- */
-void Subsector::updateMarketplace( const int period ) {
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( unsigned int j = 0; j < baseTechs.size(); j++ ) {
-        if( baseTechs[ j ]->getYear() == modeltime->getper_to_yr( period ) ){ 
-            baseTechs[ j ]->updateMarketplace( mSectorName, mRegionName, period );
-        }
-    }
-}
-
 /*! \brief Function to finalize objects after a period is solved.
 * \details This function is used to calculate and store variables which are only needed after the current
 * period is complete. 
@@ -958,12 +767,6 @@ void Subsector::updateMarketplace( const int period ) {
 * \author Josh Lurz, Sonny Kim
 */
 void Subsector::postCalc( const int aPeriod ){
-
-    // Finalize base technologies.
-    for( BaseTechIterator baseTech = baseTechs.begin(); baseTech != baseTechs.end(); ++baseTech ){
-        (*baseTech)->postCalc( mRegionName, mSectorName, aPeriod );
-    }
-
     // Finalize all technologies in all periods.
     for( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
         (*techIter)->postCalc( mRegionName, aPeriod );
@@ -973,26 +776,9 @@ void Subsector::postCalc( const int aPeriod ){
 void Subsector::accept( IVisitor* aVisitor, const int period ) const {
     aVisitor->startVisitSubsector( this, period );
     const Modeltime* modeltime = scenario->getModeltime();
-    if( period == -1 ){
-        // Output all techs.
-        for( unsigned int j = 0; j < baseTechs.size(); j++ ) {
-            baseTechs[ j ]->accept( aVisitor, period );
-        }
-    }
-    else {
-        for( unsigned int j = 0; j < baseTechs.size(); j++ ) {
-            if( baseTechs[ j ]->getYear() <= modeltime->getper_to_yr( period ) ){ // should be unneeded.
-                baseTechs[ j ]->accept( aVisitor, period );
-            }
-        }
-    }
     for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
         (*techIter)->accept( aVisitor, period );
     }
             
     aVisitor->endVisitSubsector( this, period );
-}
-
-bool Subsector::hasCalibrationMarket() const {
-    return doCalibration;
 }

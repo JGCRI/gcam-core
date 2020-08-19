@@ -92,7 +92,6 @@ class Sector: public IVisitable,
               public INamed,
               private boost::noncopyable
 {
-    // TODO: Remove the need for these.
     friend class XMLDBOutputter;
     friend class CalibrateShareWeightVisitor;
 protected:
@@ -185,8 +184,6 @@ public:
 
     virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ) = 0;
 
-    virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;
-    void updateMarketplace( const int period );
     virtual void postCalc( const int aPeriod );
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;

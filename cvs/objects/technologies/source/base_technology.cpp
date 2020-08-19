@@ -273,7 +273,7 @@ void BaseTechnology::completeInit( const string& aRegionName,
 
 }
 
-void BaseTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
+void BaseTechnology::initCalc( const string& aRegionName,
                                const string& aSectorName, NationalAccount& nationalAccount,
                                const Demographic* aDemographics, const double aCapitalStock, const int aPeriod )
 {
@@ -348,14 +348,12 @@ double BaseTechnology::getOutput( const int aPeriod ) const {
 
 /*! \brief Calculates and sets the price paid for each input of the the
 *          technology.
-* \param aMoreSectorInfo Additional sector level information needed for
-*        technology.
 * \param aRegionName The name of the region.
 * \param aSectorName The name of the sector.
 * \param aPeriod The period for which to calculate expected price paid.
 * \author Sonny Kim
 */
-void BaseTechnology::calcPricePaid( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
+void BaseTechnology::calcPricePaid( const string& aRegionName,
                                     const string& aSectorName, const int aPeriod, const int aLifetimeYears ) const
 {
     /*!
@@ -376,7 +374,7 @@ void BaseTechnology::calcPricePaid( const MoreSectorInfo* aMoreSectorInfo, const
     // SGM we would have calibrated with that large number which leads to incorrect behavior so
     // we just need to make sure when we calibrate (aPeriod is zero) that value is not included.
     for( vector<IInput*>::const_iterator it = mLeafInputs.begin(); it != mLeafInputs.end(); ++it ) {
-        (*it)->calcPricePaid( aRegionName, aSectorName, aMoreSectorInfo, mGhgs,
+        (*it)->calcPricePaid( aRegionName, aSectorName, mGhgs,
             aPeriod > 0 ? mSequestrationDevice.get() : 0, // hack to avoid getLargeNumber when calibrating
             aLifetimeYears, aPeriod );
     }

@@ -75,7 +75,6 @@ protected:
     )
     
     const std::vector<double> calcChildShares( const GDP* aGDP, const int aPeriod ) const;
-    virtual bool getCalibrationStatus( const int aPeriod ) const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
@@ -91,7 +90,6 @@ public:
     
     virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
-                           const MoreSectorInfo* aMoreSectorInfo,
                            const int aPeriod );
 
     virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;

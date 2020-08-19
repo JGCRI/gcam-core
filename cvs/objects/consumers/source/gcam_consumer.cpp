@@ -159,7 +159,7 @@ void GCAMConsumer::completeInit( const string& aRegionName, const string& aSecto
     SectorUtils::fillMissingPeriodVectorInterpolated( mSubregionalIncomeShare );
 }
 
-void GCAMConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
+void GCAMConsumer::initCalc( const string& aRegionName,
                              const string& aSectorName, NationalAccount& aNationalAccount,
                              const Demographic* aDemographics, const double aCapitalStock,
                              const int aPeriod )
@@ -179,12 +179,12 @@ void GCAMConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string
     // nesting structure can have access to the values.
     mTechInfo->setDouble( "subregional-population", subregionalPopulation );
     mTechInfo->setDouble( "subregional-income", subregionalIncome );
-    Consumer::initCalc( aMoreSectorInfo, aRegionName, aSectorName, aNationalAccount,
+    Consumer::initCalc( aRegionName, aSectorName, aNationalAccount,
                         aDemographics, aCapitalStock, aPeriod );
 }
 
 void GCAMConsumer::operate( NationalAccount& aNationalAccount, const Demographic* aDemographics,
-                            const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
+                            const string& aRegionName,
                             const string& aSectorName, const bool aIsNewVintageMode, int aPeriod )
 {
     expenditures[ aPeriod ].reset();
@@ -198,7 +198,7 @@ void GCAMConsumer::operate( NationalAccount& aNationalAccount, const Demographic
     }
 
     // Set prices for all leafs and node inputs.
-    BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod, 
+    BaseTechnology::calcPricePaid( aRegionName, aSectorName, aPeriod, 
                                    modeltime->gettimestep( aPeriod ) );
     mNestedInputRoot->calcLevelizedCost( aRegionName, aSectorName, aPeriod, 
                                          mNestedInputRoot->getCoefficient( aPeriod ) ); // alpha zero is the root's alpha

@@ -85,9 +85,7 @@
 #include "technologies/include/ag_production_technology.h"
 #include "technologies/include/expenditure.h"
 #include "functions/include/node_input.h"
-#include "sectors/include/factor_supply.h"
 #include "containers/include/national_account.h"
-#include "sectors/include/more_sector_info.h"
 #include "util/base/include/util.h"
 #include "technologies/include/default_technology.h"
 #include "technologies/include/iproduction_state.h"
@@ -1715,27 +1713,6 @@ void XMLDBOutputter::endVisitNodeInput( const NodeInput* aNodeInput, const int a
     // clean up any extra buffers
     delete childBuffer;
     delete parentBuffer;
-}
-
-void XMLDBOutputter::startVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) {
-    // put year on this element or on the price?
-    XMLWriteOpeningTag( FactorSupply::getXMLNameStatic(), mBuffer, mTabs.get(), aFactorSupply->getName() );
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    const Marketplace* marketplace = scenario->getMarketplace();
-    for( int i = 0; i < modeltime->getmaxper(); ++i ) {
-        double pricePaid = ( marketplace->getPrice(aFactorSupply->getName(), mCurrentRegion, i) +
-            ( aFactorSupply->moreSectorInfo->getValue(MoreSectorInfo::TRANSPORTATION_COST)
-            * aFactorSupply->moreSectorInfo->getValue(MoreSectorInfo::TRAN_COST_MULT) )
-            * aFactorSupply->moreSectorInfo->getValue(MoreSectorInfo::PROPORTIONAL_TAX_RATE)
-            + aFactorSupply->moreSectorInfo->getValue(MoreSectorInfo::ADDITIVE_TAX) ) // add carbon taxes
-            * 1 ;
-        XMLWriteElement( pricePaid, "price", mBuffer, mTabs.get(), modeltime->getper_to_yr( i ) );
-    }
-}
-
-void XMLDBOutputter::endVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) {
-    XMLWriteClosingTag( FactorSupply::getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::startVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) {

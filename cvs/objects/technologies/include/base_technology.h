@@ -62,7 +62,6 @@
 class IInput;
 class IOutput;
 class IFunction;
-class MoreSectorInfo;
 class Demographic;
 class NationalAccount;
 class Consumer;
@@ -141,8 +140,7 @@ public:
                                const std::string& aSectorName,
                                const std::string& aSubsectorName ) = 0;
     
-    virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo,
-                           const std::string& aRegionName, 
+    virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
                            NationalAccount& nationalAccount, 
                            const Demographic* aDemographics,
@@ -156,7 +154,7 @@ public:
     void setYear( int newYear );
 
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
-        const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName, 
+        const std::string& aRegionName,
         const std::string& aSectorName, const bool isNewVintageMode, const int aPeriod ) = 0;
 
     virtual double setInvestment( const std::string& aRegionName, const double aAnnualInvestment,
@@ -164,7 +162,7 @@ public:
 
     virtual double getOutput( const int aPeriod ) const;
     virtual double getCapitalStock() const = 0;
-    void calcPricePaid( const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName,
+    void calcPricePaid( const std::string& aRegionName,
         const std::string& aSectorName, const int aPeriod, const int aLifetimeYears ) const;
 
     virtual double getAnnualInvestment( const int aPeriod ) const = 0;

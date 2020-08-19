@@ -228,7 +228,6 @@ public:
     // TODO: put methods that NodeInput will not implement under here
     virtual void calcPricePaid( const std::string& aRegionName,
                                 const std::string& aSectorName,
-                                const MoreSectorInfo* aMoreSectorInfo,
                                 const std::vector<AGHG*>& aGhgs,
                                 const ICaptureComponent* aSequestrationDevice,
                                 const int aLifetimeYears,

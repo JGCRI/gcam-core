@@ -55,7 +55,6 @@
 class Tabs;
 class ICaptureComponent;
 class IInfo;
-class MoreSectorInfo;
 class AGHG;
 class ICaptureComponent;
 class NationalAccount;
@@ -347,7 +346,6 @@ public:
      * \brief Calculate the price paid of the input.
      * \param aRegionName Name of the region containing the input.
      * \param aSectorName Name of the containing sector.
-     * \param aMoreSectorInfo The sector info which may contain additional costs.
      * \param aGhgs GHGs which may add to the cost of the input.
      * \param aSequestrationDevice A capture component which may capture some emssions
      *          and thus reduce emissions tax costs.
@@ -357,7 +355,6 @@ public:
      */
     virtual void calcPricePaid( const std::string& aRegionName,
                                 const std::string& aSectorName,
-                                const MoreSectorInfo* aMoreSectorInfo,
                                 const std::vector<AGHG*>& aGhgs,
                                 const ICaptureComponent* aSequestrationDevice,
                                 const int aLifetimeYears,

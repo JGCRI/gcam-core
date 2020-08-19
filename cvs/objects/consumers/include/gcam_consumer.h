@@ -55,7 +55,6 @@
 class NationalAccount;
 class Demographic;
 class Tabs;
-class MoreSectorInfo;
 class IVisitor;
 
 /*!
@@ -98,8 +97,7 @@ public:
                                const std::string& aSectorName,
                                const std::string& aSubsectorName );
     
-    virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo,
-                           const std::string& aRegionName, 
+    virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
                            NationalAccount& nationalAccount,
                            const Demographic* aDemographics,
@@ -107,7 +105,7 @@ public:
                            const int aPeriod );
     
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
-                          const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName, 
+                          const std::string& aRegionName, 
                           const std::string& aSectorName, const bool aIsNewVintageMode, const int aPeriod );
 
     virtual void postCalc( const std::string& aRegionName, const std::string& aSectorName, 

@@ -57,7 +57,6 @@ class NestingSubsector;
 class BuildingDemandSubSector;
 class BaseTechnology;
 class Consumer;
-class FactorSupply;
 class AResource;
 class Technology;
 class AFinalDemand;
@@ -197,9 +196,6 @@ public:
 
     virtual void startVisitConsumer( const Consumer* aConsumer, const int aPeriod ) = 0;
     virtual void endVisitConsumer( const Consumer* aConsumer, const int aPeriod ) = 0;
-
-    virtual void startVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) = 0;
-    virtual void endVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) = 0;
 
     virtual void startVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) = 0;
     virtual void endVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) = 0;
