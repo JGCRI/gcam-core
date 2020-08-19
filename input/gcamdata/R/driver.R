@@ -258,6 +258,9 @@ driver <- function(all_data = empty_data(),
 
   while(length(chunks_to_run)) {
     nchunks <- length(chunks_to_run)
+    if(!quiet) {
+      message("Chunks left: ", nchunks)
+    }
 
     # Loop through all chunks and see who can run (i.e. all dependencies are available)
     for(chunk in chunks_to_run) {

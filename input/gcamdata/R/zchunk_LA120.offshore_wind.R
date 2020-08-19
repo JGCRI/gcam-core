@@ -51,7 +51,7 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
+    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names", strip_attributes = TRUE)
     A23.globaltech_capital <- get_data(all_data, "energy/A23.globaltech_capital")
     A23.globaltech_OMfixed <- get_data(all_data, "energy/A23.globaltech_OMfixed")
     A20.wind_class_CFs <- get_data(all_data, "energy/A20.wind_class_CFs")

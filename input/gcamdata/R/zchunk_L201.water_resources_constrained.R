@@ -56,18 +56,18 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
+    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping", strip_attributes = TRUE)
     basin_ids <- get_data(all_data, "water/basin_ID")
-    water_mapping_R_GLU_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_GLU_B_W_Ws_share")
-    water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
+    water_mapping_R_GLU_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_GLU_B_W_Ws_share", strip_attributes = TRUE)
+    water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share", strip_attributes = TRUE)
     L100.runoff_max_bm3 <- get_data(all_data, "L100.runoff_max_bm3")
     L100.runoff_accessible <- get_data(all_data, "L100.runoff_accessible")
     L101.groundwater_depletion_bm3 <- get_data(all_data, "L101.groundwater_depletion_bm3")
     L101.DepRsrcCurves_ground_uniform_bm3 <- get_data(all_data, "L101.groundwater_grades_uniform_bm3")
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
     basin_water_demand_1990_2015 <- get_data(all_data, "water/basin_water_demand_1990_2015")
-    L103.water_mapping_R_GLU_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_GLU_B_W_Ws_share")
-    L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
+    L103.water_mapping_R_GLU_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_GLU_B_W_Ws_share", strip_attributes = TRUE)
+    L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share", strip_attributes = TRUE)
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
 
     # Basin_to_country_mapping table include only one set of distinct basins

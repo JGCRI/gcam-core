@@ -205,7 +205,7 @@ const vector<double> NestingSubsector::calcChildShares( const GDP* aGDP, const i
         // This should no longer happen, but it's still technically possible.
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Shares for sector " << mName << " in region " << mRegionName
+        mainLog << "Shares for nesting-subsector " << mName << " in region " << mRegionName
                 << " did not normalize correctly. Sum is " << shareSum.first << " * exp( "
                 << shareSum.second << " ) "<< "." << endl;
 
@@ -247,8 +247,11 @@ double NestingSubsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
         /*!
          * \note Negative prices may be produced and are valid.
          */
-        subsectorPrice += techShares[ i ] * currCost;
-        sharesum += techShares[i];
+        // Subsectors with no share cannot affect price.
+        if( techShares[ i ] > util::getSmallNumber() ){
+            subsectorPrice += techShares[ i ] * currCost;
+            sharesum += techShares[i];
+        }
     }
 
     if( sharesum < util::getSmallNumber() ) {
@@ -433,12 +436,11 @@ bool NestingSubsector::allOutputFixed( const int period ) const {
 *\return Boolean for determining whether subsector contains only fixed output technologies.
 */
 bool NestingSubsector::containsOnlyFixedOutputTechnologies( const int aPeriod ) const {
+    bool allFixed = true;
     for( auto subsector : mSubsectors ) {
-        if( subsector->containsOnlyFixedOutputTechnologies( aPeriod ) ) {
-            return true;
-        }
+        allFixed &= subsector->containsOnlyFixedOutputTechnologies( aPeriod );
     }
-    return false;
+    return allFixed;
 }
 
 /*! \brief returns Subsector output

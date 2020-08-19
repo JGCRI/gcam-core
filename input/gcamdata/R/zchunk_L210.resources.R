@@ -108,9 +108,9 @@ module_energy_L210.resources <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions <- get_data(all_data, "energy/A_regions")
-    A10.rsrc_info <- get_data(all_data, "energy/A10.rsrc_info") %>%
+    A10.rsrc_info <- get_data(all_data, "energy/A10.rsrc_info", strip_attributes = TRUE) %>%
       gather_years
-    A10.subrsrc_info <- get_data(all_data, "energy/A10.subrsrc_info")
+    A10.subrsrc_info <- get_data(all_data, "energy/A10.subrsrc_info", strip_attributes = TRUE)
     A10.TechChange <- get_data(all_data, "energy/A10.TechChange") %>%
       gather_years
     A10.TechChange_SSPs <- get_data(all_data, "energy/A10.TechChange_SSPs") %>%
@@ -119,23 +119,23 @@ module_energy_L210.resources <- function(command, ...) {
       gather_years
     A15.roofPV_TechChange <- get_data(all_data, "energy/A15.roofPV_TechChange") %>%
       gather_years
-    A10.ResSubresourceProdLifetime <- get_data(all_data, "energy/A10.ResSubresourceProdLifetime")
+    A10.ResSubresourceProdLifetime <- get_data(all_data, "energy/A10.ResSubresourceProdLifetime", strip_attributes = TRUE)
     A10.SubresourcePriceAdder <- get_data(all_data, "energy/A10.SubresourcePriceAdder") %>%
       gather_years
-    A10.ResReserveTechLifetime <- get_data(all_data, "energy/A10.ResReserveTechLifetime")
-    A10.ResReserveTechDeclinePhase <- get_data(all_data, "energy/A10.ResReserveTechDeclinePhase")
-    A10.ResReserveTechProfitShutdown <- get_data(all_data, "energy/A10.ResReserveTechProfitShutdown")
-    L111.RsrcCurves_EJ_R_Ffos <- get_data(all_data, "L111.RsrcCurves_EJ_R_Ffos")
-    L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
-    L112.RsrcCurves_Mt_R_U <- get_data(all_data, "L112.RsrcCurves_Mt_R_U")
-    L113.RsrcCurves_EJ_R_MSW <- get_data(all_data, "L113.RsrcCurves_EJ_R_MSW")
-    L114.RsrcCurves_EJ_R_wind <- get_data(all_data, "L114.RsrcCurves_EJ_R_wind")
-    L115.RsrcCurves_EJ_R_roofPV <- get_data(all_data, "L115.RsrcCurves_EJ_R_roofPV")
-    L116.RsrcCurves_EJ_R_geo <- get_data(all_data, "L116.RsrcCurves_EJ_R_geo")
-    L116.RsrcCurves_EJ_R_EGS <- get_data(all_data, "L116.RsrcCurves_EJ_R_EGS")
-    L117.RsrcCurves_EJ_R_tradbio <- get_data(all_data, "L117.RsrcCurves_EJ_R_tradbio")
-    L120.RsrcCurves_EJ_R_offshore_wind <- get_data(all_data, "L120.RsrcCurves_EJ_R_offshore_wind" )
-    L120.TechChange_offshore_wind <- get_data(all_data, "L120.TechChange_offshore_wind" )
+    A10.ResReserveTechLifetime <- get_data(all_data, "energy/A10.ResReserveTechLifetime", strip_attributes = TRUE)
+    A10.ResReserveTechDeclinePhase <- get_data(all_data, "energy/A10.ResReserveTechDeclinePhase", strip_attributes = TRUE)
+    A10.ResReserveTechProfitShutdown <- get_data(all_data, "energy/A10.ResReserveTechProfitShutdown", strip_attributes = TRUE)
+    L111.RsrcCurves_EJ_R_Ffos <- get_data(all_data, "L111.RsrcCurves_EJ_R_Ffos", strip_attributes = TRUE)
+    L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh", strip_attributes = TRUE)
+    L112.RsrcCurves_Mt_R_U <- get_data(all_data, "L112.RsrcCurves_Mt_R_U", strip_attributes = TRUE)
+    L113.RsrcCurves_EJ_R_MSW <- get_data(all_data, "L113.RsrcCurves_EJ_R_MSW", strip_attributes = TRUE)
+    L114.RsrcCurves_EJ_R_wind <- get_data(all_data, "L114.RsrcCurves_EJ_R_wind", strip_attributes = TRUE)
+    L115.RsrcCurves_EJ_R_roofPV <- get_data(all_data, "L115.RsrcCurves_EJ_R_roofPV", strip_attributes = TRUE)
+    L116.RsrcCurves_EJ_R_geo <- get_data(all_data, "L116.RsrcCurves_EJ_R_geo", strip_attributes = TRUE)
+    L116.RsrcCurves_EJ_R_EGS <- get_data(all_data, "L116.RsrcCurves_EJ_R_EGS", strip_attributes = TRUE)
+    L117.RsrcCurves_EJ_R_tradbio <- get_data(all_data, "L117.RsrcCurves_EJ_R_tradbio", strip_attributes = TRUE)
+    L120.RsrcCurves_EJ_R_offshore_wind <- get_data(all_data, "L120.RsrcCurves_EJ_R_offshore_wind", strip_attributes = TRUE)
+    L120.TechChange_offshore_wind <- get_data(all_data, "L120.TechChange_offshore_wind", strip_attributes = TRUE )
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
 
     # Check for calibrated resource prices for final historical model year.
@@ -527,11 +527,11 @@ module_energy_L210.resources <- function(command, ...) {
       # 10 * environcost for high growth regions
       mutate(environCost = if_else(resource == "coal" & region %in% L210.low_reg, 0, environCost),
              environCost = if_else(resource == "coal" & region %in% L210.high_reg, 10 * environCost, environCost)) %>%
-      add_title("Environmental Costs for Depletable Resources: SSP4") %>%
+      add_title("Environmental Costs for Depletable Resources: SSP4", overwrite = TRUE) %>%
       add_units("$/GJ") %>%
       add_comments("A10.EnvironCost_SSPs written to all regions") %>%
       add_comments("EnvironCost adjusted for high growth and low growth regions ") %>%
-      add_legacy_name("L210.RsrcEnvironCost_SSP4") %>%
+      add_legacy_name("L210.RsrcEnvironCost_SSP4", overwrite = TRUE) %>%
       add_precursors("energy/A10.EnvironCost_SSPs", "common/GCAM_region_names", "energy/A10.subrsrc_info", "L102.pcgdp_thous90USD_Scen_R_Y") ->
       L210.RsrcEnvironCost_SSP4
 

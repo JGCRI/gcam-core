@@ -4,12 +4,8 @@
 \alias{set_water_input_name}
 \title{set_water_input_name}
 \usage{
-set_water_input_name(
-  water_sector,
-  water_type,
-  water_mapping,
-  GLU = NA_character_
-)
+set_water_input_name(water_sector, water_type, water_mapping,
+  GLU = NA_character_)
 }
 \arguments{
 \item{water_sector}{A character vector containing water sector information}

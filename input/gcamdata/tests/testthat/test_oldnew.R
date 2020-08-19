@@ -86,6 +86,12 @@ test_that("matches old data system output", {
       olddata <- get_comparison_data(oldf)
       expect_is(olddata, "data.frame", info = paste("No comparison data found for", oldf))
 
+      if(is.null(olddata)) {
+        # will have already failed the above test but we need to protect
+        # from crashing in the calculations below
+        next
+      }
+
       # Finally, test (NB rounding numeric columns to a sensible number of
       # digits; otherwise spurious mismatches occur)
       # Also first converts integer columns to numeric (otherwise test will
@@ -97,7 +103,11 @@ test_that("matches old data system output", {
 
         numeric_columns <- sapply(x, class) == "numeric"
         x[numeric_columns] <- round(x[numeric_columns], digits)
-        x
+
+        # expect_equivalent no longer accepts rows in different order but we
+        # do want to allow this so we will sort all columms before testing
+        arrange_columns <- select(x, dplyr::everything())
+        arrange(x, arrange_columns)
       }
 
       expect_identical(dim(olddata), dim(newdata), info = paste("Dimensions are not the same for", basename(newf)))
