@@ -107,7 +107,7 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
              expenditure = cost * consumption) %>%
       group_by(GCAM_region_ID) %>%
       summarise(expenditure = sum(expenditure), consumption = sum(consumption)) %>%
-      mutate(input.cost = expenditure / consumption) %>%
+      mutate(input.cost = round(expenditure / consumption, water.DIGITS_MUNI_WATER)) %>%
       select(GCAM_region_ID, input.cost)
 
     # The IBNET data is incomplete and so it is possible that we have entire GCAM regions in which none
