@@ -141,7 +141,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       # Add in GCAM_region_ID for joining
       left_join_error_no_match(GCAM_region_names, by = "region") %>%
       # Join in emission factor values
-      left_join_error_no_match(L125.bcoc_tgbkm2_R_grass_2000, by = c("Non.CO2", "GCAM_region_ID")) %>%
+      left_join(L125.bcoc_tgbkm2_R_grass_2000, by = c("Non.CO2", "GCAM_region_ID","year")) %>%
+      mutate(em_factor=if_else(is.na(em_factor),0,em_factor)) %>%
       mutate(em_factor = round(em_factor, emissions.DIGITS_EMISSIONS),
              input.name = emissions.UNMGD_LAND_INPUT_NAME) %>%
       select(region, AgSupplySector, AgSupplySubsector, UnmanagedLandTechnology, year, Non.CO2, emiss.coef = em_factor, input.name)
@@ -167,7 +168,8 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       # Add in GCAM_region_ID for joining
       left_join_error_no_match(GCAM_region_names, by = "region") %>%
       # Join in emission factor values
-      left_join_error_no_match(L125.bcoc_tgbkm2_R_forest_2000, by = c("Non.CO2", "technology", "GCAM_region_ID")) %>%
+      left_join(L125.bcoc_tgbkm2_R_forest_2000, by = c("Non.CO2", "technology", "GCAM_region_ID")) %>%
+      mutate(em_factor = if_else(is.na(em_factor),0,em_factor)) %>%
       mutate(em_factor = round(em_factor, emissions.DIGITS_EMISSIONS)) %>%
       select(region, AgSupplySector, AgSupplySubsector, UnmanagedLandTechnology, year, Non.CO2, emiss.coef = em_factor, technology)
 

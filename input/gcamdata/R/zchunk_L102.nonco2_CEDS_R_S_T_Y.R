@@ -166,6 +166,7 @@ CEDS_allgas %>%
 
 
 # Aggregate by region, GHG, and EDGAR sector
+#kbn 2020-08-06 Adding adjustment for international shipping emissions that are mapped to process. These are now mapped to diesel oil since we don't have driver data for these.
 L102.CEDS %>%
   left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
   group_by(GCAM_region_ID, Non.CO2, CEDS_agg_sector, CEDS_agg_fuel, year) %>%
@@ -174,6 +175,10 @@ L102.CEDS %>%
   na.omit() %>%
   add_comments("Calculate historical emissions from all sectors by sector and fuel from CEDS and CMIP data. CMIP is used for unmanaged lands") ->
   L102.CEDS_GCAM_GFED
+
+
+
+
 }
 else {
   # raw IEA datasets not available, so return NA

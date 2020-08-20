@@ -51,83 +51,46 @@ trn_freight,Domestic Ship,Liquids,trn_domestic ship,refined liquids
 trn_shipping_intl,International Ship,Liquids,trn_intl_ship,refined liquids
 trn_pass,Domestic Aviation,Liquids,trn_domestic air,refined liquids
 trn_aviation_intl,International Aviation,Liquids,trn_intl_air,refined liquids
-trn_pass_road,Bus,Liquids,trn_road,refined liquids
-trn_pass_road,Bus,NG,trn_road,gas
-trn_pass_road_LDV_2W,2W and 3W,Liquids,trn_road,refined liquids
-trn_pass_road_LDV_4W,Mini Car,Liquids,trn_road,refined liquids
-trn_pass_road_LDV_4W,Mini Car,NG,trn_road,gas
-trn_pass_road_LDV_4W,Car,Liquids,trn_road,refined liquids
-trn_pass_road_LDV_4W,Car,NG,trn_road,gas
-trn_pass_road_LDV_4W,Large Car and Truck,Liquids,trn_road,refined liquids
-trn_pass_road_LDV_4W,Large Car and Truck,NG,trn_road,gas
-trn_pass_road_LDV_4W,Car,Liquids,trn_road,refined liquids
-trn_pass_road_LDV_4W,Car,NG,trn_road,gas
+trn_pass_road,Bus,Liquids,Bus,refined liquids
+trn_pass_road_LDV_2W,2W and 3W,Liquids,LDV_2W_3W,refined liquids
+trn_pass_road_LDV_4W,Mini Car,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Car,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Car,Liquids,LDV_4W,refined liquids
 trn_pass,Passenger Rail,Liquids,trn_rail,refined liquids
-trn_freight_road,Light truck,Liquids,trn_road,refined liquids
-trn_freight_road,Light truck,NG,trn_road,gas
-trn_pass_road_LDV_2W,2W and 3W,Liquids,trn_road,refined liquids
-trn_pass_road_LDV_2W,2W and 3W,Liquids,trn_road,refined liquids
-trn_pass_road_LDV,2W and 3W,Liquids,trn_road,refined liquids
-trn_pass_road_LDV,2W and 3W,NG,trn_road,gas
-trn_freight_road,Heavy truck,Liquids,trn_road,refined liquids
-trn_freight_road,Heavy truck,Liquids,trn_road,refined liquids
-trn_freight_road,Heavy truck,Liquids,trn_road,refined liquids
-trn_freight_road,Heavy truck,Liquids,trn_road,refined liquids
-trn_freight_road,Light truck,Liquids,trn_road,refined liquids
-trn_freight_road,Light truck,Liquids,trn_road,refined liquids
-trn_freight_road,Light truck,Liquids,trn_road,refined liquids
-trn_freight_road,Light truck,Liquids,trn_road,refined liquids
-trn_freight_road,Light truck,Liquids,trn_road,refined liquids
-trn_freight_road,Light truck,Liquids,trn_road,refined liquids
-trn_freight_road,Heavy truck,Liquids,trn_road,refined liquids
-trn_freight_road,Light truck,Liquids,trn_road,refined liquids
-trn_freight_road,Medium truck,Liquids,trn_road,refined liquids
-trn_freight_road,Light truck,Liquids,trn_road,refined liquids
-trn_freight_road,Medium truck,Liquids,trn_road,refined liquids
-trn_freight_road,Medium truck,Liquids,trn_road,refined liquids
-trn_freight_road,Medium truck,Liquids,trn_road,refined liquids
-trn_freight_road,Medium truck,Liquids,trn_road,refined liquids
-trn_freight_road,Medium truck,Liquids,trn_road,refined liquids
-trn_freight_road,Medium truck,Liquids,trn_road,refined liquids
-trn_freight_road,Heavy truck,Liquids,trn_road,refined liquids
-trn_freight_road,Heavy truck,Liquids,trn_road,refined liquids
-trn_freight_road,Heavy truck,NG,trn_road,gas
-trn_freight_road,Heavy truck,NG,trn_road,gas
-trn_freight_road,Heavy truck,NG,trn_road,gas
-trn_freight_road,Heavy truck,NG,trn_road,gas
-trn_freight_road,Light truck,NG,trn_road,gas
-trn_freight_road,Light truck,NG,trn_road,gas
-trn_freight_road,Light truck,NG,trn_road,gas
-trn_freight_road,Light truck,NG,trn_road,gas
-trn_freight_road,Light truck,NG,trn_road,gas
-trn_freight_road,Light truck,NG,trn_road,gas
-trn_freight_road,Heavy truck,NG,trn_road,gas
-trn_freight_road,Light truck,NG,trn_road,gas
-trn_freight_road,Medium truck,NG,trn_road,gas
-trn_freight_road,Light truck,NG,trn_road,gas
-trn_freight_road,Medium truck,NG,trn_road,gas
-trn_freight_road,Medium truck,NG,trn_road,gas
-trn_freight_road,Medium truck,NG,trn_road,gas
-trn_freight_road,Medium truck,NG,trn_road,gas
-trn_freight_road,Medium truck,NG,trn_road,gas
-trn_freight_road,Medium truck,NG,trn_road,gas
-trn_freight_road,Heavy truck,NG,trn_road,gas
-trn_freight_road,Heavy truck,NG,trn_road,gas
-trn_pass_road_LDV_4W,Large Car and Truck,Liquids,trn_road,refined liquids
-trn_pass_road_LDV_4W,Large Car and Truck,NG,trn_road,gas
-trn_pass_road_LDV_4W,Large Car and Truck,Liquids,trn_road,refined liquids
-trn_pass_road_LDV_4W,Large Car and Truck,NG,trn_road,gas
-trn_pass_road_LDV_4W,Large Car and Truck,Liquids,trn_road,refined liquids
-trn_pass_road_LDV_4W,Large Car and Truck,NG,trn_road,gas
-trn_pass_road_LDV_4W,Car,Liquids,trn_road,refined liquids
-trn_pass_road_LDV_4W,Car,NG,trn_road,gas
-trn_pass_road_LDV_4W,Large Car and Truck,Liquids,trn_road,refined liquids
-trn_pass_road_LDV_4W,Large Car and Truck,NG,trn_road,gas
-trn_pass_road_bus,All,Liquids,trn_road,refined liquids
-trn_pass_road_bus,All,NG,trn_road,gas
-trn_pass_road_bus,All,Liquids,trn_road,refined liquids
-trn_pass_road_bus,All,NG,trn_road,gas
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_pass_road_LDV_2W,2W and 3W,Liquids,LDV_2W_3W,refined liquids
+trn_pass_road_LDV_2W,2W and 3W,Liquids,LDV_2W_3W,refined liquids
+trn_pass_road_LDV,2W and 3W,Liquids,LDV_2W_3W,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Car,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,LDV_4W,refined liquids
+trn_pass_road_bus,All,Liquids,Bus,refined liquids
+trn_pass_road_bus,All,Liquids,Bus,refined liquids
 resid heating,traditional biomass,traditional biomass,bld_resid,biomass
 resid others,traditional biomass,traditional biomass,bld_resid,biomass
-trn_pass_road_LDV_2W,2W and 3W,Liquids,trn_road,refined liquids
-trn_freight_road,Medium truck,NG,trn_road,gas
+trn_pass_road_LDV_2W,2W and 3W,Liquids,LDV_2W_3W,refined liquids

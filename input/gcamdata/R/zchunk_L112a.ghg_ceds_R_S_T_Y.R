@@ -41,6 +41,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                FILE = "emissions/CEDS/CEDS_sector_tech_revised",
                FILE = "emissions/EPA_FCCC_IndProc_2005",
                FILE = "emissions/mappings/calibrated_outresources",
+               FILE="emissions/CEDS/gains_iso_sector_emissions",
+               FILE="emissions/CEDS/gains_iso_fuel_emissions",
                "L102.ceds_GFED_nonco2_tg_R_S_F",
                "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
                "L101.in_EJ_R_en_Si_F_Yh",
@@ -50,6 +52,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                "L103.ghg_tgmt_USA_an_Sepa_F_2005",
                "L124.LC_bm2_R_Grass_Yh_GLU_adj",
                "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
+               "L154.IEA_histfut_data_times_UCD_shares",
 
                FILE = "emissions/CEDS/ceds_sector_map",
                FILE = "emissions/CEDS/ceds_fuel_map",
@@ -73,42 +76,62 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                "L124.nonco2_tg_R_grass_Y_GLU",
                "L124.nonco2_tg_R_forest_Y_GLU",
                "L124.deforest_coefs",
-               "L131.nonco2_tg_R_prc_S_S_Yh"))
+               "L131.nonco2_tg_R_prc_S_S_Yh",
+               "L125.bcoc_tgbkm2_R_grass_2000",
+               "L125.bcoc_tgbkm2_R_forest_2000",
+               "L125.deforest_coefs_bcoc"))
     } else if(command == driver.MAKE) {
 
       all_data <- list(...)[[1]]
-      #kbn 2019/11/11 We don't need the code below this line.
+
       L112.CEDS_GCAM <- get_data(all_data, "L102.ceds_GFED_nonco2_tg_R_S_F")
 
       # Optionally gets pre-built CEDS data
       if(is.null(L112.CEDS_GCAM)) {
-       #Proprietary IEA energy data are not available, so used saved outputs
-      L112.CEDS_GCAM <- prebuilt_data("L102.ceds_GFED_nonco2_tg_R_S_F")
+        #Proprietary IEA energy data are not available, so used saved outputs
+        L112.CEDS_GCAM <- prebuilt_data("L102.ceds_GFED_nonco2_tg_R_S_F")
       } else {
       }
+      #In case of tanker loading emissions which are classified as process emissions, transfer them to refined liquids. Same for processs industrial energy emissions
+      L112.CEDS_GCAM %>%
+        mutate(CEDS_agg_fuel=if_else(CEDS_agg_sector=="trn_intl_ship",if_else(CEDS_agg_fuel=="process","refined liquids",CEDS_agg_fuel),CEDS_agg_fuel)) %>%
+        mutate(CEDS_agg_fuel=if_else(CEDS_agg_sector=="industry_energy",if_else(CEDS_agg_fuel=="process","refined liquids",CEDS_agg_fuel),CEDS_agg_fuel)) %>%
+        group_by(GCAM_region_ID, Non.CO2, CEDS_agg_sector, CEDS_agg_fuel, year) %>%
+        summarise(emissions = sum(emissions)) %>%
+        ungroup() %>%
+        na.omit()->L112.CEDS_GCAM
 
       # Load required inputs
       GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
       iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
 
+      #Get GAINS data
+
+      GAINS_sector <- get_data(all_data,"emissions/CEDS/gains_iso_sector_emissions")
+      GAINS_fuel <- get_data(all_data,"emissions/CEDS/gains_iso_fuel_emissions")
+      IEA_Ctry_data <- get_data(all_data,"L154.IEA_histfut_data_times_UCD_shares")
+      if (energy.TRAN_UCD_MODE=="rev.mode"){
+        IEA_Ctry_data %>% rename(mode=rev.mode,size.class=rev_size.class)->IEA_Ctry_data
+      }
+      #kbn 2019/11/11 Add code below so that we can use revised sub-sectors from transportation model
       if (energy.TRAN_UCD_MODE=="rev.mode"){
         GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_CEDS_revised") %>% distinct()
       }else{
-      GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_CEDS")}
+        GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_CEDS")}
 
       #kbn 2019/11/11 Add code below so that we can use revised sub-sectors from transportation model
       if (energy.TRAN_UCD_MODE=="rev.mode"){
-      Trn_subsector <- get_data(all_data, "emissions/mappings/Trn_subsector_revised")}else{
+        Trn_subsector <- get_data(all_data, "emissions/mappings/Trn_subsector_revised")}else{
 
-        Trn_subsector <- get_data(all_data, "emissions/mappings/Trn_subsector")
+          Trn_subsector <- get_data(all_data, "emissions/mappings/Trn_subsector")
 
-      }
+        }
 
 
       if (energy.TRAN_UCD_MODE=="rev.mode"){
         UCD_techs <- get_data(all_data, "emissions/mappings/UCD_techs_emissions_revised")
       }else{
-      UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")}
+        UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")}
       calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
 
       calibrated_techs_bld_det <- get_data(all_data, "energy/calibrated_techs_bld_det")
@@ -119,10 +142,10 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
       #kbn 2019/11/11 Add in transport flexibility below
       if (energy.TRAN_UCD_MODE=="rev.mode"){
-      CEDS_sector_tech <- get_data(all_data, "emissions/CEDS/CEDS_sector_tech_revised") %>% distinct()}else{
+        CEDS_sector_tech <- get_data(all_data, "emissions/CEDS/CEDS_sector_tech_revised") %>% distinct()}else{
 
-        CEDS_sector_tech <- get_data(all_data, "emissions/CEDS/CEDS_sector_tech")
-      }
+          CEDS_sector_tech <- get_data(all_data, "emissions/CEDS/CEDS_sector_tech")
+        }
 
       calibrated_outresources <- get_data(all_data, "emissions/mappings/calibrated_outresources")
 
@@ -137,8 +160,90 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       # Temporary to run for testing and matching Animal emissions
       L103.ghg_tgmt_USA_an_Sepa_F_2005 <- get_data(all_data, "L103.ghg_tgmt_USA_an_Sepa_F_2005")
 
-       #kbn adding notin for later calculations
+      #kbn adding notin for later calculations
       `%notin%` <- Negate(`%in%`)
+
+      #kbn calculate emissions for different modes here
+
+      #Filter out road emissions
+      L112.CEDS_Road_emissions <- L112.CEDS_GCAM %>%  filter(CEDS_agg_sector == "trn_road")
+      L112.CEDS_GCAM<- L112.CEDS_GCAM %>%  filter(CEDS_agg_sector != "trn_road")
+
+      IEA_Ctry_data %>%
+        #Use only historical years
+        filter(year <= MODEL_FINAL_BASE_YEAR) %>%
+        filter(UCD_category=="trn_road and rail") %>%
+        filter(mode %notin% c("Rail","HSR")) %>%
+        select(-UCD_fuel,-fuel,-size.class) %>%
+        rename(fuel=UCD_technology) %>%
+        filter(fuel %notin% c("BEV","FCEV","LA-BEV","NG")) %>%
+        mutate(fuel =if_else(fuel=="Hybrid Liquids","Liquids",fuel))->Clean_IEA_ctry_data
+
+      Clean_IEA_ctry_data %>%
+        group_by(iso,UCD_sector,year) %>%
+        mutate(value=sum(value)) %>%
+        ungroup() %>%
+        select(iso,UCD_sector,year,value,GCAM_region_ID) %>%
+        distinct() %>%
+        repeat_add_columns(tibble(Non.co2 = unique(GAINS_sector$Non.co2))) %>%
+        left_join(GAINS_sector %>% gather("UCD_sector","em_fact","Freight":"Passenger"),by=c("iso","year","Non.co2","UCD_sector")) %>%
+        na.omit() %>%
+        filter(UCD_sector != "Motorcycle") %>%
+        group_by(Non.co2,GCAM_region_ID,year,UCD_sector) %>%
+        mutate(sector_weight=sum(em_fact*value)) %>%
+        ungroup() %>%
+        select(Non.co2,GCAM_region_ID,year,UCD_sector,sector_weight) %>%
+        #Use these sector weights to split CEDS emissions into passenger and freight
+        distinct() ->GAINS_sector_weights
+
+
+      Clean_IEA_ctry_data %>%
+        group_by(iso,mode,year,UCD_sector) %>%
+        mutate(value=sum(value)) %>%
+        ungroup() %>%
+        select(iso,mode,year,value,GCAM_region_ID,UCD_sector) %>%
+        distinct() %>%
+        repeat_add_columns(tibble(Non.co2 = unique(GAINS_fuel$Non.co2))) %>%
+        left_join(GAINS_fuel , by=c("Non.co2","iso","year")) %>%
+        na.omit() %>%
+        #Now calculate mode wights here
+        group_by(Non.co2,GCAM_region_ID,year,mode,UCD_sector) %>%
+        #Revisit this. Make it compatible with old size classes as well.
+        mutate(mode_weight=if_else(mode=="Bus",sum(dieseloil*value),
+                                     if_else(mode=="LDV_2W_3W",sum(((lightoil+dieseloil)/2)*value),
+                                             if_else(mode=="Truck",sum(dieseloil*value),sum(lightoil*value))))) %>%
+        ungroup() %>%
+        select(Non.co2,GCAM_region_ID,year,mode,mode_weight,UCD_sector) %>%
+        distinct()->GAINS_mode_weights
+
+
+      L112.CEDS_Road_emissions %>%
+        rename(Non.co2=Non.CO2) %>%
+        group_by(GCAM_region_ID,year,Non.co2) %>%
+        mutate(emissions=sum(emissions)) %>%
+        ungroup() %>%
+        select(GCAM_region_ID,year,Non.co2,emissions) %>%
+        distinct() %>%
+        left_join(GAINS_sector_weights, by=c("GCAM_region_ID","year","Non.co2")) %>%
+        na.omit() %>%
+        #First split emissions into Passenger and Freight %>%
+        group_by(GCAM_region_ID,year,Non.co2) %>%
+        mutate(sum_sector_weight=sum(sector_weight)) %>%
+        ungroup() %>%
+        mutate(emissions=(emissions*sector_weight)/sum_sector_weight) %>%
+        left_join(GAINS_mode_weights, by=c("GCAM_region_ID","year","Non.co2","UCD_sector")) %>%
+        na.omit() %>%
+        group_by(GCAM_region_ID,year,Non.co2,UCD_sector) %>%
+        mutate(sum_mode_weight=sum(mode_weight)) %>%
+        ungroup() %>%
+        mutate(emissions=(emissions*mode_weight)/sum_mode_weight) %>%
+        ungroup() %>%
+        mutate(CEDS_agg_fuel=paste0("refined liquids")) %>%
+        rename(CEDS_agg_sector=mode,Non.CO2=Non.co2) %>%
+        select(GCAM_region_ID,year,Non.CO2,CEDS_agg_sector,CEDS_agg_fuel,emissions) %>% distinct()->L112.CEDS_GCAM_Road_Emissions_GAINS
+
+        L112.CEDS_GCAM %>%  bind_rows(L112.CEDS_GCAM_Road_Emissions_GAINS)->L112.CEDS_GCAM
+
 
       # ===========================
       # Part 1:Combustion Energy Emissions
@@ -154,7 +259,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
       # Splits energy balances out for industry sector and maps to final GCAM sectors
       L101.in_EJ_R_en_Si_F_Yh %>%
-        #Need to add three missing out_resources rows that are not included in base calibrated techs file
         left_join(calibrated_techs %>% bind_rows(calibrated_outresources) %>% select(-secondary.output), by = c("sector", "fuel", "technology")) %>%
         rename(stub.technology = technology) %>%
         select(GCAM_region_ID, year, energy, supplysector, subsector, stub.technology) %>%
@@ -202,8 +306,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         left_join_error_no_match(CEDS_sector_tech, by = c("supplysector", "subsector", "stub.technology")) ->L112.in_EJ_R_en_S_F_Yh_calib_all_baseenergy
 
 
-
-
       # Aggregate GCAM energy to CEDS sector/fuel combinations and compute the total energy by CEDS sector
       L112.in_EJ_R_en_S_F_Yh_calib_all_baseenergy %>%
         group_by(GCAM_region_ID, year, CEDS_agg_sector, CEDS_agg_fuel) %>%
@@ -246,21 +348,12 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         mutate(GCAMemissions = emissions * enshare) ->
         L112.CEDSGCAM_computedemissions
 
-
-
-      #
       L112.CEDSGCAM_computedemissions -> L112.CEDSGCAM_computedemissions_complete
 
       L112.CEDSGCAM_computedemissions_complete %>%
         select(GCAM_region_ID, Non.CO2, year, supplysector, subsector, stub.technology, GCAMemissions) %>%
         rename(emissions = GCAMemissions) ->
         L112.nonco2_tg_R_en_S_F_Yh
-
-      # REMAINING ISSUES:
-      # TRN_OTHER SECTOR HAS NO MATCH. THIS IS CURRENTLY DROPPED--THIS IS LIKELY CORRECTLY DROPPED BUT COULD ASSIGNED SOMEWHERE.
-      # TOTAL EMISSIONS BEFORE AND AFTER OF NON-PROCESS ENERGY SECTORS IS .4 LARGER IN INITIAL DATASET
-
-      # GENERATE COMBUSTION EMISSIONS FACTORS BY MULTIPLYING EMISSIONS BY DRIVER
 
 
       # ========================================================================
@@ -292,8 +385,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         # This line is only for testing and needs to be replaced with the solution for below
         mutate(emfact = if_else(is.infinite(emfact), 1, emfact)) ->
         L112.nonco2_tgej_R_en_S_F_Yh
-      # This largely works but need to figure out what's going on with trucks 1-6t in region 19.
-      # Also need to set up rule to determine cutoff point for emissions factor replacement
+      # TO DO-  need to set up rule to determine cutoff point for emissions factor replacement
 
 
       # =======================
@@ -308,31 +400,26 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
       L112.CEDS_GCAM %>%
         filter(CEDS_agg_sector %in% c("industry_processes", "chemicals", "landfills", "wastewater", "aerosols",
-                                      "metals", "foams", "solvents", "semiconductors")) ->
+                                      "metals", "foams", "solvents", "semiconductors","chemicals_nitric","chemicals_adipic")) ->
         L112.CEDS_GCAM_Proc
-
-
-      # Fourth: Map in all data and compute emissions (EDGAR_emissions * tech_share).
 
       # THIS IS THE NEW CODE TO TAKE THE SEPARATE NITRIC AND ADIPIC SECTORS AND BREAK THEM OUT AUTOMATICALLY.
 
       GCAM_sector_tech %>%
         select(supplysector, subsector, stub.technology, EDGAR_agg_sector, EPA_agg_sector, EPA_agg_fuel_ghg) %>%
         filter(EDGAR_agg_sector %in% c("industry_processes" , "chemicals", "landfills", "wastewater",  # Filter for the agg sectors in EDGAR for all NonCO2s.
-                                        "solvents")) %>%
+                                       "solvents","chemicals_adipic","chemicals_nitric")) %>%
         repeat_add_columns(tibble(Non.CO2 = unique(L112.CEDS_GCAM_Proc$Non.CO2))) %>%
-        group_by(supplysector, subsector, stub.technology, Non.CO2) %>%
+        #group_by(supplysector, subsector, stub.technology, Non.CO2) %>%
         # left_join(L131.nonco2_pct_R_prc_S_S_2005,  # Then combine with the EPA sector information
         #           by = c("supplysector", "subsector", "stub.technology",
         #                  "Non.CO2", "EPA_agg_sector", "EDGAR_agg_sector", "EPA_agg_fuel_ghg")) %>%
         repeat_add_columns(tibble(year = emissions.CEDS_YEARS)) %>%
         repeat_add_columns(tibble(GCAM_region_ID = GCAM_region_names$GCAM_region_ID)) %>%
-        group_by(GCAM_region_ID, EDGAR_agg_sector, Non.CO2, year) %>%
+        #group_by(GCAM_region_ID, EDGAR_agg_sector, Non.CO2, year) %>%
         left_join_error_no_match(L112.CEDS_GCAM_Proc, by = c("GCAM_region_ID", "EDGAR_agg_sector" = "CEDS_agg_sector", "Non.CO2", "year")) %>%
         na.omit() %>%  # delete rows with NA's
-        # Have to figure out way to carry through and share out nitric and adipic acid here -- will now be coming from CEDS sector
         mutate(input.emissions = emissions) %>%  # Calculate emissions
-        # select(-sector_emissions, -tech_emissions.x) %>%
         group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
         summarise(value = sum(input.emissions)) %>% # Calculate total emissions
         ungroup() %>%
@@ -616,7 +703,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         filter(sector == "forest") %>%
         rename(forestfire = emissions) %>%
         left_join(L112.CEDS_GCAM_unmgd %>% filter(sector == "deforest") %>% rename(deforest = emissions),
-                                 by = c("GCAM_region_ID", "Non.CO2", "year")) %>%
+                  by = c("GCAM_region_ID", "Non.CO2", "year")) %>%
         mutate(deforest=if_else(is.na(deforest),0,deforest)) %>%
         select(GCAM_region_ID, Non.CO2, year, forestfire, deforest) %>%
         mutate(PctForestFire = forestfire / (forestfire + deforest)) %>%                               # Compute share of emissions from forest fires
@@ -627,6 +714,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         select(-forestfire, -deforest) ->
         FireShares_R_G_Y
 
+      L112.CEDS_GCAM_unmgd %>%
+        filter(sector %in% c("forest","deforest")) %>%
+        group_by(GCAM_region_ID, year,Non.CO2) %>%
+        mutate(emissions=sum(emissions)) %>%
+        ungroup() %>%
+        select(-sector) %>%
+        distinct()->L112.CEDS_GCAM_unmgd_Forest_Deforest
+
       # Downscale regional forest burning emissions to GLU based on the share of land in each GLU
       # Use GFED to separate into forest fires and deforestation, which have different drivers in GCAM
       L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj %>%
@@ -636,9 +731,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         select(-value) %>%
         # There are places with land area but no emissions and vice versa. Use an inner_join to only get places with both.
         # Note: this means that some regions get zero emissions coefficients in the historic period (future deforestation emissions coefs are defined below)
-        inner_join(filter(L112.CEDS_GCAM_unmgd, sector == "forest"), by = c("GCAM_region_ID", "year")) %>%       # Map in EDGAR emissions information
+        inner_join(L112.CEDS_GCAM_unmgd_Forest_Deforest, by = c("GCAM_region_ID", "year")) %>%       # Map in EDGAR emissions information
         mutate(emissions = emissions * land_share) %>%                                                           # Compute forest emissions from EDGAR totals and land shares
-        select(-sector, -land_share) %>%
+        select(-land_share) %>%
         left_join(FireShares_R_G_Y, by = c("GCAM_region_ID", "Non.CO2", "year")) %>%                     # Map in GFED fire shares
         # Assume missing values mean 100% forest fires since these are easier to model in GCAM
         replace_na(list(PctForestFire = 1)) %>%
@@ -687,7 +782,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         L112.ghg_tg_R_en_S_F_Yh
 
       L112.nonco2_tg_R_en_S_F_Yh %>%
-        filter(!(Non.CO2 %in% c("CH4", "N2O", "BC", "OC"))) %>%
+        filter(!(Non.CO2 %in% c("CH4", "N2O"))) %>%
         select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value = emissions) ->
         L111.nonghg_tg_R_en_S_F_Yh
 
@@ -698,12 +793,12 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
 
       L112.nonco2_tgej_R_en_S_F_Yh %>%
-        filter(!(Non.CO2 %in% c("CH4", "N2O", "BC", "OC"))) %>%
+        filter(!(Non.CO2 %in% c("CH4", "N2O"))) %>%
         select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value = emfact) ->
         L111.nonghg_tgej_R_en_S_F_Yh
 
       L112.nonco2_tgej_R_en_S_F_Yh %>%
-        filter(Non.CO2 %in% c("BC", "OC")) %>%
+        #filter(Non.CO2 %in% c("BC", "OC")) %>%
         filter(year == 2000) %>%
         select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value = emfact) ->
         L114.bcoc_tgej_R_en_S_F_2000
@@ -720,9 +815,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L112.AWBshare_R_C_GLU ->
         L121.AWBshare_R_C_GLU
 
-      L112.nonco2_tg_R_awb_C_Y_GLU %>%
-        filter(!(Non.CO2 %in% c("BC_AWB", "OC_AWB"))) ->
+      L112.nonco2_tg_R_awb_C_Y_GLU ->
         L121.nonco2_tg_R_awb_C_Y_GLU
+        #filter(!(Non.CO2 %in% c("BC_AWB", "OC_AWB")))
 
       L122.EmissShare_R_C_Y_GLU -> L122.EmissShare_R_C_Y_GLU
 
@@ -738,42 +833,115 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         select(-year) ->
         L123.bcoc_tgmt_R_awb_2000
 
-      L124.deforest_coefs_full %>%
-        filter(!(Non.CO2 %in% c("BC", "OC"))) ->
-        L124.deforest_coefs
+      L124.deforest_coefs_full->L124.deforest_coefs
+        #filter(!(Non.CO2 %in% c("BC", "OC"))) ->
+        #L124.deforest_coefs
 
       # Filter out BC/OC for its own output
       L124.nonco2_tg_R_grass_Y_GLU_full %>%
-        rename(value = emissions) %>%
-        filter(!(Non.CO2 %in% c("BC", "OC"))) ->
+        rename(value = emissions) ->L124.nonco2_tg_R_grass_Y_GLU
+        #filter(!(Non.CO2 %in% c("BC", "OC")))
         L124.nonco2_tg_R_grass_Y_GLU
 
       #Filter out BC/OC for its own output
-      L124.nonco2_tg_R_forest_Y_GLU_full %>%
-        filter(!(Non.CO2 %in% c("BC", "OC"))) ->
+      L124.nonco2_tg_R_forest_Y_GLU_full ->
         L124.nonco2_tg_R_forest_Y_GLU
+        #filter(!(Non.CO2 %in% c("BC", "OC")))
 
       # Filter out BC/OC for its own output
       L124.nonco2_tg_R_grass_Y_GLU_full %>%
-        rename(value = emissions) %>%
-        filter(Non.CO2 %in% c("BC", "OC")) %>%
-        filter(year == 2000) ->
-        L124.bcoc_tg_R_grass_Y_GLU
+        rename(value = emissions) ->L124.bcoc_tg_R_grass_Y_GLU
+        #filter(Non.CO2 %in% c("BC", "OC"))
+      #filter(year == 2000) ->
+
+      L124.bcoc_tg_R_grass_Y_GLU %>%
+        group_by(GCAM_region_ID, Non.CO2,year,Land_Type) %>%
+        mutate(value=sum(value)) %>%
+        ungroup() %>%
+        select(GCAM_region_ID, Non.CO2,year,Land_Type,value) %>%
+        distinct()->L124.bcoc_tg_R_grass_Y_GLU
 
       # IF YOU TURN THIS BACK ON YOULL NEED TO GENERATE THE EMISSIONS FACTORS HERE BY READING IN THE DRIVER
-      # L124.bcoc_tg_R_grass_Y_GLU %>%
-      #   L125.bcoc_tgbkm2_R_grass_2000
+      L125.bcoc_tgbkm2_R_grass_2000 <- L124.LC_bm2_R_Grass_Yh_GLU_adj %>%
+        #filter(year == 2000) %>%
+        group_by(GCAM_region_ID, Land_Type, year) %>%
+        mutate(value=sum(value)) %>%
+        ungroup() %>%
+        select(GCAM_region_ID, Land_Type, year,value) %>%
+        distinct() %>% # aggregate grassland land area by regions/land type
+        repeat_add_columns(tibble::tibble(Non.CO2 = unique(L124.bcoc_tg_R_grass_Y_GLU$Non.CO2))) %>%
+        filter(year %in% c(L124.bcoc_tg_R_grass_Y_GLU$year)) %>% # repeat for both BC and OC
+        #revisit this. Some regions are missing.
+        inner_join(L124.bcoc_tg_R_grass_Y_GLU %>% rename(em=value) %>% filter(year %in% c(L124.LC_bm2_R_Grass_Yh_GLU_adj$year)), by = c("GCAM_region_ID", "Non.CO2","year","Land_Type")) %>% # add emissions to land region area
+        mutate(em_factor = em / value) %>% # calculate emission factor (emissions/area)
+        select(GCAM_region_ID, Land_Type, Non.CO2, em_factor,year) %>%
+        arrange(Non.CO2, Land_Type,GCAM_region_ID,year) %>%
+        ungroup()
 
       #Filter out BC/OC for its own output
       L124.nonco2_tg_R_forest_Y_GLU_full %>%
-        filter(Non.CO2 %in% c("BC", "OC")) %>%
-        filter(year == 2000) ->
-        L125.bcoc_tgbkm2_R_forest_2000
+        filter(Non.CO2 %in% c("BC", "OC"))-> L125.bcoc_tgbkm2_R_forest_2000_data
+      #Calculate BCOC for forest fires and deforestattion
+
+      #First get driver for forests
+      L125.bcoc_tgbkm2_R_forestfire_2000 <- L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj %>%
+        filter(year == 2000) %>%
+        group_by(GCAM_region_ID, Land_Type) %>%
+        summarise(FF_driver = sum(value))
+
+      #Now get driver for deforest
+      L125.bcoc_tgbkm2_R_GLU_defor_2000 <- L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj %>%
+        filter(year %in% emissions.DEFOREST_COEF_YEARS) %>%      # select only deforestation coefficient years (used to estiamte rate of change - D-driver)
+        group_by(GCAM_region_ID, Land_Type, GLU) %>%
+        spread(year, value) %>%
+        mutate(D_driver = pmax(`2000` - `2005`, 0) / (emissions.DEFOREST_COEF_YEARS[2] - emissions.DEFOREST_COEF_YEARS[1]))
+
+
+      L125.bcoc_tgbkm2_R_defor_2000 <-  L125.bcoc_tgbkm2_R_GLU_defor_2000 %>%
+        group_by(GCAM_region_ID, Land_Type) %>%
+        summarise_at(vars(D_driver), sum)
+
+
+      L125.bcoc_tgbkm2_R_forest_2000_data %>%
+        filter(year==2000) %>%
+        filter(technology=="ForestFire") %>%
+        group_by(GCAM_region_ID,Land_Type,year,Non.CO2,technology) %>%
+        mutate(value=sum(value)) %>%
+        ungroup() %>%
+        select(GCAM_region_ID,Land_Type,year,Non.CO2,technology,value) %>%
+        distinct() %>%
+        #Join in forest fire data
+        inner_join(L125.bcoc_tgbkm2_R_forestfire_2000,by=c("GCAM_region_ID","Land_Type")) %>%
+        group_by("GCAM_region_ID","Land_Type","technology","Non.CO2") %>%
+        mutate(em_factor=(value)/(FF_driver)) %>%
+        ungroup() %>%
+        select(GCAM_region_ID,Land_Type,Non.CO2,technology,em_factor) %>%
+        distinct()->BC_OC_Forest
+
+      L125.bcoc_tgbkm2_R_forest_2000_data %>%
+        filter(year==2000) %>%
+        filter(technology=="Deforest") %>%
+        group_by(GCAM_region_ID,Land_Type,year,Non.CO2,technology) %>%
+        mutate(value=sum(value)) %>%
+        ungroup() %>%
+        select(GCAM_region_ID,Land_Type,year,Non.CO2,technology,value) %>%
+        distinct() %>%
+        #Join in de-forest data
+        inner_join(L125.bcoc_tgbkm2_R_defor_2000,by=c("GCAM_region_ID", "Land_Type")) %>%
+        group_by("GCAM_region_ID","Land_Type","technology","Non.CO2") %>%
+        mutate(em_factor=(value)/(D_driver)) %>%
+        ungroup() %>%
+        select(GCAM_region_ID,Land_Type,Non.CO2,technology,em_factor) %>%
+        distinct()->BC_OC_Deforest
+
+      L125.bcoc_tgbkm2_R_forest_2000<-bind_rows(BC_OC_Deforest,BC_OC_Forest) %>%
+        mutate(em_factor=if_else(is.finite(em_factor),em_factor,0))
+
 
       # Filter out BC OC for its own output
       L124.deforest_coefs_full %>%
-        filter(Non.CO2 %in% c("BC", "OC")) ->
-        L125.deforest_coefs_bcoc
+        filter(Non.CO2 %in% c("BC", "OC")) ->L125.deforest_coefs_bcoc
+
 
 
 
@@ -807,6 +975,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       # ===============
       # Produce outputs
       L111.nonghg_tg_R_en_S_F_Yh %>%
+        na.omit() %>%
         add_title("Non-ghg emission totals by GCAM sector, fuel, technology, and driver type for CEDS historical years.") %>%
         add_units("Tg") %>%
         add_comments("Compute unscaled non-ghg emissions by country and technology, and CEDS emissions by region and sector.") %>%
@@ -817,10 +986,12 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                        "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
                        "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech","emissions/mappings/Trn_subsector_revised",
                        "emissions/mappings/GCAM_sector_tech_CEDS","emissions/mappings/calibrated_outresources","emissions/mappings/GCAM_sector_tech_CEDS_revised",
-                       "L101.in_EJ_R_en_Si_F_Yh","emissions/CEDS/CEDS_sector_tech_revised","emissions/mappings/UCD_techs_emissions_revised") ->
+                       "L101.in_EJ_R_en_Si_F_Yh","emissions/CEDS/CEDS_sector_tech_revised","emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
+                       "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions") ->
         L111.nonghg_tg_R_en_S_F_Yh
 
       L111.nonghg_tgej_R_en_S_F_Yh %>%
+        na.omit() %>%
         add_title("Non-ghg emission total shares by GCAM sector, fuel, technology, and driver type for CEDS historical years.") %>%
         add_units("Tg/EJ") %>%
         add_comments("Use non-ghg emission totals by GCAM sector, fuel, technology, and driver type for CEDS historical years to derive emission shares.") %>%
@@ -837,7 +1008,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                        "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
                        "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech","emissions/mappings/calibrated_outresources",
                        "L101.in_EJ_R_en_Si_F_Yh", "emissions/EPA/EPA_2019_raw", "emissions/EPA_CH4N2O_map","emissions/mappings/Trn_subsector_revised",
-                       "emissions/EPA_country_map","emissions/CEDS/CEDS_sector_tech_revised","emissions/mappings/UCD_techs_emissions_revised") ->
+                       "emissions/EPA_country_map","emissions/CEDS/CEDS_sector_tech_revised","emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
+                       "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions") ->
         L112.ghg_tg_R_en_S_F_Yh
 
       L112.ghg_tgej_R_en_S_F_Yh %>%
@@ -850,7 +1022,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                        "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
                        "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech","emissions/mappings/calibrated_outresources","emissions/mappings/Trn_subsector_revised",
                        "L101.in_EJ_R_en_Si_F_Yh", "emissions/EPA/EPA_2019_raw", "emissions/EPA_CH4N2O_map",
-                        "energy/rsrc_fol_prod_vintage","emissions/EPA_country_map","emissions/CEDS/CEDS_sector_tech_revised","emissions/mappings/UCD_techs_emissions_revised") ->
+                       "energy/rsrc_fol_prod_vintage","emissions/EPA_country_map","emissions/CEDS/CEDS_sector_tech_revised","emissions/mappings/UCD_techs_emissions_revised") ->
         L112.ghg_tgej_R_en_S_F_Yh
 
       L113.ghg_tg_R_an_C_Sys_Fd_Yh %>%
@@ -930,6 +1102,33 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                        "L124.LC_bm2_R_Grass_Yh_GLU_adj") ->
         L124.nonco2_tg_R_grass_Y_GLU
 
+      L125.bcoc_tgbkm2_R_grass_2000 %>%
+        add_title("Grassland fire emissions for BCOC by GCAM region, gas, and historical year") %>%
+        add_units("Tg/yr") %>%
+        add_comments("EDGAR grassland emissions are downscaled to GLU using shares of grassland area.") %>%
+        add_legacy_name("L124.nonco2_tg_R_grass_Y_GLU") %>%
+        add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech",
+                       "L124.LC_bm2_R_Grass_Yh_GLU_adj")->L125.bcoc_tgbkm2_R_grass_2000
+
+      L125.bcoc_tgbkm2_R_forest_2000 %>%
+        add_title("Forest fire emissions for BCOC by GCAM region, gas, and historical year") %>%
+        add_units("Tg/yr") %>%
+        add_comments("EDGAR grassland emissions are downscaled to GLU using shares of grassland area.") %>%
+        add_legacy_name("L124.nonco2_tg_R_grass_Y_GLU") %>%
+        add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech",
+                       "L124.LC_bm2_R_Grass_Yh_GLU_adj")->L125.bcoc_tgbkm2_R_forest_2000
+
+      L125.deforest_coefs_bcoc %>%
+        add_title("Forest fire emissions for BCOC by GCAM region, gas, and historical year") %>%
+        add_units("Tg/yr") %>%
+        add_comments("EDGAR grassland emissions are downscaled to GLU using shares of grassland area.") %>%
+        add_legacy_name("L124.nonco2_tg_R_grass_Y_GLU") %>%
+        add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech",
+                       "L124.LC_bm2_R_Grass_Yh_GLU_adj")->L125.deforest_coefs_bcoc
+
       L124.nonco2_tg_R_forest_Y_GLU %>%
         add_title("Forest fire and deforestation emissions by GCAM region, gas, and historical year") %>%
         add_units("Tg/yr") %>%
@@ -960,12 +1159,12 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_precursors("emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                        "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech",
                        "emissions/EPA_FCCC_IndProc_2005"
-                       ) ->
+        ) ->
         L131.nonco2_tg_R_prc_S_S_Yh
 
       return_data(L111.nonghg_tg_R_en_S_F_Yh, L111.nonghg_tgej_R_en_S_F_Yh, L112.ghg_tg_R_en_S_F_Yh, L112.ghg_tgej_R_en_S_F_Yh, L113.ghg_tg_R_an_C_Sys_Fd_Yh, L115.nh3_tg_R_an_C_Sys_Fd_Yh, L121.nonco2_tg_R_awb_C_Y_GLU,
                   L121.AWBshare_R_C_Y_GLU, L122.ghg_tg_R_agr_C_Y_GLU, L122.EmissShare_R_C_Y_GLU, L124.nonco2_tg_R_grass_Y_GLU, L124.nonco2_tg_R_forest_Y_GLU, L124.deforest_coefs,
-                  L131.nonco2_tg_R_prc_S_S_Yh) # TURNED OFF BCOC OUTPUTS: L125.bcoc_tgbkm2_R_grass_2000,L125.bcoc_tgbkm2_R_forest_2000,L125.deforest_coefs_bcoc,L123.bcoc_tgmt_R_awb_2000, L114.bcoc_tgej_R_en_S_F_2000,
+                  L131.nonco2_tg_R_prc_S_S_Yh,L125.bcoc_tgbkm2_R_grass_2000,L125.bcoc_tgbkm2_R_forest_2000,L125.deforest_coefs_bcoc) # TURNED OFF BCOC OUTPUTS: ,,,L123.bcoc_tgmt_R_awb_2000, L114.bcoc_tgej_R_en_S_F_2000,
     } else {
       stop("Unknown command")
     }

@@ -64,12 +64,12 @@ module_emissions_batch_all_protected_unmgd_emissions_xml <- function(command, ..
       add_xml_data(L212.FORESTEmissions_FF_noprot, "InputEmissionsUnmgd") %>%
       add_xml_data(L212.FORESTEmissions_D_prot, "OutputEmissionsUnmgd") %>%
       add_xml_data(L212.FORESTEmissions_D_noprot, "OutputEmissionsUnmgd") %>%
-      add_xml_data(L212.GRASSEmissionsFactors_BCOC_prot, "InputEmFactUnmgd") %>%
-      add_xml_data(L212.GRASSEmissionsFactors_BCOC_noprot, "InputEmFactUnmgd") %>%
-      add_xml_data(L212.FORESTEmissionsFactors_BCOC_FF_prot, "InputEmFactUnmgd") %>%
-      add_xml_data(L212.FORESTEmissionsFactors_BCOC_FF_noprot, "InputEmFactUnmgd") %>%
-      add_xml_data(L212.FORESTEmissionsFactors_BCOC_D_prot, "OutputEmFactUnmgd") %>%
-      add_xml_data(L212.FORESTEmissionsFactors_BCOC_D_noprot, "OutputEmFactUnmgd") %>%
+      #add_xml_data(L212.GRASSEmissionsFactors_BCOC_prot, "InputEmFactUnmgd") %>%
+      #add_xml_data(L212.GRASSEmissionsFactors_BCOC_noprot, "InputEmFactUnmgd") %>%
+      #add_xml_data(L212.FORESTEmissionsFactors_BCOC_FF_prot, "InputEmFactUnmgd") %>%
+      #add_xml_data(L212.FORESTEmissionsFactors_BCOC_FF_noprot, "InputEmFactUnmgd") %>%
+      #add_xml_data(L212.FORESTEmissionsFactors_BCOC_D_prot, "OutputEmFactUnmgd") %>%
+      #add_xml_data(L212.FORESTEmissionsFactors_BCOC_D_noprot, "OutputEmFactUnmgd") %>%
       add_xml_data(L212.FORESTEmissionsFactors_future, "OutputEmFactUnmgd") %>%
       add_xml_data(L212.FORESTEmissionsFactors_future_prot, "OutputEmFactUnmgd") %>%
       add_precursors("L212.ItemName",

@@ -148,8 +148,9 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L151.nonghg_ctrl_R_en_S_T %>%
       filter(supplysector != "out_resources") %>%
       # add region name
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
-      L201.max_reduction
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      select(-year)->L201.max_reduction
+
 
     L201.max_reduction %>%
       # select only certain columns in preparation for join below

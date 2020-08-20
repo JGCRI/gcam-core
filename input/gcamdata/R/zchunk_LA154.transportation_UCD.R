@@ -47,7 +47,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              "L154.loadfactor_R_trn_m_sz_tech_F_Y",
              "L154.cost_usdvkm_R_trn_m_sz_tech_F_Y",
              "L154.speed_kmhr_R_trn_m_sz_tech_F_Y",
-             "L154.out_mpkm_R_trn_nonmotor_Yh"))
+             "L154.out_mpkm_R_trn_nonmotor_Yh",
+             "L154.IEA_histfut_data_times_UCD_shares"))
   } else if(command == driver.MAKE) {
 
     ## silence package check.
@@ -561,6 +562,21 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "energy/mappings/UCD_size_class_revisions") ->
       L154.in_EJ_R_trn_m_sz_tech_F_Yh
 
+    #Adding outputs for country level data
+    IEA_histfut_data_times_UCD_shares %>%
+      add_title("Country transportation energy data at UCD transportation technology level") %>%
+      add_units("EJ") %>%
+      add_comments("Aggregated country-level transportation energy data to UCD transportation technologies") %>%
+      add_comments("Scaled to transport end-use data") %>%
+      add_legacy_name("L154.IEA_hist_data_times_UCD_shares") %>%
+      add_precursors("common/iso_GCAM_regID", "L101.in_EJ_ctry_trn_Fi_Yh",
+                     "L1011.in_EJ_ctry_intlship_TOT_Yh", "L131.in_EJ_R_Senduse_F_Yh",
+                     "energy/mappings/calibrated_techs_trn_agg", "energy/mappings/enduse_fuel_aggregation",
+                     "energy/mappings/UCD_ctry", "energy/mappings/UCD_techs",
+                     "UCD_trn_data_SSP1","UCD_trn_data_SSP3","UCD_trn_data_SSP5","UCD_trn_data_SSP2","UCD_trn_data_CORE",
+                     "energy/mappings/UCD_size_class_revisions") ->L154.IEA_histfut_data_times_UCD_shares
+
+
     IEA_hist_data_times_UCD_shares %>%
       add_title("Country-level transportation energy data at UCD transportation technology level") %>%
       add_units("EJ") %>%
@@ -648,7 +664,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     return_data(L154.in_EJ_R_trn_m_sz_tech_F_Yh, L154.in_EJ_ctry_trn_m_sz_tech_F,
                 L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y, L154.loadfactor_R_trn_m_sz_tech_F_Y,
                 L154.cost_usdvkm_R_trn_m_sz_tech_F_Y, L154.speed_kmhr_R_trn_m_sz_tech_F_Y,
-                L154.out_mpkm_R_trn_nonmotor_Yh)
+                L154.out_mpkm_R_trn_nonmotor_Yh,L154.IEA_histfut_data_times_UCD_shares)
   } else {
     stop("Unknown command")
   }

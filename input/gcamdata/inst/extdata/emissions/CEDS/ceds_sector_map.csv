@@ -68,6 +68,6 @@ CEDS_sector,CEDS_agg_sector
 1B2_Fugitive-petr,oil_gas
 1B2b_Fugitive-NG-distr,oil_gas
 1B2b_Fugitive-NG-prod,oil_gas
-2B2_Chemicals-Nitric-acid,industry_processes
-2B3_Chemicals-Adipic-acid,industry_processes
+2B2_Chemicals-Nitric-acid,chemicals_nitric
+2B3_Chemicals-Adipic-acid,chemicals_adipic
 7BC_Indirect-N2O-non-agricultural-N,soil

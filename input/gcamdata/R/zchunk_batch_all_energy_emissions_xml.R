@@ -65,7 +65,7 @@ module_emissions_batch_all_energy_emissions_xml <- function(command, ...) {
     create_xml("all_energy_emissions.xml") %>%
       add_xml_data(L201.en_pol_emissions, "InputEmissions") %>%
       add_xml_data(L201.en_ghg_emissions, "InputEmissions") %>%
-      add_xml_data(L201.en_bcoc_emissions, "InputEmissCoeff") %>%
+      #add_xml_data(L201.en_bcoc_emissions, "InputEmissCoeff") %>%
       add_xml_data(L201.OutputEmissions_elec, "OutputEmissions") %>%
       add_xml_data(L201.OutputEmissCoeff_elec, "OutputEmissCoeff") %>%
       add_xml_data(L201.nonghg_max_reduction, "GDPCtrlMax") %>%

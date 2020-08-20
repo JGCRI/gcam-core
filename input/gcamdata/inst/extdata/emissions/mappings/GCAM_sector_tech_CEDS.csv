@@ -195,7 +195,6 @@ industrial processes,Al_Mg,Al_Mg,industrial processes,Al_Mg,Al_Mg,metals,process
 industrial processes,foams,foams,industrial processes,foams,foams,,,foams,all,all,foams,,,,Foams,
 industrial processes,HCFC_22_Prod,HCFC_22_Prod,industrial processes,HCFC_22_Prod,HCFC_22_Prod,industry_processes,process,industry_processes,HCFC22,HCFC22,industry_processes,,,,HCFC-22 Production,
 industrial processes,nitric acid,nitric acid,industrial processes,nitric acid,nitric acid,chemicals,process,chemicals,nitric acid,nitric acid,chemicals,,,,Nitric and Adipic Acid Production,
-industrial processes,other industrial processes,other industrial processes,industrial processes,other industrial processes,other industrial processes,industry_processes,process,industry_processes,other,other,industry_processes,,,,,
 industrial processes,semiconductors,semiconductors,industrial processes,semiconductors,semiconductors,,,semiconductors,all,all,semiconductors,,,,Semiconductor Manufacturing,
 industrial processes,solvents,solvents,industrial processes,solvents,solvents,solvents,process,solvents,all,all,solvents,,,,Solvent Use,
 industry_energy,biomass,biomass,industrial energy use,biomass,biomass,industry_energy,biomass,industry_energy,biomass,biomass,industry_energy,ind,industry_energy,biomass,,ind_bio

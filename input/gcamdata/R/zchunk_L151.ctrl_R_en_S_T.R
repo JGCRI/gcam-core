@@ -72,12 +72,12 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
       L151.nonghg_ctrl_R_en_S_T
 
     # Compute max emissions reduction for BC & OC
-    L114.bcoc_tgej_R_en_S_F_2000 %>%
-      map_and_compute_max_reduction(L151.min_coeff) %>%
+    #L114.bcoc_tgej_R_en_S_F_2000 %>%
+     # map_and_compute_max_reduction(L151.min_coeff) %>%
       # combine dataframes and remove unnecessary columns
-      bind_rows(L151.nonghg_ctrl_R_en_S_T, .) %>%   # follow binding order of original script
-      select(-curr_coeff, -min_coeff, -year) ->
-      L151.nonghg_ctrl_R_en_S_T  # OUTPUT
+      #bind_rows(L151.nonghg_ctrl_R_en_S_T, .) %>%   # follow binding order of original script
+      #select(-curr_coeff, -min_coeff, -year) ->
+      #L151.nonghg_ctrl_R_en_S_T  # OUTPUT
 
 
     L151.nonghg_ctrl_R_en_S_T %>%
