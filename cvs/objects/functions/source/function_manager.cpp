@@ -52,6 +52,7 @@
 #include "functions/include/logit_production_function.h"
 #include "functions/include/building_function.h"
 #include "functions/include/building_service_function.h"
+#include "functions/include/food_demand_function.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
@@ -72,6 +73,7 @@ FunctionManager::FunctionManager() {
     mFunctions[ "Logit" ] = new LogitProductionFunction;
     mFunctions[ "building-function" ] = new BuildingFunction;
     mFunctions[ "building-service-function" ] = new BuildingServiceFunction;
+    mFunctions[ "food-demand-function" ] = new FoodDemandFunction;
 }
 
 //! Destructor

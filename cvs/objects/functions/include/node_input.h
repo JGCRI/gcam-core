@@ -70,9 +70,9 @@ class IFunction;
  *          - Elements:
  *              - \c prodDmdFnType NodeInput::mProdDmdFnType
  *                   The production function type string which can be used by FunctionManager.
- *              - \c price-recieved NodeInput::mPricePaid
+ *              - \c price-received NodeInput::mPricePaid
  *                   Sets the initial price to use during coefficient calibration.
- *                   TODO: calling this price-recieved does not seem correct.
+ *                   TODO: calling this price-received does not seem correct.
  *              - \c Sigma1 NodeInput::mSigmaNewCapital
  *                   Sigma exponent to use for new capital vintage technology.
  *              - \c Sigma2 NodeInput::mSigmaOldCapital
@@ -306,7 +306,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "coefficient", mAlphaCoef, Value ),
 
         //! Price paid, for the root this would be price recieved
-        DEFINE_VARIABLE( SIMPLE | STATE, "price-recieved", mPricePaid, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "price-received", mPricePaid, Value ),
 
         //! Price paid in the base year, for the root this would be price recieved
         DEFINE_VARIABLE( SIMPLE, "base-price-paid", mBasePricePaid, Value ),

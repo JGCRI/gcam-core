@@ -12,8 +12,7 @@
 #' original data system was \code{batch_food_SSP1_xml.R} (aglu XML).
 module_aglu_batch_food_SSP1_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L203.FuelPrefElast_ssp1",
-              "L203.IncomeElasticity_SSP1"))
+    return(c("L203.FuelPrefElast_ssp1"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "food_SSP1.xml"))
   } else if(command == driver.MAKE) {
@@ -22,15 +21,13 @@ module_aglu_batch_food_SSP1_xml <- function(command, ...) {
 
     # Load required inputs
     L203.FuelPrefElast_ssp1 <- get_data(all_data, "L203.FuelPrefElast_ssp1")
-    L203.IncomeElasticity_SSP1 <- get_data(all_data, "L203.IncomeElasticity_SSP1")
 
     # ===================================================
 
     # Produce outputs
     create_xml("food_SSP1.xml") %>%
       add_xml_data(L203.FuelPrefElast_ssp1, "FuelPrefElast") %>%
-      add_xml_data(L203.IncomeElasticity_SSP1, "IncomeElasticity") %>%
-      add_precursors("L203.FuelPrefElast_ssp1", "L203.IncomeElasticity_SSP1") ->
+      add_precursors("L203.FuelPrefElast_ssp1") ->
       food_SSP1.xml
 
     return_data(food_SSP1.xml)

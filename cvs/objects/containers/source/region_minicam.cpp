@@ -495,7 +495,7 @@ void RegionMiniCAM::initCalc( const int period )
         NationalAccount nationalAccount;
         // Note that we are using the unadjusted gdp for these equations and so
         // gdp price feedbacks will be ignored.
-        (*currConsumer)->initCalc( mName, "", nationalAccount, mDemographic, mGDP->getGDP( period ), period );
+        (*currConsumer)->initCalc( mName, "", nationalAccount, mDemographic, mGDP, 0, period );
     }
 
     // Call initCalc for land allocator last. It needs profit from the ag sectors

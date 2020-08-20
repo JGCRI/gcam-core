@@ -93,6 +93,7 @@ class AgProductionTechnology;
 class NodeInput;
 class BuildingServiceInput;
 class BuildingNodeInput;
+class FoodDemandInput;
 class GCAMConsumer;
 class NoEmissCarbonCalc;
 
@@ -251,6 +252,9 @@ public:
     virtual void startVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod ) = 0;
     virtual void endVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod ) = 0;
 
+    virtual void startVisitFoodDemandInput( const FoodDemandInput* aFoodDemandInput, const int aPeriod ) = 0;
+    virtual void endVisitFoodDemandInput( const FoodDemandInput* aFoodDemandInput, const int aPeriod ) = 0;
+    
     // Following are the derived class accepts
     virtual void startVisitTranSubsector( const TranSubsector* aTranSubsector, const int aPeriod ) = 0;
     virtual void endVisitTranSubsector( const TranSubsector* aTranSubsector, const int aPeriod ) = 0;

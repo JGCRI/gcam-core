@@ -10,6 +10,7 @@ YEAR_PATTERN             <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three dig
 LOGIT_TYPE_COLNAME       <- "logit.type"        # will be removed by test code before old-new comparison
 DISABLED_MODULES         <- "NONE"
 
+
 # Flags ======================================================================
 
 FLAG_INPUT_DATA      <- "FLAG_INPUT_DATA"       # input data, don't output
@@ -189,14 +190,14 @@ aglu.WEIGHT_COTTON_LINT <- 0.4
 # FDS-2008-01, Economic Research Service, United States Department of Agriculture. Available at http://usda.mannlib.cornell.edu/usda/ers/FDS-yearbook/2000s/2008/FDS-yearbook-05-23-2008_Special_Report.pdf
 aglu.PRICERATIO_GRASS_ALFALFA <- 0.7
 
+# Pasture (forage) prices are equal to the hay (foddergrass) price times this exogenous multiplier. Equal to the hay price minus mowing, bundling, and transport.
+aglu.PRICERATIO_PASTURE_HAY <- 0.5
+
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE    <- 0.45
 
 # Conversion from peak biomass to average biomass integrated over the course of the year
 aglu.CCONV_PEAK_AVG <- 0.5
-
-# Meat price elasticity in the USA
-aglu.FOOD_MEAT_P_ELAS_USA <- -0.09
 
 # Constraints for the minimum and maximum harvested:cropped ratios
 # Source: Dalrymple, D.G. 1971, Survey of Multiple Cropping in Less Developed Nations, Foreign Econ. Dev. Serv., U.S. Dep. of Agricul., Washington, D.C.
@@ -615,6 +616,7 @@ gcamusa.SE_NEAR_TERM_YEAR <- 2030  # year after which projected growth rates fro
 gcamusa.AEO_SE_YEAR <- 2050   # year to which AEO 2019 socioeconomic assumptions run
 
 # Assumptions related to coal
+
 # Vintage groups built before 2015 will retire based on an S-curve.
 # Assumed lifetime and S-curve parametetrs for coal units:
 gcamusa.AVG_COAL_PLANT_LIFETIME <- 80
@@ -642,6 +644,7 @@ gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
 # USA states with ocean coastline, which can be reasonably assigned offshore carbon storage
 gcamusa.COASTAL_STATES <- c("AK", "AL", "CA", "CT", "DE", "FL", "GA", "HI", "LA", "MA", "MD", "ME", "MS",
                             "NC", "NH", "NJ", "NY", "OR", "RI", "SC", "TX", "VA", "WA")
+
 
 # GCAM-USA grid regions
 gcamusa.GRID_REGIONS <- c("Alaska grid", "California grid", "Central East grid", "Central Northeast grid",  "Central Northwest grid",
@@ -731,7 +734,7 @@ gcamusa.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA tran
 gcamusa.DIGITS_EMISSIONS          <- 5
 
 # Electricity load segments
-gcamusa.LOAD_SEG_CAL_YEARS <- c(2015, 2010, 2005, 1990)       # Years for which electricity load segments are calibrated
+gcamusa.LOAD_SEG_CAL_YEARS <- c(2015,2010, 2005, 1990)       # Years for which electricity load segments are calibrated
 gcamusa.ELEC_SEGMENT_BASE <- "base load generation"
 gcamusa.ELEC_SEGMENT_INT <- "intermediate generation"
 gcamusa.ELEC_SEGMENT_SUBPEAK <- "subpeak generation"

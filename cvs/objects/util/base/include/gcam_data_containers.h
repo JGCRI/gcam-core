@@ -80,6 +80,7 @@
 #include "functions/include/absolute_cost_logit.hpp"
 #include "functions/include/building_node_input.h"
 #include "functions/include/building_service_input.h"
+#include "functions/include/food_demand_input.h"
 #include "functions/include/efficiency.h"
 #include "functions/include/energy_input.h"
 #include "functions/include/icoefficient.h"
