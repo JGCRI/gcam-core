@@ -37,7 +37,6 @@
 		CD48872D122873C200F5A88A /* magicc_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488439122873C000F5A88A /* magicc_model.cpp */; };
 		CD48872F122873C200F5A88A /* consumer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48844A122873C000F5A88A /* consumer.cpp */; };
 		CD488734122873C200F5A88A /* batch_runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488468122873C000F5A88A /* batch_runner.cpp */; };
-		CD488735122873C200F5A88A /* dependency_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488469122873C000F5A88A /* dependency_finder.cpp */; };
 		CD488736122873C200F5A88A /* gdp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846A122873C000F5A88A /* gdp.cpp */; };
 		CD488737122873C200F5A88A /* info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846B122873C000F5A88A /* info.cpp */; };
 		CD488738122873C200F5A88A /* info_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48846C122873C000F5A88A /* info_factory.cpp */; };
@@ -47,7 +46,6 @@
 		CD48873F122873C200F5A88A /* region_minicam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488473122873C000F5A88A /* region_minicam.cpp */; };
 		CD488740122873C200F5A88A /* scenario.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488474122873C000F5A88A /* scenario.cpp */; };
 		CD488741122873C200F5A88A /* scenario_runner_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488475122873C000F5A88A /* scenario_runner_factory.cpp */; };
-		CD488742122873C200F5A88A /* sector_cycle_breaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488476122873C000F5A88A /* sector_cycle_breaker.cpp */; };
 		CD488743122873C200F5A88A /* single_scenario_runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488477122873C000F5A88A /* single_scenario_runner.cpp */; };
 		CD488744122873C200F5A88A /* total_policy_cost_calculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488478122873C000F5A88A /* total_policy_cost_calculator.cpp */; };
 		CD488745122873C200F5A88A /* world.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488479122873C000F5A88A /* world.cpp */; };
@@ -386,9 +384,7 @@
 		CD488443122873C000F5A88A /* consumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = consumer.h; sourceTree = "<group>"; };
 		CD48844A122873C000F5A88A /* consumer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = consumer.cpp; sourceTree = "<group>"; };
 		CD488451122873C000F5A88A /* batch_runner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = batch_runner.h; sourceTree = "<group>"; };
-		CD488452122873C000F5A88A /* dependency_finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dependency_finder.h; sourceTree = "<group>"; };
 		CD488453122873C000F5A88A /* gdp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gdp.h; sourceTree = "<group>"; };
-		CD488454122873C000F5A88A /* icycle_breaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icycle_breaker.h; sourceTree = "<group>"; };
 		CD488455122873C000F5A88A /* iinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iinfo.h; sourceTree = "<group>"; };
 		CD488456122873C000F5A88A /* info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = info.h; sourceTree = "<group>"; };
 		CD488457122873C000F5A88A /* info_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = info_factory.h; sourceTree = "<group>"; };
@@ -399,13 +395,11 @@
 		CD48845F122873C000F5A88A /* region_minicam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = region_minicam.h; sourceTree = "<group>"; };
 		CD488460122873C000F5A88A /* scenario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scenario.h; sourceTree = "<group>"; };
 		CD488461122873C000F5A88A /* scenario_runner_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scenario_runner_factory.h; sourceTree = "<group>"; };
-		CD488462122873C000F5A88A /* sector_cycle_breaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sector_cycle_breaker.h; sourceTree = "<group>"; };
 		CD488463122873C000F5A88A /* single_scenario_runner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = single_scenario_runner.h; sourceTree = "<group>"; };
 		CD488464122873C000F5A88A /* total_policy_cost_calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = total_policy_cost_calculator.h; sourceTree = "<group>"; };
 		CD488465122873C000F5A88A /* tree_item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tree_item.h; sourceTree = "<group>"; };
 		CD488466122873C000F5A88A /* world.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = world.h; sourceTree = "<group>"; };
 		CD488468122873C000F5A88A /* batch_runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = batch_runner.cpp; sourceTree = "<group>"; };
-		CD488469122873C000F5A88A /* dependency_finder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dependency_finder.cpp; sourceTree = "<group>"; };
 		CD48846A122873C000F5A88A /* gdp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gdp.cpp; sourceTree = "<group>"; };
 		CD48846B122873C000F5A88A /* info.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = info.cpp; sourceTree = "<group>"; };
 		CD48846C122873C000F5A88A /* info_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = info_factory.cpp; sourceTree = "<group>"; };
@@ -415,7 +409,6 @@
 		CD488473122873C000F5A88A /* region_minicam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = region_minicam.cpp; sourceTree = "<group>"; };
 		CD488474122873C000F5A88A /* scenario.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scenario.cpp; sourceTree = "<group>"; };
 		CD488475122873C000F5A88A /* scenario_runner_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scenario_runner_factory.cpp; sourceTree = "<group>"; };
-		CD488476122873C000F5A88A /* sector_cycle_breaker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sector_cycle_breaker.cpp; sourceTree = "<group>"; };
 		CD488477122873C000F5A88A /* single_scenario_runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = single_scenario_runner.cpp; sourceTree = "<group>"; };
 		CD488478122873C000F5A88A /* total_policy_cost_calculator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = total_policy_cost_calculator.cpp; sourceTree = "<group>"; };
 		CD488479122873C000F5A88A /* world.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = world.cpp; sourceTree = "<group>"; };
@@ -1116,9 +1109,7 @@
 				0E4247B5143D009700A8BBD3 /* resource_activity.h */,
 				0EF7AF4A13E1EFCF0034AA71 /* market_dependency_finder.h */,
 				CD488451122873C000F5A88A /* batch_runner.h */,
-				CD488452122873C000F5A88A /* dependency_finder.h */,
 				CD488453122873C000F5A88A /* gdp.h */,
-				CD488454122873C000F5A88A /* icycle_breaker.h */,
 				CD488455122873C000F5A88A /* iinfo.h */,
 				CD488456122873C000F5A88A /* info.h */,
 				CD488457122873C000F5A88A /* info_factory.h */,
@@ -1129,7 +1120,6 @@
 				CD48845F122873C000F5A88A /* region_minicam.h */,
 				CD488460122873C000F5A88A /* scenario.h */,
 				CD488461122873C000F5A88A /* scenario_runner_factory.h */,
-				CD488462122873C000F5A88A /* sector_cycle_breaker.h */,
 				CD488463122873C000F5A88A /* single_scenario_runner.h */,
 				CD488464122873C000F5A88A /* total_policy_cost_calculator.h */,
 				CD488465122873C000F5A88A /* tree_item.h */,
@@ -1149,7 +1139,6 @@
 			children = (
 				0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */,
 				CD488468122873C000F5A88A /* batch_runner.cpp */,
-				CD488469122873C000F5A88A /* dependency_finder.cpp */,
 				CD48846A122873C000F5A88A /* gdp.cpp */,
 				CD48846B122873C000F5A88A /* info.cpp */,
 				CD48846C122873C000F5A88A /* info_factory.cpp */,
@@ -1159,7 +1148,6 @@
 				CD488473122873C000F5A88A /* region_minicam.cpp */,
 				CD488474122873C000F5A88A /* scenario.cpp */,
 				CD488475122873C000F5A88A /* scenario_runner_factory.cpp */,
-				CD488476122873C000F5A88A /* sector_cycle_breaker.cpp */,
 				CD488477122873C000F5A88A /* single_scenario_runner.cpp */,
 				CD488478122873C000F5A88A /* total_policy_cost_calculator.cpp */,
 				CD488479122873C000F5A88A /* world.cpp */,
@@ -2225,7 +2213,6 @@
 				CD48872D122873C200F5A88A /* magicc_model.cpp in Sources */,
 				CD48872F122873C200F5A88A /* consumer.cpp in Sources */,
 				CD488734122873C200F5A88A /* batch_runner.cpp in Sources */,
-				CD488735122873C200F5A88A /* dependency_finder.cpp in Sources */,
 				CD488736122873C200F5A88A /* gdp.cpp in Sources */,
 				CD693FA31AEFF0A100805384 /* absolute_cost_logit.cpp in Sources */,
 				0E3C496A1EC4BBD8005EDC19 /* manage_state_variables.cpp in Sources */,
@@ -2237,7 +2224,6 @@
 				CD48873F122873C200F5A88A /* region_minicam.cpp in Sources */,
 				CD488740122873C200F5A88A /* scenario.cpp in Sources */,
 				CD488741122873C200F5A88A /* scenario_runner_factory.cpp in Sources */,
-				CD488742122873C200F5A88A /* sector_cycle_breaker.cpp in Sources */,
 				CD488743122873C200F5A88A /* single_scenario_runner.cpp in Sources */,
 				CD488744122873C200F5A88A /* total_policy_cost_calculator.cpp in Sources */,
 				CD488745122873C200F5A88A /* world.cpp in Sources */,
