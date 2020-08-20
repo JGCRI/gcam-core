@@ -138,7 +138,7 @@ double VintageProductionState::calcShutdownCoefficient( const string& aRegionNam
         aPeriod );
 
     for( unsigned int i = 0; i < aShutdownDeciders.size(); ++i ){
-        shutdownCoef *= aShutdownDeciders[ i ]->calcShutdownCoef( 0, marginalProfit, aRegionName,
+        shutdownCoef *= aShutdownDeciders[ i ]->calcShutdownCoef( marginalProfit, aRegionName,
             aSectorName, mInitialYear, aPeriod );
     }
     return shutdownCoef;
