@@ -36,7 +36,7 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
 
     # Load required inputs
     A51.min_coeff <- get_data(all_data, "emissions/A51.min_coeff")
-    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh")
+    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh", strip_attributes = TRUE)
     get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000") %>%
       gather(year, value, -GCAM_region_ID, -Non.CO2, -supplysector, -subsector, -stub.technology) %>%
       mutate(year = as.numeric(substr(year, 2, 5))) ->

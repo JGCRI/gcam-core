@@ -12,7 +12,8 @@
 #' original data system was \code{batch_nonewcoal_USA_xml.R} (gcamusa XML).
 module_gcamusa_batch_nonewcoal_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L2231.StubTechShrwt_nonewcoal_USA"))
+    return(c("L2231.SubsectorShrwt_nonewcoal_elecS_cool_USA",
+             "L2231.StubTechShrwt_nonewcoal_nongen_USA" ))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "nonewcoal_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -20,12 +21,16 @@ module_gcamusa_batch_nonewcoal_USA_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L2231.StubTechShrwt_nonewcoal_USA <- get_data(all_data, "L2231.StubTechShrwt_nonewcoal_USA")
+    L2231.SubsectorShrwt_nonewcoal_elecS_cool_USA <- get_data(all_data, "L2231.SubsectorShrwt_nonewcoal_elecS_cool_USA")
+    L2231.StubTechShrwt_nonewcoal_nongen_USA <- get_data(all_data, "L2231.StubTechShrwt_nonewcoal_nongen_USA")
 
     # Produce outputs
     create_xml("nonewcoal_USA.xml") %>%
-      add_xml_data(L2231.StubTechShrwt_nonewcoal_USA, "StubTechShrwt") %>%
-      add_precursors("L2231.StubTechShrwt_nonewcoal_USA") ->
+      add_xml_data(L2231.StubTechShrwt_nonewcoal_nongen_USA, "StubTechShrwt") %>%
+      add_xml_data_generate_levels(L2231.SubsectorShrwt_nonewcoal_elecS_cool_USA,
+                                   "SubsectorShrwt", "subsector", "nesting-subsector", 1, FALSE) %>%
+      add_precursors("L2231.SubsectorShrwt_nonewcoal_elecS_cool_USA",
+                     "L2231.StubTechShrwt_nonewcoal_nongen_USA") ->
       nonewcoal_USA.xml
 
     return_data(nonewcoal_USA.xml)

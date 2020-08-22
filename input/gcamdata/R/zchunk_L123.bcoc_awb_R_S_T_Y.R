@@ -43,10 +43,10 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU")
-    L121.AWBshare_R_C_Y_GLU <- get_data(all_data, "L121.AWBshare_R_C_Y_GLU")
-    RCP_BC_2000 <- get_data(all_data, "emissions/RCP_BC_2000")
-    RCP_OC_2000 <- get_data(all_data, "emissions/RCP_OC_2000")
+    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU", strip_attributes = TRUE)
+    L121.AWBshare_R_C_Y_GLU <- get_data(all_data, "L121.AWBshare_R_C_Y_GLU", strip_attributes = TRUE)
+    RCP_BC_2000 <- get_data(all_data, "emissions/RCP_BC_2000", strip_attributes = TRUE)
+    RCP_OC_2000 <- get_data(all_data, "emissions/RCP_OC_2000", strip_attributes = TRUE)
 
     # Extract 2000 emissions data for AWB emissions and assign emission species identifier
     RCP_BC_2000 %>%

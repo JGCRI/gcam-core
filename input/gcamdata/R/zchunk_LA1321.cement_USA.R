@@ -35,9 +35,9 @@ module_gcamusa_LA1321.cement <- function(command, ...) {
 
     # Load required inputs
     Census_ind_VoS_state <- get_data(all_data, "gcam-usa/Census_ind_VoS_state")
-    L1321.out_Mt_R_cement_Yh <- get_data(all_data, "L1321.out_Mt_R_cement_Yh")
-    L1321.IO_GJkg_R_cement_F_Yh <- get_data(all_data, "L1321.IO_GJkg_R_cement_F_Yh")
-    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "L1321.in_EJ_R_cement_F_Y")
+    L1321.out_Mt_R_cement_Yh <- get_data(all_data, "L1321.out_Mt_R_cement_Yh", strip_attributes = TRUE)
+    L1321.IO_GJkg_R_cement_F_Yh <- get_data(all_data, "L1321.IO_GJkg_R_cement_F_Yh", strip_attributes = TRUE)
+    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "L1321.in_EJ_R_cement_F_Y", strip_attributes = TRUE)
 
     # ===================================================
 

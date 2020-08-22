@@ -52,6 +52,7 @@
 
 class NationalAccount;
 class Demographic;
+class GDP;
 class Tabs;
 class MoreSectorInfo;
 class IVisitor;
@@ -79,12 +80,21 @@ public:
                                const std::string& aSubsectorName ) = 0;
     
     virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo,
-                           const std::string& aRegionName, 
+                           const std::string& aRegionName,
                            const std::string& aSectorName,
                            NationalAccount& nationalAccount,
                            const Demographic* aDemographics,
                            const double aCapitalStock,
-                           const int aPeriod ) = 0;
+                           const int aPeriod );
+    
+    virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo,
+                           const std::string& aRegionName, 
+                           const std::string& aSectorName,
+                           NationalAccount& nationalAccount,
+                           const Demographic* aDemographics,
+                           const GDP* aGDP,
+                           const double aCapitalStock,
+                           const int aPeriod );
 
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
         const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName, 

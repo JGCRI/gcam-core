@@ -18,8 +18,8 @@ the generated outputs: \code{L202.RenewRsrc}, \code{L202.RenewRsrcPrice}, \code{
 \code{L202.RenewRsrcCurves}, \code{L202.ResTechShrwt}, \code{L202.UnlimitedRenewRsrcCurves}, \code{L202.UnlimitedRenewRsrcPrice},
 \code{L202.Supplysector_in}, \code{L202.SubsectorAll_in}, \code{L202.StubTech_in}, \code{L202.StubTechInterp_in},
 \code{L202.GlobalTechCoef_in}, \code{L202.GlobalTechShrwt_in}, \code{L202.StubTechProd_in},
-\code{L202.Supplysector_an}, \code{L202.SubsectorAll_an}, \code{L202.StubTech_an}, \code{L202.StubTechInterp_an},
-\code{L202.StubTechProd_an}, \code{L202.StubTechCoef_an}, \code{L202.GlobalTechCost_an},
+\code{L202.Supplysector_an}, \code{L202.SubsectorAll_an}, \code{L202.GlobalTechShrwt_an}, \code{L202.StubTechInterp_an},
+\code{L202.StubTechProd_an}, \code{L202.StubTechCoef_an}, \code{L202.StubTechCost_an},
 \code{L202.GlobalRenewTech_imp_an}, \code{L202.StubTechFixOut_imp_an}. The corresponding file in the
 original data system was \code{L202.an_input.R} (aglu level2).
 }

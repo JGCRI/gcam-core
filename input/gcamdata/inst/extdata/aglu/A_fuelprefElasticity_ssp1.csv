@@ -6,5 +6,5 @@
 # Column types: cci 
 # ----------
 supplysector,subsector,fuelprefElasticity
-FoodDemand_Meat,Beef,-1
-FoodDemand_Meat,SheepGoat,-1
+FoodDemand_NonStaples,Beef,-1
+FoodDemand_NonStaples,SheepGoat,-1

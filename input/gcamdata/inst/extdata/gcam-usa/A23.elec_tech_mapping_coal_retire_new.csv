@@ -1,0 +1,42 @@
+# File: A23.elec_tech_mapping_coal_retire_new.csv
+# Title: Technologies in the power sector to be retired at varying rates and their corresponding technologies in the multiple load segments electricity sector
+# Units: Unitless
+# Column types: cccc
+# ----------
+Electric.sector,subsector,Electric.sector.technology,technology
+base load generation,coal,coal_base_conv pul,coal_base_conv pul
+base load generation,coal,coal_base_conv pul before 1950,coal_base_conv pul
+base load generation,coal,coal_base_conv pul 1951-1955,coal_base_conv pul
+base load generation,coal,coal_base_conv pul 1956-1960,coal_base_conv pul
+base load generation,coal,coal_base_conv pul 1961-1965,coal_base_conv pul
+base load generation,coal,coal_base_conv pul 1966-1970,coal_base_conv pul
+base load generation,coal,coal_base_conv pul 1971-1975,coal_base_conv pul
+base load generation,coal,coal_base_conv pul 1976-1980,coal_base_conv pul
+base load generation,coal,coal_base_conv pul 1981-1985,coal_base_conv pul
+base load generation,coal,coal_base_conv pul 1986-1990,coal_base_conv pul
+base load generation,coal,coal_base_conv pul 1991-1995,coal_base_conv pul
+base load generation,coal,coal_base_conv pul 1996-2000,coal_base_conv pul
+base load generation,coal,coal_base_conv pul 2001-2005,coal_base_conv pul
+base load generation,coal,coal_base_conv pul 2006-2010,coal_base_conv pul
+base load generation,coal,coal_base_conv pul 2011-2015,coal_base_conv pul
+base load generation,coal,coal_base_conv pul_retire_2020,coal_base_conv pul
+intermediate generation,coal,coal_int_conv pul,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul before 1950,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul 1951-1955,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul 1956-1960,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul 1961-1965,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul 1966-1970,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul 1971-1975,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul 1976-1980,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul 1981-1985,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul 1986-1990,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul 1991-1995,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul 1996-2000,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul 2001-2005,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul 2006-2010,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul 2011-2015,coal_int_conv pul
+intermediate generation,coal,coal_int_conv pul_retire_2020,coal_int_conv pul
+peak generation,coal,coal_peak_conv pul,coal_peak_conv pul
+peak generation,coal,coal_peak_conv pul_retire_2020,coal_peak_conv pul
+subpeak generation,coal,coal_subpeak_conv pul,coal_subpeak_conv pul
+subpeak generation,coal,coal_subpeak_conv pul_retire_2020,coal_subpeak_conv pul

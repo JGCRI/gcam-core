@@ -4,13 +4,8 @@
 \alias{check_chunk_outputs}
 \title{check_chunk_outputs}
 \usage{
-check_chunk_outputs(
-  chunk,
-  chunk_data,
-  chunk_inputs,
-  promised_outputs,
-  outputs_xml
-)
+check_chunk_outputs(chunk, chunk_data, chunk_inputs, promised_outputs,
+  outputs_xml)
 }
 \arguments{
 \item{chunk}{Chunk name, character}

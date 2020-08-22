@@ -113,6 +113,7 @@
 #include "functions/include/building_node_input.h"
 #include "functions/include/building_service_input.h"
 #include "functions/include/satiation_demand_function.h"
+#include "functions/include/food_demand_input.h"
 #include <typeinfo>
 
 // Whether to write a text file with the contents that are to be inserted
@@ -796,9 +797,8 @@ void XMLDBOutputter::endVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergy
 
 
     // Write the closing finalDemand tag.
-    XMLWriteClosingTag( aEnergyFinalDemand->getXMLNameStatic(), mBuffer, mTabs.get() );
+    XMLWriteClosingTag( aEnergyFinalDemand->getXMLName(), mBuffer, mTabs.get() );
 }
-
 
 void XMLDBOutputter::startVisitBaseTechnology( const BaseTechnology* aBaseTech, const int aPeriod ) {
     // writing blank technologies is not a big concern for sgm so just create a child buffer
@@ -2072,6 +2072,31 @@ void XMLDBOutputter::startVisitBuildingServiceInput( const BuildingServiceInput*
 
 void XMLDBOutputter::endVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod ) {
     endVisitInput( aBuildingServiceInput, aPeriod );
+}
+
+void XMLDBOutputter::startVisitFoodDemandInput( const FoodDemandInput* aFoodDemandInput, const int aPeriod ) {
+    // set the correct price/demand units which will be used in startVisitInput
+    mCurrentPriceUnit = "2005$/Mcal/day";
+    mCurrentInputUnit = "Pcal/yr";
+    startVisitInput( aFoodDemandInput, aPeriod );
+    mCurrentPriceUnit.clear();
+    mCurrentInputUnit.clear();
+
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int per = 0; per < modeltime->getmaxper(); ++per ) {
+        double perCapConv = aFoodDemandInput->getAnnualDemandConversionFactor( per );
+        double perCapDemand = aFoodDemandInput->getPhysicalDemand( per ) / perCapConv;
+        if( !objects::isEqual<double>( perCapDemand, 0.0 ) ) {
+            writeItemToBuffer( perCapDemand, "demand-percap",
+                *mBufferStack.top(), mTabs.get(), per, "Kcal/per/day" );
+        }
+        writeItemToBuffer( aFoodDemandInput->mRegionalBias[ per ], "regional-bias",
+            *mBufferStack.top(), mTabs.get(), per, "Kcal/per/day" );
+    }
+}
+
+void XMLDBOutputter::endVisitFoodDemandInput( const FoodDemandInput* aFoodDemandInput, const int aPeriod ) {
+    endVisitInput( aFoodDemandInput, aPeriod );
 }
 
 /*!

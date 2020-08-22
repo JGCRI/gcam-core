@@ -58,10 +58,10 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     A_agRegionalTechnology <- get_data(all_data, "aglu/A_agRegionalTechnology")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     A_regions <- get_data(all_data, "energy/A_regions")
-    A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef")
+    A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef", strip_attributes = TRUE)
     A21.globaltech_secout <- get_data(all_data, "energy/A21.globaltech_secout")
-    A22.globaltech_coef <- get_data(all_data, "energy/A22.globaltech_coef")
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
+    A22.globaltech_coef <- get_data(all_data, "energy/A22.globaltech_coef", strip_attributes = TRUE)
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
     get_data(all_data, "L121.in_EJ_R_unoil_F_Yh") %>%
       filter(year %in% HISTORICAL_YEARS) ->   # ensure temp data match our current history
       L121.in_EJ_R_unoil_F_Yh
