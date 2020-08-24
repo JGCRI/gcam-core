@@ -1,0 +1,7 @@
+# File: A_diet_bias.csv
+# Title: Regional bias convergence values
+# Description: Bias value for staples and non_staples note values given for a model base year will be overwritten by calibration.  The model will automatically linearly interpolate between values given here from the calibrated value so we can use this to converge the bias in future years
+# Units: NA
+# Column types: cnn
+# ----------
+demand_type,regional.bias.year,regional.bias

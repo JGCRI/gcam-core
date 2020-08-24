@@ -60,6 +60,9 @@ class NodeInput;
 class BuildingNodeInput;
 class BuildingServiceInput;
 class ThermalBuildingServiceInput;
+class FoodDemandInput;
+class StaplesFoodDemandInput;
+class NonStaplesFoodDemandInput;
 
 /*! 
 * \ingroup Objects
@@ -221,7 +224,8 @@ protected:
          * hierarchy under introspection.  Note we are going to keep seperate the
          * subclass hierarchy of IInput and INestedInput for simplicity.
          */
-        DEFINE_SUBCLASS_FAMILY( INestedInput, NodeInput, BuildingNodeInput, BuildingServiceInput, ThermalBuildingServiceInput )
+        DEFINE_SUBCLASS_FAMILY( INestedInput, NodeInput, BuildingNodeInput, BuildingServiceInput, ThermalBuildingServiceInput,
+                                FoodDemandInput, StaplesFoodDemandInput, NonStaplesFoodDemandInput )
     )
 };
 
