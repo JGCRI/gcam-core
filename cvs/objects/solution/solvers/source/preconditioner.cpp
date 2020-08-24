@@ -315,6 +315,15 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         chg = true;
                         ++nchg;
                     }
+                    else if(oldprice == 0.0 && olddmnd > 0.0) {
+                        // we can have a trial market "turn on" from one model period
+                        // to another and having the price stuck at zero doesn't allow
+                        // the solver to adjust it.  Just reset it to the demand.
+                        newprice = olddmnd;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    }
                     else if(oldprice > ub) {
                         newprice = ub;
                         solvable[i].setPrice(newprice);
