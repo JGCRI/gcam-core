@@ -4,25 +4,25 @@
 # Source: GCAM assumptions; developed from assumptions to NEMS model in support of the Annual Energy Outlook (https://www.eia.gov/outlooks/aeo/assumptions/pdf/electricity.pdf).
 # Future improvement is based on the maximum % reduction that the literature deems likely and a rate corresponding to the maturity level of the technology
 # Note that some technologies are the same as another with additional equipment (i.e. CCS) for those technologies the improvement is on the additional equipment
-# Column types: ccccnnnnnnnnc 
+# Column types: ccccnnnnnnnc 
 # ----------
-supplysector,subsector,technology,input.OM.var,1971,1990,2005,2010,2015,2020,improvement.max,improvement.rate,improvement.shadow.technology
-electricity,coal,coal (conv pul),OM-var,,,,,,,0.75,0.01,
-electricity,coal,coal (conv pul CCS),OM-var,,,,,,,0.6,0.05,
-electricity,coal,coal (IGCC),OM-var,,,,,,,0.7,0.03,
-electricity,coal,coal (IGCC CCS),OM-var,,,,,,,0.6,0.05,
-electricity,gas,gas (steam/CT),OM-var,,,,,,,0.75,0.01,
-electricity,gas,gas (CC),OM-var,,,,,,,0.75,0.01,
-electricity,gas,gas (CC CCS),OM-var,,,,,,,0.6,0.05,
-electricity,refined liquids,refined liquids (steam/CT),OM-var,,,,,,,0.75,0.01,
-electricity,refined liquids,refined liquids (CC),OM-var,,,,,,,0.75,0.01,
-electricity,refined liquids,refined liquids (CC CCS),OM-var,,,,,,,0.6,0.05,
-electricity,biomass,biomass (conv),OM-var,,,,,,,0.75,0.01,
-electricity,biomass,biomass (conv CCS),OM-var,,,,,,,0.6,0.05,
-electricity,biomass,biomass (IGCC),OM-var,,,,,,,0.7,0.03,
-electricity,biomass,biomass (IGCC CCS),OM-var,,,,,,,0.6,0.05,
-electricity,nuclear,Gen_II_LWR,OM-var,0.05,0.05,0.05,0.619654024,0.619654024,0.619654024,1,0,
-electricity,nuclear,Gen_III,OM-var,,,,,,,0.75,0.01,
-electricity,wind,wind,OM-var,,,,,,,0.7,0.03,
-electricity,wind,wind_storage,OM-var,,,,,,,0.7,0.03,
-electricity,wind,wind_offshore,OM-var,,,,,,,0.7,0.03,
+supplysector,subsector,technology,input.OM.var,1971,1990,2005,2010,2015,improvement.max,improvement.rate,improvement.shadow.technology
+electricity,coal,coal (conv pul),OM-var,,,,,,0.75,0.01,
+electricity,coal,coal (conv pul CCS),OM-var,,,,,,0.6,0.05,
+electricity,coal,coal (IGCC),OM-var,,,,,,0.7,0.03,
+electricity,coal,coal (IGCC CCS),OM-var,,,,,,0.6,0.05,
+electricity,gas,gas (steam/CT),OM-var,,,,,,0.75,0.01,
+electricity,gas,gas (CC),OM-var,,,,,,0.75,0.01,
+electricity,gas,gas (CC CCS),OM-var,,,,,,0.6,0.05,
+electricity,refined liquids,refined liquids (steam/CT),OM-var,,,,,,0.75,0.01,
+electricity,refined liquids,refined liquids (CC),OM-var,,,,,,0.75,0.01,
+electricity,refined liquids,refined liquids (CC CCS),OM-var,,,,,,0.6,0.05,
+electricity,biomass,biomass (conv),OM-var,,,,,,0.75,0.01,
+electricity,biomass,biomass (conv CCS),OM-var,,,,,,0.6,0.05,
+electricity,biomass,biomass (IGCC),OM-var,,,,,,0.7,0.03,
+electricity,biomass,biomass (IGCC CCS),OM-var,,,,,,0.6,0.05,
+electricity,nuclear,Gen_II_LWR,OM-var,0.05,0.05,0.05,0.619654024,0.619654024,1,0,
+electricity,nuclear,Gen_III,OM-var,,,,,,0.75,0.01,
+electricity,wind,wind,OM-var,,,,,,0.7,0.03,
+electricity,wind,wind_storage,OM-var,,,,,,0.7,0.03,
+electricity,wind,wind_offshore,OM-var,,,,,,0.7,0.03,

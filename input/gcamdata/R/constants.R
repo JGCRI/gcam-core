@@ -459,7 +459,7 @@ energy.TRAN_UCD_SIZE_CLASS<-'rev_size.class'
 
 # Constants related to ATB power sector technology costs
 energy.ATB_2017_YEARS <- c(2015:2016)
-energy.ATB_BASE_YEAR <- 2020
+energy.ATB_BASE_YEAR <- 2015
 energy.ATB_MID_YEAR <- 2035
 energy.ATB_TARGET_YEAR <- 2035
 gcamusa.STORAGE_TECH <- "battery"
