@@ -31,6 +31,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              FILE = "energy/mappings/UCD_techs",
              #kbn 2019-10-09 Added size class divisions file here.
              FILE=  "energy/mappings/UCD_size_class_revisions",
+             FILE =  "energy/UCD_trn_data_CORE_highEV",
              # This file is currently using a constant to select the correct SSP database
              # All SSP databases will be included in the input files
              UCD_trn_data_name,"UCD_trn_data_SSP1",
@@ -58,10 +59,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       intensity <- Tvkm <- `load factor` <- `non-fuel costs` <- size.class.x <- Tpkm <-
       Tusd <- Thr <- intensity_MJvkm <- loadfactor <- cost_usdvkm <- speed_kmhr <- variable  <-
       population <- pkm_percap <- country_name <- year.x <- rev.mode <- rev_size.class <-
-      mode.y <- size.class.y <- sce <- ':=' <- weight_EJ_core <- intensity_CORE <-
-      loadfactor_CORE <- non_fuel_cost_core <- NULL
-
-
+      mode.y <- size.class.y <- sce <- weight_EJ_core <- intensity_CORE <- loadfactor_CORE <-
+      non_fuel_cost_core <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -71,15 +70,17 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     UCD_ctry <- get_data(all_data, "energy/mappings/UCD_ctry")
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")
-    UCD_trn_data <- get_data(all_data, UCD_trn_data_name) %>%
+    UCD_trn_data_CORE <- get_data(all_data, UCD_trn_data_name) %>%
       gather_years %>% mutate(sce=paste0("CORE"))
     # kbn 2020-06-02 get data for all SSPs. No data for SSP2.
     UCD_trn_data_SSP1 <- get_data(all_data,"UCD_trn_data_SSP1") %>% gather_years %>% mutate(sce=paste0("SSP1"))
     UCD_trn_data_SSP3 <- get_data(all_data,"UCD_trn_data_SSP3") %>% gather_years %>% mutate(sce=paste0("SSP3"))
     UCD_trn_data_SSP5 <- get_data(all_data,"UCD_trn_data_SSP5") %>% gather_years %>% mutate(sce=paste0("SSP5"))
-
+    # UCD_trn_data_CORE_highEV is a scenario, but has data for historical years.
+    UCD_trn_data_CORE_highEV <- get_data(all_data,"energy/UCD_trn_data_CORE_highEV") %>% gather_years %>% mutate(sce=paste0("highEV")) %>%
+                                                        filter(year %in% c(FUTURE_YEARS))
     # kbn 2020-06-02 Bind data for SSPs with CORE
-    UCD_trn_data <- bind_rows(UCD_trn_data,UCD_trn_data_SSP1,UCD_trn_data_SSP3,UCD_trn_data_SSP5)
+    UCD_trn_data <- bind_rows(UCD_trn_data_CORE,UCD_trn_data_SSP1,UCD_trn_data_SSP3,UCD_trn_data_SSP5,UCD_trn_data_CORE_highEV)
 
     L101.in_EJ_ctry_trn_Fi_Yh <- get_data(all_data, "L101.in_EJ_ctry_trn_Fi_Yh")
     L1011.in_EJ_ctry_intlship_TOT_Yh <- get_data(all_data, "L1011.in_EJ_ctry_intlship_TOT_Yh")
@@ -183,7 +184,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       distinct
 
 
-
+    #Add adjustment here. Technologies not represented in CORE but in scenarios are getting dropped (BEV bus for example)
     IEA_hist_data_times_UCD_shares <- UCD_cat_fuel %>%
       repeat_add_columns(iso_year) %>%
       left_join(UCD_fuel_share_in_cat, by = c("UCD_category", "fuel", "iso")) %>%
@@ -306,10 +307,11 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     # Creating tibble with all GCAM years to join with. The values will be filled out using the first available year.
     # Remove years in all GCAM years that are already in UCD database
     all_years <- tibble( year = c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
-      filter(!(year %in% unique(UCD_trn_data$year)))
+      filter(!(year %in% unique(UCD_trn_data_CORE$year)))
 
+    UCD_trn_data_sce <- bind_rows(UCD_trn_data_SSP1,UCD_trn_data_SSP3,UCD_trn_data_SSP5,UCD_trn_data_CORE_highEV)
     all_years_SSPs <- tibble( year = c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)) %>%
-      filter(!(year %in% unique(UCD_trn_data$year)))
+      filter(!(year %in% unique(UCD_trn_data_sce$year)))
     #kbn 2020-01-30 We don't need all years for the SSPs. Only selecting years from 2015 on wards. Splitting years
     #into CORE years and SSP years.
     UCD_trn_data_allyears_CORE <- bind_rows(
@@ -349,7 +351,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     #Making sure that value is numeric as a check so that we do not get a failure in the if_else
     UCD_trn_data_fillout <-    UCD_trn_data_fillout[, value :=as.numeric(value)]
     # Start interpolation
-    UCD_trn_data_fillout <- UCD_trn_data_fillout[, value := if_else(is.na(value), as.numeric(approx_fun(year, value, rule = 2)), as.numeric(value)),by= c("UCD_region", "UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel", "variable", "unit","sce")]
+    UCD_trn_data_fillout <- UCD_trn_data_fillout[, value := if_else(is.na(value), as.numeric(approx_fun(year, value, rule = 2)), as.numeric(value)),by= c("UCD_region", "UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel", "variable", "unit")]
 
 
     #kbn 2020 filtering out SSP values that are the same. Basically if a certain combination has the same value for a SSP in a year compared to core,
