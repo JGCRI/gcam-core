@@ -101,8 +101,7 @@ void Consumer::initCalc( const string& aRegionName,
     mLeafInputs = FunctionUtils::getLeafInputs( mNestedInputRoot );
 }
 
-void Consumer::initCalc( const MoreSectorInfo* aMoreSectorInfo,
-                         const string& aRegionName,
+void Consumer::initCalc( const string& aRegionName,
                          const string& aSectorName,
                          NationalAccount& nationalAccount,
                          const Demographic* aDemographics,
@@ -110,7 +109,7 @@ void Consumer::initCalc( const MoreSectorInfo* aMoreSectorInfo,
                          const double aCapitalStock,
                          const int aPeriod )
 {
-    initCalc( aMoreSectorInfo, aRegionName, aSectorName, nationalAccount, aDemographics,
+    initCalc( aRegionName, aSectorName, nationalAccount, aDemographics,
               aCapitalStock, aPeriod );
 }
 
