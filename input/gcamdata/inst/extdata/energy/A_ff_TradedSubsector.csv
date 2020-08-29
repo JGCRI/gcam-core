@@ -9,4 +9,3 @@ supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.ye
 traded coal,traded coal,-6,start-year,1,share-weight,final-calibration-year,2300,1,s-curve,1,
 traded crude oil,traded crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,1,
 traded natural gas,traded natural gas,-6,start-year,1,share-weight,final-calibration-year,2300,1,s-curve,1,
-traded unconventional oil,traded unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,1,

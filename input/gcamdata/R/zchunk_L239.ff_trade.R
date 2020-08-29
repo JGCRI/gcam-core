@@ -9,7 +9,7 @@
 #'   \code{L239.SectorUseTrialMarket_tra}, \code{L239.SubsectorAll_tra}, \code{L239.TechShrwt_tra},
 #'   \code{L239.TechCost_tra}, \code{L239.TechCoef_tra}, \code{L239.Production_tra}, \code{L239.Supplysector_reg},
 #'   \code{L239.SubsectorAll_reg}, \code{L239.TechShrwt_reg}, \code{L239.TechCoef_reg}, \code{L239.Production_reg_imp},
-#'   \code{L239.Production_reg_dom}, \code{L239.Consumption_intraregional}.
+#'   \code{L239.Production_reg_dom}, \code{L239.Consumption_intraregional}, \code{L239.CarbonCoef}.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter if_else left_join mutate rename select
 #' @importFrom tibble tibble
@@ -24,6 +24,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
              FILE = "energy/A_ff_TradedSector",
              FILE = "energy/A_ff_TradedSubsector",
              FILE = "energy/A_ff_TradedTechnology",
+             "L202.CarbonCoef",
              "L2011.ff_GrossTrade_EJ_R_C_Y",
              "L2011.ff_ALL_EJ_R_C_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -41,7 +42,8 @@ module_energy_L239.ff_trade <- function(command, ...) {
              "L239.TechCoef_reg",
              "L239.Production_reg_imp",
              "L239.Production_reg_dom",
-             "L239.Consumption_intraregional"))
+             "L239.Consumption_intraregional",
+             "L239.CarbonCoef"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -61,6 +63,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
     A_ff_TradedTechnology <- get_data(all_data, "energy/A_ff_TradedTechnology",strip_attributes = TRUE)
     L2011.ff_GrossTrade_EJ_R_C_Y <- get_data(all_data, "L2011.ff_GrossTrade_EJ_R_C_Y",strip_attributes = TRUE)
     L2011.ff_ALL_EJ_R_C_Y <- get_data(all_data, "L2011.ff_ALL_EJ_R_C_Y",strip_attributes = TRUE)
+    L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef",strip_attributes = TRUE)
 
     # In the structure of the model unconventional oil is upgraded before it is shipped out. The passthrough sector
     # that upgrades uncon oil is called unconventional oil production, so to make sure we match we'll change
@@ -78,6 +81,30 @@ module_energy_L239.ff_trade <- function(command, ...) {
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       select(sector.name = supplysector, subsector.name = subsector, technology, primary.consumption, year) %>%
       filter(year %in% MODEL_YEARS) -> L239.PrimaryConsKeyword_en
+
+    # Fuel carbon coefficients for new sectors
+    # Traded sectors first.  These are only set up in the USA.
+    L202.CarbonCoef %>%
+      filter(region == gcam.USA_REGION) %>%
+      semi_join(A_ff_TradedTechnology, by = c("PrimaryFuelCO2Coef.name" = "minicam.energy.input")) %>%
+      left_join_error_no_match(A_ff_TradedTechnology, by = c("PrimaryFuelCO2Coef.name" = "minicam.energy.input")) %>%
+      select(-PrimaryFuelCO2Coef.name) %>%
+      select(region, PrimaryFuelCO2Coef.name = supplysector, PrimaryFuelCO2Coef) -> L239.CarbonCoef_traded
+
+    # Next regional sectors (all regions)
+    L239.CarbonCoef_traded %>%
+      left_join_error_no_match(A_ff_RegionalTechnology, by = c("PrimaryFuelCO2Coef.name" = "minicam.energy.input")) %>%
+      select(-PrimaryFuelCO2Coef.name) %>%
+      select(PrimaryFuelCO2Coef.name = supplysector, PrimaryFuelCO2Coef) %>%
+      write_to_all_regions(LEVEL2_DATA_NAMES[["CarbonCoef"]], GCAM_region_names = GCAM_region_names) -> L239.CarbonCoef_regional
+      # write_to_all_regions(c("region", "PrimaryFuelCO2Coef.name", "PrimaryFuelCO2Coef"), GCAM_region_names = GCAM_region_names) -> L239.CarbonCoef_regional
+
+    # Combine & clean up
+    L239.CarbonCoef_traded %>%
+      bind_rows(L239.CarbonCoef_regional) %>%
+      # no point duplicating info for sectors that already exist (e.g. traded unconventional oil)
+      # use anti_join to remove entries already in L202.CarbonCoef
+      anti_join(L202.CarbonCoef, by = c("region", "PrimaryFuelCO2Coef.name", "PrimaryFuelCO2Coef")) -> L239.CarbonCoef
 
     # 1. TRADED SECTOR / SUBSECTOR / TECHNOLOGY")
     # L239.Supplysector_tra: generic supplysector info for traded ff commodities
@@ -341,6 +368,15 @@ module_energy_L239.ff_trade <- function(command, ...) {
                      "L2011.ff_ALL_EJ_R_C_Y") ->
       L239.Consumption_intraregional
 
+    L239.CarbonCoef %>%
+      add_title("Primary Energy CO2 Coefficient for Fossil Trade Sectors") %>%
+      add_units("kgC/GJ") %>%
+      add_comments("All coefficients mapped from relevant fuels in L202.CarbonCoef") %>%
+      add_precursors("energy/A_ff_TradedTechnology",
+                     "energy/A_ff_RegionalTechnology",
+                     "L202.CarbonCoef") ->
+      L239.CarbonCoef
+
     return_data(L239.PrimaryConsKeyword_en,
                 L239.Supplysector_tra,
                 L239.SectorUseTrialMarket_tra,
@@ -355,7 +391,8 @@ module_energy_L239.ff_trade <- function(command, ...) {
                 L239.TechCoef_reg,
                 L239.Production_reg_imp,
                 L239.Production_reg_dom,
-                L239.Consumption_intraregional)
+                L239.Consumption_intraregional,
+                L239.CarbonCoef)
   } else {
     stop("Unknown command")
   }

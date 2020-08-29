@@ -23,7 +23,8 @@ module_energy_batch_ff_trade_xml <- function(command, ...) {
              "L239.TechCoef_reg",
              "L239.Production_reg_imp",
              "L239.Production_reg_dom",
-             "L239.Consumption_intraregional"))
+             "L239.Consumption_intraregional",
+             "L239.CarbonCoef"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "ff_trade.xml"))
   } else if(command == driver.MAKE) {
@@ -46,6 +47,7 @@ module_energy_batch_ff_trade_xml <- function(command, ...) {
     L239.Production_reg_imp <- get_data(all_data, "L239.Production_reg_imp")
     L239.Production_reg_dom <- get_data(all_data, "L239.Production_reg_dom")
     L239.Consumption_intraregional <- get_data(all_data, "L239.Consumption_intraregional")
+    L239.CarbonCoef <- get_data(all_data, "L239.CarbonCoef")
 
     # ===================================================
 
@@ -66,6 +68,7 @@ module_energy_batch_ff_trade_xml <- function(command, ...) {
       add_xml_data(L239.Production_reg_dom, "Production") %>%
       add_xml_data(L239.Consumption_intraregional, "Production") %>%
       add_xml_data(L239.PrimaryConsKeyword_en, "PrimaryConsKeyword") %>%
+      add_xml_data(L239.CarbonCoef, "CarbonCoef") %>%
       add_precursors("L239.PrimaryConsKeyword_en",
                      "L239.Supplysector_tra",
                      "L239.SectorUseTrialMarket_tra",
@@ -80,7 +83,8 @@ module_energy_batch_ff_trade_xml <- function(command, ...) {
                      "L239.TechCoef_reg",
                      "L239.Production_reg_imp",
                      "L239.Production_reg_dom",
-                     "L239.Consumption_intraregional") ->
+                     "L239.Consumption_intraregional",
+                     "L239.CarbonCoef") ->
       ff_trade.xml
 
     return_data(ff_trade.xml)

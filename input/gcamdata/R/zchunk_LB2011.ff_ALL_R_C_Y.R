@@ -56,7 +56,8 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       filter(sector == "TPES",
              year %in% HISTORICAL_YEARS,
              fuel %in% c("gas", "coal", "crude oil", "unconventional oil")) %>%
-      mutate(fuel = if_else(fuel == "gas", "natural gas", fuel)) %>%
+      #Unconventional oil is crude oil
+      mutate(fuel = if_else(fuel == "gas", "natural gas", if_else(fuel == "unconventional oil","crude oil",fuel))) %>%
       group_by(GCAM_region_ID, fuel, year) %>%
       summarise(value = sum(value)) %>%
       ungroup() %>%
@@ -66,7 +67,7 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
     #Part 2: Gather total production of fossil fuels
     L111.Prod_EJ_R_F_Yh %>%
       select(GCAM_region_ID, fuel, year, production = value, technology) %>%
-      mutate(fuel= if_else(technology=="unconventional oil","unconventional oil",fuel)) %>%
+      mutate(fuel= if_else(technology=="unconventional oil","crude oil",fuel)) %>%
       complete(fuel = unique(ff_consumption$fuel),
                GCAM_region_ID = unique(GCAM_region_names$GCAM_region_ID),
                year = ff_consumption$year,

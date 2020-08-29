@@ -17,7 +17,7 @@ Depends on \code{command}: either a vector of required inputs, a vector of outpu
   \code{L239.SectorUseTrialMarket_tra}, \code{L239.SubsectorAll_tra}, \code{L239.TechShrwt_tra},
   \code{L239.TechCost_tra}, \code{L239.TechCoef_tra}, \code{L239.Production_tra}, \code{L239.Supplysector_reg},
   \code{L239.SubsectorAll_reg}, \code{L239.TechShrwt_reg}, \code{L239.TechCoef_reg}, \code{L239.Production_reg_imp},
-  \code{L239.Production_reg_dom}, \code{L239.Consumption_intraregional}.
+  \code{L239.Production_reg_dom}, \code{L239.Consumption_intraregional}, \code{L239.CarbonCoef}.
 }
 \description{
 Model input for regionally and globally traded fossil fuel commodities
