@@ -89,7 +89,7 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
             } else {
                 mxscl[i] = std::max(fabs(mkts[i].getForecastPrice()), MINXSCL);
             }
-            mfxscl[i] = 1.0/mkts[i].getForecastDemand();
+            mfxscl[i] = 1.0/std::max(mkts[i].getForecastDemand(), MINXSCL);
         }
     } else {
         // for log prices & outputs the situtation is more

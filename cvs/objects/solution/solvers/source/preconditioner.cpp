@@ -219,7 +219,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
             bool chg = false;
             double lb,ub;       // only used for normal markets, but need to be declared up here.
             
-            if(pass > 1) {
+            if(pass > 0) {
                 // If this market is close to solved update the "forecast" price and demand which
                 // in this context does not affect the initial price guess anymore but rather just
                 // the price and demand/supply normalization factor.  Doing this helps ensure that
