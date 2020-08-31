@@ -67,3 +67,9 @@ trn_freight_road,Medium truck,BEV,initial-future-year,25,12,0.193
 trn_freight_road,Heavy truck,BEV,initial-future-year,25,12,0.193
 trn_freight_road,Light truck,BEV,initial-future-year,25,12,0.193
 trn_freight_road,Light truck,BEV,initial-future-year,25,12,0.193
+trn_pass_road,Bus,Liquids,final-calibration-year,25,11,0.23
+trn_pass_road,Bus,NG,final-calibration-year,25,11,0.23
+trn_pass_road,Bus,Liquids,initial-future-year,25,12,0.193
+trn_pass_road,Bus,NG,initial-future-year,25,12,0.193
+trn_pass_road,Bus,BEV,final-calibration-year,25,11,0.23
+trn_pass_road,Bus,BEV,initial-future-year,25,12,0.193

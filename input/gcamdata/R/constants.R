@@ -452,8 +452,8 @@ energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity
 
 #kbn 2019-10-11 Adding constant for transportation type. Set this to rev.mode to use revised mode classes, rev_size.class to use revised size classes.
 
-energy.TRAN_UCD_MODE<-'mode'
-energy.TRAN_UCD_SIZE_CLASS<-'size.class'
+energy.TRAN_UCD_MODE<-'rev.mode'
+energy.TRAN_UCD_SIZE_CLASS<-'rev_size.class'
 
 
 # Socioeconomics constants ======================================================================
