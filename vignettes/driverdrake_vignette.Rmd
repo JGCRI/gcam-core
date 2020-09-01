@@ -3,7 +3,7 @@ title: "Running GCAM Data System with drake"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{driverdrake-vignette}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -11,7 +11,6 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
-  #eval = FALSE
 )
 library(devtools)
 knitr::opts_knit$set(root.dir = '..')
@@ -19,7 +18,7 @@ knitr::opts_knit$set(root.dir = '..')
 ```
 
 ## Introduction
-The function `driver_drake()`, located in `R/driver.R`, runs the GCAM data system, like `driver()`. However, unlike `driver()`, `driver_drake()` skips steps that are already up-to-date, saving time. The central function of `drake` is `drake::make()`, which builds the data system. `drake's` `make` is more sophisticated than the standard GNU `make` based systems because it checks the content has substantively changed instead of only if a file has been modified, and similarly only runs subsequent steps that are actually affected by the latest changes since the previous `make()`.
+The function `driver_drake()`, located in `R/driver.R`, runs the GCAM data system, like `driver()`. However, unlike `driver()`, `driver_drake()` skips steps that are already up-to-date, saving time. The central function of `drake` is `drake::make()`, which builds the data system. `drake`'s `make` is more sophisticated than the standard GNU `make` based systems because it checks the content has substantively changed instead of only if a file has been modified, and similarly only runs subsequent steps that are actually affected by the latest changes since the previous `make()`.
 
 In this vignette we will go through concrete examples which highlight these benefits.  In addition we will give examples of common tasks when working with `drake` and provide links to further documentation.
 
@@ -37,7 +36,7 @@ When running `make()`, `drake` stores your targets in a hidden cache by default 
 Let's explore `driver_drake()` and see how it can help us run the data system. We'll start by doing an initial run which will create and store output in the drake cache and create all of our xml files. We run this just as we would `driver()`.
 
 ```{r, echo = TRUE, results = "hide", warning = FALSE, message = FALSE}
-#load package and run driver_drake, output messages are hidden 
+# Load package and run driver_drake, output messages are hidden 
 devtools::load_all()
 driver_drake()
 ```
@@ -55,14 +54,14 @@ Next, we'll explore two different edits of a chunk and see how `driver_drake()` 
 First, let's edit the input, `FAO_municipal_water_AQUASTAT.csv` by duplicating its final row. This adds another value of 0.4877 to the file. The values from this file get aggregated, so adding a non-zero value affects other chunks. 
 
 ```{r}
-#copy the file so we can get it back later
+# Copy the file so we can get it back later
 example_file <- find_csv_file("water/FAO_municipal_water_AQUASTAT", FALSE)[[1]]
 file.copy(from = example_file, to = paste0(example_file, ".bak"))
 
-#Add a row to the end of the file with value = 0.4877
+# Add a row to the end of the file with value = 0.4877
 cat("\nZimbabwe,181,Municipal water withdrawal,4251,2017,0.4877,,", file = example_file, append = TRUE)
 
-#Load and run driver_drake(). Print run time. 
+# Load and run driver_drake(). Print run time. 
 devtools::load_all(".")
 t1 <- Sys.time()
 driver_drake()
@@ -75,10 +74,10 @@ As expected, `driver_drake()` runs all dependencies of `FAO_municipal_water_AQUA
 
 Next, we will append another row to the bottom of that same file, but this time, we will give it a value of 0, which after aggregation should have no further effect. 
 ```{r}
-#Add a row but with value = 0
+# Add a row but with value = 0
 cat("\nZimbabwe,181,Municipal water withdrawal,4251,2017,0,,", file = example_file, append = TRUE)
 
-#Load and run driver_drake(). Print run time. 
+# Load and run driver_drake(). Print run time. 
 devtools::load_all(".")
 t1 <- Sys.time()
 driver_drake()
@@ -88,7 +87,7 @@ This time, `driver_drake()` only ran `FAO_municipal_water_AQUASTAT` and it's `R`
 
 Let's get our original file back and run `driver_drake`. 
 ```{r, echo = TRUE, results = "hide", warning = FALSE, message = FALSE}
-#Finally clean up the changes from this example
+# Finally, clean up the changes from this example
 file.rename(paste0(example_file, ".bak"), example_file)
 driver_drake() 
 
@@ -97,10 +96,10 @@ driver_drake()
 ### Example 3
 If you edit or delete an XML file, you can quickly and easily get the original file back by running `driver_drake()`. 
 ```{r}
-#Delete wind_reeds_USA.xml 
+# Delete wind_reeds_USA.xml 
 file.remove("xml/wind_reeds_USA.xml")
 
-#Load and run driver_drake(). Print run time. 
+# Load and run driver_drake(). Print run time. 
 devtools::load_all(".")
 t1 <- Sys.time()
 driver_drake()
@@ -122,7 +121,6 @@ Users can also pass additional arguments to `driver_drake()` which will be forwa
     
 * `history`: logical, whether to record the build history of targets (default: `TRUE`). This is helpful if you need to recover old data. Or perhaps check how some outputs changed between commits. However, given the size of the data produced by `gcamdata` it may lead to very large cache sizes.  Thus it may be beneficial to set it to `FALSE` or at least clean out the cache from time to time.
 
-<!-- TODO: check what the maximum memory usage is when using "speed" to give reccomentation below -->
 * `memory_strategy`: character scalar, name of the strategy `drake` uses to load/unload a target's dependencies in memory (default: `"speed"`). Some options include
     * `"speed"`: maximizes speed but hogs memory. Recommended for users with at least 5GB of available RAM. 
     * `"autoclean"`: conserves memory but sacrifices speed by unloading outputs after no more targets depend on them. This behavior is similar to that of `driver()`.
@@ -131,10 +129,10 @@ Users can also pass additional arguments to `driver_drake()` which will be forwa
 ### More Examples
 Here are some additional examples of calling `driver_drake()` with some of the alternative arguments discussed above.
 ```{r, eval = FALSE}
-#run the driver with a progress bar
+# Run with a progress bar
 driver_drake(verbose = 2)
 
-#run the driver, stop before a chunk and conserve memory
+# Run, stop before a chunk and conserve memory
 driver_drake(stop_before = "module_aglu_LA100.FAO_downscale_ctry", memory_stategy = "autoclean")
 
 ```
@@ -162,11 +160,11 @@ For using `clustermq` on PIC (PNNL Institutional Computing) we have already inst
     * Run `driver_drake()` with the arguments such as below
 
 ```{r, eval = FALSE}
-#Load clustermq and set type to multicore
+# Load clustermq and set type to multicore
 library(clustermq)
 options(clustermq.scheduler = "multicore")
 
-#load and run 
+# Load and run 
 devtools::load_all()
 driver_drake(parallelism = "clustermq", caching = "worker", jobs = 48)
 ```
@@ -191,7 +189,7 @@ We did not have good performance with `future`. On a local Windows machine, the 
 
 To use this backend, install the `future` package and provide the following arguments: 
 ```{r, eval = FALSE}
-#run driver_drake with future plan multisession
+# Run driver_drake with future plan multisession
 future::plan(future::multisession)
 devtools::load_all()
 driver_drake(parallelism = "future", caching = "worker", jobs = 4)
@@ -203,11 +201,11 @@ See `?future::plan` for all strategy options and explanations.
 You can use the typical arguments to `driver_drake()` such as `stop_before` or `return_data_names` to return outputs from cache after the initial run.  And if you unsure if there have been any modifications since the last run that is the best way to load them.  However, if you are sure it is up to date, we have provided a utility method `load_from_cache` for doing so and returning the data in the same format as data returned from `driver(stop_after = "module_emissions_L121.nonco2_awb_R_S_T_Y")`.  Therefore we recommend using this utility rather than directly using `drake::readd` directly.
 
 ```{r}
-# we can give a list of files we want to load
+# We can give a list of files we want to load
 data <- load_from_cache(c("L121.nonco2_tg_R_awb_C_Y_GLU"))
 data
 
-# we can also combine this with other gcamdata utilities to
+# We can also combine this with other gcamdata utilities to
 # load all input or outputs of a chunk as well
 data <- load_from_cache(outputs_of("module_emissions_L121.nonco2_awb_R_S_T_Y"))
 data
@@ -215,11 +213,11 @@ data
 
 
 ## The drake "plan"
-To utilize drakes features `driver_drake()` must generate a drake `plan` to supply to`drake::make()`, which builds the data system. The `plan` is a data frame with columns “target” and “command”. Each row is a step in the workflow and the target is the return value of the corresponding command. `drake` understands the dependency relationships between targets and commands in the plan, regardless of the order they are written. The `make()` function runs the targets in the correct order and stores the results in a hidden cache.  In `gcamdata` the targets are either inputs/outputs or chunk names.  The plan get be obtained by calling `driver_drake(return_plan_only = TRUE)` and may be useful or debugging or in use in additional drake features described next.
+To utilize `drake`'s features, `driver_drake()` must generate a drake `plan` to supply to`drake::make()`, which builds the data system. The `plan` is a data frame with columns “target” and “command”. Each row is a step in the workflow and the target is the return value of the corresponding command. `drake` understands the dependency relationships between targets and commands in the plan, regardless of the order they are written. The `make()` function runs the targets in the correct order and stores the results in a hidden cache.  In `gcamdata` the targets are either inputs/outputs or chunk names.  The plan can be obtained by calling `driver_drake(return_plan_only = TRUE)` and may be useful for debugging or when using additional drake features described next.
 
 ```{r}
 plan <- driver_drake(return_plan_only = TRUE)
-#pick targets to show the commands that would be used to build them
+# Pick targets to show the commands that would be used to build them
 plan %>%
   filter(target %in% c("socioeconomics.SSP_database_v9",
                        "L2052.AgCost_ag_irr_mgmt",
@@ -234,11 +232,11 @@ You can visualize targets and their dependency relationships with `vis_drake_gra
 ```{r}
 devtools::load_all()
 
-#get the drake plan 
+# Get the drake plan 
 plan <- driver_drake(return_plan_only = TRUE)
 
-#display the dependency graph downstream from module L210.RenewRscr 
-vis_drake_graph(plan, from = gcamdata:::sanitize_drake_target_name("L210.RenewRsrc"))
+# Display the dependency graph downstream from module L210.RenewRscr 
+vis_drake_graph(plan, from = make.names("L210.RenewRsrc"))
 
 ```
 

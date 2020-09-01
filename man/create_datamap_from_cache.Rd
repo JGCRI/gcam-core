@@ -17,6 +17,6 @@ The full GCAM data map
 }
 \description{
 Re-creates the GCAM data map by pulling the data out of cache and processing
-it's metadata.  We need to know the plan to be able to identify which data to
+its metadata.  We need to know the plan to be able to identify which data to
 to pull and the chunk names that generated them.
 }

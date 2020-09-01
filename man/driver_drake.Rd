@@ -4,12 +4,19 @@
 \alias{driver_drake}
 \title{driver_drake}
 \usage{
-driver_drake(stop_before = NULL, stop_after = NULL,
-  return_inputs_of = stop_before, return_outputs_of = stop_after,
-  return_data_names = union(inputs_of(return_inputs_of),
-  outputs_of(return_outputs_of)), return_data_map_only = FALSE,
-  write_xml = !return_data_map_only, xmldir = XML_DIR, quiet = FALSE,
-  ...)
+driver_drake(
+  stop_before = NULL,
+  stop_after = NULL,
+  return_inputs_of = stop_before,
+  return_outputs_of = stop_after,
+  return_data_names = union(inputs_of(return_inputs_of), outputs_of(return_outputs_of)),
+  return_data_map_only = FALSE,
+  return_plan_only = FALSE,
+  write_xml = !return_data_map_only,
+  xmldir = XML_DIR,
+  quiet = FALSE,
+  ...
+)
 }
 \arguments{
 \item{stop_before}{Stop immediately before this chunk (character)}
@@ -27,19 +34,23 @@ If \code{stop_after} is specified, by default that chunk's outputs are returned}
 \item{return_data_map_only}{Return only the precursor information? (logical) This overrides
 the other \code{return_*} parameters above}
 
+\item{return_plan_only}{Return only the drake plan}
+
 \item{write_xml}{Write XML Batch chunk outputs to disk?}
 
 \item{xmldir}{Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})}
 
 \item{quiet}{Suppress output?}
+
+\item{...}{Additional arguments to be forwarded on to \code{make()}}
 }
 \value{
 A list of all built data (or a data map tibble if requested).
 }
 \description{
 Run the entire data system using drake to manage the process which
-gives us a number of feature, most notably the "make" capabilities
-so that subsequent invokations only need to rebuild targets that
+gives us a number of features, most notably the "make" capabilities
+so that subsequent invocations only need to rebuild targets that
 have actually changed.
 }
 \details{

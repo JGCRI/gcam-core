@@ -541,23 +541,6 @@ screen_forbidden <- function(fn) {
 
 # some utils specific for dealing with drake
 
-#' sanitize_drake_target_name
-#'
-#' Clean up potential target names so they do not include any
-#' characters which drake does not allow.  At the moment this
-#' just means replacing slashes, which we include in FILE or XML
-#' chunk inputs / outputs, with a '.'
-#'
-#' @param chunk_names A character vector of chunk names to clean
-#' @return A cleaned up \code{chunk_names} which can be used as
-#' targets in drake.
-#' @importFrom assertthat assert_that
-sanitize_drake_target_name <- function(chunk_names) {
-  assert_that(is.character(chunk_names))
-
-  gsub('[/-]', '.', chunk_names)
-}
-
 #' load_from_cache
 #'
 #' Load the given chunk inputs / outputs from the drake cache.  The
@@ -577,9 +560,9 @@ load_from_cache <- function(return_data_names, ...) {
   }
 
   # convert to drake target names
-  sanitized_names <- sanitize_drake_target_name(return_data_names)
+  sanitized_names <- make.names(return_data_names)
 
-  # we need to filter the ... arguments to only those that rake::readd take
+  # we need to filter the ... arguments to only those that drake::readd takes
   all_ellipsis_args <- list(...)
   readd_args <- all_ellipsis_args[names(all_ellipsis_args) %in% names(formals(drake::readd))]
   # by default readd is interpreting the target as symbol so we must force
@@ -600,7 +583,7 @@ load_from_cache <- function(return_data_names, ...) {
 #' create_datamap_from_cache
 #'
 #' Re-creates the GCAM data map by pulling the data out of cache and processing
-#' it's metadata.  We need to know the plan to be able to identify which data to
+#' its metadata.  We need to know the plan to be able to identify which data to
 #' to pull and the chunk names that generated them.
 #'
 #' @param gcamdata_plan The drake plan that generated the outputs

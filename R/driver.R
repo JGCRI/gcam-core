@@ -363,8 +363,8 @@ driver <- function(all_data = empty_data(),
 #' driver_drake
 #'
 #' Run the entire data system using drake to manage the process which
-#' gives us a number of feature, most notably the "make" capabilities
-#' so that subsequent invokations only need to rebuild targets that
+#' gives us a number of features, most notably the "make" capabilities
+#' so that subsequent invocations only need to rebuild targets that
 #' have actually changed.
 #'
 #' The interface mostly mimics that of \code{driver} with the exception
@@ -373,7 +373,6 @@ driver <- function(all_data = empty_data(),
 #' to pass any additional arguments to \code{driver_drake} which will be
 #' forwarded on to \code{drake::make}.
 #'
-#' @param quiet Suppress output?
 #' @param stop_before Stop immediately before this chunk (character)
 #' @param stop_after Stop immediately after this chunk  (character)
 #' @param return_inputs_of Return the data objects that are inputs for these chunks (character).
@@ -383,8 +382,11 @@ driver <- function(all_data = empty_data(),
 #' @param return_data_names Return these data objects (character). By default this is the union of \code{return_inputs_of} and \code{return_outputs_of}
 #' @param return_data_map_only Return only the precursor information? (logical) This overrides
 #' the other \code{return_*} parameters above
+#' @param return_plan_only Return only the drake plan
 #' @param write_xml Write XML Batch chunk outputs to disk?
 #' @param xmldir Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})
+#' @param quiet Suppress output?
+#' @param ... Additional arguments to be forwarded on to \code{make()}
 #' @return A list of all built data (or a data map tibble if requested).
 #' @importFrom magrittr "%>%"
 #' @importFrom assertthat assert_that
@@ -407,7 +409,7 @@ driver_drake <- function(
 
   # We merely suggest drake as we can still run the data system via driver
   # with out it.  Ensure we have it before proceeding.
-  if(!require(drake)) {
+  if(!requireNamespace('drake')) {
     stop("The `drake` package is required to run `driver_drake()`.  Either install it or fall back to `driver()`")
   }
 
@@ -423,7 +425,7 @@ driver_drake <- function(
     return_data_names <- union(inputs_of(return_inputs_of), outputs_of(return_outputs_of))
   }
 
-  optional <- input <- from_file <- name <- NULL    # silence notes from package check.
+  optional <- input <- from_file <- name <- to_xml <- tag <-  NULL    # silence notes from package check.
 
   assert_that(is.null(stop_before) | is.character(stop_before))
   assert_that(is.null(stop_after) | is.character(stop_after))
@@ -439,14 +441,14 @@ driver_drake <- function(
     assert_that(!return_data_map_only)
   }
 
-  if(!quiet) cat("GCAM Data System v", as.character(utils::packageVersion("gcamdata")), "\n", sep = "")
+  if(!quiet) message("GCAM Data System v", as.character(utils::packageVersion("gcamdata")), sep = "")
 
   chunklist <- find_chunks()
-  if(!quiet) cat("Found", nrow(chunklist), "chunks\n")
+  if(!quiet) message("Found ", nrow(chunklist), " chunks")
   chunkinputs <- chunk_inputs(chunklist$name)
-  if(!quiet) cat("Found", nrow(chunkinputs), "chunk data requirements\n")
+  if(!quiet) message("Found ", nrow(chunkinputs), " chunk data requirements")
   chunkoutputs <- chunk_outputs(chunklist$name)
-  if(!quiet) cat("Found", nrow(chunkoutputs), "chunk data products\n")
+  if(!quiet) message("Found ", nrow(chunkoutputs), " chunk data products")
 
   # Keep track of chunk inputs for later pruning
   chunkinputs %>%
@@ -478,7 +480,7 @@ driver_drake <- function(
            " in ", paste(unique(ff$name), collapse = ", "))
     }
 
-    if(!quiet) cat(nrow(unfound_inputs), "chunk data input(s) not accounted for\n")
+    if(!quiet) message(nrow(unfound_inputs), " chunk data input(s) not accounted for")
   }
 
   # Extract metadata from the input data; we'll add output metadata as we run
@@ -523,7 +525,7 @@ driver_drake <- function(
       optional <- all(unfound_chunk$optional)
       fqfn <- find_csv_file(chunk, optional, quiet = TRUE)
       # add the chunk to the target list
-      target <- c(target, sanitize_drake_target_name(chunk))
+      target <- c(target, make.names(chunk))
       if(is.null(fqfn)) {
         assert_that(optional)
         # In the case of optional missing data just set it to missing with command:
@@ -537,7 +539,7 @@ driver_drake <- function(
         # target is actually coming from a file in the file system since the chunk names
         # as we use them in gcamdata would not themselves be sufficient to tell drake where
         # to find it.
-        command <- c(command, paste0("load_csv_files(\"", chunk, "\", ", optional, ", quiet = TRUE, dummy = file_in(\"", fqfn, "\"))"))
+        command <- c(command, paste0("load_csv_files('", chunk, "', ", optional, ", quiet = TRUE, dummy = file_in('", fqfn, "'))"))
       }
     }
     else {
@@ -546,15 +548,15 @@ driver_drake <- function(
       target <- c(target, chunk)
       # Generate the command to run the chunk as:
       # `target <- gcamdata:::chunk( "MAKE", c(input1, input2, inputN) )`
-      # Note we need bypass run_chunk here otherwise drake isn't able to associate
+      # Note we bypass run_chunk here otherwise drake isn't able to associate
       # the source code for the chunk with the command and the "make" functionality
       # would break.
       # Also note we explicitly list just the inputs required for the chunk which is
       # different than in driver where we give `all_data`, again this is for drake so it
       # can match up target names to commands and develop the dependencies between them.
-      command <- c(command, paste0("gcamdata:::", chunk, "(\"", driver.MAKE, "\", c(", paste(sanitize_drake_target_name(input_names), collapse = ","), "))"))
+      command <- c(command, paste0("gcamdata:::", chunk, "(\"", driver.MAKE, "\", c(", paste(make.names(input_names), collapse = ","), "))"))
 
-      # A chunk should in principal generate many output targets however drake assumes
+      # A chunk should in principle generate many output targets however drake assumes
       # one target per command.  We get around this by unpacking the list of outputs
       # from a chunk as an explicit target+command:
       # ```
@@ -572,7 +574,7 @@ driver_drake <- function(
       if(write_xml && length(po_xml) > 0) {
         # Add the xmldir to the XML output name and include those in the
         # target list.
-        target <- c(target, sanitize_drake_target_name(paste0(xmldir, po_xml)))
+        target <- c(target, make.names(paste0(xmldir, po_xml)))
         # Generate the command to run the XML conversion:
         # `xml/out1.xml <- run_xml_conversion(set_xml_file_helper(out1.xml, file_out("xml/out1.xml")))`
         # Note, the `file_out()` wrapper notifies drake the XML file is an output
