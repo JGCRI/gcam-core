@@ -54,7 +54,6 @@ Suggests:
     R.utils (>= 2.6.0),
     usethis (>= 1.4.0),
     drake (>= 6.2.1),
-    devtools,
     gcamdata.compdata,
     knitr,
     rmarkdown
