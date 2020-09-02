@@ -182,6 +182,9 @@ void EnergyInput::XMLParse( const xercesc::DOMNode* node ) {
         else if( nodeName == "income-elasticity" ){
             mIncomeElasticity = XMLHelper<double>::getValue( curr );
         }
+        else if( nodeName == "adjusted-coefficient" ){
+            XMLHelper<Value>::insertValueIntoVector( curr, mAdjustedCoefficients, scenario->getModeltime() );
+        }
         else if( nodeName == "calibrated-value" ){
             mCalibrationInput = XMLHelper<double>::getValue( curr );
         }
@@ -261,17 +264,6 @@ void EnergyInput::completeInit( const string& aRegionName,
     MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
     depFinder->addDependency( aSectorName, aRegionName, mName, mMarketName );
 
-    // If there is a coefficient, initialize it and determine the current
-    // coefficient. Otherwise use a default intensity of 1.
-    Value currCoef( 1 );
-    if( mCoefficient ){
-        mCoefficient->completeInit();
-        currCoef = mCoefficient->getCoefficient();
-    }
-    // TODO: This needs a default here.
-
-    // Set the coeffients to the read-in value.
-    fill( mAdjustedCoefficients.begin(), mAdjustedCoefficients.end(), currCoef );
     initializeTypeFlags();
 }
 
@@ -294,7 +286,7 @@ void EnergyInput::initCalc( const string& aRegionName,
 
     // Set the coefficient for the current period if there is an explicit
     // coefficient read-in, or it was not initialized from the previous period.
-    if( mCoefficient ){
+    if( mCoefficient && !mAdjustedCoefficients[ aPeriod ].isInited() ){
         mAdjustedCoefficients[ aPeriod ] = mCoefficient->getCoefficient();
     }
     else if( !mAdjustedCoefficients[ aPeriod ].isInited() ){
