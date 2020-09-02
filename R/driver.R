@@ -382,11 +382,11 @@ driver <- function(all_data = empty_data(),
 #' @param return_data_names Return these data objects (character). By default this is the union of \code{return_inputs_of} and \code{return_outputs_of}
 #' @param return_data_map_only Return only the precursor information? (logical) This overrides
 #' the other \code{return_*} parameters above
-#' @param return_plan_only Return only the drake plan
+#' @param return_plan_only Return only the drake plan (logical)
 #' @param write_xml Write XML Batch chunk outputs to disk?
 #' @param xmldir Location to write output XML (ignored if \code{write_outputs} is \code{FALSE})
 #' @param quiet Suppress output?
-#' @param ... Additional arguments to be forwarded on to \code{make()}
+#' @param ... Additional arguments to be forwarded on to \code{make}
 #' @return A list of all built data (or a data map tibble if requested).
 #' @importFrom magrittr "%>%"
 #' @importFrom assertthat assert_that
@@ -425,7 +425,7 @@ driver_drake <- function(
     return_data_names <- union(inputs_of(return_inputs_of), outputs_of(return_outputs_of))
   }
 
-  optional <- input <- from_file <- name <- to_xml <- tag <-  NULL    # silence notes from package check.
+  optional <- input <- from_file <- name <- to_xml <-  NULL    # silence notes from package check.
 
   assert_that(is.null(stop_before) | is.character(stop_before))
   assert_that(is.null(stop_after) | is.character(stop_after))

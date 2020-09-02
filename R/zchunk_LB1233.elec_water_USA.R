@@ -49,12 +49,14 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
 
     # ===================================================
 
+    `Generation Technology` <- NULL # silence package check notes
+
     # Define unique states and basins that have access to seawater that will
-    # allow for seawate cooling
+    # allow for seawater cooling
 
     seawater_states_basins <- unique(usa_seawater_states_basins$seawater_region)
 
-    # inital processing of UCS database
+    # initial processing of UCS database
     UCS_Database %>%
       rename(state = State,
              out_MWh = `Estimated Generation (MWh)`,

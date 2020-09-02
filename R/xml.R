@@ -305,6 +305,7 @@ add_xml_data_generate_levels <- function(dot, data, header, old_tag, new_tag, nu
     equiv_table
 
   #rename_final <- tag <- NULL  # silence package check notes
+  tag <- NULL # silence package check notes
 
   dot <- add_xml_data(dot, equiv_table, "EQUIV_TABLE", NULL)
 
