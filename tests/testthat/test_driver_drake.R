@@ -60,11 +60,6 @@ test_that("load_from_cache works", {
        numeric_columns <- sapply(x, class) == "numeric"
        x[numeric_columns] <- round(x[numeric_columns], digits)
 
-       # expect_equivalent no longer accepts rows in different order but we
-       # do want to allow this so we will sort all columns before testing
-       # arrange_columns <- select(x, dplyr::everything())
-       # arrange(x, arrange_columns)
-
        return(x)
      } # end round_df
 
