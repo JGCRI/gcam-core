@@ -60,6 +60,11 @@ test_that("load_from_cache works", {
        numeric_columns <- sapply(x, class) == "numeric"
        x[numeric_columns] <- round(x[numeric_columns], digits)
 
+       # expect_equivalent no longer accepts rows in different order but we
+       # do want to allow this so we will sort all columns before testing
+       # arrange_columns <- select(x, dplyr::everything())
+       # arrange(x, arrange_columns)
+
        return(x)
      } # end round_df
 
@@ -70,8 +75,9 @@ test_that("load_from_cache works", {
        expect_is(old_data, "data.frame", info = paste("No comparison data found for", data_name))
 
        # Compare old data and data from cache - ignore order
-       expect_true(all.equal(round_df(old_data), round_df(data[[data_name]]), ignore_col_order = TRUE, ignore_row_order = TRUE))
-     }
+       # expect_true(all.equal(round_df(old_data), round_df(data[[data_name]]), ignore_col_order = TRUE, ignore_row_order = TRUE))
+        expect_equivalent(round_df(old_data), round_df(data[[data_name]]))
+       }
    }
 })
 
