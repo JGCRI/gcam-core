@@ -530,7 +530,7 @@ driver_drake <- function(
         assert_that(optional)
         # In the case of optional missing data just set it to missing with command:
         # `target <- list( chunk = missing_data() )`
-        command <- c(command, paste0("list(\"", chunk, "\" = missing_data())"))
+        command <- c(command, paste0("list('", chunk, "' = missing_data())"))
       }
       else {
         # We have a file to load so generate the load_csv_files command:
@@ -554,7 +554,7 @@ driver_drake <- function(
       # Also note we explicitly list just the inputs required for the chunk which is
       # different than in driver where we give `all_data`, again this is for drake so it
       # can match up target names to commands and develop the dependencies between them.
-      command <- c(command, paste0("gcamdata:::", chunk, "(\"", driver.MAKE, "\", c(", paste(make.names(input_names), collapse = ","), "))"))
+      command <- c(command, paste0("gcamdata:::", chunk, "('", driver.MAKE, "', c(", paste(make.names(input_names), collapse = ","), "))"))
 
       # A chunk should in principle generate many output targets however drake assumes
       # one target per command.  We get around this by unpacking the list of outputs
@@ -579,7 +579,7 @@ driver_drake <- function(
         # `xml/out1.xml <- run_xml_conversion(set_xml_file_helper(out1.xml, file_out("xml/out1.xml")))`
         # Note, the `file_out()` wrapper notifies drake the XML file is an output
         # of this plan and allows it to know to re-produce missing/altered XML files
-        command <- c(command, paste0("run_xml_conversion(set_xml_file_helper(", po_xml, "[[1]], file_out(\"", paste0(xmldir, po_xml), "\")))"))
+        command <- c(command, paste0("run_xml_conversion(set_xml_file_helper(", po_xml, "[[1]], file_out('", paste0(xmldir, po_xml), "')))"))
       }
     }
 
