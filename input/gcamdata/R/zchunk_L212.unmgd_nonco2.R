@@ -151,6 +151,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
     # Will split up by technology in final product creation
     L212.FOREST <- L124.nonco2_tg_R_forest_Y_GLU %>%
       filter(year %in% emissions.MODEL_BASE_YEARS) %>%
+      filter(year<= max(emissions.DEFOREST_COEF_YEARS)) %>%
       mutate(value = round(value, emissions.DIGITS_EMISSIONS),
              AgSupplySector = "UnmanagedLand",
              AgSupplySubsector = paste(technology, GLU, sep = "_"),
@@ -186,7 +187,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       select(region, AgSupplySector, AgSupplySubsector, UnmanagedLandTechnology) %>%
       distinct() %>%
       # Take minimum model year greater than emissions model base years
-      mutate(year = as.integer(min(MODEL_YEARS[MODEL_YEARS > max(emissions.MODEL_BASE_YEARS)]))) %>%
+      mutate(year = as.integer(min(MODEL_YEARS[MODEL_YEARS > max(emissions.DEFOREST_COEF_YEARS)]))) %>%
       repeat_add_columns(L212.default_coefs) %>%
       mutate(emiss.coef = round(emiss.coef, emissions.DIGITS_EMISSIONS)) %>%
       rename_SO2(A_regions) %>%

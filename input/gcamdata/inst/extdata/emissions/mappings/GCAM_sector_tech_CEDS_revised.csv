@@ -193,7 +193,7 @@ heat,refined liquids,refined liquids,district heat,refined liquids,refined liqui
 industrial processes,adipic acid,adipic acid,industrial processes,adipic acid,adipic acid,chemicals_adipic,process,chemicals,adipic acid,adipic acid,chemicals_adipic,,,,Nitric and Adipic Acid Production,adipic_acid
 industrial processes,Al_Mg,Al_Mg,industrial processes,Al_Mg,Al_Mg,metals,process,metals,all,all,metals,,,,Aluminum and Magnesium Production,
 industrial processes,foams,foams,industrial processes,foams,foams,,,foams,all,all,foams,,,,Foams,
-industrial processes,HCFC_22_Prod,HCFC_22_Prod,industrial processes,HCFC_22_Prod,HCFC_22_Prod,industry_processes,process,industry_processes,HCFC22,HCFC22,industry_processes,,,,HCFC-22 Production,
+industrial processes,other industrial processes,other industrial processes,industrial processes,other industrial processes,other industrial processes,industry_processes,process,industry_processes,HCFC22,HCFC22,industry_processes,,,,HCFC-22 Production,
 industrial processes,nitric acid,nitric acid,industrial processes,nitric acid,nitric acid,chemicals,process,chemicals,nitric acid,nitric acid,chemicals,,,,Nitric and Adipic Acid Production,
 industrial processes,nitric acid,nitric acid,industrial processes,nitric acid,nitric acid,chemicals_nitric,process,chemicals,nitric acid,nitric acid,chemicals_nitric,,,,Nitric and Adipic Acid Production,
 industrial processes,semiconductors,semiconductors,industrial processes,semiconductors,semiconductors,,,semiconductors,all,all,semiconductors,,,,Semiconductor Manufacturing,

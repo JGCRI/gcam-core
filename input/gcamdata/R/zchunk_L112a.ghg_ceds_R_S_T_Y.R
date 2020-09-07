@@ -96,6 +96,11 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L112.CEDS_GCAM %>%
         mutate(CEDS_agg_fuel=if_else(CEDS_agg_sector=="trn_intl_ship",if_else(CEDS_agg_fuel=="process","refined liquids",CEDS_agg_fuel),CEDS_agg_fuel)) %>%
         mutate(CEDS_agg_fuel=if_else(CEDS_agg_sector=="industry_energy",if_else(CEDS_agg_fuel=="process","refined liquids",CEDS_agg_fuel),CEDS_agg_fuel)) %>%
+        #Only keep nitric and adipic acids for N2O. For the rest, put these in generic industrial processes.
+        mutate(CEDS_agg_sector=if_else(Non.CO2 !="N2O",if_else(CEDS_agg_fuel=="process",
+                                                               if_else(CEDS_agg_sector=="chemicals_nitric","industry_processes",CEDS_agg_sector),CEDS_agg_sector),CEDS_agg_sector)) %>%
+        mutate(CEDS_agg_sector=if_else(Non.CO2 !="N2O",if_else(CEDS_agg_fuel=="process",
+                                                               if_else(CEDS_agg_sector=="chemicals_adipic","industry_processes",CEDS_agg_sector),CEDS_agg_sector),CEDS_agg_sector)) %>%
         group_by(GCAM_region_ID, Non.CO2, CEDS_agg_sector, CEDS_agg_fuel, year) %>%
         summarise(emissions = sum(emissions)) %>%
         ungroup() %>%
@@ -417,7 +422,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         repeat_add_columns(tibble(year = emissions.CEDS_YEARS)) %>%
         repeat_add_columns(tibble(GCAM_region_ID = GCAM_region_names$GCAM_region_ID)) %>%
         #group_by(GCAM_region_ID, EDGAR_agg_sector, Non.CO2, year) %>%
-        left_join_error_no_match(L112.CEDS_GCAM_Proc, by = c("GCAM_region_ID", "EDGAR_agg_sector" = "CEDS_agg_sector", "Non.CO2", "year")) %>%
+        #Remove nitric and adipic acids for all gases except N2O
+        left_join(L112.CEDS_GCAM_Proc, by = c("GCAM_region_ID", "EDGAR_agg_sector" = "CEDS_agg_sector", "Non.CO2", "year")) %>%
+        mutate(emissions=if_else(is.na(emissions),0,emissions)) %>%
         na.omit() %>%  # delete rows with NA's
         mutate(input.emissions = emissions) %>%  # Calculate emissions
         group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
