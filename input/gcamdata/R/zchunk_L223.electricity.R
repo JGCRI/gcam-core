@@ -311,8 +311,7 @@ module_energy_L223.electricity <- function(command, ...) {
 
       L223.SubsectorInterp_elec %>%
         anti_join(A23.subsector_interp_R, by = c("region", "supplysector", "subsector")) %>%
-        bind_rows(A23.subsector_interp_R[, names(L223.SubsectorInterp_elec)]) %>%
-        set_years() ->
+        bind_rows(set_years(A23.subsector_interp_R[, names(L223.SubsectorInterp_elec)])) ->
         L223.SubsectorInterp_elec
     }
 
@@ -325,8 +324,7 @@ module_energy_L223.electricity <- function(command, ...) {
 
       L223.SubsectorInterpTo_elec %>%
         anti_join(A23.subsector_interp_R, by = c("region", "supplysector", "subsector")) %>%
-        bind_rows(A23.subsector_interp_R[!is.na(A23.subsector_interp_R$to.value), names(L223.SubsectorInterpTo_elec)]) %>%
-        set_years() ->
+        bind_rows(set_years(A23.subsector_interp_R[!is.na(A23.subsector_interp_R$to.value), names(L223.SubsectorInterpTo_elec)])) ->
         L223.SubsectorInterpTo_elec
     }
 
