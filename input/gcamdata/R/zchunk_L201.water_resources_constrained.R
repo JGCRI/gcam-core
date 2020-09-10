@@ -209,7 +209,9 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     # CREATE INPUTS FOR THE CALIBRATED WATER SUPPLY XML
 
     # Calibration procedure (this will be deprecated when the water supply is switched to logits)
-    # Step 1: For basins with groundwater depletion... get historical (2000 - 2010) runoff, demand, and groundwater depletion
+    # Step 1: For basins with groundwater depletion... get historical (2000 - 2015) runoff, demand, and groundwater depletion
+    ## We use the means across years for runoff; groundwater depletion is an annual value assumed invariant over time;
+    ## We use the max of the estimated demands over all model base years (assumes that all of these historical withdrawals were "conventional")
     # Step 2: Assume no unconventional water withdrawals; back-calculate withdrawn runoff fraction using demand and groundwater depletion
     # Step 3: Combine with uncalibrated accessible water (used for basins where there is no groundwater depletion historically)
     # Step 4: Expand out for smooth resource curve (helps with GCAM solve)
