@@ -223,7 +223,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       arrange(basin.id, year) %>%
       group_by(basin.id) %>% summarise(demand = max(demand)) %>%
       ungroup() ->
-      basin_water_demand_2000_2010
+      basin_water_demand_2005_2015
 
     L100.runoff_max_bm3 %>%
       filter(year %in% water.GW_DEPLETION_HISTORICAL) %>%
@@ -233,7 +233,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
 
     # not all basin runoff water are in used
     # ^^ non-restrictive join required (NA values generated for unused basins)
-    left_join(basin_water_demand_2000_2010,
+    left_join(basin_water_demand_2005_2015,
               basin_max_runoff_2000_2010,
               by = c("basin.id" = "basin_id")) ->
       demand_runoff_cal
