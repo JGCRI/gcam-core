@@ -80,7 +80,8 @@ module_aglu_L202.an_input <- function(command, ...) {
       feed <- wtd_price <- Feed_Mt <- FeedPrice_USDkg <- FeedCost_bilUSD <- CommodityPrice_USDkg <-
       FeedCost_USDkg <- nonFeedCost <- NetExp_Mt <- share.weight.year <- fixedOutput <- ethanol <-
       biomassOil_tech <- biodiesel <- resource <- subresource <- default_price <- revenue <-
-      weight <- SalesRevenue_bilUSD <- tradedP <- Exp_wtd_price <- ImpShare <- PrP <- NULL  # silence package check notes
+      weight <- SalesRevenue_bilUSD <- tradedP <- Exp_wtd_price <- ImpShare <- PrP <- GrossExp_Mt <-
+      Supply_Mt <- GrossImp_Mt <- ChinaCommodityPrice_USDkg <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")

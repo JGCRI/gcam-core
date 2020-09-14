@@ -4,8 +4,12 @@
 \alias{gather_years}
 \title{Helper function: call \code{tidyr::gather} for year-like columns and convert them to integers}
 \usage{
-gather_years(d, value_col = "value", year_pattern = YEAR_PATTERN,
-  na.rm = FALSE)
+gather_years(
+  d,
+  value_col = "value",
+  year_pattern = YEAR_PATTERN,
+  na.rm = FALSE
+)
 }
 \arguments{
 \item{d}{Data frame to operate on (a tibble)}
