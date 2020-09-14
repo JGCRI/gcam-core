@@ -4,9 +4,17 @@
 \alias{add_xml_data_generate_levels}
 \title{Add a table to convert to XML but generate additional levels of XML nesting}
 \usage{
-add_xml_data_generate_levels(dot, data, header, old_tag, new_tag,
-  num_levels, rename_final, column_name = old_tag,
-  column_order_lookup = header)
+add_xml_data_generate_levels(
+  dot,
+  data,
+  header,
+  old_tag,
+  new_tag,
+  num_levels,
+  rename_final,
+  column_name = old_tag,
+  column_order_lookup = header
+)
 }
 \arguments{
 \item{dot}{The current state of the pipeline started from \code{create_xml}}

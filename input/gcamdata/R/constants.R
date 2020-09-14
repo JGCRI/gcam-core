@@ -510,11 +510,11 @@ water.AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
 water.COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
 water.COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
 water.COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless)
-water.DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
+water.DEFAULT_IRR_WATER_PRICE             <- 0.00175 # (Units: 1975$/m3)
 water.DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
 water.DEFAULT_BASEYEAR_WATER_PRICE        <- 0.001
-water.IRR_PRICE_SUBSIDY_MULT              <- 0.01  # Multiplier for irrigation price subsidy (OECD 2009 Managing Water for All)
+water.IRR_PRICE_SUBSIDY_MULT              <- 0.05  # Multiplier for irrigation water price (OECD 2009 Managing Water for All; aiming for 1% of muni water price)
 water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
 water.IRRIGATION                          <- "Irrigation"
 water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
@@ -527,6 +527,7 @@ water.MAPPING_COEF                        <- 1
 water.MAPPING_PMULT                       <- 1
 water.NONIRRIGATION_SECTORS               <- c("Municipal", "Electricity", "Livestock", "Manufacturing", "Mining")
 water.LOGIT_EXP                           <- -6
+water.GW_HIST_MULTIPLIER                  <- 1.01   # Multiplier for the "available" in the "grade hist" grade of groundwater supply curves. Needed to prevent the model from pulling from higher grades in historical periods due to solution tolerance
 
 
 
@@ -554,9 +555,9 @@ water.GROUNDWATER_BETA <- 1.0
 water.DIGITS_GROUND_WATER <- 6 #Digits for rounding
 water.DIGITS_GROUND_WATER_RSC <- 5 #Digits for rounding
 water.DIGITS_RENEW_WATER <- 3 #Digits for rounding
-water.GW_DEPLETION_HISTORICAL <- c(2005, 2010) # Historical years for groundwater depletion
+water.GW_DEPLETION_HISTORICAL <- c(2005, 2010, 2015) # Historical years for groundwater depletion
 water.GW_DEPLETION_BASE_YEAR <- 1990 # Historical year for groundwater depletion calibration
-water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010) # Historical years for freshwater runoff
+water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010, 2015) # Historical years for freshwater runoff
 water.RENEW.COST.GRADE1 <- 0.00001 #Renewable water grade1 cost
 water.RENEW.COST.GRADE2 <- 0.001 #Renewable water grade2 cost
 water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
