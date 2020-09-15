@@ -19,5 +19,5 @@ FeedCrops,Rice,-6,start-year,1,share-weight,final-calibration-year,end-year,fixe
 FeedCrops,RootTuber,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 FeedCrops,SugarCrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 FeedCrops,Wheat,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-FeedCrops,DDGS and feedcakes,-6,initial-future-year,1,share-weight,initial-future-year,end-year,fixed,
+FeedCrops,DDGS and feedcakes,-6,initial-future-year,1,share-weight,final-calibration-year,end-year,fixed,
 Scavenging_Other,Scavenging_Other,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
