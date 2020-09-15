@@ -133,7 +133,7 @@ Here are some additional examples of calling `driver_drake()` with some of the a
 driver_drake(verbose = 2)
 
 # Run, stop before a chunk and conserve memory
-driver_drake(stop_before = "module_aglu_LA100.FAO_downscale_ctry", memory_stategy = "autoclean")
+driver_drake(stop_before = "module_aglu_LA100.FAO_downscale_ctry", memory_strategy = "autoclean")
 
 ```
 
