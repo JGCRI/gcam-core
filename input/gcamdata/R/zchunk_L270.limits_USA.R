@@ -24,7 +24,7 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
   negative_emiss_output_names <- sub('NegEmissBudget', 'NegEmissBudget_USA', negative_emiss_input_names)
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
-             FILE = "gcam-usa/A23.elecS_tech_mapping",
+             FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
              FILE = "gcam-usa/A23.elecS_tech_availability",
              "L270.CreditOutput",
              "L270.CreditMkt",
@@ -45,18 +45,18 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
     value <- subsector <- supplysector <- year <- GCAM_region_ID <- sector.name <-
       region <- scenario <- constraint <- . <- subsector_1 <- Electric.sector <-
       subsector.name<- Electric.sector.technology <- minicam.energy.input <-
-      coefficient<- NULL # silence package check notes
+      coefficient <- to.technology <- NULL # silence package check notes
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping")
-    A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability")
-    L270.CreditMkt <- get_data(all_data, "L270.CreditMkt")
-    L270.CreditOutput <- get_data(all_data, "L270.CreditOutput")
-    L270.CreditInput_elec <- get_data(all_data, "L270.CreditInput_elec")
-    L270.NegEmissBudgetMaxPrice <- get_data(all_data, "L270.NegEmissBudgetMaxPrice")
+    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool", strip_attributes = TRUE)
+    A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability", strip_attributes = TRUE)
+    L270.CreditMkt <- get_data(all_data, "L270.CreditMkt", strip_attributes = TRUE)
+    L270.CreditOutput <- get_data(all_data, "L270.CreditOutput", strip_attributes = TRUE)
+    L270.CreditInput_elec <- get_data(all_data, "L270.CreditInput_elec", strip_attributes = TRUE)
+    L270.NegEmissBudgetMaxPrice <- get_data(all_data, "L270.NegEmissBudgetMaxPrice", strip_attributes = TRUE)
 
     # ===================================================
     # Data Processing
@@ -74,20 +74,22 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
     L270.CreditInput_elec %>%
       # join is intended to duplicate rows
       # left_join_error_no_match throws error, so left_join is used
-      left_join(A23.elecS_tech_mapping %>%
-                                 select(-subsector_1),
-                               by = c("sector.name" = "supplysector",
-                                      "subsector.name" = "subsector",
-                                      "technology")) %>%
+      # Altered to include cooling technologies in the global tech database
+      left_join(A23.elecS_tech_mapping_cool,
+                by = c("technology", "sector.name" = "supplysector", "subsector.name" = "subsector")) %>%
+      select(-subsector_1, -sector.name)%>%
       # There are several electricity load segment / technology combinations that we think
       # do not make sense. These combinations are outlined in A23.elecS_tech_availability,
       # and are removed here.
       anti_join(A23.elecS_tech_availability,
                 by = c("Electric.sector" = "supplysector",
                         "subsector.name" = "subsector",
-                        "Electric.sector.technology" = "stub.technology")) %>%
-      select(sector.name = Electric.sector, subsector.name, technology = Electric.sector.technology,
-             year, minicam.energy.input, coefficient) -> L270.CreditInput_elecS_USA
+                        "technology" = "stub.technology")) %>%
+      select(Electric.sector, subsector.name, Electric.sector.technology, to.technology,
+             year, minicam.energy.input, coefficient) %>%
+      rename(sector.name = Electric.sector, subsector.name0 = subsector.name,
+             subsector.name = Electric.sector.technology, technology = to.technology) ->
+      L270.CreditInput_elecS_USA
 
     L270.NegEmissBudgetMaxPrice %>%
       filter(region == gcam.USA_REGION) %>%
@@ -119,7 +121,7 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
       add_units("Elec coef * constraint") %>%
       add_comments("Consumes oil-credits limiting the blend of refined liquids that can be used generate electricity") %>%
       add_comments("Adding GCAM_USA electricity load segment refined liquids technologies as consumers of oil-credits") %>%
-      add_precursors("gcam-usa/A23.elecS_tech_mapping",
+      add_precursors("gcam-usa/A23.elecS_tech_mapping_cool",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L270.CreditInput_elec") ->
       L270.CreditInput_elecS_USA
@@ -146,7 +148,7 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
     # environment to just outside of the loop:
     curr_env <- environment()
     for(i in seq_along(negative_emiss_input_names)) {
-      curr_data <- get_data(all_data, negative_emiss_input_names[i])
+      curr_data <- get_data(all_data, negative_emiss_input_names[i], strip_attributes = TRUE)
       curr_data %>%
         filter(region == gcam.USA_REGION) %>%
         write_to_all_states(names(curr_data)) %>%

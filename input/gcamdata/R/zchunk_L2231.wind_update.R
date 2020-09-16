@@ -60,7 +60,7 @@ module_energy_L2231.wind_update <- function(command, ...) {
     NREL_onshore_energy <- get_data(all_data, "energy/NREL_onshore_energy")
     onshore_wind_grid_cost <- get_data(all_data, "energy/onshore_wind_grid_cost")
     NREL_wind_energy_distance_range <- get_data(all_data, "energy/NREL_wind_energy_distance_range")
-    L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec")
+    L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec", strip_attributes = TRUE)
 
     # ===================================================
     # Perform Computations

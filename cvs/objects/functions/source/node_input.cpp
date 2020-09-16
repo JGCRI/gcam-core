@@ -49,6 +49,7 @@
 #include "functions/include/demand_input.h"
 #include "functions/include/trade_input.h"
 #include "functions/include/building_node_input.h"
+#include "functions/include/food_demand_input.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "functions/include/function_utils.h"
@@ -109,10 +110,16 @@ void NodeInput::XMLParse( const xercesc::DOMNode* node ) {
         else if ( nodeName == BuildingNodeInput::getXMLNameStatic() ) {
             parseContainerNode( curr, mNestedInputs, new BuildingNodeInput() );
         }
+        else if( nodeName == StaplesFoodDemandInput::getXMLNameStatic() ) {
+            parseContainerNode( curr, mNestedInputs, new StaplesFoodDemandInput() );
+        }
+        else if( nodeName == NonStaplesFoodDemandInput::getXMLNameStatic() ) {
+            parseContainerNode( curr, mNestedInputs, new NonStaplesFoodDemandInput() );
+        }
         else if ( nodeName == "prodDmdFnType" ) {
             mProdDmdFnType = XMLHelper<string>::getValue( curr );
         }
-        else if ( nodeName == "price-recieved" ) {
+        else if ( nodeName == "price-received" ) {
             mPricePaid.set( XMLHelper<double>::getValue( curr ) );
         }
         else if ( nodeName == "Sigma1" ) {
@@ -497,7 +504,7 @@ void NodeInput::calcLevelizedCost( const std::string& aRegionName, const std::st
 
     // use the function to calculate our levelized costs
     double tempPrice = mProdDmdFn->calcLevelizedCost( mChildInputsCache, aRegionName, aSectorName, aPeriod,
-        aAlphaZero, mCurrentSigma );
+        aAlphaZero, mCurrentSigma, this );
 
     setPricePaid( tempPrice, aPeriod );
 

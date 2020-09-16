@@ -58,7 +58,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     L100.FAO_fallowland_kha <- get_data(all_data, "L100.FAO_fallowland_kha")
     L100.FAO_CL_kha <- get_data(all_data, "L100.FAO_CL_kha")
     L100.FAO_harv_CL_kha <- get_data(all_data, "L100.FAO_harv_CL_kha")
-    L101.ag_HA_bm2_R_C_Y_GLU <- get_data(all_data, "L101.ag_HA_bm2_R_C_Y_GLU")
+    L101.ag_HA_bm2_R_C_Y_GLU <- get_data(all_data, "L101.ag_HA_bm2_R_C_Y_GLU", strip_attributes = TRUE)
     L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU")
     L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
 

@@ -147,7 +147,7 @@ bool MarketDependencyFinder::addDependency( const string& aDependentName,
     
     // These are kept track of by adding to the list of dependents for the
     // dependency item.
-    return (*dependencyIter)->mDependentList.insert( *dependentIter ).second;
+    return (*dependencyIter)->insertDependent( *dependentIter );
 }
 
 /*!
@@ -173,13 +173,11 @@ void MarketDependencyFinder::resolveActivityToDependency( const string& aRegionN
     auto_ptr<DependencyItem> item( new DependencyItem( aActivityName, aRegionName ) );
     ItemIterator itemIter = mDependencyItems.find( item.get() );
     if( itemIter == mDependencyItems.end() ){
-        // Could not match up the activity to a dependency name.
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Could not order activity: " << aActivityName <<  " in " << aRegionName << endl;
-        delete aDemandActivity;
-        delete aPriceActivity;
-        return;
+        // No dependencies have been added for this activity yet.  They may get added
+        // later in a different region so we can just add the dependency item for now
+        // with not dependency links.  There will be more error checking later to ensure
+        // this wasn't an actual mistake.
+        itemIter = mDependencyItems.insert( item.release() ).first;
     }
     
     (*itemIter)->mDemandVertices.push_back( new CalcVertex( aDemandActivity, *itemIter, mCalcVertexUIDCount++ ) );
@@ -436,7 +434,9 @@ void MarketDependencyFinder::createOrdering() {
                 for( auto otherDep : depGrouping.second ) {
                     // note mDependentList is a set so we don't need to worry about
                     // duplicates which will happen a bunch but oh well..
-                    currDep->mDependentList.insert( otherDep->mDependentList.begin(), otherDep->mDependentList.end() );
+                    for( auto depToAdd : otherDep->mDependentList ) {
+                        currDep->insertDependent( depToAdd );
+                    }
                 }
             }
         }
@@ -564,10 +564,19 @@ void MarketDependencyFinder::createOrdering() {
             }
         }
     }
+    
+    // Do some error checking for activities that are not related to any other
+    // activities in the model as it may be an indication of misconfiguration.
+    ILogger& depLog = ILogger::getLogger( "dependency_finder_log" );
+    for( CItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
+        if( !(*it)->mHasIncomingDependency && (*it)->mDependentList.empty() ) {
+            depLog.setLevel( ILogger::SEVERE );
+            depLog << (*it)->mName << " in " << (*it)->mLocatedInRegion << " is not related to any other activities." << endl;
+        }
+    }
 
     // Before we can create an ordering we must take care of any item which have a
     // self dependence by converting them to solved via trial markets
-    ILogger& depLog = ILogger::getLogger( "dependency_finder_log" );
     for( CItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
         if( (*it)->mHasSelfDependence ) {
             depLog.setLevel( ILogger::WARNING );

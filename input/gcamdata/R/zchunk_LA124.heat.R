@@ -44,9 +44,8 @@ module_energy_LA124.heat <- function(command, ...) {
     A24.globaltech_coef <- get_data(all_data, "energy/A24.globaltech_coef")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
-
     L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh")
-    L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
+    L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh", strip_attributes = TRUE)
 
     # ===================================================
     # Create list of regions with district heat modeled

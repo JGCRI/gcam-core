@@ -30,9 +30,9 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    CDIAC_CO2_by_nation <- get_data(all_data, "emissions/CDIAC_CO2_by_nation")
-    CDIAC_Cseq_by_nation <- get_data(all_data, "emissions/CDIAC_Cseq_by_nation")
-    CDIAC_nation_iso <- get_data(all_data, "emissions/mappings/CDIAC_nation_iso")
+    CDIAC_CO2_by_nation <- get_data(all_data, "emissions/CDIAC_CO2_by_nation", strip_attributes = TRUE)
+    CDIAC_Cseq_by_nation <- get_data(all_data, "emissions/CDIAC_Cseq_by_nation", strip_attributes = TRUE)
+    CDIAC_nation_iso <- get_data(all_data, "emissions/mappings/CDIAC_nation_iso", strip_attributes = TRUE)
 
     # Merge the sequestration and emissions datasets
     CDIAC_nation_iso %>%

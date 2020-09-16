@@ -46,12 +46,12 @@ module_gcamusa_L261.carbon_storage_USA <- function(command, ...) {
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
-    L161.Cstorage_FERC <- get_data(all_data, "L161.Cstorage_FERC")
-    L261.Rsrc <- get_data(all_data, "L261.Rsrc")
-    L261.Supplysector_C <- get_data(all_data, "L261.Supplysector_C")
-    L261.SubsectorLogit_C <- get_data(all_data, "L261.SubsectorLogit_C")
-    L261.SubsectorShrwtFllt_C <- get_data(all_data, "L261.SubsectorShrwtFllt_C")
-    L261.StubTech_C <- get_data(all_data, "L261.StubTech_C")
+    L161.Cstorage_FERC <- get_data(all_data, "L161.Cstorage_FERC", strip_attributes = TRUE)
+    L261.Rsrc <- get_data(all_data, "L261.Rsrc", strip_attributes = TRUE)
+    L261.Supplysector_C <- get_data(all_data, "L261.Supplysector_C", strip_attributes = TRUE)
+    L261.SubsectorLogit_C <- get_data(all_data, "L261.SubsectorLogit_C", strip_attributes = TRUE)
+    L261.SubsectorShrwtFllt_C <- get_data(all_data, "L261.SubsectorShrwtFllt_C", strip_attributes = TRUE)
+    L261.StubTech_C <- get_data(all_data, "L261.StubTech_C", strip_attributes = TRUE)
     L261.GlobalTechCoef_C <- get_data(all_data, "L261.GlobalTechCoef_C")
 
     # Create a vector of FERC grid regions with non-zero storage curves

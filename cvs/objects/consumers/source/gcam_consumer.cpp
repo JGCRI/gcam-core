@@ -48,6 +48,7 @@
 #include "functions/include/node_input.h"
 #include "containers/include/iinfo.h"
 #include "demographics/include/demographic.h"
+#include "containers/include/gdp.h"
 #include "sectors/include/sector_utils.h"
 #include "technologies/include/generic_output.h"
 #include "emissions/include/aghg.h"
@@ -161,15 +162,16 @@ void GCAMConsumer::completeInit( const string& aRegionName, const string& aSecto
 
 void GCAMConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
                              const string& aSectorName, NationalAccount& aNationalAccount,
-                             const Demographic* aDemographics, const double aCapitalStock,
-                             const int aPeriod )
+                             const Demographic* aDemographics, const GDP* aGDP,
+                             const double aCapitalStock, const int aPeriod )
 {
     double population = aDemographics->getTotal( aPeriod );
-    // aCapitalStock is really GDP
-    double gdp = aCapitalStock;
+    double gdp = aGDP->getGDP( aPeriod );
+    double gdpPPP = aGDP->getPPPGDPperCap( aPeriod ) * population;
 
     double subregionalPopulation = mSubregionalPopulationShare[ aPeriod ] * population;
     double subregionalIncome = mSubregionalIncomeShare[ aPeriod ] * gdp / subregionalPopulation;
+    double subregionalIncomePPP = mSubregionalIncomeShare[ aPeriod ] * gdpPPP / subregionalPopulation;
     
     // store the subregional population and income for reporting
     mSubregionalPopulation[ aPeriod ] = subregionalPopulation;
@@ -179,6 +181,7 @@ void GCAMConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string
     // nesting structure can have access to the values.
     mTechInfo->setDouble( "subregional-population", subregionalPopulation );
     mTechInfo->setDouble( "subregional-income", subregionalIncome );
+    mTechInfo->setDouble( "subregional-income-ppp", subregionalIncomePPP );
     Consumer::initCalc( aMoreSectorInfo, aRegionName, aSectorName, aNationalAccount,
                         aDemographics, aCapitalStock, aPeriod );
 }

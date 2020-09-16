@@ -39,8 +39,8 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
 
     # Step 1. Load required inputs
 
-    gw_uniform <- get_data(all_data, "water/groundwater_uniform")
-    gw_constrained <- get_data(all_data, "water/groundwater_constrained")
+    gw_uniform <- get_data(all_data, "water/groundwater_uniform", strip_attributes = TRUE)
+    gw_constrained <- get_data(all_data, "water/groundwater_constrained", strip_attributes = TRUE)
 
     # throw error if water.GROUNDWATER_CALIBRATION is incorrectly referenced in constants.R
     if(!(water.GROUNDWATER_CALIBRATION %in% c("watergap", "gleeson"))){

@@ -36,7 +36,7 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
 
     iso <- aquastat_ctry <- GCAM_region_ID <- Area <- Year <- Value <- cost <- consumption <-
       expenditure <- input.cost <- year <- value <- population <- value_pc <- value_pc_filled <-
-      efficiency <- withdrawals <- NULL  # silence package check notes
+      efficiency <- withdrawals <- deflator <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -82,20 +82,32 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
       # putting in missing values in all years. The sequence below achieves a simple rule = 2 extrapolation, but is
       # capable of extrapolation from a single observation
       mutate(value_pc_filled = approx_fun(year = year, value = value_pc, rule = 2),
-             value_pc_filled = if_else(is.na(value_pc_filled), median(value_pc, na.rm = TRUE), value_pc_filled)) %>%
+             value_pc_filled = if_else(is.na(value_pc_filled), median(value_pc, na.rm = TRUE), as.numeric(value_pc_filled))) %>%
       ungroup() %>%
       mutate(value = round(population * value_pc_filled, digits = water.DIGITS_MUNI_WATER)) %>%
       select(iso, year, value)
 
     # Come up with GCAM regional average prices starting with the country level IBNET data.
-    # Note that since the years are all over the place, we will just use the average across years too.
+    # Note that since the years are all over the place, we will convert all to 1975 dollar,
+    # and use the average across years too.
+
+    # Since IBNET_municipal_water_cost_USDm3 is in nominal years we will need a table of deflators
+    # to normalize each to constant 1975$
+    # The pipeline below uses group_by() to apply the gdp_deflator() function to each row
+    tibble(year = unique(IBNET_municipal_water_cost_USDm3$year)) %>%
+      mutate(deflator = gdp_deflator(1975, year)) ->
+      conv_Price_DollarYear
+
     L145.municipal_water_cost_R_75USD_m3 <- IBNET_municipal_water_cost_USDm3 %>%
-      left_join(aquastat_ctry[ c("aquastat_ctry", "iso")], by = c("country" = "aquastat_ctry")) %>%
-      left_join(iso_GCAM_regID[c("iso", "GCAM_region_ID")], by = "iso") %>%
-      mutate(expenditure = cost * consumption) %>%
+      left_join_error_no_match(aquastat_ctry[ c("aquastat_ctry", "iso")], by = c("country" = "aquastat_ctry")) %>%
+      left_join_error_no_match(iso_GCAM_regID[c("iso", "GCAM_region_ID")], by = "iso") %>%
+      left_join_error_no_match(conv_Price_DollarYear, by = "year") %>%
+      # Convert nominal dollars to 1975$
+      mutate(cost = cost * deflator,
+             expenditure = cost * consumption) %>%
       group_by(GCAM_region_ID) %>%
       summarise(expenditure = sum(expenditure), consumption = sum(consumption)) %>%
-      mutate(input.cost = expenditure / consumption) %>%
+      mutate(input.cost = round(expenditure / consumption, water.DIGITS_MUNI_WATER)) %>%
       select(GCAM_region_ID, input.cost)
 
     # The IBNET data is incomplete and so it is possible that we have entire GCAM regions in which none
@@ -191,9 +203,10 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
       add_title("Municipal water base deleivery cost by GCAM_region_ID") %>%
       add_units("1975$/m^3") %>%
       add_comments("Generate GCAM regional average prices starting with the country-level IBNET data") %>%
-      add_comments("1. Get country-level expenditure (cost * consumption);
-                   2. Sum up country-level expenditure and cost to get region-level expenditure and cost;
-                   3. Divide region-level expenditure by region-level consumption to get region-level cost") %>%
+      add_comments("1. Convert nominal dollars to 1975$;
+                   2. Get country-level expenditure (cost * consumption);
+                   3. Sum up country-level expenditure and cost to get region-level expenditure and cost;
+                   4. Divide region-level expenditure by region-level consumption to get region-level cost") %>%
       add_legacy_name("L145.municipal_water_cost_R_75USD_m3") %>%
       add_precursors("common/iso_GCAM_regID",
                      "water/IBNET_municipal_water_cost_USDm3") ->

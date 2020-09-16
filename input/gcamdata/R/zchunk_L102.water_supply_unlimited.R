@@ -29,7 +29,7 @@ module_water_L102.water_supply_unlimited <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    basin_ids <- get_data(all_data, "water/basin_to_country_mapping")
+    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
 
     # get vector of nonmapped water types
@@ -37,7 +37,7 @@ module_water_L102.water_supply_unlimited <- function(command, ...) {
       nonmapped_water_types
 
     # mapped water types
-    expand.grid(GCAM_basin_ID = basin_ids[["GCAM_basin_ID"]],
+    expand.grid(GCAM_basin_ID = basin_to_country_mapping[["GCAM_basin_ID"]],
                 year = MODEL_YEARS,
                 water_type = water.MAPPED_WATER_TYPES) %>%
       as_tibble() %>%

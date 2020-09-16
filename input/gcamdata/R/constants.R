@@ -10,6 +10,7 @@ YEAR_PATTERN             <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three dig
 LOGIT_TYPE_COLNAME       <- "logit.type"        # will be removed by test code before old-new comparison
 DISABLED_MODULES         <- "NONE"
 
+
 # Flags ======================================================================
 
 FLAG_INPUT_DATA      <- "FLAG_INPUT_DATA"       # input data, don't output
@@ -191,14 +192,14 @@ aglu.WEIGHT_COTTON_LINT <- 0.4
 # FDS-2008-01, Economic Research Service, United States Department of Agriculture. Available at http://usda.mannlib.cornell.edu/usda/ers/FDS-yearbook/2000s/2008/FDS-yearbook-05-23-2008_Special_Report.pdf
 aglu.PRICERATIO_GRASS_ALFALFA <- 0.7
 
+# Pasture (forage) prices are equal to the hay (foddergrass) price times this exogenous multiplier. Equal to the hay price minus mowing, bundling, and transport.
+aglu.PRICERATIO_PASTURE_HAY <- 0.5
+
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE    <- 0.45
 
 # Conversion from peak biomass to average biomass integrated over the course of the year
 aglu.CCONV_PEAK_AVG <- 0.5
-
-# Meat price elasticity in the USA
-aglu.FOOD_MEAT_P_ELAS_USA <- -0.09
 
 # Constraints for the minimum and maximum harvested:cropped ratios
 # Source: Dalrymple, D.G. 1971, Survey of Multiple Cropping in Less Developed Nations, Foreign Econ. Dev. Serv., U.S. Dep. of Agricul., Washington, D.C.
@@ -508,12 +509,17 @@ water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withd
 water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
 names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
 water.DESAL                               <- "desalinated water"
+water.LIVESTOCK                           <- "Livestock"
+water.PRIMARY_ENERGY                      <- "Mining"
+water.LIVESTOCK_TYPES                     <- c("Beef","Dairy","Pork","Poultry","SheepGoat")
+water.DELETE_DEMAND_TYPES              <- c("water_td_elec_W","water_td_elec_C","water_td_dom_W","water_td_dom_C", "water_td_ind_W","water_td_ind_C")
+
 water.WATER_UNITS_PRICE                   <- "1975$/m^3"
 water.WATER_UNITS_QUANTITY                <- "km^3"
 water.DIGITS_MUNI_WATER                   <- 4
-water.IRR_SHARE                           <- 1
-water.MAPPING_COEF                        <- 1
-water.MAPPING_PMULT                       <- 1
+water.IRR_SHARE                           <- 1    # Irrigation demands are compiled by basin, so no separate basin-within-region sharing is applied
+water.MAPPING_COEF                        <- 1    # The default assumption is that water withdrawals by sector refer to withdrawals from a source (i.e. upstream of any losses). Modified for irrigation.
+water.MAPPING_PMULT                       <- 1    # The default assumption is that estimated water production costs are paid by the consumers. Again this is modified for irrigation water consumers.
 water.NONIRRIGATION_SECTORS               <- c("Municipal", "Electricity", "Livestock", "Manufacturing", "Mining")
 water.LOGIT_EXP                           <- -6
 water.GW_HIST_MULTIPLIER                  <- 1.01   # Multiplier for the "available" in the "grade hist" grade of groundwater supply curves. Needed to prevent the model from pulling from higher grades in historical periods due to solution tolerance
@@ -545,7 +551,7 @@ water.DIGITS_RENEW_WATER <- 4 #Digits for rounding historical averages of runoff
 water.DIGITS_RENEW_WATER_RSC <- 7 #Digits for rounding renewable resource supply curves (available, extractioncost)
 water.GW_DEPLETION_HISTORICAL <- c(2005, 2010) # Historical years for groundwater depletion
 water.GW_DEPLETION_BASE_YEAR <- 1990 # Historical year for groundwater depletion calibration
-water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010) # Historical years for freshwater runoff
+water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010, 2015) # Historical years for freshwater runoff
 water.RENEW.COST.GRADE1 <- 0.00001 #Renewable water grade1 cost
 water.RENEW.COST.GRADE2 <- 0.001 #Renewable water grade2 cost
 water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
@@ -570,6 +576,9 @@ efw.COUNTRIES_ELEC_DESAL                  <- c("are", "qat", "sau")     # countr
 efw.COUNTRIES_NO_DESAL                    <- c("mng", "pry", "mhl", "tjk", "tkm")   # landlocked or tiny countries whose reported desalinated water production is not included in GCAM
 efw.DESAL_ENERGY_SECTORS                  <- c("in_bld_comm", "in_industry_general")    # intermediate mapping sectors where desalination-related energy is initially assigned (from the energy balances)
 efw.ELEC_DESAL_TECHS                      <- c("gas (steam/CT)", "refined liquids (steam/CT)")    # Electric generation technologies that can produce secondary output of desalinated seawater
+
+
+
 
 # Emissions constants ======================================================================
 
@@ -624,20 +633,9 @@ emissions.DIGITS_MACC          <- 3
 
 # GCAM-USA constants ======================================================================
 
-# GCAM-USA Constants for Processing UCS Database. As of 04/22/19, only used in chunk zchunk_LA1233.Process_UCS_data_ref.R
-gcamusa.UCS_WATER_COEFFICIENTS_FIRST_HISTORICAL_YEAR   <- 1970
-gcamusa.UCS_WATER_COEFFICIENTS_FINAL_HISTORICAL_YEAR   <- 2008
-gcamusa.UCS_WATER_COEFFICIENTS_FINAL_CALIBRATION_YEAR <- 2015
-gcamusa.UCS_WATER_COEFFICIENTS_FIRST_FUTURE_YEAR <- 2020
-gcamusa.UCS_WATER_COEFFICIENTS_FINAL_FUTURE_YEAR <- 2100
-gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_RECIRCULATING <- 0.85
-gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_DRY_COOLING <- 0.05
-gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_COOLING_POND <- 0.05
-gcamusa.UCS_WATER_COEFFICIENTS_FUTURE_ASSUMPTION_ONCE_THROUGH_SEAWATER <- 0.05
-
 # GCAM-USA time
 gcamusa.SEDS_DATA_YEARS <- 1971:2017 # years for which we'll use EIA SEDS data in module_gcamusa_LA101.EIA_SEDS
-gcamusa.WIND_BASE_COST_YEAR   <- 2005
+gcamusa.WIND_BASE_COST_YEAR <- 2005
 gcamusa.HYDRO_HIST_YEAR <- 2015
 gcamusa.HYDRO_FINAL_AEO_YEAR <- 2050
 
@@ -647,6 +645,7 @@ gcamusa.SE_NEAR_TERM_YEAR <- 2030  # year after which projected growth rates fro
 gcamusa.AEO_SE_YEAR <- 2050   # year to which AEO 2019 socioeconomic assumptions run
 
 # Assumptions related to coal
+
 # Vintage groups built before 2015 will retire based on an S-curve.
 # Assumed lifetime and S-curve parametetrs for coal units:
 gcamusa.AVG_COAL_PLANT_LIFETIME <- 80
@@ -675,10 +674,11 @@ gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
 gcamusa.COASTAL_STATES <- c("AK", "AL", "CA", "CT", "DE", "FL", "GA", "HI", "LA", "MA", "MD", "ME", "MS",
                             "NC", "NH", "NJ", "NY", "OR", "RI", "SC", "TX", "VA", "WA")
 
+
 # GCAM-USA grid regions
 gcamusa.GRID_REGIONS <- c("Alaska grid", "California grid", "Central East grid", "Central Northeast grid",  "Central Northwest grid",
-                    "Central Southwest grid", "Florida grid", "Hawaii grid", "Mid-Atlantic grid", "New England grid",
-                    "New York grid", "Northwest grid", "Southeast grid", "Southwest grid", "Texas grid")
+                          "Central Southwest grid", "Florida grid", "Hawaii grid", "Mid-Atlantic grid", "New England grid",
+                          "New York grid", "Northwest grid", "Southeast grid", "Southwest grid", "Texas grid")
 
 # GCAM-USA default constants
 gcamusa.DEFAULT_COEFFICIENT <- 1
@@ -686,6 +686,22 @@ gcamusa.DEFAULT_LOGIT_TYPE  <- NA  # default logit type
 gcamusa.DEFAULT_LOGITEXP    <- -3
 gcamusa.DEFAULT_MARKET      <- gcam.USA_REGION
 gcamusa.DEFAULT_SHAREWEIGHT <- 1
+gcamusa.FIXED_SHAREWEIGHT <- "fixed"
+gcamusa.LINEAR_SHAREWEIGHT <- "linear"
+gcamusa.INTERP_APPLY_TO <- "share-weight"
+
+# Water related constants for GCAM-USA
+gcamusa.DISALLOWED_COOLING_TECH <- "once through"
+gcamusa.MUNICIPAL_SECTOR <- "Municipal"
+gcamusa.UCS_WATER_TYPE_OCEAN <- "Ocean"
+gcamusa.UCS_WATER_TYPE_SURFACE <- "Surface Water"
+gcamusa.WATER_TYPE_FRESH <- "fresh"
+gcamusa.WATER_TYPE_SEAWATER <- "seawater"
+gcamusa.ELEC_COOLING_SYSTEM_NONE <- "none"
+gcamusa.ELEC_COOLING_SYSTEM_BINARY <- "binary"
+gcamusa.ELEC_TECHS_NO_COOLING <- c("hydro", "PV", "wind")
+gcamusa.ELEC_TECHS_NO_COOLING_FRESH <- c("hydro", "PV") # electricity technologies with no cooling system, still mapped to "fresh" water type
+gcamusa.UCS_WATER_FIRST_YEAR <- 2000 # we calculate cooling shares based on power plants built this century
 
 # Logit exponent regulating competition between different grid regions in USA electricity market
 # (single market approach only)
@@ -732,7 +748,7 @@ gcamusa.BASE_CDD_USA <- 1215 # https://www.eia.gov/totalenergy/data/annual/showt
 gcamusa.AEO_DD_YEARS <- seq(2010, 2040, 5)
 
 
-#Years to be adjusted for RECS
+# Years to be adjusted for RECS
 gcamusa.RECS_YEARS <- c(2009,2015)
 
 gcamusa.GAS_ADJ_THRESH      <- 5
@@ -747,12 +763,20 @@ gcamusa.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA tran
 gcamusa.DIGITS_EMISSIONS          <- 5
 
 # Electricity load segments
-gcamusa.LOAD_SEG_CAL_YEARS <- c(2015, 2010, 2005, 1990)       # Years for which electricity load segments are calibrated
+gcamusa.LOAD_SEG_CAL_YEARS <- c(2015,2010, 2005, 1990)       # Years for which electricity load segments are calibrated
 gcamusa.ELEC_SEGMENT_BASE <- "base load generation"
 gcamusa.ELEC_SEGMENT_INT <- "intermediate generation"
 gcamusa.ELEC_SEGMENT_SUBPEAK <- "subpeak generation"
 gcamusa.ELEC_SEGMENT_PEAK <- "peak generation"
 
+# Water mapping assumptions
+gcamusa.FINAL_MAPPING_YEAR <- 2010 #    Water mappings are conducted from the Huang et al. (2018) dataset which are through 2010, not the final historical year
+gcamusa.WATER_MAPPING_YEAR <- 2005
+gcamusa.USA_REGION_NUMBER <- 1
+gcamusa.ZERO_WATER_COEF <- 0
+gcamusa.CONVEYANCE_LOSSES <- 0.829937455747218 ## From file: L165.ag_IrrEff_R
+water.MAPPED_PRI_WATER_TYPES                  <- c("water consumption", "water withdrawals","desalination")
+gcamusa.MIN_PRIM_ENERGY_YEAR <- 1990
 
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions

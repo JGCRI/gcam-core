@@ -14,7 +14,8 @@ module_gcamusa_L2231.nonewcoal_USA(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2231.StubTechShrwt_nonewcoal_USA}, \code{L2231.StubTechShrwt_coal_delay_USA}.
+the generated outputs: \code{L2231.SubsectorShrwt_nonewcoal_elecS_cool_USA}, \code{L2231.StubTechShrwt_nonewcoal_nongen_USA},
+\code{L2231.SubsectorShrwt_coal_delay_elecS_cool_USA}, \code{L2231.StubTechShrwt_coal_delay_nongen_USA}.
 The corresponding file in the
 original data system was \code{L2231.nonewcoal_USA.R} (gcam-usa level2).
 }
