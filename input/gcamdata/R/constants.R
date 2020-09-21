@@ -54,6 +54,8 @@ gcam.DEFAULT_PRICE <- 1.0
 driver.MAKE            <- "MAKE"
 driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
 driver.DECLARE_INPUTS  <- "DECLARE_INPUTS"
+
+#Set the driver source to EDGAR to switch back to old emissions structure.
 driver.EMISSIONS_SOURCE <- "CEDS"
 # driver.EMISSIONS_SOURCE <- "EDGAR"
 
@@ -571,11 +573,11 @@ water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
 
 # Emissions constants ======================================================================
 
-# Flag which emissions data to use. Value "EPA" uses EPA data. All other values use EDGAR data.
-emissions.DATA_SOURCE <- "EPA"
+# Flag which emissions data to use. Value "EPA" uses EPA data. All other values use CEDS data.
+emissions.DATA_SOURCE <- "CEDS"
 
 # Time
-emissions.CEDS_YEARS              <- 1971:2015
+emissions.CEDS_YEARS              <- 1971:2019           #Year coverage for CEDS inventory.
 emissions.CTRL_BASE_YEAR          <- 1975                # Year to read in pollution controls
 emissions.DEFOREST_COEF_YEARS     <- c(2000, 2005)
 emissions.EDGAR_HISTORICAL        <- 1971:2008
@@ -592,15 +594,16 @@ emissions.INVENTORY_MATCH_YEAR    <- 2009                # Select year from whic
 emissions.MODEL_BASE_YEARS        <- MODEL_BASE_YEARS
 emissions.NH3_EXTRA_YEARS         <- 1971:1989
 emissions.NH3_HISTORICAL_YEARS    <- 1990:2002
-emissions.SSP_FUTURE_YEARS        <- MODEL_YEARS[MODEL_YEARS %in% 2010:2100]
+emissions.SSP_FUTURE_YEARS        <- MODEL_YEARS[MODEL_YEARS %in% 2015:2100]
 
 # Other emissions constants
 emissions.CONV_C_CO2    <- 44 / 12 # Convert Carbon to CO2
 emissions.F_GAS_UNITS   <- "Gg"
 emissions.TST_TO_TG     <- 0.000907 # Thousand short tons to Tg
-emissions.ZERO_EM_TECH  <- c("electricity", "Electric", "BEV","FCEV","district heat","NG")
-emissions.GFED_NODATA <- c("ala","bes","blm","ggy","jey","maf","xad","xko","xnc")
-emissions.UNMGD_LAND_AVG_YRS <- 30
+emissions.ZERO_EM_TECH  <- c("electricity", "Electric", "BEV","FCEV","district heat","NG")  #These technologies get filtered out and no emissions are generated for them.
+emissions.HIGH_EM_FACTOR_THRESHOLD <- 1000  #All emission factors above this threshold are replaced with the global median of emission factors.
+emissions.GFED_NODATA <- c("ala","bes","blm","ggy","jey","maf","xad","xko","xnc")  #GFED LULC dataset does not contaian data for these isos. These get filtered out so we can use the left_join_error_no_match.
+emissions.UNMGD_LAND_AVG_YRS <- 30 #Years for climatological average for the GFED LULC data.
 `%notin%` = Negate(`%in%`)
 
 emissions.COAL_SO2_THRESHOLD <- 0.1   # Tg/EJ (here referring to Tg SO2 per EJ of coal electricity)

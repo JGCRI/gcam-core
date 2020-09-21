@@ -1,7 +1,7 @@
 # File: ceds_sector_map.csv
 # Title: CEDS-GCAM sector map
 # Units: NA
-# Description: Maps CEDS sectors to GCAM sectors
+# Description: Maps CEDS sectors to CEDS aggregate sectors
 # Column types: cc
 CEDS_sector,CEDS_agg_sector
 11A_Volcanoes,not_in_gcam

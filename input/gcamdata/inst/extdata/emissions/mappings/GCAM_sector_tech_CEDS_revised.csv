@@ -1,5 +1,5 @@
 # File: GCAM_sector_tech_CEDS_revised.csv
-# Title: Mapping between GCAM agriculture technologies to EPA aggregate sectors, aggregte fuels, EDGAR aggregate sector, RCP aggregate sector, BCOC aggregate sectore, EPA MACC sector, and IIASA sector
+# Title: Mapping between GCAM  technologies to CEDS aggregate sectors, aggregte fuels, EDGAR aggregate sector, RCP aggregate sector, BCOC aggregate sectore, EPA MACC sector, and IIASA sector.  This file is used to map process sectors from CEDS to GCAM for the new transportation size classes.
 # Units: None
 # Source: internal
 # Column types: ccccccccccccccccc
@@ -443,7 +443,7 @@ UnmanagedLand,GrasslandFiresAEZ17,GrasslandFiresAEZ17,UnmanagedLand,GrasslandFir
 UnmanagedLand,GrasslandFiresAEZ18,GrasslandFiresAEZ18,UnmanagedLand,GrasslandFiresAEZ18,GrasslandFiresAEZ18,,,,,,grassland,,,,,
 urban processes,aerosols,aerosols,urban processes,aerosols,aerosols,,,aerosols,all,all,aerosols,,,,Aerosols Product Use,
 urban processes,fire_exting,fire_exting,urban processes,fire_exting,fire_exting,,,fire exting,all,all,fire exting,,,,Fire Protection,
-urban processes,landfills,landfills,urban processes,landfills,landfills,landfills,process,landfills,all,all,landfills,,,,Landfilling of Solid Waste,
+urban processes,waste_incineration,waste_incineration,urban processes,waste_incineration,waste_incineration,landfills,process,landfills,all,all,landfills,,,,Landfilling of Solid Waste,
 urban processes,wastewater treatment,wastewater treatment,urban processes,wastewater treatment,wastewater treatment,wastewater,process,wastewater,all,all,wastewater,,,,Wastewater,
 Wheat,WheatAEZ01,WheatAEZ01,Wheat,WheatAEZ01,WheatAEZ01,,,,,,,,,,Cropland Management,
 Wheat,WheatAEZ02,WheatAEZ02,Wheat,WheatAEZ02,WheatAEZ02,,,,,,,,,,Cropland Management,

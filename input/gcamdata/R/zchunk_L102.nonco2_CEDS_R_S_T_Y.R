@@ -1,7 +1,7 @@
 #' module_emissions_L102.nonco2_ceds_R_S_Y
 #'
-#' Calculates emissions using CEDS and CMIP emissions data for all sectors and fuels
-#'
+#' Calculates emissions using CEDS and CMIP emissions data for all sectors and fuels. Note that the outputs of this chunk are a part of the prebuilt data.
+#' To change the ouputs of this chunk, add CEDS data to the CEDS folder under emissions and rebuild prebuilt data.
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
@@ -12,7 +12,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @importFrom data.table frollmean
-#' @author CWR May 2019
+#' @author CWR May 2019, KBN June 2020
 
 
 
@@ -49,6 +49,9 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
       return(c("L102.ceds_GFED_nonco2_tg_R_S_F"))
     } else if(command == driver.MAKE) {
 
+      # Silence package checks
+      iso <- em <- CEDS_sector <- fuel <- unit <- year <-
+        emissions <- sector <- Non.CO2 <- CEDS_agg_sector <- CEDS_agg_fuel <- NULL
 
 
 all_data <- list(...)[[1]]

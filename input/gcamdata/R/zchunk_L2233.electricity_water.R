@@ -112,7 +112,9 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L2233.PrimaryRenewKeyword_elec_cool",
              "L2233.PrimaryRenewKeywordInt_elec_cool",
              "L2233.DeleteCreditInput_elec",
-             "L2233.CreditInput_elec"))
+             "L2233.CreditInput_elec",
+             "L2233.InputEmissCoeff_fut_elecPassthru",
+             "L2233.InputEmissCoeff_hist_elecPassthru"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -1105,7 +1107,9 @@ module_water_L2233.electricity_water <- function(command, ...) {
                 L2233.PrimaryRenewKeyword_elec_cool,
                 L2233.PrimaryRenewKeywordInt_elec_cool,
                 L2233.DeleteCreditInput_elec,
-                L2233.CreditInput_elec)
+                L2233.CreditInput_elec,
+                L2233.InputEmissCoeff_fut_elecPassthru,
+                L2233.InputEmissCoeff_hist_elecPassthru)
   } else {
     stop("Unknown command")
   }

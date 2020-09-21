@@ -1,5 +1,5 @@
 # File: GCAM_sector_tech_CEDS.csv
-# Title: Mapping between GCAM agriculture technologies to EPA aggregate sectors, aggregte fuels, EDGAR aggregate sector, RCP aggregate sector, BCOC aggregate sectore, EPA MACC sector, and IIASA sector
+# Title: Mapping between GCAM  technologies to CEDS aggregate sectors, aggregte fuels, EDGAR aggregate sector, RCP aggregate sector, BCOC aggregate sectore, EPA MACC sector, and IIASA sector. This file is used to map process sectors from CEDS to GCAM for the old transportation size classes.
 # Units: None
 # Source: internal
 # Column types: ccccccccccccccccc

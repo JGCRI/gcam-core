@@ -20,12 +20,6 @@ module_emissions_batch_all_protected_unmgd_emissions_xml <- function(command, ..
              "L212.FORESTEmissions_FF_noprot",
              "L212.FORESTEmissions_D_prot",
              "L212.FORESTEmissions_D_noprot",
-             "L212.GRASSEmissionsFactors_BCOC_prot",
-             "L212.GRASSEmissionsFactors_BCOC_noprot",
-             "L212.FORESTEmissionsFactors_BCOC_FF_prot",
-             "L212.FORESTEmissionsFactors_BCOC_FF_noprot",
-             "L212.FORESTEmissionsFactors_BCOC_D_prot",
-             "L212.FORESTEmissionsFactors_BCOC_D_noprot",
              "L212.FORESTEmissionsFactors_future",
              "L212.FORESTEmissionsFactors_future_prot"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -43,12 +37,6 @@ module_emissions_batch_all_protected_unmgd_emissions_xml <- function(command, ..
     L212.FORESTEmissions_FF_noprot <- get_data(all_data, "L212.FORESTEmissions_FF_noprot")
     L212.FORESTEmissions_D_prot <- get_data(all_data, "L212.FORESTEmissions_D_prot")
     L212.FORESTEmissions_D_noprot <- get_data(all_data, "L212.FORESTEmissions_D_noprot")
-    L212.GRASSEmissionsFactors_BCOC_prot <- get_data(all_data, "L212.GRASSEmissionsFactors_BCOC_prot")
-    L212.GRASSEmissionsFactors_BCOC_noprot <- get_data(all_data, "L212.GRASSEmissionsFactors_BCOC_noprot")
-    L212.FORESTEmissionsFactors_BCOC_FF_prot <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_FF_prot")
-    L212.FORESTEmissionsFactors_BCOC_FF_noprot <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_FF_noprot")
-    L212.FORESTEmissionsFactors_BCOC_D_prot <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_D_prot")
-    L212.FORESTEmissionsFactors_BCOC_D_noprot <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_D_noprot")
     L212.FORESTEmissionsFactors_future <- get_data(all_data, "L212.FORESTEmissionsFactors_future")
     L212.FORESTEmissionsFactors_future_prot <- get_data(all_data, "L212.FORESTEmissionsFactors_future_prot")
 
@@ -64,12 +52,6 @@ module_emissions_batch_all_protected_unmgd_emissions_xml <- function(command, ..
       add_xml_data(L212.FORESTEmissions_FF_noprot, "InputEmissionsUnmgd") %>%
       add_xml_data(L212.FORESTEmissions_D_prot, "OutputEmissionsUnmgd") %>%
       add_xml_data(L212.FORESTEmissions_D_noprot, "OutputEmissionsUnmgd") %>%
-      #add_xml_data(L212.GRASSEmissionsFactors_BCOC_prot, "InputEmFactUnmgd") %>%
-      #add_xml_data(L212.GRASSEmissionsFactors_BCOC_noprot, "InputEmFactUnmgd") %>%
-      #add_xml_data(L212.FORESTEmissionsFactors_BCOC_FF_prot, "InputEmFactUnmgd") %>%
-      #add_xml_data(L212.FORESTEmissionsFactors_BCOC_FF_noprot, "InputEmFactUnmgd") %>%
-      #add_xml_data(L212.FORESTEmissionsFactors_BCOC_D_prot, "OutputEmFactUnmgd") %>%
-      #add_xml_data(L212.FORESTEmissionsFactors_BCOC_D_noprot, "OutputEmFactUnmgd") %>%
       add_xml_data(L212.FORESTEmissionsFactors_future, "OutputEmFactUnmgd") %>%
       add_xml_data(L212.FORESTEmissionsFactors_future_prot, "OutputEmFactUnmgd") %>%
       add_precursors("L212.ItemName",
@@ -80,12 +62,6 @@ module_emissions_batch_all_protected_unmgd_emissions_xml <- function(command, ..
                      "L212.FORESTEmissions_FF_noprot",
                      "L212.FORESTEmissions_D_prot",
                      "L212.FORESTEmissions_D_noprot",
-                     "L212.GRASSEmissionsFactors_BCOC_prot",
-                     "L212.GRASSEmissionsFactors_BCOC_noprot",
-                     "L212.FORESTEmissionsFactors_BCOC_FF_prot",
-                     "L212.FORESTEmissionsFactors_BCOC_FF_noprot",
-                     "L212.FORESTEmissionsFactors_BCOC_D_prot",
-                     "L212.FORESTEmissionsFactors_BCOC_D_noprot",
                      "L212.FORESTEmissionsFactors_future",
                      "L212.FORESTEmissionsFactors_future_prot") ->
       all_protected_unmgd_emissions.xml

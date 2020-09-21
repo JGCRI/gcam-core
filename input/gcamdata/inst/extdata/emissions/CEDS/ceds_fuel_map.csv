@@ -2,7 +2,7 @@
 # Title: CEDS-GCAM fuel map
 # Units: NA
 # Source: None
-# Description: Maps CEDS fuel categories to GCAM fuel categories
+# Description: Maps CEDS fuel categories to CEDS aggregate fuel categories
 # Column types: cc
 CEDS_fuel,CEDS_agg_fuel
 process,process

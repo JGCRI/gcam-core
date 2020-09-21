@@ -1,7 +1,7 @@
 # File: UCD_techs_emissions_revised.csv
 # Title: UCD technologies mapping
 # Units: NA
-# Description: Maps UCD technology to GCAM technology
+# Description: Maps UCD resived size classes to GCAM emissions technologies
 # Source: Mishra et al. 2013.Documented in JIRA issue https://jira.pnnl.gov/jira/browse/JGCRI-358?src=confmacro.
 # Column types: ccccccccccc 
 # ----------
