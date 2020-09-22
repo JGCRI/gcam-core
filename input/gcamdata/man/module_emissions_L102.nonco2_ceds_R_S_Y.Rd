@@ -17,11 +17,12 @@ a vector of output names, or (if \code{command} is "MAKE") all
 the generated outputs: \code{L102.ceds_nonco2_tg_R_S_F}.
 }
 \description{
-Calculates emissions using CEDS and CMIP emissions data for all sectors and fuels
+Calculates emissions using CEDS and CMIP emissions data for all sectors and fuels. Note that the outputs of this chunk are a part of the prebuilt data.
+To change the ouputs of this chunk, add CEDS data to the CEDS folder under emissions and rebuild prebuilt data.
 }
 \details{
 Calculates emissions using CEDS and CMIP data.
 }
 \author{
-CWR May 2019
+CWR May 2019, KBN June 2020
 }
