@@ -37,14 +37,14 @@ biomass (IGCC CCS),Biopower,Dedicated,,biomass (conv),x
 Gen_III,Nuclear,Nuclear,1,,
 wind,Land-Based Wind,TRG 5,1,,
 wind_storage,Land-Based Wind,TRG 5,1,,x
-wind_storage,Storage,Battery Storage,4,,x
+wind_storage,Storage,Battery Storage,3,,x
 PV,Solar - Utility PV,Utility PV - Kansas City,1.176,,
 PV_storage,Solar - Utility PV,Utility PV - Kansas City,1.176,,x
-PV_storage,Storage,Battery Storage,4,,x
+PV_storage,Storage,Battery Storage,1.5,,x
 CSP,Solar - CSP,10hrs TES - Class 3,,CSP_storage,x
 CSP_storage,Solar - CSP,10hrs TES - Class 3,1,,
 geothermal,Geothermal,Hydro / Flash,1,,
 rooftop_pv,Solar - PV Dist. Comm,Comm PV - Kansas City,0.588,,
 rooftop_pv,Solar - PV Dist. Res,Res PV - Kansas City,0.588,,
 wind_offshore,Offshore Wind,TRG 4,1,,
-battery,Storage,Battery Storage,4,,
+battery,Storage,Battery Storage,1.5,,
