@@ -18,10 +18,12 @@
 #' @author ST September 2018
 module_water_L101.water_supply_groundwater <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "water/groundwater_uniform",
-             FILE = "water/groundwater_constrained",
+    return(c(FILE = "common/iso_GCAM_regID",
+             FILE = "water/aquastat_ctry",
+             FILE = "water/groundwater_uniform",
              FILE = "water/groundwater_trend_gleeson",
-             FILE = "water/groundwater_trend_watergap"))
+             FILE = "water/groundwater_trend_watergap",
+             FILE = "water/superwell_groundwater_cost_elec"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L101.DepRsrcCurves_ground_uniform_bm3",
              "L101.groundwater_grades_constrained_bm3",
@@ -33,14 +35,17 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       avail <- hist.use <- hist.price <-
       grade <- scenario <- trend_km3PerYr <-
       hi <- nhi <- human_only <- depletion <-
-      netDepletion <- NULL
+      netDepletion <- Country <- iso <- cost_bin <-
+      lower_cost <- median_cost <- upper_cost <-
+      grade <- elec_EJ <- elec_coef <- NULL
 
     all_data <- list(...)[[1]]
 
     # Step 1. Load required inputs
-
+    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID", strip_attributes = TRUE)
+    aquastat_ctry <- get_data(all_data, "water/aquastat_ctry", strip_attributes = TRUE)
     gw_uniform <- get_data(all_data, "water/groundwater_uniform", strip_attributes = TRUE)
-    gw_constrained <- get_data(all_data, "water/groundwater_constrained", strip_attributes = TRUE)
+    superwell_groundwater_cost_elec <- get_data(all_data, "water/superwell_groundwater_cost_elec", strip_attributes = TRUE)
 
     # throw error if water.GROUNDWATER_CALIBRATION is incorrectly referenced in constants.R
     if(!(water.GROUNDWATER_CALIBRATION %in% c("watergap", "gleeson"))){
@@ -88,12 +93,37 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
 
 
     # Step 3: Prepare constrained groundwater
-    gw_constrained %>%
-      mutate(scenario = scenario) %>%
-      # ^^ removes attributes from input
-      filter(scenario == water.GROUNDWATER_SCENARIO) %>%
-      select(-scenario) ->
-      L101.groundwater_grades_constrained_bm3
+    # prepare the country mapping list
+    superwell_ctry <- select(aquastat_ctry, Country = Superwell_country, iso) %>%
+      filter(!is.na(Country)) %>%
+      distinct()
+
+    # Re-map the country for basin #103 from China to Taiwan
+    L101.Superwell_costcurves_ctry <- superwell_groundwater_cost_elec %>%
+      filter(!is.na(Country)) %>%
+      mutate(Country = if_else(GCAM_basin_ID == 103, "Taiwan", Country)) %>%
+      left_join_error_no_match(superwell_ctry, by = "Country") %>%
+      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
+      mutate(cost_bin = if_else(cost_bin == "> 5", "(5, 5]", cost_bin)) %>%
+      separate(cost_bin, into = c("lower_cost", "upper_cost"), sep = ",") %>%
+      mutate(lower_cost = as.numeric(substr(lower_cost, 2, nchar(lower_cost))),
+             upper_cost = as.numeric(substr(upper_cost, 1, nchar(upper_cost) - 1)),
+             median_cost = (lower_cost + upper_cost) / 2)
+
+    # Extract the grade numbers from the available levels
+    grades <- tibble(median_cost = sort(unique(L101.Superwell_costcurves_ctry$median_cost)))
+    grades$grade <- paste0("grade", 1:nrow(grades))
+
+    L101.groundwater_grades_constrained_bm3 <- L101.Superwell_costcurves_ctry %>%
+      mutate(elec_EJ = elec_coef * CONV_KWH_GJ * available) %>%
+      left_join_error_no_match(grades, by = "median_cost") %>%
+      group_by(GCAM_region_ID, GCAM_basin_ID, grade, median_cost) %>%
+      summarise(available = sum(available),
+                elec_EJ = sum(elec_EJ)) %>%
+      ungroup() %>%
+      mutate(elec_coef = elec_EJ / available) %>%
+      select(GCAM_region_ID, GCAM_basin_ID, grade, extractioncost = median_cost, available, elec_coef)
+
 
     # step 4: Prepare groundwater depletion calibration data
 
@@ -133,7 +163,9 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       add_units("km^3/yr") %>%
       add_comments("These curves are based on global estimates of groundwater volumes") %>%
       add_legacy_name("L101.groundwater_grades_constrained_bm3") %>%
-      add_precursors("water/groundwater_constrained") ->
+      add_precursors("common/iso_GCAM_regID",
+                     "water/aquastat_ctry",
+                     "water/superwell_groundwater_cost_elec") ->
       L101.groundwater_grades_constrained_bm3
 
     L101.groundwater_depletion_bm3 %>%

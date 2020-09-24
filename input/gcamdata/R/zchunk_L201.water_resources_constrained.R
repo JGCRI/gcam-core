@@ -20,6 +20,7 @@
 module_water_L201.water_resources_constrained <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_to_country_mapping",
+             FILE = "water/A72.globaltech_coef",
              FILE = "common/GCAM_region_names",
              FILE = "common/iso_GCAM_regID",
              "L100.runoff_accessible",
@@ -29,7 +30,6 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
              "L101.DepRsrcCurves_ground_uniform_bm3",
              "L103.water_mapping_R_GLU_B_W_Ws_share",
              "L103.water_mapping_R_B_W_Ws_share",
-             "L125.LC_bm2_R_GLU",
              "L103.water_mapping_R_B_W_Ws_share",
              "L165.ag_IrrEff_R",
              "L165.IrrWithd_km3_R_B_Y",
@@ -44,7 +44,8 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
              "L201.RenewRsrcCurves_calib",
              "L201.DepRsrcCurves_ground",
              "L201.RenewRsrcTechShrwt",
-             "L201.RsrcTechShrwt"))
+             "L201.RsrcTechShrwt",
+             "L201.RsrcTechCoef"))
   } else if(command == driver.MAKE) {
 
     region <- ISO <- iso <- GCAM_basin_ID <- Basin_name <- GCAM_region_ID <-
@@ -60,6 +61,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping", strip_attributes = TRUE)
+    A72.globaltech_coef <- get_data(all_data, "water/A72.globaltech_coef", strip_attributes = TRUE)
     L103.water_mapping_R_GLU_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_GLU_B_W_Ws_share", strip_attributes = TRUE)
     L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share", strip_attributes = TRUE)
     L100.runoff_max_bm3 <- get_data(all_data, "L100.runoff_max_bm3")
@@ -68,7 +70,6 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     L101.DepRsrcCurves_ground_uniform_bm3 <- get_data(all_data, "L101.DepRsrcCurves_ground_uniform_bm3")
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
     L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
-    L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU")
     L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
     L165.ag_IrrEff_R <- get_data(all_data, "L165.ag_IrrEff_R")
     L165.IrrWithd_km3_R_B_Y <- get_data(all_data, "L165.IrrWithd_km3_R_B_Y")
@@ -375,63 +376,28 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         mutate(grade = "grade hist", price = water.DEFAULT_BASEYEAR_WATER_PRICE) ->
       groundwater_hist
 
-    # Parse out groundwater supply curves by basin to basin and region on the basis of land area shares
-    region_within_basin_shares <- L125.LC_bm2_R_GLU %>%
-      left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GCAM_basin_ID),
-                               by = c(GLU = "GLU_code")) %>%
-      group_by(GCAM_basin_ID) %>%
-      mutate(share = LC_bm2 / sum(LC_bm2)) %>%
-      ungroup() %>%
-      select(GCAM_region_ID, GCAM_basin_ID, share)
-
       bind_rows(
-        L201.region_basin %>%
-          left_join(region_within_basin_shares, by = c("GCAM_region_ID", "GCAM_basin_ID")) %>%
-          # Assign zero groundwater share where our estimated region/basin land area is 0
-          replace_na(list(share = 0)) %>%
-          left_join(L101.groundwater_grades_constrained_bm3,
-                    by = "GCAM_basin_ID") %>%
-          mutate(available = available * share) %>%
-          select(-share),
-        # ^^ non-restrictive join required (NA values generated for unused basins)
+        # inner_join: there are 10 region x basins in L201.region_basin that aren't in L101.groundwater_grades_constrained_bm3,
+        # and 23 vice versa. It is assumed that these are tiny basins and the discrepancies aren't worth worrying about.
+        inner_join(L101.groundwater_grades_constrained_bm3, L201.region_basin,
+                   by = c("GCAM_region_ID", "GCAM_basin_ID")),
         L201.region_basin_home %>%
           left_join(groundwater_hist,
                     by = "GCAM_basin_ID") %>%
           # ^^ non-restrictive join required (NA values generated for unused basins)
+          rename(extractioncost = price) %>%
+          mutate(available = round(available * water.GW_HIST_MULTIPLIER, water.DIGITS_GROUND_WATER_RSC),
+                 # no additional electric energy is assigned to the historical grades of groundwater
+                 elec_coef = 0) %>%
           filter(!is.na(grade))) %>%
-        rename(extractioncost = price) %>%
         mutate(subresource = "groundwater",
-               available = round(available * water.GW_HIST_MULTIPLIER, water.DIGITS_GROUND_WATER_RSC),
                extractioncost = round(extractioncost, water.DIGITS_GROUND_WATER_RSC)) %>%
-        select(LEVEL2_DATA_NAMES[["RsrcCurves"]]) %>%
+        select(c(LEVEL2_DATA_NAMES[["RsrcCurves"]], "elec_coef")) %>%
         arrange(region, resource, extractioncost) ->
         L201.DepRsrcCurves_ground
 
-      # problem with original groundwater constrained input file
-      # contains extra 0 available grade and thus creastes discontinuous supply curve
-      L201.DepRsrcCurves_ground %>%
-        filter(grade == "grade24" & available == 0) ->
-        L201.DepRsrcCurves_ground_last
-
-      # drop grades with 0 availability in order to avoid having "flat" portions of the supply curve, where changes in
-      # price do not change the quantity supplied. keep the grade1 points even where availability is zero in order to
-      # ensure that the "grade hist" prices remain at desired levels.
-      bind_rows(
-        L201.DepRsrcCurves_ground %>%
-          filter(grade == "grade1" | available > 0),
-        L201.DepRsrcCurves_ground_last ) %>%
-        arrange(region, resource, extractioncost) ->
-        L201.DepRsrcCurves_ground
-
-      # Remove any discontinuities in the supply curve (0 available between 2 grades) at the first grade by assigning
-      # a small amount of water.
-      min_grade1_available <- min(L201.DepRsrcCurves_ground$available[L201.DepRsrcCurves_ground$grade == "grade1" &
-                                                                        L201.DepRsrcCurves_ground$available > 0])
-      L201.DepRsrcCurves_ground %>%
-        mutate(available = if_else(grade == "grade1" & available == 0,
-                                   min_grade1_available,
-                                   available)) ->
-        L201.DepRsrcCurves_ground
+      # TODO: set a "grade1" with 0 available in places where this grade is missing, in order to set a price limit on
+      # grade hist water (otherwise the prices of grade hist would linearly interpolate up to a potentially high level)
 
       L201.DepRsrcCurves_ground %>%
         mutate(subresource = paste(subresource, grade)) %>%
@@ -442,10 +408,10 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         filter(!is.na(grade)) %>%
         ungroup() %>%
         bind_rows(L201.DepRsrcCurves_ground %>% mutate(subresource = paste(subresource, grade)), .) %>%
-        filter(subresource != "grade24") ->
+        filter(subresource != "groundwater grade21") ->
         L201.DepRsrcCurves_ground
 
-      # Create an empty technology for all water resources and subresources.
+      # Create a technology for all water resources and subresources. This is where the groundwater electricity coefficient will be assigned.
       # Include a share weight of 1 to facilatate creating a technology.
       # Create technology for renewable freshwater and depletable groundwater subresource
       L201.RenewRsrcCurves_calib %>%
@@ -464,6 +430,16 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
                share.weight = 1.0) %>%
         select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
         L201.RsrcTechShrwt
+
+      # Energy inputs
+      elec_input_name <- unique(A72.globaltech_coef$minicam.energy.input)
+      L201.DepRsrcCurves_ground %>%
+        repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+        mutate(technology = subresource,
+               minicam.energy.input = elec_input_name,
+               coefficient = round(elec_coef, energy.DIGITS_COEFFICIENT)) %>%
+        select(LEVEL2_DATA_NAMES[["ResTechCoef"]]) ->
+        L201.RsrcTechCoef
 
     # ===================================================
 
@@ -551,8 +527,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
                        "L165.ag_IrrEff_R",
                        "L165.IrrWithd_km3_R_B_Y",
                        "L203.Production_watertd",
-                       "L101.groundwater_grades_constrained_bm3",
-                       "L125.LC_bm2_R_GLU") ->
+                       "L101.groundwater_grades_constrained_bm3") ->
         L201.DepRsrcCurves_ground
 
       L201.RenewRsrcTechShrwt %>%
@@ -566,8 +541,17 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         add_title("Water depletable resource technologies") %>%
         add_units("NA") %>%
         add_comments("share weight is 1") %>%
-        add_precursors("L201.DepRsrcCurves_ground") ->
+        same_precursors_as(L201.DepRsrcCurves_ground) ->
         L201.RsrcTechShrwt
+
+      L201.RsrcTechCoef %>%
+        add_title("Water depletable resource technologies input-output coefficients") %>%
+        add_units("GJ per m3") %>%
+        add_comments("calculated from Superwell data") %>%
+        same_precursors_as(L201.DepRsrcCurves_ground) %>%
+        add_precursors("water/A72.globaltech_coef") ->
+        L201.RsrcTechCoef
+
 
       return_data(L201.DeleteUnlimitRsrc,
                   L201.Rsrc,
@@ -578,7 +562,8 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
                   L201.RenewRsrcCurves_calib,
                   L201.DepRsrcCurves_ground,
                   L201.RenewRsrcTechShrwt,
-                  L201.RsrcTechShrwt)
+                  L201.RsrcTechShrwt,
+                  L201.RsrcTechCoef)
 
   } else {
     stop("Unknown command")
