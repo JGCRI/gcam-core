@@ -4,8 +4,14 @@
 \alias{add_node_leaf_names}
 \title{add_node_leaf_names}
 \usage{
-add_node_leaf_names(data, nesting_table, leaf_name, ...,
-  LT_name = "Land_Type", append_GLU = TRUE)
+add_node_leaf_names(
+  data,
+  nesting_table,
+  leaf_name,
+  ...,
+  LT_name = "Land_Type",
+  append_GLU = TRUE
+)
 }
 \arguments{
 \item{data}{Data, tibble}

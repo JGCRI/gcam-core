@@ -67,3 +67,16 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
   })
 
 }
+
+test_that("relative file path works", {
+  # testing to see if relative file path from get_relative_to_workdir resolves to same file as the absolute path
+  # this tests to see if get_relative_to_workdir is working
+
+  # get paths for file A_regions.csv in emissions folder
+  full_path <- system.file("extdata/emissions/A_regions.csv", package = "gcamdata")
+  relative_path <- get_relative_to_workdir(full_path)
+
+  # test if paths are equal
+  expect_equal(normalizePath(full_path), normalizePath(relative_path))
+
+})
