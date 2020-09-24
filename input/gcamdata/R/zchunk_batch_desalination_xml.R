@@ -13,6 +13,7 @@ module_water_batch_desalination_xml <- function(command, ...) {
              "L271.FinalEnergyKeyword_desal",
              "L271.SubsectorLogit_desal",
              "L271.SubsectorShrwtFllt_desal",
+             "L271.SubsectorInterp_desal",
              "L271.SubsectorInterpTo_desal",
              "L271.StubTech_desal",
              "L271.GlobalTechCoef_desal",
@@ -30,6 +31,7 @@ module_water_batch_desalination_xml <- function(command, ...) {
     L271.FinalEnergyKeyword_desal <- get_data(all_data, "L271.FinalEnergyKeyword_desal")
     L271.SubsectorLogit_desal <- get_data(all_data, "L271.SubsectorLogit_desal")
     L271.SubsectorShrwtFllt_desal <- get_data(all_data, "L271.SubsectorShrwtFllt_desal")
+    L271.SubsectorInterp_desal <- get_data(all_data, "L271.SubsectorInterp_desal")
     L271.SubsectorInterpTo_desal <- get_data(all_data, "L271.SubsectorInterpTo_desal")
     L271.StubTech_desal <- get_data(all_data, "L271.StubTech_desal")
     L271.GlobalTechCoef_desal <- get_data(all_data, "L271.GlobalTechCoef_desal")
@@ -43,6 +45,7 @@ module_water_batch_desalination_xml <- function(command, ...) {
       add_logit_tables_xml(L271.SubsectorLogit_desal, "SubsectorLogit") %>%
       add_xml_data(L271.FinalEnergyKeyword_desal, "FinalEnergyKeyword") %>%
       add_xml_data(L271.SubsectorShrwtFllt_desal, "SubsectorShrwtFllt") %>%
+      add_xml_data(L271.SubsectorInterp_desal, "SubsectorInterp") %>%
       add_xml_data(L271.SubsectorInterpTo_desal, "SubsectorInterpTo") %>%
       add_xml_data(L271.StubTech_desal, "StubTech") %>%
       add_xml_data(L271.GlobalTechCoef_desal, "GlobalTechCoef") %>%
@@ -53,6 +56,7 @@ module_water_batch_desalination_xml <- function(command, ...) {
                      "L271.SubsectorLogit_desal",
                      "L271.FinalEnergyKeyword_desal",
                      "L271.SubsectorShrwtFllt_desal",
+                     "L271.SubsectorInterp_desal",
                      "L271.SubsectorInterpTo_desal",
                      "L271.StubTech_desal",
                      "L271.GlobalTechCoef_desal",

@@ -4,4 +4,4 @@
 # Source: NA
 # Column types: ccccnccc
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.factor,final.energy,logit.type
-desalinated water,km^3,EJ and billion m3,1975$/m3,-3,fuel choice,energy-for-water,
+desalinated water,km^3,EJ and billion m3,1975$/m3,-1,fuel choice,energy-for-water,

@@ -5,5 +5,5 @@
 # Column types: cccnn
 supplysector,subsector,technology,1971,2100
 desalinated water,electricity,reverse osmosis,1,1
-desalinated water,refined liquids,distillation,0,0
-desalinated water,gas,distillation,0,0
+desalinated water,refined liquids,distillation,1,1
+desalinated water,gas,distillation,1,1
