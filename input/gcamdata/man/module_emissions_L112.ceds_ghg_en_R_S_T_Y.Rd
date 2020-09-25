@@ -28,7 +28,7 @@ Part 6 : Calculation of agricultural waste burning emissions.
 Part 7 : Calculation of input emissions, deforestation co-efs for unmanaged land emissions sectors.
 }
 \details{
-Calculates emissions using EPA emissions factors and energy data. Then scales to EDGAR emissions and calculates emissions factors.
+Calculates emissions using CEDS emissions and GCAM sectors.
 }
 \author{
 CWR Oct. 2018 , YO Mar. 2020, KBN 2020
