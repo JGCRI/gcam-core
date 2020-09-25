@@ -1,19 +1,20 @@
 #' module_emissions_L112.ceds_ghg_en_R_S_T_Y
 #'
 #' Calculates emissions and emissions factors using CEDS and GFED emissions data for GCAM sectors and technologies. The chunk contains processing for the following,
-#' Part 1 : Bifurcating CEDS road transport emissions into different modes using the GAINS emissions data
+#' Part 1 : Distributing CEDS road transport emissions into different modes using the GAINS emissions data
 #' Part 2 : Calculation of emission factors, input emissions for all combustion emission types.
 #' Part 3 : Calculation of input emissions for process emission sectors
-#' Part 4 : Calculation of agricultural emissions including waste burning emissions
-#' Part 5 : Calculation of animal sector emissions
-#' Part 6 : Calculation of input emissions, deforestation co-efs for unmanaged land emissions sectors.
+#' Part 4 : Calculation of animal sector emissions
+#' Part 5 : Calculation of cropland emissions.
+#' Part 6 : Calculation of agricultural waste burning emissions.
+#' Part 7 : Calculation of input emissions, deforestation co-efs for unmanaged land emissions sectors.
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L112.cedsghg_tg_R_en_S_F_Yh}, \code{L112.cedsghg_tgej_R_en_S_F_Yh}. The corresponding file in the
 #' original data system was \code{L112.ghg_en_R_S_T_Y.R} (emissions level1).
-#' @details Calculates emissions using EPA emissions factors and energy data. Then scales to EDGAR emissions and calculates emissions factors.
+#' @details Calculates emissions using CEDS emissions and GCAM sectors.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select mutate_all
 #' @importFrom tidyr gather spread
@@ -34,16 +35,16 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     if(command == driver.DECLARE_INPUTS) {
       return(c(FILE = "common/GCAM_region_names",
                FILE = "common/iso_GCAM_regID",
-               FILE = "emissions/mappings/GCAM_sector_tech_CEDS",
-               FILE = "emissions/mappings/GCAM_sector_tech_CEDS_revised",
+               FILE = "emissions/mappings/CEDS_sector_tech_proc",
+               FILE = "emissions/mappings/CEDS_sector_tech_proc_revised",
                FILE = "energy/mappings/UCD_techs",
                FILE = "emissions/mappings/UCD_techs_emissions_revised",
                FILE = "energy/calibrated_techs",
                FILE = "energy/calibrated_techs_bld_det",
                FILE = "emissions/mappings/Trn_subsector",
                FILE = "emissions/mappings/Trn_subsector_revised",
-               FILE = "emissions/CEDS/CEDS_sector_tech",
-               FILE = "emissions/CEDS/CEDS_sector_tech_revised",
+               FILE = "emissions/CEDS/CEDS_sector_tech_combustion",
+               FILE = "emissions/CEDS/CEDS_sector_tech_combustion_revised",
                FILE = "emissions/EPA_FCCC_IndProc_2005",
                FILE = "emissions/mappings/calibrated_outresources",
                FILE="emissions/CEDS/gains_iso_sector_emissions",
@@ -60,7 +61,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                "L154.IEA_histfut_data_times_UCD_shares",
                FILE = "emissions/CEDS/ceds_sector_map",
                FILE = "emissions/CEDS/ceds_fuel_map"
-               ))
+      ))
     } else if(command == driver.DECLARE_OUTPUTS) {
       return(c("L111.nonghg_tg_R_en_S_F_Yh",
                "L111.nonghg_tgej_R_en_S_F_Yh",
@@ -85,14 +86,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
       #silence packages
       fuel <- CEDS_sector <- em <- iso <- unit <- year <- emissions <- sector <- Non.CO2 <- GCAM_region_ID <- CEDS_agg_sector <-
-      CEDS_agg_fuel <- GCAM_region <- rev.mode <- rev_size.class <- UCD_fuel <- size.class <- UCD_technology <- UCD_sector <- sector_weight <-
-      dieseloil <- lightoil <- mode_weight <- sum_sector_weight <- sum_mode_weight <- secondary.output <- technology <- energy <- supplysector <-
-      subsector <- stub.technology <- sector <- service <- tranSubsector <- tranTechnology <- totalenergy <- enshare <- GCAMemissions <- D_driver <-
-      `2005` <- `2000` <- em_factor <- year2 <- year1 <- Land_Type <- PctDeforest <- PctForestFire <- forestfire <- deforest <- land_share <- awb_emission <-
-      total_emiss <- AWB_emiss_share <- total_excess_bio <- burnable <- WaterContent <- HarvestIndex <- Root_Shoot <- ResEnergy_GJt <- ErosCtrl_tHa <-
-      emiss_share <- prod_share <- total_prod <- crop_area_share <- prod_share_GLU <- GLU <- Prod_R_C <- crop_area_total <- scalar <- EPA_emissions <-
-      CEDS_emissions <- epa_emissions <-  ch4_em_factor <- production <- feed <- GCAM_commodity <- input.emissions <- EPA_agg_fuel_ghg <- EPA_agg_sector <-
-      EDGAR_agg_sector <- globalemfact <- emfact <- value <- em_fact <- . <- FF_driver <- NULL
+        CEDS_agg_fuel <- GCAM_region <- rev.mode <- rev_size.class <- UCD_fuel <- size.class <- UCD_technology <- UCD_sector <- sector_weight <-
+        dieseloil <- lightoil <- mode_weight <- sum_sector_weight <- sum_mode_weight <- secondary.output <- technology <- energy <- supplysector <-
+        subsector <- stub.technology <- sector <- service <- tranSubsector <- tranTechnology <- totalenergy <- enshare <- GCAMemissions <- D_driver <-
+        `2005` <- `2000` <- em_factor <- year2 <- year1 <- Land_Type <- PctDeforest <- PctForestFire <- forestfire <- deforest <- land_share <- awb_emission <-
+        total_emiss <- AWB_emiss_share <- total_excess_bio <- burnable <- WaterContent <- HarvestIndex <- Root_Shoot <- ResEnergy_GJt <- ErosCtrl_tHa <-
+        emiss_share <- prod_share <- total_prod <- crop_area_share <- prod_share_GLU <- GLU <- Prod_R_C <- crop_area_total <- scalar <- EPA_emissions <-
+        CEDS_emissions <- epa_emissions <-  ch4_em_factor <- production <- feed <- GCAM_commodity <- input.emissions <- EPA_agg_fuel_ghg <- EPA_agg_sector <-
+        EDGAR_agg_sector <- globalemfact <- emfact <- value <- em_fact <- . <- FF_driver <- NULL
 
 
       #Get CEDS_GFED data
@@ -100,13 +101,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
       # Optionally gets pre-built CEDS data
       if(is.null(L112.CEDS_GCAM)) {
-        #Proprietary IEA energy data are not available, so used saved outputs
+        #Proprietary CEDS emissions data are not available, so used saved outputs
         L112.CEDS_GCAM <- prebuilt_data("L102.ceds_GFED_nonco2_tg_R_S_F")
       } else {
       }
       #In case of tanker loading emissions which are classified as process emissions, transfer them to refined liquids. Same for processs industrial energy emissions
       L112.CEDS_GCAM %>%
         mutate(CEDS_agg_fuel=if_else(CEDS_agg_sector=="trn_intl_ship",if_else(CEDS_agg_fuel=="process","refined liquids",CEDS_agg_fuel),CEDS_agg_fuel)) %>%
+        # Note that these are 1A1bc other energy transformation emissions, which are from both refineries and processes such as coal coke plants. These will be broken out in CEDS in the future in more detail.
         mutate(CEDS_agg_fuel=if_else(CEDS_agg_sector=="industry_energy",if_else(CEDS_agg_fuel=="process","refined liquids",CEDS_agg_fuel),CEDS_agg_fuel)) %>%
         #Only keep nitric and adipic acids for N2O. For the rest, put these in generic industrial processes.
         mutate(CEDS_agg_sector=if_else(Non.CO2 !="N2O",if_else(CEDS_agg_fuel=="process",
@@ -136,9 +138,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       }
       #kbn 2019/11/11 Add code below so that we can use revised sub-sectors from transportation model
       if (energy.TRAN_UCD_MODE=="rev.mode"){
-        GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_CEDS_revised") %>% distinct()
+        GCAM_sector_tech <- get_data(all_data, "emissions/mappings/CEDS_sector_tech_proc_revised") %>% distinct()
       }else{
-        GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech_CEDS")}
+        GCAM_sector_tech <- get_data(all_data, "emissions/mappings/CEDS_sector_tech_proc")}
 
       #kbn 2019/11/11 Add code below so that we can use revised sub-sectors from transportation model
       if (energy.TRAN_UCD_MODE=="rev.mode"){
@@ -163,9 +165,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
       #kbn 2019/11/11 Add in transport flexibility below
       if (energy.TRAN_UCD_MODE=="rev.mode"){
-        CEDS_sector_tech <- get_data(all_data, "emissions/CEDS/CEDS_sector_tech_revised") %>% distinct()}else{
+        CEDS_sector_tech <- get_data(all_data, "emissions/CEDS/CEDS_sector_tech_combustion_revised") %>% distinct()}else{
 
-          CEDS_sector_tech <- get_data(all_data, "emissions/CEDS/CEDS_sector_tech")
+          CEDS_sector_tech <- get_data(all_data, "emissions/CEDS/CEDS_sector_tech_combustion")
         }
 
       calibrated_outresources <- get_data(all_data, "emissions/mappings/calibrated_outresources")
@@ -183,13 +185,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
       #kbn calculate emissions for different modes here
       # ===========================
-      #Part 1: Bifurcate road emissions from CEDS into different modes using GAINS data
+      #Part 1: Distributing road emissions from CEDS into different modes using GAINS data
       # ===========================
 
       #Filter out road emissions
       L112.CEDS_Road_emissions <- L112.CEDS_GCAM %>%  filter(CEDS_agg_sector == "trn_road")
       L112.CEDS_GCAM<- L112.CEDS_GCAM %>%  filter(CEDS_agg_sector != "trn_road")
 
+      #Clean IEA data, filter to road emissions and  remove zero emission technologies.
       IEA_Ctry_data %>%
         #Use only historical years
         filter(year <= MODEL_FINAL_BASE_YEAR) %>%
@@ -197,9 +200,10 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         filter(mode %notin% c("Rail","HSR")) %>%
         select(-UCD_fuel,-fuel,-size.class) %>%
         rename(fuel=UCD_technology) %>%
-        filter(fuel %notin% c("BEV","FCEV","LA-BEV","NG")) %>%
+        filter(fuel %notin% emissions.ZERO_EM_TECH) %>%
         mutate(fuel =if_else(fuel=="Hybrid Liquids","Liquids",fuel))->Clean_IEA_ctry_data
 
+      #Calculate GAINS sector weights which we can use on CEDS data to distribute emissions into Passenger and Freight.
       Clean_IEA_ctry_data %>%
         group_by(iso,UCD_sector,year) %>%
         mutate(value=sum(value)) %>%
@@ -217,7 +221,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         #Use these sector weights to split CEDS emissions into passenger and freight
         distinct() ->GAINS_sector_weights
 
-
+      #Calculate GAINS mode weights which we can use on CEDS data to distribute emissions into different modes.
       Clean_IEA_ctry_data %>%
         group_by(iso,mode,year,UCD_sector) %>%
         mutate(value=sum(value)) %>%
@@ -229,16 +233,16 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         na.omit() %>%
         #Now calculate mode wights here
         group_by(Non.co2,GCAM_region_ID,year,mode,UCD_sector) %>%
-        #Revisit this. Make it compatible with old size classes as well in the future.
+        #Revisit this. May want to make it compatible with old size classes as well in the future (only if required/requested).
         #For LDV_2W_3W use a weighted average of light and heavy diesel oil. For Trucks use heavy diesel oil and for passenger buses use light oil.
         mutate(mode_weight=if_else(mode=="Bus",sum(dieseloil*value),
-                                     if_else(mode=="LDV_2W_3W",sum(((lightoil+dieseloil)/2)*value),
-                                             if_else(mode=="Truck",sum(dieseloil*value),sum(lightoil*value))))) %>%
+                                   if_else(mode=="LDV_2W_3W",sum(((lightoil+dieseloil)/2)*value),
+                                           if_else(mode=="Truck",sum(dieseloil*value),sum(lightoil*value))))) %>%
         ungroup() %>%
         select(Non.co2,GCAM_region_ID,year,mode,mode_weight,UCD_sector) %>%
         distinct()->GAINS_mode_weights
 
-
+      #Complete distribution here by sector, mode.
       L112.CEDS_Road_emissions %>%
         rename(Non.co2=Non.CO2) %>%
         #Compute emissions by non.co2
@@ -267,8 +271,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         rename(CEDS_agg_sector=mode,Non.CO2=Non.co2) %>%
         select(GCAM_region_ID,year,Non.CO2,CEDS_agg_sector,CEDS_agg_fuel,emissions) %>% distinct()->L112.CEDS_GCAM_Road_Emissions_GAINS
 
-        #Bind new GAINS weighted emissions into CEDS emissions
-        L112.CEDS_GCAM %>%  bind_rows(L112.CEDS_GCAM_Road_Emissions_GAINS)->L112.CEDS_GCAM
+      #Bind new GAINS weighted emissions into CEDS emissions
+      L112.CEDS_GCAM %>%  bind_rows(L112.CEDS_GCAM_Road_Emissions_GAINS)->L112.CEDS_GCAM
 
 
       # ===========================
@@ -427,7 +431,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
       GCAM_sector_tech %>%
         select(supplysector, subsector, stub.technology, EDGAR_agg_sector, EPA_agg_sector, EPA_agg_fuel_ghg) %>%
-        filter(EDGAR_agg_sector %in% c("industry_processes" , "chemicals", "landfills", "wastewater",  # Filter for the agg sectors in EDGAR for all NonCO2s.
+        filter(EDGAR_agg_sector %in% c("industry_processes" , "chemicals", "landfills", "wastewater",  # Filter for the agg sectors in EDGAR column for all NonCO2s.
                                        "solvents","chemicals_adipic","chemicals_nitric")) %>%
         repeat_add_columns(tibble(Non.CO2 = unique(L112.CEDS_GCAM_Proc$Non.CO2))) %>%
         repeat_add_columns(tibble(year = emissions.CEDS_YEARS)) %>%
@@ -454,13 +458,15 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       # ===================================================
       # Computing unscaled emissions by country and technology
       # using animal production from L107.an_Prod_Mt_R_C_SYS_Fd_Y
-      # and EPA emissions factos.
+      # and EPA emissions factors that are scaled up to CEDS emissions.
 
+      #First get Animal emissions from CEDS
       L112.CEDS_GCAM %>%
         filter(CEDS_agg_sector == "Animals") %>%
         mutate(Non.CO2 = paste(Non.CO2,"_AGR",sep="")) ->
         L112.CEDS_GCAM_An
 
+      #Compute EPA animal emissions.
       L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
         rename(production = value) %>%
         left_join(GCAM_sector_tech, by = c("GCAM_commodity" = "sector", "system" = "fuel", "feed" = "technology")) %>%
@@ -495,14 +501,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         left_join(L113.emiss_scalar, by = c("GCAM_region_ID", "Non.CO2", "CEDS_agg_sector", "year")) %>%
         mutate(emissions = epa_emissions * scalar) %>%
         select(-EPA_emissions, -CEDS_emissions) %>%
-        filter(year %in% emissions.EDGAR_YEARS) %>%
+        filter(year %in% emissions.CEDS_YEARS) %>%
         replace_na(list(emissions = 0)) %>%
         select(GCAM_region_ID, Non.CO2, supplysector = GCAM_commodity, subsector = system, stub.technology = feed,
                value = emissions, year) ->
         L113.ghg_tg_R_an_C_Sys_Fd_Yh_full
 
       # ==============================
-      # Part 5: Agricultural Emissions
+      # Part 5: Cropland Emissions
       # ==============================
 
       # Compute shares of regional cropland allocation by crop type, and regional production of each crop by each GLU
@@ -690,7 +696,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       # Part 7: UNMANAGED LAND EMISSIONS
       # ========================
 
-      # Select agricultural waste burning emissions
+      # Select unmanaged land emissions.
 
       L112.CEDS_GCAM %>%
         filter(CEDS_agg_sector %in% c("forest", "grassland", "deforest")) %>%
@@ -705,8 +711,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         mutate(land_share = value / sum(value)) %>%                                                           # Compute the share of regional grassland in each GLU
         select(-value) %>%
         # There are regions (e.g., region #3) where we have grassland area, but no emissions. Use inner join to remove
-        inner_join(filter(L112.CEDS_GCAM_unmgd, sector == "grassland"), by = c("GCAM_region_ID", "year")) %>%         # Map in EDGAR grassland emissions
-        mutate(emissions = emissions * land_share) %>%                                                                # Compute emissions by GLU using EDGAR totals and land shares
+        inner_join(filter(L112.CEDS_GCAM_unmgd, sector == "grassland"), by = c("GCAM_region_ID", "year")) %>%         # Map in CEDS grassland emissions
+        mutate(emissions = emissions * land_share) %>%                                                                # Compute emissions by GLU using CEDS totals and land shares
         ungroup() %>%
         select(-sector, -land_share) ->
         L124.nonco2_tg_R_grass_Y_GLU_full
@@ -747,8 +753,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         select(-value) %>%
         # There are places with land area but no emissions and vice versa. Use an inner_join to only get places with both.
         # Note: this means that some regions get zero emissions coefficients in the historic period (future deforestation emissions coefs are defined below)
-        inner_join(L112.CEDS_GCAM_unmgd_Forest_Deforest, by = c("GCAM_region_ID", "year")) %>%       # Map in EDGAR emissions information
-        mutate(emissions = emissions * land_share) %>%                                                           # Compute forest emissions from EDGAR totals and land shares
+        inner_join(L112.CEDS_GCAM_unmgd_Forest_Deforest, by = c("GCAM_region_ID", "year")) %>%       # Map in CEDS emissions information
+        mutate(emissions = emissions * land_share) %>%                                                           # Compute forest emissions from CEDS totals and land shares
         select(-land_share) %>%
         left_join(FireShares_R_G_Y, by = c("GCAM_region_ID", "Non.CO2", "year")) %>%                     # Map in GFED fire shares
         # Assume missing values mean 100% forest fires since these are easier to model in GCAM
@@ -771,7 +777,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         mutate(driver = (year1 - year2) / (emissions.DEFOREST_COEF_YEARS[2] - emissions.DEFOREST_COEF_YEARS[1]),    # Compute average annual deforestation rates (change in forest area / number of years)
                driver = if_else(driver < 0, 0, driver)) %>%                                             # Deforestation emissions only happen if forest area decreases
         repeat_add_columns(tibble(Non.CO2 = unique(L124.nonco2_tg_R_forest_Y_GLU_full$Non.CO2))) %>%                                                                # Add in rows for all required emissions
-        left_join(filter(L124.nonco2_tg_R_forest_Y_GLU_full,                                                 # Map in EDGAR deforestation emissions for the final deforestation year (as of 5/14/17 this was 2005)
+        left_join(filter(L124.nonco2_tg_R_forest_Y_GLU_full,                                                 # Map in CEDS deforestation emissions for the final deforestation year (as of 5/14/17 this was 2005)
                          year == emissions.DEFOREST_COEF_YEARS[2],
                          technology == "Deforest"), by = c("GCAM_region_ID", "Land_Type", "GLU", "Non.CO2")) %>%
         replace_na(list(value = 0)) %>%                                                                 # Note: "value" are the emissions calculated above
@@ -788,7 +794,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       # CLEANING UP FINAL OUTPUTS TO MATCH OLD DATA SYSTEM LEVEL 1 OUTPUTS
       # ==================================================================
 
-      # Because of the diverse drivers and data sources, old level 1 outputs from EDGAR were separated into multiple data frames and sources.
+      # Because of the diverse drivers and data sources, old level 1 outputs from CEDS were separated into multiple data frames and sources.
       # Some of these are preserved but many are different. This code slices the prepared CEDS emissions data to match the preexisting level 1 data
       # outputs to allow level two code to continue working unchanged.
 
@@ -943,14 +949,13 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_title("Non-ghg emission totals by GCAM sector, fuel, technology, and driver type for CEDS historical years.") %>%
         add_units("Tg") %>%
         add_comments("Compute unscaled non-ghg emissions by country and technology, and CEDS emissions by region and sector.") %>%
-        add_comments("Then, scale EPA emissions by tech to match EDGAR totals, compute international shipping and international aviation emissions, ") %>%
-        add_comments("and finally calculate non-ghg emission totals by GCAM sector, fuel, technology, and driver type for EDGAR historical years.") %>%
+        add_comments("and finally calculate non-ghg emission totals by GCAM sector, fuel, technology, and driver type for CEDS historical years.") %>%
         add_legacy_name("L111.nonghg_tg_R_en_S_F_Yh") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                        "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
-                       "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech","emissions/mappings/Trn_subsector_revised",
-                       "emissions/mappings/GCAM_sector_tech_CEDS","emissions/mappings/calibrated_outresources","emissions/mappings/GCAM_sector_tech_CEDS_revised",
-                       "L101.in_EJ_R_en_Si_F_Yh","emissions/CEDS/CEDS_sector_tech_revised","emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
+                       "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech_combustion","emissions/mappings/Trn_subsector_revised",
+                       "emissions/mappings/CEDS_sector_tech_proc","emissions/mappings/calibrated_outresources","emissions/mappings/CEDS_sector_tech_proc_revised",
+                       "L101.in_EJ_R_en_Si_F_Yh","emissions/CEDS/CEDS_sector_tech_combustion_revised","emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
                        "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions") ->
         L111.nonghg_tg_R_en_S_F_Yh
 
@@ -970,9 +975,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_legacy_name("L112.ghg_tg_R_en_S_F_Yh") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                        "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
-                       "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech","emissions/mappings/calibrated_outresources",
+                       "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech_combustion","emissions/mappings/calibrated_outresources",
                        "L101.in_EJ_R_en_Si_F_Yh", "emissions/mappings/Trn_subsector_revised",
-                       "emissions/CEDS/CEDS_sector_tech_revised","emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
+                       "emissions/CEDS/CEDS_sector_tech_combustion_revised","emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
                        "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions") ->
         L112.ghg_tg_R_en_S_F_Yh
 
@@ -984,9 +989,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_legacy_name("L112.ghg_tgej_R_en_S_F_Yh") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                        "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
-                       "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech","emissions/mappings/calibrated_outresources","emissions/mappings/Trn_subsector_revised",
+                       "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech_combustion","emissions/mappings/calibrated_outresources","emissions/mappings/Trn_subsector_revised",
                        "L101.in_EJ_R_en_Si_F_Yh",
-                       "emissions/CEDS/CEDS_sector_tech_revised","emissions/mappings/UCD_techs_emissions_revised") ->
+                       "emissions/CEDS/CEDS_sector_tech_combustion_revised","emissions/mappings/UCD_techs_emissions_revised") ->
         L112.ghg_tgej_R_en_S_F_Yh
 
       L113.ghg_tg_R_an_C_Sys_Fd_Yh %>%
@@ -995,12 +1000,12 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_comments("First: compute unscaled emissions by country and technology") %>%
         add_comments("Second: match in emissions factors from EPA") %>%
         add_comments("Third: compute unscaled emissions (production * emfactors) and aggregate by sector and region") %>%
-        add_comments("Fourth: compute EDGAR emissions by region and sector") %>%
-        add_comments("Fifth: scale EPA emissions by tech to match EDGAR") %>%
+        add_comments("Fourth: compute CEDS emissions by region and sector") %>%
+        add_comments("Fifth: scale EPA emissions by tech to match CEDS") %>%
         add_legacy_name("L113.ghg_tg_R_an_C_Sys_Fd_Yh") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
-                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech", "emissions/CEDS/CEDS_sector_tech_revised",
-                       "emissions/mappings/GCAM_sector_tech_CEDS", "L107.an_Prod_Mt_R_C_Sys_Fd_Y","emissions/mappings/GCAM_sector_tech_CEDS_revised",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion", "emissions/CEDS/CEDS_sector_tech_combustion_revised",
+                       "emissions/mappings/CEDS_sector_tech_proc", "L107.an_Prod_Mt_R_C_Sys_Fd_Y","emissions/mappings/CEDS_sector_tech_proc_revised",
                        "L103.ghg_tgmt_USA_an_Sepa_F_2005") ->
         L113.ghg_tg_R_an_C_Sys_Fd_Yh
 
@@ -1011,7 +1016,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_comments("Annual animal NH3 emissions is computed using CEDS emissions and FAO animal production.") %>%
         add_legacy_name("L115.nh3_tg_R_an_C_Sys_Fd_Yh") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
-                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech","emissions/CEDS/CEDS_sector_tech_revised",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion","emissions/CEDS/CEDS_sector_tech_combustion_revised",
                        "L107.an_Prod_Mt_R_C_Sys_Fd_Y","L107.an_Prod_Mt_R_C_Sys_Fd_Y") ->
         L115.nh3_tg_R_an_C_Sys_Fd_Yh
 
@@ -1022,7 +1027,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_comments("estimated from production, harvest index, and water content") %>%
         add_legacy_name("L121.AWBshare_R_C_Y_GLU") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
-                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech","emissions/CEDS/CEDS_sector_tech_revised",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion","emissions/CEDS/CEDS_sector_tech_combustion_revised",
                        "L101.ag_Prod_Mt_R_C_Y_GLU", "L111.ag_resbio_R_C") ->
         L121.AWBshare_R_C_Y_GLU
 
@@ -1041,17 +1046,17 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_comments("Multiply region/crop area shares by region/crop/GLU production shares") %>%
         add_legacy_name("L122.EmissShare_R_C_Y_GLU") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
-                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech","emissions/CEDS/CEDS_sector_tech_revised",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion","emissions/CEDS/CEDS_sector_tech_combustion_revised",
                        "L101.ag_Prod_Mt_R_C_Y_GLU","L111.ag_resbio_R_C","L122.LC_bm2_R_HarvCropLand_C_Yh_GLU") ->
         L122.EmissShare_R_C_Y_GLU
 
       L122.ghg_tg_R_agr_C_Y_GLU %>%
         add_title("Agriculture emissions by GCAM region, commodity, GLU, and historical year") %>%
         add_units("Tg") %>%
-        add_comments("EDGAR emissions shared out by crop production") %>%
+        add_comments("CEDS emissions shared out by crop production") %>%
         add_legacy_name("L122.ghg_tg_R_agr_C_Y_GLU") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
-                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech","emissions/CEDS/CEDS_sector_tech_revised",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion","emissions/CEDS/CEDS_sector_tech_combustion_revised",
                        "L124.LC_bm2_R_Grass_Yh_GLU_adj","L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj") ->
         L122.ghg_tg_R_agr_C_Y_GLU
 
@@ -1059,48 +1064,48 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L124.nonco2_tg_R_grass_Y_GLU %>%
         add_title("Grassland fire emissions by GCAM region, gas, and historical year") %>%
         add_units("Tg/yr") %>%
-        add_comments("EDGAR grassland emissions are downscaled to GLU using shares of grassland area.") %>%
+        add_comments("CEDS-GFED grassland emissions are downscaled to GLU using shares of grassland area.") %>%
         add_legacy_name("L124.nonco2_tg_R_grass_Y_GLU") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
-                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion",
                        "L124.LC_bm2_R_Grass_Yh_GLU_adj") ->
         L124.nonco2_tg_R_grass_Y_GLU
 
       L125.bcoc_tgbkm2_R_grass_2000 %>%
         add_title("Grassland fire emissions for BCOC by GCAM region, gas, and historical year") %>%
         add_units("Tg/yr") %>%
-        add_comments("EDGAR grassland emissions are downscaled to GLU using shares of grassland area.") %>%
+        add_comments("CEDS grassland emissions are downscaled to GLU using shares of grassland area.") %>%
         add_legacy_name("L124.nonco2_tg_R_grass_Y_GLU") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
-                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion",
                        "L124.LC_bm2_R_Grass_Yh_GLU_adj")->L125.bcoc_tgbkm2_R_grass_2000
 
       L125.bcoc_tgbkm2_R_forest_2000 %>%
         add_title("Forest fire emissions for BCOC by GCAM region, gas, and historical year") %>%
         add_units("Tg/yr") %>%
-        add_comments("EDGAR grassland emissions are downscaled to GLU using shares of grassland area.") %>%
+        add_comments("CEDS grassland emissions are downscaled to GLU using shares of grassland area.") %>%
         add_legacy_name("L124.nonco2_tg_R_grass_Y_GLU") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
-                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion","emissions/CEDS/CEDS_sector_tech_combustion_revised",
                        "L124.LC_bm2_R_Grass_Yh_GLU_adj")->L125.bcoc_tgbkm2_R_forest_2000
 
       L125.deforest_coefs_bcoc %>%
         add_title("Forest fire emissions for BCOC by GCAM region, gas, and historical year") %>%
         add_units("Tg/yr") %>%
-        add_comments("EDGAR grassland emissions are downscaled to GLU using shares of grassland area.") %>%
+        add_comments("CEDS grassland emissions are downscaled to GLU using shares of grassland area.") %>%
         add_legacy_name("L124.nonco2_tg_R_grass_Y_GLU") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
-                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion","emissions/CEDS/CEDS_sector_tech_combustion_revised",
                        "L124.LC_bm2_R_Grass_Yh_GLU_adj")->L125.deforest_coefs_bcoc
 
       L124.nonco2_tg_R_forest_Y_GLU %>%
         add_title("Forest fire and deforestation emissions by GCAM region, gas, and historical year") %>%
         add_units("Tg/yr") %>%
-        add_comments("EDGAR forest emissions are downscaled to GLU using shares of forest area.") %>%
+        add_comments("CEDS forest emissions are downscaled to GLU using shares of forest area.") %>%
         add_comments("These emissions are then separated into forest fire and deforestation using GFED data.") %>%
         add_legacy_name("L124.nonco2_tg_R_forest_Y_GLU") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
-                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion","emissions/CEDS/CEDS_sector_tech_combustion_revised",
                        "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj") ->
         L124.nonco2_tg_R_forest_Y_GLU
 
@@ -1121,7 +1126,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_comments("for CH4 and NO2 industry processes") %>%
         add_legacy_name("L131.nonco2_tg_R_prc_S_S_Yh") %>%
         add_precursors("emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
-                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech",
+                       "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion","emissions/CEDS/CEDS_sector_tech_combustion_revised",
                        "emissions/EPA_FCCC_IndProc_2005"
         ) ->
         L131.nonco2_tg_R_prc_S_S_Yh

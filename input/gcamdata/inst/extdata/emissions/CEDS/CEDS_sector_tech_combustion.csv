@@ -1,5 +1,5 @@
-# File: CEDS_sector_tech.csv
-# Title: CEDS-GCAM sector map
+# File: CEDS_sector_tech_combustion.csv
+# Title: CEDS-GCAM sector map for combustion emission sectors
 # Units: NA
 # Description: Maps CEDS aggregated sectors and fuels to final GCAM sectors for combustion emissions. This mapping file is used when using the old transportation modes and size classes.
 # Column types: ccccc

@@ -1,6 +1,6 @@
 #' module_emissions_L102.nonco2_ceds_R_S_Y
 #'
-#' Calculates emissions using CEDS and CMIP emissions data for all sectors and fuels. Note that the outputs of this chunk are a part of the prebuilt data.
+#' Calculates emissions using CEDS and CMIP emissions data for all sectors and fuels and aggregates to GCAM regions. Note that the outputs of this chunk are a part of the prebuilt data.
 #' To change the ouputs of this chunk, add CEDS data to the CEDS folder under emissions and rebuild prebuilt data.
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -44,7 +44,8 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
                #kbn 2020-02-03 Introducing N2O
                OPTIONAL_FILE = "emissions/CEDS/N2O_total_CEDS_emissions",
                FILE = "emissions/CEDS/ceds_sector_map",
-               FILE = "emissions/CEDS/ceds_fuel_map"))
+               FILE = "emissions/CEDS/ceds_fuel_map",
+               "L154.IEA_histfut_data_times_UCD_shares"))
     } else if(command == driver.DECLARE_OUTPUTS) {
       return(c("L102.ceds_GFED_nonco2_tg_R_S_F"))
     } else if(command == driver.MAKE) {
@@ -75,6 +76,7 @@ CEDS_fuel_map <- get_data(all_data, "emissions/CEDS/ceds_fuel_map")
 CMIP_unmgd_emissions <- get_data(all_data, "emissions/CEDS/GFED-CMIP6_LUC_emissions") %>%
   gather_years(value_col = "emissions")
 CMIP_sector_map <- get_data(all_data, "emissions/CEDS/LULUC_to_sector_Mapping")
+Int_shipping_IEA_EIA <- get_data(all_data, "L154.IEA_histfut_data_times_UCD_shares") %>% filter(UCD_category=="trn_international ship")
 
 # If the (proprietary) raw CEDS datasets are available, go through the full computations below
 # If not, use the pre-saved summary file (i.e., the output of this chunk!) assuming it's available
@@ -135,6 +137,7 @@ CMIP_unmgd_emissions %>%
 # Compute CEDS emissions by region and sector
 CEDS_CH4 %>%
   bind_rows(CEDS_BC, CEDS_NMVOC, CEDS_NH3, CEDS_OC, CEDS_NOx, CEDS_SO2, CEDS_CO, CEDS_N2O) %>%
+  #ISO code for Serbia is different in CEDS. Change this to GCAM iso for Serbia so that left_join_error_no_match won't fail.
   mutate(iso=if_else(iso=="srb (kosovo)","srb",iso)) %>%
   filter(iso != "global")->CEDS_allgas
 
@@ -144,20 +147,29 @@ unique_iso<-c(unique(CEDS_allgas$iso))
 CEDS_CH4 %>%
   bind_rows(CEDS_BC, CEDS_NMVOC, CEDS_NH3, CEDS_OC, CEDS_NOx, CEDS_SO2, CEDS_CO, CEDS_N2O) %>%
   filter(iso == "global") %>%
+  select(-iso) %>%
   left_join(CEDS_sector_map, by = c("sector" = "CEDS_sector")) %>%
   left_join(CEDS_fuel_map, by = c("fuel" = "CEDS_fuel")) %>%
+  filter(CEDS_agg_sector=="trn_intl_ship",CEDS_agg_fuel =="refined liquids") %>%
   gather_years %>%
   filter(year %in% emissions.CEDS_YEARS) %>%
-  # Converts kt(gg) to Teragrams
-  mutate(emissions = (emissions * CONV_GG_TG)/32)  %>%
-  select(-iso) %>%
-  repeat_add_columns(tibble(iso = unique_iso))->CEDS_int_shipping
+  filter(year <= MODEL_FINAL_BASE_YEAR, emissions > 0) %>%
+  right_join(Int_shipping_IEA_EIA %>% select(iso,year,value) %>% filter(year <= MODEL_FINAL_BASE_YEAR), by=c("year")) %>%
+  mutate(emissions=if_else(is.na(emissions),0,emissions)) %>%
+  group_by(Non.CO2,year,sector,fuel) %>%
+  mutate(share_in_global_ship= value/sum(value)) %>%
+  ungroup() %>%
+  # Converts kt(gg) to Teragrams. Multiply by iso's share in international shipping consumption.
+  mutate(emissions = (emissions * CONV_GG_TG)*share_in_global_ship) %>%
+  select(-share_in_global_ship,-value)->CEDS_int_shipping
+
 
 CEDS_allgas %>%
   filter(!(CEDS_allgas$sector %in% unique(L102.CMIP_unmgd_emissions$sector))) %>%
   bind_rows(L102.CMIP_unmgd_emissions) %>%
   left_join(CEDS_sector_map, by = c("sector" = "CEDS_sector")) %>%
   left_join(CEDS_fuel_map, by = c("fuel" = "CEDS_fuel")) %>%
+  #Final checks for iso codes for Romania and Kosovo.Kosovo emissions will be aggregated to Serbia.
   change_iso_code('rou', 'rom') %>%
   change_iso_code('srb (kosovo)', 'srb') %>%
   na.omit() %>%
@@ -168,7 +180,7 @@ CEDS_allgas %>%
   bind_rows(CEDS_int_shipping)->L102.CEDS
 
 
-# Aggregate by region, GHG, and EDGAR sector
+# Aggregate by region, GHG, and CEDS sector
 #kbn 2020-08-06 Adding adjustment for international shipping emissions that are mapped to process. These are now mapped to diesel oil since we don't have driver data for these.
 L102.CEDS %>%
   left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
@@ -200,7 +212,8 @@ L102.CEDS_GCAM_GFED %>%
   add_precursors("emissions/CEDS/BC_total_CEDS_emissions","emissions/CEDS/OC_total_CEDS_emissions","emissions/CEDS/CO_total_CEDS_emissions",
                  "emissions/CEDS/NH3_total_CEDS_emissions","emissions/CEDS/NMVOC_total_CEDS_emissions","emissions/CEDS/NOx_total_CEDS_emissions",
                  "emissions/CEDS/SO2_total_CEDS_emissions","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
-                 "common/iso_GCAM_regID","emissions/CEDS/CH4_total_CEDS_emissions","emissions/CEDS/GFED-CMIP6_LUC_emissions","emissions/CEDS/LULUC_to_sector_Mapping","emissions/CEDS/N2O_total_CEDS_emissions") ->
+                 "common/iso_GCAM_regID","emissions/CEDS/CH4_total_CEDS_emissions","emissions/CEDS/GFED-CMIP6_LUC_emissions","emissions/CEDS/LULUC_to_sector_Mapping","emissions/CEDS/N2O_total_CEDS_emissions",
+                 "L154.IEA_histfut_data_times_UCD_shares") ->
   L102.ceds_GFED_nonco2_tg_R_S_F
 
       return_data(L102.ceds_GFED_nonco2_tg_R_S_F)

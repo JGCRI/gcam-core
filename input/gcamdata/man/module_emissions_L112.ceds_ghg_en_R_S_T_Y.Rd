@@ -19,12 +19,13 @@ original data system was \code{L112.ghg_en_R_S_T_Y.R} (emissions level1).
 }
 \description{
 Calculates emissions and emissions factors using CEDS and GFED emissions data for GCAM sectors and technologies. The chunk contains processing for the following,
-Part 1 : Bifurcating CEDS road transport emissions into different modes using the GAINS emissions data
+Part 1 : Distributing CEDS road transport emissions into different modes using the GAINS emissions data
 Part 2 : Calculation of emission factors, input emissions for all combustion emission types.
 Part 3 : Calculation of input emissions for process emission sectors
-Part 4 : Calculation of agricultural emissions including waste burning emissions
-Part 5 : Calculation of animal sector emissions
-Part 6 : Calculation of input emissions, deforestation co-efs for unmanaged land emissions sectors.
+Part 4 : Calculation of animal sector emissions
+Part 5 : Calculation of cropland emissions.
+Part 6 : Calculation of agricultural waste burning emissions.
+Part 7 : Calculation of input emissions, deforestation co-efs for unmanaged land emissions sectors.
 }
 \details{
 Calculates emissions using EPA emissions factors and energy data. Then scales to EDGAR emissions and calculates emissions factors.
