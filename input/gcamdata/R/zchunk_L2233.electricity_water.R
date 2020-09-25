@@ -61,7 +61,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L1233.shrwt_R_elec_cool_Yf",
              "L223.StubTechEff_elec",
              "L223.StubTech_elec",
-             #kbn
+
              #kbn 2019/11/13 commenting these back in to test EDGAR emissions
              "L201.en_bcoc_emissions",
              "L241.nonco2_tech_coeff",
@@ -135,19 +135,19 @@ module_water_L2233.electricity_water <- function(command, ...) {
     A23.globalinttech <- get_data(all_data, "energy/A23.globalinttech")
     A23.globaltech_shrwt <- get_data(all_data, "energy/A23.globaltech_shrwt")
     A23.sector <- get_data(all_data, "energy/A23.sector")
-    elec_tech_water_map <- get_data(all_data, "water/elec_tech_water_map")
-    A03.sector <- get_data(all_data, "water/A03.sector")
-    A23.CoolingSystemCosts <- get_data(all_data, "water/A23.CoolingSystemCosts")
-    Macknick_elec_water_m3MWh <- get_data(all_data, "water/Macknick_elec_water_m3MWh")
-    L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
-    L1233.out_EJ_R_elec_F_tech_Yh_cool <- get_data(all_data, "L1233.out_EJ_R_elec_F_tech_Yh_cool")
-    L1233.shrwt_R_elec_cool_Yf <- get_data(all_data, "L1233.shrwt_R_elec_cool_Yf")
-    L223.StubTech_elec <- get_data(all_data, "L223.StubTech_elec")
-    L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec")
+    elec_tech_water_map <- get_data(all_data, "water/elec_tech_water_map",strip_attributes = TRUE)
+    A03.sector <- get_data(all_data, "water/A03.sector",strip_attributes = TRUE)
+    A23.CoolingSystemCosts <- get_data(all_data, "water/A23.CoolingSystemCosts",strip_attributes = TRUE)
+    Macknick_elec_water_m3MWh <- get_data(all_data, "water/Macknick_elec_water_m3MWh",strip_attributes = TRUE)
+    L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh",strip_attributes = TRUE)
+    L1233.out_EJ_R_elec_F_tech_Yh_cool <- get_data(all_data, "L1233.out_EJ_R_elec_F_tech_Yh_cool",strip_attributes = TRUE)
+    L1233.shrwt_R_elec_cool_Yf <- get_data(all_data, "L1233.shrwt_R_elec_cool_Yf",strip_attributes = TRUE)
+    L223.StubTech_elec <- get_data(all_data, "L223.StubTech_elec",strip_attributes = TRUE)
+    L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec",strip_attributes = TRUE)
     #kbn
-    L201.en_bcoc_emissions <- get_data(all_data, "L201.en_bcoc_emissions")
-    L241.nonco2_tech_coeff <- get_data(all_data, "L241.nonco2_tech_coeff")
-    L270.CreditInput_elec <- get_data(all_data, "L270.CreditInput_elec")
+    L201.en_bcoc_emissions <- get_data(all_data, "L201.en_bcoc_emissions",strip_attributes = TRUE)
+    L241.nonco2_tech_coeff <- get_data(all_data, "L241.nonco2_tech_coeff",strip_attributes = TRUE)
+    L270.CreditInput_elec <- get_data(all_data, "L270.CreditInput_elec",strip_attributes = TRUE)
 
     # Use get_data function with sapply to read in all "L223." inputs at once
     get_data_rev <- function(name, all_data) get_data(all_data, name)
