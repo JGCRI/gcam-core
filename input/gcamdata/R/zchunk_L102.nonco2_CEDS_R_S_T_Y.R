@@ -52,7 +52,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
 
       # Silence package checks
       iso <- em <- CEDS_sector <- fuel <- unit <- year <-
-        emissions <- sector <- Non.CO2 <- CEDS_agg_sector <- CEDS_agg_fuel <- NULL
+        emissions <- sector <- Non.CO2 <- CEDS_agg_sector <- CEDS_agg_fuel <- share_in_global_ship <- NULL
 
 
 all_data <- list(...)[[1]]
@@ -196,11 +196,11 @@ L102.CEDS %>%
 
 }
 else {
-  # raw IEA datasets not available, so return NA
+  # raw CEDS datasets not available, so return NA
   # Downstream chunks will be responsible for checking this
 
   missing_data() %>%
-    add_comments("** RAW DATA NOT READ FROM IEA FILES **") ->
+    add_comments("** RAW DATA NOT READ FROM CEDS FILES **") ->
     L102.CEDS_GCAM_GFED
 }
 # PRODUCE OUTPUTS
