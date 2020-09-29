@@ -497,9 +497,6 @@ double AgProductionTechnology::calcSupply( const string& aRegionName,
     // so this is done after the yield is set in the market info object but before
     // supply is calculated. Also, needs to be done post initCalc so the restarts
     // will work correctly
-    if ( aPeriod == 6 && aRegionName == "USA" && aProductName == "Corn") {
-        cout << getName() << ": " << mYieldScaler << endl;
-    }
     double actualYield = mYield * mYieldScaler;
 
     // Set output to actual yield times amount of land.
