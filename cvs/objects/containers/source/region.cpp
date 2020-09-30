@@ -256,7 +256,7 @@ const std::string& Region::getXMLNameStatic() {
  *
  * Completes the initialization for this regions data members.
  * \todo Figure out if Demographics and supplysectors calls to completeInit can
- *       be moved down from RegionMiniCAM and RegionCGE.
+ *       be moved down from RegionMiniCAM 
  * \author Pralit Patel
  */
 void Region::completeInit() {    

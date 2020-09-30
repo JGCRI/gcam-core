@@ -51,7 +51,6 @@
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
 
 #include "util/base/include/xml_helper.h"
-#include "sectors/include/more_sector_info.h"
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
 #include "sectors/include/nesting_subsector.h"
@@ -322,7 +321,7 @@ void Sector::initCalc( NationalAccount* aNationalAccount,
     
     // do any sub-Sector initializations
     for ( unsigned int i = 0; i < mSubsectors.size(); ++i ){
-        mSubsectors[ i ]->initCalc( aNationalAccount, aDemographics, 0, aPeriod );
+        mSubsectors[ i ]->initCalc( aNationalAccount, aDemographics, aPeriod );
     }
 }
 
@@ -513,17 +512,6 @@ double Sector::getCalOutput( const int period  ) const {
         totalCalOutput += mSubsectors[ i ]->getTotalCalOutputs( period );
     }
     return totalCalOutput;
-}
-
-/*! \brief Initialize the marketplaces in the base year to get initial demands from each technology in subsector
-*
-* \author Pralit Patel
-* \param period The period is usually the base period
-*/
-void Sector::updateMarketplace( const int period ) {
-    for( unsigned int i = 0; i < mSubsectors.size(); i++ ) {
-        mSubsectors[ i ]->updateMarketplace( period );
-    }
 }
 
 /*! \brief Function to finalize objects after a period is solved.
