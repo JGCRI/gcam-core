@@ -502,6 +502,38 @@ module_emissions_L252.MACC <- function(command, ...) {
         select(-multiplier)
     }
 
+    # Put the tech change pipeline into a helper function since it will be repeated for each
+    # of the emissions sectors
+    calc_tech_change <- function(df) {
+      df %>%
+        # Use group_by_at to select a range instead of explicitly naming because some of the
+        # df will have AgSupplySector and other supplysector for instance
+        dplyr::group_by_at(dplyr::vars(region:mac.control)) %>%
+        # The tech change assumptions give what is thought to be the maximum reduction that
+        # could be achieved by some year so we will need to back calculate the rate of change
+        # from the max value in the MAC curve
+        summarize(mac.reduction = max(mac.reduction)) %>%
+        ungroup() %>%
+        # The assumptions file will have just the base gas name so let's create a column in
+        # df with that for the purposes of joining
+        mutate(Non.CO2.join = sub('_AGR', '', Non.CO2)) %>%
+        left_join_error_no_match(A_MACC_TechChange, by=c("Non.CO2.join" = "Non.CO2", "mac.control" = "MAC")) %>%
+        # Back calculate improvement rate so that the max matches the assumed reduction in the given year
+        mutate(tc1 = (LUCAS_2050 / mac.reduction)^(1.0/(2050.0 - dplyr::last(MODEL_BASE_YEARS))) - 1.0,
+               tc2 = (LUCAS_2100 / LUCAS_2050)^(1.0/(2100.0-2050.0)) - 1.0) %>%
+        gather(tech.change.year, tech.change, dplyr::starts_with("tc")) %>%
+        # We want to start the improvement in the first model future year and switch rates after 2050
+        mutate(tech.change.year = if_else(tech.change.year == "tc1", MODEL_FUTURE_YEARS[1], MODEL_FUTURE_YEARS[MODEL_FUTURE_YEARS > 2050][1])) %>%
+        select(-Non.CO2.join, -mac.reduction, -LUCAS_2050, -LUCAS_2100) %>%
+        # Different SSPs will have differing abilities to achive this assumed maximum and is
+        # provided in a seperate assumptions file so we join that on here and adjust the
+        # tech change by scenario accordingly
+        repeat_add_columns(tibble(scenario = A_MACC_TechChange_SSP_Mult$scenario)) %>%
+        left_join_error_no_match(A_MACC_TechChange_SSP_Mult, by = c("scenario")) %>%
+        mutate(tech.change = tech.change * multiplier) %>%
+        select(-multiplier)
+    }
+
     # L252.MAC_TC: Tech Change on MACCs
     # For all tibbles, add in scenarios and tech change, then split by scenario and add in documentation
     L252.MAC_Ag_TC <- L252.AgMAC_tc_average %>%

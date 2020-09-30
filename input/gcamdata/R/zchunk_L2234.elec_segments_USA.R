@@ -151,6 +151,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions", strip_attributes = TRUE)
+    A10.renewable_resource_delete <- get_data(all_data, "gcam-usa/A10.renewable_resource_delete")
     A23.elecS_sector <- get_data(all_data, "gcam-usa/A23.elecS_sector", strip_attributes = TRUE)
     A23.elecS_metainfo <- get_data(all_data, "gcam-usa/A23.elecS_metainfo", strip_attributes = TRUE)
     A23.elecS_subsector_logit <- get_data(all_data, "gcam-usa/A23.elecS_subsector_logit", strip_attributes = TRUE)
