@@ -52,7 +52,18 @@ module_water_L172.EFW_irrigation <- function(command, ...) {
 
     Liu_EFW_inventory$iso[ Liu_EFW_inventory$iso == "ssd" ] <- "sdn"
     Liu_EFW_inventory$iso[ Liu_EFW_inventory$iso == "vtc" ] <- "vat"
-    L172.Liu_EFW_inventory <- Liu_EFW_inventory %>%
+
+    # Our India ag EFW values by the default method (0.2 EJ in 2015) are low compared with the literature, even Liu et
+    # al which had 0.36 in 2010. For ~2015 the IEA estimates it at 0.6; Indian Council of Agricultural Research has 0.7
+    # (cited in Sidhu et al. 2020, World Development), and a Brookings report (Ali 2018) has 0.6. From the latter, "Of
+    # the irrigated area, more  than  two-thirds  is  via  groundwater  sources." The following steps increase the
+    # groundwater share, and the groundwater pumping energy intensity, in order to return estimates more consistent with
+    # the literature in this country
+    L172.Liu_EFW_inventory <- Liu_EFW_inventory
+    L172.Liu_EFW_inventory$pow_irr_gw[L172.Liu_EFW_inventory$iso == "ind"] <- 0.7
+    L172.Liu_EFW_inventory$pow_irr_sf[L172.Liu_EFW_inventory$iso == "ind"] <- 0.3
+    L172.Liu_EFW_inventory$gw_sc_EI_coef[L172.Liu_EFW_inventory$iso == "ind"] <- 1.7
+    L172.Liu_EFW_inventory <- L172.Liu_EFW_inventory %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID),
                                by = "iso") %>%
       mutate(ag_energy_gw = ag * pow_irr_gw * gw_sc_EI_coef * efw.GW_ABSTRACTION_EFW,
