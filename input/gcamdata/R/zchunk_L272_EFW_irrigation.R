@@ -125,7 +125,7 @@ module_water_L272.EFW_irrigation <- function(command, ...) {
       rename(sector.name = supplysector, subsector.name = subsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechShrwt"]])
 
-    # Calibrated output of irrigation water abstraction by technology
+    # Calibrated coefficients of irrigation water abstraction by technology, carried forward to all future years
     L272.StubTechCoef_irr <- filter(L172.Coef_GJm3_IrrEnergy_R, year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names,
                                by = "GCAM_region_ID") %>%
@@ -135,6 +135,13 @@ module_water_L272.EFW_irrigation <- function(command, ...) {
       mutate(coefficient = round(coefficient, energy.DIGITS_COEFFICIENT),
              market.name = region) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCoef"]])
+
+    # Copy the coefficients forward to future years
+    L272.StubTechCoef_irr_future <- filter(L272.StubTechCoef_irr, year == max(year)) %>%
+      select(-year) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS))
+
+    L272.StubTechCoef_irr <- bind_rows(L272.StubTechCoef_irr, L272.StubTechCoef_irr_future)
 
 
     #==== OUTPUT ===========
