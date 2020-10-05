@@ -172,11 +172,11 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
     int valIndex = 0; // Index used for PFT x Grid vectors
     double scalar = 0.0; // Define the scalar
     double base_scalar = 0.0; // Define the base scalar
-    for( int pft = 1; pft <= mNumPFT; pft++ ) {
+    for( int pft = 0; pft < mNumPFT; pft++ ) {
         for ( int k = 1; k <= mNumLat; k++ ) {
             for ( int j = 1; j <= mNumLon; j++ ) {
                 gridIndex = ( k - 1 ) * mNumLon + ( j - 1 );
-                valIndex = ( pft - 1 ) * mNumLon * mNumLat + ( k - 1 ) * mNumLon + ( j - 1 );
+                valIndex = ( pft ) * mNumLon * mNumLat + ( k - 1 ) * mNumLon + ( j - 1 );
                 // Get region, subregion, and pft for this entry
                 // TODO: What to do about grid cells with multiple entries?
                 string gridID = std::to_string(j) + "_" + std::to_string(k);

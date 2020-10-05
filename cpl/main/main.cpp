@@ -77,7 +77,7 @@ int main( ) {
     // These integers define the length of the various arrays used in the coupling
     int NUM_LAT = 192; // Number of horizontal grid cells
     int NUM_LON = 288; // Number of vertical grid cells
-    int NUM_PFT = 16; // Number of PFTs in ELM
+    int NUM_PFT = 17; // Number of PFTs in ELM
     int NUM_GCAM_ENERGY_REGIONS = 32;
     int NUM_GCAM_LAND_REGIONS = 393;
     int NUM_IAC2ELM_LANDTYPES = 9;
