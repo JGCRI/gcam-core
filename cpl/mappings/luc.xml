@@ -394,6 +394,8 @@
         <output-data>USA_UsaCstNE</output-data>
         <output-data>USA_UsaCstSE</output-data>
         <output-data>USA_UsaPacNW</output-data>
+        <output-data>Taiwan_ChinaCst</output-data>
+        <output-data>Taiwan_Taiwan</output-data>
     </column>
     <column name="land-type">
         <output-data>Shrubland</output-data>
@@ -422,7 +424,7 @@
         <map from="ProtectedUnmanagedForest" to="Forest"/>
         <map from="Rice" to="Cropland"/>
         <map from="RockIceDesert" to="Barren"/>
-        <map from="Root_Tuber" to="Cropland"/>
+        <map from="RootTuber" to="Cropland"/>
         <map from="Shrubland" to="Shrubland"/>
         <map from="SugarCrop" to="Cropland"/>
         <map from="Tundra" to="Tundra"/>
@@ -430,7 +432,7 @@
         <map from="UnmanagedPasture" to="Pasture"/>
         <map from="UrbanLand" to="Urban"/>
         <map from="Wheat" to="Cropland"/>
-        <map from="biomass_grass" to="Cropland"/>
-        <map from="biomass_tree" to="Cropland"/>
+        <map from="biomassGrass" to="Cropland"/>
+        <map from="biomassTree" to="Cropland"/>
     </column>
 </remap-data>

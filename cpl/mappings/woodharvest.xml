@@ -394,6 +394,8 @@
         <output-data>USA_UsaCstNE</output-data>
         <output-data>USA_UsaCstSE</output-data>
         <output-data>USA_UsaPacNW</output-data>
+        <output-data>Taiwan_ChinaCst</output-data>
+        <output-data>Taiwan_Taiwan</output-data>
     </column>
     <column name="land-type">
         <output-data>Forest</output-data>
