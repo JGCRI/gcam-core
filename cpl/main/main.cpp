@@ -67,7 +67,7 @@ int main( ) {
     
     // Define coupling control variables
     // These booleans define what is passed between GCAM & E3SM.
-    bool ELM_IAC_CARBON_SCALING = false; // If TRUE, changes in land productivity from ELM are used in GCAM.
+    bool ELM_IAC_CARBON_SCALING = true; // If TRUE, changes in land productivity from ELM are used in GCAM.
     bool IAC_ELM_CO2_EMISSIONS = true; // If TRUE, energy system CO2 is passed from GCAM to EAM.
     int FIRST_COUPLED_YEAR = 2016; // First year to include feedbacks from E3SM in GCAM.
     double BASE_CO2EMISS_SURFACE = 9663.0297; // Global surface CO2 emissions in the base year. This should be GCAM's emissions in the year of the BASE_CO2_FILE
@@ -79,7 +79,7 @@ int main( ) {
     int NUM_LON = 288; // Number of vertical grid cells
     int NUM_PFT = 16; // Number of PFTs in ELM
     int NUM_GCAM_ENERGY_REGIONS = 32;
-    int NUM_GCAM_LAND_REGIONS = 391;
+    int NUM_GCAM_LAND_REGIONS = 393;
     int NUM_IAC2ELM_LANDTYPES = 9;
     int NUM_EMISS_SECTORS = 2;
     int NUM_EMISS_REGIONS = 1;
