@@ -48,7 +48,6 @@
 
 class World;
 class Region;
-class RegionCGE;
 class RegionMiniCAM;
 class NationalAccount;
 class Demographic;
@@ -58,16 +57,6 @@ class NestingSubsector;
 class BuildingDemandSubSector;
 class BaseTechnology;
 class Consumer;
-class HouseholdConsumer;
-class GovtConsumer;
-class InvestConsumer;
-class TradeConsumer;
-class ProductionTechnology;
-class DemandInput;
-class ProductionInput;
-class SGMInput;
-class FactorSupply;
-class ProductionSector;
 class AResource;
 class Technology;
 class AFinalDemand;
@@ -84,8 +73,6 @@ class SubRenewableResource;
 class Grade;
 class Population;
 class PopulationMiniCAM;
-class PopulationSGMFixed;
-class PopulationSGMRate;
 class AgeCohort;
 class Gender;
 class Male;
@@ -143,9 +130,6 @@ public:
     virtual void endVisitRegionMiniCAM( const RegionMiniCAM* aRegion,
                                         const int aPeriod ) = 0;
 
-    virtual void startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ) = 0;
-    virtual void endVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ) = 0;
-    
     virtual void startVisitDemographic( const Demographic* aDemographic, const int aPeriod ) = 0;
     virtual void endVisitDemographic( const Demographic* aDemographic, const int aPeriod ) = 0;
 
@@ -154,12 +138,6 @@ public:
 
     virtual void startVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod ) = 0;
     virtual void endVisitPopulationMiniCAM( const PopulationMiniCAM* aPopulation, const int aPeriod ) = 0;
-
-    virtual void startVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod ) = 0;
-    virtual void endVisitPopulationSGMFixed( const PopulationSGMFixed* aPopulation, const int aPeriod ) = 0;
-
-    virtual void startVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod ) = 0;
-    virtual void endVisitPopulationSGMRate( const PopulationSGMRate* aPopulation, const int aPeriod ) = 0;
 
     virtual void startVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod ) = 0;
     virtual void endVisitAgeCohort( const AgeCohort* aAgeCohort, const int aPeriod ) = 0;
@@ -197,9 +175,6 @@ public:
     virtual void startVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergyFinalDemand, const int aPeriod ) = 0;
     virtual void endVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergyFinalDemand, const int aPeriod ) = 0;
 
-    virtual void startVisitProductionSector( const ProductionSector* aProdSector, const int aPeriod ) = 0;
-    virtual void endVisitProductionSector( const ProductionSector* aProdSector, const int aPeriod ) = 0;
-    
     virtual void startVisitSubsector( const Subsector* aSubsector, const int aPeriod ) = 0;
     virtual void endVisitSubsector( const Subsector* aSubsector, const int aPeriod ) = 0;
     
@@ -223,39 +198,11 @@ public:
     virtual void startVisitConsumer( const Consumer* aConsumer, const int aPeriod ) = 0;
     virtual void endVisitConsumer( const Consumer* aConsumer, const int aPeriod ) = 0;
 
-    virtual void startVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, 
-        const int aPeriod ) = 0;
-    virtual void endVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer, 
-        const int aPeriod ) = 0;
-
-    virtual void startVisitGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod ) = 0;
-    virtual void endVisitGovtConsumer( const GovtConsumer* aGovtConsumer, const int aPeriod ) = 0;
-
-    virtual void startVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod ) = 0;
-    virtual void endVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod ) = 0;
-
-    virtual void startVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod ) = 0;
-    virtual void endVisitTradeConsumer( const TradeConsumer* aTradeConsumer, const int aPeriod ) = 0;
-
-    virtual void startVisitProductionTechnology( const ProductionTechnology* aProductionTechnology, 
-        const int aPeriod ) = 0;
-    virtual void endVisitProductionTechnology( const ProductionTechnology* aProductionTechnology, 
-        const int aPeriod ) = 0;
-
-    virtual void startVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) = 0;
-    virtual void endVisitFactorSupply( const FactorSupply* aFactorSupply, const int aPeriod ) = 0;
-
     virtual void startVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) = 0;
     virtual void endVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) = 0;
 
     virtual void startVisitInput( const IInput* aInput, const int aPeriod ) = 0;
     virtual void endVisitInput( const IInput* aInput, const int aPeriod ) = 0;
-
-    virtual void startVisitProductionInput( const ProductionInput* aProductionInput, const int aPeriod ) = 0;
-    virtual void endVisitProductionInput( const ProductionInput* aProductionInput, const int aPeriod ) = 0;
-
-    virtual void startVisitDemandInput( const DemandInput* aDemandInput, const int aPeriod ) = 0;
-    virtual void endVisitDemandInput( const DemandInput* aDemandInput, const int aPeriod ) = 0;
 
     virtual void startVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ) = 0;
     virtual void endVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ) = 0;
@@ -263,9 +210,6 @@ public:
     virtual void startVisitMiniCAMInput( const MiniCAMInput* aInput, const int aPeriod ) = 0;
     virtual void endVisitMiniCAMInput( const MiniCAMInput* aInput, const int aPeriod ) = 0;
 
-    virtual void startVisitSGMInput( const SGMInput* aSGMInput, const int aPeriod ) = 0;
-    virtual void endVisitSGMInput( const SGMInput* aSGMInput, const int aPeriod ) = 0;
-    
     virtual void startVisitOutput( const IOutput* aOutput, const int aPeriod ) = 0;
     virtual void endVisitOutput( const IOutput* aOutput, const int aPeriod ) = 0;
 

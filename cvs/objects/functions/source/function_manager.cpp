@@ -44,16 +44,11 @@
 
 #include "util/base/include/util.h"
 #include "functions/include/function_manager.h"
-#include "functions/include/household_demand_function.h"
-#include "functions/include/trade_demand_function.h"
-#include "functions/include/government_demand_function.h"
-#include "functions/include/investment_demand_function.h"
 #include "functions/include/ces_production_function.h"
 #include "functions/include/leontief_production_function.h"
 #include "functions/include/minicam_leontief_production_function.h"
 #include "functions/include/minicam_price_elasticity_function.h"
 #include "functions/include/nested_ces_production_function.h"
-#include "functions/include/utility_demand_function.h"
 #include "functions/include/logit_production_function.h"
 #include "functions/include/building_function.h"
 #include "functions/include/building_service_function.h"
@@ -75,11 +70,6 @@ FunctionManager::FunctionManager() {
     mFunctions[ "NestedCES" ] = new NestedCESProductionFunction;
     mFunctions[ "minicam-leontief" ] = new MinicamLeontiefProductionFunction;
     mFunctions[ "minicam-price-elasticity" ] = new MinicamPriceElasticityFunction;
-    mFunctions[ "HouseholdDemandFn" ] = new HouseholdDemandFunction;
-    mFunctions[ "GovtDemandFn" ] = new GovernmentDemandFunction;
-    mFunctions[ "TradeDemandFn" ] = new TradeDemandFunction;
-    mFunctions[ "InvestDemandFn" ] = new InvestmentDemandFunction;
-    mFunctions[ "UtilityDemandFunction" ] = new UtilityDemandFunction;
     mFunctions[ "Logit" ] = new LogitProductionFunction;
     mFunctions[ "building-function" ] = new BuildingFunction;
     mFunctions[ "building-service-function" ] = new BuildingServiceFunction;

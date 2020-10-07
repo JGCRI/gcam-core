@@ -54,7 +54,6 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "technologies/include/expenditure.h"
-#include "investment/include/iinvestable.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/value.h"
 #include "containers/include/iinfo.h"
@@ -63,16 +62,9 @@
 class IInput;
 class IOutput;
 class IFunction;
-class MoreSectorInfo;
 class Demographic;
 class NationalAccount;
 class Consumer;
-class HouseholdConsumer;
-class GovtConsumer;
-class TradeConsumer;
-class InvestConsumer;
-class ProductionTechnology;
-class InvestConsumer;
 class IVisitor;
 class AGHG;
 class IExpectedProfitRateCalculator;
@@ -126,11 +118,9 @@ class GCAMConsumer;
  * \author Pralit Patel, Sonny Kim
  */
 
-class BaseTechnology: public INamed, public IInvestable, private boost::noncopyable
+class BaseTechnology: public INamed, private boost::noncopyable
 {
     friend class XMLDBOutputter;
-    friend class InvestableCounterVisitor;
-    friend class SetShareWeightVisitor;
 public:
     BaseTechnology();
     virtual BaseTechnology* clone() const = 0;
@@ -138,21 +128,6 @@ public:
 
     virtual void copyParam( const BaseTechnology* baseTechIn,
                             const int aPeriod ) = 0;
-
-    virtual void copyParamsInto( GovtConsumer& govtConsumerIn,
-                                 const int aPeriod ) const { assert( false ); }
-
-    virtual void copyParamsInto( TradeConsumer& tradeConsumerIn,
-                                 const int aPeriod ) const { assert( false ); }
-
-    virtual void copyParamsInto( InvestConsumer& investConsumerIn,
-                                 const int aPeriod ) const { assert( false ); }
-
-    virtual void copyParamsInto( ProductionTechnology& prodTechIn,
-                                 const int aPeriod ) const { assert( false ); }
-
-    virtual void copyParamsInto( HouseholdConsumer& householdConsumerIn,
-                                 const int aPeriod ) const { assert( false ); }
 
     virtual void copyParamsInto( Consumer& consumerIn,
                                  const int aPeriod ) const { assert( false ); }
@@ -165,8 +140,7 @@ public:
                                const std::string& aSectorName,
                                const std::string& aSubsectorName ) = 0;
     
-    virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo,
-                           const std::string& aRegionName, 
+    virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
                            NationalAccount& nationalAccount, 
                            const Demographic* aDemographics,
@@ -180,7 +154,7 @@ public:
     void setYear( int newYear );
 
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
-        const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName, 
+        const std::string& aRegionName,
         const std::string& aSectorName, const bool isNewVintageMode, const int aPeriod ) = 0;
 
     virtual double setInvestment( const std::string& aRegionName, const double aAnnualInvestment,
@@ -188,35 +162,11 @@ public:
 
     virtual double getOutput( const int aPeriod ) const;
     virtual double getCapitalStock() const = 0;
-    void calcPricePaid( const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName,
+    void calcPricePaid( const std::string& aRegionName,
         const std::string& aSectorName, const int aPeriod, const int aLifetimeYears ) const;
 
     virtual double getAnnualInvestment( const int aPeriod ) const = 0;
     
-    virtual double getExpectedProfitRate( const NationalAccount& aNationalAccount,
-                                          const std::string& aRegionName,
-                                          const std::string& aSectorName,
-                                          const IExpectedProfitRateCalculator* aExpProfitRateCalc,
-                                          const double aInvestmentLogitExp,
-                                          const bool aIsShareCalc,
-                                          const bool aIsDistributing,
-                                          const int aPeriod ) const = 0;
-    
-    virtual double getCapitalOutputRatio( const IDistributor* aDistributor,
-                                          const IExpectedProfitRateCalculator* aExpProfitRateCalc,
-                                          const NationalAccount& aNationalAccount,
-                                          const std::string& aRegionName,
-                                          const std::string& aSectorName, 
-                                          const int aPeriod ) const = 0;
-
-    virtual double getFixedInvestment( const int aPeriod ) const = 0;
-    virtual double distributeInvestment( const IDistributor* aDistributor,
-                                         NationalAccount& aNationalAccount,
-                                         const IExpectedProfitRateCalculator* aExpProfitRateCalc,
-                                         const std::string& aRegionName,
-                                         const std::string& aSectorName,
-                                         const double aNewInvestment,
-                                         const int aPeriod ) = 0;
     virtual void updateMarketplace( const std::string& sectorName, const std::string& regionName,
                                     const int period ) = 0;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;

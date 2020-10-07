@@ -40,7 +40,6 @@
 
 /*! 
 * \file age_cohort.h
-* \ingroup Objects-SGM
 * \brief The AgeCohort class header file.
 * \author Sonny Kim
 * \author Katherine Chung
