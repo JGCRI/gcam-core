@@ -128,7 +128,6 @@
         <output-data>China_SChinaSea</output-data>
         <output-data>China_SyrDaryaR</output-data>
         <output-data>China_Salween</output-data>
-        <output-data>China_Taiwan</output-data>
         <output-data>China_Tarim</output-data>
         <output-data>China_Tibet</output-data>
         <output-data>China_XunJiang</output-data>
@@ -371,6 +370,8 @@
         <output-data>Southeast Asia_ThaiGulf</output-data>
         <output-data>Southeast Asia_VietnamCst</output-data>
         <output-data>Southeast Asia_XunJiang</output-data>
+        <output-data>Taiwan_ChinaCst</output-data>
+        <output-data>Taiwan_Taiwan</output-data>
         <output-data>USA_ArkWhtRedR</output-data>
         <output-data>USA_California</output-data>
         <output-data>USA_Caribbean</output-data>
@@ -394,8 +395,6 @@
         <output-data>USA_UsaCstNE</output-data>
         <output-data>USA_UsaCstSE</output-data>
         <output-data>USA_UsaPacNW</output-data>
-        <output-data>Taiwan_ChinaCst</output-data>
-        <output-data>Taiwan_Taiwan</output-data>
     </column>
     <column name="land-type">
         <output-data>Shrubland</output-data>
