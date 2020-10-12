@@ -49,12 +49,10 @@
 #include "util/base/include/default_visitor.h"
 
 class IInput;
-class SGMInput;
 
 /*! 
 * \ingroup Objects
 * \brief Finds any input leaves in a nested input structure.
-* \details Currently only SGMInput is considered a leaf.
 * \todo Add a visit method for any other type of input which sould be considered a leaf.
 * \author Pralit Patel
 */
@@ -65,8 +63,6 @@ public:
     std::vector<IInput*> getInputs() const;
 
     // IVisitor methods
-    virtual void startVisitSGMInput( const SGMInput* aSGMInput, const int aPeriod );
-
     virtual void startVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod );
     // Put a visit for any other type of input which could be a leaf here
 

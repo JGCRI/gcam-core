@@ -310,29 +310,21 @@ module_energy_L223.electricity <- function(command, ...) {
     # First write global interpolation rules to all regions, then any global interp rules that match by region + sector + subsector name will be
     # replaced by a regionally specific interpolation rule by first removing those rules from L223.SubsectorInterp_elec and then replacing them
     if(any(is.na(A23.subsector_interp$to.value))) {
-      L223.SubsectorInterp_elec <- write_to_all_regions(A23.subsector_interp[is.na(A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names) %>%
-        # convert back to char for now as we will need to merge assumptions files on which will have it as char still
-        mutate(from.year = as.character(from.year),
-               to.year = as.character(to.year))
+      L223.SubsectorInterp_elec <- write_to_all_regions(A23.subsector_interp[is.na(A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names)
 
       L223.SubsectorInterp_elec %>%
         anti_join(A23.subsector_interp_R, by = c("region", "supplysector", "subsector")) %>%
-        bind_rows(A23.subsector_interp_R[, names(L223.SubsectorInterp_elec)]) %>%
-        set_years() ->
+        bind_rows(set_years(A23.subsector_interp_R[, names(L223.SubsectorInterp_elec)])) ->
         L223.SubsectorInterp_elec
     }
 
     # Same process for interpolation rules using a to.value
     if(any(!is.na(A23.subsector_interp$to.value))) {
-      L223.SubsectorInterpTo_elec <- write_to_all_regions(A23.subsector_interp[!is.na(A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names) %>%
-        # convert back to char for now as we will need to merge assumptions files on which will have it as char still
-        mutate(from.year = as.character(from.year),
-               to.year = as.character(to.year))
+      L223.SubsectorInterpTo_elec <- write_to_all_regions(A23.subsector_interp[!is.na(A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names)
 
       L223.SubsectorInterpTo_elec %>%
         anti_join(A23.subsector_interp_R, by = c("region", "supplysector", "subsector")) %>%
-        bind_rows(A23.subsector_interp_R[!is.na(A23.subsector_interp_R$to.value), names(L223.SubsectorInterpTo_elec)]) %>%
-        set_years() ->
+        bind_rows(set_years(A23.subsector_interp_R[!is.na(A23.subsector_interp_R$to.value), names(L223.SubsectorInterpTo_elec)])) ->
         L223.SubsectorInterpTo_elec
     }
 

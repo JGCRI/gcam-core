@@ -53,7 +53,6 @@
 
 // Forward declarations
 class GDP;
-class MoreSectorInfo;
 class Demographic;
 class IInfo;
 
@@ -75,7 +74,6 @@ public:
     
     virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
-                           const MoreSectorInfo* aMoreSectorInfo,
                            const int aPeriod );
     double getPrice( const GDP* aGDP, const int aPeriod ) const;
 
