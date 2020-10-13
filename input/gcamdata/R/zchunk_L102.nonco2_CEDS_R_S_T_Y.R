@@ -169,9 +169,10 @@ CEDS_allgas %>%
   bind_rows(L102.CMIP_unmgd_emissions) %>%
   left_join(CEDS_sector_map, by = c("sector" = "CEDS_sector")) %>%
   left_join(CEDS_fuel_map, by = c("fuel" = "CEDS_fuel")) %>%
-  #Final checks for iso codes for Romania and Kosovo.Kosovo emissions will be aggregated to Serbia.
+  #Final checks for iso codes for Romania ,Kosovo and Netherlands Antilles.Kosovo emissions will be aggregated to Serbia.
   change_iso_code('rou', 'rom') %>%
   change_iso_code('srb (kosovo)', 'srb') %>%
+  change_iso_code('sxm', 'ant') %>%
   na.omit() %>%
   gather_years %>%
   filter(year %in% emissions.CEDS_YEARS) %>%

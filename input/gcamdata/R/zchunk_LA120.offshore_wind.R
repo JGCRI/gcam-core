@@ -68,8 +68,8 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
     # aggregate by GCAM region/ wind class/ depth class
     NREL_offshore_energy %>%
       select(-total) %>%
-      inner_join(iso_GCAM_regID %>%
-                                 select(country_name, GCAM_region_ID),
+      left_join_error_no_match(iso_GCAM_regID %>%
+                                 select(country_name, GCAM_region_ID) %>% distinct(),
                                by = c("IAM_country" = "country_name")) %>%
       gather(wind_class, resource.potential.PWh, -IAM_country, -GCAM_region_ID, -depth_class, -distance_to_shore) %>%
       mutate(resource.potential.EJ = resource.potential.PWh * 1000 * CONV_TWH_EJ ) %>%
