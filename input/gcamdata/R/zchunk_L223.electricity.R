@@ -961,11 +961,21 @@ module_energy_L223.electricity <- function(command, ...) {
     # Multiply capacity factor for CSP technologies by average direct normal irradiance
     L223.GlobalTechCapFac_elec_all %>%
       filter(grepl("CSP", technology)) %>%
+      # reset CSP_storage capacity factors to same as CSP, as we want to apply the
+      # DNI multiplier to the base capacity factor only, not the storage portion
+      group_by(year) %>%
+      mutate(capacity.factor = capacity.factor[technology=="CSP"]) %>%
+      ungroup() %>%
       repeat_add_columns(L119.Irradiance_rel_R) %>%
-      mutate(capacity.factor = capacity.factor * dni_avg_rel) ->
+      mutate(capacity.factor = capacity.factor * dni_avg_rel,
+             # add back in the capacity factor boost for CSP_storage
+             capacity.factor = if_else(grepl("storage", technology),
+                                       capacity.factor + energy.CSP_STORAGE_CF_DIFF,
+                                       capacity.factor)) ->
       L223.StubTechCapFactor_solar_csp
 
-    # Multiply capacity factor for PV technologies by average relative irradiance, re-bind solar and CSP into the same data frame, and change any capacity factors that exceed the maximum possible.
+    # Multiply capacity factor for PV technologies by average relative irradiance,
+    # re-bind solar and CSP into the same data frame, and change any capacity factors that exceed the maximum possible.
     L223.GlobalTechCapFac_elec_all %>%
       filter(grepl("PV", technology, ignore.case = TRUE)) %>%
       repeat_add_columns(L119.Irradiance_rel_R) %>%

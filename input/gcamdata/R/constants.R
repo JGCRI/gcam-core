@@ -403,7 +403,7 @@ energy.MIN_IN_EJ_IND <- 1e-3
 # Sets maximum for electricity IO coefficient used in cement sector
 energy.MAX_IOELEC <- 4
 
-# PV related constants
+# Solar related constants
 energy.HOURS_PER_YEAR          <- 24 * 365
 energy.PV_COMM_INSTALLED_COST  <- 7290     # 2005USD per kw
 energy.PV_COMM_OM              <- 40       # 2005USD per kw per year
@@ -412,6 +412,7 @@ energy.PV_DISCOUNT_RATE        <- 0.1      # year^-1
 energy.PV_LIFETIME             <- 30       # years
 energy.PV_RESID_INSTALLED_COST <- 9500     # 2005USD per kw
 energy.PV_RESID_OM             <- 100      # 2005USD per kw per year
+energy.CSP_STORAGE_CF_DIFF     <- 0.25     # capacity factor difference between CSP_storage (0.5) and CSP (0.25)
 
 # Wind related constants
 energy.WIND_CURVE_MIDPOINT <- 0.5

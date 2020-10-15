@@ -4,7 +4,7 @@
 # Source: NA
 # Comments: Mapping between ATB 2019 technologies and GCAM technologies.  Conversion factor of 1 indicates at 1:1 mapping between ATB & GCAM technologies.
 # Some GCAM technologies do not correspond directly to technologies in the ATB data set and are inferred in some way - as described below:
-# For technologies which are not included in the ATB database; we calculate the cost ratio (from the previous GCAM cost assumptions)relative to a technology which is included in the ATB data base and apply that ratios to the costs for a technology which is in the ATB database.
+# For technologies which are not included in the ATB database; we calculate the cost ratio (from the previous GCAM cost assumptions) relative to a technology which is included in the ATB database and apply that ratios to the costs for a technology which is in the ATB database.
 # CSP ratio = CSP / CSP_storage
 # biomass (IGCC) ratio = biomass (IGCC) / biomass (conv)
 # biomass (conv CCS) ratio = biomass (conv CCS) / biomass (conv)
@@ -17,6 +17,7 @@
 # This is because ATB reports costs for a 4-hour battery with 15-year lifetime. We assume an 8-hour battery with 30-year lifetime to be more consistent with storage requirements and technology lifetimes in GCAM.
 # rooftop_pv costs represent a simple average of commerical and residential rooftop PV.
 # PV and rooftop PV technolgies entail a 1$/kW DC : 0.85$/kW AC conversion because Overnight Capital Cost; Fixed O&M; and Variable O&M costs represent $/kW(h) DC; all other techs are reported in $/kW(h) AC.
+# inferred column indicates whether a technology cost is mapped directly from the ATB or is inferred via either (1) the shadow_tech cost ratio approach described above or (2) created from a composite of other technology costs (e.g. PV_storage costs are the sum of ATB PV costs and ATB Battery Storage costs).  This column is not used in the data processing.
 # Column types: cccncc 
 # ----------
 technology,tech_type,tech_detail,conversion,shadow_tech,inferred
@@ -40,7 +41,7 @@ wind_storage,Land-Based Wind,TRG 5,1,,x
 wind_storage,Storage,Battery Storage,3,,x
 PV,Solar - Utility PV,Utility PV - Kansas City,1.176,,
 PV_storage,Solar - Utility PV,Utility PV - Kansas City,1.176,,x
-PV_storage,Storage,Battery Storage,1.5,,x
+PV_storage,Storage,Battery Storage,3,,x
 CSP,Solar - CSP,10hrs TES - Class 3,,CSP_storage,x
 CSP_storage,Solar - CSP,10hrs TES - Class 3,1,,
 geothermal,Geothermal,Hydro / Flash,1,,
