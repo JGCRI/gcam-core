@@ -146,8 +146,7 @@ void S_CurveShutdownDecider::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-double S_CurveShutdownDecider::calcShutdownCoef( const ProductionFunctionInfo* aFuncInfo,
-                                                const double aCalculatedProfitRate,
+double S_CurveShutdownDecider::calcShutdownCoef(const double aCalculatedProfitRate,
                                                 const string& aRegionName,
                                                 const string& aSectorName,
                                                 const int aInstallationYear,

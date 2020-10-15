@@ -76,8 +76,7 @@ void Consumer::copy( const Consumer& aOther ) {
     BaseTechnology::copy( aOther );
 }
 
-void Consumer::initCalc( const MoreSectorInfo* aMoreSectorInfo,
-                         const string& aRegionName, 
+void Consumer::initCalc( const string& aRegionName,
                          const string& aSectorName,
                          NationalAccount& nationalAccount,
                          const Demographic* aDemographics,
@@ -96,14 +95,13 @@ void Consumer::initCalc( const MoreSectorInfo* aMoreSectorInfo,
             mNestedInputRoot->setCoefficient( 0, aPeriod );
         }
     }
-    BaseTechnology::initCalc( aMoreSectorInfo, aRegionName, aSectorName,
+    BaseTechnology::initCalc( aRegionName, aSectorName,
                               nationalAccount, aDemographics, aCapitalStock,
                               aPeriod );
     mLeafInputs = FunctionUtils::getLeafInputs( mNestedInputRoot );
 }
 
-void Consumer::initCalc( const MoreSectorInfo* aMoreSectorInfo,
-                         const string& aRegionName,
+void Consumer::initCalc( const string& aRegionName,
                          const string& aSectorName,
                          NationalAccount& nationalAccount,
                          const Demographic* aDemographics,
@@ -111,7 +109,7 @@ void Consumer::initCalc( const MoreSectorInfo* aMoreSectorInfo,
                          const double aCapitalStock,
                          const int aPeriod )
 {
-    initCalc( aMoreSectorInfo, aRegionName, aSectorName, nationalAccount, aDemographics,
+    initCalc( aRegionName, aSectorName, nationalAccount, aDemographics,
               aCapitalStock, aPeriod );
 }
 

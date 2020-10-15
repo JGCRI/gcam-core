@@ -49,7 +49,6 @@
 #include "technologies/include/base_technology.h"
 #include "functions/include/iinput.h"
 #include "technologies/include/ioutput.h"
-#include "technologies/include/sgm_output.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
@@ -189,9 +188,6 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
         if( nodeName == "#text" ) {
             continue;
         }
-        else if ( nodeName == SGMOutput::getXMLReportingNameStatic() ) {
-            parseContainerNode( curr, mOutputs, new SGMOutput("") );
-        }
         else if ( nodeName == "categoryName" ) {
             categoryName = XMLHelper<string>::getValue( curr );
         }
@@ -275,19 +271,9 @@ void BaseTechnology::completeInit( const string& aRegionName,
         // (*ghg)->completeInit();
     }
 
-    // Create the primary output for this technology if it does not 
-    // already exist. All technologies will have a primary output.
-    // Always insert the primary output at position 0.
-    if( mOutputs.size() == 0 ) {
-        mOutputs.insert( mOutputs.begin(), new SGMOutput( aSectorName ) );    
-    }
-        
-    for( unsigned int i = 0; i < mOutputs.size(); ++i ){
-        mOutputs[ i ]->completeInit( aSectorName, aRegionName, 0, true );
-    }
 }
 
-void BaseTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
+void BaseTechnology::initCalc( const string& aRegionName,
                                const string& aSectorName, NationalAccount& nationalAccount,
                                const Demographic* aDemographics, const double aCapitalStock, const int aPeriod )
 {
@@ -362,14 +348,12 @@ double BaseTechnology::getOutput( const int aPeriod ) const {
 
 /*! \brief Calculates and sets the price paid for each input of the the
 *          technology.
-* \param aMoreSectorInfo Additional sector level information needed for
-*        technology.
 * \param aRegionName The name of the region.
 * \param aSectorName The name of the sector.
 * \param aPeriod The period for which to calculate expected price paid.
 * \author Sonny Kim
 */
-void BaseTechnology::calcPricePaid( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
+void BaseTechnology::calcPricePaid( const string& aRegionName,
                                     const string& aSectorName, const int aPeriod, const int aLifetimeYears ) const
 {
     /*!
@@ -390,7 +374,7 @@ void BaseTechnology::calcPricePaid( const MoreSectorInfo* aMoreSectorInfo, const
     // SGM we would have calibrated with that large number which leads to incorrect behavior so
     // we just need to make sure when we calibrate (aPeriod is zero) that value is not included.
     for( vector<IInput*>::const_iterator it = mLeafInputs.begin(); it != mLeafInputs.end(); ++it ) {
-        (*it)->calcPricePaid( aRegionName, aSectorName, aMoreSectorInfo, mGhgs,
+        (*it)->calcPricePaid( aRegionName, aSectorName, mGhgs,
             aPeriod > 0 ? mSequestrationDevice.get() : 0, // hack to avoid getLargeNumber when calibrating
             aLifetimeYears, aPeriod );
     }

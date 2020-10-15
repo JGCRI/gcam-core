@@ -153,7 +153,7 @@ See the `clustermq` [installation guide](https://cran.r-project.org/web/packages
 
 <!-- - explain how to install clustermq package on PIC -->
 For using `clustermq` on PIC (PNNL Institutional Computing) we have already installed the full set of required R packages in a shared space as successfully compiling `clustermq` was not straightforward due to compiler version issues.  To use `drake` + `clustermq` in PIC a user can:
-    * Get necessary libraries with: `export R_PATH=/pic/projects/GCAM/GCAM-libraries/R/x86_64-pc-linux-gnu-library/3.5`
+    * Get necessary libraries with: `export R_LIBS=/pic/projects/GCAM/GCAM-libraries/R/x86_64-pc-linux-gnu-library/3.5`
     * Load the `zeromq` library with: `module load zeromq/4.1.4`
     * Open `R 3.5.1` with: `module load R/3.5.1`
     * Open an `R` session and set the global option below

@@ -74,7 +74,6 @@ class IDiscreteChoice;
 // Need to forward declare the subclasses as well.
 class SupplySector;
 class AgSupplySector;
-class ExportSector;
 class PassThroughSector;
 
 /*! 
@@ -93,7 +92,6 @@ class Sector: public IVisitable,
               public INamed,
               private boost::noncopyable
 {
-    // TODO: Remove the need for these.
     friend class XMLDBOutputter;
     friend class CalibrateShareWeightVisitor;
 protected:
@@ -102,7 +100,7 @@ protected:
         /* Declare all subclasses of Sector to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( Sector, SupplySector, AgSupplySector, ExportSector,
+        DEFINE_SUBCLASS_FAMILY( Sector, SupplySector, AgSupplySector, 
                                 PassThroughSector ),
 
         //! Sector name
@@ -186,8 +184,6 @@ public:
 
     virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ) = 0;
 
-    virtual void operate( NationalAccount& nationalAccount, const Demographic* aDemographic, const int period ) = 0;
-    void updateMarketplace( const int period );
     virtual void postCalc( const int aPeriod );
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
