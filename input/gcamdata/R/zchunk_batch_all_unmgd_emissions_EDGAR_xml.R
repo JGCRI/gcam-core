@@ -2,7 +2,7 @@
 
 #' module_emissions_batch_all_unmgd_emissions_xml
 #'
-#' Construct XML data structure for \code{all_unmgd_emissions.xml}.
+#' Construct XML data structure for \code{all_unmgd_emissions.xml} for EDGAR emissions.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -10,8 +10,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{all_unmgd_emissions.xml}. The corresponding file in the
 #' original data system was \code{batch_all_unmgd_emissions.xml} (emissions XML).
-module_emissions_batch_all_unmgd_emissions_xml <- function(command, ...) {
-  if(driver.EMISSIONS_SOURCE == "EDGAR") {
+module_emissions_batch_all_unmgd_emissions_edgar_xml <- function(command, ...) {
+  if(driver.EMISSIONS_SOURCE == "CEDS") {
     if(command == driver.DECLARE_INPUTS) {
       return(NULL)
     } else if(command == driver.DECLARE_OUTPUTS) {
@@ -26,6 +26,9 @@ module_emissions_batch_all_unmgd_emissions_xml <- function(command, ...) {
              "L212.GRASSEmissions",
              "L212.FORESTEmissions_FF",
              "L212.FORESTEmissions_D",
+             "L212.GRASSEmissionsFactors_BCOC",
+             "L212.FORESTEmissionsFactors_BCOC_FF",
+             "L212.FORESTEmissionsFactors_BCOC_D",
              "L212.FORESTEmissionsFactors_future"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "all_unmgd_emissions.xml"))
@@ -40,6 +43,9 @@ module_emissions_batch_all_unmgd_emissions_xml <- function(command, ...) {
     L212.GRASSEmissions <- get_data(all_data, "L212.GRASSEmissions")
     L212.FORESTEmissions_FF <- get_data(all_data, "L212.FORESTEmissions_FF")
     L212.FORESTEmissions_D <- get_data(all_data, "L212.FORESTEmissions_D")
+    L212.GRASSEmissionsFactors_BCOC <- get_data(all_data, "L212.GRASSEmissionsFactors_BCOC")
+    L212.FORESTEmissionsFactors_BCOC_FF <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_FF")
+    L212.FORESTEmissionsFactors_BCOC_D <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_D")
     L212.FORESTEmissionsFactors_future <- get_data(all_data, "L212.FORESTEmissionsFactors_future")
 
     # ===================================================
@@ -52,6 +58,9 @@ module_emissions_batch_all_unmgd_emissions_xml <- function(command, ...) {
       add_xml_data(L212.GRASSEmissions, "InputEmissionsUnmgd") %>%
       add_xml_data(L212.FORESTEmissions_FF, "InputEmissionsUnmgd") %>%
       add_xml_data(L212.FORESTEmissions_D, "OutputEmissionsUnmgd") %>%
+      add_xml_data(L212.GRASSEmissionsFactors_BCOC, "InputEmFactUnmgd") %>%
+      add_xml_data(L212.FORESTEmissionsFactors_BCOC_FF, "InputEmFactUnmgd") %>%
+      add_xml_data(L212.FORESTEmissionsFactors_BCOC_D, "OutputEmFactUnmgd") %>%
       add_xml_data(L212.FORESTEmissionsFactors_future, "OutputEmFactUnmgd") %>%
       add_precursors("L212.AgSupplySector",
                      "L212.AgSupplySubsector",
@@ -59,6 +68,9 @@ module_emissions_batch_all_unmgd_emissions_xml <- function(command, ...) {
                      "L212.GRASSEmissions",
                      "L212.FORESTEmissions_FF",
                      "L212.FORESTEmissions_D",
+                     "L212.GRASSEmissionsFactors_BCOC",
+                     "L212.FORESTEmissionsFactors_BCOC_FF",
+                     "L212.FORESTEmissionsFactors_BCOC_D",
                      "L212.FORESTEmissionsFactors_future") ->
       all_unmgd_emissions.xml
 

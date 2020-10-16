@@ -189,6 +189,21 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       #Part 1: Distributing road emissions from CEDS into different modes using GAINS data
       # ===========================
 
+      #Define special modes based on choices by user. With the old size classes, we had 2 modes, LDV_2W & LDV_3W. These,
+      #were consolidated into 1 category with the new modes (LDV_2W_3W). We need the adjustment below so emissions
+      # are calculated appropriately.
+
+      if(energy.TRAN_UCD_MODE=="rev.mode"){
+
+        LDV_2W_3W_modes <- c("LDV_2W_3W")
+
+      }else{
+
+        LDV_2W_3W_modes <- c("LDV_2W","LDV_3W")
+
+      }
+
+
       #Filter out road emissions
       L112.CEDS_Road_emissions <- L112.CEDS_GCAM %>%  filter(CEDS_agg_sector == "trn_road")
       L112.CEDS_GCAM<- L112.CEDS_GCAM %>%  filter(CEDS_agg_sector != "trn_road")
@@ -235,10 +250,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         na.omit() %>%
         #Now calculate mode wights here
         group_by(Non.co2,GCAM_region_ID,year,mode,UCD_sector) %>%
-        #Revisit this. May want to make it compatible with old size classes as well in the future (only if required/requested).
         #For LDV_2W_3W use a weighted average of light and heavy diesel oil. For Trucks use heavy diesel oil and for passenger buses use light oil.
         mutate(mode_weight=if_else(mode=="Bus",sum(dieseloil*value),
-                                   if_else(mode=="LDV_2W_3W",sum(((lightoil+dieseloil)/2)*value),
+                                   if_else(mode %in% c(LDV_2W_3W_modes),sum(((lightoil+dieseloil)/2)*value),
                                            if_else(mode=="Truck",sum(dieseloil*value),sum(lightoil*value))))) %>%
         ungroup() %>%
         select(Non.co2,GCAM_region_ID,year,mode,mode_weight,UCD_sector) %>%
@@ -281,7 +295,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       #Adjustment for NG emissions factors
       #Since the values of NG emissions are low and the energy values for NG technologies are also very low, computing emissions
       #factors like we do for the other technologies may result in unreasonably high numbers. So, we take the emissions factors from GAINS,
-      # and aggregate up to GCAM regions using IEA data for transportation NG as weights.
+      # and aggregate up to GCAM regions using IEA data for transportation NG as weights. The dataframe returned by the block below,
+      #contains both energy and emission factors. We use the appropriate columns to blend with base data.
 
       #First, clean IEA data
       IEA_Ctry_data %>%
@@ -315,10 +330,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         mutate(value=if_else(is.na(value),0,0.001*value),energy=if_else(is.na(energy),0,energy)) %>%
         left_join_keep_first_only(UCD_techs %>% select(-fuel) %>% rename(stub.technology=UCD_technology,subsector=tranSubsector),by=c("mode","size.class","UCD_sector","stub.technology")) %>%
         select(GCAM_region_ID,Non.CO2,supplysector,stub.technology,year,value,subsector,energy)->GAINS_NG_em_factors
-
-
-
-
 
       # ===========================
       # Part 2:Combustion Energy Emissions
