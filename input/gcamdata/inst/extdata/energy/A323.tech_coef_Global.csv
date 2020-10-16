@@ -1,0 +1,7 @@
+# File: A323.tech_coef_Global.csv
+# Title: Global pass-through coefficients
+# Units: 1
+# Column types: ccccnn
+# ----------
+supplysector,subsector,technology,minicam.energy.input,1971,2100
+IRONSTL,IRONSTL,IRONSTL,IRONSTL,1,1

@@ -1,0 +1,146 @@
+# File: en_construction.csv
+# Title: construction energy use by region
+# Units: Thousand tonnes
+# Description: Regional construction production
+# Source: IEA
+# Column types: ciccnic
+# ----------
+region,GCAM_region_ID,flow,fuel,value,year,unit
+USA,1,CONSTRUC,electricity,5233,2015,ktoe
+USA,1,CONSTRUC,gas,306,2015,ktoe
+USA,1,CONSTRUC,refined biofuels_FT,155,2015,ktoe
+USA,1,CONSTRUC,refined liquids,7266,2015,ktoe
+Africa_Eastern,2,CONSTRUC,refined liquids,46,2015,ktoe
+Africa_Northern,3,CONSTRUC,biomass_tradbio,1,2015,ktoe
+Africa_Northern,3,CONSTRUC,electricity,154,2015,ktoe
+Africa_Northern,3,CONSTRUC,gas,1003,2015,ktoe
+Africa_Northern,3,CONSTRUC,refined liquids,449,2015,ktoe
+Africa_Southern,4,CONSTRUC,coal,0,2015,ktoe
+Africa_Southern,4,CONSTRUC,electricity,2,2015,ktoe
+Africa_Southern,4,CONSTRUC,refined liquids,316,2015,ktoe
+Africa_Western,5,CONSTRUC,electricity,15,2015,ktoe
+Africa_Western,5,CONSTRUC,refined liquids,16,2015,ktoe
+Australia_NZ,6,CONSTRUC,coal,2,2015,ktoe
+Australia_NZ,6,CONSTRUC,electricity,47,2015,ktoe
+Australia_NZ,6,CONSTRUC,gas,81,2015,ktoe
+Australia_NZ,6,CONSTRUC,refined liquids,571,2015,ktoe
+Canada,8,CONSTRUC,gas,377,2015,ktoe
+Canada,8,CONSTRUC,heat,1,2015,ktoe
+Canada,8,CONSTRUC,refined liquids,1757,2015,ktoe
+Central America and Caribbean,9,CONSTRUC,biomass_tradbio,0,2015,ktoe
+Central America and Caribbean,9,CONSTRUC,electricity,17,2015,ktoe
+Central America and Caribbean,9,CONSTRUC,refined liquids,281.6925717,2015,ktoe
+Central Asia,10,CONSTRUC,coal,36,2015,ktoe
+Central Asia,10,CONSTRUC,electricity,174,2015,ktoe
+Central Asia,10,CONSTRUC,gas,91,2015,ktoe
+Central Asia,10,CONSTRUC,heat,38,2015,ktoe
+Central Asia,10,CONSTRUC,refined liquids,1909,2015,ktoe
+China,11,CONSTRUC,coal,4554,2015,ktoe
+China,11,CONSTRUC,electricity,6007,2015,ktoe
+China,11,CONSTRUC,gas,181,2015,ktoe
+China,11,CONSTRUC,heat,216,2015,ktoe
+China,11,CONSTRUC,refined liquids,7247,2015,ktoe
+EU-12,12,CONSTRUC,biomass,0,2015,ktoe
+EU-12,12,CONSTRUC,biomass_tradbio,13,2015,ktoe
+EU-12,12,CONSTRUC,coal,21,2015,ktoe
+EU-12,12,CONSTRUC,elec_geothermal,0,2015,ktoe
+EU-12,12,CONSTRUC,electricity,235,2015,ktoe
+EU-12,12,CONSTRUC,gas,299,2015,ktoe
+EU-12,12,CONSTRUC,heat,32,2015,ktoe
+EU-12,12,CONSTRUC,refined biofuels_FT,0,2015,ktoe
+EU-12,12,CONSTRUC,refined liquids,611,2015,ktoe
+EU-15,13,CONSTRUC,biomass,1,2015,ktoe
+EU-15,13,CONSTRUC,biomass_tradbio,109,2015,ktoe
+EU-15,13,CONSTRUC,coal,10,2015,ktoe
+EU-15,13,CONSTRUC,electricity,1415,2015,ktoe
+EU-15,13,CONSTRUC,gas,1448,2015,ktoe
+EU-15,13,CONSTRUC,gasified biomass,0,2015,ktoe
+EU-15,13,CONSTRUC,heat,23,2015,ktoe
+EU-15,13,CONSTRUC,refined biofuels_FT,42,2015,ktoe
+EU-15,13,CONSTRUC,refined liquids,2812.019058,2015,ktoe
+Europe_Eastern,14,CONSTRUC,biomass_tradbio,5,2015,ktoe
+Europe_Eastern,14,CONSTRUC,coal,3,2015,ktoe
+Europe_Eastern,14,CONSTRUC,electricity,87,2015,ktoe
+Europe_Eastern,14,CONSTRUC,gas,43,2015,ktoe
+Europe_Eastern,14,CONSTRUC,heat,16,2015,ktoe
+Europe_Eastern,14,CONSTRUC,refined liquids,259,2015,ktoe
+Europe_Non_EU,15,CONSTRUC,biomass_tradbio,0,2015,ktoe
+Europe_Non_EU,15,CONSTRUC,coal,4,2015,ktoe
+Europe_Non_EU,15,CONSTRUC,electricity,323,2015,ktoe
+Europe_Non_EU,15,CONSTRUC,gas,296,2015,ktoe
+Europe_Non_EU,15,CONSTRUC,heat,0,2015,ktoe
+Europe_Non_EU,15,CONSTRUC,refined liquids,326,2015,ktoe
+European Free Trade Association,16,CONSTRUC,biomass_tradbio,67,2015,ktoe
+European Free Trade Association,16,CONSTRUC,coal,0,2015,ktoe
+European Free Trade Association,16,CONSTRUC,electricity,158,2015,ktoe
+European Free Trade Association,16,CONSTRUC,gas,15,2015,ktoe
+European Free Trade Association,16,CONSTRUC,heat,15,2015,ktoe
+European Free Trade Association,16,CONSTRUC,refined liquids,316,2015,ktoe
+India,17,CONSTRUC,electricity,41,2015,ktoe
+India,17,CONSTRUC,refined liquids,320,2015,ktoe
+Indonesia,18,CONSTRUC,refined liquids,505,2015,ktoe
+Japan,19,CONSTRUC,electricity,535,2015,ktoe
+Japan,19,CONSTRUC,gas,65,2015,ktoe
+Japan,19,CONSTRUC,refined liquids,1382,2015,ktoe
+Mexico,20,CONSTRUC,electricity,45,2015,ktoe
+Mexico,20,CONSTRUC,refined liquids,261,2015,ktoe
+Middle East,21,CONSTRUC,electricity,0,2015,ktoe
+Russia,23,CONSTRUC,biomass,0,2015,ktoe
+Russia,23,CONSTRUC,biomass_tradbio,2,2015,ktoe
+Russia,23,CONSTRUC,coal,68,2015,ktoe
+Russia,23,CONSTRUC,electricity,1044,2015,ktoe
+Russia,23,CONSTRUC,gas,2261,2015,ktoe
+Russia,23,CONSTRUC,heat,668,2015,ktoe
+Russia,23,CONSTRUC,refined liquids,1116,2015,ktoe
+South Africa,24,CONSTRUC,electricity,9,2015,ktoe
+South Africa,24,CONSTRUC,refined liquids,106,2015,ktoe
+South America_Northern,25,CONSTRUC,refined liquids,9.28837042,2015,ktoe
+South America_Southern,26,CONSTRUC,biomass_tradbio,1,2015,ktoe
+South America_Southern,26,CONSTRUC,electricity,18,2015,ktoe
+South America_Southern,26,CONSTRUC,gas,0,2015,ktoe
+South America_Southern,26,CONSTRUC,refined liquids,100,2015,ktoe
+South Asia,27,CONSTRUC,gas,0,2015,ktoe
+South Korea,28,CONSTRUC,biomass,26,2015,ktoe
+South Korea,28,CONSTRUC,gas,8,2015,ktoe
+South Korea,28,CONSTRUC,refined liquids,822,2015,ktoe
+Southeast Asia,29,CONSTRUC,electricity,319,2015,ktoe
+Southeast Asia,29,CONSTRUC,gas,5,2015,ktoe
+Southeast Asia,29,CONSTRUC,refined biofuels_FT,2,2015,ktoe
+Southeast Asia,29,CONSTRUC,refined liquids,957,2015,ktoe
+Taiwan,30,CONSTRUC,electricity,54,2015,ktoe
+Taiwan,30,CONSTRUC,refined liquids,51,2015,ktoe
+Colombia,32,CONSTRUC,electricity,8,2015,ktoe
+Colombia,32,CONSTRUC,gas,0,2015,ktoe
+Colombia,32,CONSTRUC,refined liquids,1,2015,ktoe
+USA,1,CONSTRUC,Hydrogen,0,2015,ktoe
+Africa_Eastern,2,CONSTRUC,Hydrogen,0,2015,ktoe
+Africa_Northern,3,CONSTRUC,Hydrogen,0,2015,ktoe
+Africa_Southern,4,CONSTRUC,Hydrogen,0,2015,ktoe
+Africa_Western,5,CONSTRUC,Hydrogen,0,2015,ktoe
+Australia_NZ,6,CONSTRUC,Hydrogen,0,2015,ktoe
+Brazil,7,CONSTRUC,Hydrogen,0,2015,ktoe
+Canada,8,CONSTRUC,Hydrogen,0,2015,ktoe
+Central America and Caribbean,9,CONSTRUC,Hydrogen,0,2015,ktoe
+Central Asia,10,CONSTRUC,Hydrogen,0,2015,ktoe
+China,11,CONSTRUC,Hydrogen,0,2015,ktoe
+EU-12,12,CONSTRUC,Hydrogen,0,2015,ktoe
+EU-15,13,CONSTRUC,Hydrogen,0,2015,ktoe
+Europe_Eastern,14,CONSTRUC,Hydrogen,0,2015,ktoe
+Europe_Non_EU,15,CONSTRUC,Hydrogen,0,2015,ktoe
+European Free Trade Association,16,CONSTRUC,Hydrogen,0,2015,ktoe
+India,17,CONSTRUC,Hydrogen,0,2015,ktoe
+Indonesia,18,CONSTRUC,Hydrogen,0,2015,ktoe
+Japan,19,CONSTRUC,Hydrogen,0,2015,ktoe
+Mexico,20,CONSTRUC,Hydrogen,0,2015,ktoe
+Middle East,21,CONSTRUC,Hydrogen,0,2015,ktoe
+Pakistan,22,CONSTRUC,Hydrogen,0,2015,ktoe
+Russia,23,CONSTRUC,Hydrogen,0,2015,ktoe
+South Africa,24,CONSTRUC,Hydrogen,0,2015,ktoe
+South America_Northern,25,CONSTRUC,Hydrogen,0,2015,ktoe
+South America_Southern,26,CONSTRUC,Hydrogen,0,2015,ktoe
+South Asia,27,CONSTRUC,Hydrogen,0,2015,ktoe
+South Korea,28,CONSTRUC,Hydrogen,0,2015,ktoe
+Southeast Asia,29,CONSTRUC,Hydrogen,0,2015,ktoe
+Taiwan,30,CONSTRUC,Hydrogen,0,2015,ktoe
+Argentina,31,CONSTRUC,Hydrogen,0,2015,ktoe
+Colombia,32,CONSTRUC,Hydrogen,0,2015,ktoe

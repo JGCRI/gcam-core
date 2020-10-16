@@ -1,0 +1,72 @@
+# File: aluminum_prod.csv
+# Title: Aluminum production by region by sector
+# Units: Mt
+# Description: Regional aluminum production
+# Source: World aluminum Association
+# Column types: cciicn
+# ----------
+region,flow,GCAM_region_ID,year,unit_prod,value
+USA,Alumina,1,2015,Mt,1.94890604
+USA,Aluminum,1,2015,Mt,1.589644295
+Africa_Eastern,Alumina,2,2015,Mt,0
+Africa_Eastern,Aluminum,2,2015,Mt,0
+Africa_Northern,Alumina,3,2015,Mt,0.156648556
+Africa_Northern,Aluminum,3,2015,Mt,0.305247286
+Africa_Southern,Alumina,4,2015,Mt,0.291366314
+Africa_Southern,Aluminum,4,2015,Mt,0.567759952
+Africa_Western,Alumina,5,2015,Mt,0.054826995
+Africa_Western,Aluminum,5,2015,Mt,0.10683655
+Australia_NZ,Alumina,6,2015,Mt,19.916
+Australia_NZ,Aluminum,6,2015,Mt,1.978
+Brazil,Alumina,7,2015,Mt,7.405719033
+Brazil,Aluminum,7,2015,Mt,0.772583082
+Canada,Alumina,8,2015,Mt,3.53009396
+Canada,Aluminum,8,2015,Mt,2.879355705
+Central America and Caribbean,Alumina,9,2015,Mt,0
+Central America and Caribbean,Aluminum,9,2015,Mt,0
+Central Asia,Alumina,10,2015,Mt,0.216697169
+Central Asia,Aluminum,10,2015,Mt,0.333087724
+China,Alumina,11,2015,Mt,56.768
+China,Aluminum,11,2015,Mt,31.518
+EU-12,Alumina,12,2015,Mt,0.537758148
+EU-12,Aluminum,12,2015,Mt,0.510051016
+EU-15,Alumina,13,2015,Mt,1.932296218
+EU-15,Aluminum,13,2015,Mt,1.662023274
+Europe_Eastern,Alumina,14,2015,Mt,0
+Europe_Eastern,Aluminum,14,2015,Mt,0
+Europe_Non_EU,Alumina,15,2015,Mt,0.158458982
+Europe_Non_EU,Aluminum,15,2015,Mt,0.164433321
+European Free Trade Association,Alumina,16,2015,Mt,2.421703782
+European Free Trade Association,Aluminum,16,2015,Mt,2.082976726
+India,Alumina,17,2015,Mt,1.229691164
+India,Aluminum,17,2015,Mt,1.890172506
+Indonesia,Alumina,18,2015,Mt,0.087723191
+Indonesia,Aluminum,18,2015,Mt,0.134840332
+Japan,Alumina,19,2015,Mt,0
+Japan,Aluminum,19,2015,Mt,0
+Mexico,Alumina,20,2015,Mt,0
+Mexico,Aluminum,20,2015,Mt,0
+Middle East,Alumina,21,2015,Mt,2.845259937
+Middle East,Aluminum,21,2015,Mt,5.388930463
+Pakistan,Alumina,22,2015,Mt,0
+Pakistan,Aluminum,22,2015,Mt,0
+Russia,Alumina,23,2015,Mt,3.364802315
+Russia,Aluminum,23,2015,Mt,3.191436231
+South Africa,Alumina,24,2015,Mt,0.362902488
+South Africa,Aluminum,24,2015,Mt,0.707156212
+South America_Northern,Alumina,25,2015,Mt,1.141555136
+South America_Northern,Aluminum,25,2015,Mt,0.119089879
+South America_Southern,Alumina,26,2015,Mt,0
+South America_Southern,Aluminum,26,2015,Mt,0
+South Asia,Alumina,27,2015,Mt,0
+South Asia,Aluminum,27,2015,Mt,0
+South Korea,Alumina,28,2015,Mt,0
+South Korea,Aluminum,28,2015,Mt,0
+Southeast Asia,Alumina,29,2015,Mt,0.208864741
+Southeast Asia,Aluminum,29,2015,Mt,0.321048409
+Taiwan,Alumina,30,2015,Mt,0
+Taiwan,Aluminum,30,2015,Mt,0
+Argentina,Alumina,31,2015,Mt,4.153725831
+Argentina,Aluminum,31,2015,Mt,0.433327039
+Colombia,Alumina,32,2015,Mt,0
+Colombia,Aluminum,32,2015,Mt,0

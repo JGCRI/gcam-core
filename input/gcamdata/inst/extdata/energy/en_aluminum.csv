@@ -1,0 +1,113 @@
+# File: en_aluminum.csv
+# Title: aluminum energy use by region
+# Units: EJ
+# Description: Regional aluminum energy consumption
+# Source: IAI
+# Column types: cicnic
+# ----------
+region,GCAM_region_ID,fuel,value,year,unit
+USA,1,electricity,0.08657454,2015,EJ
+Africa_Northern,3,electricity,0.015175398,2015,EJ
+Africa_Southern,4,electricity,0.02822624,2015,EJ
+Africa_Western,5,electricity,0.005311389,2015,EJ
+Australia_NZ,6,electricity,0.1131268,2015,EJ
+Brazil,7,electricity,0.04520888,2015,EJ
+Canada,8,electricity,0.15681426,2015,EJ
+Central Asia,10,electricity,0.013149677,2015,EJ
+China,11,electricity,1.6080222,2015,EJ
+EU-12,12,electricity,0.031916954,2015,EJ
+EU-15,13,electricity,0.094958596,2015,EJ
+Europe_Non_EU,15,electricity,0.009436793,2015,EJ
+European Free Trade Association,16,electricity,0.119009492,2015,EJ
+India,17,electricity,0.074620456,2015,EJ
+Indonesia,18,electricity,0.005323243,2015,EJ
+Middle East,21,electricity,0.239038519,2015,EJ
+Russia,23,electricity,0.199707321,2015,EJ
+South Africa,24,electricity,0.035156338,2015,EJ
+South America_Northern,25,electricity,0.006968726,2015,EJ
+Southeast Asia,29,electricity,0.012674387,2015,EJ
+Argentina,31,electricity,0.025356794,2015,EJ
+USA,1,coal,0,2015,EJ
+Africa_Northern,3,coal,0.003008004,2015,EJ
+Africa_Southern,4,coal,0.005594888,2015,EJ
+Africa_Western,5,coal,0.001052802,2015,EJ
+Australia_NZ,6,coal,0.056731,2015,EJ
+Brazil,7,coal,0.015968855,2015,EJ
+Canada,8,coal,0,2015,EJ
+Central Asia,10,coal,0.004161073,2015,EJ
+China,11,coal,0.535313,2015,EJ
+EU-12,12,coal,0.001144536,2015,EJ
+EU-15,13,coal,0.003405199,2015,EJ
+Europe_Non_EU,15,coal,0.000747361,2015,EJ
+European Free Trade Association,16,coal,0.00426766,2015,EJ
+India,17,coal,0.023612835,2015,EJ
+Indonesia,18,coal,0.001684482,2015,EJ
+Middle East,21,coal,0.003559472,2015,EJ
+Russia,23,coal,0.00716147,2015,EJ
+South Africa,24,coal,0.006968544,2015,EJ
+South America_Northern,25,coal,0.00246152,2015,EJ
+Southeast Asia,29,coal,0.004010673,2015,EJ
+Argentina,31,coal,0.008956625,2015,EJ
+USA,1,refined liquids,0,2015,EJ
+Africa_Northern,3,refined liquids,0.000740078,2015,EJ
+Africa_Southern,4,refined liquids,0.001376545,2015,EJ
+Africa_Western,5,refined liquids,0.000259027,2015,EJ
+Australia_NZ,6,refined liquids,0.004131,2015,EJ
+Brazil,7,refined liquids,0.041261184,2015,EJ
+Canada,8,refined liquids,0,2015,EJ
+Central Asia,10,refined liquids,0.001023774,2015,EJ
+China,11,refined liquids,0.033683,2015,EJ
+EU-12,12,refined liquids,1.09774E-05,2015,EJ
+EU-15,13,refined liquids,3.26598E-05,2015,EJ
+Europe_Non_EU,15,refined liquids,0.000116223,2015,EJ
+European Free Trade Association,16,refined liquids,4.09318E-05,2015,EJ
+India,17,refined liquids,0.005809611,2015,EJ
+Indonesia,18,refined liquids,0.000414444,2015,EJ
+Middle East,21,refined liquids,0.000875759,2015,EJ
+Russia,23,refined liquids,6.86867E-05,2015,EJ
+South Africa,24,refined liquids,0.001714514,2015,EJ
+South America_Northern,25,refined liquids,0.006360208,2015,EJ
+Southeast Asia,29,refined liquids,0.00098677,2015,EJ
+Argentina,31,refined liquids,0.023142607,2015,EJ
+USA,1,gas,0.012688698,2015,EJ
+Africa_Northern,3,gas,2.83491E-05,2015,EJ
+Africa_Southern,4,gas,5.27293E-05,2015,EJ
+Africa_Western,5,gas,9.92218E-06,2015,EJ
+Australia_NZ,6,gas,0.125744,2015,EJ
+Brazil,7,gas,0.004334045,2015,EJ
+Canada,8,gas,0.022983302,2015,EJ
+Central Asia,10,gas,3.92162E-05,2015,EJ
+China,11,gas,0.093072,2015,EJ
+EU-12,12,gas,0.004904513,2015,EJ
+EU-15,13,gas,0.014591796,2015,EJ
+Europe_Non_EU,15,gas,0.001230475,2015,EJ
+European Free Trade Association,16,gas,0.018287573,2015,EJ
+India,17,gas,0.00022254,2015,EJ
+Indonesia,18,gas,1.58755E-05,2015,EJ
+Middle East,21,gas,3.35464E-05,2015,EJ
+Russia,23,gas,0.03068799,2015,EJ
+South Africa,24,gas,6.56754E-05,2015,EJ
+South America_Northern,25,gas,0.000668072,2015,EJ
+Southeast Asia,29,gas,3.77988E-05,2015,EJ
+Argentina,31,gas,0.002430883,2015,EJ
+USA,1,biomass_tradbio,0.004767866,2015,EJ
+Africa_Northern,3,biomass_tradbio,0.000200611,2015,EJ
+Africa_Southern,4,biomass_tradbio,0.000373137,2015,EJ
+Africa_Western,5,biomass_tradbio,7.0214E-05,2015,EJ
+Australia_NZ,6,biomass_tradbio,0.012954,2015,EJ
+Brazil,7,biomass_tradbio,0,2015,EJ
+Canada,8,biomass_tradbio,0.008636134,2015,EJ
+Central Asia,10,biomass_tradbio,0.000277513,2015,EJ
+China,11,biomass_tradbio,0.007387,2015,EJ
+EU-12,12,biomass_tradbio,1.31588E-05,2015,EJ
+EU-15,13,biomass_tradbio,3.91498E-05,2015,EJ
+Europe_Non_EU,15,biomass_tradbio,3.40501E-05,2015,EJ
+European Free Trade Association,16,biomass_tradbio,4.90656E-05,2015,EJ
+India,17,biomass_tradbio,0.0015748,2015,EJ
+Indonesia,18,biomass_tradbio,0.000112342,2015,EJ
+Middle East,21,biomass_tradbio,0.00023739,2015,EJ
+Russia,23,biomass_tradbio,8.2336E-05,2015,EJ
+South Africa,24,biomass_tradbio,0.00046475,2015,EJ
+South America_Northern,25,biomass_tradbio,0,2015,EJ
+Southeast Asia,29,biomass_tradbio,0.000267482,2015,EJ
+Argentina,31,biomass_tradbio,0,2015,EJ

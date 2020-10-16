@@ -1,0 +1,904 @@
+# File: IO_IRONSTL_scaled.csv
+# Title: IO in Steel production by subsector by technology
+# Units: GJ/t
+# Description: Energy coefficient in steel production
+# Source: Literature
+# Column types: cicccicn
+# ----------
+region,GCAM_region_ID,sector.name,subsector.name,technology,year,minicam.energy.input,coefficient
+Africa_Eastern,2,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0
+Africa_Eastern,2,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0
+Africa_Eastern,2,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.664117731
+Africa_Eastern,2,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0
+Africa_Eastern,2,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0
+Africa_Eastern,2,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0
+Africa_Eastern,2,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.664117731
+Africa_Eastern,2,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0
+Africa_Eastern,2,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Africa_Eastern,2,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0
+Africa_Eastern,2,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.664117731
+Africa_Eastern,2,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0
+Africa_Eastern,2,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0
+Africa_Eastern,2,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0
+Africa_Eastern,2,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,2.033013462
+Africa_Eastern,2,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0
+Africa_Eastern,2,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0
+Africa_Eastern,2,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0
+Africa_Eastern,2,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,2.033013462
+Africa_Eastern,2,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0
+Africa_Eastern,2,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Africa_Eastern,2,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,2.033013462
+Africa_Eastern,2,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0
+Africa_Eastern,2,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,1.490876538
+Africa_Eastern,2,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Africa_Eastern,2,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0
+Africa_Eastern,2,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,1.490876538
+Africa_Eastern,2,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Africa_Northern,3,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.023623644
+Africa_Northern,3,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0
+Africa_Northern,3,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,3.94E-04
+Africa_Northern,3,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,3.49E-04
+Africa_Northern,3,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.023623644
+Africa_Northern,3,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0
+Africa_Northern,3,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,3.94E-04
+Africa_Northern,3,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,3.49E-04
+Africa_Northern,3,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Africa_Northern,3,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0
+Africa_Northern,3,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,3.94E-04
+Africa_Northern,3,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,3.49E-04
+Africa_Northern,3,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0.001251333
+Africa_Northern,3,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0
+Africa_Northern,3,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.001205376
+Africa_Northern,3,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.00189539
+Africa_Northern,3,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0.001251333
+Africa_Northern,3,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0
+Africa_Northern,3,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.001205376
+Africa_Northern,3,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.00189539
+Africa_Northern,3,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Africa_Northern,3,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.001205376
+Africa_Northern,3,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0
+Africa_Northern,3,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,8.84E-04
+Africa_Northern,3,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Africa_Northern,3,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0
+Africa_Northern,3,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,8.84E-04
+Africa_Northern,3,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Africa_Western,5,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0
+Africa_Western,5,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0
+Africa_Western,5,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.167161867
+Africa_Western,5,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.020702044
+Africa_Western,5,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0
+Africa_Western,5,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0
+Africa_Western,5,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.167161867
+Africa_Western,5,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.020702044
+Africa_Western,5,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Africa_Western,5,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0
+Africa_Western,5,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.167161867
+Africa_Western,5,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.020702044
+Africa_Western,5,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0
+Africa_Western,5,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0
+Africa_Western,5,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.51172
+Africa_Western,5,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.112382526
+Africa_Western,5,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0
+Africa_Western,5,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0
+Africa_Western,5,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.51172
+Africa_Western,5,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.112382526
+Africa_Western,5,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Africa_Western,5,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.51172
+Africa_Western,5,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0
+Africa_Western,5,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.375261333
+Africa_Western,5,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Africa_Western,5,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0
+Africa_Western,5,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.375261333
+Africa_Western,5,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Argentina,31,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.003193169
+Argentina,31,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0.007700421
+Argentina,31,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.002509461
+Argentina,31,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.005846542
+Argentina,31,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.003193169
+Argentina,31,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0.007700421
+Argentina,31,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.002509461
+Argentina,31,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.005846542
+Argentina,31,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Argentina,31,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0.007700421
+Argentina,31,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.002509461
+Argentina,31,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.005846542
+Argentina,31,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,1.69E-04
+Argentina,31,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0.003300181
+Argentina,31,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.007682023
+Argentina,31,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.031738369
+Argentina,31,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,1.69E-04
+Argentina,31,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0.003300181
+Argentina,31,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.007682023
+Argentina,31,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.031738369
+Argentina,31,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Argentina,31,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.007682023
+Argentina,31,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0.00220012
+Argentina,31,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.005633484
+Argentina,31,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Argentina,31,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0.00220012
+Argentina,31,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.005633484
+Argentina,31,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Australia_NZ,6,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.022074353
+Australia_NZ,6,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,1.71E-04
+Australia_NZ,6,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.002263504
+Australia_NZ,6,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.001488891
+Australia_NZ,6,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.022074353
+Australia_NZ,6,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,1.71E-04
+Australia_NZ,6,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.002263504
+Australia_NZ,6,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.001488891
+Australia_NZ,6,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Australia_NZ,6,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,1.71E-04
+Australia_NZ,6,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.002263504
+Australia_NZ,6,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.001488891
+Australia_NZ,6,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0.001169268
+Australia_NZ,6,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,7.31E-05
+Australia_NZ,6,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.006929095
+Australia_NZ,6,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.008082552
+Australia_NZ,6,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0.001169268
+Australia_NZ,6,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,7.31E-05
+Australia_NZ,6,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.006929095
+Australia_NZ,6,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.008082552
+Australia_NZ,6,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Australia_NZ,6,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.006929095
+Australia_NZ,6,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,4.87E-05
+Australia_NZ,6,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.005081336
+Australia_NZ,6,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Australia_NZ,6,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,4.87E-05
+Australia_NZ,6,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.005081336
+Australia_NZ,6,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Brazil,7,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.01392553
+Brazil,7,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0.001476145
+Brazil,7,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.001950268
+Brazil,7,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,9.23E-04
+Brazil,7,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.01392553
+Brazil,7,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0.001476145
+Brazil,7,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.001950268
+Brazil,7,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,9.23E-04
+Brazil,7,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Brazil,7,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0.001476145
+Brazil,7,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.001950268
+Brazil,7,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,9.23E-04
+Brazil,7,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,7.38E-04
+Brazil,7,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,6.33E-04
+Brazil,7,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.005970208
+Brazil,7,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.005009712
+Brazil,7,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,7.38E-04
+Brazil,7,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,6.33E-04
+Brazil,7,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.005970208
+Brazil,7,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.005009712
+Brazil,7,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Brazil,7,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.005970208
+Brazil,7,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,4.22E-04
+Brazil,7,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.004378153
+Brazil,7,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Brazil,7,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,4.22E-04
+Brazil,7,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.004378153
+Brazil,7,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Canada,8,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.014091124
+Canada,8,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0
+Canada,8,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.001552844
+Canada,8,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.004996817
+Canada,8,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.014091124
+Canada,8,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0
+Canada,8,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.001552844
+Canada,8,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.004996817
+Canada,8,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Canada,8,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0
+Canada,8,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.001552844
+Canada,8,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.004996817
+Canada,8,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,7.46E-04
+Canada,8,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0
+Canada,8,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.004753604
+Canada,8,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.027125578
+Canada,8,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,7.46E-04
+Canada,8,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0
+Canada,8,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.004753604
+Canada,8,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.027125578
+Canada,8,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Canada,8,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.004753604
+Canada,8,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0
+Canada,8,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.003485976
+Canada,8,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Canada,8,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0
+Canada,8,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.003485976
+Canada,8,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Central America and Caribbean,9,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,7.35E-04
+Central America and Caribbean,9,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0
+Central America and Caribbean,9,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0
+Central America and Caribbean,9,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.004942609
+Central America and Caribbean,9,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,7.35E-04
+Central America and Caribbean,9,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0
+Central America and Caribbean,9,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0
+Central America and Caribbean,9,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.004942609
+Central America and Caribbean,9,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Central America and Caribbean,9,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0
+Central America and Caribbean,9,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0
+Central America and Caribbean,9,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.004942609
+Central America and Caribbean,9,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,3.89E-05
+Central America and Caribbean,9,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0
+Central America and Caribbean,9,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0
+Central America and Caribbean,9,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.026831307
+Central America and Caribbean,9,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,3.89E-05
+Central America and Caribbean,9,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0
+Central America and Caribbean,9,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0
+Central America and Caribbean,9,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.026831307
+Central America and Caribbean,9,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Central America and Caribbean,9,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0
+Central America and Caribbean,9,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0
+Central America and Caribbean,9,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0
+Central America and Caribbean,9,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Central America and Caribbean,9,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0
+Central America and Caribbean,9,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0
+Central America and Caribbean,9,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Central Asia,10,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.063165194
+Central Asia,10,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0.004982272
+Central Asia,10,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.00643169
+Central Asia,10,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.001881325
+Central Asia,10,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.063165194
+Central Asia,10,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0.004982272
+Central Asia,10,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.00643169
+Central Asia,10,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.001881325
+Central Asia,10,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Central Asia,10,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0.004982272
+Central Asia,10,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.00643169
+Central Asia,10,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.001881325
+Central Asia,10,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0.003345829
+Central Asia,10,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0.002135259
+Central Asia,10,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.019688847
+Central Asia,10,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.010212908
+Central Asia,10,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0.003345829
+Central Asia,10,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0.002135259
+Central Asia,10,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.019688847
+Central Asia,10,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.010212908
+Central Asia,10,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Central Asia,10,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.019688847
+Central Asia,10,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0.001423506
+Central Asia,10,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.014438488
+Central Asia,10,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Central Asia,10,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0.001423506
+Central Asia,10,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.014438488
+Central Asia,10,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+China,11,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.021009278
+China,11,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,5.22E-05
+China,11,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.00221975
+China,11,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,1.95E-04
+China,11,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.021009278
+China,11,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,5.22E-05
+China,11,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.00221975
+China,11,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,1.95E-04
+China,11,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+China,11,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,5.22E-05
+China,11,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.00221975
+China,11,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,1.95E-04
+China,11,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0.001112851
+China,11,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,2.24E-05
+China,11,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.006795155
+China,11,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.001061002
+China,11,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0.001112851
+China,11,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,2.24E-05
+China,11,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.006795155
+China,11,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.001061002
+China,11,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+China,11,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.006795155
+China,11,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,1.49E-05
+China,11,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.004983113
+China,11,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+China,11,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,1.49E-05
+China,11,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.004983113
+China,11,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Colombia,32,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.12966297
+Colombia,32,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,6.04E-04
+Colombia,32,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.002799948
+Colombia,32,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.002249665
+Colombia,32,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.12966297
+Colombia,32,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,6.04E-04
+Colombia,32,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.002799948
+Colombia,32,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.002249665
+Colombia,32,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Colombia,32,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,6.04E-04
+Colombia,32,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.002799948
+Colombia,32,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.002249665
+Colombia,32,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0.006868183
+Colombia,32,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,2.59E-04
+Colombia,32,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.008571269
+Colombia,32,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.012212468
+Colombia,32,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0.006868183
+Colombia,32,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,2.59E-04
+Colombia,32,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.008571269
+Colombia,32,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.012212468
+Colombia,32,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Colombia,32,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.008571269
+Colombia,32,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,1.73E-04
+Colombia,32,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.006285597
+Colombia,32,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Colombia,32,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,1.73E-04
+Colombia,32,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.006285597
+Colombia,32,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+EU-12,12,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.018584535
+EU-12,12,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,4.46E-05
+EU-12,12,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.001982424
+EU-12,12,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.001829048
+EU-12,12,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.018584535
+EU-12,12,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,4.46E-05
+EU-12,12,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.001982424
+EU-12,12,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.001829048
+EU-12,12,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+EU-12,12,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,4.46E-05
+EU-12,12,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.001982424
+EU-12,12,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.001829048
+EU-12,12,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,9.84E-04
+EU-12,12,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,1.91E-05
+EU-12,12,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.006068646
+EU-12,12,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.009929116
+EU-12,12,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,9.84E-04
+EU-12,12,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,1.91E-05
+EU-12,12,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.006068646
+EU-12,12,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.009929116
+EU-12,12,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+EU-12,12,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.006068646
+EU-12,12,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,1.27E-05
+EU-12,12,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.004450341
+EU-12,12,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+EU-12,12,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,1.27E-05
+EU-12,12,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.004450341
+EU-12,12,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+EU-15,13,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.014020429
+EU-15,13,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,5.33E-04
+EU-15,13,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.001472858
+EU-15,13,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.001285415
+EU-15,13,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.014020429
+EU-15,13,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,5.33E-04
+EU-15,13,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.001472858
+EU-15,13,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.001285415
+EU-15,13,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+EU-15,13,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,5.33E-04
+EU-15,13,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.001472858
+EU-15,13,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.001285415
+EU-15,13,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,7.43E-04
+EU-15,13,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,2.28E-04
+EU-15,13,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.004508749
+EU-15,13,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.006977965
+EU-15,13,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,7.43E-04
+EU-15,13,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,2.28E-04
+EU-15,13,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.004508749
+EU-15,13,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.006977965
+EU-15,13,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+EU-15,13,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.004508749
+EU-15,13,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,1.52E-04
+EU-15,13,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.003306416
+EU-15,13,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+EU-15,13,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,1.52E-04
+EU-15,13,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.003306416
+EU-15,13,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Europe_Eastern,14,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.022136997
+Europe_Eastern,14,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,1.87E-04
+Europe_Eastern,14,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.002444895
+Europe_Eastern,14,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.001778988
+Europe_Eastern,14,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.022136997
+Europe_Eastern,14,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,1.87E-04
+Europe_Eastern,14,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.002444895
+Europe_Eastern,14,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.001778988
+Europe_Eastern,14,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Europe_Eastern,14,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,1.87E-04
+Europe_Eastern,14,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.002444895
+Europe_Eastern,14,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.001778988
+Europe_Eastern,14,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0.001172586
+Europe_Eastern,14,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,8.01E-05
+Europe_Eastern,14,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.007484372
+Europe_Eastern,14,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.009657364
+Europe_Eastern,14,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0.001172586
+Europe_Eastern,14,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,8.01E-05
+Europe_Eastern,14,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.007484372
+Europe_Eastern,14,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.009657364
+Europe_Eastern,14,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Europe_Eastern,14,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.007484372
+Europe_Eastern,14,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,5.34E-05
+Europe_Eastern,14,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.005488539
+Europe_Eastern,14,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Europe_Eastern,14,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,5.34E-05
+Europe_Eastern,14,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.005488539
+Europe_Eastern,14,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Europe_Non_EU,15,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.018827254
+Europe_Non_EU,15,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,1.49E-04
+Europe_Non_EU,15,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.001194861
+Europe_Non_EU,15,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,5.86E-04
+Europe_Non_EU,15,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.018827254
+Europe_Non_EU,15,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,1.49E-04
+Europe_Non_EU,15,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.001194861
+Europe_Non_EU,15,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,5.86E-04
+Europe_Non_EU,15,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Europe_Non_EU,15,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,1.49E-04
+Europe_Non_EU,15,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.001194861
+Europe_Non_EU,15,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,5.86E-04
+Europe_Non_EU,15,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,9.97E-04
+Europe_Non_EU,15,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,6.39E-05
+Europe_Non_EU,15,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.003657737
+Europe_Non_EU,15,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.003179254
+Europe_Non_EU,15,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,9.97E-04
+Europe_Non_EU,15,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,6.39E-05
+Europe_Non_EU,15,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.003657737
+Europe_Non_EU,15,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.003179254
+Europe_Non_EU,15,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Europe_Non_EU,15,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.003657737
+Europe_Non_EU,15,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,4.26E-05
+Europe_Non_EU,15,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.00268234
+Europe_Non_EU,15,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Europe_Non_EU,15,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,4.26E-05
+Europe_Non_EU,15,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.00268234
+Europe_Non_EU,15,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+European Free Trade Association,16,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.394947567
+European Free Trade Association,16,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0.001046991
+European Free Trade Association,16,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.004998533
+European Free Trade Association,16,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,6.88E-04
+European Free Trade Association,16,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.394947567
+European Free Trade Association,16,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0.001046991
+European Free Trade Association,16,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.004998533
+European Free Trade Association,16,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,6.88E-04
+European Free Trade Association,16,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+European Free Trade Association,16,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0.001046991
+European Free Trade Association,16,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.004998533
+European Free Trade Association,16,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,6.88E-04
+European Free Trade Association,16,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0.020920176
+European Free Trade Association,16,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,4.49E-04
+European Free Trade Association,16,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.015301633
+European Free Trade Association,16,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.003732454
+European Free Trade Association,16,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0.020920176
+European Free Trade Association,16,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,4.49E-04
+European Free Trade Association,16,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.015301633
+European Free Trade Association,16,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.003732454
+European Free Trade Association,16,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+European Free Trade Association,16,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.015301633
+European Free Trade Association,16,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,2.99E-04
+European Free Trade Association,16,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.011221197
+European Free Trade Association,16,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+European Free Trade Association,16,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,2.99E-04
+European Free Trade Association,16,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.011221197
+European Free Trade Association,16,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+India,17,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.065806099
+India,17,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,4.82E-04
+India,17,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.001214795
+India,17,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,3.55E-06
+India,17,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.065806099
+India,17,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,4.82E-04
+India,17,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.001214795
+India,17,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,3.55E-06
+India,17,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+India,17,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,4.82E-04
+India,17,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.001214795
+India,17,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,3.55E-06
+India,17,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0.003485716
+India,17,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,2.07E-04
+India,17,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.003718761
+India,17,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,1.93E-05
+India,17,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0.003485716
+India,17,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,2.07E-04
+India,17,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.003718761
+India,17,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,1.93E-05
+India,17,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+India,17,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.003718761
+India,17,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,1.38E-04
+India,17,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.002727091
+India,17,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+India,17,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,1.38E-04
+India,17,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.002727091
+India,17,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Indonesia,18,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.003670658
+Indonesia,18,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0.007723713
+Indonesia,18,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0
+Indonesia,18,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,3.20E-04
+Indonesia,18,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.003670658
+Indonesia,18,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0.007723713
+Indonesia,18,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0
+Indonesia,18,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,3.20E-04
+Indonesia,18,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Indonesia,18,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0.007723713
+Indonesia,18,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0
+Indonesia,18,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,3.20E-04
+Indonesia,18,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,1.94E-04
+Indonesia,18,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0.003310163
+Indonesia,18,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0
+Indonesia,18,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.001735549
+Indonesia,18,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,1.94E-04
+Indonesia,18,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0.003310163
+Indonesia,18,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0
+Indonesia,18,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.001735549
+Indonesia,18,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Indonesia,18,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0
+Indonesia,18,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0.002206775
+Indonesia,18,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0
+Indonesia,18,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Indonesia,18,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0.002206775
+Indonesia,18,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0
+Indonesia,18,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Japan,19,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.017478321
+Japan,19,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,9.18E-04
+Japan,19,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.001758373
+Japan,19,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,5.99E-04
+Japan,19,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.017478321
+Japan,19,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,9.18E-04
+Japan,19,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.001758373
+Japan,19,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,5.99E-04
+Japan,19,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Japan,19,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,9.18E-04
+Japan,19,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.001758373
+Japan,19,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,5.99E-04
+Japan,19,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,9.26E-04
+Japan,19,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,3.94E-04
+Japan,19,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.005382773
+Japan,19,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.003249964
+Japan,19,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,9.26E-04
+Japan,19,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,3.94E-04
+Japan,19,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.005382773
+Japan,19,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.003249964
+Japan,19,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Japan,19,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.005382773
+Japan,19,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,2.62E-04
+Japan,19,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.003947367
+Japan,19,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Japan,19,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,2.62E-04
+Japan,19,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.003947367
+Japan,19,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Mexico,20,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.014936034
+Mexico,20,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,4.23E-04
+Mexico,20,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,4.48E-04
+Mexico,20,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.002011829
+Mexico,20,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.014936034
+Mexico,20,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,4.23E-04
+Mexico,20,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,4.48E-04
+Mexico,20,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.002011829
+Mexico,20,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Mexico,20,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,4.23E-04
+Mexico,20,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,4.48E-04
+Mexico,20,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.002011829
+Mexico,20,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,7.91E-04
+Mexico,20,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,1.81E-04
+Mexico,20,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.001370833
+Mexico,20,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.010921357
+Mexico,20,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,7.91E-04
+Mexico,20,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,1.81E-04
+Mexico,20,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.001370833
+Mexico,20,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.010921357
+Mexico,20,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Mexico,20,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.001370833
+Mexico,20,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,1.21E-04
+Mexico,20,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.001005277
+Mexico,20,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Mexico,20,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,1.21E-04
+Mexico,20,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.001005277
+Mexico,20,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Middle East,21,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.011117455
+Middle East,21,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0
+Middle East,21,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,2.24E-04
+Middle East,21,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,6.09E-04
+Middle East,21,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.011117455
+Middle East,21,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0
+Middle East,21,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,2.24E-04
+Middle East,21,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,6.09E-04
+Middle East,21,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Middle East,21,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0
+Middle East,21,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,2.24E-04
+Middle East,21,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,6.09E-04
+Middle East,21,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,5.89E-04
+Middle East,21,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0
+Middle East,21,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,6.87E-04
+Middle East,21,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.003308711
+Middle East,21,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,5.89E-04
+Middle East,21,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0
+Middle East,21,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,6.87E-04
+Middle East,21,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.003308711
+Middle East,21,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Middle East,21,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,6.87E-04
+Middle East,21,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0
+Middle East,21,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,5.04E-04
+Middle East,21,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Middle East,21,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0
+Middle East,21,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,5.04E-04
+Middle East,21,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Pakistan,22,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0
+Pakistan,22,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0
+Pakistan,22,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0
+Pakistan,22,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,8.84E-05
+Pakistan,22,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0
+Pakistan,22,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0
+Pakistan,22,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0
+Pakistan,22,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,8.84E-05
+Pakistan,22,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Pakistan,22,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0
+Pakistan,22,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0
+Pakistan,22,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,8.84E-05
+Pakistan,22,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0
+Pakistan,22,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0
+Pakistan,22,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0
+Pakistan,22,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,4.80E-04
+Pakistan,22,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0
+Pakistan,22,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0
+Pakistan,22,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0
+Pakistan,22,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,4.80E-04
+Pakistan,22,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Pakistan,22,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0
+Pakistan,22,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0
+Pakistan,22,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0
+Pakistan,22,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Pakistan,22,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0
+Pakistan,22,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0
+Pakistan,22,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Russia,23,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.03540502
+Russia,23,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,1.22E-04
+Russia,23,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.002008007
+Russia,23,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.004073141
+Russia,23,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.03540502
+Russia,23,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,1.22E-04
+Russia,23,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.002008007
+Russia,23,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.004073141
+Russia,23,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Russia,23,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,1.22E-04
+Russia,23,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.002008007
+Russia,23,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.004073141
+Russia,23,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0.001875386
+Russia,23,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,5.24E-05
+Russia,23,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.006146961
+Russia,23,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.022111336
+Russia,23,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0.001875386
+Russia,23,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,5.24E-05
+Russia,23,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.006146961
+Russia,23,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.022111336
+Russia,23,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Russia,23,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.006146961
+Russia,23,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,3.49E-05
+Russia,23,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.004507771
+Russia,23,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Russia,23,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,3.49E-05
+Russia,23,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.004507771
+Russia,23,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+South Africa,24,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.041961548
+South Africa,24,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0
+South Africa,24,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.001225984
+South Africa,24,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.001103756
+South Africa,24,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.041961548
+South Africa,24,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0
+South Africa,24,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.001225984
+South Africa,24,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.001103756
+South Africa,24,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+South Africa,24,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0
+South Africa,24,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.001225984
+South Africa,24,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.001103756
+South Africa,24,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0.002222682
+South Africa,24,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0
+South Africa,24,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.003753013
+South Africa,24,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.005991819
+South Africa,24,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0.002222682
+South Africa,24,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0
+South Africa,24,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.003753013
+South Africa,24,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.005991819
+South Africa,24,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+South Africa,24,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.003753013
+South Africa,24,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0
+South Africa,24,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.00275221
+South Africa,24,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+South Africa,24,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0
+South Africa,24,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.00275221
+South Africa,24,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+South America_Northern,25,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0
+South America_Northern,25,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0
+South America_Northern,25,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.002356958
+South America_Northern,25,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.017885269
+South America_Northern,25,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0
+South America_Northern,25,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0
+South America_Northern,25,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.002356958
+South America_Northern,25,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.017885269
+South America_Northern,25,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+South America_Northern,25,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0
+South America_Northern,25,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.002356958
+South America_Northern,25,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.017885269
+South America_Northern,25,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0
+South America_Northern,25,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0
+South America_Northern,25,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.007215176
+South America_Northern,25,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.097091461
+South America_Northern,25,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0
+South America_Northern,25,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0
+South America_Northern,25,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.007215176
+South America_Northern,25,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.097091461
+South America_Northern,25,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+South America_Northern,25,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.007215176
+South America_Northern,25,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0
+South America_Northern,25,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.005291129
+South America_Northern,25,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+South America_Northern,25,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0
+South America_Northern,25,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.005291129
+South America_Northern,25,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+South America_Southern,26,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.021227632
+South America_Southern,26,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0.009556289
+South America_Southern,26,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.00598406
+South America_Southern,26,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,3.68E-04
+South America_Southern,26,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.021227632
+South America_Southern,26,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0.009556289
+South America_Southern,26,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.00598406
+South America_Southern,26,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,3.68E-04
+South America_Southern,26,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+South America_Southern,26,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0.009556289
+South America_Southern,26,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.00598406
+South America_Southern,26,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,3.68E-04
+South America_Southern,26,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0.001124417
+South America_Southern,26,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0.004095552
+South America_Southern,26,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.018318551
+South America_Southern,26,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.001998913
+South America_Southern,26,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0.001124417
+South America_Southern,26,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0.004095552
+South America_Southern,26,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.018318551
+South America_Southern,26,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.001998913
+South America_Southern,26,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+South America_Southern,26,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.018318551
+South America_Southern,26,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0.002730368
+South America_Southern,26,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.013433604
+South America_Southern,26,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+South America_Southern,26,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0.002730368
+South America_Southern,26,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.013433604
+South America_Southern,26,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+South Asia,27,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0
+South Asia,27,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0
+South Asia,27,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0
+South Asia,27,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0
+South Asia,27,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0
+South Asia,27,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0
+South Asia,27,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0
+South Asia,27,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0
+South Asia,27,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+South Asia,27,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0
+South Asia,27,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0
+South Asia,27,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0
+South Asia,27,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0
+South Asia,27,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0
+South Asia,27,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0
+South Asia,27,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0
+South Asia,27,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0
+South Asia,27,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0
+South Asia,27,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0
+South Asia,27,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0
+South Asia,27,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+South Asia,27,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0
+South Asia,27,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0
+South Asia,27,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0
+South Asia,27,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+South Asia,27,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0
+South Asia,27,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0
+South Asia,27,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+South Korea,28,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.017402718
+South Korea,28,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,7.47E-05
+South Korea,28,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.001867654
+South Korea,28,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,6.04E-04
+South Korea,28,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.017402718
+South Korea,28,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,7.47E-05
+South Korea,28,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.001867654
+South Korea,28,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,6.04E-04
+South Korea,28,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+South Korea,28,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,7.47E-05
+South Korea,28,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.001867654
+South Korea,28,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,6.04E-04
+South Korea,28,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,9.22E-04
+South Korea,28,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,3.20E-05
+South Korea,28,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.005717309
+South Korea,28,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.003277452
+South Korea,28,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,9.22E-04
+South Korea,28,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,3.20E-05
+South Korea,28,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.005717309
+South Korea,28,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.003277452
+South Korea,28,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+South Korea,28,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.005717309
+South Korea,28,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,2.13E-05
+South Korea,28,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.004192693
+South Korea,28,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+South Korea,28,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,2.13E-05
+South Korea,28,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.004192693
+South Korea,28,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Southeast Asia,29,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.008722912
+Southeast Asia,29,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0.002916082
+Southeast Asia,29,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.001363846
+Southeast Asia,29,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,2.54E-04
+Southeast Asia,29,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.008722912
+Southeast Asia,29,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0.002916082
+Southeast Asia,29,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.001363846
+Southeast Asia,29,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,2.54E-04
+Southeast Asia,29,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Southeast Asia,29,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0.002916082
+Southeast Asia,29,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.001363846
+Southeast Asia,29,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,2.54E-04
+Southeast Asia,29,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,4.62E-04
+Southeast Asia,29,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0.001249749
+Southeast Asia,29,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.00417504
+Southeast Asia,29,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.001379745
+Southeast Asia,29,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,4.62E-04
+Southeast Asia,29,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0.001249749
+Southeast Asia,29,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.00417504
+Southeast Asia,29,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.001379745
+Southeast Asia,29,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Southeast Asia,29,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.00417504
+Southeast Asia,29,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,8.33E-04
+Southeast Asia,29,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.003061696
+Southeast Asia,29,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Southeast Asia,29,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,8.33E-04
+Southeast Asia,29,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.003061696
+Southeast Asia,29,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Taiwan,30,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.019534635
+Taiwan,30,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,5.58E-04
+Taiwan,30,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.001468616
+Taiwan,30,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,1.95E-04
+Taiwan,30,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.019534635
+Taiwan,30,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,5.58E-04
+Taiwan,30,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.001468616
+Taiwan,30,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,1.95E-04
+Taiwan,30,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Taiwan,30,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,5.58E-04
+Taiwan,30,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.001468616
+Taiwan,30,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,1.95E-04
+Taiwan,30,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0.00103474
+Taiwan,30,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,2.39E-04
+Taiwan,30,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.004495763
+Taiwan,30,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.001058431
+Taiwan,30,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0.00103474
+Taiwan,30,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,2.39E-04
+Taiwan,30,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.004495763
+Taiwan,30,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.001058431
+Taiwan,30,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Taiwan,30,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.004495763
+Taiwan,30,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,1.59E-04
+Taiwan,30,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.003296893
+Taiwan,30,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Taiwan,30,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,1.59E-04
+Taiwan,30,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.003296893
+Taiwan,30,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+USA,1,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.016762618
+USA,1,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,1.80E-04
+USA,1,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,0.001289727
+USA,1,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,0.004036444
+USA,1,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.016762618
+USA,1,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,1.80E-04
+USA,1,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,0.001289727
+USA,1,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,0.004036444
+USA,1,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+USA,1,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,1.80E-04
+USA,1,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,0.001289727
+USA,1,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,0.004036444
+USA,1,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,8.88E-04
+USA,1,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,7.73E-05
+USA,1,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.003948143
+USA,1,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.021912122
+USA,1,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,8.88E-04
+USA,1,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,7.73E-05
+USA,1,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.003948143
+USA,1,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.021912122
+USA,1,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+USA,1,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.003948143
+USA,1,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,5.15E-05
+USA,1,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,0.002895305
+USA,1,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+USA,1,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,5.15E-05
+USA,1,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,0.002895305
+USA,1,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0
+Africa_Southern,4,IRONSTL,BLASTFUR,BLASTFUR,2015,delivered coal,0.023623644
+Africa_Southern,4,IRONSTL,BLASTFUR,BLASTFUR,2015,refined liquids industrial,0
+Africa_Southern,4,IRONSTL,BLASTFUR,BLASTFUR,2015,elect_td_ind,3.94E-04
+Africa_Southern,4,IRONSTL,BLASTFUR,BLASTFUR,2015,wholesale gas,3.49E-04
+Africa_Southern,4,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,delivered coal,0.023623644
+Africa_Southern,4,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,refined liquids industrial,0
+Africa_Southern,4,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,elect_td_ind,3.94E-04
+Africa_Southern,4,IRONSTL,BLASTFUR,BLASTFUR CCS,2015,wholesale gas,3.49E-04
+Africa_Southern,4,IRONSTL,BLASTFUR,Biomass-based,2015,delivered biomass,0
+Africa_Southern,4,IRONSTL,BLASTFUR,Biomass-based,2015,refined liquids industrial,0
+Africa_Southern,4,IRONSTL,BLASTFUR,Biomass-based,2015,elect_td_ind,3.94E-04
+Africa_Southern,4,IRONSTL,BLASTFUR,Biomass-based,2015,wholesale gas,3.49E-04
+Africa_Southern,4,IRONSTL,EAF with DRI,EAF with DRI,2015,delivered coal,0.001251333
+Africa_Southern,4,IRONSTL,EAF with DRI,EAF with DRI,2015,refined liquids industrial,0
+Africa_Southern,4,IRONSTL,EAF with DRI,EAF with DRI,2015,elect_td_ind,0.001205376
+Africa_Southern,4,IRONSTL,EAF with DRI,EAF with DRI,2015,wholesale gas,0.00189539
+Africa_Southern,4,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,delivered coal,0.001251333
+Africa_Southern,4,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,refined liquids industrial,0
+Africa_Southern,4,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,elect_td_ind,0.001205376
+Africa_Southern,4,IRONSTL,EAF with DRI,EAF with DRI CCS,2015,wholesale gas,0.00189539
+Africa_Southern,4,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,H2 enduse,0
+Africa_Southern,4,IRONSTL,EAF with DRI,Hydrogen-based DRI,2015,elect_td_ind,0.001205376
+Africa_Southern,4,IRONSTL,EAF with scrap,EAF with scrap,2015,refined liquids industrial,0
+Africa_Southern,4,IRONSTL,EAF with scrap,EAF with scrap,2015,elect_td_ind,8.84E-04
+Africa_Southern,4,IRONSTL,EAF with scrap,EAF with scrap,2015,scrap,0
+Africa_Southern,4,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,refined liquids industrial,0
+Africa_Southern,4,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,elect_td_ind,8.84E-04
+Africa_Southern,4,IRONSTL,EAF with scrap,EAF with scrap CCS,2015,scrap,0

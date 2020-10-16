@@ -29,7 +29,7 @@ GCAM_region_ID,region,tradbio_region,ethanol,biodiesel,biomassOil_tech,elect_td_
 22,Pakistan,1,corn ethanol,biodiesel,OilCrop,0.00025,0,E
 23,Russia,0,corn ethanol,biodiesel,OilCrop,0.0004,1,D
 24,South Africa,1,corn ethanol,biodiesel,OilCrop,0.00025,0,E
-25,South America_Northern,1,sugar cane ethanol,biodiesel,OilCrop,0.00075,0,D
+25,South America_Northern,1,sugar cane ethanol,biodiesel,PalmFruit,0.00075,0,D
 26,South America_Southern,1,corn ethanol,biodiesel,OilCrop,0.00075,0,D
 27,South Asia,1,corn ethanol,biodiesel,OilCrop,0.00025,0,E
 28,South Korea,0,corn ethanol,biodiesel,OilCrop,0.0001,0,D

@@ -1,0 +1,162 @@
+# File: en_mining.csv
+# Title: mining energy use by region
+# Units: Thousand tonnes
+# Description: Regional mining production
+# Source: IEA
+# Column types: ciccnic
+# ----------
+region,GCAM_region_ID,flow,fuel,value,year,unit
+USA,1,MINING,coal,0,2015,ktoe
+USA,1,MINING,electricity,3365,2015,ktoe
+USA,1,MINING,gas,2449,2015,ktoe
+USA,1,MINING,refined biofuels_FT,58,2015,ktoe
+USA,1,MINING,refined liquids,2573,2015,ktoe
+Africa_Eastern,2,MINING,electricity,0.48272695,2015,ktoe
+Africa_Eastern,2,MINING,refined liquids,29.92907088,2015,ktoe
+Africa_Northern,3,MINING,electricity,249.0025316,2015,ktoe
+Africa_Northern,3,MINING,gas,30,2015,ktoe
+Africa_Northern,3,MINING,refined liquids,349.1569569,2015,ktoe
+Africa_Southern,4,MINING,biomass,2,2015,ktoe
+Africa_Southern,4,MINING,coal,43,2015,ktoe
+Africa_Southern,4,MINING,electricity,296.0957768,2015,ktoe
+Africa_Southern,4,MINING,refined liquids,489.9381628,2015,ktoe
+Africa_Western,5,MINING,biomass_tradbio,18,2015,ktoe
+Africa_Western,5,MINING,electricity,69.41850774,2015,ktoe
+Africa_Western,5,MINING,refined liquids,25.94747984,2015,ktoe
+Australia_NZ,6,MINING,coal,51,2015,ktoe
+Australia_NZ,6,MINING,electricity,1476,2015,ktoe
+Australia_NZ,6,MINING,gas,143,2015,ktoe
+Australia_NZ,6,MINING,refined liquids,2385,2015,ktoe
+Brazil,7,MINING,biomass,0,2015,ktoe
+Brazil,7,MINING,biomass_tradbio,0,2015,ktoe
+Brazil,7,MINING,coal,483,2015,ktoe
+Brazil,7,MINING,electricity,1096,2015,ktoe
+Brazil,7,MINING,gas,640,2015,ktoe
+Brazil,7,MINING,refined liquids,1119,2015,ktoe
+Canada,8,MINING,coal,30,2015,ktoe
+Canada,8,MINING,electricity,645,2015,ktoe
+Canada,8,MINING,gas,764,2015,ktoe
+Canada,8,MINING,refined liquids,1489,2015,ktoe
+Central America and Caribbean,9,MINING,electricity,39,2015,ktoe
+Central America and Caribbean,9,MINING,refined liquids,568,2015,ktoe
+Central Asia,10,MINING,coal,456,2015,ktoe
+Central Asia,10,MINING,electricity,576,2015,ktoe
+Central Asia,10,MINING,gas,645,2015,ktoe
+Central Asia,10,MINING,heat,147,2015,ktoe
+Central Asia,10,MINING,refined liquids,237,2015,ktoe
+China,11,MINING,coal,7197,2015,ktoe
+China,11,MINING,electricity,8896.033033,2015,ktoe
+China,11,MINING,gas,890,2015,ktoe
+China,11,MINING,heat,892,2015,ktoe
+China,11,MINING,refined liquids,2867,2015,ktoe
+EU-12,12,MINING,biomass,0,2015,ktoe
+EU-12,12,MINING,biomass_tradbio,3,2015,ktoe
+EU-12,12,MINING,coal,15,2015,ktoe
+EU-12,12,MINING,electricity,395,2015,ktoe
+EU-12,12,MINING,gas,110,2015,ktoe
+EU-12,12,MINING,heat,66,2015,ktoe
+EU-12,12,MINING,refined liquids,113,2015,ktoe
+EU-15,13,MINING,biomass,0,2015,ktoe
+EU-15,13,MINING,biomass_tradbio,85,2015,ktoe
+EU-15,13,MINING,coal,169,2015,ktoe
+EU-15,13,MINING,electricity,1201,2015,ktoe
+EU-15,13,MINING,gas,434,2015,ktoe
+EU-15,13,MINING,gasified biomass,6,2015,ktoe
+EU-15,13,MINING,heat,57,2015,ktoe
+EU-15,13,MINING,refined biofuels_FT,8,2015,ktoe
+EU-15,13,MINING,refined liquids,751,2015,ktoe
+Europe_Eastern,14,MINING,biomass_tradbio,1,2015,ktoe
+Europe_Eastern,14,MINING,coal,1,2015,ktoe
+Europe_Eastern,14,MINING,electricity,864,2015,ktoe
+Europe_Eastern,14,MINING,gas,306,2015,ktoe
+Europe_Eastern,14,MINING,heat,78,2015,ktoe
+Europe_Eastern,14,MINING,refined liquids,280,2015,ktoe
+Europe_Non_EU,15,MINING,biomass,0,2015,ktoe
+Europe_Non_EU,15,MINING,biomass_tradbio,0,2015,ktoe
+Europe_Non_EU,15,MINING,coal,66,2015,ktoe
+Europe_Non_EU,15,MINING,electricity,299,2015,ktoe
+Europe_Non_EU,15,MINING,gas,107,2015,ktoe
+Europe_Non_EU,15,MINING,heat,0,2015,ktoe
+Europe_Non_EU,15,MINING,refined liquids,480,2015,ktoe
+European Free Trade Association,16,MINING,biomass_tradbio,0,2015,ktoe
+European Free Trade Association,16,MINING,coal,0,2015,ktoe
+European Free Trade Association,16,MINING,electricity,46,2015,ktoe
+European Free Trade Association,16,MINING,gas,4,2015,ktoe
+European Free Trade Association,16,MINING,refined liquids,69,2015,ktoe
+India,17,MINING,electricity,1246,2015,ktoe
+India,17,MINING,refined liquids,1360,2015,ktoe
+Indonesia,18,MINING,coal,0,2015,ktoe
+Indonesia,18,MINING,refined liquids,1473,2015,ktoe
+Japan,19,MINING,coal,8,2015,ktoe
+Japan,19,MINING,electricity,97,2015,ktoe
+Japan,19,MINING,gas,108,2015,ktoe
+Japan,19,MINING,refined liquids,193,2015,ktoe
+Mexico,20,MINING,coal,0,2015,ktoe
+Mexico,20,MINING,electricity,910,2015,ktoe
+Mexico,20,MINING,gas,210,2015,ktoe
+Mexico,20,MINING,refined liquids,333,2015,ktoe
+Middle East,21,MINING,electricity,257,2015,ktoe
+Middle East,21,MINING,gas,64,2015,ktoe
+Russia,23,MINING,biomass,11,2015,ktoe
+Russia,23,MINING,biomass_tradbio,9,2015,ktoe
+Russia,23,MINING,coal,87,2015,ktoe
+Russia,23,MINING,electricity,2227,2015,ktoe
+Russia,23,MINING,gas,1211,2015,ktoe
+Russia,23,MINING,heat,722,2015,ktoe
+Russia,23,MINING,refined liquids,1351,2015,ktoe
+South Africa,24,MINING,coal,106,2015,ktoe
+South Africa,24,MINING,electricity,2613,2015,ktoe
+South Africa,24,MINING,gas,5,2015,ktoe
+South Africa,24,MINING,refined liquids,1658,2015,ktoe
+South America_Southern,26,MINING,biomass_tradbio,1,2015,ktoe
+South America_Southern,26,MINING,coal,38,2015,ktoe
+South America_Southern,26,MINING,electricity,2151,2015,ktoe
+South America_Southern,26,MINING,gas,174,2015,ktoe
+South America_Southern,26,MINING,refined liquids,2288,2015,ktoe
+South Asia,27,MINING,electricity,1.9529647,2015,ktoe
+South Korea,28,MINING,electricity,140,2015,ktoe
+South Korea,28,MINING,gas,0,2015,ktoe
+South Korea,28,MINING,refined liquids,64,2015,ktoe
+Southeast Asia,29,MINING,coal,27,2015,ktoe
+Southeast Asia,29,MINING,electricity,349.0144594,2015,ktoe
+Southeast Asia,29,MINING,refined biofuels_FT,5,2015,ktoe
+Southeast Asia,29,MINING,refined liquids,794.0283295,2015,ktoe
+Taiwan,30,MINING,coal,0,2015,ktoe
+Taiwan,30,MINING,electricity,40,2015,ktoe
+Taiwan,30,MINING,gas,0,2015,ktoe
+Taiwan,30,MINING,refined liquids,32,2015,ktoe
+Colombia,32,MINING,electricity,357,2015,ktoe
+Colombia,32,MINING,gas,0,2015,ktoe
+Colombia,32,MINING,refined liquids,0,2015,ktoe
+USA,1,MINING,Hydrogen,0,2015,ktoe
+Africa_Eastern,2,MINING,Hydrogen,0,2015,ktoe
+Africa_Northern,3,MINING,Hydrogen,0,2015,ktoe
+Africa_Southern,4,MINING,Hydrogen,0,2015,ktoe
+Africa_Western,5,MINING,Hydrogen,0,2015,ktoe
+Australia_NZ,6,MINING,Hydrogen,0,2015,ktoe
+Brazil,7,MINING,Hydrogen,0,2015,ktoe
+Canada,8,MINING,Hydrogen,0,2015,ktoe
+Central America and Caribbean,9,MINING,Hydrogen,0,2015,ktoe
+Central Asia,10,MINING,Hydrogen,0,2015,ktoe
+China,11,MINING,Hydrogen,0,2015,ktoe
+EU-12,12,MINING,Hydrogen,0,2015,ktoe
+EU-15,13,MINING,Hydrogen,0,2015,ktoe
+Europe_Eastern,14,MINING,Hydrogen,0,2015,ktoe
+Europe_Non_EU,15,MINING,Hydrogen,0,2015,ktoe
+European Free Trade Association,16,MINING,Hydrogen,0,2015,ktoe
+India,17,MINING,Hydrogen,0,2015,ktoe
+Indonesia,18,MINING,Hydrogen,0,2015,ktoe
+Japan,19,MINING,Hydrogen,0,2015,ktoe
+Mexico,20,MINING,Hydrogen,0,2015,ktoe
+Middle East,21,MINING,Hydrogen,0,2015,ktoe
+Pakistan,22,MINING,Hydrogen,0,2015,ktoe
+Russia,23,MINING,Hydrogen,0,2015,ktoe
+South Africa,24,MINING,Hydrogen,0,2015,ktoe
+South America_Northern,25,MINING,Hydrogen,0,2015,ktoe
+South America_Southern,26,MINING,Hydrogen,0,2015,ktoe
+South Asia,27,MINING,Hydrogen,0,2015,ktoe
+South Korea,28,MINING,Hydrogen,0,2015,ktoe
+Southeast Asia,29,MINING,Hydrogen,0,2015,ktoe
+Taiwan,30,MINING,Hydrogen,0,2015,ktoe
+Argentina,31,MINING,Hydrogen,0,2015,ktoe
+Colombia,32,MINING,Hydrogen,0,2015,ktoe

@@ -1,0 +1,9 @@
+# File: A323.globaltech_co2capture.csv
+# Title: IRONSTL CO2 capture rates
+# Units: Unitless
+# Column types: cccnn
+# ----------
+supplysector,subsector,technology,1971,2100
+IRONSTL,BLASTFUR,BLASTFUR CCS,0.9,0.9
+IRONSTL,EAF with DRI,EAF with DRI CCS,0.9,0.9
+IRONSTL,EAF with scrap,EAF with scrap CCS,0.9,0.9

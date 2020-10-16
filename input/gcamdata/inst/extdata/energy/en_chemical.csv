@@ -1,0 +1,226 @@
+# File: en_chemical.csv
+# Title: chemical energy use by region
+# Units: Thousand tonnes
+# Description: Regional chemical energy consumption
+# Source: IEA
+# Column types: ccicnic
+# ----------
+region,flow,GCAM_region_ID,fuel,value,year,unit
+USA,CHEMICAL,1,biomass,142,2015,ktoe
+USA,CHEMICAL,1,biomass_tradbio,53,2015,ktoe
+USA,CHEMICAL,1,coal,3203,2015,ktoe
+USA,CHEMICAL,1,electricity,9805,2015,ktoe
+USA,CHEMICAL,1,gas,49876,2015,ktoe
+USA,CHEMICAL,1,gasified biomass,1,2015,ktoe
+USA,CHEMICAL,1,heat,2643,2015,ktoe
+USA,CHEMICAL,1,refined biofuels_FT,41,2015,ktoe
+USA,CHEMICAL,1,refined liquids,2647,2015,ktoe
+USA,NECHEM,1,gas,15377,2015,ktoe
+USA,NECHEM,1,refined liquids,75985,2015,ktoe
+Africa_Eastern,NECHEM,2,gas,468.2451412,2015,ktoe
+Africa_Eastern,NECHEM,2,refined liquids,16,2015,ktoe
+Africa_Northern,CHEMICAL,3,biomass,9,2015,ktoe
+Africa_Northern,CHEMICAL,3,electricity,233,2015,ktoe
+Africa_Northern,CHEMICAL,3,gas,152,2015,ktoe
+Africa_Northern,CHEMICAL,3,refined liquids,62,2015,ktoe
+Africa_Northern,NECHEM,3,gas,6722.455616,2015,ktoe
+Africa_Northern,NECHEM,3,refined liquids,469,2015,ktoe
+Africa_Southern,CHEMICAL,4,coal,1,2015,ktoe
+Africa_Southern,CHEMICAL,4,electricity,2,2015,ktoe
+Africa_Southern,CHEMICAL,4,refined liquids,2,2015,ktoe
+Africa_Southern,NECHEM,4,gas,92.9035151,2015,ktoe
+Africa_Southern,NECHEM,4,refined liquids,31,2015,ktoe
+Africa_Western,CHEMICAL,5,electricity,27,2015,ktoe
+Africa_Western,CHEMICAL,5,gas,421,2015,ktoe
+Africa_Western,CHEMICAL,5,refined liquids,2,2015,ktoe
+Africa_Western,NECHEM,5,gas,1725.952507,2015,ktoe
+Africa_Western,NECHEM,5,refined liquids,9,2015,ktoe
+Australia_NZ,CHEMICAL,6,biomass,89,2015,ktoe
+Australia_NZ,CHEMICAL,6,biomass_tradbio,12,2015,ktoe
+Australia_NZ,CHEMICAL,6,coal,166,2015,ktoe
+Australia_NZ,CHEMICAL,6,electricity,399,2015,ktoe
+Australia_NZ,CHEMICAL,6,gas,2266,2015,ktoe
+Australia_NZ,CHEMICAL,6,refined liquids,148,2015,ktoe
+Australia_NZ,NECHEM,6,gas,1887,2015,ktoe
+Australia_NZ,NECHEM,6,refined liquids,2112,2015,ktoe
+Brazil,CHEMICAL,7,biomass,18,2015,ktoe
+Brazil,CHEMICAL,7,biomass_tradbio,48,2015,ktoe
+Brazil,CHEMICAL,7,coal,160,2015,ktoe
+Brazil,CHEMICAL,7,electricity,1940,2015,ktoe
+Brazil,CHEMICAL,7,gas,2163,2015,ktoe
+Brazil,CHEMICAL,7,refined liquids,2248,2015,ktoe
+Brazil,NECHEM,7,gas,667,2015,ktoe
+Brazil,NECHEM,7,refined liquids,7200,2015,ktoe
+Canada,CHEMICAL,8,coal,0,2015,ktoe
+Canada,CHEMICAL,8,electricity,1746,2015,ktoe
+Canada,CHEMICAL,8,gas,4164,2015,ktoe
+Canada,CHEMICAL,8,heat,279,2015,ktoe
+Canada,CHEMICAL,8,refined liquids,0,2015,ktoe
+Canada,NECHEM,8,gas,3242,2015,ktoe
+Canada,NECHEM,8,refined liquids,12195,2015,ktoe
+Central America and Caribbean,CHEMICAL,9,electricity,84,2015,ktoe
+Central America and Caribbean,CHEMICAL,9,gas,17,2015,ktoe
+Central America and Caribbean,CHEMICAL,9,refined liquids,38,2015,ktoe
+Central America and Caribbean,NECHEM,9,gas,9637.692572,2015,ktoe
+Central America and Caribbean,NECHEM,9,refined liquids,125,2015,ktoe
+Central Asia,CHEMICAL,10,coal,27,2015,ktoe
+Central Asia,CHEMICAL,10,electricity,445,2015,ktoe
+Central Asia,CHEMICAL,10,gas,565,2015,ktoe
+Central Asia,CHEMICAL,10,heat,133,2015,ktoe
+Central Asia,CHEMICAL,10,refined liquids,23,2015,ktoe
+Central Asia,NECHEM,10,gas,554,2015,ktoe
+Central Asia,NECHEM,10,refined liquids,552,2015,ktoe
+China,CHEMICAL,11,coal,98797,2015,ktoe
+China,CHEMICAL,11,electricity,46701,2015,ktoe
+China,CHEMICAL,11,gas,11737,2015,ktoe
+China,CHEMICAL,11,heat,26900,2015,ktoe
+China,CHEMICAL,11,refined liquids,12455,2015,ktoe
+China,NECHEM,11,gas,9983,2015,ktoe
+China,NECHEM,11,refined liquids,64549,2015,ktoe
+EU-12,CHEMICAL,12,biomass,62,2015,ktoe
+EU-12,CHEMICAL,12,biomass_tradbio,47,2015,ktoe
+EU-12,CHEMICAL,12,coal,1509,2015,ktoe
+EU-12,CHEMICAL,12,electricity,1941,2015,ktoe
+EU-12,CHEMICAL,12,gas,1965,2015,ktoe
+EU-12,CHEMICAL,12,gasified biomass,4,2015,ktoe
+EU-12,CHEMICAL,12,heat,1274,2015,ktoe
+EU-12,CHEMICAL,12,refined liquids,1060,2015,ktoe
+EU-12,NECHEM,12,coal,407,2015,ktoe
+EU-12,NECHEM,12,gas,4595,2015,ktoe
+EU-12,NECHEM,12,refined liquids,5084,2015,ktoe
+EU-15,CHEMICAL,13,biomass,457,2015,ktoe
+EU-15,CHEMICAL,13,biomass_tradbio,182,2015,ktoe
+EU-15,CHEMICAL,13,coal,1700,2015,ktoe
+EU-15,CHEMICAL,13,electricity,13586,2015,ktoe
+EU-15,CHEMICAL,13,gas,15175,2015,ktoe
+EU-15,CHEMICAL,13,gasified biomass,64,2015,ktoe
+EU-15,CHEMICAL,13,heat,5610,2015,ktoe
+EU-15,CHEMICAL,13,refined biofuels_FT,0,2015,ktoe
+EU-15,CHEMICAL,13,refined liquids,7183,2015,ktoe
+EU-15,NECHEM,13,coal,301,2015,ktoe
+EU-15,NECHEM,13,gas,9129.019058,2015,ktoe
+EU-15,NECHEM,13,refined liquids,54060,2015,ktoe
+Europe_Eastern,CHEMICAL,14,biomass_tradbio,1,2015,ktoe
+Europe_Eastern,CHEMICAL,14,coal,2,2015,ktoe
+Europe_Eastern,CHEMICAL,14,electricity,566,2015,ktoe
+Europe_Eastern,CHEMICAL,14,gas,315,2015,ktoe
+Europe_Eastern,CHEMICAL,14,heat,1052,2015,ktoe
+Europe_Eastern,CHEMICAL,14,refined liquids,35,2015,ktoe
+Europe_Eastern,NECHEM,14,coal,0,2015,ktoe
+Europe_Eastern,NECHEM,14,gas,3564,2015,ktoe
+Europe_Eastern,NECHEM,14,refined liquids,106,2015,ktoe
+Europe_Non_EU,CHEMICAL,15,biomass_tradbio,10,2015,ktoe
+Europe_Non_EU,CHEMICAL,15,coal,689,2015,ktoe
+Europe_Non_EU,CHEMICAL,15,electricity,618,2015,ktoe
+Europe_Non_EU,CHEMICAL,15,gas,2045,2015,ktoe
+Europe_Non_EU,CHEMICAL,15,heat,179,2015,ktoe
+Europe_Non_EU,CHEMICAL,15,refined liquids,278,2015,ktoe
+Europe_Non_EU,NECHEM,15,gas,946,2015,ktoe
+Europe_Non_EU,NECHEM,15,refined liquids,1205,2015,ktoe
+European Free Trade Association,CHEMICAL,16,biomass,123,2015,ktoe
+European Free Trade Association,CHEMICAL,16,biomass_tradbio,71,2015,ktoe
+European Free Trade Association,CHEMICAL,16,coal,237,2015,ktoe
+European Free Trade Association,CHEMICAL,16,electricity,954,2015,ktoe
+European Free Trade Association,CHEMICAL,16,gas,368,2015,ktoe
+European Free Trade Association,CHEMICAL,16,gasified biomass,2,2015,ktoe
+European Free Trade Association,CHEMICAL,16,heat,40,2015,ktoe
+European Free Trade Association,CHEMICAL,16,refined liquids,389,2015,ktoe
+European Free Trade Association,NECHEM,16,gas,550,2015,ktoe
+European Free Trade Association,NECHEM,16,refined liquids,1174,2015,ktoe
+India,CHEMICAL,17,coal,1419,2015,ktoe
+India,CHEMICAL,17,electricity,1179,2015,ktoe
+India,CHEMICAL,17,refined liquids,4659,2015,ktoe
+India,NECHEM,17,gas,20379,2015,ktoe
+India,NECHEM,17,refined liquids,12864,2015,ktoe
+Indonesia,CHEMICAL,18,coal,0,2015,ktoe
+Indonesia,CHEMICAL,18,gas,2545,2015,ktoe
+Indonesia,CHEMICAL,18,refined liquids,860,2015,ktoe
+Indonesia,NECHEM,18,gas,4118,2015,ktoe
+Indonesia,NECHEM,18,refined liquids,2474,2015,ktoe
+Japan,CHEMICAL,19,biomass,118,2015,ktoe
+Japan,CHEMICAL,19,biomass_tradbio,0,2015,ktoe
+Japan,CHEMICAL,19,coal,3942,2015,ktoe
+Japan,CHEMICAL,19,electricity,4825,2015,ktoe
+Japan,CHEMICAL,19,gas,2207,2015,ktoe
+Japan,CHEMICAL,19,refined liquids,11371,2015,ktoe
+Japan,NECHEM,19,coal,400,2015,ktoe
+Japan,NECHEM,19,gas,249,2015,ktoe
+Japan,NECHEM,19,refined liquids,29818,2015,ktoe
+Mexico,CHEMICAL,20,electricity,510,2015,ktoe
+Mexico,CHEMICAL,20,gas,2956,2015,ktoe
+Mexico,CHEMICAL,20,refined liquids,289,2015,ktoe
+Mexico,NECHEM,20,gas,486,2015,ktoe
+Mexico,NECHEM,20,refined liquids,3528,2015,ktoe
+Middle East,CHEMICAL,21,coal,0,2015,ktoe
+Middle East,CHEMICAL,21,electricity,811,2015,ktoe
+Middle East,CHEMICAL,21,gas,16384,2015,ktoe
+Middle East,CHEMICAL,21,refined liquids,237,2015,ktoe
+Middle East,NECHEM,21,gas,20725,2015,ktoe
+Middle East,NECHEM,21,refined liquids,42984,2015,ktoe
+Pakistan,CHEMICAL,22,gas,1398,2015,ktoe
+Pakistan,CHEMICAL,22,refined liquids,491,2015,ktoe
+Pakistan,NECHEM,22,gas,3383,2015,ktoe
+Russia,CHEMICAL,23,biomass,52,2015,ktoe
+Russia,CHEMICAL,23,biomass_tradbio,5,2015,ktoe
+Russia,CHEMICAL,23,coal,169,2015,ktoe
+Russia,CHEMICAL,23,electricity,3957,2015,ktoe
+Russia,CHEMICAL,23,gas,5717,2015,ktoe
+Russia,CHEMICAL,23,heat,12005,2015,ktoe
+Russia,CHEMICAL,23,refined liquids,8433,2015,ktoe
+Russia,NECHEM,23,coal,184,2015,ktoe
+Russia,NECHEM,23,gas,32887,2015,ktoe
+Russia,NECHEM,23,refined liquids,17756,2015,ktoe
+South Africa,CHEMICAL,24,coal,3,2015,ktoe
+South Africa,CHEMICAL,24,electricity,966,2015,ktoe
+South Africa,CHEMICAL,24,gas,1100,2015,ktoe
+South Africa,CHEMICAL,24,refined liquids,0,2015,ktoe
+South Africa,NECHEM,24,coal,1293,2015,ktoe
+South Africa,NECHEM,24,refined liquids,0,2015,ktoe
+South America_Northern,CHEMICAL,25,electricity,253,2015,ktoe
+South America_Northern,CHEMICAL,25,gas,2093,2015,ktoe
+South America_Northern,CHEMICAL,25,refined liquids,1995,2015,ktoe
+South America_Northern,NECHEM,25,gas,0.28837042,2015,ktoe
+South America_Northern,NECHEM,25,refined liquids,0,2015,ktoe
+South America_Southern,CHEMICAL,26,biomass_tradbio,4,2015,ktoe
+South America_Southern,CHEMICAL,26,electricity,71,2015,ktoe
+South America_Southern,CHEMICAL,26,gas,63,2015,ktoe
+South America_Southern,CHEMICAL,26,refined liquids,8,2015,ktoe
+South America_Southern,NECHEM,26,gas,130,2015,ktoe
+South America_Southern,NECHEM,26,refined liquids,3,2015,ktoe
+South Asia,CHEMICAL,27,electricity,0,2015,ktoe
+South Asia,NECHEM,27,gas,1281,2015,ktoe
+South Asia,NECHEM,27,refined liquids,0,2015,ktoe
+South Korea,CHEMICAL,28,biomass,260,2015,ktoe
+South Korea,CHEMICAL,28,biomass_tradbio,11,2015,ktoe
+South Korea,CHEMICAL,28,coal,111,2015,ktoe
+South Korea,CHEMICAL,28,electricity,4211,2015,ktoe
+South Korea,CHEMICAL,28,gas,1445,2015,ktoe
+South Korea,CHEMICAL,28,gasified biomass,9,2015,ktoe
+South Korea,CHEMICAL,28,heat,1651,2015,ktoe
+South Korea,CHEMICAL,28,refined liquids,533,2015,ktoe
+South Korea,NECHEM,28,coal,552,2015,ktoe
+South Korea,NECHEM,28,refined liquids,44897,2015,ktoe
+Southeast Asia,CHEMICAL,29,coal,157,2015,ktoe
+Southeast Asia,CHEMICAL,29,electricity,1624,2015,ktoe
+Southeast Asia,CHEMICAL,29,gas,1626,2015,ktoe
+Southeast Asia,CHEMICAL,29,refined biofuels_FT,1,2015,ktoe
+Southeast Asia,CHEMICAL,29,refined liquids,3711,2015,ktoe
+Southeast Asia,NECHEM,29,gas,6309.44322,2015,ktoe
+Southeast Asia,NECHEM,29,refined liquids,25515,2015,ktoe
+Taiwan,CHEMICAL,30,biomass_tradbio,9,2015,ktoe
+Taiwan,CHEMICAL,30,coal,4132,2015,ktoe
+Taiwan,CHEMICAL,30,electricity,3129,2015,ktoe
+Taiwan,CHEMICAL,30,gas,358,2015,ktoe
+Taiwan,CHEMICAL,30,refined liquids,612,2015,ktoe
+Taiwan,NECHEM,30,gas,0,2015,ktoe
+Taiwan,NECHEM,30,refined liquids,19153,2015,ktoe
+Argentina,CHEMICAL,31,electricity,1119,2015,ktoe
+Argentina,CHEMICAL,31,refined liquids,14,2015,ktoe
+Argentina,NECHEM,31,gas,1630,2015,ktoe
+Argentina,NECHEM,31,refined liquids,2217,2015,ktoe
+Colombia,CHEMICAL,32,biomass,2,2015,ktoe
+Colombia,CHEMICAL,32,biomass_tradbio,16,2015,ktoe
+Colombia,CHEMICAL,32,coal,121,2015,ktoe
+Colombia,CHEMICAL,32,electricity,249,2015,ktoe
+Colombia,CHEMICAL,32,gas,138,2015,ktoe
+Colombia,CHEMICAL,32,refined liquids,351,2015,ktoe

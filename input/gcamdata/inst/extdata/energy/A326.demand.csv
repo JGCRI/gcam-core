@@ -1,0 +1,8 @@
+# File: A326.demand.csv
+# Title: aluminum final demand perCapitaBased and price elasticity
+# Units: NA for perCapitaBased; Unitless for price.elasticity
+# Comments: perCapitaBased is a logical (Boolean) indicating whether to use a per-capita or per-GDP based demand function
+# Column types: cin
+# ----------
+energy.final.demand,perCapitaBased,price.elasticity
+aluminum,1,-0.4

@@ -1,0 +1,197 @@
+# File: en_agriculture.csv
+# Title: agriculture energy use by region
+# Units: Thousand tonnes
+# Description: Regional agriculture production
+# Source: IEA
+# Column types: ciccnic
+# ----------
+region,GCAM_region_ID,flow,fuel,value,year,unit
+USA,1,AGRICULT,biomass_tradbio,950,2015,ktoe
+USA,1,AGRICULT,coal,0,2015,ktoe
+USA,1,AGRICULT,electricity,3275,2015,ktoe
+USA,1,AGRICULT,gas,1449,2015,ktoe
+USA,1,AGRICULT,refined biofuels_FT,243,2015,ktoe
+USA,1,AGRICULT,refined liquids,14821,2015,ktoe
+Africa_Eastern,2,AGRICULT,biomass_tradbio,747.2613181,2015,ktoe
+Africa_Eastern,2,AGRICULT,electricity,69.10271984,2015,ktoe
+Africa_Eastern,2,AGRICULT,refined liquids,319.7199574,2015,ktoe
+Africa_Northern,3,AGRICULT,biomass_tradbio,3.918860079,2015,ktoe
+Africa_Northern,3,AGRICULT,electricity,1218.058226,2015,ktoe
+Africa_Northern,3,AGRICULT,gas,60,2015,ktoe
+Africa_Northern,3,AGRICULT,refined liquids,2146.334166,2015,ktoe
+Africa_Southern,4,AGRICULT,biomass_tradbio,1357.262517,2015,ktoe
+Africa_Southern,4,AGRICULT,coal,5,2015,ktoe
+Africa_Southern,4,AGRICULT,electricity,141.2028669,2015,ktoe
+Africa_Southern,4,AGRICULT,refined liquids,633.6425402,2015,ktoe
+Africa_Western,5,AGRICULT,biomass_tradbio,825.8499804,2015,ktoe
+Africa_Western,5,AGRICULT,electricity,24.625678,2015,ktoe
+Africa_Western,5,AGRICULT,refined liquids,258.2430216,2015,ktoe
+Australia_NZ,6,AGRICULT,coal,47,2015,ktoe
+Australia_NZ,6,AGRICULT,elec_geothermal,17,2015,ktoe
+Australia_NZ,6,AGRICULT,electricity,455,2015,ktoe
+Australia_NZ,6,AGRICULT,gas,64,2015,ktoe
+Australia_NZ,6,AGRICULT,refined liquids,2489,2015,ktoe
+Brazil,7,AGRICULT,biomass,8,2015,ktoe
+Brazil,7,AGRICULT,biomass_tradbio,2814,2015,ktoe
+Brazil,7,AGRICULT,electricity,2310,2015,ktoe
+Brazil,7,AGRICULT,gas,0,2015,ktoe
+Brazil,7,AGRICULT,refined liquids,6345,2015,ktoe
+Canada,8,AGRICULT,electricity,835,2015,ktoe
+Canada,8,AGRICULT,gas,841,2015,ktoe
+Canada,8,AGRICULT,heat,0,2015,ktoe
+Canada,8,AGRICULT,refined liquids,5050,2015,ktoe
+Central America and Caribbean,9,AGRICULT,biomass,19,2015,ktoe
+Central America and Caribbean,9,AGRICULT,biomass_tradbio,59,2015,ktoe
+Central America and Caribbean,9,AGRICULT,electricity,147.5405739,2015,ktoe
+Central America and Caribbean,9,AGRICULT,refined liquids,388.4971851,2015,ktoe
+Central Asia,10,AGRICULT,biomass,1,2015,ktoe
+Central Asia,10,AGRICULT,biomass_tradbio,9,2015,ktoe
+Central Asia,10,AGRICULT,coal,125,2015,ktoe
+Central Asia,10,AGRICULT,elec_geothermal,1,2015,ktoe
+Central Asia,10,AGRICULT,electricity,1638,2015,ktoe
+Central Asia,10,AGRICULT,gas,174,2015,ktoe
+Central Asia,10,AGRICULT,heat,87,2015,ktoe
+Central Asia,10,AGRICULT,refined liquids,1402,2015,ktoe
+China,11,AGRICULT,coal,13638,2015,ktoe
+China,11,AGRICULT,elec_geothermal,1091,2015,ktoe
+China,11,AGRICULT,electricity,8941.198197,2015,ktoe
+China,11,AGRICULT,gas,79,2015,ktoe
+China,11,AGRICULT,heat,25,2015,ktoe
+China,11,AGRICULT,refined liquids,17716.65164,2015,ktoe
+EU-12,12,AGRICULT,biomass,0,2015,ktoe
+EU-12,12,AGRICULT,biomass_tradbio,559,2015,ktoe
+EU-12,12,AGRICULT,coal,943,2015,ktoe
+EU-12,12,AGRICULT,elec_geothermal,37,2015,ktoe
+EU-12,12,AGRICULT,electricity,464,2015,ktoe
+EU-12,12,AGRICULT,gas,330,2015,ktoe
+EU-12,12,AGRICULT,gasified biomass,159,2015,ktoe
+EU-12,12,AGRICULT,heat,64,2015,ktoe
+EU-12,12,AGRICULT,refined biofuels_FT,2,2015,ktoe
+EU-12,12,AGRICULT,refined liquids,3241,2015,ktoe
+EU-15,13,AGRICULT,biomass,0,2015,ktoe
+EU-15,13,AGRICULT,biomass_tradbio,1017,2015,ktoe
+EU-15,13,AGRICULT,coal,75,2015,ktoe
+EU-15,13,AGRICULT,elec_geothermal,95,2015,ktoe
+EU-15,13,AGRICULT,elec_solar CSP,8,2015,ktoe
+EU-15,13,AGRICULT,electricity,3691.152463,2015,ktoe
+EU-15,13,AGRICULT,gas,2912,2015,ktoe
+EU-15,13,AGRICULT,gasified biomass,211,2015,ktoe
+EU-15,13,AGRICULT,heat,172,2015,ktoe
+EU-15,13,AGRICULT,refined biofuels_ethanol,2,2015,ktoe
+EU-15,13,AGRICULT,refined biofuels_FT,29,2015,ktoe
+EU-15,13,AGRICULT,refined liquids,9256.572808,2015,ktoe
+Europe_Eastern,14,AGRICULT,biomass_tradbio,58,2015,ktoe
+Europe_Eastern,14,AGRICULT,coal,11,2015,ktoe
+Europe_Eastern,14,AGRICULT,electricity,424,2015,ktoe
+Europe_Eastern,14,AGRICULT,gas,210,2015,ktoe
+Europe_Eastern,14,AGRICULT,heat,364,2015,ktoe
+Europe_Eastern,14,AGRICULT,refined biofuels_FT,17,2015,ktoe
+Europe_Eastern,14,AGRICULT,refined liquids,1932,2015,ktoe
+Europe_Non_EU,15,AGRICULT,biomass_tradbio,23,2015,ktoe
+Europe_Non_EU,15,AGRICULT,coal,1,2015,ktoe
+Europe_Non_EU,15,AGRICULT,elec_geothermal,596,2015,ktoe
+Europe_Non_EU,15,AGRICULT,electricity,505,2015,ktoe
+Europe_Non_EU,15,AGRICULT,gas,111,2015,ktoe
+Europe_Non_EU,15,AGRICULT,gasified biomass,0,2015,ktoe
+Europe_Non_EU,15,AGRICULT,heat,4,2015,ktoe
+Europe_Non_EU,15,AGRICULT,refined liquids,3180,2015,ktoe
+European Free Trade Association,16,AGRICULT,biomass,0,2015,ktoe
+European Free Trade Association,16,AGRICULT,biomass_tradbio,14,2015,ktoe
+European Free Trade Association,16,AGRICULT,coal,0,2015,ktoe
+European Free Trade Association,16,AGRICULT,elec_geothermal,6,2015,ktoe
+European Free Trade Association,16,AGRICULT,electricity,260,2015,ktoe
+European Free Trade Association,16,AGRICULT,gas,13,2015,ktoe
+European Free Trade Association,16,AGRICULT,gasified biomass,4,2015,ktoe
+European Free Trade Association,16,AGRICULT,heat,8,2015,ktoe
+European Free Trade Association,16,AGRICULT,refined liquids,120,2015,ktoe
+India,17,AGRICULT,electricity,14891,2015,ktoe
+India,17,AGRICULT,gas,160,2015,ktoe
+India,17,AGRICULT,refined liquids,9776,2015,ktoe
+Indonesia,18,AGRICULT,electricity,226,2015,ktoe
+Indonesia,18,AGRICULT,refined liquids,3524,2015,ktoe
+Japan,19,AGRICULT,elec_geothermal,8,2015,ktoe
+Japan,19,AGRICULT,electricity,239,2015,ktoe
+Japan,19,AGRICULT,gas,0,2015,ktoe
+Japan,19,AGRICULT,refined liquids,3029,2015,ktoe
+Mexico,20,AGRICULT,electricity,865,2015,ktoe
+Mexico,20,AGRICULT,refined liquids,3130,2015,ktoe
+Middle East,21,AGRICULT,electricity,3573,2015,ktoe
+Middle East,21,AGRICULT,gas,1387,2015,ktoe
+Middle East,21,AGRICULT,refined liquids,3035,2015,ktoe
+Pakistan,22,AGRICULT,electricity,733,2015,ktoe
+Pakistan,22,AGRICULT,refined liquids,16,2015,ktoe
+Russia,23,AGRICULT,biomass,49,2015,ktoe
+Russia,23,AGRICULT,biomass_tradbio,86,2015,ktoe
+Russia,23,AGRICULT,coal,92,2015,ktoe
+Russia,23,AGRICULT,electricity,1398,2015,ktoe
+Russia,23,AGRICULT,gas,1107,2015,ktoe
+Russia,23,AGRICULT,heat,2348,2015,ktoe
+Russia,23,AGRICULT,refined liquids,3302,2015,ktoe
+South Africa,24,AGRICULT,coal,355,2015,ktoe
+South Africa,24,AGRICULT,electricity,488,2015,ktoe
+South Africa,24,AGRICULT,refined liquids,1161,2015,ktoe
+South America_Northern,25,AGRICULT,biomass_tradbio,0,2015,ktoe
+South America_Northern,25,AGRICULT,electricity,50.30696336,2015,ktoe
+South America_Northern,25,AGRICULT,refined liquids,146.9300067,2015,ktoe
+South America_Southern,26,AGRICULT,biomass_tradbio,162,2015,ktoe
+South America_Southern,26,AGRICULT,coal,1,2015,ktoe
+South America_Southern,26,AGRICULT,electricity,178,2015,ktoe
+South America_Southern,26,AGRICULT,refined biofuels_ethanol,1,2015,ktoe
+South America_Southern,26,AGRICULT,refined biofuels_FT,9,2015,ktoe
+South America_Southern,26,AGRICULT,refined liquids,920,2015,ktoe
+South Asia,27,AGRICULT,electricity,144.7177882,2015,ktoe
+South Asia,27,AGRICULT,gas,19,2015,ktoe
+South Asia,27,AGRICULT,refined liquids,1148.648235,2015,ktoe
+South Korea,28,AGRICULT,biomass,1,2015,ktoe
+South Korea,28,AGRICULT,biomass_tradbio,65,2015,ktoe
+South Korea,28,AGRICULT,elec_geothermal,22,2015,ktoe
+South Korea,28,AGRICULT,electricity,1001,2015,ktoe
+South Korea,28,AGRICULT,gas,3,2015,ktoe
+South Korea,28,AGRICULT,refined liquids,464,2015,ktoe
+Southeast Asia,29,AGRICULT,biomass_tradbio,311.7073245,2015,ktoe
+Southeast Asia,29,AGRICULT,coal,25,2015,ktoe
+Southeast Asia,29,AGRICULT,electricity,458.094524,2015,ktoe
+Southeast Asia,29,AGRICULT,refined biofuels_FT,1,2015,ktoe
+Southeast Asia,29,AGRICULT,refined liquids,4825.760436,2015,ktoe
+Taiwan,30,AGRICULT,coal,0,2015,ktoe
+Taiwan,30,AGRICULT,electricity,167,2015,ktoe
+Taiwan,30,AGRICULT,refined liquids,3,2015,ktoe
+Argentina,31,AGRICULT,biomass_tradbio,127,2015,ktoe
+Argentina,31,AGRICULT,electricity,83,2015,ktoe
+Argentina,31,AGRICULT,refined liquids,3839,2015,ktoe
+Colombia,32,AGRICULT,biomass_tradbio,427,2015,ktoe
+Colombia,32,AGRICULT,electricity,51,2015,ktoe
+Colombia,32,AGRICULT,refined biofuels_FT,0,2015,ktoe
+Colombia,32,AGRICULT,refined liquids,0,2015,ktoe
+USA,1,AGRICULT,Hydrogen,0,2015,ktoe
+Africa_Eastern,2,AGRICULT,Hydrogen,0,2015,ktoe
+Africa_Northern,3,AGRICULT,Hydrogen,0,2015,ktoe
+Africa_Southern,4,AGRICULT,Hydrogen,0,2015,ktoe
+Africa_Western,5,AGRICULT,Hydrogen,0,2015,ktoe
+Australia_NZ,6,AGRICULT,Hydrogen,0,2015,ktoe
+Brazil,7,AGRICULT,Hydrogen,0,2015,ktoe
+Canada,8,AGRICULT,Hydrogen,0,2015,ktoe
+Central America and Caribbean,9,AGRICULT,Hydrogen,0,2015,ktoe
+Central Asia,10,AGRICULT,Hydrogen,0,2015,ktoe
+China,11,AGRICULT,Hydrogen,0,2015,ktoe
+EU-12,12,AGRICULT,Hydrogen,0,2015,ktoe
+EU-15,13,AGRICULT,Hydrogen,0,2015,ktoe
+Europe_Eastern,14,AGRICULT,Hydrogen,0,2015,ktoe
+Europe_Non_EU,15,AGRICULT,Hydrogen,0,2015,ktoe
+European Free Trade Association,16,AGRICULT,Hydrogen,0,2015,ktoe
+India,17,AGRICULT,Hydrogen,0,2015,ktoe
+Indonesia,18,AGRICULT,Hydrogen,0,2015,ktoe
+Japan,19,AGRICULT,Hydrogen,0,2015,ktoe
+Mexico,20,AGRICULT,Hydrogen,0,2015,ktoe
+Middle East,21,AGRICULT,Hydrogen,0,2015,ktoe
+Pakistan,22,AGRICULT,Hydrogen,0,2015,ktoe
+Russia,23,AGRICULT,Hydrogen,0,2015,ktoe
+South Africa,24,AGRICULT,Hydrogen,0,2015,ktoe
+South America_Northern,25,AGRICULT,Hydrogen,0,2015,ktoe
+South America_Southern,26,AGRICULT,Hydrogen,0,2015,ktoe
+South Asia,27,AGRICULT,Hydrogen,0,2015,ktoe
+South Korea,28,AGRICULT,Hydrogen,0,2015,ktoe
+Southeast Asia,29,AGRICULT,Hydrogen,0,2015,ktoe
+Taiwan,30,AGRICULT,Hydrogen,0,2015,ktoe
+Argentina,31,AGRICULT,Hydrogen,0,2015,ktoe
+Colombia,32,AGRICULT,Hydrogen,0,2015,ktoe

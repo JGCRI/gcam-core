@@ -1,0 +1,7 @@
+# File: A323.sector_Global.csv
+# Title: Global pass-through sector (consumes output of individual region)
+# Units: None
+# Column types: ccccnc
+# ----------
+supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
+IRONSTL,Mt,Mt,1975$/kg,-3,

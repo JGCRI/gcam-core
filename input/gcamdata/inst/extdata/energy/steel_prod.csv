@@ -1,0 +1,40 @@
+# File: steel_prod.csv
+# Title: Crude steel production by region by sector
+# Units: Thousand tonnes
+# Description: Regional steel production
+# Source: World Steel Association
+# Column types: cicnnn
+# ----------
+region,GCAM_region_ID,unit_prod,BLASTFUR,EAF with scrap,EAF with DRI
+Africa_Eastern,2,thousand tons,0,4.8,15.2
+Africa_Northern,3,thousand tons,576.3,1403.448,4444.252
+Africa_Western,5,thousand tons,0,30,95
+Argentina,31,thousand tons,2822,529.44,1676.56
+Australia_NZ,6,thousand tons,4380.6,320.976,1016.424
+Brazil,7,thousand tons,26536,1612.8,5107.2
+Canada,8,thousand tons,6716,4317.75,1439.25
+Central America and Caribbean,9,thousand tons,0.5,336.528,1065.672
+Central Asia,10,thousand tons,3620,267.12,845.88
+China,11,thousand tons,756368,45084.15,2372.85
+Colombia,32,thousand tons,240.9,232.824,737.276
+EU-12,12,thousand tons,18218.3,3907.568,3070.232
+EU-15,13,thousand tons,82651.7,32664.408,25664.892
+Europe_Eastern,14,thousand tons,21674.7,1358.816,2887.484
+Europe_Non_EU,15,thousand tons,11035.5,6727.936,14296.864
+European Free Trade Association,16,thousand tons,0,1156.4,908.6
+India,17,thousand tons,38216,12194.4,38615.6
+Indonesia,18,thousand tons,2720,512.16,1621.84
+Japan,19,thousand tons,81081,8418.55,15634.45
+Mexico,20,thousand tons,4978,3177.6,10062.4
+Middle East,21,thousand tons,2407,6485.28,20536.72
+Pakistan,22,thousand tons,182,650.4,2059.6
+Russia,23,thousand tons,49298,6912,14688
+South Africa,24,thousand tons,3907,602.4,1907.6
+South America_Northern,25,thousand tons,0,322.872,1022.428
+South America_Southern,26,thousand tons,773.8,537.048,1700.652
+South Asia,27,thousand tons,0,31.2,98.8
+South Korea,28,thousand tons,48499,10585.5,10585.5
+Southeast Asia,29,thousand tons,2266,2972.928,9414.272
+Taiwan,30,thousand tons,13328,1935.36,6128.64
+USA,1,thousand tons,29395,37087.5,12362.5
+Africa_Southern,4,thousand tons,0,0,0

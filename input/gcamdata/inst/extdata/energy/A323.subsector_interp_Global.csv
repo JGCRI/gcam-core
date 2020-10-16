@@ -1,0 +1,7 @@
+# File: A323.subsector_interp_Global.csv
+# Title: Subsector interpolation
+# Units: None
+# Column types: cccccnc
+# ----------
+supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+IRONSTL,IRONSTL,share-weight,final-calibration-year,end-year,1,s-curve

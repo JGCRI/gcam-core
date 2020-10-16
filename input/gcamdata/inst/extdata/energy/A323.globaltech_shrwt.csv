@@ -1,0 +1,14 @@
+# File: A323.globaltech_shrwt.csv
+# Title: IRONSTL default shareweights
+# Units: Unitless
+# Column types: cccnnnnn
+# ----------
+supplysector,subsector,technology,1971,2015,2019,2050,2100
+IRONSTL,BLASTFUR,BLASTFUR,1,1,1,1,1
+IRONSTL,BLASTFUR,BLASTFUR CCS,0,0,0,1,1
+IRONSTL,BLASTFUR,Biomass-based,0,0,0,1,1
+IRONSTL,EAF with DRI,EAF with DRI,1,1,1,1,1
+IRONSTL,EAF with DRI,EAF with DRI CCS,0,0,0,1,1
+IRONSTL,EAF with DRI,Hydrogen-based DRI,0,0,0,1,1
+IRONSTL,EAF with scrap,EAF with scrap,1,1,1,1,1
+IRONSTL,EAF with scrap,EAF with scrap CCS,0,0,0,1,1
