@@ -1,5 +1,3 @@
-# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
-
 #' module_energy_L2321.cement
 #'
 #' Compute a variety of final energy keyword, sector, share weight, and technology information for cement-related GCAM inputs.
@@ -20,8 +18,8 @@
 #' original data system was \code{L2321.cement.R} (energy level2).
 #' @details The chunk provides final energy keyword, supplysector/subsector information, supplysector/subsector interpolation information, global technology share weight, global technology efficiency, global technology coefficients, global technology cost, price elasticity, stub technology information, stub technology interpolation information, stub technology calibrated inputs, and etc for cement sector.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr arrange bind_rows distinct filter if_else group_by lag left_join mutate pull select
-#' @importFrom tidyr complete nesting
+#' @importFrom dplyr filter mutate select
+#' @importFrom tidyr gather spread
 #' @author LF October 2017
 module_energy_L2321.cement <- function(command, ...) {
 
@@ -43,6 +41,7 @@ module_energy_L2321.cement <- function(command, ...) {
              FILE = "energy/A321.globaltech_shrwt",
              FILE = "energy/A321.globaltech_co2capture",
              FILE = "energy/A321.demand",
+			 FILE = "energy/A321.globaltech_retirement",
              FILE = "socioeconomics/A321.inc_elas_output",
              "L1321.out_Mt_R_cement_Yh",
              "L1321.IO_GJkg_R_cement_F_Yh",
@@ -61,6 +60,10 @@ module_energy_L2321.cement <- function(command, ...) {
              "L2321.GlobalTechCoef_cement",
              "L2321.GlobalTechCost_cement",
              "L2321.GlobalTechCapture_cement",
+			 "L2321.GlobalTechShutdown_en",
+             "L2321.GlobalTechSCurve_en",
+             "L2321.GlobalTechLifetime_en",
+             "L2321.GlobalTechProfitShutdown_en",
              "L2321.StubTechProd_cement",
              "L2321.StubTechCalInput_cement_heat",
              "L2321.StubTechCoef_cement",
@@ -75,20 +78,22 @@ module_energy_L2321.cement <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    A321.sector <- get_data(all_data, "energy/A321.sector", strip_attributes = TRUE)
+    A321.sector <- get_data(all_data, "energy/A321.sector")
     A_PrimaryFuelCCoef <- get_data(all_data, "emissions/A_PrimaryFuelCCoef")
-    A321.subsector_interp <- get_data(all_data, "energy/A321.subsector_interp", strip_attributes = TRUE)
-    A321.subsector_logit <- get_data(all_data, "energy/A321.subsector_logit", strip_attributes = TRUE)
-    A321.subsector_shrwt <- get_data(all_data, "energy/A321.subsector_shrwt", strip_attributes = TRUE)
+    A321.sector <- get_data(all_data, "energy/A321.sector")
+    A321.subsector_interp <- get_data(all_data, "energy/A321.subsector_interp")
+    A321.subsector_logit <- get_data(all_data, "energy/A321.subsector_logit")
+    A321.subsector_shrwt <- get_data(all_data, "energy/A321.subsector_shrwt")
     A321.globaltech_coef <- get_data(all_data, "energy/A321.globaltech_coef")
     A321.globaltech_cost <- get_data(all_data, "energy/A321.globaltech_cost")
-    A321.globaltech_shrwt <- get_data(all_data, "energy/A321.globaltech_shrwt", strip_attributes = TRUE)
+    A321.globaltech_shrwt <- get_data(all_data, "energy/A321.globaltech_shrwt")
     A321.globaltech_co2capture <- get_data(all_data, "energy/A321.globaltech_co2capture")
-    A321.demand <- get_data(all_data, "energy/A321.demand", strip_attributes = TRUE)
-    L1321.out_Mt_R_cement_Yh <- get_data(all_data, "L1321.out_Mt_R_cement_Yh", strip_attributes = TRUE)
-    L1321.IO_GJkg_R_cement_F_Yh <- get_data(all_data, "L1321.IO_GJkg_R_cement_F_Yh", strip_attributes = TRUE)
-    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "L1321.in_EJ_R_cement_F_Y", strip_attributes = TRUE)
-    A321.inc_elas_output <- get_data(all_data, "socioeconomics/A321.inc_elas_output", strip_attributes = TRUE)
+	A321.globaltech_retirement <- get_data(all_data, "energy/A321.globaltech_retirement")
+    A321.demand <- get_data(all_data, "energy/A321.demand")
+    L1321.out_Mt_R_cement_Yh <- get_data(all_data, "L1321.out_Mt_R_cement_Yh")
+    L1321.IO_GJkg_R_cement_F_Yh <- get_data(all_data, "L1321.IO_GJkg_R_cement_F_Yh")
+    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "L1321.in_EJ_R_cement_F_Y")
+    A321.inc_elas_output <- get_data(all_data, "socioeconomics/A321.inc_elas_output")
     L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
     L102.pcgdp_thous90USD_GCAM3_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_GCAM3_R_Y")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
@@ -315,6 +320,62 @@ module_energy_L2321.cement <- function(command, ...) {
       mutate(energy.final.demand = A321.demand[["energy.final.demand"]]) ->
       L2321.BaseService_cement
 
+
+    # Retirement information
+    A321.globaltech_retirement %>%
+      set_years() %>%
+      mutate(year = as.integer(year)) %>%
+      rename(sector.name = supplysector, subsector.name = subsector) ->
+      L2321.globaltech_retirement_base
+
+    # Copies first future year retirment information into all future years and appends back onto base year
+    L2321.globaltech_retirement_base %>%
+      mutate(year = as.integer(year)) %>%
+      filter(year == min(MODEL_FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
+      select(-year.x) %>%
+      rename(year = year.y) ->
+      L2321.globaltech_retirement_future
+
+    # filters base years from original and then appends future years
+    L2321.globaltech_retirement_base %>%
+      mutate(year = as.integer(year)) %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
+      bind_rows(L2321.globaltech_retirement_future) ->
+      L2321.globaltech_retirement
+
+    # Retirement may consist of any of three types of retirement function (phased, s-curve, or none)
+    # This section checks L2321.globaltech_retirement for each of these functions and creates a separate level 2 file for each
+    # All of these options have different headers, and all are allowed
+    if(any(!is.na(L2321.globaltech_retirement$shutdown.rate))) {
+      L2321.globaltech_retirement %>%
+        filter(!is.na(L2321.globaltech_retirement$shutdown.rate)) %>%
+        select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "shutdown.rate") ->
+        L2321.GlobalTechShutdown_en
+    }
+
+    if(any(!is.na(L2321.globaltech_retirement$half.life))) {
+      L2321.globaltech_retirement %>%
+        filter(!is.na(L2321.globaltech_retirement$half.life)) %>%
+        select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime", "steepness", "half.life") ->
+        L2321.GlobalTechSCurve_en
+    }
+
+    # L2321.GlobalTechLifetime_en: Global tech lifetime
+    if(any(is.na(L2321.globaltech_retirement$shutdown.rate) & is.na(L2321.globaltech_retirement$half.life))) {
+      L2321.globaltech_retirement %>%
+        filter(is.na(L2321.globaltech_retirement$shutdown.rate) & is.na(L2321.globaltech_retirement$half.life)) %>%
+        select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "lifetime") ->
+        L2321.GlobalTechLifetime_en
+    }
+
+    # L2321.GlobalTechProfitShutdown_en: Global tech profit shutdown decider and parameters
+    if(any(!is.na(L2321.globaltech_retirement$median.shutdown.point))) {
+      L2321.globaltech_retirement %>%
+        filter(!is.na(L2321.globaltech_retirement$median.shutdown.point)) %>%
+        select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "median.shutdown.point", "profit.shutdown.steepness") ->
+        L2321.GlobalTechProfitShutdown_en
+    }
     # L2321.PriceElasticity_cement: price elasticity
     A321.demand %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["PriceElasticity"]][LEVEL2_DATA_NAMES[["PriceElasticity"]] != "year"], GCAM_region_names) %>%
@@ -516,6 +577,63 @@ module_energy_L2321.cement <- function(command, ...) {
       add_precursors("energy/A321.demand", "common/GCAM_region_names") ->
       L2321.PerCapitaBased_cement
 
+
+    if(exists("L2321.GlobalTechShutdown_en")) {
+      L2321.GlobalTechShutdown_en %>%
+        add_title("Global tech lifetime for techs with shutdown rate") %>%
+        add_units("Lifetime in years") %>%
+        add_comments("Filters for any technology that uses a phased retirement function") %>%
+        add_legacy_name("L2321.GlobalTechShutdown_en") %>%
+        add_precursors("energy/A321.globaltech_retirement") ->
+        L2321.GlobalTechShutdown_en
+    } else {
+      missing_data() %>%
+        add_legacy_name("energy/L2321.GlobalTechShutdown_en") ->
+        L2321.GlobalTechShutdown_en
+    }
+
+    if(exists("L2321.GlobalTechSCurve_en")) {
+      L2321.GlobalTechSCurve_en %>%
+        add_title("Global tech lifetime for techs with s-curve retirement function") %>%
+        add_units("Lifetime in years, half-life in years") %>%
+        add_comments("Filters for any technology that uses an S-curve retirement function") %>%
+        add_legacy_name("L2321.GlobalTechSCurve_en") %>%
+        add_precursors("energy/A321.globaltech_retirement") ->
+        L2321.GlobalTechSCurve_en
+    } else {
+      missing_data() %>%
+        add_legacy_name("energy/L2321.GlobalTechSCurve_en") ->
+        L2321.GlobalTechSCurve_en
+    }
+
+    if(exists("L2321.GlobalTechLifetime_en")) {
+      L2321.GlobalTechLifetime_en %>%
+        add_title("Global tech lifetime for any technology with no retirement function") %>%
+        add_units("Lifetime in years") %>%
+        add_comments("Filters for any technology that has no phased or S-curve retirement function, empty by default.") %>%
+        add_legacy_name("L2321.GlobalTechLifetime_en") %>%
+        add_precursors("energy/A321.globaltech_retirement") ->
+        L2321.GlobalTechLifetime_en
+    } else {
+      missing_data() %>%
+        add_legacy_name("energy/L2321.GlobalTechLifetime_en") ->
+        L2321.GlobalTechLifetime_en
+    }
+
+    if(exists("L2321.GlobalTechProfitShutdown_en")) {
+      L2321.GlobalTechProfitShutdown_en %>%
+        add_title("Global tech profit shutdown decider and parameters") %>%
+        add_units("Unitless, used to determine shape of the function defining the relationship between shutdown rate and profitability") %>%
+        add_comments("Filters for any technologies that use a profit-based shutdown parameter") %>%
+        add_legacy_name("L2321.GlobalTechProfitShutdown_en") %>%
+        add_precursors("energy/A321.globaltech_retirement") ->
+        L2321.GlobalTechProfitShutdown_en
+    } else {
+      missing_data() %>%
+        add_legacy_name("energy/L2321.GlobalTechProfitShutdown_en") ->
+        L2321.GlobalTechProfitShutdown_en
+    }
+
     L2321.BaseService_cement %>%
       add_title("base-year service output of cement") %>%
       add_units("Mt") %>%
@@ -537,7 +655,8 @@ module_energy_L2321.cement <- function(command, ...) {
                 L2321.StubTech_cement, L2321.GlobalTechShrwt_cement,
                 L2321.GlobalTechCoef_cement, L2321.GlobalTechCost_cement, L2321.GlobalTechCapture_cement,
                 L2321.StubTechProd_cement, L2321.StubTechCalInput_cement_heat, L2321.StubTechCoef_cement,
-                L2321.PerCapitaBased_cement, L2321.BaseService_cement,
+                L2321.PerCapitaBased_cement, L2321.BaseService_cement,L2321.GlobalTechShutdown_en,
+                L2321.GlobalTechSCurve_en, L2321.GlobalTechLifetime_en, L2321.GlobalTechProfitShutdown_en,
                 L2321.PriceElasticity_cement, L2321.IncomeElasticity_cement_gcam3,
                 L2321.IncomeElasticity_cement_gssp1, L2321.IncomeElasticity_cement_gssp2,
                 L2321.IncomeElasticity_cement_gssp3, L2321.IncomeElasticity_cement_gssp4,
