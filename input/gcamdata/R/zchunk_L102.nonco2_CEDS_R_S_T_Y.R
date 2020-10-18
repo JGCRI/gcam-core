@@ -51,7 +51,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
     } else if(command == driver.MAKE) {
 
       # Silence package checks
-      iso <- em <- CEDS_sector <- fuel <- unit <- year <-
+      iso <- em <- CEDS_sector <- fuel <- unit <- year <- UCD_category <- value <- GCAM_region_ID <-
         emissions <- sector <- Non.CO2 <- CEDS_agg_sector <- CEDS_agg_fuel <- share_in_global_ship <- NULL
 
 
