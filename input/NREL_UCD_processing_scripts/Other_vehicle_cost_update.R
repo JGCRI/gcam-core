@@ -349,8 +349,41 @@
              variable = "Capital costs (other)") %>%
       select(-share)
     
+    #Add BEV 3W for the regions that have 3W
+    #Obtain ratio between New BEV and Liquid Mini cars intensity to determine new intensity for BEV 3W
+    NREL_Liq_mini_car_intensity_3W <- NREL_ICE_long %>%
+      #filter only regions that have 3W. Use mini car as this is the closest to 3W
+      filter(UCD_region %in% c("Africa", "China", "India", "Southeast Asia"), size.class == "Mini Car", variable == "intensity")
+      
+    
+    NREL_BEV_Liq_mini_car_intensity_ratio_3W <- NREL_BEV_long %>%
+      #filter only regions that have 3W. Use mini car as this is the closest to 3W
+      filter(UCD_region %in% c("Africa", "China", "India", "Southeast Asia"), size.class == "Mini Car", variable == "intensity") %>% 
+      left_join(NREL_Liq_mini_car_intensity_3W, by = c("UCD_region", "UCD_sector", "mode", "size.class", "variable", "unit", "Year"),
+                suffix = c(".BEV", ".Liq")) %>%
+      mutate(ratio = Value.BEV/Value.Liq) %>%
+      select(UCD_region, variable, unit, Year, ratio)
+      
+    New_3W_intensity <- UCD_clean_complete_years_long %>%
+      filter(mode == "LDV_3W",UCD_fuel == "Liquids", variable == "intensity") %>%
+      left_join(NREL_BEV_Liq_mini_car_intensity_ratio_3W, by = c("UCD_region", "variable", "unit", "Year")) %>%
+      # New BEV intensity = Liquid intensity * BEV/Liq ratio as calculated above
+      mutate(Value = Value*ratio, UCD_technology = "BEV", UCD_fuel = "Electricity") %>%
+      select(-ratio)
+    
+    #Create all the other new variables for BEV 3W, bind new intensity with this table
+    New_3W <- UCD_clean_complete_years_long %>%
+      filter(mode == "LDV_3W", UCD_fuel == "Liquids", variable %in% c("Capital costs (total)",
+                                                                      "energy",
+                                                                      "load factor",
+                                                                      "Operating costs (total non-fuel)")) %>%
+      mutate(UCD_technology = "BEV", UCD_fuel = "Electricity", 
+             Value = if_else(variable == "energy", 0, Value)) %>%
+      bind_rows(New_3W_intensity) %>%
+      arrange(UCD_region, Year, variable)
+    
     #Spread years
-    NREL_final <- bind_rows(NREL_all_Vehicles, NREL_cap_costs_other) %>%
+    NREL_final <- bind_rows(NREL_all_Vehicles, NREL_cap_costs_other, New_3W) %>%
       tidyr::spread( Year, Value )
     
 

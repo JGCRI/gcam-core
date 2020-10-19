@@ -23,8 +23,8 @@
 # 0.5 Pick options and define constants and functions
 
 #   Pick options
-    NREL_EFS_case <- "Moderate Advancement"
-    BEV_TRUCK_LF_PENALTY_PHASEOUT <- FALSE
+    NREL_EFS_case <- "Rapid Advancement"
+    BEV_TRUCK_LF_PENALTY_PHASEOUT <- TRUE
 
 #   Define constants
     NREL_VEH_subs_LIST <- c( "Buses", "Medium Duty Trucks", "Heavy Duty Trucks",

@@ -168,9 +168,10 @@ UCD_NREL_updated <- UCD_to_update %>%
                                        "UCD_technology", "UCD_fuel", "variable",
                                        "unit" ) )
 
-#add in BEV Truck and Bus data - this is new and not updating existing UCD data
+#add in BEV Truck and Bus data, 3W data - this is new and not updating existing UCD data
 UCD_NREL_updated_added <- dplyr::bind_rows( UCD_NREL_updated, 
-                                     filter( NREL_data, UCD_technology == "BEV", mode %in% c("Truck", "Bus")))
+                                     filter( NREL_data, UCD_technology == "BEV", mode %in% c("Truck", "Bus", "LDV_3W")))
+
 
 #   Combine updated data with original data
 UCD_with_update_final <- dplyr::bind_rows( UCD_without_rows_to_be_updated, UCD_NREL_updated_added )
@@ -208,6 +209,6 @@ if( computer_type == "MAC" ){
 write.csv( UCD_NREL_updated_added, file = "UCD_updated_data_with_NREL.csv", row.names=FALSE, na = "" )
 
 # Output new UCD data file
-write.csv( UCD_with_update_final, file = "UCD_trn_data_CORE_ModElec(03.03.20).csv" , row.names=FALSE, na = "" )
+write.csv( UCD_with_update_final, file = "UCD_trn_data_CORE_HighElec(09.07.20).csv" , row.names=FALSE, na = "" )
 
 

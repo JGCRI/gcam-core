@@ -26,7 +26,7 @@
 # 0.5 Pick options and define constants and functions
 
 #   Pick NREL options
-    NREL_EFS_case <- "Moderate Advancement"
+    NREL_EFS_case <- "Rapid Advancement"
     NREL_EFS_ICE_case <- "PATHWAYS Reference"
 
 #   Define constants
