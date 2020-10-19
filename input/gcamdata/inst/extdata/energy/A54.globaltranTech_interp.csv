@@ -1,7 +1,7 @@
 # File: A54.globaltranTech_interp.csv
 # Title: Transportation technology default shareweights. Not including single-technology subsectors
 # Units: NA
-# Column types: ccccccc 
+# Column types: ccccccc
 # ----------
 supplysector,tranSubsector,tranTechnology,apply.to,from.year,to.year,interpolation.function
 trn_freight,Freight Rail,Adv-Electric,share-weight,final-calibration-year,end-year,fixed
@@ -197,3 +197,5 @@ trn_pass_road_bus,Heavy Bus,BEV,share-weight,final-calibration-year,2020,linear
 trn_pass_road_bus,Heavy Bus,BEV,share-weight,2020,2030,linear
 trn_pass_road_bus,Light Bus,BEV,share-weight,final-calibration-year,2020,linear
 trn_pass_road_bus,Light Bus,BEV,share-weight,2020,2030,linear
+trn_pass_road_LDV,Three-Wheeler,BEV,share-weight,final-calibration-year,2020,linear
+trn_pass_road_LDV,Three-Wheeler,BEV,share-weight,2020,2030,linear

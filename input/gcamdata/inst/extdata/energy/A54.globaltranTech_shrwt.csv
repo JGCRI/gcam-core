@@ -156,3 +156,4 @@ trn_freight_road,Truck (9-16t),BEV,0,0,0.25,0.25,1.375,2.5,2.5,2.5
 trn_pass_road,Bus,BEV,0,0,0.25,0.25,1.375,2.5,2.5,2.5
 trn_pass_road_bus,Heavy Bus,BEV,0,0,0.25,0.25,1.375,2.5,2.5,2.5
 trn_pass_road_bus,Light Bus,BEV,0,0,0.25,0.25,1.375,2.5,2.5,2.5
+trn_pass_road_LDV,Three-Wheeler,BEV,0,0,0.25,0.25,1.375,2.5,2.5,2.5

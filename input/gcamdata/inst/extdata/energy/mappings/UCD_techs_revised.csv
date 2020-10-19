@@ -3,7 +3,7 @@
 # Units: NA
 # Description: Maps UCD technology to GCAM technology
 # Source: Mishra et al. 2013.Documented in JIRA issue https://jira.pnnl.gov/jira/browse/JGCRI-358?src=confmacro.
-# Column types: ccccccccccc 
+# Column types: ccccccccccc
 # ----------
 UCD_sector,mode,size.class,UCD_technology,UCD_fuel,UCD_category,fuel,supplysector,tranSubsector,tranTechnology,minicam.energy.input
 Passenger,Air Domestic,All,Liquids,Liquids,trn_air,refined liquids,trn_pass,Domestic Aviation,Liquids,refined liquids enduse
@@ -157,3 +157,4 @@ Freight,Truck,Truck (0-2.7t),BEV,Electricity,trn_road and rail,electricity,trn_f
 Freight,Truck,Truck (2.7-4.5t),BEV,Electricity,trn_road and rail,electricity,trn_freight_road,Medium truck,BEV,elect_td_trn
 Freight,Truck,Truck (4.5-12t),BEV,Electricity,trn_road and rail,electricity,trn_freight_road,Medium truck,BEV,elect_td_trn
 Freight,Truck,Truck (>12t),BEV,Electricity,trn_road and rail,electricity,trn_freight_road,Heavy truck,BEV,elect_td_trn
+Passenger,LDV_3W,Three-Wheeler,BEV,Electricity,trn_road and rail,electricity,trn_pass_road_LDV,2W and 3W,BEV,elect_td_trn

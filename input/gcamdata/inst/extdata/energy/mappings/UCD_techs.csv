@@ -156,3 +156,4 @@ Freight,Truck,Truck (0-2.7t),BEV,Electricity,trn_road and rail,electricity,trn_f
 Freight,Truck,Truck (2.7-4.5t),BEV,Electricity,trn_road and rail,electricity,trn_freight_road,Truck (2.7-4.5t),BEV,elect_td_trn
 Freight,Truck,Truck (4.5-12t),BEV,Electricity,trn_road and rail,electricity,trn_freight_road,Truck (4.5-12t),BEV,elect_td_trn
 Freight,Truck,Truck (>12t),BEV,Electricity,trn_road and rail,electricity,trn_freight_road,Truck (>12t),BEV,elect_td_trn
+Passenger,LDV_3W,Three-Wheeler,BEV,Electricity,trn_road and rail,electricity,trn_pass_road_LDV,Three-Wheeler,BEV,elect_td_trn
