@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_emissions_batch_all_protected_unmgd_emissions_edgar_xml
+#' module_emissions_batch_all_energy_emissions_edgar_xml
 #'
 #' Construct XML data structure for \code{all_energy_emissions.xml} for EDGAR emissions.
 #'
@@ -17,7 +17,9 @@ module_emissions_batch_all_energy_emissions_edgar_xml <- function(command, ...) 
     } else if(command == driver.DECLARE_OUTPUTS) {
       return(NULL)
     } else if(command == driver.MAKE) {
-      return_data()
+      return_data() } else {
+        stop("Unknown command")
+
     }} else {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L201.en_pol_emissions",

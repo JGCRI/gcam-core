@@ -17,7 +17,8 @@ module_emissions_batch_all_unmgd_emissions_edgar_xml <- function(command, ...) {
     } else if(command == driver.DECLARE_OUTPUTS) {
       return(NULL)
     } else if(command == driver.MAKE) {
-      return_data()
+      return_data()} else {
+          stop("Unknown command")
     }} else{
   if(command == driver.DECLARE_INPUTS) {
     return(c("L212.AgSupplySector",

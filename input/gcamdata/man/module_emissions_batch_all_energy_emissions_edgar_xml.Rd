@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_batch_all_energy_emissions_edgar_xml.R
 \name{module_emissions_batch_all_energy_emissions_edgar_xml}
 \alias{module_emissions_batch_all_energy_emissions_edgar_xml}
-\title{module_emissions_batch_all_protected_unmgd_emissions_edgar_xml}
+\title{module_emissions_batch_all_energy_emissions_edgar_xml}
 \usage{
 module_emissions_batch_all_energy_emissions_edgar_xml(command, ...)
 }
