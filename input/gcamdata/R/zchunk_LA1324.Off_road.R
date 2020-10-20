@@ -112,7 +112,7 @@ module_energy_LA1324.Off_road <- function(command, ...) {
       complete(GCAM_region_ID,nesting(sector,fuel,year), fill = list(value = 0)) %>%
       rename(raw = value) %>%
       left_join(L1324.in_EJ_R_Off_road_F_Y %>%
-                  filter(sector != "CONSTRUC_feedstocks") %>%
+                  filter(sector != "NECONSTRUC") %>%
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
@@ -123,7 +123,7 @@ module_energy_LA1324.Off_road <- function(command, ...) {
     L1322.in_EJ_R_indfeed_F_Yh %>%
       rename(raw = value) %>%
       left_join(L1324.in_EJ_R_Off_road_F_Y %>%
-                  filter(sector == "CONSTRUC_feedstocks") %>%
+                  filter(sector == "NECONSTRUC") %>%
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
@@ -143,14 +143,14 @@ module_energy_LA1324.Off_road <- function(command, ...) {
 
     #Adjust negative energy use
     L1324.in_EJ_R_Off_road_F_Y %>%
-      filter(sector != "CONSTRUC_feedstocks") %>%
+      filter(sector != "NECONSTRUC") %>%
       left_join(indeergy_tmp %>% select(-sector),by = c("GCAM_region_ID", "fuel", "year"))  %>%
       mutate(raw =replace_na(raw,-1) ,value = if_else(raw < 0 , value,0)) %>%
       select(region,GCAM_region_ID,fuel,year,sector,value) ->
       L1324.in_EJ_R_Off_road_F_Y_recal
 
     L1324.in_EJ_R_Off_road_F_Y %>%
-      filter(sector == "CONSTRUC_feedstocks") %>%
+      filter(sector == "NECONSTRUC") %>%
       left_join(indfeed_tmp %>% select(-sector),by = c("GCAM_region_ID", "fuel", "year"))  %>%
       mutate(raw =replace_na(raw,-1) ,value = if_else(raw < 0 , value,0)) %>%
       select(region,GCAM_region_ID,fuel,year,sector,value) ->

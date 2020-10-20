@@ -6,56 +6,56 @@
 # Column types: ciccnic
 # ----------
 region,GCAM_region_ID,flow,fuel,value,year,unit
-Australia_NZ,6,CONSTRUC_feedstocks,coal,0,2015,ktoe
-Central Asia,10,CONSTRUC_feedstocks,coal,0,2015,ktoe
-China,11,CONSTRUC_feedstocks,coal,0,2015,ktoe
-EU-12,12,CONSTRUC_feedstocks,coal,0,2015,ktoe
-EU-15,13,CONSTRUC_feedstocks,coal,0,2015,ktoe
-Europe_Eastern,14,CONSTRUC_feedstocks,coal,0,2015,ktoe
-Europe_Non_EU,15,CONSTRUC_feedstocks,coal,0,2015,ktoe
-Russia,23,CONSTRUC_feedstocks,coal,0,2015,ktoe
-Africa_Northern,3,CONSTRUC_feedstocks,gas,0,2015,ktoe
-Australia_NZ,6,CONSTRUC_feedstocks,gas,0,2015,ktoe
-Canada,8,CONSTRUC_feedstocks,gas,0,2015,ktoe
-Central Asia,10,CONSTRUC_feedstocks,gas,0,2015,ktoe
-China,11,CONSTRUC_feedstocks,gas,0,2015,ktoe
-EU-12,12,CONSTRUC_feedstocks,gas,0,2015,ktoe
-EU-15,13,CONSTRUC_feedstocks,gas,0,2015,ktoe
-Europe_Eastern,14,CONSTRUC_feedstocks,gas,0,2015,ktoe
-Europe_Non_EU,15,CONSTRUC_feedstocks,gas,0,2015,ktoe
-European Free Trade Association,16,CONSTRUC_feedstocks,gas,0,2015,ktoe
-Japan,19,CONSTRUC_feedstocks,gas,0,2015,ktoe
-Russia,23,CONSTRUC_feedstocks,gas,0,2015,ktoe
-South Korea,28,CONSTRUC_feedstocks,gas,0,2015,ktoe
-Southeast Asia,29,CONSTRUC_feedstocks,gas,0,2015,ktoe
-USA,1,CONSTRUC_feedstocks,refined liquids,19778,2015,ktoe
-Africa_Eastern,2,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-Africa_Northern,3,CONSTRUC_feedstocks,refined liquids,195,2015,ktoe
-Africa_Southern,4,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-Africa_Western,5,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-Australia_NZ,6,CONSTRUC_feedstocks,refined liquids,120,2015,ktoe
-Brazil,7,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-Canada,8,CONSTRUC_feedstocks,refined liquids,2007,2015,ktoe
-Central America and Caribbean,9,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-Central Asia,10,CONSTRUC_feedstocks,refined liquids,269,2015,ktoe
-China,11,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-EU-12,12,CONSTRUC_feedstocks,refined liquids,2716,2015,ktoe
-EU-15,13,CONSTRUC_feedstocks,refined liquids,10131,2015,ktoe
-Europe_Eastern,14,CONSTRUC_feedstocks,refined liquids,356,2015,ktoe
-Europe_Non_EU,15,CONSTRUC_feedstocks,refined liquids,3158,2015,ktoe
-European Free Trade Association,16,CONSTRUC_feedstocks,refined liquids,691,2015,ktoe
-India,17,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-Indonesia,18,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-Japan,19,CONSTRUC_feedstocks,refined liquids,1354,2015,ktoe
-Mexico,20,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-Middle East,21,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-Pakistan,22,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-Russia,23,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-South Africa,24,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-South America_Southern,26,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-South Asia,27,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-South Korea,28,CONSTRUC_feedstocks,refined liquids,1181,2015,ktoe
-Southeast Asia,29,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-Taiwan,30,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-Argentina,31,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
-Colombia,32,CONSTRUC_feedstocks,refined liquids,0,2015,ktoe
+Australia_NZ,6,NECONSTRUC,coal,0,2015,ktoe
+Central Asia,10,NECONSTRUC,coal,0,2015,ktoe
+China,11,NECONSTRUC,coal,0,2015,ktoe
+EU-12,12,NECONSTRUC,coal,0,2015,ktoe
+EU-15,13,NECONSTRUC,coal,0,2015,ktoe
+Europe_Eastern,14,NECONSTRUC,coal,0,2015,ktoe
+Europe_Non_EU,15,NECONSTRUC,coal,0,2015,ktoe
+Russia,23,NECONSTRUC,coal,0,2015,ktoe
+Africa_Northern,3,NECONSTRUC,gas,0,2015,ktoe
+Australia_NZ,6,NECONSTRUC,gas,0,2015,ktoe
+Canada,8,NECONSTRUC,gas,0,2015,ktoe
+Central Asia,10,NECONSTRUC,gas,0,2015,ktoe
+China,11,NECONSTRUC,gas,0,2015,ktoe
+EU-12,12,NECONSTRUC,gas,0,2015,ktoe
+EU-15,13,NECONSTRUC,gas,0,2015,ktoe
+Europe_Eastern,14,NECONSTRUC,gas,0,2015,ktoe
+Europe_Non_EU,15,NECONSTRUC,gas,0,2015,ktoe
+European Free Trade Association,16,NECONSTRUC,gas,0,2015,ktoe
+Japan,19,NECONSTRUC,gas,0,2015,ktoe
+Russia,23,NECONSTRUC,gas,0,2015,ktoe
+South Korea,28,NECONSTRUC,gas,0,2015,ktoe
+Southeast Asia,29,NECONSTRUC,gas,0,2015,ktoe
+USA,1,NECONSTRUC,refined liquids,19778,2015,ktoe
+Africa_Eastern,2,NECONSTRUC,refined liquids,0,2015,ktoe
+Africa_Northern,3,NECONSTRUC,refined liquids,195,2015,ktoe
+Africa_Southern,4,NECONSTRUC,refined liquids,0,2015,ktoe
+Africa_Western,5,NECONSTRUC,refined liquids,0,2015,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,120,2015,ktoe
+Brazil,7,NECONSTRUC,refined liquids,0,2015,ktoe
+Canada,8,NECONSTRUC,refined liquids,2007,2015,ktoe
+Central America and Caribbean,9,NECONSTRUC,refined liquids,0,2015,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,269,2015,ktoe
+China,11,NECONSTRUC,refined liquids,0,2015,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2716,2015,ktoe
+EU-15,13,NECONSTRUC,refined liquids,10131,2015,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,356,2015,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,3158,2015,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,691,2015,ktoe
+India,17,NECONSTRUC,refined liquids,0,2015,ktoe
+Indonesia,18,NECONSTRUC,refined liquids,0,2015,ktoe
+Japan,19,NECONSTRUC,refined liquids,1354,2015,ktoe
+Mexico,20,NECONSTRUC,refined liquids,0,2015,ktoe
+Middle East,21,NECONSTRUC,refined liquids,0,2015,ktoe
+Pakistan,22,NECONSTRUC,refined liquids,0,2015,ktoe
+Russia,23,NECONSTRUC,refined liquids,0,2015,ktoe
+South Africa,24,NECONSTRUC,refined liquids,0,2015,ktoe
+South America_Southern,26,NECONSTRUC,refined liquids,0,2015,ktoe
+South Asia,27,NECONSTRUC,refined liquids,0,2015,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1181,2015,ktoe
+Southeast Asia,29,NECONSTRUC,refined liquids,0,2015,ktoe
+Taiwan,30,NECONSTRUC,refined liquids,0,2015,ktoe
+Argentina,31,NECONSTRUC,refined liquids,0,2015,ktoe
+Colombia,32,NECONSTRUC,refined liquids,0,2015,ktoe
