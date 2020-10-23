@@ -13,9 +13,6 @@
 #' @importFrom tidyr gather spread
 #' @importFrom data.table frollmean
 #' @author CWR May 2019, KBN June 2020
-
-
-
 module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
   if(driver.EMISSIONS_SOURCE == "EDGAR") {
     if(command == driver.DECLARE_INPUTS) {
@@ -41,7 +38,6 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
                OPTIONAL_FILE = "emissions/CEDS/NMVOC_total_CEDS_emissions",
                OPTIONAL_FILE = "emissions/CEDS/NOx_total_CEDS_emissions",
                OPTIONAL_FILE = "emissions/CEDS/SO2_total_CEDS_emissions",
-               #kbn 2020-02-03 Introducing N2O
                OPTIONAL_FILE = "emissions/CEDS/N2O_total_CEDS_emissions",
                FILE = "emissions/CEDS/ceds_sector_map",
                FILE = "emissions/CEDS/ceds_fuel_map",
@@ -135,8 +131,9 @@ CMIP_unmgd_emissions %>%
 
 
 # Compute CEDS emissions by region and sector
-CEDS_CH4 %>%
-  bind_rows(CEDS_BC, CEDS_NMVOC, CEDS_NH3, CEDS_OC, CEDS_NOx, CEDS_SO2, CEDS_CO, CEDS_N2O) %>%
+bind_rows(CEDS_CH4 ,CEDS_BC, CEDS_NMVOC, CEDS_NH3, CEDS_OC, CEDS_NOx, CEDS_SO2, CEDS_CO, CEDS_N2O) -> CEDS_data
+
+  CEDS_data %>%
   #ISO code for Serbia is different in CEDS. Change this to GCAM iso for Serbia so that left_join_error_no_match won't fail.
   mutate(iso=if_else(iso=="srb (kosovo)","srb",iso)) %>%
   filter(iso != "global")->CEDS_allgas
@@ -182,7 +179,7 @@ CEDS_allgas %>%
 
 
 # Aggregate by region, GHG, and CEDS sector
-#kbn 2020-08-06 Adding adjustment for international shipping emissions that are mapped to process. These are now mapped to diesel oil since we don't have driver data for these.
+#kbn Adding adjustment for international shipping emissions that are mapped to process. These are now mapped to diesel oil since we don't have driver data for these.
 L102.CEDS %>%
   left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
   group_by(GCAM_region_ID, Non.CO2, CEDS_agg_sector, CEDS_agg_fuel, year) %>%

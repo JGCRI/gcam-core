@@ -17,8 +17,9 @@ module_emissions_batch_all_protected_unmgd_emissions_xml <- function(command, ..
     } else if(command == driver.DECLARE_OUTPUTS) {
       return(NULL)
     } else if(command == driver.MAKE) {
-      return_data()
-    }} else{
+      return_data()}else{
+        stop("Unknown command")
+      }} else{
   if(command == driver.DECLARE_INPUTS) {
     return(c("L212.ItemName",
              "L212.ItemName_prot",

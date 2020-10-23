@@ -361,4 +361,7 @@ gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN, na
 
 
 #kbn adding notin for later calculations
+#' Helper function: select elements not in user defined criteria
+#' @usage a %notin% b
+#' @export
 `%notin%` <- Negate(`%in%`)

@@ -15,17 +15,6 @@
 #' @importFrom dplyr bind_rows filter funs group_by left_join mutate select summarize_if
 #' @author SJS May 2017
 module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
-  # if(driver.EMISSIONS_SOURCE == "CEDS") {
-  #   if(command == driver.DECLARE_INPUTS) {
-  #     return(NULL)
-  #   } else if(command == driver.DECLARE_OUTPUTS) {
-  #     return(NULL)
-  #   } else if(command == driver.MAKE) {
-  #     return_data()
-  #   } else {
-  #     stop("Unknown command")
-  #   }}
-  # else {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              "L101.ag_Prod_Mt_R_C_Y_GLU",
@@ -110,4 +99,4 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
     stop("Unknown command")
   }
 }
-#}
+

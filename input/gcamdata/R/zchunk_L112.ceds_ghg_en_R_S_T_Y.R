@@ -19,7 +19,6 @@
 #' @importFrom dplyr filter mutate select mutate_all
 #' @importFrom tidyr gather spread
 #' @author CWR Oct. 2018 , YO Mar. 2020, KBN 2020
-
 module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
   if(driver.EMISSIONS_SOURCE == "EDGAR") {
     if(command == driver.DECLARE_INPUTS) {
@@ -103,8 +102,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       if(is.null(L112.CEDS_GCAM)) {
         #Proprietary CEDS emissions data are not available, so used saved outputs
         L112.CEDS_GCAM <- prebuilt_data("L102.ceds_GFED_nonco2_tg_R_S_F")
-      } else {
       }
+
       #In case of tanker loading emissions which are classified as process emissions, transfer them to refined liquids. Same for processs industrial energy emissions
       L112.CEDS_GCAM %>%
         mutate(CEDS_agg_fuel=if_else(CEDS_agg_sector=="trn_intl_ship",if_else(CEDS_agg_fuel=="process","refined liquids",CEDS_agg_fuel),CEDS_agg_fuel)) %>%
@@ -119,7 +118,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         summarise(emissions = sum(emissions)) %>%
         ungroup() %>%
         na.omit() %>%
-        #filter data for final model base year, since we may not have activity data beyond the latest base year.
+        #filter data for final model base year, since we may not have GCAM activity data beyond the latest base year.
         filter(year<= MODEL_FINAL_BASE_YEAR)->L112.CEDS_GCAM
 
       # Load required inputs
@@ -135,18 +134,19 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       IEA_Ctry_data <- get_data(all_data,"L154.IEA_histfut_data_times_UCD_shares")
 
       #If using revised size classes, use revised data else use old data
-      if (energy.TRAN_UCD_MODE=="rev.mode"){
+      if (energy.TRAN_UCD_MODE == "rev.mode"){
         IEA_Ctry_data %>% rename(mode=rev.mode,size.class=rev_size.class)->IEA_Ctry_data
       }
-      #kbn 2019/11/11 Add code below so that we can use revised sub-sectors from transportation model
-      if (energy.TRAN_UCD_MODE=="rev.mode"){
+      #kbn Add code below so that we can use revised sub-sectors from transportation model
+      if (energy.TRAN_UCD_MODE == "rev.mode"){
         GCAM_sector_tech <- get_data(all_data, "emissions/mappings/CEDS_sector_tech_proc_revised") %>% distinct()
       }else{
         GCAM_sector_tech <- get_data(all_data, "emissions/mappings/CEDS_sector_tech_proc")}
 
-      #kbn 2019/11/11 Add code below so that we can use revised sub-sectors from transportation model
-      if (energy.TRAN_UCD_MODE=="rev.mode"){
+      #kbn Add code below so that we can use revised sub-sectors from transportation model
+      if (energy.TRAN_UCD_MODE == "rev.mode"){
         Trn_subsector <- get_data(all_data, "emissions/mappings/Trn_subsector_revised")}else{
+
 
           Trn_subsector <- get_data(all_data, "emissions/mappings/Trn_subsector")
 
@@ -165,7 +165,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       CEDS_sector_map <- get_data(all_data, "emissions/CEDS/ceds_sector_map")
       CEDS_fuel_map <- get_data(all_data, "emissions/CEDS/ceds_fuel_map")
 
-      #kbn 2019/11/11 Add in transport flexibility below
+      #kbn Add in transport flexibility below
       if (energy.TRAN_UCD_MODE=="rev.mode"){
         CEDS_sector_tech <- get_data(all_data, "emissions/CEDS/CEDS_sector_tech_combustion_revised") %>% distinct()}else{
 
@@ -422,7 +422,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         L112.in_EJ_R_en_S_F_Yh_calib_enshare
 
       # Attach CEDS emissions to those sector fuel combos
-      #kbn 2019/11/11 changed nomenclature below
+
       L112.in_EJ_R_en_S_F_Yh_calib_enshare %>%
         left_join(L112.CEDS_GCAM_emissions,
                   by = c("GCAM_region_ID", "year", "CEDS_agg_sector", "CEDS_agg_fuel")) ->
@@ -499,9 +499,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         mutate(input.emissions = emissions) %>%  # Calculate emissions
         group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
         summarise(value = sum(input.emissions)) %>% # Calculate total emissions
-        ungroup() %>%
-        replace_na(list(value = 0)) ->
-        L131.nonco2_tg_R_prc_S_S_Yh
+        ungroup()->L131.nonco2_tg_R_prc_S_S_Yh
+
 
 
 
@@ -737,7 +736,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L112.nonco2_tg_R_awb_C_Y_GLU %>%
         filter(Non.CO2 %in% c("BC_AWB", "OC_AWB")) %>%
         rename(awb_emission = value) %>%
-        # NEED TO REEXAMINE THE DRIVER HERE. IT LIKELY ACTUALLY NEEDS TO BE EXCESS BURNABLE DRY BIOMASS, POSSIBLY L112.ag_ExcessDryBiomass_Mt_R_Y
         left_join_error_no_match(L112.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_burn, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
         # Calculate emission factor, which is
         mutate(emfact = awb_emission / burnable) %>%

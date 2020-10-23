@@ -574,8 +574,6 @@ water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
 
 # Emissions constants ======================================================================
 
-# Flag which emissions data to use. Value "EPA" uses EPA data. All other values use CEDS data.
-emissions.DATA_SOURCE <- "CEDS"
 
 # Time
 emissions.CEDS_YEARS              <- 1971:2019           #Year coverage for CEDS inventory.

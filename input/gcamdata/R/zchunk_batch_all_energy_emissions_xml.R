@@ -18,7 +18,8 @@ module_emissions_batch_all_energy_emissions_xml <- function(command, ...) {
       return(NULL)
     } else if(command == driver.MAKE) {
       return_data()
-    }} else{
+    }else{
+      stop("Unknown command")}} else{
   if(command == driver.DECLARE_INPUTS) {
     return(c("L201.en_pol_emissions",
               "L201.en_ghg_emissions",
