@@ -28,7 +28,8 @@ trn_pass_road_bus,Light Bus,Liquids,share-weight,final-calibration-year,2015,lin
 trn_pass_road_bus,Light Bus,NG,share-weight,final-calibration-year,end-year,linear
 trn_pass_road_LDV,2W and 3W,Liquids,share-weight,final-calibration-year,end-year,fixed
 trn_pass_road_LDV,2W and 3W,NG,share-weight,final-calibration-year,end-year,linear
-trn_pass_road_LDV,2W and 3W,BEV,share-weight,final-calibration-year,2050,linear
+trn_pass_road_LDV,2W and 3W,BEV,share-weight,final-calibration-year,2020,linear
+trn_pass_road_LDV,2W and 3W,BEV,share-weight,2020,2030,linear
 trn_pass_road_LDV,2W and 3W,LA-BEV,share-weight,final-calibration-year,2050,linear
 trn_pass_road_LDV_4W,Car,BEV,share-weight,final-calibration-year,2020,linear
 trn_pass_road_LDV_4W,Car,BEV,share-weight,2020,2030,linear
@@ -57,6 +58,9 @@ trn_pass_road_bus,Heavy Bus,BEV,share-weight,final-calibration-year,2020,linear
 trn_pass_road_bus,Heavy Bus,BEV,share-weight,2020,2030,linear
 trn_pass_road_bus,Light Bus,BEV,share-weight,final-calibration-year,2020,linear
 trn_pass_road_bus,Light Bus,BEV,share-weight,2020,2030,linear
-trn_freight_road,Light truck,BEV,share-weight,final-calibration-year,2050,linear
-trn_freight_road,Medium truck,BEV,share-weight,final-calibration-year,2050,linear
-trn_freight_road,Heavy truck,BEV,share-weight,final-calibration-year,2050,linear
+trn_freight_road,Light truck,BEV,share-weight,final-calibration-year,2020,linear
+trn_freight_road,Light truck,BEV,share-weight,2020,2030,linear
+trn_freight_road,Medium truck,BEV,share-weight,final-calibration-year,2020,linear
+trn_freight_road,Medium truck,BEV,share-weight,2020,2030,linear
+trn_freight_road,Heavy truck,BEV,share-weight,final-calibration-year,2020,linear
+trn_freight_road,Heavy truck,BEV,share-weight,2020,2030,linear

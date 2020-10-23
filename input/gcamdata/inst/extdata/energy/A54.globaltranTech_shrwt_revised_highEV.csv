@@ -34,25 +34,25 @@ trn_pass_road_bus,Light Bus,Liquids,1,1,1,1,1,1,1,1
 trn_pass_road_bus,Light Bus,NG,0,0,1,1,1,1,1,1
 trn_pass_road_LDV,2W and 3W,Liquids,1,1,1,1,1,1,1,1
 trn_pass_road_LDV,2W and 3W,NG,0,0,1,1,1,1,1,1
-trn_pass_road_LDV,2W and 3W,BEV,0,0,1,1,1,1,1,1
+trn_pass_road_LDV,2W and 3W,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1
 trn_pass_road_LDV,2W and 3W,LA-BEV,0,0,0,0,0,0,0,0
-trn_pass_road_LDV_4W,Car,BEV,0,0,0.25,0.25,0.25,1,1,1
+trn_pass_road_LDV_4W,Car,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1
 trn_pass_road_LDV_4W,Car,FCEV,0,0,0,0,0,1,1,1
 trn_pass_road_LDV_4W,Car,Hybrid Liquids,0,0,1,1,1,1,1,1
 trn_pass_road_LDV_4W,Car,Liquids,1,1,1,1,1,1,1,1
 trn_pass_road_LDV_4W,Car,NG,0,0,1,1,1,1,1,1
-trn_pass_road_LDV_4W,Large Car and Truck,BEV,0,0,0.25,0.25,0.25,1,1,1
+trn_pass_road_LDV_4W,Large Car and Truck,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1
 trn_pass_road_LDV_4W,Large Car and Truck,FCEV,0,0,0,0,0,1,1,1
 trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,0,0,1,1,1,1,1,1
 trn_pass_road_LDV_4W,Large Car and Truck,Liquids,1,1,1,1,1,1,1,1
 trn_pass_road_LDV_4W,Large Car and Truck,NG,0,0,1,1,1,1,1,1
-trn_pass_road_LDV_4W,Mini Car,BEV,0,0,0.25,0.25,0.25,1,1,1
+trn_pass_road_LDV_4W,Mini Car,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1
 trn_pass_road_LDV_4W,Mini Car,FCEV,0,0,0,0,0,1,1,1
 trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,0,0,1,1,1,1,1,1
 trn_pass_road_LDV_4W,Mini Car,Liquids,1,1,1,1,1,1,1,1
 trn_pass_road_LDV_4W,Mini Car,NG,0,0,1,1,1,1,1,1
 trn_shipping_intl,International Ship,Liquids,1,1,1,1,1,1,1,1
-trn_pass_road,Bus,BEV,0,0,0.25,0.25,0.25,1,1,1
-trn_freight_road,Light truck,BEV,0,0,1,1,1,1,1,1
-trn_freight_road,Medium truck,BEV,0,0,1,1,1,1,1,1
-trn_freight_road,Heavy truck,BEV,0,0,1,1,1,1,1,1
+trn_pass_road,Bus,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1
+trn_freight_road,Light truck,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1
+trn_freight_road,Medium truck,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1
+trn_freight_road,Heavy truck,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1
