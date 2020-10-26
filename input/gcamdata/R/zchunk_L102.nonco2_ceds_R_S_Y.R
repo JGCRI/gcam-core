@@ -150,8 +150,8 @@ CEDS_CH4 %>%
   filter(CEDS_agg_sector=="trn_intl_ship",CEDS_agg_fuel =="refined liquids") %>%
   gather_years %>%
   filter(year %in% emissions.CEDS_YEARS) %>%
-  filter(year <= MODEL_FINAL_BASE_YEAR, emissions > 0) %>%
-  right_join(Int_shipping_IEA_EIA %>% select(iso,year,value) %>% filter(year <= MODEL_FINAL_BASE_YEAR), by=c("year")) %>%
+  filter(year <= max(HISTORICAL_YEARS), emissions > 0) %>%
+  right_join(Int_shipping_IEA_EIA %>% select(iso,year,value) %>% filter(year <= max(HISTORICAL_YEARS)), by=c("year")) %>%
   mutate(emissions=if_else(is.na(emissions),0,emissions)) %>%
   group_by(Non.CO2,year,sector,fuel) %>%
   mutate(share_in_global_ship= value/sum(value)) %>%
