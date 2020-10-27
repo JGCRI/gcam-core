@@ -20,7 +20,8 @@
 #' @author BBL February 2017
 module_socioeconomics_L100.GDP_hist <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "socioeconomics/USDA_GDP_MER"))
+    return(c(FILE = "socioeconomics/USDA_GDP_MER",
+             FILE = "socioeconomics/WB_ExtraCountries_GDP_MER"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L100.gdp_mil90usd_ctry_Yh"))
   } else if(command == driver.MAKE) {
@@ -31,7 +32,13 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
 
     # Load required inputs
     usda_gdp_mer <- get_data(all_data, "socioeconomics/USDA_GDP_MER")
+    WB_ExtraCountries_GDP_MER <- get_data(all_data, "socioeconomics/WB_ExtraCountries_GDP_MER")
     assert_that(tibble::is_tibble(usda_gdp_mer))
+    assert_that(tibble::is_tibble(WB_ExtraCountries_GDP_MER))
+
+    # bind qatar's GDP data to the USDA's nation-level data
+    usda_gdp_mer <- bind_rows(usda_gdp_mer, WB_ExtraCountries_GDP_MER) %>%
+      arrange(Country)
 
     # Convert to long form, filter to historical years, convert units
     usda_gdp_mer %>%
@@ -42,7 +49,8 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
              year = as.integer(year)) %>%
       add_title("Historical GDP downscaled to country (iso)") %>%
       add_comments("Units converted to constant 1990 USD") %>%
-      add_precursors("socioeconomics/USDA_GDP_MER") %>%
+      add_precursors("socioeconomics/USDA_GDP_MER",
+                     "socioeconomics/WB_ExtraCountries_GDP_MER") %>%
       add_units("Million 1990 USD") %>%
       add_legacy_name("L100.gdp_mil90usd_ctry_Yh") ->
       L100.gdp_mil90usd_ctry_Yh

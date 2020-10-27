@@ -81,7 +81,6 @@ class Tabs;
  * 
  *          <b>XML specification for NationalAccount</b>
  *          - XML name: \c nationalAccount
- *          - Contained by: RegionCGE
  *          - Parsing inherited from class: None.
  *          - Attributes: year
  *          - Elements:

@@ -45,9 +45,6 @@
 
 #include "functions/include/node_input.h"
 #include "functions/include/ifunction.h"
-#include "functions/include/production_input.h"
-#include "functions/include/demand_input.h"
-#include "functions/include/trade_input.h"
 #include "functions/include/building_node_input.h"
 #include "functions/include/food_demand_input.h"
 #include "containers/include/scenario.h"
@@ -95,16 +92,7 @@ void NodeInput::XMLParse( const xercesc::DOMNode* node ) {
         }
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
-        if ( nodeName == ProductionInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new ProductionInput() );
-        }
-        else if ( nodeName == DemandInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new DemandInput() );
-        }
-        else if ( nodeName == TradeInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new TradeInput() );
-        }
-        else if ( nodeName == NodeInput::getXMLNameStatic() ) {
+        if ( nodeName == NodeInput::getXMLNameStatic() ) {
             parseContainerNode( curr, mNestedInputs, new NodeInput() );
         }
         else if ( nodeName == BuildingNodeInput::getXMLNameStatic() ) {
@@ -127,17 +115,6 @@ void NodeInput::XMLParse( const xercesc::DOMNode* node ) {
         }
         else if ( nodeName == "Sigma2" ) {
             mSigmaOldCapital.set( XMLHelper<double>::getValue( curr ) );
-        }
-        // TODO: these shouldn't really be in here, they are specific to the UtilityDemandFunction
-        else if ( nodeName == "alpha-utility-param" ) {
-            mAlphaUtilityParam.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if ( nodeName == "beta-utility-param" ) {
-            mBetaUtilityParam.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if ( nodeName == "gamma-utility-param" ) {
-            // putting gamma in here due to hack in UtilityDemandFunction
-            mAlphaCoef.set( XMLHelper<double>::getValue( curr ) );
         }
         else if ( nodeName == "technicalChange" ) {
             mTechChange.set( XMLHelper<double>::getValue( curr ) );
@@ -162,22 +139,8 @@ void NodeInput::completeInit( const string& aRegionName,
     // it would ideally be created somwhere else such as with in the function itself
     // however it does not have a completeInit method.
     if( !mProdDmdFnType.empty() ) {
+        // TODO: Is this still needed?
         mProdDmdFn = FunctionManager::getFunction( mProdDmdFnType );
-        // TODO: a better way to create this market that is less hackish
-        if( mProdDmdFnType == "UtilityDemandFunction" ) {
-            Marketplace* marketplace = scenario->getMarketplace();
-            const string utilityMarketName = aSectorName+"-utility";
-            bool createdUtilityMarket = marketplace->createMarket( aRegionName, aRegionName, utilityMarketName,
-                IMarketType::NORMAL );
-            // it may not have created the market if it was created by another input in say an earlier
-            // consumer
-            if( createdUtilityMarket && !Configuration::getInstance()->getBool( "CalibrationActive" ) ){
-                const Modeltime* modeltime = scenario->getModeltime();
-                for( int period = 0; period < modeltime->getmaxper(); ++period ){
-                    marketplace->setMarketToSolve( utilityMarketName, aRegionName, period );
-                }
-            }
-        }
     }
     // Initially set the current sigma to new capital even though we technically have old vintage
     // technologies in the base year.  Theoritically the base year should be read in balanced
@@ -250,9 +213,6 @@ void NodeInput::copyParamsInto( NodeInput& aInput, const int aPeriod ) const {
 
     aInput.mBasePricePaid.set( mBasePricePaid );
 
-    aInput.mAlphaUtilityParam = mAlphaUtilityParam;
-    aInput.mBetaUtilityParam = mBetaUtilityParam;
-
     // copy children
     CNestedInputIterator itThis = mNestedInputs.begin();
     NestedInputIterator itArg = aInput.mNestedInputs.begin();
@@ -300,9 +260,6 @@ void NodeInput::copy( const NodeInput& aNodeInput ) {
     mProdDmdFnType = aNodeInput.mProdDmdFnType;
     mProdDmdFn = aNodeInput.mProdDmdFn;
     mBasePricePaid.set( aNodeInput.mBasePricePaid );
-
-    mAlphaUtilityParam = aNodeInput.mAlphaUtilityParam;
-    mBetaUtilityParam = aNodeInput.mBetaUtilityParam;
 
     // copy children
     for( CNestedInputIterator it = aNodeInput.mNestedInputs.begin(); it != aNodeInput.mNestedInputs.end(); ++it ) {
@@ -531,36 +488,6 @@ void NodeInput::resetCalcLevelizedCostFlag() {
     mNodePriceSet = false;
 }
 
-/*
-void NodeInput::calcCapitalPrice( const std::string& aRegionName, const std::string& aSectorName,
-        const int aPeriod, const double aAlphaZero ) {
-    // we must have a price by now to calculate the price for the capital path
-    assert( mPricePaid.isInited() );
-    assert( hasCapitalInput() );
-
-    //ILogger& sgmLog = ILogger::getLogger( "sgm_debug_log" );
-    //sgmLog.setLevel( ILogger::DEBUG );
-    // TODO: this math should be in a production function
-    double r = 1 - mCurrentSigma;
-    double siblingSum = 0.0;
-    for( NestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
-        if( it != mCapitalPath ) {
-            siblingSum += pow( (*it)->getPricePaid( aRegionName, aPeriod ) / 
-                (*it)->getCoefficient( aPeriod ), r );
-        }
-    }
-    double capitalPathPricePaid = pow( getPricePaid( aRegionName, aPeriod ) * aAlphaZero, r );
-    capitalPathPricePaid -= siblingSum;
-    if( capitalPathPricePaid < 0 ) {
-        //cout << "went < 0 here " << endl;
-        capitalPathPricePaid = 0;
-    }
-    capitalPathPricePaid = pow( capitalPathPricePaid, 1 / r ) * (*mCapitalPath)->getCoefficient( aPeriod );
-    //sgmLog << "calc cap  p: " << capitalPathPricePaid << endl;
-    (*mCapitalPath)->setPricePaid( capitalPathPricePaid, aPeriod );
-    (*mCapitalPath)->calcCapitalPrice( aRegionName, aSectorName, aPeriod, aAlphaZero );
-}
-*/
 
 double NodeInput::calcInputDemand( const std::string& aRegionName, const std::string& aSectorName,
         const int aPeriod, const double aPhysicalOutput, const double aUtilityParameterA,
@@ -756,13 +683,11 @@ double NodeInput::getCalibrationQuantity( const int aPeriod ) const {
 }
 
 double NodeInput::getPriceElasticity( const int aPeriod ) const {
-    // TODO: should not be here
-    return mAlphaUtilityParam;
+    return 0;
 }
 
 double NodeInput::getIncomeElasticity( const int aPeriod ) const {
-    // TODO: should not be here
-    return mBetaUtilityParam;
+    return 0;
 }
 
 double NodeInput::getTechChange( const int aPeriod ) const {

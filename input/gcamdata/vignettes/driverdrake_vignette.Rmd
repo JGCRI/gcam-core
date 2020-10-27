@@ -1,0 +1,250 @@
+---
+title: "Running GCAM Data System with drake"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{driverdrake-vignette}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(devtools)
+knitr::opts_knit$set(root.dir = '..')
+
+```
+
+## Introduction
+The function `driver_drake()`, located in `R/driver.R`, runs the GCAM data system, like `driver()`. However, unlike `driver()`, `driver_drake()` skips steps that are already up-to-date, saving time. The central function of `drake` is `drake::make()`, which builds the data system. `drake`'s `make` is more sophisticated than the standard GNU `make` based systems because it checks the content has substantively changed instead of only if a file has been modified, and similarly only runs subsequent steps that are actually affected by the latest changes since the previous `make()`.
+
+In this vignette we will go through concrete examples which highlight these benefits.  In addition we will give examples of common tasks when working with `drake` and provide links to further documentation.
+
+
+### Timing
+Using `driver_drake()` significantly speeds up the process for making changes after the initial data system build. However due to the additional overhead of caching results the initial data system build _may_ be slower (See [Parallel Computing]("#parallel-computing") than regular `driver()`.  On a local Windows machine, the initial run of `driver_drake()` took 25 minutes and 11 seconds, while the initial run of `driver()` took 17 minutes and 4 seconds. However, as an example, after editing a single input file `A10.TechChange.csv`, `driver_drake` updated 44 targets and took 1 minute and 7 seconds to run. With `driver()`, the full data system would have to be rerun.
+
+### Documentation
+The `drake` package has many features that can be used with `gcamdata` that are not discussed here. `drake`'s documentation is very good and includes many helpful resources. To learn more about what `drake` can do and how it works, the [The drake R Package Users Manual](https://books.ropensci.org/drake/) is a good place to start. 
+
+### `drake`'s cache
+When running `make()`, `drake` stores your targets in a hidden cache by default named `.drake` in your current working directory. Typically a user does not need to directly manipulate this cache but in some cases they may wish to. For recovery purposes, drake keeps all targets from all runs of `make()`. To delete this cache and rerun the data system from scratch, you can safely delete the `.drake` folder. Sometimes when a chunk errors during processing you may be left with a "locked" cache.  If the cache is locked, you can force unlock with `drake::drake_cache()$unlock()`. 
+
+## Examples
+Let's explore `driver_drake()` and see how it can help us run the data system. We'll start by doing an initial run which will create and store output in the drake cache and create all of our xml files. We run this just as we would `driver()`.
+
+```{r, echo = TRUE, results = "hide", warning = FALSE, message = FALSE}
+# Load package and run driver_drake, output messages are hidden 
+devtools::load_all()
+driver_drake()
+```
+
+On Windows we may run into the MAX_PATH file path limit after the package is installed. If you get the following error, make sure you load the package with `devtools::load_all()`.
+```
+Error in file.rename() :
+  expanded 'to' name too long
+```
+
+Next, we'll explore two different edits of a chunk and see how `driver_drake()` responds. 
+
+### Example 1
+
+First, let's edit the input, `FAO_municipal_water_AQUASTAT.csv` by duplicating its final row. This adds another value of 0.4877 to the file. The values from this file get aggregated, so adding a non-zero value affects other chunks. 
+
+```{r}
+# Copy the file so we can get it back later
+example_file <- find_csv_file("water/FAO_municipal_water_AQUASTAT", FALSE)[[1]]
+file.copy(from = example_file, to = paste0(example_file, ".bak"))
+
+# Add a row to the end of the file with value = 0.4877
+cat("\nZimbabwe,181,Municipal water withdrawal,4251,2017,0.4877,,", file = example_file, append = TRUE)
+
+# Load and run driver_drake(). Print run time. 
+devtools::load_all(".")
+t1 <- Sys.time()
+driver_drake()
+print(Sys.time()-t1)
+```
+As expected, `driver_drake()` runs all dependencies of `FAO_municipal_water_AQUASTAT.csv` since they need to be updated from adding in a non-zero value. 
+
+
+### Example 2
+
+Next, we will append another row to the bottom of that same file, but this time, we will give it a value of 0, which after aggregation should have no further effect. 
+```{r}
+# Add a row but with value = 0
+cat("\nZimbabwe,181,Municipal water withdrawal,4251,2017,0,,", file = example_file, append = TRUE)
+
+# Load and run driver_drake(). Print run time. 
+devtools::load_all(".")
+t1 <- Sys.time()
+driver_drake()
+print(Sys.time()-t1)
+```
+This time, `driver_drake()` only ran `FAO_municipal_water_AQUASTAT` and it's `R` chunk since adding a 0 affects nothing downstream. 
+
+Let's get our original file back and run `driver_drake`. 
+```{r, echo = TRUE, results = "hide", warning = FALSE, message = FALSE}
+# Finally, clean up the changes from this example
+file.rename(paste0(example_file, ".bak"), example_file)
+driver_drake() 
+
+```
+
+### Example 3
+If you edit or delete an XML file, you can quickly and easily get the original file back by running `driver_drake()`. 
+```{r}
+# Delete wind_reeds_USA.xml 
+file.remove("xml/wind_reeds_USA.xml")
+
+# Load and run driver_drake(). Print run time. 
+devtools::load_all(".")
+t1 <- Sys.time()
+driver_drake()
+print(Sys.time()-t1)
+
+```
+Now we have our file back without re-running the entire datasystem. 
+
+
+## Arguments to `driver_drake()` 
+
+`driver_drake()` supports the same arguments as `driver()` (see `?driver`), except `write_outputs` (since `drake` must include all outputs in the cache). Thus users can still use `stop_before` or `return_data_map_only` as before except with the benefits of `drake`: if no modifications were made they can just be generated from cache.
+Users can also pass additional arguments to `driver_drake()` which will be forwarded on to `make()`. You can see `?drake::make` for all available options, but some useful ones include:
+
+* `verbose`: integer, controls printing to the console/terminal (defualt: `1`)
+    * 0: print nothing
+    * 1: print target names as they build
+    * 2: show a progress bar to track what percent of targets have been completed. Also shows a spinner bar during preprocessing tasks
+    
+* `history`: logical, whether to record the build history of targets (default: `TRUE`). This is helpful if you need to recover old data. Or perhaps check how some outputs changed between commits. However, given the size of the data produced by `gcamdata` it may lead to very large cache sizes.  Thus it may be beneficial to set it to `FALSE` or at least clean out the cache from time to time.
+
+* `memory_strategy`: character scalar, name of the strategy `drake` uses to load/unload a target's dependencies in memory (default: `"speed"`). Some options include
+    * `"speed"`: maximizes speed but hogs memory. Recommended for users with at least 5GB of available RAM. 
+    * `"autoclean"`: conserves memory but sacrifices speed by unloading outputs after no more targets depend on them. This behavior is similar to that of `driver()`.
+
+
+### More Examples
+Here are some additional examples of calling `driver_drake()` with some of the alternative arguments discussed above.
+```{r, eval = FALSE}
+# Run with a progress bar
+driver_drake(verbose = 2)
+
+# Run, stop before a chunk and conserve memory
+driver_drake(stop_before = "module_aglu_LA100.FAO_downscale_ctry", memory_strategy = "autoclean")
+
+```
+
+
+## Parallel Computing
+Parallel computing is supported by `drake` but requires some "backend" to do the work. The two primary backend R packages that are used are `clustermq` and `future`. In addition each of these packages support two different mechanisms to utilizing multiple cores: `multisession` - which launches multiple independent sessions of R and communicates between them using a message passing system; or `multicore`: just the one R session but multiple threads are created with in it.  However, we found that when using the `multisession` mechanism with either package, you must do a full reinstall the `gcamdata` package each time you change a target (`devtools::load_all()` is not sufficient) for the targets to update and build correctly. Also, the `multicore` option is not supported on Windows.  
+
+### Options
+When running `driver_drake()` with parallelism, the following arguments to `make()` should be specified in `driver_drake()`
+
+* jobs: integer, maximum number of parallel workers for processing targets.  A user should choose a value <= the number of CPU cores their system has.
+* caching: character string, should be set to `"worker"` as to avoid wasting time doing synchronization
+
+
+### The `clustermq` backend
+See the `clustermq` [installation guide](https://cran.r-project.org/web/packages/clustermq/vignettes/userguide.html) for installation instructions and options. `clustermq` requires `R version 3.5` or greater.  Note, on Mac and Windows a simple `install.packages("clustermq") is sufficient.
+
+<!-- - explain how to install clustermq package on PIC -->
+For using `clustermq` on PIC (PNNL Institutional Computing) we have already installed the full set of required R packages in a shared space as successfully compiling `clustermq` was not straightforward due to compiler version issues.  To use `drake` + `clustermq` in PIC a user can:
+    * Get necessary libraries with: `export R_LIBS=/pic/projects/GCAM/GCAM-libraries/R/x86_64-pc-linux-gnu-library/3.5`
+    * Load the `zeromq` library with: `module load zeromq/4.1.4`
+    * Open `R 3.5.1` with: `module load R/3.5.1`
+    * Open an `R` session and set the global option below
+    * Run `driver_drake()` with the arguments such as below
+
+```{r, eval = FALSE}
+# Load clustermq and set type to multicore
+library(clustermq)
+options(clustermq.scheduler = "multicore")
+
+# Load and run 
+devtools::load_all()
+driver_drake(parallelism = "clustermq", caching = "worker", jobs = 48)
+```
+
+If you get the following error while trying to load `clustermq`, make sure you have the `zeromq` library loaded ( `module load zeromq/4.1.4`).  
+
+```
+library(clustermq)
+Error: package or namespace load failed for 'clustermq' in dyn.load(file, DLLpath = DLLpath, ...):
+ unable to load shared object '/qfs/projects/ops/rh6/R/3.5.1/lib64/R/library/clustermq/libs/clustermq.so':
+  libzmq.so.5: cannot open shared object file: No such file or directory
+
+```
+On PIC, we had good performance with `clustermq`, type `multicore`, and `jobs = 48`.  The initial build took 5 minutes and 40 seconds as opposed to just over 30 minutes for the `driver_drake()` build without parallelism. For reference, the build with `driver()` on PIC took  22 minutes and 41 seconds. 
+
+Recall, if you are trying to use `clustermq` on Windows, `multicore` is not supported. To use `multisession`, make sure you reinstall after any changes are make before you try to run `driver_drake()`.
+
+
+### The `future` backend 
+
+We did not have good performance with `future`. On a local Windows machine, the initial build with `parallelism = future` and type `multisession` took 1 hour and 14 seconds. It took over an hour on PIC as well. We still document it here in case the situation improves in the future.
+
+To use this backend, install the `future` package and provide the following arguments: 
+```{r, eval = FALSE}
+# Run driver_drake with future plan multisession
+future::plan(future::multisession)
+devtools::load_all()
+driver_drake(parallelism = "future", caching = "worker", jobs = 4)
+```
+See `?future::plan` for all strategy options and explanations.
+
+
+## Loading data from the `drake` cache
+You can use the typical arguments to `driver_drake()` such as `stop_before` or `return_data_names` to return outputs from cache after the initial run.  And if you unsure if there have been any modifications since the last run that is the best way to load them.  However, if you are sure it is up to date, we have provided a utility method `load_from_cache` for doing so and returning the data in the same format as data returned from `driver(stop_after = "module_emissions_L121.nonco2_awb_R_S_T_Y")`.  Therefore we recommend using this utility rather than directly using `drake::readd` directly.
+
+```{r}
+# We can give a list of files we want to load
+data <- load_from_cache(c("L121.nonco2_tg_R_awb_C_Y_GLU"))
+data
+
+# We can also combine this with other gcamdata utilities to
+# load all input or outputs of a chunk as well
+data <- load_from_cache(outputs_of("module_emissions_L121.nonco2_awb_R_S_T_Y"))
+data
+```
+
+
+## The drake "plan"
+To utilize `drake`'s features, `driver_drake()` must generate a drake `plan` to supply to`drake::make()`, which builds the data system. The `plan` is a data frame with columns “target” and “command”. Each row is a step in the workflow and the target is the return value of the corresponding command. `drake` understands the dependency relationships between targets and commands in the plan, regardless of the order they are written. The `make()` function runs the targets in the correct order and stores the results in a hidden cache.  In `gcamdata` the targets are either inputs/outputs or chunk names.  The plan can be obtained by calling `driver_drake(return_plan_only = TRUE)` and may be useful for debugging or when using additional drake features described next.
+
+```{r}
+plan <- driver_drake(return_plan_only = TRUE)
+# Pick targets to show the commands that would be used to build them
+plan %>%
+  filter(target %in% c("socioeconomics.SSP_database_v9",
+                       "L2052.AgCost_ag_irr_mgmt",
+                       "module_aglu_batch_ag_cost_IRR_MGMT_xml",
+                       "xml.ag_cost_IRR_MGMT.xml"))
+```
+
+## Additional Features
+
+You can visualize targets and their dependency relationships with `vis_drake_graph()`. This function produces an interactive graph that shows how targets are connected within the plan. You can hover over nodes to see commands of a target and double click nodes to contract neighborhoods into clusters. To just see downstream nodes from a specific target, set `from = <target_name>`. See `?vis_drake_graph` for all graph options. Here is an example of how `vis_drake_graph` could be used. 
+
+```{r}
+devtools::load_all()
+
+# Get the drake plan 
+plan <- driver_drake(return_plan_only = TRUE)
+
+# Display the dependency graph downstream from module L210.RenewRscr 
+vis_drake_graph(plan, from = make.names("L210.RenewRsrc"))
+
+```
+
+
+See the `drake` documentation for other features. Some that may be useful with `gcamdata` include
+    * `outdated(plan)`: lists all of the targets that are outdated
+    * `predict_runtime(plan)`: `drake` records the time it takes to build each target and uses this to predict the runtime of the next `make()`
+
+
+
+

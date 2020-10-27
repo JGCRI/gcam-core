@@ -218,7 +218,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       right_join(L2072.AgCoef_IrrWaterWdraw_ag_mgmt, by = "region") %>%
       # Calculate water price and water cost
-      mutate(WaterCost = coefficient * water.DEFAULT_UNLIMITED_IRR_WATER_PRICE / conveyance.eff) %>%
+      mutate(WaterCost = coefficient * water.DEFAULT_IRR_WATER_PRICE / conveyance.eff) %>%
       # Join in non-land variable costs
       left_join_error_no_match(L2052.AgCost_ag_irr_mgmt,
                                by = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year")) %>%

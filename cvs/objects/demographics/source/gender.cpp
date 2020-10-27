@@ -33,7 +33,6 @@
 
 /*! 
 * \file gender.cpp
-* \ingroup Objects-SGM
 * \brief world class source file.
 * \author Sonny Kim
 */

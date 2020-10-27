@@ -166,21 +166,19 @@ void NestingSubsector::completeInit( const IInfo* aSectorInfo,
 * \author Steve Smith, Sonny Kim
 * \param aNationalAccount National accounts container.
 * \param aDemographics Regional demographics container.
-* \param aMoreSectorInfo SGM sector info object.
 * \param aPeriod Model period
 */
 void NestingSubsector::initCalc( NationalAccount* aNationalAccount,
                           const Demographic* aDemographics,
-                          const MoreSectorInfo* aMoreSectorInfo,
                           const int aPeriod )
 {
     // note the order of operations matter here as the base class initCalc will
     // call methods which will trigger recursion down the nest, therefore we must
     // call initCalc on the child subsectors first
     for( auto subsector : mSubsectors ) {
-        subsector->initCalc( aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
+        subsector->initCalc( aNationalAccount, aDemographics, aPeriod );
     }
-    Subsector::initCalc( aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
+    Subsector::initCalc( aNationalAccount, aDemographics, aPeriod );
 }
 
 /*!
@@ -266,26 +264,6 @@ double NestingSubsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
         return subsectorPrice;
     }
 }
-
-/*! \brief Returns whether the subsector should be calibrated.
-* \details If either the Subsector output, or the output of all the technologies
-*          under this Subsector (not including those with zero output) are
-*          calibrated, then the Subsector should calibrate.
-* \author Steve Smith
-* \param aPeriod Model period
-*/
-bool NestingSubsector::getCalibrationStatus( const int aPeriod ) const {
-    
-    // Check all the technologies for the period.
-    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
-        // Check whether there is any calibration input, not one for a specific fuel.
-        if ( mSubsectors[ i ]->getCalibrationStatus( aPeriod) ) {
-            return true;
-        }
-    }
-    return false;
-}
-
 
 /*! \brief returns Subsector fuel price times share
 * \details Returns the share-weighted fuel price, which is later summed to get

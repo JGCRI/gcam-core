@@ -55,29 +55,6 @@ class INestedInput;
 
 typedef std::vector<IInput*> InputSet;
 
-/*! \brief A structure which contains the information necessary for a
-*          production function.
-*/
-struct ProductionFunctionInfo {
-    //! The vector of inputs.
-    const InputSet& mInputs;
-
-    //! Pointer to the technology's production function.
-    const IFunction* mProductionFunction;
-
-    //! The current sigma the production function is using.
-    const double mSigma;
-
-    //! Alpha zero used to scale the output of the production.
-    const double mAlphaZeroScaler;
-
-    //! Amount of capital stock the vintage owns.
-    const double mCapitalStock;
-    
-    //! The root of the nested inputs.
-    const INestedInput* mNestedInputRoot;
-};
-
 /*! 
 * \ingroup Objects
 * \brief This class is a set of static helper methods which the various

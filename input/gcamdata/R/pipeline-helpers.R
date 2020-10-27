@@ -328,8 +328,8 @@ gdp_deflator <- function(year, base_year) {
            103.311, 105.214, 106.913, 108.828, 109.998, 111.445)
   names(gdp) <- gdp_years
 
-  assert_that(year %in% gdp_years)
-  assert_that(base_year %in% gdp_years)
+  assert_that(all(year %in% gdp_years))
+  assert_that(all(base_year %in% gdp_years))
 
   as.vector(unlist(gdp[as.character(year)] / gdp[as.character(base_year)]))
 }

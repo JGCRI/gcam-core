@@ -49,6 +49,8 @@ module_gcamusa_LB1233.elec_water_USA <- function(command, ...) {
 
     # ===================================================
 
+    `Generation Technology` <- NULL # silence package check notes
+
     # Define unique states and basins that have access to seawater that will
     # allow for seawate cooling
 

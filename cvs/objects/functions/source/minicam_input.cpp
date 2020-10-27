@@ -181,20 +181,6 @@ void MiniCAMInput::accept( IVisitor* aVisitor, const int period ) const
     aVisitor->endVisitMiniCAMInput( this, period );
 }
 
-void MiniCAMInput::copyParamsInto( ProductionInput& aProductionInput,
-                                   const int aPeriod ) const
-{
-    // This should never be called.
-    assert( false );
-}
-
-void MiniCAMInput::copyParamsInto( DemandInput& aDemandInput,
-                                   const int aPeriod ) const
-{
-    // This should never be called.
-    assert( false );
-}
-
 void MiniCAMInput::copyParamsInto( NodeInput& aNodeInput,
                                    const int aPeriod ) const
 {
@@ -202,9 +188,3 @@ void MiniCAMInput::copyParamsInto( NodeInput& aNodeInput,
     assert( false );
 }
 
-void MiniCAMInput::copyParamsInto( TradeInput& aDemandInput,
-                                   const int aPeriod ) const
-{
-    // This should never be called.
-    assert( false );
-}

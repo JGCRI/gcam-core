@@ -101,7 +101,6 @@ class Timer;
  *                      - \c single-scenario-runner SingleScenarioRunner
  *                      - \c mac-generator-scenario-runner MACGeneratorScenarioRunner
  *                      - \c policy-target-runner PolicyTargetRunner
- *                      - \c simple-policy-target-runner SimplePolicyTargetRunner
  *
  * \author Josh Lurz
  */
