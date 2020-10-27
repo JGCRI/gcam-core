@@ -1,4 +1,5 @@
 library(usethis)
+library(devtools)
 library(gcamdata)
 
 # Note: the methods below explicitly name XML tags as expected by GCAM and/or
@@ -430,6 +431,13 @@ generate_level2_data_names <- function() {
 #' columns arranged in the order the ModelInterface is expecting them.
 #' @author Pralit Patel
 LEVEL2_DATA_NAMES <- generate_level2_data_names()
+# Save these objects for use as internal package data
+usethis::use_data(LEVEL2_DATA_NAMES, overwrite = TRUE, internal = TRUE)
+
+# It is frequently the case that we need to refresh the LEVEL2_DATA_NAMES in order to have
+# a successful driver() run which is required to update the following so we will re-load
+# the package now so the updated LEVEL2_DATA_NAMES can take effect.
+devtools::load_all()
 
 #' GCAM_DATA_MAP
 #'
@@ -441,6 +449,8 @@ LEVEL2_DATA_NAMES <- generate_level2_data_names()
 #' which is used by \link{\code{dstrace}} and various other graphing and diagnostic utilities.
 #' @author BBL
 GCAM_DATA_MAP <- driver(return_data_map_only = TRUE)
+# Save these objects as external data (i.e. requires explicit call to `data()` to load)
+usethis::use_data(GCAM_DATA_MAP, overwrite = TRUE, internal = FALSE)
 
 
 #' PREBUILT_DATA
@@ -478,6 +488,6 @@ PREBUILT_DATA <- driver(write_outputs = FALSE,
                     ))
 
 
-# Save these objects for use as internal package data
-usethis::use_data(GCAM_DATA_MAP, LEVEL2_DATA_NAMES, PREBUILT_DATA, overwrite = TRUE, internal = TRUE)
+# Save these objects as external data (i.e. requires explicit call to `data()` to load)
+usethis::use_data(PREBUILT_DATA, overwrite = TRUE, internal = FALSE)
 

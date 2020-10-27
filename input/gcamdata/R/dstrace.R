@@ -22,9 +22,12 @@
 #' dstrace("L100.FAO_ag_Exp_t", direction = "downstream")
 #' dstrace("L100.FAO_ag_Exp_t", direction = "both", graph = TRUE)
 dstrace <- function(object_name, direction = "upstream", graph = FALSE,
-                    gcam_data_map = GCAM_DATA_MAP,
+                    gcam_data_map = NULL,
                     previous_tracelist = NULL, recurse = TRUE, ...) {
 
+  if(is.null(gcam_data_map)) {
+    gcam_data_map <- GCAM_DATA_MAP
+  }
   assert_that(is.character(object_name))
   assert_that(is.character(direction))
   assert_that(length(direction) == 1)
@@ -194,8 +197,11 @@ dstrace_plot <- function(object_name, tracelist, upstream, downstream, ...) {
 #' @examples
 #' info("L100.FAO_ag_Exp_t")
 #' info("module_aglu_L222.land_input_2")
-info <- function(object_name, gcam_data_map = GCAM_DATA_MAP, previous_tracelist = NULL, upstream = TRUE, downstream = TRUE) {
+info <- function(object_name, gcam_data_map = NULL, previous_tracelist = NULL, upstream = TRUE, downstream = TRUE) {
 
+  if(is.null(gcam_data_map)) {
+    gcam_data_map <- GCAM_DATA_MAP
+  }
   assert_that(is.character(object_name))
   assert_that(is_tibble(gcam_data_map))
   assert_that(is.null(previous_tracelist) || is_tibble(previous_tracelist))

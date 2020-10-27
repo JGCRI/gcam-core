@@ -189,18 +189,6 @@ L102.CEDS %>%
   add_comments("Calculate historical emissions from all sectors by sector and fuel from CEDS and CMIP data. CMIP is used for unmanaged lands") ->
   L102.CEDS_GCAM_GFED
 
-
-
-
-}
-else {
-  # raw CEDS datasets not available, so return NA
-  # Downstream chunks will be responsible for checking this
-
-  missing_data() %>%
-    add_comments("** RAW DATA NOT READ FROM CEDS FILES **") ->
-    L102.CEDS_GCAM_GFED
-}
 # PRODUCE OUTPUTS
 # ===============
 
@@ -213,6 +201,18 @@ L102.CEDS_GCAM_GFED %>%
                  "common/iso_GCAM_regID","emissions/CEDS/CH4_total_CEDS_emissions","emissions/CEDS/GFED-CMIP6_LUC_emissions","emissions/CEDS/LULUC_to_sector_Mapping","emissions/CEDS/N2O_total_CEDS_emissions",
                  "L154.IEA_histfut_data_times_UCD_shares") ->
   L102.ceds_GFED_nonco2_tg_R_S_F
+
+# verify the calculated data matches the prebuilt version if not a warning
+# will be generated and should only be ignored if the underly CEDS data
+# actually changed
+verify_identical_prebuilt(L102.ceds_GFED_nonco2_tg_R_S_F)
+
+
+}
+else {
+  # raw CEDS datasets not available, so we will use the prebuilt version
+  L102.ceds_GFED_nonco2_tg_R_S_F <- prebuilt_data("L102.ceds_GFED_nonco2_tg_R_S_F")
+}
 
       return_data(L102.ceds_GFED_nonco2_tg_R_S_F)
     } else {

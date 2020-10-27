@@ -37,7 +37,8 @@ test_that("matches old data system output", {
     # They should match! See https://github.com/JGCRI/gcamdata/pull/751#issuecomment-331578990
     # First put what the driver returns and the internal GCAM_DATA_MAP into the same order (can vary if run on PIC for example)
     gcam_data_map <- arrange(gcam_data_map, name, output)
-    gdm_internal <- arrange(gcamdata:::GCAM_DATA_MAP, name, output)
+    data("GCAM_DATA_MAP")
+    gdm_internal <- arrange(GCAM_DATA_MAP, name, output)
 
     # The gcam_data_map that's generated on Travis won't have the proprietary IEA data, so its comments
     # and units may differ
