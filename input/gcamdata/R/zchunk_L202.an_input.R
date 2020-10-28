@@ -67,7 +67,8 @@ module_aglu_L202.an_input <- function(command, ...) {
              "L202.StubTechInterp_an",
              "L202.StubTechProd_an",
              "L202.StubTechCoef_an",
-             "L202.StubTechCost_an"
+             "L202.StubTechCost_an",
+             "L202.ag_consP_R_C_75USDkg"
              ))
   } else if(command == driver.MAKE) {
 
@@ -672,6 +673,14 @@ module_aglu_L202.an_input <- function(command, ...) {
                      "L107.an_Feed_Mt_R_C_Sys_Fd_Y", "L1091.GrossTrade_Mt_R_C_Y", "L109.ag_ALL_Mt_R_C_Y") ->
       L202.StubTechCost_an
 
+    # Return also the consumer prices, to be made available elsewhere
+    L202.ag_consP_R_C_75USDkg %>%
+      add_title("Consumer costs of crops") %>%
+      add_units("1975$/kg") %>%
+      add_comments("Computed from weighted average of domestically sourced crops (which use producer prices) and imports") %>%
+      add_comments("Imported crop prices are computed from weighted average of producer prices of exporting countries") %>%
+      add_precursors("L1321.ag_prP_R_C_75USDkg", "L109.ag_ALL_Mt_R_C_Y", "L1091.GrossTrade_Mt_R_C_Y") ->
+      L202.ag_consP_R_C_75USDkg
 
 
     return_data(L202.RenewRsrc, L202.RenewRsrcPrice, L202.maxSubResource, L202.RenewRsrcCurves, L202.ResTechShrwt,
@@ -679,7 +688,7 @@ module_aglu_L202.an_input <- function(command, ...) {
                 L202.SubsectorAll_in, L202.StubTech_in, L202.StubTechInterp_in, L202.GlobalTechCoef_in,
                 L202.GlobalTechShrwt_in, L202.StubTechProd_in, L202.Supplysector_an, L202.SubsectorAll_an,
                 L202.GlobalTechShrwt_an, L202.StubTechInterp_an, L202.StubTechProd_an, L202.StubTechCoef_an,
-                L202.StubTechCost_an)
+                L202.StubTechCost_an, L202.ag_consP_R_C_75USDkg)
   } else {
     stop("Unknown command")
   }
