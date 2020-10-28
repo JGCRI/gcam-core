@@ -56,6 +56,7 @@ module_aglu_L202.an_input <- function(command, ...) {
              "L202.UnlimitedRenewRsrcPrice",
              "L202.Supplysector_in",
              "L202.SubsectorAll_in",
+             "L202.SubsectorInterpTo_in",
              "L202.StubTech_in",
              "L202.StubTechInterp_in",
              "L202.GlobalTechCoef_in",
@@ -198,6 +199,14 @@ module_aglu_L202.an_input <- function(command, ...) {
     A_an_input_subsector %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], LOGIT_TYPE_COLNAME), GCAM_region_names) ->
       L202.SubsectorAll_in
+
+    # If any subsectors have a to-value provided, generate another table: L202.SubsectorInterpTo_in
+    if(any(!is.na(A_an_input_subsector$to.value))) {
+      A_an_input_subsector %>%
+        filter(!is.na(to.value)) %>%
+        write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names = GCAM_region_names) ->
+        L202.SubsectorInterpTo_in
+    }
 
     # L202.StubTech_in: identification of stub technologies for inputs to animal production (124-140)
     A_an_input_technology %>%
@@ -480,6 +489,12 @@ module_aglu_L202.an_input <- function(command, ...) {
       filter(!region %in% aglu.NO_AGLU_REGIONS) %>%
       anti_join(L202.no_ddgs_regions_subs, by = c("region", "supplysector", "subsector")) ->
       L202.SubsectorAll_in
+    if(exists("L202.SubsectorInterpTo_in")){
+      L202.SubsectorInterpTo_in %>%
+        filter(!region %in% aglu.NO_AGLU_REGIONS) %>%
+        anti_join(L202.no_ddgs_regions_subs, by = c("region", "supplysector", "subsector")) ->
+        L202.SubsectorInterpTo_in
+    }
     L202.StubTech_in %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) %>%
       anti_join(L202.no_ddgs_regions_subs, by = c("region", "supplysector", "subsector", "stub.technology" = "technology")) ->
@@ -571,6 +586,19 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_legacy_name("L202.SubsectorAll_in") %>%
       add_precursors("aglu/A_an_input_subsector", "energy/A_regions", "common/GCAM_region_names") ->
       L202.SubsectorAll_in
+
+    if(exists("L202.SubsectorInterpTo_in")) {
+      L202.SubsectorInterpTo_in %>%
+        add_title("Subsector interpolation rules with to-value specified") %>%
+        add_units("NA") %>%
+        add_comments("From A_an_input_subsector, written to all regions if used") %>%
+        same_precursors_as(L202.SubsectorAll_in) ->
+        L202.SubsectorInterpTo_in
+    } else {
+      missing_data()  %>%
+        add_comments("Empty data table") ->
+        L202.SubsectorInterpTo_in
+    }
 
     L202.StubTech_in %>%
       add_title("Identification of stub technologies for inputs to animal production") %>%
@@ -685,7 +713,7 @@ module_aglu_L202.an_input <- function(command, ...) {
 
     return_data(L202.RenewRsrc, L202.RenewRsrcPrice, L202.maxSubResource, L202.RenewRsrcCurves, L202.ResTechShrwt,
                 L202.UnlimitedRenewRsrcCurves, L202.UnlimitedRenewRsrcPrice, L202.Supplysector_in,
-                L202.SubsectorAll_in, L202.StubTech_in, L202.StubTechInterp_in, L202.GlobalTechCoef_in,
+                L202.SubsectorAll_in, L202.SubsectorInterpTo_in, L202.StubTech_in, L202.StubTechInterp_in, L202.GlobalTechCoef_in,
                 L202.GlobalTechShrwt_in, L202.StubTechProd_in, L202.Supplysector_an, L202.SubsectorAll_an,
                 L202.GlobalTechShrwt_an, L202.StubTechInterp_an, L202.StubTechProd_an, L202.StubTechCoef_an,
                 L202.StubTechCost_an, L202.ag_consP_R_C_75USDkg)
