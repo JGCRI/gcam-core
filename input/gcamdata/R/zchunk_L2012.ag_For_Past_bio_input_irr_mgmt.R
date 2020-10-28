@@ -29,7 +29,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
              "L123.ag_Prod_Mt_R_Past_Y_GLU",
              "L123.For_Prod_bm3_R_Y_GLU",
              "L132.ag_an_For_Prices",
-             "L1321.prP_R_C_75USDkg",
+             "L1321.ag_prP_R_C_75USDkg",
              "L161.ag_irrProd_Mt_R_C_Y_GLU",
              "L161.ag_rfdProd_Mt_R_C_Y_GLU",
              "L163.ag_irrBioYield_GJm2_R_GLU",
@@ -59,27 +59,28 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    A_AgSupplySector <- get_data(all_data, "aglu/A_agSupplySector")
-    A_AgSupplySubsector <- get_data(all_data, "aglu/A_agSupplySubsector")
-    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU")
-    L113.ag_bioYield_GJm2_R_GLU <- get_data(all_data, "L113.ag_bioYield_GJm2_R_GLU")
-    L122.ag_HA_to_CropLand_R_Y_GLU <- get_data(all_data, "L122.ag_HA_to_CropLand_R_Y_GLU")
-    L123.ag_Prod_Mt_R_Past_Y_GLU <- get_data(all_data, "L123.ag_Prod_Mt_R_Past_Y_GLU")
-    L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "L123.For_Prod_bm3_R_Y_GLU")
-    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
-    L1321.prP_R_C_75USDkg <- get_data(all_data, "L1321.prP_R_C_75USDkg")
-    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
-    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
-    L163.ag_irrBioYield_GJm2_R_GLU <- get_data(all_data, "L163.ag_irrBioYield_GJm2_R_GLU")
-    L163.ag_rfdBioYield_GJm2_R_GLU <- get_data(all_data, "L163.ag_rfdBioYield_GJm2_R_GLU")
-    L181.ag_Prod_Mt_R_C_Y_GLU_irr_level <- get_data(all_data, "L181.ag_Prod_Mt_R_C_Y_GLU_irr_level")
-    L181.YieldMult_R_bio_GLU_irr <- get_data(all_data, "L181.YieldMult_R_bio_GLU_irr")
+    A_AgSupplySector <- get_data(all_data, "aglu/A_agSupplySector", strip_attributes = TRUE)
+    A_AgSupplySubsector <- get_data(all_data, "aglu/A_agSupplySubsector", strip_attributes = TRUE)
+    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU", strip_attributes = TRUE)
+    L113.ag_bioYield_GJm2_R_GLU <- get_data(all_data, "L113.ag_bioYield_GJm2_R_GLU", strip_attributes = TRUE)
+    L122.ag_HA_to_CropLand_R_Y_GLU <- get_data(all_data, "L122.ag_HA_to_CropLand_R_Y_GLU", strip_attributes = TRUE)
+    L123.ag_Prod_Mt_R_Past_Y_GLU <- get_data(all_data, "L123.ag_Prod_Mt_R_Past_Y_GLU", strip_attributes = TRUE)
+    L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "L123.For_Prod_bm3_R_Y_GLU", strip_attributes = TRUE)
+    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices", strip_attributes = TRUE)
+    L1321.ag_prP_R_C_75USDkg <- get_data(all_data, "L1321.ag_prP_R_C_75USDkg", strip_attributes = TRUE)
+    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU", strip_attributes = TRUE)
+    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU", strip_attributes = TRUE)
+    L163.ag_irrBioYield_GJm2_R_GLU <- get_data(all_data, "L163.ag_irrBioYield_GJm2_R_GLU", strip_attributes = TRUE)
+    L163.ag_rfdBioYield_GJm2_R_GLU <- get_data(all_data, "L163.ag_rfdBioYield_GJm2_R_GLU", strip_attributes = TRUE)
+    L181.ag_Prod_Mt_R_C_Y_GLU_irr_level <- get_data(all_data, "L181.ag_Prod_Mt_R_C_Y_GLU_irr_level", strip_attributes = TRUE)
+    L181.YieldMult_R_bio_GLU_irr <- get_data(all_data, "L181.YieldMult_R_bio_GLU_irr", strip_attributes = TRUE)
 
     # L2012.AgSupplySector: Generic AgSupplySector characteristics (units, calprice, market, logit)
     # Set up the regional price data to be joined in to the ag supplysector table
-    L2012.prP_R_C <- left_join_error_no_match(L1321.prP_R_C_75USDkg, GCAM_region_names,
+    L2012.prP_R_C <- left_join_error_no_match(L1321.ag_prP_R_C_75USDkg, GCAM_region_names,
                                               by = "GCAM_region_ID") %>%
-      select(region, GCAM_commodity, reg_calPrice = value)
+      mutate(reg_calPrice = round(value, aglu.DIGITS_CALPRICE)) %>%
+      select(region, GCAM_commodity, reg_calPrice)
 
     A_AgSupplySector %>%
       # At the supplysector (market) level, all regions get all supplysectors
@@ -405,7 +406,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
                      "water/basin_to_country_mapping",
                      "aglu/A_agSupplySector",
                      "L132.ag_an_For_Prices",
-                     "L1321.prP_R_C_75USDkg") ->
+                     "L1321.ag_prP_R_C_75USDkg") ->
       L2012.AgSupplySector
 
    L2012.AgSupplySubsector %>%

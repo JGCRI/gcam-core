@@ -36,7 +36,7 @@ module_gcamusa_LB1231.Elec_tech<- function(command, ...) {
     # Load required inputs
     L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
     L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
-    L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
+    L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh", strip_attributes = TRUE)
     L123.in_EJ_state_elec_F <- get_data(all_data, "L123.in_EJ_state_elec_F")
     L123.out_EJ_state_elec_F <- get_data(all_data, "L123.out_EJ_state_elec_F")
 

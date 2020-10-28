@@ -35,7 +35,7 @@ module_water_L233.water_demand_livestock <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A03.sector <- get_data(all_data, "water/A03.sector")
     A_an_technology <- get_data(all_data, "aglu/A_an_technology")
-    L133.water_demand_livestock_R_C_W_km3_Mt <- get_data(all_data, "L133.water_demand_livestock_R_C_W_km3_Mt")
+    L133.water_demand_livestock_R_C_W_km3_Mt <- get_data(all_data, "L133.water_demand_livestock_R_C_W_km3_Mt", strip_attributes = TRUE)
 
     # Just read in water coefficients for all years
     L133.water_demand_livestock_R_C_W_km3_Mt %>%

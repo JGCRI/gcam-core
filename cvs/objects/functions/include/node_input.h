@@ -70,36 +70,18 @@ class IFunction;
  *          - Elements:
  *              - \c prodDmdFnType NodeInput::mProdDmdFnType
  *                   The production function type string which can be used by FunctionManager.
- *              - \c price-recieved NodeInput::mPricePaid
+ *              - \c price-received NodeInput::mPricePaid
  *                   Sets the initial price to use during coefficient calibration.
- *                   TODO: calling this price-recieved does not seem correct.
+ *                   TODO: calling this price-received does not seem correct.
  *              - \c Sigma1 NodeInput::mSigmaNewCapital
  *                   Sigma exponent to use for new capital vintage technology.
  *              - \c Sigma2 NodeInput::mSigmaOldCapital
  *                   Sigma exponent to use for old capital vintage technology.
- *              - \c alpha-utility-param NodeInput::mAlphaUtilityParam
- *                   Alpha utility demand function paramater.
- *                   TODO: This would only be used when we have a UtilityDemandFunction
- *                         however to keep the interfaces generic we stuck this paramater
- *                         in here.
- *              - \c beta-utility-param NodeInput::mBetaUtilityParam
- *                   Beta utility demand function paramater.
- *                   TODO: This would only be used when we have a UtilityDemandFunction
- *                         however to keep the interfaces generic we stuck this paramater
- *                         in here.
- *              - \c gamma-utility-param NodeInput::mAlphaCoef
- *                   Gamma utility demand function paramater.  Note we are putting it into
- *                   mAlphaCoef due to a hack in UtilityDemandFunction.
- *                   TODO: This would only be used when we have a UtilityDemandFunction
- *                         however to keep the interfaces generic we stuck this paramater
- *                         in here.
  *              - \c technicalChange NodeInput::mTechChange
  *                   Tech change specific to this node.  This tech change would only be 
  *                   applied in the intial period this nest operates.
  *              - \c ProductionInput::getXMLNameStatic(),
- *                      DemandInput::getXMLNameStatic(),
- *                      TradeInput::getXMLNameStatic(),
- *                      NodeInput::getXMLNameStatic() NodeInput::mNestedInputs
+                     NodeInput::getXMLNameStatic() NodeInput::mNestedInputs
  *                   Inputs which can be parsed a children to this node.
  *                   TODO: shouldn't there be a factory for these?
  *
@@ -246,7 +228,6 @@ public:
     // TODO: put methods that NodeInput will not implement under here
     virtual void calcPricePaid( const std::string& aRegionName,
                                 const std::string& aSectorName,
-                                const MoreSectorInfo* aMoreSectorInfo,
                                 const std::vector<AGHG*>& aGhgs,
                                 const ICaptureComponent* aSequestrationDevice,
                                 const int aLifetimeYears,
@@ -261,15 +242,6 @@ public:
                                    const int aNextYear, const IInput* aPreviousInput,
                                    const IInput* aNextInput ) {}
     
-    virtual void copyParamsInto( ProductionInput& aInput,
-        const int aPeriod ) const {}
-
-    virtual void copyParamsInto( DemandInput& aInput,
-        const int aPeriod ) const {}
-
-    virtual void copyParamsInto( TradeInput& aInput,
-        const int aPeriod ) const {}
-
     virtual void copyParamsInto( EnergyInput& aInput,
         const int aPeriod ) const {}
 
@@ -334,17 +306,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "coefficient", mAlphaCoef, Value ),
 
         //! Price paid, for the root this would be price recieved
-        DEFINE_VARIABLE( SIMPLE | STATE, "price-recieved", mPricePaid, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "price-received", mPricePaid, Value ),
 
         //! Price paid in the base year, for the root this would be price recieved
         DEFINE_VARIABLE( SIMPLE, "base-price-paid", mBasePricePaid, Value ),
-
-        // TODO: these shouldn't really be in here, they are specific to the UtilityDemandFunction
-        //! Alpha param
-        DEFINE_VARIABLE( SIMPLE, "alpha-utility-param", mAlphaUtilityParam, Value ),
-
-        //! Beta param
-        DEFINE_VARIABLE( SIMPLE, "beta-utility-param", mBetaUtilityParam, Value ),
 
         /*! 
          * The technical change that would get applied to the node.  Note that it

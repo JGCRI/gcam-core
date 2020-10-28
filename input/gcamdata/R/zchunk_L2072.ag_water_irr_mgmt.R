@@ -58,12 +58,12 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
     L2012.AgSupplySector <- get_data(all_data, "L2012.AgSupplySector")
     L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
     L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
-    L165.BlueIrr_m3kg_R_C_GLU <- get_data(all_data, "L165.BlueIrr_m3kg_R_C_GLU")
-    L165.TotIrr_m3kg_R_C_GLU <- get_data(all_data, "L165.TotIrr_m3kg_R_C_GLU")
-    L165.GreenRfd_m3kg_R_C_GLU <- get_data(all_data, "L165.GreenRfd_m3kg_R_C_GLU")
-    L165.ag_IrrEff_R <- get_data(all_data, "L165.ag_IrrEff_R")
-    L2052.AgCost_ag_irr_mgmt <- get_data(all_data, "L2052.AgCost_ag_irr_mgmt")
-    L2052.AgCost_bio_irr_mgmt <- get_data(all_data, "L2052.AgCost_bio_irr_mgmt")
+    L165.BlueIrr_m3kg_R_C_GLU <- get_data(all_data, "L165.BlueIrr_m3kg_R_C_GLU", strip_attributes = TRUE)
+    L165.TotIrr_m3kg_R_C_GLU <- get_data(all_data, "L165.TotIrr_m3kg_R_C_GLU", strip_attributes = TRUE)
+    L165.GreenRfd_m3kg_R_C_GLU <- get_data(all_data, "L165.GreenRfd_m3kg_R_C_GLU", strip_attributes = TRUE)
+    L165.ag_IrrEff_R <- get_data(all_data, "L165.ag_IrrEff_R", strip_attributes = TRUE)
+    L2052.AgCost_ag_irr_mgmt <- get_data(all_data, "L2052.AgCost_ag_irr_mgmt", strip_attributes = TRUE)
+    L2052.AgCost_bio_irr_mgmt <- get_data(all_data, "L2052.AgCost_bio_irr_mgmt", strip_attributes = TRUE)
     A03.sector <- get_data(all_data, "water/A03.sector")
 
     # Primary crops
@@ -218,7 +218,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       right_join(L2072.AgCoef_IrrWaterWdraw_ag_mgmt, by = "region") %>%
       # Calculate water price and water cost
-      mutate(WaterCost = coefficient * water.DEFAULT_UNLIMITED_IRR_WATER_PRICE / conveyance.eff) %>%
+      mutate(WaterCost = coefficient * water.DEFAULT_IRR_WATER_PRICE / conveyance.eff) %>%
       # Join in non-land variable costs
       left_join_error_no_match(L2052.AgCost_ag_irr_mgmt,
                                by = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year")) %>%

@@ -166,21 +166,19 @@ void NestingSubsector::completeInit( const IInfo* aSectorInfo,
 * \author Steve Smith, Sonny Kim
 * \param aNationalAccount National accounts container.
 * \param aDemographics Regional demographics container.
-* \param aMoreSectorInfo SGM sector info object.
 * \param aPeriod Model period
 */
 void NestingSubsector::initCalc( NationalAccount* aNationalAccount,
                           const Demographic* aDemographics,
-                          const MoreSectorInfo* aMoreSectorInfo,
                           const int aPeriod )
 {
     // note the order of operations matter here as the base class initCalc will
     // call methods which will trigger recursion down the nest, therefore we must
     // call initCalc on the child subsectors first
     for( auto subsector : mSubsectors ) {
-        subsector->initCalc( aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
+        subsector->initCalc( aNationalAccount, aDemographics, aPeriod );
     }
-    Subsector::initCalc( aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
+    Subsector::initCalc( aNationalAccount, aDemographics, aPeriod );
 }
 
 /*!
@@ -205,7 +203,7 @@ const vector<double> NestingSubsector::calcChildShares( const GDP* aGDP, const i
         // This should no longer happen, but it's still technically possible.
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Shares for sector " << mName << " in region " << mRegionName
+        mainLog << "Shares for nesting-subsector " << mName << " in region " << mRegionName
                 << " did not normalize correctly. Sum is " << shareSum.first << " * exp( "
                 << shareSum.second << " ) "<< "." << endl;
 
@@ -247,8 +245,11 @@ double NestingSubsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
         /*!
          * \note Negative prices may be produced and are valid.
          */
-        subsectorPrice += techShares[ i ] * currCost;
-        sharesum += techShares[i];
+        // Subsectors with no share cannot affect price.
+        if( techShares[ i ] > util::getSmallNumber() ){
+            subsectorPrice += techShares[ i ] * currCost;
+            sharesum += techShares[i];
+        }
     }
 
     if( sharesum < util::getSmallNumber() ) {
@@ -263,26 +264,6 @@ double NestingSubsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
         return subsectorPrice;
     }
 }
-
-/*! \brief Returns whether the subsector should be calibrated.
-* \details If either the Subsector output, or the output of all the technologies
-*          under this Subsector (not including those with zero output) are
-*          calibrated, then the Subsector should calibrate.
-* \author Steve Smith
-* \param aPeriod Model period
-*/
-bool NestingSubsector::getCalibrationStatus( const int aPeriod ) const {
-    
-    // Check all the technologies for the period.
-    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
-        // Check whether there is any calibration input, not one for a specific fuel.
-        if ( mSubsectors[ i ]->getCalibrationStatus( aPeriod) ) {
-            return true;
-        }
-    }
-    return false;
-}
-
 
 /*! \brief returns Subsector fuel price times share
 * \details Returns the share-weighted fuel price, which is later summed to get
@@ -433,12 +414,11 @@ bool NestingSubsector::allOutputFixed( const int period ) const {
 *\return Boolean for determining whether subsector contains only fixed output technologies.
 */
 bool NestingSubsector::containsOnlyFixedOutputTechnologies( const int aPeriod ) const {
+    bool allFixed = true;
     for( auto subsector : mSubsectors ) {
-        if( subsector->containsOnlyFixedOutputTechnologies( aPeriod ) ) {
-            return true;
-        }
+        allFixed &= subsector->containsOnlyFixedOutputTechnologies( aPeriod );
     }
-    return false;
+    return allFixed;
 }
 
 /*! \brief returns Subsector output

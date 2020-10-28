@@ -69,7 +69,6 @@ class Tabs;
 
 // Need to forward declare the subclasses as well.
 class RegionMiniCAM;
-class RegionCGE;
 
 /*! 
 * \ingroup Objects
@@ -99,7 +98,6 @@ public:
     const Curve* getEmissionsPriceCurve( const std::string& ghgName ) const;
 
     virtual bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const { return true; };
-    virtual void updateMarketplace( const int period ) {};
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
@@ -108,7 +106,7 @@ protected:
         /* Declare all subclasses of Region to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( Region, RegionMiniCAM, RegionCGE ),
+        DEFINE_SUBCLASS_FAMILY( Region, RegionMiniCAM ),
                 
         /*! \brief Region name */
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),

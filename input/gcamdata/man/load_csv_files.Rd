@@ -4,7 +4,7 @@
 \alias{load_csv_files}
 \title{load_csv_files}
 \usage{
-load_csv_files(filenames, optionals, quiet = FALSE, ...)
+load_csv_files(filenames, optionals, quiet = FALSE, dummy = NULL, ...)
 }
 \arguments{
 \item{filenames}{Character vector of filenames to load}
@@ -12,6 +12,8 @@ load_csv_files(filenames, optionals, quiet = FALSE, ...)
 \item{optionals}{Logical vector, specifying whether corresponding file is optional}
 
 \item{quiet}{Logical - suppress messages?}
+
+\item{dummy}{Not used, here as a hack for drake}
 
 \item{...}{Any other parameter to pass to \code{readr::read_csv}}
 }

@@ -23,6 +23,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
              FILE = 'gcam-usa/reeds_wind_curve_capacity',
              FILE = 'gcam-usa/reeds_wind_curve_CF_avg',
              FILE = 'gcam-usa/reeds_wind_curve_grid_cost',
+             FILE = 'gcam-usa/A23.elecS_tech_mapping_cool',
              FILE = "gcam-usa/A10.renewable_resource_delete",
              'L2234.StubTechCapFactor_elecS_wind_USA',
              'L2247.GlobalIntTechCapitalOnly_elecS_USA',
@@ -43,9 +44,10 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
     reeds_wind_curve_capacity <- get_data(all_data, 'gcam-usa/reeds_wind_curve_capacity')
     reeds_wind_curve_CF_avg <- get_data(all_data, 'gcam-usa/reeds_wind_curve_CF_avg')
     reeds_wind_curve_grid_cost <- get_data(all_data, 'gcam-usa/reeds_wind_curve_grid_cost')
+    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
     A10.renewable_resource_delete <- get_data(all_data, "gcam-usa/A10.renewable_resource_delete")
-    L2234.StubTechCapFactor_elecS_wind_USA <- get_data(all_data, 'L2234.StubTechCapFactor_elecS_wind_USA')
-    L2247.GlobalIntTechCapitalOnly_elecS_USA <- get_data(all_data, 'L2247.GlobalIntTechCapitalOnly_elecS_USA')
+    L2234.StubTechCapFactor_elecS_wind_USA <- get_data(all_data, 'L2234.StubTechCapFactor_elecS_wind_USA', strip_attributes = TRUE)
+    L2247.GlobalIntTechCapitalOnly_elecS_USA <- get_data(all_data, 'L2247.GlobalIntTechCapitalOnly_elecS_USA', strip_attributes = TRUE)
     L223.GlobalIntTechCapital_elec <- get_data(all_data, 'L223.GlobalIntTechCapital_elec')
     L223.GlobalIntTechOMfixed_elec <- get_data(all_data, 'L223.GlobalIntTechOMfixed_elec')
 
@@ -59,7 +61,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       tech.change <- Wind.Type <- bin <- cost <- grid.cost <- Region <- renewresource <-
       smooth.renewable.subresource <- year.fillout <- capacity.factor <- input.cost <-
       capital.tech.change.period <- tech.change.period <- time.change <-
-      subresource <- NULL
+      subresource <- technology <- subsector_1 <- to.technology <- NULL
 
     # ===================================================
     # Data Processing
@@ -305,6 +307,26 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
       L2237.ResTechShrwt_wind_reeds_USA
 
+    ## To account for new nesting-subsector structure and to add cooling technologies, we must expand certain outputs
+    add_cooling_techs <- function(data){
+      data_new <- data %>%
+        left_join(A23.elecS_tech_mapping_cool,
+                  by=c("stub.technology"="Electric.sector.technology",
+                       "supplysector"="Electric.sector","subsector")) %>%
+        select(-technology,-subsector_1)%>%
+        rename(technology = to.technology,
+               subsector0 = subsector,
+               subsector = stub.technology)%>%
+        mutate(technology = if_else(subsector=="wind_base",subsector,technology)) %>%
+        arrange(region,year)
+      return(data_new)
+    }
+
+      L2237.StubTechCapFactor_wind_reeds_USA <- add_cooling_techs(L2237.StubTechCapFactor_wind_reeds_USA)
+      L2237.StubTechCost_wind_reeds_USA <- add_cooling_techs(L2237.StubTechCost_wind_reeds_USA)
+
+
+
     # ===================================================
     # Produce outputs
 
@@ -330,6 +352,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       add_precursors('gcam-usa/reeds_regions_states',
                      'gcam-usa/reeds_wind_curve_capacity',
                      'gcam-usa/reeds_wind_curve_CF_avg',
+                     'gcam-usa/A23.elecS_tech_mapping_cool',
                      'L2234.StubTechCapFactor_elecS_wind_USA',
                      'L2247.GlobalIntTechCapitalOnly_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
@@ -355,6 +378,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       add_precursors('gcam-usa/reeds_regions_states',
                      'gcam-usa/reeds_wind_curve_CF_avg',
                      'gcam-usa/reeds_wind_curve_grid_cost',
+                     'gcam-usa/A23.elecS_tech_mapping_cool',
                      'L2234.StubTechCapFactor_elecS_wind_USA',
                      'L223.GlobalIntTechCapital_elec') ->
       L2237.StubTechCost_wind_reeds_USA

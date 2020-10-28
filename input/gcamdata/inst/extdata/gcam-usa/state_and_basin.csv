@@ -1,0 +1,147 @@
+# File: state_and_basin.csv
+# Title: Mapping between states and basins
+# Units: NA
+# Comments: Basins placed in their respective states. Derived from rgis script grid_to_zone_fraction created by Chris R Vernon
+# Source: NA
+# Column types: ncc
+# ----------
+basin_id,basin_name,state_abbr
+7,Pacific and Arctic Coast,AK
+7,Pacific and Arctic Coast,WA
+23,Saskatchewan - Nelson,MN
+23,Saskatchewan - Nelson,MT
+23,Saskatchewan - Nelson,ND
+23,Saskatchewan - Nelson,SD
+27,Fraser,WA
+96,Mexico-Northwest Coast,AZ
+96,Mexico-Northwest Coast,NM
+101,Caribbean,FL
+217,California River Basin,CA
+217,California River Basin,NV
+217,California River Basin,OR
+218,Upper Mississippi Basin,IA
+218,Upper Mississippi Basin,IL
+218,Upper Mississippi Basin,IN
+218,Upper Mississippi Basin,KY
+218,Upper Mississippi Basin,MI
+218,Upper Mississippi Basin,MN
+218,Upper Mississippi Basin,MO
+218,Upper Mississippi Basin,ND
+218,Upper Mississippi Basin,SD
+218,Upper Mississippi Basin,WI
+219,Lower Mississippi River Basin,AR
+219,Lower Mississippi River Basin,IL
+219,Lower Mississippi River Basin,KY
+219,Lower Mississippi River Basin,LA
+219,Lower Mississippi River Basin,MO
+219,Lower Mississippi River Basin,MS
+219,Lower Mississippi River Basin,TN
+220,Upper Colorado River Basin,AZ
+220,Upper Colorado River Basin,CO
+220,Upper Colorado River Basin,NM
+220,Upper Colorado River Basin,UT
+220,Upper Colorado River Basin,WY
+221,Lower Colorado River Basin,AZ
+221,Lower Colorado River Basin,CA
+221,Lower Colorado River Basin,NM
+221,Lower Colorado River Basin,NV
+221,Lower Colorado River Basin,UT
+222,Great Basin,CA
+222,Great Basin,ID
+222,Great Basin,NV
+222,Great Basin,OR
+222,Great Basin,UT
+222,Great Basin,WY
+223,Missouri River Basin,CO
+223,Missouri River Basin,IA
+223,Missouri River Basin,ID
+223,Missouri River Basin,KS
+223,Missouri River Basin,MN
+223,Missouri River Basin,MO
+223,Missouri River Basin,MT
+223,Missouri River Basin,ND
+223,Missouri River Basin,NE
+223,Missouri River Basin,SD
+223,Missouri River Basin,WY
+224,Arkansas White Red Basin,AR
+224,Arkansas White Red Basin,CO
+224,Arkansas White Red Basin,KS
+224,Arkansas White Red Basin,LA
+224,Arkansas White Red Basin,MO
+224,Arkansas White Red Basin,NM
+224,Arkansas White Red Basin,OK
+224,Arkansas White Red Basin,TX
+225,Texas Gulf Coast Basin,LA
+225,Texas Gulf Coast Basin,NM
+225,Texas Gulf Coast Basin,TX
+226,South Atlantic-Gulf Basin,AL
+226,South Atlantic-Gulf Basin,FL
+226,South Atlantic-Gulf Basin,GA
+226,South Atlantic-Gulf Basin,LA
+226,South Atlantic-Gulf Basin,MS
+226,South Atlantic-Gulf Basin,NC
+226,South Atlantic-Gulf Basin,SC
+226,South Atlantic-Gulf Basin,TN
+226,South Atlantic-Gulf Basin,VA
+226,South Atlantic-Gulf Basin,WV
+227,Great Lakes Basin,IL
+227,Great Lakes Basin,IN
+227,Great Lakes Basin,ME
+227,Great Lakes Basin,MI
+227,Great Lakes Basin,MN
+227,Great Lakes Basin,NH
+227,Great Lakes Basin,NY
+227,Great Lakes Basin,OH
+227,Great Lakes Basin,PA
+227,Great Lakes Basin,VT
+227,Great Lakes Basin,WI
+228,Ohio River Basin,IL
+228,Ohio River Basin,IN
+228,Ohio River Basin,KY
+228,Ohio River Basin,MD
+228,Ohio River Basin,NC
+228,Ohio River Basin,NY
+228,Ohio River Basin,OH
+228,Ohio River Basin,PA
+228,Ohio River Basin,TN
+228,Ohio River Basin,VA
+228,Ohio River Basin,WV
+229,Pacific Northwest Basin,CA
+229,Pacific Northwest Basin,ID
+229,Pacific Northwest Basin,MT
+229,Pacific Northwest Basin,NV
+229,Pacific Northwest Basin,OR
+229,Pacific Northwest Basin,UT
+229,Pacific Northwest Basin,WA
+229,Pacific Northwest Basin,WY
+230,Tennessee River Basin,AL
+230,Tennessee River Basin,GA
+230,Tennessee River Basin,KY
+230,Tennessee River Basin,MS
+230,Tennessee River Basin,NC
+230,Tennessee River Basin,SC
+230,Tennessee River Basin,TN
+230,Tennessee River Basin,VA
+231,Rio Grande River Basin,CO
+231,Rio Grande River Basin,NM
+231,Rio Grande River Basin,TX
+232,New England Basin,CT
+232,New England Basin,MA
+232,New England Basin,ME
+232,New England Basin,NH
+232,New England Basin,NY
+232,New England Basin,RI
+232,New England Basin,VT
+233,Mid-Atlantic Basin,CT
+233,Mid-Atlantic Basin,DC
+233,Mid-Atlantic Basin,DE
+233,Mid-Atlantic Basin,MA
+233,Mid-Atlantic Basin,MD
+233,Mid-Atlantic Basin,NC
+233,Mid-Atlantic Basin,NJ
+233,Mid-Atlantic Basin,NY
+233,Mid-Atlantic Basin,PA
+233,Mid-Atlantic Basin,VA
+233,Mid-Atlantic Basin,VT
+233,Mid-Atlantic Basin,WV
+234,Hawaii,HI

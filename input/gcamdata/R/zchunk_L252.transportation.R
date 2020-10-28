@@ -51,14 +51,14 @@ module_energy_L252.transportation <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     calibrated_techs_trn_agg <- get_data(all_data, "energy/mappings/calibrated_techs_trn_agg")
-    A52.sector <- get_data(all_data, "energy/A52.sector")
-    A52.subsector_interp <- get_data(all_data, "energy/A52.subsector_interp")
-    A52.subsector_logit <- get_data(all_data, "energy/A52.subsector_logit")
-    A52.subsector_shrwt <- get_data(all_data, "energy/A52.subsector_shrwt")
+    A52.sector <- get_data(all_data, "energy/A52.sector", strip_attributes = TRUE)
+    A52.subsector_interp <- get_data(all_data, "energy/A52.subsector_interp", strip_attributes = TRUE)
+    A52.subsector_logit <- get_data(all_data, "energy/A52.subsector_logit", strip_attributes = TRUE)
+    A52.subsector_shrwt <- get_data(all_data, "energy/A52.subsector_shrwt", strip_attributes = TRUE)
     A52.globaltech_cost <- get_data(all_data, "energy/A52.globaltech_cost")
     A52.globaltech_eff <- get_data(all_data, "energy/A52.globaltech_eff")
-    A52.globaltech_shrwt <- get_data(all_data, "energy/A52.globaltech_shrwt")
-    A52.demand <- get_data(all_data, "energy/A52.demand")
+    A52.globaltech_shrwt <- get_data(all_data, "energy/A52.globaltech_shrwt", strip_attributes = TRUE)
+    A52.demand <- get_data(all_data, "energy/A52.demand", strip_attributes = TRUE)
     L152.in_EJ_R_trn_F_Yh <- get_data(all_data, "L152.in_EJ_R_trn_F_Yh")
 
     # ===================================================
