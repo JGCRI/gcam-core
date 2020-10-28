@@ -433,14 +433,15 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     # L254.GlobalTranTechInterp: Shareweight interpolation of global tranTechnologies
     A54.globaltranTech_interp %>%
       mutate(supplysector = supplysector) %>%  # create new tibble, stripping attributes
-      mutate(sce = "CORE") %>%
       set_years() %>%
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTranTechInterp"]]) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTranTechInterp"]],"sce") ->
       L254.GlobalTranTechInterp
 
     # L254.GlobalTranTechShrwt: Shareweights of global tranTechnologies
     A54.globaltranTech_shrwt %>%
+      filter(sce=="CORE") %>%
+      select(-sce) %>%
       gather_years %>%
       # Expand table to include all model years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, tranSubsector, tranTechnology)) %>%
@@ -451,10 +452,31 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
              share.weight = round(share.weight, energy.DIGITS_SHRWT)) %>%
       ungroup() %>%
       filter(year %in% MODEL_YEARS) %>%
-      mutate(sce = paste0("CORE")) %>%
+      mutate(sce= paste0("CORE")) %>%
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTranTechShrwt"]]) ->
-      L254.GlobalTranTechShrwt # OUTPUT
+      select(LEVEL2_DATA_NAMES[["GlobalTranTechShrwt"]],sce) ->
+      L254.GlobalTranTechShrwt_CORE # OUTPUT
+
+
+    A54.globaltranTech_shrwt %>%
+      filter(sce=="highEV") %>%
+      select(-sce) %>%
+      gather_years %>%
+      # Expand table to include all model years
+      complete(year = c(year, MODEL_YEARS), nesting(supplysector, tranSubsector, tranTechnology)) %>%
+      # Extrapolate to fill out values for all years
+      # Rule 2 is used so years that may be outside of min-max range are assigned values from closest data, as opposed to NAs
+      group_by(supplysector, tranSubsector, tranTechnology) %>%
+      mutate(share.weight = approx_fun(year, value, rule = 2),
+             share.weight = round(share.weight, energy.DIGITS_SHRWT)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS) %>%
+      mutate(sce= paste0("highEV")) %>%
+      rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTranTechShrwt"]],sce) ->
+      L254.GlobalTranTechShrwt_highEV # OUTPUT
+
+    L254.GlobalTranTechShrwt <- bind_rows(L254.GlobalTranTechShrwt_highEV,L254.GlobalTranTechShrwt_CORE)
 
     # L254.GlobalTranTechSCurve: Retirement of global tranTechnologies
     # A54.globaltranTech_retire reports transportation technology retirement parameters. Only applies to vintaged technologies

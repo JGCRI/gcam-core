@@ -63,7 +63,7 @@ module_gcamusa_batch_transportation_USA_xml <- function(command, ...) {
     L254.tranSubsectorShrwtFllt_USA <- get_data(all_data, "L254.tranSubsectorShrwtFllt_USA")%>% filter(sce==i)
     L254.tranSubsectorInterp_USA <- get_data(all_data, "L254.tranSubsectorInterp_USA")%>% filter(sce==i)
     L254.tranSubsectorSpeed_USA <- get_data(all_data, "L254.tranSubsectorSpeed_USA") %>% filter(sce==i)
-    #L254.tranSubsectorSpeed_passthru_USA <- get_data(all_data, "L254.tranSubsectorSpeed_passthru_USA")%>% filter(sce==i)
+    L254.tranSubsectorSpeed_passthru_USA <- get_data(all_data, "L254.tranSubsectorSpeed_passthru_USA")%>% filter(sce==i)
     L254.tranSubsectorSpeed_noVOTT_USA <- get_data(all_data, "L254.tranSubsectorSpeed_noVOTT_USA")%>% filter(sce==i)
     L254.tranSubsectorSpeed_nonmotor_USA <- get_data(all_data, "L254.tranSubsectorSpeed_nonmotor_USA")%>% filter(sce==i)
     L254.tranSubsectorVOTT_USA <- get_data(all_data, "L254.tranSubsectorVOTT_USA") %>% filter(sce==i)

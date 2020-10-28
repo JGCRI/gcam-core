@@ -158,7 +158,8 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
       L254.tranSubsectorInterp_SSP <- L254.tranSubsectorInterp %>%  filter(sce ==i)
       L254.tranSubsectorFuelPref_SSP <- L254.tranSubsectorFuelPref %>%  filter(sce ==i)
       L254.StubTranTechCalInput_SSP <-  L254.StubTranTechCalInput %>% filter(sce ==i)
-
+      L254.GlobalTranTechInterp_SSP <- L254.GlobalTranTechInterp %>% filter(sce==i)
+      L254.GlobalTranTechShrwt_SSP <- L254.GlobalTranTechShrwt %>%  filter(sce==i)
       if (i != "CORE"){L254.StubTranTechCalInput_SSP<-L254.StubTranTechCalInput %>%  filter(sce== i) %>% filter(year>MODEL_FINAL_BASE_YEAR)}
 
       L254.BaseService_trn_SSP <- L254.BaseService_trn %>% filter(sce =="CORE")
@@ -184,8 +185,8 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
         add_xml_data(L254.GlobalTechShrwt_nonmotor, "GlobalTechShrwt") %>%
         add_xml_data(L254.GlobalTechCoef_passthru, "GlobalTechCoef") %>%
         add_xml_data(L254.GlobalRenewTech_nonmotor, "GlobalRenewTech") %>%
-        add_xml_data(L254.GlobalTranTechInterp, "GlobalTranTechInterp") %>%
-        add_xml_data(L254.GlobalTranTechShrwt, "GlobalTranTechShrwt") %>%
+        add_xml_data(L254.GlobalTranTechInterp_SSP, "GlobalTranTechInterp") %>%
+        add_xml_data(L254.GlobalTranTechShrwt_SSP, "GlobalTranTechShrwt") %>%
         add_xml_data(L254.GlobalTranTechSCurve, "GlobalTranTechSCurve") %>%
         add_xml_data(L254.StubTranTechCalInput_SSP, "StubTranTechCalInput") %>%
         add_xml_data(L254.StubTranTechLoadFactor_SSP, "StubTranTechLoadFactor") %>%
