@@ -83,7 +83,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       FeedCost_USDkg <- nonFeedCost <- NetExp_Mt <- share.weight.year <- fixedOutput <- ethanol <-
       biomassOil_tech <- biodiesel <- resource <- subresource <- default_price <- revenue <-
       weight <- SalesRevenue_bilUSD <- tradedP <- Exp_wtd_price <- ImpShare <- PrP <- GrossExp_Mt <-
-      Supply_Mt <- GrossImp_Mt <- ChinaCommodityPrice_USDkg <- NULL  # silence package check notes
+      Supply_Mt <- GrossImp_Mt <- ChinaCommodityPrice_USDkg <- to.value <- DefaultCommodityPrice_USDkg <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -102,7 +102,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices")
     L109.ag_ALL_Mt_R_C_Y <- get_data(all_data, "L109.ag_ALL_Mt_R_C_Y")
     L1091.GrossTrade_Mt_R_C_Y <- get_data(all_data, "L1091.GrossTrade_Mt_R_C_Y")
-    L1321.ag_prP_R_C_75USDkg <- get_data(all_data, "L1321.ag_prP_R_C_75USDkg")
+    L1321.ag_prP_R_C_75USDkg <- get_data(all_data, "L1321.ag_prP_R_C_75USDkg", strip_attributes = TRUE)
     L1321.an_prP_R_C_75USDkg <- get_data(all_data, "L1321.an_prP_R_C_75USDkg")
 
     # 2. Build tables

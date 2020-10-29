@@ -34,7 +34,7 @@ If \code{stop_after} is specified, by default that chunk's outputs are returned}
 \item{return_data_map_only}{Return only the precursor information? (logical) This overrides
 the other \code{return_*} parameters above}
 
-\item{return_plan_only}{Return only the drake plan}
+\item{return_plan_only}{Return only the drake plan (logical)}
 
 \item{write_xml}{Write XML Batch chunk outputs to disk?}
 
@@ -42,7 +42,7 @@ the other \code{return_*} parameters above}
 
 \item{quiet}{Suppress output?}
 
-\item{...}{Additional arguments to be forwarded on to \code{make()}}
+\item{...}{Additional arguments to be forwarded on to \code{make}}
 }
 \value{
 A list of all built data (or a data map tibble if requested).
