@@ -20,7 +20,7 @@ module_emissions_batch_all_unmgd_emissions_xml <- function(command, ...) {
                    "L212.FORESTEmissionsFactors_future")
   if(driver.EMISSIONS_SOURCE == "EDGAR") {
     # BC/OC emissions are processed sperately in EDGAR
-    input_names <- c("L212.GRASSEmissionsFactors_BCOC",
+    input_names <- c(input_names, "L212.GRASSEmissionsFactors_BCOC",
                      "L212.FORESTEmissionsFactors_BCOC_FF",
                      "L212.FORESTEmissionsFactors_BCOC_D")
   }
