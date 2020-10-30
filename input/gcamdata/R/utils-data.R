@@ -326,7 +326,10 @@ is_data_list <- function(data_list) {
 #' @param object_name The name of the desired object, character
 #' @param pb \code{PREBUILT_DATA} object; overridden only for testing
 #' @return The data object (a tibble).
-prebuilt_data <- function(object_name, pb = PREBUILT_DATA) {
+prebuilt_data <- function(object_name, pb = NULL) {
+  if(is.null(pb)) {
+    pb <- PREBUILT_DATA
+  }
   if(object_name %in% names(pb)) {
     pb[[object_name]] %>%
       add_comments("** PRE-BUILT; RAW IEA DATA NOT AVAILABLE **")
@@ -344,7 +347,10 @@ prebuilt_data <- function(object_name, pb = PREBUILT_DATA) {
 #' @param pb \code{PREBUILT_DATA} object; overridden only for testing
 #' @note Called primarily for its side effects: a warning is issued for each non-identical object.
 #' @return A logical indicating whether a mismatch occurred.
-verify_identical_prebuilt <- function(..., pb = PREBUILT_DATA) {
+verify_identical_prebuilt <- function(..., pb = NULL) {
+  if(is.null(pb)) {
+    pb <- PREBUILT_DATA
+  }
   dots <- list(...)
   names(dots) <- as.list(substitute(list(...)))[-1L]
   mismatch <- FALSE

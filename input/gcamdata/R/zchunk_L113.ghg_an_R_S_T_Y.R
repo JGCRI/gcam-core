@@ -22,6 +22,17 @@
 #' @importFrom tidyr replace_na
 #' @author CH July 2017
 module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
+  if(driver.EMISSIONS_SOURCE == "CEDS") {
+    if(command == driver.DECLARE_INPUTS) {
+      return(NULL)
+    } else if(command == driver.DECLARE_OUTPUTS) {
+      return(NULL)
+    } else if(command == driver.MAKE) {
+      return_data()
+    } else {
+      stop("Unknown command")
+    }}
+  else {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector",
@@ -143,4 +154,5 @@ module_emissions_L113.ghg_an_R_S_T_Y <- function(command, ...) {
   } else {
     stop("Unknown command")
   }
+}
 }
