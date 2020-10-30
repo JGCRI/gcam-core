@@ -56,6 +56,9 @@ driver.MAKE            <- "MAKE"
 driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
 driver.DECLARE_INPUTS  <- "DECLARE_INPUTS"
 
+#Set the driver source to EDGAR to switch back to old emissions structure.
+driver.EMISSIONS_SOURCE <- "CEDS"
+#driver.EMISSIONS_SOURCE <- "EDGAR"
 
 # Data and utility constants ======================================================================
 
@@ -112,7 +115,24 @@ CONV_KBBL_BBL <- 1000 # thousand barrels to barrels
 CONV_BBL_TONNE_RFO <- 1 / 6.66 # barrels to tons residual fuel oil
 CONV_TONNE_GJ_RFO <- 40.87 # tons to GJ residual fuel oil
 CONV_BBL_TONNE_DISTILLATE <- 1 / 7.46 # barrels to tons distillate
-CONV_TONNE_GJ_DISTILLATE <- 42.91 # tons to GJ distillate
+CONV_BBL_TONNE_RFO  <- 1 / 6.66       # barrels to tons residual fuel oil
+CONV_G_KG           <- 1e-3           # kilograms to grams
+CONV_GG_TG          <- 0.001          # gigagrams to teragrams
+CONV_HA_BM2         <- 1e-5
+CONV_HA_M2          <- 10000
+CONV_KBBL_BBL       <- 1000           # thousand barrels to barrels
+CONV_KG_TO_TG       <- 1e-9
+CONV_KT_MT          <- 0.001          # kt to Mt
+CONV_NH3_N          <- 14/17          # Nitrogen to Ammonia
+CONV_T_KG           <- 1e3
+CONV_KG_T           <- 1 / CONV_T_KG
+CONV_T_METRIC_SHORT <- 1000 / 908     # Ratio between metric ton and short ton
+CONV_T_MT           <- 1e-6           # t to Mt
+CONV_THA_KGM2       <- 0.1            # tons C/ha -> kg C/m2
+CONV_TON_MEGATON    <- 1e-6
+CONV_TONNE_GJ_DISTILLATE  <- 42.91    # tons to GJ distillate
+CONV_TONNE_GJ_RFO   <- 40.87          # tons to GJ residual fuel oil
+CONV_TST_TG         <- 0.000907       # thousand short tons to Tg
 
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
@@ -454,6 +474,7 @@ energy.OILFRACT_ELEC            <- 1.0 # Fraction of liquids for feedstocks that
 energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity that must come from oil
 
 #kbn 2019-10-11 Adding constant for transportation type. Set this to rev.mode to use revised mode classes, rev_size.class to use revised size classes.
+#To use the old modes and size classes, use mode and size.class for the constants. The default for GCAM are the new modes and size classes.
 
 energy.TRAN_UCD_MODE<-'rev.mode'
 energy.TRAN_UCD_SIZE_CLASS<-'rev_size.class'
@@ -568,7 +589,9 @@ water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
 
 # Emissions constants ======================================================================
 
+
 # Time
+emissions.CEDS_YEARS              <- 1971:2019           #Year coverage for CEDS inventory.
 emissions.CTRL_BASE_YEAR          <- 1975                # Year to read in pollution controls
 emissions.DEFOREST_COEF_YEARS     <- c(2000, 2005)
 emissions.EDGAR_HISTORICAL        <- 1971:2008
@@ -582,15 +605,20 @@ emissions.GAINS_YEARS             <- c(2010, 2020, 2030)
 emissions.GHG_CONTROL_READIN_YEAR <- 1975
 emissions.HFC_MODEL_BASE_YEARS    <- MODEL_YEARS[ MODEL_YEARS <= 2010] # We don't want this to change in timeshift
 emissions.INVENTORY_MATCH_YEAR    <- 2009                # Select year from which to calculate fuel emissions coefficients (2009 is currently the most recent)
-emissions.MODEL_BASE_YEARS        <- MODEL_BASE_YEARS[MODEL_BASE_YEARS < 2008]
+emissions.MODEL_BASE_YEARS        <- MODEL_BASE_YEARS
 emissions.NH3_EXTRA_YEARS         <- 1971:1989
 emissions.NH3_HISTORICAL_YEARS    <- 1990:2002
-emissions.SSP_FUTURE_YEARS        <- MODEL_YEARS[MODEL_YEARS %in% 2010:2100]
+emissions.SSP_FUTURE_YEARS        <- MODEL_YEARS[MODEL_YEARS %in% 2015:2100]
 
 # Other emissions constants
 emissions.CONV_C_CO2    <- 44 / 12 # Convert Carbon to CO2
 emissions.F_GAS_UNITS   <- "Gg"
 emissions.TST_TO_TG     <- 0.000907 # Thousand short tons to Tg
+emissions.ZERO_EM_TECH  <- c("electricity", "Electric", "BEV","FCEV","district heat","NG","LA-BEV")  #These technologies get filtered out and no emissions are generated for them. Note that NG emissions for vehicles are added directly from GAINS and not calculated.
+emissions.HIGH_EM_FACTOR_THRESHOLD <- 1000  #All emission factors above this threshold are replaced with the global median of emission factors.
+emissions.GFED_NODATA <- c("ala","bes","blm","ggy","jey","maf","xad","xko","xnc")  #GFED LULC dataset does not contaian data for these isos. These get filtered out so we can use the left_join_error_no_match.
+emissions.UNMGD_LAND_AVG_YRS <- 30 #Years for climatological average for the GFED LULC data.
+
 
 emissions.COAL_SO2_THRESHOLD <- 0.1   # Tg/EJ (here referring to Tg SO2 per EJ of coal electricity)
 emissions.LOW_PCGDP          <- 2.75  # thousand 1990 USD

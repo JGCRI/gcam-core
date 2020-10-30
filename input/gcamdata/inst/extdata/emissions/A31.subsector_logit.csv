@@ -4,6 +4,7 @@
 # Column types: ccic 
 # ----------
 supplysector,subsector,logit.exponent,logit.type
+urban processes,waste_incineration,-6,
 urban processes,landfills,-6,
 urban processes,wastewater treatment,-6,
 urban processes,aerosols,-6,
