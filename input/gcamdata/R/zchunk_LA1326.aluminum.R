@@ -67,14 +67,14 @@ module_energy_LA1326.aluminum <- function(command, ...) {
       left_join(select(enduse_fuel_aggregation, fuel, aluminum), by = "fuel") %>%
       select(-fuel, fuel = aluminum) %>%
       na.omit() %>%
-      group_by(region,GCAM_region_ID,year,sector,fuel) %>%
+      group_by(region, GCAM_region_ID, year, sector, fuel) %>%
       summarise(value = sum(value)) %>%
       ungroup()->
       L1326.in_EJ_R_aluminum_Yh
 
 
     L1326.in_EJ_R_aluminum_Yh  %>%
-      group_by(region,GCAM_region_ID, sector, fuel, year) %>%
+      group_by(region, GCAM_region_ID, year, sector, fuel) %>%
       summarise(value = sum(value)) %>%
       ungroup ->
       L1326.in_EJ_R_aluminum_Yh
@@ -100,9 +100,9 @@ module_energy_LA1326.aluminum <- function(command, ...) {
     #Adjust negative energy use
     L1326.in_EJ_R_aluminum_Yh %>%
       filter(sector == "Aluminum") %>%
-      left_join(indeergy_tmp %>% select(-sector),by = c("GCAM_region_ID", "fuel", "year"))  %>%
-      mutate(value.y =replace_na(value.y,-1) ,value = if_else(value.y < 0 , value.x,0)) %>%
-      select(region,GCAM_region_ID,fuel,year,sector,value) ->
+      left_join(indeergy_tmp %>% select(-sector), by = c("GCAM_region_ID", "fuel", "year"))  %>%
+      mutate(value.y =replace_na(value.y, -1) ,value = if_else(value.y < 0 , value.x, 0)) %>%
+      select(region, GCAM_region_ID, fuel, year, sector, value) ->
       L1326.in_EJ_R_aluminum_Yh_recal
 
 
@@ -119,25 +119,25 @@ module_energy_LA1326.aluminum <- function(command, ...) {
 
 
     L1326.in_EJ_R_aluminum_Yh_recal %>%
-      filter(fuel %in% c("electricity", "gas","refined liquids","biomass","Hydrogen","coal","heat" )) %>%
-      mutate(sector = if_else(fuel == "electricity","Aluminum","Alumina")) ->
+      filter(fuel %in% c("electricity", "gas", "refined liquids", "biomass", "Hydrogen", "coal", "heat" )) %>%
+      mutate(sector = if_else(fuel == "electricity", "Aluminum", "Alumina")) ->
       L1326.in_EJ_R_aluminum_Yh
 
     #Calculate coefficients
     L1326.in_EJ_R_aluminum_Yh %>%
       rename(input = value) %>%
       left_join(L1326.out_Mt_R_aluminum_Yh %>% rename(output = value), by = c("region", "GCAM_region_ID", "year", "sector")) %>%
-      mutate(value = input/output) ->
+      mutate(value = input / output) ->
       L1326.IO_GJkg_R_aluminum_F_Yh_tmp #It's not the final coefficients.Need scale
 
 
     L1326.IO_GJkg_R_aluminum_F_Yh_tmp %>%
       filter(fuel != "electricity") %>%
-      left_join(L1326.IO_GJkg_R_aluminum_F_Yh_tmp %>% filter(fuel != "electricity",value >0) %>%
+      left_join(L1326.IO_GJkg_R_aluminum_F_Yh_tmp %>% filter(fuel != "electricity",value > 0) %>%
                   group_by(region,sector,year) %>% summarise(sum = sum(output)), by = c("region", "year", "sector")) %>%
-      mutate(value = sum/output *value,sum = NULL) %>%
+      mutate(value = sum / output * value, sum = NULL) %>%
       bind_rows(L1326.IO_GJkg_R_aluminum_F_Yh_tmp %>% filter(fuel == "electricity")) %>%
-      mutate(input = NULL,output =NULL) ->
+      mutate(input = NULL, output =NULL) ->
       L1326.IO_GJkg_R_aluminum_F_Yh
 
 

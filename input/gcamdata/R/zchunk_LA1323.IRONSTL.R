@@ -52,9 +52,9 @@ module_energy_LA1323.IRONSTL <- function(command, ...) {
     # ===================================================
     # Change steel production to long format
 	All_steel %>%
-      gather(subsector, value, -region, -GCAM_region_ID,-unit_prod) %>%
+      gather(subsector, value, -region, -GCAM_region_ID,-unit_prod, -year) %>%
       #Unit: kt to Mt
-      mutate(year = as.integer(MODEL_FINAL_BASE_YEAR),value = value/1000) %>%
+      mutate(value = value/1000) %>%
       select(region,GCAM_region_ID,year,value,subsector) ->
       L1323.out_Mt_R_IRONSTL_Yh
 

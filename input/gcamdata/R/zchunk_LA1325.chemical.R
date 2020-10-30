@@ -62,9 +62,24 @@ module_energy_LA1325.chemical <- function(command, ...) {
 
     # Construction energy and feedstock input
     en_chemical %>%
-      mutate(sector = flow, value = value * unit_ktoe_to_EJ,unit = NULL,flow = NULL) %>%
+      mutate(sector = flow, value = value * unit_ktoe_to_EJ,unit = NULL,flow = NULL) ->
       #Africa_Eastern and South Asia only have NECHEM, fix it
-      mutate(value = if_else(region %in% c("Africa_Eastern", "South Asia"), 0, value)) ->
+      #mutate(value = if_else(region %in% c("Africa_Eastern", "South Asia"), 0, value)) ->
+      L1325.in_EJ_R_chemical_F_Y
+
+    # fix regions that only have feedstock use
+    L1325.in_EJ_R_chemical_F_Y %>%
+      group_by(region, GCAM_region_ID, year, sector) %>%
+      summarise(value = sum(value)) %>%
+      spread(sector, value) %>%
+      replace_na(list(CHEMICAL = 0, NECHEM = 0)) %>%
+      filter(CHEMICAL == 0 & NECHEM > 0) %>%
+      ungroup() %>%
+      select(GCAM_REGION_ID, year) ->
+      regions_feedstock_only
+
+    L1325.in_EJ_R_chemical_F_Y %>%
+      anti_join(regions_feedstock_only, by = c("GCAM_region_ID", "year")) ->
       L1325.in_EJ_R_chemical_F_Y
 
 

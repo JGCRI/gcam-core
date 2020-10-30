@@ -3,38 +3,750 @@
 # Units: Thousand tonnes
 # Description: Regional steel production
 # Source: World Steel Association
-# Column types: cicnnn
+# Column types: ciicnnn
 # ----------
-region,GCAM_region_ID,unit_prod,BLASTFUR,EAF with scrap,EAF with DRI
-Africa_Eastern,2,thousand tons,0,4.8,15.2
-Africa_Northern,3,thousand tons,576.3,1403.448,4444.252
-Africa_Western,5,thousand tons,0,30,95
-Argentina,31,thousand tons,2822,529.44,1676.56
-Australia_NZ,6,thousand tons,4380.6,320.976,1016.424
-Brazil,7,thousand tons,26536,1612.8,5107.2
-Canada,8,thousand tons,6716,4317.75,1439.25
-Central America and Caribbean,9,thousand tons,0.5,336.528,1065.672
-Central Asia,10,thousand tons,3620,267.12,845.88
-China,11,thousand tons,756368,45084.15,2372.85
-Colombia,32,thousand tons,240.9,232.824,737.276
-EU-12,12,thousand tons,18218.3,3907.568,3070.232
-EU-15,13,thousand tons,82651.7,32664.408,25664.892
-Europe_Eastern,14,thousand tons,21674.7,1358.816,2887.484
-Europe_Non_EU,15,thousand tons,11035.5,6727.936,14296.864
-European Free Trade Association,16,thousand tons,0,1156.4,908.6
-India,17,thousand tons,38216,12194.4,38615.6
-Indonesia,18,thousand tons,2720,512.16,1621.84
-Japan,19,thousand tons,81081,8418.55,15634.45
-Mexico,20,thousand tons,4978,3177.6,10062.4
-Middle East,21,thousand tons,2407,6485.28,20536.72
-Pakistan,22,thousand tons,182,650.4,2059.6
-Russia,23,thousand tons,49298,6912,14688
-South Africa,24,thousand tons,3907,602.4,1907.6
-South America_Northern,25,thousand tons,0,322.872,1022.428
-South America_Southern,26,thousand tons,773.8,537.048,1700.652
-South Asia,27,thousand tons,0,31.2,98.8
-South Korea,28,thousand tons,48499,10585.5,10585.5
-Southeast Asia,29,thousand tons,2266,2972.928,9414.272
-Taiwan,30,thousand tons,13328,1935.36,6128.64
-USA,1,thousand tons,29395,37087.5,12362.5
-Africa_Southern,4,thousand tons,0,0,0
+region,year,GCAM_region_ID,unit_prod,BLASTFUR,EAF with scrap,EAF with DRI
+Africa_Eastern,1990,2,thousand tons,0,4.381842211,13.87583367
+Africa_Eastern,1995,2,thousand tons,0,4.274416402,13.53565194
+Africa_Eastern,1996,2,thousand tons,0,4.268762412,13.51774764
+Africa_Eastern,1997,2,thousand tons,0,4.51753797,14.30553691
+Africa_Eastern,1998,2,thousand tons,0,4.393150191,13.91164227
+Africa_Eastern,1999,2,thousand tons,0,4.460998071,14.12649389
+Africa_Eastern,2000,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2001,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2002,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2003,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2004,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2005,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2006,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2007,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2008,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2009,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2010,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2011,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2012,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2013,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2014,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2015,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2016,2,thousand tons,0,4.8,15.2
+Africa_Eastern,2017,2,thousand tons,0,4.8,15.2
+Africa_Northern,1990,3,thousand tons,1921.504377,627.5076469,1987.107549
+Africa_Northern,1995,3,thousand tons,1874.396528,612.1235885,1938.391364
+Africa_Northern,1996,3,thousand tons,1871.917167,611.3139012,1935.827354
+Africa_Northern,1997,3,thousand tons,1981.009029,646.9401418,2048.643782
+Africa_Northern,1998,3,thousand tons,1926.463098,629.1270215,1992.235568
+Africa_Northern,1999,3,thousand tons,1956.215424,638.8432689,2023.003685
+Africa_Northern,2000,3,thousand tons,2105,687.432,2176.868
+Africa_Northern,2001,3,thousand tons,2177.2,878.112,2780.688
+Africa_Northern,2002,3,thousand tons,2276.6,1013.136,3208.264
+Africa_Northern,2003,3,thousand tons,2124.2,1061.472,3361.328
+Africa_Northern,2004,3,thousand tons,2299.2,1109.328,3512.872
+Africa_Northern,2005,3,thousand tons,2115.4,1447.104,4582.496
+Africa_Northern,2006,3,thousand tons,2453.3,1509.6,4780.4
+Africa_Northern,2007,3,thousand tons,2277.1,1696.056,5370.844
+Africa_Northern,2008,3,thousand tons,1517.3,1679.208,5317.492
+Africa_Northern,2009,3,thousand tons,1438.3,1504.248,4763.452
+Africa_Northern,2010,3,thousand tons,1263.1,1808.376,5726.524
+Africa_Northern,2011,3,thousand tons,1096.3,1642.488,5201.212
+Africa_Northern,2012,3,thousand tons,1084,1705.056,5399.344
+Africa_Northern,2013,3,thousand tons,956,1832.544,5803.056
+Africa_Northern,2014,3,thousand tons,930.4,1759.824,5572.776
+Africa_Northern,2015,3,thousand tons,1226.3,1403.448,4444.252
+Africa_Northern,2016,3,thousand tons,1226.5,1325.16,4196.34
+Africa_Northern,2017,3,thousand tons,985.4,1757.184,5564.416
+Africa_Western,1990,5,thousand tons,0,5.477302764,17.34479209
+Africa_Western,1995,5,thousand tons,0,5.343020503,16.91956493
+Africa_Western,1996,5,thousand tons,0,5.335953015,16.89718455
+Africa_Western,1997,5,thousand tons,0,5.646922463,17.88192113
+Africa_Western,1998,5,thousand tons,0,5.491437739,17.38955284
+Africa_Western,1999,5,thousand tons,0,5.576247588,17.65811736
+Africa_Western,2000,5,thousand tons,0,6,19
+Africa_Western,2001,5,thousand tons,0,6,19
+Africa_Western,2002,5,thousand tons,0,6,19
+Africa_Western,2003,5,thousand tons,0,6,19
+Africa_Western,2004,5,thousand tons,0,15.6,49.4
+Africa_Western,2005,5,thousand tons,0,30,95
+Africa_Western,2006,5,thousand tons,0,30,95
+Africa_Western,2007,5,thousand tons,0,30,95
+Africa_Western,2008,5,thousand tons,0,30,95
+Africa_Western,2009,5,thousand tons,0,30,95
+Africa_Western,2010,5,thousand tons,0,30,95
+Africa_Western,2011,5,thousand tons,0,30,95
+Africa_Western,2012,5,thousand tons,0,30,95
+Africa_Western,2013,5,thousand tons,0,30,95
+Africa_Western,2014,5,thousand tons,0,30,95
+Africa_Western,2015,5,thousand tons,0,30,95
+Africa_Western,2016,5,thousand tons,0,30,95
+Africa_Western,2017,5,thousand tons,0,30,95
+Argentina,1990,31,thousand tons,2031.166442,492.7381567,1560.337496
+Argentina,1995,31,thousand tons,1981.370103,480.6581244,1522.084061
+Argentina,1996,31,thousand tons,1978.749243,480.0223333,1520.070722
+Argentina,1997,31,thousand tons,2094.06708,507.9971447,1608.657625
+Argentina,1998,31,thousand tons,2036.408162,494.009739,1564.364173
+Argentina,1999,31,thousand tons,2067.858481,501.639233,1588.524238
+Argentina,2000,31,thousand tons,2225,539.76,1709.24
+Argentina,2001,31,thousand tons,2030,498.48,1578.52
+Argentina,2002,31,thousand tons,1823,607.92,1925.08
+Argentina,2003,31,thousand tons,2543,600.24,1900.76
+Argentina,2004,31,thousand tons,2491,634.08,2007.92
+Argentina,2005,31,thousand tons,2571,674.16,2134.84
+Argentina,2006,31,thousand tons,2626,697.68,2209.32
+Argentina,2007,31,thousand tons,2593,670.56,2123.44
+Argentina,2008,31,thousand tons,2655,692.64,2193.36
+Argentina,2009,31,thousand tons,2171,442.08,1399.92
+Argentina,2010,31,thousand tons,2603,608.4,1926.6
+Argentina,2011,31,thousand tons,2846,663.6,2101.4
+Argentina,2012,31,thousand tons,2214,667.44,2113.56
+Argentina,2013,31,thousand tons,2532,636.96,2017.04
+Argentina,2014,31,thousand tons,2748,657.6,2082.4
+Argentina,2015,31,thousand tons,2822,529.44,1676.56
+Argentina,2016,31,thousand tons,2339,428.88,1358.12
+Argentina,2017,31,thousand tons,2296,558.72,1769.28
+Australia_NZ,1990,6,thousand tons,6006.045058,274.259504,868.4884293
+Australia_NZ,1995,6,thousand tons,5858.800082,267.5357226,847.1964549
+Australia_NZ,1996,6,thousand tons,5851.050346,267.1818394,846.0758247
+Australia_NZ,1997,6,thousand tons,6192.038711,282.7527015,895.3835549
+Australia_NZ,1998,6,thousand tons,6021.544529,274.9672705,870.7296898
+Australia_NZ,1999,6,thousand tons,6114.541355,279.2138692,884.1772526
+Australia_NZ,2000,6,thousand tons,6579.2,300.432,951.368
+Australia_NZ,2001,6,thousand tons,6380.2,354.912,1123.888
+Australia_NZ,2002,6,thousand tons,6716.1,378.216,1197.684
+Australia_NZ,2003,6,thousand tons,6824.9,377.304,1194.796
+Australia_NZ,2004,6,thousand tons,6577.1,413.256,1308.644
+Australia_NZ,2005,6,thousand tons,6982,399.36,1264.64
+Australia_NZ,2006,6,thousand tons,7019,401.28,1270.72
+Australia_NZ,2007,6,thousand tons,7031,420.72,1332.28
+Australia_NZ,2008,6,thousand tons,6724.6,407.856,1291.544
+Australia_NZ,2009,6,thousand tons,4862.9,276.264,874.836
+Australia_NZ,2010,6,thousand tons,6686.9,350.904,1111.196
+Australia_NZ,2011,6,thousand tons,5761,356.88,1130.12
+Australia_NZ,2012,6,thousand tons,4402.1,336.696,1066.204
+Australia_NZ,2013,6,thousand tons,4253.9,320.184,1013.916
+Australia_NZ,2014,6,thousand tons,4167.7,311.592,986.708
+Australia_NZ,2015,6,thousand tons,4380.6,320.976,1016.424
+Australia_NZ,2016,6,thousand tons,4559.6,306.336,970.064
+Australia_NZ,2017,6,thousand tons,4760.8,293.808,930.392
+Brazil,1990,7,thousand tons,20192.98952,1258.684175,3985.833221
+Brazil,1995,7,thousand tons,19697.93559,1227.826112,3888.11602
+Brazil,1996,7,thousand tons,19671.88012,1226.202003,3882.973009
+Brazil,1997,7,thousand tons,20818.32081,1297.662782,4109.265476
+Brazil,1998,7,thousand tons,20245.10046,1261.932392,3996.119243
+Brazil,1999,7,thousand tons,20557.76611,1281.421696,4057.83537
+Brazil,2000,7,thousand tons,22120,1378.8,4366.2
+Brazil,2001,7,thousand tons,21314,1296.72,4106.28
+Brazil,2002,7,thousand tons,23619,1436.4,4548.6
+Brazil,2003,7,thousand tons,24558,1581.36,5007.64
+Brazil,2004,7,thousand tons,25395,1803.36,5710.64
+Brazil,2005,7,thousand tons,24651,1670.16,5288.84
+Brazil,2006,7,thousand tons,23360,1809.84,5731.16
+Brazil,2007,7,thousand tons,25701,1939.44,6141.56
+Brazil,2008,7,thousand tons,25783,1903.92,6029.08
+Brazil,2009,7,thousand tons,20157,1523.76,4825.24
+Brazil,2010,7,thousand tons,25136,1874.88,5937.12
+Brazil,2011,7,thousand tons,26989,1975.44,6255.56
+Brazil,2012,7,thousand tons,26430,1942.56,6151.44
+Brazil,2013,7,thousand tons,25593,2056.8,6513.2
+Brazil,2014,7,thousand tons,26020,1890.48,5986.52
+Brazil,2015,7,thousand tons,26536,1612.8,5107.2
+Brazil,2016,7,thousand tons,24675,1584,5016
+Brazil,2017,7,thousand tons,27283,1730.64,5480.36
+Canada,1990,8,thousand tons,8771.900377,4783.054639,1594.351546
+Canada,1995,8,thousand tons,8556.847335,4665.792654,1555.264218
+Canada,1996,8,thousand tons,8545.528754,4659.620971,1553.20699
+Canada,1997,8,thousand tons,9043.546324,4931.17504,1643.725013
+Canada,1998,8,thousand tons,8794.537539,4795.398006,1598.466002
+Canada,1999,8,thousand tons,8930.360513,4869.458206,1623.152735
+Canada,2000,8,thousand tons,9609,5239.5,1746.5
+Canada,2001,8,thousand tons,8836,4830,1610
+Canada,2002,8,thousand tons,9453,4911.75,1637.25
+Canada,2003,8,thousand tons,9296,4974.75,1658.25
+Canada,2004,8,thousand tons,9651,4990.5,1663.5
+Canada,2005,8,thousand tons,8966,4770.75,1590.25
+Canada,2006,8,thousand tons,9121,4779,1593
+Canada,2007,8,thousand tons,9241,4748.25,1582.75
+Canada,2008,8,thousand tons,8962,4487.25,1495.75
+Canada,2009,8,thousand tons,5337,2966.25,988.75
+Canada,2010,8,thousand tons,7654,4016.25,1338.75
+Canada,2011,8,thousand tons,7479,4059,1353
+Canada,2012,8,thousand tons,7810,4272.75,1424.25
+Canada,2013,8,thousand tons,6852,4173.75,1391.25
+Canada,2014,8,thousand tons,7723,3755.25,1251.75
+Canada,2015,8,thousand tons,6716,4317.75,1439.25
+Canada,2016,8,thousand tons,7012,4225.5,1408.5
+Canada,2017,8,thousand tons,7272,4756.5,1585.5
+Central America and Caribbean,1990,9,thousand tons,1.003490043,289.8371168,917.8175365
+Central America and Caribbean,1995,9,thousand tons,0.978888351,282.7314326,895.3162033
+Central America and Caribbean,1996,9,thousand tons,0.977593525,282.3574492,894.1319226
+Central America and Caribbean,1997,9,thousand tons,1.034565863,298.8127178,946.2402731
+Central America and Caribbean,1998,9,thousand tons,1.006079694,290.5850835,920.1860978
+Central America and Caribbean,1999,9,thousand tons,1.021617605,295.072884,934.3974661
+Central America and Caribbean,2000,9,thousand tons,1.1,317.712,1006.088
+Central America and Caribbean,2001,9,thousand tons,0.7,282.888,895.812
+Central America and Caribbean,2002,9,thousand tons,0.6,323.952,1025.848
+Central America and Caribbean,2003,9,thousand tons,0.2,335.112,1061.188
+Central America and Caribbean,2004,9,thousand tons,0.1,311.616,986.784
+Central America and Caribbean,2005,9,thousand tons,0.3,291,921.5
+Central America and Caribbean,2006,9,thousand tons,0.9,310.344,982.756
+Central America and Caribbean,2007,9,thousand tons,0.5,329.4,1043.1
+Central America and Caribbean,2008,9,thousand tons,0,261.456,827.944
+Central America and Caribbean,2009,9,thousand tons,0.3,231.336,732.564
+Central America and Caribbean,2010,9,thousand tons,0.4,285.024,902.576
+Central America and Caribbean,2011,9,thousand tons,0.3,306.312,969.988
+Central America and Caribbean,2012,9,thousand tons,0.5,314.592,996.208
+Central America and Caribbean,2013,9,thousand tons,0.4,345.864,1095.236
+Central America and Caribbean,2014,9,thousand tons,0.3,302.328,957.372
+Central America and Caribbean,2015,9,thousand tons,0.5,336.528,1065.672
+Central America and Caribbean,2016,9,thousand tons,0.5,166.536,527.364
+Central America and Caribbean,2017,9,thousand tons,0.2,146.664,464.436
+Central Asia,1990,10,thousand tons,4457.611566,64.1939884,203.2809633
+Central Asia,1995,10,thousand tons,4348.328186,62.62020029,198.2973009
+Central Asia,1996,10,thousand tons,4342.576429,62.53736934,198.0350029
+Central Asia,1997,10,thousand tons,4595.653731,66.18193126,209.5761157
+Central Asia,1998,10,thousand tons,4469.11508,64.3596503,203.8055593
+Central Asia,1999,10,thousand tons,4538.136162,65.35362173,206.9531355
+Central Asia,2000,10,thousand tons,4883,70.32,222.68
+Central Asia,2001,10,thousand tons,4755,99.12,313.88
+Central Asia,2002,10,thousand tons,4949,105.6,334.4
+Central Asia,2003,10,thousand tons,5047,144,456
+Central Asia,2004,10,thousand tons,5565,161.28,510.72
+Central Asia,2005,10,thousand tons,4626,180,570
+Central Asia,2006,10,thousand tons,3847,321.36,1017.64
+Central Asia,2007,10,thousand tons,4213,327.36,1036.64
+Central Asia,2008,10,thousand tons,3475,385.68,1221.32
+Central Asia,2009,10,thousand tons,3373,386.16,1222.84
+Central Asia,2010,10,thousand tons,3379.2,402.432,1274.368
+Central Asia,2011,10,thousand tons,3718.5,440.04,1393.46
+Central Asia,2012,10,thousand tons,2903.5,390.912,1237.888
+Central Asia,2013,10,thousand tons,3009,284.496,900.904
+Central Asia,2014,10,thousand tons,3526.2,253.968,804.232
+Central Asia,2015,10,thousand tons,3620,267.12,845.88
+Central Asia,2016,10,thousand tons,4229,214.56,679.44
+Central Asia,2017,10,thousand tons,4390,220.8,699.2
+China,1990,11,thousand tons,98865.31489,17518.24001,922.012632
+China,1995,11,thousand tons,96441.52008,17088.76057,899.4084513
+China,1996,11,thousand tons,96313.95193,17066.15639,898.2187576
+China,1997,11,thousand tons,101926.9504,18060.74034,950.5652812
+China,1998,11,thousand tons,99120.45119,17563.44837,924.3920194
+China,1999,11,thousand tons,100651.269,17834.69854,938.668344
+China,2000,11,thousand tons,108300,19190,1010
+China,2001,11,thousand tons,127629,22804.75,1200.25
+China,2002,11,thousand tons,151760,28964.55,1524.45
+China,2003,11,thousand tons,183278,37105.1,1952.9
+China,2004,11,thousand tons,231126,39588.4,2083.6
+China,2005,11,thousand tons,314000,39700.5,2089.5
+China,2006,11,thousand tons,376822,41991.9,2210.1
+China,2007,11,thousand tons,431283,55507.55,2921.45
+China,2008,11,thousand tons,448926,60242.35,3170.65
+China,2009,11,thousand tons,521305,52976.75,2788.25
+China,2010,11,thousand tons,572428,62999.25,3315.75
+China,2011,11,thousand tons,631022,67398.7,3547.3
+China,2012,11,thousand tons,666244,61556.2,3239.8
+China,2013,11,thousand tons,773556,46021.8,2422.2
+China,2014,11,thousand tons,767969,51620.15,2716.85
+China,2015,11,thousand tons,756368,45084.15,2372.85
+China,2016,11,thousand tons,756681,48381.6,2546.4
+China,2017,11,thousand tons,789855,76950,4050
+Colombia,1990,32,thousand tons,255.2423088,83.34263886,263.9183564
+Colombia,1995,32,thousand tons,248.9847554,81.29939997,257.4480999
+Colombia,1996,32,thousand tons,248.6554105,81.19186108,257.1075601
+Colombia,1997,32,thousand tons,263.1465868,85.92357219,272.0913119
+Colombia,1998,32,thousand tons,255.9009986,83.55771664,264.599436
+Colombia,1999,32,thousand tons,259.8531376,84.8481833,268.6859138
+Colombia,2000,32,thousand tons,279.6,91.296,289.104
+Colombia,2001,32,thousand tons,332.3,73.368,232.332
+Colombia,2002,32,thousand tons,319.9,82.584,261.516
+Colombia,2003,32,thousand tons,290.5,90.6,286.9
+Colombia,2004,32,thousand tons,320.4,116.544,369.056
+Colombia,2005,32,thousand tons,334.6,161.376,511.024
+Colombia,2006,32,thousand tons,362.8,203.568,644.632
+Colombia,2007,32,thousand tons,340,217.2,687.8
+Colombia,2008,32,thousand tons,308.3,178.728,565.972
+Colombia,2009,32,thousand tons,309.4,178.224,564.376
+Colombia,2010,32,thousand tons,340.5,208.2,659.3
+Colombia,2011,32,thousand tons,301.2,236.592,749.208
+Colombia,2012,32,thousand tons,344.9,229.704,727.396
+Colombia,2013,32,thousand tons,322.7,219.192,694.108
+Colombia,2014,32,thousand tons,297.5,218.52,691.98
+Colombia,2015,32,thousand tons,240.9,232.824,737.276
+Colombia,2016,32,thousand tons,243.9,246.744,781.356
+Colombia,2017,32,thousand tons,218,248.4,786.6
+EU-12,1990,12,thousand tons,21223.78845,3466.462653,2723.649227
+EU-12,1995,12,thousand tons,20703.46332,3381.478407,2656.875891
+EU-12,1996,12,thousand tons,20676.07778,3377.005552,2653.361505
+EU-12,1997,12,thousand tons,21881.04126,3573.811173,2807.994493
+EU-12,1998,12,thousand tons,21278.55952,3475.408363,2730.677999
+EU-12,1999,12,thousand tons,21607.18592,3529.082623,2772.850632
+EU-12,2000,12,thousand tons,23249.4,3797.304,2983.596
+EU-12,2001,12,thousand tons,22259.5,3749.704,2946.196
+EU-12,2002,12,thousand tons,23663.5,3302.712,2594.988
+EU-12,2003,12,thousand tons,24869.4,3734.136,2933.964
+EU-12,2004,12,thousand tons,25767.7,4279.128,3362.172
+EU-12,2005,12,thousand tons,22678.6,4373.264,3436.136
+EU-12,2006,12,thousand tons,24627.2,5111.064,4015.836
+EU-12,2007,12,thousand tons,25094.3,5273.464,4143.436
+EU-12,2008,12,thousand tons,21073.3,5191.032,4078.668
+EU-12,2009,12,thousand tons,14785.5,3749.536,2946.064
+EU-12,2010,12,thousand tons,17231.9,4435.984,3485.416
+EU-12,2011,12,thousand tons,16854.4,5246.472,4122.228
+EU-12,2012,12,thousand tons,16146.8,4814.992,3783.208
+EU-12,2013,12,thousand tons,15949.9,3858.12,3031.38
+EU-12,2014,12,thousand tons,17234,3878.84,3047.66
+EU-12,2015,12,thousand tons,18218.3,3907.568,3070.232
+EU-12,2016,12,thousand tons,17897.5,3868.088,3039.212
+EU-12,2017,12,thousand tons,18563.9,4398.744,3456.156
+EU-15,1990,13,thousand tons,89793.98863,33156.8888,26051.8412
+EU-15,1995,13,thousand tons,87592.58762,32344.01023,25413.1509
+EU-15,1996,13,thousand tons,87476.72441,32301.22715,25379.53562
+EU-15,1997,13,thousand tons,92574.7057,34183.68277,26858.60789
+EU-15,1998,13,thousand tons,90025.71505,33242.45496,26119.07176
+EU-15,1999,13,thousand tons,91416.07359,33755.85195,26522.4551
+EU-15,2000,13,thousand tons,98363,36321.04,28537.96
+EU-15,2001,13,thousand tons,93302.6,36430.464,28623.936
+EU-15,2002,13,thousand tons,93529.8,36409.632,28607.568
+EU-15,2003,13,thousand tons,95446.9,36616.776,28770.324
+EU-15,2004,13,thousand tons,99307.3,39093.432,30716.268
+EU-15,2005,13,thousand tons,97840.5,37676.52,29602.98
+EU-15,2006,13,thousand tons,99338.8,41577.872,32668.328
+EU-15,2007,13,thousand tons,100538.8,42118.832,33093.368
+EU-15,2008,13,thousand tons,94892,41093.92,32288.08
+EU-15,2009,13,thousand tons,63418.4,30513.056,23974.544
+EU-15,2010,13,thousand tons,84540.6,35347.984,27773.416
+EU-15,2011,13,thousand tons,85111.4,37161.376,29198.224
+EU-15,2012,13,thousand tons,81953.3,34657.112,27230.588
+EU-15,2013,13,thousand tons,84114.5,33209.4,26093.1
+EU-15,2014,13,thousand tons,85938.4,33009.536,25936.064
+EU-15,2015,13,thousand tons,82651.7,32664.408,25664.892
+EU-15,2016,13,thousand tons,80164,32063.36,25192.64
+EU-15,2017,13,thousand tons,81841,33742.8,26512.2
+Europe_Eastern,1990,14,thousand tons,28100.30673,991.7832642,2107.539436
+Europe_Eastern,1995,14,thousand tons,27411.39598,967.4685777,2055.870728
+Europe_Eastern,1996,14,thousand tons,27375.13752,966.1888574,2053.151322
+Europe_Eastern,1997,14,thousand tons,28970.50977,1022.496552,2172.805174
+Europe_Eastern,1998,14,thousand tons,28172.82365,994.3427049,2112.978248
+Europe_Eastern,1999,14,thousand tons,28607.92517,1009.699349,2145.611117
+Europe_Eastern,2000,14,thousand tons,30782,1086.432,2308.668
+Europe_Eastern,2001,14,thousand tons,32181.1,1081.568,2298.332
+Europe_Eastern,2002,14,thousand tons,33058.5,956.64,2032.86
+Europe_Eastern,2003,14,thousand tons,34932,1432.64,3044.36
+Europe_Eastern,2004,14,thousand tons,36104.4,1740.352,3698.248
+Europe_Eastern,2005,14,thousand tons,34841.5,2200.16,4675.34
+Europe_Eastern,2006,14,thousand tons,39529,1396.256,2967.044
+Europe_Eastern,2007,14,thousand tons,41305,1568.064,3332.136
+Europe_Eastern,2008,14,thousand tons,35809,1582.08,3361.92
+Europe_Eastern,2009,14,thousand tons,28578,1318.4,2801.6
+Europe_Eastern,2010,14,thousand tons,31962,1356.8,2883.2
+Europe_Eastern,2011,14,thousand tons,33766.3,1437.664,3055.036
+Europe_Eastern,2012,14,thousand tons,30988.8,1602.624,3405.576
+Europe_Eastern,2013,14,thousand tons,30820.3,1403.424,2982.276
+Europe_Eastern,2014,14,thousand tons,25492.3,1453.344,3088.356
+Europe_Eastern,2015,14,thousand tons,21674.7,1358.816,2887.484
+Europe_Eastern,2016,14,thousand tons,22518,1284.48,2729.52
+Europe_Eastern,2017,14,thousand tons,19817,1407.36,2990.64
+Europe_Non_EU,1990,15,thousand tons,4822.39993,2733.217898,5808.088033
+Europe_Non_EU,1995,15,thousand tons,4704.173351,2666.209975,5665.696197
+Europe_Non_EU,1996,15,thousand tons,4697.9509,2662.683242,5658.20189
+Europe_Non_EU,1997,15,thousand tons,4971.738767,2817.859484,5987.951404
+Europe_Non_EU,1998,15,thousand tons,4834.844833,2740.271363,5823.076647
+Europe_Non_EU,1999,15,thousand tons,4909.514252,2782.592157,5913.008333
+Europe_Non_EU,2000,15,thousand tons,5282.6,2994.048,6362.352
+Europe_Non_EU,2001,15,thousand tons,5337.2,3240.256,6885.544
+Europe_Non_EU,2002,15,thousand tons,5183.7,3773.216,8018.084
+Europe_Non_EU,2003,15,thousand tons,5824,4173.376,8868.424
+Europe_Non_EU,2004,15,thousand tons,5884.9,4866.112,10340.488
+Europe_Non_EU,2005,15,thousand tons,6141.4,5016.192,10659.408
+Europe_Non_EU,2006,15,thousand tons,7848,5894.848,12526.552
+Europe_Non_EU,2007,15,thousand tons,7870.3,6645.216,14121.084
+Europe_Non_EU,2008,15,thousand tons,8925.4,6692.064,14220.636
+Europe_Non_EU,2009,15,thousand tons,9141.7,5890.144,12516.556
+Europe_Non_EU,2010,15,thousand tons,10084.9,6979.552,14831.548
+Europe_Non_EU,2011,15,thousand tons,10805.9,8435.232,17924.868
+Europe_Non_EU,2012,15,thousand tons,10371,8767.36,18630.64
+Europe_Non_EU,2013,15,thousand tons,11048.3,8185.216,17393.584
+Europe_Non_EU,2014,15,thousand tons,11659,7938.368,16869.032
+Europe_Non_EU,2015,15,thousand tons,12809.5,6727.936,14296.864
+Europe_Non_EU,2016,15,thousand tons,13296,7099.264,15085.936
+Europe_Non_EU,2017,15,thousand tons,13794.2,8433.888,17922.012
+European Free Trade Association,1990,16,thousand tons,0,858.3298585,674.4020317
+European Free Trade Association,1995,16,thousand tons,0,837.2869329,657.8683044
+European Free Trade Association,1996,16,thousand tons,0,836.1794105,656.9981083
+European Free Trade Association,1997,16,thousand tons,0,884.910396,695.2867397
+European Free Trade Association,1998,16,thousand tons,0,860.5449033,676.142424
+European Free Trade Association,1999,16,thousand tons,0,873.8351721,686.584778
+European Free Trade Association,2000,16,thousand tons,0,940.24,738.76
+European Free Trade Association,2001,16,thousand tons,0,918.4,721.6
+European Free Trade Association,2002,16,thousand tons,0,950.88,747.12
+European Free Trade Association,2003,16,thousand tons,0,953.68,749.32
+European Free Trade Association,2004,16,thousand tons,0,966,759
+European Free Trade Association,2005,16,thousand tons,0,1043.504,819.896
+European Free Trade Association,2006,16,thousand tons,0,1084.272,851.928
+European Free Trade Association,2007,16,thousand tons,0,1104.544,867.856
+European Free Trade Association,2008,16,thousand tons,0,1048.432,823.768
+European Free Trade Association,2009,16,thousand tons,0.5,855.96,672.54
+European Free Trade Association,2010,16,thousand tons,0,1036,814
+European Free Trade Association,2011,16,thousand tons,0,1125.6,884.4
+European Free Trade Association,2012,16,thousand tons,0,1204,946
+European Free Trade Association,2013,16,thousand tons,0,1195.6,939.4
+European Free Trade Association,2014,16,thousand tons,0,1162,913
+European Free Trade Association,2015,16,thousand tons,0,1156.4,908.6
+European Free Trade Association,2016,16,thousand tons,0,1187.2,932.8
+European Free Trade Association,2017,16,thousand tons,0,1149.736,903.364
+India,1990,17,thousand tons,15732.63931,2123.002551,6722.841413
+India,1995,17,thousand tons,15346.93589,2070.954747,6558.023365
+India,1996,17,thousand tons,15326.63571,2068.215389,6549.348731
+India,1997,17,thousand tons,16219.84362,2188.747147,6931.032631
+India,1998,17,thousand tons,15773.23967,2128.481268,6740.190681
+India,1999,17,thousand tons,16016.84182,2161.353565,6844.28629
+India,2000,17,thousand tons,17234,2325.6,7364.4
+India,2001,17,thousand tons,17331,2390.4,7569.6
+India,2002,17,thousand tons,17964,2604,8246
+India,2003,17,thousand tons,19099,3043.2,9636.8
+India,2004,17,thousand tons,16841,3788.4,11996.6
+India,2005,17,thousand tons,20405,6090,19285
+India,2006,17,thousand tons,21265,6764.4,21420.6
+India,2007,17,thousand tons,22287,7483.44,23697.56
+India,2008,17,thousand tons,22568,8453.52,26769.48
+India,2009,17,thousand tons,23394,9631.92,30501.08
+India,2010,17,thousand tons,23916,10814.4,34245.6
+India,2011,17,thousand tons,23997,11873.76,37600.24
+India,2012,17,thousand tons,24914,12564,39786
+India,2013,17,thousand tons,34908,11133.84,35257.16
+India,2014,17,thousand tons,37081,12050.64,38160.36
+India,2015,17,thousand tons,38216,12194.4,38615.6
+India,2016,17,thousand tons,40740,13136.88,41600.12
+India,2017,17,thousand tons,46202,13260.72,41992.28
+Indonesia,1990,18,thousand tons,0,623.9743309,1975.918714
+Indonesia,1995,18,thousand tons,0,608.6768957,1927.476836
+Indonesia,1996,18,thousand tons,0,607.8717675,1924.927264
+Indonesia,1997,18,thousand tons,0,643.2974069,2037.108455
+Indonesia,1998,18,thousand tons,0,625.5845872,1981.01786
+Indonesia,1999,18,thousand tons,0,635.2461253,2011.61273
+Indonesia,2000,18,thousand tons,0,683.52,2164.48
+Indonesia,2001,18,thousand tons,0,667.44,2113.56
+Indonesia,2002,18,thousand tons,0,590.88,1871.12
+Indonesia,2003,18,thousand tons,0,490.08,1551.92
+Indonesia,2004,18,thousand tons,0,883.68,2798.32
+Indonesia,2005,18,thousand tons,0,882,2793
+Indonesia,2006,18,thousand tons,0,902.16,2856.84
+Indonesia,2007,18,thousand tons,0,998.4,3161.6
+Indonesia,2008,18,thousand tons,0,939.6,2975.4
+Indonesia,2009,18,thousand tons,0,840.24,2660.76
+Indonesia,2010,18,thousand tons,0,879.36,2784.64
+Indonesia,2011,18,thousand tons,0,869.04,2751.96
+Indonesia,2012,18,thousand tons,0,540.96,1713.04
+Indonesia,2013,18,thousand tons,0,634.56,2009.44
+Indonesia,2014,18,thousand tons,1904,605.76,1918.24
+Indonesia,2015,18,thousand tons,2720,512.16,1621.84
+Indonesia,2016,18,thousand tons,2907,441.36,1397.64
+Indonesia,2017,18,thousand tons,2921,545.76,1728.24
+Japan,1990,19,thousand tons,69181.98545,9796.155994,18192.86113
+Japan,1995,19,thousand tons,67485.91096,9555.992169,17746.8426
+Japan,1996,19,thousand tons,67396.64389,9543.351968,17723.36794
+Japan,1997,19,thousand tons,71324.39532,10099.52082,18756.25296
+Japan,1998,19,thousand tons,69360.5196,9821.436396,18239.81045
+Japan,1999,19,thousand tons,70431.72454,9973.118812,18521.50636
+Japan,2000,19,thousand tons,75784,10731,19929
+Japan,2001,19,thousand tons,74442,9948.4,18475.6
+Japan,2002,19,thousand tons,78533,10224.55,18988.45
+Japan,2003,19,thousand tons,81355,10204.6,18951.4
+Japan,2004,19,thousand tons,82956,10416.7,19345.3
+Japan,2005,19,thousand tons,83627,10095.4,18748.6
+Japan,2006,19,thousand tons,85965,10591.35,19669.65
+Japan,2007,19,thousand tons,89242,10836.35,20124.65
+Japan,2008,19,thousand tons,89238,10325.35,19175.65
+Japan,2009,19,thousand tons,68337,6718.95,12478.05
+Japan,2010,19,thousand tons,85756,8345.05,15497.95
+Japan,2011,19,thousand tons,82743,8700.3,16157.7
+Japan,2012,19,thousand tons,82307,8723.75,16201.25
+Japan,2013,19,thousand tons,85680,8720.25,16194.75
+Japan,2014,19,thousand tons,84987,8987.65,16691.35
+Japan,2015,19,thousand tons,81081,8418.55,15634.45
+Japan,2016,19,thousand tons,81513,8141.7,15120.3
+Japan,2017,19,thousand tons,79343,8861.3,16456.7
+Mexico,1990,20,thousand tons,4779.859545,2277.462489,7211.964549
+Mexico,1995,20,thousand tons,4662.675892,2221.627925,7035.155096
+Mexico,1996,20,thousand tons,4656.508331,2218.689264,7025.849335
+Mexico,1997,20,thousand tons,4927.881002,2347.99036,7435.302806
+Mexico,1998,20,thousand tons,4792.194667,2283.339812,7230.576071
+Mexico,1999,20,thousand tons,4866.205395,2318.603747,7342.245199
+Mexico,2000,20,thousand tons,5236,2494.8,7900.2
+Mexico,2001,20,thousand tons,4771,2046.96,6482.04
+Mexico,2002,20,thousand tons,4116,2374.56,7519.44
+Mexico,2003,20,thousand tons,4591,2536.32,8031.68
+Mexico,2004,20,thousand tons,4762,2874,9101
+Mexico,2005,20,thousand tons,4505,2805.6,8884.4
+Mexico,2006,20,thousand tons,4188,2942.16,9316.84
+Mexico,2007,20,thousand tons,4559,3123.36,9890.64
+Mexico,2008,20,thousand tons,5011,2927.52,9270.48
+Mexico,2009,20,thousand tons,4337,2350.8,7444.2
+Mexico,2010,20,thousand tons,5155,2811.6,8903.4
+Mexico,2011,20,thousand tons,5066,3130.56,9913.44
+Mexico,2012,20,thousand tons,4989,3140.16,9943.84
+Mexico,2013,20,thousand tons,5362,3091.2,9788.8
+Mexico,2014,20,thousand tons,5679,3180.24,10070.76
+Mexico,2015,20,thousand tons,4978,3177.6,10062.4
+Mexico,2016,20,thousand tons,4920,3336.96,10567.04
+Mexico,2017,20,thousand tons,4721,3656.16,11577.84
+Middle East,1990,21,thousand tons,2009.257231,1879.591217,5952.038852
+Middle East,1995,21,thousand tons,1959.998021,1833.510916,5806.1179
+Middle East,1996,21,thousand tons,1957.405431,1831.085637,5798.43785
+Middle East,1997,21,thousand tons,2071.47939,1937.797912,6136.360056
+Middle East,1998,21,thousand tons,2014.442411,1884.441775,5967.398953
+Middle East,1999,21,thousand tons,2045.55349,1913.545122,6059.559554
+Middle East,2000,21,thousand tons,2201,2058.96,6520.04
+Middle East,2001,21,thousand tons,2148,2290.08,7251.92
+Middle East,2002,21,thousand tons,2171,2477.04,7843.96
+Middle East,2003,21,thousand tons,2266,2682.48,8494.52
+Middle East,2004,21,thousand tons,2305,2867.52,9080.48
+Middle East,2005,21,thousand tons,2465,3070.08,9721.92
+Middle East,2006,21,thousand tons,2199,3162.48,10014.52
+Middle East,2007,21,thousand tons,1931,3485.04,11035.96
+Middle East,2008,21,thousand tons,1984,3519.12,11143.88
+Middle East,2009,21,thousand tons,1992,3785.76,11988.24
+Middle East,2010,21,thousand tons,2150,4284,13566
+Middle East,2011,21,thousand tons,2296,5024.16,15909.84
+Middle East,2012,21,thousand tons,2157,5477.28,17344.72
+Middle East,2013,21,thousand tons,2013,5988.96,18965.04
+Middle East,2014,21,thousand tons,2724,6542.88,20719.12
+Middle East,2015,21,thousand tons,2407,6485.28,20536.72
+Middle East,2016,21,thousand tons,2183,7031.52,22266.48
+Middle East,2017,21,thousand tons,2236,7737.36,24501.64
+Pakistan,1990,22,thousand tons,775.9512249,21.90921106,69.37916835
+Pakistan,1995,22,thousand tons,756.9279046,21.37208201,67.6782597
+Pakistan,1996,22,thousand tons,755.9266772,21.34381206,67.58873819
+Pakistan,1997,22,thousand tons,799.9806822,22.58768985,71.52768453
+Pakistan,1998,22,thousand tons,777.9536797,21.96575096,69.55821136
+Pakistan,1999,22,thousand tons,789.9684083,22.30499035,70.63246945
+Pakistan,2000,22,thousand tons,850,24,76
+Pakistan,2001,22,thousand tons,853,24,76
+Pakistan,2002,22,thousand tons,870,24,76
+Pakistan,2003,22,thousand tons,900,24,76
+Pakistan,2004,22,thousand tons,1025,28.8,91.2
+Pakistan,2005,22,thousand tons,801,6,19
+Pakistan,2006,22,thousand tons,1000,9.6,30.4
+Pakistan,2007,22,thousand tons,990,24,76
+Pakistan,2008,22,thousand tons,900,24,76
+Pakistan,2009,22,thousand tons,619,139.2,440.8
+Pakistan,2010,22,thousand tons,401,240,760
+Pakistan,2011,22,thousand tons,352,297.6,942.4
+Pakistan,2012,22,thousand tons,201,343.2,1086.8
+Pakistan,2013,22,thousand tons,165,403.2,1276.8
+Pakistan,2014,22,thousand tons,143,547.2,1732.8
+Pakistan,2015,22,thousand tons,182,650.4,2059.6
+Pakistan,2016,22,thousand tons,0,852.72,2700.28
+Pakistan,2017,22,thousand tons,0,1191.84,3774.16
+Russia,1990,23,thousand tons,46124.36658,2515.177429,5344.752037
+Russia,1995,23,thousand tons,44993.57565,2453.515015,5213.719407
+Russia,1996,23,thousand tons,44934.06034,2450.269625,5206.822952
+Russia,1997,23,thousand tons,47552.73406,2593.066795,5510.266939
+Russia,1998,23,thousand tons,46243.3972,2521.66821,5358.544946
+Russia,1999,23,thousand tons,46957.58094,2560.612893,5441.302397
+Russia,2000,23,thousand tons,50526,2755.2,5854.8
+Russia,2001,23,thousand tons,50123,2831.04,6015.96
+Russia,2002,23,thousand tons,50877,2848,6052
+Russia,2003,23,thousand tons,52100,2992,6358
+Russia,2004,23,thousand tons,54893,3420.8,7269.2
+Russia,2005,23,thousand tons,55346,3456,7344
+Russia,2006,23,thousand tons,54561,5206.08,11062.92
+Russia,2007,23,thousand tons,53096,6173.12,13117.88
+Russia,2008,23,thousand tons,48510,6400,13600
+Russia,2009,23,thousand tons,43892,5158.08,10960.92
+Russia,2010,23,thousand tons,48962,5753.6,12226.4
+Russia,2011,23,thousand tons,50352,5920,12580
+Russia,2012,23,thousand tons,49409,6656,14144
+Russia,2013,23,thousand tons,49003,6401.6,13603.4
+Russia,2014,23,thousand tons,49609,6992.64,14859.36
+Russia,2015,23,thousand tons,49298,6912,14688
+Russia,2016,23,thousand tons,48653,6976,14824
+Russia,2017,23,thousand tons,49491,7040,14960
+South Africa,1990,24,thousand tons,4267.731737,833.8645728,2640.571147
+South Africa,1995,24,thousand tons,4163.103475,813.4214413,2575.834564
+South Africa,1996,24,thousand tons,4157.596724,812.3454871,2572.427376
+South Africa,1997,24,thousand tons,4399.893752,859.6874757,2722.343673
+South Africa,1998,24,thousand tons,4278.745238,836.0164814,2647.385524
+South Africa,1999,24,thousand tons,4344.826246,848.9279328,2688.271787
+South Africa,2000,24,thousand tons,4675,913.44,2892.56
+South Africa,2001,24,thousand tons,4907,939.36,2974.64
+South Africa,2002,24,thousand tons,4971,989.76,3134.24
+South Africa,2003,24,thousand tons,5083,1055.52,3342.48
+South Africa,2004,24,thousand tons,4950,1092,3458
+South Africa,2005,24,thousand tons,5256,1017.12,3220.88
+South Africa,2006,24,thousand tons,5174,1090.56,3453.44
+South Africa,2007,24,thousand tons,4521,1098.48,3478.52
+South Africa,2008,24,thousand tons,4504,898.08,2843.92
+South Africa,2009,24,thousand tons,3954,847.2,2682.8
+South Africa,2010,24,thousand tons,4367,780,2470
+South Africa,2011,24,thousand tons,3991,853.2,2701.8
+South Africa,2012,24,thousand tons,3904,728.16,2305.84
+South Africa,2013,24,thousand tons,4272,693.6,2196.4
+South Africa,2014,24,thousand tons,3623,669.36,2119.64
+South Africa,2015,24,thousand tons,3907,602.4,1907.6
+South Africa,2016,24,thousand tons,3819,557.28,1764.72
+South Africa,2017,24,thousand tons,3731,616.8,1953.2
+South America_Northern,1990,25,thousand tons,0.365153518,840.1306072,2660.413589
+South America_Northern,1995,25,thousand tons,0.356201367,819.5338568,2595.190547
+South America_Northern,1996,25,thousand tons,0.355730201,818.4498173,2591.757755
+South America_Northern,1997,25,thousand tons,0.376461498,866.147555,2742.800591
+South America_Northern,1998,25,thousand tons,0.366095849,842.2986862,2667.279173
+South America_Northern,1999,25,thousand tons,0.371749839,855.3071601,2708.472674
+South America_Northern,2000,25,thousand tons,0.4,920.304,2914.296
+South America_Northern,2001,25,thousand tons,0.3,915.048,2897.652
+South America_Northern,2002,25,thousand tons,0.2,999.312,3164.488
+South America_Northern,2003,25,thousand tons,0,943.224,2986.876
+South America_Northern,2004,25,thousand tons,0.2,1094.592,3466.208
+South America_Northern,2005,25,thousand tons,0.5,1178.28,3731.22
+South America_Northern,2006,25,thousand tons,0,1167.456,3696.944
+South America_Northern,2007,25,thousand tons,0,1201.248,3803.952
+South America_Northern,2008,25,thousand tons,0,1013.88,3210.62
+South America_Northern,2009,25,thousand tons,0,913.92,2894.08
+South America_Northern,2010,25,thousand tons,0,529.752,1677.548
+South America_Northern,2011,25,thousand tons,0,715.296,2265.104
+South America_Northern,2012,25,thousand tons,0,566.256,1793.144
+South America_Northern,2013,25,thousand tons,0,513.384,1625.716
+South America_Northern,2014,25,thousand tons,0.2,356.352,1128.448
+South America_Northern,2015,25,thousand tons,0,322.872,1022.428
+South America_Northern,2016,25,thousand tons,0.1,132.696,420.204
+South America_Northern,2017,25,thousand tons,0.2,106.512,337.288
+South America_Southern,1990,26,thousand tons,1368.325954,170.2554147,539.1421467
+South America_Southern,1995,26,thousand tons,1334.779898,166.081411,525.9244683
+South America_Southern,1996,26,thousand tons,1333.014316,165.8617266,525.228801
+South America_Southern,1997,26,thousand tons,1410.699919,175.5278405,555.8381616
+South America_Southern,1998,26,thousand tons,1371.857118,170.6947836,540.5334813
+South America_Southern,1999,26,thousand tons,1393.0441,173.3309964,548.8814887
+South America_Southern,2000,26,thousand tons,1499.3,186.552,590.748
+South America_Southern,2001,26,thousand tons,1346.2,180.672,572.128
+South America_Southern,2002,26,thousand tons,1307.4,183.792,582.008
+South America_Southern,2003,26,thousand tons,1370.6,212.856,674.044
+South America_Southern,2004,26,thousand tons,1572.3,232.728,736.972
+South America_Southern,2005,26,thousand tons,1495.2,260.352,824.448
+South America_Southern,2006,26,thousand tons,1552.5,289.872,917.928
+South America_Southern,2007,26,thousand tons,1638.3,281.712,892.088
+South America_Southern,2008,26,thousand tons,1646.5,314.28,995.22
+South America_Southern,2009,26,thousand tons,1022.6,329.712,1044.088
+South America_Southern,2010,26,thousand tons,706,403.464,1277.636
+South America_Southern,2011,26,thousand tons,1221.3,442.728,1401.972
+South America_Southern,2012,26,thousand tons,1230.7,472.464,1496.136
+South America_Southern,2013,26,thousand tons,909.9,525.192,1663.108
+South America_Southern,2014,26,thousand tons,744.1,533.112,1688.188
+South America_Southern,2015,26,thousand tons,821.8,537.048,1700.652
+South America_Southern,2016,26,thousand tons,850.7,514.392,1628.908
+South America_Southern,2017,26,thousand tons,818.4,525.504,1664.096
+South Asia,1990,27,thousand tons,0,6.572763317,20.8137505
+South Asia,1995,27,thousand tons,0,6.411624603,20.30347791
+South Asia,1996,27,thousand tons,0,6.403143618,20.27662146
+South Asia,1997,27,thousand tons,0,6.776306955,21.45830536
+South Asia,1998,27,thousand tons,0,6.589725287,20.86746341
+South Asia,1999,27,thousand tons,0,6.691497106,21.18974084
+South Asia,2000,27,thousand tons,0,7.2,22.8
+South Asia,2001,27,thousand tons,0,7.2,22.8
+South Asia,2002,27,thousand tons,0,7.2,22.8
+South Asia,2003,27,thousand tons,0,7.2,22.8
+South Asia,2004,27,thousand tons,0,7.2,22.8
+South Asia,2005,27,thousand tons,0,7.2,22.8
+South Asia,2006,27,thousand tons,0,7.2,22.8
+South Asia,2007,27,thousand tons,0,7.2,22.8
+South Asia,2008,27,thousand tons,0,19.2,60.8
+South Asia,2009,27,thousand tons,0,24,76
+South Asia,2010,27,thousand tons,0,25.968,82.232
+South Asia,2011,27,thousand tons,0.2,27.552,87.248
+South Asia,2012,27,thousand tons,0,28.152,89.148
+South Asia,2013,27,thousand tons,0.5,27.24,86.26
+South Asia,2014,27,thousand tons,0,28.8,91.2
+South Asia,2015,27,thousand tons,0,31.2,98.8
+South Asia,2016,27,thousand tons,0,31.2,98.8
+South Asia,2017,27,thousand tons,0,31.2,98.8
+South Korea,1990,28,thousand tons,22517.19166,8417.245023,8417.245023
+South Korea,1995,28,thousand tons,21965.15729,8210.886758,8210.886758
+South Korea,1996,28,thousand tons,21936.10285,8200.025796,8200.025796
+South Korea,1997,28,thousand tons,23214.49824,8677.908094,8677.908094
+South Korea,1998,28,thousand tons,22575.30054,8438.966945,8438.966945
+South Korea,1999,28,thousand tons,22923.95384,8569.298481,8569.298481
+South Korea,2000,28,thousand tons,24666,9220.5,9220.5
+South Korea,2001,28,thousand tons,24741,9555.5,9555.5
+South Korea,2002,28,thousand tons,24891,10249.5,10249.5
+South Korea,2003,28,thousand tons,25581,10364.5,10364.5
+South Korea,2004,28,thousand tons,26651,10435,10435
+South Korea,2005,28,thousand tons,26728,10546,10546
+South Korea,2006,28,thousand tons,26291,11082,11082
+South Korea,2007,28,thousand tons,27561,11978,11978
+South Korea,2008,28,thousand tons,30227,11699,11699
+South Korea,2009,28,thousand tons,27667,10452.5,10452.5
+South Korea,2010,28,thousand tons,34113,12400.5,12400.5
+South Korea,2011,28,thousand tons,42142,13188.5,13188.5
+South Korea,2012,28,thousand tons,43118,12977.5,12977.5
+South Korea,2013,28,thousand tons,40293,12884,12884
+South Korea,2014,28,thousand tons,47346,12098.5,12098.5
+South Korea,2015,28,thousand tons,48499,10585.5,10585.5
+South Korea,2016,28,thousand tons,47521,10527.5,10527.5
+South Korea,2017,28,thousand tons,47676,11677,11677
+Southeast Asia,1990,29,thousand tons,1369.325691,1557.744906,4932.858869
+Southeast Asia,1995,29,thousand tons,1335.755126,1519.555031,4811.924265
+Southeast Asia,1996,29,thousand tons,1333.988254,1517.545038,4805.559286
+Southeast Asia,1997,29,thousand tons,1411.730616,1605.984748,5085.61837
+Southeast Asia,1998,29,thousand tons,1372.859435,1561.764893,4945.588828
+Southeast Asia,1999,29,thousand tons,1394.061897,1585.884814,5021.968578
+Southeast Asia,2000,29,thousand tons,1500,1706.4,5403.6
+Southeast Asia,2001,29,thousand tons,1474.3,1788.648,5664.052
+Southeast Asia,2002,29,thousand tons,1483,2069.04,6551.96
+Southeast Asia,2003,29,thousand tons,1475,2175.96,6890.54
+Southeast Asia,2004,29,thousand tons,1400.2,2869.152,9085.648
+Southeast Asia,2005,29,thousand tons,1400.1,2979.336,9434.564
+Southeast Asia,2006,29,thousand tons,1400.3,3313.608,10493.092
+Southeast Asia,2007,29,thousand tons,1400,3808.08,12058.92
+Southeast Asia,2008,29,thousand tons,1300.3,3692.136,11691.764
+Southeast Asia,2009,29,thousand tons,1300.4,3171.024,10041.576
+Southeast Asia,2010,29,thousand tons,1300,3829.488,12126.712
+Southeast Asia,2011,29,thousand tons,1300.4,4093.344,12962.256
+Southeast Asia,2012,29,thousand tons,1280.9,3890.424,12319.676
+Southeast Asia,2013,29,thousand tons,2071.5,3527.16,11169.34
+Southeast Asia,2014,29,thousand tons,2712.1,3496.056,11070.844
+Southeast Asia,2015,29,thousand tons,3516,2972.928,9414.272
+Southeast Asia,2016,29,thousand tons,4374,3097.512,9808.788
+Southeast Asia,2017,29,thousand tons,6413.9,3840.984,12163.116
+Taiwan,1990,30,thousand tons,9103.277194,1516.993774,4803.813616
+Taiwan,1995,30,thousand tons,8880.100076,1479.802958,4686.042702
+Taiwan,1996,30,thousand tons,8868.353912,1477.845547,4679.844233
+Taiwan,1997,30,thousand tons,9385.185133,1563.971645,4952.576877
+Taiwan,1998,30,thousand tons,9126.769522,1520.908596,4816.210555
+Taiwan,1999,30,thousand tons,9267.723492,1544.397532,4890.592185
+Taiwan,2000,30,thousand tons,9972,1661.76,5262.24
+Taiwan,2001,30,thousand tons,10317,1666.56,5277.44
+Taiwan,2002,30,thousand tons,10524,1849.44,5856.56
+Taiwan,2003,30,thousand tons,10779,1932.72,6120.28
+Taiwan,2004,30,thousand tons,10939,2078.4,6581.6
+Taiwan,2005,30,thousand tons,10041,2136.24,6764.76
+Taiwan,2006,30,thousand tons,10683,2236.08,7080.92
+Taiwan,2007,30,thousand tons,10884,2404.56,7614.44
+Taiwan,2008,30,thousand tons,10087,2350.8,7444.2
+Taiwan,2009,30,thousand tons,8150,1839.36,5824.64
+Taiwan,2010,30,thousand tons,10397,2245.92,7112.08
+Taiwan,2011,30,thousand tons,10298,2371.2,7508.8
+Taiwan,2012,30,thousand tons,11092,2297.28,7274.72
+Taiwan,2013,30,thousand tons,12483,2351.76,7447.24
+Taiwan,2014,30,thousand tons,13544,2298.48,7278.52
+Taiwan,2015,30,thousand tons,13328,1935.36,6128.64
+Taiwan,2016,30,thousand tons,13969,1867.68,5914.32
+Taiwan,2017,30,thousand tons,13690,2099.52,6648.48
+USA,1990,1,thousand tons,49271.9899,32761.11716,10920.37239
+USA,1995,1,thousand tons,48064.03144,31957.94138,10652.64713
+USA,1996,1,thousand tons,48000.45468,31915.66897,10638.55632
+USA,1997,1,thousand tons,50797.83217,33775.65498,11258.55166
+USA,1998,1,thousand tons,49399.14342,32845.66198,10948.55399
+USA,1999,1,thousand tons,50162.06455,33352.93089,11117.64363
+USA,2000,1,thousand tons,53974,35887.5,11962.5
+USA,2001,1,thousand tons,47357,32058.75,10686.25
+USA,2002,1,thousand tons,45463,34593,11531
+USA,2003,1,thousand tons,45873,35853,11951
+USA,2004,1,thousand tons,47713,38976,12992
+USA,2005,1,thousand tons,42704,39144.75,13048.25
+USA,2006,1,thousand tons,42118,42052.5,14017.5
+USA,2007,1,thousand tons,41098,42752.25,14250.75
+USA,2008,1,thousand tons,39105,39592.5,13197.5
+USA,2009,1,thousand tons,22659,27543.75,9181.25
+USA,2010,1,thousand tons,31157,37003.5,12334.5
+USA,2011,1,thousand tons,34291,39080.25,13026.75
+USA,2012,1,thousand tons,36281,39310.5,13103.5
+USA,2013,1,thousand tons,34237,39480.75,13160.25
+USA,2014,1,thousand tons,33000,41380.5,13793.5
+USA,2015,1,thousand tons,29395,37087.5,12362.5
+USA,2016,1,thousand tons,25888,39440.25,13146.75
+USA,2017,1,thousand tons,25788,41868,13956
