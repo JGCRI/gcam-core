@@ -319,8 +319,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
 
 
     # Sum up costs. Units are 1975 USD per GJ.
-    L1322.P_gas_75USDGJ <- A10.rsrc_cost_aglu.FERT_PRICE_YEAR + A21.globaltech_cost_aglu.FERT_PRICE_YEAR +
-      A22.globaltech_cost_aglu.FERT_PRICE_YEAR + energy.GAS_PIPELINE_COST_ADDER_75USDGJ
+    L1322.P_gas_75USDGJ <- A10.rsrc_cost_aglu.FERT_PRICE_YEAR + energy.GAS_PIPELINE_COST_ADDER_75USDGJ
 
     # Obtain fertilizer input-output cofficient for natural gas in aglu.FERT_PRICE_YEAR
     L1322.IO_R_Fert_F_Yh %>%
