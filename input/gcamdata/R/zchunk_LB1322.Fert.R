@@ -337,7 +337,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
     Fert_Cost_75USDkgN <- aglu.FERT_PRICE * gdp_deflator(1975, aglu.FERT_PRICE_YEAR) * CONV_KG_T / CONV_NH3_N
 
     # Calculate non-fuel cost of natural gas steam reforming (includes delivery charges)
-    L1322.Fert_NEcost_75USDkgN_gas <- Fert_Cost_75USDkgN - L1322.Fert_Fuelcost_75USDGJ_gas
+    L1322.Fert_NEcost_75USDkgN_gas <- as.double(Fert_Cost_75USDkgN - L1322.Fert_Fuelcost_75USDGJ_gas)
 
 
     # Use H2A technology characteristics to derive characteristics of other technologies
@@ -362,12 +362,8 @@ module_energy_LB1322.Fert <- function(command, ...) {
              coal = as.double(Central_Coal - Central_Natural_Gas+ L1322.Fert_NEcost_75USDkgN_gas),
              coalCCS = as.double(Central_Coal_Sequestration - Central_Natural_Gas+ L1322.Fert_NEcost_75USDkgN_gas))-> H2A_Prod_Tech_1975
 
-    H2A_Prod_Tech_1975 %>%
-      # Calculate costs of fuel technologies, including the specified cost adder
-      mutate(gasCCS = gasCCS + L1322.Fert_NEcost_75USDkgN_gas,
-             coal = coal + L1322.Fert_NEcost_75USDkgN_gas,
-             coalCCS = coalCCS + L1322.Fert_NEcost_75USDkgN_gas) ->
-      L1322.Fert_NEcost_75USDkgN_technologies
+    H2A_Prod_Tech_1975 ->L1322.Fert_NEcost_75USDkgN_technologies
+
 
     # Here the individual costs will be saved. These values will be used to build the final table.
     L1322.Fert_NEcost_75USDkgN_gasCCS <- L1322.Fert_NEcost_75USDkgN_technologies[["gasCCS"]]
