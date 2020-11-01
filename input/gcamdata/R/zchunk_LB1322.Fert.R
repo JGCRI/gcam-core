@@ -299,12 +299,11 @@ module_energy_LB1322.Fert <- function(command, ...) {
       complete(technology, year = sort(unique(c(year, aglu.FERT_PRICE_YEAR)))) %>%
       mutate(value = approx_fun(year, value)) %>%
       filter(year == aglu.FERT_PRICE_YEAR) %>%
+      mutate(value = if_else(is.na(value),0,value)) %>%
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A21.globaltech_cost_aglu.FERT_PRICE_YEAR
 
-    if(is.na(A21.globaltech_cost_aglu.FERT_PRICE_YEAR)){
-      A21.globaltech_cost_aglu.FERT_PRICE_YEAR <- 0
-    }
+
 
     # Interpolate to get cost of primary energy transformation for natural gas in aglu.FERT_PRICE_YEAR
     A22.globaltech_cost %>%
@@ -314,12 +313,10 @@ module_energy_LB1322.Fert <- function(command, ...) {
       complete(technology, year = sort(unique(c(year, aglu.FERT_PRICE_YEAR)))) %>%
       mutate(value = approx_fun(year, value)) %>%
       filter(year == aglu.FERT_PRICE_YEAR) %>%
+      mutate(value = if_else(is.na(value),0,value)) %>%
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A22.globaltech_cost_aglu.FERT_PRICE_YEAR
 
-    if(is.na(A22.globaltech_cost_aglu.FERT_PRICE_YEAR)){
-      A22.globaltech_cost_aglu.FERT_PRICE_YEAR <- 0
-    }
 
     # Sum up costs. Units are 1975 USD per GJ.
     L1322.P_gas_75USDGJ <- A10.rsrc_cost_aglu.FERT_PRICE_YEAR + A21.globaltech_cost_aglu.FERT_PRICE_YEAR +
