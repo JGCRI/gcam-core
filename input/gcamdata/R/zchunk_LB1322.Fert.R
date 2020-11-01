@@ -357,13 +357,16 @@ module_energy_LB1322.Fert <- function(command, ...) {
              Technology= if_else(Technology=="Central Natural Gas","Central_Natural_Gas",Technology),
              Technology= if_else(Technology=="Central Coal","Central_Coal",Technology),
              Technology= if_else(Technology=="Central Coal Sequestration","Central_Coal_Sequestration",Technology)) %>%
-      spread(Technology, NEcost_75USDkgN) -> H2A_Prod_Tech_1975
+      spread(Technology, NEcost_75USDkgN) %>%
+      mutate(gasCCS = Central_Natural_Gas_Sequestration - Central_Natural_Gas,
+             coal = Central_Coal - Central_Natural_Gas,
+             coalCCS = Central_Coal_Sequestration - Central_Natural_Gas)-> H2A_Prod_Tech_1975
 
     H2A_Prod_Tech_1975 %>%
       # Calculate costs of fuel technologies, including the specified cost adder
-      mutate(gasCCS = Central_Natural_Gas_Sequestration - Central_Natural_Gas + L1322.Fert_NEcost_75USDkgN_gas,
-             coal = Central_Coal - Central_Natural_Gas + L1322.Fert_NEcost_75USDkgN_gas,
-             coalCCS = Central_Coal_Sequestration - Central_Natural_Gas + L1322.Fert_NEcost_75USDkgN_gas) ->
+      mutate(gasCCS = gasCCS + L1322.Fert_NEcost_75USDkgN_gas,
+             coal = coal + L1322.Fert_NEcost_75USDkgN_gas,
+             coalCCS = coalCCS + L1322.Fert_NEcost_75USDkgN_gas) ->
       L1322.Fert_NEcost_75USDkgN_technologies
 
     # Here the individual costs will be saved. These values will be used to build the final table.
