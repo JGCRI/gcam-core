@@ -357,7 +357,9 @@ module_energy_LB1322.Fert <- function(command, ...) {
              Technology= if_else(Technology=="Central Natural Gas","Central_Natural_Gas",Technology),
              Technology= if_else(Technology=="Central Coal","Central_Coal",Technology),
              Technology= if_else(Technology=="Central Coal Sequestration","Central_Coal_Sequestration",Technology)) %>%
-      spread(Technology, NEcost_75USDkgN) %>%
+      spread(Technology, NEcost_75USDkgN) -> H2A_Prod_Tech_1975
+
+    H2A_Prod_Tech_1975 %>%
       # Calculate costs of fuel technologies, including the specified cost adder
       mutate(gasCCS = Central_Natural_Gas_Sequestration - Central_Natural_Gas + L1322.Fert_NEcost_75USDkgN_gas,
              coal = Central_Coal - Central_Natural_Gas + L1322.Fert_NEcost_75USDkgN_gas,
