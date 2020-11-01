@@ -51,16 +51,16 @@ module_energy_L239.ff_trade <- function(command, ...) {
       GrossImp_EJ <- Prod_EJ <- NULL # silence package check notes
 
     # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A21.globaltech_keyword_ff <- get_data(all_data, "energy/A21.globaltech_keyword_ff")
-    A_ff_RegionalSector <- get_data(all_data, "energy/A_ff_RegionalSector")
-    A_ff_RegionalSubsector <- get_data(all_data, "energy/A_ff_RegionalSubsector")
-    A_ff_RegionalTechnology <- get_data(all_data, "energy/A_ff_RegionalTechnology")
-    A_ff_TradedSector <- get_data(all_data, "energy/A_ff_TradedSector")
-    A_ff_TradedSubsector <- get_data(all_data, "energy/A_ff_TradedSubsector")
-    A_ff_TradedTechnology <- get_data(all_data, "energy/A_ff_TradedTechnology")
-    L2011.ff_GrossTrade_EJ_R_C_Y <- get_data(all_data, "L2011.ff_GrossTrade_EJ_R_C_Y")
-    L2011.ff_ALL_EJ_R_C_Y <- get_data(all_data, "L2011.ff_ALL_EJ_R_C_Y")
+    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names",strip_attributes = TRUE)
+    A21.globaltech_keyword_ff <- get_data(all_data, "energy/A21.globaltech_keyword_ff",strip_attributes = TRUE)
+    A_ff_RegionalSector <- get_data(all_data, "energy/A_ff_RegionalSector",strip_attributes = TRUE)
+    A_ff_RegionalSubsector <- get_data(all_data, "energy/A_ff_RegionalSubsector",strip_attributes = TRUE)
+    A_ff_RegionalTechnology <- get_data(all_data, "energy/A_ff_RegionalTechnology",strip_attributes = TRUE)
+    A_ff_TradedSector <- get_data(all_data, "energy/A_ff_TradedSector",strip_attributes = TRUE)
+    A_ff_TradedSubsector <- get_data(all_data, "energy/A_ff_TradedSubsector",strip_attributes = TRUE)
+    A_ff_TradedTechnology <- get_data(all_data, "energy/A_ff_TradedTechnology",strip_attributes = TRUE)
+    L2011.ff_GrossTrade_EJ_R_C_Y <- get_data(all_data, "L2011.ff_GrossTrade_EJ_R_C_Y",strip_attributes = TRUE)
+    L2011.ff_ALL_EJ_R_C_Y <- get_data(all_data, "L2011.ff_ALL_EJ_R_C_Y",strip_attributes = TRUE)
 
     # In the structure of the model unconventional oil is upgraded before it is shipped out. The passthrough sector
     # that upgrades uncon oil is called unconventional oil production, so to make sure we match we'll change
