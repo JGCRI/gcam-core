@@ -299,7 +299,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       complete(technology, year = sort(unique(c(year, aglu.FERT_PRICE_YEAR)))) %>%
       mutate(value = approx_fun(year, value)) %>%
       filter(year == aglu.FERT_PRICE_YEAR) %>%
-      mutate(value = if_else(is.na(value),0,value)) %>%
+      mutate(value = if_else(is.na(value),0,as.double(value))) %>%
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A21.globaltech_cost_aglu.FERT_PRICE_YEAR
 
@@ -313,7 +313,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       complete(technology, year = sort(unique(c(year, aglu.FERT_PRICE_YEAR)))) %>%
       mutate(value = approx_fun(year, value)) %>%
       filter(year == aglu.FERT_PRICE_YEAR) %>%
-      mutate(value = if_else(is.na(value),0,value)) %>%
+      mutate(value = if_else(is.na(value),0,as.double(value))) %>%
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A22.globaltech_cost_aglu.FERT_PRICE_YEAR
 
