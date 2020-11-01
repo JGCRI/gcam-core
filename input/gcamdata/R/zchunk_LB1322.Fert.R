@@ -282,6 +282,10 @@ module_energy_LB1322.Fert <- function(command, ...) {
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A10.rsrc_cost_aglu.FERT_PRICE_YEAR
 
+    if(is.na(A10.rsrc_cost_aglu.FERT_PRICE_YEAR)){
+      A10.rsrc_cost_aglu.FERT_PRICE_YEAR <- 0
+    }
+
     # A21.globaltech_cost and A22.globaltech_cost report costs on primary energy handling (A21) and transformation technologies (A22)
     # Units for both are 1975$/GJ
     # As mentioned above, because 2010 is the year used as the fertilizer base price (from A10.rsrc_info), we will interpolate for
@@ -298,6 +302,10 @@ module_energy_LB1322.Fert <- function(command, ...) {
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A21.globaltech_cost_aglu.FERT_PRICE_YEAR
 
+    if(is.na(A21.globaltech_cost_aglu.FERT_PRICE_YEAR)){
+      A21.globaltech_cost_aglu.FERT_PRICE_YEAR <- 0
+    }
+
     # Interpolate to get cost of primary energy transformation for natural gas in aglu.FERT_PRICE_YEAR
     A22.globaltech_cost %>%
       filter(technology == "natural gas") %>%
@@ -308,6 +316,10 @@ module_energy_LB1322.Fert <- function(command, ...) {
       filter(year == aglu.FERT_PRICE_YEAR) %>%
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A22.globaltech_cost_aglu.FERT_PRICE_YEAR
+
+    if(is.na(A22.globaltech_cost_aglu.FERT_PRICE_YEAR)){
+      A22.globaltech_cost_aglu.FERT_PRICE_YEAR <- 0
+    }
 
     # Sum up costs. Units are 1975 USD per GJ.
     L1322.P_gas_75USDGJ <- A10.rsrc_cost_aglu.FERT_PRICE_YEAR + A21.globaltech_cost_aglu.FERT_PRICE_YEAR +
