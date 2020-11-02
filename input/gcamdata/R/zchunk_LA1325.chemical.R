@@ -63,8 +63,6 @@ module_energy_LA1325.chemical <- function(command, ...) {
     # Construction energy and feedstock input
     en_chemical %>%
       mutate(sector = flow, value = value * unit_ktoe_to_EJ,unit = NULL,flow = NULL) ->
-      #Africa_Eastern and South Asia only have NECHEM, fix it
-      #mutate(value = if_else(region %in% c("Africa_Eastern", "South Asia"), 0, value)) ->
       L1325.in_EJ_R_chemical_F_Y
 
     # fix regions that only have feedstock use
@@ -82,15 +80,14 @@ module_energy_LA1325.chemical <- function(command, ...) {
       anti_join(regions_feedstock_only, by = c("GCAM_region_ID", "year")) ->
       L1325.in_EJ_R_chemical_F_Y
 
-
     #Mapping the fuel used in chemical sector
     L1325.in_EJ_R_chemical_F_Y %>%
       left_join(select(enduse_fuel_aggregation, fuel, chemical), by = "fuel") %>%
       select(-fuel, fuel = chemical) %>%
       na.omit() %>%
-      group_by(region,GCAM_region_ID,year,sector,fuel) %>%
+      group_by(region, GCAM_region_ID, year, sector, fuel) %>%
       summarise(value = sum(value)) %>%
-      ungroup()->
+      ungroup() ->
       L1325.in_EJ_R_chemical_F_Y
 
     ## Heat: drop heat in regions where heat is not modeled as a final fuel
@@ -103,7 +100,7 @@ module_energy_LA1325.chemical <- function(command, ...) {
 
     L1325.in_EJ_R_chemical_F_Y  %>%
       anti_join(region_heat, by = c("GCAM_region_ID", "fuel")) %>% # then drop the regions selected in region_heat
-      group_by(region,GCAM_region_ID, sector, fuel, year) %>%
+      group_by(region, GCAM_region_ID, sector, fuel, year) %>%
       summarise(value = sum(value)) %>%
       ungroup ->
       L1325.in_EJ_R_chemical_F_Y_raw
@@ -119,9 +116,9 @@ module_energy_LA1325.chemical <- function(command, ...) {
                                  group_by(GCAM_region_ID, year, fuel) %>%
                                  summarise(value_new = sum(value)),
                                by = c("GCAM_region_ID",  "fuel", "year")) %>%
-      mutate(value = value -value_ori +value_new) %>%
+      mutate(value = value - value_ori + value_new) %>%
       mutate(value =if_else(value > 0 , value, 0)) %>%
-      select(-value_ori,-value_new) ->
+      select(-value_ori, -value_new) ->
       L1325.in_EJ_R_chemical_F_Y_CHEMICAL
 
     L1325.in_EJ_R_chemical_F_Y_raw %>%
@@ -134,9 +131,9 @@ module_energy_LA1325.chemical <- function(command, ...) {
                                  group_by(GCAM_region_ID, year, fuel) %>%
                                  summarise(value_new = sum(value)),
                                by = c("GCAM_region_ID",  "fuel", "year")) %>%
-      mutate(value = value -value_ori +value_new) %>%
+      mutate(value = value - value_ori + value_new) %>%
       mutate(value =if_else(value > 0 , value, 0)) %>%
-      select(-value_ori,-value_new) ->
+      select(-value_ori, -value_new) ->
       L1325.in_EJ_R_chemical_F_Y_NECHEM
 
     L1325.in_EJ_R_chemical_F_Y_CHEMICAL %>%
@@ -145,14 +142,14 @@ module_energy_LA1325.chemical <- function(command, ...) {
 
 	  #Calculate the remaining industrial energy use and feedstock
     L1324.in_EJ_R_indenergy_F_Yh %>%
-      complete(GCAM_region_ID,nesting(sector,fuel,year), fill = list(value = 0)) %>%
+      complete(GCAM_region_ID, nesting(sector, fuel, year), fill = list(value = 0)) %>%
       rename(raw = value) %>%
       left_join(L1325.in_EJ_R_chemical_F_Y %>%
                   filter(sector == "CHEMICAL") %>%
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value,0)) %>%
+      mutate(value = replace_na(value, 0)) %>%
       mutate(value = raw - value ) ->
       L1325.in_EJ_R_indenergy_F_Yh_tmp
 
@@ -163,7 +160,7 @@ module_energy_LA1325.chemical <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value,0)) %>%
+      mutate(value = replace_na(value, 0)) %>%
       mutate(value = raw - value ) ->
       L1324.in_EJ_R_indfeed_F_Yh
 
@@ -181,15 +178,15 @@ module_energy_LA1325.chemical <- function(command, ...) {
     L1325.in_EJ_R_chemical_F_Y %>%
       filter(sector == "CHEMICAL") %>%
       left_join(indenergy_tmp %>% select(-sector),by = c("GCAM_region_ID", "fuel", "year"))  %>%
-      mutate(raw =replace_na(raw,-1) ,value = if_else(raw < 0 , value, 0)) %>%
-      select(region,GCAM_region_ID,fuel,year,sector,value) ->
+      mutate(raw =replace_na(raw, -1) ,value = if_else(raw < 0 , value, 0)) %>%
+      select(region, GCAM_region_ID, fuel, year, sector, value) ->
       L1325.in_EJ_R_chemical_F_Y_recal
 
     L1325.in_EJ_R_chemical_F_Y %>%
       filter(sector == "NECHEM") %>%
       left_join(indfeed_tmp %>% select(-sector),by = c("GCAM_region_ID", "fuel", "year"))  %>%
-      mutate(raw =replace_na(raw,-1) ,value = if_else(raw < 0 , value, 0)) %>%
-      select(region,GCAM_region_ID,fuel,year,sector,value) ->
+      mutate(raw = replace_na(raw, -1) ,value = if_else(raw < 0 , value, 0)) %>%
+      select(region, GCAM_region_ID, fuel, year, sector, value) ->
       L1325.in_EJ_R_indfeed_F_Yh_recal
 
     #Recalculate
@@ -199,7 +196,7 @@ module_energy_LA1325.chemical <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value,0)) %>%
+      mutate(value = replace_na(value, 0)) %>%
       mutate(value = raw - value , raw = NULL) ->
       L1325.in_EJ_R_indenergy_F_Yh
 
@@ -209,13 +206,13 @@ module_energy_LA1325.chemical <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value,0)) %>%
+      mutate(value = replace_na(value, 0)) %>%
       mutate(value = raw - value , raw = NULL) ->
       L1324.in_EJ_R_indfeed_F_Yh
 
     L1325.in_EJ_R_chemical_F_Y_recal %>%
       bind_rows(L1325.in_EJ_R_indfeed_F_Yh_recal) %>%
-      filter(fuel %in% c("electricity", "gas","refined liquids","biomass","Hydrogen","coal","heat" )) ->
+      filter(fuel %in% c("electricity", "gas", "refined liquids", "biomass", "Hydrogen", "coal", "heat" )) ->
       L1325.in_EJ_R_chemical_F_Y
 
     # ===================================================

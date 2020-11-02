@@ -67,7 +67,7 @@ module_energy_LA1323.IRONSTL <- function(command, ...) {
       L1323.in_EJ_R_IRONSTL_F_Y
 
 	  IO_IRONSTL %>%
-      select(region, GCAM_region_ID,supplysector = "sector.name", subsector = "subsector.name", technology, minicam.energy.input, coefficient) ->
+      select(region, GCAM_region_ID, year, supplysector = "sector.name", subsector = "subsector.name", technology, minicam.energy.input, coefficient) ->
       L1323.IO_GJkg_R_IRONSTL_F_Yh
 
 	#Calculate the remaining industrial energy use
@@ -96,12 +96,12 @@ module_energy_LA1323.IRONSTL <- function(command, ...) {
              fuel = replace(fuel, fuel == "electricity", "elect_td_ind"),
              fuel = replace(fuel, fuel == "refined liquids" ,"refined liquids industrial"),
              fuel = replace(fuel, fuel == "gas" , "wholesale gas")) %>%
-      select(-year,-sector) ->
+      select(-sector) ->
       negative
 
     L1323.IO_GJkg_R_IRONSTL_F_Yh %>%
-      left_join(negative,by = c("GCAM_region_ID","minicam.energy.input" = "fuel")) %>%
-      mutate(coefficient = if_else(replace_na(value,0) < 0, 0, coefficient),value = NULL) ->
+      left_join(negative,by = c("GCAM_region_ID", "year", "minicam.energy.input" = "fuel")) %>%
+      mutate(coefficient = if_else(replace_na(value, 0) < 0, 0, coefficient),value = NULL) ->
       L1323.IO_GJkg_R_IRONSTL_F_Yh
 
     #Recalculate
@@ -110,9 +110,9 @@ module_energy_LA1323.IRONSTL <- function(command, ...) {
       # not exist in the base years, we specify a "technology" column which is equal to the subsector. Note that this
       # method assumes that the techs with market share in the base years have the same name as their parent subsectors
       mutate(technology = subsector) %>%
-      left_join(L1323.IO_GJkg_R_IRONSTL_F_Yh , by = c("subsector", "technology", "GCAM_region_ID", "region")) %>%
+      left_join(L1323.IO_GJkg_R_IRONSTL_F_Yh , by = c("subsector", "technology", "GCAM_region_ID", "region", "year")) %>%
       mutate(value = value * coefficient) %>%
-      select(GCAM_region_ID, year,subsector, technology, minicam.energy.input, value) ->
+      select(GCAM_region_ID, year, subsector, technology, minicam.energy.input, value) ->
       L1323.in_EJ_R_IRONSTL_F_Y
 
     L1322.in_EJ_R_indenergy_F_Yh %>%
