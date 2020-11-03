@@ -619,5 +619,7 @@ create_datamap_from_cache <- function(gcamdata_plan, ...) {
     mutate(data = lapply(data, load_and_tibbilize_helper, chunk, ...)) %>%
     # pull all of the metadata into a single tibble
     pull(data) %>%
-    bind_rows()
+    bind_rows() %>%
+    # convert drake names back to data system names
+    mutate(output = if_else(name == "INPUT", gsub('\\.', '/', output), output))
 }

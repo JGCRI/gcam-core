@@ -1,0 +1,25 @@
+# File: Trn_subsector_revised.csv
+# Title: Map of intermediate sectors in IEA
+# Description: Map of intermediate IEA-GCAM sector to split out mode and size class for purposes of matching UCD_techs
+# Units: NA
+# Column types: ccc
+# ----------
+fuel,mode,size.class
+LDV_4W_Mini Car,LDV_4W,Mini Car
+LDV_4W_Car,LDV_4W,Car
+LDV_4W_Large Car and Truck,LDV_4W,Large Car and Truck
+Truck_Light truck,Truck,Light truck
+Truck_Medium truck,Truck,Medium truck
+Truck_Heavy truck,Truck,Heavy truck
+LDV_2W_3W_2W and 3W,LDV_2W_3W,2W and 3W
+Bus_All,Bus,All
+Air Domestic_All,Air Domestic,All
+Air International_All,Air International,All
+HSR_All,HSR,All
+Rail_All,Rail,All
+Ship Domestic_All,Ship Domestic,All
+Ship International_All,Ship International,All
+Walk_All,Walk,All
+Cycle_All,Cycle,All
+LDV_3W_All,LDV_3W,All
+LDV_4W_All,LDV_4W,All

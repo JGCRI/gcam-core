@@ -1,0 +1,16 @@
+# File: ceds_fuel_map.csv
+# Title: CEDS-GCAM fuel map
+# Units: NA
+# Source: None
+# Description: Maps CEDS fuel categories to CEDS aggregate fuel categories
+# Column types: cc
+CEDS_fuel,CEDS_agg_fuel
+process,process
+biomass,biomass
+brown_coal,coal
+coal_coke,coal
+diesel_oil,refined liquids
+hard_coal,coal
+heavy_oil,refined liquids
+light_oil,refined liquids
+natural_gas,gas
