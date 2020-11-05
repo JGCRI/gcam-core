@@ -282,7 +282,7 @@ module_energy_L2323.IRONSTL <- function(command, ...) {
     L1323.IO_GJkg_R_IRONSTL_F_Yh %>%
       mutate(coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) %>%
       mutate(stub.technology = technology,
-             market.name = region, year = MODEL_FINAL_BASE_YEAR) %>%
+             market.name = region) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
       L2323.StubTechCoef_IRONSTL_tmp
 
@@ -293,10 +293,10 @@ module_energy_L2323.IRONSTL <- function(command, ...) {
       left_join(select(L2323.GlobalTechCoef_IRONSTL %>% rename(terminal_coef = coefficient,supplysector = sector.name,subsector = subsector.name),
                        supplysector, subsector, technology, minicam.energy.input, terminal_coef, year),
                 by = c("supplysector", "subsector", stub.technology = "technology", "minicam.energy.input","year")) %>%
-      left_join(L2323.StubTechCoef_IRONSTL_tmp %>%mutate(year=NULL,coeff = coefficient,coefficient=NULL),
-                 by = c("region", "supplysector", "subsector", "stub.technology", "minicam.energy.input", "market.name")) %>%
-      left_join(L2323.StubTechProd_IRONSTL %>% select(-year,-share.weight.year,-subs.share.weight,-tech.share.weight),
-                by = c("region", "supplysector", "subsector", "stub.technology")) %>%
+      left_join(L2323.StubTechCoef_IRONSTL_tmp %>%mutate(coeff = coefficient,coefficient=NULL),
+                 by = c("region", "supplysector", "subsector", "stub.technology", "minicam.energy.input", "market.name", "year")) %>%
+      left_join(L2323.StubTechProd_IRONSTL %>% select(-share.weight.year,-subs.share.weight,-tech.share.weight),
+                by = c("region", "supplysector", "subsector", "stub.technology", "year")) %>%
       mutate(coefficient = if_else(year > MODEL_FINAL_BASE_YEAR , coeff, coefficient)) %>%
       mutate(coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & stub.technology == "Biomass-based" , terminal_coef, coefficient)) %>%
       mutate(coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & minicam.energy.input == "scrap" , terminal_coef, coefficient)) %>%

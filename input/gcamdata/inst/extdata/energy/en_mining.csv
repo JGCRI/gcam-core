@@ -1,6 +1,6 @@
 # File: en_mining.csv
 # Title: mining energy use by region
-# Units: Thousand tonnes
+# Units: ktoe
 # Description: Regional mining production
 # Source: IEA
 # Column types: ciccnic
