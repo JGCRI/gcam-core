@@ -26,5 +26,3 @@ construction energy use,hydrogen,hydrogen,H2 enduse,1,1,1,1.015,1.03,1.046,1.062
 construction energy use,coal,coal,delivered coal ,0.80808,0.865,0.891,0.901,0.909,0.917,0.926,0.936,0.936
 construction energy use,heat,heat,district heat,1,1,1,1,1,1,1,1,1
 construction feedstocks,refined liquids,refined liquids,refined liquids industrial,1,1,1,1,1,1,1,1,1
-construction feedstocks,gas,gas,wholesale gas,1,1,1,1,1,1,1,1,1
-construction feedstocks,coal,coal,delivered coal ,1,1,1,1,1,1,1,1,1
