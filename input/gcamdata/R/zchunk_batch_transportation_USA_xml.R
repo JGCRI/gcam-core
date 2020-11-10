@@ -102,7 +102,7 @@ module_gcamusa_batch_transportation_USA_xml <- function(command, ...) {
       add_xml_data(L254.tranSubsectorShrwtFllt_USA, "tranSubsectorShrwtFllt") %>%
       add_xml_data(L254.tranSubsectorInterp_USA, "tranSubsectorInterp") %>%
       add_xml_data(L254.tranSubsectorSpeed_USA, "tranSubsectorSpeed") %>%
-      #add_xml_data(L254.tranSubsectorSpeed_passthru_USA, "tranSubsectorSpeed") %>%
+      add_xml_data(L254.tranSubsectorSpeed_passthru_USA, "tranSubsectorSpeed") %>%
       add_xml_data(L254.tranSubsectorSpeed_noVOTT_USA, "tranSubsectorSpeed") %>%
       add_xml_data(L254.tranSubsectorSpeed_nonmotor_USA, "tranSubsectorSpeed") %>%
       add_xml_data(L254.tranSubsectorVOTT_USA, "tranSubsectorVOTT") %>%
