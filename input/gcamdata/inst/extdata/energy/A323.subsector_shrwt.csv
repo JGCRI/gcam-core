@@ -1,9 +1,9 @@
 # File: A323.subsector_shrwt.csv
-# Title: IRONSTL default subsector shareweights
+# Title: Iron and steel default subsector shareweights
 # Units: Unitless
 # Column types: ccccn 
 # ----------
 supplysector,subsector,year.fillout,year,share.weight
-IRONSTL,BLASTFUR,start-year,,1
-IRONSTL,EAF with DRI,start-year,,1
-IRONSTL,EAF with scrap,start-year,,1
+iron and steel,BLASTFUR,start-year,,1
+iron and steel,EAF with DRI,start-year,,1
+iron and steel,EAF with scrap,start-year,,1

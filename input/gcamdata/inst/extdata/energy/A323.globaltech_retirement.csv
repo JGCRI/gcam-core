@@ -1,5 +1,5 @@
 # File: A323.globaltech_retirement.csv
-# Title: IRONSTL technology lifetimes and shutdown rates
+# Title: Iron and steel technology lifetimes and shutdown rates
 # Units: Years for lifetime and half.life; Unitless for shutdown.rate; steepness; median.shutdown.point; profit.shutdown.steepness
 # Comments: maximum lifetime of cohort. If no retirement function is used; the entire cohort is retired in this number of years.
 #           shutdown.rate: portion of cohort retired each year; used by the phased-shutdown-decider retirement function.
@@ -10,19 +10,19 @@
 # Column types: ccccicinni
 # ----------
 supplysector,subsector,technology,year,lifetime,shutdown.rate,half.life,steepness,median.shutdown.point,profit.shutdown.steepness
-IRONSTL,BLASTFUR,BLASTFUR,final-calibration-year,40,,20,0.3,-0.5,6
-IRONSTL,BLASTFUR,BLASTFUR CCS,final-calibration-year,40,,20,0.3,-0.5,6
-IRONSTL,BLASTFUR,Biomass-based,final-calibration-year,40,,20,0.3,-0.5,6
-IRONSTL,EAF with DRI,EAF with DRI,final-calibration-year,40,,20,0.3,-0.5,6
-IRONSTL,EAF with DRI,EAF with DRI CCS,final-calibration-year,40,,20,0.3,-0.5,6
-IRONSTL,EAF with DRI,Hydrogen-based DRI,final-calibration-year,40,,20,0.3,-0.5,6
-IRONSTL,EAF with scrap,EAF with scrap,final-calibration-year,40,,20,0.3,-0.5,6
-IRONSTL,EAF with scrap,EAF with scrap CCS,final-calibration-year,40,,20,0.3,-0.5,6
-IRONSTL,BLASTFUR,BLASTFUR,initial-future-year,40,,20,0.3,-0.5,6
-IRONSTL,BLASTFUR,BLASTFUR CCS,initial-future-year,40,,20,0.3,-0.5,6
-IRONSTL,BLASTFUR,Biomass-based,initial-future-year,40,,20,0.3,-0.5,6
-IRONSTL,EAF with DRI,EAF with DRI,initial-future-year,40,,20,0.3,-0.5,6
-IRONSTL,EAF with DRI,EAF with DRI CCS,initial-future-year,40,,20,0.3,-0.5,6
-IRONSTL,EAF with DRI,Hydrogen-based DRI,initial-future-year,40,,20,0.3,-0.5,6
-IRONSTL,EAF with scrap,EAF with scrap,initial-future-year,40,,20,0.3,-0.5,6
-IRONSTL,EAF with scrap,EAF with scrap CCS,initial-future-year,40,,20,0.3,-0.5,6
+iron and steel,BLASTFUR,BLASTFUR,final-calibration-year,40,,20,0.3,-0.5,6
+iron and steel,BLASTFUR,BLASTFUR CCS,final-calibration-year,40,,20,0.3,-0.5,6
+iron and steel,BLASTFUR,Biomass-based,final-calibration-year,40,,20,0.3,-0.5,6
+iron and steel,EAF with DRI,EAF with DRI,final-calibration-year,40,,20,0.3,-0.5,6
+iron and steel,EAF with DRI,EAF with DRI CCS,final-calibration-year,40,,20,0.3,-0.5,6
+iron and steel,EAF with DRI,Hydrogen-based DRI,final-calibration-year,40,,20,0.3,-0.5,6
+iron and steel,EAF with scrap,EAF with scrap,final-calibration-year,40,,20,0.3,-0.5,6
+iron and steel,EAF with scrap,EAF with scrap CCS,final-calibration-year,40,,20,0.3,-0.5,6
+iron and steel,BLASTFUR,BLASTFUR,initial-future-year,40,,20,0.3,-0.5,6
+iron and steel,BLASTFUR,BLASTFUR CCS,initial-future-year,40,,20,0.3,-0.5,6
+iron and steel,BLASTFUR,Biomass-based,initial-future-year,40,,20,0.3,-0.5,6
+iron and steel,EAF with DRI,EAF with DRI,initial-future-year,40,,20,0.3,-0.5,6
+iron and steel,EAF with DRI,EAF with DRI CCS,initial-future-year,40,,20,0.3,-0.5,6
+iron and steel,EAF with DRI,Hydrogen-based DRI,initial-future-year,40,,20,0.3,-0.5,6
+iron and steel,EAF with scrap,EAF with scrap,initial-future-year,40,,20,0.3,-0.5,6
+iron and steel,EAF with scrap,EAF with scrap CCS,initial-future-year,40,,20,0.3,-0.5,6

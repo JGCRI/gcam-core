@@ -1,7 +1,7 @@
 # File: A323.subsector_logit_Global.csv
-# Title: IRONSTL default subsector logit exponents
+# Title: Iron and steel default subsector logit exponents
 # Units: None
 # Column types: ccnn
 # ----------
 supplysector,subsector,logit.exponent,logit.type
-IRONSTL,IRONSTL,-3,
+iron and steel,iron and steel,-3,

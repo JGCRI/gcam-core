@@ -1,14 +1,14 @@
 # File: A323.globaltech_cost.csv
-# Title: IRONSTL default costs
-# Units: 1975$/kg for supplysector IRONSTL
+# Title: Iron and steel default costs
+# Units: 1975$/kg for supplysector iron and steel
 # Column types: ccccnnnn
 # ----------
 supplysector,subsector,technology,minicam.non.energy.input,1971,2010,2050,2100
-IRONSTL,BLASTFUR,BLASTFUR,non-energy,0.15223572,0.15223572,0.15223572,0.15223572
-IRONSTL,BLASTFUR,BLASTFUR CCS,non-energy,0.19876768,0.19876768,0.19876768,0.19876768
-IRONSTL,BLASTFUR,Biomass-based,non-energy,0.15223572,0.15223572,0.15223572,0.15223572
-IRONSTL,EAF with DRI,EAF with DRI,non-energy,0.12137964,0.12137964,0.12137964,0.12137964
-IRONSTL,EAF with DRI,EAF with DRI CCS,non-energy,0.13377164,0.13377164,0.13377164,0.13377164
-IRONSTL,EAF with DRI,Hydrogen-based DRI,non-energy,0.12137964,0.12137964,0.12137964,0.12137964
-IRONSTL,EAF with scrap,EAF with scrap,non-energy,0.0737324,0.0737324,0.0737324,0.0737324
-IRONSTL,EAF with scrap,EAF with scrap CCS,non-energy,0.0861244,0.0861244,0.0861244,0.0861244
+iron and steel,BLASTFUR,BLASTFUR,non-energy,0.15223572,0.15223572,0.15223572,0.15223572
+iron and steel,BLASTFUR,BLASTFUR CCS,non-energy,0.19876768,0.19876768,0.19876768,0.19876768
+iron and steel,BLASTFUR,Biomass-based,non-energy,0.15223572,0.15223572,0.15223572,0.15223572
+iron and steel,EAF with DRI,EAF with DRI,non-energy,0.12137964,0.12137964,0.12137964,0.12137964
+iron and steel,EAF with DRI,EAF with DRI CCS,non-energy,0.13377164,0.13377164,0.13377164,0.13377164
+iron and steel,EAF with DRI,Hydrogen-based DRI,non-energy,0.12137964,0.12137964,0.12137964,0.12137964
+iron and steel,EAF with scrap,EAF with scrap,non-energy,0.0737324,0.0737324,0.0737324,0.0737324
+iron and steel,EAF with scrap,EAF with scrap CCS,non-energy,0.0861244,0.0861244,0.0861244,0.0861244

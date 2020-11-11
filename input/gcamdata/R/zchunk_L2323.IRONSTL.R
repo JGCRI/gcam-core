@@ -261,7 +261,7 @@ module_energy_L2323.IRONSTL <- function(command, ...) {
 
     L1323.out_Mt_R_IRONSTL_Yh %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT), sector = "IRONSTL") %>%
+      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT), sector = "iron and steel") %>%
       left_join(calibrated_techs_export %>% select(sector,supplysector, subsector,technology), by = c("sector","subsector")) %>%
       mutate(stub.technology = technology,
              share.weight.year = year,

@@ -4,4 +4,4 @@
 # Column types: ccccnc
 # ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
-IRONSTL,Mt,Mt,1975$/kg,-3,
+iron and steel,Mt,Mt,1975$/kg,-3,

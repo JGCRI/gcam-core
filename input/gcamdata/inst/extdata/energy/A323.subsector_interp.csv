@@ -1,9 +1,9 @@
 # File: A323.subsector_interp.csv
-# Title: IRONSTL default subsector shareweight interpolation
+# Title: Iron and steel default subsector shareweight interpolation
 # Units: NA
 # Column types: ccccccc
 # ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
-IRONSTL,BLASTFUR,share-weight,final-calibration-year,end-year,,fixed
-IRONSTL,EAF with DRI,share-weight,final-calibration-year,end-year,,fixed
-IRONSTL,EAF with scrap,share-weight,final-calibration-year,end-year,,fixed
+iron and steel,BLASTFUR,share-weight,final-calibration-year,end-year,,fixed
+iron and steel,EAF with DRI,share-weight,final-calibration-year,end-year,,fixed
+iron and steel,EAF with scrap,share-weight,final-calibration-year,end-year,,fixed

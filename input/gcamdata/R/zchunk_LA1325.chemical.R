@@ -70,8 +70,7 @@ module_energy_LA1325.chemical <- function(command, ...) {
       group_by(region, GCAM_region_ID, year, sector) %>%
       summarise(value = sum(value)) %>%
       spread(sector, value) %>%
-      replace_na(list(CHEMICAL = 0, NECHEM = 0)) %>%
-      filter(CHEMICAL == 0 & NECHEM > 0) %>%
+      filter(is.na(CHEMICAL) & NECHEM > 0) %>%
       ungroup() %>%
       select(GCAM_REGION_ID, year) ->
       regions_feedstock_only
