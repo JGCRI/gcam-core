@@ -73,3 +73,4 @@ xcuserdata
 *.moved-aside
 *.xcuserstate
 .Rproj.user
+libs/
