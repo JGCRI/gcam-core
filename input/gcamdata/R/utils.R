@@ -35,6 +35,7 @@ find_header <- function(fqfn) {
 #' @param filenames Character vector of filenames to load
 #' @param optionals Logical vector, specifying whether corresponding file is optional
 #' @param quiet Logical - suppress messages?
+#' @param dummy Not used, here as a hack for drake
 #' @param ... Any other parameter to pass to \code{readr::read_csv}
 #' @details The data frames read in are marked as inputs, not ones that have
 #' been computed, via \code{\link{add_comments}}. Optional files that are not found
@@ -43,7 +44,7 @@ find_header <- function(fqfn) {
 #' @importFrom magrittr "%>%"
 #' @importFrom methods is
 #' @importFrom assertthat assert_that
-load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
+load_csv_files <- function(filenames, optionals, quiet = FALSE, dummy = NULL, ...) {
   assert_that(is.character(filenames))
   assert_that(is.logical(optionals))
   assert_that(is.logical(quiet))
@@ -220,10 +221,16 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
   assert_that(is.logical(optional))
   assert_that(is.logical(quiet))
 
-  extensions <- c("", ".csv", ".csv.gz")
+  extensions <- c(".csv", ".csv.gz", "")
   for(ex in extensions) {
     fqfn <- system.file("extdata", paste0(filename, ex), package = "gcamdata")
     if(fqfn != "") {
+      # check if a relative path to the file is shorter than the absolute in
+      # hopes of being able to stay within windows file path length limits
+      fn_rel <- get_relative_to_workdir(fqfn)
+      if(nchar(fn_rel) < nchar(fqfn)) {
+        fqfn <- fn_rel
+      }
       if(!quiet) cat("Found", fqfn, "\n")
       return(fqfn)  # found it
     }
@@ -233,6 +240,43 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
   } else {
     stop("Couldn't find required data ", filename)
   }
+}
+
+#' Normalize file path to the working directory
+#'
+#' On Windows we may run into the MAX_PATH file path limit when referencing
+#' files using the absolute path.  This method will normalize the file path
+#' to the working directory which _may_ be shorter.
+#'
+#' @param fqfn The full path of the file to normalize.
+#' @return A relative path to \code{fqfn} from the current working directory
+#' given by \code{getwd()}.
+get_relative_to_workdir <- function(fqfn) {
+  # split the paths using the path separator '/' which R uses consistently
+  # across platforms
+  fqfn_split <- strsplit(fqfn, '/')[[1]]
+  wd_split <- c(strsplit(getwd(), '/')[[1]])
+
+  # figure out where the file paths diverge
+  wd_match <- wd_split == fqfn_split[seq_along(wd_split)]
+  diverge_index <- which(!wd_match, arr.ind = TRUE)
+  if(length(diverge_index) == 0) {
+    # case where the entire working dir path matches
+    diverge_index <- length(wd_split) + 1
+  } else {
+    # only part of the path matches
+    # we need to make sure we get first / earliest divergence
+    diverge_index <- diverge_index[1]
+  }
+
+  # to make the path relative we need to:
+  # 1) add as many .. as the number of dirs that diverged in the working directory
+  # 2) remove all dirs from fqfn prior to diverge_index
+  # 3) paste it all together with the path separator '/'
+  fqfn_rel <- paste0(c(rep('..', times = length(wd_split) - diverge_index + 1),
+                       fqfn_split[diverge_index:length(fqfn_split)]), collapse = '/')
+
+  fqfn_rel
 }
 
 
@@ -493,4 +537,89 @@ screen_forbidden <- function(fn) {
     }
   }
   rslt
+}
+
+# some utils specific for dealing with drake
+
+#' load_from_cache
+#'
+#' Load the given chunk inputs / outputs from the drake cache.  The
+#' names given can come from \code{inputs_of} or \code{outputs_of} for
+#' instance.
+#'
+#' @param return_data_names The names of the data to return.
+#' @param ... Parameters to pass directly to drake::readd to allow
+#' users to specify a non-default cache for instance.
+#' @return The data loaded from cache returned as a list in the
+#' same format as all_data.
+#' @export
+load_from_cache <- function(return_data_names, ...) {
+  # gracefully handle an empty request
+  if(length(return_data_names) == 0) {
+    return(c())
+  }
+
+  # convert to drake target names
+  sanitized_names <- make.names(return_data_names)
+
+  # we need to filter the ... arguments to only those that drake::readd takes
+  all_ellipsis_args <- list(...)
+  readd_args <- all_ellipsis_args[names(all_ellipsis_args) %in% names(formals(drake::readd))]
+  # by default readd is interpreting the target as symbol so we must force
+  # character_only = TRUE
+  readd_args[["character_only"]] <- TRUE
+
+  # readd can only one target at a time so we need to wrap it in an apply
+  ret_data <- sapply(sanitized_names, function(target) {
+    readd_args[["target"]] <- target
+    do.call(drake::readd, readd_args)
+  })
+  # reset names to the gcamdata names as users would otherwise expect
+  names(ret_data) <- return_data_names
+
+  invisible(ret_data)
+}
+
+#' create_datamap_from_cache
+#'
+#' Re-creates the GCAM data map by pulling the data out of cache and processing
+#' its metadata.  We need to know the plan to be able to identify which data to
+#' to pull and the chunk names that generated them.
+#'
+#' @param gcamdata_plan The drake plan that generated the outputs
+#' @param ... Parameters to pass directly to drake::readd to allow
+#' users to specify a non-default cache for instance.
+#' @return The full GCAM data map
+#' @importFrom magrittr "%>%"
+#' @importFrom dplyr pull mutate if_else select group_by bind_rows
+create_datamap_from_cache <- function(gcamdata_plan, ...) {
+  target <- command <- chunk <- data <- NULL    # silence notes on package check.
+
+  # a helper function to use in an lapply to combine the steps:
+  # 1) decay a tibble of targets to a character vector
+  # 2) load data from cache
+  # 3) run the data through tibbelize_outputs
+  load_and_tibbilize_helper <- function(target_df, chunk, ...) {
+    tibbelize_outputs(load_from_cache(pull(target_df, target), ...), chunk)
+  }
+
+  gcamdata_plan %>%
+    # only need targets that load inputs or are outputs of a chunk
+    # we can find those by knowing:
+    # INPUT have commands that start with load_csv_files
+    # chunks outputs have commands that look like chunk['chunk_output_name']
+    mutate(chunk = if_else(grepl("load_csv_files", command), "INPUT", sub('\\[.*', '', command))) %>%
+    filter(chunk == "INPUT" | grepl("]$", command)) %>%
+    select(-command) %>%
+    # we would like to "nest" targets by chunk so we can call tibbelize_outputs
+    # for each chunk and a vector of "targets" which are related
+    tidyr::nest(target) %>%
+    # also group by to ensure we call load_and_tibbilize_helper once per chunk
+    group_by(chunk) %>%
+    mutate(data = lapply(data, load_and_tibbilize_helper, chunk, ...)) %>%
+    # pull all of the metadata into a single tibble
+    pull(data) %>%
+    bind_rows() %>%
+    # convert drake names back to data system names
+    mutate(output = if_else(name == "INPUT", gsub('\\.', '/', output), output))
 }

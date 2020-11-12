@@ -48,7 +48,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              "L154.loadfactor_R_trn_m_sz_tech_F_Y",
              "L154.cost_usdvkm_R_trn_m_sz_tech_F_Y",
              "L154.speed_kmhr_R_trn_m_sz_tech_F_Y",
-             "L154.out_mpkm_R_trn_nonmotor_Yh"))
+             "L154.out_mpkm_R_trn_nonmotor_Yh",
+             "L154.IEA_histfut_data_times_UCD_shares"))
   } else if(command == driver.MAKE) {
 
     ## silence package check.
@@ -339,11 +340,11 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       filter( UCD_trn_data, variable %in% c("intensity", "load factor", "speed")),
       UCD_trn_cost_data,
       UCD_trn_data_allyears)
-      # Fill out all missing values with the nearest available year that is not missing
-      #kbn 2020-06-02: Removing duplicates here. If they exist.
+    # Fill out all missing values with the nearest available year that is not missing
+    #kbn 2020-06-02: Removing duplicates here. If they exist.
     UCD_trn_data_fillout %>%  distinct()->UCD_trn_data_fillout
 
-      #kbn 2020 adding data.table here to increase speed.
+    #kbn 2020 adding data.table here to increase speed.
     UCD_trn_data_fillout <- as.data.table(UCD_trn_data_fillout)
     #Set order
     #Changing below to year so that we don't add values for intermittent years for SSPs
@@ -370,7 +371,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
     IEA_histfut_data_times_UCD_shares <- IEA_hist_data_times_UCD_shares %>%
       bind_rows(IEA_fut_data_times_UCD_shares) #%>%
-      #kbn 2020-01-29 Adding sce below. Changes described in detail in comment with search string,kbn 2020-03-26.
+    #kbn 2020-01-29 Adding sce below. Changes described in detail in comment with search string,kbn 2020-03-26.
     #kbn 2020-01-29 tUse data.table here instead of dplyr. Changes described in detail in comment with search string,kbn 2020-03-26.
     IEA_histfut_data_times_UCD_shares <- IEA_histfut_data_times_UCD_shares
     IEA_histfut_data_times_UCD_shares <- as.data.table(IEA_histfut_data_times_UCD_shares)
@@ -413,9 +414,9 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     # we are trying to lose columns where the load factor, intensity and non-fuel costs are all not NAs but the speed IS an NA. We would
     #have to use a subset, but given the size of the dataset, the code below is much faster.
     UCD_trn_data_variable_spread<-UCD_trn_data_variable_spread[!(is.na(UCD_trn_data_variable_spread$`load factor`)&
-                                                               !(is.na(UCD_trn_data_variable_spread$intensity)) &
-                                                              !(is.na(UCD_trn_data_variable_spread$`non-fuel costs`)) &
-                                                                (is.na(UCD_trn_data_variable_spread$speed))),]
+                                                                   !(is.na(UCD_trn_data_variable_spread$intensity)) &
+                                                                   !(is.na(UCD_trn_data_variable_spread$`non-fuel costs`)) &
+                                                                   (is.na(UCD_trn_data_variable_spread$speed))),]
 
     ALL_ctry_var <- IEA_histfut_data_times_UCD_shares %>%
       left_join_error_no_match(UCD_ctry, by = "iso") %>%
@@ -440,8 +441,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       select(UCD_sector, year, UCD_region, speed, paste(energy.TRAN_UCD_MODE), paste(energy.TRAN_UCD_SIZE_CLASS),sce) %>%
       filter(!is.na(speed))
 
-     #Get speed data by modes
-     speed_data_by_mode <- speed_data %>% select("UCD_sector", paste(energy.TRAN_UCD_MODE), "UCD_region","speed") %>% distinct()
+    #Get speed data by modes
+    speed_data_by_mode <- speed_data %>% select("UCD_sector", paste(energy.TRAN_UCD_MODE), "UCD_region","speed") %>% distinct()
 
 
     #kbn 2019-10-10 joining by new categories. Changes described in detail in comment with search string,kbn 2020-03-26.
@@ -453,20 +454,20 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       #kbn 2020-01-29 Adding sce below. Changes described in detail in comment with search string,kbn 2020-03-26.
       left_join_keep_first_only(speed_data_by_mode ,
                                 by = c("UCD_sector", paste(energy.TRAN_UCD_MODE), "UCD_region"))
-      #kbn 2020 Using data tables here instead of dplyr to increase processing time. Changes described in detail in comment with search string,kbn 2020-03-26.
-      ALL_ctry_var <- as.data.table(ALL_ctry_var)
-      ALL_ctry_var[, speed.x := if_else(is.na(speed.x), speed.y, speed.x)]
-      ALL_ctry_var[, speed.x := if_else(is.na(speed.x), 1, speed.x)]
-      ALL_ctry_var <- as_tibble(ALL_ctry_var)
-      #Separate out this by CORE and for SSPs
-      ALL_ctry_var_CORE <- ALL_ctry_var %>%
-        filter(sce=="CORE") %>%
-        select(-sce) %>%
-        select("UCD_technology","UCD_fuel", "UCD_sector", "rev.mode", "rev_size.class","mode","size.class", "year", "GCAM_region_ID","load factor","weight_EJ","intensity","non-fuel costs") %>%
-        rename(loadfactor_CORE = `load factor`, weight_EJ_core = weight_EJ, intensity_CORE =intensity, non_fuel_cost_core = `non-fuel costs`)
+    #kbn 2020 Using data tables here instead of dplyr to increase processing time. Changes described in detail in comment with search string,kbn 2020-03-26.
+    ALL_ctry_var <- as.data.table(ALL_ctry_var)
+    ALL_ctry_var[, speed.x := if_else(is.na(speed.x), speed.y, speed.x)]
+    ALL_ctry_var[, speed.x := if_else(is.na(speed.x), 1, speed.x)]
+    ALL_ctry_var <- as_tibble(ALL_ctry_var)
+    #Separate out this by CORE and for SSPs
+    ALL_ctry_var_CORE <- ALL_ctry_var %>%
+      filter(sce=="CORE") %>%
+      select(-sce) %>%
+      select("UCD_technology","UCD_fuel", "UCD_sector", "rev.mode", "rev_size.class","mode","size.class", "year", "GCAM_region_ID","load factor","weight_EJ","intensity","non-fuel costs") %>%
+      rename(loadfactor_CORE = `load factor`, weight_EJ_core = weight_EJ, intensity_CORE =intensity, non_fuel_cost_core = `non-fuel costs`)
 
 
-      ALL_ctry_var %>%
+    ALL_ctry_var %>%
       filter(sce != "CORE") %>%
       left_join_keep_first_only(ALL_ctry_var_CORE, by= c("UCD_technology","UCD_fuel", "UCD_sector", "mode", "size.class","rev.mode","rev_size.class", "year", "GCAM_region_ID")) %>%
       mutate(weight_EJ =if_else(is.na(weight_EJ),weight_EJ_core,weight_EJ),intensity =if_else(is.na(intensity),intensity_CORE,intensity), `load factor`=if_else(is.na(`load factor`),loadfactor_CORE,`load factor`), `non-fuel costs`=if_else(`non-fuel costs` == 0,non_fuel_cost_core,`non-fuel costs`)) %>%
@@ -474,22 +475,22 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       filter(`non-fuel costs` != 0)-> ALL_ctry_var_SSPS
 
 
-      #kbn 2020 bind using rbindlist to increase processing speed. A separate PR submitted on github to functionalize this for future use.
-      list_for_bind=list ((ALL_ctry_var %>%  filter(sce=="CORE")), (ALL_ctry_var_SSPS) )
-      ALL_ctry_var <- rbindlist(list_for_bind, use.names=TRUE)
+    #kbn 2020 bind using rbindlist to increase processing speed. A separate PR submitted on github to functionalize this for future use.
+    list_for_bind=list ((ALL_ctry_var %>%  filter(sce=="CORE")), (ALL_ctry_var_SSPS) )
+    ALL_ctry_var <- rbindlist(list_for_bind, use.names=TRUE)
 
 
     size_class<-(paste(energy.TRAN_UCD_SIZE_CLASS,".x",sep=""))
     ALL_region_var <- ALL_ctry_var %>%
       mutate(Tvkm = weight_EJ / intensity,
-           Tpkm = Tvkm * `load factor`,
-            Tusd = Tvkm * `non-fuel costs`,
-            Thr = Tvkm / speed.x) %>%
+             Tpkm = Tvkm * `load factor`,
+             Tusd = Tvkm * `non-fuel costs`,
+             Thr = Tvkm / speed.x) %>%
       #kbn 2019-10-09 calculate weighted volumes below using revised size classes
       #kbn 2020-01-29 Adding sce below. Changes described in detail in comment with search string,kbn 2020-03-26.
-     group_by(UCD_technology,UCD_fuel, UCD_sector, !!(as.name(energy.TRAN_UCD_MODE)), !!(as.name(energy.TRAN_UCD_SIZE_CLASS)), year, GCAM_region_ID,sce) %>%
-     summarise(weight_EJ = sum(weight_EJ), Tvkm = sum(Tvkm), Tpkm = sum(Tpkm),Tusd = sum(Tusd), Thr = sum(Thr)) %>%
-     ungroup()
+      group_by(UCD_technology,UCD_fuel, UCD_sector, !!(as.name(energy.TRAN_UCD_MODE)), !!(as.name(energy.TRAN_UCD_SIZE_CLASS)), year, GCAM_region_ID,sce) %>%
+      summarise(weight_EJ = sum(weight_EJ), Tvkm = sum(Tvkm), Tpkm = sum(Tpkm),Tusd = sum(Tusd), Thr = sum(Thr)) %>%
+      ungroup()
 
 
 
@@ -564,6 +565,21 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "UCD_trn_data_SSP1","UCD_trn_data_SSP3","UCD_trn_data_SSP5","UCD_trn_data_SSP2","UCD_trn_data_CORE",
                      "energy/mappings/UCD_size_class_revisions") ->
       L154.in_EJ_R_trn_m_sz_tech_F_Yh
+
+    #Adding outputs for country level data
+    IEA_histfut_data_times_UCD_shares %>%
+      add_title("Country transportation energy data at UCD transportation technology level") %>%
+      add_units("EJ") %>%
+      add_comments("Aggregated country-level transportation energy data to UCD transportation technologies") %>%
+      add_comments("Scaled to transport end-use data") %>%
+      add_legacy_name("L154.IEA_hist_data_times_UCD_shares") %>%
+      add_precursors("common/iso_GCAM_regID", "L101.in_EJ_ctry_trn_Fi_Yh",
+                     "L1011.in_EJ_ctry_intlship_TOT_Yh", "L131.in_EJ_R_Senduse_F_Yh",
+                     "energy/mappings/calibrated_techs_trn_agg", "energy/mappings/enduse_fuel_aggregation",
+                     "energy/mappings/UCD_ctry", "energy/mappings/UCD_techs",
+                     "UCD_trn_data_SSP1","UCD_trn_data_SSP3","UCD_trn_data_SSP5","UCD_trn_data_SSP2","UCD_trn_data_CORE",
+                     "energy/mappings/UCD_size_class_revisions") ->L154.IEA_histfut_data_times_UCD_shares
+
 
     IEA_hist_data_times_UCD_shares %>%
       add_title("Country-level transportation energy data at UCD transportation technology level") %>%
@@ -652,7 +668,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     return_data(L154.in_EJ_R_trn_m_sz_tech_F_Yh, L154.in_EJ_ctry_trn_m_sz_tech_F,
                 L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y, L154.loadfactor_R_trn_m_sz_tech_F_Y,
                 L154.cost_usdvkm_R_trn_m_sz_tech_F_Y, L154.speed_kmhr_R_trn_m_sz_tech_F_Y,
-                L154.out_mpkm_R_trn_nonmotor_Yh)
+                L154.out_mpkm_R_trn_nonmotor_Yh,L154.IEA_histfut_data_times_UCD_shares)
   } else {
     stop("Unknown command")
   }

@@ -46,7 +46,6 @@
 #include "technologies/include/ishutdown_decider.h"
 
 #include <string>
-struct ProductionFunctionInfo;
 
 /*! 
  * \ingroup Objects
@@ -81,8 +80,6 @@ class ProfitShutdownDecider: public IShutdownDecider
 {
     friend class ShutdownDeciderFactory;
 
-    // Allow SGM technology to create the ProfitShutdownDecider directly.
-    friend class ProductionTechnology;
 public:
     ~ProfitShutdownDecider();
     
@@ -100,8 +97,7 @@ public:
                              Tabs* aTabs ) const;
 
     // IShutdownDecider methods.
-    virtual double calcShutdownCoef( const ProductionFunctionInfo* aFuncInfo,
-                                     const double aCalculatedProfits,
+    virtual double calcShutdownCoef( const double aCalculatedProfits,
                                      const std::string& aRegionName,
                                      const std::string& aSectorName,
                                      const int aInitialTechYear,

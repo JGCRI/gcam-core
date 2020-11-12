@@ -10,6 +10,7 @@ YEAR_PATTERN             <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three dig
 LOGIT_TYPE_COLNAME       <- "logit.type"        # will be removed by test code before old-new comparison
 DISABLED_MODULES         <- "NONE"
 
+
 # Flags ======================================================================
 
 FLAG_INPUT_DATA      <- "FLAG_INPUT_DATA"       # input data, don't output
@@ -54,6 +55,9 @@ driver.MAKE            <- "MAKE"
 driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
 driver.DECLARE_INPUTS  <- "DECLARE_INPUTS"
 
+#Set the driver source to EDGAR to switch back to old emissions structure.
+driver.EMISSIONS_SOURCE <- "CEDS"
+#driver.EMISSIONS_SOURCE <- "EDGAR"
 
 # Data and utility constants ======================================================================
 
@@ -110,7 +114,24 @@ CONV_KBBL_BBL <- 1000 # thousand barrels to barrels
 CONV_BBL_TONNE_RFO <- 1 / 6.66 # barrels to tons residual fuel oil
 CONV_TONNE_GJ_RFO <- 40.87 # tons to GJ residual fuel oil
 CONV_BBL_TONNE_DISTILLATE <- 1 / 7.46 # barrels to tons distillate
-CONV_TONNE_GJ_DISTILLATE <- 42.91 # tons to GJ distillate
+CONV_BBL_TONNE_RFO  <- 1 / 6.66       # barrels to tons residual fuel oil
+CONV_G_KG           <- 1e-3           # kilograms to grams
+CONV_GG_TG          <- 0.001          # gigagrams to teragrams
+CONV_HA_BM2         <- 1e-5
+CONV_HA_M2          <- 10000
+CONV_KBBL_BBL       <- 1000           # thousand barrels to barrels
+CONV_KG_TO_TG       <- 1e-9
+CONV_KT_MT          <- 0.001          # kt to Mt
+CONV_NH3_N          <- 14/17          # Nitrogen to Ammonia
+CONV_T_KG           <- 1e3
+CONV_KG_T           <- 1 / CONV_T_KG
+CONV_T_METRIC_SHORT <- 1000 / 908     # Ratio between metric ton and short ton
+CONV_T_MT           <- 1e-6           # t to Mt
+CONV_THA_KGM2       <- 0.1            # tons C/ha -> kg C/m2
+CONV_TON_MEGATON    <- 1e-6
+CONV_TONNE_GJ_DISTILLATE  <- 42.91    # tons to GJ distillate
+CONV_TONNE_GJ_RFO   <- 40.87          # tons to GJ residual fuel oil
+CONV_TST_TG         <- 0.000907       # thousand short tons to Tg
 
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
@@ -189,14 +210,14 @@ aglu.WEIGHT_COTTON_LINT <- 0.4
 # FDS-2008-01, Economic Research Service, United States Department of Agriculture. Available at http://usda.mannlib.cornell.edu/usda/ers/FDS-yearbook/2000s/2008/FDS-yearbook-05-23-2008_Special_Report.pdf
 aglu.PRICERATIO_GRASS_ALFALFA <- 0.7
 
+# Pasture (forage) prices are equal to the hay (foddergrass) price times this exogenous multiplier. Equal to the hay price minus mowing, bundling, and transport.
+aglu.PRICERATIO_PASTURE_HAY <- 0.5
+
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE    <- 0.45
 
 # Conversion from peak biomass to average biomass integrated over the course of the year
 aglu.CCONV_PEAK_AVG <- 0.5
-
-# Meat price elasticity in the USA
-aglu.FOOD_MEAT_P_ELAS_USA <- -0.09
 
 # Constraints for the minimum and maximum harvested:cropped ratios
 # Source: Dalrymple, D.G. 1971, Survey of Multiple Cropping in Less Developed Nations, Foreign Econ. Dev. Serv., U.S. Dep. of Agricul., Washington, D.C.
@@ -451,6 +472,7 @@ energy.OILFRACT_ELEC            <- 1.0 # Fraction of liquids for feedstocks that
 energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity that must come from oil
 
 #kbn 2019-10-11 Adding constant for transportation type. Set this to rev.mode to use revised mode classes, rev_size.class to use revised size classes.
+#To use the old modes and size classes, use mode and size.class for the constants. The default for GCAM are the new modes and size classes.
 
 energy.TRAN_UCD_MODE<-'rev.mode'
 energy.TRAN_UCD_SIZE_CLASS<-'rev_size.class'
@@ -496,11 +518,11 @@ water.AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
 water.COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
 water.COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
 water.COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless)
-water.DEFAULT_UNLIMITED_IRR_WATER_PRICE   <- 0.001 # (Units: 1975$/m3)
+water.DEFAULT_IRR_WATER_PRICE             <- 0.00175 # (Units: 1975$/m3)
 water.DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
 water.DEFAULT_BASEYEAR_WATER_PRICE        <- 0.001
-water.IRR_PRICE_SUBSIDY_MULT              <- 0.01  # Multiplier for irrigation price subsidy (OECD 2009 Managing Water for All)
+water.IRR_PRICE_SUBSIDY_MULT              <- 0.05  # Multiplier for irrigation water price (OECD 2009 Managing Water for All; aiming for 1% of muni water price)
 water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
 water.IRRIGATION                          <- "Irrigation"
 water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
@@ -513,6 +535,7 @@ water.MAPPING_COEF                        <- 1
 water.MAPPING_PMULT                       <- 1
 water.NONIRRIGATION_SECTORS               <- c("Municipal", "Electricity", "Livestock", "Manufacturing", "Mining")
 water.LOGIT_EXP                           <- -6
+water.GW_HIST_MULTIPLIER                  <- 1.01   # Multiplier for the "available" in the "grade hist" grade of groundwater supply curves. Needed to prevent the model from pulling from higher grades in historical periods due to solution tolerance
 
 
 
@@ -540,9 +563,9 @@ water.GROUNDWATER_BETA <- 1.0
 water.DIGITS_GROUND_WATER <- 6 #Digits for rounding
 water.DIGITS_GROUND_WATER_RSC <- 5 #Digits for rounding
 water.DIGITS_RENEW_WATER <- 3 #Digits for rounding
-water.GW_DEPLETION_HISTORICAL <- c(2005, 2010) # Historical years for groundwater depletion
+water.GW_DEPLETION_HISTORICAL <- c(2005, 2010, 2015) # Historical years for groundwater depletion
 water.GW_DEPLETION_BASE_YEAR <- 1990 # Historical year for groundwater depletion calibration
-water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010) # Historical years for freshwater runoff
+water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010, 2015) # Historical years for freshwater runoff
 water.RENEW.COST.GRADE1 <- 0.00001 #Renewable water grade1 cost
 water.RENEW.COST.GRADE2 <- 0.001 #Renewable water grade2 cost
 water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
@@ -552,7 +575,9 @@ water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
 
 # Emissions constants ======================================================================
 
+
 # Time
+emissions.CEDS_YEARS              <- 1971:2019           #Year coverage for CEDS inventory.
 emissions.CTRL_BASE_YEAR          <- 1975                # Year to read in pollution controls
 emissions.DEFOREST_COEF_YEARS     <- c(2000, 2005)
 emissions.EDGAR_HISTORICAL        <- 1971:2008
@@ -566,15 +591,20 @@ emissions.GAINS_YEARS             <- c(2010, 2020, 2030)
 emissions.GHG_CONTROL_READIN_YEAR <- 1975
 emissions.HFC_MODEL_BASE_YEARS    <- MODEL_YEARS[ MODEL_YEARS <= 2010] # We don't want this to change in timeshift
 emissions.INVENTORY_MATCH_YEAR    <- 2009                # Select year from which to calculate fuel emissions coefficients (2009 is currently the most recent)
-emissions.MODEL_BASE_YEARS        <- MODEL_BASE_YEARS[MODEL_BASE_YEARS < 2008]
+emissions.MODEL_BASE_YEARS        <- MODEL_BASE_YEARS
 emissions.NH3_EXTRA_YEARS         <- 1971:1989
 emissions.NH3_HISTORICAL_YEARS    <- 1990:2002
-emissions.SSP_FUTURE_YEARS        <- MODEL_YEARS[MODEL_YEARS %in% 2010:2100]
+emissions.SSP_FUTURE_YEARS        <- MODEL_YEARS[MODEL_YEARS %in% 2015:2100]
 
 # Other emissions constants
 emissions.CONV_C_CO2    <- 44 / 12 # Convert Carbon to CO2
 emissions.F_GAS_UNITS   <- "Gg"
 emissions.TST_TO_TG     <- 0.000907 # Thousand short tons to Tg
+emissions.ZERO_EM_TECH  <- c("electricity", "Electric", "BEV","FCEV","district heat","NG","LA-BEV")  #These technologies get filtered out and no emissions are generated for them. Note that NG emissions for vehicles are added directly from GAINS and not calculated.
+emissions.HIGH_EM_FACTOR_THRESHOLD <- 1000  #All emission factors above this threshold are replaced with the global median of emission factors.
+emissions.GFED_NODATA <- c("ala","bes","blm","ggy","jey","maf","xad","xko","xnc")  #GFED LULC dataset does not contaian data for these isos. These get filtered out so we can use the left_join_error_no_match.
+emissions.UNMGD_LAND_AVG_YRS <- 30 #Years for climatological average for the GFED LULC data.
+
 
 emissions.COAL_SO2_THRESHOLD <- 0.1   # Tg/EJ (here referring to Tg SO2 per EJ of coal electricity)
 emissions.LOW_PCGDP          <- 2.75  # thousand 1990 USD
@@ -615,6 +645,7 @@ gcamusa.SE_NEAR_TERM_YEAR <- 2030  # year after which projected growth rates fro
 gcamusa.AEO_SE_YEAR <- 2050   # year to which AEO 2019 socioeconomic assumptions run
 
 # Assumptions related to coal
+
 # Vintage groups built before 2015 will retire based on an S-curve.
 # Assumed lifetime and S-curve parametetrs for coal units:
 gcamusa.AVG_COAL_PLANT_LIFETIME <- 80
@@ -642,6 +673,7 @@ gcamusa.STATES <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", 
 # USA states with ocean coastline, which can be reasonably assigned offshore carbon storage
 gcamusa.COASTAL_STATES <- c("AK", "AL", "CA", "CT", "DE", "FL", "GA", "HI", "LA", "MA", "MD", "ME", "MS",
                             "NC", "NH", "NJ", "NY", "OR", "RI", "SC", "TX", "VA", "WA")
+
 
 # GCAM-USA grid regions
 gcamusa.GRID_REGIONS <- c("Alaska grid", "California grid", "Central East grid", "Central Northeast grid",  "Central Northwest grid",
@@ -731,7 +763,7 @@ gcamusa.DIGITS_TRNUSA_DEFAULT     <- 1    # Reduce rounding in detailed USA tran
 gcamusa.DIGITS_EMISSIONS          <- 5
 
 # Electricity load segments
-gcamusa.LOAD_SEG_CAL_YEARS <- c(2015, 2010, 2005, 1990)       # Years for which electricity load segments are calibrated
+gcamusa.LOAD_SEG_CAL_YEARS <- c(2015,2010, 2005, 1990)       # Years for which electricity load segments are calibrated
 gcamusa.ELEC_SEGMENT_BASE <- "base load generation"
 gcamusa.ELEC_SEGMENT_INT <- "intermediate generation"
 gcamusa.ELEC_SEGMENT_SUBPEAK <- "subpeak generation"

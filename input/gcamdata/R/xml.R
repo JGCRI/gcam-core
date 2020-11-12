@@ -31,6 +31,17 @@ create_xml <- function(xml_file, mi_header = NULL) {
     invisible()
 }
 
+#' set_xml_file_helper
+#'
+#' @param xml The xml pipeline object
+#' @param fq_name The full path to the XML file
+#' @return The updated XML object.
+set_xml_file_helper <- function(xml, fq_name) {
+  xml$xml_file <- fq_name
+
+  invisible(xml)
+}
+
 #' Add a table to an XML pipeline to include for conversion to XML.
 #'
 #' We need the tibble to convert and a header tag which can be looked up in
@@ -102,7 +113,7 @@ make_run_xml_conversion <- function() {
       close(tmp_conn)
       args <- c(
         "-cp", shQuote(java_cp),
-        "-Xmx1g", # TODO: memory limits?
+        "-Xmx2g", # TODO: memory limits?
         "ModelInterface.ModelGUI2.csvconv.CSVToXMLMain",
         tmpfn, # Read from the temporary file
         shQuote(dot$mi_header),
@@ -294,6 +305,7 @@ add_xml_data_generate_levels <- function(dot, data, header, old_tag, new_tag, nu
     equiv_table
 
   #rename_final <- tag <- NULL  # silence package check notes
+  tag <- NULL # silence package check notes
 
   dot <- add_xml_data(dot, equiv_table, "EQUIV_TABLE", NULL)
 

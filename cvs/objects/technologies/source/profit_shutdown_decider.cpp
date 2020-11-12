@@ -43,9 +43,6 @@
 #include "technologies/include/profit_shutdown_decider.h"
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
-#include "functions/include/function_utils.h"
-#include "functions/include/ifunction.h"
-#include "functions/include/inested_input.h"
 #include "util/base/include/xml_helper.h"
 
 using namespace std;
@@ -145,50 +142,17 @@ void ProfitShutdownDecider::toDebugXML( const int aPeriod, ostream& aOut, Tabs* 
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-double ProfitShutdownDecider::calcShutdownCoef( const ProductionFunctionInfo* aFuncInfo,
-                                                const double aCalculatedProfitRate,
+double ProfitShutdownDecider::calcShutdownCoef( const double aCalculatedProfitRate,
                                                 const string& aRegionName,
                                                 const string& aSectorName,
                                                 const int aInitialTechYear,
                                                 const int aPeriod ) const 
 {
-    // Default scale factor is not to scale.
-    double scaleFactor = 1;
-    // There is no shutdown decision in the base period.
-    if( aPeriod > 0 ){
-        double profitRate;
-        // Calculate the profit rate dynamically.
-        if( aCalculatedProfitRate == getUncalculatedProfitRateConstant() ){
-            // Calculate the profit rate.
-            assert( aFuncInfo );
-
-            double priceReceived = FunctionUtils::getPriceReceived( aRegionName,
-                aSectorName, aPeriod );
-
-            // note that the variable costs should have already been calculated and set
-            // so we can get it by just calling getLevelizedCost.
-            // TODO: we can not compuate it dynamically here because it is a const method and
-            // calc variable costs need to set intermediate price when calculating it
-            double variableCost = aFuncInfo->mNestedInputRoot->getLevelizedCost( aRegionName,
-                                                                                 aSectorName,
-                                                                                 aPeriod );
-
-            // we make this profit rate relative to the priceReceived rather than
-            // absolute difference since that would not be compatible with the
-            // numeraire test
-            profitRate = ( priceReceived - variableCost ) / priceReceived;
-        }
-        else {
-            // Use the passed in profit rate.
-            profitRate = aCalculatedProfitRate;
-        }
-       
-        // Compute Shutdown factor using logistic S-curve.  ScaleFactor that is returned
-        // is actually the fraction not shut down, so it is 1.0 - the shutdown fraction.
-        const double midPointToSteepness = pow( mMedianShutdownPoint + 1, mSteepness );
-        scaleFactor = 1.0 - mMaxShutdown * ( midPointToSteepness / 
-                      ( midPointToSteepness + pow( profitRate + 1, mSteepness ) ) );
-    }
+    // Compute Shutdown factor using logistic S-curve.  ScaleFactor that is returned
+    // is actually the fraction not shut down, so it is 1.0 - the shutdown fraction.
+    const double midPointToSteepness = pow( mMedianShutdownPoint + 1, mSteepness );
+    double scaleFactor = 1.0 - mMaxShutdown * ( midPointToSteepness /
+                         ( midPointToSteepness + pow( aCalculatedProfitRate + 1, mSteepness ) ) );
 
     // Scale factor is between 0 and 1.
     assert( scaleFactor >= 0 && scaleFactor <= 1 );

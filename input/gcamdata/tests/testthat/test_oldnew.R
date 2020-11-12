@@ -37,7 +37,8 @@ test_that("matches old data system output", {
     # They should match! See https://github.com/JGCRI/gcamdata/pull/751#issuecomment-331578990
     # First put what the driver returns and the internal GCAM_DATA_MAP into the same order (can vary if run on PIC for example)
     gcam_data_map <- arrange(gcam_data_map, name, output)
-    gdm_internal <- arrange(gcamdata:::GCAM_DATA_MAP, name, output)
+    data("GCAM_DATA_MAP")
+    gdm_internal <- arrange(GCAM_DATA_MAP, name, output)
 
     # The gcam_data_map that's generated on Travis won't have the proprietary IEA data, so its comments
     # and units may differ
@@ -104,10 +105,7 @@ test_that("matches old data system output", {
         numeric_columns <- sapply(x, class) == "numeric"
         x[numeric_columns] <- round(x[numeric_columns], digits)
 
-        # expect_equivalent no longer accepts rows in different order but we
-        # do want to allow this so we will sort all columms before testing
-        arrange_columns <- select(x, dplyr::everything())
-        arrange(x, arrange_columns)
+        return(x)
       }
 
       expect_identical(dim(olddata), dim(newdata), info = paste("Dimensions are not the same for", basename(newf)))

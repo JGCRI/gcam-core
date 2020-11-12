@@ -50,7 +50,6 @@
 #include "containers/include/batch_runner.h"
 #include "containers/include/mac_generator_scenario_runner.h"
 #include "target_finder/include/policy_target_runner.h"
-#include "target_finder/include/simple_policy_target_runner.h"
 
 using namespace std;
 
@@ -65,8 +64,7 @@ bool ScenarioRunnerFactory::isOfType( const string& aType ) {
     return ( ( aType == SingleScenarioRunner::getXMLNameStatic() )
         || ( aType == MACGeneratorScenarioRunner::getXMLNameStatic() )
         || ( aType == BatchRunner::getXMLNameStatic() )
-        || ( aType == PolicyTargetRunner::getXMLNameStatic() )
-        || ( aType == SimplePolicyTargetRunner::getXMLNameStatic() ) );
+        || ( aType == PolicyTargetRunner::getXMLNameStatic() ) );
 }
 
 /*!
@@ -88,9 +86,6 @@ auto_ptr<IScenarioRunner> ScenarioRunnerFactory::create( const string& aType ) {
     }
     if( aType == PolicyTargetRunner::getXMLNameStatic() ){
         return auto_ptr<IScenarioRunner>( new PolicyTargetRunner );
-    }
-    if( aType == SimplePolicyTargetRunner::getXMLNameStatic() ){
-        return auto_ptr<IScenarioRunner>( new SimplePolicyTargetRunner );
     }
 
     // Unknown type.
@@ -134,11 +129,6 @@ auto_ptr<IScenarioRunner> ScenarioRunnerFactory::createDefault( const list<strin
         && !isExcluded( aExcludedTypes, PolicyTargetRunner::getXMLNameStatic() ) )
     {
         defaultRunner.reset( new PolicyTargetRunner );
-    }
-    else if( conf->getBool( "simple-find-path", false, false )
-        && !isExcluded( aExcludedTypes, SimplePolicyTargetRunner::getXMLNameStatic() ) )
-    {
-        defaultRunner.reset( new SimplePolicyTargetRunner );
     }
     else if( conf->getBool( "createCostCurve", false, false )
         && !isExcluded( aExcludedTypes, MACGeneratorScenarioRunner::getXMLNameStatic() ) )

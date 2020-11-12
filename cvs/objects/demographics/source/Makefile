@@ -13,9 +13,7 @@ OBJS       = age_cohort.o \
              gender.o \
              male.o \
              population.o \
-             population_mini_cam.o \
-             population_sgm_fixed.o \
-             population_sgm_rate.o
+             population_mini_cam.o 
 
 demographics_dir: ${OBJS}
 
