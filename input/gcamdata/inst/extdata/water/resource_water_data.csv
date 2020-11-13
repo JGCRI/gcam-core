@@ -18,7 +18,6 @@ liquids.conventional,OPEC,crude.oil.onshore,Crude oil (onshore),78,37.2,2903
 liquids.conventional,OPEC,natura.gas.liquids.onshore,NGL (onshore),6,5.5,33
 liquids.unconventional,OPEC,crude.oil.heavy,Extra-heavy oil,14,0.2,2
 natural.gas.component,global,conventional.gas,Conventional gas,0,88.9,0
-natural.gas.component,global,gas.unconventional,Unconventional gas,,,
 natural.gas.component,global,coalbed.methane,Coalbed methane,0,0.9,0
 natural.gas.component,global,gas.thight,Thight gas,0.42,2.8,1.2
 natural.gas.component,global,gas.shale,Shale gas,0.42,0.5,0.2
@@ -36,7 +35,6 @@ conventional.oil.onshore,global,onshore,conventional.oil.onshore,132.96,97.2,129
 unconventional.oil.onshore,global,onshore,unconventional.oil.onshore,19.55,2.2,43
 crude oil,global,domestic crude oil,domestic crude oil,77.07,167.7,12924
 crude oil,global,traded crude oil,traded crude oil,77.07,167.7,12924
-unconventional oil,global,unconventional oil production,unconventional oil production,11.17,3.85,43
 gas,global,domestic natural gas,domestic natural gas,0.015,93.1,1.4
 gas,global,traded natural gas,traded natural gas,0.015,93.1,1.4
 coal,global,domestic coal,domestic coal,6.67,166,1108

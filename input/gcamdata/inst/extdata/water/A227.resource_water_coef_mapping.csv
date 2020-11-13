@@ -6,7 +6,6 @@
 # Column types: ccccc 
 # ----------
 fuel,supplysector,subsector,technology,minicam.energy.input
-unconventional oil,unconventional oil production,unconventional oil production,unconventional oil production,WaterTD_W_Primary
 coal,regional coal,domestic coal,domestic coal,WaterTD_W_Primary
 coal,traded coal,traded coal,traded coal,WaterTD_W_Primary
 gas,regional natural gas,domestic natural gas,domestic natural gas,WaterTD_W_Primary
@@ -15,7 +14,6 @@ crude oil,regional crude oil,domestic crude oil,domestic crude oil,WaterTD_W_Pri
 crude oil,traded crude oil,traded crude oil,traded crude oil,WaterTD_W_Primary
 nuclear,nuclearFuelGenII,enrichedUranium,enrichedUranium,WaterTD_W_Primary
 nuclear,nuclearFuelGenIII,enrichedUranium,enrichedUranium,WaterTD_W_Primary
-unconventional oil,unconventional oil production,unconventional oil production,unconventional oil production,WaterTD_C_Primary
 coal,regional coal,domestic coal,domestic coal,WaterTD_C_Primary
 coal,traded coal,traded coal,traded coal,WaterTD_C_Primary
 gas,regional natural gas,domestic natural gas,domestic natural gas,WaterTD_C_Primary

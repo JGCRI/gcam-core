@@ -7,7 +7,7 @@ resource,resource_type,subresource,subresource_type
 coal,resource,coal,subresource
 crude oil,resource,crude oil,subresource
 natural gas,resource,natural gas,subresource
-unconventional oil,resource,unconventional oil,subresource
+crude oil,resource,unconventional oil,subresource
 uranium,resource,uranium,subresource
 biomass,renewresource,generic waste biomass,smooth-renewable-subresource
 distributed_solar,renewresource,distributed_solar,smooth-renewable-subresource

@@ -1,7 +1,7 @@
 # File: A_ff_RegionalSubsector.csv
 # Title: Subsector assumptions for regional fossil fuel markets
 # Units: Various
-# Comments: These subsectors' shareweights evolve over time. They are calibrated to 2010 shares, but become 1 in some "to.year" following an "interpolation.function"
+# Comments: These subsectors' shareweights evolve over time. They are calibrated to 2010 shares," but become 1 in some ""to.year"" following an ""interpolation.function""",,,,,,,,,
 # Source: NA
 # Column types: ccncncccncc
 # ----------
@@ -10,9 +10,6 @@ regional coal,domestic coal,-6,start-year,1,share-weight,final-calibration-year,
 regional coal,imported coal,-6,start-year,1,share-weight,final-calibration-year,2300,1,s-curve,
 regional crude oil,domestic crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
 regional crude oil,imported crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
-regional unconventional oil,domestic unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
-regional unconventional oil,imported unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
-regional oil,unconventional oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
 regional oil,crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,s-curve,
 regional natural gas,domestic natural gas,-6,start-year,1,share-weight,final-calibration-year,2300,1,s-curve,
 regional natural gas,imported natural gas,-6,start-year,1,share-weight,final-calibration-year,2300,1,s-curve,

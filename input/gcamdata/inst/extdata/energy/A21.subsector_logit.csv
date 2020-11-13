@@ -5,7 +5,6 @@
 # ----------
 supplysector,subsector,logit.exponent,traded,logit.type
 regional biomass,regional biomass,-6,0,
-unconventional oil production,unconventional oil production,-6,0,
 regional corn for ethanol,regional corn for ethanol,-6,0,
 regional sugar for ethanol,regional sugar for ethanol,-6,0,
 regional biomassOil,regional biomassOil,-3,0,

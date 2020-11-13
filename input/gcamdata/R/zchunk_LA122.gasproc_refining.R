@@ -363,15 +363,15 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     # (Copied from original text)
     # Where the input names for unconv oil or GTL are equal to the name of the input to the gas processing sector,
     # subtract from the gas processing sector's production
-    if(gas_to_unconv_oil == reg_nat_gas) {
-      L122.out_EJ_R_gasproc_gas_Yh %>%
-        filter(GCAM_region_ID %in% L121.in_EJ_R_unoil_F_Yh$GCAM_region_ID) %>%
-        left_join(select(L121.in_EJ_R_unoil_F_Yh, GCAM_region_ID, fuel, year, in_value = value), by = c("GCAM_region_ID", "fuel", "year")) %>%
-        mutate(value = value - in_value) %>%
-        select(-in_value)%>%
-        bind_rows(filter(L122.out_EJ_R_gasproc_gas_Yh,!(GCAM_region_ID %in% L121.in_EJ_R_unoil_F_Yh$GCAM_region_ID))) ->
-        L122.out_EJ_R_gasproc_gas_Yh
-    }
+    #if(gas_to_unconv_oil == reg_nat_gas) {
+    #  L122.out_EJ_R_gasproc_gas_Yh %>%
+    #    filter(GCAM_region_ID %in% L121.in_EJ_R_unoil_F_Yh$GCAM_region_ID) %>%
+    #    left_join(select(L121.in_EJ_R_unoil_F_Yh, GCAM_region_ID, fuel, year, in_value = value), by = c("GCAM_region_ID", "fuel", "year")) %>%
+    #   mutate(value = value - in_value) %>%
+    #   select(-in_value)%>%
+    #    bind_rows(filter(L122.out_EJ_R_gasproc_gas_Yh,!(GCAM_region_ID %in% L121.in_EJ_R_unoil_F_Yh$GCAM_region_ID))) ->
+    #    L122.out_EJ_R_gasproc_gas_Yh
+    #}
 
     if(gas_to_gtl == reg_nat_gas) {
       L122.out_EJ_R_gasproc_gas_Yh %>%

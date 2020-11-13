@@ -51,11 +51,10 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
 
     #Part 1: Calculate toal consumption of fuels by region
     bind_rows(L1011.en_bal_EJ_R_Si_Fi_Yh,
-              L121.in_EJ_R_TPES_crude_Yh,
-              L121.in_EJ_R_TPES_unoil_Yh) %>%
+              L121.in_EJ_R_TPES_crude_Yh) %>%
       filter(sector == "TPES",
              year %in% HISTORICAL_YEARS,
-             fuel %in% c("gas", "coal", "crude oil", "unconventional oil")) %>%
+             fuel %in% c("gas", "coal", "crude oil")) %>%
       mutate(fuel = if_else(fuel == "gas", "natural gas", fuel)) %>%
       group_by(GCAM_region_ID, fuel, year) %>%
       summarise(value = sum(value)) %>%
@@ -70,7 +69,11 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
                GCAM_region_ID = unique(GCAM_region_names$GCAM_region_ID),
                year = ff_consumption$year,
                fill = list(production = 0)) %>%
-      select(GCAM_region_ID, fuel, year, production) ->
+      group_by(GCAM_region_ID, fuel, year) %>%
+      mutate(production= sum(production)) %>%
+      ungroup() %>%
+      select(GCAM_region_ID, fuel, year, production) %>%
+      distinct()->
       ff_production
 
     #Part 3: Calculate net-trade by subtracting consumption from production by region and year

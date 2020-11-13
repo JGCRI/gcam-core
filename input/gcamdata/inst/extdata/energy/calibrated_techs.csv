@@ -4,9 +4,6 @@
 # Column types: cccccccc 
 # ----------
 sector,fuel,supplysector,subsector,technology,minicam.energy.input,calibration,secondary.output
-unconventional oil production,unconventional oil,unconventional oil production,unconventional oil production,unconventional oil production,unconventional oil,output,
-unconventional oil production,gas,unconventional oil production,unconventional oil production,unconventional oil production,regional natural gas,output,
-unconventional oil production,electricity,unconventional oil production,unconventional oil production,unconventional oil production,elect_td_ind,output,
 electricity generation,coal,electricity,coal,coal (conv pul),regional coal,input,heat
 electricity generation,gas,electricity,gas,gas (steam/CT),wholesale gas,input,heat
 electricity generation,gas,electricity,gas,gas (CC),wholesale gas,input,

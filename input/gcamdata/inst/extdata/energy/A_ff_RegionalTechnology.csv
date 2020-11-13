@@ -1,7 +1,7 @@
 # File: A_ff_RegionalTechnology.csv
 # Title: Technology-level assumptions of regional fossil fuel markets
 # Units: Various
-# Comments: pass-through subsectors; there is no technology competition. Traded markets happen in the US by convention. The traded market is a global market, so there is no reason they happen in the US (it could happen in any region) but by convention this is where the market is held.
+# Comments: pass-through subsectors; there is no technology competition. Traded markets happen in the US by convention. The traded market is a global market, so there is no reason they happen in the US (it could happen in any region) but by convention this is where the market is held.,,,,,,
 # Source: NA
 # Column types: ccccnnnc 
 # ----------
@@ -10,9 +10,6 @@ regional coal,domestic coal,domestic coal,coal,1,0,1,regional
 regional coal,imported coal,imported coal,traded coal,1,0,1,USA
 regional crude oil,domestic crude oil,domestic crude oil,crude oil,1,0,1,regional
 regional crude oil,imported crude oil,imported crude oil,traded crude oil,1,0,1,USA
-regional unconventional oil,domestic unconventional oil,domestic unconventional oil,unconventional oil production,1,0,1,regional
-regional unconventional oil,imported unconventional oil,imported unconventional oil,traded unconventional oil,1,0,1,USA
-regional oil,unconventional oil,unconventional oil,regional unconventional oil,1,0,1,regional
 regional oil,crude oil,crude oil,regional crude oil,1,0,1,regional
 regional natural gas,domestic natural gas,domestic natural gas,natural gas,1,0,1,regional
 regional natural gas,imported natural gas,imported natural gas,traded natural gas,1,0,1,USA

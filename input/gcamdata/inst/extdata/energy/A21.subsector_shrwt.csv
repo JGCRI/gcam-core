@@ -5,7 +5,6 @@
 # ----------
 supplysector,subsector,year.fillout,year,share.weight,traded
 regional biomass,regional biomass,start-year,,1,0
-unconventional oil production,unconventional oil production,start-year,,1,0
 regional corn for ethanol,regional corn for ethanol,start-year,,1,0
 regional sugar for ethanol,regional sugar for ethanol,start-year,,1,0
 regional biomassOil,regional biomassOil,start-year,,1,0

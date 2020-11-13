@@ -8,5 +8,4 @@
 supplysector,output.unit,input.unit,price.unit,traded,logit.exponent,logit.type
 traded coal,EJ,EJ,1975$/GJ,1,-3,
 traded crude oil,EJ,EJ,1975$/GJ,1,-3,
-traded unconventional oil,EJ,EJ,1975$/GJ,1,-3,
 traded natural gas,EJ,EJ,1975$/GJ,1,-3,

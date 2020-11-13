@@ -194,13 +194,13 @@ module_energy_L210.resources <- function(command, ...) {
     # account.
     L111.Prod_EJ_R_F_Yh %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      left_join_error_no_match(select(A10.ResSubresourceProdLifetime, resource, lifetime = avg.prod.lifetime),
-                               by=c("fuel" = "resource")) %>%
+      left_join_error_no_match(select(A10.ResSubresourceProdLifetime, resource, lifetime = avg.prod.lifetime, reserve.subresource) %>% distinct(),
+                               by=c("fuel" = "resource", "technology" ="reserve.subresource")) %>%
       left_join_error_no_match(model_year_timesteps, by = c("year")) %>%
       repeat_add_columns(tibble(year_operate = MODEL_BASE_YEARS)) %>%
       mutate(final_year = pmin(MODEL_BASE_YEARS[length(MODEL_BASE_YEARS)], (year - timestep + lifetime))) %>%
       filter(year_operate >= year - timestep + 1) %>%
-      group_by(GCAM_region_ID, sector, fuel) %>%
+      group_by(GCAM_region_ID, sector, fuel,technology) %>%
       mutate(value = lag_prod_helper(year, value, year_operate, final_year)) %>%
       ungroup() %>%
       filter(year == year_operate) %>%
@@ -215,27 +215,27 @@ module_energy_L210.resources <- function(command, ...) {
     # model periods those region + resource will not be able to produce more which seems like the
     # correct compromise.
     L210.Reserve_EJ_R_F_Yh %>%
-      group_by(GCAM_region_ID, fuel) %>%
+      group_by(GCAM_region_ID, fuel,technology) %>%
       summarize(value = sum(value)) %>%
       ungroup() ->
       ReserveTotal_EJ_R_F
     L111.RsrcCurves_EJ_R_Ffos %>%
-      group_by(GCAM_region_ID, resource) %>%
+      group_by(GCAM_region_ID, resource,subresource) %>%
       summarize(available = sum(available)) %>%
       ungroup() %>%
-      left_join_error_no_match(ReserveTotal_EJ_R_F, ., by=c("GCAM_region_ID", "fuel" = "resource")) %>%
+      left_join_error_no_match(ReserveTotal_EJ_R_F %>% rename(subresource = technology), ., by=c("GCAM_region_ID", "fuel" = "resource","subresource")) %>%
       filter(value > available) %>%
       mutate(available = value - available) %>%
       select(-value) %>%
       rename(resource = fuel) %>%
       left_join_error_no_match(L111.RsrcCurves_EJ_R_Ffos %>%
-                                 group_by(GCAM_region_ID, resource) %>%
+                                 group_by(GCAM_region_ID, resource, subresource) %>%
                                  filter(extractioncost == max(extractioncost)) %>%
                                  ungroup() %>%
                                  mutate(grade = "extended for reserve1",
                                         extractioncost =  extractioncost* 1.1) %>%
                                  select(-available),
-                               by = c("GCAM_region_ID", "resource")) ->
+                               by = c("GCAM_region_ID", "resource","subresource")) ->
       RsrcCurve_ReserveDeficit
     RsrcCurve_ReserveDeficit %>%
       bind_rows(RsrcCurve_ReserveDeficit %>%
@@ -369,19 +369,27 @@ module_energy_L210.resources <- function(command, ...) {
       # Add region name
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       # Add subresource
-      left_join_error_no_match(A10.subrsrc_info, by = c("fuel" = "resource")) %>%
+      left_join_error_no_match(A10.subrsrc_info, by = c("fuel" = "resource","technology"= "subresource")) %>%
       mutate(cal.production = round(value, energy.DIGITS_CALPRODUCTION)) %>%
-      select(region, resource = fuel, subresource, year, cal.production)
+      select(region, resource = fuel, subresource= technology, year, cal.production)
 
     L210.Reserve_EJ_R_F_Yh %>%
       rename(cal.reserve = value) %>%
       # Add region name
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       # Add subresource
-      left_join_error_no_match(A10.subrsrc_info, by = c("fuel" = "resource")) %>%
-      select(region, resource = fuel, reserve.subresource = subresource, year, cal.reserve) %>%
+      left_join_error_no_match(A10.subrsrc_info, by = c("fuel" = "resource","technology"= "subresource")) %>%
+      select(region, resource = fuel, reserve.subresource = technology, year, cal.reserve) %>%
       filter(resource != "unconventional oil") ->
       L210.ReserveCalReserve
+
+    L210.ReserveCalReserve_unoil <- L210.ReserveCalReserve %>% filter(reserve.subresource=="unconventional oil")
+    `%notin%` <- Negate(`%in%`)
+    L210.ReserveCalReserve.uncon_other_reg <- L210.ReserveCalReserve %>%
+                                              filter(resource =="coal") %>%
+                                              filter(region %notin% c(unique(L210.ReserveCalReserve_unoil$region))) %>%
+                                              mutate(resource =paste0("crude oil"),reserve.subresource =paste0("unconventional oil"),cal.reserve=0)
+    L210.ReserveCalReserve <- bind_rows(L210.ReserveCalReserve,L210.ReserveCalReserve.uncon_other_reg)
 
     # D. Resource supply curves
     # L210.RsrcCurves_fos: supply curves of fossil resources
@@ -572,8 +580,11 @@ module_energy_L210.resources <- function(command, ...) {
     A10.subrsrc_info %>%
       repeat_add_columns(GCAM_region_names) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      left_join(L210.RsrcCalProd %>% mutate(prod_value = as.double(cal.production)),by=c("region","resource","subresource","year")) %>%
+      mutate(prod_value = if_else(is.na(prod_value),0,prod_value)) %>%
       mutate(technology = subresource,
-             share.weight = 1.0) %>%
+             share.weight = if_else(year>MODEL_FINAL_BASE_YEAR | prod_value>0,1,0)) %>%
+      filter(year %in% MODEL_YEARS) %>%
       select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
       L210.ResTechShrwt
     # We need to remove regions + Subresources which should not exist
