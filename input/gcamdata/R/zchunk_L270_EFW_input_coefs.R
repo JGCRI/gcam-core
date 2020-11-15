@@ -22,7 +22,8 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
              "L203.TechCoef_watertd"
              ))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L270.TechCoef_EFW"))
+    return(c("L270.TechCoef_EFW",
+             "L270.TechCoef_WWtrt_SSP"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -84,19 +85,22 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
 
     # This method uses the function used in GCAM (C++) for determining non-CO2 pollutant emissions factor reduction as a
     # function of per-capita GDP. The base-GDP scenario is set in the constants.
-    L270.GDPreduction_R_Y <- filter(L102.pcgdp_thous90USD_Scen_R_Y,
-                                         year %in% c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS),
-                                         scenario == efw.WWTRT_GDP_SCEN) %>%
+    L270.GDPreduction_scen_R_Y <- filter(L102.pcgdp_thous90USD_Scen_R_Y,
+                                         year %in% c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
       rename(pcGDP = value) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      select(region, year, pcGDP) %>%
-      group_by(region) %>%
+      select(scenario, region, year, pcGDP) %>%
+      group_by(scenario, region) %>%
       mutate(baseGDP = pcGDP[year==max(MODEL_BASE_YEARS)]) %>%
       ungroup() %>%
       # Copied from C++ code for GDP control. negative values occur where GDP declines; not allowing this to reduce trtshr.
       mutate(reduction = 1 - (1 / (1 + (pcGDP - baseGDP) / efw.WWTRT_STEEPNESS)),
              reduction = if_else(reduction < 0, 0, reduction)) %>%
-      select(region, year, reduction)
+      select(scenario, region, year, reduction)
+
+    # For the baseline (default, core) scenario, specify the
+    L270.GDPreduction_R_Y <- subset(L270.GDPreduction_scen_R_Y, scenario == efw.WWTRT_GDP_SCEN) %>%
+      select(-scenario)
 
     L270.WWtrt_coef <- left_join(L270.WWtrt_coef, L270.GDPreduction_R_Y,
                                  by = c("region", "year")) %>%
@@ -110,6 +114,18 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
              coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) %>%
       select(LEVEL2_DATA_NAMES[["TechCoef"]])
 
+    # SSP scenario suite
+    L270.WWtrt_coef_SSP <- inner_join(L270.WWtrt_coef, L270.GDPreduction_scen_R_Y,
+                                         by = c("region", "year")) %>%
+      replace_na(list(reduction = 0)) %>%
+      mutate(coef_revised = coef_revised + (efw.MAX_WWTRT_FRAC - coef_revised) * reduction) %>%
+      select(-reduction)
+
+    L270.TechCoef_WWtrt_SSP <- inner_join(L270.TechCoef_EFW_init, L270.WWtrt_coef_SSP,
+                                   by = c("region", "water.supplysector", "minicam.energy.input", "year")) %>%
+      mutate(coefficient = if_else(is.na(coef_revised), coefficient, coef_revised),
+             coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) %>%
+      select(c("scenario", LEVEL2_DATA_NAMES[["TechCoef"]]))
 
 
     #==== OUTPUT ===========
@@ -127,7 +143,14 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
                      "L203.TechCoef_watertd") ->
       L270.TechCoef_EFW
 
-    return_data(L270.TechCoef_EFW)
+    L270.TechCoef_WWtrt_SSP %>%
+      add_title("Wastewater treatment fractions by scenario, region, year") %>%
+      add_units("Unitless (e.g., m^3 of wastewater treated / m^3 of water withdrawn)") %>%
+      add_comments("Units of water flow from the EFW processes to the given technology, per unit output of the technology") %>%
+      same_precursors_as(L270.TechCoef_EFW) ->
+      L270.TechCoef_WWtrt_SSP
+
+    return_data(L270.TechCoef_EFW, L270.TechCoef_WWtrt_SSP)
   } else {
     stop("Unknown command")
   }
