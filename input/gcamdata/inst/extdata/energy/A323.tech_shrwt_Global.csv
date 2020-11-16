@@ -1,7 +1,0 @@
-# File: A323.tech_shrwt_Global.csv
-# Title: Global technology default shareweights
-# Units: None
-# Column types: ccccc
-# ----------
-supplysector,subsector,technology,1971,2100
-iron and steel,iron and steel,iron and steel,1,1
