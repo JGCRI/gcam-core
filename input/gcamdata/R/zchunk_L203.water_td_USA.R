@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcamusa_L203.water_mapping_USA
+#' module_gcamusa_L203.water_td_USA
 #'
 #' Mapping of water consumption/withdrawal to sectoral demands at the state level.
 #'
@@ -17,16 +17,20 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author NTG May 2020
-module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
+module_gcamusa_L203.water_td_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_to_country_mapping",
+             FILE = "water/A71.sector",
+             FILE = "water/A72.sector",
+             FILE = "water/A73.sector",
+             FILE = "water/A74.sector",
              "L103.water_mapping_USA_R_LS_W_Ws_share",
              "L103.water_mapping_USA_R_PRI_W_Ws_share",
              "L103.water_mapping_USA_R_GLU_W_Ws_share",
              "L103.water_mapping_USA_R_B_W_Ws_share",
              FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/state_and_basin",
-             #FILE = "gcam-usa/usa_seawater_states_basins",
+             FILE = "gcam-usa/usa_seawater_states_basins",
              FILE = "water/water_td_sectors",
              FILE = "water/A03.sector"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -37,20 +41,27 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
              "L203.SubsectorShrwt_USA",
              "L203.TechShrwt_USA",
              "L203.TechCoef_USA",
-             "L203.TechPmult_USA"))
+             "L203.TechPmult_USA",
+             "L203.TechDesalCoef_USA",
+             "L203.TechDesalShrwt_USA",
+             "L203.TechDesalCost_USA"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
+    A71.sector <- get_data(all_data, "water/A71.sector")
+    A72.sector <- get_data(all_data, "water/A72.sector")
+    A73.sector <- get_data(all_data, "water/A73.sector")
+    A74.sector <- get_data(all_data, "water/A74.sector")
     L103.water_mapping_USA_R_LS_W_Ws_share <- get_data(all_data, "L103.water_mapping_USA_R_LS_W_Ws_share", strip_attributes = TRUE)
     L103.water_mapping_USA_R_PRI_W_Ws_share <- get_data(all_data, "L103.water_mapping_USA_R_PRI_W_Ws_share", strip_attributes = TRUE)
     L103.water_mapping_USA_R_GLU_W_Ws_share <- get_data(all_data,"L103.water_mapping_USA_R_GLU_W_Ws_share", strip_attributes = TRUE)
     L103.water_mapping_USA_R_B_W_Ws_share <- get_data(all_data,"L103.water_mapping_USA_R_B_W_Ws_share", strip_attributes = TRUE)
     GCAM_state_names <- get_data(all_data, "gcam-usa/states_subregions")
     state_and_basin <- get_data(all_data, "gcam-usa/state_and_basin")
-    #usa_seawater_states_basins <- get_data(all_data, "gcam-usa/usa_seawater_states_basins")
+    usa_seawater_states_basins <- get_data(all_data, "gcam-usa/usa_seawater_states_basins")
     water_td_sectors <- get_data(all_data, "water/water_td_sectors")
     A03.sector <- get_data(all_data, "water/A03.sector")
 
@@ -62,14 +73,10 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       price.unit <- input.unit <- output.unit <- logit.exponent <- logit.type <-
       logit.year.fillout <- NULL  # silence package check notes
 
-    # 9/15/2020 GPK note - desalination and related inputs, code, and outputs have been temporarily disabled
-    # EFW has a fundamentally different way of handling desalination than was done prior, and the method used here
-    # is not consistent with how desal is handled in the EFW branches. This will have to be revisited at a later date.
-
     # Define unique states and basins that have access to seawater that will
     # allow for seawate cooling
 
-    # seawater_states_basins <- unique(usa_seawater_states_basins$seawater_region)
+    seawater_states_basins <- unique(usa_seawater_states_basins$seawater_region)
 
     # Define in which states GCAM water basins exist by using data from R package created by Chris Vernon
     state_and_basin %>%
@@ -271,8 +278,10 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                              water.IRR_PRICE_SUBSIDY_MULT, water.MAPPING_PMULT)) ->
       L203.mapping_all
 
+    L203.EFW_delete_supplysectors <- bind_rows(A71.sector, A72.sector, A73.sector, A74.sector) %>%
+      pull(supplysector)
     tibble(region = gcam.USA_REGION,
-           supplysector = water.DELETE_DEMAND_TYPES) ->
+           supplysector = c(water.DELETE_DEMAND_TYPES, L203.EFW_delete_supplysectors)) ->
       L203.DeleteSupplysector_USA
 
     ## We delete the basin level subsectors in the USA region
@@ -342,14 +351,48 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["TechPmult"]]) ->
       L203.TechPmult_USA
 
+    L203.TechCoef_USA %>%
+      filter(region!=gcam.USA_REGION) %>%
+      mutate(technology = "desalination",
+             minicam.energy.input = gcamusa.WATER_TYPE_SEAWATER,
+             market.name = gcam.USA_REGION) %>%
+      dplyr::filter(!is.na(year))->
+      L203.TechDesalCoef_USA
+
+    # Set shareweight of desalination technologies to 0 in all non-coastal states
+    # and basins that do not come in contact with the ocean. This removes the possibility
+    # of having desalination required in Texas, but coming from the Rio Grande which does not
+    # have access to seawater without inland transportation.
+    #
+    # Additionally, desalination is now allowed for all sectors, including irrigation.
+    # Given the price subsidy on agricultural water, desalination should never come
+    # for irrigated agriculture as the price required would exceed the limits defined in
+    # water_supply_constrained.xml
+    L203.TechShrwt_USA %>%
+      filter(region != gcam.USA_REGION) %>%
+      mutate(technology = "desalination",
+             share.weight = if_else(!(region %in% seawater_states_basins), 0, 1))  %>%
+      dplyr::filter(!is.na(year)) ->
+      L203.TechDesalShrwt_USA
+
+    L203.TechDesalShrwt_USA %>%
+      rename(minicam.non.energy.input = share.weight) %>%
+      mutate(minicam.non.energy.input = "final cost",
+             input.cost = gcamusa.DESALINATION_PRICE) %>%
+      dplyr::filter(!is.na(year)) ->
+      L203.TechDesalCost_USA
 
     # ===================================================
     # Produce outputs
     L203.DeleteSupplysector_USA %>%
-      add_title("Remove the three sectors that are produced at the state level") %>%
+      add_title("Remove the water sectors from the USA region that are produced at the state level") %>%
       add_units("Unitless") %>%
       add_comments("Remove the USA electricity, municipal, and industrial water_td's") %>%
-      add_legacy_name("L2232.DeleteSubsector_USA") ->
+      add_comments("Also remove all energy-for-water (EFW) sectors") %>%
+      add_precursors("water/A71.sector",
+                     "water/A72.sector",
+                     "water/A73.sector",
+                     "water/A74.sector") ->
       L203.DeleteSupplysector_USA
 
     L203.DeleteSubsector_USA %>%
@@ -437,6 +480,14 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                      "water/A03.sector") ->
       L203.TechCoef_USA
 
+    L203.TechDesalCoef_USA %>%
+      add_title("Water technology desal coefficients") %>%
+      add_units("Unitless") %>%
+      add_comments("Desalination Coefficients for USA region and states. Available only for coastal states and basins") %>%
+      add_legacy_name("L203.TechCoef") %>%
+      same_precursors_as(L203.TechCoef_USA) ->
+      L203.TechDesalCoef_USA
+
     L203.TechPmult_USA %>%
       add_title("Water technology price multipliers") %>%
       add_units("Unitless") %>%
@@ -452,6 +503,22 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                      "water/A03.sector") ->
       L203.TechPmult_USA
 
+    L203.TechDesalShrwt_USA %>%
+      add_title("Water technology desal shareweights") %>%
+      add_units("Unitless") %>%
+      add_comments("Desalination Shareweights for USA region and states. Available only for coastal states and basins") %>%
+      add_legacy_name("L203.TechCoef") %>%
+      same_precursors_as(L203.TechShrwt_USA) %>%
+      add_precursors("gcam-usa/usa_seawater_states_basins") ->
+      L203.TechDesalShrwt_USA
+
+    L203.TechDesalCost_USA %>%
+      add_title("Water technology desal costs") %>%
+      add_units("Unitless") %>%
+      add_comments("Desalination fixed costs") %>%
+      add_legacy_name("L203.TechCoef") %>%
+      same_precursors_as(L203.TechShrwt_USA) ->
+      L203.TechDesalCost_USA
 
     return_data(L203.DeleteSupplysector_USA,
                 L203.DeleteSubsector_USA,
@@ -460,6 +527,9 @@ module_gcamusa_L203.water_mapping_USA <- function(command, ...) {
                 L203.SubsectorShrwt_USA,
                 L203.TechShrwt_USA,
                 L203.TechCoef_USA,
+                L203.TechDesalCoef_USA,
+                L203.TechDesalShrwt_USA,
+                L203.TechDesalCost_USA,
                 L203.TechPmult_USA)
   } else {
     stop("Unknown command")

@@ -1,4 +1,4 @@
-#' module_gcamusa_batch_water_mapping_USA_xml
+#' module_gcamusa_batch_water_td_USA_xml
 #'
 #' Construct XML data structure for \code{water_mapping.xml}.
 #'
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{water_mapping.xml}. The corresponding file in the
 #' original data system was \code{batch_water_mapping.xml.R} (water XML).
-module_gcamusa_batch_water_mapping_USA_xml <- function(command, ...) {
+module_gcamusa_batch_water_td_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L203.Supplysector_USA",
              "L203.SubsectorLogit_USA",
@@ -17,9 +17,12 @@ module_gcamusa_batch_water_mapping_USA_xml <- function(command, ...) {
              "L203.TechCoef_USA",
              "L203.TechPmult_USA",
              "L203.DeleteSupplysector_USA",
-             "L203.DeleteSubsector_USA"))
+             "L203.DeleteSubsector_USA",
+             "L203.TechDesalCoef_USA",
+             "L203.TechDesalShrwt_USA",
+             "L203.TechDesalCost_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "water_mapping_USA.xml"))
+    return(c(XML = "water_td_USA.xml"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -33,10 +36,14 @@ module_gcamusa_batch_water_mapping_USA_xml <- function(command, ...) {
     L203.TechPmult_USA <- get_data(all_data,"L203.TechPmult_USA")
     L203.DeleteSupplysector_USA <- get_data(all_data, "L203.DeleteSupplysector_USA")
     L203.DeleteSubsector_USA <- get_data(all_data, "L203.DeleteSubsector_USA")
+    L203.TechDesalCoef_USA  <- get_data(all_data, "L203.TechDesalCoef_USA")
+    L203.TechDesalShrwt_USA <- get_data(all_data, "L203.TechDesalShrwt_USA")
+    L203.TechDesalCost_USA <- get_data(all_data, "L203.TechDesalCost_USA")
+
     # ===================================================
 
     # Produce outputs
-    create_xml("water_mapping_USA.xml") %>%
+    create_xml("water_td_USA.xml") %>%
       add_logit_tables_xml(L203.Supplysector_USA, "Supplysector") %>%
       add_logit_tables_xml(L203.SubsectorLogit_USA, "SubsectorLogit") %>%
       add_xml_data(L203.DeleteSupplysector_USA, "DeleteSupplysector") %>%
@@ -45,11 +52,14 @@ module_gcamusa_batch_water_mapping_USA_xml <- function(command, ...) {
       add_xml_data(L203.TechShrwt_USA, "TechShrwt") %>%
       add_xml_data(L203.TechCoef_USA, "TechCoef") %>%
       add_xml_data(L203.TechPmult_USA, "TechPmult") %>%
+      add_xml_data(L203.TechDesalCoef_USA, "TechCoef") %>%
+      add_xml_data(L203.TechDesalShrwt_USA, "TechShrwt") %>%
+      add_xml_data(L203.TechDesalCost_USA, "TechCost") %>%
       add_precursors("L203.Supplysector_USA", "L203.SubsectorLogit_USA", "L203.DeleteSupplysector_USA","L203.DeleteSubsector_USA", "L203.SubsectorShrwt_USA",
-                     "L203.TechShrwt_USA", "L203.TechCoef_USA","L203.TechPmult_USA") ->
-      water_mapping_USA.xml
+                     "L203.TechShrwt_USA", "L203.TechCoef_USA","L203.TechPmult_USA","L203.TechDesalCoef_USA", "L203.TechDesalShrwt_USA", "L203.TechDesalCost_USA") ->
+      water_td_USA.xml
 
-    return_data(water_mapping_USA.xml)
+    return_data(water_td_USA.xml)
   } else {
     stop("Unknown command")
   }

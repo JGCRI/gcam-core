@@ -806,6 +806,9 @@ gcamusa.CONVEYANCE_LOSSES <- 0.829937455747218 ## From file: L165.ag_IrrEff_R
 water.MAPPED_PRI_WATER_TYPES                  <- c("water consumption", "water withdrawals","desalination")
 gcamusa.MIN_PRIM_ENERGY_YEAR <- 1990
 
+# GCAM-USA does not have energy-for-water so desalination is an exogenous, unlimited resource with a fixed price
+gcamusa.DESALINATION_PRICE                  <- 0.214  # 1975$/m3
+
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions
 # # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
