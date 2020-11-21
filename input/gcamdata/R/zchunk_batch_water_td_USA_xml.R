@@ -17,6 +17,7 @@ module_gcamusa_batch_water_td_USA_xml <- function(command, ...) {
              "L203.TechCoef_USA",
              "L203.TechPmult_USA",
              "L203.DeleteSupplysector_USA",
+             "L203.DeleteResTechInput",
              "L203.DeleteSubsector_USA",
              "L203.TechDesalCoef_USA",
              "L203.TechDesalShrwt_USA",
@@ -35,6 +36,7 @@ module_gcamusa_batch_water_td_USA_xml <- function(command, ...) {
     L203.TechCoef_USA <- get_data(all_data, "L203.TechCoef_USA")
     L203.TechPmult_USA <- get_data(all_data,"L203.TechPmult_USA")
     L203.DeleteSupplysector_USA <- get_data(all_data, "L203.DeleteSupplysector_USA")
+    L203.DeleteResTechInput <- get_data(all_data, "L203.DeleteResTechInput")
     L203.DeleteSubsector_USA <- get_data(all_data, "L203.DeleteSubsector_USA")
     L203.TechDesalCoef_USA  <- get_data(all_data, "L203.TechDesalCoef_USA")
     L203.TechDesalShrwt_USA <- get_data(all_data, "L203.TechDesalShrwt_USA")
@@ -47,6 +49,7 @@ module_gcamusa_batch_water_td_USA_xml <- function(command, ...) {
       add_logit_tables_xml(L203.Supplysector_USA, "Supplysector") %>%
       add_logit_tables_xml(L203.SubsectorLogit_USA, "SubsectorLogit") %>%
       add_xml_data(L203.DeleteSupplysector_USA, "DeleteSupplysector") %>%
+      add_xml_data(L203.DeleteResTechInput, "DeleteResTechInput") %>%
       add_xml_data(L203.SubsectorShrwt_USA, "SubsectorShrwt") %>%
       add_xml_data(L203.DeleteSubsector_USA, "DeleteSubsector") %>%
       add_xml_data(L203.TechShrwt_USA, "TechShrwt") %>%
@@ -55,7 +58,7 @@ module_gcamusa_batch_water_td_USA_xml <- function(command, ...) {
       add_xml_data(L203.TechDesalCoef_USA, "TechCoef") %>%
       add_xml_data(L203.TechDesalShrwt_USA, "TechShrwt") %>%
       add_xml_data(L203.TechDesalCost_USA, "TechCost") %>%
-      add_precursors("L203.Supplysector_USA", "L203.SubsectorLogit_USA", "L203.DeleteSupplysector_USA","L203.DeleteSubsector_USA", "L203.SubsectorShrwt_USA",
+      add_precursors("L203.Supplysector_USA", "L203.SubsectorLogit_USA", "L203.DeleteSupplysector_USA", "L203.DeleteResTechInput", "L203.DeleteSubsector_USA", "L203.SubsectorShrwt_USA",
                      "L203.TechShrwt_USA", "L203.TechCoef_USA","L203.TechPmult_USA","L203.TechDesalCoef_USA", "L203.TechDesalShrwt_USA", "L203.TechDesalCost_USA") ->
       water_td_USA.xml
 

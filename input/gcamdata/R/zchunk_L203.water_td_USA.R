@@ -20,6 +20,7 @@
 module_gcamusa_L203.water_td_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "water/basin_to_country_mapping",
+             FILE = "water/water_td_sectors",
              FILE = "water/A71.sector",
              FILE = "water/A72.sector",
              FILE = "water/A73.sector",
@@ -32,9 +33,12 @@ module_gcamusa_L203.water_td_USA <- function(command, ...) {
              FILE = "gcam-usa/state_and_basin",
              FILE = "gcam-usa/usa_seawater_states_basins",
              FILE = "water/water_td_sectors",
-             FILE = "water/A03.sector"))
+             FILE = "water/A03.sector",
+             "L201.RsrcTechCoef",
+             "L203.Supplysector_desal_basin"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L203.DeleteSupplysector_USA",
+             "L203.DeleteResTechInput",
              "L203.DeleteSubsector_USA",
              "L203.Supplysector_USA",
              "L203.SubsectorLogit_USA",
@@ -51,6 +55,7 @@ module_gcamusa_L203.water_td_USA <- function(command, ...) {
 
     # Load required inputs
     basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
+    water_td_sectors <- get_data(all_data, "water/water_td_sectors")
     A71.sector <- get_data(all_data, "water/A71.sector")
     A72.sector <- get_data(all_data, "water/A72.sector")
     A73.sector <- get_data(all_data, "water/A73.sector")
@@ -64,6 +69,8 @@ module_gcamusa_L203.water_td_USA <- function(command, ...) {
     usa_seawater_states_basins <- get_data(all_data, "gcam-usa/usa_seawater_states_basins")
     water_td_sectors <- get_data(all_data, "water/water_td_sectors")
     A03.sector <- get_data(all_data, "water/A03.sector")
+    L201.RsrcTechCoef <- get_data(all_data, "L201.RsrcTechCoef", strip_attributes = TRUE)
+    L203.Supplysector_desal_basin <- get_data(all_data, "L203.Supplysector_desal_basin", strip_attributes = TRUE)
 
     GLU <- GLU_code <- GLU_name <- water.sector <-
       water_type <- supplysector <- field.eff <- conveyance.eff <-
@@ -280,9 +287,20 @@ module_gcamusa_L203.water_td_USA <- function(command, ...) {
 
     L203.EFW_delete_supplysectors <- bind_rows(A71.sector, A72.sector, A73.sector, A74.sector) %>%
       pull(supplysector)
+    L203.delete_desal_basin_sectors <- L203.Supplysector_desal_basin %>%
+      filter(region == gcam.USA_REGION) %>%
+      pull(supplysector)
     tibble(region = gcam.USA_REGION,
-           supplysector = c(water.DELETE_DEMAND_TYPES, L203.EFW_delete_supplysectors)) ->
+           supplysector = c(water.DELETE_DEMAND_TYPES,
+                            L203.EFW_delete_supplysectors,
+                            L203.delete_desal_basin_sectors)) ->
       L203.DeleteSupplysector_USA
+
+    ## Also need to delete the "elect_td_ind" input to the groundwater grades in future periods
+    L201.RsrcTechCoef %>%
+      filter(region == gcam.USA_REGION) %>%
+      select(region, resource, subresource, technology, year, minicam.energy.input) ->
+      L203.DeleteResTechInput
 
     ## We delete the basin level subsectors in the USA region
     ## to eliminate double counting of irrigation, livestock,
@@ -389,11 +407,20 @@ module_gcamusa_L203.water_td_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Remove the USA electricity, municipal, and industrial water_td's") %>%
       add_comments("Also remove all energy-for-water (EFW) sectors") %>%
-      add_precursors("water/A71.sector",
+      add_precursors("L203.Supplysector_desal_basin",
+                     "water/A71.sector",
                      "water/A72.sector",
                      "water/A73.sector",
                      "water/A74.sector") ->
       L203.DeleteSupplysector_USA
+
+    L203.DeleteResTechInput %>%
+      add_title("Remove the electricity inputs to groundwater supply curves") %>%
+      add_units("Unitless") %>%
+      add_comments("These would be pulling from a USA electricity market that does not exist in GCAM-USA") %>%
+      add_precursors("L201.RsrcTechCoef") ->
+      L203.DeleteResTechInput
+
 
     L203.DeleteSubsector_USA %>%
       add_title("Remove the three sectors that are produced at the state level") %>%
@@ -521,6 +548,7 @@ module_gcamusa_L203.water_td_USA <- function(command, ...) {
       L203.TechDesalCost_USA
 
     return_data(L203.DeleteSupplysector_USA,
+                L203.DeleteResTechInput,
                 L203.DeleteSubsector_USA,
                 L203.Supplysector_USA,
                 L203.SubsectorLogit_USA,

@@ -533,7 +533,7 @@ water.DESAL                               <- "desalinated water"
 water.LIVESTOCK                           <- "Livestock"
 water.PRIMARY_ENERGY                      <- "Mining"
 water.LIVESTOCK_TYPES                     <- c("Beef","Dairy","Pork","Poultry","SheepGoat")
-water.DELETE_DEMAND_TYPES              <- c("water_td_elec_W","water_td_elec_C","water_td_dom_W","water_td_dom_C", "water_td_ind_W","water_td_ind_C")
+water.DELETE_DEMAND_TYPES              <- c("water_td_elec_W","water_td_elec_C","water_td_muni_W","water_td_muni_C", "water_td_ind_W","water_td_ind_C")
 
 water.WATER_UNITS_PRICE                   <- "1975$/m^3"
 water.WATER_UNITS_QUANTITY                <- "km^3"
