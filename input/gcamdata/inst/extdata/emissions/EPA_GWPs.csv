@@ -1,0 +1,22 @@
+# File: EPA_GWPs.csv
+# Title: GWPs for EPA non-CO2 GHGs
+# Units: unitless
+# Source:AR4 (updated by Yang Ou Feb 5 2020)
+# Column types: cn
+gas,gwp
+CH4,25
+N2O,298
+HFC23,14800
+HFC32,675
+HFC125,3500
+HFC134a,1430
+HFC143a,4470
+HFC152a,124
+HFC227ea,3220
+HFC43,1640
+HFC236fa,9810
+HFC365mfc,794
+HFC245fa,1030
+CF4,7390
+C2F6,12200
+SF6,22800

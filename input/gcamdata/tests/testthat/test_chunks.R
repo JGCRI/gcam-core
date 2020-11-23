@@ -28,7 +28,8 @@ test_that("handles DECLARE_OUTPUTS", {
   for(ch in chunklist$name) {
     cl <- call(ch, driver.DECLARE_OUTPUTS)
     inputs <- eval(cl)
-    expect_true(is.character(inputs) & is.vector(inputs), info = ch)
+    #kbn 2020-09-25 Updating this test so that the test won't fail on chunks with null inputs.
+    expect_true(is.null(inputs) |is.character(inputs) & is.vector(inputs), info = ch)
   }
 })
 

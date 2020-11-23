@@ -6,6 +6,7 @@
 # Column types: cccnnnnnn 
 # ----------
 supplysector,subsector,stub.technology,SO2,NOx,CO,BC,OC,NMVOC
+urban processes,waste_incineration,waste_incineration,3.5,3.5,3.5,3.5,3.5,3.5
 urban processes,landfills,landfills,3.5,3.5,3.5,3.5,3.5,3.5
 urban processes,wastewater treatment,wastewater treatment,,,,,,
 urban processes,aerosols,aerosols,,,,,,

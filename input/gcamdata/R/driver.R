@@ -545,6 +545,12 @@ driver_drake <- function(
     }
     else {
       po <- subset(chunkoutputs, name == chunk)$output  # promised outputs
+      if(length(po) == 0) {
+        # chunks may get disabled due to configuration options in constants.R
+        # so if they are not currently configured to return any outputs we can just
+        # skip it
+        next
+      }
       # add the chunk to the target list
       target <- c(target, chunk)
       # Generate the command to run the chunk as:
