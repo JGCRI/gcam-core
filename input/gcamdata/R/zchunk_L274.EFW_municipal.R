@@ -50,13 +50,13 @@ module_water_L274.EFW_municipal <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     EFW_mapping <- get_data(all_data, "water/EFW_mapping")
-    A74.sector <- get_data(all_data, "water/A74.sector")
-    A74.subsector_interp <- get_data(all_data, "water/A74.subsector_interp")
-    A74.subsector_logit <- get_data(all_data, "water/A74.subsector_logit")
-    A74.subsector_shrwt <- get_data(all_data, "water/A74.subsector_shrwt")
-    A74.globaltech_coef <- get_data(all_data, "water/A74.globaltech_coef")
-    A74.globaltech_shrwt <- get_data(all_data, "water/A74.globaltech_shrwt")
-    L174.IO_GJkm3_R_muniEFW_F_Yh <- get_data(all_data, "L174.IO_GJkm3_R_muniEFW_F_Yh")
+    A74.sector <- get_data(all_data, "water/A74.sector", strip_attributes = TRUE)
+    A74.subsector_interp <- get_data(all_data, "water/A74.subsector_interp", strip_attributes = TRUE)
+    A74.subsector_logit <- get_data(all_data, "water/A74.subsector_logit", strip_attributes = TRUE)
+    A74.subsector_shrwt <- get_data(all_data, "water/A74.subsector_shrwt", strip_attributes = TRUE)
+    A74.globaltech_coef <- get_data(all_data, "water/A74.globaltech_coef", strip_attributes = TRUE)
+    A74.globaltech_shrwt <- get_data(all_data, "water/A74.globaltech_shrwt", strip_attributes = TRUE)
+    L174.IO_GJkm3_R_muniEFW_F_Yh <- get_data(all_data, "L174.IO_GJkm3_R_muniEFW_F_Yh", strip_attributes = TRUE)
 
     # ===================================================
 

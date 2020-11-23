@@ -53,9 +53,9 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
 
     L101.en_bal_EJ_ctry_Si_Fi_Yh_full <- get_data(all_data, "L101.en_bal_EJ_ctry_Si_Fi_Yh_full")
     L102.pcgdp_thous90USD_GCAM3_ctry_Y <- get_data(all_data, "L102.pcgdp_thous90USD_GCAM3_ctry_Y")
-    L132.water_km3_ctry_ind_Yh <- get_data(all_data, "L132.water_km3_ctry_ind_Yh")
-    L145.municipal_water_ctry_W_Yh_km3 <- get_data(all_data, "L145.municipal_water_ctry_W_Yh_km3")
-    L171.in_km3_ctry_desal_Yh <- get_data(all_data, "L171.in_km3_ctry_desal_Yh")
+    L132.water_km3_ctry_ind_Yh <- get_data(all_data, "L132.water_km3_ctry_ind_Yh", strip_attributes = TRUE)
+    L145.municipal_water_ctry_W_Yh_km3 <- get_data(all_data, "L145.municipal_water_ctry_W_Yh_km3", strip_attributes = TRUE)
+    L171.in_km3_ctry_desal_Yh <- get_data(all_data, "L171.in_km3_ctry_desal_Yh", strip_attributes = TRUE)
 
     # ===================================================
 

@@ -51,7 +51,7 @@ module_water_L174.EFW_municipal <- function(command, ...) {
     A74.globaltech_coef <- get_data(all_data, "water/A74.globaltech_coef")
 
     L101.en_bal_EJ_ctry_Si_Fi_Yh_full <- get_data(all_data, "L101.en_bal_EJ_ctry_Si_Fi_Yh_full")
-    L145.municipal_water_ctry_W_Yh_km3 <- get_data(all_data, "L145.municipal_water_ctry_W_Yh_km3")
+    L145.municipal_water_ctry_W_Yh_km3 <- get_data(all_data, "L145.municipal_water_ctry_W_Yh_km3", strip_attributes = TRUE)
     L145.municipal_water_eff_ctry_Yh <- get_data(all_data, "L145.municipal_water_eff_ctry_Yh")
     L173.trtshr_ctry_Yh <- get_data(all_data, "L173.trtshr_ctry_Yh")
     L173.in_desal_km3_ctry_muni_Yh <- get_data(all_data, "L173.in_desal_km3_ctry_muni_Yh")

@@ -53,14 +53,14 @@ module_water_L271.desalination <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     EFW_mapping <- get_data(all_data, "water/EFW_mapping")
-    A71.sector <- get_data(all_data, "water/A71.sector")
-    A71.subsector_interp <- get_data(all_data, "water/A71.subsector_interp")
-    A71.subsector_logit <- get_data(all_data, "water/A71.subsector_logit")
-    A71.subsector_shrwt <- get_data(all_data, "water/A71.subsector_shrwt")
-    A71.globaltech_coef <- get_data(all_data, "water/A71.globaltech_coef")
-    A71.globaltech_cost <- get_data(all_data, "water/A71.globaltech_cost")
-    A71.globaltech_shrwt <- get_data(all_data, "water/A71.globaltech_shrwt")
-    L171.out_km3_R_desal_F_tech_Yh <- get_data(all_data, "L171.out_km3_R_desal_F_tech_Yh")
+    A71.sector <- get_data(all_data, "water/A71.sector", strip_attributes = TRUE)
+    A71.subsector_interp <- get_data(all_data, "water/A71.subsector_interp", strip_attributes = TRUE)
+    A71.subsector_logit <- get_data(all_data, "water/A71.subsector_logit", strip_attributes = TRUE)
+    A71.subsector_shrwt <- get_data(all_data, "water/A71.subsector_shrwt", strip_attributes = TRUE)
+    A71.globaltech_coef <- get_data(all_data, "water/A71.globaltech_coef", strip_attributes = TRUE)
+    A71.globaltech_cost <- get_data(all_data, "water/A71.globaltech_cost", strip_attributes = TRUE)
+    A71.globaltech_shrwt <- get_data(all_data, "water/A71.globaltech_shrwt", strip_attributes = TRUE)
+    L171.out_km3_R_desal_F_tech_Yh <- get_data(all_data, "L171.out_km3_R_desal_F_tech_Yh", strip_attributes = TRUE)
 
     # ===================================================
 

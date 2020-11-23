@@ -50,13 +50,13 @@ module_water_L272.EFW_irrigation <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     EFW_mapping <- get_data(all_data, "water/EFW_mapping")
-    A72.sector <- get_data(all_data, "water/A72.sector")
-    A72.subsector_interp <- get_data(all_data, "water/A72.subsector_interp")
-    A72.subsector_logit <- get_data(all_data, "water/A72.subsector_logit")
-    A72.subsector_shrwt <- get_data(all_data, "water/A72.subsector_shrwt")
-    A72.globaltech_coef <- get_data(all_data, "water/A72.globaltech_coef")
-    A72.globaltech_shrwt <- get_data(all_data, "water/A72.globaltech_shrwt")
-    L172.Coef_GJm3_IrrEnergy_R <- get_data(all_data, "L172.Coef_GJm3_IrrEnergy_R")
+    A72.sector <- get_data(all_data, "water/A72.sector", strip_attributes = TRUE)
+    A72.subsector_interp <- get_data(all_data, "water/A72.subsector_interp", strip_attributes = TRUE)
+    A72.subsector_logit <- get_data(all_data, "water/A72.subsector_logit", strip_attributes = TRUE)
+    A72.subsector_shrwt <- get_data(all_data, "water/A72.subsector_shrwt", strip_attributes = TRUE)
+    A72.globaltech_coef <- get_data(all_data, "water/A72.globaltech_coef", strip_attributes = TRUE)
+    A72.globaltech_shrwt <- get_data(all_data, "water/A72.globaltech_shrwt", strip_attributes = TRUE)
+    L172.Coef_GJm3_IrrEnergy_R <- get_data(all_data, "L172.Coef_GJm3_IrrEnergy_R", strip_attributes = TRUE)
 
     # ===================================================
 

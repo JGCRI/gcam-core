@@ -38,7 +38,7 @@ module_water_L172.EFW_irrigation <- function(command, ...) {
     Liu_EFW_inventory <- get_data(all_data, "water/Liu_EFW_inventory")
 
     L165.ag_IrrEff_R <- get_data(all_data, "L165.ag_IrrEff_R")
-    L165.IrrWithd_km3_R_Y <- get_data(all_data, "L165.IrrWithd_km3_R_Y")
+    L165.IrrWithd_km3_R_Y <- get_data(all_data, "L165.IrrWithd_km3_R_Y", strip_attributes = TRUE)
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
 
     # ===================================================
