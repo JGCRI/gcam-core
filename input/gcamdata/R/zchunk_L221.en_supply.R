@@ -207,6 +207,9 @@ module_energy_L221.en_supply <- function(command, ...) {
       filter(year %in% MODEL_YEARS) %>%
       select(sector.name = supplysector, subsector.name = subsector, technology, minicam.energy.input, year, coefficient) -> L221.GlobalTechCoef_en
 
+    L221.GlobalTechCoef_en %>%
+       mutate(coefficient= if_else(minicam.energy.input =="crude oil", if_else(year <= MODEL_FINAL_BASE_YEAR,1,coefficient),coefficient))->L221.GlobalTechCoef_en
+
     # Stub technology coefficients - modify the global tech assumptions in regions where the crop characteristics differ
     L221.StubTechCoef_bioOil <- inner_join(L221.GlobalTechCoef_en, L121.BiomassOilRatios_kgGJ_R_C, by = c(technology = "GCAM_commodity")) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%

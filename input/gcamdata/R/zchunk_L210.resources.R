@@ -36,6 +36,8 @@ module_energy_L210.resources <- function(command, ...) {
              FILE = "energy/A10.ResReserveTechLifetime",
              FILE = "energy/A10.ResReserveTechDeclinePhase",
              FILE = "energy/A10.ResReserveTechProfitShutdown",
+             FILE = "energy/A21.globalrsrctech_cost",
+             FILE = "energy/A21.globalrsrctech_coef",
              "L111.RsrcCurves_EJ_R_Ffos",
              "L111.Prod_EJ_R_F_Yh",
              "L112.RsrcCurves_Mt_R_U",
@@ -88,7 +90,9 @@ module_energy_L210.resources <- function(command, ...) {
              "L210.ResReserveTechDeclinePhase",
              "L210.ResReserveTechProfitShutdown",
              "L210.ResTechShrwt",
-             "L210.ResTechShrwt_EGS"))
+             "L210.ResTechShrwt_EGS",
+             "L210.ResTechCoef",
+             "L210.ResTechCost"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -125,6 +129,10 @@ module_energy_L210.resources <- function(command, ...) {
     A10.ResReserveTechLifetime <- get_data(all_data, "energy/A10.ResReserveTechLifetime", strip_attributes = TRUE)
     A10.ResReserveTechDeclinePhase <- get_data(all_data, "energy/A10.ResReserveTechDeclinePhase", strip_attributes = TRUE)
     A10.ResReserveTechProfitShutdown <- get_data(all_data, "energy/A10.ResReserveTechProfitShutdown", strip_attributes = TRUE)
+    A21.globalrsrctech_cost <- get_data(all_data,"energy/A21.globalrsrctech_cost",strip_attributes = TRUE) %>%
+      gather_years(value_col = "input.cost")
+    A21.globalrsrctech_coef <- get_data(all_data,"energy/A21.globalrsrctech_coef",strip_attributes = TRUE) %>%
+      gather_years(value_col = "coefficient")
     L111.RsrcCurves_EJ_R_Ffos <- get_data(all_data, "L111.RsrcCurves_EJ_R_Ffos", strip_attributes = TRUE)
     L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh", strip_attributes = TRUE)
     L112.RsrcCurves_Mt_R_U <- get_data(all_data, "L112.RsrcCurves_Mt_R_U", strip_attributes = TRUE)
@@ -575,6 +583,15 @@ module_energy_L210.resources <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["ResReserveTechProfitShutdown"]]) ->
       L210.ResReserveTechProfitShutdown
 
+    A21.globalrsrctech_cost %>%
+      repeat_add_columns(GCAM_region_names) %>%
+      select(LEVEL2_DATA_NAMES[["ResReserveTechCost"]]) -> L210.ResTechCost
+
+    A21.globalrsrctech_coef %>%
+      repeat_add_columns(GCAM_region_names) %>%
+      select(LEVEL2_DATA_NAMES[["ResReserveTechCoef"]])-> L210.ResTechCoef
+
+
     # We need to make sure we have at least a shell technology for ALL resources
     # and so we will just use the share weight table to facilatate doing that.
     A10.subrsrc_info %>%
@@ -602,6 +619,24 @@ module_energy_L210.resources <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
+
+    L210.ResTechCost %>%
+      add_title("Cost of resource production") %>%
+      add_units("$/GJ") %>%
+      add_comments("A21.globalrsrctech_cost written to all regions") %>%
+      add_legacy_name("L210.ResTechCost") %>%
+      add_precursors("energy/A21.globalrsrctech_cost", "common/GCAM_region_names") ->
+      L210.ResTechCost
+
+    L210.ResTechCoef %>%
+      add_title("Co-efficients of resource production inputs") %>%
+      add_units("NA") %>%
+      add_comments("A21.globalrsrctech_coef written to all regions") %>%
+      add_legacy_name("L210.ResTechCoef") %>%
+      add_precursors("energy/A21.globalrsrctech_coef", "common/GCAM_region_names") ->
+      L210.ResTechCoef
+
+
     L210.Rsrc %>%
       add_title("Market information for depletable resources") %>%
       add_units("NA") %>%
@@ -847,7 +882,7 @@ module_energy_L210.resources <- function(command, ...) {
                 L210.RsrcEnvironCost_SSP1, L210.RsrcTechChange_SSP2, L210.RsrcEnvironCost_SSP2, L210.RsrcTechChange_SSP3, L210.RsrcEnvironCost_SSP3,
                 L210.RsrcTechChange_SSP4, L210.RsrcEnvironCost_SSP4, L210.RsrcTechChange_SSP5, L210.RsrcEnvironCost_SSP5,
                 L210.ResSubresourceProdLifetime, L210.SubresourcePriceAdder, L210.ResReserveTechLifetime, L210.ResReserveTechDeclinePhase, L210.ResReserveTechProfitShutdown,
-                L210.ResTechShrwt, L210.ResTechShrwt_EGS)
+                L210.ResTechShrwt, L210.ResTechShrwt_EGS, L210.ResTechCoef, L210.ResTechCost)
   } else {
     stop("Unknown command")
   }

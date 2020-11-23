@@ -29,6 +29,7 @@ module_energy_LA121.liquids <- function(command, ...) {
              FILE = "energy/mappings/IEA_product_rsrc",
              FILE = "energy/A21.unoil_demandshares",
              FILE = "energy/A21.globaltech_coef",
+             FILE = "energy/A21.globalrsrctech_coef",
              "L100.IEA_en_bal_ctry_hist",
              "L1011.en_bal_EJ_R_Si_Fi_Yh",
              "L111.Prod_EJ_R_F_Yh"))
@@ -63,7 +64,9 @@ module_energy_LA121.liquids <- function(command, ...) {
     A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef")
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
-
+    A21.globalrsrctech_coef <- get_data(all_data, "energy/A21.globalrsrctech_coef") %>%
+      gather_years(value_col = "gas_coef") %>%
+      repeat_add_columns(tibble(region = c(iso_GCAM_regID$GCAM_region_ID)))
     # L100.IEA_en_bal_ctry_hist might be null (meaning the data system is running
     # without the proprietary IEA data files). If this is the case, we substitute
     # pre-built output datasets and exit.
@@ -82,6 +85,13 @@ module_energy_LA121.liquids <- function(command, ...) {
       L111.Prod_EJ_R_F_Yh <- L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
 
       # ===================================================
+
+      A21.globalrsrctech_coef %>%
+        select(region, year, minicam.energy.input, gas_coef) %>%
+        rename(GCAM_region_ID=region, fuel = minicam.energy.input) %>%
+        mutate(fuel=paste0("gas")) %>%
+        distinct()->gas_uncov_ratio
+
 
       # Calculating energy inputs (gas) to unconventional oil production in the historical years
       A21.globaltech_coef %>%
@@ -104,14 +114,20 @@ module_energy_LA121.liquids <- function(command, ...) {
         L121.globaltech_coef_interp
 
       # Energy inputs = production times fuel IO coef
-      L111.Prod_EJ_R_F_Yh %>%
-        # Join on sector / fuel, keeping only the rows that are in both tables
-        inner_join(rename(L121.globaltech_coef_interp, value_coef = value), by = c("sector", "fuel", "year")) %>%
-        select(GCAM_region_ID, sector, fuel, year, value, value_coef) %>%
-        left_join(rename(L121.globaltech_coef_interp, value_coef_gas = value), by = c("sector", "year")) %>%
-        mutate(value = value * value_coef_gas) %>%
-        select(GCAM_region_ID, sector, fuel = fuel.y, year, value) ->
-        L121.in_EJ_R_unoil_F_Yh
+      # L111.Prod_EJ_R_F_Yh %>%
+      #   mutate(fuel = if_else(technology=="unconventional oil","unconventional oil",if_else(fuel=="natural gas","gas",fuel)),
+      #          sector=if_else(technology=="unconventional oil","unconventional oil production",sector)) %>%
+      #   # Join on sector / fuel, keeping only the rows that are in both tables
+      #   inner_join(rename(L121.globaltech_coef_interp, value_coef = value), by = c("sector", "fuel", "year")) %>%
+      #   select(GCAM_region_ID, sector, fuel, year, value, value_coef) %>%
+      #   left_join(rename(L121.globaltech_coef_interp, value_coef_gas = value), by = c("sector", "year")) %>%
+      #   mutate(value = if_else(fuel.y=="gas",value * value_coef_gas,value*1)) %>%
+      #   select(GCAM_region_ID, sector, fuel = fuel.y, year, value) ->
+      #   L121.in_EJ_R_unoil_F_Yh
+      #
+
+
+
 
       # Downscaling unconventional oil consumption shares by GCAM 3.0 region to countries
       product_filters <- filter(IEA_product_rsrc, resource == "crude oil")
@@ -149,10 +165,13 @@ module_energy_LA121.liquids <- function(command, ...) {
 
       # Calculating unconventional oil demand by region and historical year
       L111.Prod_EJ_R_F_Yh %>%
-        filter(fuel == "unconventional oil") %>%
+        filter(technology == "unconventional oil") %>%
         group_by(fuel, year, sector) %>%
         summarise(value = sum(value)) %>%
-        select(fuel, year, value) -> L121.Prod_EJ_unoil_Yh
+        ungroup() %>%
+        select(fuel, year, value) %>%
+        distinct() %>%
+        mutate(fuel = paste0("unconventional oil"))-> L121.Prod_EJ_unoil_Yh
 
       L121.share_R_TPES_unoil_Yf %>%
         repeat_add_columns(L121.Prod_EJ_unoil_Yh) %>%
@@ -160,6 +179,12 @@ module_energy_LA121.liquids <- function(command, ...) {
         select(GCAM_region_ID, fuel, year, value) %>%
         mutate(sector = "TPES") -> L121.in_EJ_R_TPES_unoil_Yh
 
+      L111.Prod_EJ_R_F_Yh %>%
+        filter(technology=="unconventional oil") -> unoil_prod
+
+
+
+      L121.in_EJ_R_TPES_unoil_Yh %>% filter(value>0)->L121.in_EJ_R_TPES_unoil_Yh_temp
       # Conventional (crude) oil: calculate as liquids TPES - unconventional oil
       L1011.en_bal_EJ_R_Si_Fi_Yh %>%
         filter(sector == "TPES", fuel == "refined liquids") -> L121.in_EJ_R_TPES_liq_Yh
@@ -168,8 +193,22 @@ module_energy_LA121.liquids <- function(command, ...) {
         select(GCAM_region_ID, sector, fuel, year, value) %>%
         mutate(fuel = "crude oil") %>%
         left_join(rename(L121.in_EJ_R_TPES_unoil_Yh, value_unoil = value, unoil = fuel), by = c("GCAM_region_ID", "sector", "year")) %>%
-        mutate(value = value) %>%
+        mutate( value_unoil = if_else(is.na(value_unoil),0,value_unoil)) %>%
+        mutate(value = value - value_unoil) %>%
         select(GCAM_region_ID, sector, fuel, year, value) -> L121.in_EJ_R_TPES_crude_Yh
+
+      L111.Prod_EJ_R_F_Yh %>%
+        filter(fuel=="natural gas") %>%
+        filter(year %in% MODEL_BASE_YEARS) %>%
+        mutate(fuel=paste0("gas")) %>%
+        left_join(gas_uncov_ratio,by=c("GCAM_region_ID","year","fuel")) %>%
+        mutate(gas_coef=if_else(is.na(gas_coef),0,gas_coef)) %>%
+        mutate(value = value*gas_coef) %>%
+        inner_join(unoil_prod %>% select(GCAM_region_ID, year, val_unoil =value),by=c("GCAM_region_ID","year"))%>%
+        mutate(value=val_unoil*gas_coef) %>%
+        select(GCAM_region_ID, fuel, year, value)->  L121.in_EJ_R_unoil_F_Yh
+
+
 
       # 4/23/2019 addendum - GPK.
       # Downscale biofuel consumption to specific technologies, per data from IIASA

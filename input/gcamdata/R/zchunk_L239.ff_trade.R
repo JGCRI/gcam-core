@@ -117,7 +117,8 @@ module_energy_L239.ff_trade <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["TechCost"]])
 
     # L239.TechCoef_tra: Coefficient and market name of traded technologies
-    L239.TechCoef_tra <- select(A_ff_TradedTechnology_R_Y, LEVEL2_DATA_NAMES[["TechCoef"]])
+    L239.TechCoef_tra <- select(A_ff_TradedTechnology_R_Y, LEVEL2_DATA_NAMES[["TechCoef"]]) %>%
+                         mutate(minicam.energy.input = if_else(minicam.energy.input == "unconventional oil production", "crude oil",minicam.energy.input))
 
     # L239.Production_tra: Output (gross exports) of traded technologies
     L239.GrossExports_EJ_R_C_Y <- left_join_error_no_match(L2011.ff_GrossTrade_EJ_R_C_Y,
@@ -155,7 +156,8 @@ module_energy_L239.ff_trade <- function(command, ...) {
     L239.TechShrwt_reg <- select(A_ff_RegionalTechnology_R_Y, LEVEL2_DATA_NAMES[["TechShrwt"]])
 
     # L239.TechCoef_reg: Coefficient and market name of traded technologies
-    L239.TechCoef_reg <- select(A_ff_RegionalTechnology_R_Y, LEVEL2_DATA_NAMES[["TechCoef"]])
+    L239.TechCoef_reg <- select(A_ff_RegionalTechnology_R_Y, LEVEL2_DATA_NAMES[["TechCoef"]]) %>%
+                         mutate(minicam.energy.input= if_else(minicam.energy.input=="unconventional oil production","crude oil",minicam.energy.input))
 
     # L239.Production_reg_imp: Output (flow) of gross imports
     L239.GrossImports_EJ_R_C_Y <- left_join_error_no_match(L2011.ff_GrossTrade_EJ_R_C_Y,
@@ -207,7 +209,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
                 by = c("region", minicam.energy.input = "fuel", "year")) %>%
       mutate(calOutputValue = consumption,
              share.weight.year = year,
-             subs.share.weight = if_else(calOutputValue > 0, 1, 0),
+             subs.share.weight = if_else(calOutputValue >= 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
       select(LEVEL2_DATA_NAMES[["Production"]])->
       L239.Consumption_intraregional

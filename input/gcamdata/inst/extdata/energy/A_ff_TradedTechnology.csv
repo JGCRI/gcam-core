@@ -1,7 +1,7 @@
 # File: A_ff_TradedTechnology.csv
 # Title: Technology-level assumptions of traded fossil fuel markets
 # Units: Various
-# Comments: for traded fuels, each subsector has only one technology; there is no technology-level competition,,,,,,
+# Comments: for traded fuels, each subsector has only one technology; there is no technology-level competition
 # Source: NA
 # Column types: ccccnnni 
 # ----------
@@ -9,3 +9,4 @@ supplysector,subsector,technology,minicam.energy.input,coefficient,input.cost,sh
 traded coal,traded coal,traded coal,coal,1,0.15,1,1
 traded crude oil,traded crude oil,traded crude oil,crude oil,1,0.15,1,1
 traded natural gas,traded natural gas,traded natural gas,natural gas,1,0.25,1,1
+traded unconventional oil,traded unconventional oil,traded unconventional oil,unconventional oil production,1,0.15,1,1
