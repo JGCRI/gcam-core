@@ -10,7 +10,6 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join mutate rename summarise select ungroup
-#' @importFrom stringr str_extract
 #' @author GPK January 2019
 module_water_L270.EFW_input_coefs <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -61,7 +60,7 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
     # are already accounted in the desalinated water production sector)
     L270.TechCoef_EFW_init <- L203.TechCoef_watertd %>%
       filter(technology != "water consumption") %>%
-      mutate(water.supplysector = stringr::str_extract(supplysector, "[a-z]+_[a-z]+_[a-z]+")) %>%
+      mutate(water.supplysector = gsub('([a-z]+_[a-z]+_[a-z]+)_.*', '\\1', supplysector)) %>%
       inner_join(L270.EFW_mapping, by = c(water.supplysector = "supplysector")) %>%
       filter(!(technology == water.DESAL & apply.to.desal.water == 0)) %>%
       mutate(minicam.energy.input = EFW_input)
