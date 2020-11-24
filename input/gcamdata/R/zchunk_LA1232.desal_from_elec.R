@@ -29,9 +29,9 @@ module_energy_LA1232.desal_from_elec <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
-    L171.out_km3_R_desalfromelec_Yh <- get_data(all_data, "L171.out_km3_R_desalfromelec_Yh")
-    L171.out_km3_R_desal_F_tech_Yh <- get_data(all_data, "L171.out_km3_R_desal_F_tech_Yh")
+    L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh", strip_attributes = TRUE)
+    L171.out_km3_R_desalfromelec_Yh <- get_data(all_data, "L171.out_km3_R_desalfromelec_Yh", strip_attributes = TRUE)
+    L171.out_km3_R_desal_F_tech_Yh <- get_data(all_data, "L171.out_km3_R_desal_F_tech_Yh", strip_attributes = TRUE)
 
     # ===================================================
 

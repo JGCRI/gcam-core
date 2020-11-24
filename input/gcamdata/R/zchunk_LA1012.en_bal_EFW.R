@@ -37,14 +37,14 @@ module_energy_LA1012.en_bal_EFW <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    EFW_mapping <- get_data(all_data, "water/EFW_mapping")
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
-    L171.in_EJ_R_desal_F_Yh <- get_data(all_data, "L171.in_EJ_R_desal_F_Yh")
-    L172.in_EJ_R_irr_F_Yh <- get_data(all_data, "L172.in_EJ_R_irr_F_Yh")
-    L173.in_EJ_R_indEFWtot_F_Yh <- get_data(all_data, "L173.in_EJ_R_indEFWtot_F_Yh")
-    L174.in_EJ_R_muniEFWtot_F_Yh <- get_data(all_data, "L174.in_EJ_R_muniEFWtot_F_Yh")
+    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID", strip_attributes = TRUE)
+    calibrated_techs <- get_data(all_data, "energy/calibrated_techs", strip_attributes = TRUE)
+    EFW_mapping <- get_data(all_data, "water/EFW_mapping", strip_attributes = TRUE)
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
+    L171.in_EJ_R_desal_F_Yh <- get_data(all_data, "L171.in_EJ_R_desal_F_Yh", strip_attributes = TRUE)
+    L172.in_EJ_R_irr_F_Yh <- get_data(all_data, "L172.in_EJ_R_irr_F_Yh", strip_attributes = TRUE)
+    L173.in_EJ_R_indEFWtot_F_Yh <- get_data(all_data, "L173.in_EJ_R_indEFWtot_F_Yh", strip_attributes = TRUE)
+    L174.in_EJ_R_muniEFWtot_F_Yh <- get_data(all_data, "L174.in_EJ_R_muniEFWtot_F_Yh", strip_attributes = TRUE)
 
     # ===================================================
 
