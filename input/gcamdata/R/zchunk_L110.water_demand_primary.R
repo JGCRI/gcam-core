@@ -50,7 +50,7 @@ module_water_L110.water_demand_primary <- function(command, ...) {
     resource_water_share <- get_data(all_data, "water/resource_water_share")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
-    L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh")
+    L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
     L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
     L121.in_EJ_R_unoil_F_Yh <- get_data(all_data, "L121.in_EJ_R_unoil_F_Yh")
     L121.in_EJ_R_TPES_crude_Yh <- get_data(all_data, "L121.in_EJ_R_TPES_crude_Yh")

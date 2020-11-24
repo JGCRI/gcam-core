@@ -68,12 +68,11 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
     L100.runoff_accessible <- get_data(all_data, "L100.runoff_accessible")
     L101.groundwater_depletion_bm3 <- get_data(all_data, "L101.groundwater_depletion_bm3")
     L101.DepRsrcCurves_ground_uniform_bm3 <- get_data(all_data, "L101.DepRsrcCurves_ground_uniform_bm3")
-    L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
-    L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3")
-    L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
-    L165.ag_IrrEff_R <- get_data(all_data, "L165.ag_IrrEff_R")
-    L165.IrrWithd_km3_R_B_Y <- get_data(all_data, "L165.IrrWithd_km3_R_B_Y")
-    L203.Production_watertd <- get_data(all_data, "L203.Production_watertd")
+    L101.groundwater_grades_constrained_bm3 <- get_data(all_data, "L101.groundwater_grades_constrained_bm3", strip_attributes = TRUE )
+    L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share", strip_attributes = TRUE)
+    L165.ag_IrrEff_R <- get_data(all_data, "L165.ag_IrrEff_R", strip_attributes = TRUE)
+    L165.IrrWithd_km3_R_B_Y <- get_data(all_data, "L165.IrrWithd_km3_R_B_Y", strip_attributes = TRUE)
+    L203.Production_watertd <- get_data(all_data, "L203.Production_watertd", strip_attributes = TRUE)
 
     # Basin_to_country_mapping table include only one set of distinct basins
     # that are mapped to a single country with largest basin share.

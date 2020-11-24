@@ -36,9 +36,9 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     EFW_mapping <- get_data(all_data, "water/EFW_mapping")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
-    L173.WWtrtfrac_R_ind_Yh <- get_data(all_data, "L173.WWtrtfrac_R_ind_Yh")
-    L174.WWtrtfrac_R_muni_Yh <- get_data(all_data, "L174.WWtrtfrac_R_muni_Yh")
-    L203.TechCoef_watertd <- get_data(all_data, "L203.TechCoef_watertd")
+    L173.WWtrtfrac_R_ind_Yh <- get_data(all_data, "L173.WWtrtfrac_R_ind_Yh", strip_attributes = TRUE)
+    L174.WWtrtfrac_R_muni_Yh <- get_data(all_data, "L174.WWtrtfrac_R_muni_Yh", strip_attributes = TRUE)
+    L203.TechCoef_watertd <- get_data(all_data, "L203.TechCoef_watertd", strip_attributes = TRUE)
 
     # ===================================================
 
