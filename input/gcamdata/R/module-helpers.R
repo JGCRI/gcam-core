@@ -525,6 +525,8 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
     # for the purposes of interpolating (and later extrapolating) we would like
     # to just group by everything except year and value
     dplyr::group_by_at(dplyr::vars(-year, -value)) %>%
+    # we must also arrange for consistency with the old complete behavior
+    arrange(year, .by_group = TRUE) %>%
     # finally do the linearly interpolation between values which are specified
     mutate(value = approx_fun(year, value, rule = 1)) ->
     d
