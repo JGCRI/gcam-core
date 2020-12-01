@@ -185,7 +185,7 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
         add_xml_data(L254.GlobalTechShrwt_nonmotor, "GlobalTechShrwt") %>%
         add_xml_data(L254.GlobalTechCoef_passthru, "GlobalTechCoef") %>%
         add_xml_data(L254.GlobalRenewTech_nonmotor, "GlobalRenewTech") %>%
-        #add_xml_data(L254.GlobalTranTechInterp_SSP, "GlobalTranTechInterp") %>%
+        add_xml_data(L254.GlobalTranTechInterp_SSP, "GlobalTranTechInterp") %>%
         add_xml_data(L254.GlobalTranTechShrwt_SSP, "GlobalTranTechShrwt") %>%
         add_xml_data(L254.GlobalTranTechSCurve, "GlobalTranTechSCurve") %>%
         add_xml_data(L254.StubTranTechCalInput_SSP, "StubTranTechCalInput") %>%

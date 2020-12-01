@@ -28,34 +28,30 @@ trn_pass,Passenger Rail,Tech-Adv-Liquid,0,0,0,0,0,0,1,1,CORE
 trn_pass,Walk,Walk,1,1,1,1,1,1,1,1,CORE
 trn_pass_road,Bus,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road,Bus,NG,0,0,1,1,1,1,1,1,CORE
-trn_pass_road_bus,Heavy Bus,Liquids,1,1,1,1,1,1,1,1,CORE
-trn_pass_road_bus,Heavy Bus,NG,0,0,1,1,1,1,1,1,CORE
-trn_pass_road_bus,Light Bus,Liquids,1,1,1,1,1,1,1,1,CORE
-trn_pass_road_bus,Light Bus,NG,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV,2W and 3W,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV,2W and 3W,NG,0,0,1,1,1,1,1,1,CORE
-trn_pass_road_LDV,2W and 3W,BEV,0,0,1,1,1,1,1,1,CORE
+trn_pass_road_LDV,2W and 3W,BEV,0,0,0,0.1429,0.2857,0.4286,1,1,CORE
 trn_pass_road_LDV,2W and 3W,LA-BEV,0,0,0,0,0,0,0,0,CORE
-trn_pass_road_LDV_4W,Car,BEV,0,0,0.25,0.25,0.25,1,1,1,CORE
-trn_pass_road_LDV_4W,Car,FCEV,0,0,0,0,0,1,1,1,CORE
+trn_pass_road_LDV_4W,Car,BEV,0,0,0,0.25,0.625,1,1,1,CORE
+trn_pass_road_LDV_4W,Car,FCEV,0,0,0,0,0.5,1,1,1,CORE
 trn_pass_road_LDV_4W,Car,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Car,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Car,NG,0,0,1,1,1,1,1,1,CORE
-trn_pass_road_LDV_4W,Large Car and Truck,BEV,0,0,0.25,0.25,0.25,1,1,1,CORE
-trn_pass_road_LDV_4W,Large Car and Truck,FCEV,0,0,0,0,0,1,1,1,CORE
+trn_pass_road_LDV_4W,Large Car and Truck,BEV,0,0,0,0.25,0.625,1,1,1,CORE
+trn_pass_road_LDV_4W,Large Car and Truck,FCEV,0,0,0,0,0.5,1,1,1,CORE
 trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Large Car and Truck,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Large Car and Truck,NG,0,0,1,1,1,1,1,1,CORE
-trn_pass_road_LDV_4W,Mini Car,BEV,0,0,0.25,0.25,0.25,1,1,1,CORE
-trn_pass_road_LDV_4W,Mini Car,FCEV,0,0,0,0,0,1,1,1,CORE
+trn_pass_road_LDV_4W,Mini Car,BEV,0,0,0,0.25,0.625,1,1,1,CORE
+trn_pass_road_LDV_4W,Mini Car,FCEV,0,0,0,0,0.5,1,1,1,CORE
 trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Mini Car,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Mini Car,NG,0,0,1,1,1,1,1,1,CORE
 trn_shipping_intl,International Ship,Liquids,1,1,1,1,1,1,1,1,CORE
-trn_pass_road,Bus,BEV,0,0,0.25,0.25,0.25,1,1,1,CORE
-trn_freight_road,Light truck,BEV,0,0,1,1,1,1,1,1,CORE
-trn_freight_road,Medium truck,BEV,0,0,1,1,1,1,1,1,CORE
-trn_freight_road,Heavy truck,BEV,0,0,1,1,1,1,1,1,CORE
+trn_pass_road,Bus,BEV,0,0,0,0.25,0.625,1,1,1,CORE
+trn_freight_road,Light truck,BEV,0,0,0,0.1429,0.2857,0.4286,1,1,CORE
+trn_freight_road,Medium truck,BEV,0,0,0,0.1429,0.2857,0.4286,1,1,CORE
+trn_freight_road,Heavy truck,BEV,0,0,0,0.1429,0.2857,0.4286,1,1,CORE
 trn_aviation_intl,International Aviation,Liquids,1,1,1,1,1,1,1,1,highEV
 trn_freight,Domestic Ship,Liquids,1,1,1,1,1,1,1,1,highEV
 trn_freight,Freight Rail,Adv-Electric,0,0,0,0,0,0,1,1,highEV
@@ -79,31 +75,27 @@ trn_pass,Passenger Rail,Tech-Adv-Liquid,0,0,0,0,0,0,1,1,highEV
 trn_pass,Walk,Walk,1,1,1,1,1,1,1,1,highEV
 trn_pass_road,Bus,Liquids,1,1,1,1,1,1,1,1,highEV
 trn_pass_road,Bus,NG,0,0,1,1,1,1,1,1,highEV
-trn_pass_road_bus,Heavy Bus,Liquids,1,1,1,1,1,1,1,1,highEV
-trn_pass_road_bus,Heavy Bus,NG,0,0,1,1,1,1,1,1,highEV
-trn_pass_road_bus,Light Bus,Liquids,1,1,1,1,1,1,1,1,highEV
-trn_pass_road_bus,Light Bus,NG,0,0,1,1,1,1,1,1,highEV
 trn_pass_road_LDV,2W and 3W,Liquids,1,1,1,1,1,1,1,1,highEV
 trn_pass_road_LDV,2W and 3W,NG,0,0,1,1,1,1,1,1,highEV
-trn_pass_road_LDV,2W and 3W,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1,highEV
+trn_pass_road_LDV,2W and 3W,BEV,0,0,0,0.25,1.375,2.5,2.5,2.5,highEV
 trn_pass_road_LDV,2W and 3W,LA-BEV,0,0,0,0,0,0,0,0,highEV
-trn_pass_road_LDV_4W,Car,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1,highEV
-trn_pass_road_LDV_4W,Car,FCEV,0,0,0,0,0,1,1,1,highEV
+trn_pass_road_LDV_4W,Car,BEV,0,0,0,0.25,1.375,2.5,2.5,2.5,highEV
+trn_pass_road_LDV_4W,Car,FCEV,0,0,0,0,0.5,1,1,1,highEV
 trn_pass_road_LDV_4W,Car,Hybrid Liquids,0,0,1,1,1,1,1,1,highEV
 trn_pass_road_LDV_4W,Car,Liquids,1,1,1,1,1,1,1,1,highEV
 trn_pass_road_LDV_4W,Car,NG,0,0,1,1,1,1,1,1,highEV
-trn_pass_road_LDV_4W,Large Car and Truck,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1,highEV
-trn_pass_road_LDV_4W,Large Car and Truck,FCEV,0,0,0,0,0,1,1,1,highEV
+trn_pass_road_LDV_4W,Large Car and Truck,BEV,0,0,0,0.25,1.375,2.5,2.5,2.5,highEV
+trn_pass_road_LDV_4W,Large Car and Truck,FCEV,0,0,0,0,0.5,1,1,1,highEV
 trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,0,0,1,1,1,1,1,1,highEV
 trn_pass_road_LDV_4W,Large Car and Truck,Liquids,1,1,1,1,1,1,1,1,highEV
 trn_pass_road_LDV_4W,Large Car and Truck,NG,0,0,1,1,1,1,1,1,highEV
-trn_pass_road_LDV_4W,Mini Car,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1,highEV
-trn_pass_road_LDV_4W,Mini Car,FCEV,0,0,0,0,0,1,1,1,highEV
+trn_pass_road_LDV_4W,Mini Car,BEV,0,0,0,0.25,1.375,2.5,2.5,2.5,highEV
+trn_pass_road_LDV_4W,Mini Car,FCEV,0,0,0,0,0.5,1,1,1,highEV
 trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,0,0,1,1,1,1,1,1,highEV
 trn_pass_road_LDV_4W,Mini Car,Liquids,1,1,1,1,1,1,1,1,highEV
 trn_pass_road_LDV_4W,Mini Car,NG,0,0,1,1,1,1,1,1,highEV
 trn_shipping_intl,International Ship,Liquids,1,1,1,1,1,1,1,1,highEV
-trn_pass_road,Bus,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1,highEV
-trn_freight_road,Light truck,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1,highEV
-trn_freight_road,Medium truck,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1,highEV
-trn_freight_road,Heavy truck,BEV,0,0,0.25,0.25,1.375,2.5,2.5,1,highEV
+trn_pass_road,Bus,BEV,0,0,0,0.25,1.375,2.5,2.5,2.5,highEV
+trn_freight_road,Light truck,BEV,0,0,0,0.25,1.375,2.5,2.5,2.5,highEV
+trn_freight_road,Medium truck,BEV,0,0,0,0.25,1.375,2.5,2.5,2.5,highEV
+trn_freight_road,Heavy truck,BEV,0,0,0,0.25,1.375,2.5,2.5,2.5,highEV
