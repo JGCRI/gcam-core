@@ -127,6 +127,10 @@ double NoClimateModel::getNetOceanUptake(const int aYear ) const {
     return 0.0;
 }
 
+bool NoClimateModel::isClimateModel() {
+    return false;
+}
+
 void NoClimateModel::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitClimateModel( this, aPeriod );
     aVisitor->endVisitClimateModel( this, aPeriod );

@@ -249,6 +249,14 @@ public:
     *         unavailable.
     */
     virtual double getNetOceanUptake( const int aYear ) const = 0;
+    
+    /*! \brief Returns a boolean indicating whether there is a climate model.
+    *         This is true for Hector & MAGICC, but false for NoClimateModel
+    *         This is used to determine whether emissions need to be processed.
+    * \return bool indicating whether a climate model exists.
+    */
+    virtual bool isClimateModel( ) {return true;}
+
 
     /*! \brief Update a visitor with information from the climate model.
     * \param aVisitor Vistor to update.

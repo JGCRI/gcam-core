@@ -581,9 +581,13 @@ void World::setEmissions( int period ) {
 }
     
 void World::runClimateModel() {
-    // The Climate model reads in data for the base period, so skip passing it in.
-    for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period ) {
-        setEmissions( period );
+    // Do not run set emissions for the NoClimateModel as it can be time consuming and is unnecessary
+    if( mClimateModel->isClimateModel() ) {
+        
+        // The Climate model reads in data for the base period, so skip passing it in.
+        for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period ) {
+            setEmissions( period );
+        }
     }
     
     // Run the model.
@@ -592,7 +596,10 @@ void World::runClimateModel() {
 
 void World::runClimateModel( int aPeriod ) {
     if( aPeriod > 0 ) {
-        setEmissions( aPeriod );
+        // Do not run set emissions for the NoClimateModel as it can be time consuming and is unnecessary
+        if( mClimateModel->isClimateModel() ) {
+            setEmissions( aPeriod );
+        }
         mClimateModel->runModel( scenario->getModeltime()->getper_to_yr( aPeriod ) );
     }
 }

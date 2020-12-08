@@ -103,6 +103,8 @@ public:
     virtual double getNetTerrestrialUptake( const int aYear ) const;
 
     virtual double getNetOceanUptake( const int aYear ) const;
+    
+    bool isClimateModel();
 
 	virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;
