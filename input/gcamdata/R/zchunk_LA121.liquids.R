@@ -65,6 +65,7 @@ module_energy_LA121.liquids <- function(command, ...) {
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
     A21.globalrsrctech_coef <- get_data(all_data, "energy/A21.globalrsrctech_coef") %>%
+      filter(minicam.energy.input == "regional natural gas") %>%
       gather_years(value_col = "gas_coef") %>%
       repeat_add_columns(tibble(region = c(iso_GCAM_regID$GCAM_region_ID)))
     # L100.IEA_en_bal_ctry_hist might be null (meaning the data system is running

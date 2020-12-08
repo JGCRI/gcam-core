@@ -3,7 +3,7 @@
 # Units: Unitless
 # Description: Mapping between fuels in datasets and sectors being assigned a primary fuel CO2 coefficient
 # Note: This only maps the fuels whose emissions coefficients are calculated from emissions inventories
-# Column types: cc 
+# Column types: cc
 # ----------
 PrimaryFuelCO2Coef.name,fuel
 coal,coal
@@ -20,3 +20,4 @@ regional oil,refined liquids
 refining,refined liquids
 refined liquids industrial,refined liquids
 refined liquids enduse,refined liquids
+unconventional oil upscaling,refined liquids
