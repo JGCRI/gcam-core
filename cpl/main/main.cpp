@@ -50,6 +50,13 @@
 #include "../include/aspatial_data.h"
 
 int main( ) {
+    /* STEP 1: DEFINE CONTROL VARIABLES WITH DEFAULTS
+               THESE WILL BE OVERWRITTEN BY THE NAMELIST,
+               BUT NEED TO DEFINE NAME AND TYPE.
+     */
+    // Current year
+    int YEAR = 1990;
+    
     // Define base control variables.
     // In fully coupled mode, these are defined in an E3SM namelist.
     std::string CASE_NAME = "Impacts";
@@ -85,6 +92,95 @@ int main( ) {
     int NUM_EMISS_REGIONS = 1;
     int NUM_EMISS_GASES = 1;
     
+    /*
+     STEP 2: READ NAMELIST
+     */
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::ERROR );
+    ifstream namelist("user_nl_gcam");
+    if (!namelist.is_open())
+    {
+        coupleLog << "Namelist not found: user_nl_gcam" << endl;
+        exit(EXIT_FAILURE);
+    }
+    string str;
+    getline(namelist, str); // skip the first line
+    while (getline(namelist, str))
+    {
+        istringstream iss(str);
+        string name;
+        string value;
+
+        getline(iss, name, ' ');
+        getline(iss, value, ' '); // Throw away the equals sign
+        getline(iss, value, ' ');
+        if ( name == "CASE_NAME" ) {
+            CASE_NAME = value;
+        } else if ( name == "GCAM_CONFIG" ) {
+            GCAM_CONFIG = value;
+        } else if ( name == "BASE_CO2_SURFACE_FILE" ) {
+            BASE_CO2_SURFACE_FILE = value;
+        } else if ( name == "BASE_CO2_AIRCRAFT_FILE" ) {
+            BASE_CO2_AIRCRAFT_FILE = value;
+        } else if ( name == "GCAM2ELM_CO2_MAPPING_FILE" ) {
+            GCAM2ELM_CO2_MAPPING_FILE = value;
+        } else if ( name == "GCAM2ELM_LUC_MAPPING_FILE" ) {
+            GCAM2ELM_LUC_MAPPING_FILE = value;
+        } else if ( name == "GCAM2ELM_WOODHARVEST_MAPPING_FILE" ) {
+            GCAM2ELM_WOODHARVEST_MAPPING_FILE = value;
+        } else if ( name == "ELM2GCAM_MAPPING_FILE" ) {
+            ELM2GCAM_MAPPING_FILE = value;
+        } else if ( name == "READ_SCALARS" ) {
+            istringstream(value) >> std::boolalpha >> READ_SCALARS;
+        } else if ( name == "READ_ELM_FROM_FILE" ) {
+            istringstream(value) >> std::boolalpha >> READ_ELM_FROM_FILE;
+        } else if ( name == "WRITE_CO2" ) {
+            istringstream(value) >> std::boolalpha >> WRITE_CO2;
+        } else if ( name == "WRITE_SCALARS" ) {
+            istringstream(value) >> std::boolalpha >> WRITE_SCALARS;
+        } else if ( name == "ELM_IAC_CARBON_SCALING" ) {
+            istringstream(value) >> std::boolalpha >> ELM_IAC_CARBON_SCALING;
+        } else if ( name == "IAC_ELM_CO2_EMISSIONS" ) {
+            istringstream(value) >> std::boolalpha >> IAC_ELM_CO2_EMISSIONS;
+        } else if ( name == "FIRST_COUPLED_YEAR" ) {
+            FIRST_COUPLED_YEAR = std::stoi(value);
+        } else if ( name == "YEAR" ) {
+            YEAR = std::stoi(value);
+        } else if ( name == "NUM_LAT" ) {
+            NUM_LAT = std::stoi(value);
+        } else if ( name == "NUM_LON" ) {
+            NUM_LON = std::stoi(value);
+        } else if ( name == "NUM_PFT" ) {
+            NUM_PFT = std::stoi(value);
+        } else if ( name == "NUM_GCAM_ENERGY_REGIONS" ) {
+            NUM_GCAM_ENERGY_REGIONS = std::stoi(value);
+        } else if ( name == "NUM_GCAM_LAND_REGIONS" ) {
+            NUM_GCAM_LAND_REGIONS = std::stoi(value);
+        } else if ( name == "NUM_IAC2ELM_LANDTYPES" ) {
+            NUM_IAC2ELM_LANDTYPES = std::stoi(value);
+        } else if ( name == "NUM_EMISS_SECTORS" ) {
+            NUM_EMISS_SECTORS = std::stoi(value);
+        } else if ( name == "NUM_EMISS_REGIONS" ) {
+            NUM_EMISS_REGIONS = std::stoi(value);
+        } else if ( name == "NUM_EMISS_GASES" ) {
+            NUM_EMISS_GASES = std::stoi(value);
+        } else if ( name == "BASE_CO2EMISS_SURFACE" ) {
+            BASE_CO2EMISS_SURFACE = std::stod(value);
+        } else if ( name == "BASE_CO2EMISS_AIRCRAFT" ) {
+            BASE_CO2EMISS_AIRCRAFT = std::stod(value);
+        } else {
+            coupleLog.setLevel( ILogger::ERROR );
+            coupleLog << "Invalid Namelist Variable" << endl;
+        }
+    
+        // Print to coupler log.
+        coupleLog.setLevel( ILogger::NOTICE );
+        coupleLog << name << " = " << value << endl;
+    }
+    
+    /*
+     STEP 3: INITIALIZE INTERFACE AND INTERFACE VARIABLES
+     */
     // Initialize Interface
     GCAM_E3SM_interface *p_obj;
     p_obj = new GCAM_E3SM_interface();
@@ -137,57 +233,61 @@ int main( ) {
     double *gcamoco2airlooct = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
     double *gcamoco2airlonov = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
     double *gcamoco2airlodec = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-      
+    
+    /*
+     STEP 4: RUN GCAM
+     */
     // Run GCAM
-    for( int yr = 1975; yr < 2101; yr++ ){
-        // Set up years
-        int ymd = yr * 10000;
-        int *yyyymmdd = &ymd;
-        
-        // If coupling is active, then set carbon density
-        if ( ELM_IAC_CARBON_SCALING ) {
-            cout << "E3SM-GCAM: Carbon scaling on" << endl;
-            if ( READ_ELM_FROM_FILE ) {
-                // Read the ELM data from a file and then pass it to setDensityGCAM below
-                // Read in average NPP
-                ASpatialData tempPFTData(NUM_LAT * NUM_LON * NUM_PFT);
-                tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false, gcaminpp);
-                
-                // Read in average HR
-                tempPFTData.readSpatialData("../cpl/data/hr_mean_pft.txt", true, true, false, gcamihr);
-                
-                // Read in PFT weight in grid cell
-                tempPFTData.readSpatialData("../cpl/data/pft_wt.txt", true, true, false, gcamipftfract);
-                
-                // Read in area of grid cell
-                ASpatialData tempData(NUM_LAT * NUM_LON);
-                tempData.readSpatialData("../cpl/data/area.txt", true, false, false, gcamiarea);
-                
-                // Read in area of grid cell
-                tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
-            }
-            p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamilfract, gcamipftfract, gcaminpp, gcamihr,
-                                  NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS);
+    cout << "Running " << YEAR << endl;
+    int ymd = YEAR * 10000;
+    int *yyyymmdd = &ymd;
+    
+    // If coupling is active, then set carbon density
+    if ( ELM_IAC_CARBON_SCALING ) {
+        coupleLog << "E3SM-GCAM: Carbon scaling on" << endl;
+        if ( READ_ELM_FROM_FILE ) {
+            // Read the ELM data from a file and then pass it to setDensityGCAM below
+            // Read in average NPP
+            ASpatialData tempPFTData(NUM_LAT * NUM_LON * NUM_PFT);
+            tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false, gcaminpp);
+            
+            // Read in average HR
+            tempPFTData.readSpatialData("../cpl/data/hr_mean_pft.txt", true, true, false, gcamihr);
+            
+            // Read in PFT weight in grid cell
+            tempPFTData.readSpatialData("../cpl/data/pft_wt.txt", true, true, false, gcamipftfract);
+            
+            // Read in area of grid cell
+            ASpatialData tempData(NUM_LAT * NUM_LON);
+            tempData.readSpatialData("../cpl/data/area.txt", true, false, false, gcamiarea);
+            
+            // Read in area of grid cell
+            tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
         }
-        
-        // Run model
-        p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, NUM_LON, NUM_LAT);
-        
-        p_obj->downscaleEmissionsGCAM(gcamoemiss,
-                                      gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
-                                      gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
-                                      gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec,
-                                      gcamoco2airlojan, gcamoco2airlofeb, gcamoco2airlomar, gcamoco2airloapr,
-                                      gcamoco2airlomay, gcamoco2airlojun, gcamoco2airlojul, gcamoco2airloaug,
-                                      gcamoco2airlosep, gcamoco2airlooct, gcamoco2airlonov, gcamoco2airlodec,
-                                      gcamoco2airhijan, gcamoco2airhifeb, gcamoco2airhimar, gcamoco2airhiapr,
-                                      gcamoco2airhimay, gcamoco2airhijun, gcamoco2airhijul, gcamoco2airhiaug,
-                                      gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
-                                      BASE_CO2_SURFACE_FILE, BASE_CO2EMISS_SURFACE, BASE_CO2_AIRCRAFT_FILE, BASE_CO2EMISS_AIRCRAFT,
-                                      NUM_LON, NUM_LAT, WRITE_CO2);
-
+        p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamilfract, gcamipftfract, gcaminpp, gcamihr,
+                              NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS, YEAR);
     }
     
+    // Run model
+    p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, NUM_LON, NUM_LAT);
+    
+    p_obj->downscaleEmissionsGCAM(gcamoemiss,
+                                  gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
+                                  gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
+                                  gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec,
+                                  gcamoco2airlojan, gcamoco2airlofeb, gcamoco2airlomar, gcamoco2airloapr,
+                                  gcamoco2airlomay, gcamoco2airlojun, gcamoco2airlojul, gcamoco2airloaug,
+                                  gcamoco2airlosep, gcamoco2airlooct, gcamoco2airlonov, gcamoco2airlodec,
+                                  gcamoco2airhijan, gcamoco2airhifeb, gcamoco2airhimar, gcamoco2airhiapr,
+                                  gcamoco2airhimay, gcamoco2airhijun, gcamoco2airhijul, gcamoco2airhiaug,
+                                  gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
+                                  BASE_CO2_SURFACE_FILE, BASE_CO2EMISS_SURFACE, BASE_CO2_AIRCRAFT_FILE, BASE_CO2EMISS_AIRCRAFT,
+                                  NUM_LON, NUM_LAT, WRITE_CO2, YEAR);
+
+    
+    /*
+     STEP 5: FINALIZE AND CLEAN UP ALL VARIABLES
+     */
     // Finalize GCAM
     p_obj->finalizeGCAM();
     
@@ -243,3 +343,7 @@ int main( ) {
     return 0;
 }
 
+void readNameList() {
+    std::cout << "HERE" << std::endl;
+    return;
+}

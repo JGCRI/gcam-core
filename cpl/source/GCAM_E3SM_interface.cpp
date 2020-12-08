@@ -258,7 +258,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
 }
 
 void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                         int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, int aFirstCoupledYear, bool aReadScalars, bool aWriteScalars) {
+                                         int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, int aFirstCoupledYear, bool aReadScalars, bool aWriteScalars, int aCurrYear) {
     // Get year only of the current date
     int curryear = *yyyymmdd/10000;
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
@@ -296,7 +296,8 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
         // Optional: write scaler information to a file
         // TODO: make the file name an input instead of hardcoded
         if( aWriteScalars ) {
-            e3sm2gcam.writeScalers("./scalers.csv", scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData, 17722);
+            string fName = "./scalers_" + std::to_string(aCurrYear) + ".csv";
+            e3sm2gcam.writeScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData, 17722);
         }
         
         // TODO: What happens if there is no scalarData or if the elements are blank?
@@ -317,7 +318,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
                                                  double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                                                  double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
                                                  std::string aBaseCO2SfcFile, double aBaseCO2EmissSfc, std::string aBaseCO2AirFile, double aBaseCO2EmissAir,
-                                                 int aNumLon, int aNumLat, bool aWriteCO2) {
+                                                 int aNumLon, int aNumLat, bool aWriteCO2, int aCurrYear) {
     // Downscale surface CO2 emissions
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
@@ -327,7 +328,8 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     surfaceCO2.downscaleCO2Emissions(aBaseCO2EmissSfc, gcamoemiss[0]);
     if ( aWriteCO2 ) {
         // TODO: Set name of file based on case name?
-        surfaceCO2.writeSpatialData("./gridded_co2_sfc.txt", false);
+        string fNameSfc = "./gridded_co2_sfc" + std::to_string(aCurrYear) + ".txt";
+        surfaceCO2.writeSpatialData(fNameSfc, false);
     }
     
     // Set the gcamoco2 monthly vector data to the output of this
@@ -341,7 +343,8 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     aircraftCO2.downscaleCO2Emissions(aBaseCO2EmissAir, gcamoemiss[1]);
     if ( aWriteCO2 ) {
         // TODO: Set name of file based on case name?
-        aircraftCO2.writeSpatialData("./gridded_co2_air.txt", false);
+        string fNameAir = "./gridded_co2_air_" + std::to_string(aCurrYear) + ".txt";
+        aircraftCO2.writeSpatialData(fNameAir, false);
     }
     
     // Set the gcamoco2 data to the output of this
