@@ -258,7 +258,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
 }
 
 void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                         int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, int aFirstCoupledYear, bool aReadScalars, bool aWriteScalars, int aCurrYear) {
+                                         int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, int aFirstCoupledYear, bool aReadScalars, bool aWriteScalars) {
     // Get year only of the current date
     int curryear = *yyyymmdd/10000;
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
@@ -296,7 +296,7 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
         // Optional: write scaler information to a file
         // TODO: make the file name an input instead of hardcoded
         if( aWriteScalars ) {
-            string fName = "./scalers_" + std::to_string(aCurrYear) + ".csv";
+            string fName = "./scalers_" + std::to_string(curryear) + ".csv";
             e3sm2gcam.writeScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData, 17722);
         }
         
@@ -326,6 +326,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     EmissDownscale surfaceCO2(aNumLon * aNumLat * 12); // Emissions data is monthly now
     surfaceCO2.readSpatialData(aBaseCO2SfcFile, true, true, false);
     surfaceCO2.downscaleCO2Emissions(aBaseCO2EmissSfc, gcamoemiss[0]);
+    coupleLog << "Diagnostics: Global surface CO2 Emissions in " << aCurrYear << " = " << gcamoemiss[0] << endl;
     if ( aWriteCO2 ) {
         // TODO: Set name of file based on case name?
         string fNameSfc = "./gridded_co2_sfc" + std::to_string(aCurrYear) + ".txt";
@@ -341,6 +342,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     EmissDownscale aircraftCO2(aNumLon * aNumLat * 12 * 2); // Emissions data is monthly now; we're using two different height levels for aircraft
     aircraftCO2.readSpatialData(aBaseCO2AirFile, true, true, false);
     aircraftCO2.downscaleCO2Emissions(aBaseCO2EmissAir, gcamoemiss[1]);
+    coupleLog << "Diagnostics: Global aircraft CO2 Emissions in " << aCurrYear << " = " << gcamoemiss[1] << endl;
     if ( aWriteCO2 ) {
         // TODO: Set name of file based on case name?
         string fNameAir = "./gridded_co2_air_" + std::to_string(aCurrYear) + ".txt";

@@ -265,7 +265,7 @@ int main( ) {
             tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
         }
         p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamilfract, gcamipftfract, gcaminpp, gcamihr,
-                              NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS, YEAR);
+                              NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS);
     }
     
     // Run model
