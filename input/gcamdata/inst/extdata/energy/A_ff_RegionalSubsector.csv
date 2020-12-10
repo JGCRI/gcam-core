@@ -6,10 +6,10 @@
 # Column types: ccncncccncc
 # ----------
 supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,to.value,interpolation.function,logit.type
-regional coal,domestic coal,-6,start-year,1,share-weight,final-calibration-year,2300,1,s-curve,
-regional coal,imported coal,-6,start-year,1,share-weight,final-calibration-year,2300,1,s-curve,
-regional crude oil,domestic crude oil,-6,start-year,1,share-weight,final-calibration-year,2300,1,s-curve,
-regional crude oil,imported crude oil,-6,start-year,1,share-weight,final-calibration-year,2300,1,s-curve,
-regional oil,crude oil,-6,start-year,1,share-weight,final-calibration-year,2300,1,s-curve,
-regional natural gas,domestic natural gas,-6,start-year,1,share-weight,final-calibration-year,2300,1,s-curve,
-regional natural gas,imported natural gas,-6,start-year,1,share-weight,final-calibration-year,2300,1,s-curve,
+regional coal,domestic coal,-6,start-year,1,share-weight,final-calibration-year,end-year,1,linear,
+regional coal,imported coal,-6,start-year,1,share-weight,final-calibration-year,end-year,1,linear,
+regional crude oil,domestic crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,linear,
+regional crude oil,imported crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,linear,
+regional oil,crude oil,-6,start-year,1,share-weight,final-calibration-year,end-year,1,linear,
+regional natural gas,domestic natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,1,linear,
+regional natural gas,imported natural gas,-6,start-year,1,share-weight,final-calibration-year,end-year,1,linear,
