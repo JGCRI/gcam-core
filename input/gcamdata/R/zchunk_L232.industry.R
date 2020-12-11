@@ -29,7 +29,7 @@
 #' @details The chunk provides final energy keyword, supplysector/subsector information, supplysector/subsector interpolation information, supplysector/subsector share weights, global technology share weight, global technology efficiency, global technology coefficients, global technology cost, price elasticity, stub technology information, stub technology interpolation information, stub technology calibrated inputs, and etc.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join arrange bind_rows distinct filter if_else group_by lag left_join mutate right_join select summarise
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr complete nesting
 #' @author LF October 2017
 module_energy_L232.industry <- function(command, ...) {
 
@@ -95,25 +95,25 @@ module_energy_L232.industry <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
+    calibrated_techs <- get_data(all_data, "energy/calibrated_techs", strip_attributes = TRUE)
     A_regions <- get_data(all_data, "energy/A_regions")
     A23.chp_elecratio <- get_data(all_data, "energy/A23.chp_elecratio")
-    A32.sector <- get_data(all_data, "energy/A32.sector")
-    A32.subsector_interp <- get_data(all_data, "energy/A32.subsector_interp")
-    A32.subsector_logit <- get_data(all_data, "energy/A32.subsector_logit")
-    A32.subsector_shrwt <- get_data(all_data, "energy/A32.subsector_shrwt")
-    A32.globaltech_coef <- get_data(all_data, "energy/A32.globaltech_coef")
+    A32.sector <- get_data(all_data, "energy/A32.sector", strip_attributes = TRUE)
+    A32.subsector_interp <- get_data(all_data, "energy/A32.subsector_interp", strip_attributes = TRUE)
+    A32.subsector_logit <- get_data(all_data, "energy/A32.subsector_logit", strip_attributes = TRUE)
+    A32.subsector_shrwt <- get_data(all_data, "energy/A32.subsector_shrwt", strip_attributes = TRUE)
+    A32.globaltech_coef <- get_data(all_data, "energy/A32.globaltech_coef", strip_attributes = TRUE)
     A32.globaltech_cost <- get_data(all_data, "energy/A32.globaltech_cost")
     A32.globaltech_eff <- get_data(all_data, "energy/A32.globaltech_eff")
-    A32.globaltech_shrwt <- get_data(all_data, "energy/A32.globaltech_shrwt")
-    A32.globaltech_interp <- get_data(all_data, "energy/A32.globaltech_interp")
-    A32.globaltech_retirement <- get_data(all_data, "energy/A32.globaltech_retirement")
-    A32.nonenergy_Cseq <- get_data(all_data, "energy/A32.nonenergy_Cseq")
+    A32.globaltech_shrwt <- get_data(all_data, "energy/A32.globaltech_shrwt", strip_attributes = TRUE)
+    A32.globaltech_interp <- get_data(all_data, "energy/A32.globaltech_interp", strip_attributes = TRUE)
+    A32.globaltech_retirement <- get_data(all_data, "energy/A32.globaltech_retirement", strip_attributes = TRUE)
+    A32.nonenergy_Cseq <- get_data(all_data, "energy/A32.nonenergy_Cseq", strip_attributes = TRUE)
     A32.fuelprefElasticity <- get_data(all_data, "energy/A32.fuelprefElasticity")
     A32.demand <- get_data(all_data, "energy/A32.demand")
     L123.in_EJ_R_indchp_F_Yh <- get_data(all_data, "L123.in_EJ_R_indchp_F_Yh")
     L1324.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1326.in_EJ_R_indenergy_F_Yh")
-    L1324.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L1324.in_EJ_R_indfeed_F_Yh")
+    L1324.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L1324.in_EJ_R_indfeed_F_Yh", strip_attributes = TRUE)
     A32.inc_elas_output <- get_data(all_data, "socioeconomics/A32.inc_elas_output")
     L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
     L102.pcgdp_thous90USD_GCAM3_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_GCAM3_R_Y")

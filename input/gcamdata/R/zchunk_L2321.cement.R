@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L2321.cement
 #'
 #' Compute a variety of final energy keyword, sector, share weight, and technology information for cement-related GCAM inputs.
@@ -18,8 +20,8 @@
 #' original data system was \code{L2321.cement.R} (energy level2).
 #' @details The chunk provides final energy keyword, supplysector/subsector information, supplysector/subsector interpolation information, global technology share weight, global technology efficiency, global technology coefficients, global technology cost, price elasticity, stub technology information, stub technology interpolation information, stub technology calibrated inputs, and etc for cement sector.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom dplyr arrange bind_rows distinct filter if_else group_by lag left_join mutate pull select
+#' @importFrom tidyr complete nesting
 #' @author LF October 2017
 module_energy_L2321.cement <- function(command, ...) {
 
@@ -78,22 +80,21 @@ module_energy_L2321.cement <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    A321.sector <- get_data(all_data, "energy/A321.sector")
+    A321.sector <- get_data(all_data, "energy/A321.sector", strip_attributes = TRUE)
     A_PrimaryFuelCCoef <- get_data(all_data, "emissions/A_PrimaryFuelCCoef")
-    A321.sector <- get_data(all_data, "energy/A321.sector")
-    A321.subsector_interp <- get_data(all_data, "energy/A321.subsector_interp")
-    A321.subsector_logit <- get_data(all_data, "energy/A321.subsector_logit")
-    A321.subsector_shrwt <- get_data(all_data, "energy/A321.subsector_shrwt")
+    A321.subsector_interp <- get_data(all_data, "energy/A321.subsector_interp", strip_attributes = TRUE)
+    A321.subsector_logit <- get_data(all_data, "energy/A321.subsector_logit", strip_attributes = TRUE)
+    A321.subsector_shrwt <- get_data(all_data, "energy/A321.subsector_shrwt", strip_attributes = TRUE)
     A321.globaltech_coef <- get_data(all_data, "energy/A321.globaltech_coef")
     A321.globaltech_cost <- get_data(all_data, "energy/A321.globaltech_cost")
-    A321.globaltech_shrwt <- get_data(all_data, "energy/A321.globaltech_shrwt")
+    A321.globaltech_shrwt <- get_data(all_data, "energy/A321.globaltech_shrwt", strip_attributes = TRUE)
     A321.globaltech_co2capture <- get_data(all_data, "energy/A321.globaltech_co2capture")
-	A321.globaltech_retirement <- get_data(all_data, "energy/A321.globaltech_retirement")
-    A321.demand <- get_data(all_data, "energy/A321.demand")
-    L1321.out_Mt_R_cement_Yh <- get_data(all_data, "L1321.out_Mt_R_cement_Yh")
-    L1321.IO_GJkg_R_cement_F_Yh <- get_data(all_data, "L1321.IO_GJkg_R_cement_F_Yh")
-    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "L1321.in_EJ_R_cement_F_Y")
-    A321.inc_elas_output <- get_data(all_data, "socioeconomics/A321.inc_elas_output")
+	  A321.globaltech_retirement <- get_data(all_data, "energy/A321.globaltech_retirement", strip_attributes = TRUE)
+    A321.demand <- get_data(all_data, "energy/A321.demand", strip_attributes = TRUE)
+    L1321.out_Mt_R_cement_Yh <- get_data(all_data, "L1321.out_Mt_R_cement_Yh", strip_attributes = TRUE)
+    L1321.IO_GJkg_R_cement_F_Yh <- get_data(all_data, "L1321.IO_GJkg_R_cement_F_Yh", strip_attributes = TRUE)
+    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "L1321.in_EJ_R_cement_F_Y", strip_attributes = TRUE)
+    A321.inc_elas_output <- get_data(all_data, "socioeconomics/A321.inc_elas_output", strip_attributes = TRUE)
     L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
     L102.pcgdp_thous90USD_GCAM3_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_GCAM3_R_Y")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")

@@ -44,8 +44,8 @@ module_energy_LA1324.Off_road <- function(command, ...) {
 	  en_mining <- get_data(all_data, "energy/en_mining")
 	  construction_feedstock <- get_data(all_data, "energy/construction_feedstock")
 	  enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
-    L1323.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1323.in_EJ_R_indenergy_F_Yh")
-    L1322.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indfeed_F_Yh")
+    L1323.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1323.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
+    L1322.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indfeed_F_Yh", strip_attributes = TRUE)
 
     # ===================================================
     # 2. Perform computations

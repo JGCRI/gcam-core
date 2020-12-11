@@ -42,8 +42,8 @@ module_energy_LA1325.chemical <- function(command, ...) {
     A_regions <- get_data(all_data, "energy/A_regions")
     en_chemical <- get_data(all_data, "energy/en_chemical")
     enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
-    L1324.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1324.in_EJ_R_indenergy_F_Yh")
-    L1323.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L1323.in_EJ_R_indfeed_F_Yh")
+    L1324.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1324.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
+    L1323.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L1323.in_EJ_R_indfeed_F_Yh", strip_attributes = TRUE)
 
     L1321.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1321.in_EJ_R_indenergy_F_Yh")
     L132.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L132.in_EJ_R_indfeed_F_Yh")

@@ -39,8 +39,8 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
 
     # Load required inputs
     All_steel <- get_data(all_data, "energy/steel_prod")
-    IO_iron_steel <- get_data(all_data, "energy/IO_iron_steel_scaled")
-    L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indenergy_F_Yh")
+    IO_iron_steel <- get_data(all_data, "energy/IO_iron_steel_scaled", strip_attributes = TRUE)
+    L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
 
     # ===================================================
     # 2. Perform computations

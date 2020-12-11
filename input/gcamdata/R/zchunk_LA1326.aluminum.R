@@ -38,9 +38,9 @@ module_energy_LA1326.aluminum <- function(command, ...) {
     # Load required inputs
     A_regions <- get_data(all_data, "energy/A_regions")
     en_aluminum <- get_data(all_data, "energy/en_aluminum")
-    aluminum_prod <- get_data(all_data, "energy/aluminum_prod")
+    aluminum_prod <- get_data(all_data, "energy/aluminum_prod", strip_attributes = TRUE)
 	  enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
-    L1325.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1325.in_EJ_R_indenergy_F_Yh")
+    L1325.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1325.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
 
     # ===================================================
     # 2. Perform computations
