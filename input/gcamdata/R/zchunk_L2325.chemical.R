@@ -447,7 +447,7 @@ module_energy_L2325.chemical <- function(command, ...) {
       summarise(value = sum(calOutputValue)) %>%
       ungroup %>%
       select(region, year, supplysector,value) %>%
-      filter(value == 0)  ->
+      filter(value == 0, year == MODEL_FINAL_BASE_YEAR)  ->
       nobaseyear
 
     L2325.SubsectorShrwtFllt_chemical %>%
