@@ -36,7 +36,7 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       grade <- scenario <- trend_km3PerYr <-
       hi <- nhi <- human_only <- depletion <-
       netDepletion <- Country <- iso <- cost_bin <-
-      lower_cost <- median_cost <- upper_cost <-
+      lower_cost <- upper_cost <-
       grade <- elec_EJ <- elec_coef <- NULL
 
     all_data <- list(...)[[1]]
@@ -104,25 +104,28 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       mutate(Country = if_else(GCAM_basin_ID == 103, "Taiwan", Country)) %>%
       left_join_error_no_match(superwell_ctry, by = "Country") %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
-      mutate(cost_bin = if_else(cost_bin == "> 5", "(5, 5]", cost_bin)) %>%
-      separate(cost_bin, into = c("lower_cost", "upper_cost"), sep = ",") %>%
-      mutate(lower_cost = as.numeric(substr(lower_cost, 2, nchar(lower_cost))),
-             upper_cost = as.numeric(substr(upper_cost, 1, nchar(upper_cost) - 1)),
-             median_cost = (lower_cost + upper_cost) / 2)
+      mutate(cost_bin = if_else(cost_bin == "> 5", "(5, 5]", cost_bin))
 
     # Extract the grade numbers from the available levels
-    grades <- tibble(median_cost = sort(unique(L101.Superwell_costcurves_ctry$median_cost)))
-    grades$grade <- paste0("grade", 1:nrow(grades))
+    grades <- tibble(cost_bin = sort(unique(L101.Superwell_costcurves_ctry$cost_bin)))
+    grades$grade <-paste0("grade", 1:nrow(grades))
+    grades$grade <- factor(grades$grade, levels = grades$grade)
 
     L101.groundwater_grades_constrained_bm3 <- L101.Superwell_costcurves_ctry %>%
-      mutate(elec_EJ = elec_coef * CONV_KWH_GJ * available) %>%
-      left_join_error_no_match(grades, by = "median_cost") %>%
-      group_by(GCAM_region_ID, GCAM_basin_ID, grade, median_cost) %>%
+      mutate(minNEcost_bilUSD = minNEcost * available,
+             maxNEcost_bilUSD = maxNEcost * available,
+             elec_EJ = elec_coef * CONV_KWH_GJ * available) %>%
+      left_join_error_no_match(grades, by = "cost_bin") %>%
+      group_by(GCAM_region_ID, GCAM_basin_ID, grade) %>%
       summarise(available = sum(available),
+                minNEcost_bilUSD = sum(minNEcost_bilUSD),
+                maxNEcost_bilUSD = sum(maxNEcost_bilUSD),
                 elec_EJ = sum(elec_EJ)) %>%
       ungroup() %>%
-      mutate(elec_coef = elec_EJ / available) %>%
-      select(GCAM_region_ID, GCAM_basin_ID, grade, extractioncost = median_cost, available, elec_coef)
+      mutate(lower_cost = minNEcost_bilUSD / available,
+             upper_cost = maxNEcost_bilUSD / available,
+             elec_coef = elec_EJ / available) %>%
+      select(GCAM_region_ID, GCAM_basin_ID, grade, lower_cost, upper_cost, available, elec_coef)
 
 
     # step 4: Prepare groundwater depletion calibration data

@@ -372,43 +372,41 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
         summarise(available = sum(deficit_total) * water.GW_HIST_MULTIPLIER) %>%
         ungroup() %>%
         filter(available > 0) %>%
-        mutate(grade = "grade hist", price = water.DEFAULT_BASEYEAR_WATER_PRICE) ->
+        mutate(subresource = "groundwater grade hist",
+               lower_cost = water.DEFAULT_BASEYEAR_WATER_PRICE,
+               upper_cost = water.GRADE_HIST_UPPER_BOUND) ->
       groundwater_hist
 
-      bind_rows(
-        # inner_join: there are 10 region x basins in L201.region_basin that aren't in L101.groundwater_grades_constrained_bm3,
-        # and 23 vice versa. It is assumed that these are tiny basins and the discrepancies aren't worth worrying about.
-        inner_join(L101.groundwater_grades_constrained_bm3, L201.region_basin,
-                   by = c("GCAM_region_ID", "GCAM_basin_ID")),
-        L201.region_basin_home %>%
-          left_join(groundwater_hist,
-                    by = "GCAM_basin_ID") %>%
-          # ^^ non-restrictive join required (NA values generated for unused basins)
-          rename(extractioncost = price) %>%
-          mutate(available = round(available * water.GW_HIST_MULTIPLIER, water.DIGITS_GROUND_WATER_RSC),
-                 # no additional electric energy is assigned to the historical grades of groundwater
-                 elec_coef = 0) %>%
-          filter(!is.na(grade))) %>%
-        mutate(subresource = "groundwater",
-               extractioncost = round(extractioncost, water.DIGITS_GROUND_WATER_RSC)) %>%
-        select(c(LEVEL2_DATA_NAMES[["RsrcCurves"]], "elec_coef")) %>%
-        arrange(region, resource, extractioncost) ->
-        L201.DepRsrcCurves_ground
+# Construction of the curves: grade hist first
+    L201.DepRsrcCurves_ground_hist <- L201.region_basin_home %>%
+      left_join(groundwater_hist,
+                by = "GCAM_basin_ID") %>%
+      # ^^ non-restrictive join required (NA values generated for unused basins)
+      filter(!is.na(subresource)) %>%
+      mutate(available = round(available * water.GW_HIST_MULTIPLIER, water.DIGITS_GROUND_WATER_RSC),
+             # no additional electric energy is assigned to the historical grades of groundwater
+             elec_coef = 0)
 
-      # TODO: set a "grade1" with 0 available in places where this grade is missing, in order to set a price limit on
-      # grade hist water (otherwise the prices of grade hist would linearly interpolate up to a potentially high level)
+    L201.DepRsrcCurves_ground_fut <- inner_join(L101.groundwater_grades_constrained_bm3, L201.region_basin,
+                                                by = c("GCAM_region_ID", "GCAM_basin_ID")) %>%
+      mutate(subresource = paste("groundwater", grade)) %>%
+      select(-grade)
 
-      L201.DepRsrcCurves_ground %>%
-        mutate(subresource = paste(subresource, grade)) %>%
-        group_by(region, resource) %>%
-        mutate(grade = dplyr::lead(grade),
-               available = 0,
-               extractioncost = dplyr::lead(extractioncost)) %>%
-        filter(!is.na(grade)) %>%
-        ungroup() %>%
-        bind_rows(L201.DepRsrcCurves_ground %>% mutate(subresource = paste(subresource, grade)), .) %>%
-        filter(subresource != "groundwater grade21") ->
-        L201.DepRsrcCurves_ground
+    # Construct the supply curves. Within each subresource, the lower_cost is assigned to grade1, the upper cost is
+    # assigned to grade2, and the available is assigned 100% to grade1. Grade2 has 0 available. The elec_coef has to be the same
+    # Filtering out grade21 due to lack of meaningful upper bound cost (often equal to lower bound cost, sometimes very low)
+    L201.DepRsrcCurves_ground <- bind_rows(L201.DepRsrcCurves_ground_hist, L201.DepRsrcCurves_ground_fut) %>%
+      mutate(lower_cost = round(lower_cost, water.DIGITS_GROUND_WATER_RSC),
+             upper_cost = round(upper_cost, water.DIGITS_GROUND_WATER_RSC)) %>%
+      select(region, resource, subresource, available, lower_cost, upper_cost, elec_coef) %>%
+      gather(key = "grade", value = "extractioncost", ends_with("_cost")) %>%
+      mutate(available = if_else(grade == "lower_cost",
+                                 round(available, water.DIGITS_GROUND_WATER_RSC),
+                                 0),
+             grade = if_else(grade == "lower_cost", "grade1", "grade2")) %>%
+      filter(grade != "grade21") %>%
+      select(c(LEVEL2_DATA_NAMES[["RsrcCurves"]], "elec_coef")) ->
+      L201.DepRsrcCurves_ground
 
       # Create a technology for all water resources and subresources. This is where the groundwater electricity coefficient will be assigned.
       # Include a share weight of 1 to facilatate creating a technology.
@@ -433,6 +431,8 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       # Energy inputs
       elec_input_name <- unique(A72.globaltech_coef$minicam.energy.input)
       L201.DepRsrcCurves_ground %>%
+        select(-grade,-available, -extractioncost) %>%
+        distinct() %>%
         repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
         mutate(technology = subresource,
                minicam.energy.input = elec_input_name,

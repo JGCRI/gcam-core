@@ -521,6 +521,7 @@ water.DEFAULT_IRR_WATER_PRICE             <- 0.001 # 1975$/m3. This excludes wat
 water.DEFAULT_UNLIMITED_WATER_PRICE       <- 0
 water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.00001 # 1975$/m3. This excludes water abstraction costs explicitly modeled.
 water.DEFAULT_BASEYEAR_WATER_PRICE        <- 0.001
+water.GRADE_HIST_UPPER_BOUND              <- 0.0062  # This value is derived from the Superwell cost bins, and indicates the upper bound production cost of nonrenewable groundwater during the historical period
 water.IRR_PRICE_SUBSIDY_MULT              <- 0.05  # Multiplier for irrigation water price (OECD 2009 Managing Water for All; aiming for 1% of muni water price)
 water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
 water.IRRIGATION                          <- "Irrigation"
