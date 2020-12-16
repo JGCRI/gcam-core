@@ -71,6 +71,7 @@ int main( ) {
     bool READ_ELM_FROM_FILE = true; // If FALSE, ELM data (NPP, HR, Area, PFT weight) are passed from E3SM.
     bool WRITE_CO2 = true; // If TRUE, gridded CO2 emissions will be written to a file (in addition to passed in code).
     bool WRITE_SCALARS = true; // If TRUE, scalars will be written to a file.
+    bool RUN_FULL_SCENARIO = false; // If TRUE, will loop over all periods. This is used for testing/offline scenario runs only.
     
     // Define coupling control variables
     // These booleans define what is passed between GCAM & E3SM.
@@ -168,7 +169,9 @@ int main( ) {
             BASE_CO2EMISS_SURFACE = std::stod(value);
         } else if ( name == "BASE_CO2EMISS_AIRCRAFT" ) {
             BASE_CO2EMISS_AIRCRAFT = std::stod(value);
-        } else {
+        } else if ( name == "RUN_FULL_SCENARIO" ) {
+            istringstream(value) >> std::boolalpha >> RUN_FULL_SCENARIO;
+        }else {
             coupleLog.setLevel( ILogger::ERROR );
             coupleLog << "Invalid Namelist Variable" << endl;
         }
@@ -237,54 +240,92 @@ int main( ) {
     /*
      STEP 4: RUN GCAM
      */
-    // Run GCAM
-    cout << "Running " << YEAR << endl;
-    int ymd = YEAR * 10000;
-    int *yyyymmdd = &ymd;
-    
-    // If coupling is active, then set carbon density
-    if ( ELM_IAC_CARBON_SCALING ) {
-        coupleLog << "E3SM-GCAM: Carbon scaling on" << endl;
-        if ( READ_ELM_FROM_FILE ) {
-            // Read the ELM data from a file and then pass it to setDensityGCAM below
-            // Read in average NPP
-            ASpatialData tempPFTData(NUM_LAT * NUM_LON * NUM_PFT);
-            tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false, gcaminpp);
+    if (RUN_FULL_SCENARIO) {
+        for ( int y = 1975; y < 2101; y++ ){
+            int ymd = y * 10000;
+            int *yyyymmdd = &ymd;
             
-            // Read in average HR
-            tempPFTData.readSpatialData("../cpl/data/hr_mean_pft.txt", true, true, false, gcamihr);
+            // If coupling is active, then set carbon density
+            if ( ELM_IAC_CARBON_SCALING ) {
+                coupleLog << "E3SM-GCAM: Carbon scaling on" << endl;
+                if ( READ_ELM_FROM_FILE ) {
+                    // Read the ELM data from a file and then pass it to setDensityGCAM below
+                    // Read in average NPP
+                    ASpatialData tempPFTData(NUM_LAT * NUM_LON * NUM_PFT);
+                    tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false, gcaminpp);
+                    
+                    // Read in average HR
+                    tempPFTData.readSpatialData("../cpl/data/hr_mean_pft.txt", true, true, false, gcamihr);
+                    
+                    // Read in PFT weight in grid cell
+                    tempPFTData.readSpatialData("../cpl/data/pft_wt.txt", true, true, false, gcamipftfract);
+                    
+                    // Read in area of grid cell
+                    ASpatialData tempData(NUM_LAT * NUM_LON);
+                    tempData.readSpatialData("../cpl/data/area.txt", true, false, false, gcamiarea);
+                    
+                    // Read in area of grid cell
+                    tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
+                }
+                p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamilfract, gcamipftfract, gcaminpp, gcamihr,
+                                      NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS);
+            }
             
-            // Read in PFT weight in grid cell
-            tempPFTData.readSpatialData("../cpl/data/pft_wt.txt", true, true, false, gcamipftfract);
+            // Run model
+            p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, NUM_LON, NUM_LAT);
             
-            // Read in area of grid cell
-            ASpatialData tempData(NUM_LAT * NUM_LON);
-            tempData.readSpatialData("../cpl/data/area.txt", true, false, false, gcamiarea);
-            
-            // Read in area of grid cell
-            tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
+            // TODO: Will we ever want to downscale emissions in this mode?
         }
-        p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamilfract, gcamipftfract, gcaminpp, gcamihr,
-                              NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS);
+    } else {
+        
+        // Run GCAM
+        cout << "Running " << YEAR << endl;
+        int ymd = YEAR * 10000;
+        int *yyyymmdd = &ymd;
+        
+        // If coupling is active, then set carbon density
+        if ( ELM_IAC_CARBON_SCALING ) {
+            coupleLog << "E3SM-GCAM: Carbon scaling on" << endl;
+            if ( READ_ELM_FROM_FILE ) {
+                // Read the ELM data from a file and then pass it to setDensityGCAM below
+                // Read in average NPP
+                ASpatialData tempPFTData(NUM_LAT * NUM_LON * NUM_PFT);
+                tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false, gcaminpp);
+                
+                // Read in average HR
+                tempPFTData.readSpatialData("../cpl/data/hr_mean_pft.txt", true, true, false, gcamihr);
+                
+                // Read in PFT weight in grid cell
+                tempPFTData.readSpatialData("../cpl/data/pft_wt.txt", true, true, false, gcamipftfract);
+                
+                // Read in area of grid cell
+                ASpatialData tempData(NUM_LAT * NUM_LON);
+                tempData.readSpatialData("../cpl/data/area.txt", true, false, false, gcamiarea);
+                
+                // Read in area of grid cell
+                tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
+            }
+            p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamilfract, gcamipftfract, gcaminpp, gcamihr,
+                                  NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS);
+        }
+        
+        // Run model
+        p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, NUM_LON, NUM_LAT);
+        
+        p_obj->downscaleEmissionsGCAM(gcamoemiss,
+                                      gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
+                                      gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
+                                      gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec,
+                                      gcamoco2airlojan, gcamoco2airlofeb, gcamoco2airlomar, gcamoco2airloapr,
+                                      gcamoco2airlomay, gcamoco2airlojun, gcamoco2airlojul, gcamoco2airloaug,
+                                      gcamoco2airlosep, gcamoco2airlooct, gcamoco2airlonov, gcamoco2airlodec,
+                                      gcamoco2airhijan, gcamoco2airhifeb, gcamoco2airhimar, gcamoco2airhiapr,
+                                      gcamoco2airhimay, gcamoco2airhijun, gcamoco2airhijul, gcamoco2airhiaug,
+                                      gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
+                                      BASE_CO2_SURFACE_FILE, BASE_CO2EMISS_SURFACE, BASE_CO2_AIRCRAFT_FILE, BASE_CO2EMISS_AIRCRAFT,
+                                      NUM_LON, NUM_LAT, WRITE_CO2, YEAR);
+        
     }
-    
-    // Run model
-    p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, NUM_LON, NUM_LAT);
-    
-    p_obj->downscaleEmissionsGCAM(gcamoemiss,
-                                  gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
-                                  gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
-                                  gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec,
-                                  gcamoco2airlojan, gcamoco2airlofeb, gcamoco2airlomar, gcamoco2airloapr,
-                                  gcamoco2airlomay, gcamoco2airlojun, gcamoco2airlojul, gcamoco2airloaug,
-                                  gcamoco2airlosep, gcamoco2airlooct, gcamoco2airlonov, gcamoco2airlodec,
-                                  gcamoco2airhijan, gcamoco2airhifeb, gcamoco2airhimar, gcamoco2airhiapr,
-                                  gcamoco2airhimay, gcamoco2airhijun, gcamoco2airhijul, gcamoco2airhiaug,
-                                  gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
-                                  BASE_CO2_SURFACE_FILE, BASE_CO2EMISS_SURFACE, BASE_CO2_AIRCRAFT_FILE, BASE_CO2EMISS_AIRCRAFT,
-                                  NUM_LON, NUM_LAT, WRITE_CO2, YEAR);
-
-    
     /*
      STEP 5: FINALIZE AND CLEAN UP ALL VARIABLES
      */
