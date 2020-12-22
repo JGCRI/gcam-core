@@ -11,23 +11,29 @@
 #' the generated outputs: \code{all_protected_unmgd_emissions.xml}. The corresponding file in the
 #' original data system was \code{batch_all_protected_unmgd_emissions.xml} (emissions XML).
 module_emissions_batch_all_protected_unmgd_emissions_xml <- function(command, ...) {
+  input_names <- c("L212.ItemName",
+                   "L212.ItemName_prot",
+                   "L212.GRASSEmissions_prot",
+                   "L212.GRASSEmissions_noprot",
+                   "L212.FORESTEmissions_FF_prot",
+                   "L212.FORESTEmissions_FF_noprot",
+                   "L212.FORESTEmissions_D_prot",
+                   "L212.FORESTEmissions_D_noprot",
+                   "L212.FORESTEmissionsFactors_future",
+                   "L212.FORESTEmissionsFactors_future_prot")
+  if(driver.EMISSIONS_SOURCE == "EDGAR") {
+    # BC/OC emissions are processed sperately in EDGAR
+    input_names <- c(input_names,
+                     "L212.GRASSEmissionsFactors_BCOC_prot",
+                     "L212.GRASSEmissionsFactors_BCOC_noprot",
+                     "L212.FORESTEmissionsFactors_BCOC_FF_prot",
+                     "L212.FORESTEmissionsFactors_BCOC_FF_noprot",
+                     "L212.FORESTEmissionsFactors_BCOC_D_prot",
+                     "L212.FORESTEmissionsFactors_BCOC_D_noprot")
+  }
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L212.ItemName",
-             "L212.ItemName_prot",
-             "L212.GRASSEmissions_prot",
-             "L212.GRASSEmissions_noprot",
-             "L212.FORESTEmissions_FF_prot",
-             "L212.FORESTEmissions_FF_noprot",
-             "L212.FORESTEmissions_D_prot",
-             "L212.FORESTEmissions_D_noprot",
-             "L212.GRASSEmissionsFactors_BCOC_prot",
-             "L212.GRASSEmissionsFactors_BCOC_noprot",
-             "L212.FORESTEmissionsFactors_BCOC_FF_prot",
-             "L212.FORESTEmissionsFactors_BCOC_FF_noprot",
-             "L212.FORESTEmissionsFactors_BCOC_D_prot",
-             "L212.FORESTEmissionsFactors_BCOC_D_noprot",
-             "L212.FORESTEmissionsFactors_future",
-             "L212.FORESTEmissionsFactors_future_prot"))
+    return(input_names)
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "all_protected_unmgd_emissions.xml"))
   } else if(command == driver.MAKE) {
@@ -43,14 +49,16 @@ module_emissions_batch_all_protected_unmgd_emissions_xml <- function(command, ..
     L212.FORESTEmissions_FF_noprot <- get_data(all_data, "L212.FORESTEmissions_FF_noprot")
     L212.FORESTEmissions_D_prot <- get_data(all_data, "L212.FORESTEmissions_D_prot")
     L212.FORESTEmissions_D_noprot <- get_data(all_data, "L212.FORESTEmissions_D_noprot")
-    L212.GRASSEmissionsFactors_BCOC_prot <- get_data(all_data, "L212.GRASSEmissionsFactors_BCOC_prot")
-    L212.GRASSEmissionsFactors_BCOC_noprot <- get_data(all_data, "L212.GRASSEmissionsFactors_BCOC_noprot")
-    L212.FORESTEmissionsFactors_BCOC_FF_prot <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_FF_prot")
-    L212.FORESTEmissionsFactors_BCOC_FF_noprot <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_FF_noprot")
-    L212.FORESTEmissionsFactors_BCOC_D_prot <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_D_prot")
-    L212.FORESTEmissionsFactors_BCOC_D_noprot <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_D_noprot")
     L212.FORESTEmissionsFactors_future <- get_data(all_data, "L212.FORESTEmissionsFactors_future")
     L212.FORESTEmissionsFactors_future_prot <- get_data(all_data, "L212.FORESTEmissionsFactors_future_prot")
+    if(driver.EMISSIONS_SOURCE == "EDGAR") {
+      L212.GRASSEmissionsFactors_BCOC_prot <- get_data(all_data, "L212.GRASSEmissionsFactors_BCOC_prot")
+      L212.GRASSEmissionsFactors_BCOC_noprot <- get_data(all_data, "L212.GRASSEmissionsFactors_BCOC_noprot")
+      L212.FORESTEmissionsFactors_BCOC_FF_prot <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_FF_prot")
+      L212.FORESTEmissionsFactors_BCOC_FF_noprot <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_FF_noprot")
+      L212.FORESTEmissionsFactors_BCOC_D_prot <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_D_prot")
+      L212.FORESTEmissionsFactors_BCOC_D_noprot <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_D_noprot")
+    }
 
     # ===================================================
 
@@ -64,31 +72,21 @@ module_emissions_batch_all_protected_unmgd_emissions_xml <- function(command, ..
       add_xml_data(L212.FORESTEmissions_FF_noprot, "InputEmissionsUnmgd") %>%
       add_xml_data(L212.FORESTEmissions_D_prot, "OutputEmissionsUnmgd") %>%
       add_xml_data(L212.FORESTEmissions_D_noprot, "OutputEmissionsUnmgd") %>%
-      add_xml_data(L212.GRASSEmissionsFactors_BCOC_prot, "InputEmFactUnmgd") %>%
-      add_xml_data(L212.GRASSEmissionsFactors_BCOC_noprot, "InputEmFactUnmgd") %>%
-      add_xml_data(L212.FORESTEmissionsFactors_BCOC_FF_prot, "InputEmFactUnmgd") %>%
-      add_xml_data(L212.FORESTEmissionsFactors_BCOC_FF_noprot, "InputEmFactUnmgd") %>%
-      add_xml_data(L212.FORESTEmissionsFactors_BCOC_D_prot, "OutputEmFactUnmgd") %>%
-      add_xml_data(L212.FORESTEmissionsFactors_BCOC_D_noprot, "OutputEmFactUnmgd") %>%
       add_xml_data(L212.FORESTEmissionsFactors_future, "OutputEmFactUnmgd") %>%
-      add_xml_data(L212.FORESTEmissionsFactors_future_prot, "OutputEmFactUnmgd") %>%
-      add_precursors("L212.ItemName",
-                     "L212.ItemName_prot",
-                     "L212.GRASSEmissions_prot",
-                     "L212.GRASSEmissions_noprot",
-                     "L212.FORESTEmissions_FF_prot",
-                     "L212.FORESTEmissions_FF_noprot",
-                     "L212.FORESTEmissions_D_prot",
-                     "L212.FORESTEmissions_D_noprot",
-                     "L212.GRASSEmissionsFactors_BCOC_prot",
-                     "L212.GRASSEmissionsFactors_BCOC_noprot",
-                     "L212.FORESTEmissionsFactors_BCOC_FF_prot",
-                     "L212.FORESTEmissionsFactors_BCOC_FF_noprot",
-                     "L212.FORESTEmissionsFactors_BCOC_D_prot",
-                     "L212.FORESTEmissionsFactors_BCOC_D_noprot",
-                     "L212.FORESTEmissionsFactors_future",
-                     "L212.FORESTEmissionsFactors_future_prot") ->
+      add_xml_data(L212.FORESTEmissionsFactors_future_prot, "OutputEmFactUnmgd") ->
       all_protected_unmgd_emissions.xml
+    if(driver.EMISSIONS_SOURCE == "EDGAR") {
+      all_protected_unmgd_emissions.xml %>%
+        add_xml_data(L212.GRASSEmissionsFactors_BCOC_prot, "InputEmFactUnmgd") %>%
+        add_xml_data(L212.GRASSEmissionsFactors_BCOC_noprot, "InputEmFactUnmgd") %>%
+        add_xml_data(L212.FORESTEmissionsFactors_BCOC_FF_prot, "InputEmFactUnmgd") %>%
+        add_xml_data(L212.FORESTEmissionsFactors_BCOC_FF_noprot, "InputEmFactUnmgd") %>%
+        add_xml_data(L212.FORESTEmissionsFactors_BCOC_D_prot, "OutputEmFactUnmgd") %>%
+        add_xml_data(L212.FORESTEmissionsFactors_BCOC_D_noprot, "OutputEmFactUnmgd") ->
+        all_protected_unmgd_emissions.xml
+    }
+    # need to call add_precursors indirectly to ensure input_names gets "unlisted"
+    all_protected_unmgd_emissions.xml <- do.call("add_precursors", c(list(all_protected_unmgd_emissions.xml), input_names))
 
     return_data(all_protected_unmgd_emissions.xml)
   } else {

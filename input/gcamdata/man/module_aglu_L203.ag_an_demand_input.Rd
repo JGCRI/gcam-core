@@ -19,7 +19,7 @@ Depends on \code{command}: either a vector of required inputs, a vector of outpu
   \code{L203.DemandStapleRegBias}, \code{L203.DemandNonStapleRegBias}, \code{L203.StapleBaseService},
   \code{L203.NonStapleBaseService}, \code{L203.GlobalTechCoef_demand}, \code{L203.GlobalTechShrwt_demand},
   \code{L203.StubTechProd_food}, \code{L203.StubTechProd_nonfood_crop}, \code{L203.StubTechProd_nonfood_meat},
-  \code{L203.StubTechProd_For}, \code{L203.StubTechFixOut_exp}, \code{L203.StubCalorieContent},
+  \code{L203.StubTechProd_For}, \code{L203.StubCalorieContent},
   \code{L203.PerCapitaBased}, \code{L203.BaseService}, \code{L203.IncomeElasticity}, \code{L203.PriceElasticity}. The
   corresponding file in the original data system was \code{L203.demand_input.R} (aglu level2).
 }

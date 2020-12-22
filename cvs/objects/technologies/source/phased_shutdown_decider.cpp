@@ -140,8 +140,7 @@ void PhasedShutdownDecider::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-double PhasedShutdownDecider::calcShutdownCoef( const ProductionFunctionInfo* aFuncInfo,
-                                                const double aCalculatedProfitRate,
+double PhasedShutdownDecider::calcShutdownCoef( const double aCalculatedProfitRate,
                                                 const string& aRegionName,
                                                 const string& aSectorName,
                                                 const int aInitialTechYear,

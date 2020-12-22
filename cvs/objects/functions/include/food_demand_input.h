@@ -323,7 +323,6 @@ public:
 
     virtual void calcPricePaid( const std::string& aRegionName,
                                 const std::string& aSectorName,
-                                const MoreSectorInfo* aMoreSectorInfo,
                                 const std::vector<AGHG*>& aGhgs,
                                 const ICaptureComponent* aSequestrationDevice,
                                 const int aLifetimeYears,
@@ -333,15 +332,6 @@ public:
                             NationalAccount* aNationalAccount,
                             Expenditure* aExpenditure,
                             const int aPeriod ) const { return 0; }
-   
-    virtual void copyParamsInto( ProductionInput& aInput,
-        const int aPeriod ) const {}
-
-    virtual void copyParamsInto( DemandInput& aInput,
-        const int aPeriod ) const {}
-
-    virtual void copyParamsInto( TradeInput& aInput,
-        const int aPeriod ) const {}
 
     virtual void copyParamsInto( EnergyInput& aInput,
         const int aPeriod ) const {}

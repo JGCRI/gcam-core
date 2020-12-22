@@ -60,14 +60,11 @@ class Tabs;
 
 // Need to forward declare the subclasses as well.
 class PopulationMiniCAM;
-class PopulationSGMFixed;
-class PopulationSGMRate;
 
 /*! 
 * \ingroup Objects
 * \brief An object which contains the Population information for a region.
-* \details This is the base Population class. PopulationSGMRate, PopulationSGMFixed, and
-*  populationMiniCAM derive from it. They all share a totalPopulation value and year.
+* \details This is the base Population class. PopulationMiniCAM derives from it.
 */
 
 class Population: public IYeared, public IVisitable, private boost::noncopyable
@@ -99,7 +96,7 @@ protected:
         /* Declare all subclasses of Population to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( Population, PopulationMiniCAM, PopulationSGMFixed, PopulationSGMRate ),
+        DEFINE_SUBCLASS_FAMILY( Population, PopulationMiniCAM ),
 
         //! year
         DEFINE_VARIABLE( SIMPLE, "year", mYear, int ),

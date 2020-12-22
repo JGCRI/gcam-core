@@ -55,7 +55,6 @@
 class Tabs;
 class ICaptureComponent;
 class IInfo;
-class MoreSectorInfo;
 class AGHG;
 class ICaptureComponent;
 class NationalAccount;
@@ -63,10 +62,7 @@ class Expenditure;
 
 // Need to forward declare the subclasses as well.
 class MiniCAMInput;
-class DemandInput;
-class ProductionInput;
 class NodeInput;
-class TradeInput;
 class EnergyInput;
 class NonEnergyInput;
 class RenewableInput;
@@ -350,7 +346,6 @@ public:
      * \brief Calculate the price paid of the input.
      * \param aRegionName Name of the region containing the input.
      * \param aSectorName Name of the containing sector.
-     * \param aMoreSectorInfo The sector info which may contain additional costs.
      * \param aGhgs GHGs which may add to the cost of the input.
      * \param aSequestrationDevice A capture component which may capture some emssions
      *          and thus reduce emissions tax costs.
@@ -360,7 +355,6 @@ public:
      */
     virtual void calcPricePaid( const std::string& aRegionName,
                                 const std::string& aSectorName,
-                                const MoreSectorInfo* aMoreSectorInfo,
                                 const std::vector<AGHG*>& aGhgs,
                                 const ICaptureComponent* aSequestrationDevice,
                                 const int aLifetimeYears,
@@ -455,16 +449,7 @@ public:
                                    const int aNextYear, const IInput* aPreviousInput,
                                    const IInput* aNextInput ) = 0;
     
-    virtual void copyParamsInto( ProductionInput& aInput,
-                                 const int aPeriod ) const = 0;
-
-    virtual void copyParamsInto( DemandInput& aInput,
-                                 const int aPeriod ) const = 0;
-
     virtual void copyParamsInto( NodeInput& aInput,
-                                 const int aPeriod ) const = 0;
-
-    virtual void copyParamsInto( TradeInput& aInput,
                                  const int aPeriod ) const = 0;
 
     virtual void copyParamsInto( EnergyInput& aInput,

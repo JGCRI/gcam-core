@@ -21,6 +21,7 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
               "L202.UnlimitedRenewRsrcPrice",
               "L202.Supplysector_in",
               "L202.SubsectorAll_in",
+              "L202.SubsectorInterpTo_in",
               "L202.StubTech_in",
               "L202.StubTechInterp_in",
               "L202.GlobalTechCoef_in",
@@ -50,6 +51,7 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
     L202.UnlimitedRenewRsrcPrice <- get_data(all_data, "L202.UnlimitedRenewRsrcPrice")
     L202.Supplysector_in <- get_data(all_data, "L202.Supplysector_in")
     L202.SubsectorAll_in <- get_data(all_data, "L202.SubsectorAll_in")
+    L202.SubsectorInterpTo_in <- get_data(all_data, "L202.SubsectorInterpTo_in")
     L202.StubTech_in <- get_data(all_data, "L202.StubTech_in")
     L202.StubTechInterp_in <- get_data(all_data, "L202.StubTechInterp_in")
     L202.GlobalTechCoef_in <- get_data(all_data, "L202.GlobalTechCoef_in")
@@ -79,6 +81,7 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
       add_xml_data(L202.UnlimitedRenewRsrcPrice, "UnlimitRsrcPrice") %>%
       add_logit_tables_xml(L202.Supplysector_in, "Supplysector") %>%
       add_logit_tables_xml(L202.SubsectorAll_in, "SubsectorAll", "SubsectorLogit") %>%
+      add_xml_data(L202.SubsectorInterpTo_in, "SubsectorInterpTo") %>%
       add_xml_data(L202.StubTech_in, "StubTech") %>%
       add_xml_data(L202.StubTechInterp_in, "StubTechInterp") %>%
       add_xml_data(L202.GlobalTechCoef_in, "GlobalTechCoef") %>%
@@ -100,6 +103,7 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
                      "L202.UnlimitedRenewRsrcPrice",
                      "L202.Supplysector_in",
                      "L202.SubsectorAll_in",
+                     "L202.SubsectorInterpTo_in",
                      "L202.StubTech_in",
                      "L202.StubTechInterp_in",
                      "L202.GlobalTechCoef_in",

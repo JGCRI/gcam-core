@@ -53,7 +53,7 @@ module_gcamusa_L103.water_mapping_USA <- function(command, ...) {
     # Copy shares for 1990 to 1975, and then from 2015 through end of century
     USGS_livestock_water_withdrawals %>%
       select(-water_type) %>%
-      filter(year==max(MODEL_BASE_YEARS)) %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
       complete(nesting(state,value), year = c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
       bind_rows(
         USGS_livestock_water_withdrawals %>%
