@@ -13,7 +13,7 @@
 #' original data system was \code{L102.water_supply_unlimited.R} (water level1).
 #' @details  Generates water resource input files for region + basin which includes runoff and groundwater.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr anti_join case_when distinct filter if_else inner_join lead mutate pull right_join select
+#' @importFrom dplyr anti_join case_when distinct ends_with filter if_else inner_join lead mutate pull right_join select
 #' @importFrom tidyr complete nesting
 #' @importFrom stats spline
 #' @author ST Oct 2018
