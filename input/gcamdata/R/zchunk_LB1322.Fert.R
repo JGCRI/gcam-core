@@ -49,7 +49,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       supplysector <- subsector <- technology <- minicam.non.energy.input <- improvement.max <- improvement.rate <-
       improvement.shadow.technology <- NEcost <- Technology <- NEcost_75USDkgN <- `Central Natural Gas Sequestration` <-
       `Central Natural Gas` <- `Central Coal` <- `Central Coal Sequestration` <- Fert_Prod_MtN_adj <-
-      in_indfeed_netFert <- NULL
+      in_indfeed_netFert <- Central_Natural_Gas_Sequestration <- Central_Natural_Gas <- Central_Coal <- Central_Coal_Sequestration <- NULL
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")

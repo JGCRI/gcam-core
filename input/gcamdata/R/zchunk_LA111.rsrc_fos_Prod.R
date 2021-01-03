@@ -37,7 +37,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
 
     sector <- fuel <- year <- value <- share <- iso <- GCAM_region_ID <- unconventionals <- value.x <-
       value.y <- FLOW <- PRODUCT <- resource <- region_GCAM3 <- CumulSum <- subresource <- grade <-
-      available <- available_region_GCAM3 <- extractioncost <- . <- NULL  # silence package check notes
+      available <- available_region_GCAM3 <- extractioncost <- technology <-  . <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")

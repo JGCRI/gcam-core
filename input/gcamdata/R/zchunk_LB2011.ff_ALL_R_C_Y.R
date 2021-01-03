@@ -29,7 +29,8 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
 
     year <- value <- GCAM_region_ID <- GCAM_commodity <- region <-  fuel <- year <-
       consumption <- calOutputValue <- . <- sector <- subsector <- production <-
-      cal.production <- net_trade <- GrossExp_EJ <- GrossImp_EJ <- NULL # silence package check.
+      cal.production <- net_trade <- GrossExp_EJ <- GrossImp_EJ <- technology <-
+      GCAM_net_trade <- GrossExp_EJ_old <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 

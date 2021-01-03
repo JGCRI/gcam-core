@@ -383,6 +383,7 @@ energy.SATIATION_YEAR             <- max(MODEL_BASE_YEARS) # Needs to be the las
 energy.UCD_EN_YEAR                <- 2005        # UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
 energy.WIND.BASE.COST.YEAR        <- 2005        # Base cost year for wind, used in capacity factor calculations
 
+energy.REG_NG_MARKET <- "regional natural gas" #Name of the regional natural gas market
 
 energy.MIN_WEIGHT_EJ <- 1e-08
 

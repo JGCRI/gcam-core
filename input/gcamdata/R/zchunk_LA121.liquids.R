@@ -48,7 +48,7 @@ module_energy_LA121.liquids <- function(command, ...) {
       share <- share_RG3_world <- subsector <- technology <- minicam.energy.input <-
       value_coef <- fuel.y <- value_coef_gas <- resource <- Production_ML <-
       Biofuel <- GCAM_commodity <- SecOutRatio <- IOcoef <- Weighted_IOcoef <-
-      Weighted_SecOutRatio <- Weight <- NULL
+      Weighted_SecOutRatio <- Weight <- region <- gas_coef <- val_unoil <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -113,20 +113,6 @@ module_energy_LA121.liquids <- function(command, ...) {
         left_join(distinct(calibrated_techs), by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%
         select(supplysector, subsector, technology, minicam.energy.input, year, value, sector, fuel) ->
         L121.globaltech_coef_interp
-
-      # Energy inputs = production times fuel IO coef
-      # L111.Prod_EJ_R_F_Yh %>%
-      #   mutate(fuel = if_else(technology=="unconventional oil","unconventional oil",if_else(fuel=="natural gas","gas",fuel)),
-      #          sector=if_else(technology=="unconventional oil","unconventional oil production",sector)) %>%
-      #   # Join on sector / fuel, keeping only the rows that are in both tables
-      #   inner_join(rename(L121.globaltech_coef_interp, value_coef = value), by = c("sector", "fuel", "year")) %>%
-      #   select(GCAM_region_ID, sector, fuel, year, value, value_coef) %>%
-      #   left_join(rename(L121.globaltech_coef_interp, value_coef_gas = value), by = c("sector", "year")) %>%
-      #   mutate(value = if_else(fuel.y=="gas",value * value_coef_gas,value*1)) %>%
-      #   select(GCAM_region_ID, sector, fuel = fuel.y, year, value) ->
-      #   L121.in_EJ_R_unoil_F_Yh
-      #
-
 
 
 
@@ -275,7 +261,7 @@ module_energy_LA121.liquids <- function(command, ...) {
         add_units("EJ") %>%
         add_comments("Inputs to unconventional oil production calculated by multiplying production data by IO coef") %>%
         add_legacy_name("L121.in_EJ_R_unoil_F_Yh") %>%
-        add_precursors("L111.Prod_EJ_R_F_Yh", "energy/A21.globaltech_coef",
+        add_precursors("L111.Prod_EJ_R_F_Yh", "energy/A21.globaltech_coef","energy/A21.globalrsrctech_coef",
                        "energy/calibrated_techs") ->
         L121.in_EJ_R_unoil_F_Yh
 

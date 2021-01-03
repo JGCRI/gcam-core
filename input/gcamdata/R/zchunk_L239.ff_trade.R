@@ -50,7 +50,8 @@ module_energy_L239.ff_trade <- function(command, ...) {
 
     year <- region <- supplysector <- subsector <- GCAM_Commodity <- GrossExp_EJ <-
       calOutputValue <- subs.share.weight <- market.name <- minicam.energy.input <-
-      GrossImp_EJ <- Prod_EJ <- NULL # silence package check notes
+      GrossImp_EJ <- Prod_EJ <- fuel <- technology <- primary.consumption <- PrimaryFuelCO2Coef.name <- PrimaryFuelCO2Coef <-
+      production <- consumption <- NULL # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names",strip_attributes = TRUE)
@@ -65,16 +66,6 @@ module_energy_L239.ff_trade <- function(command, ...) {
     L2011.ff_ALL_EJ_R_C_Y <- get_data(all_data, "L2011.ff_ALL_EJ_R_C_Y",strip_attributes = TRUE)
     L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef",strip_attributes = TRUE)
 
-    # In the structure of the model unconventional oil is upgraded before it is shipped out. The passthrough sector
-    # that upgrades uncon oil is called unconventional oil production, so to make sure we match we'll change
-    # the input here to the name of the passthrough sector.
-    L2011.ff_GrossTrade_EJ_R_C_Y %>%
-      mutate(GCAM_Commodity = if_else(GCAM_Commodity == "unconventional oil", "unconventional oil production", GCAM_Commodity)) ->
-      L2011.ff_GrossTrade_EJ_R_C_Y
-
-    L2011.ff_ALL_EJ_R_C_Y %>%
-      mutate(fuel = if_else(fuel == "unconventional oil", "unconventional oil production", fuel)) ->
-      L2011.ff_ALL_EJ_R_C_Y
 
     # Keywords of global technologies
     A21.globaltech_keyword_ff %>%
@@ -88,8 +79,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
       filter(region == gcam.USA_REGION) %>%
       semi_join(A_ff_TradedTechnology, by = c("PrimaryFuelCO2Coef.name" = "minicam.energy.input")) %>%
       left_join_error_no_match(A_ff_TradedTechnology, by = c("PrimaryFuelCO2Coef.name" = "minicam.energy.input")) %>%
-      select(-PrimaryFuelCO2Coef.name) %>%
-      select(region, PrimaryFuelCO2Coef.name = supplysector, PrimaryFuelCO2Coef) -> L239.CarbonCoef_traded
+      select(region, PrimaryFuelCO2Coef.name = supplysector, PrimaryFuelCO2Coef, -PrimaryFuelCO2Coef.name) -> L239.CarbonCoef_traded
 
     # Next regional sectors (all regions)
     L239.CarbonCoef_traded %>%
@@ -144,8 +134,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["TechCost"]])
 
     # L239.TechCoef_tra: Coefficient and market name of traded technologies
-    L239.TechCoef_tra <- select(A_ff_TradedTechnology_R_Y, LEVEL2_DATA_NAMES[["TechCoef"]]) %>%
-                         mutate(minicam.energy.input = if_else(minicam.energy.input == "unconventional oil production", "crude oil",minicam.energy.input))
+    L239.TechCoef_tra <- select(A_ff_TradedTechnology_R_Y, LEVEL2_DATA_NAMES[["TechCoef"]])
 
     # L239.Production_tra: Output (gross exports) of traded technologies
     L239.GrossExports_EJ_R_C_Y <- left_join_error_no_match(L2011.ff_GrossTrade_EJ_R_C_Y,
@@ -183,8 +172,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
     L239.TechShrwt_reg <- select(A_ff_RegionalTechnology_R_Y, LEVEL2_DATA_NAMES[["TechShrwt"]])
 
     # L239.TechCoef_reg: Coefficient and market name of traded technologies
-    L239.TechCoef_reg <- select(A_ff_RegionalTechnology_R_Y, LEVEL2_DATA_NAMES[["TechCoef"]]) %>%
-                         mutate(minicam.energy.input= if_else(minicam.energy.input=="unconventional oil production","crude oil",minicam.energy.input))
+    L239.TechCoef_reg <- select(A_ff_RegionalTechnology_R_Y, LEVEL2_DATA_NAMES[["TechCoef"]])
 
     # L239.Production_reg_imp: Output (flow) of gross imports
     L239.GrossImports_EJ_R_C_Y <- left_join_error_no_match(L2011.ff_GrossTrade_EJ_R_C_Y,
@@ -193,6 +181,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
       left_join(select(A_ff_TradedTechnology, supplysector, minicam.energy.input),
                 by = c(GCAM_Commodity = "minicam.energy.input")) %>%
       select(region, supplysector, year, GrossImp_EJ)
+
     L239.Production_reg_imp <- A_ff_RegionalTechnology_R_Y %>%
       filter(year %in% MODEL_BASE_YEARS,
              grepl( "import", subsector)) %>%

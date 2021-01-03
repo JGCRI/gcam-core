@@ -1,6 +1,0 @@
-# File: A21.tradedtech_shrwt.csv
-# Title: Primary energy handling default technology shareweights
-# Units: Unitless
-# Column types: ccccii 
-# ----------
-supplysector,subsector,technology,minicam.energy.input,1971,2100

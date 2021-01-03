@@ -105,7 +105,7 @@ module_energy_L210.resources <- function(command, ...) {
       resource_type <- scenario <-subResourceCapacityFactor <- subresource <- subresource_type <-
       minicam.non.energy.input <- input.cost <- cal.reserve <- renewresource <- sub.renewable.resource <-
       avg.prod.lifetime <- timestep <- lifetime <- year_operate <- final_year <- GCAM_region_ID <-
-      sector <- smooth.renewable.subresource <- tech.change <- NULL
+      sector <- smooth.renewable.subresource <- tech.change <- reserve.subresource <- technology <- prod_value <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -203,12 +203,12 @@ module_energy_L210.resources <- function(command, ...) {
     L111.Prod_EJ_R_F_Yh %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(select(A10.ResSubresourceProdLifetime, resource, lifetime = avg.prod.lifetime, reserve.subresource) %>% distinct(),
-                               by=c("fuel" = "resource", "technology" ="reserve.subresource")) %>%
+                               by=c("fuel" = "resource", "technology" = "reserve.subresource")) %>%
       left_join_error_no_match(model_year_timesteps, by = c("year")) %>%
       repeat_add_columns(tibble(year_operate = MODEL_BASE_YEARS)) %>%
       mutate(final_year = pmin(MODEL_BASE_YEARS[length(MODEL_BASE_YEARS)], (year - timestep + lifetime))) %>%
       filter(year_operate >= year - timestep + 1) %>%
-      group_by(GCAM_region_ID, sector, fuel,technology) %>%
+      group_by(GCAM_region_ID, sector, fuel, technology) %>%
       mutate(value = lag_prod_helper(year, value, year_operate, final_year)) %>%
       ungroup() %>%
       filter(year == year_operate) %>%
@@ -392,7 +392,7 @@ module_energy_L210.resources <- function(command, ...) {
       L210.ReserveCalReserve
 
     L210.ReserveCalReserve_unoil <- L210.ReserveCalReserve %>% filter(reserve.subresource=="unconventional oil")
-    `%notin%` <- Negate(`%in%`)
+
     L210.ReserveCalReserve.uncon_other_reg <- L210.ReserveCalReserve %>%
                                               filter(resource =="coal") %>%
                                               filter(region %notin% c(unique(L210.ReserveCalReserve_unoil$region))) %>%
