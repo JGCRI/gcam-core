@@ -31,7 +31,7 @@ module_energy_LB1011.ff_GrossTrade <- function(command, ...) {
       FAO_country <- iso <- iso.partner <- iso.reporter <- GCAM_region_ID <-
       GCAMreg.partner <- var <- gross_exports <- gross_imports <- net_exports <-
       NetExp_EJ <- net_trade <- GrossExp_EJ <- GrossImp_EJ <- Year <- Reporter_Code <- Partner_Code <-
-      Trade_Flow_Code <- Commodity_Code <- Netweight_(kg) <- Country_Code <- ISO3_digit_Alpha <- ISO3 <-
+      Trade_Flow_Code <- Commodity_Code <- `Netweight_(kg)` <- Country_Code <- ISO3_digit_Alpha <- ISO3 <-
       Trade <- reporter_GCAM_region_ID <- partner_GCAM_region_ID <- PrimaryFuelCO2Coef.name <- PrimaryFuelCO2Coef <-
       Ccontent <- export <- import <- NULL # silence package check.
 
