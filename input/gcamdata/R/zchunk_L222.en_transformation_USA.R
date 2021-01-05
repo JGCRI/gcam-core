@@ -8,8 +8,15 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L222.DeleteStubTech_USAen}, \code{L222.PassThroughSector_USAen}, \code{L222.Tech_USAen}, \code{L222.TechShrwt_USAen}, \code{L222.TechInterp_USAen}, \code{L222.TechShrwt_USAen}, \code{L222.TechCoef_USAen}, \code{L222.Production_USArefining}, \code{L222.SectorLogitTables_USA[[ curr_table ]]$data}, \code{L222.Supplysector_en_USA}, \code{L222.SubsectorShrwtFllt_en_USA}, \code{L222.StubTechProd_refining_USA}, \code{L222.StubTechMarket_en_USA}, \code{L222.CarbonCoef_en_USA}. The corresponding file in the
-#' original data system was \code{L222.en_transformation_USA.R} (gcam-usa level2).
+#' the generated outputs: \code{L222.DeleteStubTech_USAen}, \code{L222.PassThroughSector_USAen}, \code{L222.Tech_USAen},
+#' \code{L222.TechShrwt_USAen}, \code{L222.TechInterp_USAen}, \code{L222.TechCoef_USAen},
+#' \code{L222.Production_USArefining}, \code{L222.SectorLogitTables_USA[[ curr_table ]]$data},
+#' \code{L222.Supplysector_en_USA}, \code{L222.SubsectorShrwtFllt_en_USA}, \code{L222.StubTechProd_refining_USA},
+#' \code{L222.StubTechMarket_en_USA}, \code{L222.CarbonCoef_en_USA}, \code{L222.GlobalTechSCurve_en_USA},
+#' \code{L222.GlobalTechProfitShutdown_en_USA}, \code{L222.GlobalTechCost_en_USA}, \code{L222.SubsectorLogit_en_USA},
+#' \code{L222.StubTech_en_USA}, \code{L222.StubTechCoef_refining_USA}, \code{L222.GlobalTechInterp_en_USA},
+#' \code{L222.GlobalTechCoef_en_USA}, \code{L222.GlobalTechShrwt_en_USA}, \code{L222.GlobalTechCapture_en_USA}.
+#' The corresponding file in the original data system was \code{L222.en_transformation_USA.R} (gcam-usa level2).
 #' @details This chunk sets up the USA energy transformation technology databases as well as writing out assumptions to all states/sectors/markets for shareweights and logits.
 #' Calibrated outputs and I:O coefficients are updated from global values produced by \code{\link{module_energy_L222.en_transformation}}.
 #' @importFrom assertthat assert_that
@@ -30,12 +37,8 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
              "L222.GlobalTechCost_en",
              "L222.GlobalTechShrwt_en",
              "L222.GlobalTechCapture_en",
-             # "L222.GlobalTechShutdownProfit_en",
-             # "L222.GlobalTechShutdown_en",
-             # "L222.GlobalTechSCurveProfit_en",
              "L222.GlobalTechSCurve_en",
-             # "L222.GlobalTechLifetimeProfit_en",
-             # "L222.GlobalTechLifetime_en",
+             "L222.GlobalTechProfitShutdown_en",
              "L122.out_EJ_state_refining_F",
              "L202.CarbonCoef"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -52,6 +55,7 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
              "L222.StubTechMarket_en_USA",
              "L222.CarbonCoef_en_USA",
              "L222.GlobalTechSCurve_en_USA",
+             "L222.GlobalTechProfitShutdown_en_USA",
              "L222.GlobalTechCost_en_USA",
              "L222.SubsectorLogit_en_USA",
              "L222.StubTech_en_USA",
@@ -78,6 +82,7 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
     L222.GlobalTechShrwt_en <- get_data(all_data, "L222.GlobalTechShrwt_en", strip_attributes = TRUE)
     L222.GlobalTechCapture_en <- get_data(all_data, "L222.GlobalTechCapture_en", strip_attributes = TRUE)
     L222.GlobalTechSCurve_en <- get_data(all_data, "L222.GlobalTechSCurve_en", strip_attributes = TRUE)
+    L222.GlobalTechProfitShutdown_en <- get_data(all_data, "L222.GlobalTechProfitShutdown_en", strip_attributes = TRUE)
     L122.out_EJ_state_refining_F <- get_data(all_data, "L122.out_EJ_state_refining_F", strip_attributes = TRUE)
     L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
 
@@ -263,13 +268,7 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
       L222.GlobalTechShrwt_en_USA     <- global_energy_to_USA_GlobalTech(L222.GlobalTechShrwt_en)
       L222.GlobalTechCapture_en_USA   <- global_energy_to_USA_GlobalTech(L222.GlobalTechCapture_en)
       L222.GlobalTechSCurve_en_USA    <- global_energy_to_USA_GlobalTech(L222.GlobalTechSCurve_en)
-
-      ### The same processing for optional/currently NULL inputs
-      # L222.GlobalTechShutdownProfit_en_USA  <- global_energy_to_USA_GlobalTech(L222.GlobalTechShutdownProfit_en)
-      # L222.GlobalTechShutdown_en_USA        <- global_energy_to_USA_GlobalTech(L222.GlobalTechShutdown_en)
-      # L222.GlobalTechSCurveProfit_en_USA    <- global_energy_to_USA_GlobalTech(L222.GlobalTechSCurveProfit_en)
-      # L222.GlobalTechLifetimeProfit_en_USA  <- global_energy_to_USA_GlobalTech(L222.GlobalTechLifetimeProfit_en)
-      # L222.GlobalTechLifetime_en_USA        <- global_energy_to_USA_GlobalTech(L222.GlobalTechLifetime_en)
+      L222.GlobalTechProfitShutdown_en_USA <- global_energy_to_USA_GlobalTech(L222.GlobalTechProfitShutdown_en)
 
       # TODO: figure out a better strategy.  We need to have at least one technology be available in the final
       # calibration year so we can get a base cost for the absolute cost logit.  Having a share weight of zero
@@ -540,6 +539,13 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
       add_precursors("L222.GlobalTechSCurve_en") ->
       L222.GlobalTechSCurve_en_USA
 
+    L222.GlobalTechProfitShutdown_en_USA %>%
+      add_title("Global tech profit shutdown decider and parameters for USA energy sectors") %>%
+      add_units("Unitless, used to determine shape of the function defining the relationship between shutdown rate and profitability") %>%
+      add_comments("Profit-based shutdown from L222.GlobalTechProfitShutdown_en_USA are filtered for USA sectors.") %>%
+      add_precursors("L222.GlobalTechProfitShutdown_en") ->
+      L222.GlobalTechProfitShutdown_en_USA
+
     L222.GlobalTechCost_en_USA %>%
       add_title("Tech costs for USA energy sectors.") %>%
       add_units("varies") %>%
@@ -583,7 +589,7 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
     return_data(L222.DeleteStubTech_USAen, L222.PassThroughSector_USAen, L222.Tech_USAen,
                 L222.TechShrwt_USAen, L222.TechInterp_USAen, L222.TechCoef_USAen, L222.Production_USArefining,
                 L222.Supplysector_en_USA, L222.SubsectorShrwtFllt_en_USA, L222.StubTechProd_refining_USA, L222.StubTechMarket_en_USA,
-                L222.CarbonCoef_en_USA, L222.GlobalTechSCurve_en_USA,
+                L222.CarbonCoef_en_USA, L222.GlobalTechSCurve_en_USA, L222.GlobalTechProfitShutdown_en_USA,
                 L222.GlobalTechCost_en_USA,
                 L222.SubsectorLogit_en_USA,
                 L222.StubTech_en_USA,
