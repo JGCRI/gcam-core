@@ -15,7 +15,7 @@
 #' Emission factors for historical years (1971 - 1989) are estiamted as the emissions factor for 1990.
 #' All historical NH3 Emission factors use US values.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr arrange bind_rows filter funs group_by left_join mutate select rename summarize summarize_at vars
+#' @importFrom dplyr arrange bind_rows filter group_by left_join mutate select rename summarize summarize_at vars
 #' @author RMH April 2017
 module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -59,7 +59,7 @@ module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {
     L105.out_Mt_USA_an_C_Sys_Fd_Yh <- L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
       filter(GCAM_region_ID == gcam.USA_CODE) %>%
       group_by(year) %>%
-      summarize_at(vars(value), funs(sum)) %>%
+      summarize_at(vars(value), sum) %>%
       rename(production = value) %>%
       mutate(year = as.numeric(year))
 
