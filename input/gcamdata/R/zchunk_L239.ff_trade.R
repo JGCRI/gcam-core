@@ -87,12 +87,11 @@ module_energy_L239.ff_trade <- function(command, ...) {
       select(-PrimaryFuelCO2Coef.name) %>%
       select(PrimaryFuelCO2Coef.name = supplysector, PrimaryFuelCO2Coef) %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["CarbonCoef"]], GCAM_region_names = GCAM_region_names) -> L239.CarbonCoef_regional
-      # write_to_all_regions(c("region", "PrimaryFuelCO2Coef.name", "PrimaryFuelCO2Coef"), GCAM_region_names = GCAM_region_names) -> L239.CarbonCoef_regional
 
     # Combine & clean up
     L239.CarbonCoef_traded %>%
       bind_rows(L239.CarbonCoef_regional) %>%
-      # no point duplicating info for sectors that already exist (e.g. traded unconventional oil)
+      # Avoid duplicating info for sectors that already exist (e.g. traded unconventional oil)
       # use anti_join to remove entries already in L202.CarbonCoef
       anti_join(L202.CarbonCoef, by = c("region", "PrimaryFuelCO2Coef.name", "PrimaryFuelCO2Coef")) -> L239.CarbonCoef
 

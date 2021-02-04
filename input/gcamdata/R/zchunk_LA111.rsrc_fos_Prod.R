@@ -108,18 +108,16 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
 
     L111.Prod_EJ_R_F_Yh %>%
       filter(unconventionals) %>%
-      left_join_error_no_match(select(L111.Prod_EJ_ctry_unconvOil_Yh , GCAM_region_ID, year, value),
+      left_join_error_no_match(select(L111.Prod_EJ_ctry_unconvOil_Yh, GCAM_region_ID, year, value),
                                by = c("GCAM_region_ID", "year")) %>%
       mutate(value = value.x - value.y) %>%
       bind_rows(filter(L111.Prod_EJ_R_F_Yh, !unconventionals)) %>%
-      mutate(technology = paste0(fuel)) %>%
       select(-value.x, -value.y, -unconventionals) %>%
       # switch the names from final to primary
       mutate(fuel = if_else(fuel == "refined liquids", "crude oil", fuel),
              fuel = if_else(fuel == "gas", "natural gas", fuel),
-             technology = if_else(technology == "refined liquids", "crude oil", technology),
-             technology = if_else(technology == "gas", "natural gas", technology)) %>%
-      bind_rows(select(L111.Prod_EJ_ctry_unconvOil_Yh, GCAM_region_ID, sector, fuel, year, value, technology))->L111.Prod_EJ_R_F_Yh
+             technology = fuel) %>%
+      bind_rows(select(L111.Prod_EJ_ctry_unconvOil_Yh, GCAM_region_ID, sector, fuel, year, value, technology)) -> L111.Prod_EJ_R_F_Yh
 
 
     # Produce outputs

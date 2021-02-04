@@ -90,9 +90,6 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
 
     #Part 4: Adjust Comtrade's trade to match GCAM's calibrated data
 
-    #NOTE: There are some LARGE discrepancies between GCAM's data and Comtrade's
-    # enough so that I want to confirm how we're converting Comtrade's weight to energy and check
-    # that there are no conversion factors we're missing
     L1011.ff_GrossTrade_EJ_R_C_Y %>%
       filter(year == MODEL_FINAL_BASE_YEAR) %>%
       complete(GCAM_Commodity = unique(L2011.ff_ALL_EJ_R_C_Y$fuel),
@@ -100,7 +97,6 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(L2011.ff_ALL_EJ_R_C_Y %>% select(region, fuel, year, GCAM_net_trade = net_trade),
                 by = c("region", "GCAM_Commodity" = "fuel", "year")) %>%
-      #We are creating a traded structure for all fossil fuels even if we don't have data for them (just unconventional oil as of Nov 25th 2019)
       mutate(net_trade = if_else(is.na(net_trade), GCAM_net_trade, net_trade),
              GrossExp_EJ = if_else(is.na(GrossExp_EJ), if_else(GCAM_net_trade>0, GCAM_net_trade, 0), GrossExp_EJ ),
              GrossImp_EJ = if_else(is.na(GrossImp_EJ), if_else(GCAM_net_trade<=0, -1*GCAM_net_trade, 0), GrossImp_EJ )) %>%

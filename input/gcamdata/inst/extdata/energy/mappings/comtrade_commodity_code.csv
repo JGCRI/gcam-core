@@ -2,7 +2,7 @@
 # Title: Comtrade commodity mapping
 # Source: UN Comtrade
 # Units: NA
-# Column types: cccc
+# Column types: iccc
 # ----------
 Commodity_Code,Commodity,GCAM_Commodity,Notes
 2701,"Coal; briquettes, ovoids and similar solid fuels manufactured from coal",coal,None

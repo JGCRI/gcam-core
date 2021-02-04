@@ -129,9 +129,9 @@ module_energy_L210.resources <- function(command, ...) {
     A10.ResReserveTechLifetime <- get_data(all_data, "energy/A10.ResReserveTechLifetime", strip_attributes = TRUE)
     A10.ResReserveTechDeclinePhase <- get_data(all_data, "energy/A10.ResReserveTechDeclinePhase", strip_attributes = TRUE)
     A10.ResReserveTechProfitShutdown <- get_data(all_data, "energy/A10.ResReserveTechProfitShutdown", strip_attributes = TRUE)
-    A21.globalrsrctech_cost <- get_data(all_data,"energy/A21.globalrsrctech_cost",strip_attributes = TRUE) %>%
+    A21.globalrsrctech_cost <- get_data(all_data, "energy/A21.globalrsrctech_cost", strip_attributes = TRUE) %>%
       gather_years(value_col = "input.cost")
-    A21.globalrsrctech_coef <- get_data(all_data,"energy/A21.globalrsrctech_coef",strip_attributes = TRUE) %>%
+    A21.globalrsrctech_coef <- get_data(all_data, "energy/A21.globalrsrctech_coef", strip_attributes = TRUE) %>%
       gather_years(value_col = "coefficient")
     L111.RsrcCurves_EJ_R_Ffos <- get_data(all_data, "L111.RsrcCurves_EJ_R_Ffos", strip_attributes = TRUE)
     L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh", strip_attributes = TRUE)

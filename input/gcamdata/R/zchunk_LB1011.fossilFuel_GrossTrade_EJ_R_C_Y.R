@@ -49,10 +49,7 @@ module_energy_LB1011.ff_GrossTrade <- function(command, ...) {
     comtrade_trade_flow <- get_data(all_data, "energy/mappings/comtrade_trade_flow")
     comtrade_ff_trade <- get_data(all_data, "energy/comtrade_ff_trade")
 
-    #Round a number to closest base divisible number
-    mround <- function(x,base){
-      base*round(x/base)
-    }
+
 
     # 1: Filter and prepare the bi-lateral trade flow volume data by country and comtrade commodity
 
@@ -61,7 +58,7 @@ module_energy_LB1011.ff_GrossTrade <- function(command, ...) {
     # Additional data and mappings will need to be gathered at comtrade's website (https://comtrade.un.org/db/dqBasicQuery.aspx) if other commodities are added
 
     L1011.comtrade_ff_BiTrade_y_ctry_item <- select(comtrade_ff_trade, Year, Reporter_Code, Partner_Code, Trade_Flow_Code, Commodity_Code, `Netweight_(kg)`) %>%
-      left_join(comtrade_trade_flow, by = c("Trade_Flow_Code" = "Trade_Flow_Code")) %>%
+      left_join_error_no_match(comtrade_trade_flow, by = c("Trade_Flow_Code" = "Trade_Flow_Code")) %>%
       # Join the reporter and partner countries.
       # Note also - this uses left_join_keep_first_only for countries like the USSR with multiple associated present-day
       # iso codes. We wouldn't want to repeat the trade data by each post-dissolution country, and since none of these
@@ -146,7 +143,7 @@ module_energy_LB1011.ff_GrossTrade <- function(command, ...) {
       left_join(select(comtrade_commodity_GCAM, Commodity_Code, GCAM_Commodity), by = c("Commodity_Code")) %>%
       group_by(GCAM_region_ID, GCAM_Commodity, var, year) %>%
       summarise(value = sum(value)) %>%
-      mutate(year = mround(year, 5)) %>% #Round year to nearest 5 (gcam period)
+      mutate(year = round(year/5)*5) %>% #Round year to nearest 5 (gcam period)
       group_by(GCAM_region_ID, GCAM_Commodity, var, year, add = FALSE) %>%
       summarise(value = mean(value)) %>%
       ungroup() %>%
@@ -155,7 +152,8 @@ module_energy_LB1011.ff_GrossTrade <- function(command, ...) {
                year = unique(year),
                var = unique(var)) %>%
       replace_na(list(value = 0)) %>%
-      left_join(A_PrimaryFuelCCoef %>% select(PrimaryFuelCO2Coef.name, PrimaryFuelCO2Coef), by = c("GCAM_Commodity"="PrimaryFuelCO2Coef.name")) %>%
+      left_join(A_PrimaryFuelCCoef %>% select(PrimaryFuelCO2Coef.name, PrimaryFuelCO2Coef),
+                by = c("GCAM_Commodity"="PrimaryFuelCO2Coef.name")) %>%
       left_join(fuel_carbon_content, by = "GCAM_Commodity") %>%
       mutate(value = value * Ccontent/(PrimaryFuelCO2Coef)*CONV_GJ_EJ) %>%
       spread(var, value) %>%
@@ -164,7 +162,7 @@ module_energy_LB1011.ff_GrossTrade <- function(command, ...) {
       L1011.XregTrade_EJ_R_C
 
 
-    #Alter Gross Exports to maintain internal consistency as the net_trade does not sum to 0
+    #Reconcile comtrade bilateral trade data with fossil fuel trade data, so that net balance is zero.
     # NOTE: give precedence to imports (rather than exports) of each commodity. This is arbitrary but of little consequence, and generally reduces amount of trade.
     L1011.XregTrade_EJ_R_C %>%
       group_by(GCAM_Commodity, year) %>%

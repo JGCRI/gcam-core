@@ -90,8 +90,8 @@ module_energy_LA121.liquids <- function(command, ...) {
       A21.globalrsrctech_coef %>%
         select(region, year, minicam.energy.input, gas_coef) %>%
         rename(GCAM_region_ID=region, fuel = minicam.energy.input) %>%
-        mutate(fuel=paste0("gas")) %>%
-        distinct()->gas_uncov_ratio
+        mutate(fuel="gas") %>%
+        distinct() -> gas_uncov_ratio
 
 
       # Calculating energy inputs (gas) to unconventional oil production in the historical years
@@ -171,7 +171,7 @@ module_energy_LA121.liquids <- function(command, ...) {
 
 
 
-      L121.in_EJ_R_TPES_unoil_Yh %>% filter(value>0)->L121.in_EJ_R_TPES_unoil_Yh_temp
+      L121.in_EJ_R_TPES_unoil_Yh %>% filter(value > 0) -> L121.in_EJ_R_TPES_unoil_Yh_temp
       # Conventional (crude) oil: calculate as liquids TPES - unconventional oil
       L1011.en_bal_EJ_R_Si_Fi_Yh %>%
         filter(sector == "TPES", fuel == "refined liquids") -> L121.in_EJ_R_TPES_liq_Yh
@@ -189,8 +189,7 @@ module_energy_LA121.liquids <- function(command, ...) {
         filter(year %in% MODEL_BASE_YEARS) %>%
         mutate(fuel=paste0("gas")) %>%
         left_join(gas_uncov_ratio,by=c("GCAM_region_ID","year","fuel")) %>%
-        mutate(gas_coef=if_else(is.na(gas_coef),0,gas_coef)) %>%
-        mutate(value = value*gas_coef) %>%
+        mutate(value =if_else(is.na(gas_coef),0,value*gas_coef)) %>%
         inner_join(unoil_prod %>% select(GCAM_region_ID, year, val_unoil =value),by=c("GCAM_region_ID","year"))%>%
         mutate(value=val_unoil*gas_coef) %>%
         select(GCAM_region_ID, fuel, year, value)->  L121.in_EJ_R_unoil_F_Yh

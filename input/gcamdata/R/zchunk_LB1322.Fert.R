@@ -282,9 +282,6 @@ module_energy_LB1322.Fert <- function(command, ...) {
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A10.rsrc_cost_aglu.FERT_PRICE_YEAR
 
-    if(is.na(A10.rsrc_cost_aglu.FERT_PRICE_YEAR)){
-      A10.rsrc_cost_aglu.FERT_PRICE_YEAR <- 0
-    }
 
     # A21.globaltech_cost and A22.globaltech_cost report costs on primary energy handling (A21) and transformation technologies (A22)
     # Units for both are 1975$/GJ
@@ -299,7 +296,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       complete(technology, year = sort(unique(c(year, aglu.FERT_PRICE_YEAR)))) %>%
       mutate(value = approx_fun(year, value)) %>%
       filter(year == aglu.FERT_PRICE_YEAR) %>%
-      mutate(value = if_else(is.na(value),0,as.double(value))) %>%
+      mutate(value = if_else(is.na(value) ,0 , as.double(value))) %>%
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A21.globaltech_cost_aglu.FERT_PRICE_YEAR
 

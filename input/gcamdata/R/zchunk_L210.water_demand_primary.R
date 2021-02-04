@@ -67,7 +67,7 @@ module_water_L210.water_demand_primary <- function(command, ...) {
       # Avoid double acounting unconventional oil in the regional oil sector as it is already
       # accounted for in unconventional oil production.
       # Avoid double counting imported fuels as they are accounted for at the point of production
-      filter(!grepl("imported", subsector),
+      filter(!grepl("traded", subsector),
              !(supplysector %in% "regional oil" & subsector %in% "unconventional oil")) %>%
       mutate(water_sector = "Mining",
              minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%

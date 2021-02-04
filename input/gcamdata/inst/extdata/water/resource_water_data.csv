@@ -34,9 +34,9 @@ nuclear.component,global,uranium.enrichment,Centrifuge,2,18,36
 conventional.oil.onshore,global,onshore,conventional.oil.onshore,132.96,97.2,12924
 unconventional.oil.onshore,global,onshore,unconventional.oil.onshore,19.55,2.2,43
 crude oil,global,domestic crude oil,domestic crude oil,77.07,167.7,12924
-crude oil,global,traded crude oil,traded crude oil,77.07,167.7,12924
+crude oil,global,imported crude oil,imported crude oil,77.07,167.7,12924
 gas,global,domestic natural gas,domestic natural gas,0.015,93.1,1.4
-gas,global,traded natural gas,traded natural gas,0.015,93.1,1.4
+gas,global,imported natural gas,imported natural gas,0.015,93.1,1.4
 coal,global,domestic coal,domestic coal,6.67,166,1108
-coal,global,traded coal,traded coal,6.67,166,1108
+coal,global,imported coal,imported coal,6.67,166,1108
 nuclear,global,enrichedUranium,enrichedUranium,10.1,30,303
