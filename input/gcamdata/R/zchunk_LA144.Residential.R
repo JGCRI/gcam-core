@@ -155,8 +155,8 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
         if("HOUSEHOLDS" %in% names(df)) {
           flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
           df %>%
-            dplyr::select_("year", "subregion9", "HOUSEHOLDS", flsp_var) %>%
-            tidyr::gather_("variable", "value", flsp_var) %>%
+            select(tidyselect::all_of(c("year", "subregion9", "HOUSEHOLDS", flsp_var))) %>%
+            gather("variable", "value", tidyselect::all_of(flsp_var)) %>%
             group_by(year, subregion9, variable) %>%
             summarise(value = sum(value * HOUSEHOLDS * CONV_MILFT2_M2)) %>%
             ungroup()
@@ -165,8 +165,8 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
           if("NWEIGHT" %in% names(df)) {
             flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
             df %>%
-              dplyr::select_("year", "subregion9", "NWEIGHT", flsp_var) %>%
-              tidyr::gather_("variable", "value", flsp_var) %>%
+              select(tidyselect::all_of(c("year", "subregion9", "NWEIGHT", flsp_var))) %>%
+              gather("variable", "value", tidyselect::all_of(flsp_var)) %>%
               group_by(year, subregion9, variable) %>%
               summarise(value = sum(value * NWEIGHT * CONV_FT2_M2)) %>%
               ungroup()
@@ -187,8 +187,8 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
         if("subregion13" %in% names(df)) {
           flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
           df %>%
-            dplyr::select_("year", "subregion13", "NWEIGHT", flsp_var) %>%
-            tidyr::gather_("variable", "value", flsp_var) %>%
+            select(tidyselect::all_of(c("year", "subregion13", "NWEIGHT", flsp_var))) %>%
+            gather("variable", "value", tidyselect::all_of(flsp_var)) %>%
             group_by(year, subregion13, variable) %>%
             summarise(value = sum(value * NWEIGHT * CONV_FT2_M2)) %>%
             ungroup()

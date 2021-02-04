@@ -181,7 +181,7 @@ module_aglu_LB1091.ag_GrossTrade <- function(command, ...) {
              var = tolower(sub(" Quantity", "", Element))) %>%
       group_by(GCAM_region_ID, GCAM_commodity, var, year) %>%
       summarise(value = sum(value)) %>%
-      group_by(GCAM_region_ID, GCAM_commodity, var, add = FALSE) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, var) %>%
       summarise(value = mean(value)) %>%
       ungroup() %>%
       complete(GCAM_region_ID = unique(GCAM_region_ID),

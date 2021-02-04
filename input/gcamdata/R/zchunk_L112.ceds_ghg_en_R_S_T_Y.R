@@ -735,7 +735,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         mutate(emfact = awb_emission / burnable) %>%
         select(GCAM_region_ID, Non.CO2, GCAM_commodity, GLU, year, emfact) %>%
         # Replace NaNs with zeros
-        mutate_all(funs(replace(., is.na(.), 0))) ->
+        mutate_all(list(~ replace(., is.na(.), 0))) ->
         L112.bcoc_tgej_R_awb_C_Y_GLU
       # END AGRICULTURAL WASTE BURNING
 
