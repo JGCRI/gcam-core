@@ -83,7 +83,7 @@ module_energy_LA121.liquids <- function(command, ...) {
       L100.IEA_en_bal_ctry_hist %>%
         gather_years -> L100.IEA_en_bal_ctry_hist
 
-      L111.Prod_EJ_R_F_Yh <- L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
+      L111.Prod_EJ_R_F_Yh <- L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh", strip_attributes = TRUE)
 
       # ===================================================
 

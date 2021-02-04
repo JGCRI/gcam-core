@@ -13,7 +13,7 @@
 #' @details This chunk combines all flow tables of GCAM agricultural commodities, calculates mass balances by
 #' GCAM region, commodity and year, and adjusts global and regional net exports to remove negative other uses.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr bind_rows filter funs if_else group_by left_join mutate pull select summarise
+#' @importFrom dplyr bind_rows filter if_else group_by left_join mutate pull select summarise
 #' @importFrom tidyr gather spread
 #' @author RC April 2017
 module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
@@ -76,7 +76,7 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
       # Get all combinations of each GCAM_commodity and flow, by spreading to wide format
       spread(flow, value) %>%
       # Set missing values in the complete combinations to zero
-      dplyr::mutate_if(is.numeric, funs(replace(., is.na(.), 0))) %>%
+      dplyr::mutate_if(is.numeric, list(~ replace(., is.na(.), 0))) %>%
       # For any feed commodities (e.g. pasture, residue, scavenging) that are not reported in production or trade table,
       # assume all production are domestic, and set production = feed
       mutate(Prod_Mt = if_else(GCAM_commodity %in% Feed_commodities, Feed_Mt, Prod_Mt),

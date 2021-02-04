@@ -14,7 +14,7 @@
 #' @details Calculated methane emissions factors for animal production by GCAM technology (animal type) from EPA
 #' emissions estimates and FAO production data for the US in 2005.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter funs group_by left_join mutate select summarise summarise_if
+#' @importFrom dplyr filter group_by left_join mutate select summarise summarise_if
 #' @author RH April 2017
 module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -62,8 +62,8 @@ module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
       summarise_if(is.numeric, sum, na.rm = TRUE) %>%
       filter(!is.na(sector), !is.na(fuel)) %>%
       ungroup() %>%
-      dplyr::mutate_all( funs( replace(., is.na(.), 0))) %>%
-      dplyr::mutate_if(is.numeric, funs(. * CONV_GG_TG)) ->
+      dplyr::mutate_all( list(~ replace(., is.na(.), 0))) %>%
+      dplyr::mutate_if(is.numeric, list(~ . * CONV_GG_TG)) ->
       L103.ghg_tg_USA_an_Sepa_F_2005
 
     # Map FAO production to EPA sectors and aggregate
