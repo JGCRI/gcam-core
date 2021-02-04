@@ -627,7 +627,7 @@ module_energy_L2326.aluminum <- function(command, ...) {
       add_units("unitless") %>%
       add_comments("Coefficients from literature") %>%
       add_legacy_name("L2326.StubTechCoef_aluminum") %>%
-      add_precursors("energy/calibrated_techs", "common/GCAM_region_names","energy/A326.globaltech_coef") ->
+      add_precursors("energy/calibrated_techs", "common/GCAM_region_names","energy/A326.globaltech_coef", "L1326.out_Mt_R_aluminum_Yh", "L1326.IO_GJkg_R_aluminum_F_Yh") ->
       L2326.StubTechCoef_aluminum
 
       L2326.PerCapitaBased_aluminum %>%

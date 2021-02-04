@@ -40,8 +40,9 @@ module_energy_L2323.iron_steel <- function(command, ...) {
              FILE = "energy/A323.globaltech_retirement",
              FILE = "energy/A323.demand",
 			       "L1323.out_Mt_R_iron_steel_Yh",
-             "L1323.IO_GJkg_R_iron_steel_F_Yh",
-             "L1323.in_EJ_R_iron_steel_F_Y"))
+             "L1323.IO_GJkg_R_iron_steel_F_Yh"
+             #"L1323.in_EJ_R_iron_steel_F_Y"
+			       ))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2323.Supplysector_iron_steel",
              "L2323.FinalEnergyKeyword_iron_steel",
@@ -82,7 +83,7 @@ module_energy_L2323.iron_steel <- function(command, ...) {
     A323.demand <- get_data(all_data, "energy/A323.demand", strip_attributes = TRUE)
     L1323.out_Mt_R_iron_steel_Yh <- get_data(all_data, "L1323.out_Mt_R_iron_steel_Yh", strip_attributes = TRUE)
     L1323.IO_GJkg_R_iron_steel_F_Yh <- get_data(all_data, "L1323.IO_GJkg_R_iron_steel_F_Yh")
-    L1323.in_EJ_R_iron_steel_F_Y <- get_data(all_data, "L1323.in_EJ_R_iron_steel_F_Y")
+    #L1323.in_EJ_R_iron_steel_F_Y <- get_data(all_data, "L1323.in_EJ_R_iron_steel_F_Y")
     # ===================================================
     # 0. Give binding for variable names used in pipeline
     year <- value <- GCAM_region_ID <- sector <- fuel <- year.fillout <- to.value <-
