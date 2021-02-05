@@ -77,7 +77,8 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
                   mutate(minicam.energy.input = replace(minicam.energy.input, minicam.energy.input =="delivered coal", "coal"),
                          minicam.energy.input = replace(minicam.energy.input, minicam.energy.input =="elect_td_ind", "electricity"),
                          minicam.energy.input = replace(minicam.energy.input, minicam.energy.input =="refined liquids industrial", "refined liquids"),
-                         minicam.energy.input = replace(minicam.energy.input, minicam.energy.input =="wholesale gas", "gas")) %>%
+                         minicam.energy.input = replace(minicam.energy.input, minicam.energy.input =="wholesale gas", "gas"),
+                         minicam.energy.input = replace(minicam.energy.input, minicam.energy.input =="delivered biomass", "biomass")) %>%
                   group_by(GCAM_region_ID, year, minicam.energy.input) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel" = "minicam.energy.input")) %>%
       ungroup() %>%
@@ -95,7 +96,8 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
       mutate(fuel = replace(fuel, fuel == "coal", "delivered coal"),
              fuel = replace(fuel, fuel == "electricity", "elect_td_ind"),
              fuel = replace(fuel, fuel == "refined liquids" ,"refined liquids industrial"),
-             fuel = replace(fuel, fuel == "gas" , "wholesale gas")) %>%
+             fuel = replace(fuel, fuel == "gas" , "wholesale gas"),
+             fuel = replace(fuel, fuel == "biomass" , "delivered biomass")) %>%
       select(-sector) ->
       negative
 
@@ -121,7 +123,8 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
                   mutate(minicam.energy.input = replace(minicam.energy.input, minicam.energy.input =="delivered coal", "coal"),
                          minicam.energy.input = replace(minicam.energy.input, minicam.energy.input =="elect_td_ind", "electricity"),
                          minicam.energy.input = replace(minicam.energy.input, minicam.energy.input =="refined liquids industrial", "refined liquids"),
-                         minicam.energy.input = replace(minicam.energy.input, minicam.energy.input =="wholesale gas", "gas")) %>%
+                         minicam.energy.input = replace(minicam.energy.input, minicam.energy.input =="wholesale gas", "gas"),
+                         minicam.energy.input = replace(minicam.energy.input, minicam.energy.input =="delivered biomass", "biomass")) %>%
                   group_by(GCAM_region_ID, year, minicam.energy.input) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", fuel = 'minicam.energy.input')) %>%
       replace_na(list(value = 0)) %>%

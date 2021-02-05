@@ -95,3 +95,61 @@ resid heating,traditional biomass,traditional biomass,bld_resid,biomass
 resid others,traditional biomass,traditional biomass,bld_resid,biomass
 trn_pass_road_LDV_2W,Motorcycle (50-250cc),Liquids,LDV_2W,refined liquids
 trn_freight_road,Truck,Liquids,Truck,refined liquids
+agricultural energy use,refined liquids,refined liquids,agricultural energy use,refined liquids
+agricultural energy use,gas,gas,agricultural energy use,gas
+agricultural energy use,biomass,biomass,agricultural energy use,biomass
+agricultural energy use,coal,coal,agricultural energy use,coal
+agricultural energy use,heat,heat,agricultural energy use,heat
+mining energy use,refined liquids,refined liquids,mining energy use,refined liquids
+mining energy use,gas,gas,mining energy use,gas
+mining energy use,biomass,biomass,mining energy use,biomass
+mining energy use,coal,coal,mining energy use,coal
+mining energy use,heat,heat,mining energy use,heat
+construction energy use,refined liquids,refined liquids,construction energy use,refined liquids
+construction energy use,gas,gas,construction energy use,gas
+construction energy use,biomass,biomass,construction energy use,biomass
+construction energy use,coal,coal,construction energy use,coal
+construction energy use,heat,heat,construction energy use,heat
+chemical energy use,refined liquids,refined liquids,chemical energy use,refined liquids
+chemical energy use,refined liquids,refined liquids cogen,chemical energy use,refined liquids
+chemical energy use,refined liquids,refined liquids CCS,chemical energy use,refined liquids
+chemical energy use,gas,gas,chemical energy use,gas
+chemical energy use,gas,gas cogen,chemical energy use,gas
+chemical energy use,gas,gas CCS,chemical energy use,gas
+chemical energy use,biomass,biomass,chemical energy use,biomass
+chemical energy use,biomass,biomass cogen,chemical energy use,biomass
+chemical energy use,biomass,biomass CCS,chemical energy use,biomass
+chemical energy use,coal,coal,chemical energy use,coal
+chemical energy use,coal,coal cogen,chemical energy use,coal
+chemical energy use,coal,coal CCS,chemical energy use,coal
+chemical energy use,heat,heat,chemical energy use,heat
+alumina,refined liquids,refined liquids,industry_energy,refined liquids
+alumina,refined liquids,refined liquids cogen,industry_energy,refined liquids
+alumina,refined liquids,refined liquids CCS,industry_energy,refined liquids
+alumina,coal,coal,industry_energy,coal
+alumina,coal,coal cogen,industry_energy,coal
+alumina,coal,coal CCS,industry_energy,coal
+alumina,gas,gas,industry_energy,gas
+alumina,gas,gas cogen,industry_energy,gas
+alumina,gas,gas CCS,industry_energy,gas
+alumina,biomass,biomass,industry_energy,biomass
+alumina,biomass,biomass cogen,industry_energy,biomass
+alumina,biomass,biomass CCS,industry_energy,biomass
+alumina,heat,heat,industry_energy,heat
+iron and steel,delivered coal,BLASTFUR,iron and steel,coal
+iron and steel,refined liquids industrial,BLASTFUR,iron and steel,refined liquids
+iron and steel,wholesale gas,BLASTFUR,iron and steel,gas
+iron and steel,delivered coal,BLASTFUR CCS,iron and steel,coal
+iron and steel,refined liquids industrial,BLASTFUR CCS,iron and steel,refined liquids
+iron and steel,wholesale gas,BLASTFUR CCS,iron and steel,gas
+iron and steel,delivered biomass,Biomass-based,iron and steel,biomass
+iron and steel,refined liquids industrial,Biomass-based,iron and steel,refined liquids
+iron and steel,wholesale gas,Biomass-based,iron and steel,gas
+iron and steel,delivered coal,EAF with DRI,iron and steel,coal
+iron and steel,refined liquids industrial,EAF with DRI,iron and steel,refined liquids
+iron and steel,wholesale gas,EAF with DRI,iron and steel,gas
+iron and steel,delivered coal,EAF with DRI CCS,iron and steel,coal
+iron and steel,refined liquids industrial,EAF with DRI CCS,iron and steel,refined liquids
+iron and steel,wholesale gas,EAF with DRI CCS,iron and steel,gas
+iron and steel,refined liquids industrial,EAF with scrap,iron and steel,refined liquids
+iron and steel,refined liquids industrial,EAF with scrap CCS,iron and steel,refined liquids

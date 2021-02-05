@@ -91,7 +91,10 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
              year %in% emissions.MODEL_BASE_YEARS) %>%
       # add region name and round output
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(EnTechInputNameMap, by = c("supplysector", "subsector", "stub.technology")) %>%
+      left_join_error_no_match(EnTechInputNameMap %>%
+                                 # remap iron and steel subsector to match emissions data
+                                 mutate(subsector = if_else(supplysector == "iron and steel", input.name, subsector)),
+                               by = c("supplysector", "subsector", "stub.technology")) %>%
       select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2, input.name) %>%
       mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
       L201.en_pol_emissions
@@ -102,9 +105,27 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
              year %in% emissions.MODEL_BASE_YEARS) %>%
       # add region name and round output
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(EnTechInputNameMap, by = c("supplysector", "subsector", "stub.technology")) %>%
+      left_join_error_no_match(EnTechInputNameMap %>%
+                                 # remap iron and steel subsector to match emissions data
+                                 mutate(subsector = if_else(supplysector == "iron and steel", input.name, subsector)),
+                               by = c("supplysector", "subsector", "stub.technology")) %>%
       select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2, input.name) %>%
       mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
+      L201.en_ghg_emissions
+
+    # revert iron and steel subsector back to original mapping
+    L201.en_pol_emissions %>%
+      left_join(EnTechInputNameMap %>% filter(supplysector == "iron and steel") %>% rename(subsector_orig = subsector),
+                by = c("supplysector", "stub.technology", "input.name")) %>%
+      mutate(subsector = if_else(supplysector == "iron and steel", subsector_orig, subsector)) %>%
+      select(-subsector_orig) ->
+      L201.en_pol_emissions
+
+    L201.en_ghg_emissions %>%
+      left_join(EnTechInputNameMap %>% filter(supplysector == "iron and steel") %>% rename(subsector_orig = subsector),
+                by = c("supplysector", "stub.technology", "input.name")) %>%
+      mutate(subsector = if_else(supplysector == "iron and steel", subsector_orig, subsector)) %>%
+      select(-subsector_orig) ->
       L201.en_ghg_emissions
 
     # L201.en_bcoc_emissions: BC/OC emissions factors for energy technologies in all regions
@@ -188,6 +209,15 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       filter(max_reduction > 0) ->
       L201.nonghg_gdp_control
 
+    # remap iron and steel back to correct subsector
+    L201.nonghg_gdp_control %>%
+      left_join(EnTechInputNameMap %>% filter(supplysector == "iron and steel") %>% select(-input.name) %>%
+                  rename(subsector_orig = subsector) %>% unique(),
+                                              by = c("supplysector", "stub.technology")) %>%
+      mutate(subsector = if_else(supplysector == "iron and steel", subsector_orig, subsector)) %>%
+      select(-subsector_orig) ->
+      L201.nonghg_gdp_control
+
     L201.nonghg_max_reduction <- select(L201.nonghg_gdp_control, -steepness)
     L201.nonghg_steepness <- select(L201.nonghg_gdp_control, -max_reduction)
 
@@ -257,6 +287,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.nonghg_res <- rename_SO2(L201.nonghg_res, A_regions, FALSE)
     L201.nonghg_steepness_res <- rename_SO2(L201.nonghg_steepness_res, A_regions, FALSE)
     L201.nonghg_max_reduction_res <- rename_SO2(L201.nonghg_max_reduction_res, A_regions, FALSE)
+
 
     # Remove district heat from regions that do have have it
     A_regions.en %>%
