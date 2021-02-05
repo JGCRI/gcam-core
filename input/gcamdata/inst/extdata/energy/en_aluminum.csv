@@ -30,21 +30,36 @@ USA,1,biomass_tradbio,0.004919882,2011,EJ
 USA,1,biomass_tradbio,0.006127425,2013,EJ
 USA,1,biomass_tradbio,0.005512953,2014,EJ
 USA,1,biomass_tradbio,0.004767866,2015,EJ
+Africa_Northern,3,biomass_tradbio,0.000184002,1975,EJ
+Africa_Northern,3,biomass_tradbio,0.000187448,1976,EJ
+Africa_Northern,3,biomass_tradbio,0.000208578,1977,EJ
+Africa_Northern,3,biomass_tradbio,0.000207875,1978,EJ
+Africa_Northern,3,biomass_tradbio,0.00021364,1979,EJ
+Africa_Northern,3,biomass_tradbio,0.000232623,1980,EJ
+Africa_Northern,3,biomass_tradbio,0.000220705,1981,EJ
+Africa_Northern,3,biomass_tradbio,0.000182801,1982,EJ
+Africa_Northern,3,biomass_tradbio,0.000192031,1983,EJ
+Africa_Northern,3,biomass_tradbio,0.000223239,1984,EJ
+Africa_Northern,3,biomass_tradbio,0.000209363,1985,EJ
+Africa_Northern,3,biomass_tradbio,0.000214055,1986,EJ
+Africa_Northern,3,biomass_tradbio,0.00023154,1987,EJ
+Africa_Northern,3,biomass_tradbio,0.000238777,1988,EJ
+Africa_Northern,3,biomass_tradbio,0.000256136,1989,EJ
 Africa_Northern,3,biomass_tradbio,0.000268695,1990,EJ
 Africa_Northern,3,biomass_tradbio,0,1991,EJ
 Africa_Northern,3,biomass_tradbio,0,1992,EJ
-Africa_Northern,3,biomass_tradbio,1.19303E-05,1993,EJ
-Africa_Northern,3,biomass_tradbio,2.04655E-05,1994,EJ
-Africa_Northern,3,biomass_tradbio,3.4972E-05,1995,EJ
-Africa_Northern,3,biomass_tradbio,3.13454E-05,1996,EJ
-Africa_Northern,3,biomass_tradbio,6.84553E-05,1997,EJ
-Africa_Northern,3,biomass_tradbio,3.13409E-05,1998,EJ
-Africa_Northern,3,biomass_tradbio,3.47246E-05,1999,EJ
-Africa_Northern,3,biomass_tradbio,2.48631E-05,2000,EJ
+Africa_Northern,3,biomass_tradbio,1.19E-05,1993,EJ
+Africa_Northern,3,biomass_tradbio,2.05E-05,1994,EJ
+Africa_Northern,3,biomass_tradbio,3.50E-05,1995,EJ
+Africa_Northern,3,biomass_tradbio,3.13E-05,1996,EJ
+Africa_Northern,3,biomass_tradbio,6.85E-05,1997,EJ
+Africa_Northern,3,biomass_tradbio,3.13E-05,1998,EJ
+Africa_Northern,3,biomass_tradbio,3.47E-05,1999,EJ
+Africa_Northern,3,biomass_tradbio,2.49E-05,2000,EJ
 Africa_Northern,3,biomass_tradbio,0,2001,EJ
 Africa_Northern,3,biomass_tradbio,0,2003,EJ
 Africa_Northern,3,biomass_tradbio,0,2004,EJ
-Africa_Northern,3,biomass_tradbio,4.71371E-05,2005,EJ
+Africa_Northern,3,biomass_tradbio,4.71E-05,2005,EJ
 Africa_Northern,3,biomass_tradbio,0.00016341,2006,EJ
 Africa_Northern,3,biomass_tradbio,0.000185978,2007,EJ
 Africa_Northern,3,biomass_tradbio,0.00018918,2008,EJ
@@ -54,7 +69,7 @@ Africa_Northern,3,biomass_tradbio,0.000199787,2011,EJ
 Africa_Northern,3,biomass_tradbio,0.000213871,2013,EJ
 Africa_Northern,3,biomass_tradbio,0.000177049,2014,EJ
 Africa_Northern,3,biomass_tradbio,0.000200611,2015,EJ
-Africa_Southern,4,biomass_tradbio,6.95652E-06,2000,EJ
+Africa_Southern,4,biomass_tradbio,6.96E-06,2000,EJ
 Africa_Southern,4,biomass_tradbio,0,2001,EJ
 Africa_Southern,4,biomass_tradbio,0,2003,EJ
 Africa_Southern,4,biomass_tradbio,0,2004,EJ
@@ -68,30 +83,45 @@ Africa_Southern,4,biomass_tradbio,0.0004237,2011,EJ
 Africa_Southern,4,biomass_tradbio,0.000380958,2013,EJ
 Africa_Southern,4,biomass_tradbio,0.000334623,2014,EJ
 Africa_Southern,4,biomass_tradbio,0.000373137,2015,EJ
+Africa_Western,5,biomass_tradbio,0.000274461,1975,EJ
+Africa_Western,5,biomass_tradbio,0.000279601,1976,EJ
+Africa_Western,5,biomass_tradbio,0.00031112,1977,EJ
+Africa_Western,5,biomass_tradbio,0.000310071,1978,EJ
+Africa_Western,5,biomass_tradbio,0.00031867,1979,EJ
+Africa_Western,5,biomass_tradbio,0.000346986,1980,EJ
+Africa_Western,5,biomass_tradbio,0.000329207,1981,EJ
+Africa_Western,5,biomass_tradbio,0.00027267,1982,EJ
+Africa_Western,5,biomass_tradbio,0.000286437,1983,EJ
+Africa_Western,5,biomass_tradbio,0.000332988,1984,EJ
+Africa_Western,5,biomass_tradbio,0.000312291,1985,EJ
+Africa_Western,5,biomass_tradbio,0.000319288,1986,EJ
+Africa_Western,5,biomass_tradbio,0.00034537,1987,EJ
+Africa_Western,5,biomass_tradbio,0.000356165,1988,EJ
+Africa_Western,5,biomass_tradbio,0.000382057,1989,EJ
 Africa_Western,5,biomass_tradbio,0.00040079,1990,EJ
 Africa_Western,5,biomass_tradbio,0,1991,EJ
 Africa_Western,5,biomass_tradbio,0,1992,EJ
-Africa_Western,5,biomass_tradbio,1.73225E-05,1993,EJ
-Africa_Western,5,biomass_tradbio,2.50376E-05,1994,EJ
-Africa_Western,5,biomass_tradbio,4.15778E-05,1995,EJ
-Africa_Western,5,biomass_tradbio,3.87833E-05,1996,EJ
-Africa_Western,5,biomass_tradbio,9.05002E-05,1997,EJ
-Africa_Western,5,biomass_tradbio,2.53942E-05,1998,EJ
-Africa_Western,5,biomass_tradbio,3.77832E-05,1999,EJ
-Africa_Western,5,biomass_tradbio,3.24638E-05,2000,EJ
+Africa_Western,5,biomass_tradbio,1.73E-05,1993,EJ
+Africa_Western,5,biomass_tradbio,2.50E-05,1994,EJ
+Africa_Western,5,biomass_tradbio,4.16E-05,1995,EJ
+Africa_Western,5,biomass_tradbio,3.88E-05,1996,EJ
+Africa_Western,5,biomass_tradbio,9.05E-05,1997,EJ
+Africa_Western,5,biomass_tradbio,2.54E-05,1998,EJ
+Africa_Western,5,biomass_tradbio,3.78E-05,1999,EJ
+Africa_Western,5,biomass_tradbio,3.25E-05,2000,EJ
 Africa_Western,5,biomass_tradbio,0,2001,EJ
 Africa_Western,5,biomass_tradbio,0,2003,EJ
 Africa_Western,5,biomass_tradbio,0,2004,EJ
-Africa_Western,5,biomass_tradbio,1.9898E-05,2005,EJ
-Africa_Western,5,biomass_tradbio,6.22515E-05,2006,EJ
-Africa_Western,5,biomass_tradbio,6.27134E-05,2007,EJ
-Africa_Western,5,biomass_tradbio,7.42169E-05,2008,EJ
-Africa_Western,5,biomass_tradbio,3.89737E-05,2009,EJ
-Africa_Western,5,biomass_tradbio,9.17028E-05,2010,EJ
-Africa_Western,5,biomass_tradbio,9.19776E-05,2011,EJ
-Africa_Western,5,biomass_tradbio,7.61915E-05,2013,EJ
-Africa_Western,5,biomass_tradbio,7.73115E-05,2014,EJ
-Africa_Western,5,biomass_tradbio,7.0214E-05,2015,EJ
+Africa_Western,5,biomass_tradbio,1.99E-05,2005,EJ
+Africa_Western,5,biomass_tradbio,6.23E-05,2006,EJ
+Africa_Western,5,biomass_tradbio,6.27E-05,2007,EJ
+Africa_Western,5,biomass_tradbio,7.42E-05,2008,EJ
+Africa_Western,5,biomass_tradbio,3.90E-05,2009,EJ
+Africa_Western,5,biomass_tradbio,9.17E-05,2010,EJ
+Africa_Western,5,biomass_tradbio,9.20E-05,2011,EJ
+Africa_Western,5,biomass_tradbio,7.62E-05,2013,EJ
+Africa_Western,5,biomass_tradbio,7.73E-05,2014,EJ
+Africa_Western,5,biomass_tradbio,7.02E-05,2015,EJ
 Australia_NZ,6,biomass_tradbio,0,1990,EJ
 Australia_NZ,6,biomass_tradbio,0,1991,EJ
 Australia_NZ,6,biomass_tradbio,0,1992,EJ
@@ -132,7 +162,7 @@ Brazil,7,biomass_tradbio,0,2003,EJ
 Brazil,7,biomass_tradbio,0,2004,EJ
 Brazil,7,biomass_tradbio,0,2005,EJ
 Brazil,7,biomass_tradbio,0,2006,EJ
-Brazil,7,biomass_tradbio,1.30521E-06,2007,EJ
+Brazil,7,biomass_tradbio,1.31E-06,2007,EJ
 Brazil,7,biomass_tradbio,0,2008,EJ
 Brazil,7,biomass_tradbio,0,2009,EJ
 Brazil,7,biomass_tradbio,0,2010,EJ
@@ -165,18 +195,18 @@ Canada,8,biomass_tradbio,0.009348575,2013,EJ
 Canada,8,biomass_tradbio,0.009214047,2014,EJ
 Canada,8,biomass_tradbio,0.008636134,2015,EJ
 Central Asia,10,biomass_tradbio,0,1992,EJ
-Central Asia,10,biomass_tradbio,2.15689E-05,1993,EJ
-Central Asia,10,biomass_tradbio,2.72148E-05,1994,EJ
-Central Asia,10,biomass_tradbio,4.70179E-05,1995,EJ
-Central Asia,10,biomass_tradbio,3.68353E-05,1996,EJ
-Central Asia,10,biomass_tradbio,7.69639E-05,1997,EJ
-Central Asia,10,biomass_tradbio,3.15017E-05,1998,EJ
-Central Asia,10,biomass_tradbio,4.12017E-05,1999,EJ
-Central Asia,10,biomass_tradbio,3.86473E-05,2000,EJ
+Central Asia,10,biomass_tradbio,2.16E-05,1993,EJ
+Central Asia,10,biomass_tradbio,2.72E-05,1994,EJ
+Central Asia,10,biomass_tradbio,4.70E-05,1995,EJ
+Central Asia,10,biomass_tradbio,3.68E-05,1996,EJ
+Central Asia,10,biomass_tradbio,7.70E-05,1997,EJ
+Central Asia,10,biomass_tradbio,3.15E-05,1998,EJ
+Central Asia,10,biomass_tradbio,4.12E-05,1999,EJ
+Central Asia,10,biomass_tradbio,3.86E-05,2000,EJ
 Central Asia,10,biomass_tradbio,0,2001,EJ
 Central Asia,10,biomass_tradbio,0,2003,EJ
 Central Asia,10,biomass_tradbio,0,2004,EJ
-Central Asia,10,biomass_tradbio,7.92058E-05,2005,EJ
+Central Asia,10,biomass_tradbio,7.92E-05,2005,EJ
 Central Asia,10,biomass_tradbio,0.00028921,2006,EJ
 Central Asia,10,biomass_tradbio,0.000338797,2007,EJ
 Central Asia,10,biomass_tradbio,0.000368901,2008,EJ
@@ -206,15 +236,15 @@ China,11,biomass_tradbio,0.006476,2011,EJ
 China,11,biomass_tradbio,0.007191,2013,EJ
 China,11,biomass_tradbio,0.007497,2014,EJ
 China,11,biomass_tradbio,0.007387,2015,EJ
-EU-12,12,biomass_tradbio,5.20153E-05,1996,EJ
-EU-12,12,biomass_tradbio,4.04621E-05,1997,EJ
-EU-12,12,biomass_tradbio,2.85723E-05,1998,EJ
-EU-12,12,biomass_tradbio,2.692E-05,1999,EJ
-EU-12,12,biomass_tradbio,2.98251E-05,2000,EJ
-EU-12,12,biomass_tradbio,2.67459E-05,2001,EJ
-EU-12,12,biomass_tradbio,2.91494E-05,2003,EJ
-EU-12,12,biomass_tradbio,2.99835E-05,2004,EJ
-EU-12,12,biomass_tradbio,3.28807E-05,2005,EJ
+EU-12,12,biomass_tradbio,5.20E-05,1996,EJ
+EU-12,12,biomass_tradbio,4.05E-05,1997,EJ
+EU-12,12,biomass_tradbio,2.86E-05,1998,EJ
+EU-12,12,biomass_tradbio,2.69E-05,1999,EJ
+EU-12,12,biomass_tradbio,2.98E-05,2000,EJ
+EU-12,12,biomass_tradbio,2.67E-05,2001,EJ
+EU-12,12,biomass_tradbio,2.91E-05,2003,EJ
+EU-12,12,biomass_tradbio,3.00E-05,2004,EJ
+EU-12,12,biomass_tradbio,3.29E-05,2005,EJ
 EU-12,12,biomass_tradbio,0.000807413,2006,EJ
 EU-12,12,biomass_tradbio,0,2007,EJ
 EU-12,12,biomass_tradbio,0.000740316,2008,EJ
@@ -223,7 +253,22 @@ EU-12,12,biomass_tradbio,0.001468447,2010,EJ
 EU-12,12,biomass_tradbio,0.001603932,2011,EJ
 EU-12,12,biomass_tradbio,0.001102456,2013,EJ
 EU-12,12,biomass_tradbio,0.001119328,2014,EJ
-EU-12,12,biomass_tradbio,1.31588E-05,2015,EJ
+EU-12,12,biomass_tradbio,1.32E-05,2015,EJ
+EU-15,13,biomass_tradbio,0.000281147,1975,EJ
+EU-15,13,biomass_tradbio,0.000286413,1976,EJ
+EU-15,13,biomass_tradbio,0.000318699,1977,EJ
+EU-15,13,biomass_tradbio,0.000317625,1978,EJ
+EU-15,13,biomass_tradbio,0.000326433,1979,EJ
+EU-15,13,biomass_tradbio,0.000355439,1980,EJ
+EU-15,13,biomass_tradbio,0.000337228,1981,EJ
+EU-15,13,biomass_tradbio,0.000279313,1982,EJ
+EU-15,13,biomass_tradbio,0.000293415,1983,EJ
+EU-15,13,biomass_tradbio,0.0003411,1984,EJ
+EU-15,13,biomass_tradbio,0.000319899,1985,EJ
+EU-15,13,biomass_tradbio,0.000327067,1986,EJ
+EU-15,13,biomass_tradbio,0.000353784,1987,EJ
+EU-15,13,biomass_tradbio,0.000364841,1988,EJ
+EU-15,13,biomass_tradbio,0.000391365,1989,EJ
 EU-15,13,biomass_tradbio,0.000410555,1990,EJ
 EU-15,13,biomass_tradbio,0.000204292,1991,EJ
 EU-15,13,biomass_tradbio,0.000969985,1992,EJ
@@ -247,61 +292,91 @@ EU-15,13,biomass_tradbio,0.006531942,2010,EJ
 EU-15,13,biomass_tradbio,0.006225431,2011,EJ
 EU-15,13,biomass_tradbio,0.003247597,2013,EJ
 EU-15,13,biomass_tradbio,0.003193139,2014,EJ
-EU-15,13,biomass_tradbio,3.91498E-05,2015,EJ
-Europe_Eastern,14,biomass_tradbio,1.62548E-05,1996,EJ
-Europe_Eastern,14,biomass_tradbio,1.4092E-05,1997,EJ
-Europe_Eastern,14,biomass_tradbio,6.8702E-06,1998,EJ
-Europe_Eastern,14,biomass_tradbio,6.95686E-06,1999,EJ
-Europe_Eastern,14,biomass_tradbio,7.55146E-06,2000,EJ
-Europe_Eastern,14,biomass_tradbio,6.00649E-06,2001,EJ
-Europe_Eastern,14,biomass_tradbio,6.41512E-06,2003,EJ
-Europe_Eastern,14,biomass_tradbio,5.86182E-06,2004,EJ
-Europe_Eastern,14,biomass_tradbio,6.05557E-06,2005,EJ
+EU-15,13,biomass_tradbio,3.91E-05,2015,EJ
+Europe_Eastern,14,biomass_tradbio,1.63E-05,1996,EJ
+Europe_Eastern,14,biomass_tradbio,1.41E-05,1997,EJ
+Europe_Eastern,14,biomass_tradbio,6.87E-06,1998,EJ
+Europe_Eastern,14,biomass_tradbio,6.96E-06,1999,EJ
+Europe_Eastern,14,biomass_tradbio,7.55E-06,2000,EJ
+Europe_Eastern,14,biomass_tradbio,6.01E-06,2001,EJ
+Europe_Eastern,14,biomass_tradbio,6.42E-06,2003,EJ
+Europe_Eastern,14,biomass_tradbio,5.86E-06,2004,EJ
+Europe_Eastern,14,biomass_tradbio,6.06E-06,2005,EJ
 Europe_Eastern,14,biomass_tradbio,0.000146214,2006,EJ
 Europe_Eastern,14,biomass_tradbio,0,2007,EJ
 Europe_Eastern,14,biomass_tradbio,0.000149652,2008,EJ
-Europe_Eastern,14,biomass_tradbio,6.50556E-05,2009,EJ
-Europe_Eastern,14,biomass_tradbio,8.26828E-05,2010,EJ
-Europe_Eastern,14,biomass_tradbio,2.11441E-05,2011,EJ
-Europe_Non_EU,15,biomass_tradbio,9.15664E-05,1990,EJ
+Europe_Eastern,14,biomass_tradbio,6.51E-05,2009,EJ
+Europe_Eastern,14,biomass_tradbio,8.27E-05,2010,EJ
+Europe_Eastern,14,biomass_tradbio,2.11E-05,2011,EJ
+Europe_Non_EU,15,biomass_tradbio,6.27E-05,1975,EJ
+Europe_Non_EU,15,biomass_tradbio,6.39E-05,1976,EJ
+Europe_Non_EU,15,biomass_tradbio,7.11E-05,1977,EJ
+Europe_Non_EU,15,biomass_tradbio,7.08E-05,1978,EJ
+Europe_Non_EU,15,biomass_tradbio,7.28E-05,1979,EJ
+Europe_Non_EU,15,biomass_tradbio,7.93E-05,1980,EJ
+Europe_Non_EU,15,biomass_tradbio,7.52E-05,1981,EJ
+Europe_Non_EU,15,biomass_tradbio,6.23E-05,1982,EJ
+Europe_Non_EU,15,biomass_tradbio,6.54E-05,1983,EJ
+Europe_Non_EU,15,biomass_tradbio,7.61E-05,1984,EJ
+Europe_Non_EU,15,biomass_tradbio,7.13E-05,1985,EJ
+Europe_Non_EU,15,biomass_tradbio,7.29E-05,1986,EJ
+Europe_Non_EU,15,biomass_tradbio,7.89E-05,1987,EJ
+Europe_Non_EU,15,biomass_tradbio,8.14E-05,1988,EJ
+Europe_Non_EU,15,biomass_tradbio,8.73E-05,1989,EJ
+Europe_Non_EU,15,biomass_tradbio,9.16E-05,1990,EJ
 Europe_Non_EU,15,biomass_tradbio,0,1991,EJ
-Europe_Non_EU,15,biomass_tradbio,5.3534E-05,1992,EJ
-Europe_Non_EU,15,biomass_tradbio,3.74155E-05,1993,EJ
-Europe_Non_EU,15,biomass_tradbio,1.86824E-05,1994,EJ
-Europe_Non_EU,15,biomass_tradbio,3.3E-05,1995,EJ
-Europe_Non_EU,15,biomass_tradbio,2.63315E-05,1996,EJ
-Europe_Non_EU,15,biomass_tradbio,3.92505E-05,1997,EJ
-Europe_Non_EU,15,biomass_tradbio,1.66424E-05,1998,EJ
-Europe_Non_EU,15,biomass_tradbio,2.06527E-05,1999,EJ
-Europe_Non_EU,15,biomass_tradbio,2.03594E-05,2000,EJ
-Europe_Non_EU,15,biomass_tradbio,1.19563E-05,2001,EJ
-Europe_Non_EU,15,biomass_tradbio,1.31116E-05,2003,EJ
-Europe_Non_EU,15,biomass_tradbio,1.25536E-05,2004,EJ
-Europe_Non_EU,15,biomass_tradbio,2.4924E-05,2005,EJ
+Europe_Non_EU,15,biomass_tradbio,5.35E-05,1992,EJ
+Europe_Non_EU,15,biomass_tradbio,3.74E-05,1993,EJ
+Europe_Non_EU,15,biomass_tradbio,1.87E-05,1994,EJ
+Europe_Non_EU,15,biomass_tradbio,3.30E-05,1995,EJ
+Europe_Non_EU,15,biomass_tradbio,2.63E-05,1996,EJ
+Europe_Non_EU,15,biomass_tradbio,3.93E-05,1997,EJ
+Europe_Non_EU,15,biomass_tradbio,1.66E-05,1998,EJ
+Europe_Non_EU,15,biomass_tradbio,2.07E-05,1999,EJ
+Europe_Non_EU,15,biomass_tradbio,2.04E-05,2000,EJ
+Europe_Non_EU,15,biomass_tradbio,1.20E-05,2001,EJ
+Europe_Non_EU,15,biomass_tradbio,1.31E-05,2003,EJ
+Europe_Non_EU,15,biomass_tradbio,1.26E-05,2004,EJ
+Europe_Non_EU,15,biomass_tradbio,2.49E-05,2005,EJ
 Europe_Non_EU,15,biomass_tradbio,0.000353332,2006,EJ
-Europe_Non_EU,15,biomass_tradbio,4.68548E-05,2007,EJ
+Europe_Non_EU,15,biomass_tradbio,4.69E-05,2007,EJ
 Europe_Non_EU,15,biomass_tradbio,0.000351897,2008,EJ
 Europe_Non_EU,15,biomass_tradbio,0.000224039,2009,EJ
 Europe_Non_EU,15,biomass_tradbio,0.000718186,2010,EJ
 Europe_Non_EU,15,biomass_tradbio,0.000725616,2011,EJ
 Europe_Non_EU,15,biomass_tradbio,0.000307005,2013,EJ
 Europe_Non_EU,15,biomass_tradbio,0.000361644,2014,EJ
-Europe_Non_EU,15,biomass_tradbio,3.40501E-05,2015,EJ
+Europe_Non_EU,15,biomass_tradbio,3.41E-05,2015,EJ
+European Free Trade Association,16,biomass_tradbio,0.000110695,1975,EJ
+European Free Trade Association,16,biomass_tradbio,0.000112768,1976,EJ
+European Free Trade Association,16,biomass_tradbio,0.00012548,1977,EJ
+European Free Trade Association,16,biomass_tradbio,0.000125057,1978,EJ
+European Free Trade Association,16,biomass_tradbio,0.000128525,1979,EJ
+European Free Trade Association,16,biomass_tradbio,0.000139945,1980,EJ
+European Free Trade Association,16,biomass_tradbio,0.000132775,1981,EJ
+European Free Trade Association,16,biomass_tradbio,0.000109973,1982,EJ
+European Free Trade Association,16,biomass_tradbio,0.000115525,1983,EJ
+European Free Trade Association,16,biomass_tradbio,0.0001343,1984,EJ
+European Free Trade Association,16,biomass_tradbio,0.000125952,1985,EJ
+European Free Trade Association,16,biomass_tradbio,0.000128775,1986,EJ
+European Free Trade Association,16,biomass_tradbio,0.000139294,1987,EJ
+European Free Trade Association,16,biomass_tradbio,0.000143647,1988,EJ
+European Free Trade Association,16,biomass_tradbio,0.00015409,1989,EJ
 European Free Trade Association,16,biomass_tradbio,0.000161646,1990,EJ
-European Free Trade Association,16,biomass_tradbio,8.32674E-05,1991,EJ
+European Free Trade Association,16,biomass_tradbio,8.33E-05,1991,EJ
 European Free Trade Association,16,biomass_tradbio,0.000405329,1992,EJ
 European Free Trade Association,16,biomass_tradbio,0.000302541,1993,EJ
 European Free Trade Association,16,biomass_tradbio,0.000276926,1994,EJ
 European Free Trade Association,16,biomass_tradbio,0.000349716,1995,EJ
 European Free Trade Association,16,biomass_tradbio,0.000179525,1996,EJ
 European Free Trade Association,16,biomass_tradbio,0.000146501,1997,EJ
-European Free Trade Association,16,biomass_tradbio,7.71132E-05,1998,EJ
-European Free Trade Association,16,biomass_tradbio,7.707E-05,1999,EJ
-European Free Trade Association,16,biomass_tradbio,8.1543E-05,2000,EJ
-European Free Trade Association,16,biomass_tradbio,7.62711E-05,2001,EJ
-European Free Trade Association,16,biomass_tradbio,8.56474E-05,2003,EJ
-European Free Trade Association,16,biomass_tradbio,8.49704E-05,2004,EJ
-European Free Trade Association,16,biomass_tradbio,8.97181E-05,2005,EJ
+European Free Trade Association,16,biomass_tradbio,7.71E-05,1998,EJ
+European Free Trade Association,16,biomass_tradbio,7.71E-05,1999,EJ
+European Free Trade Association,16,biomass_tradbio,8.15E-05,2000,EJ
+European Free Trade Association,16,biomass_tradbio,7.63E-05,2001,EJ
+European Free Trade Association,16,biomass_tradbio,8.56E-05,2003,EJ
+European Free Trade Association,16,biomass_tradbio,8.50E-05,2004,EJ
+European Free Trade Association,16,biomass_tradbio,8.97E-05,2005,EJ
 European Free Trade Association,16,biomass_tradbio,0.002151806,2006,EJ
 European Free Trade Association,16,biomass_tradbio,0,2007,EJ
 European Free Trade Association,16,biomass_tradbio,0.002806314,2008,EJ
@@ -310,18 +385,33 @@ European Free Trade Association,16,biomass_tradbio,0.006333503,2010,EJ
 European Free Trade Association,16,biomass_tradbio,0.006554675,2011,EJ
 European Free Trade Association,16,biomass_tradbio,0.004186235,2013,EJ
 European Free Trade Association,16,biomass_tradbio,0.004263624,2014,EJ
-European Free Trade Association,16,biomass_tradbio,4.90656E-05,2015,EJ
+European Free Trade Association,16,biomass_tradbio,4.91E-05,2015,EJ
+India,17,biomass_tradbio,0.000445099,1975,EJ
+India,17,biomass_tradbio,0.000453436,1976,EJ
+India,17,biomass_tradbio,0.00050455,1977,EJ
+India,17,biomass_tradbio,0.000502849,1978,EJ
+India,17,biomass_tradbio,0.000516794,1979,EJ
+India,17,biomass_tradbio,0.000562714,1980,EJ
+India,17,biomass_tradbio,0.000533883,1981,EJ
+India,17,biomass_tradbio,0.000442195,1982,EJ
+India,17,biomass_tradbio,0.000464521,1983,EJ
+India,17,biomass_tradbio,0.000540014,1984,EJ
+India,17,biomass_tradbio,0.000506449,1985,EJ
+India,17,biomass_tradbio,0.000517797,1986,EJ
+India,17,biomass_tradbio,0.000560094,1987,EJ
+India,17,biomass_tradbio,0.0005776,1988,EJ
+India,17,biomass_tradbio,0.000619591,1989,EJ
 India,17,biomass_tradbio,0.000649971,1990,EJ
 India,17,biomass_tradbio,0,1991,EJ
 India,17,biomass_tradbio,0,1992,EJ
-India,17,biomass_tradbio,2.93202E-05,1993,EJ
-India,17,biomass_tradbio,5.13816E-05,1994,EJ
+India,17,biomass_tradbio,2.93E-05,1993,EJ
+India,17,biomass_tradbio,5.14E-05,1994,EJ
 India,17,biomass_tradbio,0.000104333,1995,EJ
-India,17,biomass_tradbio,9.40363E-05,1996,EJ
+India,17,biomass_tradbio,9.40E-05,1996,EJ
 India,17,biomass_tradbio,0.000191056,1997,EJ
-India,17,biomass_tradbio,8.71117E-05,1998,EJ
+India,17,biomass_tradbio,8.71E-05,1998,EJ
 India,17,biomass_tradbio,0.000110471,1999,EJ
-India,17,biomass_tradbio,8.2963E-05,2000,EJ
+India,17,biomass_tradbio,8.30E-05,2000,EJ
 India,17,biomass_tradbio,0,2001,EJ
 India,17,biomass_tradbio,0,2003,EJ
 India,17,biomass_tradbio,0,2004,EJ
@@ -335,21 +425,36 @@ India,17,biomass_tradbio,0.001256775,2011,EJ
 India,17,biomass_tradbio,0.001138195,2013,EJ
 India,17,biomass_tradbio,0.001144328,2014,EJ
 India,17,biomass_tradbio,0.0015748,2015,EJ
+Indonesia,18,biomass_tradbio,0.000191197,1975,EJ
+Indonesia,18,biomass_tradbio,0.000194779,1976,EJ
+Indonesia,18,biomass_tradbio,0.000216735,1977,EJ
+Indonesia,18,biomass_tradbio,0.000216004,1978,EJ
+Indonesia,18,biomass_tradbio,0.000221995,1979,EJ
+Indonesia,18,biomass_tradbio,0.00024172,1980,EJ
+Indonesia,18,biomass_tradbio,0.000229335,1981,EJ
+Indonesia,18,biomass_tradbio,0.00018995,1982,EJ
+Indonesia,18,biomass_tradbio,0.00019954,1983,EJ
+Indonesia,18,biomass_tradbio,0.000231969,1984,EJ
+Indonesia,18,biomass_tradbio,0.000217551,1985,EJ
+Indonesia,18,biomass_tradbio,0.000222426,1986,EJ
+Indonesia,18,biomass_tradbio,0.000240595,1987,EJ
+Indonesia,18,biomass_tradbio,0.000248115,1988,EJ
+Indonesia,18,biomass_tradbio,0.000266152,1989,EJ
 Indonesia,18,biomass_tradbio,0.000279202,1990,EJ
 Indonesia,18,biomass_tradbio,0,1991,EJ
 Indonesia,18,biomass_tradbio,0,1992,EJ
-Indonesia,18,biomass_tradbio,1.21325E-05,1993,EJ
-Indonesia,18,biomass_tradbio,2.41668E-05,1994,EJ
-Indonesia,18,biomass_tradbio,4.27436E-05,1995,EJ
-Indonesia,18,biomass_tradbio,3.98459E-05,1996,EJ
-Indonesia,18,biomass_tradbio,7.73506E-05,1997,EJ
-Indonesia,18,biomass_tradbio,2.13761E-05,1998,EJ
-Indonesia,18,biomass_tradbio,1.90715E-05,1999,EJ
-Indonesia,18,biomass_tradbio,2.06119E-05,2000,EJ
+Indonesia,18,biomass_tradbio,1.21E-05,1993,EJ
+Indonesia,18,biomass_tradbio,2.42E-05,1994,EJ
+Indonesia,18,biomass_tradbio,4.27E-05,1995,EJ
+Indonesia,18,biomass_tradbio,3.98E-05,1996,EJ
+Indonesia,18,biomass_tradbio,7.74E-05,1997,EJ
+Indonesia,18,biomass_tradbio,2.14E-05,1998,EJ
+Indonesia,18,biomass_tradbio,1.91E-05,1999,EJ
+Indonesia,18,biomass_tradbio,2.06E-05,2000,EJ
 Indonesia,18,biomass_tradbio,0,2001,EJ
 Indonesia,18,biomass_tradbio,0,2003,EJ
 Indonesia,18,biomass_tradbio,0,2004,EJ
-Indonesia,18,biomass_tradbio,4.86826E-05,2005,EJ
+Indonesia,18,biomass_tradbio,4.87E-05,2005,EJ
 Indonesia,18,biomass_tradbio,0.000162113,2006,EJ
 Indonesia,18,biomass_tradbio,0.000174444,2007,EJ
 Indonesia,18,biomass_tradbio,0.000176811,2008,EJ
@@ -359,29 +464,44 @@ Indonesia,18,biomass_tradbio,0.000183955,2011,EJ
 Indonesia,18,biomass_tradbio,0.000170428,2013,EJ
 Indonesia,18,biomass_tradbio,0.000124525,2014,EJ
 Indonesia,18,biomass_tradbio,0.000112342,2015,EJ
-Japan,19,biomass_tradbio,5.1037E-05,1990,EJ
+Japan,19,biomass_tradbio,3.50E-05,1975,EJ
+Japan,19,biomass_tradbio,3.56E-05,1976,EJ
+Japan,19,biomass_tradbio,3.96E-05,1977,EJ
+Japan,19,biomass_tradbio,3.95E-05,1978,EJ
+Japan,19,biomass_tradbio,4.06E-05,1979,EJ
+Japan,19,biomass_tradbio,4.42E-05,1980,EJ
+Japan,19,biomass_tradbio,4.19E-05,1981,EJ
+Japan,19,biomass_tradbio,3.47E-05,1982,EJ
+Japan,19,biomass_tradbio,3.65E-05,1983,EJ
+Japan,19,biomass_tradbio,4.24E-05,1984,EJ
+Japan,19,biomass_tradbio,3.98E-05,1985,EJ
+Japan,19,biomass_tradbio,4.07E-05,1986,EJ
+Japan,19,biomass_tradbio,4.40E-05,1987,EJ
+Japan,19,biomass_tradbio,4.54E-05,1988,EJ
+Japan,19,biomass_tradbio,4.87E-05,1989,EJ
+Japan,19,biomass_tradbio,5.10E-05,1990,EJ
 Japan,19,biomass_tradbio,0,1991,EJ
 Japan,19,biomass_tradbio,0,1992,EJ
-Japan,19,biomass_tradbio,1.21325E-06,1993,EJ
-Japan,19,biomass_tradbio,1.85061E-06,1994,EJ
-Japan,19,biomass_tradbio,3.4972E-06,1995,EJ
-Japan,19,biomass_tradbio,3.01058E-06,1996,EJ
-Japan,19,biomass_tradbio,6.5748E-06,1997,EJ
-Japan,19,biomass_tradbio,2.57156E-06,1998,EJ
-Japan,19,biomass_tradbio,1.97912E-06,1999,EJ
-Japan,19,biomass_tradbio,9.01771E-07,2000,EJ
+Japan,19,biomass_tradbio,1.21E-06,1993,EJ
+Japan,19,biomass_tradbio,1.85E-06,1994,EJ
+Japan,19,biomass_tradbio,3.50E-06,1995,EJ
+Japan,19,biomass_tradbio,3.01E-06,1996,EJ
+Japan,19,biomass_tradbio,6.57E-06,1997,EJ
+Japan,19,biomass_tradbio,2.57E-06,1998,EJ
+Japan,19,biomass_tradbio,1.98E-06,1999,EJ
+Japan,19,biomass_tradbio,9.02E-07,2000,EJ
 Japan,19,biomass_tradbio,0,2001,EJ
 Japan,19,biomass_tradbio,0,2003,EJ
 Japan,19,biomass_tradbio,0,2004,EJ
-Japan,19,biomass_tradbio,1.35229E-06,2005,EJ
-Japan,19,biomass_tradbio,4.53918E-06,2006,EJ
-Japan,19,biomass_tradbio,5.04591E-06,2007,EJ
-Japan,19,biomass_tradbio,4.29294E-05,2008,EJ
-Japan,19,biomass_tradbio,1.76741E-05,2009,EJ
-Japan,19,biomass_tradbio,5.1051E-05,2010,EJ
-Japan,19,biomass_tradbio,3.24183E-05,2011,EJ
-Japan,19,biomass_tradbio,1.93821E-05,2013,EJ
-Japan,19,biomass_tradbio,5.90164E-07,2014,EJ
+Japan,19,biomass_tradbio,1.35E-06,2005,EJ
+Japan,19,biomass_tradbio,4.54E-06,2006,EJ
+Japan,19,biomass_tradbio,5.05E-06,2007,EJ
+Japan,19,biomass_tradbio,4.29E-05,2008,EJ
+Japan,19,biomass_tradbio,1.77E-05,2009,EJ
+Japan,19,biomass_tradbio,5.11E-05,2010,EJ
+Japan,19,biomass_tradbio,3.24E-05,2011,EJ
+Japan,19,biomass_tradbio,1.94E-05,2013,EJ
+Japan,19,biomass_tradbio,5.90E-07,2014,EJ
 Mexico,20,biomass_tradbio,0,1990,EJ
 Mexico,20,biomass_tradbio,0,1991,EJ
 Mexico,20,biomass_tradbio,0,1992,EJ
@@ -393,25 +513,40 @@ Mexico,20,biomass_tradbio,0,1998,EJ
 Mexico,20,biomass_tradbio,0,1999,EJ
 Mexico,20,biomass_tradbio,0,2000,EJ
 Mexico,20,biomass_tradbio,0,2001,EJ
-Middle East,21,biomass_tradbio,9.00653E-05,1990,EJ
+Middle East,21,biomass_tradbio,6.17E-05,1975,EJ
+Middle East,21,biomass_tradbio,6.28E-05,1976,EJ
+Middle East,21,biomass_tradbio,6.99E-05,1977,EJ
+Middle East,21,biomass_tradbio,6.97E-05,1978,EJ
+Middle East,21,biomass_tradbio,7.16E-05,1979,EJ
+Middle East,21,biomass_tradbio,7.80E-05,1980,EJ
+Middle East,21,biomass_tradbio,7.40E-05,1981,EJ
+Middle East,21,biomass_tradbio,6.13E-05,1982,EJ
+Middle East,21,biomass_tradbio,6.44E-05,1983,EJ
+Middle East,21,biomass_tradbio,7.48E-05,1984,EJ
+Middle East,21,biomass_tradbio,7.02E-05,1985,EJ
+Middle East,21,biomass_tradbio,7.18E-05,1986,EJ
+Middle East,21,biomass_tradbio,7.76E-05,1987,EJ
+Middle East,21,biomass_tradbio,8.00E-05,1988,EJ
+Middle East,21,biomass_tradbio,8.59E-05,1989,EJ
+Middle East,21,biomass_tradbio,9.01E-05,1990,EJ
 Middle East,21,biomass_tradbio,0,1991,EJ
 Middle East,21,biomass_tradbio,0,1992,EJ
-Middle East,21,biomass_tradbio,6.74027E-06,1993,EJ
-Middle East,21,biomass_tradbio,1.26277E-05,1994,EJ
-Middle East,21,biomass_tradbio,2.29261E-05,1995,EJ
-Middle East,21,biomass_tradbio,2.0897E-05,1996,EJ
-Middle East,21,biomass_tradbio,4.56369E-05,1997,EJ
-Middle East,21,biomass_tradbio,1.99296E-05,1998,EJ
-Middle East,21,biomass_tradbio,2.4649E-05,1999,EJ
-Middle East,21,biomass_tradbio,1.80354E-05,2000,EJ
+Middle East,21,biomass_tradbio,6.74E-06,1993,EJ
+Middle East,21,biomass_tradbio,1.26E-05,1994,EJ
+Middle East,21,biomass_tradbio,2.29E-05,1995,EJ
+Middle East,21,biomass_tradbio,2.09E-05,1996,EJ
+Middle East,21,biomass_tradbio,4.56E-05,1997,EJ
+Middle East,21,biomass_tradbio,1.99E-05,1998,EJ
+Middle East,21,biomass_tradbio,2.46E-05,1999,EJ
+Middle East,21,biomass_tradbio,1.80E-05,2000,EJ
 Middle East,21,biomass_tradbio,0,2001,EJ
 Middle East,21,biomass_tradbio,0,2003,EJ
 Middle East,21,biomass_tradbio,0,2004,EJ
-Middle East,21,biomass_tradbio,4.25007E-05,2005,EJ
+Middle East,21,biomass_tradbio,4.25E-05,2005,EJ
 Middle East,21,biomass_tradbio,0.000132933,2006,EJ
 Middle East,21,biomass_tradbio,0.000155702,2007,EJ
 Middle East,21,biomass_tradbio,0.000180449,2008,EJ
-Middle East,21,biomass_tradbio,9.06365E-05,2009,EJ
+Middle East,21,biomass_tradbio,9.06E-05,2009,EJ
 Middle East,21,biomass_tradbio,0.000181515,2010,EJ
 Middle East,21,biomass_tradbio,0.00024276,2011,EJ
 Middle East,21,biomass_tradbio,0.000197162,2013,EJ
@@ -434,18 +569,33 @@ Russia,23,biomass_tradbio,0.013053962,2010,EJ
 Russia,23,biomass_tradbio,0.012061206,2011,EJ
 Russia,23,biomass_tradbio,0.007971777,2013,EJ
 Russia,23,biomass_tradbio,0.00671597,2014,EJ
-Russia,23,biomass_tradbio,8.2336E-05,2015,EJ
+Russia,23,biomass_tradbio,8.23E-05,2015,EJ
+South Africa,24,biomass_tradbio,0.000163443,1975,EJ
+South Africa,24,biomass_tradbio,0.000166504,1976,EJ
+South Africa,24,biomass_tradbio,0.000185273,1977,EJ
+South Africa,24,biomass_tradbio,0.000184649,1978,EJ
+South Africa,24,biomass_tradbio,0.00018977,1979,EJ
+South Africa,24,biomass_tradbio,0.000206632,1980,EJ
+South Africa,24,biomass_tradbio,0.000196045,1981,EJ
+South Africa,24,biomass_tradbio,0.000162377,1982,EJ
+South Africa,24,biomass_tradbio,0.000170575,1983,EJ
+South Africa,24,biomass_tradbio,0.000198296,1984,EJ
+South Africa,24,biomass_tradbio,0.000185971,1985,EJ
+South Africa,24,biomass_tradbio,0.000190138,1986,EJ
+South Africa,24,biomass_tradbio,0.00020567,1987,EJ
+South Africa,24,biomass_tradbio,0.000212098,1988,EJ
+South Africa,24,biomass_tradbio,0.000227517,1989,EJ
 South Africa,24,biomass_tradbio,0.000238673,1990,EJ
 South Africa,24,biomass_tradbio,0,1991,EJ
 South Africa,24,biomass_tradbio,0,1992,EJ
-South Africa,24,biomass_tradbio,1.17955E-05,1993,EJ
-South Africa,24,biomass_tradbio,1.87238E-05,1994,EJ
-South Africa,24,biomass_tradbio,3.78863E-05,1995,EJ
+South Africa,24,biomass_tradbio,1.18E-05,1993,EJ
+South Africa,24,biomass_tradbio,1.87E-05,1994,EJ
+South Africa,24,biomass_tradbio,3.79E-05,1995,EJ
 South Africa,24,biomass_tradbio,0.000109266,1996,EJ
 South Africa,24,biomass_tradbio,0.000255257,1997,EJ
 South Africa,24,biomass_tradbio,0.000108809,1998,EJ
 South Africa,24,biomass_tradbio,0.000123965,1999,EJ
-South Africa,24,biomass_tradbio,8.66989E-05,2000,EJ
+South Africa,24,biomass_tradbio,8.67E-05,2000,EJ
 South Africa,24,biomass_tradbio,0,2001,EJ
 South Africa,24,biomass_tradbio,0,2003,EJ
 South Africa,24,biomass_tradbio,0,2004,EJ
@@ -475,7 +625,7 @@ South America_Northern,25,biomass_tradbio,0,2003,EJ
 South America_Northern,25,biomass_tradbio,0,2004,EJ
 South America_Northern,25,biomass_tradbio,0,2005,EJ
 South America_Northern,25,biomass_tradbio,0,2006,EJ
-South America_Northern,25,biomass_tradbio,4.81073E-07,2007,EJ
+South America_Northern,25,biomass_tradbio,4.81E-07,2007,EJ
 South America_Northern,25,biomass_tradbio,0,2008,EJ
 South America_Northern,25,biomass_tradbio,0,2009,EJ
 South America_Northern,25,biomass_tradbio,0,2010,EJ
@@ -483,8 +633,8 @@ South America_Northern,25,biomass_tradbio,0,2011,EJ
 South America_Northern,25,biomass_tradbio,0,2013,EJ
 South America_Northern,25,biomass_tradbio,0,2014,EJ
 South America_Northern,25,biomass_tradbio,0,2015,EJ
-Southeast Asia,29,biomass_tradbio,6.79774E-06,2009,EJ
-Southeast Asia,29,biomass_tradbio,6.03132E-05,2011,EJ
+Southeast Asia,29,biomass_tradbio,6.80E-06,2009,EJ
+Southeast Asia,29,biomass_tradbio,6.03E-05,2011,EJ
 Southeast Asia,29,biomass_tradbio,0.000194489,2013,EJ
 Southeast Asia,29,biomass_tradbio,0.000236066,2014,EJ
 Southeast Asia,29,biomass_tradbio,0.000267482,2015,EJ
@@ -504,7 +654,7 @@ Argentina,31,biomass_tradbio,0,2003,EJ
 Argentina,31,biomass_tradbio,0,2004,EJ
 Argentina,31,biomass_tradbio,0,2005,EJ
 Argentina,31,biomass_tradbio,0,2006,EJ
-Argentina,31,biomass_tradbio,2.13722E-07,2007,EJ
+Argentina,31,biomass_tradbio,2.14E-07,2007,EJ
 Argentina,31,biomass_tradbio,0,2008,EJ
 Argentina,31,biomass_tradbio,0,2009,EJ
 Argentina,31,biomass_tradbio,0,2010,EJ
@@ -529,13 +679,28 @@ USA,1,coal,0,2004,EJ
 USA,1,coal,0,2005,EJ
 USA,1,coal,0,2006,EJ
 USA,1,coal,0,2007,EJ
-USA,1,coal,2.99013E-05,2008,EJ
-USA,1,coal,3.44892E-05,2009,EJ
+USA,1,coal,2.99E-05,2008,EJ
+USA,1,coal,3.45E-05,2009,EJ
 USA,1,coal,0,2010,EJ
 USA,1,coal,0,2011,EJ
-USA,1,coal,3.08826E-05,2013,EJ
-USA,1,coal,2.65784E-05,2014,EJ
+USA,1,coal,3.09E-05,2013,EJ
+USA,1,coal,2.66E-05,2014,EJ
 USA,1,coal,0,2015,EJ
+Africa_Northern,3,coal,0.001329434,1975,EJ
+Africa_Northern,3,coal,0.001354335,1976,EJ
+Africa_Northern,3,coal,0.001507003,1977,EJ
+Africa_Northern,3,coal,0.001501923,1978,EJ
+Africa_Northern,3,coal,0.001543575,1979,EJ
+Africa_Northern,3,coal,0.001680731,1980,EJ
+Africa_Northern,3,coal,0.001594617,1981,EJ
+Africa_Northern,3,coal,0.001320761,1982,EJ
+Africa_Northern,3,coal,0.001387444,1983,EJ
+Africa_Northern,3,coal,0.00161293,1984,EJ
+Africa_Northern,3,coal,0.001512677,1985,EJ
+Africa_Northern,3,coal,0.001546571,1986,EJ
+Africa_Northern,3,coal,0.001672905,1987,EJ
+Africa_Northern,3,coal,0.001725192,1988,EJ
+Africa_Northern,3,coal,0.001850611,1989,EJ
 Africa_Northern,3,coal,0.001941352,1990,EJ
 Africa_Northern,3,coal,0.001936601,1991,EJ
 Africa_Northern,3,coal,0.001462911,1992,EJ
@@ -574,6 +739,21 @@ Africa_Southern,4,coal,0.003458452,2011,EJ
 Africa_Southern,4,coal,0.003642944,2013,EJ
 Africa_Southern,4,coal,0.003588686,2014,EJ
 Africa_Southern,4,coal,0.005594888,2015,EJ
+Africa_Western,5,coal,0.001983011,1975,EJ
+Africa_Western,5,coal,0.002020154,1976,EJ
+Africa_Western,5,coal,0.002247876,1977,EJ
+Africa_Western,5,coal,0.002240298,1978,EJ
+Africa_Western,5,coal,0.002302428,1979,EJ
+Africa_Western,5,coal,0.002507013,1980,EJ
+Africa_Western,5,coal,0.002378563,1981,EJ
+Africa_Western,5,coal,0.001970074,1982,EJ
+Africa_Western,5,coal,0.00206954,1983,EJ
+Africa_Western,5,coal,0.002405878,1984,EJ
+Africa_Western,5,coal,0.002256339,1985,EJ
+Africa_Western,5,coal,0.002306897,1986,EJ
+Africa_Western,5,coal,0.002495339,1987,EJ
+Africa_Western,5,coal,0.002573332,1988,EJ
+Africa_Western,5,coal,0.002760408,1989,EJ
 Africa_Western,5,coal,0.002895759,1990,EJ
 Africa_Western,5,coal,0.002806984,1991,EJ
 Africa_Western,5,coal,0.002153273,1992,EJ
@@ -598,6 +778,21 @@ Africa_Western,5,coal,0.000750767,2011,EJ
 Africa_Western,5,coal,0.000728589,2013,EJ
 Africa_Western,5,coal,0.000829132,2014,EJ
 Africa_Western,5,coal,0.001052802,2015,EJ
+Australia_NZ,6,coal,0.025012944,1975,EJ
+Australia_NZ,6,coal,0.025481449,1976,EJ
+Australia_NZ,6,coal,0.028353854,1977,EJ
+Australia_NZ,6,coal,0.028258262,1978,EJ
+Australia_NZ,6,coal,0.029041949,1979,EJ
+Australia_NZ,6,coal,0.031622499,1980,EJ
+Australia_NZ,6,coal,0.030002287,1981,EJ
+Australia_NZ,6,coal,0.02484976,1982,EJ
+Australia_NZ,6,coal,0.026104381,1983,EJ
+Australia_NZ,6,coal,0.030346831,1984,EJ
+Australia_NZ,6,coal,0.028460595,1985,EJ
+Australia_NZ,6,coal,0.029098318,1986,EJ
+Australia_NZ,6,coal,0.031475247,1987,EJ
+Australia_NZ,6,coal,0.032459023,1988,EJ
+Australia_NZ,6,coal,0.034818732,1989,EJ
 Australia_NZ,6,coal,0.036526,1990,EJ
 Australia_NZ,6,coal,0.036303,1991,EJ
 Australia_NZ,6,coal,0.03841,1992,EJ
@@ -622,6 +817,21 @@ Australia_NZ,6,coal,0.036032,2011,EJ
 Australia_NZ,6,coal,0.04605,2013,EJ
 Australia_NZ,6,coal,0.053153,2014,EJ
 Australia_NZ,6,coal,0.056731,2015,EJ
+Brazil,7,coal,0.001116689,1975,EJ
+Brazil,7,coal,0.001137605,1976,EJ
+Brazil,7,coal,0.001265842,1977,EJ
+Brazil,7,coal,0.001261574,1978,EJ
+Brazil,7,coal,0.001296561,1979,EJ
+Brazil,7,coal,0.001411769,1980,EJ
+Brazil,7,coal,0.001339435,1981,EJ
+Brazil,7,coal,0.001109404,1982,EJ
+Brazil,7,coal,0.001165415,1983,EJ
+Brazil,7,coal,0.001354817,1984,EJ
+Brazil,7,coal,0.001270607,1985,EJ
+Brazil,7,coal,0.001299078,1986,EJ
+Brazil,7,coal,0.001405195,1987,EJ
+Brazil,7,coal,0.001449115,1988,EJ
+Brazil,7,coal,0.001554463,1989,EJ
 Brazil,7,coal,0.001630683,1990,EJ
 Brazil,7,coal,0.001904592,1991,EJ
 Brazil,7,coal,0.002008472,1992,EJ
@@ -663,12 +873,12 @@ Canada,8,coal,0,2004,EJ
 Canada,8,coal,0,2005,EJ
 Canada,8,coal,0,2006,EJ
 Canada,8,coal,0,2007,EJ
-Canada,8,coal,3.50987E-05,2008,EJ
-Canada,8,coal,6.05108E-05,2009,EJ
+Canada,8,coal,3.51E-05,2008,EJ
+Canada,8,coal,6.05E-05,2009,EJ
 Canada,8,coal,0,2010,EJ
 Canada,8,coal,0,2011,EJ
-Canada,8,coal,4.71174E-05,2013,EJ
-Canada,8,coal,4.44216E-05,2014,EJ
+Canada,8,coal,4.71E-05,2013,EJ
+Canada,8,coal,4.44E-05,2014,EJ
 Canada,8,coal,0,2015,EJ
 Central Asia,10,coal,0.003492905,1992,EJ
 Central Asia,10,coal,0.003199256,1993,EJ
@@ -721,12 +931,12 @@ EU-12,12,coal,0,2001,EJ
 EU-12,12,coal,0,2003,EJ
 EU-12,12,coal,0.000635086,2004,EJ
 EU-12,12,coal,0,2005,EJ
-EU-12,12,coal,1.93626E-05,2006,EJ
-EU-12,12,coal,1.2058E-05,2007,EJ
-EU-12,12,coal,2.65284E-06,2008,EJ
+EU-12,12,coal,1.94E-05,2006,EJ
+EU-12,12,coal,1.21E-05,2007,EJ
+EU-12,12,coal,2.65E-06,2008,EJ
 EU-12,12,coal,0.001530847,2009,EJ
-EU-12,12,coal,1.20056E-06,2010,EJ
-EU-12,12,coal,1.00456E-06,2011,EJ
+EU-12,12,coal,1.20E-06,2010,EJ
+EU-12,12,coal,1.00E-06,2011,EJ
 EU-12,12,coal,0,2013,EJ
 EU-12,12,coal,0,2014,EJ
 EU-12,12,coal,0.001144536,2015,EJ
@@ -745,12 +955,12 @@ EU-15,13,coal,0,2001,EJ
 EU-15,13,coal,0,2003,EJ
 EU-15,13,coal,0.002929309,2004,EJ
 EU-15,13,coal,0,2005,EJ
-EU-15,13,coal,7.56196E-05,2006,EJ
-EU-15,13,coal,4.95805E-05,2007,EJ
-EU-15,13,coal,1.17788E-05,2008,EJ
+EU-15,13,coal,7.56E-05,2006,EJ
+EU-15,13,coal,4.96E-05,2007,EJ
+EU-15,13,coal,1.18E-05,2008,EJ
 EU-15,13,coal,0.007618543,2009,EJ
-EU-15,13,coal,5.34035E-06,2010,EJ
-EU-15,13,coal,3.89907E-06,2011,EJ
+EU-15,13,coal,5.34E-06,2010,EJ
+EU-15,13,coal,3.90E-06,2011,EJ
 EU-15,13,coal,0,2013,EJ
 EU-15,13,coal,0,2014,EJ
 EU-15,13,coal,0.003405199,2015,EJ
@@ -763,12 +973,27 @@ Europe_Eastern,14,coal,0,2001,EJ
 Europe_Eastern,14,coal,0,2003,EJ
 Europe_Eastern,14,coal,0.00012416,2004,EJ
 Europe_Eastern,14,coal,0,2005,EJ
-Europe_Eastern,14,coal,3.50637E-06,2006,EJ
-Europe_Eastern,14,coal,2.24104E-06,2007,EJ
-Europe_Eastern,14,coal,5.36263E-07,2008,EJ
+Europe_Eastern,14,coal,3.51E-06,2006,EJ
+Europe_Eastern,14,coal,2.24E-06,2007,EJ
+Europe_Eastern,14,coal,5.36E-07,2008,EJ
 Europe_Eastern,14,coal,0.000198296,2009,EJ
-Europe_Eastern,14,coal,6.75993E-08,2010,EJ
-Europe_Eastern,14,coal,1.32428E-08,2011,EJ
+Europe_Eastern,14,coal,6.76E-08,2010,EJ
+Europe_Eastern,14,coal,1.32E-08,2011,EJ
+Europe_Non_EU,15,coal,0.000453047,1975,EJ
+Europe_Non_EU,15,coal,0.000461533,1976,EJ
+Europe_Non_EU,15,coal,0.00051356,1977,EJ
+Europe_Non_EU,15,coal,0.000511828,1978,EJ
+Europe_Non_EU,15,coal,0.000526023,1979,EJ
+Europe_Non_EU,15,coal,0.000572763,1980,EJ
+Europe_Non_EU,15,coal,0.000543417,1981,EJ
+Europe_Non_EU,15,coal,0.000450092,1982,EJ
+Europe_Non_EU,15,coal,0.000472816,1983,EJ
+Europe_Non_EU,15,coal,0.000549658,1984,EJ
+Europe_Non_EU,15,coal,0.000515493,1985,EJ
+Europe_Non_EU,15,coal,0.000527044,1986,EJ
+Europe_Non_EU,15,coal,0.000570096,1987,EJ
+Europe_Non_EU,15,coal,0.000587915,1988,EJ
+Europe_Non_EU,15,coal,0.000630655,1989,EJ
 Europe_Non_EU,15,coal,0.000661578,1990,EJ
 Europe_Non_EU,15,coal,0.000609268,1991,EJ
 Europe_Non_EU,15,coal,0.000484897,1992,EJ
@@ -808,15 +1033,30 @@ European Free Trade Association,16,coal,0,2001,EJ
 European Free Trade Association,16,coal,0,2003,EJ
 European Free Trade Association,16,coal,0.001799778,2004,EJ
 European Free Trade Association,16,coal,0,2005,EJ
-European Free Trade Association,16,coal,5.16025E-05,2006,EJ
-European Free Trade Association,16,coal,3.48055E-05,2007,EJ
-European Free Trade Association,16,coal,1.00561E-05,2008,EJ
+European Free Trade Association,16,coal,5.16E-05,2006,EJ
+European Free Trade Association,16,coal,3.48E-05,2007,EJ
+European Free Trade Association,16,coal,1.01E-05,2008,EJ
 European Free Trade Association,16,coal,0.007709759,2009,EJ
-European Free Trade Association,16,coal,5.17811E-06,2010,EJ
-European Free Trade Association,16,coal,4.10527E-06,2011,EJ
+European Free Trade Association,16,coal,5.18E-06,2010,EJ
+European Free Trade Association,16,coal,4.11E-06,2011,EJ
 European Free Trade Association,16,coal,0,2013,EJ
 European Free Trade Association,16,coal,0,2014,EJ
 European Free Trade Association,16,coal,0.00426766,2015,EJ
+India,17,coal,0.003215894,1975,EJ
+India,17,coal,0.00327613,1976,EJ
+India,17,coal,0.003645433,1977,EJ
+India,17,coal,0.003633142,1978,EJ
+India,17,coal,0.0037339,1979,EJ
+India,17,coal,0.00406568,1980,EJ
+India,17,coal,0.00385737,1981,EJ
+India,17,coal,0.003194914,1982,EJ
+India,17,coal,0.00335622,1983,EJ
+India,17,coal,0.003901668,1984,EJ
+India,17,coal,0.003659156,1985,EJ
+India,17,coal,0.003741148,1986,EJ
+India,17,coal,0.004046748,1987,EJ
+India,17,coal,0.004173231,1988,EJ
+India,17,coal,0.004476617,1989,EJ
 India,17,coal,0.004696119,1990,EJ
 India,17,coal,0.00548341,1991,EJ
 India,17,coal,0.004027114,1992,EJ
@@ -841,6 +1081,21 @@ India,17,coal,0.010258434,2011,EJ
 India,17,coal,0.010884093,2013,EJ
 India,17,coal,0.012272419,2014,EJ
 India,17,coal,0.023612835,2015,EJ
+Indonesia,18,coal,0.001381423,1975,EJ
+Indonesia,18,coal,0.001407298,1976,EJ
+Indonesia,18,coal,0.001565936,1977,EJ
+Indonesia,18,coal,0.001560657,1978,EJ
+Indonesia,18,coal,0.001603939,1979,EJ
+Indonesia,18,coal,0.001746458,1980,EJ
+Indonesia,18,coal,0.001656977,1981,EJ
+Indonesia,18,coal,0.001372411,1982,EJ
+Indonesia,18,coal,0.001441702,1983,EJ
+Indonesia,18,coal,0.001676005,1984,EJ
+Indonesia,18,coal,0.001571832,1985,EJ
+Indonesia,18,coal,0.001607052,1986,EJ
+Indonesia,18,coal,0.001738326,1987,EJ
+Indonesia,18,coal,0.001792658,1988,EJ
+Indonesia,18,coal,0.001922981,1989,EJ
 Indonesia,18,coal,0.00201727,1990,EJ
 Indonesia,18,coal,0.002034519,1991,EJ
 Indonesia,18,coal,0.001421818,1992,EJ
@@ -865,6 +1120,21 @@ Indonesia,18,coal,0.001501534,2011,EJ
 Indonesia,18,coal,0.001629738,2013,EJ
 Indonesia,18,coal,0.001335472,2014,EJ
 Indonesia,18,coal,0.001684482,2015,EJ
+Japan,19,coal,0.000252518,1975,EJ
+Japan,19,coal,0.000257248,1976,EJ
+Japan,19,coal,0.000286246,1977,EJ
+Japan,19,coal,0.000285281,1978,EJ
+Japan,19,coal,0.000293193,1979,EJ
+Japan,19,coal,0.000319245,1980,EJ
+Japan,19,coal,0.000302888,1981,EJ
+Japan,19,coal,0.000250871,1982,EJ
+Japan,19,coal,0.000263537,1983,EJ
+Japan,19,coal,0.000306367,1984,EJ
+Japan,19,coal,0.000287324,1985,EJ
+Japan,19,coal,0.000293762,1986,EJ
+Japan,19,coal,0.000317758,1987,EJ
+Japan,19,coal,0.00032769,1988,EJ
+Japan,19,coal,0.000351513,1989,EJ
 Japan,19,coal,0.000368748,1990,EJ
 Japan,19,coal,0.000348153,1991,EJ
 Japan,19,coal,0.000156153,1992,EJ
@@ -874,31 +1144,61 @@ Japan,19,coal,0.00016848,1995,EJ
 Japan,19,coal,0.000135781,1996,EJ
 Japan,19,coal,0.000139654,1997,EJ
 Japan,19,coal,0.000140462,1998,EJ
-Japan,19,coal,9.87068E-05,1999,EJ
-Japan,19,coal,5.38667E-05,2000,EJ
-Japan,19,coal,5.66655E-05,2001,EJ
-Japan,19,coal,2.05743E-05,2003,EJ
-Japan,19,coal,4.94738E-05,2004,EJ
-Japan,19,coal,5.14891E-05,2005,EJ
-Japan,19,coal,4.90505E-05,2006,EJ
-Japan,19,coal,1.35658E-05,2007,EJ
+Japan,19,coal,9.87E-05,1999,EJ
+Japan,19,coal,5.39E-05,2000,EJ
+Japan,19,coal,5.67E-05,2001,EJ
+Japan,19,coal,2.06E-05,2003,EJ
+Japan,19,coal,4.95E-05,2004,EJ
+Japan,19,coal,5.15E-05,2005,EJ
+Japan,19,coal,4.91E-05,2006,EJ
+Japan,19,coal,1.36E-05,2007,EJ
 Japan,19,coal,0.000457449,2008,EJ
 Japan,19,coal,0.000236321,2009,EJ
 Japan,19,coal,0.000148065,2010,EJ
 Japan,19,coal,0.000264615,2011,EJ
 Japan,19,coal,0.000185343,2013,EJ
-Japan,19,coal,6.32925E-06,2014,EJ
+Japan,19,coal,6.33E-06,2014,EJ
+Mexico,20,coal,8.16E-05,1975,EJ
+Mexico,20,coal,8.31E-05,1976,EJ
+Mexico,20,coal,9.25E-05,1977,EJ
+Mexico,20,coal,9.21E-05,1978,EJ
+Mexico,20,coal,9.47E-05,1979,EJ
+Mexico,20,coal,0.000103115,1980,EJ
+Mexico,20,coal,9.78E-05,1981,EJ
+Mexico,20,coal,8.10E-05,1982,EJ
+Mexico,20,coal,8.51E-05,1983,EJ
+Mexico,20,coal,9.90E-05,1984,EJ
+Mexico,20,coal,9.28E-05,1985,EJ
+Mexico,20,coal,9.49E-05,1986,EJ
+Mexico,20,coal,0.000102635,1987,EJ
+Mexico,20,coal,0.000105843,1988,EJ
+Mexico,20,coal,0.000113538,1989,EJ
 Mexico,20,coal,0.000119105,1990,EJ
-Mexico,20,coal,8.52054E-05,1991,EJ
-Mexico,20,coal,4.18432E-05,1992,EJ
-Mexico,20,coal,4.31462E-05,1993,EJ
-Mexico,20,coal,1.95886E-05,1995,EJ
+Mexico,20,coal,8.52E-05,1991,EJ
+Mexico,20,coal,4.18E-05,1992,EJ
+Mexico,20,coal,4.31E-05,1993,EJ
+Mexico,20,coal,1.96E-05,1995,EJ
 Mexico,20,coal,0.000118037,1996,EJ
 Mexico,20,coal,0.000126937,1997,EJ
 Mexico,20,coal,0.000232193,1998,EJ
 Mexico,20,coal,0.000259638,1999,EJ
 Mexico,20,coal,0.000215347,2000,EJ
 Mexico,20,coal,0.000121273,2001,EJ
+Middle East,21,coal,0.00044562,1975,EJ
+Middle East,21,coal,0.000453967,1976,EJ
+Middle East,21,coal,0.000505141,1977,EJ
+Middle East,21,coal,0.000503438,1978,EJ
+Middle East,21,coal,0.0005174,1979,EJ
+Middle East,21,coal,0.000563374,1980,EJ
+Middle East,21,coal,0.000534509,1981,EJ
+Middle East,21,coal,0.000442713,1982,EJ
+Middle East,21,coal,0.000465065,1983,EJ
+Middle East,21,coal,0.000540647,1984,EJ
+Middle East,21,coal,0.000507042,1985,EJ
+Middle East,21,coal,0.000518404,1986,EJ
+Middle East,21,coal,0.00056075,1987,EJ
+Middle East,21,coal,0.000578277,1988,EJ
+Middle East,21,coal,0.000620316,1989,EJ
 Middle East,21,coal,0.000650732,1990,EJ
 Middle East,21,coal,0.000870383,1991,EJ
 Middle East,21,coal,0.000756111,1992,EJ
@@ -933,14 +1233,29 @@ Russia,23,coal,0,2003,EJ
 Russia,23,coal,0.003946765,2004,EJ
 Russia,23,coal,0,2005,EJ
 Russia,23,coal,0.000115369,2006,EJ
-Russia,23,coal,7.84363E-05,2007,EJ
-Russia,23,coal,1.98845E-05,2008,EJ
+Russia,23,coal,7.84E-05,2007,EJ
+Russia,23,coal,1.99E-05,2008,EJ
 Russia,23,coal,0.015130006,2009,EJ
-Russia,23,coal,1.06726E-05,2010,EJ
-Russia,23,coal,7.55408E-06,2011,EJ
+Russia,23,coal,1.07E-05,2010,EJ
+Russia,23,coal,7.55E-06,2011,EJ
 Russia,23,coal,0,2013,EJ
 Russia,23,coal,0,2014,EJ
 Russia,23,coal,0.00716147,2015,EJ
+South Africa,24,coal,0.001180894,1975,EJ
+South Africa,24,coal,0.001203013,1976,EJ
+South Africa,24,coal,0.001338623,1977,EJ
+South Africa,24,coal,0.00133411,1978,EJ
+South Africa,24,coal,0.001371109,1979,EJ
+South Africa,24,coal,0.00149294,1980,EJ
+South Africa,24,coal,0.001416448,1981,EJ
+South Africa,24,coal,0.00117319,1982,EJ
+South Africa,24,coal,0.001232422,1983,EJ
+South Africa,24,coal,0.001432714,1984,EJ
+South Africa,24,coal,0.001343662,1985,EJ
+South Africa,24,coal,0.00137377,1986,EJ
+South Africa,24,coal,0.001485988,1987,EJ
+South Africa,24,coal,0.001532434,1988,EJ
+South Africa,24,coal,0.001643839,1989,EJ
 South Africa,24,coal,0.001724441,1990,EJ
 South Africa,24,coal,0.001838683,1991,EJ
 South Africa,24,coal,0.001421818,1992,EJ
@@ -965,6 +1280,21 @@ South Africa,24,coal,0.004978448,2011,EJ
 South Africa,24,coal,0.005253508,2013,EJ
 South Africa,24,coal,0.004715292,2014,EJ
 South Africa,24,coal,0.006968544,2015,EJ
+South America_Northern,25,coal,0.000746058,1975,EJ
+South America_Northern,25,coal,0.000760033,1976,EJ
+South America_Northern,25,coal,0.000845707,1977,EJ
+South America_Northern,25,coal,0.000842856,1978,EJ
+South America_Northern,25,coal,0.000866231,1979,EJ
+South America_Northern,25,coal,0.000943201,1980,EJ
+South America_Northern,25,coal,0.000894875,1981,EJ
+South America_Northern,25,coal,0.000741191,1982,EJ
+South America_Northern,25,coal,0.000778613,1983,EJ
+South America_Northern,25,coal,0.000905152,1984,EJ
+South America_Northern,25,coal,0.000848891,1985,EJ
+South America_Northern,25,coal,0.000867913,1986,EJ
+South America_Northern,25,coal,0.000938809,1987,EJ
+South America_Northern,25,coal,0.000968152,1988,EJ
+South America_Northern,25,coal,0.001038535,1989,EJ
 South America_Northern,25,coal,0.001089457,1990,EJ
 South America_Northern,25,coal,0.001052538,1991,EJ
 South America_Northern,25,coal,0.00099252,1992,EJ
@@ -989,11 +1319,26 @@ South America_Northern,25,coal,0.004947308,2011,EJ
 South America_Northern,25,coal,0.002359621,2013,EJ
 South America_Northern,25,coal,0.002564634,2014,EJ
 South America_Northern,25,coal,0.00246152,2015,EJ
-Southeast Asia,29,coal,9.08925E-05,2009,EJ
+Southeast Asia,29,coal,9.09E-05,2009,EJ
 Southeast Asia,29,coal,0.000492306,2011,EJ
 Southeast Asia,29,coal,0.001859819,2013,EJ
 Southeast Asia,29,coal,0.002531701,2014,EJ
 Southeast Asia,29,coal,0.004010673,2015,EJ
+Argentina,31,coal,0.000199109,1975,EJ
+Argentina,31,coal,0.000202838,1976,EJ
+Argentina,31,coal,0.000225703,1977,EJ
+Argentina,31,coal,0.000224942,1978,EJ
+Argentina,31,coal,0.000231181,1979,EJ
+Argentina,31,coal,0.000251722,1980,EJ
+Argentina,31,coal,0.000238825,1981,EJ
+Argentina,31,coal,0.00019781,1982,EJ
+Argentina,31,coal,0.000207797,1983,EJ
+Argentina,31,coal,0.000241568,1984,EJ
+Argentina,31,coal,0.000226553,1985,EJ
+Argentina,31,coal,0.000231629,1986,EJ
+Argentina,31,coal,0.00025055,1987,EJ
+Argentina,31,coal,0.000258381,1988,EJ
+Argentina,31,coal,0.000277165,1989,EJ
 Argentina,31,coal,0.000290755,1990,EJ
 Argentina,31,coal,0.000275665,1991,EJ
 Argentina,31,coal,0.000276165,1992,EJ
@@ -1018,6 +1363,21 @@ Argentina,31,coal,0.005416,2011,EJ
 Argentina,31,coal,0.00607154,2013,EJ
 Argentina,31,coal,0.008214263,2014,EJ
 Argentina,31,coal,0.008956625,2015,EJ
+USA,1,electricity,0.16506572,1975,EJ
+USA,1,electricity,0.170203764,1976,EJ
+USA,1,electricity,0.188745677,1977,EJ
+USA,1,electricity,0.194007397,1978,EJ
+USA,1,electricity,0.200319824,1979,EJ
+USA,1,electricity,0.214015091,1980,EJ
+USA,1,electricity,0.208734635,1981,EJ
+USA,1,electricity,0.17816236,1982,EJ
+USA,1,electricity,0.183926045,1983,EJ
+USA,1,electricity,0.211466738,1984,EJ
+USA,1,electricity,0.203591212,1985,EJ
+USA,1,electricity,0.202808986,1986,EJ
+USA,1,electricity,0.214062806,1987,EJ
+USA,1,electricity,0.229180445,1988,EJ
+USA,1,electricity,0.238724472,1989,EJ
 USA,1,electricity,0.240858667,1990,EJ
 USA,1,electricity,0.242447521,1991,EJ
 USA,1,electricity,0.236081969,1992,EJ
@@ -1044,6 +1404,21 @@ USA,1,electricity,0.104006939,2012,EJ
 USA,1,electricity,0.097468508,2013,EJ
 USA,1,electricity,0.078154412,2014,EJ
 USA,1,electricity,0.08657454,2015,EJ
+Africa_Northern,3,electricity,0.007030189,1975,EJ
+Africa_Northern,3,electricity,0.00724698,1976,EJ
+Africa_Northern,3,electricity,0.008037097,1977,EJ
+Africa_Northern,3,electricity,0.008255322,1978,EJ
+Africa_Northern,3,electricity,0.008523033,1979,EJ
+Africa_Northern,3,electricity,0.009109641,1980,EJ
+Africa_Northern,3,electricity,0.008879351,1981,EJ
+Africa_Northern,3,electricity,0.007573852,1982,EJ
+Africa_Northern,3,electricity,0.007821836,1983,EJ
+Africa_Northern,3,electricity,0.008995255,1984,EJ
+Africa_Northern,3,electricity,0.008655278,1985,EJ
+Africa_Northern,3,electricity,0.008626937,1986,EJ
+Africa_Northern,3,electricity,0.009110657,1987,EJ
+Africa_Northern,3,electricity,0.009745924,1988,EJ
+Africa_Northern,3,electricity,0.010158415,1989,EJ
 Africa_Northern,3,electricity,0.010258412,1990,EJ
 Africa_Northern,3,electricity,0.010279641,1991,EJ
 Africa_Northern,3,electricity,0.010129655,1992,EJ
@@ -1086,6 +1461,21 @@ Africa_Southern,4,electricity,0.024678818,2012,EJ
 Africa_Southern,4,electricity,0.026006067,2013,EJ
 Africa_Southern,4,electricity,0.023969956,2014,EJ
 Africa_Southern,4,electricity,0.02822624,2015,EJ
+Africa_Western,5,electricity,0.010486371,1975,EJ
+Africa_Western,5,electricity,0.010809741,1976,EJ
+Africa_Western,5,electricity,0.011988295,1977,EJ
+Africa_Western,5,electricity,0.012313804,1978,EJ
+Africa_Western,5,electricity,0.012713127,1979,EJ
+Africa_Western,5,electricity,0.013588123,1980,EJ
+Africa_Western,5,electricity,0.013244619,1981,EJ
+Africa_Western,5,electricity,0.01129731,1982,EJ
+Africa_Western,5,electricity,0.011667208,1983,EJ
+Africa_Western,5,electricity,0.013417504,1984,EJ
+Africa_Western,5,electricity,0.012910387,1985,EJ
+Africa_Western,5,electricity,0.012868112,1986,EJ
+Africa_Western,5,electricity,0.013589639,1987,EJ
+Africa_Western,5,electricity,0.014537217,1988,EJ
+Africa_Western,5,electricity,0.015152496,1989,EJ
 Africa_Western,5,electricity,0.015301654,1990,EJ
 Africa_Western,5,electricity,0.014899704,1991,EJ
 Africa_Western,5,electricity,0.014909942,1992,EJ
@@ -1112,6 +1502,21 @@ Africa_Western,5,electricity,0.005075785,2012,EJ
 Africa_Western,5,electricity,0.005201213,2013,EJ
 Africa_Western,5,electricity,0.005538032,2014,EJ
 Africa_Western,5,electricity,0.005311389,2015,EJ
+Australia_NZ,6,electricity,0.062424791,1975,EJ
+Australia_NZ,6,electricity,0.064302075,1976,EJ
+Australia_NZ,6,electricity,0.07132759,1977,EJ
+Australia_NZ,6,electricity,0.073127912,1978,EJ
+Australia_NZ,6,electricity,0.075478458,1979,EJ
+Australia_NZ,6,electricity,0.080765019,1980,EJ
+Australia_NZ,6,electricity,0.078593956,1981,EJ
+Australia_NZ,6,electricity,0.066921735,1982,EJ
+Australia_NZ,6,electricity,0.069182388,1983,EJ
+Australia_NZ,6,electricity,0.07961244,1984,EJ
+Australia_NZ,6,electricity,0.076486977,1985,EJ
+Australia_NZ,6,electricity,0.076351704,1986,EJ
+Australia_NZ,6,electricity,0.080750268,1987,EJ
+Australia_NZ,6,electricity,0.086189997,1988,EJ
+Australia_NZ,6,electricity,0.089993297,1989,EJ
 Australia_NZ,6,electricity,0.0910942,1990,EJ
 Australia_NZ,6,electricity,0.09239,1991,EJ
 Australia_NZ,6,electricity,0.0903596,1992,EJ
@@ -1138,6 +1543,21 @@ Australia_NZ,6,electricity,0.113616,2012,EJ
 Australia_NZ,6,electricity,0.091003,2013,EJ
 Australia_NZ,6,electricity,0.1191994,2014,EJ
 Australia_NZ,6,electricity,0.1131268,2015,EJ
+Brazil,7,electricity,0.039229298,1975,EJ
+Brazil,7,electricity,0.040423495,1976,EJ
+Brazil,7,electricity,0.044835581,1977,EJ
+Brazil,7,electricity,0.046008602,1978,EJ
+Brazil,7,electricity,0.047493808,1979,EJ
+Brazil,7,electricity,0.050792444,1980,EJ
+Brazil,7,electricity,0.049466349,1981,EJ
+Brazil,7,electricity,0.042155483,1982,EJ
+Brazil,7,electricity,0.04355835,1983,EJ
+Brazil,7,electricity,0.050109631,1984,EJ
+Brazil,7,electricity,0.048177832,1985,EJ
+Brazil,7,electricity,0.048057544,1986,EJ
+Brazil,7,electricity,0.050790381,1987,EJ
+Brazil,7,electricity,0.054269817,1988,EJ
+Brazil,7,electricity,0.056617292,1989,EJ
 Brazil,7,electricity,0.057244569,1990,EJ
 Brazil,7,electricity,0.069433233,1991,EJ
 Brazil,7,electricity,0.070911346,1992,EJ
@@ -1164,6 +1584,21 @@ Brazil,7,electricity,0.0801288,2012,EJ
 Brazil,7,electricity,0.068927874,2013,EJ
 Brazil,7,electricity,0.049853311,2014,EJ
 Brazil,7,electricity,0.04520888,2015,EJ
+Canada,8,electricity,0.063897723,1975,EJ
+Canada,8,electricity,0.065886684,1976,EJ
+Canada,8,electricity,0.073064347,1977,EJ
+Canada,8,electricity,0.075101184,1978,EJ
+Canada,8,electricity,0.077544754,1979,EJ
+Canada,8,electricity,0.082846257,1980,EJ
+Canada,8,electricity,0.080802167,1981,EJ
+Canada,8,electricity,0.068967494,1982,EJ
+Canada,8,electricity,0.071198645,1983,EJ
+Canada,8,electricity,0.081859777,1984,EJ
+Canada,8,electricity,0.078811124,1985,EJ
+Canada,8,electricity,0.07850832,1986,EJ
+Canada,8,electricity,0.082864727,1987,EJ
+Canada,8,electricity,0.088716837,1988,EJ
+Canada,8,electricity,0.092411375,1989,EJ
 Canada,8,electricity,0.093237533,1990,EJ
 Canada,8,electricity,0.107192279,1991,EJ
 Canada,8,electricity,0.115179031,1992,EJ
@@ -1256,6 +1691,21 @@ EU-12,12,electricity,0.02770603,2012,EJ
 EU-12,12,electricity,0.028089393,2013,EJ
 EU-12,12,electricity,0.029932828,2014,EJ
 EU-12,12,electricity,0.031916954,2015,EJ
+EU-15,13,electricity,0.094249557,1975,EJ
+EU-15,13,electricity,0.097146677,1976,EJ
+EU-15,13,electricity,0.107741177,1977,EJ
+EU-15,13,electricity,0.110640099,1978,EJ
+EU-15,13,electricity,0.114223972,1979,EJ
+EU-15,13,electricity,0.122103379,1980,EJ
+EU-15,13,electricity,0.118991512,1981,EJ
+EU-15,13,electricity,0.101473919,1982,EJ
+EU-15,13,electricity,0.104809891,1983,EJ
+EU-15,13,electricity,0.120543292,1984,EJ
+EU-15,13,electricity,0.115964707,1985,EJ
+EU-15,13,electricity,0.11560736,1986,EJ
+EU-15,13,electricity,0.122112384,1987,EJ
+EU-15,13,electricity,0.130589962,1988,EJ
+EU-15,13,electricity,0.136147282,1989,EJ
 EU-15,13,electricity,0.137529261,1990,EJ
 EU-15,13,electricity,0.135024395,1991,EJ
 EU-15,13,electricity,0.0674804,1992,EJ
@@ -1298,6 +1748,21 @@ Europe_Eastern,14,electricity,0.006442555,2008,EJ
 Europe_Eastern,14,electricity,0.002749761,2009,EJ
 Europe_Eastern,14,electricity,0.00136872,2010,EJ
 Europe_Eastern,14,electricity,0.000331457,2011,EJ
+Europe_Non_EU,15,electricity,0.003537891,1975,EJ
+Europe_Non_EU,15,electricity,0.003647366,1976,EJ
+Europe_Non_EU,15,electricity,0.00404491,1977,EJ
+Europe_Non_EU,15,electricity,0.004155813,1978,EJ
+Europe_Non_EU,15,electricity,0.004290747,1979,EJ
+Europe_Non_EU,15,electricity,0.00458534,1980,EJ
+Europe_Non_EU,15,electricity,0.004470443,1981,EJ
+Europe_Non_EU,15,electricity,0.00381409,1982,EJ
+Europe_Non_EU,15,electricity,0.003938424,1983,EJ
+Europe_Non_EU,15,electricity,0.004528855,1984,EJ
+Europe_Non_EU,15,electricity,0.004358604,1985,EJ
+Europe_Non_EU,15,electricity,0.004343425,1986,EJ
+Europe_Non_EU,15,electricity,0.004586039,1987,EJ
+Europe_Non_EU,15,electricity,0.004907318,1988,EJ
+Europe_Non_EU,15,electricity,0.005113792,1989,EJ
 Europe_Non_EU,15,electricity,0.005162437,1990,EJ
 Europe_Non_EU,15,electricity,0.004699187,1991,EJ
 Europe_Non_EU,15,electricity,0.007538498,1992,EJ
@@ -1324,6 +1789,21 @@ Europe_Non_EU,15,electricity,0.011330156,2012,EJ
 Europe_Non_EU,15,electricity,0.007765655,2013,EJ
 Europe_Non_EU,15,electricity,0.009729626,2014,EJ
 Europe_Non_EU,15,electricity,0.009436793,2015,EJ
+European Free Trade Association,16,electricity,0.037108453,1975,EJ
+European Free Trade Association,16,electricity,0.038249123,1976,EJ
+European Free Trade Association,16,electricity,0.042420448,1977,EJ
+European Free Trade Association,16,electricity,0.043561827,1978,EJ
+European Free Trade Association,16,electricity,0.04497289,1979,EJ
+European Free Trade Association,16,electricity,0.048075213,1980,EJ
+European Free Trade Association,16,electricity,0.046849991,1981,EJ
+European Free Trade Association,16,electricity,0.039952869,1982,EJ
+European Free Trade Association,16,electricity,0.041266326,1983,EJ
+European Free Trade Association,16,electricity,0.047460967,1984,EJ
+European Free Trade Association,16,electricity,0.045658261,1985,EJ
+European Free Trade Association,16,electricity,0.045517565,1986,EJ
+European Free Trade Association,16,electricity,0.048078758,1987,EJ
+European Free Trade Association,16,electricity,0.051416597,1988,EJ
+European Free Trade Association,16,electricity,0.053604656,1989,EJ
 European Free Trade Association,16,electricity,0.054148776,1990,EJ
 European Free Trade Association,16,electricity,0.055034696,1991,EJ
 European Free Trade Association,16,electricity,0.028198117,1992,EJ
@@ -1350,6 +1830,21 @@ European Free Trade Association,16,electricity,0.105207303,2012,EJ
 European Free Trade Association,16,electricity,0.106660729,2013,EJ
 European Free Trade Association,16,electricity,0.114016864,2014,EJ
 European Free Trade Association,16,electricity,0.119009492,2015,EJ
+India,17,electricity,0.025113228,1975,EJ
+India,17,electricity,0.025890318,1976,EJ
+India,17,electricity,0.028712232,1977,EJ
+India,17,electricity,0.029499463,1978,EJ
+India,17,electricity,0.030457267,1979,EJ
+India,17,electricity,0.032548397,1980,EJ
+India,17,electricity,0.031732817,1981,EJ
+India,17,electricity,0.02707379,1982,EJ
+India,17,electricity,0.027956356,1983,EJ
+India,17,electricity,0.032147448,1984,EJ
+India,17,electricity,0.030938945,1985,EJ
+India,17,electricity,0.030831195,1986,EJ
+India,17,electricity,0.032553357,1987,EJ
+India,17,electricity,0.03483391,1988,EJ
+India,17,electricity,0.036299543,1989,EJ
 India,17,electricity,0.036644842,1990,EJ
 India,17,electricity,0.042292682,1991,EJ
 India,17,electricity,0.031677405,1992,EJ
@@ -1376,6 +1871,21 @@ India,17,electricity,0.018335945,2012,EJ
 India,17,electricity,0.026708701,2013,EJ
 India,17,electricity,0.034390373,2014,EJ
 India,17,electricity,0.074620456,2015,EJ
+Indonesia,18,electricity,0.010787668,1975,EJ
+Indonesia,18,electricity,0.011121476,1976,EJ
+Indonesia,18,electricity,0.012333661,1977,EJ
+Indonesia,18,electricity,0.012671825,1978,EJ
+Indonesia,18,electricity,0.01308326,1979,EJ
+Indonesia,18,electricity,0.013981529,1980,EJ
+Indonesia,18,electricity,0.013631187,1981,EJ
+Indonesia,18,electricity,0.01162985,1982,EJ
+Indonesia,18,electricity,0.012008966,1983,EJ
+Indonesia,18,electricity,0.013809296,1984,EJ
+Indonesia,18,electricity,0.013290171,1985,EJ
+Indonesia,18,electricity,0.013243885,1986,EJ
+Indonesia,18,electricity,0.013983659,1987,EJ
+Indonesia,18,electricity,0.014963296,1988,EJ
+Indonesia,18,electricity,0.015592875,1989,EJ
 Indonesia,18,electricity,0.015741202,1990,EJ
 Indonesia,18,electricity,0.015691928,1991,EJ
 Indonesia,18,electricity,0.011184063,1992,EJ
@@ -1402,6 +1912,21 @@ Indonesia,18,electricity,0.002674891,2012,EJ
 Indonesia,18,electricity,0.003999248,2013,EJ
 Indonesia,18,electricity,0.003742325,2014,EJ
 Indonesia,18,electricity,0.005323243,2015,EJ
+Japan,19,electricity,0.001971939,1975,EJ
+Japan,19,electricity,0.002032958,1976,EJ
+Japan,19,electricity,0.00225454,1977,EJ
+Japan,19,electricity,0.002316355,1978,EJ
+Japan,19,electricity,0.002391564,1979,EJ
+Japan,19,electricity,0.002555763,1980,EJ
+Japan,19,electricity,0.002491722,1981,EJ
+Japan,19,electricity,0.002125886,1982,EJ
+Japan,19,electricity,0.002195187,1983,EJ
+Japan,19,electricity,0.00252428,1984,EJ
+Japan,19,electricity,0.002429386,1985,EJ
+Japan,19,electricity,0.002420925,1986,EJ
+Japan,19,electricity,0.002556153,1987,EJ
+Japan,19,electricity,0.002735226,1988,EJ
+Japan,19,electricity,0.002850311,1989,EJ
 Japan,19,electricity,0.002877424,1990,EJ
 Japan,19,electricity,0.00268525,1991,EJ
 Japan,19,electricity,0.001228308,1992,EJ
@@ -1426,7 +1951,22 @@ Japan,19,electricity,0.002035834,2010,EJ
 Japan,19,electricity,0.002489994,2011,EJ
 Japan,19,electricity,0.000280432,2012,EJ
 Japan,19,electricity,0.000454816,2013,EJ
-Japan,19,electricity,1.77361E-05,2014,EJ
+Japan,19,electricity,1.77E-05,2014,EJ
+Mexico,20,electricity,0.002865298,1975,EJ
+Mexico,20,electricity,0.002952522,1976,EJ
+Mexico,20,electricity,0.003274779,1977,EJ
+Mexico,20,electricity,0.003360456,1978,EJ
+Mexico,20,electricity,0.003468935,1979,EJ
+Mexico,20,electricity,0.003709867,1980,EJ
+Mexico,20,electricity,0.003613009,1981,EJ
+Mexico,20,electricity,0.003079026,1982,EJ
+Mexico,20,electricity,0.003181491,1983,EJ
+Mexico,20,electricity,0.003659994,1984,EJ
+Mexico,20,electricity,0.003518896,1985,EJ
+Mexico,20,electricity,0.003510111,1986,EJ
+Mexico,20,electricity,0.003709716,1987,EJ
+Mexico,20,electricity,0.003963853,1988,EJ
+Mexico,20,electricity,0.004135312,1989,EJ
 Mexico,20,electricity,0.004181129,1990,EJ
 Mexico,20,electricity,0.003106224,1991,EJ
 Mexico,20,electricity,0.00147732,1992,EJ
@@ -1439,6 +1979,21 @@ Mexico,20,electricity,0.003469896,1999,EJ
 Mexico,20,electricity,0.003489668,2000,EJ
 Mexico,20,electricity,0.003246111,2001,EJ
 Mexico,20,electricity,0.002111349,2002,EJ
+Middle East,21,electricity,0.003479893,1975,EJ
+Middle East,21,electricity,0.003587573,1976,EJ
+Middle East,21,electricity,0.0039786,1977,EJ
+Middle East,21,electricity,0.004087685,1978,EJ
+Middle East,21,electricity,0.004220407,1979,EJ
+Middle East,21,electricity,0.004510171,1980,EJ
+Middle East,21,electricity,0.004397157,1981,EJ
+Middle East,21,electricity,0.003751564,1982,EJ
+Middle East,21,electricity,0.00387386,1983,EJ
+Middle East,21,electricity,0.004454612,1984,EJ
+Middle East,21,electricity,0.004287152,1985,EJ
+Middle East,21,electricity,0.004272221,1986,EJ
+Middle East,21,electricity,0.004510858,1987,EJ
+Middle East,21,electricity,0.00482687,1988,EJ
+Middle East,21,electricity,0.00502996,1989,EJ
 Middle East,21,electricity,0.005077807,1990,EJ
 Middle East,21,electricity,0.006713124,1991,EJ
 Middle East,21,electricity,0.005947594,1992,EJ
@@ -1485,6 +2040,21 @@ Russia,23,electricity,0.217327611,2012,EJ
 Russia,23,electricity,0.203112261,2013,EJ
 Russia,23,electricity,0.17959697,2014,EJ
 Russia,23,electricity,0.199707321,2015,EJ
+South Africa,24,electricity,0.006244693,1975,EJ
+South Africa,24,electricity,0.006437262,1976,EJ
+South Africa,24,electricity,0.007139097,1977,EJ
+South Africa,24,electricity,0.00733294,1978,EJ
+South Africa,24,electricity,0.007570739,1979,EJ
+South Africa,24,electricity,0.008091804,1980,EJ
+South Africa,24,electricity,0.007887245,1981,EJ
+South Africa,24,electricity,0.006727611,1982,EJ
+South Africa,24,electricity,0.006947888,1983,EJ
+South Africa,24,electricity,0.007990199,1984,EJ
+South Africa,24,electricity,0.007688208,1985,EJ
+South Africa,24,electricity,0.007663033,1986,EJ
+South Africa,24,electricity,0.008092706,1987,EJ
+South Africa,24,electricity,0.008656994,1988,EJ
+South Africa,24,electricity,0.009023396,1989,EJ
 South Africa,24,electricity,0.009112221,1990,EJ
 South Africa,24,electricity,0.009759884,1991,EJ
 South Africa,24,electricity,0.009845114,1992,EJ
@@ -1511,6 +2081,21 @@ South Africa,24,electricity,0.029098252,2012,EJ
 South Africa,24,electricity,0.037503486,2013,EJ
 South Africa,24,electricity,0.031494915,2014,EJ
 South Africa,24,electricity,0.035156338,2015,EJ
+South America_Northern,25,electricity,0.026209048,1975,EJ
+South America_Northern,25,electricity,0.02700689,1976,EJ
+South America_Northern,25,electricity,0.029954598,1977,EJ
+South America_Northern,25,electricity,0.030738293,1978,EJ
+South America_Northern,25,electricity,0.031730557,1979,EJ
+South America_Northern,25,electricity,0.033934372,1980,EJ
+South America_Northern,25,electricity,0.033048409,1981,EJ
+South America_Northern,25,electricity,0.028164029,1982,EJ
+South America_Northern,25,electricity,0.029101282,1983,EJ
+South America_Northern,25,electricity,0.033478185,1984,EJ
+South America_Northern,25,electricity,0.032187553,1985,EJ
+South America_Northern,25,electricity,0.032107188,1986,EJ
+South America_Northern,25,electricity,0.033932994,1987,EJ
+South America_Northern,25,electricity,0.0362576,1988,EJ
+South America_Northern,25,electricity,0.037825946,1989,EJ
 South America_Northern,25,electricity,0.038245029,1990,EJ
 South America_Northern,25,electricity,0.038370997,1991,EJ
 South America_Northern,25,electricity,0.035042024,1992,EJ
@@ -1543,6 +2128,21 @@ Southeast Asia,29,electricity,0.001294302,2012,EJ
 Southeast Asia,29,electricity,0.004563847,2013,EJ
 Southeast Asia,29,electricity,0.007094455,2014,EJ
 Southeast Asia,29,electricity,0.012674387,2015,EJ
+Argentina,31,electricity,0.006994698,1975,EJ
+Argentina,31,electricity,0.007207626,1976,EJ
+Argentina,31,electricity,0.007994314,1977,EJ
+Argentina,31,electricity,0.008203467,1978,EJ
+Argentina,31,electricity,0.008468284,1979,EJ
+Argentina,31,electricity,0.00905644,1980,EJ
+Argentina,31,electricity,0.008819994,1981,EJ
+Argentina,31,electricity,0.007516445,1982,EJ
+Argentina,31,electricity,0.00776658,1983,EJ
+Argentina,31,electricity,0.008934692,1984,EJ
+Argentina,31,electricity,0.008590247,1985,EJ
+Argentina,31,electricity,0.008568799,1986,EJ
+Argentina,31,electricity,0.009056072,1987,EJ
+Argentina,31,electricity,0.009676466,1988,EJ
+Argentina,31,electricity,0.010095027,1989,EJ
 Argentina,31,electricity,0.010206873,1990,EJ
 Argentina,31,electricity,0.010049547,1991,EJ
 Argentina,31,electricity,0.00975031,1992,EJ
@@ -1569,6 +2169,21 @@ Argentina,31,electricity,0.0230454,2012,EJ
 Argentina,31,electricity,0.023257872,2013,EJ
 Argentina,31,electricity,0.022905575,2014,EJ
 Argentina,31,electricity,0.025356794,2015,EJ
+USA,1,gas,0.033387693,1975,EJ
+USA,1,gas,0.034013061,1976,EJ
+USA,1,gas,0.037847194,1977,EJ
+USA,1,gas,0.037719596,1978,EJ
+USA,1,gas,0.038765675,1979,EJ
+USA,1,gas,0.042210236,1980,EJ
+USA,1,gas,0.04004755,1981,EJ
+USA,1,gas,0.033169872,1982,EJ
+USA,1,gas,0.034844561,1983,EJ
+USA,1,gas,0.040507454,1984,EJ
+USA,1,gas,0.037989674,1985,EJ
+USA,1,gas,0.038840918,1986,EJ
+USA,1,gas,0.042013682,1987,EJ
+USA,1,gas,0.043326843,1988,EJ
+USA,1,gas,0.046476621,1989,EJ
 USA,1,gas,0.048755511,1990,EJ
 USA,1,gas,0.047025027,1991,EJ
 USA,1,gas,0.043026398,1992,EJ
@@ -1594,10 +2209,10 @@ USA,1,gas,0.01788182,2013,EJ
 USA,1,gas,0.018860911,2014,EJ
 USA,1,gas,0.012688698,2015,EJ
 Africa_Northern,3,gas,0,1990,EJ
-Africa_Northern,3,gas,1.82377E-06,1991,EJ
+Africa_Northern,3,gas,1.82E-06,1991,EJ
 Africa_Northern,3,gas,0,1992,EJ
 Africa_Northern,3,gas,0,1993,EJ
-Africa_Northern,3,gas,1.91592E-05,1994,EJ
+Africa_Northern,3,gas,1.92E-05,1994,EJ
 Africa_Northern,3,gas,0,1995,EJ
 Africa_Northern,3,gas,0,1996,EJ
 Africa_Northern,3,gas,0,1997,EJ
@@ -1608,34 +2223,34 @@ Africa_Northern,3,gas,0,2001,EJ
 Africa_Northern,3,gas,0,2003,EJ
 Africa_Northern,3,gas,0,2004,EJ
 Africa_Northern,3,gas,0,2005,EJ
-Africa_Northern,3,gas,1.36392E-06,2006,EJ
-Africa_Northern,3,gas,5.37767E-05,2007,EJ
-Africa_Northern,3,gas,3.19395E-06,2008,EJ
-Africa_Northern,3,gas,2.68911E-06,2009,EJ
-Africa_Northern,3,gas,3.50658E-05,2010,EJ
-Africa_Northern,3,gas,3.30829E-05,2011,EJ
-Africa_Northern,3,gas,2.49677E-05,2013,EJ
-Africa_Northern,3,gas,2.13905E-05,2014,EJ
-Africa_Northern,3,gas,2.83491E-05,2015,EJ
+Africa_Northern,3,gas,1.36E-06,2006,EJ
+Africa_Northern,3,gas,5.38E-05,2007,EJ
+Africa_Northern,3,gas,3.19E-06,2008,EJ
+Africa_Northern,3,gas,2.69E-06,2009,EJ
+Africa_Northern,3,gas,3.51E-05,2010,EJ
+Africa_Northern,3,gas,3.31E-05,2011,EJ
+Africa_Northern,3,gas,2.50E-05,2013,EJ
+Africa_Northern,3,gas,2.14E-05,2014,EJ
+Africa_Northern,3,gas,2.83E-05,2015,EJ
 Africa_Southern,4,gas,0,2000,EJ
 Africa_Southern,4,gas,0,2001,EJ
 Africa_Southern,4,gas,0,2003,EJ
 Africa_Southern,4,gas,0,2004,EJ
 Africa_Southern,4,gas,0,2005,EJ
-Africa_Southern,4,gas,3.05258E-06,2006,EJ
+Africa_Southern,4,gas,3.05E-06,2006,EJ
 Africa_Southern,4,gas,0.000117558,2007,EJ
-Africa_Southern,4,gas,6.58446E-06,2008,EJ
-Africa_Southern,4,gas,5.53044E-06,2009,EJ
-Africa_Southern,4,gas,7.34273E-05,2010,EJ
-Africa_Southern,4,gas,7.01608E-05,2011,EJ
-Africa_Southern,4,gas,4.44738E-05,2013,EJ
-Africa_Southern,4,gas,4.0428E-05,2014,EJ
-Africa_Southern,4,gas,5.27293E-05,2015,EJ
+Africa_Southern,4,gas,6.58E-06,2008,EJ
+Africa_Southern,4,gas,5.53E-06,2009,EJ
+Africa_Southern,4,gas,7.34E-05,2010,EJ
+Africa_Southern,4,gas,7.02E-05,2011,EJ
+Africa_Southern,4,gas,4.45E-05,2013,EJ
+Africa_Southern,4,gas,4.04E-05,2014,EJ
+Africa_Southern,4,gas,5.27E-05,2015,EJ
 Africa_Western,5,gas,0,1990,EJ
-Africa_Western,5,gas,2.64344E-06,1991,EJ
+Africa_Western,5,gas,2.64E-06,1991,EJ
 Africa_Western,5,gas,0,1992,EJ
 Africa_Western,5,gas,0,1993,EJ
-Africa_Western,5,gas,2.34395E-05,1994,EJ
+Africa_Western,5,gas,2.34E-05,1994,EJ
 Africa_Western,5,gas,0,1995,EJ
 Africa_Western,5,gas,0,1996,EJ
 Africa_Western,5,gas,0,1997,EJ
@@ -1646,15 +2261,30 @@ Africa_Western,5,gas,0,2001,EJ
 Africa_Western,5,gas,0,2003,EJ
 Africa_Western,5,gas,0,2004,EJ
 Africa_Western,5,gas,0,2005,EJ
-Africa_Western,5,gas,5.19588E-07,2006,EJ
-Africa_Western,5,gas,1.8134E-05,2007,EJ
-Africa_Western,5,gas,1.25301E-06,2008,EJ
-Africa_Western,5,gas,8.72694E-07,2009,EJ
-Africa_Western,5,gas,1.27872E-05,2010,EJ
-Africa_Western,5,gas,1.52306E-05,2011,EJ
-Africa_Western,5,gas,8.89476E-06,2013,EJ
-Africa_Western,5,gas,9.34051E-06,2014,EJ
-Africa_Western,5,gas,9.92218E-06,2015,EJ
+Africa_Western,5,gas,5.20E-07,2006,EJ
+Africa_Western,5,gas,1.81E-05,2007,EJ
+Africa_Western,5,gas,1.25E-06,2008,EJ
+Africa_Western,5,gas,8.73E-07,2009,EJ
+Africa_Western,5,gas,1.28E-05,2010,EJ
+Africa_Western,5,gas,1.52E-05,2011,EJ
+Africa_Western,5,gas,8.89E-06,2013,EJ
+Africa_Western,5,gas,9.34E-06,2014,EJ
+Africa_Western,5,gas,9.92E-06,2015,EJ
+Australia_NZ,6,gas,0.050010138,1975,EJ
+Australia_NZ,6,gas,0.050946854,1976,EJ
+Australia_NZ,6,gas,0.056689854,1977,EJ
+Australia_NZ,6,gas,0.056498729,1978,EJ
+Australia_NZ,6,gas,0.058065611,1979,EJ
+Australia_NZ,6,gas,0.063225085,1980,EJ
+Australia_NZ,6,gas,0.059985682,1981,EJ
+Australia_NZ,6,gas,0.049683873,1982,EJ
+Australia_NZ,6,gas,0.052192325,1983,EJ
+Australia_NZ,6,gas,0.060674554,1984,EJ
+Australia_NZ,6,gas,0.056903268,1985,EJ
+Australia_NZ,6,gas,0.058178314,1986,EJ
+Australia_NZ,6,gas,0.062930675,1987,EJ
+Australia_NZ,6,gas,0.064897608,1988,EJ
+Australia_NZ,6,gas,0.06961554,1989,EJ
 Australia_NZ,6,gas,0.073029,1990,EJ
 Australia_NZ,6,gas,0.083355,1991,EJ
 Australia_NZ,6,gas,0.082964,1992,EJ
@@ -1679,6 +2309,21 @@ Australia_NZ,6,gas,0.115447,2011,EJ
 Australia_NZ,6,gas,0.124471,2013,EJ
 Australia_NZ,6,gas,0.126981,2014,EJ
 Australia_NZ,6,gas,0.125744,2015,EJ
+Brazil,7,gas,0.005010472,1975,EJ
+Brazil,7,gas,0.005104321,1976,EJ
+Brazil,7,gas,0.005679707,1977,EJ
+Brazil,7,gas,0.005660558,1978,EJ
+Brazil,7,gas,0.005817543,1979,EJ
+Brazil,7,gas,0.006334466,1980,EJ
+Brazil,7,gas,0.006009913,1981,EJ
+Brazil,7,gas,0.004977784,1982,EJ
+Brazil,7,gas,0.005229104,1983,EJ
+Brazil,7,gas,0.006078931,1984,EJ
+Brazil,7,gas,0.005701089,1985,EJ
+Brazil,7,gas,0.005828834,1986,EJ
+Brazil,7,gas,0.006304969,1987,EJ
+Brazil,7,gas,0.006502035,1988,EJ
+Brazil,7,gas,0.00697472,1989,EJ
 Brazil,7,gas,0.007316712,1990,EJ
 Brazil,7,gas,0.008587885,1991,EJ
 Brazil,7,gas,0.007942511,1992,EJ
@@ -1703,6 +2348,21 @@ Brazil,7,gas,0.01421839,2011,EJ
 Brazil,7,gas,0.005839741,2013,EJ
 Brazil,7,gas,0.004889855,2014,EJ
 Brazil,7,gas,0.004334045,2015,EJ
+Canada,8,gas,0.012924534,1975,EJ
+Canada,8,gas,0.013166617,1976,EJ
+Canada,8,gas,0.014650828,1977,EJ
+Canada,8,gas,0.014601435,1978,EJ
+Canada,8,gas,0.015006377,1979,EJ
+Canada,8,gas,0.016339783,1980,EJ
+Canada,8,gas,0.015502597,1981,EJ
+Canada,8,gas,0.012840215,1982,EJ
+Canada,8,gas,0.013488495,1983,EJ
+Canada,8,gas,0.015680628,1984,EJ
+Canada,8,gas,0.014705983,1985,EJ
+Canada,8,gas,0.015035504,1986,EJ
+Canada,8,gas,0.016263696,1987,EJ
+Canada,8,gas,0.016772026,1988,EJ
+Canada,8,gas,0.017991321,1989,EJ
 Canada,8,gas,0.018873489,1990,EJ
 Canada,8,gas,0.020790973,1991,EJ
 Canada,8,gas,0.020991602,1992,EJ
@@ -1729,7 +2389,7 @@ Canada,8,gas,0.031523089,2014,EJ
 Canada,8,gas,0.022983302,2015,EJ
 Central Asia,10,gas,0,1992,EJ
 Central Asia,10,gas,0,1993,EJ
-Central Asia,10,gas,2.54777E-05,1994,EJ
+Central Asia,10,gas,2.55E-05,1994,EJ
 Central Asia,10,gas,0,1995,EJ
 Central Asia,10,gas,0,1996,EJ
 Central Asia,10,gas,0,1997,EJ
@@ -1740,15 +2400,15 @@ Central Asia,10,gas,0,2001,EJ
 Central Asia,10,gas,0,2003,EJ
 Central Asia,10,gas,0,2004,EJ
 Central Asia,10,gas,0,2005,EJ
-Central Asia,10,gas,2.41392E-06,2006,EJ
-Central Asia,10,gas,9.79653E-05,2007,EJ
-Central Asia,10,gas,6.22821E-06,2008,EJ
-Central Asia,10,gas,4.93173E-06,2009,EJ
-Central Asia,10,gas,7.58001E-05,2010,EJ
-Central Asia,10,gas,6.82882E-05,2011,EJ
-Central Asia,10,gas,4.04946E-05,2013,EJ
-Central Asia,10,gas,2.73798E-05,2014,EJ
-Central Asia,10,gas,3.92162E-05,2015,EJ
+Central Asia,10,gas,2.41E-06,2006,EJ
+Central Asia,10,gas,9.80E-05,2007,EJ
+Central Asia,10,gas,6.23E-06,2008,EJ
+Central Asia,10,gas,4.93E-06,2009,EJ
+Central Asia,10,gas,7.58E-05,2010,EJ
+Central Asia,10,gas,6.83E-05,2011,EJ
+Central Asia,10,gas,4.05E-05,2013,EJ
+Central Asia,10,gas,2.74E-05,2014,EJ
+Central Asia,10,gas,3.92E-05,2015,EJ
 China,11,gas,0,1990,EJ
 China,11,gas,0,1991,EJ
 China,11,gas,0,1992,EJ
@@ -1769,12 +2429,12 @@ China,11,gas,0.081595,2011,EJ
 China,11,gas,0.09061,2013,EJ
 China,11,gas,0.09446,2014,EJ
 China,11,gas,0.093072,2015,EJ
-EU-12,12,gas,1.55914E-05,1996,EJ
-EU-12,12,gas,1.32272E-05,1997,EJ
-EU-12,12,gas,1.91922E-05,1998,EJ
-EU-12,12,gas,1.77906E-05,1999,EJ
-EU-12,12,gas,2.14236E-05,2000,EJ
-EU-12,12,gas,1.93819E-05,2001,EJ
+EU-12,12,gas,1.56E-05,1996,EJ
+EU-12,12,gas,1.32E-05,1997,EJ
+EU-12,12,gas,1.92E-05,1998,EJ
+EU-12,12,gas,1.78E-05,1999,EJ
+EU-12,12,gas,2.14E-05,2000,EJ
+EU-12,12,gas,1.94E-05,2001,EJ
 EU-12,12,gas,0.000201161,2003,EJ
 EU-12,12,gas,0.001173218,2004,EJ
 EU-12,12,gas,0.00025897,2005,EJ
@@ -1787,6 +2447,21 @@ EU-12,12,gas,0.003002992,2011,EJ
 EU-12,12,gas,0.003760711,2013,EJ
 EU-12,12,gas,0.004074138,2014,EJ
 EU-12,12,gas,0.004904513,2015,EJ
+EU-15,13,gas,0.00226435,1975,EJ
+EU-15,13,gas,0.002306762,1976,EJ
+EU-15,13,gas,0.002566793,1977,EJ
+EU-15,13,gas,0.002558139,1978,EJ
+EU-15,13,gas,0.002629084,1979,EJ
+EU-15,13,gas,0.002862694,1980,EJ
+EU-15,13,gas,0.00271602,1981,EJ
+EU-15,13,gas,0.002249577,1982,EJ
+EU-15,13,gas,0.002363154,1983,EJ
+EU-15,13,gas,0.002747211,1984,EJ
+EU-15,13,gas,0.002576456,1985,EJ
+EU-15,13,gas,0.002634187,1986,EJ
+EU-15,13,gas,0.002849363,1987,EJ
+EU-15,13,gas,0.002938422,1988,EJ
+EU-15,13,gas,0.003152039,1989,EJ
 EU-15,13,gas,0.003306593,1990,EJ
 EU-15,13,gas,0.004127741,1991,EJ
 EU-15,13,gas,0.002471227,1992,EJ
@@ -1796,7 +2471,7 @@ EU-15,13,gas,0.002081061,1995,EJ
 EU-15,13,gas,0.000119534,1996,EJ
 EU-15,13,gas,0.000101484,1997,EJ
 EU-15,13,gas,0.000101309,1998,EJ
-EU-15,13,gas,9.86281E-05,1999,EJ
+EU-15,13,gas,9.86E-05,1999,EJ
 EU-15,13,gas,0.000114685,2000,EJ
 EU-15,13,gas,0.00010582,2001,EJ
 EU-15,13,gas,0.001000371,2003,EJ
@@ -1811,34 +2486,34 @@ EU-15,13,gas,0.011655682,2011,EJ
 EU-15,13,gas,0.011078239,2013,EJ
 EU-15,13,gas,0.011622404,2014,EJ
 EU-15,13,gas,0.014591796,2015,EJ
-Europe_Eastern,14,gas,4.8723E-06,1996,EJ
-Europe_Eastern,14,gas,4.6067E-06,1997,EJ
-Europe_Eastern,14,gas,4.61476E-06,1998,EJ
-Europe_Eastern,14,gas,4.59758E-06,1999,EJ
-Europe_Eastern,14,gas,5.42428E-06,2000,EJ
-Europe_Eastern,14,gas,4.35272E-06,2001,EJ
-Europe_Eastern,14,gas,4.42711E-05,2003,EJ
+Europe_Eastern,14,gas,4.87E-06,1996,EJ
+Europe_Eastern,14,gas,4.61E-06,1997,EJ
+Europe_Eastern,14,gas,4.61E-06,1998,EJ
+Europe_Eastern,14,gas,4.60E-06,1999,EJ
+Europe_Eastern,14,gas,5.42E-06,2000,EJ
+Europe_Eastern,14,gas,4.35E-06,2001,EJ
+Europe_Eastern,14,gas,4.43E-05,2003,EJ
 Europe_Eastern,14,gas,0.000229366,2004,EJ
-Europe_Eastern,14,gas,4.7694E-05,2005,EJ
+Europe_Eastern,14,gas,4.77E-05,2005,EJ
 Europe_Eastern,14,gas,0.000815545,2006,EJ
 Europe_Eastern,14,gas,0.000631603,2007,EJ
 Europe_Eastern,14,gas,0.000578628,2008,EJ
 Europe_Eastern,14,gas,0.000590309,2009,EJ
 Europe_Eastern,14,gas,0.000146846,2010,EJ
-Europe_Eastern,14,gas,3.95875E-05,2011,EJ
+Europe_Eastern,14,gas,3.96E-05,2011,EJ
 Europe_Non_EU,15,gas,0,1990,EJ
-Europe_Non_EU,15,gas,5.7377E-07,1991,EJ
+Europe_Non_EU,15,gas,5.74E-07,1991,EJ
 Europe_Non_EU,15,gas,0.000136388,1992,EJ
 Europe_Non_EU,15,gas,0.000105526,1993,EJ
-Europe_Non_EU,15,gas,4.87563E-05,1994,EJ
-Europe_Non_EU,15,gas,5.48893E-05,1995,EJ
-Europe_Non_EU,15,gas,4.60162E-06,1996,EJ
-Europe_Non_EU,15,gas,5.24525E-06,1997,EJ
-Europe_Non_EU,15,gas,4.48537E-06,1998,EJ
-Europe_Non_EU,15,gas,6.2767E-06,1999,EJ
-Europe_Non_EU,15,gas,8.9797E-06,2000,EJ
-Europe_Non_EU,15,gas,8.66438E-06,2001,EJ
-Europe_Non_EU,15,gas,9.04838E-05,2003,EJ
+Europe_Non_EU,15,gas,4.88E-05,1994,EJ
+Europe_Non_EU,15,gas,5.49E-05,1995,EJ
+Europe_Non_EU,15,gas,4.60E-06,1996,EJ
+Europe_Non_EU,15,gas,5.25E-06,1997,EJ
+Europe_Non_EU,15,gas,4.49E-06,1998,EJ
+Europe_Non_EU,15,gas,6.28E-06,1999,EJ
+Europe_Non_EU,15,gas,8.98E-06,2000,EJ
+Europe_Non_EU,15,gas,8.66E-06,2001,EJ
+Europe_Non_EU,15,gas,9.05E-05,2003,EJ
 Europe_Non_EU,15,gas,0.000491209,2004,EJ
 Europe_Non_EU,15,gas,0.00010501,2005,EJ
 Europe_Non_EU,15,gas,0.001754106,2006,EJ
@@ -1850,18 +2525,33 @@ Europe_Non_EU,15,gas,0.001274914,2011,EJ
 Europe_Non_EU,15,gas,0.000954782,2013,EJ
 Europe_Non_EU,15,gas,0.00125401,2014,EJ
 Europe_Non_EU,15,gas,0.001230475,2015,EJ
+European Free Trade Association,16,gas,0.000891532,1975,EJ
+European Free Trade Association,16,gas,0.000908231,1976,EJ
+European Free Trade Association,16,gas,0.001010612,1977,EJ
+European Free Trade Association,16,gas,0.001007204,1978,EJ
+European Free Trade Association,16,gas,0.001035137,1979,EJ
+European Free Trade Association,16,gas,0.001127115,1980,EJ
+European Free Trade Association,16,gas,0.001069367,1981,EJ
+European Free Trade Association,16,gas,0.000885716,1982,EJ
+European Free Trade Association,16,gas,0.000930434,1983,EJ
+European Free Trade Association,16,gas,0.001081647,1984,EJ
+European Free Trade Association,16,gas,0.001014416,1985,EJ
+European Free Trade Association,16,gas,0.001037146,1986,EJ
+European Free Trade Association,16,gas,0.001121867,1987,EJ
+European Free Trade Association,16,gas,0.001156932,1988,EJ
+European Free Trade Association,16,gas,0.001241038,1989,EJ
 European Free Trade Association,16,gas,0.00130189,1990,EJ
 European Free Trade Association,16,gas,0.001682429,1991,EJ
 European Free Trade Association,16,gas,0.001032655,1992,EJ
 European Free Trade Association,16,gas,0.000954756,1993,EJ
 European Free Trade Association,16,gas,0.000971832,1994,EJ
 European Free Trade Association,16,gas,0.000916083,1995,EJ
-European Free Trade Association,16,gas,5.38119E-05,1996,EJ
-European Free Trade Association,16,gas,4.78914E-05,1997,EJ
-European Free Trade Association,16,gas,5.17974E-05,1998,EJ
-European Free Trade Association,16,gas,5.09332E-05,1999,EJ
-European Free Trade Association,16,gas,5.85732E-05,2000,EJ
-European Free Trade Association,16,gas,5.52713E-05,2001,EJ
+European Free Trade Association,16,gas,5.38E-05,1996,EJ
+European Free Trade Association,16,gas,4.79E-05,1997,EJ
+European Free Trade Association,16,gas,5.18E-05,1998,EJ
+European Free Trade Association,16,gas,5.09E-05,1999,EJ
+European Free Trade Association,16,gas,5.86E-05,2000,EJ
+European Free Trade Association,16,gas,5.53E-05,2001,EJ
 European Free Trade Association,16,gas,0.000591057,2003,EJ
 European Free Trade Association,16,gas,0.003324793,2004,EJ
 European Free Trade Association,16,gas,0.000706624,2005,EJ
@@ -1875,10 +2565,10 @@ European Free Trade Association,16,gas,0.01428013,2013,EJ
 European Free Trade Association,16,gas,0.015518761,2014,EJ
 European Free Trade Association,16,gas,0.018287573,2015,EJ
 India,17,gas,0,1990,EJ
-India,17,gas,5.16393E-06,1991,EJ
+India,17,gas,5.16E-06,1991,EJ
 India,17,gas,0,1992,EJ
 India,17,gas,0,1993,EJ
-India,17,gas,4.81019E-05,1994,EJ
+India,17,gas,4.81E-05,1994,EJ
 India,17,gas,0,1995,EJ
 India,17,gas,0,1996,EJ
 India,17,gas,0,1997,EJ
@@ -1889,20 +2579,20 @@ India,17,gas,0,2001,EJ
 India,17,gas,0,2003,EJ
 India,17,gas,0,2004,EJ
 India,17,gas,0,2005,EJ
-India,17,gas,5.98067E-06,2006,EJ
+India,17,gas,5.98E-06,2006,EJ
 India,17,gas,0.00025471,2007,EJ
-India,17,gas,1.72228E-05,2008,EJ
-India,17,gas,1.62159E-05,2009,EJ
+India,17,gas,1.72E-05,2008,EJ
+India,17,gas,1.62E-05,2009,EJ
 India,17,gas,0.000211845,2010,EJ
 India,17,gas,0.00020811,2011,EJ
 India,17,gas,0.000132875,2013,EJ
 India,17,gas,0.000138254,2014,EJ
 India,17,gas,0.00022254,2015,EJ
 Indonesia,18,gas,0,1990,EJ
-Indonesia,18,gas,1.91598E-06,1991,EJ
+Indonesia,18,gas,1.92E-06,1991,EJ
 Indonesia,18,gas,0,1992,EJ
 Indonesia,18,gas,0,1993,EJ
-Indonesia,18,gas,2.26242E-05,1994,EJ
+Indonesia,18,gas,2.26E-05,1994,EJ
 Indonesia,18,gas,0,1995,EJ
 Indonesia,18,gas,0,1996,EJ
 Indonesia,18,gas,0,1997,EJ
@@ -1913,20 +2603,20 @@ Indonesia,18,gas,0,2001,EJ
 Indonesia,18,gas,0,2003,EJ
 Indonesia,18,gas,0,2004,EJ
 Indonesia,18,gas,0,2005,EJ
-Indonesia,18,gas,1.35309E-06,2006,EJ
-Indonesia,18,gas,5.04417E-05,2007,EJ
-Indonesia,18,gas,2.98512E-06,2008,EJ
-Indonesia,18,gas,2.61808E-06,2009,EJ
-Indonesia,18,gas,3.33521E-05,2010,EJ
-Indonesia,18,gas,3.04613E-05,2011,EJ
-Indonesia,18,gas,1.98962E-05,2013,EJ
-Indonesia,18,gas,1.50446E-05,2014,EJ
-Indonesia,18,gas,1.58755E-05,2015,EJ
+Indonesia,18,gas,1.35E-06,2006,EJ
+Indonesia,18,gas,5.04E-05,2007,EJ
+Indonesia,18,gas,2.99E-06,2008,EJ
+Indonesia,18,gas,2.62E-06,2009,EJ
+Indonesia,18,gas,3.34E-05,2010,EJ
+Indonesia,18,gas,3.05E-05,2011,EJ
+Indonesia,18,gas,1.99E-05,2013,EJ
+Indonesia,18,gas,1.50E-05,2014,EJ
+Indonesia,18,gas,1.59E-05,2015,EJ
 Japan,19,gas,0,1990,EJ
-Japan,19,gas,3.27869E-07,1991,EJ
+Japan,19,gas,3.28E-07,1991,EJ
 Japan,19,gas,0,1992,EJ
 Japan,19,gas,0,1993,EJ
-Japan,19,gas,1.73248E-06,1994,EJ
+Japan,19,gas,1.73E-06,1994,EJ
 Japan,19,gas,0,1995,EJ
 Japan,19,gas,0,1996,EJ
 Japan,19,gas,0,1997,EJ
@@ -1937,19 +2627,34 @@ Japan,19,gas,0,2001,EJ
 Japan,19,gas,0,2003,EJ
 Japan,19,gas,0,2004,EJ
 Japan,19,gas,0,2005,EJ
-Japan,19,gas,3.78866E-08,2006,EJ
-Japan,19,gas,1.45906E-06,2007,EJ
-Japan,19,gas,7.24781E-07,2008,EJ
-Japan,19,gas,3.95756E-07,2009,EJ
-Japan,19,gas,7.11862E-06,2010,EJ
-Japan,19,gas,5.36818E-06,2011,EJ
-Japan,19,gas,2.2627E-06,2013,EJ
-Japan,19,gas,7.13016E-08,2014,EJ
+Japan,19,gas,3.79E-08,2006,EJ
+Japan,19,gas,1.46E-06,2007,EJ
+Japan,19,gas,7.25E-07,2008,EJ
+Japan,19,gas,3.96E-07,2009,EJ
+Japan,19,gas,7.12E-06,2010,EJ
+Japan,19,gas,5.37E-06,2011,EJ
+Japan,19,gas,2.26E-06,2013,EJ
+Japan,19,gas,7.13E-08,2014,EJ
+Mexico,20,gas,0.000365964,1975,EJ
+Mexico,20,gas,0.000372818,1976,EJ
+Mexico,20,gas,0.000414844,1977,EJ
+Mexico,20,gas,0.000413446,1978,EJ
+Mexico,20,gas,0.000424912,1979,EJ
+Mexico,20,gas,0.000462668,1980,EJ
+Mexico,20,gas,0.000438963,1981,EJ
+Mexico,20,gas,0.000363576,1982,EJ
+Mexico,20,gas,0.000381932,1983,EJ
+Mexico,20,gas,0.000444004,1984,EJ
+Mexico,20,gas,0.000416406,1985,EJ
+Mexico,20,gas,0.000425737,1986,EJ
+Mexico,20,gas,0.000460513,1987,EJ
+Mexico,20,gas,0.000474907,1988,EJ
+Mexico,20,gas,0.000509432,1989,EJ
 Mexico,20,gas,0.000534411,1990,EJ
 Mexico,20,gas,0.000384195,1991,EJ
 Mexico,20,gas,0.000165469,1992,EJ
 Mexico,20,gas,0.000192499,1993,EJ
-Mexico,20,gas,8.48874E-05,1995,EJ
+Mexico,20,gas,8.49E-05,1995,EJ
 Mexico,20,gas,0.000565053,1996,EJ
 Mexico,20,gas,0.000599336,1997,EJ
 Mexico,20,gas,0.000528183,1998,EJ
@@ -1957,10 +2662,10 @@ Mexico,20,gas,0.000517893,1999,EJ
 Mexico,20,gas,0.00056014,2000,EJ
 Mexico,20,gas,0.000553635,2001,EJ
 Middle East,21,gas,0,1990,EJ
-Middle East,21,gas,8.19672E-07,1991,EJ
+Middle East,21,gas,8.20E-07,1991,EJ
 Middle East,21,gas,0,1992,EJ
 Middle East,21,gas,0,1993,EJ
-Middle East,21,gas,1.18217E-05,1994,EJ
+Middle East,21,gas,1.18E-05,1994,EJ
 Middle East,21,gas,0,1995,EJ
 Middle East,21,gas,0,1996,EJ
 Middle East,21,gas,0,1997,EJ
@@ -1971,15 +2676,15 @@ Middle East,21,gas,0,2001,EJ
 Middle East,21,gas,0,2003,EJ
 Middle East,21,gas,0,2004,EJ
 Middle East,21,gas,0,2005,EJ
-Middle East,21,gas,1.10954E-06,2006,EJ
-Middle East,21,gas,4.50223E-05,2007,EJ
-Middle East,21,gas,3.04654E-06,2008,EJ
-Middle East,21,gas,2.02952E-06,2009,EJ
-Middle East,21,gas,2.53107E-05,2010,EJ
-Middle East,21,gas,4.01989E-05,2011,EJ
-Middle East,21,gas,2.30171E-05,2013,EJ
-Middle East,21,gas,2.53121E-05,2014,EJ
-Middle East,21,gas,3.35464E-05,2015,EJ
+Middle East,21,gas,1.11E-06,2006,EJ
+Middle East,21,gas,4.50E-05,2007,EJ
+Middle East,21,gas,3.05E-06,2008,EJ
+Middle East,21,gas,2.03E-06,2009,EJ
+Middle East,21,gas,2.53E-05,2010,EJ
+Middle East,21,gas,4.02E-05,2011,EJ
+Middle East,21,gas,2.30E-05,2013,EJ
+Middle East,21,gas,2.53E-05,2014,EJ
+Middle East,21,gas,3.35E-05,2015,EJ
 Russia,23,gas,0.000155589,1996,EJ
 Russia,23,gas,0.000132545,1997,EJ
 Russia,23,gas,0.000129601,1998,EJ
@@ -1999,10 +2704,10 @@ Russia,23,gas,0.027193415,2013,EJ
 Russia,23,gas,0.024444826,2014,EJ
 Russia,23,gas,0.03068799,2015,EJ
 South Africa,24,gas,0,1990,EJ
-South Africa,24,gas,1.73156E-06,1991,EJ
+South Africa,24,gas,1.73E-06,1991,EJ
 South Africa,24,gas,0,1992,EJ
 South Africa,24,gas,0,1993,EJ
-South Africa,24,gas,1.75287E-05,1994,EJ
+South Africa,24,gas,1.75E-05,1994,EJ
 South Africa,24,gas,0,1995,EJ
 South Africa,24,gas,0,1996,EJ
 South Africa,24,gas,0,1997,EJ
@@ -2013,15 +2718,30 @@ South Africa,24,gas,0,2001,EJ
 South Africa,24,gas,0,2003,EJ
 South Africa,24,gas,0,2004,EJ
 South Africa,24,gas,0,2005,EJ
-South Africa,24,gas,4.84407E-06,2006,EJ
+South Africa,24,gas,4.84E-06,2006,EJ
 South Africa,24,gas,0.000187385,2007,EJ
-South Africa,24,gas,9.96267E-06,2008,EJ
-South Africa,24,gas,8.20941E-06,2009,EJ
+South Africa,24,gas,9.96E-06,2008,EJ
+South Africa,24,gas,8.21E-06,2009,EJ
 South Africa,24,gas,0.000106384,2010,EJ
 South Africa,24,gas,0.000100997,2011,EJ
-South Africa,24,gas,6.41359E-05,2013,EJ
-South Africa,24,gas,5.31197E-05,2014,EJ
-South Africa,24,gas,6.56754E-05,2015,EJ
+South Africa,24,gas,6.41E-05,2013,EJ
+South Africa,24,gas,5.31E-05,2014,EJ
+South Africa,24,gas,6.57E-05,2015,EJ
+South America_Northern,25,gas,0.003347491,1975,EJ
+South America_Northern,25,gas,0.003410191,1976,EJ
+South America_Northern,25,gas,0.003794606,1977,EJ
+South America_Northern,25,gas,0.003781812,1978,EJ
+South America_Northern,25,gas,0.003886694,1979,EJ
+South America_Northern,25,gas,0.004232049,1980,EJ
+South America_Northern,25,gas,0.004015216,1981,EJ
+South America_Northern,25,gas,0.003325652,1982,EJ
+South America_Northern,25,gas,0.003493558,1983,EJ
+South America_Northern,25,gas,0.004061326,1984,EJ
+South America_Northern,25,gas,0.003808891,1985,EJ
+South America_Northern,25,gas,0.003894237,1986,EJ
+South America_Northern,25,gas,0.004212343,1987,EJ
+South America_Northern,25,gas,0.004344002,1988,EJ
+South America_Northern,25,gas,0.004659802,1989,EJ
 South America_Northern,25,gas,0.004888287,1990,EJ
 South America_Northern,25,gas,0.004745937,1991,EJ
 South America_Northern,25,gas,0.003924924,1992,EJ
@@ -2046,11 +2766,26 @@ South America_Northern,25,gas,0.003752075,2011,EJ
 South America_Northern,25,gas,0.000765794,2013,EJ
 South America_Northern,25,gas,0.000701455,2014,EJ
 South America_Northern,25,gas,0.000668072,2015,EJ
-Southeast Asia,29,gas,1.52214E-07,2009,EJ
-Southeast Asia,29,gas,9.9873E-06,2011,EJ
-Southeast Asia,29,gas,2.2705E-05,2013,EJ
-Southeast Asia,29,gas,2.85206E-05,2014,EJ
-Southeast Asia,29,gas,3.77988E-05,2015,EJ
+Southeast Asia,29,gas,1.52E-07,2009,EJ
+Southeast Asia,29,gas,9.99E-06,2011,EJ
+Southeast Asia,29,gas,2.27E-05,2013,EJ
+Southeast Asia,29,gas,2.85E-05,2014,EJ
+Southeast Asia,29,gas,3.78E-05,2015,EJ
+Argentina,31,gas,0.000893382,1975,EJ
+Argentina,31,gas,0.000910115,1976,EJ
+Argentina,31,gas,0.001012708,1977,EJ
+Argentina,31,gas,0.001009294,1978,EJ
+Argentina,31,gas,0.001037285,1979,EJ
+Argentina,31,gas,0.001129454,1980,EJ
+Argentina,31,gas,0.001071585,1981,EJ
+Argentina,31,gas,0.000887553,1982,EJ
+Argentina,31,gas,0.000932364,1983,EJ
+Argentina,31,gas,0.001083891,1984,EJ
+Argentina,31,gas,0.001016521,1985,EJ
+Argentina,31,gas,0.001039298,1986,EJ
+Argentina,31,gas,0.001124194,1987,EJ
+Argentina,31,gas,0.001159332,1988,EJ
+Argentina,31,gas,0.001243613,1989,EJ
 Argentina,31,gas,0.001304591,1990,EJ
 Argentina,31,gas,0.001242983,1991,EJ
 Argentina,31,gas,0.001092095,1992,EJ
@@ -2075,6 +2810,21 @@ Argentina,31,gas,0.004107535,2011,EJ
 Argentina,31,gas,0.001970465,2013,EJ
 Argentina,31,gas,0.00224669,2014,EJ
 Argentina,31,gas,0.002430883,2015,EJ
+USA,1,refined liquids,0.001655833,1975,EJ
+USA,1,refined liquids,0.001686847,1976,EJ
+USA,1,refined liquids,0.001876998,1977,EJ
+USA,1,refined liquids,0.00187067,1978,EJ
+USA,1,refined liquids,0.001922549,1979,EJ
+USA,1,refined liquids,0.002093379,1980,EJ
+USA,1,refined liquids,0.001986123,1981,EJ
+USA,1,refined liquids,0.00164503,1982,EJ
+USA,1,refined liquids,0.001728085,1983,EJ
+USA,1,refined liquids,0.002008931,1984,EJ
+USA,1,refined liquids,0.001884064,1985,EJ
+USA,1,refined liquids,0.001926281,1986,EJ
+USA,1,refined liquids,0.002083631,1987,EJ
+USA,1,refined liquids,0.002148756,1988,EJ
+USA,1,refined liquids,0.002304967,1989,EJ
 USA,1,refined liquids,0.002417986,1990,EJ
 USA,1,refined liquids,0.002098985,1991,EJ
 USA,1,refined liquids,0.002302609,1992,EJ
@@ -2096,9 +2846,24 @@ USA,1,refined liquids,0.001810182,2008,EJ
 USA,1,refined liquids,0.00048067,2009,EJ
 USA,1,refined liquids,0,2010,EJ
 USA,1,refined liquids,0,2011,EJ
-USA,1,refined liquids,1.06901E-05,2013,EJ
-USA,1,refined liquids,9.35858E-06,2014,EJ
+USA,1,refined liquids,1.07E-05,2013,EJ
+USA,1,refined liquids,9.36E-06,2014,EJ
 USA,1,refined liquids,0,2015,EJ
+Africa_Northern,3,refined liquids,0.001235211,1975,EJ
+Africa_Northern,3,refined liquids,0.001258347,1976,EJ
+Africa_Northern,3,refined liquids,0.001400195,1977,EJ
+Africa_Northern,3,refined liquids,0.001395474,1978,EJ
+Africa_Northern,3,refined liquids,0.001434175,1979,EJ
+Africa_Northern,3,refined liquids,0.00156161,1980,EJ
+Africa_Northern,3,refined liquids,0.001481599,1981,EJ
+Africa_Northern,3,refined liquids,0.001227153,1982,EJ
+Africa_Northern,3,refined liquids,0.00128911,1983,EJ
+Africa_Northern,3,refined liquids,0.001498614,1984,EJ
+Africa_Northern,3,refined liquids,0.001405466,1985,EJ
+Africa_Northern,3,refined liquids,0.001436959,1986,EJ
+Africa_Northern,3,refined liquids,0.001554338,1987,EJ
+Africa_Northern,3,refined liquids,0.00160292,1988,EJ
+Africa_Northern,3,refined liquids,0.001719449,1989,EJ
 Africa_Northern,3,refined liquids,0.001803759,1990,EJ
 Africa_Northern,3,refined liquids,0.001879821,1991,EJ
 Africa_Northern,3,refined liquids,0.001520373,1992,EJ
@@ -2137,6 +2902,21 @@ Africa_Southern,4,refined liquids,0.001178345,2011,EJ
 Africa_Southern,4,refined liquids,0.000847415,2013,EJ
 Africa_Southern,4,refined liquids,0.000841485,2014,EJ
 Africa_Southern,4,refined liquids,0.001376545,2015,EJ
+Africa_Western,5,refined liquids,0.001842466,1975,EJ
+Africa_Western,5,refined liquids,0.001876976,1976,EJ
+Africa_Western,5,refined liquids,0.002088559,1977,EJ
+Africa_Western,5,refined liquids,0.002081518,1978,EJ
+Africa_Western,5,refined liquids,0.002139245,1979,EJ
+Africa_Western,5,refined liquids,0.002329329,1980,EJ
+Africa_Western,5,refined liquids,0.002209984,1981,EJ
+Africa_Western,5,refined liquids,0.001830446,1982,EJ
+Africa_Western,5,refined liquids,0.001922862,1983,EJ
+Africa_Western,5,refined liquids,0.002235363,1984,EJ
+Africa_Western,5,refined liquids,0.002096422,1985,EJ
+Africa_Western,5,refined liquids,0.002143397,1986,EJ
+Africa_Western,5,refined liquids,0.002318483,1987,EJ
+Africa_Western,5,refined liquids,0.002390948,1988,EJ
+Africa_Western,5,refined liquids,0.002564765,1989,EJ
 Africa_Western,5,refined liquids,0.002690524,1990,EJ
 Africa_Western,5,refined liquids,0.002724684,1991,EJ
 Africa_Western,5,refined liquids,0.002237852,1992,EJ
@@ -2161,6 +2941,21 @@ Africa_Western,5,refined liquids,0.000255797,2011,EJ
 Africa_Western,5,refined liquids,0.000169483,2013,EJ
 Africa_Western,5,refined liquids,0.000194417,2014,EJ
 Africa_Western,5,refined liquids,0.000259027,2015,EJ
+Australia_NZ,6,refined liquids,0.018312877,1975,EJ
+Australia_NZ,6,refined liquids,0.018655887,1976,EJ
+Australia_NZ,6,refined liquids,0.020758878,1977,EJ
+Australia_NZ,6,refined liquids,0.020688891,1978,EJ
+Australia_NZ,6,refined liquids,0.021262657,1979,EJ
+Australia_NZ,6,refined liquids,0.02315197,1980,EJ
+Australia_NZ,6,refined liquids,0.021965755,1981,EJ
+Australia_NZ,6,refined liquids,0.018193404,1982,EJ
+Australia_NZ,6,refined liquids,0.019111958,1983,EJ
+Australia_NZ,6,refined liquids,0.022218008,1984,EJ
+Australia_NZ,6,refined liquids,0.020837026,1985,EJ
+Australia_NZ,6,refined liquids,0.021303927,1986,EJ
+Australia_NZ,6,refined liquids,0.023044162,1987,EJ
+Australia_NZ,6,refined liquids,0.02376442,1988,EJ
+Australia_NZ,6,refined liquids,0.025492048,1989,EJ
 Australia_NZ,6,refined liquids,0.026742,1990,EJ
 Australia_NZ,6,refined liquids,0.019133,1991,EJ
 Australia_NZ,6,refined liquids,0.018475,1992,EJ
@@ -2185,6 +2980,21 @@ Australia_NZ,6,refined liquids,0.044108,2011,EJ
 Australia_NZ,6,refined liquids,0.02354,2013,EJ
 Australia_NZ,6,refined liquids,0.015678,2014,EJ
 Australia_NZ,6,refined liquids,0.004131,2015,EJ
+Brazil,7,refined liquids,0.023485072,1975,EJ
+Brazil,7,refined liquids,0.023924959,1976,EJ
+Brazil,7,refined liquids,0.026621908,1977,EJ
+Brazil,7,refined liquids,0.026532155,1978,EJ
+Brazil,7,refined liquids,0.027267972,1979,EJ
+Brazil,7,refined liquids,0.029690893,1980,EJ
+Brazil,7,refined liquids,0.028169649,1981,EJ
+Brazil,7,refined liquids,0.023331856,1982,EJ
+Brazil,7,refined liquids,0.02450984,1983,EJ
+Brazil,7,refined liquids,0.028493148,1984,EJ
+Brazil,7,refined liquids,0.026722129,1985,EJ
+Brazil,7,refined liquids,0.027320898,1986,EJ
+Brazil,7,refined liquids,0.029552636,1987,EJ
+Brazil,7,refined liquids,0.03047632,1988,EJ
+Brazil,7,refined liquids,0.03269189,1989,EJ
 Brazil,7,refined liquids,0.034294872,1990,EJ
 Brazil,7,refined liquids,0.040684683,1991,EJ
 Brazil,7,refined liquids,0.043803328,1992,EJ
@@ -2209,6 +3019,21 @@ Brazil,7,refined liquids,0.04806483,2011,EJ
 Brazil,7,refined liquids,0.049302776,2013,EJ
 Brazil,7,refined liquids,0.04471366,2014,EJ
 Brazil,7,refined liquids,0.041261184,2015,EJ
+Canada,8,refined liquids,0.000640981,1975,EJ
+Canada,8,refined liquids,0.000652987,1976,EJ
+Canada,8,refined liquids,0.000726595,1977,EJ
+Canada,8,refined liquids,0.000724145,1978,EJ
+Canada,8,refined liquids,0.000744228,1979,EJ
+Canada,8,refined liquids,0.000810357,1980,EJ
+Canada,8,refined liquids,0.000768837,1981,EJ
+Canada,8,refined liquids,0.000636799,1982,EJ
+Canada,8,refined liquids,0.00066895,1983,EJ
+Canada,8,refined liquids,0.000777667,1984,EJ
+Canada,8,refined liquids,0.00072933,1985,EJ
+Canada,8,refined liquids,0.000745672,1986,EJ
+Canada,8,refined liquids,0.000806583,1987,EJ
+Canada,8,refined liquids,0.000831794,1988,EJ
+Canada,8,refined liquids,0.000892264,1989,EJ
 Canada,8,refined liquids,0.000936014,1990,EJ
 Canada,8,refined liquids,0.000928015,1991,EJ
 Canada,8,refined liquids,0.001123391,1992,EJ
@@ -2230,8 +3055,8 @@ Canada,8,refined liquids,0.002124818,2008,EJ
 Canada,8,refined liquids,0.00084333,2009,EJ
 Canada,8,refined liquids,0,2010,EJ
 Canada,8,refined liquids,0,2011,EJ
-Canada,8,refined liquids,1.63099E-05,2013,EJ
-Canada,8,refined liquids,1.56414E-05,2014,EJ
+Canada,8,refined liquids,1.63E-05,2013,EJ
+Canada,8,refined liquids,1.56E-05,2014,EJ
 Canada,8,refined liquids,0,2015,EJ
 Central Asia,10,refined liquids,0.003630104,1992,EJ
 Central Asia,10,refined liquids,0.003108146,1993,EJ
@@ -2292,7 +3117,22 @@ EU-12,12,refined liquids,0.001144138,2010,EJ
 EU-12,12,refined liquids,0.001124165,2011,EJ
 EU-12,12,refined liquids,0.000844755,2013,EJ
 EU-12,12,refined liquids,0.000696395,2014,EJ
-EU-12,12,refined liquids,1.09774E-05,2015,EJ
+EU-12,12,refined liquids,1.10E-05,2015,EJ
+EU-15,13,refined liquids,0.015217197,1975,EJ
+EU-15,13,refined liquids,0.015502223,1976,EJ
+EU-15,13,refined liquids,0.017249716,1977,EJ
+EU-15,13,refined liquids,0.017191561,1978,EJ
+EU-15,13,refined liquids,0.017668335,1979,EJ
+EU-15,13,refined liquids,0.019238271,1980,EJ
+EU-15,13,refined liquids,0.018252578,1981,EJ
+EU-15,13,refined liquids,0.015117921,1982,EJ
+EU-15,13,refined liquids,0.015881198,1983,EJ
+EU-15,13,refined liquids,0.01846219,1984,EJ
+EU-15,13,refined liquids,0.017314655,1985,EJ
+EU-15,13,refined liquids,0.017702628,1986,EJ
+EU-15,13,refined liquids,0.019148687,1987,EJ
+EU-15,13,refined liquids,0.01974719,1988,EJ
+EU-15,13,refined liquids,0.021182773,1989,EJ
 EU-15,13,refined liquids,0.022221429,1990,EJ
 EU-15,13,refined liquids,0.024189582,1991,EJ
 EU-15,13,refined liquids,0.013616025,1992,EJ
@@ -2316,7 +3156,7 @@ EU-15,13,refined liquids,0.005089352,2010,EJ
 EU-15,13,refined liquids,0.004363283,2011,EJ
 EU-15,13,refined liquids,0.002488464,2013,EJ
 EU-15,13,refined liquids,0.001986624,2014,EJ
-EU-15,13,refined liquids,3.26598E-05,2015,EJ
+EU-15,13,refined liquids,3.27E-05,2015,EJ
 Europe_Eastern,14,refined liquids,0.000528246,1996,EJ
 Europe_Eastern,14,refined liquids,0.000636223,1997,EJ
 Europe_Eastern,14,refined liquids,0.000509834,1998,EJ
@@ -2330,8 +3170,23 @@ Europe_Eastern,14,refined liquids,0.000446567,2006,EJ
 Europe_Eastern,14,refined liquids,0.000527678,2007,EJ
 Europe_Eastern,14,refined liquids,0.000374288,2008,EJ
 Europe_Eastern,14,refined liquids,0.00014208,2009,EJ
-Europe_Eastern,14,refined liquids,6.44222E-05,2010,EJ
-Europe_Eastern,14,refined liquids,1.48195E-05,2011,EJ
+Europe_Eastern,14,refined liquids,6.44E-05,2010,EJ
+Europe_Eastern,14,refined liquids,1.48E-05,2011,EJ
+Europe_Non_EU,15,refined liquids,0.000420938,1975,EJ
+Europe_Non_EU,15,refined liquids,0.000428822,1976,EJ
+Europe_Non_EU,15,refined liquids,0.000477161,1977,EJ
+Europe_Non_EU,15,refined liquids,0.000475553,1978,EJ
+Europe_Non_EU,15,refined liquids,0.000488741,1979,EJ
+Europe_Non_EU,15,refined liquids,0.000532169,1980,EJ
+Europe_Non_EU,15,refined liquids,0.000504903,1981,EJ
+Europe_Non_EU,15,refined liquids,0.000418192,1982,EJ
+Europe_Non_EU,15,refined liquids,0.000439306,1983,EJ
+Europe_Non_EU,15,refined liquids,0.000510701,1984,EJ
+Europe_Non_EU,15,refined liquids,0.000478958,1985,EJ
+Europe_Non_EU,15,refined liquids,0.00048969,1986,EJ
+Europe_Non_EU,15,refined liquids,0.000529691,1987,EJ
+Europe_Non_EU,15,refined liquids,0.000546247,1988,EJ
+Europe_Non_EU,15,refined liquids,0.000585958,1989,EJ
 Europe_Non_EU,15,refined liquids,0.000614689,1990,EJ
 Europe_Non_EU,15,refined liquids,0.000591404,1991,EJ
 Europe_Non_EU,15,refined liquids,0.00125542,1992,EJ
@@ -2356,6 +3211,21 @@ Europe_Non_EU,15,refined liquids,0.000610509,2011,EJ
 Europe_Non_EU,15,refined liquids,0.000276174,2013,EJ
 Europe_Non_EU,15,refined liquids,0.000258506,2014,EJ
 Europe_Non_EU,15,refined liquids,0.000116223,2015,EJ
+European Free Trade Association,16,refined liquids,0.005991399,1975,EJ
+European Free Trade Association,16,refined liquids,0.00610362,1976,EJ
+European Free Trade Association,16,refined liquids,0.006791653,1977,EJ
+European Free Trade Association,16,refined liquids,0.006768756,1978,EJ
+European Free Trade Association,16,refined liquids,0.006956474,1979,EJ
+European Free Trade Association,16,refined liquids,0.007574598,1980,EJ
+European Free Trade Association,16,refined liquids,0.007186505,1981,EJ
+European Free Trade Association,16,refined liquids,0.005952311,1982,EJ
+European Free Trade Association,16,refined liquids,0.006252833,1983,EJ
+European Free Trade Association,16,refined liquids,0.007269035,1984,EJ
+European Free Trade Association,16,refined liquids,0.006817221,1985,EJ
+European Free Trade Association,16,refined liquids,0.006969976,1986,EJ
+European Free Trade Association,16,refined liquids,0.007539326,1987,EJ
+European Free Trade Association,16,refined liquids,0.007774972,1988,EJ
+European Free Trade Association,16,refined liquids,0.008340198,1989,EJ
 European Free Trade Association,16,refined liquids,0.008749143,1990,EJ
 European Free Trade Association,16,refined liquids,0.00985945,1991,EJ
 European Free Trade Association,16,refined liquids,0.005689745,1992,EJ
@@ -2379,7 +3249,22 @@ European Free Trade Association,16,refined liquids,0.004934738,2010,EJ
 European Free Trade Association,16,refined liquids,0.004594044,2011,EJ
 European Free Trade Association,16,refined liquids,0.003207693,2013,EJ
 European Free Trade Association,16,refined liquids,0.00265263,2014,EJ
-European Free Trade Association,16,refined liquids,4.09318E-05,2015,EJ
+European Free Trade Association,16,refined liquids,4.09E-05,2015,EJ
+India,17,refined liquids,0.002987969,1975,EJ
+India,17,refined liquids,0.003043936,1976,EJ
+India,17,refined liquids,0.003387064,1977,EJ
+India,17,refined liquids,0.003375645,1978,EJ
+India,17,refined liquids,0.003469262,1979,EJ
+India,17,refined liquids,0.003777526,1980,EJ
+India,17,refined liquids,0.003583981,1981,EJ
+India,17,refined liquids,0.002968476,1982,EJ
+India,17,refined liquids,0.003118349,1983,EJ
+India,17,refined liquids,0.003625139,1984,EJ
+India,17,refined liquids,0.003399815,1985,EJ
+India,17,refined liquids,0.003475996,1986,EJ
+India,17,refined liquids,0.003759936,1987,EJ
+India,17,refined liquids,0.003877455,1988,EJ
+India,17,refined liquids,0.004159339,1989,EJ
 India,17,refined liquids,0.004363284,1990,EJ
 India,17,refined liquids,0.005322639,1991,EJ
 India,17,refined liquids,0.004185297,1992,EJ
@@ -2404,6 +3289,21 @@ India,17,refined liquids,0.003495197,2011,EJ
 India,17,refined liquids,0.002531839,2013,EJ
 India,17,refined liquids,0.002877671,2014,EJ
 India,17,refined liquids,0.005809611,2015,EJ
+Indonesia,18,refined liquids,0.001283516,1975,EJ
+Indonesia,18,refined liquids,0.001307557,1976,EJ
+Indonesia,18,refined liquids,0.001454951,1977,EJ
+Indonesia,18,refined liquids,0.001450046,1978,EJ
+Indonesia,18,refined liquids,0.00149026,1979,EJ
+Indonesia,18,refined liquids,0.001622679,1980,EJ
+Indonesia,18,refined liquids,0.001539539,1981,EJ
+Indonesia,18,refined liquids,0.001275142,1982,EJ
+Indonesia,18,refined liquids,0.001339522,1983,EJ
+Indonesia,18,refined liquids,0.001557219,1984,EJ
+Indonesia,18,refined liquids,0.001460429,1985,EJ
+Indonesia,18,refined liquids,0.001493153,1986,EJ
+Indonesia,18,refined liquids,0.001615123,1987,EJ
+Indonesia,18,refined liquids,0.001665604,1988,EJ
+Indonesia,18,refined liquids,0.00178669,1989,EJ
 Indonesia,18,refined liquids,0.001874297,1990,EJ
 Indonesia,18,refined liquids,0.001974868,1991,EJ
 Indonesia,18,refined liquids,0.001477666,1992,EJ
@@ -2428,6 +3328,21 @@ Indonesia,18,refined liquids,0.000511595,2011,EJ
 Indonesia,18,refined liquids,0.000379107,2013,EJ
 Indonesia,18,refined liquids,0.000313145,2014,EJ
 Indonesia,18,refined liquids,0.000414444,2015,EJ
+Japan,19,refined liquids,0.000234621,1975,EJ
+Japan,19,refined liquids,0.000239016,1976,EJ
+Japan,19,refined liquids,0.000265959,1977,EJ
+Japan,19,refined liquids,0.000265062,1978,EJ
+Japan,19,refined liquids,0.000272413,1979,EJ
+Japan,19,refined liquids,0.000296619,1980,EJ
+Japan,19,refined liquids,0.000281421,1981,EJ
+Japan,19,refined liquids,0.00023309,1982,EJ
+Japan,19,refined liquids,0.000244859,1983,EJ
+Japan,19,refined liquids,0.000284653,1984,EJ
+Japan,19,refined liquids,0.00026696,1985,EJ
+Japan,19,refined liquids,0.000272942,1986,EJ
+Japan,19,refined liquids,0.000295237,1987,EJ
+Japan,19,refined liquids,0.000304465,1988,EJ
+Japan,19,refined liquids,0.000326599,1989,EJ
 Japan,19,refined liquids,0.000342613,1990,EJ
 Japan,19,refined liquids,0.000337945,1991,EJ
 Japan,19,refined liquids,0.000162287,1992,EJ
@@ -2437,20 +3352,35 @@ Japan,19,refined liquids,0.000171736,1995,EJ
 Japan,19,refined liquids,0.000132161,1996,EJ
 Japan,19,refined liquids,0.000123244,1997,EJ
 Japan,19,refined liquids,0.000128107,1998,EJ
-Japan,19,refined liquids,8.08312E-05,1999,EJ
-Japan,19,refined liquids,3.81365E-05,2000,EJ
-Japan,19,refined liquids,4.02322E-05,2001,EJ
-Japan,19,refined liquids,2.48515E-05,2003,EJ
-Japan,19,refined liquids,2.23544E-05,2004,EJ
-Japan,19,refined liquids,2.86002E-05,2005,EJ
-Japan,19,refined liquids,3.21441E-05,2006,EJ
-Japan,19,refined liquids,2.04459E-05,2007,EJ
+Japan,19,refined liquids,8.08E-05,1999,EJ
+Japan,19,refined liquids,3.81E-05,2000,EJ
+Japan,19,refined liquids,4.02E-05,2001,EJ
+Japan,19,refined liquids,2.49E-05,2003,EJ
+Japan,19,refined liquids,2.24E-05,2004,EJ
+Japan,19,refined liquids,2.86E-05,2005,EJ
+Japan,19,refined liquids,3.21E-05,2006,EJ
+Japan,19,refined liquids,2.04E-05,2007,EJ
 Japan,19,refined liquids,0.000245283,2008,EJ
 Japan,19,refined liquids,0.000160497,2009,EJ
 Japan,19,refined liquids,0.000139834,2010,EJ
-Japan,19,refined liquids,9.01581E-05,2011,EJ
-Japan,19,refined liquids,4.31141E-05,2013,EJ
-Japan,19,refined liquids,1.4841E-06,2014,EJ
+Japan,19,refined liquids,9.02E-05,2011,EJ
+Japan,19,refined liquids,4.31E-05,2013,EJ
+Japan,19,refined liquids,1.48E-06,2014,EJ
+Mexico,20,refined liquids,0.001715344,1975,EJ
+Mexico,20,refined liquids,0.001747473,1976,EJ
+Mexico,20,refined liquids,0.001944457,1977,EJ
+Mexico,20,refined liquids,0.001937902,1978,EJ
+Mexico,20,refined liquids,0.001991646,1979,EJ
+Mexico,20,refined liquids,0.002168615,1980,EJ
+Mexico,20,refined liquids,0.002057504,1981,EJ
+Mexico,20,refined liquids,0.001704153,1982,EJ
+Mexico,20,refined liquids,0.001790192,1983,EJ
+Mexico,20,refined liquids,0.002081132,1984,EJ
+Mexico,20,refined liquids,0.001951777,1985,EJ
+Mexico,20,refined liquids,0.001995511,1986,EJ
+Mexico,20,refined liquids,0.002158517,1987,EJ
+Mexico,20,refined liquids,0.002225983,1988,EJ
+Mexico,20,refined liquids,0.002387807,1989,EJ
 Mexico,20,refined liquids,0.002504889,1990,EJ
 Mexico,20,refined liquids,0.001820104,1991,EJ
 Mexico,20,refined liquids,0.000912569,1992,EJ
@@ -2462,6 +3392,21 @@ Mexico,20,refined liquids,0.002874303,1998,EJ
 Mexico,20,refined liquids,0.002889279,1999,EJ
 Mexico,20,refined liquids,0.002968385,2000,EJ
 Mexico,20,refined liquids,0.002542329,2001,EJ
+Middle East,21,refined liquids,0.000414037,1975,EJ
+Middle East,21,refined liquids,0.000421792,1976,EJ
+Middle East,21,refined liquids,0.000469339,1977,EJ
+Middle East,21,refined liquids,0.000467757,1978,EJ
+Middle East,21,refined liquids,0.000480729,1979,EJ
+Middle East,21,refined liquids,0.000523445,1980,EJ
+Middle East,21,refined liquids,0.000496626,1981,EJ
+Middle East,21,refined liquids,0.000411336,1982,EJ
+Middle East,21,refined liquids,0.000432104,1983,EJ
+Middle East,21,refined liquids,0.000502329,1984,EJ
+Middle East,21,refined liquids,0.000471106,1985,EJ
+Middle East,21,refined liquids,0.000481662,1986,EJ
+Middle East,21,refined liquids,0.000521007,1987,EJ
+Middle East,21,refined liquids,0.000537292,1988,EJ
+Middle East,21,refined liquids,0.000576352,1989,EJ
 Middle East,21,refined liquids,0.000604612,1990,EJ
 Middle East,21,refined liquids,0.000844863,1991,EJ
 Middle East,21,refined liquids,0.000785811,1992,EJ
@@ -2503,7 +3448,22 @@ Russia,23,refined liquids,0.010170973,2010,EJ
 Russia,23,refined liquids,0.008453465,2011,EJ
 Russia,23,refined liquids,0.006108356,2013,EJ
 Russia,23,refined liquids,0.004178368,2014,EJ
-Russia,23,refined liquids,6.86867E-05,2015,EJ
+Russia,23,refined liquids,6.87E-05,2015,EJ
+South Africa,24,refined liquids,0.001097199,1975,EJ
+South Africa,24,refined liquids,0.00111775,1976,EJ
+South Africa,24,refined liquids,0.001243749,1977,EJ
+South Africa,24,refined liquids,0.001239556,1978,EJ
+South Africa,24,refined liquids,0.001273932,1979,EJ
+South Africa,24,refined liquids,0.001387129,1980,EJ
+South Africa,24,refined liquids,0.001316058,1981,EJ
+South Africa,24,refined liquids,0.001090041,1982,EJ
+South Africa,24,refined liquids,0.001145075,1983,EJ
+South Africa,24,refined liquids,0.001331171,1984,EJ
+South Africa,24,refined liquids,0.001248431,1985,EJ
+South Africa,24,refined liquids,0.001276405,1986,EJ
+South Africa,24,refined liquids,0.001380669,1987,EJ
+South Africa,24,refined liquids,0.001423823,1988,EJ
+South Africa,24,refined liquids,0.001527332,1989,EJ
 South Africa,24,refined liquids,0.001602222,1990,EJ
 South Africa,24,refined liquids,0.001784774,1991,EJ
 South Africa,24,refined liquids,0.001477666,1992,EJ
@@ -2528,6 +3488,21 @@ South Africa,24,refined liquids,0.00169623,2011,EJ
 South Africa,24,refined liquids,0.001222062,2013,EJ
 South Africa,24,refined liquids,0.001105655,2014,EJ
 South Africa,24,refined liquids,0.001714514,2015,EJ
+South America_Northern,25,refined liquids,0.015690349,1975,EJ
+South America_Northern,25,refined liquids,0.015984237,1976,EJ
+South America_Northern,25,refined liquids,0.017786065,1977,EJ
+South America_Northern,25,refined liquids,0.017726101,1978,EJ
+South America_Northern,25,refined liquids,0.0182177,1979,EJ
+South America_Northern,25,refined liquids,0.019836451,1980,EJ
+South America_Northern,25,refined liquids,0.018820109,1981,EJ
+South America_Northern,25,refined liquids,0.015587985,1982,EJ
+South America_Northern,25,refined liquids,0.016374995,1983,EJ
+South America_Northern,25,refined liquids,0.019036238,1984,EJ
+South America_Northern,25,refined liquids,0.017853023,1985,EJ
+South America_Northern,25,refined liquids,0.01825306,1986,EJ
+South America_Northern,25,refined liquids,0.019744081,1987,EJ
+South America_Northern,25,refined liquids,0.020361193,1988,EJ
+South America_Northern,25,refined liquids,0.021841413,1989,EJ
 South America_Northern,25,refined liquids,0.022912364,1990,EJ
 South America_Northern,25,refined liquids,0.02248364,1991,EJ
 South America_Northern,25,refined liquids,0.021646145,1992,EJ
@@ -2552,11 +3527,26 @@ South America_Northern,25,refined liquids,0.012683775,2011,EJ
 South America_Northern,25,refined liquids,0.006465318,2013,EJ
 South America_Northern,25,refined liquids,0.006414226,2014,EJ
 South America_Northern,25,refined liquids,0.006360208,2015,EJ
-Southeast Asia,29,refined liquids,6.17297E-05,2009,EJ
+Southeast Asia,29,refined liquids,6.17E-05,2009,EJ
 Southeast Asia,29,refined liquids,0.000167736,2011,EJ
 Southeast Asia,29,refined liquids,0.000432628,2013,EJ
 Southeast Asia,29,refined liquids,0.00059364,2014,EJ
 Southeast Asia,29,refined liquids,0.00098677,2015,EJ
+Argentina,31,refined liquids,0.004187456,1975,EJ
+Argentina,31,refined liquids,0.00426589,1976,EJ
+Argentina,31,refined liquids,0.004746763,1977,EJ
+Argentina,31,refined liquids,0.00473076,1978,EJ
+Argentina,31,refined liquids,0.004861958,1979,EJ
+Argentina,31,refined liquids,0.005293972,1980,EJ
+Argentina,31,refined liquids,0.00502273,1981,EJ
+Argentina,31,refined liquids,0.004160138,1982,EJ
+Argentina,31,refined liquids,0.004370176,1983,EJ
+Argentina,31,refined liquids,0.005080411,1984,EJ
+Argentina,31,refined liquids,0.004764633,1985,EJ
+Argentina,31,refined liquids,0.004871395,1986,EJ
+Argentina,31,refined liquids,0.005269321,1987,EJ
+Argentina,31,refined liquids,0.005434016,1988,EJ
+Argentina,31,refined liquids,0.005829059,1989,EJ
 Argentina,31,refined liquids,0.006114875,1990,EJ
 Argentina,31,refined liquids,0.005888573,1991,EJ
 Argentina,31,refined liquids,0.006022958,1992,EJ
