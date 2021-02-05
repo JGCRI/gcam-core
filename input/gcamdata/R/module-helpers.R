@@ -198,7 +198,7 @@ set_years <- function(data) {
                    "end-year" = max(MODEL_FUTURE_YEARS))
   if(nrow(data)) {
     data %>%
-      dplyr::mutate_if(funs(any(. %in% names(year_recode))), funs(dplyr::recode(., !!!year_recode, .default=suppressWarnings(as.numeric(.))))) ->
+      dplyr::mutate_if(list(~ any(. %in% names(year_recode))), list(~ dplyr::recode(., !!!year_recode, .default=suppressWarnings(as.numeric(.))))) ->
       data
   }
   data
@@ -472,7 +472,7 @@ get_ssp_regions <- function(pcGDP, reg_names, income_group,
 #'     the column \code{technology}.  In other words for shadowing technologies the decay is
 #'     only applied to the difference in the values in the last year in which one was
 #'     specified. This is to allow for instance a Gas CC plant to have cost reductions at a
-#'     moderate pace but a Gas CC+CCS can have rapid cost reductions tothe CCS portion of
+#'     moderate pace but a Gas CC+CCS can have rapid cost reductions to the CCS portion of
 #'     the cost.
 #'
 #' @param d The wide format tibble with values under year columns that will be filled
@@ -511,29 +511,22 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
   # values which are specified (approx_fun rule=1)
   d <- gather_years(d)
 
-  # We would like to replicate values for all years including those found in the
-  # data as well as requested in out_years with the exception of the year (which
-  # which is the column we are replicating on) and value which we would like to
-  # just fill the missing values with NA (which is what complete does)
-  # NOTE: the approach for programmatically selecting columns got completely
-  # overhauled in recent version of dplyr, and it seems to have affected the nesting
-  # function particularly. How to specify columns also seems inconsistent
-  # between the versions, and thus we fall back on checking versions and doing
-  # something different.
-  if(utils::packageVersion("dplyr") < "0.7") {
-    d %>%
-      complete(tidyr::nesting_(select(., -year, -value)), year = union(year, out_years)) ->
-      d
-  } else {
-    nesting_vars <- paste0('`', names(d)[!(names(d) %in% c("year", "value"))], '`')
-    d %>%
-      complete(tidyr::nesting_(nesting_vars), year = union(year, out_years)) ->
-      d
-  }
   d %>%
+    # We just need to "complete" the years to include all years in d and out_years.
+    # However, finding a way to programmatically select columns for use in nest/nesting
+    # that is compatible across versions of tidyr is impossible.
+    # Instead we replicate the underlying steps of complete: expand, then left_join
+    # so we can directly use the basic dplyr/tidyr functions which have more
+    # reliable column select behavior.
+    select(-year, -value) %>%
+    distinct() %>%
+    repeat_add_columns(tibble(year=c(unique(c(d$year, out_years))))) %>%
+    left_join(d, by=names(.)) %>%
     # for the purposes of interpolating (and later extrapolating) we would like
     # to just group by everything except year and value
-    dplyr::group_by_(.dots = paste0('`', names(.)[!(names(.) %in% c("year", "value"))], '`')) %>%
+    dplyr::group_by_at(dplyr::vars(-year, -value)) %>%
+    # we must also arrange for consistency with the old complete behavior
+    arrange(year, .by_group = TRUE) %>%
     # finally do the linearly interpolation between values which are specified
     mutate(value = approx_fun(year, value, rule = 1)) ->
     d
@@ -591,11 +584,11 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
                              (1.0 - improvement.rate) ^ (year - year_base),
                            value)) %>%
     # drop the extra columns created for the shadow / exp decay calculation
-    dplyr::select_(.dots = paste0('`', names(d_nonshadowed), '`')) %>%
+    select(names(d_nonshadowed)) %>%
     ungroup() ->
     d_shadowed
 
-  # Pull all the data together and drop exptrapolation parameters.
+  # Pull all the data together and drop extrapolation parameters.
   bind_rows(ungroup(d_no_extrap), d_nonshadowed, d_shadowed) %>%
     select(-matches('improvement.')) %>%
     filter(year %in% out_years)
