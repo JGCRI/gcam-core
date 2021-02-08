@@ -62,16 +62,16 @@ module_energy_L224.heat <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     A_regions <- get_data(all_data, "energy/A_regions")
-    A24.sector <- get_data(all_data, "energy/A24.sector")
-    A24.subsector_logit <- get_data(all_data, "energy/A24.subsector_logit")
-    A24.subsector_shrwt <- get_data(all_data, "energy/A24.subsector_shrwt")
-    A24.subsector_interp <- get_data(all_data, "energy/A24.subsector_interp")
+    A24.sector <- get_data(all_data, "energy/A24.sector", strip_attributes = TRUE)
+    A24.subsector_logit <- get_data(all_data, "energy/A24.subsector_logit", strip_attributes = TRUE)
+    A24.subsector_shrwt <- get_data(all_data, "energy/A24.subsector_shrwt", strip_attributes = TRUE)
+    A24.subsector_interp <- get_data(all_data, "energy/A24.subsector_interp", strip_attributes = TRUE)
     A24.globaltech_coef <- get_data(all_data, "energy/A24.globaltech_coef")
     A24.globaltech_cost <- get_data(all_data, "energy/A24.globaltech_cost")
     A24.globaltech_shrwt <- get_data(all_data, "energy/A24.globaltech_shrwt")
     L1231.eff_R_elec_F_tech_Yh <- get_data(all_data, "L1231.eff_R_elec_F_tech_Yh")
-    L124.in_EJ_R_heat_F_Yh <- get_data(all_data, "L124.in_EJ_R_heat_F_Yh")
-    L124.heatoutratio_R_elec_F_tech_Yh <- get_data(all_data, "L124.heatoutratio_R_elec_F_tech_Yh")
+    L124.in_EJ_R_heat_F_Yh <- get_data(all_data, "L124.in_EJ_R_heat_F_Yh", strip_attributes = TRUE)
+    L124.heatoutratio_R_elec_F_tech_Yh <- get_data(all_data, "L124.heatoutratio_R_elec_F_tech_Yh", strip_attributes = TRUE)
 
     # Changing input data into long format
     A24.globaltech_coef %>%

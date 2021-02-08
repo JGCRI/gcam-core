@@ -12,7 +12,7 @@
 #' original data system was \code{L123.bcoc_awb_R_S_T_Y.R} (emissions level1).
 #' @details Use RCP year 2000 BC and OC emissions from agricultural waste burning on fields (AWB) to calculate emission factors for each ag production technology. Allocates regional AWB emissions to GCAM technology according to above-ground non-harvested biomass.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr bind_rows filter funs group_by left_join mutate select summarize_if
+#' @importFrom dplyr bind_rows filter group_by left_join mutate select summarize_if
 #' @author SJS May 2017
 module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -32,10 +32,10 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU")
-    L121.AWBshare_R_C_Y_GLU <- get_data(all_data, "L121.AWBshare_R_C_Y_GLU")
-    RCP_BC_2000 <- get_data(all_data, "emissions/RCP_BC_2000")
-    RCP_OC_2000 <- get_data(all_data, "emissions/RCP_OC_2000")
+    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU", strip_attributes = TRUE)
+    L121.AWBshare_R_C_Y_GLU <- get_data(all_data, "L121.AWBshare_R_C_Y_GLU", strip_attributes = TRUE)
+    RCP_BC_2000 <- get_data(all_data, "emissions/RCP_BC_2000", strip_attributes = TRUE)
+    RCP_OC_2000 <- get_data(all_data, "emissions/RCP_OC_2000", strip_attributes = TRUE)
 
     # Extract 2000 emissions data for AWB emissions and assign emission species identifier
     RCP_BC_2000 %>%
@@ -78,7 +78,7 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
       mutate(emfact = awb_emission / value) %>%
       select(-awb_emission, -value, -AWB_emiss_share, -awb) %>%
       # Replace NaNs with zeros
-      dplyr::mutate_all(funs(replace(., is.na(.), 0))) ->
+      dplyr::mutate_all(list(~ replace(., is.na(.), 0))) ->
       L121.AWB_Emissions_FactorR_C_Y_GLU
 
     # Produce outputs
@@ -99,3 +99,4 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
     stop("Unknown command")
   }
 }
+

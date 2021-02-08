@@ -52,7 +52,6 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/world.h"
 #include "containers/include/region_minicam.h"
-#include "containers/include/region_cge.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
@@ -152,10 +151,6 @@ void World::XMLParse( const DOMNode* node ){
             parseSingleNode( curr, mClimateModel, new HectorModel() );
         }
 #endif
-		// SGM regions
-        else if( nodeName == RegionCGE::getXMLNameStatic() ){
-            parseContainerNode( curr, mRegions, new RegionCGE() );
-        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -266,13 +261,6 @@ const string& World::getName() const {
 void World::initCalc( const int period ) {
 
     for( vector<Region*>::iterator i = mRegions.begin(); i != mRegions.end(); i++ ){
-        // Add supplies and demands to the marketplace in the base year for checking data consistency
-        // and for getting demand and supply totals.
-        // Need to update markets here after markets have been null by scenario.
-        // TODO: This should be combined with check data.
-        if( period == 0 ){
-            ( *i )->updateMarketplace( period );
-        }
         ( *i )->initCalc( period );
     }
     

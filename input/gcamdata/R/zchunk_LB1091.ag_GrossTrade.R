@@ -86,7 +86,7 @@ module_aglu_LB1091.ag_GrossTrade <- function(command, ...) {
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
     FAO_ag_items_TRADE <- get_data(all_data, "aglu/FAO/FAO_ag_items_TRADE")
     FAO_BilateralTrade <- get_data(all_data, "FAO_BilateralTrade")
-    L109.ag_ALL_Mt_R_C_Y <- get_data(all_data, "L109.ag_ALL_Mt_R_C_Y")
+    L109.ag_ALL_Mt_R_C_Y <- get_data(all_data, "L109.ag_ALL_Mt_R_C_Y", strip_attributes = TRUE)
     L109.an_ALL_Mt_R_C_Y <- get_data(all_data, "L109.an_ALL_Mt_R_C_Y")
 
     # 0: Bind crops and livestock for prod and netexp
@@ -181,7 +181,7 @@ module_aglu_LB1091.ag_GrossTrade <- function(command, ...) {
              var = tolower(sub(" Quantity", "", Element))) %>%
       group_by(GCAM_region_ID, GCAM_commodity, var, year) %>%
       summarise(value = sum(value)) %>%
-      group_by(GCAM_region_ID, GCAM_commodity, var, add = FALSE) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, var) %>%
       summarise(value = mean(value)) %>%
       ungroup() %>%
       complete(GCAM_region_ID = unique(GCAM_region_ID),

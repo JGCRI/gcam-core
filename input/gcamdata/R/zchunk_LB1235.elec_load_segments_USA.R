@@ -47,11 +47,11 @@ module_gcamusa_LB1235.elec_load_segments_USA <- function(command, ...) {
       intermediate.sum <- subpeak.sum <- NULL # silence package check notes
 
     # Load required inputs
-    elecS_demand_fraction <- get_data(all_data, "gcam-usa/elecS_demand_fraction")
-    elecS_time_fraction <- get_data(all_data, "gcam-usa/elecS_time_fraction")
-    elecS_fuel_fraction <- get_data(all_data, "gcam-usa/elecS_fuel_fraction")
-    elecS_horizontal_to_vertical_map <- get_data(all_data, "gcam-usa/elecS_horizontal_to_vertical_map")
-    L1234.out_EJ_grid_elec_F <- get_data(all_data, "L1234.out_EJ_grid_elec_F")
+    elecS_demand_fraction <- get_data(all_data, "gcam-usa/elecS_demand_fraction", strip_attributes = TRUE)
+    elecS_time_fraction <- get_data(all_data, "gcam-usa/elecS_time_fraction", strip_attributes = TRUE)
+    elecS_fuel_fraction <- get_data(all_data, "gcam-usa/elecS_fuel_fraction", strip_attributes = TRUE)
+    elecS_horizontal_to_vertical_map <- get_data(all_data, "gcam-usa/elecS_horizontal_to_vertical_map", strip_attributes = TRUE)
+    L1234.out_EJ_grid_elec_F <- get_data(all_data, "L1234.out_EJ_grid_elec_F", strip_attributes = TRUE)
 
     # ===================================================
     # Data Processing

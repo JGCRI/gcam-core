@@ -130,7 +130,7 @@ test_that("left_join_keep_first_only works", {
   r3 <- left_join_keep_first_only(x2, y, by = 'iso')
   expect_equal(r3,
                mutate(x2, year.x = year, year.y = rep(2000, 4), coef = c(1, 2, 3, 3)) %>%
-                 select(-year))
+                 select(iso, year.x, value, year.y, coef))
   ## more sensible usage
   r4 <- left_join_keep_first_only(x2, y, by = c('iso','year'))
   expect_equal(r4,
@@ -154,16 +154,16 @@ test_that("fast_left_join produces results equivalent to left_join", {
 
   ## Two join columns, no duplicate unjoined columns
   ABdp <- left_join(A, B, by = c('x', 'y')) %>% arrange(x, y)
-  ABdt <- fast_left_join(A, B, by = c('x', 'y')) %>% arrange(x, y)
+  ABdt <- fast_left_join(A, B, by = c('x', 'y')) %>% arrange(x, y) %>% select(x, y, z1, z2)
 
-  expect_equal(ABdp, ABdt)
+  expect_equivalent(ABdp, ABdt)
 
   ## One join column, y is a duplicate
   ABdp <- left_join(A, B, by = 'x') %>% arrange(x, y.x, y.y)
   ABdt <- fast_left_join(A, B, by = 'x') %>% rename(y.x = i.y, y.y = y) %>%
-    arrange(x, y.x, y.y)
+    arrange(x, y.x, y.y) %>% select(x, y.x, z1, y.y, z2)
 
-  expect_equal(ABdp, ABdt)
+  expect_equivalent(ABdp, ABdt)
 })
 
 test_that("gather_years does its job", {

@@ -58,8 +58,6 @@
 #include "util/base/include/istandard_component.h"
 #include "util/base/include/data_definition_util.h"
 
-
-struct ProductionFunctionInfo;
 class Tabs;
 
 // Need to forward declare the subclasses as well.
@@ -90,36 +88,18 @@ public:
      *          Technology may use a set of IShutdownDeciders, in which case the
      *          fraction of output to produce will be the product of all the
      *          shutdown coefficients.
-     * \note MiniCAM and SGM differ in how the pass in the marginal profit
-     *       information. MiniCAM calculates it before calling this function and
-     *       passes it in as aCalculatedProfitRate. SGM initializes the
-     *       variables in the ProductionFunctionInfo so that it can be
-     *       calculated when required.
-     * \param aFuncInfo The Technology's production information.
-     * \param aCalculatedProfitRate The profit rate of the Technology. If this
-     *        is set to the uncalculated profit rate constant, the
-     *        IShutdownDecider will calculate the value from the
-     *        ProductionFunctionInfo.
+     * \param aCalculatedProfitRate The profit rate of the Technology.
      * \param RegionName Region name.
      * \param aSectorName Sector name.
      * \param aInitialTechYear The initial operational year of the Technology.
      * \param aPeriod Period in which to calculate the shutdown coefficient.
      * \return The fraction of capital or output to operate.
      */
-    virtual double calcShutdownCoef( const ProductionFunctionInfo* aFuncInfo,
-                                     const double aCalculatedProfitRate,
+    virtual double calcShutdownCoef( const double aCalculatedProfitRate,
                                      const std::string& aRegionName,
                                      const std::string& aSectorName,
                                      const int aInitialTechYear,
                                      const int aPeriod ) const = 0;
-
-    /*!
-     * \brief Return a constant to represent a state where the profit rate has
-     *        not yet been calculated.
-     * \return A constant to represent a state where the profit rate has not yet
-     *         been calculated.
-     */
-    static double getUncalculatedProfitRateConstant();
     
 protected:
     
@@ -130,10 +110,5 @@ protected:
         DEFINE_SUBCLASS_FAMILY( IShutdownDecider, ProfitShutdownDecider, PhasedShutdownDecider, S_CurveShutdownDecider )
     )
 };
-
-
-inline double IShutdownDecider::getUncalculatedProfitRateConstant(){
-    return DBL_MAX;
-}
 
 #endif // _ISHUTDOWN_DECIDER_H_

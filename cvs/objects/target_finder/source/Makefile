@@ -13,7 +13,6 @@ OBJS       = bisecter.o \
              forcing_target.o \
              rcp_forcing_target.o \
              policy_target_runner.o \
-             simple_policy_target_runner.o \
              target_factory.o \
              secanter.o \
              kyoto_forcing_target.o \

@@ -56,9 +56,7 @@ class ICaptureComponent;
  * \ingroup Objects
  * \brief Defines a single input to a MiniCAM production function.
  * \details This is the abstract base class for inputs to a MiniCAM production
- *          function. This class has stub implementations for functions that
- *          having meaning in SGM but not yet in MiniCAM. This class contains no
- *          actual functionality itself.
+ *          function. This class contains no actual functionality itself.
  *
  *          <b>XML specification for MiniCAMInput</b>
  *          - XML name: None.
@@ -164,15 +162,6 @@ public:
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
-    virtual void copyParamsInto( ProductionInput& aInput,
-                                 const int aPeriod ) const;
-
-    virtual void copyParamsInto( DemandInput& aInput,
-                                 const int aPeriod ) const;
-
-    virtual void copyParamsInto( TradeInput& aInput,
-                                 const int aPeriod ) const;
-
     virtual void copyParamsInto( NodeInput& aInput,
                                  const int aPeriod ) const;
 
@@ -202,7 +191,6 @@ public:
 
     virtual void calcPricePaid( const std::string& aRegionName,
                                 const std::string& aSectorName,
-                                const MoreSectorInfo* aMoreSectorInfo,
                                 const std::vector<AGHG*>& aGhgs,
                                 const ICaptureComponent* aSequestrationDevice,
                                 const int aLifetimeYears,

@@ -43,7 +43,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
     A_bio_ghost_share <- get_data(all_data, "aglu/A_bio_ghost_share")
     A_LT_Mapping <- get_data(all_data, "aglu/A_LT_Mapping")
     A_LandLeaf3 <- get_data(all_data, "aglu/A_LandLeaf3")
-    L2012.AgYield_bio_ref <- get_data(all_data, "L2012.AgYield_bio_ref")
+    L2012.AgYield_bio_ref <- get_data(all_data, "L2012.AgYield_bio_ref", strip_attributes = TRUE)
     L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "L2012.AgProduction_ag_irr_mgmt")
 
     # L2242.LN4_Logit: Logit exponent of the fourth land nest by region

@@ -1,0 +1,96 @@
+# File: CEDS_sector_tech_combustion_revised.csv
+# Title: CEDS-GCAM sector map for combustion emission sectors.
+# Units: NA
+# Description: Maps CEDS aggregated sectors and fuels to final GCAM sectors for combustion emissions. This mapping file is used when using the new transportation modes and size classes.
+# Column types: ccccc
+supplysector,subsector,stub.technology,CEDS_agg_sector,CEDS_agg_fuel
+out_resources,coal,coal,coal,process
+out_resources,natural gas,natural gas,oil_gas,process
+out_resources,crude oil,crude oil,oil_gas,process
+industrial energy use,biomass,biomass,industry_energy,biomass
+industrial energy use,coal,coal,industry_energy,coal
+industrial energy use,gas,gas,industry_energy,gas
+industrial energy use,refined liquids,refined liquids,industry_energy,refined liquids
+N fertilizer,coal,coal,industry_energy,coal
+N fertilizer,gas,gas,industry_energy,gas
+N fertilizer,refined liquids,refined liquids,industry_energy,refined liquids
+process heat cement,biomass,biomass,cement,biomass
+process heat cement,coal,coal,cement,coal
+process heat cement,gas,gas,cement,gas
+process heat cement,refined liquids,refined liquids,cement,refined liquids
+district heat,biomass,biomass,elec_heat,biomass
+district heat,coal,coal,elec_heat,coal
+district heat,gas,gas,elec_heat,gas
+district heat,refined liquids,refined liquids,elec_heat,refined liquids
+electricity,biomass,biomass (conv),elec_heat,biomass
+electricity,coal,coal (conv pul),elec_heat,coal
+electricity,gas,gas (CC),elec_heat,gas
+electricity,gas,gas (steam/CT),elec_heat,gas
+electricity,refined liquids,refined liquids (steam/CT),elec_heat,refined liquids
+comm heating,biomass,biomass,bld_comm,biomass
+comm others,biomass,biomass,bld_comm,biomass
+comm heating,coal,coal,bld_comm,coal
+comm others,coal,coal,bld_comm,coal
+comm cooling,gas,gas,bld_comm,gas
+comm heating,gas,gas,bld_comm,gas
+comm others,gas,gas,bld_comm,gas
+comm heating,refined liquids,refined liquids,bld_comm,refined liquids
+comm others,refined liquids,refined liquids,bld_comm,refined liquids
+resid heating,biomass,biomass,bld_resid,biomass
+resid others,biomass,biomass,bld_resid,biomass
+resid heating,coal,coal,bld_resid,coal
+resid others,coal,coal,bld_resid,coal
+resid cooling,gas,gas,bld_resid,gas
+resid heating,gas,gas,bld_resid,gas
+resid others,gas,gas,bld_resid,gas
+resid heating,refined liquids,refined liquids,bld_resid,refined liquids
+resid others,refined liquids,refined liquids,bld_resid,refined liquids
+trn_freight,Freight Rail,Coal,trn_rail,coal
+trn_freight,Freight Rail,Liquids,trn_rail,refined liquids
+trn_freight,Domestic Ship,Liquids,trn_domestic ship,refined liquids
+trn_shipping_intl,International Ship,Liquids,trn_intl_ship,refined liquids
+trn_pass,Domestic Aviation,Liquids,trn_domestic air,refined liquids
+trn_aviation_intl,International Aviation,Liquids,trn_intl_air,refined liquids
+trn_pass_road,Bus,Liquids,Bus,refined liquids
+trn_pass_road_LDV_2W,2W and 3W,Liquids,LDV_2W_3W,refined liquids
+trn_pass_road_LDV_4W,Mini Car,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Car,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Car,Liquids,LDV_4W,refined liquids
+trn_pass,Passenger Rail,Liquids,trn_rail,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_pass_road_LDV_2W,2W and 3W,Liquids,LDV_2W_3W,refined liquids
+trn_pass_road_LDV_2W,2W and 3W,Liquids,LDV_2W_3W,refined liquids
+trn_pass_road_LDV,2W and 3W,Liquids,LDV_2W_3W,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Light truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Medium truck,Liquids,Truck,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_freight_road,Heavy truck,Liquids,Truck,refined liquids
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Car,Liquids,LDV_4W,refined liquids
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,LDV_4W,refined liquids
+trn_pass_road_bus,All,Liquids,Bus,refined liquids
+trn_pass_road_bus,All,Liquids,Bus,refined liquids
+resid heating,traditional biomass,traditional biomass,bld_resid,biomass
+resid others,traditional biomass,traditional biomass,bld_resid,biomass
+trn_pass_road_LDV_2W,2W and 3W,Liquids,LDV_2W_3W,refined liquids

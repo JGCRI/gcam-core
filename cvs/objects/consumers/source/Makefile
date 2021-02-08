@@ -8,12 +8,7 @@ PATHOFFSET = ../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
 OBJS       = consumer.o \
-             govt_consumer.o \
-             household_consumer.o \
-             invest_consumer.o \
-             trade_consumer.o \
-             gcam_consumer.o \
-             calc_capital_good_price_visitor.o
+             gcam_consumer.o 
 
 consumers_dir: ${OBJS}
 

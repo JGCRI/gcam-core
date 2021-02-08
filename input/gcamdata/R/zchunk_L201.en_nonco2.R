@@ -63,15 +63,15 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     A_regions <- get_data(all_data, "emissions/A_regions")
     A_regions.en <- get_data(all_data, "energy/A_regions")
 
-    L111.nonghg_tg_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tg_R_en_S_F_Yh")
-    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh")
-    L112.ghg_tg_R_en_S_F_Yh <- get_data(all_data, "L112.ghg_tg_R_en_S_F_Yh")
-    L112.ghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L112.ghg_tgej_R_en_S_F_Yh")
-    L114.bcoc_tgej_R_en_S_F_2000 <- get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000")
-    L151.nonghg_ctrl_R_en_S_T <- get_data(all_data, "L151.nonghg_ctrl_R_en_S_T")
-    A51.steepness <- get_data(all_data, "emissions/A51.steepness")
-    L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService")
-    L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec")
+    L111.nonghg_tg_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tg_R_en_S_F_Yh", strip_attributes = TRUE)
+    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh", strip_attributes = TRUE)
+    L112.ghg_tg_R_en_S_F_Yh <- get_data(all_data, "L112.ghg_tg_R_en_S_F_Yh", strip_attributes = TRUE)
+    L112.ghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L112.ghg_tgej_R_en_S_F_Yh", strip_attributes = TRUE)
+    L114.bcoc_tgej_R_en_S_F_2000 <- get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000", strip_attributes = TRUE)
+    L151.nonghg_ctrl_R_en_S_T <- get_data(all_data, "L151.nonghg_ctrl_R_en_S_T", strip_attributes = TRUE)
+    A51.steepness <- get_data(all_data, "emissions/A51.steepness", strip_attributes = TRUE)
+    L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService", strip_attributes = TRUE)
+    L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec", strip_attributes = TRUE)
 
     # make a complete mapping to be able to look up with sector + subsector + tech the
     # input name to use for an input-driver
@@ -148,8 +148,9 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L151.nonghg_ctrl_R_en_S_T %>%
       filter(supplysector != "out_resources") %>%
       # add region name
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
-      L201.max_reduction
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      select(-year)->L201.max_reduction
+
 
     L201.max_reduction %>%
       # select only certain columns in preparation for join below
@@ -411,11 +412,12 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "L111.nonghg_tgej_R_en_S_F_Yh") ->
       L201.nonghg_res
 
+    # update into using input emissions + output driver
+    # YO Mar 2020
     L201.ghg_res %>%
-      add_title("GHG emissions from resource production in all regions") %>%
+      add_title("GHG emission factors from resource production in all regions") %>%
       add_units("Tg/EJ") %>%
-      add_comments("Take GHG emissions for the energy system, filter to include only resources") %>%
-      add_comments("in model base years, and rename to regional SO2.") %>%
+      add_comments("Take GHG emissions for resource production using EPA 2019 data") %>%
       add_legacy_name("L201.ghg_res") %>%
       add_precursors("common/GCAM_region_names",
                      "L112.ghg_tgej_R_en_S_F_Yh") ->

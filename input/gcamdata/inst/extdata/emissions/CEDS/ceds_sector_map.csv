@@ -1,0 +1,73 @@
+# File: ceds_sector_map.csv
+# Title: CEDS-GCAM sector map
+# Units: NA
+# Description: Maps CEDS sectors to CEDS aggregate sectors
+# Column types: cc
+CEDS_sector,CEDS_agg_sector
+11A_Volcanoes,not_in_gcam
+11B_Forest-fires,forest
+11B_Grassland-fires,grassland
+11B_Deforestation,deforest
+11C_Other-natural,not_in_gcam
+1A1a_Electricity-autoproducer,elec_heat
+1A1a_Electricity-public,elec_heat
+1A1a_Heat-production,elec_heat
+1A1bc_Other-transformation,industry_energy
+1A2a_Ind-Comb-Iron-steel,industry_energy
+1A2b_Ind-Comb-Non-ferrous-metals,industry_energy
+1A2c_Ind-Comb-Chemicals,industry_energy
+1A2d_Ind-Comb-Pulp-paper,industry_energy
+1A2e_Ind-Comb-Food-tobacco,industry_energy
+1A2f_Ind-Comb-Non-metalic-minerals,cement
+1A2g_Ind-Comb-Construction,industry_energy
+1A2g_Ind-Comb-machinery,industry_energy
+1A2g_Ind-Comb-mining-quarying,industry_energy
+1A2g_Ind-Comb-other,industry_energy
+1A2g_Ind-Comb-textile-leather,industry_energy
+1A2g_Ind-Comb-transpequip,industry_energy
+1A2g_Ind-Comb-wood-products,industry_energy
+1A3aii_Domestic-aviation,trn_domestic air
+1A3ai_International-aviation,trn_intl_air
+1A3b_Road,trn_road
+1A3c_Rail,trn_rail
+1A3dii_Domestic-navigation,trn_domestic ship
+1A3di_International-shipping,trn_intl_ship
+1A3di_Oil_Tanker_Loading,trn_intl_ship
+1A3eii_Other-transp,trn_other
+1A4a_Commercial-institutional,bld_comm
+1A4b_Residential,bld_resid
+1A4c_Agriculture-forestry-fishing,industry_energy
+1A5_Other-unspecified,industry_energy
+1B1_Fugitive-solid-fuels,coal
+1B2d_Fugitive-other-energy,unmatched
+1B2_Fugitive-petr-and-gas,oil_gas
+2A1_Cement-production,industry_processes
+2A2_Lime-production,industry_processes
+2A6_Other-minerals,industry_processes
+2B_Chemical-industry,chemicals
+2C_Metal-production,industry_processes
+2D3_Chemical-products-manufacture-processing,solvents
+2D3_Other-product-use,solvents
+2D_Degreasing-Cleaning,solvents
+2D_Paint-application,solvents
+2H_Pulp-and-paper-food-beverage-wood,industry_processes
+2L_Other-process-emissions,industry_processes
+3B_Manure-management,Animals
+3D_Rice-Cultivation,rice
+3D_Soil-emissions,soil
+3E_Enteric-fermentation,Animals
+3F_Agricultural-residue-burning-on-fields,ag_waste_burning
+3I_Agriculture-other,soil
+5A_Solid-waste-disposal,landfills
+5C_Waste-incineration,landfills
+5D_Wastewater-handling,wastewater
+5E_Other-waste-handling,landfills
+6A_Other-in-total,industry_processes
+6B_Other-not-in-total,not_in_gcam
+7A_Fossil-fuel-fires,oil_gas
+1B2_Fugitive-petr,oil_gas
+1B2b_Fugitive-NG-distr,oil_gas
+1B2b_Fugitive-NG-prod,oil_gas
+2B2_Chemicals-Nitric-acid,chemicals_nitric
+2B3_Chemicals-Adipic-acid,chemicals_adipic
+7BC_Indirect-N2O-non-agricultural-N,soil

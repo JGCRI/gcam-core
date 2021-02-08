@@ -16,6 +16,17 @@
 #' @importFrom tidyr replace_na separate
 #' @author KD May 2017
 module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
+  if(driver.EMISSIONS_SOURCE == "CEDS") {
+    if(command == driver.DECLARE_INPUTS) {
+      return(NULL)
+    } else if(command == driver.DECLARE_OUTPUTS) {
+      return(NULL)
+    } else if(command == driver.MAKE) {
+      return_data()
+    } else {
+      stop("Unknown command")
+    }}
+  else {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/EDGAR/EDGAR_sector",
@@ -48,7 +59,7 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
     }
 
 
-    L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
+    L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y", strip_attributes = TRUE)
     L105.nh3_tgmt_USA_an_Yh <- get_data(all_data, "L105.nh3_tgmt_USA_an_Yh")
     EDGAR_NH3 <- get_data(all_data, "emissions/EDGAR/EDGAR_NH3")
 
@@ -164,4 +175,5 @@ module_emissions_L115.nh3_an_R_S_T_Y <- function(command, ...) {
   } else {
     stop("Unknown command")
   }
+}
 }

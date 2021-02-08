@@ -33,7 +33,6 @@
 
 /*! 
 * \file demographic.cpp
-* \ingroup Objects-SGM
 * \brief Demographic class source file.
 * \author Sonny Kim
 * \author Katherine Chung
@@ -50,8 +49,6 @@
 #include "util/base/include/model_time.h"
 #include "demographics/include/demographic.h"
 #include "demographics/include/population.h"
-#include "demographics/include/population_sgm_fixed.h"
-#include "demographics/include/population_sgm_rate.h"
 #include "demographics/include/population_mini_cam.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
@@ -97,12 +94,6 @@ void Demographic::XMLParse( const xercesc::DOMNode* node ){
         }
         else if( nodeName == PopulationMiniCAM::getXMLNameStatic() ) {
             parseContainerNode( curr, population, yearToMapIndex, new PopulationMiniCAM(), "year" );
-        }
-        else if( nodeName == PopulationSGMFixed::getXMLNameStatic() ){
-            parseContainerNode( curr, population, yearToMapIndex, new PopulationSGMFixed(), "year" );
-        }
-        else if( nodeName == PopulationSGMRate::getXMLNameStatic() ){
-            parseContainerNode( curr, population, yearToMapIndex, new PopulationSGMRate(), "year" );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );

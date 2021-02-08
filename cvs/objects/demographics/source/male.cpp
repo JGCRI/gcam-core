@@ -33,7 +33,6 @@
 
 /*! 
 * \file male.cpp
-* \ingroup Objects-SGM
 * \brief Male class source file.
 * \author Sonny Kim
 */

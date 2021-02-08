@@ -4,12 +4,15 @@
 \alias{get_data}
 \title{getdata}
 \usage{
-get_data(all_data, name)
+get_data(all_data, name, strip_attributes = FALSE)
 }
 \arguments{
 \item{all_data}{Data structure}
 
 \item{name}{Name of data to return}
+
+\item{strip_attributes}{Boolean indicating that `gcamdata` attributes should be
+removed when this data chunk is loaded.}
 }
 \value{
 Data object (currently, a tibble or data frame). If the object was marked

@@ -66,14 +66,14 @@ module_energy_L261.Cstorage <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A61.rsrc_info <- get_data(all_data, "energy/A61.rsrc_info")
-    A61.sector <- get_data(all_data, "energy/A61.sector")
-    A61.subsector_logit <- get_data(all_data, "energy/A61.subsector_logit")
-    A61.subsector_shrwt <- get_data(all_data, "energy/A61.subsector_shrwt")
+    A61.rsrc_info <- get_data(all_data, "energy/A61.rsrc_info", strip_attributes = TRUE)
+    A61.sector <- get_data(all_data, "energy/A61.sector", strip_attributes = TRUE)
+    A61.subsector_logit <- get_data(all_data, "energy/A61.subsector_logit", strip_attributes = TRUE)
+    A61.subsector_shrwt <- get_data(all_data, "energy/A61.subsector_shrwt", strip_attributes = TRUE)
     A61.globaltech_coef <- get_data(all_data, "energy/A61.globaltech_coef")
     A61.globaltech_cost <- get_data(all_data, "energy/A61.globaltech_cost")
-    A61.globaltech_shrwt <- get_data(all_data, "energy/A61.globaltech_shrwt")
-    L161.RsrcCurves_MtC_R <- get_data(all_data, "L161.RsrcCurves_MtC_R")
+    A61.globaltech_shrwt <- get_data(all_data, "energy/A61.globaltech_shrwt", strip_attributes = TRUE)
+    L161.RsrcCurves_MtC_R <- get_data(all_data, "L161.RsrcCurves_MtC_R", strip_attributes = TRUE)
 
     # ===================================================
 

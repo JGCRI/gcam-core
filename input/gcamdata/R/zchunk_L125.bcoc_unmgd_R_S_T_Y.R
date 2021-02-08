@@ -16,10 +16,22 @@
 #' Compute global average deforestation emissions coefficients using deforestation from 2000 to 2005 using RCP emissions.
 #' Note: Non-CO2s are calculated in a separate chunk.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr arrange bind_rows filter funs group_by left_join mutate select summarise summarise_all summarise_at vars
+#' @importFrom dplyr arrange bind_rows filter group_by left_join mutate select summarise summarise_all summarise_at vars
 #' @importFrom tidyr gather replace_na spread
 #' @author RMH May 2017
 module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
+  if(driver.EMISSIONS_SOURCE == "CEDS") {
+    if(command == driver.DECLARE_INPUTS) {
+      return(NULL)
+    } else if(command == driver.DECLARE_OUTPUTS) {
+      return(NULL)
+    } else if(command == driver.MAKE) {
+      return_data()
+    } else {
+      stop("Unknown command")
+    }}
+  else {
+
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              "L124.LC_bm2_R_Grass_Yh_GLU_adj",
@@ -104,7 +116,7 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
       select(GCAM_region_ID, Non.CO2, lcf, sav) %>%
       mutate(lcf = lcf * CONV_KG_TO_TG, sav = sav * CONV_KG_TO_TG) %>% # convert from kg to Tg
       group_by(GCAM_region_ID, Non.CO2) %>%
-      summarise_all(funs(sum)) # sum sav and lcf emissions by GCAM region
+      summarise_all(sum) # sum sav and lcf emissions by GCAM region
 
     # Compute grassland emissions factors by GCAM region
     # Because grassland and forest fire emissions scale with land quantity, the coefs can be computed at the regional level
@@ -227,5 +239,6 @@ module_emissions_L125.bcoc_unmgd_R_S_T_Y <- function(command, ...) {
     return_data(L125.bcoc_tgbkm2_R_grass_2000, L125.bcoc_tgbkm2_R_forest_2000, L125.deforest_coefs_bcoc)
   } else {
     stop("Unknown command")
+  }
   }
 }

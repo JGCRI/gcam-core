@@ -39,7 +39,7 @@ License: MIT + file LICENSE
 Depends: R (>= 3.1.2)
 Imports:
     assertthat (>= 0.2),
-    dplyr (>= 0.7.0),
+    dplyr (>= 0.8.0),
     methods,
     magrittr (>= 1.5),
     tibble (>= 1.1),
@@ -53,9 +53,13 @@ Suggests:
     testthat (>= 1.0.2),
     R.utils (>= 2.6.0),
     usethis (>= 1.4.0),
-    gcamdata.compdata
+    drake (>= 6.2.1),
+    gcamdata.compdata,
+    knitr,
+    rmarkdown
 Remotes: github::JGCRI/gcamdata.compdata
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
+VignetteBuilder: knitr
 BugReports: https://github.com/JGCRI/gcamdata/issues

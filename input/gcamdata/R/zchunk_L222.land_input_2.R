@@ -85,7 +85,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     A_LandLeaf2 <- get_data(all_data, "aglu/A_LandLeaf2")
     A_LT_Mapping <- get_data(all_data, "aglu/A_LT_Mapping")
     L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
-    L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU")
+    L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU", strip_attributes = TRUE)
 
     # silence package check notes
     GCAM_commodity <- GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-

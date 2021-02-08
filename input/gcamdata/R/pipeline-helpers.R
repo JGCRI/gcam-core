@@ -65,15 +65,18 @@ left_join_error_no_match <- function(d, ..., ignore_columns = NULL) {
 #' supplied explicitly.
 #' @return Joined table.  In case of multiple matches, only the first will be
 #' included.
-#' @importFrom dplyr left_join
+#' @importFrom dplyr ungroup left_join
 left_join_keep_first_only <- function(x, y, by) {
-  ## Our strategy is to use "distinct" to filter y to a single element for
-  ## each match category, then join that to x.
+  ## Our strategy is to use summarize/first on y for each non-match category,
+  ## then join that to x.
   . <- NULL                           # silence notes on package check
-  ll <- as.list(by)
+  ll <- by
   names(ll) <- NULL
-  do.call(dplyr::distinct_, c(list(y), ll, list(.keep_all = TRUE))) %>%
-    left_join(x, ., by = by)
+  y %>%
+    dplyr::group_by_at(tidyselect::all_of(ll)) %>%
+    dplyr::summarize_at(dplyr::vars(-tidyselect::any_of(ll)), first) %>%
+    ungroup() %>%
+    left_join(x, ., by=by)
 }
 
 
@@ -328,8 +331,8 @@ gdp_deflator <- function(year, base_year) {
            103.311, 105.214, 106.913, 108.828, 109.998, 111.445)
   names(gdp) <- gdp_years
 
-  assert_that(year %in% gdp_years)
-  assert_that(base_year %in% gdp_years)
+  assert_that(all(year %in% gdp_years))
+  assert_that(all(base_year %in% gdp_years))
 
   as.vector(unlist(gdp[as.character(year)] / gdp[as.character(base_year)]))
 }
@@ -357,3 +360,11 @@ gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN, na
     mutate(year = as.integer(year)) %>%
     stats::setNames(sub("value", value_col, names(.)))
 }
+
+
+
+#kbn adding notin for later calculations
+#' Helper function: select elements not in user defined criteria
+#' @usage a %notin% b
+#' @export
+`%notin%` <- Negate(`%in%`)

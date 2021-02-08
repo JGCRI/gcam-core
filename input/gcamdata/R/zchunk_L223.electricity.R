@@ -150,27 +150,27 @@ module_energy_L223.electricity <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    A23.sector <- get_data(all_data, "energy/A23.sector")
-    A23.subsector_logit <- get_data(all_data, "energy/A23.subsector_logit")
-    A23.subsector_shrwt <- get_data(all_data, "energy/A23.subsector_shrwt")
-    A23.subsector_interp <- get_data(all_data, "energy/A23.subsector_interp")
+    calibrated_techs <- get_data(all_data, "energy/calibrated_techs", strip_attributes = TRUE)
+    A23.sector <- get_data(all_data, "energy/A23.sector", strip_attributes = TRUE)
+    A23.subsector_logit <- get_data(all_data, "energy/A23.subsector_logit", strip_attributes = TRUE)
+    A23.subsector_shrwt <- get_data(all_data, "energy/A23.subsector_shrwt", strip_attributes = TRUE)
+    A23.subsector_interp <- get_data(all_data, "energy/A23.subsector_interp", strip_attributes = TRUE)
     A23.subsector_interp_R <- get_data(all_data, "energy/A23.subsector_interp_R")
     A23.subsector_shrwt_coal_R <- get_data(all_data, "energy/A23.subsector_shrwt_coal_R")
     A23.subsector_shrwt_nuc_R <- get_data(all_data, "energy/A23.subsector_shrwt_nuc_R")
     A23.subsector_shrwt_renew_R <- get_data(all_data, "energy/A23.subsector_shrwt_renew_R")
-    A23.globalinttech <- get_data(all_data, "energy/A23.globalinttech")
-    A23.globaltech_shrwt <- get_data(all_data, "energy/A23.globaltech_shrwt")
-    A23.globaltech_interp <- get_data(all_data, "energy/A23.globaltech_interp")
-    A23.globaltech_keyword <- get_data(all_data, "energy/A23.globaltech_keyword")
+    A23.globalinttech <- get_data(all_data, "energy/A23.globalinttech", strip_attributes = TRUE)
+    A23.globaltech_shrwt <- get_data(all_data, "energy/A23.globaltech_shrwt", strip_attributes = TRUE)
+    A23.globaltech_interp <- get_data(all_data, "energy/A23.globaltech_interp", strip_attributes = TRUE)
+    A23.globaltech_keyword <- get_data(all_data, "energy/A23.globaltech_keyword", strip_attributes = TRUE)
     A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
     A23.globaltech_capacity_factor <- get_data(all_data, "energy/A23.globaltech_capacity_factor")
-    A23.globaltech_capital <- get_data(all_data, "energy/A23.globaltech_capital")
-    A23.globaltech_capital_adv <- get_data(all_data, "energy/A23.globaltech_capital_adv")
-    A23.globaltech_capital_low <- get_data(all_data, "energy/A23.globaltech_capital_low")
+    A23.globaltech_capital <- get_data(all_data, "energy/A23.globaltech_capital", strip_attributes = TRUE)
+    A23.globaltech_capital_adv <- get_data(all_data, "energy/A23.globaltech_capital_adv", strip_attributes = TRUE)
+    A23.globaltech_capital_low <- get_data(all_data, "energy/A23.globaltech_capital_low", strip_attributes = TRUE)
     A23.globaltech_OMfixed <- get_data(all_data, "energy/A23.globaltech_OMfixed")
     A23.globaltech_OMvar <- get_data(all_data, "energy/A23.globaltech_OMvar")
-    A23.globaltech_retirement <- get_data(all_data, "energy/A23.globaltech_retirement")
+    A23.globaltech_retirement <- get_data(all_data, "energy/A23.globaltech_retirement", strip_attributes = TRUE)
     A23.globaltech_co2capture <- get_data(all_data, "energy/A23.globaltech_co2capture")
     L114.RsrcCurves_EJ_R_wind <- get_data(all_data, "L114.RsrcCurves_EJ_R_wind")
     L118.out_EJ_R_elec_hydro_Yfut <- get_data(all_data, "L118.out_EJ_R_elec_hydro_Yfut")
@@ -304,29 +304,21 @@ module_energy_L223.electricity <- function(command, ...) {
     # First write global interpolation rules to all regions, then any global interp rules that match by region + sector + subsector name will be
     # replaced by a regionally specific interpolation rule by first removing those rules from L223.SubsectorInterp_elec and then replacing them
     if(any(is.na(A23.subsector_interp$to.value))) {
-      L223.SubsectorInterp_elec <- write_to_all_regions(A23.subsector_interp[is.na(A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names) %>%
-        # convert back to char for now as we will need to merge assumptions files on which will have it as char still
-        mutate(from.year = as.character(from.year),
-               to.year = as.character(to.year))
+      L223.SubsectorInterp_elec <- write_to_all_regions(A23.subsector_interp[is.na(A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names)
 
       L223.SubsectorInterp_elec %>%
         anti_join(A23.subsector_interp_R, by = c("region", "supplysector", "subsector")) %>%
-        bind_rows(A23.subsector_interp_R[, names(L223.SubsectorInterp_elec)]) %>%
-        set_years() ->
+        bind_rows(set_years(A23.subsector_interp_R[, names(L223.SubsectorInterp_elec)])) ->
         L223.SubsectorInterp_elec
     }
 
     # Same process for interpolation rules using a to.value
     if(any(!is.na(A23.subsector_interp$to.value))) {
-      L223.SubsectorInterpTo_elec <- write_to_all_regions(A23.subsector_interp[!is.na(A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names) %>%
-        # convert back to char for now as we will need to merge assumptions files on which will have it as char still
-        mutate(from.year = as.character(from.year),
-               to.year = as.character(to.year))
+      L223.SubsectorInterpTo_elec <- write_to_all_regions(A23.subsector_interp[!is.na(A23.subsector_interp$to.value),], LEVEL2_DATA_NAMES[["SubsectorInterpTo"]], GCAM_region_names)
 
       L223.SubsectorInterpTo_elec %>%
         anti_join(A23.subsector_interp_R, by = c("region", "supplysector", "subsector")) %>%
-        bind_rows(A23.subsector_interp_R[!is.na(A23.subsector_interp_R$to.value), names(L223.SubsectorInterpTo_elec)]) %>%
-        set_years() ->
+        bind_rows(set_years(A23.subsector_interp_R[!is.na(A23.subsector_interp_R$to.value), names(L223.SubsectorInterpTo_elec)])) ->
         L223.SubsectorInterpTo_elec
     }
 
