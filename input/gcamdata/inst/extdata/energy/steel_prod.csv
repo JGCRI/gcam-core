@@ -6,9 +6,6 @@
 # Column types: ciicnnn
 # ----------
 region,year,GCAM_region_ID,unit_prod,BLASTFUR,EAF with scrap,EAF with DRI
-Africa_Eastern,1975,2,thousand tons,0,3.64,11.5
-Africa_Eastern,1980,2,thousand tons,0,4.05,12.8
-Africa_Eastern,1985,2,thousand tons,0,4.08,12.9
 Africa_Eastern,1990,2,thousand tons,0,4.38,13.9
 Africa_Eastern,1995,2,thousand tons,0,4.27,13.5
 Africa_Eastern,1996,2,thousand tons,0,4.27,13.5
@@ -31,9 +28,6 @@ Africa_Eastern,2012,2,thousand tons,0,4.8,15.2
 Africa_Eastern,2013,2,thousand tons,0,4.8,15.2
 Africa_Eastern,2014,2,thousand tons,0,4.8,15.2
 Africa_Eastern,2015,2,thousand tons,0,4.8,15.2
-Africa_Northern,1975,3,thousand tons,1600,521,1650
-Africa_Northern,1980,3,thousand tons,1780,581,1840
-Africa_Northern,1985,3,thousand tons,1790,584,1850
 Africa_Northern,1990,3,thousand tons,1920,628,1990
 Africa_Northern,1995,3,thousand tons,1870,612,1940
 Africa_Northern,1996,3,thousand tons,1870,611,1940
@@ -56,9 +50,6 @@ Africa_Northern,2012,3,thousand tons,1080,1710,5400
 Africa_Northern,2013,3,thousand tons,956,1830,5800
 Africa_Northern,2014,3,thousand tons,930,1760,5570
 Africa_Northern,2015,3,thousand tons,1230,1400,4440
-Africa_Western,1975,5,thousand tons,0,4.55,14.4
-Africa_Western,1980,5,thousand tons,0,5.07,16
-Africa_Western,1985,5,thousand tons,0,5.1,16.1
 Africa_Western,1990,5,thousand tons,0,5.48,17.3
 Africa_Western,1995,5,thousand tons,0,5.34,16.9
 Africa_Western,1996,5,thousand tons,0,5.34,16.9
@@ -81,9 +72,6 @@ Africa_Western,2012,5,thousand tons,0,30,95
 Africa_Western,2013,5,thousand tons,0,30,95
 Africa_Western,2014,5,thousand tons,0,30,95
 Africa_Western,2015,5,thousand tons,0,30,95
-Argentina,1975,31,thousand tons,1690,409,1300
-Argentina,1980,31,thousand tons,1880,456,1440
-Argentina,1985,31,thousand tons,1890,458,1450
 Argentina,1990,31,thousand tons,2030,493,1560
 Argentina,1995,31,thousand tons,1980,481,1520
 Argentina,1996,31,thousand tons,1980,480,1520
@@ -106,9 +94,6 @@ Argentina,2012,31,thousand tons,2210,667,2110
 Argentina,2013,31,thousand tons,2530,637,2020
 Argentina,2014,31,thousand tons,2750,658,2080
 Argentina,2015,31,thousand tons,2820,529,1680
-Australia_NZ,1975,6,thousand tons,4990,228,722
-Australia_NZ,1980,6,thousand tons,5560,254,803
-Australia_NZ,1985,6,thousand tons,5590,255,808
 Australia_NZ,1990,6,thousand tons,6010,274,868
 Australia_NZ,1995,6,thousand tons,5860,268,847
 Australia_NZ,1996,6,thousand tons,5850,267,846
@@ -131,9 +116,6 @@ Australia_NZ,2012,6,thousand tons,4400,337,1070
 Australia_NZ,2013,6,thousand tons,4250,320,1010
 Australia_NZ,2014,6,thousand tons,4170,312,987
 Australia_NZ,2015,6,thousand tons,4380,321,1020
-Brazil,1975,7,thousand tons,16800,1050,3310
-Brazil,1980,7,thousand tons,18700,1160,3690
-Brazil,1985,7,thousand tons,18800,1170,3710
 Brazil,1990,7,thousand tons,20200,1260,3990
 Brazil,1995,7,thousand tons,19700,1230,3890
 Brazil,1996,7,thousand tons,19700,1230,3880
@@ -156,9 +138,6 @@ Brazil,2012,7,thousand tons,26400,1940,6150
 Brazil,2013,7,thousand tons,25600,2060,6510
 Brazil,2014,7,thousand tons,26000,1890,5990
 Brazil,2015,7,thousand tons,26500,1610,5110
-Canada,1975,8,thousand tons,7290,3970,1320
-Canada,1980,8,thousand tons,8120,4430,1480
-Canada,1985,8,thousand tons,8160,4450,1480
 Canada,1990,8,thousand tons,8770,4780,1590
 Canada,1995,8,thousand tons,8560,4670,1560
 Canada,1996,8,thousand tons,8550,4660,1550
@@ -181,9 +160,6 @@ Canada,2012,8,thousand tons,7810,4270,1420
 Canada,2013,8,thousand tons,6850,4170,1390
 Canada,2014,8,thousand tons,7720,3760,1250
 Canada,2015,8,thousand tons,6720,4320,1440
-Central America and Caribbean,1975,9,thousand tons,0.834,241,763
-Central America and Caribbean,1980,9,thousand tons,0.928,268,849
-Central America and Caribbean,1985,9,thousand tons,0.934,270,854
 Central America and Caribbean,1990,9,thousand tons,1,290,918
 Central America and Caribbean,1995,9,thousand tons,0.979,283,895
 Central America and Caribbean,1996,9,thousand tons,0.978,282,894
@@ -206,9 +182,6 @@ Central America and Caribbean,2012,9,thousand tons,0.5,315,996
 Central America and Caribbean,2013,9,thousand tons,0.4,346,1100
 Central America and Caribbean,2014,9,thousand tons,0.3,302,957
 Central America and Caribbean,2015,9,thousand tons,0.5,337,1070
-Central Asia,1975,10,thousand tons,3700,53.3,169
-Central Asia,1980,10,thousand tons,4120,59.4,188
-Central Asia,1985,10,thousand tons,4150,59.7,189
 Central Asia,1990,10,thousand tons,4460,64.2,203
 Central Asia,1995,10,thousand tons,4350,62.6,198
 Central Asia,1996,10,thousand tons,4340,62.5,198
@@ -231,9 +204,6 @@ Central Asia,2012,10,thousand tons,2900,391,1240
 Central Asia,2013,10,thousand tons,3010,284,901
 Central Asia,2014,10,thousand tons,3530,254,804
 Central Asia,2015,10,thousand tons,3620,267,846
-China,1975,11,thousand tons,82200,14600,766
-China,1980,11,thousand tons,91500,16200,853
-China,1985,11,thousand tons,92000,16300,858
 China,1990,11,thousand tons,98900,17500,922
 China,1995,11,thousand tons,96400,17100,899
 China,1996,11,thousand tons,96300,17100,898
@@ -256,9 +226,6 @@ China,2012,11,thousand tons,666000,61600,3240
 China,2013,11,thousand tons,774000,46000,2420
 China,2014,11,thousand tons,768000,51600,2720
 China,2015,11,thousand tons,756000,45100,2370
-Colombia,1975,32,thousand tons,212,69.3,219
-Colombia,1980,32,thousand tons,236,77.1,244
-Colombia,1985,32,thousand tons,237,77.5,246
 Colombia,1990,32,thousand tons,255,83.3,264
 Colombia,1995,32,thousand tons,249,81.3,257
 Colombia,1996,32,thousand tons,249,81.2,257
@@ -281,9 +248,6 @@ Colombia,2012,32,thousand tons,345,230,727
 Colombia,2013,32,thousand tons,323,219,694
 Colombia,2014,32,thousand tons,298,219,692
 Colombia,2015,32,thousand tons,241,233,737
-EU-12,1975,12,thousand tons,17600,2880,2260
-EU-12,1980,12,thousand tons,19600,3210,2520
-EU-12,1985,12,thousand tons,19700,3220,2530
 EU-12,1990,12,thousand tons,21200,3470,2720
 EU-12,1995,12,thousand tons,20700,3380,2660
 EU-12,1996,12,thousand tons,20700,3380,2650
@@ -306,9 +270,6 @@ EU-12,2012,12,thousand tons,16100,4810,3780
 EU-12,2013,12,thousand tons,15900,3860,3030
 EU-12,2014,12,thousand tons,17200,3880,3050
 EU-12,2015,12,thousand tons,18200,3910,3070
-EU-15,1975,13,thousand tons,74600,27600,21600
-EU-15,1980,13,thousand tons,83100,30700,24100
-EU-15,1985,13,thousand tons,83500,30800,24200
 EU-15,1990,13,thousand tons,89800,33200,26100
 EU-15,1995,13,thousand tons,87600,32300,25400
 EU-15,1996,13,thousand tons,87500,32300,25400
@@ -331,9 +292,6 @@ EU-15,2012,13,thousand tons,82000,34700,27200
 EU-15,2013,13,thousand tons,84100,33200,26100
 EU-15,2014,13,thousand tons,85900,33000,25900
 EU-15,2015,13,thousand tons,82700,32700,25700
-Europe_Eastern,1975,14,thousand tons,23400,824,1750
-Europe_Eastern,1980,14,thousand tons,26000,918,1950
-Europe_Eastern,1985,14,thousand tons,26100,923,1960
 Europe_Eastern,1990,14,thousand tons,28100,992,2110
 Europe_Eastern,1995,14,thousand tons,27400,967,2060
 Europe_Eastern,1996,14,thousand tons,27400,966,2050
@@ -356,9 +314,6 @@ Europe_Eastern,2012,14,thousand tons,31000,1600,3410
 Europe_Eastern,2013,14,thousand tons,30800,1400,2980
 Europe_Eastern,2014,14,thousand tons,25500,1450,3090
 Europe_Eastern,2015,14,thousand tons,21700,1360,2890
-Europe_Non_EU,1975,15,thousand tons,4010,2270,4830
-Europe_Non_EU,1980,15,thousand tons,4460,2530,5370
-Europe_Non_EU,1985,15,thousand tons,4490,2540,5400
 Europe_Non_EU,1990,15,thousand tons,4820,2730,5810
 Europe_Non_EU,1995,15,thousand tons,4700,2670,5670
 Europe_Non_EU,1996,15,thousand tons,4700,2660,5660
@@ -381,9 +336,6 @@ Europe_Non_EU,2012,15,thousand tons,10400,8770,18600
 Europe_Non_EU,2013,15,thousand tons,11000,8190,17400
 Europe_Non_EU,2014,15,thousand tons,11700,7940,16900
 Europe_Non_EU,2015,15,thousand tons,12800,6730,14300
-European Free Trade Association,1975,16,thousand tons,0,713,560
-European Free Trade Association,1980,16,thousand tons,0,794,624
-European Free Trade Association,1985,16,thousand tons,0,799,627
 European Free Trade Association,1990,16,thousand tons,0,858,674
 European Free Trade Association,1995,16,thousand tons,0,837,658
 European Free Trade Association,1996,16,thousand tons,0,836,657
@@ -406,9 +358,6 @@ European Free Trade Association,2012,16,thousand tons,0,1200,946
 European Free Trade Association,2013,16,thousand tons,0,1200,939
 European Free Trade Association,2014,16,thousand tons,0,1160,913
 European Free Trade Association,2015,16,thousand tons,0,1160,909
-India,1975,17,thousand tons,13100,1760,5590
-India,1980,17,thousand tons,14600,1960,6220
-India,1985,17,thousand tons,14600,1980,6250
 India,1990,17,thousand tons,15700,2120,6720
 India,1995,17,thousand tons,15300,2070,6560
 India,1996,17,thousand tons,15300,2070,6550
@@ -431,9 +380,6 @@ India,2012,17,thousand tons,24900,12600,39800
 India,2013,17,thousand tons,34900,11100,35300
 India,2014,17,thousand tons,37100,12100,38200
 India,2015,17,thousand tons,38200,12200,38600
-Indonesia,1975,18,thousand tons,0,519,1640
-Indonesia,1980,18,thousand tons,0,577,1830
-Indonesia,1985,18,thousand tons,0,580,1840
 Indonesia,1990,18,thousand tons,0,624,1980
 Indonesia,1995,18,thousand tons,0,609,1930
 Indonesia,1996,18,thousand tons,0,608,1920
@@ -456,9 +402,6 @@ Indonesia,2012,18,thousand tons,0,541,1710
 Indonesia,2013,18,thousand tons,0,635,2010
 Indonesia,2014,18,thousand tons,1900,606,1920
 Indonesia,2015,18,thousand tons,2720,512,1620
-Japan,1975,19,thousand tons,57500,8140,15100
-Japan,1980,19,thousand tons,64000,9060,16800
-Japan,1985,19,thousand tons,64400,9110,16900
 Japan,1990,19,thousand tons,69200,9800,18200
 Japan,1995,19,thousand tons,67500,9560,17700
 Japan,1996,19,thousand tons,67400,9540,17700
@@ -481,9 +424,6 @@ Japan,2012,19,thousand tons,82300,8720,16200
 Japan,2013,19,thousand tons,85700,8720,16200
 Japan,2014,19,thousand tons,85000,8990,16700
 Japan,2015,19,thousand tons,81100,8420,15600
-Mexico,1975,20,thousand tons,3970,1890,5990
-Mexico,1980,20,thousand tons,4420,2110,6670
-Mexico,1985,20,thousand tons,4450,2120,6710
 Mexico,1990,20,thousand tons,4780,2280,7210
 Mexico,1995,20,thousand tons,4660,2220,7040
 Mexico,1996,20,thousand tons,4660,2220,7030
@@ -506,9 +446,6 @@ Mexico,2012,20,thousand tons,4990,3140,9940
 Mexico,2013,20,thousand tons,5360,3090,9790
 Mexico,2014,20,thousand tons,5680,3180,10100
 Mexico,2015,20,thousand tons,4980,3180,10100
-Middle East,1975,21,thousand tons,1670,1560,4950
-Middle East,1980,21,thousand tons,1860,1740,5510
-Middle East,1985,21,thousand tons,1870,1750,5540
 Middle East,1990,21,thousand tons,2010,1880,5950
 Middle East,1995,21,thousand tons,1960,1830,5810
 Middle East,1996,21,thousand tons,1960,1830,5800
@@ -531,9 +468,6 @@ Middle East,2012,21,thousand tons,2160,5480,17300
 Middle East,2013,21,thousand tons,2010,5990,19000
 Middle East,2014,21,thousand tons,2720,6540,20700
 Middle East,2015,21,thousand tons,2410,6490,20500
-Pakistan,1975,22,thousand tons,645,18.2,57.7
-Pakistan,1980,22,thousand tons,718,20.3,64.2
-Pakistan,1985,22,thousand tons,722,20.4,64.5
 Pakistan,1990,22,thousand tons,776,21.9,69.4
 Pakistan,1995,22,thousand tons,757,21.4,67.7
 Pakistan,1996,22,thousand tons,756,21.3,67.6
@@ -556,9 +490,6 @@ Pakistan,2012,22,thousand tons,201,343,1090
 Pakistan,2013,22,thousand tons,165,403,1280
 Pakistan,2014,22,thousand tons,143,547,1730
 Pakistan,2015,22,thousand tons,182,650,2060
-Russia,1975,23,thousand tons,38300,2090,4440
-Russia,1980,23,thousand tons,42700,2330,4940
-Russia,1985,23,thousand tons,42900,2340,4970
 Russia,1990,23,thousand tons,46100,2520,5340
 Russia,1995,23,thousand tons,45000,2450,5210
 Russia,1996,23,thousand tons,44900,2450,5210
@@ -581,9 +512,6 @@ Russia,2012,23,thousand tons,49400,6660,14100
 Russia,2013,23,thousand tons,49000,6400,13600
 Russia,2014,23,thousand tons,49600,6990,14900
 Russia,2015,23,thousand tons,49300,6910,14700
-South Africa,1975,24,thousand tons,3550,693,2190
-South Africa,1980,24,thousand tons,3950,771,2440
-South Africa,1985,24,thousand tons,3970,776,2460
 South Africa,1990,24,thousand tons,4270,834,2640
 South Africa,1995,24,thousand tons,4160,813,2580
 South Africa,1996,24,thousand tons,4160,812,2570
@@ -606,9 +534,6 @@ South Africa,2012,24,thousand tons,3900,728,2310
 South Africa,2013,24,thousand tons,4270,694,2200
 South Africa,2014,24,thousand tons,3620,669,2120
 South Africa,2015,24,thousand tons,3910,602,1910
-South America_Northern,1975,25,thousand tons,0.303,698,2210
-South America_Northern,1980,25,thousand tons,0.338,777,2460
-South America_Northern,1985,25,thousand tons,0.34,782,2480
 South America_Northern,1990,25,thousand tons,0.365,840,2660
 South America_Northern,1995,25,thousand tons,0.356,820,2600
 South America_Northern,1996,25,thousand tons,0.356,818,2590
@@ -631,9 +556,6 @@ South America_Northern,2012,25,thousand tons,0,566,1790
 South America_Northern,2013,25,thousand tons,0,513,1630
 South America_Northern,2014,25,thousand tons,0.2,356,1130
 South America_Northern,2015,25,thousand tons,0,323,1020
-South America_Southern,1975,26,thousand tons,1140,141,448
-South America_Southern,1980,26,thousand tons,1270,158,499
-South America_Southern,1985,26,thousand tons,1270,158,502
 South America_Southern,1990,26,thousand tons,1370,170,539
 South America_Southern,1995,26,thousand tons,1330,166,526
 South America_Southern,1996,26,thousand tons,1330,166,525
@@ -656,9 +578,6 @@ South America_Southern,2012,26,thousand tons,1230,472,1500
 South America_Southern,2013,26,thousand tons,910,525,1660
 South America_Southern,2014,26,thousand tons,744,533,1690
 South America_Southern,2015,26,thousand tons,822,537,1700
-South Asia,1975,27,thousand tons,0,5.46,17.3
-South Asia,1980,27,thousand tons,0,6.08,19.3
-South Asia,1985,27,thousand tons,0,6.11,19.4
 South Asia,1990,27,thousand tons,0,6.57,20.8
 South Asia,1995,27,thousand tons,0,6.41,20.3
 South Asia,1996,27,thousand tons,0,6.4,20.3
@@ -681,9 +600,6 @@ South Asia,2012,27,thousand tons,0,28.2,89.1
 South Asia,2013,27,thousand tons,0.5,27.2,86.3
 South Asia,2014,27,thousand tons,0,28.8,91.2
 South Asia,2015,27,thousand tons,0,31.2,98.8
-South Korea,1975,28,thousand tons,18700,6990,6990
-South Korea,1980,28,thousand tons,20800,7790,7790
-South Korea,1985,28,thousand tons,20900,7830,7830
 South Korea,1990,28,thousand tons,22500,8420,8420
 South Korea,1995,28,thousand tons,22000,8210,8210
 South Korea,1996,28,thousand tons,21900,8200,8200
@@ -706,9 +622,6 @@ South Korea,2012,28,thousand tons,43100,13000,13000
 South Korea,2013,28,thousand tons,40300,12900,12900
 South Korea,2014,28,thousand tons,47300,12100,12100
 South Korea,2015,28,thousand tons,48500,10600,10600
-Southeast Asia,1975,29,thousand tons,1140,1290,4100
-Southeast Asia,1980,29,thousand tons,1270,1440,4560
-Southeast Asia,1985,29,thousand tons,1270,1450,4590
 Southeast Asia,1990,29,thousand tons,1370,1560,4930
 Southeast Asia,1995,29,thousand tons,1340,1520,4810
 Southeast Asia,1996,29,thousand tons,1330,1520,4810
@@ -731,9 +644,6 @@ Southeast Asia,2012,29,thousand tons,1280,3890,12300
 Southeast Asia,2013,29,thousand tons,2070,3530,11200
 Southeast Asia,2014,29,thousand tons,2710,3500,11100
 Southeast Asia,2015,29,thousand tons,3520,2970,9410
-Taiwan,1975,30,thousand tons,7560,1260,3990
-Taiwan,1980,30,thousand tons,8420,1400,4440
-Taiwan,1985,30,thousand tons,8470,1410,4470
 Taiwan,1990,30,thousand tons,9100,1520,4800
 Taiwan,1995,30,thousand tons,8880,1480,4690
 Taiwan,1996,30,thousand tons,8870,1480,4680
@@ -756,9 +666,6 @@ Taiwan,2012,30,thousand tons,11100,2300,7270
 Taiwan,2013,30,thousand tons,12500,2350,7450
 Taiwan,2014,30,thousand tons,13500,2300,7280
 Taiwan,2015,30,thousand tons,13300,1940,6130
-USA,1975,1,thousand tons,40900,27200,9070
-USA,1980,1,thousand tons,45600,30300,10100
-USA,1985,1,thousand tons,45800,30500,10200
 USA,1990,1,thousand tons,49300,32800,10900
 USA,1995,1,thousand tons,48100,32000,10700
 USA,1996,1,thousand tons,48000,31900,10600

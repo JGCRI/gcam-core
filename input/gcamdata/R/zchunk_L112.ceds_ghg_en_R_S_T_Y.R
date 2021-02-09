@@ -451,8 +451,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       # Append CEDS sector/fuel combinations to GCAM energy
 
       L112.in_EJ_R_en_S_F_Yh_calib_all %>%
-        # filter out iron and steel energy use - this will be mapped to the main fuel within each technology below
-        # filter(!supplysector == "iron and steel") %>%
         #We will drop all electricity sectors here
         filter(stub.technology %notin% c(emissions.ZERO_EM_TECH), subsector %notin% c(emissions.ZERO_EM_TECH, "elect_td_ind", "heat")) %>%
         left_join_error_no_match(CEDS_sector_tech, by = c("supplysector", "subsector", "stub.technology")) ->
