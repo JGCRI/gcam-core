@@ -268,7 +268,10 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
       L222.GlobalTechShrwt_en_USA     <- global_energy_to_USA_GlobalTech(L222.GlobalTechShrwt_en)
       L222.GlobalTechCapture_en_USA   <- global_energy_to_USA_GlobalTech(L222.GlobalTechCapture_en)
       L222.GlobalTechSCurve_en_USA    <- global_energy_to_USA_GlobalTech(L222.GlobalTechSCurve_en)
-      L222.GlobalTechProfitShutdown_en_USA <- global_energy_to_USA_GlobalTech(L222.GlobalTechProfitShutdown_en)
+
+      if(!is.null(L222.GlobalTechProfitShutdown_en)) {
+        L222.GlobalTechProfitShutdown_en_USA <- global_energy_to_USA_GlobalTech(L222.GlobalTechProfitShutdown_en)
+      }
 
       # TODO: figure out a better strategy.  We need to have at least one technology be available in the final
       # calibration year so we can get a base cost for the absolute cost logit.  Having a share weight of zero
@@ -539,12 +542,17 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
       add_precursors("L222.GlobalTechSCurve_en") ->
       L222.GlobalTechSCurve_en_USA
 
-    L222.GlobalTechProfitShutdown_en_USA %>%
-      add_title("Global tech profit shutdown decider and parameters for USA energy sectors") %>%
-      add_units("Unitless, used to determine shape of the function defining the relationship between shutdown rate and profitability") %>%
-      add_comments("Profit-based shutdown from L222.GlobalTechProfitShutdown_en_USA are filtered for USA sectors.") %>%
-      add_precursors("L222.GlobalTechProfitShutdown_en") ->
-      L222.GlobalTechProfitShutdown_en_USA
+    if(exists("L222.GlobalTechProfitShutdown_en_USA")) {
+      L222.GlobalTechProfitShutdown_en_USA %>%
+        add_title("Global tech profit shutdown decider and parameters for USA energy sectors") %>%
+        add_units("Unitless, used to determine shape of the function defining the relationship between shutdown rate and profitability") %>%
+        add_comments("Profit-based shutdown from L222.GlobalTechProfitShutdown_en_USA are filtered for USA sectors.") %>%
+        add_precursors("L222.GlobalTechProfitShutdown_en") ->
+        L222.GlobalTechProfitShutdown_en_USA
+    } else {
+      missing_data() ->
+        L222.GlobalTechProfitShutdown_en_USA
+    }
 
     L222.GlobalTechCost_en_USA %>%
       add_title("Tech costs for USA energy sectors.") %>%
