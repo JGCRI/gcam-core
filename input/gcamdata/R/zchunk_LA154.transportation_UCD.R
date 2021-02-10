@@ -358,10 +358,10 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
     #kbn 2020 filtering out SSP values that are the same. Basically if a certain combination has the same value for a SSP in a year compared to core,
     #just keep the core value.
-    setorderv(UCD_trn_data_fillout,c("sce","year"))
-    UCD_trn_data_fillout<- unique(UCD_trn_data_fillout, by= c("UCD_region", "UCD_sector", "size.class","rev_size.class", "mode","rev.mode", "UCD_technology", "UCD_fuel", "variable", "unit", "year","value"))
+    #setorderv(UCD_trn_data_fillout,c("sce","year"))
+    #UCD_trn_data_fillout<- unique(UCD_trn_data_fillout, by= c("UCD_region", "UCD_sector", "size.class","rev_size.class", "mode","rev.mode", "UCD_technology", "UCD_fuel", "variable", "unit", "year","value"))
     #Convert back to tibble
-    UCD_trn_data_fillout <- as_tibble(UCD_trn_data_fillout)
+    #UCD_trn_data_fillout <- as_tibble(UCD_trn_data_fillout)
 
     # Aggregate the country-level energy consumption by sector and mode. First need to add in the future years for matching purposes
     IEA_fut_data_times_UCD_shares <- IEA_hist_data_times_UCD_shares %>%
