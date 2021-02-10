@@ -32,6 +32,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              #kbn 2019-10-09 Added size class divisions file here.
              FILE=  "energy/mappings/UCD_size_class_revisions",
              FILE =  "energy/UCD_trn_data_CORE_highEV",
+             FILE =  "energy/UCD_trn_data_CORE",
              # This file is currently using a constant to select the correct SSP database
              # All SSP databases will be included in the input files
              UCD_trn_data_name,"UCD_trn_data_SSP1",
@@ -71,7 +72,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     UCD_ctry <- get_data(all_data, "energy/mappings/UCD_ctry")
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")
-    UCD_trn_data_CORE <- get_data(all_data, UCD_trn_data_name) %>%
+    UCD_trn_data_CORE <- get_data(all_data, "energy/UCD_trn_data_CORE") %>%
       gather_years %>% mutate(sce=paste0("CORE"))
     # kbn 2020-06-02 get data for all SSPs. No data for SSP2.
     UCD_trn_data_SSP1 <- get_data(all_data,"UCD_trn_data_SSP1") %>% gather_years %>% mutate(sce=paste0("SSP1"))
@@ -537,7 +538,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       #kbn 2020-01-29 Add in sce below. Using only CORE for these.
       repeat_add_columns(tibble(mode = c("Walk", "Cycle"),sce=c("CORE"))) %>%
       inner_join(UCD_ctry %>% select(-country_name), by = "iso") %>%
-      left_join_error_no_match(PKM_percap_nonmotor_UCD_R %>% filter(year == energy.UCD_EN_YEAR),
+      inner_join(PKM_percap_nonmotor_UCD_R %>% filter(year == energy.UCD_EN_YEAR),
                                by = c("UCD_region", "mode")) %>%
       mutate(value = value * 1 / CONV_MIL_THOUS * pkm_percap)
 
