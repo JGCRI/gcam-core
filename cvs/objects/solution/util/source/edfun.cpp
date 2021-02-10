@@ -165,7 +165,10 @@ void LogEDFun::setSlope(UBVECTOR& adx) {
         // compare scaled prices to ensure consistent hueristics accross markets
         double p0 = mkts[i].getLowerBoundSupplyPrice() / mxscl[i];
         double p = mkts[i].getPrice() / mxscl[i];
-        if(( mkts[i].getType() == IMarketType::RES  // (constraint type markets only)
+        if( newSlope == 0.0) {
+            // ignore zero slope which is obviously problematic
+        }
+        else if(( mkts[i].getType() == IMarketType::RES  // (constraint type markets only)
             || mkts[i].getType() == IMarketType::TAX
             || mkts[i].getType() == IMarketType::SUBSIDY ) && (p > p0 && p < (p0 + 0.5)))
         {

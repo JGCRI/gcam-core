@@ -321,6 +321,15 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         chg = true;
                         ++nchg;
                     }
+                    else if(abs(oldprice) < util::getSmallNumber() &&
+                            abs(olddmnd) > util::getSmallNumber()) {
+                        // the case there the market was "off" but has now turned on
+                        // in which case just reset the trial price to the actual
+                        newprice = olddmnd;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    }
                     break; 
                 case IMarketType::PRICE:
                     // price markets are solving a consistency

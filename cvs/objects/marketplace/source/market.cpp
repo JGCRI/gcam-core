@@ -263,7 +263,9 @@ void Market::set_price_to_last( const double lastPrice ) {
  * \param aForecastPrice The forecasted price to set.
  */
 void Market::setForecastPrice( double aForecastPrice ) {
-    mForecastPrice = aForecastPrice;
+    if( aForecastPrice != 0.0 ) {
+        mForecastPrice = aForecastPrice;
+    }
 }
 
 /*!
@@ -281,7 +283,9 @@ double Market::getForecastPrice() const {
  * \param aForecastDemand The forecasted demand to set.
  */
 void Market::setForecastDemand( double aForecastDemand ) {
-    mForecastDemand = aForecastDemand;
+    if( aForecastDemand != 0.0 ) {
+        mForecastDemand = aForecastDemand;
+    }
 }
 
 /*!

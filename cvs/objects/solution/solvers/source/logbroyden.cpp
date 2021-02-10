@@ -478,11 +478,78 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       solverLog << "**** ||gx|| = 0.  Returning.\n";
       return -3;
     }
+      
+      Btmp = B;                   // save the jacobian approximant
+        dx = fx * -1.0;
 
-    Btmp = B;                   // save the jacobian approximant
-      dx = fx * -1.0;
-      if(B.determinant() == 0) {
-          std::cout << "Doing SVD: " << std::endl;
+#if 0
+      tbb::tick_count t0 = tbb::tick_count::now();
+      Eigen::PartialPivLU<UBMATRIX> luFastTest(B);
+      double det = luFastTest.determinant();
+      double recipCond = luFastTest.rcond();
+      UBVECTOR dx_LUFAST = luFastTest.solve(dx);
+      tbb::tick_count t1 = tbb::tick_count::now();
+      solverLog << "PartialPivLU = time: " << (t1-t0).seconds() << " det: " << det << " rCond: " << recipCond << " dxMag: " << sqrt(dx_LUFAST.dot(dx_LUFAST)) << std::endl;
+      t0 = tbb::tick_count::now();
+      Eigen::FullPivLU<UBMATRIX> luSlowTest(B);
+      luSlowTest.setThreshold(1.0e-12);
+      det = luSlowTest.determinant();
+      recipCond = luSlowTest.rcond();
+      bool isInvert = luSlowTest.isInvertible();
+      UBVECTOR dx_LUSLOW = luSlowTest.solve(dx);
+      t1 = tbb::tick_count::now();
+      solverLog << "FullPivLU = time: " << (t1-t0).seconds() << " det: " << det << " rCond: " << recipCond << " isInvert: " << isInvert << " rank: " << luSlowTest.rank() << " dxMag: " << sqrt(dx_LUSLOW.dot(dx_LUSLOW)) << std::endl;
+      t0 = tbb::tick_count::now();
+      Eigen::BDCSVD<UBMATRIX> svdTest(B, Eigen::ComputeThinU | Eigen::ComputeThinV);
+      svdTest.setThreshold(1.0e-12);
+      UBVECTOR dx_SVD = svdTest.solve(dx);
+      t1 = tbb::tick_count::now();
+      solverLog << "BDCSVD = time: " << (t1-t0).seconds() << " rank: " << svdTest.rank() << " dxMag: " << sqrt(dx_SVD.dot(dx_SVD)) << std::endl;
+      solverLog << "dx (LUFAST - LUSLOW): " << std::endl;
+      for(int i = 0; i < dx_LUSLOW.size(); ++i) {
+          if(abs(dx_LUFAST[i] - dx_LUSLOW[i]) > 1e-8) {
+              solverLog << i << ": "  << (dx_LUFAST[i] - dx_LUSLOW[i]) << std::endl;
+          }
+      }
+      solverLog << "dx (LUFAST - SVD): " << std::endl;
+      for(int i = 0; i < dx_LUSLOW.size(); ++i) {
+          if(abs(dx_LUFAST[i] - dx_SVD[i]) > 1e-8) {
+              solverLog << i << ": "  << (dx_LUFAST[i] - dx_SVD[i]) << std::endl;
+          }
+      }
+      solverLog << "dx (LUSLOW - SVD): " << std::endl;
+      for(int i = 0; i < dx_LUSLOW.size(); ++i) {
+          if(abs(dx_LUSLOW[i] - dx_SVD[i]) > 1e-8) {
+              solverLog << i << ": "  << (dx_LUSLOW[i] - dx_SVD[i]) << std::endl;
+          }
+      }
+#endif
+      
+      Eigen::PartialPivLU<UBMATRIX> luPartialPiv(B);
+      dx = luPartialPiv.solve(-1.0 * fx);
+      double dxmag = sqrt(dx.dot(dx));
+      /*if() {
+          // going to have to use SVD
+          solverLog << "Doing SVD: " << std::endl;
+          Eigen::BDCSVD<UBMATRIX> svdSolver(B, Eigen::ComputeThinU | Eigen::ComputeThinV);
+          const double small_threshold = 1.0e-12;
+          svdSolver.setThreshold(small_threshold);
+          dx = svdSolver.solve(-1.0 * fx);
+      }
+      else*/ if(luPartialPiv.determinant() == 0 || dxmag > 1000.0) {
+          // potentially unreliable result, let's put a little more effort
+          // in with full pivot LU to hopefully get a more accurate solution
+          solverLog << "Attempting full pivot LU instead, old dxmag: " << dxmag;
+          Eigen::FullPivLU<UBMATRIX> luFullPiv(B);
+          luFullPiv.setThreshold(1.0e-12);
+          dx = luFullPiv.solve(-1.0 * fx);
+          dxmag = sqrt(dx.dot(dx));
+          solverLog << " new dxmag: " << dxmag << std::endl;
+      }
+      
+      
+      /*if(B.determinant() == 0) {
+          solverLog << "Doing SVD: " << std::endl;
           Eigen::BDCSVD<UBMATRIX> svdSolver(B, Eigen::ComputeThinU | Eigen::ComputeThinV);
           const double small_threshold = 1.0e-8;
           svdSolver.setThreshold(small_threshold);
@@ -490,7 +557,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       }
       else {
           dx = B.lu().solve(dx);
-      }
+      }*/
 #if 0
 #if USE_LAPACK /* Solve using SVD */
     int ierr = boost::numeric::bindings::lapack::gesvd('O','A','A', // control parameters
