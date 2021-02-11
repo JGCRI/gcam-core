@@ -528,15 +528,15 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       Eigen::PartialPivLU<UBMATRIX> luPartialPiv(B);
       dx = luPartialPiv.solve(-1.0 * fx);
       double dxmag = sqrt(dx.dot(dx));
-      /*if() {
+      if(luPartialPiv.determinant() == 0) {
           // going to have to use SVD
           solverLog << "Doing SVD: " << std::endl;
           Eigen::BDCSVD<UBMATRIX> svdSolver(B, Eigen::ComputeThinU | Eigen::ComputeThinV);
-          const double small_threshold = 1.0e-12;
+          const double small_threshold = 0;
           svdSolver.setThreshold(small_threshold);
           dx = svdSolver.solve(-1.0 * fx);
       }
-      else*/ if(luPartialPiv.determinant() == 0 || dxmag > 1000.0) {
+      else if(dxmag > 1000.0) {
           // potentially unreliable result, let's put a little more effort
           // in with full pivot LU to hopefully get a more accurate solution
           solverLog << "Attempting full pivot LU instead, old dxmag: " << dxmag;
@@ -655,6 +655,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       // failure starting from this x value, try a finite difference
       // jacobian
       if(!lsfail) {
+          F(x, fx);
         solverLog << "**Failed line search. Evaluating fdjac\n";
         lsfail = true;
           if((iter+1) < mMaxIter) {
