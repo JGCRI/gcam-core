@@ -17,7 +17,6 @@
 module_energy_L239.ff_trade <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             FILE = "energy/A21.globaltech_keyword_ff",
              FILE = "energy/A_ff_RegionalSector",
              FILE = "energy/A_ff_RegionalSubsector",
              FILE = "energy/A_ff_RegionalTechnology",
@@ -55,7 +54,6 @@ module_energy_L239.ff_trade <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names",strip_attributes = TRUE)
-    A21.globaltech_keyword_ff <- get_data(all_data, "energy/A21.globaltech_keyword_ff",strip_attributes = TRUE)
     A_ff_RegionalSector <- get_data(all_data, "energy/A_ff_RegionalSector",strip_attributes = TRUE)
     A_ff_RegionalSubsector <- get_data(all_data, "energy/A_ff_RegionalSubsector",strip_attributes = TRUE)
     A_ff_RegionalTechnology <- get_data(all_data, "energy/A_ff_RegionalTechnology",strip_attributes = TRUE)
@@ -68,7 +66,8 @@ module_energy_L239.ff_trade <- function(command, ...) {
 
 
     # Keywords of global technologies
-    A21.globaltech_keyword_ff %>%
+    A_ff_RegionalTechnology %>%
+      filter(!is.na(primary.consumption)) %>%
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
       select(sector.name = supplysector, subsector.name = subsector, technology, primary.consumption, year) %>%
       filter(year %in% MODEL_YEARS) -> L239.PrimaryConsKeyword_en
@@ -145,7 +144,8 @@ module_energy_L239.ff_trade <- function(command, ...) {
       left_join_error_no_match(L239.GrossExports_EJ_R_C_Y,
                                by = c(market.name = "region", minicam.energy.input = "GCAM_Commodity", "year")) %>%
       rename(calOutputValue = GrossExp_EJ) %>%
-      mutate(share.weight.year = year,
+      mutate(calOutputValue = round(calOutputValue, energy.DIGITS_CALOUTPUT),
+             share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
       select(LEVEL2_DATA_NAMES[["Production"]])
@@ -187,7 +187,8 @@ module_energy_L239.ff_trade <- function(command, ...) {
       left_join_error_no_match(L239.GrossImports_EJ_R_C_Y,
                                by = c("region", minicam.energy.input = "supplysector", "year")) %>%
       rename(calOutputValue = GrossImp_EJ) %>%
-      mutate(share.weight.year = year,
+      mutate(calOutputValue = round(calOutputValue, energy.DIGITS_CALOUTPUT),
+             share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
       select(LEVEL2_DATA_NAMES[["Production"]])
@@ -208,7 +209,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
                                by = c("region", minicam.energy.input = "GCAM_Commodity", "year")) %>%
       left_join_error_no_match(L239.Prod_EJ_R_C_Y,
                                by = c("region", minicam.energy.input = "GCAM_Commodity", "year")) %>%
-      mutate(calOutputValue = Prod_EJ - GrossExp_EJ,
+      mutate(calOutputValue = round(Prod_EJ - GrossExp_EJ, energy.DIGITS_CALOUTPUT),
              share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
@@ -222,7 +223,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
              !grepl("imported", subsector))  %>%
       left_join(L2011.ff_ALL_EJ_R_C_Y %>% mutate(fuel = gsub(" production", "", fuel), fuel = paste0("regional ",fuel)),
                 by = c("region", minicam.energy.input = "fuel", "year")) %>%
-      mutate(calOutputValue = consumption,
+      mutate(calOutputValue = round(consumption, energy.DIGITS_CALOUTPUT),
              share.weight.year = year,
              subs.share.weight = if_else(calOutputValue >= 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
@@ -235,9 +236,9 @@ module_energy_L239.ff_trade <- function(command, ...) {
     L239.PrimaryConsKeyword_en %>%
       add_title("Keywords of global technologies") %>%
       add_units("unitless") %>%
-      add_comments("A21.globaltech_keyword_ff written to all model periods") %>%
+      add_comments("Primary consumption from A_ff_RegionalTechnology written to all model periods") %>%
       add_legacy_name("L239.PrimaryConsKeyword_en") %>%
-      add_precursors("energy/A21.globaltech_keyword_ff") ->
+      add_precursors("energy/A_ff_RegionalTechnology") ->
       L239.PrimaryConsKeyword_en
 
     L239.Supplysector_tra %>%
