@@ -342,8 +342,8 @@ void LogEDFun::operator()(const UBVECTOR &ax, UBVECTOR &fx, const int partj)
       double p0 = mkts[i].getLowerBoundSupplyPrice();
       double p  = x[i]>=ARGMAX ? PMAX : exp(x[i]);
       double c  = std::max(0.0, p0-p);
-      double fxi = log(d/s);
-      /*if(c>0.0) {
+      /*double fxi = log(d/s);
+      if(c>0.0) {
         ILogger &solverlog = ILogger::getLogger("solver_log");
         solverlog.setLevel(ILogger::DEBUG);
         solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << p
@@ -378,7 +378,8 @@ void LogEDFun::operator()(const UBVECTOR &ax, UBVECTOR &fx, const int partj)
     }
     else if(!mLogPricep && ( mkts[i].getType() == IMarketType::RES  // LINEAR CASE (constraint type markets only)
             || mkts[i].getType() == IMarketType::TAX
-            || mkts[i].getType() == IMarketType::SUBSIDY ) )
+            || mkts[i].getType() == IMarketType::SUBSIDY
+            || mkts[i].getType() == IMarketType::TRIAL_VALUE ) )
     {
         double d = mkts[i].getDemand();
         double s = mkts[i].getSupply();

@@ -368,6 +368,11 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
     double currFX = fx.dot(fx);
     double prevFX;
     
+    // save initial values in case the solution becomes substantially worse
+    // and we need to revert to them
+    double initialFX = currFX;
+    UBVECTOR initialX = x;
+    
     solverLog.setLevel( ILogger::DEBUG );
     solverLog << aSolutionSet << endl;
     solverLog << endl << "Initial FX: " << currFX << endl;
@@ -492,6 +497,17 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
     } while ( ++iterationCount <= aMaxIterations && !aSolutionSet.isAllBracketed() );
 
     code = ( aSolutionSet.isAllBracketed() ? true : false );
+    
+    // do not allow the overall solution to get worse by three orders of magnitude
+    if(currFX > (initialFX * 1e3)) {
+        solverLog.setLevel( ILogger::WARNING );
+        solverLog << "Final FX: " << currFX << " increased from: " << initialFX<< " beyond thge allowable limit." << endl;
+        solverLog << "Brackets may be unreliable, reseting to initial prices and marking failure." << endl;
+        // reset brackets and go back to the original price vector
+        aSolutionSet.resetBrackets();
+        edFun(initialX, fx);
+        code = false;
+    }
 
     solverLog.setLevel( ILogger::DEBUG );
     solverLog << "Solution Info Set before leaving bracket: " << endl;

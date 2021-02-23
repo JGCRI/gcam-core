@@ -528,7 +528,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       Eigen::PartialPivLU<UBMATRIX> luPartialPiv(B);
       dx = luPartialPiv.solve(-1.0 * fx);
       double dxmag = sqrt(dx.dot(dx));
-      if(luPartialPiv.determinant() == 0) {
+      if(luPartialPiv.determinant() == 0 || !util::isValidNumber(dxmag)) {
           // going to have to use SVD
           solverLog << "Doing SVD: " << std::endl;
           Eigen::BDCSVD<UBMATRIX> svdSolver(B, Eigen::ComputeThinU | Eigen::ComputeThinV);
@@ -546,18 +546,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
           dxmag = sqrt(dx.dot(dx));
           solverLog << " new dxmag: " << dxmag << std::endl;
       }
-      
-      
-      /*if(B.determinant() == 0) {
-          solverLog << "Doing SVD: " << std::endl;
-          Eigen::BDCSVD<UBMATRIX> svdSolver(B, Eigen::ComputeThinU | Eigen::ComputeThinV);
-          const double small_threshold = 1.0e-8;
-          svdSolver.setThreshold(small_threshold);
-          dx = svdSolver.solve(dx);
-      }
-      else {
-          dx = B.lu().solve(dx);
-      }*/
+
 #if 0
 #if USE_LAPACK /* Solve using SVD */
     int ierr = boost::numeric::bindings::lapack::gesvd('O','A','A', // control parameters
@@ -655,6 +644,9 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       // failure starting from this x value, try a finite difference
       // jacobian
       if(!lsfail) {
+          // linesearch will have left off on some other price vector thus we
+          // could have bad state data from which we calculate derivatives or
+          // check if we we can return due to a relaxed convergence test
           F(x, fx);
         solverLog << "**Failed line search. Evaluating fdjac\n";
         lsfail = true;
@@ -662,10 +654,9 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
               // no point in re-calculating a jacobian if we won't get a chance
               // to use it
               
-        // call fdjac such that it re-calculates the model at x as linesearch will
-        // have left off on some other price vector thus we could have bad state
-        // data from which we calculate derivatives
-        fdjac(F,x,B);
+
+        // we just recalculated fx so we can be confident we can re-use it
+        fdjac(F,x,fx, B);
         neval += x.size();
         ageB = 0;  // reset the age on B
 

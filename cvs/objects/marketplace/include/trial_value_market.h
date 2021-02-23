@@ -92,6 +92,11 @@ protected:
     )
     
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    
+    //! The minimum price threshold below which the constraint is considered
+    //! non-binding and the solver will begin to impose a "correction" to
+    //! force the supply equal to the demand.
+    double mMinPrice;
 };
 
 #endif // _TRIALVALUE_MARKET_H_

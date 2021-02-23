@@ -278,6 +278,14 @@ void SubResource::postCalc( const string& aRegionName, const string& aResourceNa
     }
     
     mTechnology->postCalc( aRegionName, aPeriod );
+    
+    // reset the supply curve bounds, the lower bound in particular
+    // as the rule for setting the lower bound is the lowest price wins
+    // (to accommodate global markets) but this can be problematic when target
+    // in which case the amount depleted will vary between dispatches
+    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( aResourceName, aRegionName, aPeriod, true );
+    const string LOWER_BOUND_KEY = "lower-bound-supply-price";
+    marketInfo->setDouble(LOWER_BOUND_KEY, util::getLargeNumber());
 }
 
 void SubResource::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
