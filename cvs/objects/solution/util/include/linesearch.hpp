@@ -116,10 +116,6 @@ int linesearch(VecFVec &f, const UBVECTOR &x0,
 
     if(solverlog) {
         (*solverlog) << "\tlambda = " << lambda << "  fx = " << fx << std::endl;
-      if(fx > 10.0*f0) {
-        //f.prn_diagnostic(solverlog);
-        (*solverlog) << std::endl;
-      }
     }
 
     // check for exit condition.  The term after the + is negative, so

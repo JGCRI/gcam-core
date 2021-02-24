@@ -355,7 +355,6 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
     // This way we can re-use the same concepts to backtrack on a bracket step
     // similar to how we do it in the linesearch algorithm used in NR.
     LogEDFun edFun(aSolutionSet, aWorld, aMarketplace, aPeriod, false);
-    //FdotF<double, double> F(edFun);
     UBVECTOR fx(aSolutionSet.getNumSolvable());
     UBVECTOR x(aSolutionSet.getNumSolvable());
     UBVECTOR prev_x(aSolutionSet.getNumSolvable());
@@ -649,4 +648,38 @@ void SolverLibrary::restorePrices( SolutionInfoSet& aSolutionSet, const vector<d
     for( unsigned int i = 0; i < aSolutionSet.getNumTotal(); ++i ){
         aSolutionSet.getAny( i ).setPrice( aPrices[ i ] );
     }
+}
+
+std::ostream & operator<<(std::ostream &ostrm, const UBVECTOR &v) {
+    ostrm << "(";
+    for(size_t i=0; i<v.size(); ++i) {
+        if(i>0) {
+            // print dividers to make the thing easier to read
+            if(i%50 == 0)
+                ostrm << "\n" << i << ":\t";
+            else if(i%10 == 0)
+                ostrm << "\n\t";
+            else ostrm << " ";
+        }
+        ostrm << v[i];
+    }
+    ostrm << ")";
+    return ostrm;
+}
+
+
+std::ostream & operator<<(std::ostream &ostrm, const UBMATRIX &M) {
+    int m = M.rows();
+    int n = M.cols();
+    
+    for(int i=0;i<m;++i) {
+        ostrm << i << ":   ";
+        for(int j=0;j<n;++j) {
+            if(j>0 && j%50==0) ostrm << "|";
+            if(j>0 && j%10==0) ostrm << "| ";
+            ostrm << M(i,j) << " ";
+        }
+        ostrm << "\n";
+    }
+    return ostrm;
 }

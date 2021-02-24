@@ -33,15 +33,10 @@
 *
 */
 
-#include <boost/numeric/ublas/lu.hpp>
-#include "solution/util/include/functor-subs.hpp"
+#include "solution/util/include/functor.hpp"
 
 
 int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec &F,
                           std::ostream *diagnostic=0, bool logpricep=true, double FTOL=1.0e-4);
-
-void broyden_singular_B_reset(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &B, VecFVec &F,
-                             std::ostream *diagnostic, double FTOL=1.0e-4);
-
 
 #endif

@@ -41,13 +41,12 @@
  * @brief Some specific functor subclasses for use in GCAM
  */
 
-#include <map>
-#include <set>
 #include <vector>
-#include "marketplace/include/marketplace.h"
-#include "containers/include/world.h"
 #include "solution/util/include/solution_info_set.h"
 #include "solution/util/include/functor.hpp"
+
+class Marketplace;
+class World;
 
 
 /*!

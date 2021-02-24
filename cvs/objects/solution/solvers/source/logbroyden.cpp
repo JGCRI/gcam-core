@@ -65,21 +65,8 @@
 #include "solution/util/include/fdjac.hpp" 
 #include "solution/util/include/edfun.hpp"
 #include "solution/util/include/ublas-helpers.hpp"
-#include "util/base/include/fltcmp.hpp"
 #include "solution/util/include/jacobian-precondition.hpp"
 
-/*
-#if USE_LAPACK
-#include <boost/numeric/bindings/traits/ublas_vector.hpp>
-#include <boost/numeric/bindings/traits/ublas_matrix.hpp>
-#include <boost/numeric/ublas/operation.hpp>
-#include <boost/numeric/bindings/lapack/gesvd.hpp>
-#include "solution/util/include/svd_invert_solve.hpp"
-#else
-#include <boost/numeric/ublas/operation.hpp>
-#include <boost/numeric/ublas/lu.hpp>
-#endif
- */
 #include <Eigen/LU>
 #include <Eigen/SVD>
 
@@ -293,10 +280,6 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
 
     solverLog << ">>>> Main loop jacobian called.\n";
     int pcfail = jacobian_precondition(x, fx, J, F, &solverLog, mLogPricep);
-    if(pcfail == 2) {
-        fdjac(F, x, fx, J, true);
-        pcfail = 0;
-    }
 
     if( pcfail ) {
       solverLog.setLevel(ILogger::WARNING);
@@ -369,20 +352,10 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
 int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
                        UBMATRIX & B, int &neval)
 {
-#if 0
-#if !USE_LAPACK
-  using boost::numeric::ublas::permutation_matrix;
-  using boost::numeric::ublas::lu_factorize;
-  using boost::numeric::ublas::lu_substitute;
-#endif
-#endif
-  using boost::numeric::ublas::axpy_prod;
-  using boost::numeric::ublas::inner_prod;
   int nrow = B.rows(), ncol = B.cols();
   int ageB = 0;   // number of iterations since the last reset on B
   // svd decomposition elements (note nrow == ncol)
 
-  UBMATRIX Btmp(nrow, ncol);
   ILogger &solverLog = ILogger::getLogger("solver_log");
   ILogger& worstMarketLog = ILogger::getLogger( "worst_market_log" );
   worstMarketLog.setLevel( ILogger::DEBUG );
@@ -435,9 +408,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     abort();
   }
 
-  // We create a functor that computes f( x ) = F( x )*F( x ).  It also
-  // stores the value of F that it produces as an intermediate.
-  //FdotF<double,double> fnorm( F );
+  // We calculate a scalar value for F(x) using F(x) * F(x)
   double f0 = fx.dot(fx); // already have a value of F on input, so no need to call fnorm yet
   if(f0 < FTINY) {
     // Guard against F=0 since it can cause a NaN in our solver.  This
@@ -453,13 +424,9 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     solverLog << "Internal iteration count ( mPerIter )= " << mPerIter << "\n";
     cSolInfo->printMarketInfo("Broyden ", calcCounter->getPeriodCount(), singleLog);
     for(int j=0;j<F.narg();++j) {
-      // double bjj= B(j,j);
-      // jdiag[j] = bjj;
       jdiag[j] = B(j,j);
     }
-      if(iter == 0) {
     static_cast<LogEDFun&>(F).setSlope(jdiag);
-      }
     double jdmax=0.0, jdmin=0.0;
     int jdjmax=0, jdjmin=0;
     locate_vector_minmax(jdiag, jdmax, jdmin, jdjmax, jdjmin);
@@ -480,9 +447,6 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       solverLog << "**** ||gx|| = 0.  Returning.\n";
       return -3;
     }
-      
-      Btmp = B;                   // save the jacobian approximant
-        dx = fx * -1.0;
 
 #if 0
       tbb::tick_count t0 = tbb::tick_count::now();
@@ -527,16 +491,27 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       }
 #endif
       
+      // start with partial pivot LU decomposition as it is so fast to execute and
+      // see if we need to fall back to an alternative if it doesn't "perform" well
       Eigen::PartialPivLU<UBMATRIX> luPartialPiv(B);
       dx = luPartialPiv.solve(-1.0 * fx);
       double dxmag = sqrt(dx.dot(dx));
       if(luPartialPiv.determinant() == 0 || !util::isValidNumber(dxmag)) {
-          // going to have to use SVD
-          solverLog << "Doing SVD: " << std::endl;
+          // singular or badly messed up Jacobian, going to have to use SVD
+          solverLog << "Doing SVD, old dxmag:  " << dxmag;
           Eigen::BDCSVD<UBMATRIX> svdSolver(B, Eigen::ComputeThinU | Eigen::ComputeThinV);
+          // SVD uses a threshold to determine which elements to treat as singular
+          // however it is applied relative to the largest diaganol element and we seem
+          // to have some really large ones.  So even when setting what seems like a small
+          // value here it normalizes to something large enough that it suppresses behavior
+          // in markets which should be fine to operate on.  Thus we have set it explicitly
+          // to zero, a.k.a only the elements that truly have no behavior get suppressed
+          // ideally we could improve upon this
           const double small_threshold = 0;
           svdSolver.setThreshold(small_threshold);
           dx = svdSolver.solve(-1.0 * fx);
+          dxmag = sqrt(dx.dot(dx));
+          solverLog << " new dxmag: " << dxmag << std::endl;
       }
       else if(dxmag > 1000.0) {
           // potentially unreliable result, let's put a little more effort
@@ -548,85 +523,6 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
           dxmag = sqrt(dx.dot(dx));
           solverLog << " new dxmag: " << dxmag << std::endl;
       }
-
-#if 0
-#if USE_LAPACK /* Solve using SVD */
-    int ierr = boost::numeric::bindings::lapack::gesvd('O','A','A', // control parameters
-                                                       B,           // input matrix
-                                                       Ssv,Usv,VTsv); // outputs
-    if(ierr>0) {
-      // svd failed.  It's not even clear under what circumstances
-      // this can happen
-      solverLog.setLevel(ILogger::SEVERE);
-      solverLog << "****************SVD failed.  This shouldn't happen.  It can't mean anything good.\n";
-      return ierr;
-    }
-
-    // At this point, U, S, and VT contain the SVD of the original Jacobian
-    solverLog.setLevel(ILogger::DEBUG);
-    dx = -1.0*fx; 
-    int nsing = svdInvertSolve(Usv,Ssv,VTsv,dx, solverLog);
-
-    solverLog << "\nIteration " << iter << "\nf0= " << f0
-              << "\tnsing= " << nsing
-              << "\nx: " << x << "\nF( x ): " << fx << "\ndx: " << dx << "\n";
-
-#else /* No USE_LAPACK.  Solve using L-U decomposition */
-    int itrial = 0;
-    /* If the L-U decomposition fails the first time around, we will
-       invoke the jacobian preconditioner and try again.  If it fails
-       a second time, we bail out */
-    do {
-      for(size_t i=0; i<p.size(); ++i) {
-        p[i] = i;
-      }
-      int sing = lu_factorize(B,p);
-      if(sing>0) {
-        int fail=1;
-        B = Btmp;           // restore Jacobian
-        if(itrial == 0) {
-            solverLog << "Salvaging Jacobian.\n";
-            fail = jacobian_precondition(x, fx, B, F, &solverLog, mLogPricep);
-            if(fail == 2) {
-                fail = 0;
-                fdjac(F, x, fx, B, true);
-            }
-            f0 = inner_prod(fx,fx);
-
-            // log the diagonal of the new jacobian
-            for(int j=0; j<F.narg(); ++j) {
-                jdiag[j] = B(j,j); 
-            }
-            solverLog << "After jacobian salvage.  diag( B )=\n" << jdiag << "\n";
-
-        }
-        
-        if( fail ) {
-            solverLog.setLevel(ILogger::WARNING);
-            solverLog << "Singular Jacobian:\n" << B << "\n";
-            return sing;
-        }
-      }
-      else {
-        // L-U decomp was successful.  Continue with the next phase of the algorithm.
-        break;
-      }
-    } while(++itrial < 2);
-    
-    // J now holds the L-U decomposition of the Jacobian.  Attempt backsubstitution
-    dx = -1.0*fx;
-    try {
-      lu_substitute(B,p,dx);    // solve dx = J^-1 F
-    }
-    catch (const boost::numeric::ublas::internal_logic &err) {
-      // This error seems to be thrown when the Jacobian is
-      // ill-conditioned.  We let it go because often the solver will
-      // muddle through to a solution.  If not, then it will
-      // eventually stop with a genuinely singular matrix.
-    }
-    solverLog << "dx: " << dx << "\n"; 
-#endif /* USE_LAPACK */
-#endif
 
     // log the proposal step
     solverLog << "Proposal step magnitude dxmag= " << sqrt(dx.dot(dx)) << "\n\n";
@@ -680,7 +576,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       // test and return if we have a "close enough" solution.
       double msf = f0/fx.size();
       if(msf < mFTOL) {
-          std::cout << "Relaxed success" << std::endl;
+        solverLog << "Relaxed success" << std::endl;
         // basically, we're letting ourselves converge to the sqrt of
         // our intended tolerance.
         return 0;
@@ -708,7 +604,9 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
               << "\tlambda= " << lambda << "\n";
 
     UBVECTOR fxnew(fx.size());
-      F(xnew, fxnew);//fnorm.lastF( fxnew );            // get the last value of big-F
+      // TODO: if we return the last fx from linesearch we wouldn't have to recalculate
+      // it here
+      F(xnew, fxnew);
     //solverLog << "\nxnew: " << xnew << "\nfxnew: " << fxnew << "\n";
     UBVECTOR fxstep(fxnew -fx); // change in F( x ).  We will need this for the secant update
 
@@ -742,39 +640,15 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       fx = fxnew;
       return 0;                 // SUCCESS 
     }
-
-#if 0
-    // secondary convergence test based on an estimated change in the
-    // price vector.  Only test this if we have a "fresh" jacobian
-    if(ageB == 0)  {
-        maxval = fabs(fxnew[0]) / (util::getSmallNumber() + fabs(Btmp(0,0)));
-        imaxval = 0;
-        for(size_t i=1; i<fxnew.size(); ++i) {
-            double val = fabs(fxnew[i]) / (util::getSmallNumber() + fabs(Btmp(i,i)));
-            if(val > maxval) {
-                maxval = val;
-                imaxval = i;
-            }
-        }
-        solverLog << "Secondary convergence test maxval:  " << maxval << "  imaxval= " << imaxval << "\n";
-        if(maxval <= mFTOL) {   // XXX should put an x-tolerance in here
-            solverLog << "Solved using secondary criterion.\n";
-            x = xnew;
-            fx = fxnew;
-            return 0; 
-        }
-    }
-#endif
     
     // update B for next iteration
       double fratio_cutoff = 1.0 - 1.0/nrow;
     if(fnew/f0 < fratio_cutoff || iter == 0) { // making adequate progress with the Broyden formula
       double dx2 = xstep.dot(xstep);
       UBVECTOR Bdx(F.nrtn());
-      B = Btmp;
-        fxstep -= B * xstep;//axpy_prod(B, xstep, Bdx);
+        fxstep -= B * xstep;
       fxstep /= dx2;
-        B += fxstep * xstep.transpose();//outer_prod(fxstep, xstep);
+        B += fxstep * xstep.transpose();
         if(iter >0) {
       ageB++;                // increment the age of B
         }
@@ -917,40 +791,3 @@ void LogBroyden::reportPSD(UBVECTOR &arptvec, const std::vector<int> &amktids, c
     reportVec("demand", arptvec, amktids, aissolvable);
 
 }
-
-//template <class FTYPE>
-std::ostream & operator<<(std::ostream &ostrm, const UBVECTOR &v) {
-    ostrm << "(";
-    for(size_t i=0; i<v.size(); ++i) {
-        if(i>0) {
-            // print dividers to make the thing easier to read
-            if(i%50 == 0)
-                ostrm << "\n" << i << ":\t";
-            else if(i%10 == 0)
-                ostrm << "\n\t";
-            else ostrm << " ";
-        }
-        ostrm << v[i];
-    }
-    ostrm << ")";
-    return ostrm;
-}
-
-//template <class FTYPE, class MTRAIT>
-std::ostream & operator<<(std::ostream &ostrm, const UBMATRIX &M) {
-    int m = M.rows();
-    int n = M.cols();
-    
-    for(int i=0;i<m;++i) {
-        ostrm << i << ":   ";
-        for(int j=0;j<n;++j) {
-            if(j>0 && j%50==0) ostrm << "|";
-            if(j>0 && j%10==0) ostrm << "| ";
-            ostrm << M(i,j) << " ";
-        }
-        ostrm << "\n";
-    }
-    return ostrm;
-}
-
-    

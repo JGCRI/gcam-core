@@ -34,6 +34,15 @@
 #define UBLAS_HELPERS_HPP_
 
 #include <iostream>
+
+// In principal we could easily swap out implementations, or define different
+// storage semantics just by changing the types in this one header file and all
+// the other solver methods will update accordingly.  For now we will just use
+// the Eigen defaults but it may be useful to explore alternatives for increased
+// performance.
+
+//include <boost/numeric/ublas/vector.hpp>
+//#include <boost/numeric/ublas/matrix.hpp>
 #include <Eigen/Core>
 
 //#define UBLAS boost::numeric::ublas
@@ -42,7 +51,6 @@ using UBMATRIX = Eigen::MatrixXd;
 
 std::ostream & operator<<(std::ostream &ostrm, const UBVECTOR &v);
 std::ostream & operator<<(std::ostream &ostrm, const UBMATRIX &M);
-
 
 //#undef UBLAS
 

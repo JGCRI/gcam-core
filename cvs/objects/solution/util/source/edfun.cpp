@@ -33,13 +33,12 @@
 #include <stdlib.h>
 #include <math.h>
 #include <assert.h>
-#include <set>
 #include <vector>
 
 #include "util/base/include/definitions.h"
 #include "solution/util/include/edfun.hpp"
-#include "util/base/include/fltcmp.hpp"
-#include "containers/include/iactivity.h"
+#include "containers/include/world.h"
+#include "marketplace/include/marketplace.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/scenario.h"
@@ -344,15 +343,6 @@ void LogEDFun::operator()(const UBVECTOR &ax, UBVECTOR &fx, const int partj)
       double p0 = mkts[i].getLowerBoundSupplyPrice();
       double p  = x[i]>=ARGMAX ? PMAX : exp(x[i]);
       double c  = std::max(0.0, p0-p);
-      /*double fxi = log(d/s);
-      if(c>0.0) {
-        ILogger &solverlog = ILogger::getLogger("solver_log");
-        solverlog.setLevel(ILogger::DEBUG);
-        solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << p
-                  << "  p0= " << p0 << "  c= " << c
-                  << "  unmodified fx= " << fxi << "  modified fx= " << fxi+c
-                  << "\n";
-      }*/
       fx[i] = log(d/s)+c;
     }
     else if(mkts[i].getType() == IMarketType::NORMAL) { // LINEAR CASE (NORMAL markets only)
@@ -370,13 +360,6 @@ void LogEDFun::operator()(const UBVECTOR &ax, UBVECTOR &fx, const int partj)
         double c = s == 0 ? std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]) * slope[i] : 0;
         // give difference as a fraction of demand
         fx[i] = d - s + c;          // == d-(s-c); i.e., the correction subtracts from supply
-        /*if(c>0.0) {
-          ILogger &solverlog = ILogger::getLogger("solver_log");
-          solverlog.setLevel(ILogger::DEBUG);
-          solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << x[i]
-                    << "  p0= " << p0 << "  c= " << c << "  modified supply= " << s-c
-                    << "\n";
-        }*/
     }
     else if(!mLogPricep && ( mkts[i].getType() == IMarketType::RES  // LINEAR CASE (constraint type markets only)
             || mkts[i].getType() == IMarketType::TAX
