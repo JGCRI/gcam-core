@@ -77,7 +77,7 @@ public:
   LogBroyden(Marketplace *mktplc, World *world, CalcCounter *ccounter, int itmax=250,
              double ftol=1.0e-4) :
       SolverComponent(mktplc,world,ccounter), mMaxIter( itmax ), mFTOL( ftol ),
-      mLogPricep( true ) {}
+      mLogPricep( true ), mMaxJacobainReuse( 100 ) {}
   virtual ~LogBroyden() {}
 
   // SolverComponent methods
@@ -123,6 +123,10 @@ protected:
   // have multiple logbroyden solvers operating.
   static int mLastPer;                 //<! used to detect when the period has changed, so we can reset mPerIter.
   static int mPerIter;                 //<! total iteration count within the period
+    
+  //! Control the number of times we can re-use the Jacobian using Broyden's method
+  //! which if set to zero implies this algorithm just collapse to a regular NR algorithm
+  int mMaxJacobainReuse;
 
 private:
   static std::string SOLVER_NAME;

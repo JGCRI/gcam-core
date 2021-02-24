@@ -142,6 +142,9 @@ bool LogBroyden::XMLParse( const DOMNode* aNode ) {
         else if(nodeName == "log-price") {
           mLogPricep = true;    // not strictly necessary, as this is the default.
         }
+        else if(nodeName == "max-jacobian-reuse") {
+            mMaxJacobainReuse = XMLHelper<int>::getValue( curr );
+        }
         else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
             mSolutionInfoFilter.reset( SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr ) );
         }
@@ -643,7 +646,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     
     // update B for next iteration
       double fratio_cutoff = 1.0 - 1.0/nrow;
-    if(fnew/f0 < fratio_cutoff || iter == 0) { // making adequate progress with the Broyden formula
+    if(ageB < mMaxJacobainReuse && (fnew/f0 < fratio_cutoff || iter == 0)) { // making adequate progress with the Broyden formula
       double dx2 = xstep.dot(xstep);
       UBVECTOR Bdx(F.nrtn());
         fxstep -= B * xstep;
@@ -657,7 +660,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       // Progress using the Broyden formula is anemic.  This usually
       // happens near discontinuities in the Jacobian matrix.  If B is
       // old, try a finite-difference jacobian to get us back on track.
-      if(ageB > 0) {
+      if(ageB > 0 && mMaxJacobainReuse > 0) {
         solverLog << "Insufficient progress with Broyden formula.  Resetting the Jacobian.\n(f0= " << f0 << ", fnew= " << fnew << ")\n";
         // just in case call fdjac such that it re-calculates the model at xnew
         // otherwise we could have bad state data from which we calculate derivatives
