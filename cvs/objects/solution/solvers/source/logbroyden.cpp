@@ -369,10 +369,12 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
 int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
                        UBMATRIX & B, int &neval)
 {
+#if 0
 #if !USE_LAPACK
   using boost::numeric::ublas::permutation_matrix;
   using boost::numeric::ublas::lu_factorize;
   using boost::numeric::ublas::lu_substitute;
+#endif
 #endif
   using boost::numeric::ublas::axpy_prod;
   using boost::numeric::ublas::inner_prod;

@@ -2588,7 +2588,6 @@
 					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
 					"FUSION_MAX_VECTOR_SIZE=30",
 					EIGEN_MPL2_ONLY,
-					GCAM_PARALLEL_ENABLED,
 				);
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

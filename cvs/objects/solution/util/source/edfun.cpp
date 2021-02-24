@@ -35,6 +35,8 @@
 #include <assert.h>
 #include <set>
 #include <vector>
+
+#include "util/base/include/definitions.h"
 #include "solution/util/include/edfun.hpp"
 #include "util/base/include/fltcmp.hpp"
 #include "containers/include/iactivity.h"

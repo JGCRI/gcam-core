@@ -49,6 +49,8 @@
 #include <string>
 #include <set>
 
+#include "util/base/include/definitions.h"
+
 class Marketplace;
 class IActivity;
 #if GCAM_PARALLEL_ENABLED

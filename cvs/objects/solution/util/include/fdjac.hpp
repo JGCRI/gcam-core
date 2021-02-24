@@ -51,6 +51,7 @@
 #include <iostream>
 #include "solution/util/include/functor.hpp"
 #include "solution/util/include/ublas-helpers.hpp"
+#include "util/base/include/definitions.h"
 
 
 #if GCAM_PARALLEL_ENABLED
