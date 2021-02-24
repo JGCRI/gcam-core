@@ -15,21 +15,33 @@ extern "C" {
   }
     
   // Call the GCAM initialization
-  void initcgcam_(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap, std::string aGCAM2ELMWHMap) {
-    p_obj->initGCAM(aCaseName, aGCAMConfig, aGCAM2ELMCO2Map, aGCAM2ELMLUCMap, aGCAM2ELMWHMap);
+  void initcgcam_(char* aCaseName, char* aGCAMConfig, char* aGCAM2ELMCO2Map, char* aGCAM2ELMLUCMap, char* aGCAM2ELMWHMap) {
+      
+      // Convert to string - fortran doesn't handle string
+      std::string CaseName(aCaseName);
+      std::string GCAMConfig(aGCAMConfig);
+      std::string GCAM2ELMCO2Map(aGCAM2ELMCO2Map);
+      std::string GCAM2ELMLUCMap(aGCAM2ELMLUCMap);
+      std::string GCAM2ELMWHMap(aGCAM2ELMWHMap);
+      
+    p_obj->initGCAM(CaseName, GCAMConfig, GCAM2ELMCO2Map, GCAM2ELMLUCMap, GCAM2ELMWHMap);
   }
 
   // Set Carbon Densities in GCAM using scalers from E3SM
   void setdensitycgcam_(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                          int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, int aFirstCoupledYear, bool aReadScalars, bool aWriteScalars) {
+                          int aNumLon, int aNumLat, int aNumPFT, char* aMappingFile, int aFirstCoupledYear, bool aReadScalars, bool aWriteScalars) {
+      
+      // Convert to string - fortran doesn't handle string
+      std::string MappingFile(aMappingFile);
+      
       p_obj->setDensityGCAM(yyyymmdd, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
-                            aNumLon, aNumLat, aNumPFT, aMappingFile, aFirstCoupledYear, aReadScalars, aWriteScalars);
+                            aNumLon, aNumLat, aNumPFT, MappingFile, aFirstCoupledYear, aReadScalars, aWriteScalars);
   }
     
   // Run GCAM
   void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, int aNumLon, int aNumLat) {
     
-    p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, aNumLon, aNumLat);
+      p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, aNumLon, aNumLat);
   }
 
   // Downscale Emissions
@@ -43,10 +55,14 @@ extern "C" {
                               double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar, double *gcamoco2airhiapr,
                               double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                               double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
-                              std::string aBaseCO2SfcFile, double aBaseCO2EmissSfc, std::string aBaseCO2AirFile, double aBaseCO2EmissAir,
+                              char* aBaseCO2SfcFile, double aBaseCO2EmissSfc, char* aBaseCO2AirFile, double aBaseCO2EmissAir,
                               int aNumLon, int aNumLat, bool aWriteCO2, int aCurrYear) {
+      
+      // Convert to string - fortran doesn't handle string
+      std::string BaseCO2SfcFile(aBaseCO2SfcFile);
+      std::string BaseCO2AirFile(aBaseCO2AirFile);
     
-    p_obj->downscaleEmissionsGCAM(gcamoemiss,
+      p_obj->downscaleEmissionsGCAM(gcamoemiss,
                                   gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
                                   gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
                                   gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec,
@@ -56,7 +72,7 @@ extern "C" {
                                   gcamoco2airhijan, gcamoco2airhifeb, gcamoco2airhimar, gcamoco2airhiapr,
                                   gcamoco2airhimay, gcamoco2airhijun, gcamoco2airhijul, gcamoco2airhiaug,
                                   gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
-                                  aBaseCO2SfcFile, aBaseCO2EmissSfc, aBaseCO2AirFile, aBaseCO2EmissAir,
+                                  BaseCO2SfcFile, aBaseCO2EmissSfc, BaseCO2AirFile, aBaseCO2EmissAir,
                                   aNumLon, aNumLat, aWriteCO2, aCurrYear);
 }
 

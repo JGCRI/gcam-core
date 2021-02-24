@@ -134,12 +134,14 @@ void LandCarbonDensities::setMatureAge( const int aMatureAge )
 ASimpleCarbonCalc::precalc_sigmoid_helper::precalc_sigmoid_helper( const int aMatureAge ):
 mData( CarbonModelUtils::getEndYear() - CarbonModelUtils::getStartYear() + 1 )
 {
-    double prevSigmoid = pow( 1 - exp( ( -3.0 * 0 ) / aMatureAge ), 2.0 );
-    for ( int i = CarbonModelUtils::getStartYear(); i <= CarbonModelUtils::getEndYear(); ++i ){
-        const int offestYear = i - CarbonModelUtils::getStartYear();
-        double currSigmoid = pow( 1 - exp( ( -3.0 * ( offestYear + 1 ) ) / aMatureAge ), 2.0 );
-        mData[ offestYear ] = currSigmoid - prevSigmoid;
-        prevSigmoid = currSigmoid;
+    if ( aMatureAge > 0 ) {
+        double prevSigmoid = pow( 1 - exp( ( -3.0 * 0 ) / aMatureAge ), 2.0 );
+        for ( int i = CarbonModelUtils::getStartYear(); i <= CarbonModelUtils::getEndYear(); ++i ){
+            const int offestYear = i - CarbonModelUtils::getStartYear();
+            double currSigmoid = pow( 1 - exp( ( -3.0 * ( offestYear + 1 ) ) / aMatureAge ), 2.0 );
+            mData[ offestYear ] = currSigmoid - prevSigmoid;
+            prevSigmoid = currSigmoid;
+        }
     }
 }
 
