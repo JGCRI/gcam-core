@@ -76,30 +76,30 @@ class SatiationDemandFunction;
  *                   child to this node.
  *              - \c prodDmdFnType BuildingNodeInput::mFunctionType
  *                   The name of the function that will calculate demand for the child inputs.
- *                     This will most likely be a building-service-function.
+ *                   This will most likely be a building-service-function.
  *              - \c base-building-size BuildingNodeInput::mBuildingSize
  *                   The base year size in terms of floorspace which can be utilized to back out
- *                     coefficients.
+ *                   coefficients.
  *              - \c is-building-size-fixed BuildingNodeInput::mIsFixedBuildingSize
  *                   A flag to indicate the user wants to fix the building size to the parsed value
  *              - \c price-exponent BuildingNodeInput::mPriceExponent
  *                   Price exponent by period to be used in calculating a demand for this
- *                     building type.
+ *                   building type.
  *              - \c shell-conductance BuildingNodeInput::mShellConductance
  *                   The building shell conductance by period which encapsulates technical change
- *                     characterisitics which affect heating and cooling service demand.
+ *                   characterisitics which affect heating and cooling service demand.
  *              - \c floor-to-surface-ratio BuildingNodeInput::mFloorToSurfaceRatio
  *                   The building floor to surface area by period which building structual change
- *                     characterisitics which affect heating and cooling service demand.
+ *                   characterisitics which affect heating and cooling service demand.
  *              - \c internal-gains-market-name BuildingNodeInput::mInternalGainsMarketname
  *                   A name to use when setting up a trial market for the internal gains of this
- *                     building type.
+ *                   building type.
  *              - \c internal-gains-unit BuildingNodeInput::mInternalGainsUnit
  *                   A string which describes the units for internal gains.
  *              - \c internal-gains-trial-supply BuildingNodeInput::mInternalGainsTrialSupply
  *                   Initial trial supplies to set into the market for internal gains.  These
- *                     values are not necessary and only used to start the solver with a reasonable
- *                     trial supply.
+ *                   values are not necessary and only used to start the solver with a reasonable
+ *                   trial supply.
  *              - \c SatiationDemandFunction::getXMLNameStatic() BuildingNodeInput::mSatiationDemandFunction
  *                   The self contained satiation demand function which will parse it's own
  *                   parameters.
