@@ -646,7 +646,6 @@
     <ClCompile Include="..\..\solution\solvers\source\bisect_policy_nr_solver.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisection_nr_solver.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\logbroyden.cpp" />
-    <ClCompile Include="..\..\solution\solvers\source\lognrbt.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson_sd.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\preconditioner.cpp" />
@@ -658,6 +657,7 @@
     <ClCompile Include="..\..\solution\util\source\and_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\calc_counter.cpp" />
     <ClCompile Include="..\..\solution\util\source\edfun.cpp" />
+    <ClCompile Include="..\..\solution\util\source\fdjac.cpp" />
     <ClCompile Include="..\..\solution\util\source\has_market_flag_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\jacobian-precondition.cpp" />
     <ClCompile Include="..\..\solution\util\source\market_name_solution_info_filter.cpp" />
@@ -673,7 +673,6 @@
     <ClCompile Include="..\..\solution\util\source\solvable_nr_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\solvable_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\solver_library.cpp" />
-    <ClCompile Include="..\..\solution\util\source\svd_invert_solve.cpp" />
     <ClCompile Include="..\..\solution\util\source\unsolved_solution_info_filter.cpp" />
     <ClCompile Include="..\..\target_finder\source\cumulative_emissions_target.cpp" />
     <ClCompile Include="..\..\target_finder\source\kyoto_forcing_target.cpp" />
@@ -932,7 +931,6 @@
     <ClInclude Include="..\..\solution\solvers\include\bisect_policy_nr_solver.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisection_nr_solver.h" />
     <ClInclude Include="..\..\solution\solvers\include\logbroyden.hpp" />
-    <ClInclude Include="..\..\solution\solvers\include\lognrbt.hpp" />
     <ClInclude Include="..\..\solution\solvers\include\log_newton_raphson.h" />
     <ClInclude Include="..\..\solution\solvers\include\log_newton_raphson_sd.h" />
     <ClInclude Include="..\..\solution\solvers\include\preconditioner.hpp" />
@@ -946,7 +944,6 @@
     <ClInclude Include="..\..\solution\util\include\calc_counter.h" />
     <ClInclude Include="..\..\solution\util\include\edfun.hpp" />
     <ClInclude Include="..\..\solution\util\include\fdjac.hpp" />
-    <ClInclude Include="..\..\solution\util\include\functor-subs.hpp" />
     <ClInclude Include="..\..\solution\util\include\functor.hpp" />
     <ClInclude Include="..\..\solution\util\include\has_market_flag_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\isolution_info_filter.h" />
@@ -965,7 +962,6 @@
     <ClInclude Include="..\..\solution\util\include\solvable_nr_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\solvable_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\solver_library.h" />
-    <ClInclude Include="..\..\solution\util\include\svd_invert_solve.hpp" />
     <ClInclude Include="..\..\solution\util\include\ublas-helpers.hpp" />
     <ClInclude Include="..\..\solution\util\include\unsolved_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\unsolved_solver_info_filter.h" />
