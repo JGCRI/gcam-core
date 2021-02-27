@@ -38,6 +38,7 @@ endif
 ifndef USE_MKL
   ifdef MKL_CFLAGS
     USE_MKL=1
+    CXXBASEOPTS += -DEIGEN_USE_MKL_ALL=1
   else
     USE_MKL=0
   endif
@@ -111,53 +112,25 @@ BOOSTINC	      = $(BOOST_INCLUDE)
 # but until then it will have to be set manually
 XERCESINC	      = $(XERCES_INCLUDE)
 
-# Same for the Boost Lapack bindings
-ifneq ($(USE_LAPACK),0)
-  BOOSTBIND      = -I$(BOOST_NUMERIC_BINDINGS)
-  # On evergreen, these variables are set by running 'tap lapack'.  On other systems, set 
-  # manually or using shell scripts.  If MKL is in use, we don't set these.
-  ifeq ($(strip $(LAPACKINC)),)
-    ifeq ($(USE_MKL),0)
-      LAPACKINC  = $(GCAMLIB_HOME)/include
-    endif
-  endif
-
-  ifeq ($(strip $(LAPACKLIB)),)
-    ifeq ($(USE_MKL),0)
-      LAPACKLIB  = $(GCAMLIB_HOME)/lib
-    endif
-  endif
-
-  ifeq ($(USE_MKL),0)
-    LAPACKLD = -L$(LAPACKLIB)
-    LAPACKCF = -I$(LAPACKINC)
-    LAPACK_RPATH	= -Wl,-rpath,$(LAPACKLIB)
-    LAPACKLINK = -llapack -lblas
-  endif
-
-endif
-
-
 #
 ### locations of libraries
-LIBDIR		= -L/usr/local/lib -L$(XERCES_LIB) -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRARY) $(LAPACKLD)
+LIBDIR		= -L/usr/local/lib -L$(XERCES_LIB) -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRARY)
 
 ### The rest should be mostly compiler independent
 ## Note $(PROF) will be set as needed if we are building the gcam-prof target
-CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(JARSLIB) -DGCAM_PARALLEL_ENABLED=$(USE_GCAM_PARALLEL) -DUSE_LAPACK=$(USE_LAPACK) -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS)
+CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(JARSLIB) -DGCAM_PARALLEL_ENABLED=$(USE_GCAM_PARALLEL) -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS)
 CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD -std=c++14 -Wno-deprecated
 FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
 LD              = $(CXX) $(PROF)
-LDFLAGS         = $(CXXFLAGS) -Wl,-rpath,$(XERCES_LIB) $(JAVA_RPATH) $(TBB_RPATH) $(LAPACK_RPATH) $(MKL_LDFLAGS)
+LDFLAGS         = $(CXXFLAGS) -Wl,-rpath,$(XERCES_LIB) $(JAVA_RPATH) $(TBB_RPATH) $(MKL_LDFLAGS)
 AR              = ar ru
 #MAKE            = make -i -r
 RANLIB          = ranlib
-LIB             = ${ENVLIBS} $(LIBDIR) -lxerces-c $(JAVALINK) $(HECTOR_LIB) $(TBB_LIB_IMPORT) $(LAPACKLINK) -lm
-INCLUDE         = -I$(BOOSTINC) $(JAVAINC) $(TBB_INC) $(BOOSTBIND) $(HECTOR_INCLUDE) -I$(EIGEN_INCLUDE) \
+LIB             = ${ENVLIBS} $(LIBDIR) -lxerces-c $(JAVALINK) $(HECTOR_LIB) $(TBB_LIB_IMPORT) -lm
+INCLUDE         = -I$(BOOSTINC) $(JAVAINC) $(TBB_INC) $(HECTOR_INCLUDE) -I$(EIGEN_INCLUDE) \
 		 -I$(XERCESINC) \
 		 -I${PATHOFFSET} \
-		 -I${HOME}/include \
-		 $(LAPACKCF)
+		 -I${HOME}/include
 
 ### rule for building the dependency information
 # %.d: %.cpp
