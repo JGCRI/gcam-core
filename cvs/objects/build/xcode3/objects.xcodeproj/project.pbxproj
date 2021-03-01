@@ -2614,134 +2614,6 @@
 			};
 			name = Release;
 		};
-		CDE5689F161BA81B007A864C /* Release - LAPACK */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_AUTO_VECTORIZATION = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_ENABLE_SSE41_EXTENSIONS = YES;
-				GCC_ENABLE_SSE42_EXTENSIONS = YES;
-				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
-					"FUSION_MAX_VECTOR_SIZE=30",
-					USE_LAPACK,
-				);
-				GCC_UNROLL_LOOPS = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"../../../../libs/boost-lib",
-					../../../../libs/xercesc/include,
-					../../../../libs/java/include,
-					../../../../libs/java/include/darwin,
-					"../../../../libs/boost-numeric-bindings",
-				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs ../libs/tbb/lib";
-				LIBRARY_SEARCH_PATHS = (
-					../../../../libs/xercesc/lib,
-					../../../../libs/java/lib,
-					"../../../../libs/boost-lib/stage/lib",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-lxerces-c",
-					"-ljvm",
-					"-llapack",
-					"-lblas",
-					"-lboost_system",
-					"-lboost_filesystem",
-				);
-				PREBINDING = NO;
-				SDKROOT = "";
-				SYMROOT = ../../../../exe;
-				USER_HEADER_SEARCH_PATHS = "../.. ../../climate/source/hector/headers";
-			};
-			name = "Release - LAPACK";
-		};
-		CDE568A0161BA81B007A864C /* Release - LAPACK */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = gcam;
-			};
-			name = "Release - LAPACK";
-		};
-		CDE568AC161BAC0D007A864C /* Release - TBB */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_AUTO_VECTORIZATION = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_ENABLE_SSE41_EXTENSIONS = YES;
-				GCC_ENABLE_SSE42_EXTENSIONS = YES;
-				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
-					"FUSION_MAX_VECTOR_SIZE=30",
-					USE_LAPACK,
-					GCAM_PARALLEL_ENABLED,
-				);
-				GCC_UNROLL_LOOPS = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"../../../../libs/boost-lib",
-					../../../../libs/xercesc/include,
-					../../../../libs/java/include,
-					../../../../libs/java/include/darwin,
-					"../../../../libs/boost-numeric-bindings",
-					../../../../libs/tbb/include,
-				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs ../libs/tbb/lib";
-				LIBRARY_SEARCH_PATHS = (
-					../../../../libs/xercesc/lib,
-					../../../../libs/java/lib,
-					../../../../libs/tbb/lib,
-					"../../../../libs/boost-lib/stage/lib",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-lxerces-c",
-					"-ljvm",
-					"-llapack",
-					"-lblas",
-					"-ltbb",
-					"-ltbbmalloc",
-					"-ltbbmalloc_proxy",
-					"-lboost_system",
-					"-lboost_filesystem",
-				);
-				PREBINDING = NO;
-				SDKROOT = "";
-				SYMROOT = ../../../../exe;
-				USER_HEADER_SEARCH_PATHS = "../.. ../../climate/source/hector/headers";
-			};
-			name = "Release - TBB";
-		};
-		CDE568AD161BAC0D007A864C /* Release - TBB */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = gcam;
-			};
-			name = "Release - TBB";
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2750,8 +2622,6 @@
 			buildConfigurations = (
 				1DEB923208733DC60010E9CD /* Debug */,
 				1DEB923308733DC60010E9CD /* Release */,
-				CDE568A0161BA81B007A864C /* Release - LAPACK */,
-				CDE568AD161BAC0D007A864C /* Release - TBB */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2761,8 +2631,6 @@
 			buildConfigurations = (
 				1DEB923608733DC60010E9CD /* Debug */,
 				1DEB923708733DC60010E9CD /* Release */,
-				CDE5689F161BA81B007A864C /* Release - LAPACK */,
-				CDE568AC161BAC0D007A864C /* Release - TBB */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
