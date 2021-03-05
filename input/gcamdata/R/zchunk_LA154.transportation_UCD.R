@@ -107,20 +107,6 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     # First, replace the international shipping data (swapping in EIA for IEA)
     # Only perform this swap for international shipping / refined liquids, and in countries in the EIA database
 
-    # JS 12/2020: Extrapolate EIA data to 2015
-    L1011.in_EJ_ctry_intlship_TOT_Yh_2015<-L1011.in_EJ_ctry_intlship_TOT_Yh %>%
-      filter(year==2014) %>%
-      mutate(year=2015)
-
-    # JS 12/2020: Add 2015 to the dataset and group by iso
-    L1011.in_EJ_ctry_intlship_TOT_Yh<-L1011.in_EJ_ctry_intlship_TOT_Yh %>%
-      bind_rows(L1011.in_EJ_ctry_intlship_TOT_Yh_2015) %>%
-      group_by(year,iso,GCAM_region_ID) %>%
-      summarise(value=sum(value)) %>%
-      ungroup() %>%
-      arrange(iso)
-
-
     IEA_data_EIA_intlship <- L101.in_EJ_ctry_trn_Fi_Yh %>%
       # expecting NAs here because we only want to replace certain values. JS 12/2020: Use left_join
       left_join(L1011.in_EJ_ctry_intlship_TOT_Yh %>% rename(EIA_value = value), by = c("iso", "year")) %>%
