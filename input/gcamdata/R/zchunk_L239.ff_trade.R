@@ -69,8 +69,10 @@ module_energy_L239.ff_trade <- function(command, ...) {
     A_ff_RegionalTechnology %>%
       filter(!is.na(primary.consumption)) %>%
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
-      select(sector.name = supplysector, subsector.name = subsector, technology, primary.consumption, year) %>%
-      filter(year %in% MODEL_YEARS) -> L239.PrimaryConsKeyword_en
+      select(supplysector, subsector, technology, primary.consumption, year) %>%
+      filter(year %in% MODEL_YEARS) %>%
+      repeat_add_columns(GCAM_region_names) %>%
+      select(-GCAM_region_ID)-> L239.PrimaryConsKeyword_en
 
     # Fuel carbon coefficients for new sectors
     # Traded sectors first.  These are only set up in the USA.

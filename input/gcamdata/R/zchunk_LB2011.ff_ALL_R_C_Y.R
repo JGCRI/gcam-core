@@ -120,8 +120,11 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(L2011.ff_ALL_EJ_R_C_Y %>% select(region, fuel, year, production),
                                by = c("region", "GCAM_Commodity" = "fuel", "year")) %>%
-      mutate(GrossImp_EJ = if_else(GrossExp_EJ>production, GrossImp_EJ - (GrossExp_EJ-production), GrossImp_EJ),
-             GrossExp_EJ = if_else(GrossExp_EJ>production, production, GrossExp_EJ)) %>%
+      mutate(GrossImp_EJ = if_else(GrossExp_EJ>production, GrossImp_EJ - (GrossExp_EJ-production), if_else(GrossExp_EJ==production, GrossImp_EJ - (GrossExp_EJ-0.95*production),GrossImp_EJ)),
+             GrossExp_EJ = if_else(GrossExp_EJ>production, production, if_else(GrossExp_EJ==production, 0.95*production,GrossExp_EJ))) %>%
+      distinct() %>%
+      mutate(GrossImp_EJ = if_else(GrossExp_EJ==production, GrossImp_EJ - (GrossExp_EJ-0.95*production),GrossImp_EJ),
+             GrossExp_EJ = if_else(GrossExp_EJ==production, 0.95*production,GrossExp_EJ)) %>%
       select(names(L1011.ff_GrossTrade_EJ_R_C_Y)) ->
       L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year_adj
 

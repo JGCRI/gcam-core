@@ -30,6 +30,8 @@ CarbonCoef, world/+{name}region, region/+{name}PrimaryFuelCO2Coef, region/+Prima
 
 FinalEnergyKeyword, world/+{name}region, region/+{name}supplysector, supplysector/+{final-energy}keyword, scenario, scenario/world
 
+PrimaryConsKeywordff, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology,  technology/+{year}period, period/+{primary-consumption}keyword, scenario, scenario/world
+
 PrimaryConsKeyword, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{primary-consumption}keyword, scenario, scenario/world, world/global-technology-database
 
 PrimaryRenewKeyword, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{primary-renewable}keyword, scenario, scenario/world, world/global-technology-database

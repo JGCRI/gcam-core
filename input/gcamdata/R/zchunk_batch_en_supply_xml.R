@@ -128,6 +128,7 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
       }
 
     en_supply.xml %>%
+      add_node_equiv_xml("technology") %>%
       add_xml_data(L221.StubTech_en, "StubTech") %>%
       add_xml_data(L221.GlobalTechCoef_en, "GlobalTechCoef") %>%
       add_xml_data(L221.StubTechCoef_bioOil, "StubTechCoef") %>%
@@ -153,7 +154,7 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
       add_xml_data(L239.Production_reg_imp, "Production") %>%
       add_xml_data(L239.Production_reg_dom, "Production") %>%
       add_xml_data(L239.Consumption_intraregional, "Production") %>%
-      add_xml_data(L239.PrimaryConsKeyword_en, "PrimaryConsKeyword") %>%
+      add_xml_data(L239.PrimaryConsKeyword_en, "PrimaryConsKeywordff") %>%
       add_xml_data(L239.CarbonCoef, "CarbonCoef") %>%
       add_xml_data(L221.StubTechCalInput_bioOil, "StubTechCalInput") %>%
       add_xml_data(L221.StubTechInterp_bioOil, "StubTechInterp") %>%

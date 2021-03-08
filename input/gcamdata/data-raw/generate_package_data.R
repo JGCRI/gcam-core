@@ -201,6 +201,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["GlobalTechIntGainOutputRatio"]] <- c(level2_data_names[["GlobalTechYr"]], "internal.gains.output.ratio", "internal.gains.market.name")
   level2_data_names[["AvgFossilEffKeyword"]] <- c(level2_data_names[["GlobalTechYr"]], "average.fossil.efficiency")
   level2_data_names[["PrimaryConsKeyword"]] <- c(level2_data_names[["GlobalTechYr"]], "primary.consumption")
+  level2_data_names[["PrimaryConsKeywordff"]] <- c("region", "supplysector", "subsector", "technology", "year", "primary.consumption")
   level2_data_names[["PrimaryRenewKeyword"]] <- c(level2_data_names[["GlobalTechYr"]], "primary.renewable")
   level2_data_names[["PrimaryRenewKeywordInt"]] <- c(level2_data_names[["GlobalTechYr"]], "primary.renewable")
   level2_data_names[["GlobalTechCTaxInput"]] <- c(level2_data_names[["GlobalTechYr"]], "ctax.input", "fuel.C.coef")
