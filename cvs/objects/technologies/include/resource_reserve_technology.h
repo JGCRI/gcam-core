@@ -87,6 +87,13 @@ public:
 	~ResourceReserveTechnology();
 	static const std::string& getXMLNameStatic();
 	ResourceReserveTechnology* clone() const;
+    
+    virtual void initCalc( const std::string& aRegionName,
+                           const std::string& aSectorName,
+                           const IInfo* aSubsectorInfo,
+                           const Demographic* aDemographics,
+                           PreviousPeriodInfo& aPrevPeriodInfo,
+                           const int aPeriod );
 
 	virtual void completeInit(const std::string& aRegionName,
                               const std::string& aSectorName,
@@ -148,7 +155,11 @@ protected:
     
         //! A parameter which can be used to linearly phase out annual production
         //! after the remaining reserve has reached the configured percent.
-        DEFINE_VARIABLE( SIMPLE, "decline-phase-percent", mDeclinePhasePct, Value )
+        DEFINE_VARIABLE( SIMPLE, "decline-phase-percent", mDeclinePhasePct, Value ),
+        
+        //! A flag that indicates if this resource in currently calibrating which we can use to disable
+        //! certain dynamics such as decline phase or profit shutdown to ensure values match.
+        DEFINE_VARIABLE( SIMPLE, "is-calibrating", mIsResourceCalibrating, bool )
     )
     
 	virtual void toDebugXMLDerived(const int period, std::ostream& out, Tabs* tabs) const;

@@ -45,6 +45,12 @@
 			<Value name = "nonco2_unmgd">../input/gcamdata/xml/all_unmgd_emissions.xml</Value>
 			<Value name = "nonco2_aglu">../input/gcamdata/xml/all_aglu_emissions_IRR_MGMT.xml</Value>
 			
+			<!-- Global nonCO2 GHG MAC files -->
+		    <Value name = "nonco2_energy">../input/gcamdata/xml/all_energy_emissions_MAC.xml</Value>
+		    <Value name = "nonco2_fgas">../input/gcamdata/xml/all_fgas_emissions_MAC.xml</Value>
+		    <Value name = "nonco2_aglu">../input/gcamdata/xml/all_aglu_emissions_IRR_MGMT_MAC.xml</Value> 
+		    <Value name = "nonco2_proc">../input/gcamdata/xml/ind_urb_processing_sectors_MAC.xml</Value>
+			
 			<Value name = "unlim_supply_water">../input/gcamdata/xml/unlimited_water_supply.xml</Value>
 			<Value name = "water_supply">../input/gcamdata/xml/water_supply_constrained.xml</Value>
 			<Value name = "water_mapping">../input/gcamdata/xml/water_mapping.xml</Value>
@@ -60,6 +66,7 @@
 			<Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
 			
 			<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
+
 		</FileSet>
 	</ComponentSet>
 	<ComponentSet name="SSP Harmonized">

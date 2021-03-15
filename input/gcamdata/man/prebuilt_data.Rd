@@ -4,7 +4,7 @@
 \alias{prebuilt_data}
 \title{prebuilt_data}
 \usage{
-prebuilt_data(object_name, pb = PREBUILT_DATA)
+prebuilt_data(object_name, pb = NULL)
 }
 \arguments{
 \item{object_name}{The name of the desired object, character}

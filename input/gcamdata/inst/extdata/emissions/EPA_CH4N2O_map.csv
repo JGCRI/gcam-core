@@ -1,0 +1,28 @@
+# File: EPA_CH4N2O_map.csv
+# Title: Map of EPA sectors and sources to aggregated EPA sectors for scaling
+# Description: Detailed and aggregate EPA global emissions projections sectors mapped to their gas sources
+# Units: Unitless
+# Column types: cccc
+sector,source,subsource,EPA_sector
+Energy,Combustion,Biomass,Combustion_Bio
+Energy,Coal,Surface,Fugitive_coal
+Energy,Coal,Under,Fugitive_coal
+Energy,NGO,Gas Product,Fugitive_gas
+Energy,NGO,Gas TSD,Fugitive_gas
+Energy,NGO,Oil Product,Fugitive_oil
+Energy,NGO,Oil Refining,Fugitive_oil
+Energy,OtherEnergy,,Fugitive_other
+Energy,Combustion,StatMob,Combustion_general
+Industrial Processes,NitricAdipic,Adipic,Industrial processes Adipic
+Industrial Processes,NitricAdipic,Nitric,Industrial processes Nitric
+Industrial Processes,OtherIPPU,,Industrial processes Other
+Agriculture,AgSoils,,Agriculture
+Agriculture,Livestock,Enteric,Agriculture
+Agriculture,Livestock,Manure,Agriculture
+Agriculture,OtherAg,,Agriculture
+Agriculture,Rice,,Agriculture
+Waste,Landfills,Industrial,Waste
+Waste,Landfills,MSW,Waste
+Waste,OtherWaste,,Waste
+Waste,Wastewater,Rural,Waste
+Waste,Wastewater,Urban,Waste
