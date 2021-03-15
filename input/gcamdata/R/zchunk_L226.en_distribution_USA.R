@@ -35,6 +35,7 @@ module_gcamusa_L226.en_distribution_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/A21.sector",
+             FILE = "energy/A_ff_RegionalSector",
              FILE = "energy/A26.sector",
              FILE = "gcam-usa/EIA_state_energy_prices",
              "L202.CarbonCoef",
@@ -71,6 +72,7 @@ module_gcamusa_L226.en_distribution_USA <- function(command, ...) {
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     A21.sector <- get_data(all_data, "energy/A21.sector", strip_attributes = TRUE)
+    A_ff_regional_sector <- get_data(all_data, "energy/A_ff_RegionalSector", strip_attributes = TRUE) %>% mutate(traded=0)
     A26.sector <- get_data(all_data, "energy/A26.sector", strip_attributes = TRUE)
     EIA_state_energy_prices <- get_data(all_data, "gcam-usa/EIA_state_energy_prices", strip_attributes = TRUE)
     L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef", strip_attributes = TRUE)
@@ -119,7 +121,9 @@ module_gcamusa_L226.en_distribution_USA <- function(command, ...) {
     # L226.Supplysector_en_USA: Supply sector information for energy handling and delivery sectors
     # NOTE: Currently using FERC regions as a proxy for regional energy markets
     A21.sector %>%
+      bind_rows(A_ff_regional_sector) %>%
       select(supplysector, output.unit, input.unit, price.unit, logit.exponent, logit.type) %>%
+      mutate(logit.exponent= if_else(supplysector=="regional coal",-3,logit.exponent)) %>%
       filter(supplysector %in% gcamusa.REGIONAL_FUEL_MARKETS) ->
       A21.tmp
 
