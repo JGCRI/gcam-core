@@ -164,7 +164,8 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     gdp_mil90usd_rgn <- gdp_mil90usd_ctry %>%
       filter(year %in% HISTORICAL_YEARS) %>%
       group_by(GCAM_region_ID, year) %>%
-      summarise(gdp = sum(gdp))
+      summarise(gdp = sum(gdp)) %>%
+      ungroup()
     ## gdp_mil90usd_ctry:  iso, GCAM_region_ID, year, gdp
     ## gdp_mil90usd_rgn:  GCAM_region_ID, year, gdp
 
@@ -218,6 +219,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       mutate(gdp.ratio = 1.0 + gdp.rate / 100.0) %>%
       arrange(year) %>% group_by(iso) %>%
       mutate(gdp = cumprod(gdp.ratio)) %>% # actually ratio of gdp to base-year
+      ungroup() %>%
       # gdp, but we're calling it "gdp" so
       # that join.gdp.ts() can work with it.
       select(iso, year, gdp)
@@ -237,6 +239,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       left_join_error_no_match(gdp.mil90usd.imf.country.yr, iso_region32_lookup, by = 'iso') %>%
       group_by(GCAM_region_ID, year) %>%
       summarise(gdp = sum(gdp)) %>%
+      ungroup() %>%
       filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS))
     ## columns:  GCAM_region_ID, year, gdp
 

@@ -391,6 +391,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["GDPCtrlSteepRes"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "ctrl.name", "steepness")
   level2_data_names[["ResMAC"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
   level2_data_names[["ResMACTC"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "mac.control", "tech.change.year", "tech.change")
+  level2_data_names[["ResMACPhaseIn"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "mac.control", "mac.phase.in.time")
   level2_data_names[["StubTechNonCO2"]] <- c(level2_data_names[["StubTechYr"]], "Non.CO2")
   level2_data_names[["StubTechEmissUnits"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emissions.unit")
   level2_data_names[["InputEmissCoeff"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emiss.coef", "input.name")
@@ -399,11 +400,13 @@ generate_level2_data_names <- function() {
   level2_data_names[["OutputEmissions"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "input.emissions")
   level2_data_names[["StbTechOutputEmissions"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "input.emissions")
   level2_data_names[["ReadInControl"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "future.emiss.coeff.name", "future.emiss.coeff.year", "emiss.coeff")
+  level2_data_names[["ResReadInControl"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "future.emiss.coeff.name", "future.emiss.coeff.year", "emiss.coef")
   level2_data_names[["GDPCtrlMax"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "ctrl.name", "max.reduction")
   level2_data_names[["GDPCtrlSteep"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "ctrl.name", "steepness")
   level2_data_names[["DelEmCtrl"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "ctrl.name")
   level2_data_names[["MAC"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
   level2_data_names[["MACTC"]] <- c(level2_data_names[["StubTechNonCO2"]], "mac.control", "tech.change.year", "tech.change")
+  level2_data_names[["MACPhaseIn"]] <- c(level2_data_names[["StubTechNonCO2"]], "mac.control", "mac.phase.in.time")
   level2_data_names[["MAC_NC"]] <- level2_data_names[["MAC"]]
   level2_data_names[["MAC_NoBelowZero"]] <- level2_data_names[["MAC"]]
   level2_data_names[["InputEmFactUnmgd"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology", "year", "Non.CO2", "emiss.coef", "input.name")
@@ -416,6 +419,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["AgGDPCtrlSteep"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "ctrl.name", "steepness")
   level2_data_names[["AgMAC"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
   level2_data_names[["AgMACTC"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "mac.control", "tech.change.year", "tech.change")
+  level2_data_names[["AgMACPhaseIn"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "mac.control", "mac.phase.in.time")
   level2_data_names[["TrnInputEmissCoeff"]] <- c("region", "supplysector", "tranSubsector", "stub.technology", "year", "Non.CO2", "emiss.coef", "input.name")
   level2_data_names[["LinearCtrlInc"]] <- c("region", "supplysector", "tranSubsector","stub.technology", "year", "Non.CO2", "linear.control", "start.year", "end.year", "final.emissions.coefficient")
 
@@ -457,7 +461,8 @@ if(USE_DRIVER_DRAKE) {
 #' used to generate this latter data, i.e. a tibble of chunk-output-precursor information,
 #' which is used by \link{\code{dstrace}} and various other graphing and diagnostic utilities.
 #' @author BBL
-GCAM_DATA_MAP <- NULL
+# Note: the above text is not used for package documentation and is instead
+# replicated in data.R for that purpose.
 if(USE_DRIVER_DRAKE) {
   # we will need to drake "plan" to construct the GCAM_DATA_MAP from cache
   # note: calling driver_drake with return_plan_only = TRUE does not actually run the driver
@@ -501,7 +506,8 @@ prebuilt_data_names <- c(
 #' Its immediate downstream dependencies (currently, four chunks) then use the
 #' prebuilt versions of their outputs stored in this object.
 #' @author BBL
-PREBUILT_DATA <- NULL
+# Note: the above text is not used for package documentation and is instead
+# replicated in data.R for that purpose.
 if(USE_DRIVER_DRAKE) {
   PREBUILT_DATA <- load_from_cache(prebuilt_data_names)
 } else {

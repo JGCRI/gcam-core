@@ -1,0 +1,18 @@
+# File: EPA_fgas_sector_map.csv
+# Title: Map of EPA sectors to GCAM sectors for HFC gases
+# Description: Detailed and aggregate EPA global emissions projections sectors mapped to their gas sources
+# Units: Unitless
+# Column types: cccccc
+EPA_sector,EPA_agg_sector,supplysector,subsector,stub.technology,EDGAR_agg_sector
+ODS Substitutes: Refrigeration / Air Conditioning,Industrial Processes,cooling,electricity,electricity,refrigeration
+ODS Substitutes: Foam Blowing,Industrial Processes,industrial processes,foams,foams,foams
+ODS Substitutes: Solvents,Industrial Processes,industrial processes,solvents,solvents,solvents
+ODS Substitutes: MDI Aerosols,Industrial Processes,urban processes,aerosols,aerosols,aerosols
+ODS Substitutes: Fire Extinguishing,Industrial Processes,urban processes,fire_exting,fire_exting,fire exting
+Production of HCFC-22,Industrial Processes,industrial processes,HCFC_22_Prod,HCFC_22_Prod,halo_prod
+Manufacture of Semiconductors,Industrial Processes,industrial processes,semiconductors,semiconductors,semiconductors
+Magnesium Manufacturing,Industrial Processes,industrial processes,Al_Mg,Al_Mg,metals
+Flat Panel Display Manufacturing,Industrial Processes,industrial processes,semiconductors,semiconductors,semiconductors
+Aluminum,Industrial Processes,industrial processes,Al_Mg,Al_Mg,metals
+Photovoltaic Manufacturing,Industrial Processes,industrial processes,semiconductors,semiconductors,semiconductors
+Electric Power Systems,Industrial Processes,electricity_net_ownuse,electricity_net_ownuse,electricity_net_ownuse,elect_equip

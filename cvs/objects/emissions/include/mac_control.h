@@ -96,8 +96,14 @@ protected:
         //! The underlying Curve (as read in)
         DEFINE_VARIABLE( CONTAINER, "mac-reduction", mMacCurve, PointSetCurve* ),
         
+        //! Threshold emission price to fully phase-in zero-cost reductions and mac phase-in reductions
+        DEFINE_VARIABLE( SIMPLE, "full-phase-in-price", mFullPhaseInPrice, double ),
+                            
         //! Length of time in years to phase in no-cost MAC reductions
         DEFINE_VARIABLE( SIMPLE, "zero-cost-phase-in-time", mZeroCostPhaseInTime, int ),
+                            
+        //! Length of time in years to phase in postive cost MAC reductions
+        DEFINE_VARIABLE( SIMPLE, "mac-phase-in-time", mMacPhaseInTime, int ),
         
         //! Conversion factor if getting price from its own market.
         DEFINE_VARIABLE( SIMPLE, "mac-price-conversion", mCovertPriceValue, Value ),

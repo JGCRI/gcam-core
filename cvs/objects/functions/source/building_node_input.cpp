@@ -68,6 +68,7 @@ extern Scenario* scenario;
 BuildingNodeInput::BuildingNodeInput()
 {
     mSatiationDemandFunction = 0;
+    mIsFixedBuildingSize = false;
 }
 
 //! Destructor
@@ -166,7 +167,15 @@ void BuildingNodeInput::completeInit( const string& aRegionName, const string& a
         (*it)->completeInit( aRegionName, aSectorName, aSubsectorName, aTechName, aTechInfo );
     }
     
-    // Interpolate parameters
+    // Note initializing the fixed building size flag before interpolations implies
+    // we will assume the user wanted to use calculated values instead of interpolated
+    // in those missing periods.
+    for (size_t period = 0; period < mBuildingSize.size(); ++period) {
+        mIsFixedBuildingSize[period] = mBuildingSize[period].isInited();
+    }
+
+    // Interpolate parameters.  Note this will copy the last value to extrapolate
+    // if necessary.
     SectorUtils::fillMissingPeriodVectorInterpolated( mBuildingSize );
     SectorUtils::fillMissingPeriodVectorNextAvailable( mPriceExponent );
     SectorUtils::fillMissingPeriodVectorInterpolated( mShellConductance );
@@ -225,6 +234,7 @@ void BuildingNodeInput::copy( const BuildingNodeInput& aNodeInput ) {
     mFunctionType = aNodeInput.mFunctionType;
     mFunction = aNodeInput.mFunction;
     mBuildingSize = aNodeInput.mBuildingSize;
+    mIsFixedBuildingSize = aNodeInput.mIsFixedBuildingSize;
     mPriceExponent = aNodeInput.mPriceExponent;
     mShellConductance = aNodeInput.mShellConductance;
     mFloorToSurfaceRatio = aNodeInput.mFloorToSurfaceRatio;
@@ -254,6 +264,7 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
     XMLWriteOpeningTag ( getXMLReportingName(), aOut, aTabs, mName );
 
     XMLWriteElement( mBuildingSize[ aPeriod ], "building-size", aOut, aTabs );
+    XMLWriteElement(mIsFixedBuildingSize[aPeriod], "is-building-size-fixed", aOut, aTabs);
     XMLWriteElement( mPriceExponent[ aPeriod ], "price-exponent", aOut, aTabs );
     XMLWriteElement( mShellConductance[ aPeriod ], "shell-conductance", aOut, aTabs );
     XMLWriteElement( mFloorToSurfaceRatio[ aPeriod ], "floor-to-surface-ratio", aOut, aTabs );
@@ -443,7 +454,11 @@ void BuildingNodeInput::setPhysicalDemand( const double aPhysicalDemand,
     // solver throws us negative prices.  We must explictly gaurd against
     // reseting these values in calibration years.
     if( aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod() ) {
-        mBuildingSize[ aPeriod ].set( aPhysicalDemand );
+         // Only reset the building size to a calculated value when not
+        // running with a fixed path.
+        if (!mIsFixedBuildingSize[aPeriod]) {
+           mBuildingSize[ aPeriod ].set( aPhysicalDemand );
+        }
     }
 }
 
