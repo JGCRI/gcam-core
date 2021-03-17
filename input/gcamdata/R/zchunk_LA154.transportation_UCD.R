@@ -353,8 +353,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     #Making sure that value is numeric as a check so that we do not get a failure in the if_else
     UCD_trn_data_fillout <-    UCD_trn_data_fillout[, value :=as.numeric(value)]
     # Start interpolation
-    UCD_trn_data_fillout <- UCD_trn_data_fillout[, value := if_else(is.na(value), as.numeric(approx_fun(year, value, rule = 2)), as.numeric(value)),by= c("UCD_region", "UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel", "variable", "unit")]
-
+    UCD_trn_data_fillout <- UCD_trn_data_fillout[, value := if_else(is.na(value), as.numeric(approx_fun(year, value, rule = 2)), as.numeric(value)),by= c("UCD_region", "UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel", "variable", "unit","sce")]
 
     #kbn 2020 filtering out SSP values that are the same. Basically if a certain combination has the same value for a SSP in a year compared to core,
     #just keep the core value.
