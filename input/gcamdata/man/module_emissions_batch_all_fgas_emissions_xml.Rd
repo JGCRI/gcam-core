@@ -14,7 +14,8 @@ module_emissions_batch_all_fgas_emissions_xml(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{all_fgas_emissions.xml}. The corresponding file in the
+the generated outputs: \code{all_fgas_emissions.xml}, \code{all_fgas_emissions_MAC.xml}.
+The corresponding file in the
 original data system was \code{batch_all_fgas_emissions.xml} (emissions XML).
 }
 \description{

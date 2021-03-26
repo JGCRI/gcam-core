@@ -15,10 +15,12 @@ module_emissions_L252.MACC(command, ...)
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
 the generated outputs: \code{L252.ResMAC_fos}, \code{L252.AgMAC}, \code{L252.MAC_an}, \code{L252.MAC_prc},
-\code{L252.MAC_higwp}, \code{L252.MAC_Ag_TC_SSP1}, \code{L252.MAC_An_TC_SSP1}, \code{L252.MAC_prc_TC_SSP1},
+\code{L252.MAC_higwp}, \code{L252.ResMAC_fos_tc_average}, \code{L252.AgMAC_tc_average}, \code{L252.MAC_an_tc_average},
+\code{L252.MAC_prc_tc_average}, \code{L252.MAC_higwp_tc_average},
+\code{L252.MAC_Ag_TC_SSP1}, \code{L252.MAC_An_TC_SSP1}, \code{L252.MAC_prc_TC_SSP1}, \code{L252.MAC_higwp_TC_SSP1},
 \code{L252.MAC_res_TC_SSP1}, \code{L252.MAC_Ag_TC_SSP2}, \code{L252.MAC_An_TC_SSP2}, \code{L252.MAC_prc_TC_SSP2},
-\code{L252.MAC_res_TC_SSP2}, \code{L252.MAC_Ag_TC_SSP5}, \code{L252.MAC_An_TC_SSP5}, \code{L252.MAC_prc_TC_SSP5},
-\code{L252.MAC_res_TC_SSP5}. The corresponding file in the
+\code{L252.MAC_res_TC_SSP2}, \code{L252.MAC_higwp_TC_SSP2}, \code{L252.MAC_Ag_TC_SSP5}, \code{L252.MAC_An_TC_SSP5},
+\code{L252.MAC_prc_TC_SSP5}, \code{L252.MAC_res_TC_SSP5}, \code{L252.MAC_higwp_TC_SSP5}. The corresponding file in the
 original data system was \code{L252.MACC.R} (emissions level2).
 }
 \description{

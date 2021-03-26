@@ -23,6 +23,7 @@ module_gcamusa_batch_en_transformation_USA_xml <- function(command, ...) {
              "L222.GlobalTechShrwt_en_USA",
              "L222.GlobalTechCapture_en_USA",
              "L222.GlobalTechSCurve_en_USA",
+             "L222.GlobalTechProfitShutdown_en_USA",
              "L222.Tech_USAen",
              "L222.TechShrwt_USAen",
              "L222.TechInterp_USAen",
@@ -52,6 +53,7 @@ module_gcamusa_batch_en_transformation_USA_xml <- function(command, ...) {
     L222.GlobalTechShrwt_en_USA <- get_data(all_data, "L222.GlobalTechShrwt_en_USA")
     L222.GlobalTechCapture_en_USA <- get_data(all_data, "L222.GlobalTechCapture_en_USA")
     L222.GlobalTechSCurve_en_USA <- get_data(all_data, "L222.GlobalTechSCurve_en_USA")
+    L222.GlobalTechProfitShutdown_en_USA <- get_data(all_data, "L222.GlobalTechProfitShutdown_en_USA")
     L222.Tech_USAen <- get_data(all_data, "L222.Tech_USAen")
     L222.TechShrwt_USAen <- get_data(all_data, "L222.TechShrwt_USAen")
     L222.TechInterp_USAen <- get_data(all_data, "L222.TechInterp_USAen")
@@ -85,6 +87,7 @@ module_gcamusa_batch_en_transformation_USA_xml <- function(command, ...) {
       add_xml_data(L222.GlobalTechShrwt_en_USA, "GlobalTechShrwt") %>%
       add_xml_data(L222.GlobalTechCapture_en_USA, "GlobalTechCapture") %>%
       add_xml_data(L222.GlobalTechSCurve_en_USA, "GlobalTechSCurve") %>%
+      add_xml_data(L222.GlobalTechProfitShutdown_en_USA, "GlobalTechProfitShutdown") %>%
       add_xml_data(L222.Tech_USAen, "PassThroughTech") %>%
       add_xml_data(L222.TechInterp_USAen, "TechInterp") %>%
       add_xml_data(L222.TechShrwt_USAen, "TechShrwt") %>%
@@ -107,6 +110,7 @@ module_gcamusa_batch_en_transformation_USA_xml <- function(command, ...) {
                      "L222.GlobalTechShrwt_en_USA",
                      "L222.GlobalTechCapture_en_USA",
                      "L222.GlobalTechSCurve_en_USA",
+                     "L222.GlobalTechProfitShutdown_en_USA",
                      "L222.Tech_USAen",
                      "L222.TechShrwt_USAen",
                      "L222.TechInterp_USAen",

@@ -18,12 +18,6 @@ module_emissions_batch_all_unmgd_emissions_xml <- function(command, ...) {
                    "L212.FORESTEmissions_FF",
                    "L212.FORESTEmissions_D",
                    "L212.FORESTEmissionsFactors_future")
-  if(driver.EMISSIONS_SOURCE == "EDGAR") {
-    # BC/OC emissions are processed sperately in EDGAR
-    input_names <- c(input_names, "L212.GRASSEmissionsFactors_BCOC",
-                     "L212.FORESTEmissionsFactors_BCOC_FF",
-                     "L212.FORESTEmissionsFactors_BCOC_D")
-  }
   if(command == driver.DECLARE_INPUTS) {
     return(input_names)
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -40,11 +34,6 @@ module_emissions_batch_all_unmgd_emissions_xml <- function(command, ...) {
     L212.FORESTEmissions_FF <- get_data(all_data, "L212.FORESTEmissions_FF")
     L212.FORESTEmissions_D <- get_data(all_data, "L212.FORESTEmissions_D")
     L212.FORESTEmissionsFactors_future <- get_data(all_data, "L212.FORESTEmissionsFactors_future")
-    if(driver.EMISSIONS_SOURCE == "EDGAR") {
-      L212.GRASSEmissionsFactors_BCOC <- get_data(all_data, "L212.GRASSEmissionsFactors_BCOC")
-      L212.FORESTEmissionsFactors_BCOC_FF <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_FF")
-      L212.FORESTEmissionsFactors_BCOC_D <- get_data(all_data, "L212.FORESTEmissionsFactors_BCOC_D")
-    }
 
     # ===================================================
 
@@ -58,13 +47,6 @@ module_emissions_batch_all_unmgd_emissions_xml <- function(command, ...) {
       add_xml_data(L212.FORESTEmissions_D, "OutputEmissionsUnmgd") %>%
       add_xml_data(L212.FORESTEmissionsFactors_future, "OutputEmFactUnmgd") ->
       all_unmgd_emissions.xml
-    if(driver.EMISSIONS_SOURCE == "EDGAR") {
-      all_unmgd_emissions.xml %>%
-        add_xml_data(L212.GRASSEmissionsFactors_BCOC, "InputEmFactUnmgd") %>%
-        add_xml_data(L212.FORESTEmissionsFactors_BCOC_FF, "InputEmFactUnmgd") %>%
-        add_xml_data(L212.FORESTEmissionsFactors_BCOC_D, "OutputEmFactUnmgd") ->
-        all_unmgd_emissions.xml
-    }
     # need to call add_precursors indirectly to ensure input_names gets "unlisted"
     all_unmgd_emissions.xml <- do.call("add_precursors", c(list(all_unmgd_emissions.xml), input_names))
 

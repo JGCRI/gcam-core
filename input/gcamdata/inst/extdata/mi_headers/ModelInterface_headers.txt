@@ -721,6 +721,8 @@ ResMAC, world/+{name}region, region/+{name;nocreate=1}resource, resource/+{name}
 
 ResMACTC, world/+{name}region, region/+{name;nocreate=1}resource, resource/+{name;nocreate=1}subresource, subresource/+{name;nocreate=1}technology, technology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name;nocreate=1}mac-control, mac-control/+{year;fillout=1}tech-change, mac-control/+tech-change, scenario, scenario/world
 
+ResMACPhaseIn, world/+{name}region, region/+{name;nocreate=1}resource, resource/+{name;nocreate=1}subresource, subresource/+{name;nocreate=1}technology, technology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name;nocreate=1}mac-control, mac-control/+mac-phase-in-time, scenario, scenario/world
+
 FinalDemandInfo, world/+{name}region, region/+{name}energy-final-demand, energy-final-demand/+perCapitaBased, energy-final-demand/+{year=2020;fillout=1}income-elasticity, energy-final-demand/+{year}base-service, energy-final-demand/+base-service, final-energy-consumer/+{year=1975;fillout=1}aeei, energy-final-demand/final-energy-consumer, scenario, scenario/world
 
 StubTechCalInputIndUrb, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+calibrated-value, scenario, scenario/world
@@ -745,6 +747,8 @@ ResEmissCoef, world/+{name}region, region/+{name;nocreate=1}resource, resource/+
 
 ReadInControl, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}readin-control, readin-control/+{year}future-emiss-factor, readin-control/+future-emiss-factor, scenario, scenario/world
 
+ResReadInControl, world/+{name}region, region/+{name;nocreate=1}resource, resource/+{name;nocreate=1}subresource, subresource/+{name;nocreate=1}technology, technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}readin-control, readin-control/+{year}future-emiss-factor, readin-control/+future-emiss-factor, scenario, scenario/world
+
 StubTechEmissUnits, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emissions-unit, scenario, scenario/world
 
 TrnInputEmissCoeff, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}tranSubsector, tranSubsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, input-driver/+input-name, Non-CO2/input-driver, scenario, scenario/world
@@ -753,7 +757,8 @@ LinearCtrlInc, world/+{name}region, region/+{name;nocreate=1}supplysector, suppl
 
 ResEmissInput, world/+{name}region, region/+{name;nocreate=1}resource, resource/+{name}subresource, subresource/+{name}technology, technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+input-emissions, Non-CO2/output-driver, scenario, scenario/world
 
+MACPhaseIn, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+mac-phase-in-time, scenario, scenario/world
 
-
+AgMACPhaseIn, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+mac-phase-in-time,  scenario, scenario/world
 
 EQUIV_TABLE,NODE_EQUIVALENCE

@@ -14,8 +14,8 @@ module_emissions_batch_all_energy_emissions_xml(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{all_energy_emissions.xml}. The corresponding file in the
-original data system was \code{batch_all_energy_emissions.xml.R} (emissions XML).
+the generated outputs: \code{all_energy_emissions.xml}, \code{all_energy_emissions_MAC.xml}.
+The corresponding file in the original data system was \code{batch_all_energy_emissions.xml.R} (emissions XML).
 }
 \description{
 Construct XML data structure for \code{all_energy_emissions.xml}.

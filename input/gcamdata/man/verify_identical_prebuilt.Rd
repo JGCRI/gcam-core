@@ -4,7 +4,7 @@
 \alias{verify_identical_prebuilt}
 \title{verify_identical_prebuilt}
 \usage{
-verify_identical_prebuilt(..., pb = PREBUILT_DATA)
+verify_identical_prebuilt(..., pb = NULL)
 }
 \arguments{
 \item{...}{The objects}

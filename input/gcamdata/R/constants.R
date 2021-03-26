@@ -55,10 +55,6 @@ driver.MAKE            <- "MAKE"
 driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
 driver.DECLARE_INPUTS  <- "DECLARE_INPUTS"
 
-#Set the driver source to EDGAR to switch back to old emissions structure.
-driver.EMISSIONS_SOURCE <- "CEDS"
-#driver.EMISSIONS_SOURCE <- "EDGAR"
-
 # Data and utility constants ======================================================================
 
 data.SEPARATOR <- "; "
@@ -575,16 +571,21 @@ water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
 
 # Emissions constants ======================================================================
 
+# scaling CH4 and N2O emissions to EPA 2019 mitigation report BAU emission trajectory
+emissions.nonCO2.EPA.scaling <- FALSE
+emissions.EPA.scaling.threshold <- 50 # EPA emissions/ CEDS emission, used to check scaling outliers in L112 chunk
+emissions.EPA.scaling.threshold.combustion <- 20 # check scaling outliers in L112 chunk for combustion sector
 
 # Time
-emissions.CEDS_YEARS              <- 1971:2019           #Year coverage for CEDS inventory.
+emissions.CEDS_YEARS              <- 1971:2019           # Year coverage for CEDS inventory.
 emissions.CTRL_BASE_YEAR          <- 1975                # Year to read in pollution controls
 emissions.DEFOREST_COEF_YEARS     <- c(2000, 2005)
-emissions.EDGAR_HISTORICAL        <- 1971:2008
 emissions.EDGAR_YEARS             <- 1971:2008
-emissions.EDGAR_YEARS_PLUS        <- 1970:2008
 emissions.EPA_HISTORICAL_YEARS    <- 1971:2002
-emissions.EPA_MACC_YEAR           <- 2030                # Must be either 2020 or 2030
+emissions.EPA_MACC_YEAR           <- seq(2015, 2050, 5)        # based on 2019 EPA nonCO2 report
+emissions.EPA_MACC_FUTURE_YEAR    <- seq(2055, 2100, 5)        # EPA report only covers till 2050
+emissions.EPA_TC_TimeStep         <- 5   # currently calculate EPA MAC-based technological change based on every 5 years
+emissions.EPA_BAU_HIST_YEAR       <- c(1990, 1995, 2000, 2005, 2010, 2015) # based on 2019 EPA nonCO2 report
 emissions.FINAL_EMISS_YEAR        <- min(max(MODEL_BASE_YEARS), 2005)
 emissions.GAINS_BASE_YEAR         <- 2005
 emissions.GAINS_YEARS             <- c(2010, 2020, 2030)
@@ -604,12 +605,14 @@ emissions.ZERO_EM_TECH  <- c("electricity", "Electric", "BEV","FCEV","district h
 emissions.HIGH_EM_FACTOR_THRESHOLD <- 1000  #All emission factors above this threshold are replaced with the global median of emission factors.
 emissions.GFED_NODATA <- c("ala","bes","blm","ggy","jey","maf","xad","xko","xnc")  #GFED LULC dataset does not contaian data for these isos. These get filtered out so we can use the left_join_error_no_match.
 emissions.UNMGD_LAND_AVG_YRS <- 30 #Years for climatological average for the GFED LULC data.
-
+emissions.CH4.GWP.AR4 <- 25 # used for EPA non-CO2 scaling, the 2019 EPA non-CO2 report uses AR4 GWPs
+emissions.N2O.GWP.AR4 <- 298 # used for EPA non-CO2 scaling, the 2019 EPA non-CO2 report uses AR4 GWPs
 
 emissions.COAL_SO2_THRESHOLD <- 0.1   # Tg/EJ (here referring to Tg SO2 per EJ of coal electricity)
 emissions.LOW_PCGDP          <- 2.75  # thousand 1990 USD
 emissions.MAC_TAXES          <- c(0, 2, 4, 6, 13, 27, 53, 100, 200, 450, 850, 2000, 3000, 5000) # Range of MAC curve costs to keep to read into GCAM; they are in EPA's units (2010USD_tCO2e)
 emissions.MAC_MARKET         <- "CO2" # Default market that MAC curves will look for
+emissions.MAC_highestReduction <- 0.95 # a high MAC reduction used to replace calculated values there are greater than 1
 
 emissions.AGR_SECTORS        <- c("rice", "fertilizer", "soil")
 emissions.AGR_GASES          <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
@@ -619,7 +622,6 @@ emissions.NONGHG_GASES       <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
 emissions.PFCS               <- c("CF4", "C2F6", "SF6")
 emissions.TRN_INTL_SECTORS   <- c("trn_intl_ship", "trn_intl_air")
 
-emissions.USE_GV_MAC           <- 1
 emissions.USE_GCAM3_CCOEFS     <- 1 # Select whether to use GCAM3 fuel carbon coefficients
 emissions.USE_GLOBAL_CCOEFS    <- 1 # Select whether to use global average carbon coefficients on fuels, or region-specific carbon coefficients
 emissions.UNMGD_LAND_INPUT_NAME <- "land-input"
@@ -629,7 +631,7 @@ emissions.DIGITS_CO2COEF       <- 1
 emissions.DIGITS_EMISS_COEF    <- 7
 emissions.DIGITS_EMISSIONS     <- 10
 emissions.DIGITS_MACC          <- 3
-
+emissions.DIGITS_MACC_TC       <- 4 # tech.change rounding
 
 # GCAM-USA constants ======================================================================
 

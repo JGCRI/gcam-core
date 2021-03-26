@@ -209,12 +209,26 @@ void SubResource::initCalc( const string& aRegionName, const string& aResourceNa
         mGrade[i]->initCalc( aRegionName, aResourceName, aPeriod );
     }
     
+    // Fill price added after it is calibrated.  This will interpolate to any
+    // price adders read in the future or just copy forward if there is nothing
+    // to interpolate to.
+    const int finalCalPeriod = scenario->getModeltime()->getFinalCalibrationPeriod();
+    if( aPeriod == finalCalPeriod + 1 ) {
+        SectorUtils::fillMissingPeriodVectorInterpolated( mPriceAdder );
+    }
+
+    // If we are in a calibration period and a calibrated value was read in set the
+    // flag on the market that this resource is fully calibrated.
+    Marketplace* marketplace = scenario->getMarketplace();
+    IInfo* productInfo = marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod, false );
+    if( aPeriod <= finalCalPeriod && mCalProduction[ aPeriod ] > 0 && productInfo ) {
+        productInfo->setBoolean( "fully-calibrated", true );
+    }
+    
     // Note we have to reset the CO2coefficient for the resource to zero before
     // the technology / output calls initCalc to avoid undesriable carbon accounting
     // (positive carbon in the output but no inputs = negative emissions).
     // we will then reset the value to what it was before after the call
-    Marketplace* marketplace = scenario->getMarketplace();
-    IInfo* productInfo = marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod, false );
     double resCCoef = productInfo ? productInfo->getDouble( "CO2coefficient", false ) : 0;
     if( productInfo ) {
         productInfo->setDouble( "CO2coefficient", 0.0 );
@@ -233,21 +247,6 @@ void SubResource::initCalc( const string& aRegionName, const string& aResourceNa
         }
         // Determine cost
         mGrade[gr]->calcCost( mCumulativeTechChange[ aPeriod ], aPeriod );
-    }
-
-    // Fill price added after it is calibrated.  This will interpolate to any
-    // price adders read in the future or just copy forward if there is nothing
-    // to interpolate to.
-    const int finalCalPeriod = scenario->getModeltime()->getFinalCalibrationPeriod();
-    if( aPeriod == finalCalPeriod + 1 ) {
-        SectorUtils::fillMissingPeriodVectorInterpolated( mPriceAdder );
-    }
-
-    // If we are in a calibration period and a calibrated value was read in set the
-    // flag on the market that this resource is fully calibrated.
-    if( aPeriod <= finalCalPeriod && mCalProduction[ aPeriod ] > 0 ) {
-        IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( aResourceName, aRegionName, aPeriod, true );
-        marketInfo->setBoolean( "fully-calibrated", true );
     }
     
 }

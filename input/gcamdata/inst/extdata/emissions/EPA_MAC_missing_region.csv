@@ -1,0 +1,7 @@
+# File: EPA_MAC_missing_region.csv
+# Title: Map of EPA MAC data missing regions to existing ones
+# Description: current 2019 EPA nonCO2 MAC data do not have Taiwan so we use the same MAC data from China but this mapping is flexible
+# Units: Unitless
+# Column types: ii
+GCAM_region_ID_missing,GCAM_region_ID_alternative
+30,11

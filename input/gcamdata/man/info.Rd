@@ -6,7 +6,7 @@
 \usage{
 info(
   object_name,
-  gcam_data_map = GCAM_DATA_MAP,
+  gcam_data_map = NULL,
   previous_tracelist = NULL,
   upstream = TRUE,
   downstream = TRUE

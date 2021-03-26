@@ -8,7 +8,7 @@ dstrace(
   object_name,
   direction = "upstream",
   graph = FALSE,
-  gcam_data_map = GCAM_DATA_MAP,
+  gcam_data_map = NULL,
   previous_tracelist = NULL,
   recurse = TRUE,
   ...
