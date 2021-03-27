@@ -48,6 +48,7 @@
 #include <string>
 #include <iosfwd>
 #include <functional>
+#include "util/base/include/definitions.h"
 #include "marketplace/include/imarket_type.h"
 // need to include this because you can't forward declare
 // internal classes

@@ -203,6 +203,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
     // set up some scratch data
     int nmkt = aSolutionSet.getNumSolvable();
     std::vector<SolutionInfo> solvable = aSolutionSet.getSolvableSet();
+    bool isCalibrationPeriod = aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod();
 
     solverLog << "Preconditioning " << nmkt << " markets.\n";
 
@@ -215,11 +216,14 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
             double oldprice = solvable[i].getPrice();
             double oldsply  = solvable[i].getSupply();
             double olddmnd  = solvable[i].getDemand();
+            double fp = solvable[i].getForecastPrice();
+            double fd = solvable[i].getForecastDemand();
             double newprice = oldprice;
             bool chg = false;
             double lb,ub;       // only used for normal markets, but need to be declared up here.
+            bool isSolved = solvable[i].getRelativeED() < mFTOL || fabs(solvable[i].getED()) < mFTOL;
             
-            if(pass > 1) {
+            if(pass > 0) {
                 // If this market is close to solved update the "forecast" price and demand which
                 // in this context does not affect the initial price guess anymore but rather just
                 // the price and demand/supply normalization factor.  Doing this helps ensure that
@@ -229,9 +233,33 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                 // this but we can always update the normalization factors again later.
                 // Note we do not ever update the normalization factor for TAX and SUBSIDY markets
                 // because being constraints we already know what the scale should be.
-                if(solvable[i].getRelativeED() < mFTOL && !(solvable[i].getType() == IMarketType::TAX || solvable[i].getType() == IMarketType::SUBSIDY)) {
+                if(isSolved && (solvable[i].getType() == IMarketType::PRICE || solvable[i].getType() == IMarketType::DEMAND || solvable[i].getType() == IMarketType::TRIAL_VALUE) ) {
+                    // We should make the price and demand the same which if they are
+                    // solved is probably close enough, except around zero.  So to take
+                    // care of that case we will choose the larger of the two.
+                    double newScale = std::max(abs(oldprice), abs(olddmnd));
+                    solvable[i].setForecastPrice(newScale);
+                    solvable[i].setForecastDemand(newScale);
+                    fp = fd = newScale;
+                }
+                else if(isSolved && !(solvable[i].getType() == IMarketType::TAX || solvable[i].getType() == IMarketType::SUBSIDY)) {
                     solvable[i].setForecastPrice(oldprice);
                     solvable[i].setForecastDemand(olddmnd);
+                    fp = oldprice;
+                    fd = olddmnd;
+                }
+                if(fd == 0.0) {
+                    if(olddmnd > 0.0) {
+                        fd = olddmnd;
+                    }
+                    else if(oldsply > 0.0) {
+                        fd = oldsply;
+                    }
+                    else {
+                        // fall back to 1 for now
+                        fd = 1.0;
+                    }
+                    solvable[i].setForecastDemand(fd);
                 }
             }
 
@@ -294,7 +322,13 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                       // greater than or equal to supply, we leave the
                       // price alone.  In between we interpolate.
                       double sthresh = 100.0; // the 1% threshold described above.
-                      if(oldsply >= sthresh*olddmnd) {
+                        if(isCalibrationPeriod) {
+                            // it is a calibration period, the demand is going to be
+                            // fixed so let's move us back squarely into "good" supply
+                            // territory
+                            newprice = ub - lb / 2.0;
+                        }
+                      else if(oldsply >= sthresh*olddmnd) {
                         newprice = ub;
                       }
                       else {
@@ -309,7 +343,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                 case IMarketType::TRIAL_VALUE:
                     lb = solvable[i].getLowerBoundSupplyPrice();
                     ub = solvable[i].getUpperBoundSupplyPrice();
-                    if(oldprice < lb) {
+                    if(!isSolved && oldprice < lb) {
                         newprice = 0.001;
                         solvable[i].setPrice(newprice);
                         chg = true;
@@ -318,6 +352,20 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     else if(oldprice > ub) {
                         newprice = ub;
                         solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
+                    }
+                    else if(abs(oldprice) < util::getSmallNumber() &&
+                            abs(olddmnd) > util::getSmallNumber()) {
+                        // the case there the market was "off" but has now turned on
+                        // in which case just reset the trial price to the actual
+                        newprice = olddmnd;
+                        solvable[i].setPrice(newprice);
+                        // it is a good idea to reset the price/quantity scale factor too
+                        solvable[i].setForecastPrice(olddmnd);
+                        solvable[i].setForecastDemand(olddmnd);
+                        fp = olddmnd;
+                        fd = oldprice;
                         chg = true;
                         ++nchg;
                     }
@@ -356,18 +404,11 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     // greatly affect the trial values.
 
                     // Never intentionally set a trial demand or trial value
-                    // to something less than zero.  If a trial demand
-                    // is less than zero, set it to a small positive
-                    // number.
+                    // to something less than zero.
                     if(pass>=0) {
-                        double normoldprice = oldprice / solvable[i].getForecastDemand();
-                        double normolddemand = olddmnd / solvable[i].getForecastDemand();
-                        if(olddmnd <= 0.0) {
-                            newprice = util::getSmallNumber();
-                            solvable[i].setPrice(newprice);
-                            chg = true;
-                            ++nchg;
-                        } else if(oldprice <= 0.0 && olddmnd > 0.0) {
+                        double normoldprice = oldprice / fd;
+                        double normolddemand = olddmnd / fd;
+                        if(oldprice <= 0.0 && olddmnd > 0.0) {
                             newprice = olddmnd;
                             solvable[i].setPrice(newprice);
                             chg = true;
@@ -397,10 +438,26 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         chg = true;
                         ++nchg;
                     }
-                    else if(oldprice > lb && solvable[i].getForecastPrice() < lb && olddmnd < oldsply) {
+                    else if(oldprice > lb && fp <= lb && (1.3*olddmnd) < oldsply) {
                         // reset the price back to "unconstrained" if it wasn't constraining in the last period
                         // and it still is not now
-                        newprice = solvable[i].getForecastPrice();
+                        newprice = fp;
+                        solvable[i].setPrice(newprice);
+                        if(fp == 0.0) {
+                            // don't set the scale to zero
+                            fp = 1.0;
+                            solvable[i].setForecastPrice(fp);
+                        }
+                        if(abs(fd) < util::getSmallNumber() && oldsply > util::getSmallNumber()) {
+                            fd = oldsply;
+                            solvable[i].setForecastDemand(fd);
+                        }
+                        chg = true;
+                        ++nchg;
+                    }
+                    else if(oldprice <= lb && fp <= lb && (1.05*olddmnd) > oldsply) {
+                        // the case the policy had been "unconstrained" but might need to turn on now
+                        newprice = lb + 0.01;
                         solvable[i].setPrice(newprice);
                         chg = true;
                         ++nchg;
@@ -420,8 +477,8 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                       << marker << std::setw(8) << newprice << "\t"
                       << std::setw(8) << oldsply << "\t"
                       << std::setw(8) << olddmnd << "\t"
-                      << std::setw(8) << solvable[i].getForecastPrice() << "\t"
-                      << std::setw(8) << solvable[i].getForecastDemand() << "\t"
+                      << std::setw(8) << fp << "\t"
+                      << std::setw(8) << fd << "\t"
                       << solvable[i].getName() << "\n";
             if(nchg==0 && pass > 2)
                 // no additional effect from further passes.
