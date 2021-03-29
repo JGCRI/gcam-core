@@ -27,4 +27,4 @@ hector_dir:
 
 clean:
 	rm *.o *.d
-	$(MAKE) -C ./hector/src clean
+	$(MAKE) -C ./hector/src -f makefile.standalone clean

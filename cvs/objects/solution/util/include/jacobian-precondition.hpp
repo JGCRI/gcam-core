@@ -33,24 +33,10 @@
 *
 */
 
-#include <boost/numeric/ublas/lu.hpp>
-#include "solution/util/include/functor-subs.hpp"
-
-#if USE_LAPACK
-#define UBMATRIX boost::numeric::ublas::matrix<double,boost::numeric::ublas::column_major>
-#else
-#define UBMATRIX boost::numeric::ublas::matrix<double>
-#endif
-#define UBVECTOR boost::numeric::ublas::vector<double>
+#include "solution/util/include/functor.hpp"
 
 
-int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec<double,double> &F,
+int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec &F,
                           std::ostream *diagnostic=0, bool logpricep=true, double FTOL=1.0e-4);
-
-void broyden_singular_B_reset(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &B, VecFVec<double,double> &F,
-                             std::ostream *diagnostic, double FTOL=1.0e-4);
-
-#undef UBMATRIX
-#undef UBVECTOR
 
 #endif

@@ -280,6 +280,11 @@ void World::initCalc( const int period ) {
     
     // Reset the calc counter.
     mCalcCounter->startNewPeriod();
+#if GCAM_PARALLEL_ENABLED
+    // stash the period in the flow graph which just otherwise just set
+    // at the start of the model run and doesn't change
+    GcamFlowGraph::mPeriod = period;
+#endif
 }
 
 /*!
@@ -342,18 +347,10 @@ void World::calc( const int aPeriod, GcamFlowGraph *aWorkGraph, const vector<IAc
     mCalcCounter->incrementCount( aCalcList ? (double)(aCalcList->size()) / (double) mGlobalOrdering.size() : 1.0 );
 
     if( !aWorkGraph ) {
-        // If a work graph was not provided just use the global flow graph and set the
-        // calc list which is used to skip uncessary activities that are not contained in
-        // the given calc list.
+        // If a work graph was not provided just use the global flow graph
         aWorkGraph = mTBBGraphGlobal;
-        aWorkGraph->mCalcList = aCalcList;
     }
-    else {
-        // When a work graph is provided we assume all items in that graph should be
-        // calculated.
-        aWorkGraph->mCalcList = 0;
-    }
-    aWorkGraph->mPeriod = aPeriod;
+
     // do the model calculation
     aWorkGraph->mHead.try_put( tbb::flow::continue_msg() );
     aWorkGraph->mTBBFlowGraph.wait_for_all();

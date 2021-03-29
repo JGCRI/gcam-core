@@ -44,12 +44,11 @@
  */
 
 #include "util/base/include/util.h"
-#include "functor.hpp"
-#include <boost/numeric/ublas/vector.hpp>
+#include "solution/util/include/functor.hpp"
+#include "solution/util/include/ublas-helpers.hpp"
 #include <algorithm>
 #include <iostream>
 
-#define UBLAS boost::numeric::ublas
 
 /*!
  * Perform a line search for use in multidimensional root finders.  This is NOT a 1-D
@@ -69,14 +68,13 @@
  * \return : 0= success, anything else= fail
  *
  */
-template <class FTYPE> 
-int linesearch(SclFVec<FTYPE,FTYPE> &f, const UBLAS::vector<FTYPE> &x0,
-               FTYPE f0, const UBLAS::vector<FTYPE> &g0,
-               const UBLAS::vector<FTYPE> &dx, UBLAS::vector<FTYPE> &x,
-               FTYPE &fx, int &neval, std::ostream *solverlog = 0)
+int linesearch(VecFVec &f, const UBVECTOR &x0,
+               double f0, const UBVECTOR &g0,
+               const UBVECTOR &dx, UBVECTOR &x,
+               double &fx, int &neval, std::ostream *solverlog = 0)
 {
-  const FTYPE lseps = 1.0e-7;   // part of the definition of "sufficient" decrease
-  const FTYPE TOLX = 1.0e-6;    // tolerance for x values
+  const double lseps = 1.0e-7;   // part of the definition of "sufficient" decrease
+  const double TOLX = 1.0e-6;    // tolerance for x values
   // NB: This value of TOLX is way too small for single-precision,
   // but we're running GCAM in double precision anyhow, and the small
   // tolerance seems to be necessary for solving global unconventional
@@ -84,9 +82,10 @@ int linesearch(SclFVec<FTYPE,FTYPE> &f, const UBLAS::vector<FTYPE> &x0,
   // contemplate using this function in a single-precision
   // application, we are going to have to adjust this tolerance.
   int n = x0.size();
-  FTYPE g0dx=inner_prod(g0,dx); // initial rate of decrease, df/dlambda
-  FTYPE lambda = 1.0;           // start with full step
-  FTYPE maxval = 0.0;
+  double g0dx=g0.dot(dx); // initial rate of decrease, df/dlambda
+  double lambda = 1.0;           // start with full step
+  double maxval = 0.0;
+  UBVECTOR fxVec(x0.size());
 
   if(g0dx >= 0) {
     if(solverlog)
@@ -99,10 +98,10 @@ int linesearch(SclFVec<FTYPE,FTYPE> &f, const UBLAS::vector<FTYPE> &x0,
   
   // set lmin (minimum admissable value for lambda)
   for(int i=0; i<n; ++i) {
-    FTYPE tmp = fabs(dx[i] / (x0[i] + TOLX)); // fractional change in ith component of x over a unit step
+    double tmp = fabs(dx[i] / (x0[i] + TOLX)); // fractional change in ith component of x over a unit step
     maxval = std::max(tmp,maxval);          // pick the largest
   }
-  FTYPE lmin = TOLX / maxval;     // when lambda gets this small, even
+  double lmin = TOLX / maxval;     // when lambda gets this small, even
                                 // the fastest changing x is changing
                                 // by less than TOLX
 
@@ -111,15 +110,12 @@ int linesearch(SclFVec<FTYPE,FTYPE> &f, const UBLAS::vector<FTYPE> &x0,
   
   while(lambda > lmin) {
     x  = x0 + lambda*dx;
-    fx = f(x);
+    f(x, fxVec);
+    fx = fxVec.dot(fxVec);
     neval++;
 
     if(solverlog) {
         (*solverlog) << "\tlambda = " << lambda << "  fx = " << fx << std::endl;
-      if(fx > 10.0*f0) {
-        f.prn_diagnostic(solverlog);
-        (*solverlog) << std::endl;
-      }
     }
 
     // check for exit condition.  The term after the + is negative, so
@@ -131,15 +127,15 @@ int linesearch(SclFVec<FTYPE,FTYPE> &f, const UBLAS::vector<FTYPE> &x0,
       return 0;
 
     // last step increased or decreased too slowly --- backtrack
-    FTYPE tl0 = 0.1*lambda; // never decrease lambda by more than a factor of 10
-    FTYPE tl1 = 0.5*lambda; // always decrease lambda by at least half
+    double tl0 = 0.1*lambda; // never decrease lambda by more than a factor of 10
+    double tl1 = 0.5*lambda; // always decrease lambda by at least half
     // We fit a quadratic approximation to f(lambda) using the values
     // we've computed already, and we try the minimum of the quadratic
     // as our next lambda (subject to the constraints above).  NR
     // suggests that on iterations after the first we fit a cubic, but
     // it's not clear that that buys us a whole lot, so we'll try just
     // using the quadratic every time for now.
-    FTYPE denom = fx - f0 - g0dx*lambda;
+    double denom = fx - f0 - g0dx*lambda;
     if(denom != 0.0)
       lambda = -g0dx * (lambda*lambda)/(2.0 * denom);
     else
@@ -153,7 +149,5 @@ int linesearch(SclFVec<FTYPE,FTYPE> &f, const UBLAS::vector<FTYPE> &x0,
   // the Jacobian.  Otherwise, try starting with a new initial guess.
   return 1;              
 }
-
-#undef UBLAS
 
 #endif

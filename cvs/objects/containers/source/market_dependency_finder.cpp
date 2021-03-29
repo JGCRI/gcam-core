@@ -272,24 +272,9 @@ const vector<IActivity*> MarketDependencyFinder::getOrdering( const int aMarketN
 GcamFlowGraph* MarketDependencyFinder::getFlowGraph( const int aMarketNumber ) {
     if( aMarketNumber == -1 ) {
         if( !mTBBGraphGlobal ) {
-            // reads parameters from the global configuration
-            GcamParallel config;
-            GcamParallel::FlowGraph gcamFlowGraph;
-            GcamParallel::FlowGraph grainGraph;
-
-            // convert dependency table to flow graph 
-            config.makeGCAMFlowGraph( *this, gcamFlowGraph );
-            // parse flow graph
-            config.graphParseGrainCollect( gcamFlowGraph, grainGraph ); 
-            if( !gcamFlowGraph.topology_valid() ) {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::ERROR );
-                mainLog << "Topological indices not computed." << endl;
-                abort();
-            }
-            // build the tbb graph structure
+            // convert dependency table to flow graph
             mTBBGraphGlobal = new GcamFlowGraph();
-            config.makeTBBFlowGraph( grainGraph, gcamFlowGraph, *mTBBGraphGlobal ); 
+            GcamParallel::makeTBBFlowGraph( *this, *mTBBGraphGlobal );
         }
         return mTBBGraphGlobal;
     }
@@ -303,7 +288,7 @@ GcamFlowGraph* MarketDependencyFinder::getFlowGraph( const int aMarketNumber ) {
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "Could not find market: " << mMarketplace->mMarkets[ aMarketNumber ]->getName()
                     << " to get an ordering for." << endl;
-            exit( 1 );
+            abort();
         }
 
         // First check the MarketToDependencyItem and see if we have this cached.
@@ -311,27 +296,9 @@ GcamFlowGraph* MarketDependencyFinder::getFlowGraph( const int aMarketNumber ) {
             return (*mrktIter)->mFlowGraph;
         }
 
-        // We must generate the flow graph following the same procedure as the global graph.
-        // It may be a good idea to make some of these tempararies members to avoid recalculating
-        // them over and over.
-        GcamParallel config;
-        GcamParallel::FlowGraph gcamFlowGraph;
-        GcamParallel::FlowGraph grainGraph;
-        
-        // convert dependency table to flow graph
-        config.makeGCAMFlowGraph( *this, gcamFlowGraph );
-        // Parse flow graph subsetting for only the activities effected.  Use getOrdering
-        // to get this list incase it has not yet been calculated.
-        config.graphParseGrainCollect( gcamFlowGraph, grainGraph, getOrdering( aMarketNumber ) );
-        if( !gcamFlowGraph.topology_valid() ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Topological indices not computed." << endl;
-            abort();
-        }
-        // build the tbb graph structure
+        // build the tbb graph structure for the subgraph that is affected by this market
         (*mrktIter)->mFlowGraph = new GcamFlowGraph();
-        config.makeTBBFlowGraph( grainGraph, gcamFlowGraph, *(*mrktIter)->mFlowGraph );
+        GcamParallel::makeTBBFlowGraph( *this, *(*mrktIter)->mFlowGraph, getOrdering( aMarketNumber ) );
         return (*mrktIter)->mFlowGraph;
     }
 }
