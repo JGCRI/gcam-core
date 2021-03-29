@@ -2,7 +2,7 @@
 % Please edit documentation in R/zchunk_batch_ind_urb_processing_sectors.R
 \name{module_emissions_batch_ind_urb_processing_sectors_xml}
 \alias{module_emissions_batch_ind_urb_processing_sectors_xml}
-\title{module_emissions_batch_ind_urb_processing_sectors.xml}
+\title{module_emissions_batch_ind_urb_processing_sectors_xml}
 \usage{
 module_emissions_batch_ind_urb_processing_sectors_xml(command, ...)
 }
@@ -14,8 +14,9 @@ module_emissions_batch_ind_urb_processing_sectors_xml(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{ind_urb_processing_sectors.xml}. The corresponding file in the
-original data system was \code{batch_ind_urb_processing_sectors.xml} (emissions XML).
+the generated outputs: \code{ind_urb_processing_sectors.xml}, \code{ind_urb_processing_sectors_MAC.xml}.
+The corresponding file in the original data system was
+\code{batch_ind_urb_processing_sectors.xml} (emissions XML).
 }
 \description{
 Construct XML data structure for \code{ind_urb_processing_sectors.xml}.

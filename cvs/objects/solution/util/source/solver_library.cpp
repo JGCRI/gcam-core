@@ -64,7 +64,6 @@
 #include "containers/include/iactivity.h"
 
 #include "solution/util/include/edfun.hpp"
-#include "solution/util/include/functor-subs.hpp"
 
 using namespace std;
 
@@ -355,9 +354,8 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
     // Set up the EDFun wrapper which we will use to do the model evaluations.
     // This way we can re-use the same concepts to backtrack on a bracket step
     // similar to how we do it in the linesearch algorithm used in NR.
-    using UBVECTOR = boost::numeric::ublas::vector<double>;
     LogEDFun edFun(aSolutionSet, aWorld, aMarketplace, aPeriod, false);
-    FdotF<double, double> F(edFun);
+    UBVECTOR fx(aSolutionSet.getNumSolvable());
     UBVECTOR x(aSolutionSet.getNumSolvable());
     UBVECTOR prev_x(aSolutionSet.getNumSolvable());
     UBVECTOR dx(aSolutionSet.getNumSolvable());
@@ -365,8 +363,14 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
         x[i] = aSolutionSet.getSolvable(i).getPrice();
     }
     edFun.scaleInitInputs(x);
-    double currFX = F(x);
+    edFun(x,fx);
+    double currFX = fx.dot(fx);
     double prevFX;
+    
+    // save initial values in case the solution becomes substantially worse
+    // and we need to revert to them
+    double initialFX = currFX;
+    UBVECTOR initialX = x;
     
     solverLog.setLevel( ILogger::DEBUG );
     solverLog << aSolutionSet << endl;
@@ -470,7 +474,8 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
 
         // Rescale prices to be normalized then run an iteration
         edFun.scaleInitInputs(x);
-        currFX = F(x);
+        edFun(x, fx);
+        currFX = fx.dot(fx);
         solverLog << "Current FX: " << currFX << endl;
         
         // Check if this bracket step has increased the "error" F dot F by more than the
@@ -481,7 +486,8 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
         while(currFX > (prevFX * FX_INCREASE_THRESHOLD)) {
             stepMult /= 2.0;
             x = prev_x + dx * stepMult;
-            currFX = F(x);
+            edFun(x, fx);
+            currFX = fx.dot(fx);
             solverLog << "Walked back: " << stepMult << ", Current FX: " << currFX << endl;
         }
         solverLog.setLevel( ILogger::NOTICE );
@@ -490,6 +496,17 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
     } while ( ++iterationCount <= aMaxIterations && !aSolutionSet.isAllBracketed() );
 
     code = ( aSolutionSet.isAllBracketed() ? true : false );
+    
+    // do not allow the overall solution to get worse by three orders of magnitude
+    if(currFX > (initialFX * 1e3)) {
+        solverLog.setLevel( ILogger::WARNING );
+        solverLog << "Final FX: " << currFX << " increased from: " << initialFX<< " beyond thge allowable limit." << endl;
+        solverLog << "Brackets may be unreliable, reseting to initial prices and marking failure." << endl;
+        // reset brackets and go back to the original price vector
+        aSolutionSet.resetBrackets();
+        edFun(initialX, fx);
+        code = false;
+    }
 
     solverLog.setLevel( ILogger::DEBUG );
     solverLog << "Solution Info Set before leaving bracket: " << endl;
@@ -631,4 +648,38 @@ void SolverLibrary::restorePrices( SolutionInfoSet& aSolutionSet, const vector<d
     for( unsigned int i = 0; i < aSolutionSet.getNumTotal(); ++i ){
         aSolutionSet.getAny( i ).setPrice( aPrices[ i ] );
     }
+}
+
+std::ostream & operator<<(std::ostream &ostrm, const UBVECTOR &v) {
+    ostrm << "(";
+    for(size_t i=0; i<v.size(); ++i) {
+        if(i>0) {
+            // print dividers to make the thing easier to read
+            if(i%50 == 0)
+                ostrm << "\n" << i << ":\t";
+            else if(i%10 == 0)
+                ostrm << "\n\t";
+            else ostrm << " ";
+        }
+        ostrm << v[i];
+    }
+    ostrm << ")";
+    return ostrm;
+}
+
+
+std::ostream & operator<<(std::ostream &ostrm, const UBMATRIX &M) {
+    int m = M.rows();
+    int n = M.cols();
+    
+    for(int i=0;i<m;++i) {
+        ostrm << i << ":   ";
+        for(int j=0;j<n;++j) {
+            if(j>0 && j%50==0) ostrm << "|";
+            if(j>0 && j%10==0) ostrm << "| ";
+            ostrm << M(i,j) << " ";
+        }
+        ostrm << "\n";
+    }
+    return ostrm;
 }

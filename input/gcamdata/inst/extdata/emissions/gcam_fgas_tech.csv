@@ -1,9 +1,9 @@
 # File: gcam_fgas_tech.csv
 # Title: GCAM fluorinated greenhouse gases by sector
 # Units: NA
-# Source: GCAM compilation?
+# Source: GCAM compilation
 # Description: Specifies sector-specific sources of Fgases
-# Column types: cccccc 
+# Column types: cccccc
 # ----------
 supplysector,subsector,stub.technology,EPA_sector,EDGAR_agg_sector,MAC_type1
 electricity_net_ownuse,electricity_net_ownuse,electricity_net_ownuse,elect_td,elect_equip,ElectTD

@@ -47,7 +47,9 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
              "L201.nonghg_max_reduction_res",
              "L201.nonghg_steepness_res",
              "L201.nonghg_res",
-             "L201.ghg_res"))
+             "L201.ghg_res",
+             "L201.ResReadInControl_nonghg_res",
+             "L201.ResReadInControl_ghg_res"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -213,6 +215,58 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
       L201.ghg_res
 
+    # Resources have vintaging going on in the historical years.
+    # The above emissions coefficients are the coefficients across vintages
+    # in the given model year.  The best way to ensure the correct "total"
+    # emissions factor across vintages is realized is to use the ReadInControl
+    # to change the coefficients by vintage for all vintages.  Note given the way
+    # the C++ operates we need to read in the "base" EmissCoef table and then the
+    # same values in the ReadInControl table all read into the first model period
+    # vintage.  We will also need to "fillout" the value in the final calibration
+    # to the future model periods otherwise the vintage would revert back to the
+    # value in the EmissCoef table.  Finally to turn "off" any adjustments made to
+    # new vintages in future model periods we must have ReadInControl with values of
+    # zero starting in the first future model period.
+
+    # L201.ResReadInControl_nonghg_res: Vintage adjustments for Pollutant emissions for energy resources in all regions
+    L201.nonghg_res %>%
+      # copy the final historical year value to the future model periods
+      bind_rows(L201.nonghg_res %>%
+                  filter(year == MODEL_FINAL_BASE_YEAR) %>%
+                  select(-year) %>%
+                  repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS))) %>%
+      rename(future.emiss.coeff.year = year) %>%
+      mutate(year = MODEL_BASE_YEARS[1],
+             future.emiss.coeff.name = "vintage_adjust") %>%
+      select(LEVEL2_DATA_NAMES[["ResReadInControl"]]) ->
+      L201.ResReadInControl_nonghg_res
+    # turn "off" vintage adjustments for future year vintages
+    L201.ResReadInControl_nonghg_res %>%
+      mutate(year = MODEL_FUTURE_YEARS[1],
+             emiss.coef = 0.0) %>%
+      bind_rows(L201.ResReadInControl_nonghg_res) ->
+      L201.ResReadInControl_nonghg_res
+
+    # L201.ResReadInControl_ghg_res: Vintage adjustments for GHG emissions from resource production in all regions
+    L201.ghg_res %>%
+      # copy the final historical year value to the future model periods
+      bind_rows(L201.ghg_res %>%
+                  filter(year == MODEL_FINAL_BASE_YEAR) %>%
+                  select(-year) %>%
+                  repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS))) %>%
+      rename(future.emiss.coeff.year = year) %>%
+      mutate(year = MODEL_BASE_YEARS[1],
+             future.emiss.coeff.name = "vintage_adjust") %>%
+      select(LEVEL2_DATA_NAMES[["ResReadInControl"]]) ->
+      L201.ResReadInControl_ghg_res
+    # turn "off" vintage adjustments for future year vintages
+    L201.ResReadInControl_ghg_res %>%
+      mutate(year = MODEL_FUTURE_YEARS[1],
+             emiss.coef = 0.0) %>%
+      bind_rows(L201.ResReadInControl_ghg_res) ->
+      L201.ResReadInControl_ghg_res
+
+
     # L201.nonghg_max_reduction_res: maximum reduction for resources in all regions
     L151.nonghg_ctrl_R_en_S_T %>%
       filter(supplysector == "out_resources") %>%
@@ -255,6 +309,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.nonghg_max_reduction <- rename_SO2(L201.nonghg_max_reduction, A_regions, FALSE)
     L201.nonghg_steepness <- rename_SO2(L201.nonghg_steepness, A_regions, FALSE)
     L201.nonghg_res <- rename_SO2(L201.nonghg_res, A_regions, FALSE)
+    L201.ResReadInControl_nonghg_res <- rename_SO2(L201.ResReadInControl_nonghg_res, A_regions, FALSE)
     L201.nonghg_steepness_res <- rename_SO2(L201.nonghg_steepness_res, A_regions, FALSE)
     L201.nonghg_max_reduction_res <- rename_SO2(L201.nonghg_max_reduction_res, A_regions, FALSE)
 
@@ -412,8 +467,6 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "L111.nonghg_tgej_R_en_S_F_Yh") ->
       L201.nonghg_res
 
-    # update into using input emissions + output driver
-    # YO Mar 2020
     L201.ghg_res %>%
       add_title("GHG emission factors from resource production in all regions") %>%
       add_units("Tg/EJ") %>%
@@ -423,7 +476,23 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "L112.ghg_tgej_R_en_S_F_Yh") ->
       L201.ghg_res
 
-    return_data(L201.en_pol_emissions, L201.en_ghg_emissions, L201.en_bcoc_emissions, L201.OutputEmissions_elec, L201.OutputEmissCoeff_elec, L201.nonghg_max_reduction, L201.nonghg_steepness, L201.nonghg_max_reduction_res, L201.nonghg_steepness_res, L201.nonghg_res, L201.ghg_res)
+    L201.ResReadInControl_nonghg_res %>%
+      add_title("Vintaging adjustments for pollutant emissions for energy resources") %>%
+      add_units("Tg/EJ") %>%
+      add_comments("Used to make per vintage adjustments to ensure overall emissions") %>%
+      add_comments("factors match the ones in L201.nonghg_res in historical years") %>%
+      same_precursors_as(L201.nonghg_res) ->
+      L201.ResReadInControl_nonghg_res
+
+    L201.ResReadInControl_ghg_res %>%
+      add_title("Vintaging adjustments for GHG emission factors from resource production") %>%
+      add_units("Tg/EJ") %>%
+      add_comments("Used to make per vintage adjustments to ensure overall emissions") %>%
+      add_comments("factors match the ones in L201.ghg_res in historical years") %>%
+      same_precursors_as(L201.ghg_res) ->
+      L201.ResReadInControl_ghg_res
+
+    return_data(L201.en_pol_emissions, L201.en_ghg_emissions, L201.en_bcoc_emissions, L201.OutputEmissions_elec, L201.OutputEmissCoeff_elec, L201.nonghg_max_reduction, L201.nonghg_steepness, L201.nonghg_max_reduction_res, L201.nonghg_steepness_res, L201.nonghg_res, L201.ghg_res, L201.ResReadInControl_nonghg_res, L201.ResReadInControl_ghg_res)
   } else {
     stop("Unknown command")
   }

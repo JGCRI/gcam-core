@@ -189,7 +189,16 @@ void SmoothRenewableSubresource::annualsupply( const std::string& aRegionName, c
                                          mGdpSupplyElasticity );
     
     // now convert to absolute value of production
-    mAnnualProd[ aPeriod ] = fractionAvailable * mMaxAnnualSubResource[aPeriod] * gpdSupplyExpansion;
+    double annualProd = fractionAvailable * mMaxAnnualSubResource[aPeriod] * gpdSupplyExpansion;
+    if( annualProd < util::getSmallNumber() ) {
+        // the curve can be extremely flat close to zero
+        // so instead we will cut off production at getSmallNumber
+        // which has also be used in getLowestPrice so that in
+        // conjunction we can let the solver effectively ignore
+        // supply/demand mismatch below this value
+        annualProd = 0.0;
+    }
+    mAnnualProd[ aPeriod ] = annualProd;
     
     currTech->production( aRegionName, aResourceName, mAnnualProd[ aPeriod ], 1.0, aGDP, aPeriod );
     

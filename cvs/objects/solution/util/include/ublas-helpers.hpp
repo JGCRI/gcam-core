@@ -34,47 +34,24 @@
 #define UBLAS_HELPERS_HPP_
 
 #include <iostream>
-#include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
 
-#define UBLAS boost::numeric::ublas
+// In principal we could easily swap out implementations, or define different
+// storage semantics just by changing the types in this one header file and all
+// the other solver methods will update accordingly.  For now we will just use
+// the Eigen defaults but it may be useful to explore alternatives for increased
+// performance.
 
-template <class FTYPE>
-std::ostream & operator<<(std::ostream &ostrm, const UBLAS::vector<FTYPE> &v) {
-  ostrm << "(";
-  for(size_t i=0; i<v.size(); ++i) {
-    if(i>0) {
-      // print dividers to make the thing easier to read
-      if(i%50 == 0)
-        ostrm << "\n" << i << ":\t";
-      else if(i%10 == 0)
-        ostrm << "\n\t";
-      else ostrm << " ";
-    }
-    ostrm << v[i];
-  }
-  ostrm << ")";
-  return ostrm;
-}
+//include <boost/numeric/ublas/vector.hpp>
+//#include <boost/numeric/ublas/matrix.hpp>
+#include <Eigen/Core>
 
-template <class FTYPE, class MTRAIT>
-std::ostream & operator<<(std::ostream &ostrm, const UBLAS::matrix<FTYPE,MTRAIT> &M) {
-  int m = M.size1();
-  int n = M.size2();
-  
-  for(int i=0;i<m;++i) {
-    ostrm << i << ":   ";
-    for(int j=0;j<n;++j) {
-      if(j>0 && j%50==0) ostrm << "|";
-      if(j>0 && j%10==0) ostrm << "| ";
-      ostrm << M(i,j) << " ";
-    }
-    ostrm << "\n";
-  } 
-  return ostrm;
-}
+//#define UBLAS boost::numeric::ublas
+using UBVECTOR = Eigen::VectorXd;
+using UBMATRIX = Eigen::MatrixXd;
 
+std::ostream & operator<<(std::ostream &ostrm, const UBVECTOR &v);
+std::ostream & operator<<(std::ostream &ostrm, const UBMATRIX &M);
 
-#undef UBLAS
+//#undef UBLAS
 
 #endif

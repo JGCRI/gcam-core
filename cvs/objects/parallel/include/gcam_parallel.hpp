@@ -1,6 +1,8 @@
 #ifndef GCAM_FLOW_GRAPH_HPP_
 #define GCAM_FLOW_GRAPH_HPP_
 
+#include "util/base/include/definitions.h"
+
 #if GCAM_PARALLEL_ENABLED
 
 /*
@@ -35,15 +37,12 @@
 *
 */
 
-/* standard headers */
-#include <list>
+#include <vector>
 #include <set>
-
-/* graph analysis headers */
-#include "parallel/include/digraph.hpp"
 
 /* TBB headers */
 #include <tbb/flow_graph.h>
+#include <tbb/global_control.h>
 
 // Forward declare when possible
 class IActivity;
@@ -59,110 +58,31 @@ class GcamFlowGraph {
     friend class MarketDependencyFinder;
 private:
     //! Private constructor to only allow select classes to create flow graphs.
-    GcamFlowGraph() : mTBBFlowGraph(), mHead( mTBBFlowGraph ), mPeriod( 0 ), mCalcList( 0 ) {}
+    GcamFlowGraph();
     
     //! The TBB calculation flow graph.
     tbb::flow::graph mTBBFlowGraph;
     
     //! The broadcast node which can be used to kick off calculations.
     tbb::flow::broadcast_node<tbb::flow::continue_msg> mHead;
-
-    //! The model period which will be calculated when called.
-    int mPeriod;
     
-    //! A list of items which actually need to be calculated which may be a subset
-    //! of the total activities.  This can be used when individual flow graphs have
-    //! not be calculated for sub-graphs.  Note when null it implies all activities
-    //! will be calculated.
-    const std::vector<IActivity*>* mCalcList;
+    static tbb::global_control* mParallelismConfig;
+
+public:
+    
+    ~GcamFlowGraph();
+    //! The model period which will be calculated when called.
+    static int mPeriod;
 };
 
-/*!
- * \brief A class which converts activities and dependecies tracked by the MarketDependencyFinder
- *        and turn them into a TBB flow graph which can be calculated in parallel.
- * \details The process to convert to the flow graph is several steps which includes aggregating
- *          activities into larger grains to mitigate context switching overhead when the
- *          work to be done by an individual activity is small.
- */
 class GcamParallel {
 public:
-    /* Types */
-
-    //! Typedef for the type of a vertex in the flow graph
-    typedef IActivity* FlowGraphNodeType;
-
-    //! Flow graph of calc vertex dependencies for parallel analysis
-    typedef digraph<FlowGraphNodeType> FlowGraph;
+    static void makeTBBFlowGraph( const MarketDependencyFinder& aDependencyFinder,
+                                  GcamFlowGraph& aTBBGraph );
     
-    GcamParallel();
-    
-    /* Graph analysis and parsing methods */
-    void makeGCAMFlowGraph( const MarketDependencyFinder& aDependencyFinder, FlowGraph& aGCAMFlowGraph );
-    
-    void graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, FlowGraph& aGrainGraph );
-    
-    void graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, FlowGraph& aGrainGraph,
-                                 const std::vector<FlowGraphNodeType>& aCalcItems );
-    
-    void makeTBBFlowGraph( const FlowGraph& aGrainGraph, const FlowGraph& aTopology,
-                           GcamFlowGraph& aTBBGraph );
-  
-protected:
-    //! Helper class for sorting lists in topological order
-    struct TopologicalComparator {
-        TopologicalComparator(const FlowGraph& aGraph ) : mTopology( aGraph ) {}
-        
-        bool operator()( const FlowGraphNodeType& aLHS, const FlowGraphNodeType& aRHS ) {
-            return mTopology.topological_index( aLHS ) < mTopology.topological_index( aRHS );
-        }
-        
-        //! A flow graph which can be used to check topological indices.
-        const FlowGraph& mTopology;
-    };
-    
-    /*!
-     * \brief Body structure for tbb::flow_graph
-     *
-     * \details This structure defines a grain of work for TBB.  We will
-     * place a bunch of these into a tbb::flow::graph structure, and TBB
-     * will take care of the dispatch.  What this structure has to do is
-     * to provide a way to execute the calculation vertices in the
-     * topologically correct order.  We do that by taking in the set of
-     * vertices and the graph structure that defines the topology.  From
-     * that we can create a list that is sorted in topological order.
-     * After that, the body struct no longer needs the graph.
-     */
-    struct TBBFlowGraphBody {
-        TBBFlowGraphBody( const std::set<FlowGraphNodeType>& aNodes, const FlowGraph& aTopology,
-                          const GcamFlowGraph& aGraph );
-        
-        void operator()( tbb::flow::continue_msg aMessage );
-
-        //! The list of activities which will be calculated when TBB calls this class
-        //! to execute.
-        std::list<FlowGraphNodeType> mNodes;
-        
-        //! A reference to the TBB flow graph to which this node belongs.
-        const GcamFlowGraph& mGraph;
-    };
-    
-    /* data members */
-    
-    /*!
-     * \brief Target grain size for parallel decomposition
-     * \details Target grain size in the graph decomposition heuristics.
-     *          Grains won't turn out to be exactly this size; however,
-     *          larger gsize will generally result in larger grains, less
-     *          parallelism, and less overhead.  Smaller gsize will result
-     *          in the opposite.  The default is 30.
-     */
-    int mGrainSizeTarget;
-    
-    //! Default grain size
-    static const int DEFAULT_GRAIN_SIZE;
-    
-    // right now, grain size is the only parameter in the heuristics.
-    // We may add more later.
+    static void makeTBBFlowGraph( const MarketDependencyFinder& aDependencyFinder,
+                                  GcamFlowGraph& aTBBGraph,
+                                  const std::vector<IActivity*>& aPartialCalcList );
 };
 
   

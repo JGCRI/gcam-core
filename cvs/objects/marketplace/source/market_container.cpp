@@ -375,10 +375,8 @@ double MarketContainer::forecastDemand( const int aPeriod )
         // set some reasonable limits on what kinds of forecast you get
         // this is going to use as a scale factor, so lose the sign
         forecastedDemand = abs( forecastedDemand );
-        if( forecastedDemand < 1.0 ) {
-            // don't scale up small values
-            forecastedDemand = 1.0;
-        }
+        // we will rely on the preconditioner to correct unreasonable forecast
+        // values as the requisite heuristics are implemented there
     }
     
     mMarkets[ aPeriod ]->setForecastDemand( forecastedDemand );

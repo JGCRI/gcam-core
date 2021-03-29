@@ -59,9 +59,9 @@ class SatiationDemandFunction;
  * \brief A node class which drives building services and floorspace demands.
  *
  * \details Contains leaves which will represent building services as well as
- *			characteristics for this type of building such as floorspace, shell
- *			conductance and floor to surface area ratio.  This class is also
- *			responsible for setting up a trial market for internal gains.
+ *          characteristics for this type of building such as floorspace, shell
+ *          conductance and floor to surface area ratio.  This class is also
+ *          responsible for setting up a trial market for internal gains.
  *
  *          <b>XML specification for BuildingNodeInput</b>
  *          - XML name: \c BuildingNodeInput::getXMLNameStatic()
@@ -76,28 +76,30 @@ class SatiationDemandFunction;
  *                   child to this node.
  *              - \c prodDmdFnType BuildingNodeInput::mFunctionType
  *                   The name of the function that will calculate demand for the child inputs.
- *					 This will most likely be a building-service-function.
+ *                   This will most likely be a building-service-function.
  *              - \c base-building-size BuildingNodeInput::mBuildingSize
  *                   The base year size in terms of floorspace which can be utilized to back out
- *					 coefficients.
+ *                   coefficients.
+ *              - \c is-building-size-fixed BuildingNodeInput::mIsFixedBuildingSize
+ *                   A flag to indicate the user wants to fix the building size to the parsed value
  *              - \c price-exponent BuildingNodeInput::mPriceExponent
  *                   Price exponent by period to be used in calculating a demand for this
- *					 building type.
+ *                   building type.
  *              - \c shell-conductance BuildingNodeInput::mShellConductance
  *                   The building shell conductance by period which encapsulates technical change
- *					 characterisitics which affect heating and cooling service demand.
+ *                   characterisitics which affect heating and cooling service demand.
  *              - \c floor-to-surface-ratio BuildingNodeInput::mFloorToSurfaceRatio
  *                   The building floor to surface area by period which building structual change
- *					 characterisitics which affect heating and cooling service demand.
+ *                   characterisitics which affect heating and cooling service demand.
  *              - \c internal-gains-market-name BuildingNodeInput::mInternalGainsMarketname
  *                   A name to use when setting up a trial market for the internal gains of this
- *					 building type.
+ *                   building type.
  *              - \c internal-gains-unit BuildingNodeInput::mInternalGainsUnit
  *                   A string which describes the units for internal gains.
  *              - \c internal-gains-trial-supply BuildingNodeInput::mInternalGainsTrialSupply
  *                   Initial trial supplies to set into the market for internal gains.  These
- *					 values are not necessary and only used to start the solver with a reasonable
- *					 trial supply.
+ *                   values are not necessary and only used to start the solver with a reasonable
+ *                   trial supply.
  *              - \c SatiationDemandFunction::getXMLNameStatic() BuildingNodeInput::mSatiationDemandFunction
  *                   The self contained satiation demand function which will parse it's own
  *                   parameters.
@@ -113,18 +115,18 @@ public:
 
     static const std::string& getXMLNameStatic();
 
-	// Building NodeInput specific methods
-	Value getSubregionalPopulation() const;
+    // Building NodeInput specific methods
+    Value getSubregionalPopulation() const;
 
-	Value getSubregionalIncome() const;
+    Value getSubregionalIncome() const;
 
-	Value getShellConductance( const int aPeriod ) const;
+    Value getShellConductance( const int aPeriod ) const;
 
-	Value getFloorToSurfaceRatio( const int aPeriod ) const;
+    Value getFloorToSurfaceRatio( const int aPeriod ) const;
 
     double getInternalGains( const std::string& aRegionName, const int aPeriod ) const;
 
-	SatiationDemandFunction* getSatiationDemandFunction() const;
+    SatiationDemandFunction* getSatiationDemandFunction() const;
 
     // INestedInput methods
     virtual void removeEmptyInputs();
@@ -149,32 +151,32 @@ public:
     virtual double getLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
         const int aPeriod ) const;
 
-	// INestedInput methods that will not be implemented
+    // INestedInput methods that will not be implemented
     virtual void changeSigma( const std::string& aRegionName, const int aPeriod,
         const double aAlphaZero )
-	{
-		// Change sigma refers to adjusting from a new vintage technology to an old vintage
-		// technology.  So for instance changing from a high elasticity of substitutio to a low.
-		// This concept makes no sense for buildings and so it is not implemented.
-	}
+    {
+        // Change sigma refers to adjusting from a new vintage technology to an old vintage
+        // technology.  So for instance changing from a high elasticity of substitutio to a low.
+        // This concept makes no sense for buildings and so it is not implemented.
+    }
 
     virtual double calcCapitalOutputRatio( const std::string& aRegionName, const std::string& aSectorName,
         const int aPeriod, const double aAlphaZero )
-	{
-		return 0;
-	}
+    {
+        return 0;
+    }
 
     virtual void calcVariableLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
         const int aPeriod, const double aAlphaZero )
-	{
-	}
+    {
+    }
 
     virtual void applyTechnicalChange( const std::string& aRegionName, const std::string& aSectorName,
         const int aPeriod, const TechChange& aTechChange )
-	{
-	}
+    {
+    }
 
-	virtual void resetCalcLevelizedCostFlag() {}
+    virtual void resetCalcLevelizedCostFlag() {}
 
     // IInput methods
     virtual IInput* clone() const;
@@ -234,57 +236,57 @@ public:
 
     // Methods that NodeInput will not implement
     virtual double getCurrencyDemand( const int aPeriod ) const
-	{
-		return 0;
-	}
+    {
+        return 0;
+    }
 
     virtual void setCurrencyDemand( const double aCurrencyDemand,
                                     const std::string& aRegionName, 
                                     const int aPeriod )
-	{
-	}
+    {
+    }
 
     virtual double getCarbonContent( const int aPeriod ) const
-	{
-		return 0;
-	}
+    {
+        return 0;
+    }
 
-	virtual double getPriceAdjustment() const
-	{
-		return 0;
-	}
+    virtual double getPriceAdjustment() const
+    {
+        return 0;
+    }
 
     virtual double getConversionFactor( const int aPeriod ) const
-	{
-		return 0;
-	}
+    {
+        return 0;
+    }
 
     virtual double getCO2EmissionsCoefficient( const std::string& aGHGName,
                                              const int aPeriod ) const
-	{
-		return 0;
-	}
+    {
+        return 0;
+    }
 
     virtual void tabulateFixedQuantity( const std::string& aRegionName,
                                         const double aFixedOutput,
                                         const bool aIsInvestmentPeriod,
                                         const int aPeriod )
-	{
-	}
+    {
+    }
 
     virtual void scaleCalibrationQuantity( const double aScaleFactor )
-	{
-	}
+    {
+    }
 
     virtual double getCalibrationQuantity( const int aPeriod ) const
-	{
-		return 0;
-	}
+    {
+        return 0;
+    }
 
-	virtual double getTechChange( const int aPeriod ) const
-	{
-		return 0;
-	}
+    virtual double getTechChange( const int aPeriod ) const
+    {
+        return 0;
+    }
     
     virtual double getIncomeElasticity( const int aPeriod ) const
     {
@@ -328,21 +330,21 @@ public:
     virtual void copyParamsInto( InputTax& aInput,
         const int aPeriod ) const {}
 
-	virtual void copyParamsInto( InputOMVar& aInput,
-								const int aPeriod ) const {}
-	
-	virtual void copyParamsInto( InputOMFixed& aInput,
-								const int aPeriod ) const {}
-	
-	virtual void copyParamsInto( InputCapital& aInput,
-								const int aPeriod ) const {}
+    virtual void copyParamsInto( InputOMVar& aInput,
+                                const int aPeriod ) const {}
+    
+    virtual void copyParamsInto( InputOMFixed& aInput,
+                                const int aPeriod ) const {}
+    
+    virtual void copyParamsInto( InputCapital& aInput,
+                                const int aPeriod ) const {}
 
     virtual void copyParamsInto( NodeInput& aInput,
-		const int aPeriod ) const {}
+        const int aPeriod ) const {}
 
-	virtual void doInterpolations( const int aYear, const int aPreviousYear,
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const IInput* aPreviousInput,
-								   const IInput* aNextInput ) {}
+                                   const IInput* aNextInput ) {}
 
     // IVisitable interface.
     virtual void accept( IVisitor* aVisitor,
@@ -367,6 +369,9 @@ protected:
 
         //! Building size by period.
         DEFINE_VARIABLE( ARRAY | STATE, "base-building-size", mBuildingSize, objects::PeriodVector<Value> ),
+
+        //! A flag to indicate the user wants to fix the building size to the parsed value.
+        DEFINE_VARIABLE(ARRAY, "is-building-size-fixed", mIsFixedBuildingSize, objects::PeriodVector<bool>),
 
         //! Price exponent by period.
         DEFINE_VARIABLE( ARRAY, "price-exponent", mPriceExponent, objects::PeriodVector<Value> ),

@@ -89,7 +89,6 @@ void SupplyDemandCurve::calculatePoints( const std::vector<double>& aPrices, Sol
                                          Marketplace* aMarketplace, const int aPeriod, bool aIsPricesRelative )
 {
     size_t nsolv = aSolnSet.getNumSolvable();
-    using UBVECTOR = boost::numeric::ublas::vector<double>;
     UBVECTOR x( nsolv );
     UBVECTOR fx( nsolv );
     int numPrices = aPrices.size();

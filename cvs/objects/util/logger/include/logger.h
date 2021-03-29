@@ -51,6 +51,7 @@
 #include <sstream>
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/logger/include/ilogger.h"
+#include "util/base/include/definitions.h"
 
 #if GCAM_PARALLEL_ENABLED
 #include <tbb/spin_mutex.h>
