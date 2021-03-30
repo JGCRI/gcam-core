@@ -6,7 +6,7 @@
 # Column types: ccccnc
 # ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
-regional coal,EJ,EJ,1975$/GJ,-1.5,
-regional oil,EJ,EJ,1975$/GJ,-1.5,
-regional natural gas,EJ,EJ,1975$/GJ,-1.5,
+regional coal,EJ,EJ,1975$/GJ,-3,
+regional oil,EJ,EJ,1975$/GJ,-3,
+regional natural gas,EJ,EJ,1975$/GJ,-3,
 
