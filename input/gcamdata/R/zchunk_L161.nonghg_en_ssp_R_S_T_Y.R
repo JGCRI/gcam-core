@@ -136,12 +136,9 @@ module_emissions_L161.nonghg_en_ssp_R_S_T_Y <- function(command, ...) {
     # Compute future emissions factors for GAINS scenarios
     emfact_scaled <- L111.nonghg_tgej_R_en_S_F_Yh %>%
       filter(year == emissions.GAINS_BASE_YEAR) %>%
-      # Add in BC/OC emissions factors, assumed that 2005 emissions factors are identical to 2000
-      bind_rows(L114.bcoc_tgej_R_en_S_F_2000 %>%
-                  mutate(year = emissions.GAINS_BASE_YEAR)) %>%
       # Add GAINS regions and sectors
       left_join_error_no_match(A_regions %>% select(GCAM_region_ID, GAINS_region), by = "GCAM_region_ID") %>%
-      left_join(GCAM_sector_tech %>% select(supplysector, subsector, stub.technology, IIASA_sector),
+      left_join(GCAM_sector_tech %>% select(supplysector, subsector, stub.technology, IIASA_sector) %>% distinct(),
                 by = c("supplysector", "subsector", "stub.technology")) %>%
       # Remove non-IIASA sectors and technologies with 0 emissions factor in base year. No reason to read in future zeroes.
       filter(!is.na(IIASA_sector), value != 0) %>%

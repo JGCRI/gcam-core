@@ -53,7 +53,6 @@
 #include "solution/solvers/include/bisect_all.h"
 #include "solution/solvers/include/bisect_one.h"
 #include "solution/solvers/include/bisect_policy.h"
-#include "solution/solvers/include/lognrbt.hpp"
 #include "solution/solvers/include/logbroyden.hpp"
 #include "solution/solvers/include/preconditioner.hpp"
 
@@ -75,7 +74,6 @@ bool SolverComponentFactory::hasSolverComponent( const string& aXMLName ) {
         || LogNewtonRaphsonSaveDeriv::getXMLNameStatic() == aXMLName
         || BisectOne::getXMLNameStatic() == aXMLName
         || BisectPolicy::getXMLNameStatic() == aXMLName
-        || LogNRbt::getXMLNameStatic() == aXMLName
         || LogBroyden::getXMLNameStatic() == aXMLName
         || Preconditioner::getXMLNameStatic() == aXMLName;
 }
@@ -122,9 +120,6 @@ SolverComponentFactory::createAndParseSolverComponent( const string& aXMLName,
     }
     else if( BisectPolicy::getXMLNameStatic() == aXMLName ) {
         retSolverComponent = new BisectPolicy( aMarketplace, aWorld, aCalcCounter );
-    }
-    else if( LogNRbt::getXMLNameStatic() == aXMLName ) {
-        retSolverComponent = new LogNRbt( aMarketplace, aWorld, aCalcCounter );
     }
     else if( LogBroyden::getXMLNameStatic() == aXMLName ) {
         retSolverComponent = new LogBroyden( aMarketplace, aWorld, aCalcCounter );

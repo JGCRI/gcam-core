@@ -31,7 +31,7 @@ ensures values are filled in for all \code{out_years} using the following rules:
     the column \code{technology}.  In other words for shadowing technologies the decay is
     only applied to the difference in the values in the last year in which one was
     specified. This is to allow for instance a Gas CC plant to have cost reductions at a
-    moderate pace but a Gas CC+CCS can have rapid cost reductions tothe CCS portion of
+    moderate pace but a Gas CC+CCS can have rapid cost reductions to the CCS portion of
     the cost.
 }
 \author{

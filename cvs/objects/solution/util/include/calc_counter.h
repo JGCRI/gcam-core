@@ -49,6 +49,8 @@
 #include <iosfwd>
 #include <map>
 
+#include "util/base/include/definitions.h"
+
 #if GCAM_PARALLEL_ENABLED
 #include "tbb/spin_mutex.h"
 #endif

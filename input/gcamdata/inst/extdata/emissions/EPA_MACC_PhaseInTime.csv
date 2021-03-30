@@ -1,0 +1,23 @@
+# File: EPA_MACC_PhaseInTime.csv
+# Title: Map MAC phase in time for MAC curvers in early modeling period
+# Description: Phasing in fractions for MAC curvers in early modeling period allows a smoother phase in
+# Units: Unitless
+# Column types: cn
+mac.control,mac.phase.in.time
+Refrigeration and Air Conditioning,25
+Electric Power Systems,25
+Foams,25
+Solvent Use,25
+Semiconductor Manufacturing,25
+Aerosols Product Use,25
+Fire Protection,25
+Aluminum and Magnesium Production,25
+HCFC-22 Production,25
+Nitric and Adipic Acid Production,25
+Landfilling of Solid Waste,25
+Wastewater,25
+Livestock,0
+Cropland Management,0
+Rice Cultivation,0
+Coal Mining Activities,25
+Natural Gas and Oil Systems,25

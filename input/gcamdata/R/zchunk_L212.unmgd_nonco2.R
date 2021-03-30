@@ -132,12 +132,6 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
       rename_SO2(A_regions) %>%
       select(region, AgSupplySector, AgSupplySubsector, UnmanagedLandTechnology, year, Non.CO2, input.emissions = value, input.name)
 
-    if(driver.EMISSIONS_SOURCE =="EDGAR"){
-      L125.bcoc_tgbkm2_R_grass_2000 %>%
-        mutate(year=(2000))->L125.bcoc_tgbkm2_R_grass_2000
-    }
-
-
     # Grassland emissions factors for BC/OC
     # L212.GrassEmissions: Grassland fire emissions factors for BC/OC in all regions
     L212.GRASSEmissionsFactors_BCOC <- L212.GRASSEmissions %>%

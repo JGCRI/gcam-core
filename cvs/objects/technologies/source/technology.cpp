@@ -880,7 +880,7 @@ double Technology::getFixedOutput( const string& aRegionName,
     assert( mProductionState[ aPeriod ] );
 
     // Store the marginal profit rate for use later
-    mMarginalRevenue = aMarginalRevenue;
+    const_cast<Technology*>(this)->mMarginalRevenue = aMarginalRevenue;
 
     // Construct a marginal profit calculator. This allows the calculation of 
     // marginal profits to be lazy.

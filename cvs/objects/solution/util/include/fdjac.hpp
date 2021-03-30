@@ -46,133 +46,21 @@
  *         arrange it.
  */
 
-#include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
-#include "functor.hpp"
 #include <iostream>
+#include "solution/util/include/functor.hpp"
 #include "solution/util/include/ublas-helpers.hpp"
+#include "util/base/include/definitions.h"
 
-#define UBLAS boost::numeric::ublas
+void jacol(VecFVec &F, const UBVECTOR &x,
+                  const UBVECTOR &fx, int j,
+                  UBMATRIX &J,
+           bool usepartial=true, std::ostream *diagnostic=NULL);
 
-#if GCAM_PARALLEL_ENABLED
-#include <tbb/task_group.h>
-#include <tbb/parallel_for_each.h>
-#endif
+void fdjac(VecFVec &F, const UBVECTOR &x,
+           const UBVECTOR &fx, UBMATRIX &J, bool usepartial=true,
+           std::ostream *diagnostic=NULL);
 
-#include "util/base/include/timer.h"
-#include "containers/include/scenario.h"
-#include "util/base/include/manage_state_variables.hpp"
-
-extern Scenario* scenario;
-
-/*!
- * Compute a single column in a Jacobian matrix.  We have broken this
- * out from the fdjac subroutine so that we can easily test a single
- * column for nonsingularity without duplicating any code.
- */
-template<class FTYPE,class MTRAIT>
-inline void jacol(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
-                  const UBLAS::vector<FTYPE> &fx, int j, 
-                  UBLAS::matrix<FTYPE,MTRAIT> &J,
-                  bool usepartial=true, std::ostream *diagnostic=NULL) {
-  const FTYPE heps = 1.0e-6;
-  const FTYPE TINY = 1.0e-6;
-  UBLAS::vector<FTYPE> xx(x); // temporary, so we can respect the const on x
-  UBLAS::vector<FTYPE> fxx(fx.size());        // hold the values of F(xx)
-  FTYPE t = xx[j];            // store the old value
-  FTYPE h = heps * (fabs(t)+TINY);
-  
-  xx[j] = t+h;
-  h     = xx[j]-t; // reduce roundoff error, since (t+h)-t is not
-                   // necessarily identical to the original h
-  if(diagnostic) {
-      (*diagnostic) << "j= " << j << "\th= " << h << "\nxx:\n" << xx << "\n";
-  } 
-  if(usepartial) {F.partial(j);}    // hint to the function that this is a partial derivative calculation
-    F(xx,fxx, usepartial ? j : -1);       // eval the function
-  xx[j] = t;       // restore the old value
-  
-  if(diagnostic) {
-    (*diagnostic) << "fxx:\n" << fxx << "\n";
-  }
-  
-  // compute the finite difference derivatives
-  FTYPE hinv = 1.0/h;
-  for(size_t i=0; i<fxx.size(); ++i) {
-    J(i,j) = (fxx[i] - fx[i]) * hinv;
-  } 
-}
-
-
-/*!
- * Compute the Jacobian of a vector function F at point x.
- * \param[in] F: The function to have its Jacobian calculated
- * \param[in] x: The point at which to calculate the Jacobian
- * \param[out] J: The Jacobian of F
- * \remark This function evaluates F(x) and then calls fdjac(F,x,Fx,J).  If you have already
- *         evaluated F(x), you should call the latter version directly.
- * \warning The Jacobian calculated here is defined as J(i,j) = \partial F_i / \partial x_j.
- *          The version in use in GCAM looks as though it might reverse the roles of i and j;
- *          therefore, any function making use of either of these functions should take care
- *          that the right convention is being used.
- */
-template <class FTYPE, class MTRAIT>
-void fdjac(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
-           UBLAS::matrix<FTYPE,MTRAIT> &J, bool usepartial=true)
-{
-  UBLAS::vector<FTYPE> fx(F.nrtn());
-
-  F(x,fx);                      // fx = F(x)
-  fdjac(F,x,fx,J,usepartial);
-}
-
-/*!
- * Compute the Jacobian of a vector function F at point x.
- * \tparam FTYPE: The floating point type of the input and output vectors
- * \param[in] F: The function to have its Jacobian calculated
- * \param[in] x: The point at which to calculate the Jacobian
- * \param[in] fx: F(x)
- * \param[out] J: The Jacobian of F
- * \param[in] usepartial: (optional) use partial model evaluation for partial derivatives
- * \param[in] diagnostic: (optional) ostream pointer to which to send additional diagnostics
- *
- */
-template<class FTYPE, class MTRAIT>
-void fdjac(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
-           const UBLAS::vector<FTYPE> &fx, UBLAS::matrix<FTYPE,MTRAIT> &J, bool usepartial=true,
-           std::ostream *diagnostic=NULL)
-{
-  if(diagnostic) {
-    (*diagnostic) << "fdjac: usepartial = " << usepartial << "\nInitial x:\n" << x
-        << "\nInitial fx:\n" << fx << "\n";
-  }
-
-  Timer& jacTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::JACOBIAN );
-  jacTimer.start();
-    if(usepartial) { scenario->getManageStateVariables()->setPartialDeriv(true); }
-  
-#if !GCAM_PARALLEL_ENABLED
-  for(size_t j=0; j<x.size(); ++j) {
-    jacol(F, x, fx, j, J, usepartial, diagnostic);
-  }
-#else
-    tbb::task_arena& threadPool = scenario->getManageStateVariables()->mThreadPool;
-    tbb::task_group tg;
-    threadPool.execute([&](){
-        tg.run([&](){
-            tbb::parallel_for_each( x, [&]( const FTYPE& j ) {
-                jacol(F, x, fx, (&j - &x[0]), J, usepartial, 0/*diagnostic*/);
-            });
-        });
-    });
-    threadPool.execute([&tg](){ tg.wait(); });
-#endif
-    if(usepartial) { F.partial(-1); }
-
-  jacTimer.stop();
-}
-
-
-#undef UBLAS
+void fdjac(VecFVec &F, const UBVECTOR &x,
+           UBMATRIX &J, bool usepartial=true);
 
 #endif

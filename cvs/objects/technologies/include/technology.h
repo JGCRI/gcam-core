@@ -345,7 +345,11 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "year", mYear, int ),
 
         //! Number of years for which the vintage exists.
-        DEFINE_VARIABLE( SIMPLE, "lifetime", mLifetimeYears, int )
+        DEFINE_VARIABLE( SIMPLE, "lifetime", mLifetimeYears, int ),
+              
+        //! The current marginal revenue.  TODO: cleaner solution for getting
+        //! this information to the profit shutdown decider.
+        DEFINE_VARIABLE( SIMPLE | STATE, "marginal-revenue", mMarginalRevenue, Value )
     )
 
     //! The technology's information store.
@@ -353,10 +357,6 @@ protected:
     
     //! Production function for the technology.
     const IFunction* mProductionFunction;
-
-    //! The current marginal revenue.  TODO: cleaner solution for getting
-    //! this information to the profit shutdown decider.
-    mutable double mMarginalRevenue;
 
     static double getFixedOutputDefault();
 

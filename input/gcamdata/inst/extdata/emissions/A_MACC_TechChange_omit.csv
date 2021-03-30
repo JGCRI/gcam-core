@@ -1,0 +1,10 @@
+# File: A_MACC_TechChange_omit.csv
+# Title: MAC curve omit sectors and years for technological change calculation due to huge increase between two periods
+# Description: technoloigical changes are calculated based on backward calculations of mac reductions
+# Units: NA
+# Source: EPA 2019 non-CO2 mitigation reports
+# Column types: cii
+# ----------
+supplysector,year,omit
+resid cooling,2020,1
+comm cooling,2020,1

@@ -47,6 +47,7 @@
 // Should only include these in debug.
 #include <cassert>
 #include "util/base/include/util.h"
+#include "util/base/include/definitions.h"
 
 #if GCAM_PARALLEL_ENABLED
 #include <tbb/enumerable_thread_specific.h>

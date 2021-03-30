@@ -2,7 +2,7 @@
 # Title: Mapping between GCAM agriculture technologies to EPA aggregate sectors, aggregte fuels, EDGAR aggregate sector, RCP aggregate sector, BCOC aggregate sectore, EPA MACC sector, and IIASA sector
 # Units: None
 # Source: internal
-# Column types: ccccccccccccccc 
+# Column types: ccccccccccccccc
 # ----------
 sector,fuel,technology,supplysector,subsector,stub.technology,EPA_agg_sector,EPA_agg_fuel,EPA_agg_fuel_ghg,EDGAR_agg_sector,RCP_agg_sector,BCOC_agg_sector,BCOC_agg_fuel,EPA_MACC_Sector,IIASA_sector
 Beef,Mixed,FeedCrops,Beef,Mixed,FeedCrops,Beef,all,all,Animals,,Beef,all,Livestock,
@@ -209,6 +209,7 @@ OtherGrain,OtherGrainAEZ17,OtherGrainAEZ17,OtherGrain,OtherGrainAEZ17,OtherGrain
 OtherGrain,OtherGrainAEZ18,OtherGrainAEZ18,OtherGrain,OtherGrainAEZ18,OtherGrainAEZ18,,,,,,,,Cropland Management,
 out_resources,coal,coal,out_resources,coal,coal,coal,all,all,coal,,,,Coal Mining Activities,
 out_resources,crude oil,crude oil,out_resources,crude oil,crude oil,oil_gas,all,all,oil_gas,,,,Natural Gas and Oil Systems,
+out_resources,unconventional oil,unconventional oil,out_resources,unconventional oil,unconventional oil,oil_gas,all,all,oil_gas,,,,Natural Gas and Oil Systems,
 out_resources,natural gas,natural gas,out_resources,natural gas,natural gas,oil_gas,all,all,oil_gas,,,,Natural Gas and Oil Systems,
 PalmFruit,PalmFruitAEZ01,PalmFruitAEZ01,PalmFruit,PalmFruitAEZ01,PalmFruitAEZ01,,,,,,,,Cropland Management,
 PalmFruit,PalmFruitAEZ02,PalmFruitAEZ02,PalmFruit,PalmFruitAEZ02,PalmFruitAEZ02,,,,,,,,Cropland Management,
