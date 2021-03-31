@@ -440,6 +440,7 @@ generate_level2_data_names <- function() {
 LEVEL2_DATA_NAMES <- generate_level2_data_names()
 # Save these objects for use as internal package data
 usethis::use_data(LEVEL2_DATA_NAMES, overwrite = TRUE, internal = TRUE)
+rm(list = c("LEVEL2_DATA_NAMES"))
 
 # It is frequently the case that we need to refresh the LEVEL2_DATA_NAMES in order to have
 # a successful driver() run which is required to update the following so we will re-load
@@ -460,7 +461,8 @@ if(USE_DRIVER_DRAKE) {
 #' used to generate this latter data, i.e. a tibble of chunk-output-precursor information,
 #' which is used by \link{\code{dstrace}} and various other graphing and diagnostic utilities.
 #' @author BBL
-GCAM_DATA_MAP <- NULL
+# Note: the above text is not used for package documentation and is instead
+# replicated in data.R for that purpose.
 if(USE_DRIVER_DRAKE) {
   # we will need to drake "plan" to construct the GCAM_DATA_MAP from cache
   # note: calling driver_drake with return_plan_only = TRUE does not actually run the driver
@@ -504,7 +506,8 @@ prebuilt_data_names <- c(
 #' Its immediate downstream dependencies (currently, four chunks) then use the
 #' prebuilt versions of their outputs stored in this object.
 #' @author BBL
-PREBUILT_DATA <- NULL
+# Note: the above text is not used for package documentation and is instead
+# replicated in data.R for that purpose.
 if(USE_DRIVER_DRAKE) {
   PREBUILT_DATA <- load_from_cache(prebuilt_data_names)
 } else {
