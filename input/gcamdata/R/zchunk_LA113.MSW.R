@@ -63,7 +63,7 @@ module_energy_LA113.MSW <- function(command, ...) {
     }
 
     L113.GDP_ctry %>%
-      dplyr::group_by_(GCAM_REGION_ID) %>%
+      dplyr::group_by_at(GCAM_REGION_ID) %>%
       summarise(maxSubResource = sum(maxSubResource)) ->
       L113.MSW_maxSubResource
 
