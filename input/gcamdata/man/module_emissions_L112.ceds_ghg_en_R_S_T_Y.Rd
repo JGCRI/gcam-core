@@ -26,6 +26,7 @@ Part 4 : Calculation of animal sector emissions
 Part 5 : Calculation of cropland emissions.
 Part 6 : Calculation of agricultural waste burning emissions.
 Part 7 : Calculation of input emissions, deforestation co-efs for unmanaged land emissions sectors.
+Part 8 : Scale CH4 and N2O emissions to 2019 EPA nonCO2 report
 }
 \details{
 Calculates emissions using CEDS emissions and GCAM sectors.

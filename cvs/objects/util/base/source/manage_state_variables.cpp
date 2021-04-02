@@ -51,7 +51,7 @@
 
 #if GCAM_PARALLEL_ENABLED
 #include <tbb/concurrent_queue.h>
-#include <tbb/task_scheduler_init.h>
+#include <tbb/global_control.h>
 #endif
 
 using namespace std;
@@ -65,7 +65,7 @@ Value::CentralValueType Value::sCentralValue( (double*)0 );
 double* Value::sBaseCentralValue( 0 );
 
 #if GCAM_PARALLEL_ENABLED
-#define NUM_STATES tbb::task_scheduler_init::default_num_threads()+1
+#define NUM_STATES tbb::global_control::active_value(tbb::global_control::max_allowed_parallelism)+1
 #else
 #define NUM_STATES 2
 #endif

@@ -641,7 +641,9 @@ double SolutionInfo::getCorrectionSlope() const {
 
 void SolutionInfo::setCorrectionSlope(const double aSlope) {
     const string SLOPE_KEY = "correction-slope";
-    linkedMarket->getMarketInfo()->setDouble( SLOPE_KEY, aSlope );
+    if( aSlope != 0.0 ) {
+        linkedMarket->getMarketInfo()->setDouble( SLOPE_KEY, aSlope );
+    }
 }
 
 int SolutionInfo::getSerialNumber( void ) const

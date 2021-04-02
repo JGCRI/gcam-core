@@ -8,6 +8,7 @@
 #' Part 5 : Calculation of cropland emissions.
 #' Part 6 : Calculation of agricultural waste burning emissions.
 #' Part 7 : Calculation of input emissions, deforestation co-efs for unmanaged land emissions sectors.
+#' Part 8 : Scale CH4 and N2O emissions to 2019 EPA nonCO2 report
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
@@ -20,17 +21,6 @@
 #' @importFrom tidyr gather spread
 #' @author CWR Oct. 2018 , YO Mar. 2020, KBN 2020
 module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
-  if(driver.EMISSIONS_SOURCE == "EDGAR") {
-    if(command == driver.DECLARE_INPUTS) {
-      return(NULL)
-    } else if(command == driver.DECLARE_OUTPUTS) {
-      return(NULL)
-    } else if(command == driver.MAKE) {
-      return_data()
-    } else {
-      stop("Unknown command")
-    }}
-  else {
     if(command == driver.DECLARE_INPUTS) {
       return(c(FILE = "common/GCAM_region_names",
                FILE = "common/iso_GCAM_regID",
@@ -54,13 +44,18 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
                "L101.ag_Prod_Mt_R_C_Y_GLU",
                "L111.ag_resbio_R_C",
+               "L111.Prod_EJ_R_F_Yh",
                "L103.ghg_tgmt_USA_an_Sepa_F_2005",
                "L124.LC_bm2_R_Grass_Yh_GLU_adj",
                "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
                "L154.IEA_histfut_data_times_UCD_shares",
                FILE = "emissions/CEDS/ceds_sector_map",
-               FILE = "emissions/CEDS/ceds_fuel_map"
-      ))
+               FILE = "emissions/CEDS/ceds_fuel_map",
+               # EPA scaling process 2020
+               FILE = "emissions/EPA_country_map",
+               FILE = "emissions/EPA/EPA_2019_raw",
+               FILE = "emissions/EPA_CH4N2O_map",
+               FILE = "emissions/GCAM_EPA_CH4N2O_energy_map"))
     } else if(command == driver.DECLARE_OUTPUTS) {
       return(c("L111.nonghg_tg_R_en_S_F_Yh",
                "L111.nonghg_tgej_R_en_S_F_Yh",
@@ -84,7 +79,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       all_data <- list(...)[[1]]
 
       #silence packages
-      fuel <- CEDS_sector <- em <- iso <- unit <- year <- emissions <- sector <- Non.CO2 <- GCAM_region_ID <- CEDS_agg_sector <-
+      lifetime <- emscaler <- ej_vintage <- tg_vintage <- tg_i_total <- tg_i <- ej_i <- value_adj <-
+      tot_emissions <- EPA_sector <- final_year  <- year_operate <- timestep <-  avg.prod.lifetime  <-  resource  <- gas <- country <- fuel <- CEDS_sector <- em <- iso <- unit <- year <- emissions <- sector <- Non.CO2 <- GCAM_region_ID <- CEDS_agg_sector <-
         CEDS_agg_fuel <- GCAM_region <- rev.mode <- rev_size.class <- UCD_fuel <- size.class <- UCD_technology <- UCD_sector <- sector_weight <-
         dieseloil <- lightoil <- mode_weight <- sum_sector_weight <- sum_mode_weight <- secondary.output <- technology <- energy <- supplysector <-
         subsector <- stub.technology <- sector <- service <- tranSubsector <- tranTechnology <- totalenergy <- enshare <- GCAMemissions <- D_driver <-
@@ -118,7 +114,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       # Load required inputs
       GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
       iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-
 
       #Get GAINS sector and fuel emissions by iso. Also get IEA energy data by iso.
       GAINS_sector <- get_data(all_data,"emissions/CEDS/gains_iso_sector_emissions")
@@ -176,11 +171,17 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",strip_attributes = TRUE)
       L103.ghg_tgmt_USA_an_Sepa_F_2005 <- get_data(all_data, "L103.ghg_tgmt_USA_an_Sepa_F_2005",strip_attributes = TRUE)
 
-
+      # EPA Raw CH4 and N2O data files
+      # YO 2020 EPA scaling
+      EPA_master <- get_data(all_data, "emissions/EPA/EPA_2019_raw")
+      EPA_CH4N2O_map <- get_data(all_data, "emissions/EPA_CH4N2O_map")
+      EPA_country_map <- get_data(all_data, "emissions/EPA_country_map")
+      GCAM_EPA_CH4N2O_map <- get_data(all_data, "emissions/GCAM_EPA_CH4N2O_energy_map")
+      L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh",strip_attributes = TRUE)
 
       #kbn calculate emissions for different modes here
       # ===========================
-      #Part 1: Distributing road emissions from CEDS into different modes using GAINS data
+      # Part 1: Distributing road emissions from CEDS into different modes using GAINS data #
       # ===========================
 
       #Define special modes based on choices by user. With the old size classes, we had 2 modes, LDV_2W & LDV_3W. These,
@@ -326,7 +327,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         select(GCAM_region_ID,Non.CO2,supplysector,stub.technology,year,value,subsector,energy)->GAINS_NG_em_factors
 
       # ===========================
-      # Part 2:Combustion Energy Emissions
+      #Part 2:Combustion Energy Emissions#
       # ===========================
 
       # Filter down to combustion emissions plus fugitive process emissions from combustion resource production (out_resources)
@@ -383,7 +384,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         filter(stub.technology %notin% c(emissions.ZERO_EM_TECH)) %>%
         left_join_error_no_match(CEDS_sector_tech, by = c("supplysector", "subsector", "stub.technology")) ->L112.in_EJ_R_en_S_F_Yh_calib_all_baseenergy
 
-
       # Aggregate GCAM energy to CEDS sector/fuel combinations and compute the total energy by CEDS sector
       L112.in_EJ_R_en_S_F_Yh_calib_all_baseenergy %>%
         group_by(GCAM_region_ID, year, CEDS_agg_sector, CEDS_agg_fuel) %>%
@@ -434,7 +434,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         L112.nonco2_tg_R_en_S_F_Yh
 
 
-      #--------------------------------------------------------------------------------------
+
       # Now join emissions and energy data together to calculate emissions factors
       L112.nonco2_tg_R_en_S_F_Yh %>%
         left_join_error_no_match(L112.in_EJ_R_en_S_F_Yh_calib_all_baseenergy,
@@ -474,7 +474,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       # Subset CEDS process emissions and match to GCAM drivers
 
       L112.CEDS_GCAM %>%
-        filter(CEDS_agg_sector %in% c("industry_processes", "chemicals", "landfills", "wastewater", "aerosols",
+        filter(CEDS_agg_sector %in% c("industry_processes", "landfills","waste_incineration" ,"wastewater", "aerosols",
                                       "metals", "foams", "solvents", "semiconductors","chemicals_nitric","chemicals_adipic")) ->
         L112.CEDS_GCAM_Proc
 
@@ -482,7 +482,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       GCAM_sector_tech %>%
         select(supplysector, subsector, stub.technology, EDGAR_agg_sector, EPA_agg_sector, EPA_agg_fuel_ghg) %>%
         filter(EDGAR_agg_sector %in% c("industry_processes" , "chemicals", "landfills", "wastewater",  # Filter for the agg sectors in EDGAR column for all NonCO2s.
-                                       "solvents","chemicals_adipic","chemicals_nitric")) %>%
+                                       "solvents","chemicals_adipic","chemicals_nitric","waste_incineration")) %>%
         repeat_add_columns(tibble(Non.CO2 = unique(L112.CEDS_GCAM_Proc$Non.CO2))) %>%
         repeat_add_columns(tibble(year = emissions.CEDS_YEARS)) %>%
         repeat_add_columns(tibble(GCAM_region_ID = GCAM_region_names$GCAM_region_ID)) %>%
@@ -496,11 +496,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         ungroup()->L131.nonco2_tg_R_prc_S_S_Yh
 
 
-
-
       # Note: Final sector outputs
       # "nitric acid" "other industrial processes" "solvents"
-      # "landfills" "wastewater treatment"
+      # "landfills" "wastewater treatment" "waste_incineration"
 
       # ===================================================
       # Part 4: Animal Emissions
@@ -637,15 +635,12 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                   emissions = emissions * emiss_share, type = "Soil") ->
         L122.ghgsoil_tg_R_C_Y_GLU
 
-
-
       # Bind together dataframes & aggregate
       L122.ghg_tg_R_agr_C_Y_GLU_full <- bind_rows( L122.ghg_tg_R_rice_Y_GLU, L122.ghgsoil_tg_R_C_Y_GLU#, L122.ghgfert_tg_R_C_Y_GLU
       ) %>%
         group_by(GCAM_region_ID, GCAM_commodity, year, GLU, Non.CO2) %>%
         summarise(value = sum(emissions)) %>%
         ungroup()
-
 
       # ===================================================
       # Part 6: AGRICULTURAL WASTE BURNING
@@ -867,7 +862,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         bind_rows(GAINS_NG_em_factors %>% filter(Non.CO2 %in% c("CH4", "N2O")) %>% select(-energy))->L112.ghg_tgej_R_en_S_F_Yh
 
 
-
       L112.nonco2_tgej_R_en_S_F_Yh %>%
         filter(!(Non.CO2 %in% c("CH4", "N2O", "CO2"))) %>%
         select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value = emfact) %>%
@@ -897,7 +891,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L122.ghg_tg_R_agr_C_Y_GLU_full ->
         L122.ghg_tg_R_agr_C_Y_GLU
 
-
       L124.deforest_coefs_full->L124.deforest_coefs
 
       L124.nonco2_tg_R_grass_Y_GLU_full %>%
@@ -916,7 +909,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         ungroup() %>%
         select(GCAM_region_ID, Non.CO2,year,Land_Type,value) %>%
         distinct()->L124.bcoc_tg_R_grass_Y_GLU
-
 
       L125.bcoc_tgbkm2_R_grass_2000 <- L124.LC_bm2_R_Grass_Yh_GLU_adj %>%
         group_by(GCAM_region_ID, Land_Type, year) %>%
@@ -937,7 +929,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         filter(Non.CO2 %in% c("BC", "OC"))-> L125.bcoc_tgbkm2_R_forest_2000_data
 
       #Calculate BCOC for forest fires and deforestation
-
       #First get driver for forests
       L125.bcoc_tgbkm2_R_forestfire_2000 <- L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj %>%
         filter(year == 2000) %>%
@@ -950,7 +941,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         group_by(GCAM_region_ID, Land_Type, GLU) %>%
         spread(year, value) %>%
         mutate(D_driver = pmax(`2000` - `2005`, 0) / (emissions.DEFOREST_COEF_YEARS[2] - emissions.DEFOREST_COEF_YEARS[1]))
-
 
       L125.bcoc_tgbkm2_R_defor_2000 <-  L125.bcoc_tgbkm2_R_GLU_defor_2000 %>%
         group_by(GCAM_region_ID, Land_Type) %>%
@@ -997,6 +987,364 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L124.deforest_coefs_full %>%
         filter(Non.CO2 %in% c("BC", "OC")) ->L125.deforest_coefs_bcoc
 
+      # ==============================
+      # Part 8: SCALE TO EPA
+      # ========================
+
+      if(emissions.nonCO2.EPA.scaling){
+        # EPA scaling process
+        # Scale CH4 and N2O emissions to EPA 2019 mitigation report (BAU scenario)
+        # Source: https://www.epa.gov/global-mitigation-non-co2-greenhouse-gases
+        # The following tables will be updated by the order below:
+        # 1) L112.ghg_tgej_R_en_S_F_Yh (resource production emission factors)
+        # 2) L131.nonco2_tg_R_prc_S_S_Yh (industrial processes and urban processes input emissions)
+        # 3) L113.ghg_tg_R_an_C_Sys_Fd_Yh (agriculture livestock - input emissions)
+        # 4) L121.nonco2_tg_R_awb_C_Y_GLU (agriculture waster burning - input emissions)
+        # 5) L122.ghg_tg_R_agr_C_Y_GLU (agriculture crop - input emissions)
+        # 6) L112.ghg_tg_R_en_S_F_Yh (energy combustion-related - input emission)
+
+        # Part 0: clean EPA nonCO2 data and define short-cut functions
+        #---------------------------------------------------------------------------------------------------------------
+
+        # remove Cameroon industrial process N2O emissions
+        # because it is a known data error after communicating with EPA
+        EPA_master %<>%
+          mutate(value = if_else(country == "Cameroon" & source == "OtherIPPU" & gas == "N2O", 0, value))
+
+        # define three functions to perform EPA scaling processes
+
+        # function (1): isolate EPA emissions for specific sector
+        FUN_isolate_EPA_sector <- function(EPA_SECTOR, EPA_SOURCE = NA, use.Source = F){
+          # EPA data has source/subsource levels of information
+          # for resource, energy etc we scale at EPA source level (Coal, Gas, Oil, Combusion)
+          # for agriculture etc we scale at EPA subsource level, e.g. Agricultre-livestocks, Agriculture-rice etc.
+          EPA_master %>%
+            filter(sector %in% EPA_SECTOR & gas %in% c("CH4", "N2O") & (!use.Source | source %in% EPA_SOURCE)) %>%
+            left_join_error_no_match(EPA_CH4N2O_map, by = c("sector", "source", "subsource")) %>%
+            left_join_error_no_match(EPA_country_map, by = c("country" = "EPA_country")) %>%
+            group_by(GCAM_region_ID, EPA_sector, year, gas) %>%
+            summarise(EPA_emissions = sum(value)) %>%
+            ungroup() ->
+            result
+
+          return(result)
+        }
+
+        # function (2): calculate EPA scalers based on current GCAM data and EPA aggregated emission data
+        FUN_cal_EPA_scalers <- function(DATA, EPA_DATA){
+          DATA %>%
+            group_by(GCAM_region_ID, EPA_sector, Non.CO2, year) %>%
+            summarise(tot_emissions = sum(emissions)) %>%
+            ungroup() %>%
+            mutate(tot_emissions = if_else(Non.CO2 == "CH4", tot_emissions * emissions.CH4.GWP.AR4,
+                                           tot_emissions * emissions.N2O.GWP.AR4)) %>%
+            # using left_join becuase EPA emissions starts from 1990
+            left_join(EPA_DATA, by = c("GCAM_region_ID", "EPA_sector", "Non.CO2" = "gas", "year")) %>%
+            # safeguard: if GCAM data is missing for some year then directly using EPA data
+            mutate(tot_emissions = if_else(is.na(tot_emissions), EPA_emissions, tot_emissions)) %>%
+            # EPA emissions are only from 1990 to 2015, and some regions may do not have EPA emissions
+            # e.g. oil production emissions in region 16
+            # so here need to define rules to make sure values from all years and all regions are scaled
+            # 1) for 1990-2015, if EPA emissions are completely missing, then use CEDS values
+            mutate(EPA_emissions = if_else(year >= min(emissions.EPA_BAU_HIST_YEAR) & is.na(EPA_emissions), tot_emissions, EPA_emissions)) %>%
+            # compute scalers (will generate inf and NAs)
+            mutate(emscaler = EPA_emissions / tot_emissions) %>%
+            # remove na and inf within EPA covered period
+            mutate(emscaler = if_else((is.na(emscaler) | is.infinite(emscaler)) & year >= min(emissions.EPA_BAU_HIST_YEAR), 1, emscaler)) %>%
+            # 2) after properly scaled 1990-2015 values (for each year), extrapolate scalers using rule 2
+            # using rule 1 will still result in NAs
+            # at this step we will not worry about outliers of scalers, which will be properly handled in later processes
+            group_by(GCAM_region_ID, EPA_sector, Non.CO2) %>%
+            mutate(emscaler = if_else(is.na(emscaler), approx_fun(year, emscaler, rule = 2), emscaler)) %>%
+            ungroup() %>%
+            select(-EPA_emissions, -tot_emissions)
+        }
+
+        # function (3): perform EPA scaling based on the calculated EPA scalers
+        FUN_scale_to_EPA <- function(DATA, EPA_SCALER){
+          DATA %>%
+            left_join_error_no_match(GCAM_EPA_CH4N2O_map,
+                                     by = c("supplysector", "subsector", "stub.technology")) %>%
+            left_join_error_no_match(EPA_SCALER,
+                                     by = c("GCAM_region_ID", "Non.CO2", "year", "EPA_sector")) %>%
+            mutate(emissions = emscaler * emissions) %>%
+            select(-EPA_sector, -emscaler)
+        }
+
+        # Part 1: L112.ghg_tgej_R_en_S_F_Yh (resource production emission factors)
+        #---------------------------------------------------------------------------------------------------------------
+
+
+        # 1) Isolate EPA resource production emissions
+
+        L112.EPA_CH4N2O_energy <- FUN_isolate_EPA_sector(EPA_SECTOR = c("Energy"))
+
+        # 2) Calculate scalers for resource emissions by EPA_sector by year and region
+        L112.nonco2_tg_R_en_S_F_Yh %>%
+          filter(supplysector == "out_resources" & Non.CO2 %in% c("CH4", "N2O")) %>%
+          left_join_error_no_match(GCAM_EPA_CH4N2O_map, by = c("supplysector", "subsector", "stub.technology")) %>%
+          FUN_cal_EPA_scalers(EPA_DATA = L112.EPA_CH4N2O_energy) ->
+          L112.nonco2_tg_R_en_S_F_Yh_EPAscaler
+
+        # 3) Do the actual scaling to obtain historical emissions
+        L112.nonco2_tg_R_en_S_F_Yh %>%
+          filter(supplysector == "out_resources" & Non.CO2 %in% c("CH4", "N2O")) %>%
+          FUN_scale_to_EPA(EPA_SCALER = L112.nonco2_tg_R_en_S_F_Yh_EPAscaler) ->
+          L112.nonco2_tg_R_en_S_F_Yh_resource
+
+        # use updated emissions to calculate emission factors based on activity data
+        L112.nonco2_tg_R_en_S_F_Yh_resource %>%
+          left_join_error_no_match(L111.Prod_EJ_R_F_Yh,
+                                   by = c("GCAM_region_ID", "year", "supplysector" = "sector", "subsector" = "fuel")) %>%
+          mutate(value_adj = if_else(value == 0.0, 0.0, emissions / value )) %>%
+          select(-emissions, -value) ->
+          L112.ghg_tgej_R_en_S_F_Yh_adj
+
+        # since this is emission factors, we can directly check outliers through its own distribution
+        # obtain global median as replacement
+        L112.ghg_tgej_R_en_S_F_Yh_adj_median <- L112.ghg_tgej_R_en_S_F_Yh_adj %>%
+          group_by(Non.CO2, year, supplysector, subsector, stub.technology) %>%
+          summarise(value_median = median(value_adj)) %>%
+          ungroup()
+
+        # check outliers 2 * IQR
+        L112.ghg_tgej_R_en_S_F_Yh_adj %>%
+          group_by(Non.CO2, year, supplysector, subsector, stub.technology) %>%
+          mutate(upper = median(value_adj) + 2 * (quantile(value_adj, 0.75) - quantile(value_adj, 0.25))) %>%
+          ungroup() %>%
+          left_join_error_no_match(L112.ghg_tgej_R_en_S_F_Yh_adj_median,
+                                   by = c("Non.CO2", "year", "supplysector", "subsector", "stub.technology")) %>%
+          mutate(value_adj = if_else(value_adj > upper, upper, value_adj)) %>%
+          select(-upper, -value_median) ->
+          L112.ghg_tgej_R_en_S_F_Yh_adj_noOutlier
+
+        # 4) update L112.ghg_tgej_R_en_S_F_Yh for resource production
+        L112.ghg_tgej_R_en_S_F_Yh %>%
+          # produce NA on purpose, since the original data also contain combustion related emission factors
+          # we just update resource emission factors
+          left_join(L112.ghg_tgej_R_en_S_F_Yh_adj_noOutlier,
+                    by = c("GCAM_region_ID", "Non.CO2", "supplysector", "subsector", "stub.technology", "year")) %>%
+          mutate(value = if_else(is.na(value_adj), value, value_adj)) %>%
+          select(-value_adj) ->
+          L112.ghg_tgej_R_en_S_F_Yh_update
+
+        # assume unconventional oil the same as crude oil
+        L112.ghg_tgej_R_en_S_F_Yh_update %>%
+          filter(subsector == "crude oil") %>%
+          mutate(subsector = "unconventional oil") %>%
+          mutate(stub.technology = "unconventional oil") ->
+          L112.ghg_tgej_R_en_S_F_Yh_update_uncov_oil
+
+        # add unconventional oil
+        L112.ghg_tgej_R_en_S_F_Yh_update_all <- bind_rows(L112.ghg_tgej_R_en_S_F_Yh_update,
+                                                          L112.ghg_tgej_R_en_S_F_Yh_update_uncov_oil)
+
+        # update the original table
+        L112.ghg_tgej_R_en_S_F_Yh <- L112.ghg_tgej_R_en_S_F_Yh_update_all
+
+        # Part 2: L131.nonco2_tg_R_prc_S_S_Yh (industrial processes and urban processes input emissions)
+
+        #---------------------------------------------------------------------------------------------------------------
+
+        # 1) Isolate EPA emissions for industrial processes and urban processes
+
+        L131.EPA_CH4N2O_proc <- FUN_isolate_EPA_sector(EPA_SECTOR = c("Industrial Processes", "Waste"))
+
+        # 2) Calculate scalers for process-related emissions by EPA_sector by year and region
+        L131.nonco2_tg_R_prc_S_S_Yh %>%
+          filter(supplysector %in% c("industrial processes", "urban processes") & Non.CO2 %in% c("CH4", "N2O")) ->
+          L131.nonco2_tg_R_prc_S_S_Yh_change
+
+        L131.nonco2_tg_R_prc_S_S_Yh_change %>%
+          rename(emissions = value) %>%
+          left_join_error_no_match(GCAM_EPA_CH4N2O_map,
+                                   by = c("supplysector", "subsector", "stub.technology")) %>%
+          FUN_cal_EPA_scalers(EPA_DATA = L131.EPA_CH4N2O_proc) ->
+          L131.nonco2_tg_R_prc_S_S_Yh_EPAscaler
+
+        # 3) Handling outliers, if any scaler is greater than a threshold, will replace its scaler as 1
+        # so just keep using CEDS emission
+        # for industry process emisison, choose scaler as emissions.EPA.scaling.threshold
+        # mostly filter out Region 4 - industrial other, and some region 32
+
+        L131.nonco2_tg_R_prc_S_S_Yh_EPAscaler %>%
+          mutate(emscaler = if_else(emscaler >= emissions.EPA.scaling.threshold, 1, emscaler)) ->
+          L131.nonco2_tg_R_prc_S_S_Yh_EPAscaler
+
+        # 4) Do the actual scaling for industrial and urban processes emissions
+        L131.nonco2_tg_R_prc_S_S_Yh_change %>%
+          rename(emissions = value) %>%
+          FUN_scale_to_EPA(EPA_SCALER = L131.nonco2_tg_R_prc_S_S_Yh_EPAscaler) %>%
+          rename(value = emissions) ->
+          L131.nonco2_tg_R_prc_S_S_Yh_update
+
+        L131.nonco2_tg_R_prc_S_S_Yh %>%
+          filter(!(supplysector %in% c("industrial processes", "urban processes") & Non.CO2 %in% c("CH4", "N2O"))) %>%
+          bind_rows(L131.nonco2_tg_R_prc_S_S_Yh_update) ->
+          L131.nonco2_tg_R_prc_S_S_Yh_adj
+
+        # update the origional dataset
+        L131.nonco2_tg_R_prc_S_S_Yh <- L131.nonco2_tg_R_prc_S_S_Yh_adj
+
+        # Part 3: L113.ghg_tg_R_an_C_Sys_Fd_Yh (agriculture livestock input emissions)
+        #---------------------------------------------------------------------------------------------------------------
+
+        # 1) Isolate EPA emissions for agriculture livestock emissions
+        L131.EPA_CH4N2O_livestocks <- FUN_isolate_EPA_sector(EPA_SECTOR = c("Agriculture"),
+                                                             EPA_SOURCE = c("Livestock"),
+                                                             use.Source = T)
+
+        # 2) Calculate scalers for livestocks emissions by EPA_sector by year and region
+        L113.ghg_tg_R_an_C_Sys_Fd_Yh %>%
+          filter(Non.CO2 %in% c("CH4_AGR", "N2O_AGR")) ->
+          L113.ghg_tg_R_an_C_Sys_Fd_Yh_change
+
+        L113.ghg_tg_R_an_C_Sys_Fd_Yh_change %>%
+          mutate(Non.CO2 = substr(Non.CO2, 1, 3)) %>%
+          mutate(EPA_sector = "Agriculture") %>%
+          rename(emissions = value) %>%
+          FUN_cal_EPA_scalers(EPA_DATA = L131.EPA_CH4N2O_livestocks) %>%
+          mutate(Non.CO2 = paste0(Non.CO2, "_AGR")) ->
+          L113.ghg_tg_R_an_C_Sys_Fd_Yh_EPAscaler
+
+        # 3) do the actual scaling for livestock-related emissions
+        L113.ghg_tg_R_an_C_Sys_Fd_Yh_change %>%
+          mutate(EPA_sector = "Agriculture") %>%
+          left_join_error_no_match(L113.ghg_tg_R_an_C_Sys_Fd_Yh_EPAscaler,
+                                   by = c("GCAM_region_ID", "Non.CO2", "year", "EPA_sector")) %>%
+          mutate(value = value * emscaler) %>%
+          select(-EPA_sector, -emscaler) ->
+          L113.ghg_tg_R_an_C_Sys_Fd_Yh_update
+
+        L113.ghg_tg_R_an_C_Sys_Fd_Yh %>%
+          filter(!(Non.CO2 %in% c("CH4_AGR", "N2O_AGR"))) %>%
+          bind_rows(L113.ghg_tg_R_an_C_Sys_Fd_Yh_update) ->
+          L113.ghg_tg_R_an_C_Sys_Fd_Yh_adj
+
+        # update the origional dataset
+        L113.ghg_tg_R_an_C_Sys_Fd_Yh <- L113.ghg_tg_R_an_C_Sys_Fd_Yh_adj
+
+        # Part 4: L121.nonco2_tg_R_awb_C_Y_GLU (agriculture waster burning)
+        #---------------------------------------------------------------------------------------------------------------
+
+        # 1) isolate EPA emissions for agriculture waster burning emissions
+        L121.EPA_CH4N2O_awb <- FUN_isolate_EPA_sector(EPA_SECTOR = c("Agriculture"),
+                                                      EPA_SOURCE = c("OtherAg"),
+                                                      use.Source = T)
+
+        # 2) Calculate scalers for agriculture emissions by EPA_sector by year and region
+        L121.nonco2_tg_R_awb_C_Y_GLU %>%
+          filter(Non.CO2 %in% c("CH4_AWB", "N2O_AWB")) ->
+          L121.nonco2_tg_R_awb_C_Y_GLU_change
+
+        L121.nonco2_tg_R_awb_C_Y_GLU_change  %>%
+          mutate(Non.CO2 = substr(Non.CO2, 1, 3)) %>%
+          mutate(EPA_sector = "Agriculture") %>%
+          rename(emissions = value) %>%
+          FUN_cal_EPA_scalers(EPA_DATA = L121.EPA_CH4N2O_awb) %>%
+          mutate(Non.CO2 = paste0(Non.CO2, "_AWB")) ->
+          L121.nonco2_tg_R_awb_C_Y_GLU_EPAscaler
+
+        # 3) Handling outliers, if any scaler is greater than a threshold, will replace its scaler as 1
+        # so just keep using CEDS emission
+        # for agriculture waste burning, choose scaler as emissions.EPA.scaling.threshold
+        # just filter out Region 26
+
+        L121.nonco2_tg_R_awb_C_Y_GLU_EPAscaler %>%
+          mutate(emscaler = if_else(emscaler >= emissions.EPA.scaling.threshold, 1, emscaler)) ->
+          L121.nonco2_tg_R_awb_C_Y_GLU_EPAscaler
+
+        # 4) do the actual scaling for agriculture emissions
+        L121.nonco2_tg_R_awb_C_Y_GLU_change %>%
+          mutate(EPA_sector = "Agriculture") %>%
+          left_join_error_no_match(L121.nonco2_tg_R_awb_C_Y_GLU_EPAscaler,
+                                   by = c("GCAM_region_ID", "Non.CO2", "year", "EPA_sector")) %>%
+          mutate(value = value * emscaler) %>%
+          select(-EPA_sector, -emscaler) ->
+          L121.nonco2_tg_R_awb_C_Y_GLU_update
+
+        L121.nonco2_tg_R_awb_C_Y_GLU %>%
+          filter(!(Non.CO2 %in% c("CH4_AWB", "N2O_AWB"))) %>%
+          bind_rows(L121.nonco2_tg_R_awb_C_Y_GLU_update) ->
+          L121.nonco2_tg_R_awb_C_Y_GLU_adj
+
+        # update the origional dataset
+        L121.nonco2_tg_R_awb_C_Y_GLU <- L121.nonco2_tg_R_awb_C_Y_GLU_adj
+
+
+        # Part 5: L122.ghg_tg_R_agr_C_Y_GLU (agriculture rice - input emissions)
+        #---------------------------------------------------------------------------------------------------------------
+
+        # 1) Isolate EPA emissions for agriculture rice emissions
+        L131.EPA_CH4N2O_agr <- FUN_isolate_EPA_sector(EPA_SECTOR = c("Agriculture"),
+                                                      EPA_SOURCE = c("Rice", "AgSoils"),
+                                                      use.Source = T)
+
+        # 2) Calculate scalers for agriculture emissions by EPA_sector by year and region
+        L122.ghg_tg_R_agr_C_Y_GLU %>%
+          filter(Non.CO2 %in% c("CH4_AGR", "N2O_AGR")) ->
+          L122.ghg_tg_R_agr_C_Y_GLU_change
+
+        L122.ghg_tg_R_agr_C_Y_GLU_change %>%
+          mutate(Non.CO2 = substr(Non.CO2, 1, 3)) %>%
+          mutate(EPA_sector = "Agriculture") %>%
+          rename(emissions = value) %>%
+          FUN_cal_EPA_scalers(EPA_DATA = L131.EPA_CH4N2O_agr) %>%
+          mutate(Non.CO2 = paste0(Non.CO2, "_AGR")) ->
+          L122.ghg_tg_R_agr_C_Y_GLU_EPAscaler
+
+        # 3) do the actual scaling for agriculture crop emissions
+        L122.ghg_tg_R_agr_C_Y_GLU_change %>%
+          mutate(EPA_sector = "Agriculture") %>%
+          left_join_error_no_match(L122.ghg_tg_R_agr_C_Y_GLU_EPAscaler,
+                                   by = c("GCAM_region_ID", "year", "Non.CO2", "EPA_sector")) %>%
+          mutate(value = value * emscaler) %>%
+          select(-EPA_sector, -emscaler) ->
+          L122.ghg_tg_R_agr_C_Y_GLU_update
+
+        L122.ghg_tg_R_agr_C_Y_GLU %>%
+          filter(!(Non.CO2 %in% c("CH4_AGR", "N2O_AGR"))) %>%
+          bind_rows(L122.ghg_tg_R_agr_C_Y_GLU_update) ->
+          L122.ghg_tg_R_agr_C_Y_GLU_adj
+
+        # update the origional dataset
+        L122.ghg_tg_R_agr_C_Y_GLU <- L122.ghg_tg_R_agr_C_Y_GLU_adj
+
+        # Part 6: L112.ghg_tg_R_en_S_F_Yh (energy combustion-related - input emission)
+        #---------------------------------------------------------------------------------------------------------------
+        # L112.EPA_CH4N2O_energy already contains combustion-related emissions processed from EPA
+
+        # 1) Calculate scalers for combustion-related emissions by EPA_sector by year and region
+        L112.ghg_tg_R_en_S_F_Yh %>%
+          left_join_error_no_match(GCAM_EPA_CH4N2O_map,
+                                   by = c("supplysector", "subsector", "stub.technology")) %>%
+          rename(emissions = value) %>%
+          FUN_cal_EPA_scalers(EPA_DATA = L112.EPA_CH4N2O_energy) ->
+          L112.ghg_tg_R_en_S_F_Yh_EPAscaler
+
+        # 3) Handling outliers, if any scaler is greater than a threshold, will replace its scaler as 1
+        # so just keep using CEDS emission
+        # for combustion, choose scaler as emissions.EPA.scaling.threshold.combustion
+        # becuase EPA only has the entire combustion sector as a whole catagory
+        # mostly filter out Region 4, 5, 27
+
+        L112.ghg_tg_R_en_S_F_Yh_EPAscaler %>%
+          mutate(emscaler = if_else(emscaler >= emissions.EPA.scaling.threshold.combustion, 1, emscaler)) ->
+          L112.ghg_tg_R_en_S_F_Yh_EPAscaler
+
+        # 4) Do the actual scaling for combustion-related emissions
+        L112.ghg_tg_R_en_S_F_Yh %>%
+          rename(emissions = value) %>%
+          FUN_scale_to_EPA(EPA_SCALER = L112.ghg_tg_R_en_S_F_Yh_EPAscaler) %>%
+          rename(value = emissions) ->
+          L112.ghg_tg_R_en_S_F_Yh_adj
+
+        L112.ghg_tg_R_en_S_F_Yh <- L112.ghg_tg_R_en_S_F_Yh_adj
+
+        # END OF EPA SCALING PROCESS
+        # -------------------------------------------------------------------------------------------------------------
+      }
+
       # ===============
       # Produce outputs
       L111.nonghg_tg_R_en_S_F_Yh %>%
@@ -1031,7 +1379,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                        "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
                        "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech_combustion","emissions/mappings/calibrated_outresources",
-                       "L101.in_EJ_R_en_Si_F_Yh", "emissions/mappings/Trn_subsector_revised",
+                       "L101.in_EJ_R_en_Si_F_Yh", "emissions/mappings/Trn_subsector_revised", "emissions/EPA/EPA_2019_raw", "emissions/EPA_CH4N2O_map",
                        "emissions/CEDS/CEDS_sector_tech_combustion_revised","emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
                        "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions") ->
         L112.ghg_tg_R_en_S_F_Yh
@@ -1042,11 +1390,25 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_comments("Emissions calculated with CEDS emissions factors.") %>%
         add_comments("Then, emissions factors computed by dividing calculated emissions by energy data") %>%
         add_legacy_name("L112.ghg_tgej_R_en_S_F_Yh") %>%
-        add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
-                       "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
-                       "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech_combustion","emissions/mappings/calibrated_outresources","emissions/mappings/Trn_subsector_revised",
+        add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F",
+                       "emissions/CEDS/ceds_sector_map",
+                       "emissions/CEDS/ceds_fuel_map",
+                       "common/GCAM_region_names",
+                       "common/iso_GCAM_regID",
+                       "energy/mappings/UCD_techs",
+                       "energy/calibrated_techs",
+                       "energy/calibrated_techs_bld_det",
+                       "emissions/mappings/Trn_subsector",
+                       "emissions/CEDS/CEDS_sector_tech_combustion",
+                       "emissions/mappings/calibrated_outresources",
+                       "emissions/mappings/Trn_subsector_revised",
                        "L101.in_EJ_R_en_Si_F_Yh",
-                       "emissions/CEDS/CEDS_sector_tech_combustion_revised","emissions/mappings/UCD_techs_emissions_revised") ->
+                       "emissions/EPA/EPA_2019_raw",
+                       "emissions/EPA_CH4N2O_map",
+                       "L111.Prod_EJ_R_F_Yh",
+                       "emissions/EPA_country_map",
+                       "emissions/CEDS/CEDS_sector_tech_combustion_revised",
+                       "emissions/mappings/UCD_techs_emissions_revised") ->
         L112.ghg_tgej_R_en_S_F_Yh
 
       L113.ghg_tg_R_an_C_Sys_Fd_Yh %>%
@@ -1182,7 +1544,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_legacy_name("L131.nonco2_tg_R_prc_S_S_Yh") %>%
         add_precursors("emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                        "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion","emissions/CEDS/CEDS_sector_tech_combustion_revised",
-                       "emissions/EPA_FCCC_IndProc_2005"
+                       "emissions/EPA_FCCC_IndProc_2005", "emissions/EPA/EPA_2019_raw", "emissions/EPA_CH4N2O_map",
+                       "emissions/GCAM_EPA_CH4N2O_energy_map"
         ) ->
         L131.nonco2_tg_R_prc_S_S_Yh
 
@@ -1192,5 +1555,4 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     } else {
       stop("Unknown command")
     }
-  }
 }

@@ -156,20 +156,23 @@ void GDPControl::calcEmissionsReduction( const std::string& aRegionName, const i
     double reduction = 0.0;
     
     // Calculate reduction
+    // we only make adjustments in future model periods
     int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
-    double baseGDP = aGDP->getGDPperCap( finalCalibPer );
-    double currGDP = aGDP->getGDPperCap( aPeriod );
-    reduction = 1 - ( 1.0 / ( 1.0 + ( currGDP - baseGDP ) / mSteepness ));
+    if( aPeriod > finalCalibPer ) {
+        double baseGDP = aGDP->getGDPperCap( finalCalibPer );
+        double currGDP = aGDP->getGDPperCap( aPeriod );
+        reduction = 1 - ( 1.0 / ( 1.0 + ( currGDP - baseGDP ) / mSteepness ));
+            
+        // Ensure reduction doesn't exceed maximum allowed
+        const double maxReductionFraction = mMaxReduction / 100.0;
+        if ( reduction > maxReductionFraction ) {
+            reduction = maxReductionFraction;
+        }
         
-    // Ensure reduction doesn't exceed maximum allowed
-    const double maxRedcutionFraction = mMaxReduction / 100.0;
-    if ( reduction > maxRedcutionFraction ) {
-        reduction = maxRedcutionFraction;
-    }
-    
-    // Also ensure that reduction is not negative. This can happen if GDP declines significantly
-    if ( reduction < 0.0 ) {
-        reduction = 0.0;
+        // Also ensure that reduction is not negative. This can happen if GDP declines significantly
+        if ( reduction < 0.0 ) {
+            reduction = 0.0;
+        }
     }
     
     setEmissionsReduction( reduction );

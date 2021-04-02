@@ -370,8 +370,8 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\..\..\libs\xercesc\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\java\include;..\..\..\..\libs\java\include\win32;..\..;..\..\climate\source\hector\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;FUSION_MAX_VECTOR_SIZE=30;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\libs\xercesc\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\java\include;..\..\..\..\libs\java\include\win32;..\..;..\..\climate\source\hector\headers;..\..\..\..\libs\tbb\include;..\..\..\..\libs\Eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;FUSION_MAX_VECTOR_SIZE=30;BOOST_MATH_TR1_NO_LIB;NDEBUG;EIGEN_MPL2_ONLY;GCAM_PARALLEL_ENABLED;_WINDOWS;_AFXDLL;NOGDI;NOMINMAX;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -380,15 +380,17 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>..\..\..\..\libs\xercesc\lib;..\..\..\..\libs\java\lib;..\..\..\..\libs\boost-lib\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\libs\xercesc\lib;..\..\..\..\libs\java\lib;..\..\..\..\libs\boost-lib\stage\lib;..\..\..\..\libs\tbb\lib\intel64\vc14;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalDependencies>xerces-c_3.lib;jvm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>xerces-c_3.lib;jvm.lib;tbb.lib;tbbmalloc.lib;tbbmalloc_proxy.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/INCLUDE:"__TBB_malloc_proxy" %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'">
@@ -644,7 +646,6 @@
     <ClCompile Include="..\..\solution\solvers\source\bisect_policy_nr_solver.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisection_nr_solver.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\logbroyden.cpp" />
-    <ClCompile Include="..\..\solution\solvers\source\lognrbt.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson_sd.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\preconditioner.cpp" />
@@ -656,6 +657,7 @@
     <ClCompile Include="..\..\solution\util\source\and_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\calc_counter.cpp" />
     <ClCompile Include="..\..\solution\util\source\edfun.cpp" />
+    <ClCompile Include="..\..\solution\util\source\fdjac.cpp" />
     <ClCompile Include="..\..\solution\util\source\has_market_flag_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\jacobian-precondition.cpp" />
     <ClCompile Include="..\..\solution\util\source\market_name_solution_info_filter.cpp" />
@@ -671,7 +673,6 @@
     <ClCompile Include="..\..\solution\util\source\solvable_nr_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\solvable_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\solver_library.cpp" />
-    <ClCompile Include="..\..\solution\util\source\svd_invert_solve.cpp" />
     <ClCompile Include="..\..\solution\util\source\unsolved_solution_info_filter.cpp" />
     <ClCompile Include="..\..\target_finder\source\cumulative_emissions_target.cpp" />
     <ClCompile Include="..\..\target_finder\source\kyoto_forcing_target.cpp" />
@@ -930,7 +931,6 @@
     <ClInclude Include="..\..\solution\solvers\include\bisect_policy_nr_solver.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisection_nr_solver.h" />
     <ClInclude Include="..\..\solution\solvers\include\logbroyden.hpp" />
-    <ClInclude Include="..\..\solution\solvers\include\lognrbt.hpp" />
     <ClInclude Include="..\..\solution\solvers\include\log_newton_raphson.h" />
     <ClInclude Include="..\..\solution\solvers\include\log_newton_raphson_sd.h" />
     <ClInclude Include="..\..\solution\solvers\include\preconditioner.hpp" />
@@ -944,7 +944,6 @@
     <ClInclude Include="..\..\solution\util\include\calc_counter.h" />
     <ClInclude Include="..\..\solution\util\include\edfun.hpp" />
     <ClInclude Include="..\..\solution\util\include\fdjac.hpp" />
-    <ClInclude Include="..\..\solution\util\include\functor-subs.hpp" />
     <ClInclude Include="..\..\solution\util\include\functor.hpp" />
     <ClInclude Include="..\..\solution\util\include\has_market_flag_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\isolution_info_filter.h" />
@@ -963,7 +962,6 @@
     <ClInclude Include="..\..\solution\util\include\solvable_nr_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\solvable_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\solver_library.h" />
-    <ClInclude Include="..\..\solution\util\include\svd_invert_solve.hpp" />
     <ClInclude Include="..\..\solution\util\include\ublas-helpers.hpp" />
     <ClInclude Include="..\..\solution\util\include\unsolved_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\unsolved_solver_info_filter.h" />
