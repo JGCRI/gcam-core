@@ -41,15 +41,13 @@
  * @brief Some specific functor subclasses for use in GCAM
  */
 
-#include <map>
-#include <set>
 #include <vector>
-#include "marketplace/include/marketplace.h"
-#include "containers/include/world.h"
 #include "solution/util/include/solution_info_set.h"
 #include "solution/util/include/functor.hpp"
 
-#define UBVECTOR boost::numeric::ublas::vector
+class Marketplace;
+class World;
+
 
 /*!
  * \class LogEDFun "solution/util/include/edfun.hpp"
@@ -70,7 +68,7 @@
  *
  * \sa EDFun
  */
-class LogEDFun : public VecFVec<double,double>
+class LogEDFun : public VecFVec
 {
   // information needed to compute ED(p)
   
@@ -101,11 +99,11 @@ public:
   LogEDFun(SolutionInfoSet &sisin, World *w, Marketplace *m, int per, bool aLogPricep=true);
   
   // basic vector function interface
-  virtual void operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx, const int partj=-1);
+  virtual void operator()(const UBVECTOR &x, UBVECTOR &fx, const int partj=-1);
   virtual void partial(int ip);
   virtual double partialSize(int ip) const;
-  void scaleInitInputs(UBVECTOR<double> &ax);
-  void setSlope(UBVECTOR<double> &adx);
+  void scaleInitInputs(UBVECTOR &ax);
+  void setSlope(UBVECTOR &adx);
 
   // Constants to protect against overflow: 
   static const double PMAX;            //!< Greatest allowable price
@@ -115,14 +113,12 @@ public:
 
 protected:
   // scale factors for input and output
-  UBVECTOR<double> mxscl;
-  UBVECTOR<double> mfxscl;
+  UBVECTOR mxscl;
+  UBVECTOR mfxscl;
   // supply correction slope to use for prices below the "lower bound"
-  UBVECTOR<double> slope;
+  UBVECTOR slope;
     
 };  
 
-
-#undef UBVECTOR
 
 #endif

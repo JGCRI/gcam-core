@@ -341,12 +341,10 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
         mEmissionsCoef = emissDriver > 0 ? mInputEmissions / emissDriver : 0;
     }
     
-    // Compute emissions reductions. These are only applied in future years
+    // Compute emissions reductions.
     double emissMult = 1.0;
-    if ( aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod() ) {
-        for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
+    for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
             emissMult *= 1.0 - (*controlIt)->getEmissionsReduction( aRegionName, aPeriod, mGDP );
-        }
     }
     
     // Compute emissions, including any reductions.

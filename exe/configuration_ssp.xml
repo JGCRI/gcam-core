@@ -49,6 +49,7 @@
 		<Value name="stop-year">-1</Value>
 		<Value name="restart-period">-1</Value>
 		<Value name="restart-year">-1</Value>
+		<Value name="max-parallelism">-1</Value>
 	</Ints>
 	<Doubles>
 	</Doubles>

@@ -30,8 +30,12 @@
 *
 */
 
+#include "util/base/include/definitions.h"
+
 #if GCAM_PARALLEL_ENABLED
-#include <map>
+#include <vector>
+#include <list>
+#include <Eigen/SparseCore>
 /* gcam headers */
 #include "parallel/include/gcam_parallel.hpp"
 #include "util/base/include/configuration.h"
@@ -49,193 +53,39 @@
 
 using namespace std;
 
-const int GcamParallel::DEFAULT_GRAIN_SIZE = 30;
+int GcamFlowGraph::mPeriod = 0;
+tbb::global_control* GcamFlowGraph::mParallelismConfig = 0;
 
-/*!
- * \brief Default constructor
- *
- * \details Checks configuration for parallel-grain-size tag.  If so,
- *            uses it to set mGrain_size_tgt; if not, uses the default
- *            value. 
- * \remark Grain size is currently the only configurable parameter,
- *         but others may be added in the future.  Consider
- *         configuration parameter names starting with "parallel-" to
- *         be reserved for this purpose.
+/*
+ * \brief Default constructor.
+ * \details We lookup the "max-parallelism", aka number of cores to use, from the
+ *          configuration so we can initialize TBB with it.
  */
-GcamParallel::GcamParallel()
+GcamFlowGraph::GcamFlowGraph() : mTBBFlowGraph(), mHead( mTBBFlowGraph )
 {
-    mGrainSizeTarget = Configuration::getInstance()->getInt( "parallel-grain-size", DEFAULT_GRAIN_SIZE );
-}
-  
-
-
-/*!
- * \brief Build the GCAM flow graph from the information in the MarketDependencyFinder 
- * \details The information we need is stored in the DependencyItem objects,
- *          which are stored in the MarketDependencyFinder.  This function uses
- *          that information to create an explicit flow graph for the parallel
- *          analysis functions.  This function should be run *after*
- *          MarketDependencyFinder::createOrdering(). 
- * \param[in] aDependencyFinder: The MarketDependencyFinder object. 
- * \param[out] aGCAMFlowGraph: The flow graph created by the routine.  On input it
- *                             should be a newly-created (i.e., empty) FGraph
- *                             object. 
- * \pre aDependencyFinder.createOrdering() has been run
- */
-void GcamParallel::makeGCAMFlowGraph( const MarketDependencyFinder& aDependencyFinder, FlowGraph& aGCAMFlowGraph )
-{
-    // Basic procedure: 
-    // *  For each dependency item, d:
-    // **  For each calc vertex, v, of d:
-    // ***  For each child, c, of v:
-    // ****  Add the edge v -> c
-    
-    // Note that we don't have to recurse into the children because each
-    // child belongs to some other dependency item, d'.  Thus, we pick
-    // up all the child's dependencies when we process d'.
-    FlowGraph fgTemp;
-    
-    const MarketDependencyFinder::DependencyItemSet& dependencyItems = aDependencyFinder.getDependencyItems();
-    MarketDependencyFinder::CItemIterator diIter = dependencyItems.begin();
-    for( ; diIter != dependencyItems.end(); ++diIter ) {
-        // the vertex list actually comes in two parts: price vertices and
-        // demand vertices.  Handle each in turn.
-        for( int priceOrDemand = 0; priceOrDemand <= 1; ++priceOrDemand ) {
-            const MarketDependencyFinder::VertexList &cvertices = priceOrDemand ?
-                (*diIter)->mPriceVertices : (*diIter)->mDemandVertices;
-            MarketDependencyFinder::CVertexIterator vIter = cvertices.begin();
-            for( ; vIter != cvertices.end(); ++vIter ) {
-                // *vIter is a CalcVertex*, it contains a node identifier used in
-                // our flow graph.  It also has a vector of identifiers for its
-                // children
-                if( (*vIter)->mOutEdges.empty() ) {
-                    // vertices that have neither parents nor children have to
-                    // be created specially.  We can't easily tell whether a
-                    // node has parents, so we add any vertices that have no
-                    // children.  Both addnode and addedge guard against
-                    // duplicate creation, so there's no problem with that.
-                    fgTemp.addnode( (*vIter)->mCalcItem );
-                }
-                else {
-                    MarketDependencyFinder::CVertexIterator cIter = (*vIter)->mOutEdges.begin();
-                    for( ; cIter != (*vIter)->mOutEdges.end(); ++cIter ) {
-                        // addedge will create the relevant nodes if they don't
-                        // already exist; otherwise it will find them and connect
-                        // them.
-                        fgTemp.addedge( (*vIter)->mCalcItem, (*cIter)->mCalcItem );
-                    }
-                }
-            }
-        }
+    const int maxParallelism = Configuration::getInstance()->getInt( "max-parallelism", -1 );
+    if( maxParallelism > 0 && !mParallelismConfig ) {
+        mParallelismConfig = new tbb::global_control( tbb::global_control::max_allowed_parallelism, maxParallelism );
     }
-    // copy the transitive reduction of the flow graph we just made into
-    // the output argument
-    Timer &graphtimer = TimerRegistry::getInstance().getTimer("graph-timer");
-    graphtimer.start();
-    aGCAMFlowGraph = fgTemp.treduce();
-    // perform a topological sort and record the results.
-    aGCAMFlowGraph.topological_sort();
-    graphtimer.stop();
-    ILogger &mainlog = ILogger::getLogger("main_log");
-    mainlog.setLevel(ILogger::DEBUG);
-    graphtimer.print(mainlog, "Graph analysis in makeGCAMFlowGraph:  ");
 }
 
-
-/*!
- * \brief Parse the GCAM flow graph and collect IActivies into computational grains 
- * \details This function collects the individual computational tasks (price and
- *          demand vertices) into computational "grains," that is, collections
- *          that will be dispatched as a unit and computed serially (different
- *          grains can and will still be computed in parallel to one another).
- *          These grains still have a graph structure that determines the order
- *          in which they may be executed and which ones may be executed in
- *          parallel, so the output of this function is a graph of grains (as
- *          contrasted with the input graph of calc vertices).  We do this all
- *          as a single step (vs. the alternative of parsing and collecting as
- *          separate steps) to avoid exposing structures like "Clan Trees" to
- *          the outside world. 
- * \param[in] aGCAMFlowGraph: The gcam flow graph generated by makeGCAMFlowGraph 
- * \param[out] aGrainGraph: The graph of computational grains.  On input it
- *                          should be empty. 
- */
-void GcamParallel::graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, FlowGraph& aGrainGraph )
-{
-    // some intermediate types involving "clans".  These will hold the
-    // intermediate results of the parsing.
-    typedef clanid<FlowGraphNodeType> ClanidType;
-    typedef digraph<ClanidType> ClanTree;
-
-    AutoOutputFile graphFile( "flow-graph", "gcam-flow-graph.dot" );
-    write_as_dot( *graphFile, aGCAMFlowGraph );
-    
-    Timer &parsetimer = TimerRegistry::getInstance().getTimer("parse-timer");
-    Timer &graintimer = TimerRegistry::getInstance().getTimer("grain-timer");
-    ILogger &mainlog = ILogger::getLogger("main_log");
-    mainlog.setLevel(ILogger::DEBUG);
-
-    parsetimer.start();
-    FlowGraph gcamFGReduce = aGCAMFlowGraph.treduce(); // find transitive reduction of gcamfg
-    gcamFGReduce.topological_sort();
-    
-    ClanTree parseTree; 
-    graph_parse( gcamFGReduce, 0, parseTree, mGrainSizeTarget );
-    parsetimer.stop();
-    
-    // Use the parse tree to roll up the node graph into a grain graph.  Start
-    // with a copy of the node graph.
-    graintimer.start();
-    FlowGraph grainGraphTemp = gcamFGReduce;
-    grain_collect( parseTree, parseTree.nodelist().begin(), grainGraphTemp, mGrainSizeTarget );
-    
-    // set the output graph to the transitive reduction of what came out of the
-    // grain collection algorithm.
-    aGrainGraph = grainGraphTemp.treduce();
-    graintimer.stop();
-
-    parsetimer.print(mainlog, "Graph parse in graphParseGrainCollect:  ");
-    graintimer.print(mainlog, "Grain collect in graphParseGrainCollect:  ");
+//! Destrcutor
+GcamFlowGraph::~GcamFlowGraph() {
+    delete mParallelismConfig;
+    mParallelismConfig = 0;
 }
 
 /*!
- * \brief Parse the GCAM flow graph and collect IActivies into computational grains 
- *        for only a subset of the full graph.
- * \details This method determines the nodes which should remain in the graph according
- *          to aCalcItems then calls graphParseGrainCollect with that resulting graph.
- * \param[in] aGCAMFlowGraph: The gcam flow graph generated by makeGCAMFlowGraph 
- * \param[out] aGrainGraph: The graph of computational grains.  On input it
- *                          should be empty. 
- * \param[in] aCalcItems: The list of items to use to subset aGCAMFlowGraph.
- */
-void GcamParallel::graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, FlowGraph& aGrainGraph,
-                                           const vector<FlowGraphNodeType>& aCalcItems )
-{
-    FlowGraph::nodelist_t fullGraph = aGCAMFlowGraph.nodelist();
-    FlowGraph::nodelist_t subGraph;
-    for( vector<FlowGraphNodeType>::const_iterator it = aCalcItems.begin(); it != aCalcItems.end(); ++it ) {
-        subGraph[ *it ] = fullGraph[ *it ];
-    }
-    FlowGraph subFlowGraph( subGraph, aGCAMFlowGraph.title() );
-    graphParseGrainCollect( subFlowGraph, aGrainGraph );
-}
-
-/*!
- * \brief Build the TBB flow graph for an input grain structure and topology 
- * \details This function builds a TBB flow graph for the input grain graph and
- *          topology.  The resulting structure can be used to run the GCAM model
+ * \brief Build the TBB flow graph from the given dependency finder which contains
+ *        the activities.
+ * \details This function builds a TBB flow graph from the input dependency finder
+ *          and.  The resulting structure can be used to run the GCAM model
  *          (in essence, it replaces the loop over the vector of IActivity* in
  *          world->calc()).  When it is run, the TBB runtime will automatically
  *          determine how many threads to use, and it will queue and dispatch
  *          the computational grains automatically, in keeping with the
- *          relationships embodied in the grain graph. 
- * \remark The reason you need the topology is because although the grain graph
- *         captures all of the relationships between the grains, the ordering of
- *         the nodes within a grain is not available in any readily accessible
- *         form.  (Technically, it is there, so with some effort we should be
- *         able to remove this requirement . . . later) 
- * \param[in] aGrainGraph: graph of the computational grains
- *            (produced by graph_parse_grain_collect()) 
- * \param[in] aTopology: original gcam flow graph (see remark) 
+ *          relationships embodied in the dependency finder.
+ * \param[in] aDependencyFinder Defines the activities and their relationships.
  * \param[inout] aTBBGraph: The class that will hold the flow graph nodes as well
  *             as any other required items to run the flow graph including the
  *             broadcast node which serves as the trigger that causes
@@ -247,7 +97,7 @@ void GcamParallel::graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, Flow
  *             probably live in World, Scenario, or some similarly long-lived
  *             object.
  */
-void GcamParallel::makeTBBFlowGraph( const FlowGraph& aGrainGraph, const FlowGraph& aTopology,
+void GcamParallel::makeTBBFlowGraph( const MarketDependencyFinder& aDependencyFinder,
                                      GcamFlowGraph& aTBBGraph )
 {
     using tbb::flow::continue_node;
@@ -259,128 +109,105 @@ void GcamParallel::makeTBBFlowGraph( const FlowGraph& aGrainGraph, const FlowGra
     ILogger& pgLog = ILogger::getLogger( "parallel-grain-log" );
     pgLog.setLevel( ILogger::NOTICE );
     
-    // We need a place to stash all of the TBB flow graph nodes, and we need to be
-    // able to find them from the node identifiers.
-    map<FlowGraphNodeType, continue_node<continue_msg>* > nodeTable;
-    map<FlowGraphNodeType, int> nodeSizeTable;
+    // first read the information out of the dependency finder into an
+    // adjacency matrix for easy as we are going to have to take multiple
+    // passes to create the TBB structures required
+    vector<IActivity*> globalOrdering = aDependencyFinder.getOrdering();
+    vector<MarketDependencyFinder::CalcVertex*> calcVertexList( globalOrdering.size(), 0 );
+    vector<bool> isSourceNode( globalOrdering.size(), true );
+    using TripletType = Eigen::Triplet<bool>;
+    list<TripletType> adjTriplets;
     
-    // The TBB flow graph structures don't automatically create nodes, so we'll do
-    // two passes, creating nodes on the first and connecting them on the second.
-    for( FlowGraph::nodelist_c_iter_t gnodeIt = aGrainGraph.nodelist().begin();
-         gnodeIt != aGrainGraph.nodelist().end(); ++gnodeIt )
-    {
-        // Find the nodes from the original graph that are in this node.  We have to
-        // extract them from the subgraph contained in the node, which is a little
-        // ugly.  That subgraph has the information we need to order the nodes
-        // without carrying an otherwise superfluous topology graph down into this
-        // function.  Thus, this should be a prime candidate for refactoring.
-        set<FlowGraphNodeType> subGraphNodes;
-        getkeys( gnodeIt->second.subgraph->nodelist(), subGraphNodes );
-        
-        // create the node for this grain.  Note that the tbbfg_body constructor
-        // uses the topology to order the elements of the grain, but does not store
-        // a reference.
-        size_t nodeSize = subGraphNodes.size();
-        nodeTable[ gnodeIt->first ] = new continue_node<continue_msg>( tbbFlowGraph,
-            TBBFlowGraphBody( subGraphNodes, aTopology, aTBBGraph ) );
-        nodeSizeTable[ gnodeIt->first ] = nodeSize;
-        pgLog << "\tContinue node: " << nodeTable[ gnodeIt->first ] << endl;
-    }
-    
-    // In the second pass, connect edges in the nodes we just created.
-    // This will make the TBB flow graph isomorphic to the grain graph.
-    for( FlowGraph::nodelist_c_iter_t gnodeIt= aGrainGraph.nodelist().begin();
-         gnodeIt != aGrainGraph.nodelist().end(); ++gnodeIt )
-    {
-        // get the children of each node in the flow graph
-        set<FlowGraphNodeType> children = gnodeIt->second.successors;
-        for( set<FlowGraphNodeType>::const_iterator cnodeIt = children.begin();
-             cnodeIt != children.end(); ++cnodeIt )
-        {
-            // find the TBB flow graph nodes for the grain graph node and
-            // the child node.  Connect them in the TBB flow graph.
-            tbb::flow::make_edge( *nodeTable[ gnodeIt->first ], *nodeTable[ *cnodeIt ] );
-            pgLog << nodeTable[ gnodeIt->first ] << "_" << nodeSizeTable[ gnodeIt->first ]
-                << " -> " << nodeTable[ *cnodeIt ] << "_" << nodeSizeTable[ *cnodeIt ] << endl;
+    for( MarketDependencyFinder::DependencyItem* item : aDependencyFinder.getDependencyItems() ) {
+        for( MarketDependencyFinder::CalcVertex* vertex : item->mPriceVertices ) {
+            calcVertexList[ vertex->mUID ] = vertex;
+            for( MarketDependencyFinder::CalcVertex* outEdge : vertex->mOutEdges ) {
+                isSourceNode[ outEdge->mUID ] = false;
+                adjTriplets.push_back(TripletType(vertex->mUID, outEdge->mUID, true));
+            }
+        }
+        for( MarketDependencyFinder::CalcVertex* vertex : item->mDemandVertices ) {
+            calcVertexList[ vertex->mUID ] = vertex;
+            for( MarketDependencyFinder::CalcVertex* outEdge : vertex->mOutEdges ) {
+                isSourceNode[ outEdge->mUID ] = false;
+                adjTriplets.push_back(TripletType(vertex->mUID, outEdge->mUID, true));
+            }
         }
     }
     
-    // Find the source nodes and connect the TBB broadcast node to all of them.
-    set<FlowGraphNodeType> sources;
-    aGrainGraph.find_all_sources( sources );
-    for( set<FlowGraphNodeType>::const_iterator srcIt = sources.begin();
-         srcIt != sources.end(); ++srcIt )
-    {
-        tbb::flow::make_edge( head, *nodeTable[ *srcIt ] );
-        pgLog << "start node found:  " << nodeTable[ *srcIt ] << "_" << nodeSizeTable[ *srcIt ] << endl;
+    // TODO: in principle doing a transitive reduction should give us a speed up
+    // running the model, however it seems to be rather computationaly expensive
+    // see if we can come up with a faster algorithm that scales well with a large
+    // number of vertices/edges.
+    Eigen::SparseMatrix<bool> adjMatrix( globalOrdering.size(), globalOrdering.size());
+    adjMatrix.setFromTriplets( adjTriplets.begin(), adjTriplets.end() );
+    
+    /*Eigen::SparseMatrix<bool> adjMatrixTransClosure = adjMatrix;
+    for (int k=0; k<adjMatrix.outerSize(); ++k) {
+        adjMatrixTransClosure = adjMatrix * adjMatrix;
     }
-    // TBB flow graph is ready to go.
-}
-
-void GcamParallel::TBBFlowGraphBody::operator()( tbb::flow::continue_msg aMessage )
-{
-    for( list<FlowGraphNodeType>::const_iterator nodeIt = mNodes.begin();
-         nodeIt != mNodes.end(); ++nodeIt )
-    {
-        if( !mGraph.mCalcList ||
-            find( mGraph.mCalcList->begin(), mGraph.mCalcList->end(), *nodeIt ) != mGraph.mCalcList->end() )
-        {
-            (*nodeIt)->calc( mGraph.mPeriod );
+    
+    // transative reduction
+    adjMatrix = (adjMatrix - adjMatrixTransClosure).pruned();*/
+    
+    // we have to take two passes, first to create each of the verticies which
+    // apparently can not be copied so we hang on to them with a pointer
+    vector<continue_node<continue_msg>*> tbbVert;
+    tbbVert.reserve( calcVertexList.size() );
+    for( MarketDependencyFinder::CalcVertex* vert : calcVertexList ) {
+        IActivity* activity = vert->mCalcItem;
+        tbbVert.push_back(new continue_node<continue_msg>(tbbFlowGraph, [activity](continue_msg) {
+            activity->calc(GcamFlowGraph::mPeriod);
+        }));
+    }
+    // now create the edges
+    for (int k=0; k<adjMatrix.outerSize(); ++k) {
+        for (Eigen::SparseMatrix<bool>::InnerIterator it(adjMatrix,k); it; ++it) {
+            // regular dependency between activities
+            pgLog << calcVertexList[it.row()]->mCalcItem->getDescription() << " -> " << calcVertexList[it.col()]->mCalcItem->getDescription() << endl;
+            make_edge(*tbbVert[it.row()], *tbbVert[it.col()]);
+        }
+        // also include the "edge" from the head node to all activities that
+        // have no incoming dependencies
+        if(isSourceNode[k]) {
+            pgLog << " head -> " << calcVertexList[k]->mCalcItem->getDescription() << endl;
+            make_edge(head, *tbbVert[k]);
         }
     }
 }
 
-GcamParallel::TBBFlowGraphBody::TBBFlowGraphBody( const std::set<FlowGraphNodeType>& aNodes,
-                                                  const FlowGraph& aTopology,
-                                                  const GcamFlowGraph& aGraph )
-:mGraph( aGraph )
-{
-    ILogger& pgLog = ILogger::getLogger( "parallel-grain-log" );
-    pgLog.setLevel( ILogger::NOTICE );
-    
-    if( !aTopology.topology_valid() ) {
-        pgLog.setLevel( ILogger::SEVERE );
-        pgLog << "Creating tbbfg_body with invalid topology." << endl;
-        abort();
-    }
-    
-    mNodes.insert( mNodes.end(), aNodes.begin(), aNodes.end() );
-    mNodes.sort( TopologicalComparator( aTopology ) );
-    
-    // log some output to allow us to analyze the parallel grain
-    // structure (this allows us to see what is in the grains, but not
-    // the relationships between grains)
-    pgLog << "\nGrain id: " << this << "   size:  " << mNodes.size() << "  Contents:";
-    int i = 0;
-    for( list<FlowGraphNodeType>::const_iterator it = mNodes.begin(); it != mNodes.end(); ++it ) {
-        if( i % 3 == 0 ) {
-            pgLog << "\n\t";
-        }
-        pgLog << (*it)->getDescription() << ", ";
-    }
-    pgLog << endl;
-}
 
 /*!
- * \brief A helper method used by digraph-output to pretty print
- *        IActivity* objects with it's description as it's label.
- * \param aOut The output stream to write to.
- * \param aActivity The IActivity * to print with it's label.
- */
-template<>
-void print_id_with_label<IActivity*>( ostream& aOut, IActivity* aActivity ) {
-    aOut << (size_t)aActivity << "[label=\"" << aActivity->getDescription() << "\"]";
-}
-
-/*!
- * \brief A helper method used by digraph-output to pretty print
- *        IActivity* objects.
- * \param aOut The output stream to write to.
- * \param aActivity The IActivity * to print.
- */
-template<>
-void print_id<IActivity*>( ostream& aOut, IActivity* aActivity ) {
-    aOut << (size_t)aActivity;
+* \brief Build the TBB a partial flow graph from the given dependency finder which
+*        contains the activities and given the list of the activities which are to be included
+ *  in the partial graph.
+* \details This method is basically does the same thing as for the global graph but is a bit
+ *     more complicated due to not being able to use UIDs so we have to resort to set
+ *     looks which are slower. So we seperate it into it's own method.
+* \param[in] aDependencyFinder Defines the activities and their relationships.
+ * \param[in] aPartialCalcList A list representing the subset of vertices to include
+ *     in this subgraph.
+* \param[inout] aTBBGraph: The class that will hold the flow graph nodes as well
+*             as any other required items to run the flow graph including the
+*             broadcast node which serves as the trigger that causes
+*             the model to run, using this incantation:
+*               head.try_put(tbb::flow::continue_msg());
+*               tbbfg.wait_for_all();
+*             On input it should be default-constructed.  It needs to remain
+*             alive for as long as we're going to be running, so it should
+*             probably live in World, Scenario, or some similarly long-lived
+*             object.
+*/
+void GcamParallel::makeTBBFlowGraph( const MarketDependencyFinder& aDependencyFinder,
+                                     GcamFlowGraph& aTBBGraph,
+                                     const std::vector<IActivity*>& aPartialCalcList )
+{
+    // TODO:implement this.  We don't use it at the moment and to make sure
+    // it works it would be handy to actually test it with something.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::ERROR );
+    mainLog << "TBB flow graphs for partial subgraphs are not yet implemented." << endl;
+    abort();
 }
 
 #endif // GCAM_PARALLEL_ENABLED

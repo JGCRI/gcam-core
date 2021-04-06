@@ -41,6 +41,7 @@
 #include "util/base/include/definitions.h"
 #include "technologies/include/resource_reserve_technology.h"
 #include "containers/include/scenario.h"
+#include "marketplace/include/marketplace.h"
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/iproduction_state.h"
 #include "technologies/include/production_state_factory.h"
@@ -151,6 +152,23 @@ void ResourceReserveTechnology::completeInit(const std::string& aRegionName,
 		aLandAllocator);
 }
 
+void ResourceReserveTechnology::initCalc( const string& aRegionName,
+                                          const string& aSectorName,
+                                          const IInfo* aSubsectorInfo,
+                                          const Demographic* aDemographics,
+                                          PreviousPeriodInfo& aPrevPeriodInfo,
+                                          const int aPeriod )
+{
+    // determine if the resource is currently calibrating so we can disable any "shutdown"
+    // behavior and ensure calibration values match
+    Marketplace* marketplace = scenario->getMarketplace();
+    IInfo* productInfo = marketplace->getMarketInfo( aSectorName, aRegionName, aPeriod, false );
+    mIsResourceCalibrating = productInfo->getBoolean( "fully-calibrated", false );
+    
+    Technology::initCalc(aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPrevPeriodInfo, aPeriod);
+}
+
+
 /*!
  * \brief Calculates the output of the technology.
  * \details For the case of ResourceReserveTechnology this method will be called
@@ -221,7 +239,7 @@ void ResourceReserveTechnology::setProductionState( const int aPeriod ) {
         // phase in production linearly if we are within the buildup years
         productionPhaseScaler = (currYear - mYear + 1) / mBuildupYears;
     }
-    else if((mTotalReserve - mCumulProd[ aPeriod - 1]) <= (mTotalReserve * mDeclinePhasePct)) {
+    else if(!mIsResourceCalibrating && (mTotalReserve - mCumulProd[ aPeriod - 1]) <= (mTotalReserve * mDeclinePhasePct)) {
         // phase out production linearly if we have depleted enough of the reserve to be
         // in the decline phase
         productionPhaseScaler = max((mTotalReserve - mCumulProd[ aPeriod - 1]) /
@@ -275,9 +293,11 @@ double ResourceReserveTechnology::getFixedOutput( const string& aRegionName,
     if( mProductionState[ aPeriod ]->isNewInvestment() ) {
         const_cast<ResourceReserveTechnology*>(this)->mInvestmentCost = aMarginalRevenue;
     }
+    
+    double margRevTest = mIsResourceCalibrating ? 50.0 : aMarginalRevenue + mInvestmentCost;
 
     return Technology::getFixedOutput( aRegionName, aSectorName, aHasRequiredInput, aRequiredInput,
-                                       aMarginalRevenue + mInvestmentCost, aPeriod );
+                                       margRevTest, aPeriod );
 }
 
 /*!

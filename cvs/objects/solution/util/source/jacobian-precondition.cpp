@@ -30,34 +30,19 @@
 *
 */
 
-#include <boost/numeric/ublas/lu.hpp>
-#if USE_LAPACK
-#include <boost/numeric/bindings/traits/ublas_vector.hpp>
-#include <boost/numeric/bindings/traits/ublas_matrix.hpp>
-#include <boost/numeric/bindings/lapack/gesvd.hpp>
-#endif
-#include <boost/numeric/ublas/operation.hpp>
-#include "solution/util/include/functor-subs.hpp"
-#include "solution/util/include/fdjac.hpp" 
+#include "solution/util/include/functor.hpp"
+#include "solution/util/include/fdjac.hpp"
 #include "util/base/include/util.h"
 #include "solution/util/include/ublas-helpers.hpp"
 
-#include "solution/util/include/svd_invert_solve.hpp"
 #include "solution/util/include/jacobian-precondition.hpp"
 
 #include "util/base/include/timer.h"
 
-#if USE_LAPACK
-#define UBMATRIX boost::numeric::ublas::matrix<double,boost::numeric::ublas::column_major>
-#else
-#define UBMATRIX boost::numeric::ublas::matrix<double>
-#endif
-#define UBVECTOR boost::numeric::ublas::vector<double> 
-
 
 /* ensure that markets going into a solver that uses a jacobian start
    off in price regimes that produce nonsingular jacobians. */
-int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec<double,double> &F,
+int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec &F,
                           std::ostream *diagnostic, bool loginputsp, double FTOL)
 {
   const double JPCMIN = util::getVerySmallNumber(); // if max column value is less than this, the column is "singular".
@@ -87,11 +72,6 @@ int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec<double
     // (effectively) zero, then we're in a bad part of the parameter
     // space.
     double diagval = fabs(J(j,j));
-
-    if(diagnostic) {
-        (*diagnostic) << "\tj= " << j << "  x[j] = " << x[j] << "  fx[j]= " << fx[j] << "  J(j,j) = " << J(j,j)
-                      << std::endl;
-    }
     
     if(diagval < JPCMIN && fabs(fx[j]) > FTOL) {
         // Tiny derivative on the diagonal, which will likely cause
@@ -196,26 +176,3 @@ int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec<double
 
   return fail;
 }
-
-
-void broyden_singular_B_reset(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &B, VecFVec<double,double> &F,
-                             std::ostream *diagnostic, double FTOL)
-{
-  const double JPCMIN = util::getVerySmallNumber(); // if diagonal value is less than this, the column is "singular".
-
-  /* If we get a singular matrix in the Broyden solver, we have a
-     simple solution.  Since B is just an approximate Jacobian, and
-     since we know that "normally" an increase a market's in price
-     reduces excess demand in that market, we just set any deficient
-     diagonal terms to -JPCMIN and keep on trucking. */
-  int nrow = B.size1(), ncol = B.size2();
-
-  for(int j=0;j<nrow;++j)
-    if(fabs(B(j,j)) < JPCMIN && fabs(fx[j]) > FTOL) {
-      if(diagnostic)
-        (*diagnostic) << "Resetting diagonal term at j = " << j << "  x = " << x[j]
-                      << "  fx = " << fx[j] << "  old B = " << B(j,j) << "\n";
-      B(j,j) = -JPCMIN;
-    }
-}
-

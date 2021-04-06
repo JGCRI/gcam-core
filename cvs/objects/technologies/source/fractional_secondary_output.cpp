@@ -327,7 +327,7 @@ double FractionalSecondaryOutput::getMarketPrice( const string& aRegionName, con
         return 0;
     }
 
-    return price;
+    return std::max( price, mCostCurve->getMinX() );
 }
 
 /*! 

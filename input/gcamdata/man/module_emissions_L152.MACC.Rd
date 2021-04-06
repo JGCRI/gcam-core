@@ -22,8 +22,7 @@ Create Marginal Abatement Cost Curves, in percent reduction by 1990 USD abatemen
 }
 \details{
 Create Marginal abatement cost curves, in percent reduction by 1990 USD costs from EPA cost curves.
-Choose between 2020 or 2030 data in constants file - emissions.EPA_MACC_YEAR.
 }
 \author{
-RMH May 2017
+RMH May 2017 / YO Mar 2020
 }

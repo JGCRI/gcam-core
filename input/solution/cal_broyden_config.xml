@@ -71,7 +71,7 @@
         <max-model-calcs>2500</max-model-calcs>
 
         <preconditioner-solver-component>
-            <solution-info-filter>solvable &amp;&amp; unsolved</solution-info-filter>
+            <solution-info-filter>solvable</solution-info-filter>
             <ftol>1.0e-2</ftol>
             <itmax>2</itmax>
         </preconditioner-solver-component>
@@ -90,12 +90,6 @@
             <solution-info-filter>solvable-nr</solution-info-filter>
         </broyden-solver-component>
 
-        <bisect-all-solver-component>
-            <bracket-interval>0.05</bracket-interval>
-            <max-bracket-iterations>20</max-bracket-iterations>
-            <max-iterations>10</max-iterations>
-            <solution-info-filter>unsolved &amp;&amp; solvable &amp;&amp; price-greater-than="0"</solution-info-filter>
-        </bisect-all-solver-component>
     </user-configurable-solver>
     <!-- The SolutionInfoParamParser object allows us to specify the following solution algorithm
          parameters with varying granularity.

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "objects-main", "objects.vcxproj", "{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}"
 EndProject
@@ -9,50 +9,23 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hector-lib", "..\..\climate
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
-		Release - LAPACK|Win32 = Release - LAPACK|Win32
-		Release - LAPACK|x64 = Release - LAPACK|x64
-		Release - TBB|Win32 = Release - TBB|Win32
-		Release - TBB|x64 = Release - TBB|x64
-		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Debug|Win32.ActiveCfg = Debug|Win32
-		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Debug|Win32.Build.0 = Debug|Win32
 		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Debug|x64.ActiveCfg = Debug|x64
 		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Debug|x64.Build.0 = Debug|x64
-		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Release - LAPACK|Win32.ActiveCfg = Release - LAPACK|Win32
-		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Release - LAPACK|Win32.Build.0 = Release - LAPACK|Win32
-		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Release - LAPACK|x64.ActiveCfg = Release - LAPACK|x64
-		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Release - LAPACK|x64.Build.0 = Release - LAPACK|x64
-		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Release - TBB|Win32.ActiveCfg = Release - TBB|Win32
-		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Release - TBB|Win32.Build.0 = Release - TBB|Win32
-		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Release - TBB|x64.ActiveCfg = Release - TBB|x64
-		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Release - TBB|x64.Build.0 = Release - TBB|x64
-		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Release|Win32.ActiveCfg = Release|Win32
-		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Release|Win32.Build.0 = Release|Win32
 		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Release|x64.ActiveCfg = Release|x64
 		{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}.Release|x64.Build.0 = Release|x64
-		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Debug|Win32.ActiveCfg = Debug|Win32
-		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Debug|Win32.Build.0 = Debug|Win32
 		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Debug|x64.ActiveCfg = Debug|x64
 		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Debug|x64.Build.0 = Debug|x64
-		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Release - LAPACK|Win32.ActiveCfg = Release|Win32
-		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Release - LAPACK|Win32.Build.0 = Release|Win32
-		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Release - LAPACK|x64.ActiveCfg = Release|x64
-		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Release - LAPACK|x64.Build.0 = Release|x64
-		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Release - TBB|Win32.ActiveCfg = Release|Win32
-		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Release - TBB|Win32.Build.0 = Release|Win32
-		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Release - TBB|x64.ActiveCfg = Release|x64
-		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Release - TBB|x64.Build.0 = Release|x64
-		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Release|Win32.ActiveCfg = Release|Win32
-		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Release|Win32.Build.0 = Release|Win32
 		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Release|x64.ActiveCfg = Release|x64
 		{88489C16-7642-48BB-B36C-C4B9507A1DE2}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0158E38C-C785-46B7-910B-D2A4B519543E}
 	EndGlobalSection
 EndGlobal

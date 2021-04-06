@@ -189,7 +189,16 @@ void SmoothRenewableSubresource::annualsupply( const std::string& aRegionName, c
                                          mGdpSupplyElasticity );
     
     // now convert to absolute value of production
-    mAnnualProd[ aPeriod ] = fractionAvailable * mMaxAnnualSubResource[aPeriod] * gpdSupplyExpansion;
+    double annualProd = fractionAvailable * mMaxAnnualSubResource[aPeriod] * gpdSupplyExpansion;
+    if( annualProd < util::getSmallNumber() ) {
+        // the curve can be extremely flat close to zero
+        // so instead we will cut off production at getSmallNumber
+        // which has also be used in getLowestPrice so that in
+        // conjunction we can let the solver effectively ignore
+        // supply/demand mismatch below this value
+        annualProd = 0.0;
+    }
+    mAnnualProd[ aPeriod ] = annualProd;
     
     currTech->production( aRegionName, aResourceName, mAnnualProd[ aPeriod ], 1.0, aGDP, aPeriod );
     
@@ -208,8 +217,21 @@ void SmoothRenewableSubresource::annualsupply( const std::string& aRegionName, c
 }
 
 double SmoothRenewableSubresource::getLowestPrice( const int aPeriod ) const{
-    // supply curve for smooth renewables extends down to zero, always.
-    return 0.0;
+   // technically this curve extends all the way down to zero
+   // price, but it is approaching zero potentially extremely flat and the
+   // derivative isn't very good at those very low prices.  Ideally we
+   // would want to calculate the price at which the elasticity is at
+   // some threshold, say 0.1, but that's not solvable in closed
+   // form.  Instead, we'll take the point at which the supply is
+   // equal to 1e-6
+
+    double minSupply = util::getSmallNumber() / mMaxAnnualSubResource[aPeriod];
+
+    double curveExp = mCostCurve.getCurveExponent();
+
+    double value = pow((minSupply * pow(mCostCurve.getMidprice(), curveExp)) / (1.0 - minSupply), 1.0 / curveExp);
+
+    return value;
 }
 
 double SmoothRenewableSubresource::getHighestPrice( const int aPeriod ) const{
@@ -221,13 +243,8 @@ double SmoothRenewableSubresource::getHighestPrice( const int aPeriod ) const{
     // form.  Instead, we'll take the point at which the supply is 99%
     // of maximum.
 
-    // TODO: add a member variable for the top price and calculate the
-    // elasticity condition when the object is set up.  We don't
-    // provide for changing the mid-price or exponent, so it only
-    // needs to be calculated once.
-
     double curveExp = mCostCurve.getCurveExponent();
-    double value = pow( 99.0 * pow( mMidPrice, curveExp ), 1.0 / curveExp );
+    double value = pow( 99.0 * pow(mCostCurve.getMidprice(), curveExp ), 1.0 / curveExp );
 
     return value;
 }

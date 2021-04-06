@@ -52,6 +52,8 @@
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/definitions.h"
+
 #if GCAM_PARALLEL_ENABLED
 #include <tbb/spin_mutex.h>
 #endif
