@@ -39,18 +39,6 @@
 			<Value name = "bio_trade">../input/gcamdata/xml/bio_trade.xml</Value>
 			<Value name = "ag_trade">../input/gcamdata/xml/ag_trade.xml</Value>
 			
-			<Value name = "ind_urb_proc">../input/gcamdata/xml/ind_urb_processing_sectors.xml</Value>
-			<Value name = "nonco2_energy">../input/gcamdata/xml/all_energy_emissions.xml</Value>
-			<Value name = "nonco2_fgas">../input/gcamdata/xml/all_fgas_emissions.xml</Value>
-			<Value name = "nonco2_unmgd">../input/gcamdata/xml/all_unmgd_emissions.xml</Value>
-			<Value name = "nonco2_aglu">../input/gcamdata/xml/all_aglu_emissions_IRR_MGMT.xml</Value>
-			
-			<!-- Global nonCO2 GHG MAC files -->
-		    <Value name = "nonco2_energy">../input/gcamdata/xml/all_energy_emissions_MAC.xml</Value>
-		    <Value name = "nonco2_fgas">../input/gcamdata/xml/all_fgas_emissions_MAC.xml</Value>
-		    <Value name = "nonco2_aglu">../input/gcamdata/xml/all_aglu_emissions_IRR_MGMT_MAC.xml</Value> 
-		    <Value name = "nonco2_proc">../input/gcamdata/xml/ind_urb_processing_sectors_MAC.xml</Value> 
-			
 			<Value name = "unlim_supply_water">../input/gcamdata/xml/unlimited_water_supply.xml</Value>
 			<Value name = "water_supply">../input/gcamdata/xml/water_supply_constrained.xml</Value>
 			<Value name = "water_desal">../input/gcamdata/xml/desalination.xml</Value>
@@ -65,6 +53,18 @@
 			<Value name = "an_water">../input/gcamdata/xml/water_demand_livestock.xml</Value>
 			<Value name = "municipal_water">../input/gcamdata/xml/water_demand_municipal.xml</Value>
 			<Value name = "primary_ene_water">../input/gcamdata/xml/water_demand_primary.xml</Value>
+			
+			<Value name = "ind_urb_proc">../input/gcamdata/xml/ind_urb_processing_sectors.xml</Value>
+			<Value name = "nonco2_energy">../input/gcamdata/xml/all_energy_emissions.xml</Value>
+			<Value name = "nonco2_fgas">../input/gcamdata/xml/all_fgas_emissions.xml</Value>
+			<Value name = "nonco2_unmgd">../input/gcamdata/xml/all_unmgd_emissions.xml</Value>
+			<Value name = "nonco2_aglu">../input/gcamdata/xml/all_aglu_emissions_IRR_MGMT.xml</Value>
+			
+			<!-- Global nonCO2 GHG MAC files -->
+		    <Value name = "nonco2_energy">../input/gcamdata/xml/all_energy_emissions_MAC.xml</Value>
+		    <Value name = "nonco2_fgas">../input/gcamdata/xml/all_fgas_emissions_MAC.xml</Value>
+		    <Value name = "nonco2_aglu">../input/gcamdata/xml/all_aglu_emissions_IRR_MGMT_MAC.xml</Value> 
+		    <Value name = "nonco2_proc">../input/gcamdata/xml/ind_urb_processing_sectors_MAC.xml</Value> 
 			
             <Value name = "bio_feedstock_limit">../input/gcamdata/xml/liquids_limits.xml</Value>
             <Value name = "bio_elec_w_feed_limit">../input/gcamdata/xml/water_elec_liquids_limits.xml</Value>
