@@ -360,7 +360,7 @@ void LogEDFun::operator()(const UBVECTOR &ax, UBVECTOR &fx, const int partj)
         double c = s == 0 ? std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]) * slope[i] : 0;
         // give difference as a fraction of demand
         fx[i] = d - s + c;          // == d-(s-c); i.e., the correction subtracts from supply
-        }
+    }
     else if(!mLogPricep && ( mkts[i].getType() == IMarketType::RES  // LINEAR CASE (constraint type markets only)
             || mkts[i].getType() == IMarketType::TAX
             || mkts[i].getType() == IMarketType::SUBSIDY

@@ -251,7 +251,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                 if(fd == 0.0) {
                     if(olddmnd > 0.0) {
                         fd = olddmnd;
-            }
+                    }
                     else if(oldsply > 0.0) {
                         fd = oldsply;
                     }
