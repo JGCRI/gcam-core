@@ -386,7 +386,7 @@ void LogEDFun::operator()(const UBVECTOR &ax, UBVECTOR &fx, const int partj)
                     << "  p0= " << p0 << "  c= " << c << "  s= " << s << " d= " << d << " modified F(x)= " << fx[i]
                     << "\n";
         }*/
-        }
+    }
     else {                      // Markets that are neither normal nor constraint types.
       // for other types of markets (mostly price, demand, and
       // trial-value), output fractional demand - supply
