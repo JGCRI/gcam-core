@@ -15,10 +15,8 @@ module_energy_batch_chemical_xml <- function(command, ...) {
     return(c("L2325.Supplysector_chemical",
              "L2325.FinalEnergyKeyword_chemical",
              "L2325.SubsectorLogit_chemical",
-             #"L2325.SubsectorShrwt_chemical",
              "L2325.SubsectorShrwtFllt_chemical",
              "L2325.SubsectorInterp_chemical",
-             # "L2325.SubsectorInterpTo_chemical",
              "L2325.StubTech_chemical",
              "L2325.GlobalTechShrwt_chemical",
              "L2325.GlobalTechCoef_chemical",
@@ -26,7 +24,6 @@ module_energy_batch_chemical_xml <- function(command, ...) {
 			 "L2325.GlobalTechSCurve_chemical",
 			 "L2325.GlobalTechCSeq_ind",
              "L2325.GlobalTechProfitShutdown_chemical",
-             #"L2325.GlobalTechCapture_chemical",
              "L2325.StubTechProd_chemical",
              "L2325.StubTechCalInput_chemical",
              "L2325.StubTechCoef_chemical",
@@ -46,16 +43,14 @@ module_energy_batch_chemical_xml <- function(command, ...) {
     L2325.Supplysector_chemical <- get_data(all_data, "L2325.Supplysector_chemical")
     L2325.FinalEnergyKeyword_chemical <- get_data(all_data, "L2325.FinalEnergyKeyword_chemical")
     L2325.SubsectorLogit_chemical <- get_data(all_data, "L2325.SubsectorLogit_chemical")
-    #    L2325.SubsectorShrwt_chemical <- get_data(all_data, "L2325.SubsectorShrwt_chemical")
     L2325.SubsectorShrwtFllt_chemical <- get_data(all_data, "L2325.SubsectorShrwtFllt_chemical")
     L2325.SubsectorInterp_chemical <- get_data(all_data, "L2325.SubsectorInterp_chemical")
-    #    L2325.SubsectorInterpTo_chemical <- get_data(all_data, "L2325.SubsectorInterpTo_chemical")
     L2325.StubTech_chemical <- get_data(all_data, "L2325.StubTech_chemical")
     L2325.GlobalTechShrwt_chemical <- get_data(all_data, "L2325.GlobalTechShrwt_chemical")
     L2325.GlobalTechEff_chemical <- get_data(all_data, "L2325.GlobalTechEff_chemical")
     L2325.GlobalTechCoef_chemical <- get_data(all_data, "L2325.GlobalTechCoef_chemical")
     L2325.GlobalTechCost_chemical <- get_data(all_data, "L2325.GlobalTechCost_chemical")
-	L2325.GlobalTechSCurve_chemical <- get_data(all_data, "L2325.GlobalTechSCurve_chemical")
+	  L2325.GlobalTechSCurve_chemical <- get_data(all_data, "L2325.GlobalTechSCurve_chemical")
     L2325.GlobalTechProfitShutdown_chemical <- get_data(all_data, "L2325.GlobalTechProfitShutdown_chemical")
     L2325.GlobalTechCapture_chemical <- get_data(all_data, "L2325.GlobalTechCapture_chemical")
     L2325.StubTechProd_chemical <- get_data(all_data, "L2325.StubTechProd_chemical")
@@ -73,16 +68,14 @@ module_energy_batch_chemical_xml <- function(command, ...) {
       add_logit_tables_xml(L2325.Supplysector_chemical, "Supplysector") %>%
       add_xml_data(L2325.FinalEnergyKeyword_chemical, "FinalEnergyKeyword") %>%
       add_logit_tables_xml(L2325.SubsectorLogit_chemical, "SubsectorLogit") %>%
-      #add_xml_data(L2325.SubsectorShrwt_chemical, "SubsectorShrwt") %>%
       add_xml_data(L2325.SubsectorShrwtFllt_chemical, "SubsectorShrwtFllt") %>%
       add_xml_data(L2325.SubsectorInterp_chemical, "SubsectorInterp") %>%
-      #add_xml_data(L2325.SubsectorInterpTo_chemical, "SubsectorInterpTo") %>%
       add_xml_data(L2325.StubTech_chemical, "StubTech") %>%
       add_xml_data(L2325.GlobalTechShrwt_chemical, "GlobalTechShrwt") %>%
       add_xml_data(L2325.GlobalTechEff_chemical, "GlobalTechEff") %>%
       add_xml_data(L2325.GlobalTechCoef_chemical, "GlobalTechCoef") %>%
       add_xml_data(L2325.GlobalTechCost_chemical, "GlobalTechCost") %>%
-	  add_xml_data(L2325.GlobalTechSCurve_chemical, "GlobalTechSCurve") %>%
+	    add_xml_data(L2325.GlobalTechSCurve_chemical, "GlobalTechSCurve") %>%
       add_xml_data(L2325.GlobalTechProfitShutdown_chemical, "GlobalTechProfitShutdown") %>%
       add_xml_data(L2325.GlobalTechCSeq_ind, "GlobalTechCSeq") %>%
       add_xml_data(L2325.GlobalTechCapture_chemical, "GlobalTechCapture") %>%
@@ -94,18 +87,15 @@ module_energy_batch_chemical_xml <- function(command, ...) {
       add_xml_data(L2325.PriceElasticity_chemical, "PriceElasticity") %>%
       add_xml_data(L2325.GlobalTechSecOut_chemical, "GlobalTechSecOut") %>%
       add_precursors("L2325.Supplysector_chemical", "L2325.FinalEnergyKeyword_chemical", "L2325.SubsectorLogit_chemical",
-                     # "L2325.SubsectorShrwt_chemical",
                      "L2325.SubsectorShrwtFllt_chemical","L2325.GlobalTechEff_chemical",
                      "L2325.SubsectorInterp_chemical","L2325.StubTechProd_chemical",
-                     # "L2325.SubsectorInterpTo_chemical",
                      "L2325.StubTech_chemical","L2325.StubTechCoef_chemical","L2325.GlobalTechCSeq_ind",
                      "L2325.GlobalTechShrwt_chemical", "L2325.GlobalTechCoef_chemical", "L2325.GlobalTechCost_chemical",
-					 "L2325.GlobalTechProfitShutdown_chemical", "L2325.GlobalTechSCurve_chemical",
+                     "L2325.GlobalTechProfitShutdown_chemical", "L2325.GlobalTechSCurve_chemical",
                      "L2325.StubTechCalInput_chemical","L2325.GlobalTechCapture_chemical",
                      "L2325.PerCapitaBased_chemical", "L2325.BaseService_chemical",
                      "L2325.PriceElasticity_chemical","L2325.GlobalTechSecOut_chemical") ->
       chemical.xml
-	#"L2325.GlobalTechCapture_chemical"
 
     return_data(chemical.xml)
   } else {

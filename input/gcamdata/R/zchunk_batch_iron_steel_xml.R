@@ -15,10 +15,8 @@ module_energy_batch_iron_steel_xml <- function(command, ...) {
     return(c("L2323.Supplysector_iron_steel",
              "L2323.FinalEnergyKeyword_iron_steel",
              "L2323.SubsectorLogit_iron_steel",
-             # "L2323.SubsectorShrwt_iron_steel",
              "L2323.SubsectorShrwtFllt_iron_steel",
              "L2323.SubsectorInterp_iron_steel",
-             # "L2323.SubsectorInterp_iron_steel",
              "L2323.StubTech_iron_steel",
              "L2323.GlobalTechShrwt_iron_steel",
              "L2323.GlobalTechCoef_iron_steel",
@@ -27,7 +25,6 @@ module_energy_batch_iron_steel_xml <- function(command, ...) {
              "L2323.GlobalTechSCurve_en",
              "L2323.GlobalTechProfitShutdown_en",
              "L2323.StubTechProd_iron_steel",
-             #"L2323.StubTechCalInput_iron_steel",
              "L2323.StubTechCoef_iron_steel",
              "L2323.PerCapitaBased_iron_steel",
              "L2323.BaseService_iron_steel",
@@ -42,9 +39,7 @@ module_energy_batch_iron_steel_xml <- function(command, ...) {
     L2323.Supplysector_iron_steel <- get_data(all_data, "L2323.Supplysector_iron_steel")
     L2323.FinalEnergyKeyword_iron_steel <- get_data(all_data, "L2323.FinalEnergyKeyword_iron_steel")
     L2323.SubsectorLogit_iron_steel <- get_data(all_data, "L2323.SubsectorLogit_iron_steel")
-    #    L2323.SubsectorShrwt_iron_steel <- get_data(all_data, "L2323.SubsectorShrwt_iron_steel")
     L2323.SubsectorShrwtFllt_iron_steel <- get_data(all_data, "L2323.SubsectorShrwtFllt_iron_steel")
-    #L2323.SubsectorInterp_iron_steel <- get_data(all_data, "L2323.SubsectorInterp_iron_steel")
     L2323.SubsectorInterp_iron_steel <- get_data(all_data, "L2323.SubsectorInterp_iron_steel")
     L2323.StubTech_iron_steel <- get_data(all_data, "L2323.StubTech_iron_steel")
     L2323.GlobalTechShrwt_iron_steel <- get_data(all_data, "L2323.GlobalTechShrwt_iron_steel")
@@ -54,7 +49,6 @@ module_energy_batch_iron_steel_xml <- function(command, ...) {
     L2323.GlobalTechSCurve_en <- get_data(all_data, "L2323.GlobalTechSCurve_en")
     L2323.GlobalTechProfitShutdown_en <- get_data(all_data, "L2323.GlobalTechProfitShutdown_en")
     L2323.StubTechProd_iron_steel <- get_data(all_data, "L2323.StubTechProd_iron_steel")
-    #L2323.StubTechCalInput_iron_steel <- get_data(all_data, "L2323.StubTechCalInput_iron_steel")
     L2323.StubTechCoef_iron_steel <- get_data(all_data, "L2323.StubTechCoef_iron_steel")
     L2323.PerCapitaBased_iron_steel <- get_data(all_data, "L2323.PerCapitaBased_iron_steel")
     L2323.BaseService_iron_steel <- get_data(all_data, "L2323.BaseService_iron_steel")
@@ -66,9 +60,7 @@ module_energy_batch_iron_steel_xml <- function(command, ...) {
       add_logit_tables_xml(L2323.Supplysector_iron_steel, "Supplysector") %>%
       add_xml_data(L2323.FinalEnergyKeyword_iron_steel, "FinalEnergyKeyword") %>%
       add_logit_tables_xml(L2323.SubsectorLogit_iron_steel, "SubsectorLogit") %>%
-      #      add_xml_data(L2323.SubsectorShrwt_iron_steel, "SubsectorShrwt") %>%
       add_xml_data(L2323.SubsectorShrwtFllt_iron_steel, "SubsectorShrwtFllt") %>%
-      #     add_xml_data(L2323.SubsectorInterp_iron_steel, "SubsectorInterp") %>%
       add_xml_data(L2323.SubsectorInterp_iron_steel, "SubsectorInterp") %>%
       add_xml_data(L2323.StubTech_iron_steel, "StubTech") %>%
       add_xml_data(L2323.GlobalTechShrwt_iron_steel, "GlobalTechShrwt") %>%
@@ -78,16 +70,13 @@ module_energy_batch_iron_steel_xml <- function(command, ...) {
       add_xml_data(L2323.GlobalTechSCurve_en, "GlobalTechSCurve") %>%
       add_xml_data(L2323.GlobalTechProfitShutdown_en, "GlobalTechProfitShutdown") %>%
       add_xml_data(L2323.StubTechProd_iron_steel, "StubTechProd") %>%
-      #add_xml_data(L2323.StubTechCalInput_iron_steel, "StubTechCalInput") %>%
       add_xml_data(L2323.StubTechCoef_iron_steel, "StubTechCoef") %>%
       add_xml_data(L2323.PerCapitaBased_iron_steel, "PerCapitaBased") %>%
       add_xml_data(L2323.BaseService_iron_steel, "BaseService") %>%
       add_xml_data(L2323.PriceElasticity_iron_steel, "PriceElasticity") %>%
       add_precursors("L2323.Supplysector_iron_steel", "L2323.FinalEnergyKeyword_iron_steel", "L2323.SubsectorLogit_iron_steel",
-                     # "L2323.SubsectorShrwt_iron_steel",
                      "L2323.SubsectorShrwtFllt_iron_steel",
                      "L2323.SubsectorInterp_iron_steel",
-                     # "L2323.SubsectorInterp_iron_steel",
                      "L2323.StubTech_iron_steel",
                      "L2323.GlobalTechShrwt_iron_steel", "L2323.GlobalTechCoef_iron_steel", "L2323.GlobalTechCost_iron_steel",
                      "L2323.GlobalTechCapture_iron_steel", "L2323.GlobalTechSCurve_en",
@@ -95,7 +84,6 @@ module_energy_batch_iron_steel_xml <- function(command, ...) {
                      "L2323.StubTechCoef_iron_steel", "L2323.PerCapitaBased_iron_steel", "L2323.BaseService_iron_steel",
                      "L2323.PriceElasticity_iron_steel") ->
       iron_steel.xml
-	#, "L2323.StubTechCalInput_iron_steel"
     return_data(iron_steel.xml)
   } else {
     stop("Unknown command")

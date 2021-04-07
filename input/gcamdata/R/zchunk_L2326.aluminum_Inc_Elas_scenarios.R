@@ -63,13 +63,6 @@ module_socioeconomics_L2326.aluminum_Inc_Elas_scenarios <- function(command, ...
       #Add income elasticity
       left_join_error_no_match(A326.inc_elas, by = c("year", "region")) %>%
       mutate(income.elasticity = inc_elas,energy.final.demand = "aluminum") %>%
-      # Using approx rather than approx_fun because data is from assumption file, not in our tibble
-      #mutate(income.elasticity = approx(x = filter(A326.inc_elas,A326.inc_elas$sector == 'aluminum')$pcgdp_90thousUSD, y = filter(A326.inc_elas,A326.inc_elas$sector == 'aluminum')$inc_elas,
-      #                                  xout = pcgdp_90thousUSD,
-      #                                  # Rule 2 means that data outside of the interval of input
-      #                                  # data will be assigned the cloest data extreme
-      #                                  rule = 2)[['y']] %>% round(3),
-      #       energy.final.demand = "aluminum") %>%
       select(scenario, region, energy.final.demand, year, income.elasticity) %>%
       arrange(year) ->
       L2326.pcgdp_thous90USD_Scen_R_Y
@@ -96,13 +89,6 @@ module_socioeconomics_L2326.aluminum_Inc_Elas_scenarios <- function(command, ...
       #Add income elasticity
       left_join_error_no_match(A326.inc_elas, by = c("year", "region")) %>%
       mutate(income.elasticity = inc_elas,energy.final.demand = "aluminum") %>%
-      # Using approx rather than approx_fun because data is from assumption file, not in our tibble
-      #mutate(income.elasticity = approx(x = filter(A326.inc_elas,A326.inc_elas$sector == 'aluminum')$pcgdp_90thousUSD, y = filter(A326.inc_elas,A326.inc_elas$sector == 'aluminum')$inc_elas,
-      #                                  xout = pcgdp_90thousUSD,
-      #                                  # Rule 2 means that data outside of the interval of input
-      #                                  # data will be assigned the cloest data extreme
-      #                                  rule = 2)[['y']] %>% round(3),
-      #       energy.final.demand = "aluminum") %>%
       select(region, energy.final.demand, year, income.elasticity) ->
       L2326.aluminum_incelas_gcam3
 

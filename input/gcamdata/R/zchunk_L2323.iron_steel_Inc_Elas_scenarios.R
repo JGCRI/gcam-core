@@ -63,13 +63,6 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       #Add income elasticity
       left_join_error_no_match(A323.inc_elas, by = c("year", "region")) %>%
       mutate(income.elasticity = inc_elas,energy.final.demand = "iron and steel") %>%
-      # Using approx rather than approx_fun because data is from assumption file, not in our tibble
-      #mutate(income.elasticity = approx(x = A323.inc_elas$pcgdp_90thousUSD, y = A323.inc_elas$inc_elas,
-      #                                  xout = pcgdp_90thousUSD,
-      #                                  # Rule 2 means that data outside of the interval of input
-      #                                  # data will be assigned the cloest data extreme
-      #                                  rule = 2)[['y']] %>% round(3),
-      #       energy.final.demand = "iron and steel") %>%
       select(scenario, region, energy.final.demand, year, income.elasticity) %>%
       arrange(year)
 
@@ -94,13 +87,6 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       #Add income elasticity
       left_join_error_no_match(A323.inc_elas, by = c("year", "region")) %>%
       mutate(income.elasticity = inc_elas,energy.final.demand = "iron and steel") %>%
-      # Using approx rather than approx_fun because data is from assumption file, not in our tibble
-      #mutate(income.elasticity = approx(x = A323.inc_elas$pcgdp_90thousUSD, y = A323.inc_elas$inc_elas,
-      #                                  xout = pcgdp_90thousUSD,
-      #                                  # Rule 2 means that data outside of the interval of input
-      #                                  # data will be assigned the cloest data extreme
-      #                                  rule = 2)[['y']] %>% round(3),
-      #       energy.final.demand = "iron and steel") %>%
       select(region, energy.final.demand, year, income.elasticity)
     # ===================================================
 

@@ -310,23 +310,6 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       filter(year %in% MODEL_YEARS) ->   # drop the terminal coef year if it's outside of the model years
       L2323.StubTechCoef_iron_steel
 
-    # L2323.StubTechCalInput_iron_steel: calibrated steel production
-    # calibrated_techs %>%
-      # select(sector, fuel, supplysector, subsector, technology, minicam.energy.input) %>%
-      # distinct ->
-      # calibrated_techs_export # temporary tibble
-
-    # L1323.in_EJ_R_iron_steel_F_Y %>%
-      # filter(year %in% MODEL_BASE_YEARS) %>%
-      # mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
-      # left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      # mutate(stub.technology = technology,
-             # share.weight.year = year,
-             # subs.share.weight = if_else(calibrated.value > 0, 1, 0),
-             # tech.share.weight = subs.share.weight) %>%
-      # select(LEVEL2_DATA_NAMES[["StubTechCalInput"]]) ->
-      # L2323.StubTechCalInput_iron_steel
-
     # L2323.PerCapitaBased_iron_steel: per-capita based flag for iron_steel exports final demand
     A323.demand %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["PerCapitaBased"]], GCAM_region_names)  ->
@@ -495,14 +478,6 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       add_legacy_name("L2323.StubTechProd_iron_steel") %>%
       add_precursors("energy/calibrated_techs", "L1323.out_Mt_R_iron_steel_Yh", "common/GCAM_region_names") ->
       L2323.StubTechProd_iron_steel
-
-    # L2323.StubTechCalInput_iron_steel %>%
-      # add_title("calibrated iron_steel production") %>%
-      # add_units("EJ") %>%
-      # add_comments("Values are calculated using L1323.in_EJ_R_iron_steel_F_Y then added GCAM region information and supplysector, subsector, technology, and input information") %>%
-      # add_legacy_name("L2323.StubTechCalInput_iron_steel") %>%
-      # add_precursors("energy/calibrated_techs", "L1323.in_EJ_R_iron_steel_F_Y", "common/GCAM_region_names") ->
-      # L2323.StubTechCalInput_iron_steel
 
     L2323.StubTechCoef_iron_steel %>%
       add_title("region-specific coefficients of iron and steel production technologies") %>%
