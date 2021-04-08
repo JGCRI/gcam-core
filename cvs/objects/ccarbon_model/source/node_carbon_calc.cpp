@@ -246,7 +246,12 @@ void NodeCarbonCalc::calcLandUseHistory()
                 // computing the average from the current carbon stock.
                 // Assumes carbon is evenly distributed across land; that is, if you
                 // move 10% of land you move 10% of carbon.
-                double currCarbonStockMoved = -1 * carbonStock[ i ] * diffLand[ i ] / prevLand[ i ];
+                double currCarbonStockMoved = 0.0;
+                // Protect against divide by zero. This doesn't happen in practice, but some
+                // compilers are more strict about checks
+                if( prevLand[ i ] != 0.0 ) {
+                    currCarbonStockMoved = -1 * carbonStock[ i ] * diffLand[ i ] / prevLand[ i ];
+                }
                 carbonStockMoved += currCarbonStockMoved;
                 // Remove the carbon that is changing land type from the carbon stock without
                 // emissions. Carbon will be allocated to the other land types in subsequent steps.
@@ -264,7 +269,12 @@ void NodeCarbonCalc::calcLandUseHistory()
             // Compute fraction of land reduced that comes from each land leaf.
             for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
                 if ( diffLand[ i ] < 0 ) {
-                    fractDiffLand[ i ] = -diffLand[ i ] / totalLandGain;
+                    fractDiffLand[ i ] = 0.0;
+                    // Protect against divide by zero. This doesn't happen in practice, but some
+                    // compilers are more strict about checks
+                    if( totalLandGain != 0.0 ) {
+                        fractDiffLand[ i ] = -diffLand[ i ] / totalLandGain;
+                    }
                     avgCarbonDensityReducedLand[ temp ] += fractDiffLand[ i ] * (*belowGroundCarbonDensity[ i ])[ temp ];
                 }
             }
@@ -277,7 +287,12 @@ void NodeCarbonCalc::calcLandUseHistory()
                 double emissBeforeMove = mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ];
                 // Calculate the difference in carbon densities which would drive any
                 // emissions or uptake.
-                double fractionOfGain = diffLand[ i ] / totalLandGain;
+                double fractionOfGain = 0.0;
+                // Protect against divide by zero. This doesn't happen in practice, but some
+                // compilers are more strict about checks
+                if( totalLandGain != 0.0 ) {
+                    fractionOfGain = diffLand[ i ] / totalLandGain;
+                }
                 double currCarbonMove = fractionOfGain * carbonStockMoved;
                 
                 // For above ground carbon, carbon density is passed in instead of carbon stock. Use the difference

@@ -129,9 +129,14 @@ void ReserveSubResource::annualsupply( const string& aRegionName, const string& 
         // Calculate the ratio from the actual production to the calibrated production
         // to use as the fixedScaleFactor which we can then use in Technology::production
         // to scale and ensure production matches calibration.
-        fixedScaleFactor = mCalProduction[ aPeriod ] == 0.0 ? 0.0 :
-            mCalProduction[ aPeriod ] /
-                ( fixedOutput + mCalReserve[ aPeriod ] / static_cast<double>( mAvgProdLifetime ) );
+        fixedScaleFactor = 0.0;
+        // if mCalProduction is zero, then fixedScaleFactor should be zero
+        if ( mCalProduction[ aPeriod ] != 0.0 ) {
+            // Protect against divide by zeroes, which shouldn't happen
+            if ( mAvgProdLifetime != 0 && ( fixedOutput + mCalReserve[ aPeriod ] / static_cast<double>( mAvgProdLifetime ) ) != 0.0 ) {
+                fixedScaleFactor = mCalProduction[ aPeriod ] / ( fixedOutput + mCalReserve[ aPeriod ] / static_cast<double>( mAvgProdLifetime ) );
+            }
+        }
     }
 
     // Calculate production from all vintages

@@ -94,12 +94,6 @@ void LandAllocator::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTa
 
 void LandAllocator::initCalc( const string& aRegionName, const int aPeriod )
 {
-    // In calibration periods, check land area and set calibration values
-    if ( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
-        checkLandArea( aRegionName, aPeriod);
-        calibrateLandAllocator( aRegionName, aPeriod );
-    }
-
     // Call land node's initCalc
     LandNode::initCalc( aRegionName, aPeriod );
     

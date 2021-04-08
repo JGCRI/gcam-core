@@ -211,8 +211,14 @@ double TranSubsector::getGeneralizedPrice( const GDP* aGDP, const int aPeriod ) 
     
     // Save time value so can print out
     // Maybe also write to XML DB?
-    double timeValue =  getTimeValue( aGDP, aPeriod );
     return Subsector::getPrice( aGDP, aPeriod ) + timeValue;
+    double timeValue =  getTimeValue( aGDP, aPeriod );
+    double subsectorPrice = Subsector::getPrice( aGDP, aPeriod );
+    if ( boost::math::isnan( subsectorPrice ) )  {
+        return subsectorPrice;
+    } else {
+        return subsectorPrice + timeValue;
+    }
 }
 
 /*! \brief Get the time in transit per day per person for the period.
