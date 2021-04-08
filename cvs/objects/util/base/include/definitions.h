@@ -64,7 +64,7 @@
 
 //! A flag which turns on or off the compilation of the hector climate model code.
 #ifndef USE_HECTOR
-#define USE_HECTOR 1
+#define USE_HECTOR 0
 #endif
 
 //! A flag which turns on or off parallel calculation using intel TBB
