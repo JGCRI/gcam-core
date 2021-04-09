@@ -119,6 +119,19 @@ module_energy_LA1011.en_bal_adj <- function(command, ...) {
       filter(!(is.na(GCAM_region_ID))) %>%
       select(Country, year, value, iso, GCAM_region_ID) -> L1011.in_EJ_ctry_intlship_TOT_Yh
 
+    # JS 12/2020: Extrapolate EIA data to 2015
+    L1011.in_EJ_ctry_intlship_TOT_Yh_2015<-L1011.in_EJ_ctry_intlship_TOT_Yh %>%
+      filter(year==2014) %>%
+      mutate(year=2015)
+
+    # JS 12/2020: Add 2015 to the dataset and group by iso
+    L1011.in_EJ_ctry_intlship_TOT_Yh<-L1011.in_EJ_ctry_intlship_TOT_Yh %>%
+      bind_rows(L1011.in_EJ_ctry_intlship_TOT_Yh_2015) %>%
+      group_by(year,iso,GCAM_region_ID) %>%
+      summarise(value=sum(value)) %>%
+      ungroup() %>%
+      arrange(iso)
+
     L1011.in_EJ_ctry_intlship_TOT_Yh %>%
       group_by(GCAM_region_ID, year) %>%
       summarise(value = sum(value)) -> L1011.in_EJ_R_intlship_Yh
