@@ -448,15 +448,20 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L112.nonco2_tgej_R_en_S_F_Yh_withNAs %>%
         replace_na(list(emfact = 0)) %>%
         group_by(year, Non.CO2, supplysector, subsector, stub.technology) %>%
-        summarise(emfact = median(emfact)) %>%
+        mutate(emfact = median(emfact), upper = quantile(emfact,0.95)) %>%
         ungroup() %>%
-        rename(globalemfact = emfact) ->
+        rename(globalemfact = emfact) %>%
+        select(year, Non.CO2, supplysector, subsector, stub.technology, globalemfact, upper) %>%
+        distinct()->
         L112.nonco2_tgej_R_en_S_F_Yh_globalmedian
 
-      # Replaces all emissions factors above a given value (currently 1000) or that are NAs with the global median emissions factor for that year, non.CO2, and technology
+      # Replaces all emissions factors above a given value or that are NAs with the global median emissions factor for that year, non.CO2, and technology
       L112.nonco2_tgej_R_en_S_F_Yh_withNAs %>%
         left_join_error_no_match(L112.nonco2_tgej_R_en_S_F_Yh_globalmedian, by = c("year", "Non.CO2", "supplysector", "subsector", "stub.technology")) %>%
-        mutate(emfact = if_else(emfact > emissions.HIGH_EM_FACTOR_THRESHOLD | is.na(emfact), globalemfact, emfact)) %>%
+        #There are two adjustments here. First, we check if the supply sector is related to fossil fuels, in that case, if the emfact is above 95th percentile, we replace with the global median.
+        #If not, we just compare with our threshold of 1000 tg/ej and make the replacements accordingly. These adjustments are structured given that fossil fuel production may increase rapidly in some regions (even though absolute increase may be low).
+        mutate(emfact = if_else(supplysector == "out_resources", if_else(emfact >upper | is.na(emfact) , globalemfact, emfact),
+                                if_else(emfact >  emissions.HIGH_EM_FACTOR_THRESHOLD | is.na(emfact) , globalemfact, emfact))) %>%
         select(GCAM_region_ID, Non.CO2, year, supplysector, subsector, stub.technology, emfact) %>%
         mutate(emfact = if_else(is.infinite(emfact), 1, emfact)) ->
         L112.nonco2_tgej_R_en_S_F_Yh
