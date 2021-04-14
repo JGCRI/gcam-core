@@ -150,7 +150,7 @@ private:
     void doStateCheck() const;
 #endif
     double& getInternal();
-    const double& getInternal() const;
+    double getInternal() const;
 };
 
 inline Value::Value(): mValue( 0 ), mIsInit( false ), mIsStateCopy( false ){
@@ -199,7 +199,7 @@ inline double& Value::getInternal() {
  *          managed state if the mIsStateCopy flag is set.
  * \return A const reference the the appropriate value represented by this class.
  */
-inline const double& Value::getInternal() const {
+inline double Value::getInternal() const {
     return mIsStateCopy ?
 #if !GCAM_PARALLEL_ENABLED
         sCentralValue[mCentralValueIndex]
