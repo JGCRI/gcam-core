@@ -1099,9 +1099,10 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
         # use updated emissions to calculate emission factors based on activity data
         L112.nonco2_tg_R_en_S_F_Yh_resource %>%
-          left_join_error_no_match(L111.Prod_EJ_R_F_Yh,
+          # Group by fuels here to get total value. We do this because, unconventional oil now is a technology within crude oil.
+          left_join_error_no_match(L111.Prod_EJ_R_F_Yh %>% group_by("GCAM_region_ID", "year","sector","fuel") %>% mutate(value = sum(value)) %>% ungroup() %>% select("GCAM_region_ID", "year","sector","fuel", "value") %>% distinct(),
                                    by = c("GCAM_region_ID", "year", "supplysector" = "sector", "subsector" = "fuel")) %>%
-          mutate(value_adj = if_else(value == 0.0, 0.0, emissions / value )) %>%
+          mutate(value_adj = if_else(value == 0.0  |  is.na(value), 0.0, emissions / value )) %>%
           select(-emissions, -value) ->
           L112.ghg_tgej_R_en_S_F_Yh_adj
 
@@ -1133,19 +1134,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
           select(-value_adj) ->
           L112.ghg_tgej_R_en_S_F_Yh_update
 
-        # assume unconventional oil the same as crude oil
-        L112.ghg_tgej_R_en_S_F_Yh_update %>%
-          filter(subsector == "crude oil") %>%
-          mutate(subsector = "unconventional oil") %>%
-          mutate(stub.technology = "unconventional oil") ->
-          L112.ghg_tgej_R_en_S_F_Yh_update_uncov_oil
-
-        # add unconventional oil
-        L112.ghg_tgej_R_en_S_F_Yh_update_all <- bind_rows(L112.ghg_tgej_R_en_S_F_Yh_update,
-                                                          L112.ghg_tgej_R_en_S_F_Yh_update_uncov_oil)
 
         # update the original table
-        L112.ghg_tgej_R_en_S_F_Yh <- L112.ghg_tgej_R_en_S_F_Yh_update_all
+        L112.ghg_tgej_R_en_S_F_Yh <- L112.ghg_tgej_R_en_S_F_Yh_update
 
         # Part 2: L131.nonco2_tg_R_prc_S_S_Yh (industrial processes and urban processes input emissions)
 
