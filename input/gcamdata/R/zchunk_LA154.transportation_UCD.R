@@ -33,6 +33,9 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              FILE=  "energy/mappings/UCD_size_class_revisions",
              FILE =  "energy/UCD_trn_data_CORE_highEV",
              FILE =  "energy/UCD_trn_data_CORE",
+             FILE =  "energy/UCD_trn_data_SSP1",
+             FILE =  "energy/UCD_trn_data_SSP3",
+             FILE = "energy/UCD_trn_data_SSP5",
              # This file is currently using a constant to select the correct SSP database
              # All SSP databases will be included in the input files
              UCD_trn_data_name,"UCD_trn_data_SSP1",
@@ -75,9 +78,9 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     UCD_trn_data_CORE <- get_data(all_data, "energy/UCD_trn_data_CORE") %>%
       gather_years %>% mutate(sce=paste0("CORE"))
     # kbn 2020-06-02 get data for all SSPs. No data for SSP2.
-    UCD_trn_data_SSP1 <- get_data(all_data,"UCD_trn_data_SSP1") %>% gather_years %>% mutate(sce=paste0("SSP1"))
-    UCD_trn_data_SSP3 <- get_data(all_data,"UCD_trn_data_SSP3") %>% gather_years %>% mutate(sce=paste0("SSP3"))
-    UCD_trn_data_SSP5 <- get_data(all_data,"UCD_trn_data_SSP5") %>% gather_years %>% mutate(sce=paste0("SSP5"))
+    UCD_trn_data_SSP1 <- get_data(all_data,"energy/UCD_trn_data_SSP1") %>% gather_years %>% mutate(sce=paste0("SSP1"))
+    UCD_trn_data_SSP3 <- get_data(all_data,"energy/UCD_trn_data_SSP3") %>% gather_years %>% mutate(sce=paste0("SSP3"))
+    UCD_trn_data_SSP5 <- get_data(all_data,"energy/UCD_trn_data_SSP5") %>% gather_years %>% mutate(sce=paste0("SSP5"))
     # UCD_trn_data_CORE_highEV is a scenario, but has data for historical years.
     UCD_trn_data_CORE_highEV <- get_data(all_data,"energy/UCD_trn_data_CORE_highEV") %>% gather_years %>% mutate(sce=paste0("highEV")) %>%
                                                         filter(year %in% c(FUTURE_YEARS))
@@ -310,11 +313,11 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     # Creating tibble with all GCAM years to join with. The values will be filled out using the first available year.
     # Remove years in all GCAM years that are already in UCD database
     all_years <- tibble( year = c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
-      filter(!(year %in% unique(UCD_trn_data_CORE$year)))
+      filter(!(year %in% unique(UCD_trn_data$year)))
 
     UCD_trn_data_sce <- bind_rows(UCD_trn_data_SSP1,UCD_trn_data_SSP3,UCD_trn_data_SSP5,UCD_trn_data_CORE_highEV)
     all_years_SSPs <- tibble( year = c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)) %>%
-      filter(!(year %in% unique(UCD_trn_data_sce$year)))
+      filter(!(year %in% unique(UCD_trn_data$year)))
     #kbn 2020-01-30 We don't need all years for the SSPs. Only selecting years from 2015 on wards. Splitting years
     #into CORE years and SSP years.
     UCD_trn_data_allyears_CORE <- bind_rows(
