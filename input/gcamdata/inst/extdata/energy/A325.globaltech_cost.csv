@@ -13,7 +13,7 @@ chemical energy use,gas,gas CCS,non-energy,3.5,3.5,3.5,3.5
 chemical energy use,biomass,biomass,non-energy,3,3,3,3
 chemical energy use,biomass,biomass cogen,non-energy,4.5,4.5,4.5,4.5
 chemical energy use,biomass,biomass CCS,non-energy,3.5,3.5,3.5,3.5
-chemical energy use,electricity ,electricity ,non-energy,3,3,3,3
+chemical energy use,electricity,electricity,non-energy,3,3,3,3
 chemical energy use,hydrogen,hydrogen,non-energy,3,3,3,3
 chemical energy use,hydrogen,hydrogen cogen,non-energy,4.5,4.5,4.5,4.5
 chemical energy use,coal,coal,non-energy,3,3,3,3
