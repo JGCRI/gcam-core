@@ -64,8 +64,8 @@ module_energy_LA1326.aluminum <- function(command, ...) {
 
     #Mapping the fuel used in aluminum sector
     L1326.in_EJ_R_aluminum_Yh %>%
-      left_join(select(enduse_fuel_aggregation, fuel, aluminum), by = "fuel") %>%
-      select(-fuel, fuel = aluminum) %>%
+      left_join(select(enduse_fuel_aggregation, fuel, industry), by = "fuel") %>%
+      select(-fuel, fuel = industry) %>%
       na.omit() %>%
       group_by(region, GCAM_region_ID, year, sector, fuel) %>%
       summarise(value = sum(value)) %>%

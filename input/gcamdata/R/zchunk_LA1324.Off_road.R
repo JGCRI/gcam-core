@@ -83,8 +83,8 @@ module_energy_LA1324.Off_road <- function(command, ...) {
 
     #Mapping the fuel used in off-road sector
     L1324.in_EJ_R_Off_road_F_Y %>%
-      left_join(select(enduse_fuel_aggregation, fuel, off_road), by = "fuel") %>%
-      select(-fuel, fuel = off_road) %>%
+      left_join(select(enduse_fuel_aggregation, fuel, industry), by = "fuel") %>%
+      select(-fuel, fuel = industry) %>%
       na.omit() %>%
       group_by(region, GCAM_region_ID, year, sector, fuel) %>%
       summarise(value = sum(value)) %>%
