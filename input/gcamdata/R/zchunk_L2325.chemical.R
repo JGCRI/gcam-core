@@ -104,7 +104,7 @@ module_energy_L2325.chemical <- function(command, ...) {
     has_not_heat <- filter(A_regions, has_district_heat == 0) # intermediate tibble
 
     calibrated_techs %>%
-      filter(grepl("CHEMICAL", sector) & fuel == "heat") %>%
+      filter(grepl("chemical energy", sector) & fuel == "heat") %>%
       select(supplysector, subsector, technology) %>%
       repeat_add_columns(tibble(GCAM_region_ID = has_not_heat[["GCAM_region_ID"]])) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
@@ -335,6 +335,7 @@ module_energy_L2325.chemical <- function(command, ...) {
 
     L1325.in_EJ_R_chemical_F_Y %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
+      left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
       complete(nesting(fuel,year,sector),region = GCAM_region_names$region) %>%
       mutate(GCAM_region_ID = NULL,value = replace_na(value,0)) %>%
       left_join_error_no_match(GCAM_region_names, by = "region") %>%

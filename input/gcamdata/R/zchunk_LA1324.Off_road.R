@@ -17,14 +17,11 @@
 #' @author Yang Liu Sep 2019
 module_energy_LA1324.Off_road <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "energy/en_construction",
-             FILE = "energy/construction_feedstock",
-             FILE = "energy/en_agriculture",
-			       FILE = "energy/en_mining",
-			       FILE = "energy/A_regions",
-			       FILE = "energy/mappings/enduse_fuel_aggregation",
-				   "L1323.in_EJ_R_indenergy_F_Yh",
-			       "L1322.in_EJ_R_indfeed_F_Yh"))
+    return(c("L1011.en_bal_EJ_R_Si_Fi_Yh",
+             FILE = "energy/A_regions",
+             FILE = "energy/mappings/enduse_fuel_aggregation",
+             "L1323.in_EJ_R_indenergy_F_Yh",
+             "L1322.in_EJ_R_indfeed_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1324.in_EJ_R_Off_road_F_Y",
              "L1324.in_EJ_R_indenergy_F_Yh",
@@ -39,10 +36,11 @@ module_energy_LA1324.Off_road <- function(command, ...) {
 
     # Load required inputs
     A_regions <- get_data(all_data, "energy/A_regions")
-    en_construction <- get_data(all_data, "energy/en_construction")
-    en_agriculture <- get_data(all_data, "energy/en_agriculture")
-	  en_mining <- get_data(all_data, "energy/en_mining")
-	  construction_feedstock <- get_data(all_data, "energy/construction_feedstock")
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
+#     en_construction <- get_data(all_data, "energy/en_construction")
+#     en_agriculture <- get_data(all_data, "energy/en_agriculture")
+# 	  en_mining <- get_data(all_data, "energy/en_mining")
+# 	  construction_feedstock <- get_data(all_data, "energy/construction_feedstock")
 	  enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     L1323.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1323.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
     L1322.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indfeed_F_Yh", strip_attributes = TRUE)
@@ -55,29 +53,22 @@ module_energy_LA1324.Off_road <- function(command, ...) {
     # Determine historical years not available in data set (additional years) to copy values from final available year (final_CO2_year)
 
     # ===================================================
-    # Change ktoe to EJ
-    unit_ktoe_to_EJ = 0.000041868
 
-    # Construction energy input
-    en_construction %>%
-      mutate(sector = flow, value = value * unit_ktoe_to_EJ, unit = NULL, flow = NULL) ->
-      L1324.in_EJ_R_Off_road_F_Y
 
-    # Construction feedstock input
-    construction_feedstock %>%
-      mutate(sector = flow, value = value * unit_ktoe_to_EJ, unit = NULL, flow = NULL) %>%
-      rbind(L1324.in_EJ_R_Off_road_F_Y) ->
+    # Construction energy input and construction feedstocks
+    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+      filter(grepl("construction", sector)) ->
       L1324.in_EJ_R_Off_road_F_Y
 
      # Agriculture energy input
-    en_agriculture %>%
-      mutate(sector = flow, value = value * unit_ktoe_to_EJ, unit = NULL, flow = NULL) %>%
-      rbind(L1324.in_EJ_R_Off_road_F_Y) ->
+    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+      filter(grepl("agriculture", sector)) %>%
+      bind_rows(L1324.in_EJ_R_Off_road_F_Y) ->
       L1324.in_EJ_R_Off_road_F_Y
 
     # Mining energy input
-    en_mining %>%
-      mutate(sector = flow, value = value * unit_ktoe_to_EJ, unit = NULL, flow = NULL) %>%
+    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+      filter(grepl("mining", sector)) %>%
       rbind(L1324.in_EJ_R_Off_road_F_Y) ->
       L1324.in_EJ_R_Off_road_F_Y
 
@@ -86,7 +77,7 @@ module_energy_LA1324.Off_road <- function(command, ...) {
       left_join(select(enduse_fuel_aggregation, fuel, industry), by = "fuel") %>%
       select(-fuel, fuel = industry) %>%
       na.omit() %>%
-      group_by(region, GCAM_region_ID, year, sector, fuel) %>%
+      group_by(GCAM_region_ID, year, sector, fuel) %>%
       summarise(value = sum(value)) %>%
       ungroup()->
       L1324.in_EJ_R_Off_road_F_Y
@@ -101,7 +92,7 @@ module_energy_LA1324.Off_road <- function(command, ...) {
 
     L1324.in_EJ_R_Off_road_F_Y  %>%
       anti_join(region_heat, by = c("GCAM_region_ID", "fuel")) %>% # then drop the regions selected in region_heat
-      group_by(region,GCAM_region_ID, sector, fuel, year) %>%
+      group_by(GCAM_region_ID, sector, fuel, year) %>%
       summarise(value = sum(value)) %>%
       ungroup ->
       L1324.in_EJ_R_Off_road_F_Y
@@ -112,7 +103,7 @@ module_energy_LA1324.Off_road <- function(command, ...) {
       complete(GCAM_region_ID, nesting(sector, fuel, year), fill = list(value = 0)) %>%
       rename(raw = value) %>%
       left_join(L1324.in_EJ_R_Off_road_F_Y %>%
-                  filter(sector != "NECONSTRUC") %>%
+                  filter(!grepl("feedstock", sector)) %>%
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
@@ -123,7 +114,7 @@ module_energy_LA1324.Off_road <- function(command, ...) {
     L1322.in_EJ_R_indfeed_F_Yh %>%
       rename(raw = value) %>%
       left_join(L1324.in_EJ_R_Off_road_F_Y %>%
-                  filter(sector == "NECONSTRUC") %>%
+                  filter(grepl("feedstock", sector)) %>%
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
@@ -143,17 +134,17 @@ module_energy_LA1324.Off_road <- function(command, ...) {
 
     #Adjust negative energy use
     L1324.in_EJ_R_Off_road_F_Y %>%
-      filter(sector != "NECONSTRUC") %>%
+      filter(!grepl("feedstock", sector)) %>%
       left_join(indeergy_tmp %>% select(-sector) ,by = c("GCAM_region_ID", "fuel", "year"))  %>%
       mutate(raw = replace_na(raw, -1), value = if_else(raw < 0 , value, 0)) %>%
-      select(region, GCAM_region_ID, fuel, year, sector, value) ->
+      select(GCAM_region_ID, fuel, year, sector, value) ->
       L1324.in_EJ_R_Off_road_F_Y_recal
 
     L1324.in_EJ_R_Off_road_F_Y %>%
-      filter(sector == "NECONSTRUC") %>%
+      filter(grepl("feedstock", sector)) %>%
       left_join(indfeed_tmp %>% select(-sector), by = c("GCAM_region_ID", "fuel", "year"))  %>%
       mutate(raw = replace_na(raw,-1), value = if_else(raw < 0 , value, 0)) %>%
-      select(region, GCAM_region_ID, fuel, year, sector, value) ->
+      select(GCAM_region_ID, fuel, year, sector, value) ->
       L1323.in_EJ_R_indfeed_F_Yh_recal
 
     #Recalculate
@@ -189,10 +180,7 @@ module_energy_LA1324.Off_road <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Obtained from IEA") %>%
       add_legacy_name("L1324.in_EJ_R_Off_road_F_Y") %>%
-      add_precursors("energy/en_construction",
-                     "energy/en_agriculture",
-                     "energy/en_mining",
-                     "energy/construction_feedstock",
+      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh",
                      "energy/A_regions",
                      "energy/mappings/enduse_fuel_aggregation") ->
       L1324.in_EJ_R_Off_road_F_Y
@@ -203,8 +191,8 @@ module_energy_LA1324.Off_road <- function(command, ...) {
       add_comments("Subtracted Off_road energy use from industrial energy use values in L1323.in_EJ_R_indenergy_F_Yh") %>%
       add_comments("To determine adjusted input energy for industrial energy use") %>%
       add_legacy_name("L1324.in_EJ_R_indenergy_F_Yh") %>%
-      add_precursors("L1323.in_EJ_R_indenergy_F_Yh", "energy/en_construction","energy/construction_feedstock","energy/en_agriculture",
-                     "energy/en_mining","energy/mappings/enduse_fuel_aggregation") ->
+      add_precursors("L1323.in_EJ_R_indenergy_F_Yh", "L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "energy/mappings/enduse_fuel_aggregation") ->
       L1324.in_EJ_R_indenergy_F_Yh
 
     L1323.in_EJ_R_indfeed_F_Yh %>%
@@ -213,8 +201,7 @@ module_energy_LA1324.Off_road <- function(command, ...) {
       add_comments("Subtracted Off_road feedstock use from industrial feedstock use values in L1322.in_EJ_R_indfeed_F_Yh") %>%
       add_comments("To determine adjusted input feedstock for industrial feed use") %>%
       add_legacy_name("L1323.in_EJ_R_indfeed_F_Yh") %>%
-      add_precursors("L1322.in_EJ_R_indfeed_F_Yh", "energy/en_construction","energy/en_agriculture",
-                     "energy/en_mining","energy/construction_feedstock","energy/mappings/enduse_fuel_aggregation") ->
+      add_precursors("L1322.in_EJ_R_indfeed_F_Yh", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/mappings/enduse_fuel_aggregation") ->
       L1323.in_EJ_R_indfeed_F_Yh
 
     return_data(L1324.in_EJ_R_Off_road_F_Y, L1324.in_EJ_R_indenergy_F_Yh, L1323.in_EJ_R_indfeed_F_Yh)

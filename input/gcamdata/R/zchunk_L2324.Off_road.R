@@ -99,11 +99,12 @@ module_energy_L2324.Off_road <- function(command, ...) {
     has_not_heat <- filter(A_regions, has_district_heat == 0) # intermediate tibble
 
     calibrated_techs %>%
-      filter(sector %in% c("AGRICULT", "MINING", "CONSTRUC") & fuel == "heat") %>%
+      filter(sector %in% c("in_industry_agriculture", "mining energy use", "construction energy use") & fuel == "heat") %>%
       select(supplysector, subsector, technology) %>%
       repeat_add_columns(tibble(GCAM_region_ID = has_not_heat[["GCAM_region_ID"]])) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       L2324.rm_heat_techs_R # intermediate tibble
+
     # 1a. Supplysector information
     # L2324.Supplysector_Off_road: Supply sector information for Off_road sector
     A324.sector %>%
@@ -313,6 +314,7 @@ module_energy_L2324.Off_road <- function(command, ...) {
     # L2324.StubTechCalInput_Off_road: calibrated Off_road input
     L1324.in_EJ_R_Off_road_F_Y %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
+      left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
       complete(nesting(fuel,year,sector),region = GCAM_region_names$region) %>%
       mutate(GCAM_region_ID = NULL,value = replace_na(value,0)) %>%
       left_join(GCAM_region_names,by = c("region")) %>%
