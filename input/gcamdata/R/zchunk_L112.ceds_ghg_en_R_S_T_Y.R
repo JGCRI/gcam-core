@@ -39,6 +39,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                FILE="emissions/CEDS/gains_iso_sector_emissions",
                FILE="emissions/CEDS/gains_iso_fuel_emissions",
                "L102.ceds_GFED_nonco2_tg_R_S_F",
+               "L102.ceds_int_shipping_nonco2_tg_S_F",
                "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
                "L101.in_EJ_R_en_Si_F_Yh",
                "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
@@ -92,7 +93,26 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
 
       #Get CEDS_GFED data
-      L112.CEDS_GCAM <- get_data(all_data, "L102.ceds_GFED_nonco2_tg_R_S_F")
+      L112.CEDS_GCAM_no_intl_shipping <- get_data(all_data, "L102.ceds_GFED_nonco2_tg_R_S_F")
+
+      #Get CEDS international shipping data
+      L112.CEDS_intl_shipping <- get_data(all_data, "L102.ceds_int_shipping_nonco2_tg_S_F")
+      Int_shipping_IEA_EIA <- get_data(all_data, "L154.IEA_histfut_data_times_UCD_shares") %>% filter(UCD_category=="trn_international ship")
+
+      #Process data for international shipping to disaggregate to the GCAM regions
+      L112.CEDS_intl_shipping %>%
+        right_join(Int_shipping_IEA_EIA %>% select(iso,year,value) %>% filter(year <= max(HISTORICAL_YEARS)), by=c("year")) %>%
+        mutate(emissions=if_else(is.na(emissions),0,emissions)) %>%
+        group_by(Non.CO2,year,sector,fuel) %>%
+        mutate(share_in_global_ship= value/sum(value)) %>%
+        ungroup() %>%
+        # Converts kt(gg) to Teragrams. Multiply by iso's share in international shipping consumption.
+        mutate(emissions = (emissions * CONV_GG_TG)*share_in_global_ship) %>%
+        select(-share_in_global_ship,-value)->CEDS_int_shipping
+
+      #Combine emissions from all other CEDS sectors with emissions from international shipping
+      L112.CEDS_GCAM_no_intl_shipping %>%
+        bind_rows(CEDS_int_shipping)->L112.CEDS_GCAM
 
       #In case of tanker loading emissions which are classified as process emissions, transfer them to refined liquids. Same for processs industrial energy emissions
       L112.CEDS_GCAM %>%
@@ -1354,7 +1374,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_comments("Compute unscaled non-ghg emissions by country and technology, and CEDS emissions by region and sector.") %>%
         add_comments("and finally calculate non-ghg emission totals by GCAM sector, fuel, technology, and driver type for CEDS historical years.") %>%
         add_legacy_name("L111.nonghg_tg_R_en_S_F_Yh") %>%
-        add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
+        add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F", "L102.ceds_int_shipping_nonco2_tg_S_F", "emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                        "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
                        "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech_combustion","emissions/mappings/Trn_subsector_revised",
                        "emissions/mappings/CEDS_sector_tech_proc","emissions/mappings/calibrated_outresources","emissions/mappings/CEDS_sector_tech_proc_revised",
@@ -1376,7 +1396,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_units("Tg") %>%
         add_comments("Emissions calculated with CEDS totals") %>%
         add_legacy_name("L112.ghg_tg_R_en_S_F_Yh") %>%
-        add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
+        add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","L102.ceds_int_shipping_nonco2_tg_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                        "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
                        "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech_combustion","emissions/mappings/calibrated_outresources",
                        "L101.in_EJ_R_en_Si_F_Yh", "emissions/mappings/Trn_subsector_revised", "emissions/EPA/EPA_2019_raw", "emissions/EPA_CH4N2O_map",
@@ -1391,6 +1411,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_comments("Then, emissions factors computed by dividing calculated emissions by energy data") %>%
         add_legacy_name("L112.ghg_tgej_R_en_S_F_Yh") %>%
         add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F",
+                       "L102.ceds_int_shipping_nonco2_tg_S_F",
                        "emissions/CEDS/ceds_sector_map",
                        "emissions/CEDS/ceds_fuel_map",
                        "common/GCAM_region_names",
@@ -1420,7 +1441,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_comments("Fourth: compute CEDS emissions by region and sector") %>%
         add_comments("Fifth: scale EPA emissions by tech to match CEDS") %>%
         add_legacy_name("L113.ghg_tg_R_an_C_Sys_Fd_Yh") %>%
-        add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
+        add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","L102.ceds_int_shipping_nonco2_tg_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                        "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion", "emissions/CEDS/CEDS_sector_tech_combustion_revised",
                        "emissions/mappings/CEDS_sector_tech_proc", "L107.an_Prod_Mt_R_C_Sys_Fd_Y","emissions/mappings/CEDS_sector_tech_proc_revised",
                        "L103.ghg_tgmt_USA_an_Sepa_F_2005") ->
@@ -1432,7 +1453,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_units("Tg") %>%
         add_comments("Annual animal NH3 emissions is computed using CEDS emissions and FAO animal production.") %>%
         add_legacy_name("L115.nh3_tg_R_an_C_Sys_Fd_Yh") %>%
-        add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
+        add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","L102.ceds_int_shipping_nonco2_tg_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                        "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion","emissions/CEDS/CEDS_sector_tech_combustion_revised",
                        "L107.an_Prod_Mt_R_C_Sys_Fd_Y","L107.an_Prod_Mt_R_C_Sys_Fd_Y") ->
         L115.nh3_tg_R_an_C_Sys_Fd_Yh
