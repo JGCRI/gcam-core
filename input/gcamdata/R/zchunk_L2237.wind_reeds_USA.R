@@ -26,7 +26,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
              FILE = 'gcam-usa/A23.elecS_tech_mapping_cool',
              FILE = "gcam-usa/A10.renewable_resource_delete",
              'L2234.StubTechCapFactor_elecS_wind_USA',
-             'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+             'L2234.GlobalIntTechCapital_elecS_USA',
              'L223.GlobalIntTechCapital_elec',
              'L223.GlobalIntTechOMfixed_elec'))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -47,7 +47,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
     A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
     A10.renewable_resource_delete <- get_data(all_data, "gcam-usa/A10.renewable_resource_delete")
     L2234.StubTechCapFactor_elecS_wind_USA <- get_data(all_data, 'L2234.StubTechCapFactor_elecS_wind_USA', strip_attributes = TRUE)
-    L2247.GlobalIntTechCapitalOnly_elecS_USA <- get_data(all_data, 'L2247.GlobalIntTechCapitalOnly_elecS_USA', strip_attributes = TRUE)
+    L2234.GlobalIntTechCapital_elecS_USA <- get_data(all_data, 'L2234.GlobalIntTechCapital_elecS_USA', strip_attributes = TRUE)
     L223.GlobalIntTechCapital_elec <- get_data(all_data, 'L223.GlobalIntTechCapital_elec')
     L223.GlobalIntTechOMfixed_elec <- get_data(all_data, 'L223.GlobalIntTechOMfixed_elec')
 
@@ -90,7 +90,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       ungroup() -> L2237.wind_potential_EJ
 
     # L2237.wind_matrix: Creating a matrix of costs (1975$/GJ) and cumulative resource potential (EJ) by state and class
-    L2247.GlobalIntTechCapitalOnly_elecS_USA %>%
+    L2234.GlobalIntTechCapital_elecS_USA %>%
       filter(intermittent.technology == "wind_base",
              year == max(MODEL_BASE_YEARS)) %>%
       select(capital.overnight) -> L2237.wind_capital
@@ -212,7 +212,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
     # a' = (k1.a.CC + k2. OM-fixed) / (k1.CC + k2. OM-fixed) where k1 = FCR / (CONV_YEAR_HOURS * kWh_GJ) and k2 = 1 / (CONV_YEAR_HOURS * kWh_GJ)
     # Thus, we calculate model input parameter techChange (which is the reduction per year) as 1 - a'^(1/5)
 
-    L2247.GlobalIntTechCapitalOnly_elecS_USA %>%
+    L2234.GlobalIntTechCapital_elecS_USA %>%
       filter(intermittent.technology == "wind_base") %>%
       select(year, capital.overnight) %>%
       mutate(capital.tech.change.period = lag(capital.overnight, 1) / capital.overnight,
@@ -339,7 +339,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
                      'gcam-usa/reeds_wind_curve_capacity',
                      'gcam-usa/reeds_wind_curve_CF_avg',
                      'gcam-usa/A10.renewable_resource_delete',
-                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+                     'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
       L2237.SmthRenewRsrcCurves_wind_reeds_USA
@@ -354,7 +354,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
                      'gcam-usa/reeds_wind_curve_CF_avg',
                      'gcam-usa/A23.elecS_tech_mapping_cool',
                      'L2234.StubTechCapFactor_elecS_wind_USA',
-                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+                     'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
       L2237.StubTechCapFactor_wind_reeds_USA
@@ -365,7 +365,7 @@ module_gcamusa_L2237.wind_reeds_USA <- function(command, ...) {
       add_comments("Technological change in the supply curve is related to assumed improvements in capital cost") %>%
       add_legacy_name("L2237.SmthRenewRsrcTechChange_wind_USA_reeds") %>%
       add_precursors('gcam-usa/A10.renewable_resource_delete',
-                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+                     'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
       L2237.SmthRenewRsrcTechChange_wind_reeds_USA

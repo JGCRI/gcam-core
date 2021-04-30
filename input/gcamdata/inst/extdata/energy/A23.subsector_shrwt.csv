@@ -3,7 +3,7 @@
 # Units: Unitless share-weights
 # Source: None (GCAM assumptions)
 # Note: These may be over-written by interpolation rules which take precedence
-# Column types: cccci 
+# Column types: ccccn 
 # ----------
 supplysector,subsector,year.fillout,year,share.weight
 electricity,coal,start-year,,1
