@@ -35,6 +35,7 @@ MODEL_FUTURE_YEARS      <- seq(2020, 2100, 5)
 MODEL_YEARS             <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
 MODEL_FINAL_BASE_YEAR   <- 2015
 
+
 # GCAM constants ======================================================================
 
 gcam.USA_CODE            <- 1
@@ -418,7 +419,7 @@ energy.MIN_IN_EJ_IND <- 1e-3
 # Sets maximum for electricity IO coefficient used in cement sector
 energy.MAX_IOELEC <- 4
 
-# PV related constants
+# Solar related constants
 energy.HOURS_PER_YEAR          <- 24 * 365
 energy.PV_COMM_INSTALLED_COST  <- 7290     # 2005USD per kw
 energy.PV_COMM_OM              <- 40       # 2005USD per kw per year
@@ -427,6 +428,7 @@ energy.PV_DISCOUNT_RATE        <- 0.1      # year^-1
 energy.PV_LIFETIME             <- 30       # years
 energy.PV_RESID_INSTALLED_COST <- 9500     # 2005USD per kw
 energy.PV_RESID_OM             <- 100      # 2005USD per kw per year
+energy.CSP_STORAGE_CF_DIFF     <- 0.25     # capacity factor difference between CSP_storage (0.5) and CSP (0.25)
 
 # Wind related constants
 energy.WIND_CURVE_MIDPOINT <- 0.5
@@ -473,6 +475,18 @@ energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity
 energy.TRAN_UCD_MODE<-'rev.mode'
 energy.TRAN_UCD_SIZE_CLASS<-'rev_size.class'
 
+# Constants related to ATB power sector technology costs
+energy.ATB_2017_YEARS <- c(2015:2016)
+energy.ATB_BASE_YEAR <- 2015
+energy.ATB_MID_YEAR <- 2035
+energy.ATB_TARGET_YEAR <- 2035
+gcamusa.STORAGE_TECH <- "battery"
+energy.COSTS_MID_CASE <- "central"
+energy.COSTS_ADV_CASE <- "adv tech"
+energy.COSTS_LOW_CASE <- "low tech"
+energy.CAPITAL_INPUT <- "capital"
+energy.OM_FIXED_INPUT <- "OM-fixed"
+energy.OM_VAR_INPUT <- "OM-var"
 
 # Socioeconomics constants ======================================================================
 
