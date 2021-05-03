@@ -30,16 +30,25 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
              "L221.StubTechFractCalPrice_en",
              "L221.Rsrc_en",
              "L221.RsrcPrice_en",
-             "L221.TechCoef_en_Traded",
-             "L221.TechCost_en_Traded",
-             "L221.TechShrwt_en_Traded",
-             "L221.StubTechCoef_unoil",
-             "L221.Production_unoil",
-             "L221.StubTechProd_oil_unoil",
-             "L221.StubTechProd_oil_crude",
              "L221.StubTechCalInput_bioOil",
              "L221.StubTechInterp_bioOil",
-             "L221.StubTechShrwt_bioOil"))
+             "L221.StubTechShrwt_bioOil",
+             "L239.PrimaryConsKeyword_en",
+             "L239.Supplysector_tra",
+             "L239.SectorUseTrialMarket_tra",
+             "L239.SubsectorAll_tra",
+             "L239.TechShrwt_tra",
+             "L239.TechCost_tra",
+             "L239.TechCoef_tra",
+             "L239.Production_tra",
+             "L239.Supplysector_reg",
+             "L239.SubsectorAll_reg",
+             "L239.TechShrwt_reg",
+             "L239.TechCoef_reg",
+             "L239.Production_reg_imp",
+             "L239.Production_reg_dom",
+             "L239.Consumption_intraregional",
+             "L239.CarbonCoef"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "en_supply.xml"))
   } else if(command == driver.MAKE) {
@@ -65,17 +74,25 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
     L221.StubTechFractCalPrice_en <- get_data(all_data, "L221.StubTechFractCalPrice_en")
     L221.Rsrc_en <- get_data(all_data, "L221.Rsrc_en")
     L221.RsrcPrice_en <- get_data(all_data, "L221.RsrcPrice_en")
-    L221.TechCoef_en_Traded <- get_data(all_data, "L221.TechCoef_en_Traded")
-    L221.TechCost_en_Traded <- get_data(all_data, "L221.TechCost_en_Traded")
-    L221.TechShrwt_en_Traded <- get_data(all_data, "L221.TechShrwt_en_Traded")
-    L221.StubTechCoef_unoil <- get_data(all_data, "L221.StubTechCoef_unoil")
-    L221.Production_unoil <- get_data(all_data, "L221.Production_unoil")
-    L221.StubTechProd_oil_unoil <- get_data(all_data, "L221.StubTechProd_oil_unoil")
-    L221.StubTechProd_oil_crude <- get_data(all_data, "L221.StubTechProd_oil_crude")
     L221.StubTechCalInput_bioOil <- get_data(all_data, "L221.StubTechCalInput_bioOil")
     L221.StubTechInterp_bioOil <- get_data(all_data, "L221.StubTechInterp_bioOil")
     L221.StubTechShrwt_bioOil <- get_data(all_data, "L221.StubTechShrwt_bioOil")
-
+    L239.PrimaryConsKeyword_en <- get_data(all_data, "L239.PrimaryConsKeyword_en")
+    L239.Supplysector_tra <- get_data(all_data, "L239.Supplysector_tra")
+    L239.SectorUseTrialMarket_tra <- get_data(all_data, "L239.SectorUseTrialMarket_tra")
+    L239.SubsectorAll_tra <- get_data(all_data, "L239.SubsectorAll_tra")
+    L239.TechShrwt_tra <- get_data(all_data, "L239.TechShrwt_tra")
+    L239.TechCost_tra <- get_data(all_data, "L239.TechCost_tra")
+    L239.TechCoef_tra <- get_data(all_data, "L239.TechCoef_tra")
+    L239.Production_tra <- get_data(all_data, "L239.Production_tra")
+    L239.Supplysector_reg <- get_data(all_data, "L239.Supplysector_reg")
+    L239.SubsectorAll_reg <- get_data(all_data, "L239.SubsectorAll_reg")
+    L239.TechShrwt_reg <- get_data(all_data, "L239.TechShrwt_reg")
+    L239.TechCoef_reg <- get_data(all_data, "L239.TechCoef_reg")
+    L239.Production_reg_imp <- get_data(all_data, "L239.Production_reg_imp")
+    L239.Production_reg_dom <- get_data(all_data, "L239.Production_reg_dom")
+    L239.Consumption_intraregional <- get_data(all_data, "L239.Consumption_intraregional")
+    L239.CarbonCoef <- get_data(all_data, "L239.CarbonCoef")
     # ===================================================
 
     # Produce outputs
@@ -111,6 +128,7 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
       }
 
     en_supply.xml %>%
+      add_node_equiv_xml("technology") %>%
       add_xml_data(L221.StubTech_en, "StubTech") %>%
       add_xml_data(L221.GlobalTechCoef_en, "GlobalTechCoef") %>%
       add_xml_data(L221.StubTechCoef_bioOil, "StubTechCoef") %>%
@@ -122,13 +140,22 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
       add_xml_data(L221.StubTechFractCalPrice_en, "StubTechFractCalPrice") %>%
       add_xml_data(L221.Rsrc_en, "Rsrc") %>%
       add_xml_data(L221.RsrcPrice_en, "RsrcPrice") %>%
-      add_xml_data(L221.TechCoef_en_Traded, "TechCoef") %>%
-      add_xml_data(L221.TechCost_en_Traded, "TechCost") %>%
-      add_xml_data(L221.TechShrwt_en_Traded, "TechShrwt") %>%
-      add_xml_data(L221.StubTechCoef_unoil, "StubTechCoef") %>%
-      add_xml_data(L221.Production_unoil, "Production", column_order_lookup = NULL) %>%
-      add_xml_data(L221.StubTechProd_oil_unoil, "StubTechProd", column_order_lookup = NULL) %>%
-      add_xml_data(L221.StubTechProd_oil_crude, "StubTechProd", column_order_lookup = NULL) %>%
+      add_logit_tables_xml(L239.Supplysector_tra, "Supplysector") %>%
+      add_xml_data(L239.SectorUseTrialMarket_tra, "SectorUseTrialMarket") %>%
+      add_logit_tables_xml(L239.SubsectorAll_tra, "SubsectorAllTo", base_logit_header = "SubsectorLogit") %>%
+      add_xml_data(L239.TechShrwt_tra, "TechShrwt") %>%
+      add_xml_data(L239.TechCost_tra, "TechCost") %>%
+      add_xml_data(L239.TechCoef_tra, "TechCoef") %>%
+      add_xml_data(L239.Production_tra, "Production") %>%
+      add_logit_tables_xml(L239.Supplysector_reg, "Supplysector") %>%
+      add_logit_tables_xml(L239.SubsectorAll_reg, "SubsectorAllTo", base_logit_header = "SubsectorLogit") %>%
+      add_xml_data(L239.TechShrwt_reg, "TechShrwt") %>%
+      add_xml_data(L239.TechCoef_reg, "TechCoef") %>%
+      add_xml_data(L239.Production_reg_imp, "Production") %>%
+      add_xml_data(L239.Production_reg_dom, "Production") %>%
+      add_xml_data(L239.Consumption_intraregional, "Production") %>%
+      add_xml_data(L239.PrimaryConsKeyword_en, "PrimaryConsKeywordff") %>%
+      add_xml_data(L239.CarbonCoef, "CarbonCoef") %>%
       add_xml_data(L221.StubTechCalInput_bioOil, "StubTechCalInput") %>%
       add_xml_data(L221.StubTechInterp_bioOil, "StubTechInterp") %>%
       add_xml_data(L221.StubTechShrwt_bioOil, "StubTechShrwt") %>%
@@ -137,10 +164,23 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
                      "L221.SubsectorInterpTo_en", "L221.StubTech_en", "L221.GlobalTechCoef_en", "L221.StubTechCoef_bioOil",
                      "L221.GlobalTechCost_en", "L221.GlobalTechShrwt_en", "L221.PrimaryConsKeyword_en",
                      "L221.StubTechFractSecOut_en", "L221.StubTechFractProd_en", "L221.StubTechFractCalPrice_en",
-                     "L221.Rsrc_en", "L221.RsrcPrice_en", "L221.TechCoef_en_Traded", "L221.TechCost_en_Traded",
-                     "L221.TechShrwt_en_Traded", "L221.StubTechCoef_unoil", "L221.Production_unoil",
-                     "L221.StubTechProd_oil_unoil", "L221.StubTechProd_oil_crude", "L221.StubTechCalInput_bioOil",
-                     "L221.StubTechInterp_bioOil", "L221.StubTechShrwt_bioOil") ->
+                     "L221.Rsrc_en", "L221.RsrcPrice_en", "L221.StubTechCalInput_bioOil",
+                     "L221.StubTechInterp_bioOil", "L221.StubTechShrwt_bioOil","L239.PrimaryConsKeyword_en",
+                     "L239.Supplysector_tra",
+                     "L239.SectorUseTrialMarket_tra",
+                     "L239.SubsectorAll_tra",
+                     "L239.TechShrwt_tra",
+                     "L239.TechCost_tra",
+                     "L239.TechCoef_tra",
+                     "L239.Production_tra",
+                     "L239.Supplysector_reg",
+                     "L239.SubsectorAll_reg",
+                     "L239.TechShrwt_reg",
+                     "L239.TechCoef_reg",
+                     "L239.Production_reg_imp",
+                     "L239.Production_reg_dom",
+                     "L239.Consumption_intraregional",
+                     "L239.CarbonCoef") ->
       en_supply.xml
 
     return_data(en_supply.xml)

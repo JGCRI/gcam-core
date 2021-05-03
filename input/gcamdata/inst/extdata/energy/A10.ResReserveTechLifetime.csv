@@ -1,5 +1,5 @@
 # File: A10.ResReserveTechLifetime.csv
-# Title: Total lifetime a Technology has to produce a reserve which is different than A10.ResSubresoureProdLifetime in that this value allows for extra years to produce in case it was producing at less than "capacity" due to economic shutdown
+# Title: Total lifetime a Technology has to produce a reserve which is different than A10.ResSubresoureProdLifetime in that this value allows for extra years to produce in case it was producing at less than capacity due to economic shutdown
 # Units: Years
 # Source: Assumed to be so long that all reserve gets produced
 # Column types: ccci
@@ -8,4 +8,4 @@ resource,reserve.subresource,resource.reserve.technology,lifetime
 coal,coal,coal,100
 crude oil,crude oil,crude oil,100
 natural gas,natural gas,natural gas,100
-unconventional oil,unconventional oil,unconventional oil,100
+crude oil,unconventional oil,unconventional oil,100

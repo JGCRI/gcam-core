@@ -37,7 +37,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
 
     sector <- fuel <- year <- value <- share <- iso <- GCAM_region_ID <- unconventionals <- value.x <-
       value.y <- FLOW <- PRODUCT <- resource <- region_GCAM3 <- CumulSum <- subresource <- grade <-
-      available <- available_region_GCAM3 <- extractioncost <- . <- NULL  # silence package check notes
+      available <- available_region_GCAM3 <- extractioncost <- technology <-  . <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -92,8 +92,10 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       # summarise by GCAM region and convert to EJ/yr
       group_by(GCAM_region_ID, year) %>%
       summarise(value = sum(value) * CONV_MBLD_EJYR) %>%
-      mutate(sector = "unconventional oil production",
-             fuel = "unconventional oil") ->
+      # make unconventional oil a technology within crude oil
+      mutate(sector = "out_resources",
+             fuel = "crude oil",
+             technology = "unconventional oil") ->
       L111.Prod_EJ_ctry_unconvOil_Yh
 
     # Subtract the unconventional oil, append the unconventional oil to the table, and write it out
@@ -113,9 +115,10 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
       select(-value.x, -value.y, -unconventionals) %>%
       # switch the names from final to primary
       mutate(fuel = if_else(fuel == "refined liquids", "crude oil", fuel),
-             fuel = if_else(fuel == "gas", "natural gas", fuel)) %>%
-      bind_rows(select(L111.Prod_EJ_ctry_unconvOil_Yh, GCAM_region_ID, sector, fuel, year, value)) ->
-      L111.Prod_EJ_R_F_Yh
+             fuel = if_else(fuel == "gas", "natural gas", fuel),
+             technology = fuel) %>%
+      bind_rows(select(L111.Prod_EJ_ctry_unconvOil_Yh, GCAM_region_ID, sector, fuel, year, value, technology)) -> L111.Prod_EJ_R_F_Yh
+
 
     # Produce outputs
     L111.Prod_EJ_R_F_Yh %>%
@@ -181,15 +184,15 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
 
       # Use crude oil production shares as a proxy for unconventional oil resources (123-130)
       L111.RsrcCurves_EJ_ctry_Ffos %>%
-        filter(resource == "crude oil") %>%
+        filter(subresource == "crude oil") %>%
         select(iso, share) ->
         crude
 
       L111.RsrcCurves_EJ_ctry_Ffos %>%
-        filter(resource == "unconventional oil") %>%
+        filter(subresource == "unconventional oil") %>%
         select(-share) %>%
         left_join_keep_first_only(crude, by = "iso") %>%
-        bind_rows(filter(L111.RsrcCurves_EJ_ctry_Ffos, resource != "unconventional oil")) %>%
+        bind_rows(filter(L111.RsrcCurves_EJ_ctry_Ffos, subresource != "unconventional oil")) %>%
         # set all other missing values to 0 (these are small countries)
         replace_na(list(share = 0)) %>%
         mutate(available = available_region_GCAM3 * share) ->

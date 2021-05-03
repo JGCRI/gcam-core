@@ -158,14 +158,14 @@ Japan,crude oil,crude oil,grade 3,0.2,0.92
 Japan,crude oil,crude oil,grade 4,0.2,1.3
 Japan,crude oil,crude oil,grade 5,0.2,2.1
 Japan,crude oil,crude oil,grade 6,0.2,2.7
-Japan,crude oil,crude oil,grade 7,0.2,3.5
+Japan,crude oil,crude oil,grade 7,0,3.5
 Korea,crude oil,crude oil,grade 1,0.1,0.5
 Korea,crude oil,crude oil,grade 2,0.1,0.55
 Korea,crude oil,crude oil,grade 3,0.1,0.92
 Korea,crude oil,crude oil,grade 4,0.1,1.3
 Korea,crude oil,crude oil,grade 5,0.1,2.1
 Korea,crude oil,crude oil,grade 6,0.1,2.7
-Korea,crude oil,crude oil,grade 7,0.1,3.5
+Korea,crude oil,crude oil,grade 7,0,3.5
 Latin America,crude oil,crude oil,grade 1,222,0.5
 Latin America,crude oil,crude oil,grade 2,281,0.55
 Latin America,crude oil,crude oil,grade 3,230,0.92
@@ -313,59 +313,59 @@ Western Europe,natural gas,natural gas,grade 5,382,3.1
 Western Europe,natural gas,natural gas,grade 6,714,3.7
 Western Europe,natural gas,natural gas,grade 7,8560,6.5
 Western Europe,natural gas,natural gas,grade 8,0,6.6
-Africa,unconventional oil,unconventional oil,grade 1,503,1.8
-Africa,unconventional oil,unconventional oil,grade 2,983,3.3
-Africa,unconventional oil,unconventional oil,grade 3,267.48,10.8
-Africa,unconventional oil,unconventional oil,grade 4,0,16.3
-Australia_NZ,unconventional oil,unconventional oil,grade 1,1320,1.8
-Australia_NZ,unconventional oil,unconventional oil,grade 2,2578,3.3
-Australia_NZ,unconventional oil,unconventional oil,grade 3,701.64,10.8
-Australia_NZ,unconventional oil,unconventional oil,grade 4,0,16.3
-Canada,unconventional oil,unconventional oil,grade 1,803,1.8
-Canada,unconventional oil,unconventional oil,grade 2,1570,3.3
-Canada,unconventional oil,unconventional oil,grade 3,427.14,10.8
-Canada,unconventional oil,unconventional oil,grade 4,0,16.3
-China,unconventional oil,unconventional oil,grade 1,2012,1.8
-China,unconventional oil,unconventional oil,grade 2,3933,3.3
-China,unconventional oil,unconventional oil,grade 3,1070.1,10.8
-China,unconventional oil,unconventional oil,grade 4,0,16.3
-Eastern Europe,unconventional oil,unconventional oil,grade 1,151,1.8
-Eastern Europe,unconventional oil,unconventional oil,grade 2,295,3.3
-Eastern Europe,unconventional oil,unconventional oil,grade 3,80.28,10.8
-Eastern Europe,unconventional oil,unconventional oil,grade 4,0,16.3
-Former Soviet Union,unconventional oil,unconventional oil,grade 1,3874,1.8
-Former Soviet Union,unconventional oil,unconventional oil,grade 2,7575,3.3
-Former Soviet Union,unconventional oil,unconventional oil,grade 3,2060.82,10.8
-Former Soviet Union,unconventional oil,unconventional oil,grade 4,0,16.3
-India,unconventional oil,unconventional oil,grade 1,1509,1.8
-India,unconventional oil,unconventional oil,grade 2,2950,3.3
-India,unconventional oil,unconventional oil,grade 3,802.62,10.8
-India,unconventional oil,unconventional oil,grade 4,0,16.3
-Japan,unconventional oil,unconventional oil,grade 1,146,1.8
-Japan,unconventional oil,unconventional oil,grade 2,287,3.3
-Japan,unconventional oil,unconventional oil,grade 3,77.94,10.8
-Japan,unconventional oil,unconventional oil,grade 4,0,16.3
-Korea,unconventional oil,unconventional oil,grade 1,0,1.8
-Korea,unconventional oil,unconventional oil,grade 2,0,3.3
-Korea,unconventional oil,unconventional oil,grade 3,0,10.8
-Korea,unconventional oil,unconventional oil,grade 4,0,16.3
-Latin America,unconventional oil,unconventional oil,grade 1,3004,1.8
-Latin America,unconventional oil,unconventional oil,grade 2,5873,3.3
-Latin America,unconventional oil,unconventional oil,grade 3,1597.86,10.8
-Latin America,unconventional oil,unconventional oil,grade 4,0,16.3
-Middle East,unconventional oil,unconventional oil,grade 1,6009,1.8
-Middle East,unconventional oil,unconventional oil,grade 2,11745,3.3
-Middle East,unconventional oil,unconventional oil,grade 3,3195.72,10.8
-Middle East,unconventional oil,unconventional oil,grade 4,0,16.3
-Southeast Asia,unconventional oil,unconventional oil,grade 1,1509,1.8
-Southeast Asia,unconventional oil,unconventional oil,grade 2,2950,3.3
-Southeast Asia,unconventional oil,unconventional oil,grade 3,802.62,10.8
-Southeast Asia,unconventional oil,unconventional oil,grade 4,0,16.3
-USA,unconventional oil,unconventional oil,grade 1,4397,1.8
-USA,unconventional oil,unconventional oil,grade 2,8594,3.3
-USA,unconventional oil,unconventional oil,grade 3,2338.38,10.8
-USA,unconventional oil,unconventional oil,grade 4,0,16.3
-Western Europe,unconventional oil,unconventional oil,grade 1,1204,1.8
-Western Europe,unconventional oil,unconventional oil,grade 2,2355,3.3
-Western Europe,unconventional oil,unconventional oil,grade 3,640.62,10.8
-Western Europe,unconventional oil,unconventional oil,grade 4,0,16.3
+Africa,crude oil,unconventional oil,grade 1,503,1.8
+Africa,crude oil,unconventional oil,grade 2,983,3.3
+Africa,crude oil,unconventional oil,grade 3,267.48,10.8
+Africa,crude oil,unconventional oil,grade 4,0,16.3
+Australia_NZ,crude oil,unconventional oil,grade 1,1320,1.8
+Australia_NZ,crude oil,unconventional oil,grade 2,2578,3.3
+Australia_NZ,crude oil,unconventional oil,grade 3,701.64,10.8
+Australia_NZ,crude oil,unconventional oil,grade 4,0,16.3
+Canada,crude oil,unconventional oil,grade 1,803,1.8
+Canada,crude oil,unconventional oil,grade 2,1570,3.3
+Canada,crude oil,unconventional oil,grade 3,427.14,10.8
+Canada,crude oil,unconventional oil,grade 4,0,16.3
+China,crude oil,unconventional oil,grade 1,2012,1.8
+China,crude oil,unconventional oil,grade 2,3933,3.3
+China,crude oil,unconventional oil,grade 3,1070.1,10.8
+China,crude oil,unconventional oil,grade 4,0,16.3
+Eastern Europe,crude oil,unconventional oil,grade 1,151,1.8
+Eastern Europe,crude oil,unconventional oil,grade 2,295,3.3
+Eastern Europe,crude oil,unconventional oil,grade 3,80.28,10.8
+Eastern Europe,crude oil,unconventional oil,grade 4,0,16.3
+Former Soviet Union,crude oil,unconventional oil,grade 1,3874,1.8
+Former Soviet Union,crude oil,unconventional oil,grade 2,7575,3.3
+Former Soviet Union,crude oil,unconventional oil,grade 3,2060.82,10.8
+Former Soviet Union,crude oil,unconventional oil,grade 4,0,16.3
+India,crude oil,unconventional oil,grade 1,1509,1.8
+India,crude oil,unconventional oil,grade 2,2950,3.3
+India,crude oil,unconventional oil,grade 3,802.62,10.8
+India,crude oil,unconventional oil,grade 4,0,16.3
+Japan,crude oil,unconventional oil,grade 1,146,1.8
+Japan,crude oil,unconventional oil,grade 2,287,3.3
+Japan,crude oil,unconventional oil,grade 3,77.94,10.8
+Japan,crude oil,unconventional oil,grade 4,0,16.3
+Korea,crude oil,unconventional oil,grade 1,0,1.8
+Korea,crude oil,unconventional oil,grade 2,0,3.3
+Korea,crude oil,unconventional oil,grade 3,0,10.8
+Korea,crude oil,unconventional oil,grade 4,0,16.3
+Latin America,crude oil,unconventional oil,grade 1,3004,1.8
+Latin America,crude oil,unconventional oil,grade 2,5873,3.3
+Latin America,crude oil,unconventional oil,grade 3,1597.86,10.8
+Latin America,crude oil,unconventional oil,grade 4,0,16.3
+Middle East,crude oil,unconventional oil,grade 1,6009,1.8
+Middle East,crude oil,unconventional oil,grade 2,11745,3.3
+Middle East,crude oil,unconventional oil,grade 3,3195.72,10.8
+Middle East,crude oil,unconventional oil,grade 4,0,16.3
+Southeast Asia,crude oil,unconventional oil,grade 1,1509,1.8
+Southeast Asia,crude oil,unconventional oil,grade 2,2950,3.3
+Southeast Asia,crude oil,unconventional oil,grade 3,802.62,10.8
+Southeast Asia,crude oil,unconventional oil,grade 4,0,16.3
+USA,crude oil,unconventional oil,grade 1,4397,1.8
+USA,crude oil,unconventional oil,grade 2,8594,3.3
+USA,crude oil,unconventional oil,grade 3,2338.38,10.8
+USA,crude oil,unconventional oil,grade 4,0,16.3
+Western Europe,crude oil,unconventional oil,grade 1,1204,1.8
+Western Europe,crude oil,unconventional oil,grade 2,2355,3.3
+Western Europe,crude oil,unconventional oil,grade 3,640.62,10.8
+Western Europe,crude oil,unconventional oil,grade 4,0,16.3

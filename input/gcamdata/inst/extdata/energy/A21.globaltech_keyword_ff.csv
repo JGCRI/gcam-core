@@ -1,0 +1,9 @@
+# File: A21.globaltech_keyword_ff.csv
+# Title: Primary energy handling keywords
+# Units: NA
+# Column types: cccc 
+# ----------
+supplysector,subsector,technology,primary.consumption
+regional coal,regional coal,regional coal,coal
+regional natural gas,regional natural gas,regional natural gas,natural gas
+regional oil,crude oil,crude oil,oil

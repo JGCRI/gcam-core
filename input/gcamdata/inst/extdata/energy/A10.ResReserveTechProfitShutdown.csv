@@ -7,4 +7,4 @@ resource,reserve.subresource,resource.reserve.technology,median.shutdown.point,p
 coal,coal,coal,0.3,9
 crude oil,crude oil,crude oil,0.3,9
 natural gas,natural gas,natural gas,0.3,9
-unconventional oil,unconventional oil,unconventional oil,0.3,9
+crude oil,unconventional oil,unconventional oil,0.3,9

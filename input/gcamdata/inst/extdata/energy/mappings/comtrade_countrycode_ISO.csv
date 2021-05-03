@@ -1,0 +1,303 @@
+# File: comtrade_countrycode_ISO.csv
+# Title: Comtrade country code to ISO mapping
+# Source: UN Comtrade
+# Comments:Nov 25th 2019: Note that as Taiwan is not recognized by the UN there is no TWN ISO specified in the comtrade_ISO mappings. According to COMTRADE code 490 is (in practice) only Taiwan, so it is listed as TWN here rather than NA, but when/if better data is available for Taiwan we may want to update
+# Units: NA
+# Notes: The current (Nov 15th 2019) ISO for Romania is rou, however GCAM has it listed as rom. This change has been manually implemented here.
+# Column types: icc 
+# ----------
+Country_Code,Country_Name,ISO3_digit_Alpha
+4,Afghanistan,AFG
+472,"Africa CAMEU region, not elsewhere specified",N/A
+8,Albania,ALB
+12,Algeria,DZA
+16,American Samoa,ASM
+20,Andorra,AND
+24,Angola,AGO
+660,Anguilla,AIA
+10,Antarctica,ATA
+28,Antigua and Barbuda,ATA
+899,"Areas, not elsewhere specified",N/A
+32,Argentina,ARG
+51,Armenia,ARM
+533,Aruba,ABW
+36,Australia,AUS
+40,Austria,AUT
+31,Azerbaijan,AZE
+44,Bahamas,BHS
+48,Bahrain,BHR
+50,Bangladesh,BGD
+52,Barbados,BRB
+112,Belarus,BLR
+56,Belgium,BEL
+58,Belgium-Luxembourg,BEL
+84,Belize,BLZ
+204,Benin,BEN
+60,Bermuda,BMU
+64,Bhutan,BTN
+68,Plurinational State of Bolivia,BOL
+535,"Bonaire, Saint Eustatius and Saba",BES
+70,Bosnia Herzegovina,BIH
+72,Botswana,BWA
+74,Ile Bouvet,N/A
+80,British Antarctic Territories,N/A
+86,British Indian Ocean Territories,IOT
+92,British Virgin Islands,VGB
+76,Brazil,BRA
+96,Brunei Darussalam,BRN
+100,Bulgaria,BGR
+837,Bunkers,N/A
+854,Burkina Faso,BFA
+108,Burundi,BDI
+132,Cabo Verde,CPV
+471,"CACM, not elsewhere specified",N/A
+116,Cambodia,KHM
+120,Cameroon,CMR
+124,Canada,CAN
+129,"Caribbean, not elsewhere specified",N/A
+136,Cayman Islands,CYM
+140,Central African Republic,CAF
+148,Chad,TCD
+152,Chile,CHL
+156,China,CHN
+344,"China, Hong Kong Special Administrative Region",HKG
+446,"China, Macao Special Administrative Region",MAC
+162,Christmas Islands,CXR
+166,Cocos Islands,CCK
+170,Colombia,COL
+174,Comoros,COM
+178,Congo,COG
+184,Cook Islands,COK
+188,Costa Rica,CRI
+384,Côte d'Ivoire,CIV
+191,Croatia,HRV
+192,Cuba,CUB
+531,Curaçao,CUW
+196,Cyprus,CYP
+203,Czechia,CZE
+200,Czechoslovakia,CSK
+408,Democratic People's Republic of Korea,PRK
+180,Democratic Republic of the Congo,COD
+208,Denmark,DNK
+262,Djibouti,DJI
+212,Dominica,DMA
+214,Dominican Republic,DOM
+588,East and West Pakistan,PAK
+221,"Eastern Europe, not elsewhere specified",N/A
+218,Ecuador,ECU
+818,Egypt,EGY
+222,El Salvador,SLV
+226,Equatorial Guinea,GNQ
+232,Eritrea,ERI
+233,Estonia,EST
+231,Ethiopia,ETH
+97,EU-28,EU2
+697,"Europe EFTA, not elsewhere specified",N/A
+492,"Europe EU, not elsewhere specified",N/A
+234,Faeroe Islands,FRO
+238,Falkland Islands (Malvinas),FLK
+242,Fiji,FJI
+246,Finland,FIN
+886,Former Arab Republic of Yemen,YEM
+278,Former Democratic Republic of Germany,DDR
+866,Former Democratic Republic of Vietnam,VDR
+720,Former Democratic Yemen,YMD
+230,Former Ethiopia,ETH
+280,Former Federal Republic of Germany,DEU
+582,Former Pacific Islands,PCI
+590,"Former Panama, excluding Canal Zone",PAN
+592,Former Panama-Canal-Zone,PCZ
+868,Former Republic of Vietnam,VNM
+717,Former Rhodesia Nyas,N/A
+736,Former Sudan,SDN
+835,Former Tanganyika,N/A
+810,Former USSR,SUN
+890,Former Yugoslavia,YUG
+836,Former Zanzibar and Pemba Island,N/A
+260,French South Antarctic Territories,ATF
+251,"France, Monaco",FRA
+838,Free Zones,N/A
+254,French Guiana,GUF
+258,French Polynesia,PYF
+583,Federated State of Micronesia,FSM
+266,Gabon,GAB
+270,Gambia,GMB
+268,Georgia,GEO
+276,Germany,DEU
+288,Ghana,GHA
+292,Gibraltar,GIB
+300,Greece,GRC
+304,Greenland,GRL
+308,Grenada,GRD
+312,Guadeloupe,GLP
+316,Guam,GUM
+320,Guatemala,GTM
+324,Guinea,GIN
+624,Guinea-Bissau,GNB
+328,Guyana,GUY
+332,Haiti,HTI
+334,Heard Island and McDonald Islands,HMD
+336,Holy See (Vatican City State),VAT
+340,Honduras,HND
+348,Hungary,HUN
+352,Iceland,ISL
+699,India,IND
+356,"India, excluding Sikkim",IND
+360,Indonesia,IDN
+364,Iran,IRN
+368,Iraq,IRQ
+372,Ireland,IRL
+376,Israel,ISR
+381,Italy,ITA
+388,Jamaica,JAM
+392,Japan,JPN
+400,Jordan,JOR
+398,Kazakhstan,KAZ
+404,Kenya,KEN
+296,Kiribati,KIR
+414,Kuwait,KWT
+417,Kyrgyzstan,KGZ
+473,"LAIA, not elsewhere specified",N/A
+418,Lao People's Dem. Rep.,LAO
+428,Latvia,LVA
+422,Lebanon,LBN
+426,Lesotho,LSO
+430,Liberia,LBR
+434,Libya,LBY
+440,Lithuania,LTU
+442,Luxembourg,LUX
+450,Madagascar,MDG
+454,Malawi,MWI
+458,Malaysia,MYS
+462,Maldives,MDV
+466,Mali,MLI
+470,Malta,MLT
+584,Marshall Islands,MHL
+474,Martinique,MTQ
+478,Mauritania,MRT
+480,Mauritius,MUS
+175,Mayotte,MYT
+484,Mexico,MEX
+496,Mongolia,MNG
+499,Montenegro,MNE
+500,Montserrat,MSR
+504,Morocco,MAR
+508,Mozambique,MOZ
+104,Myanmar,MMR
+580,Northern Mariana Islands,MNP
+516,Namibia,NAM
+520,Nauru,NRU
+524,Nepal,NPL
+530,Netherlands Antilles,ANT
+532,Netherlands Antilles and Aruba,ANT
+528,Netherlands,NLD
+536,Neutral Zone,N/A
+540,New Caledonia,NCL
+554,New Zealand,NZL
+558,Nicaragua,NIC
+562,Niger,NER
+566,Nigeria,NGA
+570,Niue,NIU
+574,Norfolk Islands,NFK
+637,"North America, the Caribbean and Central America not elsewhere specified",N/A
+290,"Northern Africa, not elsewhere specified",N/A
+579,"Norway, Svalbard and Jan Mayen",NOR
+527,"Oceania, not elsewhere specified",N/A
+512,Oman,OMN
+577,"Other Africa, not elsewhere specified",N/A
+490,"Other Asia, not elsewhere specified",TWN
+568,"Other Europe, not elsewhere specified",N/A
+586,Pakistan,PAK
+585,Palau,PLW
+591,Panama,PAN
+598,Papua New Guinea,PNG
+600,Paraguay,PRY
+459,Peninsula Malaysia,N/A
+604,Peru,PER
+608,Philippines,PHL
+612,Pitcairn,PCN
+616,Poland,POL
+620,Portugal,PRT
+634,Qatar,QAT
+410,Republic of Korea,KOR
+498,Republic of Moldova,MDA
+636,"Rest of America, not elsewhere specified",N/A
+638,Réunion,REU
+642,Romania,ROM
+643,Russian Federation,RUS
+646,Rwanda,RWA
+647,Ryukyu Island,N/A
+461,Sabah,N/A
+652,Saint Barthélemy,BLM
+654,Saint Helena,SHN
+659,Saint Kitts and Nevis,KNA
+658,"Saint Kitts, Nevis and Anguilla",KNA
+662,Saint Lucia,LCA
+534,Saint Maarten (Dutch part),SXM
+666,Saint Pierre and Miquelon,SPM
+670,Saint Vincent and the Grenadines,VCT
+882,Samoa,WSM
+674,San Marino,SMR
+678,Sao Tome and Principe,STP
+457,Sarawak,N/A
+682,Saudi Arabia,SAU
+686,Senegal,SEN
+688,Serbia,SRB
+891,Serbia and Montenegro,SCG
+690,Seychelles,SYC
+694,Sierra Leone,SLE
+698,Sikkim,N/A
+702,Singapore,SGP
+703,Slovakia,SVK
+705,Slovenia,SVN
+711,Southern African Customs Union,ZAF
+90,Solomon Islands,SLB
+706,Somalia,SOM
+710,South Africa,ZAF
+239,South Georgia and the South Sandwich Islands,SGS
+728,South Sudan,SSD
+724,Spain,ESP
+839,Special Categories,N/A
+144,Sri Lanka,LKA
+275,State of Palestine,PSE
+729,Sudan,SDN
+740,Suriname,SUR
+748,Swaziland,SWZ
+752,Sweden,SWE
+757,"Switzerland, Liechtenstein",CHE
+760,Syria,SYR
+762,Tajikistan,TJK
+807,The Former Yugoslav Republic of Macedonia,MKD
+764,Thailand,THA
+626,Timor-Leste,TLS
+768,Togo,TGO
+772,Tokelau,TKL
+776,Tonga,TON
+780,Trinidad and Tobago,TTO
+788,Tunisia,TUN
+792,Turkey,TUR
+795,Turkmenistan,TKM
+796,Turks and Caicos Islands,TCA
+798,Tuvalu,TUV
+800,Uganda,UGA
+804,Ukraine,UKR
+784,United Arab Emirates,ARE
+826,United Kingdom,GBR
+834,United Republic of Tanzania,TZA
+581,United States Minor Outlying Islands,UMI
+858,Uruguay,URY
+849,US Miscellaneous Pacific Islands,N/A
+850,US Virgin Islands,VIR
+842,"USA, Puerto Rico and US Virgin Islands",USA
+841,USA and Puerto Rico,USA
+860,Uzbekistan,UZB
+548,Vanuatu,VUT
+862,Venezuela,VEN
+704,Viet Nam,VNM
+876,Wallis and Futuna Islands,WLF
+879,"Western Asia, not elsewhere specified",N/A
+732,Western Sahara,ESH
+0,World,WLD
+887,Yemen,YEM
+894,Zambia,ZMB
+716,Zimbabwe,ZWE

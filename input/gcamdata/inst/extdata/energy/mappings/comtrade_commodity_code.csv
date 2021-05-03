@@ -1,0 +1,12 @@
+# File: comtrade_commodity_code.csv
+# Title: Comtrade commodity mapping
+# Source: UN Comtrade
+# Units: NA
+# Column types: iccc
+# ----------
+Commodity_Code,Commodity,GCAM_Commodity,Notes
+2701,"Coal; briquettes, ovoids and similar solid fuels manufactured from coal",coal,None
+2709,Petroleum oils and oils obtained from bituminous minerals; crude,crude oil,This value should only include conventional which we call crude oil
+271111,"Petroleum gases and other gaseous hydrocarbons; liquefied, natural gas",natural gas,"This is actually liquified natural gas, but for a first pass at creating a fossil fuel market we'll lump LNG and gaseous natural gas together"
+271121,"Petroleum gases and other gaseous hydrocarbons; in gaseous state, natural gas",natural gas,None
+271410,Bituminous or oil shale and tar sands,crude oil,"This is just oil shale and tar sands, which are generally counted as unconventional oil. Depending on IEA's definition we may need to add more."

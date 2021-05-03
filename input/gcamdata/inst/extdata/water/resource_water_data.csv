@@ -18,7 +18,6 @@ liquids.conventional,OPEC,crude.oil.onshore,Crude oil (onshore),78,37.2,2903
 liquids.conventional,OPEC,natura.gas.liquids.onshore,NGL (onshore),6,5.5,33
 liquids.unconventional,OPEC,crude.oil.heavy,Extra-heavy oil,14,0.2,2
 natural.gas.component,global,conventional.gas,Conventional gas,0,88.9,0
-natural.gas.component,global,gas.unconventional,Unconventional gas,,,
 natural.gas.component,global,coalbed.methane,Coalbed methane,0,0.9,0
 natural.gas.component,global,gas.thight,Thight gas,0.42,2.8,1.2
 natural.gas.component,global,gas.shale,Shale gas,0.42,0.5,0.2
@@ -34,8 +33,10 @@ nuclear.component,global,uranium.enrichment,Gaseous diffusion,12,12,145
 nuclear.component,global,uranium.enrichment,Centrifuge,2,18,36
 conventional.oil.onshore,global,onshore,conventional.oil.onshore,132.96,97.2,12924
 unconventional.oil.onshore,global,onshore,unconventional.oil.onshore,19.55,2.2,43
-crude oil,global,crude oil,crude oil,77.07,167.7,12924
-unconventional oil,global,unconventional oil production,unconventional oil production,11.17,3.85,43
-gas,global,regional natural gas,regional natural gas,0.015,93.1,1.4
-coal,global,regional coal,regional coal,6.67,166,1108
+crude oil,global,domestic crude oil,domestic crude oil,77.07,167.7,12924
+crude oil,global,imported crude oil,imported crude oil,77.07,167.7,12924
+gas,global,domestic natural gas,domestic natural gas,0.015,93.1,1.4
+gas,global,imported natural gas,imported natural gas,0.015,93.1,1.4
+coal,global,domestic coal,domestic coal,6.67,166,1108
+coal,global,imported coal,imported coal,6.67,166,1108
 nuclear,global,enrichedUranium,enrichedUranium,10.1,30,303

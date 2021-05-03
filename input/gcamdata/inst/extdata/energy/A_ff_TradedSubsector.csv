@@ -1,0 +1,11 @@
+# File: A_ff_TradedSubsector.csv
+# Title: Subsector assumptions for traded fossil fuel markets
+# Units: Various
+# Comments: These subsectors' shareweights evolve over time. They are calibrated to 2010 shares," but become 1 in some to.year following an interpolation.function
+# Source: NA
+# Column types: ccncncccncic
+# ----------
+supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,to.value,interpolation.function,traded,logit.type
+traded coal,traded coal,-6,start-year,1,share-weight,final-calibration-year,2100,1,fixed,1,
+traded oil,traded oil,-6,start-year,1,share-weight,final-calibration-year,2100,1,fixed,1,
+traded natural gas,traded natural gas,-6,start-year,1,share-weight,final-calibration-year,2100,1,fixed,1,
