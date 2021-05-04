@@ -283,6 +283,7 @@ module_energy_L2323.iron_steel <- function(command, ...) {
 
     L1323.IO_GJkg_R_iron_steel_F_Yh %>%
       left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join(calibrated_techs, by = c("supplysector", "subsector", "technology", "fuel")) %>%
       mutate(coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) %>%
       mutate(stub.technology = technology,
              market.name = region) %>%

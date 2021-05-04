@@ -135,20 +135,20 @@ alumina,biomass,biomass,industry_energy,biomass
 alumina,biomass,biomass cogen,industry_energy,biomass
 alumina,biomass,biomass CCS,industry_energy,biomass
 alumina,heat,heat,industry_energy,heat
-iron and steel,delivered coal,BLASTFUR,iron and steel,coal
-iron and steel,refined liquids industrial,BLASTFUR,iron and steel,refined liquids
-iron and steel,wholesale gas,BLASTFUR,iron and steel,gas
-iron and steel,delivered coal,BLASTFUR CCS,iron and steel,coal
-iron and steel,refined liquids industrial,BLASTFUR CCS,iron and steel,refined liquids
-iron and steel,wholesale gas,BLASTFUR CCS,iron and steel,gas
-iron and steel,delivered biomass,Biomass-based,iron and steel,biomass
-iron and steel,refined liquids industrial,Biomass-based,iron and steel,refined liquids
-iron and steel,wholesale gas,Biomass-based,iron and steel,gas
-iron and steel,delivered coal,EAF with DRI,iron and steel,coal
-iron and steel,refined liquids industrial,EAF with DRI,iron and steel,refined liquids
-iron and steel,wholesale gas,EAF with DRI,iron and steel,gas
-iron and steel,delivered coal,EAF with DRI CCS,iron and steel,coal
-iron and steel,refined liquids industrial,EAF with DRI CCS,iron and steel,refined liquids
-iron and steel,wholesale gas,EAF with DRI CCS,iron and steel,gas
-iron and steel,refined liquids industrial,EAF with scrap,iron and steel,refined liquids
-iron and steel,refined liquids industrial,EAF with scrap CCS,iron and steel,refined liquids
+iron and steel,coal,BLASTFUR,iron and steel,coal
+iron and steel,refined liquids,BLASTFUR,iron and steel,refined liquids
+iron and steel,gas,BLASTFUR,iron and steel,gas
+iron and steel,coal,BLASTFUR CCS,iron and steel,coal
+iron and steel,refined liquids,BLASTFUR CCS,iron and steel,refined liquids
+iron and steel,gas,BLASTFUR CCS,iron and steel,gas
+iron and steel,biomass,Biomass-based,iron and steel,biomass
+iron and steel,refined liquids,Biomass-based,iron and steel,refined liquids
+iron and steel,gas,Biomass-based,iron and steel,gas
+iron and steel,coal,EAF with DRI,iron and steel,coal
+iron and steel,refined liquids,EAF with DRI,iron and steel,refined liquids
+iron and steel,gas,EAF with DRI,iron and steel,gas
+iron and steel,coal,EAF with DRI CCS,iron and steel,coal
+iron and steel,refined liquids,EAF with DRI CCS,iron and steel,refined liquids
+iron and steel,gas,EAF with DRI CCS,iron and steel,gas
+iron and steel,refined liquids,EAF with scrap,iron and steel,refined liquids
+iron and steel,refined liquids,EAF with scrap CCS,iron and steel,refined liquids

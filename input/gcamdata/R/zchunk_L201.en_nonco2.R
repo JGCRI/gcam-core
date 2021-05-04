@@ -76,9 +76,9 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     # make a complete mapping to be able to look up with sector + subsector + tech the
     # input name to use for an input-driver
     bind_rows(
-      get_data(all_data, "energy/calibrated_techs") %>% select(supplysector, subsector, technology, minicam.energy.input),
-      get_data(all_data, "energy/calibrated_techs_bld_det") %>% select(supplysector, subsector, technology, minicam.energy.input),
-      get_data(all_data, UCD_tech_map_name) %>% select(supplysector, subsector = tranSubsector, technology = tranTechnology, minicam.energy.input)
+      get_data(all_data, "energy/calibrated_techs") %>% select(supplysector, subsector, fuel, technology, minicam.energy.input),
+      get_data(all_data, "energy/calibrated_techs_bld_det") %>% select(supplysector, subsector, fuel, technology, minicam.energy.input),
+      get_data(all_data, UCD_tech_map_name) %>% select(supplysector, subsector = tranSubsector, fuel, technology = tranTechnology, minicam.energy.input)
       ) %>%
       rename(stub.technology = technology,
              input.name = minicam.energy.input) %>%
@@ -93,7 +93,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(EnTechInputNameMap %>%
                                  # remap iron and steel subsector to match emissions data
-                                 mutate(subsector = if_else(supplysector == "iron and steel", input.name, subsector)),
+                                 mutate(subsector = if_else(supplysector == "iron and steel", fuel, subsector)),
                                by = c("supplysector", "subsector", "stub.technology")) %>%
       select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2, input.name) %>%
       mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
@@ -107,25 +107,26 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(EnTechInputNameMap %>%
                                  # remap iron and steel subsector to match emissions data
-                                 mutate(subsector = if_else(supplysector == "iron and steel", input.name, subsector)),
+                                 mutate(subsector = if_else(supplysector == "iron and steel", fuel, subsector)),
                                by = c("supplysector", "subsector", "stub.technology")) %>%
       select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2, input.name) %>%
       mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
       L201.en_ghg_emissions
 
     # revert iron and steel subsector back to original mapping
+    # input.name now has the fuel information for iron and steel technologies, so we don't need to keep that information in the subsector column anymore
     L201.en_pol_emissions %>%
       left_join(EnTechInputNameMap %>% filter(supplysector == "iron and steel") %>% rename(subsector_orig = subsector),
                 by = c("supplysector", "stub.technology", "input.name")) %>%
       mutate(subsector = if_else(supplysector == "iron and steel", subsector_orig, subsector)) %>%
-      select(-subsector_orig) ->
+      select(-subsector_orig, -fuel) ->
       L201.en_pol_emissions
 
     L201.en_ghg_emissions %>%
       left_join(EnTechInputNameMap %>% filter(supplysector == "iron and steel") %>% rename(subsector_orig = subsector),
                 by = c("supplysector", "stub.technology", "input.name")) %>%
       mutate(subsector = if_else(supplysector == "iron and steel", subsector_orig, subsector)) %>%
-      select(-subsector_orig) ->
+      select(-subsector_orig, -fuel) ->
       L201.en_ghg_emissions
 
     # L201.en_bcoc_emissions: BC/OC emissions factors for energy technologies in all regions
@@ -209,7 +210,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       filter(max_reduction > 0) ->
       L201.nonghg_gdp_control
 
-    # remap iron and steel back to correct subsector
+    # remap iron and steel back to correct subsector, because fuel information is now attached
     L201.nonghg_gdp_control %>%
       left_join(EnTechInputNameMap %>% filter(supplysector == "iron and steel") %>% select(-input.name) %>%
                   rename(subsector_orig = subsector) %>% unique(),

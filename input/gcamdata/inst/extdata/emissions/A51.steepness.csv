@@ -265,11 +265,11 @@ chemical feedstocks,coal,coal,,,,,,
 chemical feedstocks,gas,gas,,,,,,
 chemical feedstocks,refined liquids,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
 construction feedstocks,refined liquids,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
-iron and steel,delivered biomass,Biomass-based,3.5,3.5,3.5,3.5,3.5,3.5
-iron and steel,delivered coal,BLASTFUR,3.5,3.5,3.5,3.5,3.5,3.5
-iron and steel,delivered coal,EAF with DRI,3.5,3.5,3.5,3.5,3.5,3.5
-iron and steel,wholesale gas,BLASTFUR,3.5,3.5,3.5,3.5,3.5,3.5
-iron and steel,wholesale gas,EAF with DRI,3.5,3.5,3.5,3.5,3.5,3.5
-iron and steel,refined liquids industrial,BLASTFUR,3.5,3.5,3.5,3.5,3.5,3.5
-iron and steel,refined liquids industrial,EAF with DRI,3.5,3.5,3.5,3.5,3.5,3.5
-iron and steel,refined liquids industrial,EAF with scrap,3.5,3.5,3.5,3.5,3.5,3.5
+iron and steel,biomass,Biomass-based,3.5,3.5,3.5,3.5,3.5,3.5
+iron and steel,coal,BLASTFUR,3.5,3.5,3.5,3.5,3.5,3.5
+iron and steel,coal,EAF with DRI,3.5,3.5,3.5,3.5,3.5,3.5
+iron and steel,gas,BLASTFUR,3.5,3.5,3.5,3.5,3.5,3.5
+iron and steel,gas,EAF with DRI,3.5,3.5,3.5,3.5,3.5,3.5
+iron and steel,refined liquids,BLASTFUR,3.5,3.5,3.5,3.5,3.5,3.5
+iron and steel,refined liquids,EAF with DRI,3.5,3.5,3.5,3.5,3.5,3.5
+iron and steel,refined liquids,EAF with scrap,3.5,3.5,3.5,3.5,3.5,3.5

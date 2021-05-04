@@ -355,17 +355,16 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       # prepare detailed industry energy use for matching and filter out feedstocks
       L1323.in_EJ_R_iron_steel_F_Y %>%
         mutate(sector = "iron and steel") %>%
-        rename(fuel = minicam.energy.input) %>%
         filter(fuel %notin% c("scrap")) ->
         L1323.in_EJ_R_iron_steel_F_Y
 
       L1324.in_EJ_R_Off_road_F_Y %>%
         mutate(technology = fuel) %>%
-        filter(!sector == "NECONSTRUC") ->
+        filter(!grepl("feedstocks", sector)) ->
         L1324.in_EJ_R_Off_road_F_Y
 
       L1325.in_EJ_R_chemical_F_Y %>%
-        filter(!sector == "NECHEM") %>%
+        filter(!grepl("feedstocks", sector)) %>%
         mutate(technology = fuel) ->
         L1325.in_EJ_R_chemical_F_Y
 
@@ -394,16 +393,12 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L1323.in_EJ_R_iron_steel_F_Y %>%
         filter(year == max(MODEL_BASE_YEARS),
                # filter out electricity
-               !fuel == "elect_td_ind") %>%
+               !fuel %in% emissions.ZERO_EM_TECH) %>%
         group_by(GCAM_region_ID, sector, technology) %>%
         mutate(main.fuel = fuel[which.max(value)]) %>%
         select(GCAM_region_ID, supplysector = sector, stub.technology = technology, main.fuel) %>%
         unique() %>%
-        mutate(CEDS_agg_fuel = main.fuel) %>%
-        mutate(CEDS_agg_fuel = replace(CEDS_agg_fuel, CEDS_agg_fuel =="delivered coal", "coal"),
-               CEDS_agg_fuel = replace(CEDS_agg_fuel, CEDS_agg_fuel =="refined liquids industrial", "refined liquids"),
-               CEDS_agg_fuel = replace(CEDS_agg_fuel, CEDS_agg_fuel =="delivered biomass", "biomass"),
-               CEDS_agg_fuel = replace(CEDS_agg_fuel, CEDS_agg_fuel =="wholesale gas", "gas")) ->
+        mutate(CEDS_agg_fuel = main.fuel) ->
         ironsteel_main_fuel_BY
 
       # Splits energy balances out for industry sector and maps to final GCAM sectors
@@ -506,7 +501,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         mutate(subsector = main.fuel) %>%
         group_by(GCAM_region_ID, year, supplysector, subsector, stub.technology, CEDS_agg_sector, CEDS_agg_fuel, Non.CO2) %>%
         summarise(emissions = sum(emissions),
-                  GCAMemissions = sum(GCAMemissions)) ->
+                  GCAMemissions = sum(GCAMemissions)) %>%
+        ungroup ->
         L112.CEDSGCAM_computedemissions_steel_adj
 
       L112.CEDSGCAM_computedemissions %>%

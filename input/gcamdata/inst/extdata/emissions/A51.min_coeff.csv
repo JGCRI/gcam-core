@@ -268,11 +268,11 @@ chemical feedstocks,coal,coal,,,,,,
 chemical feedstocks,gas,gas,,,,,,
 chemical feedstocks,refined liquids,refined liquids,,,,,,
 construction feedstocks,refined liquids,refined liquids,,,,,,
-iron and steel,delivered biomass,Biomass-based,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
-iron and steel,delivered coal,BLASTFUR,0.004,0.013,0.0067,0.0024,0.0009,0.0038
-iron and steel,delivered coal,EAF with DRI,0.004,0.013,0.0067,0.0024,0.0009,0.0038
-iron and steel,wholesale gas,BLASTFUR,0.0238,0.0468,0.0067,0,0,0.0038
-iron and steel,wholesale gas,EAF with DRI,0.0238,0.0468,0.0067,0,0,0.0038
-iron and steel,refined liquids industrial,BLASTFUR,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
-iron and steel,refined liquids industrial,EAF with DRI,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
-iron and steel,refined liquids industrial,EAF with scrap,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+iron and steel,biomass,Biomass-based,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
+iron and steel,coal,BLASTFUR,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+iron and steel,coal,EAF with DRI,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+iron and steel,gas,BLASTFUR,0.0238,0.0468,0.0067,0,0,0.0038
+iron and steel,gas,EAF with DRI,0.0238,0.0468,0.0067,0,0,0.0038
+iron and steel,refined liquids,BLASTFUR,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+iron and steel,refined liquids,EAF with DRI,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+iron and steel,refined liquids,EAF with scrap,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
