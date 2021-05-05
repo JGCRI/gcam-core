@@ -37,10 +37,6 @@ module_energy_LA1324.Off_road <- function(command, ...) {
     # Load required inputs
     A_regions <- get_data(all_data, "energy/A_regions")
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
-#     en_construction <- get_data(all_data, "energy/en_construction")
-#     en_agriculture <- get_data(all_data, "energy/en_agriculture")
-# 	  en_mining <- get_data(all_data, "energy/en_mining")
-# 	  construction_feedstock <- get_data(all_data, "energy/construction_feedstock")
 	  enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     L1323.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1323.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
     L1322.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indfeed_F_Yh", strip_attributes = TRUE)

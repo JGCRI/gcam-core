@@ -18,7 +18,6 @@
 module_energy_LA1325.chemical <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L1011.en_bal_EJ_R_Si_Fi_Yh",
-             # FILE = "energy/en_chemical",
 			       FILE = "energy/A_regions",
              FILE = "energy/mappings/enduse_fuel_aggregation",
 			       "L1321.in_EJ_R_indenergy_F_Yh",
@@ -41,7 +40,6 @@ module_energy_LA1325.chemical <- function(command, ...) {
 
     # Load required inputs
     A_regions <- get_data(all_data, "energy/A_regions")
-    # en_chemical <- get_data(all_data, "energy/en_chemical")
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
     enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     L1324.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1324.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
