@@ -80,7 +80,7 @@ module_energy_L2326.aluminum <- function(command, ...) {
     A326.subsector_shrwt <- get_data(all_data, "energy/A326.subsector_shrwt", strip_attributes = TRUE)
     A326.globaltech_coef <- get_data(all_data, "energy/A326.globaltech_coef", strip_attributes = TRUE)
     A326.globaltech_co2capture <- get_data(all_data, "energy/A326.globaltech_co2capture", strip_attributes = TRUE)
-	A326.globaltech_retirement <- get_data(all_data, "energy/A326.globaltech_retirement", strip_attributes = TRUE)
+	  A326.globaltech_retirement <- get_data(all_data, "energy/A326.globaltech_retirement", strip_attributes = TRUE)
     A326.globaltech_cost <- get_data(all_data, "energy/A326.globaltech_cost", strip_attributes = TRUE)
     A326.globaltech_shrwt <- get_data(all_data, "energy/A326.globaltech_shrwt", strip_attributes = TRUE)
     A326.demand <- get_data(all_data, "energy/A326.demand", strip_attributes = TRUE)
@@ -320,11 +320,11 @@ module_energy_L2326.aluminum <- function(command, ...) {
 
     L1326.in_EJ_R_aluminum_Yh %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      complete(nesting(fuel,year,sector),region = GCAM_region_names$region) %>%
+      complete(nesting(fuel,year,sector),GCAM_region_ID = GCAM_region_names$GCAM_region_ID) %>%
       filter(fuel != 'heat' | (fuel == 'heat' & value>0) ) %>%
       filter(fuel != 'electricity') %>%
-      mutate(GCAM_region_ID = NULL,value = replace_na(value,0)) %>%
-      left_join(GCAM_region_names,by = c("region")) %>%
+      mutate(value = replace_na(value,0)) %>%
+      left_join(GCAM_region_names,by = c("GCAM_region_ID")) %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
       left_join(calibrated_techs_export, by = c("fuel", "sector")) %>%
       mutate(stub.technology = technology,
@@ -356,7 +356,7 @@ module_energy_L2326.aluminum <- function(command, ...) {
       filter(sector == "Alumina") %>%
       mutate(sector = "Aluminum") %>%
       left_join(L1326.out_Mt_R_aluminum_Yh %>%
-                                 filter(sector == "Aluminum"), by = c("region", "GCAM_region_ID", "year", "sector")) %>%
+                                 filter(sector == "Aluminum"), by = c("GCAM_region_ID", "year", "sector")) %>%
       mutate(value = replace_na(value.x/value.y,0), value.x = NULL,value.y = NULL,fuel = "alumina") ->
       L1326.IO_GJkg_R_aluminum_F_Yh_alumina
 
@@ -364,10 +364,10 @@ module_energy_L2326.aluminum <- function(command, ...) {
     L1326.IO_GJkg_R_aluminum_F_Yh %>%
       bind_rows(L1326.IO_GJkg_R_aluminum_F_Yh_alumina) %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      complete(nesting(fuel,year,sector),region = GCAM_region_names$region) %>%
+      complete(nesting(fuel,year,sector),GCAM_region_ID = GCAM_region_names$GCAM_region_ID) %>%
       filter(fuel != 'heat' | (fuel == 'heat' & value>0) ) %>%
-      mutate(GCAM_region_ID = NULL,value = replace_na(value,0)) %>%
-      left_join(GCAM_region_names,by = c("region")) %>%
+      mutate(value = replace_na(value,0)) %>%
+      left_join(GCAM_region_names,by = c("GCAM_region_ID")) %>%
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
       left_join(calibrated_techs_export, by = c("fuel", "sector")) %>%
       anti_join(L2326.rm_heat_techs_R, by = c("region", "subsector")) %>% # Remove non-existent heat subsectors from each region
@@ -414,9 +414,9 @@ module_energy_L2326.aluminum <- function(command, ...) {
     L1326.out_Mt_R_aluminum_Yh %>%
       mutate(fuel = "electricity") %>%
       complete(nesting(fuel,region,sector),year = MODEL_BASE_YEARS) %>%
-      complete(nesting(fuel,year,sector),region = GCAM_region_names$region) %>%
-      mutate(GCAM_region_ID = NULL,calOutputValue = replace_na(value,0),value = NULL) %>%
-      left_join(GCAM_region_names,by = c("region")) %>%
+      complete(nesting(fuel,year,sector),GCAM_region_ID = GCAM_region_names$GCAM_region_ID) %>%
+      mutate(calOutputValue = replace_na(value,0),value = NULL) %>%
+      left_join(GCAM_region_names,by = c("GCAM_region_ID")) %>%
       left_join(calibrated_techs_export, by = c("fuel", "sector"))  %>%
       filter(!is.na(supplysector)) %>%
       mutate(sector = NULL, fuel = NULL,stub.technology = technology, technology = NULL,minicam.energy.input = NULL) ->
