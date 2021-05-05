@@ -99,6 +99,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L112.CEDS_intl_shipping <- get_data(all_data, "L102.ceds_int_shipping_nonco2_tg_S_F")
       Int_shipping_IEA_EIA <- get_data(all_data, "L154.IEA_histfut_data_times_UCD_shares") %>% filter(UCD_category=="trn_international ship")
 
+      # Load required inputs
+      iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
+
       #Process data for international shipping to disaggregate to the GCAM regions
       L112.CEDS_intl_shipping %>%
         right_join(Int_shipping_IEA_EIA %>% select(iso,year,value) %>% filter(year <= max(HISTORICAL_YEARS)), by=c("year")) %>%
@@ -108,7 +111,12 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         ungroup() %>%
         # Converts kt(gg) to Teragrams. Multiply by iso's share in international shipping consumption.
         mutate(emissions = (emissions * CONV_GG_TG)*share_in_global_ship) %>%
-        select(-share_in_global_ship,-value)->CEDS_int_shipping
+        select(-share_in_global_ship,-value) %>%
+        left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
+        group_by(GCAM_region_ID, Non.CO2, CEDS_agg_sector, CEDS_agg_fuel, year) %>%
+        summarise(emissions = sum(emissions)) %>%
+        ungroup() %>%
+        na.omit()->CEDS_int_shipping
 
       #Combine emissions from all other CEDS sectors with emissions from international shipping
       L112.CEDS_GCAM_no_intl_shipping %>%
@@ -133,7 +141,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
       # Load required inputs
       GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-      iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
 
       #Get GAINS sector and fuel emissions by iso. Also get IEA energy data by iso.
       GAINS_sector <- get_data(all_data,"emissions/CEDS/gains_iso_sector_emissions")
