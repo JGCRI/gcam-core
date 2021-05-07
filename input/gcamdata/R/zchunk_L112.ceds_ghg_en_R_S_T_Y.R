@@ -59,9 +59,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                FILE = "emissions/GCAM_EPA_CH4N2O_energy_map"))
     } else if(command == driver.DECLARE_OUTPUTS) {
       return(c("L111.nonghg_tg_R_en_S_F_Yh",
-               "L111.nonghg_tgej_R_en_S_F_Yh",
+               "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP",
                "L112.ghg_tg_R_en_S_F_Yh",
-               "L112.ghg_tgej_R_en_S_F_Yh",
+               "L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP",
                "L113.ghg_tg_R_an_C_Sys_Fd_Yh",
                "L115.nh3_tg_R_an_C_Sys_Fd_Yh",
                "L121.nonco2_tg_R_awb_C_Y_GLU",
@@ -886,14 +886,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L112.nonco2_tgej_R_en_S_F_Yh %>%
         filter(Non.CO2 %in% c("CH4", "N2O")) %>%
         select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value = emfact) %>%
-        bind_rows(GAINS_NG_em_factors %>% filter(Non.CO2 %in% c("CH4", "N2O")) %>% select(-energy))->L112.ghg_tgej_R_en_S_F_Yh
+        bind_rows(GAINS_NG_em_factors %>% filter(Non.CO2 %in% c("CH4", "N2O")) %>% select(-energy))->L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP
 
 
       L112.nonco2_tgej_R_en_S_F_Yh %>%
         filter(!(Non.CO2 %in% c("CH4", "N2O", "CO2"))) %>%
         select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value = emfact) %>%
         bind_rows(GAINS_NG_em_factors %>% filter(!(Non.CO2 %in% c("CH4", "N2O"))) %>% select(-energy))->
-        L111.nonghg_tgej_R_en_S_F_Yh
+        L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP
 
 
       # Animal NH3 emissions
@@ -1023,7 +1023,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         # Scale CH4 and N2O emissions to EPA 2019 mitigation report (BAU scenario)
         # Source: https://www.epa.gov/global-mitigation-non-co2-greenhouse-gases
         # The following tables will be updated by the order below:
-        # 1) L112.ghg_tgej_R_en_S_F_Yh (resource production emission factors)
+        # 1) L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP (resource production emission factors)
         # 2) L131.nonco2_tg_R_prc_S_S_Yh (industrial processes and urban processes input emissions)
         # 3) L113.ghg_tg_R_an_C_Sys_Fd_Yh (agriculture livestock - input emissions)
         # 4) L121.nonco2_tg_R_awb_C_Y_GLU (agriculture waster burning - input emissions)
@@ -1098,7 +1098,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
             select(-EPA_sector, -emscaler)
         }
 
-        # Part 1: L112.ghg_tgej_R_en_S_F_Yh (resource production emission factors)
+        # Part 1: L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP (resource production emission factors)
         #---------------------------------------------------------------------------------------------------------------
 
 
@@ -1145,8 +1145,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
           select(-upper, -value_median) ->
           L112.ghg_tgej_R_en_S_F_Yh_adj_noOutlier
 
-        # 4) update L112.ghg_tgej_R_en_S_F_Yh for resource production
-        L112.ghg_tgej_R_en_S_F_Yh %>%
+        # 4) update L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP for resource production
+        L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP %>%
           # produce NA on purpose, since the original data also contain combustion related emission factors
           # we just update resource emission factors
           left_join(L112.ghg_tgej_R_en_S_F_Yh_adj_noOutlier,
@@ -1167,7 +1167,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                                                           L112.ghg_tgej_R_en_S_F_Yh_update_uncov_oil)
 
         # update the original table
-        L112.ghg_tgej_R_en_S_F_Yh <- L112.ghg_tgej_R_en_S_F_Yh_update_all
+        L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP <- L112.ghg_tgej_R_en_S_F_Yh_update_all
 
         # Part 2: L131.nonco2_tg_R_prc_S_S_Yh (industrial processes and urban processes input emissions)
 
@@ -1389,14 +1389,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                        "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions") ->
         L111.nonghg_tg_R_en_S_F_Yh
 
-      L111.nonghg_tgej_R_en_S_F_Yh %>%
+      L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP %>%
         na.omit() %>%
         add_title("Non-ghg emission total shares by GCAM sector, fuel, technology, and driver type for CEDS historical years.") %>%
         add_units("Tg/EJ") %>%
         add_comments("Use non-ghg emission totals by GCAM sector, fuel, technology, and driver type for CEDS historical years to derive emission shares.") %>%
         add_legacy_name("L111.nonghg_tgej_R_en_S_F_Yh") %>%
         same_precursors_as("L111.nonghg_tg_R_en_S_F_Yh") ->
-        L111.nonghg_tgej_R_en_S_F_Yh
+        L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP
 
       L112.ghg_tg_R_en_S_F_Yh %>%
         add_title("GHG emissions by energy sector, gas, region, and historical year") %>%
@@ -1411,7 +1411,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                        "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions") ->
         L112.ghg_tg_R_en_S_F_Yh
 
-      L112.ghg_tgej_R_en_S_F_Yh %>%
+      L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP %>%
         add_title("GHG emissions factors by energy sector, gas, region, and historical year") %>%
         add_units("Tg/EJ") %>%
         add_comments("Emissions calculated with CEDS emissions factors.") %>%
@@ -1437,7 +1437,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                        "emissions/EPA_country_map",
                        "emissions/CEDS/CEDS_sector_tech_combustion_revised",
                        "emissions/mappings/UCD_techs_emissions_revised") ->
-        L112.ghg_tgej_R_en_S_F_Yh
+        L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP
 
       L113.ghg_tg_R_an_C_Sys_Fd_Yh %>%
         add_title("Animal GHG emissions (CH4 and N2O) by GCAM region / sector / technology / historical year") %>%
@@ -1577,7 +1577,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         ) ->
         L131.nonco2_tg_R_prc_S_S_Yh
 
-      return_data(L111.nonghg_tg_R_en_S_F_Yh, L111.nonghg_tgej_R_en_S_F_Yh, L112.ghg_tg_R_en_S_F_Yh, L112.ghg_tgej_R_en_S_F_Yh, L113.ghg_tg_R_an_C_Sys_Fd_Yh, L115.nh3_tg_R_an_C_Sys_Fd_Yh, L121.nonco2_tg_R_awb_C_Y_GLU,
+      return_data(L111.nonghg_tg_R_en_S_F_Yh, L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP, L112.ghg_tg_R_en_S_F_Yh, L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP, L113.ghg_tg_R_an_C_Sys_Fd_Yh, L115.nh3_tg_R_an_C_Sys_Fd_Yh, L121.nonco2_tg_R_awb_C_Y_GLU,
                   L121.AWBshare_R_C_Y_GLU, L122.ghg_tg_R_agr_C_Y_GLU, L122.EmissShare_R_C_Y_GLU, L124.nonco2_tg_R_grass_Y_GLU, L124.nonco2_tg_R_forest_Y_GLU, L124.deforest_coefs,
                   L131.nonco2_tg_R_prc_S_S_Yh,L125.bcoc_tgbkm2_R_grass_2000,L125.bcoc_tgbkm2_R_forest_2000,L125.deforest_coefs_bcoc)
     } else {
