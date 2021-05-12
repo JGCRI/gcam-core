@@ -10,29 +10,29 @@
 # Column types: ccccicinni
 # ----------
 supplysector,subsector,technology,year,lifetime,shutdown.rate,half.life,steepness,median.shutdown.point,profit.shutdown.steepness
-industrial energy use,biomass,biomass,final-calibration-year,40,,20,0.3,-0.5,6
-industrial energy use,biomass,biomass cogen,final-calibration-year,40,,20,0.3,-0.5,6
-industrial energy use,coal,coal,final-calibration-year,40,,20,0.3,-0.5,6
-industrial energy use,coal,coal cogen,final-calibration-year,40,,20,0.3,-0.5,6
-industrial energy use,district heat,district heat,final-calibration-year,40,,20,0.3,-0.5,6
-industrial energy use,electricity,electricity,final-calibration-year,40,,20,0.3,-0.5,6
-industrial energy use,gas,gas,final-calibration-year,40,,20,0.3,-0.5,6
-industrial energy use,gas,gas cogen,final-calibration-year,40,,20,0.3,-0.5,6
-industrial energy use,hydrogen,hydrogen,final-calibration-year,40,,20,0.3,-0.5,6
-industrial energy use,hydrogen,hydrogen cogen,final-calibration-year,40,,20,0.3,-0.5,6
-industrial energy use,refined liquids,refined liquids,final-calibration-year,40,,20,0.3,-0.5,6
-industrial energy use,refined liquids,refined liquids cogen,final-calibration-year,40,,20,0.3,-0.5,6
-industry,industry,industry,final-calibration-year,40,,20,0.3,-0.5,6
-industrial energy use,biomass,biomass,initial-future-year,40,,20,0.3,-0.5,6
-industrial energy use,biomass,biomass cogen,initial-future-year,40,,20,0.3,-0.5,6
-industrial energy use,coal,coal,initial-future-year,40,,20,0.3,-0.5,6
-industrial energy use,coal,coal cogen,initial-future-year,40,,20,0.3,-0.5,6
-industrial energy use,district heat,district heat,initial-future-year,40,,20,0.3,-0.5,6
-industrial energy use,electricity,electricity,initial-future-year,40,,20,0.3,-0.5,6
-industrial energy use,gas,gas,initial-future-year,40,,20,0.3,-0.5,6
-industrial energy use,gas,gas cogen,initial-future-year,40,,20,0.3,-0.5,6
-industrial energy use,hydrogen,hydrogen,initial-future-year,40,,20,0.3,-0.5,6
-industrial energy use,hydrogen,hydrogen cogen,initial-future-year,40,,20,0.3,-0.5,6
-industrial energy use,refined liquids,refined liquids,initial-future-year,40,,20,0.3,-0.5,6
-industrial energy use,refined liquids,refined liquids cogen,initial-future-year,40,,20,0.3,-0.5,6
-industry,industry,industry,initial-future-year,40,,20,0.3,-0.5,6
+other industrial energy use,biomass,biomass,final-calibration-year,40,,20,0.3,-0.5,6
+other industrial energy use,biomass,biomass cogen,final-calibration-year,40,,20,0.3,-0.5,6
+other industrial energy use,coal,coal,final-calibration-year,40,,20,0.3,-0.5,6
+other industrial energy use,coal,coal cogen,final-calibration-year,40,,20,0.3,-0.5,6
+other industrial energy use,district heat,district heat,final-calibration-year,40,,20,0.3,-0.5,6
+other industrial energy use,electricity,electricity,final-calibration-year,40,,20,0.3,-0.5,6
+other industrial energy use,gas,gas,final-calibration-year,40,,20,0.3,-0.5,6
+other industrial energy use,gas,gas cogen,final-calibration-year,40,,20,0.3,-0.5,6
+other industrial energy use,hydrogen,hydrogen,final-calibration-year,40,,20,0.3,-0.5,6
+other industrial energy use,hydrogen,hydrogen cogen,final-calibration-year,40,,20,0.3,-0.5,6
+other industrial energy use,refined liquids,refined liquids,final-calibration-year,40,,20,0.3,-0.5,6
+other industrial energy use,refined liquids,refined liquids cogen,final-calibration-year,40,,20,0.3,-0.5,6
+other industry,other industry,other industry,final-calibration-year,40,,20,0.3,-0.5,6
+other industrial energy use,biomass,biomass,initial-future-year,40,,20,0.3,-0.5,6
+other industrial energy use,biomass,biomass cogen,initial-future-year,40,,20,0.3,-0.5,6
+other industrial energy use,coal,coal,initial-future-year,40,,20,0.3,-0.5,6
+other industrial energy use,coal,coal cogen,initial-future-year,40,,20,0.3,-0.5,6
+other industrial energy use,district heat,district heat,initial-future-year,40,,20,0.3,-0.5,6
+other industrial energy use,electricity,electricity,initial-future-year,40,,20,0.3,-0.5,6
+other industrial energy use,gas,gas,initial-future-year,40,,20,0.3,-0.5,6
+other industrial energy use,gas,gas cogen,initial-future-year,40,,20,0.3,-0.5,6
+other industrial energy use,hydrogen,hydrogen,initial-future-year,40,,20,0.3,-0.5,6
+other industrial energy use,hydrogen,hydrogen cogen,initial-future-year,40,,20,0.3,-0.5,6
+other industrial energy use,refined liquids,refined liquids,initial-future-year,40,,20,0.3,-0.5,6
+other industrial energy use,refined liquids,refined liquids cogen,initial-future-year,40,,20,0.3,-0.5,6
+other industry,other industry,other industry,initial-future-year,40,,20,0.3,-0.5,6

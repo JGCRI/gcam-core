@@ -355,7 +355,7 @@ module_energy_L232.industry <- function(command, ...) {
 
     # intermediate tibble to extract industry names
     A32.globaltech_shrwt %>%
-      filter(supplysector == "industry") %>%
+      filter(supplysector == "other industry") %>%
       select(supplysector, subsector, technology) ->
       L232.industry_names
 

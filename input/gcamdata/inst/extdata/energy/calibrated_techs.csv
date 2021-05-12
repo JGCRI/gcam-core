@@ -48,19 +48,19 @@ heat,biomass,district heat,biomass,biomass,delivered biomass,input,
 heat,coal,district heat,coal,coal,delivered coal,input,
 heat,gas,district heat,gas,gas,wholesale gas,input,
 heat,refined liquids,district heat,refined liquids,refined liquids,refined liquids industrial,input,
-chp_elec,biomass,industrial energy use,biomass,biomass cogen,delivered biomass,input,electricity
-chp_elec,coal,industrial energy use,coal,coal cogen,delivered coal,input,electricity
-chp_elec,gas,industrial energy use,gas,gas cogen,wholesale gas,input,electricity
-chp_elec,refined liquids,industrial energy use,refined liquids,refined liquids cogen,refined liquids industrial,input,electricity
-industry_feedstocks,coal,industrial feedstocks,coal,coal,delivered coal,input,
-industry_feedstocks,gas,industrial feedstocks,gas,gas,wholesale gas,input,
-industry_feedstocks,refined liquids,industrial feedstocks,refined liquids,refined liquids,refined liquids industrial,input,
-industry_energy,biomass,industrial energy use,biomass,biomass,delivered biomass,input,
-industry_energy,coal,industrial energy use,coal,coal,delivered coal,input,
-industry_energy,electricity,industrial energy use,electricity,electricity,elect_td_ind,input,
-industry_energy,gas,industrial energy use,gas,gas,wholesale gas,input,
-industry_energy,heat,industrial energy use,district heat,district heat,district heat,input,
-industry_energy,refined liquids,industrial energy use,refined liquids,refined liquids,refined liquids industrial,input,
+chp_elec,biomass,other industrial energy use,biomass,biomass cogen,delivered biomass,input,electricity
+chp_elec,coal,other industrial energy use,coal,coal cogen,delivered coal,input,electricity
+chp_elec,gas,other industrial energy use,gas,gas cogen,wholesale gas,input,electricity
+chp_elec,refined liquids,other industrial energy use,refined liquids,refined liquids cogen,refined liquids industrial,input,electricity
+industry_feedstocks,coal,other industrial feedstocks,coal,coal,delivered coal,input,
+industry_feedstocks,gas,other industrial feedstocks,gas,gas,wholesale gas,input,
+industry_feedstocks,refined liquids,other industrial feedstocks,refined liquids,refined liquids,refined liquids industrial,input,
+industry_energy,biomass,other industrial energy use,biomass,biomass,delivered biomass,input,
+industry_energy,coal,other industrial energy use,coal,coal,delivered coal,input,
+industry_energy,electricity,other industrial energy use,electricity,electricity,elect_td_ind,input,
+industry_energy,gas,other industrial energy use,gas,gas,wholesale gas,input,
+industry_energy,heat,other industrial energy use,district heat,district heat,district heat,input,
+industry_energy,refined liquids,other industrial energy use,refined liquids,refined liquids,refined liquids industrial,input,
 cement,electricity,cement,cement,cement,elect_td_ind,output,
 cement,heat,cement,cement,cement,process heat cement,output,
 cement,limestone,cement,cement,cement,limestone,output,

@@ -7,10 +7,10 @@ supplysector,subsector,stub.technology,CEDS_agg_sector,CEDS_agg_fuel
 out_resources,coal,coal,coal,process
 out_resources,natural gas,natural gas,oil_gas,process
 out_resources,crude oil,crude oil,oil_gas,process
-industrial energy use,biomass,biomass,industry_energy,biomass
-industrial energy use,coal,coal,industry_energy,coal
-industrial energy use,gas,gas,industry_energy,gas
-industrial energy use,refined liquids,refined liquids,industry_energy,refined liquids
+other industrial energy use,biomass,biomass,industry_energy,biomass
+other industrial energy use,coal,coal,industry_energy,coal
+other industrial energy use,gas,gas,industry_energy,gas
+other industrial energy use,refined liquids,refined liquids,industry_energy,refined liquids
 N fertilizer,coal,coal,industry_energy,coal
 N fertilizer,gas,gas,industry_energy,gas
 N fertilizer,refined liquids,refined liquids,industry_energy,refined liquids
