@@ -383,8 +383,3 @@ int main( ) {
     // Return exit code based on whether the model succeeded (Non-zero is failure by convention).
     return 0;
 }
-
-void readNameList() {
-    std::cout << "HERE" << std::endl;
-    return;
-}
