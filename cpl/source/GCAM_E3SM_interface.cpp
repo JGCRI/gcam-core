@@ -245,14 +245,21 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         // Set data in the gcamoluc* arrays
         const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
         int row = 0;
-        for(size_t i = 0; i < mLUCData.getArrayLength(); ++i) {
-            gcamoluc[i] = luc[i];
+        int lurow = 0;
+        // The variables below are read in, but to get them from the namelist would require changes to the runGCAM call
+        // For now, we'll derive them from data already accessible
+        int numRegions = mWoodHarvestData.getArrayLength();
+        int numLUTypes = mLUCData.getArrayLength() / mWoodHarvestData.getArrayLength();
+        for( int r = 0; r < numRegions; r++) {
+            for( int l = 0; l < numLUTypes; l++) {
+                gcamoluc[row] = luc[lurow];
+                lurow++;
+                row++;
+            }
+            gcamoluc[row] = mWoodHarvestData.getData()[r];
             row++;
         }
-        for(size_t i = 0; i < mWoodHarvestData.getArrayLength(); ++i) {
-            gcamoluc[row] = mWoodHarvestData.getData()[i];
-            row++;
-        }
+        
     }
         
 }
