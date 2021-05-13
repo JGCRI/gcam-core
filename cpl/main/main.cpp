@@ -279,7 +279,7 @@ int main( ) {
     } else {
         
         // Run GCAM
-        cout << "Running " << YEAR << endl;
+        cout << "Running E3SM Year: " << YEAR << endl;
         int ymd = YEAR * 10000;
         int *yyyymmdd = &ymd;
         
