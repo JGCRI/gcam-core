@@ -148,7 +148,7 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
 
 // Calculate scalers
 // TODO: Set the data in the passed vectors
-void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                                 std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers) {
     // First, read spatial data
     readBaseYearData();
@@ -276,13 +276,13 @@ void CarbonScalers::calcScalers(int *ymd, double *aELMArea, double *aELMLandFrac
         }
      }
      
-    createScalerVectors(ymd, aYears, aRegions, aLandTechs, aAboveScalers, aBelowScalers, aboveScalarMap, belowScalarMap);
+    createScalerVectors(aGCAMYear, aYears, aRegions, aLandTechs, aAboveScalers, aBelowScalers, aboveScalarMap, belowScalarMap);
 }
 
 
 // This function transforms the mappings used for internal scalar calculation
 // into the vectors needed to set data within GCAM
-void CarbonScalers::createScalerVectors(int *ymd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+void CarbonScalers::createScalerVectors(int aGCAMYear, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
                                         std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers,
                                         std::map<std::pair<std::string,std::string>, double> aAboveScalarMap,
                                         std::map<std::pair<std::string,std::string>, double> aBelowScalarMap) {
@@ -303,7 +303,7 @@ void CarbonScalers::createScalerVectors(int *ymd, std::vector<int>& aYears, std:
         // Note that we need to combine the basin with the crop name for the `aLandTechs` vector
         // and separate the region from the basin for the `aRegions` vector.
         // TODO: Set below ground scalar
-        aYears[row] = *ymd/10000;
+        aYears[row] = aGCAMYear;
         aRegions[row] = strs[0];
         aLandTechs[row] = crop + "_" + strs[1];
         aAboveScalers[row] = curr.second;
@@ -329,7 +329,7 @@ void CarbonScalers::writeScalers(std::string aFileName, std::vector<int>& aYears
 // Read in scalers from a csv file
 // Note: this is used for diagnostics and testing. In fully coupled E3SM-GCAM, these scalers
 // are calculated based on data passed in code through the wrapper
-void CarbonScalers::readScalers(int *yyyymmdd, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
+void CarbonScalers::readScalers(std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
     
     // TODO: Get this file name from either a configuration or passed argument
     ifstream data("../cpl/data/scaler_data.csv");

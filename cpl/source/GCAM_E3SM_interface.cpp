@@ -173,38 +173,38 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
 void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemiss, int aNumLon, int aNumLat )
 {
     // Get year only of the current date
-    int curryear = *yyyymmdd/10000;
+    const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
+    // Note that GCAM runs one period ahead of E3SM. We make that adjustment here
+    int e3smYear = *yyyymmdd/10000;
+    int gcamPeriod = modeltime->getyr_to_per( e3smYear ) + 1;
+    int gcamYear = modeltime->getper_to_yr( gcamPeriod );
+    
     bool success = false;
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
     
-    if ( curryear < gcamStartYear ) {
-        coupleLog << "returning from runGCAM: current date: " << *yyyymmdd << " is before GCAM starting date: " << gcamStartYear << endl;
+    if ( gcamYear < gcamStartYear ) {
+        coupleLog << "returning from runGCAM: E3SM year: " << *yyyymmdd << " (GCAM year: " << gcamYear << ") is before GCAM starting date: " << gcamStartYear << endl;
         return;
     }
-    if ( curryear > gcamEndYear ) {
-        coupleLog << "returning from runGCAM: current date: " << *yyyymmdd << " is after GCAM ending date: " << gcamEndYear << endl;
+    if ( gcamYear > gcamEndYear ) {
+        coupleLog << "returning from runGCAM: E3SM year: " << *yyyymmdd << " (GCAM year: " << gcamYear << ") is after GCAM ending date: " << gcamEndYear << endl;
         return;
     }
     
-    const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
-    
+    coupleLog << "Current E3SM Year is " << e3smYear << ", Current GCAM Year is " << gcamYear << endl;
+
     int finalCalibrationYear = modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() );
-    int period = modeltime->getyr_to_per( curryear );
-    int modelyear = modeltime->getper_to_yr( period );   
-    
-    coupleLog << "Current Year is " << curryear << endl;
-    
-    
-    if( modeltime->isModelYear( curryear )) {
+   
+    if( modeltime->isModelYear( gcamYear )) {
         // set restart period
-        restartPeriod = period;
+        restartPeriod = gcamPeriod;
 
         Timer timer;
         
         // TODO: is this necessary, it will be the same as currYear
-        coupleLog << "Running GCAM for year " << modelyear;
-        coupleLog << ", calculating period = " << period << endl;
+        coupleLog << "Running GCAM for year " << gcamYear;
+        coupleLog << ", calculating period = " << gcamPeriod << endl;
         
         coupleLog.precision(20);
         
@@ -212,7 +212,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         timer.start();
         
         // Run this GCAM period
-        success = runner->runScenarios( period, true, timer );
+        success = runner->runScenarios( gcamPeriod, true, timer );
         
         // Stop the timer
         timer.stop();
@@ -221,7 +221,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         double *co2 = mCO2EmissData.getData();
         // be sure to reset any data set previously
         fill(co2, co2+mCO2EmissData.getArrayLength(), 0.0);
-        GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mCO2EmissData);
+        GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mCO2EmissData);
         getCo2.run(runner->getInternalScenario());
         std::copy(co2, co2+mCO2EmissData.getArrayLength(), gcamoemiss);
         coupleLog << mCO2EmissData << endl;
@@ -230,7 +230,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         double *luc = mLUCData.getData();
         // be sure to reset any data set previously
         fill(luc, luc+mLUCData.getArrayLength(), 0.0);
-        GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mLUCData);
+        GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mLUCData);
         getLUC.run(runner->getInternalScenario());
         coupleLog << mLUCData << endl;
         
@@ -238,7 +238,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         double *woodHarvest = mWoodHarvestData.getData();
         // be sure to reset any data set previously
         fill(woodHarvest, woodHarvest+mWoodHarvestData.getArrayLength(), 0.0);
-        GetDataHelper getWH("world/region[+NamedFilter,MatchesAny]/sector[NamedFilter,StringEquals,Forest]/subsector/technology[+NamedFilter,MatchesAny]//output[IndexFilter,IntEquals,0]/physical-output[+YearFilter,IntEquals,"+util::toString(curryear)+"]", mWoodHarvestData);
+        GetDataHelper getWH("world/region[+NamedFilter,MatchesAny]/sector[NamedFilter,StringEquals,Forest]/subsector/technology[+NamedFilter,MatchesAny]//output[IndexFilter,IntEquals,0]/physical-output[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mWoodHarvestData);
         getWH.run(runner->getInternalScenario());
         coupleLog << mWoodHarvestData << endl;
         
@@ -260,8 +260,11 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
 void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                                          int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, int aFirstCoupledYear, bool aReadScalars, bool aWriteScalars) {
     // Get year only of the current date
-    int curryear = *yyyymmdd/10000;
+    // Note that GCAM runs one period ahead of E3SM. We make that adjustment here
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
+    int e3smYear = *yyyymmdd/10000;
+    int gcamPeriod = modeltime->getyr_to_per( e3smYear ) + 1;
+    int gcamYear = modeltime->getper_to_yr( gcamPeriod );
     const int finalCalibrationPeriod = modeltime->getFinalCalibrationPeriod();
     const int finalCalibrationYear = modeltime->getper_to_yr(finalCalibrationPeriod);
     
@@ -278,25 +281,25 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     coupleLog.setLevel( ILogger::NOTICE );
     
     // Only set carbon densities during GCAM model years after the first coupled year
-    if( modeltime->isModelYear( curryear ) && curryear >=  aFirstCoupledYear ) {
-        coupleLog << "Setting carbon density in year: " << curryear << endl;
+    if( modeltime->isModelYear( gcamYear ) && e3smYear >=  aFirstCoupledYear ) {
+        coupleLog << "Setting carbon density in year: " << gcamYear << endl;
         CarbonScalers e3sm2gcam(aNumLon, aNumLat, aNumPFT);
         
         // Get scaler information
         if ( aReadScalars ) {
             coupleLog << "Reading scalars from file." << endl;
-            e3sm2gcam.readScalers(yyyymmdd, scalarYears, scalarRegion, scalarLandTech, aboveScalarData);
+            e3sm2gcam.readScalers(scalarYears, scalarRegion, scalarLandTech, aboveScalarData);
         } else {
             coupleLog << "Calculating scalers from data." << endl;
             e3sm2gcam.readRegionalMappingData(aMappingFile);
-            e3sm2gcam.calcScalers(yyyymmdd, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
+            e3sm2gcam.calcScalers(gcamYear, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
                                   scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
         }
         
         // Optional: write scaler information to a file
         // TODO: make the file name an input instead of hardcoded
         if( aWriteScalars ) {
-            string fName = "./scalers_" + std::to_string(curryear) + ".csv";
+            string fName = "./scalers_" + std::to_string(gcamYear) + ".csv";
             e3sm2gcam.writeScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData, 17722);
         }
         
