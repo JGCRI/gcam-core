@@ -169,8 +169,12 @@ double AbsoluteCostLogit::calcAverageValue( const double aUnnormalizedShareSum,
 double AbsoluteCostLogit::calcShareWeight( const double aShare, const double aValue, const double aAnchorShare,
                                            const double aAnchorValue, const int aPeriod ) const
 {
-    double coef = mLogitExponent[ aPeriod ] / mBaseValue;
-    return ( aShare / aAnchorShare ) * exp( coef * ( aAnchorValue - aValue ) );
+    if ( aShare == 0 ) {
+        return 0.0;
+    } else {
+        double coef = mLogitExponent[ aPeriod ] / mBaseValue;
+        return ( aShare / aAnchorShare ) * exp( coef * ( aAnchorValue - aValue ) );
+    }
 }
 
 /*!

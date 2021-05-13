@@ -156,7 +156,9 @@ void ALandAllocatorItem::calculateShareWeights( const string& aRegionName,
                 // note dominantCropAvgProfitRate, and shareAdj are "out" arguments in getObservedAverageProfitRate
                 // i.e. they will get set by this method call
                 maxChild->getObservedAverageProfitRate( dominantCropAvgProfitRate, shareAdj, aPeriod );
-                profitRateForCal *= dominantCropAvgProfitRate / newCropAvgProfitRate;
+                if( newCropAvgProfitRate > 0 ) {
+                    profitRateForCal *= dominantCropAvgProfitRate / newCropAvgProfitRate;
+                }
             }
             else {
                 // there are no valid crops in this nest and we were instructed to make the ghost share
