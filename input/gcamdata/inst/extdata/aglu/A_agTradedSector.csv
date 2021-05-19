@@ -1,23 +1,24 @@
 # File: A_agTradedSector.csv
-# Title: Supplysector assumptions for traded crop markets (including logit exponent for subsector competition)
+# Title: Supplysector assumptions for traded agricultural markets (including logit exponent for subsector competition)
 # Units: Various
-# Comments: These sectors compete different regions in supplying the pool of globally traded crops
+# Comments: These sectors compete different regions in supplying the pool of globally traded crops (source: GTAP)
 # Source: NA
 # Column types: ccccinc
 # ----------
 supplysector,output.unit,input.unit,price.unit,traded,logit.exponent,logit.type
-traded corn,Mt,Mt,1975$/kg,1,-6,
-traded fibercrop,Mt,Mt,1975$/kg,1,-6,
-traded misccrop,Mt,Mt,1975$/kg,1,-6,
-traded oilcrop,Mt,Mt,1975$/kg,1,-6,
-traded othergrain,Mt,Mt,1975$/kg,1,-6,
-traded palmfruit,Mt,Mt,1975$/kg,1,-6,
-traded rice,Mt,Mt,1975$/kg,1,-6,
-traded root_tuber,Mt,Mt,1975$/kg,1,-6,
-traded sugarcrop,Mt,Mt,1975$/kg,1,-6,
-traded wheat,Mt,Mt,1975$/kg,1,-6,
+traded corn,Mt,Mt,1975$/kg,1,-2.6,
+traded fibercrop,Mt,Mt,1975$/kg,1,-5,
+traded misccrop,Mt,Mt,1975$/kg,1,-4.81,
+traded oilcrop,Mt,Mt,1975$/kg,1,-5.97,
+traded othergrain,Mt,Mt,1975$/kg,1,-2.6,
+traded palmfruit,Mt,Mt,1975$/kg,1,-5.97,
+traded rice,Mt,Mt,1975$/kg,1,-5.79,
+traded roottuber,Mt,Mt,1975$/kg,1,-4.81,
+traded sugarcrop,Mt,Mt,1975$/kg,1,-5.4,
+traded wheat,Mt,Mt,1975$/kg,1,-8.9,
 traded beef,Mt,Mt,1975$/kg,1,-7.7,
 traded dairy,Mt,Mt,1975$/kg,1,-7.3,
 traded pork,Mt,Mt,1975$/kg,1,-8.8,
 traded poultry,Mt,Mt,1975$/kg,1,-8.8,
 traded sheepgoat,Mt,Mt,1975$/kg,1,-7.7,
+traded forest,billion m3,billion m3,1975$/m3,1,-5,
