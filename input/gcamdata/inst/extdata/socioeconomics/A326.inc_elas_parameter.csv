@@ -4,35 +4,35 @@
 # Column types: cnnn
 # ----------
 region,a,b,m
-Africa_Eastern,30,-104.2,0.01
-Africa_Northern,30,-104.2,0.01
-Africa_Southern,30,-104.2,0.01
-Africa_Western,30,-104.2,0.01
-Argentina,30,-104.2,0.01
-Australia_NZ,30,-104.2,0.01
-Brazil,30,-104.2,0.01
-Canada,30,-104.2,0.01
-Central America and Caribbean,30,-104.2,0.01
-Central Asia,30,-104.2,0.01
-China,30,-104.2,0.01
-Colombia,30,-104.2,0.01
-EU-12,30,-104.2,0.01
-EU-15,30,-104.2,0.01
-Europe_Eastern,30,-104.2,0.01
-Europe_Non_EU,30,-104.2,0.01
-European Free Trade Association,30,-104.2,0.01
-India,30,-104.2,0.01
-Indonesia,30,-104.2,0.01
-Japan,30,-104.2,0.01
-Mexico,30,-104.2,0.01
-Middle East,30,-104.2,0.01
-Pakistan,30,-104.2,0.01
-Russia,30,-104.2,0.01
-South Africa,30,-104.2,0.01
-South America_Northern,30,-104.2,0.01
-South America_Southern,30,-104.2,0.01
-South Asia,30,-104.2,0.01
-South Korea,30,-104.2,0.01
-Southeast Asia,30,-104.2,0.01
-Taiwan,30,-104.2,0.01
-USA,30,-104.2,0.01
+Africa_Eastern,30,-5882,0.005
+Africa_Northern,30,-5882,0.005
+Africa_Southern,30,-5882,0.005
+Africa_Western,30,-5882,0.005
+Argentina,30,-5882,0.005
+Australia_NZ,30,-5882,0.005
+Brazil,30,-5882,0.005
+Canada,30,-5882,0.005
+Central America and Caribbean,30,-5882,0.005
+Central Asia,30,-5882,0.005
+China,30,-5882,0.005
+Colombia,30,-5882,0.005
+EU-12,30,-5882,0.005
+EU-15,30,-5882,0.005
+Europe_Eastern,30,-5882,0.005
+Europe_Non_EU,30,-5882,0.005
+European Free Trade Association,30,-5882,0.005
+India,30,-5882,0.005
+Indonesia,30,-5882,0.005
+Japan,30,-5882,0.005
+Mexico,30,-5882,0.005
+Middle East,30,-5882,0.005
+Pakistan,30,-5882,0.005
+Russia,30,-5882,0.005
+South Africa,30,-5882,0.005
+South America_Northern,30,-5882,0.005
+South America_Southern,30,-5882,0.005
+South Asia,30,-5882,0.005
+South Korea,30,-5882,0.005
+Southeast Asia,30,-5882,0.005
+Taiwan,30,-5882,0.005
+USA,30,-5882,0.005
