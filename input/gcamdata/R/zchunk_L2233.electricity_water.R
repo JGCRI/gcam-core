@@ -18,7 +18,7 @@
 #' \code{L2233.Supplysector_elec_cool}, \code{L2233.ElecReserve_elec_cool},
 #' \code{L2233.SubsectorShrwtFllt_elec_cool}, \code{L2233.SubsectorLogit_elec_cool},
 #'  \code{L2233.StubTech_elec_cool}, \code{L2233.StubTechEff_elec_cool},
-#' \code{L2233.StubTechProd_elec_cool}, \code{L2233.StubTechFixOut_hydro},
+#' \code{L2233.StubTechProd_elec_cool}, \code{L2233.StubTechCapFactor_elec_cool}, \code{L2233.StubTechFixOut_hydro},
 #'   \code{L2233.StubTechShrwt_elec_cool}, \code{L2233.GlobalTechCapital_elec_cool},
 #'  \code{L2233.GlobalIntTechCapital_elec_cool}, \code{L2233.GlobalTechCoef_elec_cool},
 #' \code{L2233.GlobalIntTechCoef_elec_cool}, \code{L2233.InputEmissCoeff_hist_elecPassthru},
@@ -44,7 +44,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
                       "GlobalTechProfitShutdown_elec", "GlobalTechSCurve_elec", "GlobalTechShrwt_elec",
                       "GlobalIntTechCapFac_elec", "GlobalTechCapFac_elec",
                       "PrimaryRenewKeyword_elec", "PrimaryRenewKeywordInt_elec", "StubTech_elec",
-                      "StubTechEff_elec", "StubTechFixOut_hydro", "Supplysector_elec")
+                      "StubTechEff_elec", "StubTechCapFactor_elec", "StubTechFixOut_hydro", "Supplysector_elec")
 
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -87,6 +87,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L2233.StubTech_elec_cool",
              "L2233.StubTechEff_elec_cool",
              "L2233.StubTechProd_elec_cool",
+             "L2233.StubTechCapFactor_elec_cool",
              "L2233.StubTechFixOut_hydro",
              "L2233.StubTechShrwt_elec_cool",
              "L2233.GlobalTechCapital_elec_cool",
@@ -620,6 +621,26 @@ module_water_L2233.electricity_water <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["StubTechProd"]]) ->
       L2233.StubTechProd_elec_cool  # --OUTPUT-- (note: hydro is removed when written to output)
 
+    # Stub tech (regionally-specific) capacity factors for renewable technologies with cooling systems (i.e. CSP)
+    # extract L223.StubTechCapFactor_elec from L223_data for convenience
+    L223.StubTechCapFactor_elec <- L223_data$StubTechCapFactor_elec
+
+    L2233.TechMapYr %>%
+      # we only need techs with cooling systems from this list;
+      # L223.StubTechCapFactor_elec already contains capacity factors for techs without cooling systems
+      filter(from.supplysector != to.supplysector) %>%
+      repeat_add_columns(GCAM_region_names) %>%
+      filter(from.supplysector %in% L223.StubTechCapFactor_elec$supplysector,
+             from.subsector %in% L223.StubTechCapFactor_elec$subsector,
+             from.technology %in% L223.StubTechCapFactor_elec$stub.technology,
+             year %in% L223.StubTechCapFactor_elec$year) %>%
+      left_join_error_no_match(L223.StubTechCapFactor_elec,
+                               by = c("region", "from.supplysector" = "supplysector",
+                                      "from.subsector" = "subsector", "from.technology" = "stub.technology", "year")) %>%
+      rename(supplysector = to.supplysector, subsector = to.subsector, stub.technology = to.technology) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechCapFactor"]]) ->
+      L2233.StubTechCapFactor_elec_cool  # --OUTPUT--
+
     # Hydropower fixed output for base and future periods
     L2233.StubTechProd_elec_cool %>%
       filter(subsector == "hydro") %>%
@@ -947,6 +968,14 @@ module_water_L2233.electricity_water <- function(command, ...) {
                      "L1233.out_EJ_R_elec_F_tech_Yh_cool") ->
       L2233.StubTechProd_elec_cool
 
+    L2233.StubTechCapFactor_elec_cool %>%
+      add_title("Region-specific capacity factors of variable technologies with cooling systems") %>%
+      add_units("unitless fraction") %>%
+      add_comments("Assumptions copied from L223.StubTechCapFactor_elec") %>%
+      add_legacy_name("L223.StubTechCapFactor_elec") %>%
+      add_precursors("L223.StubTechCapFactor_elec") ->
+      L2233.StubTechCapFactor_elec_cool
+
     L2233.StubTechFixOut_hydro %>%
       add_title("Fixed output for hydropower") %>%
       add_units("EJ") %>%
@@ -1038,6 +1067,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
                 L2233.StubTech_elec_cool,
                 L2233.StubTechEff_elec_cool,
                 L2233.StubTechProd_elec_cool,
+                L2233.StubTechCapFactor_elec_cool,
                 L2233.StubTechFixOut_hydro,
                 L2233.StubTechShrwt_elec_cool,
                 L2233.GlobalTechCapital_elec_cool,

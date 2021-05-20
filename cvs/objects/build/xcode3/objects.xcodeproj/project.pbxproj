@@ -23,7 +23,6 @@
 		0EDA1122220B739C0066113A /* reserve_subresource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EDA1121220B739C0066113A /* reserve_subresource.cpp */; };
 		0EDA1124220B73AA0066113A /* resource_reserve_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EDA1123220B73A90066113A /* resource_reserve_technology.cpp */; };
 		0EF7AF5813E1EFDA0034AA71 /* market_dependency_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */; };
-		0EF7AF5D13E1EFF80034AA71 /* lognrbt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */; };
 		981AC63D19E31D92000CB162 /* rcp_forcing_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */; };
 		CD165BC51A2513D5005F3A8B /* preconditioner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD165BC41A2513D5005F3A8B /* preconditioner.cpp */; };
 		CD165BC81A2513F7005F3A8B /* spline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD165BC71A2513F7005F3A8B /* spline.cpp */; };
@@ -242,6 +241,7 @@
 		CD8FDEC91C0647140099C752 /* pass_through_sector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD8FDEC81C0647140099C752 /* pass_through_sector.cpp */; };
 		CD8FDECC1C0647A20099C752 /* pass_through_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD8FDECB1C0647A20099C752 /* pass_through_technology.cpp */; };
 		CD966E751D92F1CD00A93938 /* libhector-lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD966E721D92F1BB00A93938 /* libhector-lib.a */; };
+		CDA481A525E6FC3E0046E143 /* fdjac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA481A425E6FC3E0046E143 /* fdjac.cpp */; };
 		CDAACD88216C546D00D13FD6 /* supply_demand_curve_saver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAACD87216C546D00D13FD6 /* supply_demand_curve_saver.cpp */; };
 		CDAF62F0130DAB6900D93AFB /* MAGICC_array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EC130DAB6900D93AFB /* MAGICC_array.cpp */; };
 		CDAF62F1130DAB6900D93AFB /* MAGICC_IO_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62ED130DAB6900D93AFB /* MAGICC_IO_helpers.cpp */; };
@@ -253,7 +253,6 @@
 		CDCBBF0D14BB6658008B5F4D /* thermal_building_service_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCBBF0C14BB6658008B5F4D /* thermal_building_service_input.cpp */; };
 		CDD20FFF161B9F9200945527 /* logbroyden.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD20FFE161B9F9200945527 /* logbroyden.cpp */; };
 		CDD21004161B9FA300945527 /* jacobian-precondition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD21002161B9FA300945527 /* jacobian-precondition.cpp */; };
-		CDD21005161B9FA300945527 /* svd_invert_solve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD21003161B9FA300945527 /* svd_invert_solve.cpp */; };
 		CDD5A20D130338B60088463C /* empty_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5A20A130338B60088463C /* empty_technology.cpp */; };
 		CDD5A20E130338B60088463C /* stub_technology_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5A20B130338B60088463C /* stub_technology_container.cpp */; };
 		CDD5A20F130338B60088463C /* technology_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5A20C130338B60088463C /* technology_container.cpp */; };
@@ -352,7 +351,6 @@
 		0EDA1125220B73B60066113A /* resource_reserve_technology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resource_reserve_technology.h; sourceTree = "<group>"; };
 		0EF7AF4A13E1EFCF0034AA71 /* market_dependency_finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = market_dependency_finder.h; sourceTree = "<group>"; };
 		0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = market_dependency_finder.cpp; sourceTree = "<group>"; };
-		0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lognrbt.cpp; sourceTree = "<group>"; };
 		0EF7AF6713E1F0130034AA71 /* edfun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edfun.cpp; sourceTree = "<group>"; };
 		981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rcp_forcing_target.cpp; sourceTree = "<group>"; };
 		981AC63E19E31D9A000CB162 /* rcp_forcing_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rcp_forcing_target.h; sourceTree = "<group>"; };
@@ -821,14 +819,11 @@
 		CD5162A621909920005B351E /* no_climate_model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = no_climate_model.cpp; sourceTree = "<group>"; };
 		CD52797916418A2B00A425BF /* fltcmp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fltcmp.hpp; sourceTree = "<group>"; };
 		CD52797C16418A6400A425BF /* logbroyden.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = logbroyden.hpp; sourceTree = "<group>"; };
-		CD52797D16418A6400A425BF /* lognrbt.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lognrbt.hpp; sourceTree = "<group>"; };
 		CD52797E16418A8300A425BF /* edfun.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = edfun.hpp; sourceTree = "<group>"; };
 		CD52797F16418A8300A425BF /* fdjac.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fdjac.hpp; sourceTree = "<group>"; };
-		CD52798016418A8300A425BF /* functor-subs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "functor-subs.hpp"; sourceTree = "<group>"; };
 		CD52798116418A8300A425BF /* functor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = functor.hpp; sourceTree = "<group>"; };
 		CD52798216418A8300A425BF /* jacobian-precondition.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "jacobian-precondition.hpp"; sourceTree = "<group>"; };
 		CD52798316418A8300A425BF /* linesearch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = linesearch.hpp; sourceTree = "<group>"; };
-		CD52798416418A8300A425BF /* svd_invert_solve.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = svd_invert_solve.hpp; sourceTree = "<group>"; };
 		CD52798516418A8300A425BF /* ublas-helpers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "ublas-helpers.hpp"; sourceTree = "<group>"; };
 		CD52798616418A9F00A425BF /* bitvector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bitvector.hpp; sourceTree = "<group>"; };
 		CD52798716418A9F00A425BF /* bmatrix.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = bmatrix.hpp; sourceTree = "<group>"; };
@@ -862,6 +857,7 @@
 		CD8FDECA1C0647640099C752 /* pass_through_technology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pass_through_technology.h; sourceTree = "<group>"; };
 		CD8FDECB1C0647A20099C752 /* pass_through_technology.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pass_through_technology.cpp; sourceTree = "<group>"; };
 		CD966E671D92F1BB00A93938 /* hector.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = hector.xcodeproj; path = ../../climate/source/hector/project_files/Xcode/hector.xcodeproj; sourceTree = "<group>"; };
+		CDA481A425E6FC3E0046E143 /* fdjac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fdjac.cpp; sourceTree = "<group>"; };
 		CDAACD84216C545F00D13FD6 /* supply_demand_curve_saver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = supply_demand_curve_saver.h; sourceTree = "<group>"; };
 		CDAACD87216C546D00D13FD6 /* supply_demand_curve_saver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = supply_demand_curve_saver.cpp; sourceTree = "<group>"; };
 		CDAF62EA130DAB6100D93AFB /* MAGICC_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAGICC_array.h; sourceTree = "<group>"; };
@@ -878,7 +874,6 @@
 		CDCBBF0C14BB6658008B5F4D /* thermal_building_service_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thermal_building_service_input.cpp; sourceTree = "<group>"; };
 		CDD20FFE161B9F9200945527 /* logbroyden.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logbroyden.cpp; sourceTree = "<group>"; };
 		CDD21002161B9FA300945527 /* jacobian-precondition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "jacobian-precondition.cpp"; sourceTree = "<group>"; };
-		CDD21003161B9FA300945527 /* svd_invert_solve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svd_invert_solve.cpp; sourceTree = "<group>"; };
 		CDD5A206130338A90088463C /* empty_technology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = empty_technology.h; sourceTree = "<group>"; };
 		CDD5A207130338A90088463C /* itechnology_container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = itechnology_container.h; sourceTree = "<group>"; };
 		CDD5A208130338A90088463C /* stub_technology_container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stub_technology_container.h; sourceTree = "<group>"; };
@@ -1660,7 +1655,6 @@
 			children = (
 				CD165BC31A2513CB005F3A8B /* preconditioner.hpp */,
 				CD52797C16418A6400A425BF /* logbroyden.hpp */,
-				CD52797D16418A6400A425BF /* lognrbt.hpp */,
 				CD48861C122873C200F5A88A /* bisect_all.h */,
 				CD48861D122873C200F5A88A /* bisect_one.h */,
 				CD48861E122873C200F5A88A /* bisect_policy.h */,
@@ -1682,7 +1676,6 @@
 			children = (
 				CD165BC41A2513D5005F3A8B /* preconditioner.cpp */,
 				CDD20FFE161B9F9200945527 /* logbroyden.cpp */,
-				0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */,
 				CD488629122873C200F5A88A /* bisect_all.cpp */,
 				CD48862A122873C200F5A88A /* bisect_one.cpp */,
 				CD48862B122873C200F5A88A /* bisect_policy.cpp */,
@@ -1713,11 +1706,9 @@
 				CD6B455319B138870020AC72 /* has_market_flag_solution_info_filter.h */,
 				CD52797E16418A8300A425BF /* edfun.hpp */,
 				CD52797F16418A8300A425BF /* fdjac.hpp */,
-				CD52798016418A8300A425BF /* functor-subs.hpp */,
 				CD52798116418A8300A425BF /* functor.hpp */,
 				CD52798216418A8300A425BF /* jacobian-precondition.hpp */,
 				CD52798316418A8300A425BF /* linesearch.hpp */,
-				CD52798416418A8300A425BF /* svd_invert_solve.hpp */,
 				CD52798516418A8300A425BF /* ublas-helpers.hpp */,
 				CD488636122873C200F5A88A /* all_solution_info_filter.h */,
 				CD488637122873C200F5A88A /* and_solution_info_filter.h */,
@@ -1744,9 +1735,9 @@
 		CD488646122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CDA481A425E6FC3E0046E143 /* fdjac.cpp */,
 				CD6B455419B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp */,
 				CDD21002161B9FA300945527 /* jacobian-precondition.cpp */,
-				CDD21003161B9FA300945527 /* svd_invert_solve.cpp */,
 				0EF7AF6713E1F0130034AA71 /* edfun.cpp */,
 				CD488647122873C200F5A88A /* all_solution_info_filter.cpp */,
 				CD488648122873C200F5A88A /* and_solution_info_filter.cpp */,
@@ -2427,6 +2418,7 @@
 				CD488833122873C200F5A88A /* data_point.cpp in Sources */,
 				CD488834122873C200F5A88A /* explicit_point_set.cpp in Sources */,
 				CD488835122873C200F5A88A /* point_set.cpp in Sources */,
+				CDA481A525E6FC3E0046E143 /* fdjac.cpp in Sources */,
 				CD488836122873C200F5A88A /* point_set_curve.cpp in Sources */,
 				CD488837122873C200F5A88A /* xy_data_point.cpp in Sources */,
 				CD8FDECC1C0647A20099C752 /* pass_through_technology.cpp in Sources */,
@@ -2449,7 +2441,6 @@
 				CDF83C1A13A30CC500DF178D /* kyoto_forcing_target.cpp in Sources */,
 				CDF83C1B13A30CC500DF178D /* secanter.cpp in Sources */,
 				0EF7AF5813E1EFDA0034AA71 /* market_dependency_finder.cpp in Sources */,
-				0EF7AF5D13E1EFF80034AA71 /* lognrbt.cpp in Sources */,
 				CDBEAA2A13E9F2A700FA99F7 /* edfun.cpp in Sources */,
 				0E36093313F03D350002F67C /* price_greater_than_solution_info_filter.cpp in Sources */,
 				0E36094413F0457A0002F67C /* price_less_than_solution_info_filter.cpp in Sources */,
@@ -2471,7 +2462,6 @@
 				CD177C3B159A0C5B000A996F /* cumulative_emissions_target.cpp in Sources */,
 				CDD20FFF161B9F9200945527 /* logbroyden.cpp in Sources */,
 				CDD21004161B9FA300945527 /* jacobian-precondition.cpp in Sources */,
-				CDD21005161B9FA300945527 /* svd_invert_solve.cpp in Sources */,
 				CDBAAD7F1651520D00BB9E56 /* gcam_parallel.cpp in Sources */,
 				0E440957183C7EDF000DA5FF /* node_carbon_calc.cpp in Sources */,
 				0E44096E183D501B000DA5FF /* no_emiss_carbon_calc.cpp in Sources */,
@@ -2550,12 +2540,14 @@
 					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
 					../../../../libs/java/include/darwin,
+					../../../../libs/tbb/include,
 				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs";
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs ../libs/tbb/lib";
 				LIBRARY_SEARCH_PATHS = (
 					../../../../libs/xercesc/lib,
 					../../../../libs/java/lib,
 					"../../../../libs/boost-lib/stage/lib",
+					../../../../libs/tbb/lib,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -2585,6 +2577,7 @@
 					NDEBUG,
 					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
 					"FUSION_MAX_VECTOR_SIZE=30",
+					EIGEN_MPL2_ONLY,
 				);
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2594,12 +2587,15 @@
 					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
 					../../../../libs/java/include/darwin,
+					../../../../libs/eigen,
+					../../../../libs/tbb/include,
 				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs";
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs ../libs/tbb/lib";
 				LIBRARY_SEARCH_PATHS = (
 					../../../../libs/xercesc/lib,
 					../../../../libs/java/lib,
 					"../../../../libs/boost-lib/stage/lib",
+					../../../../libs/tbb/lib,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -2607,6 +2603,9 @@
 					"-ljvm",
 					"-lboost_system",
 					"-lboost_filesystem",
+					"-ltbb",
+					"-ltbbmalloc",
+					"-ltbbmalloc_proxy",
 				);
 				PREBINDING = NO;
 				SDKROOT = "";
@@ -2614,134 +2613,6 @@
 				USER_HEADER_SEARCH_PATHS = "../.. ../../climate/source/hector/headers";
 			};
 			name = Release;
-		};
-		CDE5689F161BA81B007A864C /* Release - LAPACK */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_AUTO_VECTORIZATION = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_ENABLE_SSE41_EXTENSIONS = YES;
-				GCC_ENABLE_SSE42_EXTENSIONS = YES;
-				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
-					"FUSION_MAX_VECTOR_SIZE=30",
-					USE_LAPACK,
-				);
-				GCC_UNROLL_LOOPS = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"../../../../libs/boost-lib",
-					../../../../libs/xercesc/include,
-					../../../../libs/java/include,
-					../../../../libs/java/include/darwin,
-					"../../../../libs/boost-numeric-bindings",
-				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs";
-				LIBRARY_SEARCH_PATHS = (
-					../../../../libs/xercesc/lib,
-					../../../../libs/java/lib,
-					"../../../../libs/boost-lib/stage/lib",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-lxerces-c",
-					"-ljvm",
-					"-llapack",
-					"-lblas",
-					"-lboost_system",
-					"-lboost_filesystem",
-				);
-				PREBINDING = NO;
-				SDKROOT = "";
-				SYMROOT = ../../../../exe;
-				USER_HEADER_SEARCH_PATHS = "../.. ../../climate/source/hector/headers";
-			};
-			name = "Release - LAPACK";
-		};
-		CDE568A0161BA81B007A864C /* Release - LAPACK */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = gcam;
-			};
-			name = "Release - LAPACK";
-		};
-		CDE568AC161BAC0D007A864C /* Release - TBB */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_AUTO_VECTORIZATION = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_ENABLE_SSE41_EXTENSIONS = YES;
-				GCC_ENABLE_SSE42_EXTENSIONS = YES;
-				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
-					"FUSION_MAX_VECTOR_SIZE=30",
-					USE_LAPACK,
-					GCAM_PARALLEL_ENABLED,
-				);
-				GCC_UNROLL_LOOPS = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"../../../../libs/boost-lib",
-					../../../../libs/xercesc/include,
-					../../../../libs/java/include,
-					../../../../libs/java/include/darwin,
-					"../../../../libs/boost-numeric-bindings",
-					../../../../libs/tbb/include,
-				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs";
-				LIBRARY_SEARCH_PATHS = (
-					../../../../libs/xercesc/lib,
-					../../../../libs/java/lib,
-					../../../../libs/tbb/lib,
-					"../../../../libs/boost-lib/stage/lib",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-lxerces-c",
-					"-ljvm",
-					"-llapack",
-					"-lblas",
-					"-ltbb",
-					"-ltbbmalloc",
-					"-ltbbmalloc_proxy",
-					"-lboost_system",
-					"-lboost_filesystem",
-				);
-				PREBINDING = NO;
-				SDKROOT = "";
-				SYMROOT = ../../../../exe;
-				USER_HEADER_SEARCH_PATHS = "../.. ../../climate/source/hector/headers";
-			};
-			name = "Release - TBB";
-		};
-		CDE568AD161BAC0D007A864C /* Release - TBB */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = gcam;
-			};
-			name = "Release - TBB";
 		};
 /* End XCBuildConfiguration section */
 
@@ -2751,8 +2622,6 @@
 			buildConfigurations = (
 				1DEB923208733DC60010E9CD /* Debug */,
 				1DEB923308733DC60010E9CD /* Release */,
-				CDE568A0161BA81B007A864C /* Release - LAPACK */,
-				CDE568AD161BAC0D007A864C /* Release - TBB */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2762,8 +2631,6 @@
 			buildConfigurations = (
 				1DEB923608733DC60010E9CD /* Debug */,
 				1DEB923708733DC60010E9CD /* Release */,
-				CDE5689F161BA81B007A864C /* Release - LAPACK */,
-				CDE568AC161BAC0D007A864C /* Release - TBB */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -7,28 +7,28 @@
 # Column types: ccccnnnnnnnc 
 # ----------
 supplysector,subsector,technology,input.OM.fixed,1971,1990,2005,2010,2015,improvement.max,improvement.rate,improvement.shadow.technology
-electricity,coal,coal (conv pul),OM-fixed,8.83,8.83,8.83,7.745675305,7.745675305,0.75,0.01,
-electricity,coal,coal (conv pul CCS),OM-fixed,15.49135061,15.49135061,15.49135061,15.49135061,15.49135061,0.6,0.05,coal (conv pul)
-electricity,coal,coal (IGCC),OM-fixed,12.4,12.4,12.4,10.84394543,10.84394543,0.7,0.03,
-electricity,coal,coal (IGCC CCS),OM-fixed,14.22,14.22,14.22,21.68789085,21.68789085,0.6,0.05,coal (IGCC)
-electricity,gas,gas (steam/CT),OM-fixed,3.63,3.63,3.63,1.858962073,1.858962073,0.75,0.01,
-electricity,gas,gas (CC),OM-fixed,3.88,3.88,3.88,3.098270122,3.098270122,0.75,0.01,
-electricity,gas,gas (CC CCS),OM-fixed,4.29,4.29,4.29,6.196540244,6.196540244,0.6,0.05,gas (CC)
-electricity,refined liquids,refined liquids (steam/CT),OM-fixed,3.63,3.63,3.63,1.858962073,1.858962073,0.75,0.01,
-electricity,refined liquids,refined liquids (CC),OM-fixed,11.16,11.16,11.16,3.098270122,3.098270122,0.75,0.01,
-electricity,refined liquids,refined liquids (CC CCS),OM-fixed,12.02,12.02,12.02,7.374755642,7.374755642,0.6,0.05,refined liquids (CC)
-electricity,biomass,biomass (conv),OM-fixed,9.09,9.09,9.09,29.43356616,29.43356616,0.75,0.01,
-electricity,biomass,biomass (conv CCS),OM-fixed,35.95922667,35.95922667,35.95922667,35.95922667,35.95922667,0.6,0.05,biomass (conv)
-electricity,biomass,biomass (IGCC),OM-fixed,12.77,12.77,12.77,43.37578171,43.37578171,0.7,0.03,
-electricity,biomass,biomass (IGCC CCS),OM-fixed,14.33,14.33,14.33,52.51170642,52.51170642,0.6,0.05,biomass (IGCC)
+electricity,coal,coal (conv pul),OM-fixed,,,,,,0.75,0.01,
+electricity,coal,coal (conv pul CCS),OM-fixed,,,,,,0.6,0.05,
+electricity,coal,coal (IGCC),OM-fixed,,,,,,0.7,0.03,
+electricity,coal,coal (IGCC CCS),OM-fixed,,,,,,0.6,0.05,
+electricity,gas,gas (steam/CT),OM-fixed,,,,,,0.75,0.01,
+electricity,gas,gas (CC),OM-fixed,,,,,,0.75,0.01,
+electricity,gas,gas (CC CCS),OM-fixed,,,,,,0.6,0.05,
+electricity,refined liquids,refined liquids (steam/CT),OM-fixed,,,,,,0.75,0.01,
+electricity,refined liquids,refined liquids (CC),OM-fixed,,,,,,0.75,0.01,
+electricity,refined liquids,refined liquids (CC CCS),OM-fixed,,,,,,0.6,0.05,
+electricity,biomass,biomass (conv),OM-fixed,,,,,,0.75,0.01,
+electricity,biomass,biomass (conv CCS),OM-fixed,,,,,,0.6,0.05,
+electricity,biomass,biomass (IGCC),OM-fixed,,,,,,0.7,0.03,
+electricity,biomass,biomass (IGCC CCS),OM-fixed,,,,,,0.6,0.05,
 electricity,nuclear,Gen_II_LWR,OM-fixed,22.02,22.02,22.02,29.43356616,29.43356616,1,0,
-electricity,nuclear,Gen_III,OM-fixed,21.77,21.77,21.77,29.43356616,29.43356616,0.75,0.01,
-electricity,wind,wind,OM-fixed,3.75,3.75,3.75,15.49135061,15.49135061,0.75,0.01,
-electricity,wind,wind_storage,OM-fixed,8.63,8.63,8.63,18.58962073,18.58962073,0.7,0.03,wind
-electricity,solar,PV,OM-fixed,8.93,8.93,8.93,12.39308049,12.39308049,0.7,0.03,
-electricity,solar,PV_storage,OM-fixed,17.42,17.42,17.42,14.87169658,14.87169658,0.7,0.03,PV
-electricity,solar,CSP,OM-fixed,16.62,16.62,16.62,17.04048567,17.04048567,0.6,0.05,
-electricity,solar,CSP_storage,OM-fixed,16.62,16.62,16.62,20.13875579,20.13875579,0.7,0.03,CSP
-electricity,geothermal,geothermal,OM-fixed,23.54,23.54,23.54,30.98270122,30.98270122,0.75,0.01,
-elect_td_bld,rooftop_pv,rooftop_pv,OM-fixed,46.77,46.77,46.77,18.58962073,18.58962073,0.7,0.03,
-electricity,wind,wind_offshore,OM-fixed,38,38,38,38,38,0.7,0.03,
+electricity,nuclear,Gen_III,OM-fixed,,,,,,0.75,0.01,
+electricity,wind,wind,OM-fixed,,,,,,0.75,0.01,
+electricity,wind,wind_storage,OM-fixed,,,,,,0.7,0.03,
+electricity,solar,PV,OM-fixed,,,,,,0.7,0.03,
+electricity,solar,PV_storage,OM-fixed,,,,,,0.7,0.03,
+electricity,solar,CSP,OM-fixed,,,,,,0.6,0.05,
+electricity,solar,CSP_storage,OM-fixed,,,,,,0.7,0.03,
+electricity,geothermal,geothermal,OM-fixed,,,,,,0.75,0.01,
+elect_td_bld,rooftop_pv,rooftop_pv,OM-fixed,,,,,,0.7,0.03,
+electricity,wind,wind_offshore,OM-fixed,,,,,,0.7,0.03,

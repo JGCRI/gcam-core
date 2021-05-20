@@ -8,4 +8,4 @@ resource,reserve.subresource,resource.reserve.technology,decline.phase.percent
 coal,coal,coal,0.3
 crude oil,crude oil,crude oil,0.3
 natural gas,natural gas,natural gas,0.3
-unconventional oil,unconventional oil,unconventional oil,0.3
+crude oil,unconventional oil,unconventional oil,0.3

@@ -45,9 +45,7 @@
  */
 
 #include <iostream>
-#include <boost/numeric/ublas/vector.hpp> 
-
-#define UBVECTOR boost::numeric::ublas::vector
+#include "solution/util/include/ublas-helpers.hpp"
 
 /*!
  * @class VecFVec
@@ -55,8 +53,7 @@
  * @author Robert Link
  * @tparam Tr: return type -- generally a floating point type
  * @tparam Ta: argument type -- generally a floating point type
- */ 
-template <class Tr, class Ta>
+ */
 class VecFVec {
 protected:
   /*!
@@ -77,7 +74,7 @@ public:
    * @remark Not declared as const because a functor may maintain some internal
    *         state that is modified by a normal call.
    */
-  virtual void operator()(const UBVECTOR<Ta> &arg, UBVECTOR<Tr> &rval, const int partj = -1) = 0;
+  virtual void operator()(const UBVECTOR &arg, UBVECTOR &rval, const int partj = -1) = 0;
   /*!
    * Returns the length of the argument vector required by the function
    */
@@ -120,66 +117,5 @@ public:
   virtual void diagnosticOff(void) {mdiagnostic = false;}
 };
 
-
-
-/*!
- * @class SclFVec
- * @brief Base class template for scalar function of a vector argument 
- * @author Robert Link
- * @tparam Tr: return type -- generally a floating point type
- * @tparam Ta: argument type -- generally a floating point type
- */ 
-template <class Tr, class Ta>
-class SclFVec {
-protected:
-  /*!
-   * @var na: length of the argument vector
-   * @remark Subclasses of SclFVec are responsible for setting this value
-   *         appropriately on initialization.
-   */
-  int na;
-
-public: 
-  /*!
-   * Paren operator -- calls the function
-   * @param[in] arg: argument vector - caller is responsible for
-   *            sizing it correctly (you'll need to do that to supply reasonable
-   *            input values anyhow).
-   * @return Scalar function output.
-   * @remark Not declared as const because a functor may maintain some internal
-   *         state that is modified by a normal call.
-   */
-  virtual Tr operator()(const UBVECTOR<Ta> &arg) = 0;
-  /*!
-   * Returns the length of the argument vector required by the function
-   */
-  int narg() const {return na;}
-  //! diagnostic output does nothing by default
-  virtual void prn_diagnostic(std::ostream *out) {}
-};
-
-
-/*!
- * @brief Base class template for scalar function of a scalar argument 
- * @author Robert Link
- * @tparam Tr: return type -- generally a floating point type
- * @tparam Ta: argument type -- generally a floating point type
- */ 
-template <class Tr, class Ta>
-class SclFScl {
-protected:
-
-public:
-  /*!
-   * Paren operator -- calls the function
-   * @param[in] arg: argument to the function
-   * @return Scalar function output.
-   * @remark Not declared as const because a functor may maintain some internal
-   *         state that is modified by a normal call.
-   */
-  virtual Tr operator()(Ta &arg) = 0;
-};
-
-#undef UBVECTOR
 
 #endif

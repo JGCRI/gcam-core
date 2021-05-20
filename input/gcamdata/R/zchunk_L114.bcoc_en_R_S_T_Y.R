@@ -19,17 +19,6 @@
 #' @importFrom tidyr gather spread
 #' @author GPK May 2017
 module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
-  # if(driver.EMISSIONS_SOURCE == "CEDS") {
-  #   if(command == driver.DECLARE_INPUTS) {
-  #     return(NULL)
-  #   } else if(command == driver.DECLARE_OUTPUTS) {
-  #     return(NULL)
-  #   } else if(command == driver.MAKE) {
-  #     return_data()
-  #   } else {
-  #     stop("Unknown command")
-  #   }}
-  # else {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/mappings/EPA_ghg_tech",
@@ -173,4 +162,3 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
     stop("Unknown command")
   }
 }
-# }

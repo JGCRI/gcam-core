@@ -130,6 +130,9 @@
                         <rewrite from="hydro-elect" to="f hydro"/>
                         <rewrite from="solar-elect" to="h solar"/>
                         <rewrite from="coal" to="c coal"/>
+                        <rewrite from="traded coal" to="a oil"/>
+                        <rewrite from="traded natural gas" to="b natural gas"/>
+                        <rewrite from="traded oil" to="c coal"/>
                         <rewrite from="elect_td_ind" to=""/>
                         <rewrite from="wind-elect" to="g wind"/>
                         <rewrite from="total biomass" to="d biomass"/>
@@ -3775,8 +3778,9 @@ element input {
             <emissionsQueryBuilder title="CO2 emissions by region">
                 <axis1 name="region">region</axis1>
                 <axis2 name="Year">emissions</axis2>
-                <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type='sector' (:collapse:)]//CO2/emissions/node()</xPath>
-                <comments/>
+                <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' (:collapse:) or @type = 'resource' (:collapse:)](: / *[@type = 'subresource' (: collapse :)] :)//*[((@name='CO2'))]/emissions/node()</xPath>
+                <comments>
+                </comments>
             </emissionsQueryBuilder>
             <emissionsQueryBuilder title="CO2 emissions by sector">
                 <axis1 name="sector">sector</axis1>

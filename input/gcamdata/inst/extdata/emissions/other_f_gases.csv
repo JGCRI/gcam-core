@@ -3,17 +3,17 @@
 # Units: NA
 # Source: GCAM compilation?
 # Description: Specifies other fgases by sector
-# Column types: cc 
+# Column types: cc
 # ----------
 Gas,Sector
 C2F6,refrigeration
 CF4,na
-HFC125,fire exting
+HFC125,refrigeration
 HFC134a,fire exting
 HFC143a,refrigeration
 HFC152a,aerosols
 HFC227ea,fire exting
-HFC23,fire exting
+HFC23,refrigeration
 HFC236fa,fire exting
 HFC245fa,foams
 HFC32,refrigeration

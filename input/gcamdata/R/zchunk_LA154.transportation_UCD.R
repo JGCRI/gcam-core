@@ -106,9 +106,10 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     # NOTE: We are currently aggregating IEA's data on rail and road due to inconsistencies (e.g. no rail in the Middle East)
     # First, replace the international shipping data (swapping in EIA for IEA)
     # Only perform this swap for international shipping / refined liquids, and in countries in the EIA database
+
     IEA_data_EIA_intlship <- L101.in_EJ_ctry_trn_Fi_Yh %>%
-      # expecting NAs here because we only want to replace certain values
-      left_join_keep_first_only(L1011.in_EJ_ctry_intlship_TOT_Yh %>% rename(EIA_value = value), by = c("iso", "year")) %>%
+      # expecting NAs here because we only want to replace certain values. JS 12/2020: Use left_join
+      left_join(L1011.in_EJ_ctry_intlship_TOT_Yh %>% rename(EIA_value = value), by = c("iso", "year")) %>%
       mutate(value = if_else(sector == "in_trn_international ship" &
                                fuel == "refined liquids" &
                                !is.na(EIA_value), EIA_value, value),

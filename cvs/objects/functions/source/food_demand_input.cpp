@@ -356,7 +356,8 @@ std::string FoodDemandInput::getTrialShareMarketName() const {
 double FoodDemandInput::getTrialShare( const string& aRegionName,
                                        const int aPeriod ) const
 {
-    return SectorUtils::getTrialSupply( aRegionName, getTrialShareMarketName(), aPeriod );
+    // ensure the trial share is between zero and one
+    return std::min(std::max( SectorUtils::getTrialSupply( aRegionName, getTrialShareMarketName(), aPeriod ), 0.0), 1.0);
 }
 
 /*!

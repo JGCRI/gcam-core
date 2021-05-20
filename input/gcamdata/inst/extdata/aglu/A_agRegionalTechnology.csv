@@ -1,5 +1,5 @@
 # File: A_agRegionalTechnology.csv
-# Title: Technology-level assumptions of regional crop markets
+# Title: Technology-level assumptions of regional crop agricultural markets
 # Units: Various
 # Comments: pass-through subsectors; there is no technology competition
 # Source: NA
@@ -20,8 +20,8 @@ regional palmfruit,domestic palmfruit,domestic palmfruit,PalmFruit,1,0,1,regiona
 regional palmfruit,imported palmfruit,imported palmfruit,traded palmfruit,1,0,1,USA
 regional rice,domestic rice,domestic rice,Rice,1,0,1,regional
 regional rice,imported rice,imported rice,traded rice,1,0,1,USA
-regional root_tuber,domestic root_tuber,domestic root_tuber,RootTuber,1,0,1,regional
-regional root_tuber,imported root_tuber,imported root_tuber,traded root_tuber,1,0,1,USA
+regional roottuber,domestic roottuber,domestic roottuber,RootTuber,1,0,1,regional
+regional roottuber,imported roottuber,imported roottuber,traded roottuber,1,0,1,USA
 regional sugarcrop,domestic sugarcrop,domestic sugarcrop,SugarCrop,1,0,1,regional
 regional sugarcrop,imported sugarcrop,imported sugarcrop,traded sugarcrop,1,0,1,USA
 regional wheat,domestic wheat,domestic wheat,Wheat,1,0,1,regional
@@ -36,3 +36,5 @@ regional poultry,domestic poultry,domestic poultry,Poultry,1,0,1,regional
 regional poultry,imported poultry,imported poultry,traded poultry,1,0,1,USA
 regional sheepgoat,domestic sheepgoat,domestic sheepgoat,SheepGoat,1,0,1,regional
 regional sheepgoat,imported sheepgoat,imported sheepgoat,traded sheepgoat,1,0,1,USA
+regional forest,domestic forest,domestic forest,Forest,1,0,1,regional
+regional forest,imported forest,imported forest,traded forest,1,0,1,USA

@@ -42,6 +42,7 @@
 #include "util/base/include/util.h"
 #include <string>
 #include "marketplace/include/trial_value_market.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 
@@ -63,6 +64,9 @@ IMarketType::Type TrialValueMarket::getType() const {
 
 void TrialValueMarket::initPrice() {
     // Note zero may be a valid price for a trial value.
+    // get the minimum price from the market info
+    const string LOWER_BOUND_KEY = "lower-bound-supply-price";
+    mMinPrice = mMarketInfo->getDouble( LOWER_BOUND_KEY, 0.0 );
 }
 
 void TrialValueMarket::setPrice( const double priceIn ) {
@@ -92,7 +96,7 @@ void TrialValueMarket::set_price_to_last( const double lastPrice ) {
 }
 
 double TrialValueMarket::getPrice() const {
-    return Market::getPrice();
+    return std::max( Market::getPrice(), mMinPrice );
 }
 
 /*! \brief Add to the the Market an amount of demand in a method based on the Market's type.
@@ -146,5 +150,5 @@ bool TrialValueMarket::shouldSolveNR() const {
     // Allow NR to solve trial value markets, even if they don't
     // otherwise meet the NR criteria.  The edfun.cpp module makes
     // special allowance for this type of market.
-    return shouldSolve();
+    return shouldSolve() && ( abs(Market::getPrice()) > util::getVerySmallNumber() || abs(Market::getDemand()) > util::getVerySmallNumber());
 }

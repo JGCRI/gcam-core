@@ -5,11 +5,5 @@
 # ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function,traded
 regional biomass,regional biomass,share-weight,final-calibration-year,end-year,,linear,0
-regional coal,regional coal,share-weight,final-calibration-year,end-year,,linear,0
-regional natural gas,regional natural gas,share-weight,final-calibration-year,end-year,,linear,0
-unconventional oil production,unconventional oil production,share-weight,final-calibration-year,end-year,,fixed,0
-regional oil,crude oil,share-weight,final-calibration-year,2050,,linear,0
-regional oil,unconventional oil,share-weight,final-calibration-year,2185,2,s-curve,0
-traded unconventional oil,unconventional oil,share-weight,final-calibration-year,2050,,linear,1
 regional corn for ethanol,regional corn for ethanol,share-weight,final-calibration-year,end-year,,fixed,0
 regional sugar for ethanol,regional sugar for ethanol,share-weight,final-calibration-year,end-year,,fixed,0

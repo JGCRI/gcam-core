@@ -1,8 +1,0 @@
-# File: A21.tradedtech_cost.csv
-# Title: Primary energy handling default costs
-# Description: To include 2005-2010 price shock set the 2010 and 2100 values to 1.5
-# Units: 1975$/EJ
-# Column types: cccciinn 
-# ----------
-supplysector,subsector,technology,minicam.non.energy.input,1971,2005,2010,2100
-traded unconventional oil,unconventional oil,unconventional oil,non-energy,0,0,1.5,1.5

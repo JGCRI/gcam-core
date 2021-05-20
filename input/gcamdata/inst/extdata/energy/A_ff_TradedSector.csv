@@ -1,0 +1,11 @@
+# File: A_ff_TradedSector.csv
+# Title: Supplysector assumptions for traded fossil fuel markets (including logit exponent for subsector competition)
+# Units: Various
+# Comments: These sectors compete different regions in supplying the pool of globally traded fuels
+# Source: NA
+# Column types: ccccinc
+# ----------
+supplysector,output.unit,input.unit,price.unit,traded,logit.exponent,logit.type
+traded coal,EJ,EJ,1975$/GJ,1,-6,
+traded oil,EJ,EJ,1975$/GJ,1,-6,
+traded natural gas,EJ,EJ,1975$/GJ,1,-6,

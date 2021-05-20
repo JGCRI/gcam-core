@@ -55,6 +55,7 @@
 #include "util/base/include/hash_map.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
+#include "util/base/include/definitions.h"
 
 #if GCAM_PARALLEL_ENABLED
 #include <tbb/queuing_rw_mutex.h>

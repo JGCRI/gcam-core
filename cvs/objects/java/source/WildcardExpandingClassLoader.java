@@ -62,7 +62,7 @@ public class WildcardExpandingClassLoader extends URLClassLoader {
      * A pattern that looks for a "prefered" BaseX version if we find
      * duplicate versions of the library.
      */
-    final static String PREFERED_BASEX_VER = "^.*[Bb][Aa][Ss][Ee][Xx]-8.6.7.*$";
+    final static String PREFERED_BASEX_VER = "^.*[Bb][Aa][Ss][Ee][Xx]-9.5.0.*$";
 
     /**
      * Constructor which will expand any wildcard jar specifications then call

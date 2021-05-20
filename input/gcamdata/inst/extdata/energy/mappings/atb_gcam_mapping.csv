@@ -1,0 +1,51 @@
+# File: atb_gcam_mapping.csv
+# Title: ATB to GCAM technology mapping
+# Units: unitless scaling factor
+# Source: NA
+# Comments: Mapping between ATB 2019 technologies and GCAM technologies.  Conversion factor of 1 indicates at 1:1 mapping between ATB & GCAM technologies.
+# Some GCAM technologies do not correspond directly to technologies in the ATB data set and are inferred in some way - as described below:
+# For technologies which are not included in the ATB database; we calculate the cost ratio (from the previous GCAM cost assumptions) relative to a technology which is included in the ATB database and apply that ratios to the costs for a technology which is in the ATB database.
+# CSP ratio = CSP / CSP_storage
+# biomass (IGCC) ratio = biomass (IGCC) / biomass (conv)
+# biomass (conv CCS) ratio = biomass (conv CCS) / biomass (conv)
+# biomass (IGCC CCS) ratio = biomass (IGCC CCS) / biomass (IGCC)
+# coal (IGCC CCS) ratio = coal (IGCC CCS) / coal (IGCC)
+# refined liquids (steam/CT) ratio = refined liquids (steam/CT) / gas (steam/CT)
+# refined liquids (CC) ratio = refined liquids (CC) / gas (CC)
+# refined liquids (CC CCS) ratio = refined liquids (CC CCS) / gas (CC CCS)
+# Wind and PV with dedicated storage costs are assumed to equal costs of the underlying technologies plus four times the cost of ATB 2019's battery storage.
+# This is because ATB reports costs for a 4-hour battery with 15-year lifetime. We assume an 8-hour battery with 30-year lifetime to be more consistent with storage requirements and technology lifetimes in GCAM.
+# rooftop_pv costs represent a simple average of commerical and residential rooftop PV.
+# PV and rooftop PV technolgies entail a 1$/kW DC : 0.85$/kW AC conversion because Overnight Capital Cost; Fixed O&M; and Variable O&M costs represent $/kW(h) DC; all other techs are reported in $/kW(h) AC.
+# inferred column indicates whether a technology cost is mapped directly from the ATB or is inferred via either (1) the shadow_tech cost ratio approach described above or (2) created from a composite of other technology costs (e.g. PV_storage costs are the sum of ATB PV costs and ATB Battery Storage costs).  This column is not used in the data processing.
+# Column types: cccncc 
+# ----------
+technology,tech_type,tech_detail,conversion,shadow_tech,inferred
+coal (conv pul),Coal,Coal-new-HighCF,1,,
+coal (conv pul CCS),Coal,Coal-CCS 90%-HighCF,1,,
+coal (IGCC),Coal,Coal-IGCC-HighCF,1,,
+coal (IGCC CCS),Coal,Coal-IGCC-HighCF,,coal (IGCC),x
+gas (steam/CT),Natural Gas,Gas-CT-HighCF,1,,
+gas (CC),Natural Gas,Gas-CC-HighCF,1,,
+gas (CC CCS),Natural Gas,Gas-CC-CCS-HighCF,1,,
+refined liquids (steam/CT),Natural Gas,Gas-CT-HighCF,,gas (steam/CT),x
+refined liquids (CC),Natural Gas,Gas-CC-HighCF,,gas (CC),x
+refined liquids (CC CCS),Natural Gas,Gas-CC-CCS-HighCF,,gas (CC CCS),x
+biomass (conv),Biopower,Dedicated,1,,
+biomass (conv CCS),Biopower,Dedicated,,biomass (conv),x
+biomass (IGCC),Biopower,Dedicated,,biomass (conv),x
+biomass (IGCC CCS),Biopower,Dedicated,,biomass (conv),x
+Gen_III,Nuclear,Nuclear,1,,
+wind,Land-Based Wind,TRG 5,1,,
+wind_storage,Land-Based Wind,TRG 5,1,,x
+wind_storage,Storage,Battery Storage,3,,x
+PV,Solar - Utility PV,Utility PV - Kansas City,1.176,,
+PV_storage,Solar - Utility PV,Utility PV - Kansas City,1.176,,x
+PV_storage,Storage,Battery Storage,3,,x
+CSP,Solar - CSP,10hrs TES - Class 3,,CSP_storage,x
+CSP_storage,Solar - CSP,10hrs TES - Class 3,1,,
+geothermal,Geothermal,Hydro / Flash,1,,
+rooftop_pv,Solar - PV Dist. Comm,Comm PV - Kansas City,0.588,,
+rooftop_pv,Solar - PV Dist. Res,Res PV - Kansas City,0.588,,
+wind_offshore,Offshore Wind,TRG 4,1,,
+battery,Storage,Battery Storage,1.5,,

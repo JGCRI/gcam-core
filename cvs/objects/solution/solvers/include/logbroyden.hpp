@@ -49,13 +49,7 @@
 #include <boost/numeric/ublas/matrix.hpp>
 #include "solution/util/include/solvable_nr_solution_info_filter.h"
 #include "solution/util/include/edfun.hpp"
-
-#define UBLAS boost::numeric::ublas
-#if USE_LAPACK
-#define UBMATRIX UBLAS::matrix<double,boost::numeric::ublas::column_major>
-#else
-#define UBMATRIX UBLAS::matrix<double>
-#endif
+#include "solution/util/include/ublas-helpers.hpp"
 
 class CalcCounter; 
 class Marketplace;
@@ -83,7 +77,7 @@ public:
   LogBroyden(Marketplace *mktplc, World *world, CalcCounter *ccounter, int itmax=250,
              double ftol=1.0e-4) :
       SolverComponent(mktplc,world,ccounter), mMaxIter( itmax ), mFTOL( ftol ),
-      mLogPricep( true ) {}
+      mLogPricep( true ), mMaxJacobainReuse( 100 ) {}
   virtual ~LogBroyden() {}
 
   // SolverComponent methods
@@ -101,12 +95,12 @@ public:
 
 protected:
   //! Perform the Broyden's method iterations.
-  int bsolve(VecFVec<double,double> &F, UBLAS::vector<double> &x, UBLAS::vector<double> &fx,
+  int bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
              UBMATRIX &B, int &neval);
   //! Additional logging for visualizing solver progress.
-  void reportVec(const std::string &aname, const UBLAS::vector<double> &av, const std::vector<int> &amktids,
+  void reportVec(const std::string &aname, const UBVECTOR &av, const std::vector<int> &amktids,
                  const std::vector<bool> &aissolvable);
-  void reportPSD(UBLAS::vector<double> &arptvec, const std::vector<int> &amktids, const std::vector<bool> &aissolvable);
+  void reportPSD(UBVECTOR &arptvec, const std::vector<int> &amktids, const std::vector<bool> &aissolvable);
 
   //! Maximum number of main-loop iterations for the root-finding algorithm
   unsigned int mMaxIter;
@@ -129,13 +123,14 @@ protected:
   // have multiple logbroyden solvers operating.
   static int mLastPer;                 //<! used to detect when the period has changed, so we can reset mPerIter.
   static int mPerIter;                 //<! total iteration count within the period
+    
+  //! Control the number of times we can re-use the Jacobian using Broyden's method
+  //! which if set to zero implies this algorithm just collapse to a regular NR algorithm
+  int mMaxJacobainReuse;
 
 private:
   static std::string SOLVER_NAME;
 };
-
-#undef UBLAS
-#undef UBMATRIX
 
 #endif  // LOGBROYDEN_HPP_
 

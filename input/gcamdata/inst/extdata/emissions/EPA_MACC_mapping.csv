@@ -1,0 +1,40 @@
+# File: EPA_MACC_mapping.csv
+# Title: Map of EPA sectors and sources to EPA processes in old dataset
+# Description: to use the old data process for now
+# Units: Unitless
+# Column types: cccc
+sector,source,subsource,Process
+Agriculture,AgSoils,NA,Cropland Management
+Agriculture,Livestock,Enteric,Livestock
+Agriculture,Livestock,Manure,Livestock
+Agriculture,OtherAg,NA,Cropland Management
+Agriculture,Rice,NA,Rice Cultivation
+Energy,Combustion,Biomass,NA
+Energy,Coal,Surface,Coal Mining Activities
+Energy,Coal,Under,Coal Mining Activities
+Energy,NGO,Gas Product,Natural Gas and Oil Systems
+Energy,NGO,Gas TSD,Natural Gas and Oil Systems
+Energy,NGO,Oil Product,Natural Gas and Oil Systems
+Energy,NGO,Oil Refining,Natural Gas and Oil Systems
+Energy,OtherEnergy,NA,NA
+Energy,Combustion,StatMob,NA
+Industrial Processes,Metals,Aluminum,Primary Aluminum Production
+Industrial Processes,EPS,NA,Electric Power Systems
+Industrial Processes,Electronics,FPD,Flat Panel Display Manufacturing
+Industrial Processes,HCFC22,NA,HCFC-22 Production
+Industrial Processes,Metals,Magnesium,Magnesium Manufacturing
+Industrial Processes,NitricAdipic,Adipic,Nitric and Adipic Acid Production
+Industrial Processes,NitricAdipic,Nitric,Nitric and Adipic Acid Production
+Industrial Processes,ODSSubs,Aerosols,Aerosols Product Use
+Industrial Processes,ODSSubs,Fire Ext,Fire Protection
+Industrial Processes,ODSSubs,Foams,Foams
+Industrial Processes,ODSSubs,RefAC,Refrigeration and Air Conditioning
+Industrial Processes,ODSSubs,Solvents,Solvent Use
+Industrial Processes,OtherIPPU,NA,NA
+Industrial Processes,Electronics,PV,Photovoltaic Cell Manufacturing
+Industrial Processes,Electronics,Semi,Semiconductor Manufacturing
+Waste,Landfills,Industrial,Landfilling and Solid Waste
+Waste,Landfills,MSW,Landfilling of Solid Waste
+Waste,OtherWaste,NA,NA
+Waste,Wastewater,Rural,Wastewater
+Waste,Wastewater,Urban,Wastewater

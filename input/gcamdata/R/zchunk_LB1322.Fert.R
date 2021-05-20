@@ -49,7 +49,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       supplysector <- subsector <- technology <- minicam.non.energy.input <- improvement.max <- improvement.rate <-
       improvement.shadow.technology <- NEcost <- Technology <- NEcost_75USDkgN <- `Central Natural Gas Sequestration` <-
       `Central Natural Gas` <- `Central Coal` <- `Central Coal Sequestration` <- Fert_Prod_MtN_adj <-
-      in_indfeed_netFert <- NULL
+      in_indfeed_netFert <- Central_Natural_Gas_Sequestration <- Central_Natural_Gas <- Central_Coal <- Central_Coal_Sequestration <- NULL
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -279,8 +279,10 @@ module_energy_LB1322.Fert <- function(command, ...) {
       complete(resource, year = sort(unique(c(year, aglu.FERT_PRICE_YEAR)))) %>%
       mutate(value = approx_fun(year, value)) %>%
       filter(year == aglu.FERT_PRICE_YEAR) %>%
+      mutate(value = replace_na(value, 0)) %>% 
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A10.rsrc_cost_aglu.FERT_PRICE_YEAR
+
 
     # A21.globaltech_cost and A22.globaltech_cost report costs on primary energy handling (A21) and transformation technologies (A22)
     # Units for both are 1975$/GJ
@@ -295,8 +297,11 @@ module_energy_LB1322.Fert <- function(command, ...) {
       complete(technology, year = sort(unique(c(year, aglu.FERT_PRICE_YEAR)))) %>%
       mutate(value = approx_fun(year, value)) %>%
       filter(year == aglu.FERT_PRICE_YEAR) %>%
+      mutate(value = if_else(is.na(value) ,0 , as.double(value))) %>%
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A21.globaltech_cost_aglu.FERT_PRICE_YEAR
+
+
 
     # Interpolate to get cost of primary energy transformation for natural gas in aglu.FERT_PRICE_YEAR
     A22.globaltech_cost %>%
@@ -306,12 +311,13 @@ module_energy_LB1322.Fert <- function(command, ...) {
       complete(technology, year = sort(unique(c(year, aglu.FERT_PRICE_YEAR)))) %>%
       mutate(value = approx_fun(year, value)) %>%
       filter(year == aglu.FERT_PRICE_YEAR) %>%
+      mutate(value = if_else(is.na(value),0,as.double(value))) %>%
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A22.globaltech_cost_aglu.FERT_PRICE_YEAR
 
+
     # Sum up costs. Units are 1975 USD per GJ.
-    L1322.P_gas_75USDGJ <- A10.rsrc_cost_aglu.FERT_PRICE_YEAR + A21.globaltech_cost_aglu.FERT_PRICE_YEAR +
-      A22.globaltech_cost_aglu.FERT_PRICE_YEAR + energy.GAS_PIPELINE_COST_ADDER_75USDGJ
+    L1322.P_gas_75USDGJ <- A10.rsrc_cost_aglu.FERT_PRICE_YEAR + energy.GAS_PIPELINE_COST_ADDER_75USDGJ
 
     # Obtain fertilizer input-output cofficient for natural gas in aglu.FERT_PRICE_YEAR
     L1322.IO_R_Fert_F_Yh %>%
@@ -328,7 +334,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
     Fert_Cost_75USDkgN <- aglu.FERT_PRICE * gdp_deflator(1975, aglu.FERT_PRICE_YEAR) * CONV_KG_T / CONV_NH3_N
 
     # Calculate non-fuel cost of natural gas steam reforming (includes delivery charges)
-    L1322.Fert_NEcost_75USDkgN_gas <- Fert_Cost_75USDkgN - L1322.Fert_Fuelcost_75USDGJ_gas
+    L1322.Fert_NEcost_75USDkgN_gas <- as.double(Fert_Cost_75USDkgN - L1322.Fert_Fuelcost_75USDGJ_gas)
 
 
     # Use H2A technology characteristics to derive characteristics of other technologies
@@ -344,12 +350,17 @@ module_energy_LB1322.Fert <- function(command, ...) {
     # Derive costs as the cost of NGSR plus the specified cost adder
     H2A_Prod_Tech_1975 %>%
       select(Technology, NEcost_75USDkgN) %>%
+      mutate(Technology= if_else(Technology=="Central Natural Gas Sequestration","Central_Natural_Gas_Sequestration",Technology),
+             Technology= if_else(Technology=="Central Natural Gas","Central_Natural_Gas",Technology),
+             Technology= if_else(Technology=="Central Coal","Central_Coal",Technology),
+             Technology= if_else(Technology=="Central Coal Sequestration","Central_Coal_Sequestration",Technology)) %>%
       spread(Technology, NEcost_75USDkgN) %>%
-      # Calculate costs of fuel technologies, including the specified cost adder
-      mutate(gasCCS = `Central Natural Gas Sequestration` - `Central Natural Gas` + L1322.Fert_NEcost_75USDkgN_gas,
-             coal = `Central Coal` - `Central Natural Gas` + L1322.Fert_NEcost_75USDkgN_gas,
-             coalCCS = `Central Coal Sequestration` - `Central Natural Gas` + L1322.Fert_NEcost_75USDkgN_gas) ->
-      L1322.Fert_NEcost_75USDkgN_technologies
+      mutate(gasCCS = as.double(Central_Natural_Gas_Sequestration - Central_Natural_Gas + L1322.Fert_NEcost_75USDkgN_gas),
+             coal = as.double(Central_Coal - Central_Natural_Gas+ L1322.Fert_NEcost_75USDkgN_gas),
+             coalCCS = as.double(Central_Coal_Sequestration - Central_Natural_Gas+ L1322.Fert_NEcost_75USDkgN_gas))-> H2A_Prod_Tech_1975
+
+    H2A_Prod_Tech_1975 ->L1322.Fert_NEcost_75USDkgN_technologies
+
 
     # Here the individual costs will be saved. These values will be used to build the final table.
     L1322.Fert_NEcost_75USDkgN_gasCCS <- L1322.Fert_NEcost_75USDkgN_technologies[["gasCCS"]]

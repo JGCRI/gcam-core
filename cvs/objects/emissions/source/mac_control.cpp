@@ -66,7 +66,9 @@ MACControl::MACControl():
 AEmissionsControl(),
 mNoZeroCostReductions( false ),
 mTechChange( new objects::PeriodVector<double>( 0.0 ) ),
+mFullPhaseInPrice (400.00),
 mZeroCostPhaseInTime( 25 ),
+mMacPhaseInTime( 0 ),
 mCovertPriceValue( 1 ),
 mPriceMarketName( "CO2" ),
 mMacCurve( new PointSetCurve( new ExplicitPointSet() ) )
@@ -112,7 +114,9 @@ void MACControl::copy( const MACControl& aOther ){
     mMacCurve = aOther.mMacCurve->clone();
     mNoZeroCostReductions = aOther.mNoZeroCostReductions;
     mTechChange = aOther.mTechChange;
+    mFullPhaseInPrice = aOther.mFullPhaseInPrice;
     mZeroCostPhaseInTime = aOther.mZeroCostPhaseInTime;
+    mMacPhaseInTime = aOther.mMacPhaseInTime;
     mCovertPriceValue = aOther.mCovertPriceValue;
     mPriceMarketName = aOther.mPriceMarketName;
 }
@@ -148,8 +152,14 @@ bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
     else if ( aNodeName == "tech-change" ){
         XMLHelper<double>::insertValueIntoVector( aCurrNode, *mTechChange, modeltime );
     }
+    else if ( aNodeName == "full-phase-in-price" ){
+        mFullPhaseInPrice = XMLHelper<double>::getValue( aCurrNode );
+    }
     else if ( aNodeName == "zero-cost-phase-in-time" ){
         mZeroCostPhaseInTime = XMLHelper<int>::getValue( aCurrNode );
+    }
+    else if ( aNodeName == "mac-phase-in-time" ){
+        mMacPhaseInTime = XMLHelper<int>::getValue( aCurrNode );
     }
     else if ( aNodeName == "mac-price-conversion" ){
         mCovertPriceValue = XMLHelper<Value>::getValue( aCurrNode );
@@ -172,9 +182,10 @@ void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs
         XMLWriteElementWithAttributes( currPair->second, "mac-reduction", aOut, aTabs, attrs );
     }
     const Modeltime* modeltime = scenario->getModeltime();
-	XMLWriteVector( *mTechChange, "tech-change", aOut, aTabs, modeltime, 0.0 );
 
+    XMLWriteElementCheckDefault( mFullPhaseInPrice, "full-phase-in-price", aOut, aTabs, 400.0 );
     XMLWriteElementCheckDefault( mZeroCostPhaseInTime, "zero-cost-phase-in-time", aOut, aTabs, 25 );
+    XMLWriteElementCheckDefault( mMacPhaseInTime, "mac-phase-in-time", aOut, aTabs, 0 );
     XMLWriteElementCheckDefault( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs, false );
     XMLWriteElementCheckDefault( mCovertPriceValue, "mac-price-conversion", aOut, aTabs, Value( 1.0 ) );
     XMLWriteElement( mPriceMarketName, "market-name", aOut, aTabs );
@@ -202,8 +213,10 @@ void MACControl::initCalc( const string& aRegionName,
 }
 
 void MACControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
+    int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
     // Check first if MAC curve operation should be turned off
-    if ( mCovertPriceValue < 0 ) { // User flag to turn off MAC curves
+    // we do not apply the MAC curve in calibration model periods
+    if ( aPeriod <= finalCalibPer || mCovertPriceValue < 0 ) { // User flag to turn off MAC curves
         setEmissionsReduction( 0 );
         return;
     }
@@ -217,45 +230,94 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
     emissionsPrice *= mCovertPriceValue;
 
     double reduction = getMACValue( emissionsPrice );
-    reduction = adjustForTechChange( aPeriod, reduction );
+    
+    // base reduction when only considering tech.change
+    double baseReduction = adjustForTechChange( aPeriod, reduction );
     
     if( mNoZeroCostReductions && emissionsPrice <= 0.0 ) {
         reduction = 0.0;
     }
 
+    // define parameters for zero-cost reduction and mac-phase-in reduction
+    double zeroCostReductionMultiplier = 0.0;
+    double macPhaseInMultiplier = 1.0;
+    
     // Adjust to smoothly phase-in "no-cost" emission reductions
     // Some MAC curves have non-zero abatement at zero emissions price. Unless the users sets
     // mNoZeroCostReductions, this reduction will occur even without an emissions price. This
     // code smoothly phases in this abatement so that a sudden change in emissions does not
     // occur. The phase-in period has a default value that can be altered
-    // by the user. This code also reduces this phase-in period if there is a emissions-price,
-    // which avoids an illogical situation where a high emissions price is present and mitigation
-    // is maxed out, but the "no-cost" reductions are not fully phased in.
-    const int lastCalYear = scenario->getModeltime()->getper_to_yr( 
-                            scenario->getModeltime()->getFinalCalibrationPeriod() );
+    // by the user.
+    const int lastCalYear = scenario->getModeltime()->getper_to_yr( finalCalibPer );
     int modelYear = scenario->getModeltime()->getper_to_yr( aPeriod );
 
     // Amount of zero-cost reduction
     double zeroCostReduction = getMACValue( 0 );
 
     if ( ( reduction > 0.0 ) && ( zeroCostReduction > 0.0 ) &&
-        ( modelYear <= ( lastCalYear + mZeroCostPhaseInTime ) ) )
-    {
-        const double maxEmissionsTax = mMacCurve->getMaxX();
-
-		// Fraction of zero cost that is removed from original reduction value
-		// Equal to 1 at last calibration year and zero at the zero cost phase in time
-		double multiplier = ( static_cast<double>( lastCalYear ) + mZeroCostPhaseInTime
-		                    - static_cast<double>( modelYear ) ) / mZeroCostPhaseInTime;
-
-		// If emissions price is not zero, accelerate the phase in for consistency if there are 
-		// zero cost reductions to phase in
-        double adjEmissionsPrice = min( emissionsPrice, maxEmissionsTax );
-        multiplier *= ( maxEmissionsTax - adjEmissionsPrice ) / maxEmissionsTax;
-		
-		reduction = reduction - zeroCostReduction * multiplier;
-    }
+            ( modelYear <= ( lastCalYear + mZeroCostPhaseInTime ) ) )
+        {
+            // Fraction of zero cost that is removed from original reduction value
+            // Equal to 1 at last calibration year and zero at the zero cost phase in time
+            zeroCostReductionMultiplier = ( static_cast<double>( lastCalYear ) + mZeroCostPhaseInTime
+                                            - static_cast<double>( modelYear ) ) / mZeroCostPhaseInTime;
+        }
     
+    // Amount of mac reductions considering mac-phase-in-time
+    // MacPhaseInTime offers users an option to make additional adjustment for the existing MAC
+    // reductions due to factors other than "no-cost" emission reductions and technological changes
+    // A primary purpose is to smoothly phase in MACs in early modeling periods. In some cases, the
+    // first MAC year (as well as carbon price year) would lead to a dramatic yet unrealistic
+    // MAC-driven emission reductions, and MacPhaseInTime(period) can be applied to make the reduction
+    // in those first several modeling periods more realistic;
+    // A second purpose is to allow users to explore scenarios when different regions have different
+    // MAC phase-in periods.
+    // The default MacPhaseInTime is 0 years (so disabled)
+    // Users will need to explicitly add xmls to include MacPhaseInTime
+    // e.g. if 2015 is last calibration year, and MacPhaseIntime is set as 25
+    // 2020 will just phase in 20% of the originally defined MAC reduction
+    // 2025 is 40%.... and by 2040 the actual MAC will be fully phased in.
+    
+    // here also requie emissionsPrice > 0 and mMacPhaseInTime >0 to go this process
+    if ( ( emissionsPrice > 0.0 ) && ( modelYear <= ( lastCalYear + mMacPhaseInTime ) ) &&
+            ( modelYear >= lastCalYear ) && ( mMacPhaseInTime > 0 ) )
+        {
+            // Fraction applied to phase in mac
+            // Equal to 0 at last calibration year and 1 at the mac phase in time (fully phased in)
+            macPhaseInMultiplier = ( static_cast<double>( modelYear ) - static_cast<double>( lastCalYear ) ) / mMacPhaseInTime;
+        }
+    
+    // mFullPhaseInPrice defines a carbon price value to reflect what is considered to be a "high carbon price"
+    // at which point any reductions that are being phased in (see below) are assumed to
+    // be 100% implemented due to economic incentives provided by a high carbon price.
+    // Set this price in units of $1990/tC
+    // Price is deliberately set to be high as substantial incentive is presumed to be
+    // needed to overcome historical near-term inertia, retrofit old vintages, etc.
+    // This will only work, in these units, for GHGs, not air pollutants, but the two
+    // phase-in options below are not envisioned to be appropriate for air pollutants.
+    // This value only needs to reset if users attempt to set MACs directly based on other GHG prices (e.g. methane price)
+    
+
+    // If emissions price is not zero, accelerate the zero-cost phase in and mac phase-in
+    // As the emissions price approaches macCarbonPricePhaseInLimit both of the above cost
+    // reductions multipliers will be linearly reduced to zero (e.g. no impact).
+    // This avoids an illogical situation where a high emissions price is present but mitigation
+    // doesn’t increase in earlier years in response to that price.
+
+    double adjEmissionsPrice = min( emissionsPrice, mFullPhaseInPrice );
+    double carbonPriceAdjustment = ( mFullPhaseInPrice - adjEmissionsPrice ) / mFullPhaseInPrice;
+    
+    zeroCostReductionMultiplier *= carbonPriceAdjustment;
+    macPhaseInMultiplier *= carbonPriceAdjustment;
+    
+    // Amount of phased-in > 0 MAC reduction
+    double phasedInMACReduction = baseReduction * (1.0 - macPhaseInMultiplier);
+    
+    // calculate final reduction accounting for:
+    // zero-cost phase, mac phase in, and emission price adjustments
+
+    reduction = baseReduction - zeroCostReduction * zeroCostReductionMultiplier - phasedInMACReduction * macPhaseInMultiplier;
+
     setEmissionsReduction( reduction );
 }
 
@@ -298,8 +360,8 @@ double MACControl::adjustForTechChange( const int aPeriod, double reduction ) {
     // note technical change is a rate of change per year, therefore we must
     // be sure to apply it for as many years as are in a model time step
     double techChange = 1;
-    int timestep = scenario->getModeltime()->gettimestep( 0 );
-    for ( int i=0; i <= aPeriod; i++ ) {
+    int timestep;
+    for ( int i=1; i <= aPeriod; i++ ) {
         timestep = scenario->getModeltime()->gettimestep( i );
         techChange *= pow( 1 + (*mTechChange)[ i ], timestep );
     }

@@ -8,4 +8,4 @@ resource,reserve.subresource,avg.prod.lifetime
 coal,coal,40
 crude oil,crude oil,60
 natural gas,natural gas,30
-unconventional oil,unconventional oil,40
+crude oil,unconventional oil,40

@@ -44,7 +44,7 @@ CEDS_sector,CEDS_agg_sector
 2A1_Cement-production,industry_processes
 2A2_Lime-production,industry_processes
 2A6_Other-minerals,industry_processes
-2B_Chemical-industry,chemicals
+2B_Chemical-industry,industry_processes
 2C_Metal-production,industry_processes
 2D3_Chemical-products-manufacture-processing,solvents
 2D3_Other-product-use,solvents
@@ -59,7 +59,7 @@ CEDS_sector,CEDS_agg_sector
 3F_Agricultural-residue-burning-on-fields,ag_waste_burning
 3I_Agriculture-other,soil
 5A_Solid-waste-disposal,landfills
-5C_Waste-incineration,landfills
+5C_Waste-incineration,waste_incineration
 5D_Wastewater-handling,wastewater
 5E_Other-waste-handling,landfills
 6A_Other-in-total,industry_processes
