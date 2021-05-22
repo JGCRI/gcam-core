@@ -5,10 +5,9 @@
 # Column types: cccccnnnnnn
 # ----------
 resource,resource_type,market,output-unit,price-unit,1971,1975,1990,2005,2010,2015
-coal,resource,global,EJ,1975$/GJ,0.4,0.4,0.435,0.382,0.495,0.547
-crude oil,resource,global,EJ,1975$/GJ,1.84,1.84,1.37,1.546,3.935,4.510
-natural gas,resource,global,EJ,1975$/GJ,0.65,0.65,0.812,1.107,1.746,1.746
-unconventional oil,resource,regional,EJ,1975$/GJ,1.81,1.81,1.81,1.81,1.81,1.81
+coal,resource,regional,EJ,1975$/GJ,0.4,0.4,0.435,0.382,0.495,0.547
+crude oil,resource,regional,EJ,1975$/GJ,1.84,1.84,1.37,1.546,3.935,4.51
+natural gas,resource,regional,EJ,1975$/GJ,0.65,0.65,0.812,1.107,1.746,1.746
 uranium,resource,global,Mt,1975$/kg,20,20,25,35,35,35
 biomass,renewresource,regional,EJ,1975$/GJ,1,1,1,1.25,1.25,1.25
 distributed_solar,renewresource,regional,EJ,1975$/GJ,6,6,6,6,6,6
@@ -18,3 +17,4 @@ traditional biomass,renewresource,regional,EJ,1975$/GJ,0.25,0.25,0.25,0.25,0.25,
 global solar resource,unlimited-resource,global,EJ,1975$/GJ,0.001,0.001,0.001,0.001,0.001,0.001
 limestone,unlimited-resource,global,Mt,1975$/kg,0.001,0.001,0.001,0.001,0.001,0.001
 offshore wind resource,renewresource,regional,EJ,1975$/GJ,0.05,0.05,0.05,0.05,0.05,0.05
+unconventional oil upscaling,unlimited-resource,global,EJ,1975$/GJ,0.001,0.001,0.001,0.001,0.001,0.001

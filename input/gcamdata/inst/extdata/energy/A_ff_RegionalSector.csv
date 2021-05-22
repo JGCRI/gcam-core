@@ -1,0 +1,12 @@
+# File: A_ff_RegionalSector.csv
+# Title: Supplysector assumptions for regional fossil fuel markets (including logit exponent for subsector competition)
+# Units: Various
+# Comments: These sectors compete domestic production and imports from the globally traded markets
+# Source: NA
+# Column types: ccccnc
+# ----------
+supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
+regional coal,EJ,EJ,1975$/GJ,-3,
+regional oil,EJ,EJ,1975$/GJ,-3,
+regional natural gas,EJ,EJ,1975$/GJ,-3,
+

@@ -18,9 +18,9 @@
 module_gcamusa_LA114.wind <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c( FILE = "gcam-usa/us_state_wind",
-              FILE = "energy/A23.globaltech_capital",
-              FILE = "energy/A23.globaltech_OMfixed",
-              FILE = "energy/A23.globaltech_OMvar"))
+              "L113.globaltech_OMfixed_ATB",
+              "L113.globaltech_OMvar_ATB",
+              "L113.globaltech_capital_ATB"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L114.CapacityFactor_wind_state"))
   } else if(command == driver.MAKE) {
@@ -32,9 +32,9 @@ module_gcamusa_LA114.wind <- function(command, ...) {
 
     # Load required inputs
     us_state_wind <- get_data(all_data, "gcam-usa/us_state_wind", strip_attributes = TRUE)
-    A23.globaltech_capital <- get_data(all_data, "energy/A23.globaltech_capital")
-    A23.globaltech_OMfixed <- get_data(all_data, "energy/A23.globaltech_OMfixed")
-    A23.globaltech_OMvar <- get_data(all_data, "energy/A23.globaltech_OMvar")
+    L113.globaltech_capital_ATB <- get_data(all_data, "L113.globaltech_capital_ATB")
+    L113.globaltech_OMfixed_ATB <- get_data(all_data, "L113.globaltech_OMfixed_ATB")
+    L113.globaltech_OMvar_ATB <- get_data(all_data, "L113.globaltech_OMvar_ATB")
 
     # ===================================================
 
@@ -53,13 +53,13 @@ module_gcamusa_LA114.wind <- function(command, ...) {
         pull(value)
     }
 
-    A23.globaltech_capital %>% filter_gather_interp_get_cost -> L114.CapCost
-    A23.globaltech_OMfixed %>% filter_gather_interp_get_cost -> L114.OMFixedCost
-    A23.globaltech_OMvar %>% filter_gather_interp_get_cost -> L114.OMVarCost
+    L113.globaltech_capital_ATB %>% filter_gather_interp_get_cost -> L114.CapCost
+    L113.globaltech_OMfixed_ATB %>% filter_gather_interp_get_cost -> L114.OMFixedCost
+    L113.globaltech_OMvar_ATB %>% filter_gather_interp_get_cost -> L114.OMVarCost
     # ^^ all above rates are in $1975
 
     # Get fixed charge rate of capital for wind
-    filter(A23.globaltech_capital, technology == "wind")$fixed.charge.rate -> L114.FixedChargeRate
+    filter(L113.globaltech_capital_ATB, technology == "wind")$fixed.charge.rate -> L114.FixedChargeRate
 
     # Convert state level wind base cost data to 1975$/GJ, ...
     # ... then compute capacity factor for the base wind turbine in each state
@@ -79,9 +79,9 @@ module_gcamusa_LA114.wind <- function(command, ...) {
       add_comments("Computed from A23 tables for capital, variable and fixed wind costs") %>%
       add_legacy_name("L114.CapacityFactor_wind_state") %>%
       add_precursors("gcam-usa/us_state_wind",
-                     "energy/A23.globaltech_capital",
-                     "energy/A23.globaltech_OMfixed",
-                     "energy/A23.globaltech_OMvar") ->
+                     "L113.globaltech_capital_ATB",
+                     "L113.globaltech_OMfixed_ATB",
+                     "L113.globaltech_OMvar_ATB") ->
       L114.CapacityFactor_wind_state
 
     return_data(L114.CapacityFactor_wind_state)

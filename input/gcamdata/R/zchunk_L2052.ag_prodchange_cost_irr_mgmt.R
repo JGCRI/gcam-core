@@ -30,7 +30,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
              "L2012.AgSupplySector",
              "L201.AgYield_bio_grass",
              "L201.AgYield_bio_tree",
-             "L102.pcgdp_thous90USD_Scen_R_Y"))
+             "L102.pcgdp_thous90USD_Scen_R_Y",
+             "L1321.expP_R_F_75USDm3"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2052.AgCost_ag_irr_mgmt",
              "L2052.AgCost_bio_irr_mgmt",
@@ -64,6 +65,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     L201.AgYield_bio_grass <- get_data(all_data, "L201.AgYield_bio_grass", strip_attributes = TRUE)
     L201.AgYield_bio_tree <- get_data(all_data, "L201.AgYield_bio_tree", strip_attributes = TRUE)
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y", strip_attributes = TRUE)
+    L1321.expP_R_F_75USDm3 <- get_data(all_data, "L1321.expP_R_F_75USDm3", strip_attributes = TRUE)
 
     # Define column names
     names_AgTech <- LEVEL2_DATA_NAMES[["AgTech"]]
@@ -141,21 +143,25 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
 
     # Assign nonLandVariableCost of forest production
     # Start with the yield table to determine where forest are being read in
+    # Differentiate regional cost for forest using aglu.FOR_COST_SHARE in constants.R
     L123.For_Yield_m3m2_R_GLU %>%
       select(GCAM_region_ID, GCAM_commodity, GLU) %>%
       unique() %>%
       # Copy costs to all model years
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      mutate(nonLandVariableCost = aglu.FOR_COST_75USDM3) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Add sector, subsector, technology names
       mutate(AgSupplySector = GCAM_commodity,
              AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
              AgProductionTechnology = paste(GCAM_commodity, GLU_name, sep = "_")) %>%
+      left_join(L132.ag_an_For_Prices, by = "GCAM_commodity") %>%
+      left_join(L1321.expP_R_F_75USDm3, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
+                  mutate(nonLandVariableCost = if_else(is.na(value),
+                                                       calPrice * aglu.FOR_COST_SHARE,
+                                                       value * aglu.FOR_COST_SHARE) ) %>%
       select(names_AgCost) ->
       L2052.AgCost_For
-
     # Future agricultural productivity changes
     # Specify reference scenario agricultural productivity change for crops (not incl biomass)
     L162.ag_YieldRate_R_C_Y_GLU_irr %>%
@@ -286,7 +292,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       add_legacy_name("L2052.AgCost_For") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "L123.For_Yield_m3m2_R_GLU") ->
+                     "L123.For_Yield_m3m2_R_GLU",
+                     "L1321.expP_R_F_75USDm3") ->
       L2052.AgCost_For
 
     L2052.AgProdChange_ag_irr_ref %>%

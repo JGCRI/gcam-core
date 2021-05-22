@@ -2,7 +2,7 @@
 # Title: Electricity technology share weight interpolation
 # Units: None
 # Source: None (GCAM assumptions). Documented in Proposal 210_GCAM4p1_Electricity Generation Assumptions.pdf (page 20).
-# Comments: If there are multiple technologies that are historically calibrated within a subsector, each technology must
+# Comments: If there are multiple technologies that are historically calibrated within a subsector; each technology must
 #           have an interpolation function that smoothly interpolates the calibrated share-weight into the future.
 #           This does not apply for subsectors with only single technology that is historically calibrated as a share-weight 
 #           of 1 will be carried forward (coal biomass wind).
@@ -13,5 +13,5 @@ electricity,gas,gas (steam/CT),share-weight,final-calibration-year,end-year,s-cu
 electricity,gas,gas (CC),share-weight,final-calibration-year,end-year,s-curve
 electricity,refined liquids,refined liquids (CC),share-weight,final-calibration-year,end-year,s-curve
 electricity,refined liquids,refined liquids (steam/CT),share-weight,final-calibration-year,end-year,s-curve
-electricity,solar,CSP,share-weight,final-calibration-year,end-year,s-curve
-electricity,solar,PV,share-weight,final-calibration-year,end-year,s-curve
+electricity,solar,CSP_storage,share-weight,final-calibration-year,end-year,linear
+electricity,wind,wind_offshore,share-weight,final-calibration-year,2050,linear

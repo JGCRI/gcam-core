@@ -2,7 +2,7 @@
 # Title: Electricity technology shareweights
 # Units: Unitless share-weights
 # Source: None (GCAM assumptions)
-# Column types: ccciinnnnnii 
+# Column types: cccnnnnnnnnn 
 # ----------
 supplysector,subsector,technology,1971,2010,2015,2020,2024,2025,2035,2050,2100
 electricity,coal,coal (conv pul),1,1,1,1,1,1,1,1,1
@@ -26,8 +26,8 @@ electricity,wind,wind,1,1,1,1,1,1,1,1,1
 electricity,wind,wind_storage,0,0,0,1,1,1,1,1,1
 electricity,solar,PV,1,1,1,1,1,1,1,1,1
 electricity,solar,PV_storage,0,0,0,1,1,1,1,1,1
-electricity,solar,CSP,1,1,1,1,1,1,1,1,1
-electricity,solar,CSP_storage,0,0,0,0,0,0.25,0.75,1,1
+electricity,solar,CSP,0,0,0,0,0,0,0,0,0
+electricity,solar,CSP_storage,0,0,0,0.5,0.5,0.5,0.5,0.5,0.5
 electricity,geothermal,geothermal,1,1,1,1,1,1,1,1,1
 elect_td_bld,rooftop_pv,rooftop_pv,0,0,0,1,1,1,1,1,1
-electricity,wind,wind_offshore,0,0,0.25,0.7,0.75,1,1,1,1
+electricity,wind,wind_offshore,0,0,0,1,1,1,1,1,1

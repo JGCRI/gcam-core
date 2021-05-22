@@ -344,15 +344,10 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
     # method is designed to work if future users re-set the energy inputs to these technologies from "regional natural gas" to "wholesale gas".
 
     # First, extract the input names to reg_nat_gas, gas_to_unconv_oil, gas_to_gtl
-    calibrated_techs %>%
-      filter(sector == "gas processing", fuel == "gas") %>%
-      select(minicam.energy.input) -> reg_nat_gas_tibble
-    reg_nat_gas_tibble$minicam.energy.input -> reg_nat_gas
 
-    calibrated_techs %>%
-      filter(sector == "unconventional oil production", fuel == "gas") %>%
-      select(minicam.energy.input) -> gas_to_unconv_oil_tibble
-    gas_to_unconv_oil_tibble$minicam.energy.input -> gas_to_unconv_oil
+    reg_nat_gas <- energy.REG_NG_MARKET
+
+    gas_to_unconv_oil <- energy.REG_NG_MARKET
 
     calibrated_techs %>%
       filter(sector == "gtl", fuel == "gas") %>%
@@ -366,16 +361,16 @@ module_energy_LA122.gasproc_refining <- function(command, ...) {
       L122.out_EJ_R_gasproc_gas_Yh %>%
         filter(GCAM_region_ID %in% L121.in_EJ_R_unoil_F_Yh$GCAM_region_ID) %>%
         left_join(select(L121.in_EJ_R_unoil_F_Yh, GCAM_region_ID, fuel, year, in_value = value), by = c("GCAM_region_ID", "fuel", "year")) %>%
-        mutate(value = value - in_value) %>%
-        select(-in_value)%>%
-        bind_rows(filter(L122.out_EJ_R_gasproc_gas_Yh,!(GCAM_region_ID %in% L121.in_EJ_R_unoil_F_Yh$GCAM_region_ID))) ->
+        mutate(value = if_else(is.na(in_value), value , value - in_value)) %>%
+        select(-in_value) %>%
+      bind_rows(filter(L122.out_EJ_R_gasproc_gas_Yh,!(GCAM_region_ID %in% L121.in_EJ_R_unoil_F_Yh$GCAM_region_ID))) ->
         L122.out_EJ_R_gasproc_gas_Yh
     }
 
     if(gas_to_gtl == reg_nat_gas) {
       L122.out_EJ_R_gasproc_gas_Yh %>%
         left_join(select(L122.in_EJ_R_gtlctl_F_Yh, GCAM_region_ID, fuel, year, in_value = value), by = c("GCAM_region_ID", "fuel", "year")) %>%
-        mutate(value = value - in_value)%>%
+        mutate(value = value - in_value) %>%
         select(-in_value) -> L122.out_EJ_R_gasproc_gas_Yh
     }
 

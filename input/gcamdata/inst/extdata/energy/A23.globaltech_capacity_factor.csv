@@ -29,6 +29,6 @@ electricity,wind,wind_storage,0.37,0.37
 electricity,solar,PV,0.2,0.2
 electricity,solar,PV_storage,0.2,0.2
 electricity,solar,CSP,0.25,0.25
-electricity,solar,CSP_storage,0.65,0.65
+electricity,solar,CSP_storage,0.5,0.5
 electricity,geothermal,geothermal,0.9,0.9
-elect_td_bld,rooftop_pv,rooftop_pv,0.2,0.2
+elect_td_bld,rooftop_pv,rooftop_pv,0.17,0.17

@@ -5,11 +5,6 @@
 # ----------
 supplysector,subsector,technology,1971,2100
 regional biomass,regional biomass,regional biomass,1,1
-regional coal,regional coal,regional coal,1,1
-regional natural gas,regional natural gas,regional natural gas,1,1
-unconventional oil production,unconventional oil production,unconventional oil production,1,1
-regional oil,crude oil,crude oil,1,1
-regional oil,unconventional oil,unconventional oil,1,1
 regional corn for ethanol,regional corn for ethanol,regional corn for ethanol,1,1
 regional sugar for ethanol,regional sugar for ethanol,regional sugar for ethanol,1,1
 regional biomassOil,regional biomassOil,biomassOil,0,0
