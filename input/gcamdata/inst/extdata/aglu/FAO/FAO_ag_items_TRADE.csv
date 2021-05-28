@@ -72,48 +72,48 @@ item.code,GCAM_commodity,prod_commod,pp_commod,bitrade_commod
 165,SugarCrop,Molasses,,Molasses
 166,SugarCrop,,,"Fructose and syrup, other"
 168,SugarCrop,,,Sugar confectionery
-169,MiscCrop,,,Beet pulp
+169,Vegetables,,,Beet pulp
 171,SugarCrop,,,Sugar flavoured
 172,SugarCrop,,,Glucose and dextrose
-176,MiscCrop,"Beans, dry","Beans, dry","Beans, dry"
-181,MiscCrop,"Broad beans, horse beans, dry","Broad beans, horse beans, dry","Broad beans, horse beans, dry"
-187,MiscCrop,"Peas, dry","Peas, dry","Peas, dry"
-191,MiscCrop,Chick peas,Chick peas,Chick peas
-195,MiscCrop,"Cow peas, dry","Cow peas, dry",
-197,MiscCrop,Pigeon peas,Pigeon peas,
-201,MiscCrop,Lentils,Lentils,Lentils
-203,MiscCrop,Bambara beans,Bambara beans,Bambara beans
+176,Legumes,"Beans, dry","Beans, dry","Beans, dry"
+181,Vegetables,"Broad beans, horse beans, dry","Broad beans, horse beans, dry","Broad beans, horse beans, dry"
+187,Legumes,"Peas, dry","Peas, dry","Peas, dry"
+191,Legumes,Chick peas,Chick peas,Chick peas
+195,Legumes,"Cow peas, dry","Cow peas, dry",
+197,Legumes,Pigeon peas,Pigeon peas,
+201,Legumes,Lentils,Lentils,Lentils
+203,Legumes,Bambara beans,Bambara beans,Bambara beans
 205,FodderHerb,Vetches,Vetches,Vetches
-210,MiscCrop,Lupins,Lupins,
-211,MiscCrop,"Pulses, nes","Pulses, nes",
-212,MiscCrop,,,"Flour, pulses"
-216,MiscCrop,"Brazil nuts, with shell","Brazil nuts, with shell",
-217,MiscCrop,"Cashew nuts, with shell","Cashew nuts, with shell","Cashew nuts, with shell"
-220,MiscCrop,Chestnut,Chestnut,Chestnut
-221,MiscCrop,"Almonds, with shell","Almonds, with shell",
-222,MiscCrop,"Walnuts, with shell","Walnuts, with shell","Walnuts, with shell"
-223,MiscCrop,Pistachios,Pistachios,Pistachios
-224,MiscCrop,Kola nuts,Kola nuts,Kola nuts
-225,MiscCrop,"Hazelnuts, with shell","Hazelnuts, with shell",
-226,MiscCrop,Areca nuts,Areca nuts,
-229,MiscCrop,,,"Brazil nuts, shelled"
-230,MiscCrop,,,"Cashew nuts, shelled"
-231,MiscCrop,,,Almonds shelled
-232,MiscCrop,,,"Walnuts, shelled"
-233,MiscCrop,,,"Hazelnuts, shelled"
-234,MiscCrop,"Nuts, nes","Nuts, nes","Nuts, nes"
-235,MiscCrop,,,"Nuts, prepared (exc. groundnuts)"
-236,OilCrop,Soybeans,Soybeans,Soybeans
-237,OilCrop,"Oil, soybean",,"Oil, soybean"
-238,OilCrop,,,"Cake, soybeans"
-239,OilCrop,,,Soya sauce
-240,OilCrop,,,Soya paste
-241,OilCrop,,,Soya curd
-242,OilCrop,"Groundnuts, with shell","Groundnuts, with shell",
-243,OilCrop,,,"Groundnuts, shelled"
-244,OilCrop,"Oil, groundnut",,"Oil, groundnut"
-245,OilCrop,,,"Cake, groundnuts"
-247,OilCrop,,,Peanut butter
+210,Legumes,Lupins,Lupins,
+211,Legumes,"Pulses, nes","Pulses, nes",
+212,Legumes,,,"Flour, pulses"
+216,NutsSeeds,"Brazil nuts, with shell","Brazil nuts, with shell",
+217,NutsSeeds,"Cashew nuts, with shell","Cashew nuts, with shell","Cashew nuts, with shell"
+220,NutsSeeds,Chestnut,Chestnut,Chestnut
+221,NutsSeeds,"Almonds, with shell","Almonds, with shell",
+222,NutsSeeds,"Walnuts, with shell","Walnuts, with shell","Walnuts, with shell"
+223,NutsSeeds,Pistachios,Pistachios,Pistachios
+224,NutsSeeds,Kola nuts,Kola nuts,Kola nuts
+225,NutsSeeds,"Hazelnuts, with shell","Hazelnuts, with shell",
+226,NutsSeeds,Areca nuts,Areca nuts,
+229,NutsSeeds,,,"Brazil nuts, shelled"
+230,NutsSeeds,,,"Cashew nuts, shelled"
+231,NutsSeeds,,,Almonds shelled
+232,NutsSeeds,,,"Walnuts, shelled"
+233,NutsSeeds,,,"Hazelnuts, shelled"
+234,NutsSeeds,"Nuts, nes","Nuts, nes","Nuts, nes"
+235,NutsSeeds,,,"Nuts, prepared (exc. groundnuts)"
+236,Soybean,Soybeans,Soybeans,Soybeans
+237,Soybean,"Oil, soybean",,"Oil, soybean"
+238,Soybean,,,"Cake, soybeans"
+239,Soybean,,,Soya sauce
+240,Soybean,,,Soya paste
+241,Soybean,,,Soya curd
+242,NutsSeeds,"Groundnuts, with shell","Groundnuts, with shell",
+243,NutsSeeds,,,"Groundnuts, shelled"
+244,NutsSeeds,"Oil, groundnut",,"Oil, groundnut"
+245,NutsSeeds,,,"Cake, groundnuts"
+247,NutsSeeds,,,Peanut butter
 249,PalmFruit,Coconuts,Coconuts,Coconuts
 250,PalmFruit,,,"Coconuts, desiccated"
 251,PalmFruit,,,Copra
@@ -122,7 +122,7 @@ item.code,GCAM_commodity,prod_commod,pp_commod,bitrade_commod
 256,PalmFruit,Palm kernels,Palm kernels,
 257,PalmFruit,"Oil, palm","Oil, palm","Oil, palm"
 258,PalmFruit,"Oil, palm kernel",,"Oil, palm kernel"
-259,OilCrop,,,"Cake, palm kernel"
+259,PalmFruit,,,"Cake, palm kernel"
 260,OilCrop,Olives,Olives,Olives
 261,OilCrop,"Oil, olive, virgin",,"Oil, olive, virgin"
 262,OilCrop,,,Olives preserved
@@ -146,12 +146,12 @@ item.code,GCAM_commodity,prod_commod,pp_commod,bitrade_commod
 290,OilCrop,"Oil, sesame",,"Oil, sesame"
 291,OilCrop,,,"Cake, sesame seed"
 292,OilCrop,Mustard seed,Mustard seed,Mustard seed
-294,MiscCrop,,,"Cake, mustard"
+294,OilCrop,,,"Cake, mustard"
 295,OilCrop,,,"Flour, mustard"
 296,OilCrop,Poppy seed,Poppy seed,Poppy seed
 297,OilCrop,,,"Oil, poppy"
 299,OilCrop,Melonseed,Melonseed,
-305,MiscCrop,Tallowtree seed,Tallowtree seed,
+305,NutsSeeds,Tallowtree seed,Tallowtree seed,
 306,OilCrop,,Vegetable tallow,Vegetable tallow
 307,OilCrop,,"Oil, stillingia",
 310,OilCrop,Kapok fruit,Kapok fruit,
@@ -170,108 +170,108 @@ item.code,GCAM_commodity,prod_commod,pp_commod,bitrade_commod
 338,OilCrop,,,"Cake, hempseed"
 339,OilCrop,Oilseeds nes,Oilseeds nes,Oilseeds nes
 340,OilCrop,,,"Oil, vegetable origin nes"
-358,MiscCrop,Cabbages and other brassicas,Cabbages and other brassicas,Cabbages and other brassicas
-366,MiscCrop,Artichokes,Artichokes,Artichokes
-367,MiscCrop,Asparagus,Asparagus,Asparagus
-372,MiscCrop,Lettuce and chicory,Lettuce and chicory,Lettuce and chicory
-373,MiscCrop,Spinach,Spinach,Spinach
-378,MiscCrop,Cassava leaves,,
-388,MiscCrop,Tomatoes,Tomatoes,Tomatoes
-390,MiscCrop,,,"Juice, tomato"
-391,MiscCrop,,,"Tomatoes, paste"
-392,MiscCrop,,,"Tomatoes, peeled"
-393,MiscCrop,Cauliflowers and broccoli,Cauliflowers and broccoli,Cauliflowers and broccoli
-394,MiscCrop,"Pumpkins, squash and gourds","Pumpkins, squash and gourds","Pumpkins, squash and gourds"
-397,MiscCrop,Cucumbers and gherkins,Cucumbers and gherkins,Cucumbers and gherkins
-399,MiscCrop,Eggplants (aubergines),Eggplants (aubergines),Eggplants (aubergines)
-401,MiscCrop,"Chillies and peppers, green","Chillies and peppers, green","Chillies and peppers, green"
-402,MiscCrop,"Onions, shallots, green","Onions, shallots, green","Onions, shallots, green"
-403,MiscCrop,"Onions, dry","Onions, dry","Onions, dry"
-406,MiscCrop,Garlic,Garlic,Garlic
-407,MiscCrop,"Leeks, other alliaceous vegetables","Leeks, other alliaceous vegetables","Leeks, other alliaceous vegetables"
-414,MiscCrop,"Beans, green","Beans, green","Beans, green"
-417,MiscCrop,"Peas, green","Peas, green","Peas, green"
-420,MiscCrop,"Vegetables, leguminous nes","Vegetables, leguminous nes",
-423,MiscCrop,String beans,String beans,
-426,MiscCrop,Carrots and turnips,Carrots and turnips,Carrots and turnips
-430,MiscCrop,Okra,Okra,
-446,MiscCrop,"Maize, green","Maize, green","Maize, green"
-447,MiscCrop,,,Sweet corn frozen
-448,MiscCrop,,,Sweet corn prep or preserved
-449,MiscCrop,Mushrooms and truffles,Mushrooms and truffles,Mushrooms and truffles
-451,MiscCrop,,,"Mushrooms, canned"
-459,MiscCrop,Chicory roots,Chicory roots,
-460,MiscCrop,,,"Vegetables, fresh or dried products nes"
+358,Vegetables,Cabbages and other brassicas,Cabbages and other brassicas,Cabbages and other brassicas
+366,Vegetables,Artichokes,Artichokes,Artichokes
+367,Vegetables,Asparagus,Asparagus,Asparagus
+372,Vegetables,Lettuce and chicory,Lettuce and chicory,Lettuce and chicory
+373,Vegetables,Spinach,Spinach,Spinach
+378,Vegetables,Cassava leaves,,
+388,Vegetables,Tomatoes,Tomatoes,Tomatoes
+390,Vegetables,,,"Juice, tomato"
+391,Vegetables,,,"Tomatoes, paste"
+392,Vegetables,,,"Tomatoes, peeled"
+393,Vegetables,Cauliflowers and broccoli,Cauliflowers and broccoli,Cauliflowers and broccoli
+394,Vegetables,"Pumpkins, squash and gourds","Pumpkins, squash and gourds","Pumpkins, squash and gourds"
+397,Vegetables,Cucumbers and gherkins,Cucumbers and gherkins,Cucumbers and gherkins
+399,Vegetables,Eggplants (aubergines),Eggplants (aubergines),Eggplants (aubergines)
+401,Vegetables,"Chillies and peppers, green","Chillies and peppers, green","Chillies and peppers, green"
+402,Vegetables,"Onions, shallots, green","Onions, shallots, green","Onions, shallots, green"
+403,Vegetables,"Onions, dry","Onions, dry","Onions, dry"
+406,Vegetables,Garlic,Garlic,Garlic
+407,Vegetables,"Leeks, other alliaceous vegetables","Leeks, other alliaceous vegetables","Leeks, other alliaceous vegetables"
+414,Vegetables,"Beans, green","Beans, green","Beans, green"
+417,Vegetables,"Peas, green","Peas, green","Peas, green"
+420,Vegetables,"Vegetables, leguminous nes","Vegetables, leguminous nes",
+423,Vegetables,String beans,String beans,
+426,Vegetables,Carrots and turnips,Carrots and turnips,Carrots and turnips
+430,Vegetables,Okra,Okra,
+446,Corn,"Maize, green","Maize, green","Maize, green"
+447,Corn,,,Sweet corn frozen
+448,Corn,,,Sweet corn prep or preserved
+449,Vegetables,Mushrooms and truffles,Mushrooms and truffles,Mushrooms and truffles
+451,Vegetables,,,"Mushrooms, canned"
+459,Vegetables,Chicory roots,Chicory roots,
+460,Vegetables,,,"Vegetables, fresh or dried products nes"
 461,MiscCrop,Carobs,Carobs,
-463,MiscCrop,"Vegetables, fresh nes","Vegetables, fresh nes","Vegetables, fresh nes"
-464,MiscCrop,,,"Vegetables, dried nes"
-465,MiscCrop,,,"Vegetables, canned nes"
-469,MiscCrop,,,"Vegetables, dehydrated"
-471,MiscCrop,,,Vegetables in vinegar
-472,MiscCrop,,,"Vegetables, preserved nes"
-473,MiscCrop,,,"Vegetables, frozen"
-474,MiscCrop,,,"Vegetables, temporarily preserved"
-475,MiscCrop,,,"Vegetables, preserved, frozen"
-476,MiscCrop,,,"Vegetables, homogenized preparations"
-486,MiscCrop,Bananas,Bananas,Bananas
-489,MiscCrop,Plantains and others,Plantains,Plantains
-490,MiscCrop,Oranges,Oranges,Oranges
-491,MiscCrop,,,"Juice, orange, single strength"
-492,MiscCrop,,,"Juice, orange, concentrated"
-495,MiscCrop,"Tangerines, mandarins, clementines, satsumas","Tangerines, mandarins, clementines, satsumas","Tangerines, mandarins, clementines, satsumas"
-497,MiscCrop,Lemons and limes,Lemons and limes,Lemons and limes
-499,MiscCrop,,,"Juice, lemon, concentrated"
-507,MiscCrop,Grapefruit (inc. pomelos),Grapefruit (inc. pomelos),Grapefruit (inc. pomelos)
-509,MiscCrop,,,"Juice, grapefruit"
-510,MiscCrop,,,"Juice, grapefruit, concentrated"
-512,MiscCrop,"Fruit, citrus nes","Fruit, citrus nes",
-513,MiscCrop,,,"Juice, citrus, single strength"
-514,MiscCrop,,,"Juice, citrus, concentrated"
-515,MiscCrop,Apples,Apples,Apples
-521,MiscCrop,Pears,Pears,Pears
-523,MiscCrop,Quinces,Quinces,Quinces
-526,MiscCrop,Apricots,Apricots,Apricots
-527,MiscCrop,,,"Apricots, dry"
-530,MiscCrop,"Cherries, sour","Cherries, sour","Cherries, sour"
-531,MiscCrop,Cherries,Cherries,Cherries
-534,MiscCrop,Peaches and nectarines,Peaches and nectarines,Peaches and nectarines
-536,MiscCrop,Plums and sloes,Plums and sloes,Plums and sloes
-537,MiscCrop,,,Plums dried (prunes)
-538,MiscCrop,,,"Juice, plum, single strength"
-539,MiscCrop,,,"Juice, plum, concentrated"
-541,MiscCrop,"Fruit, stone nes","Fruit, stone nes",
-542,MiscCrop,"Fruit, pome nes","Fruit, pome nes",
-544,MiscCrop,Strawberries,Strawberries,Strawberries
-547,MiscCrop,Raspberries,Raspberries,
-549,MiscCrop,Gooseberries,Gooseberries,Gooseberries
-550,MiscCrop,Currants,Currants,Currants
-552,MiscCrop,Blueberries,Blueberries,Blueberries
-554,MiscCrop,Cranberries,Cranberries,Cranberries
-558,MiscCrop,Berries nes,Berries nes,
-560,MiscCrop,Grapes,Grapes,Grapes
-561,MiscCrop,,,Raisins
-562,MiscCrop,,,"Juice, grape"
-567,MiscCrop,Watermelons,Watermelons,Watermelons
-568,MiscCrop,"Melons, other (inc.cantaloupes)","Melons, other (inc.cantaloupes)","Melons, other (inc.cantaloupes)"
-569,MiscCrop,Figs,Figs,Figs
-570,MiscCrop,,,Figs dried
-571,MiscCrop,"Mangoes, mangosteens, guavas","Mangoes, mangosteens, guavas","Mangoes, mangosteens, guavas"
-572,MiscCrop,Avocados,Avocados,Avocados
-574,MiscCrop,Pineapples,Pineapples,Pineapples
-575,MiscCrop,,,Pineapples canned
-576,MiscCrop,,,"Juice, pineapple"
-577,MiscCrop,Dates,Dates,Dates
-580,MiscCrop,,,"Juice, pineapple, concentrated"
-587,MiscCrop,Persimmons,Persimmons,Persimmons
-591,MiscCrop,Cashewapple,Cashewapple,Cashewapple
-592,MiscCrop,Kiwi fruit,Kiwi fruit,Kiwi fruit
-600,MiscCrop,Papayas,Papayas,Papayas
-603,MiscCrop,"Fruit, tropical fresh nes","Fruit, tropical fresh nes","Fruit, tropical fresh nes"
-619,MiscCrop,"Fruit, fresh nes","Fruit, fresh nes","Fruit, fresh nes"
-620,MiscCrop,,,"Fruit, dried nes"
-622,MiscCrop,,,"Juice, fruit nes"
-623,MiscCrop,,,"Fruit, prepared nes"
-626,MiscCrop,,,"Fruit, cooked, homogenized preparations"
+463,Vegetables,"Vegetables, fresh nes","Vegetables, fresh nes","Vegetables, fresh nes"
+464,Vegetables,,,"Vegetables, dried nes"
+465,Vegetables,,,"Vegetables, canned nes"
+469,Vegetables,,,"Vegetables, dehydrated"
+471,Vegetables,,,Vegetables in vinegar
+472,Vegetables,,,"Vegetables, preserved nes"
+473,Vegetables,,,"Vegetables, frozen"
+474,Vegetables,,,"Vegetables, temporarily preserved"
+475,Vegetables,,,"Vegetables, preserved, frozen"
+476,Vegetables,,,"Vegetables, homogenized preparations"
+486,Fruits,Bananas,Bananas,Bananas
+489,Fruits,Plantains and others,Plantains,Plantains
+490,Fruits,Oranges,Oranges,Oranges
+491,Fruits,,,"Juice, orange, single strength"
+492,Fruits,,,"Juice, orange, concentrated"
+495,Fruits,"Tangerines, mandarins, clementines, satsumas","Tangerines, mandarins, clementines, satsumas","Tangerines, mandarins, clementines, satsumas"
+497,Fruits,Lemons and limes,Lemons and limes,Lemons and limes
+499,Fruits,,,"Juice, lemon, concentrated"
+507,Fruits,Grapefruit (inc. pomelos),Grapefruit (inc. pomelos),Grapefruit (inc. pomelos)
+509,Fruits,,,"Juice, grapefruit"
+510,Fruits,,,"Juice, grapefruit, concentrated"
+512,Fruits,"Fruit, citrus nes","Fruit, citrus nes",
+513,Fruits,,,"Juice, citrus, single strength"
+514,Fruits,,,"Juice, citrus, concentrated"
+515,Fruits,Apples,Apples,Apples
+521,Fruits,Pears,Pears,Pears
+523,Fruits,Quinces,Quinces,Quinces
+526,Fruits,Apricots,Apricots,Apricots
+527,Fruits,,,"Apricots, dry"
+530,Fruits,"Cherries, sour","Cherries, sour","Cherries, sour"
+531,Fruits,Cherries,Cherries,Cherries
+534,Fruits,Peaches and nectarines,Peaches and nectarines,Peaches and nectarines
+536,Fruits,Plums and sloes,Plums and sloes,Plums and sloes
+537,Fruits,,,Plums dried (prunes)
+538,Fruits,,,"Juice, plum, single strength"
+539,Fruits,,,"Juice, plum, concentrated"
+541,Fruits,"Fruit, stone nes","Fruit, stone nes",
+542,Fruits,"Fruit, pome nes","Fruit, pome nes",
+544,Fruits,Strawberries,Strawberries,Strawberries
+547,Fruits,Raspberries,Raspberries,
+549,Fruits,Gooseberries,Gooseberries,Gooseberries
+550,Fruits,Currants,Currants,Currants
+552,Fruits,Blueberries,Blueberries,Blueberries
+554,Fruits,Cranberries,Cranberries,Cranberries
+558,Fruits,Berries nes,Berries nes,
+560,Fruits,Grapes,Grapes,Grapes
+561,Fruits,,,Raisins
+562,Fruits,,,"Juice, grape"
+567,Fruits,Watermelons,Watermelons,Watermelons
+568,Fruits,"Melons, other (inc.cantaloupes)","Melons, other (inc.cantaloupes)","Melons, other (inc.cantaloupes)"
+569,Fruits,Figs,Figs,Figs
+570,Fruits,,,Figs dried
+571,Fruits,"Mangoes, mangosteens, guavas","Mangoes, mangosteens, guavas","Mangoes, mangosteens, guavas"
+572,Fruits,Avocados,Avocados,Avocados
+574,Fruits,Pineapples,Pineapples,Pineapples
+575,Fruits,,,Pineapples canned
+576,Fruits,,,"Juice, pineapple"
+577,Fruits,Dates,Dates,Dates
+580,Fruits,,,"Juice, pineapple, concentrated"
+587,Fruits,Persimmons,Persimmons,Persimmons
+591,Fruits,Cashewapple,Cashewapple,Cashewapple
+592,Fruits,Kiwi fruit,Kiwi fruit,Kiwi fruit
+600,Fruits,Papayas,Papayas,Papayas
+603,Fruits,"Fruit, tropical fresh nes","Fruit, tropical fresh nes","Fruit, tropical fresh nes"
+619,Fruits,"Fruit, fresh nes","Fruit, fresh nes","Fruit, fresh nes"
+620,Fruits,,,"Fruit, dried nes"
+622,Fruits,,,"Juice, fruit nes"
+623,Fruits,,,"Fruit, prepared nes"
+626,Fruits,,,"Fruit, cooked, homogenized preparations"
 639,FodderGrass,,,"Forage and silage, grasses nes"
 640,FodderHerb,,,"Forage and silage, clover"
 643,FodderHerb,,,"Forage and silage, legumes"
@@ -284,7 +284,7 @@ item.code,GCAM_commodity,prod_commod,pp_commod,bitrade_commod
 660,MiscCrop,,,"Coffee, husks and skins"
 661,MiscCrop,"Cocoa, beans","Cocoa, beans","Cocoa, beans"
 662,MiscCrop,,,"Cocoa, paste"
-664,OilCrop,,,"Cocoa, butter"
+664,MiscCrop,,,"Cocoa, butter"
 665,MiscCrop,,,"Cocoa, powder & cake"
 666,MiscCrop,,,Chocolate products nes
 667,MiscCrop,Tea,Tea,Tea
@@ -293,7 +293,7 @@ item.code,GCAM_commodity,prod_commod,pp_commod,bitrade_commod
 674,MiscCrop,,Tea nes,
 677,MiscCrop,Hops,Hops,Hops
 687,MiscCrop,Pepper (piper spp.),Pepper (piper spp.),Pepper (piper spp.)
-689,MiscCrop,"Chillies and peppers, dry","Chillies and peppers, dry","Chillies and peppers, dry"
+689,Vegetables,"Chillies and peppers, dry","Chillies and peppers, dry","Chillies and peppers, dry"
 692,MiscCrop,Vanilla,Vanilla,Vanilla
 693,MiscCrop,Cinnamon (canella),Cinnamon (canella),Cinnamon (canella)
 698,MiscCrop,Cloves,Cloves,Cloves

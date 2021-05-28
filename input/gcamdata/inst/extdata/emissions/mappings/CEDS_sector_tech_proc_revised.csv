@@ -101,6 +101,7 @@ Freight,Truck_Heavy truck,gas,trn_freight_road,Truck (6-30t),NG,trn_road,gas,trn
 Freight,Truck_Heavy truck,refined liquids,trn_freight_road,Truck (6-30t),Liquids,trn_road,refined liquids,trn_road,refined liquids,refined liquids,trn_road,tra,trn_road,refined liquids,,trn_oil
 Freight,Truck_Heavy truck,gas,trn_freight_road,Truck (9-16t),NG,trn_road,gas,trn_road,gas,gas,trn_road,tra,trn_road,gas,,trn_gas
 Freight,Truck_Heavy truck,refined liquids,trn_freight_road,Truck (9-16t),Liquids,trn_road,refined liquids,trn_road,refined liquids,refined liquids,trn_road,tra,trn_road,refined liquids,,trn_oil
+Fruits,,,Fruits,,,,,,,,,,,,Cropland Management,
 heat,biomass,biomass,district heat,biomass,biomass,elec_heat,biomass,elec_heat,biomass,biomass,elec_heat,ene,heat,biomass,,
 heat,coal,coal,district heat,coal,coal,elec_heat,coal,elec_heat,coal,coal,elec_heat,ene,heat,coal,,
 heat,gas,gas,district heat,gas,gas,elec_heat,gas,elec_heat,gas,gas,elec_heat,ene,heat,gas,,
@@ -116,7 +117,9 @@ industry_energy,biomass,biomass,industrial energy use,biomass,biomass,industry_e
 industry_energy,coal,coal,industrial energy use,coal,coal,industry_energy,coal,industry_energy,coal,coal,industry_energy,ind,industry_energy,coal,,ind_coal
 industry_energy,gas,gas,industrial energy use,gas,gas,industry_energy,gas,industry_energy,gas,gas,industry_energy,ind,industry_energy,gas,,ind_gas
 industry_energy,refined liquids,refined liquids,industrial energy use,refined liquids,refined liquids,industry_energy,refined liquids,industry_energy,refined liquids,refined liquids,industry_energy,ind,industry_energy,refined liquids,,ind_oil
+Legumes,,,Legumes,,,,,,,,,,,,Cropland Management,
 MiscCrop,,,MiscCrop,,,,,,,,,,,,Cropland Management,
+NutsSeeds,,,NutsSeeds,,,,,,,,,,,,Cropland Management,
 N fertilizer,coal,coal,N fertilizer,coal,coal,industry_energy,coal,industry_energy,coal,coal,industry_energy,ind,industry_energy,coal,,
 N fertilizer,gas,gas,N fertilizer,gas,gas,industry_energy,gas,industry_energy,gas,gas,industry_energy,ind,industry_energy,gas,,
 N fertilizer,refined liquids,refined liquids,N fertilizer,refined liquids,refined liquids,industry_energy,refined liquids,industry_energy,refined liquids,refined liquids,industry_energy,ind,industry_energy,refined liquids,,
@@ -200,12 +203,14 @@ SheepGoat,Pastoral,FeedCrops,SheepGoat,Pastoral,FeedCrops,Animals,process,SheepG
 SheepGoat,Pastoral,FodderHerb_Residue,SheepGoat,Pastoral,FodderHerb_Residue,Animals,process,SheepGoat,all,all,Animals,,SheepGoat,all,Livestock,
 SheepGoat,Pastoral,Pasture_FodderGrass,SheepGoat,Pastoral,Pasture_FodderGrass,Animals,process,SheepGoat,all,all,Animals,,SheepGoat,all,Livestock,
 SheepGoat,Pastoral,Scavenging_Other,SheepGoat,Pastoral,Scavenging_Other,Animals,process,SheepGoat,all,all,Animals,,SheepGoat,all,Livestock,
+Soybean,,,Soybean,,,,,,,,,,,,Cropland Management,
 SugarCrop,,,SugarCrop,,,,,,,,,,,,Cropland Management,
 UnmanagedLand,ForestFires,ForestFires,UnmanagedLand,ForestFires,ForestFires,forest,process,,,,forest,,,,,
 UnmanagedLand,GrasslandFires,GrasslandFires,UnmanagedLand,GrasslandFires,GrasslandFires,,,,,,grassland,,,,,
 urban processes,aerosols,aerosols,urban processes,aerosols,aerosols,,,aerosols,all,all,aerosols,,,,Aerosols Product Use,
 urban processes,fire_exting,fire_exting,urban processes,fire_exting,fire_exting,,,fire exting,all,all,fire exting,,,,Fire Protection,
+urban processes,landfills,landfills,urban processes,landfills,landfills,landfills,process,landfills,all,all,landfills,,,,Landfilling of Solid Waste,
 urban processes,waste_incineration,waste_incineration,urban processes,waste_incineration,waste_incineration,waste_incineration,process,landfills,all,all,waste_incineration,,,,Incineration of waste,
 urban processes,wastewater treatment,wastewater treatment,urban processes,wastewater treatment,wastewater treatment,wastewater,process,wastewater,all,all,wastewater,,,,Wastewater,
+Vegetables,,,Vegetables,,,,,,,,,,,,Cropland Management,
 Wheat,,,Wheat,,,,,,,,,,,,Cropland Management,
-urban processes,landfills,landfills,urban processes,landfills,landfills,landfills,process,landfills,all,all,landfills,,,,Landfilling of Solid Waste,

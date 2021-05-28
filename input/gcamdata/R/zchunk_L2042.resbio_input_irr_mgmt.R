@@ -197,14 +197,14 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     # AGRICULTURE RESIDUE BIO
     # 4. Form a table of Agricultural Residue Biomass Paramters by region-glu-year
     L101.ag_Prod_Mt_R_C_Y_GLU %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       distinct %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       # have to use left_join + na.omit to match  m e r g e  behavior in old DS
       left_join(L111.ag_resbio_R_C, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
       na.omit %>%
       mutate(AgSupplySector = GCAM_commodity,
-             AgSupplySubsector = paste(GCAM_commodity, GLU, sep = aglu.CROP_GLU_DELIMITER),
+             AgSupplySubsector = paste(GCAM_subsector, GLU, sep = aglu.CROP_GLU_DELIMITER),
              AgProductionTechnology = AgSupplySubsector,
              residue.biomass.production = "biomass",
              # fill in parameters

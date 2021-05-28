@@ -8,13 +8,18 @@
 supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,minicam.energy.input,coefficient
 FoodDemand_Staples,Corn,Corn,share-weight,final-calibration-year,end-year,fixed,regional corn,1
 FoodDemand_NonStaples,FiberCrop,FiberCrop,share-weight,final-calibration-year,end-year,fixed,regional fibercrop,1
+FoodDemand_NonStaples,Fruits,Fruits,share-weight,final-calibration-year,end-year,fixed,regional fruits,1
+FoodDemand_NonStaples,Legumes,Legumes,share-weight,final-calibration-year,end-year,fixed,regional legumes,1
 FoodDemand_NonStaples,MiscCrop,MiscCrop,share-weight,final-calibration-year,end-year,fixed,regional misccrop,1
+FoodDemand_NonStaples,NutsSeeds,NutsSeeds,share-weight,final-calibration-year,end-year,fixed,regional nuts_seeds,1
 FoodDemand_NonStaples,OilCrop,OilCrop,share-weight,final-calibration-year,end-year,fixed,regional oilcrop,1
 FoodDemand_Staples,OtherGrain,OtherGrain,share-weight,final-calibration-year,end-year,fixed,regional othergrain,1
 FoodDemand_NonStaples,PalmFruit,PalmFruit,share-weight,final-calibration-year,end-year,fixed,regional palmfruit,1
 FoodDemand_Staples,Rice,Rice,share-weight,final-calibration-year,end-year,fixed,regional rice,1
-FoodDemand_Staples,RootTuber,RootTuber,share-weight,final-calibration-year,end-year,fixed,regional roottuber,1
+FoodDemand_Staples,RootTuber,RootTuber,share-weight,final-calibration-year,end-year,fixed,regional root_tuber,1
+FoodDemand_NonStaples,Soybean,Soybean,share-weight,final-calibration-year,end-year,fixed,regional soybean,1
 FoodDemand_NonStaples,SugarCrop,SugarCrop,share-weight,final-calibration-year,end-year,fixed,regional sugarcrop,1
+FoodDemand_NonStaples,Vegetables,Vegetables,share-weight,final-calibration-year,end-year,fixed,regional vegetables,1
 FoodDemand_Staples,Wheat,Wheat,share-weight,final-calibration-year,end-year,fixed,regional wheat,1
 FoodDemand_NonStaples,Beef,Beef,share-weight,final-calibration-year,end-year,fixed,regional beef,1
 FoodDemand_NonStaples,Dairy,Dairy,share-weight,final-calibration-year,end-year,fixed,regional dairy,1
@@ -26,13 +31,18 @@ NonFoodDemand_Crops,Corn,Corn,share-weight,final-calibration-year,end-year,fixed
 NonFoodDemand_Crops,FiberCrop,FiberCrop,share-weight,final-calibration-year,end-year,fixed,regional fibercrop,1
 NonFoodDemand_Crops,FodderGrass,FodderGrass,share-weight,final-calibration-year,end-year,fixed,FodderGrass,1
 NonFoodDemand_Crops,FodderHerb,FodderHerb,share-weight,final-calibration-year,end-year,fixed,FodderHerb,1
+NonFoodDemand_Crops,Fruits,Fruits,share-weight,final-calibration-year,end-year,fixed,regional fruits,1
+NonFoodDemand_Crops,Legumes,Legumes,share-weight,final-calibration-year,end-year,fixed,regional legumes,1
 NonFoodDemand_Crops,MiscCrop,MiscCrop,share-weight,final-calibration-year,end-year,fixed,regional misccrop,1
+NonFoodDemand_Crops,NutsSeeds,NutsSeeds,share-weight,final-calibration-year,end-year,fixed,regional nuts_seeds,1
 NonFoodDemand_Crops,OilCrop,OilCrop,share-weight,final-calibration-year,end-year,fixed,regional oilcrop,1
 NonFoodDemand_Crops,OtherGrain,OtherGrain,share-weight,final-calibration-year,end-year,fixed,regional othergrain,1
 NonFoodDemand_Crops,PalmFruit,PalmFruit,share-weight,final-calibration-year,end-year,fixed,regional palmfruit,1
 NonFoodDemand_Crops,Rice,Rice,share-weight,final-calibration-year,end-year,fixed,regional rice,1
-NonFoodDemand_Crops,RootTuber,RootTuber,share-weight,final-calibration-year,end-year,fixed,regional roottuber,1
+NonFoodDemand_Crops,RootTuber,RootTuber,share-weight,final-calibration-year,end-year,fixed,regional root_tuber,1
+NonFoodDemand_Crops,Soybean,Soybean,share-weight,final-calibration-year,end-year,fixed,regional soybean,1
 NonFoodDemand_Crops,SugarCrop,SugarCrop,share-weight,final-calibration-year,end-year,fixed,regional sugarcrop,1
+NonFoodDemand_Crops,Vegetables,Vegetables,share-weight,final-calibration-year,end-year,fixed,regional vegetables,1
 NonFoodDemand_Crops,Wheat,Wheat,share-weight,final-calibration-year,end-year,fixed,regional wheat,1
 NonFoodDemand_Meat,Beef,Beef,share-weight,final-calibration-year,end-year,fixed,regional beef,1
 NonFoodDemand_Meat,Dairy,Dairy,share-weight,final-calibration-year,end-year,fixed,regional dairy,1

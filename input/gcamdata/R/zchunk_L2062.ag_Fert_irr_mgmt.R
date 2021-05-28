@@ -37,7 +37,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     year <- value <- GCAM_region_ID <- GCAM_commodity <- GLU <- GLU_name <- IRR_RFD <-
       MGMT <- region <- AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <-
       minicam.energy.input <- coefficient <- WaterContent <- nonLandVariableCost <-
-      FertCost <- NULL  # silence package check notes
+      FertCost <- GCAM_subsector <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -59,8 +59,9 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
 
       # Add sector, subsector, technology names
       mutate(AgSupplySector = GCAM_commodity,
-             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
-             AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_")) %>%
+             AgSupplySubsector = paste(GCAM_subsector, GLU_name, sep = aglu.CROP_GLU_DELIMITER),
+             AgProductionTechnology = paste(paste(AgSupplySubsector, IRR_RFD, sep = aglu.IRR_DELIMITER),
+                                            MGMT, sep = aglu.MGMT_DELIMITER)) %>%
 
       # Add name of minicam.energy.input
       mutate(minicam.energy.input = "N fertilizer") %>%

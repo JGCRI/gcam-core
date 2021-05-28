@@ -73,7 +73,7 @@ module_emissions_L123.bcoc_awb_R_S_T_Y <- function(command, ...) {
       # by the share for each individual GCAM technology
       mutate(awb_emission = AWB_emiss_share * awb) %>%
       # Add production data
-      left_join_error_no_match(L101.ag_Prod_Mt_R_C_Y_GLU_2000, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      left_join_error_no_match(L101.ag_Prod_Mt_R_C_Y_GLU_2000, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       # Calculate emission factor, which is
       mutate(emfact = awb_emission / value) %>%
       select(-awb_emission, -value, -AWB_emiss_share, -awb) %>%

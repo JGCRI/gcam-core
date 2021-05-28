@@ -30,7 +30,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
 
     year <- value <- GCAM_region_ID <- GCAM_commodity <- GLU <- irrHA_frac <-
       irr.harvarea <- rfd_share <- rfd.harvarea <- prod.irr <- irr.yld <-
-      prod.rfd <- rfd.yld <- NULL     # silence package check.
+      prod.rfd <- rfd.yld <- GCAM_subsector <- NULL     # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -42,7 +42,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
 
     # First, calculate the share of irrigated vs. rainfed cropland in the base year by GCAM region, commodity and GLU.
     L161.ag_irrHA_frac_R_C_GLU %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU, irrHA_frac) %>%
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, irrHA_frac) %>%
       # Get the share of rainfed cropland
       mutate(rfd_share = 1 - irrHA_frac) ->
       L171.ag_irrHA_frac_R_C_GLU
@@ -54,20 +54,20 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
       left_join(L171.ag_irrHA_frac_R_C_GLU,
                                by = c("GCAM_region_ID", "GCAM_commodity",
-                                      "GLU")) %>%
+                                      "GCAM_subsector", "GLU")) %>%
       mutate(irrHA_frac = if_else(is.na(irrHA_frac), 0, irrHA_frac),
              rfd_share = if_else(is.na(rfd_share), 1, rfd_share),
              irr.harvarea = value * irrHA_frac,
              rfd.harvarea = value * rfd_share)
 
     ## Extend to cover all years 1700-2010.
-    idvars <- c('GCAM_region_ID', 'GCAM_commodity', 'GLU', 'year')
+    idvars <- c('GCAM_region_ID', 'GCAM_commodity', 'GCAM_subsector', 'GLU', 'year')
     allyr <- seq(min(HISTORICAL_YEARS), max(HISTORICAL_YEARS))
     IrrRfdCropland %>%
-      tidyr::expand(nesting(GCAM_region_ID, GCAM_commodity, GLU),
+      tidyr::expand(nesting(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU),
                     year = allyr) %>%
       left_join(IrrRfdCropland, by=idvars) %>%
-      group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       mutate(irr.harvarea = approx_fun(year, irr.harvarea, rule = 2),
              rfd.harvarea = approx_fun(year, rfd.harvarea, rule = 2)) %>%
       ungroup -> IrrRfdCropland.interp
@@ -90,7 +90,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
 
     ## Produce outputs.  Note that for harvested area, we use the values without
     ## interpolation, stored in IrrRfdCropland (as opposed to IrrRfdCropland.interp)
-    select(IrrRfdCropland, GCAM_region_ID, GCAM_commodity, GLU, year,
+    select(IrrRfdCropland, GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, year,
            value = irr.harvarea) %>%
       add_title("Irrigated harvested cropland cover by GCAM region / commodity / year / GLU") %>%
       add_units("bm2") %>%
@@ -101,7 +101,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
                      "L161.ag_irrHA_frac_R_C_GLU") ->
       L171.LC_bm2_R_irrHarvCropLand_C_Yh_GLU
 
-    select(IrrRfdCropland, GCAM_region_ID, GCAM_commodity, GLU, year,
+    select(IrrRfdCropland, GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, year,
            value = rfd.harvarea) %>%
       add_title("Rainfed harvested cropland cover by GCAM region / commodity / year / GLU") %>%
       add_units("bm2") %>%
@@ -112,7 +112,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
                      "L161.ag_irrHA_frac_R_C_GLU") ->
       L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU
 
-    select(ecyield.both, GCAM_region_ID, GCAM_commodity, GLU, year, value =
+    select(ecyield.both, GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, year, value =
              irr.yld) %>%
       add_title("Adjusted economic yield for irrigated crops by GCAM region / commodity / year / GLU") %>%
       add_units("kg/m2") %>%
@@ -121,7 +121,7 @@ module_aglu_LB171.LC_R_Cropland_Yh_GLU_irr <- function(command, ...) {
       add_precursors("L161.ag_irrProd_Mt_R_C_Y_GLU") ->
       L171.ag_irrEcYield_kgm2_R_C_Y_GLU
 
-    select(ecyield.both, GCAM_region_ID, GCAM_commodity, GLU, year, value =
+    select(ecyield.both, GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, year, value =
              rfd.yld) %>%
       add_title("Adjusted economic yield for rainfed crops by GCAM region / commodity / year / GLU") %>%
       add_units("kg/m2") %>%

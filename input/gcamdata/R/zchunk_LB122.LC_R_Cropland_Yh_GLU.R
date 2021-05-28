@@ -49,7 +49,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     Land_Type <- year <- . <- GCAM_region_ID <- GLU <- GCAM_commodity <-
       value <- iso <- countries <- cropland <- fallow <- fallow_frac <- cropped <-
       cropped_frac <- uncropped_frac <- nonharvested_frac <- value.x <-
-      value.y <- Land_Type.y <- Land_Type.x <- NULL # silence package check.
+      value.y <- Land_Type.y <- Land_Type.x <- GCAM_subsector <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -97,8 +97,6 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # Take the input historical harvested area table, L101.ag_HA_bm2_R_C_Y_GLU, and sum over GCAM_commodity, so that each
     # region-GLU-year combo has a single value.
     L101.ag_HA_bm2_R_C_Y_GLU %>%
-      # remove GCAM_commodity:
-      select(-GCAM_commodity) %>%
       group_by(GCAM_region_ID, GLU, year) %>%
       # and sum by region-GLU-year:
       summarise(value = sum(value)) %>%
@@ -300,9 +298,6 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # is used for other calculations below. That is why this is not part of the previous pipeline
     # Take harvested cropland area by region-commodity-glu-year:
     L122.LC_bm2_R_HarvCropLand_C_Y_GLU %>%
-      # remove commodity info since that is what aggregate over:
-      select(-GCAM_commodity) %>%
-      # aggregate:
       group_by(GCAM_region_ID, GLU, Land_Type, year) %>%
       summarise(value = sum(value)) ->
       # store in a table of Harvested cropland by region-glu-year:
@@ -316,7 +311,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # Take cropland by region-glu-commodity-year:
     L122.LC_bm2_R_HarvCropLand_C_Y_GLU %>%
       # join the production by region-glu-commodity-year information:
-      left_join_error_no_match(L101.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
+      left_join_error_no_match(L101.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU", "year")) %>%
       # value.x = the cropland area by region-commodity-glu-year from L122.LC_bm2_R_HarvCropLand_C_Y_GLU
       # value.y = production by region-commodity-glu-year from L101.ag_Prod_Mt_R_C_Y_GLU
       # Calculate yield by region-commodity-glu-year as value = value.y/value.x:
@@ -472,7 +467,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       ungroup %>%
       # expand to include history years and fill in those values to be 0:
       tidyr::complete(year = c(aglu.PREAGLU_YEARS, aglu.AGLU_HISTORICAL_YEARS),
-                      nesting(GCAM_region_ID, GCAM_commodity, GLU, Land_Type),
+                      nesting(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, Land_Type),
                       fill = list(value = 0)) ->
       # store in a table of HarvCropland by region-commodity-glu-year, including historical years:
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU

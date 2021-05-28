@@ -75,15 +75,15 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
                                                                             gsub("biomassTree_", "", AgSupplySubsector))) %>%
       left_join_error_no_match(A_LT_Mapping, by = "GCAM_commodity") %>%
       mutate(LandAllocatorRoot = "root",
-             LandNode1 = paste(LandNode1, GLU_name, sep = "_"),
-             LandNode2 = paste(LandNode2, GLU_name, sep = "_"),
-             LandNode3 = paste(LandNode3, GLU_name, sep = "_"),
-             LandNode4 = paste(LandLeaf, GLU_name, sep = "_")) %>%
+             LandNode1 = paste(LandNode1, GLU_name, sep = aglu.LT_GLU_DELIMITER),
+             LandNode2 = paste(LandNode2, GLU_name, sep = aglu.LT_GLU_DELIMITER),
+             LandNode3 = paste(LandNode3, GLU_name, sep = aglu.LT_GLU_DELIMITER),
+             LandNode4 = paste(LandLeaf, GLU_name, sep = aglu.LT_GLU_DELIMITER)) %>%
       repeat_add_columns(tibble::tibble(year = MODEL_FUTURE_YEARS)) %>%
       filter(year >= aglu.BIO_START_YEAR) %>%
       left_join(A_bio_ghost_share, by = "year") %>%
       mutate(ghost.unnormalized.share = approx_fun(year, ghost.share)) %>%
-      select(-GLU_name, -GCAM_commodity, -AgSupplySubsector, -LandLeaf, -Land_Type, -ghost.share) ->
+      select(LEVEL2_DATA_NAMES[["LN4_NodeGhostShare"]]) ->
       L2242.LN4_NodeGhostShare
 
     # L2242.LN4_NodeIsGhostShareRel:

@@ -36,7 +36,7 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
 
     EcYield_kgm2_hi <- EcYield_kgm2_lo <- GCAM_commodity <- GCAM_region_ID <- GLU <-
       Irr_Rfd <- LC_bm2_hi <- LC_bm2_lo <- landshare_hi <- landshare_lo <- level <- value <-
-      year <- yield <- yieldmult_hi <- yieldmult_lo <- NULL  # silence package check notes
+      year <- yield <- yieldmult_hi <- yieldmult_lo <- GCAM_subsector <- NULL  # silence package check notes
 
     # Load required inputs
     L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU <- get_data(all_data, "L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU")
@@ -63,8 +63,8 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
       mutate(yieldmult_hi = 1 + aglu.MGMT_YIELD_ADJ, yieldmult_lo = 1 - aglu.MGMT_YIELD_ADJ,
              # high and low yields are now calculated as the observed yield times the multipliers
              EcYield_kgm2_lo = value * yieldmult_lo, EcYield_kgm2_hi = value * yieldmult_hi) %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd, year, EcYield_kgm2_hi, EcYield_kgm2_lo) %>%
-      gather(level, value, -GCAM_region_ID, -GCAM_commodity, -GLU, -Irr_Rfd, -year) %>%
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, Irr_Rfd, year, EcYield_kgm2_hi, EcYield_kgm2_lo) %>%
+      gather(level, value, -GCAM_region_ID, -GCAM_commodity, -GCAM_subsector, -GLU, -Irr_Rfd, -year) %>%
       mutate(level = sub("EcYield_kgm2_", "", level)) ->
       L181.ag_EcYield_kgm2_R_C_Y_GLU_irr_level
 
@@ -80,8 +80,8 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
              landshare_lo = (1 - yieldmult_hi) / (yieldmult_lo - yieldmult_hi), landshare_hi = 1 - landshare_lo,
              # low- and high-input land are calculated as the total times the shares
              LC_bm2_lo = value * landshare_lo, LC_bm2_hi = value * landshare_hi) %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd, year, LC_bm2_hi, LC_bm2_lo) %>%
-      gather(level, value, -GCAM_region_ID, -GCAM_commodity, -GLU, -Irr_Rfd, -year) %>%
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, Irr_Rfd, year, LC_bm2_hi, LC_bm2_lo) %>%
+      gather(level, value, -GCAM_region_ID, -GCAM_commodity, -GCAM_subsector, -GLU, -Irr_Rfd, -year) %>%
       mutate(level = sub("LC_bm2_", "", level)) ->
       L181.LC_bm2_R_C_Yh_GLU_irr_level
 
@@ -89,7 +89,8 @@ module_aglu_LB181.ag_R_C_Y_GLU_irr_mgmt <- function(command, ...) {
     L181.ag_EcYield_kgm2_R_C_Y_GLU_irr_level %>%
       rename(yield = value) %>%
       left_join_error_no_match(L181.LC_bm2_R_C_Yh_GLU_irr_level,
-                               by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "Irr_Rfd", "year", "level")) %>%
+                               by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector",
+                                      "GLU", "Irr_Rfd", "year", "level")) %>%
       # apply land area rounding (and cutoff) for production consistency
       mutate(value = round(value, digits = aglu.DIGITS_LAND_USE) * yield) %>%
       select(-yield) ->

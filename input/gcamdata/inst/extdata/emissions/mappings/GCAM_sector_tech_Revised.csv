@@ -49,6 +49,7 @@ electricity_net_ownuse,electricity_net_ownuse,electricity_net_ownuse,electricity
 FiberCrop,,,FiberCrop,,,,,,,,,,Cropland Management,
 FodderGrass,,,FodderGrass,,,,,,,,,,Cropland Management,
 FodderHerb,,,FodderHerb,,,,,,,,,,Cropland Management,
+Fruits,,,Fruits,,,,,,,,,,Cropland Management,
 heat,biomass,biomass,district heat,biomass,biomass,elec_heat,biomass,biomass,elec_heat,ene,heat,biomass,,
 heat,coal,coal,district heat,coal,coal,elec_heat,coal,coal,elec_heat,ene,heat,coal,,
 heat,gas,gas,district heat,gas,gas,elec_heat,gas,gas,elec_heat,ene,heat,gas,,
@@ -65,10 +66,12 @@ industry_energy,biomass,biomass,industrial energy use,biomass,biomass,industry_e
 industry_energy,coal,coal,industrial energy use,coal,coal,industry_energy,coal,coal,industry_energy,ind,industry_energy,coal,,ind_coal
 industry_energy,gas,gas,industrial energy use,gas,gas,industry_energy,gas,gas,industry_energy,ind,industry_energy,gas,,ind_gas
 industry_energy,refined liquids,refined liquids,industrial energy use,refined liquids,refined liquids,industry_energy,refined liquids,refined liquids,industry_energy,ind,industry_energy,refined liquids,,ind_oil
+Legumes,,,Legumes,,,,,,,,,,Cropland Management,
 MiscCrop,,,MiscCrop,,,,,,,,,,Cropland Management,
 N fertilizer,coal,coal,N fertilizer,coal,coal,industry_energy,coal,coal,industry_energy,ind,industry_energy,coal,,
 N fertilizer,gas,gas,N fertilizer,gas,gas,industry_energy,gas,gas,industry_energy,ind,industry_energy,gas,,
 N fertilizer,refined liquids,refined liquids,N fertilizer,refined liquids,refined liquids,industry_energy,refined liquids,refined liquids,industry_energy,ind,industry_energy,refined liquids,,
+NutsSeeds,,,NutsSeeds,,,,,,,,,,Cropland Management,
 OilCrop,,,OilCrop,,,,,,,,,,Cropland Management,
 OtherGrain,,,OtherGrain,,,,,,,,,,Cropland Management,
 out_resources,coal,coal,out_resources,coal,coal,coal,all,all,coal,,,,Coal Mining Activities,
@@ -106,6 +109,7 @@ SheepGoat,Pastoral,FeedCrops,SheepGoat,Pastoral,FeedCrops,SheepGoat,all,all,Anim
 SheepGoat,Pastoral,FodderHerb_Residue,SheepGoat,Pastoral,FodderHerb_Residue,SheepGoat,all,all,Animals,,SheepGoat,all,Livestock,
 SheepGoat,Pastoral,Pasture_FodderGrass,SheepGoat,Pastoral,Pasture_FodderGrass,SheepGoat,all,all,Animals,,SheepGoat,all,Livestock,
 SheepGoat,Pastoral,Scavenging_Other,SheepGoat,Pastoral,Scavenging_Other,SheepGoat,all,all,Animals,,SheepGoat,all,Livestock,
+Soybean,,,Soybean,,,,,,,,,,Cropland Management,
 SugarCrop,,,SugarCrop,,,,,,,,,,Cropland Management,
 UnmanagedLand,ForestFires,ForestFires,UnmanagedLand,ForestFires,ForestFires,,,,forest,,,,,
 UnmanagedLand,GrasslandFires,GrasslandFires,UnmanagedLand,GrasslandFires,GrasslandFires,,,,grassland,,,,,
@@ -113,6 +117,7 @@ urban processes,aerosols,aerosols,urban processes,aerosols,aerosols,aerosols,all
 urban processes,fire_exting,fire_exting,urban processes,fire_exting,fire_exting,fire exting,all,all,fire exting,,,,Fire Protection,
 urban processes,landfills,landfills,urban processes,landfills,landfills,landfills,all,all,landfills,,,,Landfilling of Solid Waste,
 urban processes,wastewater treatment,wastewater treatment,urban processes,wastewater treatment,wastewater treatment,wastewater,all,all,wastewater,,,,Wastewater,
+Vegetables,,,Vegetables,,,,,,,,,,Cropland Management,
 Wheat,,,Wheat,,,,,,,,,,Cropland Management,
 Freight,Rail_All,coal,trn_freight,Freight Rail,Coal,trn_rail,all,coal,trn_rail,tra,trn_rail,coal,,trn_coal
 Freight,Rail_All,refined liquids,trn_freight,Freight Rail,Liquids,trn_rail,all,refined liquids,trn_rail,tra,trn_rail,refined liquids,,trn_oil

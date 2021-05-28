@@ -41,7 +41,7 @@ module_emissions_L1221.ghg_agr_R_S_T_Y_IRR <- function(command, ...) {
     L1221.ghg_tg_R_agr_C_Y_GLU_IRR <- L122.ghg_tg_R_agr_C_Y_GLU %>%
       repeat_add_columns( tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
       left_join(L1211.ag_irrShare_R_C_Y_GLU_irr,
-                by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "Irr_Rfd", "year"),
+                by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU", "Irr_Rfd", "year"),
                 suffix = c(".emissions", ".share")) %>% # under timeshift conditions, L122.ghg_tg_R_agr_C_Y_GLU has NaN values (N2O_AGR), which throws error in left_join_no_error as NA values, even though they are matched correctly.
       mutate(value = value.emissions * value.share) %>%
       select(-value.emissions, -value.share)

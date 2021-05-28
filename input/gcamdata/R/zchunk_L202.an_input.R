@@ -464,7 +464,8 @@ module_aglu_L202.an_input <- function(command, ...) {
     # Also, remove DDGS and feedcake subsectors and technologies in regions where these commodities are not available
     # First need to figure out what the names of these subsectors are, and which regions to exclude
     A_regions %>%
-      filter(ethanol != "corn ethanol", paste(biomassOil_tech, biodiesel) != "OilCrop biodiesel") %>%
+      filter(ethanol != "corn ethanol",
+             !paste(biomassOil_tech, biodiesel) %in% c("OilCrop biodiesel", "Soybean biodiesel" )) %>%
       select(-region) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       select(region) ->

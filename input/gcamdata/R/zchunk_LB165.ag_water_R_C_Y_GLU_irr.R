@@ -48,7 +48,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       MH2014_proxy <- GLU <- NULL
     GreenRfd_m3kg <- GCAM_region_ID <- GCAM_commodity <- BlueIrr_thousm3 <-
       TotIrr_m3kg <- application.eff <- management.eff <- irrHA <-
-      field.eff <- conveyance.eff <- NULL
+      field.eff <- conveyance.eff <- GCAM_subsector <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -319,7 +319,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
              GreenRfd_thousm3 = GreenRfd_m3kg * rfdProd_t) %>%
       # match in GCAM regions and commodities for aggregation
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
-      left_join_keep_first_only(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") ->
+      left_join_keep_first_only(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity, GCAM_subsector), by = "GTAP_crop") ->
       L165.ag_Water_ctry_crop_GLU
 
     # Original lines 243-265
@@ -343,7 +343,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
 
       # at this point, the crops are ready for aggregation by GCAM region and commodity
       filter(!is.na(GCAM_commodity)) %>%   # to replicate `aggregate` behavior
-      group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       summarise_at(vars(irrProd_t, rfdProd_t, BlueIrr_thousm3, GreenIrr_thousm3, GreenRfd_thousm3), sum) %>%
       ungroup %>%
       mutate(BlueIrr_m3kg = BlueIrr_thousm3 / irrProd_t,
@@ -356,9 +356,9 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
     L165.ag_Water_R_C_GLU[is.na(L165.ag_Water_R_C_GLU)] <- 0
 
     # Create the final tables to be written out (original lines 267-270)
-    L165.BlueIrr_m3kg_R_C_GLU <- select(L165.ag_Water_R_C_GLU, GCAM_region_ID, GCAM_commodity, GLU, BlueIrr_m3kg)
-    L165.TotIrr_m3kg_R_C_GLU <- select(L165.ag_Water_R_C_GLU, GCAM_region_ID, GCAM_commodity, GLU, TotIrr_m3kg)
-    L165.GreenRfd_m3kg_R_C_GLU <- select(L165.ag_Water_R_C_GLU, GCAM_region_ID, GCAM_commodity, GLU, GreenRfd_m3kg)
+    L165.BlueIrr_m3kg_R_C_GLU <- select(L165.ag_Water_R_C_GLU, GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, BlueIrr_m3kg)
+    L165.TotIrr_m3kg_R_C_GLU <- select(L165.ag_Water_R_C_GLU, GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, TotIrr_m3kg)
+    L165.GreenRfd_m3kg_R_C_GLU <- select(L165.ag_Water_R_C_GLU, GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, GreenRfd_m3kg)
 
     # Original lines 272-290
     # Irrigation Efficiency: Compile country-level data to GCAM regions, weighted by total irrigated harvested area
