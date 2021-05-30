@@ -49,8 +49,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                "L124.LC_bm2_R_Grass_Yh_GLU_adj",
                "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
                "L154.IEA_histfut_data_times_UCD_shares",
-               "L173.water_km3_R_indEFW_Yh",
-               "L174.water_km3_R_muniEFW_Yh",
                FILE = "emissions/CEDS/ceds_sector_map",
                FILE = "emissions/CEDS/ceds_fuel_map",
                # EPA scaling process 2020
@@ -172,8 +170,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L111.ag_resbio_R_C <- get_data(all_data, "L111.ag_resbio_R_C",strip_attributes = TRUE)
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",strip_attributes = TRUE)
       L103.ghg_tgmt_USA_an_Sepa_F_2005 <- get_data(all_data, "L103.ghg_tgmt_USA_an_Sepa_F_2005",strip_attributes = TRUE)
-      L173.water_km3_R_indEFW_Yh <- get_data(all_data, "L173.water_km3_R_indEFW_Yh")
-      L174.water_km3_R_muniEFW_Yh <- get_data(all_data, "L174.water_km3_R_muniEFW_Yh")
 
       # EPA Raw CH4 and N2O data files
       # YO 2020 EPA scaling
@@ -487,17 +483,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                                       "metals", "foams", "solvents", "semiconductors","chemicals_nitric","chemicals_adipic")) ->
         L112.CEDS_GCAM_Proc
 
-      # The wastewater related emissions are handled in two separate sectors (industrial and municipal).
-      # Here the shares are calculated which are applied to these emissions further below
-      L112.WWtrt_sector_shares <- bind_rows(L173.water_km3_R_indEFW_Yh, L174.water_km3_R_muniEFW_Yh) %>%
-        mutate(sector = sub("in_", "", sector)) %>%
-        semi_join(GCAM_sector_tech, by = "sector") %>%
-        group_by(GCAM_region_ID, year) %>%
-        mutate(share = water_km3 / sum(water_km3)) %>%
-        ungroup() %>%
-        left_join_error_no_match(select(GCAM_sector_tech, sector, supplysector), by = "sector") %>%
-        select(GCAM_region_ID, supplysector, year, share)
-
       GCAM_sector_tech %>%
         select(supplysector, subsector, stub.technology, EDGAR_agg_sector, EPA_agg_sector, EPA_agg_fuel_ghg) %>%
         filter(EDGAR_agg_sector %in% c("industry_processes" , "chemicals", "landfills", "wastewater",  # Filter for the agg sectors in EDGAR column for all NonCO2s.
@@ -509,9 +494,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         left_join(L112.CEDS_GCAM_Proc, by = c("GCAM_region_ID", "EDGAR_agg_sector" = "CEDS_agg_sector", "Non.CO2", "year")) %>%
         mutate(emissions=if_else(is.na(emissions),0,emissions)) %>%
         na.omit() %>%  # delete rows with NA's
-        # Wastewater treatment emissions are shared between two sectors. Merge in the shares and multiply thru
-        left_join(L112.WWtrt_sector_shares, by = c("GCAM_region_ID", "supplysector", "year")) %>%
-        mutate(input.emissions = if_else(is.na(share), emissions, emissions * share)) %>%
+        mutate(input.emissions = emissions) %>%  # Calculate emissions
         group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
         summarise(value = sum(input.emissions)) %>% # Calculate total emissions
         ungroup()->L131.nonco2_tg_R_prc_S_S_Yh
@@ -1556,7 +1539,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         add_precursors("emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                        "common/iso_GCAM_regID","emissions/CEDS/CEDS_sector_tech_combustion","emissions/CEDS/CEDS_sector_tech_combustion_revised",
                        "emissions/EPA_FCCC_IndProc_2005", "emissions/EPA/EPA_2019_raw", "emissions/EPA_CH4N2O_map",
-                       "emissions/GCAM_EPA_CH4N2O_energy_map", "L173.water_km3_R_indEFW_Yh", "L174.water_km3_R_muniEFW_Yh"
+                       "emissions/GCAM_EPA_CH4N2O_energy_map"
         ) ->
         L131.nonco2_tg_R_prc_S_S_Yh
 
