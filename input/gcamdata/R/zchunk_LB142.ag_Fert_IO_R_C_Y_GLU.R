@@ -35,7 +35,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
 
     Fert_Cons_MtN <- Fert_Cons_MtN_unscaled <- Fert_IO <- Fert_IO_unscaled <- Prod_share <-
       prod <- cons <- total <- adj <- scaler <- GCAM_commodity <- GCAM_region_ID <- GTAP_crop <-
-      GLU <- iso <- value <- year <- NULL   # silence package checks
+      GLU <- iso <- value <- year <- GCAM_subsector <- NULL   # silence package checks
 
     all_data <- list(...)[[1]]
 

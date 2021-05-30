@@ -243,7 +243,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     FAO_ag_Food_t_SUA[FAO_ag_Food_t_SUA$countries == "China" & FAO_ag_Food_t_SUA$item == "Vegetables, Other",
                       FAO_histyear_cols] <-
       FAO_ag_Food_t_SUA[FAO_ag_Food_t_SUA$countries == "China" & FAO_ag_Food_t_SUA$item == "Vegetables, Other",
-                        FAO_histyear_cols] * aglu.CHN_Veg_Food_Mult
+                        FAO_histyear_cols] * aglu.CHN_VEG_FOOD_MULT
 
     # Not all databases go to 2012. Extrapolate each dataset to 2012, repeating
     # the data for 2009/10. Where missing 1961, substitute 1962

@@ -51,7 +51,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       Category <- LT_SAGE <- LT_HYDE <- countries <- country.codes <-
       item.codes <- element <- element.codes <- GCAM_commodity <-
       value <- GCAM_region_ID <- year <- Mcal_t <- value.y <- value.x <-
-      item <- iso <- production <- harvested.area <- NULL # silence package check.
+      item <- iso <- production <- harvested.area <- GCAM_subsector <- NULL # silence package check.
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")

@@ -7,7 +7,8 @@
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
-#'   \code{command} is "MAKE") all the generated outputs: \code{L1321.prP_R_C_75USDkg}, \code{L1321.expP_R_F_75USDm3.
+#'   \code{command} is "MAKE") all the generated outputs: \code{L1321.ag_prP_R_C_75USDkg},
+#'   \code{L1321.an_prP_R_C_75USDkg}, \code{L1321.expP_R_F_75USDm3
 #' @details This chunk calculates average prices over calibration years by GCAM commodity and region. Averages across
 #'   years are unweighted; averages over FAO item are weighted by production.
 #' @importFrom assertthat assert_that
@@ -36,7 +37,8 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
       countries <- currentUSD_per_baseyearUSD <- item <- pp_commod <- Cottonseed <-
       `Cotton lint` <- item.codes <- production <- prod_commod <- item.code <-
       GCAM_commodity <- GCAM_region_ID <- revenue <- avg_prP_C <- prP <- prPmult <-
-      production_wt_prPmult <- prPmult_R <- countries <- `item codes` <- calPrice <- NULL    # silence package check.
+      production_wt_prPmult <- prPmult_R <- countries <- `item codes` <- calPrice <-
+      `element codes` <- element <- ExpV_kUSD <- Exp_m3 <- avg_expP_F <- Price_USDm3 <- NULL    # silence package check.
 
     all_data <- list(...)[[1]]
 

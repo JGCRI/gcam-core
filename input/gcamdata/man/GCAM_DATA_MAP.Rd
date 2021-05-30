@@ -4,8 +4,10 @@
 \name{GCAM_DATA_MAP}
 \alias{GCAM_DATA_MAP}
 \title{GCAM_DATA_MAP}
-\format{A tibble with columns: name (chunk that produces the data), output (name of the data object),
-precursors (colon seperated list of precursors), title, units, comments, flags (typically metadata for processing)}
+\format{
+A tibble with columns: name (chunk that produces the data), output (name of the data object),
+precursors (colon seperated list of precursors), title, units, comments, flags (typically metadata for processing)
+}
 \usage{
 GCAM_DATA_MAP
 }

@@ -38,7 +38,8 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
     Prod_kt_rainfed <- HA_kha_irrigated <- Yield_kgHa_irrigated <-
         Prod_kt_irrigated <- NULL
     Yield_base <- iso <- GTAP_crop <- . <- GLU <- value <- CROSIT <- Mult <-
-        GCAM_region_ID <- GCAM_commodity <- Prod_mod <- YieldRatio <- NULL # silence package check.
+        GCAM_region_ID <- GCAM_commodity <- Prod_mod <- YieldRatio <-
+        GCAM_subsector <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 

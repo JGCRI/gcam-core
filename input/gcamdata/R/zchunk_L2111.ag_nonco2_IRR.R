@@ -39,7 +39,7 @@ module_emissions_L2111.ag_nonco2_IRR <- function(command, ...) {
     # Silence package checks
     SO2_name <- Non.CO2 <- AgProductionTechnology <- AgSupplySector <-
       AgSupplySubsector <- GCAM_commodity <- GLU <- GLU_code <- Non.CO2 <-
-      input.emissions <- region <- year <- GLU_name <- value <- NULL
+      input.emissions <- region <- year <- GLU_name <- value <- GCAM_subsector <- NULL
 
     all_data <- list(...)[[1]]
 

@@ -53,7 +53,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <- share.weight.year <- subs.share.weight <-
       tech.share.weight <- logit.year.fillout <- logit.exponent <- calPrice <- calOutputValue <-
       market <- IRR_RFD <- Irr_Rfd <- MGMT <- level <- yield <- generic.yield <- yield_irr <-
-      yieldmult <- Yield_GJm2 <- reg_calPrice <- NULL   # silence package check notes
+      yieldmult <- Yield_GJm2 <- reg_calPrice <- GCAM_subsector <- harvests.per.year <- NULL   # silence package check notes
 
     all_data <- list(...)[[1]]
 
