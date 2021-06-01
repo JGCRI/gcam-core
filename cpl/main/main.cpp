@@ -55,7 +55,8 @@ int main( ) {
                BUT NEED TO DEFINE NAME AND TYPE.
      */
     // Current year
-    int YEAR = 1990;
+    int year = 1990;
+    int* YEAR = &year;
     
     // Define base control variables.
     // In fully coupled mode, these are defined in an E3SM namelist.
@@ -77,21 +78,33 @@ int main( ) {
     // These booleans define what is passed between GCAM & E3SM.
     bool ELM_IAC_CARBON_SCALING = true; // If TRUE, changes in land productivity from ELM are used in GCAM.
     bool IAC_ELM_CO2_EMISSIONS = true; // If TRUE, energy system CO2 is passed from GCAM to EAM.
-    int FIRST_COUPLED_YEAR = 2016; // First year to include feedbacks from E3SM in GCAM.
-    double BASE_CO2EMISS_SURFACE = 9663.0297; // Global surface CO2 emissions in the base year. This should be GCAM's emissions in the year of the BASE_CO2_FILE
-    double BASE_CO2EMISS_AIRCRAFT = 102.157; // Global aircraft CO2 emissions in the base year.
+    int firstCoupledYear = 2016;
+    int* FIRST_COUPLED_YEAR = &firstCoupledYear; // First year to include feedbacks from E3SM in GCAM.
+    double baseCo2EmissSurface = 9663.0297;
+    double* BASE_CO2EMISS_SURFACE = &baseCo2EmissSurface; // Global surface CO2 emissions in the base year. This should be GCAM's emissions in the year of the BASE_CO2_FILE
+    double baseCo2EmissAir = 102.157;
+    double* BASE_CO2EMISS_AIRCRAFT = &baseCo2EmissAir; // Global aircraft CO2 emissions in the base year.
     
     // Define size control variables
     // These integers define the length of the various arrays used in the coupling
-    int NUM_LAT = 192; // Number of horizontal grid cells
-    int NUM_LON = 288; // Number of vertical grid cells
-    int NUM_PFT = 17; // Number of PFTs in ELM
-    int NUM_GCAM_ENERGY_REGIONS = 32;
-    int NUM_GCAM_LAND_REGIONS = 392;
-    int NUM_IAC2ELM_LANDTYPES = 9;
-    int NUM_EMISS_SECTORS = 2;
-    int NUM_EMISS_REGIONS = 1;
-    int NUM_EMISS_GASES = 1;
+    int numLat = 192;
+    int* NUM_LAT = &numLat; // Number of horizontal grid cells
+    int numLon = 288;
+    int* NUM_LON = &numLon; // Number of vertical grid cells
+    int numPFT = 17;
+    int* NUM_PFT = &numPFT; // Number of PFTs in ELM
+    int numGEReg = 32;
+    int* NUM_GCAM_ENERGY_REGIONS = &numGEReg;
+    int numGLReg = 392;
+    int* NUM_GCAM_LAND_REGIONS = &numGLReg;
+    int numLT = 9;
+    int* NUM_IAC2ELM_LANDTYPES = &numLT;
+    int numES = 2;
+    int* NUM_EMISS_SECTORS = &numES;
+    int numER = 1;
+    int* NUM_EMISS_REGIONS = &numER;
+    int numEG = 1;
+    int* NUM_EMISS_GASES = &numEG;
     
     /*
      STEP 2: READ NAMELIST
@@ -144,31 +157,31 @@ int main( ) {
         } else if ( name == "IAC_ELM_CO2_EMISSIONS" ) {
             istringstream(value) >> std::boolalpha >> IAC_ELM_CO2_EMISSIONS;
         } else if ( name == "FIRST_COUPLED_YEAR" ) {
-            FIRST_COUPLED_YEAR = std::stoi(value);
+            *FIRST_COUPLED_YEAR = std::stoi(value);
         } else if ( name == "YEAR" ) {
-            YEAR = std::stoi(value);
+            *YEAR = std::stoi(value);
         } else if ( name == "NUM_LAT" ) {
-            NUM_LAT = std::stoi(value);
+            *NUM_LAT = std::stoi(value);
         } else if ( name == "NUM_LON" ) {
-            NUM_LON = std::stoi(value);
+            *NUM_LON = std::stoi(value);
         } else if ( name == "NUM_PFT" ) {
-            NUM_PFT = std::stoi(value);
+            *NUM_PFT = std::stoi(value);
         } else if ( name == "NUM_GCAM_ENERGY_REGIONS" ) {
-            NUM_GCAM_ENERGY_REGIONS = std::stoi(value);
+            *NUM_GCAM_ENERGY_REGIONS = std::stoi(value);
         } else if ( name == "NUM_GCAM_LAND_REGIONS" ) {
-            NUM_GCAM_LAND_REGIONS = std::stoi(value);
+            *NUM_GCAM_LAND_REGIONS = std::stoi(value);
         } else if ( name == "NUM_IAC2ELM_LANDTYPES" ) {
-            NUM_IAC2ELM_LANDTYPES = std::stoi(value);
+            *NUM_IAC2ELM_LANDTYPES = std::stoi(value);
         } else if ( name == "NUM_EMISS_SECTORS" ) {
-            NUM_EMISS_SECTORS = std::stoi(value);
+            *NUM_EMISS_SECTORS = std::stoi(value);
         } else if ( name == "NUM_EMISS_REGIONS" ) {
-            NUM_EMISS_REGIONS = std::stoi(value);
+            *NUM_EMISS_REGIONS = std::stoi(value);
         } else if ( name == "NUM_EMISS_GASES" ) {
-            NUM_EMISS_GASES = std::stoi(value);
+            *NUM_EMISS_GASES = std::stoi(value);
         } else if ( name == "BASE_CO2EMISS_SURFACE" ) {
-            BASE_CO2EMISS_SURFACE = std::stod(value);
+            *BASE_CO2EMISS_SURFACE = std::stod(value);
         } else if ( name == "BASE_CO2EMISS_AIRCRAFT" ) {
-            BASE_CO2EMISS_AIRCRAFT = std::stod(value);
+            *BASE_CO2EMISS_AIRCRAFT = std::stod(value);
         } else if ( name == "RUN_FULL_SCENARIO" ) {
             istringstream(value) >> std::boolalpha >> RUN_FULL_SCENARIO;
         }else {
@@ -193,49 +206,49 @@ int main( ) {
     
     // Set up data structures that will be passed to runGCAM
     // In fully coupled mode, these are allocated by E3SM
-    double *gcamiarea = new double [NUM_LAT * NUM_LON]();
-    double *gcamilfract = new double [NUM_LAT * NUM_LON]();
-    double *gcamipftfract = new double [NUM_LAT * NUM_LON * NUM_PFT]();
-    double *gcaminpp = new double [NUM_LAT * NUM_LON * NUM_PFT]();
-    double *gcamihr = new double [NUM_LAT * NUM_LON * NUM_PFT]();
-    double *gcamoluc = new double [NUM_GCAM_LAND_REGIONS * NUM_IAC2ELM_LANDTYPES]();
-    double *gcamoemiss = new double [NUM_EMISS_SECTORS * NUM_EMISS_REGIONS * NUM_EMISS_GASES](); // Emissions by sector, gas, and region (not gridded)
-    double *gcamoco2sfcjan = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2sfcfeb = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2sfcmar = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2sfcapr = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2sfcmay = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2sfcjun = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2sfcjul = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2sfcaug = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2sfcsep = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2sfcoct = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2sfcnov = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2sfcdec = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airhijan = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airhifeb = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airhimar = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airhiapr = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airhimay = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airhijun = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airhijul = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airhiaug = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airhisep = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airhioct = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airhinov = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airhidec = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airlojan = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airlofeb = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airlomar = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airloapr = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airlomay = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airlojun = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airlojul = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airloaug = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airlosep = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airlooct = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airlonov = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
-    double *gcamoco2airlodec = new double [NUM_LAT * NUM_LON](); // Emissions data is monthly
+    double *gcamiarea = new double [(*NUM_LAT) * (*NUM_LON)]();
+    double *gcamilfract = new double [(*NUM_LAT) * (*NUM_LON)]();
+    double *gcamipftfract = new double [(*NUM_LAT) * (*NUM_LON) * (*NUM_PFT)]();
+    double *gcaminpp = new double [(*NUM_LAT) * (*NUM_LON) * (*NUM_PFT)]();
+    double *gcamihr = new double [(*NUM_LAT) * (*NUM_LON) * (*NUM_PFT)]();
+    double *gcamoluc = new double [(*NUM_GCAM_LAND_REGIONS) * (*NUM_IAC2ELM_LANDTYPES)]();
+    double *gcamoemiss = new double [(*NUM_EMISS_SECTORS) * (*NUM_EMISS_REGIONS) * (*NUM_EMISS_GASES)](); // Emissions by sector, gas, and region (not gridded)
+    double *gcamoco2sfcjan = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2sfcfeb = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2sfcmar = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2sfcapr = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2sfcmay = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2sfcjun = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2sfcjul = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2sfcaug = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2sfcsep = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2sfcoct = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2sfcnov = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2sfcdec = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airhijan = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airhifeb = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airhimar = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airhiapr = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airhimay = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airhijun = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airhijul = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airhiaug = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airhisep = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airhioct = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airhinov = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airhidec = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airlojan = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airlofeb = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airlomar = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airloapr = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airlomay = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airlojun = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airlojul = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airloaug = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airlosep = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airlooct = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airlonov = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
+    double *gcamoco2airlodec = new double [(*NUM_LAT) * (*NUM_LON)](); // Emissions data is monthly
     
     /*
      STEP 4: RUN GCAM
@@ -251,7 +264,7 @@ int main( ) {
                 if ( READ_ELM_FROM_FILE ) {
                     // Read the ELM data from a file and then pass it to setDensityGCAM below
                     // Read in average NPP
-                    ASpatialData tempPFTData(NUM_LAT * NUM_LON * NUM_PFT);
+                    ASpatialData tempPFTData((*NUM_LAT) * (*NUM_LON) * (*NUM_PFT));
                     tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false, gcaminpp);
                     
                     // Read in average HR
@@ -261,7 +274,7 @@ int main( ) {
                     tempPFTData.readSpatialData("../cpl/data/pft_wt.txt", true, true, false, gcamipftfract);
                     
                     // Read in area of grid cell
-                    ASpatialData tempData(NUM_LAT * NUM_LON);
+                    ASpatialData tempData((*NUM_LAT) * (*NUM_LON));
                     tempData.readSpatialData("../cpl/data/area.txt", true, false, false, gcamiarea);
                     
                     // Read in area of grid cell
@@ -272,15 +285,15 @@ int main( ) {
             }
             
             // Run model
-            p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, NUM_LON, NUM_LAT);
+            p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss);
             
             // TODO: Will we ever want to downscale emissions in this mode?
         }
     } else {
         
         // Run GCAM
-        cout << "Running E3SM Year: " << YEAR << endl;
-        int ymd = YEAR * 10000;
+        cout << "Running E3SM Year: " << *YEAR << endl;
+        int ymd = *YEAR * 10000;
         int *yyyymmdd = &ymd;
         
         // If coupling is active, then set carbon density
@@ -289,7 +302,7 @@ int main( ) {
             if ( READ_ELM_FROM_FILE ) {
                 // Read the ELM data from a file and then pass it to setDensityGCAM below
                 // Read in average NPP
-                ASpatialData tempPFTData(NUM_LAT * NUM_LON * NUM_PFT);
+                ASpatialData tempPFTData((*NUM_LAT) * (*NUM_LON) * (*NUM_PFT));
                 tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false, gcaminpp);
                 
                 // Read in average HR
@@ -299,7 +312,7 @@ int main( ) {
                 tempPFTData.readSpatialData("../cpl/data/pft_wt.txt", true, true, false, gcamipftfract);
                 
                 // Read in area of grid cell
-                ASpatialData tempData(NUM_LAT * NUM_LON);
+                ASpatialData tempData((*NUM_LAT) * (*NUM_LON));
                 tempData.readSpatialData("../cpl/data/area.txt", true, false, false, gcamiarea);
                 
                 // Read in area of grid cell
@@ -310,7 +323,7 @@ int main( ) {
         }
         
         // Run model
-        p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, NUM_LON, NUM_LAT);
+        p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss);
         
         p_obj->downscaleEmissionsGCAM(gcamoemiss,
                                       gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,

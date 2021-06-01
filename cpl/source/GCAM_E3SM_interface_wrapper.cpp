@@ -29,7 +29,7 @@ extern "C" {
 
   // Set Carbon Densities in GCAM using scalers from E3SM
   void setdensitycgcam_(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                          int aNumLon, int aNumLat, int aNumPFT, char* aMappingFile, int aFirstCoupledYear, bool aReadScalars, bool aWriteScalars) {
+                          int *aNumLon, int *aNumLat, int *aNumPFT, char* aMappingFile, int *aFirstCoupledYear, bool aReadScalars, bool aWriteScalars) {
       
       // Convert to string - fortran doesn't handle string
       std::string MappingFile(aMappingFile);
@@ -39,9 +39,9 @@ extern "C" {
   }
     
   // Run GCAM
-  void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, int aNumLon, int aNumLat) {
+  void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemiss) {
     
-      p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, aNumLon, aNumLat);
+      p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss);
   }
 
   // Downscale Emissions
@@ -55,8 +55,8 @@ extern "C" {
                               double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar, double *gcamoco2airhiapr,
                               double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                               double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
-                              char* aBaseCO2SfcFile, double aBaseCO2EmissSfc, char* aBaseCO2AirFile, double aBaseCO2EmissAir,
-                              int aNumLon, int aNumLat, bool aWriteCO2, int aCurrYear) {
+                              char* aBaseCO2SfcFile, double *aBaseCO2EmissSfc, char* aBaseCO2AirFile, double *aBaseCO2EmissAir,
+                              int *aNumLon, int *aNumLat, bool aWriteCO2, int *aCurrYear) {
       
       // Convert to string - fortran doesn't handle string
       std::string BaseCO2SfcFile(aBaseCO2SfcFile);

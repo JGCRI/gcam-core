@@ -170,7 +170,7 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
  * \param sneakermode integer indicating sneakernet mode is on
  * \param write_rest integer indicating restarts should be written
  */
-void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemiss, int aNumLon, int aNumLat )
+void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemiss )
 {
     // Get year only of the current date
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
@@ -265,7 +265,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
 }
 
 void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                         int aNumLon, int aNumLat, int aNumPFT, std::string aMappingFile, int aFirstCoupledYear, bool aReadScalars, bool aWriteScalars) {
+                                         int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars, bool aWriteScalars) {
     // Get year only of the current date
     // Note that GCAM runs one period ahead of E3SM. We make that adjustment here
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
@@ -288,9 +288,9 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     coupleLog.setLevel( ILogger::NOTICE );
     
     // Only set carbon densities during GCAM model years after the first coupled year
-    if( modeltime->isModelYear( gcamYear ) && e3smYear >=  aFirstCoupledYear ) {
+    if( modeltime->isModelYear( gcamYear ) && e3smYear >=  *aFirstCoupledYear ) {
         coupleLog << "Setting carbon density in year: " << gcamYear << endl;
-        CarbonScalers e3sm2gcam(aNumLon, aNumLat, aNumPFT);
+        CarbonScalers e3sm2gcam(*aNumLon, *aNumLat, *aNumPFT);
         
         // Get scaler information
         if ( aReadScalars ) {
@@ -327,35 +327,35 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
                                                  double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar, double *gcamoco2airhiapr,
                                                  double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                                                  double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
-                                                 std::string aBaseCO2SfcFile, double aBaseCO2EmissSfc, std::string aBaseCO2AirFile, double aBaseCO2EmissAir,
-                                                 int aNumLon, int aNumLat, bool aWriteCO2, int aCurrYear) {
+                                                 std::string aBaseCO2SfcFile, double *aBaseCO2EmissSfc, std::string aBaseCO2AirFile, double *aBaseCO2EmissAir,
+                                                 int *aNumLon, int *aNumLat, bool aWriteCO2, int *aCurrYear) {
     // Downscale surface CO2 emissions
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
     coupleLog << "Downscaling CO2 emissions" << endl;
-    EmissDownscale surfaceCO2(aNumLon * aNumLat * 12); // Emissions data is monthly now
+    EmissDownscale surfaceCO2((*aNumLon) * (*aNumLat) * 12); // Emissions data is monthly now
     surfaceCO2.readSpatialData(aBaseCO2SfcFile, true, true, false);
-    surfaceCO2.downscaleCO2Emissions(aBaseCO2EmissSfc, gcamoemiss[0]);
-    coupleLog << "Diagnostics: Global surface CO2 Emissions in " << aCurrYear << " = " << gcamoemiss[0] << endl;
+    surfaceCO2.downscaleCO2Emissions(*aBaseCO2EmissSfc, gcamoemiss[0]);
+    coupleLog << "Diagnostics: Global surface CO2 Emissions in " << *aCurrYear << " = " << gcamoemiss[0] << endl;
     if ( aWriteCO2 ) {
         // TODO: Set name of file based on case name?
-        string fNameSfc = "./gridded_co2_sfc" + std::to_string(aCurrYear) + ".txt";
+        string fNameSfc = "./gridded_co2_sfc" + std::to_string(*aCurrYear) + ".txt";
         surfaceCO2.writeSpatialData(fNameSfc, false);
     }
     
     // Set the gcamoco2 monthly vector data to the output of this
     surfaceCO2.separateMonthlyEmissions(gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
                                        gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
-                                       gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec, aNumLon, aNumLat);
+                                       gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec, *aNumLon, *aNumLat);
     
     
-    EmissDownscale aircraftCO2(aNumLon * aNumLat * 12 * 2); // Emissions data is monthly now; we're using two different height levels for aircraft
+    EmissDownscale aircraftCO2((*aNumLon) * (*aNumLat) * 12 * 2); // Emissions data is monthly now; we're using two different height levels for aircraft
     aircraftCO2.readSpatialData(aBaseCO2AirFile, true, true, false);
-    aircraftCO2.downscaleCO2Emissions(aBaseCO2EmissAir, gcamoemiss[1]);
-    coupleLog << "Diagnostics: Global aircraft CO2 Emissions in " << aCurrYear << " = " << gcamoemiss[1] << endl;
+    aircraftCO2.downscaleCO2Emissions(*aBaseCO2EmissAir, gcamoemiss[1]);
+    coupleLog << "Diagnostics: Global aircraft CO2 Emissions in " << *aCurrYear << " = " << gcamoemiss[1] << endl;
     if ( aWriteCO2 ) {
         // TODO: Set name of file based on case name?
-        string fNameAir = "./gridded_co2_air_" + std::to_string(aCurrYear) + ".txt";
+        string fNameAir = "./gridded_co2_air_" + std::to_string(*aCurrYear) + ".txt";
         aircraftCO2.writeSpatialData(fNameAir, false);
     }
     
@@ -366,7 +366,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
                                          gcamoco2airhijan, gcamoco2airhifeb, gcamoco2airhimar, gcamoco2airhiapr,
                                          gcamoco2airhimay, gcamoco2airhijun, gcamoco2airhijul, gcamoco2airhiaug,
                                          gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
-                                         aNumLon, aNumLat);
+                                         *aNumLon, *aNumLat);
     
     
     

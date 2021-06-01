@@ -386,8 +386,10 @@ double SectorUtils::calcPriceRatio( const string& aRegionName,
         double basePrice = marketplace->getPrice( aSectorName, aRegionName, internalBasePeriod );
         double currentPrice = marketplace->getPrice( aSectorName, aRegionName, aCurrentPeriod );
 
-        priceRatio = currentPrice / basePrice;
-        
+        // Protect against divide by zero
+        if ( basePrice != 0 ) {
+            priceRatio = currentPrice / basePrice;
+        }
     }
 
     return priceRatio;
