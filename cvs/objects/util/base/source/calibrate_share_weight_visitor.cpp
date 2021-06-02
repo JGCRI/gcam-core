@@ -40,7 +40,7 @@
 
 #include "util/base/include/definitions.h"
 #include <cassert>
-#include <boost/math/tr1.hpp>
+#include <cmath>
 
 #include "util/base/include/calibrate_share_weight_visitor.h"
 #include "technologies/include/technology_container.h"
@@ -145,7 +145,7 @@ void CalibrateShareWeightVisitor::calibrateShareWeights( const ContainerType* aC
     double baseCost = 0;
     for( int childIndex = 0; childIndex < childrenVec.size(); ++childIndex ) {
         double currCost = getCost( childrenVec[ childIndex ], aPeriod );
-        if( !boost::math::isnan( currCost )  && currCost > baseCost &&
+        if( !std::isnan( currCost )  && currCost > baseCost &&
            ( ( hasCalValues && getCalValue( childrenVec[ childIndex ], aPeriod ) > 0 ) || !hasCalValues ) )
         {
             baseCost = currCost;
