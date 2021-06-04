@@ -359,7 +359,7 @@ module_aglu_L202.an_input <- function(command, ...) {
     L202.ag_ImpShare_Mt_R_C_Y <- filter(L109.ag_ALL_Mt_R_C_Y, year == max(MODEL_BASE_YEARS)) %>%
       select(GCAM_region_ID, GCAM_commodity, year, Supply_Mt) %>%
       left_join(L1091.GrossTrade_Mt_R_C_Y, by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
-      mutate(ImpShare = if_else(is.na(GrossImp_Mt), 0, GrossImp_Mt / Supply_Mt)) %>%
+      mutate(ImpShare = if_else(is.na(GrossImp_Mt) | Supply_Mt == 0, 0, GrossImp_Mt / Supply_Mt)) %>%
       select(GCAM_region_ID, GCAM_commodity, ImpShare)
 
     # Calculate the weighted average regional crop prices, as the global traded crop price times the
