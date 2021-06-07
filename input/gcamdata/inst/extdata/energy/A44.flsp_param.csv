@@ -1,0 +1,39 @@
+# File: A44.flsp_param.csv
+# Title: Parameters for projecting future floorspace per capita using the updated Gompertz function
+# Units: unitless
+# Source: Econometric analysis documented in CMP XXX
+# Column types: cnnnn
+# ----------
+region,unadj.sat,flsp.param.a,flsp.param.b,flsp.param.c
+USA,150,0,0.8591063,0.5044
+Africa_Eastern,100,5.879486,0.631145,0.298642
+Africa_Northern,100,5.879486,0.631145,0.298642
+Africa_Southern,100,5.879486,0.631145,0.298642
+Africa_Western,100,5.879486,0.631145,0.298642
+Australia_NZ,100,5.879486,0.631145,0.298642
+Brazil,100,5.879486,0.631145,0.298642
+Canada,100,5.879486,0.631145,0.298642
+Central America and Caribbean,100,5.879486,0.631145,0.298642
+Central Asia,100,5.879486,0.631145,0.298642
+China,100,5.879486,0.631145,0.298642
+EU-12,100,5.879486,0.631145,0.298642
+EU-15,100,5.879486,0.631145,0.298642
+Europe_Eastern,100,5.879486,0.631145,0.298642
+Europe_Non_EU,100,5.879486,0.631145,0.298642
+European Free Trade Association,100,5.879486,0.631145,0.298642
+India,100,5.879486,0.631145,0.298642
+Indonesia,100,5.879486,0.631145,0.298642
+Japan,100,5.879486,0.631145,0.298642
+Mexico,100,5.879486,0.631145,0.298642
+Middle East,100,5.879486,0.631145,0.298642
+Pakistan,100,5.879486,0.631145,0.298642
+Russia,100,5.879486,0.631145,0.298642
+South Africa,100,5.879486,0.631145,0.298642
+South America_Northern,100,5.879486,0.631145,0.298642
+South America_Southern,100,5.879486,0.631145,0.298642
+South Asia,100,5.879486,0.631145,0.298642
+South Korea,100,5.879486,0.631145,0.298642
+Southeast Asia,100,5.879486,0.631145,0.298642
+Taiwan,100,5.879486,0.631145,0.298642
+Argentina,100,5.879486,0.631145,0.298642
+Colombia,100,5.879486,0.631145,0.298642
