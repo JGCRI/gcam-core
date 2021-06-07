@@ -19,7 +19,7 @@
 #' \code{L244.SatiationAdder_SSP3}, \code{L244.GenericServiceSatiation_SSP3}, \code{L244.FuelPrefElast_bld_SSP3}, \code{L244.Satiation_flsp_SSP4},
 #' \code{L244.SatiationAdder_SSP4}, \code{L244.GenericServiceSatiation_SSP4}, \code{L244.FuelPrefElast_bld_SSP4}, \code{L244.Satiation_flsp_SSP5},
 #' \code{L244.SatiationAdder_SSP5}, \code{L244.GenericServiceSatiation_SSP5}, \code{L244.FuelPrefElast_bld_SSP15}, \code{L244.DeleteThermalService},
-#' \code{L244.HDDCDD_A2_CCSM3x}, \code{L244.HDDCDD_A2_HadCM3}, \code{L244.HDDCDD_B1_CCSM3x}, \code{L244.HDDCDD_B1_HadCM3} and \code{L244.HDDCDD_constdd_no_GCM}.
+#' \code{L244.HDDCDD_A2_CCSM3x}, \code{L244.HDDCDD_A2_HadCM3}, \code{L244.HDDCDD_B1_CCSM3x}, \code{L244.HDDCDD_B1_HadCM3}, \code{L244.HDDCDD_constdd_no_GCM} and \code{L244.Gomp.fn.param}.
 #' The corresponding file in the original data system was \code{L244.building_det.R} (energy level2).
 #' @details Creates level2 data for the building sector.
 #' @importFrom assertthat assert_that
@@ -59,7 +59,9 @@ module_energy_L244.building_det <- function(command, ...) {
              "L144.internal_gains",
              "L143.HDDCDD_scen_R_Y",
              "L101.Pop_thous_R_Yh",
-             "L102.pcgdp_thous90USD_Scen_R_Y"))
+             "L102.pcgdp_thous90USD_Scen_R_Y",
+             FILE = "energy/A44.dens_region_flsp",
+             FILE = "energy/A44.flsp_param"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L244.SubregionalShares",
              "L244.PriceExp_IntGains",
@@ -112,7 +114,8 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.HDDCDD_A2_HadCM3",
              "L244.HDDCDD_B1_CCSM3x",
              "L244.HDDCDD_B1_HadCM3",
-             "L244.HDDCDD_constdd_no_GCM"))
+             "L244.HDDCDD_constdd_no_GCM",
+             "L244.Gomp.fn.param"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -165,6 +168,8 @@ module_energy_L244.building_det <- function(command, ...) {
     L143.HDDCDD_scen_R_Y <- get_data(all_data, "L143.HDDCDD_scen_R_Y")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y") # year comes in as double
+    L144.dens_region_flsp<- get_data(all_data, "energy/A44.dens_region_flsp", strip_attributes = TRUE)
+    L144.flsp_param <- get_data(all_data, "energy/A44.flsp_param", strip_attributes = TRUE)
 
     # ===================================================
     # Subregional population and income shares: need to be read in because these default to 0
@@ -335,6 +340,27 @@ module_energy_L244.building_det <- function(command, ...) {
                add_title(paste0("Satiation adders in floorspace demand function: ", i)) %>%
                add_legacy_name(paste0("L244.SatiationAdder_", i)))
     }
+
+
+    #------------------------------------------------------
+    # JS, 06/2021:Updated floorspace function (flps-gomp-function)
+    # 1- Calculate the bias correction parameter (k)
+    # 2- Write parameters for the updated floorspace function: unadjSat, a, b, c and k
+
+    L244.Gomp.fn.param<-L144.flsp_param %>%
+      left_join_error_no_match(L144.dens_region_flsp %>% filter(year==MODEL_FINAL_BASE_YEAR),by="region") %>%
+      left_join_error_no_match(GCAM_region_names, by="region") %>%
+      left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(scenario== socioeconomics.BASE_GDP_SCENARIO), by=c("GCAM_region_ID","year")) %>%
+      rename(gdp_pc=pcGDP_thous90USD) %>%
+      left_join_error_no_match(L101.Pop_thous_R_Yh, by=c("GCAM_region_ID","year")) %>%
+      left_join_error_no_match(L144.flsp_bm2_R_res_Yh,by=c("GCAM_region_ID","year")) %>%
+      rename(flsp=value) %>%
+      mutate(flsp_pc=(flsp*1E9)/(pop_thous*1E3)) %>%
+      mutate(base_flsp=flsp_pc) %>%
+      mutate(flsp_est=(unadj.sat +(-flsp.param.a*log(tot_dens)))*exp(-flsp.param.b*log(base_flsp)*exp(-flsp.param.c*log(gdp_pc)))) %>%
+      mutate(flsp.param.k=flsp_est-flsp_pc) %>%
+      select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
+
 
     # L244.GenericBaseService and L244.ThermalBaseService: Base year output of buildings services (per unit floorspace)
 
@@ -799,6 +825,16 @@ module_energy_L244.building_det <- function(command, ...) {
                      "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh") ->
       L244.SatiationAdder
 
+    L244.Gomp.fn.param %>%
+      add_title("Parameters for the floorspace Gompertz function") %>%
+      add_units("Unitless") %>%
+      add_comments("Computed offline based on data from RECS and IEA") %>%
+      add_legacy_name("L244.Gomp.fn.param") %>%
+      add_precursors("common/GCAM_region_names", "energy/A44.dens_region_flsp","energy/A44.flsp_param",
+                     "L102.pcgdp_thous90USD_Scen_R_Y", "L101.Pop_thous_R_Yh",
+                     "L144.flsp_bm2_R_res_Yh") ->
+      L244.Gomp.fn.param
+
     L244.ThermalBaseService %>%
       add_title("Historical building heating and cooling energy output") %>%
       add_units("EJ/yr") %>%
@@ -1052,7 +1088,8 @@ module_energy_L244.building_det <- function(command, ...) {
                 L244.SatiationAdder_SSP4, L244.GenericServiceSatiation_SSP4, L244.FuelPrefElast_bld_SSP4,
                 L244.Satiation_flsp_SSP5, L244.SatiationAdder_SSP5, L244.GenericServiceSatiation_SSP5, L244.FuelPrefElast_bld_SSP15,
                 L244.DeleteThermalService, L244.SubsectorLogit_bld, L244.StubTechIntGainOutputRatio,
-                L244.HDDCDD_A2_CCSM3x, L244.HDDCDD_A2_HadCM3, L244.HDDCDD_B1_CCSM3x, L244.HDDCDD_B1_HadCM3, L244.HDDCDD_constdd_no_GCM)
+                L244.HDDCDD_A2_CCSM3x, L244.HDDCDD_A2_HadCM3, L244.HDDCDD_B1_CCSM3x, L244.HDDCDD_B1_HadCM3, L244.HDDCDD_constdd_no_GCM,
+                L244.Gomp.fn.param)
   } else {
     stop("Unknown command")
   }
