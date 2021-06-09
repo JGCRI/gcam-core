@@ -364,7 +364,7 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(flsp_pc=(flsp*1E9)/(pop_thous*1E3)) %>%
       mutate(base_flsp=flsp_pc) %>%
       mutate(flsp_est=(unadj.sat +(-flsp.param.a*log(tot_dens)))*exp(-flsp.param.b*log(base_flsp)*exp(-flsp.param.c*log(gdp_pc)))) %>%
-      mutate(flsp.param.k=flsp_est-flsp_pc) %>%
+      mutate(flsp.param.k=flsp_pc-flsp_est) %>%
       mutate(gcam.consumer="resid",
              nodeInput="resid",
              building.node.input="resid_building") %>%
