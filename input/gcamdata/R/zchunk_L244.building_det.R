@@ -231,15 +231,19 @@ module_energy_L244.building_det <- function(command, ...) {
       gather(sector, value, resid, comm) %>%
       # Converting from square meters per capita to million square meters per capita
       mutate(satiation.level = value * CONV_THOUS_BIL) %>%
-      select(-value)
+      select(-value) %>%
+      # JS 06/2021:Weare not using satiation  levels in the residential sector with the new floorspace function:
+      filter(sector != "resid")
 
-    L244.Satiation_flsp <- write_to_all_regions(A44.gcam_consumer, c("region", "gcam.consumer", "nodeInput", "building.node.input"), # replace with LEVEL2_DATA_NAMES[["BldNodes]]
+    L244.Satiation_flsp <- write_to_all_regions(A44.gcam_consumer %>% filter(gcam.consumer != "resid"), c("region", "gcam.consumer", "nodeInput", "building.node.input"), # replace with LEVEL2_DATA_NAMES[["BldNodes]]
                                                 GCAM_region_names = GCAM_region_names) %>%
       # Match in the region class, and use this to then match in the satiation floorspace
       left_join_error_no_match(A_regions %>% select(region, region.class),
                                by = "region") %>%
       left_join_error_no_match(L244.Satiation_flsp_class, by = c("region.class", "gcam.consumer" = "sector")) %>%
-      select(LEVEL2_DATA_NAMES[["Satiation_flsp"]])
+      select(LEVEL2_DATA_NAMES[["Satiation_flsp"]]) %>%
+      # JS 06/2021:Weare not using satiation  levels in the residential sector with the new floorspace function:
+      filter(gcam.consumer != "resid")
 
     # Satiation adder - Required for shaping the future floorspace growth trajectories in each region
     # The satiation adder allows the starting (final calibration year) position of any region and sector to be set along the satiation demand function
@@ -277,9 +281,11 @@ module_energy_L244.building_det <- function(command, ...) {
     # L244.Satiation_flsp_SSPs: Satiation levels assumed for floorspace in the SSPs
     L244.Satiation_flsp_class_SSPs <- A44.satiation_flsp_SSPs %>%
       gather(sector, value, resid, comm) %>%
-      mutate(satiation.level = value * CONV_THOUS_BIL)
+      mutate(satiation.level = value * CONV_THOUS_BIL) %>%
+    # JS 06/2021:Weare not using satiation  levels in the residential sector with the new floorspace function:
+    filter(sector != "resid")
 
-    L244.Satiation_flsp_SSPs <- write_to_all_regions(A44.gcam_consumer, c("region", "gcam.consumer", "nodeInput", "building.node.input"), # replace with LEVEL2_DATA_NAMES[["BldNodes]]
+    L244.Satiation_flsp_SSPs <- write_to_all_regions(A44.gcam_consumer %>% filter(gcam.consumer != "resid"), c("region", "gcam.consumer", "nodeInput", "building.node.input"), # replace with LEVEL2_DATA_NAMES[["BldNodes]]
                                                      GCAM_region_names = GCAM_region_names) %>%
       repeat_add_columns(tibble(SSP = c("SSP1", "SSP2", "SSP3", "SSP4", "SSP5"))) %>%
       # Match in the region class, and use this to then match in the satiation floorspace
@@ -359,6 +365,10 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(base_flsp=flsp_pc) %>%
       mutate(flsp_est=(unadj.sat +(-flsp.param.a*log(tot_dens)))*exp(-flsp.param.b*log(base_flsp)*exp(-flsp.param.c*log(gdp_pc)))) %>%
       mutate(flsp.param.k=flsp_est-flsp_pc) %>%
+      mutate(gcam.consumer="resid",
+             nodeInput="resid",
+             building.node.input="resid_building") %>%
+      #select(region,gcam.consumer,nodeInput,building.node.input,unadj.sat,flsp.param.a,flsp.param.b,flsp.param.c,flsp.param.k)
       select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
 
 
