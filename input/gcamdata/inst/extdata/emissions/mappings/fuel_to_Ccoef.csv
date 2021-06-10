@@ -1,9 +1,9 @@
-# File: fuel_to_Ccoef.csv,
-# Title: CO2 Coefficient for Primary Fuel Mapping,
-# Units: Unitless,
-# Description: Mapping between fuels in datasets and sectors being assigned a primary fuel CO2 coefficient,
-# Note: This only maps the fuels whose emissions coefficients are calculated from emissions inventories,
-# Column types: cc 
+# File: fuel_to_Ccoef.csv
+# Title: CO2 Coefficient for Primary Fuel Mapping
+# Units: Unitless
+# Description: Mapping between fuels in datasets and sectors being assigned a primary fuel CO2 coefficient
+# Note: This only maps the fuels whose emissions coefficients are calculated from emissions inventories
+# Column types: cc
 # ----------
 PrimaryFuelCO2Coef.name,fuel
 coal,coal
@@ -16,9 +16,8 @@ gas pipeline,gas
 wholesale gas,gas
 delivered gas,gas
 crude oil,refined liquids
-unconventional oil production,refined liquids
-traded unconventional oil,refined liquids
 regional oil,refined liquids
 refining,refined liquids
 refined liquids industrial,refined liquids
 refined liquids enduse,refined liquids
+unconventional oil upscaling,refined liquids

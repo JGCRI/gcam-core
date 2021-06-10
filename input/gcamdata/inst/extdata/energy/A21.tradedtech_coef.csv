@@ -1,7 +1,0 @@
-# File: A21.tradedtech_coef.csv
-# Title: Primary energy handling default coefficients
-# Units: NA
-# Column types: ccccii 
-# ----------
-supplysector,subsector,technology,minicam.energy.input,1971,2100
-traded unconventional oil,unconventional oil,unconventional oil,unconventional oil production,1,1

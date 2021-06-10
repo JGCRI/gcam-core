@@ -1,0 +1,11 @@
+# File: fuel_carbon_content.csv
+# Title: Fuel carbon contents
+# Units: kg carbon/kg fuel
+# Description: a fractional value of carbon in the fuel to calculate energy density of the fuels
+# Column types: cn
+# Source: Coal data taken from Grammelis et al. 2016 (https://www.sciencedirect.com/science/article/pii/B978178242378200002X)", crude oil value taken from encyclopedia britanica (https://www.britannica.com/science/crude-oil), natural gas value calculated assuming 100% of natural gas is CH4. Unconventional oil is traded after processing within GCAM," and so will be assumed to have the same carbon content as crude oil for trade.
+# ----------
+GCAM_Commodity,Ccontent
+natural gas,0.75
+crude oil,0.82
+coal,0.86

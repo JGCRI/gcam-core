@@ -35,6 +35,7 @@ MODEL_FUTURE_YEARS      <- seq(2020, 2100, 5)
 MODEL_YEARS             <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
 MODEL_FINAL_BASE_YEAR   <- 2015
 
+
 # GCAM constants ======================================================================
 
 gcam.USA_CODE            <- 1
@@ -180,12 +181,12 @@ aglu.PREAGLU_YEARS          <- c(1700, 1750,1800, 1850, 1900, 1950)          # C
 aglu.DEFLATOR_BASE_YEAR     <- 2015                                          # year used as the basis for computing regional price deflators
 aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years, KD i think this might need a better comment
 aglu.SSP_DEMAND_YEARS       <- seq(2015, 2100, 5) # food demand in the SSPs is calculated at 5-yr intervals
-aglu.TRADE_CAL_YEARS        <- 2008:2012 # Years used for calculating base year gross trade. Should ideally include the final base year, but note that the trade data starts in 1986.
+aglu.TRADE_CAL_YEARS        <- 2013:2017 # Years used for calculating base year gross trade. Should ideally include the final base year, but note that the trade data starts in 1986.
 aglu.TRADE_FINAL_BASE_YEAR  <- max(MODEL_BASE_YEARS) # The base year to which gross trade volumes are assigned. Should be within the aglu.TRADE_CAL_YEARS and equal to the final model calibration year
 aglu.FALLOW_YEARS           <- 2008:2012 # Years used for calculating the % of fallow land
 aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "MiscCrop", "OilCrop", "OtherGrain", "PalmFruit", "Rice", "RootTuber", "SugarCrop", "Wheat")
 aglu.TRADED_MEATS           <- c("Beef", "Dairy", "Pork", "Poultry", "SheepGoat")
-aglu.TRADED_AG_AN           <- c(aglu.TRADED_CROPS, aglu.TRADED_MEATS)
+aglu.TRADED_FORESTS         <- c("Forest")
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
 aglu.MAX_FAO_LDS_SCALER <- 5   # Unitless max multiplier in reconciling LDS harvested area with FAO harvested area by country and crop. Useful for preventing bad allocations of N fert in AFG, TWN, several others
@@ -243,6 +244,7 @@ aglu.BIO_TREE_COST_75USD_GJ  <- 0.67   # Production costs of biomass (from Patri
 aglu.FERT_PRICE              <- 596    # Price of fertilizer, 2010$ per ton NH3
 aglu.FERT_PRICE_YEAR         <- 2010    # Year corresponding to the above price/cost
 aglu.FOR_COST_75USDM3        <- 29.59  # Forestry cost (1975$/GJ)
+aglu.FOR_COST_SHARE          <- 0.59   # Non-land forestry cost share (from 2011 GTAP data base)
 
 # Price at which base year bio frac produced is used.
 # The share of residue biomass production in each region,
@@ -379,6 +381,7 @@ energy.SATIATION_YEAR             <- max(MODEL_BASE_YEARS) # Needs to be the las
 energy.UCD_EN_YEAR                <- 2005        # UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
 energy.WIND.BASE.COST.YEAR        <- 2005        # Base cost year for wind, used in capacity factor calculations
 
+energy.REG_NG_MARKET <- "regional natural gas" #Name of the regional natural gas market
 
 energy.MIN_WEIGHT_EJ <- 1e-08
 
@@ -418,7 +421,7 @@ energy.MIN_IN_EJ_IND <- 1e-3
 # Sets maximum for electricity IO coefficient used in cement sector
 energy.MAX_IOELEC <- 4
 
-# PV related constants
+# Solar related constants
 energy.HOURS_PER_YEAR          <- 24 * 365
 energy.PV_COMM_INSTALLED_COST  <- 7290     # 2005USD per kw
 energy.PV_COMM_OM              <- 40       # 2005USD per kw per year
@@ -427,6 +430,7 @@ energy.PV_DISCOUNT_RATE        <- 0.1      # year^-1
 energy.PV_LIFETIME             <- 30       # years
 energy.PV_RESID_INSTALLED_COST <- 9500     # 2005USD per kw
 energy.PV_RESID_OM             <- 100      # 2005USD per kw per year
+energy.CSP_STORAGE_CF_DIFF     <- 0.25     # capacity factor difference between CSP_storage (0.5) and CSP (0.25)
 
 # Wind related constants
 energy.WIND_CURVE_MIDPOINT <- 0.5
@@ -473,6 +477,18 @@ energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity
 energy.TRAN_UCD_MODE<-'rev.mode'
 energy.TRAN_UCD_SIZE_CLASS<-'rev_size.class'
 
+# Constants related to ATB power sector technology costs
+energy.ATB_2017_YEARS <- c(2015:2016)
+energy.ATB_BASE_YEAR <- 2015
+energy.ATB_MID_YEAR <- 2035
+energy.ATB_TARGET_YEAR <- 2035
+gcamusa.STORAGE_TECH <- "battery"
+energy.COSTS_MID_CASE <- "central"
+energy.COSTS_ADV_CASE <- "adv tech"
+energy.COSTS_LOW_CASE <- "low tech"
+energy.CAPITAL_INPUT <- "capital"
+energy.OM_FIXED_INPUT <- "OM-fixed"
+energy.OM_VAR_INPUT <- "OM-var"
 
 # Socioeconomics constants ======================================================================
 

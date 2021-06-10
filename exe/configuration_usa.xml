@@ -98,7 +98,6 @@
 		<Value name = "hydro_usa">../input/gcamdata/xml/elec_hydro_USA.xml</Value>
 		<Value name = "nuc_usa">../input/gcamdata/xml/nuclear_USA.xml</Value>
 		<Value name = "no_new_coal_usa">../input/gcamdata/xml/nonewcoal_USA.xml</Value>
-		<Value name = "elecS_costs">../input/gcamdata/xml/elecS_costs_USA.xml</Value>
 		<Value name = "ITC_usa">../input/gcamdata/xml/elecS_costs_USA_itc.xml</Value>
 		<Value name = "PTC_usa">../input/gcamdata/xml/elecS_costs_USA_ptc.xml</Value>
 

@@ -390,7 +390,12 @@ void IntermittentTechnology::setCoefficients( const string& aRegionName,
         double newCoefficient = getResourceToEnergyRatio(aRegionName, aSectorName, aPeriod ) /
                                 ( 1.0 + backupEnergyFraction );
         ( *mResourceInput )->setCoefficient( newCoefficient, aPeriod );
-        ( *mBackupInput )->setCoefficient( backupEnergyFraction / ( 1.0 + backupEnergyFraction ), aPeriod );
+        double newBackupCoef = aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod() ?
+            backupEnergyFraction / ( 1.0 + backupEnergyFraction ) :
+            // we do not include the back up energy in the calibration energy balance so we
+            // will have to turn off the energy demand in the historical years
+            0.0;
+        ( *mBackupInput )->setCoefficient( newBackupCoef, aPeriod );
     }
 }
 

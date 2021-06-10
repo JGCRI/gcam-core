@@ -6,12 +6,6 @@
 # ----------
 supplysector,subsector,technology,minicam.energy.input,1971,2010,2100
 regional biomass,regional biomass,regional biomass,biomass,1,1,1
-regional coal,regional coal,regional coal,coal,1,1,1
-regional natural gas,regional natural gas,regional natural gas,natural gas,1,1,1
-unconventional oil production,unconventional oil production,unconventional oil production,unconventional oil,1,1,1
-unconventional oil production,unconventional oil production,unconventional oil production,regional natural gas,0.124,0.124,0.102
-regional oil,crude oil,crude oil,crude oil,1,1,1
-regional oil,unconventional oil,unconventional oil,traded unconventional oil,1,1,1
 regional corn for ethanol,regional corn for ethanol,regional corn for ethanol,regional corn,111.79,111.79,111.79
 regional sugar for ethanol,regional sugar for ethanol,regional sugar for ethanol,regional sugarcrop,582.48,582.48,582.48
 regional biomassOil,regional biomassOil,biomassOil,biomassOil,1,1,1

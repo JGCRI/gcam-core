@@ -1,14 +1,14 @@
 # File: A23.globalinttech.csv
 # Title: Electricity sector intermittent technology information
-# Units: USD1975/kW/yr for 'backup.capital.cost', Unitless for 'backup.capacity.factor', Unitless for 'capacity.limit
+# Units: USD1975/kW/yr for 'backup.capital.cost'; Unitless for 'backup.capacity.factor'; Unitless for 'capacity.limit'
 # Description: (1) Annualized capital cost per kW of backup capacity that intermittent renewable technologies may be required to purchase to ensure electrical supply reliability
 # (2) Assumed capacity factor of purchased backup capacity
-# (3) Mid-point of backup capacity requirement curve, an s-curve describing the amount of backup capacity required per unit of installed capacity of the given technology.
+# (3) Mid-point of backup capacity requirement curve: an s-curve describing the amount of backup capacity required per unit of installed capacity of the given technology.
 # Column types: cccccinnccc 
 # ----------
 supplysector,subsector,technology,electric.sector.name,trial.market.name,backup.capital.cost,backup.capacity.factor,capacity.limit,minicam.energy.input,minicam.non.energy.input,flag
-electricity,wind,wind,electricity,wind,36,0.05,0.55,backup_electricity,backup-cap-cost,BackupEnergy
-electricity,solar,PV,electricity,solar,36,0.05,0.6,backup_electricity,backup-cap-cost,BackupEnergy
-electricity,solar,CSP,electricity,solar,36,0.05,0.6,csp_backup,backup-cap-cost,BackupEnergy
-elect_td_bld,rooftop_pv,rooftop_pv,electricity,solar,36,0.05,0.6,backup_electricity,backup-cap-cost,BackupEnergy
-electricity,wind,wind_offshore,electricity,wind,36,0.05,0.35,backup_electricity,backup-cap-cost,BackupEnergy
+electricity,wind,wind,electricity,wind,36,0.05,0.4,backup_electricity,backup-cap-cost,BackupEnergy
+electricity,solar,PV,electricity,solar,36,0.05,0.45,backup_electricity,backup-cap-cost,BackupEnergy
+electricity,solar,CSP,electricity,solar,36,0.05,0.45,csp_backup,backup-cap-cost,BackupEnergy
+elect_td_bld,rooftop_pv,rooftop_pv,electricity,solar,36,0.05,0.45,backup_electricity,backup-cap-cost,BackupEnergy
+electricity,wind,wind_offshore,electricity,wind,36,0.05,0.4,backup_electricity,backup-cap-cost,BackupEnergy

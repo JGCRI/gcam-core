@@ -5,11 +5,6 @@
 # ----------
 supplysector,subsector,technology,minicam.non.energy.input,1971,2100
 regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737
-regional coal,regional coal,regional coal,non-energy,0.15,0.15
-regional natural gas,regional natural gas,regional natural gas,non-energy,0.25,0.25
-unconventional oil production,unconventional oil production,unconventional oil production,non-energy,0.15,0.15
-regional oil,crude oil,crude oil,non-energy,0.15,0.15
-regional oil,unconventional oil,unconventional oil,non-energy,0.15,0.15
 regional corn for ethanol,regional corn for ethanol,regional corn for ethanol,non-energy,0,0
 regional sugar for ethanol,regional sugar for ethanol,regional sugar for ethanol,non-energy,0,0
 regional biomassOil,regional biomassOil,biomassOil,non-energy,0,0

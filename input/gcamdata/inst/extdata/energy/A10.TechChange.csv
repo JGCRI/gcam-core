@@ -7,5 +7,5 @@ resource,subresource,1975,2005
 coal,coal,0.005,0.005
 crude oil,crude oil,0.005,0.0075
 natural gas,natural gas,0.005,0.0075
-unconventional oil,unconventional oil,0,0.005
 biomass,generic waste biomass,0,0
+crude oil,unconventional oil,0,0.004

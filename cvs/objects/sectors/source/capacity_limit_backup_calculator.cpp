@@ -61,7 +61,7 @@ CapacityLimitBackupCalculator::CapacityLimitBackupCalculator()
 {
     mCapacityLimit = 1.0;
     mFmax = 1.0;
-    mC = 5.0;
+    mC = 1.0;
     mTau = 0.1;
 }
 

@@ -1,0 +1,9 @@
+# File: comtrade_unit_code.csv
+# Title: Mapping between Comtrade unit codes
+# Source: UN Comtrade
+# Units: NA
+# Column types: ic
+# ----------
+Qty_Unit_Code,Qty_Unit
+1,No Quantity
+8,Weight in kilograms

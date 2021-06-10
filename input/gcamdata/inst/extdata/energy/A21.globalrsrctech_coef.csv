@@ -1,0 +1,8 @@
+# File: A21.globalrsrctech_coef.csv
+# Title: Technology coefficients for resource technologies
+# Units: Unitless
+# Column types: ccccnnnnnnnnnnnnnnnnnnnnnn 
+# ----------
+resource,reserve.subresource,resource.reserve.technology,minicam.energy.input,1975,1990,2005,2010,2015,2020,2025,2030,2035,2040,2045,2050,2055,2060,2065,2070,2075,2080,2085,2090,2095,2100
+crude oil,unconventional oil,unconventional oil,regional natural gas,0.124,0.124,0.124,0.124,0.124,0.102,0.102,0.102,0.102,0.102,0.102,0.102,0.102,0.102,0.102,0.102,0.102,0.102,0.102,0.102,0.102,0.102
+crude oil,unconventional oil,unconventional oil,unconventional oil upscaling,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1

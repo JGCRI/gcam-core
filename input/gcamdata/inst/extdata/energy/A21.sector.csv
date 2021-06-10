@@ -6,11 +6,6 @@
 # ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,traded,logit.type
 regional biomass,EJ,EJ,1975$/GJ,-3,0,
-regional coal,EJ,EJ,1975$/GJ,-3,0,
-regional natural gas,EJ,EJ,1975$/GJ,-3,0,
-unconventional oil production,EJ,EJ,1975$/GJ,-3,0,
-regional oil,EJ,EJ,1975$/GJ,-6,0,
-traded unconventional oil,EJ,EJ,1975$/GJ,-3,1,
 regional corn for ethanol,EJ,EJ,1975$/GJ,-3,0,
 regional sugar for ethanol,EJ,EJ,1975$/GJ,-3,0,
 regional biomassOil,EJ,EJ,1975$/GJ,-3,0,

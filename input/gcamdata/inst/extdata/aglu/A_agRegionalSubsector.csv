@@ -1,5 +1,5 @@
 # File: A_agRegionalSubsector.csv
-# Title: Subsector assumptions for regional crop markets
+# Title: Subsector assumptions for regional agricultural markets
 # Units: Various
 # Source: NA
 # Column types: ccncnccccc
@@ -19,8 +19,8 @@ regional palmfruit,domestic palmfruit,-6,start-year,1,share-weight,final-calibra
 regional palmfruit,imported palmfruit,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional rice,domestic rice,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional rice,imported rice,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-regional root_tuber,domestic root_tuber,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-regional root_tuber,imported root_tuber,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional roottuber,domestic roottuber,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional roottuber,imported roottuber,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional sugarcrop,domestic sugarcrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional sugarcrop,imported sugarcrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional wheat,domestic wheat,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
@@ -35,3 +35,5 @@ regional poultry,domestic poultry,-6,start-year,1,share-weight,final-calibration
 regional poultry,imported poultry,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional sheepgoat,domestic sheepgoat,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional sheepgoat,imported sheepgoat,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional forest,domestic forest,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional forest,imported forest,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
