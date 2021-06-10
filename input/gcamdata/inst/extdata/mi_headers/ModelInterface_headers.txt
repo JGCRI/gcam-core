@@ -496,7 +496,7 @@ DeleteGenericService, world/+{name}region, region/+{name}gcam-consumer, gcam-con
 
 DemandStapleParams, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}staples-food-demand-input, staples-food-demand-input/+scale-param, staples-food-demand-input/+self-price-elasticity, staples-food-demand-input/+cross-price-elasticity, staples-food-demand-input/+income-elasticity, staples-food-demand-input/+income-max-term, nodeInput/+price-received, scenario, scenario/world
 
-Gomp.fn.param, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+unadj.sat, building-node-input/+flsp.param.a, building-node-input/+flsp.param.b, building-node-input/+flsp.param.c, building-node-input/+flsp.param.k, scenario, scenario/world
+Gomp.fn.param, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input,building-node-input/+pop_dens, building-node-input/+unadj.sat, building-node-input/+flsp.param.a, building-node-input/+flsp.param.b, building-node-input/+flsp.param.c, building-node-input/+flsp.param.k, scenario, scenario/world
 
 DemandStapleRegBias, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}staples-food-demand-input, staples-food-demand-input/+{year}regional-bias, staples-food-demand-input/+regional-bias, scenario, scenario/world
 

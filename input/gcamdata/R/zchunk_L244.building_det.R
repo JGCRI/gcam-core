@@ -232,7 +232,7 @@ module_energy_L244.building_det <- function(command, ...) {
       # Converting from square meters per capita to million square meters per capita
       mutate(satiation.level = value * CONV_THOUS_BIL) %>%
       select(-value) %>%
-      # JS 06/2021:Weare not using satiation  levels in the residential sector with the new floorspace function:
+      # JS 06/2021:We are not using satiation  levels in the residential sector with the new floorspace function:
       filter(sector != "resid")
 
     L244.Satiation_flsp <- write_to_all_regions(A44.gcam_consumer %>% filter(gcam.consumer != "resid"), c("region", "gcam.consumer", "nodeInput", "building.node.input"), # replace with LEVEL2_DATA_NAMES[["BldNodes]]
@@ -368,7 +368,8 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(gcam.consumer="resid",
              nodeInput="resid",
              building.node.input="resid_building") %>%
-      #select(region,gcam.consumer,nodeInput,building.node.input,unadj.sat,flsp.param.a,flsp.param.b,flsp.param.c,flsp.param.k)
+      rename(pop_dens=tot_dens) %>%
+      #select(region,gcam.consumer,nodeInput,building.node.input,pop_dens,unadj.sat,flsp.param.a,flsp.param.b,flsp.param.c,flsp.param.k)
       select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
 
 
