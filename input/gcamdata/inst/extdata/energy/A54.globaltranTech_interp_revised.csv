@@ -22,10 +22,6 @@ trn_pass,Passenger Rail,Tech-Adv-Electric,share-weight,final-calibration-year,en
 trn_pass,Passenger Rail,Tech-Adv-Liquid,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_pass_road,Bus,Liquids,share-weight,final-calibration-year,2020,linear,CORE
 trn_pass_road,Bus,NG,share-weight,final-calibration-year,end-year,linear,CORE
-trn_pass_road_bus,Heavy Bus,Liquids,share-weight,final-calibration-year,2020,linear,CORE
-trn_pass_road_bus,Heavy Bus,NG,share-weight,final-calibration-year,end-year,linear,CORE
-trn_pass_road_bus,Light Bus,Liquids,share-weight,final-calibration-year,2020,linear,CORE
-trn_pass_road_bus,Light Bus,NG,share-weight,final-calibration-year,end-year,linear,CORE
 trn_pass_road_LDV,2W and 3W,Liquids,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_pass_road_LDV,2W and 3W,NG,share-weight,final-calibration-year,end-year,linear,CORE
 trn_pass_road_LDV,2W and 3W,LA-BEV,share-weight,final-calibration-year,2050,linear,CORE
@@ -55,10 +51,6 @@ trn_pass,Passenger Rail,Tech-Adv-Electric,share-weight,final-calibration-year,en
 trn_pass,Passenger Rail,Tech-Adv-Liquid,share-weight,final-calibration-year,end-year,fixed,highEV
 trn_pass_road,Bus,Liquids,share-weight,final-calibration-year,2020,linear,highEV
 trn_pass_road,Bus,NG,share-weight,final-calibration-year,end-year,linear,highEV
-trn_pass_road_bus,Heavy Bus,Liquids,share-weight,final-calibration-year,2020,linear,highEV
-trn_pass_road_bus,Heavy Bus,NG,share-weight,final-calibration-year,end-year,linear,highEV
-trn_pass_road_bus,Light Bus,Liquids,share-weight,final-calibration-year,2020,linear,highEV
-trn_pass_road_bus,Light Bus,NG,share-weight,final-calibration-year,end-year,linear,highEV
 trn_pass_road_LDV,2W and 3W,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
 trn_pass_road_LDV,2W and 3W,NG,share-weight,final-calibration-year,end-year,linear,highEV
 trn_pass_road_LDV,2W and 3W,LA-BEV,share-weight,final-calibration-year,2050,linear,highEV
