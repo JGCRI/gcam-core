@@ -41,7 +41,8 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
              "L244.GlobalTechEff_bld",
              "L244.GlobalTechShrwt_bld_gcamusa",
              "L244.GlobalTechCost_bld_gcamusa",
-             "L244.GlobalTechSCurve_bld"))
+             "L244.GlobalTechSCurve_bld",
+             "L244.Gomp.fn.param_gcamusa"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -79,6 +80,7 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
     L244.GlobalTechShrwt_bld <- get_data(all_data, "L244.GlobalTechShrwt_bld_gcamusa")
     L244.GlobalTechCost_bld <- get_data(all_data, "L244.GlobalTechCost_bld_gcamusa")
     L244.GlobalTechSCurve_bld <- get_data(all_data, "L244.GlobalTechSCurve_bld")
+    L244.Gomp.fn.param_gcamusa<- get_data(all_data, "L244.Gomp.fn.param_gcamusa")
 
     # ===================================================
 
@@ -93,6 +95,7 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
       add_xml_data(L244.DemandFunction_flsp, "DemandFunction_flsp") %>%
       add_xml_data(L244.Satiation_flsp, "Satiation_flsp") %>%
       add_xml_data(L244.SatiationAdder, "SatiationAdder") %>%
+      add_xml_data(L244.Gomp.fn.param_gcamusa, "Gomp.fn.param")  %>%
       add_xml_data(L244.ThermalBaseService, "ThermalBaseService") %>%
       add_xml_data(L244.GenericBaseService, "GenericBaseService") %>%
       add_xml_data(L244.ThermalServiceSatiation, "ThermalServiceSatiation") %>%
@@ -142,7 +145,8 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
                      "L244.GlobalTechEff_bld",
                      "L244.GlobalTechShrwt_bld_gcamusa",
                      "L244.GlobalTechCost_bld_gcamusa",
-                     "L244.GlobalTechSCurve_bld") ->
+                     "L244.GlobalTechSCurve_bld",
+                     "L244.Gomp.fn.param_gcamusa") ->
       building_USA.xml
 
     # # Some data inputs may not actually contain data. If so, do not add_xml_data.

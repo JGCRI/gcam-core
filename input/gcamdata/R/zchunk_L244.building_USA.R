@@ -17,7 +17,7 @@
 #' \code{L244.SubsectorLogit_bld_gcamusa}, \code{L244.StubTech_bld_gcamusa}, \code{L244.StubTechCalInput_bld_gcamusa}, \code{L244.StubTechMarket_bld},
 #' \code{L244.GlobalTechIntGainOutputRatio}, \code{L244.GlobalTechInterpTo_bld}, \code{L244.GlobalTechEff_bld},
 #' \code{L244.GlobalTechShrwt_bld_gcamusa}, \code{L244.GlobalTechCost_bld_gcamusa}, \code{L244.GlobalTechSCurve_bld}, \code{L244.HDDCDD_A2_GFDL_USA},
-#' \code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}.
+#' \code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}, \code{L244.Gomp.fn.param_gcamusa}.
 #' The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
 #' @details Creates GCAM-USA building output files for writing to xml.
 #' @importFrom assertthat assert_that
@@ -49,6 +49,8 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
              FILE = "gcam-usa/A44.globaltech_shrwt",
              FILE = "gcam-usa/A44.globaltech_interp",
              FILE = "gcam-usa/A44.demand_satiation_mult",
+             FILE = "gcam-usa/A44.dens_state_flsp_usa",
+             FILE = "energy/A44.flsp_param",
              "L144.flsp_bm2_state_res",
              "L144.flsp_bm2_state_comm",
              "L144.in_EJ_state_comm_F_U_Y",
@@ -90,7 +92,8 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
              "L244.GlobalTechSCurve_bld",
              "L244.HDDCDD_A2_GFDL_USA",
              "L244.HDDCDD_constdds_USA",
-             "L244.HDDCDD_AEO_2015_USA"))
+             "L244.HDDCDD_AEO_2015_USA",
+             "L244.Gomp.fn.param_gcamusa"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -140,6 +143,8 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
     L143.HDDCDD_scen_state <- get_data(all_data, "L143.HDDCDD_scen_state", strip_attributes = TRUE)
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state", strip_attributes = TRUE)
     L100.pcGDP_thous90usd_state <- get_data(all_data, "L100.pcGDP_thous90usd_state", strip_attributes = TRUE)
+    L144.dens_state_flsp_usa<- get_data(all_data, "gcam-usa/A44.dens_state_flsp_usa", strip_attributes = TRUE)
+    L144.flsp_param <- get_data(all_data, "energy/A44.flsp_param", strip_attributes = TRUE)
 
     # ===================================================
     # Data Processing
@@ -214,7 +219,9 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
              # greater than calculated, multiply observed by 1.001
              satiation.level = round(pmax(value * CONV_THOUS_BIL, pcflsp_mm2cap * 1.001), energy.DIGITS_SATIATION_ADDER)) %>%
       left_join_error_no_match(A44.gcam_consumer, by = c("gcam.consumer", "nodeInput", "building.node.input")) %>%
-      select(LEVEL2_DATA_NAMES[["BldNodes"]], "satiation.level")
+      select(LEVEL2_DATA_NAMES[["BldNodes"]], "satiation.level") %>%
+      # JS 06/2021:We are not using satiation levels in the residential sector with the new floorspace function:
+      filter(gcam.consumer != "resid")
 
     # L244.SatiationAdder_gcamusa: Satiation adders in floorspace demand function
     # Required for shaping the future floorspace growth trajectories in each region
@@ -242,7 +249,41 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                energy.DIGITS_SATIATION_ADDER),
              # The satiation adder (million square meters of floorspace per person) needs to be less than the per-capita demand in the final calibration year
              satiation.adder = if_else(satiation.adder > pcFlsp_mm2, pcFlsp_mm2 * 0.999, satiation.adder)) %>%
-      select(LEVEL2_DATA_NAMES[["SatiationAdder"]])
+      select(LEVEL2_DATA_NAMES[["SatiationAdder"]]) %>%
+      # JS 06/2021:We are not using satiation levels in the residential sector with the new floorspace function:
+      filter(gcam.consumer != "resid")
+
+    #------------------------------------------------------
+    # JS, 06/2021:Updated floorspace function (flps-gomp-function)
+    # 1- Calculate the bias correction parameter (k)
+    # 2- Write parameters for the updated floorspace function: unadjSat, a, b, c and k
+
+    L144.flsp_param_usa<-L144.flsp_param %>%
+      filter(region=="USA") %>%
+      select(-region) %>%
+      repeat_add_columns(tibble(region=gcamusa.STATES))
+
+
+    L244.Gomp.fn.param_gcamusa<-L144.flsp_param_usa %>%
+      left_join_error_no_match(L144.dens_state_flsp_usa %>% filter(year==MODEL_FINAL_BASE_YEAR),by="region") %>%
+      left_join_error_no_match(L100.pcGDP_thous90usd_state %>% rename(region=state), by=c("region","year")) %>%
+      rename(gdp_pc=value) %>%
+      left_join_error_no_match(L100.Pop_thous_state %>% rename(region=state), by=c("region","year")) %>%
+      rename(pop_thous=value) %>%
+      left_join_error_no_match(L144.flsp_bm2_state_res %>% rename(region=state), by=c("region","year")) %>%
+      rename(flsp=value) %>%
+      mutate(flsp_pc=(flsp*1E9)/(pop_thous*1E3)) %>%
+      mutate(base_flsp=flsp_pc) %>%
+      #correct 0 population density to avoid NaN
+      mutate(tot_dens=if_else(tot_dens==0,1,tot_dens)) %>%
+      mutate(flsp_est=(unadj.sat +(-flsp.param.a*log(tot_dens)))*exp(-flsp.param.b*log(base_flsp)*exp(-flsp.param.c*log(gdp_pc)))) %>%
+      mutate(flsp.param.k=flsp_pc-flsp_est) %>%
+      mutate(gcam.consumer="resid",
+             nodeInput="resid",
+             building.node.input="resid_building") %>%
+      rename(pop_dens=tot_dens) %>%
+      #select(region,gcam.consumer,nodeInput,building.node.input,pop_dens,unadj.sat,flsp.param.a,flsp.param.b,flsp.param.c,flsp.param.k)
+      select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
 
     # Heating and cooling degree days (thermal services only)
     # First, separate the thermal from the generic services. Generic services will be assumed to produce
@@ -660,6 +701,15 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                      "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm", "L100.pcGDP_thous90usd_state") ->
       L244.SatiationAdder_gcamusa
 
+    L244.Gomp.fn.param_gcamusa %>%
+      add_title("Parameters for the floorspace Gompertz function") %>%
+      add_units("Unitless") %>%
+      add_comments("Computed offline based on data from RECS and IEA") %>%
+      add_legacy_name("L244.Gomp.fn.param_gcamusa") %>%
+      add_precursors("energy/A44.flsp_param", "L100.Pop_thous_state","L100.pcGDP_thous90usd_state",
+                     "gcam-usa/A44.dens_state_flsp_usa","L144.flsp_bm2_state_res" ) ->
+      L244.Gomp.fn.param_gcamusa
+
     L244.HDDCDD_A2_GFDL_USA %>%
       add_title("Heating and Cooling Degree Days by State for GFDL A2") %>%
       add_units("Fahrenheit Degree Days") %>%
@@ -935,7 +985,8 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                 L244.GlobalTechSCurve_bld,
                 L244.HDDCDD_A2_GFDL_USA,
                 L244.HDDCDD_AEO_2015_USA,
-                L244.HDDCDD_constdds_USA)
+                L244.HDDCDD_constdds_USA,
+                L244.Gomp.fn.param_gcamusa)
   } else {
     stop("Unknown command")
   }
