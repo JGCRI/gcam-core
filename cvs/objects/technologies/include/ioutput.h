@@ -82,7 +82,7 @@ class GenericOutput;
 *          and quantity calculations.
 * \author Josh Lurz
 */
-class IOutput : public INamed, private boost::noncopyable {
+class IOutput : public INamed, public AParsable, private boost::noncopyable {
 public:
     /*! 
      * \brief Constructor.
@@ -122,7 +122,7 @@ public:
      * \brief Return the name of the input for reporting.
      * \return The name of the input for reporting.
      */
-    virtual const std::string& getXMLReportingName() const = 0;
+    virtual const std::string& getXMLName() const = 0;
 
     // Documentation is inherited.
     virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;

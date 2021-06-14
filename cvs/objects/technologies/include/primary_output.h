@@ -77,6 +77,8 @@ public:
      */
     PrimaryOutput( const std::string& aSectorName );
     
+    PrimaryOutput();
+    
     virtual ~PrimaryOutput();
 
     virtual PrimaryOutput* clone() const;
@@ -85,7 +87,9 @@ public:
 
     virtual const std::string& getName() const;
 
-    virtual const std::string& getXMLReportingName() const;
+    static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 

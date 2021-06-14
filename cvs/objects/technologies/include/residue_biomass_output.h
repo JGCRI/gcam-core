@@ -36,10 +36,9 @@
 
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
-#include "util/curves/include/cost_curve.h"
 #include "util/base/include/time_vector.h"
 
-class Curve;
+class PointSetCurve;
 class ALandAllocatorItem;
 
 /*!
@@ -80,7 +79,7 @@ public :
 
     ResidueBiomassOutput( const std::string& sectorName = std::string() );
     virtual ~ResidueBiomassOutput(void);
-    virtual const std::string& getXMLReportingName() const;
+    virtual const std::string& getXMLName() const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
     virtual IOutput::OutputList calcPhysicalOutput( const double aPrimaryOutput,
@@ -124,6 +123,8 @@ public :
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const IOutput* aPreviousInput,
@@ -165,7 +166,7 @@ protected :
         DEFINE_VARIABLE( SIMPLE, "mass-to-energy", mMassToEnergy, double ),
 
         //! Piece-wise linear cost curve 
-        DEFINE_VARIABLE( CONTAINER, "fract-harvested", mCostCurve, Curve* )
+        DEFINE_VARIABLE( CONTAINER | NOT_PARSABLE, "fract-harvested", mCostCurve, PointSetCurve* )
     )
 
     // These variables are for debugging purposes. Values are written to debug.xml

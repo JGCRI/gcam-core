@@ -38,6 +38,7 @@
 #include "technologies/include/residue_biomass_output.h"
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/TValidatorInfo.h"
 #include "util/curves/include/point_set_curve.h"
 #include "util/curves/include/curve.h"
@@ -102,9 +103,11 @@ void ResidueBiomassOutput::copy( const ResidueBiomassOutput& aOther ) {
 * \author Sonny Kim
 * \return The constant XML_NAME.
 */
-const string& ResidueBiomassOutput::getXMLReportingName() const{
+const string& ResidueBiomassOutput::getXMLName() const{
+    /*
     static const string XML_REPORTING_NAME = "output-residue-biomass";
-    return XML_REPORTING_NAME;
+    return XML_REPORTING_NAME;*/
+    return getXMLNameStatic();
 }
 
 void ResidueBiomassOutput::accept( IVisitor* aVisitor, const int aPeriod ) const
@@ -433,6 +436,31 @@ bool ResidueBiomassOutput::XMLParse( const xercesc::DOMNode* aNode )
     mCostCurve = new PointSetCurve( currPoints );
 
     return true;
+}
+
+bool ResidueBiomassOutput::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if(nodeName == "fract-harvested") {
+        // we need some specialized behavior to read in the point set curve
+        PointSet* curvePoints;
+        if(!mCostCurve) {
+            curvePoints = new ExplicitPointSet();
+            mCostCurve = new PointSetCurve(curvePoints);
+        }
+        else {
+            curvePoints = mCostCurve->getPointSet();
+        }
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        double price = XMLParseHelper::getValue<double>( attrs["price"] );
+        double fraction = XMLParseHelper::getValue<double>( aNode );
+        XYDataPoint* currPoint = new XYDataPoint( price, fraction );
+        curvePoints->addPoint( currPoint );
+        return true;
+    }
+    else {
+        // return false to indicate XMLParseHelper should try to parse aNode
+        return false;
+    }
 }
 
 string ResidueBiomassOutput::getOutputUnits( const string& aRegionName ) const {

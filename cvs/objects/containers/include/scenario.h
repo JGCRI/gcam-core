@@ -88,6 +88,7 @@ class ManageStateVariables;
 class Scenario: public IParsable, public IVisitable
 {
     friend class LogEDFun;
+    friend class gcam;
 public:
     Scenario();
     ~Scenario();

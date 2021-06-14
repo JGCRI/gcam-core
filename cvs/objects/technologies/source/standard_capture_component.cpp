@@ -100,6 +100,10 @@ const string& StandardCaptureComponent::getXMLNameStatic() {
     return XML_NAME;
 }
 
+const string& StandardCaptureComponent::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 const string& StandardCaptureComponent::getName() const {
     return getXMLNameStatic();
 }

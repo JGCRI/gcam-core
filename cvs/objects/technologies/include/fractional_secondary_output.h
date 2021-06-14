@@ -52,7 +52,8 @@ class Tabs;
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
-#include "util/curves/include/cost_curve.h"
+
+class PointSetCurve;
 
 /*! 
  * \ingroup Objects
@@ -79,8 +80,9 @@ class Tabs;
  */
 class FractionalSecondaryOutput: public IOutput
 {
-    friend class OutputFactory;
 public:
+    FractionalSecondaryOutput();
+    
     virtual ~FractionalSecondaryOutput();
     
     /*!
@@ -97,9 +99,11 @@ public:
 
     virtual void setName( const std::string& aName );
 
-    virtual const std::string& getXMLReportingName() const;
+    virtual const std::string& getXMLName() const;
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -166,11 +170,6 @@ public:
                                    const IOutput* aNextInput );
 
 protected:
-    /*!
-     * \brief Protected constructor so the class can only be created by the
-     *        OutputFactory.
-     */
-    FractionalSecondaryOutput();
 
     double getMarketPrice( const std::string& aRegionName, const int aPeriod ) const;
 
@@ -201,7 +200,7 @@ protected:
         
         //! Piece-wise linear cost curve that contains price driven fraction adjustments
         //! to mOutputRatio.
-        DEFINE_VARIABLE( CONTAINER, "fraction-produced", mCostCurve, Curve* ),
+        DEFINE_VARIABLE( CONTAINER | NOT_PARSABLE, "fraction-produced", mCostCurve, PointSetCurve* ),
                                 
         //! The market name in which this output is adjusting the value.  If empty
         //! the current region is assumed.

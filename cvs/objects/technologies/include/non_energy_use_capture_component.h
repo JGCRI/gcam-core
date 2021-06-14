@@ -73,12 +73,17 @@
  * \author Josh Lurz
  */
 class NonEnergyUseCaptureComponent: public ICaptureComponent {
-    friend class CaptureComponentFactory;
 public:
+    NonEnergyUseCaptureComponent();
+    
     virtual ~NonEnergyUseCaptureComponent();
     
     // Documentation is inherited from ICaptureComponent.
     virtual NonEnergyUseCaptureComponent* clone() const;
+    
+    static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
 
     virtual bool isSameType( const std::string& aType ) const;
     
@@ -117,9 +122,7 @@ public:
                                std::vector<IInput*>& aInputs,
                                const int aPeriod ) const;
 protected:
-    NonEnergyUseCaptureComponent();
     void copy( const NonEnergyUseCaptureComponent& aOther );
-    static const std::string& getXMLNameStatic();
 
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.

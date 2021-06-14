@@ -77,6 +77,8 @@
 #include "util/base/include/version.h"
 #include "util/base/include/util.h"
 
+#include "util/base/include/xml_parse_helper.h"
+
 using namespace std;
 using namespace xercesc;
 
@@ -111,6 +113,11 @@ int main( int argc, char *argv[] ) {
     // Initialize the LoggerFactory
     LoggerFactoryWrapper loggerFactoryWrapper;
     bool success = XMLHelper<void>::parseXML( loggerFileName, &loggerFactoryWrapper );
+    
+    scenario = new Scenario;
+    success = XMLHelper<void>::parseXML( "../input/gcamdata/xml/modeltime.xml", scenario );
+    XMLParseHelper::parseXML("output_test.xml", scenario);
+    abort();
     
     // Check if parsing succeeded. Non-zero return codes from main indicate
     // failure.

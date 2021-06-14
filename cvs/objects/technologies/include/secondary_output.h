@@ -78,8 +78,9 @@ class Tabs;
  */
 class SecondaryOutput: public IOutput
 {
-    friend class OutputFactory;
 public:
+    SecondaryOutput();
+    
     /*!
      * \brief Get the XML name for the class.
      * \return The XML name for the class.
@@ -96,7 +97,7 @@ public:
 
     virtual void setName( const std::string& aName );
 
-    virtual const std::string& getXMLReportingName() const;
+    virtual const std::string& getXMLName() const;
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
@@ -165,11 +166,6 @@ public:
                                    const IOutput* aNextInput );
 
 protected:
-    /*!
-     * \brief Protected constructor so the class can only be created by the
-     *        OutputFactory.
-     */
-    SecondaryOutput();
 
     double calcPhysicalOutputInternal( const double aPrimaryOutput ) const;
     

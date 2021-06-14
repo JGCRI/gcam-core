@@ -44,6 +44,10 @@
 * \author Josh Lurz
 */
 #include <xercesc/dom/DOMNode.hpp>
+
+namespace rapidxml {
+template<typename Ch> class xml_node;
+};
 /*!
 * \ingroup Objects
 * \brief An interface to a class which can be parsed by the XMLParser.
@@ -76,4 +80,16 @@ public:
 // Inline function definitions.
 IParsable::~IParsable(){
 }
+
+class AParsable {
+public:
+    //! Virtual destructor so that instances of the interface may be deleted
+    //! correctly through a pointer to the interface.
+    inline virtual ~AParsable() {}
+    
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode ) {
+        return false;
+    }
+};
+
 #endif // _IPARSABLE_H_

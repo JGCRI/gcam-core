@@ -73,13 +73,17 @@ public:
      */
     GenericOutput( const std::string& aSectorName );
     
+    GenericOutput();
+    
     virtual ~GenericOutput();
 
     virtual GenericOutput* clone() const;
 
     virtual bool isSameType( const std::string& aType ) const;
+    
+    static const std::string& getXMLNameStatic();
 
-    virtual const std::string& getXMLReportingName() const;
+    virtual const std::string& getXMLName() const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,

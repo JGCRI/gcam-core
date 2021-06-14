@@ -93,6 +93,10 @@ const string& NonEnergyUseCaptureComponent::getXMLNameStatic() {
     return XML_NAME;
 }
 
+const string& NonEnergyUseCaptureComponent::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 const string& NonEnergyUseCaptureComponent::getName() const {
     // Capture components are not named as only one can exist per Technology.
     return getXMLNameStatic();

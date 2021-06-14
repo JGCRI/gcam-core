@@ -80,10 +80,10 @@ class Tabs;
  * \author Jiyong Eom
  */
 class InternalGains : public IOutput {
-    friend class OutputFactory;
 public:
+    InternalGains();
 
-    virtual const std::string& getXMLReportingName() const;
+    virtual const std::string& getXMLName() const;
 
     /*!
      * \brief Get the XML name for the class.
@@ -163,11 +163,6 @@ public:
                                    const int aNextYear, const IOutput* aPreviousInput,
                                    const IOutput* aNextInput );
 protected:
-    /*!
-     * \brief Protected constructor so the class can only be created by the
-     *        OutputFactory.
-     */
-    InternalGains();
     
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.

@@ -96,12 +96,17 @@
  * \author Josh Lurz
  */
 class PowerPlantCaptureComponent: public ICaptureComponent {
-    friend class CaptureComponentFactory;
 public:
+    PowerPlantCaptureComponent();
+    
     virtual ~PowerPlantCaptureComponent();
     
     // Documentation is inherited from ICaptureComponent.
     virtual PowerPlantCaptureComponent* clone() const;
+    
+    static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
         
     virtual bool isSameType( const std::string& aType ) const;
     
@@ -150,11 +155,8 @@ public:
                        const int aPeriod ) const;
 
 protected:
-	PowerPlantCaptureComponent();
     
     void copy( const PowerPlantCaptureComponent& aOther );
-
-	static const std::string& getXMLNameStatic();
     
     void adjustEnergyInput( IInput* aEnergyInput,
                             const int aPeriod ) const;

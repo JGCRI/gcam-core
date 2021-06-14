@@ -59,6 +59,9 @@ PrimaryOutput::PrimaryOutput( const string& aSectorName )
     mName = aSectorName;
 }
 
+PrimaryOutput::PrimaryOutput() {
+}
+
 PrimaryOutput::~PrimaryOutput() {
 }
 
@@ -87,6 +90,11 @@ const string& PrimaryOutput::getName() const
     return mName;
 }
 
+const string& PrimaryOutput::getXMLNameStatic() {
+    static const string XML_REPORTING_NAME = "output-primary";
+    return XML_REPORTING_NAME;
+}
+
 /*! \brief Get the XML name for reporting to XML file.
 *
 * This public function accesses the private constant string, XML_NAME. This way
@@ -95,9 +103,10 @@ const string& PrimaryOutput::getName() const
 * \author Sonny Kim
 * \return The constant XML_NAME.
 */
-const string& PrimaryOutput::getXMLReportingName() const{
-    static const string XML_REPORTING_NAME = "output-primary";
-    return XML_REPORTING_NAME;
+const string& PrimaryOutput::getXMLName() const{
+    /*static const string XML_REPORTING_NAME = "output-primary";
+    return XML_REPORTING_NAME;*/
+    return getXMLNameStatic();
 }
 
 bool PrimaryOutput::XMLParse( const DOMNode* aNode )

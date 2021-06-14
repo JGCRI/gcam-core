@@ -109,9 +109,17 @@ enum DataFlags {
      *          can be managed centrally stored/restored for instance during partial
      *          derivative calculations.
      */
-    STATE = 1 << 3
+    STATE = 1 << 3,
     
-    // potentially more flags here such as to tag "non-parsable" Data etc
+    /*!
+     * \brief A flag to indicate this Data should not be available to set via XML parse.
+     * \details Such a flag is useful to make sure users to not inadvertently set some
+     *          parameters they should not but also to avoid trying to generate the C++
+     *          to try to parse it.
+     */
+    NOT_PARSABLE = 1 << 4
+    
+    // potentially more flags here
 };
 
 /*!

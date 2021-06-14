@@ -103,6 +103,10 @@ const string& PowerPlantCaptureComponent::getXMLNameStatic() {
     return XML_NAME;
 }
 
+const string& PowerPlantCaptureComponent::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 const string& PowerPlantCaptureComponent::getName() const {
     return getXMLNameStatic();
 }
