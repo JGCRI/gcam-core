@@ -103,7 +103,7 @@ module_socioeconomics_L2326.aluminum_Inc_Elas_scenarios <- function(command, ...
       select( GCAM_region_ID, year,pcgdp_90thousUSD_2015)
 
     population_2015 <- L101.Pop_thous_Scen_R_Yfut %>%
-      filter(year == 2016) %>%
+      filter(year == 2015) %>%
       mutate(population_2015 = population ,year = 2020 ) %>%
       select(scenario, GCAM_region_ID, year,population_2015 )
 
