@@ -1,7 +1,7 @@
 # File: DesalData_capacity_basin.csv
 # Title: Desalinated water production capacity by basin
 # Units: cubic meters per day
-# Comments: data provided by personal communication from 
+# Comments: data provided in April 2020 by personal communication from E. Jones, E.r.jones@uu.nl.
 # Source: Jones, E., Qadir, M., van Vliet, M. T., Smakhtin, V., & Kang, S. M. (2019). The state of desalination and brine production: A global outlook. Science of the Total Environment, 657, 1343-1356.
 # Column types: icn
 # ----------
@@ -104,7 +104,7 @@ glu_ID,glu_name,desal_capacity_m3_d
 108,Xun_Jiang,365503
 109,Hong_(Red_River),41803
 110,Ganges_Bramaputra,404495
-111,Yucat��n_Peninsula,69606
+111,Yucatan_Peninsula,69606
 112,South_China_Sea_Coast,33010
 113,Mahi,59864
 114,Mexico_Interior,8901
