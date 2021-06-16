@@ -119,7 +119,7 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
 
     # Split this into two tables for write-out
     L173.in_desal_km3_ctry_ind_Yh <- select(L173.in_desal_km3_ctry_S_Yh, iso, year, desal_ind_km3)
-    L173.in_desal_km3_ctry_muni_Yh <- select( L173.in_desal_km3_ctry_S_Yh, iso, year, desal_muni_km3)
+    L173.in_desal_km3_ctry_muni_Yh <- select(L173.in_desal_km3_ctry_S_Yh, iso, year, desal_muni_km3)
 
     # Third (1.3.3), compute the share of wastewater treated ('trtshr') in each country and year
     # This is done as a linear function of GDP, bounded by maximum and minimum values, from a 2010
@@ -172,9 +172,9 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
     L173.water_km3_ctry_indWWTrt_Yh <- select(L173.water_km3_ctry_indWWTrt_Yh, iso, sector, year, water_km3)
 
     # 1.3.5: Final step: bind the water flow tables and aggregate from countries to GCAM regions
-    L173.water_km3_R_indEFW_Yh <- bind_rows( L173.water_km3_ctry_indAbs_Yh,
-                                             L173.water_km3_ctry_indTrt_Yh,
-                                             L173.water_km3_ctry_indWWTrt_Yh) %>%
+    L173.water_km3_R_indEFW_Yh <- bind_rows(L173.water_km3_ctry_indAbs_Yh,
+                                            L173.water_km3_ctry_indTrt_Yh,
+                                            L173.water_km3_ctry_indWWTrt_Yh) %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID),
                                by = "iso") %>%
       group_by(GCAM_region_ID, sector, year) %>%
@@ -212,7 +212,7 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
     # 2.2: Multiply the water volumes by the EFW coefficients to compute energy demands
     L173.in_ALL_ctry_indEFW_F_Yh <- bind_rows(L173.water_km3_ctry_indTrt_Yh,
                                               L173.water_km3_ctry_indWWTrt_Yh) %>%
-      left_join_error_no_match(L173.globaltech_coef, by = c( "sector", "year"),
+      left_join_error_no_match(L173.globaltech_coef, by = c("sector", "year"),
                                ignore_columns = "from.sector.2") %>%
       bind_rows(L173.in_EJ_ctry_indAbs_Yh) %>%
       mutate(energy_EJ = water_km3 * coefficient)
@@ -229,9 +229,9 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
     # one sector is assigned, "from.sector.2" will be either null or NA, and both are OK
     indEFW_from_sectors <- unique(c(L173.in_ALL_ctry_indEFW_F_Yh$from.sector,
                                     L173.in_ALL_ctry_indEFW_F_Yh$from.sector.2))
-    L173.in_EJavail_ind <- subset( L101.en_bal_EJ_ctry_Si_Fi_Yh_full,
-                                   sector %in% indEFW_from_sectors &
-                                     fuel %in% unique(L173.in_ALL_ctry_indEFW_F_Yh$fuel)) %>%
+    L173.in_EJavail_ind <- subset(L101.en_bal_EJ_ctry_Si_Fi_Yh_full,
+                                  sector %in% indEFW_from_sectors &
+                                    fuel %in% unique(L173.in_ALL_ctry_indEFW_F_Yh$fuel)) %>%
       rename(avail_energy_EJ = value) %>%
       # If there are two sectors from which energy is re-allocated, aggregate them.
       group_by(iso, fuel, year) %>%
@@ -247,7 +247,7 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
       summarise(ind_EFW_energy_EJ = sum(energy_EJ)) %>%
       ungroup() %>%
       left_join_error_no_match(L173.in_EJavail_ind,
-                               by = c( "iso", "year", "fuel")) %>%
+                               by = c("iso", "year", "fuel")) %>%
       mutate(scaler = if_else(ind_EFW_energy_EJ / avail_energy_EJ > efw.MAX_IND_ENERGY_EFW,
                               avail_energy_EJ * efw.MAX_IND_ENERGY_EFW / ind_EFW_energy_EJ, 1)) %>%
       # Countries with zero industrial electricity consumption (and therefore water demands) return NA. Reset scalers to 0.
@@ -264,6 +264,8 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
       select(iso, sector, year, fuel, water_km3, energy_EJ, coefficient)
 
     # 3.4: Aggregate from countries to regions, to calculate industrial EFW and IO coefficients by process
+    # The aggregation is done with the "agg_sector" name in order to compute the entire sector's EFW quantity,
+    # named such that the data can be inserted into regional energy balances.
     # This will be used to modify the region-level energy balances
     L173.in_EJ_R_indEFWtot_F_Yh <- L173.in_ALL_ctry_indEFW_F_Yh %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID),
@@ -285,7 +287,7 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
                 energy_EJ = sum(energy_EJ),
                 default_coef = median(coefficient)) %>%
       ungroup() %>%
-      mutate(coefficient = if_else( water_km3 == 0, default_coef, energy_EJ / water_km3)) %>%
+      mutate(coefficient = if_else(water_km3 == 0, default_coef, energy_EJ / water_km3)) %>%
       select(GCAM_region_ID, sector, fuel, year, coefficient)
 
     # Part 4: Calculating region-level wastewater treatment fractions.

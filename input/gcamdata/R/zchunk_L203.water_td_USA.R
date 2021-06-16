@@ -98,8 +98,6 @@ module_gcamusa_L203.water_td_USA <- function(command, ...) {
     L103.water_mapping_USA_R_B_W_Ws_share %>%
       mutate(water_sector = gsub("Domestic", "Municipal", water_sector)) %>%
       left_join_error_no_match(water_td_sectors, by = c("water_sector" = "water.sector")) %>%
-      # LJENM returns error because A03.sector has NAs in logit.type column
-      # this is expected and not a problem, so left_join() is used
       left_join_error_no_match(A03.sector, by = "supplysector", ignore_columns = c("logit.type")) %>%
       mutate(supplysector = set_water_input_name(water_sector, water_type, water_td_sectors)) ->
       L203.mapping_nonirr

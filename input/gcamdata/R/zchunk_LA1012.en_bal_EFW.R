@@ -58,7 +58,7 @@ module_energy_LA1012.en_bal_EFW <- function(command, ...) {
     # those. The important part for incorporation into GCAM's energy system is to minimize distortions to energy
     # balances.
 
-    #1.1 Compute the share of each desal-related (i.e., commercial and industrial) sector's energy by region, fuel, and year
+    # 1.1 Compute the share of each desal-related (i.e., commercial and industrial) sector's energy by region, fuel, and year
     L1012.desal_shares <- filter(L1011.en_bal_EJ_R_Si_Fi_Yh, sector %in% efw.DESAL_ENERGY_SECTORS) %>%
       filter(fuel %in% L171.in_EJ_R_desal_F_Yh$fuel) %>%
       group_by(GCAM_region_ID, fuel, year) %>%
@@ -85,7 +85,7 @@ module_energy_LA1012.en_bal_EFW <- function(command, ...) {
     stopifnot(with(subset(L1012.en_bal_EJ_R_Si_Fi_Yh_desal, initial_energy_EJ > 0),
                    deduction_EJ / initial_energy_EJ) < efw.MAX_COMMIND_ENERGY_DESAL)
 
-    #Replace the corresponding values in the energy balance tables
+    # Replace the corresponding values in the energy balance tables
     # left_join returns missing values for all unaffected sectors
     L1012.en_bal_EJ_R_Si_Fi_Yh <- L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       left_join(select(L1012.en_bal_EJ_R_Si_Fi_Yh_desal, GCAM_region_ID, sector, fuel, year, deduction_EJ),
@@ -222,6 +222,7 @@ module_energy_LA1012.en_bal_EFW <- function(command, ...) {
       bind_rows(L1012.in_EJ_R_revmuni1_F_Yh)
 
     # Append municipal total EFW, and join revisions to assigned sectors back into the energy balances table
+    # This block uses left_join() because not all sectors and fuels have their energy demands revised by EFW
     L1012.en_bal_EJ_R_Si_Fi_Yh <- bind_rows(L1012.en_bal_EJ_R_Si_Fi_Yh,
                                             rename(L174.in_EJ_R_muniEFWtot_F_Yh, value = energy_EJ)) %>%
       left_join(L1012.in_EJ_R_revmuni_F_Yh, by = c("GCAM_region_ID", "sector", "fuel", "year")) %>%

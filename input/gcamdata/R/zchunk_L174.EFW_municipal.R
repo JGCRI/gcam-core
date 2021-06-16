@@ -79,7 +79,7 @@ module_water_L174.EFW_municipal <- function(command, ...) {
     L174.water_km3_ctry_muniTrt_Yh <- mutate(L174.water_km3_ctry_muniAbs_Yh, sector = muniTrt)
 
     # Part 1.3: Water distribution is also equal to water withdrawals = abstraction = treatment
-    L174.water_km3_ctry_muniDist_Yh <- mutate( L174.water_km3_ctry_muniAbs_Yh, sector = muniDist)
+    L174.water_km3_ctry_muniDist_Yh <- mutate(L174.water_km3_ctry_muniAbs_Yh, sector = muniDist)
 
     # Part 1.4: Treated wastewater is equal to (withdrawals - consumption) * trtshr
     # Start with the withdrawal volume, deduct consumptive uses (water evaporated, or used in products), and multiply by
@@ -93,8 +93,8 @@ module_water_L174.EFW_municipal <- function(command, ...) {
     # the municipal water abstraction, in order to compute the wastewater flow volume
     L174.water_km3_ctry_muniWWTrt_Yh <- L174.water_km3_ctry_muniAbs_Yh %>%
       mutate(sector = muniWWTrt) %>%
-      left_join_error_no_match(L145.municipal_water_eff_ctry_Yh, by = c( "iso", "year")) %>%
-      left_join_error_no_match(L173.trtshr_ctry_Yh, by = c( "iso", "year"),
+      left_join_error_no_match(L145.municipal_water_eff_ctry_Yh, by = c("iso", "year")) %>%
+      left_join_error_no_match(L173.trtshr_ctry_Yh, by = c("iso", "year"),
                                ignore_columns = "trtshr") %>%
       # Not all countries are present in the trtshr data; just assume zero wastewater treatment share
       replace_na(list(trtshr = 0)) %>%
@@ -105,14 +105,14 @@ module_water_L174.EFW_municipal <- function(command, ...) {
     # Part 1.5: Adjust municipal water abstraction and treatment flow volumes for desalinated water
     # Abstraction and treatment-related energy for desalinated water is already accounted
     L174.water_km3_ctry_muniAbs_Yh <-
-      left_join_error_no_match( L174.water_km3_ctry_muniAbs_Yh, L173.in_desal_km3_ctry_muni_Yh,
-                                by = c("iso", "year"),
-                                ignore_columns = "desal_muni_km3") %>%
+      left_join_error_no_match(L174.water_km3_ctry_muniAbs_Yh, L173.in_desal_km3_ctry_muni_Yh,
+                               by = c("iso", "year"),
+                               ignore_columns = "desal_muni_km3") %>%
       mutate(desal_muni_km3 = if_else(is.na(desal_muni_km3), 0, desal_muni_km3),
              water_km3 = water_km3 - desal_muni_km3) %>%
       select(-desal_muni_km3)
 
-    L174.water_km3_ctry_muniTrt_Yh <- mutate( L174.water_km3_ctry_muniAbs_Yh, sector = muniTrt)
+    L174.water_km3_ctry_muniTrt_Yh <- mutate(L174.water_km3_ctry_muniAbs_Yh, sector = muniTrt)
 
     # Merge the four country-level tables and aggregate by GCAM region (water flow volumes)
     # This table is written out
@@ -157,7 +157,7 @@ module_water_L174.EFW_municipal <- function(command, ...) {
     L174.in_ALL_ctry_muniEFW_F_Yh <- bind_rows(L174.water_km3_ctry_muniTrt_Yh,
                                                L174.water_km3_ctry_muniDist_Yh,
                                                L174.water_km3_ctry_muniWWTrt_Yh) %>%
-      left_join_error_no_match(L174.globaltech_coef, by = c( "sector", "year"),
+      left_join_error_no_match(L174.globaltech_coef, by = c("sector", "year"),
                                ignore_columns = "from.sector.2") %>%
       bind_rows(L174.in_EJ_ctry_muniAbs_Yh) %>%
       mutate(energy_EJ = water_km3 * coefficient)
@@ -174,7 +174,7 @@ module_water_L174.EFW_municipal <- function(command, ...) {
     # one sector is assigned, "from.sector.2" will be either null or NA, and both are OK
     muniEFW_from_sectors <- unique(c(L174.in_ALL_ctry_muniEFW_F_Yh$from.sector,
                                      L174.in_ALL_ctry_muniEFW_F_Yh$from.sector.2))
-    L174.in_EJavail_muni <- subset( L101.en_bal_EJ_ctry_Si_Fi_Yh_full,
+    L174.in_EJavail_muni <- subset(L101.en_bal_EJ_ctry_Si_Fi_Yh_full,
                                    sector %in% muniEFW_from_sectors &
                                      fuel %in% unique(L174.in_ALL_ctry_muniEFW_F_Yh$fuel)) %>%
       rename(avail_energy_EJ = value) %>%

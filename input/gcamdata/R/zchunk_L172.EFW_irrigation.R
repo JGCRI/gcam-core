@@ -50,7 +50,7 @@ module_water_L172.EFW_irrigation <- function(command, ...) {
     # estimates used in GCAM, and include an exogenous primary:electric conversion factor, we instead use the provided
     # energy intensities, and surface versus groundwater ratios
 
-    Liu_EFW_inventory$iso[ Liu_EFW_inventory$iso == "ssd" ] <- "sdn"
+    # Replace non-standard iso code
     Liu_EFW_inventory$iso[ Liu_EFW_inventory$iso == "vtc" ] <- "vat"
 
     # Our India ag EFW values by the default method (0.2 EJ in 2015) are low compared with the literature, even Liu et
@@ -102,9 +102,9 @@ module_water_L172.EFW_irrigation <- function(command, ...) {
     agEFW_from_sectors <- unique(c(EFW_mapping$from.sector[grepl("irrig", EFW_mapping$sector)],
                                    EFW_mapping$from.sector.2[grepl("irrig", EFW_mapping$sector)]))
     agEFW_from_fuel <- unique(EFW_mapping$fuel[grepl("irrig", EFW_mapping$sector)])
-    L172.in_EJavail_ag <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh,
-                                  sector %in% agEFW_from_sectors &
-                                    fuel %in% agEFW_from_fuel) %>%
+    L172.in_EJavail_ag <- subset(L1011.en_bal_EJ_R_Si_Fi_Yh,
+                                 sector %in% agEFW_from_sectors &
+                                   fuel %in% agEFW_from_fuel) %>%
       # If there are multiple sectors from which energy is allowed to be pulled, aggregate them.
       group_by(GCAM_region_ID, fuel, year) %>%
       summarise(avail_energy_EJ = sum(value)) %>%

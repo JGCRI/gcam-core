@@ -1,6 +1,6 @@
 #' module_water_batch_EFW_input_coefs_xml
 #'
-#' Construct XML data structure for \code{en_distribution.xml}.
+#' Construct XML data structure for \code{EFW_input_coefs.xml}.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

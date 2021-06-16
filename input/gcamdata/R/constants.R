@@ -546,7 +546,7 @@ water.DESAL                               <- "desalinated water"
 water.LIVESTOCK                           <- "Livestock"
 water.PRIMARY_ENERGY                      <- "Mining"
 water.LIVESTOCK_TYPES                     <- c("Beef","Dairy","Pork","Poultry","SheepGoat")
-water.DELETE_DEMAND_TYPES              <- c("water_td_elec_W","water_td_elec_C","water_td_muni_W","water_td_muni_C", "water_td_ind_W","water_td_ind_C")
+water.DELETE_DEMAND_TYPES                 <- c("water_td_elec_W", "water_td_elec_C", "water_td_muni_W", "water_td_muni_C", "water_td_ind_W", "water_td_ind_C")
 
 water.WATER_UNITS_PRICE                   <- "1975$/m^3"
 water.WATER_UNITS_QUANTITY                <- "km^3"
@@ -579,17 +579,17 @@ water.GROUNDWATER_SCENARIO <- "25pct" # may be "05pct", "25pct", or "40pct" (i.e
 water.GROUNDWATER_MAX_PRICE_INC <- 10000
 water.GROUNDWATER_UNIFORM_GRADES <- 10
 water.GROUNDWATER_BETA <- 1.0
-water.DIGITS_GROUND_WATER <- 6 #Digits for rounding estimates of historical groundwater depletion
-water.DIGITS_GROUND_WATER_RSC <- 5 #Digits for rounding groundwater supply curves (available, extractioncost)
-water.DIGITS_RENEW_WATER <- 4 #Digits for rounding historical averages of runoff and access fraction
-water.DIGITS_RENEW_WATER_RSC <- 7 #Digits for rounding renewable resource supply curves (available, extractioncost)
+water.DIGITS_GROUND_WATER <- 6 # Digits for rounding estimates of historical groundwater depletion
+water.DIGITS_GROUND_WATER_RSC <- 5 # Digits for rounding groundwater supply curves (available, extractioncost)
+water.DIGITS_RENEW_WATER <- 4 # Digits for rounding historical averages of runoff and access fraction
+water.DIGITS_RENEW_WATER_RSC <- 7 # Digits for rounding renewable resource supply curves (available, extractioncost)
 water.GW_DEPLETION_HISTORICAL <- c(2005, 2010) # Historical years for groundwater depletion
 water.GW_DEPLETION_BASE_YEAR <- 1990 # Historical year for groundwater depletion calibration
 water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010, 2015) # Historical years for freshwater runoff
-water.RENEW.COST.GRADE1 <- 0.00001 #Renewable water grade1 cost
-water.RENEW.COST.GRADE2 <- 0.001 #Renewable water grade2 cost
-water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
-water.DEMAND_FRAC_THRESHOLD <- 1e-4 #Demand fraction of total runoff below which we use a 3-point supply curve to help model solution
+water.RENEW.COST.GRADE1 <- 0.00001 # Renewable water grade1 cost
+water.RENEW.COST.GRADE2 <- 0.001 # Renewable water grade2 cost
+water.RENEW.COST.GRADE3 <- 10 # Renewable water grade3 cost
+water.DEMAND_FRAC_THRESHOLD <- 1e-4 # Demand fraction of total runoff below which we use a 3-point supply curve to help model solution
 
 # Energy-for-water constants ======================================================================
 

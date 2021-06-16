@@ -398,12 +398,12 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
              IrrWithd_km3 = value * BlueIrr_m3kg / field.eff) %>%
       select(GCAM_region_ID, GCAM_commodity, GLU, year, IrrWithd_km3)
 
-    # aggregate by region. Need na.rm for region/crop/glu combinations with no reported irrigation water consumption
+    # aggregate by GCAM region and year
     L165.IrrWithd_km3_R_Y <- group_by(L165.IrrWithd_km3_R_C_Y_GLU, GCAM_region_ID, year) %>%
       summarise(IrrWithd_km3 = sum(IrrWithd_km3)) %>%
       ungroup()
 
-    # aggregate by region and basin
+    # aggregate by GCAM region, basin, and year
     L165.IrrWithd_km3_R_B_Y <- group_by(L165.IrrWithd_km3_R_C_Y_GLU, GCAM_region_ID, GLU, year) %>%
       summarise(IrrWithd_km3 = sum(IrrWithd_km3)) %>%
       ungroup()

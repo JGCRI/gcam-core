@@ -1,6 +1,7 @@
 # File: A03.sector.csv
 # Title: Water t&d supplysector information  (units and logit exponents)
 # Units: NA
+# Source: NA
 # Column types: ccccic
 # ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type

@@ -58,6 +58,10 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
     # and drop where the RHS is missing values (e.g., no EFW for primary or electric sector energy-for-water) Filter out
     # the irrelevant inputs to technologies that use desalinated water (e.g., water abstraction and treatment energy use
     # are already accounted in the desalinated water production sector)
+
+    # Note - the gsub() statement is performing the opposite of the set_water_inputs_name() function, returning the generic
+    # water supplysector name from the geographically specific one (e.g., water_td_irr from water_td_irr_California_W)
+
     L270.TechCoef_EFW_init <- L203.TechCoef_watertd %>%
       filter(technology != "water consumption") %>%
       mutate(water.supplysector = gsub('([a-z]+_[a-z]+_[a-z]+)_.*', '\\1', supplysector)) %>%
@@ -68,7 +72,7 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
     # Because not all water withdrawn is later treated as wastewater, the wastewater treatment coefficients should be
     # replaced by those computed in prior steps (for historical periods) The step below temporarily fills out the last
     # historical value to all subsequent future model time periods. Note that 2010 is hard-wired as this is the base
-    # year of the Liu et all inventory. These default coefficients will be supplemented with scenario-specific
+    # year of the Liu et al inventory. These default coefficients will be supplemented with scenario-specific
     # coefficients in a subsequent step
     L270.WWtrt_coef <- bind_rows(L173.WWtrtfrac_R_ind_Yh, L174.WWtrtfrac_R_muni_Yh) %>%
       rename(coef_revised = WWtrtfrac) %>%
@@ -97,16 +101,20 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
              reduction = if_else(reduction < 0, 0, reduction)) %>%
       select(scenario, region, year, reduction)
 
-    # For the baseline (default, core) scenario, specify the
+    # For the baseline (default, core) scenario, specify the future "reduction" in the discharge of untreated wastewater
+    # This is done in two steps, so that the default (core) XML file will have one set of WW reduction rates,
+    # and each alternative scenario (SSP) will have its own set that overwrites the defaults
     L270.GDPreduction_R_Y <- subset(L270.GDPreduction_scen_R_Y, scenario == efw.WWTRT_GDP_SCEN) %>%
       select(-scenario)
 
+    # use left_join as L270.GDPreduction_R_Y doesn't have base year values
     L270.WWtrt_coef <- left_join(L270.WWtrt_coef, L270.GDPreduction_R_Y,
                                  by = c("region", "year")) %>%
       replace_na(list(reduction = 0)) %>%
       mutate(coef_revised = coef_revised + (efw.MAX_WWTRT_FRAC - coef_revised) * reduction) %>%
       select(-reduction)
 
+    # use left_join as the L270.WWtrt_coef only apply to one of the EFW processes (wastewater treatment)
     L270.TechCoef_EFW <- left_join(L270.TechCoef_EFW_init, L270.WWtrt_coef,
                                    by = c("region", "water.supplysector", "minicam.energy.input", "year")) %>%
       mutate(coefficient = if_else(is.na(coef_revised), coefficient, coef_revised),

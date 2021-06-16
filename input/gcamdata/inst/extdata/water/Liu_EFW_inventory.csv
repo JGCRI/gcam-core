@@ -3,7 +3,6 @@
 # Units: km^3, EJ
 # Source: http://pubs.acs.org/doi/suppl/10.1021/acs.est.6b01065/suppl_file/es6b01065_si_002.xlsx
 # Comments: "ISO" column name changed to "iso" and comment character added to top header row
-# Column types:ccinnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 # column 1    ,country,country name
 # column 2     ,ISO,ISO 3 digit number
 # column 3     ,GCAM_R14,the region # in the 14 geopolitical regions of GCAM 
@@ -38,6 +37,8 @@
 # column 32,E4W_ind,E4W embedded in industrial sector (EJ)
 # column 33,E4W_mun,E4W embedded in municipal sector (EJ)
 # country information,,,water withdrawal,,,,,power irrigation,share between surface water and groundwater,,,,,,variables for estimating process-level water-use amount,,,,adjusting coefficient for EI ,,E4W by water sources,,,E4W by processes,,,,,,E4W by sectors
+# Column types:ccinnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+# ----------
 country,iso,GCAM_R14,ag,irr,ind,muni,trtww,pow_irr,pow_irr_gw,pow_irr_sf,sf_shr2,gw_shr2,irr_gw_shr,irr_sf_shr,pct_ind_sf_cooling,pct_ind_sf_manu,ratio_sw_ind,trtshr,gw_sc_EI_coef,muni_sply_EI_coef,E4W_sf,E4W_gw,E4W_non-fresh,E4W_sc,E4W_trt,E4W_dist,E4W_ww_clt,E4W_ww_trt,E4W_ww_dis,E4W_ag,E4W_ind,E4W_mun
 Afghanistan,afg,11,32.77,32.44,0.21,0.25,0.04,24.92,0.25,0,1,0,0.5,0.5,10.52,89.48,1.79,0.14,0.96,1,0.002,0.015,0,0.016,0.001,0,0,0,0,0.015,0.001,0.001
 Albania,alb,12,0.31,0.31,0.14,0.34,0.15,0.02,0,0,0.71,0.29,0.07,0.93,66.02,33.98,0.1,0.46,0.86,1,0.003,0.001,0,0.001,0.001,0.001,0,0.001,0,0,0.001,0.003

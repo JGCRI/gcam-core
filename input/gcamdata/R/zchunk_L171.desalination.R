@@ -72,7 +72,7 @@ module_water_L171.desalination <- function(command, ...) {
     # sectors (industry, commercial) for re-balancing their historical energy consumption
 
     # Part 0: Estimation of desalinated water production by country and year (filling out AQUASTAT)
-    L171.desal_aquastat <- bind_rows( FAO_desal_AQUASTAT,
+    L171.desal_aquastat <- bind_rows(FAO_desal_AQUASTAT,
                                       FAO_desal_missing_AQUASTAT[names(FAO_desal_AQUASTAT)] ) %>%
       left_join_error_no_match(select(aquastat_ctry, aquastat_ctry, iso),
                                by = c("Country" = "aquastat_ctry"))
@@ -81,7 +81,7 @@ module_water_L171.desalination <- function(command, ...) {
     # fill out all historical years. Values are interpolated first with rule=1 (no extrapolation), and where no 1980 or
     # prior values are available, 1980 is set to 0, and the interpolation is applied again with rule=2 (fixed
     # extrapolation)
-    L171.out_km3_ctry_desal_Yh <- subset( L171.desal_aquastat, !iso %in% efw.COUNTRIES_NO_DESAL) %>%
+    L171.out_km3_ctry_desal_Yh <- subset(L171.desal_aquastat, !iso %in% efw.COUNTRIES_NO_DESAL) %>%
       rename(year = Year, value = Value) %>%
       select(iso, year, value) %>%
       complete(iso = unique(iso), year = sort(unique(c(L171.desal_aquastat$Year, HISTORICAL_YEARS)))) %>%
@@ -94,7 +94,7 @@ module_water_L171.desalination <- function(command, ...) {
       select(iso, year, value)
 
     # Part 1: Desalinated water (secondary) output from the power sector
-    L171.out_km3_R_desalfromelec_Yh <- subset( L171.out_km3_ctry_desal_Yh, iso %in% efw.COUNTRIES_ELEC_DESAL ) %>%
+    L171.out_km3_R_desalfromelec_Yh <- subset(L171.out_km3_ctry_desal_Yh, iso %in% efw.COUNTRIES_ELEC_DESAL ) %>%
       left_join_error_no_match(iso_GCAM_regID[c("iso", "GCAM_region_ID")], by = "iso") %>%
       group_by(GCAM_region_ID, year) %>%
       summarise(value = sum(value)) %>%
@@ -115,8 +115,8 @@ module_water_L171.desalination <- function(command, ...) {
       summarise(share = sum(share)) %>%
       ungroup()
 
-    L171.out_km3_ctry_desal_tech_Yh <- repeat_add_columns( L171.out_km3_ctry_desal_Yh,
-                                                              unique( L171.AusNWC_desal_techs["technology"] ) ) %>%
+    L171.out_km3_ctry_desal_tech_Yh <- repeat_add_columns(L171.out_km3_ctry_desal_Yh,
+                                                              unique(L171.AusNWC_desal_techs["technology"] ) ) %>%
       left_join_error_no_match(unique(select(aquastat_ctry, iso, AusNWC_reg)),
                                by = "iso") %>%
       left_join_error_no_match(L171.AusNWC_desal_techs, by = c("AusNWC_reg", "technology")) %>%
@@ -138,7 +138,7 @@ module_water_L171.desalination <- function(command, ...) {
     # input-output coefficients are the same for gas-based and liquids-based thermal desalination technologies.
 
     EFW_mapping_desal <- subset(EFW_mapping, grepl("desal", sector))
-    L171.desal_fuel_shares <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh,
+    L171.desal_fuel_shares <- subset(L1011.en_bal_EJ_R_Si_Fi_Yh,
                                       sector %in% efw.DESAL_ENERGY_SECTORS &
                                         fuel %in% EFW_mapping_desal$fuel) %>%
       left_join_error_no_match(select(EFW_mapping_desal, fuel, technology),
@@ -155,7 +155,7 @@ module_water_L171.desalination <- function(command, ...) {
       ungroup() %>%
       left_join_error_no_match(L171.desal_fuel_shares_denom, by = c("GCAM_region_ID", "technology", "year")) %>%
       mutate(share = energy_EJ / energy_EJ_total) %>%
-      select(GCAM_region_ID, fuel, technology, year, "share")
+      select(GCAM_region_ID, fuel, technology, year, share)
 
     # Check to see if this generated any missing values. If so, there will be problems downstream, when we try to deduct
     # energy from sectors/fuels that have no energy consumption
@@ -177,9 +177,9 @@ module_water_L171.desalination <- function(command, ...) {
     # First get the energy-related coefficients that convert from water production volumes to energy requirements
     # Note - using inner_join b/c the coef table also includes the seawater inputs to desalination technologies
 
-    L171.desal_coef_tech <- inner_join( A71.globaltech_coef,
-                                        select(EFW_mapping_desal, supplysector, subsector, technology, minicam.energy.input, sector, fuel),
-                                        by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%
+    L171.desal_coef_tech <- inner_join(A71.globaltech_coef,
+                                       select(EFW_mapping_desal, supplysector, subsector, technology, minicam.energy.input, sector, fuel),
+                                       by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%
       gather_years(value_col = "coefficient") %>%
       select(sector, fuel, technology, year, coefficient) %>%
       complete(nesting(sector, fuel, technology), year = c(HISTORICAL_YEARS)) %>%

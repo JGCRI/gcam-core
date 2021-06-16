@@ -123,6 +123,9 @@ module_water_L203.water_td <- function(command, ...) {
                                by = "GCAM_basin_ID") %>%
       select(region, subsector, basin_share)
 
+    # L203.water_td_info is first filtered to the water sectors that can take an input of desalinated water, and second,
+    # using inner_join, this table is further filtered to only basins where desalination occurs, while joining in
+    # the basin-within-region share of desalinated water production for each region
     L203.water_td_info_desal <- filter(L203.water_td_info, has.desal.input == 1 & water_type == "water withdrawals") %>%
       select(-basin_share) %>%
       inner_join(L203.desal_basins, by = c("region", "subsector")) %>%
@@ -155,7 +158,7 @@ module_water_L203.water_td <- function(command, ...) {
              share.weight = 1.0) %>%
     select(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]])
 
-    # Subsector share-weight interpolation (for competition between basins - fixed share-weighte interpolation)
+    # Subsector share-weight interpolation (for competition between basins - fixed share-weight interpolation)
     L203.SubsectorInterp_watertd <- L203.SubsectorLogit_watertd %>%
       mutate(apply.to = "share-weight",
              from.year = max(MODEL_BASE_YEARS),

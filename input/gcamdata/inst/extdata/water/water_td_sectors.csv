@@ -1,6 +1,7 @@
 # File: water_td_sectors.csv
 # Title: Water t&d sector mapping to water types
 # Units: NA
+# Source: NA
 # Column types: cci
 # ----------
 water.sector,supplysector,has.desal.input
