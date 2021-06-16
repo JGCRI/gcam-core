@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L174.EFW_municipal
 #'
 #' Energy requirements for municipal water use

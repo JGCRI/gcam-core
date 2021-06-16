@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L245.water_demand_municipal
 #'
 #' Genereate GCAM-USA municipal water sector input files.

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L270.EFW_input_coefs
 #'
 #' Energy-for-water input names and coefficients to water T&D technologies

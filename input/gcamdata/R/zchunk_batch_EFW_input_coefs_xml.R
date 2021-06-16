@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_batch_EFW_input_coefs_xml
 #'
 #' Construct XML data structure for \code{EFW_input_coefs.xml}.

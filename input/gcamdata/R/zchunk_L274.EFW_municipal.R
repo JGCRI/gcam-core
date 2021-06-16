@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L274.EFW_municipal
 #'
 #' Generate municipal water sector energy-for-water input file

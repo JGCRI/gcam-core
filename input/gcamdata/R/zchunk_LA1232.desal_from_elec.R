@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA1232.desal_from_elec
 #'
 #' Output ratio of desalinated seawater produced as secondary output from electric power plants.

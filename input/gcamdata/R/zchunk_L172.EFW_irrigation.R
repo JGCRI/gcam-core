@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L172.EFW_irrigation
 #'
 #' Energy requirements for irrigation water abstraction, by GCAM region

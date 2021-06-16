@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_batch_water_td_xml
 #'
 #' Construct XML data structure for \code{water_td.xml}.

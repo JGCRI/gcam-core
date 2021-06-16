@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L112.ceds_ghg_en_R_S_T_Y
 #'
 #' Calculates emissions and emissions factors using CEDS and GFED emissions data for GCAM sectors and technologies. The chunk contains processing for the following,

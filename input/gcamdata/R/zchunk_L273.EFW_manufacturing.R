@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L273.EFW_manufacturing
 #'
 #' Generate manufacturing energy-for-water input file

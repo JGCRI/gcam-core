@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LA1012.en_bal_EFW
 #'
 #' Adjustments to the IEA energy balances to account for energy-for-water processes explicitly modeled.

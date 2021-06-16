@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L232.water_demand_industry
 #'
 #' Computes industrial water withdrawal/consumption coefficients (m3/GJ output) by US state and year.

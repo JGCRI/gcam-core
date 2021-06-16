@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_water_L271.desalination
 #'
 #' Generate sector and technologies for desalination
