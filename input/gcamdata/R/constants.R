@@ -583,7 +583,7 @@ water.DIGITS_GROUND_WATER <- 6 # Digits for rounding estimates of historical gro
 water.DIGITS_GROUND_WATER_RSC <- 5 # Digits for rounding groundwater supply curves (available, extractioncost)
 water.DIGITS_RENEW_WATER <- 4 # Digits for rounding historical averages of runoff and access fraction
 water.DIGITS_RENEW_WATER_RSC <- 7 # Digits for rounding renewable resource supply curves (available, extractioncost)
-water.GW_DEPLETION_HISTORICAL <- c(2005, 2010) # Historical years for groundwater depletion
+water.GW_DEPLETION_HISTORICAL <- c(2005, 2010, 2015) # Historical years for groundwater depletion
 water.GW_DEPLETION_BASE_YEAR <- 1990 # Historical year for groundwater depletion calibration
 water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010, 2015) # Historical years for freshwater runoff
 water.RENEW.COST.GRADE1 <- 0.00001 # Renewable water grade1 cost
