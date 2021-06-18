@@ -100,6 +100,10 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
         string region;
         string subregion;
             
+        // Skip region & GLU ID
+        getline(iss, token, ',');
+        getline(iss, token, ',');
+        
         // Parse longitude
         getline(iss, token, ',');
         lon = std::stoi(token);

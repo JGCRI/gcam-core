@@ -68,10 +68,13 @@ int main( ) {
     std::string GCAM2ELM_LUC_MAPPING_FILE = "../cpl/mappings/luc.xml";
     std::string GCAM2ELM_WOODHARVEST_MAPPING_FILE = "../cpl/mappings/woodharvest.xml";
     std::string ELM2GCAM_MAPPING_FILE = "../cpl/mappings/elm0.9x1.25togcam_mapping.csv";
-    bool READ_SCALARS = false; // If FALSE, scalars are calculated from NPP/HR
+    int readScalars = 0;
+    int* READ_SCALARS = &readScalars; // If 0, scalars are calculated from NPP/HR
     bool READ_ELM_FROM_FILE = true; // If FALSE, ELM data (NPP, HR, Area, PFT weight) are passed from E3SM.
-    bool WRITE_CO2 = true; // If TRUE, gridded CO2 emissions will be written to a file (in addition to passed in code).
-    bool WRITE_SCALARS = true; // If TRUE, scalars will be written to a file.
+    int writeCO2 = 1;
+    int* WRITE_CO2 = &writeCO2; // If 1, gridded CO2 emissions will be written to a file (in addition to passed in code).
+    int writeScalars = 1;
+    int* WRITE_SCALARS = &writeScalars; // If 1, scalars will be written to a file.
     bool RUN_FULL_SCENARIO = false; // If TRUE, will loop over all periods. This is used for testing/offline scenario runs only.
     
     // Define coupling control variables
@@ -145,13 +148,13 @@ int main( ) {
         } else if ( name == "ELM2GCAM_MAPPING_FILE" ) {
             ELM2GCAM_MAPPING_FILE = value;
         } else if ( name == "READ_SCALARS" ) {
-            istringstream(value) >> std::boolalpha >> READ_SCALARS;
+            *READ_SCALARS = std::stoi(value);
         } else if ( name == "READ_ELM_FROM_FILE" ) {
             istringstream(value) >> std::boolalpha >> READ_ELM_FROM_FILE;
         } else if ( name == "WRITE_CO2" ) {
-            istringstream(value) >> std::boolalpha >> WRITE_CO2;
+            *WRITE_CO2 = std::stoi(value);
         } else if ( name == "WRITE_SCALARS" ) {
-            istringstream(value) >> std::boolalpha >> WRITE_SCALARS;
+            *WRITE_SCALARS = std::stoi(value);
         } else if ( name == "ELM_IAC_CARBON_SCALING" ) {
             istringstream(value) >> std::boolalpha >> ELM_IAC_CARBON_SCALING;
         } else if ( name == "IAC_ELM_CO2_EMISSIONS" ) {
@@ -325,7 +328,8 @@ int main( ) {
         // Run model
         p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss);
         
-        p_obj->downscaleEmissionsGCAM(gcamoemiss,
+        if( IAC_ELM_CO2_EMISSIONS ) {
+            p_obj->downscaleEmissionsGCAM(gcamoemiss,
                                       gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
                                       gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
                                       gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec,
@@ -337,6 +341,7 @@ int main( ) {
                                       gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
                                       BASE_CO2_SURFACE_FILE, BASE_CO2EMISS_SURFACE, BASE_CO2_AIRCRAFT_FILE, BASE_CO2EMISS_AIRCRAFT,
                                       NUM_LON, NUM_LAT, WRITE_CO2, YEAR);
+        }
         
     }
     /*

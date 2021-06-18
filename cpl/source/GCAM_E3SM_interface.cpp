@@ -260,6 +260,8 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             row++;
         }
         
+        // Print output
+        runner->printOutput(timer);
     }
         
 }
@@ -381,6 +383,5 @@ void GCAM_E3SM_interface::finalizeGCAM()
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
     coupleLog << "calling finalize" << endl;
-    runner->printOutput(timer);
     timer.stop();
 }
