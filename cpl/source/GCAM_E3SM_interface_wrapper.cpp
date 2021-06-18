@@ -29,13 +29,17 @@ extern "C" {
 
   // Set Carbon Densities in GCAM using scalers from E3SM
   void setdensitycgcam_(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                          int *aNumLon, int *aNumLat, int *aNumPFT, char* aMappingFile, int *aFirstCoupledYear, bool aReadScalars, bool aWriteScalars) {
+                          int *aNumLon, int *aNumLat, int *aNumPFT, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars) {
       
       // Convert to string - fortran doesn't handle string
       std::string MappingFile(aMappingFile);
       
+      // Convert to bool - fortran doesn't have a bool
+      bool readScalars = *aReadScalars == 1 ? true : false;
+      bool writeScalars = *aWriteScalars == 1 ? true : false;
+      
       p_obj->setDensityGCAM(yyyymmdd, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
-                            aNumLon, aNumLat, aNumPFT, MappingFile, aFirstCoupledYear, aReadScalars, aWriteScalars);
+                            aNumLon, aNumLat, aNumPFT, MappingFile, aFirstCoupledYear, readScalars, writeScalars);
   }
     
   // Run GCAM
@@ -56,11 +60,14 @@ extern "C" {
                               double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                               double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
                               char* aBaseCO2SfcFile, double *aBaseCO2EmissSfc, char* aBaseCO2AirFile, double *aBaseCO2EmissAir,
-                              int *aNumLon, int *aNumLat, bool aWriteCO2, int *aCurrYear) {
+                              int *aNumLon, int *aNumLat, int* aWriteCO2, int *aCurrYear) {
       
       // Convert to string - fortran doesn't handle string
       std::string BaseCO2SfcFile(aBaseCO2SfcFile);
       std::string BaseCO2AirFile(aBaseCO2AirFile);
+      
+      // Convert to bool - fortran doesn't have a bool
+      bool writeCO2 = *aWriteCO2 == 1 ? true : false;
     
       p_obj->downscaleEmissionsGCAM(gcamoemiss,
                                   gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
@@ -73,7 +80,7 @@ extern "C" {
                                   gcamoco2airhimay, gcamoco2airhijun, gcamoco2airhijul, gcamoco2airhiaug,
                                   gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
                                   BaseCO2SfcFile, aBaseCO2EmissSfc, BaseCO2AirFile, aBaseCO2EmissAir,
-                                  aNumLon, aNumLat, aWriteCO2, aCurrYear);
+                                  aNumLon, aNumLat, writeCO2, aCurrYear);
 }
 
     
