@@ -418,13 +418,23 @@ namespace objects {
      *        to 1E-10.
      * \return Whether the two doubles are within aTolerance of each other. 
      */
-    template<>
-    inline bool isEqual<double>( const double aFirstValue,
-                                 const double aSecondValue,
-                                 const double aTolerance )
-    {
+template<>
+inline bool isEqual<double>( const double aFirstValue,
+                            const double aSecondValue,
+                            const double aTolerance )
+{
+    // Protect against nan
+    if( boost::math::isnan(aFirstValue) || boost::math::isnan(aSecondValue) ) {
+        // If both values are nan, then they are equal
+        if( boost::math::isnan(aFirstValue) && boost::math::isnan(aSecondValue) ) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
         return ( std::fabs( aFirstValue - aSecondValue ) < aTolerance );
     }
+}
 
     /*
     * \brief Interpolate a Y value based on two points and an X value.
