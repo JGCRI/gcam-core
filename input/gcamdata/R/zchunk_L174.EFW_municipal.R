@@ -100,8 +100,8 @@ module_water_L174.EFW_municipal <- function(command, ...) {
                                ignore_columns = "trtshr") %>%
       # Not all countries are present in the trtshr data; just assume zero wastewater treatment share
       replace_na(list(trtshr = 0)) %>%
-      mutate(water_km3 = water_km3 * (1 - efficiency) * trtshr) %>%
-      mutate(water_km3 = if_else(is.na(water_km3), 0, water_km3)) %>%
+      mutate(water_km3 = water_km3 * (1 - efficiency) * trtshr,
+             water_km3 = if_else(is.na(water_km3), 0, water_km3)) %>%
       select(iso, sector, year, water_km3)
 
     # Part 1.5: Adjust municipal water abstraction and treatment flow volumes for desalinated water
@@ -151,9 +151,9 @@ module_water_L174.EFW_municipal <- function(command, ...) {
       # Missing values are allowed here, for countries not included in the Liu inventory
       left_join(select(Liu_EFW_inventory, iso, sf_shr2, gw_shr2, gw_sc_EI_coef),
                 by = "iso") %>%
-      mutate(coefficient = (sf_shr2 * efw.SW_ABSTRACTION_EFW + gw_shr2 * gw_sc_EI_coef * efw.GW_ABSTRACTION_EFW)) %>%
       # for countries not included in the Liu et al inventory, use the surface water abstraction coefficient
-      mutate(coefficient = if_else(is.na(coefficient), efw.SW_ABSTRACTION_EFW, coefficient))
+      mutate(coefficient = (sf_shr2 * efw.SW_ABSTRACTION_EFW + gw_shr2 * gw_sc_EI_coef * efw.GW_ABSTRACTION_EFW),
+             coefficient = if_else(is.na(coefficient), efw.SW_ABSTRACTION_EFW, coefficient))
 
     # 2.2: Multiply the water volumes by the EFW coefficients to compute energy demands
     L174.in_ALL_ctry_muniEFW_F_Yh <- bind_rows(L174.water_km3_ctry_muniTrt_Yh,
@@ -197,10 +197,10 @@ module_water_L174.EFW_municipal <- function(command, ...) {
                                by = c("iso", "year", "fuel"),
                                ignore_columns = "avail_energy_EJ") %>%
       replace_na(list(avail_energy_EJ = 0)) %>%
-      mutate(scaler = if_else(muni_EFW_energy_EJ / avail_energy_EJ > efw.MAX_COMMIND_ENERGY_MUNI_EFW,
-                              avail_energy_EJ * efw.MAX_COMMIND_ENERGY_MUNI_EFW / muni_EFW_energy_EJ, 1)) %>%
       # Countries with zero industrial electricity consumption (and therefore water demands) return NA. Reset scalers to 0.
-      mutate(scaler = if_else(is.na(scaler), 0, scaler))
+      mutate(scaler = if_else(muni_EFW_energy_EJ / avail_energy_EJ > efw.MAX_COMMIND_ENERGY_MUNI_EFW,
+                              avail_energy_EJ * efw.MAX_COMMIND_ENERGY_MUNI_EFW / muni_EFW_energy_EJ, 1),
+             scaler = if_else(is.na(scaler), 0, scaler))
 
     # 3.3: Join the scalers to the country-level data of EFW coefficients and water flow volumes by country and
     # process, and re-compute scaled energy as (water * EFWcoefficient * scaler)

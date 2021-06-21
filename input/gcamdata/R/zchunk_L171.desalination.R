@@ -88,9 +88,9 @@ module_water_L171.desalination <- function(command, ...) {
       select(iso, year, value) %>%
       complete(iso = unique(iso), year = sort(unique(c(L171.desal_aquastat$Year, HISTORICAL_YEARS)))) %>%
       group_by(iso) %>%
-      mutate(value = approx_fun(year, value, rule = 1)) %>%
-      mutate(value = if_else(year == 1980 & is.na(value), 0, value)) %>%
-      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      mutate(value = approx_fun(year, value, rule = 1),
+             value = if_else(year == 1980 & is.na(value), 0, value),
+             value = approx_fun(year, value, rule = 2)) %>%
       ungroup() %>%
       filter(year %in% HISTORICAL_YEARS) %>%
       select(iso, year, value)

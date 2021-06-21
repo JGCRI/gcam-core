@@ -142,8 +142,8 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
 
     # join in the fitted values and compute the delta between predicted and observed in 2010
     L173.trtshr_2010 <- L173.trtshr_2010 %>%
-      mutate(pred_trtshr = L173.trtshr_lm[["fitted.values"]]) %>%
-      mutate(delta = trtshr - pred_trtshr)
+      mutate(pred_trtshr = L173.trtshr_lm[["fitted.values"]],
+             delta = trtshr - pred_trtshr)
 
     # Fourth (1.3.4), compute the volumes of industrial wastewater treated from the variables computed above in this step
     L173.water_km3_ctry_indWWTrt_Yh <- L173.water_km3_ctry_indAbs_Yh %>%
@@ -201,15 +201,17 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
       select(sector, fuel, from.sector, from.sector.2, year, coefficient)
 
     # 2.1.2: Adjust water abstraction EFW coefficients to reflect country-level estimates of ground:surface water ratio
+    # Note also that there is a country-level adjustment factor, gw_sc_EI_coef, applied to groundwater pumping energy intensity,
+    # that reflects the average depth of groundwater pumping
     L173.in_EJ_ctry_indAbs_Yh <- L173.water_km3_ctry_indAbs_Yh %>%
       left_join_error_no_match(select(L173.globaltech_coef, sector, fuel, year, coefficient),
                                by = c("sector", "year")) %>%
       # Missing values are allowed here, for countries not included in the Liu inventory
       left_join(select(Liu_EFW_inventory, iso, sf_shr2, gw_shr2, gw_sc_EI_coef),
                 by = "iso") %>%
-      mutate(coefficient = (sf_shr2 * efw.SW_ABSTRACTION_EFW + gw_shr2 * gw_sc_EI_coef * efw.GW_ABSTRACTION_EFW)) %>%
       # for countries not included in the Liu et al inventory, use the surface water abstraction coefficient
-      mutate(coefficient = if_else(is.na(coefficient), efw.SW_ABSTRACTION_EFW, coefficient))
+      mutate(coefficient = (sf_shr2 * efw.SW_ABSTRACTION_EFW + gw_shr2 * gw_sc_EI_coef * efw.GW_ABSTRACTION_EFW),
+             coefficient = if_else(is.na(coefficient), efw.SW_ABSTRACTION_EFW, coefficient))
 
     # 2.2: Multiply the water volumes by the EFW coefficients to compute energy demands
     L173.in_ALL_ctry_indEFW_F_Yh <- bind_rows(L173.water_km3_ctry_indTrt_Yh,
@@ -250,10 +252,10 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
       ungroup() %>%
       left_join_error_no_match(L173.in_EJavail_ind,
                                by = c("iso", "year", "fuel")) %>%
-      mutate(scaler = if_else(ind_EFW_energy_EJ / avail_energy_EJ > efw.MAX_IND_ENERGY_EFW,
-                              avail_energy_EJ * efw.MAX_IND_ENERGY_EFW / ind_EFW_energy_EJ, 1)) %>%
       # Countries with zero industrial electricity consumption (and therefore water demands) return NA. Reset scalers to 0.
-      mutate(scaler = if_else(is.na(scaler), 0, scaler))
+      mutate(scaler = if_else(ind_EFW_energy_EJ / avail_energy_EJ > efw.MAX_IND_ENERGY_EFW,
+                              avail_energy_EJ * efw.MAX_IND_ENERGY_EFW / ind_EFW_energy_EJ, 1),
+             scaler = if_else(is.na(scaler), 0, scaler))
 
     # 3.3: Join the scalers to the country-level data of EFW coefficients and water flow volumes by country and
     # process, and re-compute scaled energy as (water * EFWcoefficient * scaler)
