@@ -101,7 +101,7 @@ module_aglu_LB1091.ag_GrossTrade <- function(command, ...) {
     L1091.BiTrade_t_ctry_item <- left_join(FAO_BilateralTrade, select(FAO_ag_items_TRADE, item.code, bitrade_commod, GCAM_commodity),
                 by = c(Item.Code = "item.code")) %>%
       filter(!is.na(GCAM_commodity),
-             GCAM_commodity %in% aglu.TRADED_AG_AN) %>%
+             GCAM_commodity %in% c(aglu.TRADED_CROPS, aglu.TRADED_MEATS)) %>%
       # Join the reporter and partner countries. 10/17/2017 this does produce some missing iso codes for partner
       # countries but they're all tiny. Many  (e.g., "Unspecified Area") do not have 3-digit iso codes anyway. They are
       # dropped by drop_na().
@@ -114,7 +114,7 @@ module_aglu_LB1091.ag_GrossTrade <- function(command, ...) {
       left_join_keep_first_only(select(AGLU_ctry, FAO_country, iso),
                                 by = c( Partner.Countries = "FAO_country")) %>%
       rename(iso.partner = iso) %>%
-      drop_na(iso.partner)
+      drop_na(iso.partner, iso.reporter)
 
     #2. Re-balancing bilateral trade data
     # The bilateral trade data are not symmetrical - some countries are partner countries but not reporter countries
@@ -150,7 +150,7 @@ module_aglu_LB1091.ag_GrossTrade <- function(command, ...) {
                                  "Partner.Countries" = "Reporter.Countries")) %>%
       mutate(Element = "Import Quantity")
 
-    # Filter those asymetric obersvations in the original data, and flip reporter/partner, export/import
+    # Filter those asymmetric observations in the original data, and flip reporter/partner, export/import
     L1091.BiTrade_t_ctry_item_full <- L1091.BiTrade_t_ctry_item_missing_exp %>%
       bind_rows(L1091.BiTrade_t_ctry_item_missing_imp) %>%
       inner_join(L1091.BiTrade_t_ctry_item,
@@ -171,7 +171,7 @@ module_aglu_LB1091.ag_GrossTrade <- function(command, ...) {
       rename(iso.partner = iso,
              GCAMreg.partner = GCAM_region_ID)
     L1091.XregTrade_Mt_R_C <- L1091.BiTrade_t_ctry_item_full %>%
-      filter(GCAM_commodity %in% aglu.TRADED_AG_AN) %>%
+      filter(GCAM_commodity %in% c(aglu.TRADED_CROPS, aglu.TRADED_MEATS)) %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID),
                                by = c("iso.reporter" = "iso")) %>%
       left_join_error_no_match(iso_mapping_partner,

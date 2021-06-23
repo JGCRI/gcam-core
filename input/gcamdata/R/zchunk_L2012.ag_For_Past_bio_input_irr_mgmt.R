@@ -30,6 +30,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
              "L123.For_Prod_bm3_R_Y_GLU",
              "L132.ag_an_For_Prices",
              "L1321.ag_prP_R_C_75USDkg",
+             "L1321.expP_R_F_75USDm3",
              "L161.ag_irrProd_Mt_R_C_Y_GLU",
              "L161.ag_rfdProd_Mt_R_C_Y_GLU",
              "L163.ag_irrBioYield_GJm2_R_GLU",
@@ -68,6 +69,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "L123.For_Prod_bm3_R_Y_GLU", strip_attributes = TRUE)
     L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices", strip_attributes = TRUE)
     L1321.ag_prP_R_C_75USDkg <- get_data(all_data, "L1321.ag_prP_R_C_75USDkg", strip_attributes = TRUE)
+    L1321.expP_R_F_75USDm3 <- get_data(all_data, "L1321.expP_R_F_75USDm3", strip_attributes = TRUE)
     L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU", strip_attributes = TRUE)
     L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU", strip_attributes = TRUE)
     L163.ag_irrBioYield_GJm2_R_GLU <- get_data(all_data, "L163.ag_irrBioYield_GJm2_R_GLU", strip_attributes = TRUE)
@@ -77,7 +79,9 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
 
     # L2012.AgSupplySector: Generic AgSupplySector characteristics (units, calprice, market, logit)
     # Set up the regional price data to be joined in to the ag supplysector table
-    L2012.prP_R_C <- left_join_error_no_match(L1321.ag_prP_R_C_75USDkg, GCAM_region_names,
+    L2012.P_R_C <- left_join_error_no_match(L1321.ag_prP_R_C_75USDkg%>%
+                                                bind_rows(L1321.expP_R_F_75USDm3),
+                                              GCAM_region_names,
                                               by = "GCAM_region_ID") %>%
       mutate(reg_calPrice = round(value, aglu.DIGITS_CALPRICE)) %>%
       select(region, GCAM_commodity, reg_calPrice)
@@ -89,7 +93,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       select(-calPrice) %>%
       # Join calibration price data, there are missing value for biomass, use left_join instead
       left_join(L132.ag_an_For_Prices, by = c("AgSupplySector" = "GCAM_commodity")) %>%
-      left_join(L2012.prP_R_C, by = c("region", AgSupplySector = "GCAM_commodity")) %>%
+      left_join(L2012.P_R_C, by = c("region", AgSupplySector = "GCAM_commodity")) %>%
       mutate(calPrice = replace(calPrice, AgSupplySector == "biomass", 1), # value irrelevant
              calPrice = if_else(is.na(reg_calPrice), calPrice, reg_calPrice),
              # For regional commodities, specify market names with region names
@@ -406,7 +410,8 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
                      "water/basin_to_country_mapping",
                      "aglu/A_agSupplySector",
                      "L132.ag_an_For_Prices",
-                     "L1321.ag_prP_R_C_75USDkg") ->
+                     "L1321.ag_prP_R_C_75USDkg",
+                     "L1321.expP_R_F_75USDm3") ->
       L2012.AgSupplySector
 
    L2012.AgSupplySubsector %>%

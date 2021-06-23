@@ -1,0 +1,14 @@
+# File: A_ff_RegionalTechnology.csv
+# Title: Technology-level assumptions of regional fossil fuel markets
+# Units: Various
+# Comments: Subsectors capture competition between domestic and imported resources; there is no technology competition.
+# Source: NA
+# Column types: ccccnnncc 
+# ----------
+supplysector,subsector,technology,minicam.energy.input,coefficient,input.cost,share.weight,market.name,primary.consumption
+regional coal,domestic coal,domestic coal,coal,1,0,1,regional,coal
+regional coal,imported coal,imported coal,traded coal,1,0,1,USA,coal
+regional oil,domestic crude oil,domestic crude oil,crude oil,1,0,1,regional,oil
+regional oil,imported crude oil,imported crude oil,traded oil,1,0,1,USA,oil
+regional natural gas,domestic natural gas,domestic natural gas,natural gas,1,0,1,regional,natural gas
+regional natural gas,imported natural gas,imported natural gas,traded natural gas,1,0,1,USA,natural gas

@@ -7,12 +7,12 @@
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
-#'   \code{command} is "MAKE") all the generated outputs: \code{L1321.prP_R_C_75USDkg}.
+#'   \code{command} is "MAKE") all the generated outputs: \code{L1321.prP_R_C_75USDkg}, \code{L1321.expP_R_F_75USDm3.
 #' @details This chunk calculates average prices over calibration years by GCAM commodity and region. Averages across
 #'   years are unweighted; averages over FAO item are weighted by production.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else inner_join left_join mutate rename select
-#' @importFrom tidyr  complete drop_na gather nesting spread
+#' @importFrom tidyr  complete drop_na gather nesting spread replace_na
 #' @importFrom tibble tibble
 #' @author GPK/RC/STW February 2019
 module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
@@ -22,16 +22,18 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
              FILE = "aglu/FAO/FAO_ag_items_TRADE",
              FILE = "aglu/FAO/FAO_ag_an_ProducerPrice",
              FILE = "aglu/FAO/FAO_ag_Prod_t_PRODSTAT",
-             FILE = "aglu/FAO/FAO_GDP_Deflators",
+             FILE = "common/FAO_GDP_Deflators",
              FILE = "aglu/FAO/FAO_an_Prod_t_PRODSTAT",
+	FILE = "aglu/FAO/FAO_For_Exp_m3_USD_FORESTAT",
              "L132.ag_an_For_Prices"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1321.ag_prP_R_C_75USDkg",
-             "L1321.an_prP_R_C_75USDkg"))
+             "L1321.an_prP_R_C_75USDkg",
+             "L1321.expP_R_F_75USDm3"))
   } else if(command == driver.MAKE) {
 
     year <- value <- Year <- Value <- FAO_country <- iso <- deflator <-
-      Area <- currentUSD_per_baseyearUSD <- item <- pp_commod <- Cottonseed <-
+      countries <- currentUSD_per_baseyearUSD <- item <- pp_commod <- Cottonseed <-
       `Cotton lint` <- item.codes <- production <- prod_commod <- item.code <-
       GCAM_commodity <- GCAM_region_ID <- revenue <- avg_prP_C <- prP <- prPmult <-
       production_wt_prPmult <- prPmult_R <- countries <- `item codes` <- calPrice <- NULL    # silence package check.
@@ -44,35 +46,39 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     FAO_ag_items_TRADE <- get_data(all_data, "aglu/FAO/FAO_ag_items_TRADE")
     FAO_ag_an_ProducerPrice <- get_data(all_data, "aglu/FAO/FAO_ag_an_ProducerPrice")
     FAO_ag_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_Prod_t_PRODSTAT")
-    FAO_GDP_Deflators <- get_data(all_data, "aglu/FAO/FAO_GDP_Deflators")
+    FAO_GDP_Deflators <- get_data(all_data, "common/FAO_GDP_Deflators")
     FAO_an_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_an_Prod_t_PRODSTAT")
     L132.ag_an_For_Prices <- get_data(all_data,"L132.ag_an_For_Prices")
-    #kbn 2019/09/23 added AGLU_Ctry_Unique since using AGLU_Ctry was causing extra rows to be added.
+    # kbn 2019/09/23 added AGLU_Ctry_Unique since using AGLU_Ctry was causing extra rows to be added.
     AGLU_Ctry_Unique<-distinct(AGLU_ctry,FAO_country,.keep_all = TRUE)
+    # xz 2021/4/14 added regional forest export prices
+    FAO_For_Exp_m3_USD_FORESTAT <- get_data(all_data, "aglu/FAO/FAO_For_Exp_m3_USD_FORESTAT")
+
 
     # 1. Producer prices
     # 1.1 GDP deflators (to 2005) by country and analysis year
 
     # GDP deflators are used to convert each reported year- and country- values to a common unit of measure
     # This step filters years, sets iso codes to countries, and converts all deflators from an index-100 with a base
-    # year of 2005 to a multiplier with an exogenous base year. The deflator base year is the year in which relative
+    # year of 2015 to a multiplier with an exogenous base year. The deflator base year is the year in which relative
     # regional nominal prices are preserved in the constant dollar (i.e., 1975$ in this code) prices. For example, with
-    # deflator base year set to 2010, prices are in 2010 Constant USD but expressed in terms of 1975 USD.
+    # deflator base year set to 2015, prices are in 2015 Constant USD but expressed in terms of 1975 USD.
 
     # Sudan (former) is re-set to Sudan for building the full time series
     # South Sudan is dropped as only a few data years are available and it isn't in the price data
     L1321.GDPdefl_ctry <- FAO_GDP_Deflators %>%
-      select(Area, year = Year, Value) %>%
-      mutate(Area = if_else(Area == "Sudan (former)", "Sudan", Area)) %>%
-      filter(Area != "South Sudan") %>%
-      group_by(Area) %>%
-      mutate(currentUSD_per_baseyearUSD = (Value / Value[year == aglu.DEFLATOR_BASE_YEAR])) %>%
+      gather_years() %>%
+      select(countries, year, value) %>%
+      mutate(countries= if_else(countries== "Sudan (former)", "Sudan", countries)) %>%
+      filter(countries!= "South Sudan") %>%
+      group_by(countries) %>%
+      mutate(currentUSD_per_baseyearUSD = (value / value[year == aglu.DEFLATOR_BASE_YEAR])) %>%
       ungroup() %>%
       filter(year %in% aglu.TRADE_CAL_YEARS) %>%
       #kbn 2019/09/23 added AGLU_Ctry_Unique since using AGLU_Ctry was causing extra rows to be added.
       left_join_error_no_match(select(AGLU_Ctry_Unique, FAO_country, iso),
-                               by = c(Area = "FAO_country")) %>%
-      select(iso, countries = Area, year, currentUSD_per_baseyearUSD)
+                               by = c(countries= "FAO_country")) %>%
+      select(iso, countries, year, currentUSD_per_baseyearUSD)
 
     # 1.2. Producer prices by country, analysis year, and crop
 
@@ -81,7 +87,7 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     # calculate the revised prices as the reported prices divided by deflators
     # Here "Sudan (former)" has data in most years, but "Sudan" is all missing values
     L1321.prP_ctry_item_75USDkg <- FAO_ag_an_ProducerPrice %>%
-      filter(countries != "Sudan") %>%
+      filter(!countries %in% c("Sudan")) %>%
       mutate(countries = if_else(countries == "Sudan (former)", "Sudan", countries)) %>%
       gather_years() %>%
       filter(year %in% aglu.TRADE_CAL_YEARS) %>%
@@ -94,11 +100,11 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
 
     # Fill out data for missing years
     # Complete only the years (i.e. for each country and commodity, write out all possible years)
-    # replace() the missing values generated in the prior step with averages from available years
+    # replace_na() the missing values generated in the prior step with averages from available years
     L1321.prP_ctry_item_75USDkg <- L1321.prP_ctry_item_75USDkg %>%
       complete(nesting(iso, pp_commod), year) %>%
       group_by(iso, pp_commod) %>%
-      mutate(value = replace(value, is.na(value), mean(value, na.rm=TRUE))) %>%
+      mutate(value = replace_na(value, mean(value, na.rm=TRUE))) %>%
       ungroup()
 
     # 1.2.1 Revise cotton prices to cover for gaps in the data
@@ -273,6 +279,67 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
 
     L1321.ag_prP_R_C_75USDkg <- bind_rows(L1321.ag_prP_R_C_75USDkg, L1321.ag_prP_R_Grass_75USDkg)
 
+    # Forest export price by country, analysis year, and crop
+    L1321.expP_ctry_item_75kUSDm3 <- FAO_For_Exp_m3_USD_FORESTAT %>%
+      select(-`element codes`) %>%
+      filter(countries != "Sudan") %>%
+      mutate(countries = if_else(countries == "Sudan (former)", "Sudan", countries)) %>%
+      gather_years() %>%
+      filter(year %in% aglu.TRADE_CAL_YEARS) %>%
+      mutate(element = if_else(element == "Export Quantity (m3)", "Exp_m3", "ExpV_kUSD"),
+             GCAM_commodity = "Forest") %>%
+      spread(element, value) %>%
+      inner_join(L1321.GDPdefl_ctry,
+                 by = c("countries", "year")) %>%
+      mutate(ExpV_kUSD = as.numeric(ExpV_kUSD),
+             ExpV_kUSD = ((ExpV_kUSD / currentUSD_per_baseyearUSD) * gdp_deflator(1975, aglu.DEFLATOR_BASE_YEAR))) %>%
+      select(iso, GCAM_commodity, year, ExpV_kUSD, Exp_m3) %>%
+      drop_na(ExpV_kUSD, Exp_m3)
+
+    # Fill out data for missing years
+    # Complete only the years (i.e. for each country and commodity, write out all possible years)
+    # replace_na() the missing values generated in the prior step with averages from available years
+    L1321.expP_R_F_Y_75USDm3 <- L1321.expP_ctry_item_75kUSDm3 %>%
+      complete(nesting(iso, GCAM_commodity), year) %>%
+      group_by(iso, GCAM_commodity) %>%
+      mutate(ExpV_kUSD = replace_na(ExpV_kUSD, mean(ExpV_kUSD, na.rm=TRUE)),
+             Exp_m3 = replace_na(Exp_m3, mean(Exp_m3, na.rm=TRUE))) %>%
+      ungroup()%>%
+      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID),
+                               by = "iso") %>%
+      group_by(GCAM_region_ID, GCAM_commodity, year) %>%
+      summarise(ExpV_kUSD = sum(ExpV_kUSD),
+                Exp_m3 = sum(Exp_m3)) %>%
+      ungroup() %>%
+      # Calculate forest price as export value (in thous USD) divided by export quantity
+      mutate(Price_USDm3 = ExpV_kUSD * 1000 / Exp_m3)
+
+    # Calculate default global average export prices (weighted by volume)
+    L1321.expP_F_75USDm3 <- L1321.expP_R_F_Y_75USDm3 %>%
+      group_by(GCAM_commodity) %>%
+      summarise(ExpV_kUSD = sum(ExpV_kUSD),
+                Exp_m3 = sum(Exp_m3)) %>%
+      ungroup() %>%
+      mutate(avg_expP_F =  ExpV_kUSD * 1000 / Exp_m3) %>%
+      select(GCAM_commodity, avg_expP_F)
+
+    # Using global values fill out missing values for all necessary regions and commodities
+    L1321.expP_R_F_Y_75USDm3 <- L1321.expP_R_F_Y_75USDm3 %>%
+      filter(GCAM_commodity %in% aglu.TRADED_FORESTS) %>%
+      complete(GCAM_region_ID, GCAM_commodity, year) %>%
+      left_join_error_no_match(L1321.expP_F_75USDm3,
+                               by = "GCAM_commodity") %>%
+      mutate(Price_USDm3 = if_else(is.na(Price_USDm3), avg_expP_F , Price_USDm3)) %>%
+      select(GCAM_region_ID, GCAM_commodity, year, Price_USDm3)
+
+    # Final step - filter only traded crops and take the mean among years considered
+    L1321.expP_R_F_75USDm3 <- L1321.expP_R_F_Y_75USDm3 %>%
+      filter(GCAM_commodity %in% aglu.TRADED_FORESTS) %>%
+      group_by(GCAM_region_ID, GCAM_commodity) %>%
+      summarise(value = mean(Price_USDm3)) %>%
+      ungroup %>%
+      arrange(GCAM_region_ID, GCAM_commodity)
+
     # Produce outputs
     L1321.ag_prP_R_C_75USDkg %>%
       add_title("Regional agricultural commodity prices for all traded primary GCAM AGLU commodities") %>%
@@ -283,7 +350,7 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
                      "aglu/FAO/FAO_ag_items_TRADE",
                      "aglu/FAO/FAO_ag_an_ProducerPrice",
                      "aglu/FAO/FAO_ag_Prod_t_PRODSTAT",
-                     "aglu/FAO/FAO_GDP_Deflators",
+                     "common/FAO_GDP_Deflators",
                      "L132.ag_an_For_Prices") ->
       L1321.ag_prP_R_C_75USDkg
 
@@ -295,7 +362,20 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
       add_precursors("aglu/FAO/FAO_an_Prod_t_PRODSTAT") ->
       L1321.an_prP_R_C_75USDkg
 
-    return_data(L1321.ag_prP_R_C_75USDkg, L1321.an_prP_R_C_75USDkg)
+    L1321.expP_R_F_75USDm3 %>%
+      add_title("Regional prices for GCAM forest commodities") %>%
+      add_units("1975$/M3") %>%
+      add_comments("Region-specific calibration prices by GCAM commodity and region") %>%
+      add_precursors("common/iso_GCAM_regID",
+                     "aglu/AGLU_ctry",
+                     "aglu/FAO/FAO_ag_items_TRADE",
+                     "aglu/FAO/FAO_For_Exp_m3_USD_FORESTAT",
+                     "common/FAO_GDP_Deflators") ->
+      L1321.expP_R_F_75USDm3
+
+    return_data(L1321.ag_prP_R_C_75USDkg,
+                L1321.an_prP_R_C_75USDkg,
+                L1321.expP_R_F_75USDm3)
   } else {
     stop("Unknown command")
   }

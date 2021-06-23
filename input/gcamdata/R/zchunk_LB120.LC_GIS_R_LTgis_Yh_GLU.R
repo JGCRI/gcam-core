@@ -15,13 +15,14 @@
 #' zero values (i.e. they only report nonzero land use combinations).
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange distinct filter group_by left_join mutate select summarise
-#' @importFrom tidyr complete nesting
+#' @importFrom tidyr complete nesting spread
 #' @author BBL April 2017
 module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/LDS/LDS_land_types",
              FILE = "aglu/SAGE_LT",
+             FILE = "aglu/LDS/L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust",
              "L100.Land_type_area_ha"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L120.LC_bm2_R_LT_Yh_GLU",
@@ -44,6 +45,7 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       iso_GCAM_regID
     LDS_land_types <- get_data(all_data, "aglu/LDS/LDS_land_types")
     SAGE_LT <- get_data(all_data, "aglu/SAGE_LT")
+    L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust <- get_data(all_data, "aglu/LDS/L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust")
     L100.Land_type_area_ha <- get_data(all_data, "L100.Land_type_area_ha")
 
     # Perform computations
@@ -101,6 +103,25 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       mutate(year = as.integer(year)) ->
       L120.LC_bm2_R_LT_Yh_GLU
 
+    # scale forest to avoid negative unmanaged forest area which caused issue for yield in Pakistan and African regions
+    # L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust, pulled from L123.LC_bm2_R_MgdFor_Yh_GLU before managed forest scaling, was used here. 
+    L120.LC_bm2_R_LT_Yh_GLU %>%
+      left_join(L120.LC_bm2_R_LT_Yh_GLU %>%
+                  spread(Land_Type, value, fill = 0) %>%
+                  left_join(L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust %>% select(-Land_Type),
+			by = c("GCAM_region_ID", "GLU", "year")) %>%
+                  mutate(nonForScaler =
+                           if_else((Forest - MgdFor) < 0 & Forest > 0,
+                                   1 + (Forest - MgdFor)/(Grassland + Shrubland + Pasture), 1),
+                         ForScaler = if_else((Forest - MgdFor) < 0 & Forest > 0,  MgdFor/Forest ,1)) %>%
+                  select(GCAM_region_ID, GLU, year, nonForScaler, ForScaler),
+                by = c("GCAM_region_ID", "GLU", "year") ) %>%
+      mutate(value = if_else(Land_Type %in% c("Grassland", "Shrubland" , "Pasture"),
+                             value * nonForScaler,
+                             if_else(Land_Type == "Forest", value * ForScaler, value) )) %>%
+      select(-nonForScaler, -ForScaler) ->
+      L120.LC_bm2_R_LT_Yh_GLU
+
     # Subset the land types that are not further modified
     L120.LC_bm2_R_UrbanLand_Yh_GLU <- filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "UrbanLand")
     L120.LC_bm2_R_Tundra_Yh_GLU <- filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "Tundra")
@@ -136,7 +157,8 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       add_units("bm2") %>%
       add_comments("Land types from SAGE, HYDE, WDPA merged and reconciled; missing zeroes backfilled; interpolated to AGLU land cover years") %>%
       add_legacy_name("L120.LC_bm2_R_LT_Yh_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") ->
+      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha",
+                     "aglu/LDS/L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust") ->
       L120.LC_bm2_R_LT_Yh_GLU
 
     L120.LC_bm2_R_UrbanLand_Yh_GLU %>%

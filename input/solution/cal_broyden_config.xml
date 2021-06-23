@@ -39,7 +39,7 @@
          they will fail.
       -->
     <user-configurable-solver year="1975" fillout="1">
-        <solution-tolerance>0.001</solution-tolerance>
+        <solution-tolerance>0.002</solution-tolerance>
         <solution-floor>0.0001</solution-floor>
         <calibration-tolerance>0.01</calibration-tolerance>
         <max-model-calcs>1000</max-model-calcs>

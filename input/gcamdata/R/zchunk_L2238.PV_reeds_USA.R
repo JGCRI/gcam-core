@@ -35,7 +35,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
              FILE = "gcam-usa/A10.renewable_resource_delete",
              'L2234.StubTechCapFactor_elecS_solar_USA',
              'L2234.StubTechMarket_elecS_USA',
-             'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+             'L2234.GlobalIntTechCapital_elecS_USA',
              'L223.GlobalIntTechCapital_elec',
              'L223.GlobalIntTechOMfixed_elec'))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -66,7 +66,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
     A10.renewable_resource_delete <- get_data(all_data, "gcam-usa/A10.renewable_resource_delete")
     L2234.StubTechCapFactor_elecS_solar_USA <- get_data(all_data, 'L2234.StubTechCapFactor_elecS_solar_USA', strip_attributes = TRUE)
     L2234.StubTechMarket_elecS_USA <- get_data(all_data, 'L2234.StubTechMarket_elecS_USA', strip_attributes = TRUE)
-    L2247.GlobalIntTechCapitalOnly_elecS_USA <- get_data(all_data, 'L2247.GlobalIntTechCapitalOnly_elecS_USA', strip_attributes = TRUE)
+    L2234.GlobalIntTechCapital_elecS_USA <- get_data(all_data, 'L2234.GlobalIntTechCapital_elecS_USA', strip_attributes = TRUE)
     L223.GlobalIntTechCapital_elec <- get_data(all_data, 'L223.GlobalIntTechCapital_elec')
     L223.GlobalIntTechOMfixed_elec <- get_data(all_data, 'L223.GlobalIntTechOMfixed_elec')
 
@@ -178,7 +178,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
       bind_rows(L2238.PV_potential_EJ_non_reeds_states) -> L2238.PV_potential_EJ
 
     # L2238.PV_matrix: Create a matrix of costs (1975$/GJ) and resource potential (EJ) by state and class
-    L2247.GlobalIntTechCapitalOnly_elecS_USA %>%
+    L2234.GlobalIntTechCapital_elecS_USA %>%
       filter(intermittent.technology == "PV_peak",
              year == max(MODEL_BASE_YEARS)) %>%
       select(capital.overnight) -> L2238.PV_capital
@@ -291,7 +291,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
     # a' = (k1.a.CC + k2. OM-fixed) / (k1.CC + k2. OM-fixed), where
     # k1 = FCR / (CONV_YEAR_HOURS * kWh_GJ) and k2 = 1 / (CONV_YEAR_HOURS * kWh_GJ)
     # Thus, we calculate model input parameter techChange (which is the reduction per year) as 1 - a'^ (1/5)
-    L2247.GlobalIntTechCapitalOnly_elecS_USA %>%
+    L2234.GlobalIntTechCapital_elecS_USA %>%
       filter(intermittent.technology == "PV_peak") %>%
       select(year, capital.overnight) %>%
       mutate(capital.tech.change.period = lag(capital.overnight, 1) / capital.overnight,
@@ -486,7 +486,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
                      'gcam-usa/NREL_us_re_capacity_factors',
                      'energy/A10.rsrc_info',
                      'L2234.StubTechMarket_elecS_USA',
-                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+                     'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
       L2238.DeleteStubTechMinicamEnergyInput_PV_reeds_USA
@@ -504,7 +504,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
                      'gcam-usa/NREL_us_re_capacity_factors',
                      'gcam-usa/A10.renewable_resource_delete',
                      'energy/A10.rsrc_info',
-                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+                     'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
       L2238.RenewRsrc_PV_reeds_USA
@@ -547,7 +547,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
                      'gcam-usa/NREL_us_re_technical_potential',
                      'gcam-usa/NREL_us_re_capacity_factors',
                      'L2234.StubTechCapFactor_elecS_solar_USA',
-                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+                     'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
       L2238.StubTechCapFactor_PV_reeds_USA
@@ -575,7 +575,7 @@ module_gcamusa_L2238.PV_reeds_USA <- function(command, ...) {
                      'gcam-usa/A23.elecS_tech_mapping_cool',
                      'gcam-usa/non_reeds_PV_grid_cost',
                      'L2234.StubTechCapFactor_elecS_solar_USA',
-                     'L2247.GlobalIntTechCapitalOnly_elecS_USA',
+                     'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
       L2238.StubTechCost_PV_reeds_USA

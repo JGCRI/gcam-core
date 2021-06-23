@@ -1,0 +1,11 @@
+# File: comtrade_trade_flow.csv
+# Title: Mapping between Comtrade trade codes and trade values
+# Source: UN Comtrade
+# Units: NA
+# Column types: ic
+# ----------
+Trade_Flow_Code,Trade
+1,Import Quantity
+2,Export Quantity
+3,Re-Export Quantity
+4,Re-Import Quantity

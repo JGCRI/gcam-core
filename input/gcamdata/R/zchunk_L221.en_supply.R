@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L221.SectorLogitTables[[ curr_table ]]$data}, \code{L221.Supplysector_en}, \code{L221.SectorUseTrialMarket_en}, \code{L221.SubsectorLogitTables[[ curr_table ]]$data}, \code{L221.SubsectorLogit_en}, \code{L221.SubsectorShrwt_en}, \code{L221.SubsectorShrwtFllt_en}, \code{L221.SubsectorInterp_en}, \code{L221.SubsectorInterpTo_en}, \code{L221.StubTech_en}, \code{L221.GlobalTechCoef_en}, \code{L221.GlobalTechCost_en}, \code{L221.GlobalTechShrwt_en}, \code{L221.PrimaryConsKeyword_en}, \code{L221.StubTechFractSecOut_en}, \code{L221.StubTechFractProd_en}, \code{L221.StubTechFractCalPrice_en}, \code{L221.Rsrc_en}, \code{L221.RsrcPrice_en}, \code{L221.TechCoef_en_Traded}, \code{L221.TechCost_en_Traded}, \code{L221.TechShrwt_en_Traded}, \code{L221.StubTechCoef_unoil}, \code{L221.Production_unoil}, \code{L221.StubTechProd_oil_unoil}, \code{L221.StubTechProd_oil_crude}. The corresponding file in the
+#' the generated outputs: \code{L221.SectorLogitTables[[ curr_table ]]$data}, \code{L221.Supplysector_en}, \code{L221.SectorUseTrialMarket_en}, \code{L221.SubsectorLogitTables[[ curr_table ]]$data}, \code{L221.SubsectorLogit_en}, \code{L221.SubsectorShrwt_en}, \code{L221.SubsectorShrwtFllt_en}, \code{L221.SubsectorInterp_en}, \code{L221.SubsectorInterpTo_en}, \code{L221.StubTech_en}, \code{L221.GlobalTechCoef_en}, \code{L221.GlobalTechCost_en}, \code{L221.GlobalTechShrwt_en}, \code{L221.PrimaryConsKeyword_en}, \code{L221.StubTechFractSecOut_en}, \code{L221.StubTechFractProd_en}, \code{L221.StubTechFractCalPrice_en}, \code{L221.Rsrc_en}, \code{L221.RsrcPrice_en}, \code{L221.Production_unoil}, \code{L221.StubTechProd_oil_unoil}, \code{L221.StubTechProd_oil_crude}. The corresponding file in the
 #' original data system was \code{L221.en_supply.R} (energy level2).
 #' @details This chunk creates level 2 output files for energy supply. It creates supply sector information,
 #' subsector logit exponents, subsector shareweight and interpolation, and stubtech info by writing assumption file
@@ -33,10 +33,6 @@ module_energy_L221.en_supply <- function(command, ...) {
              FILE = "energy/A21.globaltech_keyword",
              FILE = "energy/A21.globaltech_secout",
              FILE = "energy/A21.rsrc_info",
-             FILE = "energy/A21.tradedtech_coef",
-             FILE = "energy/A21.tradedtech_cost",
-             FILE = "energy/A21.tradedtech_shrwt",
-             "L111.Prod_EJ_R_F_Yh",
              "L121.in_EJ_R_TPES_unoil_Yh",
              "L121.in_EJ_R_TPES_crude_Yh",
              "L121.BiomassOilRatios_kgGJ_R_C",
@@ -63,11 +59,6 @@ module_energy_L221.en_supply <- function(command, ...) {
              "L221.StubTechFractCalPrice_en",
              "L221.Rsrc_en",
              "L221.RsrcPrice_en",
-             "L221.TechCoef_en_Traded",
-             "L221.TechCost_en_Traded",
-             "L221.TechShrwt_en_Traded",
-             "L221.StubTechCoef_unoil",
-             "L221.Production_unoil",
              "L221.StubTechProd_oil_unoil",
              "L221.StubTechProd_oil_crude",
              "L221.StubTechCalInput_bioOil",
@@ -103,10 +94,6 @@ module_energy_L221.en_supply <- function(command, ...) {
     A21.globaltech_keyword <- get_data(all_data, "energy/A21.globaltech_keyword", strip_attributes = TRUE)
     A21.globaltech_secout <- get_data(all_data, "energy/A21.globaltech_secout", strip_attributes = TRUE)
     A21.rsrc_info <- get_data(all_data, "energy/A21.rsrc_info", strip_attributes = TRUE)
-    A21.tradedtech_coef <- get_data(all_data, "energy/A21.tradedtech_coef")
-    A21.tradedtech_cost <- get_data(all_data, "energy/A21.tradedtech_cost")
-    A21.tradedtech_shrwt <- get_data(all_data, "energy/A21.tradedtech_shrwt")
-    L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
     L121.in_EJ_R_TPES_unoil_Yh <- get_data(all_data, "L121.in_EJ_R_TPES_unoil_Yh")
     L121.in_EJ_R_TPES_crude_Yh <- get_data(all_data, "L121.in_EJ_R_TPES_crude_Yh")
     L121.BiomassOilRatios_kgGJ_R_C <- get_data(all_data, "L121.BiomassOilRatios_kgGJ_R_C", strip_attributes = TRUE)
@@ -206,6 +193,9 @@ module_energy_L221.en_supply <- function(command, ...) {
       ungroup() %>%
       filter(year %in% MODEL_YEARS) %>%
       select(sector.name = supplysector, subsector.name = subsector, technology, minicam.energy.input, year, coefficient) -> L221.GlobalTechCoef_en
+
+    L221.GlobalTechCoef_en %>%
+       mutate(coefficient= if_else(minicam.energy.input =="crude oil", if_else(year <= MODEL_FINAL_BASE_YEAR,1,coefficient),coefficient))->L221.GlobalTechCoef_en
 
     # Stub technology coefficients - modify the global tech assumptions in regions where the crop characteristics differ
     L221.StubTechCoef_bioOil <- inner_join(L221.GlobalTechCoef_en, L121.BiomassOilRatios_kgGJ_R_C, by = c(technology = "GCAM_commodity")) %>%
@@ -369,82 +359,8 @@ module_energy_L221.en_supply <- function(command, ...) {
       select(region, resource = fractional.secondary.output, year, price = calPrice) ->
       L221.RsrcPrice_en
 
-    # Coefficients of traded technologies
-    A21.tradedtech_coef %>%
-      select(supplysector, subsector, technology, minicam.energy.input) %>%
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
-      left_join(A21.tradedtech_coef %>%
-                  gather(year, value, -supplysector, -subsector, - technology, -minicam.energy.input) %>%
-                  mutate(year = as.numeric(year)),
-                by = c("year", "supplysector", "subsector", "technology", "minicam.energy.input")) %>%
-      group_by(supplysector, subsector, technology, minicam.energy.input) %>%
-      mutate(coefficient = approx_fun(year, value, rule = 1)) %>%
-      ungroup() %>%
-      select(-value) %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["TechCoef"]]), set_market = TRUE, has_traded = TRUE, apply_selected_only = FALSE,
-                           GCAM_region_names = GCAM_region_names) %>%
-      filter(year %in% MODEL_YEARS) -> L221.TechCoef_en_Traded
-
-    # Costs of traded technologies
-    A21.tradedtech_cost %>%
-      select(supplysector, subsector, technology, minicam.non.energy.input) %>%
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
-      left_join(A21.tradedtech_cost %>%
-                  gather(year, value, -supplysector, -subsector, - technology, -minicam.non.energy.input) %>%
-                  mutate(year = as.numeric(year)),
-                by = c("year", "supplysector", "subsector", "technology", "minicam.non.energy.input")) %>%
-      group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
-      mutate(input.cost = approx_fun(year, value, rule = 1)) %>%
-      ungroup() %>%
-      select(-value) %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["TechCost"]]), set_market = FALSE, has_traded = TRUE, apply_selected_only = FALSE,
-                           GCAM_region_names = GCAM_region_names) %>%
-      filter(year %in% MODEL_YEARS) -> L221.TechCost_en_Traded
-
-    # Shareweights of traded technologies
-    A21.tradedtech_shrwt %>%
-      select(supplysector, subsector, technology, minicam.energy.input) %>%
-      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
-      left_join(A21.tradedtech_shrwt %>%
-                  gather(year, value, -supplysector, -subsector, - technology, -minicam.energy.input) %>%
-                  mutate(year = as.numeric(year)),
-                by = c("year", "supplysector", "subsector", "technology", "minicam.energy.input")) %>%
-      group_by(supplysector, subsector, technology, minicam.energy.input) %>%
-      mutate(share.weight = approx_fun(year, value, rule = 1)) %>%
-      ungroup() %>%
-      select(-value) %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["TechYr"]], "share.weight"), set_market = FALSE, has_traded = TRUE, apply_selected_only = FALSE,
-                           GCAM_region_names = GCAM_region_names) %>%
-      filter(year %in% MODEL_YEARS) -> L221.TechShrwt_en_Traded
 
     # Calibration and region specific data
-    # Coefficient and market name of stub technologies for importing traded unconventional oil
-    L221.GlobalTechCoef_en %>%
-      rename(supplysector = sector.name, subsector = subsector.name) %>%
-      filter(minicam.energy.input %in% L221.TechShrwt_en_Traded$supplysector) %>%
-      rename(stub.technology = technology) %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["StubTechCoef"]]),
-                           GCAM_region_names = GCAM_region_names) %>%
-      mutate(market.name = gcam.USA_REGION) -> L221.StubTechCoef_unoil
-
-    L111.Prod_EJ_R_F_Yh %>%
-      filter(grepl("unconventional", fuel), year %in% MODEL_BASE_YEARS) %>%
-      left_join_error_no_match(A_regions %>%
-                  select(GCAM_region_ID, region), by = c("GCAM_region_ID")) %>%
-      select(GCAM_region_ID, value, year, region) -> L221.Prod_EJ_R_unoil_Yh
-
-    # Calibrated production of unconventional oil
-    L221.TechCoef_en_Traded %>%
-      filter(supplysector == "traded unconventional oil" & year %in% MODEL_BASE_YEARS) %>%
-      left_join(L221.Prod_EJ_R_unoil_Yh %>%
-                  rename(market.name = region), by = c("market.name", "year")) %>%
-      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT)) %>%
-      select(LEVEL2_DATA_NAMES[["TechYr"]], calOutputValue) %>%
-      mutate(calOutputValue = if_else(is.na(calOutputValue), 0, calOutputValue),
-             year.share.weight = year,
-             subsector.share.weight = if_else(calOutputValue > 0, 1, 0),
-             share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      mutate(year.share.weight = year) -> L221.Production_unoil
 
     # Unconventional oil demand
     L121.in_EJ_R_TPES_unoil_Yh %>%
@@ -726,45 +642,8 @@ module_energy_L221.en_supply <- function(command, ...) {
       same_precursors_as(L221.StubTechFractCalPrice_en) ->
       L221.RsrcPrice_en
 
-    L221.TechCoef_en_Traded %>%
-      add_title("Coefficients of traded technologies") %>%
-      add_units("unitless") %>%
-      add_comments("A21.tradedtech_coef interpolated to all model periods and written out to all regions") %>%
-      add_legacy_name("L221.TechCoef_en_Traded") %>%
-      add_precursors("energy/A21.tradedtech_coef", "common/GCAM_region_names") ->
-      L221.TechCoef_en_Traded
 
-    L221.TechCost_en_Traded %>%
-      add_title("Costs of traded technologies") %>%
-      add_units("1975$") %>%
-      add_comments("A21.tradedtech_cost interpolated to all model periods and written out to all regions") %>%
-      add_legacy_name("L221.TechCost_en_Traded") %>%
-      add_precursors("energy/A21.tradedtech_cost", "common/GCAM_region_names") ->
-      L221.TechCost_en_Traded
 
-    L221.TechShrwt_en_Traded %>%
-      add_title("Shareweights of traded technologies") %>%
-      add_units("unitless") %>%
-      add_comments("A21.tradedtech_shrwt interpolated to all model periods and written out to all regions") %>%
-      add_legacy_name("L221.TechShrwt_en_Traded") %>%
-      add_precursors("energy/A21.tradedtech_shrwt", "common/GCAM_region_names") ->
-      L221.TechShrwt_en_Traded
-
-    L221.StubTechCoef_unoil %>%
-      add_title("Coefficient and market name of stub technologies for importing traded unconventional oil") %>%
-      add_units("unitless") %>%
-      add_comments("L221.GlobalTechCoef_en written to all regions for traded technologies") %>%
-      add_legacy_name("L221.StubTechCoef_unoil") %>%
-      add_precursors("energy/A21.globaltech_coef", "common/GCAM_region_names", "energy/A21.tradedtech_shrwt") ->
-      L221.StubTechCoef_unoil
-
-    L221.Production_unoil %>%
-      add_title("Calibrated production of unconventional oil") %>%
-      add_units("unitless") %>%
-      add_comments("L111.Prod_EJ_R_F_Yh used to determine unconventional oil coefficients") %>%
-      add_legacy_name("L221.Production_unoil") %>%
-      add_precursors("energy/A21.tradedtech_coef", "L111.Prod_EJ_R_F_Yh") ->
-      L221.Production_unoil
 
     L221.StubTechProd_oil_unoil %>%
       add_title("Calibrated demand of unconventional oil") %>%
@@ -808,8 +687,7 @@ module_energy_L221.en_supply <- function(command, ...) {
                 L221.SubsectorInterpTo_en, L221.StubTech_en, L221.GlobalTechCoef_en, L221.StubTechCoef_bioOil,
                 L221.GlobalTechCost_en, L221.GlobalTechShrwt_en, L221.PrimaryConsKeyword_en,
                 L221.StubTechFractSecOut_en, L221.StubTechFractProd_en, L221.StubTechFractCalPrice_en, L221.Rsrc_en,
-                L221.RsrcPrice_en, L221.TechCoef_en_Traded, L221.TechCost_en_Traded,
-                L221.TechShrwt_en_Traded, L221.StubTechCoef_unoil, L221.Production_unoil,
+                L221.RsrcPrice_en,
                 L221.StubTechProd_oil_unoil, L221.StubTechProd_oil_crude, L221.StubTechCalInput_bioOil,
                 L221.StubTechInterp_bioOil, L221.StubTechShrwt_bioOil)
   } else {
