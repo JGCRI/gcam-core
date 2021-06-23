@@ -82,7 +82,9 @@ module_water_L203.water_td <- function(command, ...) {
       coefficient <- region <- has.desal.input <- supplysector_root <-
       subsector <- technology <- desal_ind_km3 <- desal_muni_km3 <-
       year <- iso <- desal_km3 <- water_km3 <- withdrawals <- total_water_km3 <-
-      calOutputValue <- desal_water_km3 <- NULL  # silence package check notes
+      calOutputValue <- desal_water_km3 <- GCAM_basin_ID <- basin_name <-
+      water_sector <- share <- basin_share <- desal_share <- water_type_fresh <-
+      withdrawals_share <- water_type_desal <- value <- water_type_share <- NULL  # silence package check notes
 
     # Create tibble with all possible mapping sectors...
 

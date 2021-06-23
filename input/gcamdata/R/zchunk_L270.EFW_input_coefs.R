@@ -31,7 +31,7 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
 
     year <- supplysector <- water.supplysector <- apply.to.desal.water <- minicam.energy.input <-
       EFW_input <- WWtrtfrac <- sector <- region <- coef_revised <- scenario <- value <- pcGDP <-
-      baseGDP <- reduction <- coefficient <- NULL  # silence package check notes
+      baseGDP <- reduction <- coefficient <- technology <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")

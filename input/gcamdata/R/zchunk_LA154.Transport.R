@@ -54,7 +54,7 @@ module_gcamusa_LA154.Transport <- function(command, ...) {
       # Silence package notes
       GCAM_region_ID <- UCD_sector <- mode <- size.class <- UCD_technology <- UCD_fuel <- fuel <- EIA_fuel <-
         year <- value <- EIA_sector <- . <- fuel_sector <- state <- sector <- value_state <- value_national <-
-        value_share <- value_mode <- NULL
+        value_share <- value_mode <- value.noEFW <- value.withEFW <- scaler <- NULL
 
       # Calculate the state-wise percentages for each of EIA's sector/fuel combinations that is relevant for disaggregating
       # nation-level transportation energy to the states

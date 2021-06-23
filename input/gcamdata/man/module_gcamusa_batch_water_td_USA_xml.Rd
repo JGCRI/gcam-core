@@ -14,8 +14,7 @@ module_gcamusa_batch_water_td_USA_xml(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{water_mapping.xml}. The corresponding file in the
-original data system was \code{batch_water_mapping.xml.R} (water XML).
+the generated outputs: \code{water_td_USA.xml}.
 }
 \description{
 Construct XML data structure for \code{water_mapping.xml}.

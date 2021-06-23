@@ -38,7 +38,9 @@ module_water_L110.water_demand_primary <- function(command, ...) {
 
     fuel <- supplysector <- water.coefficient.m3.per.TJ <- region <- rsrc_region <-
       GCAM_region_ID <- region_GCAM3 <- fresh <- coefficient_WC <- cons_fr <-
-      cal <- water_type <- coefficient <- sal <- NULL # silence package check.
+      cal <- water_type <- coefficient <- sal <- sector <- year <- value <-
+      subsector <- minicam.energy.input <- efficiency <- water_sector <- share <-
+      GCAM_basin_ID <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 

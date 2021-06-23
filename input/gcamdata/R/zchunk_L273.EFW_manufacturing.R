@@ -47,7 +47,7 @@ module_water_L273.EFW_manufacturing <- function(command, ...) {
 
     year <- year.fillout <- to.value <- technology <- supplysector <- subsector <-
       minicam.energy.input <- coefficient <- share.weight <- sector <-
-      fuel <- region <- NULL  # silence package check notes
+      fuel <- region <- coefficient.default <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")

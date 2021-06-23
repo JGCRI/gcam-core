@@ -37,7 +37,9 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       hi <- nhi <- human_only <- depletion <-
       netDepletion <- Country <- iso <- cost_bin <-
       lower_cost <- upper_cost <-
-      grade <- elec_EJ <- elec_coef <- NULL
+      grade <- elec_EJ <- elec_coef <- Superwell_country <-
+      GCAM_region_ID <- minNEcost <- available <-
+      minNEcost_bilUSD <- maxNEcost_bilUSD <- maxNEcost <- NULL
 
     all_data <- list(...)[[1]]
 

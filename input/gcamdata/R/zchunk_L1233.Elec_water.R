@@ -44,7 +44,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
       fuel <- gen <- iso <- landshare_hi <- landshare_lo <- level <- output <- output_cool <-
       plant_type <- region_GCAM3 <- sector <- share <- technology <- value <-
       water_consumption <- water_type <- water_withdrawals <- year <- yield <-
-      yieldmult_hi <- yieldmult_lo <- NULL  # silence package check notes
+      yieldmult_hi <- yieldmult_lo <- water_sector <- GCAM_basin_ID <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")

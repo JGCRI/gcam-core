@@ -52,7 +52,9 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       renewresource <- year <- access_fraction <- sub.renewable.resource <-
       grade <- available <- extractioncost <- price <- avail <-
       demand <- depletion <- runoff <- accessible <- x <- . <- accessible_runoff <-
-      deficit <- years <- deficit_total <- subresource <- NULL                      # silence package check.
+      deficit <- years <- deficit_total <- subresource <- GLU_name <- GLU_code <-
+      conveyance.eff <- IrrWithd_km3 <- technology <- calOutputValue <- value <-
+      demand_frac <- lower_cost <- upper_cost <- elec_coef <- NULL                      # silence package check.
 
     all_data <- list(...)[[1]]
 

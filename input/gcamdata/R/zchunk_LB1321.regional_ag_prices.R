@@ -36,7 +36,8 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
       countries <- currentUSD_per_baseyearUSD <- item <- pp_commod <- Cottonseed <-
       `Cotton lint` <- item.codes <- production <- prod_commod <- item.code <-
       GCAM_commodity <- GCAM_region_ID <- revenue <- avg_prP_C <- prP <- prPmult <-
-      production_wt_prPmult <- prPmult_R <- countries <- `item codes` <- calPrice <- NULL    # silence package check.
+      production_wt_prPmult <- prPmult_R <- countries <- `item codes` <- calPrice <-
+      `element codes` <- element <- ExpV_kUSD <- Exp_m3 <- avg_expP_F <- Price_USDm3 <- NULL    # silence package check.
 
     all_data <- list(...)[[1]]
 

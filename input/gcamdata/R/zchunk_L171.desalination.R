@@ -43,7 +43,9 @@ module_water_L171.desalination <- function(command, ...) {
 
     iso <- aquastat_ctry <- GCAM_region_ID <- Country <- Year <- Value <- energy_EJ <- desal_km3 <-
       year <- value <- AusNWC_reg <- technology <- share <- sector <- fuel <- energy_EJ_total <-
-      GLU_code <- GLU_name <- supplysector <- subsector <- minicam.energy.input <- coefficient <- NULL  # silence package check notes
+      GLU_code <- GLU_name <- supplysector <- subsector <- minicam.energy.input <- coefficient <-
+      glu_ID <- desal_capacity_m3_d <- glu_code <- ISO_3DIGIT <- LONG_NAME <- GCAM_ID_1 <-
+      GCAM_basin_ID <- total_basin_capacity <- basin_share <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")

@@ -4,15 +4,14 @@
 #'
 #' Generate the following two tables:
 #' \itemize{
-#'  \item{Final scaled energy input by GCAM region / end-use sector, incl CHP / fuel / historical year}
+#'  \item{Final scaled energy input by USA / end-use sector (incl CHP) / fuel / historical year (no EFW)}
 #' }
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L131.in_EJ_R_Senduse_F_Yh}, \code{L131.share_R_Senduse_heat_Yh}. The corresponding file in the
-#' original data system was \code{LA131.enduse.R} (energy level1).
+#' the generated outputs: \code{L131.in_EJ_USA_Senduse_F_Yh_noEFW}.
 #' @details This chunk performs the same steps as module_energy_LA131.enduse, but works from the energy balances prior to the
 #' energy-for-water deductions, in order to generate information for GCAM-USA which does not have energy-for-water
 #' @importFrom assertthat assert_that

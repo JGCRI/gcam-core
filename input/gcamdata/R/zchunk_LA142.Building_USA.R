@@ -38,7 +38,7 @@ module_gcamusa_LA142.Building_USA <- function(command, ...) {
     # Silence package checks
     sector <- fuel <- year <- value <- state_val <- usa_val <-
       state <- . <- GCAM_region_ID <- LEVEL2_DATA_NAMES <-
-      curr_table <- value.x <- value.y <- NULL
+      curr_table <- value.x <- value.y <- heat_allsectors <- sector_share <- bld <- NULL
 
     # ===================================================
     # Scale national-level building energy consumption

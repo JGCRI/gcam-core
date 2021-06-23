@@ -45,7 +45,8 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
     # Silence package checks
     year <- iso <- item <- value <- dairy.to.total <- dairy.adj <-
       coefficient <- GCAM_region_ID <- GCAM_commodity <- water.consumption <-
-      water_type <- coefficient <- Coefficient <- NULL
+      water_type <- coefficient <- Coefficient <- water_sector <- share <-
+      GCAM_basin_ID <- NULL
 
     # ===================================================
     # Calculate livestock water coefficients by region ID / GCAM_commodity/ water type.

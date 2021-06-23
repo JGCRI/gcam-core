@@ -17,5 +17,5 @@ a vector of output names, or (if \code{command} is "MAKE") all
 the generated outputs: \code{EFW_input_coefs.xml}.
 }
 \description{
-Construct XML data structure for \code{en_distribution.xml}.
+Construct XML data structure for \code{EFW_input_coefs.xml}.
 }

@@ -28,7 +28,7 @@ module_water_batch_EFW_WWtrt_coefs_SSP_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     EFW_WWtrt_coefs_SSP1.xml <- EFW_WWtrt_coefs_SSP2.xml <- EFW_WWtrt_coefs_SSP3.xml <-
-      EFW_WWtrt_coefs_SSP4.xml <- EFW_WWtrt_coefs_SSP5.xml <- NULL  # silence package check notes
+      EFW_WWtrt_coefs_SSP4.xml <- EFW_WWtrt_coefs_SSP5.xml <- scenario <- NULL  # silence package check notes
 
     # Load required inputs
     L270.TechCoef_WWtrt_SSP <- get_data(all_data, "L270.TechCoef_WWtrt_SSP")

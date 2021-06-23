@@ -78,7 +78,7 @@ module_gcamusa_L203.water_td_USA <- function(command, ...) {
       GCAM_basin_ID <- state_abbr <- water_sector <- year <- wt_short <- value <-
       state.to.country.share <- subsector <- technology <- share.weight <-
       price.unit <- input.unit <- output.unit <- logit.exponent <- logit.type <-
-      logit.year.fillout <- NULL  # silence package check notes
+      logit.year.fillout <- resource <- minicam.energy.input <- subresource <- NULL  # silence package check notes
 
     # Define unique states and basins that have access to seawater that will
     # allow for seawate cooling

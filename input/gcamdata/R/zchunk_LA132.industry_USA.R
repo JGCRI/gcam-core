@@ -42,7 +42,9 @@ module_gcamusa_LA132.industry_USA <- function(command, ...) {
 
     # Silence package checks
     fuel <- year <- state <- value <- sector <- refinery_comsumption <- GCAM_region_ID <-
-      multiplier <- NULL
+      multiplier <- value.input <- value.output <- value.before <- value.after <-
+      deduction <- heat_allsectors <- sector_share <- industry <- sector_agg <-
+      value.initial <- value.heat <- NULL
 
     all_data <- list(...)[[1]]
 
