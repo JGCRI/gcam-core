@@ -210,11 +210,11 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         #Use only historical years
         filter(year <= max(HISTORICAL_YEARS)) %>%
         filter(UCD_category=="trn_road and rail") %>%
-        filter(mode %notin% c("Rail","HSR")) %>%
+        filter(!mode %in% c("Rail","HSR")) %>%
         select(-UCD_fuel,-fuel,-size.class) %>%
         rename(fuel=UCD_technology) %>%
         #NG is treated separately.
-        filter(fuel %notin% c(emissions.ZERO_EM_TECH,"NG")) %>%
+        filter(!fuel %in% c(emissions.ZERO_EM_TECH,"NG")) %>%
         mutate(fuel =if_else(fuel=="Hybrid Liquids","Liquids",fuel))->Clean_IEA_ctry_data
 
       #Calculate GAINS sector weights which we can use on CEDS data to distribute emissions into Passenger and Freight.
@@ -300,7 +300,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         #Use only historical years
         filter(year <= max(HISTORICAL_YEARS)) %>%
         filter(UCD_category=="trn_road and rail") %>%
-        filter(mode %notin% c("Rail","HSR")) %>%
+        filter(!mode %in% c("Rail","HSR")) %>%
         select(-UCD_fuel,-fuel) %>%
         rename(fuel=UCD_technology) %>%
         filter(fuel %in% c("NG"))->Clean_IEA_ctry_data_NG
@@ -383,7 +383,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       # Append CEDS sector/fuel combinations to GCAM energy
       L112.in_EJ_R_en_S_F_Yh_calib_all %>%
         #We will drop all electricity sectors here
-        filter(stub.technology %notin% c(emissions.ZERO_EM_TECH)) %>%
+        filter(!stub.technology %in% c(emissions.ZERO_EM_TECH)) %>%
         left_join_error_no_match(CEDS_sector_tech, by = c("supplysector", "subsector", "stub.technology")) ->L112.in_EJ_R_en_S_F_Yh_calib_all_baseenergy
 
       # Aggregate GCAM energy to CEDS sector/fuel combinations and compute the total energy by CEDS sector

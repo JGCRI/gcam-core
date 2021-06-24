@@ -51,7 +51,6 @@
 // include files ***********************************************************
 
 #include <cmath>
-#include <boost/math/tr1.hpp>
 
 // namespaces **************************************************************
 
@@ -191,7 +190,7 @@ inline typename TCostCurve<T>::value_type TCostCurve<T>::calculate(
    }
 
    value_type  temp = std::pow( aPrice, mCurveExponent );
-    if( !boost::math::isfinite( temp ) ) {
+    if( !std::isfinite( temp ) ) {
         // happens sometimes for large price
        temp = std::numeric_limits<T>::max();
     }
