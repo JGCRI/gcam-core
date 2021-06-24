@@ -31,7 +31,7 @@ module_emissions_L152.MACC <- function(command, ...) {
 
     Process <- EPA_region <- cost_2010USD_tCO2e <- reduction_MtCO2e <- Sector <-
         EPA_region_code <- cost_1990USD_tCe <- year <- baseline_MtCO2e <-
-            reduction_pct <- NULL       # silence package check.
+            reduction_pct <- GCAM_region_ID_missing <- NULL       # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -118,14 +118,14 @@ module_emissions_L152.MACC <- function(command, ...) {
     # Match in the baseline emissions quantities to abatement tibble then calculate abatement percentages
     # Use left_join - there should be NAs (i.e., there are sectors where the baseline is zero) - then drop those NAs
     # (ie. MAC curves in regions where the sector/process does not exist - the baseline is zero)
-    # emissions.MAC_highestReduction is 0.95, defined in constant.R
+    # emissions.MAC_HIGHESTREDUCTION is 0.95, defined in constant.R
 
     L152.EPA_MACC_MtCO2e %>%
       left_join(L152.EPA_MACC_baselines_MtCO2e ,
                 by = c("Sector", "Process", "GCAM_region_ID", "year")) %>%
-      mutate(reduction_pct = cum_reduction_MtCO2e / baseline_MtCO2e) %>%
-      mutate(reduction_pct = ifelse(is.na(reduction_pct) | is.infinite(reduction_pct), 0, reduction_pct)) %>%
-      mutate(reduction_pct = ifelse(reduction_pct >=1, emissions.MAC_highestReduction, reduction_pct)) %>%
+      mutate(reduction_pct = cum_reduction_MtCO2e / baseline_MtCO2e,
+             reduction_pct = if_else(is.na(reduction_pct) | is.infinite(reduction_pct), 0, reduction_pct),
+             reduction_pct = if_else(reduction_pct >= 1, emissions.MAC_HIGHESTREDUCTION, reduction_pct)) %>%
       ungroup() %>%
       select(Sector, Process, GCAM_region_ID, year, cost_1990USD_tCe, reduction_pct) ->
       L152.EPA_MACC_percent_MtCO2e

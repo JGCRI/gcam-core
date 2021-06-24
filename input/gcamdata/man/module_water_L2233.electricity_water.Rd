@@ -24,7 +24,7 @@ the generated outputs: \code{L2233.StubTech_elecPassthru}, \code{L2233.StubTechP
 \code{L2233.Supplysector_elec_cool}, \code{L2233.ElecReserve_elec_cool},
 \code{L2233.SubsectorShrwtFllt_elec_cool}, \code{L2233.SubsectorLogit_elec_cool},
  \code{L2233.StubTech_elec_cool}, \code{L2233.StubTechEff_elec_cool},
-\code{L2233.StubTechProd_elec_cool}, \code{L2233.StubTechFixOut_hydro},
+\code{L2233.StubTechProd_elec_cool}, \code{L2233.StubTechCapFactor_elec_cool}, \code{L2233.StubTechFixOut_hydro},
   \code{L2233.StubTechShrwt_elec_cool}, \code{L2233.GlobalTechCapital_elec_cool},
  \code{L2233.GlobalIntTechCapital_elec_cool}, \code{L2233.GlobalTechCoef_elec_cool},
 \code{L2233.GlobalIntTechCoef_elec_cool}, \code{L2233.InputEmissCoeff_hist_elecPassthru},

@@ -50,7 +50,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
     year <- region <- supplysector <- subsector <- GCAM_Commodity <- GrossExp_EJ <-
       calOutputValue <- subs.share.weight <- market.name <- minicam.energy.input <-
       GrossImp_EJ <- Prod_EJ <- fuel <- technology <- primary.consumption <- PrimaryFuelCO2Coef.name <- PrimaryFuelCO2Coef <-
-      production <- consumption <- NULL # silence package check notes
+      production <- consumption <- GCAM_region_ID <- NULL # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names",strip_attributes = TRUE)

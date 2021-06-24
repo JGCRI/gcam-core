@@ -4,18 +4,20 @@
 \name{GCAM_DATA_MAP}
 \alias{GCAM_DATA_MAP}
 \title{GCAM_DATA_MAP}
-\format{A tibble with columns: name (chunk that produces the data), output (name of the data object),
-precursors (colon seperated list of precursors), title, units, comments, flags (typically metadata for processing)}
+\format{
+A tibble with columns: name (chunk that produces the data), output (name of the data object),
+precursors (colon seperated list of precursors), title, units, comments, flags (typically metadata for processing)
+}
 \usage{
 GCAM_DATA_MAP
 }
 \description{
 There are two levels of information available from the GCAM data system:
 chunk dependencies, which are available for "free", i.e. with a fast query to
-each chunk on the part of \link{\code{chunk_inputs}} and \link{\code{chunk_outputs}},
+each chunk on the part of \code{\link{chunk_inputs}} and \code{\link{chunk_outputs}},
 and detailed information on data object-level dependencies. This function is
 used to generate this latter data, i.e. a tibble of chunk-output-precursor information,
-which is used by \link{\code{dstrace}} and various other graphing and diagnostic utilities.
+which is used by \code{\link{dstrace}} and various other graphing and diagnostic utilities.
 }
 \author{
 BBL
