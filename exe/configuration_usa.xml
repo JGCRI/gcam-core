@@ -83,7 +83,7 @@
 		<Value name = "elec_water_usa">../input/gcamdata/xml/elec_segments_water_USA.xml</Value>
 		<Value name = "h2_usa">../input/gcamdata/xml/hydrogen_USA.xml</Value>
 		<Value name = "elect_td_usa">../input/gcamdata/xml/electd_USA.xml</Value>
-		<Value name = "trn_usa">../input/gcamdata/xml/transportation_USA.xml</Value>
+		<Value name = "trn_usa">../input/gcamdata/xml/transportation_USA_CORE.xml</Value>
 		<Value name = "bld_usa">../input/gcamdata/xml/building_USA.xml</Value>
 		<Value name = "dd_usa">../input/gcamdata/xml/HDDCDD_constdds_USA.xml</Value>
 		<Value name = "ind_usa">../input/gcamdata/xml/industry_USA.xml</Value>
