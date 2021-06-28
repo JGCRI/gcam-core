@@ -130,9 +130,9 @@
                         <rewrite from="hydro-elect" to="f hydro"/>
                         <rewrite from="solar-elect" to="h solar"/>
                         <rewrite from="coal" to="c coal"/>
-                        <rewrite from="traded coal" to="a oil"/>
+                        <rewrite from="traded oil" to="a oil"/>
                         <rewrite from="traded natural gas" to="b natural gas"/>
-                        <rewrite from="traded oil" to="c coal"/>
+                        <rewrite from="traded coal" to="c coal"/>
                         <rewrite from="elect_td_ind" to=""/>
                         <rewrite from="wind-elect" to="g wind"/>
                         <rewrite from="total biomass" to="d biomass"/>

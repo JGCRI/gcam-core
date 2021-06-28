@@ -2,7 +2,7 @@
 # Title: Emission coefficients for energy technology by sector 
 # Units: NA
 # Source: NA 
-# Description: may.be.historic is an indicator variable that indicates if the “new” technology may be been used historically by some sector.  
+# Description: may.be.historic is an indicator variable that indicates if the "new" technology may be been used historically by some sector.  
 # Column types: cccnnnnnnnncci 
 # ----------
 supplysector,subsector,stub.technology,SO2,NOx,CO,CH4,N2O,BC,OC,NMVOC,exception,exception_tech,may.be.historic

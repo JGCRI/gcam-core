@@ -80,7 +80,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
       #silence packages
       lifetime <- emscaler <- ej_vintage <- tg_vintage <- tg_i_total <- tg_i <- ej_i <- value_adj <-
-      tot_emissions <- EPA_sector <- final_year  <- year_operate <- timestep <-  avg.prod.lifetime  <-  resource  <- gas <- country <- fuel <- CEDS_sector <- em <- iso <- unit <- year <- emissions <- sector <- Non.CO2 <- GCAM_region_ID <- CEDS_agg_sector <-
+        tot_emissions <- EPA_sector <- final_year  <- year_operate <- timestep <-  avg.prod.lifetime  <-  resource  <- gas <- country <- fuel <- CEDS_sector <-
+        em <- iso <- unit <- year <- emissions <- sector <- Non.CO2 <- GCAM_region_ID <- CEDS_agg_sector <-
         CEDS_agg_fuel <- GCAM_region <- rev.mode <- rev_size.class <- UCD_fuel <- size.class <- UCD_technology <- UCD_sector <- sector_weight <-
         dieseloil <- lightoil <- mode_weight <- sum_sector_weight <- sum_mode_weight <- secondary.output <- technology <- energy <- supplysector <-
         subsector <- stub.technology <- sector <- service <- tranSubsector <- tranTechnology <- totalenergy <- enshare <- GCAMemissions <- D_driver <-
@@ -88,7 +89,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         total_emiss <- AWB_emiss_share <- total_excess_bio <- burnable <- WaterContent <- HarvestIndex <- Root_Shoot <- ResEnergy_GJt <- ErosCtrl_tHa <-
         emiss_share <- prod_share <- total_prod <- crop_area_share <- prod_share_GLU <- GLU <- Prod_R_C <- crop_area_total <- scalar <- EPA_emissions <-
         CEDS_emissions <- epa_emissions <-  ch4_em_factor <- production <- feed <- GCAM_commodity <- input.emissions <- EPA_agg_fuel_ghg <- EPA_agg_sector <-
-        EDGAR_agg_sector <- globalemfact <- emfact <- value <- em_fact <- . <- FF_driver <- natural_gas <- UCD_category <- Non.co2 <- NULL
+        EDGAR_agg_sector <- globalemfact <- emfact <- value <- em_fact <- . <- FF_driver <- natural_gas <- UCD_category <- Non.co2 <- quantile <-
+        upper <- value_median <- NULL
 
 
       #Get CEDS_GFED data
@@ -996,7 +998,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       # Part 8: SCALE TO EPA
       # ========================
 
-      if(emissions.nonCO2.EPA.scaling){
+      if(emissions.NONCO2.EPA.SCALING){
         # EPA scaling process
         # Scale CH4 and N2O emissions to EPA 2019 mitigation report (BAU scenario)
         # Source: https://www.epa.gov/global-mitigation-non-co2-greenhouse-gases
@@ -1160,11 +1162,11 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
         # 3) Handling outliers, if any scaler is greater than a threshold, will replace its scaler as 1
         # so just keep using CEDS emission
-        # for industry process emisison, choose scaler as emissions.EPA.scaling.threshold
+        # for industry process emisison, choose scaler as emissions.EPA.SCALING.THRESHOLD
         # mostly filter out Region 4 - industrial other, and some region 32
 
         L131.nonco2_tg_R_prc_S_S_Yh_EPAscaler %>%
-          mutate(emscaler = if_else(emscaler >= emissions.EPA.scaling.threshold, 1, emscaler)) ->
+          mutate(emscaler = if_else(emscaler >= emissions.EPA.SCALING.THRESHOLD, 1, emscaler)) ->
           L131.nonco2_tg_R_prc_S_S_Yh_EPAscaler
 
         # 4) Do the actual scaling for industrial and urban processes emissions
@@ -1196,8 +1198,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
           L113.ghg_tg_R_an_C_Sys_Fd_Yh_change
 
         L113.ghg_tg_R_an_C_Sys_Fd_Yh_change %>%
-          mutate(Non.CO2 = substr(Non.CO2, 1, 3)) %>%
-          mutate(EPA_sector = "Agriculture") %>%
+          mutate(Non.CO2 = substr(Non.CO2, 1, 3),
+                 EPA_sector = "Agriculture") %>%
           rename(emissions = value) %>%
           FUN_cal_EPA_scalers(EPA_DATA = L131.EPA_CH4N2O_livestocks) %>%
           mutate(Non.CO2 = paste0(Non.CO2, "_AGR")) ->
@@ -1234,8 +1236,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
           L121.nonco2_tg_R_awb_C_Y_GLU_change
 
         L121.nonco2_tg_R_awb_C_Y_GLU_change  %>%
-          mutate(Non.CO2 = substr(Non.CO2, 1, 3)) %>%
-          mutate(EPA_sector = "Agriculture") %>%
+          mutate(Non.CO2 = substr(Non.CO2, 1, 3),
+                 EPA_sector = "Agriculture") %>%
           rename(emissions = value) %>%
           FUN_cal_EPA_scalers(EPA_DATA = L121.EPA_CH4N2O_awb) %>%
           mutate(Non.CO2 = paste0(Non.CO2, "_AWB")) ->
@@ -1243,11 +1245,11 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
         # 3) Handling outliers, if any scaler is greater than a threshold, will replace its scaler as 1
         # so just keep using CEDS emission
-        # for agriculture waste burning, choose scaler as emissions.EPA.scaling.threshold
+        # for agriculture waste burning, choose scaler as emissions.EPA.SCALING.THRESHOLD
         # just filter out Region 26
 
         L121.nonco2_tg_R_awb_C_Y_GLU_EPAscaler %>%
-          mutate(emscaler = if_else(emscaler >= emissions.EPA.scaling.threshold, 1, emscaler)) ->
+          mutate(emscaler = if_else(emscaler >= emissions.EPA.SCALING.THRESHOLD, 1, emscaler)) ->
           L121.nonco2_tg_R_awb_C_Y_GLU_EPAscaler
 
         # 4) do the actual scaling for agriculture emissions
@@ -1282,8 +1284,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
           L122.ghg_tg_R_agr_C_Y_GLU_change
 
         L122.ghg_tg_R_agr_C_Y_GLU_change %>%
-          mutate(Non.CO2 = substr(Non.CO2, 1, 3)) %>%
-          mutate(EPA_sector = "Agriculture") %>%
+          mutate(Non.CO2 = substr(Non.CO2, 1, 3),
+                 EPA_sector = "Agriculture") %>%
           rename(emissions = value) %>%
           FUN_cal_EPA_scalers(EPA_DATA = L131.EPA_CH4N2O_agr) %>%
           mutate(Non.CO2 = paste0(Non.CO2, "_AGR")) ->
@@ -1320,12 +1322,12 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
         # 3) Handling outliers, if any scaler is greater than a threshold, will replace its scaler as 1
         # so just keep using CEDS emission
-        # for combustion, choose scaler as emissions.EPA.scaling.threshold.combustion
+        # for combustion, choose scaler as emissions.EPA.SCALING.THRESHOLD.COMBUSTION
         # becuase EPA only has the entire combustion sector as a whole catagory
         # mostly filter out Region 4, 5, 27
 
         L112.ghg_tg_R_en_S_F_Yh_EPAscaler %>%
-          mutate(emscaler = if_else(emscaler >= emissions.EPA.scaling.threshold.combustion, 1, emscaler)) ->
+          mutate(emscaler = if_else(emscaler >= emissions.EPA.SCALING.THRESHOLD.COMBUSTION, 1, emscaler)) ->
           L112.ghg_tg_R_en_S_F_Yh_EPAscaler
 
         # 4) Do the actual scaling for combustion-related emissions
