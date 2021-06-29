@@ -46,12 +46,15 @@
 #include "util/base/include/interpolation_rule.h"
 #include "util/base/include/interpolation_function_factory.h"
 #include "util/base/include/fixed_interpolation_function.h" // for the fixed hack
+#include "util/base/include/linear_interpolation_function.h"
+#include "util/base/include/s_curve_interpolation_function.h"
 #include "util/curves/include/xy_data_point.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/xml_parse_helper.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
+#include "util/base/include/factory.h"
 
 using namespace std;
 using namespace xercesc;

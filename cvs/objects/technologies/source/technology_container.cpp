@@ -48,6 +48,7 @@
 #include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/interpolation_rule.h"
 #include "technologies/include/stub_technology_container.h"
+#include "util/base/include/factory.h"
 
 // technology includes
 #include "technologies/include/technology.h"
