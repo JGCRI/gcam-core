@@ -72,6 +72,7 @@
 #include "util/base/include/iparsable.h"
 
 class Scenario;
+class LoggerFactoryWrapper;
 
 class ParseChildData {
 public:
@@ -150,6 +151,8 @@ struct XMLParseHelper {
     static void parseData(const rapidxml::xml_node<char>* aNode, DataType& aData);
     
     static bool parseXML( const std::string& aXMLFile, Scenario* aRootElement );
+    
+    static bool parseXML( const std::string& aXMLFile, LoggerFactoryWrapper* aRootElement );
     
     static rapidxml::xml_node<char>* deepClone(rapidxml::xml_node<char>* aNode) {
         rapidxml::memory_pool<char>& memoryPool = getStoreXMLMemoryPool();

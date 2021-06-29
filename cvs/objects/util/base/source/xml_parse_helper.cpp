@@ -47,6 +47,8 @@
 #include "util/base/include/gcam_fusion.hpp"
 #include "util/base/include/gcam_data_containers.h"
 #include "util/base/include/factory.h"
+#include "util/logger/include/logger_factory.h"
+#include "util/logger/include/logger.h"
 
 using namespace std;
 using namespace rapidxml;
@@ -506,6 +508,13 @@ inline std::map<std::string, std::string> lexical_cast<std::map<std::string, std
     return std::map<std::string, std::string>();
 }
 }
+
+namespace boost {
+template<>
+inline ILogger::WarningLevel lexical_cast<ILogger::WarningLevel, std::string>(const std::string& aStr) {
+    return static_cast<ILogger::WarningLevel>(boost::lexical_cast<int>(aStr));
+}
+}
     
 template<typename DataVectorType>
 void ParseChildData::processDataVector( DataVectorType aDataVector ) {
@@ -585,6 +594,11 @@ void XMLParseHelper::parseData<Data<objects::PeriodVector<double>, ARRAY> >(cons
     parseDataI(aNode, aData);
 }
 
+template<>
+void XMLParseHelper::parseData<Data<Logger*, CONTAINER> >(const rapidxml::xml_node<char>* aNode, Data<Logger*, CONTAINER>& aData) {
+    parseDataI(aNode, aData);
+}
+
 template<typename ContainerType>
 bool parseXMLInternal(const string& aXMLFile, ContainerType* aRootElement) {
     Data<ContainerType*, CONTAINER> root(aRootElement, "");
@@ -602,5 +616,9 @@ bool parseXMLInternal(const string& aXMLFile, ContainerType* aRootElement) {
 }
 
 bool XMLParseHelper::parseXML(const string& aXMLFile, Scenario* aRootElement) {
+    return parseXMLInternal(aXMLFile, aRootElement);
+}
+
+bool XMLParseHelper::parseXML(const string& aXMLFile, LoggerFactoryWrapper* aRootElement) {
     return parseXMLInternal(aXMLFile, aRootElement);
 }

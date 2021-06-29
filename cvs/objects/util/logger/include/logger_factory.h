@@ -50,6 +50,7 @@
 #include <map>
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/iparsable.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward Declaration
 class Logger;
@@ -72,6 +73,7 @@ public:
 private:
     static std::map<std::string,Logger*> mLoggers; //!< Map of logger names to loggers.
     static void XMLParse( const xercesc::DOMNode* aRoot );
+    static bool XMLParse( rapidxml::xml_node<char>* & aNode );
     static void cleanUp();
     //! Private undefined constructor to prevent creating a LoggerFactory.
     LoggerFactory();
@@ -94,7 +96,7 @@ private:
 * \warning This class cannot be instantiated.
 * \warning Loggers can only be created by the LoggerFactory.
 */
-class LoggerFactoryWrapper: public IParsable {
+class LoggerFactoryWrapper: public IParsable, public AParsable {
 public:
     ~LoggerFactoryWrapper() {
         LoggerFactory::cleanUp();
@@ -103,6 +105,18 @@ public:
         LoggerFactory::XMLParse( aRoot );
         return true;
     }
+    
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
+    
+    static const std::string& getXMLNameStatic();
+    
+    const std::string& getXMLName() const;
+    
+protected:
+    DEFINE_DATA(
+        // InterpolationRule is the only member of this container hierarchy.
+        DEFINE_SUBCLASS_FAMILY( LoggerFactoryWrapper )
+    )
 };
 
 #endif // _LOGGER_FACTORY_H_

@@ -47,6 +47,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/logger/include/logger_factory.h"
 #include "util/logger/include/logger.h"
 #include "util/logger/include/ilogger.h"
@@ -94,6 +95,40 @@ void LoggerFactory::XMLParse( const DOMNode* aRoot ){
 			mLoggers[ newLogger->mName ] = newLogger;
 		}
 	}
+}
+
+bool LoggerFactory::XMLParse(rapidxml::xml_node<char>* & aNode) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    
+    if( nodeName == "Logger" ) {
+        // get the Logger type.
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        string loggerType = attrs["type"];
+        
+        // Add additional types here.
+        Logger* newLogger = 0;
+        if( loggerType == "PlainTextLogger" ){
+            newLogger = new PlainTextLogger();
+        }
+        else if( loggerType == "XMLLogger" ){
+            newLogger = new XMLLogger();
+        }
+        else {
+            cerr << "Unknown Logger Type: " << loggerType << endl;
+        }
+        
+        ParseChildData parseChildHelper(aNode, attrs);
+        parseChildHelper.setContainer(newLogger);
+        ExpandDataVector<Logger::SubClassFamilyVector> getDataVector;
+        newLogger->doDataExpansion( getDataVector );
+        getDataVector.getFullDataVector(parseChildHelper);
+        newLogger->open();
+        mLoggers[ newLogger->mName ] = newLogger;
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 //! Single static method of ILogger interface.
@@ -152,3 +187,15 @@ void LoggerFactory::logNewScenarioStarting( const string& aScenarioName ) {
     }
 }
 
+const string& LoggerFactoryWrapper::getXMLNameStatic() {
+    const static string XML_NAME = "LoggerFactoryWrapper";
+    return XML_NAME;
+}
+
+const string& LoggerFactoryWrapper::getXMLName() const {
+    return getXMLNameStatic();
+}
+
+bool LoggerFactoryWrapper::XMLParse(rapidxml::xml_node<char>* & aNode) {
+    return LoggerFactory::XMLParse(aNode);
+}
