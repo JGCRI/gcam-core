@@ -81,6 +81,10 @@ const string& GenericOutput::getXMLNameStatic() {
 * \author Sonny Kim
 * \return The constant XML_NAME.
 */
+const string& GenericOutput::getXMLReportingName() const{
+    return getXMLNameStatic();
+}
+
 const string& GenericOutput::getXMLName() const{
     return getXMLNameStatic();
 }

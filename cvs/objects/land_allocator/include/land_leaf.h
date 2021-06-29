@@ -71,10 +71,14 @@ class LandLeaf : public ALandAllocatorItem {
 public:
     LandLeaf( const ALandAllocatorItem* aParent,
               const std::string& aName );
+    
+    LandLeaf();
 
     virtual ~LandLeaf();
 
     static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
 
     // Tree Item methods.
     virtual size_t getNumChildren() const;
@@ -178,7 +182,7 @@ protected:
         //! Container of historical land use.
         DEFINE_VARIABLE( CONTAINER, "land-use-history", mLandUseHistory, LandUseHistory* ),
         
-        DEFINE_VARIABLE( ARRAY, "parsed-landAllocation", mReadinLandAllocation, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY, "landAllocation", mReadinLandAllocation, objects::PeriodVector<Value> ),
                             
         //! Name of land constraint policy
         DEFINE_VARIABLE( SIMPLE, "land-constraint-policy", mLandConstraintPolicy, std::string ),
@@ -203,8 +207,6 @@ protected:
     virtual void toDebugXMLDerived( const int aPeriod,
                                     std::ostream& aOut,
                                     Tabs* aTabs ) const;
-
-    virtual const std::string& getXMLName() const;
 
     virtual void initLandUseHistory( const std::string& aRegionName );
 };

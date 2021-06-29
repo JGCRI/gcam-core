@@ -62,10 +62,9 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 /* \brief Constructor
-* \param aRegionName The name of the region.
 */
-SupplySector::SupplySector( const string& aRegionName ):
-Sector( aRegionName ),
+SupplySector::SupplySector():
+Sector(),
 // The default price for a trial supply market is 0.001
 mPriceTrialSupplyMarket( 0.001 )
 {

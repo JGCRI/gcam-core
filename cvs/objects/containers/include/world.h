@@ -145,15 +145,15 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "region", mRegions, std::vector<Region*> ),
         
         /*! \brief The climate model. */
-        DEFINE_VARIABLE( SIMPLE, "climate-model", mClimateModel, IClimateModel* ),
+        DEFINE_VARIABLE( CONTAINER, "climate-model", mClimateModel, IClimateModel* ),
         
         /*! \brief The global technology database. */
-        DEFINE_VARIABLE( SIMPLE, "global-technology-database", mGlobalTechDB, GlobalTechnologyDatabase* ),
+        DEFINE_VARIABLE( CONTAINER, "global-technology-database", mGlobalTechDB, GlobalTechnologyDatabase* ),
         
         /*! \brief An object which maintains a count of the number of times
          *         calc() has been called.
          */
-        DEFINE_VARIABLE( SIMPLE, "calc-counter", mCalcCounter, CalcCounter* )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "calc-counter", mCalcCounter, CalcCounter* )
     )
     
     //! The global ordering of activities which can be used to calculate the model.

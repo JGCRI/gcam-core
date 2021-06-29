@@ -79,12 +79,17 @@ class Tabs;
  */
 class S_CurveShutdownDecider: public IShutdownDecider
 {
-    friend class ShutdownDeciderFactory;
 public:
+    S_CurveShutdownDecider();
+    
     virtual ~S_CurveShutdownDecider();
     
     // IParsedComponent methods.
     virtual S_CurveShutdownDecider* clone() const;
+    
+    static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
 
     virtual bool isSameType( const std::string& aType ) const;
 
@@ -120,10 +125,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "half-life", mHalfLife, double )
     )
 
-    S_CurveShutdownDecider();
     void copy( const S_CurveShutdownDecider& aOther );
-
-    static const std::string& getXMLNameStatic();
 };
 
 #endif // _S_CURVE_SHUTDOWN_DECIDER_H_

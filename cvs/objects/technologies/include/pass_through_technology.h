@@ -61,6 +61,7 @@ class PassThroughTechnology: public Technology
 {
 public:
     PassThroughTechnology( const std::string& aName, const int aYear );
+    PassThroughTechnology();
     virtual ~PassThroughTechnology();
 
     static const std::string& getXMLNameStatic();

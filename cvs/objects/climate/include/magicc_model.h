@@ -123,13 +123,13 @@ protected:
         IClimateModel,
 
         //! A map of the gases Magicc can report out.
-        DEFINE_VARIABLE( SIMPLE, "output-gas-name-map", mOutputGasNameMap, std::map<std::string,int> ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "output-gas-name-map", mOutputGasNameMap, std::map<std::string,int> ),
         
         //! Emissions levels by gas and period from model
-        DEFINE_VARIABLE( ARRAY, "model-emission-by-gas", mModelEmissionsByGas, std::vector<std::vector<double> > ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "model-emission-by-gas", mModelEmissionsByGas, std::vector<std::vector<double> > ),
         
         //! Default emissions levels by gas and year from exogenous input file
-        DEFINE_VARIABLE( ARRAY, "default-emissions-by-gas", mDefaultEmissionsByGas, std::vector<std::vector<double> > ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "default-emissions-by-gas", mDefaultEmissionsByGas, std::vector<std::vector<double> > ),
         
         //! A vector of years for the default emissions
         DEFINE_VARIABLE( ARRAY, "default-emission-years", mDefaultEmissionsYears, std::vector<int> ),

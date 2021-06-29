@@ -56,8 +56,8 @@ using namespace xercesc;
 *
 * \author Sonny Kim
 */
-SubsectorAddTechCosts::SubsectorAddTechCosts( const string& aRegionName, const string& aSectorName )
-: Subsector(aRegionName, aSectorName)
+SubsectorAddTechCosts::SubsectorAddTechCosts()
+: Subsector()
 {
 }
 

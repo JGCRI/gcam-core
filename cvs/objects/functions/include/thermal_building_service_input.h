@@ -96,6 +96,8 @@ public:
 
     virtual const std::string& getXMLReportingName() const;
     
+    virtual const std::string& getXMLName() const;
+    
     virtual void XMLParse( const xercesc::DOMNode* aNode );
     
     virtual void toDebugXML( const int aPeriod,

@@ -71,7 +71,7 @@ class ILandAllocator;
  */
 class AgSupplySector : public SupplySector {
 public:
-    explicit AgSupplySector( std::string& aRegionName );
+    explicit AgSupplySector();
     virtual ~AgSupplySector();
     static const std::string& getXMLNameStatic();
     virtual void completeInit( const IInfo* aRegionInfo,

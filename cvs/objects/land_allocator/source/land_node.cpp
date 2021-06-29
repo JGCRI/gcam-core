@@ -74,6 +74,15 @@ mCarbonCalc( 0 )
 {
 }
 
+LandNode::LandNode()
+: ALandAllocatorItem( eNode ),
+mChoiceFn( 0 ),
+mUnManagedLandValue( 0.0 ),
+mLandUseHistory( 0 ),
+mCarbonCalc( 0 )
+{
+}
+
 //! Destructor
 LandNode::~LandNode() {
     for( unsigned int i = 0; i < mChildren.size(); i++ ) {
@@ -82,6 +91,13 @@ LandNode::~LandNode() {
     delete mLandUseHistory;
     delete mCarbonCalc;
     delete mChoiceFn;
+}
+
+void LandNode::setParent( const ALandAllocatorItem* aParent ) {
+    mParent = aParent;
+    for( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->setParent( this );
+    }
 }
 
 size_t LandNode::getNumChildren() const {

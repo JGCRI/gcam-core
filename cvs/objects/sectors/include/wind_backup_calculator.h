@@ -95,7 +95,10 @@ class IInfo;
 class WindBackupCalculator: public IBackupCalculator {
     friend class BackupCalculatorFactory;
 public:
+    WindBackupCalculator();
     virtual WindBackupCalculator* clone() const;
+    static const std::string& getXMLNameStatic();
+    virtual const std::string& getXMLName() const;
     virtual bool isSameType( const std::string& aType ) const;
     virtual const std::string& getName() const;
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
@@ -126,8 +129,6 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         IBackupCalculator
     )
-    
-    static const std::string& getXMLNameStatic();
 
     double getBackupCapacityFraction( const std::string& aSector,
                                       const std::string& aElectricSector,
@@ -150,8 +151,6 @@ protected:
                               const std::string& aResourceName,
                               const double aTechCapacityFactor,
                               const int aPeriod ) const;
-
-    WindBackupCalculator();
 };
 
 #endif // _WIND_BACKUP_CALCULATOR_H_

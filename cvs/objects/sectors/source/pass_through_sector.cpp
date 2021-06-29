@@ -58,10 +58,9 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 /* \brief Constructor
- * \param aRegionName The name of the region.
  */
-PassThroughSector::PassThroughSector( const string& aRegionName ):
-SupplySector( aRegionName )
+PassThroughSector::PassThroughSector():
+SupplySector()
 {
 }
 

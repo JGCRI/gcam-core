@@ -81,6 +81,10 @@ const string& CTaxInput::getXMLNameStatic() {
 * \author Sonny Kim
 * \return The constant XML_NAME.
 */
+const string& CTaxInput::getXMLName() const{
+    return getXMLNameStatic();
+}
+
 const string& CTaxInput::getXMLReportingName() const{
     return getXMLNameStatic();
 }

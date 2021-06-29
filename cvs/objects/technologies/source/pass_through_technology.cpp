@@ -59,6 +59,9 @@ Technology(aName, aYear )
 {
 }
 
+PassThroughTechnology::PassThroughTechnology() {
+}
+
 PassThroughTechnology::~PassThroughTechnology() {
 }
 

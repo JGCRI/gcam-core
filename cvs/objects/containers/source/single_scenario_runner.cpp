@@ -44,6 +44,7 @@
 #include "containers/include/single_scenario_runner.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/timer.h"
 #include "util/base/include/configuration.h"
@@ -109,8 +110,10 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
 
     // Parse the input file.
     bool success =
-        XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ),
-                                   mScenario.get() );
+        /*XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ),
+                                   mScenario.get() );*/
+        XMLParseHelper::parseXML( conf->getFile( "xmlInputFileName" ),
+                                  mScenario.get() );
     
     // Check if parsing succeeded.
     if( !success ){
@@ -135,7 +138,8 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
 	{
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Parsing " << *currComp << " scenario component." << endl;
-        success = XMLHelper<void>::parseXML( *currComp, mScenario.get() );
+        //success = XMLHelper<void>::parseXML( *currComp, mScenario.get() );
+        success = XMLParseHelper::parseXML( *currComp, mScenario.get() );
         
         // Check if parsing succeeded.
         if( !success ){

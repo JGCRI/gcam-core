@@ -82,6 +82,10 @@ const string& InputCapital::getXMLReportingName() const{
     return XML_REPORTING_NAME;
 }
 
+const string& InputCapital::getXMLName() const{
+    return getXMLNameStatic();
+}
+
 //! Constructor
 InputCapital::InputCapital()
 {

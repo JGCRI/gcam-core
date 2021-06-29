@@ -48,6 +48,7 @@
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "technologies/include/icapture_component.h"
 #include "functions/include/icoefficient.h"
 #include "functions/include/efficiency.h"
@@ -90,6 +91,10 @@ const string& EnergyInput::getXMLNameStatic() {
 */
 const string& EnergyInput::getXMLReportingName() const{
     return XML_REPORTING_NAME;
+}
+
+const string& EnergyInput::getXMLName() const{
+    return getXMLNameStatic();
 }
 
 //! Constructor
@@ -218,6 +223,25 @@ void EnergyInput::XMLParse( const xercesc::DOMNode* node ) {
                     << getXMLNameStatic() << "." << endl;
         }
     }
+}
+
+bool EnergyInput::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if( nodeName == Efficiency::getXMLNameStatic() ) {
+        delete mCoefficient;
+        mCoefficient = new Efficiency( XMLParseHelper::getValue<double>( aNode ) );
+    }
+    else if( nodeName == Intensity::getXMLNameStatic() ){
+        delete mCoefficient;
+        mCoefficient = new Intensity( XMLParseHelper::getValue<double>( aNode ) );
+    }
+    else if( nodeName == "flag" ) {
+        setFlagsByName( XMLParseHelper::getValue<string>( aNode ) );
+    }
+    else {
+        return false;
+    }
+    return true;
 }
 
 void EnergyInput::toDebugXML( const int aPeriod,

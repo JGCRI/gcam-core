@@ -76,6 +76,29 @@
 #include "util/base/include/gcam_data_containers.h"
 #include "util/base/include/factory.h"
 
+template<>
+struct Factory<ITechnologyContainer::SubClassFamilyVector> {
+    using FamilyBasePtr = ITechnologyContainer*;
+    static bool canCreateType( const std::string& aXMLName ) {
+        return TechnologyContainer::hasTechnologyType( aXMLName ) || StubTechnologyContainer::getXMLNameStatic() == aXMLName;
+    }
+    static ITechnologyContainer* createType( const std::string& aXMLName ) {
+        ITechnologyContainer* ret = 0;
+        if( TechnologyContainer::hasTechnologyType( aXMLName ) ) {
+            ret = new TechnologyContainer();
+        }
+        else if( StubTechnologyContainer::getXMLNameStatic() == aXMLName ) {
+            ret = new StubTechnologyContainer();
+        }
+        if( !ret ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Could not create " << aXMLName << " of type: " << typeid(ITechnologyContainer).name() << std::endl;
+        }
+        return ret;
+    }
+};
+
 template<typename DataType, typename Enable = void>
 struct GetActualContainerType;
 
@@ -120,7 +143,7 @@ struct GetActualContainerType<DataType, typename boost::enable_if<
 
 class ParseChildData {
 public:
-    ParseChildData(const rapidxml::xml_node<char>* aNode):mParentNode(aNode), mContainer(0) {}
+    ParseChildData(const rapidxml::xml_node<char>* aNode, const std::map<std::string, std::string>& aAttrs):mParentNode(aNode), mAttrs(aAttrs), mContainer(0) {}
     
     template<typename ContainerType>
     typename boost::disable_if<
@@ -141,6 +164,8 @@ public:
 private:
     //! The Parent XML Node
     const rapidxml::xml_node<char>* mParentNode;
+    
+    const std::map<std::string, std::string>& mAttrs;
     
     AParsable* mContainer;
     
@@ -255,8 +280,16 @@ struct XMLParseHelper {
             // The instance of the container has been set yet.
             if( deleteFlagSet ) {
                 // log delete set but container not found
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "Could not delete node " << nodeName << " as it does not exist." << std::endl;
+                return;
             } else if( noCreateFlagSet ) {
                 // log nocreate
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::NOTICE );
+                mainLog << "Did not create node " << nodeName << " as the nocreate input flag was set." << std::endl;
+                return;
             }
             else {
                 // No previous container so add a new one.
@@ -270,6 +303,9 @@ struct XMLParseHelper {
                 aData.mData = dynamic_cast<typename DataType::value_type>( temp );
                 if( temp && !aData.mData ) {
                     // log temp->getXMLName() is not a subclass of typename DataType::value_type::getXMLNameStatic()
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::ERROR );
+                    mainLog << "Attempted to set incompatible type " << nodeName << " as " << typeid(typename DataType::value_type).name() << std::endl;
                     abort();
                 }
             }
@@ -278,20 +314,21 @@ struct XMLParseHelper {
             // There is already an instance set
             if( deleteFlagSet ) {
                 // when we get a delete flag we simply delete and ignore the rest.
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::DEBUG );
+                mainLog << "Deleting node: " << nodeName << std::endl;
                 delete aData.mData;
                 aData.mData = 0;
+                return;
             }
             else {
                 // else we can just use this instance
-                // TODO check to make sure the XML names are the same
-                if( !GetFilterForContainer<data_type>::filter_type::matchesXMLAttr( aData.mData, attrs ) ) {
-                    // log IDs did not match in single container
-                }
+                // TODO: we should check to make sure the XML names are the same but we would currently fail this check often
             }
         }
         
         // parse child nodes
-        ParseChildData parseChildHelper(aNode);
+        ParseChildData parseChildHelper(aNode, attrs);
         parseChildHelper.setContainer(aData.mData);
         ExpandDataVector<typename data_type::SubClassFamilyVector> getDataVector;
         aData.mData->doDataExpansion( getDataVector );
@@ -332,8 +369,16 @@ struct XMLParseHelper {
             // The instance of the container has not yet been set yet.
             if( deleteFlagSet ) {
                 // log delete set but container not found
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "Could not delete node " << nodeName << " as it does not exist." << std::endl;
+                return;
             } else if( noCreateFlagSet ) {
                 // log nocreate
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::NOTICE );
+                mainLog << "Did not create node " << nodeName << " as the nocreate input flag was set." << std::endl;
+                return;
             }
             else {
                 // No previous container so add a new one.
@@ -344,9 +389,12 @@ struct XMLParseHelper {
                 // RegionMiniCAM::mLandAllocator we want to ensure only the type LandAllocator
                 // is created and not for instance a LandLeaf.
                 typename FactoryType::FamilyBasePtr temp = FactoryType::createType( nodeName );
-                currContainer = dynamic_cast<typename decltype( aData.mData )::value_type>( temp );
+                currContainer = dynamic_cast<value_type>( temp );
                 if( temp && !currContainer ) {
                     // log temp->getXMLName() is not a subclass of typename DataType::value_type::getXMLNameStatic()
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::ERROR );
+                    mainLog << "Attempted to set incompatible type " << nodeName << " as " << typeid(typename DataType::value_type).name() << std::endl;
                     abort();
                 }
                 aData.mData.push_back( currContainer );
@@ -356,18 +404,22 @@ struct XMLParseHelper {
             // There is already an instance set
             if( deleteFlagSet ) {
                 // when we get a delete flag we simply delete and ignore the rest.
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::DEBUG );
+                mainLog << "Deleting node: " << nodeName << std::endl;
                 delete currContainer;
                 currContainer = 0;
                 aData.mData.erase( dataIter );
+                return;
             }
             else {
                 // else we can just use this instance
-                // TODO check to make sure the XML names are the same
+                // TODO: we should check to make sure the XML names are the same but we would currently fail this check often
             }
         }
         
         // parse child nodes
-        ParseChildData parseChildHelper(aNode);
+        ParseChildData parseChildHelper(aNode, attrs);
         parseChildHelper.setContainer(currContainer);
         ExpandDataVector<typename data_type::SubClassFamilyVector> getDataVector;
         currContainer->doDataExpansion( getDataVector );
@@ -408,8 +460,16 @@ struct XMLParseHelper {
             // The instance of the container has not been set yet.
             if( deleteFlagSet ) {
                 // log delete set but container not found
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "Could not delete node " << nodeName << " as it does not exist." << std::endl;
+                return;
             } else if( noCreateFlagSet ) {
                 // log nocreate
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::NOTICE );
+                mainLog << "Did not create node " << nodeName << " as the nocreate input flag was set." << std::endl;
+                return;
             }
             else {
                 // No previous container so add a new one.
@@ -420,9 +480,12 @@ struct XMLParseHelper {
                 // RegionMiniCAM::mLandAllocator we want to ensure only the type LandAllocator
                 // is created and not for instance a LandLeaf.
                 typename FactoryType::FamilyBasePtr temp = FactoryType::createType( nodeName );
-                currContainer = dynamic_cast<typename decltype( aData.mData )::mapped_type>( temp );
+                currContainer = dynamic_cast<value_type>( temp );
                 if( temp && !currContainer ) {
                     // log temp->getXMLName() is not a subclass of typename DataType::value_type::getXMLNameStatic()
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::ERROR );
+                    mainLog << "Attempted to set incompatible type " << nodeName << " as " << typeid(typename DataType::value_type).name() << std::endl;
                     abort();
                 }
                 aData.mData[ boost::lexical_cast<typename DataType::value_type::key_type>( attrs[ GetFilterForContainer<data_type>::filter_type::getXMLAttrKey() ] ) ] = currContainer;
@@ -432,18 +495,22 @@ struct XMLParseHelper {
             // There is already an instance set
             if( deleteFlagSet ) {
                 // when we get a delete flag we simply delete and ignore the rest.
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::DEBUG );
+                mainLog << "Deleting node: " << nodeName << std::endl;
                 delete currContainer;
                 currContainer = 0;
                 aData.mData.erase( dataIter );
+                return;
             }
             else {
                 // else we can just use this instance
-                // TODO check to make sure the XML names are the same
+                // TODO: we should check to make sure the XML names are the same but we would currently fail this check often
             }
         }
         
         // parse child nodes
-        ParseChildData parseChildHelper(aNode);
+        ParseChildData parseChildHelper(aNode, attrs);
         parseChildHelper.setContainer(currContainer);
         ExpandDataVector<typename data_type::SubClassFamilyVector> getDataVector;
         currContainer->doDataExpansion( getDataVector );
@@ -467,7 +534,9 @@ struct XMLParseHelper {
         auto yearIter = attrs.find( "year" );
         bool filloutFlagSet = XMLParseHelper::isAttrFlagSet( attrs, "fillout" );
         if( yearIter == attrs.end() ) {
-            std::cout << "Could not find year to set simple array data" << std::endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Could not find year attribute to set simple array data" << endl;
         }
         else {
             const int currAttrYear = boost::lexical_cast<int>( (*yearIter).second );
@@ -515,31 +584,90 @@ struct XMLParseHelper {
         aData.mData = nodeValue;
     }
     
+    template<>
+    void parseData<Data<std::map<std::string, std::string>, SIMPLE> >(const rapidxml::xml_node<char>* aNode, Data<std::map<std::string, std::string>, SIMPLE>& aData) {
+        std::map<std::string, std::string> attrs = getAllAttrs(aNode);
+        aData.mData.insert(attrs.begin(), attrs.end());
+    }
+    
     static bool parseXML( const std::string& aXMLFile, Scenario* aRootElement );
+    
+    static rapidxml::xml_node<char>* deepClone(rapidxml::xml_node<char>* aNode) {
+        rapidxml::memory_pool<char>& memoryPool = getStoreXMLMemoryPool();
+        char* nameC = memoryPool.allocate_string(aNode->name(), aNode->name_size());
+        char* valueC = memoryPool.allocate_string(aNode->value(), aNode->value_size());
+        rapidxml::xml_node<char>* copy = memoryPool.allocate_node(aNode->type(), nameC, valueC, aNode->name_size(), aNode->value_size());
+        for(rapidxml::xml_attribute<char> *attr = aNode->first_attribute(); attr; attr = attr->next_attribute()) {
+            char* nameC = memoryPool.allocate_string(attr->name(), attr->name_size());
+            char* valueC = memoryPool.allocate_string(attr->value(), attr->value_size());
+            rapidxml::xml_attribute<char>* attrCopy = memoryPool.allocate_attribute(nameC, valueC, attr->name_size(), attr->value_size());
+            copy->append_attribute(attrCopy);
+        }
+        for(rapidxml::xml_node<char>* child = aNode->first_node(); child; child = child->next_sibling()) {
+            if(child->type() == rapidxml::node_element) {
+                rapidxml::xml_node<char>* childCopy = deepClone(child);
+                copy->append_node(childCopy);
+            }
+        }
+        return copy;
+    }
+    
+private:
+    static rapidxml::memory_pool<char>& getStoreXMLMemoryPool() {
+        static rapidxml::memory_pool<char> GLOBAL_MEM_POOL;
+        return GLOBAL_MEM_POOL;
+    }
 };
 
 template<typename DataType>
-struct IsSimple {
-    using type = boost::integral_constant<bool, DataType::hasDataFlag(SIMPLE)>;
+struct IsSimpleAndParsable {
+    using type = boost::mpl::and_<
+        boost::integral_constant<bool, DataType::hasDataFlag(SIMPLE)>,
+        boost::mpl::not_<
+            boost::integral_constant<bool, DataType::hasDataFlag(NOT_PARSABLE)>
+        >
+    >;
 };
+
+namespace boost {
+template<>
+inline std::map<std::string, std::string> lexical_cast<std::map<std::string, std::string>, std::string>(const std::string& aStr) {
+    return std::map<std::string, std::string>();
+}
+}
     
 template<typename DataVectorType>
 void ParseChildData::processDataVector( DataVectorType aDataVector ) {
     using namespace std;
-    for(rapidxml::xml_attribute<char> *attr = mParentNode->first_attribute(); attr; attr = attr->next_attribute()) {
+    /*for(rapidxml::xml_attribute<char> *attr = mParentNode->first_attribute(); attr; attr = attr->next_attribute()) {
         const char* nameC = attr->name();
         const size_t nameCSize = attr->name_size();
         if(!(strncmp("fillout", nameC, nameCSize) == 0 ||
              strncmp("delete", nameC, nameCSize) == 0 ||
              strncmp("nocreate", nameC, nameCSize) == 0))
         {
-            boost::fusion::for_each(boost::fusion::filter_if<boost::mpl::lambda<IsSimple<boost::mpl::_1> >::type>(aDataVector), [attr] (auto aData) {
+            boost::fusion::for_each(boost::fusion::filter_if<boost::mpl::lambda<IsSimpleAndParsable<boost::mpl::_1> >::type>(aDataVector), [attr] (auto aData) {
                 if(strncmp(aData.mDataName, attr->name(), attr->name_size()) == 0) {
-                    /*! \pre Attributes only map to SIMPLE data types. */
+                    /*! \pre Attributes only map to SIMPLE data types. * /
                     assert(aData.hasDataFlag(SIMPLE));
                     //XMLHelper<void>::parseSimple(attr, aData);
                     string valueStr(attr->value(), attr->value_size());
                     aData.mData = boost::lexical_cast<typename decltype(aData)::value_type>(valueStr);
+                }
+            });
+        }
+    }*/
+    for(auto attr : mAttrs) {
+        if(attr.first != "fillout" &&
+           attr.first != "delete" &&
+           attr.first != "nocreate")
+        {
+            boost::fusion::for_each(boost::fusion::filter_if<boost::mpl::lambda<IsSimpleAndParsable<boost::mpl::_1> >::type>(aDataVector), [attr] (auto aData) {
+                if(aData.mDataName == attr.first) {
+                    /*! \pre Attributes only map to SIMPLE data types. */
+                    assert(aData.hasDataFlag(SIMPLE));
+                    //XMLHelper<void>::parseSimple(attr, aData);
+                    aData.mData = boost::lexical_cast<typename decltype(aData)::value_type>(attr.second);
                 }
             });
         }

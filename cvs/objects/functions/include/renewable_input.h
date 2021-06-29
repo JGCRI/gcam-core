@@ -76,12 +76,15 @@ class Tabs;
  */
 class RenewableInput: public MiniCAMInput
 {
-    friend class InputFactory;
     friend class UnmanagedLandTechnology;
 public:
+    RenewableInput();
+    
     static const std::string& getXMLNameStatic();
 
     const std::string& getXMLReportingName() const;
+    
+    const std::string& getXMLName() const;
     
     virtual RenewableInput* clone() const;
 
@@ -140,7 +143,6 @@ public:
 
 	virtual double getCalibrationQuantity( const int aPeriod ) const;
 protected:
-    RenewableInput();
 
     // Constuctor to allow internal creation of this object
     RenewableInput( const std::string& aName );

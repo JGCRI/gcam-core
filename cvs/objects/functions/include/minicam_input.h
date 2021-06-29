@@ -77,7 +77,7 @@ public:
     virtual void copyParam( const IInput* aInput,
                             const int aPeriod ) = 0;
 
-    virtual const std::string& getXMLReportingName() const = 0;
+    virtual const std::string& getXMLName() const = 0;
 
     virtual void XMLParse( const xercesc::DOMNode* aNode ) = 0;
 

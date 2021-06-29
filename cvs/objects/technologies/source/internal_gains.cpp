@@ -101,9 +101,12 @@ const string& InternalGains::getName() const
 * \author Sonny Kim
 * \return The constant XML_NAME.
 */
+const string& InternalGains::getXMLReportingName() const{
+    static const string XML_REPORTING_NAME = "output-internal-gains";
+    return XML_REPORTING_NAME;
+}
+
 const string& InternalGains::getXMLName() const{
-    /*static const string XML_REPORTING_NAME = "output-internal-gains";
-    return XML_REPORTING_NAME;*/
     return getXMLNameStatic();
 }
 

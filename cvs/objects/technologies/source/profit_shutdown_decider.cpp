@@ -94,6 +94,10 @@ const string& ProfitShutdownDecider::getXMLNameStatic() {
     return XML_NAME;
 }
 
+const string& ProfitShutdownDecider::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 bool ProfitShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
     
     // Assume we have a valid node.

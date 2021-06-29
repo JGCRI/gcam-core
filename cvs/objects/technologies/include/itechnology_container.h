@@ -74,11 +74,12 @@ class StubTechnologyContainer;
  *          
  * \author Pralit Patel
  */
-class ITechnologyContainer : public INamed, public IParsable, public IVisitable,
+class ITechnologyContainer : public INamed, public AParsable, public IVisitable,
                              private boost::noncopyable
 {
     friend class StubTechnologyContainer; // to be able to call clone()
 public:
+    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
     /*! 
      * \brief Constructor.
      * \details Inlined constructor to avoid compiler problems with abstract

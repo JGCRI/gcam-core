@@ -124,7 +124,7 @@ void NodeInput::XMLParse( const xercesc::DOMNode* node ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing " 
-                << getXMLReportingName() << "." << endl;
+                << getXMLName() << "." << endl;
         }
     }
 }
@@ -268,7 +268,7 @@ void NodeInput::copy( const NodeInput& aNodeInput ) {
 }
 
 bool NodeInput::isSameType( const string& aType ) const {
-    return aType == getXMLReportingName();
+    return aType == getXMLName();
 }
 
 bool NodeInput::hasTypeFlag( const int aTypeFlag ) const {
@@ -279,7 +279,7 @@ bool NodeInput::hasTypeFlag( const int aTypeFlag ) const {
 //! Output debug info to XML
 void NodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLReportingName(), aOut, aTabs, mName );
+    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
 
     XMLWriteElement( mSigmaNewCapital, "Sigma1", aOut, aTabs );
     XMLWriteElement( mSigmaOldCapital, "Sigma2", aOut, aTabs );
@@ -294,7 +294,7 @@ void NodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) cons
     }
 
     // write the closing tag.
-    XMLWriteClosingTag( getXMLReportingName(), aOut, aTabs );
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -305,6 +305,10 @@ void NodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) cons
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
+const string& NodeInput::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 const string& NodeInput::getXMLReportingName() const {
     return getXMLNameStatic();
 }

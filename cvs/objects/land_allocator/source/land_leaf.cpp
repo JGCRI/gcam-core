@@ -83,6 +83,19 @@ LandLeaf::LandLeaf( const ALandAllocatorItem* aParent, const std::string &aName 
 {
 }
 
+LandLeaf::LandLeaf():
+    ALandAllocatorItem( eLeaf ),
+    mCarbonContentCalc( 0 ),
+    mMinAboveGroundCDensity( 0.0 ),
+    mMinBelowGroundCDensity( 0.0 ),
+    mCarbonPriceIncreaseRate( Value( 0.0 ) ),
+    mLandUseHistory( 0 ),
+    mReadinLandAllocation( Value( 0.0 ) ),
+    mLastCalcCO2Value( 0.0 ),
+    mLandConstraintPolicy( "" )
+{
+}
+
 //! Destructor
 LandLeaf::~LandLeaf() {
     delete mLandUseHistory;

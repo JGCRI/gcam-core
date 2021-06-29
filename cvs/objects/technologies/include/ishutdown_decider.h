@@ -79,6 +79,12 @@ public:
     // this class is a subtype of IStandardComponent, this is legal and referred
     // to as a covariant return type.
     virtual IShutdownDecider* clone() const = 0;
+    
+    /*!
+     * \brief Get the XML name appropriate for the subclass.
+     * \return The XML name that can be used for input/output.
+     */
+    virtual const std::string& getXMLName() const = 0;
 
     /*!
      * \brief Calculate the coefficient which represents what fraction of the

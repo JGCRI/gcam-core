@@ -62,6 +62,11 @@ LandLeaf( aParent, "" )
 {
 }
 
+CarbonLandLeaf::CarbonLandLeaf():
+LandLeaf()
+{
+}
+
 //! Destructor
 CarbonLandLeaf::~CarbonLandLeaf() {
 }

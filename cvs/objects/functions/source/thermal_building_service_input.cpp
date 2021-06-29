@@ -77,6 +77,10 @@ const string& ThermalBuildingServiceInput::getXMLNameStatic() {
     return XML_REPORTING_NAME;
 }
 
+const string& ThermalBuildingServiceInput::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 const string& ThermalBuildingServiceInput::getXMLReportingName() const {
     return getXMLNameStatic();
 }

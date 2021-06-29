@@ -62,6 +62,10 @@ TranTechnology::TranTechnology( const string& aName, const int aYear ): Technolo
     mLoadFactor = 1;
 }
 
+TranTechnology::TranTechnology() {
+    mLoadFactor = 1;
+}
+
 TranTechnology* TranTechnology::clone() const {
     TranTechnology* clone = new TranTechnology( mName, mYear );
     clone->copy( *this );

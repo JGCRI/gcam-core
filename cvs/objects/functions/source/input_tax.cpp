@@ -92,6 +92,10 @@ const string& InputTax::getXMLReportingName() const{
     return XML_REPORTING_NAME;
 }
 
+const string& InputTax::getXMLName() const{
+    return getXMLNameStatic();
+}
+
 //! Constructor
 InputTax::InputTax()
 {

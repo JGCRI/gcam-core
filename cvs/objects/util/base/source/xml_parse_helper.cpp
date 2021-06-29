@@ -32,9 +32,9 @@
 
 
 /*! 
- * \file interpolation_function_factory.cpp
+ * \file xml_parse_helper.cpp
  * \ingroup Objects
- * \brief InterpolationFunctionFactory class source file.
+ * \brief XMLParseHelper class source file.
  * \author Pralit Patel
  */
 
@@ -59,12 +59,9 @@ bool parseXMLInternal(const string& aXMLFile, ContainerType* aRootElement) {
     
     xmlFile.close();
     
-    cout << root.mData->getName() << endl;
-    
     return true;
 }
 
 bool XMLParseHelper::parseXML(const string& aXMLFile, Scenario* aRootElement) {
-    IOutput* temp = 0;
-    return parseXMLInternal(aXMLFile, temp);
+    return parseXMLInternal(aXMLFile, aRootElement);
 }

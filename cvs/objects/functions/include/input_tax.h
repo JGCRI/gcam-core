@@ -80,7 +80,6 @@ class Tabs;
  */
 class InputTax: public MiniCAMInput
 {
-    friend class InputFactory;
 public:
 
     InputTax();
@@ -92,6 +91,8 @@ public:
     static const std::string& getXMLNameStatic();
 
     virtual const std::string& getXMLReportingName() const;
+    
+    virtual const std::string& getXMLName() const;
 
     virtual void XMLParse( const xercesc::DOMNode* aNode );
 

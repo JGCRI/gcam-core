@@ -79,6 +79,8 @@ public:
      * \brief Destructor.
      */
     virtual ~AFinalDemand();
+    
+    virtual const std::string& getXMLName() const;
 
     // Documentation is inherited
     virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;

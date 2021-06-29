@@ -72,6 +72,7 @@ class UnmanagedLandTechnology : public AgProductionTechnology {
 public:
     UnmanagedLandTechnology( const std::string& aName,
                                 const int aYear );
+    UnmanagedLandTechnology();
 
     ~UnmanagedLandTechnology();
 

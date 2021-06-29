@@ -73,12 +73,14 @@ class Tabs;
  */
 class InputOMVar: public MiniCAMInput
 {
-    friend class InputFactory;
 public:
+    InputOMVar();
 
     static const std::string& getXMLNameStatic();
 
-    const std::string& getXMLReportingName() const;    
+    const std::string& getXMLReportingName() const;
+    
+    const std::string& getXMLName() const;
 
     InputOMVar* clone() const;
 
@@ -152,8 +154,6 @@ public:
                                    const IInput* aNextInput );
 
 protected:
-
-    InputOMVar();
     
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.

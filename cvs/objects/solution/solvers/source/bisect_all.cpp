@@ -54,6 +54,7 @@
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "solution/util/include/solution_info_filter_factory.h"
 // TODO: this filter is hard coded here since it is the default, is this ok?
 #include "solution/util/include/solvable_solution_info_filter.h"
@@ -68,15 +69,29 @@ BisectAll::BisectAll( Marketplace* marketplaceIn, World* worldIn, CalcCounter* c
 mMaxIterations( 30 ),
 mDefaultBracketInterval( 0.4 ),
 mBracketTolerance( 1.0e-8 ),
-mMaxBracketIterations( 40 )
+mMaxBracketIterations( 40 ),
+mSolutionInfoFilter(0)
 {
+}
+
+BisectAll::BisectAll():
+mMaxIterations( 30 ),
+mDefaultBracketInterval( 0.4 ),
+mBracketTolerance( 1.0e-8 ),
+mMaxBracketIterations( 40 ),
+mSolutionInfoFilter(0)
+{
+}
+
+BisectAll::~BisectAll() {
+    delete mSolutionInfoFilter;
 }
 
 //! Init method.
 void BisectAll::init() {
-    if( !mSolutionInfoFilter.get() ) {
+    if( !mSolutionInfoFilter ) {
         // note we are hard coding this as the default
-        mSolutionInfoFilter.reset( new SolvableSolutionInfoFilter() );
+        mSolutionInfoFilter = new SolvableSolutionInfoFilter();
     }
 }
 
@@ -119,11 +134,13 @@ bool BisectAll::XMLParse( const DOMNode* aNode ) {
             mMaxBracketIterations = XMLHelper<unsigned int>::getValue( curr );
         }
         else if( nodeName == "solution-info-filter" ) {
-            mSolutionInfoFilter.reset(
-                SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<string>::getValue( curr ) ) );
+            delete mSolutionInfoFilter;
+            mSolutionInfoFilter =
+                SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<string>::getValue( curr ) );
         }
         else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
-            mSolutionInfoFilter.reset( SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr ) );
+            delete mSolutionInfoFilter;
+            mSolutionInfoFilter = SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -133,6 +150,19 @@ bool BisectAll::XMLParse( const DOMNode* aNode ) {
         }
     }
     return true;
+}
+
+bool BisectAll::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if( nodeName == "solution-info-filter" ) {
+        delete mSolutionInfoFilter;
+        mSolutionInfoFilter =
+            SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLParseHelper::getValue<string>( aNode ) );
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 /*! \brief Bisection Solution Mechanism (all markets)
@@ -177,7 +207,7 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
     solverLog << "Solution set before Bracket: " << endl << aSolutionSet << endl;
     // Currently attempts to bracket but does not necessarily bracket all markets.
     SolverLibrary::bracket( marketplace, world, mDefaultBracketInterval, mMaxBracketIterations,
-                            aSolutionSet, calcCounter, mSolutionInfoFilter.get(), aPeriod );
+                            aSolutionSet, calcCounter, mSolutionInfoFilter, aPeriod );
     
     startMethod();
     ReturnCode code = ORIGINAL_STATE; // code that reports success 1 or failure 0
@@ -185,7 +215,7 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
     worstMarketLog << "Policy All, X, XL, XR, ED, EDL, EDR, RED, bracketed, supply, demand" << endl;
     solverLog << "Bisection_all routine starting" << endl; 
 
-    aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
+    aSolutionSet.updateSolvable( mSolutionInfoFilter );
     
     if( aSolutionSet.getNumSolvable() == 0 ) {
         solverLog << "Exiting bisect all early due to empty solvable set." << endl;
@@ -231,7 +261,7 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
 #else
         world->calc( aPeriod );
 #endif
-        aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
+        aSolutionSet.updateSolvable( mSolutionInfoFilter );
 
         // Print solution set information to solver log.
         solverLog << aSolutionSet << endl;

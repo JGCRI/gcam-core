@@ -55,9 +55,11 @@ class PassThroughSector: public SupplySector
 {
     friend class CalcFixedOutputActivity;
 public:
-    explicit PassThroughSector( const std::string& aRegionName );
+    explicit PassThroughSector();
     virtual ~PassThroughSector(){};
     static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
 
     virtual void completeInit( const IInfo* aRegionInfo,
                                ILandAllocator* aLandAllocator );
@@ -69,8 +71,6 @@ public:
 
 protected:
     virtual double getFixedOutput( const int aPeriod ) const;
-
-    virtual const std::string& getXMLName() const;
 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 

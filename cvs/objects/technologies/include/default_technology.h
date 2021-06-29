@@ -67,6 +67,8 @@ class DefaultTechnology: public Technology
 public:
 	DefaultTechnology( const std::string& aName,
                        const int aYear );
+    
+    DefaultTechnology();
 
 	virtual DefaultTechnology* clone() const;
 

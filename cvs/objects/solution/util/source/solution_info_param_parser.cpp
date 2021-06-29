@@ -47,6 +47,7 @@
 #include "solution/util/include/solution_info_param_parser.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/iinfo.h"
 
@@ -140,6 +141,127 @@ bool SolutionInfoParamParser::XMLParse( const DOMNode* aNode ) {
         }
     }
     return true;
+}
+
+bool SolutionInfoParamParser::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    string nodeName = XMLParseHelper::getNodeName( aNode );
+    map<string, string> attrs = XMLParseHelper::getAllAttrs( aNode );
+    if( nodeName == "solution-tolerance" ) {
+        double value = XMLParseHelper::getValue<double>( aNode );
+        vector<SolutionInfoValues*> valuesToSet = getSolutionInfoValuesFromAttrs( attrs );
+        
+        for( ValueFilloutIterator valueIter = valuesToSet.begin(); valueIter != valuesToSet.end(); ++valueIter ) {
+            (*valueIter)->mSolutionTolerance = value;
+        }
+    }
+    else if( nodeName == "solution-floor" ) {
+        double value = XMLParseHelper::getValue<double>( aNode );
+        vector<SolutionInfoValues*> valuesToSet = getSolutionInfoValuesFromAttrs( attrs );
+        
+        for( ValueFilloutIterator valueIter = valuesToSet.begin(); valueIter != valuesToSet.end(); ++valueIter ) {
+            (*valueIter)->mSolutionFloor = value;
+        }
+    }
+    else if( nodeName == "bracket-interval" ) {
+        double value = XMLParseHelper::getValue<double>( aNode );
+        vector<SolutionInfoValues*> valuesToSet = getSolutionInfoValuesFromAttrs( attrs );
+        
+        for( ValueFilloutIterator valueIter = valuesToSet.begin(); valueIter != valuesToSet.end(); ++valueIter ) {
+            (*valueIter)->mBracketInterval = value;
+        }
+    }
+    else if( nodeName == "max-price-change" ) {
+        double value = XMLParseHelper::getValue<double>( aNode );
+        vector<SolutionInfoValues*> valuesToSet = getSolutionInfoValuesFromAttrs( attrs );
+        
+        for( ValueFilloutIterator valueIter = valuesToSet.begin(); valueIter != valuesToSet.end(); ++valueIter ) {
+            (*valueIter)->mMaxNRPriceJump = value;
+        }
+    }
+    else if( nodeName == "delta-price" ) {
+        double value = XMLParseHelper::getValue<double>( aNode );
+        vector<SolutionInfoValues*> valuesToSet = getSolutionInfoValuesFromAttrs( attrs );
+        
+        for( ValueFilloutIterator valueIter = valuesToSet.begin(); valueIter != valuesToSet.end(); ++valueIter ) {
+            (*valueIter)->mDeltaPrice = value;
+        }
+    }
+    else {
+        return false;
+    }
+    return true;
+}
+
+vector<SolutionInfoParamParser::SolutionInfoValues*> SolutionInfoParamParser::getSolutionInfoValuesFromAttrs( const map<string, string>& aXMLAttrs ) {
+    string goodName;
+    string regionName;
+    string marketType;
+    int period(0);
+    bool fillout(false);
+    
+    // List of allowed attributes, checking them through the attribute list allows us
+    // to warn for any mistyped attribute names.
+    for ( auto currAttr : aXMLAttrs ){
+        if( currAttr.first == "good" ) {
+            goodName = currAttr.second;
+        }
+        else if( currAttr.first == "market-type" ) {
+            marketType = currAttr.second;
+        }
+        else if( currAttr.first == "region" ) {
+            regionName = currAttr.second;
+        }
+        else if( currAttr.first == "period" ) {
+            period = boost::lexical_cast<int>( currAttr.second );
+        }
+        else if( currAttr.first == "fillout" ) {
+            fillout = boost::lexical_cast<bool>( currAttr.second );
+        }
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << currAttr.first << " found while parsing "
+                    << getXMLNameStatic() << "." << endl;
+        }
+    }
+    
+    pair<string, string> marketPair;
+    vector<SolutionInfoValues*> retValuesToSet;
+    
+    // Determine if the user intended this to be by good or market type.
+    // Note that an empty region name is only allowed for market type since
+    // that implies global.
+    if( !goodName.empty() && !regionName.empty() ){
+        marketPair.first = goodName;
+        marketPair.second = regionName;
+    }
+    else if( !marketType.empty() && !regionName.empty() ){
+        marketPair.first = marketType;
+        marketPair.second = regionName;
+    }
+    else if( !marketType.empty() && regionName.empty() ){
+        marketPair.first = marketType;
+        // marketPair.second is empty
+    }
+    else{
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Did not find a good name or market type while parsing "
+                << getXMLNameStatic() << "." << endl;
+        // return an empty vector so no values will be set
+        return retValuesToSet;
+    }
+    
+    // get the SolutionInfoValues from the map for the parsed info
+    retValuesToSet.push_back( &mSolutionInfoParams[ period ][ marketPair ] );
+    
+    // if fillout was set we should also include all future periods as well so that those values can also
+    // get set
+    for( unsigned int fillOutPer = period + 1; fillout && fillOutPer < mSolutionInfoParams.size(); ++fillOutPer ) {
+        retValuesToSet.push_back( &mSolutionInfoParams[ fillOutPer ][ marketPair ] );
+    }
+    
+    return retValuesToSet;
 }
 
 /*!

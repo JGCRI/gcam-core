@@ -52,6 +52,7 @@
 #include "marketplace/include/marketplace.h"
 #include "containers/include/world.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "util/curves/include/curve.h"
@@ -224,6 +225,57 @@ bool Scenario::XMLParse( const DOMNode* node ){
     } // end for loop
     return true;
 }
+
+bool Scenario::XMLParse(rapidxml::xml_node<char>* & aNode) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if ( nodeName == Modeltime::getXMLNameStatic() ){
+        if( !mModeltime ) {
+            mModeltime = Modeltime::getInstance();
+            rapidxml::xml_node<char>* firstChild = aNode->first_node();
+            const_cast<Modeltime*>( mModeltime )->XMLParse( firstChild );
+        }
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Modeltime can only be parsed once." << endl;
+        }
+        return true;
+    }
+    else if( SolverFactory::hasSolver( nodeName ) ) {
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        Solver* currSolver = 0;
+        Data<Solver*, CONTAINER> currSolverData(currSolver, "");
+        XMLParseHelper::parseData(aNode, currSolverData);
+        if(currSolver) {
+            /*!
+             * \pre Modeltime has already been created.
+             */
+            assert( modeltime.get() );
+            
+            // this must be done here rather than relying on XMLHelper since we require a factory
+            // to create our object
+            const int period = mModeltime->getyr_to_per( XMLParseHelper::getValue<int>(attrs["year"]));
+            const bool fillOut = XMLParseHelper::getValue<bool>( attrs["fillout"] );
+            // we may need to resize the mSolvers which we could do now that we know we have a
+            // modeltime
+            if( mSolvers.size() == 0 ) {
+                mSolvers.resize( mModeltime->getmaxper() );
+            }
+            boost::shared_ptr<Solver> retSolver(currSolver);
+            mSolvers[ period ] = retSolver;
+            
+            // TODO: I think just using the same object rather than copying should suffice here
+            for( int fillOutPeriod = period + 1; fillOut && fillOutPeriod < mModeltime->getmaxper(); ++fillOutPeriod ) {
+                mSolvers[ fillOutPeriod ] = retSolver;
+            }
+        }
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+    
 
 //! Sets the name of the scenario. 
 void Scenario::setName( string newName ) {

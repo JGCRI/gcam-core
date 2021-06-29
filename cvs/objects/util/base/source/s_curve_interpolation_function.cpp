@@ -88,7 +88,7 @@ IInterpolationFunction* SCurveInterpolationFunction::clone() const {
  * \return The string which identifies this function.
  * \see InterpolationFunctionFactory
  */
-const string& SCurveInterpolationFunction::getXMLAttrNameStatic() {
+const string& SCurveInterpolationFunction::getXMLNameStatic() {
     const static string XML_NAME = "s-curve";
     return XML_NAME;
 }
@@ -118,14 +118,14 @@ bool SCurveInterpolationFunction::XMLParse( const DOMNode* aNode ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLAttrNameStatic() << "." << endl;
+                << getXMLNameStatic() << "." << endl;
         }
     }
     return true;
 }
 
 void SCurveInterpolationFunction::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, getXMLAttrNameStatic() );
+    XMLWriteOpeningTag( IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, getXMLNameStatic() );
 
     XMLWriteElement( mSteepness, "steepness", aOut, aTabs );
     XMLWriteElement( mMedianXValue, "median-x-value", aOut, aTabs );

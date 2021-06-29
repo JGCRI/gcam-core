@@ -73,7 +73,7 @@ IInterpolationFunction* FixedInterpolationFunction::clone() const {
  * \return The string which identifies this function.
  * \see InterpolationFunctionFactory
  */
-const string& FixedInterpolationFunction::getXMLAttrNameStatic() {
+const string& FixedInterpolationFunction::getXMLNameStatic() {
     const static string XML_NAME = "fixed";
     return XML_NAME;
 }
@@ -100,14 +100,14 @@ bool FixedInterpolationFunction::XMLParse( const DOMNode* aNode ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLAttrNameStatic() << "." << endl;
+                << getXMLNameStatic() << "." << endl;
         }
     }
     return true;
 }
 
 void FixedInterpolationFunction::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteElement("", IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, 0, getXMLAttrNameStatic() );
+    XMLWriteElement("", IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, 0, getXMLNameStatic() );
 }
 
 double FixedInterpolationFunction::interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,

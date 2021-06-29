@@ -82,6 +82,10 @@ const string& BuildingServiceInput::getXMLNameStatic() {
     return XML_REPORTING_NAME;
 }
 
+const string& BuildingServiceInput::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 const string& BuildingServiceInput::getXMLReportingName() const {
     return getXMLNameStatic();
 }

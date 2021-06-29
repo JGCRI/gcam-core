@@ -66,6 +66,10 @@ public:
     
     static const std::string& getXMLNameStatic();
     
+    virtual const std::string& getXMLName() const;
+    
+    bool XMLParse( rapidxml::xml_node<char>* & aNode );
+    
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const IInfo* aTechIInfo );
@@ -79,7 +83,6 @@ protected:
     ReadInControl( const ReadInControl& aOther );
     ReadInControl& operator=( const ReadInControl& aOther );
     
-    virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 

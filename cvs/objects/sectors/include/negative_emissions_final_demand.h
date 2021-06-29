@@ -66,6 +66,8 @@ class NegativeEmissionsFinalDemand: public AFinalDemand
 
 public:
     static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
 
     NegativeEmissionsFinalDemand();
 
@@ -112,8 +114,6 @@ protected:
         //! State value necessary to use Marketplace::addToDemand
         DEFINE_VARIABLE( SIMPLE | STATE, "curr-negative-emiss-value", mCurrNegEmissValue, Value )
     )
-    
-    virtual const std::string& getXMLName() const;
 };
 
 #endif // _NEGATIVE_EMISSIONS_FINAL_DEMAND_H_

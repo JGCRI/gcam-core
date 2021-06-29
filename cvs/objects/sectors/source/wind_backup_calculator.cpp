@@ -85,6 +85,10 @@ const string& WindBackupCalculator::getXMLNameStatic() {
     return XML_NAME;
 }
 
+const string& WindBackupCalculator::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 bool WindBackupCalculator::XMLParse( const xercesc::DOMNode* node ){
     // This backup calculator does not need to parse any data.
     return true;

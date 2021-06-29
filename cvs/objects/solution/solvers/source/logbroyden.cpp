@@ -59,6 +59,7 @@
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "solution/util/include/solution_info_filter_factory.h"
 #include "solution/util/include/solvable_nr_solution_info_filter.h"
 
@@ -134,8 +135,9 @@ bool LogBroyden::XMLParse( const DOMNode* aNode ) {
             mFTOL = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "solution-info-filter" ) {
-            mSolutionInfoFilter.reset(
-                                      SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<std::string>::getValue( curr ) ) );
+            delete mSolutionInfoFilter;
+            mSolutionInfoFilter =
+              SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<std::string>::getValue( curr ) );
         }
         else if(nodeName == "linear-price") {
           mLogPricep = false;
@@ -147,7 +149,8 @@ bool LogBroyden::XMLParse( const DOMNode* aNode ) {
             mMaxJacobainReuse = XMLHelper<int>::getValue( curr );
         }
         else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
-            mSolutionInfoFilter.reset( SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr ) );
+            delete mSolutionInfoFilter;
+            mSolutionInfoFilter = SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -155,6 +158,25 @@ bool LogBroyden::XMLParse( const DOMNode* aNode ) {
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
                     << getXMLName() << "." << std::endl;
         }
+    }
+    return true;
+}
+
+bool LogBroyden::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    std::string nodeName = XMLParseHelper::getNodeName(aNode);
+    if( nodeName == "solution-info-filter" ) {
+        delete mSolutionInfoFilter;
+        mSolutionInfoFilter =
+            SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLParseHelper::getValue<std::string>( aNode ) );
+    }
+    else if(nodeName == "linear-price") {
+      mLogPricep = false;
+    }
+    else if(nodeName == "log-price") {
+      mLogPricep = true;    // not strictly necessary, as this is the default.
+    }
+    else {
+        return false;
     }
     return true;
 }
@@ -205,7 +227,7 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     
     // Update the solution vector for the correct markets to solve.
     // Need to update solvable status before starting solution (Ignore return code)
-    solnset.updateSolvable( mSolutionInfoFilter.get() );
+    solnset.updateSolvable( mSolutionInfoFilter );
 
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );

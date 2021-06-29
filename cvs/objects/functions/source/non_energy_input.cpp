@@ -81,6 +81,10 @@ const string& NonEnergyInput::getXMLReportingName() const{
     return XML_REPORTING_NAME;
 }
 
+const string& NonEnergyInput::getXMLName() const{
+    return getXMLNameStatic();
+}
+
 //! Constructor
 NonEnergyInput::NonEnergyInput()
 {

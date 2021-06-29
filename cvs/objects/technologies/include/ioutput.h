@@ -122,6 +122,8 @@ public:
      * \brief Return the name of the input for reporting.
      * \return The name of the input for reporting.
      */
+    virtual const std::string& getXMLReportingName() const = 0;
+    
     virtual const std::string& getXMLName() const = 0;
 
     // Documentation is inherited.

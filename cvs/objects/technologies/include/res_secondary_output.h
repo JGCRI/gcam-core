@@ -89,9 +89,9 @@ public:
 
     virtual bool isSameType( const std::string& aType ) const;
 
-
+    virtual const std::string& getXMLReportingName() const;
+    
     virtual const std::string& getXMLName() const;
-
     
     virtual void setPhysicalOutput( const double aPrimaryOutput,
                                    const std::string& aRegionName,

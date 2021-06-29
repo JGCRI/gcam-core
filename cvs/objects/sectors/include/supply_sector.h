@@ -56,9 +56,10 @@ class IInfo;
 class SupplySector: public Sector
 {
 public:
-    explicit SupplySector( const std::string& aRegionName );
+    explicit SupplySector();
     virtual ~SupplySector(){};
     static const std::string& getXMLNameStatic();
+    virtual const std::string& getXMLName() const;
     
     virtual void completeInit( const IInfo* aRegionInfo,
                                ILandAllocator* aLandAllocator );
@@ -86,8 +87,6 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
 
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-
-    virtual const std::string& getXMLName() const;
 
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.

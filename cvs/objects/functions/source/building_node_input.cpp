@@ -131,7 +131,7 @@ void BuildingNodeInput::XMLParse( const xercesc::DOMNode* node ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing " 
-                << getXMLReportingName() << "." << endl;
+                << getXMLName() << "." << endl;
         }
     }
 }
@@ -251,7 +251,7 @@ void BuildingNodeInput::copy( const BuildingNodeInput& aNodeInput ) {
 }
 
 bool BuildingNodeInput::isSameType( const string& aType ) const {
-    return aType == getXMLReportingName();
+    return aType == getXMLName();
 }
 
 bool BuildingNodeInput::hasTypeFlag( const int aTypeFlag ) const {
@@ -261,7 +261,7 @@ bool BuildingNodeInput::hasTypeFlag( const int aTypeFlag ) const {
 //! Output debug info to XML
 void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLReportingName(), aOut, aTabs, mName );
+    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
 
     XMLWriteElement( mBuildingSize[ aPeriod ], "building-size", aOut, aTabs );
     XMLWriteElement(mIsFixedBuildingSize[aPeriod], "is-building-size-fixed", aOut, aTabs);
@@ -276,7 +276,7 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
     }
 
     // write the closing tag.
-    XMLWriteClosingTag( getXMLReportingName(), aOut, aTabs );
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -287,6 +287,10 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
+const string& BuildingNodeInput::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 const string& BuildingNodeInput::getXMLReportingName() const {
     return getXMLNameStatic();
 }

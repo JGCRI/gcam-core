@@ -116,6 +116,9 @@ void SmoothRenewableSubresource::completeInit( const std::string& aRegionName, c
                                                const IInfo* aSectorInfo )
 {
    SubRenewableResource::completeInit( aRegionName, aResourceName, aSectorInfo );
+    
+    mCostCurve.setCurveExponent( mCurveExponent );
+    mCostCurve.setMidprice( mMidPrice );
 
    if ( !( mCostCurve.getMidprice() > 0 && mCostCurve.getCurveExponent() > 0 ) )
    // Invalid input parameter

@@ -54,6 +54,7 @@
 #include <boost/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
+#include "util/base/include/iparsable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -77,7 +78,7 @@ class RegionMiniCAM;
 * \author Sonny Kim
 */
 
-class Region: public INamed, public IVisitable, protected boost::noncopyable
+class Region: public INamed, public IVisitable, public AParsable, protected boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
@@ -127,7 +128,7 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "resource", mResources, std::vector<AResource*> ),
         
         /*! \brief The region's information store. */
-        DEFINE_VARIABLE( SIMPLE, "info", mRegionInfo, IInfo* )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "info", mRegionInfo, IInfo* )
     )
 
     virtual const std::string& getXMLName() const = 0;

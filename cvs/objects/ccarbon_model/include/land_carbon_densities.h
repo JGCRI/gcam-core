@@ -106,7 +106,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "below-ground-carbon-density", mAvgBelowGroundCarbon, double ),
         
         //! Age at maturity.  This is used to grow forests slowly.
-        DEFINE_VARIABLE( SIMPLE, "mature-age", mMatureAge, int )
+        DEFINE_VARIABLE( SIMPLE, "mature-age", mMatureAge, /*int*/double )
     )
 };
 

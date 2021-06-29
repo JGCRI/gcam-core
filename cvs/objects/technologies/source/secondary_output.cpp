@@ -63,9 +63,12 @@ extern Scenario* scenario;
 * \author Sonny Kim
 * \return The constant XML_NAME.
 */
+const string& SecondaryOutput::getXMLReportingName() const{
+    static const string XML_REPORTING_NAME = "output-secondary";
+    return XML_REPORTING_NAME;
+}
+
 const string& SecondaryOutput::getXMLName() const{
-    /*static const string XML_REPORTING_NAME = "output-secondary";
-    return XML_REPORTING_NAME;*/
     return getXMLNameStatic();
 }
 

@@ -76,6 +76,8 @@ public:
     // this class is a subtype of IStandardComponent, this is legal and referred
     // to as a covariant return type.
     virtual IBackupCalculator* clone() const = 0;
+    
+    virtual const std::string& getXMLName() const = 0;
 
     /*!
      * \brief Pass parameter information into the backup calculator from the technology.

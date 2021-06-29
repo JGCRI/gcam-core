@@ -67,8 +67,22 @@ ALandAllocatorItem::ALandAllocatorItem( const ALandAllocatorItem* aParent,
 {
 }
 
+ALandAllocatorItem::ALandAllocatorItem( const LandAllocatorItemType aType )
+    : mParent( 0 ),
+      mShare( Value( -1.0 ) ), // this is so initialization can be checked.
+      mProfitRate( Value( 0.0 ) ),
+      mIsGhostShareRelativeToDominantCrop( false ),
+      mType( aType ),
+      mIsLandExpansionCost( false )
+{
+}
+
 //! Destructor
 ALandAllocatorItem::~ALandAllocatorItem() {
+}
+
+void ALandAllocatorItem::setParent( const ALandAllocatorItem* aParent ) {
+    mParent = aParent;
 }
 
 void ALandAllocatorItem::setShare( const double aShare,

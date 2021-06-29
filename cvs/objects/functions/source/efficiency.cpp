@@ -45,6 +45,12 @@
 
 using namespace std;
 
+Efficiency::Efficiency():mReadInEfficiency(0) {
+}
+
+Efficiency::~Efficiency() {
+}
+
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
 * \details This public function accesses the private constant string, XML_NAME.
 *          This way
@@ -58,6 +64,10 @@ using namespace std;
 const string& Efficiency::getXMLNameStatic() {
     const static string XML_NAME = "efficiency";
     return XML_NAME;
+}
+
+const string& Efficiency::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 /*!

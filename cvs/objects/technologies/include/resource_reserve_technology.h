@@ -82,11 +82,12 @@ class Tabs;
 class ResourceReserveTechnology : public Technology {
 	friend class XMLDBOutputter;
 public:
-	ResourceReserveTechnology(const std::string& aName,
+    ResourceReserveTechnology(const std::string& aName,
 		const int aYear);
-	~ResourceReserveTechnology();
-	static const std::string& getXMLNameStatic();
-	ResourceReserveTechnology* clone() const;
+    ResourceReserveTechnology();
+    ~ResourceReserveTechnology();
+    static const std::string& getXMLNameStatic();
+    ResourceReserveTechnology* clone() const;
     
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
@@ -95,13 +96,13 @@ public:
                            PreviousPeriodInfo& aPrevPeriodInfo,
                            const int aPeriod );
 
-	virtual void completeInit(const std::string& aRegionName,
+    virtual void completeInit(const std::string& aRegionName,
                               const std::string& aSectorName,
                               const std::string& aSubsectorName,
                               const IInfo* aSubsectorIInfo,
                               ILandAllocator* aLandAllocator);
 
-	virtual void production(const std::string& aRegionName,
+    virtual void production(const std::string& aRegionName,
                             const std::string& aSectorName,
                             double aVariableDemand,
                             double aFixedOutputScaleFactor,
@@ -122,7 +123,7 @@ public:
     virtual void postCalc( const std::string& aRegionName,
                            const int aPeriod );
 
-	virtual void doInterpolations(const Technology* aPrevTech, const Technology* aNextTech);
+    virtual void doInterpolations(const Technology* aPrevTech, const Technology* aNextTech);
     
 protected:
     
@@ -162,9 +163,9 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "is-calibrating", mIsResourceCalibrating, bool )
     )
     
-	virtual void toDebugXMLDerived(const int period, std::ostream& out, Tabs* tabs) const;
-	virtual bool XMLDerivedClassParse(const std::string& nodeName, const xercesc::DOMNode* curr);
-	virtual const std::string& getXMLName() const;
+    virtual void toDebugXMLDerived(const int period, std::ostream& out, Tabs* tabs) const;
+    virtual bool XMLDerivedClassParse(const std::string& nodeName, const xercesc::DOMNode* curr);
+    virtual const std::string& getXMLName() const;
     void copy( const ResourceReserveTechnology& aOther );
     virtual void setProductionState( const int aPeriod );
 };

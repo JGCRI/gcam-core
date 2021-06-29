@@ -45,6 +45,7 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/user_configurable_solver.h"
+#include "containers/include/scenario.h"
 #include "containers/include/world.h"
 #include "marketplace/include/marketplace.h"
 #include "solution/solvers/include/solver_component.h"
@@ -54,11 +55,14 @@
 #include "util/logger/include/ilogger.h"
 #include "solution/util/include/calc_counter.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/util.h"
 #include "util/base/include/auto_file.h"
 
 using namespace std;
 using namespace xercesc;
+
+extern Scenario* scenario;
 
 // typedefs
 typedef vector<SolverComponent*>::iterator SolverComponentIterator;
@@ -67,6 +71,17 @@ typedef vector<SolverComponent*>::const_iterator CSolverComponentIterator;
 //! Constructor
 UserConfigurableSolver::UserConfigurableSolver( Marketplace* aMarketplace, World* aWorld ) :
     Solver( aMarketplace, aWorld ),
+    mDefaultSolutionTolerance( 0.001),
+    mDefaultSolutionFloor( 0.0001 ),
+    mCalibrationTolerance( 0.01 ),
+    mMaxModelCalcs( 2000 )
+{
+    // get the calc counter from the world
+    mCalcCounter = world->getCalcCounter();
+}
+
+UserConfigurableSolver::UserConfigurableSolver() :
+    Solver( scenario->getMarketplace(), scenario->getWorld() ),
     mDefaultSolutionTolerance( 0.001),
     mDefaultSolutionFloor( 0.0001 ),
     mCalibrationTolerance( 0.01 ),
@@ -87,6 +102,10 @@ UserConfigurableSolver::~UserConfigurableSolver() {
 const string& UserConfigurableSolver::getXMLNameStatic() {
     const static string SOLVER_NAME = "user-configurable-solver";
     return SOLVER_NAME;
+}
+
+const string& UserConfigurableSolver::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 bool UserConfigurableSolver::XMLParse( const DOMNode* aNode ) {

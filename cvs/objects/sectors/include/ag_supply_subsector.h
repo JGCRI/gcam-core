@@ -57,9 +57,10 @@
 
 class AgSupplySubsector : public Subsector {
 public:
-    AgSupplySubsector( const std::string& regionName, const std::string& sectorName );
+    AgSupplySubsector();
     virtual ~AgSupplySubsector();
     static const std::string& getXMLNameStatic();
+    virtual const std::string& getXMLName() const;
 
     virtual double calcShare( const IDiscreteChoice* aChoiceFun, const GDP* aGDP, const int aPeriod ) const;
     
@@ -73,6 +74,5 @@ protected:
     )
 
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual const std::string& getXMLName() const;
 };
 #endif // _AG_SUPPLY_SUBSECTOR_H_

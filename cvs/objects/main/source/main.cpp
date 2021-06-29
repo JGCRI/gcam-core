@@ -77,7 +77,7 @@
 #include "util/base/include/version.h"
 #include "util/base/include/util.h"
 
-#include "util/base/include/xml_parse_helper.h"
+//#include "util/base/include/xml_parse_helper.h"
 
 using namespace std;
 using namespace xercesc;
@@ -114,10 +114,15 @@ int main( int argc, char *argv[] ) {
     LoggerFactoryWrapper loggerFactoryWrapper;
     bool success = XMLHelper<void>::parseXML( loggerFileName, &loggerFactoryWrapper );
     
-    scenario = new Scenario;
-    success = XMLHelper<void>::parseXML( "../input/gcamdata/xml/modeltime.xml", scenario );
-    XMLParseHelper::parseXML("output_test.xml", scenario);
-    abort();
+    /*scenario = new Scenario;
+    //success = XMLHelper<void>::parseXML( "../input/gcamdata/xml/modeltime.xml", scenario );
+    XMLParseHelper::parseXML("../input/gcamdata/xml/modeltime.xml", scenario);
+    XMLParseHelper::parseXML("../input/gcamdata/xml/hector.xml", scenario);
+    XMLParseHelper::parseXML("../input/gcamdata/xml/socioeconomics_gSSP2.xml", scenario);
+    XMLParseHelper::parseXML("../input/gcamdata/xml/resources.xml", scenario);
+    XMLParseHelper::parseXML("../input/gcamdata/xml/en_supply.xml", scenario);
+    XMLParseHelper::parseXML("../input/gcamdata/xml/en_transformation.xml", scenario);
+    abort();*/
     
     // Check if parsing succeeded. Non-zero return codes from main indicate
     // failure.

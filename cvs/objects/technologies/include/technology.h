@@ -155,6 +155,7 @@ class Technology: public ITechnology
     friend class EnergyBalanceTable;
 public:
     Technology( const std::string& aName, const int aYear );
+    Technology();
     virtual Technology* clone() const = 0;
     virtual ~Technology();
 
@@ -294,7 +295,7 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "input", mInputs, std::vector<IInput*> ),
                                 
         //! The current production state for each period.
-        DEFINE_VARIABLE( CONTAINER, "production-state", mProductionState, objects::PeriodVector<IProductionState*> ),
+        DEFINE_VARIABLE( CONTAINER | NOT_PARSABLE, "production-state", mProductionState, objects::PeriodVector<IProductionState*> ),
 
         //! The objects which combine to calculate the shutdown coefficient.
         DEFINE_VARIABLE( CONTAINER, "shutdown-decider", mShutdownDeciders, std::vector<IShutdownDecider*> ),
@@ -322,10 +323,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Logit share weight
-        DEFINE_VARIABLE( SIMPLE | STATE, "share-weight", mShareWeight, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "real-share-weight", mShareWeight, Value ),
 
         //! The Logit share weight that was parsed by the user
-        DEFINE_VARIABLE( SIMPLE, "parsed-share-weight", mParsedShareWeight, Value ),
+        DEFINE_VARIABLE( SIMPLE, "share-weight", mParsedShareWeight, Value ),
 
         //! The annual capacity factor
         DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, double ),

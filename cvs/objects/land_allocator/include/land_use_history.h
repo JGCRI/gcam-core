@@ -69,7 +69,7 @@ class Tabs;
  *                      - \c year the year of the land allocation
  */
 class LandUseHistory : public IVisitable,
-                       public IParsable,
+                       public AParsable,
                        private boost::noncopyable
 {
     friend class XMLDBOutputter;
@@ -84,6 +84,9 @@ public:
     
     // IParsable Methods.
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+    // AParsable Methods.
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
     
     const std::string& getName() const;
 
@@ -116,7 +119,7 @@ protected:
         DEFINE_SUBCLASS_FAMILY( LandUseHistory ),
 
         //! Sparse mapping of year to land allocation.
-        DEFINE_VARIABLE( ARRAY, "allocation", mHistoricalLand, LandMapType ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "allocation", mHistoricalLand, LandMapType ),
 
         //! Average above ground carbon content historically.
         DEFINE_VARIABLE( SIMPLE, "above-ground-carbon-density", mHistoricAboveGroundCarbonDensity, double ),

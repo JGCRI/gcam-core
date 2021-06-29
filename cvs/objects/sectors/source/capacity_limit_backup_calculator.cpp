@@ -101,6 +101,10 @@ const string& CapacityLimitBackupCalculator::getXMLNameStatic() {
     return XML_NAME;
 }
 
+const string& CapacityLimitBackupCalculator::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 // Documentation is inherited.
 bool CapacityLimitBackupCalculator::XMLParse( const xercesc::DOMNode* node ){
     /*! \pre Assume we are passed a valid node. */

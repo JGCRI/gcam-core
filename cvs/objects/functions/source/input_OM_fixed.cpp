@@ -82,6 +82,10 @@ const string& InputOMFixed::getXMLReportingName() const{
     return XML_REPORTING_NAME;
 }
 
+const string& InputOMFixed::getXMLName() const{
+    return getXMLNameStatic();
+}
+
 //! Constructor
 InputOMFixed::InputOMFixed()
 {

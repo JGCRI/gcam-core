@@ -70,7 +70,7 @@ class ReadInControl;
  * \details The AEmissionsControl class describes a means of reducing emissions.
  * \author Kate Calvin
  */
-class AEmissionsControl: public INamed, public IParsable {
+class AEmissionsControl: public INamed, public AParsable {
 public:
     //! Virtual Destructor.
     virtual ~AEmissionsControl();
@@ -79,7 +79,17 @@ public:
     
     bool XMLParse( const xercesc::DOMNode* aNode );
     void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
-    static const std::string& getXMLNameStatic();
+    
+    /*!
+     * \brief Get the XML node name for output to XML.
+     * \details This public function accesses the private constant string,
+     *          XML_NAME. This way the tag is always consistent for both read-in
+     *          and output and can be easily changed. This function may be
+     *          virtual to be overridden by derived class pointers.
+     * \author Jim Naslund
+     * \return The constant XML_NAME.
+     */
+    virtual const std::string& getXMLName() const = 0;
     
     double getEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
 
@@ -115,17 +125,6 @@ protected:
     AEmissionsControl();
     AEmissionsControl( const AEmissionsControl& aOther );
     AEmissionsControl& operator=( const AEmissionsControl& aOther );
-
-    /*!
-     * \brief Get the XML node name for output to XML.
-     * \details This public function accesses the private constant string,
-     *          XML_NAME. This way the tag is always consistent for both read-in
-     *          and output and can be easily changed. This function may be
-     *          virtual to be overridden by derived class pointers.
-     * \author Jim Naslund
-     * \return The constant XML_NAME.
-     */
-    virtual const std::string& getXMLName() const = 0;
 
     /*!
      * \brief Parses any child nodes specific to derived classes

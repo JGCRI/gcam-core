@@ -84,7 +84,7 @@ GDP::GDP() {
     mEnergyGDPElasticity = 0;
     PPPConversionFact = 1;
     PPPDelta = 0;
-    constRatio = false;
+    constRatio = true;//false;
     baseGDP = 0;
     mGDPUnit = "Million1990US$";
 }

@@ -47,6 +47,7 @@
 #include "emissions/include/mac_control.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
@@ -171,6 +172,30 @@ bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
         return false;
     }    
     return true;
+}
+
+bool MACControl::XMLParse(rapidxml::xml_node<char>* & aNode) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if ( nodeName == "mac-reduction" ){
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        double taxVal = XMLParseHelper::getValue<double>(attrs["tax"]);
+        double reductionVal = XMLParseHelper::getValue<double>( aNode );
+        XYDataPoint* currPoint = new XYDataPoint( taxVal, reductionVal );
+        mMacCurve->getPointSet()->addPoint( currPoint );
+        return true;
+    }
+    else if ( nodeName == "no-zero-cost-reductions" ){
+        mNoZeroCostReductions = true;
+        return true;
+    }
+    else if ( nodeName == "tech-change" ){
+        Data<objects::PeriodVector<double>, ARRAY> techChangeData(*mTechChange, "");
+        XMLParseHelper::parseData(aNode, techChangeData);
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {

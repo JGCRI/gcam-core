@@ -64,9 +64,11 @@
  * \author Marshall Wise
  */
 class CSPBackupCalculator: public IBackupCalculator {
-    friend class BackupCalculatorFactory;
 public:
+    CSPBackupCalculator();
     virtual CSPBackupCalculator* clone() const;
+    static const std::string& getXMLNameStatic();
+    const std::string& getXMLName() const;
     virtual bool isSameType( const std::string& aType ) const;
     virtual const std::string& getName() const;
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
@@ -91,8 +93,6 @@ public:
                                              const double aAverageGridCapacityFactor,
                                              const int aPeriod ) const;
 protected:
-    static const std::string& getXMLNameStatic();
-    CSPBackupCalculator();
 
     double calcIntermittentShare( const std::string& aSector,
                                   const std::string& aElectricSector,

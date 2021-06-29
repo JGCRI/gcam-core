@@ -109,6 +109,10 @@ void FractionalSecondaryOutput::setName( const string& aName )
  * \author Sonny Kim
  * \return The constant XML_NAME.
  */
+const string& FractionalSecondaryOutput::getXMLReportingName() const{
+    return getXMLNameStatic();
+}
+
 const string& FractionalSecondaryOutput::getXMLName() const{
     return getXMLNameStatic();
 }

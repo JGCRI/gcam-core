@@ -45,8 +45,12 @@
 
 #include "solution/solvers/include/solver_component.h"
 #include "solution/util/include/calc_counter.h"
+#include "containers/include/scenario.h"
+#include "containers/include/world.h"
 
 using namespace std;
+
+extern Scenario* scenario;
 
 /*! \brief Constructor.
 * \details This constructor takes as arguments the marketplace, and world which it will be solving, and a pointer to the CalcCounter
@@ -56,6 +60,11 @@ using namespace std;
 * \param calcCounterIn A pointer to the object which tracks calls to world.calc()
 */
 SolverComponent::SolverComponent( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ): marketplace( marketplaceIn ), world( worldIn ), calcCounter( calcCounterIn ){
+}
+
+SolverComponent::SolverComponent():
+marketplace( scenario->getMarketplace() ), world( scenario->getWorld() ), calcCounter( scenario->getWorld()->getCalcCounter() )
+{
 }
 
 //! Default Destructor.

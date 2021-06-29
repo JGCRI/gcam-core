@@ -70,6 +70,10 @@ UnmanagedLandTechnology::UnmanagedLandTechnology( const string& aName, const int
     mResourceInput = mInputs.end();
 }
 
+UnmanagedLandTechnology::UnmanagedLandTechnology() {
+    mResourceInput = mInputs.end();
+}
+
 // ! Destructor
 UnmanagedLandTechnology::~UnmanagedLandTechnology() {
 }

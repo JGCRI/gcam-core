@@ -64,6 +64,11 @@ LandLeaf( aParent, "" )
 {
 }
 
+UnmanagedLandLeaf::UnmanagedLandLeaf():
+LandLeaf()
+{
+}
+
 //! Destructor
 UnmanagedLandLeaf::~UnmanagedLandLeaf() {
 }

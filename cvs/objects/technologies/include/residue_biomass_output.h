@@ -79,6 +79,7 @@ public :
 
     ResidueBiomassOutput( const std::string& sectorName = std::string() );
     virtual ~ResidueBiomassOutput(void);
+    virtual const std::string& getXMLReportingName() const;
     virtual const std::string& getXMLName() const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 

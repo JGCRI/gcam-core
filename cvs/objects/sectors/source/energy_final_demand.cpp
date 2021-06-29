@@ -65,13 +65,16 @@ extern Scenario* scenario;
 /*! \brief Constructor.
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-EnergyFinalDemand::EnergyFinalDemand()
+EnergyFinalDemand::EnergyFinalDemand():
+mFinalEnergyConsumer(0),
+mIsPerCapBased(false)
 {
 }
 
 /*! \brief Destructor.
 */
 EnergyFinalDemand::~EnergyFinalDemand(){
+    delete mFinalEnergyConsumer;
 }
 
 const string& EnergyFinalDemand::getXMLName() const {
@@ -136,7 +139,7 @@ bool EnergyFinalDemand::XMLParse( const DOMNode* aNode ) {
         }
         else if( nodeName == FinalEnergyConsumer::getXMLNameStatic() ){
             parseSingleNode( curr, mFinalEnergyConsumer,
-                new FinalEnergyConsumer( mName ) );
+                new FinalEnergyConsumer() );
         }
         else if( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -158,7 +161,7 @@ void EnergyFinalDemand::toDebugXML( const int aPeriod,
     XMLWriteElement( mDemandFunction->isPerCapitaBased(),
                      "perCapitaBased", aOut, aTabs );
 
-    if( mFinalEnergyConsumer.get() ){
+    if( mFinalEnergyConsumer ){
         mFinalEnergyConsumer->toDebugXML( aPeriod, aOut, aTabs );
     }
 
@@ -195,10 +198,17 @@ void EnergyFinalDemand::toDebugXMLDerived( const int period, std::ostream& out, 
 void EnergyFinalDemand::completeInit( const string& aRegionName,
                                       const IInfo* aRegionInfo )
 {
-    // Setup the default demand function if one was not read in.
-    if( !mDemandFunction.get() ){
+    //mDemandFunction.reset( mIsPerCapBased ? new PerCapitaGDPDemandFunction : new TotalGDPDemandFunction );
+    if(mIsPerCapBased) {
+        mDemandFunction.reset( new PerCapitaGDPDemandFunction );
+    }
+    else {
         mDemandFunction.reset( new TotalGDPDemandFunction );
     }
+    // Setup the default demand function if one was not read in.
+    /*if( !mDemandFunction.get() ){
+        mDemandFunction.reset( new TotalGDPDemandFunction );
+    }*/
 
     if( mBaseService[ 0 ] < 0.0 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -245,7 +255,7 @@ void EnergyFinalDemand::completeInit( const string& aRegionName,
         }
     }
 
-    if( mFinalEnergyConsumer.get() ){
+    if( mFinalEnergyConsumer ){
         mFinalEnergyConsumer->completeInit( aRegionName, mName );
     }
 }
@@ -307,7 +317,7 @@ double EnergyFinalDemand::calcFinalDemand( const string& aRegionName,
     // Do for non-calibration periods
     else{
         // Update AEEI.
-        if( mFinalEnergyConsumer.get() ){
+        if( mFinalEnergyConsumer ){
             mFinalEnergyConsumer->updateAEEI( aRegionName, aPeriod );
         }
 
@@ -323,7 +333,7 @@ double EnergyFinalDemand::calcFinalDemand( const string& aRegionName,
         mPreTechChangeServiceDemand[ aPeriod ] = mServiceDemands[ aPeriod ];
  
         // Final demand for service adjusted using cummulative technical change.
-        if( mFinalEnergyConsumer.get() ){
+        if( mFinalEnergyConsumer ){
             mServiceDemands[ aPeriod ] /= mFinalEnergyConsumer->calcTechChange( aPeriod );
         }
     }
@@ -373,7 +383,7 @@ double EnergyFinalDemand::getWeightedEnergyPrice( const string& aRegionName,
 {
     // If this is not a final energy demand, it has no impact on the energy
     // price.
-    if( !mFinalEnergyConsumer.get() ){
+    if( !mFinalEnergyConsumer ){
         return 0;
     }
 
@@ -409,8 +419,7 @@ void EnergyFinalDemand::acceptDerived( IVisitor* aVisitor,
     aVisitor->endVisitEnergyFinalDemand( this, aPeriod );
 }
 
-EnergyFinalDemand::FinalEnergyConsumer::FinalEnergyConsumer( const string& aFinalDemandName ) {
-    mTFEMarketName = SectorUtils::createTFEMarketName( aFinalDemandName );
+EnergyFinalDemand::FinalEnergyConsumer::FinalEnergyConsumer() {
 }
 
 double EnergyFinalDemand::PerCapitaGDPDemandFunction::calcDemand(
@@ -483,6 +492,7 @@ double EnergyFinalDemand::FinalEnergyConsumer::noCalibrationValue() {
 void EnergyFinalDemand::FinalEnergyConsumer::completeInit( const string& aRegionName,
                                                            const string& aFinalDemandName )
 {
+    mTFEMarketName = SectorUtils::createTFEMarketName( aFinalDemandName );
     // Set up demand sector calibration market.
     Marketplace* marketplace = scenario->getMarketplace();
     marketplace->createMarket( aRegionName, aRegionName, mTFEMarketName,

@@ -89,6 +89,8 @@ public:
 
     static const std::string& getXMLNameStatic();
     
+    virtual const std::string& getXMLReportingName() const;
+    
     virtual const std::string& getXMLName() const;
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );

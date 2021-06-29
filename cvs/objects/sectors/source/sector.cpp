@@ -70,6 +70,7 @@
 #include "functions/include/idiscrete_choice.hpp"
 #include "functions/include/discrete_choice_factory.hpp"
 #include "containers/include/market_dependency_finder.h"
+#include "util/base/include/object_meta_info.h"
 
 using namespace std;
 using namespace xercesc;
@@ -83,10 +84,9 @@ extern Scenario* scenario;
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-Sector::Sector( const string& aRegionName )
+Sector::Sector()
     :mObjectMetaInfo()
 {
-    mRegionName = aRegionName;
     mDiscreteChoiceModel = 0;
     mUseTrialMarkets = false;
 }
@@ -105,6 +105,10 @@ void Sector::clear(){
         delete *subSecIter;
     }
     
+    for(auto metaInfo: mObjectMetaInfo) {
+        delete metaInfo;
+    }
+    
     delete mDiscreteChoiceModel;
 }
 
@@ -115,6 +119,13 @@ void Sector::clear(){
 */
 const string& Sector::getName() const {
     return mName;
+}
+
+void Sector::setNames( const string& aRegionName ) {
+    mRegionName = aRegionName;
+    for( vector<Subsector*>::iterator subSecIter = mSubsectors.begin(); subSecIter != mSubsectors.end(); subSecIter++ ) {
+        (*subSecIter)->setNames( mRegionName, mName );
+    }
 }
 
 /*! \brief Set data members from XML input
@@ -167,20 +178,21 @@ void Sector::XMLParse( const DOMNode* node ){
             /* Read in object meta info here into mObjectMetaInfo.  This
              * will be copied into mSectorInfo in completeInit()
              */
-            object_meta_info_type metaInfo;
+            /*object_meta_info_type metaInfo;
             if ( metaInfo.XMLParse( curr ) ){
                 // Add to collection
                 mObjectMetaInfo.push_back( metaInfo );
-            }
+            }*/
+            parseContainerNode( curr, mObjectMetaInfo, new object_meta_info_type );
         }
         else if( nodeName == Subsector::getXMLNameStatic() ){
-            parseContainerNode( curr, mSubsectors, new Subsector( mRegionName, mName ) );
+            parseContainerNode( curr, mSubsectors, new Subsector() );
         }
         else if( nodeName == NestingSubsector::getXMLNameStatic() ){
-            parseContainerNode( curr, mSubsectors, new NestingSubsector( mRegionName, mName, 0 ) );
+            parseContainerNode( curr, mSubsectors, new NestingSubsector() );
         }
         else if( nodeName == TranSubsector::getXMLNameStatic() ){
-            parseContainerNode( curr, mSubsectors, new TranSubsector( mRegionName, mName ) );
+            parseContainerNode( curr, mSubsectors, new TranSubsector() );
         }
         else if( nodeName == "keyword" ){
             DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
@@ -233,12 +245,9 @@ void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( outputsAllFixed( aPeriod ), "outputs-all-fixed", aOut, aTabs );
     XMLWriteElement( getCalOutput( aPeriod ), "cal-output", aOut, aTabs );
 
-    if ( mObjectMetaInfo.size() ) {
-        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
-            metaInfoIterItem != mObjectMetaInfo.end(); 
-            ++metaInfoIterItem ) {
-                metaInfoIterItem->toDebugXML( aPeriod, aOut, aTabs );
-            }
+
+    for(auto metaInfo : mObjectMetaInfo) {
+        metaInfo->toDebugXML( aPeriod, aOut, aTabs );
     }
 
     toDebugXMLDerived (aPeriod, aOut, aTabs);
@@ -283,13 +292,8 @@ void Sector::completeInit( const IInfo* aRegionInfo, ILandAllocator* aLandAlloca
     mSectorInfo->setString( "input-unit", mInputUnit );
     mSectorInfo->setString( "price-unit", mPriceUnit );
 
-    if ( mObjectMetaInfo.size() ) {
-        // Put values in mSectorInfo
-        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin(); 
-            metaInfoIterItem != mObjectMetaInfo.end();
-            ++metaInfoIterItem ) {
-                mSectorInfo->setDouble( (*metaInfoIterItem).getName(), (*metaInfoIterItem).getValue() );
-            }
+    for(auto metaInfo : mObjectMetaInfo) {
+        mSectorInfo->setDouble( metaInfo->getName(), metaInfo->getValue() );
     }
 
     // Complete the subsector initializations.

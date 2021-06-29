@@ -48,6 +48,7 @@
 #include "util/base/include/fixed_interpolation_function.h" // for the fixed hack
 #include "util/curves/include/xy_data_point.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
@@ -156,7 +157,7 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
 
             // only set valid functions
             if( tempFn ) {
-                mIsFixedFunction = functionName == FixedInterpolationFunction::getXMLAttrNameStatic();
+                mIsFixedFunction = functionName == FixedInterpolationFunction::getXMLNameStatic();
                 delete mInterpolationFunction;
                 mInterpolationFunction = tempFn;
             }
@@ -190,6 +191,59 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
     }
     return true;
 }
+
+bool InterpolationRule::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    // replace to year if it is equal to the last model year flag
+    if( mToYear == getLastModelYearConstant() ) {
+        mToYear = scenario->getModeltime()->getEndYear();
+    }
+    
+    string nodeName = XMLParseHelper::getNodeName( aNode );
+    map<string, string> attrs = XMLParseHelper::getAllAttrs( aNode );
+    
+    if( nodeName == IInterpolationFunction::getXMLNameStatic() ) {
+        string functionName = attrs["name"];
+        IInterpolationFunction* tempFn = Factory<IInterpolationFunction::SubClassFamilyVector>::createType(functionName);
+        // parse child nodes
+        ParseChildData parseChildHelper(aNode, attrs);
+        parseChildHelper.setContainer(tempFn);
+        ExpandDataVector<IInterpolationFunction::SubClassFamilyVector> getDataVector;
+        tempFn->doDataExpansion( getDataVector );
+        getDataVector.getFullDataVector(parseChildHelper);
+
+        // only set valid functions
+        if( tempFn ) {
+            mIsFixedFunction = functionName == FixedInterpolationFunction::getXMLNameStatic();
+            delete mInterpolationFunction;
+            mInterpolationFunction = tempFn;
+        }
+    }
+    else if( nodeName == "overwrite-policy" ) {
+        mWarnWhenOverwritting = XMLParseHelper::getValue<bool>( attrs["warn"] );
+
+        const string overwritePolicyStr = XMLParseHelper::getValue<string>( aNode );
+        if( overwritePolicyStr == overwritePolicyEnumToStr( NEVER ) ) {
+            mOverwritePolicy = NEVER;
+        }
+        else if( overwritePolicyStr == overwritePolicyEnumToStr( INTERPOLATED ) ) {
+            mOverwritePolicy = INTERPOLATED;
+        }
+        else if( overwritePolicyStr == overwritePolicyEnumToStr( ALWAYS ) ) {
+            mOverwritePolicy = ALWAYS;
+        }
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized overwrite policy: " << overwritePolicyStr << " found while parsing "
+                    << getXMLNameStatic() << "." << endl;
+        }
+    }
+    else {
+        return false;
+    }
+    return true;
+}
+    
 
 void InterpolationRule::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
     aTabs->writeTabs( aOut );

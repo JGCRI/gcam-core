@@ -83,6 +83,8 @@ class InternalGains : public IOutput {
 public:
     InternalGains();
 
+    virtual const std::string& getXMLReportingName() const;
+    
     virtual const std::string& getXMLName() const;
 
     /*!

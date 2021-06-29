@@ -84,7 +84,6 @@ class CachedMarket;
  */
 class EnergyInput: public MiniCAMInput
 {
-    friend class InputFactory;
 public:
 
     EnergyInput();
@@ -95,9 +94,13 @@ public:
 
     static const std::string& getXMLNameStatic();
 
+    virtual const std::string& getXMLName() const;
+    
     virtual const std::string& getXMLReportingName() const;
 
     virtual void XMLParse( const xercesc::DOMNode* aNode );
+    
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 
     virtual bool isSameType( const std::string& aType ) const;
 

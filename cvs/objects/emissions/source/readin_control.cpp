@@ -47,11 +47,10 @@
 #include "containers/include/scenario.h"
 #include "containers/include/gdp.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/iinfo.h"
-//#include "technologies/include/ioutput.h"
-//#include "functions/include/function_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -123,6 +122,18 @@ bool ReadInControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode
     }
        
     return true;
+}
+
+bool ReadInControl::XMLParse(rapidxml::xml_node<char>* & aNode) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if(nodeName == "future-emiss-factor") {
+        Data<objects::PeriodVector<double>, ARRAY> futureEmissData(*mFutureEmissionsFactors, "");
+        XMLParseHelper::parseData(aNode, futureEmissData);
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 void ReadInControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

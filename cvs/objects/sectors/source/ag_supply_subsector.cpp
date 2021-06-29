@@ -48,9 +48,7 @@ using namespace xercesc;
 
 /*! \brief Constructor.
 */
-AgSupplySubsector::AgSupplySubsector( const string& regionName,
-                                          const string& sectorName )
-                                          : Subsector( regionName, sectorName ){
+AgSupplySubsector::AgSupplySubsector(): Subsector(){
 }
 
 AgSupplySubsector::~AgSupplySubsector() {

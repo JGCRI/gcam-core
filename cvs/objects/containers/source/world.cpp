@@ -137,7 +137,7 @@ void World::XMLParse( const DOMNode* node ){
         }
         // MiniCAM regions
         else if( nodeName == RegionMiniCAM::getXMLNameStatic() ){
-            parseContainerNode( curr, mRegions, new RegionMiniCAM() );
+            //parseContainerNode( curr, mRegions, new RegionMiniCAM() );
         }
 		// Read in parameters for climate model
         else if( nodeName == MagiccModel::getXMLNameStatic() ){

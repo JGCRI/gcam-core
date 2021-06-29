@@ -75,7 +75,7 @@ IInterpolationFunction* LinearInterpolationFunction::clone() const {
  * \return The string which identifies this function.
  * \see InterpolationFunctionFactory
  */
-const string& LinearInterpolationFunction::getXMLAttrNameStatic() {
+const string& LinearInterpolationFunction::getXMLNameStatic() {
     const static string XML_NAME = "linear";
     return XML_NAME;
 }
@@ -102,14 +102,14 @@ bool LinearInterpolationFunction::XMLParse( const DOMNode* aNode ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLAttrNameStatic() << "." << endl;
+                << getXMLNameStatic() << "." << endl;
         }
     }
     return true;
 }
 
 void LinearInterpolationFunction::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteElement("", IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, 0, getXMLAttrNameStatic() );
+    XMLWriteElement("", IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, 0, getXMLNameStatic() );
 }
 
 double LinearInterpolationFunction::interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,

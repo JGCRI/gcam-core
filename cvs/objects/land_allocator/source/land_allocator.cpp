@@ -142,6 +142,10 @@ void LandAllocator::initCalc( const string& aRegionName, const int aPeriod )
 void LandAllocator::completeInit( const string& aRegionName, 
                                   const IInfo* aRegionInfo )
 {
+    // Ensure the parent nodes are set through out the tree.  The root has no
+    // parent so just set it to null.
+    setParent( 0 );
+    
     // create a land-info from the region info so we can pass the
     // negative emissions market name
     IInfo* landInfo = InfoFactory::constructInfo( aRegionInfo, mName );

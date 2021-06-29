@@ -45,6 +45,7 @@
 #include "technologies/include/stub_technology_container.h"
 #include "technologies/include/global_technology_database.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "containers/include/scenario.h"
 #include "containers/include/world.h"
 #include "util/base/include/model_time.h"
@@ -98,6 +99,12 @@ bool StubTechnologyContainer::XMLParse( const DOMNode* aNode ) {
     return true;
 }
 
+// AParsable methods
+bool StubTechnologyContainer::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    mXMLAdjustments2.push_back( XMLParseHelper::deepClone(aNode) );
+    return true;
+}
+
 void StubTechnologyContainer::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     mTechnology->toDebugXML( aPeriod, aOut, aTabs );
 }
@@ -121,7 +128,7 @@ void StubTechnologyContainer::completeInit( const string& aRegionName,
     else {
         // If the global technology did not exist we can not go forward.  Note the
         // error message was printed by the global technology database.
-        exit( 1 );
+        abort();
     }
     
     // Make the XML adjustments note that this may produce parsing errors.
@@ -145,6 +152,12 @@ void StubTechnologyContainer::completeInit( const string& aRegionName,
     // Next interpolate and parse XML that was tagged to allow interpolation.
     for( CXMLIterator xmlIter = interpolateThenParse.begin(); xmlIter != interpolateThenParse.end(); ++xmlIter ) {
         mTechnology->interpolateAndParse( *xmlIter );
+    }
+    
+    for(rapidxml::xml_node<char>* currNode : mXMLAdjustments2) {
+        // TODO: for some reason it can't decide between the two versions of XMLParse
+        // once we knock out the old xerces version this case won't be necessary
+        static_cast<AParsable*>(mTechnology)->XMLParse(currNode);
     }
     
     // Now call complete init on the completed technology.  Note any other interpolations
@@ -196,5 +209,14 @@ void StubTechnologyContainer::interpolateAndParse( const DOMNode* aNode ) {
 }
 
 void StubTechnologyContainer::doDataExpansion( ExpandDataVector<ParentClass::SubClassFamilyVector>& aVisitor ) {
-    mTechnology->doDataExpansion( aVisitor );
+    // if mTechnology has not yet been filled in, i.e. during XMLParse
+    // the make available the Data from this subclass, otherwise it should
+    // always just appear that mTechnology is the tech container that exists
+    // here
+    if(!mTechnology) {
+        aVisitor.setSubClass( this );
+    }
+    else {
+        mTechnology->doDataExpansion( aVisitor );
+    }
 }

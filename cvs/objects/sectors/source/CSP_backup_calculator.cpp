@@ -100,6 +100,10 @@ const string& CSPBackupCalculator::getXMLNameStatic() {
     return XML_NAME;
 }
 
+const string& CSPBackupCalculator::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 // Documentation is inherited.
 bool CSPBackupCalculator::XMLParse( const xercesc::DOMNode* node ){
     /*! \pre make sure we were passed a valid node. */

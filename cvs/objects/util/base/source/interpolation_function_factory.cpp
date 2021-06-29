@@ -63,9 +63,9 @@ using namespace xercesc;
  *       the ones found in createAndParseFunction.
  */
 bool InterpolationFunctionFactory::hasInterpolationFunction( const string& aXMLAttrNameValue ) {
-    return LinearInterpolationFunction::getXMLAttrNameStatic() == aXMLAttrNameValue
-        || FixedInterpolationFunction::getXMLAttrNameStatic() == aXMLAttrNameValue
-        || SCurveInterpolationFunction::getXMLAttrNameStatic() == aXMLAttrNameValue;
+    return LinearInterpolationFunction::getXMLNameStatic() == aXMLAttrNameValue
+        || FixedInterpolationFunction::getXMLNameStatic() == aXMLAttrNameValue
+        || SCurveInterpolationFunction::getXMLNameStatic() == aXMLAttrNameValue;
 }
 
 /*!
@@ -92,13 +92,13 @@ IInterpolationFunction* InterpolationFunctionFactory::createAndParseFunction( co
     
     // create the requested function
     IInterpolationFunction* retFunction;
-    if( LinearInterpolationFunction::getXMLAttrNameStatic() == aXMLAttrNameValue ) {
+    if( LinearInterpolationFunction::getXMLNameStatic() == aXMLAttrNameValue ) {
         retFunction = new LinearInterpolationFunction();
     }
-    else if( FixedInterpolationFunction::getXMLAttrNameStatic() == aXMLAttrNameValue ) {
+    else if( FixedInterpolationFunction::getXMLNameStatic() == aXMLAttrNameValue ) {
         retFunction = new FixedInterpolationFunction();
     }
-    else if( SCurveInterpolationFunction::getXMLAttrNameStatic() == aXMLAttrNameValue ) {
+    else if( SCurveInterpolationFunction::getXMLNameStatic() == aXMLAttrNameValue ) {
         retFunction = new SCurveInterpolationFunction();
     }
     else {

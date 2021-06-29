@@ -105,7 +105,10 @@ protected :
         DEFINE_VARIABLE( SIMPLE, "price-exponent", mPriceExponent, double ),
         
         //! Mid-price for cost curve, assuming no technical change
-        DEFINE_VARIABLE( SIMPLE, "mid-price", mMidPrice, double )
+        DEFINE_VARIABLE( SIMPLE, "mid-price", mMidPrice, double ),
+                            
+        //! curve exponent from parsing
+        DEFINE_VARIABLE( SIMPLE, "curve-exponent", mCurveExponent, double )
     )
 
    //! The cost curve calculator

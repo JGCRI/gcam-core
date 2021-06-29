@@ -57,6 +57,7 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/gdp.h"
 #include "containers/include/info_factory.h"
@@ -79,10 +80,8 @@ extern Scenario* scenario;
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-Subsector::Subsector( const string& aRegionName, const string& aSectorName )
+Subsector::Subsector()
 {
-    mRegionName = aRegionName;
-    mSectorName = aSectorName;
     mDiscreteChoiceModel = 0;
 }
 
@@ -123,6 +122,11 @@ void Subsector::clearInterpolationRules() {
 */
 const string& Subsector::getName() const {
     return mName;
+}
+
+void Subsector::setNames( const std::string& aRegionName, const std::string& aSectorName ) {
+    mRegionName = aRegionName;
+    mSectorName = aSectorName;
 }
 
 //! Initialize Subsector with xml data
@@ -187,6 +191,28 @@ bool Subsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cur
     // defining method here even though it does nothing so that we do not
     // create an abstract class.
     return false;
+}
+
+bool Subsector::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if( nodeName == InterpolationRule::getXMLNameStatic() ) {
+        // just handle the interpolation rule clear
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        if( attrs["apply-to"] == "share-weight" && attrs["delete"] == "1" ) {
+            clearInterpolationRules();
+        }
+        InterpolationRule* tempRule = new InterpolationRule();
+        ParseChildData parseChildHelper(aNode, attrs);
+        parseChildHelper.setContainer(tempRule);
+        ExpandDataVector<InterpolationRule::SubClassFamilyVector> getDataVector;
+        tempRule->doDataExpansion( getDataVector );
+        getDataVector.getFullDataVector(parseChildHelper);
+        mShareWeightInterpRules.push_back( tempRule );
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 /*! \brief Write information useful for debugging to XML output stream

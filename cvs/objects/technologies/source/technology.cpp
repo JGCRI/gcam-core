@@ -122,6 +122,13 @@ Technology::Technology( const string& aName, const int aYear ) {
     init();
 }
 
+/*!
+ * \brief Constructor.
+ */
+Technology::Technology() {
+    init();
+}
+
 //! Destructor
 Technology::~Technology()
 {

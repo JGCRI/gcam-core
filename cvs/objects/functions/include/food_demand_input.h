@@ -206,7 +206,7 @@ public:
 
     virtual const std::string& getMarketName( const std::string& aRegionName ) const { return aRegionName; }
 
-    virtual const std::string& getXMLReportingName() const = 0;
+    virtual const std::string& getXMLName() const = 0;
 
     virtual void XMLParse( const xercesc::DOMNode* aNode );
     
@@ -380,7 +380,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Food demand in Pcal/year
-        DEFINE_VARIABLE( ARRAY | STATE, "food-demand", mFoodDemandQuantity, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, /*"food-demand"*/"base-service", mFoodDemandQuantity, objects::PeriodVector<Value> ),
 
         //! Demand scale paramater (A)
         DEFINE_VARIABLE( SIMPLE, "scale-param", mScaleParam, Value ),
@@ -434,6 +434,8 @@ public:
     
     virtual const std::string& getXMLReportingName() const;
     
+    virtual const std::string& getXMLName() const;
+    
 protected:
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
@@ -480,6 +482,8 @@ public:
     virtual IInput* clone() const;
     
     virtual const std::string& getXMLReportingName() const;
+    
+    virtual const std::string& getXMLName() const;
     
 protected:
     // Define data such that introspection utilities can process the data from this

@@ -80,6 +80,25 @@ NukeFuelTechnology::NukeFuelTechnology( const string& aName, const int aYear ): 
     mConversionFactor = 1;
 }
 
+NukeFuelTechnology::NukeFuelTechnology() {
+    // default values for nuclear fuel
+    fertileFuelName = "none"; // name of secondary fertile material used for making nuclear fuel
+    blanketFuelName = "none"; // name of secondary fertile material used for breeding fissile material
+    blanketFuelRatio = 0.0; // Ratio of blanket to fuel materials (kgBlanket/kgFuel)
+    burnup = 50; // designed burnup of fuel associated with nuclear plant (MWd/kgHM)
+    conversionCost = 5; // uranium ore conversion cost ($/kgU)
+    enrichmentProd = 0.045; // fissile material enrichment
+    enrichmentFeed = 0.0071; // feed material enrichment
+    enrichmentTail = 0.003; // tails enrichment
+    enrichmentCost = 100; // uranium enrichment cost ($/SWU)
+    fabricationCost = 200; // enriched uranium fuel fabrication cost ($/kgHM)
+    blanketFabCost = 0.0; // blanket material fabrication cost ($/kgHM)
+    interimStorageCost = 200; // interim storage cost of spent fuel ($/kgHM)
+    geologicWasteDisposalCost = 400; // cost of permenant waste disposal ($/kgHM)
+    reprocessingCost = 0; // reprocessing cost of spent fuel ($/kgHM)
+    mConversionFactor = 1;
+}
+
 NukeFuelTechnology* NukeFuelTechnology::clone() const {
     NukeFuelTechnology* clone = new NukeFuelTechnology( mName, mYear );
     clone->copy( *this );

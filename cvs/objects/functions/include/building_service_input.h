@@ -147,6 +147,8 @@ public:
     virtual const std::string& getMarketName( const std::string& aRegionName ) const { return aRegionName; }
 
     virtual const std::string& getXMLReportingName() const;
+    
+    virtual const std::string& getXMLName() const;
 
     virtual void XMLParse( const xercesc::DOMNode* aNode );
     

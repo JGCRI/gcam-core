@@ -136,7 +136,7 @@ protected:
         DEFINE_VARIABLE( ARRAY, "gdpPerCapitaApproxPPP", gdpPerCapitaApproxPPP, std::vector<double> ),
                 
         /*! \brief flag to tell if GDPs have been adjusted yet. */
-        DEFINE_VARIABLE( SIMPLE, "gdpAdjustedFlag", gdpAdjustedFlag, std::vector<bool> ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "gdpAdjustedFlag", gdpAdjustedFlag, std::vector<bool> ),
         
         /*! \brief Calibration values for GDP (constant dollars). */
         DEFINE_VARIABLE( ARRAY, "calibrationGDPs", calibrationGDPs, std::vector<double> ),
@@ -151,13 +151,13 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "e_GDP_elas", mEnergyGDPElasticity, double ),
         
         /*! \brief 1990 Ratio of PPP to Market GDP. */
-        DEFINE_VARIABLE( SIMPLE, "PPPConversionFact", PPPConversionFact, double ),
+        DEFINE_VARIABLE( SIMPLE, "PPPConvert", PPPConversionFact, double ),
         
         /*! \brief Internal exponent variable for PPP conversion. */
         DEFINE_VARIABLE( SIMPLE, "PPPDelta", PPPDelta, double ),
                 
         /*! \brief Flag to turn on dynamic ratio of PPP to Market GDP. */
-        DEFINE_VARIABLE( SIMPLE, "PPPConvert", constRatio, bool )
+        DEFINE_VARIABLE( SIMPLE, "PPPConvertFlag", constRatio, bool )
     )
 
     double calculatePPPPerCap( const int period,const double marketGDPperCap ); // function to calculate PPP values

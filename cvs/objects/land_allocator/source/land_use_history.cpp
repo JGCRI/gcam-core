@@ -41,14 +41,12 @@
 #include "util/base/include/definitions.h"
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "land_allocator/include/land_use_history.h"
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
-
-//! Map type for land allocations by year.
-typedef std::map<unsigned int, double> LandMapType;
 
 const string& LandUseHistory::getXMLNameStatic(){
     static const string XML_NAME = "land-use-history";
@@ -111,6 +109,32 @@ bool LandUseHistory::XMLParse( const xercesc::DOMNode* aNode ){
     }
     // TODO: Improved error checking.
     return true;
+}
+
+bool LandUseHistory::XMLParse(rapidxml::xml_node<char>* & aNode) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if( nodeName == "allocation" ){
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        unsigned int year = XMLParseHelper::getValue<unsigned int>( attrs["year"] );
+        if( year == 0 ){
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Land allocations must have a year attribute." << endl;
+        }
+        else {
+            mHistoricalLand[ year ] = XMLParseHelper::getValue<double>( aNode );
+            if ( mHistoricalLand[ year ]  <  0 ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "Negative land allocation in land-use-history. Resetting to zero." << endl;
+                mHistoricalLand[ year ] = 0;
+            }
+        }
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 const string& LandUseHistory::getName() const {
@@ -231,7 +255,7 @@ double LandUseHistory::getHistoricBelowGroundCarbonDensity( ) const {
     return mHistoricBelowGroundCarbonDensity;
 }
 
-const LandMapType LandUseHistory::getHistoricalLand() const {
+const LandUseHistory::LandMapType LandUseHistory::getHistoricalLand() const {
 	return mHistoricalLand;
 }
 

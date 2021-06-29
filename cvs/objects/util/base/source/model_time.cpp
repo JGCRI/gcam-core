@@ -48,6 +48,7 @@
 // xml headers
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/model_time.h"
 #include "util/logger/include/ilogger.h"
 
@@ -144,6 +145,87 @@ bool Modeltime::XMLParse( const DOMNode* aNode ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing modeltime." << endl;
+        }
+    }
+    
+    // initialize the data members and finalize the Modeltime
+    initMembers( yearToTimeStep );
+    return true;
+}
+
+bool Modeltime::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    // It is important that Modeltime only be parse once as the very first
+    // object since the rest of the model will rely on it to initialize some
+    // datastructures.
+    if( mIsInitialized ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Modeltime can only be parsed once." << endl;
+        return false;
+    }
+    
+    // Temparary sorted map of years to their time step to keep track of
+    // them while we are parsing.  After parsing we will use them to initialize
+    // the Modeltime with the initMembers method.
+    map<int, int> yearToTimeStep;
+        
+    // assume node is valid.
+    assert( aNode );
+
+    // loop through all of aNode's siblings
+    // note, we intentionally modify aNode to ensure XMLParseHelper does not
+    // attempt to re-parse these elements
+    for( ; aNode; aNode = aNode->next_sibling() ) {
+        if( aNode->type() == rapidxml::node_element) {
+            const string nodeName = XMLParseHelper::getNodeName( aNode );
+            map<string, string> attrs = XMLParseHelper::getAllAttrs( aNode );
+
+            // select the type of node.
+            if( nodeName == "#text" ) {
+                continue;
+            }
+
+            else if ( nodeName == "start-year" ){
+                mStartYear =  XMLParseHelper::getValue<int>( aNode );
+                yearToTimeStep[ mStartYear ]  = XMLParseHelper::getValue<int>( attrs["time-step"] );
+            }
+            else if ( nodeName == "inter-year" ){
+                int interYear =  XMLParseHelper::getValue<int>( aNode );
+                yearToTimeStep[ interYear ]  = XMLParseHelper::getValue<int>( attrs["time-step"] );
+            }
+            else if ( nodeName == "end-year" ){
+                mEndYear =  XMLParseHelper::getValue<int>( aNode );
+                // the end year does not have a time step
+                yearToTimeStep[ mEndYear ]  = -1;
+            }
+            else if ( nodeName == "final-calibration-year" ){
+                int tempCalibrationYear =  XMLParseHelper::getValue<int>( aNode );
+                // mFinalCalibrationYear is initialized to 2015
+                if ( tempCalibrationYear < mFinalCalibrationYear ){
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::WARNING );
+                    mainLog << "\nRead in final-calibration-year (" << tempCalibrationYear << ") "
+                            << "earlier than last historical year (" << mFinalCalibrationYear << ").\n"
+                            << "Running in HINDCASTING MODE with (" << tempCalibrationYear
+                            << ") as the final calibration year.\n" << endl;
+                    mFinalCalibrationYear = tempCalibrationYear;
+                }
+                else if (tempCalibrationYear > mFinalCalibrationYear ){
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::WARNING );
+                    mainLog << "\nHistorical calibration to (" << tempCalibrationYear << ") is not possible! "
+                            << "Setting final calibration year to default year (" << mFinalCalibrationYear
+                            << ").\n" << endl;
+                }
+            }
+            else if( nodeName == "carbon-model-start-year" ) {
+                mCarbonModelStartYear = XMLParseHelper::getValue<int>( aNode );
+            }
+            else {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Unrecognized text string: " << nodeName << " found while parsing modeltime." << endl;
+            }
         }
     }
     

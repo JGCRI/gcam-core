@@ -45,7 +45,10 @@
 */
 
 #include <xercesc/dom/DOMNode.hpp>
+#include <string>
+#include <vector>
 #include "util/base/include/iparsable.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
 class Tabs;
@@ -76,7 +79,7 @@ class ITechnologyContainer;
  *
  * \author Pralit Patel
  */
-class GlobalTechnologyDatabase : public IParsable {
+class GlobalTechnologyDatabase : public AParsable {
 public:
     GlobalTechnologyDatabase();
     ~GlobalTechnologyDatabase();
@@ -89,6 +92,15 @@ public:
     
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+    // AParsable methods
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
+    
+protected:
+    DEFINE_DATA(
+        //! GlobalTechnologyDatabase is the only member of this container hierarchy.
+        DEFINE_SUBCLASS_FAMILY( GlobalTechnologyDatabase )
+    )
     
 private:
     //! List of GlobalTechnologies

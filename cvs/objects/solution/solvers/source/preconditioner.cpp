@@ -55,6 +55,7 @@
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "solution/util/include/solution_info_filter_factory.h"
 // TODO: this filter is hard coded here since it is the default, is this ok?
 #include "solution/util/include/solvable_solution_info_filter.h"
@@ -71,15 +72,30 @@ Preconditioner::Preconditioner( Marketplace* marketplaceIn, World* worldIn, Calc
   mPriceIncreaseFac(0.25),
   mPriceDecreaseFac(0.1),
   mLargePrice(1.0e6),
-  mFTOL(util::getSmallNumber())
+  mFTOL(util::getSmallNumber()),
+  mSolutionInfoFilter(0)
 {
+}
+
+Preconditioner::Preconditioner() :
+  mItmax(2),
+  mPriceIncreaseFac(0.25),
+  mPriceDecreaseFac(0.1),
+  mLargePrice(1.0e6),
+  mFTOL(util::getSmallNumber()),
+  mSolutionInfoFilter(0)
+{
+}
+
+Preconditioner::~Preconditioner() {
+    delete mSolutionInfoFilter;
 }
 
 //! Init method.
 void Preconditioner::init() {
-    if( !mSolutionInfoFilter.get() ) {
+    if( !mSolutionInfoFilter ) {
         // note we are hard coding this as the default
-        mSolutionInfoFilter.reset( new SolvableSolutionInfoFilter() );
+        mSolutionInfoFilter = new SolvableSolutionInfoFilter();
     }
 }
 
@@ -125,11 +141,13 @@ bool Preconditioner::XMLParse( const DOMNode* aNode ) {
             mFTOL = XMLHelper<double>::getValue(curr);
         }
         else if( nodeName == "solution-info-filter" ) {
-            mSolutionInfoFilter.reset(
-                SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<string>::getValue( curr ) ) );
+            delete mSolutionInfoFilter;
+            mSolutionInfoFilter =
+                SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<string>::getValue( curr ) );
         }
         else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
-            mSolutionInfoFilter.reset( SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr ) );
+            delete mSolutionInfoFilter;
+            mSolutionInfoFilter = SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -139,6 +157,19 @@ bool Preconditioner::XMLParse( const DOMNode* aNode ) {
         }
     }
     return true;
+}
+
+bool Preconditioner::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    std::string nodeName = XMLParseHelper::getNodeName(aNode);
+    if( nodeName == "solution-info-filter" ) {
+        delete mSolutionInfoFilter;
+        mSolutionInfoFilter =
+            SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLParseHelper::getValue<std::string>( aNode ) );
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 /*! \brief Market Preconditioner
@@ -193,7 +224,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
     worstMarketLog << "Market Name, X, XL, XR, ED, EDL, EDR, RED, bracketed, supply, demand" << endl;
     solverLog << "Preconditioning routine starting" << endl; 
 
-    aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
+    aSolutionSet.updateSolvable( mSolutionInfoFilter );
     
     if( aSolutionSet.getNumSolvable() == 0 ) {
         solverLog << "Exiting Preconditioning early due to empty solvable set." << endl;

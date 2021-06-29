@@ -70,6 +70,8 @@ class AgProductionTechnology : public Technology {
 public:
     AgProductionTechnology( const std::string& aName,
                               const int aYear );
+    AgProductionTechnology();
+    
     ~AgProductionTechnology();
     static const std::string& getXMLNameStatic();
     AgProductionTechnology* clone() const;    

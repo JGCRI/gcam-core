@@ -75,6 +75,17 @@ AgProductionTechnology::AgProductionTechnology( const string& aName, const int a
     mProductLeaf = 0;
 }
 
+AgProductionTechnology::AgProductionTechnology()
+{
+    mNonLandVariableCost = 0;
+    mNonLandCostTechChange = 0;
+    mYield  = 0;
+    mAgProdChange  = 0;
+    mHarvestsPerYear = 1;
+    mLandAllocator = 0;
+    mProductLeaf = 0;
+}
+
 // ! Destructor
 AgProductionTechnology::~AgProductionTechnology() {
 }

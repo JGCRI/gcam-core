@@ -117,6 +117,11 @@ void Demographic::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 
 //! Complete the initialization.
 void Demographic::completeInit(){
+    if( yearToMapIndex.empty() ) {
+        for( int i = 0; i < population.size(); ++i ) {
+            yearToMapIndex[ util::toString( population[ i ]->getYear() ) ] = i;
+        }
+    }
     // First make sure we have a population for each model period.  If we do not have one in a given
     // period interpolate between ones we do have.
     const Modeltime* modeltime = scenario->getModeltime();

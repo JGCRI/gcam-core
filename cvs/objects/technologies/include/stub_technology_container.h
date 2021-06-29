@@ -116,6 +116,9 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
+    // AParsable methods
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
+    
     // IVisitable methods
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
@@ -126,6 +129,10 @@ public:
     // the macro DEFINE_DATA utilities and instead set it up ourselves.
     typedef ITechnologyContainer ParentClass;
     virtual void doDataExpansion( ExpandDataVector<ParentClass::SubClassFamilyVector>& aVisitor );
+    typedef boost::fusion::vector<Data<std::string, SIMPLE> > DataVectorType;
+    DataVectorType generateDataVector() {
+        return DataVectorType(Data<std::string, SIMPLE>(mName, "name"));
+    }
     
 protected:
     virtual ITechnologyContainer* clone() const;
@@ -143,6 +150,7 @@ private:
     
     //! The vector of XML modifications to make to the global technology
     std::vector<const xercesc::DOMNode*> mXMLAdjustments;
+    std::vector<rapidxml::xml_node<char>*> mXMLAdjustments2;
     
     // typdef to help simplify code
     typedef std::vector<const xercesc::DOMNode*>::const_iterator CXMLIterator;

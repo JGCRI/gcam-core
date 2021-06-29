@@ -117,11 +117,14 @@ class ALandAllocatorItem : public TreeItem<ALandAllocatorItem>,
                            private boost::noncopyable
 {
     friend class XMLDBOutputter;
+    friend class LandNode; // to access setParent
 public:
     typedef TreeItem<ALandAllocatorItem> ParentTreeType;
 
     explicit ALandAllocatorItem( const ALandAllocatorItem* aParent,
                                  const LandAllocatorItemType aType );
+    
+    explicit ALandAllocatorItem( const LandAllocatorItemType aType );
    
     virtual ~ALandAllocatorItem();
 
@@ -425,6 +428,8 @@ public:
 	virtual bool isUnmanagedLandLeaf( )  const = 0;
 
 protected:
+    virtual void setParent( const ALandAllocatorItem* aParent );
+    
     virtual void toDebugXMLDerived( const int aPeriod,
                                     std::ostream& aOut,
                                     Tabs* aTabs ) const = 0;
@@ -477,7 +482,7 @@ protected:
          * \brief Enum that stores the item's type.
          * \note This is stored to avoid a virtual function call.
          */
-        DEFINE_VARIABLE( SIMPLE, "land-type", mType, LandAllocatorItemType ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "land-type", mType, LandAllocatorItemType ),
 
         //! name of land expansion constraint cost curve
         // TODO: should these be in the leaf?

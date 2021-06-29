@@ -76,6 +76,8 @@ class NodeCarbonCalc;
 class LandNode : public ALandAllocatorItem {
 public:
     explicit LandNode( const ALandAllocatorItem* aParent );
+    
+    explicit LandNode();
 
     virtual ~LandNode();
 
@@ -87,6 +89,8 @@ public:
     virtual ALandAllocatorItem* getChildAt( const size_t aIndex );
 
     static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
     
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo );
@@ -160,14 +164,14 @@ public:
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
 protected:
+    virtual void setParent( const ALandAllocatorItem* aParent );
+    
     virtual bool XMLDerivedClassParse( const std::string& nodeName, 
                                        const xercesc::DOMNode* curr );
 
     virtual void toDebugXMLDerived( const int period, 
                                     std::ostream& out, 
                                     Tabs* tabs ) const;
-
-    virtual const std::string& getXMLName() const;
     
     ALandAllocatorItem* findChild( const std::string& aName,
                                    const LandAllocatorItemType aType );

@@ -103,10 +103,12 @@ void ResidueBiomassOutput::copy( const ResidueBiomassOutput& aOther ) {
 * \author Sonny Kim
 * \return The constant XML_NAME.
 */
-const string& ResidueBiomassOutput::getXMLName() const{
-    /*
+const string& ResidueBiomassOutput::getXMLReportingName() const{
     static const string XML_REPORTING_NAME = "output-residue-biomass";
-    return XML_REPORTING_NAME;*/
+    return XML_REPORTING_NAME;
+}
+
+const string& ResidueBiomassOutput::getXMLName() const{
     return getXMLNameStatic();
 }
 

@@ -82,6 +82,7 @@
 
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
@@ -163,13 +164,13 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
         mPrivateDiscountRateLand = XMLHelper<double>::getValue( curr );
     }
     else if( nodeName == SupplySector::getXMLNameStatic() ){
-        parseContainerNode( curr, mSupplySector, new SupplySector( mName ) );
+        parseContainerNode( curr, mSupplySector, new SupplySector(  ) );
     }
     else if( nodeName == AgSupplySector::getXMLNameStatic() ) {
-        parseContainerNode( curr, mSupplySector, new AgSupplySector( mName ) );
+        parseContainerNode( curr, mSupplySector, new AgSupplySector(  ) );
     }
     else if( nodeName == PassThroughSector::getXMLNameStatic() ) {
-        parseContainerNode( curr, mSupplySector, new PassThroughSector( mName ) );
+        parseContainerNode( curr, mSupplySector, new PassThroughSector(  ) );
     }
     else if( nodeName == EnergyFinalDemand::getXMLNameStatic() ){
         parseContainerNode( curr, mFinalDemands, new EnergyFinalDemand );
@@ -217,6 +218,18 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
     return true;
 }
 
+bool RegionMiniCAM::XMLParse(rapidxml::xml_node<char>* & aNode) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if( nodeName == "PrimaryFuelCO2Coef" ) {
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        mPrimaryFuelCO2Coef[ attrs["name"] ] = XMLParseHelper::getValue<double>( aNode );
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 
 /*! Complete the initialization. Get the size of vectors, initialize AGLU,
 *   create all markets, call complete initialization
@@ -251,6 +264,7 @@ void RegionMiniCAM::completeInit() {
     }
 
     for( SectorIterator sectorIter = mSupplySector.begin(); sectorIter != mSupplySector.end(); ++sectorIter ) {
+        ( *sectorIter )->setNames( mName );
         ( *sectorIter )->completeInit( mRegionInfo, mLandAllocator );
     }
 

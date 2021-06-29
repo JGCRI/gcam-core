@@ -103,9 +103,12 @@ const string& PrimaryOutput::getXMLNameStatic() {
 * \author Sonny Kim
 * \return The constant XML_NAME.
 */
+const string& PrimaryOutput::getXMLReportingName() const{
+    static const string XML_REPORTING_NAME = "output-primary";
+    return XML_REPORTING_NAME;
+}
+
 const string& PrimaryOutput::getXMLName() const{
-    /*static const string XML_REPORTING_NAME = "output-primary";
-    return XML_REPORTING_NAME;*/
     return getXMLNameStatic();
 }
 

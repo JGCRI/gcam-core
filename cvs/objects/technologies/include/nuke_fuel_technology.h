@@ -62,6 +62,7 @@ class NukeFuelTechnology : public Technology
 {
 public:
     NukeFuelTechnology( const std::string& aName, const int aYear );
+    NukeFuelTechnology();
     virtual NukeFuelTechnology* clone() const;
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();

@@ -74,6 +74,8 @@ public:
     LandAllocator();
     virtual ~LandAllocator();
     static const std::string& getXMLNameStatic();
+                              
+    virtual const std::string& getXMLName() const;
 
     // IParsable
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
@@ -130,8 +132,6 @@ public:
                               
     virtual ALandAllocatorItem* findProductLeaf( const std::string& aProductName );
 protected:
-    virtual const std::string& getXMLName() const;
-
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
                                        const xercesc::DOMNode* aCurr );
 
@@ -145,7 +145,7 @@ protected:
         LandNode,
                             
         //! Land allocated typically in thous km2.
-        DEFINE_VARIABLE( ARRAY, "land-allocation", mLandAllocation, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY, /*"land-allocation"*/"landAllocation", mLandAllocation, objects::PeriodVector<Value> ),
 
         //! Rate at which carbon price is expected to increase
         DEFINE_VARIABLE( ARRAY, "carbonPriceIncreaseRate", mCarbonPriceIncreaseRate, objects::PeriodVector<double> ),

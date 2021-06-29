@@ -66,8 +66,9 @@ class IInfo;
 class TranSubsector: public Subsector{
     friend class XMLDBOutputter;
 public:
-    TranSubsector( const std::string& regionName, const std::string& sectorName );
-    static const std::string& getXMLNameStatic();    
+    TranSubsector();
+    static const std::string& getXMLNameStatic();
+    const std::string& getXMLName() const;
 
     virtual void completeInit( const IInfo* aSectorInfo,
                                ILandAllocator* aLandAllocator );
@@ -113,7 +114,6 @@ protected:
 
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-    const std::string& getXMLName() const;
 
     double getTimeValue( const GDP* aGDP, const int aPeriod ) const;
     double getTimeInTransit( const int aPeriod ) const;

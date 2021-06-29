@@ -114,7 +114,7 @@
  * \author Pralit Patel
  * \author Sonny Kim
  */
-class InterpolationRule : public IParsable, private boost::noncopyable {
+class InterpolationRule : public AParsable, private boost::noncopyable {
 public:
 
     /*!
@@ -145,6 +145,9 @@ public:
     
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+    // AParsable methods
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
@@ -168,11 +171,11 @@ protected:
 
         //! The interpolation function that will be used to perform the
         //! interpolations
-        DEFINE_VARIABLE( CONTAINER, IInterpolationFunction::getXMLNameStatic(), mInterpolationFunction, IInterpolationFunction* ),
+        DEFINE_VARIABLE( CONTAINER | NOT_PARSABLE, IInterpolationFunction::getXMLNameStatic(), mInterpolationFunction, IInterpolationFunction* ),
 
         //! The policy this rule will use in the event that an existing
         //! value may get overwritten.
-        DEFINE_VARIABLE( SIMPLE, "overwrite-policy", mOverwritePolicy, OverwritePolicy ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "overwrite-policy", mOverwritePolicy, OverwritePolicy ),
 
         //! A flag to indicate a warning should be produced when an
         //! existing value gets overwritten.

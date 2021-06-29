@@ -130,6 +130,9 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
+    // AParsable methods
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
+    
     // IVisitable methods
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
@@ -151,7 +154,7 @@ private:
         
         //! The map that will be the primary data structure to contain technology vintages
         //! which do not have to align to model periods
-        DEFINE_VARIABLE( CONTAINER, "period", mVintages, std::map<int, ITechnology*> ),
+        DEFINE_VARIABLE( CONTAINER | NOT_PARSABLE, "period", mVintages, std::map<int, ITechnology*> ),
                                 
         //! Optional parameter for the first year in which a vintage should exist.
         DEFINE_VARIABLE( SIMPLE, "initial-available-year", mInitialAvailableYear, int ),

@@ -61,6 +61,7 @@ class TranTechnology : public Technology
     friend class XMLDBOutputter;
 public:
     TranTechnology( const std::string& aName, const int aYear );
+    TranTechnology();
     virtual TranTechnology* clone() const;
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();

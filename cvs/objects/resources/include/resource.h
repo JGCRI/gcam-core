@@ -83,8 +83,8 @@ public:
 protected:
 
     // TODO: is this stuff used?
-    typedef ObjECTS::TObjectMetaInfo<> object_meta_info_type;
-    typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
+    //typedef ObjECTS::TObjectMetaInfo<> object_meta_info_type;
+    //typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
 
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
@@ -111,7 +111,7 @@ protected:
     std::auto_ptr<IInfo> mResourceInfo;
 
     //! Vector of object meta info to pass to the market
-    object_meta_info_vector_type mObjectMetaInfo;
+    //object_meta_info_vector_type mObjectMetaInfo;
 
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
                                        const xercesc::DOMNode* aNode );

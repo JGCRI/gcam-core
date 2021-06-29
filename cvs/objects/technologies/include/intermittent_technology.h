@@ -91,6 +91,7 @@ public:
 
     IntermittentTechnology( const std::string& aName,
                             const int aYear );
+    IntermittentTechnology();
     virtual ~IntermittentTechnology();
     
     virtual IntermittentTechnology* clone() const;
@@ -141,22 +142,22 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "electric-sector-market", mElectricSectorMarket, std::string ),
 
         //! Name of trial market associated with this Intermittent Technology.
-        DEFINE_VARIABLE( SIMPLE, "trial-market-name", mTrialMarketName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "real-trial-market-name", mTrialMarketName, std::string ),
 
         //! Name of trial market readin for this Intermittent Technology.
-        DEFINE_VARIABLE( SIMPLE, "trial-market-name-parsed", mTrialMarketNameParsed, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "trial-market-name", mTrialMarketNameParsed, std::string ),
 
         //! Cached input containing the resource.
-        DEFINE_VARIABLE( SIMPLE, "resource-input-pointer", mResourceInput, InputIterator ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "resource-input-pointer", mResourceInput, InputIterator ),
 
         //! Cached input containing the backup.
-        DEFINE_VARIABLE( SIMPLE, "backup-input-pointer", mBackupInput, InputIterator ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "backup-input-pointer", mBackupInput, InputIterator ),
 
         //! Cached input containing the capital costs for backup.
-        DEFINE_VARIABLE( SIMPLE, "backup-cap-cost-input-pointer", mBackupCapCostInput, InputIterator ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "backup-cap-cost-input-pointer", mBackupCapCostInput, InputIterator ),
 
         //! Cached input containing the technology costs.
-        DEFINE_VARIABLE( SIMPLE, "tech-cost-input-pointer", mTechCostInput, InputIterator ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "tech-cost-input-pointer", mTechCostInput, InputIterator ),
 
         //! Backup capacity factor read in at the Sector level.
         DEFINE_VARIABLE( SIMPLE, "backup-capacity-factor", mBackupCapacityFactor, Value ),

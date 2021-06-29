@@ -59,6 +59,9 @@ DefaultTechnology::DefaultTechnology( const string& aName,
 {
 }
 
+DefaultTechnology::DefaultTechnology() {
+}
+
 //! Clone Function. Returns a deep copy of the current technology.
 DefaultTechnology* DefaultTechnology::clone() const {
     DefaultTechnology* clone = new DefaultTechnology( mName, mYear );

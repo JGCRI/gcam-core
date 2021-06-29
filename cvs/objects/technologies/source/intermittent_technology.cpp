@@ -86,6 +86,21 @@ IntermittentTechnology::IntermittentTechnology( const string& aName, const int a
     mTechCostInput = mInputs.end();
 }
 
+IntermittentTechnology::IntermittentTechnology() {
+    mElectricSectorName = "electricity";
+    mBackupCapacityFactor = 0.05;
+    mBackupCapitalCost = 0.0;
+    mElecReserveMargin = 0.15;
+    mAveGridCapacityFactor = 0.60;
+    
+    mBackupCalculator = 0;
+    
+    mResourceInput = mInputs.end();
+    mBackupInput = mInputs.end();
+    mBackupCapCostInput = mInputs.end();
+    mTechCostInput = mInputs.end();
+}
+
 /*!
  * \brief Destructor.
  */

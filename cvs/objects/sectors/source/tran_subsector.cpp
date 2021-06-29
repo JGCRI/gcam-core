@@ -71,13 +71,11 @@ extern Scenario* scenario;
 *
 * Default constructor takes region name, sector name and units as arguments
 * and resizes and initializes vectors.
-* \param regionName The name of the region.
-* \param sectorName The name of the sector.
 * \param aUnit The sector output unit.
 * \author Josh Lurz, Sonny Kim
 */
-TranSubsector::TranSubsector( const string& regionName, const string& sectorName ):
-Subsector( regionName, sectorName ),
+TranSubsector::TranSubsector():
+Subsector(),
 mTimeValueMult( Value( 1.0 ) )
 {
     mPopDensity = 1; // initialize to 1 for now

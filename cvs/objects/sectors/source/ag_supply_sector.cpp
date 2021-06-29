@@ -58,7 +58,7 @@ extern Scenario* scenario;
 /*! \brief Default constructor.
 * \author James Blackwood
 */
-AgSupplySector::AgSupplySector( std::string& regionName ): SupplySector( regionName ),
+AgSupplySector::AgSupplySector(): SupplySector(),
    mCalPrice( -1.0 ),
    mSubsidy( 0.0 ),
    // The default is to allow very negative profit rates, which implies to
@@ -78,7 +78,7 @@ AgSupplySector::~AgSupplySector( ) {
 */
 bool AgSupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
     if ( nodeName == AgSupplySubsector::getXMLNameStatic() ) {
-        parseContainerNode( curr, mSubsectors, new AgSupplySubsector( mRegionName, mName ) );
+        parseContainerNode( curr, mSubsectors, new AgSupplySubsector() );
     }
     else if ( nodeName == "calPrice" ) {
         mCalPrice = XMLHelper<double>::getValue( curr );

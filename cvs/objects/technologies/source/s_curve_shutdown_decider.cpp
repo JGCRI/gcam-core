@@ -100,6 +100,10 @@ const string& S_CurveShutdownDecider::getXMLNameStatic() {
     return XML_NAME;
 }
 
+const string& S_CurveShutdownDecider::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 bool S_CurveShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
     // Assume we have a valid node.
     assert( node );

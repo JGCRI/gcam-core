@@ -75,15 +75,17 @@ class Tabs;
  */
 class NonEnergyInput: public MiniCAMInput
 {
-    friend class InputFactory;
     friend class IntermittentTechnology;
     friend class SolarTechnology;
     friend class WindTechnology;
 public:
+    NonEnergyInput();
 
     static const std::string& getXMLNameStatic();
 
-    const std::string& getXMLReportingName() const;    
+    const std::string& getXMLReportingName() const;
+    
+    const std::string& getXMLName() const;
 
     NonEnergyInput* clone() const;
 
@@ -150,8 +152,6 @@ public:
                                    const IInput* aNextInput );
 
 protected:
-
-    NonEnergyInput();
     
     NonEnergyInput( const std::string& aName );
     

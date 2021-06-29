@@ -93,6 +93,12 @@ public:
      * \return An exact copy of the coefficient. 
      */
     virtual ICoefficient* clone() const = 0;
+    
+    /*!
+     * \brief Get the XML name appropriate for the subclass.
+     * \return The XML name that can be used for input/output.
+     */
+    virtual const std::string& getXMLName() const = 0;
 
     /*!
      * \brief Complete the initialization of the coefficient.

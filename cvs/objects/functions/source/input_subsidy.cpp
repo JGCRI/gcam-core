@@ -92,6 +92,10 @@ const string& InputSubsidy::getXMLReportingName() const{
     return XML_REPORTING_NAME;
 }
 
+const string& InputSubsidy::getXMLName() const{
+    return getXMLNameStatic();
+}
+
 //! Constructor
 InputSubsidy::InputSubsidy()
 {

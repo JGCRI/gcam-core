@@ -81,6 +81,10 @@ const string& InputOMVar::getXMLReportingName() const{
     return XML_REPORTING_NAME;
 }
 
+const string& InputOMVar::getXMLName() const{
+    return getXMLNameStatic();
+}
+
 //! Constructor
 InputOMVar::InputOMVar()
 {

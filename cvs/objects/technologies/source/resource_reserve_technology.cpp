@@ -68,6 +68,14 @@ mDeclinePhasePct( 1.0 )
 {
 }
 
+ResourceReserveTechnology::ResourceReserveTechnology() :
+mTotalReserve( 0.0 ),
+mInvestmentCost( 0.0 ),
+mBuildupYears( 0 ),
+mDeclinePhasePct( 1.0 )
+{
+}
+
 /*!
 * \brief Copy the technology paramaters.
 * \details Does not copy variables which should get initialized through normal

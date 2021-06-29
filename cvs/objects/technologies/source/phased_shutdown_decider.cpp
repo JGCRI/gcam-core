@@ -98,6 +98,10 @@ const string& PhasedShutdownDecider::getXMLNameStatic() {
     return XML_NAME;
 }
 
+const string& PhasedShutdownDecider::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 bool PhasedShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
     // Assume we have a valid node.
     assert( node );

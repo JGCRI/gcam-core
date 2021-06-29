@@ -144,7 +144,7 @@ const string& LandCarbonDensities::getXMLName() const {
 */
 void LandCarbonDensities::completeInit( const double aPrivateDiscountRateLand  ) {
     // force the sigmoid to get precalculated.
-    setMatureAge( mMatureAge );
+    setMatureAge( util::round(mMatureAge) );
     
     mPrivateDiscountRate = aPrivateDiscountRateLand; 
 }
@@ -168,8 +168,8 @@ void LandCarbonDensities::setMatureAge( const int aMatureAge )
     
     // Precompute the sigmoid curve differnce to avoid doing it during calc.
     // Note this is only necessary when the mature age is greater than 1.
-    if( mMatureAge > 1 ) {
-        precalc_sigmoid_diff = precalc_sigmoid_type( mMatureAge );
+    if( aMatureAge > 1 ) {
+        precalc_sigmoid_diff = precalc_sigmoid_type( aMatureAge );
     }
 }
 
@@ -198,5 +198,5 @@ double LandCarbonDensities::getActualBelowGroundCarbonDensity( const int aYear )
 }
 
 int LandCarbonDensities::getMatureAge( ) const {
-	return mMatureAge;
+	return util::round(mMatureAge);
 }

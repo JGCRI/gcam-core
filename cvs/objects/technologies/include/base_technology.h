@@ -93,7 +93,7 @@ class GCAMConsumer;
  *                           The vintage year of this technology (i.e. the first year
  *                           this technology will operate).
  *          - Elements:
- *              - \c SGMOutput::getXMLReportingNameStatic() BaseTechnology::mOutputs
+ *              - \c SGMOutput::getXMLName() BaseTechnology::mOutputs
  *                   Parse and output object (used to parse output for pre-base year
  *                   vintage technologies).  Note if non are parsed a default SGMOutput
  *                   will be created.

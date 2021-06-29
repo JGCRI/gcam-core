@@ -84,7 +84,7 @@ public:
         const double aMedianXValue );
     ~SCurveInterpolationFunction();
     
-    static const std::string& getXMLAttrNameStatic();
+    static const std::string& getXMLNameStatic();
     
     // IInterpolationFunction methods
     virtual IInterpolationFunction* clone() const;

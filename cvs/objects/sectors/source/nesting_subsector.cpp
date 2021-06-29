@@ -61,15 +61,9 @@ using namespace objects;
 
 extern Scenario* scenario;
 
-/*! \brief Default constructor.
-*
-* Constructor initializes member variables with default values, sets vector sizes, etc.
-*
-* \author Sonny Kim, Steve Smith, Josh Lurz
-*/
-NestingSubsector::NestingSubsector( const string& aRegionName, const string& aSectorName, const int aDepth ):
-    Subsector( aRegionName, aSectorName ),
-    mNestingDepth( aDepth )
+NestingSubsector::NestingSubsector():
+    Subsector(),
+    mNestingDepth( 0 )
 {
 }
 
@@ -87,13 +81,13 @@ NestingSubsector::~NestingSubsector() {
 //! Parses any input variables specific to derived classes
 bool NestingSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     if( nodeName == Subsector::getXMLNameStatic() ){
-        parseContainerNode( curr, mSubsectors, new Subsector( mRegionName, mSectorName ) );
+        parseContainerNode( curr, mSubsectors, new Subsector() );
     }
     else if( nodeName == TranSubsector::getXMLNameStatic() ){
-        parseContainerNode( curr, mSubsectors, new TranSubsector( mRegionName, mSectorName ) );
+        parseContainerNode( curr, mSubsectors, new TranSubsector() );
     }
     else if( nodeName == getXMLNameStatic() ) {
-        parseContainerNode( curr, mSubsectors, new NestingSubsector( mRegionName, mSectorName, mNestingDepth + 1 ) );
+        parseContainerNode( curr, mSubsectors, new NestingSubsector( /*mNestingDepth + 1*/ ) );
     } else {
         // unknown element
         return false;
@@ -154,6 +148,9 @@ void NestingSubsector::completeInit( const IInfo* aSectorInfo,
 
     Subsector::completeInit( aSectorInfo, aLandAllocator );
     for( auto subsector : mSubsectors ) {
+        if(subsector->getXMLName() == getXMLNameStatic()) {
+            dynamic_cast<NestingSubsector*>(subsector)->mNestingDepth = mNestingDepth + 1;
+        }
         subsector->completeInit( aSectorInfo, aLandAllocator );
     }
 }

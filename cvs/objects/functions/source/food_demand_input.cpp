@@ -102,7 +102,7 @@ void FoodDemandInput::XMLParse( const DOMNode* aNode ) {
         else if( !XMLDerivedClassParse( nodeName, curr ) ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLReportingName() << "." << endl;
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
         }
     }
 }
@@ -193,13 +193,13 @@ void FoodDemandInput::copy( const FoodDemandInput& aInput ) {
 }
 
 bool FoodDemandInput::isSameType( const string& aType ) const {
-    return aType == getXMLReportingName();
+    return aType == getXMLName();
 }
 
 //! Output debug info to XML
 void FoodDemandInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLReportingName(), aOut, aTabs, mName );
+    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
 
     XMLWriteElement( mFoodDemandQuantity[ aPeriod ], "service", aOut, aTabs );
     XMLWriteElement( mFoodDemandQuantity[ aPeriod ] / getAnnualDemandConversionFactor( aPeriod ), "food-demand-percap", aOut, aTabs );
@@ -208,7 +208,7 @@ void FoodDemandInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs 
     XMLWriteElement( mRegionalBias[ aPeriod ], "regional-bias", aOut, aTabs );
 
     // write the closing tag.
-    XMLWriteClosingTag( getXMLReportingName(), aOut, aTabs );
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
 //! Get the name of the input
@@ -436,6 +436,10 @@ const string& StaplesFoodDemandInput::getXMLReportingName() const {
     return getXMLNameStatic();
 }
 
+const string& StaplesFoodDemandInput::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 IInput* StaplesFoodDemandInput::clone() const {
     StaplesFoodDemandInput* clone = new StaplesFoodDemandInput();
     clone->copy( *this );
@@ -573,6 +577,10 @@ const string& NonStaplesFoodDemandInput::getXMLNameStatic() {
 }
 
 const string& NonStaplesFoodDemandInput::getXMLReportingName() const {
+    return getXMLNameStatic();
+}
+
+const string& NonStaplesFoodDemandInput::getXMLName() const {
     return getXMLNameStatic();
 }
 

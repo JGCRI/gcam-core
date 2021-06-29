@@ -77,6 +77,10 @@ const string& RenewableInput::getXMLReportingName() const{
     return XML_REPORTING_NAME;
 }
 
+const string& RenewableInput::getXMLName() const{
+    return getXMLNameStatic();
+}
+
 //! Constructor
 RenewableInput::RenewableInput() 
 {
