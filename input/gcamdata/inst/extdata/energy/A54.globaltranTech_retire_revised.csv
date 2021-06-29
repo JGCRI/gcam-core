@@ -8,14 +8,14 @@
 # Column types: cccciin 
 # ----------
 supplysector,tranSubsector,tranTechnology,year,lifetime,half.life,steepness
-trn_freight_road,Medium truck,Liquids,final-calibration-year,25,12,0.193
-trn_freight_road,Medium truck,NG,final-calibration-year,25,12,0.193
-trn_freight_road,Heavy truck,Liquids,final-calibration-year,25,12,0.193
-trn_freight_road,Heavy truck,NG,final-calibration-year,25,12,0.193
-trn_freight_road,Light truck,Liquids,final-calibration-year,25,12,0.193
-trn_freight_road,Light truck,NG,final-calibration-year,25,12,0.193
-trn_freight_road,Light truck,Liquids,final-calibration-year,25,12,0.193
-trn_freight_road,Light truck,NG,final-calibration-year,25,12,0.193
+trn_freight_road,Medium truck,Liquids,final-calibration-year,20,10,0.193
+trn_freight_road,Medium truck,NG,final-calibration-year,20,10,0.193
+trn_freight_road,Heavy truck,Liquids,final-calibration-year,20,10,0.193
+trn_freight_road,Heavy truck,NG,final-calibration-year,20,10,0.193
+trn_freight_road,Light truck,Liquids,final-calibration-year,20,10,0.193
+trn_freight_road,Light truck,NG,final-calibration-year,20,10,0.193
+trn_freight_road,Light truck,Liquids,final-calibration-year,20,10,0.193
+trn_freight_road,Light truck,NG,final-calibration-year,20,10,0.193
 trn_pass_road_LDV_4W,Car,BEV,final-calibration-year,25,11,0.218
 trn_pass_road_LDV_4W,Car,FCEV,final-calibration-year,25,11,0.218
 trn_pass_road_LDV_4W,Car,Hybrid Liquids,final-calibration-year,25,11,0.218
@@ -36,14 +36,14 @@ trn_pass_road_LDV_4W,Mini Car,FCEV,final-calibration-year,25,11,0.218
 trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,final-calibration-year,25,11,0.218
 trn_pass_road_LDV_4W,Mini Car,Liquids,final-calibration-year,25,11,0.218
 trn_pass_road_LDV_4W,Mini Car,NG,final-calibration-year,25,11,0.218
-trn_freight_road,Medium truck,Liquids,initial-future-year,25,12,0.193
-trn_freight_road,Medium truck,NG,initial-future-year,25,12,0.193
-trn_freight_road,Heavy truck,Liquids,initial-future-year,25,12,0.193
-trn_freight_road,Heavy truck,NG,initial-future-year,25,12,0.193
-trn_freight_road,Light truck,Liquids,initial-future-year,25,12,0.193
-trn_freight_road,Light truck,NG,initial-future-year,25,12,0.193
-trn_freight_road,Light truck,Liquids,initial-future-year,25,12,0.193
-trn_freight_road,Light truck,NG,initial-future-year,25,12,0.193
+trn_freight_road,Medium truck,Liquids,initial-future-year,20,10,0.193
+trn_freight_road,Medium truck,NG,initial-future-year,20,10,0.193
+trn_freight_road,Heavy truck,Liquids,initial-future-year,20,10,0.193
+trn_freight_road,Heavy truck,NG,initial-future-year,20,10,0.193
+trn_freight_road,Light truck,Liquids,initial-future-year,20,10,0.193
+trn_freight_road,Light truck,NG,initial-future-year,20,10,0.193
+trn_freight_road,Light truck,Liquids,initial-future-year,20,10,0.193
+trn_freight_road,Light truck,NG,initial-future-year,20,10,0.193
 trn_pass_road_LDV_4W,Car,BEV,initial-future-year,25,12,0.193
 trn_pass_road_LDV_4W,Car,FCEV,initial-future-year,25,12,0.193
 trn_pass_road_LDV_4W,Car,Hybrid Liquids,initial-future-year,25,12,0.193
@@ -59,3 +59,17 @@ trn_pass_road_LDV_4W,Mini Car,FCEV,initial-future-year,25,12,0.193
 trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,initial-future-year,25,12,0.193
 trn_pass_road_LDV_4W,Mini Car,Liquids,initial-future-year,25,12,0.193
 trn_pass_road_LDV_4W,Mini Car,NG,initial-future-year,25,12,0.193
+trn_freight_road,Medium truck,BEV,final-calibration-year,20,10,0.193
+trn_freight_road,Heavy truck,BEV,final-calibration-year,20,10,0.193
+trn_freight_road,Light truck,BEV,final-calibration-year,20,10,0.193
+trn_freight_road,Light truck,BEV,final-calibration-year,20,10,0.193
+trn_freight_road,Medium truck,BEV,initial-future-year,20,10,0.193
+trn_freight_road,Heavy truck,BEV,initial-future-year,20,10,0.193
+trn_freight_road,Light truck,BEV,initial-future-year,20,10,0.193
+trn_freight_road,Light truck,BEV,initial-future-year,20,10,0.193
+trn_pass_road,Bus,Liquids,final-calibration-year,15,8,0.124
+trn_pass_road,Bus,NG,final-calibration-year,15,8,0.124
+trn_pass_road,Bus,BEV,final-calibration-year,15,8,0.124
+trn_pass_road,Bus,Liquids,initial-future-year,15,8,0.122
+trn_pass_road,Bus,NG,initial-future-year,15,8,0.122
+trn_pass_road,Bus,BEV,initial-future-year,15,8,0.122

@@ -473,8 +473,8 @@ energy.OIL_CREDITS_MARKETNAME   <- "oil-credits"
 energy.OILFRACT_ELEC            <- 1.0 # Fraction of liquids for feedstocks that must come from oil
 energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity that must come from oil
 
-#kbn 2019-10-11 Adding constant for transportation type. Set this to rev.mode to use revised mode classes, rev_size.class to use revised size classes.
-#To use the old modes and size classes, use mode and size.class for the constants. The default for GCAM are the new modes and size classes.
+#kbn 2019-10-11 Adding constant for transportation type. Set this to 'rev.mode' to use revised mode classes, 'rev_size.class' to use revised size classes.
+#To use the old modes and size classes, use 'mode' and 'size.class' for the constants. The default for GCAM are the new modes and size classes.
 
 energy.TRAN_UCD_MODE<-'rev.mode'
 energy.TRAN_UCD_SIZE_CLASS<-'rev_size.class'
