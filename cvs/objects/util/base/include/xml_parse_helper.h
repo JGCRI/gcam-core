@@ -73,6 +73,7 @@
 
 class Scenario;
 class LoggerFactoryWrapper;
+class Configuration;
 
 class ParseChildData {
 public:
@@ -153,6 +154,8 @@ struct XMLParseHelper {
     static bool parseXML( const std::string& aXMLFile, Scenario* aRootElement );
     
     static bool parseXML( const std::string& aXMLFile, LoggerFactoryWrapper* aRootElement );
+    
+    static bool parseXML( const std::string& aXMLFile, Configuration* aRootElement );
     
     static rapidxml::xml_node<char>* deepClone(rapidxml::xml_node<char>* aNode) {
         rapidxml::memory_pool<char>& memoryPool = getStoreXMLMemoryPool();

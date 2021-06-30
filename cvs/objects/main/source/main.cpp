@@ -111,6 +111,7 @@ int main( int argc, char *argv[] ) {
     timer.start();
 
     // Initialize the LoggerFactory
+    XMLHelper<void>::initParser();
     LoggerFactoryWrapper loggerFactoryWrapper;
     bool success = /*XMLHelper<void>*/XMLParseHelper::parseXML( loggerFileName, &loggerFactoryWrapper );
     
@@ -173,7 +174,7 @@ int main( int argc, char *argv[] ) {
     mainLog << "Configuration file:  " << configurationFileName << endl;
     mainLog << "Parsing input files..." << endl;
     Configuration* conf = Configuration::getInstance();
-    success = XMLHelper<void>::parseXML( configurationFileName, conf );
+    success = XMLHelper<void>/*XMLParseHelper*/::parseXML( configurationFileName, conf );
     // Check if parsing succeeded. Non-zero return codes from main indicate
     // failure.
     if( !success ){

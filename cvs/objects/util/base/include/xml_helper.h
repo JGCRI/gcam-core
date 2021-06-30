@@ -199,11 +199,12 @@ public:
    static void serializeNode( const xercesc::DOMNode* aNode, std::ostream& aOut, Tabs* aTabs,
                               const bool aDeep );
    static xercesc::DOMDocument* getDOMDocument();
+        static void initParser();
 private:
     static xercesc::XercesDOMParser** getParserPointerInternal();
     static xercesc::ErrorHandler** getErrorHandlerPointerInternal();
     static xercesc::DOMDocument** getDOMDocumentInternal();
-    static void initParser();
+
     static xercesc::XercesDOMParser* getParser();
 };
 

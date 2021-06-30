@@ -49,6 +49,7 @@
 #include "util/base/include/factory.h"
 #include "util/logger/include/logger_factory.h"
 #include "util/logger/include/logger.h"
+#include "util/base/include/configuration.h"
 
 using namespace std;
 using namespace rapidxml;
@@ -621,4 +622,17 @@ bool XMLParseHelper::parseXML(const string& aXMLFile, Scenario* aRootElement) {
 
 bool XMLParseHelper::parseXML(const string& aXMLFile, LoggerFactoryWrapper* aRootElement) {
     return parseXMLInternal(aXMLFile, aRootElement);
+}
+
+bool XMLParseHelper::parseXML(const string& aXMLFile, Configuration* aRootElement) {
+    boost::iostreams::mapped_file_source xmlFile(aXMLFile.c_str());
+    
+    rapidxml::xml_document<> doc;
+    doc.parse<rapidxml::parse_non_destructive>(const_cast<char*>(xmlFile.data()));
+    
+    aRootElement->XMLParse(doc.first_node());
+    
+    xmlFile.close();
+    
+    return true;
 }
