@@ -258,7 +258,8 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       mutate(soil.carbon.density = if_else(is.na(soil.carbon.density), mean(soil.carbon.density, na.rm = TRUE), soil.carbon.density),
              hist.soil.carbon.density = if_else(is.na(hist.soil.carbon.density),
                                                 mean(hist.soil.carbon.density, na.rm = TRUE), hist.soil.carbon.density),
-             mature.age = if_else(is.na(mature.age), mean(mature.age, na.rm = TRUE), mature.age)) %>%
+             mature.age = if_else(is.na(mature.age), mean(mature.age, na.rm = TRUE), mature.age),
+             mature.age = if_else(grepl("Tree", GCAM_subsector), aglu.TREECROP_MATURE_AGE, mature.age)) %>%
       # Map in yield -- this will be used to compute vegetation carbon
       # Map in information for calculation of cropland vegetation carbon; note there will be NAs since Fodder crops are missing
       left_join(L111.ag_resbio_R_C, by = c("region", "GCAM_commodity")) %>%
