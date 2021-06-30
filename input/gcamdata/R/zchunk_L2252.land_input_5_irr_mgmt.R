@@ -48,6 +48,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
              "L2242.LN4_Logit",
              "L111.ag_resbio_R_C",
              "L121.CarbonContent_kgm2_R_LT_GLU",
+             "L121.CarbonContent_kgm2_R_TreeCrop_GLU",
              "L2012.AgYield_bio_ref",
              "L2012.AgProduction_ag_irr_mgmt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -75,6 +76,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     L2242.LN4_Logit <- get_data(all_data, "L2242.LN4_Logit", strip_attributes = TRUE)
     L111.ag_resbio_R_C <- get_data(all_data, "L111.ag_resbio_R_C")
     L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
+    L121.CarbonContent_kgm2_R_TreeCrop_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_TreeCrop_GLU")
     L171.ag_irrEcYield_kgm2_R_C_Y_GLU <- get_data(all_data, "L171.ag_irrEcYield_kgm2_R_C_Y_GLU", strip_attributes = TRUE)
     L171.ag_rfdEcYield_kgm2_R_C_Y_GLU <- get_data(all_data, "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU", strip_attributes = TRUE)
     L2012.AgYield_bio_ref <- get_data(all_data, "L2012.AgYield_bio_ref")
@@ -106,6 +108,12 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       replace_GLU(map = basin_to_country_mapping) ->
       L181.LC_bm2_R_C_Yh_GLU_irr_level
+
+    L121.CarbonContent_kgm2_R_TreeCrop_GLU %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      replace_GLU(map = basin_to_country_mapping) %>%
+      select(region, GCAM_commodity, GCAM_subsector, GLU, Tree_Cdensity_kgm2 = Cdensity_kgm2) ->
+      L121.CarbonContent_kgm2_R_TreeCrop_GLU
 
     L121.CarbonContent_kgm2_R_LT_GLU %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
@@ -234,6 +242,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       filter(year %in% MODEL_BASE_YEARS) ->
       L2252.LN5_MgdAllocation_bio
 
+
     # L2252.LN5_MgdCarbon_crop: Carbon content info, managed land in the fifth nest, cropland (no bio)
     # Soil will use default values, but vegetation will be replaced by bottom-up estimates
     L171.ag_EcYield_kgm2_R_C_Y_GLU %>%
@@ -254,6 +263,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       # Map in information for calculation of cropland vegetation carbon; note there will be NAs since Fodder crops are missing
       left_join(L111.ag_resbio_R_C, by = c("region", "GCAM_commodity")) %>%
       left_join(A_Fodderbio_chars, by = c("GCAM_commodity")) %>%
+      left_join(L121.CarbonContent_kgm2_R_TreeCrop_GLU, by = c("region", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       mutate(HarvestIndex.x = if_else(is.na(HarvestIndex.x), HarvestIndex.y, HarvestIndex.x),
              Root_Shoot.x = if_else(is.na(Root_Shoot.x), Root_Shoot.y, Root_Shoot.x),
              WaterContent.x = if_else(is.na(WaterContent.x), WaterContent.y, WaterContent.x)) %>%
@@ -261,6 +271,9 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       # Calculate vegetation carbon density based on the yields and crop characteristics
       mutate(hist.veg.carbon.density = round( yield / (HarvestIndex.x) * (1 + Root_Shoot.x) * (1 - WaterContent.x) *
                                                 aglu.CCONTENT_CELLULOSE * aglu.CCONV_PEAK_AVG,  aglu.DIGITS_C_DENSITY_CROP),
+             # For tree crops, replace the values calculated above with tree-specific carbon contents elsewhere calculated
+             hist.veg.carbon.density = if_else(is.na(Tree_Cdensity_kgm2), hist.veg.carbon.density,
+                                               round(Tree_Cdensity_kgm2, aglu.DIGITS_C_DENSITY_CROP)),
              # Replace missing values with the default values
              hist.veg.carbon.density = if_else(is.na(hist.veg.carbon.density), veg.carbon.density,
                                                hist.veg.carbon.density),
@@ -434,7 +447,8 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L171.ag_irrEcYield_kgm2_R_C_Y_GLU",
                      "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU",
                      "L111.ag_resbio_R_C",
-                     "L121.CarbonContent_kgm2_R_LT_GLU") ->
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L121.CarbonContent_kgm2_R_TreeCrop_GLU") ->
       L2252.LN5_MgdCarbon_crop
 
     L2252.LN5_MgdCarbon_bio %>%
