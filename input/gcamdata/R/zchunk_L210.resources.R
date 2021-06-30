@@ -395,7 +395,7 @@ module_energy_L210.resources <- function(command, ...) {
 
     L210.ReserveCalReserve.uncon_other_reg <- L210.ReserveCalReserve %>%
                                               filter(resource =="coal") %>%
-                                              filter(region %notin% c(unique(L210.ReserveCalReserve_unoil$region))) %>%
+                                              filter(!region %in% c(unique(L210.ReserveCalReserve_unoil$region))) %>%
                                               mutate(resource =paste0("crude oil"),reserve.subresource =paste0("unconventional oil"),cal.reserve=0)
     L210.ReserveCalReserve <- bind_rows(L210.ReserveCalReserve,L210.ReserveCalReserve.uncon_other_reg)
 
