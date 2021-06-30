@@ -339,6 +339,9 @@ aglu.IRR_GHOST_SHARE_MULT <- 0.25
 # 1975$/thou km2 ??
 aglu.UNMANAGED_LAND_VALUE <- 1
 
+# Set non-habitable land categories
+NON_HAB_LANDTYPES<-c("rock and desert","tundra")
+
 # default protected, unmanaged land LN1 logit info
 aglu.LN1_PROTUNMGD_LOGIT_EXP  <- 0
 aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA

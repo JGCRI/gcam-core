@@ -60,7 +60,7 @@ module_energy_L244.building_det <- function(command, ...) {
              "L143.HDDCDD_scen_R_Y",
              "L101.Pop_thous_R_Yh",
              "L102.pcgdp_thous90USD_Scen_R_Y",
-             FILE = "energy/A44.dens_region_flsp",
+             FILE = "energy/A44.hab_land_flsp",
              FILE = "energy/A44.flsp_param"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L244.SubregionalShares",
@@ -168,7 +168,7 @@ module_energy_L244.building_det <- function(command, ...) {
     L143.HDDCDD_scen_R_Y <- get_data(all_data, "L143.HDDCDD_scen_R_Y")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y") # year comes in as double
-    L144.dens_region_flsp<- get_data(all_data, "energy/A44.dens_region_flsp", strip_attributes = TRUE)
+    L144.hab_land_flsp<- get_data(all_data, "energy/A44.hab_land_flsp", strip_attributes = TRUE)
     L144.flsp_param <- get_data(all_data, "energy/A44.flsp_param", strip_attributes = TRUE)
 
     # ===================================================
@@ -222,7 +222,8 @@ module_energy_L244.building_det <- function(command, ...) {
     # L244.DemandFunction_serv and L244.DemandFunction_flsp: demand function types
     L244.DemandFunction_serv <- write_to_all_regions(A44.demandFn_serv, LEVEL2_DATA_NAMES[["DemandFunction_serv"]],
                                                      GCAM_region_names = GCAM_region_names)
-    L244.DemandFunction_flsp <- write_to_all_regions(A44.demandFn_flsp, LEVEL2_DATA_NAMES[["DemandFunction_flsp"]],
+    L244.DemandFunction_flsp <- write_to_all_regions(A44.demandFn_flsp,
+                                                     LEVEL2_DATA_NAMES[["DemandFunction_flsp"]],
                                                      GCAM_region_names = GCAM_region_names)
 
     # Floorspace demand satiation
@@ -231,19 +232,16 @@ module_energy_L244.building_det <- function(command, ...) {
       gather(sector, value, resid, comm) %>%
       # Converting from square meters per capita to million square meters per capita
       mutate(satiation.level = value * CONV_THOUS_BIL) %>%
-      select(-value) %>%
-      # JS 06/2021:We are not using satiation  levels in the residential sector with the new floorspace function:
-      filter(sector != "resid")
+      select(-value)
 
-    L244.Satiation_flsp <- write_to_all_regions(A44.gcam_consumer %>% filter(gcam.consumer != "resid"), c("region", "gcam.consumer", "nodeInput", "building.node.input"), # replace with LEVEL2_DATA_NAMES[["BldNodes]]
+
+    L244.Satiation_flsp <- write_to_all_regions(A44.gcam_consumer, c("region", "gcam.consumer", "nodeInput", "building.node.input"), # replace with LEVEL2_DATA_NAMES[["BldNodes]]
                                                 GCAM_region_names = GCAM_region_names) %>%
       # Match in the region class, and use this to then match in the satiation floorspace
       left_join_error_no_match(A_regions %>% select(region, region.class),
                                by = "region") %>%
       left_join_error_no_match(L244.Satiation_flsp_class, by = c("region.class", "gcam.consumer" = "sector")) %>%
-      select(LEVEL2_DATA_NAMES[["Satiation_flsp"]]) %>%
-      # JS 06/2021:Weare not using satiation  levels in the residential sector with the new floorspace function:
-      filter(gcam.consumer != "resid")
+      select(LEVEL2_DATA_NAMES[["Satiation_flsp"]])
 
     # Satiation adder - Required for shaping the future floorspace growth trajectories in each region
     # The satiation adder allows the starting (final calibration year) position of any region and sector to be set along the satiation demand function
@@ -281,11 +279,10 @@ module_energy_L244.building_det <- function(command, ...) {
     # L244.Satiation_flsp_SSPs: Satiation levels assumed for floorspace in the SSPs
     L244.Satiation_flsp_class_SSPs <- A44.satiation_flsp_SSPs %>%
       gather(sector, value, resid, comm) %>%
-      mutate(satiation.level = value * CONV_THOUS_BIL) %>%
-    # JS 06/2021:Weare not using satiation  levels in the residential sector with the new floorspace function:
-    filter(sector != "resid")
+      mutate(satiation.level = value * CONV_THOUS_BIL)
 
-    L244.Satiation_flsp_SSPs <- write_to_all_regions(A44.gcam_consumer %>% filter(gcam.consumer != "resid"), c("region", "gcam.consumer", "nodeInput", "building.node.input"), # replace with LEVEL2_DATA_NAMES[["BldNodes]]
+
+    L244.Satiation_flsp_SSPs <- write_to_all_regions(A44.gcam_consumer, c("region", "gcam.consumer", "nodeInput", "building.node.input"), # replace with LEVEL2_DATA_NAMES[["BldNodes]]
                                                      GCAM_region_names = GCAM_region_names) %>%
       repeat_add_columns(tibble(SSP = c("SSP1", "SSP2", "SSP3", "SSP4", "SSP5"))) %>%
       # Match in the region class, and use this to then match in the satiation floorspace
@@ -353,24 +350,38 @@ module_energy_L244.building_det <- function(command, ...) {
     # 1- Calculate the bias correction parameter (k)
     # 2- Write parameters for the updated floorspace function: unadjSat, a, b, c and k
 
+    # First calculate the habitable land
+
+
+    L144.hab_land_flsp_fin<-L144.hab_land_flsp %>%
+      #filter(landleaf %notin% c("rock and desert","tundra")) %>%
+      filter(landleaf %notin% NON_HAB_LANDTYPES) %>%
+      group_by(region,year,Units) %>%
+      summarise(value=sum(value)) %>%
+      ungroup()
+
     L244.Gomp.fn.param<-L144.flsp_param %>%
-      left_join_error_no_match(L144.dens_region_flsp %>% filter(year==MODEL_FINAL_BASE_YEAR),by="region") %>%
+      left_join_error_no_match(L144.hab_land_flsp_fin %>% filter(year==MODEL_FINAL_BASE_YEAR),by="region") %>%
+      rename(area_thouskm2=value) %>%
       left_join_error_no_match(GCAM_region_names, by="region") %>%
       left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(scenario== socioeconomics.BASE_GDP_SCENARIO), by=c("GCAM_region_ID","year")) %>%
       rename(gdp_pc=pcGDP_thous90USD) %>%
       left_join_error_no_match(L101.Pop_thous_R_Yh, by=c("GCAM_region_ID","year")) %>%
       left_join_error_no_match(L144.flsp_bm2_R_res_Yh,by=c("GCAM_region_ID","year")) %>%
       rename(flsp=value) %>%
+      mutate(tot_dens=pop_thous/area_thouskm2) %>%
       mutate(flsp_pc=(flsp*1E9)/(pop_thous*1E3)) %>%
       mutate(base_flsp=flsp_pc) %>%
-      mutate(flsp_est=(unadj.sat +(-flsp.param.a*log(tot_dens)))*exp(-flsp.param.b*log(base_flsp)*exp(-flsp.param.c*log(gdp_pc)))) %>%
-      mutate(flsp.param.k=flsp_pc-flsp_est) %>%
+      mutate(flsp_est=(unadjust_satiation +(-land_density_param*log(tot_dens)))*exp(-base_floorspace_param*log(base_flsp)*exp(-income_param*log(gdp_pc)))) %>%
+      mutate(bias_adjust_param=flsp_pc-flsp_est) %>%
       mutate(gcam.consumer="resid",
              nodeInput="resid",
              building.node.input="resid_building") %>%
-      rename(pop_dens=tot_dens) %>%
-      #select(region,gcam.consumer,nodeInput,building.node.input,pop_dens,unadj.sat,flsp.param.a,flsp.param.b,flsp.param.c,flsp.param.k)
-      select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
+      rename(pop_dens=tot_dens,
+             habitable_land=area_thouskm2) %>%
+     # select(region,gcam.consumer,nodeInput,building.node.input,habitable_land,unadjust_satiation,
+     #         land_density_param,base_floorspace_param,income_param,bias_adjust_param)
+       select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
 
 
     # L244.GenericBaseService and L244.ThermalBaseService: Base year output of buildings services (per unit floorspace)
@@ -841,7 +852,7 @@ module_energy_L244.building_det <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Computed offline based on data from RECS and IEA") %>%
       add_legacy_name("L244.Gomp.fn.param") %>%
-      add_precursors("common/GCAM_region_names", "energy/A44.dens_region_flsp","energy/A44.flsp_param",
+      add_precursors("common/GCAM_region_names", "energy/A44.hab_land_flsp","energy/A44.flsp_param",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L101.Pop_thous_R_Yh",
                      "L144.flsp_bm2_R_res_Yh") ->
       L244.Gomp.fn.param

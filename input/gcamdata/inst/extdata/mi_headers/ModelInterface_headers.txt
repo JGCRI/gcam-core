@@ -472,6 +472,8 @@ Satiation_flsp, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/
 
 SatiationAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, satiation-demand-function/+satiation-adder, scenario, scenario/world, building-node-input/satiation-demand-function
 
+Gomp.fn.param, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, gompertz-function/+habitable_land, gompertz-function/+unadjust_satiation, gompertz-function/+land_density_param, gompertz-function/+base_floorspace_param, gompertz-function/+income_param, gompertz-function/+bias_adjust_param, scenario, scenario/world, building-node-input/gompertz-function
+
 GenericBaseService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, building-service-input/+{year}base-service, building-service-input/+base-service, scenario, scenario/world
 
 ThermalBaseService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, thermal-building-service-input/+{year}base-service, thermal-building-service-input/+base-service, scenario, scenario/world
@@ -495,8 +497,6 @@ DeleteThermalService, world/+{name}region, region/+{name}gcam-consumer, gcam-con
 DeleteGenericService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name;delete=1}building-service-input, region/+{name;delete=1}supplysector, scenario, scenario/world
 
 DemandStapleParams, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}staples-food-demand-input, staples-food-demand-input/+scale-param, staples-food-demand-input/+self-price-elasticity, staples-food-demand-input/+cross-price-elasticity, staples-food-demand-input/+income-elasticity, staples-food-demand-input/+income-max-term, nodeInput/+price-received, scenario, scenario/world
-
-Gomp.fn.param, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input,building-node-input/+pop_dens, building-node-input/+unadj.sat, building-node-input/+flsp.param.a, building-node-input/+flsp.param.b, building-node-input/+flsp.param.c, building-node-input/+flsp.param.k, scenario, scenario/world
 
 DemandStapleRegBias, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}staples-food-demand-input, staples-food-demand-input/+{year}regional-bias, staples-food-demand-input/+regional-bias, scenario, scenario/world
 

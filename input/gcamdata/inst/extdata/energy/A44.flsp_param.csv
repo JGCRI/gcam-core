@@ -4,7 +4,7 @@
 # Source: Econometric analysis documented in CMP XXX
 # Column types: cnnnn
 # ----------
-region,unadj.sat,flsp.param.a,flsp.param.b,flsp.param.c
+region,unadjust_satiation,land_density_param,base_floorspace_param,income_param
 USA,150,0,0.8591063,0.5044
 Africa_Eastern,100,5.879486,0.631145,0.298642
 Africa_Northern,100,5.879486,0.631145,0.298642
