@@ -1,0 +1,7 @@
+# File: A72.sector.csv
+# Title: Irrigation water abstraction sector information and logit exponents for subsector (fuel) competition
+# Units: NA
+# Source: NA
+# Column types: ccccnccc
+supplysector,output.unit,input.unit,price.unit,logit.exponent,final.energy,logit.factor,logit.type
+irrigation water abstraction,km^3,EJ,1975$/m3,-3,energy-for-water,fuel choice,

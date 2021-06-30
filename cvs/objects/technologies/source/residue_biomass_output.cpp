@@ -281,8 +281,9 @@ double ResidueBiomassOutput::getValue( const std::string& aRegionName,
                                        const ICaptureComponent* aCaptureComponent,
                                        const int aPeriod ) const
 {
-    // TODO: need to change code to make it residue per unit of crop,
-    // rather than total residue
+    // TODO: consider adding the residue biomass value to crop value
+    // First, need to change residue biomass output as per unit of land
+    // in order to prevent a simultaneity.  Then, we can include this value.
     return 0;
 }
 

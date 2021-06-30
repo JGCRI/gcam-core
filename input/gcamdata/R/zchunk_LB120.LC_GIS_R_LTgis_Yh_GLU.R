@@ -34,7 +34,8 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     iso <- GCAM_region_ID <- Land_Type <- year <- GLU <- Area_bm2 <- LT_HYDE <-
-        land_code <- LT_SAGE <- NULL    # silence package check.
+      land_code <- LT_SAGE <- value <- Forest <- MgdFor <- Grassland <- Shrubland <-
+      Pasture <- nonForScaler <- ForScaler <- NULL    # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -104,7 +105,7 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       L120.LC_bm2_R_LT_Yh_GLU
 
     # scale forest to avoid negative unmanaged forest area which caused issue for yield in Pakistan and African regions
-    # L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust, pulled from L123.LC_bm2_R_MgdFor_Yh_GLU before managed forest scaling, was used here. 
+    # L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust, pulled from L123.LC_bm2_R_MgdFor_Yh_GLU before managed forest scaling, was used here.
     L120.LC_bm2_R_LT_Yh_GLU %>%
       left_join(L120.LC_bm2_R_LT_Yh_GLU %>%
                   spread(Land_Type, value, fill = 0) %>%

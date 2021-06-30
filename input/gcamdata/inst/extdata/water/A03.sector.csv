@@ -1,12 +1,13 @@
 # File: A03.sector.csv
-# Title: Water mapping suppply sector information  (units and logit exponents)
+# Title: Water t&d supplysector information  (units and logit exponents)
 # Units: NA
-# Column types: cccccic 
+# Source: NA
+# Column types: ccccic
 # ----------
-water.sector,supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
-Irrigation,water_td_irr,km^3,km^3,1975$/m^3,0,
-Municipal,water_td_dom,km^3,km^3,1975$/m^3,0,
-Electricity,water_td_elec,km^3,km^3,1975$/m^3,0,
-Livestock,water_td_an,km^3,km^3,1975$/m^3,0,
-Manufacturing,water_td_ind,km^3,km^3,1975$/m^3,0,
-Mining,water_td_pri,km^3,km^3,1975$/m^3,0,
+supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
+water_td_irr,km^3,km^3,1975$/m^3,0,
+water_td_muni,km^3,km^3,1975$/m^3,0,
+water_td_elec,km^3,km^3,1975$/m^3,0,
+water_td_an,km^3,km^3,1975$/m^3,0,
+water_td_ind,km^3,km^3,1975$/m^3,0,
+water_td_pri,km^3,km^3,1975$/m^3,0,

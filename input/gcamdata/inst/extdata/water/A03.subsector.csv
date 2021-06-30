@@ -1,0 +1,13 @@
+# File: A03.subsector.csv
+# Title: Water t&d subsector information  (logit exponents)
+# Units: NA
+# Source: NA
+# Column types: ccnc
+# ----------
+supplysector,subsector,logit.exponent,logit.type
+water_td_irr,,0,
+water_td_muni,,-1,
+water_td_elec,,0,
+water_td_an,,0,
+water_td_ind,,-1,
+water_td_pri,,0,

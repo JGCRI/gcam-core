@@ -5,143 +5,143 @@
 # Source: NA
 # Column types: ncc
 # ----------
-basin_id,basin_name,state_abbr
-7,Pacific and Arctic Coast,AK
-7,Pacific and Arctic Coast,WA
-23,Saskatchewan - Nelson,MN
-23,Saskatchewan - Nelson,MT
-23,Saskatchewan - Nelson,ND
-23,Saskatchewan - Nelson,SD
-27,Fraser,WA
-96,Mexico-Northwest Coast,AZ
-96,Mexico-Northwest Coast,NM
+GCAM_basin_ID,basin_name,state_abbr
+7,PacArctic,AK
+7,PacArctic,WA
+23,NelsonR,MN
+23,NelsonR,MT
+23,NelsonR,ND
+23,NelsonR,SD
+27,FraserR,WA
+96,MexCstNW,AZ
+96,MexCstNW,NM
 101,Caribbean,FL
-217,California River Basin,CA
-217,California River Basin,NV
-217,California River Basin,OR
-218,Upper Mississippi Basin,IA
-218,Upper Mississippi Basin,IL
-218,Upper Mississippi Basin,IN
-218,Upper Mississippi Basin,KY
-218,Upper Mississippi Basin,MI
-218,Upper Mississippi Basin,MN
-218,Upper Mississippi Basin,MO
-218,Upper Mississippi Basin,ND
-218,Upper Mississippi Basin,SD
-218,Upper Mississippi Basin,WI
-219,Lower Mississippi River Basin,AR
-219,Lower Mississippi River Basin,IL
-219,Lower Mississippi River Basin,KY
-219,Lower Mississippi River Basin,LA
-219,Lower Mississippi River Basin,MO
-219,Lower Mississippi River Basin,MS
-219,Lower Mississippi River Basin,TN
-220,Upper Colorado River Basin,AZ
-220,Upper Colorado River Basin,CO
-220,Upper Colorado River Basin,NM
-220,Upper Colorado River Basin,UT
-220,Upper Colorado River Basin,WY
-221,Lower Colorado River Basin,AZ
-221,Lower Colorado River Basin,CA
-221,Lower Colorado River Basin,NM
-221,Lower Colorado River Basin,NV
-221,Lower Colorado River Basin,UT
-222,Great Basin,CA
-222,Great Basin,ID
-222,Great Basin,NV
-222,Great Basin,OR
-222,Great Basin,UT
-222,Great Basin,WY
-223,Missouri River Basin,CO
-223,Missouri River Basin,IA
-223,Missouri River Basin,ID
-223,Missouri River Basin,KS
-223,Missouri River Basin,MN
-223,Missouri River Basin,MO
-223,Missouri River Basin,MT
-223,Missouri River Basin,ND
-223,Missouri River Basin,NE
-223,Missouri River Basin,SD
-223,Missouri River Basin,WY
-224,Arkansas White Red Basin,AR
-224,Arkansas White Red Basin,CO
-224,Arkansas White Red Basin,KS
-224,Arkansas White Red Basin,LA
-224,Arkansas White Red Basin,MO
-224,Arkansas White Red Basin,NM
-224,Arkansas White Red Basin,OK
-224,Arkansas White Red Basin,TX
-225,Texas Gulf Coast Basin,LA
-225,Texas Gulf Coast Basin,NM
-225,Texas Gulf Coast Basin,TX
-226,South Atlantic-Gulf Basin,AL
-226,South Atlantic-Gulf Basin,FL
-226,South Atlantic-Gulf Basin,GA
-226,South Atlantic-Gulf Basin,LA
-226,South Atlantic-Gulf Basin,MS
-226,South Atlantic-Gulf Basin,NC
-226,South Atlantic-Gulf Basin,SC
-226,South Atlantic-Gulf Basin,TN
-226,South Atlantic-Gulf Basin,VA
-226,South Atlantic-Gulf Basin,WV
-227,Great Lakes Basin,IL
-227,Great Lakes Basin,IN
-227,Great Lakes Basin,ME
-227,Great Lakes Basin,MI
-227,Great Lakes Basin,MN
-227,Great Lakes Basin,NH
-227,Great Lakes Basin,NY
-227,Great Lakes Basin,OH
-227,Great Lakes Basin,PA
-227,Great Lakes Basin,VT
-227,Great Lakes Basin,WI
-228,Ohio River Basin,IL
-228,Ohio River Basin,IN
-228,Ohio River Basin,KY
-228,Ohio River Basin,MD
-228,Ohio River Basin,NC
-228,Ohio River Basin,NY
-228,Ohio River Basin,OH
-228,Ohio River Basin,PA
-228,Ohio River Basin,TN
-228,Ohio River Basin,VA
-228,Ohio River Basin,WV
-229,Pacific Northwest Basin,CA
-229,Pacific Northwest Basin,ID
-229,Pacific Northwest Basin,MT
-229,Pacific Northwest Basin,NV
-229,Pacific Northwest Basin,OR
-229,Pacific Northwest Basin,UT
-229,Pacific Northwest Basin,WA
-229,Pacific Northwest Basin,WY
-230,Tennessee River Basin,AL
-230,Tennessee River Basin,GA
-230,Tennessee River Basin,KY
-230,Tennessee River Basin,MS
-230,Tennessee River Basin,NC
-230,Tennessee River Basin,SC
-230,Tennessee River Basin,TN
-230,Tennessee River Basin,VA
-231,Rio Grande River Basin,CO
-231,Rio Grande River Basin,NM
-231,Rio Grande River Basin,TX
-232,New England Basin,CT
-232,New England Basin,MA
-232,New England Basin,ME
-232,New England Basin,NH
-232,New England Basin,NY
-232,New England Basin,RI
-232,New England Basin,VT
-233,Mid-Atlantic Basin,CT
-233,Mid-Atlantic Basin,DC
-233,Mid-Atlantic Basin,DE
-233,Mid-Atlantic Basin,MA
-233,Mid-Atlantic Basin,MD
-233,Mid-Atlantic Basin,NC
-233,Mid-Atlantic Basin,NJ
-233,Mid-Atlantic Basin,NY
-233,Mid-Atlantic Basin,PA
-233,Mid-Atlantic Basin,VA
-233,Mid-Atlantic Basin,VT
-233,Mid-Atlantic Basin,WV
+217,California,CA
+217,California,NV
+217,California,OR
+218,MissppRN,IA
+218,MissppRN,IL
+218,MissppRN,IN
+218,MissppRN,KY
+218,MissppRN,MI
+218,MissppRN,MN
+218,MissppRN,MO
+218,MissppRN,ND
+218,MissppRN,SD
+218,MissppRN,WI
+219,MissppRS,AR
+219,MissppRS,IL
+219,MissppRS,KY
+219,MissppRS,LA
+219,MissppRS,MO
+219,MissppRS,MS
+219,MissppRS,TN
+220,UsaColoRN,AZ
+220,UsaColoRN,CO
+220,UsaColoRN,NM
+220,UsaColoRN,UT
+220,UsaColoRN,WY
+221,UsaColoRS,AZ
+221,UsaColoRS,CA
+221,UsaColoRS,NM
+221,UsaColoRS,NV
+221,UsaColoRS,UT
+222,GreatBasin,CA
+222,GreatBasin,ID
+222,GreatBasin,NV
+222,GreatBasin,OR
+222,GreatBasin,UT
+222,GreatBasin,WY
+223,MissouriR,CO
+223,MissouriR,IA
+223,MissouriR,ID
+223,MissouriR,KS
+223,MissouriR,MN
+223,MissouriR,MO
+223,MissouriR,MT
+223,MissouriR,ND
+223,MissouriR,NE
+223,MissouriR,SD
+223,MissouriR,WY
+224,ArkWhtRedR,AR
+224,ArkWhtRedR,CO
+224,ArkWhtRedR,KS
+224,ArkWhtRedR,LA
+224,ArkWhtRedR,MO
+224,ArkWhtRedR,NM
+224,ArkWhtRedR,OK
+224,ArkWhtRedR,TX
+225,TexasCst,LA
+225,TexasCst,NM
+225,TexasCst,TX
+226,UsaCstSE,AL
+226,UsaCstSE,FL
+226,UsaCstSE,GA
+226,UsaCstSE,LA
+226,UsaCstSE,MS
+226,UsaCstSE,NC
+226,UsaCstSE,SC
+226,UsaCstSE,TN
+226,UsaCstSE,VA
+226,UsaCstSE,WV
+227,GreatLakes,IL
+227,GreatLakes,IN
+227,GreatLakes,ME
+227,GreatLakes,MI
+227,GreatLakes,MN
+227,GreatLakes,NH
+227,GreatLakes,NY
+227,GreatLakes,OH
+227,GreatLakes,PA
+227,GreatLakes,VT
+227,GreatLakes,WI
+228,OhioR,IL
+228,OhioR,IN
+228,OhioR,KY
+228,OhioR,MD
+228,OhioR,NC
+228,OhioR,NY
+228,OhioR,OH
+228,OhioR,PA
+228,OhioR,TN
+228,OhioR,VA
+228,OhioR,WV
+229,UsaPacNW,CA
+229,UsaPacNW,ID
+229,UsaPacNW,MT
+229,UsaPacNW,NV
+229,UsaPacNW,OR
+229,UsaPacNW,UT
+229,UsaPacNW,WA
+229,UsaPacNW,WY
+230,TennR,AL
+230,TennR,GA
+230,TennR,KY
+230,TennR,MS
+230,TennR,NC
+230,TennR,SC
+230,TennR,TN
+230,TennR,VA
+231,RioGrande,CO
+231,RioGrande,NM
+231,RioGrande,TX
+232,UsaCstNE,CT
+232,UsaCstNE,MA
+232,UsaCstNE,ME
+232,UsaCstNE,NH
+232,UsaCstNE,NY
+232,UsaCstNE,RI
+232,UsaCstNE,VT
+233,UsaCstE,CT
+233,UsaCstE,DC
+233,UsaCstE,DE
+233,UsaCstE,MA
+233,UsaCstE,MD
+233,UsaCstE,NC
+233,UsaCstE,NJ
+233,UsaCstE,NY
+233,UsaCstE,PA
+233,UsaCstE,VA
+233,UsaCstE,VT
+233,UsaCstE,WV
 234,Hawaii,HI

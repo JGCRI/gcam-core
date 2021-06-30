@@ -17,7 +17,7 @@
 #' @author RH March 2017
 module_energy_LA117.tradbio <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L1011.en_bal_EJ_R_Si_Fi_Yh",
+    return(c("L1012.en_bal_EJ_R_Si_Fi_Yh",
              FILE = "energy/A17.tradbio_curves"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L117.RsrcCurves_EJ_R_tradbio"))
@@ -31,13 +31,13 @@ module_energy_LA117.tradbio <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
+    L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh")
     A17.tradbio_curves <- get_data(all_data, "energy/A17.tradbio_curves", strip_attributes = TRUE)
 
     # ===================================================
 
     # Calculate the max resource of tradbio as the maximum during the historical years
-     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+     L1012.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(fuel == "biomass_tradbio", sector == "TPES") %>%
       group_by(GCAM_region_ID, sector, fuel) %>%
       summarise(value = max(value)) ->
@@ -59,7 +59,7 @@ module_energy_LA117.tradbio <- function(command, ...) {
       add_units("available: EJ; extractioncost: 1975$/GJ") %>%
       add_comments("Multiply the max historical amount used in each region by the supply curve amount") %>%
       add_legacy_name("L117.RsrcCurves_EJ_R_tradbio") %>%
-      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A17.tradbio_curves") ->
+      add_precursors("L1012.en_bal_EJ_R_Si_Fi_Yh", "energy/A17.tradbio_curves") ->
       L117.RsrcCurves_EJ_R_tradbio
 
     return_data(L117.RsrcCurves_EJ_R_tradbio)

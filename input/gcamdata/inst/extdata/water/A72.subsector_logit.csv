@@ -1,0 +1,7 @@
+# File: A72.subsector_logit.csv
+# Title: Irrigation water abstraction subsector logit exponents
+# Units: None
+# Source: NA
+# Column types: ccnc
+supplysector,subsector,logit.exponent,logit.type
+irrigation water abstraction,electricity,-6,

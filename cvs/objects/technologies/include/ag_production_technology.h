@@ -129,10 +129,12 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "agProdChange", mAgProdChange, double ),
 
         //! Measure of multiple cropping
-        DEFINE_VARIABLE( SIMPLE, "harvests-per-year", mHarvestsPerYear, double )
+        DEFINE_VARIABLE( SIMPLE, "harvests-per-year", mHarvestsPerYear, double ),
+                            
+        //! A calibrated implied subsidy to ensure profit rates do not fall below some threshold
+        //! set at the sector level.
+        DEFINE_VARIABLE( SIMPLE | STATE, "implied-subsidy", mImpliedSubsidy, Value )
     )
- 
-    ILandAllocator* mLandAllocator;
     
     //! Weak pointer to the land leaf which corresponds to this technology
     //! used to save time finding it over and over
@@ -147,7 +149,7 @@ protected:
     
     virtual double calcProfitRate( const std::string& aRegionName,
                                    const std::string& aProductName,
-                                   const int aPeriod ) const;
+                                   const int aPeriod );
 
     double calcSupply( const std::string& aRegionName,
                        const std::string& aProductName,

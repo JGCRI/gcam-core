@@ -74,7 +74,8 @@ module_emissions_L252.MACC <- function(command, ...) {
       MAC_region <- Non.CO2 <- PCT_ABATE <- Process <- Species <- Year <- bio_N2O_coef <-
       resource <- emiss.coef <- input.emissions <- mac.control <- mac.reduction <- region <-
       scenario <- sector <- stub.technology <- subsector <- supplysector <- tax <- tech_change <-
-      market.name <- year <- Irr_Rfd <- mgmt <- tech.change.year <- tech.change <- Non.CO2.join <- multiplier <- NULL
+      market.name <- year <- Irr_Rfd <- mgmt <- tech.change.year <- tech.change <- Non.CO2.join <-
+      multiplier <- omit <- NULL
 
     all_data <- list(...)[[1]]
 

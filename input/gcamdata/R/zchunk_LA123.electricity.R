@@ -18,7 +18,7 @@ module_energy_LA123.electricity <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/mappings/enduse_fuel_aggregation",
              FILE = "energy/A23.chp_elecratio",
-             "L1011.en_bal_EJ_R_Si_Fi_Yh"))
+             "L1012.en_bal_EJ_R_Si_Fi_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L123.out_EJ_R_elec_F_Yh",
              "L123.in_EJ_R_elec_F_Yh",
@@ -36,7 +36,7 @@ module_energy_LA123.electricity <- function(command, ...) {
     # Load required inputs
     enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     A23.chp_elecratio <- get_data(all_data, "energy/A23.chp_elecratio")
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
+    L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh")
 
 
     # ===================================================
@@ -47,9 +47,9 @@ module_energy_LA123.electricity <- function(command, ...) {
       filter(!is.na(electricity)) ->
       enduse_fuel_aggregation_electricity
 
-    # Creates L123.in_EJ_R_elec_F_Yh based on L1011.en_bal_EJ_R_Si_Fi_Yh and enduse_fuel_aggregation_electricity
+    # Creates L123.in_EJ_R_elec_F_Yh based on L1012.en_bal_EJ_R_Si_Fi_Yh and enduse_fuel_aggregation_electricity
     # Calculates the inpunts by fuel (based on electricity input fuels), region ID and sector (electricity)
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    L1012.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "in_electricity generation") %>%
       mutate(sector = "electricity generation") %>%
       left_join(enduse_fuel_aggregation_electricity, by = "fuel") %>%
@@ -61,9 +61,9 @@ module_energy_LA123.electricity <- function(command, ...) {
       ungroup() ->
       L123.in_EJ_R_elec_F_Yh
 
-    # Creates L123.out_EJ_R_elec_F_Yh based on L1011.en_bal_EJ_R_Si_Fi_Yh and enduse_fuel_aggregation_electricity
+    # Creates L123.out_EJ_R_elec_F_Yh based on L1012.en_bal_EJ_R_Si_Fi_Yh and enduse_fuel_aggregation_electricity
     # Calculates the electricity outputs by fuel, region ID and sector (electricity generation)
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    L1012.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "out_electricity generation") %>%
       mutate(sector = "electricity generation") %>%
       left_join(enduse_fuel_aggregation_electricity, by = "fuel") %>%
@@ -119,7 +119,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       enduse_fuel_aggregation_industry
 
     # Create Industry CHP estimates by fuel, region and industry sector.
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    L1012.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "out_chp_elec") %>%
       mutate(sector = "chp_elec") %>%
       left_join(enduse_fuel_aggregation_industry, by = "fuel") %>%
@@ -162,7 +162,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.out_EJ_R_elec_F_Yh") %>%
-      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh",
+      add_precursors("L1012.en_bal_EJ_R_Si_Fi_Yh",
                      "energy/mappings/enduse_fuel_aggregation", "energy/A23.chp_elecratio") ->
       L123.out_EJ_R_elec_F_Yh
 
@@ -171,7 +171,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.in_EJ_R_elec_F_Yh") %>%
-      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh",
+      add_precursors("L1012.en_bal_EJ_R_Si_Fi_Yh",
                      "energy/mappings/enduse_fuel_aggregation", "energy/A23.chp_elecratio") ->
       L123.in_EJ_R_elec_F_Yh
 
@@ -180,7 +180,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.eff_R_elec_F_Yh") %>%
-      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh",
+      add_precursors("L1012.en_bal_EJ_R_Si_Fi_Yh",
                      "energy/mappings/enduse_fuel_aggregation", "energy/A23.chp_elecratio") ->
       L123.eff_R_elec_F_Yh
 
@@ -189,7 +189,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.out_EJ_R_indchp_F_Yh") %>%
-      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh",
+      add_precursors("L1012.en_bal_EJ_R_Si_Fi_Yh",
                      "energy/mappings/enduse_fuel_aggregation", "energy/A23.chp_elecratio") ->
       L123.out_EJ_R_indchp_F_Yh
 
@@ -198,7 +198,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.in_EJ_R_indchp_F_Yh") %>%
-      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh",
+      add_precursors("L1012.en_bal_EJ_R_Si_Fi_Yh",
                      "energy/mappings/enduse_fuel_aggregation", "energy/A23.chp_elecratio") ->
       L123.in_EJ_R_indchp_F_Yh
 

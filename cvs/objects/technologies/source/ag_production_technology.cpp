@@ -72,7 +72,6 @@ AgProductionTechnology::AgProductionTechnology( const string& aName, const int a
     mYield  = 0;
     mAgProdChange  = 0;
     mHarvestsPerYear = 1;
-    mLandAllocator = 0;
     mProductLeaf = 0;
 }
 
@@ -96,7 +95,6 @@ void AgProductionTechnology::copy( const AgProductionTechnology& aOther ) {
     mAgProdChange = aOther.mAgProdChange;
     mHarvestsPerYear = aOther.mHarvestsPerYear;
     // The following do not get copied as they are initialized through other means
-    mLandAllocator = 0;
     mProductLeaf = 0;
 }
 
@@ -140,6 +138,7 @@ void AgProductionTechnology::toDebugXMLDerived( const int period, ostream& out, 
     XMLWriteElement( mYield, "yield", out, tabs );
     XMLWriteElement( mAgProdChange, "agProdChange", out, tabs );
     XMLWriteElement( mHarvestsPerYear, "harvests-per-year", out, tabs );
+    XMLWriteElement( mImpliedSubsidy, "implied-subsidy", out, tabs );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -185,37 +184,21 @@ void AgProductionTechnology::initCalc( const string& aRegionName,
     // Only do tech changes if this is the initial year of the
     // technology.
     if( !mProductionState[ aPeriod ]->isNewInvestment() ){
+        aPrevPeriodInfo.mPrevVintage = this;
         return;
     }
 
     // Compute tech change values for this period for both ag productivity and
-    // the nonLandVariableCost.  Since technologies are distinct by vintage and don't
-    // previous period technologies, need to save a previous period compounded cumulative
-    // change in the MarketInfo
- 
-    // Create a unique regional string for the yield and for the
-    // variable cost. 
+    // the nonLandVariableCost.
+    int timestep = modeltime->gettimestep( aPeriod );
+    const AgProductionTechnology* prevAgTech = static_cast<const AgProductionTechnology*>( aPrevPeriodInfo.mPrevVintage );
 
-    const string preVarCostName = "preVarCost-" + mName + "-" + aRegionName;
-    double preVarCost = 0.0;
-
-    const string preYieldName = "preYield-" + mName + "-" + aRegionName;
-    double preYield = 0.0;
-
-
-    // Get the information object for this market.
-    Marketplace* marketplace = scenario->getMarketplace();
-    IInfo* marketInfo = marketplace->getMarketInfo( aSectorName, aRegionName, aPeriod, true );
-    assert( marketInfo );
-
-    // If no nonLandVariableCost is read in, get the previous period cost from the market info.
+    // If no nonLandVariableCost is read in, get the previous period cost from previous vintage.
     // Note: you can never overwrite a positive yield with a zero yield. If the model sees a
     // zero non-land cost, it will copy from the previous period.
     if ( mNonLandVariableCost == 0 && aPeriod != 0 ) {
-         preVarCost = marketInfo->getDouble( preVarCostName, true );
          // Adjust last period's variable cost by tech change
-         int timestep = modeltime->gettimestep( aPeriod );
-         mNonLandVariableCost = preVarCost / pow(1 + mNonLandCostTechChange , timestep);
+         mNonLandVariableCost = prevAgTech->mNonLandVariableCost / pow(1 + mNonLandCostTechChange , timestep);
     }
 
     // Only do the ag productivity change calc if a calibration value is not read in that period
@@ -224,26 +207,23 @@ void AgProductionTechnology::initCalc( const string& aRegionName,
         // Note: you can never overwrite a positive yield with a zero yield. If the model sees a
         // zero yield, it will copy from the previous period.
         if ( mYield == 0 && aPeriod != 0 ) {
-            preYield = marketInfo->getDouble( preYieldName, true );
             // Adjust last period's variable cost by tech change
-            int timestep = modeltime->gettimestep( aPeriod );
-            mYield = preYield * pow(1 + mAgProdChange , timestep);
+            mYield = prevAgTech->mYield * pow(1 + mAgProdChange , timestep);
         }
     }
-
-    // If this is not the end period of the model, set the market info
-    // variable cost and Yield for the next period.
-    if( aPeriod + 1 < modeltime->getmaxper() ){
-        IInfo* nextPerMarketInfo = marketplace->getMarketInfo( aSectorName, aRegionName, aPeriod + 1, true );
-        assert( nextPerMarketInfo );
-        nextPerMarketInfo->setDouble( preVarCostName, mNonLandVariableCost );
-        nextPerMarketInfo->setDouble( preYieldName, mYield );
+    
+    // copy forward any implied subsidy
+    if( aPeriod > 0 ) {
+        mImpliedSubsidy = prevAgTech->mImpliedSubsidy;
     }
+    
+    // set the previous vintage for the next tech
+    aPrevPeriodInfo.mPrevVintage = this;
 
     // If yield is GCal/kHa and prices are $/GCal, then rental rate is $/kHa
     // And this is what is now passed in ($/kHa)
     double profitRate = calcProfitRate( aRegionName, aSectorName, aPeriod );
-    mLandAllocator->setProfitRate( aRegionName, mName, profitRate, aPeriod );
+    mProductLeaf->setProfitRate( aRegionName, mName, profitRate, aPeriod );
 
     // TODO: it may be useful to inform the solver about the minimum price required
     // to have some supply however we can not know that information for sure due to
@@ -258,8 +238,7 @@ void AgProductionTechnology::completeInit( const std::string& aRegionName,
                                              const IInfo* aSubsectorInfo,
                                              ILandAllocator* aLandAllocator )
 {
-    // Store away the land allocator.
-    mLandAllocator = aLandAllocator;
+    // Store away the corresponding leaf in the land allocator.
     mProductLeaf = aLandAllocator->findProductLeaf( mName );
  
     // Send "pointer to the land allocator" to each of the secondary outputs, e.g, residue biomass
@@ -442,11 +421,6 @@ void AgProductionTechnology::production( const string& aRegionName,
         return;
     }
 
-    // Calculate the profit rate.  
-    // KVC_AGLU:: NOT SURE IF THIS IS NEEDED, SINCE IT ISN'T PASSED TO LAND ALLOCATOR
-    // AT THIS POINT...THAT HAPPENS IN calcCost()
- //   double profitRate = calcProfitRate( aRegionName, aSectorName, aPeriod );
-
     // Calculate the output of the technology.
     double primaryOutput = calcSupply( aRegionName, aSectorName, aPeriod );
 
@@ -472,14 +446,11 @@ void AgProductionTechnology::production( const string& aRegionName,
 */
 double AgProductionTechnology::calcProfitRate( const string& aRegionName,
                                                const string& aProductName,
-                                               const int aPeriod ) const
+                                               const int aPeriod )
 {
     // Calculate profit rate.
     const Marketplace* marketplace = scenario->getMarketplace();
 
-    // TODO: consider adding the residue biomass value to crop value
-    // First, need to change residue biomass output as per unit of land
-    // in order to prevent a simultaneity.  Then, we can include this value.
     double secondaryValue = calcSecondaryValue( aRegionName, aPeriod );
 
     // nonlandvariable cost units are now assumed to be in $/kg
@@ -498,8 +469,15 @@ double AgProductionTechnology::calcProfitRate( const string& aRegionName,
     // We multiply by 1e9 since profitRate above is in $/m2
     // and the land allocator needs it in $/billion m2. This assumes yield is in kg/m2
     profitRate *= 1e9;
+    
+    // In the calibration periods we may need to calculate an implied subsidy to
+    // ensure the profit rate does not fall below some acceptable threshold
+    if( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
+        double profitRateThreshold = mTechnologyInfo->getDouble( "cal-min-profit-rate", true );
+        mImpliedSubsidy.set( std::max( profitRateThreshold - profitRate, 0.0 ) );
+    }
 
-    return profitRate;
+    return profitRate + mImpliedSubsidy;
 }
 
 /*! \brief Calculate the supply for the technology.

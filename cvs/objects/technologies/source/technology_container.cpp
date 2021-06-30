@@ -417,7 +417,7 @@ void TechnologyContainer::initCalc( const string& aRegionName, const string& aSe
     
     // Initialize the previous period info as having no input set and
     // cumulative Hicks neutral, energy of 1 and it is the first tech.
-    PreviousPeriodInfo prevPeriodInfo = { 0, 1, true };
+    PreviousPeriodInfo prevPeriodInfo = { 0, 0, 1, true };
     // Warning: aPeriod is the current model period and not the technology vintage.
     // Currently calls initCalc on all vintages past and future.
     // TODO: Should not call initialization for all future technology vintages beyond the

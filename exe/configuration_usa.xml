@@ -59,8 +59,12 @@
 
 		<Value name = "unlim_supply_water">../input/gcamdata/xml/unlimited_water_supply.xml</Value>
 		<Value name = "water_supply">../input/gcamdata/xml/water_supply_constrained.xml</Value>
-		<Value name = "water_mapping">../input/gcamdata/xml/water_mapping.xml</Value>
-		<Value name = "water_mapping_usa">../input/gcamdata/xml/water_mapping_USA.xml</Value>
+		<Value name = "water_desal">../input/gcamdata/xml/desalination.xml</Value>
+		<Value name = "water_td">../input/gcamdata/xml/water_td.xml</Value>
+		<Value name = "efw_coefs">../input/gcamdata/xml/EFW_input_coefs.xml</Value>
+		<Value name = "efw_irr">../input/gcamdata/xml/EFW_irrigation.xml</Value>
+		<Value name = "efw_mfg">../input/gcamdata/xml/EFW_manufacturing.xml</Value>
+		<Value name = "efw_muni">../input/gcamdata/xml/EFW_municipal.xml</Value>
 		<Value name = "ag_water">../input/gcamdata/xml/ag_water_input_IRR_MGMT.xml</Value>
 		<Value name = "elec_water_coef">../input/gcamdata/xml/electricity_water_coefs.xml</Value>
 		<Value name = "ind_water">../input/gcamdata/xml/water_demand_industry.xml</Value>
@@ -106,6 +110,7 @@
 		<Value name = "USA_regional_bio">../input/gcamdata/xml/regional_biomass_USA.xml</Value>
 		
 		<!--WATER DATA-->
+		<Value name = "water_td_usa">../input/gcamdata/xml/water_td_USA.xml</Value>
 		<Value name = "municipal_water_usa">../input/gcamdata/xml/water_demand_municipal_USA.xml</Value>
 		<Value name = "ind_water_usa">../input/gcamdata/xml/water_demand_industry_USA.xml</Value>
 		
