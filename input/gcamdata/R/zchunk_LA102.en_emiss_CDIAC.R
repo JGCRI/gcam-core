@@ -24,7 +24,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
              FILE = "emissions/mappings/CDIAC_fuel",
              FILE = "energy/A32.nonenergy_Cseq",
              "L100.CDIAC_CO2_ctry_hist",
-             "L1011.en_bal_EJ_R_Si_Fi_Yh"))
+             "L1012.en_bal_EJ_R_Si_Fi_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L102.CO2_Mt_R_F_Yh",
              "L102.Ccoef_kgCGJ_R_F_Yh",
@@ -42,7 +42,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
     CDIAC_fuel <- get_data(all_data, "emissions/mappings/CDIAC_fuel")
     A32.nonenergy_Cseq <- get_data(all_data, "energy/A32.nonenergy_Cseq")
     L100.CDIAC_CO2_ctry_hist <- get_data(all_data, "L100.CDIAC_CO2_ctry_hist")
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
+    L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh")
 
 
     # ===================================================
@@ -70,16 +70,16 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
     # Calculate regional and global CO2 emissions coefficients by fuel
     # Calculate the TPES by fuel, deducting non-energy use of fuels that does not result in CO2 emissions
 
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == "in_industry_feedstocks") %>%
-      filter(fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
+    L1012.en_bal_EJ_R_Si_Fi_Yh %>%
+      filter(sector == "in_industry_feedstocks",
+             fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
       left_join_error_no_match(A32.nonenergy_Cseq, by = c("fuel" = "subsector")) %>%
       mutate(val_non_energy = value * remove.fraction) %>%
       select(GCAM_region_ID, fuel, year, val_non_energy) ->
       L102.en_sequestered_EJ_R_Fi_Yh
 
     # subtracts the non-energy use of fuels (sequestered carbon) from the TPES to get only the emitting energy
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    L1012.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "TPES", fuel %in% L102.CO2_Mt_R_F_Yh$fuel) %>%
       left_join_error_no_match(L102.en_sequestered_EJ_R_Fi_Yh, by = c("GCAM_region_ID", "fuel", "year")) %>%
       mutate(val_energy = value - val_non_energy) %>%
@@ -145,7 +145,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
       add_units("kgC/GJ") %>%
       add_comments("ratio of CDIAC carbon emissions to energy consumption") %>%
       add_legacy_name("L102.Ccoef_kgCGJ_R_F_Yh") %>%
-      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A32.nonenergy_Cseq")  ->
+      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel", "L1012.en_bal_EJ_R_Si_Fi_Yh", "energy/A32.nonenergy_Cseq")  ->
       L102.Ccoef_kgCGJ_R_F_Yh
 
     L102.Ccoef_kgCGJ_F_Yh %>%
@@ -153,7 +153,7 @@ module_energy_LA102.en_emiss_CDIAC <- function(command, ...) {
       add_units("kgC/GJ") %>%
       add_comments("aggregated regional data for CDIAC carbon emissions and energy balances to find global ratios") %>%
       add_legacy_name("L102.Ccoef_kgCGJ_F_Yh") %>%
-      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel", "L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A32.nonenergy_Cseq") ->
+      add_precursors("L100.CDIAC_CO2_ctry_hist", "common/iso_GCAM_regID", "emissions/mappings/CDIAC_fuel", "L1012.en_bal_EJ_R_Si_Fi_Yh", "energy/A32.nonenergy_Cseq") ->
       L102.Ccoef_kgCGJ_F_Yh
 
     return_data(L102.CO2_Mt_R_F_Yh, L102.Ccoef_kgCGJ_R_F_Yh, L102.Ccoef_kgCGJ_F_Yh)

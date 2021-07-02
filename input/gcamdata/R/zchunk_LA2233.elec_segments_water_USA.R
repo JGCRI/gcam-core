@@ -158,7 +158,7 @@ module_gcamusa_LA2233.elec_segments_water_USA <- function(command, ...) {
       intermittent.technology <- subsector_1 <- sector <- fuel <- Electric.sector.technology <-
       water_sector <- water_type <- state <- state_name <- ':=' <- x <- plant_type <- State <-
       value <- Basin_name <- Electric.sector <- Electric.sector.technology <-
-      apply.to <- basin_id <- basin_name <- calOutputValue <- capital.overnight <-
+      apply.to <- GCAM_basin_ID <- basin_name <- calOutputValue <- capital.overnight <-
       cooling_system <- deflator <- efficiency <- fixed.charge.rate <- from.subsector <-
       from.supplysector <- from.technology <- from.year <- global.share.weight <-
       input.capital <- input.cost <- input.unit <- intensity_CORE <-

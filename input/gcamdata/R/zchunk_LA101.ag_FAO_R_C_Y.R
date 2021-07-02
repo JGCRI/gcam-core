@@ -268,7 +268,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
     # Calculate initial yield estimates in kilograms per square meter by region, crop, year, and GLU
     # Yield in kilograms per square meter
     L101.ag_Prod_Mt_R_C_Y_GLU %>%
-      left_join(L101.ag_HA_bm2_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
+      left_join(L101.ag_HA_bm2_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU", "year")) %>%
       mutate(value = value.x / value.y) %>%
       replace_na(list(value = 0)) %>%
       select(-value.x, -value.y) %>%

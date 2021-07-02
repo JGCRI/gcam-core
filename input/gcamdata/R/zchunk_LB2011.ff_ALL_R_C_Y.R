@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LB2011.ff_ALL_R_C_Y
 #'
 #' Calculate fossil fuel energy balances, by region / commodity / year and harmonize GCAM's data to Comtrade's.

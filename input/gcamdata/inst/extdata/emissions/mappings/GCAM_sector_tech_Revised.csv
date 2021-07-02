@@ -116,7 +116,7 @@ UnmanagedLand,GrasslandFires,GrasslandFires,UnmanagedLand,GrasslandFires,Grassla
 urban processes,aerosols,aerosols,urban processes,aerosols,aerosols,aerosols,all,all,aerosols,,,,Aerosols Product Use,
 urban processes,fire_exting,fire_exting,urban processes,fire_exting,fire_exting,fire exting,all,all,fire exting,,,,Fire Protection,
 urban processes,landfills,landfills,urban processes,landfills,landfills,landfills,all,all,landfills,,,,Landfilling of Solid Waste,
-urban processes,wastewater treatment,wastewater treatment,urban processes,wastewater treatment,wastewater treatment,wastewater,all,all,wastewater,,,,Wastewater,
+urban processes,wastewater,wastewater,urban processes,wastewater,wastewater,wastewater,all,all,wastewater,,,,Wastewater,
 Vegetables,,,Vegetables,,,,,,,,,,Cropland Management,
 Wheat,,,Wheat,,,,,,,,,,Cropland Management,
 Freight,Rail_All,coal,trn_freight,Freight Rail,Coal,trn_rail,all,coal,trn_rail,tra,trn_rail,coal,,trn_coal

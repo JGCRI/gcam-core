@@ -6,7 +6,7 @@
 supplysector,subsector,logit.exponent,logit.type
 urban processes,waste_incineration,-6,
 urban processes,landfills,-6,
-urban processes,wastewater treatment,-6,
+urban processes,wastewater,-6,
 urban processes,aerosols,-6,
 urban processes,fire_exting,-6,
 industrial processes,adipic acid,-6,

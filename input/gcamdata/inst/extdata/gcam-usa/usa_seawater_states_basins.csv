@@ -5,14 +5,14 @@
 # Column types: cc
 # ----------
 region,seawater_region
-USA,Pacific and Arctic Coast
-USA,South Atlantic Gulf
-USA,Lower Mississippi River
-USA,Pacific Northwest
-USA,California River
-USA,Mid Atlantic
-USA,New England
-USA,Texas Gulf Coast
+USA,PacArctic
+USA,UsaCstSE
+USA,MissppRS
+USA,UsaPacNW
+USA,California
+USA,UsaCstE
+USA,UsaCstNE
+USA,TexasCst
 USA,AK
 USA,WA
 USA,OR

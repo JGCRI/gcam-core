@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L112.ceds_ghg_en_R_S_T_Y
 #'
 #' Calculates emissions and emissions factors using CEDS and GFED emissions data for GCAM sectors and technologies. The chunk contains processing for the following,
@@ -90,7 +92,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         CEDS_emissions <- epa_emissions <-  ch4_em_factor <- production <- feed <- GCAM_commodity <- input.emissions <- EPA_agg_fuel_ghg <- EPA_agg_sector <-
         EDGAR_agg_sector <- globalemfact <- emfact <- value <- em_fact <- . <- FF_driver <- natural_gas <- UCD_category <- Non.co2 <- quantile <-
         upper <- GCAM_subsector <- value_median <- NULL
-
 
       #Get CEDS_GFED data
       L112.CEDS_GCAM <- get_data(all_data, "L102.ceds_GFED_nonco2_tg_R_S_F")
@@ -484,7 +485,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                                       "metals", "foams", "solvents", "semiconductors","chemicals_nitric","chemicals_adipic")) ->
         L112.CEDS_GCAM_Proc
 
-
       GCAM_sector_tech %>%
         select(supplysector, subsector, stub.technology, EDGAR_agg_sector, EPA_agg_sector, EPA_agg_fuel_ghg) %>%
         filter(EDGAR_agg_sector %in% c("industry_processes" , "chemicals", "landfills", "wastewater",  # Filter for the agg sectors in EDGAR column for all NonCO2s.
@@ -500,7 +500,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
         summarise(value = sum(input.emissions)) %>% # Calculate total emissions
         ungroup()->L131.nonco2_tg_R_prc_S_S_Yh
-
 
       # Note: Final sector outputs
       # "nitric acid" "other industrial processes" "solvents"

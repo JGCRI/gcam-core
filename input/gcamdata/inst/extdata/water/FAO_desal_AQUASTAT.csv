@@ -1,0 +1,261 @@
+# File: FAO_desal_AQUASTAT.csv
+# Title: Desalinated water production by country and year
+# Units: km^3
+# Column types: ccin
+# Source: FAO AQUASTAT database: http://www.fao.org/aquastat/en/
+Country,Variable,Year,Value
+Algeria,Desalinated water produced,1990,0.064
+Algeria,Desalinated water produced,2002,0.017
+Angola,Desalinated water produced,1990,1.00E-04
+Angola,Desalinated water produced,2000,1.00E-04
+Angola,Desalinated water produced,2005,1.00E-04
+Antigua and Barbuda,Desalinated water produced,1992,0.0033
+Antigua and Barbuda,Desalinated water produced,2005,0.0033
+Antigua and Barbuda,Desalinated water produced,2012,0.0071
+Argentina,Desalinated water produced,1990,7.00E-04
+Argentina,Desalinated water produced,1995,7.00E-04
+Argentina,Desalinated water produced,2000,7.00E-04
+Australia,Desalinated water produced,1990,0.0298
+Australia,Desalinated water produced,1996,0.0298
+Australia,Desalinated water produced,2000,0.0298
+Australia,Desalinated water produced,2005,0.0298
+Australia,Desalinated water produced,2012,0.0298
+Austria,Desalinated water produced,1980,0.0022
+Austria,Desalinated water produced,1985,0.0022
+Austria,Desalinated water produced,1990,0.0022
+Austria,Desalinated water produced,1997,0.0022
+Austria,Desalinated water produced,2000,0.0022
+Bahamas,Desalinated water produced,1989,0.0013
+Bahamas,Desalinated water produced,2000,0.0074
+Bahrain,Desalinated water produced,1991,0.0441
+Bahrain,Desalinated water produced,2000,0.0441
+Bahrain,Desalinated water produced,2003,0.1024
+Barbados,Desalinated water produced,2005,0.011
+Brazil,Desalinated water produced,1996,0.04
+Brazil,Desalinated water produced,2010,0.04
+Cabo Verde,Desalinated water produced,1990,0.002
+Cabo Verde,Desalinated water produced,1997,0.0017
+Cabo Verde,Desalinated water produced,2001,0.0017
+Canada,Desalinated water produced,1990,0.0027
+Canada,Desalinated water produced,1996,0.0027
+Canada,Desalinated water produced,2000,0.0027
+Canada,Desalinated water produced,2007,0.0027
+Canada,Desalinated water produced,2009,0.0027
+Chile,Desalinated water produced,1990,0.0048
+Chile,Desalinated water produced,2000,0.0048
+Chile,Desalinated water produced,2012,0.0645
+China,Desalinated water produced,2005,0.0109
+China,Desalinated water produced,2008,0.0109
+Cuba,Desalinated water produced,2001,4.00E-04
+Cyprus,Desalinated water produced,1990,0.003
+Cyprus,Desalinated water produced,1993,0.003
+Cyprus,Desalinated water produced,2000,0.0335
+Cyprus,Desalinated water produced,2007,0.0335
+Cyprus,Desalinated water produced,2009,0.0335
+Czech Republic,Desalinated water produced,1997,2.00E-04
+Czech Republic,Desalinated water produced,2000,2.00E-04
+Czech Republic,Desalinated water produced,2007,2.00E-04
+Czech Republic,Desalinated water produced,2009,2.00E-04
+Denmark,Desalinated water produced,1990,0.015
+Denmark,Desalinated water produced,2000,0.015
+Denmark,Desalinated water produced,2007,0.015
+Denmark,Desalinated water produced,2009,0.015
+Djibouti,Desalinated water produced,1990,1.00E-04
+Djibouti,Desalinated water produced,2000,1.00E-04
+Ecuador,Desalinated water produced,1990,0.0022
+Ecuador,Desalinated water produced,1997,0.0022
+Ecuador,Desalinated water produced,2000,0.0022
+Ecuador,Desalinated water produced,2005,0.0022
+Egypt,Desalinated water produced,1990,0.025
+Egypt,Desalinated water produced,1993,0.025
+Egypt,Desalinated water produced,2002,0.1
+El Salvador,Desalinated water produced,1992,1.00E-04
+El Salvador,Desalinated water produced,2000,1.00E-04
+El Salvador,Desalinated water produced,2005,1.00E-04
+Finland,Desalinated water produced,1980,1.00E-04
+Finland,Desalinated water produced,1985,1.00E-04
+Finland,Desalinated water produced,1990,1.00E-04
+Finland,Desalinated water produced,1995,1.00E-04
+Finland,Desalinated water produced,2000,1.00E-04
+Finland,Desalinated water produced,2005,1.00E-04
+France,Desalinated water produced,1980,0.0117
+France,Desalinated water produced,1985,0.0117
+France,Desalinated water produced,1990,0.0117
+France,Desalinated water produced,1997,0.0117
+France,Desalinated water produced,2000,0.0117
+France,Desalinated water produced,2007,0.0117
+France,Desalinated water produced,2009,0.0117
+Greece,Desalinated water produced,1980,0.01
+Greece,Desalinated water produced,1985,0.01
+Greece,Desalinated water produced,1990,0.01
+Greece,Desalinated water produced,1997,0.01
+Greece,Desalinated water produced,2000,0.01
+Greece,Desalinated water produced,2007,0.01
+Honduras,Desalinated water produced,1990,2.00E-04
+Honduras,Desalinated water produced,2000,2.00E-04
+Hungary,Desalinated water produced,1990,2.00E-04
+Hungary,Desalinated water produced,2000,2.00E-04
+Hungary,Desalinated water produced,2007,2.00E-04
+Hungary,Desalinated water produced,2012,2.00E-04
+India,Desalinated water produced,1996,5.00E-04
+India,Desalinated water produced,2000,5.00E-04
+India,Desalinated water produced,2010,6.00E-04
+Indonesia,Desalinated water produced,1990,0.0187
+Indonesia,Desalinated water produced,2000,0.019
+Iran (Islamic Republic of),Desalinated water produced,1991,0.003
+Iran (Islamic Republic of),Desalinated water produced,1995,0.003
+Iran (Islamic Republic of),Desalinated water produced,2000,0.003
+Iran (Islamic Republic of),Desalinated water produced,2004,0.2
+Iraq,Desalinated water produced,1997,0.0074
+Iraq,Desalinated water produced,2000,0.0074
+Ireland,Desalinated water produced,1990,2.00E-04
+Ireland,Desalinated water produced,1994,2.00E-04
+Ireland,Desalinated water produced,2000,2.00E-04
+Ireland,Desalinated water produced,2007,2.00E-04
+Israel,Desalinated water produced,1990,0.0256
+Israel,Desalinated water produced,1995,0.0256
+Israel,Desalinated water produced,2002,0.0256
+Israel,Desalinated water produced,2007,0.14
+Italy,Desalinated water produced,1987,0.05
+Italy,Desalinated water produced,1990,0.0973
+Italy,Desalinated water produced,2000,0.0973
+Jamaica,Desalinated water produced,1990,5.00E-04
+Jamaica,Desalinated water produced,1993,5.00E-04
+Jamaica,Desalinated water produced,2000,5.00E-04
+Jamaica,Desalinated water produced,2007,5.00E-04
+Japan,Desalinated water produced,1996,0.04
+Japan,Desalinated water produced,2000,0.04
+Japan,Desalinated water produced,2007,0.04
+Japan,Desalinated water produced,2009,0.04
+Jordan,Desalinated water produced,1993,0.002
+Jordan,Desalinated water produced,2005,0.0098
+Kazakhstan,Desalinated water produced,1995,1.328
+Kazakhstan,Desalinated water produced,2002,0.64
+Kazakhstan,Desalinated water produced,2007,0.64
+Kazakhstan,Desalinated water produced,2010,0.853
+Kuwait,Desalinated water produced,1990,0.507
+Kuwait,Desalinated water produced,1993,0.231
+Kuwait,Desalinated water produced,2002,0.4202
+Lebanon,Desalinated water produced,2006,0.0473
+Libya,Desalinated water produced,2000,0.018
+Malaysia,Desalinated water produced,1990,0.0043
+Malaysia,Desalinated water produced,1995,0.0043
+Malaysia,Desalinated water produced,2000,0.0043
+Malaysia,Desalinated water produced,2005,0.0043
+Maldives,Desalinated water produced,1991,4.00E-04
+Maldives,Desalinated water produced,2001,0.0012
+Maldives,Desalinated water produced,2008,0.0012
+Malta,Desalinated water produced,1990,0.024
+Malta,Desalinated water produced,1997,0.0245
+Malta,Desalinated water produced,2002,0.0179
+Malta,Desalinated water produced,2004,0.0189
+Marshall Islands,Desalinated water produced,1990,7.00E-04
+Mauritania,Desalinated water produced,1990,0.002
+Mauritania,Desalinated water produced,2000,0.002
+Mauritania,Desalinated water produced,2005,0.002
+Mexico,Desalinated water produced,1980,0.0307
+Mexico,Desalinated water produced,1985,0.0307
+Mexico,Desalinated water produced,1990,0.0307
+Mexico,Desalinated water produced,2001,0.0191
+Mexico,Desalinated water produced,2007,0.0191
+Mexico,Desalinated water produced,2008,0.0191
+Mongolia,Desalinated water produced,2005,0
+Morocco,Desalinated water produced,1992,0.0034
+Morocco,Desalinated water produced,1995,0.0034
+Morocco,Desalinated water produced,2002,0.003
+Morocco,Desalinated water produced,2010,0.007
+Namibia,Desalinated water produced,1991,3.00E-04
+Namibia,Desalinated water produced,1995,3.00E-04
+Namibia,Desalinated water produced,2000,3.00E-04
+Nicaragua,Desalinated water produced,1990,2.00E-04
+Nicaragua,Desalinated water produced,2000,2.00E-04
+Nicaragua,Desalinated water produced,2008,2.00E-04
+Nigeria,Desalinated water produced,1990,0.003
+Nigeria,Desalinated water produced,2000,0.003
+Norway,Desalinated water produced,1990,1.00E-04
+Norway,Desalinated water produced,1996,1.00E-04
+Norway,Desalinated water produced,2000,1.00E-04
+Norway,Desalinated water produced,2006,1.00E-04
+Oman,Desalinated water produced,1995,0.034
+Oman,Desalinated water produced,2000,0.034
+Oman,Desalinated water produced,2006,0.109
+Paraguay,Desalinated water produced,2011,8.00E-06
+Peru,Desalinated water produced,1992,0.0054
+Peru,Desalinated water produced,2000,0.0054
+Peru,Desalinated water produced,2008,0.0054
+Poland,Desalinated water produced,1990,0.007
+Poland,Desalinated water produced,1997,0.007
+Poland,Desalinated water produced,2000,0.007
+Poland,Desalinated water produced,2007,0.007
+Poland,Desalinated water produced,2009,0.007
+Portugal,Desalinated water produced,1990,0.0016
+Portugal,Desalinated water produced,2000,0.0016
+Portugal,Desalinated water produced,2007,0.0016
+Qatar,Desalinated water produced,1990,0.065
+Qatar,Desalinated water produced,1995,0.099
+Qatar,Desalinated water produced,2000,0.099
+Qatar,Desalinated water produced,2005,0.18
+Republic of Korea,Desalinated water produced,2002,2.00E-04
+Republic of Korea,Desalinated water produced,2005,2.00E-04
+Saint Kitts and Nevis,Desalinated water produced,2005,0.0033
+Saint Kitts and Nevis,Desalinated water produced,2012,0.0033
+Saudi Arabia,Desalinated water produced,1982,0.112
+Saudi Arabia,Desalinated water produced,1987,0.508
+Saudi Arabia,Desalinated water produced,1992,0.683
+Saudi Arabia,Desalinated water produced,1997,0.727
+Saudi Arabia,Desalinated water produced,2002,0.863
+Saudi Arabia,Desalinated water produced,2006,1.033
+Senegal,Desalinated water produced,1990,5.00E-05
+Senegal,Desalinated water produced,2002,5.00E-05
+Seychelles,Desalinated water produced,2003,0.001
+Singapore,Desalinated water produced,1990,0.0072
+Somalia,Desalinated water produced,1990,1.00E-04
+Somalia,Desalinated water produced,2000,1.00E-04
+Somalia,Desalinated water produced,2003,1.00E-04
+South Africa,Desalinated water produced,1990,0.018
+South Africa,Desalinated water produced,1995,0.018
+South Africa,Desalinated water produced,2000,0.018
+Spain,Desalinated water produced,1990,0.1002
+Spain,Desalinated water produced,1997,0.1002
+Spain,Desalinated water produced,2000,0.1002
+Spain,Desalinated water produced,2005,0.1002
+Spain,Desalinated water produced,2008,0.1002
+Sweden,Desalinated water produced,1980,2.00E-04
+Sweden,Desalinated water produced,1985,2.00E-04
+Sweden,Desalinated water produced,1990,2.00E-04
+Sweden,Desalinated water produced,2000,2.00E-04
+Sweden,Desalinated water produced,2007,2.00E-04
+Tajikistan,Desalinated water produced,2006,0
+Trinidad and Tobago,Desalinated water produced,2005,0.036
+Trinidad and Tobago,Desalinated water produced,2011,0.047
+Tunisia,Desalinated water produced,1990,0.008
+Tunisia,Desalinated water produced,1995,0.008
+Tunisia,Desalinated water produced,2001,0.013
+Tunisia,Desalinated water produced,2012,0.0197
+Turkey,Desalinated water produced,1992,5.00E-04
+Turkey,Desalinated water produced,2000,5.00E-04
+Turkey,Desalinated water produced,2003,5.00E-04
+Turkmenistan,Desalinated water produced,2006,0
+United Arab Emirates,Desalinated water produced,1990,0.163
+United Arab Emirates,Desalinated water produced,1995,0.385
+United Arab Emirates,Desalinated water produced,2000,0.385
+United Arab Emirates,Desalinated water produced,2005,0.95
+United Kingdom,Desalinated water produced,1980,0.0333
+United Kingdom,Desalinated water produced,1985,0.0333
+United Kingdom,Desalinated water produced,1990,0.0333
+United Kingdom,Desalinated water produced,1995,0.0333
+United Kingdom,Desalinated water produced,2000,0.0333
+United Kingdom,Desalinated water produced,2006,0.0333
+United Kingdom,Desalinated water produced,2008,0.0333
+United States of America,Desalinated water produced,1980,0.138
+United States of America,Desalinated water produced,1985,0.138
+United States of America,Desalinated water produced,1990,0.58
+United States of America,Desalinated water produced,1995,0.58
+United States of America,Desalinated water produced,2000,0.58
+United States of America,Desalinated water produced,2005,0.58
+Venezuela (Bolivarian Republic of),Desalinated water produced,1990,0.0052
+Venezuela (Bolivarian Republic of),Desalinated water produced,2000,0.0052
+Venezuela (Bolivarian Republic of),Desalinated water produced,2007,0.0052
+Yemen,Desalinated water produced,1990,0.01
+Yemen,Desalinated water produced,2000,0.01
+Yemen,Desalinated water produced,2006,0.0251

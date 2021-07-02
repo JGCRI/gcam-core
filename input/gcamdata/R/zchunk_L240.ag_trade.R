@@ -54,9 +54,8 @@ module_aglu_L240.ag_trade <- function(command, ...) {
 
     year <- region <- supplysector <- subsector <- GCAM_commodity <- GrossExp_Mt <-
       calOutputValue <- subs.share.weight <- market.name <- minicam.energy.input <-
-      GrossImp_Mt <- Prod_Mt <- GCAM_region_ID <- NetExp_Mt <- Prod_bm3 <- NetExp_bm3 <-
-      value <- flow <- GrossExp <- NULL # silence package check notes
-
+      GrossImp_Mt <- Prod_Mt <- GCAM_region_ID <- NetExp_Mt <- Prod_bm3 <-
+      NetExp_bm3 <- value <- flow <- GrossExp <- NULL # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
