@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L245.water_demand_municipal
 #'
 #' Genereate GCAM-USA municipal water sector input files.
@@ -17,10 +19,10 @@
 #' @author RC March 2019
 module_gcamusa_L245.water_demand_municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "water/A03.sector",
-             FILE = "water/A45.sector",
+    return(c(FILE = "water/A45.sector",
              FILE = "water/A45.tech_cost",
              FILE = "water/A45.demand",
+             FILE = "water/water_td_sectors",
              "L145.municipal_water_state_W_Yh_km3",
              "L145.municipal_water_cost_state_75USD_m3",
              "L145.municipal_water_eff_state_Yh"))
@@ -47,10 +49,10 @@ module_gcamusa_L245.water_demand_municipal <- function(command, ...) {
       region <- supplysector <- NULL  # silence package check notes
 
     # Load required inputs
-    A03.sector <- get_data(all_data, "water/A03.sector")
     A45.sector <- get_data(all_data, "water/A45.sector", strip_attributes = TRUE)
     A45.tech_cost <- get_data(all_data, "water/A45.tech_cost", strip_attributes = TRUE)
     A45.demand <- get_data(all_data, "water/A45.demand", strip_attributes = TRUE)
+    water_td_sectors <- get_data(all_data, "water/water_td_sectors")
     L145.municipal_water_state_W_Yh_km3 <- get_data(all_data, "L145.municipal_water_state_W_Yh_km3")
     L145.municipal_water_cost_state_75USD_m3 <- get_data(all_data, "L145.municipal_water_cost_state_75USD_m3")
     L145.municipal_water_eff_state_Yh <- get_data(all_data, "L145.municipal_water_eff_state_Yh")
@@ -121,7 +123,7 @@ module_gcamusa_L245.water_demand_municipal <- function(command, ...) {
              coefficient = replace(coefficient, water_type == "water consumption",
                                    round(value[water_type == "water consumption"], water.DIGITS_MUNI_WATER)),
              water_sector = gcamusa.MUNICIPAL_SECTOR,
-             minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
+             minicam.energy.input = set_water_input_name(water_sector, water_type, water_td_sectors)) %>%
       select(LEVEL2_DATA_NAMES[["TechCoef"]]) ->
       L245.TechCoef_USA  # municipal water technology withdrawals and consumption efficiencies
 
@@ -223,9 +225,9 @@ module_gcamusa_L245.water_demand_municipal <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Withdrawal efficiencies bound to consumption and appropriate minicam.energy.input appended") %>%
       add_legacy_name("L245.TechCoef_USA") %>%
-      add_precursors("water/A03.sector",
-                     "water/A45.sector",
+      add_precursors("water/A45.sector",
                      "water/A45.tech_cost",
+                     "water/water_td_sectors",
                      "L145.municipal_water_eff_state_Yh") ->
       L245.TechCoef_USA
 

@@ -1,0 +1,6 @@
+# File: A72.subsector_interp.csv
+# Title: Irrigation water abstraction subsector (fuel) share-weight interpolation
+# Units: None
+# Source: NA
+# Column types: ccciinc
+supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function

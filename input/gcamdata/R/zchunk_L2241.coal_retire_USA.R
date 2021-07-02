@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L2241.coal_retire_USA
 #'
 #' Generates GCAM-USA model input for removing coal capacity retired between 2011 and 2015, 2016 and 2020, and vintaging capacity which continues to operate beyond 2020.

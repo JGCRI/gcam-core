@@ -1,0 +1,9 @@
+# File: A73.globaltech_shrwt.csv
+# Title: Industrial manufacturing energy-for-water technology share-weights
+# Units: None
+# Source: NA
+# Column types: cccnn
+supplysector,subsector,technology,1971,2100
+industrial water abstraction,electricity,electricity,1,1
+industrial water treatment,electricity,electricity,1,1
+industrial wastewater treatment,electricity,electricity,1,1

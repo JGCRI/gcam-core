@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_batch_water_demand_municipal_xml
 #'
 #' Construct XML data structure for \code{water_demand_municipal.xml}.

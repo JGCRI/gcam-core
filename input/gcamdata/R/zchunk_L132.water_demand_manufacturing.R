@@ -46,6 +46,7 @@ module_water_L132.water_demand_manufacturing <- function(command, ...) {
     mfg_water_mapping <- get_data(all_data, "water/mfg_water_mapping")
     Vassolo_mfg_water <- get_data(all_data, "water/Vassolo_mfg_water")
 
+
     L101.en_bal_EJ_ctry_Si_Fi_Yh_full <- get_data(all_data, "L101.en_bal_EJ_ctry_Si_Fi_Yh_full")
 
     # ===================================================

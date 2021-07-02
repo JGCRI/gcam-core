@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L145.water_demand_municipal
 #'
 #' Generate US state municipal water withdrawals, municipal water base delivery cost, and municipal water use efficiency.

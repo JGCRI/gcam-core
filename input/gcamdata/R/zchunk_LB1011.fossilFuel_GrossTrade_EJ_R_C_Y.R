@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_LB1011.ff_GrossTrade
 #'
 #' Calculate primary fossil fuel (coal, natural gas, crude oil) product balances, by region / commodity / year.

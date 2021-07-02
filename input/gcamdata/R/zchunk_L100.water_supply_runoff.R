@@ -17,8 +17,7 @@
 #' @author ST September 2018
 module_water_L100.water_supply_runoff <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "water/basin_ID",
-             FILE = "water/xanthos_basin_runoff",
+    return(c(FILE = "water/xanthos_basin_runoff",
              FILE = "water/xanthos_accessible_water"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L100.runoff_max_bm3",
@@ -26,12 +25,11 @@ module_water_L100.water_supply_runoff <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     year <- runoff <- name <- accessible_water <-
-      access_fraction <- basin_id <- runoff_max <- id <- NULL
+      access_fraction <- runoff_max <- id <- GCAM_basin_ID <- NULL
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    basin_ids <- get_data(all_data, "water/basin_ID")
     # historical runoff and accessible water by basin for 1961 - 2016
     xanthos_runoff <- get_data(all_data, "water/xanthos_basin_runoff")
     xanthos_access <- get_data(all_data, "water/xanthos_accessible_water")
@@ -53,7 +51,7 @@ module_water_L100.water_supply_runoff <- function(command, ...) {
       mutate(access_fraction = accessible_water / runoff) %>%
       group_by(id) %>% summarise(access_fraction = mean(access_fraction)) %>%
       ungroup() %>%
-      rename(basin_id = id) ->
+      rename(GCAM_basin_ID = id) ->
       L100.runoff_accessible
 
     # compute basin runoff as mean of
@@ -62,11 +60,11 @@ module_water_L100.water_supply_runoff <- function(command, ...) {
       group_by(id) %>%
       summarise(runoff_max = mean(runoff)) %>%
       ungroup() %>%
-      rename(basin_id = id) %>%
+      rename(GCAM_basin_ID = id) %>%
       mutate(year = 2000) %>% #temp year written over by following line
-      complete(year = MODEL_YEARS, nesting(basin_id, runoff_max)) %>%
+      complete(year = MODEL_YEARS, nesting(GCAM_basin_ID, runoff_max)) %>%
       filter(year %in% MODEL_YEARS) %>%
-      arrange(basin_id) ->
+      arrange(GCAM_basin_ID) ->
       L100.runoff_max_bm3
 
 
@@ -77,8 +75,7 @@ module_water_L100.water_supply_runoff <- function(command, ...) {
       add_units("km^3/yr") %>%
       add_comments("Computed directly from Xanthos outputs") %>%
       add_legacy_name("L100.runoff_max_bm3") %>%
-      add_precursors("water/basin_ID",
-                     "water/xanthos_basin_runoff") ->
+      add_precursors("water/xanthos_basin_runoff") ->
       L100.runoff_max_bm3
 
     L100.runoff_accessible %>%
@@ -86,8 +83,7 @@ module_water_L100.water_supply_runoff <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("") %>%
       add_legacy_name("L100.runoff_max_bm3") %>%
-      add_precursors("water/basin_ID",
-                     "water/xanthos_basin_runoff",
+      add_precursors("water/xanthos_basin_runoff",
                      "water/xanthos_accessible_water") ->
       L100.runoff_accessible
 

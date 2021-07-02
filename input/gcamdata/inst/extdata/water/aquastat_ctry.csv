@@ -3,189 +3,203 @@
 # Units: NA
 # Comments: Maps countries in all aquastat databases to iso codes
 # Source: NA
-# Column types: ccc 
+# Column types: cccc
 # ----------
-aquastat_ctry,iso,AusNWC_reg
-Afghanistan,afg,
-Angola,ago,Middle East and Africa
-Albania,alb,
-United Arab Emirates,are,Middle East and Africa
-Argentina,arg,Americas
-Armenia,arm,
-Antigua and Barbuda,atg,Americas
-Australia,aus,Asia Pacific
-Austria,aut,Europe
-Azerbaijan,aze,
-Burundi,bdi,
-Belgium,bel,
-Benin,ben,
-Burkina Faso,bfa,
-Bangladesh,bgd,
-Bulgaria,bgr,
-Bahrain,bhr,Middle East and Africa
-Bahamas,bhs,Americas
-Bosnia and Herzegovina,bih,
-Belarus,blr,
-Belize,blz,
-Bolivia (Plurinational State of),bol,
-Brazil,bra,Americas
-Barbados,brb,Americas
-Brunei Darussalam,brn,
-Bhutan,btn,
-Botswana,bwa,
-Central African Republic,caf,
-Canada,can,Americas
-Switzerland,che,
-Chile,chl,Americas
-China,chn,Asia Pacific
-Cote dIvoire,civ,
-Cameroon,cmr,
-Democratic Republic of the Congo,cod,
-Congo,cog,
-Colombia,col,
-Comoros,com,
-Cabo Verde,cpv,Middle East and Africa
-Cape Verde,cpv,Middle East and Africa
-Costa Rica,cri,
-Cuba,cub,Americas
-Cyprus,cyp,Europe
-Czech Republic,cze,Europe
-Germany,deu,
-Djibouti,dji,Middle East and Africa
-Dominica,dma,
-Denmark,dnk,Europe
-Dominican Republic,dom,
-Algeria,dza,Middle East and Africa
-Ecuador,ecu,Americas
-Egypt,egy,Middle East and Africa
-Eritrea,eri,
-Spain,esp,Europe
-Estonia,est,
-Ethiopia,eth,
-Finland,fin,Europe
-Fiji,fji,
-France,fra,Europe
-Gabon,gab,
-United Kingdom,gbr,Europe
-Georgia,geo,
-Ghana,gha,
-Guinea,gin,
-Gambia,gmb,
-Guinea-Bissau,gnb,
-Equatorial Guinea,gnq,
-Greece,grc,Europe
-Grenada,grd,
-Guatemala,gtm,
-Guyana,guy,
-Honduras,hnd,Americas
-Croatia,hrv,
-Haiti,hti,
-Hungary,hun,Europe
-Indonesia,idn,Asia Pacific
-India,ind,Asia Pacific
-Ireland,irl,Europe
-Iran (Islamic Republic of),irn,Middle East and Africa
-Iraq,irq,Middle East and Africa
-Iceland,isl,
-Israel,isr,Middle East and Africa
-Italy,ita,Europe
-Jamaica,jam,Americas
-Jordan,jor,Middle East and Africa
-Japan,jpn,Asia Pacific
-Kazakhstan,kaz,Asia Pacific
-Kenya,ken,
-Kyrgyzstan,kgz,
-Cambodia,khm,
-Saint Kitts and Nevis,kna,Americas
-Republic of Korea,kor,Asia Pacific
-Kuwait,kwt,Middle East and Africa
-Lao Peoples Democratic Republic,lao,
-Lebanon,lbn,Middle East and Africa
-Liberia,lbr,
-Libya,lby,Middle East and Africa
-Saint Lucia,lca,
-Sri Lanka,lka,
-Lesotho,lso,
-Lithuania,ltu,
-Luxembourg,lux,
-Latvia,lva,
-Morocco,mar,Middle East and Africa
-Monaco,mco,
-Republic of Moldova,mda,
-Madagascar,mdg,
-Maldives,mdv,Asia Pacific
-Mexico,mex,Americas
-Marshall Islands,mhl,Asia Pacific
-The former Yugoslav Republic of Macedonia,mkd,
-Mali,mli,
-Malta,mlt,Europe
-Myanmar,mmr,
-Montenegro,mne,
-Mongolia,mng,Asia Pacific
-Mozambique,moz,
-Mauritania,mrt,Middle East and Africa
-Mauritius,mus,
-Malawi,mwi,
-Malaysia,mys,Asia Pacific
-Namibia,nam,Middle East and Africa
-Niger,ner,
-Nigeria,nga,Middle East and Africa
-Nicaragua,nic,Americas
-Netherlands,nld,
-Norway,nor,Europe
-Nepal,npl,
-New Zealand,nzl,
-Oman,omn,Middle East and Africa
-Pakistan,pak,
-Panama,pan,
-Peru,per,Americas
-Philippines,phl,
-Papua New Guinea,png,
-Poland,pol,Europe
-Puerto Rico,pri,
-Democratic Peoples Republic of Korea,prk,
-Portugal,prt,Europe
-Paraguay,pry,Americas
-Occupied Palestinian Territory,pse,
-Qatar,qat,Middle East and Africa
-Romania,rom,
-Russian Federation,rus,
-Rwanda,rwa,
-Saudi Arabia,sau,Middle East and Africa
-South Sudan,sdn,
-Sudan,sdn,
-Senegal,sen,Middle East and Africa
-Singapore,sgp,Asia Pacific
-Sierra Leone,sle,
-El Salvador,slv,Americas
-Somalia,som,Middle East and Africa
-Suriname,sur,
-Slovakia,svk,
-Slovenia,svn,
-Sweden,swe,Europe
-Swaziland,swz,
-Seychelles,syc,Middle East and Africa
-Syrian Arab Republic,syr,
-Chad,tcd,
-Togo,tgo,
-Thailand,tha,
-Tajikistan,tjk,Asia Pacific
-Turkmenistan,tkm,Asia Pacific
-Timor-Leste,tls,
-Trinidad and Tobago,tto,Americas
-Tunisia,tun,Middle East and Africa
-Turkey,tur,Middle East and Africa
-Taiwan,twn,
-United Republic of Tanzania,tza,
-Uganda,uga,
-Ukraine,ukr,
-Uruguay,ury,
-United States of America,usa,Americas
-Uzbekistan,uzb,
-Saint Vincent and the Grenadines,vct,
-Venezuela (Bolivarian Republic of),ven,Americas
-Viet Nam,vnm,
-Yemen,yem,Middle East and Africa
-South Africa,zaf,Middle East and Africa
-Zambia,zmb,
-Zimbabwe,zwe,
+aquastat_ctry,iso,AusNWC_reg,Superwell_country
+Afghanistan,afg,,Afghanistan
+Angola,ago,Middle East and Africa,Angola
+Albania,alb,,Albania
+,and,,Andorra
+United Arab Emirates,are,Middle East and Africa,United Arab Emirates
+Argentina,arg,Americas,Argentina
+Armenia,arm,,Armenia
+Antigua and Barbuda,atg,Americas,Antigua and Barbuda
+Australia,aus,Asia Pacific,Australia
+Austria,aut,Europe,Austria
+Azerbaijan,aze,,Azerbaijan
+Burundi,bdi,,Burundi
+Belgium,bel,,Belgium
+Benin,ben,,Benin
+Burkina Faso,bfa,,Burkina Faso
+Bangladesh,bgd,,Bangladesh
+Bulgaria,bgr,,Bulgaria
+Bahrain,bhr,Middle East and Africa,Bahrain
+Bahamas,bhs,Americas,Bahamas
+Bosnia and Herzegovina,bih,,Bosnia and Herzegovina
+Belarus,blr,,Belarus
+Belize,blz,,Belize
+Bolivia (Plurinational State of),bol,,Bolivia
+Brazil,bra,Americas,Brazil
+Barbados,brb,Americas,Barbados
+Brunei Darussalam,brn,,Brunei Darussalam
+Bhutan,btn,,Bhutan
+Botswana,bwa,,Botswana
+Central African Republic,caf,,Central African Republic
+Canada,can,Americas,Canada
+Switzerland,che,,Switzerland
+Chile,chl,Americas,Chile
+China,chn,Asia Pacific,China
+Cote dIvoire,civ,,Cote dIvoire
+Cameroon,cmr,,Cameroon
+Democratic Republic of the Congo,cod,,Democratic Republic of the Congo
+Congo,cog,,Congo
+Colombia,col,,Colombia
+Comoros,com,,Comoros
+Cabo Verde,cpv,Middle East and Africa,
+Cape Verde,cpv,Middle East and Africa,
+Costa Rica,cri,,Costa Rica
+Cuba,cub,Americas,Cuba
+Cyprus,cyp,Europe,Cyprus
+Czech Republic,cze,Europe,Czech Republic
+Germany,deu,,Germany
+Djibouti,dji,Middle East and Africa,Djibouti
+Dominica,dma,,Dominica
+Denmark,dnk,Europe,Denmark
+Dominican Republic,dom,,Dominican Republic
+Algeria,dza,Middle East and Africa,Algeria
+Ecuador,ecu,Americas,Ecuador
+Egypt,egy,Middle East and Africa,Egypt
+Eritrea,eri,,Eritrea
+Spain,esp,Europe,Spain
+Estonia,est,,Estonia
+Ethiopia,eth,,Ethiopia
+Finland,fin,Europe,Finland
+Fiji,fji,,Fiji
+,flk,,Falkland Islands
+France,fra,Europe,France
+,fro,,Faroe Islands
+Gabon,gab,,Gabon
+United Kingdom,gbr,Europe,United Kingdom
+Georgia,geo,,Georgia
+,ggy,,Guernsey
+Ghana,gha,,Ghana
+Guinea,gin,,Guinea
+Gambia,gmb,,Gambia
+Guinea-Bissau,gnb,,Guinea-Bissau
+Equatorial Guinea,gnq,,Equatorial Guinea
+Greece,grc,Europe,Greece
+Grenada,grd,,
+Guatemala,gtm,,Guatemala
+Guyana,guy,,Guyana
+Honduras,hnd,Americas,Honduras
+Croatia,hrv,,Croatia
+Haiti,hti,,Haiti
+Hungary,hun,Europe,Hungary
+Indonesia,idn,Asia Pacific,Indonesia
+,imn,,Isle of Man
+India,ind,Asia Pacific,India
+Ireland,irl,Europe,Ireland
+Iran (Islamic Republic of),irn,Middle East and Africa,Iran
+Iraq,irq,Middle East and Africa,Iraq
+Iceland,isl,,Iceland
+Israel,isr,Middle East and Africa,Israel
+Italy,ita,Europe,Italy
+Jamaica,jam,Americas,Jamaica
+,jey,,Jersey
+Jordan,jor,Middle East and Africa,Jordan
+Japan,jpn,Asia Pacific,Japan
+Kazakhstan,kaz,Asia Pacific,Kazakhstan
+Kenya,ken,,Kenya
+Kyrgyzstan,kgz,,Kyrgyzstan
+Cambodia,khm,,Cambodia
+Saint Kitts and Nevis,kna,Americas,Saint Kitts and Nevis
+Republic of Korea,kor,Asia Pacific,South Korea
+Kuwait,kwt,Middle East and Africa,Kuwait
+Lao Peoples Democratic Republic,lao,,Laos
+Lebanon,lbn,Middle East and Africa,Lebanon
+Liberia,lbr,,Liberia
+Libya,lby,Middle East and Africa,Libya
+Saint Lucia,lca,,Saint Lucia
+Sri Lanka,lka,,Sri Lanka
+Lesotho,lso,,Lesotho
+,lie,,Liechtenstein
+Lithuania,ltu,,Lithuania
+Luxembourg,lux,,Luxembourg
+Latvia,lva,,Latvia
+Morocco,mar,Middle East and Africa,Morocco
+Monaco,mco,,
+Republic of Moldova,mda,,Moldova
+Madagascar,mdg,,Madagascar
+Maldives,mdv,Asia Pacific,
+Mexico,mex,Americas,Mexico
+Marshall Islands,mhl,Asia Pacific,
+The former Yugoslav Republic of Macedonia,mkd,,The Former Yugoslav Republic of Macedonia
+Mali,mli,,Mali
+Malta,mlt,Europe,
+Myanmar,mmr,,Myanmar
+Montenegro,mne,,Montenegro
+Mongolia,mng,Asia Pacific,Mongolia
+Mozambique,moz,,Mozambique
+Mauritania,mrt,Middle East and Africa,Mauritania
+,msr,,Montserrat
+Mauritius,mus,,
+Malawi,mwi,,Malawi
+Malaysia,mys,Asia Pacific,Malaysia
+Namibia,nam,Middle East and Africa,Namibia
+Niger,ner,,Niger
+Nigeria,nga,Middle East and Africa,Nigeria
+Nicaragua,nic,Americas,Nicaragua
+Netherlands,nld,,Netherlands
+,nfk,,Norfolk Island
+Norway,nor,Europe,Norway
+Nepal,npl,,Nepal
+New Zealand,nzl,,New Zealand
+Oman,omn,Middle East and Africa,Oman
+Pakistan,pak,,Pakistan
+Panama,pan,,Panama
+Peru,per,Americas,Peru
+Philippines,phl,,Philippines
+Papua New Guinea,png,,Papua New Guinea
+Poland,pol,Europe,Poland
+Puerto Rico,pri,,
+Democratic Peoples Republic of Korea,prk,,North Korea
+Portugal,prt,Europe,Portugal
+Paraguay,pry,Americas,Paraguay
+Occupied Palestinian Territory,pse,,Palestinian Territory
+Qatar,qat,Middle East and Africa,Qatar
+Romania,rom,,Romania
+Russian Federation,rus,,Russian Federation
+Rwanda,rwa,,Rwanda
+Saudi Arabia,sau,Middle East and Africa,Saudi Arabia
+South Sudan,sdn,,South Sudan
+Sudan,sdn,,Sudan
+Senegal,sen,Middle East and Africa,Senegal
+Singapore,sgp,Asia Pacific,Singapore
+,slb,,Solomon Islands
+Sierra Leone,sle,,Sierra Leone
+El Salvador,slv,Americas,El Salvador
+Somalia,som,Middle East and Africa,Somalia
+,srb,,Serbia
+,stp,,Sao Tome and Principe
+Suriname,sur,,Suriname
+Slovakia,svk,,Slovakia
+Slovenia,svn,,Slovenia
+Sweden,swe,Europe,Sweden
+Swaziland,swz,,Swaziland
+Seychelles,syc,Middle East and Africa,Seychelles
+Syrian Arab Republic,syr,,Syria
+Chad,tcd,,Chad
+Togo,tgo,,Togo
+Thailand,tha,,Thailand
+Tajikistan,tjk,Asia Pacific,Tajikistan
+Turkmenistan,tkm,Asia Pacific,Turkmenistan
+Timor-Leste,tls,,Timor-Leste
+Trinidad and Tobago,tto,Americas,Trinidad and Tobago
+Tunisia,tun,Middle East and Africa,Tunisia
+Turkey,tur,Middle East and Africa,Turkey
+Taiwan,twn,,Taiwan
+United Republic of Tanzania,tza,,Tanzania
+Uganda,uga,,Uganda
+Ukraine,ukr,,Ukraine
+Uruguay,ury,,Uruguay
+United States of America,usa,Americas,United States
+Uzbekistan,uzb,,Uzbekistan
+Saint Vincent and the Grenadines,vct,,
+Venezuela (Bolivarian Republic of),ven,Americas,Venezuela
+,vgb,,British Virgin Islands
+Viet Nam,vnm,,Vietnam
+,vut,,Vanuatu
+Yemen,yem,Middle East and Africa,Yemen
+South Africa,zaf,Middle East and Africa,South Africa
+Zambia,zmb,,Zambia
+Zimbabwe,zwe,,Zimbabwe

@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_energy_L239.ff_trade
 #'
 #' Model input for regionally and globally traded fossil fuel commodities
