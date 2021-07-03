@@ -21,10 +21,10 @@ Cassava and products,RootTuber,CASSAVA,1090
 "Citrus, Other",Fruits,CITRUS FRUIT NES,260
 Cloves,MiscCrop,CLOVES,3230
 Cocoa Beans and products,MiscCrop,COCOA BEANS,4140
-Coconut Oil,PalmFruit,OIL OF COCONUTS,8840
-Coconuts - Incl Copra,PalmFruit,COCONUTS,1840
+Coconut Oil,OilCrop,OIL OF COCONUTS,8840
+Coconuts - Incl Copra,OilCrop,COCONUTS,1840
 Coffee and products,MiscCrop,COFFEE GREEN,470
-Copra Cake,PalmFruit,,0
+Copra Cake,OilCrop,,0
 Cotton lint,FiberCrop,,0
 Cottonseed,FiberCrop,,0
 Cottonseed Cake,FiberCrop,,0
@@ -55,10 +55,10 @@ Olive Oil,OilCrop,OLIVE OIL,8840
 Olives (including preserved),OilCrop,OLIVES,1750
 Onions,Vegetables,"ONIONS,SHALLOTS, GREEN",240
 "Oranges, Mandarines",Fruits,ORANGES,340
-Palm kernels,PalmFruit,PALM KERNELS,5140
-Palm Oil,PalmFruit,PALM OIL,8840
-Palmkernel Cake,PalmFruit,,0
-Palmkernel Oil,PalmFruit,OIL OF PALM KERNELS,8840
+Palm kernels,OilPalm,PALM KERNELS,5140
+Palm Oil,OilPalm,PALM OIL,8840
+Palmkernel Cake,OilPalm,,0
+Palmkernel Oil,OilPalm,OIL OF PALM KERNELS,8840
 Peas,Legumes,"PEAS, DRY",3460
 Pepper,MiscCrop,PEPPER WHITE/LONG/BLACK,2760
 Pimento,Vegetables,PIMENTO,3180

@@ -52,7 +52,7 @@ Cinnamon (canella),693,CnnmnCnlla,MiscCrop,MiscCropTree,,,,Other,Others (perenni
 Clover for forage and silage,640,Clovr4FrgSlg,FodderHerb,FodderHerb,,,Clover,Other,Fodder crops,Crop25,,,Peas,"Peas, green",ocr,Nfix,
 Cloves,698,cloves,MiscCrop,MiscCropTree,,,,Other,Others (perennial) ,Crop24,Cloves,,Cloves,,ocr,,Tree
 "Cocoa, beans",661,CocoaBeans,MiscCrop,MiscCropTree,COCO,28,Cocoa,Other,Cocoa,Crop22,,,Cocoa Beans,,ocr,,Tree
-Coconuts,249,Coconuts,PalmFruit,PalmFruitTree,COCN,27,Coconut,FruitsAndVeg,Others (perennial) ,Crop24,Coconuts,Coconuts,Coconuts,,osd,,Tree
+Coconuts,249,Coconuts,OilCrop,OilCropTree,COCN,27,Coconut,FruitsAndVeg,Others (perennial) ,Crop24,Coconuts,Coconuts,Coconuts,,osd,,Tree
 "Coffee, green",656,CoffeeGreen,MiscCrop,MiscCropTree,COFF,29,Coffee,Other,Coffee,Crop23,,Coffee,Coffee,,ocr,,Tree
 Coir,813,Coir,FiberCrop,FiberCrop,,,,,Others (perennial) ,Crop24,,,,,pfb,,
 Cotton lint,767,,FiberCrop,FiberCrop,,,,,,,,,,,,,
@@ -118,7 +118,7 @@ Natural rubber,836,NatRubber,,,,,,,Others (perennial) ,Crop24,Naturalrubber,,,,,
 "Nutmeg, mace and cardamoms",702,Ntmg_Mc_Crdm,MiscCrop,MiscCropTree,,,,Other,Others (perennial) ,Crop24,Nutmeg_maceandcardamoms,,Spices other,,ocr,,Tree
 "Nuts, nes",234,Nutsnes,NutsSeeds,NutsSeedsTree,,,,Other,Others (annual),Crop26,Nuts_nes,,Nuts,,v_f,,Tree
 Oats,75,Oats,OtherGrain,OtherGrain,OTHC,7,Oat,OtherCoarseGrains,Others (annual),Crop26,Oats,,Oats,,gro,,
-"Oil, palm fruit",254,OilPalmFruit,PalmFruit,PalmFruitTree,PALM,22,Oil Palm,OilPalm,Oil palm,Crop14,,Oilpalm,Oilpalm,,osd,,Tree
+"Oil, palm fruit",254,OilPalmFruit,OilPalm,OilPalmTree,PALM,22,Oil Palm,OilPalm,Oil palm,Crop14,,Oilpalm,Oilpalm,,osd,,Tree
 Oilseeds nes,339,Oilseedsnes,OilCrop,OilCrop,OILC,20,Oilseeds,OtherOilSeeds,Others (annual),Crop26,Oilseeds_Nes,,Oilcrops other,,osd,,
 Okra,430,Okra,Vegetables,Vegetables,VEGE,16,,FruitsAndVeg,Others (annual),Crop26,Okra,,Vegetables other,,v_f,,
 Olives,260,Olives,OilCrop,OilCropTree,OILC,20,Olive,OtherOilSeeds,Others (perennial) ,Crop24,Olives,Olives,Olives,,osd,,Tree

@@ -13,7 +13,7 @@ traded misccrop,traded misccrop,-6,start-year,1,share-weight,final-calibration-y
 traded nuts_seeds,traded nuts_seeds,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
 traded oilcrop,traded oilcrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
 traded othergrain,traded othergrain,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
-traded palmfruit,traded palmfruit,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
+traded oilpalm,traded oilpalm,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
 traded rice,traded rice,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
 traded root_tuber,traded root_tuber,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
 traded soybean,traded soybean,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,

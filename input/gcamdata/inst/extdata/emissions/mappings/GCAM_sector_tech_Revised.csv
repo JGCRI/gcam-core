@@ -78,7 +78,7 @@ out_resources,coal,coal,out_resources,coal,coal,coal,all,all,coal,,,,Coal Mining
 out_resources,crude oil,crude oil,out_resources,crude oil,crude oil,oil_gas,all,all,oil_gas,,,,Natural Gas and Oil Systems,
 out_resources,unconventional oil,unconventional oil,out_resources,unconventional oil,unconventional oil,oil_gas,all,all,oil_gas,,,,Natural Gas and Oil Systems,
 out_resources,natural gas,natural gas,out_resources,natural gas,natural gas,oil_gas,all,all,oil_gas,,,,Natural Gas and Oil Systems,
-PalmFruit,,,PalmFruit,,,,,,,,,,Cropland Management,
+OilPalm,,,OilPalm,,,,,,,,,,Cropland Management,
 Pork,Mixed,FeedCrops,Pork,Mixed,FeedCrops,Pork,all,all,Animals,,Pork,all,Livestock,
 Pork,Mixed,FodderHerb_Residue,Pork,Mixed,FodderHerb_Residue,Pork,all,all,Animals,,Pork,all,Livestock,
 Pork,Mixed,Pasture_FodderGrass,Pork,Mixed,Pasture_FodderGrass,Pork,all,all,Animals,,Pork,all,Livestock,

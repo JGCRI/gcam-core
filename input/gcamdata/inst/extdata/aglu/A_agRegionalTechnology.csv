@@ -22,8 +22,8 @@ regional oilcrop,domestic oilcrop,domestic oilcrop,OilCrop,1,0,1,regional
 regional oilcrop,imported oilcrop,imported oilcrop,traded oilcrop,1,0,1,USA
 regional othergrain,domestic othergrain,domestic othergrain,OtherGrain,1,0,1,regional
 regional othergrain,imported othergrain,imported othergrain,traded othergrain,1,0,1,USA
-regional palmfruit,domestic palmfruit,domestic palmfruit,PalmFruit,1,0,1,regional
-regional palmfruit,imported palmfruit,imported palmfruit,traded palmfruit,1,0,1,USA
+regional oilpalm,domestic oilpalm,domestic oilpalm,OilPalm,1,0,1,regional
+regional oilpalm,imported oilpalm,imported oilpalm,traded oilpalm,1,0,1,USA
 regional rice,domestic rice,domestic rice,Rice,1,0,1,regional
 regional rice,imported rice,imported rice,traded rice,1,0,1,USA
 regional root_tuber,domestic root_tuber,domestic root_tuber,RootTuber,1,0,1,regional

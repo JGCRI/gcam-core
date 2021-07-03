@@ -14,7 +14,7 @@ FoodDemand_NonStaples,MiscCrop,MiscCrop,share-weight,final-calibration-year,end-
 FoodDemand_NonStaples,NutsSeeds,NutsSeeds,share-weight,final-calibration-year,end-year,fixed,regional nuts_seeds,1
 FoodDemand_NonStaples,OilCrop,OilCrop,share-weight,final-calibration-year,end-year,fixed,regional oilcrop,1
 FoodDemand_Staples,OtherGrain,OtherGrain,share-weight,final-calibration-year,end-year,fixed,regional othergrain,1
-FoodDemand_NonStaples,PalmFruit,PalmFruit,share-weight,final-calibration-year,end-year,fixed,regional palmfruit,1
+FoodDemand_NonStaples,OilPalm,OilPalm,share-weight,final-calibration-year,end-year,fixed,regional oilpalm,1
 FoodDemand_Staples,Rice,Rice,share-weight,final-calibration-year,end-year,fixed,regional rice,1
 FoodDemand_Staples,RootTuber,RootTuber,share-weight,final-calibration-year,end-year,fixed,regional root_tuber,1
 FoodDemand_NonStaples,Soybean,Soybean,share-weight,final-calibration-year,end-year,fixed,regional soybean,1
@@ -37,7 +37,7 @@ NonFoodDemand_Crops,MiscCrop,MiscCrop,share-weight,final-calibration-year,end-ye
 NonFoodDemand_Crops,NutsSeeds,NutsSeeds,share-weight,final-calibration-year,end-year,fixed,regional nuts_seeds,1
 NonFoodDemand_Crops,OilCrop,OilCrop,share-weight,final-calibration-year,end-year,fixed,regional oilcrop,1
 NonFoodDemand_Crops,OtherGrain,OtherGrain,share-weight,final-calibration-year,end-year,fixed,regional othergrain,1
-NonFoodDemand_Crops,PalmFruit,PalmFruit,share-weight,final-calibration-year,end-year,fixed,regional palmfruit,1
+NonFoodDemand_Crops,OilPalm,OilPalm,share-weight,final-calibration-year,end-year,fixed,regional oilpalm,1
 NonFoodDemand_Crops,Rice,Rice,share-weight,final-calibration-year,end-year,fixed,regional rice,1
 NonFoodDemand_Crops,RootTuber,RootTuber,share-weight,final-calibration-year,end-year,fixed,regional root_tuber,1
 NonFoodDemand_Crops,Soybean,Soybean,share-weight,final-calibration-year,end-year,fixed,regional soybean,1
