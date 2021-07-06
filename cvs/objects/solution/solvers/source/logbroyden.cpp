@@ -652,9 +652,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
         fxstep -= B * xstep;
       fxstep /= dx2;
         B += fxstep * xstep.transpose();
-        if(iter >0) {
       ageB++;                // increment the age of B
-        }
     }
     else {
       // Progress using the Broyden formula is anemic.  This usually

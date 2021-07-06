@@ -243,10 +243,14 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     fp = fd = newScale;
                 }
                 else if(isSolved && !(solvable[i].getType() == IMarketType::TAX || solvable[i].getType() == IMarketType::SUBSIDY)) {
+                    // TODO: might want to add SolutionInfo::getSolutionFloor() and check that instead
+                    // the market is solved, in case it is solved to the solution floor don't let
+                    // NR make a big deal out of relative differences
+                    double demandScale = abs(olddmnd) < 1e-5 || abs(oldsply) < 1e-5 ? 1.0 : olddmnd;
                     solvable[i].setForecastPrice(oldprice);
-                    solvable[i].setForecastDemand(olddmnd);
+                    solvable[i].setForecastDemand(demandScale);
                     fp = oldprice;
-                    fd = olddmnd;
+                    fd = demandScale;
                 }
                 if(fd == 0.0) {
                     if(olddmnd > 0.0) {
@@ -344,7 +348,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     lb = solvable[i].getLowerBoundSupplyPrice();
                     ub = solvable[i].getUpperBoundSupplyPrice();
                     if(!isSolved && oldprice < lb) {
-                        newprice = 0.001;
+                        newprice = lb + 0.001;
                         solvable[i].setPrice(newprice);
                         chg = true;
                         ++nchg;
