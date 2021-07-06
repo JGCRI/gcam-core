@@ -33,8 +33,6 @@ module_energy_L221.en_supply <- function(command, ...) {
              FILE = "energy/A21.globaltech_keyword",
              FILE = "energy/A21.globaltech_secout",
              FILE = "energy/A21.rsrc_info",
-             "L121.in_EJ_R_TPES_unoil_Yh",
-             "L121.in_EJ_R_TPES_crude_Yh",
              "L121.BiomassOilRatios_kgGJ_R_C",
              "L122.in_Mt_R_C_Yh",
              FILE = "aglu/A_an_input_subsector",
@@ -92,8 +90,6 @@ module_energy_L221.en_supply <- function(command, ...) {
     A21.globaltech_keyword <- get_data(all_data, "energy/A21.globaltech_keyword", strip_attributes = TRUE)
     A21.globaltech_secout <- get_data(all_data, "energy/A21.globaltech_secout", strip_attributes = TRUE)
     A21.rsrc_info <- get_data(all_data, "energy/A21.rsrc_info", strip_attributes = TRUE)
-    L121.in_EJ_R_TPES_unoil_Yh <- get_data(all_data, "L121.in_EJ_R_TPES_unoil_Yh")
-    L121.in_EJ_R_TPES_crude_Yh <- get_data(all_data, "L121.in_EJ_R_TPES_crude_Yh")
     L121.BiomassOilRatios_kgGJ_R_C <- get_data(all_data, "L121.BiomassOilRatios_kgGJ_R_C", strip_attributes = TRUE)
     L122.in_Mt_R_C_Yh <- get_data(all_data, "L122.in_Mt_R_C_Yh", strip_attributes = TRUE)
     A_an_input_subsector <- get_data(all_data, "aglu/A_an_input_subsector")
@@ -359,16 +355,6 @@ module_energy_L221.en_supply <- function(command, ...) {
 
 
     # Calibration and region specific data
-
-    # Unconventional oil demand
-    L121.in_EJ_R_TPES_unoil_Yh %>%
-      left_join(A_regions %>%
-                  select(GCAM_region_ID, region), by = "GCAM_region_ID") -> L121.in_EJ_R_TPES_unoil_Yh
-
-    # Crude oil demand
-    L121.in_EJ_R_TPES_crude_Yh %>%
-      left_join(A_regions %>%
-                  select(GCAM_region_ID, region), by = "GCAM_region_ID") -> L121.in_EJ_R_TPES_crude_Yh
 
     # GPK 4/26/2019: Region-specific calibrated output of biomassOil technologies
     # Because multiple feedstocks for producing biomassOil are allowed, the quantities are calibrated
