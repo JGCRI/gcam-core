@@ -17,8 +17,6 @@ trn_pass,HSR,share-weight,final-calibration-year,end-year,,linear
 trn_pass,Passenger Rail,share-weight,final-calibration-year,end-year,,fixed
 trn_pass,Walk,share-weight,final-calibration-year,end-year,,fixed
 trn_pass_road,Bus,share-weight,final-calibration-year,end-year,,fixed
-trn_pass_road_bus,Heavy Bus,share-weight,final-calibration-year,end-year,,fixed
-trn_pass_road_bus,Light Bus,share-weight,final-calibration-year,end-year,,fixed
 trn_pass_road_LDV,2W and 3W,share-weight,final-calibration-year,end-year,,fixed
 trn_pass_road_LDV_4W,Car,share-weight,final-calibration-year,end-year,,fixed
 trn_pass_road_LDV_4W,Large Car and Truck,share-weight,final-calibration-year,end-year,,fixed

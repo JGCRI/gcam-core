@@ -17,8 +17,6 @@ trn_pass,HSR,-6,,absolute-cost-logit
 trn_pass,Passenger Rail,-1,Fuel types and efficiency levels,absolute-cost-logit
 trn_pass,Walk,-6,,absolute-cost-logit
 trn_pass_road,Bus,-3,Fuel types,absolute-cost-logit
-trn_pass_road_bus,Heavy Bus,-3,Fuel types,absolute-cost-logit
-trn_pass_road_bus,Light Bus,-3,Fuel types,absolute-cost-logit
 trn_pass_road_LDV,2W and 3W,-8,Fuel types,absolute-cost-logit
 trn_pass_road_LDV_4W,Car,-8,Fuel types and ICE efficiency levels,absolute-cost-logit
 trn_pass_road_LDV_4W,Large Car and Truck,-8,Fuel types and ICE efficiency levels,absolute-cost-logit

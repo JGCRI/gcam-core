@@ -80,11 +80,17 @@ class UnmanagedLandTechnology;
 class ResourceReserveTechnology;
 class EmptyTechnology;
 
+// To allow declaration in PreviousPeriodInfo
+class ITechnology;
+
 /*!
 * \brief A structure containing information about the same type Technology
 *        in the previous period.
 */
 struct PreviousPeriodInfo {
+    //! Instance of the previous year technology
+    const ITechnology* mPrevVintage;
+    
     //! The vector of inputs.
     const std::vector<IInput*>* mInputs;
 

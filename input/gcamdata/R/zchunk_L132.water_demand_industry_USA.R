@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L132.water_demand_industry
 #'
 #' Computes industrial water withdrawals and consumption by US state and historical year.

@@ -48,6 +48,8 @@ GCAM_REGION_ID      <- "GCAM_region_ID"
 # The default market price GCAM will use to start solving from if it has no other info
 # If users do not have an estimate for a starting price this is a safe one to set
 gcam.DEFAULT_PRICE <- 1.0
+gcam.DEFAULT_SUBSECTOR_LOGIT <- -3
+gcam.DEFAULT_TECH_LOGIT      <- -6
 
 
 # Driver constants ======================================================================
@@ -471,8 +473,8 @@ energy.OIL_CREDITS_MARKETNAME   <- "oil-credits"
 energy.OILFRACT_ELEC            <- 1.0 # Fraction of liquids for feedstocks that must come from oil
 energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity that must come from oil
 
-#kbn 2019-10-11 Adding constant for transportation type. Set this to rev.mode to use revised mode classes, rev_size.class to use revised size classes.
-#To use the old modes and size classes, use mode and size.class for the constants. The default for GCAM are the new modes and size classes.
+#kbn 2019-10-11 Adding constant for transportation type. Set this to 'rev.mode' to use revised mode classes, 'rev_size.class' to use revised size classes.
+#To use the old modes and size classes, use 'mode' and 'size.class' for the constants. The default for GCAM are the new modes and size classes.
 
 energy.TRAN_UCD_MODE<-'rev.mode'
 energy.TRAN_UCD_SIZE_CLASS<-'rev_size.class'
@@ -520,37 +522,42 @@ socioeconomics.POP_DIGITS                <- 0
 # Water constants ======================================================================
 
 water.ALL_WATER_TYPES                     <- c("water consumption",
-
-"water withdrawals",
-"seawater",
-"biophysical water consumption",
-"desalination")
-
+                                               "water withdrawals",
+                                               "seawater",
+                                               "biophysical water consumption")
 water.AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
 water.COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
 water.COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
 water.COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless)
-water.DEFAULT_IRR_WATER_PRICE             <- 0.00175 # (Units: 1975$/m3)
+water.DEFAULT_IRR_WATER_PRICE             <- 0.001 # 1975$/m3. This excludes water abstraction costs explicitly modeled.
 water.DEFAULT_UNLIMITED_WATER_PRICE       <- 0
-water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
+water.DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.00001 # 1975$/m3. This excludes water abstraction costs explicitly modeled.
 water.DEFAULT_BASEYEAR_WATER_PRICE        <- 0.001
+water.GRADE_HIST_UPPER_BOUND              <- 0.0062  # This value is derived from the Superwell cost bins, and indicates the upper bound production cost of nonrenewable groundwater during the historical period
 water.IRR_PRICE_SUBSIDY_MULT              <- 0.05  # Multiplier for irrigation water price (OECD 2009 Managing Water for All; aiming for 1% of muni water price)
 water.DRY_COOLING_EFF_ADJ 				        <- 0.95  # Dry cooling efficiency adjustment (Unitless)
 water.IRRIGATION                          <- "Irrigation"
+water.MANUFACTURING                       <- "Manufacturing"
+water.MUNICIPAL                           <- "Municipal"
 water.MAPPED_WATER_TYPES                  <- c("water consumption", "water withdrawals")
+water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
+names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
+water.DESAL                               <- "desalinated water"
+water.LIVESTOCK                           <- "Livestock"
+water.PRIMARY_ENERGY                      <- "Mining"
+water.LIVESTOCK_TYPES                     <- c("Beef","Dairy","Pork","Poultry","SheepGoat")
+water.DELETE_DEMAND_TYPES                 <- c("water_td_elec_W", "water_td_elec_C", "water_td_muni_W", "water_td_muni_C", "water_td_ind_W", "water_td_ind_C")
+
 water.WATER_UNITS_PRICE                   <- "1975$/m^3"
 water.WATER_UNITS_QUANTITY                <- "km^3"
 water.DIGITS_MUNI_WATER                   <- 4
-water.DESALINATION_PRICE                  <- 0.214  # 1975$/m3
-water.IRR_SHARE                           <- 1
-water.MAPPING_COEF                        <- 1
-water.MAPPING_PMULT                       <- 1
+water.IRR_SHARE                           <- 1    # Irrigation demands are compiled by basin, so no separate basin-within-region sharing is applied
+water.MAPPING_COEF                        <- 1    # The default assumption is that water withdrawals by sector refer to withdrawals from a source (i.e. upstream of any losses). Modified for irrigation.
+water.MAPPING_PMULT                       <- 1    # The default assumption is that estimated water production costs are paid by the consumers. Again this is modified for irrigation water consumers.
 water.NONIRRIGATION_SECTORS               <- c("Municipal", "Electricity", "Livestock", "Manufacturing", "Mining")
 water.LOGIT_EXP                           <- -6
 water.GW_HIST_MULTIPLIER                  <- 1.01   # Multiplier for the "available" in the "grade hist" grade of groundwater supply curves. Needed to prevent the model from pulling from higher grades in historical periods due to solution tolerance
-
-
-
+water.DIGITS_TD_FLOWS                     <- 9     # Need a large number of digits here due to a large number of tiny numbers
 
 # GCAM intermediate sectors for which Vassolo + Doll assessed manufacturing water demands. In the paper, they indicate
 # chemicals, pulp and paper, pig iron, sugar, beer, cloth, cement, and crude steel. some industrial mfg does take place
@@ -572,15 +579,37 @@ water.GROUNDWATER_SCENARIO <- "25pct" # may be "05pct", "25pct", or "40pct" (i.e
 water.GROUNDWATER_MAX_PRICE_INC <- 10000
 water.GROUNDWATER_UNIFORM_GRADES <- 10
 water.GROUNDWATER_BETA <- 1.0
-water.DIGITS_GROUND_WATER <- 6 #Digits for rounding
-water.DIGITS_GROUND_WATER_RSC <- 5 #Digits for rounding
-water.DIGITS_RENEW_WATER <- 3 #Digits for rounding
+water.DIGITS_GROUND_WATER <- 6 # Digits for rounding estimates of historical groundwater depletion
+water.DIGITS_GROUND_WATER_RSC <- 5 # Digits for rounding groundwater supply curves (available, extractioncost)
+water.DIGITS_RENEW_WATER <- 4 # Digits for rounding historical averages of runoff and access fraction
+water.DIGITS_RENEW_WATER_RSC <- 7 # Digits for rounding renewable resource supply curves (available, extractioncost)
 water.GW_DEPLETION_HISTORICAL <- c(2005, 2010, 2015) # Historical years for groundwater depletion
 water.GW_DEPLETION_BASE_YEAR <- 1990 # Historical year for groundwater depletion calibration
 water.RUNOFF_HISTORICAL <- c(1990, 2005, 2010, 2015) # Historical years for freshwater runoff
-water.RENEW.COST.GRADE1 <- 0.00001 #Renewable water grade1 cost
-water.RENEW.COST.GRADE2 <- 0.001 #Renewable water grade2 cost
-water.RENEW.COST.GRADE3 <- 10 #Renewable water grade3 cost
+water.RENEW.COST.GRADE1 <- 0.00001 # Renewable water grade1 cost
+water.RENEW.COST.GRADE2 <- 0.001 # Renewable water grade2 cost
+water.RENEW.COST.GRADE3 <- 10 # Renewable water grade3 cost
+water.DEMAND_FRAC_THRESHOLD <- 1e-4 # Demand fraction of total runoff below which we use a 3-point supply curve to help model solution
+
+# Energy-for-water constants ======================================================================
+
+efw.GW_ABSTRACTION_EFW                    <- 0.000666  # GJ of electricity per cubic meter of groundwater produced
+efw.SW_ABSTRACTION_EFW                    <- 0.000284  # GJ of electricity per cubic meter of surface water produced
+efw.MAX_COMMIND_ENERGY_DESAL              <- 0.15      # maximum share of commercial + industrial sector energy consumption that can be re-assigned to desalination
+efw.MAX_AGCOMM_ENERGY_IRR                 <- 0.5       # maximum share of ag + commercial energy that can be re-assigned to irrigation
+efw.MAX_AG_ENERGY_IRR                     <- 1         # maximum share of reported agricultural energy that can be re-assigned to irrigation
+efw.MAX_IND_ENERGY_EFW                    <- 0.05      # maximum share of industrial sector energy consumption that can be re-assigned to industrial manufacturing energy-for-water
+efw.MAX_COMMIND_ENERGY_MUNI_EFW           <- 0.2       # maximum share of commercial + industrial sector energy consumption that can be re-assigned to municipal water systems
+efw.MAX_COMM_ENERGY_MUNI_EFW              <- 0.3       # maximum share of commercial sector energy consumption that can be re-assigned to municipal water systems
+efw.MAX_WWTRT_FRAC                        <- 0.85      # maximum share of municipal/industrial water use that can be treated as wastewater (considering consumptive uses)
+efw.WWTRT_STEEPNESS                       <- 10        # steepness assumption relating per-capita GDP to the portion of municipal/industrial wastewater treated
+efw.DEFAULT_IRR_ELEC_PRICE_75USDGJ        <- 15        # default assumed price paid for the electricity used for irrigation water abstraction
+
+efw.WWTRT_GDP_SCEN                        <- "SSP2"    # scenario to use for increasing the fraction of wastewater treated as a function of GDP in post-2010 years
+efw.COUNTRIES_ELEC_DESAL                  <- c("are", "qat", "sau")     # countries whose desalination-related energy is in the power sector (combined electric + desal plants)
+efw.COUNTRIES_NO_DESAL                    <- c("mng", "pry", "mhl", "tjk", "tkm")   # landlocked or tiny countries whose reported desalinated water production is not included in GCAM
+efw.DESAL_ENERGY_SECTORS                  <- c("in_bld_comm", "in_industry_general")    # intermediate mapping sectors where desalination-related energy is initially assigned (from the energy balances)
+efw.ELEC_DESAL_TECHS                      <- c("gas (steam/CT)", "refined liquids (steam/CT)")    # Electric generation technologies that can produce secondary output of desalinated seawater
 
 
 
@@ -796,12 +825,8 @@ gcamusa.CONVEYANCE_LOSSES <- 0.829937455747218 ## From file: L165.ag_IrrEff_R
 water.MAPPED_PRI_WATER_TYPES                  <- c("water consumption", "water withdrawals","desalination")
 gcamusa.MIN_PRIM_ENERGY_YEAR <- 1990
 
-water.LIVESTOCK                           <- "Livestock"
-water.PRIMARY_ENERGY                      <- "Mining"
-water.LIVESTOCK_TYPES                     <- c("Beef","Dairy","Pork","Poultry","SheepGoat")
-water.DELETE_DEMAND_TYPES              <- c("water_td_elec_W","water_td_elec_C","water_td_dom_W","water_td_dom_C", "water_td_ind_W","water_td_ind_C")
-water.MAPPED_WATER_TYPES_SHORT            <- c("C", "W")
-names(water.MAPPED_WATER_TYPES_SHORT)     <- water.MAPPED_WATER_TYPES
+# GCAM-USA does not have energy-for-water so desalination is an exogenous, unlimited resource with a fixed price
+gcamusa.DESALINATION_PRICE                  <- 0.214  # 1975$/m3
 
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions

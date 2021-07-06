@@ -18,7 +18,7 @@
 #' @author ST Oct 2018
 module_water_L103.water_basin_mapping <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "water/basin_ID",
+    return(c(FILE = "water/basin_to_country_mapping",
              FILE = "water/nonirrigation_consumption",
              FILE = "water/nonirrigation_withdrawal",
              FILE = "common/iso_GCAM_regID",
@@ -29,20 +29,20 @@ module_water_L103.water_basin_mapping <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     region <- GCAM_region_ID <- GLU <- water_type <- GCAM_ID_1 <- ISO_3DIGIT <-
-      iso <- water_sector <- value <- basin_id <- demand <- demand_total <-
+      iso <- water_sector <- value <- GCAM_basin_ID <- demand <- demand_total <-
       share <- NULL                      # silence package check.
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    basin_ids <- get_data(all_data, "water/basin_ID")
+    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
     nonirr_cons <- get_data(all_data, "water/nonirrigation_consumption")
     nonirr_wthd <- get_data(all_data, "water/nonirrigation_withdrawal")
     iso_GCAM_mapping <- get_data(all_data, "common/iso_GCAM_regID", strip_attributes = TRUE)
     L125.LC_bm2_R_GLU <- get_data(all_data, "L125.LC_bm2_R_GLU", strip_attributes = TRUE)
 
     # expand all GLUs for each water type
-    expand.grid(GLU = basin_ids$basin_id,
+    expand.grid(GLU = basin_to_country_mapping$GCAM_basin_ID,
                 water_type = water.MAPPED_WATER_TYPES) ->
       GLU_water_types
 
@@ -64,14 +64,14 @@ module_water_L103.water_basin_mapping <- function(command, ...) {
         select(GCAM_ID_1, ISO_3DIGIT, one_of(water.NONIRRIGATION_SECTORS)) %>%
         mutate(water_type = "water withdrawals")
     ) %>%
-      rename(basin_id = GCAM_ID_1,
+      rename(GCAM_basin_ID = GCAM_ID_1,
              iso = ISO_3DIGIT) %>%
       mutate(iso = tolower(iso)) %>%
-      gather(water_sector, value, -basin_id, -iso, -water_type) %>%
+      gather(water_sector, value, -GCAM_basin_ID, -iso, -water_type) %>%
       left_join(select(iso_GCAM_mapping, iso, GCAM_region_ID),
                 by = "iso") %>%
       filter(!is.na(GCAM_region_ID)) %>%
-      group_by(GCAM_region_ID, basin_id, water_type, water_sector) %>%
+      group_by(GCAM_region_ID, GCAM_basin_ID, water_type, water_sector) %>%
       summarise(demand = sum(value)) %>% ungroup() %>%
       group_by(GCAM_region_ID, water_type, water_sector) %>%
       mutate(demand_total = sum(demand),
@@ -89,7 +89,7 @@ module_water_L103.water_basin_mapping <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L103.water_mapping_R_GLU_B_W_Ws_share") %>%
-      add_precursors("water/basin_ID",
+      add_precursors("water/basin_to_country_mapping",
                      "L125.LC_bm2_R_GLU") ->
       L103.water_mapping_R_GLU_B_W_Ws_share
 
@@ -99,7 +99,7 @@ module_water_L103.water_basin_mapping <- function(command, ...) {
       add_units("NA") %>%
       add_comments("") %>%
       add_legacy_name("L103.water_mapping_R_B_W_Ws_share") %>%
-      add_precursors("water/basin_ID",
+      add_precursors("water/basin_to_country_mapping",
                      "common/iso_GCAM_regID",
                      "water/nonirrigation_consumption",
                      "water/nonirrigation_withdrawal") ->

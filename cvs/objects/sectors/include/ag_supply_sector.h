@@ -96,6 +96,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "calPrice", mCalPrice, double ),
 
         DEFINE_VARIABLE( ARRAY, "subsidy", mSubsidy, objects::PeriodVector<double> ),
+                            
+        //! A threshold which controls the minimum profit rate to allow during calibration.  The technology will
+        //! use this threshold to calculate an implicit subsidy to ensure its profit rate meets this threshold.
+        DEFINE_VARIABLE( SIMPLE, "cal-min-profit-rate", mCalMinProfitRate, double ),
 
         //! Name of the market for this good.
         DEFINE_VARIABLE( SIMPLE, "market", mMarketName, std::string )

@@ -4,7 +4,7 @@
 # Units: km^3/yr
 # Column types: inccc
 # ----------
-basin.id,trend_km3PerYr,basinName,scenario,model
+GCAM_basin_ID,trend_km3PerYr,basinName,scenario,model
 55,-0.102,Adriatic Sea - Greece - Black Sea Coast,hi,watergap
 171,-0.4756,"Africa, East Central Coast",hi,watergap
 190,-0.3051,"Africa, Indian Ocean Coast",hi,watergap

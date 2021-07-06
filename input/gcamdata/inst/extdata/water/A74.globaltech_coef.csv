@@ -1,0 +1,10 @@
+# File: A74.globaltech_coef.csv
+# Title: Municipal energy-for-water technology coefficients
+# Units: GJ of energy per cubic meter of water (GJ/m3)
+# Source: Liu et al. 2016. DOI: 10.1021/acs.est.6b01065
+# Column types: ccccnnn
+supplysector,subsector,technology,minicam.energy.input,1971,2015,2100
+municipal water abstraction,electricity,electricity,elect_td_bld,0.00028,0.00028,0.00028
+municipal water treatment,electricity,electricity,elect_td_bld,0.000846,0.000846,0.000846
+municipal water distribution,electricity,electricity,elect_td_bld,0.000889,0.000889,0.000889
+municipal wastewater treatment,electricity,electricity,elect_td_bld,0.00215,0.00215,0.00215

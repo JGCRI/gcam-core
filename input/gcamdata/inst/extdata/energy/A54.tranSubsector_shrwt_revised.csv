@@ -18,8 +18,6 @@ trn_pass,HSR,initial-future-year,,0.001
 trn_pass,Passenger Rail,start-year,,1
 trn_pass,Walk,start-year,,1
 trn_pass_road,Bus,start-year,,1
-trn_pass_road_bus,Heavy Bus,start-year,,1
-trn_pass_road_bus,Light Bus,start-year,,1
 trn_pass_road_LDV,2W and 3W,start-year,,1
 trn_pass_road_LDV_4W,Car,start-year,,1
 trn_pass_road_LDV_4W,Large Car and Truck,start-year,,1

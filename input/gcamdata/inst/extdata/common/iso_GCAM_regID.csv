@@ -3,7 +3,7 @@
 # Units: NA
 # Description: Maps iso codes to GCAM regions (including composites as necessary)
 # Column types: ccci
-# ---------- 
+# ----------
 iso,country_name,region_GCAM3,GCAM_region_ID
 abw,Aruba,Latin America,9
 afg,Afghanistan,Southeast Asia,27
@@ -82,6 +82,7 @@ fsm,"Micronesia, Federated States of",Southeast Asia,29
 gab,Gabon,Africa,5
 gbr,United Kingdom,Western Europe,13
 geo,Georgia,Former Soviet Union,10
+ggy,Guernsey,Western Europe,13
 gha,Ghana,Africa,5
 gib,Gibraltar,Western Europe,13
 gin,Guinea,Africa,5
@@ -111,6 +112,7 @@ isl,Iceland,Western Europe,16
 isr,Israel,Middle East,21
 ita,Italy,Western Europe,13
 jam,Jamaica,Latin America,9
+jey,Jersey,Western Europe,13
 jor,Jordan,Middle East,21
 jpn,Japan,Japan,19
 kaz,Kazakhstan,Former Soviet Union,10

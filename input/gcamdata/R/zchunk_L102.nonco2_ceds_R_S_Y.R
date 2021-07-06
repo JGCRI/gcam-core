@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_emissions_L102.nonco2_ceds_R_S_Y
 #'
 #' Calculates emissions using CEDS and CMIP emissions data for all sectors and fuels and aggregates to GCAM regions. Note that the outputs of this chunk are a part of the prebuilt data.

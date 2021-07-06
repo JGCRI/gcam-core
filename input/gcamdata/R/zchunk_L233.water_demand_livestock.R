@@ -19,7 +19,7 @@
 module_water_L233.water_demand_livestock <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/A03.sector",
+             FILE = "water/water_td_sectors",
              FILE = "aglu/A_an_technology",
              "L133.water_demand_livestock_R_C_W_km3_Mt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -33,7 +33,7 @@ module_water_L233.water_demand_livestock <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A03.sector <- get_data(all_data, "water/A03.sector")
+    water_td_sectors <- get_data(all_data, "water/water_td_sectors")
     A_an_technology <- get_data(all_data, "aglu/A_an_technology")
     L133.water_demand_livestock_R_C_W_km3_Mt <- get_data(all_data, "L133.water_demand_livestock_R_C_W_km3_Mt", strip_attributes = TRUE)
 
@@ -42,7 +42,7 @@ module_water_L233.water_demand_livestock <- function(command, ...) {
       rename(supplysector = GCAM_commodity) %>%
       inner_join(select(A_an_technology, supplysector, subsector, technology), by = "supplysector") %>%
       mutate(water_sector = "Livestock",
-             minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
+             minicam.energy.input = set_water_input_name(water_sector, water_type, water_td_sectors)) %>%
       left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(market.name = region) %>%
       # Set the coef for all years
@@ -60,7 +60,7 @@ module_water_L233.water_demand_livestock <- function(command, ...) {
                    3) left join with GCAM_region_names;
                    4) replicate the water coefficients for all MODEL_YEARS") %>%
       add_legacy_name("L233.TechCoef") %>%
-      add_precursors("common/GCAM_region_names", "water/A03.sector", "aglu/A_an_technology",
+      add_precursors("common/GCAM_region_names", "water/water_td_sectors", "aglu/A_an_technology",
                      "L133.water_demand_livestock_R_C_W_km3_Mt") ->
       L233.TechCoef
 

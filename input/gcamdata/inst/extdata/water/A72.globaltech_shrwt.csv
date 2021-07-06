@@ -1,0 +1,7 @@
+# File: A72.globaltech_shrwt.csv
+# Title: Irrigation water abstraction technology share-weights
+# Units: None
+# Source: NA
+# Column types: cccnn
+supplysector,subsector,technology,1971,2100
+irrigation water abstraction,electricity,electricity,1,1
