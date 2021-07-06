@@ -455,6 +455,9 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                         <rewrite from="traded oil" to="a oil"/>
                         <rewrite from="traded natural gas" to="b natural gas"/>
                         <rewrite from="traded coal" to="c coal"/>
+                        <rewrite from="traded oil CCS" to="a oil CCS"/>
+                        <rewrite from="traded natural gas CCS" to="b natural gas CCS"/>
+                        <rewrite from="traded coal CCS" to="c coal CCS"/>
                         <rewrite from="geothermal-elect" to="i geothermal"/>
                         <rewrite from="regional sugar for ethanol" to="d biomass"/>
                         <rewrite from="natural gas" to="b natural gas"/>
