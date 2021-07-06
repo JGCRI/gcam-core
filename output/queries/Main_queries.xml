@@ -1836,7 +1836,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                             <rewrite from="trn_freight" to="transportation"/>
                             <rewrite from="comm others" to="building"/>
                             <rewrite from="comm heating" to="building"/>
-                            <rewrite from="industrial energy use" to="industry"/>
+                            <rewrite from="other industrial energy use" to="industry"/>
                             <rewrite from="comm cooling" to="building"/>
                             <rewrite from="trn_pass_road_LDV" to="transportation"/>
                             <rewrite from="trn_pass_road_bus" to="transportation"/>
@@ -1848,7 +1848,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                             <rewrite from="resid others" to="building"/>
                             <rewrite from="process heat cement" to="industry"/>
                             <rewrite from="resid cooling" to="building"/>
-                            <rewrite from="industrial feedstocks" to="industry"/>
+                            <rewrite from="other industrial feedstocks" to="industry"/>
                             <rewrite from="trn_shipping_intl" to="transportation"/>
                         </level>
                     </labelRewriteList>
@@ -5429,7 +5429,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                             <rewrite from="trn_pass_road_LDV_2W" to="transportation"/>
                             <rewrite from="resid televisions" to="building"/>
                             <rewrite from="comm heating" to="building"/>
-                            <rewrite from="industrial energy use" to="industry"/>
+                            <rewrite from="other industrial energy use" to="industry"/>
                             <rewrite from="comm cooling" to="building"/>
                             <rewrite from="resid computers" to="building"/>
                             <rewrite from="trn_pass_road_LDV" to="transportation"/>
@@ -5443,7 +5443,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                             <rewrite from="resid furnace fans" to="building"/>
                             <rewrite from="comm office" to="building"/>
                             <rewrite from="comm other" to="building"/>
-                            <rewrite from="industrial feedstocks" to="industry"/>
+                            <rewrite from="other industrial feedstocks" to="industry"/>
                             <rewrite from="comm ventilation" to="building"/>
                             <rewrite from="trn_shipping_intl" to="transportation"/>
                             <rewrite from="trn_pass_road" to="transportation"/>
