@@ -1102,7 +1102,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
         # use updated emissions to calculate emission factors based on activity data
         L112.nonco2_tg_R_en_S_F_Yh_resource %>%
           # Group by fuels here to get total value. We do this because, unconventional oil now is a technology within crude oil.
-          left_join_error_no_match(L111.Prod_EJ_R_F_Yh %>% group_by("GCAM_region_ID", "year","sector","fuel") %>% mutate(value = sum(value)) %>% ungroup() %>% select("GCAM_region_ID", "year","sector","fuel", "value") %>% distinct(),
+          left_join_error_no_match(L111.Prod_EJ_R_F_Yh %>% group_by(GCAM_region_ID, year,sector,fuel) %>% summarise(value = sum(value)) %>% ungroup() %>% select("GCAM_region_ID", "year","sector","fuel", "value") %>% distinct(),
                                    by = c("GCAM_region_ID", "year", "supplysector" = "sector", "subsector" = "fuel")) %>%
           mutate(value_adj = if_else(value == 0.0  |  is.na(value), 0.0, emissions / value )) %>%
           select(-emissions, -value) ->
