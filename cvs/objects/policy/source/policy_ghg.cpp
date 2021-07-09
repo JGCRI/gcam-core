@@ -79,13 +79,13 @@ mMarket(aMarket)
 /*! \brief Constructor used when explicitly constructing a fixed tax.
 */
 GHGPolicy::GHGPolicy( const string aName, const string aMarket,
-                      const vector<double>& aTaxes )
+                      const vector<double>& aTaxes ):
+mName(aName),
+mMarket(aMarket)
 {
     // Ensure that the taxes vector passed in is the right size.
     assert( aTaxes.size() == mConstraint.size() );
     
-    mName = aName;
-    mMarket = aMarket;
     std::copy( aTaxes.begin(), aTaxes.end(), mFixedTax.begin() );
 }
 

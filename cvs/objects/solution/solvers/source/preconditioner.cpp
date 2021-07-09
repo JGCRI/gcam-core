@@ -221,7 +221,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
             double newprice = oldprice;
             bool chg = false;
             double lb,ub;       // only used for normal markets, but need to be declared up here.
-            bool isSolved = solvable[i].getRelativeED() < mFTOL || fabs(solvable[i].getED()) < mFTOL;
+            bool isSolved = solvable[i].getRelativeED() < mFTOL || fabs(solvable[i].getED()) < mFTOL || solvable[i].isSolved();
             
             if(pass > 0) {
                 // If this market is close to solved update the "forecast" price and demand which
@@ -243,10 +243,11 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     fp = fd = newScale;
                 }
                 else if(isSolved && !(solvable[i].getType() == IMarketType::TAX || solvable[i].getType() == IMarketType::SUBSIDY)) {
+                    double solutionFloor = solvable[i].getSolutionFloor();
                     // TODO: might want to add SolutionInfo::getSolutionFloor() and check that instead
                     // the market is solved, in case it is solved to the solution floor don't let
                     // NR make a big deal out of relative differences
-                    double demandScale = abs(olddmnd) < 1e-5 || abs(oldsply) < 1e-5 ? 1.0 : olddmnd;
+                    double demandScale = abs(olddmnd) < solutionFloor || abs(oldsply) < solutionFloor ? 1.0 : olddmnd;
                     solvable[i].setForecastPrice(oldprice);
                     solvable[i].setForecastDemand(demandScale);
                     fp = oldprice;
