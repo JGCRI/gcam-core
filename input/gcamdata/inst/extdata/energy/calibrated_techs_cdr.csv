@@ -1,0 +1,9 @@
+# File: calibrated_techs_cdr.csv
+# Title: For cdr technologies in the CO2 removal sector we separately define dummy calibration for cdr + noCDR
+# Units: n/a
+# Column types: cccccccc
+# ----------
+sector,fuel,supplysector,subsector,technology,minicam.energy.input,calibration,secondary.output
+CO2 removal,electricity,CO2 removal,dac,no DAC,elect_td_ind,output,
+CO2 removal,heat,CO2 removal,dac,no DAC,process heat dac,output,
+CO2 removal,airCO2,CO2 removal,dac,no DAC,airCO2,output,
