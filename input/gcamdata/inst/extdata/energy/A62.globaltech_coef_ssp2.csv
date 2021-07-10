@@ -1,0 +1,21 @@
+# File: A62.globaltech_coef_ssp2.csv
+# Title: Default coefficients for DAC
+# Units: airCO2 input is unitless (MtC from the atmosphere per Mt dac demand); all others are GJ per kg C (EJ of energy per Mt C)
+# Column types: ccccnnnn
+# ----------
+supplysector,subsector,technology,minicam.energy.input,1971,2020,2050,2100
+CO2 removal,dac,hightemp DAC NG,process heat dac,0.0297,0.0297,0.019433333,0.019433333
+CO2 removal,dac,hightemp DAC NG,elect_td_ind,0.006526667,0.006526667,0.004766667,0.004766667
+CO2 removal,dac,hightemp DAC NG,airCO2,1,1,1,1
+CO2 removal,dac,hightemp DAC NG,water_td_ind_C,0.017233333,0.017233333,0.017233333,0.017233333
+CO2 removal,dac,hightemp DAC NG,water_td_ind_W,0.017233333,0.017233333,0.017233333,0.017233333
+CO2 removal,dac,no DAC,process heat dac,0,0,0,0
+CO2 removal,dac,no DAC,elect_td_ind,0,0,0,0
+CO2 removal,dac,no DAC,airCO2,0,0,0,0
+process heat dac,gas CCS,gas CCS,wholesale gas,1,1,1,1
+CO2 removal,dac,hightemp DAC elec,elect_td_ind,0.0220044,0.0220044,0.0186384,0.0186384
+CO2 removal,dac,hightemp DAC elec,airCO2,1,1,1,1
+CO2 removal,dac,hightemp DAC elec,water_td_ind_C,0.017233333,0.017233333,0.017233333,0.017233333
+CO2 removal,dac,hightemp DAC elec,water_td_ind_W,0.017233333,0.017233333,0.017233333,0.017233333
+CO2 removal,dac,lowtemp DAC heatpump,elect_td_ind,0.0200684,0.0200684,0.009320178,0.009320178
+CO2 removal,dac,lowtemp DAC heatpump,airCO2,1,1,1,1

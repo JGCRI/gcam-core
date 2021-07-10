@@ -1,0 +1,10 @@
+# File: A62.globaltech_co2capture.csv
+# Title: CO2 capture rates for dac and process heat dac technology
+# Units: Unitless
+# Column types: cccnn
+# ----------
+supplysector,subsector,technology,1971,2100
+process heat dac,gas CCS,gas CCS,0.95,0.95
+CO2 removal,dac,hightemp DAC NG,1,1
+CO2 removal,dac,hightemp DAC elec,1,1
+CO2 removal,dac,lowtemp DAC heatpump,1,1

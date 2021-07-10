@@ -1,0 +1,38 @@
+# File: A62.calibration.csv
+# Title: Calibration values for the CO2 removal sector
+# Units: MtC
+# Column types: icin
+# ----------
+GCAM_region_ID,sector,year,value
+1,CO2 removal,2015,2000
+2,CO2 removal,2015,26.58921908
+3,CO2 removal,2015,26.30296292
+4,CO2 removal,2015,25.52156095
+5,CO2 removal,2015,51.65929106
+6,CO2 removal,2015,417.4775416
+7,CO2 removal,2015,1012.357646
+8,CO2 removal,2015,79.87707563
+9,CO2 removal,2015,86.18576367
+10,CO2 removal,2015,429.8246874
+11,CO2 removal,2015,2116.541628
+12,CO2 removal,2015,22.06217174
+13,CO2 removal,2015,71.77458929
+14,CO2 removal,2015,15.81592955
+15,CO2 removal,2015,15.84963925
+16,CO2 removal,2015,6.342950362
+17,CO2 removal,2015,87.41423367
+18,CO2 removal,2015,16.37849476
+19,CO2 removal,2015,66.31417001
+20,CO2 removal,2015,232.7632894
+21,CO2 removal,2015,334.5848291
+22,CO2 removal,2015,7.458686272
+23,CO2 removal,2015,313.0929592
+24,CO2 removal,2015,5.567627191
+25,CO2 removal,2015,161.9684919
+26,CO2 removal,2015,470.9671038
+27,CO2 removal,2015,8.830836973
+28,CO2 removal,2015,0
+29,CO2 removal,2015,165.6920326
+30,CO2 removal,2015,0.307808272
+31,CO2 removal,2015,331.3724602
+32,CO2 removal,2015,136.5132452
