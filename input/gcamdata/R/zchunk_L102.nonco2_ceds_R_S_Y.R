@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L102.ceds_nonco2_tg_R_S_F}.
+#' the generated outputs: \code{L102.ceds_nonco2_tg_R_S_F}, \code{L102.ceds_int_shipping_nonco2_tg_S_F}.
 #' @details Calculates emissions using CEDS and CMIP data.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -34,7 +34,8 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
                FILE = "emissions/CEDS/ceds_fuel_map",
                "L154.IEA_histfut_data_times_UCD_shares"))
     } else if(command == driver.DECLARE_OUTPUTS) {
-      return(c("L102.ceds_GFED_nonco2_tg_R_S_F"))
+      return(c("L102.ceds_GFED_nonco2_tg_R_S_F",
+               "L102.ceds_int_shipping_nonco2_tg_S_F"))
     } else if(command == driver.MAKE) {
 
       # Silence package checks
@@ -63,7 +64,6 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
       CMIP_unmgd_emissions <- get_data(all_data, "emissions/CEDS/GFED-CMIP6_LUC_emissions") %>%
         gather_years(value_col = "emissions")
       CMIP_sector_map <- get_data(all_data, "emissions/CEDS/LULUC_to_sector_Mapping")
-      Int_shipping_IEA_EIA <- get_data(all_data, "L154.IEA_histfut_data_times_UCD_shares") %>% filter(UCD_category=="trn_international ship")
 
       # If the (proprietary) raw CEDS datasets are available, go through the full computations below
       # If not, use the pre-saved summary file (i.e., the output of this chunk!) assuming it's available
@@ -140,15 +140,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
           filter(CEDS_agg_sector=="trn_intl_ship",CEDS_agg_fuel =="refined liquids") %>%
           gather_years %>%
           filter(year %in% emissions.CEDS_YEARS) %>%
-          filter(year <= max(HISTORICAL_YEARS), emissions > 0) %>%
-          right_join(Int_shipping_IEA_EIA %>% select(iso,year,value) %>% filter(year <= max(HISTORICAL_YEARS)), by=c("year")) %>%
-          mutate(emissions=if_else(is.na(emissions),0,emissions)) %>%
-          group_by(Non.CO2,year,sector,fuel) %>%
-          mutate(share_in_global_ship= value/sum(value)) %>%
-          ungroup() %>%
-          # Converts kt(gg) to Teragrams. Multiply by iso's share in international shipping consumption.
-          mutate(emissions = (emissions * CONV_GG_TG)*share_in_global_ship) %>%
-          select(-share_in_global_ship,-value)->CEDS_int_shipping
+          filter(year <= max(HISTORICAL_YEARS), emissions > 0)->CEDS_int_shipping
 
 
         CEDS_allgas %>%
@@ -164,8 +156,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
           gather_years %>%
           filter(year %in% emissions.CEDS_YEARS) %>%
           # Converts kt(gg) to Teragrams
-          mutate(emissions = emissions * CONV_GG_TG) %>%
-          bind_rows(CEDS_int_shipping)->L102.CEDS
+          mutate(emissions = emissions * CONV_GG_TG)->L102.CEDS
 
 
         # Aggregate by region, GHG, and CEDS sector
@@ -192,19 +183,30 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
                          "L154.IEA_histfut_data_times_UCD_shares") ->
           L102.ceds_GFED_nonco2_tg_R_S_F
 
+        CEDS_int_shipping %>%
+          add_title("CEDS international shipping non-CO2 emissions by CEDS sector / fuel / historical year",overwrite = TRUE) %>%
+          add_units("Tg") %>%
+          add_precursors("emissions/CEDS/BC_total_CEDS_emissions","emissions/CEDS/OC_total_CEDS_emissions","emissions/CEDS/CO_total_CEDS_emissions",
+                         "emissions/CEDS/NH3_total_CEDS_emissions","emissions/CEDS/NMVOC_total_CEDS_emissions","emissions/CEDS/NOx_total_CEDS_emissions",
+                         "emissions/CEDS/SO2_total_CEDS_emissions","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map",
+                         "emissions/CEDS/CH4_total_CEDS_emissions") ->
+          L102.ceds_int_shipping_nonco2_tg_S_F
+
         # verify the calculated data matches the prebuilt version if not a warning
         # will be generated and should only be ignored if the underly CEDS data
         # actually changed
         verify_identical_prebuilt(L102.ceds_GFED_nonco2_tg_R_S_F)
+        verify_identical_prebuilt(L102.ceds_int_shipping_nonco2_tg_S_F)
 
 
       }
       else {
         # raw CEDS datasets not available, so we will use the prebuilt version
         L102.ceds_GFED_nonco2_tg_R_S_F <- prebuilt_data("L102.ceds_GFED_nonco2_tg_R_S_F")
+        L102.ceds_int_shipping_nonco2_tg_S_F <- prebuilt_data("L102.ceds_int_shipping_nonco2_tg_S_F")
       }
 
-      return_data(L102.ceds_GFED_nonco2_tg_R_S_F)
+      return_data(L102.ceds_GFED_nonco2_tg_R_S_F, L102.ceds_int_shipping_nonco2_tg_S_F)
     } else {
       stop("Unknown command")
     }
