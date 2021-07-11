@@ -622,7 +622,7 @@ emissions.EPA.SCALING.THRESHOLD <- 50 # EPA emissions/ CEDS emission, used to ch
 emissions.EPA.SCALING.THRESHOLD.COMBUSTION <- 20 # check scaling outliers in L112 chunk for combustion sector
 
 # Time
-emissions.CEDS_YEARS              <- 1971:2019           # Year coverage for CEDS inventory.
+emissions.CEDS_YEARS              <- 1970:2019           # Year coverage for CEDS inventory.
 emissions.CTRL_BASE_YEAR          <- 1975                # Year to read in pollution controls
 emissions.DEFOREST_COEF_YEARS     <- c(2000, 2005)
 emissions.EDGAR_YEARS             <- 1971:2008

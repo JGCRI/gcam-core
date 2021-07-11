@@ -1,0 +1,11 @@
+# File: A62.globaltech_cost_ssp1.csv
+# Title: dac default costs
+# Units: 1975$/kgC for dac, 1975$/GJ for process heat dac
+# Column types: ccccnnnn
+# ----------
+supplysector,subsector,technology,minicam.non.energy.input,1971,2020,2050,2100
+CO2 removal,dac,hightemp DAC NG,non-energy,0.297615642,0.297615642,0.178569385,0.178569385
+CO2 removal,dac,hightemp DAC elec,non-energy,0.381047227,0.381047227,0.184176464,0.184176464
+CO2 removal,dac,lowtemp DAC heatpump,non-energy,0.423419501,0.423419501,0.203535766,0.203535766
+CO2 removal,dac,no DAC,non-energy,0.001,0.001,0.001,0.001
+process heat dac,gas CCS,gas CCS,non-energy,0,0,0,0
