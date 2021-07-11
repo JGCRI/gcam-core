@@ -244,9 +244,8 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                 }
                 else if(isSolved && !(solvable[i].getType() == IMarketType::TAX || solvable[i].getType() == IMarketType::SUBSIDY)) {
                     double solutionFloor = solvable[i].getSolutionFloor();
-                    // TODO: might want to add SolutionInfo::getSolutionFloor() and check that instead
-                    // the market is solved, in case it is solved to the solution floor don't let
-                    // NR make a big deal out of relative differences
+                    // Check if the market is solved to the solution floor in which case don't let
+                    // NR make a big deal out of relative differences by reseting the demand scale to 1
                     double demandScale = abs(olddmnd) < solutionFloor || abs(oldsply) < solutionFloor ? 1.0 : olddmnd;
                     solvable[i].setForecastPrice(oldprice);
                     solvable[i].setForecastDemand(demandScale);
