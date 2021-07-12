@@ -53,10 +53,7 @@ mitigation policy.
 * [GCAM Documentation](http://jgcri.github.io/gcam-doc/)
 * [Getting Started with GCAM](http://jgcri.github.io/gcam-doc/user-guide.html)
 * [GCAM Community](http://www.globalchange.umd.edu/models/gcam/gcam-community/)
-* [2019 Tutorial Slides](http://www.globalchange.umd.edu/data/gcam/GCAM_tutorial_2019.pdf)
-* GCAM lectures from the UMD Water and Climate class
-  * [Lecture 3: Introduction to GCAM](https://www.youtube.com/watch?v=xRF9lFwtMr0)
-  * [Lecture 4: GCAM Tutorial](https://www.youtube.com/watch?v=S7vAShH-dbs)
+* [GCAM Videos and Tutorial Slides](https://gcims.pnnl.gov/community)
 
 ## Selected Publications
 
