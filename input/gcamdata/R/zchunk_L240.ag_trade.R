@@ -102,8 +102,8 @@ module_aglu_L240.ag_trade <- function(command, ...) {
                     by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
                   replace_na(list(GrossExp = 0)) %>%
                   filter(GCAM_commodity %in% aglu.TRADED_FORESTS) %>%
-                  mutate(GrossImp_Mt = ifelse(GrossExp - NetExp_bm3 > 0, GrossExp - NetExp_bm3, 0),
-                         GrossExp_Mt = ifelse(GrossExp - NetExp_bm3 > 0, GrossExp, NetExp_bm3)) %>%
+                  mutate(GrossImp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp - NetExp_bm3, 0),
+                         GrossExp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp, NetExp_bm3)) %>%
                   select(names(L1091.GrossTrade_Mt_R_C_Y)) )
 
     # 1. TRADED SECTOR / SUBSECTOR / TECHNOLOGY")

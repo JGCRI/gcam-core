@@ -40,6 +40,7 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
+#include <queue>
 #include <algorithm>
 #include <iomanip>
 #include <math.h>
@@ -413,6 +414,11 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
 
   // We calculate a scalar value for F(x) using F(x) * F(x)
   double f0 = fx.dot(fx); // already have a value of F on input, so no need to call fnorm yet
+    // Keep track of several past f(x) values which we will use to determine if
+    // progress has stalled out or not.
+    const int TRACK_NUM_PAST_F_VALUES = 4;
+    std::queue<double> past_f_values;
+    past_f_values.push(f0);
   if(f0 < FTINY) {
     // Guard against F=0 since it can cause a NaN in our solver.  This
     // is a more stringent test than our regular convergence test
@@ -535,7 +541,21 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     // dx now holds the newton step.  Execute the line search along
     // that direction.
     double fnew;
-    int lserr = linesearch(F,x,f0,gx,dx, xnew,fnew, neval, &solverLog);
+      // if we are making adequate progress we only allow linesearch to accept
+      // steps that are make f(x) smaller
+      double fxIncr = 0.0;
+      solverLog << "Past f size: " << past_f_values.size();
+      solverLog << " values F: " << past_f_values.front() << ", B: " << past_f_values.back() << std::endl;
+      if(past_f_values.size() == TRACK_NUM_PAST_F_VALUES && past_f_values.back()*1.1 > past_f_values.front() ) {
+          solverLog << "Taking a chance to try to jump out of local min.\n";
+          // very little progress, might be stuck in a local minima
+          // let's take a chance and take a step out of our comfort zone
+          // by accepting a step that makes f(x) at most 1000 time worse
+          fxIncr = 1000.0;
+          past_f_values = std::queue<double>();
+      }
+      UBVECTOR fxnew(fx.size());
+    int lserr = linesearch(F,x,f0,gx,dx, xnew,fnew, fxnew, fxIncr, neval, &solverLog);
 
     if(lserr != 0) {
       // line search failed.  There are a couple of things that could
@@ -600,16 +620,17 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       // reset the line search fail flag
       lsfail = false;
     }
+      // keep track of the last TRACK_NUM_PAST_F_VALUES f(x) values only
+      if(past_f_values.size() == TRACK_NUM_PAST_F_VALUES) {
+          past_f_values.pop();
+      }
+      past_f_values.push(fnew);
 
     UBVECTOR xstep(xnew-x);    // step in x eventually taken
     double lambda = fabs(dx[0]) > 0.0 ? xstep[0] / dx[0] : 0.0;
     solverLog << "################Return from linesearch\nfold= " << f0 << "\tfnew= " << fnew
               << "\tlambda= " << lambda << "\n";
 
-    UBVECTOR fxnew(fx.size());
-      // TODO: if we return the last fx from linesearch we wouldn't have to recalculate
-      // it here
-      F(xnew, fxnew);
     //solverLog << "\nxnew: " << xnew << "\nfxnew: " << fxnew << "\n";
     UBVECTOR fxstep(fxnew -fx); // change in F( x ).  We will need this for the secant update
 
@@ -652,9 +673,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
         fxstep -= B * xstep;
       fxstep /= dx2;
         B += fxstep * xstep.transpose();
-        if(iter >0) {
       ageB++;                // increment the age of B
-        }
     }
     else {
       // Progress using the Broyden formula is anemic.  This usually

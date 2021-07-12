@@ -52,6 +52,7 @@
 
 #include "util/base/include/inamed.h"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
 
 // Need to forward declare the subclasses as well.
@@ -94,10 +95,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
                     
         //! Emissions constraint by year(tgC or MTC)
-        DEFINE_VARIABLE( ARRAY, "constraint", mConstraint, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY, "constraint", mConstraint, objects::PeriodVector<Value> ),
                     
         //! Fixed tax on Emissions by year($/TC)
-        DEFINE_VARIABLE( ARRAY, "fixedTax", mFixedTax, objects::PeriodVector<double> )
+        DEFINE_VARIABLE( ARRAY, "fixedTax", mFixedTax, objects::PeriodVector<Value> )
     )
     
     void copy( const GHGPolicy& aOther );

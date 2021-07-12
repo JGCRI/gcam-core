@@ -59,7 +59,6 @@
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/math/tr1.hpp>
 #include <limits>
 #include <fstream>
 #include <iostream>
@@ -366,7 +365,7 @@ namespace objects {
         // should take corrective action, or abort if none is
         // possible.
         const double doubleValue( aNumber );
-        return boost::math::isfinite( doubleValue );
+        return std::isfinite( doubleValue );
     }
 
     /*!

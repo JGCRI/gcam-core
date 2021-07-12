@@ -44,7 +44,8 @@ module_emissions_L241.fgas <- function(command, ...) {
     . <- `2010` <- `2020` <- `2030` <- EF <- Emissions <- GCAM_region_ID <- GDP <-
       Non.CO2 <- Ratio_2020 <- Ratio_2030 <- Scenario <- Species <- USA_factor <-
       Year <- curr_table <- emiss.coeff <- input.emissions <- region <-
-      stub.technology <- subsector <- supplysector <- value <- year <- NULL
+      stub.technology <- subsector <- supplysector <- value <- year <-
+      year_min <- NULL
 
     # ===================================================
     # Format and round emission values for HFC gas emissions for technologies in all regions.
@@ -206,9 +207,17 @@ module_emissions_L241.fgas <- function(command, ...) {
     L241.pfc_all %>%
       bind_rows(L241.hfc_all) %>%
       bind_rows(L241.hfc_future) %>%
+      # we need to just add the unit tag for all gasses and model years
+      # however we need to be careful because some gasses do not start
+      # in the same year
       select(region, supplysector, subsector, stub.technology, year, Non.CO2) %>%
-      mutate(emissions.unit = emissions.F_GAS_UNITS) %>%
-      unique() ->
+      group_by(region, supplysector, subsector, stub.technology, Non.CO2) %>%
+      summarize(year_min = min(year)) %>%
+      ungroup() %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      filter(year >= year_min) %>%
+      select(-year_min) %>%
+      mutate(emissions.unit = emissions.F_GAS_UNITS) ->
       L241.fgas_all_units
 
     # ===================================================

@@ -274,7 +274,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
       inner_join(L141.EPA_hfc_R_S_T_Yh_scalar, by = c("GCAM_region_ID", "supplysector", "subsector", "stub.technology",
                                                       "EPA_sector", "EDGAR_agg_sector", "MAC_type1", "year")) %>%
       mutate(adj_emissions = emissions * emscalar) ->
-      L141.EPA_EDGAR_HFCmatch_nocool
+      L141.EPA_EDGAR_HFCmatches_nocool
 
     # Fixing cooling sector mismatch by separating out resid and comm cooling rows, adding matching "cooling" sector name
     # and then performing scaling and rebinding to other rows.
@@ -286,8 +286,8 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
                                                      "EPA_sector", "EDGAR_agg_sector", "MAC_type1", "year")) %>%
       select(-supply) %>%
       mutate(adj_emissions = emissions * emscalar) %>%
-      bind_rows(L141.EPA_EDGAR_HFCmatch_nocool) ->
-      L141.EPA_EDGAR_HFCmatch
+      bind_rows(L141.EPA_EDGAR_HFCmatches_nocool) ->
+      L141.EPA_EDGAR_HFCmatches
 
     # Fixing infinite values
     # ======================
@@ -320,21 +320,21 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
 
     # Calculate replacement values for EPA sectors with multiple HFC gases with no corresponding EDGAR emissions by multiplying
     # default EPA emissions by global emissions share of gas by sector (resid and comm cooling are combined)
-    L141.EPA_EDGAR_HFCmatch %>%
+    L141.EPA_EDGAR_HFCmatches %>%
       left_join(L141.hfc_R_S_T_Yh_share, by = c("supplysector", "subsector", "stub.technology",
                                                 "EPA_sector", "EDGAR_agg_sector","MAC_type1" ,"year", "Non.CO2")) %>%
       filter(is.infinite(emscalar)) %>%
-      mutate(adj_emissions = EPA_emissions * emiss_share) -> L141.EPA_EDGAR_HFCmatch_inf
+      mutate(adj_emissions = EPA_emissions * emiss_share) -> L141.EPA_EDGAR_HFCmatches_inf
 
     # Rebind replaced infinite values to the original df
-    L141.EPA_EDGAR_HFCmatch %>%
+    L141.EPA_EDGAR_HFCmatches %>%
       filter(!is.infinite(emscalar)) %>%
-      bind_rows(L141.EPA_EDGAR_HFCmatch_inf) -> L141.EPA_EDGAR_HFCmatch_adj
+      bind_rows(L141.EPA_EDGAR_HFCmatches_inf) -> L141.EPA_EDGAR_HFCmatches_adj
 
     # Clean up data to match data system format (year, unit, columns)
     # ===============================================================
 
-    L141.EPA_EDGAR_HFCmatch_adj %>% #remove columns used in calculation (once testing is completed, integrate with above pipeline)
+    L141.EPA_EDGAR_HFCmatches_adj %>% #remove columns used in calculation (once testing is completed, integrate with above pipeline)
       select(-EPA_emissions, -tot_emissions, -emscalar, -emissions, -emiss_share) %>%
       rename(value = adj_emissions) %>%
       # remove CO2 equivalence used for matching, returning units to gg

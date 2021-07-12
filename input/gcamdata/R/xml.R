@@ -275,7 +275,7 @@ add_node_equiv_xml <- function(dot, equiv_class) {
 #' @param old_tag The XML tag which is being expanded to add more levels
 #' @param new_tag The XML tag which will serve as the additional levels
 #' @param num_levels The number of additional levels to generate
-#' @param rename_file Whether to rename the final \code{old_tag} to
+#' @param rename_final Whether to rename the final \code{old_tag} to
 #' \code{new_tag} in the original header
 #' @param column_name The base name of the column in \code{data} which will get
 #' expanded by appending \code{paste0(column_name, (seq_len(num_levels) - 1))}
@@ -335,7 +335,7 @@ add_xml_data_generate_levels <- function(dot, data, header, old_tag, new_tag, nu
 #' @param old_tag The XML tag which is being expanded to add more levels
 #' @param new_tag The XML tag which will serve as the additional levels
 #' @param num_levels The number of additional levels to generate
-#' @param rename_file Whether to rename the final \code{old_tag} to
+#' @param rename_final Whether to rename the final \code{old_tag} to
 #' \code{new_tag} in the original header
 #' @param column_name The base name of the column in \code{data} which will get
 #' expanded by appending \code{paste0(column_name, (seq_len(num_levels) - 1))}

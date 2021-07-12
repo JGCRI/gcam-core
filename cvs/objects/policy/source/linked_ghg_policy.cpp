@@ -218,7 +218,7 @@ void LinkedGHGPolicy::completeInit( const string& aRegionName ) {
     // Add a dependency between this mand the linked market and include a dummy
     // activity to ensure the dependecy finder has an activity to traverse
     MarketDependencyFinder* depFinder = marketplace->getDependencyFinder();
-    depFinder->addDependency( mPolicyName, aRegionName, mLinkedPolicyName, aRegionName );
+    depFinder->addDependency( mPolicyName, aRegionName, mLinkedPolicyName, aRegionName, false );
     depFinder->resolveActivityToDependency( aRegionName, mPolicyName,
             new DummyActivity(), new DummyActivity() );
     

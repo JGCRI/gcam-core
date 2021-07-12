@@ -374,8 +374,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       filter(addTimeValue == 1) %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["tranSubsector"]], "addTimeValue", "time.value.multiplier","sce"),
                            GCAM_region_names = GCAM_region_names) %>%
-      mutate(year.fillout = min(MODEL_YEARS)) %>%
-      mutate(sce= if_else(is.na(sce),"CORE",sce)) %>%
+      mutate(year.fillout = min(MODEL_YEARS),
+             sce= if_else(is.na(sce),"CORE",sce)) %>%
       # Subset only the combinations of region, supplysector, and tranSubsector
       semi_join(r_ss_ts_all, by = c("region", "supplysector", "tranSubsector","sce")) %>%
       select(LEVEL2_DATA_NAMES[["tranSubsector"]], year.fillout, addTimeValue, time.value.multiplier,sce) %>%
@@ -596,9 +596,10 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
                                                                    "stub.technology", "year", "sce")) %>%
       left_join(L254.StubTranTechCoef, by = c("region", "supplysector", "tranSubsector",
                                                              "stub.technology", "minicam.energy.input", "year","sce")) %>%
-      mutate(loadFactor=if_else(is.na(loadFactor),0,loadFactor),coefficient=if_else(is.na(coefficient),0,coefficient)) %>%
-      mutate(output = calibrated.value * loadFactor * CONV_EJ_GJ / (coefficient * CONV_BTU_KJ)) %>%
-      mutate(output = if_else(is.na(output),0,output)) %>%
+      mutate(loadFactor=if_else(is.na(loadFactor),0,loadFactor),
+             coefficient=if_else(is.na(coefficient),0,coefficient),
+             output = calibrated.value * loadFactor * CONV_EJ_GJ / (coefficient * CONV_BTU_KJ),
+             output = if_else(is.na(output),0,output)) %>%
       select(region, supplysector, tranSubsector, stub.technology, year, minicam.energy.input,
              calibrated.value, loadFactor, coefficient, output,sce) ->
       L254.StubTranTechOutput
@@ -641,8 +642,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
 
     L254.StubTechCalInput_passthru_cum %>%
       mutate(calibrated.value = if_else(minicam.energy.input %in% LIST_supplysector,
-                                        output_cum, output_agg)) %>%
-      mutate(share.weight.year = year,
+                                        output_cum, output_agg),
+             share.weight.year = year,
              subs.share.weight = if_else(calibrated.value > 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
       select(region, supplysector, tranSubsector, stub.technology, year,

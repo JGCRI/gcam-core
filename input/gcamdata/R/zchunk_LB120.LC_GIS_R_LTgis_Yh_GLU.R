@@ -34,8 +34,8 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     iso <- GCAM_region_ID <- Land_Type <- year <- GLU <- Area_bm2 <- LT_HYDE <-
-      land_code <- LT_SAGE <- value <- Forest <- MgdFor <- Grassland <- Shrubland <-
-      Pasture <- nonForScaler <- ForScaler <- NULL    # silence package check.
+      land_code <- LT_SAGE <- value <- Forest <- MgdFor <- Grassland <-
+      Shrubland <- Pasture <- nonForScaler <- ForScaler <- NULL    # silence package check.
 
     all_data <- list(...)[[1]]
 

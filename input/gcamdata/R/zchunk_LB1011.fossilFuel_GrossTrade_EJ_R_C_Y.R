@@ -146,7 +146,7 @@ module_energy_LB1011.ff_GrossTrade <- function(command, ...) {
       group_by(GCAM_region_ID, GCAM_Commodity, var, year) %>%
       summarise(value = sum(value)) %>%
       mutate(year = round(year/5)*5) %>% #Round year to nearest 5 (gcam period)
-      group_by(GCAM_region_ID, GCAM_Commodity, var, year, add = FALSE) %>%
+      group_by(GCAM_region_ID, GCAM_Commodity, var, year) %>%
       summarise(value = mean(value)) %>%
       ungroup() %>%
       complete(GCAM_region_ID = unique(GCAM_region_ID),

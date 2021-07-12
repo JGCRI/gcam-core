@@ -106,7 +106,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
         CEDS_N2O$Non.CO2 <- "N2O"
         # Prepare unmanaged forest emissions from CMIP to be combined with CEDS data set
         CMIP_unmgd_emissions %>%
-          filter(iso %notin% c(emissions.GFED_NODATA)) %>%
+          filter(!iso %in% c(emissions.GFED_NODATA)) %>%
           distinct() %>%
           left_join(CMIP_sector_map, by = c("sector" = "LULUC_sector_abr")) %>%
           na.omit() %>%
@@ -185,6 +185,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
 
         CEDS_int_shipping %>%
           add_title("CEDS international shipping non-CO2 emissions by CEDS sector / fuel / historical year",overwrite = TRUE) %>%
+          add_comments("CEDS international shipping non-CO2 emissions by CEDS sector / fuel / historical year") %>%
           add_units("Tg") %>%
           add_precursors("emissions/CEDS/BC_total_CEDS_emissions","emissions/CEDS/OC_total_CEDS_emissions","emissions/CEDS/CO_total_CEDS_emissions",
                          "emissions/CEDS/NH3_total_CEDS_emissions","emissions/CEDS/NMVOC_total_CEDS_emissions","emissions/CEDS/NOx_total_CEDS_emissions",
