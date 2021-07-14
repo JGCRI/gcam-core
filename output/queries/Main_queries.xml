@@ -130,9 +130,9 @@
                         <rewrite from="hydro-elect" to="f hydro"/>
                         <rewrite from="solar-elect" to="h solar"/>
                         <rewrite from="coal" to="c coal"/>
-                        <rewrite from="traded coal" to="a oil"/>
+                        <rewrite from="traded oil" to="a oil"/>
                         <rewrite from="traded natural gas" to="b natural gas"/>
-                        <rewrite from="traded oil" to="c coal"/>
+                        <rewrite from="traded coal" to="c coal"/>
                         <rewrite from="elect_td_ind" to=""/>
                         <rewrite from="wind-elect" to="g wind"/>
                         <rewrite from="total biomass" to="d biomass"/>
@@ -224,6 +224,9 @@
                         <rewrite from="solar-H2" to="h solar"/>
                         <rewrite from="regional natural gas" to=""/>
                         <rewrite from="traded unconventional oil" to="a oil"/>
+                        <rewrite from="traded oil" to="a oil"/>
+                        <rewrite from="traded natural gas" to="b natural gas"/>
+                        <rewrite from="traded coal" to="c coal"/>
                         <rewrite from="geothermal-elect" to="i geothermal"/>
                         <rewrite from="natural gas" to="b natural gas"/>
                         <rewrite from="wholesale gas" to=""/>
@@ -260,7 +263,7 @@
 	       	 	 declare function local:generate-sector-input-coefs($outputNameQueue as xs:string*, $currTree as node(), $coefs as node()*, $is_usa as xs:boolean) as node()* {
                  if(empty($outputNameQueue)) then $coefs
                  else if( exists($coefs[@name = $outputNameQueue[1]]) or exists(index-of(('biomass',
-'traded unconventional oil', 'regional corn for ethanol', 'regional biomassOil', 'regional sugar for ethanol', 'regional sugarbeet for ethanol'),
+'traded oil', 'traded coal', 'traded natural gas', 'regional corn for ethanol', 'regional biomassOil', 'regional sugar for ethanol', 'regional sugarbeet for ethanol'),
 $outputNameQueue[1])) or not($currTree/*[@type='sector' and @name=$outputNameQueue[1]]))
 then 
 (:if(not($is_usa) and string-length($currTree/@name) = 2) then
@@ -272,7 +275,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                         $newOutputNameQueue := remove($outputNameQueue, 1),
                         $useOutputs := $currTree//output-primary[@type='output' and @name=$outputName],
                         $useInputs := for $out in $useOutputs[not(following-sibling::keyword[exists(@primary-renewable)])]
-                                      return $out/following-sibling::*[@type='input' and not(@name='oil-credits')],
+                                      return $out/following-sibling::*[@type='input' and not(@name='oil-credits') and not(starts-with(@name, 'water_td'))],
                         $renewOutputs := for $out in $useOutputs[following-sibling::keyword[exists(@primary-renewable)]]
                                          return element output {
                                              attribute name { $out/following-sibling::keyword/@primary-renewable },
@@ -317,8 +320,8 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
         declare function local:generate-ccs-coefs($currTree as node(), $coefs as node()*) as node()* {
             for $sector in $coefs/@name
             let $currSector := $currTree/*[@type='sector' and @name=$sector],
-                $useInputs := $currSector//*[@type='technology' and not(contains(@name, 'CCS')) and not(child::keyword/@primary-renewable)]/*[@type='input' and not(@name='oil-credits')],
-                $useInputsCCS := $currSector//*[@type='technology' and contains(@name, 'CCS')]/*[@type='input' and not(@name='oil-credits')],
+                $useInputs := $currSector//*[@type='technology' and not(contains(@name, 'CCS')) and not(child::keyword/@primary-renewable)]/*[@type='input' and not(@name='oil-credits') and not(starts-with(@name, 'water_td'))],
+                $useInputsCCS := $currSector//*[@type='technology' and contains(@name, 'CCS')]/*[@type='input' and not(@name='oil-credits') and not(starts-with(@name, 'water_td'))],
                 $totalOutputSum := for $vintage in distinct-values($useInputs/demand-physical/@vintage | $useInputsCCS/demand-physical/@vintage)
                                           return element output {
                                                      attribute vintage { $vintage },
@@ -449,6 +452,12 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                         <rewrite from="natural gas CCS" to="b natural gas CCS"/>
                         <rewrite from="traded biomass" to="d biomass"/>
                         <rewrite from="traded unconventional oil" to="a oil"/>
+                        <rewrite from="traded oil" to="a oil"/>
+                        <rewrite from="traded natural gas" to="b natural gas"/>
+                        <rewrite from="traded coal" to="c coal"/>
+                        <rewrite from="traded oil CCS" to="a oil CCS"/>
+                        <rewrite from="traded natural gas CCS" to="b natural gas CCS"/>
+                        <rewrite from="traded coal CCS" to="c coal CCS"/>
                         <rewrite from="geothermal-elect" to="i geothermal"/>
                         <rewrite from="regional sugar for ethanol" to="d biomass"/>
                         <rewrite from="natural gas" to="b natural gas"/>
@@ -3630,14 +3639,14 @@ element input {
             <supplyDemandQuery title="food consumption by type (general)">
                 <axis1 name="sector">sector</axis1>
                 <axis2 name="Year">physical-output[@vintage]</axis2>
-                <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='FoodDemand_Crops' or @name='FoodDemand_Meat')]//
+                <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='FoodDemand_Staples' or @name='FoodDemand_NonStaples')]//
             *[@type='output']/physical-output/node()</xPath>
                 <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="food consumption by type (specific)">
                 <axis1 name="technology">technology</axis1>
                 <axis2 name="Year">physical-output[@vintage]</axis2>
-                <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='FoodDemand_Crops' or @name='FoodDemand_Meat')]/
+                <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='FoodDemand_Staples' or @name='FoodDemand_NonStaples')]/
             *[@type='subsector']/*[@type='technology']/
             *[@type='output']/physical-output/node()</xPath>
                 <comments/>

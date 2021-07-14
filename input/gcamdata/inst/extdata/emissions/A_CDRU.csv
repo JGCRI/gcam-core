@@ -1,0 +1,8 @@
+# File: A_CDRU.csv
+# Title: Primary energy handling default coefficients
+# Units: Unitless
+#Description: Defines dummy coefficient table for atmospheric carbon stocks
+# Column types: ccccnnn 
+# ----------
+supplysector,subsector,technology,minicam.energy.input,1971,2010,2100
+airCO2,airCO2,airCO2,atmospheric carbon stocks,1,1,1

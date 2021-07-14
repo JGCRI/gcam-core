@@ -124,7 +124,7 @@ module_emissions_L252.MACC <- function(command, ...) {
         repeat_add_columns(tibble(tax = MAC_taxes)) %>%
         repeat_add_columns(tibble(year = emissions.EPA_MACC_YEAR)) %>%
         # we don't need MACs for calibration years
-        filter(year %notin% MODEL_BASE_YEARS)
+        filter(!year %in% MODEL_BASE_YEARS)
       # Next, add in mac.reduction values
       if(error_no_match) {
         # Usually we use left_join_error_no_match

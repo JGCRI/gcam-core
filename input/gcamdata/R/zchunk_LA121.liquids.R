@@ -181,8 +181,8 @@ module_energy_LA121.liquids <- function(command, ...) {
         select(GCAM_region_ID, sector, fuel, year, value) %>%
         mutate(fuel = "crude oil") %>%
         left_join(rename(L121.in_EJ_R_TPES_unoil_Yh, value_unoil = value, unoil = fuel), by = c("GCAM_region_ID", "sector", "year")) %>%
-        mutate( value_unoil = if_else(is.na(value_unoil),0,value_unoil)) %>%
-        mutate(value = value - value_unoil) %>%
+        mutate(value_unoil = if_else(is.na(value_unoil), 0, value_unoil),
+               value = value - value_unoil) %>%
         select(GCAM_region_ID, sector, fuel, year, value) -> L121.in_EJ_R_TPES_crude_Yh
 
       L111.Prod_EJ_R_F_Yh %>%

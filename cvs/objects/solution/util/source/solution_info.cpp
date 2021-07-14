@@ -227,6 +227,10 @@ double SolutionInfo::getEDRight() const {
     return EDR;
 }
 
+double SolutionInfo::getSolutionFloor() const {
+    return mSolutionFloor;
+}
+
 /*! \brief Return the name of the SolutionInfo object.
 * \author Josh Lurz
 * \return The name of the market the SolutionInfo is connected to.

@@ -105,6 +105,7 @@ public:
     double getED() const;
     double getEDLeft() const;
     double getEDRight() const;
+    double getSolutionFloor() const;
     void expandBracket( const double aAdjFactor );
     double getRelativeED() const;
     bool isWithinTolerance() const;
