@@ -294,15 +294,18 @@ generate_level2_data_names <- function() {
   level2_data_names[["Floorspace"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "year", "base.building.size")
   level2_data_names[["SatiationAdder"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "satiation.adder")
   level2_data_names[["Satiation_flsp"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "satiation.level")
+  level2_data_names[["Satiation_impedance"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "satiation-impedance")
   level2_data_names[["ShellConductance"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "year", "shell.conductance", "shell.year", "floor.to.surface.ratio")
   level2_data_names[["PriceExp_IntGains"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "price.exp.year.fillout", "price.exponent", "internal.gains.market.name", "internal.gains.unit")
   level2_data_names[["ThermalBaseService"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input", "year", "base.service")
   level2_data_names[["ThermalServiceSatiation"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input", "satiation.level")
   level2_data_names[["ThermalServiceSatiationAdder"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input", "satiation.adder")
+  level2_data_names[["ThermalServiceImpedance"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input", "satiation-impedance")
   level2_data_names[["Intgains_scalar"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input", "internal.gains.scalar")
   level2_data_names[["HDDCDD"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input", "year", "degree.days")
   level2_data_names[["GenericBaseService"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "building.service.input", "year", "base.service")
   level2_data_names[["GenericServiceSatiation"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "building.service.input", "satiation.level")
+  level2_data_names[["GenericServiceImpedance"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "building.service.input", "satiation-impedance")
   level2_data_names[["GenericServiceTechChange"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "building.service.input", "year.fillout", "tech.change")
   level2_data_names[["DeleteFinalDemand"]] <- level2_data_names[["EnergyFinalDemand"]]
   level2_data_names[["DeleteConsumer"]] <- c("region", "gcam.consumer")
@@ -316,7 +319,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["DemandNonStapleRegBias"]] <- c("region", "gcam.consumer", "nodeInput", "non.staples.food.demand.input", "regional.bias.year", "regional.bias")
   level2_data_names[["StapleBaseService"]] <- c("region", "gcam.consumer", "nodeInput", "staples.food.demand.input", "year", "base.service")
   level2_data_names[["NonStapleBaseService"]] <- c("region", "gcam.consumer", "nodeInput", "non.staples.food.demand.input", "year", "base.service")
-  level2_data_names[["Gomp.fn.param"]] <- c("region","gcam.consumer","nodeInput","building.node.input","habitable_land","unadjust_satiation","land_density_param","base_floorspace_param","income_param","bias_adjust_param")
+  level2_data_names[["Gomp.fn.param"]] <- c("region","gcam.consumer","nodeInput","building.node.input","habitable-land","unadjust-satiation","land-density-param","base-floorspace-param","income-param","bias-adjust-param")
 
   # Land types
   level2_data_names[["LN0_Land"]] <- c("region", "LandAllocatorRoot", "year.fillout", "landAllocation")

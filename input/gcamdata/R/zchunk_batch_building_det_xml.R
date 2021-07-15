@@ -41,6 +41,9 @@ module_energy_batch_building_det_xml <- function(command, ...) {
              "L244.GlobalTechCost_bld",
              "L244.DeleteThermalService",
              "L244.DeleteGenericService",
+             "L244.Satiation_impedance",
+             "L244.GenericServiceImpedance",
+             "L244.ThermalServiceImpedance",
              "L244.Gomp.fn.param"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_det.xml"))
@@ -79,6 +82,9 @@ module_energy_batch_building_det_xml <- function(command, ...) {
     L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService")
     L244.DeleteGenericService <- get_data(all_data, "L244.DeleteGenericService")
     L244.Gomp.fn.param <- get_data(all_data, "L244.Gomp.fn.param")
+    L244.Satiation_impedance <- get_data(all_data, "L244.Satiation_impedance")
+    L244.GenericServiceImpedance<-get_data(all_data, "L244.GenericServiceImpedance")
+    L244.ThermalServiceImpedance<-get_data(all_data, "L244.ThermalServiceImpedance")
     # ===================================================
 
     # Produce outputs
@@ -88,11 +94,14 @@ module_energy_batch_building_det_xml <- function(command, ...) {
       add_xml_data(L244.ShellConductance_bld, "ShellConductance") %>%
       add_xml_data(L244.Intgains_scalar, "Intgains_scalar") %>%
       add_xml_data(L244.GenericServiceSatiation, "GenericServiceSatiation") %>%
+      add_xml_data(L244.GenericServiceImpedance, "GenericServiceImpedance") %>%
+      add_xml_data(L244.ThermalServiceImpedance, "ThermalServiceImpedance") %>%
       add_xml_data(L244.ThermalServiceSatiation, "ThermalServiceSatiation") %>%
       add_xml_data(L244.GenericBaseService, "GenericBaseService") %>%
       add_xml_data(L244.ThermalBaseService, "ThermalBaseService") %>%
       add_xml_data(L244.SatiationAdder, "SatiationAdder") %>%
       add_xml_data(L244.Satiation_flsp, "Satiation_flsp") %>%
+      add_xml_data(L244.Satiation_impedance, "Satiation_impedance") %>%
       add_xml_data(L244.Gomp.fn.param, "Gomp.fn.param") %>%
       add_xml_data(L244.DemandFunction_flsp, "DemandFunction_flsp") %>%
       add_xml_data(L244.DemandFunction_serv, "DemandFunction_serv") %>%
@@ -111,12 +120,13 @@ module_energy_batch_building_det_xml <- function(command, ...) {
                      "L244.SubsectorShrwt_bld", "L244.FinalEnergyKeyword_bld", "L244.Supplysector_bld",
                      "L244.ShellConductance_bld", "L244.Intgains_scalar", "L244.GenericServiceSatiation",
                      "L244.ThermalServiceSatiation", "L244.GenericBaseService", "L244.ThermalBaseService", "L244.SatiationAdder",
-                     "L244.Satiation_flsp","L244.Gomp.fn.param",
+                     "L244.Satiation_flsp","L244.Gomp.fn.param","L244.Satiation_impedance",
                      "L244.DemandFunction_flsp", "L244.DemandFunction_serv",
                      "L244.Floorspace", "L244.SubregionalShares", "L244.SubsectorLogit_bld",
                      "L244.FuelPrefElast_bld", "L244.StubTech_bld", "L244.StubTechEff_bld",
                      "L244.StubTechCalInput_bld", "L244.StubTechIntGainOutputRatio", "L244.GlobalTechShrwt_bld",
-                     "L244.GlobalTechCost_bld", "L244.DeleteThermalService", "L244.DeleteGenericService", "L244.PriceExp_IntGains") ->
+                     "L244.GlobalTechCost_bld", "L244.DeleteThermalService", "L244.DeleteGenericService",
+                     "L244.PriceExp_IntGains","L244.GenericServiceImpedance","L244.ThermalServiceImpedance") ->
       building_det.xml
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.
