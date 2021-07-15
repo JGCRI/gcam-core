@@ -57,6 +57,7 @@
 #include "marketplace/include/marketplace.h"
 #include "sectors/include/sector_utils.h"
 #include "functions/include/satiation_demand_function.h"
+#include "functions/include/gompertz_function.h"
 #include "containers/include/market_dependency_finder.h"
 
 using namespace std;
@@ -127,6 +128,9 @@ void BuildingNodeInput::XMLParse( const xercesc::DOMNode* node ) {
         else if( nodeName == SatiationDemandFunction::getXMLNameStatic() ) {
             parseSingleNode( curr, mSatiationDemandFunction, new SatiationDemandFunction );
         }
+		else if (nodeName == GompertzDemandFunction::getXMLNameStatic()) {
+			parseSingleNode(curr, mGompertzDemandFunction, new GompertzDemandFunction);
+		}
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -365,6 +369,15 @@ double BuildingNodeInput::getInternalGains( const string& aRegionName, const int
 SatiationDemandFunction* BuildingNodeInput::getSatiationDemandFunction() const {
     return mSatiationDemandFunction;
 }
+
+/*!
+*\brief Get the gompertz demand function to be used in floorspace demand calculations.
+* \return The gompertz function.
+*/
+GompertzDemandFunction * BuildingNodeInput::getGompertzDemandFunction() const {
+	return mGompertzDemandFunction;
+}
+
 
 void BuildingNodeInput::removeEmptyInputs() {
     // this functionality has not been implemented
