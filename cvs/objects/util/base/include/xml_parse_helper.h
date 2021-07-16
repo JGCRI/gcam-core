@@ -72,6 +72,7 @@
 #include "util/base/include/iparsable.h"
 
 class Scenario;
+class IScenarioRunner;
 class LoggerFactoryWrapper;
 class Configuration;
 
@@ -152,6 +153,8 @@ struct XMLParseHelper {
     static void parseData(const rapidxml::xml_node<char>* aNode, DataType& aData);
     
     static bool parseXML( const std::string& aXMLFile, Scenario* aRootElement );
+    
+    static bool parseXML( const std::string& aXMLFile, IScenarioRunner* & aRootElement );
     
     static bool parseXML( const std::string& aXMLFile, LoggerFactoryWrapper* aRootElement );
     

@@ -128,7 +128,10 @@ public:
 	virtual const Scenario* getInternalScenario() const;
 
 	// IParsable Interface.
-    bool XMLParse( const xercesc::DOMNode* aRoot );
+    virtual bool XMLParse( const xercesc::DOMNode* aRoot );
+    
+    // AParsable Interface.
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 protected:
     //! A structure which defines a single file.
     struct File {
@@ -161,6 +164,14 @@ protected:
         std::string mName;
     };
     
+    // We could potentially include ComponentSet set the very least in here
+    // and convert each of the intermediate structs above to generate XML parse
+    // for them but there are a bunch of minor tweaks needed to get that to work
+    // correctly so we will write the XML parse code manually.
+    DEFINE_DATA_WITH_PARENT(
+        IScenarioRunner
+    )
+    
     //! A vector containing a series of Components.
     typedef std::vector<Component> ComponentSet;
 
@@ -188,6 +199,13 @@ protected:
     bool XMLParseRunnerSet( const xercesc::DOMNode* aNode );
 
     bool XMLParseFileSet( const xercesc::DOMNode* aNode,
+                          Component& aCurrComponentSet );
+    
+    bool XMLParseComponentSet( rapidxml::xml_node<char>* aNode );
+
+    bool XMLParseRunnerSet( rapidxml::xml_node<char>* aNode );
+
+    bool XMLParseFileSet( rapidxml::xml_node<char>* aNode,
                           Component& aCurrComponentSet );
 
 	static const std::string& getXMLNameStatic();

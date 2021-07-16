@@ -49,6 +49,7 @@
 #include "containers/include/scenario_runner_factory.h"
 #include "util/base/include/timer.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/scenario.h"
@@ -86,7 +87,8 @@ bool BatchRunner::setupScenarios( Timer& aTimer, const string aName, const list<
     mainLog << "Reading Batch File " << batchFileName << endl;
 
     // Parse the batch file.
-    bool success = XMLHelper<void>::parseXML( batchFileName, this );
+    IScenarioRunner* temp = this;
+    bool success = /*XMLHelper<void>*/XMLParseHelper::parseXML( batchFileName, temp );
 
     // Create a default scenario runner if none were read in. This will be used to run all scenarios.
     if( mScenarioRunners.empty() ){
@@ -240,6 +242,7 @@ bool BatchRunner::runSingleScenario( IScenarioRunner* aScenarioRunner,
             << " with scenario runner " << aScenarioRunner->getName()
             << "." << endl;
 
+    XMLHelper<void>::initParser();
     // Setup the scenario.
     const string runName = aComponent.mName;
     bool success = mInternalRunner->setupScenarios( aTimer, runName, components );
@@ -307,6 +310,20 @@ bool BatchRunner::XMLParse( const DOMNode* aRoot ){
     return success;
 }
 
+bool BatchRunner::XMLParse( rapidxml::xml_node<char>* & aNode) {
+    string nodeName = XMLParseHelper::getNodeName( aNode );
+    if ( nodeName == "ComponentSet" ){
+        XMLParseComponentSet( aNode );
+    }
+    else if( nodeName == "runner-set" ){
+        XMLParseRunnerSet( aNode );
+    }
+    else {
+        return false;
+    }
+    return true;
+}
+
 /*!
  * \brief Parse a single scenario set element.
  * \details Parse a single ComponentSet and add it to the BatchRunner's list of
@@ -345,6 +362,47 @@ bool BatchRunner::XMLParseComponentSet( const DOMNode* aNode ){
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing ComponentSet." << endl;
             success = false;
+        }
+    }
+    // Add the new component
+    mComponentSet.push_back( newComponent );
+    return success;
+}
+
+/*!
+ * \brief Parse a single scenario set element.
+ * \details Parse a single ComponentSet and add it to the BatchRunner's list of
+ *          ComponentSets. Dispatch any FileSets found to the XMLParseFileSet
+ *          function.
+ * \param aNode DOM node corresponding to the current ComponentSet.
+ * \return Whether the node was successfully parsed.
+ */
+bool BatchRunner::XMLParseComponentSet( rapidxml::xml_node<char>* aNode ){
+    // assume we were passed a valid node.
+    assert( aNode );
+    
+    map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+    
+    // Create a new Component
+    Component newComponent;
+
+    // Get the name of the component set.
+    newComponent.mName = attrs["name"];
+
+    // loop through the children
+    bool success = true;
+    for(rapidxml::xml_node<char>* curr = aNode->first_node(); curr; curr = curr->next_sibling()) {
+        if(curr->type() == rapidxml::node_element) {
+            string nodeName = XMLParseHelper::getNodeName(curr);
+            if ( nodeName == "FileSet" ) {
+                XMLParseFileSet( curr, newComponent );
+            }
+            else {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Unrecognized text string: " << nodeName << " found while parsing ComponentSet." << endl;
+                success = false;
+            }
         }
     }
     // Add the new component
@@ -397,9 +455,9 @@ bool BatchRunner::XMLParseRunnerSet( const DOMNode* aNode ){
             else {
                 IScenarioRunner* currRunner =
                     ScenarioRunnerFactory::create( nodeName ).release();
-                    if( currRunner->XMLParse( curr ) ){
+                    /*if( currRunner->XMLParse( curr ) ){
                         mScenarioRunners.push_back( currRunner  );
-                    }
+                    }*/
             }
         }
         else {
@@ -413,9 +471,110 @@ bool BatchRunner::XMLParseRunnerSet( const DOMNode* aNode ){
 }
 
 /*!
+ * \brief Parse the set of scenario runners.
+ * \details Parse the set of scenario runners. Dispatches and XML data below the
+ *          ScenarioRunner to the object itself for parsing.
+ * \param aNode DOM node corresponding to the runner-set.
+ * \return Whether the node was successfully parsed.
+ */
+bool BatchRunner::XMLParseRunnerSet( rapidxml::xml_node<char>* aNode ){
+    // assume we were passed a valid node.
+    assert( aNode );
+
+    // loop through the children
+    bool success = true;
+    for(rapidxml::xml_node<char>* curr = aNode->first_node(); curr; curr = curr->next_sibling()) {
+        if(curr->type() == rapidxml::node_element) {
+            string nodeName = XMLParseHelper::getNodeName(curr);
+            if( nodeName == "Value" ){
+                // The value should point at a file containing configuration
+                // information for a scenario runner.
+                IScenarioRunner* tempScenarioRunner = 0;
+                if( XMLParseHelper::parseXML( XMLParseHelper::getValue<string>( curr ), tempScenarioRunner ) ) {
+                    mScenarioRunners.push_back( tempScenarioRunner );
+                }
+            }
+            else if( ScenarioRunnerFactory::isOfType( nodeName ) ){
+                // This is a shortcut to allow creating a IScenarioRunner directly
+                // without creating a file. Most IScenarioRunners only have a tag
+                // and no data so this is useful.
+                // Ensure that a BatchRunner cannot create another BatchRunner.
+                if( nodeName == getXMLNameStatic() ){
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::ERROR );
+                    mainLog << "Batch scenario runners cannot create Batch scenario runners." << endl;
+                    success = false;
+                }
+                else {
+                    IScenarioRunner* currRunner =
+                        ScenarioRunnerFactory::create( nodeName ).release();
+                    Data<IScenarioRunner*, CONTAINER> runnerData(currRunner, "");
+                    XMLParseHelper::parseData(curr, runnerData);
+                    mScenarioRunners.push_back( currRunner  );
+                }
+            }
+            else {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Unrecognized text string: " << nodeName << " found while parsing the runner-set." << endl;
+                success = false;
+            }
+        }
+    }
+    return success;
+}
+
+/*!
  * \brief Parse a single FileSet element.
  * \details This function parses a single FileSet and adds it to the passed in
  *          ComponentSet's list of FileSets. 
+ * \param aNode DOM node corresponding to the current FileSet.
+ * \param aCurrComponent The ComponentSet to add this FileSet to.
+ * \return Whether the node was successfully parsed.
+ */
+bool BatchRunner::XMLParseFileSet( rapidxml::xml_node<char>* aNode, Component& aCurrComponent ){
+    // assume we were passed a valid node.
+    assert( aNode );
+    
+    map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+    
+    // Create the new file set and set the name.
+    FileSet newFileSet;
+    newFileSet.mName = attrs["name"];
+
+    // loop through the children
+    bool success = true;
+    for(rapidxml::xml_node<char>* curr = aNode->first_node(); curr; curr = curr->next_sibling()) {
+        if(curr->type() == rapidxml::node_element) {
+            string nodeName = XMLParseHelper::getNodeName(curr);
+            if ( nodeName == "Value" ){
+                map<string, string> currAttrs = XMLParseHelper::getAllAttrs(curr);
+                // Create the new File
+                File newFile;
+                // Get the name of the file.
+                newFile.mName = currAttrs["name"];
+                // Get the full path of the file.
+                newFile.mPath = XMLParseHelper::getValue<string>( curr );
+                // Add the file to the current new file set.
+                newFileSet.mFiles.push_back( newFile );
+            }
+            else {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Unrecognized text string: " << nodeName << " found while parsing FileSet." << endl;
+                success = false;
+            }
+        }
+    }
+    // Add the new file set to the current component.
+    aCurrComponent.mFileSets.push_back( newFileSet );
+    return success;
+}
+
+/*!
+ * \brief Parse a single FileSet element.
+ * \details This function parses a single FileSet and adds it to the passed in
+ *          ComponentSet's list of FileSets.
  * \param aNode DOM node corresponding to the current FileSet.
  * \param aCurrComponent The ComponentSet to add this FileSet to.
  * \return Whether the node was successfully parsed.
@@ -504,7 +663,7 @@ bool BatchRunner::ParseHelper::XMLParse( const xercesc::DOMNode* aNode ){
             mScenarioRunner = ScenarioRunnerFactory::create( nodeName );
 
             // Allow the IScenarioRunner to parse its own data.
-            success &= mScenarioRunner->XMLParse( /*curr*/aNode );
+            //success &= mScenarioRunner->XMLParse( /*curr*/aNode );
         }
     }
     else {

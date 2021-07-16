@@ -45,6 +45,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "target_finder/include/policy_target_runner.h"
 #include "target_finder/include/target_factory.h"
 #include "target_finder/include/itarget_solver.h"
@@ -176,6 +177,38 @@ bool PolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
     return success;
 }
 
+bool PolicyTargetRunner::XMLParse(rapidxml::xml_node<char>* & aNode) {
+    mHasParsedConfig = true;
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if( nodeName == "stabilization" ) {
+        mInitialTargetYear = ITarget::getUseMaxTargetYearFlag();
+    }
+    else if( nodeName == "overshoot" ) {
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        // Set the year to overshoot to the year attribute or if not provided
+        // default to the last model year.  We can not set it to the last
+        // year here since the model time may not have been parsed.
+        string overshootYear = attrs["year"];
+        mInitialTargetYear = overshootYear.empty() ? 0 : XMLParseHelper::getValue<int>( overshootYear );
+    }
+    else if( nodeName == "forward-look" ) {
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        auto yearIter = attrs.find("year");
+        if( yearIter == attrs.end() ) {
+            int value = XMLParseHelper::getValue<int>( aNode );
+            fill( mNumForwardLooking.begin(), mNumForwardLooking.end(), value );
+        }
+        else {
+            Data<vector<int>, ARRAY> forwardLookData( mNumForwardLooking, "");
+            XMLParseHelper::parseData(aNode, forwardLookData);
+        }
+    }
+    else {
+        return false;
+    }
+    return true;
+}
+
 bool PolicyTargetRunner::setupScenarios( Timer& aTimer,
                                          const string aName,
                                          const list<string> aScenComponents )
@@ -206,7 +239,9 @@ bool PolicyTargetRunner::setupScenarios( Timer& aTimer,
                 << fileName << endl;
 
         // Parse the file.
-        success &= XMLHelper<void>::parseXML( fileName, this );
+        //success &= XMLHelper<void>::parseXML( fileName, this );
+        IScenarioRunner* temp = this;
+        success &= XMLParseHelper::parseXML( fileName, temp );
     }
 
     if( !mTargetValue.isInited() ){

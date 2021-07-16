@@ -93,6 +93,13 @@ private:
 
     //! The delegate object which calculates total costs.
     std::auto_ptr<TotalPolicyCostCalculator> mPolicyCostCalculator;
+    
+    // Not totally intuitive but this define data is here for XML parse of scenario
+    // components and the contained scenario components don't get initialized from
+    // there so they are left out of this data definition.
+    DEFINE_DATA_WITH_PARENT(
+        IScenarioRunner
+    )
 
     MACGeneratorScenarioRunner();
     static const std::string& getXMLNameStatic();

@@ -117,6 +117,13 @@ protected:
     static const std::string& getXMLNameStatic();
     //! The scenario which will be run.
     std::auto_ptr<Scenario> mScenario;
+    
+    // Not totally intuitive but this define data is here for XML parse of scenario
+    // components and the contained Scenario *doesn't* get initialized from
+    // there so it is left out of this data definition.
+    DEFINE_DATA_WITH_PARENT(
+        IScenarioRunner
+    )
 
     //! The XML database output is a special case in that we must keep
     //! it around in case we want to do additional processing once GCAM

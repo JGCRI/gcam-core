@@ -47,6 +47,12 @@
 #include "util/base/include/gcam_fusion.hpp"
 #include "util/base/include/gcam_data_containers.h"
 #include "util/base/include/factory.h"
+#include "containers/include/scenario_runner_factory.h"
+#include "containers/include/iscenario_runner.h"
+#include "containers/include/single_scenario_runner.h"
+#include "containers/include/mac_generator_scenario_runner.h"
+#include "containers/include/batch_runner.h"
+#include "target_finder/include/policy_target_runner.h"
 #include "util/logger/include/logger_factory.h"
 #include "util/logger/include/logger.h"
 #include "util/base/include/configuration.h"
@@ -74,6 +80,17 @@ struct Factory<ITechnologyContainer::SubClassFamilyVector> {
             mainLog << "Could not create " << aXMLName << " of type: " << typeid(ITechnologyContainer).name() << std::endl;
         }
         return ret;
+    }
+};
+
+template<>
+struct Factory<IScenarioRunner::SubClassFamilyVector> {
+    using FamilyBasePtr = IScenarioRunner*;
+    static bool canCreateType( const std::string& aXMLName ) {
+        return ScenarioRunnerFactory::isOfType( aXMLName );
+    }
+    static IScenarioRunner* createType( const std::string& aXMLName ) {
+        return ScenarioRunnerFactory::create( aXMLName ).release();
     }
 };
 
@@ -596,6 +613,16 @@ void XMLParseHelper::parseData<Data<objects::PeriodVector<double>, ARRAY> >(cons
 }
 
 template<>
+void XMLParseHelper::parseData<Data<std::vector<int>, ARRAY> >(const rapidxml::xml_node<char>* aNode, Data<std::vector<int>, ARRAY>& aData) {
+    parseDataI(aNode, aData);
+}
+
+template<>
+void XMLParseHelper::parseData<Data<IScenarioRunner*, CONTAINER> >(const rapidxml::xml_node<char>* aNode, Data<IScenarioRunner*, CONTAINER>& aData) {
+    parseDataI(aNode, aData);
+}
+
+template<>
 void XMLParseHelper::parseData<Data<Logger*, CONTAINER> >(const rapidxml::xml_node<char>* aNode, Data<Logger*, CONTAINER>& aData) {
     parseDataI(aNode, aData);
 }
@@ -618,6 +645,32 @@ bool parseXMLInternal(const string& aXMLFile, ContainerType* aRootElement) {
 
 bool XMLParseHelper::parseXML(const string& aXMLFile, Scenario* aRootElement) {
     return parseXMLInternal(aXMLFile, aRootElement);
+}
+
+bool XMLParseHelper::parseXML(const string& aXMLFile, IScenarioRunner* & aRootElement) {
+    boost::iostreams::mapped_file_source xmlFile(aXMLFile.c_str());
+    
+    rapidxml::xml_document<> doc;
+    doc.parse<rapidxml::parse_non_destructive>(const_cast<char*>(xmlFile.data()));
+    
+    if(!aRootElement) {
+        string runnerType = getNodeName(doc.first_node());
+        aRootElement = ScenarioRunnerFactory::create(runnerType).release();
+        if(!aRootElement) {
+            // Didn't recognize runnerType, an error will have already been generated
+            // so just close the file and indicate failure.
+            xmlFile.close();
+            return false;
+        }
+    }
+    
+    Data<IScenarioRunner*, CONTAINER> root(aRootElement, "");
+    
+    XMLParseHelper::parseData(doc.first_node(), root);
+    
+    xmlFile.close();
+    
+    return true;
 }
 
 bool XMLParseHelper::parseXML(const string& aXMLFile, LoggerFactoryWrapper* aRootElement) {
