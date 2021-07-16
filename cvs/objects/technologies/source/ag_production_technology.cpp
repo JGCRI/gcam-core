@@ -82,7 +82,6 @@ AgProductionTechnology::AgProductionTechnology()
     mYield  = 0;
     mAgProdChange  = 0;
     mHarvestsPerYear = 1;
-    mLandAllocator = 0;
     mProductLeaf = 0;
 }
 
