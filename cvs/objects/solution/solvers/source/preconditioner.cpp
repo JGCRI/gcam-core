@@ -251,6 +251,10 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     solvable[i].setForecastDemand(demandScale);
                     fp = oldprice;
                     fd = demandScale;
+                    double slope = solvable[i].getCorrectionSlope();
+                    if(slope != 1.0) {
+                        solvable[i].setCorrectionSlope(1.0);
+                    }
                 }
                 if(fd == 0.0) {
                     if(olddmnd > 0.0) {
