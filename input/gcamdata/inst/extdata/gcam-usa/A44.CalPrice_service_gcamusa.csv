@@ -1,0 +1,4939 @@
+# File: A44.CalPrice_service_gcamusa.csv
+# Title: Prices by service in the base years. Used to calibrate satiation impedance
+# Units: 1975$/unit
+# Source: GCAM-USA output
+# Column types: ccnnnn 
+# ----------
+region,sector,1990,2005,2010,2015
+CA,N fertilizer,0.216013,0.225464,0.249058,0.24916
+FL,N fertilizer,0.17764,0.187091,0.210686,0.210787
+GA,N fertilizer,0.185252,0.194703,0.218297,0.218399
+IA,N fertilizer,0.187843,0.197294,0.220889,0.22099
+LA,N fertilizer,0.185252,0.194703,0.218297,0.218399
+MO,N fertilizer,0.208401,0.217852,0.241446,0.241548
+NC,N fertilizer,0.185252,0.194703,0.218297,0.218399
+OH,N fertilizer,0.194544,0.203995,0.227589,0.227691
+TX,N fertilizer,0.163631,0.173083,0.196677,0.196778
+AK,base load generation,8.6615,8.12047,9.86454,10.1528
+AL,base load generation,7.46403,7.57123,7.92761,8.52636
+AR,base load generation,7.79647,7.77558,7.80192,8.2904
+AZ,base load generation,7.32914,7.10266,7.51582,8.20714
+CA,base load generation,8.55582,8.28615,8.70584,7.92442
+CO,base load generation,5.56372,5.5907,5.75962,6.35192
+CT,base load generation,8.91913,8.73144,9.36598,9.42935
+DC,base load generation,0,0,0,17.0007
+DE,base load generation,6.30721,6.49921,6.95136,7.28508
+FL,base load generation,7.45392,6.60466,7.47537,7.09814
+GA,base load generation,7.56491,7.49265,7.77212,8.4853
+HI,base load generation,10.6352,10.5947,14.2215,14.2583
+IA,base load generation,6.06929,6.09399,6.11016,6.6897
+ID,base load generation,16.2561,15.5081,7.36779,7.35654
+IL,base load generation,8.15351,7.94073,8.29378,8.76514
+IN,base load generation,5.92778,5.93519,6.02113,6.78738
+KS,base load generation,6.48078,6.39319,6.52643,6.98641
+KY,base load generation,5.93172,6.0031,6.10809,6.8153
+LA,base load generation,7.99715,7.85149,7.89975,9.06726
+MA,base load generation,8.64126,8.23492,8.92103,9.11547
+MD,base load generation,6.75227,7.77827,8.1398,8.79833
+ME,base load generation,9.69392,10.2391,11.1204,10.6595
+MI,base load generation,7.01908,7.31534,7.54576,8.02952
+MN,base load generation,7.07295,6.88908,7.40123,7.6311
+MO,base load generation,6.62601,6.26534,6.52259,7.33888
+MS,base load generation,7.99975,7.78909,7.68399,8.59556
+MT,base load generation,6.00477,6.02215,6.06078,7.66288
+NC,base load generation,7.7893,7.74742,8.03353,8.67689
+ND,base load generation,5.46034,5.46919,5.54231,6.22618
+NE,base load generation,7.24088,6.93591,7.32342,7.66741
+NH,base load generation,9.05377,8.67128,9.34673,9.72674
+NJ,base load generation,8.61757,8.6698,8.99918,9.27946
+NM,base load generation,5.56025,5.66625,5.84163,6.39946
+NV,base load generation,6.24364,6.40455,6.96966,7.36329
+NY,base load generation,8.27218,8.45766,9.13821,9.31537
+OH,base load generation,6.34972,6.445,6.68429,7.50917
+OK,base load generation,5.50357,5.63539,5.79276,6.2175
+OR,base load generation,8.96005,7.06792,6.43259,6.56571
+PA,base load generation,7.71116,7.907,8.22748,8.75248
+RI,base load generation,13.2581,6.57716,7.91348,7.89774
+SC,base load generation,8.44042,8.31012,8.57789,9.10238
+SD,base load generation,5.45944,5.45166,5.56459,5.9142
+TN,base load generation,7.38473,7.69887,8.10744,8.45438
+TX,base load generation,5.37613,5.57756,6.1454,6.26763
+UT,base load generation,6.0044,6.09494,6.27513,6.93867
+VA,base load generation,8.22264,8.07794,8.41336,9.06392
+VT,base load generation,8.98588,9.29641,9.76848,10.2391
+WA,base load generation,8.0813,8.18443,8.11028,8.11854
+WI,base load generation,7.20578,6.7497,7.36015,7.77938
+WV,base load generation,5.92981,5.96569,6.06033,6.83839
+WY,base load generation,5.56535,5.59954,5.68373,6.39772
+AK,biomass liquids,0,0,0,0
+AL,biomass liquids,0,15.7149,15.7444,15.5369
+AR,biomass liquids,0,15.7149,15.7444,15.5369
+AZ,biomass liquids,0,15.7162,8.84123,9.13275
+CA,biomass liquids,0,10.3301,10.148,10.878
+CO,biomass liquids,0,8.61763,8.78461,8.78726
+CT,biomass liquids,0,0,0,0
+DC,biomass liquids,0,0,0,0
+DE,biomass liquids,0,0,0,0
+FL,biomass liquids,0,15.7053,15.7349,15.5274
+GA,biomass liquids,0,14.9441,9.04053,9.78021
+HI,biomass liquids,0,16.011,16.0406,15.8331
+IA,biomass liquids,0,8.78077,8.93946,9.45086
+ID,biomass liquids,0,0,8.85875,8.86487
+IL,biomass liquids,0,8.92655,9.18565,9.88002
+IN,biomass liquids,0,9.20167,9.07281,9.62615
+KS,biomass liquids,0,8.60593,8.77259,8.76601
+KY,biomass liquids,0,9.58209,10.5084,13.2228
+LA,biomass liquids,0,0,8.82969,0
+MA,biomass liquids,0,15.7599,15.7895,15.582
+MD,biomass liquids,0,0,0,0
+ME,biomass liquids,0,15.7599,15.7895,15.582
+MI,biomass liquids,0,8.70386,8.86975,8.88191
+MN,biomass liquids,0,8.77427,8.9566,9.55845
+MO,biomass liquids,0,9.70257,9.99058,12.3783
+MS,biomass liquids,0,15.7149,10.9377,14.3131
+MT,biomass liquids,0,0,0,0
+NC,biomass liquids,0,15.7149,15.7444,15.5369
+ND,biomass liquids,0,9.78016,9.17392,10.2303
+NE,biomass liquids,0,8.65312,8.81133,8.81635
+NH,biomass liquids,0,15.7599,15.7895,15.582
+NJ,biomass liquids,0,0,0,0
+NM,biomass liquids,0,8.61763,8.78461,0
+NV,biomass liquids,0,15.7262,15.7558,15.5483
+NY,biomass liquids,0,0,9.04362,9.03991
+OH,biomass liquids,0,13.8469,9.12302,9.8185
+OK,biomass liquids,0,15.7166,15.7462,15.5386
+OR,biomass liquids,0,15.7262,9.46225,11.2616
+PA,biomass liquids,0,15.7359,9.64895,11.4879
+RI,biomass liquids,0,15.7599,15.7895,15.582
+SC,biomass liquids,0,0,0,0
+SD,biomass liquids,0,8.65312,8.81133,8.81635
+TN,biomass liquids,0,8.77503,8.9495,9.33399
+TX,biomass liquids,0,15.6878,10.4933,12.6905
+UT,biomass liquids,0,15.7262,15.7558,15.5483
+VA,biomass liquids,0,15.7149,15.7444,10.1536
+VT,biomass liquids,0,0,0,0
+WA,biomass liquids,0,15.3333,15.7558,15.5483
+WI,biomass liquids,0,8.89632,9.07329,9.46512
+WV,biomass liquids,0,0,0,0
+WY,biomass liquids,0,8.61763,8.78461,8.78726
+AK,carbon-storage,212,212,212,212
+AL,carbon-storage,1.53666,1.53666,1.53666,1.53666
+AR,carbon-storage,1,1,1,1
+AZ,carbon-storage,1,1,1,1
+CA,carbon-storage,1.53666,1.53666,1.53666,1.53666
+CO,carbon-storage,1,1,1,1
+CT,carbon-storage,1.53666,1.53666,1.53666,1.53666
+DC,carbon-storage,1,1,1,1
+DE,carbon-storage,1.53666,1.53666,1.53666,1.53666
+FL,carbon-storage,1.53666,1.53666,1.53666,1.53666
+GA,carbon-storage,1.53666,1.53666,1.53666,1.53666
+HI,carbon-storage,212,212,212,212
+IA,carbon-storage,1,1,1,1
+ID,carbon-storage,1,1,1,1
+IL,carbon-storage,1,1,1,1
+IN,carbon-storage,1,1,1,1
+KS,carbon-storage,1,1,1,1
+KY,carbon-storage,1,1,1,1
+LA,carbon-storage,1.53666,1.53666,1.53666,1.53666
+MA,carbon-storage,1.53666,1.53666,1.53666,1.53666
+MD,carbon-storage,1.53666,1.53666,1.53666,1.53666
+ME,carbon-storage,1.53666,1.53666,1.53666,1.53666
+MI,carbon-storage,1,1,1,1
+MN,carbon-storage,1,1,1,1
+MO,carbon-storage,1,1,1,1
+MS,carbon-storage,1.53666,1.53666,1.53666,1.53666
+MT,carbon-storage,1,1,1,1
+NC,carbon-storage,1.53666,1.53666,1.53666,1.53666
+ND,carbon-storage,1,1,1,1
+NE,carbon-storage,1,1,1,1
+NH,carbon-storage,1.53666,1.53666,1.53666,1.53666
+NJ,carbon-storage,1.53666,1.53666,1.53666,1.53666
+NM,carbon-storage,1,1,1,1
+NV,carbon-storage,1,1,1,1
+NY,carbon-storage,1.53666,1.53666,1.53666,1.53666
+OH,carbon-storage,1,1,1,1
+OK,carbon-storage,1,1,1,1
+OR,carbon-storage,1.53666,1.53666,1.53666,1.53666
+PA,carbon-storage,1,1,1,1
+RI,carbon-storage,1.53666,1.53666,1.53666,1.53666
+SC,carbon-storage,1.53666,1.53666,1.53666,1.53666
+SD,carbon-storage,1,1,1,1
+TN,carbon-storage,1,1,1,1
+TX,carbon-storage,1.53666,1.53666,1.53666,1.53666
+UT,carbon-storage,1,1,1,1
+VA,carbon-storage,1.53666,1.53666,1.53666,1.53666
+VT,carbon-storage,1,1,1,1
+WA,carbon-storage,1.53666,1.53666,1.53666,1.53666
+WI,carbon-storage,1,1,1,1
+WV,carbon-storage,1,1,1,1
+WY,carbon-storage,1,1,1,1
+AL,cement,0.0229394,0.0223703,0.0248109,0.0247752
+AR,cement,0.0229394,0.0223703,0.0248109,0.0247752
+AZ,cement,0.021406,0.0206696,0.0231809,0.0235175
+CA,cement,0.0248225,0.0244742,0.0271375,0.0271533
+CO,cement,0.021406,0.0206696,0.0231809,0.0235175
+CT,cement,0.0243435,0.0241931,0.0268861,0.0270702
+FL,cement,0.0222623,0.0219532,0.0243749,0.02445
+GA,cement,0.0229394,0.0223703,0.0248109,0.0247752
+IA,cement,0.0215933,0.0210569,0.0233934,0.0237769
+ID,cement,0.022827,0.0219698,0.0244882,0.0248936
+IL,cement,0.0223927,0.0218013,0.0243674,0.0250139
+IN,cement,0.0220489,0.0217356,0.0242299,0.0247548
+KS,cement,0.0202327,0.020043,0.0225477,0.022413
+KY,cement,0.0220489,0.0217356,0.0242299,0.0247548
+LA,cement,0.0229394,0.0223703,0.0248109,0.0247752
+MA,cement,0.0243435,0.0241931,0.0268861,0.0270702
+MD,cement,0.0229059,0.0227711,0.0252781,0.0254121
+MI,cement,0.0220489,0.0217356,0.0242299,0.0247548
+MN,cement,0.0215933,0.0210569,0.0233934,0.0237769
+MO,cement,0.0223927,0.0218013,0.0243674,0.0250139
+MS,cement,0.0229394,0.0223703,0.0248109,0.0247752
+NC,cement,0.0229394,0.0223703,0.0248109,0.0247752
+NE,cement,0.0215933,0.0210569,0.0233934,0.0237769
+NJ,cement,0.0229059,0.0227711,0.0252781,0.0254121
+NM,cement,0.021406,0.0206696,0.0231809,0.0235175
+NV,cement,0.022827,0.0219698,0.0244882,0.0248936
+NY,cement,0.0231784,0.0233156,0.0258845,0.0260952
+OH,cement,0.0220489,0.0217356,0.0242299,0.0247548
+OK,cement,0.0202327,0.020043,0.0225477,0.022413
+OR,cement,0.022827,0.0219698,0.0244882,0.0248936
+PA,cement,0.0229059,0.0227711,0.0252781,0.0254121
+SC,cement,0.0229394,0.0223703,0.0248109,0.0247752
+SD,cement,0.0215933,0.0210569,0.0233934,0.0237769
+TN,cement,0.0229394,0.0223703,0.0248109,0.0247752
+TX,cement,0.0204051,0.0200454,0.0227562,0.022752
+UT,cement,0.022827,0.0219698,0.0244882,0.0248936
+VA,cement,0.0229394,0.0223703,0.0248109,0.0247752
+WA,cement,0.022827,0.0219698,0.0244882,0.0248936
+WI,cement,0.0223927,0.0218013,0.0243674,0.0250139
+WV,cement,0.0220489,0.0217356,0.0242299,0.0247548
+AK,coal to liquids,0,0,0,9.40576
+AL,coal to liquids,0,0,0,6.86186
+AR,coal to liquids,0,0,0,6.86186
+AZ,coal to liquids,0,0,0,6.22256
+CA,coal to liquids,0,0,0,7.55375
+CO,coal to liquids,0,0,0,6.22256
+CT,coal to liquids,0,0,0,7.99748
+DC,coal to liquids,0,0,0,6.79195
+DE,coal to liquids,0,0,0,6.79195
+FL,coal to liquids,0,0,0,6.9947
+GA,coal to liquids,0,0,0,6.86186
+HI,coal to liquids,0,0,0,7.06461
+IA,coal to liquids,0,0,0,6.14209
+ID,coal to liquids,0,0,0,6.52647
+IL,coal to liquids,0,0,0,6.29584
+IN,coal to liquids,0,0,0,6.50556
+KS,coal to liquids,0,0,0,6.17356
+KY,coal to liquids,0,0,0,6.50556
+LA,coal to liquids,0,0,0,6.86186
+MA,coal to liquids,0,0,0,7.99748
+MD,coal to liquids,0,0,0,6.79195
+ME,coal to liquids,0,0,0,7.99748
+MI,coal to liquids,0,0,0,6.50556
+MN,coal to liquids,0,0,0,6.14209
+MO,coal to liquids,0,0,0,6.29584
+MS,coal to liquids,0,0,0,6.86186
+MT,coal to liquids,0,0,0,6.52647
+NC,coal to liquids,0,0,0,6.86186
+ND,coal to liquids,0,0,0,6.14209
+NE,coal to liquids,0,0,0,6.14209
+NH,coal to liquids,0,0,0,7.99748
+NJ,coal to liquids,0,0,0,6.79195
+NM,coal to liquids,0,0,0,6.22256
+NV,coal to liquids,0,0,0,6.52647
+NY,coal to liquids,0,0,0,7.37909
+OH,coal to liquids,0,0,0,6.50556
+OK,coal to liquids,0,0,0,6.17356
+OR,coal to liquids,0,0,0,6.52647
+PA,coal to liquids,0,0,0,6.79195
+RI,coal to liquids,0,0,0,7.99748
+SC,coal to liquids,0,0,0,6.86186
+SD,coal to liquids,0,0,0,6.14209
+TN,coal to liquids,0,0,0,6.86186
+TX,coal to liquids,0,0,0,6.14209
+UT,coal to liquids,0,0,0,6.52647
+VA,coal to liquids,0,0,0,6.86186
+VT,coal to liquids,0,0,0,7.99748
+WA,coal to liquids,0,0,0,6.52647
+WI,coal to liquids,0,0,0,6.29584
+WV,coal to liquids,0,0,0,6.50556
+WY,coal to liquids,0,0,0,6.22256
+AK,comm cooking,11.6766,12.0316,13.4879,12.7652
+AL,comm cooking,14.2041,12.9005,13.9382,12.3893
+AR,comm cooking,13.039,10.2458,11.2156,10.3844
+AZ,comm cooking,13.4972,10.8119,11.4898,10.6924
+CA,comm cooking,10.4479,11.1762,12.3136,11.9236
+CO,comm cooking,13.3937,10.4676,11.0246,10.3237
+CT,comm cooking,14.5084,13.3567,14.0093,12.7655
+DC,comm cooking,13.4371,12.9632,13.2268,11.871
+DE,comm cooking,15.0177,12.9952,12.4488,11.3788
+FL,comm cooking,12.9624,10.8151,11.7044,10.7604
+GA,comm cooking,12.5388,12.5347,12.6199,11.4979
+HI,comm cooking,19.2817,20.3094,23.1146,22.76
+IA,comm cooking,10.0136,11.2934,12.7243,11.6588
+ID,comm cooking,17.9625,11.3843,11.63,10.7285
+IL,comm cooking,11.5217,12.5536,13.6985,12.4016
+IN,comm cooking,11.0527,12.2793,13.2427,12.0461
+KS,comm cooking,9.23084,11.6439,13.223,11.4747
+KY,comm cooking,14.4736,12.7707,13.697,12.5092
+LA,comm cooking,14.4144,10.9864,12.6245,11.8192
+MA,comm cooking,14.9779,14.2251,13.4678,12.9474
+MD,comm cooking,13.657,11.1052,12.9892,11.6215
+ME,comm cooking,21.0078,17.0752,17.4391,14.44
+MI,comm cooking,10.1673,11.9626,13.1614,11.8434
+MN,comm cooking,9.47711,11.5589,13.4852,12.2037
+MO,comm cooking,11.8898,13.2556,15.319,14.091
+MS,comm cooking,13.5117,11.6162,12.9829,11.738
+MT,comm cooking,15.0671,11.3278,11.1391,10.5062
+NC,comm cooking,15.372,13.6115,13.4563,11.8935
+ND,comm cooking,11.2942,13.5388,15.6216,14.5184
+NE,comm cooking,10.1667,11.9097,13.3338,12.1698
+NH,comm cooking,15.5712,14.7981,16.2692,14.7379
+NJ,comm cooking,10.8627,10.3057,11.651,11.2049
+NM,comm cooking,12.6875,10.1731,10.7893,10.1007
+NV,comm cooking,13.2113,10.0574,10.6556,10.2203
+NY,comm cooking,11.8104,11.22,12.6246,11.9084
+OH,comm cooking,11.2257,12.0627,13.157,11.9226
+OK,comm cooking,12.9039,10.1952,11.4792,10.8542
+OR,comm cooking,12.442,11.2668,12.4829,12.0623
+PA,comm cooking,11.0376,10.9547,12.6076,11.5406
+RI,comm cooking,14.1835,12.9503,14.2433,13.2229
+SC,comm cooking,14.5841,12.7965,13.0177,11.5803
+SD,comm cooking,10.6804,13.1272,14.7238,13.6459
+TN,comm cooking,13.5319,12.5661,13.4267,12.2867
+TX,comm cooking,11.4095,9.56799,10.8822,10.6244
+UT,comm cooking,15.1316,10.5526,11.0569,10.598
+VA,comm cooking,15.27,13.134,13.3867,11.7549
+VT,comm cooking,18.8027,17.1885,18.4531,14.2416
+WA,comm cooking,12.1627,11.2938,12.4015,11.9022
+WI,comm cooking,12.1647,13.4094,14.6384,13.1549
+WV,comm cooking,11.5665,11.3051,11.881,11.0833
+WY,comm cooking,14.3094,11.2838,11.5314,10.2776
+AK,comm cooling,6.8437,6.75509,7.02807,6.65287
+AL,comm cooling,7.14708,6.62809,6.60542,5.99802
+AR,comm cooling,7.15672,6.67506,6.81613,6.41405
+AZ,comm cooling,6.58246,5.96776,5.98792,5.64873
+CA,comm cooling,6.91612,6.63188,6.67147,6.08671
+CO,comm cooling,6.58243,5.97588,5.99667,5.66024
+CT,comm cooling,7.12486,7.38158,7.53613,7.37759
+DC,comm cooling,7.00722,6.74245,6.70794,6.17746
+DE,comm cooling,6.9756,6.74139,6.72871,6.19233
+FL,comm cooling,6.56246,6.23665,6.11507,5.59833
+GA,comm cooling,7.25168,6.71037,6.64364,6.0187
+HI,comm cooling,7.70095,7.47352,8.76403,8.15655
+IA,comm cooling,6.76902,6.58973,6.28554,5.84898
+ID,comm cooling,6.88189,6.19457,6.2211,5.90649
+IL,comm cooling,7.11426,6.96431,6.76624,6.52438
+IN,comm cooling,6.7543,6.70227,6.50511,6.20486
+KS,comm cooling,6.06859,5.965,5.83078,5.18277
+KY,comm cooling,6.67977,6.30471,6.31553,6.0453
+LA,comm cooling,7.15375,6.65369,6.71206,6.16947
+MA,comm cooling,7.1027,7.19743,7.71678,7.28245
+MD,comm cooling,7.00164,6.8693,6.71324,6.18402
+ME,comm cooling,6.97247,6.88028,7.02802,6.82231
+MI,comm cooling,6.79288,6.75403,6.51148,6.22308
+MN,comm cooling,6.77381,6.55336,6.25287,5.84233
+MO,comm cooling,7.03833,6.72561,6.61771,6.33236
+MS,comm cooling,7.14721,6.64168,6.6107,6.00223
+MT,comm cooling,6.88173,6.19582,6.23338,5.91723
+NC,comm cooling,7.19867,6.68076,6.6303,6.01294
+ND,comm cooling,6.76371,6.39302,6.20209,5.82915
+NE,comm cooling,6.76797,6.51298,6.25845,5.84268
+NH,comm cooling,7.07886,7.10727,7.13538,6.76745
+NJ,comm cooling,7.21356,7.59368,7.71904,7.44808
+NM,comm cooling,6.5825,5.98497,6.00294,5.6714
+NV,comm cooling,6.88211,6.23901,6.25451,5.93936
+NY,comm cooling,6.80583,7.19785,7.32512,7.22774
+OH,comm cooling,6.74925,6.73679,6.51186,6.2156
+OK,comm cooling,6.05852,5.77059,5.89259,5.38226
+OR,comm cooling,6.90352,6.28087,6.27095,5.93948
+PA,comm cooling,7.19103,7.29021,7.32369,7.191
+RI,comm cooling,7.14253,7.49724,7.47368,7.16137
+SC,comm cooling,7.20912,6.70197,6.6366,6.01737
+SD,comm cooling,6.76532,6.4159,6.21859,5.83247
+TN,comm cooling,7.1472,6.63089,6.60797,5.99856
+TX,comm cooling,6.255,5.86201,6.11154,5.61276
+UT,comm cooling,6.8819,6.21596,6.23594,5.91206
+VA,comm cooling,7.19989,6.69237,6.63122,6.01478
+VT,comm cooling,7.00148,6.87269,6.95958,6.86195
+WA,comm cooling,6.90555,6.27934,6.274,5.94591
+WI,comm cooling,7.09557,6.83722,6.70149,6.46365
+WV,comm cooling,6.82138,6.45174,6.37644,6.08489
+WY,comm cooling,6.58216,5.95968,5.98711,5.66245
+AK,comm heating,5.87172,6.62145,7.32092,6.94658
+AL,comm heating,5.17315,6.47243,7.03712,7.62677
+AR,comm heating,5.36664,5.61294,6.04338,6.17116
+AZ,comm heating,5.48051,6.01373,6.68437,6.93216
+CA,comm heating,6.02399,6.73365,7.06745,7.28454
+CO,comm heating,5.33498,5.78625,5.99288,6.55492
+CT,comm heating,6.51187,6.61395,7.3687,7.46285
+DC,comm heating,5.96207,6.92801,7.28091,7.6309
+DE,comm heating,6.3426,6.93624,7.02495,7.29035
+FL,comm heating,5.73143,5.91783,6.484,6.93074
+GA,comm heating,6.01334,6.63936,6.82754,7.50431
+HI,comm heating,7.70177,4.83477,4.85782,4.78745
+IA,comm heating,4.47426,5.58293,6.11999,6.10336
+ID,comm heating,6.06072,6.29027,6.74208,6.69578
+IL,comm heating,5.67314,6.07324,6.44421,6.55366
+IN,comm heating,4.7135,5.64526,5.91971,6.21067
+KS,comm heating,4.89619,6.11296,6.3174,6.24444
+KY,comm heating,5.47496,6.20016,6.78873,7.5907
+LA,comm heating,5.67501,5.93719,6.59023,7.21832
+MA,comm heating,6.43422,6.77247,7.35178,7.48266
+MD,comm heating,6.27269,6.11338,7.1132,7.41869
+ME,comm heating,6.0929,6.55211,7.85594,7.69278
+MI,comm heating,5.06141,5.66891,6.05279,6.16246
+MN,comm heating,4.81018,5.98432,6.33896,6.43765
+MO,comm heating,5.27226,6.57333,6.78447,7.22287
+MS,comm heating,5.53192,5.96339,6.68772,7.19798
+MT,comm heating,5.53459,5.94836,6.38171,6.49034
+NC,comm heating,6.25983,6.74354,7.00598,7.47871
+ND,comm heating,4.77712,6.01121,6.81919,7.3606
+NE,comm heating,5.22823,6.17319,6.25394,6.45414
+NH,comm heating,6.23452,6.63651,7.90433,8.04186
+NJ,comm heating,5.84005,5.91767,6.3235,6.54867
+NM,comm heating,5.30311,5.711,6.17783,6.26828
+NV,comm heating,5.61481,5.79546,6.22426,6.33482
+NY,comm heating,6.07985,6.34248,7.23512,7.04509
+OH,comm heating,5.06052,5.67627,6.15372,6.24211
+OK,comm heating,5.52087,5.67221,6.23587,6.63602
+OR,comm heating,6.57438,6.83038,6.93757,7.45845
+PA,comm heating,4.88252,5.9831,6.66784,6.72167
+RI,comm heating,6.36651,6.50793,7.45733,7.65838
+SC,comm heating,6.41924,6.60582,7.07613,7.57645
+SD,comm heating,5.41716,6.69593,6.77875,7.14656
+TN,comm heating,4.99031,6.36792,6.62651,7.51371
+TX,comm heating,4.74429,5.24224,5.70695,6.51932
+UT,comm heating,4.62149,5.95115,6.4318,6.70468
+VA,comm heating,6.19566,6.6259,6.95777,7.45309
+VT,comm heating,6.94281,6.92036,8.10913,7.78181
+WA,comm heating,6.35638,6.89141,7.01455,7.5068
+WI,comm heating,6.05151,6.09803,6.59389,6.78984
+WV,comm heating,5.05279,6.01781,6.48533,6.98828
+WY,comm heating,4.54607,6.01344,6.67752,6.47943
+AK,comm hot water,8.43501,7.33581,7.99252,8.69028
+AL,comm hot water,7.42887,7.39154,6.74528,8.25674
+AR,comm hot water,8.95417,6.51902,6.10795,6.93825
+AZ,comm hot water,6.33541,6.29121,6.65351,8.28129
+CA,comm hot water,7.74881,6.79417,6.88701,8.0913
+CO,comm hot water,6.27852,6.07698,6.30636,7.78825
+CT,comm hot water,8.0661,8.39167,7.71924,8.8393
+DC,comm hot water,10.0072,8.72792,7.46837,8.74315
+DE,comm hot water,10.6824,8.69988,7.09491,8.28813
+FL,comm hot water,8.71424,7.14663,6.77258,8.11302
+GA,comm hot water,9.46564,8.4832,7.06079,8.7442
+HI,comm hot water,10.7739,10.4747,12.2386,14.3622
+IA,comm hot water,6.5737,6.33449,6.38145,7.68891
+ID,comm hot water,8.67745,6.68023,6.7803,8.21467
+IL,comm hot water,7.00621,6.7596,6.61995,7.40979
+IN,comm hot water,6.71921,6.54099,6.32921,7.30097
+KS,comm hot water,5.90488,6.54814,6.32189,7.17971
+KY,comm hot water,7.7533,7.38547,6.69503,8.25215
+LA,comm hot water,9.85124,7.09996,6.6797,8.33056
+MA,comm hot water,8.06697,8.88277,7.55885,8.95473
+MD,comm hot water,9.83736,7.21304,7.36117,8.53776
+ME,comm hot water,8.14845,9.14897,9.41014,10.312
+MI,comm hot water,6.12921,6.37882,6.27025,7.10408
+MN,comm hot water,6.23772,6.46536,6.37892,7.6928
+MO,comm hot water,7.77963,7.49179,7.17025,8.83468
+MS,comm hot water,7.05922,6.62862,6.42333,7.78967
+MT,comm hot water,7.06722,6.63664,6.37759,7.63495
+NC,comm hot water,11.2551,9.18497,7.56036,9.15728
+ND,comm hot water,7.46206,7.6129,7.23385,9.24537
+NE,comm hot water,6.68767,6.65555,6.27742,7.5768
+NH,comm hot water,7.83795,8.76994,8.83661,10.5185
+NJ,comm hot water,7.01721,6.28562,6.23215,6.95178
+NM,comm hot water,6.00824,5.93246,6.1793,7.33446
+NV,comm hot water,6.30159,5.88998,6.20119,7.47216
+NY,comm hot water,7.43189,6.97087,6.96909,7.50692
+OH,comm hot water,6.83179,6.42891,6.30638,7.20765
+OK,comm hot water,8.75298,6.45906,6.26109,7.41845
+OR,comm hot water,10.3723,6.84193,6.68802,8.41216
+PA,comm hot water,7.14069,6.7536,6.57476,7.30712
+RI,comm hot water,7.86184,8.13802,7.83316,9.25247
+SC,comm hot water,10.8807,8.64421,7.29553,8.8355
+SD,comm hot water,6.98181,7.36647,6.83744,8.58895
+TN,comm hot water,7.07536,7.19597,6.46992,8.08481
+TX,comm hot water,7.76052,6.10784,5.74007,7.49547
+UT,comm hot water,7.09984,6.15908,6.36991,7.81001
+VA,comm hot water,11.4184,8.89964,7.48229,9.00652
+VT,comm hot water,9.12044,9.77624,9.89707,10.1776
+WA,comm hot water,10.1807,6.85838,6.67122,8.30679
+WI,comm hot water,7.40231,7.18692,6.87632,7.91712
+WV,comm hot water,8.5379,7.43185,6.73382,8.0425
+WY,comm hot water,6.69322,6.59917,6.80422,8.00155
+AK,comm lighting,1.61504,1.54375,1.63478,1.61953
+AL,comm lighting,1.70268,1.57573,1.57312,1.51153
+AR,comm lighting,1.70267,1.57573,1.57311,1.51154
+AZ,comm lighting,1.57095,1.41745,1.42565,1.42159
+CA,comm lighting,1.6307,1.52952,1.55526,1.5015
+CO,comm lighting,1.57096,1.41744,1.42565,1.4216
+CT,comm lighting,1.65527,1.58384,1.61469,1.58072
+DC,comm lighting,1.64877,1.58145,1.58779,1.54838
+DE,comm lighting,1.64876,1.58144,1.58776,1.54836
+FL,comm lighting,1.54978,1.45484,1.44896,1.40845
+GA,comm lighting,1.70267,1.57573,1.57312,1.51153
+HI,comm lighting,1.81769,1.74703,2.06104,2.02368
+IA,comm lighting,1.61146,1.48764,1.47117,1.4712
+ID,comm lighting,1.64088,1.47079,1.47876,1.4814
+IL,comm lighting,1.67534,1.545,1.56067,1.59178
+IN,comm lighting,1.59361,1.5001,1.50525,1.52268
+KS,comm lighting,1.44703,1.3681,1.37575,1.31053
+KY,comm lighting,1.59361,1.5001,1.50525,1.52269
+LA,comm lighting,1.70267,1.57573,1.57311,1.51153
+MA,comm lighting,1.65527,1.58384,1.61469,1.58072
+MD,comm lighting,1.64878,1.58146,1.58779,1.54839
+ME,comm lighting,1.65527,1.58386,1.61469,1.58075
+MI,comm lighting,1.59362,1.5001,1.50525,1.52268
+MN,comm lighting,1.61146,1.48764,1.47117,1.47121
+MO,comm lighting,1.67534,1.545,1.56067,1.59179
+MS,comm lighting,1.70268,1.57573,1.57311,1.51152
+MT,comm lighting,1.64087,1.4708,1.47876,1.48138
+NC,comm lighting,1.70268,1.57573,1.57312,1.51153
+ND,comm lighting,1.61147,1.48763,1.47118,1.4712
+NE,comm lighting,1.61146,1.48764,1.47116,1.47121
+NH,comm lighting,1.6553,1.58386,1.61467,1.58071
+NJ,comm lighting,1.64878,1.58146,1.5878,1.54839
+NM,comm lighting,1.57095,1.41744,1.42565,1.4216
+NV,comm lighting,1.64087,1.4708,1.47879,1.48139
+NY,comm lighting,1.5686,1.53639,1.55036,1.52315
+OH,comm lighting,1.59362,1.5001,1.50525,1.52269
+OK,comm lighting,1.44703,1.3681,1.37574,1.31054
+OR,comm lighting,1.64087,1.47079,1.47877,1.48139
+PA,comm lighting,1.64878,1.58146,1.58779,1.54839
+RI,comm lighting,1.65527,1.58387,1.61468,1.58074
+SC,comm lighting,1.70267,1.57573,1.57312,1.51153
+SD,comm lighting,1.61144,1.48764,1.47117,1.47122
+TN,comm lighting,1.70267,1.57573,1.57312,1.51153
+TX,comm lighting,1.49227,1.39071,1.42783,1.37767
+UT,comm lighting,1.64087,1.47079,1.47878,1.48138
+VA,comm lighting,1.70267,1.57573,1.57312,1.51153
+VT,comm lighting,1.65523,1.58388,1.61463,1.58069
+WA,comm lighting,1.64087,1.47079,1.47878,1.48139
+WI,comm lighting,1.67534,1.545,1.56068,1.59178
+WV,comm lighting,1.59362,1.5001,1.50526,1.52268
+WY,comm lighting,1.57095,1.41745,1.42565,1.42159
+AK,comm non-building,14.7602,13.7847,15.0296,15.1556
+AL,comm non-building,15.9594,14.2223,14.1863,13.6016
+AR,comm non-building,15.9594,14.2223,14.1863,13.6016
+AZ,comm non-building,14.1574,12.0569,12.169,12.3074
+CA,comm non-building,14.9748,13.5901,13.9421,13.4573
+CO,comm non-building,14.1574,12.0569,12.169,12.3074
+CT,comm non-building,15.3108,14.3333,14.7552,14.5973
+DC,comm non-building,15.2221,14.3006,14.3871,14.132
+DE,comm non-building,15.2221,14.3006,14.3871,14.132
+FL,comm non-building,13.8677,12.5686,12.4879,12.1183
+GA,comm non-building,15.9594,14.2223,14.1863,13.6016
+HI,comm non-building,17.5326,16.5658,20.8614,20.9712
+IA,comm non-building,14.7114,13.0172,12.7917,13.0214
+ID,comm non-building,15.1139,12.7867,12.8958,13.1679
+IL,comm non-building,15.5854,13.8019,14.0161,14.7565
+IN,comm non-building,14.4675,13.1877,13.258,13.7622
+KS,comm non-building,12.4621,11.3818,11.4863,10.7092
+KY,comm non-building,14.4675,13.1877,13.258,13.7622
+LA,comm non-building,15.9594,14.2223,14.1863,13.6016
+MA,comm non-building,15.3108,14.3333,14.7552,14.5973
+MD,comm non-building,15.2221,14.3006,14.3871,14.132
+ME,comm non-building,15.3108,14.3333,14.7552,14.5973
+MI,comm non-building,14.4675,13.1877,13.258,13.7622
+MN,comm non-building,14.7114,13.0172,12.7917,13.0214
+MO,comm non-building,15.5854,13.8019,14.0161,14.7565
+MS,comm non-building,15.9594,14.2223,14.1863,13.6016
+MT,comm non-building,15.1139,12.7867,12.8958,13.1679
+NC,comm non-building,15.9594,14.2223,14.1863,13.6016
+ND,comm non-building,14.7114,13.0172,12.7917,13.0214
+NE,comm non-building,14.7114,13.0172,12.7917,13.0214
+NH,comm non-building,15.3108,14.3333,14.7552,14.5973
+NJ,comm non-building,15.2221,14.3006,14.3871,14.132
+NM,comm non-building,14.1574,12.0569,12.169,12.3074
+NV,comm non-building,15.1139,12.7867,12.8958,13.1679
+NY,comm non-building,14.1252,13.6841,13.875,13.7688
+OH,comm non-building,14.4675,13.1877,13.258,13.7622
+OK,comm non-building,12.4621,11.3818,11.4863,10.7092
+OR,comm non-building,15.1139,12.7867,12.8958,13.1679
+PA,comm non-building,15.2221,14.3006,14.3871,14.132
+RI,comm non-building,15.3108,14.3333,14.7552,14.5973
+SC,comm non-building,15.9594,14.2223,14.1863,13.6016
+SD,comm non-building,14.7114,13.0172,12.7917,13.0214
+TN,comm non-building,15.9594,14.2223,14.1863,13.6016
+TX,comm non-building,13.0811,11.6911,12.1988,11.6754
+UT,comm non-building,15.1139,12.7867,12.8958,13.1679
+VA,comm non-building,15.9594,14.2223,14.1863,13.6016
+VT,comm non-building,15.3108,14.3333,14.7552,14.5973
+WA,comm non-building,15.1139,12.7867,12.8958,13.1679
+WI,comm non-building,15.5854,13.8019,14.0161,14.7565
+WV,comm non-building,14.4675,13.1877,13.258,13.7622
+WY,comm non-building,14.1574,12.0569,12.169,12.3074
+AK,comm office,58.9472,57.9717,59.2166,55.1871
+AL,comm office,60.1464,58.4093,58.3733,53.9918
+AR,comm office,60.1464,58.4093,58.3733,53.9918
+AZ,comm office,58.3444,56.2439,56.356,52.9962
+CA,comm office,59.1618,57.7771,58.1291,53.8808
+CO,comm office,58.3444,56.2439,56.356,52.9962
+CT,comm office,59.4978,58.5203,58.9422,54.7577
+DC,comm office,59.4091,58.4876,58.5741,54.3998
+DE,comm office,59.4091,58.4876,58.5741,54.3998
+FL,comm office,58.0547,56.7556,56.6749,52.8508
+GA,comm office,60.1464,58.4093,58.3733,53.9918
+HI,comm office,61.7196,60.7528,65.0484,59.6607
+IA,comm office,58.8984,57.2042,56.9787,53.5454
+ID,comm office,59.3009,56.9737,57.0828,53.6581
+IL,comm office,59.7724,57.9889,58.2031,54.8802
+IN,comm office,58.6545,57.3747,57.445,54.1153
+KS,comm office,56.6491,55.5688,55.6733,51.7669
+KY,comm office,58.6545,57.3747,57.445,54.1153
+LA,comm office,60.1464,58.4093,58.3733,53.9918
+MA,comm office,59.4978,58.5203,58.9422,54.7577
+MD,comm office,59.4091,58.4876,58.5741,54.3998
+ME,comm office,59.4978,58.5203,58.9422,54.7577
+MI,comm office,58.6545,57.3747,57.445,54.1153
+MN,comm office,58.8984,57.2042,56.9787,53.5454
+MO,comm office,59.7724,57.9889,58.2031,54.8802
+MS,comm office,60.1464,58.4093,58.3733,53.9918
+MT,comm office,59.3009,56.9737,57.0828,53.6581
+NC,comm office,60.1464,58.4093,58.3733,53.9918
+ND,comm office,58.8984,57.2042,56.9787,53.5454
+NE,comm office,58.8984,57.2042,56.9787,53.5454
+NH,comm office,59.4978,58.5203,58.9422,54.7577
+NJ,comm office,59.4091,58.4876,58.5741,54.3998
+NM,comm office,58.3444,56.2439,56.356,52.9962
+NV,comm office,59.3009,56.9737,57.0828,53.6581
+NY,comm office,58.3122,57.8711,58.062,54.1204
+OH,comm office,58.6545,57.3747,57.445,54.1153
+OK,comm office,56.6491,55.5688,55.6733,51.7669
+OR,comm office,59.3009,56.9737,57.0828,53.6581
+PA,comm office,59.4091,58.4876,58.5741,54.3998
+RI,comm office,59.4978,58.5203,58.9422,54.7577
+SC,comm office,60.1464,58.4093,58.3733,53.9918
+SD,comm office,58.8984,57.2042,56.9787,53.5454
+TN,comm office,60.1464,58.4093,58.3733,53.9918
+TX,comm office,57.2681,55.8781,56.3858,52.51
+UT,comm office,59.3009,56.9737,57.0828,53.6581
+VA,comm office,60.1464,58.4093,58.3733,53.9918
+VT,comm office,59.4978,58.5203,58.9422,54.7577
+WA,comm office,59.3009,56.9737,57.0828,53.6581
+WI,comm office,59.7724,57.9889,58.2031,54.8802
+WV,comm office,58.6545,57.3747,57.445,54.1153
+WY,comm office,58.3444,56.2439,56.356,52.9962
+AK,comm other,34.5641,40.9495,36.8373,31.1281
+AL,comm other,37.7049,48.6557,47.8349,43.4581
+AR,comm other,38.5178,43.5906,43.3761,33.1037
+AZ,comm other,38.1087,44.7087,44.8995,40.1373
+CA,comm other,35.312,44.81,44.4073,34.8759
+CO,comm other,38.2085,44.0041,45.5939,38.9392
+CT,comm other,38.8483,47.7026,46.596,33.7486
+DC,comm other,34.791,48.9697,50.1676,43.4459
+DE,comm other,36.1145,46.7344,47.2726,38.0544
+FL,comm other,31.3585,40.3918,41.9042,38.9642
+GA,comm other,33.4578,49.3076,48.9675,40.925
+HI,comm other,27.6935,41.9762,40.6093,38.7023
+IA,comm other,31.9572,42.4001,42.4642,36.742
+ID,comm other,45.6431,44.9055,45.1726,39.1027
+IL,comm other,39.2806,47.1592,49.2897,39.7747
+IN,comm other,37.9578,46.5853,47.4297,39.3884
+KS,comm other,30.3787,44.2301,46.963,40.4468
+KY,comm other,41.8149,49.1777,50.5004,44.0487
+LA,comm other,40.2039,43.2898,45.6659,38.9721
+MA,comm other,39.0557,48.823,44.4599,34.9042
+MD,comm other,33.9703,44.7402,48.8046,39.9193
+ME,comm other,40.8509,48.0788,45.6076,35.6433
+MI,comm other,35.8332,46.5968,48.5082,39.4459
+MN,comm other,29.5906,43.5419,47.0311,40.9396
+MO,comm other,35.2198,45.7824,49.3106,43.5756
+MS,comm other,38.1446,47.5231,47.1817,41.9557
+MT,comm other,40.6184,45.0883,46.2085,39.2545
+NC,comm other,37.6003,47.1736,47.4836,41.6409
+ND,comm other,35.49,46.7639,47.9101,44.2266
+NE,comm other,32.732,44.6228,47.841,41.7621
+NH,comm other,38.0932,47.8041,47.608,37.0107
+NJ,comm other,39.1297,42.3963,45.2104,34.295
+NM,comm other,36.3505,42.14,45.2937,38.47
+NV,comm other,36.4738,40.6915,43.9442,36.0866
+NY,comm other,40.4051,42.0002,43.1902,34.5768
+OH,comm other,39.1922,46.6574,47.3632,39.1764
+OK,comm other,39.8834,45.1823,44.393,36.1972
+OR,comm other,41.2081,46.6253,45.9686,38.3561
+PA,comm other,40.0165,44.3823,46.4182,35.1939
+RI,comm other,37.8498,46.9269,46.7726,35.3635
+SC,comm other,36.7787,48.0182,48.2947,40.9903
+SD,comm other,32.7809,46.283,47.6048,44.4015
+TN,comm other,40.0314,49.9992,49.7905,44.4328
+TX,comm other,37.2587,44.3058,45.1889,37.7607
+UT,comm other,40.6317,43.1791,45.5699,39.5929
+VA,comm other,38.1675,48.3418,49.5362,41.8006
+VT,comm other,44.3502,49.8284,47.8669,35.3657
+WA,comm other,42.1322,46.69,45.6357,37.5124
+WI,comm other,38.6729,48.0529,49.6883,41.4753
+WV,comm other,31.8039,47.661,48.537,39.2658
+WY,comm other,39.8547,44.7061,43.4891,37.2297
+AK,comm refrigeration,50.0783,49.6046,50.2089,49.2948
+AL,comm refrigeration,50.6604,49.8171,49.7996,48.7646
+AR,comm refrigeration,50.6604,49.8171,49.7996,48.7646
+AZ,comm refrigeration,49.7857,48.7659,48.8203,48.323
+CA,comm refrigeration,50.1825,49.5102,49.681,48.7154
+CO,comm refrigeration,49.7857,48.7659,48.8203,48.323
+CT,comm refrigeration,50.3456,49.8709,50.0757,49.1043
+DC,comm refrigeration,50.3025,49.8551,49.897,48.9456
+DE,comm refrigeration,50.3025,49.8551,49.897,48.9456
+FL,comm refrigeration,49.6451,49.0143,48.9751,48.2585
+GA,comm refrigeration,50.6604,49.8171,49.7996,48.7646
+HI,comm refrigeration,51.4241,50.9547,53.0399,51.279
+IA,comm refrigeration,50.0546,49.2321,49.1226,48.5666
+ID,comm refrigeration,50.25,49.1202,49.1731,48.6166
+IL,comm refrigeration,50.4789,49.613,49.7169,49.1586
+IN,comm refrigeration,49.9362,49.3148,49.3489,48.8194
+KS,comm refrigeration,48.9627,48.4382,48.4889,47.7778
+KY,comm refrigeration,49.9362,49.3148,49.3489,48.8194
+LA,comm refrigeration,50.6604,49.8171,49.7996,48.7646
+MA,comm refrigeration,50.3456,49.8709,50.0757,49.1043
+MD,comm refrigeration,50.3025,49.8551,49.897,48.9456
+ME,comm refrigeration,50.3456,49.8709,50.0757,49.1043
+MI,comm refrigeration,49.9362,49.3148,49.3489,48.8194
+MN,comm refrigeration,50.0546,49.2321,49.1226,48.5666
+MO,comm refrigeration,50.4789,49.613,49.7169,49.1586
+MS,comm refrigeration,50.6604,49.8171,49.7996,48.7646
+MT,comm refrigeration,50.25,49.1202,49.1731,48.6166
+NC,comm refrigeration,50.6604,49.8171,49.7996,48.7646
+ND,comm refrigeration,50.0546,49.2321,49.1226,48.5666
+NE,comm refrigeration,50.0546,49.2321,49.1226,48.5666
+NH,comm refrigeration,50.3456,49.8709,50.0757,49.1043
+NJ,comm refrigeration,50.3025,49.8551,49.897,48.9456
+NM,comm refrigeration,49.7857,48.7659,48.8203,48.323
+NV,comm refrigeration,50.25,49.1202,49.1731,48.6166
+NY,comm refrigeration,49.77,49.5558,49.6484,48.8217
+OH,comm refrigeration,49.9362,49.3148,49.3489,48.8194
+OK,comm refrigeration,48.9627,48.4382,48.4889,47.7778
+OR,comm refrigeration,50.25,49.1202,49.1731,48.6166
+PA,comm refrigeration,50.3025,49.8551,49.897,48.9456
+RI,comm refrigeration,50.3456,49.8709,50.0757,49.1043
+SC,comm refrigeration,50.6604,49.8171,49.7996,48.7646
+SD,comm refrigeration,50.0546,49.2321,49.1226,48.5666
+TN,comm refrigeration,50.6604,49.8171,49.7996,48.7646
+TX,comm refrigeration,49.2632,48.5883,48.8348,48.1074
+UT,comm refrigeration,50.25,49.1202,49.1731,48.6166
+VA,comm refrigeration,50.6604,49.8171,49.7996,48.7646
+VT,comm refrigeration,50.3456,49.8709,50.0757,49.1043
+WA,comm refrigeration,50.25,49.1202,49.1731,48.6166
+WI,comm refrigeration,50.4789,49.613,49.7169,49.1586
+WV,comm refrigeration,49.9362,49.3148,49.3489,48.8194
+WY,comm refrigeration,49.7857,48.7659,48.8203,48.323
+AK,comm ventilation,76.5963,75.3418,76.9438,77.9445
+AL,comm ventilation,78.1403,75.9046,75.8583,76.0361
+AR,comm ventilation,78.1404,75.9046,75.8583,76.0361
+AZ,comm ventilation,75.8213,73.1177,73.262,74.4466
+CA,comm ventilation,76.8732,75.0909,75.5439,75.8588
+CO,comm ventilation,75.8213,73.1179,73.262,74.4467
+CT,comm ventilation,77.3056,76.0475,76.5903,77.2589
+DC,comm ventilation,77.1914,76.0054,76.1166,76.6874
+DE,comm ventilation,77.1916,76.0054,76.1165,76.6874
+FL,comm ventilation,75.4484,73.7762,73.6724,74.2144
+GA,comm ventilation,78.1403,75.9046,75.8583,76.0361
+HI,comm ventilation,80.1651,78.9207,84.4489,85.0867
+IA,comm ventilation,76.5346,74.3535,74.0635,75.3235
+ID,comm ventilation,77.0522,74.0571,74.1972,75.5033
+IL,comm ventilation,77.6591,75.3635,75.6392,77.4544
+IN,comm ventilation,76.2203,74.573,74.6635,76.2333
+KS,comm ventilation,73.6391,72.2491,72.3832,72.4839
+KY,comm ventilation,76.2203,74.5731,74.6635,76.2332
+LA,comm ventilation,78.1403,75.9045,75.8583,76.0361
+MA,comm ventilation,77.3056,76.0474,76.5903,77.2589
+MD,comm ventilation,77.1913,76.0054,76.1167,76.6874
+ME,comm ventilation,77.305,76.0472,76.5903,77.259
+MI,comm ventilation,76.2202,74.573,74.6635,76.2332
+MN,comm ventilation,76.5343,74.3536,74.0634,75.3235
+MO,comm ventilation,77.6591,75.3635,75.6392,77.4544
+MS,comm ventilation,78.1404,75.9046,75.8583,76.0361
+MT,comm ventilation,77.0524,74.0571,74.1974,75.5035
+NC,comm ventilation,78.1403,75.9046,75.8583,76.0361
+ND,comm ventilation,76.5342,74.3537,74.0636,75.3236
+NE,comm ventilation,76.5341,74.3537,74.0633,75.3234
+NH,comm ventilation,77.306,76.0473,76.5903,77.259
+NJ,comm ventilation,77.1913,76.0054,76.1167,76.6874
+NM,comm ventilation,75.8211,73.1177,73.2621,74.4467
+NV,comm ventilation,77.0523,74.0571,74.1973,75.5033
+NY,comm ventilation,75.7797,75.212,75.4576,76.2414
+OH,comm ventilation,76.2202,74.5731,74.6635,76.2332
+OK,comm ventilation,73.6395,72.2488,72.3832,72.484
+OR,comm ventilation,77.0521,74.057,74.1972,75.5034
+PA,comm ventilation,77.1915,76.0054,76.1167,76.6874
+RI,comm ventilation,77.3063,76.0476,76.5902,77.2589
+SC,comm ventilation,78.1403,75.9046,75.8583,76.0361
+SD,comm ventilation,76.5343,74.3534,74.0635,75.3234
+TN,comm ventilation,78.1403,75.9046,75.8583,76.0361
+TX,comm ventilation,74.436,72.647,73.3004,73.6704
+UT,comm ventilation,77.0522,74.0571,74.1974,75.5034
+VA,comm ventilation,78.1403,75.9046,75.8583,76.0361
+VT,comm ventilation,77.3056,76.0479,76.5903,77.2586
+WA,comm ventilation,77.0522,74.057,74.1973,75.5034
+WI,comm ventilation,77.6592,75.3634,75.6392,77.4544
+WV,comm ventilation,76.2201,74.5731,74.6633,76.2332
+WY,comm ventilation,75.8215,73.1177,73.2617,74.4466
+AK,delivered biomass,2.05121,2.0896,2.13477,2.15092
+AL,delivered biomass,2.05121,2.0896,2.13477,2.15092
+AR,delivered biomass,2.05121,2.0896,2.13477,2.15092
+AZ,delivered biomass,2.05121,2.0896,2.13477,2.15092
+CA,delivered biomass,2.05121,2.0896,2.13477,2.15092
+CO,delivered biomass,2.05121,2.0896,2.13477,2.15092
+CT,delivered biomass,2.05121,2.0896,2.13477,2.15092
+DC,delivered biomass,2.05121,2.0896,2.13477,2.15092
+DE,delivered biomass,2.05121,2.0896,2.13477,2.15092
+FL,delivered biomass,2.05121,2.0896,2.13477,2.15092
+GA,delivered biomass,2.05121,2.0896,2.13477,2.15092
+HI,delivered biomass,2.05121,2.0896,2.13477,2.15092
+IA,delivered biomass,2.05121,2.0896,2.13477,2.15092
+ID,delivered biomass,2.05121,2.0896,2.13477,2.15092
+IL,delivered biomass,2.05121,2.0896,2.13477,2.15092
+IN,delivered biomass,2.05121,2.0896,2.13477,2.15092
+KS,delivered biomass,2.05121,2.0896,2.13477,2.15092
+KY,delivered biomass,2.05121,2.0896,2.13477,2.15092
+LA,delivered biomass,2.05121,2.0896,2.13477,2.15092
+MA,delivered biomass,2.05121,2.0896,2.13477,2.15092
+MD,delivered biomass,2.05121,2.0896,2.13477,2.15092
+ME,delivered biomass,2.05121,2.0896,2.13477,2.15092
+MI,delivered biomass,2.05121,2.0896,2.13477,2.15092
+MN,delivered biomass,2.05121,2.0896,2.13477,2.15092
+MO,delivered biomass,2.05121,2.0896,2.13477,2.15092
+MS,delivered biomass,2.05121,2.0896,2.13477,2.15092
+MT,delivered biomass,2.05121,2.0896,2.13477,2.15092
+NC,delivered biomass,2.05121,2.0896,2.13477,2.15092
+ND,delivered biomass,2.05121,2.0896,2.13477,2.15092
+NE,delivered biomass,2.05121,2.0896,2.13477,2.15092
+NH,delivered biomass,2.05121,2.0896,2.13477,2.15092
+NJ,delivered biomass,2.05121,2.0896,2.13477,2.15092
+NM,delivered biomass,2.05121,2.0896,2.13477,2.15092
+NV,delivered biomass,2.05121,2.0896,2.13477,2.15092
+NY,delivered biomass,2.05121,2.0896,2.13477,2.15092
+OH,delivered biomass,2.05121,2.0896,2.13477,2.15092
+OK,delivered biomass,2.05121,2.0896,2.13477,2.15092
+OR,delivered biomass,2.05121,2.0896,2.13477,2.15092
+PA,delivered biomass,2.05121,2.0896,2.13477,2.15092
+RI,delivered biomass,2.05121,2.0896,2.13477,2.15092
+SC,delivered biomass,2.05121,2.0896,2.13477,2.15092
+SD,delivered biomass,2.05121,2.0896,2.13477,2.15092
+TN,delivered biomass,2.05121,2.0896,2.13477,2.15092
+TX,delivered biomass,2.05121,2.0896,2.13477,2.15092
+UT,delivered biomass,2.05121,2.0896,2.13477,2.15092
+VA,delivered biomass,2.05121,2.0896,2.13477,2.15092
+VT,delivered biomass,2.05121,2.0896,2.13477,2.15092
+WA,delivered biomass,2.05121,2.0896,2.13477,2.15092
+WI,delivered biomass,2.05121,2.0896,2.13477,2.15092
+WV,delivered biomass,2.05121,2.0896,2.13477,2.15092
+WY,delivered biomass,2.05121,2.0896,2.13477,2.15092
+AK,elect_td_bld,14.7602,13.7847,15.0296,15.1556
+AL,elect_td_bld,15.9594,14.2223,14.1863,13.6016
+AR,elect_td_bld,15.9594,14.2223,14.1863,13.6016
+AZ,elect_td_bld,14.1574,12.0569,12.169,12.3074
+CA,elect_td_bld,14.9748,13.5901,13.9421,13.4573
+CO,elect_td_bld,14.1574,12.0569,12.169,12.3074
+CT,elect_td_bld,15.3108,14.3333,14.7552,14.5973
+DC,elect_td_bld,15.2221,14.3006,14.3871,14.132
+DE,elect_td_bld,15.2221,14.3006,14.3871,14.132
+FL,elect_td_bld,13.8677,12.5686,12.4879,12.1183
+GA,elect_td_bld,15.9594,14.2223,14.1863,13.6016
+HI,elect_td_bld,17.5326,16.5658,20.8614,20.9712
+IA,elect_td_bld,14.7114,13.0172,12.7917,13.0214
+ID,elect_td_bld,15.1139,12.7867,12.8958,13.1679
+IL,elect_td_bld,15.5854,13.8019,14.0161,14.7565
+IN,elect_td_bld,14.4675,13.1877,13.258,13.7622
+KS,elect_td_bld,12.4621,11.3818,11.4863,10.7092
+KY,elect_td_bld,14.4675,13.1877,13.258,13.7622
+LA,elect_td_bld,15.9594,14.2223,14.1863,13.6016
+MA,elect_td_bld,15.3108,14.3333,14.7552,14.5973
+MD,elect_td_bld,15.2221,14.3006,14.3871,14.132
+ME,elect_td_bld,15.3108,14.3333,14.7552,14.5973
+MI,elect_td_bld,14.4675,13.1877,13.258,13.7622
+MN,elect_td_bld,14.7114,13.0172,12.7917,13.0214
+MO,elect_td_bld,15.5854,13.8019,14.0161,14.7565
+MS,elect_td_bld,15.9594,14.2223,14.1863,13.6016
+MT,elect_td_bld,15.1139,12.7867,12.8958,13.1679
+NC,elect_td_bld,15.9594,14.2223,14.1863,13.6016
+ND,elect_td_bld,14.7114,13.0172,12.7917,13.0214
+NE,elect_td_bld,14.7114,13.0172,12.7917,13.0214
+NH,elect_td_bld,15.3108,14.3333,14.7552,14.5973
+NJ,elect_td_bld,15.2221,14.3006,14.3871,14.132
+NM,elect_td_bld,14.1574,12.0569,12.169,12.3074
+NV,elect_td_bld,15.1139,12.7867,12.8958,13.1679
+NY,elect_td_bld,14.1252,13.6841,13.875,13.7688
+OH,elect_td_bld,14.4675,13.1877,13.258,13.7622
+OK,elect_td_bld,12.4621,11.3818,11.4863,10.7092
+OR,elect_td_bld,15.1139,12.7867,12.8958,13.1679
+PA,elect_td_bld,15.2221,14.3006,14.3871,14.132
+RI,elect_td_bld,15.3108,14.3333,14.7552,14.5973
+SC,elect_td_bld,15.9594,14.2223,14.1863,13.6016
+SD,elect_td_bld,14.7114,13.0172,12.7917,13.0214
+TN,elect_td_bld,15.9594,14.2223,14.1863,13.6016
+TX,elect_td_bld,13.0811,11.6911,12.1988,11.6754
+UT,elect_td_bld,15.1139,12.7867,12.8958,13.1679
+VA,elect_td_bld,15.9594,14.2223,14.1863,13.6016
+VT,elect_td_bld,15.3108,14.3333,14.7552,14.5973
+WA,elect_td_bld,15.1139,12.7867,12.8958,13.1679
+WI,elect_td_bld,15.5854,13.8019,14.0161,14.7565
+WV,elect_td_bld,14.4675,13.1877,13.258,13.7622
+WY,elect_td_bld,14.1574,12.0569,12.169,12.3074
+AK,elect_td_ind,12.5652,11.6747,12.9596,13.1256
+AL,elect_td_ind,13.7644,12.1123,12.1163,11.5716
+AR,elect_td_ind,13.7644,12.1123,12.1163,11.5716
+AZ,elect_td_ind,11.9624,9.94695,10.099,10.2774
+CA,elect_td_ind,12.7798,11.4801,11.8721,11.4273
+CO,elect_td_ind,11.9624,9.94695,10.099,10.2774
+CT,elect_td_ind,13.1158,12.2233,12.6852,12.5673
+DC,elect_td_ind,13.0271,12.1906,12.3171,12.102
+DE,elect_td_ind,13.0271,12.1906,12.3171,12.102
+FL,elect_td_ind,11.6727,10.4586,10.4179,10.0883
+GA,elect_td_ind,13.7644,12.1123,12.1163,11.5716
+HI,elect_td_ind,15.3376,14.4558,18.7914,18.9412
+IA,elect_td_ind,12.5164,10.9072,10.7217,10.9914
+ID,elect_td_ind,12.9189,10.6767,10.8258,11.1379
+IL,elect_td_ind,13.3904,11.6919,11.9461,12.7265
+IN,elect_td_ind,12.2725,11.0777,11.188,11.7322
+KS,elect_td_ind,10.2671,9.27183,9.41628,8.67924
+KY,elect_td_ind,12.2725,11.0777,11.188,11.7322
+LA,elect_td_ind,13.7644,12.1123,12.1163,11.5716
+MA,elect_td_ind,13.1158,12.2233,12.6852,12.5673
+MD,elect_td_ind,13.0271,12.1906,12.3171,12.102
+ME,elect_td_ind,13.1158,12.2233,12.6852,12.5673
+MI,elect_td_ind,12.2725,11.0777,11.188,11.7322
+MN,elect_td_ind,12.5164,10.9072,10.7217,10.9914
+MO,elect_td_ind,13.3904,11.6919,11.9461,12.7265
+MS,elect_td_ind,13.7644,12.1123,12.1163,11.5716
+MT,elect_td_ind,12.9189,10.6767,10.8258,11.1379
+NC,elect_td_ind,13.7644,12.1123,12.1163,11.5716
+ND,elect_td_ind,12.5164,10.9072,10.7217,10.9914
+NE,elect_td_ind,12.5164,10.9072,10.7217,10.9914
+NH,elect_td_ind,13.1158,12.2233,12.6852,12.5673
+NJ,elect_td_ind,13.0271,12.1906,12.3171,12.102
+NM,elect_td_ind,11.9624,9.94695,10.099,10.2774
+NV,elect_td_ind,12.9189,10.6767,10.8258,11.1379
+NY,elect_td_ind,11.9302,11.5741,11.805,11.7388
+OH,elect_td_ind,12.2725,11.0777,11.188,11.7322
+OK,elect_td_ind,10.2671,9.27183,9.41628,8.67924
+OR,elect_td_ind,12.9189,10.6767,10.8258,11.1379
+PA,elect_td_ind,13.0271,12.1906,12.3171,12.102
+RI,elect_td_ind,13.1158,12.2233,12.6852,12.5673
+SC,elect_td_ind,13.7644,12.1123,12.1163,11.5716
+SD,elect_td_ind,12.5164,10.9072,10.7217,10.9914
+TN,elect_td_ind,13.7644,12.1123,12.1163,11.5716
+TX,elect_td_ind,10.8861,9.58114,10.1288,9.64535
+UT,elect_td_ind,12.9189,10.6767,10.8258,11.1379
+VA,elect_td_ind,13.7644,12.1123,12.1163,11.5716
+VT,elect_td_ind,13.1158,12.2233,12.6852,12.5673
+WA,elect_td_ind,12.9189,10.6767,10.8258,11.1379
+WI,elect_td_ind,13.3904,11.6919,11.9461,12.7265
+WV,elect_td_ind,12.2725,11.0777,11.188,11.7322
+WY,elect_td_ind,11.9624,9.94695,10.099,10.2774
+AK,elect_td_trn,14.7602,13.7847,15.0296,15.1556
+AL,elect_td_trn,15.9594,14.2223,14.1863,13.6016
+AR,elect_td_trn,15.9594,14.2223,14.1863,13.6016
+AZ,elect_td_trn,14.1574,12.0569,12.169,12.3074
+CA,elect_td_trn,14.9748,13.5901,13.9421,13.4573
+CO,elect_td_trn,14.1574,12.0569,12.169,12.3074
+CT,elect_td_trn,15.3108,14.3333,14.7552,14.5973
+DC,elect_td_trn,15.2221,14.3006,14.3871,14.132
+DE,elect_td_trn,15.2221,14.3006,14.3871,14.132
+FL,elect_td_trn,13.8677,12.5686,12.4879,12.1183
+GA,elect_td_trn,15.9594,14.2223,14.1863,13.6016
+HI,elect_td_trn,17.5326,16.5658,20.8614,20.9712
+IA,elect_td_trn,14.7114,13.0172,12.7917,13.0214
+ID,elect_td_trn,15.1139,12.7867,12.8958,13.1679
+IL,elect_td_trn,15.5854,13.8019,14.0161,14.7565
+IN,elect_td_trn,14.4675,13.1877,13.258,13.7622
+KS,elect_td_trn,12.4621,11.3818,11.4863,10.7092
+KY,elect_td_trn,14.4675,13.1877,13.258,13.7622
+LA,elect_td_trn,15.9594,14.2223,14.1863,13.6016
+MA,elect_td_trn,15.3108,14.3333,14.7552,14.5973
+MD,elect_td_trn,15.2221,14.3006,14.3871,14.132
+ME,elect_td_trn,15.3108,14.3333,14.7552,14.5973
+MI,elect_td_trn,14.4675,13.1877,13.258,13.7622
+MN,elect_td_trn,14.7114,13.0172,12.7917,13.0214
+MO,elect_td_trn,15.5854,13.8019,14.0161,14.7565
+MS,elect_td_trn,15.9594,14.2223,14.1863,13.6016
+MT,elect_td_trn,15.1139,12.7867,12.8958,13.1679
+NC,elect_td_trn,15.9594,14.2223,14.1863,13.6016
+ND,elect_td_trn,14.7114,13.0172,12.7917,13.0214
+NE,elect_td_trn,14.7114,13.0172,12.7917,13.0214
+NH,elect_td_trn,15.3108,14.3333,14.7552,14.5973
+NJ,elect_td_trn,15.2221,14.3006,14.3871,14.132
+NM,elect_td_trn,14.1574,12.0569,12.169,12.3074
+NV,elect_td_trn,15.1139,12.7867,12.8958,13.1679
+NY,elect_td_trn,14.1252,13.6841,13.875,13.7688
+OH,elect_td_trn,14.4675,13.1877,13.258,13.7622
+OK,elect_td_trn,12.4621,11.3818,11.4863,10.7092
+OR,elect_td_trn,15.1139,12.7867,12.8958,13.1679
+PA,elect_td_trn,15.2221,14.3006,14.3871,14.132
+RI,elect_td_trn,15.3108,14.3333,14.7552,14.5973
+SC,elect_td_trn,15.9594,14.2223,14.1863,13.6016
+SD,elect_td_trn,14.7114,13.0172,12.7917,13.0214
+TN,elect_td_trn,15.9594,14.2223,14.1863,13.6016
+TX,elect_td_trn,13.0811,11.6911,12.1988,11.6754
+UT,elect_td_trn,15.1139,12.7867,12.8958,13.1679
+VA,elect_td_trn,15.9594,14.2223,14.1863,13.6016
+VT,elect_td_trn,15.3108,14.3333,14.7552,14.5973
+WA,elect_td_trn,15.1139,12.7867,12.8958,13.1679
+WI,elect_td_trn,15.5854,13.8019,14.0161,14.7565
+WV,elect_td_trn,14.4675,13.1877,13.258,13.7622
+WY,elect_td_trn,14.1574,12.0569,12.169,12.3074
+AK,gas to liquids,0,0,0,6.6968
+AL,gas to liquids,0,0,0,6.6968
+AR,gas to liquids,0,0,0,6.6968
+AZ,gas to liquids,0,0,0,6.6968
+CA,gas to liquids,0,0,0,6.6968
+CO,gas to liquids,0,0,0,6.6968
+CT,gas to liquids,0,0,0,6.6968
+DC,gas to liquids,0,0,0,6.6968
+DE,gas to liquids,0,0,0,6.6968
+FL,gas to liquids,0,0,0,6.6968
+GA,gas to liquids,0,0,0,6.6968
+HI,gas to liquids,0,0,0,6.6968
+IA,gas to liquids,0,0,0,6.6968
+ID,gas to liquids,0,0,0,6.6968
+IL,gas to liquids,0,0,0,6.6968
+IN,gas to liquids,0,0,0,6.6968
+KS,gas to liquids,0,0,0,6.6968
+KY,gas to liquids,0,0,0,6.6968
+LA,gas to liquids,0,0,0,6.6968
+MA,gas to liquids,0,0,0,6.6968
+MD,gas to liquids,0,0,0,6.6968
+ME,gas to liquids,0,0,0,6.6968
+MI,gas to liquids,0,0,0,6.6968
+MN,gas to liquids,0,0,0,6.6968
+MO,gas to liquids,0,0,0,6.6968
+MS,gas to liquids,0,0,0,6.6968
+MT,gas to liquids,0,0,0,6.6968
+NC,gas to liquids,0,0,0,6.6968
+ND,gas to liquids,0,0,0,6.6968
+NE,gas to liquids,0,0,0,6.6968
+NH,gas to liquids,0,0,0,6.6968
+NJ,gas to liquids,0,0,0,6.6968
+NM,gas to liquids,0,0,0,6.6968
+NV,gas to liquids,0,0,0,6.6968
+NY,gas to liquids,0,0,0,6.6968
+OH,gas to liquids,0,0,0,6.6968
+OK,gas to liquids,0,0,0,6.6968
+OR,gas to liquids,0,0,0,6.6968
+PA,gas to liquids,0,0,0,6.6968
+RI,gas to liquids,0,0,0,6.6968
+SC,gas to liquids,0,0,0,6.6968
+SD,gas to liquids,0,0,0,6.6968
+TN,gas to liquids,0,0,0,6.6968
+TX,gas to liquids,0,0,0,6.6968
+UT,gas to liquids,0,0,0,6.6968
+VA,gas to liquids,0,0,0,6.6968
+VT,gas to liquids,0,0,0,6.6968
+WA,gas to liquids,0,0,0,6.6968
+WI,gas to liquids,0,0,0,6.6968
+WV,gas to liquids,0,0,0,6.6968
+WY,gas to liquids,0,0,0,6.6968
+AK,industrial energy use,5.66968,5.96659,6.57759,6.63039
+AL,industrial energy use,7.42898,7.70771,8.01265,7.64026
+AR,industrial energy use,6.87597,7.96656,8.34811,8.1871
+AZ,industrial energy use,9.77855,9.03551,9.63963,10.5337
+CA,industrial energy use,7.94771,7.09151,7.79872,7.69015
+CO,industrial energy use,7.03702,6.39243,7.1099,7.16703
+CT,industrial energy use,9.83407,9.30132,9.3838,9.0985
+DC,industrial energy use,16.1378,12.7312,14.5302,14.3024
+DE,industrial energy use,8.45661,9.07556,10.4404,7.88732
+FL,industrial energy use,7.13869,7.46853,7.48109,7.32687
+GA,industrial energy use,7.50441,7.81831,8.24161,7.98865
+HI,industrial energy use,10.4315,12.4528,16.0037,17.1327
+IA,industrial energy use,6.74647,7.53049,7.61259,8.22144
+ID,industrial energy use,8.85607,8.34734,8.92802,9.11542
+IL,industrial energy use,7.74345,8.37775,8.66039,9.14638
+IN,industrial energy use,6.54025,7.13294,7.36703,7.76686
+KS,industrial energy use,5.90289,6.74683,7.34499,7.03986
+KY,industrial energy use,9.16437,9.0742,9.77702,9.39478
+LA,industrial energy use,5.1787,5.49953,6.18358,6.27457
+MA,industrial energy use,9.4132,9.46451,11.6007,9.63688
+MD,industrial energy use,8.9658,10.4352,8.01517,8.20632
+ME,industrial energy use,7.12302,6.94585,6.98662,7.24489
+MI,industrial energy use,7.25766,7.67559,8.35017,8.26218
+MN,industrial energy use,9.1744,8.33865,8.13936,8.27946
+MO,industrial energy use,8.70598,8.60099,9.70546,10.0396
+MS,industrial energy use,7.38236,7.89542,8.13367,7.98009
+MT,industrial energy use,9.9867,7.79636,8.75059,8.92919
+NC,industrial energy use,8.8195,8.79971,8.98757,8.8295
+ND,industrial energy use,4.6209,5.11002,5.45444,6.10346
+NE,industrial energy use,7.8246,8.53142,8.48344,8.64888
+NH,industrial energy use,10.7591,8.96027,10.5018,9.79297
+NJ,industrial energy use,8.53777,8.75897,9.40881,9.07214
+NM,industrial energy use,6.18433,6.31434,6.99262,7.06227
+NV,industrial energy use,11.1434,10.8762,11.4909,11.4499
+NY,industrial energy use,8.7225,8.50232,8.66627,9.18095
+OH,industrial energy use,8.26196,8.29934,8.4233,8.31306
+OK,industrial energy use,5.60293,6.20653,6.59538,6.53568
+OR,industrial energy use,9.54719,8.1091,8.68251,8.69578
+PA,industrial energy use,7.12717,8.01512,8.27556,7.55744
+RI,industrial energy use,10.1774,9.50783,9.22654,8.62611
+SC,industrial energy use,8.7585,9.17987,9.33625,9.24595
+SD,industrial energy use,7.43904,8.29874,7.64387,7.87
+TN,industrial energy use,9.32393,8.78392,8.88381,8.09486
+TX,industrial energy use,5.32706,5.69902,6.6627,6.5236
+UT,industrial energy use,6.50447,7.38401,8.23873,8.19523
+VA,industrial energy use,7.06628,7.42086,7.85397,7.72855
+VT,industrial energy use,10.5489,10.2196,10.8466,12.0584
+WA,industrial energy use,10.5926,8.90489,9.46648,9.53389
+WI,industrial energy use,7.92644,8.09718,8.57897,8.8871
+WV,industrial energy use,6.30501,7.52001,7.79603,7.92301
+WY,industrial energy use,6.66927,6.58093,6.99969,7.3475
+AK,industrial feedstocks,2.89777,3.19284,4.96725,5.17125
+AL,industrial feedstocks,2.26577,2.56084,4.33525,4.53925
+AR,industrial feedstocks,2.26577,2.56084,4.33525,4.53925
+AZ,industrial feedstocks,2.43457,2.72964,4.50405,4.70805
+CA,industrial feedstocks,3.52977,3.82484,5.59925,5.80325
+CO,industrial feedstocks,2.43457,2.72964,4.50405,4.70805
+CT,industrial feedstocks,2.49577,2.79084,4.56525,4.76925
+DC,industrial feedstocks,2.60657,2.90164,4.67605,4.88005
+DE,industrial feedstocks,2.60657,2.90164,4.67605,4.88005
+FL,industrial feedstocks,2.51067,2.80574,4.58015,4.78415
+GA,industrial feedstocks,2.26577,2.56084,4.33525,4.53925
+HI,industrial feedstocks,3.45697,3.75204,5.52645,5.73045
+IA,industrial feedstocks,2.42467,2.71974,4.49415,4.69815
+ID,industrial feedstocks,2.88127,3.17634,4.95075,5.15475
+IL,industrial feedstocks,2.50737,2.80244,4.57685,4.78085
+IN,industrial feedstocks,2.53047,2.82554,4.59995,4.80395
+KS,industrial feedstocks,2.24927,2.54434,4.31875,4.52275
+KY,industrial feedstocks,2.53047,2.82554,4.59995,4.80395
+LA,industrial feedstocks,2.15125,2.45893,4.06258,4.07255
+MA,industrial feedstocks,2.49577,2.79084,4.56525,4.76925
+MD,industrial feedstocks,2.60657,2.90164,4.67605,4.88005
+ME,industrial feedstocks,2.49577,2.79084,4.56525,4.76925
+MI,industrial feedstocks,2.53047,2.82554,4.59995,4.80395
+MN,industrial feedstocks,2.42467,2.71974,4.49415,4.69815
+MO,industrial feedstocks,2.50737,2.80244,4.57685,4.78085
+MS,industrial feedstocks,2.26577,2.56084,4.33525,4.53925
+MT,industrial feedstocks,2.88127,3.17634,4.95075,5.15475
+NC,industrial feedstocks,2.26577,2.56084,4.33525,4.53925
+ND,industrial feedstocks,2.42467,2.71974,4.49415,4.69815
+NE,industrial feedstocks,2.42467,2.71974,4.49415,4.69815
+NH,industrial feedstocks,2.49577,2.79084,4.56525,4.76925
+NJ,industrial feedstocks,2.60657,2.90164,4.67605,4.88005
+NM,industrial feedstocks,2.43457,2.72964,4.50405,4.70805
+NV,industrial feedstocks,2.88127,3.17634,4.95075,5.15475
+NY,industrial feedstocks,2.68937,2.98444,4.75885,4.96285
+OH,industrial feedstocks,2.53047,2.82554,4.59995,4.80395
+OK,industrial feedstocks,2.24927,2.54434,4.31875,4.52275
+OR,industrial feedstocks,2.88127,3.17634,4.95075,5.15475
+PA,industrial feedstocks,2.60657,2.90164,4.67605,4.88005
+RI,industrial feedstocks,2.49577,2.79084,4.56525,4.76925
+SC,industrial feedstocks,2.26577,2.56084,4.33525,4.53925
+SD,industrial feedstocks,2.42467,2.71974,4.49415,4.69815
+TN,industrial feedstocks,2.26577,2.56084,4.33525,4.53925
+TX,industrial feedstocks,2.05349,2.36993,3.97047,3.97608
+UT,industrial feedstocks,2.88127,3.17634,4.95075,5.15475
+VA,industrial feedstocks,2.26577,2.56084,4.33525,4.53925
+VT,industrial feedstocks,2.49577,2.79084,4.56525,4.76925
+WA,industrial feedstocks,2.88127,3.17634,4.95075,5.15475
+WI,industrial feedstocks,2.50737,2.80244,4.57685,4.78085
+WV,industrial feedstocks,2.53047,2.82554,4.59995,4.80395
+WY,industrial feedstocks,2.43457,2.72964,4.50405,4.70805
+AK,industry,30.6133,30.9371,31.3136,31.3753
+AL,industry,31.7703,31.7247,32.5882,32.2846
+AR,industry,31.7151,32.7858,32.7878,32.7149
+AZ,industry,32.5627,31.0527,32.4483,33.1127
+CA,industry,32.0064,31.4829,32.5607,32.3051
+CO,industry,30.5583,30.7692,31.4599,31.6437
+CT,industry,32.75,31.6893,32.0588,32.3395
+DC,industry,40.6552,35.9839,30.3384,30.4744
+DE,industry,32.4699,32.42,34.3966,32.0191
+FL,industry,30.9064,31.2256,31.7424,31.6109
+GA,industry,31.5778,31.8485,32.5563,32.6615
+HI,industry,34.4816,36.4274,36.3806,36.8291
+IA,industry,31.3339,31.5932,32.2962,32.7442
+ID,industry,32.707,32.0947,32.9975,32.9002
+IL,industry,31.7948,31.9796,32.7717,33.1328
+IN,industry,30.8925,31.5259,32.1392,32.4124
+KS,industry,30.0847,30.9045,31.5166,31.5544
+KY,industry,33.3047,33.1456,34.0404,33.566
+LA,industry,28.8918,28.6357,29.8651,30.0921
+MA,industry,33.3421,33.2006,34.5365,32.6299
+MD,industry,32.2695,33.6345,31.6605,31.3417
+ME,industry,31.733,31.6751,31.6141,31.6984
+MI,industry,31.793,31.746,32.6933,32.543
+MN,industry,32.2336,31.3072,32.1121,32.0743
+MO,industry,31.8433,31.6011,33.7028,33.7187
+MS,industry,31.5968,31.6994,32.5328,32.3905
+MT,industry,33.0369,32.0111,32.0653,32.0801
+NC,industry,32.8549,32.3254,32.8601,32.8045
+ND,industry,29.3877,29.6674,30.316,30.8885
+NE,industry,31.5613,32.4002,32.704,32.8296
+NH,industry,32.5158,31.3553,32.7252,32.5068
+NJ,industry,32.2146,31.293,32.2966,31.9432
+NM,industry,30.5459,30.5811,31.4671,31.5777
+NV,industry,34.017,33.3987,34.5857,34.5721
+NY,industry,32.564,31.6411,31.9206,32.2594
+OH,industry,32.3497,32.1058,32.8043,32.6191
+OK,industry,30.1281,30.5281,31.2625,31.2399
+OR,industry,33.011,31.6076,32.8789,32.9108
+PA,industry,31.5464,31.9131,32.5032,32.0194
+RI,industry,30.0909,32.3575,31.2897,30.978
+SC,industry,33.1525,33.1486,33.5841,33.5245
+SD,industry,30.9842,29.7563,31.1373,31.6612
+TN,industry,32.9441,32.2099,33.0869,32.4076
+TX,industry,28.9447,29.0452,30.5972,30.4754
+UT,industry,30.9421,31.5458,32.5575,32.5501
+VA,industry,31.1614,31.3656,31.9702,31.8052
+VT,industry,35.2855,34.0875,32.2512,32.2407
+WA,industry,34.8,32.595,33.7042,33.8032
+WI,industry,32.041,31.766,32.543,32.7779
+WV,industry,31.1295,32.2135,32.3287,32.4158
+WY,industry,31.243,31.3172,31.6572,31.8979
+AK,intermediate generation,11.3189,11.4311,11.56,11.6328
+AL,intermediate generation,14.2394,12.9687,11.7325,9.35151
+AR,intermediate generation,12.9512,12.3197,11.8023,10.0435
+AZ,intermediate generation,12.5485,10.163,10.6675,10.1383
+CA,intermediate generation,10.766,10.1254,10.8959,10.8436
+CO,intermediate generation,12.7638,11.1469,11.2303,11.3165
+CT,intermediate generation,11.9618,11.9184,11.6506,10.9978
+DC,intermediate generation,10.8311,11.9952,0,30.7849
+DE,intermediate generation,12.1531,12.7146,11.9675,9.66704
+FL,intermediate generation,11.0043,11.0606,9.43498,9.28067
+GA,intermediate generation,13.8273,13.1883,12.391,9.43962
+HI,intermediate generation,14.2464,14.2612,18.951,19.4428
+IA,intermediate generation,12.9335,12.7894,12.2199,12.5856
+ID,intermediate generation,28.2898,9.11049,10.141,10.9125
+IL,intermediate generation,13.168,13.3757,13.407,14.5353
+IN,intermediate generation,13.3871,13.3523,13.1419,13.5724
+KS,intermediate generation,11.6886,12.1145,11.5097,7.81122
+KY,intermediate generation,13.4074,13.5657,13.6377,14.7575
+LA,intermediate generation,10.0294,9.95374,10.4728,8.87118
+MA,intermediate generation,11.6892,11.6796,11.4618,11.1972
+MD,intermediate generation,12.9935,13.4949,13.6906,13.7847
+ME,intermediate generation,15.9722,14.8006,15.0682,18.5277
+MI,intermediate generation,13.4185,13.6118,13.5371,12.8098
+MN,intermediate generation,13.2329,13.078,13.2063,12.9969
+MO,intermediate generation,13.129,13.1916,13.222,15.1684
+MS,intermediate generation,11.1588,10.4178,9.93657,8.60003
+MT,intermediate generation,13.4562,13.5604,13.685,15.5552
+NC,intermediate generation,13.8376,13.8064,13.5013,9.86554
+ND,intermediate generation,12.9301,12.9135,12.4424,14.1175
+NE,intermediate generation,12.9213,12.9646,12.9332,14.5443
+NH,intermediate generation,14.6418,12.3722,13.5426,14.0505
+NJ,intermediate generation,11.4511,11.3404,10.5806,9.6853
+NM,intermediate generation,12.449,11.9994,11.4031,10.9357
+NV,intermediate generation,12.6083,10.7288,10.2184,9.56856
+NY,intermediate generation,11.2263,11.2443,10.744,10.327
+OH,intermediate generation,13.4497,13.5534,13.5576,12.7536
+OK,intermediate generation,9.35394,8.87185,9.24305,8.29719
+OR,intermediate generation,14.2537,9.88162,10.5381,10.2325
+PA,intermediate generation,13.5568,13.7052,13.23,12.028
+RI,intermediate generation,10.5867,9.36004,10.4923,10.3722
+SC,intermediate generation,13.6507,13.1,12.6088,10.345
+SD,intermediate generation,12.9268,12.679,11.6485,10.1705
+TN,intermediate generation,13.8509,14.0728,13.8923,11.2282
+TX,intermediate generation,8.744,8.21803,8.42948,8.2988
+UT,intermediate generation,13.4121,13.3893,13.0636,14.6337
+VA,intermediate generation,13.6084,12.8404,12.039,9.79927
+VT,intermediate generation,16.7584,27.2077,30.3275,30.6333
+WA,intermediate generation,13.8434,11.5813,11.6901,11.4447
+WI,intermediate generation,13.2208,13.279,13.4513,14.4716
+WV,intermediate generation,13.4021,13.4772,13.4748,15.3585
+WY,intermediate generation,13.0367,13.0233,12.7621,15.3765
+AK,oil refining,2.57913,2.81842,4.5313,4.62955
+AL,oil refining,2.55647,2.79764,4.49974,4.58861
+AR,oil refining,2.55647,2.79764,4.49974,4.58861
+AZ,oil refining,2.5503,0,0,0
+CA,oil refining,2.56669,2.80689,4.51265,4.60474
+CO,oil refining,2.5503,2.79076,4.4906,4.58258
+DE,oil refining,2.56129,2.8041,0,4.60051
+FL,oil refining,0,0,0,0
+GA,oil refining,2.55647,0,4.49974,0
+HI,oil refining,2.66872,2.89292,4.63978,4.75593
+IL,oil refining,2.56551,2.80479,4.50952,4.60721
+IN,oil refining,2.55515,2.7976,4.49956,4.59453
+KS,oil refining,2.54418,2.7886,4.48748,4.57457
+KY,oil refining,2.55515,2.7976,4.49956,4.59453
+LA,oil refining,2.55647,2.79764,4.49974,4.58861
+MD,oil refining,0,0,0,0
+MI,oil refining,2.55515,2.7976,4.49956,4.59453
+MN,oil refining,2.55303,2.79455,4.49427,4.58706
+MO,oil refining,0,0,0,0
+MS,oil refining,2.55647,2.79764,4.49974,4.58861
+MT,oil refining,2.55743,2.79617,4.49772,4.59136
+NC,oil refining,2.55647,0,0,0
+ND,oil refining,2.55303,2.79455,4.49427,4.58706
+NE,oil refining,0,0,0,0
+NH,oil refining,0,0,0,0
+NJ,oil refining,2.56129,2.8041,4.50836,4.60051
+NM,oil refining,2.5503,2.79076,4.4906,4.58258
+NV,oil refining,0,2.79617,4.49772,4.59136
+NY,oil refining,2.56417,0,0,0
+OH,oil refining,2.55515,2.7976,4.49956,4.59453
+OK,oil refining,2.54418,2.7886,4.48748,4.57457
+OR,oil refining,0,0,0,0
+PA,oil refining,2.56129,2.8041,4.50836,4.60051
+RI,oil refining,0,0,0,0
+TN,oil refining,2.55647,2.79764,4.49974,4.58861
+TX,oil refining,2.53611,2.78114,4.48035,4.5669
+UT,oil refining,2.55743,2.79617,4.49772,4.59136
+VA,oil refining,2.55647,0,0,0
+WA,oil refining,2.55743,2.79617,4.49772,4.59136
+WI,oil refining,2.56551,2.80479,4.50952,4.60721
+WV,oil refining,2.55515,2.7976,4.49956,4.59453
+WY,oil refining,2.5503,2.79076,4.4906,4.58258
+AK,peak generation,44.5888,43.2418,43.9688,43.3603
+AL,peak generation,93.7816,40.2772,41.6988,40.6479
+AR,peak generation,64.7109,40.2772,41.7158,40.6479
+AZ,peak generation,83.4521,40.3298,41.3708,40.6961
+CA,peak generation,42.8674,41.7932,42.5923,42.0349
+CO,peak generation,88.9229,40.3298,41.331,40.6961
+CT,peak generation,40.0711,42.0483,42.8347,42.2684
+DC,peak generation,0,0,44.9703,0
+DE,peak generation,60.2289,41.1027,43.1942,41.4033
+FL,peak generation,40.6203,39.902,40.7952,40.3047
+GA,peak generation,97.2593,40.2772,41.936,40.6479
+HI,peak generation,42.5031,43.7896,47.2264,47.4936
+IA,peak generation,84.3228,40.4049,42.342,41.3395
+ID,peak generation,0,40.7237,41.5841,41.0565
+IL,peak generation,89.5954,41.418,42.5166,41.867
+IN,peak generation,89.7289,40.7351,42.8827,45.08
+KS,peak generation,63.7813,40.3448,41.2159,40.7098
+KY,peak generation,97.7534,40.7351,44.6834,45.08
+LA,peak generation,44.8893,40.2772,43.6637,40.6479
+MA,peak generation,40.0711,42.0483,42.8347,42.2684
+MD,peak generation,71.3012,41.1027,44.3008,41.4033
+ME,peak generation,40.0711,42.0483,42.8347,42.2684
+MI,peak generation,56.5268,40.7351,43.0641,45.08
+MN,peak generation,82.4903,40.4048,41.3815,40.8875
+MO,peak generation,93.8847,41.418,42.6143,42.1917
+MS,peak generation,48.9871,40.2772,41.6214,40.6479
+MT,peak generation,98.0498,40.7231,45.6804,41.0566
+NC,peak generation,95.8734,40.2772,43.162,40.6479
+ND,peak generation,97.8046,40.3437,44.4831,41.4616
+NE,peak generation,77.9503,40.4049,41.997,41.154
+NH,peak generation,40.0711,42.0483,42.8347,42.2684
+NJ,peak generation,47.6008,41.1027,42.4908,41.4033
+NM,peak generation,80.8294,40.3298,41.5924,40.6961
+NV,peak generation,84.8416,40.7237,41.6532,41.0565
+NY,peak generation,40.561,41.8607,42.6565,42.0968
+OH,peak generation,96.7429,40.7351,44.3613,45.08
+OK,peak generation,46.1908,40.3447,41.2159,40.7098
+OR,peak generation,69.0488,40.7237,41.6059,41.0565
+PA,peak generation,92.2237,41.1027,43.2773,41.4033
+RI,peak generation,40.0711,42.0483,42.8347,42.2684
+SC,peak generation,86.1096,40.2772,42.5898,40.6479
+SD,peak generation,89.9677,40.4047,41.8612,41.3764
+TN,peak generation,98.2775,40.2771,43.6135,40.6479
+TX,peak generation,47.5413,39.2116,40.1391,39.6731
+UT,peak generation,98.0485,40.7238,42.3239,41.0565
+VA,peak generation,82.5069,40.2772,43.5694,40.6479
+VT,peak generation,40.0711,42.048,42.8448,42.2578
+WA,peak generation,98.0261,40.7238,41.8146,41.0565
+WI,peak generation,93.514,41.418,43.2743,42.0139
+WV,peak generation,98.0345,40.735,44.6623,45.08
+WY,peak generation,97.9089,40.3287,44.3445,40.6959
+AL,process heat cement,2.34584,2.44289,3.03197,3.09339
+AR,process heat cement,2.34584,2.44289,3.03197,3.09339
+AZ,process heat cement,2.1974,2.29444,2.88352,2.94495
+CA,process heat cement,2.96131,3.05836,3.64743,3.70886
+CO,process heat cement,2.1974,2.29444,2.88352,2.94495
+CT,process heat cement,2.79315,2.8902,3.47927,3.5407
+FL,process heat cement,2.45587,2.55291,3.14199,3.20341
+GA,process heat cement,2.34584,2.44289,3.03197,3.09339
+IA,process heat cement,2.17028,2.26732,2.8564,2.91782
+ID,process heat cement,2.43159,2.52864,3.11771,3.17914
+IL,process heat cement,2.25653,2.35358,2.94266,3.00408
+IN,process heat cement,2.31997,2.41701,3.00609,3.06752
+KS,process heat cement,2.12669,2.22374,2.81282,2.87424
+KY,process heat cement,2.31997,2.41701,3.00609,3.06752
+LA,process heat cement,2.34584,2.44289,3.03197,3.09339
+MA,process heat cement,2.79315,2.8902,3.47927,3.5407
+MD,process heat cement,2.43716,2.5342,3.12328,3.18471
+MI,process heat cement,2.31997,2.41701,3.00609,3.06752
+MN,process heat cement,2.17028,2.26732,2.8564,2.91782
+MO,process heat cement,2.25653,2.35358,2.94266,3.00408
+MS,process heat cement,2.34584,2.44289,3.03197,3.09339
+NC,process heat cement,2.34584,2.44289,3.03197,3.09339
+NE,process heat cement,2.17028,2.26732,2.8564,2.91782
+NJ,process heat cement,2.43716,2.5342,3.12328,3.18471
+NM,process heat cement,2.1974,2.29444,2.88352,2.94495
+NV,process heat cement,2.43159,2.52864,3.11771,3.17914
+NY,process heat cement,2.6555,2.75255,3.34163,3.40305
+OH,process heat cement,2.31997,2.41701,3.00609,3.06752
+OK,process heat cement,2.12669,2.22374,2.81282,2.87424
+OR,process heat cement,2.43159,2.52864,3.11771,3.17914
+PA,process heat cement,2.43716,2.5342,3.12328,3.18471
+SC,process heat cement,2.34584,2.44289,3.03197,3.09339
+SD,process heat cement,2.17028,2.26732,2.8564,2.91782
+TN,process heat cement,2.34584,2.44289,3.03197,3.09339
+TX,process heat cement,2.08696,2.18401,2.77308,2.83451
+UT,process heat cement,2.43159,2.52864,3.11771,3.17914
+VA,process heat cement,2.34584,2.44289,3.03197,3.09339
+WA,process heat cement,2.43159,2.52864,3.11771,3.17914
+WI,process heat cement,2.25653,2.35358,2.94266,3.00408
+WV,process heat cement,2.31997,2.41701,3.00609,3.06752
+AK,regional biomass,1.91121,1.9496,1.99477,2.01092
+AL,regional biomass,1.91121,1.9496,1.99477,2.01092
+AR,regional biomass,1.91121,1.9496,1.99477,2.01092
+AZ,regional biomass,1.91121,1.9496,1.99477,2.01092
+CA,regional biomass,1.91121,1.9496,1.99477,2.01092
+CO,regional biomass,1.91121,1.9496,1.99477,2.01092
+CT,regional biomass,1.91121,1.9496,1.99477,2.01092
+DC,regional biomass,1.91121,1.9496,1.99477,2.01092
+DE,regional biomass,1.91121,1.9496,1.99477,2.01092
+FL,regional biomass,1.91121,1.9496,1.99477,2.01092
+GA,regional biomass,1.91121,1.9496,1.99477,2.01092
+HI,regional biomass,1.91121,1.9496,1.99477,2.01092
+IA,regional biomass,1.91121,1.9496,1.99477,2.01092
+ID,regional biomass,1.91121,1.9496,1.99477,2.01092
+IL,regional biomass,1.91121,1.9496,1.99477,2.01092
+IN,regional biomass,1.91121,1.9496,1.99477,2.01092
+KS,regional biomass,1.91121,1.9496,1.99477,2.01092
+KY,regional biomass,1.91121,1.9496,1.99477,2.01092
+LA,regional biomass,1.91121,1.9496,1.99477,2.01092
+MA,regional biomass,1.91121,1.9496,1.99477,2.01092
+MD,regional biomass,1.91121,1.9496,1.99477,2.01092
+ME,regional biomass,1.91121,1.9496,1.99477,2.01092
+MI,regional biomass,1.91121,1.9496,1.99477,2.01092
+MN,regional biomass,1.91121,1.9496,1.99477,2.01092
+MO,regional biomass,1.91121,1.9496,1.99477,2.01092
+MS,regional biomass,1.91121,1.9496,1.99477,2.01092
+MT,regional biomass,1.91121,1.9496,1.99477,2.01092
+NC,regional biomass,1.91121,1.9496,1.99477,2.01092
+ND,regional biomass,1.91121,1.9496,1.99477,2.01092
+NE,regional biomass,1.91121,1.9496,1.99477,2.01092
+NH,regional biomass,1.91121,1.9496,1.99477,2.01092
+NJ,regional biomass,1.91121,1.9496,1.99477,2.01092
+NM,regional biomass,1.91121,1.9496,1.99477,2.01092
+NV,regional biomass,1.91121,1.9496,1.99477,2.01092
+NY,regional biomass,1.91121,1.9496,1.99477,2.01092
+OH,regional biomass,1.91121,1.9496,1.99477,2.01092
+OK,regional biomass,1.91121,1.9496,1.99477,2.01092
+OR,regional biomass,1.91121,1.9496,1.99477,2.01092
+PA,regional biomass,1.91121,1.9496,1.99477,2.01092
+RI,regional biomass,1.91121,1.9496,1.99477,2.01092
+SC,regional biomass,1.91121,1.9496,1.99477,2.01092
+SD,regional biomass,1.91121,1.9496,1.99477,2.01092
+TN,regional biomass,1.91121,1.9496,1.99477,2.01092
+TX,regional biomass,1.91121,1.9496,1.99477,2.01092
+UT,regional biomass,1.91121,1.9496,1.99477,2.01092
+VA,regional biomass,1.91121,1.9496,1.99477,2.01092
+VT,regional biomass,1.91121,1.9496,1.99477,2.01092
+WA,regional biomass,1.91121,1.9496,1.99477,2.01092
+WI,regional biomass,1.91121,1.9496,1.99477,2.01092
+WV,regional biomass,1.91121,1.9496,1.99477,2.01092
+WY,regional biomass,1.91121,1.9496,1.99477,2.01092
+AK,regional biomassOil,13.3414,13.3414,13.3414,13.14
+AL,regional biomassOil,13.3414,13.3414,13.3414,13.14
+AR,regional biomassOil,13.3414,13.3414,13.3414,13.14
+AZ,regional biomassOil,13.3414,13.3414,13.3414,13.14
+CA,regional biomassOil,13.3414,13.3414,13.3414,13.14
+CO,regional biomassOil,13.3414,13.3414,13.3414,13.14
+CT,regional biomassOil,13.3414,13.3414,13.3414,13.14
+DC,regional biomassOil,13.3414,13.3414,13.3414,13.14
+DE,regional biomassOil,13.3414,13.3414,13.3414,13.14
+FL,regional biomassOil,13.3414,13.3414,13.3414,13.14
+GA,regional biomassOil,13.3414,13.3414,13.3414,13.14
+HI,regional biomassOil,13.3414,13.3414,13.3414,13.14
+IA,regional biomassOil,13.3414,13.3414,13.3414,13.14
+ID,regional biomassOil,13.3414,13.3414,13.3414,13.14
+IL,regional biomassOil,13.3414,13.3414,13.3414,13.14
+IN,regional biomassOil,13.3414,13.3414,13.3414,13.14
+KS,regional biomassOil,13.3414,13.3414,13.3414,13.14
+KY,regional biomassOil,13.3414,13.3414,13.3414,13.14
+LA,regional biomassOil,13.3414,13.3414,13.3414,13.14
+MA,regional biomassOil,13.3414,13.3414,13.3414,13.14
+MD,regional biomassOil,13.3414,13.3414,13.3414,13.14
+ME,regional biomassOil,13.3414,13.3414,13.3414,13.14
+MI,regional biomassOil,13.3414,13.3414,13.3414,13.14
+MN,regional biomassOil,13.3414,13.3414,13.3414,13.14
+MO,regional biomassOil,13.3414,13.3414,13.3414,13.14
+MS,regional biomassOil,13.3414,13.3414,13.3414,13.14
+MT,regional biomassOil,13.3414,13.3414,13.3414,13.14
+NC,regional biomassOil,13.3414,13.3414,13.3414,13.14
+ND,regional biomassOil,13.3414,13.3414,13.3414,13.14
+NE,regional biomassOil,13.3414,13.3414,13.3414,13.14
+NH,regional biomassOil,13.3414,13.3414,13.3414,13.14
+NJ,regional biomassOil,13.3414,13.3414,13.3414,13.14
+NM,regional biomassOil,13.3414,13.3414,13.3414,13.14
+NV,regional biomassOil,13.3414,13.3414,13.3414,13.14
+NY,regional biomassOil,13.3414,13.3414,13.3414,13.14
+OH,regional biomassOil,13.3414,13.3414,13.3414,13.14
+OK,regional biomassOil,13.3414,13.3414,13.3414,13.14
+OR,regional biomassOil,13.3414,13.3414,13.3414,13.14
+PA,regional biomassOil,13.3414,13.3414,13.3414,13.14
+RI,regional biomassOil,13.3414,13.3414,13.3414,13.14
+SC,regional biomassOil,13.3414,13.3414,13.3414,13.14
+SD,regional biomassOil,13.3414,13.3414,13.3414,13.14
+TN,regional biomassOil,13.3414,13.3414,13.3414,13.14
+TX,regional biomassOil,13.3414,13.3414,13.3414,13.14
+UT,regional biomassOil,13.3414,13.3414,13.3414,13.14
+VA,regional biomassOil,13.3414,13.3414,13.3414,13.14
+VT,regional biomassOil,13.3414,13.3414,13.3414,13.14
+WA,regional biomassOil,13.3414,13.3414,13.3414,13.14
+WI,regional biomassOil,13.3414,13.3414,13.3414,13.14
+WV,regional biomassOil,13.3414,13.3414,13.3414,13.14
+WY,regional biomassOil,13.3414,13.3414,13.3414,13.14
+AK,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+AL,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+AR,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+AZ,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+CA,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+CO,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+CT,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+DC,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+DE,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+FL,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+GA,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+HI,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+IA,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+ID,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+IL,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+IN,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+KS,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+KY,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+LA,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+MA,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+MD,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+ME,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+MI,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+MN,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+MO,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+MS,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+MT,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+NC,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+ND,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+NE,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+NH,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+NJ,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+NM,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+NV,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+NY,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+OH,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+OK,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+OR,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+PA,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+RI,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+SC,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+SD,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+TN,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+TX,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+UT,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+VA,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+VT,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+WA,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+WI,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+WV,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+WY,regional corn for ethanol,5.52385,5.52385,5.52385,5.52116
+AK,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+AL,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+AR,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+AZ,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+CA,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+CO,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+CT,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+DC,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+DE,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+FL,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+GA,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+HI,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+IA,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+ID,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+IL,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+IN,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+KS,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+KY,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+LA,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+MA,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+MD,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+ME,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+MI,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+MN,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+MO,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+MS,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+MT,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+NC,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+ND,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+NE,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+NH,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+NJ,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+NM,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+NV,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+NY,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+OH,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+OK,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+OR,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+PA,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+RI,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+SC,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+SD,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+TN,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+TX,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+UT,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+VA,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+VT,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+WA,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+WI,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+WV,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+WY,regional sugar for ethanol,9.84821,9.64125,9.56232,9.59009
+AK,resid clothes dryers,0.055216,0.053681,0.0572518,0.0611323
+AL,resid clothes dryers,0.05906,0.0567771,0.0572906,0.0592579
+AR,resid clothes dryers,0.0565188,0.0552257,0.0567154,0.0600229
+AZ,resid clothes dryers,0.0562654,0.0514892,0.0527579,0.0581451
+CA,resid clothes dryers,0.0507636,0.0475926,0.0512705,0.0557804
+CO,resid clothes dryers,0.0544057,0.0484974,0.0507945,0.0564539
+CT,resid clothes dryers,0.0572273,0.0556843,0.057156,0.0611719
+DC,resid clothes dryers,0.0510424,0.0506144,0.0538181,0.0574757
+DE,resid clothes dryers,0.0575929,0.0557533,0.057164,0.0604935
+FL,resid clothes dryers,0.0573442,0.0538586,0.0543951,0.0582508
+GA,resid clothes dryers,0.0565223,0.0538055,0.0556186,0.0586487
+HI,resid clothes dryers,0.0655534,0.0636357,0.0732471,0.0772234
+IA,resid clothes dryers,0.0556743,0.0522305,0.0534232,0.0593893
+ID,resid clothes dryers,0.0598393,0.0527124,0.0540591,0.0595995
+IL,resid clothes dryers,0.0526968,0.049755,0.0530077,0.0599111
+IN,resid clothes dryers,0.0540931,0.051392,0.0537048,0.0599887
+KS,resid clothes dryers,0.0501879,0.0484117,0.0503679,0.0545054
+KY,resid clothes dryers,0.0563967,0.0548492,0.0553766,0.0591375
+LA,resid clothes dryers,0.0556467,0.0548432,0.0563907,0.0599362
+MA,resid clothes dryers,0.0549547,0.0541438,0.0557022,0.0600804
+MD,resid clothes dryers,0.056644,0.0547437,0.0564817,0.0597502
+ME,resid clothes dryers,0.0610419,0.0588065,0.0597612,0.0637032
+MI,resid clothes dryers,0.0515875,0.048797,0.0517998,0.0582805
+MN,resid clothes dryers,0.0561567,0.0523141,0.0534587,0.0594176
+MO,resid clothes dryers,0.0571189,0.0542482,0.0563849,0.0632149
+MS,resid clothes dryers,0.0590909,0.05665,0.0570477,0.0586437
+MT,resid clothes dryers,0.0582485,0.0518419,0.0536726,0.059413
+NC,resid clothes dryers,0.0605633,0.056481,0.0572378,0.0603645
+ND,resid clothes dryers,0.0582286,0.0542434,0.0546309,0.0601822
+NE,resid clothes dryers,0.0559599,0.0526249,0.0536479,0.0595806
+NH,resid clothes dryers,0.059546,0.0575719,0.0588758,0.0629885
+NJ,resid clothes dryers,0.0529559,0.0492276,0.0522851,0.0564271
+NM,resid clothes dryers,0.0539426,0.0486675,0.0510361,0.0566429
+NV,resid clothes dryers,0.058092,0.0508935,0.0528411,0.0588504
+NY,resid clothes dryers,0.0510164,0.0492623,0.0523996,0.0569704
+OH,resid clothes dryers,0.0531674,0.0503414,0.0530122,0.0593163
+OK,resid clothes dryers,0.0504749,0.0491697,0.050765,0.0538726
+OR,resid clothes dryers,0.0589621,0.0536337,0.0546176,0.0596303
+PA,resid clothes dryers,0.0549079,0.0526298,0.0550265,0.0594162
+RI,resid clothes dryers,0.054363,0.0536708,0.0557833,0.0598011
+SC,resid clothes dryers,0.0601981,0.0563952,0.0572329,0.060325
+SD,resid clothes dryers,0.0577312,0.0538143,0.0543856,0.060019
+TN,resid clothes dryers,0.0606423,0.0570782,0.0572753,0.0588297
+TX,resid clothes dryers,0.0517371,0.0490256,0.0515935,0.0553052
+UT,resid clothes dryers,0.0554885,0.0495359,0.0519728,0.05819
+VA,resid clothes dryers,0.0596615,0.0556675,0.056798,0.0596969
+VT,resid clothes dryers,0.0602072,0.0580317,0.0590807,0.0630885
+WA,resid clothes dryers,0.0590511,0.0535849,0.054583,0.0595571
+WI,resid clothes dryers,0.0571053,0.0528278,0.0551294,0.0617617
+WV,resid clothes dryers,0.0549001,0.0534958,0.0549353,0.0600728
+WY,resid clothes dryers,0.0554533,0.0502913,0.0519838,0.0574739
+AK,resid clothes washers,0,0.124917,0.125903,0.126003
+AL,resid clothes washers,0,0.125264,0.125236,0.124773
+AR,resid clothes washers,0,0.125264,0.125236,0.124773
+AZ,resid clothes washers,0,0.123549,0.123638,0.123747
+CA,resid clothes washers,0,0.124763,0.125042,0.124658
+CO,resid clothes washers,0,0.123549,0.123638,0.123747
+CT,resid clothes washers,0,0.125352,0.125686,0.125561
+DC,resid clothes washers,0,0.125326,0.125395,0.125193
+DE,resid clothes washers,0,0.125326,0.125395,0.125193
+FL,resid clothes washers,0,0.123954,0.12389,0.123598
+GA,resid clothes washers,0,0.125264,0.125236,0.124773
+HI,resid clothes washers,0,0.12712,0.130522,0.130609
+IA,resid clothes washers,0,0.12431,0.124131,0.124313
+ID,resid clothes washers,0,0.124127,0.124213,0.124429
+IL,resid clothes washers,0,0.124931,0.125101,0.125687
+IN,resid clothes washers,0,0.124445,0.1245,0.1249
+KS,resid clothes washers,0,0.123014,0.123097,0.122482
+KY,resid clothes washers,0,0.124445,0.1245,0.1249
+LA,resid clothes washers,0,0.125264,0.125236,0.124773
+MA,resid clothes washers,0,0.125352,0.125686,0.125561
+MD,resid clothes washers,0,0.125326,0.125395,0.125193
+ME,resid clothes washers,0,0.125352,0.125686,0.125561
+MI,resid clothes washers,0,0.124445,0.1245,0.1249
+MN,resid clothes washers,0,0.12431,0.124131,0.124313
+MO,resid clothes washers,0,0.124931,0.125101,0.125687
+MS,resid clothes washers,0,0.125264,0.125236,0.124773
+MT,resid clothes washers,0,0.124127,0.124213,0.124429
+NC,resid clothes washers,0,0.125264,0.125236,0.124773
+ND,resid clothes washers,0,0.12431,0.124131,0.124313
+NE,resid clothes washers,0,0.12431,0.124131,0.124313
+NH,resid clothes washers,0,0.125352,0.125686,0.125561
+NJ,resid clothes washers,0,0.125326,0.125395,0.125193
+NM,resid clothes washers,0,0.123549,0.123638,0.123747
+NV,resid clothes washers,0,0.124127,0.124213,0.124429
+NY,resid clothes washers,0,0.124838,0.124989,0.124905
+OH,resid clothes washers,0,0.124445,0.1245,0.1249
+OK,resid clothes washers,0,0.123014,0.123097,0.122482
+OR,resid clothes washers,0,0.124127,0.124213,0.124429
+PA,resid clothes washers,0,0.125326,0.125395,0.125193
+RI,resid clothes washers,0,0.125352,0.125686,0.125561
+SC,resid clothes washers,0,0.125264,0.125236,0.124773
+SD,resid clothes washers,0,0.12431,0.124131,0.124313
+TN,resid clothes washers,0,0.125264,0.125236,0.124773
+TX,resid clothes washers,0,0.123259,0.123661,0.123247
+UT,resid clothes washers,0,0.124127,0.124213,0.124429
+VA,resid clothes washers,0,0.125264,0.125236,0.124773
+VT,resid clothes washers,0,0.125352,0.125686,0.125561
+WA,resid clothes washers,0,0.124127,0.124213,0.124429
+WI,resid clothes washers,0,0.124931,0.125101,0.125687
+WV,resid clothes washers,0,0.124445,0.1245,0.1249
+WY,resid clothes washers,0,0.123549,0.123638,0.123747
+AK,resid computers,0,33.7847,35.0296,32.1245
+AL,resid computers,0,34.2223,34.1863,30.8813
+AR,resid computers,0,34.2223,34.1863,30.8813
+AZ,resid computers,0,32.0569,32.169,29.8459
+CA,resid computers,0,33.5901,33.9421,30.7658
+CO,resid computers,0,32.0569,32.169,29.8459
+CT,resid computers,0,34.3333,34.7552,31.6779
+DC,resid computers,0,34.3006,34.3871,31.3056
+DE,resid computers,0,34.3006,34.3871,31.3056
+FL,resid computers,0,32.5686,32.4879,29.6947
+GA,resid computers,0,34.2223,34.1863,30.8813
+HI,resid computers,0,36.5658,40.8614,36.777
+IA,resid computers,0,33.0172,32.7917,30.4171
+ID,resid computers,0,32.7867,32.8958,30.5343
+IL,resid computers,0,33.8019,34.0161,31.8052
+IN,resid computers,0,33.1877,33.258,31.0097
+KS,resid computers,0,31.3818,31.4863,28.5674
+KY,resid computers,0,33.1877,33.258,31.0097
+LA,resid computers,0,34.2223,34.1863,30.8813
+MA,resid computers,0,34.3333,34.7552,31.6779
+MD,resid computers,0,34.3006,34.3871,31.3056
+ME,resid computers,0,34.3333,34.7552,31.6779
+MI,resid computers,0,33.1877,33.258,31.0097
+MN,resid computers,0,33.0172,32.7917,30.4171
+MO,resid computers,0,33.8019,34.0161,31.8052
+MS,resid computers,0,34.2223,34.1863,30.8813
+MT,resid computers,0,32.7867,32.8958,30.5343
+NC,resid computers,0,34.2223,34.1863,30.8813
+ND,resid computers,0,33.0172,32.7917,30.4171
+NE,resid computers,0,33.0172,32.7917,30.4171
+NH,resid computers,0,34.3333,34.7552,31.6779
+NJ,resid computers,0,34.3006,34.3871,31.3056
+NM,resid computers,0,32.0569,32.169,29.8459
+NV,resid computers,0,32.7867,32.8958,30.5343
+NY,resid computers,0,33.6841,33.875,31.0151
+OH,resid computers,0,33.1877,33.258,31.0097
+OK,resid computers,0,31.3818,31.4863,28.5674
+OR,resid computers,0,32.7867,32.8958,30.5343
+PA,resid computers,0,34.3006,34.3871,31.3056
+RI,resid computers,0,34.3333,34.7552,31.6779
+SC,resid computers,0,34.2223,34.1863,30.8813
+SD,resid computers,0,33.0172,32.7917,30.4171
+TN,resid computers,0,34.2223,34.1863,30.8813
+TX,resid computers,0,31.6911,32.1988,29.3403
+UT,resid computers,0,32.7867,32.8958,30.5343
+VA,resid computers,0,34.2223,34.1863,30.8813
+VT,resid computers,0,34.3333,34.7552,31.6779
+WA,resid computers,0,32.7867,32.8958,30.5343
+WI,resid computers,0,33.8019,34.0161,31.8052
+WV,resid computers,0,33.1877,33.258,31.0097
+WY,resid computers,0,32.0569,32.169,29.8459
+AK,resid cooking,28.6276,27.4723,29.5167,29.8656
+AL,resid cooking,30.7849,30.2576,31.0456,29.0376
+AR,resid cooking,27.6371,27.7066,29.9819,30.1556
+AZ,resid cooking,30.333,26.5284,28.4139,30.0431
+CA,resid cooking,24.9067,23.4831,25.7512,26.6467
+CO,resid cooking,27.6962,23.4867,25.7618,27.4281
+CT,resid cooking,29.6337,28.45,29.4326,30.1937
+DC,resid cooking,24.5822,24.1729,26.6496,27.0253
+DE,resid cooking,29.9988,28.4604,30.1463,29.8875
+FL,resid cooking,32.7789,29.116,30.8975,30.8588
+GA,resid cooking,27.8831,26.1298,28.3663,28.2518
+HI,resid cooking,39.3142,38.0882,42.2385,44.3403
+IA,resid cooking,28.3302,25.881,27.9477,30.464
+ID,resid cooking,34.5593,26.9559,28.8994,30.5163
+IL,resid cooking,25.5907,24.1038,26.4505,28.7099
+IN,resid cooking,27.0491,25.1114,27.634,29.9215
+KS,resid cooking,25.1154,23.9174,26.1821,27.408
+KY,resid cooking,29.8084,29.6103,30.2914,28.7852
+LA,resid cooking,27.0419,27.2566,29.5657,30.0984
+MA,resid cooking,27.5205,26.9825,28.2187,29.1762
+MD,resid cooking,29.0333,27.3024,29.3333,29.0592
+ME,resid cooking,35.9117,33.6665,32.965,33.786
+MI,resid cooking,24.9821,23.3842,25.7948,27.8359
+MN,resid cooking,28.8778,25.9896,28.0279,30.5458
+MO,resid cooking,29.2221,27.5228,30.1561,33.4279
+MS,resid cooking,30.6849,29.9309,30.3815,28.2273
+MT,resid cooking,31.377,25.857,28.2761,29.9851
+NC,resid cooking,33.1223,29.6154,30.8555,30.641
+ND,resid cooking,31.9513,28.5753,30.0697,32.1968
+NE,resid cooking,28.7986,26.3707,28.3258,30.9043
+NH,resid cooking,32.9692,31.2961,31.7996,32.603
+NJ,resid cooking,25.7772,23.5074,25.6494,26.3354
+NM,resid cooking,27.0218,23.5842,26.0552,27.6446
+NV,resid cooking,31.1514,25.0269,27.1927,29.3767
+NY,resid cooking,25.3904,24.163,26.3887,27.2651
+OH,resid cooking,26.2153,24.3147,26.8494,28.9952
+OK,resid cooking,25.3644,24.6565,26.72,26.5185
+OR,resid cooking,32.7976,28.4399,30.0018,30.6724
+PA,resid cooking,27.3488,25.4231,27.6862,28.7112
+RI,resid cooking,27.0542,26.5498,28.222,28.884
+SC,resid cooking,32.5763,29.5336,31.065,30.7314
+SD,resid cooking,30.6788,27.9551,29.6037,31.8295
+TN,resid cooking,33.5528,30.8844,31.13,28.4857
+TX,resid cooking,25.6701,23.6803,26.1834,26.5474
+UT,resid cooking,27.9038,24.001,26.2339,28.4888
+VA,resid cooking,31.6287,28.2921,30.0446,29.5723
+VT,resid cooking,34.2314,32.2833,32.0419,32.8139
+WA,resid cooking,32.977,28.3374,29.8713,30.5131
+WI,resid cooking,29.0058,26.0964,28.3694,30.699
+WV,resid cooking,28.0011,27.3812,29.5057,30.0367
+WY,resid cooking,29.0151,24.9814,27.1249,28.7088
+AK,resid cooling,10.3775,10.057,10.4661,9.50484
+AL,resid cooling,10.7716,10.2008,10.189,9.09698
+AR,resid cooling,10.7716,10.2008,10.189,9.09698
+AZ,resid cooling,10.1795,9.48919,9.52601,8.75729
+CA,resid cooling,10.4481,9.99301,10.1087,9.0591
+CO,resid cooling,10.1795,9.48919,9.52601,8.75729
+CT,resid cooling,10.5585,10.2372,10.3759,9.35832
+DC,resid cooling,10.5293,10.2265,10.2549,9.23619
+DE,resid cooling,10.5293,10.2265,10.2549,9.23619
+FL,resid cooling,10.0843,9.65732,9.63081,8.70766
+GA,resid cooling,10.7716,10.2008,10.189,9.09698
+HI,resid cooling,11.2886,10.9709,12.3825,11.0313
+IA,resid cooling,10.3615,9.80475,9.73065,8.94468
+ID,resid cooling,10.4938,9.72902,9.76485,8.98314
+IL,resid cooling,10.6487,10.0626,10.133,9.40011
+IN,resid cooling,10.2813,9.86077,9.88387,9.13912
+KS,resid cooling,9.62234,9.26733,9.30166,8.33782
+KY,resid cooling,10.2813,9.86077,9.88387,9.13912
+LA,resid cooling,10.7716,10.2008,10.189,9.09698
+MA,resid cooling,10.5585,10.2372,10.3759,9.35832
+MD,resid cooling,10.5293,10.2265,10.2549,9.23619
+ME,resid cooling,10.5585,10.2372,10.3759,9.35832
+MI,resid cooling,10.2813,9.86077,9.88387,9.13912
+MN,resid cooling,10.3615,9.80475,9.73065,8.94468
+MO,resid cooling,10.6487,10.0626,10.133,9.40011
+MS,resid cooling,10.7716,10.2008,10.189,9.09698
+MT,resid cooling,10.4938,9.72902,9.76485,8.98314
+NC,resid cooling,10.7716,10.2008,10.189,9.09698
+ND,resid cooling,10.3615,9.80475,9.73065,8.94468
+NE,resid cooling,10.3615,9.80475,9.73065,8.94468
+NH,resid cooling,10.5585,10.2372,10.3759,9.35832
+NJ,resid cooling,10.5293,10.2265,10.2549,9.23619
+NM,resid cooling,10.1795,9.48919,9.52601,8.75729
+NV,resid cooling,10.4938,9.72902,9.76485,8.98314
+NY,resid cooling,10.1689,10.0239,10.0866,9.14087
+OH,resid cooling,10.2813,9.86077,9.88387,9.13912
+OK,resid cooling,9.62234,9.26733,9.30166,8.33782
+OR,resid cooling,10.4938,9.72902,9.76485,8.98314
+PA,resid cooling,10.5293,10.2265,10.2549,9.23619
+RI,resid cooling,10.5585,10.2372,10.3759,9.35832
+SC,resid cooling,10.7716,10.2008,10.189,9.09698
+SD,resid cooling,10.3615,9.80475,9.73065,8.94468
+TN,resid cooling,10.7716,10.2008,10.189,9.09698
+TX,resid cooling,9.82575,9.36898,9.53582,8.5914
+UT,resid cooling,10.4938,9.72902,9.76485,8.98314
+VA,resid cooling,10.7716,10.2008,10.189,9.09698
+VT,resid cooling,10.5585,10.2372,10.3759,9.35832
+WA,resid cooling,10.4938,9.72902,9.76485,8.98314
+WI,resid cooling,10.6487,10.0626,10.133,9.40011
+WV,resid cooling,10.2813,9.86077,9.88387,9.13912
+WY,resid cooling,10.1795,9.48919,9.52601,8.75729
+AK,resid dishwashers,0,0.255893,0.262295,0.262943
+AL,resid dishwashers,0,0.258143,0.257958,0.254951
+AR,resid dishwashers,0,0.258143,0.257958,0.254951
+AZ,resid dishwashers,0,0.247007,0.247584,0.248295
+CA,resid dishwashers,0,0.254892,0.256702,0.254209
+CO,resid dishwashers,0,0.247007,0.247584,0.248295
+CT,resid dishwashers,0,0.258714,0.260884,0.260072
+DC,resid dishwashers,0,0.258546,0.258991,0.257679
+DE,resid dishwashers,0,0.258546,0.258991,0.257679
+FL,resid dishwashers,0,0.249638,0.249224,0.247323
+GA,resid dishwashers,0,0.258143,0.257958,0.254951
+HI,resid dishwashers,0,0.270196,0.292287,0.292852
+IA,resid dishwashers,0,0.251946,0.250786,0.251967
+ID,resid dishwashers,0,0.250761,0.251321,0.252721
+IL,resid dishwashers,0,0.255981,0.257083,0.260891
+IN,resid dishwashers,0,0.252822,0.253184,0.255777
+KS,resid dishwashers,0,0.243535,0.244072,0.240076
+KY,resid dishwashers,0,0.252822,0.253184,0.255777
+LA,resid dishwashers,0,0.258143,0.257958,0.254951
+MA,resid dishwashers,0,0.258714,0.260884,0.260072
+MD,resid dishwashers,0,0.258546,0.258991,0.257679
+ME,resid dishwashers,0,0.258714,0.260884,0.260072
+MI,resid dishwashers,0,0.252822,0.253184,0.255777
+MN,resid dishwashers,0,0.251946,0.250786,0.251967
+MO,resid dishwashers,0,0.255981,0.257083,0.260891
+MS,resid dishwashers,0,0.258143,0.257958,0.254951
+MT,resid dishwashers,0,0.250761,0.251321,0.252721
+NC,resid dishwashers,0,0.258143,0.257958,0.254951
+ND,resid dishwashers,0,0.251946,0.250786,0.251967
+NE,resid dishwashers,0,0.251946,0.250786,0.251967
+NH,resid dishwashers,0,0.258714,0.260884,0.260072
+NJ,resid dishwashers,0,0.258546,0.258991,0.257679
+NM,resid dishwashers,0,0.247007,0.247584,0.248295
+NV,resid dishwashers,0,0.250761,0.251321,0.252721
+NY,resid dishwashers,0,0.255376,0.256357,0.255811
+OH,resid dishwashers,0,0.252822,0.253184,0.255777
+OK,resid dishwashers,0,0.243535,0.244072,0.240076
+OR,resid dishwashers,0,0.250761,0.251321,0.252721
+PA,resid dishwashers,0,0.258546,0.258991,0.257679
+RI,resid dishwashers,0,0.258714,0.260884,0.260072
+SC,resid dishwashers,0,0.258143,0.257958,0.254951
+SD,resid dishwashers,0,0.251946,0.250786,0.251967
+TN,resid dishwashers,0,0.258143,0.257958,0.254951
+TX,resid dishwashers,0,0.245126,0.247737,0.245045
+UT,resid dishwashers,0,0.250761,0.251321,0.252721
+VA,resid dishwashers,0,0.258143,0.257958,0.254951
+VT,resid dishwashers,0,0.258714,0.260884,0.260072
+WA,resid dishwashers,0,0.250761,0.251321,0.252721
+WI,resid dishwashers,0,0.255981,0.257083,0.260891
+WV,resid dishwashers,0,0.252822,0.253184,0.255777
+WY,resid dishwashers,0,0.247007,0.247584,0.248295
+AK,resid freezers,30.7246,29.7462,30.9948,28.8614
+AL,resid freezers,31.9274,30.1851,30.149,27.7443
+AR,resid freezers,31.9274,30.1851,30.149,27.7443
+AZ,resid freezers,30.12,28.0132,28.1256,26.8139
+CA,resid freezers,30.9399,29.551,29.904,27.6405
+CO,resid freezers,30.12,28.0132,28.1256,26.8139
+CT,resid freezers,31.2769,30.2964,30.7196,28.4601
+DC,resid freezers,31.1879,30.2636,30.3504,28.1256
+DE,resid freezers,31.1879,30.2636,30.3504,28.1256
+FL,resid freezers,29.8295,28.5264,28.4455,26.6779
+GA,resid freezers,31.9274,30.1851,30.149,27.7443
+HI,resid freezers,33.5053,32.5356,36.8442,33.0424
+IA,resid freezers,30.6757,28.9764,28.7502,27.3272
+ID,resid freezers,31.0794,28.7452,28.8546,27.4325
+IL,resid freezers,31.5523,29.7634,29.9783,28.5746
+IN,resid freezers,30.431,29.1474,29.2179,27.8597
+KS,resid freezers,28.4196,27.3361,27.4408,25.665
+KY,resid freezers,30.431,29.1474,29.2179,27.8597
+LA,resid freezers,31.9274,30.1851,30.149,27.7443
+MA,resid freezers,31.2769,30.2964,30.7196,28.4601
+MD,resid freezers,31.1879,30.2636,30.3504,28.1256
+ME,resid freezers,31.2769,30.2964,30.7196,28.4601
+MI,resid freezers,30.431,29.1474,29.2179,27.8597
+MN,resid freezers,30.6757,28.9764,28.7502,27.3272
+MO,resid freezers,31.5523,29.7634,29.9783,28.5746
+MS,resid freezers,31.9274,30.1851,30.149,27.7443
+MT,resid freezers,31.0794,28.7452,28.8546,27.4325
+NC,resid freezers,31.9274,30.1851,30.149,27.7443
+ND,resid freezers,30.6757,28.9764,28.7502,27.3272
+NE,resid freezers,30.6757,28.9764,28.7502,27.3272
+NH,resid freezers,31.2769,30.2964,30.7196,28.4601
+NJ,resid freezers,31.1879,30.2636,30.3504,28.1256
+NM,resid freezers,30.12,28.0132,28.1256,26.8139
+NV,resid freezers,31.0794,28.7452,28.8546,27.4325
+NY,resid freezers,30.0877,29.6453,29.8368,27.8645
+OH,resid freezers,30.431,29.1474,29.2179,27.8597
+OK,resid freezers,28.4196,27.3361,27.4408,25.665
+OR,resid freezers,31.0794,28.7452,28.8546,27.4325
+PA,resid freezers,31.1879,30.2636,30.3504,28.1256
+RI,resid freezers,31.2769,30.2964,30.7196,28.4601
+SC,resid freezers,31.9274,30.1851,30.149,27.7443
+SD,resid freezers,30.6757,28.9764,28.7502,27.3272
+TN,resid freezers,31.9274,30.1851,30.149,27.7443
+TX,resid freezers,29.0404,27.6463,28.1555,26.3595
+UT,resid freezers,31.0794,28.7452,28.8546,27.4325
+VA,resid freezers,31.9274,30.1851,30.149,27.7443
+VT,resid freezers,31.2769,30.2964,30.7196,28.4601
+WA,resid freezers,31.0794,28.7452,28.8546,27.4325
+WI,resid freezers,31.5523,29.7634,29.9783,28.5746
+WV,resid freezers,30.431,29.1474,29.2179,27.8597
+WY,resid freezers,30.12,28.0132,28.1256,26.8139
+AK,resid furnace fans,0,33.7847,35.0296,32.9535
+AL,resid furnace fans,0,34.2223,34.1863,31.6253
+AR,resid furnace fans,0,34.2223,34.1863,31.6253
+AZ,resid furnace fans,0,32.0569,32.169,30.5192
+CA,resid furnace fans,0,33.5901,33.9421,31.502
+CO,resid furnace fans,0,32.0569,32.169,30.5192
+CT,resid furnace fans,0,34.3333,34.7552,32.4764
+DC,resid furnace fans,0,34.3006,34.3871,32.0786
+DE,resid furnace fans,0,34.3006,34.3871,32.0786
+FL,resid furnace fans,0,32.5686,32.4879,30.3575
+GA,resid furnace fans,0,34.2223,34.1863,31.6253
+HI,resid furnace fans,0,36.5658,40.8614,37.9241
+IA,resid furnace fans,0,33.0172,32.7917,31.1294
+ID,resid furnace fans,0,32.7867,32.8958,31.2546
+IL,resid furnace fans,0,33.8019,34.0161,32.6124
+IN,resid furnace fans,0,33.1877,33.258,31.7625
+KS,resid furnace fans,0,31.3818,31.4863,29.1532
+KY,resid furnace fans,0,33.1877,33.258,31.7625
+LA,resid furnace fans,0,34.2223,34.1863,31.6253
+MA,resid furnace fans,0,34.3333,34.7552,32.4764
+MD,resid furnace fans,0,34.3006,34.3871,32.0786
+ME,resid furnace fans,0,34.3333,34.7552,32.4764
+MI,resid furnace fans,0,33.1877,33.258,31.7625
+MN,resid furnace fans,0,33.0172,32.7917,31.1294
+MO,resid furnace fans,0,33.8019,34.0161,32.6124
+MS,resid furnace fans,0,34.2223,34.1863,31.6253
+MT,resid furnace fans,0,32.7867,32.8958,31.2546
+NC,resid furnace fans,0,34.2223,34.1863,31.6253
+ND,resid furnace fans,0,33.0172,32.7917,31.1294
+NE,resid furnace fans,0,33.0172,32.7917,31.1294
+NH,resid furnace fans,0,34.3333,34.7552,32.4764
+NJ,resid furnace fans,0,34.3006,34.3871,32.0786
+NM,resid furnace fans,0,32.0569,32.169,30.5192
+NV,resid furnace fans,0,32.7867,32.8958,31.2546
+NY,resid furnace fans,0,33.6841,33.875,31.7682
+OH,resid furnace fans,0,33.1877,33.258,31.7625
+OK,resid furnace fans,0,31.3818,31.4863,29.1532
+OR,resid furnace fans,0,32.7867,32.8958,31.2546
+PA,resid furnace fans,0,34.3006,34.3871,32.0786
+RI,resid furnace fans,0,34.3333,34.7552,32.4764
+SC,resid furnace fans,0,34.2223,34.1863,31.6253
+SD,resid furnace fans,0,33.0172,32.7917,31.1294
+TN,resid furnace fans,0,34.2223,34.1863,31.6253
+TX,resid furnace fans,0,31.6911,32.1988,29.9789
+UT,resid furnace fans,0,32.7867,32.8958,31.2546
+VA,resid furnace fans,0,34.2223,34.1863,31.6253
+VT,resid furnace fans,0,34.3333,34.7552,32.4764
+WA,resid furnace fans,0,32.7867,32.8958,31.2546
+WI,resid furnace fans,0,33.8019,34.0161,32.6124
+WV,resid furnace fans,0,33.1877,33.258,31.7625
+WY,resid furnace fans,0,32.0569,32.169,30.5192
+AK,resid heating,8.5447,8.37422,9.53443,9.2952
+AL,resid heating,7.53709,7.90422,9.2188,9.48233
+AR,resid heating,6.86402,7.67502,8.86174,8.91999
+AZ,resid heating,6.72893,6.85329,7.77393,7.82253
+CA,resid heating,6.97888,7.45174,8.13667,8.35737
+CO,resid heating,6.24567,6.36614,7.16505,7.09594
+CT,resid heating,7.90233,7.95764,9.56576,9.3623
+DC,resid heating,6.60036,7.23334,8.20227,8.20949
+DE,resid heating,8.09885,8.50193,9.75582,9.45747
+FL,resid heating,9.8293,10.6322,10.2496,10.0442
+GA,resid heating,7.15855,7.49609,8.48246,8.43727
+HI,resid heating,12.3935,9.00941,9.41537,15.126
+IA,resid heating,6.36476,6.73749,7.9333,7.80911
+ID,resid heating,8.30114,7.17292,8.08607,7.86224
+IL,resid heating,6.50937,6.69525,7.61339,7.61167
+IN,resid heating,6.54632,6.70354,7.73767,7.72602
+KS,resid heating,5.93965,6.32021,7.34089,7.16336
+KY,resid heating,7.61012,7.93113,9.0201,9.38709
+LA,resid heating,6.61431,7.5711,8.72146,8.91403
+MA,resid heating,7.64339,7.65055,8.93461,8.83236
+MD,resid heating,7.83291,8.13677,9.21786,9.04979
+ME,resid heating,8.39767,8.36858,9.92735,9.7988
+MI,resid heating,6.36329,6.60579,7.44116,7.35064
+MN,resid heating,6.55706,6.71506,7.79959,7.74426
+MO,resid heating,6.74053,7.12656,8.29727,8.45
+MS,resid heating,7.59318,7.77501,8.994,9.24961
+MT,resid heating,7.18895,7.14733,8.28827,7.98217
+NC,resid heating,8.45271,8.49872,9.61826,9.47627
+ND,resid heating,7.24328,7.49141,8.90964,8.85933
+NE,resid heating,6.36278,6.71876,7.89753,7.83436
+NH,resid heating,8.19918,8.17585,9.74711,9.73178
+NJ,resid heating,7.08686,6.91855,7.9125,7.7054
+NM,resid heating,6.38013,6.54617,7.3445,7.15004
+NV,resid heating,7.13111,6.7279,7.51417,7.55137
+NY,resid heating,7.18162,7.40861,8.44638,8.1178
+OH,resid heating,6.43225,6.56759,7.53179,7.50549
+OK,resid heating,6.44521,6.95762,7.93093,7.73763
+OR,resid heating,9.82104,7.8137,8.59433,8.74147
+PA,resid heating,7.18436,7.39028,8.73285,8.53327
+RI,resid heating,7.59202,7.71589,9.21077,9.00738
+SC,resid heating,8.36897,8.56415,9.62198,9.40889
+SD,resid heating,7.29097,7.20987,8.51581,8.4209
+TN,resid heating,8.48323,8.11633,9.24975,9.23441
+TX,resid heating,6.33927,7.25357,7.97312,8.00988
+UT,resid heating,6.25358,6.492,7.2256,7.31182
+VA,resid heating,8.09821,8.1602,9.2911,9.01429
+VT,resid heating,8.3261,8.16658,9.57105,9.32809
+WA,resid heating,9.88781,7.85636,8.74358,8.82813
+WI,resid heating,7.22619,7.17634,8.18986,8.15957
+WV,resid heating,7.30984,7.91207,8.74259,9.03897
+WY,resid heating,6.347,6.70756,7.74431,7.47543
+AK,resid hot water,19.3007,18.694,19.9251,19.6266
+AL,resid hot water,19.1793,18.6067,19.4197,19.507
+AR,resid hot water,16.9164,17.497,19.061,18.9844
+AZ,resid hot water,17.089,16.5275,17.435,17.4436
+CA,resid hot water,16.4525,16.5761,17.491,17.2248
+CO,resid hot water,16.2179,15.8448,16.7887,16.7032
+CT,resid hot water,17.7894,17.7464,19.3313,18.9625
+DC,resid hot water,17.1525,17.2179,18.1694,18.3134
+DE,resid hot water,19.2584,18.7427,19.6336,19.4485
+FL,resid hot water,20.2968,19.083,19.167,18.7727
+GA,resid hot water,18.4966,17.8454,18.6009,18.4994
+HI,resid hot water,24.827,23.5878,27.6646,28.0606
+IA,resid hot water,16.6839,16.5026,17.4177,17.5667
+ID,resid hot water,19.3988,16.9722,17.9164,17.8825
+IL,resid hot water,17.0221,16.8055,17.7007,17.9715
+IN,resid hot water,17.2246,16.8463,17.7489,18.1155
+KS,resid hot water,15.6865,15.822,16.7104,16.422
+KY,resid hot water,18.5894,18.2199,18.889,19.5578
+LA,resid hot water,16.7245,17.335,18.8164,18.9224
+MA,resid hot water,17.358,17.5769,18.7864,18.5326
+MD,resid hot water,18.9275,18.395,19.2186,19.1097
+ME,resid hot water,19.3222,18.1345,20.6137,20.5696
+MI,resid hot water,16.545,16.3791,17.2713,17.4749
+MN,resid hot water,16.8613,16.5161,17.391,17.5669
+MO,resid hot water,17.3134,17.3007,18.4753,18.9533
+MS,resid hot water,19.1639,18.4468,19.2092,19.2967
+MT,resid hot water,17.6451,16.7887,17.957,18.0318
+NC,resid hot water,20.6773,19.0473,19.6692,19.3881
+ND,resid hot water,18.0335,17.2469,18.2499,18.5447
+NE,resid hot water,16.8104,16.5989,17.477,17.6881
+NH,resid hot water,18.6648,18.1662,20.0908,19.9582
+NJ,resid hot water,16.8308,16.6028,17.7543,17.619
+NM,resid hot water,16.1017,15.9454,16.9528,16.8074
+NV,resid hot water,17.5454,16.4123,17.3298,17.342
+NY,resid hot water,16.8313,16.9773,18.1211,17.9557
+OH,resid hot water,16.9367,16.6083,17.5098,17.791
+OK,resid hot water,16.0259,16.1308,17.2677,16.7979
+OR,resid hot water,20.7096,18.289,18.7311,18.7809
+PA,resid hot water,17.2713,17.1689,18.5392,18.503
+RI,resid hot water,17.2513,17.4525,18.9102,18.5223
+SC,resid hot water,20.477,19.0852,19.6672,19.3615
+SD,resid hot water,17.5019,17.0636,18.0017,18.2492
+TN,resid hot water,20.5089,18.8736,19.4045,19.3565
+TX,resid hot water,15.9035,15.9919,17.0064,16.9761
+UT,resid hot water,16.4544,16.145,17.0445,17.0616
+VA,resid hot water,20.0509,18.5781,19.3294,19.0071
+VT,resid hot water,19.0189,18.3329,20.2084,20.0378
+WA,resid hot water,20.7801,18.2588,18.7329,18.7384
+WI,resid hot water,18.2143,17.3851,18.3439,18.7625
+WV,resid hot water,18.322,18.0794,18.8059,19.2394
+WY,resid hot water,16.6219,16.2085,17.27,17.1775
+AK,resid lighting,2.86564,2.68819,2.91453,2.81137
+AL,resid lighting,3.084,2.7677,2.76116,2.58365
+AR,resid lighting,3.08401,2.7677,2.76117,2.58367
+AZ,resid lighting,2.75587,2.37343,2.39382,2.39376
+CA,resid lighting,2.90471,2.65258,2.71667,2.56246
+CO,resid lighting,2.75585,2.37344,2.39382,2.39378
+CT,resid lighting,2.96591,2.78791,2.86471,2.72969
+DC,resid lighting,2.94965,2.78188,2.79778,2.66129
+DE,resid lighting,2.94992,2.78193,2.79784,2.66132
+FL,resid lighting,2.70313,2.46657,2.45188,2.36603
+GA,resid lighting,3.08399,2.7677,2.76114,2.58363
+HI,resid lighting,3.3706,3.19441,3.97664,3.66447
+IA,resid lighting,2.8568,2.54826,2.50718,2.49855
+ID,resid lighting,2.93007,2.50636,2.52612,2.52003
+IL,resid lighting,3.01591,2.69113,2.73015,2.75306
+IN,resid lighting,2.81235,2.57932,2.59211,2.60718
+KS,resid lighting,2.4472,2.25051,2.2695,2.15934
+KY,resid lighting,2.81232,2.57931,2.59212,2.60718
+LA,resid lighting,3.08401,2.76768,2.76114,2.58365
+MA,resid lighting,2.96591,2.78789,2.8647,2.72969
+MD,resid lighting,2.94976,2.78194,2.79771,2.66146
+ME,resid lighting,2.96583,2.78782,2.86465,2.7297
+MI,resid lighting,2.81233,2.57931,2.5921,2.60717
+MN,resid lighting,2.85677,2.54826,2.50722,2.4985
+MO,resid lighting,3.01589,2.69113,2.73015,2.75306
+MS,resid lighting,3.08395,2.76766,2.76113,2.58367
+MT,resid lighting,2.93016,2.50622,2.52622,2.52005
+NC,resid lighting,3.08398,2.7677,2.76116,2.58364
+ND,resid lighting,2.85664,2.54816,2.50731,2.49856
+NE,resid lighting,2.85676,2.54825,2.50716,2.49858
+NH,resid lighting,2.96579,2.78786,2.86475,2.72962
+NJ,resid lighting,2.94976,2.78194,2.79769,2.66145
+NM,resid lighting,2.75596,2.37345,2.39377,2.39375
+NV,resid lighting,2.93003,2.50629,2.5262,2.51998
+NY,resid lighting,2.75,2.6697,2.70445,2.60816
+OH,resid lighting,2.81233,2.5793,2.59211,2.60718
+OK,resid lighting,2.44717,2.2505,2.26949,2.15934
+OR,resid lighting,2.93005,2.5063,2.52617,2.52004
+PA,resid lighting,2.94974,2.78196,2.79771,2.66142
+RI,resid lighting,2.96578,2.78787,2.86483,2.72982
+SC,resid lighting,3.08402,2.76769,2.76114,2.58361
+SD,resid lighting,2.85667,2.54836,2.50723,2.49842
+TN,resid lighting,3.08398,2.76771,2.76115,2.58362
+TX,resid lighting,2.55989,2.30681,2.39925,2.30105
+UT,resid lighting,2.93011,2.50631,2.5262,2.51996
+VA,resid lighting,3.084,2.76769,2.76116,2.58364
+VT,resid lighting,2.9659,2.78799,2.86451,2.72958
+WA,resid lighting,2.93006,2.5063,2.52616,2.52
+WI,resid lighting,3.01593,2.69115,2.73015,2.75306
+WV,resid lighting,2.81229,2.57934,2.59213,2.60718
+WY,resid lighting,2.75588,2.37338,2.39367,2.39368
+AK,resid other,32.6786,32.5733,32.0367,32.2689
+AL,resid other,34.5843,34.0743,33.2237,32.3889
+AR,resid other,33.4411,33.9462,32.9535,32.6667
+AZ,resid other,33.4558,31.9454,31.2917,31.793
+CA,resid other,31.7023,33.4542,30.2185,30.8805
+CO,resid other,32.9266,31.6768,30.189,30.9498
+CT,resid other,33.3552,33.4592,32.5043,32.8797
+DC,resid other,32.3046,33.9999,31.4673,31.6153
+DE,resid other,33.4528,33.8161,32.8479,32.6491
+FL,resid other,32.9805,32.0274,32.0529,31.8223
+GA,resid other,34.2281,34.1191,32.4741,32.1263
+HI,resid other,36.731,36.0484,39.8218,40.4107
+IA,resid other,33.1026,32.5342,31.399,32.3407
+ID,resid other,34.6045,32.4359,31.7578,32.3633
+IL,resid other,32.9076,33.707,31.1313,32.727
+IN,resid other,32.6661,33.0268,31.592,32.6864
+KS,resid other,31.0663,31.1175,30.1107,30.1163
+KY,resid other,33.3202,33.043,32.4246,32.341
+LA,resid other,33.9286,34.0495,32.9077,32.7074
+MA,resid other,32.9094,33.6736,32.0529,32.5506
+MD,resid other,33.6587,33.9927,32.6851,32.4202
+ME,resid other,34.2633,33.2254,33.6451,33.8228
+MI,resid other,31.7951,32.8017,30.5608,31.8652
+MN,resid other,33.1231,32.6122,31.4796,32.375
+MO,resid other,33.9777,33.5101,32.8241,34.1737
+MS,resid other,34.3269,33.9462,32.98,32.0762
+MT,resid other,34.0757,32.0351,31.307,31.9333
+NC,resid other,34.8315,33.9321,33.1484,32.7313
+ND,resid other,33.4813,32.3939,32.0145,32.6923
+NE,resid other,33.4667,32.7114,31.5874,32.4702
+NH,resid other,34.0492,33.554,33.4331,33.5872
+NJ,resid other,32.878,34.0409,30.6493,31.1381
+NM,resid other,32.322,31.3183,30.1974,30.9686
+NV,resid other,34.0837,32.5572,31.1928,32.1483
+NY,resid other,31.9112,32.7356,30.7831,31.3742
+OH,resid other,32.4455,33.0249,31.241,32.3897
+OK,resid other,31.0375,31.196,30.3228,29.8236
+OR,resid other,34.4988,32.6378,32.1343,32.4953
+PA,resid other,33.5105,34.0011,31.8963,32.2965
+RI,resid other,32.7196,33.4401,31.9063,32.3155
+SC,resid other,34.879,34.0501,33.2733,32.8331
+SD,resid other,32.7904,32.564,31.9195,32.6364
+TN,resid other,35.2168,34.0913,33.281,32.2307
+TX,resid other,31.7988,31.3722,30.6738,30.5239
+UT,resid other,33.6829,32.6326,30.8027,31.8989
+VA,resid other,34.6454,33.8884,32.932,32.4559
+VT,resid other,34.2161,33.6087,33.4734,33.6522
+WA,resid other,34.5283,32.6015,32.0528,32.4337
+WI,resid other,33.463,33.46,32.0999,33.3557
+WV,resid other,33.2127,33.0825,32.2573,32.7084
+WY,resid other,33.12,31.6149,30.6637,31.2829
+AK,resid refrigerators,16.7556,16.2473,16.896,15.9299
+AL,resid refrigerators,17.3805,16.4753,16.4566,15.3167
+AR,resid refrigerators,17.3805,16.4753,16.4566,15.3167
+AZ,resid refrigerators,16.4415,15.3469,15.4053,14.8059
+CA,resid refrigerators,16.8674,16.1459,16.3293,15.2597
+CO,resid refrigerators,16.4415,15.3469,15.4053,14.8059
+CT,resid refrigerators,17.0425,16.5331,16.753,15.7096
+DC,resid refrigerators,16.9963,16.5161,16.5612,15.526
+DE,resid refrigerators,16.9963,16.5161,16.5612,15.526
+FL,resid refrigerators,16.2905,15.6135,15.5715,14.7313
+GA,resid refrigerators,17.3805,16.4753,16.4566,15.3167
+HI,resid refrigerators,18.2003,17.6965,19.935,18.2249
+IA,resid refrigerators,16.7302,15.8473,15.7298,15.0877
+ID,resid refrigerators,16.9399,15.7272,15.784,15.1455
+IL,resid refrigerators,17.1856,16.2562,16.3679,15.7724
+IN,resid refrigerators,16.6031,15.9362,15.9728,15.38
+KS,resid refrigerators,15.5581,14.9951,15.0496,14.1752
+KY,resid refrigerators,16.6031,15.9362,15.9728,15.38
+LA,resid refrigerators,17.3805,16.4753,16.4566,15.3167
+MA,resid refrigerators,17.0425,16.5331,16.753,15.7096
+MD,resid refrigerators,16.9963,16.5161,16.5612,15.526
+ME,resid refrigerators,17.0425,16.5331,16.753,15.7096
+MI,resid refrigerators,16.6031,15.9362,15.9728,15.38
+MN,resid refrigerators,16.7302,15.8473,15.7298,15.0877
+MO,resid refrigerators,17.1856,16.2562,16.3679,15.7724
+MS,resid refrigerators,17.3805,16.4753,16.4566,15.3167
+MT,resid refrigerators,16.9399,15.7272,15.784,15.1455
+NC,resid refrigerators,17.3805,16.4753,16.4566,15.3167
+ND,resid refrigerators,16.7302,15.8473,15.7298,15.0877
+NE,resid refrigerators,16.7302,15.8473,15.7298,15.0877
+NH,resid refrigerators,17.0425,16.5331,16.753,15.7096
+NJ,resid refrigerators,16.9963,16.5161,16.5612,15.526
+NM,resid refrigerators,16.4415,15.3469,15.4053,14.8059
+NV,resid refrigerators,16.9399,15.7272,15.784,15.1455
+NY,resid refrigerators,16.4247,16.1949,16.2943,15.3826
+OH,resid refrigerators,16.6031,15.9362,15.9728,15.38
+OK,resid refrigerators,15.5581,14.9951,15.0496,14.1752
+OR,resid refrigerators,16.9399,15.7272,15.784,15.1455
+PA,resid refrigerators,16.9963,16.5161,16.5612,15.526
+RI,resid refrigerators,17.0425,16.5331,16.753,15.7096
+SC,resid refrigerators,17.3805,16.4753,16.4566,15.3167
+SD,resid refrigerators,16.7302,15.8473,15.7298,15.0877
+TN,resid refrigerators,17.3805,16.4753,16.4566,15.3167
+TX,resid refrigerators,15.8806,15.1563,15.4209,14.5565
+UT,resid refrigerators,16.9399,15.7272,15.784,15.1455
+VA,resid refrigerators,17.3805,16.4753,16.4566,15.3167
+VT,resid refrigerators,17.0425,16.5331,16.753,15.7096
+WA,resid refrigerators,16.9399,15.7272,15.784,15.1455
+WI,resid refrigerators,17.1856,16.2562,16.3679,15.7724
+WV,resid refrigerators,16.6031,15.9362,15.9728,15.38
+WY,resid refrigerators,16.4415,15.3469,15.4053,14.8059
+AK,resid televisions,34.7602,33.7847,35.0296,33.7778
+AL,resid televisions,35.9594,34.2223,34.1863,32.3651
+AR,resid televisions,35.9594,34.2223,34.1863,32.3651
+AZ,resid televisions,34.1574,32.0569,32.169,31.1886
+CA,resid televisions,34.9748,33.5901,33.9421,32.2339
+CO,resid televisions,34.1574,32.0569,32.169,31.1886
+CT,resid televisions,35.3108,34.3333,34.7552,33.2703
+DC,resid televisions,35.2221,34.3006,34.3871,32.8473
+DE,resid televisions,35.2221,34.3006,34.3871,32.8473
+FL,resid televisions,33.8677,32.5686,32.4879,31.0167
+GA,resid televisions,35.9594,34.2223,34.1863,32.3651
+HI,resid televisions,37.5326,36.5658,40.8614,39.0647
+IA,resid televisions,34.7114,33.0172,32.7917,31.8376
+ID,resid televisions,35.1139,32.7867,32.8958,31.9708
+IL,resid televisions,35.5854,33.8019,34.0161,33.415
+IN,resid televisions,34.4675,33.1877,33.258,32.5111
+KS,resid televisions,32.4621,31.3818,31.4863,29.7357
+KY,resid televisions,34.4675,33.1877,33.258,32.5111
+LA,resid televisions,35.9594,34.2223,34.1863,32.3651
+MA,resid televisions,35.3108,34.3333,34.7552,33.2703
+MD,resid televisions,35.2221,34.3006,34.3871,32.8473
+ME,resid televisions,35.3108,34.3333,34.7552,33.2703
+MI,resid televisions,34.4675,33.1877,33.258,32.5111
+MN,resid televisions,34.7114,33.0172,32.7917,31.8376
+MO,resid televisions,35.5854,33.8019,34.0161,33.415
+MS,resid televisions,35.9594,34.2223,34.1863,32.3651
+MT,resid televisions,35.1139,32.7867,32.8958,31.9708
+NC,resid televisions,35.9594,34.2223,34.1863,32.3651
+ND,resid televisions,34.7114,33.0172,32.7917,31.8376
+NE,resid televisions,34.7114,33.0172,32.7917,31.8376
+NH,resid televisions,35.3108,34.3333,34.7552,33.2703
+NJ,resid televisions,35.2221,34.3006,34.3871,32.8473
+NM,resid televisions,34.1574,32.0569,32.169,31.1886
+NV,resid televisions,35.1139,32.7867,32.8958,31.9708
+NY,resid televisions,34.1252,33.6841,33.875,32.5171
+OH,resid televisions,34.4675,33.1877,33.258,32.5111
+OK,resid televisions,32.4621,31.3818,31.4863,29.7357
+OR,resid televisions,35.1139,32.7867,32.8958,31.9708
+PA,resid televisions,35.2221,34.3006,34.3871,32.8473
+RI,resid televisions,35.3108,34.3333,34.7552,33.2703
+SC,resid televisions,35.9594,34.2223,34.1863,32.3651
+SD,resid televisions,34.7114,33.0172,32.7917,31.8376
+TN,resid televisions,35.9594,34.2223,34.1863,32.3651
+TX,resid televisions,33.0811,31.6911,32.1988,30.614
+UT,resid televisions,35.1139,32.7867,32.8958,31.9708
+VA,resid televisions,35.9594,34.2223,34.1863,32.3651
+VT,resid televisions,35.3108,34.3333,34.7552,33.2703
+WA,resid televisions,35.1139,32.7867,32.8958,31.9708
+WI,resid televisions,35.5854,33.8019,34.0161,33.415
+WV,resid televisions,34.4675,33.1877,33.258,32.5111
+WY,resid televisions,34.1574,32.0569,32.169,31.1886
+AK,subpeak generation,23.4389,23.0281,23.7095,23.2694
+AL,subpeak generation,43.1652,19.8119,20.9546,20.5571
+AR,subpeak generation,31.032,19.8401,20.957,20.5526
+AZ,subpeak generation,36.182,19.7659,20.6823,13.8088
+CA,subpeak generation,22.0979,20.5849,18.9882,15.5937
+CO,subpeak generation,39.3149,19.0379,17.202,16.4505
+CT,subpeak generation,21.5684,21.9536,22.5754,22.0438
+DC,subpeak generation,21.7646,22.9287,27.357,0
+DE,subpeak generation,24.5969,21.154,21.9803,20.8116
+FL,subpeak generation,19.7352,21.041,20.3703,19.9977
+GA,subpeak generation,44.2887,19.8406,20.9909,20.3684
+HI,subpeak generation,23.9143,25.2006,29.4359,26.8376
+IA,subpeak generation,38.5503,18.5224,12.5399,6.98815
+ID,subpeak generation,18.6009,20.1537,21.0664,20.4833
+IL,subpeak generation,35.4736,21.0084,19.8935,17.1506
+IN,subpeak generation,37.8853,20.5229,20.0513,19.6066
+KS,subpeak generation,34.8236,20.924,20.6507,7.479
+KY,subpeak generation,43.3331,22.1835,24.203,23.2294
+LA,subpeak generation,22.0201,19.9533,22.195,20.5571
+MA,subpeak generation,21.6865,21.911,22.5706,20.3538
+MD,subpeak generation,27.1598,21.7387,22.9225,20.1114
+ME,subpeak generation,21.4898,21.7526,22.5754,22.1775
+MI,subpeak generation,27.8547,20.5027,21.3591,19.6151
+MN,subpeak generation,34.2915,19.5026,17.8489,10.6351
+MO,subpeak generation,41.7625,21.066,21.5128,20.4886
+MS,subpeak generation,23.7605,19.929,20.9442,20.5571
+MT,subpeak generation,44.528,23.2913,27.5392,20.2061
+NC,subpeak generation,43.5527,19.9353,21.3376,18.8953
+ND,subpeak generation,43.6485,14.9979,6.36268,7.20924
+NE,subpeak generation,36.0174,19.7214,18.736,9.9386
+NH,subpeak generation,21.4842,21.8263,22.5754,22.1775
+NJ,subpeak generation,22.699,20.6875,21.7166,20.6167
+NM,subpeak generation,35.3431,18.0097,18.0983,14.5985
+NV,subpeak generation,38.1417,20.1744,19.9244,16.8932
+NY,subpeak generation,22.0112,22.1675,22.3971,21.863
+OH,subpeak generation,42.1895,21.3184,22.1857,21.4283
+OK,subpeak generation,26.3245,19.2268,20.91,8.6305
+OR,subpeak generation,31.5539,20.245,21.2972,20.7278
+PA,subpeak generation,35.4896,21.1891,21.999,21.266
+RI,subpeak generation,22.1007,21.5682,22.5754,21.918
+SC,subpeak generation,39.9557,19.9225,21.1457,20.537
+SD,subpeak generation,37.7337,19.1349,11.847,9.76749
+TN,subpeak generation,44.724,20.2193,22.0627,20.0452
+TX,subpeak generation,22.2228,18.7408,19.8159,13.1726
+UT,subpeak generation,44.419,19.9098,21.2181,19.5754
+VA,subpeak generation,35.3053,20.3828,21.9634,20.5571
+VT,subpeak generation,22.2261,22.3469,22.5825,17.1701
+WA,subpeak generation,44.6189,20.2432,21.3606,20.9541
+WI,subpeak generation,41.8289,21.1109,21.7773,20.9624
+WV,subpeak generation,42.5837,20.7706,17.0862,17.4103
+WY,subpeak generation,43.0786,11.9243,7.9847,15.9745
+AK,trn_aviation_intl,0.136151,0.134964,0.145516,0.139262
+AL,trn_aviation_intl,0.0950983,0.107033,0.108758,0.106346
+AR,trn_aviation_intl,0.0929057,0.105159,0.107085,0.105546
+AZ,trn_aviation_intl,0.0976175,0.112599,0.1113,0.108762
+CA,trn_aviation_intl,0.111995,0.126621,0.129075,0.132089
+CO,trn_aviation_intl,0.103432,0.120886,0.122472,0.122952
+CT,trn_aviation_intl,0.115869,0.134782,0.137898,0.133135
+DC,trn_aviation_intl,0.175116,0,0,0
+DE,trn_aviation_intl,0.118592,0.136896,0.136077,0.135638
+FL,trn_aviation_intl,0.0993971,0.113037,0.11202,0.109432
+GA,trn_aviation_intl,0.10084,0.116336,0.11467,0.113797
+HI,trn_aviation_intl,0.117774,0.124039,0.125994,0.12445
+IA,trn_aviation_intl,0.098371,0.115736,0.119302,0.12058
+ID,trn_aviation_intl,0.0966669,0.108722,0.109973,0.107943
+IL,trn_aviation_intl,0.105436,0.1214,0.124267,0.124286
+IN,trn_aviation_intl,0.0991128,0.113375,0.116488,0.114572
+KS,trn_aviation_intl,0.0996536,0.111378,0.117005,0.116229
+KY,trn_aviation_intl,0.0967755,0.108714,0.111104,0.109037
+LA,trn_aviation_intl,0.101786,0.119735,0.123628,0.116089
+MA,trn_aviation_intl,0.109335,0.127397,0.133818,0.134679
+MD,trn_aviation_intl,0.105939,0.122106,0.126837,0.124524
+ME,trn_aviation_intl,0.0982058,0.108842,0.11182,0.108504
+MI,trn_aviation_intl,0.101048,0.112805,0.112037,0.112231
+MN,trn_aviation_intl,0.103951,0.121708,0.123516,0.123198
+MO,trn_aviation_intl,0.0999705,0.113001,0.115948,0.113144
+MS,trn_aviation_intl,0.0910666,0.100732,0.104721,0.101337
+MT,trn_aviation_intl,0.0957719,0.109314,0.113657,0.112598
+NC,trn_aviation_intl,0.0995756,0.113514,0.115292,0.113388
+ND,trn_aviation_intl,0.0957105,0.112566,0.125526,0.13744
+NE,trn_aviation_intl,0.100639,0.117503,0.123366,0.124277
+NH,trn_aviation_intl,0.100731,0.11697,0.120878,0.12025
+NJ,trn_aviation_intl,0.111188,0.126317,0.128813,0.126902
+NM,trn_aviation_intl,0.0935805,0.11109,0.113083,0.111124
+NV,trn_aviation_intl,0.109363,0.125701,0.11982,0.115979
+NY,trn_aviation_intl,0.112063,0.128345,0.135258,0.135825
+OH,trn_aviation_intl,0.100725,0.115164,0.1162,0.117115
+OK,trn_aviation_intl,0.0958027,0.107532,0.112571,0.116188
+OR,trn_aviation_intl,0.10007,0.113336,0.116503,0.116528
+PA,trn_aviation_intl,0.100909,0.115287,0.119953,0.120405
+RI,trn_aviation_intl,0.102322,0.116432,0.119408,0.117447
+SC,trn_aviation_intl,0.0961355,0.106415,0.1075,0.106149
+SD,trn_aviation_intl,0.0962306,0.113725,0.119454,0.119758
+TN,trn_aviation_intl,0.0973923,0.111117,0.112295,0.112465
+TX,trn_aviation_intl,0.100925,0.115904,0.120778,0.123375
+UT,trn_aviation_intl,0.098253,0.113836,0.116876,0.116263
+VA,trn_aviation_intl,0.103883,0.120768,0.12369,0.120375
+VT,trn_aviation_intl,0.0995632,0.111285,0.115834,0.113711
+WA,trn_aviation_intl,0.107766,0.123365,0.127885,0.129445
+WI,trn_aviation_intl,0.0996466,0.114922,0.117375,0.116879
+WV,trn_aviation_intl,0.0922545,0.104766,0.108693,0.106223
+WY,trn_aviation_intl,0.107443,0.130247,0.138962,0.133005
+AK,trn_freight,0.193008,0.196554,0.204556,0.206844
+AL,trn_freight,0.174768,0.186467,0.195872,0.187941
+AR,trn_freight,0.192903,0.19414,0.202586,0.204188
+AZ,trn_freight,0.193618,0.194868,0.203298,0.204897
+CA,trn_freight,0.127056,0.145432,0.148904,0.116914
+CO,trn_freight,0.193618,0.194867,0.203298,0.204897
+CT,trn_freight,0.191907,0.194615,0.202225,0.205154
+DC,trn_freight,0.193928,0.195614,0.204,0.205624
+DE,trn_freight,0.139947,0.123424,0.174986,0.178294
+FL,trn_freight,0.157686,0.154692,0.158542,0.123818
+GA,trn_freight,0.186454,0.177497,0.170001,0.177026
+HI,trn_freight,0.137665,0.157863,0.173205,0.0967447
+IA,trn_freight,0.193574,0.194826,0.203256,0.204855
+ID,trn_freight,0.195511,0.196762,0.205185,0.206774
+IL,trn_freight,0.193738,0.195071,0.203606,0.205178
+IN,trn_freight,0.19311,0.194295,0.203091,0.203269
+KS,trn_freight,0.192832,0.194083,0.202515,0.204118
+KY,trn_freight,0.194024,0.195256,0.203664,0.205301
+LA,trn_freight,0.118495,0.144738,0.151298,0.13919
+MA,trn_freight,0.175178,0.186284,0.1997,0.199849
+MD,trn_freight,0.171786,0.182464,0.196619,0.20279
+ME,trn_freight,0.190223,0.164434,0.190552,0.184571
+MI,trn_freight,0.19324,0.193795,0.201947,0.200584
+MN,trn_freight,0.193575,0.192508,0.201383,0.201575
+MO,trn_freight,0.193689,0.195087,0.203606,0.205203
+MS,trn_freight,0.175329,0.188048,0.195757,0.185825
+MT,trn_freight,0.19551,0.196761,0.205185,0.206776
+NC,trn_freight,0.189313,0.191526,0.200276,0.203933
+ND,trn_freight,0.193576,0.194826,0.203255,0.204855
+NE,trn_freight,0.193576,0.194827,0.203256,0.204855
+NH,trn_freight,0.186645,0.195128,0.203562,0.205157
+NJ,trn_freight,0.146671,0.121513,0.159329,0.126994
+NM,trn_freight,0.193617,0.194868,0.203298,0.204898
+NV,trn_freight,0.195512,0.196763,0.205184,0.206776
+NY,trn_freight,0.187845,0.16622,0.155052,0.130278
+OH,trn_freight,0.194001,0.195275,0.203703,0.205188
+OK,trn_freight,0.192832,0.194083,0.202516,0.204118
+OR,trn_freight,0.16236,0.176662,0.19106,0.194839
+PA,trn_freight,0.17045,0.176738,0.200698,0.199379
+RI,trn_freight,0.190583,0.195127,0.196213,0.205092
+SC,trn_freight,0.187663,0.179527,0.185727,0.155694
+SD,trn_freight,0.193564,0.194825,0.203255,0.204855
+TN,trn_freight,0.192874,0.193805,0.202586,0.203868
+TX,trn_freight,0.146204,0.162531,0.171458,0.139566
+UT,trn_freight,0.19444,0.196762,0.205185,0.206775
+VA,trn_freight,0.172936,0.182951,0.197893,0.197219
+VT,trn_freight,0.193529,0.195124,0.203555,0.20516
+WA,trn_freight,0.114665,0.145141,0.163963,0.0856609
+WI,trn_freight,0.193912,0.194168,0.203605,0.205203
+WV,trn_freight,0.194024,0.195273,0.203703,0.2053
+WY,trn_freight,0.193618,0.194868,0.203299,0.204898
+AK,trn_freight_road,0.402525,0.405009,0.420847,0.422655
+AL,trn_freight_road,0.397205,0.399689,0.415559,0.417408
+AR,trn_freight_road,0.397205,0.399689,0.415559,0.417408
+AZ,trn_freight_road,0.398626,0.40111,0.416971,0.41881
+CA,trn_freight_road,0.407846,0.41033,0.426136,0.427903
+CO,trn_freight_road,0.398626,0.40111,0.416971,0.41881
+CT,trn_freight_road,0.399141,0.401625,0.417483,0.419318
+DC,trn_freight_road,0.400076,0.402556,0.418402,0.420234
+DE,trn_freight_road,0.400072,0.402559,0.418408,0.420236
+FL,trn_freight_road,0.399267,0.401751,0.417608,0.419441
+GA,trn_freight_road,0.397205,0.399689,0.415558,0.417408
+HI,trn_freight_road,0.407232,0.409716,0.425527,0.427296
+IA,trn_freight_road,0.398543,0.401027,0.416888,0.418728
+ID,trn_freight_road,0.402387,0.40487,0.420709,0.422519
+IL,trn_freight_road,0.399239,0.401723,0.41758,0.419414
+IN,trn_freight_road,0.399433,0.401917,0.417774,0.419606
+KS,trn_freight_road,0.397066,0.39955,0.41542,0.417271
+KY,trn_freight_road,0.399433,0.401917,0.417773,0.419606
+LA,trn_freight_road,0.397205,0.399689,0.415558,0.417408
+MA,trn_freight_road,0.399141,0.401625,0.417483,0.419317
+MD,trn_freight_road,0.400074,0.402558,0.41841,0.420237
+ME,trn_freight_road,0.399141,0.401625,0.417483,0.419318
+MI,trn_freight_road,0.399433,0.401917,0.417774,0.419606
+MN,trn_freight_road,0.398543,0.401026,0.416888,0.418727
+MO,trn_freight_road,0.399239,0.401723,0.41758,0.419414
+MS,trn_freight_road,0.397205,0.399689,0.415558,0.417408
+MT,trn_freight_road,0.402386,0.404871,0.420709,0.422518
+NC,trn_freight_road,0.397205,0.399689,0.415558,0.417408
+ND,trn_freight_road,0.398543,0.401027,0.416888,0.418727
+NE,trn_freight_road,0.398543,0.401027,0.416888,0.418727
+NH,trn_freight_road,0.399143,0.401625,0.417483,0.419317
+NJ,trn_freight_road,0.400074,0.402558,0.418411,0.420237
+NM,trn_freight_road,0.398626,0.40111,0.416971,0.418809
+NV,trn_freight_road,0.402386,0.404871,0.420709,0.422518
+NY,trn_freight_road,0.400771,0.403255,0.419103,0.420925
+OH,trn_freight_road,0.399433,0.401917,0.417774,0.419606
+OK,trn_freight_road,0.397066,0.39955,0.41542,0.417271
+OR,trn_freight_road,0.402386,0.40487,0.420709,0.422518
+PA,trn_freight_road,0.400074,0.402558,0.41841,0.420238
+RI,trn_freight_road,0.399142,0.401625,0.417482,0.419319
+SC,trn_freight_road,0.397205,0.399689,0.415558,0.417408
+SD,trn_freight_road,0.398542,0.401027,0.416889,0.418727
+TN,trn_freight_road,0.397205,0.399689,0.415558,0.417408
+TX,trn_freight_road,0.396648,0.399132,0.415004,0.416858
+UT,trn_freight_road,0.402387,0.40487,0.42071,0.422518
+VA,trn_freight_road,0.397205,0.399689,0.415558,0.417408
+VT,trn_freight_road,0.399142,0.401626,0.417482,0.419319
+WA,trn_freight_road,0.402387,0.40487,0.420709,0.422519
+WI,trn_freight_road,0.399239,0.401723,0.41758,0.419414
+WV,trn_freight_road,0.399433,0.401917,0.417773,0.419605
+WY,trn_freight_road,0.398626,0.40111,0.416971,0.41881
+AK,trn_pass,0.318479,0.281254,0.329164,0.329806
+AL,trn_pass,0.308612,0.369457,0.369953,0.371568
+AR,trn_pass,0.293823,0.358889,0.360026,0.369315
+AZ,trn_pass,0.303096,0.388483,0.382059,0.386355
+CA,trn_pass,0.349372,0.42346,0.429418,0.453559
+CO,trn_pass,0.338419,0.415301,0.417422,0.444047
+CT,trn_pass,0.422966,0.521342,0.53539,0.527053
+DC,trn_pass,0.809031,1.17741,1.25445,1.2199
+DE,trn_pass,0.416937,0.539046,0.527257,0.542875
+FL,trn_pass,0.310112,0.38796,0.367803,0.371493
+GA,trn_pass,0.318808,0.414985,0.385437,0.418099
+HI,trn_pass,0.298663,0.318172,0.349513,0.333555
+IA,trn_pass,0.326905,0.418026,0.429236,0.453311
+ID,trn_pass,0.3004,0.368082,0.367532,0.371937
+IL,trn_pass,0.367816,0.408301,0.428089,0.441365
+IN,trn_pass,0.299068,0.392893,0.398565,0.403967
+KS,trn_pass,0.322575,0.39387,0.407441,0.427719
+KY,trn_pass,0.301702,0.357936,0.356375,0.360165
+LA,trn_pass,0.292093,0.377912,0.39954,0.357908
+MA,trn_pass,0.371694,0.467866,0.500075,0.522858
+MD,trn_pass,0.364061,0.446884,0.467389,0.478216
+ME,trn_pass,0.306795,0.370879,0.375312,0.379921
+MI,trn_pass,0.334283,0.402929,0.388268,0.406838
+MN,trn_pass,0.349715,0.424082,0.432025,0.459813
+MO,trn_pass,0.324398,0.391721,0.404995,0.407481
+MS,trn_pass,0.267482,0.32044,0.331649,0.31751
+MT,trn_pass,0.295616,0.361031,0.377637,0.39157
+NC,trn_pass,0.332479,0.403675,0.413492,0.418105
+ND,trn_pass,0.295609,0.389444,0.44719,0.525475
+NE,trn_pass,0.330499,0.425169,0.44581,0.468048
+NH,trn_pass,0.3404,0.426353,0.436236,0.453905
+NJ,trn_pass,0.330281,0.429177,0.419267,0.423424
+NM,trn_pass,0.284797,0.380443,0.387677,0.394107
+NV,trn_pass,0.33335,0.423827,0.408959,0.397555
+NY,trn_pass,0.409352,0.478702,0.513811,0.509096
+OH,trn_pass,0.332148,0.396856,0.398148,0.421556
+OK,trn_pass,0.295278,0.358742,0.37285,0.403855
+OR,trn_pass,0.318131,0.381943,0.393506,0.410977
+PA,trn_pass,0.331561,0.40021,0.421035,0.449215
+RI,trn_pass,0.346723,0.420331,0.428741,0.435518
+SC,trn_pass,0.312567,0.368568,0.365798,0.37366
+SD,trn_pass,0.303128,0.394352,0.419272,0.436934
+TN,trn_pass,0.317334,0.372254,0.37207,0.39015
+TX,trn_pass,0.297064,0.385204,0.41049,0.433523
+UT,trn_pass,0.289327,0.365592,0.380573,0.394667
+VA,trn_pass,0.336187,0.421523,0.437665,0.439591
+VT,trn_pass,0.335145,0.3898,0.408733,0.414307
+WA,trn_pass,0.325821,0.415821,0.427851,0.453983
+WI,trn_pass,0.335107,0.41235,0.416895,0.433494
+WV,trn_pass,0.291826,0.35688,0.370142,0.375139
+WY,trn_pass,0.365788,0.490164,0.523342,0.50886
+AK,trn_pass_road,0.508999,0.497606,0.545794,0.530469
+AL,trn_pass_road,0.303391,0.362925,0.36301,0.366906
+AR,trn_pass_road,0.291482,0.351211,0.351747,0.361404
+AZ,trn_pass_road,0.316399,0.390242,0.374177,0.377931
+CA,trn_pass_road,0.374288,0.446798,0.452128,0.486125
+CO,trn_pass_road,0.347313,0.434546,0.433459,0.453202
+CT,trn_pass_road,0.412552,0.507275,0.514718,0.506492
+DC,trn_pass_road,0.723503,1.02107,1.05326,1.01267
+DE,trn_pass_road,0.424884,0.516708,0.503782,0.518363
+FL,trn_pass_road,0.32504,0.392203,0.378252,0.381404
+GA,trn_pass_road,0.335123,0.41247,0.394815,0.406917
+HI,trn_pass_road,0.402917,0.4331,0.434932,0.447276
+IA,trn_pass_road,0.318601,0.406063,0.415134,0.439193
+ID,trn_pass_road,0.301509,0.360095,0.358112,0.364395
+IL,trn_pass_road,0.355045,0.435607,0.441576,0.458116
+IN,trn_pass_road,0.319129,0.391178,0.398628,0.40533
+KS,trn_pass_road,0.326495,0.385137,0.405758,0.417463
+KY,trn_pass_road,0.306606,0.36582,0.369807,0.376309
+LA,trn_pass_road,0.33703,0.42938,0.439786,0.416776
+MA,trn_pass_road,0.378482,0.468495,0.4934,0.514691
+MD,trn_pass_road,0.358089,0.438407,0.454448,0.459632
+ME,trn_pass_road,0.316229,0.369771,0.375925,0.375964
+MI,trn_pass_road,0.334309,0.390954,0.377981,0.395777
+MN,trn_pass_road,0.350115,0.438971,0.439281,0.454456
+MO,trn_pass_road,0.326684,0.390563,0.397094,0.399397
+MS,trn_pass_road,0.282218,0.328394,0.340035,0.339287
+MT,trn_pass_road,0.294701,0.360754,0.375371,0.389176
+NC,trn_pass_road,0.329571,0.398342,0.398649,0.405324
+ND,trn_pass_road,0.302423,0.386612,0.446545,0.527602
+NE,trn_pass_road,0.328516,0.414107,0.433942,0.457245
+NH,trn_pass_road,0.333803,0.413939,0.425715,0.439196
+NJ,trn_pass_road,0.385847,0.460495,0.46504,0.471983
+NM,trn_pass_road,0.292398,0.379845,0.380572,0.387035
+NV,trn_pass_road,0.370677,0.452014,0.41239,0.409998
+NY,trn_pass_road,0.389218,0.470043,0.497725,0.517718
+OH,trn_pass_road,0.330832,0.401787,0.398152,0.420127
+OK,trn_pass_road,0.308113,0.363623,0.380231,0.417265
+OR,trn_pass_road,0.319194,0.385449,0.392999,0.411516
+PA,trn_pass_road,0.330638,0.401466,0.417349,0.436796
+RI,trn_pass_road,0.341624,0.410958,0.417575,0.424076
+SC,trn_pass_road,0.310556,0.360468,0.356844,0.366707
+SD,trn_pass_road,0.307731,0.394613,0.415183,0.434315
+TN,trn_pass_road,0.315344,0.384224,0.381615,0.399401
+TX,trn_pass_road,0.337291,0.411054,0.427079,0.457466
+UT,trn_pass_road,0.310105,0.387991,0.395125,0.409943
+VA,trn_pass_road,0.351786,0.436466,0.442755,0.441945
+VT,trn_pass_road,0.326593,0.383701,0.398209,0.403685
+WA,trn_pass_road,0.362268,0.439751,0.455024,0.48077
+WI,trn_pass_road,0.324882,0.401473,0.405204,0.419517
+WV,trn_pass_road,0.284168,0.345022,0.357881,0.361634
+WY,trn_pass_road,0.358012,0.478963,0.517228,0.502497
+AK,trn_pass_road_LDV,0.513533,0.502547,0.549353,0.533874
+AL,trn_pass_road_LDV,0.3105,0.367706,0.367807,0.371507
+AR,trn_pass_road_LDV,0.299106,0.357968,0.359109,0.36735
+AZ,trn_pass_road_LDV,0.320838,0.393878,0.378483,0.381741
+CA,trn_pass_road_LDV,0.377685,0.448882,0.454429,0.487903
+CO,trn_pass_road_LDV,0.351057,0.436943,0.436543,0.455484
+CT,trn_pass_road_LDV,0.414688,0.50816,0.515793,0.507561
+DC,trn_pass_road_LDV,0.720777,1.01568,1.04918,1.00939
+DE,trn_pass_road_LDV,0.42703,0.517342,0.504665,0.519044
+FL,trn_pass_road_LDV,0.328844,0.394917,0.381081,0.384179
+GA,trn_pass_road_LDV,0.34034,0.416056,0.398529,0.410228
+HI,trn_pass_road_LDV,0.408907,0.436649,0.439512,0.44921
+IA,trn_pass_road_LDV,0.324915,0.410346,0.420216,0.443294
+ID,trn_pass_road_LDV,0.308609,0.366441,0.364888,0.371345
+IL,trn_pass_road_LDV,0.360279,0.43843,0.444777,0.461415
+IN,trn_pass_road_LDV,0.327044,0.396348,0.404007,0.410618
+KS,trn_pass_road_LDV,0.334443,0.390559,0.41091,0.423096
+KY,trn_pass_road_LDV,0.314897,0.372124,0.376028,0.381851
+LA,trn_pass_road_LDV,0.345256,0.433718,0.445081,0.42214
+MA,trn_pass_road_LDV,0.380732,0.469784,0.494587,0.515584
+MD,trn_pass_road_LDV,0.361278,0.440481,0.456644,0.461288
+ME,trn_pass_road_LDV,0.322897,0.373355,0.380267,0.379561
+MI,trn_pass_road_LDV,0.3371,0.393386,0.380873,0.398452
+MN,trn_pass_road_LDV,0.353913,0.441379,0.442113,0.456901
+MO,trn_pass_road_LDV,0.331878,0.394779,0.401546,0.403513
+MS,trn_pass_road_LDV,0.289548,0.334966,0.346824,0.345477
+MT,trn_pass_road_LDV,0.303958,0.36952,0.384033,0.395531
+NC,trn_pass_road_LDV,0.333768,0.401386,0.401762,0.408104
+ND,trn_pass_road_LDV,0.311089,0.393871,0.452561,0.530913
+NE,trn_pass_road_LDV,0.336702,0.419528,0.441338,0.462509
+NH,trn_pass_road_LDV,0.336021,0.415597,0.427338,0.440604
+NJ,trn_pass_road_LDV,0.388555,0.462362,0.466914,0.473647
+NM,trn_pass_road_LDV,0.299858,0.386038,0.387747,0.394015
+NV,trn_pass_road_LDV,0.374591,0.45468,0.416058,0.413103
+NY,trn_pass_road_LDV,0.391752,0.471549,0.499165,0.518881
+OH,trn_pass_road_LDV,0.335421,0.405645,0.40251,0.42383
+OK,trn_pass_road_LDV,0.31443,0.370571,0.387867,0.42288
+OR,trn_pass_road_LDV,0.326295,0.390419,0.398824,0.415959
+PA,trn_pass_road_LDV,0.335139,0.405042,0.420872,0.439885
+RI,trn_pass_road_LDV,0.344287,0.412798,0.419702,0.426034
+SC,trn_pass_road_LDV,0.31589,0.364498,0.361265,0.370487
+SD,trn_pass_road_LDV,0.313792,0.399891,0.421007,0.43902
+TN,trn_pass_road_LDV,0.322422,0.388934,0.386184,0.40331
+TX,trn_pass_road_LDV,0.341863,0.414888,0.431264,0.460913
+UT,trn_pass_road_LDV,0.316852,0.393019,0.400761,0.414582
+VA,trn_pass_road_LDV,0.356152,0.439087,0.445404,0.444416
+VT,trn_pass_road_LDV,0.329951,0.386052,0.401129,0.406618
+WA,trn_pass_road_LDV,0.366289,0.442539,0.457971,0.483084
+WI,trn_pass_road_LDV,0.330195,0.404764,0.40896,0.422921
+WV,trn_pass_road_LDV,0.291403,0.35161,0.363496,0.367227
+WY,trn_pass_road_LDV,0.371901,0.485595,0.522237,0.507729
+AK,trn_pass_road_LDV_4W,0.180971,0.18221,0.188724,0.188573
+AL,trn_pass_road_LDV_4W,0.177933,0.179169,0.185764,0.185711
+AR,trn_pass_road_LDV_4W,0.177933,0.179169,0.185764,0.185711
+AZ,trn_pass_road_LDV_4W,0.178744,0.179981,0.186555,0.186476
+CA,trn_pass_road_LDV_4W,0.18401,0.185252,0.191685,0.191434
+CO,trn_pass_road_LDV_4W,0.178744,0.179981,0.186555,0.186476
+CT,trn_pass_road_LDV_4W,0.179038,0.180275,0.186842,0.186753
+DC,trn_pass_road_LDV_4W,0.179571,0.180808,0.187361,0.187254
+DE,trn_pass_road_LDV_4W,0.179571,0.180808,0.187361,0.187254
+FL,trn_pass_road_LDV_4W,0.17911,0.180347,0.186911,0.18682
+GA,trn_pass_road_LDV_4W,0.177933,0.179169,0.185764,0.185711
+HI,trn_pass_road_LDV_4W,0.18366,0.184901,0.191344,0.191105
+IA,trn_pass_road_LDV_4W,0.178697,0.179933,0.186509,0.186431
+ID,trn_pass_road_LDV_4W,0.180891,0.18213,0.188647,0.188498
+IL,trn_pass_road_LDV_4W,0.179094,0.180331,0.186896,0.186805
+IN,trn_pass_road_LDV_4W,0.179205,0.180442,0.187004,0.18691
+KS,trn_pass_road_LDV_4W,0.177854,0.179089,0.185687,0.185637
+KY,trn_pass_road_LDV_4W,0.179205,0.180442,0.187004,0.18691
+LA,trn_pass_road_LDV_4W,0.177933,0.179169,0.185764,0.185711
+MA,trn_pass_road_LDV_4W,0.179038,0.180275,0.186842,0.186753
+MD,trn_pass_road_LDV_4W,0.179571,0.180808,0.18736,0.187254
+ME,trn_pass_road_LDV_4W,0.179038,0.180275,0.186842,0.186753
+MI,trn_pass_road_LDV_4W,0.179205,0.180442,0.187004,0.18691
+MN,trn_pass_road_LDV_4W,0.178697,0.179933,0.186509,0.186431
+MO,trn_pass_road_LDV_4W,0.179094,0.180331,0.186896,0.186805
+MS,trn_pass_road_LDV_4W,0.177933,0.179169,0.185764,0.185711
+MT,trn_pass_road_LDV_4W,0.180891,0.18213,0.188647,0.188498
+NC,trn_pass_road_LDV_4W,0.177933,0.179169,0.185764,0.185711
+ND,trn_pass_road_LDV_4W,0.178697,0.179933,0.186509,0.186431
+NE,trn_pass_road_LDV_4W,0.178697,0.179933,0.186509,0.186431
+NH,trn_pass_road_LDV_4W,0.179038,0.180275,0.186842,0.186753
+NJ,trn_pass_road_LDV_4W,0.179571,0.180808,0.18736,0.187254
+NM,trn_pass_road_LDV_4W,0.178744,0.179981,0.186555,0.186476
+NV,trn_pass_road_LDV_4W,0.180891,0.18213,0.188647,0.188498
+NY,trn_pass_road_LDV_4W,0.179969,0.181207,0.187748,0.187629
+OH,trn_pass_road_LDV_4W,0.179205,0.180442,0.187004,0.18691
+OK,trn_pass_road_LDV_4W,0.177854,0.179089,0.185687,0.185637
+OR,trn_pass_road_LDV_4W,0.180891,0.18213,0.188647,0.188498
+PA,trn_pass_road_LDV_4W,0.179571,0.180808,0.18736,0.187254
+RI,trn_pass_road_LDV_4W,0.179038,0.180275,0.186842,0.186753
+SC,trn_pass_road_LDV_4W,0.177933,0.179169,0.185764,0.185711
+SD,trn_pass_road_LDV_4W,0.178697,0.179933,0.186509,0.186431
+TN,trn_pass_road_LDV_4W,0.177933,0.179169,0.185764,0.185711
+TX,trn_pass_road_LDV_4W,0.177615,0.17885,0.185454,0.185412
+UT,trn_pass_road_LDV_4W,0.180891,0.18213,0.188647,0.188498
+VA,trn_pass_road_LDV_4W,0.177933,0.179169,0.185764,0.185711
+VT,trn_pass_road_LDV_4W,0.179038,0.180275,0.186842,0.186753
+WA,trn_pass_road_LDV_4W,0.180891,0.18213,0.188647,0.188498
+WI,trn_pass_road_LDV_4W,0.179094,0.180331,0.186896,0.186805
+WV,trn_pass_road_LDV_4W,0.179205,0.180442,0.187004,0.18691
+WY,trn_pass_road_LDV_4W,0.178744,0.179981,0.186555,0.186476
+AK,trn_shipping_intl,0,0,0,0
+AL,trn_shipping_intl,0,0,0,0.00214057
+AR,trn_shipping_intl,0,0,0,0
+AZ,trn_shipping_intl,0,0,0,0
+CA,trn_shipping_intl,0,0,0,0.00243457
+CO,trn_shipping_intl,0,0,0,0
+CT,trn_shipping_intl,0,0,0,0
+DC,trn_shipping_intl,0,0,0,0
+DE,trn_shipping_intl,0,0,0,0.00221984
+FL,trn_shipping_intl,0,0,0,0.00219753
+GA,trn_shipping_intl,0,0,0,0.00214057
+HI,trn_shipping_intl,0,0,0,0.00241764
+IA,trn_shipping_intl,0,0,0,0
+ID,trn_shipping_intl,0,0,0,0
+IL,trn_shipping_intl,0,0,0,0.00219676
+IN,trn_shipping_intl,0,0,0,0.00220214
+KS,trn_shipping_intl,0,0,0,0
+KY,trn_shipping_intl,0,0,0,0
+LA,trn_shipping_intl,0,0,0,0.00214057
+MA,trn_shipping_intl,0,0,0,0.00219407
+MD,trn_shipping_intl,0,0,0,0.00221984
+ME,trn_shipping_intl,0,0,0,0.00219407
+MI,trn_shipping_intl,0,0,0,0.00220214
+MN,trn_shipping_intl,0,0,0,0.00217753
+MO,trn_shipping_intl,0,0,0,0
+MS,trn_shipping_intl,0,0,0,0.00214057
+MT,trn_shipping_intl,0,0,0,0
+NC,trn_shipping_intl,0,0,0,0.00214057
+ND,trn_shipping_intl,0,0,0,0
+NE,trn_shipping_intl,0,0,0,0
+NH,trn_shipping_intl,0,0,0,0
+NJ,trn_shipping_intl,0,0,0,0.00221984
+NM,trn_shipping_intl,0,0,0,0
+NV,trn_shipping_intl,0,0,0,0
+NY,trn_shipping_intl,0,0,0,0.0022391
+OH,trn_shipping_intl,0,0,0,0.00220214
+OK,trn_shipping_intl,0,0,0,0
+OR,trn_shipping_intl,0,0,0,0.00228373
+PA,trn_shipping_intl,0,0,0,0.00221984
+RI,trn_shipping_intl,0,0,0,0.00219407
+SC,trn_shipping_intl,0,0,0,0.00214057
+SD,trn_shipping_intl,0,0,0,0
+TN,trn_shipping_intl,0,0,0,0.00214057
+TX,trn_shipping_intl,0,0,0,0.00212517
+UT,trn_shipping_intl,0,0,0,0
+VA,trn_shipping_intl,0,0,0,0.00214057
+VT,trn_shipping_intl,0,0,0,0
+WA,trn_shipping_intl,0,0,0,0.00228373
+WI,trn_shipping_intl,0,0,0,0
+WV,trn_shipping_intl,0,0,0,0
+WY,trn_shipping_intl,0,0,0,0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

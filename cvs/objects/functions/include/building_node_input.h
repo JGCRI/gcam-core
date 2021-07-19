@@ -103,6 +103,10 @@ class SatiationDemandFunction;
  *              - \c SatiationDemandFunction::getXMLNameStatic() BuildingNodeInput::mSatiationDemandFunction
  *                   The self contained satiation demand function which will parse it's own
  *                   parameters.
+
+  *              - \c GompertzDemandFunction::getXMLNameStatic() BuildingNodeInput::GompertzDemandFunction
+ *                   The self contained gompertz demand function which will parse it's own
+ *                   parameters.
  *
  * \author Pralit Patel
  * \author Jiyong Eom
@@ -400,7 +404,29 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "subregional-income", mCurrentSubregionalIncome, Value ),
 
         //! The sum product of energy service price necessary to drive demands.
-        DEFINE_VARIABLE( ARRAY | STATE, "price", mPrice, objects::PeriodVector<Value> )
+        DEFINE_VARIABLE( ARRAY | STATE, "price", mPrice, objects::PeriodVector<Value> ),
+
+		//! The unadjusted satiation level to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "unadjust-satiation", mUnadjustSatiation, Value),
+
+		//! The habitable land to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "habitable-land", mHabitableLand, Value),
+
+		//! The base pcFlsp to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "base-pcFlsp", mBasepcFlsp, Value),
+
+		//! The land density parameter to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "land-density-param", mLandDensityParam, Value),
+
+		//! The base floorspace parameter to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "base-floorspace-param", mBaseFloorspaceParam, Value),
+
+		//! The income parameter to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "income-param", mIncomeParam, Value),
+
+		//! The bias correction parameter to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "bias-adjust-param", mBiasAdjustParam, Value)
+
     )
                            
     //! Pointer to function this class will use

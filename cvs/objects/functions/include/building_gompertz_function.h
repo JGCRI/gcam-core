@@ -38,7 +38,7 @@
 
 
 /*! 
-* \file building_GOMPERTZ_function.h
+* \file building_gompertz_function.h
 * \ingroup Objects
 * \brief BuildingFunction class header file.
 * \author	Jon Sampedro
@@ -70,67 +70,6 @@ public:
                        double capitalStock = 0, double alphaZero = 0, double sigma = 0, double IBT = 0,
                        const IInput* aParentInput = 0 ) const;
     
-    double calcCoefficient( InputSet& input, double consumption, const std::string& regionName,
-                            const std::string& sectorName, int period, double sigma = 0, double IBT = 0,
-                            double capitalStock = 0, const IInput* aParentInput = 0 ) const;
-    
-    double calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
-                              const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
-                              const IInput* aParentInput ) const;
-
-    // AProductionFunction methods not implemented by this function
-    double changeElasticity( InputSet& input, const std::string& aRegionName, double priceReceived,
-                             double aProfits, double capitalStock, const int aPeriod, double alphaZero,
-                             double sigmaNew, double sigmaOld ) const
-    {
-        return 1;
-    }
-    
-    double calcOutput( InputSet& input, const std::string& regionName,
-                       const std::string& sectorName, const double aShutdownCoef,
-                       int period, double capitalStock = 0, double alphaZero = 0, double sigma = 0 ) const
-    {
-        return 0;
-    }
-    
-    double calcExpProfitRate( const InputSet& input, const std::string& regionName,
-                              const std::string& sectorName, double aLifeTimeYears, int period, double alphaZero = 0,
-                              double sigma = 0 ) const
-    {
-        return 0;
-    }
-
-
-    double getCapitalOutputRatio( const InputSet& aInputs, const std::string& aRegionName,
-                                  const std::string& aSectorName, double aLifeTimeYears, int aPeriod,
-                                  double aAlphaZero, double aSigma ) const
-    {
-        return 0;
-    }
-    
-    double applyTechnicalChange( InputSet& input, const TechChange& aTechChange,
-                                 const std::string& regionName,const std::string& sectorName, const int aPeriod, 
-                                 double alphaZero = 0, double sigma = 0 ) const
-    {
-        return 0;
-    }
-    
-    double calcUnscaledProfits( const InputSet& aInputs, 
-                                const std::string& aRegionName,
-                                const std::string& aSectorName,
-                                const int aPeriod,
-                                const double aCapitalStock,
-                                const double aAlphaZero,
-                                const double aSigma ) const
-    {
-        return 0;
-    }
-private:
-    virtual double calcCapitalScaler( const InputSet& input, double aAlphaZero, double sigma,
-        double capitalStock, const int aPeriod ) const
-    {
-        return 0;
-    }
-};
+  
 
 #endif // _BUILDING_FUNCTION_H_

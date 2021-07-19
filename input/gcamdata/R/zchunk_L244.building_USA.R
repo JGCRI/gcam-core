@@ -300,8 +300,9 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
              nodeInput="resid",
              building.node.input="resid_building") %>%
       rename(pop_dens=tot_dens,
-             `habitable-land`=area_thouskm2) %>%
-      #select(region,gcam.consumer,nodeInput,building.node.input,`habitable-land`,`unadjust-satiation`,
+             `habitable-land`=area_thouskm2,
+             `base-pcFlsp`=base_flsp) %>%
+      #select(region,gcam.consumer,nodeInput,building.node.input,`habitable-land`,`base-pcFlsp`,`unadjust-satiation`,
       #       `land-density-param`,`base-floorspace-param`,`income-param`,`bias-adjust-param`)
       select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
 

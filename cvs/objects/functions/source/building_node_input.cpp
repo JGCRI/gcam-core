@@ -57,7 +57,7 @@
 #include "marketplace/include/marketplace.h"
 #include "sectors/include/sector_utils.h"
 #include "functions/include/satiation_demand_function.h"
-#include "functions/include/gompertz_function.h"
+#include "functions/include/building_gompertz_function.h"
 #include "containers/include/market_dependency_finder.h"
 
 using namespace std;
@@ -125,12 +125,11 @@ void BuildingNodeInput::XMLParse( const xercesc::DOMNode* node ) {
         else if ( nodeName == "internal-gains-unit" ) {
             mInternalGainsUnit = XMLHelper<string>::getValue( curr );
         }
+
         else if( nodeName == SatiationDemandFunction::getXMLNameStatic() ) {
             parseSingleNode( curr, mSatiationDemandFunction, new SatiationDemandFunction );
         }
-		else if (nodeName == GompertzDemandFunction::getXMLNameStatic()) {
-			parseSingleNode(curr, mGompertzDemandFunction, new GompertzDemandFunction);
-		}
+
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -233,6 +232,101 @@ IInput* BuildingNodeInput::clone() const {
     return retNodeInput;
 }
 
+
+/*!
+ * \Write the gompertz demand function
+ */
+
+
+GompertzDemandFunction::GompertzDemandFunction()
+{
+
+}
+
+GompertzDemandFunction* GompertzDemandFunction::clone() {
+	GompertzDemandFunction* clone = new GompertzDemandFunction();
+	clone->copy(*this);
+	return clone;
+}
+
+//Read the parameters, written in the building_det.xml (or building_USA.xml)
+void GompertzDemandFunction::copy(const GompertzDemandFunction& aOther) {
+	mUnadjustSatiation = aOther.mUnadjustSatiation;
+	mHabitableLand = aOther.mHabitableLand;
+	mBasepcFlsp = aOther.mBasepcFlsp;
+	mLandDensityParam = aOther.mLandDensityParam;
+	mBaseFloorspaceParam = aOther.mBaseFloorspaceParam;
+	mIncomeParam = aOther.mIncomeParam;
+	mBiasAdjustParam = aOther.mBiasAdjustParam
+
+}
+
+const string& GompertzDemandFunction::getXMLNameStatic() {
+	const static string XML_NAME = "building-gompertz-function";
+	return XML_NAME;
+}
+
+const string& GompertzDemandFunction::getName() const {
+	return getXMLNameStatic();
+}
+
+bool GompertzDemandFunction::XMLParse(const DOMNode* aNode) {
+	/*! \pre Make sure we were passed a valid node. */
+	assert(aNode);
+
+	// get all child nodes.
+	DOMNodeList* nodeList = aNode->getChildNodes();
+
+	// loop through the child nodes.
+	for (unsigned int i = 0; i < nodeList->getLength(); i++) {
+		DOMNode* curr = nodeList->item(i);
+		string nodeName = XMLHelper<string>::safeTranscode(curr->getNodeName());
+
+		if (nodeName == XMLHelper<void>::text()) {
+			continue;
+		}
+		else if (nodeName == "unadjust-satiation") {
+			mUnadjustSatiation(XMLHelper<double>::getValue(curr));
+		}
+		else if (nodeName == "base-pcFlsp") {
+			mBasepcFlsp(XMLHelper<double>::getValue(curr));
+		}
+		else if (nodeName == "land-density-param") {
+			mLandDensityParam(XMLHelper<double>::getValue(curr));
+		}
+		else if (nodeName == "base-floorspace-param") {
+			mBaseFloorspaceParam(XMLHelper<double>::getValue(curr));
+		}
+		else if (nodeName == "income-param") {
+			mIncomeParam(XMLHelper<double>::getValue(curr));
+		}
+		else if (nodeName == "bias-adjust-param") {
+			mBiasAdjustParam(XMLHelper<double>::getValue(curr));
+		}
+		else if (nodeName == "habitable-land") {
+			mHabitableLand(XMLHelper<double>::getValue(curr));
+
+			assert(mHabitableLand > 1.0);
+		}
+
+		else if (nodeName == GompertzDemandFunction::getXMLNameStatic()) {
+			parseSingleNode(curr, mGompertzDemandFunction, new GompertzDemandFunction);
+		}
+
+		else {
+			ILogger& mainLog = ILogger::getLogger("main_log");
+			mainLog.setLevel(ILogger::ERROR);
+			mainLog << "Unknown element " << nodeName << " encountered while parsing " << getXMLNameStatic() << endl;
+		}
+	}
+
+	return true;
+}
+
+
+
+
+
 void BuildingNodeInput::copy( const BuildingNodeInput& aNodeInput ) {
     mName = aNodeInput.mName;
     mFunctionType = aNodeInput.mFunctionType;
@@ -245,8 +339,12 @@ void BuildingNodeInput::copy( const BuildingNodeInput& aNodeInput ) {
     mInternalGainsMarketname = aNodeInput.mInternalGainsMarketname;
     mInternalGainsUnit = aNodeInput.mInternalGainsUnit;
 
+
     delete mSatiationDemandFunction;
     mSatiationDemandFunction = aNodeInput.mSatiationDemandFunction->clone();
+
+	delete mGompertzDemandFunction;
+	mGompertzDemandFunction = aNodeInput.mGompertzDemandFunction->clone();
 
     // copy children
     for( CNestedInputIterator it = aNodeInput.mNestedInputs.begin(); it != aNodeInput.mNestedInputs.end(); ++it ) {
@@ -281,6 +379,27 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
 
     // write the closing tag.
     XMLWriteClosingTag( getXMLReportingName(), aOut, aTabs );
+}
+
+
+//! Output debug info to XML: Gompertz function
+void GompertzDemandFunction::toDebugXML(const int aPeriod, ostream& aOut, Tabs* aTabs) const {
+	// write the beginning tag.
+	XMLWriteOpeningTag(getXMLReportingName(), aOut, aTabs, mName);
+
+	XMLWriteElement(mUnadjustSatiation[aPeriod], "unadjust-satiation", aOut, aTabs);
+	XMLWriteElement(mHabitableLand[aPeriod], "habitable-land", aOut, aTabs);
+	XMLWriteElement(mHabitableLand[aPeriod], "base-pcFlsp", aOut, aTabs);
+	XMLWriteElement(mLandDensityParam[aPeriod], "land-density-param", aOut, aTabs);
+	XMLWriteElement(mBaseFloorspaceParam[aPeriod], "base-floorspace-param", aOut, aTabs);
+	XMLWriteElement(mIncomeParam[aPeriod], "income-param", aOut, aTabs);
+	XMLWriteElement(mBiasAdjustParam[aPeriod], "bias-adjust-param", aOut, aTabs);
+
+	mBiasAdjustParam = aOther.mBiasAdjustParam
+
+
+	// write the closing tag.
+	XMLWriteClosingTag(getXMLReportingName(), aOut, aTabs);
 }
 
 /*! \brief Get the XML node name for output to XML.
