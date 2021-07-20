@@ -113,6 +113,7 @@ class SatiationDemandFunction;
  */
 class BuildingNodeInput : public INestedInput
 {
+friend class GompertzDemandFunction;
 public:
     BuildingNodeInput();
     ~BuildingNodeInput();
@@ -427,7 +428,7 @@ protected:
 		//! The bias correction parameter to use during calcDemand. Parsed from XML
 		DEFINE_VARIABLE(SIMPLE | STATE, "bias-adjust-param", mBiasAdjustParam, Value)
 
-    )
+	    )
                            
     //! Pointer to function this class will use
     const IFunction* mFunction;

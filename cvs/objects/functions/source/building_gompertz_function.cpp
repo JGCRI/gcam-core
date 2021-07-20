@@ -60,14 +60,24 @@ extern Scenario* scenario;
 double GompertzDemandFunction::calcDemand(InputSet& input, double income, const std::string& regionName,
 	const std::string& sectorName, const double aShutdownCoef, int period,
 	double capitalStock, double alphaZero, double sigma, double IBT, const IInput* aParentInput) const {
+	assert(input.size() == 1);
+	BuildingNodeInput* bldInput = static_cast<BuildingNodeInput*>(input[0]);
+	assert(bldInput);
+	double unadjustSatiation = bldInput->mUnadjustSatiation;
+	double landDensityParam = bldInput->mLandDensityParam;
+	double subregionalPopulation = bldInput->getSubregionalPopulation();
+	double habitableLand = bldInput->mHabitableLand;
+	double floorspaceParam = bldInput->mBaseFloorspaceParam;
+	double basepcFlsp = bldInput->mBasepcFlsp;
+	double incomeParam = bldInput->mIncomeParam;
+	double subregionalIncome = bldInput->getSubregionalIncome();
+	double biasAdjustParam = bldInput->mBiasAdjustParam;
 
-	   	return (mParsedUnadjustSatiation - mParsedLandDensityParam * log(mCurrentSubregionalPopulation / mParsedHabitableLand))
-
-		* exp(mParsedBaseFloorspaceParam*log(mBasepcFlsp)
-
-			* exp(mParsedIncomeParam*log(mCurrentSubregionalIncome))
-
-			+ mParsedBiasAdjustParam;
+	double floorspace = (unadjustSatiation - landDensityParam * log(subregionalPopulation / habitableLand))
+		* exp(floorspaceParam*log(basepcFlsp)
+			* exp(incomeParam*log(subregionalIncome))
+			+ biasAdjustParam;
+	bldInput->setPhysicalOutput(floorspace, period);
+	return floorspace;
 }
-
 

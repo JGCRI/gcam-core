@@ -40,7 +40,7 @@
 /*! 
 * \file building_gompertz_function.h
 * \ingroup Objects
-* \brief BuildingFunction class header file.
+* \brief GompertzDemandFunction class header file.
 * \author	Jon Sampedro
 */
 
@@ -63,12 +63,72 @@ class IInput;
  *
  * \author Jon Sampedro
  */
-class BuildingFunction : public AProductionFunction {
+class GompertzDemandFunction : public AProductionFunction {
 public:
-    double calcDemand( InputSet& input, double consumption, const std::string& regionName,
-                       const std::string& sectorName, const double aShutdownCoef, int period,
-                       double capitalStock = 0, double alphaZero = 0, double sigma = 0, double IBT = 0,
-                       const IInput* aParentInput = 0 ) const;
+	double calcDemand(InputSet& input, double consumption, const std::string& regionName,
+		const std::string& sectorName, const double aShutdownCoef, int period,
+		double capitalStock = 0, double alphaZero = 0, double sigma = 0, double IBT = 0,
+		const IInput* aParentInput = 0) const;
+
+
+	static const std::string& getXMLNameStatic();
+
+	// INamed methods
+
+		// IParsable methods
+
+	virtual const std::string& getName() const;
+
+	virtual void toDebugXML(const int aPeriod,
+		std::ostream& aOut,
+		Tabs* aTabs) const;
+
+	virtual const std::string& getXMLReportingName() const;
+
+	virtual void XMLParse(const xercesc::DOMNode* aNode);
+
+protected:
+
+	DEFINE_DATA(
+
+		DEFINE_SUBCLASS_FAMILY(GompertzDemandFunction),
+
+		//! Current Subregional population.  Note that this is just a
+		//! temporary value used during demand calculations
+		DEFINE_VARIABLE(SIMPLE, "subregional-population", mCurrentSubregionalPopulation, Value),
+
+		//! Current Subregional income.  Note that this is just a
+		//! temporary value used during demand calculations
+		DEFINE_VARIABLE(SIMPLE, "subregional-income", mCurrentSubregionalIncome, Value),
+
+		//! The unadjusted satiation level to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "unadjust-satiation", mUnadjustSatiation, Value),
+
+		//! The habitable land to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "habitable-land", mHabitableLand, Value),
+
+		//! The base pcFlsp to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "base-pcFlsp", mBasepcFlsp, Value),
+
+		//! The land density parameter to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "land-density-param", mLandDensityParam, Value),
+
+		//! The base floorspace parameter to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "base-floorspace-param", mBaseFloorspaceParam, Value),
+
+		//! The income parameter to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "income-param", mIncomeParam, Value),
+
+		//! The bias correction parameter to use during calcDemand. Parsed from XML
+		DEFINE_VARIABLE(SIMPLE | STATE, "bias-adjust-param", mBiasAdjustParam, Value)
+
+	)
+
+		void copy(const GompertzDemandFunction& aOther);
+}
+
+
+
     
   
 
