@@ -53,6 +53,8 @@
 #include "functions/include/building_function.h"
 #include "functions/include/building_service_function.h"
 #include "functions/include/food_demand_function.h"
+#include "functions/include/building_node_input.h"
+#include "functions/include/building_gompertz_function.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;

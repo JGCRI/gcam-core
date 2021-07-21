@@ -44,7 +44,6 @@
 #include <cmath>
 #include <cassert>
 
-#include "functions/include/building_gompertz_function.h"
 #include "functions/include/iinput.h"
 #include "functions/include/building_node_input.h"
 #include "functions/include/building_gompertz_function.h"
