@@ -48,6 +48,7 @@
 #include <vector>
 #include "functions/include/aproduction_function.h"
 
+class IInput;
 
 /*! 
  * \ingroup Objects
@@ -62,12 +63,16 @@
  *
  * \author Jon Sampedro
  */
+
+
+
 class GompertzDemandFunction : public AProductionFunction {
+
 public:
-	double calcDemand (InputSet& input, double consumption, const std::string& regionName,
+	double calcDemand(InputSet& input, double consumption, const std::string& regionName,
 		const std::string& sectorName, const double aShutdownCoef, int period,
-		double capitalStock = 0, double alphaZero = 0, double sigma = 0, double IBT = 0,
-		const IInput* aParentInput = 0) const;
+		double capitalStock = 0, double alphaZero = 0, double sigma = 0,
+		double IBT = 0, const IInput* aParentInput = 0) const;
 
 
 	// AProductionFunction methods not implemented by this function

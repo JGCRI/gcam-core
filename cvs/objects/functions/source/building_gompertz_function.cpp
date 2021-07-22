@@ -34,7 +34,7 @@
 /*! 
 * \file building_gompertz_function.cpp
 * \ingroup Objects
-* \brief The BuildingGompertzFunction class source file.
+* \brief The GompertzDemandFunction class source file.
 * \author Jon Sampedro
 */
 
@@ -44,8 +44,10 @@
 #include <cmath>
 #include <cassert>
 
+#include "functions/include/building_function.h"
 #include "functions/include/iinput.h"
 #include "functions/include/building_node_input.h"
+#include "functions/include/satiation_demand_function.h"
 #include "functions/include/building_gompertz_function.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
@@ -64,12 +66,12 @@ double GompertzDemandFunction::calcDemand(InputSet& input, double income, const 
 	assert(bldInput);
 	double unadjustSatiation = bldInput->mUnadjustSatiation;
 	double landDensityParam = bldInput->mLandDensityParam;
-	double subregionalPopulation = bldInput->getSubregionalPopulation();
+	double subregionalPopulation = bldInput->mCurrentSubregionalPopulation;
 	double habitableLand = bldInput->mHabitableLand;
 	double floorspaceParam = bldInput->mBaseFloorspaceParam;
 	double basepcFlsp = bldInput->mBasepcFlsp;
 	double incomeParam = bldInput->mIncomeParam;
-	double subregionalIncome = bldInput->getSubregionalIncome();
+	double subregionalIncome = bldInput->mCurrentSubregionalIncome;
 	double biasAdjustParam = bldInput->mBiasAdjustParam;
 
 	double floorspace = (unadjustSatiation - landDensityParam * log(subregionalPopulation / habitableLand))
@@ -77,6 +79,7 @@ double GompertzDemandFunction::calcDemand(InputSet& input, double income, const 
 			* exp(incomeParam*log(subregionalIncome))
 			+ biasAdjustParam;
 	bldInput->setPhysicalOutput(floorspace, period);
+
 	return floorspace;
 }
 

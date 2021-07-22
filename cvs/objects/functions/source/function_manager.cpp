@@ -76,7 +76,7 @@ FunctionManager::FunctionManager() {
     mFunctions[ "building-function" ] = new BuildingFunction;
     mFunctions[ "building-service-function" ] = new BuildingServiceFunction;
     mFunctions[ "food-demand-function" ] = new FoodDemandFunction;
-	mFunctions[ "building-gompertz-function"] = new GompertzDemandFunction;
+	mFunctions[ "building-gompertz-function" ] = new GompertzDemandFunction;
 }
 
 //! Destructor
