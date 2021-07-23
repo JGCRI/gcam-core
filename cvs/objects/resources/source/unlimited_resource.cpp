@@ -177,6 +177,8 @@ void UnlimitedResource::initCalc( const string& aRegionName,
                                   const int aPeriod )
 {
     Marketplace* marketplace = scenario->getMarketplace();
+    // ensure this market is not solved
+    marketplace->unsetMarketToSolve(mName, aRegionName, aPeriod);
     // Set the capacity factor and variance.
     IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, aPeriod, true );
     assert( marketInfo );
@@ -247,6 +249,13 @@ void UnlimitedResource::setMarket( const string& aRegionName ) {
     // Need to set resource variance here because initCalc of technology is called
     // before that of resource. shk 2/27/07
     marketInfo->setDouble( "resourceVariance", mVariance );
+
+    // UnlimitedResource markets must not be solved so reset the flag in case it
+    // was set by another Resource who was just adding regions to market for instance
+    const Modeltime* modeltime = scenario->getModeltime();
+    for(int period = 0; period < modeltime->getmaxper(); ++period ) {
+        marketplace->unsetMarketToSolve( mName, aRegionName, period );
+    }
 }
 
 void UnlimitedResource::accept( IVisitor* aVisitor,
