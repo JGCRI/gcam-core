@@ -450,9 +450,9 @@ void NodeInput::calcLevelizedCost( const std::string& aRegionName, const std::st
      *          time the solver changes prices.  Note calling calcVariableCost will also implicitly
      *          reset the flag.
      */
-    if( mNodePriceSet ) {
+    /*if( mNodePriceSet ) {
         return;
-    }
+    }*/
     // have children calculate their levelized costs first
     // the leaves are assumed to already have calculated their appropriate price paid
     for( NestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
@@ -467,9 +467,9 @@ void NodeInput::calcLevelizedCost( const std::string& aRegionName, const std::st
 
     // we only set the hack for the root so that we don't have to recurse through
     // the nest when it comes time to reset this flag
-    if( mName == "root" ) {
+    /*if( mName == "root" ) {
         mNodePriceSet = true;
-    }
+    }*/
 
     // We need to store the base year price paids since they are require to adjust our coefficients
     // with new sigmas in the future.  Note this may be inconsistent if the base year was not read in
