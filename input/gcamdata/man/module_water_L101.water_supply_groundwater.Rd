@@ -14,7 +14,7 @@ module_water_L101.water_supply_groundwater(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L101.groundwater_grades_uniform_bm3},
+the generated outputs: \code{L101.DepRsrcCurves_ground_uniform_bm3},
 \code{L101.groundwater_grades_constrained_bm3}, \code{L101.groundwater_depletion_bm3}. The corresponding file in the
 original data system was \code{L100.water_supply_runoff.R} (Water level1).
 }

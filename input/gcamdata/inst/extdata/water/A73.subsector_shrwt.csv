@@ -1,0 +1,9 @@
+# File: A73.subsector_shrwt.csv
+# Title: Industrial manufacturing energy-for-water subsector (fuel) share-weights
+# Units: None
+# Source: NA
+# Column types: cccin
+supplysector,subsector,year.fillout,year,share.weight
+industrial water abstraction,electricity,start-year,,1
+industrial water treatment,electricity,start-year,,1
+industrial wastewater treatment,electricity,start-year,,1

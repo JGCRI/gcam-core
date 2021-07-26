@@ -57,6 +57,21 @@
 		<Value name = "bio_trade">../input/gcamdata/xml/bio_trade.xml</Value>
 		<Value name = "ag_trade">../input/gcamdata/xml/ag_trade.xml</Value>
 
+		<Value name = "unlim_supply_water">../input/gcamdata/xml/unlimited_water_supply.xml</Value>
+		<Value name = "water_supply">../input/gcamdata/xml/water_supply_constrained.xml</Value>
+		<Value name = "water_desal">../input/gcamdata/xml/desalination.xml</Value>
+		<Value name = "water_td">../input/gcamdata/xml/water_td.xml</Value>
+		<Value name = "efw_coefs">../input/gcamdata/xml/EFW_input_coefs.xml</Value>
+		<Value name = "efw_irr">../input/gcamdata/xml/EFW_irrigation.xml</Value>
+		<Value name = "efw_mfg">../input/gcamdata/xml/EFW_manufacturing.xml</Value>
+		<Value name = "efw_muni">../input/gcamdata/xml/EFW_municipal.xml</Value>
+		<Value name = "ag_water">../input/gcamdata/xml/ag_water_input_IRR_MGMT.xml</Value>
+		<Value name = "elec_water_coef">../input/gcamdata/xml/electricity_water_coefs.xml</Value>
+		<Value name = "ind_water">../input/gcamdata/xml/water_demand_industry.xml</Value>
+		<Value name = "an_water">../input/gcamdata/xml/water_demand_livestock.xml</Value>
+		<Value name = "municipal_water">../input/gcamdata/xml/water_demand_municipal.xml</Value>
+		<Value name = "primary_ene_water">../input/gcamdata/xml/water_demand_primary.xml</Value>
+
 		<Value name = "ind_urb_proc">../input/gcamdata/xml/ind_urb_processing_sectors.xml</Value>
 		<Value name = "nonco2_energy">../input/gcamdata/xml/all_energy_emissions.xml</Value>
 		<Value name = "nonco2_fgas">../input/gcamdata/xml/all_fgas_emissions.xml</Value>
@@ -70,16 +85,6 @@
 		<Value name = "nonco2_aglu">../input/gcamdata/xml/all_aglu_emissions_IRR_MGMT_MAC.xml</Value> 
 		<Value name = "nonco2_proc">../input/gcamdata/xml/ind_urb_processing_sectors_MAC.xml</Value> 
 		
-		<Value name = "unlim_supply_water">../input/gcamdata/xml/unlimited_water_supply.xml</Value>
-		<Value name = "water_supply">../input/gcamdata/xml/water_supply_constrained.xml</Value>
-		<Value name = "water_mapping">../input/gcamdata/xml/water_mapping.xml</Value>
-		<Value name = "ag_water">../input/gcamdata/xml/ag_water_input_IRR_MGMT.xml</Value>
-		<Value name = "elec_water_coef">../input/gcamdata/xml/electricity_water_coefs.xml</Value>
-		<Value name = "ind_water">../input/gcamdata/xml/water_demand_industry.xml</Value>
-		<Value name = "an_water">../input/gcamdata/xml/water_demand_livestock.xml</Value>
-		<Value name = "municipal_water">../input/gcamdata/xml/water_demand_municipal.xml</Value>
-		<Value name = "primary_ene_water">../input/gcamdata/xml/water_demand_primary.xml</Value>
-
 		<Value name = "bio_feedstock_limit">../input/gcamdata/xml/liquids_limits.xml</Value>
 		<Value name = "bio_elec_w_feed_limit">../input/gcamdata/xml/water_elec_liquids_limits.xml</Value>
 		<Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_gSSP2.xml</Value>

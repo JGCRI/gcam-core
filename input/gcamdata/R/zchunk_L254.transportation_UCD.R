@@ -107,17 +107,17 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       calOutputValue <- energy.final.demand <- base.service <- object <- r_ss <- UCD_region <- size.class <- sce <- NULL
 
     # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")
-    A54.demand <- get_data(all_data, "energy/A54.demand", strip_attributes = TRUE) %>% mutate(sce=paste0("CORE"))
+    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names",strip_attributes = TRUE)
+    UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs",strip_attributes = TRUE)
+    A54.demand <- get_data(all_data, "energy/A54.demand",strip_attributes = TRUE) %>% mutate(sce=paste0("CORE"))
     # This is a special case for SSP1, and the way this is executed will likely change in the future.
     # Note that the variable is defined in constants.R
-    A54.demand_SSP1 <- get_data(all_data, "energy/A54.demand_ssp1")%>% mutate(sce=paste0("SSP1"))
+    A54.demand_SSP1 <- get_data(all_data, "energy/A54.demand_ssp1",strip_attributes = TRUE)%>% mutate(sce=paste0("SSP1"))
     A54.demand<-bind_rows(A54.demand,A54.demand_SSP1)
 
-    A54.sector <- get_data(all_data, "energy/A54.sector", strip_attributes = TRUE)
+    A54.sector <- get_data(all_data, "energy/A54.sector",strip_attributes = TRUE)
     #kbn 2019-10-11 Insert code to use revised versions for subsectors below
-    Size_class_New<- get_data(all_data, "energy/mappings/UCD_size_class_revisions") %>%
+    Size_class_New<- get_data(all_data, "energy/mappings/UCD_size_class_revisions",strip_attributes = TRUE) %>%
                      select(-UCD_region) %>%
                      distinct()
     #kbn 2020-03-26 If the user selects the revised modes and size classes, use the revised mapping files.
@@ -134,45 +134,46 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       colnames(UCD_techs)[colnames(UCD_techs)=='rev.mode']<-'mode'
     }
     if (toString(energy.TRAN_UCD_MODE)=='rev.mode'){
-      A54.tranSubsector_logit <- get_data(all_data, "energy/A54.tranSubsector_logit_revised", strip_attributes = TRUE)
-      A54.tranSubsector_shrwt <- get_data(all_data, "energy/A54.tranSubsector_shrwt_revised", strip_attributes = TRUE)
-      A54.tranSubsector_interp <- get_data(all_data, "energy/A54.tranSubsector_interp_revised", strip_attributes = TRUE)
-      A54.tranSubsector_VOTT <- get_data(all_data, "energy/A54.tranSubsector_VOTT_revised", strip_attributes = TRUE) %>% mutate(sce=paste0("CORE"))
+      A54.tranSubsector_logit <- get_data(all_data, "energy/A54.tranSubsector_logit_revised",strip_attributes = TRUE)
+      A54.tranSubsector_shrwt <- get_data(all_data, "energy/A54.tranSubsector_shrwt_revised",strip_attributes = TRUE)
+      A54.tranSubsector_interp <- get_data(all_data, "energy/A54.tranSubsector_interp_revised",strip_attributes = TRUE)
+      A54.tranSubsector_VOTT <- get_data(all_data, "energy/A54.tranSubsector_VOTT_revised",strip_attributes = TRUE) %>% mutate(sce=paste0("CORE"))
 
-      A54.tranSubsector_VOTT_SSP1 <- get_data(all_data, "energy/A54.tranSubsector_VOTT_ssp1_revised") %>% mutate(sce=paste0("SSP1"))
+      A54.tranSubsector_VOTT_SSP1 <- get_data(all_data, "energy/A54.tranSubsector_VOTT_ssp1_revised",strip_attributes = TRUE) %>% mutate(sce=paste0("SSP1"))
       A54.tranSubsector_VOTT<- bind_rows(A54.tranSubsector_VOTT,A54.tranSubsector_VOTT_SSP1)
 
-      A54.globaltranTech_retire <- get_data(all_data, "energy/A54.globaltranTech_retire_revised", strip_attributes = TRUE)
-      A54.globaltranTech_shrwt <- get_data(all_data, "energy/A54.globaltranTech_shrwt_revised", strip_attributes = TRUE)
-      A54.globaltranTech_interp <- get_data(all_data, "energy/A54.globaltranTech_interp_revised", strip_attributes = TRUE)
-      A54.globaltech_passthru <- get_data(all_data, "energy/A54.globaltech_passthru_revised", strip_attributes = TRUE)
+      A54.globaltranTech_retire <- get_data(all_data, "energy/A54.globaltranTech_retire_revised",strip_attributes = TRUE)
+      A54.globaltranTech_shrwt <- get_data(all_data, "energy/A54.globaltranTech_shrwt_revised",strip_attributes = TRUE)
+      A54.globaltranTech_interp <- get_data(all_data, "energy/A54.globaltranTech_interp_revised",strip_attributes = TRUE)
+      A54.globaltech_passthru <- get_data(all_data, "energy/A54.globaltech_passthru_revised",strip_attributes = TRUE)
     }
-    else {A54.tranSubsector_logit <- get_data(all_data, "energy/A54.tranSubsector_logit", strip_attributes = TRUE)
-    A54.tranSubsector_shrwt <- get_data(all_data, "energy/A54.tranSubsector_shrwt", strip_attributes = TRUE)
-    A54.tranSubsector_interp <- get_data(all_data, "energy/A54.tranSubsector_interp", strip_attributes = TRUE)
+    else {A54.tranSubsector_logit <- get_data(all_data, "energy/A54.tranSubsector_logit",strip_attributes = TRUE)
+    A54.tranSubsector_shrwt <- get_data(all_data, "energy/A54.tranSubsector_shrwt",strip_attributes = TRUE)
+    A54.tranSubsector_interp <- get_data(all_data, "energy/A54.tranSubsector_interp",strip_attributes = TRUE)
+    A54.tranSubsector_VOTT <- get_data(all_data, "energy/A54.tranSubsector_VOTT",strip_attributes = TRUE)
 
-    A54.tranSubsector_VOTT <- get_data(all_data, "energy/A54.tranSubsector_VOTT", strip_attributes = TRUE)
-    A54.tranSubsector_VOTT_SSP1 <- get_data(all_data, "energy/A54.tranSubsector_VOTT_ssp1") %>% mutate(sce=paste0("SSP1"))
+    A54.tranSubsector_VOTT <- get_data(all_data, "energy/A54.tranSubsector_VOTT",strip_attributes = TRUE)
+    A54.tranSubsector_VOTT_SSP1 <- get_data(all_data, "energy/A54.tranSubsector_VOTT_ssp1",strip_attributes = TRUE) %>% mutate(sce=paste0("SSP1"))
     A54.tranSubsector_VOTT<- bind_rows(A54.tranSubsector_VOTT,A54.tranSubsector_VOTT_SSP1)
 
-    A54.globaltranTech_retire <- get_data(all_data, "energy/A54.globaltranTech_retire", strip_attributes = TRUE)
-    A54.globaltranTech_shrwt <- get_data(all_data, "energy/A54.globaltranTech_shrwt", strip_attributes = TRUE)
-    A54.globaltranTech_interp <- get_data(all_data, "energy/A54.globaltranTech_interp", strip_attributes = TRUE)
-    A54.globaltech_passthru <- get_data(all_data, "energy/A54.globaltech_passthru", strip_attributes = TRUE)
+    A54.globaltranTech_retire <- get_data(all_data, "energy/A54.globaltranTech_retire",strip_attributes = TRUE)
+    A54.globaltranTech_shrwt <- get_data(all_data, "energy/A54.globaltranTech_shrwt",strip_attributes = TRUE)
+    A54.globaltranTech_interp <- get_data(all_data, "energy/A54.globaltranTech_interp",strip_attributes = TRUE)
+    A54.globaltech_passthru <- get_data(all_data, "energy/A54.globaltech_passthru",strip_attributes = TRUE)
     }
 
 
 
-    A54.globaltech_nonmotor <- get_data(all_data, "energy/A54.globaltech_nonmotor", strip_attributes = TRUE)
+    A54.globaltech_nonmotor <- get_data(all_data, "energy/A54.globaltech_nonmotor",strip_attributes = TRUE)
 
 
 
-    L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "L154.in_EJ_R_trn_m_sz_tech_F_Yh", strip_attributes = TRUE)
-    L154.cost_usdvkm_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.cost_usdvkm_R_trn_m_sz_tech_F_Y", strip_attributes = TRUE)
-    L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y", strip_attributes = TRUE)
-    L154.loadfactor_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.loadfactor_R_trn_m_sz_tech_F_Y", strip_attributes = TRUE)
-    L154.speed_kmhr_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.speed_kmhr_R_trn_m_sz_tech_F_Y", strip_attributes = TRUE)
-    L154.out_mpkm_R_trn_nonmotor_Yh <- get_data(all_data, "L154.out_mpkm_R_trn_nonmotor_Yh", strip_attributes = TRUE)
+    L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "L154.in_EJ_R_trn_m_sz_tech_F_Yh",strip_attributes = TRUE)
+    L154.cost_usdvkm_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.cost_usdvkm_R_trn_m_sz_tech_F_Y",strip_attributes = TRUE)
+    L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y",strip_attributes = TRUE)
+    L154.loadfactor_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.loadfactor_R_trn_m_sz_tech_F_Y",strip_attributes = TRUE)
+    L154.speed_kmhr_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.speed_kmhr_R_trn_m_sz_tech_F_Y",strip_attributes = TRUE)
+    L154.out_mpkm_R_trn_nonmotor_Yh <- get_data(all_data, "L154.out_mpkm_R_trn_nonmotor_Yh",strip_attributes = TRUE)
 
     # ===================================================
 
@@ -318,7 +319,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_keep_first_only(UCD_techs, by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")) %>%
       mutate(speed = round(value, energy.DIGITS_SPEED)) %>%
-      select(LEVEL2_DATA_NAMES[["tranSubsectorSpeed"]],sce) ->
+      select(LEVEL2_DATA_NAMES[["tranSubsectorSpeed"]],sce) %>%
+      distinct()->
       L254.tranSubsectorSpeed # OUTPUT
 
     # This does not include the pass-through tranSectors
@@ -372,8 +374,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       filter(addTimeValue == 1) %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["tranSubsector"]], "addTimeValue", "time.value.multiplier","sce"),
                            GCAM_region_names = GCAM_region_names) %>%
-      mutate(year.fillout = min(MODEL_YEARS)) %>%
-      #mutate(sce = paste0("CORE")) %>%
+      mutate(year.fillout = min(MODEL_YEARS),
+             sce= if_else(is.na(sce),"CORE",sce)) %>%
       # Subset only the combinations of region, supplysector, and tranSubsector
       semi_join(r_ss_ts_all, by = c("region", "supplysector", "tranSubsector","sce")) %>%
       select(LEVEL2_DATA_NAMES[["tranSubsector"]], year.fillout, addTimeValue, time.value.multiplier,sce) %>%
@@ -430,15 +432,16 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     # PART D: TECHNOLOGY INFORMATION - GLOBAL TRANTECHNOLOGIES
     # L254.GlobalTranTechInterp: Shareweight interpolation of global tranTechnologies
     A54.globaltranTech_interp %>%
-      mutate(supplysector = supplysector,  # create new tibble, stripping attributes
-              sce = "CORE") %>%
+      mutate(supplysector = supplysector) %>%  # create new tibble, stripping attributes
       set_years() %>%
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTranTechInterp"]]) ->
+      select(LEVEL2_DATA_NAMES[["GlobalTranTechInterp"]],"sce") ->
       L254.GlobalTranTechInterp
 
     # L254.GlobalTranTechShrwt: Shareweights of global tranTechnologies
     A54.globaltranTech_shrwt %>%
+      filter(sce=="CORE") %>%
+      select(-sce) %>%
       gather_years %>%
       # Expand table to include all model years
       complete(year = c(year, MODEL_YEARS), nesting(supplysector, tranSubsector, tranTechnology)) %>%
@@ -449,10 +452,31 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
              share.weight = round(share.weight, energy.DIGITS_SHRWT)) %>%
       ungroup() %>%
       filter(year %in% MODEL_YEARS) %>%
-      mutate(sce = paste0("CORE")) %>%
+      mutate(sce= paste0("CORE")) %>%
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTranTechShrwt"]]) ->
-      L254.GlobalTranTechShrwt # OUTPUT
+      select(LEVEL2_DATA_NAMES[["GlobalTranTechShrwt"]],sce) ->
+      L254.GlobalTranTechShrwt_CORE # OUTPUT
+
+
+    A54.globaltranTech_shrwt %>%
+      filter(sce=="highEV") %>%
+      select(-sce) %>%
+      gather_years %>%
+      # Expand table to include all model years
+      complete(year = c(year, MODEL_YEARS), nesting(supplysector, tranSubsector, tranTechnology)) %>%
+      # Extrapolate to fill out values for all years
+      # Rule 2 is used so years that may be outside of min-max range are assigned values from closest data, as opposed to NAs
+      group_by(supplysector, tranSubsector, tranTechnology) %>%
+      mutate(share.weight = approx_fun(year, value, rule = 2),
+             share.weight = round(share.weight, energy.DIGITS_SHRWT)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS) %>%
+      mutate(sce= paste0("highEV")) %>%
+      rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTranTechShrwt"]],sce) ->
+      L254.GlobalTranTechShrwt_highEV # OUTPUT
+
+    L254.GlobalTranTechShrwt <- bind_rows(L254.GlobalTranTechShrwt_highEV,L254.GlobalTranTechShrwt_CORE)
 
     # L254.GlobalTranTechSCurve: Retirement of global tranTechnologies
     # A54.globaltranTech_retire reports transportation technology retirement parameters. Only applies to vintaged technologies
@@ -495,7 +519,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     L254.StubTranTechCalInput_basetable<- bind_rows(L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("CORE")),
                                                     L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("SSP1")),
                                                     L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("SSP3")),
-                                                    L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("SSP5")))
+                                                    L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("SSP5")),
+                                                    L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("highEV")))
 
     # Aggregate to set subsector share weights according to region, supplysector, tranSubsector, year combination
     # kbn 2020-02-06 Add sce below (See description of changes using search string kbn 2020-06-02 Making changes to generate xmls for SSPs flexibly)
@@ -571,7 +596,10 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
                                                                    "stub.technology", "year", "sce")) %>%
       left_join(L254.StubTranTechCoef, by = c("region", "supplysector", "tranSubsector",
                                                              "stub.technology", "minicam.energy.input", "year","sce")) %>%
-      mutate(output = calibrated.value * loadFactor * CONV_EJ_GJ / (coefficient * CONV_BTU_KJ)) %>%
+      mutate(loadFactor=if_else(is.na(loadFactor),0,loadFactor),
+             coefficient=if_else(is.na(coefficient),0,coefficient),
+             output = calibrated.value * loadFactor * CONV_EJ_GJ / (coefficient * CONV_BTU_KJ),
+             output = if_else(is.na(output),0,output)) %>%
       select(region, supplysector, tranSubsector, stub.technology, year, minicam.energy.input,
              calibrated.value, loadFactor, coefficient, output,sce) ->
       L254.StubTranTechOutput
@@ -614,8 +642,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
 
     L254.StubTechCalInput_passthru_cum %>%
       mutate(calibrated.value = if_else(minicam.energy.input %in% LIST_supplysector,
-                                        output_cum, output_agg)) %>%
-      mutate(share.weight.year = year,
+                                        output_cum, output_agg),
+             share.weight.year = year,
              subs.share.weight = if_else(calibrated.value > 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
       select(region, supplysector, tranSubsector, stub.technology, year,

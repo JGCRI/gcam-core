@@ -54,7 +54,8 @@ module_aglu_L240.ag_trade <- function(command, ...) {
 
     year <- region <- supplysector <- subsector <- GCAM_commodity <- GrossExp_Mt <-
       calOutputValue <- subs.share.weight <- market.name <- minicam.energy.input <-
-      GrossImp_Mt <- Prod_Mt <- GCAM_region_ID <- NetExp_Mt <- NULL # silence package check notes
+      GrossImp_Mt <- Prod_Mt <- GCAM_region_ID <- NetExp_Mt <- Prod_bm3 <-
+      NetExp_bm3 <- value <- flow <- GrossExp <- NULL # silence package check notes
 
 
     # Load required inputs
@@ -101,8 +102,8 @@ module_aglu_L240.ag_trade <- function(command, ...) {
                     by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
                   replace_na(list(GrossExp = 0)) %>%
                   filter(GCAM_commodity %in% aglu.TRADED_FORESTS) %>%
-                  mutate(GrossImp_Mt = ifelse(GrossExp - NetExp_bm3 > 0, GrossExp - NetExp_bm3, 0),
-                         GrossExp_Mt = ifelse(GrossExp - NetExp_bm3 > 0, GrossExp, NetExp_bm3)) %>%
+                  mutate(GrossImp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp - NetExp_bm3, 0),
+                         GrossExp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp, NetExp_bm3)) %>%
                   select(names(L1091.GrossTrade_Mt_R_C_Y)) )
 
     # 1. TRADED SECTOR / SUBSECTOR / TECHNOLOGY")

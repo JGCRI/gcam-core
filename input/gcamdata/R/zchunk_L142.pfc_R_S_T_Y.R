@@ -323,7 +323,7 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
         inner_join(L142.EPA_pfc_R_S_T_Yh_scalar, by = c("GCAM_region_ID", "supplysector", "subsector", "stub.technology",
                                             "gas" = "Non.CO2", "year")) %>%
         mutate(adj_emissions = emissions * emscalar) ->
-        L142.EPA_EDGAR_PFCmatch_nocool
+        L142.EPA_EDGAR_PFCmatches_nocool
 
       # Fixing cooling sector mismatch
       L142.pfc_R_S_T_Yh_gas2 %>%
@@ -334,8 +334,8 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
                                                        "stub.technology", "gas" = "Non.CO2", "year")) %>%
         select(-supply) %>%
         mutate(adj_emissions = emissions * emscalar) %>%
-        bind_rows(L142.EPA_EDGAR_PFCmatch_nocool) ->
-        L142.EPA_EDGAR_PFCmatch
+        bind_rows(L142.EPA_EDGAR_PFCmatches_nocool) ->
+        L142.EPA_EDGAR_PFCmatches
 
       # FIXING INFINITE VALUES
       # We need to calculate replacement values for infinite values in which there is no 1-1 map from EPA_emissions to EDGAR emissions categories
@@ -373,20 +373,20 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
         L142.pfc_R_S_T_Yh_share
 
       # Calculate replacement values for EPA sectors with multiple PFC gases with no corresponding EDGAR emissions
-      L142.EPA_EDGAR_PFCmatch %>%
+      L142.EPA_EDGAR_PFCmatches %>%
         left_join(L142.pfc_R_S_T_Yh_share, by = c("supplysector", "subsector", "stub.technology", "Non.CO2", "gas", "year")) %>%
         filter(is.infinite(emscalar)) %>%
         mutate(adj_emissions = EPA_emissions * emiss_share) %>%
-        select(-emiss_share) -> L142.EPA_EDGAR_PFCmatch_inf
+        select(-emiss_share) -> L142.EPA_EDGAR_PFCmatches_inf
 
       # Rebind replaced infinite values to the original df
-      L142.EPA_EDGAR_PFCmatch %>%
+      L142.EPA_EDGAR_PFCmatches %>%
         filter(!is.infinite(emscalar)) %>%
-        bind_rows(L142.EPA_EDGAR_PFCmatch_inf) -> L142.EPA_EDGAR_PFCmatch_adj
+        bind_rows(L142.EPA_EDGAR_PFCmatches_inf) -> L142.EPA_EDGAR_PFCmatches_adj
       # END OF INFINITE VALUES FIX
 
       # Clean up data to include base years (annually, not just modeling years)
-      L142.EPA_EDGAR_PFCmatch_adj %>% #remove columns used in calculation (once testing is completed, integrate with above pipeline)
+      L142.EPA_EDGAR_PFCmatches_adj %>% #remove columns used in calculation (once testing is completed, integrate with above pipeline)
         select(-EPA_emissions, -tot_emissions, -EPA_emissions, -emscalar, -gas, -emissions) %>%
         rename(value = adj_emissions) %>%
         # remove CO2 equivalence used for matching, returning units to gg

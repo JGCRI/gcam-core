@@ -61,7 +61,9 @@
  * \param[in] g0: Value of grad-f(x0)
  * \param[in] dx: Proposed step from the root finder
  * \param[out] x: Final step determined by the search
- * \param[out]fx: Value of f(x) 
+ * \param[out] fx: Value of f(x)
+ * \param[in] fxVec: The value of F(x)
+ * \param[in] fxIncr: The maximum increase of f(x) we will allow to consider linesearch a success.
  * \param[inout]neval: number of function evaluations. The subroutine
  * adds whatever value is passed in, allowing the caller to keep a
  * running total.
@@ -71,7 +73,7 @@
 int linesearch(VecFVec &f, const UBVECTOR &x0,
                double f0, const UBVECTOR &g0,
                const UBVECTOR &dx, UBVECTOR &x,
-               double &fx, int &neval, std::ostream *solverlog = 0)
+               double &fx, UBVECTOR& fxVec, const double fxIncr, int &neval, std::ostream *solverlog = 0)
 {
   const double lseps = 1.0e-7;   // part of the definition of "sufficient" decrease
   const double TOLX = 1.0e-6;    // tolerance for x values
@@ -85,7 +87,6 @@ int linesearch(VecFVec &f, const UBVECTOR &x0,
   double g0dx=g0.dot(dx); // initial rate of decrease, df/dlambda
   double lambda = 1.0;           // start with full step
   double maxval = 0.0;
-  UBVECTOR fxVec(x0.size());
 
   if(g0dx >= 0) {
     if(solverlog)
@@ -122,7 +123,7 @@ int linesearch(VecFVec &f, const UBVECTOR &x0,
     // it specifies a minimum rate of decrease.  lseps is set fairly
     // small, so we're biased toward accepting steps unless their rate
     // of decrease is painfully slow
-    if(fx <= f0 + lseps*lambda*g0dx)
+    if(fx <= f0 + lseps*lambda*g0dx + fxIncr)
       // SUCCESS
       return 0;
 

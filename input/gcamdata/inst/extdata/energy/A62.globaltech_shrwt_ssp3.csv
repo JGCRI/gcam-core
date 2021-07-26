@@ -1,0 +1,12 @@
+# File: A62.globaltech_shrwt_ssp3.csv
+# Title: dac default shareweights
+# Units: Unitless
+# Column types: ccciiiii
+# ----------
+supplysector,subsector,technology,1971,2019,2020,2050,2100
+CO2 removal,dac,hightemp DAC NG,0,0,0,1,1
+CO2 removal,dac,hightemp DAC elec,0,0,0,1,1
+CO2 removal,dac,lowtemp DAC heatpump,0,0,0,1,1
+CO2 removal,dac,no DAC,1,1,1,1,1
+process heat dac,gas CCS,gas CCS,1,1,1,1,1
+airCO2,airCO2,airCO2,1,1,1,1,1

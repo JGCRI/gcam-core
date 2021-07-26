@@ -6,7 +6,7 @@
 supplysector,subsector,year.fillout,year,share.weight
 urban processes,waste_incineration,start-year,,1
 urban processes,landfills,start-year,,1
-urban processes,wastewater treatment,start-year,,1
+urban processes,wastewater,start-year,,1
 urban processes,aerosols,start-year,,1
 urban processes,fire_exting,start-year,,1
 industrial processes,nitric acid,start-year,,1

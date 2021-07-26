@@ -32,6 +32,9 @@ convert \code{data} besides the additional levels of nesting.}
 
 \item{num_levels}{The number of additional levels to generate}
 
+\item{rename_final}{Whether to rename the final \code{old_tag} to
+\code{new_tag} in the original header}
+
 \item{column_name}{The base name of the column in \code{data} which will get
 expanded by appending \code{paste0(column_name, (seq_len(num_levels) - 1))}}
 
@@ -45,9 +48,6 @@ given \code{NULL} no column reordering will be done.}
 tables such that \code{paste(base_logit_header, logit.type, sep = "_")} corresponds
 to the appropriate model interface header.  Note by default this value is the
 same as \code{header} as often this is the case but certainly not always.}
-
-\item{rename_file}{Whether to rename the final \code{old_tag} to
-\code{new_tag} in the original header}
 }
 \value{
 A "data structure" to hold the various parts needed to run the model

@@ -1,0 +1,10 @@
+# File: A74.subsector_shrwt.csv
+# Title: Municipal energy-for-water subsector (fuel) share-weights
+# Units: None
+# Source: NA
+# Column types: cccin
+supplysector,subsector,year.fillout,year,share.weight
+municipal water abstraction,electricity,start-year,,1
+municipal water treatment,electricity,start-year,,1
+municipal water distribution,electricity,start-year,,1
+municipal wastewater treatment,electricity,start-year,,1

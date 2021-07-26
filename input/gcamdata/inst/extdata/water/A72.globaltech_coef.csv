@@ -1,0 +1,7 @@
+# File: A72.globaltech_coef.csv
+# Title: Irrigation water abstraction energy-for-water coefficients
+# Units: GJ of energy per cubic meter of water (GJ/m3)
+# Source: Liu et al. 2016. DOI: 10.1021/acs.est.6b01065
+# Column types: ccccnnn
+supplysector,subsector,technology,minicam.energy.input,1971,2015,2100
+irrigation water abstraction,electricity,electricity,elect_td_ind,0.00028,0.00028,0.00028

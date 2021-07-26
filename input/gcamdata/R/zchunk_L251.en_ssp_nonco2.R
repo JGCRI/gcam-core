@@ -47,9 +47,10 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     year <- value <- GCAM_region_ID <- Non.CO2 <- supplysector <- subsector <-
-      stub.technology <- agg_sector <- MAC_region <- bio_N2O_coef <-
+      stub.technology <- agg_sector <- MAC_region <- bio_N2O_coef <- future.emiss.coeff.year <-
       SO2_name <- GAINS_region <- emiss.coeff <- technology <- minicam.energy.input <-
-      tranSubsector <- tranTechnology <- input.name <- efficiency <- NULL # silence package check.
+      tranSubsector <- tranTechnology <- input.name <- efficiency <-
+      future.emiss.coeff.year <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 

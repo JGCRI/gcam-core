@@ -1,0 +1,12 @@
+# File: A71.globaltech_coef.csv
+# Title: Desalination energy-for-water coefficients
+# Units: GJ of energy per cubic meter of water (GJ/m3)
+# Source: Liu et al. 2016. DOI: 10.1021/acs.est.6b01065
+# Column types: ccccnnn
+supplysector,subsector,technology,minicam.energy.input,1971,2015,2100
+desalinated water,electricity,reverse osmosis,elect_td_ind,0.0432,0.0099,0.0063
+desalinated water,electricity,reverse osmosis,seawater,2.5,2.5,2.5
+desalinated water,refined liquids,distillation,refined liquids industrial,0.2097,0.2097,0.2097
+desalinated water,refined liquids,distillation,seawater,2.5,2.5,2.5
+desalinated water,gas,distillation,wholesale gas,0.2097,0.2097,0.2097
+desalinated water,gas,distillation,seawater,2.5,2.5,2.5

@@ -593,7 +593,7 @@ load_from_cache <- function(return_data_names, ...) {
 #' @importFrom magrittr "%>%"
 #' @importFrom dplyr pull mutate if_else select group_by bind_rows
 create_datamap_from_cache <- function(gcamdata_plan, ...) {
-  target <- command <- chunk <- data <- NULL    # silence notes on package check.
+  target <- command <- chunk <- data <- name <- output <- NULL    # silence notes on package check.
 
   # a helper function to use in an lapply to combine the steps:
   # 1) decay a tibble of targets to a character vector

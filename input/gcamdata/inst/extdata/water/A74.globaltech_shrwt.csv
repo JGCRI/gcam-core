@@ -1,0 +1,10 @@
+# File: A74.globaltech_shrwt.csv
+# Title: Municipal energy-for-water technology share-weights
+# Units: None
+# Source: NA
+# Column types: cccnn
+supplysector,subsector,technology,1971,2100
+municipal water abstraction,electricity,electricity,1,1
+municipal water treatment,electricity,electricity,1,1
+municipal water distribution,electricity,electricity,1,1
+municipal wastewater treatment,electricity,electricity,1,1

@@ -23,7 +23,7 @@
 module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A51.min_coeff",
-             "L111.nonghg_tgej_R_en_S_F_Yh"))
+             "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L151.nonghg_ctrl_R_en_S_T"))
   } else if(command == driver.MAKE) {
@@ -35,7 +35,7 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
 
     # Load required inputs
     A51.min_coeff <- get_data(all_data, "emissions/A51.min_coeff")
-    L111.nonghg_tgej_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh", strip_attributes = TRUE)
+    L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP", strip_attributes = TRUE)
 
     # First, set up min coeff data frame
     A51.min_coeff %>%
@@ -61,7 +61,7 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
 
 
     # Compute max emissions reduction for non_CO2s
-    L111.nonghg_tgej_R_en_S_F_Yh %>%
+    L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP %>%
       filter(year == 2005) %>%
       map_and_compute_max_reduction(L151.min_coeff) ->
       L151.nonghg_ctrl_R_en_S_T
@@ -73,7 +73,7 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
       add_comments("Compute maximum reduction by region and sector for SO2, CO, NOx, NMVOC (all 2005 reference), BC, and OC (2005)") %>%
       add_legacy_name("L151.nonghg_ctrl_R_en_S_T") %>%
       add_precursors("emissions/A51.min_coeff",
-                     "L111.nonghg_tgej_R_en_S_F_Yh") ->
+                     "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP") ->
       L151.nonghg_ctrl_R_en_S_T
 
     return_data(L151.nonghg_ctrl_R_en_S_T)

@@ -1,0 +1,9 @@
+# File: A71.subsector_shrwt.csv
+# Title: Desalinated water subsector (fuel) share-weights
+# Units: None
+# Source: NA
+# Column types: cccin
+supplysector,subsector,year.fillout,year,share.weight
+desalinated water,electricity,start-year,,1
+desalinated water,gas,start-year,,0
+desalinated water,refined liquids,start-year,,0

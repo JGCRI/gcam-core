@@ -26,3 +26,9 @@ electricity,nuclear,Gen_III,OM-var,0.16,0.16,0.16,0.619654024,0.619654024,0.75,0
 electricity,wind,wind,OM-var,2.28,2.28,2.28,0,0,0.7,0.03,
 electricity,wind,wind_storage,OM-var,3.91,3.91,3.91,0,0,0.7,0.03,wind
 electricity,wind,wind_offshore,OM-var,2.28,2.28,2.28,0,0,0.7,0.03,
+electricity,solar,PV,OM-var,0,0,0,0,0,0.7,0.03,
+electricity,solar,PV_storage,OM-var,0,0,0,0,0,0.7,0.03,
+electricity,solar,CSP,OM-var,0,0,0,0,0,0.6,0.05,
+electricity,solar,CSP_storage,OM-var,0,0,0,0,0,0.7,0.03,
+electricity,geothermal,geothermal,OM-var,0,0,0,0,0,0.75,0.01,
+elect_td_bld,rooftop_pv,rooftop_pv,OM-var,0,0,0,0,0,0.7,0.03,

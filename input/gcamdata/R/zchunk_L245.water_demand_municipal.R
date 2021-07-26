@@ -18,7 +18,7 @@
 module_water_L245.water_demand_municipal <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/A03.sector",
+             FILE = "water/water_td_sectors",
              FILE = "water/A45.sector",
              FILE = "water/A45.tech_cost",
              FILE = "water/A45.demand",
@@ -47,7 +47,7 @@ module_water_L245.water_demand_municipal <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A03.sector <- get_data(all_data, "water/A03.sector")
+    water_td_sectors <- get_data(all_data, "water/water_td_sectors")
     A45.sector <- get_data(all_data, "water/A45.sector", strip_attributes = TRUE)
     A45.tech_cost <- get_data(all_data, "water/A45.tech_cost")
     A45.demand <- get_data(all_data, "water/A45.demand")
@@ -110,7 +110,7 @@ module_water_L245.water_demand_municipal <- function(command, ...) {
       mutate(coefficient = if_else(water_type == "water withdrawals", 1,
                                    round(efficiency, water.DIGITS_MUNI_WATER)),
              water_sector = "Municipal",
-             minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector)) %>%
+             minicam.energy.input = set_water_input_name(water_sector, water_type, water_td_sectors)) %>%
       select(LEVEL2_DATA_NAMES$TechCoef) ->
       L245.TechCoef  # municipal water technology withdrawals and consumption efficiencies
 
@@ -197,7 +197,7 @@ module_water_L245.water_demand_municipal <- function(command, ...) {
       add_comments("Withdrawal efficiencies bound to consumption and appropriate minicam.energy.input appended") %>%
       add_legacy_name("L245.TechCoef") %>%
       add_precursors("common/GCAM_region_names",
-                     "water/A03.sector",
+                     "water/water_td_sectors",
                      "water/A45.sector",
                      "water/A45.tech_cost",
                      "L145.municipal_water_eff_R_Yh") ->

@@ -11,10 +11,10 @@
 #'
 #' There are two levels of information available from the GCAM data system:
 #' chunk dependencies, which are available for "free", i.e. with a fast query to
-#' each chunk on the part of \link{\code{chunk_inputs}} and \link{\code{chunk_outputs}},
+#' each chunk on the part of \code{chunk_inputs} and \code{chunk_outputs},
 #' and detailed information on data object-level dependencies. This function is
 #' used to generate this latter data, i.e. a tibble of chunk-output-precursor information,
-#' which is used by \link{\code{dstrace}} and various other graphing and diagnostic utilities.
+#' which is used by \code{dstrace} and various other graphing and diagnostic utilities.
 #' @author BBL
 #' @format A tibble with columns: name (chunk that produces the data), output (name of the data object),
 #' precursors (colon seperated list of precursors), title, units, comments, flags (typically metadata for processing)
