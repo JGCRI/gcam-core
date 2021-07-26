@@ -71,8 +71,12 @@ class GompertzDemandFunction : public AProductionFunction {
 public:
 	double calcDemand(InputSet& input, double consumption, const std::string& regionName,
 		const std::string& sectorName, const double aShutdownCoef, int period,
-		double capitalStock = 0, double alphaZero = 0, double sigma = 0,
-		double IBT = 0, const IInput* aParentInput = 0) const;
+		double capitalStock = 0, double alphaZero = 0, double sigma = 0, double IBT = 0,
+		const IInput* aParentInput = 0) const;
+
+	virtual void setPhysicalDemand(const double aPhysicalDemand,
+		const std::string& aRegionName,
+		const int aPeriod);
 
 
 	// AProductionFunction methods not implemented by this function

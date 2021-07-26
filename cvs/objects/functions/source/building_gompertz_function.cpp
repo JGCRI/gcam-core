@@ -52,6 +52,8 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "sectors/include/sector_utils.h"
+#include "technologies/include/generic_output.h"
+
 
 using namespace std;
 
@@ -76,9 +78,10 @@ double GompertzDemandFunction::calcDemand(InputSet& input, double income, const 
 
 	double floorspace = (unadjustSatiation - landDensityParam * log(subregionalPopulation / habitableLand))
 		* exp(floorspaceParam*log(basepcFlsp)
-			* exp(incomeParam*log(subregionalIncome))
+			* exp(incomeParam*log(subregionalIncome)))
 			+ biasAdjustParam;
-	bldInput->setPhysicalOutput(floorspace, period);
+
+	bldInput->setPhysicalDemand(floorspace, regionName, period);
 
 	return floorspace;
 }
