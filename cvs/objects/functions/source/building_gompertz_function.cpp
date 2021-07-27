@@ -52,7 +52,6 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "sectors/include/sector_utils.h"
-#include "technologies/include/generic_output.h"
 
 
 using namespace std;

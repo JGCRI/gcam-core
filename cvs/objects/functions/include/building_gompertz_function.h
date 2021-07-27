@@ -74,10 +74,6 @@ public:
 		double capitalStock = 0, double alphaZero = 0, double sigma = 0, double IBT = 0,
 		const IInput* aParentInput = 0) const;
 
-	virtual void setPhysicalDemand(const double aPhysicalDemand,
-		const std::string& aRegionName,
-		const int aPeriod);
-
 
 	// AProductionFunction methods not implemented by this function
 	
