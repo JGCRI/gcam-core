@@ -221,7 +221,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
             double newprice = oldprice;
             bool chg = false;
             double lb,ub;       // only used for normal markets, but need to be declared up here.
-            bool isSolved = solvable[i].getRelativeED() < mFTOL || fabs(solvable[i].getED()) < mFTOL;
+            bool isSolved = solvable[i].getRelativeED() < mFTOL || fabs(solvable[i].getED()) < mFTOL || solvable[i].isSolved();
             
             if(pass > 0) {
                 // If this market is close to solved update the "forecast" price and demand which
@@ -243,10 +243,14 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     fp = fd = newScale;
                 }
                 else if(isSolved && !(solvable[i].getType() == IMarketType::TAX || solvable[i].getType() == IMarketType::SUBSIDY)) {
+                    double solutionFloor = solvable[i].getSolutionFloor();
+                    // Check if the market is solved to the solution floor in which case don't let
+                    // NR make a big deal out of relative differences by reseting the demand scale to 1
+                    double demandScale = abs(olddmnd) < solutionFloor || abs(oldsply) < solutionFloor ? 1.0 : olddmnd;
                     solvable[i].setForecastPrice(oldprice);
-                    solvable[i].setForecastDemand(olddmnd);
+                    solvable[i].setForecastDemand(demandScale);
                     fp = oldprice;
-                    fd = olddmnd;
+                    fd = demandScale;
                 }
                 if(fd == 0.0) {
                     if(olddmnd > 0.0) {
@@ -344,7 +348,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     lb = solvable[i].getLowerBoundSupplyPrice();
                     ub = solvable[i].getUpperBoundSupplyPrice();
                     if(!isSolved && oldprice < lb) {
-                        newprice = 0.001;
+                        newprice = lb + 0.001;
                         solvable[i].setPrice(newprice);
                         chg = true;
                         ++nchg;

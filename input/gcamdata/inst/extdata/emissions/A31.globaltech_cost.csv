@@ -6,7 +6,7 @@
 supplysector,subsector,technology,minicam.non.energy.input,1971,2100
 urban processes,waste_incineration,waste_incineration,non-energy,0,0
 urban processes,landfills,landfills,non-energy,0,0
-urban processes,wastewater treatment,wastewater treatment,non-energy,0,0
+urban processes,wastewater,wastewater,non-energy,0,0
 urban processes,aerosols,aerosols,non-energy,0,0
 urban processes,fire_exting,fire_exting,non-energy,0,0
 industrial processes,adipic acid,adipic acid,non-energy,0,0

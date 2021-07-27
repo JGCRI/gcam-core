@@ -1,0 +1,10 @@
+# File: A74.subsector_logit.csv
+# Title: Municipal energy-for-water subsector logit exponents
+# Units: None
+# Source: NA
+# Column types: ccnc
+supplysector,subsector,logit.exponent,logit.type
+municipal water abstraction,electricity,-6,
+municipal water treatment,electricity,-6,
+municipal water distribution,electricity,-6,
+municipal wastewater treatment,electricity,-6,

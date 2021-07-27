@@ -24,6 +24,7 @@ module_energy_L270.limits <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "energy/A23.globaltech_eff",
+             FILE = "emissions/A_CDRU",
              "L102.gdp_mil90usd_GCAM3_R_Y",
              "L102.gdp_mil90usd_Scen_R_Y",
              "L221.GlobalTechCoef_en",
@@ -52,6 +53,7 @@ module_energy_L270.limits <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
+    A_CDRU <- get_data(all_data, "emissions/A_CDRU")
     L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y", strip_attributes = TRUE)
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
@@ -124,6 +126,31 @@ module_energy_L270.limits <- function(command, ...) {
 	  L270.CTaxInput
 
     L270.CTaxInput <- L270.CTaxInput[, c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "ctax.input", "fuel.C.coef")]
+
+
+    A_CDRU %>%
+      gather_years("coef") -> A_CDRU
+
+    #create a coefficient table for airCO2 only, analogous to L221.GlobalTechCoef_en (where we don't want airCO2 showing up), which will be appended to L270.CTaxInput
+    A_CDRU %>%
+      select(supplysector, subsector, technology) %>%
+      distinct %>%
+      # Interpolate to all years
+      repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS))) %>%
+      left_join(A_CDRU, by = c("supplysector", "subsector", "technology", "year")) %>%
+      group_by(supplysector, subsector, technology) %>%
+      mutate(coefficient = approx_fun(year, value = coef, rule = 1)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS) %>%
+      select(sector.name = supplysector, subsector.name = subsector, technology, year, coefficient) -> L270.GlobalTechCoef_cdr
+
+    L270.GlobalTechCoef_cdr %>%
+      mutate(ctax.input = energy.NEG_EMISS_POLICY_NAME)  %>%
+      rename(fuel.C.coef = coefficient)-> L270.GlobalTechCoef_cdr
+
+    L270.CTaxInput %>%
+      bind_rows(L270.GlobalTechCoef_cdr) -> L270.CTaxInput
+
 
     # L270.LandRootNegEmissMkt: set the negative emissions policy name into the LandAllocator root
     # so it can make it available to all land leaves under a UCT
@@ -216,9 +243,11 @@ module_energy_L270.limits <- function(command, ...) {
       add_comments("Add ctax-input to all of the bio-energy supply sectors") %>%
       add_comments("by using L221.GlobalTechCoef_en filtered by biomass|ethanol") %>%
       add_comments("and joining carbon coefficients from L202.CarbonCoef") %>%
+      add_comments("airCO2 is also appended for direct air capture (i.e. negative emissions not from biomass)") %>%
       add_legacy_name("L270.CTaxInput") %>%
       add_precursors("L221.GlobalTechCoef_en",
-                     "L202.CarbonCoef") ->
+                     "L202.CarbonCoef",
+                     "emissions/A_CDRU") ->
       L270.CTaxInput
 
     L270.LandRootNegEmissMkt %>%

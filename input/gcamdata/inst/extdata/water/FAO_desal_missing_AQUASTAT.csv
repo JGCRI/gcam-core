@@ -1,0 +1,21 @@
+# File: FAO_desal_missing_AQUASTAT.csv
+# Title: Desalinated water production by country and year, for selected countries and years missing in the FAO AQUASTAT database
+# Units: km^3
+# Comments: This table fills out some of the missing values in the AQUASTAT time series, in order to improve accuracy of historical calibration data
+# Sources: See "Source" field in data table.
+# Column types: ccinc
+Country,Variable,Year,Value,Source
+Barbados,Desalinated water produced,1999,0,http://www.water-technology.net/projects/barbados/
+Barbados,Desalinated water produced,2001,0.01095,http://www.water-technology.net/projects/barbados/
+Cuba,Desalinated water produced,1965,1.30E-04,http://www.centralbasin.org/en/education/water-facts/desalination/
+France,Desalinated water produced,1965,0.0117,http://consulfrance-atlanta.org/spip.php?article3880
+India,Desalinated water produced,2011,0.0371,https://en.wikipedia.org/wiki/Minjur_Seawater_Desalination_Plant
+India,Desalinated water produced,2014,0.0736,https://en.wikipedia.org/wiki/Nemmeli_Seawater_Desalination_Plant
+Lebanon,Desalinated water produced,2005,0.0473,
+Libya,Desalinated water produced,2004,0.1095,http://www.sciencedirect.com/science/article/pii/S0011916404002292
+Qatar,Desalinated water produced,2012,0.5475,http://www.waterworld.com/articles/wwi/print/volume-27/issue-1/regional-spotlight/middle-east-africa/will-qatar-turn.html
+Qatar,Desalinated water produced,2020,0.866145,http://www.waterworld.com/articles/wwi/print/volume-27/issue-1/regional-spotlight/middle-east-africa/will-qatar-turn.html
+Saudi Arabia,Desalinated water produced,2011,1.2,https://en.wikipedia.org/wiki/Water_supply_and_sanitation_in_Saudi_Arabia
+Seychelles,Desalinated water produced,2010,0.003066,
+Singapore,Desalinated water produced,2005,0.04964,http://www.pub.gov.sg/water/Pages/DesalinatedWater.aspx
+United Arab Emirates,Desalinated water produced,2013,1.5994,http://www.waterworld.com/articles/2013/04/dubai-opens-uaes-largest-desalination-plant.html

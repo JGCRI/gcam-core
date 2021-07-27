@@ -5,7 +5,7 @@
 # Units: NA
 # Column types: icnnnnnn
 # ----------
-basin.id,basin.name,alpha,base.cum,base.rsc,base.prc,hist.use,hist.price
+GCAM_basin_ID,basin.name,alpha,base.cum,base.rsc,base.prc,hist.use,hist.price
 55,Adriatic Sea - Greece - Black Sea Coast,0.5,100,100,0.001,0,0
 171,"Africa, East Central Coast",0.5,100,100,0.001,0,0
 190,"Africa, Indian Ocean Coast",0.5,100,100,0.001,0,0

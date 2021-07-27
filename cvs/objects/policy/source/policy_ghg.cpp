@@ -62,9 +62,7 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 /*! \brief Default constructor. */
-GHGPolicy::GHGPolicy():
-mConstraint( -1 ),
-mFixedTax( -1 )
+GHGPolicy::GHGPolicy()
 {
 }
 
@@ -73,24 +71,21 @@ mFixedTax( -1 )
 *        constraint.
 */
 GHGPolicy::GHGPolicy( const string aName, const string aMarket ):
-mConstraint( -1 ),
-mFixedTax( -1 )
+mName(aName),
+mMarket(aMarket)
 {
-    mName = aName;
-    mMarket = aMarket;
 }
 
 /*! \brief Constructor used when explicitly constructing a fixed tax.
 */
 GHGPolicy::GHGPolicy( const string aName, const string aMarket,
-                      const vector<double>& aTaxes )
+                      const vector<double>& aTaxes ):
+mName(aName),
+mMarket(aMarket)
 {
     // Ensure that the taxes vector passed in is the right size.
     assert( aTaxes.size() == mConstraint.size() );
     
-    mName = aName;
-    mMarket = aMarket;
-    mConstraint.assign( mConstraint.size(), -1 );
     std::copy( aTaxes.begin(), aTaxes.end(), mFixedTax.begin() );
 }
 
@@ -165,10 +160,10 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
             mMarket = XMLHelper<string>::getValue( curr ); // should be only one market
         }
         else if( nodeName == "constraint" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mConstraint, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mConstraint, modeltime );
         }
         else if( nodeName == "fixedTax" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mFixedTax, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mFixedTax, modeltime );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -219,9 +214,9 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
 
     // check for missing periods in which case interpolate
     for( int i = 1; i < modeltime->getmaxper(); ++i ) {
-        if( mFixedTax[ i ] == -1 && mFixedTax[ i - 1 ] != -1 ) {
+        if( !mFixedTax[ i ].isInited() && mFixedTax[ i - 1 ].isInited() ) {
             int j;
-            for( j = i + 1; j < modeltime->getmaxper() && mFixedTax[ j ] == -1; ++j ) {
+            for( j = i + 1; j < modeltime->getmaxper() && !mFixedTax[ j ].isInited(); ++j ) {
             }
             if( j < modeltime->getmaxper() ) {
                 mFixedTax[ i ] = util::linearInterpolateY( modeltime->getper_to_yr( i ),
@@ -231,9 +226,9 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
                                                            mFixedTax[ j ] );
             }
         }
-        if( mConstraint[ i ] == -1 && mConstraint[ i - 1 ] != -1 ) {
+        if( !mConstraint[ i ].isInited() && mConstraint[ i - 1 ].isInited() ) {
             int j;
-            for( j = i + 1; j < modeltime->getmaxper() && mConstraint[ j ] == -1; ++j ) {
+            for( j = i + 1; j < modeltime->getmaxper() && !mConstraint[ j ].isInited(); ++j ) {
             }
             if( j < modeltime->getmaxper() ) {
                 mConstraint[ i ] = util::linearInterpolateY( modeltime->getper_to_yr( i ),
@@ -250,11 +245,13 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
     // If it is a constraint, add the constraint to the market and set the 
     // market to solve.
     for( unsigned int i = 0; i < modeltime->getmaxper(); ++i ){
-        if( mFixedTax[ i ] != -1 ){
+        if( mFixedTax[ i ].isInited() ){
             marketplace->unsetMarketToSolve( mName, aRegionName, i );
             marketplace->setPrice( mName, aRegionName, mFixedTax[ i ], i );
         }
-        else if( mConstraint[ i ] != -1 ){
+        // if both a fixed tax and constraint are provided the constraint takes
+        // precedence and the fixed tax is used as initial guess
+        if( mConstraint[ i ].isInited() ){
             marketplace->setMarketToSolve( mName, aRegionName, i );
             // Adding the difference between the constraint for this period
             // and the current supply because addToSupply adds to the current
@@ -265,7 +262,7 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
 
         // GHG policies must have a price >= 0.  It may be the case that the constraint is
         // non-binding at a zero price in which case the solver can use this information to
-        // make a supply currection to still ensure equality.
+        // make a supply correction to still ensure equality.
         SectorUtils::setSupplyBehaviorBounds( mName, aRegionName, 0, util::getLargeNumber(), i );
     }
 }

@@ -4,7 +4,7 @@
 # Units: km^3/yr
 # Column types: ni
 # ----------
-netDepletion,basin.id
+netDepletion,GCAM_basin_ID
 0,1
 0,2
 0,3

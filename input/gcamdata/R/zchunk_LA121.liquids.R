@@ -31,7 +31,7 @@ module_energy_LA121.liquids <- function(command, ...) {
              FILE = "energy/A21.globaltech_coef",
              FILE = "energy/A21.globalrsrctech_coef",
              "L100.IEA_en_bal_ctry_hist",
-             "L1011.en_bal_EJ_R_Si_Fi_Yh",
+             "L1012.en_bal_EJ_R_Si_Fi_Yh",
              "L111.Prod_EJ_R_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L121.in_EJ_R_unoil_F_Yh",
@@ -53,21 +53,22 @@ module_energy_LA121.liquids <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    IIASA_biofuel_production <- get_data(all_data, "aglu/IIASA_biofuel_production")
-    IIASA_biofuel_tech_mapping <- get_data(all_data, "aglu/IIASA_biofuel_tech_mapping")
-    IIASA_biofuel_region_mapping <- get_data(all_data, "aglu/IIASA_biofuel_region_mapping")
-    A_OilSeed_SecOut <- get_data(all_data, "aglu/A_OilSeed_SecOut")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    IEA_product_rsrc <- get_data(all_data, "energy/mappings/IEA_product_rsrc")
-    A21.unoil_demandshares <- get_data(all_data, "energy/A21.unoil_demandshares")
-    A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef")
-    L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
-    A21.globalrsrctech_coef <- get_data(all_data, "energy/A21.globalrsrctech_coef") %>%
+    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID", strip_attributes = TRUE)
+    IIASA_biofuel_production <- get_data(all_data, "aglu/IIASA_biofuel_production", strip_attributes = TRUE)
+    IIASA_biofuel_tech_mapping <- get_data(all_data, "aglu/IIASA_biofuel_tech_mapping", strip_attributes = TRUE)
+    IIASA_biofuel_region_mapping <- get_data(all_data, "aglu/IIASA_biofuel_region_mapping", strip_attributes = TRUE)
+    A_OilSeed_SecOut <- get_data(all_data, "aglu/A_OilSeed_SecOut", strip_attributes = TRUE)
+    calibrated_techs <- get_data(all_data, "energy/calibrated_techs", strip_attributes = TRUE)
+    IEA_product_rsrc <- get_data(all_data, "energy/mappings/IEA_product_rsrc", strip_attributes = TRUE)
+    A21.unoil_demandshares <- get_data(all_data, "energy/A21.unoil_demandshares", strip_attributes = TRUE)
+    A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef", strip_attributes = TRUE)
+    L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist", strip_attributes = TRUE)
+    L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
+    A21.globalrsrctech_coef <- get_data(all_data, "energy/A21.globalrsrctech_coef", strip_attributes = TRUE) %>%
       filter(minicam.energy.input == "regional natural gas") %>%
       gather_years(value_col = "gas_coef") %>%
       repeat_add_columns(tibble(region = c(iso_GCAM_regID$GCAM_region_ID)))
+
     # L100.IEA_en_bal_ctry_hist might be null (meaning the data system is running
     # without the proprietary IEA data files). If this is the case, we substitute
     # pre-built output datasets and exit.
@@ -173,15 +174,15 @@ module_energy_LA121.liquids <- function(command, ...) {
 
       L121.in_EJ_R_TPES_unoil_Yh %>% filter(value > 0) -> L121.in_EJ_R_TPES_unoil_Yh_temp
       # Conventional (crude) oil: calculate as liquids TPES - unconventional oil
-      L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+      L1012.en_bal_EJ_R_Si_Fi_Yh %>%
         filter(sector == "TPES", fuel == "refined liquids") -> L121.in_EJ_R_TPES_liq_Yh
 
       L121.in_EJ_R_TPES_liq_Yh %>%
         select(GCAM_region_ID, sector, fuel, year, value) %>%
         mutate(fuel = "crude oil") %>%
         left_join(rename(L121.in_EJ_R_TPES_unoil_Yh, value_unoil = value, unoil = fuel), by = c("GCAM_region_ID", "sector", "year")) %>%
-        mutate( value_unoil = if_else(is.na(value_unoil),0,value_unoil)) %>%
-        mutate(value = value - value_unoil) %>%
+        mutate(value_unoil = if_else(is.na(value_unoil), 0, value_unoil),
+               value = value - value_unoil) %>%
         select(GCAM_region_ID, sector, fuel, year, value) -> L121.in_EJ_R_TPES_crude_Yh
 
       L111.Prod_EJ_R_F_Yh %>%
@@ -270,7 +271,7 @@ module_energy_LA121.liquids <- function(command, ...) {
         add_comments("Unconventional oil subtracted from total primary energy supply of liquids") %>%
         add_comments("to determine crude oil supply") %>%
         add_legacy_name("L121.in_EJ_R_TPES_crude_Yh") %>%
-        add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh") ->
+        add_precursors("L1012.en_bal_EJ_R_Si_Fi_Yh") ->
         L121.in_EJ_R_TPES_crude_Yh
 
       L121.in_EJ_R_TPES_unoil_Yh %>%

@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L221.SectorLogitTables[[ curr_table ]]$data}, \code{L221.Supplysector_en}, \code{L221.SectorUseTrialMarket_en}, \code{L221.SubsectorLogitTables[[ curr_table ]]$data}, \code{L221.SubsectorLogit_en}, \code{L221.SubsectorShrwt_en}, \code{L221.SubsectorShrwtFllt_en}, \code{L221.SubsectorInterp_en}, \code{L221.SubsectorInterpTo_en}, \code{L221.StubTech_en}, \code{L221.GlobalTechCoef_en}, \code{L221.GlobalTechCost_en}, \code{L221.GlobalTechShrwt_en}, \code{L221.PrimaryConsKeyword_en}, \code{L221.StubTechFractSecOut_en}, \code{L221.StubTechFractProd_en}, \code{L221.StubTechFractCalPrice_en}, \code{L221.Rsrc_en}, \code{L221.RsrcPrice_en}, \code{L221.Production_unoil}, \code{L221.StubTechProd_oil_unoil}, \code{L221.StubTechProd_oil_crude}. The corresponding file in the
+#' the generated outputs: \code{L221.SectorLogitTables[[ curr_table ]]$data}, \code{L221.Supplysector_en}, \code{L221.SectorUseTrialMarket_en}, \code{L221.SubsectorLogitTables[[ curr_table ]]$data}, \code{L221.SubsectorLogit_en}, \code{L221.SubsectorShrwt_en}, \code{L221.SubsectorShrwtFllt_en}, \code{L221.SubsectorInterp_en}, \code{L221.SubsectorInterpTo_en}, \code{L221.StubTech_en}, \code{L221.GlobalTechCoef_en}, \code{L221.GlobalTechCost_en}, \code{L221.GlobalTechShrwt_en}, \code{L221.PrimaryConsKeyword_en}, \code{L221.StubTechFractSecOut_en}, \code{L221.StubTechFractProd_en}, \code{L221.StubTechFractCalPrice_en}, \code{L221.Rsrc_en}, \code{L221.RsrcPrice_en}, \code{L221.Production_unoil}. The corresponding file in the
 #' original data system was \code{L221.en_supply.R} (energy level2).
 #' @details This chunk creates level 2 output files for energy supply. It creates supply sector information,
 #' subsector logit exponents, subsector shareweight and interpolation, and stubtech info by writing assumption file
@@ -33,8 +33,6 @@ module_energy_L221.en_supply <- function(command, ...) {
              FILE = "energy/A21.globaltech_keyword",
              FILE = "energy/A21.globaltech_secout",
              FILE = "energy/A21.rsrc_info",
-             "L121.in_EJ_R_TPES_unoil_Yh",
-             "L121.in_EJ_R_TPES_crude_Yh",
              "L121.BiomassOilRatios_kgGJ_R_C",
              "L122.in_Mt_R_C_Yh",
              FILE = "aglu/A_an_input_subsector",
@@ -59,8 +57,6 @@ module_energy_L221.en_supply <- function(command, ...) {
              "L221.StubTechFractCalPrice_en",
              "L221.Rsrc_en",
              "L221.RsrcPrice_en",
-             "L221.StubTechProd_oil_unoil",
-             "L221.StubTechProd_oil_crude",
              "L221.StubTechCalInput_bioOil",
              "L221.StubTechInterp_bioOil",
              "L221.StubTechShrwt_bioOil"))
@@ -94,8 +90,6 @@ module_energy_L221.en_supply <- function(command, ...) {
     A21.globaltech_keyword <- get_data(all_data, "energy/A21.globaltech_keyword", strip_attributes = TRUE)
     A21.globaltech_secout <- get_data(all_data, "energy/A21.globaltech_secout", strip_attributes = TRUE)
     A21.rsrc_info <- get_data(all_data, "energy/A21.rsrc_info", strip_attributes = TRUE)
-    L121.in_EJ_R_TPES_unoil_Yh <- get_data(all_data, "L121.in_EJ_R_TPES_unoil_Yh")
-    L121.in_EJ_R_TPES_crude_Yh <- get_data(all_data, "L121.in_EJ_R_TPES_crude_Yh")
     L121.BiomassOilRatios_kgGJ_R_C <- get_data(all_data, "L121.BiomassOilRatios_kgGJ_R_C", strip_attributes = TRUE)
     L122.in_Mt_R_C_Yh <- get_data(all_data, "L122.in_Mt_R_C_Yh", strip_attributes = TRUE)
     A_an_input_subsector <- get_data(all_data, "aglu/A_an_input_subsector")
@@ -362,40 +356,6 @@ module_energy_L221.en_supply <- function(command, ...) {
 
     # Calibration and region specific data
 
-    # Unconventional oil demand
-    L121.in_EJ_R_TPES_unoil_Yh %>%
-      left_join(A_regions %>%
-                  select(GCAM_region_ID, region), by = "GCAM_region_ID") -> L121.in_EJ_R_TPES_unoil_Yh
-
-    # Calibrated demand of unconventional oil
-    L221.StubTech_en %>%
-      filter(supplysector == "regional oil" & subsector == "unconventional oil") %>%
-      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
-      left_join(L121.in_EJ_R_TPES_unoil_Yh, by = c("region", "year")) %>%
-      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT),
-             calOutputValue = if_else(is.na(calOutputValue), 0, calOutputValue),
-             year.share.weight = year,
-             subsector.share.weight = if_else(calOutputValue > 0, 1, 0),
-             share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      select(region, supplysector, subsector, stub.technology, year, calOutputValue, year.share.weight, subsector.share.weight, share.weight) -> L221.StubTechProd_oil_unoil
-
-    # Crude oil demand
-    L121.in_EJ_R_TPES_crude_Yh %>%
-      left_join(A_regions %>%
-                  select(GCAM_region_ID, region), by = "GCAM_region_ID") -> L121.in_EJ_R_TPES_crude_Yh
-
-    # Calibrated demand of crude oil
-    L221.StubTech_en %>%
-      filter(supplysector == "regional oil" & subsector == "crude oil") %>%
-      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
-      left_join(L121.in_EJ_R_TPES_crude_Yh, by = c("region", "year")) %>%
-      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT),
-             calOutputValue = if_else(is.na(calOutputValue), 0, calOutputValue),
-             year.share.weight = year,
-             subsector.share.weight = if_else(calOutputValue > 0, 1, 0),
-             share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      select(region, supplysector, subsector, stub.technology, year, calOutputValue, year.share.weight, subsector.share.weight, share.weight) -> L221.StubTechProd_oil_crude
-
     # GPK 4/26/2019: Region-specific calibrated output of biomassOil technologies
     # Because multiple feedstocks for producing biomassOil are allowed, the quantities are calibrated
     L221.StubTechCalInput_bioOil <- L122.in_Mt_R_C_Yh %>%
@@ -642,25 +602,6 @@ module_energy_L221.en_supply <- function(command, ...) {
       same_precursors_as(L221.StubTechFractCalPrice_en) ->
       L221.RsrcPrice_en
 
-
-
-
-    L221.StubTechProd_oil_unoil %>%
-      add_title("Calibrated demand of unconventional oil") %>%
-      add_units("unitless") %>%
-      add_comments("Demand for unoil from L121.in_EJ_R_TPES_unoil_Yh used to determine calibrated output value and shareweights") %>%
-      add_legacy_name("L221.StubTechProd_oil_unoil") %>%
-      add_precursors("L121.in_EJ_R_TPES_unoil_Yh", "energy/A21.globaltech_shrwt", "common/GCAM_region_names", "energy/A_regions") ->
-      L221.StubTechProd_oil_unoil
-
-    L221.StubTechProd_oil_crude %>%
-      add_title("Calibrated demand of crude oil") %>%
-      add_units("unitless") %>%
-      add_comments("Demand for crude from L121.in_EJ_R_TPES_unoil_Yh used to determine calibrated output value and shareweights") %>%
-      add_legacy_name("L221.StubTechProd_oil_crude") %>%
-      add_precursors("L121.in_EJ_R_TPES_crude_Yh", "energy/A21.globaltech_shrwt", "common/GCAM_region_names", "energy/A_regions") ->
-      L221.StubTechProd_oil_crude
-
     L221.StubTechCalInput_bioOil %>%
       add_title("Calibrated output of biomassOil by feedstock type") %>%
       add_units("Mt/yr") %>%
@@ -688,7 +629,7 @@ module_energy_L221.en_supply <- function(command, ...) {
                 L221.GlobalTechCost_en, L221.GlobalTechShrwt_en, L221.PrimaryConsKeyword_en,
                 L221.StubTechFractSecOut_en, L221.StubTechFractProd_en, L221.StubTechFractCalPrice_en, L221.Rsrc_en,
                 L221.RsrcPrice_en,
-                L221.StubTechProd_oil_unoil, L221.StubTechProd_oil_crude, L221.StubTechCalInput_bioOil,
+                L221.StubTechCalInput_bioOil,
                 L221.StubTechInterp_bioOil, L221.StubTechShrwt_bioOil)
   } else {
     stop("Unknown command")

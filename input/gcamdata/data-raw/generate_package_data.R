@@ -143,6 +143,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["CalorieContent"]] <- c(level2_data_names[["TechYr"]], "minicam.energy.input", "efficiency")
   level2_data_names[["DeleteInput"]] <- c("region", "supplysector", "subsector", "technology", "year", "minicam.energy.input")
   level2_data_names[["ResTechShrwt"]] <- c("region", "resource", "subresource", "technology", "year", "share.weight")
+  level2_data_names[["ResTechCoef"]] <- c("region", "resource", "subresource", "technology", "year", "minicam.energy.input", "coefficient")
+  level2_data_names[["DeleteResTechInput"]] <- c("region", "resource", "subresource", "technology", "year", "minicam.energy.input")
   level2_data_names[["ResReserveTechCost"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "minicam.non.energy.input", "input.cost")
   level2_data_names[["ResReserveTechLifetime"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "lifetime")
   level2_data_names[["ResReserveTechProfitShutdown"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "median.shutdown.point", "profit.shutdown.steepness")
@@ -233,7 +235,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["StubTechFractProd"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "fractional.secondary.output", "price", "fraction.produced")
   level2_data_names[["StubTechFractCalPrice"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "fractional.secondary.output", "calPrice")
   level2_data_names[["StubTechIntGainOutputRatio"]] <- c("region", "supplysector", "subsector", "technology", "year", "internal.gains.output.ratio", "internal.gains.market.name")
-  level2_data_names[["StubTechSecOut"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "secondary.output.name", "secondary.output")
+  level2_data_names[["StubTechSecOut"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "secondary.output", "output.ratio")
   level2_data_names[["StubTechSecMarket"]] <- c(level2_data_names[["StubTechYr"]], "secondary.output", "market.name")
   level2_data_names[["StubTechSecPmult"]] <- c(level2_data_names[["StubTechYr"]], "secondary.output", "pMultiplier")
   level2_data_names[["StubTranTech"]] <- c("region", "supplysector", "tranSubsector", "stub.technology")
@@ -266,6 +268,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["AgHAtoCL"]] <- c(level2_data_names[["AgTechYr"]], "harvests.per.year")
   level2_data_names[["AgYield"]] <- c(level2_data_names[["AgTechYr"]], "yield")
   level2_data_names[["AgNonEnergyCost"]] <- c(level2_data_names[["AgTechYr"]], "minicam.non.energy.input", "input.cost")
+  level2_data_names[["AgPriceConversion"]] <- c(level2_data_names[["AgTechYr"]], "minicam.energy.input", "price.unit.conversion")
   level2_data_names[["AgProdChange"]] <- c(level2_data_names[["AgTechYr"]], "AgProdChange")
   level2_data_names[["AgCost"]] <- c(level2_data_names[["AgTechYr"]], "nonLandVariableCost")
   level2_data_names[["AgCoef"]] <- c(level2_data_names[["AgTechYr"]], "minicam.energy.input", "coefficient")
@@ -485,6 +488,7 @@ usethis::use_data(GCAM_DATA_MAP, overwrite = TRUE, internal = FALSE)
 prebuilt_data_names <- c(
   # outputs of module_emissions_L102.nonco2_ceds_R_S_Y
   "L102.ceds_GFED_nonco2_tg_R_S_F",
+  "L102.ceds_int_shipping_nonco2_tg_S_F",
 
   # outputs of module_energy_LA101.en_bal_IEA
   "L101.en_bal_EJ_R_Si_Fi_Yh_full",

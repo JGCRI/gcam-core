@@ -361,7 +361,8 @@ module_gcamusa_L226.en_distribution_USA <- function(command, ...) {
       add_comments("Currently using FERC regions as a proxy for regional energy markets.") %>%
       add_legacy_name("L226.Supplysector_en_USA") %>%
       add_precursors("energy/A21.sector",
-                     "energy/A26.sector") ->
+                     "energy/A26.sector",
+                     "energy/A_ff_RegionalSector") ->
       L226.Supplysector_en_USA
 
     L226.SubsectorShrwtFllt_en_USA %>%

@@ -53,12 +53,11 @@ mitigation policy.
 * [GCAM Documentation](http://jgcri.github.io/gcam-doc/)
 * [Getting Started with GCAM](http://jgcri.github.io/gcam-doc/user-guide.html)
 * [GCAM Community](http://www.globalchange.umd.edu/models/gcam/gcam-community/)
-* [2019 Tutorial Slides](http://www.globalchange.umd.edu/data/gcam/GCAM_tutorial_2019.pdf)
-* GCAM lectures from the UMD Water and Climate class
-  * [Lecture 3: Introduction to GCAM](https://www.youtube.com/watch?v=xRF9lFwtMr0)
-  * [Lecture 4: GCAM Tutorial](https://www.youtube.com/watch?v=S7vAShH-dbs)
+* [GCAM Videos and Tutorial Slides](https://gcims.pnnl.gov/community)
 
 ## Selected Publications
+
+Calvin, K., Patel, P., Clarke, L., Asrar, G., Bond-Lamberty, B., Cui, R. Y., Di Vittorio, A., Dorheim, K., Edmonds, J., Hartin, C., Hejazi, M., Horowitz, R., Iyer, G., Kyle, P., Kim, S., Link, R., McJeon, H., Smith, S. J., Snyder, A., Waldhoff, S., and Wise, M.: GCAM v5.1: representing the linkages between energy, water, land, climate, and economic systems, Geosci. Model Dev., 12, 677–698, https://doi.org/10.5194/gmd-12-677-2019, 2019.
 
 Edmonds, J., and J. Reilly (1985)Global Energy: Assessing the Future (Oxford University Press, New York) pp.317.
 

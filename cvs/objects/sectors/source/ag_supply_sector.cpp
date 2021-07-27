@@ -60,7 +60,10 @@ extern Scenario* scenario;
 */
 AgSupplySector::AgSupplySector( std::string& regionName ): SupplySector( regionName ),
    mCalPrice( -1.0 ),
-   mSubsidy( 0.0 )   
+   mSubsidy( 0.0 ),
+   // The default is to allow very negative profit rates, which implies to
+   // never give a subsidy.
+   mCalMinProfitRate( -util::getLargeNumber() )
 {
 }
 
@@ -83,6 +86,9 @@ bool AgSupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode
 	else if ( nodeName == "subsidy" ) {
         XMLHelper<double>::insertValueIntoVector( curr, mSubsidy, scenario->getModeltime() );
     }
+    else if ( nodeName == "cal-min-profit-rate" ) {
+        mCalMinProfitRate = XMLHelper<double>::getValue( curr );
+    }
     else if( nodeName == "market" ){
         mMarketName = XMLHelper<string>::getValue( curr );
     }
@@ -95,6 +101,7 @@ bool AgSupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode
 void AgSupplySector::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     SupplySector::toDebugXMLDerived( period, out, tabs );
     XMLWriteElement( scenario->getMarketplace()->getPrice( mName, mRegionName, 1, true ), "calPrice", out, tabs );
+    XMLWriteElement( mCalMinProfitRate, "cal-min-profit-rate", out, tabs );
     XMLWriteElement( mMarketName, "market", out, tabs );
 }
 
@@ -125,6 +132,9 @@ void AgSupplySector::completeInit( const IInfo* aRegionInfo,
 	for( int per = 0; per < modeltime->getmaxper(); ++per ){
 		marketplace->getMarketInfo( mName, mRegionName, per, true )->setDouble( mRegionName + "subsidy", mSubsidy[ per ] );
 	}
+    
+    // make available the minimum calibration profit rate to the technology through the info object
+    mSectorInfo->setDouble( "cal-min-profit-rate", mCalMinProfitRate );
 }
 
 /*! \brief Calculate the sector price.

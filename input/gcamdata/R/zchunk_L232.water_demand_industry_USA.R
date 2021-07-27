@@ -1,3 +1,5 @@
+# Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
+
 #' module_gcamusa_L232.water_demand_industry
 #'
 #' Computes industrial water withdrawal/consumption coefficients (m3/GJ output) by US state and year.
@@ -15,7 +17,7 @@
 #' @author RC March 2019
 module_gcamusa_L232.water_demand_industry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "water/A03.sector",
+    return(c(FILE = "water/water_td_sectors",
              FILE = "energy/A32.globaltech_coef",
              "L132.water_km3_state_ind_Yh",
              "L232.StubTechProd_industry_USA"))
@@ -30,8 +32,8 @@ module_gcamusa_L232.water_demand_industry <- function(command, ...) {
       water_km3 <- energy_EJ <- state <- NULL  # silence package check notes
 
     # Load required inputs
-    A03.sector <- get_data(all_data, "water/A03.sector")
     A32.globaltech_coef <- get_data(all_data, "energy/A32.globaltech_coef")
+    water_td_sectors <- get_data(all_data, "water/water_td_sectors")
     L132.water_km3_state_ind_Yh <- get_data(all_data, "L132.water_km3_state_ind_Yh")
     L232.StubTechProd_industry_USA <- get_data(all_data, "L232.StubTechProd_industry_USA")
 
@@ -49,7 +51,7 @@ module_gcamusa_L232.water_demand_industry <- function(command, ...) {
       select(region = state, water_type, year, coefficient) %>%
       repeat_add_columns(distinct(A32.globaltech_coef, supplysector, subsector, technology)) %>%
       mutate(water_sector = "Manufacturing",
-             minicam.energy.input = set_water_input_name(water_sector, water_type, A03.sector),
+             minicam.energy.input = set_water_input_name(water_sector, water_type, water_td_sectors),
              market.name = region) %>%
       select(LEVEL2_DATA_NAMES[["TechCoef"]]) %>%
       # Fill out the values in the final base year to all future years
@@ -66,7 +68,7 @@ module_gcamusa_L232.water_demand_industry <- function(command, ...) {
       add_comments("Historical coefficients are calculated as industrial water demand divided by industrial sector output") %>%
       add_comments("Future coefficients are set the same as in the final base year") %>%
       add_legacy_name("L232.TechCoef_USA") %>%
-      add_precursors("water/A03.sector",
+      add_precursors("water/water_td_sectors",
                      "energy/A32.globaltech_coef",
                      "L132.water_km3_state_ind_Yh",
                      "L232.StubTechProd_industry_USA") ->

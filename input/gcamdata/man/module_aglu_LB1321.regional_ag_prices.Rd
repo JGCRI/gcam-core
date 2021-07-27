@@ -13,7 +13,7 @@ module_aglu_LB1321.regional_ag_prices(command, ...)
 }
 \value{
 Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
-  \code{command} is "MAKE") all the generated outputs: \code{L1321.prP_R_C_75USDkg}.
+  \code{command} is "MAKE") all the generated outputs: \code{L1321.prP_R_C_75USDkg}, \code{L1321.expP_R_F_75USDm3}.
 }
 \description{
 Calculate the calibration prices for all GCAM AGLU commodities.

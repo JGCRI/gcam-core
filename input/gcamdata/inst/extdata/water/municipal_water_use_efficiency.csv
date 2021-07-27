@@ -1,8 +1,8 @@
 # File: municipal_water_use_efficiency.csv
 # Title: Domestic water use efficiency from Shiklomanov
 # Units: %
-# Comments: http://webworld.unesco.org/water/ihp/db/shiklomanov/part'3/_Read'me.html. Note continent names were changed to match manufacturing water's to avoid the need for more mapping files
-# Source: http://hydrologie.org/redbooks/a281/iahs_281_358.pdf
+# Comments: The data here are computed as municipal water consumption / withdrawals for 7 global regions; these data were presented in more aggregate form in Shiklomanov 2000, https://doi.org/10.1080/02508060008686794.
+# Source: Shiklomanov 1999, World Water Resources and Their Use. Joint SHI/UNESCO Product. Data tables available 11/7/2020 at https://hydrologie.org/DON/html/PART'3/_Read'me.html
 # Column types: cnnnnnnnnnnn 
 # ----------
 continent,1900,1940,1950,1960,1970,1980,1990,1995,2000,2010,2025

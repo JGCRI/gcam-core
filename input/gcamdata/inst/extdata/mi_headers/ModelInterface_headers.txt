@@ -119,6 +119,10 @@ ResSubresourceProdLifetime, world/+{name}region, region/+{name}resource, resourc
 
 ResTechShrwt, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{name}technology, technology/+{year}period, period/+share-weight, scenario, scenario/world
 
+ResTechCoef, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{name}technology, technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world
+
+DeleteResTechInput, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{name}technology, technology/+{year}period, period/+{name; delete=1}minicam-energy-input, scenario, scenario/world
+
 ResReserveTechCost, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+{name}minicam-non-energy-input, minicam-non-energy-input/+input-cost, scenario, scenario/world, period/{name=CO2}CO2
 
 ResReserveTechCoef, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world, period/{name=CO2}CO2
@@ -539,6 +543,8 @@ AgHAtoCL, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{na
 AgYield, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+yield, scenario, scenario/world
 
 AgCoef, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world, period/{name=CO2}CO2
+
+AgPriceConversion, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+price-unit-conversion, scenario, scenario/world
 
 AgNonEnergyCost, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}minicam-non-energy-input, minicam-non-energy-input/+input-cost, scenario, scenario/world
 

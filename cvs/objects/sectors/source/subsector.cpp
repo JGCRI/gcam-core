@@ -46,7 +46,7 @@
 #include <algorithm>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
-#include <boost/math/tr1.hpp>
+#include <cmath>
 
 #include "util/base/include/configuration.h"
 #include "sectors/include/subsector.h"
@@ -472,7 +472,7 @@ void Subsector::calcCost( const int aPeriod ){
 double Subsector::calcShare( const IDiscreteChoice* aChoiceFn, const GDP* aGDP, const int aPeriod ) const {
     double subsectorPrice = getPrice( aGDP, aPeriod );
 
-    if( boost::math::isnan( subsectorPrice ) ) {
+    if( std::isnan( subsectorPrice ) ) {
         // Check for a NaN sentinel value.  If we find it, set the
         // subsector's share to zero.
         return -numeric_limits<double>::infinity();

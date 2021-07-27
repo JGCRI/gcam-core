@@ -58,7 +58,7 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
     # precede this change, and as such the mappings do not recognize this as a separate country
     L145.municipal_water_ctry_W_Yh_km3 <-
       FAO_municipal_water_AQUASTAT %>%
-      left_join_error_no_match( aquastat_ctry[ c("iso", "aquastat_ctry")], by = c(Area = "aquastat_ctry")) %>%
+      left_join_error_no_match(aquastat_ctry[ c("iso", "aquastat_ctry")], by = c(Area = "aquastat_ctry")) %>%
       mutate(Year = if_else(Year > max(HISTORICAL_YEARS), max(HISTORICAL_YEARS), Year)) %>%
       select(iso, Year, Value) %>%
       complete(iso = unique(iso), Year = HISTORICAL_YEARS) %>%
@@ -134,7 +134,7 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
     # Calculate nation-level consumption as withdrawals times efficiency, aggregate flow volumes by GCAM region, and
     # calculate the average efficiency by GCAM region and year
     L145.municipal_water_ctry_ALL_Yh_km3 <- L145.municipal_water_eff_ctry_Yh %>%
-      left_join( L145.municipal_water_ctry_W_Yh_km3, by = c("iso", "year")) %>%
+      left_join(L145.municipal_water_ctry_W_Yh_km3, by = c("iso", "year")) %>%
       rename(withdrawals = value) %>%
       drop_na(withdrawals) %>%
       mutate(consumption = efficiency * withdrawals)
@@ -150,7 +150,7 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
 
     #Compile data to be written out in the final format, selecting the appropriate columns
     L145.municipal_water_ctry_W_Yh_km3 <- select(L145.municipal_water_ctry_ALL_Yh_km3, iso, year, withdrawals)
-    L145.municipal_water_R_W_Yh_km3 <- select(L145.municipal_water_R_ALL_Yh_km3, GCAM_region_ID, year, withdrawals)
+    L145.municipal_water_R_W_Yh_km3 <- select(L145.municipal_water_R_ALL_Yh_km3, GCAM_region_ID, year, withdrawals, consumption)
     L145.municipal_water_eff_ctry_Yh <- select(L145.municipal_water_ctry_ALL_Yh_km3, iso, year, efficiency)
     L145.municipal_water_eff_R_Yh <- select(L145.municipal_water_R_ALL_Yh_km3, GCAM_region_ID, year, efficiency)
 
