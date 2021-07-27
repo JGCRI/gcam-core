@@ -474,7 +474,7 @@ SatiationAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/
 
 Satiation_impedance, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, satiation-demand-function/+satiation-impedance, scenario, scenario/world, building-node-input/satiation-demand-function
 
-Gomp.fn.param, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, gompertz-function/+habitable-land,gompertz-function/+base-pcFlsp, gompertz-function/+unadjust-satiation, gompertz-function/+land-density-param, gompertz-function/+base-floorspace-param, gompertz-function/+income-param, gompertz-function/+bias-adjust-param, scenario, scenario/world, building-node-input/gompertz-function
+Gomp.fn.param, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+habitable-land,building-node-input/+base-pcFlsp, building-node-input/+unadjust-satiation, building-node-input/+land-density-param, building-node-input/+base-floorspace-param, building-node-input/+income-param, building-node-input/+bias-adjust-param, scenario, scenario/world
 
 GenericBaseService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, building-service-input/+{year}base-service, building-service-input/+base-service, scenario, scenario/world
 
