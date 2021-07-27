@@ -17,7 +17,7 @@
 #' \code{L244.SubsectorLogit_bld_gcamusa}, \code{L244.StubTech_bld_gcamusa}, \code{L244.StubTechCalInput_bld_gcamusa}, \code{L244.StubTechMarket_bld},
 #' \code{L244.GlobalTechIntGainOutputRatio}, \code{L244.GlobalTechInterpTo_bld}, \code{L244.GlobalTechEff_bld},
 #' \code{L244.GlobalTechShrwt_bld_gcamusa}, \code{L244.GlobalTechCost_bld_gcamusa}, \code{L244.GlobalTechSCurve_bld}, \code{L244.HDDCDD_A2_GFDL_USA},
-#' \code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}, \code{L244.Gomp.fn.param_gcamusa}
+#' \code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}, \code{L244.Gomp.fn.param_gcamusa}.
 #' The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
 #' @details Creates GCAM-USA building output files for writing to xml.
 #' @importFrom assertthat assert_that
@@ -202,8 +202,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
 
     # L244.DemandFunction_serv_gcamusa and L244.DemandFunction_flsp_gcamusa: demand function types
     L244.DemandFunction_serv_gcamusa <- write_to_all_states(A44.demandFn_serv, LEVEL2_DATA_NAMES[["DemandFunction_serv"]])
-    L244.DemandFunction_flsp_gcamusa <- write_to_all_states(A44.demandFn_flsp,
-                                                            LEVEL2_DATA_NAMES[["DemandFunction_flsp"]])
+    L244.DemandFunction_flsp_gcamusa <- write_to_all_states(A44.demandFn_flsp, LEVEL2_DATA_NAMES[["DemandFunction_flsp"]])
 
     # L244.Satiation_flsp_gcamusa: Satiation levels assumed for floorspace
     L244.Satiation_flsp_gcamusa <- A44.satiation_flsp %>%
@@ -247,10 +246,11 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                exp(log(2) * pcGDP / energy.GDP_MID_SATIATION) * (satiation.level - pcFlsp_mm2)),
                energy.DIGITS_SATIATION_ADDER),
              # The satiation adder (million square meters of floorspace per person) needs to be less than the per-capita demand in the final calibration year
-             satiation.adder = if_else(satiation.adder > pcFlsp_mm2, pcFlsp_mm2 * 0.999, satiation.adder))
+             satiation.adder = if_else(satiation.adder > pcFlsp_mm2, pcFlsp_mm2 * 0.999, satiation.adder)) %>%
+      select(LEVEL2_DATA_NAMES[["SatiationAdder"]])
 
     #------------------------------------------------------
-    # JS, 06/2021:Updated floorspace function (flps-gomp-function)
+    # JS, 06/2021:Updated floorspace function
     # 1- Calculate the bias correction parameter (k)
     # 2- Write parameters for the updated floorspace function: unadjSat, a, b, c and k
 
@@ -439,7 +439,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       # considered a regional fuel market
       left_join_error_no_match(states_subregions, by = c("region" = "state")) %>%
       mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
-                                     grid_region, market.name)) %>%
+                                   grid_region, market.name)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechMarket"]])
 
     # L244.StubTechCalInput_bld: Calibrated energy consumption by buildings technologies
@@ -721,6 +721,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                      "gcam-usa/A44.hab_land_flsp_usa","L144.flsp_bm2_state_res" ) ->
       L244.Gomp.fn.param_gcamusa
 
+
     L244.HDDCDD_A2_GFDL_USA %>%
       add_title("Heating and Cooling Degree Days by State for GFDL A2") %>%
       add_units("Fahrenheit Degree Days") %>%
@@ -760,7 +761,6 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                      "gcam-usa/A44.gcam_consumer", "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm",
                      "gcam-usa/A44.demand_satiation_mult") ->
       L244.GenericServiceSatiation_gcamusa
-
 
     L244.ThermalServiceSatiation_gcamusa %>%
       add_title("Satiation levels assumed for thermal building services") %>%
