@@ -472,8 +472,6 @@ Satiation_flsp, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/
 
 SatiationAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, satiation-demand-function/+satiation-adder, scenario, scenario/world, building-node-input/satiation-demand-function
 
-Satiation_impedance, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, satiation-demand-function/+satiation-impedance, scenario, scenario/world, building-node-input/satiation-demand-function
-
 Gomp.fn.param, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+habitable-land,building-node-input/+base-pcFlsp, building-node-input/+unadjust-satiation, building-node-input/+land-density-param, building-node-input/+base-floorspace-param, building-node-input/+income-param, building-node-input/+bias-adjust-param, scenario, scenario/world
 
 GenericBaseService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, building-service-input/+{year}base-service, building-service-input/+base-service, scenario, scenario/world
@@ -481,10 +479,6 @@ GenericBaseService, world/+{name}region, region/+{name}gcam-consumer, gcam-consu
 ThermalBaseService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, thermal-building-service-input/+{year}base-service, thermal-building-service-input/+base-service, scenario, scenario/world
 
 GenericServiceSatiation, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, satiation-demand-function/+satiation-level, scenario, scenario/world, building-service-input/satiation-demand-function
-
-GenericServiceImpedance, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, satiation-demand-function/+satiation-impedance, scenario, scenario/world, building-service-input/satiation-demand-function
-
-ThermalServiceImpedance, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, satiation-demand-function/+satiation-impedance, scenario, scenario/world, thermal-building-service-input/satiation-demand-function
 
 ThermalServiceSatiation, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, satiation-demand-function/+satiation-level, scenario, scenario/world, thermal-building-service-input/satiation-demand-function
 

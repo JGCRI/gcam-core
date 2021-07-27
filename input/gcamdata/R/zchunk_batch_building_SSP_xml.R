@@ -19,8 +19,6 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
              paste0("L244.SatiationAdder_SSP", SSP_NUMS),
              paste0("L244.GenericServiceSatiation_SSP", SSP_NUMS),
              paste0("L244.FuelPrefElast_bld_SSP", unique(fuelpref_NUMS)),
-             paste0("L244.Satiation_impedance_SSP", SSP_NUMS),
-             paste0("L244.GenericServiceImpedance_SSP", SSP_NUMS),
              "L244.DeleteThermalService"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_SSP1.xml",
@@ -40,9 +38,8 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
       # Names of inputs and outputs
       Satiation_flsp <- paste0("L244.Satiation_flsp_SSP", i)
       SatiationAdder <- paste0("L244.SatiationAdder_SSP", i)
-      Satiation_impedance <- paste0("L244.Satiation_impedance_SSP", i)
       GenericServiceSatiation <- paste0("L244.GenericServiceSatiation_SSP", i)
-      GenericServiceImpedance <- paste0("L244.GenericServiceImpedance_SSP", i)
+
       # SSP2 is unique, uses fewer files
       if(i != 2) {
         FuelPrefElast <- paste0("L244.FuelPrefElast_bld_SSP", fuelpref_NUMS[toString(i)])
@@ -52,9 +49,7 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
       # Load required inputs
       L244.Satiation_flsp_SSP <- get_data(all_data, Satiation_flsp)
       L244.SatiationAdder_SSP <- get_data(all_data, SatiationAdder)
-      L244.Satiation_impedance_SSP <- get_data(all_data, Satiation_impedance)
       L244.GenericServiceSatiation_SSP <- get_data(all_data, GenericServiceSatiation)
-      L244.GenericServiceImpedance_SSP <- get_data(all_data, GenericServiceImpedance)
       if(i != 2) {
         L244.FuelPrefElast_SSP <- get_data(all_data, FuelPrefElast)
         L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService")
@@ -65,21 +60,17 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
         create_xml(xmlfn) %>%
           add_xml_data(L244.Satiation_flsp_SSP, "Satiation_flsp") %>%
           add_xml_data(L244.SatiationAdder_SSP, "SatiationAdder") %>%
-          add_xml_data(L244.Satiation_impedance_SSP, "Satiation_impedance") %>%
           add_xml_data(L244.GenericServiceSatiation_SSP, "GenericServiceSatiation") %>%
-          add_xml_data(L244.GenericServiceImpedance_SSP, "GenericServiceImpedance") %>%
-          add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance, GenericServiceSatiation,GenericServiceImpedance) ->
+          add_precursors(Satiation_flsp, SatiationAdder,GenericServiceSatiation) ->
           xml_obj
       } else {
         create_xml(xmlfn) %>%
           add_xml_data(L244.Satiation_flsp_SSP, "Satiation_flsp") %>%
           add_xml_data(L244.SatiationAdder_SSP, "SatiationAdder") %>%
-          add_xml_data(L244.Satiation_impedance_SSP, "Satiation_impedance") %>%
           add_xml_data(L244.GenericServiceSatiation_SSP, "GenericServiceSatiation") %>%
-          add_xml_data(L244.GenericServiceImpedance_SSP, "GenericServiceImpedance") %>%
           add_xml_data(L244.FuelPrefElast_SSP, "FuelPrefElast") %>%
           add_xml_data(L244.DeleteThermalService, "DeleteThermalService") %>%
-          add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance, GenericServiceSatiation, FuelPrefElast,
+          add_precursors(Satiation_flsp, SatiationAdder, GenericServiceSatiation, FuelPrefElast,
                          "L244.DeleteThermalService") ->
           xml_obj
       }

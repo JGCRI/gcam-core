@@ -17,8 +17,7 @@
 #' \code{L244.SubsectorLogit_bld_gcamusa}, \code{L244.StubTech_bld_gcamusa}, \code{L244.StubTechCalInput_bld_gcamusa}, \code{L244.StubTechMarket_bld},
 #' \code{L244.GlobalTechIntGainOutputRatio}, \code{L244.GlobalTechInterpTo_bld}, \code{L244.GlobalTechEff_bld},
 #' \code{L244.GlobalTechShrwt_bld_gcamusa}, \code{L244.GlobalTechCost_bld_gcamusa}, \code{L244.GlobalTechSCurve_bld}, \code{L244.HDDCDD_A2_GFDL_USA},
-#' \code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}, \code{L244.Gomp.fn.param_gcamusa}, \code{L244.Satiation_impedance_gcamusa},
-#' \code{L244.GenericServiceImpedance_gcamusa} and \code{L244.ThermalServiceImpedance_gcamusa}
+#' \code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}, \code{L244.Gomp.fn.param_gcamusa}
 #' The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
 #' @details Creates GCAM-USA building output files for writing to xml.
 #' @importFrom assertthat assert_that
@@ -52,7 +51,6 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
              FILE = "gcam-usa/A44.demand_satiation_mult",
              FILE = "gcam-usa/A44.hab_land_flsp_usa",
              FILE = "energy/A44.flsp_param",
-             FILE = "gcam-usa/A44.CalPrice_service_gcamusa", # To be changed
              "L144.flsp_bm2_state_res",
              "L144.flsp_bm2_state_comm",
              "L144.in_EJ_state_comm_F_U_Y",
@@ -95,10 +93,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
              "L244.HDDCDD_A2_GFDL_USA",
              "L244.HDDCDD_constdds_USA",
              "L244.HDDCDD_AEO_2015_USA",
-             "L244.Gomp.fn.param_gcamusa",
-             "L244.Satiation_impedance_gcamusa",
-             "L244.GenericServiceImpedance_gcamusa",
-             "L244.ThermalServiceImpedance_gcamusa"))
+             "L244.Gomp.fn.param_gcamusa"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -150,7 +145,6 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
     L100.pcGDP_thous90usd_state <- get_data(all_data, "L100.pcGDP_thous90usd_state", strip_attributes = TRUE)
     L144.hab_land_flsp_usa<- get_data(all_data, "gcam-usa/A44.hab_land_flsp_usa", strip_attributes = TRUE)
     L144.flsp_param <- get_data(all_data, "energy/A44.flsp_param", strip_attributes = TRUE)
-    L144.CalPrice_service_gcamusa <- get_data(all_data, "gcam-usa/A44.CalPrice_service_gcamusa", strip_attributes = TRUE)
 
     # ===================================================
     # Data Processing
@@ -253,14 +247,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                exp(log(2) * pcGDP / energy.GDP_MID_SATIATION) * (satiation.level - pcFlsp_mm2)),
                energy.DIGITS_SATIATION_ADDER),
              # The satiation adder (million square meters of floorspace per person) needs to be less than the per-capita demand in the final calibration year
-             satiation.adder = if_else(satiation.adder > pcFlsp_mm2, pcFlsp_mm2 * 0.999, satiation.adder)) %>%
-
-      # JS 2021: To make the function flexible to multiple consumer groups, we zero the satiation adder and use a common satiation impedance
-      # (calibrated below) across all the consumer groups. This ensures that the functional form is completely equal across consumers,
-      # so the floorspace demand is only driven by GDP, and the behavior across groups is similar.
-
-      mutate(satiation.adder=0) %>%
-      select(LEVEL2_DATA_NAMES[["SatiationAdder"]])
+             satiation.adder = if_else(satiation.adder > pcFlsp_mm2, pcFlsp_mm2 * 0.999, satiation.adder))
 
     #------------------------------------------------------
     # JS, 06/2021:Updated floorspace function (flps-gomp-function)
@@ -305,36 +292,6 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       #select(region,gcam.consumer,nodeInput,building.node.input,`habitable-land`,`base-pcFlsp`,`unadjust-satiation`,
       #       `land-density-param`,`base-floorspace-param`,`income-param`,`bias-adjust-param`)
       select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
-
-    #------------------------------------------------------
-    # JS 07/2021. Calibrate satiation impedance (in the DS) per GCAM region.
-
-    # sat_impedance = (-ln(2)/ln((satiation level - pcFlsp2015)/(satiation level - satiation adder))) * pcGDP2015
-
-    # The code calibrates the satiation impedance per gcam.consumer, generating problems for the incorporation of multiple consumers (consumer heterogeneity)
-
-    L244.Satiation_impedance_gcamusa<-L244.Satiation_flsp_gcamusa %>%
-      left_join_error_no_match(L244.SatiationAdder_gcamusa, by=c("region","gcam.consumer","nodeInput","building.node.input")) %>%
-      # Add base floorspace
-      left_join_error_no_match(L244.Floorspace_gcamusa %>% filter(year==MODEL_FINAL_BASE_YEAR),
-                               by=c("region","gcam.consumer","nodeInput","building.node.input")) %>%
-      rename(flsp_bm2=base.building.size) %>%
-      # Add population to calculate floorspace per capita
-      left_join_error_no_match(L100.Pop_thous_state %>% rename(region=state), by=c("region","year")) %>%
-      rename(pop_thous=value) %>%
-      mutate(flsp_pc=(flsp_bm2*1E9)/(pop_thous*1E3)) %>%
-      # Add GDPpc
-      left_join_error_no_match(L100.pcGDP_thous90usd_state %>% rename(region=state),
-                               by=c("region","year")) %>%
-      rename(pcGDP_thous90USD=value) %>%
-      # Change units satiation level and adder
-      mutate(satiation.level=satiation.level*1E6,
-             satiation.adder=satiation.adder*1E6) %>%
-      # Calculate satiation impedance
-      mutate(`satiation-impedance`=(-log(2)/log((satiation.level - flsp_pc)/(satiation.level - satiation.adder))) * pcGDP_thous90USD) %>%
-      mutate(`satiation-impedance`=round(`satiation-impedance`,energy.DIGITS_SATIATION_ADDER)) %>%
-      #select(region,gcam.consumer,nodeInput,building.node.input,`satiation-impedance`)
-      select(LEVEL2_DATA_NAMES[["Satiation_impedance"]])
 
 
     #================================================================
@@ -678,107 +635,6 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["Intgains_scalar"]])
 
 
-
-    # JS 07/2021. In order to make the function flexible to the implementation of multiple consumers, the satiation impedance (mu)
-    # is calibrated in the DS per region, and not per consumer group.
-    # Here we create L244.ThermalServiceImpedance_gcamusa and L244.GenericServiceImpedance_gcamusa
-
-    # L244.GenericServiceImpedance
-    L244.GenericServiceImpedance_gcamusa<-L244.GenericServiceSatiation_gcamusa %>%
-      left_join_error_no_match(L244.base_service %>%  filter(year==MODEL_FINAL_BASE_YEAR, supplysector %in% generic_services) %>%
-                               rename(building.service.input=supplysector) %>%
-                               select(-price.exponent,-internal.gains.market.name,-internal.gains.unit),
-                               by=c("region","gcam.consumer","nodeInput","building.node.input","building.service.input")) %>%
-      rename(base_service_EJ=base.service) %>%
-      left_join_error_no_match(L244.Floorspace_gcamusa %>% filter(year==MODEL_FINAL_BASE_YEAR),
-                               by=c("region","year","gcam.consumer","nodeInput","building.node.input"))%>%
-      mutate(base_serv_flsp=base_service_EJ/base.building.size) %>%
-      select(-base_service_EJ,-base.building.size) %>%
-      # In generic services, s=1 (not needed but to keep the structure for Thermal services)
-      mutate(s0=1) %>%
-      mutate(k=satiation.level/s0) %>%
-      # Add pcGDP
-      left_join_error_no_match(L100.pcGDP_thous90usd_state %>% rename(region=state),
-                               by=c("region","year")) %>%
-      rename(pcGDP_thous90USD=value) %>%
-      # Add service prices: At this point, we read the calibrated prices from GCAM v5.3 (A44.CalPrice_service)
-      # This needs to be revised!!
-      left_join_error_no_match(L144.CalPrice_service_gcamusa %>% gather(year,price,-region,-sector) %>% mutate(year=as.numeric(year)) %>%
-                                 rename(building.service.input=sector) %>%
-                                 filter(building.service.input %in% generic_services, year==MODEL_FINAL_BASE_YEAR),
-                               by=c("region","year","building.service.input")) %>%
-      mutate(`(1-Serv/ks)`= (1-(base_serv_flsp/(k*s0)))) %>%
-      mutate(`(-ln2)*i/p`=-log(2)*pcGDP_thous90USD/price) %>%
-      mutate(`satiation-impedance`=`(-ln2)*i/p`/log(`(1-Serv/ks)`)) %>%
-      select(LEVEL2_DATA_NAMES[["GenericServiceImpedance"]])
-
-    #L244.ThermalServiceImpedance_gcamusa
-   # First, calculate IntGains through Int gains output ratio
-
-    L144.int.gains_gcamusa<- L244.StubTechCalInput_bld_gcamusa %>%
-      # Add in efficiency by technology
-      left_join_error_no_match(L244.GlobalTechEff_bld,
-                               by = c("supplysector" = "sector.name", "subsector" = "subsector.name",
-                                      "stub.technology" = "technology", "year", "minicam.energy.input")) %>%
-      # Calculate base.service = calibrated.value(energy) * efficiency
-      mutate(base.service = round(calibrated.value * efficiency, energy.DIGITS_CALOUTPUT)) %>%
-      # use left_join because not all service produce internal gains
-      left_join(L244.GlobalTechIntGainOutputRatio %>%
-                rename(supplysector=sector.name, subsector=subsector.name,stub.technology=technology),
-                by = c("supplysector" , "subsector" , "stub.technology" , "year")) %>%
-      filter(complete.cases(.)) %>%
-      mutate(int_gains=base.service*internal.gains.output.ratio) %>%
-      group_by(region,supplysector,year) %>%
-      summarise(int_gains=sum(int_gains)) %>%
-      ungroup()
-
-
-    L244.ThermalServiceImpedance_gcamusa<-L244.ThermalServiceSatiation_gcamusa %>%
-      left_join_error_no_match(L244.base_service %>%  filter(year==MODEL_FINAL_BASE_YEAR, supplysector %in% thermal_services) %>%
-                                 rename(thermal.building.service.input=supplysector) %>%
-                                 select(-price.exponent,-internal.gains.market.name,-internal.gains.unit),
-                               by=c("region","gcam.consumer","nodeInput","building.node.input","thermal.building.service.input")) %>%
-      rename(base_service_EJ=base.service) %>%
-      left_join_error_no_match(L244.Floorspace_gcamusa %>% filter(year==MODEL_FINAL_BASE_YEAR),
-                               by=c("region","year","gcam.consumer","nodeInput","building.node.input"))%>%
-      mutate(base_serv_flsp=base_service_EJ/base.building.size) %>%
-      select(-base_service_EJ,-base.building.size) %>%
-      # Add files to calculate S0: HDD/CDD, ShellEff, R, intGains and intGains-scalar
-      mutate(dd=if_else(grepl("cooling",thermal.building.service.input),"CDD","HDD")) %>%
-      left_join_error_no_match(L244.HDDCDD_scen_state %>% filter(year==MODEL_FINAL_BASE_YEAR,
-                                                               Scen=="constdds") %>%
-                                 rename(dd=variable) %>%
-                                 select(-GCM,-Scen),
-                               by=c("region","year","dd")) %>%
-      left_join_error_no_match(L244.ShellConductance_bld_gcamusa %>% select(-shell.year) %>% filter(year==MODEL_FINAL_BASE_YEAR),
-                               by=c("region","year","gcam.consumer","nodeInput","building.node.input")) %>%
-      left_join_error_no_match(L144.int.gains_gcamusa %>%
-                                 mutate(gcam.consumer=ifelse(grepl("comm",supplysector),"comm","resid")) %>%
-                                 group_by(region,gcam.consumer,year) %>%
-                                 summarise(int_gains=sum(int_gains)) %>%
-                                 ungroup() %>%
-                                 rename(intGains_EJ=int_gains),
-                               by=c("region","year","gcam.consumer")) %>%
-      left_join_error_no_match(L244.Intgains_scalar_gcamusa,by=c("region","gcam.consumer","nodeInput","building.node.input","thermal.building.service.input")) %>%
-      mutate(s0=if_else(thermal.building.service.input %in% cooling_services,
-                        degree.days*shell.conductance*floor.to.surface.ratio+internal.gains.scalar*intGains_EJ,
-                        degree.days*shell.conductance*floor.to.surface.ratio-internal.gains.scalar*intGains_EJ)) %>%
-      mutate(k=satiation.level/s0) %>%
-      left_join_error_no_match(L100.pcGDP_thous90usd_state %>% rename(region=state),
-                               by=c("region","year")) %>%
-      rename(pcGDP_thous90USD=value) %>%
-      left_join_error_no_match(L144.CalPrice_service_gcamusa %>% gather(year,price,-region,-sector) %>% mutate(year=as.numeric(year)) %>%
-                  rename(thermal.building.service.input=sector) %>%
-                  filter(thermal.building.service.input %in% thermal_services, year==MODEL_FINAL_BASE_YEAR),
-                by=c("region","year","thermal.building.service.input")) %>%
-      mutate(`(1-Serv/ks)`= (1-(base_serv_flsp/(k*s0)))) %>%
-      mutate(`(-ln2)*i/p`=-log(2)*pcGDP_thous90USD/price) %>%
-      mutate(`satiation-impedance`=`(-ln2)*i/p`/log(`(1-Serv/ks)`)) %>%
-      select(LEVEL2_DATA_NAMES[["ThermalServiceImpedance"]])
-
-
-
-
     # ===================================================
     # Produce outputs
     L244.DeleteConsumer_USAbld %>%
@@ -856,15 +712,6 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                      "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm", "L100.pcGDP_thous90usd_state") ->
       L244.SatiationAdder_gcamusa
 
-    L244.Satiation_impedance_gcamusa %>%
-      add_title("Satiation impedance in floorspace demand function") %>%
-      add_units("unitless") %>%
-      add_comments("Calibrated with function dependent on satiation level; per capita floorspace; and per capita GDP") %>%
-      add_legacy_name("L244.Satiation_impedance") %>%
-      add_precursors("gcam-usa/A44.satiation_flsp", "gcam-usa/A44.gcam_consumer", "L100.Pop_thous_state",
-                     "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm", "L100.pcGDP_thous90usd_state") ->
-      L244.Satiation_impedance_gcamusa
-
     L244.Gomp.fn.param_gcamusa %>%
       add_title("Parameters for the floorspace Gompertz function") %>%
       add_units("Unitless") %>%
@@ -914,27 +761,6 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                      "gcam-usa/A44.demand_satiation_mult") ->
       L244.GenericServiceSatiation_gcamusa
 
-    L244.GenericServiceImpedance_gcamusa %>%
-      add_title("Satiation impedance for non-thermal building services") %>%
-      add_units("Unitless") %>%
-      add_comments("Satiation level = base service / floorspace * exogenous multiplier") %>%
-      add_legacy_name("L244.GenericServiceImpedance") %>%
-      add_precursors("L144.in_EJ_state_res_F_U_Y", "L144.in_EJ_state_comm_F_U_Y", "gcam-usa/calibrated_techs_bld_usa",
-                     "gcam-usa/A44.globaltech_eff", "gcam-usa/A44.globaltech_eff_avg", "gcam-usa/A44.globaltech_shares",
-                     "gcam-usa/A44.gcam_consumer", "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm",
-                     "gcam-usa/A44.CalPrice_service_gcamusa") ->
-      L244.GenericServiceImpedance_gcamusa
-
-    L244.ThermalServiceImpedance_gcamusa %>%
-      add_title("Satiation impedance for thermal building services") %>%
-      add_units("Unitless") %>%
-      add_comments("Satiation level = base service / floorspace * exogenous multiplier") %>%
-      add_legacy_name("L244.GenericServiceImpedance") %>%
-      add_precursors("L144.in_EJ_state_res_F_U_Y", "L144.in_EJ_state_comm_F_U_Y", "gcam-usa/calibrated_techs_bld_usa",
-                     "gcam-usa/A44.globaltech_eff", "gcam-usa/A44.globaltech_eff_avg", "gcam-usa/A44.globaltech_shares",
-                     "gcam-usa/A44.gcam_consumer", "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm",
-                     "gcam-usa/A44.CalPrice_service_gcamusa") ->
-      L244.ThermalServiceImpedance_gcamusa
 
     L244.ThermalServiceSatiation_gcamusa %>%
       add_title("Satiation levels assumed for thermal building services") %>%
@@ -1172,10 +998,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                 L244.HDDCDD_A2_GFDL_USA,
                 L244.HDDCDD_AEO_2015_USA,
                 L244.HDDCDD_constdds_USA,
-                L244.Gomp.fn.param_gcamusa,
-                L244.Satiation_impedance_gcamusa,
-                L244.GenericServiceImpedance_gcamusa,
-                L244.ThermalServiceImpedance_gcamusa)
+                L244.Gomp.fn.param_gcamusa)
   } else {
     stop("Unknown command")
   }
