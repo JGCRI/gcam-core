@@ -75,10 +75,12 @@ double GompertzDemandFunction::calcDemand(InputSet& input, double income, const 
 	double subregionalIncome = bldInput->mCurrentSubregionalIncome;
 	double biasAdjustParam = bldInput->mBiasAdjustParam;
 
-	double floorspace = (unadjustSatiation - landDensityParam * log(subregionalPopulation / habitableLand))
-		* exp(floorspaceParam*log(basepcFlsp)
-			* exp(incomeParam*log(subregionalIncome)))
+	double pcfloorspace = (unadjustSatiation - (-landDensityParam) * log(subregionalPopulation / habitableLand))
+		* exp((-floorspaceParam) * log(basepcFlsp)
+			* exp((-incomeParam) * log(subregionalIncome)))
 			+ biasAdjustParam;
+
+	double floorspace = (pcfloorspace * subregionalPopulation) / 1000000;
 
 	bldInput->setPhysicalDemand(floorspace, regionName, period);
 
