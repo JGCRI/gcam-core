@@ -309,7 +309,7 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
 	XMLWriteElement(mIncomeParam, "income-param", aOut, aTabs);
 	XMLWriteElement(mBiasAdjustParam, "bias-adjust-param", aOut, aTabs);
 	XMLWriteElement(mCurrentSubregionalPopulation, "subregional-population", aOut, aTabs);
-	XMLWriteElement(mCurrentSubregionalIncome, "subregional-population", aOut, aTabs);
+	XMLWriteElement(mCurrentSubregionalIncome, "subregional-income", aOut, aTabs);
 
     XMLWriteElement( mFunctionType, "prodDmdFnType", aOut, aTabs );
     for( CNestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
