@@ -45,7 +45,6 @@
  * \author James Blackwood
  */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include "ccarbon_model/include/asimple_carbon_calc.h"
 
 /*!
@@ -71,7 +70,6 @@ public:
 
     static const std::string& getXMLNameStatic();
 
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual const std::string& getXMLName() const;

@@ -47,7 +47,6 @@
 
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 

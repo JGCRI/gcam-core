@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/interpolation_function_factory.h"
 #include "util/logger/include/ilogger.h"
@@ -52,7 +50,6 @@
 #include "util/base/include/s_curve_interpolation_function.h"
 
 using namespace std;
-using namespace xercesc;
 
 /*!
  * \brief Returns whether this factory can create a function with the given xml
@@ -66,54 +63,4 @@ bool InterpolationFunctionFactory::hasInterpolationFunction( const string& aXMLA
     return LinearInterpolationFunction::getXMLNameStatic() == aXMLAttrNameValue
         || FixedInterpolationFunction::getXMLNameStatic() == aXMLAttrNameValue
         || SCurveInterpolationFunction::getXMLNameStatic() == aXMLAttrNameValue;
-}
-
-/*!
- * \brief Creates and parses the function with the given xml attribute name value.
- * \details Creates the function and calls XMLParse on it before returning it,
- *          if there are no known functions which match the given name null
- *          is returned.
- * \param aXMLAttrNameValue The name attribute value of an xml element to check.
- * \param aNode The xml which defines the function to be created.
- * \return The newly created and parsed function or null if given an unknown type.
- * \note The list of known functions here must be kept in sync with
- *       the ones found in hasInterpolationFunction.
- */
-IInterpolationFunction* InterpolationFunctionFactory::createAndParseFunction( const string& aXMLAttrNameValue,
-                                                                              const DOMNode* aNode )
-{
-    // make sure we know about this function
-    if( !hasInterpolationFunction( aXMLAttrNameValue ) ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Could not create unknown IInterpolationFunction: " << aXMLAttrNameValue << endl;
-        return 0;
-    }
-    
-    // create the requested function
-    IInterpolationFunction* retFunction;
-    if( LinearInterpolationFunction::getXMLNameStatic() == aXMLAttrNameValue ) {
-        retFunction = new LinearInterpolationFunction();
-    }
-    else if( FixedInterpolationFunction::getXMLNameStatic() == aXMLAttrNameValue ) {
-        retFunction = new FixedInterpolationFunction();
-    }
-    else if( SCurveInterpolationFunction::getXMLNameStatic() == aXMLAttrNameValue ) {
-        retFunction = new SCurveInterpolationFunction();
-    }
-    else {
-        // this must mean createAndParseFunction and hasInterpolationFunction
-        // are out of sync with known functions
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Could not create unknown IInterpolationFunction: " << aXMLAttrNameValue
-            << ", createAndParseFunction may be out of sync with hasInterpolationFunction." << endl;
-        return 0;
-    }
-    
-    // parse the created function
-    if( aNode ) {
-        retFunction->XMLParse( aNode );
-    }
-    return retFunction;
 }

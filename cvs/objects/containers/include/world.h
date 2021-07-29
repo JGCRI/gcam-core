@@ -49,7 +49,6 @@
 #include <vector>
 #include <list>
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/definitions.h"
@@ -88,7 +87,6 @@ class World: public IVisitable, private boost::noncopyable
 public:
     World();
     ~World();
-    void XMLParse( const xercesc::DOMNode* node );
     void completeInit();
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 	static const std::string& getXMLNameStatic();

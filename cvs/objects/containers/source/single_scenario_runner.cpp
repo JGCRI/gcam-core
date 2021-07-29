@@ -40,7 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
 #include "containers/include/single_scenario_runner.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
@@ -54,7 +53,6 @@
 #include "reporting/include/xml_db_outputter.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 extern ofstream outFile;
@@ -80,12 +78,6 @@ SingleScenarioRunner::~SingleScenarioRunner(){
 
 const string& SingleScenarioRunner::getName() const {
     return getXMLNameStatic();
-}
-
-// IParsable interface
-bool SingleScenarioRunner::XMLParse( const xercesc::DOMNode* aRoot ){
-    // No data to parse.
-    return true;
 }
 
 bool SingleScenarioRunner::setupScenarios( Timer& timer,

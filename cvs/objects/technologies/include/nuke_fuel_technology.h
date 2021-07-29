@@ -45,7 +45,6 @@
 * \author Sonny Kim
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/technology.h"
 
 class GDP;
@@ -87,8 +86,6 @@ public:
 							 const int aPeriod );
 
 protected:
-
-    bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
     virtual double getTotalInputCost( const std::string& aRegionName,

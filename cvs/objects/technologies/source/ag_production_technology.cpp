@@ -55,7 +55,6 @@
 #include "sectors/include/sector_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -106,29 +105,6 @@ void AgProductionTechnology::copy( const AgProductionTechnology& aOther ) {
     mHarvestsPerYear = aOther.mHarvestsPerYear;
     // The following do not get copied as they are initialized through other means
     mProductLeaf = 0;
-}
-
-//! Parses any input variables specific to derived classes
-bool AgProductionTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    if ( nodeName == "nonLandVariableCost" ) {
-        mNonLandVariableCost = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "nonLandCostTechChange" ) {
-        mNonLandCostTechChange = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "yield" ) {
-        mYield = XMLHelper<double>::getValue( curr );
-    }    
-    else if( nodeName == "agProdChange" ) {
-        mAgProdChange = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "harvests-per-year" ){
-        mHarvestsPerYear = XMLHelper<double>::getValue( curr );
-    }
-    else {
-        return false;
-    }
-    return true;
 }
 
 /*! \brief Derived class visitor.

@@ -43,7 +43,6 @@
  * \brief Header file for the InterpolationRule class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include <boost/core/noncopyable.hpp>
 
@@ -142,10 +141,7 @@ public:
     
     void applyInterpolations( objects::PeriodVector<Value>& aValuesToInterpolate,
         const objects::PeriodVector<Value>& aParsedValues ) const;
-    
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
+        
     // AParsable methods
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 

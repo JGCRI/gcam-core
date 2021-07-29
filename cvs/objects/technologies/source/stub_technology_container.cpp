@@ -40,7 +40,6 @@
 #include "util/base/include/definitions.h"
 #include <string>
 #include <cassert>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "technologies/include/stub_technology_container.h"
 #include "technologies/include/global_technology_database.h"
@@ -52,7 +51,6 @@
 #include "technologies/include/technology.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -81,22 +79,6 @@ ITechnologyContainer* StubTechnologyContainer::clone() const {
 const string& StubTechnologyContainer::getXMLNameStatic() {
     const static string XML_NAME = "stub-technology";
     return XML_NAME;
-}
-
-bool StubTechnologyContainer::XMLParse( const DOMNode* aNode ) {
-    /*! \pre Make sure we were passed a valid node. */
-    assert( aNode );
-    
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, XMLHelper<void>::name() );
-    
-    // store the XML for later processing
-    /*!
-     * \warning This may shift some parsing errors to completeInit.
-     */
-    mXMLAdjustments.push_back( XMLHelper<void>::getDOMDocument()->importNode( aNode, true ) );
-    
-    return true;
 }
 
 // AParsable methods
@@ -130,30 +112,7 @@ void StubTechnologyContainer::completeInit( const string& aRegionName,
         // error message was printed by the global technology database.
         abort();
     }
-    
-    // Make the XML adjustments note that this may produce parsing errors.
-    vector<const DOMNode*> interpolateThenParse;
-    // First parse XML that does not require interpolation.
-    for( CXMLIterator xmlIter = mXMLAdjustments.begin(); xmlIter != mXMLAdjustments.end(); ++xmlIter ) {
-        if( !XMLHelper<bool>::getAttr( *xmlIter, "allow-interpolate" ) ) {
-            // This XML does not need to intperolate
-            mTechnology->XMLParse( *xmlIter );
-        }
-        else {
-            // Store this XML until all XML which did not need to parse has
-            // finished.
-            interpolateThenParse.push_back( *xmlIter );
-        }
-    }
-    // now that the XML adjustments are parsed no need to keep them around any longer
-    // Note the XML adjustments's memory will be managed by their document.
-    mXMLAdjustments.clear();
-    
-    // Next interpolate and parse XML that was tagged to allow interpolation.
-    for( CXMLIterator xmlIter = interpolateThenParse.begin(); xmlIter != interpolateThenParse.end(); ++xmlIter ) {
-        mTechnology->interpolateAndParse( *xmlIter );
-    }
-    
+     
     for(rapidxml::xml_node<char>* currNode : mXMLAdjustments2) {
         // TODO: for some reason it can't decide between the two versions of XMLParse
         // once we knock out the old xerces version this case won't be necessary
@@ -202,10 +161,6 @@ ITechnologyContainer::CTechRangeIterator StubTechnologyContainer::getVintageEnd(
 
 void StubTechnologyContainer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     mTechnology->accept( aVisitor, aPeriod );
-}
-
-void StubTechnologyContainer::interpolateAndParse( const DOMNode* aNode ) {
-    // could make this work
 }
 
 void StubTechnologyContainer::doDataExpansion( ExpandDataVector<ParentClass::SubClassFamilyVector>& aVisitor ) {

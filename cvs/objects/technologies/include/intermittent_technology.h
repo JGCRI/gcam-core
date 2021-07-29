@@ -211,9 +211,6 @@ protected:
 
     double calcEnergyFromBackup() const;
 
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName,
-                                       const xercesc::DOMNode* aCurr );
-
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
 

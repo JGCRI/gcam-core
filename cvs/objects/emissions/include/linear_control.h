@@ -77,7 +77,6 @@ protected:
     LinearControl( const LinearControl& aOther );
     LinearControl& operator=( const LinearControl& aOther );
     
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );

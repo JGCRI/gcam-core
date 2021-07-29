@@ -47,7 +47,6 @@
 
 #include <vector>
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 #include "land_allocator/include/aland_allocator_item.h"
 
 // Forward declarations
@@ -161,14 +160,9 @@ public:
     virtual void accept( IVisitor* aVisitor, 
                          const int aPeriod ) const;
 
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
 protected:
     virtual void setParent( const ALandAllocatorItem* aParent );
     
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, 
-                                       const xercesc::DOMNode* curr );
-
     virtual void toDebugXMLDerived( const int period, 
                                     std::ostream& out, 
                                     Tabs* tabs ) const;

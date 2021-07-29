@@ -73,9 +73,6 @@ public:
     virtual ReturnCode solve( SolutionInfoSet& aSolutionSet, const int aPeriod );
     virtual const std::string& getXMLName() const;
 
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
     // AParsable methods
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 

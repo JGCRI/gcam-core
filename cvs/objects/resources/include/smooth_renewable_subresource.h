@@ -117,11 +117,6 @@ protected :
 
    // Documentation is inherited.
    virtual const std::string& getXMLName() const;
-
-   // Documentation is inherited.
- 	virtual bool XMLDerivedClassParse(
-      const std::string&      nodeName,
-      const xercesc::DOMNode* node );
 };
 #endif   // __SMOOTH_RENEWABLE_SUBRESOURCE_H
 

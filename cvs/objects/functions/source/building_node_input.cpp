@@ -40,8 +40,6 @@
 */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "functions/include/building_node_input.h"
 #include "functions/include/ifunction.h"
@@ -60,7 +58,6 @@
 #include "containers/include/market_dependency_finder.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -77,63 +74,6 @@ BuildingNodeInput::~BuildingNodeInput() {
         delete *it;
     }
     delete mSatiationDemandFunction;
-}
-
-void BuildingNodeInput::XMLParse( const xercesc::DOMNode* node ) {
-    /*! \pre make sure we were passed a valid node. */
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    const DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() == DOMNode::TEXT_NODE ){
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if ( nodeName == BuildingServiceInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new BuildingServiceInput() );
-        }
-        else if ( nodeName == ThermalBuildingServiceInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new ThermalBuildingServiceInput() );
-        }
-        else if ( nodeName == "prodDmdFnType" ) {
-            mFunctionType = XMLHelper<string>::getValue( curr );
-        }
-        else if ( nodeName == "base-building-size" ) {
-            XMLHelper<Value>::insertValueIntoVector( curr, mBuildingSize, scenario->getModeltime() );
-        }
-        else if ( nodeName == "price-exponent" ) {
-            XMLHelper<Value>::insertValueIntoVector( curr, mPriceExponent, scenario->getModeltime() );
-        }
-        else if ( nodeName == "shell-conductance" ) {
-            XMLHelper<Value>::insertValueIntoVector( curr, mShellConductance, scenario->getModeltime() );
-        }
-        else if ( nodeName == "floor-to-surface-ratio" ) {
-            XMLHelper<Value>::insertValueIntoVector( curr, mFloorToSurfaceRatio, scenario->getModeltime() );
-        }
-        else if ( nodeName == "internal-gains-market-name" ) {
-            mInternalGainsMarketname = XMLHelper<string>::getValue( curr );
-        }
-        else if ( nodeName == "internal-gains-unit" ) {
-            mInternalGainsUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == SatiationDemandFunction::getXMLNameStatic() ) {
-            parseSingleNode( curr, mSatiationDemandFunction, new SatiationDemandFunction );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " 
-                << getXMLName() << "." << endl;
-        }
-    }
 }
 
 void BuildingNodeInput::completeInit( const string& aRegionName, const string& aSectorName,

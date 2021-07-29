@@ -43,7 +43,6 @@
  * \brief Header file for the MarketNameSolutionInfoFilter class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 
 #include "solution/util/include/isolution_info_filter.h"
@@ -78,9 +77,6 @@ public:
     
     // ISolutionInfoFilter methods
     virtual bool acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const;
-    
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
 private:
     //! The name of the market which will be accepted

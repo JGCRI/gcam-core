@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/util/include/price_greater_than_solution_info_filter.h"
 #include "solution/util/include/solution_info.h"
@@ -49,7 +47,6 @@
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
 PriceGreaterThanSolutionInfoFilter::PriceGreaterThanSolutionInfoFilter()
 :mPriceThreshold( -1 )
@@ -62,34 +59,6 @@ PriceGreaterThanSolutionInfoFilter::~PriceGreaterThanSolutionInfoFilter() {
 const string& PriceGreaterThanSolutionInfoFilter::getXMLNameStatic() {
     const static string XML_NAME = "price-greater-than-solution-info-filter";
     return XML_NAME;
-}
-
-bool PriceGreaterThanSolutionInfoFilter::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "price-greater-than" ) {
-            mPriceThreshold = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
 }
 
 bool PriceGreaterThanSolutionInfoFilter::acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const {

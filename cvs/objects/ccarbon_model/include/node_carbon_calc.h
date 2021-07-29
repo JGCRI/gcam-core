@@ -73,8 +73,7 @@ class Tabs;
  *          the type of carbon calculation for all leaves in this Node that are "swappable"
  *          so that the carbon calculations are not incorrectly calculated twice.
  */
-class NodeCarbonCalc: public IParsable,
-                      public DefaultVisitor,
+class NodeCarbonCalc: public DefaultVisitor,
                       private boost::noncopyable
 {
 public:
@@ -82,9 +81,6 @@ public:
     virtual ~NodeCarbonCalc();
 
     static const std::string& getXMLNameStatic();
-
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
     // IStandardComponent methods
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;

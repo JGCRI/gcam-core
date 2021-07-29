@@ -46,8 +46,6 @@
 #include <sstream>
 #include <algorithm>
 
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "demographics/include/age_cohort.h"
 #include "demographics/include/gender.h"
 #include "demographics/include/male.h"
@@ -57,7 +55,6 @@
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern ofstream outputFile;
 
@@ -84,68 +81,6 @@ AgeCohort::~AgeCohort(){
 const std::string& AgeCohort::getXMLNameStatic(){
     const static string XML_NAME = "ageCohort";
     return XML_NAME;
-}
-
-//! parses AgeCohort xml object
-void AgeCohort::XMLParse( const xercesc::DOMNode* node ){
-    // make sure we were passed a valid node.
-    assert( node );
-
-    ageGroup = XMLHelper<string>::getAttr( node, "ageGroup" );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        // Note: Male and female can either be parsed as <gender ="male"> or <male>
-        else if( nodeName == "gender" ){
-            if( !parseGender( curr ) ){
-                cout << "Failed to parse a gender element." << endl;
-            }
-        }
-        else if( parseGender( curr ) ){
-            // do nothing but don't print a warning.
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
-        }
-    }
-}
-
-//! Attempt to parse a gender.
-bool AgeCohort::parseGender( DOMNode* aNode ) {
-    // We could either be parsing out of the "type" attribute
-    // or the element name itself.
-    string type = XMLHelper<string>::getAttr( aNode, "type" );
-    if( type == "" ){
-        type = XMLHelper<string>::safeTranscode( aNode->getNodeName() );
-    }
-
-    if( type == Male::getXMLNameStatic() ){
-        if( !male.get() ){
-            male.reset( new Male() );
-        }
-        male->XMLParse( aNode );
-    }
-    else if( type == Female::getXMLNameStatic() ) {
-        if( !female.get() ){
-            female.reset( new Female() );
-        }
-        female->XMLParse( aNode );
-    }
-    else {
-        return false;
-    }
-    return true;
 }
 
 //! Write out XML for debugging purposes.

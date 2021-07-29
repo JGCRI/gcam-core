@@ -41,8 +41,6 @@
 #include "util/base/include/definitions.h"
 
 #include <cmath>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "emissions/include/mac_control.h"
 #include "containers/include/scenario.h"
@@ -58,7 +56,6 @@
 #include "util/curves/include/xy_data_point.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -137,41 +134,6 @@ const string& MACControl::getXMLName() const {
 const string& MACControl::getXMLNameStatic(){
     static const string XML_NAME = "mac-control";
     return XML_NAME;
-}
-
-bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    if ( aNodeName == "mac-reduction" ){
-        double taxVal = XMLHelper<double>::getAttr( aCurrNode, "tax" );
-        double reductionVal = XMLHelper<double>::getValue( aCurrNode );
-        XYDataPoint* currPoint = new XYDataPoint( taxVal, reductionVal );
-        mMacCurve->getPointSet()->addPoint( currPoint );
-    }
-    else if ( aNodeName == "no-zero-cost-reductions" ){
-        mNoZeroCostReductions = true;
-    }
-    else if ( aNodeName == "tech-change" ){
-        XMLHelper<double>::insertValueIntoVector( aCurrNode, *mTechChange, modeltime );
-    }
-    else if ( aNodeName == "full-phase-in-price" ){
-        mFullPhaseInPrice = XMLHelper<double>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "zero-cost-phase-in-time" ){
-        mZeroCostPhaseInTime = XMLHelper<int>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "mac-phase-in-time" ){
-        mMacPhaseInTime = XMLHelper<int>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "mac-price-conversion" ){
-        mCovertPriceValue = XMLHelper<Value>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "market-name" ){
-        mPriceMarketName = XMLHelper<string>::getValue( aCurrNode );
-    }
-    else{
-        return false;
-    }    
-    return true;
 }
 
 bool MACControl::XMLParse(rapidxml::xml_node<char>* & aNode) {

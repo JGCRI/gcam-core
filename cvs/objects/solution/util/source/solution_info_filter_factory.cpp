@@ -93,83 +93,6 @@ bool SolutionInfoFilterFactory::hasSolutionInfoFilter( const string& aXMLName ) 
 }
 
 /*!
- * \brief Creates and parses the solution info filter with the given xml name.
- * \details Creates the filter and calls XMLParse on it before returning it,
- *          if there are no known filters which match the given xml name null
- *          is returned.
- * \param aXMLName The element name of the given xml node.
- * \param aNode The xml which defines the filter to be created.
- * \return The newly created and parsed filter or null if given an unknown type.
- * \note The list of known solution info filters here must be kept in sync with
- *       the ones found in hasSolutionInfoFilter.
- */
-ISolutionInfoFilter* SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( const string& aXMLName,
-                                                                                  const DOMNode* aNode )
-{
-    // make sure we know about this filter
-    if( !hasSolutionInfoFilter( aXMLName ) ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Could not create unknown ISolutionInfoFilter: " << aXMLName << endl;
-        return 0;
-    }
-    
-    // create the requested filter
-    ISolutionInfoFilter* retFilter;
-    if( AllSolutionInfoFilter::getXMLNameStatic() == aXMLName ) {
-        retFilter = new AllSolutionInfoFilter();
-    }
-    else if( SolvableSolutionInfoFilter::getXMLNameStatic() == aXMLName ) {
-        retFilter = new SolvableSolutionInfoFilter();
-    }
-    else if( SolvableNRSolutionInfoFilter::getXMLNameStatic() == aXMLName ) {
-        retFilter = new SolvableNRSolutionInfoFilter();
-    }
-    else if( MarketTypeSolutionInfoFilter::getXMLNameStatic() == aXMLName ) {
-        retFilter = new MarketTypeSolutionInfoFilter();
-    }
-    else if( MarketNameSolutionInfoFilter::getXMLNameStatic() == aXMLName ) {
-        retFilter = new MarketNameSolutionInfoFilter();
-    }
-    else if( HasMarketFlagSolutionInfoFilter::getXMLNameStatic() == aXMLName ) {
-        retFilter = new HasMarketFlagSolutionInfoFilter();
-    }
-    else if( UnsolvedSolutionInfoFilter::getXMLNameStatic() == aXMLName ) {
-        retFilter = new UnsolvedSolutionInfoFilter();
-    }
-    else if( PriceGreaterThanSolutionInfoFilter::getXMLNameStatic() == aXMLName ) {
-        retFilter = new PriceGreaterThanSolutionInfoFilter();
-    }
-    else if( PriceLessThanSolutionInfoFilter::getXMLNameStatic() == aXMLName ) {
-        retFilter = new PriceLessThanSolutionInfoFilter();
-    }
-    else if( AndSolutionInfoFilter::getXMLNameStatic() == aXMLName ) {
-        retFilter = new AndSolutionInfoFilter();
-    }
-    else if( OrSolutionInfoFilter::getXMLNameStatic() == aXMLName ) {
-        retFilter = new OrSolutionInfoFilter();
-    }
-    else if( NotSolutionInfoFilter::getXMLNameStatic() == aXMLName ) {
-        retFilter = new NotSolutionInfoFilter();
-    }
-    else {
-        // this must mean createAndParseSolutionInfoFilter and hasSolutionInfoFilter are out of
-        // sync with known filters
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Could not create unknown ISolutionInfoFilter: " << aXMLName
-            << ", createAndParseSolutionInfoFilter may be out of sync with hasSolutionInfoFilter." << endl;
-        return 0;
-    }
-    
-    // parse the created solution info filter
-    if( aNode ) {
-        retFilter->XMLParse( aNode );
-    }
-    return retFilter;
-}
-
-/*!
  * \brief Creates a solution info filter by parsing a filter string.
  * \details The syntax for a filter string is very simple, we allow the and, or, and not
  *          operators and the operands would be the other known ISolutionInfoFilter to this
@@ -196,8 +119,8 @@ ISolutionInfoFilter* SolutionInfoFilterFactory::createSolutionInfoFilterFromStri
     // If we were successfully able to parse the string then have the factory create and parse
     // the solution info filters from the xml otherwise warn the user.
     if( parsedSyntaxTree ) {
-        return createAndParseSolutionInfoFilter( XMLHelper<string>::safeTranscode( parsedSyntaxTree->getNodeName() ),
-                                                 parsedSyntaxTree );
+//        return createAndParseSolutionInfoFilter( XMLHelper<string>::safeTranscode( parsedSyntaxTree->getNodeName() ),
+  //                                               parsedSyntaxTree );
     }
     else {
         ILogger& mainLog = ILogger::getLogger( "main_log" );

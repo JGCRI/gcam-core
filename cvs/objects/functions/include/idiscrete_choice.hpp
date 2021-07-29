@@ -71,7 +71,7 @@ class AbsoluteCostLogit;
  *       The sectors and and subsectors are currently not using this and instead
  *       are calculating a straight average cost.
  */
-class IDiscreteChoice : public IParsable, private boost::noncopyable {
+class IDiscreteChoice : private boost::noncopyable {
 public:
     /*!
      * \brief Constructor.

@@ -45,7 +45,6 @@
  */
 
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/afinal_demand.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -73,8 +72,6 @@ public:
 
     virtual ~NegativeEmissionsFinalDemand();
 
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;

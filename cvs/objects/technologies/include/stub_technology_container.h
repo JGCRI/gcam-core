@@ -46,7 +46,6 @@
  */
 
 #include <map>
-#include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/itechnology_container.h"
 
 /*! 
@@ -113,9 +112,6 @@ public:
     // INamed methods
     virtual const std::string& getName() const;
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
     // AParsable methods
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
     
@@ -137,8 +133,6 @@ public:
 protected:
     virtual ITechnologyContainer* clone() const;
     
-    virtual void interpolateAndParse( const xercesc::DOMNode* aNode );
-    
 private:
     //! The name of the stub which will be duplicated in each contained
     //! technology however we must keep it around to be able to do the
@@ -149,11 +143,8 @@ private:
     ITechnologyContainer* mTechnology;
     
     //! The vector of XML modifications to make to the global technology
-    std::vector<const xercesc::DOMNode*> mXMLAdjustments;
     std::vector<rapidxml::xml_node<char>*> mXMLAdjustments2;
     
-    // typdef to help simplify code
-    typedef std::vector<const xercesc::DOMNode*>::const_iterator CXMLIterator;
 };
 
 #endif // _STUB_TECHNOLOGY_CONTAINER_H_

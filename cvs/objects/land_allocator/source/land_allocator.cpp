@@ -51,7 +51,6 @@
 #include "functions/include/idiscrete_choice.hpp"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -86,30 +85,6 @@ const string& LandAllocator::getXMLName() const {
 const string& LandAllocator::getXMLNameStatic() {
     const static string XML_NAME = "LandAllocatorRoot";    // original XML tag
     return XML_NAME;
-}
-
-bool LandAllocator::XMLParse( const DOMNode* aNode ){
-    // Call the XML parse.
-    return LandNode::XMLParse( aNode );
-}
-
-bool LandAllocator::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ){
-    if( aNodeName == "landAllocation" ){
-        XMLHelper<Value>::insertValueIntoVector( aCurr, mLandAllocation, scenario->getModeltime() );
-    }
-    else if( aNodeName == "carbonPriceIncreaseRate" ){
-        XMLHelper<double>::insertValueIntoVector( aCurr, mCarbonPriceIncreaseRate, scenario->getModeltime() );
-    }
-    else if( aNodeName == "soilTimeScale" ){
-        mSoilTimeScale = XMLHelper<int>::getValue( aCurr );
-    }
-    else if( aNodeName == "negative-emiss-market" ){
-        mNegEmissMarketName = XMLHelper<string>::getValue( aCurr );
-    }
-    else {
-        return false;
-    }
-    return true;
 }
 
 void LandAllocator::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {

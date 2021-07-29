@@ -49,11 +49,9 @@
 #include <vector>
 #include <map>
 #include <list>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
-#include "util/base/include/iparsable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/data_definition_util.h"
@@ -142,7 +140,6 @@ protected:
 
     virtual void interpolateShareWeights( const int aPeriod );
 
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
     
     virtual const std::vector<double> calcTechShares ( const GDP* gdp, const int period ) const;
@@ -158,9 +155,7 @@ public:
     void setNames( const std::string& regionName, const std::string& sectorName );
     
     virtual const std::string& getXMLName() const;
-
-    void XMLParse( const xercesc::DOMNode* aNode );
-    
+   
     bool XMLParse( rapidxml::xml_node<char>* & aNode );
 
     virtual void completeInit( const IInfo* aSectorInfo,

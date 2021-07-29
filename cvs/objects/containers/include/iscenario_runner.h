@@ -67,7 +67,7 @@ class PolicyTargetRunner;
  *          the object, and not defined by the interface.
  * \author Josh Lurz
  */
-class IScenarioRunner: public IParsable, public AParsable {
+class IScenarioRunner: public AParsable {
 public:
     /*!
      * \brief Virtual destructor so that derived instances can be deleted

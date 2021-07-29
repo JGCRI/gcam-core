@@ -49,7 +49,6 @@
 #include "marketplace/include/marketplace.h"
 
 using namespace std;
-using namespace xercesc;
 
 /*!
  * \brief Constructor.
@@ -87,11 +86,6 @@ const string& WindBackupCalculator::getXMLNameStatic() {
 
 const string& WindBackupCalculator::getXMLName() const {
     return getXMLNameStatic();
-}
-
-bool WindBackupCalculator::XMLParse( const xercesc::DOMNode* node ){
-    // This backup calculator does not need to parse any data.
-    return true;
 }
 
 void WindBackupCalculator::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

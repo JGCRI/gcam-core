@@ -46,7 +46,6 @@
 */
 
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
@@ -75,8 +74,7 @@ class Grade: public INamed, public IVisitable, private boost::noncopyable
     friend class XMLDBOutputter;
 public:
     Grade();
-    void XMLParse( const xercesc::DOMNode* tempnode );
-    virtual void completeInit( const IInfo* aSubresourceInfo );
+     virtual void completeInit( const IInfo* aSubresourceInfo );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
 

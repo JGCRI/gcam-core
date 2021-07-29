@@ -39,14 +39,12 @@
  */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/xml_parse_helper.h"
 #include "land_allocator/include/land_use_history.h"
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
 
 const string& LandUseHistory::getXMLNameStatic(){
     static const string XML_NAME = "land-use-history";
@@ -62,54 +60,6 @@ LandUseHistory::LandUseHistory()
     mHistoricBelowGroundCarbonDensity = 0.0;
 }
 
-bool LandUseHistory::XMLParse( const xercesc::DOMNode* aNode ){
-
-    // assume we are passed a valid node.
-    assert( aNode );
-
-    // get all the children.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        const DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        if( nodeName == "allocation" ){
-            unsigned int year = XMLHelper<unsigned int>::getAttr( curr, "year" );
-            if( year == 0 ){
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Land allocations must have a year attribute." << endl;
-            }
-            else {
-                mHistoricalLand[ year ] = XMLHelper<double>::getValue( curr );
-                if ( mHistoricalLand[ year ]  <  0 ) {
-                    ILogger& mainLog = ILogger::getLogger( "main_log" );
-                    mainLog.setLevel( ILogger::ERROR );
-                    mainLog << "Negative land allocation in land-use-history. Resetting to zero." << endl;
-                    mHistoricalLand[ year ] = 0;
-                }
-            }
-        }
-        else if( nodeName == "above-ground-carbon-density" ) {
-            mHistoricAboveGroundCarbonDensity = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "below-ground-carbon-density" ) {
-            mHistoricBelowGroundCarbonDensity = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLNameStatic() << "." << endl;
-        }
-    }
-    // TODO: Improved error checking.
-    return true;
-}
 
 bool LandUseHistory::XMLParse(rapidxml::xml_node<char>* & aNode) {
     string nodeName = XMLParseHelper::getNodeName(aNode);

@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/util/include/market_type_solution_info_filter.h"
 #include "solution/util/include/solution_info.h"
@@ -50,7 +48,6 @@
 #include "marketplace/include/market.h"
 
 using namespace std;
-using namespace xercesc;
 
 MarketTypeSolutionInfoFilter::MarketTypeSolutionInfoFilter()
 :mAcceptMarketType( IMarketType::END )
@@ -63,34 +60,6 @@ MarketTypeSolutionInfoFilter::~MarketTypeSolutionInfoFilter() {
 const string& MarketTypeSolutionInfoFilter::getXMLNameStatic() {
     const static string XML_NAME = "market-type-solution-info-filter";
     return XML_NAME;
-}
-
-bool MarketTypeSolutionInfoFilter::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "market-type" ) {
-            mAcceptMarketType = getMarketTypeFromString( XMLHelper<string>::getValue( curr ) );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
 }
 
 bool MarketTypeSolutionInfoFilter::acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const {

@@ -43,7 +43,6 @@
  * \brief Header file for the FixedInterpolationFunction class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 
 #include "util/base/include/iinterpolation_function.h"
@@ -82,9 +81,6 @@ public:
     
     virtual double interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,
         const double aXValue ) const;
-    
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
     

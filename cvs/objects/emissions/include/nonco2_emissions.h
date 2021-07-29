@@ -106,7 +106,6 @@ protected:
     NonCO2Emissions( const NonCO2Emissions& aOther );
     NonCO2Emissions& operator=( const NonCO2Emissions& aOther );
     
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const;
     
     // Define data such that introspection utilities can process the data from this

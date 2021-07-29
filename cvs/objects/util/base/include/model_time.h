@@ -47,8 +47,8 @@
 
 #include <vector>
 #include <map>
-#include "util/base/include/iparsable.h"
 #include "util/base/include/data_definition_util.h"
+#include "util/base/include/iparsable.h"
 
 class Tabs;
 
@@ -101,9 +101,6 @@ private:
     Modeltime& operator=( const Modeltime& aModelTime );
 public:
     static const Modeltime* getInstance();
-    
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
     // AParsable methods
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );

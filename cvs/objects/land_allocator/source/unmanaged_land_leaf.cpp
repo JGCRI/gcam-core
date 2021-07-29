@@ -49,7 +49,6 @@
 #include "marketplace/include/marketplace.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -71,12 +70,6 @@ LandLeaf()
 
 //! Destructor
 UnmanagedLandLeaf::~UnmanagedLandLeaf() {
-}
-
-bool UnmanagedLandLeaf::XMLDerivedClassParse( const std::string& aNodeName,
-                                              const xercesc::DOMNode* aCurr )
-{
-    return true;
 }
 
 const string& UnmanagedLandLeaf::getXMLName() const {

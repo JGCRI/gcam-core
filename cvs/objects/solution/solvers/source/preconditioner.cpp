@@ -41,8 +41,6 @@
 #include "util/base/include/definitions.h"
 #include <string>
 #include <iomanip>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/preconditioner.hpp"
@@ -63,7 +61,6 @@
 #include "util/base/include/timer.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Default Constructor. Constructs the base class. 
 Preconditioner::Preconditioner( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ) :
@@ -108,55 +105,6 @@ const string& Preconditioner::getXMLNameStatic() {
 //! Get the name of the SolverComponent
 const string& Preconditioner::getXMLName() const {
     return getXMLNameStatic();
-}
-
-bool Preconditioner::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "max-iterations" || nodeName == "itmax") {
-            mItmax = XMLHelper<unsigned int>::getValue( curr );
-        }
-        else if( nodeName == "price-increase-fac" ) {
-            mPriceIncreaseFac = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "price-decrease-fac" ) {
-            mPriceDecreaseFac = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "large-price-thresh") {
-            mLargePrice = XMLHelper<double>::getValue(curr);
-        }
-        else if( nodeName == "ftol") {
-            mFTOL = XMLHelper<double>::getValue(curr);
-        }
-        else if( nodeName == "solution-info-filter" ) {
-            delete mSolutionInfoFilter;
-            mSolutionInfoFilter =
-                SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<string>::getValue( curr ) );
-        }
-        else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
-            delete mSolutionInfoFilter;
-            mSolutionInfoFilter = SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
 }
 
 bool Preconditioner::XMLParse( rapidxml::xml_node<char>* & aNode ) {

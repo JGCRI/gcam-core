@@ -45,7 +45,6 @@
 * \author Marshall Wise, Kate Calvin
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/subsector.h"
 
 /*! 
@@ -72,7 +71,5 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         Subsector
     )
-
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 };
 #endif // _AG_SUPPLY_SUBSECTOR_H_

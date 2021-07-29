@@ -122,8 +122,6 @@ public :
     virtual double getCurrencyOutput( const int aPeriod ) const { return 0; }
     
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
-
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 

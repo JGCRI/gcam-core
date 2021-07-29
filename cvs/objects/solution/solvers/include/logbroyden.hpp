@@ -92,12 +92,9 @@ public:
   }
   virtual ReturnCode solve( SolutionInfoSet& aSolutionSet, const int aPeriod );
   virtual const std::string& getXMLName() const {return SOLVER_NAME;}
-  
-  // IParsable methods
-  virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
-    // AParsable methods
-    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
+  // AParsable methods
+  virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
   
   static const std::string & getXMLNameStatic( void ) {return SOLVER_NAME;}
 

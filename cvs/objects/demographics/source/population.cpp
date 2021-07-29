@@ -43,8 +43,6 @@
 #include <map>
 #include <cassert>
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "containers/include/scenario.h"
 #include "demographics/include/population.h"
@@ -55,7 +53,6 @@
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -90,42 +87,6 @@ int Population::getYear() const {
 //! Returns name (year as a string)
 const std::string Population::getName() const {
     return util::toString( mYear );
-}
-
-//! parses Population xml object
-void Population::XMLParse( const xercesc::DOMNode* node ){
-    /*! \pre make sure we were passed a valid node. */
-    assert( node );
-
-    DOMNodeList* nodeList = node->getChildNodes();
-
-    // get the year attribute
-    mYear = XMLHelper<int>::getAttr( node, "year" ); 
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        // get the name of the node.
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "population-unit" ){
-            mPopulationUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "min-working-age" ){
-            mWorkingAgeMin = XMLHelper<int>::getValue( curr );
-        }
-        else if( nodeName == "max-working-age" ){
-            mWorkingAgeMax = XMLHelper<int>::getValue( curr );
-        }
-        else if( XMLDerivedClassParse( nodeName, curr ) ){
-            // do nothing but dont warn.
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << endl;
-        }
-    }
 }
 
 //! Write out XML for debugging purposes.

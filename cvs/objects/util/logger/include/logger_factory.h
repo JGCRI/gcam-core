@@ -48,7 +48,6 @@
 */
 
 #include <map>
-#include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/iparsable.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -72,8 +71,7 @@ public:
     static void logNewScenarioStarting( const std::string& aScenarioName );
 private:
     static std::map<std::string,Logger*> mLoggers; //!< Map of logger names to loggers.
-    static void XMLParse( const xercesc::DOMNode* aRoot );
-    static bool XMLParse( rapidxml::xml_node<char>* & aNode );
+     static bool XMLParse( rapidxml::xml_node<char>* & aNode );
     static void cleanUp();
     //! Private undefined constructor to prevent creating a LoggerFactory.
     LoggerFactory();
@@ -96,14 +94,10 @@ private:
 * \warning This class cannot be instantiated.
 * \warning Loggers can only be created by the LoggerFactory.
 */
-class LoggerFactoryWrapper: public IParsable, public AParsable {
+class LoggerFactoryWrapper: public AParsable {
 public:
     ~LoggerFactoryWrapper() {
         LoggerFactory::cleanUp();
-    }
-    bool XMLParse( const xercesc::DOMNode* aRoot ){
-        LoggerFactory::XMLParse( aRoot );
-        return true;
     }
     
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );

@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 // User headers
 #include "technologies/include/global_technology_database.h"
@@ -52,7 +50,6 @@
 #include "util/base/include/util.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Default Constructor
 GlobalTechnologyDatabase::GlobalTechnologyDatabase() {
@@ -81,76 +78,6 @@ GlobalTechnologyDatabase::~GlobalTechnologyDatabase() {
 const std::string& GlobalTechnologyDatabase::getXMLNameStatic() {
     const static string XML_NAME = "global-technology-database";
     return XML_NAME;
-}
-
-//! parses GlobalTechnologyDatabase xml object
-bool GlobalTechnologyDatabase::XMLParse( const DOMNode* aNode ){
-    // assume we are passed a valid node.
-    assert( aNode );
-
-    // get all the children.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-
-    for( unsigned int i = 0;  i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == XMLHelper<void>::text() ) {
-            continue;
-        }
-        else if( nodeName == "location-info" ) {
-            string sectorName = XMLHelper<string>::getAttr( curr, "sector-name" );
-            string subsectorName = XMLHelper<string>::getAttr( curr, "subsector-name" );
-            
-            if( sectorName.empty() ) {
-                // warn missing sector name
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::ERROR );
-                mainLog << "Missing sector-name attribute while parsing location-info in "
-                        << getXMLNameStatic();
-            }
-            else if( subsectorName.empty() ) {
-                // warn missing subsector name
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::ERROR );
-                mainLog << "Missing subsector-name attribute while parsing location-info in "
-                        << getXMLNameStatic();
-            }
-            else {
-                // try to find the contained technology
-                DOMNodeList* innerNodeList = curr->getChildNodes();
-                for( int innerIndex = 0; innerIndex < innerNodeList->getLength(); ++innerIndex ) {
-                    DOMNode* currInner = innerNodeList->item( innerIndex );
-                    const string innerNodeName = XMLHelper<string>::safeTranscode( currInner->getNodeName() );
-                    
-                    if( innerNodeName == XMLHelper<void>::text() ) {
-                        continue;
-                    }
-                    else if( TechnologyContainer::hasTechnologyType( innerNodeName ) ) {
-                        // note only technology containers are considered, no stubs
-                        pair<string, string> locationInfo( sectorName, subsectorName );
-                        
-                        // Get the tech list by reference so that updates are reflected
-                        // in mTechnologyList as well.
-                        vector<ITechnologyContainer*>& tempTechList = mTechnologyList[ locationInfo ];
-                        parseContainerNode( currInner, tempTechList, new TechnologyContainer );
-                    }
-                    else {
-                        ILogger& mainLog = ILogger::getLogger( "main_log" );
-                        mainLog.setLevel( ILogger::ERROR );
-                        mainLog << "Unknown element " << innerNodeName << " encountered while parsing location-info" << endl;
-                    }
-                }
-            }
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unknown element " << nodeName << " encountered while parsing " << getXMLNameStatic() << endl;
-        }
-    }
-    
-    return true;
 }
 
 //! parses GlobalTechnologyDatabase xml object

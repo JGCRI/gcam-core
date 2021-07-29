@@ -75,7 +75,6 @@ protected:
     )
     
     const std::vector<double> calcChildShares( const GDP* aGDP, const int aPeriod ) const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
 public:

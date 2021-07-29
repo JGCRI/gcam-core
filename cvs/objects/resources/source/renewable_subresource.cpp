@@ -55,7 +55,6 @@
 #include "technologies/include/itechnology.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -77,24 +76,6 @@ const std::string& SubRenewableResource::getXMLName() const{
 const std::string& SubRenewableResource::getXMLNameStatic(){
     static const std::string XMLName = "sub-renewable-resource";
     return XMLName;
-}
-
-//! Performs XML read-in that is specific to this derived class
-bool SubRenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
-    bool didParse = false;
-    if( nodeName == "maxSubResource" ){
-        XMLHelper<double>::insertValueIntoVector( node, mMaxAnnualSubResource, scenario->getModeltime() );
-        didParse = true;
-    }
-	else if( nodeName == "subResourceVariance" ){
-        mSubResourceVariance = XMLHelper<double>::getValue( node );
-        didParse = true;
-    }
-    else if( nodeName == "gdpSupplyElast" ){
-        mGdpSupplyElasticity = XMLHelper<double>::getValue( node );
-        didParse = true;
-    }
-    return didParse;
 }
 
 //! Do any initializations needed for this resource

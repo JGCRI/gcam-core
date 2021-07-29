@@ -44,7 +44,6 @@
 #include "sectors/include/ag_supply_subsector.h"
 
 using namespace std;
-using namespace xercesc;
 
 /*! \brief Constructor.
 */
@@ -52,11 +51,6 @@ AgSupplySubsector::AgSupplySubsector(): Subsector(){
 }
 
 AgSupplySubsector::~AgSupplySubsector() {
-}
-
-//! Parses any input variables specific to derived classes
-bool AgSupplySubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    return false;
 }
 
 /*! \brief Get the XML node name for output to XML.

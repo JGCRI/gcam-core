@@ -88,12 +88,7 @@ public:
     * \return Whether the type of the object is the same as the passed in type.
     */
     virtual bool isSameType( const std::string& aType ) const = 0;
-    
-    /*! \brief Parse the data for this object starting at a given node.
-    * \param aNode Root node from which to parse data.
-    */
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
-    
+        
     /*! \brief Write data from this object in an XML format for debugging.
     * \param aPeriod Period for which to write data.
     * \param aOut Filestream to which to write.

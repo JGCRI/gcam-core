@@ -80,7 +80,6 @@ public:
     
     static const std::string& getXMLNameStatic();
     virtual const std::string& getXMLName() const { return getXMLNameStatic(); }
-    virtual void XMLParse( const xercesc::DOMNode* node );
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     
     virtual bool setEmissions( const std::string& aGasName,

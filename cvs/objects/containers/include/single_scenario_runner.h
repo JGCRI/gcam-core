@@ -90,9 +90,6 @@ class SingleScenarioRunner: public IScenarioRunner {
 public:
     virtual const std::string& getName() const;
 
-    // IParsable interface
-    virtual bool XMLParse( const xercesc::DOMNode* aRoot );
-
     virtual ~SingleScenarioRunner();
 
     virtual bool setupScenarios( Timer& timer, const std::string aName = "",

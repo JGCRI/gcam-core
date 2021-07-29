@@ -50,7 +50,6 @@
 #include "containers/include/market_dependency_finder.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -175,11 +174,6 @@ double PassThroughTechnology::getCalibrationOutput( const bool aHasRequiredInput
         calOutput -= mPassThroughFixedOutput;
     }
     return calOutput;
-}
-
-bool PassThroughTechnology::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
-    // no additional parameters are parsed by this technology
-    return false;
 }
 
 //! write object to xml output stream

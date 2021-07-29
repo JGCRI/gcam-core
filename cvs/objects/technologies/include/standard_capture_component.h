@@ -46,7 +46,6 @@
 
 #include <string>
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/icapture_component.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
@@ -120,8 +119,6 @@ public:
     virtual bool isSameType( const std::string& aType ) const;
     
     virtual const std::string& getName() const;
-    
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,

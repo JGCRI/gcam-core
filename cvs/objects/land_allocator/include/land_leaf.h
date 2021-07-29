@@ -45,7 +45,6 @@
  * \author James Blackwood
  */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include "land_allocator/include/aland_allocator_item.h"
 #include "util/base/include/ivisitable.h"
 
@@ -140,8 +139,6 @@ public:
     
     virtual const ALandAllocatorItem* getChildWithHighestShare( const bool aIncludeAllChildren, const int aPeriod ) const;
 
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;
 
@@ -200,9 +197,6 @@ protected:
     
     double getLandConstraintCost( const std::string& aRegionName,
                             const int aPeriod ) const;
-
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName,
-                                       const xercesc::DOMNode* aCurr );
 
     virtual void toDebugXMLDerived( const int aPeriod,
                                     std::ostream& aOut,

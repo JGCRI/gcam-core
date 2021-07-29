@@ -45,7 +45,6 @@
 * \author Sonny Kim
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include <boost/core/noncopyable.hpp>
 
@@ -65,7 +64,6 @@ public:
     const std::string& getName() const;
     const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
-    void XMLParse( const xercesc::DOMNode* node );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void completeInit( const std::string& aRegionName );
     void initCalc( const std::string& aRegionName, const int aPeriod );

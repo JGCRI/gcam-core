@@ -41,9 +41,6 @@
 #include <string>
 #include <algorithm>
 
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-
 #include "util/base/include/definitions.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
@@ -58,7 +55,6 @@
 #include "sectors/include/sector_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -100,57 +96,6 @@ const string& EnergyFinalDemand::getName() const {
     return mName;
 }
 
-bool EnergyFinalDemand::XMLParse( const DOMNode* aNode ) {
-
-    assert( aNode );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        if( nodeName == "base-service" ){
-            // TEMP
-            if( XMLHelper<int>::getAttr( curr, "year" ) == 0 ){
-                mBaseService[ 0 ] = XMLHelper<double>::getValue( curr );
-            }
-            else {
-                XMLHelper<Value>::insertValueIntoVector( curr, mBaseService,
-                                                         modeltime );
-            }
-        }
-        else if( nodeName == "price-elasticity" ) {
-            XMLHelper<Value>::insertValueIntoVector( curr, mPriceElasticity,
-                                                      modeltime );
-        }
-        else if( nodeName == "income-elasticity" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mIncomeElasticity,
-                                                      modeltime );
-        }
-        else if( nodeName == FinalEnergyConsumer::getXMLNameStatic() ){
-            parseSingleNode( curr, mFinalEnergyConsumer,
-                new FinalEnergyConsumer() );
-        }
-        else if( !XMLDerivedClassParse( nodeName, curr ) ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unknown element " << nodeName
-                    << " encountered while parsing " << getXMLName() << endl;
-        }
-    }
-    return true;
-}
-
 void EnergyFinalDemand::toDebugXML( const int aPeriod,
                                     ostream& aOut,
                                     Tabs* aTabs ) const
@@ -173,22 +118,6 @@ void EnergyFinalDemand::toDebugXML( const int aPeriod,
 
     toDebugXMLDerived( aPeriod, aOut, aTabs );
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}
-
-bool EnergyFinalDemand::XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ){ 
-    // Put this here so that derived classes can do something different
-    if( nodeName == "perCapitaBased" ) {
-        if( XMLHelper<bool>::getValue( curr ) ){
-            mDemandFunction.reset( new PerCapitaGDPDemandFunction );
-        }
-        else {
-            mDemandFunction.reset( new TotalGDPDemandFunction );
-        }
-    }
-    else {
-        return false;
-    }
-    return true;
 }
 
 void EnergyFinalDemand::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
@@ -591,39 +520,6 @@ double EnergyFinalDemand::FinalEnergyConsumer::calcTechChange( const int aPeriod
         cummTechChange = calcTechChange( aPeriod - 1 ) 
                        * pow( 1 + mAEEI[ aPeriod ], modeltime->gettimestep( aPeriod ) );
         return cummTechChange;
-}
-
-bool EnergyFinalDemand::FinalEnergyConsumer::XMLParse( const DOMNode* aNode ) {
-
-    assert( aNode );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "aeei" ) {
-            XMLHelper<Value>::insertValueIntoVector( curr, mAEEI, modeltime );
-        }
-        else if( nodeName == "cal-final-energy" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mCalFinalEnergy,
-                                                     modeltime );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unknown element " << nodeName
-                    << " encountered while parsing " << getXMLNameStatic() << endl;
-        }
-    }
-    return true;
 }
 
 void EnergyFinalDemand::FinalEnergyConsumer::toDebugXML( const int aPeriod,

@@ -87,7 +87,6 @@ protected:
         LandLeaf
     )
 
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 };
 
 #endif // _CARBON_LAND_LEAF_H_

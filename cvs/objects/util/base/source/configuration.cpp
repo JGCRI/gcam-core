@@ -43,15 +43,12 @@
 #include <string>
 #include <map>
 #include <iostream>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/configuration.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/xml_parse_helper.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
 // Static initializations.
 std::auto_ptr<Configuration> Configuration::gInstance;
@@ -73,62 +70,6 @@ Configuration* Configuration::getInstance() {
         gInstance.reset( new Configuration() );
     }
     return gInstance.get();
-}
-
-//! Initialize Configuration object with xml data.
-bool Configuration::XMLParse( const DOMNode* root ) {
-	/*! \pre Assume we are passed a valid node. */
-	assert( root );
-	
-	DOMNodeList* nodeSectionList = root->getChildNodes();
-	
-	for( unsigned int i = 0; i < nodeSectionList->getLength(); i++ ) {
-		
-		DOMNode* currSectionNode = nodeSectionList->item( i );
-		string sectionName = XMLHelper<string>::safeTranscode( currSectionNode->getNodeName() );		
-		DOMNodeList* nodeValueList = currSectionNode->getChildNodes();
-		
-		for( unsigned int j = 0; j < nodeValueList->getLength(); j++ ) {
-			DOMNode* currValueNode = nodeValueList->item( j );
-
-			if ( currValueNode->getNodeType() != DOMNode::ELEMENT_NODE ) {
-				continue;
-			}
-
-			const string valueName = XMLHelper<string>::getAttr( currValueNode, XMLHelper<void>::name() );
-			
-			if( sectionName == "Files" ){
-				fileMap[ valueName ] = XMLHelper<string>::getValue( currValueNode );
-				mShouldWriteFileMap[ valueName ] = XMLHelper<bool>::getAttr( currValueNode, "write-output" );
-				mShouldAppendScnFileMap[ valueName ] = XMLHelper<bool>::getAttr( currValueNode, "append-scenario-name" );
-			}
-			
-			else if(  sectionName == "Strings" ) {
-				stringMap[ valueName ] = XMLHelper<string>::getValue( currValueNode );
-			}
-			
-			else if(  sectionName == "Bools" ) {
-				boolMap[ valueName ] = ( XMLHelper<int>::getValue( currValueNode ) != 0 );
-			}
-			
-			else if(  sectionName == "Ints" ) {
-				intMap[ valueName ] = XMLHelper<int>::getValue( currValueNode );
-			}
-			
-			else if(  sectionName == "Doubles" ) {
-				doubleMap[ valueName ] = XMLHelper<double>::getValue( currValueNode );
-			}
-            else if( sectionName == "ScenarioComponents" ){
-                scenarioComponents.push_back( XMLHelper<string>::getValue( currValueNode ) );
-            }
-			else {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << sectionName << " found while parsing configuration." << endl;
-            }
-		} // for ( int j = 0;...
-	} // for ( int i = 0;...
-    return true;
 }
 
 bool Configuration::XMLParse( rapidxml::xml_node<char>* aRoot ) {

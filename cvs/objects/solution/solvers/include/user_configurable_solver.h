@@ -93,9 +93,6 @@ public:
     virtual void init();
     virtual bool solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser );
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
 protected:
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.

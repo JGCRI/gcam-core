@@ -42,7 +42,6 @@
 #include <string>
 #include <cassert>
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "technologies/include/intermittent_technology.h"
 #include "containers/include/scenario.h"
@@ -60,7 +59,6 @@
 #include "containers/include/market_dependency_finder.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -174,37 +172,6 @@ const string& IntermittentTechnology::getBackupCapCostName( ) const {
 const string& IntermittentTechnology::getTechCostName( ) const {
    const static string TECH_COST_NAME = ""; // no tech cost implmented in this class
    return TECH_COST_NAME;
-}
-
-bool IntermittentTechnology::XMLDerivedClassParse( const string& aNodeName,
-                                                   const DOMNode* aCurr )
-{
-    if( aNodeName == "electric-sector-name" ){
-        mElectricSectorName = XMLHelper<string>::getValue( aCurr );
-    }
-    else if( aNodeName == "electric-sector-market" ){
-        mElectricSectorMarket = XMLHelper<string>::getValue( aCurr );
-    }
-    // Dependent trial market name to allow multiple and different intermittent
-    // technologies to contribute to same trial market.
-    else if( aNodeName == "trial-market-name" ){
-        mTrialMarketNameParsed = XMLHelper<string>::getValue( aCurr );
-    }
-    // Backup capacity factor.
-    else if( aNodeName == "backup-capacity-factor" ){
-        mBackupCapacityFactor = XMLHelper<double>::getValue( aCurr );
-    }
-    // Backup capital cost.
-    else if( aNodeName == "backup-capital-cost" ){
-        mBackupCapitalCost = XMLHelper<double>::getValue( aCurr );
-    }
-    else if( BackupCalculatorFactory::isOfType( aNodeName ) ){
-        parseSingleNode( aCurr, mBackupCalculator, BackupCalculatorFactory::create( aNodeName ).release() );
-    }
-    else {
-        return false;
-    }
-    return true;
 }
 
 void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {

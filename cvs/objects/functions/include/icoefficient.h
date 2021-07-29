@@ -46,7 +46,6 @@
 
 #include <iosfwd>
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"

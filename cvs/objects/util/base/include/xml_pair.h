@@ -51,7 +51,6 @@
 // include files ***********************************************************
 
 #include "util/base/include/xml_helper.h"
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 
 // namespaces **************************************************************
@@ -129,12 +128,6 @@ public :
     */
    virtual const value_type& getValue( void ) const { return mValue; }
 
-    /*! Parse a pair from the specified node
-    *  \param apNode the node to parse
-    *  \return true on success, false otherwise
-    */
-   virtual bool parse( const xercesc::DOMNode * apNode );
-
    /*! Print to the specified output stream
     *  \param out the output stream
     *  \param apTabs the current tab setting
@@ -159,36 +152,6 @@ private :
    //! The value for the pair
    value_type  mValue;
 };
-
-// XMLPair<T>::parse *******************************************************
-
- /*! Parse a pair from the specified node
- *  \param apNode the node to parse
- *  \return true on success, false otherwise
- */
-template <class T>
-inline bool XMLPair<T>::parse( const xercesc::DOMNode * apNode )
-{
-   // Validate the node
-   if ( !apNode || apNode->getNodeType() != xercesc::DOMNode::ELEMENT_NODE )
-   {
-      return false;
-   }
-
-   // Get the node name (key)
-   setKey( XMLHelper<std::string>::safeTranscode( apNode->getNodeName() ) );
-
-   // Get the node value
-   try
-   {
-      setValue( XMLHelper<T>::getValue( apNode ) );
-      return true;
-   }
-   catch ( ... )
-   {
-   	return false;
-   }
-}
 
 // XMLPair<T>::print *******************************************************
 

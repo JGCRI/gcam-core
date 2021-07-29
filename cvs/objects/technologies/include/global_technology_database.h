@@ -44,7 +44,6 @@
 * \author Pralit Patel
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include <vector>
 #include "util/base/include/iparsable.h"
@@ -89,9 +88,6 @@ public:
     const ITechnologyContainer* getTechnology( const std::string& aSectorName,
                                                const std::string& aSubsectorName,
                                                const std::string& aTechnologyName ) const;
-    
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
     // AParsable methods
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );

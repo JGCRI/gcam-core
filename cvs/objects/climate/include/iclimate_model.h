@@ -46,7 +46,6 @@
 */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/ivisitable.h"
@@ -92,11 +91,6 @@ public:
         EXCEPTION               //!< Model failed to run to completion.
     };
 
-    
-	/*! \brief Read in any data needed for this climate model.
-	* \details Climate model is not required to read in data
-    */
-    virtual void XMLParse( const xercesc::DOMNode* node ) = 0; 
     /*!
      * \brief Get the actual name of the object.
      */

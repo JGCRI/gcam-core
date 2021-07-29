@@ -43,7 +43,6 @@
  * \brief Header file for the SolutionInfoParamParser class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include <boost/core/noncopyable.hpp>
 
@@ -160,8 +159,6 @@ public:
     SolutionInfoValues getSolutionInfoValuesForMarket( const std::string& aGoodName, const std::string& aRegionName,
                                                        const std::string& aMarketType, const int aPeriod ) const;
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     // AParsable methods
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
     
@@ -177,7 +174,6 @@ protected:
         DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "solution-info-param", mSolutionInfoParams, objects::PeriodVector<std::map<std::pair<std::string, std::string>, SolutionInfoValues> > )
     )
     
-    std::vector<SolutionInfoValues*> getSolutionInfoValuesFromAttrs( const xercesc::DOMNode* aNode );
     std::vector<SolutionInfoValues*> getSolutionInfoValuesFromAttrs( const std::map<std::string, std::string>& aXMLAttrs );
 };
 

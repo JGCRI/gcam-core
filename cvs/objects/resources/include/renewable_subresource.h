@@ -44,7 +44,6 @@
 * \brief The SubRenewableResource class header file.
 * \author Sonny Kim
 */
-#include <xercesc/dom/DOMNode.hpp>
 #include "resources/include/subresource.h"
 
 // Forward declarations.
@@ -101,6 +100,5 @@ protected:
     )
 
     virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
 };
 #endif // _RENEWABLE_SUBRESOURCE_H_

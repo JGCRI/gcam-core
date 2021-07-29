@@ -43,8 +43,6 @@
 #include <cassert>
 
 // xml headers
-#include <xercesc/dom/DOMNode.hpp>
-
 #include "util/base/include/xml_helper.h"
 #include "sectors/include/supply_sector.h"
 #include "containers/include/scenario.h"
@@ -57,7 +55,6 @@
 #include "sectors/include/sector_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -94,24 +91,6 @@ const string& SupplySector::getXMLName() const {
 const std::string& SupplySector::getXMLNameStatic() {
     static const string XML_NAME = "supplysector";
     return XML_NAME;
-}
-
-/*! \brief Parses any child nodes specific to derived classes
-*
-* Method parses any input data from child nodes that are specific to the classes derived from this class. Since Sector is the generic base class, there are no values here.
-*
-* \author Josh Lurz, Steve Smith, Sonny Kim
-* \param nodeName name of current node
-* \param curr pointer to the current node in the XML input tree
-*/
-bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    if( nodeName == "price-trial-supply" ){
-        XMLHelper<double>::insertValueIntoVector( curr, mPriceTrialSupplyMarket, scenario->getModeltime() );
-    }        
-    else {
-        return false;
-    }
-    return true;
 }
 
 /*! \brief XML debugging output stream for derived classes

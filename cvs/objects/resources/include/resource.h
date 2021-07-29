@@ -44,7 +44,6 @@
 * \brief The Resource and RenewableResource classes header file.
 * \author Sonny Kim
 */
-#include <xercesc/dom/DOMNode.hpp>
 #include <vector>
 #include <map>
 #include "resources/include/aresource.h"
@@ -68,7 +67,6 @@ public:
     Resource();
     virtual ~Resource();
     static const std::string& getXMLNameStatic();
-    void XMLParse( const xercesc::DOMNode* aNode );
     void toDebugXML( const int period, std::ostream& aOut, Tabs* aTabs ) const;
     const std::string& getName() const; 
     virtual void completeInit( const std::string& aRegionName, const IInfo* aRegionInfo );
@@ -113,8 +111,6 @@ protected:
     //! Vector of object meta info to pass to the market
     //object_meta_info_vector_type mObjectMetaInfo;
 
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName,
-                                       const xercesc::DOMNode* aNode );
     virtual const std::string& getXMLName() const;
     void setMarket( const std::string& aRegionName );
     virtual void annualsupply( const std::string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice );
@@ -145,7 +141,6 @@ protected:
         DEFINE_VARIABLE( ARRAY, "resourceCapacityFactor", mResourceCapacityFactor, objects::PeriodVector<double> )
     )
 
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode );
     virtual const std::string& getXMLName() const;
     virtual void annualsupply( const std::string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice );
 };

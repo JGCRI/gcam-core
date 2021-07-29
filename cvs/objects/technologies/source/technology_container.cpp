@@ -40,7 +40,6 @@
 #include "util/base/include/definitions.h"
 #include <string>
 #include <cassert>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/util.h"
 #include "technologies/include/technology_container.h"
@@ -68,7 +67,6 @@
 extern Scenario* scenario;
 
 using namespace std;
-using namespace xercesc;
 
 //! Constructor
 TechnologyContainer::TechnologyContainer()
@@ -137,160 +135,6 @@ bool TechnologyContainer::hasTechnologyType( const string& aTechNodeName ) {
              aTechNodeName == PassThroughTechnology::getXMLNameStatic() ||
              aTechNodeName == UnmanagedLandTechnology::getXMLNameStatic() ||
              aTechNodeName == ResourceReserveTechnology::getXMLNameStatic() );
-}
-
-/*!
- * \brief Create and parse a vintage of a technology from the given XML and of the given
- *        type.
- * \details Creates a new vintage in the year determined by the year attribute of
- *          aNode if one does not already exist for that year.  That vintage will
- *          then have XMLParse called on it.
- * \param aNode The XML which defines the vintage including year.
- * \param aTechType The type of technology which would need to be created.
- * \return Whether the creation and parsing of the vintage was successful.
- * \note The types of technologies that may be created should be kept in sync with
- *       TechnologyContainer::hasTechnologyType
- */
-bool TechnologyContainer::createAndParseVintage( const DOMNode* aNode, const string& aTechType ) {
-    /*! \pre Tech type should be known. */
-    assert( hasTechnologyType( aTechType ) );
-    
-    ITechnology* newVintage = 0;
-    
-    const int techYear = XMLHelper<int>::getAttr( aNode, "year" );
-    if( techYear == 0 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Could not determine year for technology " << mName << " while parsing " << aTechType << endl;
-        return false;
-    }
-    
-    // check if this vintage has already been created
-    VintageIterator vintageIt = mVintages.find( techYear );
-    if( vintageIt == mVintages.end() ) {
-        // has not been added yet so we must create a new one
-        if( aTechType == DefaultTechnology::getXMLNameStatic() ) {
-            newVintage = new DefaultTechnology( mName, techYear );
-        }
-        else if( aTechType == IntermittentTechnology::getXMLNameStatic() ) {
-            newVintage = new IntermittentTechnology( mName, techYear );
-        }
-        else if( aTechType == WindTechnology::getXMLNameStatic() ) {
-            newVintage = new WindTechnology( mName, techYear );
-        }
-        else if( aTechType == SolarTechnology::getXMLNameStatic() ) {
-            newVintage = new SolarTechnology( mName, techYear );
-        }
-        else if( aTechType == NukeFuelTechnology::getXMLNameStatic() ) {
-            newVintage = new NukeFuelTechnology( mName, techYear );
-        }
-        else if( aTechType == TranTechnology::getXMLNameStatic() ) {
-            newVintage = new TranTechnology( mName, techYear );
-        }
-        else if( aTechType == AgProductionTechnology::getXMLNameStatic() ) {
-            newVintage = new AgProductionTechnology( mName, techYear );
-        }
-        else if( aTechType == PassThroughTechnology::getXMLNameStatic() ) {
-            newVintage = new PassThroughTechnology( mName, techYear );
-        }
-        else if( aTechType == UnmanagedLandTechnology::getXMLNameStatic() ) {
-            newVintage = new UnmanagedLandTechnology( mName, techYear );
-        }
-        else if( aTechType == ResourceReserveTechnology::getXMLNameStatic() ) {
-            newVintage = new ResourceReserveTechnology( mName, techYear );
-        }
-        else {
-            // Getting an error message here implies that the known technologies in this method are
-            // out of sync with hasTechnologyType.
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Could not determine a technology of type" << aTechType << endl;
-            return false;
-        }
-        
-        /*!
-         * \note That we adding the vintage even if there are errors while parsing it.
-         */
-        mVintages[ techYear ] = newVintage;
-    }
-    else {
-        // just fetch the previously created vintage
-        newVintage = ( *vintageIt ).second;
-    }
-    
-    return newVintage->XMLParse( aNode );
-}
-
-bool TechnologyContainer::XMLParse( const DOMNode* aNode ) {
-    /*! \pre Make sure we were passed a valid node. */
-    assert( aNode );
-    
-    // get the technology type
-    string techType = XMLHelper<string>::safeTranscode( aNode->getNodeName() );
-    
-    // special case to accomodate overriding parameters from global technologies
-    if( techType == StubTechnologyContainer::getXMLNameStatic() ) {
-        /*!
-         * \pre There must be atleast on vintage from the global technology.
-         */
-        assert( mVintages.begin() != mVintages.end() );
-        techType = (*mVintages.begin()).second->getXMLName();
-    }
-    
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, XMLHelper<void>::name() );
-    
-    if( mName.empty() ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Ignoring technology set because it does not have a name." << endl;
-        return false;
-    }
-    
-    // flag for return if parsing was successful
-    // TODO: wait do we carry this through?
-    bool parsingSuccessful = true;
-    
-    // get all child nodes.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == XMLHelper<void>::text() ) {
-            continue;
-        }
-        else if( nodeName == Technology::getXMLVintageNameStatic() ) {
-            parsingSuccessful &= createAndParseVintage( curr, techType );
-        }
-        else if( nodeName == InterpolationRule::getXMLNameStatic() && XMLHelper<string>::getAttr( curr, "apply-to" ) == "share-weight" ) {
-            // if the delete flag is set then for interpolation rules that means to clear
-            // out any previously parsed rules
-            if( XMLHelper<bool>::getAttr( curr, "delete" ) ) {
-                clearInterpolationRules();
-            }
-            
-            InterpolationRule* tempRule = new InterpolationRule();
-            tempRule->XMLParse( curr );
-            mShareWeightInterpRules.push_back( tempRule );
-        }
-        else if( nodeName == "initial-available-year" ) {
-            mInitialAvailableYear = XMLHelper<int>::getValue( curr );
-        }
-        else if( nodeName == "final-available-year" ) {
-            mFinalAvailableYear = XMLHelper<int>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unknown element " << nodeName << " encountered while parsing " << techType << endl;
-            parsingSuccessful = false;
-        }
-    }
-    
-    return parsingSuccessful;
 }
 
 bool TechnologyContainer::XMLParse( rapidxml::xml_node<char>* & aNode) {
@@ -799,37 +643,4 @@ void TechnologyContainer::accept( IVisitor* aVisitor, const int aPeriod ) const 
     for( CVintageIterator vintageIt = mVintages.begin(); vintageIt != end; ++vintageIt ) {
         ( *vintageIt ).second->accept( aVisitor, periodToUse );
     }
-}
-
-void TechnologyContainer::interpolateAndParse( const DOMNode* aNode ) {
-    // Get all child nodes.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // Loop through the child nodes and interpolate any vintages which do not exist.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == XMLHelper<void>::text() ) {
-            continue;
-        }
-        
-        const int year = XMLHelper<int>::getAttr( curr, "year" );
-        if( year != 0 && mVintages.find( year ) == mVintages.end() ) {
-            // Find the previous and next vintages so that we can interpolate.
-            CVintageIterator prevTech = --mVintages.lower_bound( year );
-            if( prevTech == mVintages.end() ) {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::ERROR );
-                mainLog << "Could not find a vintage before " << year << " to interplate from." << endl;
-                exit( 1 );
-            }
-            CVintageIterator tempPrevTech = prevTech;
-            CVintageIterator nextTech = ++tempPrevTech;
-            interpolateVintage( year, prevTech, nextTech );
-        }
-    }
-    
-    // We can now parse values.
-    XMLParse( aNode );
 }

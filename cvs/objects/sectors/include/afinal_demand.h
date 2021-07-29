@@ -43,7 +43,6 @@
  * \brief The AFinalDemand abstract base class header file.
  * \author Josh Lurz
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
@@ -70,7 +69,6 @@ class NegativeEmissionsFinalDemand;
  */
 
 class AFinalDemand: public INamed,
-                    public IParsable,
                     public IVisitable,
                     private boost::noncopyable
 {
@@ -82,9 +80,6 @@ public:
     
     virtual const std::string& getXMLName() const;
 
-    // Documentation is inherited
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
-    
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const = 0;

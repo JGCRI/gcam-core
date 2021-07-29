@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include <list>
 #include <boost/core/noncopyable.hpp>
 
@@ -125,9 +124,6 @@ public:
     virtual const std::string& getXMLReportingName() const = 0;
     
     virtual const std::string& getXMLName() const = 0;
-
-    // Documentation is inherited.
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
 
     // Documentation is inherited.
     virtual void toDebugXML( const int aPeriod,

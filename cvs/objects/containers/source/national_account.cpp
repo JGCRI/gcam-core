@@ -41,8 +41,6 @@
 
 #include "util/base/include/definitions.h"
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "containers/include/national_account.h"
 #include "util/base/include/ivisitor.h"
@@ -51,7 +49,6 @@
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Default Constructor
 NationalAccount::NationalAccount():
@@ -75,47 +72,6 @@ const std::string& NationalAccount::getXMLNameStatic() {
     return XML_NAME;
 }
 
-
-void NationalAccount::XMLParse( const DOMNode* node ) {
-    /*! \pre make sure we were passed a valid node. */
-    assert( node );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if  ( nodeName == enumToXMLName( RETAINED_EARNINGS ) ) {
-            addToAccount( RETAINED_EARNINGS, XMLHelper<double>::getValue( curr ) );
-        }
-        else if  ( nodeName == enumToXMLName( DIVIDENDS ) ) {
-            addToAccount( DIVIDENDS, XMLHelper<double>::getValue( curr ) );
-        }
-        else if  ( nodeName == enumToXMLName( TRANSFERS ) ) {
-            addToAccount( TRANSFERS, XMLHelper<double>::getValue( curr ) );
-        }
-        else if  ( nodeName == enumToXMLName( CORPORATE_INCOME_TAX_RATE ) ) {
-            setAccount( CORPORATE_INCOME_TAX_RATE, XMLHelper<double>::getValue( curr ) );
-        }
-        else if  ( nodeName == enumToXMLName( EXCHANGE_RATE ) ) {
-            addToAccount( EXCHANGE_RATE, XMLHelper<double>::getValue( curr ) );
-        }
-        else if  ( nodeName == enumToXMLName( CORPORATE_PROFITS ) ) {
-            addToAccount( CORPORATE_PROFITS, XMLHelper<double>::getValue( curr ) );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
-        }
-    }
-}
 
 //! Output debug info to XML
 void NationalAccount::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {

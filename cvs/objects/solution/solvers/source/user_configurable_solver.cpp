@@ -41,8 +41,6 @@
 #include "util/base/include/definitions.h"
 #include <iostream>
 #include <fstream>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/user_configurable_solver.h"
 #include "containers/include/scenario.h"
@@ -60,7 +58,6 @@
 #include "util/base/include/auto_file.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -106,56 +103,6 @@ const string& UserConfigurableSolver::getXMLNameStatic() {
 
 const string& UserConfigurableSolver::getXMLName() const {
     return getXMLNameStatic();
-}
-
-bool UserConfigurableSolver::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "solution-tolerance" ) {
-            mDefaultSolutionTolerance = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "solution-floor" ) {
-            mDefaultSolutionFloor = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "calibration-tolerance" ) {
-            mCalibrationTolerance = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "max-model-calcs" ) {
-            mMaxModelCalcs = XMLHelper<int>::getValue( curr );
-        }
-        else if( SolverComponentFactory::hasSolverComponent( nodeName ) ) {
-            SolverComponent* tempSolverComponent = SolverComponentFactory::createAndParseSolverComponent( nodeName,
-                                                                                                          marketplace,
-                                                                                                          world,
-                                                                                                          mCalcCounter,
-                                                                                                          curr );
-            
-            // only add valid solver components
-            if( tempSolverComponent ) {
-                mSolverComponents.push_back( tempSolverComponent );
-            }
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    
-    return true;
 }
 
 //! Initialize the solver at the beginning of the model.

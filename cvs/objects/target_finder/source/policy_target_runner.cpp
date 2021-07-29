@@ -42,8 +42,6 @@
 #include <cassert>
 #include <string>
 #include <cmath>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/xml_parse_helper.h"
 #include "target_finder/include/policy_target_runner.h"
@@ -64,7 +62,6 @@
 #include "marketplace/include/marketplace.h"
 
 using namespace std;
-using namespace xercesc;
 
 /*!
  * \brief Constructor.
@@ -88,93 +85,6 @@ PolicyTargetRunner::~PolicyTargetRunner(){
 
 const string& PolicyTargetRunner::getName() const {
     return mName;
-}
-
-// IParsable interface
-bool PolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
-    // Check for double initialization.
-    assert( !mHasParsedConfig );
-
-    // Set the configuration has been parsed.
-    mHasParsedConfig = true;
-
-    // assume we were passed a valid node.
-    assert( aRoot );
-
-    mName = XMLHelper<string>::getAttr( aRoot, "name" );
-
-    // get the children of the node.
-    DOMNodeList* nodeList = aRoot->getChildNodes();
-    bool success = true;
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        const string nodeName =
-            XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == XMLHelper<void>::text() ) {
-            continue;
-        }
-        else if ( nodeName == "target-value" ){
-            mTargetValue = XMLHelper<double>::getValue( curr );
-        }
-        else if ( nodeName == "target-type" ){
-            mTargetType = XMLHelper<string>::getValue( curr );
-        }
-        else if ( nodeName == "tax-name" ){
-            mTaxName = XMLHelper<string>::getValue( curr );
-        }
-        else if ( nodeName == "target-tolerance" ){
-            mTolerance = XMLHelper<double>::getValue( curr );
-        }
-        else if ( nodeName == "path-discount-rate" ){
-            mPathDiscountRate = XMLHelper<double>::getValue( curr );
-        }
-        else if ( nodeName == "first-tax-year" ){
-            mFirstTaxYear = XMLHelper<unsigned int>::getValue( curr );
-        }
-        else if ( nodeName == "max-iterations" ){
-            mMaxIterations = XMLHelper<unsigned int>::getValue( curr );
-        }
-        else if( nodeName == "stabilization" ) {
-            mInitialTargetYear = ITarget::getUseMaxTargetYearFlag();
-        }
-        else if( nodeName == "overshoot" ) {
-            // Set the year to overshoot to the year attribute or if not provided
-            // default to the last model year.  We can not set it to the last
-            // year here since the model time may not have been parsed.
-            mInitialTargetYear = XMLHelper<int>::getAttr( curr, "year" );
-        }
-        else if( nodeName == "forward-look" ) {
-            const int year = XMLHelper<int>::getAttr( curr, "year" );
-            if( year == 0 ) {
-                int value = XMLHelper<int>::getValue( curr );
-                fill( mNumForwardLooking.begin(), mNumForwardLooking.end(), value );
-            }
-            else {
-                XMLHelper<int>::insertValueIntoVector( curr, mNumForwardLooking, mSingleScenario->getInternalScenario()->getModeltime() );
-            }
-        }
-        else if( nodeName == "max-tax" ) {
-            mMaxTax = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "backward-look" ) {
-            mNumBackwardsLook = XMLHelper<int>::getValue( curr );
-        }
-        else if( nodeName == "initial-tax-guess" ) {
-            mInitialTaxGuess = XMLHelper<double>::getValue( curr );
-        }
-        // Handle unknown nodes.
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized string: " << nodeName
-                    << " found while parsing " << getXMLNameStatic() 
-                    << "." << endl;
-            success = false;
-        }
-    }
-    return success;
 }
 
 bool PolicyTargetRunner::XMLParse(rapidxml::xml_node<char>* & aNode) {

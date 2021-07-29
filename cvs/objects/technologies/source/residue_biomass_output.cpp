@@ -47,12 +47,9 @@
 #include "land_allocator/include/aland_allocator_item.h"
 #include "containers/include/market_dependency_finder.h"
 
-#include <xercesc/dom/DOMNodeList.hpp>
-
 #include <cstdio>
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -365,79 +362,6 @@ void ResidueBiomassOutput::toDebugXML( const int aPeriod, std::ostream& aOut, Ta
         XMLWriteElementWithAttributes( currPair->second, "fract-harvested", aOut, aTabs, attrs );
     }
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
-bool ResidueBiomassOutput::XMLParse( const xercesc::DOMNode* aNode )
-{
-    // assume we are passed a valid node.
-    if ( !aNode ) {
-        return false;
-    }
-
-    // get all the children.
-    xercesc::DOMNodeList* nodeList = aNode->getChildNodes();
-    if ( !nodeList ) {
-        return false;
-    }
-
-    ExplicitPointSet* currPoints = new ExplicitPointSet();
-
-    // get the sector name attribute.
-    std::string sectorName = XMLHelper<std::string>::getAttr( aNode, "name" );
-    if ( !sectorName.length() ) {
-        return false;
-    }
-    setName( sectorName );
-
-    XMLSize_t n = nodeList->getLength();
-    for ( XMLSize_t i = 0; i != n; ++i ) {
-        const xercesc::DOMNode* curr = nodeList->item( i );
-        if ( !curr ) {
-            return false;
-        }
-
-        const std::string nodeName = XMLHelper<std::string>::safeTranscode( curr->getNodeName() );
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "eros-ctrl" ) {
-            mErosCtrl = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "harvest-index" ) {
-            mHarvestIndex = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "mass-conversion" ) {
-            mMassConversion = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "mass-to-energy" ) {
-            mMassToEnergy = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "water-content" ) {
-            mWaterContent = XMLHelper<double>::getValue( curr );
-        }
-        else if ( nodeName == "fract-harvested" ){
-            double price = XMLHelper<double>::getAttr( curr, "price" );  
-            double fractionHarvested = XMLHelper<double>::getValue( curr );
-            XYDataPoint* currPoint = new XYDataPoint( price, fractionHarvested );
-            currPoints->addPoint( currPoint );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLNameStatic() << "." << std::endl;
-            return false;
-        }
-    }
-    
-    /*!
-     * \warning This implies mCostCurve must be parsed all together and any subsequent
-     *          attempts to parse it will completely override the previous definition.
-     */
-    delete mCostCurve;
-    mCostCurve = new PointSetCurve( currPoints );
-
-    return true;
 }
 
 bool ResidueBiomassOutput::XMLParse( rapidxml::xml_node<char>* & aNode ) {

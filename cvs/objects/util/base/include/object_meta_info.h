@@ -54,7 +54,6 @@
 #include "util/base/include/xml_pair.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/data_definition_util.h"
-#include <xercesc/dom/DOMNodeList.hpp>
 
 // namespaces **************************************************************
 
@@ -121,12 +120,6 @@ public :
     */
    virtual void setValue( const value_type& aValue ) { mValue = aValue; }
 
-  /*! Parse XML from the specified node
-    *  \param apNode The current node of a DOM tree.
-    *  \return Whether the parse completed successfully.
-    */
-   virtual bool XMLParse( const xercesc::DOMNode* apNode );
-
    /*! \brief Serialize the object to an output stream in an XML format.
     *  \details Function which writes out all data members of an object which are
     *           necessary to duplicate a model run. This should not include
@@ -184,73 +177,6 @@ inline const std::string& TObjectMetaInfo/*<T>*/::getXMLNameStatic( void )
 inline const std::string& TObjectMetaInfo/*<T>*/::getXMLName( void ) const
 {
    return getXMLNameStatic();
-}
-
-// TObjectMetaInfo<T>::XMLParse ********************************************
-
-/*! Parse XML from the specified node
- *  \param aNode The current node of a DOM tree.
- *  \return Whether the parse completed successfully.
- */
-//template <class T>
-inline bool TObjectMetaInfo/*<T>*/::XMLParse( const xercesc::DOMNode* apNode )
-{
-   typedef XMLPair</*T*/double> value_pair_type;
-
-   if ( !apNode || apNode->getNodeType() != xercesc::DOMNode::ELEMENT_NODE )
-   {
-      return false;
-   }
-   XMLSize_t numParsed = 0;
-
-   // get the name attribute
-   setName( XMLHelper<std::string>::getAttr( apNode, "name" ) );
-   if ( getName().length() )
-   {
-      ++numParsed;
-   }
-
-   // get all the children.
-   xercesc::DOMNodeList* pNodeList = apNode->getChildNodes();
-   XMLSize_t             n         = pNodeList ? pNodeList->getLength() : 0;
-
-   for ( XMLSize_t i = 0; i != n; ++i )
-   {
-      const xercesc::DOMNode* pCurr = pNodeList->item( i );
-      if ( !pCurr )
-      {
-         return false;
-      }
-
-      const std::string nodeName =
-         XMLHelper<std::string>::safeTranscode( pCurr->getNodeName() );
-
-      if( nodeName == "#text" )
-      {
-         continue;
-      }
-      else if( nodeName == "value" )
-      {
-         value_pair_type np;
-         if ( !np.parse( pCurr ) )
-         {
-            return false;
-         }
-         setValue( np.getValue() );
-         ++numParsed;
-      }
-      else
-      {
-         ILogger& mainLog = ILogger::getLogger( "main_log" );
-         mainLog.setLevel( ILogger::WARNING );
-         mainLog << "Unrecognized text string: " << nodeName
-            << " found while parsing "
-            << getXMLNameStatic() << "." << std::endl;
-         return false;
-      }
-   }
-
-   return numParsed == 2;
 }
 
 // TObjectMetaInfo<T>::toDebugXML ******************************************

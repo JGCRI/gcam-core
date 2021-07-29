@@ -44,7 +44,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
@@ -83,8 +82,6 @@ public:
     const std::string& getXMLName() const;
 
     InputOMVar* clone() const;
-
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
 
     virtual bool isSameType( const std::string& aType ) const;
 

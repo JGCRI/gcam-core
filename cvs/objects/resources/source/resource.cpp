@@ -45,9 +45,6 @@
 #include <fstream>
 #include <vector>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/dom/DOMNamedNodeMap.hpp>
 
 // class headers
 #include "util/base/include/xml_helper.h"
@@ -67,7 +64,6 @@
 
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -114,80 +110,6 @@ const std::string& Resource::getXMLNameStatic() {
     return XML_NAME;
 }
 
-//! Set data members from XML input.
-void Resource::XMLParse( const DOMNode* aNode ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    string nodeName;
-    DOMNodeList* nodeList = 0;
-    DOMNode* curr = 0;
-
-    // make sure we were passed a valid node.
-    assert( aNode );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-
-    // get all child nodes.
-    nodeList = aNode->getChildNodes();
-
-    // loop through the child nodes.
-    for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "output-unit" ){
-            mOutputUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "price-unit" ){
-            mPriceUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "market" ){
-            mMarket = XMLHelper<string>::getValue( curr ); // only one market element.
-        }
-        else if( nodeName == "price" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mResourcePrice, modeltime );
-        }
-        else if( nodeName == "keyword" ){
-            DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
-            for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
-                DOMNode* attrTemp = keywordAttributes->item( attrNum );
-                mKeywordMap[ XMLHelper<string>::safeTranscode( attrTemp->getNodeName() ) ] = 
-                    XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
-            }
-        }
-        /*else if ( nodeName == object_meta_info_type::getXMLNameStatic() ){
-            object_meta_info_type metaInfo;
-            if ( metaInfo.XMLParse( curr ) ){
-                // Add to collection
-                mObjectMetaInfo.push_back( metaInfo );
-            }
-        }*/
-        else if( nodeName == SubResource::getXMLNameStatic() ){
-            parseContainerNode( curr, mSubResource, new SubResource() );
-        }
-        else if( nodeName == SubRenewableResource::getXMLNameStatic() ) {
-            parseContainerNode( curr, mSubResource, new SubRenewableResource() );
-        }
-        else if( nodeName == SmoothRenewableSubresource::getXMLNameStatic() ) {
-            parseContainerNode( curr, mSubResource, new SmoothRenewableSubresource() );
-        }
-        else if( nodeName == ReserveSubResource::getXMLNameStatic() ) {
-            parseContainerNode( curr, mSubResource, new ReserveSubResource() );
-        }
-        else if( XMLDerivedClassParse( nodeName, curr ) ){
-            // no-op
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing Resource." << endl;
-        }
-    }
-}
-
 //! Write data members to data stream in XML format for debugging.
 void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const {
 
@@ -226,11 +148,6 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
 
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}
-
-bool Resource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
-    // do nothing
-    return false;
 }
 
 /*! \brief Complete the initialization
@@ -469,22 +386,6 @@ const std::string& RenewableResource::getXMLName() const {
 const std::string& RenewableResource::getXMLNameStatic() {
     static const string XML_NAME = "renewresource";
     return XML_NAME;
-}
-
-//! 
-/*! In this case, this read-in just substantiates the appropriate type of subResource */
-/*! \brief Performs XML read-in that is specific to this derived class
-*
-*  this case, this read-in just instantiates the appropriate type of subResource
-*
-* \author Steve Smith
-* \param aNodeName name of the current node
-* \param aNode pointer to the current node in the XML input tree
-* \return Whether an element was parsed.
-*/
-bool RenewableResource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode )
-{
-    return false;
 }
 
 /*! \brief Complete the initialization

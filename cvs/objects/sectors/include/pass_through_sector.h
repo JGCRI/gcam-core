@@ -72,8 +72,6 @@ public:
 protected:
     virtual double getFixedOutput( const int aPeriod ) const;
 
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const;
     
     // Define data such that introspection utilities can process the data from this

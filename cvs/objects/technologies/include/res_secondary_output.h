@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "technologies/include/secondary_output.h"
 

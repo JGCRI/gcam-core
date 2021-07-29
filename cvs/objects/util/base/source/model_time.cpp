@@ -46,15 +46,12 @@
 #include <cassert>
 
 // xml headers
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/model_time.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
-
 
 const Modeltime* Modeltime::getInstance() {
     const static Modeltime modeltime;
@@ -69,88 +66,6 @@ mFinalCalibrationYear( 2015 ),
 mIsInitialized( false ),
 mCarbonModelStartYear( -1 )
 {
-}
-
-//! Set the data members from the XML input.
-bool Modeltime::XMLParse( const DOMNode* aNode ) {
-    
-    // It is important that Modeltime only be parse once as the very first
-    // object since the rest of the model will rely on it to initialize some
-    // datastructures.
-    if( mIsInitialized ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Modeltime can only be parsed once." << endl;
-        return false;
-    }
-    
-    // Temparary sorted map of years to their time step to keep track of
-    // them while we are parsing.  After parsing we will use them to initialize
-    // the Modeltime with the initMembers method.
-    map<int, int> yearToTimeStep;
-        
-    // assume node is valid.
-    assert( aNode );
-
-    // get all children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        // select the type of node.
-        if( nodeName == "#text" ) {
-            continue;
-        }
-
-        else if ( nodeName == "start-year" ){
-            mStartYear = XMLHelper<int>::getValue( curr );
-            yearToTimeStep[ mStartYear ]  = XMLHelper<int>::getAttr( curr, "time-step" );
-        } 
-        else if ( nodeName == "inter-year" ){
-            int interYear = XMLHelper<int>::getValue( curr );
-            yearToTimeStep[ interYear ]  = XMLHelper<int>::getAttr( curr, "time-step" );
-        } 
-        else if ( nodeName == "end-year" ){
-            mEndYear = XMLHelper<int>::getValue( curr );
-            // the end year does not have a time step
-            yearToTimeStep[ mEndYear ]  = -1;
-        }
-        else if ( nodeName == "final-calibration-year" ){
-            int tempCalibrationYear = XMLHelper<int>::getValue( curr ); 
-            // mFinalCalibrationYear is initialized to 2015
-            if ( tempCalibrationYear < mFinalCalibrationYear ){
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "\nRead in final-calibration-year (" << tempCalibrationYear << ") "
-                        << "earlier than last historical year (" << mFinalCalibrationYear << ").\n"
-                        << "Running in HINDCASTING MODE with (" << tempCalibrationYear
-                        << ") as the final calibration year.\n" << endl;
-                mFinalCalibrationYear = tempCalibrationYear;
-            }
-            else if (tempCalibrationYear > mFinalCalibrationYear ){
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "\nHistorical calibration to (" << tempCalibrationYear << ") is not possible! "
-                        << "Setting final calibration year to default year (" << mFinalCalibrationYear
-                        << ").\n" << endl;
-            }
-        } 
-        else if( nodeName == "carbon-model-start-year" ) {
-            mCarbonModelStartYear = XMLHelper<int>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing modeltime." << endl;
-        }
-    }
-    
-    // initialize the data members and finalize the Modeltime
-    initMembers( yearToTimeStep );
-    return true;
 }
 
 bool Modeltime::XMLParse( rapidxml::xml_node<char>* & aNode ) {

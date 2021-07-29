@@ -43,16 +43,12 @@
 #include <cassert>
 #include <string>
 #include <numeric>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-
 
 #include "functions/include/absolute_cost_logit.hpp"
 #include "util/base/include/xml_helper.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! constructor: arg values <= 0 (including default) will get filled in with the default
 AbsoluteCostLogit::AbsoluteCostLogit():
@@ -69,63 +65,6 @@ AbsoluteCostLogit::~AbsoluteCostLogit() {
 const string& AbsoluteCostLogit::getXMLNameStatic() {
     const static string XML_NAME = "absolute-cost-logit";
     return XML_NAME;
-}
-
-bool AbsoluteCostLogit::XMLParse( const DOMNode *aNode ) {
-    /*! \pre Make sure we were passed a valid node. */
-    assert( aNode );
-
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // get the children of the node
-    DOMNodeList* nodeList = aNode->getChildNodes();
-
-    bool parsingSuccessful = true;
-
-    // loop over the child nodes
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ) {
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == XMLHelper<void>::text() ) {
-            continue;
-        }
-        else if( nodeName == "logit-exponent" ) {
-            XMLHelper<double>::insertValueIntoVector( curr, mLogitExponent, modeltime );
-        }
-        else if( nodeName == "base-value" ) {
-            double value = XMLHelper<double>::getValue( curr );
-            if( value <= 0 ) {
-                ILogger& mainlog = ILogger::getLogger( "main_log" );
-                mainlog.setLevel( ILogger::WARNING );
-                mainlog << "Ignoring invalid value for base value: " << value
-                        << " while parsing " << getXMLNameStatic() << "." << endl;
-                parsingSuccessful = false;
-                // skip the rest of the loop.  Don't set base value.
-                continue;
-            }
-            else if( value < 1.0e-2 ) {
-                ILogger& mainlog = ILogger::getLogger( "main_log" );
-                mainlog.setLevel( ILogger::WARNING );
-                mainlog << "Parsed value for base value:  " << value
-                        << " is very low.  This may produce questionable results."
-                        << endl;
-                // fall through to set base value to the input value.
-            }
-            mBaseValue = value;
-            mParsedBaseValue = true;
-        }
-        else {
-            ILogger& mainlog = ILogger::getLogger( "main_log" );
-            mainlog.setLevel( ILogger::WARNING );
-            mainlog << "Unknown text string: " << nodeName
-                    << " found while parsing " << getXMLNameStatic() << "."
-                    << endl;
-            parsingSuccessful = false;
-        }
-    }
-
-    return parsingSuccessful;
 }
 
 void AbsoluteCostLogit::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

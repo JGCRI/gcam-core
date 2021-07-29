@@ -65,7 +65,6 @@
 #include <boost/algorithm/string/split.hpp>
 
 using namespace std;
-using namespace xercesc;
 
 /*! \brief Constructor.
 * \param aSingleScenario The single scenario runner.

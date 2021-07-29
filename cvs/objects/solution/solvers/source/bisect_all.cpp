@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/bisect_all.h"
@@ -62,7 +60,6 @@
 #include "util/base/include/timer.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Default Constructor. Constructs the base class. 
 BisectAll::BisectAll( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ):SolverComponent( marketplaceIn, worldIn, calcCounterIn ),
@@ -104,52 +101,6 @@ const string& BisectAll::getXMLNameStatic() {
 //! Get the name of the SolverComponent
 const string& BisectAll::getXMLName() const {
     return getXMLNameStatic();
-}
-
-bool BisectAll::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "max-iterations" ) {
-            mMaxIterations = XMLHelper<unsigned int>::getValue( curr );
-        }
-        else if( nodeName == "bracket-interval" ) {
-            mDefaultBracketInterval = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "bracket-tolerance" ) {
-            mBracketTolerance = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "max-bracket-iterations" ) {
-            mMaxBracketIterations = XMLHelper<unsigned int>::getValue( curr );
-        }
-        else if( nodeName == "solution-info-filter" ) {
-            delete mSolutionInfoFilter;
-            mSolutionInfoFilter =
-                SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<string>::getValue( curr ) );
-        }
-        else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
-            delete mSolutionInfoFilter;
-            mSolutionInfoFilter = SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
 }
 
 bool BisectAll::XMLParse( rapidxml::xml_node<char>* & aNode ) {

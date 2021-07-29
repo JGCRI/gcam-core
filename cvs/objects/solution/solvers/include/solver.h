@@ -66,7 +66,7 @@ class UserConfigurableSolver;
 * \author Josh Lurz
 */
 
-class Solver : public IParsable {
+class Solver {
 public:
     Solver( Marketplace* aMarketplace, World* aWorld ):marketplace( aMarketplace ), world( aWorld ){};
     virtual ~Solver(){};

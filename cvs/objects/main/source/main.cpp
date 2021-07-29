@@ -61,9 +61,7 @@
 #include <memory>
 #include <list>
 
-// xerces xml headers
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/parsers/XercesDOMParser.hpp>
+// xml headers
 #include "util/base/include/xml_helper.h"
 
 // include custom headers
@@ -80,7 +78,6 @@
 #include "util/base/include/xml_parse_helper.h"
 
 using namespace std;
-using namespace xercesc;
 
 // define file (ofstream) objects for outputs, debugging and logs
 /* \todo Finish removing globals-JPL */
@@ -174,7 +171,7 @@ int main( int argc, char *argv[] ) {
     mainLog << "Configuration file:  " << configurationFileName << endl;
     mainLog << "Parsing input files..." << endl;
     Configuration* conf = Configuration::getInstance();
-    success = XMLHelper<void>/*XMLParseHelper*/::parseXML( configurationFileName, conf );
+    success = XMLParseHelper::parseXML( configurationFileName, conf );
     // Check if parsing succeeded. Non-zero return codes from main indicate
     // failure.
     if( !success ){

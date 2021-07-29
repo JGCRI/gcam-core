@@ -45,7 +45,6 @@
 * \author Kate Calvin
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include "util/base/include/inamed.h"
 #include "util/base/include/iparsable.h"
@@ -77,7 +76,6 @@ public:
     //! Clone operator.
     virtual AEmissionsControl* clone() const = 0;
     
-    bool XMLParse( const xercesc::DOMNode* aNode );
     void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
     
     /*!
@@ -125,17 +123,6 @@ protected:
     AEmissionsControl();
     AEmissionsControl( const AEmissionsControl& aOther );
     AEmissionsControl& operator=( const AEmissionsControl& aOther );
-
-    /*!
-     * \brief Parses any child nodes specific to derived classes
-     * \details Method parses any input data from child nodes that are specific
-     *          to the classes derived from this class.
-     * \author Josh Lurz, Steve Smith
-     * \param aNodeName name of current node
-     * \param aCurrNode pointer to the current node in the XML input tree
-     * \return Whether any node was parsed.
-     */
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode ) = 0;
     
     /*!
      * \brief XML debug output stream for derived classes

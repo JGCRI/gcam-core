@@ -46,10 +46,6 @@
 #include <stack>
 
 // xml headers
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/dom/DOMNamedNodeMap.hpp>
-
 #include "util/base/include/xml_helper.h"
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
@@ -73,7 +69,6 @@
 #include "util/base/include/object_meta_info.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -125,97 +120,6 @@ void Sector::setNames( const string& aRegionName ) {
     mRegionName = aRegionName;
     for( vector<Subsector*>::iterator subSecIter = mSubsectors.begin(); subSecIter != mSubsectors.end(); subSecIter++ ) {
         (*subSecIter)->setNames( mRegionName, mName );
-    }
-}
-
-/*! \brief Set data members from XML input
-*
-* \author Josh Lurz
-* \param node pointer to the current node in the XML input tree
-* \todo josh to add appropriate detailed comment here
-*/
-void Sector::XMLParse( const DOMNode* node ){
-    /*! \pre make sure we were passed a valid node. */
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // Temporary code to warn about no longer read-in demand sector
-    // perCapitaBasedString. TODO: Remove this warning.
-    if( XMLHelper<bool>::getAttr( node, "perCapitaBased" ) ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "The perCapitaBased attribute is no longer supported and will not be read."
-            << " Convert the attribute to an element." << endl;
-    }
-    
-    // get all child nodes.
-    DOMNodeList* nodeList = node->getChildNodes();
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "price" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mPrice, modeltime );
-        }
-        else if( nodeName == "output-unit" ){
-            mOutputUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "input-unit" ){
-            mInputUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "price-unit" ){
-            mPriceUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if ( nodeName == object_meta_info_type::getXMLNameStatic() ){
-            /* Read in object meta info here into mObjectMetaInfo.  This
-             * will be copied into mSectorInfo in completeInit()
-             */
-            /*object_meta_info_type metaInfo;
-            if ( metaInfo.XMLParse( curr ) ){
-                // Add to collection
-                mObjectMetaInfo.push_back( metaInfo );
-            }*/
-            parseContainerNode( curr, mObjectMetaInfo, new object_meta_info_type );
-        }
-        else if( nodeName == Subsector::getXMLNameStatic() ){
-            parseContainerNode( curr, mSubsectors, new Subsector() );
-        }
-        else if( nodeName == NestingSubsector::getXMLNameStatic() ){
-            parseContainerNode( curr, mSubsectors, new NestingSubsector() );
-        }
-        else if( nodeName == TranSubsector::getXMLNameStatic() ){
-            parseContainerNode( curr, mSubsectors, new TranSubsector() );
-        }
-        else if( nodeName == "keyword" ){
-            DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
-            for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
-                DOMNode* attrTemp = keywordAttributes->item( attrNum );
-                mKeywordMap[ XMLHelper<string>::safeTranscode( attrTemp->getNodeName() ) ] =
-                    XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
-            }
-        }
-        else if( DiscreteChoiceFactory::isOfType( nodeName ) ) {
-            parseSingleNode( curr, mDiscreteChoiceModel, DiscreteChoiceFactory::create( nodeName ).release() );
-        }
-        else if( nodeName == "use-trial-market" ) {
-            mUseTrialMarkets = XMLHelper<bool>::getValue( curr );
-        }
-        else if( XMLDerivedClassParse( nodeName, curr ) ){
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLName() << "." << endl;
-        }
     }
 }
 

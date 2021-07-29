@@ -39,7 +39,6 @@
  * \author Jiyong Eom
  */
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "consumers/include/gcam_consumer.h"
 #include "util/base/include/xml_helper.h"
@@ -56,7 +55,6 @@
 #include "util/base/include/initialize_tech_vector_helper.hpp"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -114,19 +112,6 @@ const string& GCAMConsumer::getXMLName() const {
 const string& GCAMConsumer::getXMLNameStatic() {
     const static string XML_NAME = "gcam-consumer";
     return XML_NAME;
-}
-
-bool GCAMConsumer::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ) {
-    if ( aNodeName == "subregional-income-share" ) {
-        XMLHelper<Value>::insertValueIntoVector( aCurr, mSubregionalIncomeShare, scenario->getModeltime() );
-    }
-    else if ( aNodeName == "subregional-population-share" ) {
-        XMLHelper<Value>::insertValueIntoVector( aCurr, mSubregionalPopulationShare, scenario->getModeltime() );
-    }
-    else {
-        return false;
-    }
-    return true;
 }
 
 void GCAMConsumer::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

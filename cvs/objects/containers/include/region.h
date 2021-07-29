@@ -50,7 +50,6 @@
 #include <memory>
 #include <string>
 #include <list>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
@@ -84,7 +83,6 @@ class Region: public INamed, public IVisitable, public AParsable, protected boos
 public:
     Region();
     virtual ~Region();
-    void XMLParse( const xercesc::DOMNode* node );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual void completeInit();
@@ -132,7 +130,6 @@ protected:
     )
 
     virtual const std::string& getXMLName() const = 0;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
 private:
     void clear();

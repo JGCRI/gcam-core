@@ -49,7 +49,6 @@
 #include "marketplace/include/marketplace.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Default Constructor with default emissions unit and name.
 CO2Emissions::CO2Emissions() {
@@ -88,10 +87,6 @@ const string& CO2Emissions::getXMLName() const {
 const string& CO2Emissions::getXMLNameStatic(){
     static const string XML_NAME = "CO2";
     return XML_NAME;
-}
-
-bool CO2Emissions::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
-    return false;
 }
 
 void CO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

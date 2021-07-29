@@ -43,8 +43,6 @@
 #include <iostream>
 #include <cassert>
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/configuration.h"
 #include "sectors/include/nesting_subsector.h"
@@ -56,7 +54,6 @@
 #include "functions/include/idiscrete_choice.hpp"
 
 using namespace std;
-using namespace xercesc;
 using namespace objects;
 
 extern Scenario* scenario;
@@ -76,23 +73,6 @@ NestingSubsector::~NestingSubsector() {
     for( auto subsector : mSubsectors ) {
         delete subsector;
     }
-}
-
-//! Parses any input variables specific to derived classes
-bool NestingSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    if( nodeName == Subsector::getXMLNameStatic() ){
-        parseContainerNode( curr, mSubsectors, new Subsector() );
-    }
-    else if( nodeName == TranSubsector::getXMLNameStatic() ){
-        parseContainerNode( curr, mSubsectors, new TranSubsector() );
-    }
-    else if( nodeName == getXMLNameStatic() ) {
-        parseContainerNode( curr, mSubsectors, new NestingSubsector( /*mNestingDepth + 1*/ ) );
-    } else {
-        // unknown element
-        return false;
-    }
-    return true;
 }
 
 void NestingSubsector::toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {

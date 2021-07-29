@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/solver_component_factory.h"
 #include "solution/solvers/include/solver_component.h"
@@ -57,7 +55,6 @@
 #include "solution/solvers/include/preconditioner.hpp"
 
 using namespace std;
-using namespace xercesc;
 
 /*!
  * \brief Returns whether this factory can create a solver component with the given
@@ -76,70 +73,4 @@ bool SolverComponentFactory::hasSolverComponent( const string& aXMLName ) {
         || BisectPolicy::getXMLNameStatic() == aXMLName
         || LogBroyden::getXMLNameStatic() == aXMLName
         || Preconditioner::getXMLNameStatic() == aXMLName;
-}
-
-/*!
- * \brief Creates and parses the solver component with the given xml name.
- * \details Creates the solver component and calls XMLParse on it before returning
- *          it,  if there are no known solver components which match the given xml
- *          name null is returned.
- * \param aXMLName The element name of the given xml node.
- * \param aNode The xml which defines the solver component to be created.
- * \return The newly created and parsed solver component or null if given an unknown type.
- * \note The list of known solvers components here must be kept in sync with
- *       the ones found in hasSolverComponent.
- */
-SolverComponent*
-SolverComponentFactory::createAndParseSolverComponent( const string& aXMLName,
-                                                       Marketplace* aMarketplace,
-                                                       World* aWorld,
-                                                       CalcCounter* aCalcCounter,
-                                                       const DOMNode* aNode )
-{
-    // make sure we know about this solver component
-    if( !hasSolverComponent( aXMLName ) ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Could not create unknown SolverComponent: " << aXMLName << endl;
-        return 0;
-    }
-    
-    // create the requested solver component
-    SolverComponent* retSolverComponent;
-    if( LogNewtonRaphson::getXMLNameStatic() == aXMLName ) {
-        retSolverComponent = new LogNewtonRaphson( aMarketplace, aWorld, aCalcCounter );
-    }
-    else if( BisectAll::getXMLNameStatic() == aXMLName ) {
-        retSolverComponent = new BisectAll( aMarketplace, aWorld, aCalcCounter );
-    }
-    else if( LogNewtonRaphsonSaveDeriv::getXMLNameStatic() == aXMLName ) {
-        retSolverComponent = new LogNewtonRaphsonSaveDeriv( aMarketplace, aWorld, aCalcCounter );
-    }
-    else if( BisectOne::getXMLNameStatic() == aXMLName ) {
-        retSolverComponent = new BisectOne( aMarketplace, aWorld, aCalcCounter );
-    }
-    else if( BisectPolicy::getXMLNameStatic() == aXMLName ) {
-        retSolverComponent = new BisectPolicy( aMarketplace, aWorld, aCalcCounter );
-    }
-    else if( LogBroyden::getXMLNameStatic() == aXMLName ) {
-        retSolverComponent = new LogBroyden( aMarketplace, aWorld, aCalcCounter );
-    }
-    else if( Preconditioner::getXMLNameStatic() == aXMLName ) {
-        retSolverComponent = new Preconditioner( aMarketplace, aWorld, aCalcCounter );
-    }
-    else {
-        // this must mean createAndParseSolverComponent and hasSolverComponent
-        // are out of sync with known solver components
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Could not create unknown SolverComponent: " << aXMLName
-            << ", createAndParseSolverComponent may be out of sync with hasSolverComponent." << endl;
-        return 0;
-    }
-    
-    // parse the created solver component if we have something to parse
-    if( aNode ) {
-        retSolverComponent->XMLParse( aNode );
-    }
-    return retSolverComponent;
 }

@@ -41,8 +41,6 @@
 #include "util/base/include/definitions.h"
 #include <iostream>
 #include <fstream>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/bisection_nr_solver.h"
 #include "containers/include/world.h"
@@ -62,7 +60,6 @@
 #include "solution/solvers/include/log_newton_raphson_sd.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Constructor
 BisectionNRSolver::BisectionNRSolver( Marketplace* aMarketplace, World* aWorld ):Solver( aMarketplace, aWorld ),
@@ -73,14 +70,6 @@ mMaxModelCalcs( 2000 )
 {
     // Construct components.
     mCalcCounter = world->getCalcCounter();
-    mLogNewtonRaphson.reset( SolverComponentFactory::createAndParseSolverComponent( LogNewtonRaphson::getXMLNameStatic(), aMarketplace,
-                                                                                    aWorld, mCalcCounter, 0 ) );
-    mBisectAll.reset( SolverComponentFactory::createAndParseSolverComponent( BisectAll::getXMLNameStatic(), aMarketplace,
-                                                                             aWorld, mCalcCounter, 0 ) );
-    /* TODO: test if this is useful or not
-    mLogNewtonRaphsonSaveDeriv.reset( SolverComponentFactory::createAndParseSolverComponent( LogNewtonRaphsonSaveDeriv::getXMLNameStatic(), aMarketplace,
-                                                                                             aWorld, mCalcCounter, 0 ) );
-    */
 }
 
 //! Destructor
@@ -91,54 +80,6 @@ BisectionNRSolver::~BisectionNRSolver() {
 const string& BisectionNRSolver::getXMLNameStatic() {
     const static string SOLVER_NAME = "BisectionNRSolver";
     return SOLVER_NAME;
-}
-
-bool BisectionNRSolver::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "solution-tolerance" ) {
-            mDefaultSolutionTolerance = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "solution-floor" ) {
-            mDefaultSolutionFloor = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "calibration-tolerance" ) {
-            mCalibrationTolerance = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "max-model-calcs" ) {
-            mMaxModelCalcs = XMLHelper<int>::getValue( curr );
-        }
-        else if( nodeName == mLogNewtonRaphson->getXMLName() ) {
-            mLogNewtonRaphson->XMLParse( curr );
-        }
-        else if( nodeName == mBisectAll->getXMLName() ) {
-            mBisectAll->XMLParse( curr );
-        }
-        /*  TODO: test first
-        else if( nodeName == mLogNewtonRaphsonSaveDeriv->getXMLName() ) {
-            mLogNewtonRaphsonSaveDeriv->XMLParse( curr );
-        }
-        */
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
 }
 
 //! Initialize the solver at the beginning of the model.

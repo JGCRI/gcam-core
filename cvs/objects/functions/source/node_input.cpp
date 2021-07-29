@@ -40,8 +40,6 @@
 */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "functions/include/node_input.h"
 #include "functions/include/ifunction.h"
@@ -59,7 +57,6 @@
 #include "util/base/include/configuration.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -71,61 +68,6 @@ NodeInput::NodeInput(){
 NodeInput::~NodeInput() {
     for( CNestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
         delete *it;
-    }
-}
-
-void NodeInput::XMLParse( const xercesc::DOMNode* node ) {
-    /*! \pre make sure we were passed a valid node. */
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    const DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() == DOMNode::TEXT_NODE ){
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if ( nodeName == NodeInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new NodeInput() );
-        }
-        else if ( nodeName == BuildingNodeInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new BuildingNodeInput() );
-        }
-        else if( nodeName == StaplesFoodDemandInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new StaplesFoodDemandInput() );
-        }
-        else if( nodeName == NonStaplesFoodDemandInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new NonStaplesFoodDemandInput() );
-        }
-        else if ( nodeName == "prodDmdFnType" ) {
-            mProdDmdFnType = XMLHelper<string>::getValue( curr );
-        }
-        else if ( nodeName == "price-received" ) {
-            mPricePaid.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if ( nodeName == "Sigma1" ) {
-            mSigmaNewCapital.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if ( nodeName == "Sigma2" ) {
-            mSigmaOldCapital.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if ( nodeName == "technicalChange" ) {
-            mTechChange.set( XMLHelper<double>::getValue( curr ) );
-        }
-        // TODO: do I need a derived?
-        else /*if( !XMLDerivedClassParse( nodeName, curr ) )*/{
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " 
-                << getXMLName() << "." << endl;
-        }
     }
 }
 

@@ -40,9 +40,6 @@
 
 #include "util/base/include/definitions.h"
 
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-
 #include "emissions/include/readin_control.h"
 #include "containers/include/scenario.h"
 #include "containers/include/gdp.h"
@@ -53,7 +50,6 @@
 #include "containers/include/iinfo.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -110,18 +106,6 @@ const string& ReadInControl::getXMLName() const {
 const string& ReadInControl::getXMLNameStatic(){
     static const string XML_NAME = "readin-control";
     return XML_NAME;
-}
-
-bool ReadInControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    if ( aNodeName == "future-emiss-factor" ){
-        XMLHelper<double>::insertValueIntoVector( aCurrNode, *mFutureEmissionsFactors, modeltime );
-    }
-    else{
-        return false;
-    }
-       
-    return true;
 }
 
 bool ReadInControl::XMLParse(rapidxml::xml_node<char>* & aNode) {

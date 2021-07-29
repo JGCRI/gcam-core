@@ -85,7 +85,7 @@ class ManageStateVariables;
 * \author Sonny Kim
 */
 
-class Scenario: public IParsable, public AParsable, public IVisitable
+class Scenario: public AParsable, public IVisitable
 {
     friend class LogEDFun;
     friend class gcam;
@@ -97,7 +97,6 @@ public:
     Marketplace* getMarketplace();
     const World* getWorld() const;
     World* getWorld();
-    bool XMLParse( const xercesc::DOMNode* node );
     bool XMLParse( rapidxml::xml_node<char>* & aNode );
     void completeInit();
     void setName(std::string newName);

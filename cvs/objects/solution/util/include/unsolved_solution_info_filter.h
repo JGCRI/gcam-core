@@ -43,7 +43,6 @@
  * \brief Header file for the UnsolvedSolutionInfoFilter class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 
 #include "solution/util/include/isolution_info_filter.h"
@@ -73,9 +72,6 @@ public:
     
     // ISolutionInfoFilter methods
     virtual bool acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const;
-    
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 };
 
 #endif // _UNSOLVED_SOLUTION_INFO_FILTER_H_

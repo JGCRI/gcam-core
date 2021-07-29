@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 class Tabs;
 
@@ -100,8 +99,6 @@ public:
     virtual bool isSameType( const std::string& aType ) const;
 
     virtual const std::string& getName() const;
-
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,

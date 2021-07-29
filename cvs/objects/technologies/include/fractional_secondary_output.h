@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 class Tabs;
 
@@ -103,8 +102,6 @@ public:
     
     virtual const std::string& getXMLName() const;
 
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 
     virtual void toDebugXML( const int aPeriod,

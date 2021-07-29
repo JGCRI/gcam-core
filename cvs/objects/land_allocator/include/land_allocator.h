@@ -77,9 +77,6 @@ public:
                               
     virtual const std::string& getXMLName() const;
 
-    // IParsable
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
     // ILandAllocator methods.
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -132,9 +129,6 @@ public:
                               
     virtual ALandAllocatorItem* findProductLeaf( const std::string& aProductName );
 protected:
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName,
-                                       const xercesc::DOMNode* aCurr );
-
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
     DEFINE_DATA_WITH_PARENT(

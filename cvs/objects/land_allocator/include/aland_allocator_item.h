@@ -46,7 +46,6 @@
  */
 
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/noncopyable.hpp>
 
 #include "containers/include/tree_item.h"
@@ -113,7 +112,6 @@ enum LandAllocatorItemType {
 class ALandAllocatorItem : public TreeItem<ALandAllocatorItem>,
                            public INamed,
                            public IVisitable,
-                           public IParsable,
                            private boost::noncopyable
 {
     friend class XMLDBOutputter;
@@ -134,10 +132,7 @@ public:
     virtual const ALandAllocatorItem* getChildAt( const size_t aIndex ) const = 0;
     
     virtual ALandAllocatorItem* getChildAt( const size_t aIndex ) = 0;
-    
-    // IParsable
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
-    
+      
     // IVisitable
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const = 0;

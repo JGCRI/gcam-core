@@ -40,7 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include "util/base/include/xml_helper.h"
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "land_allocator/include/land_node.h"
 #include "land_allocator/include/unmanaged_land_leaf.h"
 #include "land_allocator/include/carbon_land_leaf.h"
@@ -56,7 +55,6 @@
 #include <utility>
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 typedef std::map<unsigned int, double> LandMapType;
@@ -114,72 +112,6 @@ ALandAllocatorItem* LandNode::getChildAt( const size_t aIndex ) {
     // aIndex must be less than the size of the child vector.
     assert( aIndex < mChildren.size() );
     return mChildren[ aIndex ];
-}
-
-bool LandNode::XMLParse( const xercesc::DOMNode* aNode ){
-
-    // assume we are passed a valid node.
-    assert( aNode );
-    
-    // Set the node name.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-
-    // get all the children.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        const DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if ( nodeName == LandNode::getXMLNameStatic() ) {
-            parseContainerNode( curr, mChildren, new LandNode( this ) );
-        }
-        else if ( nodeName == UnmanagedLandLeaf::getXMLNameStatic() ) {
-            parseContainerNode( curr, mChildren, new UnmanagedLandLeaf( this ) );
-        }
-        else if ( nodeName == CarbonLandLeaf::getXMLNameStatic() ) {
-            parseContainerNode( curr, mChildren, new CarbonLandLeaf( this ) );
-        }
-        else if ( nodeName == LandLeaf::getXMLNameStatic() ) {
-            parseContainerNode( curr, mChildren, new LandLeaf( this, "" ) );
-        }
-        else if( DiscreteChoiceFactory::isOfType( nodeName ) ) {
-            parseSingleNode( curr, mChoiceFn, DiscreteChoiceFactory::create( nodeName ).release() );
-        }
-        else if( nodeName == LandUseHistory::getXMLNameStatic() ){
-            parseSingleNode( curr, mLandUseHistory, new LandUseHistory );
-        }
-        else if( nodeName == NodeCarbonCalc::getXMLNameStatic() ){
-            parseSingleNode( curr, mCarbonCalc, new NodeCarbonCalc );
-        }
-        else if( nodeName == "ghost-unnormalized-share" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mGhostUnormalizedShare, scenario->getModeltime() );
-        }
-        else if( nodeName == "is-ghost-share-relative" ){
-            mIsGhostShareRelativeToDominantCrop = XMLHelper<bool>::getValue( curr );
-        }
-        else if( nodeName == "unManagedLandValue" ){
-            mUnManagedLandValue = XMLHelper<double>::getValue( curr );
-        }
-        else if ( !XMLDerivedClassParse( nodeName, curr ) ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLName() << "." << endl;
-        }
-    }
-
-    // TODO: Improve error checking
-    return true;
-}
-
-bool LandNode::XMLDerivedClassParse( const std::string& aNodeName,
-                                     const xercesc::DOMNode* aCurr )
-{
-    return false;
 }
 
 void LandNode::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {

@@ -50,7 +50,6 @@
 #include <memory>
 #include <string>
 #include <list>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "containers/include/region.h"
 #include "util/base/include/ivisitable.h"
@@ -144,7 +143,6 @@ protected:
     )
 
     virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
     void initElementalMembers();

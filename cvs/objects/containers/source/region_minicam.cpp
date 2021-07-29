@@ -45,8 +45,6 @@
 #include <string>
 #include <vector>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include <algorithm>
 #include <memory>
 #include <stack>
@@ -95,7 +93,6 @@
 #include "containers/include/consumer_activity.h"
 
 using namespace std;
-using namespace xercesc;
 
 typedef std::vector<AFinalDemand*>::iterator FinalDemandIterator;
 typedef std::vector<AFinalDemand*>::const_iterator CFinalDemandIterator;
@@ -143,79 +140,6 @@ void RegionMiniCAM::clear(){
     
     delete mGDP;
     delete mLandAllocator;
-}
-
-// for parsing derived region classes
-bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) {
-    if( nodeName == "PrimaryFuelCO2Coef" ) {
-        mPrimaryFuelCO2Coef[ XMLHelper<string>::getAttr( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
-    }
-
-    else if( nodeName == GDP::getXMLNameStatic() ){
-        parseSingleNode( curr, mGDP, new GDP );
-    }
-    else if( nodeName == "interest-rate" ){
-        mInterestRate = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "social-discount-rate" ){
-        mSocialDiscountRate = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "private-discount-rate-land" ){
-        mPrivateDiscountRateLand = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == SupplySector::getXMLNameStatic() ){
-        parseContainerNode( curr, mSupplySector, new SupplySector(  ) );
-    }
-    else if( nodeName == AgSupplySector::getXMLNameStatic() ) {
-        parseContainerNode( curr, mSupplySector, new AgSupplySector(  ) );
-    }
-    else if( nodeName == PassThroughSector::getXMLNameStatic() ) {
-        parseContainerNode( curr, mSupplySector, new PassThroughSector(  ) );
-    }
-    else if( nodeName == EnergyFinalDemand::getXMLNameStatic() ){
-        parseContainerNode( curr, mFinalDemands, new EnergyFinalDemand );
-    }
-    else if( nodeName == NegativeEmissionsFinalDemand::getXMLNameStatic() ){
-        parseContainerNode( curr, mFinalDemands, new NegativeEmissionsFinalDemand );
-    }
-    else if( nodeName == GCAMConsumer::getXMLNameStatic() ) {
-        parseContainerNode( curr, mConsumers, new GCAMConsumer );
-    }
-    else if ( nodeName == LandAllocator::getXMLNameStatic() ) {
-        parseSingleNode( curr, mLandAllocator, new LandAllocator );
-    }
-    // regional economic data
-    else if( nodeName == "calibrationdata" ){
-        // get all child nodes.
-        DOMNodeList* nodeListChild = curr->getChildNodes();
-        // loop through the child nodes.
-        string nodeNameChild;
-        for( unsigned int j = 0; j < nodeListChild->getLength(); j++ ){
-            DOMNode* currChild = nodeListChild->item( j );
-            nodeNameChild = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
-            const Modeltime* modeltime = scenario->getModeltime();
-
-            if( nodeNameChild == "#text" ) {
-                continue;
-            }
-            else if( nodeNameChild == "GDPcal" ) { // TODO: MOVE TO GDP
-                XMLHelper<double>::insertValueIntoVector( currChild, mCalibrationGDPs, modeltime );
-            }
-            // Per-capita value -- is converted to total GDP using population
-            else if( nodeNameChild == "GDPcalPerCapita" ) { // TODO: MOVE TO GDP
-                XMLHelper<double>::insertValueIntoVector( currChild, mGDPcalPerCapita, modeltime );
-            }
-            else {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Unrecognized text string: " << nodeNameChild << " found while parsing region->calibrationdata." << endl;
-            }
-        }
-    }
-    else {
-        return false;
-    }
-    return true;
 }
 
 bool RegionMiniCAM::XMLParse(rapidxml::xml_node<char>* & aNode) {

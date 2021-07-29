@@ -44,8 +44,6 @@
  * \author Josh Lurz
  */
 
-#include <xercesc/dom/DOMNode.hpp>
-
 #include "sectors/include/afinal_demand.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -76,8 +74,6 @@ public:
 
     virtual ~EnergyFinalDemand();
 
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
@@ -156,8 +152,6 @@ protected:
 
         FinalEnergyConsumer();
 
-        bool XMLParse( const xercesc::DOMNode* aNode );
-
         void completeInit( const std::string& aRegionName,
                            const std::string& aFinalDemandName );
 
@@ -230,7 +224,6 @@ protected:
                                     const int aPeriod ) const;
 
     // Methods for deriving from EnergyFinalDemand.
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:    
     void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;

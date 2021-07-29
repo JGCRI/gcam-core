@@ -40,7 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/xml_helper.h"
 
 #include "sectors/include/ag_supply_sector.h"
@@ -51,7 +50,6 @@
 #include "containers/include/scenario.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -69,33 +67,6 @@ AgSupplySector::AgSupplySector(): SupplySector(),
 
 //! Default destructor
 AgSupplySector::~AgSupplySector( ) {
-}
-
-/*! \brief Parses any attributes specific to derived classes
-* \author Josh Lurz, James Blackwood
-* \param nodeName The name of the curr node. 
-* \param curr pointer to the current node in the XML input tree
-*/
-bool AgSupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
-    if ( nodeName == AgSupplySubsector::getXMLNameStatic() ) {
-        parseContainerNode( curr, mSubsectors, new AgSupplySubsector() );
-    }
-    else if ( nodeName == "calPrice" ) {
-        mCalPrice = XMLHelper<double>::getValue( curr );
-    }
-	else if ( nodeName == "subsidy" ) {
-        XMLHelper<double>::insertValueIntoVector( curr, mSubsidy, scenario->getModeltime() );
-    }
-    else if ( nodeName == "cal-min-profit-rate" ) {
-        mCalMinProfitRate = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "market" ){
-        mMarketName = XMLHelper<string>::getValue( curr );
-    }
-    else if( !SupplySector::XMLDerivedClassParse( nodeName, curr ) ) {
-        return false;
-    }
-    return true;
 }
 
 void AgSupplySector::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {

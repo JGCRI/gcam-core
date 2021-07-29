@@ -47,7 +47,6 @@
 
 #include <vector>
 #include <map>
-#include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/subsector.h"
 
 // Forward declarations
@@ -76,7 +75,5 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         Subsector
     )
-
-    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
 };
 #endif // _SUBSECTOR_ADD_TECH_COSTS_H_

@@ -116,10 +116,7 @@ class Modeltime;
  */
 class PolicyTargetRunner: public IScenarioRunner {
     friend class ScenarioRunnerFactory;
-public:
-    // IParsable interface
-    virtual bool XMLParse( const xercesc::DOMNode* aRoot );
-    
+public:   
     // AParsable interface
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 

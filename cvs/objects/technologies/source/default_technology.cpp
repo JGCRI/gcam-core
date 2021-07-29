@@ -41,14 +41,12 @@
 #include "util/base/include/definitions.h"
 #include <string>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "technologies/include/default_technology.h"
 #include "containers/include/scenario.h"
 #include "functions/include/iinput.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -92,12 +90,6 @@ double DefaultTechnology::getTotalInputCost( const string& aRegionName, const st
 									   const int aPeriod ) const
 {
 	return Technology::getTotalInputCost( aRegionName, aSectorName, aPeriod );
-}
-
-
-//! Parses any input variables specific to derived classes
-bool DefaultTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
-    return false;
 }
 
 void DefaultTechnology::toDebugXMLDerived( const int aPeriod,

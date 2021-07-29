@@ -49,7 +49,6 @@
 #include <vector>
 #include <map>
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "util/base/include/istandard_component.h"
 #include "util/base/include/ivisitable.h"
@@ -164,7 +163,6 @@ public:
     
     virtual bool isSameType( const std::string& aType ) const;
 
-    bool XMLParse( const xercesc::DOMNode* tempnode );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 
     static const std::string& getXMLVintageNameStatic();
@@ -386,7 +384,6 @@ protected:
 
     virtual const IFunction* getProductionFunction() const;
 
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
 

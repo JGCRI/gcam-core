@@ -44,11 +44,11 @@
  * \brief The ASimpleCarbonCalc class header file.
  * \author James Blackwood
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/flyweight.hpp>
 #include <boost/flyweight/key_value.hpp>
 #include <boost/flyweight/no_tracking.hpp>
 
+#include "util/base/include/iparsable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
 #include "ccarbon_model/include/icarbon_calc.h"
@@ -67,7 +67,6 @@ public:
     ASimpleCarbonCalc();
     virtual ~ASimpleCarbonCalc();
 
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
 
     virtual void completeInit( const double aPrivateDiscountRateLand  ) = 0;

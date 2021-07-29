@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/interpolation_rule.h"
 #include "util/base/include/interpolation_function_factory.h"
@@ -57,7 +55,6 @@
 #include "util/base/include/factory.h"
 
 using namespace std;
-using namespace xercesc;
 using namespace objects;
 
 extern Scenario* scenario;
@@ -110,89 +107,6 @@ const string& InterpolationRule::getXMLNameStatic() {
 const int InterpolationRule::getLastModelYearConstant() {
     const static int END_MODEL_YEAR_FLAG = 9999;
     return END_MODEL_YEAR_FLAG;
-}
-
-bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-
-    // get the year-range this rule is applicable from the attributes
-    mFromYear = XMLHelper<int>::getAttr( aNode, "from-year" );
-    mToYear = XMLHelper<int>::getAttr( aNode, "to-year" );
-    mApplyTo = XMLHelper<string>::getAttr( aNode, "apply-to" );
-    
-    // replace to year if it is equal to the last model year flag
-    if( mToYear == getLastModelYearConstant() ) {
-        mToYear = scenario->getModeltime()->getEndYear();
-    }
-
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "from-value" ) {
-            // If this node has a value then we assume that is the
-            // value the user wants to interpolate from.  Otherwise
-            // we assume the value they want to interpolate from will
-            // be within the given PeriodVector to interpolate at the
-            // period for mFromYear.
-            mFromValue.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if( nodeName == "to-value" ) {
-            // If this node has a value then we assume that is the
-            // value the user wants to interpolate to.  Otherwise
-            // we assume the value they want to interpolate to will
-            // be within the given PeriodVector to interpolate at the
-            // period for mFromYear.
-            mToValue.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if( nodeName == IInterpolationFunction::getXMLNameStatic() ) {
-            string functionName = XMLHelper<string>::getAttr( curr, "name" );
-            IInterpolationFunction* tempFn = InterpolationFunctionFactory::createAndParseFunction(
-                functionName, curr );
-
-            // only set valid functions
-            if( tempFn ) {
-                mIsFixedFunction = functionName == FixedInterpolationFunction::getXMLNameStatic();
-                delete mInterpolationFunction;
-                mInterpolationFunction = tempFn;
-            }
-        }
-        else if( nodeName == "overwrite-policy" ) {
-            mWarnWhenOverwritting = XMLHelper<bool>::getAttr( curr, "warn" );
-
-            const string overwritePolicyStr = XMLHelper<string>::getValue( curr );
-            if( overwritePolicyStr == overwritePolicyEnumToStr( NEVER ) ) {
-                mOverwritePolicy = NEVER;
-            }
-            else if( overwritePolicyStr == overwritePolicyEnumToStr( INTERPOLATED ) ) {
-                mOverwritePolicy = INTERPOLATED;
-            }
-            else if( overwritePolicyStr == overwritePolicyEnumToStr( ALWAYS ) ) {
-                mOverwritePolicy = ALWAYS;
-            }
-            else {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Unrecognized overwrite policy: " << overwritePolicyStr << " found while parsing "
-                    << getXMLNameStatic() << "." << endl;
-            }
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
 }
 
 bool InterpolationRule::XMLParse( rapidxml::xml_node<char>* & aNode ) {

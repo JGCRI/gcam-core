@@ -45,7 +45,6 @@
  * \author Pralit Patel
  */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/technology.h"
 
 // Forward declaration
@@ -164,7 +163,6 @@ protected:
     )
     
     virtual void toDebugXMLDerived(const int period, std::ostream& out, Tabs* tabs) const;
-    virtual bool XMLDerivedClassParse(const std::string& nodeName, const xercesc::DOMNode* curr);
     virtual const std::string& getXMLName() const;
     void copy( const ResourceReserveTechnology& aOther );
     virtual void setProductionState( const int aPeriod );

@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/iparsable.h"
 
 class Tabs;
@@ -117,8 +116,7 @@ inline ISimpleComponent::~ISimpleComponent(){
  * \todo Is there a better name? DataComponent, XMLComponent, etc?
  * \author Josh Lurz
  */
-class IParsedComponent: public ISimpleComponent,
-                        public IParsable
+class IParsedComponent: public ISimpleComponent
 { 
 public:
 	/*!

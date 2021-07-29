@@ -63,7 +63,6 @@ class AgeCohort: public IVisitable {
 public:
     AgeCohort();
     ~AgeCohort();
-    void XMLParse( const xercesc::DOMNode* node );
     void toDebugXML( std::ostream& out, Tabs* tabs ) const;
     void completeInit();
     void initCalc();
@@ -88,7 +87,6 @@ protected:
     std::auto_ptr<Male> male; //!< male gender object
     std::auto_ptr<Female> female; //!< male gender object
 private:
-    bool parseGender( xercesc::DOMNode* aNode );
     mutable int mLowerAgeBound;
     mutable int mUpperAgeBound;
 };

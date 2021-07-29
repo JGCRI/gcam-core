@@ -47,7 +47,6 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/iyeared.h"
@@ -120,7 +119,6 @@ public:
     virtual void setYear( const int aNewYear ) = 0;
     virtual int getYear() const = 0;
 
-    virtual bool XMLParse( const xercesc::DOMNode* tempnode ) = 0;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     
     virtual const std::string& getXMLName() const = 0;

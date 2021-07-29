@@ -43,8 +43,6 @@
 #include <iostream>
 #include <cassert>
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "sectors/include/tran_subsector.h"
 #include "containers/include/scenario.h"
@@ -61,7 +59,6 @@
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -106,33 +103,6 @@ const std::string& TranSubsector::getXMLName() const {
 const std::string& TranSubsector::getXMLNameStatic() {
     static const string XML_NAME = "tranSubsector";
     return XML_NAME;
-}
-
-/*! \brief Function Parses any input variables specific to derived classes.
-* \param nodeName The name of the XML node.
-* \param curr A pointer to the XML DOM node.
-* \author Josh Lurz, Sonny Kim
-* \return Boolean for node match.
-*/
-bool TranSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {    
-    // additional read in for transportation
-    const Modeltime* modeltime = scenario->getModeltime();
-    if( nodeName == "addTimeValue" ){
-        mAddTimeValue = XMLHelper<bool>::getValue( curr );
-    }
-    else if( nodeName == "speed" ){
-        XMLHelper<Value>::insertValueIntoVector( curr, mSpeed, modeltime );
-    }
-    else if( nodeName == "popDenseElasticity" ){
-        XMLHelper<double>::insertValueIntoVector( curr, mPopDenseElasticity, modeltime );
-    }
-    else if( nodeName == "time-value-multiplier" ){
-        XMLHelper<Value>::insertValueIntoVector( curr, mTimeValueMult, modeltime );
-    }
-    else {
-        return false;
-    }
-    return true;
 }
 
 /*! \brief XML output for debugging.

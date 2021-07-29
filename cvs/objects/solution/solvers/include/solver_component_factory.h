@@ -43,7 +43,6 @@
  * \brief Header file for the SolverComponentFactory class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 
 class SolverComponent;
@@ -62,13 +61,7 @@ class CalcCounter;
  */
 class SolverComponentFactory {
 public:
-    static bool hasSolverComponent( const std::string& aXMLName );
-    
-    static SolverComponent* createAndParseSolverComponent( const std::string& aXMLName,
-                                                           Marketplace* aMarketplace,
-                                                           World* aWorld,
-                                                           CalcCounter* aCalcCounter,
-                                                           const xercesc::DOMNode* aNode );
+    static bool hasSolverComponent( const std::string& aXMLName ); 
     
 };
 

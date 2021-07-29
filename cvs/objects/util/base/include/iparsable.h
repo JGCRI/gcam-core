@@ -74,7 +74,7 @@ public:
      * \param aNode The current node of a DOM tree.
      * \return Whether the parse completed successfully.
      */
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
+    virtual bool XMLParse( const xercesc::DOMNode* aNode ) {return false;}
 };
 
 // Inline function definitions.

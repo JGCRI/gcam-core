@@ -50,7 +50,6 @@
 * \author Marshall Wise, Kate Calvin
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/technology.h"
 
 // Forward declaration
@@ -145,7 +144,6 @@ protected:
     void copy( const AgProductionTechnology& aOther );
 
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;    
     virtual const std::string& getXMLName() const;
     

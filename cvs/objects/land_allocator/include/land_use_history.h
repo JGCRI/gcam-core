@@ -44,7 +44,6 @@
  * \author Josh Lurz
  */
 #include <map>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/ivisitable.h"
@@ -81,9 +80,6 @@ public:
     static const std::string& getXMLNameStatic();
 
     LandUseHistory();
-    
-    // IParsable Methods.
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
     // AParsable Methods.
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );

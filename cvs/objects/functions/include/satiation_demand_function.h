@@ -45,7 +45,6 @@
  * \author Jiyong Eom
  */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/value.h"
@@ -98,7 +97,7 @@
  * \author Pralit Patel
  * \author Jiyong Eom
  */
-class SatiationDemandFunction : public INamed, public IParsable, private boost::noncopyable {
+class SatiationDemandFunction : public INamed, private boost::noncopyable {
 	friend class XMLDBOutputter;
 public:
     SatiationDemandFunction();
@@ -114,9 +113,6 @@ public:
     // INamed methods
     virtual const std::string& getName() const;
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
 protected:
     
     DEFINE_DATA(

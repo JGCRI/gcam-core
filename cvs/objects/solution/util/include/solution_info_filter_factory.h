@@ -63,9 +63,6 @@ class SolutionInfoFilterFactory {
 public:
     static bool hasSolutionInfoFilter( const std::string& aXMLName );
     
-    static ISolutionInfoFilter* createAndParseSolutionInfoFilter( const std::string& aXMLName,
-                                                              const xercesc::DOMNode* aNode );
-    
     static ISolutionInfoFilter* createSolutionInfoFilterFromString( const std::string& aFilterString );
     
 private:

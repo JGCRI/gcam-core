@@ -47,7 +47,6 @@
 #include <string>
 #include <list>
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 #include "containers/include/iscenario_runner.h"
 class Timer;
 
@@ -127,9 +126,6 @@ public:
 
 	virtual const Scenario* getInternalScenario() const;
 
-	// IParsable Interface.
-    virtual bool XMLParse( const xercesc::DOMNode* aRoot );
-    
     // AParsable Interface.
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 protected:
@@ -194,13 +190,6 @@ protected:
                             const int aSinglePeriod,
                             Timer& aTimer );
 
-    bool XMLParseComponentSet( const xercesc::DOMNode* aNode );
-
-    bool XMLParseRunnerSet( const xercesc::DOMNode* aNode );
-
-    bool XMLParseFileSet( const xercesc::DOMNode* aNode,
-                          Component& aCurrComponentSet );
-    
     bool XMLParseComponentSet( rapidxml::xml_node<char>* aNode );
 
     bool XMLParseRunnerSet( rapidxml::xml_node<char>* aNode );
@@ -216,11 +205,8 @@ protected:
      *          IScenarioRunner requested. XML parsing for the class is then
      *          forwarded to the newly created IScenarioRunner.
      */
-    class ParseHelper: public IParsable {
+    class ParseHelper {
     public:
-        // IParsableInterface
-        bool XMLParse( const xercesc::DOMNode* aRoot );
-
         std::auto_ptr<IScenarioRunner>& getParsedScenarioRunner();
     private:
         //! The IScenarioRunner created by the XMLParse method.

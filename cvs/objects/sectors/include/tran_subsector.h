@@ -46,7 +46,6 @@
 */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/subsector.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
@@ -112,7 +111,6 @@ protected:
     //! Save time value for debugging purposes.
     mutable double mTimeValue;
 
-    bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
     double getTimeValue( const GDP* aGDP, const int aPeriod ) const;

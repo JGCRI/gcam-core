@@ -43,7 +43,6 @@
  * \brief Header file for the InterpolationFunctionFactory class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 
 class IInterpolationFunction;
@@ -63,9 +62,7 @@ class IInterpolationFunction;
 class InterpolationFunctionFactory {
 public:
     static bool hasInterpolationFunction( const std::string& aXMLAttrNameValue );
-    
-    static IInterpolationFunction* createAndParseFunction( const std::string& aXMLAttrNameValue,
-        const xercesc::DOMNode* aNode );
+ 
 };
 
 #endif // _INTERPOLATION_FUNCTION_FACTORY_H_

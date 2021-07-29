@@ -100,8 +100,6 @@ public:
    virtual ReturnCode solve( SolutionInfoSet& aSolutionSet, const int aPeriod ) = 0;
 
    virtual const std::string& getXMLName() const = 0;
-    
-    virtual bool XMLParse( const xercesc::DOMNode* aNode) = 0;
 
 protected:
     DEFINE_DATA(

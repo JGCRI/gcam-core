@@ -45,7 +45,6 @@
 * \author Sonny Kim
 */
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
@@ -82,7 +81,6 @@ public:
     SubResource();
     virtual ~SubResource();
     const std::string& getName() const;
-    void XMLParse( const xercesc::DOMNode* aNode );
     virtual void completeInit( const std::string& aRegionName, const std::string& aResourceName,
                                const IInfo* aResourceInfo );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
@@ -105,7 +103,6 @@ public:
     virtual double getHighestPrice( const int aPeriod ) const;
 protected:
     virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
 
     DEFINE_DATA(
         /* Declare all subclasses of SubResource to allow automatic traversal of the

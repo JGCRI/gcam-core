@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 class Tabs;
 class CachedMarket;
@@ -92,8 +91,6 @@ public:
     virtual const std::string& getXMLReportingName() const;
     
     virtual const std::string& getXMLName() const;
-
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,

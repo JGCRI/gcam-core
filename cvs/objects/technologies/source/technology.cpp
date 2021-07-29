@@ -41,9 +41,6 @@
 #include "util/base/include/definitions.h"
 #include <string>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/dom/DOMNamedNodeMap.hpp>
 
 // User headers
 #include "util/base/include/configuration.h"
@@ -93,7 +90,6 @@
 #include "util/base/include/initialize_tech_vector_helper.hpp"
 
 using namespace std;
-using namespace xercesc;
 using namespace objects;
 
 extern Scenario* scenario;
@@ -236,75 +232,6 @@ bool Technology::isSameType( const string& aType ) const {
 double Technology::getFixedOutputDefault()
 {
     return -1.0;
-}
-
-bool Technology::XMLParse( const DOMNode* node )
-{
-    /*! \pre Assume we are passed a valid node. */
-    assert( node );
-
-    const DOMNodeList* nodeList = node->getChildNodes();
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() != DOMNode::ELEMENT_NODE ) {
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );        
-        if( nodeName == "lifetime" ) {
-            mLifetimeYears = XMLHelper<int>::getValue( curr );
-        }
-        else if( nodeName == "share-weight" ) {
-            mParsedShareWeight.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if( nodeName == "pMultiplier" ){
-           mPMultiplier = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "fixedOutput" ) {
-            mFixedOutput = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "capacity-factor" ) {
-            mCapacityFactor = XMLHelper<double>::getValue( curr );
-        }
-        else if( InputFactory::isOfType( nodeName ) ) {
-            parseContainerNode( curr, mInputs, InputFactory::create( nodeName ).release() );
-        }
-        else if( CaptureComponentFactory::isOfType( nodeName ) ) {
-            parseSingleNode( curr, mCaptureComponent, CaptureComponentFactory::create( nodeName ).release() );
-        }
-        else if( nodeName == StandardTechnicalChangeCalc::getXMLNameStatic() ){
-            parseSingleNode( curr, mTechChangeCalc, new StandardTechnicalChangeCalc );
-        }
-        else if( ShutdownDeciderFactory::isOfType( nodeName ) ) {
-            parseContainerNode( curr, mShutdownDeciders, ShutdownDeciderFactory::create( nodeName ).release() );
-        }
-        else if( GHGFactory::isGHGNode( nodeName ) ) {
-            parseContainerNode( curr, mGHG, GHGFactory::create( nodeName ).release() );
-        }
-        else if( nodeName == CalDataOutput::getXMLNameStatic() ) {
-            parseSingleNode( curr, mCalValue, new CalDataOutput );
-        }
-        else if( OutputFactory::isOfType( nodeName ) ) {
-            parseContainerNode( curr, mOutputs, OutputFactory::create( nodeName ).release() );
-        }
-        else if( nodeName == "keyword" ){
-            DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
-            for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
-                DOMNode* attrTemp = keywordAttributes->item( attrNum );
-                mKeywordMap[ XMLHelper<string>::safeTranscode( attrTemp->getNodeName() ) ] = 
-                    XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
-            }
-        }
-        // parse derived classes
-        else if( !XMLDerivedClassParse( nodeName, curr ) ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName
-                    << " found while parsing " << getXMLName() << "." << endl;
-        }
-    }
-
-    // TODO: Improve error handling.
-    return true;
 }
 
 /*!

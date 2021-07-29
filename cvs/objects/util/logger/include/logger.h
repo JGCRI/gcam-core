@@ -49,7 +49,6 @@
 
 #include <iosfwd>
 #include <sstream>
-#include <xercesc/dom/DOMNode.hpp>
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/definitions.h"
 #include "util/base/include/data_definition_util.h"
@@ -166,7 +165,6 @@ private:
 	 //! Underlying ofstream
     PassToParentStreamBuf mUnderStream;
 
-    void XMLParse( const xercesc::DOMNode* node );
     static const std::string getTimeString();
     static const std::string getDateString();
 };

@@ -71,7 +71,6 @@ class GDP: public IVisitable, private boost::noncopyable
     friend class XMLDBOutputter;
 public:
     GDP();
-    void XMLParse( const xercesc::DOMNode* node );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void initData( const Demographic* regionalPop );
     void initialGDPcalc( const int period, const double population);

@@ -39,7 +39,6 @@
 */
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/fractional_secondary_output.h"
@@ -55,7 +54,6 @@
 #include "sectors/include/sector_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -126,56 +124,6 @@ const string& FractionalSecondaryOutput::getXMLNameStatic()
 bool FractionalSecondaryOutput::isSameType( const string& aType ) const
 {
     return aType == getXMLNameStatic();
-}
-
-bool FractionalSecondaryOutput::XMLParse( const DOMNode* aNode )
-{
-    // assume we are passed a valid node.
-    assert( aNode );
-
-    // get all the children.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-    
-    ExplicitPointSet* currPoints = new ExplicitPointSet();
-
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ) {
-        const DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == XMLHelper<void>::text() ) {
-            continue;
-        }
-        else if( nodeName == "output-ratio" ) {
-            mOutputRatio.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if( nodeName == "calPrice" ) {
-            mCalPrice.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if( nodeName == "market-name" ) {
-            mMarketName = XMLHelper<string>::getValue( curr );
-        }
-        else if ( nodeName == "fraction-produced" ){
-            double price = XMLHelper<double>::getAttr( curr, "price" );
-            double fraction = XMLHelper<double>::getValue( curr );
-            XYDataPoint* currPoint = new XYDataPoint( price, fraction );
-            currPoints->addPoint( currPoint );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
-        }
-    }
-    
-    // TODO: should not reset the curve everytime *anything* is parsed
-    delete mCostCurve;
-    mCostCurve = new PointSetCurve( currPoints );
-
-    // TODO: Improve error handling.
-    return true;
 }
 
 bool FractionalSecondaryOutput::XMLParse( rapidxml::xml_node<char>* & aNode ) {

@@ -43,7 +43,6 @@
  * \brief UnlimitedResource header file.
  * \author Josh Lurz
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include "resources/include/aresource.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -80,8 +79,6 @@ public:
     virtual ~UnlimitedResource();
 
     virtual const std::string& getXMLName() const;
-
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
 
     virtual void toDebugXML( const int period,
                              std::ostream &out,

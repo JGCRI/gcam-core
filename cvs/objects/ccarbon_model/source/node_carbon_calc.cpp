@@ -51,7 +51,6 @@
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 using namespace objects;
 
 extern Scenario* scenario;
@@ -79,32 +78,6 @@ NodeCarbonCalc::~NodeCarbonCalc() {
 const string& NodeCarbonCalc::getXMLNameStatic() {
     const static string XML_NAME = "node-carbon-calc";
     return XML_NAME;
-}
-
-bool NodeCarbonCalc::XMLParse( const DOMNode* aCurr ) {
-    // Assume we are passed a valid node.
-    assert( aCurr );
-
-    // get all the children.
-    DOMNodeList* nodeList = aCurr->getChildNodes();
-
-    for( unsigned int i = 0;  i < nodeList->getLength(); ++i ){
-        const DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string " << nodeName
-                << " found while parsing " << getXMLNameStatic() << "." << endl;
-        }
-    }
-
-    // TODO: Improve error handling.
-    return true;
 }
 
 void NodeCarbonCalc::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

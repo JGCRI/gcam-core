@@ -79,8 +79,7 @@ class ITechnologyContainer : public INamed, public AParsable, public IVisitable,
 {
     friend class StubTechnologyContainer; // to be able to call clone()
 public:
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
-    /*! 
+    /*!
      * \brief Constructor.
      * \details Inlined constructor to avoid compiler problems with abstract
      *          base classes. 
@@ -210,15 +209,7 @@ protected:
      * \return A pointer to a copy of this technology container.
      */
     virtual ITechnologyContainer* clone() const = 0;
-    
-    /*!
-     * \brief Interpolate a technology to parse the given XML.
-     * \details This method will interpolate (if necessary) a technology
-     *          in order to parse the given XML.
-     * \ param aNode The XML to parse.
-     */
-    virtual void interpolateAndParse( const xercesc::DOMNode* aNode ) = 0;
-    
+        
     DEFINE_DATA(
         /* Declare all subclasses of ITechnologyContainer to allow automatic traversal of the
          * hierarchy under introspection.

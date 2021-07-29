@@ -44,8 +44,6 @@
 #include <algorithm>
 #include <iomanip>
 #include <math.h>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/logbroyden.hpp"
@@ -73,8 +71,6 @@
 #include <Eigen/SVD>
 
 #include "util/base/include/timer.h"
-
-using namespace xercesc;
 
 std::string LogBroyden::SOLVER_NAME = "broyden-solver-component";
 
@@ -112,55 +108,6 @@ namespace {
 
 int LogBroyden::mLastPer = 0;
 int LogBroyden::mPerIter = 0;
-
-bool LogBroyden::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        std::string nodeName = XMLHelper<std::string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "max-iterations" ) {
-            mMaxIter = XMLHelper<unsigned int>::getValue( curr );
-        }
-        else if( nodeName == "ftol" ) {
-            mFTOL = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "solution-info-filter" ) {
-            delete mSolutionInfoFilter;
-            mSolutionInfoFilter =
-              SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<std::string>::getValue( curr ) );
-        }
-        else if(nodeName == "linear-price") {
-          mLogPricep = false;
-        }
-        else if(nodeName == "log-price") {
-          mLogPricep = true;    // not strictly necessary, as this is the default.
-        }
-        else if(nodeName == "max-jacobian-reuse") {
-            mMaxJacobainReuse = XMLHelper<int>::getValue( curr );
-        }
-        else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
-            delete mSolutionInfoFilter;
-            mSolutionInfoFilter = SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLName() << "." << std::endl;
-        }
-    }
-    return true;
-}
 
 bool LogBroyden::XMLParse( rapidxml::xml_node<char>* & aNode ) {
     std::string nodeName = XMLParseHelper::getNodeName(aNode);

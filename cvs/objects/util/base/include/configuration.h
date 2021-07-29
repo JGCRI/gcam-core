@@ -47,7 +47,6 @@
 * \version $Revision: 1.6.2.3 $
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <map>
 #include <list>
 #include <memory>
@@ -70,11 +69,10 @@ class Tabs;
 * \warning The user must call delete on the object when they are finished with it.
 */
 
-class Configuration: public IParsable {
+class Configuration {
 
 public:
 	static Configuration* getInstance();
-	bool XMLParse( const xercesc::DOMNode* tempnode );
     bool XMLParse( rapidxml::xml_node<char>* aRoot );
 	void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 	const std::string& getFile( const std::string& key, const std::string& defaultValue = "", const bool mustExist = true ) const;

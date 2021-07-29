@@ -46,7 +46,6 @@
 */
 
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
 #include <map>
 #include <memory>
 #include <list>
@@ -151,8 +150,7 @@ protected:
     //object_meta_info_vector_type mObjectMetaInfo; //!< Vector of object meta info to pass to mSectorInfo
 
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
-    
+
     virtual double getFixedOutput( const int aPeriod ) const;
     const std::vector<double> calcSubsectorShares( const GDP* aGDP, const int aPeriod ) const;
 
@@ -171,7 +169,6 @@ public:
     
     virtual const std::string& getXMLName() const = 0;
 
-    virtual void XMLParse( const xercesc::DOMNode* node );
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void completeInit( const IInfo* aRegionInfo,

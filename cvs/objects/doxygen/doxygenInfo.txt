@@ -9,11 +9,6 @@
 */
 
 /*!
-* \namespace xercesc
-* \brief The namespace for the Xerces xml parser.
-*/
-
-/*!
 * \namespace mtl
 * \brief The namespace for the Matrix Template Library.
 */

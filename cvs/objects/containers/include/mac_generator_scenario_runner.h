@@ -69,9 +69,6 @@ public:
 
     virtual const std::string& getName() const;
 
-    // IParsable interface
-    virtual bool XMLParse( const xercesc::DOMNode* aRoot );
-
     virtual bool setupScenarios( Timer& timer,
         const std::string aName = "",
         const std::list<std::string> aScenComponents = std::list<std::string>() );

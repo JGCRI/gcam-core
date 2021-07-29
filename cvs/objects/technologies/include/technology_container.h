@@ -46,7 +46,6 @@
  */
 
 #include <map>
-#include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/itechnology_container.h"
 
 // Forward declarations
@@ -127,9 +126,6 @@ public:
     // INamed methods
     virtual const std::string& getName() const;
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
     // AParsable methods
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
     
@@ -138,8 +134,6 @@ public:
     
 protected:
     virtual ITechnologyContainer* clone() const;
-    
-    virtual void interpolateAndParse( const xercesc::DOMNode* aNode );
     
 private:
     
@@ -193,9 +187,7 @@ private:
     //! The cached begin iterator returned in getVintageEnd if the period matches
     //! mCachedVintageRangePeriod.
     TechRangeIterator mCachedTechRangeEnd;
-    
-    bool createAndParseVintage( const xercesc::DOMNode* aNode, const std::string& aTechType );
-    
+        
     void interpolateShareWeights( const int aPeriod );
     
     void clearInterpolationRules();

@@ -46,14 +46,13 @@
 * \author Jim Naslund
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <vector>
 #include <memory>
 #include <string>
 #include <boost/core/noncopyable.hpp>
 
-#include "util/base/include/inamed.h"
 #include "util/base/include/iparsable.h"
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -83,7 +82,7 @@ class NonCO2Emissions;
  *          The last one of these read in determines the method used.
  * \author Sonny Kim, Marshall Wise, Steve Smith, Nick Fernandez, Jim Naslund
  */
-class AGHG: public INamed, public IParsable, public IVisitable, private boost::noncopyable
+class AGHG: public INamed, public IVisitable, private boost::noncopyable
 { 
     friend class XMLDBOutputter;
 
@@ -107,9 +106,6 @@ public:
      * \return The constant XML_NAME.
      */
     virtual const std::string& getXMLName() const = 0;
-
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
     void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
@@ -213,18 +209,7 @@ protected:
     //! Pre-located market which has been cached from the marketplace to get the price
     //! of this ghg and add demands to the market.
     std::auto_ptr<CachedMarket> mCachedMarket;
-
-    /*!
-     * \brief Parses any child nodes specific to derived classes
-     * \details Method parses any input data from child nodes that are specific
-     *          to the classes derived from this class.
-     * \author Josh Lurz, Steve Smith
-     * \param aNodeName name of current node
-     * \param aCurrNode pointer to the current node in the XML input tree
-     * \return Whether any node was parsed.
-     */
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode ) = 0;
-    
+   
     /*!
      * \brief XML debug output stream for derived classes
      * \details Function writes output due to any variables specific to derived

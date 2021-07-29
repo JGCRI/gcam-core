@@ -208,8 +208,6 @@ public:
 
     virtual const std::string& getXMLName() const = 0;
 
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
-    
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
@@ -405,7 +403,6 @@ protected:
     )
                            
     void copy( const FoodDemandInput& aNodeInput );
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode ) = 0;
 };
 
 /*!
@@ -454,7 +451,6 @@ protected:
     )
     
     void copy( const StaplesFoodDemandInput& aNodeInput );
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode );
 };
 
 /*!
@@ -497,7 +493,6 @@ protected:
     )
     
     void copy( const NonStaplesFoodDemandInput& aNodeInput );
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode );
 };
 
 #endif // _FOOD_DEMAND_INPUT_H_

@@ -39,7 +39,6 @@
 */
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/primary_output.h"
 #include "containers/include/scenario.h"
@@ -50,7 +49,6 @@
 #include "marketplace/include/cached_market.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -110,13 +108,6 @@ const string& PrimaryOutput::getXMLReportingName() const{
 
 const string& PrimaryOutput::getXMLName() const{
     return getXMLNameStatic();
-}
-
-bool PrimaryOutput::XMLParse( const DOMNode* aNode )
-{
-    // Primary outputs are created and cannot be parsed.
-    assert( false );
-    return false;
 }
 
 void PrimaryOutput::toDebugXML( const int aPeriod,
