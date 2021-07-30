@@ -1,0 +1,32 @@
+# File: AusNWC_desal_techs.csv
+# Title: Desalination technology shares by continent
+# Units: Unitless shares
+# Comments: This table indicates the technology shares of desalinated water production by major global region
+# Source: Australian Government National Water Commission. 2008. Emerging Trends in Desalination: A Review. Waterlines Report Series No. 9.
+# URL: http://pandora.nla.gov.au/pan/95567/20090227-1122/www.nwc.gov.au/resources/documents/Waterlines_-_Trends_in_Desalination_-_REPLACE_(2).pdf
+# Column types: cccn
+AusNWC_reg,technology,specific_tech,share
+Americas,reverse osmosis,RO,0.633
+Americas,reverse osmosis,NF,0.145
+Americas,distillation,MSF,0.049
+Americas,distillation,MED,0.087
+Americas,reverse osmosis,EDI,0.004
+Americas,reverse osmosis,ED,0.082
+Middle East and Africa,reverse osmosis,RO,0.321
+Middle East and Africa,reverse osmosis,NF,0.011
+Middle East and Africa,distillation,MSF,0.59
+Middle East and Africa,distillation,MED,0.059
+Middle East and Africa,reverse osmosis,EDI,0
+Middle East and Africa,reverse osmosis,ED,0.019
+Europe,reverse osmosis,RO,0.735
+Europe,reverse osmosis,NF,0.037
+Europe,distillation,MSF,0.076
+Europe,distillation,MED,0.092
+Europe,reverse osmosis,EDI,0.002
+Europe,reverse osmosis,ED,0.058
+Asia Pacific,reverse osmosis,RO,0.764
+Asia Pacific,reverse osmosis,NF,0.002
+Asia Pacific,distillation,MSF,0.064
+Asia Pacific,distillation,MED,0.096
+Asia Pacific,reverse osmosis,EDI,0.023
+Asia Pacific,reverse osmosis,ED,0.051

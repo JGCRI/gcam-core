@@ -6,7 +6,7 @@
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 urban processes,waste_incineration,share-weight,final-calibration-year,end-year,,fixed
 urban processes,landfills,share-weight,final-calibration-year,end-year,,fixed
-urban processes,wastewater treatment,share-weight,final-calibration-year,end-year,,fixed
+urban processes,wastewater,share-weight,final-calibration-year,end-year,,fixed
 urban processes,aerosols,share-weight,final-calibration-year,end-year,,fixed
 urban processes,fire_exting,share-weight,final-calibration-year,end-year,,fixed
 industrial processes,nitric acid,share-weight,final-calibration-year,end-year,,fixed

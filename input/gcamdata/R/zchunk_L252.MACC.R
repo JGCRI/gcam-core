@@ -74,7 +74,8 @@ module_emissions_L252.MACC <- function(command, ...) {
       MAC_region <- Non.CO2 <- PCT_ABATE <- Process <- Species <- Year <- bio_N2O_coef <-
       resource <- emiss.coef <- input.emissions <- mac.control <- mac.reduction <- region <-
       scenario <- sector <- stub.technology <- subsector <- supplysector <- tax <- tech_change <-
-      market.name <- year <- Irr_Rfd <- mgmt <- tech.change.year <- tech.change <- Non.CO2.join <- multiplier <- NULL
+      market.name <- year <- Irr_Rfd <- mgmt <- tech.change.year <- tech.change <- Non.CO2.join <-
+      multiplier <- omit <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -123,7 +124,7 @@ module_emissions_L252.MACC <- function(command, ...) {
         repeat_add_columns(tibble(tax = MAC_taxes)) %>%
         repeat_add_columns(tibble(year = emissions.EPA_MACC_YEAR)) %>%
         # we don't need MACs for calibration years
-        filter(year %notin% MODEL_BASE_YEARS)
+        filter(!year %in% MODEL_BASE_YEARS)
       # Next, add in mac.reduction values
       if(error_no_match) {
         # Usually we use left_join_error_no_match
@@ -286,7 +287,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       select(-omit) %>%
       # first tech.change year is the next modeling period of the MAC defined years
       # here add 5 years so they can be used to match with their corresponding "next period"
-      mutate(year = year + emissions.EPA_TC_TimeStep)
+      mutate(year = year + emissions.EPA_TC_TIMESTEP)
 
     # based on EPA's year's specific MACs (2020-2050 by every 5 year) to backward calculate technology.change
     # these are tech.change before 2050, based on actual EPA MAC data
@@ -298,14 +299,14 @@ module_emissions_L252.MACC <- function(command, ...) {
       left_join(L252.MAC_base_TC,
                 by = c("region", "supplysector", "subsector", "stub.technology", "Non.CO2", "year")) %>%
       na.omit() %>%
-      mutate(tech.change = (mac.reduction / mac.reduction.base)^(1/emissions.EPA_TC_TimeStep) - 1) %>%
+      mutate(tech.change = (mac.reduction / mac.reduction.base)^(1/emissions.EPA_TC_TIMESTEP) - 1) %>%
       # round to 4 digits otherwise it will be > 10 digits and long in xmls
       mutate(tech.change = round(tech.change, emissions.DIGITS_MACC_TC)) %>%
       replace_na(list(tech.change = 0)) %>%
       select(region, supplysector, subsector, stub.technology, year, Non.CO2, mac.control, tech.change) %>%
       mutate(key = paste(supplysector, subsector, Non.CO2, sep = "-")) %>%
       # replace negative tech.change into 0s
-      mutate(tech.change = ifelse(tech.change < 0, 0, tech.change))
+      mutate(tech.change = if_else(tech.change < 0, 0, tech.change))
 
 
     # since the current EPA MAC data (2019 version) only covers 2020 to 2050
@@ -320,7 +321,7 @@ module_emissions_L252.MACC <- function(command, ...) {
 
     # combine together
     # L252.MAC_summary_TC_average contains TC for all future periods greater than MAC base-year for each region/sector
-    L252.MAC_summary_TC_average <- rbind(L252.MAC_summary_TC_before2050, L252.MAC_summary_TC_post2050_average)
+    L252.MAC_summary_TC_average <- bind_rows(L252.MAC_summary_TC_before2050, L252.MAC_summary_TC_post2050_average)
 
 
     # Part 2: calculate the MAC curve for each region/sector, so the TCs above can be applied to

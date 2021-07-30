@@ -1,0 +1,9 @@
+# File: A62.subsector_shrwt.csv
+# Title: dac default subsector shareweights
+# Units: Unitless
+# Column types: cccci
+# ----------
+supplysector,subsector,year.fillout,year,share.weight
+CO2 removal,dac,start-year,,1
+process heat dac,gas CCS,start-year,,1
+airCO2,airCO2,start-year,,1

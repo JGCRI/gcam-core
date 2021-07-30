@@ -1,0 +1,6 @@
+# File: A74.subsector_interp.csv
+# Title: Municipal energy-for-water subsector (fuel) share-weight interpolation
+# Units: None
+# Source: NA
+# Column types: ccciinc
+supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function

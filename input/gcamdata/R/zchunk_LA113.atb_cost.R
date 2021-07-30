@@ -164,6 +164,8 @@ module_energy_LA113.atb_cost <- function(command, ...) {
       left_join_error_no_match(atb_gcam_mapping_ratios, by = "technology") %>%
       left_join_error_no_match(L113.cost_shadow, by = c("shadow_tech", "year", "input", "case")) %>%
       mutate(cost_ratio = value / shadow_tech_cost) %>%
+      # technologies with cost = 0 for tech & shadow tech (e.g. CSP OM-var) return NAN... reset to cost_ratio = 1
+      mutate(cost_ratio = if_else(is.nan(cost_ratio), 1, cost_ratio)) %>%
       select(technology, year, cost_ratio, input, case) %>%
       # fill out for all ATB years
       complete(nesting(technology, input, case), year = c(ATB_years)) %>%

@@ -1,0 +1,9 @@
+# File: A71.subsector_interp.csv
+# Title: Desalinated water subsector (fuel) share-weight interpolation
+# Units: None
+# Source: NA
+# Column types: cccccnc
+supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+desalinated water,electricity,share-weight,final-calibration-year,end-year,,fixed
+desalinated water,gas,share-weight,final-calibration-year,end-year,,fixed
+desalinated water,refined liquids,share-weight,final-calibration-year,end-year,,fixed

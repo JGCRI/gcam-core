@@ -14,8 +14,9 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L165.BlueIrr_m3kg_R_C_GLU}, \code{L165.TotIrr_m3kg_R_C_GLU}, \code{L165.GreenRfd_m3kg_R_C_GLU}, \code{L165.ag_IrrEff_R}. The corresponding file in the
-original data system was \code{LB165.ag_water_R_C_Y_GLU_irr.R} (aglu level1).
+the generated outputs: \code{L165.BlueIrr_m3kg_R_C_GLU}, \code{L165.TotIrr_m3kg_R_C_GLU},
+\code{L165.GreenRfd_m3kg_R_C_GLU}, \code{L165.ag_IrrEff_R}, \code{L165.IrrWithd_km3_R_Y}. The corresponding file in
+the original data system was \code{LB165.ag_water_R_C_Y_GLU_irr.R} (aglu level1).
 }
 \description{
 Compute irrigation efficiency (by GCAM region) and blue, green, and total consumption coefficients (by region, commodity, and GLU).

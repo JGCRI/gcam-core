@@ -7,7 +7,9 @@
 supplysector,subsector,stub.technology,SO2,NOx,CO,BC,OC,NMVOC
 urban processes,waste_incineration,waste_incineration,50,80,80,30,30,60
 urban processes,landfills,landfills,50,80,80,30,30,60
-urban processes,wastewater treatment,wastewater treatment,,,,,,
+urban processes,wastewater,wastewater,,,,,,
+industrial wastewater,electricity,electricity,,,,,,
+municipal wastewater,electricity,electricity,,,,,,
 urban processes,aerosols,aerosols,,,,,,
 urban processes,fire_exting,fire_exting,,,,,,
 industrial processes,nitric acid,nitric acid,,,,,,

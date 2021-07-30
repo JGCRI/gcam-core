@@ -24,8 +24,9 @@ Depends on \code{command}: either a vector of required inputs, a vector of outpu
 Calculate agriculture water Input-Output coefficients by region / crop / year / GLU / technology.
 }
 \details{
-This chunk calculates the Input-Output coefficients of irrigation water withdrawals and consumption, and biophysical water consumption of irrigated and rainfed crops,
-for each primary and dedicated bioenergy crop by region / year / GLU / management level.
+This chunk calculates the Input-Output coefficients of irrigation water withdrawals and consumption, and
+  biophysical water consumption of irrigated and rainfed crops, for each primary and dedicated bioenergy crop by
+  region / year / GLU / management level.
 }
 \author{
 RC July 2017

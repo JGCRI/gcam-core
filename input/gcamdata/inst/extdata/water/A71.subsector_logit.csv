@@ -1,0 +1,9 @@
+# File: A71.subsector_logit.csv
+# Title: Desalinated water subsector logit exponents
+# Units: None
+# Source: NA
+# Column types: ccnc
+supplysector,subsector,logit.exponent,logit.type
+desalinated water,electricity,-6,
+desalinated water,gas,-6,
+desalinated water,refined liquids,-6,

@@ -19,7 +19,8 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
              "L201.GrdRenewRsrcMax_runoff",
              "L201.DepRsrcCurves_ground",
              "L201.RenewRsrcTechShrwt",
-             "L201.RsrcTechShrwt"))
+             "L201.RsrcTechShrwt",
+             "L201.RsrcTechCoef"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "water_supply_constrained.xml"))
   } else if(command == driver.MAKE) {
@@ -35,6 +36,7 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
     L201.DepRsrcCurves_ground <- get_data(all_data, "L201.DepRsrcCurves_ground")
     L201.RenewRsrcTechShrwt <- get_data(all_data, "L201.RenewRsrcTechShrwt")
     L201.RsrcTechShrwt <- get_data(all_data, "L201.RsrcTechShrwt")
+    L201.RsrcTechCoef <- get_data(all_data, "L201.RsrcTechCoef")
 
     resource <- NULL    # silence package check notes
 
@@ -56,6 +58,7 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
       add_node_equiv_xml("subresource") %>%
       add_xml_data(L201.RenewRsrcTechShrwt, "ResTechShrwt") %>%
       add_xml_data(L201.RsrcTechShrwt, "ResTechShrwt") %>%
+      add_xml_data(L201.RsrcTechCoef, "ResTechCoef") %>%
       add_precursors("L201.DeleteUnlimitRsrc",
                      "L201.Rsrc",
                      "L201.RsrcPrice",
@@ -63,7 +66,8 @@ module_water_batch_water_supply_constrained_xml <- function(command, ...) {
                      "L201.GrdRenewRsrcMax_runoff",
                      "L201.DepRsrcCurves_ground",
                      "L201.RenewRsrcTechShrwt",
-                     "L201.RsrcTechShrwt") ->
+                     "L201.RsrcTechShrwt",
+                     "L201.RsrcTechCoef") ->
     water_supply_constrained.xml
     return_data(water_supply_constrained.xml)
   } else {

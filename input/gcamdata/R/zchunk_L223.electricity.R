@@ -23,7 +23,7 @@
 #' \code{L223.GlobalIntTechSCurve_elec}, \code{L223.GlobalTechLifetime_elec}, \code{L223.GlobalIntTechLifetime_elec},
 #' \code{L223.GlobalTechProfitShutdown_elec}, \code{L223.GlobalIntTechProfitShutdown_elec},
 #' \code{L223.StubTechCalInput_elec}, \code{L223.StubTechFixOut_elec}, \code{L223.StubTechFixOut_hydro},
-#' \code{L223.StubTechProd_elec}, \code{L223.StubTechEff_elec}, \code{L223.GlobalTechCapital_sol_adv},
+#' \code{L223.StubTechProd_elec}, \code{L223.StubTechEff_elec}, \code{L223.StubTechSecOut_desal}, \code{L223.GlobalTechCapital_sol_adv},
 #' \code{L223.GlobalIntTechCapital_sol_adv}, \code{L223.GlobalTechCapital_wind_adv},
 #' \code{L223.GlobalIntTechCapital_wind_adv}, \code{L223.GlobalTechCapital_geo_adv},
 #' \code{L223.GlobalTechCapital_nuc_adv}, \code{L223.GlobalTechCapital_sol_low},
@@ -59,6 +59,7 @@ module_energy_L223.electricity <- function(command, ...) {
              FILE = "energy/A23.globaltech_capacity_factor",
              FILE = "energy/A23.globaltech_retirement",
              FILE = "energy/A23.globaltech_co2capture",
+             FILE = "water/EFW_mapping",
              FILE = "energy/A23.globaltech_eff",
              "L113.globaltech_capital_ATB",
              "L113.globaltech_capital_ATB_adv",
@@ -73,6 +74,7 @@ module_energy_L223.electricity <- function(command, ...) {
              "L1231.eff_R_elec_F_tech_Yh",
              "L120.GridCost_offshore_wind",
              "L120.RegCapFactor_offshore_wind",
+             "L1232.desalsecout_R_elec_F_tech",
              "L102.gdp_mil90usd_GCAM3_ctry_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L223.Supplysector_elec",
@@ -119,6 +121,7 @@ module_energy_L223.electricity <- function(command, ...) {
              "L223.StubTechFixOut_hydro",
              "L223.StubTechProd_elec",
              "L223.StubTechEff_elec",
+             "L223.StubTechSecOut_desal",
              "L223.GlobalTechCapital_sol_adv",
              "L223.GlobalIntTechCapital_sol_adv",
              "L223.GlobalTechCapital_wind_adv",
@@ -145,7 +148,8 @@ module_energy_L223.electricity <- function(command, ...) {
       primary.renewable <- region <- region_GCAM3 <- remove.fraction <- sector <-
       sector.name <- share.weight <- stub.technology <- subsector <- subsector.name <-
       supplysector <- technology <- value <- weight <- year <- year.fillout <- year.x <- year.y <-
-      CFmax <- grid.cost <- input.cost <- minicam.non.energy.input <- from.year <- to.year <- NULL
+      CFmax <- grid.cost <- input.cost <- minicam.non.energy.input <- from.year <- to.year <-
+      secondary.output <- output.ratio <- secout_coef <- NULL
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -172,6 +176,7 @@ module_energy_L223.electricity <- function(command, ...) {
     L113.globaltech_OMvar_ATB <- get_data(all_data, "L113.globaltech_OMvar_ATB")
     A23.globaltech_retirement <- get_data(all_data, "energy/A23.globaltech_retirement", strip_attributes = TRUE)
     A23.globaltech_co2capture <- get_data(all_data, "energy/A23.globaltech_co2capture")
+    EFW_mapping <- get_data(all_data, "water/EFW_mapping")
     L114.RsrcCurves_EJ_R_wind <- get_data(all_data, "L114.RsrcCurves_EJ_R_wind")
     L118.out_EJ_R_elec_hydro_Yfut <- get_data(all_data, "L118.out_EJ_R_elec_hydro_Yfut")
     L119.Irradiance_rel_R <- get_data(all_data, "L119.Irradiance_rel_R")
@@ -180,6 +185,7 @@ module_energy_L223.electricity <- function(command, ...) {
     L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
     L1231.eff_R_elec_F_tech_Yh <- get_data(all_data, "L1231.eff_R_elec_F_tech_Yh")
+    L1232.desalsecout_R_elec_F_tech <- get_data(all_data, "L1232.desalsecout_R_elec_F_tech", strip_attributes = TRUE)
     L102.gdp_mil90usd_GCAM3_ctry_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_ctry_Y")
 
     # ============================
@@ -1019,6 +1025,17 @@ module_energy_L223.electricity <- function(command, ...) {
       select(region, supplysector, subsector, stub.technology = technology,
              year, minicam.non.energy.input, input.cost) -> L223.StubTechCost_offshore_wind
 
+    # L223.StubTechSecOut_desal: secondary output of desalinated seawater from electricity technologies
+    # Note that this only applies in selected regions that have combined electric + desalination plants
+    L223.StubTechSecOut_desal <- filter(L1232.desalsecout_R_elec_F_tech, year %in% MODEL_BASE_YEARS) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(select(calibrated_techs, sector, fuel, supplysector, subsector, technology),
+                               by = c("sector", "fuel", "technology")) %>%
+      rename(stub.technology = technology) %>%
+      mutate(secondary.output = water.DESAL,
+             output.ratio = round(secout_coef, energy.DIGITS_CALOUTPUT)) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechSecOut"]])
+
     # ===================================================
 
     # Produce outputs
@@ -1440,6 +1457,13 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("energy/calibrated_techs", "common/GCAM_region_names", "L1231.eff_R_elec_F_tech_Yh", "energy/A23.globaltech_eff") ->
       L223.StubTechEff_elec
 
+    L223.StubTechSecOut_desal %>%
+      add_title("secondary output of desalinated water from the electricity sector") %>%
+      add_units("m^3/GJ") %>%
+      add_comments("This only applies in regions with combined electric + desalination plants") %>%
+      add_precursors("energy/calibrated_techs", "common/GCAM_region_names", "water/EFW_mapping", "L1232.desalsecout_R_elec_F_tech") ->
+      L223.StubTechSecOut_desal
+
     L223.GlobalTechCapital_sol_adv %>%
       add_title("high tech/low cost solar capital costs for the electricity sector") %>%
       add_units("capital overnight - 1975USD/GJ, capacity factor - unitless, fixed.charge.rate - unitless") %>%
@@ -1571,7 +1595,7 @@ module_energy_L223.electricity <- function(command, ...) {
        L223.GlobalIntTechShutdown_elec, L223.GlobalTechSCurve_elec, L223.GlobalIntTechSCurve_elec,
        L223.GlobalTechLifetime_elec, L223.GlobalIntTechLifetime_elec, L223.GlobalTechProfitShutdown_elec,
        L223.GlobalIntTechProfitShutdown_elec, L223.StubTechCalInput_elec, L223.StubTechFixOut_elec,
-       L223.StubTechFixOut_hydro, L223.StubTechProd_elec, L223.StubTechEff_elec,
+       L223.StubTechFixOut_hydro, L223.StubTechProd_elec, L223.StubTechEff_elec, L223.StubTechSecOut_desal,
        L223.GlobalTechCapital_sol_adv, L223.GlobalIntTechCapital_sol_adv, L223.GlobalTechCapital_wind_adv,
         L223.GlobalIntTechCapital_wind_adv, L223.GlobalTechCapital_geo_adv, L223.GlobalTechCapital_nuc_adv,
         L223.GlobalTechCapital_sol_low, L223.GlobalIntTechCapital_sol_low, L223.GlobalTechCapital_wind_low,

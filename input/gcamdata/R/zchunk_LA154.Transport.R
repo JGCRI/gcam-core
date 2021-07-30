@@ -23,7 +23,9 @@ module_gcamusa_LA154.Transport <- function(command, ...) {
              "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
              "L154.out_mpkm_R_trn_nonmotor_Yh",
              "L100.Pop_thous_state",
-             "L101.EIA_use_all_Bbtu"))
+             "L101.EIA_use_all_Bbtu",
+             "L131.in_EJ_USA_Senduse_F_Yh_noEFW",
+             "L131.in_EJ_R_Senduse_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L154.in_EJ_state_trn_m_sz_tech_F",
              "L154.out_mpkm_state_trn_nonmotor_Yh",
@@ -44,13 +46,15 @@ module_gcamusa_LA154.Transport <- function(command, ...) {
     L154.out_mpkm_R_trn_nonmotor_Yh <- get_data(all_data, "L154.out_mpkm_R_trn_nonmotor_Yh", strip_attributes = TRUE)
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state")
     L101.EIA_use_all_Bbtu <- get_data(all_data, "L101.EIA_use_all_Bbtu")
+    L131.in_EJ_R_Senduse_F_Yh <- get_data(all_data, "L131.in_EJ_R_Senduse_F_Yh")
+    L131.in_EJ_USA_Senduse_F_Yh_noEFW <- get_data(all_data, "L131.in_EJ_USA_Senduse_F_Yh_noEFW")
 
     # ===================================================
 
       # Silence package notes
       GCAM_region_ID <- UCD_sector <- mode <- size.class <- UCD_technology <- UCD_fuel <- fuel <- EIA_fuel <-
         year <- value <- EIA_sector <- . <- fuel_sector <- state <- sector <- value_state <- value_national <-
-        value_share <- value_mode <- NULL
+        value_share <- value_mode <- value.noEFW <- value.withEFW <- scaler <- NULL
 
       # Calculate the state-wise percentages for each of EIA's sector/fuel combinations that is relevant for disaggregating
       # nation-level transportation energy to the states
@@ -67,6 +71,30 @@ module_gcamusa_LA154.Transport <- function(command, ...) {
         # Fuel and mode will be mapped to EIA fuel and sector
         left_join_error_no_match(trnUCD_EIA_mapping, by = c("fuel", "mode")) ->
         Transportation_energy_consumption
+
+      # EFW-related modification for GCAM-USA: Because energy-for-water is not deducted from the "unscalable"
+      # electricity demands prior to computing end-use-sector electricity scalers (in LA131), the electricity scalers
+      # end up being slightly different. This is addressed explicitly in the buildings and industry sectors of GCAM-USA.
+      # Here we compute a separate scaler to resolve the difference in electricity consumption by the transportation sector
+      # following these two different approaches
+      L154.trn_elec_scaler <- left_join_error_no_match(L131.in_EJ_USA_Senduse_F_Yh_noEFW,
+                                                       L131.in_EJ_R_Senduse_F_Yh,
+                                                       by = c("GCAM_region_ID", "sector", "fuel", "year"),
+                                                       suffix = c(".noEFW", ".withEFW")) %>%
+        filter(fuel == "electricity",
+               grepl("trn", sector)) %>%
+        group_by(GCAM_region_ID, fuel, year) %>%
+        summarise(value.noEFW = sum(value.noEFW),
+                  value.withEFW = sum(value.withEFW)) %>%
+        ungroup() %>%
+        mutate(scaler = value.noEFW / value.withEFW) %>%
+        select(fuel, year, scaler)
+
+      Transportation_energy_consumption <- left_join(Transportation_energy_consumption,
+                                                     L154.trn_elec_scaler,
+                                                     by = c("fuel", "year")) %>%
+        mutate(value = if_else(is.na(scaler), value, value * scaler)) %>%
+        select(-scaler)
 
       # From the full state database, state shares will be calculated based on relevant EIA sector and fuel combinations
       # These shares will later be multipled by the transportation energy consumption data above
@@ -155,7 +183,9 @@ module_gcamusa_LA154.Transport <- function(command, ...) {
       add_precursors("gcam-usa/trnUCD_EIA_mapping_revised",
                      "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
                      "gcam-usa/trnUCD_EIA_mapping",
-                     "L101.EIA_use_all_Bbtu") ->
+                     "L101.EIA_use_all_Bbtu",
+                     "L131.in_EJ_USA_Senduse_F_Yh_noEFW",
+                     "L131.in_EJ_R_Senduse_F_Yh") ->
       L154.in_EJ_state_trn_m_sz_tech_F
 
     L154.out_mpkm_state_trn_nonmotor_Yh %>%
@@ -171,10 +201,7 @@ module_gcamusa_LA154.Transport <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Transportation energy consumption was aggregated by fuel, and the sector was named transportation") %>%
       add_legacy_name("L154.in_EJ_state_trn_F") %>%
-      add_precursors("gcam-usa/trnUCD_EIA_mapping_revised",
-                     "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
-                     "gcam-usa/trnUCD_EIA_mapping",
-                     "L101.EIA_use_all_Bbtu") ->
+      same_precursors_as(L154.in_EJ_state_trn_m_sz_tech_F) ->
       L154.in_EJ_state_trn_F
 
     return_data(L154.in_EJ_state_trn_m_sz_tech_F, L154.out_mpkm_state_trn_nonmotor_Yh, L154.in_EJ_state_trn_F)

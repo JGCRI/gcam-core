@@ -207,11 +207,10 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
     mOutputs.erase( mOutputs.begin() );
 	
 
-    // Store away the land allocator.
-    mLandAllocator = aLandAllocator;
-    mProductLeaf = mLandAllocator->findProductLeaf( mLandItemName );
+    // Store away the corresponding leaf in the land allocator.
+    mProductLeaf = aLandAllocator->findProductLeaf( mLandItemName );
     
-    // Unmanaged land sector is dependant on the land allocator
+    // Unmanaged land sector is dependent on the land allocator
     scenario->getMarketplace()->getDependencyFinder()->addDependency( "land-allocator",
                                                                       aRegionName,
                                                                       aSectorName,

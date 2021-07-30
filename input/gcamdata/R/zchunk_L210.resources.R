@@ -395,7 +395,7 @@ module_energy_L210.resources <- function(command, ...) {
 
     L210.ReserveCalReserve.uncon_other_reg <- L210.ReserveCalReserve %>%
                                               filter(resource =="coal") %>%
-                                              filter(region %notin% c(unique(L210.ReserveCalReserve_unoil$region))) %>%
+                                              filter(!region %in% c(unique(L210.ReserveCalReserve_unoil$region))) %>%
                                               mutate(resource =paste0("crude oil"),reserve.subresource =paste0("unconventional oil"),cal.reserve=0)
     L210.ReserveCalReserve <- bind_rows(L210.ReserveCalReserve,L210.ReserveCalReserve.uncon_other_reg)
 
@@ -597,10 +597,12 @@ module_energy_L210.resources <- function(command, ...) {
     A10.subrsrc_info %>%
       repeat_add_columns(GCAM_region_names) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      left_join(L210.RsrcCalProd %>% mutate(prod_value = as.double(cal.production)),by=c("region","resource","subresource","year")) %>%
-      mutate(prod_value = if_else(is.na(prod_value),0,prod_value)) %>%
-      mutate(technology = subresource,
-             share.weight = if_else(year>MODEL_FINAL_BASE_YEAR | prod_value>0,1,0)) %>%
+      left_join(L210.RsrcCalProd %>%
+                  mutate(prod_value = as.double(cal.production)),
+                by = c("region", "resource", "subresource", "year")) %>%
+      mutate(prod_value = if_else(is.na(prod_value), 0, prod_value),
+             technology = subresource,
+             share.weight = if_else(year > MODEL_FINAL_BASE_YEAR | prod_value > 0, 1, 0)) %>%
       filter(year %in% MODEL_YEARS) %>%
       select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
       L210.ResTechShrwt

@@ -7,7 +7,7 @@
 supplysector,subsector,technology,minicam.energy.input,1971,2100
 urban processes,waste_incineration,waste_incineration,misc emissions sources,1,1
 urban processes,landfills,landfills,misc emissions sources,1,1
-urban processes,wastewater treatment,wastewater treatment,misc emissions sources,1,1
+urban processes,wastewater,wastewater,misc emissions sources,1,1
 urban processes,aerosols,aerosols,misc emissions sources,1,1
 urban processes,fire_exting,fire_exting,misc emissions sources,1,1
 industrial processes,adipic acid,adipic acid,misc emissions sources,1,1

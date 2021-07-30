@@ -1,0 +1,19 @@
+# File: EFW_mapping.csv
+# Title: assignments between modeled energy-for-water (EFW) processes and intermediate energy system sectors
+# Units: None
+# Source: NA
+# Comments: from.sector(2) indicates which sector(s) to re-assign energy from.
+# Comments, continued: apply.to.desal.water indicates whether the EFW process applies to desalinated seawater used for municipal or industrial purposes.
+# Column types: cccccccccci
+supplysector,subsector,technology,minicam.energy.input,sector,agg_sector,fuel,from.sector,from.sector.2,water.supplysector,apply.to.desal.water
+desalinated water,electricity,reverse osmosis,elect_td_ind,in_desalination,in_desalination,electricity,,,,
+desalinated water,refined liquids,distillation,refined liquids industrial,in_desalination,in_desalination,refined liquids,,,,
+desalinated water,gas,distillation,wholesale gas,in_desalination,in_desalination,gas,,,,
+irrigation water abstraction,electricity,electricity,elect_td_ind,in_irrigation,in_irrigation,electricity,in_industry_agriculture,in_bld_comm,water_td_irr,0
+industrial water abstraction,electricity,electricity,elect_td_ind,in_industry_water abstraction,in_industry_EFW,electricity,in_industry_general,,water_td_ind,0
+industrial water treatment,electricity,electricity,elect_td_ind,in_industry_water treatment,in_industry_EFW,electricity,in_industry_general,,water_td_ind,0
+industrial wastewater treatment,electricity,electricity,elect_td_ind,in_industry_wastewater treatment,in_industry_EFW,electricity,in_industry_general,,water_td_ind,1
+municipal water abstraction,electricity,electricity,elect_td_bld,in_municipal_water abstraction,in_municipal_EFW,electricity,in_bld_comm,in_industry_general,water_td_muni,0
+municipal water treatment,electricity,electricity,elect_td_bld,in_municipal_water treatment,in_municipal_EFW,electricity,in_bld_comm,in_industry_general,water_td_muni,0
+municipal water distribution,electricity,electricity,elect_td_bld,in_municipal_water distribution,in_municipal_EFW,electricity,in_bld_comm,in_industry_general,water_td_muni,1
+municipal wastewater treatment,electricity,electricity,elect_td_bld,in_municipal_wastewater treatment,in_municipal_EFW,electricity,in_bld_comm,in_industry_general,water_td_muni,1
