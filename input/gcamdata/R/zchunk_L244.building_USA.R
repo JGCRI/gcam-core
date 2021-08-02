@@ -250,15 +250,16 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["SatiationAdder"]])
 
     #------------------------------------------------------
-    # JS, 06/2021:Updated floorspace function
-    # 1- Calculate the bias correction parameter (k)
-    # 2- Write parameters for the updated floorspace function: unadjSat, a, b, c and k
+    # Updated floorspace Gompertz function
+    # - Calculate the bias correction parameter (k)
+    # - Write parameters for the updated floorspace function
 
-    L144.flsp_param_usa<-L144.flsp_param %>%
+      L144.flsp_param_usa<-L144.flsp_param %>%
       filter(region=="USA") %>%
       select(-region) %>%
       repeat_add_columns(tibble(region=gcamusa.STATES))
 
+    # First calculate the habitable land
     L144.hab_land_flsp_usa_fin<-L144.hab_land_flsp_usa %>%
       rename(state_name=state)%>%
       left_join(states_subregions %>% select(state,state_name),by="state_name") %>%
@@ -266,6 +267,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       mutate(area_thouskm2=(area_gcam-misc_land_usda)/1E3) %>%
       select(region=state,area_thouskm2)
 
+    # Write the function parameters
     L244.Gomp.fn.param_gcamusa<-L144.flsp_param_usa %>%
       left_join_error_no_match(L144.hab_land_flsp_usa_fin,by="region") %>%
       mutate(year=MODEL_FINAL_BASE_YEAR) %>%
@@ -289,8 +291,6 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       rename(pop_dens=tot_dens,
              `habitable-land`=area_thouskm2,
              `base-pcFlsp`=base_flsp) %>%
-      #select(region,gcam.consumer,nodeInput,building.node.input,`habitable-land`,`base-pcFlsp`,`unadjust-satiation`,
-      #       `land-density-param`,`base-floorspace-param`,`income-param`,`bias-adjust-param`)
       select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
 
 

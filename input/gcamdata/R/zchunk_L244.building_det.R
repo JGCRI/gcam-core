@@ -344,9 +344,9 @@ module_energy_L244.building_det <- function(command, ...) {
 
 
     #------------------------------------------------------
-    # JS, 06/2021:Updated floorspace function
-    # 1- Calculate the bias correction parameter (k)
-    # 2- Write parameters for the updated floorspace function: unadjSat, a, b, c and k
+    # Updated floorspace Gompertz function
+    # - Calculate the bias correction parameter (k)
+    # - Write parameters for the updated floorspace function
 
     # First calculate the habitable land
 
@@ -359,6 +359,7 @@ module_energy_L244.building_det <- function(command, ...) {
       summarise(value=sum(value)) %>%
       ungroup()
 
+    # Write the function parameters
     L244.Gomp.fn.param<-L144.flsp_param %>%
       left_join_error_no_match(L144.hab_land_flsp_fin %>% filter(year==MODEL_FINAL_BASE_YEAR),by="region") %>%
       rename(area_thouskm2=value) %>%
@@ -380,8 +381,6 @@ module_energy_L244.building_det <- function(command, ...) {
       rename(pop_dens=tot_dens,
              `habitable-land`=area_thouskm2,
              `base-pcFlsp`=base_flsp) %>%
-      #select(region,gcam.consumer,nodeInput,building.node.input,`habitable-land`,`base-pcFlsp`,`unadjust-satiation`,
-      #        `land-density-param`,`base-floorspace-param`,`income-param`,`bias-adjust-param`)
       select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
 
     #================================================================
