@@ -88,17 +88,17 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       group_by(GCAM_region_ID,year) %>%
       summarise(steel_hist = sum(value))%>%
       ungroup() %>%
-      filter(year == 2015) %>%
-      mutate(year = 2020)
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
+      mutate(year = MODEL_FINAL_BASE_YEAR + 5)
 
     pcgdp_2015 <- L102.pcgdp_thous90USD_Scen_R_Y %>%
-      filter(year == 2015) %>%
-      mutate(pcgdp_90thousUSD_2015 = pcgdp_90thousUSD,year = 2020 ) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
+      mutate(pcgdp_90thousUSD_2015 = pcgdp_90thousUSD,year = MODEL_FINAL_BASE_YEAR + 5 ) %>%
       select(scenario, GCAM_region_ID, year,pcgdp_90thousUSD_2015)
 
     pcgdp_2015_GCAM3 <- L102.pcgdp_thous90USD_GCAM3_R_Y %>%
-      filter(year == 2015) %>%
-      mutate(pcgdp_90thousUSD_2015 = pcgdp_90thousUSD,year = 2020 ) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
+      mutate(pcgdp_90thousUSD_2015 = pcgdp_90thousUSD,year = MODEL_FINAL_BASE_YEAR + 5 ) %>%
       select( GCAM_region_ID, year,pcgdp_90thousUSD_2015)
 
 
@@ -109,7 +109,7 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       filter(year %in%  MODEL_FUTURE_YEARS) %>%
       left_join_error_no_match(L101.Pop_thous_Scen_R_Yfut, by = c("scenario", "GCAM_region_ID", "year", "region")) %>%
       left_join_error_no_match(A323.inc_elas_parameter, by = c( "region")) %>%
-      mutate(per_capita_steel = a * exp(b/(pcgdp_90thousUSD * 1000 * COV_1990USD_2005USD)) * (1-m) ^ (year- 2015) ) %>%
+      mutate(per_capita_steel = a * exp(b/(pcgdp_90thousUSD * 1000 * COV_1990USD_2005USD)) * (1-m) ^ (year- MODEL_FINAL_BASE_YEAR) ) %>%
       mutate(steel_pro = per_capita_steel * population*0.000001)
 
 
@@ -135,25 +135,6 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       mutate(income.elasticity = replace(income.elasticity,income.elasticity > 10 , 10)) %>%
       mutate(income.elasticity = replace(income.elasticity,income.elasticity < -10,-10))
 
-
-
-
-    # Linearly interpolate income elasticity for each level of per-capita GDP,
-    # using the assumption data
-    #L2323.pcgdp_thous90USD_Scen_R_Y <- L102.pcgdp_thous90USD_Scen_R_Y %>%
-      #filter(year %in% MODEL_FUTURE_YEARS) %>%
-      #Add income elasticity
-      #left_join_error_no_match(A323.inc_elas, by = c("year", "region")) %>%
-      #mutate(income.elasticity = inc_elas,energy.final.demand = "iron and steel") %>%
-      # Using approx rather than approx_fun because data is from assumption file, not in our tibble
-      #mutate(income.elasticity = approx(x = A323.inc_elas$pcgdp_90thousUSD, y = A323.inc_elas$inc_elas,
-      #                                  xout = pcgdp_90thousUSD,
-      #                                  # Rule 2 means that data outside of the interval of input
-      #                                  # data will be assigned the cloest data extreme
-      #                                  rule = 2)[['y']] %>% round(3),
-      #       energy.final.demand = "iron and steel") %>%
-      #select(scenario, region, energy.final.demand, year, income.elasticity) %>%
-      #arrange(year)
 
     # Split by scenario and remove scenario column from each tibble
     L2323.pcgdp_thous90USD_Scen_R_Y <- L2323.pcgdp_thous90USD_Scen_R_Y %>%
@@ -198,24 +179,6 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       mutate(income.elasticity = replace(income.elasticity,income.elasticity < -10,-10))
 
 
-
-    # L2323.iron_steel_incelas_gcam3: iron_steel sector income elasticity for GCAM 3.0 socioeconomics
-    # For the GCAM 3.0 scenario, calculate the per-capita GDP
-    #L2323.iron_steel_incelas_gcam3 <- L102.gdp_mil90usd_GCAM3_R_Y %>%
-	  #left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y, by = c("GCAM_region_ID", "year")) %>%
-      #filter(year %in% MODEL_FUTURE_YEARS) %>%
-      #transmute(region, year, pcgdp_90thousUSD = value.x / value.y) %>%
-      #Add income elasticity
-      #left_join_error_no_match(A323.inc_elas, by = c("year", "region")) %>%
-      #mutate(income.elasticity = inc_elas,energy.final.demand = "iron and steel") %>%
-      # Using approx rather than approx_fun because data is from assumption file, not in our tibble
-      #mutate(income.elasticity = approx(x = A323.inc_elas$pcgdp_90thousUSD, y = A323.inc_elas$inc_elas,
-      #                                  xout = pcgdp_90thousUSD,
-      #                                  # Rule 2 means that data outside of the interval of input
-      #                                  # data will be assigned the cloest data extreme
-      #                                  rule = 2)[['y']] %>% round(3),
-      #       energy.final.demand = "iron and steel") %>%
-      #select(region, energy.final.demand, year, income.elasticity)
     # ===================================================
 
     # Produce outputs

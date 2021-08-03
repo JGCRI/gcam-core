@@ -92,7 +92,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(EnTechInputNameMap %>%
                                  # remap iron and steel subsector to match emissions data
-                                 mutate(subsector = if_else(supplysector == "iron and steel", fuel, subsector)),
+                                 # structure is supplysector, fuel, technology; subsector will be added back in later based on technology
+                                 mutate(subsector = if_else(grepl("steel", supplysector), fuel, subsector)),
                                by = c("supplysector", "subsector", "stub.technology")) %>%
       select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2, input.name) %>%
       mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
@@ -105,26 +106,26 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       # add region name and round output
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(EnTechInputNameMap %>%
-                                 # remap iron and steel subsector to match emissions data
-                                 mutate(subsector = if_else(supplysector == "iron and steel", fuel, subsector)),
+                                 # remap iron and steel subsector to match emissions data, as above
+                                 mutate(subsector = if_else(grepl("steel", supplysector), fuel, subsector)),
                                by = c("supplysector", "subsector", "stub.technology")) %>%
       select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2, input.name) %>%
       mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
       L201.en_ghg_emissions
 
-    # revert iron and steel subsector back to original mapping
+    # Add back in correct subsector name for iron and steel sector
     # input.name now has the fuel information for iron and steel technologies, so we don't need to keep that information in the subsector column anymore
     L201.en_pol_emissions %>%
-      left_join(EnTechInputNameMap %>% filter(supplysector == "iron and steel") %>% rename(subsector_orig = subsector),
+      left_join(EnTechInputNameMap %>% filter(grepl("steel", supplysector)) %>% rename(subsector_orig = subsector),
                 by = c("supplysector", "stub.technology", "input.name")) %>%
-      mutate(subsector = if_else(supplysector == "iron and steel", subsector_orig, subsector)) %>%
+      mutate(subsector = if_else(grepl("steel", supplysector), subsector_orig, subsector)) %>%
       select(-subsector_orig, -fuel) ->
       L201.en_pol_emissions
 
     L201.en_ghg_emissions %>%
-      left_join(EnTechInputNameMap %>% filter(supplysector == "iron and steel") %>% rename(subsector_orig = subsector),
+      left_join(EnTechInputNameMap %>% filter(grepl("steel", supplysector)) %>% rename(subsector_orig = subsector),
                 by = c("supplysector", "stub.technology", "input.name")) %>%
-      mutate(subsector = if_else(supplysector == "iron and steel", subsector_orig, subsector)) %>%
+      mutate(subsector = if_else(grepl("steel", supplysector), subsector_orig, subsector)) %>%
       select(-subsector_orig, -fuel) ->
       L201.en_ghg_emissions
 
