@@ -5,5 +5,5 @@
 # Column types: cccncc 
 # ----------
 gcam.consumer,nodeInput,building.node.input,price.exponent,internal.gains.market.name,internal.gains.unit
-resid,resid,resid_building,0,resid-internal-gains-trial-market,EJ
-comm,comm,comm_building,0,comm-internal-gains-trial-market,EJ
+resid,resid,resid_building,-0.1,resid-internal-gains-trial-market,EJ
+comm,comm,comm_building,-0.1,comm-internal-gains-trial-market,EJ
