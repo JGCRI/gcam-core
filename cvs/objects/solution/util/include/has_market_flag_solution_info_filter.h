@@ -67,8 +67,8 @@ class SolutionInfo;
  */
 class HasMarketFlagSolutionInfoFilter : public ISolutionInfoFilter {
 public:
-    HasMarketFlagSolutionInfoFilter();
-    ~HasMarketFlagSolutionInfoFilter();
+    HasMarketFlagSolutionInfoFilter(const std::string& aMarketInfoKey);
+    virtual ~HasMarketFlagSolutionInfoFilter();
     
     static const std::string& getXMLNameStatic();
     

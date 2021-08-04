@@ -42,14 +42,11 @@
 #include <string>
 
 #include "solution/util/include/not_solution_info_filter.h"
-#include "solution/util/include/solution_info_filter_factory.h"
-#include "util/base/include/xml_helper.h"
-#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
-NotSolutionInfoFilter::NotSolutionInfoFilter()
-:mWrappedFilter( 0 )
+NotSolutionInfoFilter::NotSolutionInfoFilter(ISolutionInfoFilter* aWrappedFilter)
+:mWrappedFilter( aWrappedFilter )
 {
 }
 

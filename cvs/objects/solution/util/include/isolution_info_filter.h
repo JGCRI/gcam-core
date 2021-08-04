@@ -43,7 +43,6 @@
  * \brief Header file for the ISolutionInfoFilter interface.
  * \author Pralit Patel
  */
-#include "util/base/include/iparsable.h"
 
 class SolutionInfo;
 
@@ -55,7 +54,7 @@ class SolutionInfo;
  *          should be accepted.
  * \author Pralit Patel
  */
-class ISolutionInfoFilter : public IParsable {
+class ISolutionInfoFilter {
 public:
     //! Virtual destructor so that instances of the interface may be deleted
     //! correctly through a pointer to the interface.

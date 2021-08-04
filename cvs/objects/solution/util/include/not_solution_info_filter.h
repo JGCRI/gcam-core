@@ -65,8 +65,8 @@ class SolutionInfo;
  */
 class NotSolutionInfoFilter : public ISolutionInfoFilter {
 public:
-    NotSolutionInfoFilter();
-    ~NotSolutionInfoFilter();
+    NotSolutionInfoFilter(ISolutionInfoFilter* aWrappedFilter);
+    virtual ~NotSolutionInfoFilter();
     
     static const std::string& getXMLNameStatic();
     

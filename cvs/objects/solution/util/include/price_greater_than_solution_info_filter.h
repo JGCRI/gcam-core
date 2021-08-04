@@ -67,8 +67,8 @@ class SolutionInfo;
  */
 class PriceGreaterThanSolutionInfoFilter : public ISolutionInfoFilter {
 public:
-    PriceGreaterThanSolutionInfoFilter();
-    ~PriceGreaterThanSolutionInfoFilter();
+    PriceGreaterThanSolutionInfoFilter(const std::string& aPriceStr);
+    virtual ~PriceGreaterThanSolutionInfoFilter();
     
     static const std::string& getXMLNameStatic();
     

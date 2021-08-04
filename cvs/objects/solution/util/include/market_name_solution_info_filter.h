@@ -70,8 +70,8 @@ class SolutionInfo;
  */
 class MarketNameSolutionInfoFilter : public ISolutionInfoFilter {
 public:
-    MarketNameSolutionInfoFilter();
-    ~MarketNameSolutionInfoFilter();
+    MarketNameSolutionInfoFilter(const std::string& aMarketName);
+    virtual ~MarketNameSolutionInfoFilter();
     
     static const std::string& getXMLNameStatic();
     

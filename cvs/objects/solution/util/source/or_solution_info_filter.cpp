@@ -42,15 +42,14 @@
 #include <string>
 
 #include "solution/util/include/or_solution_info_filter.h"
-#include "solution/util/include/solution_info_filter_factory.h"
-#include "util/base/include/xml_helper.h"
-#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
 typedef vector<ISolutionInfoFilter*>::const_iterator CSolutionInfoFilterIterator;
 
-OrSolutionInfoFilter::OrSolutionInfoFilter() {
+OrSolutionInfoFilter::OrSolutionInfoFilter(std::vector<ISolutionInfoFilter*> aFilters)
+:mFilters(aFilters)
+{
 }
 
 OrSolutionInfoFilter::~OrSolutionInfoFilter() {

@@ -63,7 +63,7 @@ class SolutionInfo;
 class AllSolutionInfoFilter : public ISolutionInfoFilter {
 public:
     AllSolutionInfoFilter();
-    ~AllSolutionInfoFilter();
+    virtual ~AllSolutionInfoFilter();
     
     static const std::string& getXMLNameStatic();
     

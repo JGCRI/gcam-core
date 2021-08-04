@@ -44,12 +44,12 @@
 #include "solution/util/include/has_market_flag_solution_info_filter.h"
 #include "solution/util/include/solution_info.h"
 #include "containers/include/iinfo.h"
-#include "util/base/include/xml_helper.h"
-#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
-HasMarketFlagSolutionInfoFilter::HasMarketFlagSolutionInfoFilter() {
+HasMarketFlagSolutionInfoFilter::HasMarketFlagSolutionInfoFilter(const std::string& aMarketInfoKey)
+:mMarketInfoKey(aMarketInfoKey)
+{
 }
 
 HasMarketFlagSolutionInfoFilter::~HasMarketFlagSolutionInfoFilter() {

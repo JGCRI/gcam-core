@@ -43,14 +43,12 @@
 
 #include "solution/util/include/market_type_solution_info_filter.h"
 #include "solution/util/include/solution_info.h"
-#include "util/base/include/xml_helper.h"
-#include "util/logger/include/ilogger.h"
 #include "marketplace/include/market.h"
 
 using namespace std;
 
-MarketTypeSolutionInfoFilter::MarketTypeSolutionInfoFilter()
-:mAcceptMarketType( IMarketType::END )
+MarketTypeSolutionInfoFilter::MarketTypeSolutionInfoFilter(const std::string& aMarketTypeStr)
+:mAcceptMarketType( getMarketTypeFromString(aMarketTypeStr) )
 {
 }
 
@@ -81,7 +79,7 @@ bool MarketTypeSolutionInfoFilter::acceptSolutionInfo( const SolutionInfo& aSolu
  *         if no matches were found.
  * \see Market::convert_type_to_string
  */
-IMarketType::Type MarketTypeSolutionInfoFilter::getMarketTypeFromString( const string& aMarketType ) const {
+IMarketType::Type MarketTypeSolutionInfoFilter::getMarketTypeFromString( const string& aMarketType ) {
     // would it be worth it to convert this to a static method with a pre-populated map of string to enum?
     
     // iterate over each possible enum and have the Market convert it to a string

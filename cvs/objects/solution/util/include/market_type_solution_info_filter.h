@@ -67,8 +67,8 @@ class SolutionInfo;
  */
 class MarketTypeSolutionInfoFilter : public ISolutionInfoFilter {
 public:
-    MarketTypeSolutionInfoFilter();
-    ~MarketTypeSolutionInfoFilter();
+    MarketTypeSolutionInfoFilter(const std::string& aMarketTypeStr);
+    virtual ~MarketTypeSolutionInfoFilter();
     
     static const std::string& getXMLNameStatic();
     
@@ -79,7 +79,7 @@ private:
     //! The market type which will be accepted
     IMarketType::Type mAcceptMarketType;
     
-    IMarketType::Type getMarketTypeFromString( const std::string& aMarketType ) const;
+    static IMarketType::Type getMarketTypeFromString( const std::string& aMarketType );
 };
 
 #endif // _MARKET_TYPE_SOLUTION_INFO_FILTER_H_

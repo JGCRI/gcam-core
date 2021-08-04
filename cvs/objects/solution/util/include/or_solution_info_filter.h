@@ -71,8 +71,8 @@ class SolutionInfo;
  */
 class OrSolutionInfoFilter : public ISolutionInfoFilter {
 public:
-    OrSolutionInfoFilter();
-    ~OrSolutionInfoFilter();
+    OrSolutionInfoFilter(std::vector<ISolutionInfoFilter*> aFilters);
+    virtual ~OrSolutionInfoFilter();
     
     static const std::string& getXMLNameStatic();
     

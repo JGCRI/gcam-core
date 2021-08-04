@@ -43,13 +43,12 @@
 
 #include "solution/util/include/price_greater_than_solution_info_filter.h"
 #include "solution/util/include/solution_info.h"
-#include "util/base/include/xml_helper.h"
-#include "util/logger/include/ilogger.h"
+#include "util/base/include/xml_parse_helper.h"
 
 using namespace std;
 
-PriceGreaterThanSolutionInfoFilter::PriceGreaterThanSolutionInfoFilter()
-:mPriceThreshold( -1 )
+PriceGreaterThanSolutionInfoFilter::PriceGreaterThanSolutionInfoFilter(const string& aPriceStr)
+:mPriceThreshold( XMLParseHelper::getValue<double>(aPriceStr) )
 {
 }
 
@@ -61,11 +60,6 @@ const string& PriceGreaterThanSolutionInfoFilter::getXMLNameStatic() {
     return XML_NAME;
 }
 
-bool PriceGreaterThanSolutionInfoFilter::acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const {
-    /*!
-     * \pre mAcceptMarketName was read in.
-     */
-    assert( mPriceThreshold > 0 );
-    
+bool PriceGreaterThanSolutionInfoFilter::acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const {    
     return aSolutionInfo.getPrice() > mPriceThreshold;
 }

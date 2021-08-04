@@ -71,8 +71,8 @@ class SolutionInfo;
  */
 class AndSolutionInfoFilter : public ISolutionInfoFilter {
 public:
-    AndSolutionInfoFilter();
-    ~AndSolutionInfoFilter();
+    AndSolutionInfoFilter(std::vector<ISolutionInfoFilter*> aFilters);
+    virtual ~AndSolutionInfoFilter();
     
     static const std::string& getXMLNameStatic();
     

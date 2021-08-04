@@ -43,8 +43,6 @@
 
 #include "solution/util/include/solvable_solution_info_filter.h"
 #include "solution/util/include/solution_info.h"
-#include "util/base/include/xml_helper.h"
-#include "util/logger/include/ilogger.h"
 
 using namespace std;
 

@@ -64,7 +64,7 @@ class SolutionInfo;
 class SolvableNRSolutionInfoFilter : public ISolutionInfoFilter {
 public:
     SolvableNRSolutionInfoFilter();
-    ~SolvableNRSolutionInfoFilter();
+    virtual ~SolvableNRSolutionInfoFilter();
     
     static const std::string& getXMLNameStatic();
     

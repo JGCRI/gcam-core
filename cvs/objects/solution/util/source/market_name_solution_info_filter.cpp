@@ -43,12 +43,12 @@
 
 #include "solution/util/include/market_name_solution_info_filter.h"
 #include "solution/util/include/solution_info.h"
-#include "util/base/include/xml_helper.h"
-#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
-MarketNameSolutionInfoFilter::MarketNameSolutionInfoFilter() {
+MarketNameSolutionInfoFilter::MarketNameSolutionInfoFilter(const std::string& aMarketName)
+:mAcceptMarketName(aMarketName)
+{
 }
 
 MarketNameSolutionInfoFilter::~MarketNameSolutionInfoFilter() {
