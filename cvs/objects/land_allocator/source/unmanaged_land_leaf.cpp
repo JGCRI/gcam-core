@@ -47,6 +47,7 @@
 #include "util/base/include/ivisitor.h"
 #include "emissions/include/ghg_factory.h"
 #include "marketplace/include/marketplace.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -106,8 +107,13 @@ void UnmanagedLandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,
 {
     // Adjust profit rate for land expnasion costs if applicable
     double adjustedProfitRate = aAverageProfitRate;
-    const Marketplace* marketplace = scenario->getMarketplace();
+    Marketplace* marketplace = scenario->getMarketplace();
 
+    // Increase land value with GDP
+    IInfo* marketInfo = marketplace->getMarketInfo( "UnmanagedLand", aRegionName, aPeriod, true );
+    double gdpRatio = marketInfo->getDouble( "gdp-ratio", true );
+    adjustedProfitRate = adjustedProfitRate * gdpRatio;
+    
     if ( mIsLandExpansionCost ) {
         //subtract off expansion cost from profit rate
         double expansionCost = marketplace->getPrice( mLandExpansionCostName, aRegionName, aPeriod );
