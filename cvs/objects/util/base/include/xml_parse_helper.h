@@ -106,6 +106,10 @@ private:
 };
 
 struct XMLParseHelper {
+    static void initParser();
+    
+    static void cleanupParser();
+    
     static std::string getNodeName(const rapidxml::xml_node<char>* aNode) {
         return std::string(aNode->name(), aNode->name_size());
     }

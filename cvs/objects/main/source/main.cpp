@@ -108,7 +108,7 @@ int main( int argc, char *argv[] ) {
     timer.start();
 
     // Initialize the LoggerFactory
-    XMLHelper<void>::initParser();
+    XMLParseHelper::initParser();
     LoggerFactoryWrapper loggerFactoryWrapper;
     bool success = /*XMLHelper<void>*/XMLParseHelper::parseXML( loggerFileName, &loggerFactoryWrapper );
     
@@ -194,8 +194,9 @@ int main( int argc, char *argv[] ) {
         return 1;
     }
     
-    // Cleanup Xerces. This should be encapsulated with an initializer object to ensure against leakage.
-    XMLHelper<void>::cleanupParser();
+    // Cleanup any temporary structures that are no longer required now that no more data
+    // will be parsed.
+    XMLParseHelper::cleanupParser();
 
     // Run the scenario and print debugging information as controlled by the following
     // configuration options with the defaults being to run all periods and print debug

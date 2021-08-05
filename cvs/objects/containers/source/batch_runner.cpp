@@ -239,7 +239,7 @@ bool BatchRunner::runSingleScenario( IScenarioRunner* aScenarioRunner,
             << " with scenario runner " << aScenarioRunner->getName()
             << "." << endl;
 
-    XMLHelper<void>::initParser();
+    XMLParseHelper::initParser();
     // Setup the scenario.
     const string runName = aComponent.mName;
     bool success = mInternalRunner->setupScenarios( aTimer, runName, components );
@@ -253,7 +253,7 @@ bool BatchRunner::runSingleScenario( IScenarioRunner* aScenarioRunner,
     }
     
     // Cleanup parser and associated memory now to save space while the scenario is running.
-    XMLHelper<void>::cleanupParser();
+    XMLParseHelper::cleanupParser();
     
     // the value for aSinglePeriod may not have been properly set because in batch mode
     // the model time may not have been available

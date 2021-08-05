@@ -47,6 +47,7 @@
 #include "util/base/include/gcam_fusion.hpp"
 #include "util/base/include/gcam_data_containers.h"
 #include "util/base/include/factory.h"
+#include "util/base/include/tech_vector_parse_helper.h"
 #include "containers/include/scenario_runner_factory.h"
 #include "containers/include/iscenario_runner.h"
 #include "containers/include/single_scenario_runner.h"
@@ -135,6 +136,25 @@ struct GetActualContainerType<DataType, typename boost::enable_if<
     using data_type = typename boost::remove_pointer<value_type>::type;
     using FactoryType = Factory<typename data_type::SubClassFamilyVector>;
 };
+
+void XMLParseHelper::initParser() {
+    // At this point we should ensure we have a place to store temporary data for
+    // TechVintageVectors.
+    // Note we will clean up this memory (and all of the temporary arrays that it contains
+    // when we close the XML parser).
+    boost::fusion::for_each(sTechVectorParseHelperMap, [] (auto& aPair) {
+        using TVVHelperType = typename boost::remove_pointer<decltype( aPair.second )>::type;
+        aPair.second = new TVVHelperType();
+    });
+}
+
+void XMLParseHelper::cleanupParser() {
+    // Clear out all temporary stroage arrays for TechVintageVector.
+    boost::fusion::for_each(sTechVectorParseHelperMap, [] (auto& aPair) {
+        delete aPair.second;
+        aPair.second = 0;
+    });
+}
 
 // Specialization for non-parsable data
 template<typename DataType>

@@ -45,6 +45,7 @@
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/tech_vector_parse_helper.h"
 #include "technologies/include/icapture_component.h"
 #include "functions/include/icoefficient.h"
 #include "functions/include/efficiency.h"
