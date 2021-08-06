@@ -143,7 +143,7 @@ private:
     ITechnologyContainer* mTechnology;
     
     //! The vector of XML modifications to make to the global technology
-    std::vector<rapidxml::xml_node<char>*> mXMLAdjustments2;
+    std::vector<rapidxml::xml_node<char>*> mXMLAdjustments;
     
 };
 

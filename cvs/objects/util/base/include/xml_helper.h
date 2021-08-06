@@ -71,7 +71,7 @@
 #include <map>
 #include <memory>
 #include <typeinfo>
-
+/*
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMAttr.hpp>
@@ -95,12 +95,12 @@
 #include <boost/mpl/transform.hpp>
 #include <boost/mpl/unpack_args.hpp>
 #include <boost/fusion/include/vector.hpp>
-#include <boost/fusion/include/for_each.hpp>
+#include <boost/fusion/include/for_each.hpp>*/
 
 #include "util/base/include/model_time.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
-#include "util/base/include/iparsable.h"
+//#include "util/base/include/iparsable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
 
@@ -167,7 +167,7 @@ public:
  * \brief A class with static functions to parse XML DOM trees.
  * \author Josh Lurz
  */
-
+#if 0
 template<class T>
 class XMLHelper {
 public:
@@ -543,6 +543,7 @@ std::string XMLHelper<T>::safeTranscode( const XMLCh* toTranscode ) {
    xercesc::XMLString::release( &transcoded );
    return retString;
 }
+#endif
 
 //! Function to write the argument element to xml in proper format.
 /*!
@@ -888,7 +889,7 @@ void XMLWriteVector( const objects::PeriodVector<T>& aOutputVector,
 * \param aModelElement Element to call XMLParse on.
 * \return Whether parsing was successful.
 */
-
+#if 0
 template <class T>
 bool XMLHelper<T>::parseXML( const std::string& aXMLFile, IParsable* aModelElement ) {
     // Track the number of active parses to avoid destroying a document that causes other
@@ -1563,5 +1564,6 @@ void XMLHelper<T>::serializeNode( const xercesc::DOMNode* aNode, std::ostream& a
             break;
     }
 }
+#endif
 
 #endif // _XML_HELPER_H_

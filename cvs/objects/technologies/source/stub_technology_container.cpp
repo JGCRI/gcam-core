@@ -83,7 +83,7 @@ const string& StubTechnologyContainer::getXMLNameStatic() {
 
 // AParsable methods
 bool StubTechnologyContainer::XMLParse( rapidxml::xml_node<char>* & aNode ) {
-    mXMLAdjustments2.push_back( XMLParseHelper::deepClone(aNode) );
+    mXMLAdjustments.push_back( XMLParseHelper::deepClone(aNode) );
     return true;
 }
 
@@ -113,11 +113,15 @@ void StubTechnologyContainer::completeInit( const string& aRegionName,
         abort();
     }
      
-    for(rapidxml::xml_node<char>* currNode : mXMLAdjustments2) {
-        // TODO: for some reason it can't decide between the two versions of XMLParse
-        // once we knock out the old xerces version this case won't be necessary
-        static_cast<AParsable*>(mTechnology)->XMLParse(currNode);
+    // Make the XML adjustments note that this may produce parsing errors.
+    for(rapidxml::xml_node<char>* currNode : mXMLAdjustments) {
+        mTechnology->XMLParse(currNode);
     }
+    
+    // now that the XML adjustments are parsed no need to keep them around any longer
+    // Note the XML adjustments's memory is managed by rapidxml and will get cleaned up
+    // when XMLParseHelper::cleanupParser is called.
+    mXMLAdjustments.clear();
     
     // Now call complete init on the completed technology.  Note any other interpolations
     // which need to occur will happen here.

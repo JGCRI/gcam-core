@@ -149,6 +149,12 @@ void XMLParseHelper::initParser() {
 }
 
 void XMLParseHelper::cleanupParser() {
+    // The "store" memory pool was used to store XML adjustments to be made in
+    // stub technology during completeInit.  That should be done by now so we
+    // should free the memory, which can be significant, to make room during
+    // the model run.
+    getStoreXMLMemoryPool().clear();
+    
     // Clear out all temporary stroage arrays for TechVintageVector.
     boost::fusion::for_each(sTechVectorParseHelperMap, [] (auto& aPair) {
         delete aPair.second;

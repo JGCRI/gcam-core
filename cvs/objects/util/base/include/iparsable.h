@@ -43,7 +43,7 @@
 * \brief Header file for the IParsable interface.
 * \author Josh Lurz
 */
-#include <xercesc/dom/DOMNode.hpp>
+//#include <xercesc/dom/DOMNode.hpp>
 
 namespace rapidxml {
 template<typename Ch> class xml_node;
@@ -62,6 +62,7 @@ template<typename Ch> class xml_node;
 *          interface without multiple inheritance problems. 
 * \author Josh Lurz
 */
+#if 0
 class IParsable {
 public:
 	//! Virtual destructor so that instances of the interface may be deleted
@@ -80,6 +81,7 @@ public:
 // Inline function definitions.
 IParsable::~IParsable(){
 }
+#endif
 
 class AParsable {
 public:
