@@ -51,7 +51,7 @@
 
 // include files ***********************************************************
 
-#include "util/base/include/xml_pair.h"
+#include "util/base/include/xml_helper.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/data_definition_util.h"
 

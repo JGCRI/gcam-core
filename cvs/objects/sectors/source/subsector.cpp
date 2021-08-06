@@ -64,7 +64,6 @@
 #include "sectors/include/sector_utils.h"
 #include "util/base/include/interpolation_rule.h"
 #include "functions/include/idiscrete_choice.hpp"
-#include "functions/include/discrete_choice_factory.hpp"
 
 using namespace std;
 using namespace objects;

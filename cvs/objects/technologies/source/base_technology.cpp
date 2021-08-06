@@ -51,12 +51,10 @@
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/ivisitor.h"
-#include "emissions/include/ghg_factory.h"
 #include "emissions/include/co2_emissions.h"
 #include "functions/include/function_utils.h"
 #include "functions/include/node_input.h"
 #include "technologies/include/icapture_component.h"
-#include "technologies/include/capture_component_factory.h"
 #include "containers/include/info_factory.h"
 
 

@@ -51,7 +51,6 @@
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
 #include "sectors/include/ibackup_calculator.h"
-#include "sectors/include/backup_calculator_factory.h"
 #include "sectors/include/sector_utils.h"
 #include "functions/include/iinput.h"
 #include "functions/include/non_energy_input.h"

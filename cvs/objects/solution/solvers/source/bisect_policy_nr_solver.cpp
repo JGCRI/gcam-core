@@ -44,7 +44,6 @@
 #include "solution/solvers/include/bisect_policy_nr_solver.h"
 #include "containers/include/world.h"
 #include "solution/solvers/include/solver_component.h"
-#include "solution/solvers/include/solver_component_factory.h"
 #include "solution/util/include/solution_info_set.h"
 #include "solution/util/include/calc_counter.h"
 #include "util/base/include/configuration.h"

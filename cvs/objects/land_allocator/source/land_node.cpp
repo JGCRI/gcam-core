@@ -49,7 +49,6 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/ivisitor.h"
 #include "functions/include/idiscrete_choice.hpp"
-#include "functions/include/discrete_choice_factory.hpp"
 #include "sectors/include/sector_utils.h"
 #include <numeric>
 #include <utility>

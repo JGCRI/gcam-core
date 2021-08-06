@@ -53,14 +53,11 @@
 #include "containers/include/gdp.h"
 #include "util/logger/include/ilogger.h"
 #include "technologies/include/icapture_component.h"
-#include "technologies/include/capture_component_factory.h"
 #include "technologies/include/ishutdown_decider.h"
-#include "technologies/include/shutdown_decider_factory.h"
 #include "functions/include/iinput.h"
 #include "functions/include/non_energy_input.h"
 #include "functions/include/input_capital.h"
 #include "functions/include/ifunction.h"
-#include "technologies/include/input_factory.h"
 #include "functions/include/function_manager.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
@@ -69,16 +66,13 @@
 #include "functions/include/idiscrete_choice.hpp"
 
 #include "technologies/include/ioutput.h"
-#include "technologies/include/output_factory.h"
 #include "technologies/include/primary_output.h"
-#include "technologies/include/output_factory.h"
 
 #include "technologies/include/ical_data.h"
 #include "technologies/include/iproduction_state.h"
 #include "technologies/include/production_state_factory.h"
 
 #include "technologies/include/marginal_profit_calculator.h"
-#include "emissions/include/ghg_factory.h"
 #include "emissions/include/co2_emissions.h"
 
 // TODO: Factory for cal data objects.

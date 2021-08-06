@@ -42,9 +42,7 @@
 
 #include "emissions/include/nonco2_emissions.h"
 #include "emissions/include/iemissions_driver.h"
-#include "emissions/include/emissions_driver_factory.h"
 #include "emissions/include/aemissions_control.h"
-#include "emissions/include/emissions_control_factory.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "util/logger/include/ilogger.h"

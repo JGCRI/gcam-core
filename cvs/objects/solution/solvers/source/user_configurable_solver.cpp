@@ -47,7 +47,6 @@
 #include "containers/include/world.h"
 #include "marketplace/include/marketplace.h"
 #include "solution/solvers/include/solver_component.h"
-#include "solution/solvers/include/solver_component_factory.h"
 #include "solution/util/include/solution_info_set.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"

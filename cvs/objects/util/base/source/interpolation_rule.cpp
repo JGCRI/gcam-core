@@ -42,7 +42,6 @@
 #include <string>
 
 #include "util/base/include/interpolation_rule.h"
-#include "util/base/include/interpolation_function_factory.h"
 #include "util/base/include/fixed_interpolation_function.h" // for the fixed hack
 #include "util/base/include/linear_interpolation_function.h"
 #include "util/base/include/s_curve_interpolation_function.h"
