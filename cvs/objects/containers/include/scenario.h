@@ -50,7 +50,7 @@
 #include <string>
 #include <boost/shared_ptr.hpp>
 
-#include "util/base/include/iparsable.h"
+#include "util/base/include/aparsable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
 

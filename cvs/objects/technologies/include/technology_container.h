@@ -47,6 +47,7 @@
 
 #include <map>
 #include "technologies/include/itechnology_container.h"
+#include "util/base/include/time_vector.h"
 
 // Forward declarations
 class InterpolationRule;

@@ -47,7 +47,7 @@
 
 #include <string>
 #include "util/base/include/inamed.h"
-#include "util/base/include/iparsable.h"
+#include "util/base/include/aparsable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
 

@@ -46,7 +46,7 @@
 #include <string>
 #include <boost/core/noncopyable.hpp>
 
-#include "util/base/include/iparsable.h"
+#include "util/base/include/aparsable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/iinterpolation_function.h"

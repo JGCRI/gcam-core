@@ -51,7 +51,6 @@
 #include <string>
 #include <boost/core/noncopyable.hpp>
 
-#include "util/base/include/iparsable.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"

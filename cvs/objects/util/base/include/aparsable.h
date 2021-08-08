@@ -1,5 +1,5 @@
-#ifndef _IPARSABLE_H_
-#define _IPARSABLE_H_
+#ifndef _APARSABLE_H_
+#define _APARSABLE_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -38,12 +38,11 @@
 
 
 /*! 
-* \file iparsable.h  
+* \file aparsable.h  
 * \ingroup Objects
-* \brief Header file for the IParsable interface.
+* \brief Header file for the AParsable interface.
 * \author Josh Lurz
 */
-//#include <xercesc/dom/DOMNode.hpp>
 
 namespace rapidxml {
 template<typename Ch> class xml_node;
@@ -51,47 +50,35 @@ template<typename Ch> class xml_node;
 /*!
 * \ingroup Objects
 * \brief An interface to a class which can be parsed by the XMLParser.
-* \details This interface represents a contract by a class that it implements
-*          the XMLParse function. Classes that implement this interface are
-*          classes that initiate an XML parse. Since they implement this
-*          interface, these classes can be passed to the XMLHelper as a pointer
-*          to the IParsable interface. This allows the XMLParser to then call
-*          their parsing routine at the appropriate time, which still
-*          controlling XML parsing. This class has no data members and so
-*          classes that already inherit from another class may implement this
-*          interface without multiple inheritance problems. 
-* \author Josh Lurz
+* \details A classes should inherit from this class if they require some customized
+*          behavior to parse it's data structures from XML.
+* \author Pralit Patel
 */
-#if 0
-class IParsable {
-public:
-	//! Virtual destructor so that instances of the interface may be deleted
-    //! correctly through a pointer to the interface.
-    inline virtual ~IParsable();
-    
-	/*!
-     * \brief A function which parses XML starting at a given position in the
-     *        DOM tree.
-     * \param aNode The current node of a DOM tree.
-     * \return Whether the parse completed successfully.
-     */
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) {return false;}
-};
-
-// Inline function definitions.
-IParsable::~IParsable(){
-}
-#endif
-
 class AParsable {
 public:
     //! Virtual destructor so that instances of the interface may be deleted
     //! correctly through a pointer to the interface.
     inline virtual ~AParsable() {}
     
+    /*!
+     * \brief Perform custom behavior to parse Data out of XML DOM element.
+     * \details Classes that implement this method will get called with a *reference*
+     *          to the child XML nodes.  If the subclass is able to parse that node
+     *          they should return true, otherwise default parsing behavior will be
+     *          attempted to parse that XML node.  Because classes they will get access
+     *          by reference they could, for instance, skip ahead and parse multiple
+     *          child nodes at a time to avoid having them parsed by default behavior
+     *          as well.
+     * \param aNode A reference to the XML element which can be chnaged as needed to
+     *              ensure all data gets processed correctly and default parsing behavior
+     *              is not applied where not appropriate.
+     * \return If true is returned the parser will move on to the next element without
+     *         attempting to further parse.  If false is returned the element will still
+     *         be attempted to parse using default behavior.
+     */
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode ) {
         return false;
     }
 };
 
-#endif // _IPARSABLE_H_
+#endif // _APARSABLE_H_

@@ -293,7 +293,7 @@ bool BatchRunner::XMLParse( rapidxml::xml_node<char>* & aNode) {
  * \details Parse a single ComponentSet and add it to the BatchRunner's list of
  *          ComponentSets. Dispatch any FileSets found to the XMLParseFileSet
  *          function.
- * \param aNode DOM node corresponding to the current ComponentSet.
+ * \param aNode XML node corresponding to the current ComponentSet.
  * \return Whether the node was successfully parsed.
  */
 bool BatchRunner::XMLParseComponentSet( rapidxml::xml_node<char>* aNode ){
@@ -334,7 +334,7 @@ bool BatchRunner::XMLParseComponentSet( rapidxml::xml_node<char>* aNode ){
  * \brief Parse the set of scenario runners.
  * \details Parse the set of scenario runners. Dispatches and XML data below the
  *          ScenarioRunner to the object itself for parsing.
- * \param aNode DOM node corresponding to the runner-set.
+ * \param aNode XML node corresponding to the runner-set.
  * \return Whether the node was successfully parsed.
  */
 bool BatchRunner::XMLParseRunnerSet( rapidxml::xml_node<char>* aNode ){
@@ -388,7 +388,7 @@ bool BatchRunner::XMLParseRunnerSet( rapidxml::xml_node<char>* aNode ){
  * \brief Parse a single FileSet element.
  * \details This function parses a single FileSet and adds it to the passed in
  *          ComponentSet's list of FileSets. 
- * \param aNode DOM node corresponding to the current FileSet.
+ * \param aNode XML node corresponding to the current FileSet.
  * \param aCurrComponent The ComponentSet to add this FileSet to.
  * \return Whether the node was successfully parsed.
  */

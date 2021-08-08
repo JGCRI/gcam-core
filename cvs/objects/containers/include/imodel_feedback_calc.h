@@ -45,8 +45,7 @@
 
 #include <boost/core/noncopyable.hpp>
 
-#include "util/base/include/value.h"
-#include "util/base/include/iparsable.h"
+#include "util/base/include/inamed.h"
 
 class Scenario;
 class IClimateModel;

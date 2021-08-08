@@ -102,6 +102,7 @@ protected:
     // TODO: Move all these.
     class IDemandFunction {
     public:
+        virtual ~IDemandFunction() {}
         // TODO: Remove this function once construction is cleanly implemented.
         virtual bool isPerCapitaBased() const = 0;
 

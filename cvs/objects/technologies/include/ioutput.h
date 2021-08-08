@@ -55,7 +55,7 @@ class ILandAllocator;
 
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iparsable.h"
+#include "util/base/include/aparsable.h"
 #include "util/base/include/data_definition_util.h"
 
 // Need to forward declare the subclasses as well.

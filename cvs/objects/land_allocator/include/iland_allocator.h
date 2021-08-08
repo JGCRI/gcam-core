@@ -45,7 +45,6 @@
  * \author Josh Lurz, Kate Calvin
  */
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iparsable.h"
 
 // Forward declarations
 class Tabs;

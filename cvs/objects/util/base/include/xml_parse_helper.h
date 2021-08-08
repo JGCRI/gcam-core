@@ -68,7 +68,7 @@
 #include <cstring>
 #include <boost/lexical_cast.hpp>
 #include <rapidxml.hpp>
-#include "util/base/include/iparsable.h"
+#include "util/base/include/aparsable.h"
 
 class Scenario;
 class IScenarioRunner;

@@ -734,7 +734,6 @@
 		CD4886D6122873C200F5A88A /* inamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inamed.h; sourceTree = "<group>"; };
 		CD4886D7122873C200F5A88A /* input_finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input_finder.h; sourceTree = "<group>"; };
 		CD4886D9122873C200F5A88A /* interpolation_rule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interpolation_rule.h; sourceTree = "<group>"; };
-		CD4886DA122873C200F5A88A /* iparsable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iparsable.h; sourceTree = "<group>"; };
 		CD4886DD122873C200F5A88A /* ivisitable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivisitable.h; sourceTree = "<group>"; };
 		CD4886DE122873C200F5A88A /* ivisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivisitor.h; sourceTree = "<group>"; };
 		CD4886DF122873C200F5A88A /* linear_interpolation_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linear_interpolation_function.h; sourceTree = "<group>"; };
@@ -873,6 +872,7 @@
 		CDE29980198C82C400556032 /* gdp_control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gdp_control.cpp; sourceTree = "<group>"; };
 		CDE29981198C82C400556032 /* mac_control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mac_control.cpp; sourceTree = "<group>"; };
 		CDE29982198C82C400556032 /* nonco2_emissions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nonco2_emissions.cpp; sourceTree = "<group>"; };
+		CDE4917426C037ED00ADDD53 /* aparsable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aparsable.h; sourceTree = "<group>"; };
 		CDE659AC1E940B8E00C562D8 /* linear_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linear_control.h; sourceTree = "<group>"; };
 		CDE659AD1E940BA600C562D8 /* linear_control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linear_control.cpp; sourceTree = "<group>"; };
 		CDF0CA0E139FD0BB00B20B01 /* luc_emissions_summer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luc_emissions_summer.h; sourceTree = "<group>"; };
@@ -1896,6 +1896,7 @@
 		CD4886CA122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CDE4917426C037ED00ADDD53 /* aparsable.h */,
 				CD7A99FE2673A49D000EA23F /* xml_parse_helper.h */,
 				CDAACD84216C545F00D13FD6 /* supply_demand_curve_saver.h */,
 				CD2420002162D2250071DB2B /* initialize_tech_vector_helper.hpp */,
@@ -1920,7 +1921,6 @@
 				CD4886D6122873C200F5A88A /* inamed.h */,
 				CD4886D7122873C200F5A88A /* input_finder.h */,
 				CD4886D9122873C200F5A88A /* interpolation_rule.h */,
-				CD4886DA122873C200F5A88A /* iparsable.h */,
 				CD4886DD122873C200F5A88A /* ivisitable.h */,
 				CD4886DE122873C200F5A88A /* ivisitor.h */,
 				CD4886DF122873C200F5A88A /* linear_interpolation_function.h */,

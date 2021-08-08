@@ -47,8 +47,7 @@
 
 #include <boost/core/noncopyable.hpp>
 
-#include "util/base/include/iparsable.h"
-#include "util/base/include/time_vector.h"
+#include "util/base/include/aparsable.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
@@ -56,6 +55,7 @@
 // Forward declarations
 class ITechnology;
 class IInfo;
+class Tabs;
 class ILandAllocator;
 class Demographic;
 class InterpolationRule;
