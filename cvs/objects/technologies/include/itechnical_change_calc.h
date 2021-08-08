@@ -47,12 +47,12 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
-#include "util/base/include/istandard_component.h"
 #include "util/base/include/data_definition_util.h"
 
 class IInput;
 struct PreviousPeriodInfo;
 class IFunction;
+class Tabs;
 
 // Need to forward declare the subclasses as well.
 class StandardTechnicalChangeCalc;
@@ -70,7 +70,7 @@ class StandardTechnicalChangeCalc;
  *          entire production function.
  * \author Josh Lurz
 */
-class ITechnicalChangeCalc : public INamed, public IParsedComponent, private boost::noncopyable {
+class ITechnicalChangeCalc : public INamed, private boost::noncopyable {
 public:
     // Clone operator must be declared explicitly even though it is inherited
     // from IStandardComponent so that the return type can be changed. Since
@@ -82,6 +82,16 @@ public:
      * \brief Complete the initialization of the technical change calculator.
      */
     virtual void completeInit() = 0;
+    
+    /*!
+     * \brief Write data from this object in an XML format for debugging.
+     * \param aPeriod Period for which to write data.
+     * \param aOut Filestream to which to write.
+     * \param aTabs Object responsible for writing the correct number of tabs.
+     */
+    virtual void toDebugXML( const int aPeriod,
+                             std::ostream& aOut,
+                             Tabs* aTabs ) const = 0;
 
     /*!
      * \brief Calculate the total Hick's neutral technical change and adjust the

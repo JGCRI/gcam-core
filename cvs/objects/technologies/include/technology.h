@@ -50,7 +50,6 @@
 #include <map>
 #include <memory>
 
-#include "util/base/include/istandard_component.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"
 #include "functions/include/ifunction.h" // For TechChange struct.

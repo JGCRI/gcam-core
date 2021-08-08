@@ -49,7 +49,6 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
-#include "util/base/include/istandard_component.h"
 #include "util/base/include/data_definition_util.h"
 
 class Tabs;
@@ -69,7 +68,6 @@ class Intensity;
  * \author Josh Lurz
  */
 class ICoefficient : public INamed,
-                     public ISimpleComponent,
                      private boost::noncopyable
 {
 public:
@@ -103,6 +101,16 @@ public:
      * \brief Complete the initialization of the coefficient.
      */
     virtual void completeInit() = 0;
+    
+    /*!
+     * \brief Write data from this object in an XML format for debugging.
+     * \param aPeriod Period for which to write data.
+     * \param aOut Filestream to which to write.
+     * \param aTabs Object responsible for writing the correct number of tabs.
+     */
+    virtual void toDebugXML( const int aPeriod,
+                             std::ostream& aOut,
+                             Tabs* aTabs ) const = 0;
 
     /*!
      * \brief Get the coefficient.

@@ -735,7 +735,6 @@
 		CD4886D7122873C200F5A88A /* input_finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input_finder.h; sourceTree = "<group>"; };
 		CD4886D9122873C200F5A88A /* interpolation_rule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interpolation_rule.h; sourceTree = "<group>"; };
 		CD4886DA122873C200F5A88A /* iparsable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iparsable.h; sourceTree = "<group>"; };
-		CD4886DC122873C200F5A88A /* istandard_component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = istandard_component.h; sourceTree = "<group>"; };
 		CD4886DD122873C200F5A88A /* ivisitable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivisitable.h; sourceTree = "<group>"; };
 		CD4886DE122873C200F5A88A /* ivisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivisitor.h; sourceTree = "<group>"; };
 		CD4886DF122873C200F5A88A /* linear_interpolation_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linear_interpolation_function.h; sourceTree = "<group>"; };
@@ -1922,7 +1921,6 @@
 				CD4886D7122873C200F5A88A /* input_finder.h */,
 				CD4886D9122873C200F5A88A /* interpolation_rule.h */,
 				CD4886DA122873C200F5A88A /* iparsable.h */,
-				CD4886DC122873C200F5A88A /* istandard_component.h */,
 				CD4886DD122873C200F5A88A /* ivisitable.h */,
 				CD4886DE122873C200F5A88A /* ivisitor.h */,
 				CD4886DF122873C200F5A88A /* linear_interpolation_function.h */,

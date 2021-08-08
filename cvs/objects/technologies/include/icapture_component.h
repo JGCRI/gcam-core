@@ -47,7 +47,6 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
-#include "util/base/include/istandard_component.h"
 #include "util/base/include/data_definition_util.h"
 
 class IInput;
@@ -68,7 +67,7 @@ class PowerPlantCaptureComponent;
  *          and how the emissions are disposed.
  * \author Josh Lurz
 */
-class ICaptureComponent : public INamed, public IParsedComponent, private boost::noncopyable {
+class ICaptureComponent : public INamed, private boost::noncopyable {
 public:
     // Clone operator must be declared explicitly even though it is inherited
     // from IStandardComponent so that the return type can be changed. Since
