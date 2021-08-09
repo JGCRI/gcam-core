@@ -420,7 +420,7 @@ protected:
 		DEFINE_VARIABLE(SIMPLE | STATE, "land-density-param", mLandDensityParam, Value),
 
 		//! The base floorspace parameter to use during calcDemand. Parsed from XML
-		DEFINE_VARIABLE(SIMPLE | STATE, "base-floorspace-param", mBaseFloorspaceParam, Value),
+		DEFINE_VARIABLE(SIMPLE | STATE, "b-param", mbParam, Value),
 
 		//! The income parameter to use during calcDemand. Parsed from XML
 		DEFINE_VARIABLE(SIMPLE | STATE, "income-param", mIncomeParam, Value),

@@ -353,7 +353,6 @@ module_energy_L244.building_det <- function(command, ...) {
     `%notin%` <- Negate(`%in%`)
 
     L144.hab_land_flsp_fin<-L144.hab_land_flsp %>%
-      #filter(landleaf %notin% c("rock and desert","tundra")) %>%
       filter(landleaf %notin% NON_HAB_LANDTYPES) %>%
       group_by(region,year,Units) %>%
       summarise(value=sum(value)) %>%
@@ -372,7 +371,7 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(tot_dens=pop_thous/area_thouskm2) %>%
       mutate(flsp_pc=(flsp*1E9)/(pop_thous*1E3)) %>%
       mutate(base_flsp=flsp_pc) %>%
-      mutate(flsp_est=(`unadjust-satiation` +(-`land-density-param`*log(tot_dens)))*exp(-`base-floorspace-param`*log(base_flsp)
+      mutate(flsp_est=(`unadjust-satiation` +(-`land-density-param`*log(tot_dens)))*exp(-`b-param`
                                                                                         *exp(-`income-param`*log(gdp_pc)))) %>%
       mutate(`bias-adjust-param`=flsp_pc-flsp_est) %>%
       mutate(gcam.consumer="resid",
@@ -381,7 +380,7 @@ module_energy_L244.building_det <- function(command, ...) {
       rename(pop_dens=tot_dens,
              `habitable-land`=area_thouskm2,
              `base-pcFlsp`=base_flsp) %>%
-      select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
+    select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
 
     #================================================================
 

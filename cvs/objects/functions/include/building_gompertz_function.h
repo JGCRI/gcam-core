@@ -57,7 +57,7 @@ class IInput;
  * \details The total floorspace is estimated as follows:
  *          Per capita floorspace=( unadjust_satiation − land_density_param ∗ log⁡( population/habitable_land))
 
-									∗ exp(−base_floorspace_param ∗ log⁡(base per capita floorspace)
+									∗ exp(−b_param 
 
 									∗ exp(−income_param ∗log⁡(per capita GDP) ) ) − bias_adjust_param
  *

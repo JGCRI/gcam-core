@@ -135,8 +135,8 @@ void BuildingNodeInput::XMLParse( const xercesc::DOMNode* node ) {
 		else if (nodeName == "land-density-param") {
 			mLandDensityParam = (XMLHelper<double>::getValue(curr));
 		}
-		else if (nodeName == "base-floorspace-param") {
-			mBaseFloorspaceParam = (XMLHelper<double>::getValue(curr));
+		else if (nodeName == "b-param") {
+			mbParam = (XMLHelper<double>::getValue(curr));
 		}
 		else if (nodeName == "income-param") {
 			mIncomeParam = (XMLHelper<double>::getValue(curr));
@@ -305,7 +305,7 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
 	XMLWriteElement(mHabitableLand, "habitable-land", aOut, aTabs);
 	XMLWriteElement(mBasepcFlsp, "base-pcFlsp", aOut, aTabs);
 	XMLWriteElement(mLandDensityParam, "land-density-param", aOut, aTabs);
-	XMLWriteElement(mBaseFloorspaceParam, "base-floorspace-param", aOut, aTabs);
+	XMLWriteElement(mbParam, "b-param", aOut, aTabs);
 	XMLWriteElement(mIncomeParam, "income-param", aOut, aTabs);
 	XMLWriteElement(mBiasAdjustParam, "bias-adjust-param", aOut, aTabs);
 	XMLWriteElement(mCurrentSubregionalPopulation, "subregional-population", aOut, aTabs);

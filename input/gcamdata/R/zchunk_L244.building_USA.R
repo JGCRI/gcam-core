@@ -282,7 +282,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       mutate(tot_dens=round(pop_thous/area_thouskm2,0)) %>%
       #correct 0 population density to avoid NaN
       mutate(tot_dens=if_else(tot_dens==0,1,tot_dens)) %>%
-      mutate(flsp_est=(`unadjust-satiation` +(-`land-density-param`*log(tot_dens)))*exp(-`base-floorspace-param`*log(base_flsp)
+      mutate(flsp_est=(`unadjust-satiation` +(-`land-density-param`*log(tot_dens)))*exp(-`b-param`
                                                                                         *exp(-`income-param`*log(gdp_pc)))) %>%
       mutate(`bias-adjust-param`=flsp_pc-flsp_est) %>%
       mutate(gcam.consumer="resid",
