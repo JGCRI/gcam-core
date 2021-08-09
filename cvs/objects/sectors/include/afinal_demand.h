@@ -77,7 +77,7 @@ public:
      */
     virtual ~AFinalDemand();
     
-    virtual const std::string& getXMLName() const;
+    virtual const std::string& getXMLName() const = 0;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,

@@ -44,6 +44,7 @@
 #include "solution/util/include/market_type_solution_info_filter.h"
 #include "solution/util/include/solution_info.h"
 #include "marketplace/include/market.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
