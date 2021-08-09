@@ -44,9 +44,19 @@
 * \author Josh Lurz
 */
 
+#ifdef USE_STANDALONE_RAPIDXML
 namespace rapidxml {
 template<typename Ch> class xml_node;
 };
+#else
+namespace boost { namespace property_tree { namespace detail {
+namespace rapidxml {
+template<typename Ch> class xml_node;
+};
+} } }
+namespace rapidxml = boost::property_tree::detail::rapidxml;
+#endif
+
 /*!
 * \ingroup Objects
 * \brief An interface to a class which can be parsed by the XMLParser.

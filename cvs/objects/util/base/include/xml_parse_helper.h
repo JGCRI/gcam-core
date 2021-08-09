@@ -67,7 +67,13 @@
 #include <map>
 #include <cstring>
 #include <boost/lexical_cast.hpp>
+
+#ifdef USE_STANDALONE_RAPIDXML
 #include <rapidxml.hpp>
+#else
+#include <boost/property_tree/detail/rapidxml.hpp>
+#endif
+
 #include "util/base/include/aparsable.h"
 
 class Scenario;
