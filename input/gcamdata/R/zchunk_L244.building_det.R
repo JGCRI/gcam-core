@@ -60,8 +60,9 @@ module_energy_L244.building_det <- function(command, ...) {
              "L144.internal_gains",
              "L143.HDDCDD_scen_R_Y",
              "L101.Pop_thous_R_Yh",
+             "L221.LN0_Land",
+             "L221.LN1_UnmgdAllocation",
              "L102.pcgdp_thous90USD_Scen_R_Y",
-             FILE = "energy/A44.hab_land_flsp",
              FILE = "energy/A44.flsp_param"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L244.SubregionalShares",
@@ -169,8 +170,9 @@ module_energy_L244.building_det <- function(command, ...) {
     L143.HDDCDD_scen_R_Y <- get_data(all_data, "L143.HDDCDD_scen_R_Y")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y") # year comes in as double
-    L144.hab_land_flsp<- get_data(all_data, "energy/A44.hab_land_flsp", strip_attributes = TRUE)
     L144.flsp_param <- get_data(all_data, "energy/A44.flsp_param", strip_attributes = TRUE)
+    L221.LN0_Land<-get_data(all_data, "L221.LN0_Land")
+    L221.LN1_UnmgdAllocation<-get_data(all_data, "L221.LN1_UnmgdAllocation")
 
     # ===================================================
     # Subregional population and income shares: need to be read in because these default to 0
@@ -348,15 +350,41 @@ module_energy_L244.building_det <- function(command, ...) {
     # - Calculate the bias correction parameter (k)
     # - Write parameters for the updated floorspace function
 
-    # First calculate the habitable land
+    #------------------------
+      # First calculate the habitable land
 
     `%notin%` <- Negate(`%in%`)
 
-    L144.hab_land_flsp_fin<-L144.hab_land_flsp %>%
-      filter(landleaf %notin% NON_HAB_LANDTYPES) %>%
-      group_by(region,year,Units) %>%
-      summarise(value=sum(value)) %>%
+    L144.non_hab_land_pre<-L221.LN1_UnmgdAllocation %>%
+      filter(!grepl("Urban",LandNode1)) %>%
+      rename(nonHab=allocation) %>%
+      group_by(region,year) %>%
+      summarise(nonHab=sum(nonHab)) %>%
       ungroup()
+
+    L144.adj_reg<-anti_join(L221.LN1_UnmgdAllocation,L144.non_hab_land_pre, by = c("region", "year")) %>%
+        select(region,year)%>%
+        distinct(region,year) %>%
+        mutate(nonHab=0)
+
+    L144.non_hab_land<- bind_rows(L144.non_hab_land_pre,L144.adj_reg)
+
+
+    L144.hab_land_flsp<-L221.LN0_Land %>%
+      select(region, totland=landAllocation) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
+      left_join_error_no_match(L144.non_hab_land,by=c("region","year")) %>%
+      mutate(value=totland-nonHab,
+             Units="thous km2") %>%
+      select(region,year,Units,value)
+
+    L144.hab_land_flsp_fin<-L144.hab_land_flsp %>%
+      filter(year==MODEL_FINAL_BASE_YEAR) %>%
+      select(-year) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
+      bind_rows(L144.hab_land_flsp) %>%
+      arrange(region,year)
+    #------------------------
 
     # Write the function parameters
     L244.Gomp.fn.param<-L144.flsp_param %>%
@@ -852,7 +880,8 @@ module_energy_L244.building_det <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Computed offline based on data from RECS and IEA") %>%
       add_legacy_name("L244.Gomp.fn.param") %>%
-      add_precursors("common/GCAM_region_names", "energy/A44.hab_land_flsp","energy/A44.flsp_param",
+      add_precursors("common/GCAM_region_names", "L221.LN0_Land","L221.LN1_UnmgdAllocation",
+                     "energy/A44.flsp_param",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L101.Pop_thous_R_Yh",
                      "L144.flsp_bm2_R_res_Yh") ->
       L244.Gomp.fn.param
