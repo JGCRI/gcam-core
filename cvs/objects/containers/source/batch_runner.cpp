@@ -85,7 +85,7 @@ bool BatchRunner::setupScenarios( Timer& aTimer, const string aName, const list<
 
     // Parse the batch file.
     IScenarioRunner* temp = this;
-    bool success = /*XMLHelper<void>*/XMLParseHelper::parseXML( batchFileName, temp );
+    bool success = XMLParseHelper::parseXML( batchFileName, temp );
 
     // Create a default scenario runner if none were read in. This will be used to run all scenarios.
     if( mScenarioRunners.empty() ){

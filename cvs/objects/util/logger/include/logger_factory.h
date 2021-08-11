@@ -108,7 +108,7 @@ public:
     
 protected:
     DEFINE_DATA(
-        // InterpolationRule is the only member of this container hierarchy.
+        // LoggerFactoryWrapper is the only member of this container hierarchy.
         DEFINE_SUBCLASS_FAMILY( LoggerFactoryWrapper )
     )
 };

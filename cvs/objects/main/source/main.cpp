@@ -62,7 +62,7 @@
 #include <list>
 
 // xml headers
-#include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 
 // include custom headers
 #include "util/base/include/configuration.h"
@@ -74,8 +74,6 @@
 #include "util/base/include/timer.h"
 #include "util/base/include/version.h"
 #include "util/base/include/util.h"
-
-#include "util/base/include/xml_parse_helper.h"
 
 using namespace std;
 
@@ -110,17 +108,7 @@ int main( int argc, char *argv[] ) {
     // Initialize the LoggerFactory
     XMLParseHelper::initParser();
     LoggerFactoryWrapper loggerFactoryWrapper;
-    bool success = /*XMLHelper<void>*/XMLParseHelper::parseXML( loggerFileName, &loggerFactoryWrapper );
-    
-    /*scenario = new Scenario;
-    //success = XMLHelper<void>::parseXML( "../input/gcamdata/xml/modeltime.xml", scenario );
-    XMLParseHelper::parseXML("../input/gcamdata/xml/modeltime.xml", scenario);
-    XMLParseHelper::parseXML("../input/gcamdata/xml/hector.xml", scenario);
-    XMLParseHelper::parseXML("../input/gcamdata/xml/socioeconomics_gSSP2.xml", scenario);
-    XMLParseHelper::parseXML("../input/gcamdata/xml/resources.xml", scenario);
-    XMLParseHelper::parseXML("../input/gcamdata/xml/en_supply.xml", scenario);
-    XMLParseHelper::parseXML("../input/gcamdata/xml/en_transformation.xml", scenario);
-    abort();*/
+    bool success = XMLParseHelper::parseXML( loggerFileName, &loggerFactoryWrapper );
     
     // Check if parsing succeeded. Non-zero return codes from main indicate
     // failure.

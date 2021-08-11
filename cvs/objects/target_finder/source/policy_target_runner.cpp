@@ -149,7 +149,6 @@ bool PolicyTargetRunner::setupScenarios( Timer& aTimer,
                 << fileName << endl;
 
         // Parse the file.
-        //success &= XMLHelper<void>::parseXML( fileName, this );
         IScenarioRunner* temp = this;
         success &= XMLParseHelper::parseXML( fileName, temp );
     }

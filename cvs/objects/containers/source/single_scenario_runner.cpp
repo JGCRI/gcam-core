@@ -102,8 +102,6 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
 
     // Parse the input file.
     bool success =
-        /*XMLHelper<void>::parseXML( conf->getFile( "xmlInputFileName" ),
-                                   mScenario.get() );*/
         XMLParseHelper::parseXML( conf->getFile( "xmlInputFileName" ),
                                   mScenario.get() );
     
@@ -130,7 +128,6 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
 	{
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Parsing " << *currComp << " scenario component." << endl;
-        //success = XMLHelper<void>::parseXML( *currComp, mScenario.get() );
         success = XMLParseHelper::parseXML( *currComp, mScenario.get() );
         
         // Check if parsing succeeded.

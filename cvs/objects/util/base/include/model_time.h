@@ -134,7 +134,7 @@ public:
 
 protected:
     DEFINE_DATA(
-        /*! \brief World is the only member of this container hierarchy. */
+        /*! \brief Modeltime is the only member of this container hierarchy. */
         DEFINE_SUBCLASS_FAMILY( Modeltime )
     )
 };
