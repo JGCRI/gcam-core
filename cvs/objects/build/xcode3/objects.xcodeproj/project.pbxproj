@@ -2477,21 +2477,18 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"../../../../libs/boost-lib",
-					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
 					../../../../libs/java/include/darwin,
 					../../../../libs/tbb/include,
 				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs ../libs/tbb/lib";
+				LD_RUNPATH_SEARCH_PATHS = "../libs/java/lib ../libs/boost-lib/stage/lib ../libs ../libs/tbb/lib";
 				LIBRARY_SEARCH_PATHS = (
-					../../../../libs/xercesc/lib,
 					../../../../libs/java/lib,
 					"../../../../libs/boost-lib/stage/lib",
 					../../../../libs/tbb/lib,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
-					"-lxerces-c",
 					"-ljvm",
 					"-lboost_system",
 					"-lboost_filesystem",
@@ -2525,23 +2522,19 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"../../../../libs/boost-lib",
-					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
 					../../../../libs/java/include/darwin,
 					../../../../libs/eigen,
 					../../../../libs/tbb/include,
-					../../../../libs/rapidxml,
 				);
-				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs ../libs/tbb/lib";
+				LD_RUNPATH_SEARCH_PATHS = "../libs/java/lib ../libs/boost-lib/stage/lib ../libs ../libs/tbb/lib";
 				LIBRARY_SEARCH_PATHS = (
-					../../../../libs/xercesc/lib,
 					../../../../libs/java/lib,
 					"../../../../libs/boost-lib/stage/lib",
 					../../../../libs/tbb/lib,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
-					"-lxerces-c",
 					"-ljvm",
 					"-lboost_system",
 					"-lboost_filesystem",
