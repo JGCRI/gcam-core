@@ -73,8 +73,8 @@ using namespace rapidxml;
 void XMLParseHelper::initParser() {
     // At this point we should ensure we have a place to store temporary data for
     // TechVintageVectors.
-    // Note we will clean up this memory (and all of the temporary arrays that it contains
-    // when we close the XML parser).
+    // Note we will clean up this memory (and all of the temporary arrays that it contains)
+    // when we close the XML parser.
     boost::fusion::for_each(sTechVectorParseHelperMap, [] (auto& aPair) {
         using TVVHelperType = typename boost::remove_pointer<decltype( aPair.second )>::type;
         aPair.second = new TVVHelperType();
@@ -285,7 +285,7 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
     bool deleteFlagSet = XMLParseHelper::isAttrFlagSet( attrs, "delete" );
     bool noCreateFlagSet = XMLParseHelper::isAttrFlagSet( attrs, "nocreate" );
     if( !aData.mData ) {
-        // The instance of the container has been set yet.
+        // The instance of the container has not been set yet.
         if( deleteFlagSet ) {
             // log delete set but container not found
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -573,8 +573,8 @@ typename boost::enable_if<
     >,
 void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
     // During XMLParse the TechVintageVector will not be initialized, therefore
-    // this data will simply call insertValueIntoVector with the temporary
-    // PeriodVector storage allocated for aTechVector instead.
+    // this data will simply call parseDataI with the temporary PeriodVector
+    // storage allocated for the given TechVintageVector instead.
     using T = typename DataType::value_type::value_type;
     objects::PeriodVector<T>& tvvParseArray =
         boost::fusion::at_key<T>( sTechVectorParseHelperMap )->getPeriodVector( aData.mData );
@@ -604,6 +604,13 @@ void XMLParseHelper::parseData<Data<std::map<std::string, std::string>, SIMPLE> 
     aData.mData.insert(attrs.begin(), attrs.end());
 }
 
+/*!
+* \brief Check if the given XML tag corresponds to the given Data.
+* \tparam DataType The Data declaration such as `Data<double, SIMPLE>` or `Data<IClimateModel*, CONTAINER>`
+*                 which will drive specialized matching behavior depending on the type flags set on the Data.
+* \param aNode The XML node which will be used to initialize some GCAM Data.
+* \param aData The current Data member variable definition which indicated aNode corresponds to it.
+*/
 template<typename DataType>
 void XMLParseHelper::parseData(const rapidxml::xml_node<char>* aNode, DataType& aData) {
     // defer to the parseDataI version to get the correct template specialization
@@ -630,7 +637,9 @@ struct IsSimpleAndParsable {
 namespace boost {
 template<>
 inline std::map<std::string, std::string> lexical_cast<std::map<std::string, std::string>, std::string>(const std::string& aStr) {
-    // TODO: still required
+    // TODO: kind of a hack to deal with keywords and ensure everything compiles
+    // we should never get here during runtime
+    assert( false );
     return std::map<std::string, std::string>();
 }
 }
@@ -665,7 +674,7 @@ void ParseChildData::processDataVector( DataVectorType aDataVector ) {
            attr.first != "delete" &&
            attr.first != "nocreate")
         {
-            // we optimize compile time / runtime here by limiting to our search in the Data vector
+            // we optimize compile time / runtime here by limiting our search in the Data vector
             // to just those flagged as SIMPLE (but not also flagged as NOT_PARSABLE of course)
             boost::fusion::for_each(boost::fusion::filter_if<boost::mpl::lambda<IsSimpleAndParsable<boost::mpl::_1> >::type>(aDataVector), [attr] (auto aData) {
                 if(aData.mDataName == attr.first) {
@@ -758,11 +767,11 @@ void XMLParseHelper::parseData<Data<Logger*, CONTAINER> >(const rapidxml::xml_no
 /*!
  * \brief Parse the given XML file using aRootElement as the parsing context to start processing the XML.
  * \details We will load the XML file using a memory mapped file then have Rapid XML parse it.  We then
- *          kick of the actual parsing by making the first call to parseData which will recursively kick off:
+ *          kick off the actual parsing by making the first call to parseData which will recursively kick off:
  *            - At compile time the template instantiations to generate the XML parsing code for ALL of GCAM.
  *            - At runtime the handling of all of the XML nodes so that they get matched up with and initialize
  *             the GCAM data structures.
- *           Note, we assume that the instance of aRootElement already exists an is a "single" container.
+ *           Note, we assume that the instance of aRootElement already exists and is a "single" container.
  * \tparam ContainerType The type of the root CONTAINER to kick off processing.
  * \param aXMLFile A string representing the path to the XML file to parse.
  * \param aRootElement A valid instance of a GCAM class, such as Scenario, which starts the processing
