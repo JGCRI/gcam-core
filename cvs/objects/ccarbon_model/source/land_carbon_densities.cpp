@@ -98,7 +98,7 @@ const string& LandCarbonDensities::getXMLName() const {
 */
 void LandCarbonDensities::completeInit( const double aPrivateDiscountRateLand  ) {
     // force the sigmoid to get precalculated.
-    setMatureAge( util::round(mMatureAge) );
+    setMatureAge( mMatureAge);
     
     mPrivateDiscountRate = aPrivateDiscountRateLand; 
 }
@@ -152,5 +152,5 @@ double LandCarbonDensities::getActualBelowGroundCarbonDensity( const int aYear )
 }
 
 int LandCarbonDensities::getMatureAge( ) const {
-	return util::round(mMatureAge);
+	return mMatureAge;
 }
