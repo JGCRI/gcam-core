@@ -84,6 +84,8 @@ public:
 
     static const std::string& getXMLNameStatic();
     
+    virtual void setNames( const std::string& aRegionName, const std::string& aSectorName );
+    
     virtual const std::string& getXMLName() const;
 
     virtual void completeInit( const IInfo* aSectorInfo,

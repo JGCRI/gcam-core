@@ -152,7 +152,7 @@ public:
     virtual ~Subsector();
     const std::string& getName() const;
     
-    void setNames( const std::string& regionName, const std::string& sectorName );
+    virtual void setNames( const std::string& aRegionName, const std::string& aSectorName );
     
     virtual const std::string& getXMLName() const;
    

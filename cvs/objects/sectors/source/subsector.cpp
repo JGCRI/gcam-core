@@ -120,7 +120,7 @@ const string& Subsector::getName() const {
     return mName;
 }
 
-void Subsector::setNames( const std::string& aRegionName, const std::string& aSectorName ) {
+void Subsector::setNames( const string& aRegionName, const string& aSectorName ) {
     mRegionName = aRegionName;
     mSectorName = aSectorName;
 }

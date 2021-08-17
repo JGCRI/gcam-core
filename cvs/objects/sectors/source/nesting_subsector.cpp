@@ -107,6 +107,12 @@ const string& NestingSubsector::getXMLNameStatic() {
     return XML_NAME;
 }
 
+void NestingSubsector::setNames( const string& aRegionName, const string& aSectorName ) {
+    for( auto subsector : mSubsectors ) {
+        subsector->setNames( aRegionName, aSectorName );
+    }
+}
+
 /*! \brief Complete the initialization
 *
 * This routine is only called once per model run
