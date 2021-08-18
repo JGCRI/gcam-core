@@ -63,7 +63,8 @@ module_energy_L244.building_det <- function(command, ...) {
              "L221.LN0_Land",
              "L221.LN1_UnmgdAllocation",
              "L102.pcgdp_thous90USD_Scen_R_Y",
-             FILE = "energy/A44.flsp_param"))
+             FILE = "energy/A44.flsp_param",
+             FILE = "energy/income_shares.csv"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L244.SubregionalShares",
              "L244.PriceExp_IntGains",
@@ -173,39 +174,147 @@ module_energy_L244.building_det <- function(command, ...) {
     L144.flsp_param <- get_data(all_data, "energy/A44.flsp_param", strip_attributes = TRUE)
     L221.LN0_Land<-get_data(all_data, "L221.LN0_Land")
     L221.LN1_UnmgdAllocation<-get_data(all_data, "L221.LN1_UnmgdAllocation")
+    income_shares<-get_data(all_data, "energy/income_shares.csv")
+    n_groups<-nrow(unique(get_data(all_data, "energy/income_shares.csv") %>%
+      gather(group,subregional.income.share,-region,-gcam.consumer,-GCAM_region_ID) %>%
+      select(group)))
 
     # ===================================================
+
+    `%notin%` <- Negate(`%in%`)
+
+    # Update JS: Create the gcam.consumer with multiple groups
+    L144.income_shares<-income_shares %>%
+      gather(group,subregional.income.share,-region,-GCAM_region_ID)
+
+    A44.gcam_consumer<-A44.gcam_consumer %>%
+      filter(gcam.consumer=="resid") %>%
+      repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
+      mutate(internal.gains.market.name=paste0(gcam.consumer,"-",group,"-internal-gains-trial-market")) %>%
+      unite(gcam.consumer, c(gcam.consumer,group),sep="_") %>%
+      bind_rows(A44.gcam_consumer %>% filter(gcam.consumer=="comm"))
+
+
+
     # Subregional population and income shares: need to be read in because these default to 0
     # L244.SubregionalShares: subregional population and income shares (not currently used)
     L244.SubregionalShares <- write_to_all_regions(A44.gcam_consumer, LEVEL2_DATA_NAMES[["DeleteConsumer"]],
                                                    GCAM_region_names = GCAM_region_names) %>%
       mutate(pop.year.fillout = min(MODEL_BASE_YEARS),
-             inc.year.fillout = min(MODEL_BASE_YEARS),
-             subregional.population.share = 1,
-             subregional.income.share = 1)
+             inc.year.fillout = min(MODEL_BASE_YEARS)) %>%
+      # Update JS: Disaggregate socieconomic groups (income quintiles)
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
+      left_join_error_no_match(L144.income_shares %>% select(-GCAM_region_ID),
+                               by=c("region","group")) %>%
+      mutate(subregional.population.share=1/n_groups) %>%
+      unite(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
+      bind_rows(write_to_all_regions(A44.gcam_consumer, LEVEL2_DATA_NAMES[["DeleteConsumer"]],
+                                     GCAM_region_names = GCAM_region_names) %>%
+                      mutate(pop.year.fillout = min(MODEL_BASE_YEARS),
+                             inc.year.fillout = min(MODEL_BASE_YEARS),
+                             subregional.population.share = 1,
+                             subregional.income.share = 1) %>%
+                      filter(gcam.consumer=="comm"))
 
     # Internal gains
     # L244.PriceExp_IntGains: price exponent on floorspace and naming of internal gains trial markets
     L244.PriceExp_IntGains <- write_to_all_regions(A44.gcam_consumer, LEVEL2_DATA_NAMES[["PriceExp_IntGains"]],
                                                    GCAM_region_names = GCAM_region_names)
-
+    #----------------------------------------------------------------------
     # L244.Floorspace: base year floorspace
 
     # Building residential floorspace in the base years
     # Keep all historical years for now - these are needed in calculating satiation adders later on
     A44.gcam_consumer_resid <- A44.gcam_consumer %>%
-      filter(grepl("res", A44.gcam_consumer$gcam.consumer))
+      filter(grepl("resid", gcam.consumer))
 
+    # Calculate the residential floorspace shares
+    # First, calculate flsp per consumer groups using the GCAM function (Gompertz).
+    # NOTE: This number won't match with the value calibrated at region level, it is just used to estimate th shares per consumer group.
+    L144.flsp_shares<-L144.flsp_param %>%
+      left_join_error_no_match(A_regions %>% select(GCAM_region_ID,region),by="region") %>%
+      repeat_add_columns(tibble(year=MODEL_BASE_YEARS)) %>%
+      left_join_error_no_match(L221.LN0_Land %>% select(region,landAllocation), by="region") %>%
+      mutate(area_km2=landAllocation*1E3)%>%
+      select(-landAllocation) %>%
+      left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(scenario==socioeconomics.BASE_GDP_SCENARIO),
+                               by=c("GCAM_region_ID","year")) %>%
+      rename(pcGDP_thous90USD=value) %>%
+      left_join_error_no_match(L101.Pop_thous_R_Yh,
+                               by=c("GCAM_region_ID","year")) %>%
+      rename(pop_thous=value) %>%
+      repeat_add_columns(tibble(gcam.consumer=unique(L144.income_shares$group))) %>%
+      mutate(gcam.consumer=paste0("resid_",gcam.consumer)) %>%
+      left_join_error_no_match(L244.SubregionalShares %>% filter(grepl("resid",gcam.consumer)) %>% select(-pop.year.fillout,-inc.year.fillout),
+                               by=c("region","gcam.consumer")) %>%
+      mutate(GDP=pcGDP_thous90USD*1E3*pop_thous*1E3,
+             POP=pop_thous*1E3) %>%
+      mutate(gdp_pc_thous_fin=((GDP*subregional.income.share)/(POP*subregional.population.share))/1E3,
+             pop_thous_fin=(POP*subregional.population.share)/1E3,
+             pop_dens=POP/area_km2) %>%
+      select(GCAM_region_ID,region,gcam.consumer,year,pop_dens,`unadjust-satiation`,`land-density-param`,
+             `b-param`,`income-param`,gdp_pc_thous_fin,pop_thous_fin) %>%
+      mutate(est_flsp_pc=(`unadjust-satiation` +(-`land-density-param`*log(pop_dens)))
+             *exp(-`b-param`*exp(-`income-param`*log(gdp_pc_thous_fin)))) %>%
+      mutate(est_flsp_m2=est_flsp_pc*pop_thous_fin*1E3)
+
+    # Calculate subtotals (for shares)
+    L144.flsp_est_tot<-L144.flsp_shares %>%
+      select(region,gcam.consumer,year,est_flsp_m2) %>%
+      group_by(region,year) %>%
+      summarise(est_flsp_m2=sum(est_flsp_m2)) %>%
+      ungroup() %>%
+      rename(est_flsp_m2_aggReg=est_flsp_m2)
+
+    # Merge the subtotals to the estimated values to calculate %shares for each consumer group, in each region and period
+    L244.flsp_shares<-L144.flsp_shares %>%
+      left_join_error_no_match(L144.flsp_est_tot, by=c("region","year")) %>%
+      mutate(flsp_share=est_flsp_m2/est_flsp_m2_aggReg) %>%
+      select(GCAM_region_ID,region,gcam.consumer,year,flsp_share)
+
+    # Check that 100% of floorspace is assigned within each region. Print a warning otherwise.
+    check_flsp_shares<-L244.flsp_shares %>%
+      group_by(region,year) %>%
+      summarise(flsp_share=sum(flsp_share)) %>%
+      ungroup()
+
+    if(round(sum(check_flsp_shares$flsp_share),0) != nrow(check_flsp_shares)){
+      print("Shares are not correctly assigned")
+    }
+
+    # Shares are only calcultaed for MODEL_BASE_YEARS, so they need to be expanded to the rest of historical years (1971:max(MODEL_BASE_YEARS))
+    # Values are interpolated using the approx_fun function and rule two (see pipeline-helpers.R)
+    L244.flsp_shares_adj<-L244.flsp_shares %>%
+      select(GCAM_region_ID,region,gcam.consumer) %>%
+      distinct() %>%
+      repeat_add_columns(tibble(year=unique(L144.flsp_bm2_R_res_Yh$year))) %>%
+      filter(year %notin% MODEL_BASE_YEARS) %>%
+      mutate(flsp_share=NA)
+
+    L244.flsp_shares_fin<-bind_rows(L244.flsp_shares,L244.flsp_shares_adj) %>%
+      arrange(region,gcam.consumer,year) %>%
+      group_by(GCAM_region_ID, region, gcam.consumer) %>%
+      mutate(flsp_share = if_else(is.na(flsp_share), approx_fun(year, flsp_share, rule = 2), flsp_share)) %>%
+      ungroup()
+
+
+    # Calculate the residential floorspace per group multiplying the shares by the calibrated values
     L244.Floorspace_resid <- L144.flsp_bm2_R_res_Yh %>%
       mutate(base.building.size = round(value, energy.DIGITS_FLOORSPACE)) %>%
       select(-value) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(gcam.consumer = A44.gcam_consumer_resid$gcam.consumer,
-             nodeInput = A44.gcam_consumer_resid$nodeInput,
-             building.node.input = A44.gcam_consumer_resid$building.node.input) %>%
+      mutate(nodeInput = unique(A44.gcam_consumer_resid$nodeInput),
+             building.node.input = unique(A44.gcam_consumer_resid$building.node.input)) %>%
+      repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
+      mutate(gcam.consumer=nodeInput) %>%
+      unite(gcam.consumer,c("gcam.consumer","group"),sep="_") %>%
+      left_join_error_no_match(L244.flsp_shares_fin,by=c("GCAM_region_ID","region","gcam.consumer","year")) %>%
+      mutate(base.building.size=base.building.size*flsp_share) %>%
+      select(-flsp_share) %>%
       select(region, gcam.consumer, nodeInput, building.node.input, year, base.building.size)
 
-    # Commercial floorspace
+    # Commercial floorspace (does not need any adjustment)
     A44.gcam_consumer_comm <- A44.gcam_consumer %>%
       filter(grepl("comm", A44.gcam_consumer$gcam.consumer))
 
@@ -218,23 +327,47 @@ module_energy_L244.building_det <- function(command, ...) {
              building.node.input = A44.gcam_consumer_comm$building.node.input) %>%
       select(region, gcam.consumer, nodeInput, building.node.input, year, base.building.size)
 
+    # Total floorspace (residential + commercial)
     L244.Floorspace <- bind_rows(L244.Floorspace_resid, L244.Floorspace_comm) %>%
       filter(year %in% MODEL_BASE_YEARS)
 
+    #----------------------------------------------------------------------
     # Demand function
     # L244.DemandFunction_serv and L244.DemandFunction_flsp: demand function types
+    # JS: Functions need to be defined for the generated consumer groups.
     L244.DemandFunction_serv <- write_to_all_regions(A44.demandFn_serv, LEVEL2_DATA_NAMES[["DemandFunction_serv"]],
-                                                     GCAM_region_names = GCAM_region_names)
-    L244.DemandFunction_flsp <- write_to_all_regions(A44.demandFn_flsp, LEVEL2_DATA_NAMES[["DemandFunction_flsp"]],
-                                                     GCAM_region_names = GCAM_region_names)
+                                                     GCAM_region_names = GCAM_region_names) %>%
+      filter(gcam.consumer=="resid") %>%
+      repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
+      unite(gcam.consumer, c(gcam.consumer,group),sep="_") %>%
+      bind_rows(write_to_all_regions(A44.demandFn_serv, LEVEL2_DATA_NAMES[["DemandFunction_serv"]],
+                                                       GCAM_region_names = GCAM_region_names) %>% filter(gcam.consumer=="comm"))
 
+    L244.DemandFunction_flsp <- write_to_all_regions(A44.demandFn_flsp, LEVEL2_DATA_NAMES[["DemandFunction_flsp"]],
+                                                     GCAM_region_names = GCAM_region_names) %>%
+      filter(gcam.consumer=="resid") %>%
+      repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
+      unite(gcam.consumer, c(gcam.consumer,group),sep="_") %>%
+      bind_rows(write_to_all_regions(A44.demandFn_serv, LEVEL2_DATA_NAMES[["DemandFunction_serv"]],
+                                     GCAM_region_names = GCAM_region_names) %>% filter(gcam.consumer=="comm"))
+
+    #----------------------------------------------------------------------
     # Floorspace demand satiation
     # L244.Satiation_flsp: Satiation levels assumed for floorspace
     L244.Satiation_flsp_class <- A44.satiation_flsp %>%
       gather(sector, value, resid, comm) %>%
       # Converting from square meters per capita to million square meters per capita
       mutate(satiation.level = value * CONV_THOUS_BIL) %>%
-      select(-value)
+      select(-value) %>%
+      filter(sector=="resid") %>%
+      repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
+      unite(sector, c(sector,group),sep="_") %>%
+      bind_rows(A44.satiation_flsp %>%
+                  gather(sector, value, resid, comm) %>%
+                  # Converting from square meters per capita to million square meters per capita
+                  mutate(satiation.level = value * CONV_THOUS_BIL) %>%
+                  select(-value) %>%
+                  filter(sector=="comm"))
 
     L244.Satiation_flsp <- write_to_all_regions(A44.gcam_consumer, c("region", "gcam.consumer", "nodeInput", "building.node.input"), # replace with LEVEL2_DATA_NAMES[["BldNodes]]
                                                 GCAM_region_names = GCAM_region_names) %>%
@@ -248,12 +381,47 @@ module_energy_L244.building_det <- function(command, ...) {
     # The satiation adder allows the starting (final calibration year) position of any region and sector to be set along the satiation demand function
     # L244.SatiationAdder: Satiation adders in floorspace demand function
     # First, prepare socioeconomics tables by adding region names
-    L102.pcgdp_thous90USD_Scen_R_Y <- L102.pcgdp_thous90USD_Scen_R_Y %>%
+    # Update: We need to calculate pcGDP and Pop by consumer group
+    # We need subregional shares for all historical periods (not just MODEL_BASE_YEARS)
+    L244.SubregionalShares_allHist<-L244.SubregionalShares %>%
+      select(-pop.year.fillout,-inc.year.fillout) %>%
+      repeat_add_columns(tibble(year=HISTORICAL_YEARS))
+
+    # We calculate population and per capita GDP per region, year and consumer group
+    L101.Pop_thous_R_Yh_gr <- L101.Pop_thous_R_Yh %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      rename(pcGDP_thous90USD = value)
-    L101.Pop_thous_R_Yh <- L101.Pop_thous_R_Yh %>%
+      rename(pop_thous = value) %>%
+      repeat_add_columns(tibble(gcam.consumer=paste0("resid_",unique(L144.income_shares$group)))) %>%
+      mutate(pop_thous=pop_thous*(1/n_groups)) %>%
+      bind_rows(L101.Pop_thous_R_Yh %>%
+                  left_join_error_no_match(A_regions %>% select(region,GCAM_region_ID),by="GCAM_region_ID") %>%
+                  mutate(gcam.consumer="comm") %>%
+                  rename(pop_thous = value) %>%
+                  filter(year %in% HISTORICAL_YEARS))
+
+    L102.pcgdp_thous90USD_Scen_R_Y_gr <- L102.pcgdp_thous90USD_Scen_R_Y %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      rename(pop_thous = value)
+      rename(pcGDP_thous90USD = value) %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
+      left_join_error_no_match(L101.Pop_thous_R_Yh, by=c("GCAM_region_ID","year")) %>%
+      rename(pop_thous=value) %>%
+      mutate(gdp=pcGDP_thous90USD*1E3*pop_thous*1E3) %>%
+      repeat_add_columns(tibble(gcam.consumer=paste0("resid_",unique(L144.income_shares$group)))) %>%
+      mutate(pop_thous=pop_thous*(1/n_groups)) %>%
+      left_join_error_no_match(L244.SubregionalShares_allHist %>% select(-subregional.population.share)
+                               , by=c("region","gcam.consumer","year")) %>%
+      mutate(gdp_gr=gdp*subregional.income.share,
+              gdp_pc=(gdp_gr/1E3)/(pop_thous*1E3)) %>%
+      select(-pcGDP_thous90USD) %>%
+      rename(pcGDP_thous90USD=gdp_pc) %>%
+      select(scenario,GCAM_region_ID,region,gcam.consumer,year,pcGDP_thous90USD) %>%
+      # add commercial
+      bind_rows(L102.pcgdp_thous90USD_Scen_R_Y %>%
+                left_join_error_no_match(A_regions %>% select(region,GCAM_region_ID),by="GCAM_region_ID") %>%
+                  mutate(gcam.consumer="comm") %>%
+                  rename(pcGDP_thous90USD = value) %>%
+                  filter(year %in% HISTORICAL_YEARS))
+
 
     # In order to pass timeshift, we need floorspace for energy satiation year, which we don't have under timeshift conditions
     # So instead, we will take floorspace for maximum year (this ONLY affects the data in the timeshift right now)
@@ -263,10 +431,10 @@ module_energy_L244.building_det <- function(command, ...) {
 
     # Match in the per-capita GDP, total floorspace, and population (for calculating per-capita floorspace)
     L244.SatiationAdder <- L244.Satiation_flsp %>%
-      left_join_keep_first_only(L102.pcgdp_thous90USD_Scen_R_Y %>%
-                                  filter(year == energy.SATIATION_YEAR), by = "region") %>%
+      left_join(L102.pcgdp_thous90USD_Scen_R_Y_gr %>%
+                                  filter(year == energy.SATIATION_YEAR), by = c("region","gcam.consumer")) %>%
       left_join_error_no_match(Floorspace_timeshift_pass, by = c("region", "gcam.consumer", "nodeInput", "building.node.input")) %>%
-      left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("region", "year", "GCAM_region_ID")) %>%
+      left_join_error_no_match(L101.Pop_thous_R_Yh_gr, by = c("region", "year", "GCAM_region_ID","gcam.consumer")) %>%
       mutate(pcFlsp_mm2 = base.building.size / pop_thous,
              # We now have all of the data required for calculating the satiation adder in each region
              satiation.adder = round(satiation.level - exp(log(2) * pcGDP_thous90USD / energy.GDP_MID_SATIATION) *
@@ -275,12 +443,22 @@ module_energy_L244.building_det <- function(command, ...) {
              # The satiation adder (million square meters of floorspace per person) needs to be less than the per-capita demand in the final calibration year
              # Need to match in the demand in the final calibration year to check this.
              satiation.adder = if_else(satiation.adder > pcFlsp_mm2_fby, pcFlsp_mm2_fby * 0.999, satiation.adder)) %>%
-      select(LEVEL2_DATA_NAMES[["SatiationAdder"]])
+      select(LEVEL2_DATA_NAMES[["SatiationAdder"]]) %>%
+      # Zero the satiation adder for the residential sector
+      mutate(satiation.adder=if_else(grepl("resid",gcam.consumer),0,satiation.adder))
 
     # L244.Satiation_flsp_SSPs: Satiation levels assumed for floorspace in the SSPs
     L244.Satiation_flsp_class_SSPs <- A44.satiation_flsp_SSPs %>%
       gather(sector, value, resid, comm) %>%
-      mutate(satiation.level = value * CONV_THOUS_BIL)
+      mutate(satiation.level = value * CONV_THOUS_BIL) %>%
+      filter(sector=="resid") %>%
+      repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
+      unite(sector, c(sector,group),sep="_") %>%
+      bind_rows(A44.satiation_flsp_SSPs %>%
+                  gather(sector, value, resid, comm) %>%
+                  # Converting from square meters per capita to million square meters per capita
+                  mutate(satiation.level = value * CONV_THOUS_BIL) %>%
+                  filter(sector=="comm"))
 
     L244.Satiation_flsp_SSPs <- write_to_all_regions(A44.gcam_consumer, c("region", "gcam.consumer", "nodeInput", "building.node.input"), # replace with LEVEL2_DATA_NAMES[["BldNodes]]
                                                      GCAM_region_names = GCAM_region_names) %>%
@@ -289,11 +467,11 @@ module_energy_L244.building_det <- function(command, ...) {
       left_join_error_no_match(A_regions %>% select(region, region.class), by = "region") %>%
       left_join_error_no_match(L244.Satiation_flsp_class_SSPs, by = c("SSP", "region.class", "gcam.consumer" = "sector")) %>%
       # Calculate pcFlsp and make sure it is smaller than the satiation level
-      left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>%
+      left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y_gr %>%
                                  # This used to be filtered to energy.SATIATION_YEAR, changed to pass timeshift test
-                                 filter(year == max(MODEL_BASE_YEARS)), by = c("region", "SSP" = "scenario")) %>%
+                                 filter(year == max(MODEL_BASE_YEARS)), by = c("region", "SSP" = "scenario","gcam.consumer")) %>%
       left_join_error_no_match(L244.Floorspace, by = c("region", "gcam.consumer", "year", "nodeInput", "building.node.input")) %>%
-      left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("GCAM_region_ID", "year", "region")) %>%
+      left_join_error_no_match(L101.Pop_thous_R_Yh_gr, by = c("GCAM_region_ID", "year", "region","gcam.consumer")) %>%
       mutate(pcFlsp_mm2 = base.building.size / pop_thous,
              satiation.level = if_else(pcFlsp_mm2 > satiation.level, 1.001 * pcFlsp_mm2, satiation.level))
 
@@ -325,6 +503,8 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(satiation.adder = round(satiation.level - (exp(log(2) * pcGDP_thous90USD / energy.GDP_MID_SATIATION) *
                                                           (satiation.level - pcFlsp_mm2)),
                                      energy.DIGITS_SATIATION_ADDER)) %>%
+      # Zero the satiation adder for the residential sector
+      mutate(satiation.adder=if_else(grepl("resid",gcam.consumer),0,satiation.adder)) %>%
       select(LEVEL2_DATA_NAMES[["SatiationAdder"]], SSP) %>%
       # Split by SSP, creating a list with a tibble for each SSP, then add attributes
       split(.$SSP) %>%
@@ -352,8 +532,6 @@ module_energy_L244.building_det <- function(command, ...) {
 
     #------------------------
       # First calculate the habitable land
-
-    `%notin%` <- Negate(`%in%`)
 
     L144.non_hab_land_pre<-L221.LN1_UnmgdAllocation %>%
       filter(!grepl("Urban",LandNode1)) %>%
@@ -388,22 +566,22 @@ module_energy_L244.building_det <- function(command, ...) {
 
     # Write the function parameters
     L244.Gomp.fn.param<-L144.flsp_param %>%
+      repeat_add_columns(tibble(gcam.consumer=paste0("resid_",unique(L144.income_shares$group)))) %>%
       left_join_error_no_match(L144.hab_land_flsp_fin %>% filter(year==MODEL_FINAL_BASE_YEAR),by="region") %>%
       rename(area_thouskm2=value) %>%
       left_join_error_no_match(GCAM_region_names, by="region") %>%
-      left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(scenario== socioeconomics.BASE_GDP_SCENARIO), by=c("GCAM_region_ID","year")) %>%
+      left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y_gr %>% filter(scenario== socioeconomics.BASE_GDP_SCENARIO), by=c("GCAM_region_ID","year","gcam.consumer","region")) %>%
       rename(gdp_pc=pcGDP_thous90USD) %>%
-      left_join_error_no_match(L101.Pop_thous_R_Yh, by=c("GCAM_region_ID","year")) %>%
-      left_join_error_no_match(L144.flsp_bm2_R_res_Yh,by=c("GCAM_region_ID","year")) %>%
-      rename(flsp=value) %>%
+      left_join_error_no_match(L101.Pop_thous_R_Yh_gr, by=c("GCAM_region_ID","year","gcam.consumer","region")) %>%
+      left_join_error_no_match(L244.Floorspace,by=c("region","year","gcam.consumer")) %>%
+      rename(flsp=base.building.size) %>%
       mutate(tot_dens=pop_thous/area_thouskm2) %>%
       mutate(flsp_pc=(flsp*1E9)/(pop_thous*1E3)) %>%
       mutate(base_flsp=flsp_pc) %>%
       mutate(flsp_est=(`unadjust-satiation` +(-`land-density-param`*log(tot_dens)))*exp(-`b-param`
                                                                                         *exp(-`income-param`*log(gdp_pc)))) %>%
       mutate(`bias-adjust-param`=flsp_pc-flsp_est) %>%
-      mutate(gcam.consumer="resid",
-             nodeInput="resid",
+      mutate(nodeInput="resid",
              building.node.input="resid_building") %>%
       rename(pop_dens=tot_dens,
              `habitable-land`=area_thouskm2,
