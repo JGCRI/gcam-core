@@ -20,7 +20,8 @@
 #' \code{L244.SatiationAdder_SSP4}, \code{L244.GenericServiceSatiation_SSP4}, \code{L244.FuelPrefElast_bld_SSP4}, \code{L244.Satiation_flsp_SSP5},
 #' \code{L244.SatiationAdder_SSP5}, \code{L244.GenericServiceSatiation_SSP5}, \code{L244.FuelPrefElast_bld_SSP15}, \code{L244.DeleteThermalService},
 #' \code{L244.HDDCDD_A2_CCSM3x}, \code{L244.HDDCDD_A2_HadCM3}, \code{L244.HDDCDD_B1_CCSM3x}, \code{L244.HDDCDD_B1_HadCM3},
-#' \code{L244.HDDCDD_constdd_no_GCM} and \code{L244.Gomp.fn.param}.
+#' \code{L244.HDDCDD_constdd_no_GCM} and \code{L244.Gomp.fn.param}, \code{L244.Satiation_impedance},\code{L244.Satiation_impedance_SSP1},\code{L244.Satiation_impedance_SSP2},\code{L244.Satiation_impedance_SSP3}
+#' \code{L244.Satiation_impedance_SSP4}, \code{L244.Satiation_impedance_SSP5}.
 #' The corresponding file in the original data system was \code{L244.building_det.R} (energy level2).
 #' @details Creates level2 data for the building sector.
 #' @importFrom assertthat assert_that
@@ -50,6 +51,7 @@ module_energy_L244.building_det <- function(command, ...) {
              FILE = "energy/A44.satiation_flsp_SSPs",
              FILE = "energy/A44.demand_satiation_mult",
              FILE = "energy/A44.demand_satiation_mult_SSPs",
+             FILE = "energy/A44.CalPrice_service_temp", # To be changed
              "L144.flsp_bm2_R_res_Yh",
              "L144.flsp_bm2_R_comm_Yh",
              "L144.base_service_EJ_serv",
@@ -118,7 +120,13 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.HDDCDD_B1_CCSM3x",
              "L244.HDDCDD_B1_HadCM3",
              "L244.HDDCDD_constdd_no_GCM",
-             "L244.Gomp.fn.param"))
+             "L244.Gomp.fn.param",
+             "L244.Satiation_impedance",
+             "L244.Satiation_impedance_SSP1",
+             "L244.Satiation_impedance_SSP2",
+             "L244.Satiation_impedance_SSP3",
+             "L244.Satiation_impedance_SSP4",
+             "L244.Satiation_impedance_SSP5"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -160,6 +168,7 @@ module_energy_L244.building_det <- function(command, ...) {
     A44.satiation_flsp_SSPs <- get_data(all_data, "energy/A44.satiation_flsp_SSPs")
     A44.demand_satiation_mult <- get_data(all_data, "energy/A44.demand_satiation_mult")
     A44.demand_satiation_mult_SSPs <- get_data(all_data, "energy/A44.demand_satiation_mult_SSPs")
+    A44.CalPrice_service<-get_data(all_data, "energy/A44.CalPrice_service_temp")
     L144.flsp_bm2_R_res_Yh <- get_data(all_data, "L144.flsp_bm2_R_res_Yh", strip_attributes = TRUE)
     L144.flsp_bm2_R_comm_Yh <- get_data(all_data, "L144.flsp_bm2_R_comm_Yh", strip_attributes = TRUE)
     L144.base_service_EJ_serv <- get_data(all_data, "L144.base_service_EJ_serv", strip_attributes = TRUE)
@@ -496,34 +505,6 @@ module_energy_L244.building_det <- function(command, ...) {
                add_legacy_name(paste0("L244.Satiation_flsp_", i)))
     }
 
-    # Satiation adder - Required for shaping the future floorspace growth trajectories in each region
-    # L244.SatiationAdder_SSPs: Satiation adders in floorspace demand function for the SSPs
-    L244.SatiationAdder_SSPs <- L244.Satiation_flsp_SSPs %>%
-      # Calculate satiation.adder
-      mutate(satiation.adder = round(satiation.level - (exp(log(2) * pcGDP_thous90USD / energy.GDP_MID_SATIATION) *
-                                                          (satiation.level - pcFlsp_mm2)),
-                                     energy.DIGITS_SATIATION_ADDER)) %>%
-      # Zero the satiation adder for the residential sector
-      mutate(satiation.adder=if_else(grepl("resid",gcam.consumer),0,satiation.adder)) %>%
-      select(LEVEL2_DATA_NAMES[["SatiationAdder"]], SSP) %>%
-      # Split by SSP, creating a list with a tibble for each SSP, then add attributes
-      split(.$SSP) %>%
-      lapply(function(df) {
-        select(df, -SSP) %>%
-          add_units("Unitless") %>%
-          add_comments("Satiation adder compute using satiation level, per-capita GDP and per-capita floorsapce") %>%
-          add_precursors("energy/A44.satiation_flsp_SSPs", "energy/A44.gcam_consumer", "common/GCAM_region_names",
-                         "energy/A_regions", "L102.pcgdp_thous90USD_Scen_R_Y", "L101.Pop_thous_R_Yh",
-                         "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh")
-      })
-
-    # Assign each tibble in list
-    for(i in names(L244.SatiationAdder_SSPs)) {
-      assign(paste0("L244.SatiationAdder_", i), L244.SatiationAdder_SSPs[[i]] %>%
-               add_title(paste0("Satiation adders in floorspace demand function: ", i)) %>%
-               add_legacy_name(paste0("L244.SatiationAdder_", i)))
-    }
-
 
     #------------------------------------------------------
     # Updated floorspace Gompertz function
@@ -587,6 +568,189 @@ module_energy_L244.building_det <- function(command, ...) {
              `habitable-land`=area_thouskm2,
              `base-pcFlsp`=base_flsp) %>%
     select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
+
+
+    #------------------------------------------------------
+    # JS 07/2021. Calibrate satiation impedance (in the DS) per GCAM region.
+
+    # sat_impedance = (-ln(2)/ln((satiation level - pcFlsp2015)/(satiation level - satiation adder))) * pcGDP2015
+
+    # The code calibrates the satiation impedance per gcam.consumer, generating problems for the incorporation of multiple consumers (consumer heterogeneity)
+
+    L144.Satiation_impedance_pre<-L244.Satiation_flsp %>%
+      left_join_error_no_match(A_regions %>% select(GCAM_region_ID,region),by="region") %>%
+      mutate(year=max(MODEL_BASE_YEARS)) %>%
+      # Add base floorspace
+      left_join_error_no_match(L244.Floorspace,by=c("region","gcam.consumer","nodeInput","building.node.input","year")) %>%
+      rename(flsp_bm2=base.building.size) %>%
+      group_by(GCAM_region_ID,region,year,nodeInput,building.node.input) %>%
+      summarise(satiation.level=mean(satiation.level),
+                flsp_bm2=sum(flsp_bm2)) %>%
+      ungroup() %>%
+      # Add population to calculate floorspace per capita
+      left_join_error_no_match(L101.Pop_thous_R_Yh, by=c("GCAM_region_ID","year")) %>%
+      rename(pop_thous=value) %>%
+      mutate(flsp_pc=(flsp_bm2*1E9)/(pop_thous*1E3)) %>%
+      # Add GDPpc
+      left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(scenario==socioeconomics.BASE_GDP_SCENARIO),
+                               by=c("GCAM_region_ID","year")) %>%
+      rename(pcGDP_thous90USD=value) %>%
+      # Change units satiation level
+      mutate(satiation.level=satiation.level*1E6) %>%
+      # Calculate satiation impedance
+      mutate(`satiation-impedance`=(-log(2)/log((satiation.level - flsp_pc)/(satiation.level))) * pcGDP_thous90USD) %>%
+      mutate(`satiation-impedance`=round(`satiation-impedance`,energy.DIGITS_SATIATION_ADDER)) %>%
+      select(region,nodeInput,building.node.input,`satiation-impedance`)
+
+
+    L244.Satiation_impedance<-L144.Satiation_impedance_pre %>%
+      filter(grepl("resid",nodeInput)) %>%
+      repeat_add_columns(tibble(gcam.consumer=paste0("resid_",unique(L144.income_shares$group)))) %>%
+      bind_rows(L144.Satiation_impedance_pre %>%
+                  filter(grepl("comm",nodeInput)) %>%
+                  mutate(gcam.consumer=nodeInput)) %>%
+      select(region,gcam.consumer,nodeInput,building.node.input,`satiation-impedance`)
+    #select(LEVEL2_DATA_NAMES[["Satiation_impedance"]])
+
+    #---------------------------------
+    # Satiation impedance for SSPs
+
+    L144.Satiation_impedance_SSPs_pre<-L244.Satiation_flsp_SSPs %>%
+      mutate(gdp=pcGDP_thous90USD*1E3*pop_thous*1E3,
+             pop=pop_thous*1E3) %>%
+      group_by(GCAM_region_ID,region,year,nodeInput,building.node.input,SSP) %>%
+      summarise(value=mean(value),
+                gdp=sum(gdp),
+                pop=sum(pop),
+                base.building.size=sum(base.building.size)) %>%
+      ungroup() %>%
+      mutate(pcGDP_thous90USD=(gdp/pop)/1E3,
+             flsp_pc=base.building.size*1E9/pop) %>%
+      # There are some cases where assumed satiation level is below the 2015 pcflsp value.
+      # This generates problems for calibration of the satiation impedance, so it needs to be corrected.
+      mutate(`satiation-impedance`=(-log(2)/log((value - flsp_pc)/(value))) * pcGDP_thous90USD) %>%
+      mutate(`satiation-impedance`=round(`satiation-impedance`,energy.DIGITS_SATIATION_ADDER)) %>%
+      select(region,gcam.consumer,nodeInput,building.node.input,`satiation-impedance`,SSP) %>%
+      #select(LEVEL2_DATA_NAMES[["Satiation_impedance"]], SSP) %>%
+      # substitute NaN: use approx_fun per ssp
+      mutate(year=as.numeric(gsub("SSP","",SSP))) %>%
+      select(-SSP) %>%
+      group_by(region,nodeInput) %>%
+      mutate(`satiation-impedance` = if_else(is.nan(`satiation-impedance`), approx_fun(year, `satiation-impedance`, rule = 2), `satiation-impedance`)) %>%
+      ungroup() %>%
+      rename(SSP=year) %>%
+      mutate(SSP=paste0("SSP",SSP))
+
+    L244.Satiation_impedance_SSPs<-L144.Satiation_impedance_SSPs_pre %>%
+      filter(grepl("resid",nodeInput)) %>%
+      repeat_add_columns(tibble(gcam.consumer=paste0("resid_",unique(L144.income_shares$group)))) %>%
+      bind_rows(L144.Satiation_impedance_SSPs_pre %>%
+                  filter(grepl("comm",nodeInput)) %>%
+                  mutate(gcam.consumer=nodeInput)) %>%
+      select(region,gcam.consumer,nodeInput,building.node.input,`satiation-impedance`,SSP)
+      #select(LEVEL2_DATA_NAMES[["Satiation_impedance"]], SSP) %>%
+
+    L244.Satiation_impedance_SSPs.split<-L244.Satiation_impedance_SSPs %>%
+      split(.$SSP) %>%
+      lapply(function(df) {
+        select(df, -SSP) %>%
+          add_units("Unitless") %>%
+          add_comments("Satiation impedance computed using satiation level, per-capita GDP and per-capita floorsapce") %>%
+          add_precursors("energy/A44.satiation_flsp_SSPs", "energy/A44.gcam_consumer", "common/GCAM_region_names",
+                         "energy/A_regions", "L102.pcgdp_thous90USD_Scen_R_Y", "L101.Pop_thous_R_Yh",
+                         "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh")
+      })
+
+    # Assign each tibble in list
+    for(i in names(L244.Satiation_impedance_SSPs.split)) {
+      assign(paste0("L244.Satiation_impedance_", i), L244.Satiation_impedance_SSPs.split[[i]] %>%
+               add_title(paste0("Floorspace satiation impedance: ", i)) %>%
+               add_legacy_name(paste0("L244.Satiation_impedance_", i)))
+    }
+
+    #------------------------------------------------------
+    # JS 08/2021. Calibrate satiation adder (in the DS) per GCAM region -> Only needed for multiple gcam.consumers
+    # NOTE: The updated satiation adder it only acts as a "bias-correction" parameter to allow the model calibrate 2015,
+    # by capturing the difference between the observed and the estimated values
+    # satiation_adder=Observed_pcflsp_2015 - Estimated_pcflsp_2015
+
+    # First, I check that at region level observed and estimated floorspace match in 2015: (satiation adder should be equal to zero)
+    L244.SatiationAdder_checkReg<- L244.Satiation_flsp %>%
+      mutate(satiation.level=satiation.level*1E6) %>%
+      left_join_error_no_match(L244.Satiation_impedance,by = c("region", "gcam.consumer", "nodeInput", "building.node.input")) %>%
+      # aggregate to region level
+      group_by(region,nodeInput,building.node.input) %>%
+      summarise(satiation.level=mean(satiation.level),
+                `satiation-impedance`=mean(`satiation-impedance`)) %>%
+      ungroup() %>%
+      mutate(year=2015) %>%
+      left_join_error_no_match(A_regions %>% select(GCAM_region_ID,region),by="region") %>%
+      left_join_error_no_match(bind_rows(L144.flsp_bm2_R_res_Yh %>% mutate(nodeInput="resid"),
+                               L144.flsp_bm2_R_comm_Yh %>% mutate(nodeInput="comm")),
+                               by=c("GCAM_region_ID","year","nodeInput")) %>%
+      rename(observed_flsp_bm2=value) %>%
+      left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("year", "GCAM_region_ID")) %>%
+      rename(pop_thous=value) %>%
+      mutate(observed_pcflsp=observed_flsp_bm2*1E9/(pop_thous*1E3)) %>%
+      left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(scenario==socioeconomics.BASE_GDP_SCENARIO),by = c("year", "GCAM_region_ID")) %>%
+      rename(pcGDP_thous90USD=value) %>%
+      mutate(est_pcflsp=satiation.level*(1-exp(-log(2)*pcGDP_thous90USD/`satiation-impedance`))) %>%
+      mutate(satiation.adder=round(observed_pcflsp-est_pcflsp,2))
+
+    if(any(L244.SatiationAdder_checkReg$satiation.adder>0.05)==T){
+      print("Error: Observed and estimated values do not match")
+    }
+
+    # Then, calculate the satiation adder parameters per consumer group
+    L244.SatiationAdder<- L244.Satiation_flsp %>%
+      mutate(satiation.level=satiation.level*1E6) %>%
+      left_join_error_no_match(L244.Satiation_impedance,by = c("region", "gcam.consumer", "nodeInput", "building.node.input")) %>%
+      mutate(year=2015) %>%
+      left_join_error_no_match(A_regions %>% select(GCAM_region_ID,region),by="region") %>%
+      left_join_error_no_match(L244.Floorspace,by=c("region","year","gcam.consumer", "nodeInput", "building.node.input")) %>%
+      rename(observed_flsp_bm2=base.building.size) %>%
+      left_join_error_no_match(L101.Pop_thous_R_Yh_gr, by = c("year", "GCAM_region_ID","gcam.consumer","region")) %>%
+      rename(pop_thous=value) %>%
+      mutate(observed_pcflsp=observed_flsp_bm2*1E9/(pop_thous*1E3)) %>%
+      left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y_gr %>% filter(scenario==socioeconomics.BASE_GDP_SCENARIO),by = c("year", "GCAM_region_ID","region","gcam.consumer")) %>%
+      rename(pcGDP_thous90USD=value) %>%
+      mutate(est_pcflsp=satiation.level*(1-exp(-log(2)*pcGDP_thous90USD/`satiation-impedance`))) %>%
+      mutate(satiation.adder=round(observed_pcflsp-est_pcflsp,energy.DIGITS_SATIATION_ADDER)) %>%
+      arrange(GCAM_region_ID,gcam.consumer) %>%
+      select(LEVEL2_DATA_NAMES[["SatiationAdder"]])
+
+
+    # Repeat the process for SSPs
+    L244.SatiationAdder_SSPs <- L244.Satiation_flsp_SSPs %>%
+      select(-satiation.level) %>%
+      rename(satiation.level=value) %>%
+      left_join_error_no_match(L244.Satiation_impedance_SSPs,by = c("region", "gcam.consumer", "nodeInput", "building.node.input","SSP")) %>%
+      mutate(year=2015) %>%
+      rename(observed_flsp_bm2=base.building.size) %>%
+      mutate(observed_pcflsp=observed_flsp_bm2*1E9/(pop_thous*1E3)) %>%
+      mutate(est_pcflsp=satiation.level*(1-exp(-log(2)*pcGDP_thous90USD/`satiation-impedance`))) %>%
+      mutate(satiation.adder=round(observed_pcflsp-est_pcflsp,energy.DIGITS_SATIATION_ADDER)) %>%
+      arrange(GCAM_region_ID,gcam.consumer) %>%
+      select(LEVEL2_DATA_NAMES[["SatiationAdder"]], SSP) %>%
+      # Split by SSP, creating a list with a tibble for each SSP, then add attributes
+      split(.$SSP) %>%
+      lapply(function(df) {
+        select(df, -SSP) %>%
+          add_units("Unitless") %>%
+          add_comments("Satiation adder compute using satiation level, per-capita GDP and per-capita floorsapce") %>%
+          add_precursors("energy/A44.satiation_flsp_SSPs", "energy/A44.gcam_consumer", "common/GCAM_region_names",
+                         "energy/A_regions", "L102.pcgdp_thous90USD_Scen_R_Y", "L101.Pop_thous_R_Yh",
+                         "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh")
+      })
+
+    # Assign each tibble in list
+    for(i in names(L244.SatiationAdder_SSPs)) {
+      assign(paste0("L244.SatiationAdder_", i), L244.SatiationAdder_SSPs[[i]] %>%
+               add_title(paste0("Satiation adders in floorspace demand function: ", i)) %>%
+               add_legacy_name(paste0("L244.SatiationAdder_", i)))
+    }
+
+
 
     #================================================================
 
@@ -1053,6 +1217,16 @@ module_energy_L244.building_det <- function(command, ...) {
                      "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh") ->
       L244.SatiationAdder
 
+    L244.Satiation_impedance %>%
+      add_title("Floorspace satiation impedance") %>%
+      add_units("Unitless") %>%
+      add_comments("Calibrated in the DS for flexibility with multiple consumer groups") %>%
+      add_legacy_name("L244.Satiation_impedance") %>%
+      add_precursors("energy/A44.satiation_flsp", "energy/A44.gcam_consumer", "common/GCAM_region_names", "energy/A_regions",
+                     "L102.pcgdp_thous90USD_Scen_R_Y", "L101.Pop_thous_R_Yh",
+                     "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh") ->
+      L244.Satiation_impedance
+
     L244.Gomp.fn.param %>%
       add_title("Parameters for the floorspace Gompertz function") %>%
       add_units("Unitless") %>%
@@ -1318,7 +1492,8 @@ module_energy_L244.building_det <- function(command, ...) {
                 L244.Satiation_flsp_SSP5, L244.SatiationAdder_SSP5, L244.GenericServiceSatiation_SSP5, L244.FuelPrefElast_bld_SSP15,
                 L244.DeleteThermalService, L244.SubsectorLogit_bld, L244.StubTechIntGainOutputRatio,
                 L244.HDDCDD_A2_CCSM3x, L244.HDDCDD_A2_HadCM3, L244.HDDCDD_B1_CCSM3x, L244.HDDCDD_B1_HadCM3, L244.HDDCDD_constdd_no_GCM,
-                L244.Gomp.fn.param)
+                L244.Gomp.fn.param,L244.Satiation_impedance,L244.Satiation_impedance_SSP1,L244.Satiation_impedance_SSP2,
+                L244.Satiation_impedance_SSP3,L244.Satiation_impedance_SSP4,L244.Satiation_impedance_SSP5)
   } else {
     stop("Unknown command")
   }
