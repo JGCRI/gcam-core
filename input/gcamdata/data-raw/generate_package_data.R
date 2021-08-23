@@ -297,6 +297,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["Floorspace"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "year", "base.building.size")
   level2_data_names[["SatiationAdder"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "satiation.adder")
   level2_data_names[["Satiation_flsp"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "satiation.level")
+  level2_data_names[["SatiationImpedance"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "satiation-impedance")
   level2_data_names[["ShellConductance"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "year", "shell.conductance", "shell.year", "floor.to.surface.ratio")
   level2_data_names[["PriceExp_IntGains"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "price.exp.year.fillout", "price.exponent", "internal.gains.market.name", "internal.gains.unit")
   level2_data_names[["ThermalBaseService"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input", "year", "base.service")

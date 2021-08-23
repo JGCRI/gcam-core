@@ -609,8 +609,8 @@ module_energy_L244.building_det <- function(command, ...) {
       bind_rows(L144.Satiation_impedance_pre %>%
                   filter(grepl("comm",nodeInput)) %>%
                   mutate(gcam.consumer=nodeInput)) %>%
-      select(region,gcam.consumer,nodeInput,building.node.input,`satiation-impedance`)
-    #select(LEVEL2_DATA_NAMES[["Satiation_impedance"]])
+      #select(region,gcam.consumer,nodeInput,building.node.input,`satiation-impedance`)
+      select(LEVEL2_DATA_NAMES[["SatiationImpedance"]])
 
     #---------------------------------
     # Satiation impedance for SSPs
@@ -628,10 +628,25 @@ module_energy_L244.building_det <- function(command, ...) {
              flsp_pc=base.building.size*1E9/pop) %>%
       # There are some cases where assumed satiation level is below the 2015 pcflsp value.
       # This generates problems for calibration of the satiation impedance, so it needs to be corrected.
+      filter(flsp_pc<=value) %>%
       mutate(`satiation-impedance`=(-log(2)/log((value - flsp_pc)/(value))) * pcGDP_thous90USD) %>%
+      bind_rows(L244.Satiation_flsp_SSPs %>%
+                  mutate(gdp=pcGDP_thous90USD*1E3*pop_thous*1E3,
+                         pop=pop_thous*1E3) %>%
+                  group_by(GCAM_region_ID,region,year,nodeInput,building.node.input,SSP) %>%
+                  summarise(value=mean(value),
+                            gdp=sum(gdp),
+                            pop=sum(pop),
+                            base.building.size=sum(base.building.size)) %>%
+                  ungroup() %>%
+                  mutate(pcGDP_thous90USD=(gdp/pop)/1E3,
+                         flsp_pc=base.building.size*1E9/pop) %>%
+                  # There are some cases where assumed satiation level is below the 2015 pcflsp value.
+                  # This generates problems for calibration of the satiation impedance, so it needs to be corrected.
+                  filter(flsp_pc>value) %>%
+                  mutate(`satiation-impedance`= NaN)) %>%
       mutate(`satiation-impedance`=round(`satiation-impedance`,energy.DIGITS_SATIATION_ADDER)) %>%
-      select(region,gcam.consumer,nodeInput,building.node.input,`satiation-impedance`,SSP) %>%
-      #select(LEVEL2_DATA_NAMES[["Satiation_impedance"]], SSP) %>%
+      select(region,nodeInput,building.node.input,`satiation-impedance`,SSP) %>%
       # substitute NaN: use approx_fun per ssp
       mutate(year=as.numeric(gsub("SSP","",SSP))) %>%
       select(-SSP) %>%
@@ -647,8 +662,8 @@ module_energy_L244.building_det <- function(command, ...) {
       bind_rows(L144.Satiation_impedance_SSPs_pre %>%
                   filter(grepl("comm",nodeInput)) %>%
                   mutate(gcam.consumer=nodeInput)) %>%
-      select(region,gcam.consumer,nodeInput,building.node.input,`satiation-impedance`,SSP)
-      #select(LEVEL2_DATA_NAMES[["Satiation_impedance"]], SSP) %>%
+      #select(region,gcam.consumer,nodeInput,building.node.input,`satiation-impedance`,SSP)
+      select(LEVEL2_DATA_NAMES[["SatiationImpedance"]], SSP)
 
     L244.Satiation_impedance_SSPs.split<-L244.Satiation_impedance_SSPs %>%
       split(.$SSP) %>%
