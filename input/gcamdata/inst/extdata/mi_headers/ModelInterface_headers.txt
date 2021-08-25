@@ -488,6 +488,14 @@ GenericServiceSatiation, world/+{name}region, region/+{name}gcam-consumer, gcam-
 
 ThermalServiceSatiation, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, satiation-demand-function/+satiation-level, scenario, scenario/world, thermal-building-service-input/satiation-demand-function
 
+GenericServiceImpedance, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, satiation-demand-function/+satiation-impedance, scenario, scenario/world, building-service-input/satiation-demand-function
+
+ThermalServiceImpedance, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, satiation-demand-function/+satiation-impedance, scenario, scenario/world, thermal-building-service-input/satiation-demand-function
+
+GenericServiceAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, satiation-demand-function/+bias-adder, scenario, scenario/world, building-service-input/satiation-demand-function
+
+ThermalServiceAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, satiation-demand-function/+bias-adder, scenario, scenario/world, thermal-building-service-input/satiation-demand-function
+
 ThermalServiceSatiationAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, satiation-demand-function/+satiation-adder, scenario, scenario/world, thermal-building-service-input/satiation-demand-function
 
 GenericServiceTechChange, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, building-service-input/+{year;fillout=1}tech-change, building-service-input/+tech-change, scenario, scenario/world
