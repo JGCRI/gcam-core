@@ -1,0 +1,197 @@
+# File: A44.CalPrice_service.csv
+# Title: Prices by service in the base years. Used to calibrate satiation impedance
+# Units: 1975$/unit
+# Source: GCAM v5.4 output
+# Column types: ccnnnn 
+# ----------
+region,sector,1990,2005,2010,2015
+Africa_Eastern,comm cooling,10.8517,9.66426,11.7865,12.0415
+Africa_Eastern,comm heating,7.72876,7.48722,11.2903,11.9422
+Africa_Eastern,comm others,13.5505,13.8066,17.275,18.607
+Africa_Eastern,resid cooling,15.2468,14.0141,16.2171,16.4818
+Africa_Eastern,resid heating,2.40808,2.44391,2.44333,2.4366
+Africa_Eastern,resid others,5.39423,5.57966,6.30616,6.75509
+Africa_Northern,comm cooling,8.85055,7.72252,8.68768,8.53815
+Africa_Northern,comm heating,7.60783,7.63024,11.5032,12.1401
+Africa_Northern,comm others,15.1669,15.8559,18.3938,18.3646
+Africa_Northern,resid cooling,13.1695,11.9986,13.0004,12.8452
+Africa_Northern,resid heating,2.41908,2.52666,2.43066,2.36767
+Africa_Northern,resid others,12.6561,12.4326,16.1895,16.0473
+Africa_Southern,comm cooling,9.09701,8.58991,11.1935,10.6627
+Africa_Southern,comm heating,5.87616,6.99516,10.5991,12.0018
+Africa_Southern,comm others,13.1518,15.1495,19.2607,20.1713
+Africa_Southern,resid cooling,13.4253,12.8989,15.6015,15.0505
+Africa_Southern,resid heating,2.46273,2.49479,2.43693,2.4366
+Africa_Southern,resid others,5.27782,5.74841,7.78361,8.3979
+Africa_Western,comm cooling,8.79666,8.09076,9.60704,8.86561
+Africa_Western,comm heating,7.57761,7.60509,11.3255,12.115
+Africa_Western,comm others,13.3317,13.3086,16.3696,16.1396
+Africa_Western,resid cooling,13.1135,12.3808,13.9547,13.1851
+Africa_Western,resid heating,2.40748,2.44291,2.43869,2.43661
+Africa_Western,resid others,4.25263,4.46315,4.81049,4.95448
+Argentina,comm cooling,8.34774,7.19272,8.30772,8.25445
+Argentina,comm heating,6.41499,8.10126,10.837,11.0702
+Argentina,comm others,12.75,13.8433,17.5026,17.7595
+Argentina,resid cooling,12.6342,11.1328,12.395,12.3607
+Argentina,resid heating,6.80053,6.69421,8.96021,9.05879
+Argentina,resid others,10.8556,10.4862,12.9509,13.2746
+Australia_NZ,comm cooling,6.91749,6.51409,6.61544,6.50783
+Australia_NZ,comm heating,6.29648,6.98466,8.03275,7.9679
+Australia_NZ,comm others,13.1473,13.1124,13.9715,13.9192
+Australia_NZ,resid cooling,11.1629,10.7442,10.8494,10.7377
+Australia_NZ,resid heating,6.3771,6.46593,7.21049,7.11398
+Australia_NZ,resid others,13.2696,12.9164,13.5427,13.3459
+Brazil,comm cooling,9.25228,7.76247,8.25688,7.85711
+Brazil,comm heating,10.9706,11.5943,14.5572,14.9204
+Brazil,comm others,18.1806,16.4517,18.7421,18.0936
+Brazil,resid cooling,13.5944,12.0239,12.5373,12.1287
+Brazil,resid heating,7.36774,7.57998,10.3759,11.0832
+Brazil,resid others,13.4699,13.2054,16.2881,16.426
+Canada,comm cooling,7.33776,6.93664,7.14638,7.1778
+Canada,comm heating,7.04421,7.17212,9.01154,8.90309
+Canada,comm others,13.3988,13.0029,14.2692,14.1596
+Canada,resid cooling,11.5513,11.0697,11.2815,11.2928
+Canada,resid heating,7.28598,7.53486,8.69399,8.97373
+Canada,resid others,13.6366,13.2481,14.21,14.512
+Central America and Caribbean,comm cooling,9.46095,8.02966,9.89368,9.28292
+Central America and Caribbean,comm heating,9.32251,8.78228,11.8988,11.9474
+Central America and Caribbean,comm others,15.4436,14.6134,19.5379,19.3184
+Central America and Caribbean,resid cooling,13.8125,12.3127,14.2531,13.6181
+Central America and Caribbean,resid heating,6.74048,6.62449,8.05007,8.1664
+Central America and Caribbean,resid others,11.8057,11.5857,14.762,14.6029
+Central Asia,comm cooling,8.48656,8.08576,8.62357,8.34036
+Central Asia,comm heating,5.44809,5.80615,6.6969,6.58458
+Central Asia,comm others,9.92666,10.656,12.3605,14.0044
+Central Asia,resid cooling,12.7916,12.3756,12.9339,12.6399
+Central Asia,resid heating,5.77574,5.95175,6.73621,6.6785
+Central Asia,resid others,11.3383,11.3181,12.8425,13.6184
+China,comm cooling,8.67131,7.7673,7.38793,7.15325
+China,comm heating,4.06034,5.00325,6.64255,6.91636
+China,comm others,10.512,13.5245,14.4124,14.6026
+China,resid cooling,12.9834,12.045,11.6512,11.4076
+China,resid heating,2.76532,4.03826,5.54609,5.98362
+China,resid others,4.75029,10.2332,12.7307,13.6727
+Colombia,comm cooling,8.04987,7.12479,7.74093,7.68022
+Colombia,comm heating,8.62818,9.50584,11.3214,10.3938
+Colombia,comm others,14.7287,14.3942,16.3266,15.3192
+Colombia,resid cooling,12.3346,11.2773,11.8541,11.5516
+Colombia,resid heating,6.23053,7.2436,8.98363,8.03477
+Colombia,resid others,12.2801,12.1943,14.395,13.3941
+EU-12,comm cooling,8.60745,7.76168,7.81831,7.61683
+EU-12,comm heating,4.50949,5.39186,6.21447,6.5091
+EU-12,comm others,13.8857,14.8825,16.0018,16.0486
+EU-12,resid cooling,12.9171,12.0392,12.098,11.8888
+EU-12,resid heating,4.42901,5.2645,5.76979,5.99537
+EU-12,resid others,12.1635,12.5837,13.6538,13.8509
+EU-15,comm cooling,7.48258,6.8895,7.04014,7.12656
+EU-15,comm heating,6.38695,7.42863,8.90338,9.33227
+EU-15,comm others,12.632,12.7621,14.0839,14.5871
+EU-15,resid cooling,11.7495,11.1339,11.2902,11.3799
+EU-15,resid heating,6.18476,6.24496,7.57935,7.9934
+EU-15,resid others,11.8488,12.2794,13.526,14.2143
+Europe_Eastern,comm cooling,8.77734,8.49731,8.40332,8.20762
+Europe_Eastern,comm heating,5.28315,5.56257,6.0801,6.33932
+Europe_Eastern,comm others,10.0709,17.3253,16.4341,17.5449
+Europe_Eastern,resid cooling,13.0935,12.8028,12.7052,12.5021
+Europe_Eastern,resid heating,4.7386,5.36471,6.57126,6.71534
+Europe_Eastern,resid others,8.73667,11.0009,12.7625,13.6151
+Europe_Non_EU,comm cooling,8.14532,7.09688,7.19942,7.0811
+Europe_Non_EU,comm heating,4.63945,6.837,5.53001,6.26969
+Europe_Non_EU,comm others,12.021,13.3972,13.9266,13.946
+Europe_Non_EU,resid cooling,12.4374,11.3491,11.4556,11.3327
+Europe_Non_EU,resid heating,7.29773,7.0054,7.83886,7.39138
+Europe_Non_EU,resid others,11.37,11.6777,12.6053,12.5972
+European Free Trade Association,comm cooling,7.90698,7.4246,7.39762,7.53809
+European Free Trade Association,comm heating,8.86623,9.11908,10.7061,11.6738
+European Free Trade Association,comm others,15.5978,15.138,15.9192,16.7108
+European Free Trade Association,resid cooling,12.19,11.6893,11.6613,11.8071
+European Free Trade Association,resid heating,8.00564,8.04907,9.86427,10.6907
+European Free Trade Association,resid others,16.5945,15.9577,16.3501,17.0658
+India,comm cooling,9.89622,9.08789,9.00353,8.54099
+India,comm heating,21.1458,20.306,20.5311,19.5844
+India,comm others,10.6005,13.9413,14.8858,16.1453
+India,resid cooling,14.2549,13.4158,13.3283,12.8481
+India,resid heating,15.788,18.0578,18.7419,18.5802
+India,resid others,7.2257,9.5668,11.8971,13.4433
+Indonesia,comm cooling,8.94139,7.8901,8.54657,7.67883
+Indonesia,comm others,13.2498,13.7403,18.1752,17.184
+Indonesia,resid cooling,13.2638,12.1725,12.8539,11.9532
+Indonesia,resid others,6.66192,7.30785,8.88991,9.57507
+Japan,comm cooling,6.92789,6.5024,6.70465,6.47644
+Japan,comm heating,6.26651,6.55084,8.73541,8.92695
+Japan,comm others,11.8491,12.1244,13.6895,13.3912
+Japan,resid cooling,11.1737,10.732,10.942,10.7051
+Japan,resid heating,6.89574,7.16483,9.50749,9.72742
+Japan,resid others,12.378,12.2465,13.6975,13.3912
+Mexico,comm cooling,8.62363,7.67031,8.25097,7.5693
+Mexico,comm heating,10.5392,9.00348,12.4583,12.9335
+Mexico,comm others,17.6096,15.2303,18.1361,17.1102
+Mexico,resid cooling,12.9339,11.9133,12.507,11.7914
+Mexico,resid heating,6.68946,7.24436,10.4067,10.9273
+Mexico,resid others,11.9144,13.0931,16.2497,15.8035
+Middle East,comm cooling,7.81524,7.58578,9.01661,8.92172
+Middle East,comm heating,6.5152,6.30509,7.58325,6.9641
+Middle East,comm others,12.8006,13.5758,18.5388,18.9978
+Middle East,resid cooling,12.1671,12.1763,13.5915,13.4608
+Middle East,resid heating,6.85522,6.18806,7.81523,7.49463
+Middle East,resid others,11.8105,11.2931,14.709,15.0315
+Pakistan,comm cooling,8.82744,8.01747,10.2893,9.73313
+Pakistan,comm heating,6.4587,6.55373,8.70351,10.1084
+Pakistan,comm others,13.7062,13.0489,17.2352,17.1216
+Pakistan,resid cooling,13.1455,12.3047,14.663,14.0856
+Pakistan,resid heating,6.13911,5.50393,6.51289,6.64174
+Pakistan,resid others,5.30428,6.43547,7.99644,8.11907
+Russia,comm cooling,8.8681,8.07182,8.15555,7.88177
+Russia,comm heating,4.41401,4.98154,6.28299,6.17693
+Russia,comm others,7.84088,15.0087,16.9267,16.7134
+Russia,resid cooling,13.1877,12.3611,12.4481,12.1639
+Russia,resid heating,5.88574,5.00621,6.13153,6.15391
+Russia,resid others,11.1071,11.2688,13.0326,13.3183
+South Africa,comm cooling,8.61115,7.88088,7.90135,7.68806
+South Africa,comm heating,2.60366,3.13147,8.07665,9.17681
+South Africa,comm others,17.2479,15.5846,16.2271,15.5909
+South Africa,resid cooling,12.921,12.1629,12.1842,11.9628
+South Africa,resid heating,2.55109,2.31401,2.25784,2.21642
+South Africa,resid others,12.9277,12.6373,14.5784,13.0257
+South America_Northern,comm cooling,7.72546,8.19037,10.4607,11.3392
+South America_Northern,comm heating,8.66821,11.4154,15.4275,18.3572
+South America_Northern,comm others,13.4484,17.0091,22.6951,25.5835
+South America_Northern,resid cooling,11.9242,12.4521,14.8951,15.8313
+South America_Northern,resid heating,7.92442,8.49119,13.5007,14.6705
+South America_Northern,resid others,12.5408,13.5621,20.0608,22.1894
+South America_Southern,comm cooling,8.24096,7.23706,8.31765,7.72399
+South America_Southern,comm heating,8.3082,9.32585,12.6155,12.7769
+South America_Southern,comm others,15.4048,14.8783,18.566,17.5544
+South America_Southern,resid cooling,12.5343,11.4828,12.6048,11.9813
+South America_Southern,resid heating,6.76184,7.07368,9.5041,10.4403
+South America_Southern,resid others,14.7649,13.9585,17.0991,16.5371
+South Asia,comm cooling,8.34937,7.72135,8.71614,8.37856
+South Asia,comm heating,6.82327,6.86677,9.47942,10.0501
+South Asia,comm others,11.8699,13.2568,16.3694,15.7141
+South Asia,resid cooling,12.6492,11.9973,13.03,12.6795
+South Asia,resid heating,5.02402,5.29575,6.51773,6.483
+South Asia,resid others,4.44152,5.9714,7.1778,7.84411
+South Korea,comm cooling,7.84636,7.0863,7.09406,6.91856
+South Korea,comm heating,6.5485,7.06637,9.08405,9.02861
+South Korea,comm others,11.5185,13.633,14.8707,14.6745
+South Korea,resid cooling,12.1066,11.1977,11.1665,10.9783
+South Korea,resid heating,5.35026,6.41925,7.91143,8.21601
+South Korea,resid others,8.19753,11.8434,12.9157,13.0017
+Southeast Asia,comm cooling,8.83544,7.11163,7.54201,7.18059
+Southeast Asia,comm heating,2.84396,2.93297,3.93215,5.1167
+Southeast Asia,comm others,15.0034,13.9159,16.3656,16.1986
+Southeast Asia,resid cooling,13.1538,11.3644,11.8112,11.436
+Southeast Asia,resid heating,6.04603,5.89221,7.17161,7.59907
+Southeast Asia,resid others,7.53177,8.61117,10.5979,11.6636
+Taiwan,comm cooling,8.8866,7.60864,7.64121,7.29948
+Taiwan,comm heating,7.53741,7.50475,10.4131,10.4668
+Taiwan,comm others,16.8811,16.1186,16.9493,16.2097
+Taiwan,resid cooling,13.2069,11.8803,11.9141,11.5594
+Taiwan,resid heating,7.36847,7.403,10.0941,10.4328
+Taiwan,resid others,17.828,16.2654,16.861,16.2054
+USA,comm cooling,7.12459,6.49879,6.55543,6.42988
+USA,comm heating,5.74427,6.15259,7.30011,7.25869
+USA,comm others,12.2579,12.4492,13.0236,12.8916
+USA,resid cooling,11.3641,10.7083,10.7601,10.6295
+USA,resid heating,5.30184,5.70526,6.70894,6.63408
+USA,resid others,12.8574,12.4696,13.1094,12.9413
