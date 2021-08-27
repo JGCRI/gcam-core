@@ -1,0 +1,9 @@
+# File: calibrated_techs_ces.csv
+# Title: For cdr technologies in the ces sector we separately define dummy calibration for cdr + noCDR
+# Units: n/a
+# Column types: cccccccc
+# ----------
+sector,fuel,supplysector,subsector,technology,minicam.energy.input,calibration,secondary.output
+ces,electricity,ces,dac,no DAC,elect_td_ind,output,
+ces,heat,ces,dac,no DAC,process heat dac,output,
+ces,airCO2,ces,dac,no DAC,airCO2,output,

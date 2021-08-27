@@ -1,0 +1,38 @@
+# File: A999.calibration.csv
+# Title: Calibration values for climate engineering services sector
+# Units: MtC
+# Column types: icin
+# ----------
+GCAM_region_ID,sector,year,value
+1,ces,2015,2000
+2,ces,2015,2000
+3,ces,2015,2000
+4,ces,2015,2000
+5,ces,2015,2000
+6,ces,2015,2000
+7,ces,2015,2000
+8,ces,2015,2000
+9,ces,2015,2000
+10,ces,2015,2000
+11,ces,2015,2000
+12,ces,2015,2000
+13,ces,2015,2000
+14,ces,2015,2000
+15,ces,2015,2000
+16,ces,2015,2000
+17,ces,2015,2000
+18,ces,2015,2000
+19,ces,2015,2000
+20,ces,2015,2000
+21,ces,2015,2000
+22,ces,2015,2000
+23,ces,2015,2000
+24,ces,2015,2000
+25,ces,2015,2000
+26,ces,2015,2000
+27,ces,2015,2000
+28,ces,2015,2000
+29,ces,2015,2000
+30,ces,2015,2000
+31,ces,2015,2000
+32,ces,2015,2000

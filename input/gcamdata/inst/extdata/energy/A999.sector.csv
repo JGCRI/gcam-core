@@ -1,0 +1,9 @@
+# File: A999.sector.csv
+# Title: dac default supplysector information (units and logit exponents)
+# Units: Units-in-table
+# Column types: ccccicc
+# ----------
+supplysector,output.unit,input.unit,price.unit,logit.exponent,final.energy,logit.type
+ces,Mt,EJ or Mt,1975$/kg,-3,industry,
+process heat dac,EJ,EJ,1975$/GJ,-3,industry,
+airCO2,Mt,EJ or Mt,1975$/kg,-3,industry,

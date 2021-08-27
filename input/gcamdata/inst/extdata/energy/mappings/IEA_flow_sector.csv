@@ -62,7 +62,7 @@ MANUFACT,Manufacturing,,
 IRONSTL,Iron and Steel,iron and steel,0.00004186
 CHEMICAL,Chemical and Petrochemical,chemical energy use,0.00004186
 NONFERR,Non-Ferrous Metals,,
-NONMET,Non-Metallic Minerals,nonmet,0.00004186
+NONMET,Non-Metallic Minerals,cement,0.00004186
 TRANSEQ,Transport Equipment,,
 MACHINE,Machinery,,
 MINING,Mining and Quarrying,mining energy use,0.00004186

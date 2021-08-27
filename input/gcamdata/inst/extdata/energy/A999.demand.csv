@@ -1,0 +1,8 @@
+# File: A999.demand.csv
+# Title: dac final demand perCapitaBased and price elasticity
+# Units: NA for perCapitaBased; Unitless for price.elasticity
+# Comments: perCapitaBased is a logical (Boolean) indicating whether to use a per-capita or per-GDP based demand function
+# Column types: cin
+# ----------
+energy.final.demand,perCapitaBased,price.elasticity
+ces,0,0
