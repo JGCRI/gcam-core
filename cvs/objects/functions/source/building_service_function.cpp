@@ -75,7 +75,7 @@ double BuildingServiceFunction::calcCoefficient( InputSet& input, double consump
             double thermalLoad = buildingServiceInput->calcThermalLoad( buildingParentInput, internalGainsPerSqMeter, period );
             double servicePerFloorspace = buildingServiceInput->getPhysicalDemand( period ) / floorSpace;
             double servicePrice = max( buildingServiceInput->getPricePaid( regionName, period ), SectorUtils::getDemandPriceThreshold() );
-            buildingServiceInput->getSatiationDemandFunction()->calibrateSatiationImpedance( servicePerFloorspace, income / servicePrice, period );
+            buildingServiceInput->getSatiationDemandFunction()->calibrateSatiationImpedance( period );
             double serviceDensity = calcServiceDensity( buildingServiceInput, income, regionName, period );
             coefficient =  servicePerFloorspace / ( serviceDensity * thermalLoad );
         }
@@ -106,7 +106,7 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
             BuildingServiceInput* buildingServiceInput = static_cast<BuildingServiceInput*>( *inputIter );
             double thermalLoad = buildingServiceInput->calcThermalLoad( buildingParentInput, internalGainsPerSqMeter, period );
             double serviceDensity = calcServiceDensity( buildingServiceInput, income, regionName, period );
-            double adjustedServiceDensity = buildingServiceInput->getCoefficient( period ) * thermalLoad * serviceDensity;
+	        double adjustedServiceDensity = buildingServiceInput->getCoefficient( period ) * thermalLoad * serviceDensity + buildingServiceInput->getSatiationDemandFunction()->calibrateBiasAdder(period);
             // Set the thermal load adjusted service density back into the input for reporting.
             buildingServiceInput->setServiceDensity( adjustedServiceDensity, period );
             demand = floorSpace * adjustedServiceDensity;

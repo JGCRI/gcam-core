@@ -70,7 +70,7 @@ double BuildingFunction::calcCoefficient( InputSet& input, double consumption, c
             / buildingNodeInput->getSubregionalPopulation();
         // first calibrate the satiation impedance
         SatiationDemandFunction* demandFunction = buildingNodeInput->getSatiationDemandFunction();
-        demandFunction->calibrateSatiationImpedance( perCapitaBaseFloorspace, buildingNodeInput->getSubregionalIncome(), period );
+        demandFunction->calibrateSatiationImpedance( period );
     }
     return 1;
 }
