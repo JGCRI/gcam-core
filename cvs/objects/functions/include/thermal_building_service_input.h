@@ -125,6 +125,9 @@ protected:
         
         //! Degree days by period.
         DEFINE_VARIABLE( ARRAY, "degree-days", mDegreeDays, objects::PeriodVector<Value> ),
+
+		//! Bias adder.  This value that correct the mismatching in base year if multiple consumers are implemented
+		DEFINE_VARIABLE(SIMPLE, "bias-adder", mBiasAdder, objects::PeriodVector<Value>),
         
         //! Demand function coefficients to capture base year thermal characteristics.
         DEFINE_VARIABLE( SIMPLE | STATE, "coefficient", mCoefficient, Value )

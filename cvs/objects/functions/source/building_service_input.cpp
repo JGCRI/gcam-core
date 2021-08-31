@@ -107,6 +107,11 @@ void BuildingServiceInput::XMLParse( const DOMNode* aNode ) {
         if ( nodeName == "base-service" ) {
             XMLHelper<Value>::insertValueIntoVector( curr, mServiceDemand, scenario->getModeltime() );
         }
+
+		else if ( nodeName == "bias-adder" ) {
+			XMLHelper<Value>::insertValueIntoVector( curr, mBiasAdder, scenario->getModeltime() );
+		}
+
         else if( nodeName == SatiationDemandFunction::getXMLNameStatic() ) {
             parseSingleNode( curr, mSatiationDemandFunction, new SatiationDemandFunction );
         }
@@ -162,6 +167,7 @@ IInput* BuildingServiceInput::clone() const {
 void BuildingServiceInput::copy( const BuildingServiceInput& aInput ) {
     mName = aInput.mName;
     mServiceDemand = aInput.mServiceDemand;
+	mBiasAdder = aInput.mBiasAdder;
 
     delete mSatiationDemandFunction;
     mSatiationDemandFunction = aInput.mSatiationDemandFunction->clone();
@@ -177,6 +183,7 @@ void BuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* a
     XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs, mName );
 
     XMLWriteElement( mServiceDemand[ aPeriod ], "service", aOut, aTabs );
+	XMLWriteElement(mBiasAdder[aPeriod], "service", aOut, aTabs);
     XMLWriteElement( mServiceDensity[ aPeriod ], "service-density", aOut, aTabs );
 
     // write the closing tag.

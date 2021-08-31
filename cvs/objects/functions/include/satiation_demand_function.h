@@ -107,10 +107,6 @@ public:
 
     double calcDemand( const double aDemandDriver ) const;
     
-    double calibrateSatiationImpedance(const int aPeriod );
-
-	double calibrateBiasAdder(const int aPeriod);
-
     static const std::string& getXMLNameStatic();
 
     // INamed methods
@@ -154,11 +150,9 @@ protected:
         DEFINE_VARIABLE( SIMPLE | STATE, "satiation-adder", mSatiationAdder, Value ),
 
 		//! Bias adder.  This parsed value that correct the mismatching in base year if multiple consumers are implemented
-		DEFINE_VARIABLE(SIMPLE, "parsed-bias-impedance", mParsedBiasAdder, Value),
-
-		//! Bias adder.  This value that correct the mismatching in base year if multiple consumers are implemented
-		DEFINE_VARIABLE(SIMPLE, "bias-adder", mBiasAdder, Value)
-    )
+		DEFINE_VARIABLE(SIMPLE, "parsed-bias-impedance", mParsedBiasAdder, Value)
+	
+	)
     
     void copy( const SatiationDemandFunction& aOther );
 };

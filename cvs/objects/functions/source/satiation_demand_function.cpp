@@ -72,7 +72,6 @@ void SatiationDemandFunction::copy( const SatiationDemandFunction& aOther ) {
     mParsedSatiationAdder = aOther.mParsedSatiationAdder;
     mSatiationAdder = aOther.mSatiationAdder;
 	mParsedSatiationImpedance = aOther.mParsedSatiationImpedance;
-	mBiasAdder = aOther.mBiasAdder;
 	mParsedBiasAdder = aOther.mParsedBiasAdder;
 }
 
@@ -162,19 +161,3 @@ double SatiationDemandFunction::calcDemand( const double aDemandDriver ) const {
  * \param aDemandDriver The driver for the calibrated demand level.
  * \param aPeriod The model period.
  */
-double SatiationDemandFunction::calibrateSatiationImpedance(const int aPeriod ) {
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::ERROR );
-    
-    // calibrate the satiation impedance
-        mSatiationImpedance = mParsedSatiationImpedance;
-}
-
-
-double SatiationDemandFunction::calibrateBiasAdder(const int aPeriod) {
-	ILogger& mainLog = ILogger::getLogger("main_log");
-	mainLog.setLevel(ILogger::ERROR);
-
-	// calibrate the bias adder
-	mBiasAdder = mParsedBiasAdder;
-}
