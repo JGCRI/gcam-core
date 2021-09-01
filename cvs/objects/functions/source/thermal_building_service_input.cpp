@@ -103,10 +103,6 @@ void ThermalBuildingServiceInput::XMLParse( const DOMNode* aNode ) {
             XMLHelper<Value>::insertValueIntoVector( curr, mServiceDemand, scenario->getModeltime() );
         }
 
-		else if (nodeName == "bias-adder") {
-			XMLHelper<Value>::insertValueIntoVector(curr, mBiasAdder, scenario->getModeltime());
-		}
-
         else if( nodeName == "internal-gains-scalar" ) {
             mInternalGainsScalar = XMLHelper<Value>::getValue( curr );
         }
