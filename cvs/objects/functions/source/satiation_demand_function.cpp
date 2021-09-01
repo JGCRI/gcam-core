@@ -147,7 +147,7 @@ double SatiationDemandFunction::calcDemand( const double aDemandDriver ) const {
     assert( mSatiationImpedance.isInited() );
 
     const double log2 = log( 2.0 );
-    return ( mSatiationLevel * 1E6 )
+    return ( mSatiationLevel )
         * ( 1 - exp( -log2 / mSatiationImpedance * aDemandDriver ) ) + mSatiationAdder;
 }
 
