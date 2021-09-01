@@ -95,6 +95,8 @@ public:
                                     const double aInternalGainsPerSqMeter,
                                     const int aPeriod ) const;
 
+	virtual double getBiasAdder() const;
+
     // INestedInput methods
     // define them to do nothing since a BuildingServiceInput is a leaf in the nesting structure
     // this should be the end point for recursion
@@ -311,7 +313,7 @@ protected:
 		DEFINE_VARIABLE(ARRAY | STATE, "service-density", mServiceDensity, objects::PeriodVector<Value>),
 
 		//! Bias adder.  This value that correct the mismatching in base year if multiple consumers are implemented
-		DEFINE_VARIABLE(ARRAY, "bias-adder", mBiasAdder, objects::PeriodVector<Value>),
+		DEFINE_VARIABLE(SIMPLE, "bias-adder", mBiasAdder, Value),
 
         //! Satiation demand function.
         DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* )

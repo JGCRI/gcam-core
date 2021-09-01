@@ -109,7 +109,7 @@ void BuildingServiceInput::XMLParse( const DOMNode* aNode ) {
         }
 
 		else if ( nodeName == "bias-adder" ) {
-			XMLHelper<Value>::insertValueIntoVector( curr, mBiasAdder, scenario->getModeltime() );
+			mBiasAdder = (XMLHelper<double>::getValue(curr));
 		}
 
         else if( nodeName == SatiationDemandFunction::getXMLNameStatic() ) {
@@ -183,7 +183,7 @@ void BuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* a
     XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs, mName );
 
     XMLWriteElement( mServiceDemand[ aPeriod ], "service", aOut, aTabs );
-	XMLWriteElement(mBiasAdder[aPeriod], "service", aOut, aTabs);
+	XMLWriteElement(mBiasAdder, "bias-adder", aOut, aTabs);
     XMLWriteElement( mServiceDensity[ aPeriod ], "service-density", aOut, aTabs );
 
     // write the closing tag.
@@ -196,6 +196,10 @@ double BuildingServiceInput::calcThermalLoad( const BuildingNodeInput* aBuilding
 {
     // Generic building services do not adjust demands based on thermal load.
     return 1;
+}
+
+double BuildingServiceInput::getBiasAdder() const {
+	return mBiasAdder;
 }
 
 /*!
@@ -311,3 +315,4 @@ void BuildingServiceInput::accept( IVisitor* aVisitor, const int aPeriod ) const
     aVisitor->startVisitBuildingServiceInput( this, aPeriod );
     aVisitor->endVisitBuildingServiceInput( this, aPeriod );
 }
+
