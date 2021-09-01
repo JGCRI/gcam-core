@@ -423,7 +423,7 @@ module_energy_L244.building_det <- function(command, ...) {
                                by=c("GCAM_region_ID","year")) %>%
       rename(pcGDP_thous90USD=value) %>%
       # Change units satiation level
-      mutate(satiation.level=satiation.level*1E6) %>%
+      mutate(flsp_pc=flsp_pc/1E6) %>%
       # Calculate satiation impedance
       mutate(`satiation-impedance`=(-log(2)/log((satiation.level - flsp_pc)/(satiation.level))) * pcGDP_thous90USD) %>%
       mutate(`satiation-impedance`=round(`satiation-impedance`,energy.DIGITS_SATIATION_ADDER)) %>%
@@ -434,14 +434,14 @@ module_energy_L244.building_det <- function(command, ...) {
     # Satiation impedance for SSPs
 
     L244.Satiation_impedance_SSPs<-L244.Satiation_flsp_SSPs %>%
-      mutate(flsp_pc=base.building.size*1E9/(pop_thous*1E3)) %>%
+      mutate(flsp_pc=(base.building.size*1E9/(pop_thous*1E3))/1E6) %>%
       # There are some cases where assumed satiation level is below the 2015 pcflsp value.
       # This generates problems for calibration of the satiation impedance, so it needs to be corrected.
-      filter(flsp_pc<=value) %>%
-      mutate(`satiation-impedance`= (-log(2)/log((value - flsp_pc)/(value)) * pcGDP_thous90USD)) %>%
+      filter(flsp_pc<=satiation.level) %>%
+      mutate(`satiation-impedance`= (-log(2)/log((satiation.level - flsp_pc)/(satiation.level)) * pcGDP_thous90USD)) %>%
       bind_rows(L244.Satiation_flsp_SSPs %>%
-                  mutate(flsp_pc=base.building.size*1E9/(pop_thous*1E3)) %>%
-                  filter(flsp_pc>value) %>%
+                  mutate(flsp_pc=(base.building.size*1E9/(pop_thous*1E3))/1E6) %>%
+                  filter(flsp_pc>satiation.level) %>%
                   mutate(`satiation-impedance`= NaN)) %>%
       mutate(`satiation-impedance`=round(`satiation-impedance`,energy.DIGITS_SATIATION_ADDER)) %>%
       #select(region,gcam.consumer,nodeInput,building.node.input,`satiation-impedance`,SSP) %>%
@@ -484,14 +484,13 @@ module_energy_L244.building_det <- function(command, ...) {
     # satiation_adder=Observed_pcflsp_2015 - Estimated_pcflsp_2015
 
     L244.SatiationAdder<- L244.Satiation_flsp %>%
-      mutate(satiation.level=satiation.level*1E6) %>%
       left_join_error_no_match(L244.Satiation_impedance,by = c("region", "gcam.consumer", "nodeInput", "building.node.input")) %>%
       mutate(year=2015) %>%
       left_join_error_no_match(L244.Floorspace,by=c("region","gcam.consumer","year","nodeInput","building.node.input")) %>%
       rename(observed_flsp_bm2=base.building.size) %>%
       left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("year", "region")) %>%
       rename(pop_thous=value) %>%
-      mutate(observed_pcflsp=observed_flsp_bm2*1E9/(pop_thous*1E3)) %>%
+      mutate(observed_pcflsp=(observed_flsp_bm2*1E9/(pop_thous*1E3))/1E6) %>%
       left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(scenario==socioeconomics.BASE_GDP_SCENARIO),by = c("year", "GCAM_region_ID","region")) %>%
       rename(pcGDP_thous90USD=value) %>%
       mutate(est_pcflsp=satiation.level*(1-exp(-log(2)*pcGDP_thous90USD/`satiation-impedance`))) %>%
@@ -504,12 +503,11 @@ module_energy_L244.building_det <- function(command, ...) {
 
     # Repeat the process for SSPs
     L244.SatiationAdder_SSPs <- L244.Satiation_flsp_SSPs %>%
-      select(-satiation.level) %>%
-      rename(satiation.level=value) %>%
+      select(-value) %>%
       left_join_error_no_match(L244.Satiation_impedance_SSPs,by = c("region", "gcam.consumer", "nodeInput", "building.node.input","SSP")) %>%
       mutate(year=2015) %>%
       rename(observed_flsp_bm2=base.building.size) %>%
-      mutate(observed_pcflsp=observed_flsp_bm2*1E9/(pop_thous*1E3)) %>%
+      mutate(observed_pcflsp=(observed_flsp_bm2*1E9/(pop_thous*1E3))/1E6) %>%
       mutate(est_pcflsp=satiation.level*(1-exp(-log(2)*pcGDP_thous90USD/`satiation-impedance`))) %>%
       mutate(satiation.adder=round(observed_pcflsp-est_pcflsp,energy.DIGITS_SATIATION_ADDER)) %>%
       arrange(GCAM_region_ID,gcam.consumer) %>%
@@ -531,9 +529,6 @@ module_energy_L244.building_det <- function(command, ...) {
                add_title(paste0("Satiation adders in floorspace demand function: ", i)) %>%
                add_legacy_name(paste0("L244.SatiationAdder_", i)))
     }
-
-
-
 
 
     #================================================================

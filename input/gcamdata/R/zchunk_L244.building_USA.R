@@ -298,7 +298,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                                by=c("region","year")) %>%
       rename(pcGDP_thous90USD=value) %>%
       # Change units satiation level
-      mutate(satiation.level=satiation.level*1E6) %>%
+      mutate(flsp_pc=flsp_pc/1E6) %>%
       # Calculate satiation impedance
       mutate(`satiation-impedance`=(-log(2)/log((satiation.level - flsp_pc)/(satiation.level))) * pcGDP_thous90USD) %>%
       mutate(`satiation-impedance`=round(`satiation-impedance`,energy.DIGITS_SATIATION_ADDER)) %>%
@@ -312,14 +312,13 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
     # satiation_adder=Observed_pcflsp_2015 - Estimated_pcflsp_2015
 
     L244.SatiationAdder_gcamusa<- L244.Satiation_flsp_gcamusa %>%
-      mutate(satiation.level=satiation.level*1E6) %>%
       left_join_error_no_match(L244.Satiation_impedance_gcamusa,by = c("region", "gcam.consumer", "nodeInput", "building.node.input")) %>%
       mutate(year=2015) %>%
       left_join_error_no_match(L244.Floorspace_gcamusa,by=c("region","gcam.consumer","year","nodeInput","building.node.input")) %>%
       rename(observed_flsp_bm2=base.building.size) %>%
       left_join_error_no_match(L100.Pop_thous_state %>% rename(region=state), by=c("region","year")) %>%
       rename(pop_thous=value) %>%
-      mutate(observed_pcflsp=observed_flsp_bm2*1E9/(pop_thous*1E3)) %>%
+      mutate(observed_pcflsp=(observed_flsp_bm2*1E9/(pop_thous*1E3))/1E6) %>%
       left_join_error_no_match(L100.pcGDP_thous90usd_state %>% rename(region=state),
                                by=c("region","year")) %>%
       rename(pcGDP_thous90USD=value) %>%
