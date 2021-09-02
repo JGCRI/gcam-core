@@ -136,19 +136,24 @@ bool SatiationDemandFunction::XMLParse( const DOMNode* aNode ) {
  * \return The value of the function at the given demand driver.
  */
 double SatiationDemandFunction::calcDemand( const double aDemandDriver ) const {
-    /*!
-     * \pre The satiation level must have been set.
-     */
-    assert( mSatiationLevel.isInited() );
 
-    /*!
-     * \pre The satiation impedance is calibrated.
-     */
-    assert( mSatiationImpedance.isInited() );
+	double SatiationLevel = SatiationDemandFunction::mParsedSatiationLevel;
+	double SatiationImpedance = SatiationDemandFunction::mParsedSatiationImpedance;
+	double SatiationAdder = SatiationDemandFunction::mParsedSatiationAdder;
+	
 
     const double log2 = log( 2.0 );
-    return ( mSatiationLevel )
-        * ( 1 - exp( -log2 / mSatiationImpedance * aDemandDriver ) ) + mSatiationAdder;
+    return (SatiationLevel)
+        * ( 1 - exp( -log2 / SatiationImpedance * aDemandDriver ) ) + SatiationAdder;
+
+	if ((SatiationLevel)
+		* (1 - exp(-log2 / SatiationImpedance * aDemandDriver)) + SatiationAdder == 0) {
+
+		ILogger& mainLog = ILogger::getLogger("main_log");
+		mainLog.setLevel(ILogger::ERROR);
+		mainLog << "Sataition level is " << SatiationLevel 
+	}
+	
 }
 
 /*!
