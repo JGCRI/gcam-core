@@ -146,13 +146,6 @@ double SatiationDemandFunction::calcDemand( const double aDemandDriver ) const {
     return (SatiationLevel)
         * ( 1 - exp( -log2 / SatiationImpedance * aDemandDriver ) ) + SatiationAdder;
 
-	if ((SatiationLevel)
-		* (1 - exp(-log2 / SatiationImpedance * aDemandDriver)) + SatiationAdder == 0) {
-
-		ILogger& mainLog = ILogger::getLogger("main_log");
-		mainLog.setLevel(ILogger::ERROR);
-		mainLog << "Sataition level is " << SatiationLevel 
-	}
 	
 }
 
