@@ -25,6 +25,8 @@ module_energy_L270.limits <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "energy/A23.globaltech_eff",
              FILE = "emissions/A_CDRU",
+             FILE = "energy/A27.rsrc_info",
+             FILE = "energy/A27.GrdRenewRsrcCurves",
              "L102.gdp_mil90usd_GCAM3_R_Y",
              "L102.gdp_mil90usd_Scen_R_Y",
              "L221.GlobalTechCoef_en",
@@ -41,7 +43,13 @@ module_energy_L270.limits <- function(command, ...) {
              # TODO: might just be easier to keep the scenarios in a single
              # table here and split when making XMLs but to match the old
              # data system we will split here
-             paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)) )))
+             paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)) ),
+             "L270.RenewRsrc",
+             "L270.RenewRsrcPrice",
+             "L270.GrdRenewRsrcCurves",
+             "L270.GrdRenewRsrcMax",
+             "L270.ResTechShrwt",
+             "L270.GlobalTechCoef_bioenv"))
   } else if(command == driver.MAKE) {
 
     value <- subsector <- supplysector <- year <- GCAM_region_ID <- sector.name <-
@@ -54,6 +62,8 @@ module_energy_L270.limits <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
     A_CDRU <- get_data(all_data, "emissions/A_CDRU")
+    A27.rsrc_info <- get_data(all_data, "energy/A27.rsrc_info")
+    A27.GrdRenewRsrcCurves <- get_data(all_data, "energy/A27.GrdRenewRsrcCurves")
     L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y", strip_attributes = TRUE)
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
@@ -202,6 +212,59 @@ module_energy_L270.limits <- function(command, ...) {
       L270.NegEmissFinalDemand %<>% dplyr::slice(1)
     }
 
+    # create the biomass environmental cost constraint tibbles which will tack on an additional
+    # penalty for use of biomass given the total level of deployment
+
+    # A. Output unit, price unit, market
+    L270.rsrc_info <- A27.rsrc_info %>%
+      # Repeat and add region to resource assumptions table
+      repeat_add_columns(select(GCAM_region_names, region)) %>%
+      # Reset regional markets to the names of the specific regions
+      mutate(market = if_else(market == "regional", region, market))
+
+    # L270.RenewRsrc: output unit, price unit, and market for renewable resources
+    L270.RenewRsrc <- L270.rsrc_info %>%
+      filter(resource_type == "renewresource") %>%
+      select(region, renewresource = resource, output.unit = `output-unit`, price.unit = `price-unit`, market) %>%
+      distinct()
+
+    # L210.RenewRsrcPrice: initial prices for renewable resources
+    L270.RenewRsrcPrice <- L270.rsrc_info %>%
+      gather_years() %>%
+      filter(resource_type == "renewresource",
+             year %in% MODEL_BASE_YEARS) %>%
+      select(region, renewresource = resource, year, price = value)
+
+    L270.GrdRenewRsrcCurves <- A27.GrdRenewRsrcCurves %>%
+      # Add region name
+      mutate(region = gcam.USA_REGION) %>%
+      select(region, renewresource = resource, sub.renewable.resource = subresource, grade, available, extractioncost)
+
+    L270.GrdRenewRsrcCurves %>%
+      select(region, renewresource, sub.renewable.resource) %>%
+      distinct() %>%
+      mutate(year.fillout = MODEL_BASE_YEARS[1],
+             maxSubResource = 1.0) ->
+      L270.GrdRenewRsrcMax
+
+    L270.GrdRenewRsrcCurves %>%
+      select(region, renewresource, sub.renewable.resource) %>%
+      distinct() %>%
+      mutate(technology = renewresource) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      mutate(share.weight = 1.0) %>%
+      rename(resource = renewresource,
+             subresource = sub.renewable.resource) ->
+      L270.ResTechShrwt
+
+    L270.CTaxInput %>%
+      filter(sector.name == "regional biomass") %>%
+      mutate(minicam.energy.input = unique(L270.rsrc_info$resource),
+             coefficient = 1.0) %>%
+      select(LEVEL2_DATA_NAMES[['GlobalTechCoef']]) ->
+      L270.GlobalTechCoef_bioenv
+
+
     # Produce outputs
     L270.CreditOutput %>%
       add_title("Creates the supply of oil credits") %>%
@@ -280,7 +343,62 @@ module_energy_L270.limits <- function(command, ...) {
       add_precursors("common/GCAM_region_names") ->
       L270.NegEmissBudgetMaxPrice
 
-    ret_data <- c("L270.CreditOutput", "L270.CreditInput_elec", "L270.CreditInput_feedstocks", "L270.CreditMkt", "L270.CTaxInput", "L270.LandRootNegEmissMkt", "L270.NegEmissFinalDemand", "L270.NegEmissBudgetMaxPrice")
+    L270.RenewRsrc %>%
+      add_title("The biomass environmental cost resource") %>%
+      add_units("NA") %>%
+      add_comments("Creates the renewable resource which maps biomass deployment to") %>%
+      add_comments("an additional cost meant to reflect environmental damages.") %>%
+      add_precursors("common/GCAM_region_names",
+                     "energy/A27.rsrc_info") ->
+      L270.RenewRsrc
+
+    L270.RenewRsrcPrice %>%
+      add_title("Prices for the biomass environmental cost resource") %>%
+      add_units("1975$/GJ") %>%
+      add_comments("Initial price guesses") %>%
+      same_precursors_as(L270.RenewRsrc) ->
+      L270.RenewRsrcPrice
+
+    L270.GrdRenewRsrcCurves %>%
+      add_title("Graded renewable supply curve for the biomass environmental cost resource") %>%
+      add_units("available: EJ; extractioncost: 1975$/GJ") %>%
+      add_comments("Creates the renewable resource which maps biomass deployment to") %>%
+      add_comments("an additional cost meant to reflect environmental damages.") %>%
+      add_precursors("energy/A27.rsrc_info",
+                     "A27.GrdRenewRsrcCurves") ->
+      L270.GrdRenewRsrcCurves
+
+    L270.GrdRenewRsrcMax %>%
+      add_title("Graded renewable max resource for the biomass environmental cost resource") %>%
+      add_units("NA") %>%
+      add_comments("Note: the max resource is just set to one and available quantities are set") %>%
+      add_comments("in L270.GrdRenewRsrcCurves") %>%
+      add_precursors("A27.GrdRenewRsrcCurves") ->
+      L270.GrdRenewRsrcMax
+
+    L270.ResTechShrwt %>%
+      add_title("Technology for the biomass environmental cost resource") %>%
+      add_units("NA") %>%
+      add_comments("Share weights won't matter for resource technologies as there") %>%
+      add_comments("is no competetion between technologies.") %>%
+      same_precursors_as(L270.GrdRenewRsrcMax) ->
+      L270.ResTechShrwt
+
+    L270.GlobalTechCoef_bioenv %>%
+      add_title("Inputs to add the cost for the biomass environmental cost to biomass consumption") %>%
+      add_units("NA") %>%
+      add_comments("coefficients are just set to 1 as the resource maps consumption to an addtional cost") %>%
+      add_precursors("energy/A27.rsrc_info",
+                     "L221.GlobalTechCoef_en") ->
+      L270.GlobalTechCoef_bioenv
+
+    ret_data <- c("L270.CreditOutput", "L270.CreditInput_elec", "L270.CreditInput_feedstocks", "L270.CreditMkt", "L270.CTaxInput", "L270.LandRootNegEmissMkt", "L270.NegEmissFinalDemand", "L270.NegEmissBudgetMaxPrice",
+                  "L270.RenewRsrc",
+                  "L270.RenewRsrcPrice",
+                  "L270.GrdRenewRsrcCurves",
+                  "L270.GrdRenewRsrcMax",
+                  "L270.ResTechShrwt",
+                  "L270.GlobalTechCoef_bioenv")
     # We will generate a bunch of tibbles for the negative emissions budgets for each scenario
     # and use assign() to save them to variables with names as L270.NegEmissBudget_[SCENARIO]
     # Note that since the call to assign() is in the for loop we must explicitly set the
