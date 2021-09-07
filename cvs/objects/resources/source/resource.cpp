@@ -500,6 +500,10 @@ void RenewableResource::completeInit( const string& aRegionName, const IInfo* aR
     // Complete resource initialization.
     // Base class completeInit must be called first to create the market.
     Resource::completeInit( aRegionName, aRegionInfo );
+    
+    if(mSubResource.empty() ) {
+        return;
+    }
 
     Marketplace* pMarketplace = scenario->getMarketplace();
     const Modeltime* pModeltime = scenario->getModeltime();
