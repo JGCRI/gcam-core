@@ -130,6 +130,7 @@
 			<Value name="link">../input/policy/2025_target_finder.xml</Value>
 			<Value name="link">../input/policy/global_uct_spa1.xml</Value>
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP1.xml</Value>
+            <Value name = "bio_environ">../input/gcamdata/xml/bio_environ.xml</Value>
 		</FileSet>
 		
 		

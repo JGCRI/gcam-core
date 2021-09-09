@@ -132,6 +132,7 @@
 			<Value name="bio_tax">../input/policy/regional_uct_spa4.xml</Value>
 			<Value name="bio_trade">../input/gcamdata/xml/ssp4_ag_bio_trade.xml</Value>
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP4.xml</Value>
+            <Value name = "bio_environ">../input/gcamdata/xml/bio_environ.xml</Value>
 		</FileSet>
 		
 	</ComponentSet>	
