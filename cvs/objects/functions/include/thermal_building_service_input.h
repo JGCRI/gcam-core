@@ -108,7 +108,9 @@ public:
                                const std::string& aTechName,
                                const IInfo* aTechInfo );
     
-    virtual double getCoefficient( const int aPeriod ) const;
+    virtual double getCoefficient(const int aPeriod) const;
+
+	virtual double getCoef() const;
     
     virtual void setCoefficient( const double aCoefficient,
                                  const int aPeriod );
@@ -127,7 +129,10 @@ protected:
         DEFINE_VARIABLE( ARRAY, "degree-days", mDegreeDays, objects::PeriodVector<Value> ),
 
         //! Demand function coefficients to capture base year thermal characteristics.
-        DEFINE_VARIABLE( SIMPLE | STATE, "coefficient", mCoefficient, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE, "coef", mCoef, Value ),
+
+		//! Demand function coefficients to capture base year thermal characteristics.
+		DEFINE_VARIABLE(SIMPLE | STATE, "bias-adder", mBiasAdderEn, Value)
     )
     
     void copy( const ThermalBuildingServiceInput& aInput );

@@ -109,6 +109,15 @@ void ThermalBuildingServiceInput::XMLParse( const DOMNode* aNode ) {
         else if( nodeName == "degree-days" ) {
             XMLHelper<Value>::insertValueIntoVector( curr, mDegreeDays, scenario->getModeltime() );
         }
+
+		else if (nodeName == "bias-adder") {
+			mBiasAdderEn = (XMLHelper<double>::getValue(curr));
+		}
+
+		else if (nodeName == "coef") {
+			mCoef = (XMLHelper<double>::getValue(curr));
+		}
+
         else if( nodeName == SatiationDemandFunction::getXMLNameStatic() ) {
             parseSingleNode( curr, mSatiationDemandFunction, new SatiationDemandFunction );
         }
@@ -140,10 +149,11 @@ IInput* ThermalBuildingServiceInput::clone() const {
 
 void ThermalBuildingServiceInput::copy( const ThermalBuildingServiceInput& aInput ) {
     BuildingServiceInput::copy( aInput );
-    mCoefficient = aInput.mCoefficient;
+    mCoef = aInput.mCoef;
     mInternalGainsScalar = aInput.mInternalGainsScalar;
     mDegreeDays = aInput.mDegreeDays;
-	mBiasAdder = aInput.mBiasAdder;
+	mBiasAdderEn = aInput.mBiasAdderEn;
+	mCoef = aInput.mCoef;
 }
 
 //! Output debug info to XML
@@ -153,7 +163,8 @@ void ThermalBuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, 
     
     XMLWriteElement( mServiceDemand[ aPeriod ], "service", aOut, aTabs );
     XMLWriteElement( mServiceDensity[ aPeriod ], "service-density", aOut, aTabs );
-    XMLWriteElement( mCoefficient, "coefficient", aOut, aTabs );
+    XMLWriteElement( mCoef, "coef", aOut, aTabs );
+	XMLWriteElement( mBiasAdderEn, "bias-adder", aOut, aTabs);
     XMLWriteElement( mInternalGainsScalar, "internal-gains-scalar", aOut, aTabs );
     XMLWriteElement( mDegreeDays[ aPeriod ], "degree-days", aOut, aTabs );
     
@@ -193,10 +204,14 @@ double ThermalBuildingServiceInput::calcThermalLoad( const BuildingNodeInput* aB
  * \param aPeriod Model period.
  * \return The coefficient.
  */
-double ThermalBuildingServiceInput::getCoefficient( const int aPeriod ) const {
-    assert( mCoefficient.isInited() );
+double ThermalBuildingServiceInput::getCoef( ) const {
     
-    return mCoefficient;
+    return mCoef;
+}
+
+double ThermalBuildingServiceInput::getCoefficient(const int aPeriod) const {
+
+	return 1;
 }
 
 /*! \brief Set the building service coefficient.
@@ -205,5 +220,5 @@ double ThermalBuildingServiceInput::getCoefficient( const int aPeriod ) const {
  */
 void ThermalBuildingServiceInput::setCoefficient( const double aCoefficient, const int aPeriod ) {
     assert( aCoefficient != 0 ); // Can't set coefficients to zero.
-    mCoefficient.set( aCoefficient );
+    mCoef.set( aCoefficient );
 }

@@ -106,7 +106,7 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
             double thermalLoad = buildingServiceInput->calcThermalLoad( buildingParentInput, internalGainsPerSqMeter, period );
             double serviceDensity = calcServiceDensity( buildingServiceInput, income, regionName, period );			
 			double biasadder = buildingServiceInput->getBiasAdder();
-	        double adjustedServiceDensity = (buildingServiceInput->getCoefficient( period ) * thermalLoad * serviceDensity) + biasadder;
+	        double adjustedServiceDensity = (buildingServiceInput->getCoef( ) * thermalLoad * serviceDensity) + biasadder;
             // Set the thermal load adjusted service density back into the input for reporting.
             buildingServiceInput->setServiceDensity( adjustedServiceDensity, period );
             demand = floorSpace * adjustedServiceDensity;

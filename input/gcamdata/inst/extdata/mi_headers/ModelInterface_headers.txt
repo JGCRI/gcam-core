@@ -492,9 +492,13 @@ GenericServiceImpedance, world/+{name}region, region/+{name}gcam-consumer, gcam-
 
 ThermalServiceImpedance, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, satiation-demand-function/+satiation-impedance, scenario, scenario/world, thermal-building-service-input/satiation-demand-function
 
-GenericServiceAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, satiation-demand-function/+bias-adder, scenario, scenario/world, building-service-input/satiation-demand-function
+GenericServiceAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, building-service-input/+bias-adder, scenario, scenario/world
 
-ThermalServiceAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, satiation-demand-function/+bias-adder, scenario, scenario/world, thermal-building-service-input/satiation-demand-function
+ThermalServiceAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, thermal-building-service-input/+bias-adder, scenario, scenario/world
+
+GenericServiceCoef, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, building-service-input/+coef, scenario, scenario/world, building-service-input/satiation-demand-function
+
+ThermalServiceCoef, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, thermal-building-service-input/+coef, scenario, scenario/world
 
 ThermalServiceSatiationAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, satiation-demand-function/+satiation-adder, scenario, scenario/world, thermal-building-service-input/satiation-demand-function
 

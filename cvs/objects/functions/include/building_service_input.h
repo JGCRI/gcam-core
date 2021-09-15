@@ -190,7 +190,9 @@ public:
     virtual void setPricePaid( const double aPricePaid,
                                const int aPeriod );
 
-    virtual double getCoefficient( const int aPeriod ) const;
+    virtual double getCoefficient(const int aPeriod) const;
+
+	virtual double getCoef() const;
 
     virtual void setCoefficient( const double aCoefficient,
                                  const int aPeriod );
@@ -312,8 +314,11 @@ protected:
 		//! Energy service density for reporting.
 		DEFINE_VARIABLE(ARRAY | STATE, "service-density", mServiceDensity, objects::PeriodVector<Value>),
 
-		//! Bias adder.  This value that correct the mismatching in base year if multiple consumers are implemented
-		DEFINE_VARIABLE(SIMPLE, "bias-adder", mBiasAdder, Value),
+		//! Demand function coefficients to capture base year thermal characteristics.
+		DEFINE_VARIABLE(SIMPLE | STATE, "coef", mCoef, Value),
+
+		//! Demand function coefficients to capture base year thermal characteristics.
+		DEFINE_VARIABLE(SIMPLE | STATE, "bias-adder", mBiasAdderEn, Value),
 
         //! Satiation demand function.
         DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* )

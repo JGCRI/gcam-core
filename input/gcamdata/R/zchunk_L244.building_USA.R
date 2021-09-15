@@ -18,7 +18,8 @@
 #' \code{L244.GlobalTechIntGainOutputRatio}, \code{L244.GlobalTechInterpTo_bld}, \code{L244.GlobalTechEff_bld},
 #' \code{L244.GlobalTechShrwt_bld_gcamusa}, \code{L244.GlobalTechCost_bld_gcamusa}, \code{L244.GlobalTechSCurve_bld}, \code{L244.HDDCDD_A2_GFDL_USA},
 #' \code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}, \code{L244.Gomp.fn.param_gcamusa}, \code{L244.Satiation_impedance_gcamusa},
-#' \code{L244.GenericServiceImpedance_gcamusa} and \code{L244.ThermalServiceImpedance_gcamusa}, \code{L244.GenericServiceAdder_gcamusa} and \code{L244.ThermalServiceAdder_gcamusa}
+#' \code{L244.GenericServiceImpedance_gcamusa} , \code{L244.ThermalServiceImpedance_gcamusa}, \code{L244.GenericServiceAdder_gcamusa},
+#' \code{L244.ThermalServiceAdder_gcamusa},{L244.GenericServiceCoef_gcamusa},{L244.ThermalServiceCoef_gcamusa}
 #' The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
 #' @details Creates GCAM-USA building output files for writing to xml.
 #' @importFrom assertthat assert_that
@@ -100,7 +101,9 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
              "L244.GenericServiceImpedance_gcamusa",
              "L244.ThermalServiceImpedance_gcamusa",
              "L244.GenericServiceAdder_gcamusa",
-             "L244.ThermalServiceAdder_gcamusa"))
+             "L244.ThermalServiceAdder_gcamusa",
+             "L244.GenericServiceCoef_gcamusa",
+             "L244.ThermalServiceCoef_gcamusa"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -766,6 +769,13 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       mutate(coef=observed_base_serv_perflsp/serv_density*thermal_load) %>%
       mutate(est_base_serv_perflsp=coef*thermal_load*serv_density) %>%
       mutate(`bias-adder`= round(observed_base_serv_perflsp-est_base_serv_perflsp,3)) %>%
+      mutate(coef=round(coef,0)) %>%
+      select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]],coef)
+
+    L244.GenericServiceCoef_gcamusa<-L244.GenericServiceAdder_gcamusa %>%
+      select(LEVEL2_DATA_NAMES[["GenericServiceCoef"]])
+
+    L244.GenericServiceAdder_gcamusa<-L244.GenericServiceAdder_gcamusa %>%
       select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]])
 
 
@@ -812,6 +822,13 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
         mutate(coef=observed_base_serv_perflsp/(serv_density*thermal_load)) %>%
         mutate(est_base_serv_perflsp=coef*thermal_load*serv_density) %>%
         mutate(`bias-adder`= round(observed_base_serv_perflsp-est_base_serv_perflsp,3)) %>%
+        mutate(coef=round(coef,energy.DIGITS_SATIATION_ADDER)) %>%
+        select(LEVEL2_DATA_NAMES[["ThermalServiceAdder"]],coef)
+
+      L244.ThermalServiceCoef_gcamusa<-L244.ThermalServiceAdder_gcamusa %>%
+        select(LEVEL2_DATA_NAMES[["ThermalServiceCoef"]])
+
+      L244.ThermalServiceAdder_gcamusa<-L244.ThermalServiceAdder_gcamusa %>%
         select(LEVEL2_DATA_NAMES[["ThermalServiceAdder"]])
 
 
@@ -988,7 +1005,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       add_title("Bias-correction parameter for non-thermal building services") %>%
       add_units("Unitless") %>%
       add_comments("Satiation level = base service / floorspace * exogenous multiplier") %>%
-      add_legacy_name("L244.GenericServiceImpedance") %>%
+      add_legacy_name("L244.GenericServiceAdder_gcamusa") %>%
       add_precursors("L144.in_EJ_state_res_F_U_Y", "L144.in_EJ_state_comm_F_U_Y", "gcam-usa/calibrated_techs_bld_usa",
                      "gcam-usa/A44.globaltech_eff", "gcam-usa/A44.globaltech_eff_avg", "gcam-usa/A44.globaltech_shares",
                      "gcam-usa/A44.gcam_consumer", "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm",
@@ -1000,12 +1017,35 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       add_title("Bias-correction parameter for thermal building services") %>%
       add_units("Unitless") %>%
       add_comments("Satiation level = base service / floorspace * exogenous multiplier") %>%
-      add_legacy_name("L244.GenericServiceImpedance") %>%
+      add_legacy_name("L244.ThermalServiceAdder_gcamusa") %>%
       add_precursors("L144.in_EJ_state_res_F_U_Y", "L144.in_EJ_state_comm_F_U_Y", "gcam-usa/calibrated_techs_bld_usa",
                      "gcam-usa/A44.globaltech_eff", "gcam-usa/A44.globaltech_eff_avg", "gcam-usa/A44.globaltech_shares",
                      "gcam-usa/A44.gcam_consumer", "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm",
                      "gcam-usa/A44.CalPrice_service_gcamusa","L143.HDDCDD_scen_state","gcam-usa/A44.bld_shell_conductance") ->
       L244.ThermalServiceAdder_gcamusa
+
+    L244.GenericServiceCoef_gcamusa %>%
+      add_title("Coef parameter for non-thermal building services") %>%
+      add_units("Unitless") %>%
+      add_comments("Satiation level = base service / floorspace * exogenous multiplier") %>%
+      add_legacy_name("L244.GenericServiceCoef_gcamusa") %>%
+      add_precursors("L144.in_EJ_state_res_F_U_Y", "L144.in_EJ_state_comm_F_U_Y", "gcam-usa/calibrated_techs_bld_usa",
+                     "gcam-usa/A44.globaltech_eff", "gcam-usa/A44.globaltech_eff_avg", "gcam-usa/A44.globaltech_shares",
+                     "gcam-usa/A44.gcam_consumer", "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm",
+                     "gcam-usa/A44.CalPrice_service_gcamusa") ->
+      L244.GenericServiceCoef_gcamusa
+
+
+    L244.ThermalServiceCoef_gcamusa %>%
+      add_title("Coef parameter for thermal building services") %>%
+      add_units("Unitless") %>%
+      add_comments("Satiation level = base service / floorspace * exogenous multiplier") %>%
+      add_legacy_name("L244.ThermalServiceCoef_gcamusa") %>%
+      add_precursors("L144.in_EJ_state_res_F_U_Y", "L144.in_EJ_state_comm_F_U_Y", "gcam-usa/calibrated_techs_bld_usa",
+                     "gcam-usa/A44.globaltech_eff", "gcam-usa/A44.globaltech_eff_avg", "gcam-usa/A44.globaltech_shares",
+                     "gcam-usa/A44.gcam_consumer", "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm",
+                     "gcam-usa/A44.CalPrice_service_gcamusa","L143.HDDCDD_scen_state","gcam-usa/A44.bld_shell_conductance") ->
+      L244.ThermalServiceCoef_gcamusa
 
     L244.Intgains_scalar_gcamusa %>%
       add_title("Scalers relating internal gain energy to increased/reduced cooling/heating demands") %>%
@@ -1237,7 +1277,9 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                 L244.GenericServiceImpedance_gcamusa,
                 L244.ThermalServiceImpedance_gcamusa,
                 L244.GenericServiceAdder_gcamusa,
-                L244.ThermalServiceAdder_gcamusa)
+                L244.ThermalServiceAdder_gcamusa,
+                L244.GenericServiceCoef_gcamusa,
+                L244.ThermalServiceCoef_gcamusa)
   } else {
     stop("Unknown command")
   }

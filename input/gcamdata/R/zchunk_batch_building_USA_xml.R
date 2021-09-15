@@ -47,7 +47,9 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
              "L244.GenericServiceImpedance_gcamusa",
              "L244.ThermalServiceImpedance_gcamusa",
              "L244.GenericServiceAdder_gcamusa",
-             "L244.ThermalServiceAdder_gcamusa"))
+             "L244.ThermalServiceAdder_gcamusa",
+             "L244.GenericServiceCoef_gcamusa",
+             "L244.ThermalServiceCoef_gcamusa"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -91,6 +93,8 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
     L244.ThermalServiceImpedance_gcamusa<- get_data(all_data, "L244.ThermalServiceImpedance_gcamusa")
     L244.GenericServiceAdder_gcamusa<- get_data(all_data, "L244.GenericServiceAdder_gcamusa")
     L244.ThermalServiceAdder_gcamusa<- get_data(all_data, "L244.ThermalServiceAdder_gcamusa")
+    L244.GenericServiceCoef_gcamusa<- get_data(all_data, "L244.GenericServiceCoef_gcamusa")
+    L244.ThermalServiceCoef_gcamusa<- get_data(all_data, "L244.ThermalServiceCoef_gcamusa")
 
     # ===================================================
 
@@ -115,6 +119,8 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
       add_xml_data(L244.ThermalServiceImpedance_gcamusa, "ThermalServiceImpedance") %>%
       add_xml_data(L244.GenericServiceAdder_gcamusa, "GenericServiceAdder") %>%
       add_xml_data(L244.ThermalServiceAdder_gcamusa, "ThermalServiceAdder") %>%
+      add_xml_data(L244.GenericServiceCoef_gcamusa, "GenericServiceCoef") %>%
+      add_xml_data(L244.ThermalServiceCoef_gcamusa, "ThermalServiceCoef") %>%
       add_xml_data(L244.Intgains_scalar, "Intgains_scalar") %>%
       add_xml_data(L244.ShellConductance_bld, "ShellConductance") %>%
       add_logit_tables_xml(L244.Supplysector_bld, "Supplysector") %>%
@@ -166,7 +172,9 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
                      "L244.GenericServiceImpedance_gcamusa",
                      "L244.ThermalServiceImpedance_gcamusa",
                      "L244.GenericServiceAdder_gcamusa",
-                     "L244.ThermalServiceAdder_gcamusa") ->
+                     "L244.ThermalServiceAdder_gcamusa",
+                     "L244.GenericServiceCoef_gcamusa",
+                     "L244.ThermalServiceCoef_gcamusa") ->
       building_USA.xml
 
     # # Some data inputs may not actually contain data. If so, do not add_xml_data.

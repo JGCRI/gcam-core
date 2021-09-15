@@ -25,6 +25,8 @@
 #' \code{L244.GenericServiceImpedance_SSP3},\code{L244.GenericServiceImpedance_SSP4} , \code{L244.GenericServiceImpedance_SSP5} and \code{L244.ThermalServiceImpedance}.
 #' \code{L244.GenericServiceAdder},\code{L244.ThermalServiceAdder}, \code{L244.GenericServiceAdder_SSP1}, \code{L244.GenericServiceAdder_SSP2},
 #' \code{L244.GenericServiceAdder_SSP3}, \code{L244.GenericServiceAdder_SSP4}, \code{L244.GenericServiceAdder_SSP5}
+#' \code{L244.GenericServiceCoef},\code{L244.ThermalServiceCoef}, \code{L244.GenericServiceCoef_SSP1}, \code{L244.GenericServiceCoef_SSP2},
+#' \code{L244.GenericServiceCoef_SSP3}, \code{L244.GenericServiceCoef_SSP4}, \code{L244.GenericServiceCoef_SSP5}
 #' The corresponding file in the original data system was \code{L244.building_det.R} (energy level2).
 #' @details Creates level2 data for the building sector.
 #' @importFrom assertthat assert_that
@@ -142,7 +144,14 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.GenericServiceAdder_SSP2",
              "L244.GenericServiceAdder_SSP3",
              "L244.GenericServiceAdder_SSP4",
-             "L244.GenericServiceAdder_SSP5"))
+             "L244.GenericServiceAdder_SSP5",
+             "L244.ThermalServiceCoef",
+             "L244.GenericServiceCoef",
+             "L244.GenericServiceCoef_SSP1",
+             "L244.GenericServiceCoef_SSP2",
+             "L244.GenericServiceCoef_SSP3",
+             "L244.GenericServiceCoef_SSP4",
+             "L244.GenericServiceCoef_SSP5"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -164,6 +173,8 @@ module_energy_L244.building_det <- function(command, ...) {
       L244.GenericServiceImpedance_SSP4 <-L244.GenericServiceImpedance_SSP5 <-
       L244.GenericServiceAdder_SSP1 <- L244.GenericServiceAdder_SSP2 <-L244.GenericServiceAdder_SSP3 <-
       L244.GenericServiceAdder_SSP4 <-L244.GenericServiceAdder_SSP5 <-
+      L244.GenericServiceCoef_SSP1 <- L244.GenericServiceCoef_SSP2 <-L244.GenericServiceCoef_SSP3 <-
+      L244.GenericServiceCoef_SSP4 <-L244.GenericServiceCoef_SSP5 <-
       L244.HDDCDD_A2_HadCM3 <- L244.HDDCDD_B1_CCSM3x <- L244.HDDCDD_B1_HadCM3 <- L244.HDDCDD_constdd_no_GCM <- NULL
 
     all_data <- list(...)[[1]]
@@ -1084,6 +1095,13 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(coef=observed_base_serv_perflsp/serv_density*thermal_load) %>%
       mutate(est_base_serv_perflsp=coef*thermal_load*serv_density) %>%
       mutate(`bias-adder`= round(observed_base_serv_perflsp-est_base_serv_perflsp,3)) %>%
+      mutate(coef=round(coef,0)) %>%
+      select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]],coef)
+
+    L244.GenericServiceCoef<-L244.GenericServiceAdder %>%
+      select(LEVEL2_DATA_NAMES[["GenericServiceCoef"]])
+
+    L244.GenericServiceAdder<-L244.GenericServiceAdder %>%
       select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]])
 
 
@@ -1126,7 +1144,16 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(coef=observed_base_serv_perflsp/(serv_density*thermal_load)) %>%
       mutate(est_base_serv_perflsp=coef*thermal_load*serv_density) %>%
       mutate(`bias-adder`= round(observed_base_serv_perflsp-est_base_serv_perflsp,3)) %>%
+      mutate(coef=round(coef,energy.DIGITS_SATIATION_ADDER)) %>%
+      select(LEVEL2_DATA_NAMES[["ThermalServiceAdder"]],coef)
+
+    L244.ThermalServiceCoef<-L244.ThermalServiceAdder %>%
+      select(LEVEL2_DATA_NAMES[["ThermalServiceCoef"]])
+
+    L244.ThermalServiceAdder<-L244.ThermalServiceAdder %>%
       select(LEVEL2_DATA_NAMES[["ThermalServiceAdder"]])
+
+
 
     # Create L244.GenericServiceAdder for all the SSP assumptions
     L244.GenericServiceAdder_SSPs<- L244.ServiceSatiation_USA_SSPs %>%
@@ -1152,10 +1179,27 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(coef=observed_base_serv_perflsp/serv_density*thermal_load) %>%
       mutate(est_base_serv_perflsp=coef*thermal_load*serv_density) %>%
       mutate(`bias-adder`= round(observed_base_serv_perflsp-est_base_serv_perflsp,3)) %>%
+      mutate(coef=round(coef,energy.DIGITS_SATIATION_ADDER)) %>%
+      select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]],coef,SSP)
+
+    L244.GenericServiceCoef_SSPs<-L244.GenericServiceAdder_SSPs %>%
+      select(LEVEL2_DATA_NAMES[["GenericServiceCoef"]],SSP)
+
+    L244.GenericServiceAdder_SSPs<-L244.GenericServiceAdder_SSPs %>%
       select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]],SSP)
 
 
     L244.GenericServiceAdder_SSPs.split<-L244.GenericServiceAdder_SSPs %>%
+      split(.$SSP) %>%
+      lapply(function(df) {
+        select(df, -SSP) %>%
+          add_units("Unitless") %>%
+          add_comments("It is zero if no multiple consumers are implemented") %>%
+          add_precursors("L144.base_service_EJ_serv", "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh", "energy/A44.demand_satiation_mult",
+                         "L102.pcgdp_thous90USD_Scen_R_Y", "L101.Pop_thous_R_Yh")
+      })
+
+    L244.GenericServiceCoef_SSPs.split<-L244.GenericServiceCoef_SSPs %>%
       split(.$SSP) %>%
       lapply(function(df) {
         select(df, -SSP) %>%
@@ -1170,6 +1214,13 @@ module_energy_L244.building_det <- function(command, ...) {
       assign(paste0("L244.GenericServiceAdder_", i), L244.GenericServiceAdder_SSPs.split[[i]] %>%
                add_title(paste0("Bias-correction parameter for non-thermal building services: ", i)) %>%
                add_legacy_name(paste0("L244.GenericServiceAdder_", i)))
+    }
+
+    # Assign each tibble in list
+    for(i in names(L244.GenericServiceCoef_SSPs.split)) {
+      assign(paste0("L244.GenericServiceCoef_", i), L244.GenericServiceCoef_SSPs.split[[i]] %>%
+               add_title(paste0("Coef parameter for non-thermal building services: ", i)) %>%
+               add_legacy_name(paste0("L244.GenericServiceCoef_", i)))
     }
 
     # ===================================================
@@ -1321,11 +1372,31 @@ module_energy_L244.building_det <- function(command, ...) {
       add_title("Bias-correction paramter for thermal building services") %>%
       add_comments("It is zero if no multiple consumers are implemented") %>%
       add_units("Unitless") %>%
-      add_legacy_name("L244.GenericServiceAdder") %>%
+      add_legacy_name("L244.ThermalServiceAdder") %>%
       add_precursors("L144.base_service_EJ_serv", "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh", "energy/A44.demand_satiation_mult",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L101.Pop_thous_R_Yh","energy/A44.CalPrice_service",
                      "L144.shell_eff_R_Y","L144.internal_gains", "L143.HDDCDD_scen_R_Y") ->
       L244.ThermalServiceAdder
+
+    L244.GenericServiceCoef %>%
+      add_title("Coef paramter for thermal building services") %>%
+      add_comments("It is zero if no multiple consumers are implemented") %>%
+      add_units("Unitless") %>%
+      add_legacy_name("L244.GenericServiceCoef") %>%
+      add_precursors("L144.base_service_EJ_serv", "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh", "energy/A44.demand_satiation_mult",
+                     "L102.pcgdp_thous90USD_Scen_R_Y", "L101.Pop_thous_R_Yh","energy/A44.CalPrice_service",
+                     "L144.shell_eff_R_Y","L144.internal_gains", "L143.HDDCDD_scen_R_Y") ->
+      L244.GenericServiceCoef
+
+    L244.ThermalServiceCoef %>%
+      add_title("Coef paramter for thermal building services") %>%
+      add_comments("It is zero if no multiple consumers are implemented") %>%
+      add_units("Unitless") %>%
+      add_legacy_name("L244.ThermalServiceCoef") %>%
+      add_precursors("L144.base_service_EJ_serv", "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh", "energy/A44.demand_satiation_mult",
+                     "L102.pcgdp_thous90USD_Scen_R_Y", "L101.Pop_thous_R_Yh","energy/A44.CalPrice_service",
+                     "L144.shell_eff_R_Y","L144.internal_gains", "L143.HDDCDD_scen_R_Y") ->
+      L244.ThermalServiceCoef
 
     L244.GenericServiceAdder %>%
       add_title("Bias-correction paramter for non-thermal building services") %>%
@@ -1557,7 +1628,9 @@ module_energy_L244.building_det <- function(command, ...) {
                 L244.GenericServiceImpedance, L244.GenericServiceImpedance_SSP1,L244.GenericServiceImpedance_SSP2,
                 L244.GenericServiceImpedance_SSP3,L244.GenericServiceImpedance_SSP4,L244.GenericServiceImpedance_SSP5,
                 L244.ThermalServiceImpedance, L244.ThermalServiceAdder,L244.GenericServiceAdder,L244.GenericServiceAdder_SSP1,
-                L244.GenericServiceAdder_SSP2,L244.GenericServiceAdder_SSP3,L244.GenericServiceAdder_SSP4,L244.GenericServiceAdder_SSP5)
+                L244.GenericServiceAdder_SSP2,L244.GenericServiceAdder_SSP3,L244.GenericServiceAdder_SSP4,L244.GenericServiceAdder_SSP5,
+                L244.GenericServiceCoef,L244.GenericServiceCoef_SSP1,L244.GenericServiceCoef_SSP2,L244.GenericServiceCoef_SSP3,
+                L244.GenericServiceCoef_SSP4,L244.GenericServiceCoef_SSP5,L244.ThermalServiceCoef)
   } else {
     stop("Unknown command")
   }
