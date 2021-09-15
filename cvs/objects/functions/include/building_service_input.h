@@ -95,6 +95,8 @@ public:
                                     const double aInternalGainsPerSqMeter,
                                     const int aPeriod ) const;
 
+	virtual double getBiasAdder() const;
+
     // INestedInput methods
     // define them to do nothing since a BuildingServiceInput is a leaf in the nesting structure
     // this should be the end point for recursion
@@ -188,7 +190,9 @@ public:
     virtual void setPricePaid( const double aPricePaid,
                                const int aPeriod );
 
-    virtual double getCoefficient( const int aPeriod ) const;
+    virtual double getCoefficient(const int aPeriod) const;
+
+	virtual double getCoef() const;
 
     virtual void setCoefficient( const double aCoefficient,
                                  const int aPeriod );
@@ -298,17 +302,23 @@ protected:
     
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
-    DEFINE_DATA_WITH_PARENT(
-        INestedInput,
+	DEFINE_DATA_WITH_PARENT(
+		INestedInput,
 
-        //! The name of this input.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+		//! The name of this input.
+		DEFINE_VARIABLE(SIMPLE, "name", mName, std::string),
 
-        //! Building service demand by period.
-        DEFINE_VARIABLE( ARRAY | STATE, "base-service", mServiceDemand, objects::PeriodVector<Value> ),
+		//! Building service demand by period.
+		DEFINE_VARIABLE(ARRAY | STATE, "base-service", mServiceDemand, objects::PeriodVector<Value>),
 
-        //! Energy service density for reporting.
-        DEFINE_VARIABLE( ARRAY | STATE, "service-density", mServiceDensity, objects::PeriodVector<Value> ),
+		//! Energy service density for reporting.
+		DEFINE_VARIABLE(ARRAY | STATE, "service-density", mServiceDensity, objects::PeriodVector<Value>),
+
+		//! Demand function coefficients to capture base year thermal characteristics.
+		DEFINE_VARIABLE(SIMPLE | STATE, "coef", mCoef, Value),
+
+		//! Demand function coefficients to capture base year thermal characteristics.
+		DEFINE_VARIABLE(SIMPLE | STATE, "bias-adder", mBiasAdderEn, Value),
 
         //! Satiation demand function.
         DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* )

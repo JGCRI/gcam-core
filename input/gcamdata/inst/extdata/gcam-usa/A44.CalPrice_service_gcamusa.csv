@@ -1228,4 +1228,8 @@ VT,resid clothes dryers,0.0602072,0.0580317,0.0590807,0.0630885
 WA,resid clothes dryers,0.0590511,0.0535849,0.054583,0.0595571
 WI,resid clothes dryers,0.0571053,0.0528278,0.0551294,0.0617617
 WV,resid clothes dryers,0.0549001,0.0534958,0.0549353,0.0600728
+<<<<<<< HEAD
 WY,resid clothes dryers,0.0554533,0.0502913,0.0519838,0.0574739
+=======
+WY,resid clothes dryers,0.0554533,0.0502913,0.0519838,0.0574739
+>>>>>>> JS/feature/adjSatfunction

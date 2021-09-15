@@ -18,9 +18,10 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
     return(c(paste0("L244.Satiation_flsp_SSP", SSP_NUMS),
              paste0("L244.SatiationAdder_SSP", SSP_NUMS),
              paste0("L244.Satiation_impedance_SSP", SSP_NUMS),
+             paste0("L244.GenericServiceSatiation_SSP", SSP_NUMS),
              paste0("L244.GenericServiceImpedance_SSP", SSP_NUMS),
              paste0("L244.GenericServiceAdder_SSP", SSP_NUMS),
-             paste0("L244.GenericServiceSatiation_SSP", SSP_NUMS),
+             paste0("L244.GenericServiceCoef_SSP", SSP_NUMS),
              paste0("L244.FuelPrefElast_bld_SSP", unique(fuelpref_NUMS)),
              "L244.DeleteThermalService"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -45,6 +46,8 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
       GenericServiceSatiation <- paste0("L244.GenericServiceSatiation_SSP", i)
       GenericServiceImpedance <- paste0("L244.GenericServiceImpedance_SSP", i)
       GenericServiceAdder <- paste0("L244.GenericServiceAdder_SSP", i)
+      GenericServiceCoef <- paste0("L244.GenericServiceCoef_SSP", i)
+
 
       # SSP2 is unique, uses fewer files
       if(i != 2) {
@@ -59,6 +62,8 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
       L244.GenericServiceSatiation_SSP <- get_data(all_data, GenericServiceSatiation)
       L244.GenericServiceImpedance_SSP <- get_data(all_data, GenericServiceImpedance)
       L244.GenericServiceAdder_SSP <- get_data(all_data, GenericServiceAdder)
+      L244.GenericServiceCoef_SSP <- get_data(all_data, GenericServiceCoef)
+
       if(i != 2) {
         L244.FuelPrefElast_SSP <- get_data(all_data, FuelPrefElast)
         L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService")
@@ -73,8 +78,9 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
           add_xml_data(L244.GenericServiceSatiation_SSP, "GenericServiceSatiation") %>%
           add_xml_data(L244.GenericServiceImpedance_SSP, "GenericServiceImpedance") %>%
           add_xml_data(L244.GenericServiceAdder_SSP, "GenericServiceAdder") %>%
+          add_xml_data(L244.GenericServiceCoef_SSP, "GenericServiceCoef") %>%
           add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance,GenericServiceSatiation,
-                         GenericServiceImpedance,GenericServiceAdder) ->
+                         GenericServiceImpedance,GenericServiceAdder,GenericServiceCoef) ->
           xml_obj
       } else {
         create_xml(xmlfn) %>%
@@ -82,12 +88,13 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
           add_xml_data(L244.SatiationAdder_SSP, "SatiationAdder") %>%
           add_xml_data(L244.Satiation_impedance_SSP, "SatiationImpedance") %>%
           add_xml_data(L244.GenericServiceSatiation_SSP, "GenericServiceSatiation") %>%
-          add_xml_data(L244.FuelPrefElast_SSP, "FuelPrefElast") %>%
-          add_xml_data(L244.DeleteThermalService, "DeleteThermalService") %>%
           add_xml_data(L244.GenericServiceImpedance_SSP, "GenericServiceImpedance") %>%
           add_xml_data(L244.GenericServiceAdder_SSP, "GenericServiceAdder") %>%
-          add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance, GenericServiceSatiation, FuelPrefElast,
-                         GenericServiceImpedance,GenericServiceAdder,"L244.DeleteThermalService") ->
+          add_xml_data(L244.GenericServiceCoef_SSP, "GenericServiceCoef") %>%
+          add_xml_data(L244.FuelPrefElast_SSP, "FuelPrefElast") %>%
+          add_xml_data(L244.DeleteThermalService, "DeleteThermalService") %>%
+          add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance, GenericServiceSatiation, GenericServiceImpedance,
+                         GenericServiceAdder,GenericServiceCoef,FuelPrefElast,"L244.DeleteThermalService") ->
           xml_obj
       }
 

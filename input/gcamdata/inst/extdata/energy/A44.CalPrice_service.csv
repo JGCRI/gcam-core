@@ -194,4 +194,8 @@ USA,comm heating,5.74427,6.15259,7.30011,7.25869
 USA,comm others,12.2579,12.4492,13.0236,12.8916
 USA,resid cooling,11.3641,10.7083,10.7601,10.6295
 USA,resid heating,5.30184,5.70526,6.70894,6.63408
+<<<<<<< HEAD
 USA,resid others,12.8574,12.4696,13.1094,12.9413
+=======
+USA,resid others,12.8574,12.4696,13.1094,12.9413
+>>>>>>> JS/feature/adjSatfunction

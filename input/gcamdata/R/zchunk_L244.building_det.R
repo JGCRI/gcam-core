@@ -69,7 +69,7 @@ module_energy_L244.building_det <- function(command, ...) {
              "L221.LN1_UnmgdAllocation",
              "L102.pcgdp_thous90USD_Scen_R_Y",
              FILE = "energy/A44.flsp_param",
-             FILE = "energy/income_shares"))
+             FILE = "socioeconomics/income_shares_quintiles"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L244.SubregionalShares",
              "L244.PriceExp_IntGains",
@@ -204,10 +204,10 @@ module_energy_L244.building_det <- function(command, ...) {
     L144.flsp_param <- get_data(all_data, "energy/A44.flsp_param", strip_attributes = TRUE)
     L221.LN0_Land<-get_data(all_data, "L221.LN0_Land")
     L221.LN1_UnmgdAllocation<-get_data(all_data, "L221.LN1_UnmgdAllocation")
-    income_shares<-get_data(all_data, "energy/income_shares")
-    n_groups<-nrow(unique(get_data(all_data, "energy/income_shares") %>%
-      gather(group,subregional.income.share,-region,-gcam.consumer,-GCAM_region_ID) %>%
-      select(group)))
+    income_shares<-get_data(all_data, "socioeconomics/income_shares_quintiles")
+    n_groups<-nrow(unique(get_data(all_data, "socioeconomics/income_shares_quintiles") %>%
+                            gather(group,subregional.income.share,-region,-gcam.consumer,-GCAM_region_ID) %>%
+                            select(group)))
 
     # ===================================================
 
@@ -241,11 +241,11 @@ module_energy_L244.building_det <- function(command, ...) {
       unite(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
       bind_rows(write_to_all_regions(A44.gcam_consumer, LEVEL2_DATA_NAMES[["DeleteConsumer"]],
                                      GCAM_region_names = GCAM_region_names) %>%
-                      mutate(pop.year.fillout = min(MODEL_BASE_YEARS),
-                             inc.year.fillout = min(MODEL_BASE_YEARS),
-                             subregional.population.share = 1,
-                             subregional.income.share = 1) %>%
-                      filter(gcam.consumer=="comm"))
+                  mutate(pop.year.fillout = min(MODEL_BASE_YEARS),
+                         inc.year.fillout = min(MODEL_BASE_YEARS),
+                         subregional.population.share = 1,
+                         subregional.income.share = 1) %>%
+                  filter(gcam.consumer=="comm"))
 
     # Internal gains
     # L244.PriceExp_IntGains: price exponent on floorspace and naming of internal gains trial markets
@@ -371,7 +371,7 @@ module_energy_L244.building_det <- function(command, ...) {
       repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
       unite(gcam.consumer, c(gcam.consumer,group),sep="_") %>%
       bind_rows(write_to_all_regions(A44.demandFn_serv, LEVEL2_DATA_NAMES[["DemandFunction_serv"]],
-                                                       GCAM_region_names = GCAM_region_names) %>% filter(gcam.consumer=="comm"))
+                                     GCAM_region_names = GCAM_region_names) %>% filter(gcam.consumer=="comm"))
 
     L244.DemandFunction_flsp <- write_to_all_regions(A44.demandFn_flsp, LEVEL2_DATA_NAMES[["DemandFunction_flsp"]],
                                                      GCAM_region_names = GCAM_region_names) %>%
@@ -443,13 +443,13 @@ module_energy_L244.building_det <- function(command, ...) {
       left_join_error_no_match(L244.SubregionalShares_allHist %>% select(-subregional.population.share)
                                , by=c("region","gcam.consumer","year")) %>%
       mutate(gdp_gr=gdp*subregional.income.share,
-              gdp_pc=(gdp_gr/1E3)/(pop_thous*1E3)) %>%
+             gdp_pc=(gdp_gr/1E3)/(pop_thous*1E3)) %>%
       select(-pcGDP_thous90USD) %>%
       rename(pcGDP_thous90USD=gdp_pc) %>%
       select(scenario,GCAM_region_ID,region,gcam.consumer,year,pcGDP_thous90USD) %>%
       # add commercial
       bind_rows(L102.pcgdp_thous90USD_Scen_R_Y %>%
-                left_join_error_no_match(A_regions %>% select(region,GCAM_region_ID),by="GCAM_region_ID") %>%
+                  left_join_error_no_match(A_regions %>% select(region,GCAM_region_ID),by="GCAM_region_ID") %>%
                   mutate(gcam.consumer="comm") %>%
                   rename(pcGDP_thous90USD = value) %>%
                   filter(year %in% HISTORICAL_YEARS))
@@ -518,7 +518,7 @@ module_energy_L244.building_det <- function(command, ...) {
     # - Write parameters for the updated floorspace function
 
     #------------------------
-      # First calculate the habitable land
+    # First calculate the habitable land
 
     L144.non_hab_land_pre<-L221.LN1_UnmgdAllocation %>%
       filter(!grepl("Urban",LandNode1)) %>%
@@ -528,9 +528,9 @@ module_energy_L244.building_det <- function(command, ...) {
       ungroup()
 
     L144.adj_reg<-anti_join(L221.LN1_UnmgdAllocation,L144.non_hab_land_pre, by = c("region", "year")) %>%
-        select(region,year)%>%
-        distinct(region,year) %>%
-        mutate(nonHab=0)
+      select(region,year)%>%
+      distinct(region,year) %>%
+      mutate(nonHab=0)
 
     L144.non_hab_land<- bind_rows(L144.non_hab_land_pre,L144.adj_reg)
 
@@ -573,7 +573,7 @@ module_energy_L244.building_det <- function(command, ...) {
       rename(pop_dens=tot_dens,
              `habitable-land`=area_thouskm2,
              `base-pcFlsp`=base_flsp) %>%
-    select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
+      select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
 
 
     #------------------------------------------------------
@@ -707,7 +707,7 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(year=2015) %>%
       left_join_error_no_match(A_regions %>% select(GCAM_region_ID,region),by="region") %>%
       left_join_error_no_match(bind_rows(L144.flsp_bm2_R_res_Yh %>% mutate(nodeInput="resid"),
-                               L144.flsp_bm2_R_comm_Yh %>% mutate(nodeInput="comm")),
+                                         L144.flsp_bm2_R_comm_Yh %>% mutate(nodeInput="comm")),
                                by=c("GCAM_region_ID","year","nodeInput")) %>%
       rename(observed_flsp_bm2=value) %>%
       left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("year", "GCAM_region_ID")) %>%
@@ -1337,8 +1337,8 @@ module_energy_L244.building_det <- function(command, ...) {
       left_join_error_no_match(L244.Intgains_scalar,by=c("region","gcam.consumer","nodeInput","building.node.input","thermal.building.service.input")) %>%
       mutate(intGains_EJ_serv=intGains_EJ/base.building.size) %>%
       mutate(thermal_load=if_else(thermal.building.service.input %in% cooling_services,
-                        degree.days*shell.conductance*floor.to.surface.ratio+internal.gains.scalar*intGains_EJ_serv,
-                        degree.days*shell.conductance*floor.to.surface.ratio-internal.gains.scalar*intGains_EJ_serv)) %>%
+                                  degree.days*shell.conductance*floor.to.surface.ratio+internal.gains.scalar*intGains_EJ_serv,
+                                  degree.days*shell.conductance*floor.to.surface.ratio-internal.gains.scalar*intGains_EJ_serv)) %>%
       select(-base.building.size) %>%
       left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(scenario==socioeconomics.BASE_GDP_SCENARIO),
                                by=c("year","GCAM_region_ID")) %>%
@@ -1346,9 +1346,9 @@ module_energy_L244.building_det <- function(command, ...) {
       # Add service prices: At this point, we read the calibrated prices from GCAM v5.4 (A44.CalPrice_service)
       # Use left_join bc there is no heating in Indonesia
       left_join(A44.CalPrice_service %>% gather(year,price,-region,-sector) %>% mutate(year=as.numeric(year)) %>%
-                                 rename(thermal.building.service.input=sector) %>%
-                                 filter(thermal.building.service.input %in% thermal_services, year==MODEL_FINAL_BASE_YEAR),
-                               by=c("region","year","thermal.building.service.input")) %>%
+                  rename(thermal.building.service.input=sector) %>%
+                  filter(thermal.building.service.input %in% thermal_services, year==MODEL_FINAL_BASE_YEAR),
+                by=c("region","year","thermal.building.service.input")) %>%
       # Adjust Indonesia
       group_by(gcam.consumer,thermal.building.service.input,year) %>%
       mutate(price_avg=mean(price,na.rm=T)) %>%
@@ -1383,23 +1383,23 @@ module_energy_L244.building_det <- function(command, ...) {
 
     # L244.GenericBaseService adjusted
     L244.GenericBaseService_pre<-L244.GenericBaseService %>%
-        left_join_error_no_match(A_regions %>% select(region,GCAM_region_ID),by="region") %>%
-        left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(scenario==socioeconomics.BASE_GDP_SCENARIO),
-                                 by=c("year","GCAM_region_ID")) %>%
-        rename(pcGDP_thous90USD=value) %>%
-        # Add service prices: At this point, we read the calibrated prices from GCAM v5.4 (A44.CalPrice_service)
+      left_join_error_no_match(A_regions %>% select(region,GCAM_region_ID),by="region") %>%
+      left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(scenario==socioeconomics.BASE_GDP_SCENARIO),
+                               by=c("year","GCAM_region_ID")) %>%
+      rename(pcGDP_thous90USD=value) %>%
+      # Add service prices: At this point, we read the calibrated prices from GCAM v5.4 (A44.CalPrice_service)
       left_join(A44.CalPrice_service %>% gather(year,price,-region,-sector) %>% mutate(year=as.numeric(year)) %>%
-                                   rename(building.service.input=sector) %>%
-                                   filter(building.service.input %in% generic_services),
-                                 by=c("region","year","building.service.input"))  %>%
-        # interpolate prices for 1975
-        group_by(region,gcam.consumer,nodeInput,building.node.input,building.service.input,region,scenario) %>%
-        mutate(price = if_else(is.na(price), approx_fun(year, price, rule = 2), price)) %>%
-        ungroup() %>%
+                  rename(building.service.input=sector) %>%
+                  filter(building.service.input %in% generic_services),
+                by=c("region","year","building.service.input"))  %>%
+      # interpolate prices for 1975
+      group_by(region,gcam.consumer,nodeInput,building.node.input,building.service.input,region,scenario) %>%
+      mutate(price = if_else(is.na(price), approx_fun(year, price, rule = 2), price)) %>%
+      ungroup() %>%
       left_join(L244.GenericServiceImpedance_allvars %>%
-                                select(region,gcam.consumer,nodeInput,building.service.input,satiation.level,`satiation-impedance`) %>%
-                                repeat_add_columns(tibble(year=MODEL_BASE_YEARS))
-                  ,by=c("region","gcam.consumer","nodeInput","building.service.input","year")) %>%
+                  select(region,gcam.consumer,nodeInput,building.service.input,satiation.level,`satiation-impedance`) %>%
+                  repeat_add_columns(tibble(year=MODEL_BASE_YEARS))
+                ,by=c("region","gcam.consumer","nodeInput","building.service.input","year")) %>%
       # check it is correct with an adder: in 2015 adder to check should be equal to zero
       left_join_error_no_match(L244.Floorspace %>%
                                  group_by(region, nodeInput,building.node.input,year) %>%
@@ -1489,9 +1489,9 @@ module_energy_L244.building_det <- function(command, ...) {
       # Filter out Indonesia heating
       filter(base.service>0) %>%
       left_join_error_no_match(L244.ThermalServiceImpedance_allvars %>%
-                  select(region,gcam.consumer,nodeInput,thermal.building.service.input,thermal_load,satiation.level,`satiation-impedance`) %>%
-                  repeat_add_columns(tibble(year=MODEL_BASE_YEARS))
-                ,by=c("region","gcam.consumer","nodeInput","thermal.building.service.input","year")) %>%
+                                 select(region,gcam.consumer,nodeInput,thermal.building.service.input,thermal_load,satiation.level,`satiation-impedance`) %>%
+                                 repeat_add_columns(tibble(year=MODEL_BASE_YEARS))
+                               ,by=c("region","gcam.consumer","nodeInput","thermal.building.service.input","year")) %>%
       # check it is correct with an adder: in 2015 adder to check should be equal to zero
       left_join_error_no_match(L244.Floorspace %>%
                                  group_by(region, nodeInput,building.node.input,year) %>%
@@ -1579,9 +1579,9 @@ module_energy_L244.building_det <- function(command, ...) {
                                ,by=c("region","gcam.consumer","year")) %>%
       rename(pcGDP_thous90USD_gr=pcGDP_thous90USD) %>%
       left_join_error_no_match(A44.CalPrice_service %>% gather(year,price,-region,-sector) %>% mutate(year=as.numeric(year)) %>%
-                  rename(building.service.input=sector) %>%
-                  filter(building.service.input %in% generic_services),
-                by=c("region","year","building.service.input"))  %>%
+                                 rename(building.service.input=sector) %>%
+                                 filter(building.service.input %in% generic_services),
+                               by=c("region","year","building.service.input"))  %>%
       left_join_error_no_match(L244.GenericBaseService
                                , by = c("region", "gcam.consumer", "nodeInput", "building.node.input", "building.service.input", "year")) %>%
       left_join_error_no_match(L244.Floorspace, by = c("region", "gcam.consumer", "nodeInput", "building.node.input", "year")) %>%
@@ -1768,7 +1768,7 @@ module_energy_L244.building_det <- function(command, ...) {
                   unite(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
                   bind_rows(L244.ShellConductance_bld %>%
                               filter(grepl("comm",gcam.consumer))) %>%
-                 filter(grepl("resid",gcam.consumer) & year %in% MODEL_BASE_YEARS))
+                  filter(grepl("resid",gcam.consumer) & year %in% MODEL_BASE_YEARS))
 
     L244.ShellConductance_bld<-L244.ShellConductance_bld %>%
       filter(grepl("resid",gcam.consumer)) %>%

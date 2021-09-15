@@ -107,6 +107,15 @@ void BuildingServiceInput::XMLParse( const DOMNode* aNode ) {
         if ( nodeName == "base-service" ) {
             XMLHelper<Value>::insertValueIntoVector( curr, mServiceDemand, scenario->getModeltime() );
         }
+
+		else if ( nodeName == "bias-adder" ) {
+			mBiasAdderEn = (XMLHelper<double>::getValue(curr));
+		}
+
+		else if (nodeName == "coef") {
+			mCoef = (XMLHelper<double>::getValue(curr));
+		}
+
         else if( nodeName == SatiationDemandFunction::getXMLNameStatic() ) {
             parseSingleNode( curr, mSatiationDemandFunction, new SatiationDemandFunction );
         }
@@ -162,6 +171,8 @@ IInput* BuildingServiceInput::clone() const {
 void BuildingServiceInput::copy( const BuildingServiceInput& aInput ) {
     mName = aInput.mName;
     mServiceDemand = aInput.mServiceDemand;
+	mBiasAdderEn = aInput.mBiasAdderEn;
+	mCoef = aInput.mCoef;
 
     delete mSatiationDemandFunction;
     mSatiationDemandFunction = aInput.mSatiationDemandFunction->clone();
@@ -177,6 +188,8 @@ void BuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* a
     XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs, mName );
 
     XMLWriteElement( mServiceDemand[ aPeriod ], "service", aOut, aTabs );
+	XMLWriteElement(mBiasAdderEn, "bias-adder", aOut, aTabs);
+	XMLWriteElement(mCoef, "coef", aOut, aTabs);
     XMLWriteElement( mServiceDensity[ aPeriod ], "service-density", aOut, aTabs );
 
     // write the closing tag.
@@ -189,6 +202,10 @@ double BuildingServiceInput::calcThermalLoad( const BuildingNodeInput* aBuilding
 {
     // Generic building services do not adjust demands based on thermal load.
     return 1;
+}
+
+double BuildingServiceInput::getBiasAdder() const {
+	return mBiasAdderEn;
 }
 
 /*!
@@ -249,9 +266,14 @@ void BuildingServiceInput::setPhysicalDemand( double aPhysicalDemand, const stri
  * \param aPeriod Model period.
  * \return The coefficient.
 */
-double BuildingServiceInput::getCoefficient( const int aPeriod ) const {
+double BuildingServiceInput::getCoefficient(const int aPeriod) const {
     // Generic building services do not have coefficients.
     return 1;
+}
+
+double BuildingServiceInput::getCoef() const {
+	// Generic building services do not have coefficients.
+	return mCoef;
 }
 
 /*! \brief Set the building service coefficient.
@@ -304,3 +326,4 @@ void BuildingServiceInput::accept( IVisitor* aVisitor, const int aPeriod ) const
     aVisitor->startVisitBuildingServiceInput( this, aPeriod );
     aVisitor->endVisitBuildingServiceInput( this, aPeriod );
 }
+
