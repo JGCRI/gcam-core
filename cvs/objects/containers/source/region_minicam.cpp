@@ -491,11 +491,6 @@ void RegionMiniCAM::initCalc( const int period )
     calcGDP( period );
     mGDP->adjustGDP( period, 1.0 );
     
-    // Add GDP to the market info so it can be used in the land allocator
-    Marketplace* marketplace = scenario->getMarketplace();
-    IInfo* marketInfo = marketplace->getMarketInfo( "UnmanagedLand", mName, period, true );
-    marketInfo->setDouble( "gdp-ratio", mGDP->getApproxScaledGDP( period) );
-    
     for( ConsumerIterator currConsumer = mConsumers.begin(); currConsumer != mConsumers.end(); ++currConsumer ) {
         NationalAccount nationalAccount;
         // Note that we are using the unadjusted gdp for these equations and so

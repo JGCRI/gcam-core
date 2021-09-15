@@ -37,9 +37,6 @@
  * \brief UnmanagedLandLeaf class source file.
  * \author James Blackwood, Kate Calvin
  */
-#include <regex>
-#include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
 
 #include "util/base/include/definitions.h"
 #include "land_allocator/include/unmanaged_land_leaf.h"
@@ -50,7 +47,6 @@
 #include "util/base/include/ivisitor.h"
 #include "emissions/include/ghg_factory.h"
 #include "marketplace/include/marketplace.h"
-#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -110,16 +106,8 @@ void UnmanagedLandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,
 {
     // Adjust profit rate for land expnasion costs if applicable
     double adjustedProfitRate = aAverageProfitRate;
-    Marketplace* marketplace = scenario->getMarketplace();
+    const Marketplace* marketplace = scenario->getMarketplace();
 
-    // Increase land value with GDP for unmanaged forest only
-    std::regex searchString("UnmanagedForest");
-    if (std::regex_search(mName, searchString )) {
-        IInfo* marketInfo = marketplace->getMarketInfo( "UnmanagedLand", aRegionName, aPeriod, true );
-        double gdpRatio = marketInfo->getDouble( "gdp-ratio", true );
-        adjustedProfitRate = adjustedProfitRate * gdpRatio;
-    }
-    
     if ( mIsLandExpansionCost ) {
         //subtract off expansion cost from profit rate
         double expansionCost = marketplace->getPrice( mLandExpansionCostName, aRegionName, aPeriod );
