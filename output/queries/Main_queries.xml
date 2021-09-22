@@ -2093,6 +2093,13 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                     <comments/>
                 </supplyDemandQuery>
 
+                <supplyDemandQuery title="building service output by gcam consumer">
+	    <axis1 name="input">input[@name]</axis1>
+	    <axis2 name="Year">demand-physical[@vintage]</axis2>
+	    <xPath buildList="true" dataName="input" group="false" sumAll="false">gcam-consumer//*[@type='input']/demand-physical/node()</xPath>
+	    <comments/>
+                </supplyDemandQuery>
+
                 <supplyDemandQuery title="building service density by energy service">
                     <axis1 name="building">building-node-input[@name]</axis1>
                     <axis2 name="Year">service-density[@year]</axis2>
