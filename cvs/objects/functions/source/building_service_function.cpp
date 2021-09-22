@@ -58,29 +58,7 @@ double BuildingServiceFunction::calcCoefficient( InputSet& input, double consump
                             const std::string& sectorName, int period, double sigma, double IBT,
                             double capitalStock, const IInput* aParentInput ) const
 {
-    const double CVRT90 = 2.212; // 1975 $ to 1990 $
-    const BuildingNodeInput* buildingParentInput = static_cast<const BuildingNodeInput*>( aParentInput );
-    // income is 1990 thousand $ and service price is 1975 $
-    double income = buildingParentInput->getSubregionalIncome() * 1000 / CVRT90;
-    const double floorSpace = buildingParentInput->getPhysicalDemand( period );
-    const double internalGainsPerSqMeter = buildingParentInput->getInternalGains( regionName, period )
-        / floorSpace;
-    for( InputSet::iterator inputIter = input.begin(); inputIter != input.end(); ++inputIter ) {
-        double coefficient = 1;
-        // Guard against zero floorspace which happens for 1975 since no data was read in for
-        // that period.
-        assert( floorSpace != 0 || period == 0 );
-        if( floorSpace != 0 ) {
-            BuildingServiceInput* buildingServiceInput = static_cast<BuildingServiceInput*>( *inputIter );
-            double thermalLoad = buildingServiceInput->calcThermalLoad( buildingParentInput, internalGainsPerSqMeter, period );
-            double servicePerFloorspace = buildingServiceInput->getPhysicalDemand( period ) / floorSpace;
-            double servicePrice = max( buildingServiceInput->getPricePaid( regionName, period ), SectorUtils::getDemandPriceThreshold() );
-            double serviceDensity = calcServiceDensity( buildingServiceInput, income, regionName, period );
-            coefficient =  servicePerFloorspace / ( serviceDensity * thermalLoad );
-        }
-        (*inputIter)->setCoefficient( coefficient, period );
-    }
-    return 1;
+     return 1;
 }
 
 double BuildingServiceFunction::calcDemand( InputSet& input, double consumption, const std::string& regionName,
