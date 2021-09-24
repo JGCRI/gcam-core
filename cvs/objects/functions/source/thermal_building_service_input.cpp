@@ -207,6 +207,12 @@ double ThermalBuildingServiceInput::calcThermalLoad( const BuildingNodeInput* aB
 double ThermalBuildingServiceInput::getCoef( ) const {
     
     return mCoef;
+
+
+}
+
+double ThermalBuildingServiceInput::getBiasAdder() const {
+	return mBiasAdderEn;
 }
 
 double ThermalBuildingServiceInput::getCoefficient(const int aPeriod) const {

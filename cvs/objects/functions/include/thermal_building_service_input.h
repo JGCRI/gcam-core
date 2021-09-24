@@ -111,6 +111,8 @@ public:
     virtual double getCoefficient(const int aPeriod) const;
 
 	virtual double getCoef() const;
+
+	virtual double getBiasAdder() const;
     
     virtual void setCoefficient( const double aCoefficient,
                                  const int aPeriod );
