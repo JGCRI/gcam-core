@@ -786,10 +786,26 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(observed_pcflsp=observed_flsp_bm2*1E9/(pop_thous*1E3)) %>%
       left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y_gr %>% filter(scenario==socioeconomics.BASE_GDP_SCENARIO),by = c("year", "GCAM_region_ID","region","gcam.consumer")) %>%
       rename(pcGDP_thous90USD=value) %>%
-      mutate(est_pcflsp=satiation.level*(1-exp(-log(2)*pcGDP_thous90USD/`satiation-impedance`))) %>%
-      mutate(satiation.adder=round(observed_pcflsp-est_pcflsp,energy.DIGITS_SATIATION_ADDER)) %>%
-      arrange(GCAM_region_ID,gcam.consumer) %>%
-      select(LEVEL2_DATA_NAMES[["SatiationAdder"]])
+      mutate(est_pcflsp=satiation.level*(1-exp(-log(2)*pcGDP_thous90USD/`satiation-impedance`)),
+             est_flsp_bm2=(est_pcflsp*pop_thous*1E3)/1E9) %>%
+      group_by(region,nodeInput,building.node.input,year) %>%
+      summarise(pop_thous=sum(pop_thous),
+                est_flsp_bm2=sum(est_flsp_bm2),
+                observed_flsp_bm2=sum(observed_flsp_bm2)) %>%
+      ungroup() %>%
+      left_join_error_no_match(A_regions %>% select(GCAM_region_ID,region),by="region") %>%
+      left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("year", "GCAM_region_ID")) %>%
+      mutate(satiation.adder=((observed_flsp_bm2-est_flsp_bm2)*1E9)/(pop_thous*1E3)) %>%
+      select(region,nodeInput,building.node.input,year,satiation.adder) %>%
+      filter(grepl("resid",nodeInput)) %>%
+      repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
+      unite(gcam.consumer,c("nodeInput","group"),sep = "_",remove = F) %>%
+      select(-group) %>%
+      select(LEVEL2_DATA_NAMES[["SatiationAdder"]]) %>%
+      bind_rows(A44.gcam_consumer_comm %>%
+                  select(gcam.consumer,nodeInput,building.node.input)%>%
+                  mutate(satiation.adder=0) %>%
+                  repeat_add_columns(tibble(region=unique(A_regions$region))))
 
 
     # Repeat the process for SSPs
@@ -800,10 +816,27 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(year=2015) %>%
       rename(observed_flsp_bm2=base.building.size) %>%
       mutate(observed_pcflsp=observed_flsp_bm2*1E9/(pop_thous*1E3)) %>%
-      mutate(est_pcflsp=satiation.level*(1-exp(-log(2)*pcGDP_thous90USD/`satiation-impedance`))) %>%
-      mutate(satiation.adder=round(observed_pcflsp-est_pcflsp,energy.DIGITS_SATIATION_ADDER)) %>%
-      arrange(GCAM_region_ID,gcam.consumer) %>%
+      mutate(est_pcflsp=satiation.level*(1-exp(-log(2)*pcGDP_thous90USD/`satiation-impedance`)),
+             est_flsp_bm2=(est_pcflsp*pop_thous*1E3)/1E9) %>%
+      group_by(region,nodeInput,building.node.input,year,SSP) %>%
+      summarise(pop_thous=sum(pop_thous),
+                est_flsp_bm2=sum(est_flsp_bm2),
+                observed_flsp_bm2=sum(observed_flsp_bm2)) %>%
+      ungroup() %>%
+      left_join_error_no_match(A_regions %>% select(GCAM_region_ID,region),by="region") %>%
+      left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("year", "GCAM_region_ID")) %>%
+      mutate(satiation.adder=((observed_flsp_bm2-est_flsp_bm2)*1E9)/(pop_thous*1E3)) %>%
+      select(region,nodeInput,building.node.input,year,satiation.adder,SSP) %>%
+      filter(grepl("resid",nodeInput)) %>%
+      repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
+      unite(gcam.consumer,c("nodeInput","group"),sep = "_",remove = F) %>%
+      select(-group) %>%
       select(LEVEL2_DATA_NAMES[["SatiationAdder"]], SSP) %>%
+      bind_rows(A44.gcam_consumer_comm %>%
+                  select(gcam.consumer,nodeInput,building.node.input)%>%
+                  mutate(satiation.adder=0) %>%
+                  repeat_add_columns(tibble(region=unique(A_regions$region))) %>%
+                  repeat_add_columns(tibble(SSP=unique(L244.Satiation_flsp_SSPs$SSP)))) %>%
       # Split by SSP, creating a list with a tibble for each SSP, then add attributes
       split(.$SSP) %>%
       lapply(function(df) {
@@ -1704,6 +1737,10 @@ module_energy_L244.building_det <- function(command, ...) {
     #--------------------
     #--------------------
     # Bias adder per group
+
+    comm_thermal_services<-c("comm heating","comm cooling")
+    comm_generic_services<-c("comm others")
+
     # 1- Generic services
     L244.GenericServiceAdder<-L244.GenericServiceImpedance_allvars %>%
       select(region,gcam.consumer,nodeInput,building.node.input,building.service.input, year,satiation.level, `satiation-impedance`,coef) %>%
@@ -1729,9 +1766,26 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(thermal_load=1) %>%
       mutate(afford=(pcGDP_thous90USD_gr*1000/def9075)/price) %>%
       mutate(serv_density=satiation.level*(1-exp((-log(2)/`satiation-impedance`)*afford))) %>%
-      mutate(est_base_serv_perflsp=coef*thermal_load*serv_density) %>%
-      mutate(`bias-adder`=round(observed_base_serv_perflsp-est_base_serv_perflsp,energy.DIGITS_SATIATION_ADDER)) %>%
-      select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]])
+      mutate(est_base_serv_perflsp=coef*thermal_load*serv_density,
+             est_base_serv=est_base_serv_perflsp*base.building.size) %>%
+      group_by(region,nodeInput,building.node.input,building.service.input,year) %>%
+      summarise(base.building.size=sum(base.building.size),
+                est_base_serv=sum(est_base_serv),
+                base.service=sum(base.service)) %>%
+      ungroup() %>%
+      mutate(`bias-adder`=(base.service-est_base_serv)/base.building.size) %>%
+      select(region,nodeInput,building.node.input,building.service.input,year,`bias-adder`) %>%
+      filter(grepl("resid",nodeInput)) %>%
+      repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
+      unite(gcam.consumer,c("nodeInput","group"),sep = "_",remove = F) %>%
+      select(-group) %>%
+      select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]]) %>%
+      bind_rows(A44.gcam_consumer_comm %>%
+                  select(gcam.consumer,nodeInput,building.node.input)%>%
+                  mutate(`bias-adder`=0) %>%
+                  repeat_add_columns(tibble(region=unique(A_regions$region))) %>%
+                  repeat_add_columns(tibble(building.service.input=comm_generic_services)))
+
 
     # 1.5- Generic services per SSP
     L244.GenericServiceAdder_SSPs<-L244.GenericServiceImpedance_allvars_SSPs %>%
@@ -1758,8 +1812,26 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(thermal_load=1) %>%
       mutate(afford=(pcGDP_thous90USD_gr*1000/def9075)/price) %>%
       mutate(serv_density=satiation.level*(1-exp((-log(2)/`satiation-impedance`)*afford))) %>%
-      mutate(est_base_serv_perflsp=coef*thermal_load*serv_density) %>%
-      mutate(`bias-adder`=round(observed_base_serv_perflsp-est_base_serv_perflsp,energy.DIGITS_SATIATION_ADDER)) %>%
+      mutate(est_base_serv_perflsp=coef*thermal_load*serv_density,
+             est_base_serv=est_base_serv_perflsp*base.building.size) %>%
+      group_by(region,nodeInput,building.node.input,building.service.input,year,SSP) %>%
+      summarise(base.building.size=sum(base.building.size),
+                est_base_serv=sum(est_base_serv),
+                base.service=sum(base.service)) %>%
+      ungroup() %>%
+      mutate(`bias-adder`=(base.service-est_base_serv)/base.building.size) %>%
+      select(region,nodeInput,building.node.input,building.service.input,year,SSP,`bias-adder`) %>%
+      filter(grepl("resid",nodeInput)) %>%
+      repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
+      unite(gcam.consumer,c("nodeInput","group"),sep = "_",remove = F) %>%
+      select(-group) %>%
+      select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]],SSP) %>%
+      bind_rows(A44.gcam_consumer_comm %>%
+                  select(gcam.consumer,nodeInput,building.node.input)%>%
+                  mutate(`bias-adder`=0) %>%
+                  repeat_add_columns(tibble(region=unique(A_regions$region))) %>%
+                  repeat_add_columns(tibble(building.service.input=comm_generic_services)) %>%
+                  repeat_add_columns(tibble(SSP=unique(L244.Satiation_flsp_SSPs$SSP)))) %>%
       select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]],SSP) %>%
       # Split by SSP, creating a list with a tibble for each SSP, then add attributes
       split(.$SSP) %>%
@@ -1805,8 +1877,25 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(observed_base_serv_perflsp=base.service/base.building.size) %>%
       mutate(afford=(pcGDP_thous90USD_gr*1000/def9075)/price) %>%
       mutate(serv_density=satiation.level*(1-exp((-log(2)/`satiation-impedance`)*afford))) %>%
-      mutate(est_base_serv_perflsp=coef*thermal_load*serv_density) %>%
-      mutate(`bias-adder`=round(observed_base_serv_perflsp-est_base_serv_perflsp,energy.DIGITS_SATIATION_ADDER)) %>%
+      mutate(est_base_serv_perflsp=coef*thermal_load*serv_density,
+             est_base_serv=est_base_serv_perflsp*base.building.size) %>%
+      group_by(region,nodeInput,building.node.input,thermal.building.service.input,year) %>%
+      summarise(base.building.size=sum(base.building.size),
+                est_base_serv=sum(est_base_serv),
+                base.service=sum(base.service)) %>%
+      ungroup() %>%
+      mutate(`bias-adder`=(base.service-est_base_serv)/base.building.size) %>%
+      select(region,nodeInput,building.node.input,thermal.building.service.input,year,`bias-adder`) %>%
+      filter(grepl("resid",nodeInput)) %>%
+      repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
+      unite(gcam.consumer,c("nodeInput","group"),sep = "_",remove = F) %>%
+      select(-group) %>%
+      select(LEVEL2_DATA_NAMES[["ThermalServiceAdder"]]) %>%
+      bind_rows(A44.gcam_consumer_comm %>%
+                  select(gcam.consumer,nodeInput,building.node.input)%>%
+                  mutate(`bias-adder`=0) %>%
+                  repeat_add_columns(tibble(region=unique(A_regions$region))) %>%
+                  repeat_add_columns(tibble(thermal.building.service.input=comm_thermal_services))) %>%
       select(LEVEL2_DATA_NAMES[["ThermalServiceAdder"]])
 
 
