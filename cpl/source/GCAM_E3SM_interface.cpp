@@ -267,7 +267,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
 }
 
 void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                         int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars, bool aWriteScalars) {
+                                         int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars, bool aWriteScalars, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName) {
     // Get year only of the current date
     // Note that GCAM runs one period ahead of E3SM. We make that adjustment here
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
@@ -302,7 +302,8 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
             coupleLog << "Calculating scalers from data." << endl;
             e3sm2gcam.readRegionalMappingData(aMappingFile);
             e3sm2gcam.calcScalers(gcamYear, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
-                                  scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
+                                  scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData,
+                                  aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
         }
         
         // Optional: write scaler information to a file
