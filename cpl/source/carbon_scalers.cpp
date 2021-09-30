@@ -67,17 +67,17 @@ CarbonScalers::~CarbonScalers() {
 // Read each component of the base year data
 // This is used to calculate the scalar baseline.
 // ASpatialData::readSpatialData method and then copying the vectors.
-void CarbonScalers::readBaseYearData(){
+void CarbonScalers::readBaseYearData(std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName){
     // Read in average NPP
-    readSpatialData("../cpl/data/base_npp_mean_pft.txt", true, true, false);
+    readSpatialData(aBaseNPPFileName, true, true, false);
     mBaseNPPVector = getValueVector();
     
     // Read in average HR
-    readSpatialData("../cpl/data/base_hr_mean_pft.txt", true, true, false);
+    readSpatialData(aBaseHRFileName, true, true, false);
     mBaseHRVector = getValueVector();
     
     // Read in PFT weight in grid cell
-    readSpatialData("../cpl/data/base_pft_wt.txt", true, true, false);
+    readSpatialData(aBasePFTWtFileName, true, true, false);
     mBasePFTFractVector = getValueVector();
 }
 
@@ -153,9 +153,9 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
 // Calculate scalers
 // TODO: Set the data in the passed vectors
 void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers) {
+                                std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName) {
     // First, read spatial data
-    readBaseYearData();
+    readBaseYearData(aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
     
     // Exclude outliers from the scalar calculation
     excludeOutliers(aELMNPP, aELMHR);

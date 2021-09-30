@@ -68,6 +68,9 @@ int main( ) {
     std::string GCAM2ELM_LUC_MAPPING_FILE = "../cpl/mappings/luc.xml";
     std::string GCAM2ELM_WOODHARVEST_MAPPING_FILE = "../cpl/mappings/woodharvest.xml";
     std::string ELM2GCAM_MAPPING_FILE = "../cpl/mappings/elm0.9x1.25togcam_mapping.csv";
+    std::string BASE_NPP_FILE = "../cpl/data/base_npp_mean_pft.txt";
+    std::string BASE_HR_FILE = "../cpl/data/base_hr_mean_pft.txt";
+    std::string BASE_PFT_FILE = "../cpl/data/base_pft_wt.txt";
     int readScalars = 0;
     int* READ_SCALARS = &readScalars; // If 0, scalars are calculated from NPP/HR
     bool READ_ELM_FROM_FILE = true; // If FALSE, ELM data (NPP, HR, Area, PFT weight) are passed from E3SM.
@@ -80,7 +83,7 @@ int main( ) {
     // Define coupling control variables
     // These booleans define what is passed between GCAM & E3SM.
     bool ELM_IAC_CARBON_SCALING = true; // If TRUE, changes in land productivity from ELM are used in GCAM.
-    bool IAC_ELM_CO2_EMISSIONS = true; // If TRUE, energy system CO2 is passed from GCAM to EAM.
+    bool IAC_EAM_CO2_EMISSIONS = true; // If TRUE, energy system CO2 is passed from GCAM to EAM.
     int firstCoupledYear = 2016;
     int* FIRST_COUPLED_YEAR = &firstCoupledYear; // First year to include feedbacks from E3SM in GCAM.
     double baseCo2EmissSurface = 9663.0297;
@@ -147,6 +150,12 @@ int main( ) {
             GCAM2ELM_WOODHARVEST_MAPPING_FILE = value;
         } else if ( name == "ELM2GCAM_MAPPING_FILE" ) {
             ELM2GCAM_MAPPING_FILE = value;
+        } else if ( name == "BASE_NPP_FILE" ) {
+            BASE_NPP_FILE = value;
+        } else if ( name == "BASE_HR_FILE" ) {
+            BASE_HR_FILE = value;
+        } else if ( name == "BASE_PFT_FILE" ) {
+            BASE_PFT_FILE = value;
         } else if ( name == "READ_SCALARS" ) {
             *READ_SCALARS = std::stoi(value);
         } else if ( name == "READ_ELM_FROM_FILE" ) {
@@ -157,8 +166,8 @@ int main( ) {
             *WRITE_SCALARS = std::stoi(value);
         } else if ( name == "ELM_IAC_CARBON_SCALING" ) {
             istringstream(value) >> std::boolalpha >> ELM_IAC_CARBON_SCALING;
-        } else if ( name == "IAC_ELM_CO2_EMISSIONS" ) {
-            istringstream(value) >> std::boolalpha >> IAC_ELM_CO2_EMISSIONS;
+        } else if ( name == "IAC_EAM_CO2_EMISSIONS" ) {
+            istringstream(value) >> std::boolalpha >> IAC_EAM_CO2_EMISSIONS;
         } else if ( name == "FIRST_COUPLED_YEAR" ) {
             *FIRST_COUPLED_YEAR = std::stoi(value);
         } else if ( name == "YEAR" ) {
@@ -284,7 +293,7 @@ int main( ) {
                     tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
                 }
                 p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamilfract, gcamipftfract, gcaminpp, gcamihr,
-                                      NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS);
+                                      NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS, BASE_NPP_FILE, BASE_HR_FILE, BASE_PFT_FILE);
             }
             
             // Run model
@@ -322,13 +331,13 @@ int main( ) {
                 tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
             }
             p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamilfract, gcamipftfract, gcaminpp, gcamihr,
-                                  NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS);
+                                  NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS, BASE_NPP_FILE, BASE_HR_FILE, BASE_PFT_FILE);
         }
         
         // Run model
         p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss);
         
-        if( IAC_ELM_CO2_EMISSIONS ) {
+        if( IAC_EAM_CO2_EMISSIONS ) {
             p_obj->downscaleEmissionsGCAM(gcamoemiss,
                                       gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
                                       gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,

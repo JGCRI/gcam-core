@@ -1,5 +1,5 @@
 // NAMELIST FOR GCAM. THIS LINE IS SKIPPED
-YEAR = 2025
+YEAR = 2020
 CASE_NAME = Impacts
 GCAM_CONFIG = configuration.xml
 BASE_CO2_SURFACE_FILE = ../cpl/data/gcam_CO2-em-anthro_0.9x1.25_201401-201412_c20200406.txt
@@ -8,12 +8,15 @@ GCAM2ELM_CO2_MAPPING_FILE = ../cpl/mappings/co2.xml
 GCAM2ELM_LUC_MAPPING_FILE = ../cpl/mappings/luc.xml
 GCAM2ELM_WOODHARVEST_MAPPING_FILE = ../cpl/mappings/woodharvest.xml
 ELM2GCAM_MAPPING_FILE = ../cpl/mappings/elm0.9x1.25togcam_mapping.csv
-READ_SCALARS = false
+BASE_NPP_FILE = ../cpl/data/base_npp_mean_pft.txt
+BASE_HR_FILE = ../cpl/data/base_hr_mean_pft.txt
+BASE_PFT_FILE = ../cpl/data/base_pft_wt.txt
+READ_SCALARS = 0
 READ_ELM_FROM_FILE = true
-WRITE_CO2 = true
-WRITE_SCALARS = true
+WRITE_CO2 = 1
+WRITE_SCALARS = 1
 ELM_IAC_CARBON_SCALING = true
-IAC_ELM_CO2_EMISSIONS = true
+IAC_EAM_CO2_EMISSIONS = true
 FIRST_COUPLED_YEAR = 2016
 BASE_CO2EMISS_SURFACE = 9663.0297
 BASE_CO2EMISS_AIRCRAFT = 102.157

@@ -29,17 +29,21 @@ extern "C" {
 
   // Set Carbon Densities in GCAM using scalers from E3SM
   void setdensitycgcam_(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                          int *aNumLon, int *aNumLat, int *aNumPFT, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars) {
+                          int *aNumLon, int *aNumLat, int *aNumPFT, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars, char* aBaseNPPFile, char* aBaseHRFile, char* aBasePFTwtFile) {
       
       // Convert to string - fortran doesn't handle string
       std::string MappingFile(aMappingFile);
+      std::string baseNPPFile(aBaseNPPFile);
+      std::string baseHRFile(aBaseHRFile);
+      std::string basePFTwtFile(aBasePFTwtFile);
       
       // Convert to bool - fortran doesn't have a bool
       bool readScalars = *aReadScalars == 1 ? true : false;
       bool writeScalars = *aWriteScalars == 1 ? true : false;
       
       p_obj->setDensityGCAM(yyyymmdd, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
-                            aNumLon, aNumLat, aNumPFT, MappingFile, aFirstCoupledYear, readScalars, writeScalars);
+                            aNumLon, aNumLat, aNumPFT, MappingFile, aFirstCoupledYear, readScalars, writeScalars,
+                            baseNPPFile, baseHRFile, basePFTwtFile);
   }
     
   // Run GCAM
