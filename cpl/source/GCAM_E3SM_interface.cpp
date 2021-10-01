@@ -256,7 +256,8 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
                 lurow++;
                 row++;
             }
-            gcamoluc[row] = mWoodHarvestData.getData()[r];
+            // Convert to tC and set wood harvest data to output vector
+            gcamoluc[row] = mWoodHarvestData.getData()[r] * 288000000;
             row++;
         }
         
