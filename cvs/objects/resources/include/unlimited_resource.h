@@ -119,12 +119,6 @@ protected:
                             
         //! Read in prices.
         DEFINE_VARIABLE( ARRAY, "price", mFixedPrices, objects::PeriodVector<Value> ),
-
-        //! Capacity factor.
-        DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, Value ),
-
-        //! Variance.
-        DEFINE_VARIABLE( SIMPLE, "variance", mVariance, Value ),
         
         //! The last supply value that was added to the marketplace so it is equal.
         DEFINE_VARIABLE( SIMPLE | STATE, "supply-wedge", mSupplyWedge, Value)
