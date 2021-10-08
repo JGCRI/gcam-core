@@ -718,6 +718,7 @@
     <ClCompile Include="..\..\technologies\source\unmanaged_land_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\variable_production_state.cpp" />
     <ClCompile Include="..\..\technologies\source\vintage_production_state.cpp" />
+    <ClCompile Include="..\..\technologies\source\wind_technology.cpp" />
     <ClCompile Include="..\..\util\base\source\atom.cpp" />
     <ClCompile Include="..\..\util\base\source\atom_registry.cpp" />
     <ClCompile Include="..\..\util\base\source\calibrate_resource_visitor.cpp" />
@@ -1018,6 +1019,7 @@
     <ClInclude Include="..\..\technologies\include\unmanaged_land_technology.h" />
     <ClInclude Include="..\..\technologies\include\variable_production_state.h" />
     <ClInclude Include="..\..\technologies\include\vintage_production_state.h" />
+    <ClInclude Include="..\..\technologies\include\wind_technology.h" />
     <ClInclude Include="..\..\util\base\include\atom.h" />
     <ClInclude Include="..\..\util\base\include\atom_registry.h" />
     <ClInclude Include="..\..\util\base\include\auto_file.h" />
