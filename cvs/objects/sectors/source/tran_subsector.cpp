@@ -149,9 +149,6 @@ void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tab
     XMLWriteElement( mPopDensity, "popDensity", out, tabs );
     XMLWriteElement( mSpeed[ period ], "speed", out, tabs );
     XMLWriteElement( mTimeValueMult[ period ], "time-value-multiplier", out, tabs );
-    
-    // Write out useful debugging info
-    XMLWriteElement( mTimeValue, "timeValue", out, tabs );
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -248,8 +245,8 @@ double TranSubsector::getGeneralizedPrice( const GDP* aGDP, const int aPeriod ) 
     
     // Save time value so can print out
     // Maybe also write to XML DB?
-    mTimeValue =  getTimeValue( aGDP, aPeriod );
-    return Subsector::getPrice( aGDP, aPeriod ) + mTimeValue;
+    double timeValue =  getTimeValue( aGDP, aPeriod );
+    return Subsector::getPrice( aGDP, aPeriod ) + timeValue;
 }
 
 /*! \brief Get the time in transit per day per person for the period.
