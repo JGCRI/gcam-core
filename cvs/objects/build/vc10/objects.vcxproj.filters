@@ -338,9 +338,6 @@
     <ClCompile Include="..\..\sectors\source\tran_subsector.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sectors\source\wind_backup_calculator.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\solution\solvers\source\bisect_all.cpp">
       <Filter>Source Files\solution\solvers</Filter>
     </ClCompile>
@@ -528,9 +525,6 @@
       <Filter>Source Files\technology</Filter>
     </ClCompile>
     <ClCompile Include="..\..\technologies\source\vintage_production_state.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\wind_technology.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
     <ClCompile Include="..\..\util\base\source\atom.cpp">
@@ -1285,9 +1279,6 @@
     <ClInclude Include="..\..\sectors\include\tran_subsector.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\sectors\include\wind_backup_calculator.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\solution\solvers\include\bisect_all.h">
       <Filter>Header Files\solution\solvers</Filter>
     </ClInclude>
@@ -1511,9 +1502,6 @@
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\vintage_production_state.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\wind_technology.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\util\base\include\atom.h">
