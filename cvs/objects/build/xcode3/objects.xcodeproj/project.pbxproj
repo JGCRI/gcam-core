@@ -23,6 +23,7 @@
 		0EDA1122220B739C0066113A /* reserve_subresource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EDA1121220B739C0066113A /* reserve_subresource.cpp */; };
 		0EDA1124220B73AA0066113A /* resource_reserve_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EDA1123220B73A90066113A /* resource_reserve_technology.cpp */; };
 		0EF7AF5813E1EFDA0034AA71 /* market_dependency_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */; };
+		4BC45CF32717DF19001B7DF6 /* building_gompertz_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4BC45CF22717DF19001B7DF6 /* building_gompertz_function.cpp */; };
 		981AC63D19E31D92000CB162 /* rcp_forcing_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */; };
 		CD165BC51A2513D5005F3A8B /* preconditioner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD165BC41A2513D5005F3A8B /* preconditioner.cpp */; };
 		CD165BC81A2513F7005F3A8B /* spline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD165BC71A2513F7005F3A8B /* spline.cpp */; };
@@ -352,6 +353,8 @@
 		0EF7AF4A13E1EFCF0034AA71 /* market_dependency_finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = market_dependency_finder.h; sourceTree = "<group>"; };
 		0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = market_dependency_finder.cpp; sourceTree = "<group>"; };
 		0EF7AF6713E1F0130034AA71 /* edfun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edfun.cpp; sourceTree = "<group>"; };
+		4BC45CF12717DF09001B7DF6 /* building_gompertz_function.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = building_gompertz_function.h; sourceTree = "<group>"; };
+		4BC45CF22717DF19001B7DF6 /* building_gompertz_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = building_gompertz_function.cpp; sourceTree = "<group>"; };
 		981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rcp_forcing_target.cpp; sourceTree = "<group>"; };
 		981AC63E19E31D9A000CB162 /* rcp_forcing_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rcp_forcing_target.h; sourceTree = "<group>"; };
 		CD165BC31A2513CB005F3A8B /* preconditioner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = preconditioner.hpp; sourceTree = "<group>"; };
@@ -1277,6 +1280,7 @@
 		CD4884CE122873C100F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				4BC45CF12717DF09001B7DF6 /* building_gompertz_function.h */,
 				CD3CFCD9238DC23600016CDB /* food_demand_function.h */,
 				CD3CFCD4238DA5A200016CDB /* food_demand_input.h */,
 				CD8DFFD51FA8D1D900CB3719 /* ctax_input.h */,
@@ -1323,6 +1327,7 @@
 		CD4884F4122873C100F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				4BC45CF22717DF19001B7DF6 /* building_gompertz_function.cpp */,
 				CD3CFCDA238DC24100016CDB /* food_demand_function.cpp */,
 				CD3CFCD7238DA5B800016CDB /* food_demand_input.cpp */,
 				CD8DFFD81FA8D1F000CB3719 /* ctax_input.cpp */,
@@ -2241,6 +2246,7 @@
 				CD488756122873C200F5A88A /* emissions_summer.cpp in Sources */,
 				CDAACD88216C546D00D13FD6 /* supply_demand_curve_saver.cpp in Sources */,
 				CD488758122873C200F5A88A /* ghg_factory.cpp in Sources */,
+				4BC45CF32717DF19001B7DF6 /* building_gompertz_function.cpp in Sources */,
 				CD693FA01AEFE0CE00805384 /* relative_cost_logit.cpp in Sources */,
 				CD48875B122873C200F5A88A /* input_driver.cpp in Sources */,
 				CD48875D122873C200F5A88A /* input_output_driver.cpp in Sources */,
@@ -2500,6 +2506,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_NAME = gcam;
 			};
 			name = Debug;
@@ -2513,6 +2520,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_NAME = gcam;
 			};
 			name = Release;
