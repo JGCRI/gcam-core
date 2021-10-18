@@ -113,6 +113,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["tranSubsectorVOTT"]] <- c("region", "supplysector", "tranSubsector", "addTimeValue", "year.fillout", "time.value.multiplier")
   level2_data_names[["tranSubsector_absolute-cost-logit"]] <- c("region", "supplysector", "tranSubsector")
   level2_data_names[["tranSubsector_relative-cost-logit"]] <- c("region", "supplysector", "tranSubsector")
+  level2_data_names[["tranCoef"]] <- c("region", "energy.final.demand","coef","sce")
   level2_data_names[["DeleteSubsector"]] <- level2_data_names[["Subsector"]]
 
   # Technologies
