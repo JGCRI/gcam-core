@@ -476,7 +476,7 @@ Satiation_flsp, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/
 
 SatiationAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, satiation-demand-function/+satiation-adder, scenario, scenario/world, building-node-input/satiation-demand-function
 
-Gomp.fn.param, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+habitable-land,building-node-input/+base-pcFlsp, building-node-input/+unadjust-satiation, building-node-input/+land-density-param, building-node-input/+b-param, building-node-input/+income-param, building-node-input/+bias-adjust-param, scenario, scenario/world
+GompFnParam, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+habitable-land,building-node-input/+base-pcFlsp, building-node-input/+unadjust-satiation, building-node-input/+land-density-param, building-node-input/+b-param, building-node-input/+income-param, building-node-input/+bias-adjust-param, scenario, scenario/world
 
 GenericBaseService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, building-service-input/+{year}base-service, building-service-input/+base-service, scenario, scenario/world
 

@@ -20,7 +20,7 @@
 #' \code{L244.SatiationAdder_SSP4}, \code{L244.GenericServiceSatiation_SSP4}, \code{L244.FuelPrefElast_bld_SSP4}, \code{L244.Satiation_flsp_SSP5},
 #' \code{L244.SatiationAdder_SSP5}, \code{L244.GenericServiceSatiation_SSP5}, \code{L244.FuelPrefElast_bld_SSP15}, \code{L244.DeleteThermalService},
 #' \code{L244.HDDCDD_A2_CCSM3x}, \code{L244.HDDCDD_A2_HadCM3}, \code{L244.HDDCDD_B1_CCSM3x}, \code{L244.HDDCDD_B1_HadCM3},
-#' \code{L244.HDDCDD_constdd_no_GCM} and \code{L244.Gomp.fn.param}.
+#' \code{L244.HDDCDD_constdd_no_GCM} and \code{L244.GompFnParam}.
 #' The corresponding file in the original data system was \code{L244.building_det.R} (energy level2).
 #' @details Creates level2 data for the building sector.
 #' @importFrom assertthat assert_that
@@ -117,7 +117,7 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.HDDCDD_B1_CCSM3x",
              "L244.HDDCDD_B1_HadCM3",
              "L244.HDDCDD_constdd_no_GCM",
-             "L244.Gomp.fn.param"))
+             "L244.GompFnParam"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -241,6 +241,8 @@ module_energy_L244.building_det <- function(command, ...) {
       # Match in the region class, and use this to then match in the satiation floorspace
       left_join_error_no_match(A_regions %>% select(region, region.class),
                                by = "region") %>%
+      # Residential floorspace does not use the satiation demand function, so filter the commercial floorspace
+     # TO DELETE filter(!grepl("resid",gcam.consumer)) %>%
       left_join_error_no_match(L244.Satiation_flsp_class, by = c("region.class", "gcam.consumer" = "sector")) %>%
       select(LEVEL2_DATA_NAMES[["Satiation_flsp"]])
 
@@ -287,6 +289,8 @@ module_energy_L244.building_det <- function(command, ...) {
       repeat_add_columns(tibble(SSP = c("SSP1", "SSP2", "SSP3", "SSP4", "SSP5"))) %>%
       # Match in the region class, and use this to then match in the satiation floorspace
       left_join_error_no_match(A_regions %>% select(region, region.class), by = "region") %>%
+      # Residential floorspace does not use the satiation demand function, so filter the commercial floorspace
+      # TO DELETE filter(!grepl("resid",gcam.consumer)) %>%
       left_join_error_no_match(L244.Satiation_flsp_class_SSPs, by = c("SSP", "region.class", "gcam.consumer" = "sector")) %>%
       # Calculate pcFlsp and make sure it is smaller than the satiation level
       left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>%
@@ -355,6 +359,7 @@ module_energy_L244.building_det <- function(command, ...) {
 
     `%notin%` <- Negate(`%in%`)
 
+    # The following table extracts the non habitable land per region, adding up the Tundra and the RockIceDesert categories
     L144.non_hab_land_pre<-L221.LN1_UnmgdAllocation %>%
       filter(!grepl("Urban",LandNode1)) %>%
       rename(nonHab=allocation) %>%
@@ -362,6 +367,7 @@ module_energy_L244.building_det <- function(command, ...) {
       summarise(nonHab=sum(nonHab)) %>%
       ungroup()
 
+    # Some regions do not have any Tundra or RockIceDesert, so the prior table needs to be completed by back-filling zeroes
     L144.adj_reg<-anti_join(L221.LN1_UnmgdAllocation,L144.non_hab_land_pre, by = c("region", "year")) %>%
         select(region,year)%>%
         distinct(region,year) %>%
@@ -369,7 +375,7 @@ module_energy_L244.building_det <- function(command, ...) {
 
     L144.non_hab_land<- bind_rows(L144.non_hab_land_pre,L144.adj_reg)
 
-
+    # Habitable land is calculated by subtracting the non-habitable land from total land
     L144.hab_land_flsp<-L221.LN0_Land %>%
       select(region, totland=landAllocation) %>%
       repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
@@ -387,7 +393,7 @@ module_energy_L244.building_det <- function(command, ...) {
     #------------------------
 
     # Write the function parameters
-    L244.Gomp.fn.param<-L144.flsp_param %>%
+    L244.GompFnParam<-L144.flsp_param %>%
       left_join_error_no_match(L144.hab_land_flsp_fin %>% filter(year==MODEL_FINAL_BASE_YEAR),by="region") %>%
       rename(area_thouskm2=value) %>%
       left_join_error_no_match(GCAM_region_names, by="region") %>%
@@ -396,19 +402,19 @@ module_energy_L244.building_det <- function(command, ...) {
       left_join_error_no_match(L101.Pop_thous_R_Yh, by=c("GCAM_region_ID","year")) %>%
       left_join_error_no_match(L144.flsp_bm2_R_res_Yh,by=c("GCAM_region_ID","year")) %>%
       rename(flsp=value) %>%
-      mutate(tot_dens=pop_thous/area_thouskm2) %>%
+      mutate(tot.dens=pop_thous/area_thouskm2) %>%
       mutate(flsp_pc=(flsp*1E9)/(pop_thous*1E3)) %>%
       mutate(base_flsp=flsp_pc) %>%
-      mutate(flsp_est=(`unadjust-satiation` +(-`land-density-param`*log(tot_dens)))*exp(-`b-param`
-                                                                                        *exp(-`income-param`*log(gdp_pc)))) %>%
-      mutate(`bias-adjust-param`=flsp_pc-flsp_est) %>%
+      mutate(flsp_est=(`unadjust.satiation` +(-`land.density.param`*log(tot.dens)))*exp(-`b.param`
+                                                                                        *exp(-`income.param`*log(gdp_pc)))) %>%
+      mutate(bias.adjust.param=flsp_pc-flsp_est) %>%
       mutate(gcam.consumer="resid",
              nodeInput="resid",
              building.node.input="resid_building") %>%
-      rename(pop_dens=tot_dens,
-             `habitable-land`=area_thouskm2,
-             `base-pcFlsp`=base_flsp) %>%
-    select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
+      rename(pop.dens=tot.dens,
+             habitable.land=area_thouskm2,
+             base.pcFlsp=base_flsp) %>%
+      select(LEVEL2_DATA_NAMES[["GompFnParam"]])
 
     #================================================================
 
@@ -875,16 +881,16 @@ module_energy_L244.building_det <- function(command, ...) {
                      "L144.flsp_bm2_R_res_Yh", "L144.flsp_bm2_R_comm_Yh") ->
       L244.SatiationAdder
 
-    L244.Gomp.fn.param %>%
+    L244.GompFnParam %>%
       add_title("Parameters for the floorspace Gompertz function") %>%
       add_units("Unitless") %>%
       add_comments("Computed offline based on data from RECS and IEA") %>%
-      add_legacy_name("L244.Gomp.fn.param") %>%
+      add_legacy_name("L244.GompFnParam") %>%
       add_precursors("common/GCAM_region_names", "L221.LN0_Land","L221.LN1_UnmgdAllocation",
                      "energy/A44.flsp_param",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L101.Pop_thous_R_Yh",
                      "L144.flsp_bm2_R_res_Yh") ->
-      L244.Gomp.fn.param
+      L244.GompFnParam
 
     L244.ThermalBaseService %>%
       add_title("Historical building heating and cooling energy output") %>%
@@ -1140,7 +1146,7 @@ module_energy_L244.building_det <- function(command, ...) {
                 L244.Satiation_flsp_SSP5, L244.SatiationAdder_SSP5, L244.GenericServiceSatiation_SSP5, L244.FuelPrefElast_bld_SSP15,
                 L244.DeleteThermalService, L244.SubsectorLogit_bld, L244.StubTechIntGainOutputRatio,
                 L244.HDDCDD_A2_CCSM3x, L244.HDDCDD_A2_HadCM3, L244.HDDCDD_B1_CCSM3x, L244.HDDCDD_B1_HadCM3, L244.HDDCDD_constdd_no_GCM,
-                L244.Gomp.fn.param)
+                L244.GompFnParam)
   } else {
     stop("Unknown command")
   }

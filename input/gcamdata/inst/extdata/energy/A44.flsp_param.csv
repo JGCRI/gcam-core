@@ -4,7 +4,7 @@
 # Source: Econometric analysis documented in CMP 346
 # Column types: cnnnn
 # ----------
-region,unadjust-satiation,land-density-param,b-param,income-param
+region,unadjust.satiation,land.density.param,b.param,income.param
 USA,150,0,3.49026,0.4875
 Africa_Eastern,100,4.540518,1.4053895,0.156197
 Africa_Northern,100,4.540518,1.4053895,0.156197
