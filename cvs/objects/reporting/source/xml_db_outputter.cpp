@@ -1805,23 +1805,25 @@ void XMLDBOutputter::endVisitGCAMConsumer( const GCAMConsumer* aGCAMConsumer, co
     XMLWriteClosingTag( aGCAMConsumer->getXMLName(), mBuffer, mTabs.get() );
 }
 
-void XMLDBOutputter::startVisitBuildingNodeInput( const BuildingNodeInput* aBuildingNodeInput, const int aPeriod ) {
-    // write the BuildingNodeInput tag and it's children in temp buffers so that we can
-    // check if anything was really written out and avoid writing blank node inputs
-    stringstream* parentBuffer = new stringstream();
-    stringstream* childBuffer = new stringstream();
+void XMLDBOutputter::startVisitBuildingNodeInput(const BuildingNodeInput* aBuildingNodeInput, const int aPeriod) {
+	// write the BuildingNodeInput tag and it's children in temp buffers so that we can
+	// check if anything was really written out and avoid writing blank node inputs
+	stringstream* parentBuffer = new stringstream();
+	stringstream* childBuffer = new stringstream();
 
-    XMLWriteOpeningTag( BuildingNodeInput::getXMLNameStatic(), *parentBuffer, mTabs.get(),
-        aBuildingNodeInput->getName() );
+	XMLWriteOpeningTag(BuildingNodeInput::getXMLNameStatic(), *parentBuffer, mTabs.get(),
+		aBuildingNodeInput->getName());
 
-    // put the buffers on a stack so that we have the correct ordering
-    mBufferStack.push( parentBuffer );
-    mBufferStack.push( childBuffer );
+	// put the buffers on a stack so that we have the correct ordering
+	mBufferStack.push(parentBuffer);
+	mBufferStack.push(childBuffer);
 
-    writeItemToBuffer( aBuildingNodeInput->getSatiationDemandFunction()->mSatiationImpedance,
-                       "satiation-impedance", *childBuffer, mTabs.get(), 1, "unitless" );
-    writeItemToBuffer( aBuildingNodeInput->getSatiationDemandFunction()->mSatiationLevel,
-                       "satiation-level", *childBuffer, mTabs.get(), 1, "GJ/m^2" );
+	if (aBuildingNodeInput->getSatiationDemandFunction() ) {
+		writeItemToBuffer(aBuildingNodeInput->getSatiationDemandFunction()->mSatiationImpedance,
+			"satiation-impedance", *childBuffer, mTabs.get(), 1, "unitless");
+		writeItemToBuffer(aBuildingNodeInput->getSatiationDemandFunction()->mSatiationLevel,
+			"satiation-level", *childBuffer, mTabs.get(), 1, "GJ/m^2");
+	}
     const Modeltime* modeltime = scenario->getModeltime();
     for( int per = 0; per < modeltime->getmaxper(); ++per ) {
         double price = aBuildingNodeInput->getPricePaid( mCurrentRegion, per );
