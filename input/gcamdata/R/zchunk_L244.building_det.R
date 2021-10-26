@@ -242,7 +242,7 @@ module_energy_L244.building_det <- function(command, ...) {
       left_join_error_no_match(A_regions %>% select(region, region.class),
                                by = "region") %>%
       # Residential floorspace does not use the satiation demand function, so filter the commercial floorspace
-     # TO DELETE filter(!grepl("resid",gcam.consumer)) %>%
+      filter(!grepl("resid",gcam.consumer)) %>%
       left_join_error_no_match(L244.Satiation_flsp_class, by = c("region.class", "gcam.consumer" = "sector")) %>%
       select(LEVEL2_DATA_NAMES[["Satiation_flsp"]])
 
@@ -290,7 +290,7 @@ module_energy_L244.building_det <- function(command, ...) {
       # Match in the region class, and use this to then match in the satiation floorspace
       left_join_error_no_match(A_regions %>% select(region, region.class), by = "region") %>%
       # Residential floorspace does not use the satiation demand function, so filter the commercial floorspace
-      # TO DELETE filter(!grepl("resid",gcam.consumer)) %>%
+      filter(!grepl("resid",gcam.consumer)) %>%
       left_join_error_no_match(L244.Satiation_flsp_class_SSPs, by = c("SSP", "region.class", "gcam.consumer" = "sector")) %>%
       # Calculate pcFlsp and make sure it is smaller than the satiation level
       left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>%
