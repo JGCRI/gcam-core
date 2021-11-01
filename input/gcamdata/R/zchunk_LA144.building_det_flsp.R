@@ -494,10 +494,10 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       add_comments("Floorspace was calculated from various datasets, including those for the USA, China, and South Africa") %>%
       add_comments("Floorspace for the remaining countries were calculated using GCAM 3.0 assumptions") %>%
       add_legacy_name("L144.flsp_bm2_R_res_Yh") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/A44.flsp_bm2_state_res", "energy/A44.pcflsp_default",
+      add_precursors("common/iso_GCAM_regID","common/GCAM_region_names", "energy/A44.flsp_bm2_state_res", "energy/A44.pcflsp_default",
                      "energy/A44.HouseholdSize", "energy/CEDB_ResFloorspace_chn", "energy/Other_pcflsp_m2_ctry_Yh",
                      "energy/IEA_PCResFloorspace", "energy/Odyssee_ResFloorspacePerHouse",
-                     "L100.Pop_thous_ctry_Yh", "energy/RECS_ResFloorspace_usa") ->
+                     "L100.Pop_thous_ctry_Yh", "energy/RECS_ResFloorspace_usa","energy/A44.flsp_param") ->
       L144.flsp_bm2_R_res_Yh
 
     L144.flsp_bm2_R_comm_Yh %>%
