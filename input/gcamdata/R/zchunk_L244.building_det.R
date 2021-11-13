@@ -866,6 +866,49 @@ module_energy_L244.building_det <- function(command, ...) {
     generic_services <- unique(A44.internal_gains$supplysector)
     thermal_services <- dplyr::setdiff(unique(A44.sector$supplysector), generic_services)
 
+    # Supplysectors (e.g. resid heating) need to be differentiated for each consumer group.
+    # This makes that the fuel-technology mix for each service can vary across quintiles
+    # We create the "add.cg" ("add consumer groups) function to make this process automatic for the different files
+
+    cons.groups<-unique(A44.gcam_consumer_resid$gcam.consumer)
+    n.cons.groups<-as.numeric(length(unique(A44.gcam_consumer_resid$gcam.consumer)))
+
+    add.cg<-function(df){
+      df.res<-df %>% filter(grepl("resid",supplysector))
+      df.comm<-df %>% filter(grepl("comm",supplysector))
+
+      df<- df.res %>%
+        repeat_add_columns(tibble::tibble(cons.groups)) %>%
+        separate(cons.groups,c("sector","cons.groups"),sep="_") %>%
+        unite(supplysector,c(supplysector,cons.groups), sep="_") %>%
+        select(-sector) %>%
+        bind_rows(df.comm)
+      return(df)
+    }
+
+    # Transform the Level 0 data files (A44.*) in order to adjust to consumer groups
+    A44.fuelprefElasticity<-add.cg(A44.fuelprefElasticity)
+    A44.fuelprefElasticity_SSP15<-add.cg(A44.fuelprefElasticity_SSP15)
+    A44.fuelprefElasticity_SSP3<-add.cg(A44.fuelprefElasticity_SSP3)
+    A44.fuelprefElasticity_SSP4<-add.cg(A44.fuelprefElasticity_SSP4)
+
+    A44.globaltech_shrwt<-add.cg(A44.globaltech_shrwt)
+    A44.internal_gains<-add.cg(A44.internal_gains)
+    A44.sector<-add.cg(A44.sector)
+    A44.subsector_interp<-add.cg(A44.subsector_interp)
+    A44.subsector_logit<-add.cg(A44.subsector_logit)
+    A44.subsector_shrwt<-add.cg(A44.subsector_shrwt)
+
+    # Adjust calibrated techs in a different file
+    calibrated_techs_bld_det_adj<-calibrated_techs_bld_det %>%
+      filter(grepl("resid",supplysector)) %>%
+      repeat_add_columns(tibble::tibble(cons.groups)) %>%
+      separate(cons.groups,c("adj","cons.groups"),sep="_") %>%
+      unite(supplysector,c(supplysector,cons.groups), sep="_",remove = F) %>%
+      mutate(gcam.consumer = paste0(gcam.consumer,"_",cons.groups)) %>%
+      select(-adj,-cons.groups) %>%
+      bind_rows(calibrated_techs_bld_det %>% filter(grepl("comm",supplysector)))
+
 
     # Base-service: filter only the model base years and change names as indicated in calibrated_techs_bld_det
     L244.base_service <- L144.base_service_EJ_serv %>%
@@ -1093,7 +1136,7 @@ module_energy_L244.building_det <- function(command, ...) {
     # Subsector information
     ## Not all subsectors exist in all regions; tradbio and heat are only modeled in selected regions
     ## The level1 end-use tech efficiency file has all of the combinations that exist
-    L244.Tech_bld <- L144.end_use_eff %>%
+    L244.Tech_bld <- add.cg(L144.end_use_eff) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       select(region, supplysector, subsector, technology) %>%
       distinct()
@@ -1161,7 +1204,7 @@ module_energy_L244.building_det <- function(command, ...) {
       rename(stub.technology = technology)
 
     # L244.StubTechCalInput_bld: Calibrated energy consumption by buildings technologies
-    L244.StubTechCalInput_bld <- L144.in_EJ_R_bld_serv_F_Yh %>%
+    L244.StubTechCalInput_bld_pre <- L144.in_EJ_R_bld_serv_F_Yh %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
       rename(calibrated.value = value) %>%
       mutate(calibrated.value = round(calibrated.value, energy.DIGITS_CALOUTPUT)) %>%
@@ -1179,7 +1222,7 @@ module_energy_L244.building_det <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["StubTechCalInput"]])
 
     # L244.StubTechEff_bld: Assumed efficiencies (all years) of buildings technologies
-    L244.StubTechEff_bld <- L144.end_use_eff %>%
+    L244.StubTechEff_bld_pre <- L144.end_use_eff %>%
       filter(year %in% MODEL_YEARS) %>%
       mutate(value = round(value, energy.DIGITS_CALOUTPUT)) %>%
       rename(efficiency = value) %>%
@@ -1204,7 +1247,7 @@ module_energy_L244.building_det <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], share.weight)
 
     # L244.GlobalTechCost_bld: Non-fuel costs of global building technologies
-    L244.GlobalTechCost_bld <- L144.NEcost_75USDGJ %>%
+    L244.GlobalTechCost_bld <- add.cg(L144.NEcost_75USDGJ) %>%
       mutate(input.cost = round(NEcostPerService, energy.DIGITS_COST)) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       rename(sector.name = supplysector,
@@ -1213,7 +1256,7 @@ module_energy_L244.building_det <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]])
 
     # L244.StubTechIntGainOutputRatio: Output ratios of internal gain energy from non-thermal building services
-    L244.StubTechIntGainOutputRatio <- L144.internal_gains %>%
+    L244.StubTechIntGainOutputRatio_pre <- L144.internal_gains %>%
       filter(year %in% MODEL_YEARS) %>%
       # Round and rename value
       mutate(value = round(value, energy.DIGITS_EFFICIENCY)) %>%
@@ -1260,6 +1303,9 @@ module_energy_L244.building_det <- function(command, ...) {
       filter(grepl("resid",gcam.consumer)) %>%
       repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
       unite(gcam.consumer, c(gcam.consumer,group),sep="_") %>%
+      separate(gcam.consumer, c("adj","group"),sep="_",remove = F) %>%
+      mutate(supplysector = paste0(supplysector,"_",group),
+             thermal.building.service.input = paste0(thermal.building.service.input,"_",group)) %>%
       bind_rows(L244.ThermalBaseService %>%
                   group_by(region, gcam.consumer, nodeInput, building.node.input, thermal.building.service.input) %>%
                   summarise(base.service = max(base.service)) %>%
@@ -1440,15 +1486,15 @@ module_energy_L244.building_det <- function(command, ...) {
     # 2-L244.ThermalServiceImpedance
 
     # First calculate internal gains
-    L244.internal_gains<-L244.StubTechCalInput_bld %>%
+    L244.internal_gains<-L244.StubTechCalInput_bld_pre %>%
       # Add in efficiency by technology
-      left_join_error_no_match(L244.StubTechEff_bld,
+      left_join_error_no_match(L244.StubTechEff_bld_pre,
                                by = c("region","supplysector", "subsector" ,
                                       "stub.technology", "year", "minicam.energy.input")) %>%
       # Calculate base.service = calibrated.value(energy) * efficiency
       mutate(base.service = round(calibrated.value * efficiency, energy.DIGITS_CALOUTPUT)) %>%
       # use left join because not all services produce internal gains
-      left_join(L244.StubTechIntGainOutputRatio,
+      left_join(L244.StubTechIntGainOutputRatio_pre,
                 by = c("region","supplysector", "subsector" ,
                        "stub.technology"="technology", "year")) %>%
       filter(complete.cases(.)) %>%
@@ -1964,11 +2010,15 @@ module_energy_L244.building_det <- function(command, ...) {
     # INT GAINS SCALAR
     L244.Intgains_scalar<-L244.Intgains_scalar %>%
       filter(grepl("resid",gcam.consumer)) %>%
-      repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
-      unite(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
+      repeat_add_columns(tibble::tibble(cons.groups)) %>%
+      separate(cons.groups,c("sector","cons.groups"),sep="_",remove = F) %>%
+      select(-sector) %>%
+      mutate(gcam.consumer = paste0(gcam.consumer,"_",cons.groups),
+             thermal.building.service.input = paste0(thermal.building.service.input,"_",cons.groups)) %>%
+      select(LEVEL2_DATA_NAMES[["Intgains_scalar"]]) %>%
       bind_rows(L244.Intgains_scalar %>%
-                  filter(grepl("comm",gcam.consumer))) %>%
-      select(LEVEL2_DATA_NAMES[["Intgains_scalar"]])
+                  filter(grepl("comm",gcam.consumer)))
+
 
     # Shell Efficiency
     # Adjust future years based on the rule used for expanding USA-based efficiency to the RoW
@@ -2028,6 +2078,119 @@ module_energy_L244.building_det <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["ShellConductance"]]) %>%
       bind_rows(L244.ShellConductance_bld_noadj) %>%
       arrange(region,year,gcam.consumer)
+
+    # Supplysectors are also disaggregated at consumer levels (to allow quintile-specific fuel-technology mixes)
+    # First, we adjust efficiencies and InterganGain I/O ratios
+
+    L244.StubTechEff_bld<-add.cg(L244.StubTechEff_bld_pre)
+    L244.StubTechIntGainOutputRatio<-add.cg(L244.StubTechIntGainOutputRatio_pre)
+
+    # Finally we need to calibrate the different technologies at quintile level.
+
+    shares_resid<-bind_rows(L244.GenericShares %>% rename(share = gen_share,
+                                                    agg.share = agg_gen_share,
+                                                    adj_sector = building.service.input),
+                      L244.ThermalShares %>% rename(adj_sector = thermal.building.service.input,
+                                                    share = thermal_share,
+                                                    agg.share = agg_thermal_share)) %>%
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer,c("tmp","group"),sep = "_",remove = F) %>%
+      select(region,year,group,adj_sector,share)
+
+    L244.StubTechCalInput_bld_comm<- L244.StubTechCalInput_bld_pre %>%
+      filter(grepl("comm",supplysector))
+
+    L244.StubTechCalInput_bld_resid<-add.cg(L244.StubTechCalInput_bld_pre) %>%
+      filter(grepl("resid",supplysector)) %>%
+      separate(supplysector,c("adj_sector","group"),sep = "_",remove = F) %>%
+      # use left_join due to lack of heating in Indonesia
+      left_join(shares_resid, by=c("region","year","group","adj_sector")) %>%
+      mutate(share = if_else(is.na(share),0,share)) %>%
+      mutate(calibrated.value = calibrated.value * share) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechCalInput"]])
+
+    L244.StubTechCalInput_bld<-bind_rows(L244.StubTechCalInput_bld_resid,L244.StubTechCalInput_bld_comm)
+
+    # Add consumer group to building.service.input and to thermal.building.service.input
+    L244.ThermalBaseService<-L244.ThermalBaseService %>%
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer,c("adj","group"), sep = "_",remove = F) %>%
+      mutate(thermal.building.service.input = paste0(thermal.building.service.input,"_",group)) %>%
+      select(LEVEL2_DATA_NAMES[["ThermalBaseService"]]) %>%
+      bind_rows(L244.ThermalBaseService %>%
+      filter(grepl("comm",gcam.consumer)))
+
+    L244.ThermalServiceAdder<-L244.ThermalServiceAdder %>%
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer,c("adj","group"), sep = "_",remove = F) %>%
+      mutate(thermal.building.service.input = paste0(thermal.building.service.input,"_",group)) %>%
+      select(LEVEL2_DATA_NAMES[["ThermalServiceAdder"]]) %>%
+      bind_rows(L244.ThermalServiceAdder %>%
+                  filter(grepl("comm",gcam.consumer)))
+
+    L244.ThermalServiceCoef<-L244.ThermalServiceCoef %>%
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer,c("adj","group"), sep = "_",remove = F) %>%
+      mutate(thermal.building.service.input = paste0(thermal.building.service.input,"_",group)) %>%
+      select(LEVEL2_DATA_NAMES[["ThermalServiceCoef"]]) %>%
+      bind_rows(L244.ThermalServiceCoef %>%
+                  filter(grepl("comm",gcam.consumer)))
+
+    L244.ThermalServiceSatiation<-L244.ThermalServiceSatiation %>%
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer,c("adj","group"), sep = "_",remove = F) %>%
+      mutate(thermal.building.service.input = paste0(thermal.building.service.input,"_",group)) %>%
+      select(LEVEL2_DATA_NAMES[["ThermalServiceSatiation"]]) %>%
+      bind_rows(L244.ThermalServiceSatiation %>%
+                  filter(grepl("comm",gcam.consumer)))
+
+    L244.ThermalServiceImpedance<-L244.ThermalServiceImpedance %>%
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer,c("adj","group"), sep = "_",remove = F) %>%
+      mutate(thermal.building.service.input = paste0(thermal.building.service.input,"_",group)) %>%
+      select(LEVEL2_DATA_NAMES[["ThermalServiceImpedance"]]) %>%
+      bind_rows(L244.ThermalServiceImpedance %>%
+                  filter(grepl("comm",gcam.consumer)))
+
+    L244.GenericBaseService<-L244.GenericBaseService %>%
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer,c("adj","group"), sep = "_",remove = F) %>%
+      mutate(building.service.input = paste0(building.service.input,"_",group)) %>%
+      select(LEVEL2_DATA_NAMES[["GenericBaseService"]]) %>%
+      bind_rows(L244.GenericBaseService %>%
+                  filter(grepl("comm",gcam.consumer)))
+
+    L244.GenericServiceAdder<-L244.GenericServiceAdder %>%
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer,c("adj","group"), sep = "_",remove = F) %>%
+      mutate(building.service.input = paste0(building.service.input,"_",group)) %>%
+      select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]]) %>%
+      bind_rows(L244.GenericServiceAdder %>%
+                  filter(grepl("comm",gcam.consumer)))
+
+    L244.GenericServiceCoef<-L244.GenericServiceCoef %>%
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer,c("adj","group"), sep = "_",remove = F) %>%
+      mutate(building.service.input = paste0(building.service.input,"_",group)) %>%
+      select(LEVEL2_DATA_NAMES[["GenericServiceCoef"]]) %>%
+      bind_rows(L244.GenericServiceCoef %>%
+                  filter(grepl("comm",gcam.consumer)))
+
+    L244.GenericServiceSatiation<-L244.GenericServiceSatiation %>%
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer,c("adj","group"), sep = "_",remove = F) %>%
+      mutate(building.service.input = paste0(building.service.input,"_",group)) %>%
+      select(LEVEL2_DATA_NAMES[["GenericServiceSatiation"]]) %>%
+      bind_rows(L244.GenericServiceSatiation %>%
+                  filter(grepl("comm",gcam.consumer)))
+
+    L244.GenericServiceImpedance<-L244.GenericServiceImpedance %>%
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer,c("adj","group"), sep = "_",remove = F) %>%
+      mutate(building.service.input = paste0(building.service.input,"_",group)) %>%
+      select(LEVEL2_DATA_NAMES[["GenericServiceImpedance"]]) %>%
+      bind_rows(L244.GenericServiceImpedance %>%
+                  filter(grepl("comm",gcam.consumer)))
 
 
 
