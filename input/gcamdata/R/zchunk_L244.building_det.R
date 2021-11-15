@@ -948,7 +948,7 @@ module_energy_L244.building_det <- function(command, ...) {
     cooling_services <- thermal_services[grepl("cooling", thermal_services)]
 
     # Add HDDCDD for L244.ThermalBaseService categories and model years
-    L244.HDDCDD <- L244.ThermalBaseService %>%
+    L244.HDDCDD_pre <- L244.ThermalBaseService %>%
       select(-year, -base.service) %>%
       distinct() %>%
       # Add model years
@@ -980,7 +980,19 @@ module_energy_L244.building_det <- function(command, ...) {
                   select(-variable, -value, -GCAM_region_ID) %>%
                   # Join SRES and GCM so that we can split by unique ESM scenario
                   unite(scenario, SRES, GCM) %>%
-                  filter(grepl("comm",gcam.consumer))) %>%
+                  filter(grepl("comm",gcam.consumer)))
+
+    L244.HDDCDD_comm<-L244.HDDCDD_pre %>%
+      filter(grepl("comm",gcam.consumer))
+
+    L244.HDDCDD_res<-L244.HDDCDD_pre %>%
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer, c("adj","group"), sep="_", remove = F) %>%
+      unite(thermal.building.service.input, c("thermal.building.service.input","group"), sep = "_") %>%
+      select(-adj)
+
+
+    L244.HDDCDD<-bind_rows(L244.HDDCDD_res,L244.HDDCDD_comm) %>%
       split(.$scenario) %>%
       lapply(function(df) {
         select(df, -scenario) %>%
