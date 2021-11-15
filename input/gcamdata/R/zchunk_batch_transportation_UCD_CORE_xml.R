@@ -46,7 +46,6 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
              "L254.PerCapitaBased_trn",
              "L254.PriceElasticity_trn",
              "L254.IncomeElasticity_trn",
-             "L254.Coef_trn",
              "L254.BaseService_trn"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     xml_files<- c("transportation_UCD_CORE.xml","transportation_UCD_SSP1.xml","transportation_UCD_SSP3.xml","transportation_UCD_SSP5.xml","transportation_UCD_highEV.xml")
@@ -96,7 +95,6 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
     L254.PriceElasticity_trn <- get_data(all_data, "L254.PriceElasticity_trn")
     L254.IncomeElasticity_trn <- get_data(all_data, "L254.IncomeElasticity_trn")
     L254.BaseService_trn <- get_data(all_data, "L254.BaseService_trn")
-    L254.Coef_trn <- get_data(all_data, "L254.Coef_trn")
 
 
     # ===================================================
@@ -131,7 +129,6 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
         L254.PerCapitaBased_trn_SSP <- L254.PerCapitaBased_trn %>% filter(sce=="CORE")
         L254.PriceElasticity_trn_SSP <- L254.PriceElasticity_trn %>% filter(sce=="CORE")
         L254.IncomeElasticity_trn_SSP <- L254.IncomeElasticity_trn %>% filter(sce=="CORE")
-        L254.Coef_trn_SSP <- L254.Coef_trn %>% filter(sce=="CORE")
       }
 
 
@@ -198,7 +195,6 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
         add_xml_data(L254.StubTechCalInput_passthru, "StubTranTechCalInput") %>%
         add_xml_data(L254.StubTechProd_nonmotor, "StubTranTechProd") %>%
         add_xml_data(L254.PerCapitaBased_trn_SSP, "PerCapitaBased") %>%
-        add_xml_data(L254.Coef_trn_SSP, "tranCoef") %>%
         add_xml_data(L254.PriceElasticity_trn_SSP, "PriceElasticity") %>%
         add_xml_data(L254.IncomeElasticity_trn_SSP, "IncomeElasticity") %>%
         add_xml_data(L254.BaseService_trn_SSP, "BaseService") %>%
@@ -232,7 +228,6 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
                        "L254.PerCapitaBased_trn",
                        "L254.PriceElasticity_trn",
                        "L254.IncomeElasticity_trn",
-                       "L254.Coef_trn",
                        "L254.BaseService_trn")  %>%
                         assign(xml_name, ., envir = curr_env)
 

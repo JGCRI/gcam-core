@@ -442,8 +442,6 @@ StubTranTechProd, world/+{name}region, region/+{name}supplysector, supplysector/
 
 PerCapitaBased, world/+{name}region, region/+{name}energy-final-demand, energy-final-demand/+perCapitaBased, energy-final-demand/final-energy-consumer, scenario, scenario/world
 
-tranCoef, world/+{name}region, region/+{name}energy-final-demand, energy-final-demand/+coef, scenario, scenario/world
-
 BaseService, world/+{name}region, region/+{name}energy-final-demand, energy-final-demand/+{year}base-service, energy-final-demand/+base-service, scenario, scenario/world
 
 IncomeElasticity, world/+{name}region, region/+{name}energy-final-demand, energy-final-demand/+{year}income-elasticity, energy-final-demand/+income-elasticity, scenario, scenario/world
