@@ -40,8 +40,40 @@
 
 #include <boost/iostreams/device/mapped_file.hpp>
 #include <boost/fusion/include/filter_if.hpp>
+#include <boost/preprocessor/tuple/enum.hpp>
+#include <boost/preprocessor/seq.hpp>
+#include <boost/preprocessor/control/iif.hpp>
+#include <boost/preprocessor/punctuation/is_begin_parens.hpp>
+#include <boost/preprocessor/tuple/enum.hpp>
+#include <boost/mpl/set.hpp>
 
 #include "util/base/include/xml_parse_helper.h"
+
+// A tuple of GCAM Containers for which we want to debug the XML parsing
+// such as `(World, ReserveSubResource)`.  Users can choose any class even
+// if it is not the base class and they will need to add a `debugXMLParse`
+// method to these classes (they do not need to add it to the base class
+// however).  If no value is set here we avoid compiling the extra machinery
+// required to support calling debugXMLParse.
+#define XMLPARSE_DEBUG_CONTAINERS
+
+/*!
+ * \brief Figure out if we have any containers set to debug XML Parsing.
+ * \details This is actually kind of tricky to do.  Not until the C++ 20 standard will there be a way
+ *          to see if an "ENUM" is empty (length will still return 1).  So instead we see if there is an
+ *          opening parenthesis and if so we _assume_ there is at least one container to debug.
+ * \param .../__VA_ARGS__ The ENUM to check if is "empty"
+ * \return 1 if we have containers to debug otherwise 0
+ */
+#define IS_XMLPARSE_DEBUG_ACTIVE(...) \
+     BOOST_PP_IIF( BOOST_PP_IS_BEGIN_PARENS( __VA_ARGS__ ), 1, 0)
+
+// We will set a preprocessor flag if we have have any containers to debug
+// and we will check it to avoid compiling the extra code needed to do so
+// if we have none to save compile / run time.
+// Note we set this now as ExpandDataVector (included below) will want to check it.
+#define XMLPARSE_DEBUG_ACTIVE IS_XMLPARSE_DEBUG_ACTIVE(XMLPARSE_DEBUG_CONTAINERS)
+
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/data_definition_util.h"
 #include "util/base/include/gcam_fusion.hpp"
@@ -60,6 +92,55 @@
 
 using namespace std;
 using namespace rapidxml;
+
+#if XMLPARSE_DEBUG_ACTIVE
+// convert the list of containers to debug to a boost MPL set
+using DebugContainersSet = boost::mpl::set<BOOST_PP_TUPLE_ENUM(XMLPARSE_DEBUG_CONTAINERS)>::type;
+
+// A helper to use in our filter_if lambda expression below
+template<typename T>
+struct PairTypeHelper {
+    using type = typename T::first_type;
+};
+
+/*!
+ * \brief Call the debugXMLParse method if the container was included in the set to debug.
+ * \details This gets tricky because we only ever hold a reference by the base class pointer.  Users may be
+ *          interested in debugging one of the subclasses however.  We of course use the ExpandDataVector
+ *          to do a double-dispatch to figure out which subclass we actually have so we take advantage of that
+ *          machinery for this purpose as well.
+ * \param aContainer A reference to the current parsing container vis-a-vis the ExpandDataVector so we can
+ *                  use it to tell us which subclass is actually set and then check if that subclass is one of the
+ *                  containers we are interested in debugging.
+ * \param aNode The XML Node at the container level.  For instance if we are debugging SupplySector the aNode
+ *              would be a reference to `<supplysector name="sector name">`
+ * \return A flag from the debugging code if false signals the generic parsing code should continue it's parsing, and
+ *         if true no further processing will be attempted.
+ */
+template<typename SubClassFamilyVector>
+bool callDebugXMLParse(ExpandDataVector<SubClassFamilyVector> aContainer, const rapidxml::xml_node<char>* aNode) {
+    bool stopProcessing = false;
+    // first, we need to filter all the possible subclasses to just those selected for debugging
+    boost::fusion::for_each(boost::fusion::filter_if<
+            boost::mpl::lambda<
+                boost::mpl::has_key<
+                    DebugContainersSet,
+                    PairTypeHelper<boost::mpl::_1>
+                >
+            >::type >(aContainer.mSubClassPtrMap), [&stopProcessing, aNode] (auto& aPair)
+    {
+        // The fusion map where the `.first` is the subclass type and the `.second` is
+        // a pointer to the actual instance of the subclass which would be non-NULL if
+        // that is the type we have at runtime.
+        if( aPair.second ) {
+            // call the debugXMLParse method on this container as it was flagged to be
+            // debugged
+            stopProcessing = aPair.second->debugXMLParse(aNode);
+        }
+    });
+    return stopProcessing;
+}
+#endif // XMLPARSE_DEBUG_ACTIVE
 
 // A LOT of heavy lifting will go on in this cpp file.  The XML parse of all the
 // GCAM classes will be generated here.
@@ -340,6 +421,14 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
     parseChildHelper.setContainer(aData.mData);
     ExpandDataVector<typename data_type::SubClassFamilyVector> getDataVector;
     aData.mData->doDataExpansion( getDataVector );
+#if XMLPARSE_DEBUG_ACTIVE
+    // call debugXMLParse if applicable and check if the debugging code intends for
+    // the generic parsing to continue or not
+    bool stopProcessing = callDebugXMLParse<typename data_type::SubClassFamilyVector>(getDataVector, aNode);
+    if(stopProcessing) {
+        return;
+    }
+#endif //XMLPARSE_DEBUG_ACTIVE
     getDataVector.getFullDataVector(parseChildHelper);
 }
 
@@ -430,6 +519,14 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
     parseChildHelper.setContainer(currContainer);
     ExpandDataVector<typename data_type::SubClassFamilyVector> getDataVector;
     currContainer->doDataExpansion( getDataVector );
+#if XMLPARSE_DEBUG_ACTIVE
+    // call debugXMLParse if applicable and check if the debugging code intends for
+    // the generic parsing to continue or not
+    bool stopProcessing = callDebugXMLParse<typename data_type::SubClassFamilyVector>(getDataVector, aNode);
+    if(stopProcessing) {
+        return;
+    }
+#endif //XMLPARSE_DEBUG_ACTIVE
     getDataVector.getFullDataVector(parseChildHelper);
 }
 
@@ -520,6 +617,14 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
     parseChildHelper.setContainer(currContainer);
     ExpandDataVector<typename data_type::SubClassFamilyVector> getDataVector;
     currContainer->doDataExpansion( getDataVector );
+#if XMLPARSE_DEBUG_ACTIVE
+    // call debugXMLParse if applicable and check if the debugging code intends for
+    // the generic parsing to continue or not
+    bool stopProcessing = callDebugXMLParse<typename data_type::SubClassFamilyVector>(getDataVector, aNode);
+    if(stopProcessing) {
+        return;
+    }
+#endif //XMLPARSE_DEBUG_ACTIVE
     getDataVector.getFullDataVector(parseChildHelper);
 }
 
@@ -744,6 +849,11 @@ void XMLParseHelper::parseData<Data<Solver*, CONTAINER> >(const rapidxml::xml_no
 
 template<>
 void XMLParseHelper::parseData<Data<objects::PeriodVector<double>, ARRAY> >(const rapidxml::xml_node<char>* aNode, Data<objects::PeriodVector<double>, ARRAY>& aData) {
+    parseDataI(aNode, aData);
+}
+
+template<>
+void XMLParseHelper::parseData<Data<objects::PeriodVector<Value>, ARRAY> >(const rapidxml::xml_node<char>* aNode, Data<objects::PeriodVector<Value>, ARRAY>& aData) {
     parseDataI(aNode, aData);
 }
 
