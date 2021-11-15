@@ -393,14 +393,14 @@ protected:
 
         //! Current Subregional population.  Note that this is just a
         //! temporary value used during demand calculations
-        DEFINE_VARIABLE( SIMPLE, "subregional-population", mCurrentSubregionalPopulation, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "subregional-population", mCurrentSubregionalPopulation, Value ),
 
         //! Current Subregional income.  Note that this is just a
         //! temporary value used during demand calculations
-        DEFINE_VARIABLE( SIMPLE, "subregional-income", mCurrentSubregionalIncome, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "subregional-income", mCurrentSubregionalIncome, Value ),
 
         //! The sum product of energy service price necessary to drive demands.
-        DEFINE_VARIABLE( ARRAY | STATE, "price", mPrice, objects::PeriodVector<Value> )
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "price", mPrice, objects::PeriodVector<Value> )
     )
                            
     //! Pointer to function this class will use

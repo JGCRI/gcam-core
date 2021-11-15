@@ -93,7 +93,7 @@ protected:
         AEmissionsControl,
         
         //! Technology build period -- this is the period that the vintage was constructed
-        DEFINE_VARIABLE( SIMPLE, "tech-build-period", mTechBuildPeriod, int )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "tech-build-period", mTechBuildPeriod, int )
     )
     
     //! Future emissions factors -- this vector sets future emissions factors for vintaged technologies

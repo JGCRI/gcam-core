@@ -196,7 +196,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "price-unit-conversion", mPriceUnitConversionFactor, Value ),
 
         //! Physical Demand.
-        DEFINE_VARIABLE( ARRAY | STATE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> ),
 
         //! Current coefficient after adjustments have been made by the technology's
         //! capture component.

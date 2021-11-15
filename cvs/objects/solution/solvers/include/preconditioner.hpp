@@ -98,12 +98,6 @@ protected:
         // default = 30
         DEFINE_VARIABLE( SIMPLE, "max-iterations", mItmax, unsigned int ),
         
-        // default = 0.25
-        DEFINE_VARIABLE( SIMPLE, "price-increase-fac", mPriceIncreaseFac, double ),
-        
-        // default = 0.1
-        DEFINE_VARIABLE( SIMPLE, "price-decrease-fac", mPriceDecreaseFac, double ),
-        
         // default = 1e6
         DEFINE_VARIABLE( SIMPLE, "large-price-thresh", mLargePrice, double ),
         

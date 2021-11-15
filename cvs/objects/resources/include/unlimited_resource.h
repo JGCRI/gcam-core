@@ -124,7 +124,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "variance", mVariance, Value ),
         
         //! The last supply value that was added to the marketplace so it is equal.
-        DEFINE_VARIABLE( SIMPLE | STATE, "supply-wedge", mSupplyWedge, Value)
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "supply-wedge", mSupplyWedge, Value)
     )
 
     void setMarket( const std::string& aRegionName );

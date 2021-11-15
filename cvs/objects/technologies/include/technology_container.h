@@ -156,10 +156,6 @@ private:
         
         //! Optional parameter for the last year in which a technology can be invested in.
         DEFINE_VARIABLE( SIMPLE, "final-available-year", mFinalAvailableYear, int ),
-        
-        //! A list of technology years that were created by interpolations.  This could
-        //! be used to avoid writing them back out in toInputXML
-        DEFINE_VARIABLE( ARRAY, "interpolated-years", mInterpolatedTechYears, std::vector<int> ),
                                 
         //! Interpolation rules for technology share weight values.
         DEFINE_VARIABLE( CONTAINER, "interpolation-rule", mShareWeightInterpRules, std::vector<InterpolationRule*> )

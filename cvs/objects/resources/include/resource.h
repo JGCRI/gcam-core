@@ -96,13 +96,13 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE, "price", mResourcePrice, objects::PeriodVector<Value> ),
 
         //! total Resource available
-        DEFINE_VARIABLE( ARRAY | STATE, "available", mAvailable, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "available", mAvailable, objects::PeriodVector<Value> ),
 
         //! annual production rate of Resource
-        DEFINE_VARIABLE( ARRAY | STATE, "annualprod", mAnnualProd, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "annualprod", mAnnualProd, objects::PeriodVector<Value> ),
 
         //! cumulative production of Resource
-        DEFINE_VARIABLE( ARRAY | STATE, "cummprod", mCumulProd, objects::PeriodVector<Value> )
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "cummprod", mCumulProd, objects::PeriodVector<Value> )
     )
     
     //! Pointer to the resource's information store.

@@ -199,10 +199,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "emissions-unit", mEmissionsUnit, std::string ),
 
         //! Emissions (calculated)
-        //! TODO: These are sized to store emissions for all periods however only
-        //!       a fraction of that will actually be used (depending on the technology
-        //!       vintage and lifetime.
-        DEFINE_VARIABLE( ARRAY | STATE, "emissions", mEmissions, objects::TechVintageVector<Value> )
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "emissions", mEmissions, objects::TechVintageVector<Value> )
     )
     
     //! Pre-located market which has been cached from the marketplace to get the price

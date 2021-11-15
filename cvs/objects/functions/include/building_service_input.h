@@ -308,7 +308,7 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE, "base-service", mServiceDemand, objects::PeriodVector<Value> ),
 
         //! Energy service density for reporting.
-        DEFINE_VARIABLE( ARRAY | STATE, "service-density", mServiceDensity, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "service-density", mServiceDensity, objects::PeriodVector<Value> ),
 
         //! Satiation demand function.
         DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* )

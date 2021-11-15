@@ -387,18 +387,18 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "self-price-elasticity", mSelfPriceElasticity, Value ),
 
         //! The actual share of the total budget (alpha)
-        DEFINE_VARIABLE( ARRAY | STATE, "share", mShare, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "share", mShare, objects::PeriodVector<Value> ),
                             
         //! Regional bias correction term
         DEFINE_VARIABLE( ARRAY | STATE, "regional-bias", mRegionalBias, objects::PeriodVector<Value> ),
         
         //! The Subregional population.  Note that this is just a
         //! temporary value used during demand calculations
-        DEFINE_VARIABLE( ARRAY, "subregional-population", mSubregionalPopulation, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "subregional-population", mSubregionalPopulation, objects::PeriodVector<Value> ),
 
         //! Current Subregional income (in PPP).  Note that this is just a
         //! temporary value used during demand calculations
-        DEFINE_VARIABLE( SIMPLE, "subregional-income", mCurrentSubregionalIncome, Value )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "subregional-income", mCurrentSubregionalIncome, Value )
 
     )
                            

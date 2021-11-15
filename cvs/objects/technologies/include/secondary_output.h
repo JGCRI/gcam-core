@@ -174,14 +174,14 @@ protected:
         IOutput,
 
         //! Physical output by period.
-        DEFINE_VARIABLE( ARRAY | STATE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
 
         //! Name of the secondary output. Corresponds to a market for this good and
         //! a supply sector which supplies this good as its primary output.
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! CO2 emissions coefficient cached from the marketplace.
-        DEFINE_VARIABLE( SIMPLE, "co2-coef", mCachedCO2Coef, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "co2-coef", mCachedCO2Coef, Value ),
 
         //! Ratio of the secondary output to primary output production such that
         //! primary output multiplied by the ratio is equal to secondary output.

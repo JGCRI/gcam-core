@@ -142,7 +142,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "electric-sector-market", mElectricSectorMarket, std::string ),
 
         //! Name of trial market associated with this Intermittent Technology.
-        DEFINE_VARIABLE( SIMPLE, "real-trial-market-name", mTrialMarketName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "real-trial-market-name", mTrialMarketName, std::string ),
 
         //! Name of trial market readin for this Intermittent Technology.
         DEFINE_VARIABLE( SIMPLE, "trial-market-name", mTrialMarketNameParsed, std::string ),
@@ -166,14 +166,14 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "backup-capital-cost", mBackupCapitalCost, Value ),
 
         //! Electric reserve cost read in at the Sector level.
-        DEFINE_VARIABLE( SIMPLE, "electricity-reserve-margin", mElecReserveMargin, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "electricity-reserve-margin", mElecReserveMargin, Value ),
 
         //! Average grid capacity factor read in at the Sector level.
         //todo dynamically calculate average grid capacity factor
-        DEFINE_VARIABLE( SIMPLE, "average-grid-capacity-factor", mAveGridCapacityFactor, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "average-grid-capacity-factor", mAveGridCapacityFactor, Value ),
 
         //! State value necessary to track tech output ration
-        DEFINE_VARIABLE( SIMPLE | STATE, "tech-output-ratio", mIntermitOutTechRatio, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "tech-output-ratio", mIntermitOutTechRatio, Value )
     )
     
     //! Info object used to pass parameter information into backup calculators.

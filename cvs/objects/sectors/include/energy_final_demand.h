@@ -193,7 +193,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "perCapitaBased", mIsPerCapBased, bool ),
         
         //! Total end-use sector service after technical change is applied.
-        DEFINE_VARIABLE( ARRAY | STATE, "service", mServiceDemands, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "service", mServiceDemands, objects::PeriodVector<Value> ),
 
         //! Income elasticity 
         DEFINE_VARIABLE( ARRAY, "income-elasticity", mIncomeElasticity, objects::PeriodVector<Value> ),
@@ -202,7 +202,7 @@ protected:
         DEFINE_VARIABLE( ARRAY, "price-elasticity", mPriceElasticity, objects::PeriodVector<Value> ),
 
         //! Service demand without technical change applied.
-        DEFINE_VARIABLE( ARRAY | STATE, "service-pre-tech-change", mPreTechChangeServiceDemand, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "service-pre-tech-change", mPreTechChangeServiceDemand, objects::PeriodVector<Value> ),
 
         //! Per capita service for each period to which to calibrate.
         DEFINE_VARIABLE( ARRAY, "base-service", mBaseService, objects::PeriodVector<Value> ),

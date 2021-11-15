@@ -109,7 +109,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "policy-name", mPolicyName, std::string ),
 
         //! State value necessary to use Marketplace::addToDemand
-        DEFINE_VARIABLE( SIMPLE | STATE, "curr-negative-emiss-value", mCurrNegEmissValue, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "curr-negative-emiss-value", mCurrNegEmissValue, Value )
     )
 };
 

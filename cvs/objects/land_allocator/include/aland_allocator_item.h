@@ -446,14 +446,14 @@ protected:
          *          allocated to node above. This is always the normalized share and
          *          so is always between zero and one inclusive.
          */
-        DEFINE_VARIABLE( ARRAY | STATE, "share", mShare, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "share", mShare, objects::PeriodVector<Value> ),
         
         //! Share weights for calibrating historical shares, or turning how future
         //! crops/technologies will compete.
-        DEFINE_VARIABLE( ARRAY | STATE, "share-weight", mShareWeight, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "share-weight", mShareWeight, objects::PeriodVector<Value> ),
 
         //! Land observed profit rate
-        DEFINE_VARIABLE( ARRAY | STATE, "profit-rate", mProfitRate, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "profit-rate", mProfitRate, objects::PeriodVector<Value> ),
 
         //! The ghost unnormalized share, or the share a future crop/technology would
         //! get if it was available in the final calibration period at the profit rate

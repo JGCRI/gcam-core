@@ -127,7 +127,7 @@ protected:
                                 
         //! Stored Emissions Coefficient (needed for some control technologies)
         //! The emissions coefficient is the current ratio of emissions to driver, accounting for any controls   
-        DEFINE_VARIABLE( ARRAY | STATE, "control-adjusted-emiss-coef", mAdjustedEmissCoef, objects::TechVintageVector<Value> )
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "control-adjusted-emiss-coef", mAdjustedEmissCoef, objects::TechVintageVector<Value> )
     )
 
     //! A flag to indicate if mInputEmissions should be used recalibrate mEmissionsCoef

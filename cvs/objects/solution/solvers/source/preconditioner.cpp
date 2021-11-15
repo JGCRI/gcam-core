@@ -66,8 +66,6 @@ using namespace std;
 Preconditioner::Preconditioner( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ) :
   SolverComponent( marketplaceIn, worldIn, calcCounterIn ),
   mItmax(2),
-  mPriceIncreaseFac(0.25),
-  mPriceDecreaseFac(0.1),
   mLargePrice(1.0e6),
   mFTOL(util::getSmallNumber()),
   mSolutionInfoFilter(0)
@@ -76,8 +74,6 @@ Preconditioner::Preconditioner( Marketplace* marketplaceIn, World* worldIn, Calc
 
 Preconditioner::Preconditioner() :
   mItmax(2),
-  mPriceIncreaseFac(0.25),
-  mPriceDecreaseFac(0.1),
   mLargePrice(1.0e6),
   mFTOL(util::getSmallNumber()),
   mSolutionInfoFilter(0)

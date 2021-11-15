@@ -311,7 +311,7 @@ protected:
          * \note calcCost must be called in an iteration before this value is valid.
          * \sa Technology::calcCost
          */
-        DEFINE_VARIABLE( ARRAY | STATE, "cost", mCosts, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "cost", mCosts, objects::TechVintageVector<Value> ),
 
         //! A map of a keyword to its keyword group
         DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
@@ -320,7 +320,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Logit share weight
-        DEFINE_VARIABLE( SIMPLE | STATE, "real-share-weight", mShareWeight, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "real-share-weight", mShareWeight, Value ),
 
         //! The Logit share weight that was parsed by the user
         DEFINE_VARIABLE( SIMPLE, "share-weight", mParsedShareWeight, Value ),
@@ -347,7 +347,7 @@ protected:
               
         //! The current marginal revenue.  TODO: cleaner solution for getting
         //! this information to the profit shutdown decider.
-        DEFINE_VARIABLE( SIMPLE | STATE, "marginal-revenue", mMarginalRevenue, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "marginal-revenue", mMarginalRevenue, Value )
     )
 
     //! The technology's information store.

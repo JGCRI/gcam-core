@@ -77,8 +77,6 @@ public:
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
                           const int aPeriod ){};
 
-    virtual void postCalc( const int aPeriod );
-
 protected:
     virtual double getEnergyInput( const int aPeriod ) const;
     virtual double getOutput( const int aPeriod ) const;
@@ -90,10 +88,7 @@ protected:
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
     DEFINE_DATA_WITH_PARENT(
-        Sector,
-
-        //! Trial supply market prices
-        DEFINE_VARIABLE( ARRAY, "price-trial-supply", mPriceTrialSupplyMarket, objects::PeriodVector<double> )
+        Sector
     )
 };
 

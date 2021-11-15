@@ -105,7 +105,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "extractioncost", mExtractCost, double ),
         
         //! total cost
-        DEFINE_VARIABLE( ARRAY, "totalcost", mTotalCost, objects::PeriodVector<double> )
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "totalcost", mTotalCost, objects::PeriodVector<double> )
     )
 
     //! The Grade's information store.

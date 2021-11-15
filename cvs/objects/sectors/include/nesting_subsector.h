@@ -67,7 +67,7 @@ protected:
         Subsector,
 
         //! subsector name
-        DEFINE_VARIABLE( SIMPLE, "depth", mNestingDepth, int ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "depth", mNestingDepth, int ),
 
         //! region name
         DEFINE_VARIABLE( CONTAINER, "nested-subsector", mSubsectors, std::vector<Subsector*> )

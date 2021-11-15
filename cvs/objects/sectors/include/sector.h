@@ -118,7 +118,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnit, std::string ),
 
         //! region name
-        DEFINE_VARIABLE( SIMPLE, "region-name", mRegionName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "region-name", mRegionName, std::string ),
 
         //! subsector objects
         DEFINE_VARIABLE( CONTAINER, "subsector", mSubsectors, std::vector<Subsector*> ),

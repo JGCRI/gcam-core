@@ -49,6 +49,7 @@
 
 #include "technologies/include/icapture_component.h"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 
 /*! 
  * \ingroup Objects
@@ -127,7 +128,7 @@ protected:
         ICaptureComponent,
 
         //! Sequestered quantity by period.
-        DEFINE_VARIABLE( ARRAY, "sequestered-amount", mSequesteredAmount, objects::TechVintageVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "sequestered-amount", mSequesteredAmount, objects::TechVintageVector<Value> ),
 
         //! The name of the gas which will be sequestered.
         DEFINE_VARIABLE( SIMPLE, "target-gas", mTargetGas, std::string ),

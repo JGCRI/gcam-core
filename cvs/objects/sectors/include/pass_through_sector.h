@@ -87,7 +87,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "marginal-revenue-market", mMarginalRevenueMarket, std::string ),
 
         //! State value used to set the fixed output to market.
-        DEFINE_VARIABLE( SIMPLE | STATE, "last-calac-fixed-output", mLastCalcFixedOutput, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "last-calac-fixed-output", mLastCalcFixedOutput, Value )
     )
 
 private:

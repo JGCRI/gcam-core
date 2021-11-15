@@ -75,7 +75,6 @@ TranSubsector::TranSubsector():
 Subsector(),
 mTimeValueMult( Value( 1.0 ) )
 {
-    mPopDensity = 1; // initialize to 1 for now
     mAddTimeValue = false; // initialize to false
 }
 
@@ -114,7 +113,6 @@ const std::string& TranSubsector::getXMLNameStatic() {
 void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mAddTimeValue, "addTimeValue", out, tabs );
     XMLWriteElement( mPopDenseElasticity[ period ], "popDenseElasticity", out, tabs );
-    XMLWriteElement( mPopDensity, "popDensity", out, tabs );
     XMLWriteElement( mSpeed[ period ], "speed", out, tabs );
     XMLWriteElement( mTimeValueMult[ period ], "time-value-multiplier", out, tabs );
     

@@ -122,7 +122,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "emissions-switch-year", mEmissionsSwitchYear, int ),
 
         //! Last year the climate model has been run to
-        DEFINE_VARIABLE( SIMPLE, "last-calc-year", mLastYear, int ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "last-calc-year", mLastYear, int ),
 
         //! Hector initialization file
         DEFINE_VARIABLE( SIMPLE, "hector-ini-file", mHectorIniFile, std::string )

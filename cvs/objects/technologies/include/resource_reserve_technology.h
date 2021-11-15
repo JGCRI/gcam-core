@@ -132,23 +132,23 @@ protected:
         Technology,
 
         //! The total reserve which was calculated during investment to produce from.
-        DEFINE_VARIABLE( SIMPLE | STATE, "total-reserve", mTotalReserve, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "total-reserve", mTotalReserve, Value ),
         
         //! The "investment" cost which is the cost of where on the supply curve the
         //! containing resource was when it invested in this technology.  We use this
         //! as a way to reflect the costs captured in the supply curve when calculating
         //! the profit shutdown.
-        DEFINE_VARIABLE( SIMPLE | STATE, "investment-cost", mInvestmentCost, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "investment-cost", mInvestmentCost, Value ),
                             
         //! An expected average lifetime to fully produce the total reserve.  This
         //! value is calculate an annualized production.  Note this value is generally
         //! shorter than the actual technology lifetime as annual production may decline
         //! in some years due to profit shutdown or because we are in a "decline" phase.
-        DEFINE_VARIABLE( SIMPLE, "average-production-lifetime", mAvgProdLifetime, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "average-production-lifetime", mAvgProdLifetime, Value ),
                   
         //! The cumulative production that has been depleted from the total reserve
         //! by each model period.
-        DEFINE_VARIABLE( ARRAY, "cumulative-production", mCumulProd, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "cumulative-production", mCumulProd, objects::TechVintageVector<Value> ),
         
         //! A parameter which can phase in annual production over the given number of years.
         DEFINE_VARIABLE( SIMPLE, "buildup-years", mBuildupYears, int ),
@@ -159,7 +159,7 @@ protected:
         
         //! A flag that indicates if this resource in currently calibrating which we can use to disable
         //! certain dynamics such as decline phase or profit shutdown to ensure values match.
-        DEFINE_VARIABLE( SIMPLE, "is-calibrating", mIsResourceCalibrating, bool )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "is-calibrating", mIsResourceCalibrating, bool )
     )
     
     virtual void toDebugXMLDerived(const int period, std::ostream& out, Tabs* tabs) const;

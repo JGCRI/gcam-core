@@ -523,38 +523,6 @@ void TechnologyContainer::interpolateShareWeights( const int aPeriod ) {
         ( *ruleIter )->applyInterpolations( techShareWeights, techParsedShareWeights );
     }
     for( int period = 0; period < mVintagesByPeriod.size(); ++period ) {
-        // Interpolated technologies may still have uninitialized share-weights,
-        // particularly those between the last calibration year and the next non
-        // interpolated technology.  We make the default behavior here to linearly
-        // interpolate those values.
-        const int year = modeltime->getper_to_yr( period );
-        vector<int>::const_iterator interpYearsIt = find( mInterpolatedTechYears.begin(), mInterpolatedTechYears.end(), year );
-        vector<int>::const_iterator interpYearsEnd = mInterpolatedTechYears.end();
-        if( !techShareWeights[ period ].isInited() && interpYearsIt != interpYearsEnd ) {
-            const int prevYear = modeltime->getper_to_yr( period - 1 );
-            
-            // Find the next non-interpolated technology to interpolate to.
-            int nextPeriod = period;
-            int nextYear = year;
-            while( interpYearsIt != mInterpolatedTechYears.end() && nextPeriod < modeltime->getmaxper() ) {
-                ++nextPeriod;
-                // guard against going past the last model year
-                if( nextPeriod < modeltime->getmaxper() ) {
-                    nextYear = modeltime->getper_to_yr( nextPeriod );
-                    interpYearsIt = find( interpYearsIt, interpYearsEnd, nextYear );
-                }
-            }
-            if( nextPeriod == modeltime->getmaxper() ) {
-                // If there was no next technology just copy the previous share-weight
-                // forward.
-                techShareWeights[ period ].set( techShareWeights[ period - 1] );
-            }
-            else {
-                // linearly interpolate to fill this missing value
-                techShareWeights[ period ].set( util::linearInterpolateY( year,
-                    prevYear, nextYear, techShareWeights[ period - 1], techShareWeights[ nextPeriod ] ) );
-            }
-        }
         // All periods must have set a share weight value at this point, not having one is an error.
         if( period > modeltime->getFinalCalibrationPeriod() && !techShareWeights[ period ].isInited() ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -597,7 +565,6 @@ void TechnologyContainer::interpolateVintage( const int aYear, CVintageIterator 
                                    static_cast<Technology*>( ( *aNextTech ).second ) );
     }
     mVintages[ aYear ] = newTech;
-    mInterpolatedTechYears.push_back( aYear );
     
     const Modeltime* modeltime = scenario->getModeltime();
     if( modeltime->isModelYear( aYear ) ) {

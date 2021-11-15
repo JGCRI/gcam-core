@@ -226,6 +226,13 @@ void AgProductionTechnology::completeInit( const std::string& aRegionName,
 {
     // Store away the corresponding leaf in the land allocator.
     mProductLeaf = aLandAllocator->findProductLeaf( mName );
+    if( !mProductLeaf ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Could not find associated product leaf in the land allocator in region: "
+                << aRegionName << ", sector: " << aSectorName << ", tech: " << mName << endl;
+        abort();
+    }
  
     // Send "pointer to the land allocator" to each of the secondary outputs, e.g, residue biomass
     if ( mOutputs.size() ) {

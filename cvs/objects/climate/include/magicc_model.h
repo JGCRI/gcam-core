@@ -131,16 +131,16 @@ protected:
         DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "default-emissions-by-gas", mDefaultEmissionsByGas, std::vector<std::vector<double> > ),
         
         //! A vector of years for the default emissions
-        DEFINE_VARIABLE( ARRAY, "default-emission-years", mDefaultEmissionsYears, std::vector<int> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "default-emission-years", mDefaultEmissionsYears, std::vector<int> ),
         
         //! LUC CO2 Emissions by year.
-        DEFINE_VARIABLE( ARRAY, "land-use-change-emissions", mLUCEmissionsByYear, std::vector<double> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "land-use-change-emissions", mLUCEmissionsByYear, std::vector<double> ),
         
         //! Name of the scenario.
-        DEFINE_VARIABLE( SIMPLE, "scenario-name", mScenarioName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "scenario-name", mScenarioName, std::string ),
         
         //! Whether the climate model output is updated.
-        DEFINE_VARIABLE( SIMPLE, "is-valid", mIsValid, bool ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "is-valid", mIsValid, bool ),
         
         //! Name of a GHG input file to use.
         DEFINE_VARIABLE( SIMPLE, "ghgInputFileName", mGHGInputFileName, std::string ),

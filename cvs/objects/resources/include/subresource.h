@@ -115,19 +115,19 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! total available resource
-        DEFINE_VARIABLE( ARRAY | STATE, "available", mAvailable, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "available", mAvailable, objects::PeriodVector<Value> ),
         
         //! annual production of SubResource
         DEFINE_VARIABLE( ARRAY | STATE, "annualprod", mAnnualProd, objects::PeriodVector<Value> ),
         
         //! cumulative production of SubResource
-        DEFINE_VARIABLE( ARRAY | STATE, "cumulprod", mCumulProd, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "cumulprod", mCumulProd, objects::PeriodVector<Value> ),
         
         //! Cumulative Technical Change for this subsector
-        DEFINE_VARIABLE( ARRAY, "cumulative-tech-change", mCumulativeTechChange, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "cumulative-tech-change", mCumulativeTechChange, objects::PeriodVector<double> ),
         
         //! effective price (global price + price adder)
-        DEFINE_VARIABLE( ARRAY | STATE, "effective-price", mEffectivePrice, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "effective-price", mEffectivePrice, objects::PeriodVector<Value> ),
         
         //! calibrated production
         DEFINE_VARIABLE( ARRAY, "cal-production", mCalProduction, objects::PeriodVector<double> ),

@@ -150,7 +150,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! Reduction (usually calculated)
-        DEFINE_VARIABLE( SIMPLE | STATE, "reduction", mReduction, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "reduction", mReduction, Value )
     )
 
 private:

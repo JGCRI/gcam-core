@@ -106,13 +106,13 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! region name
-        DEFINE_VARIABLE( SIMPLE, "region-name", mRegionName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "region-name", mRegionName, std::string ),
 
         //! sector name
-        DEFINE_VARIABLE( SIMPLE, "sector-name", mSectorName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "sector-name", mSectorName, std::string ),
 
         //! Subsector logit share weights
-        DEFINE_VARIABLE( ARRAY | STATE, "real-share-weight", mShareWeights, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "real-share-weight", mShareWeights, objects::PeriodVector<Value> ),
 
         //! The original subsector logit share weights that were parsed
         DEFINE_VARIABLE( ARRAY, "share-weight", mParsedShareWeights, objects::PeriodVector<Value> ),

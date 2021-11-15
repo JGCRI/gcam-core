@@ -159,13 +159,13 @@ protected:
         ALandAllocatorItem,
                             
         //! Land allocated typically in thous km2.
-        DEFINE_VARIABLE( ARRAY | STATE, "land-allocation", mLandAllocation, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "land-allocation", mLandAllocation, objects::PeriodVector<Value> ),
 
         //! Carbon content and emissions calculator for the leaf.
         DEFINE_VARIABLE( CONTAINER, "carbon-calc", mCarbonContentCalc, ICarbonCalc* ),
 
         //! Social discount rate stored from the region info.
-        DEFINE_VARIABLE( SIMPLE, "social-discount-rate", mSocialDiscountRate, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "social-discount-rate", mSocialDiscountRate, Value ),
 
         //! Minimum above ground carbon density (used for carbon subsidy and not emissions calculations)
         DEFINE_VARIABLE( SIMPLE, "minAboveGroundCDensity", mMinAboveGroundCDensity, Value ),
@@ -185,7 +185,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "land-constraint-policy", mLandConstraintPolicy, std::string ),
                             
         //! State value necessary to use Marketplace::addToDemand for CO2 emissions
-        DEFINE_VARIABLE( SIMPLE | STATE, "luc-state", mLastCalcCO2Value, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "luc-state", mLastCalcCO2Value, Value ),
 
         //! The name of a negative emissions policy which may scale back
         //! carbon subsidies if there isn't a budget to support it

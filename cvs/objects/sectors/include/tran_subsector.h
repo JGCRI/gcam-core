@@ -93,13 +93,10 @@ protected:
         DEFINE_VARIABLE( ARRAY, "speed", mSpeed, objects::PeriodVector<Value> ),
 
         //! copy of population from demographics
-        DEFINE_VARIABLE( ARRAY, "population", mPopulation, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "population", mPopulation, objects::PeriodVector<double> ),
 
         //! Population Density Elasticity of mode
         DEFINE_VARIABLE( ARRAY, "popDenseElasticity", mPopDenseElasticity, objects::PeriodVector<double> ),
-
-        //! population density per land area
-        DEFINE_VARIABLE( SIMPLE, "popDensity", mPopDensity, double ),
 
         //! Time value multiplier
         DEFINE_VARIABLE( ARRAY, "time-value-multiplier", mTimeValueMult, objects::PeriodVector<Value> ),

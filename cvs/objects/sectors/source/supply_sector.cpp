@@ -61,9 +61,7 @@ extern Scenario* scenario;
 /* \brief Constructor
 */
 SupplySector::SupplySector():
-Sector(),
-// The default price for a trial supply market is 0.001
-mPriceTrialSupplyMarket( 0.001 )
+Sector()
 {
 }
 
@@ -147,18 +145,6 @@ void SupplySector::setMarket() {
         IInfo* marketInfo = marketplace->getMarketInfo( mName, mRegionName, 0, true );
         marketInfo->setString( "price-unit", mPriceUnit );
         marketInfo->setString( "output-unit", mOutputUnit );
-    }
-
-    // This sector may have had trial demands because the dependency finder choose
-    // to make one for this sector.  In that case we will store the initial trial
-    // demand in the market info and if the dependency finder decides to make a trial
-    // market again for this sector it can utilize this value.
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int period = 1; period < modeltime->getmaxper(); ++period ) {
-        if( mPriceTrialSupplyMarket[ period ] != 0.001 ) {
-            marketplace->getMarketInfo( mName, mRegionName, period, true )
-                ->setDouble( "initial-trial-demand", mPriceTrialSupplyMarket[ period ] );
-        }
     }
 }
 
@@ -290,24 +276,3 @@ double SupplySector::getEnergyInput( const int aPeriod ) const {
     }
     return totalEnergy;
 }
-
-/*! \brief Function to finalize objects after a period is solved.
-* \details This function is used to calculate and store variables which are only needed after the current
-* period is complete.
-* \param aPeriod The period to finalize.
-* \todo Finish this function.
-* \author Josh Lurz, Sonny Kim
-*/
-void SupplySector::postCalc( const int aPeriod ){
-    Sector::postCalc( aPeriod );
-    // We may have trial "prices" if the dependency finder generated a trial market
-    // for this sector.  This value is stored so that it can be written into the
-    // toOutputXML and potentially used for restart purposes.
-    const Marketplace* marketplace = scenario->getMarketplace();
-    if( aPeriod > 0 && marketplace->getMarketInfo( mName, mRegionName, aPeriod, true )
-             ->getBoolean( "has-split-market", false ) )
-    {
-        mPriceTrialSupplyMarket[ aPeriod ] = marketplace->getDemand( mName, mRegionName, aPeriod );
-    }
-}
-

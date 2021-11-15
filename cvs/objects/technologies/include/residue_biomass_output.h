@@ -138,7 +138,7 @@ protected :
         IOutput,
 
         //! Physical output by period.
-        DEFINE_VARIABLE( ARRAY | STATE, "physical-output", mPhysicalOutputs, value_vector_type ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-output", mPhysicalOutputs, value_vector_type ),
 
         /*!
         * Name of the secondary output. Corresponds to a market for this good
@@ -147,7 +147,7 @@ protected :
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! CO2 emissions coefficient cached from the marketplace.
-        DEFINE_VARIABLE( SIMPLE, "co2-coef", mCachedCO2Coef, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "co2-coef", mCachedCO2Coef, Value ),
 
         //! The harvest index
         DEFINE_VARIABLE( SIMPLE, "harvest-index", mHarvestIndex, double ),
