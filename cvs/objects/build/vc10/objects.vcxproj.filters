@@ -338,9 +338,6 @@
     <ClCompile Include="..\..\sectors\source\tran_subsector.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sectors\source\wind_backup_calculator.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\solution\solvers\source\bisect_all.cpp">
       <Filter>Source Files\solution\solvers</Filter>
     </ClCompile>
@@ -1283,9 +1280,6 @@
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\tran_subsector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\wind_backup_calculator.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\solution\solvers\include\bisect_all.h">

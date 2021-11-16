@@ -168,26 +168,6 @@ protected :
         DEFINE_VARIABLE( CONTAINER, "fract-harvested", mCostCurve, Curve* )
     )
 
-    // These variables are for debugging purposes. Values are written to debug.xml
-    // Are made mutable so values can be saved. Are used only for debugging so are not violating const functions.
-    //! Mass in crop residue
-    mutable double mResMass;
-
-    //! Mass in crop
-    mutable double mCropMass;
-
-    //! Residue Available
-    mutable double mResAvail;
-
-    //! Mass of biomass to be retained to prevent erosion
-    mutable double mMeanErosCtrl;
-
-    //! Max biomass energy supply
-    mutable double mMaxBioEnergySupply;
-
-    //! Fraction of max available residue harvested for energy
-    mutable double mFractProduced;
-    
     //! Weak pointer to the land leaf which corresponds to this biomass output
     //! used to save time finding it over and over
     ALandAllocatorItem* mProductLeaf;
