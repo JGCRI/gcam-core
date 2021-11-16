@@ -178,6 +178,9 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
     singleLog.setLevel( ILogger::DEBUG );
 
     unsigned int numIterations = 1; // number of iterations
+    
+    // ensure we do not waste iterations if none of the markets are bracketed
+    bool isAnyBracketed = false;
 
     do {
         solverLog.setLevel( ILogger::NOTICE );
@@ -187,12 +190,14 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
         // Since bisection is called after bracketing, the current price and ED will be the
         // one of the brackets.
         // Start bisection with mid-point to improve efficiency.
+        isAnyBracketed = false;
         for ( unsigned int i = 0; i < aSolutionSet.getNumSolvable(); ++i ) {
             SolutionInfo& currSol = aSolutionSet.getSolvable( i );
             // Skip markets that were not bracketed
             if( !currSol.isBracketed() ) {
                 continue;
             }
+            isAnyBracketed = true;
             // If not solved.
             if ( !currSol.isWithinTolerance() ) {
                 // Set new trial value to center
@@ -241,7 +246,8 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
         }
     } // end do loop        
     while ( ++numIterations <= mMaxIterations 
-            && !aSolutionSet.isAllSolved() && !areAllBracketsEqual( aSolutionSet ) );
+            && !aSolutionSet.isAllSolved() && !areAllBracketsEqual( aSolutionSet )
+            && isAnyBracketed );
 
     // Set the return code. 
     code = ( aSolutionSet.isAllSolved() ? SUCCESS : FAILURE_ITER_MAX_REACHED ); // report success, or failure

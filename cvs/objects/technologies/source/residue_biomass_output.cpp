@@ -167,50 +167,51 @@ IOutput::OutputList ResidueBiomassOutput::calcPhysicalOutput( const double aPrim
     // Compute the amount of crop produced in tonnes
     // Primary Output is in billion m^3 or in ECal
     // mMassConversion is in tonnes/billion m^3 or tonnes/ECal
-    mCropMass = aPrimaryOutput * mMassConversion;
+    double cropMass = aPrimaryOutput * mMassConversion;
 
     // Compute the above-ground biomass that is not used for food
     // production. Harvest index is the fraction of total biomass produced for food
     // Thus, the amount of biomass available for bioenergy production
     // is food production * [ ( 1 / harvest index ) - 1 ]
+    double resMass;
     if ( mHarvestIndex > 0.0 ) {
-        mResMass = mCropMass * ( std::pow( mHarvestIndex, double( -1 ) ) - double( 1 ) );
+        resMass = cropMass * ( std::pow( mHarvestIndex, double( -1 ) ) - double( 1 ) );
     }
     else {
-        mResMass = 0.0;
+        resMass = 0.0;
     }
 
     // Compute the mass of residue that are required to sustain
     // agriculture in terms of soil nutrients and erosion 
     // mErosCtrl is in tonnes/kHa, landArea is in kHa
-    // So, mMeanErosCtrl is in tonnes
-    mMeanErosCtrl = landArea * mErosCtrl;
+    // So, meanErosCtrl is in tonnes
+    double meanErosCtrl = landArea * mErosCtrl;
 
     // Compute the amount of residue biomass available to the energy sector
     // The amount available is the total biomass not produced for food
     // less the amount of biomass needed for erosion control
     // multiply by moisture content to get DRY residue available; residue from model is wet
-    mResAvail = (1 - mWaterContent) * ( mResMass - mMeanErosCtrl);
+    double resAvail = (1 - mWaterContent) * ( resMass - meanErosCtrl);
 
     // If there is no biomass available for production after
     // erosion control demands are met, then return. Residue
     // biomass production is zero.
-    if ( mResAvail <= 0 ) {
+    if ( resAvail <= 0 ) {
         return outputList;
     }
 
     // Compute energy content of the available biomass 
-    // mResAvail is measured in tonnes
+    // resAvail is measured in tonnes
     // mMassToEnergy is measured in EJ/tonne
-    // mMaxBioEnergySupply is measured in EJ
-    mMaxBioEnergySupply = mResAvail * mMassToEnergy;
+    // maxBioEnergySupply is measured in EJ
+    double maxBioEnergySupply = resAvail * mMassToEnergy;
 
     // Compute the fraction of the total possible supply that is
     // produced at the current biomass price 
-    mFractProduced = mCostCurve->getY( price );
+    double fractProduced = mCostCurve->getY( price );
 
     // Compute the quantity of a crop residue biomass produced
-    double resEnergy = mMaxBioEnergySupply * mFractProduced;
+    double resEnergy = maxBioEnergySupply * fractProduced;
 
     outputList.front().second = resEnergy;
     return outputList;
@@ -347,12 +348,7 @@ void ResidueBiomassOutput::toDebugXML( const int aPeriod, std::ostream& aOut, Ta
     XMLWriteElement( mMassConversion, "mass-conversion", aOut, aTabs );
     XMLWriteElement( mMassToEnergy, "mass-to-energy", aOut, aTabs );
     XMLWriteElement( mWaterContent, "water-content", aOut, aTabs );
-    XMLWriteElement( mResMass, "Residue-Mass", aOut, aTabs );
-    XMLWriteElement( mCropMass, "Crop-Mass", aOut, aTabs );
-    XMLWriteElement( mResAvail, "resAvail", aOut, aTabs );
-    XMLWriteElement( mMeanErosCtrl, "meanErosCtrl", aOut, aTabs );
-    XMLWriteElement( mMaxBioEnergySupply, "maxBioEnergySupply", aOut, aTabs );
-    XMLWriteElement( mFractProduced, "fraction-produced", aOut, aTabs );
+    
     
     const vector<pair<double,double> > pairs = mCostCurve->getSortedPairs();
     typedef vector<pair<double, double> >::const_iterator PairIterator;

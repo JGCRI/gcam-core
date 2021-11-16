@@ -182,7 +182,7 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "discrete-choice-function", mChoiceFn, IDiscreteChoice* ),
 
         //! Double storing the average price of land in a region or subregion
-        DEFINE_VARIABLE( SIMPLE, "unManagedLandValue", mUnManagedLandValue, double ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "unManagedLandValue", mUnManagedLandValue, Value ),
 
         //! List of the children of this land node located below it in the land
         //! allocation tree.

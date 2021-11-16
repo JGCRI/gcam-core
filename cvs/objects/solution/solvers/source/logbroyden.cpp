@@ -558,6 +558,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
         static_cast<LogEDFun&>(F).setSlope(jdiag);
           }
 
+          past_f_values.push(f0);
         // start the next iteration *without* updating x
         continue;
       }

@@ -54,7 +54,6 @@ class IInfo;
 class Tabs;
 
 // Need to forward declare the subclasses as well.
-class WindBackupCalculator;
 class CapacityLimitBackupCalculator;
 class CSPBackupCalculator;
 
@@ -152,7 +151,7 @@ protected:
         /* Declare all subclasses of Sector to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( IBackupCalculator, WindBackupCalculator, CapacityLimitBackupCalculator,
+        DEFINE_SUBCLASS_FAMILY( IBackupCalculator, CapacityLimitBackupCalculator,
                                 CSPBackupCalculator )
     )
 };

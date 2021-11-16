@@ -126,19 +126,12 @@ class RenewableResource: public Resource {
 public: 
     RenewableResource();
     static const std::string& getXMLNameStatic();
-    virtual void completeInit( const std::string& aRegionName, const IInfo* aRegionInfo );
 protected:
     
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
     DEFINE_DATA_WITH_PARENT(
-        Resource,
-
-        //! average resource variance computed from subresources
-        DEFINE_VARIABLE( ARRAY, "resourceVariance", mResourceVariance, objects::PeriodVector<double> ),
-
-        //! average resource capacity factor computed from subresources
-        DEFINE_VARIABLE( ARRAY, "resourceCapacityFactor", mResourceCapacityFactor, objects::PeriodVector<double> )
+        Resource
     )
 
     virtual const std::string& getXMLName() const;

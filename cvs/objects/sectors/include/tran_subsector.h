@@ -105,9 +105,6 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "addTimeValue", mAddTimeValue, bool )
     )
     
-    //! Save time value for debugging purposes.
-    mutable double mTimeValue;
-
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
     double getTimeValue( const GDP* aGDP, const int aPeriod ) const;

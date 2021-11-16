@@ -169,12 +169,19 @@ double CapacityLimitBackupCalculator::getAverageBackupCapacity( const string& aS
     assert( aReserveMargin >= 0 );
     assert( aAverageGridCapacityFactor > 0 );
 
-    double renewElecShare = std::min( SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ), 1.0 );
+    // This function has an odd feature that at small shares the curve reverses sharply
+    // ultimately looking as if massive amounts of backup should be required.  Clearly
+    // this isn't the intention so we will cap the trial share at the share value near
+    // the minimum "average backup" value.
+    double renewElecShare = std::max(
+                                     std::min(
+                                              SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ),
+                                              // share should never exceed 1
+                                              1.0 ),
+                                     // avoid the steeply rising inflection point near the
+                                     // bottom of the curve by capping the share
+                                     0.01 / mCapacityLimit );
 
-    // No backup required for zero share.
-    if( renewElecShare < util::getVerySmallNumber() ){
-        return 0;
-    }
 
     // Compute total backup using the integral of the marginal backup function
     double xmid = mCapacityLimit;
