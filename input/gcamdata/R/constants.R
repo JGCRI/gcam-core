@@ -492,6 +492,14 @@ energy.CAPITAL_INPUT <- "capital"
 energy.OM_FIXED_INPUT <- "OM-fixed"
 energy.OM_VAR_INPUT <- "OM-var"
 
+# Constants for the residential sector: Parameters for USA (estimated offline) and unadjusted saturation values:
+obs_UnadjSat<-100
+obs_UnadjSat_USA<-150
+
+land.density.param.usa<-0
+b.param.usa<-3.49026
+income.param.usa<-0.4875
+
 # Socioeconomics constants ======================================================================
 
 # Population years - note that these sequences shouldn't have any overlap,

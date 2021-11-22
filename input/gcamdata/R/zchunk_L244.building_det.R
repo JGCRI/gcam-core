@@ -61,7 +61,7 @@ module_energy_L244.building_det <- function(command, ...) {
              "L143.HDDCDD_scen_R_Y",
              "L101.Pop_thous_R_Yh",
              "L102.pcgdp_thous90USD_Scen_R_Y",
-             FILE = "energy/A44.flsp_param",
+             "L144.flsp_param",
              "L144.hab_land_flsp_fin"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L244.SubregionalShares",
@@ -169,7 +169,7 @@ module_energy_L244.building_det <- function(command, ...) {
     L143.HDDCDD_scen_R_Y <- get_data(all_data, "L143.HDDCDD_scen_R_Y")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y") # year comes in as double
-    L144.flsp_param <- get_data(all_data, "energy/A44.flsp_param", strip_attributes = TRUE)
+    L144.flsp_param <- get_data(all_data, "L144.flsp_param", strip_attributes = TRUE)
     L144.hab_land_flsp_fin<-get_data(all_data, "L144.hab_land_flsp_fin")
 
     # ===================================================
@@ -847,7 +847,7 @@ module_energy_L244.building_det <- function(command, ...) {
       add_comments("Computed offline based on data from RECS and IEA") %>%
       add_legacy_name("L244.GompFnParam") %>%
       add_precursors("common/GCAM_region_names",
-                     "energy/A44.flsp_param",
+                     "L144.flsp_param",
                      "L102.pcgdp_thous90USD_Scen_R_Y", "L101.Pop_thous_R_Yh",
                      "L144.flsp_bm2_R_res_Yh","L144.hab_land_flsp_fin") ->
       L244.GompFnParam

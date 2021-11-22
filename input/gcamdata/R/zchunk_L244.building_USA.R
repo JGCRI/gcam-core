@@ -50,7 +50,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
              FILE = "gcam-usa/A44.globaltech_interp",
              FILE = "gcam-usa/A44.demand_satiation_mult",
              FILE = "gcam-usa/A44.hab_land_flsp_usa",
-             FILE = "energy/A44.flsp_param",
+             "L144.flsp_param",
              "L144.flsp_bm2_state_res",
              "L144.flsp_bm2_state_comm",
              "L144.in_EJ_state_comm_F_U_Y",
@@ -144,7 +144,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state", strip_attributes = TRUE)
     L100.pcGDP_thous90usd_state <- get_data(all_data, "L100.pcGDP_thous90usd_state", strip_attributes = TRUE)
     L144.hab_land_flsp_usa<- get_data(all_data, "gcam-usa/A44.hab_land_flsp_usa", strip_attributes = TRUE)
-    L144.flsp_param <- get_data(all_data, "energy/A44.flsp_param", strip_attributes = TRUE)
+    L144.flsp_param <- get_data(all_data, "L144.flsp_param", strip_attributes = TRUE)
 
     # ===================================================
     # Data Processing
@@ -717,7 +717,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Computed offline based on data from RECS and IEA") %>%
       add_legacy_name("L244.GompFnParam_gcamusa") %>%
-      add_precursors("energy/A44.flsp_param", "L100.Pop_thous_state","L100.pcGDP_thous90usd_state",
+      add_precursors("L144.flsp_param", "L100.Pop_thous_state","L100.pcGDP_thous90usd_state",
                      "gcam-usa/A44.hab_land_flsp_usa","L144.flsp_bm2_state_res" ) ->
       L244.GompFnParam_gcamusa
 

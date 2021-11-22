@@ -8,7 +8,8 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L144.flsp_bm2_R_res_Yh}, \code{L144.flsp_bm2_R_comm_Yh}, \code{L144.flspPrice_90USDm2_R_bld_Yh}, \code{L144.hab_land_flsp_fin}.. The corresponding file in the
+#' the generated outputs: \code{L144.flsp_bm2_R_res_Yh}, \code{L144.flsp_bm2_R_comm_Yh}, \code{L144.flspPrice_90USDm2_R_bld_Yh},
+#' \code{L144.hab_land_flsp_fin}, \code{L144.flsp_param}. The corresponding file in the
 #' original data system was \code{LA144.building_det_flsp.R} (energy level1).
 #' @details Commercial and residential floorspace was calculated at the country level, before aggregating to the regional level.
 #' When available, floorspace was calculated from country-specific datasets, including those for the USA, China, and South Africa.
@@ -22,7 +23,6 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "common/GCAM_region_names",
-             FILE = "energy/A44.flsp_bm2_state_res",
              FILE = "energy/A44.flsp_bm2_state_comm",
              FILE = "energy/A44.pcflsp_default",
              FILE = "energy/A44.HouseholdSize",
@@ -33,14 +33,14 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
              FILE = "energy/Odyssee_ResFloorspacePerHouse",
              "L100.Pop_thous_ctry_Yh",
              "L102.gdp_mil90usd_GCAM3_R_Y",
-             FILE = "energy/A44.flsp_param",
              "L221.LN0_Land",
              "L221.LN1_UnmgdAllocation"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L144.flsp_bm2_R_res_Yh",
              "L144.flsp_bm2_R_comm_Yh",
              "L144.flspPrice_90USDm2_R_bld_Yh",
-             "L144.hab_land_flsp_fin"))
+             "L144.hab_land_flsp_fin",
+             "L144.flsp_param"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -48,7 +48,6 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    A44.flsp_bm2_state_res <- get_data(all_data, "energy/A44.flsp_bm2_state_res")
     A44.flsp_bm2_state_comm <- get_data(all_data, "energy/A44.flsp_bm2_state_comm")
     A44.pcflsp_default <- get_data(all_data, "energy/A44.pcflsp_default")
     A44.HouseholdSize <- get_data(all_data, "energy/A44.HouseholdSize")
@@ -59,7 +58,6 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     Odyssee_ResFloorspacePerHouse <- get_data(all_data, "energy/Odyssee_ResFloorspacePerHouse")
     L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
     L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y")
-    L144.flsp_param <- get_data(all_data, "energy/A44.flsp_param", strip_attributes = TRUE)
     L221.LN0_Land<-get_data(all_data, "L221.LN0_Land")
     L221.LN1_UnmgdAllocation<-get_data(all_data, "L221.LN1_UnmgdAllocation")
     # ===================================================
@@ -81,7 +79,6 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     # Note that IEA data will be chosen over Odyssee for duplicate countries b/c it reports per capita instead of per house
     # Other_pcflsp_m2_ctry_Yh provides residential and commercial floorspace (m2) per person for 2004 and 2005
     # for other countries (only South Africa at this time)
-    # A44.flsp_bm2_state_res provides residential floorspace by U.S. state from 1975-2005 (in 5-year increments) and 2008
     # Note that this table is written by LA144.Residential.R from an earlier version of GCAM-USA
     # A44.pcflsp_default provides residential and commercial floorspace (m2) per person for 1975, 1990, and 2005 for GCAM3 regions
     # L100.Pop_thous_ctry_Yh provides country-level population data and will be used to switch between total floorspace and per capita data
@@ -333,6 +330,71 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       summarise(value=sum(value)*1E3) %>%
       ungroup()
 
+    # Estimation of the Gompertz parameters(land.density.param,b.param,and income.param):
+    # pcap_flsp~(obs_sat +(land.density.param * log(tot_dens)))* exp(-b.param * exp(-income.param * log(pcap_income)))
+    # USA has a different unique behaviour, as observed pcap flsp is significantly higher than countries with:
+    # - Similar (or higher) per capita income
+    # - Similar (or lower) population density
+    # Therefore, we substitute the parameters for USA by those estimated using subregional data (not included in the DS).
+    L144.flsp_param_pre<-L144.flsp_bm2_R_res_Yh_pre %>%
+      left_join_error_no_match(GCAM_region_names, by="GCAM_region_ID") %>%
+      # take all periods from regions with observed data:
+      filter(region %in% regions_with_obs_data) %>%
+      bind_rows(L144.flsp_bm2_R_res_Yh_pre %>%
+                  left_join_error_no_match(GCAM_region_names, by="GCAM_region_ID") %>%
+                  filter(region %notin% regions_with_obs_data,
+                          year<=avg_fin_obs_year)) %>%
+      rename(flps_bm2 = value) %>%
+      #add GDP
+      left_join_error_no_match(L102.gdp_mil90usd_GCAM3_R_Y, by = c("GCAM_region_ID", "year")) %>%
+      mutate(gdp=value * 1E6) %>%
+      select(-value) %>%
+      #Add population to estimate pc_GDP
+      left_join_error_no_match(L100.Pop_thous_R_Y, by = c("GCAM_region_ID", "year")) %>%
+      rename(pop = value) %>%
+      mutate(pc_gdp_thous= gdp / (pop * 1E3),
+             pc_flsp = (flps_bm2* 1E9) / pop) %>%
+      left_join_error_no_match(L144.hab_land_flsp_fin %>%
+                                 group_by(region,Units) %>%
+                                 complete(nesting(year=min(L144.flsp_bm2_R_res_Yh_pre$year):max(L144.flsp_bm2_R_res_Yh_pre$year))) %>%
+                                 mutate(value=if_else(is.na(value),approx_fun(year,value,rule = 2),value)) %>%
+                                 ungroup() %>%
+                                 select(-Units),
+                              by = c("year", "region")) %>%
+      rename(area_thous_km2 = value) %>%
+      mutate(tot_dens = pop/(area_thous_km2* 1E3))
+
+    # Filter out USA because it already has the parameters (estimated offline using subregional data, but following the same procedure applied here for the 31 GCAM regions):
+    L144.flsp_param_pre_nonusa<- L144.flsp_param_pre %>%
+      filter(region != "USA")
+
+    # Estimation of the parameters for non USA:
+    formula.gomp<- "pc_flsp~(100 -(a*log(tot_dens)))*exp(-b*exp(-c*log(pc_gdp_thous)))"
+    start.value<-c(a=-0.5,b=0.005,c=0.05)
+    fit.gomp<-nls(formula.gomp, L144.flsp_param_pre_nonusa, start.value)
+
+    # Tibble with the USA parameters
+    L144.flsp_param_USA<-tibble(region ="USA",
+                                unadjust.satiation = obs_UnadjSat_USA,
+                                land.density.param = land.density.param.usa,
+                                b.param = b.param.usa,
+                                income.param = income.param.usa)
+
+    # Write the dataset with the fitted parameters for the 31 GCAM regions
+    # Add the tibble with USA-specific parameters
+    L144.flsp_param<-L144.flsp_param_pre %>%
+      select(region) %>%
+      distinct() %>%
+      filter(region != "USA") %>%
+      arrange(region) %>%
+      mutate(unadjust.satiation = obs_UnadjSat,
+      land.density.param = coef(fit.gomp)[1],
+      b.param = coef(fit.gomp)[2],
+      income.param = coef(fit.gomp)[3]) %>%
+      bind_rows(L144.flsp_param_USA)
+
+
+
     # ----------------------------------
     # With all this data, estimate the per capita floorspace in the final calibration year using the Gompertz function:
     L144.flsp_bm2_R_res_Yh_finBaseYear_est<-L144.flsp_bm2_R_res_Yh_pre %>%
@@ -494,10 +556,10 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       add_comments("Floorspace was calculated from various datasets, including those for the USA, China, and South Africa") %>%
       add_comments("Floorspace for the remaining countries were calculated using GCAM 3.0 assumptions") %>%
       add_legacy_name("L144.flsp_bm2_R_res_Yh") %>%
-      add_precursors("common/iso_GCAM_regID","common/GCAM_region_names", "energy/A44.flsp_bm2_state_res", "energy/A44.pcflsp_default",
+      add_precursors("common/iso_GCAM_regID","common/GCAM_region_names", "energy/A44.pcflsp_default",
                      "energy/A44.HouseholdSize", "energy/CEDB_ResFloorspace_chn", "energy/Other_pcflsp_m2_ctry_Yh",
                      "energy/IEA_PCResFloorspace", "energy/Odyssee_ResFloorspacePerHouse",
-                     "L100.Pop_thous_ctry_Yh", "energy/RECS_ResFloorspace_usa","energy/A44.flsp_param") ->
+                     "L100.Pop_thous_ctry_Yh", "energy/RECS_ResFloorspace_usa") ->
       L144.flsp_bm2_R_res_Yh
 
     L144.flsp_bm2_R_comm_Yh %>%
@@ -516,13 +578,24 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       add_units("1990$ / m2") %>%
       add_comments("A fraction of GDP pertaining to buildings was divided by residential floorspace") %>%
       add_legacy_name("L144.flspPrice_90USDm2_R_bld_Yh") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/A44.flsp_bm2_state_res", "energy/A44.pcflsp_default",
+      add_precursors("common/iso_GCAM_regID",  "energy/A44.pcflsp_default",
                      "energy/A44.HouseholdSize", "energy/CEDB_ResFloorspace_chn", "energy/Other_pcflsp_m2_ctry_Yh",
                      "energy/IEA_PCResFloorspace", "energy/Odyssee_ResFloorspacePerHouse", "L100.Pop_thous_ctry_Yh",
                      "L102.gdp_mil90usd_GCAM3_R_Y") ->
       L144.flspPrice_90USDm2_R_bld_Yh
 
-    return_data(L144.flsp_bm2_R_res_Yh, L144.flsp_bm2_R_comm_Yh, L144.flspPrice_90USDm2_R_bld_Yh,L144.hab_land_flsp_fin)
+    L144.flsp_param %>%
+      add_title("Parameters for the floorspace Gompertz function") %>%
+      add_units("Unitless") %>%
+      add_comments("Estimated based on historical/observed floorspace values") %>%
+      add_legacy_name("L144.flsp_param") %>%
+      add_precursors("common/iso_GCAM_regID","common/GCAM_region_names", "energy/A44.pcflsp_default",
+                     "energy/A44.HouseholdSize", "energy/CEDB_ResFloorspace_chn", "energy/Other_pcflsp_m2_ctry_Yh",
+                     "energy/IEA_PCResFloorspace", "energy/Odyssee_ResFloorspacePerHouse",
+                     "L100.Pop_thous_ctry_Yh", "energy/RECS_ResFloorspace_usa") ->
+      L144.flsp_param
+
+    return_data(L144.flsp_bm2_R_res_Yh, L144.flsp_bm2_R_comm_Yh, L144.flspPrice_90USDm2_R_bld_Yh,L144.hab_land_flsp_fin, L144.flsp_param)
   } else {
     stop("Unknown command")
   }
