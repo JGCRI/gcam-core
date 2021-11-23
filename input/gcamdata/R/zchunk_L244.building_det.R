@@ -170,7 +170,7 @@ module_energy_L244.building_det <- function(command, ...) {
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y") # year comes in as double
     L144.flsp_param <- get_data(all_data, "L144.flsp_param", strip_attributes = TRUE)
-    L144.hab_land_flsp_fin<-get_data(all_data, "L144.hab_land_flsp_fin")
+    L144.hab_land_flsp_fin<-get_data(all_data, "L144.hab_land_flsp_fin", strip_attributes = TRUE)
 
     # ===================================================
     # Subregional population and income shares: need to be read in because these default to 0
