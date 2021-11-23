@@ -285,6 +285,8 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       mutate(flsp_est=(`unadjust.satiation` +(-`land.density.param`*log(tot.dens)))*exp(-`b.param`
                                                                                         *exp(-`income.param`*log(gdp_pc)))) %>%
       mutate(`bias.adjust.param`=flsp_pc-flsp_est) %>%
+      mutate(base_flsp=round(base_flsp,energy.DIGITS_FLOORSPACE),
+             bias.adjust.param=round(bias.adjust.param,energy.DIGITS_FLOORSPACE)) %>%
       mutate(gcam.consumer="resid",
              nodeInput="resid",
              building.node.input="resid_building") %>%
