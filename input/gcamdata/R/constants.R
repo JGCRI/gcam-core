@@ -685,6 +685,7 @@ emissions.DIGITS_EMISS_COEF    <- 7
 emissions.DIGITS_EMISSIONS     <- 10
 emissions.DIGITS_MACC          <- 3
 emissions.DIGITS_MACC_TC       <- 4 # tech.change rounding
+emissions.DIGITS_GFED          <- 12
 
 # GCAM-USA constants ======================================================================
 
