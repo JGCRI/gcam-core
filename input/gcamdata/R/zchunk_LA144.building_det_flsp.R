@@ -58,8 +58,8 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     Odyssee_ResFloorspacePerHouse <- get_data(all_data, "energy/Odyssee_ResFloorspacePerHouse")
     L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
     L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y")
-    L221.LN0_Land<-get_data(all_data, "L221.LN0_Land")
-    L221.LN1_UnmgdAllocation<-get_data(all_data, "L221.LN1_UnmgdAllocation")
+    L221.LN0_Land<-get_data(all_data, "L221.LN0_Land", strip_attributes = TRUE)
+    L221.LN1_UnmgdAllocation<-get_data(all_data, "L221.LN1_UnmgdAllocation", strip_attributes = TRUE)
     # ===================================================
 
     # Silence package notes
