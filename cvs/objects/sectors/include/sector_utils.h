@@ -104,10 +104,6 @@ public:
     static bool isFinalEnergySector( const std::string& aRegionName,
                                      const std::string& aSectorName );
 
-    static double getVariance( const std::string& aResourceName,
-                               const std::string& aRegionName,
-                               const int aPeriod );
-
     static int getDemandNormPeriod( const int aPeriod );
 
     static double convertEnergyToCapacity( const double aCapacityFactor,

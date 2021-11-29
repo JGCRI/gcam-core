@@ -636,17 +636,37 @@ void SolutionInfo::setForecastDemand(const double aDemand) {
     linkedMarket->setForecastDemand(aDemand);
 }
 
-double SolutionInfo::getCorrectionSlope() const {
+/*!
+ * \brief Get the "negative" price correction slope in the approriate normalized units.
+ * \details The correction slope is stored in unnormalized units so that if the price or demand
+ *          scale factors are updated, such as in the preconditioner, we can easily convert
+ *          to the updated scales.  Note:  if not value has been explicitly set a slope of 1 is given.
+ * \param aPriceScale The price scale (i.e. divide by this value to normalize price) to normalize with.
+ * \param aDemandScale The demand scale (i.e. divide by this value to normalize demand) to normalize with.
+ * \return The noramalized correction slope to use.
+ */
+double SolutionInfo::getCorrectionSlope( const double aPriceScale, const double aDemandScale ) const {
     const string SLOPE_KEY = "correction-slope";
     return linkedMarket->getMarketInfo()->hasValue( SLOPE_KEY ) ?
-        linkedMarket->getMarketInfo()->getDouble( SLOPE_KEY, true ) :
+        linkedMarket->getMarketInfo()->getDouble( SLOPE_KEY, true ) * (aPriceScale / aDemandScale) :
         1.0;
 }
 
-void SolutionInfo::setCorrectionSlope(const double aSlope) {
+/*!
+* \brief Store the "negative" price correction slope.
+* \details The correction slope is ideally the slope just above the bottom of the supply curve, however
+ * we do not always happen to observe that when calculating derivatives so if we do we should save the value
+ * so it may be used later.  From that perspective it is important that we save the slope, which will be in normalized
+ * terms, as unnormalized so that if scales are updated we can easily re-normalize accordingly.
+ * \param aSlope The normalized correction slope to store.
+* \param aPriceScale The price scale (i.e. divide by this value to normalize price) to unnormalize with.
+* \param aDemandScale The demand scale (i.e. divide by this value to normalize demand) to unnormalize with.
+*/
+void SolutionInfo::setCorrectionSlope(const double aSlope,  const double aPriceScale, const double aDemandScale ) {
     const string SLOPE_KEY = "correction-slope";
     if( aSlope != 0.0 ) {
-        linkedMarket->getMarketInfo()->setDouble( SLOPE_KEY, aSlope );
+        double unnormalizedSlope = aSlope * (aDemandScale / aPriceScale);
+        linkedMarket->getMarketInfo()->setDouble( SLOPE_KEY, unnormalizedSlope );
     }
 }
 

@@ -108,9 +108,6 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "addTimeValue", mAddTimeValue, bool )
     )
     
-    //! Save time value for debugging purposes.
-    mutable double mTimeValue;
-
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const;

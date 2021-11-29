@@ -2,7 +2,7 @@
 # Title: Energy Inputs for Technologies Specific to the Multiple Load Segments Electricity Sector
 # Units: unitless
 # Comments: Energy inputs for new technologies that are not included in the energy system global technology database. Leave market-name empty if it equal to the state.
-# Source: battery assumptions compiled from several sources (Lazard, 2016) (Schmidt et al., 2017) (Rastler, 2010) (Chen et al., 2009)"
+# Source: battery assumptions compiled from several sources (Lazard, 2016) (Schmidt et al., 2017) (Rastler, 2010) (Chen et al., 2009)
 # Column types: cccciccn 
 # ----------
 region,supplysector,subsector,stub.technology,period,minicam.energy.input,market.name,efficiency

@@ -80,21 +80,15 @@ public :
    // Constructors
    TCostCurve( void )
       : mMidprice( 0 ),
-        mCurveExponent( 0 ),
-        mCachedValue( 0 ),
-        mDirty( true ) {}
+        mCurveExponent( 0 ) {}
    TCostCurve(
       const value_type& midprice,
       const value_type& curveExponent )
       : mMidprice( midprice ),
-        mCurveExponent( curveExponent ),
-        mCachedValue( 0 ),
-        mDirty( true ) {}
+        mCurveExponent( curveExponent ) {}
    TCostCurve(const TCostCurve<T>& other)
       : mMidprice( other.mMidprice ),
-        mCurveExponent( other.mCurveExponent ),
-        mCachedValue( other.mCachedValue ),
-        mDirty( other.mDirty ) {}
+        mCurveExponent( other.mCurveExponent ) {}
 
    // Destructor
    virtual ~TCostCurve(void) {}
@@ -106,8 +100,6 @@ public :
       {
          mMidprice      = other.mMidprice;
          mCurveExponent = other.mCurveExponent;
-         mCachedValue   = other.mCachedValue;
-         mDirty         = other.mDirty;
       }
       return *this;
    }
@@ -145,14 +137,12 @@ public :
    virtual void setCurveExponent( const value_type& aCurveExponent )
    {
       mCurveExponent = aCurveExponent;
-      mDirty         = true;
    }
 
    //! Set the price where 50% of the maximum supply is brought to market
    virtual void setMidprice( const value_type& aMidprice )
    {
       mMidprice = aMidprice;
-      mDirty    = true;
    }
 
 private :
@@ -162,12 +152,6 @@ private :
 
    //! The steepness parameter of the cost curve
    value_type           mCurveExponent;
-
-   //! pow( midprice, curve-exponent ) for optimisation
-   mutable value_type   mCachedValue;
-
-   //! Flag if mCachedValue needs to be computed
-   mutable bool         mDirty;
 };
 
 // TCostCurve<T>::calculate ************************************************
@@ -182,19 +166,14 @@ inline typename TCostCurve<T>::value_type TCostCurve<T>::calculate(
       return value_type( 0 );
    }
 
-   // Check if to update the cached value
-   if ( mDirty )
-   {
-      mCachedValue = std::pow( mMidprice, mCurveExponent );
-      mDirty       = false;
-   }
+  double midPriceTerm = std::pow( mMidprice, mCurveExponent );
 
    value_type  temp = std::pow( aPrice, mCurveExponent );
     if( !std::isfinite( temp ) ) {
         // happens sometimes for large price
        temp = std::numeric_limits<T>::max();
     }
-   return temp / ( mCachedValue + temp );
+   return temp / ( midPriceTerm + temp );
 }
 
 template <class T>
