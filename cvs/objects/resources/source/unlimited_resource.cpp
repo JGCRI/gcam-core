@@ -112,9 +112,6 @@ void UnlimitedResource::XMLParse( const DOMNode* node ){
             XMLHelper<Value>::insertValueIntoVector( curr, mFixedPrices,
                                                      scenario->getModeltime() );
         }
-        else if( nodeName == "variance" ){
-            mVariance = XMLHelper<double>::getValue( curr );
-        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -140,7 +137,6 @@ void UnlimitedResource::toDebugXML( const int aPeriod,
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
     XMLWriteElement( mMarket, "market", aOut, aTabs );
-    XMLWriteElement( mVariance, "variance", aOut, aTabs );
 
     // Write out resource prices for debugging period.
     XMLWriteElement( mFixedPrices[ aPeriod ], "price", aOut, aTabs );
@@ -161,11 +157,6 @@ void UnlimitedResource::completeInit( const string& aRegionName,
     if ( mPriceUnit.empty() ) {
         mPriceUnit = "1975$/GJ"; 
     }
-    // If not read-in, set variance to 0 and isInited to true.
-    // The set() call sets isInited to true.
-    if( !mVariance.isInited() ){
-        mVariance.set( 0 );
-    }
     // Setup markets for this resource.
     setMarket( aRegionName );
     
@@ -177,13 +168,8 @@ void UnlimitedResource::initCalc( const string& aRegionName,
                                   const int aPeriod )
 {
     Marketplace* marketplace = scenario->getMarketplace();
-    // Set the capacity factor and variance.
-    IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, aPeriod, true );
-    assert( marketInfo );
-
-    if( mVariance.isInited() ){
-        marketInfo->setDouble( "resourceVariance", mVariance );
-    }
+    // ensure this market is not solved
+    marketplace->unsetMarketToSolve(mName, aRegionName, aPeriod);
     
     // Set the fixed price if a valid one was read in.
     if( mFixedPrices[ aPeriod ].isInited() ) {
@@ -244,9 +230,13 @@ void UnlimitedResource::setMarket( const string& aRegionName ) {
     IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
     marketInfo->setString( "price-unit", mPriceUnit );
     marketInfo->setString( "output-unit", mOutputUnit );
-    // Need to set resource variance here because initCalc of technology is called
-    // before that of resource. shk 2/27/07
-    marketInfo->setDouble( "resourceVariance", mVariance );
+
+    // UnlimitedResource markets must not be solved so reset the flag in case it
+    // was set by another Resource who was just adding regions to market for instance
+    const Modeltime* modeltime = scenario->getModeltime();
+    for(int period = 0; period < modeltime->getmaxper(); ++period ) {
+        marketplace->unsetMarketToSolve( mName, aRegionName, period );
+    }
 }
 
 void UnlimitedResource::accept( IVisitor* aVisitor,

@@ -434,5 +434,13 @@ double MarketContainer::extrapolate( const int aPeriod, getpsd_t aDataFn )
     m = m2 + 2.0 * ( m2 - m1 ) / ( x[ 2 ] - x[ 0 ] );
     
     double currYear = modeltime->getper_to_yr( aPeriod );
-    return y[ 2 ] + m * ( currYear - x[ 2 ] );
+    double extrapValue = y[ 2 ] + m * ( currYear - x[ 2 ] );
+    
+    // If we extrapolated a negative value but none of the actual values
+    // were negative this won't be a viable result.  In this case we should
+    // just return the last value.
+    if( extrapValue < 0.0 && !(y[0] < 0.0 || y[1] < 0.0 || y[2] < 0.0)) {
+        extrapValue = y[2];
+    }
+    return extrapValue;
 }

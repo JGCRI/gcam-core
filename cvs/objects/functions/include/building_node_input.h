@@ -407,28 +407,28 @@ protected:
         //! The sum product of energy service price necessary to drive demands.
         DEFINE_VARIABLE( ARRAY | STATE, "price", mPrice, objects::PeriodVector<Value> ),
 
-		//! The unadjusted satiation level to use during calcDemand. Parsed from XML
-		DEFINE_VARIABLE(SIMPLE | STATE, "unadjust-satiation", mUnadjustSatiation, Value),
+        //! The unadjusted satiation level to use during calcDemand. Parsed from XML
+        DEFINE_VARIABLE(SIMPLE, "unadjust-satiation", mUnadjustSatiation, Value),
 
-		//! The habitable land to use during calcDemand. Parsed from XML
-		DEFINE_VARIABLE(SIMPLE | STATE, "habitable-land", mHabitableLand, Value),
+        //! The habitable land to use during calcDemand. Parsed from XML
+        DEFINE_VARIABLE(SIMPLE, "habitable-land", mHabitableLand, Value),
 
-		//! The base pcFlsp to use during calcDemand. Parsed from XML
-		DEFINE_VARIABLE(SIMPLE | STATE, "base-pcFlsp", mBasepcFlsp, Value),
+        //! The base pcFlsp to use during calcDemand. Parsed from XML
+        DEFINE_VARIABLE(SIMPLE, "base-pcFlsp", mBasepcFlsp, Value),
 
-		//! The land density parameter to use during calcDemand. Parsed from XML
-		DEFINE_VARIABLE(SIMPLE | STATE, "land-density-param", mLandDensityParam, Value),
+        //! The land density parameter to use during calcDemand. Parsed from XML
+        DEFINE_VARIABLE(SIMPLE, "land-density-param", mLandDensityParam, Value),
 
-		//! The base floorspace parameter to use during calcDemand. Parsed from XML
-		DEFINE_VARIABLE(SIMPLE | STATE, "b-param", mbParam, Value),
+        //! The base floorspace parameter to use during calcDemand. Parsed from XML
+        DEFINE_VARIABLE(SIMPLE, "b-param", mbParam, Value),
 
-		//! The income parameter to use during calcDemand. Parsed from XML
-		DEFINE_VARIABLE(SIMPLE | STATE, "income-param", mIncomeParam, Value),
+        //! The income parameter to use during calcDemand. Parsed from XML
+        DEFINE_VARIABLE(SIMPLE, "income-param", mIncomeParam, Value),
 
-		//! The bias correction parameter to use during calcDemand. Parsed from XML
-		DEFINE_VARIABLE(SIMPLE | STATE, "bias-adjust-param", mBiasAdjustParam, Value)
+        //! The bias correction parameter to use during calcDemand. Parsed from XML
+        DEFINE_VARIABLE(SIMPLE, "bias-adjust-param", mBiasAdjustParam, Value)
 
-	    )
+    )
                            
     //! Pointer to function this class will use
     const IFunction* mFunction;

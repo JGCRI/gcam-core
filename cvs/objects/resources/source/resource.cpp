@@ -328,11 +328,7 @@ void Resource::setMarket( const string& aRegionName ) {
 
         pMarketplace->setPriceVector( mName, aRegionName, mResourcePrice );
         for( int period = 0; period < pModeltime->getmaxper(); ++period ){
-        
-            // TODO: Remove or improve this. Intermittent technologies need to know during initCalc 
-            // which good has a variance. This will get set again later, which is bad.
             IInfo* marketInfo = pMarketplace->getMarketInfo( mName, aRegionName, period, true );
-            marketInfo->setDouble( "resourceVariance", 0 );
             if( period >= 1 ){
                 pMarketplace->setMarketToSolve( mName, aRegionName, period );
             }
@@ -439,7 +435,7 @@ void Resource::accept( IVisitor* aVisitor, const int aPeriod ) const {
 // RenewableResource Class
 // *******************************************************************
 
-//! \brief set the size for the resourceVariance member
+//! \brief default constructor
 RenewableResource::RenewableResource()
 {
 }
@@ -487,53 +483,6 @@ bool RenewableResource::XMLDerivedClassParse( const string& aNodeName, const DOM
     return false;
 }
 
-/*! \brief Complete the initialization
-*
-* This routine is only called once per model run.
-*
-* \author Sonny Kim
-* \warning markets are not necessarily set when completeInit is called
-*/
-
-void RenewableResource::completeInit( const string& aRegionName, const IInfo* aRegionInfo ) {
-
-    // Complete resource initialization.
-    // Base class completeInit must be called first to create the market.
-    Resource::completeInit( aRegionName, aRegionInfo );
-
-    Marketplace* pMarketplace = scenario->getMarketplace();
-    const Modeltime* pModeltime = scenario->getModeltime();
-    // Initialize resource variance and capacitity factors in this market's info
-    /*!
-     * \warning This strategy of calculating resource variance and capacity factor
-     *          is inadequate due to sequence issues.  If these values are not 
-     *          constant i.e. multiple subresources it will cause trouble when solving
-     *          and trying to reproduce a solution.  For such a case a trial value
-     *          should be utilized to directly handle the sequence issue.
-     */
-    double resourceVariance = mSubResource[ 0 ]->getVariance();
-    double resourceCapacityFactor = mSubResource[ 0 ]->getAverageCapacityFactor();
-    
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::WARNING );
-    for( int subResource = 1; subResource < mSubResource.size(); ++subResource ) {
-        if( mSubResource[ subResource ]->getVariance() != resourceVariance ) {
-            mainLog << "Non-constant resource variance in " << mName << ", region: "
-                << aRegionName << " may cause trouble finding a solution." << endl;
-        }
-        if( mSubResource[ subResource ]->getAverageCapacityFactor() != resourceCapacityFactor ) {
-            mainLog << "Non-constant resource capacity factor in " << mName << ", region: "
-                << aRegionName << " may cause trouble finding a solution." << endl;
-        }
-    }
-    
-    for( int period = 0; period < pModeltime->getmaxper(); ++period ){
-        IInfo* marketInfo = pMarketplace->getMarketInfo( mName, aRegionName, period, true );
-        marketInfo->setDouble( "resourceVariance", resourceVariance );
-        marketInfo->setDouble( "resourceCapacityFactor", resourceCapacityFactor );
-    }
-}    
-
 //! Calculate annual production
 /*! \brief Adds to the base Resource::annualsupply by computing a weighted-average
 *  variance of the resource based on the variance of the subresources.
@@ -549,47 +498,10 @@ void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, co
     // clear out sums for this iteration
     mAnnualProd[ aPeriod ]=0.0;
     mAvailable[ aPeriod ]=0.0;
-    mResourceVariance[ aPeriod ]=0.0;
-    mResourceCapacityFactor[ aPeriod ] = 0.0;
-    
-    // If annual production is extremely small or zero, these will not be calculated properly.
-    // In this case, set production to some minimum number.
-    const double MIN_RESOURCE_PROD = util::getVerySmallNumber();
-    double adjustedProduction = 0;
     
     // sum annual production of each subsector
     for (int i=0;i<mSubResource.size();i++) {
         mSubResource[i]->annualsupply( aRegionName, mName, aPeriod, aGdp, aPrice );
         mAnnualProd[ aPeriod ] += Value( mSubResource[i]->getAnnualProd( aPeriod ) );
-        double adjustedSubResourceProd = max( mSubResource[i]->getAnnualProd( aPeriod ), MIN_RESOURCE_PROD );
-        adjustedProduction += adjustedSubResourceProd;
-        mAvailable[ aPeriod ] += Value( mSubResource[i]->getAvailable( aPeriod ) );
-        
-        // and compute weighted average variance
-        mResourceVariance[ aPeriod ] += adjustedSubResourceProd * mSubResource[i]->getVariance();
-        // and compute weighted average capacity factor
-        mResourceCapacityFactor[ aPeriod ] += adjustedSubResourceProd * mSubResource[i]->getAverageCapacityFactor();
-    }
-
-    // TODO: This is currently wrong because the resource calculation is done last
-    // so if there were multiple subresources with different variances this would
-    // calculate a stale value and result in solution problems. It would also
-    // be wrong in that case for global markets.
-
-    // This may be a global market and the resource may only exist to add the
-    // region into the market. In this case the resource will not have any
-    // subresources, and should not adjust the market info values.
-    if( !mSubResource.empty() ){
-        if ( adjustedProduction >= MIN_RESOURCE_PROD ) {
-            mResourceVariance[ aPeriod ] /= adjustedProduction;
-            mResourceCapacityFactor[ aPeriod ] /= adjustedProduction;
-        }
-
-        // add variance to marketinfo
-        IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName, aPeriod, true );
-        marketInfo->setDouble( "resourceVariance", mResourceVariance[ aPeriod ] );
-
-        // add capacity factor to marketinfo
-        marketInfo->setDouble( "resourceCapacityFactor", mResourceCapacityFactor[ aPeriod ] );
     }
 }

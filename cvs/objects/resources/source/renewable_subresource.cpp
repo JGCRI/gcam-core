@@ -62,8 +62,7 @@ extern Scenario* scenario;
 //! Constructor
 SubRenewableResource::SubRenewableResource(void):
 mMaxAnnualSubResource( 0.0 ),
-mGdpSupplyElasticity( 0 ),
-mSubResourceVariance( 0 )
+mGdpSupplyElasticity( 0 )
 {
 }
 
@@ -84,10 +83,6 @@ bool SubRenewableResource::XMLDerivedClassParse( const string& nodeName, const D
     bool didParse = false;
     if( nodeName == "maxSubResource" ){
         XMLHelper<double>::insertValueIntoVector( node, mMaxAnnualSubResource, scenario->getModeltime() );
-        didParse = true;
-    }
-	else if( nodeName == "subResourceVariance" ){
-        mSubResourceVariance = XMLHelper<double>::getValue( node );
         didParse = true;
     }
     else if( nodeName == "gdpSupplyElast" ){
@@ -149,7 +144,6 @@ void SubRenewableResource::cumulsupply( const string& aRegionName, const string&
 * For renewable resources interprets parameters as a cost curve.
 * Technological change is applied if present. 
 * Note that the cost curve needs to be in the form of price, and cumulative fraction available.
-* Calls calcVariance() method
 */
 void SubRenewableResource::annualsupply( const string& aRegionName, const string& aResourceName,
                                          int aPeriod, const GDP* aGdp, double aPrice )
@@ -214,14 +208,6 @@ void SubRenewableResource::annualsupply( const string& aRegionName, const string
         mCumulProd[ aPeriod ] = ( mAnnualProd[aPeriod] + mAnnualProd[aPeriod - 1] ) / 2
         * scenario->getModeltime()->gettimestep( aPeriod ) + mCumulProd[aPeriod - 1];
     }
-}
-
-/*! \brief Get the variance.
-* \details Return the variance for this subresource.
-* \return The variance.
-*/
-double SubRenewableResource::getVariance() const {
-	return mSubResourceVariance;
 }
 
 double SubRenewableResource::getMaxAnnualSubResource( const int aPeriod ) const {

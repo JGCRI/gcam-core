@@ -126,29 +126,29 @@ void BuildingNodeInput::XMLParse( const xercesc::DOMNode* node ) {
             mInternalGainsUnit = XMLHelper<string>::getValue( curr );
         }
 
-		else if (nodeName == "unadjust-satiation") {
-			mUnadjustSatiation = (XMLHelper<double>::getValue(curr));
-		}
-		else if (nodeName == "base-pcFlsp") {
-			mBasepcFlsp = (XMLHelper<double>::getValue(curr));
-		}
-		else if (nodeName == "land-density-param") {
-			mLandDensityParam = (XMLHelper<double>::getValue(curr));
-		}
-		else if (nodeName == "b-param") {
-			mbParam = (XMLHelper<double>::getValue(curr));
-		}
-		else if (nodeName == "income-param") {
-			mIncomeParam = (XMLHelper<double>::getValue(curr));
-		}
-		else if (nodeName == "bias-adjust-param") {
-			mBiasAdjustParam = (XMLHelper<double>::getValue(curr));
-		}
-		else if (nodeName == "habitable-land") {
-			mHabitableLand = (XMLHelper<double>::getValue(curr));
+        else if (nodeName == "unadjust-satiation") {
+            mUnadjustSatiation = (XMLHelper<double>::getValue(curr));
+        }
+        else if (nodeName == "base-pcFlsp") {
+            mBasepcFlsp = (XMLHelper<double>::getValue(curr));
+        }
+        else if (nodeName == "land-density-param") {
+            mLandDensityParam = (XMLHelper<double>::getValue(curr));
+        }
+        else if (nodeName == "b-param") {
+            mbParam = (XMLHelper<double>::getValue(curr));
+        }
+        else if (nodeName == "income-param") {
+            mIncomeParam = (XMLHelper<double>::getValue(curr));
+        }
+        else if (nodeName == "bias-adjust-param") {
+            mBiasAdjustParam = (XMLHelper<double>::getValue(curr));
+        }
+        else if (nodeName == "habitable-land") {
+            mHabitableLand = (XMLHelper<double>::getValue(curr));
 
-			assert(mHabitableLand > 1.0);
-		}
+            assert(mHabitableLand > 1.0);
+        }
 
         else if( nodeName == SatiationDemandFunction::getXMLNameStatic() ) {
             parseSingleNode( curr, mSatiationDemandFunction, new SatiationDemandFunction );
@@ -301,15 +301,15 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
     XMLWriteElement( mShellConductance[ aPeriod ], "shell-conductance", aOut, aTabs );
     XMLWriteElement( mFloorToSurfaceRatio[ aPeriod ], "floor-to-surface-ratio", aOut, aTabs );
     XMLWriteElement( mPrice[ aPeriod ], "price", aOut, aTabs );
-	XMLWriteElement(mUnadjustSatiation, "unadjust-satiation", aOut, aTabs);
-	XMLWriteElement(mHabitableLand, "habitable-land", aOut, aTabs);
-	XMLWriteElement(mBasepcFlsp, "base-pcFlsp", aOut, aTabs);
-	XMLWriteElement(mLandDensityParam, "land-density-param", aOut, aTabs);
-	XMLWriteElement(mbParam, "b-param", aOut, aTabs);
-	XMLWriteElement(mIncomeParam, "income-param", aOut, aTabs);
-	XMLWriteElement(mBiasAdjustParam, "bias-adjust-param", aOut, aTabs);
-	XMLWriteElement(mCurrentSubregionalPopulation, "subregional-population", aOut, aTabs);
-	XMLWriteElement(mCurrentSubregionalIncome, "subregional-income", aOut, aTabs);
+    XMLWriteElement(mUnadjustSatiation, "unadjust-satiation", aOut, aTabs);
+    XMLWriteElement(mHabitableLand, "habitable-land", aOut, aTabs);
+    XMLWriteElement(mBasepcFlsp, "base-pcFlsp", aOut, aTabs);
+    XMLWriteElement(mLandDensityParam, "land-density-param", aOut, aTabs);
+    XMLWriteElement(mbParam, "b-param", aOut, aTabs);
+    XMLWriteElement(mIncomeParam, "income-param", aOut, aTabs);
+    XMLWriteElement(mBiasAdjustParam, "bias-adjust-param", aOut, aTabs);
+    XMLWriteElement(mCurrentSubregionalPopulation, "subregional-population", aOut, aTabs);
+    XMLWriteElement(mCurrentSubregionalIncome, "subregional-income", aOut, aTabs);
 
     XMLWriteElement( mFunctionType, "prodDmdFnType", aOut, aTabs );
     for( CNestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {

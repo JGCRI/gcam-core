@@ -190,8 +190,6 @@ void GCAMConsumer::operate( NationalAccount& aNationalAccount, const Demographic
                             const string& aRegionName,
                             const string& aSectorName, const bool aIsNewVintageMode, int aPeriod )
 {
-    expenditures[ aPeriod ].reset();
-
     // In calibration periods we will back out coefficients to reproduce the read in base year
     // values in the nested input structure.
     const Modeltime* modeltime = scenario->getModeltime();
@@ -208,10 +206,6 @@ void GCAMConsumer::operate( NationalAccount& aNationalAccount, const Demographic
 
     // Drive input demands.
     calcInputDemand( 0, aRegionName, aSectorName, aPeriod );
-    
-    // Reset speed optimization flags.
-    mPricePaidCached = false;
-    mNestedInputRoot->resetCalcLevelizedCostFlag();
 }
 
 void GCAMConsumer::postCalc( const string& aRegionName, const string& aSectorName, const int aPeriod ) {
