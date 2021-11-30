@@ -81,6 +81,10 @@ const string& SingleScenarioRunner::getName() const {
     return getXMLNameStatic();
 }
 
+const string& SingleScenarioRunner::getXMLName() {
+	return getXMLNameStatic();
+}
+
 // IParsable interface
 bool SingleScenarioRunner::XMLParse( const xercesc::DOMNode* aRoot ){
     // No data to parse.

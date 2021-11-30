@@ -71,6 +71,7 @@
 #include "containers/include/scenario.h"
 #include "containers/include/iscenario_runner.h"
 #include "containers/include/scenario_runner_factory.h"
+#include "containers/include/single_scenario_runner.h"
 #include "util/logger/include/ilogger.h"
 #include "util/logger/include/logger_factory.h"
 #include "util/base/include/timer.h"
@@ -194,10 +195,25 @@ int main( int argc, char *argv[] ) {
     // we use the util::getConfigRunPeriod to decipher the appropriate value to use.
     int finalPeriod = util::getConfigRunPeriod( "stop" );
     const bool printDebug = conf->shouldWriteFile( "xmlDebugFileName" );
-    success = runner->runScenarios( finalPeriod, printDebug, timer );
 
+	// If QuitFirstFailure bool is set to 1 and a period fails to solve (success = FALSE), 
+	// the model will exit after this period and not print the database.
+	// If the model is running in target finder mode, this only applies when the final period fails.
+	bool quitFirstFailure = conf->getBool("QuitFirstFailure", false, false);
+	bool runTargetFinder = conf->getBool("find-path", false, false);
+    success = runner->runScenarios( finalPeriod, printDebug, timer );
+	string runner_type = runner->getName();
+	
     // Print the output.
-    runner->printOutput( timer );
+	if (runner_type == SingleScenarioRunner::getXMLName() & !success & quitFirstFailure & !runTargetFinder) {
+		// If this is a single scenario runner (not target finder) which fails a model period while 
+		// QuitFirstFailure bool is set to true (1), do not print output
+	}
+	else
+	{
+		runner->printOutput(timer);
+	}
+    
     mainLog.setLevel( ILogger::WARNING ); // Increase level so that user will know that model is done
     mainLog << "Model exiting successfully." << endl;
     runner->cleanup();

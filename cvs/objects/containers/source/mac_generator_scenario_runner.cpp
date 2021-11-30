@@ -114,6 +114,12 @@ bool MACGeneratorScenarioRunner::runScenarios( const int aSinglePeriod,
                                                const bool aPrintDebugging,
                                                Timer& aTimer )
 {
+	// If QuitFirstFailure bool is set to 1 and model is not running in target finder mode,
+	// model will exit after any failed model period (rather than running to completion).
+	const Configuration* conf = Configuration::getInstance();
+	bool quitFirstFailure = conf->getBool("QuitFirstFailure", false, false);
+	bool runTargetFinder = conf->getBool("find-path", false, false);
+
     // TODO: This is only necessary because the cost calculator has trouble solving
     // a zero carbon tax with restart turned on.  This should be unnecessary with
     // a better solver.
@@ -125,15 +131,22 @@ bool MACGeneratorScenarioRunner::runScenarios( const int aSinglePeriod,
     // Run the base scenario. Print debugging for the base scenario run.
     bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS,
                                                   aPrintDebugging, aTimer );
-
-    // Print the output now before it is overwritten.
-    mSingleScenario->printOutput( aTimer );
-
-    // Now calculate the abatement curves.
-    if( mPolicyCostCalculator.get() ){
-        success &= mPolicyCostCalculator->calculateAbatementCostCurve();
-    }
-
+	// Print the output.
+	// If QuitFirstFailure bool is set to 1 and model is not running in target finder mode,
+	// model will exit after any failed model period (and skip printing database).
+	if (!success & quitFirstFailure & !runTargetFinder) {
+		ILogger& mainLog = ILogger::getLogger("main_log");
+		mainLog.setLevel(ILogger::ERROR);
+		mainLog << "Period failed to solve. Skipping writing database and calculating abatement curves." << endl;
+	}
+	else {
+		mSingleScenario->printOutput(aTimer);
+		// Now calculate the abatement curves.
+		if (mPolicyCostCalculator.get()) {
+			success &= mPolicyCostCalculator->calculateAbatementCostCurve();
+		}
+	}
+	
     // Return whether the initial run and all datapoint calculations completed
     // successfully.
     return success;
