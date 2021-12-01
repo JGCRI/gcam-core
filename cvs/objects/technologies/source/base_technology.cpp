@@ -80,8 +80,6 @@ BaseTechnology::BaseTechnology():
   doCalibration( false )
 {
     mNestedInputRoot = 0 ;
-    const int maxper = scenario->getModeltime()->getmaxper();
-    expenditures.resize( maxper );
 }
 
 //!< Destructor
@@ -238,7 +236,7 @@ void BaseTechnology::toDebugXML( const int period, ostream& out, Tabs* tabs ) co
     for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
         (*ghg)->toDebugXML( period, out, tabs );
     }
-    expenditures[ period ].toDebugXML( period, out, tabs );
+    //expenditures[ period ].toDebugXML( period, out, tabs );
 
     toDebugXMLDerived( period, out, tabs );
 
@@ -356,17 +354,6 @@ double BaseTechnology::getOutput( const int aPeriod ) const {
 void BaseTechnology::calcPricePaid( const string& aRegionName,
                                     const string& aSectorName, const int aPeriod, const int aLifetimeYears ) const
 {
-    /*!
-     * \warning Using the mPricePaidCached hack here to avoid excessive calls to calcPricePaid
-     *          this means we are relying on the technology to reset this flag at the end of
-     *          it's operate to ensure that prices will be recalculated the next time the solver
-     *          changes prices.
-     */
-    if( mPricePaidCached ) {
-        return;
-    }
-    mPricePaidCached = true;
-
     // the leaves must calculate their price paid first, then the nesting structure can calculate
     // node prices through the calcLevelizedCost method
     // Note the hack on the sequestration device, this is because MiniCAM uses a getLargeNumber
@@ -402,6 +389,7 @@ void BaseTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const
 
     mNestedInputRoot->accept( aVisitor, aPeriod );
 
+    /*
     if( aPeriod == -1 ) {
         int currPeriod = 0;
         for( vector<Expenditure>::const_iterator cExpenditure = expenditures.begin(); cExpenditure !=
@@ -413,6 +401,7 @@ void BaseTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const
     } else {
         expenditures[ aPeriod].accept( aVisitor, aPeriod );
     }
+    */
     for( unsigned int iter = 0; iter < mOutputs.size(); iter++ ){
         mOutputs[ iter ]->accept( aVisitor, aPeriod );
     }

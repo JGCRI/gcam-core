@@ -17,7 +17,7 @@
 #' \code{L244.SubsectorLogit_bld_gcamusa}, \code{L244.StubTech_bld_gcamusa}, \code{L244.StubTechCalInput_bld_gcamusa}, \code{L244.StubTechMarket_bld},
 #' \code{L244.GlobalTechIntGainOutputRatio}, \code{L244.GlobalTechInterpTo_bld}, \code{L244.GlobalTechEff_bld},
 #' \code{L244.GlobalTechShrwt_bld_gcamusa}, \code{L244.GlobalTechCost_bld_gcamusa}, \code{L244.GlobalTechSCurve_bld}, \code{L244.HDDCDD_A2_GFDL_USA},
-#' \code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}, \code{L244.Gomp.fn.param_gcamusa}, \code{L244.Satiation_impedance_gcamusa},
+#' \code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}, \code{L244.GompFnParam_gcamusa}, \code{L244.Satiation_impedance_gcamusa},
 #' \code{L244.GenericServiceImpedance_gcamusa} , \code{L244.ThermalServiceImpedance_gcamusa}, \code{L244.GenericServiceAdder_gcamusa},
 #' \code{L244.ThermalServiceAdder_gcamusa},{L244.GenericServiceCoef_gcamusa},{L244.ThermalServiceCoef_gcamusa}
 #' The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
@@ -52,8 +52,8 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
              FILE = "gcam-usa/A44.globaltech_interp",
              FILE = "gcam-usa/A44.demand_satiation_mult",
              FILE = "gcam-usa/A44.hab_land_flsp_usa",
-             FILE = "energy/A44.flsp_param",
              FILE = "gcam-usa/A44.CalPrice_service_gcamusa",
+             "L144.flsp_param",
              "L144.flsp_bm2_state_res",
              "L144.flsp_bm2_state_comm",
              "L144.in_EJ_state_comm_F_U_Y",
@@ -96,7 +96,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
              "L244.HDDCDD_A2_GFDL_USA",
              "L244.HDDCDD_constdds_USA",
              "L244.HDDCDD_AEO_2015_USA",
-             "L244.Gomp.fn.param_gcamusa",
+             "L244.GompFnParam_gcamusa",
              "L244.Satiation_impedance_gcamusa",
              "L244.GenericServiceImpedance_gcamusa",
              "L244.ThermalServiceImpedance_gcamusa",
@@ -154,7 +154,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state", strip_attributes = TRUE)
     L100.pcGDP_thous90usd_state <- get_data(all_data, "L100.pcGDP_thous90usd_state", strip_attributes = TRUE)
     L144.hab_land_flsp_usa<- get_data(all_data, "gcam-usa/A44.hab_land_flsp_usa", strip_attributes = TRUE)
-    L144.flsp_param <- get_data(all_data, "energy/A44.flsp_param", strip_attributes = TRUE)
+    L144.flsp_param <- get_data(all_data, "L144.flsp_param", strip_attributes = TRUE)
     L144.CalPrice_service_gcamusa <- get_data(all_data, "gcam-usa/A44.CalPrice_service_gcamusa", strip_attributes = TRUE)
 
     # ===================================================
@@ -255,9 +255,10 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       select(region=state,area_thouskm2)
 
     # Write the function parameters
-    L244.Gomp.fn.param_gcamusa<-L144.flsp_param_usa %>%
+    L244.GompFnParam_gcamusa<-L144.flsp_param_usa %>%
       left_join_error_no_match(L144.hab_land_flsp_usa_fin,by="region") %>%
       mutate(year=MODEL_FINAL_BASE_YEAR) %>%
+      rename(area_thouskm2 = value) %>%
       left_join_error_no_match(L100.pcGDP_thous90usd_state %>% rename(region=state), by=c("region","year")) %>%
       rename(gdp_pc=value) %>%
       left_join_error_no_match(L100.Pop_thous_state %>% rename(region=state), by=c("region","year")) %>%
@@ -266,19 +267,21 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       rename(flsp=value) %>%
       mutate(flsp_pc=(flsp*1E9)/(pop_thous*1E3)) %>%
       mutate(base_flsp=flsp_pc) %>%
-      mutate(tot_dens=round(pop_thous/area_thouskm2,0)) %>%
+      mutate(tot.dens=round(pop_thous/area_thouskm2,0)) %>%
       #correct 0 population density to avoid NaN
-      mutate(tot_dens=if_else(tot_dens==0,1,tot_dens)) %>%
-      mutate(flsp_est=(`unadjust-satiation` +(-`land-density-param`*log(tot_dens)))*exp(-`b-param`
-                                                                                        *exp(-`income-param`*log(gdp_pc)))) %>%
-      mutate(`bias-adjust-param`=flsp_pc-flsp_est) %>%
+      mutate(tot.dens=if_else(tot.dens==0,1,tot.dens)) %>%
+      mutate(flsp_est=(`unadjust.satiation` +(-`land.density.param`*log(tot.dens)))*exp(-`b.param`
+                                                                                        *exp(-`income.param`*log(gdp_pc)))) %>%
+      mutate(`bias.adjust.param`=flsp_pc-flsp_est) %>%
+      mutate(base_flsp=round(base_flsp,energy.DIGITS_FLOORSPACE),
+             bias.adjust.param=round(bias.adjust.param,energy.DIGITS_FLOORSPACE)) %>%
       mutate(gcam.consumer="resid",
              nodeInput="resid",
              building.node.input="resid_building") %>%
-      rename(pop_dens=tot_dens,
-             `habitable-land`=area_thouskm2,
-             `base-pcFlsp`=base_flsp) %>%
-      select(LEVEL2_DATA_NAMES[["Gomp.fn.param"]])
+      rename(pop.dens=tot.dens,
+             habitable.land=area_thouskm2,
+             base.pcFlsp=base_flsp) %>%
+    select(LEVEL2_DATA_NAMES[["GompFnParam"]])
 
     #------------------------------------------------------
     # Calibrate satiation impedance (in the DS) per GCAM region.
@@ -909,6 +912,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                      "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm", "L100.pcGDP_thous90usd_state") ->
       L244.SatiationAdder_gcamusa
 
+
     L244.Satiation_impedance_gcamusa %>%
       add_title("Floorspace satiation impedance") %>%
       add_units("Unitless") %>%
@@ -918,14 +922,15 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                      "L144.flsp_bm2_state_res", "L144.flsp_bm2_state_comm", "L100.pcGDP_thous90usd_state") ->
       L244.Satiation_impedance_gcamusa
 
-    L244.Gomp.fn.param_gcamusa %>%
+
+    L244.GompFnParam_gcamusa %>%
       add_title("Parameters for the floorspace Gompertz function") %>%
       add_units("Unitless") %>%
       add_comments("Computed offline based on data from RECS and IEA") %>%
-      add_legacy_name("L244.Gomp.fn.param_gcamusa") %>%
-      add_precursors("energy/A44.flsp_param", "L100.Pop_thous_state","L100.pcGDP_thous90usd_state",
+      add_legacy_name("L244.GompFnParam_gcamusa") %>%
+      add_precursors("L144.flsp_param", "L100.Pop_thous_state","L100.pcGDP_thous90usd_state",
                      "gcam-usa/A44.hab_land_flsp_usa","L144.flsp_bm2_state_res" ) ->
-      L244.Gomp.fn.param_gcamusa
+      L244.GompFnParam_gcamusa
 
 
     L244.HDDCDD_A2_GFDL_USA %>%
@@ -1272,7 +1277,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                 L244.HDDCDD_A2_GFDL_USA,
                 L244.HDDCDD_AEO_2015_USA,
                 L244.HDDCDD_constdds_USA,
-                L244.Gomp.fn.param_gcamusa,
+                L244.GompFnParam_gcamusa,
                 L244.Satiation_impedance_gcamusa,
                 L244.GenericServiceImpedance_gcamusa,
                 L244.ThermalServiceImpedance_gcamusa,
@@ -1280,6 +1285,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                 L244.ThermalServiceAdder_gcamusa,
                 L244.GenericServiceCoef_gcamusa,
                 L244.ThermalServiceCoef_gcamusa)
+
   } else {
     stop("Unknown command")
   }

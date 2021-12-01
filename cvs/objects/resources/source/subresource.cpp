@@ -469,22 +469,6 @@ double SubResource::getAvailable(int per) const {
     return mAvailable[per];
 }
 
-//! get variance
-/*! do nothing here.  Applies to derived subrenewableresource
-* \author Marshall Wise
-*/
-double SubResource::getVariance() const {
-    return 0.0;
-}
-
-//! get resource capacity factor
-/*! do nothing here.  Applies to derived subrenewableresource
-* \author Marshall Wise
-*/
-double SubResource::getAverageCapacityFactor() const {
-    return 0.0;
-}
-
 /*!
  * \brief Calculate the highest price for which a price change produces a nonzero supply response 
  * \details This is simply the cost of the highest grade for the

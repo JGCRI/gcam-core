@@ -60,29 +60,33 @@ extern Scenario* scenario;
 
 
 double GompertzDemandFunction::calcDemand(InputSet& input, double income, const std::string& regionName,
-	const std::string& sectorName, const double aShutdownCoef, int period,
-	double capitalStock, double alphaZero, double sigma, double IBT, const IInput* aParentInput) const {
-	assert(input.size() == 1);
-	BuildingNodeInput* bldInput = static_cast<BuildingNodeInput*>(input[0]);
-	assert(bldInput);
-	double unadjustSatiation = bldInput->mUnadjustSatiation;
-	double landDensityParam = bldInput->mLandDensityParam;
-	double subregionalPopulation = bldInput->mCurrentSubregionalPopulation;
-	double habitableLand = bldInput->mHabitableLand;
-	double bParam = bldInput->mbParam;
-	double incomeParam = bldInput->mIncomeParam;
-	double subregionalIncome = bldInput->mCurrentSubregionalIncome;
-	double biasAdjustParam = bldInput->mBiasAdjustParam;
+    const std::string& sectorName, const double aShutdownCoef, int period,
+    double capitalStock, double alphaZero, double sigma, double IBT, const IInput* aParentInput) const {
+    assert(input.size() == 1);
+    BuildingNodeInput* bldInput = static_cast<BuildingNodeInput*>(input[0]);
+    assert(bldInput);
+    double unadjustSatiation = bldInput->mUnadjustSatiation;
+    double landDensityParam = bldInput->mLandDensityParam;
+    double subregionalPopulation = bldInput->mCurrentSubregionalPopulation;
+    double habitableLand = bldInput->mHabitableLand;
+    double bParam = bldInput->mbParam;
+    double incomeParam = bldInput->mIncomeParam;
+    double subregionalIncome = bldInput->mCurrentSubregionalIncome;
+    double biasAdjustParam = bldInput->mBiasAdjustParam;
 
-	double pcfloorspace = (unadjustSatiation + (-landDensityParam) * log(subregionalPopulation / habitableLand))
-		* exp((-bParam)
-			* exp((-incomeParam) * log(subregionalIncome)))
-			+ biasAdjustParam;
+    double pcfloorspace = (unadjustSatiation + (-landDensityParam) * log(subregionalPopulation / habitableLand))
+        * exp((-bParam)
+            * exp((-incomeParam) * log(subregionalIncome)))
+            + biasAdjustParam;
 
-	double floorspace = (pcfloorspace * subregionalPopulation) / 1000000;
+    // unit conversions to convert from from billion m^2 to m^2
+    const double CONV_M2_BM2 = 1e-9;
+    // unit conversions to convert from thous ppl to ppl
+    const double CONV_POP_THOUS = 1e3;
+    double floorspace = pcfloorspace * CONV_M2_BM2 * subregionalPopulation * CONV_POP_THOUS;
 
-	bldInput->setPhysicalDemand(floorspace, regionName, period);
+    bldInput->setPhysicalDemand(floorspace, regionName, period);
 
-	return floorspace;
+    return floorspace;
 }
 

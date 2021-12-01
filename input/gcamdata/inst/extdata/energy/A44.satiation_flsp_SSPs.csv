@@ -1,31 +1,31 @@
 # File: A44.satiation_flsp_SSPs.csv
-# Title: Assumed satiation levels of floorspace 
+# Title: Assumed satiation levels of commercial floorspace 
 # Units: m2 per capita
-# Column types: ccnn 
+# Column types: ccn 
 # ----------
-SSP,region.class,resid,comm
-SSP1,A,54,24
-SSP1,B,45,22
-SSP1,C,41,19
-SSP1,D,36,17
-SSP1,E,32,15
-SSP2,A,60,27
-SSP2,B,50,24
-SSP2,C,45,21
-SSP2,D,40,19
-SSP2,E,35,17
-SSP3,A,60,27
-SSP3,B,50,24
-SSP3,C,45,21
-SSP3,D,40,19
-SSP3,E,35,17
-SSP4,A,54,24.3
-SSP4,B,45,21.6
-SSP4,C,40.5,18.9
-SSP4,D,34,16.15
-SSP4,E,29.75,14.45
-SSP5,A,66,30
-SSP5,B,55,26
-SSP5,C,50,23
-SSP5,D,44,21
-SSP5,E,39,19
+SSP,region.class,comm
+SSP1,A,24
+SSP1,B,22
+SSP1,C,19
+SSP1,D,17
+SSP1,E,15
+SSP2,A,27
+SSP2,B,24
+SSP2,C,21
+SSP2,D,19
+SSP2,E,17
+SSP3,A,27
+SSP3,B,24
+SSP3,C,21
+SSP3,D,19
+SSP3,E,17
+SSP4,A,24.3
+SSP4,B,21.6
+SSP4,C,18.9
+SSP4,D,16.15
+SSP4,E,14.45
+SSP5,A,30
+SSP5,B,26
+SSP5,C,23
+SSP5,D,21
+SSP5,E,19
