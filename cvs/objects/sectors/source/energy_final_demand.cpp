@@ -127,17 +127,12 @@ void EnergyFinalDemand::toDebugXMLDerived( const int period, std::ostream& out, 
 void EnergyFinalDemand::completeInit( const string& aRegionName,
                                       const IInfo* aRegionInfo )
 {
-    //mDemandFunction.reset( mIsPerCapBased ? new PerCapitaGDPDemandFunction : new TotalGDPDemandFunction );
     if(mIsPerCapBased) {
         mDemandFunction.reset( new PerCapitaGDPDemandFunction );
     }
     else {
         mDemandFunction.reset( new TotalGDPDemandFunction );
     }
-    // Setup the default demand function if one was not read in.
-    /*if( !mDemandFunction.get() ){
-        mDemandFunction.reset( new TotalGDPDemandFunction );
-    }*/
 
     if( mBaseService[ 0 ] < 0.0 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );

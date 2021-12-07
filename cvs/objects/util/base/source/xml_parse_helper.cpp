@@ -114,7 +114,7 @@ struct PairTypeHelper {
  *                  containers we are interested in debugging.
  * \param aNode The XML Node at the container level.  For instance if we are debugging SupplySector the aNode
  *              would be a reference to `<supplysector name="sector name">`
- * \return A flag from the debugging code if false signals the generic parsing code should continue it's parsing, and
+ * \return A flag from the debugging code if false signals the generic parsing code should continue its parsing, and
  *         if true no further processing will be attempted.
  */
 template<typename SubClassFamilyVector>
@@ -825,8 +825,8 @@ void ParseChildData::processDataVector( DataVectorType aDataVector ) {
 
 //=============================================================================
 
-// This is kind of a wort.  Any AParsable subclasses which need to kick off recursive
-// processing of it's Data will have gotten a "promise" from XMLParseHelper that it would
+// This is kind of a wart.  Any AParsable subclasses which need to kick off recursive
+// processing of its Data will have gotten a "promise" from XMLParseHelper that it would
 // define how exactly to do that.  But we do not *actually* generate that code at that time
 // because it would have to recursively generate ALL the GCAM CONTAINER objects contained
 // below that hierarchy.  So to avoid the unresolved symbol error at the linker stage we

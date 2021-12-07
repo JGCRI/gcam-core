@@ -47,7 +47,6 @@
 #include <vector>
 #include <map>
 #include "resources/include/aresource.h"
-#include "util/base/include/object_meta_info.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 
@@ -80,10 +79,6 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
 
-    // TODO: is this stuff used?
-    //typedef ObjECTS::TObjectMetaInfo<> object_meta_info_type;
-    //typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
-
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
     DEFINE_DATA_WITH_PARENT(
@@ -107,9 +102,6 @@ protected:
     
     //! Pointer to the resource's information store.
     std::auto_ptr<IInfo> mResourceInfo;
-
-    //! Vector of object meta info to pass to the market
-    //object_meta_info_vector_type mObjectMetaInfo;
 
     virtual const std::string& getXMLName() const;
     void setMarket( const std::string& aRegionName );

@@ -212,5 +212,6 @@
 #include "util/curves/include/point_set.h"
 #include "util/curves/include/point_set_curve.h"
 #include "util/curves/include/xy_data_point.h"
+#include "util/base/include/object_meta_info.h"
 
 #endif // _GCAM_DATA_CONTAINERS_H_

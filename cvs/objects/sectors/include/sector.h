@@ -53,7 +53,6 @@
 
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/inamed.h"
-//#include "util/base/include/object_meta_info.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
@@ -136,7 +135,7 @@ protected:
         //! markets for this sector.
         DEFINE_VARIABLE( SIMPLE, "use-trial-market", mUseTrialMarkets, bool ),
                 
-        DEFINE_VARIABLE( CONTAINER, "object-meta-info", mObjectMetaInfo, std::vector<ObjECTS::TObjectMetaInfo/*<>*/*> )
+        DEFINE_VARIABLE( CONTAINER, "object-meta-info", mObjectMetaInfo, std::vector<ObjECTS::TObjectMetaInfo*> )
     )
     
     typedef std::vector<Subsector*>::iterator SubsectorIterator;
@@ -145,9 +144,8 @@ protected:
     //! Pointer to the sector's information store.
     std::auto_ptr<IInfo> mSectorInfo;
 
-    typedef ObjECTS::TObjectMetaInfo/*<>*/ object_meta_info_type;
+    typedef ObjECTS::TObjectMetaInfo object_meta_info_type;
     typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
-    //object_meta_info_vector_type mObjectMetaInfo; //!< Vector of object meta info to pass to mSectorInfo
 
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
 

@@ -239,7 +239,7 @@ class ParseChildData {
 public:
     /*!
      * \brief Create new helper to parse the child elements of the given node.
-     * \details The parent node and it's attributes are stored for convenience.
+     * \details The parent node and its attributes are stored for convenience.
      * \param aNode The XML node who's children need to be processed.
      * \param aAttrs The attributes already converted to strings which is saved for performance reasons.
      */

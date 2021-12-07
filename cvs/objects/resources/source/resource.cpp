@@ -69,7 +69,6 @@ extern Scenario* scenario;
 
 //! Default constructor.
 Resource::Resource():
-//mObjectMetaInfo(),
 mResourcePrice( Value( 0.0 ) ),
 mAvailable( Value( 0.0 ) ),
 mAnnualProd( Value( 0.0 ) ),
@@ -121,14 +120,6 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
     // Write out the market string.
     XMLWriteElement( mMarket, "market", aOut, aTabs );
 
-    /*if ( mObjectMetaInfo.size() ) {
-        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
-            metaInfoIterItem != mObjectMetaInfo.end(); 
-            ++metaInfoIterItem ) {
-                metaInfoIterItem->toDebugXML( period, aOut, aTabs );
-            }
-    }*/
-
     // Write out resource prices for debugging period.
     XMLWriteElement( mResourcePrice[ period ], "rscprc", aOut, aTabs );
 
@@ -172,15 +163,6 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
     // Set output and price unit of resource into the resource info.
     mResourceInfo->setString( "output-unit", mOutputUnit );
     mResourceInfo->setString( "price-unit", mPriceUnit );
-
-    /*if ( mObjectMetaInfo.size() ) {
-        // Put values in mSectorInfo
-        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin(); 
-            metaInfoIterItem != mObjectMetaInfo.end();
-            ++metaInfoIterItem ) {
-                mResourceInfo->setDouble( (*metaInfoIterItem).getName(), (*metaInfoIterItem).getValue() );
-            }
-    }*/
 
     for( vector<SubResource*>::iterator subResIter = mSubResource.begin(); subResIter != mSubResource.end(); subResIter++ ) {
         ( *subResIter )->completeInit( aRegionName, mName, mResourceInfo.get() );
@@ -254,20 +236,6 @@ void Resource::setMarket( const string& aRegionName ) {
             marketInfo->setString( "Market-Region", mMarket );
       }
     }
-    // Put values in market.
-    /*if ( mObjectMetaInfo.size() ) {
-        // Put values in market
-        for ( int period = 0; period < pModeltime->getmaxper(); ++period ) {
-            IInfo* pMarketInfo = pMarketplace->getMarketInfo( mName, aRegionName, period, true );
-            if ( pMarketInfo ) {
-                for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
-                    metaInfoIterItem != mObjectMetaInfo.end(); 
-                    ++metaInfoIterItem ) {
-                        pMarketInfo->setDouble( (*metaInfoIterItem).getName(), (*metaInfoIterItem).getValue() );
-                    }
-            }
-        }
-    }*/
 }
 
 //! Return resource name.

@@ -378,7 +378,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Food demand in Pcal/year
-        DEFINE_VARIABLE( ARRAY | STATE, /*"food-demand"*/"base-service", mFoodDemandQuantity, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "base-service", mFoodDemandQuantity, objects::PeriodVector<Value> ),
 
         //! Demand scale paramater (A)
         DEFINE_VARIABLE( SIMPLE, "scale-param", mScaleParam, Value ),

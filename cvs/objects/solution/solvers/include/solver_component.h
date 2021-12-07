@@ -58,11 +58,7 @@ class SolutionInfoSet;
 class World;
 
 // Need to forward declare the subclasses as well.
-//class LogNewtonRaphson;
 class BisectAll;
-//class LogNewtonRaphsonSaveDeriv;
-//class BisectOne;
-//class BisectPolicy;
 class LogBroyden;
 class Preconditioner;
 

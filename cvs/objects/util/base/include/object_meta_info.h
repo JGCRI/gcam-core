@@ -61,19 +61,18 @@ namespace ObjECTS {
 
 // class: TObjectMetaInfo **************************************************
 
-/*template <class T = double>*/
 class TObjectMetaInfo : public INamed
 {
 public :
 
-   typedef double/*T*/   value_type;
+   typedef double   value_type;
 
    //! Default constructor
    TObjectMetaInfo(void) : mName(), mValue() {}
    /*! Copy constructor
     *  \param other the instance to copy
     */
-   TObjectMetaInfo(const TObjectMetaInfo/*<T>*/& other)
+   TObjectMetaInfo(const TObjectMetaInfo& other)
       : mName( other.mName ), mValue( other.mValue ) {}
 
    //! Destructor
@@ -83,7 +82,7 @@ public :
     *  \param other the instance to copy
     *  \return *this
     */
-   TObjectMetaInfo/*<T>*/& operator = (const TObjectMetaInfo/*<T>*/& other)
+   TObjectMetaInfo& operator = (const TObjectMetaInfo& other)
    {
       if ( &other != this )
       {
@@ -147,8 +146,6 @@ protected :
     
         DEFINE_VARIABLE( SIMPLE, "value", mValue, value_type )
     )
-   //std::string mName;
-   //value_type  mValue;
 };
 
 // TObjectMetaInfoGetXMLName ***********************************************
@@ -162,24 +159,22 @@ inline const std::string& TObjectMetaInfoGetXMLName( void )
    return XMLName;
 }
 
-// TObjectMetaInfo<T>::getXMLNameStatic ************************************
+// TObjectMetaInfo::getXMLNameStatic ************************************
 
 /*! Get the XML tag name
  *  \return the XML tag name
  */
-//template <class T>
-inline const std::string& TObjectMetaInfo/*<T>*/::getXMLNameStatic( void )
+inline const std::string& TObjectMetaInfo::getXMLNameStatic( void )
 {
    return TObjectMetaInfoGetXMLName();
 }
 
-//template <class T>
-inline const std::string& TObjectMetaInfo/*<T>*/::getXMLName( void ) const
+inline const std::string& TObjectMetaInfo::getXMLName( void ) const
 {
    return getXMLNameStatic();
 }
 
-// TObjectMetaInfo<T>::toDebugXML ******************************************
+// TObjectMetaInfo::toDebugXML ******************************************
 
 /*! \brief Serialize the object to an output stream in an XML format.
  *  \details Function which writes out all data members of an object which are
@@ -190,8 +185,7 @@ inline const std::string& TObjectMetaInfo/*<T>*/::getXMLName( void ) const
  *  \param aOut Stream into which to write.
  *  \param aTabs Object which controls formatting of the file.
  */
-//template <class T>
-inline void TObjectMetaInfo/*<T>*/::toDebugXML( const int aPeriod,
+inline void TObjectMetaInfo::toDebugXML( const int aPeriod,
    std::ostream& aOut, Tabs* aTabs ) const
 {
    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );

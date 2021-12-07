@@ -139,7 +139,7 @@ protected:
         LandNode,
                             
         //! Land allocated typically in thous km2.
-        DEFINE_VARIABLE( ARRAY, /*"land-allocation"*/"landAllocation", mLandAllocation, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY, "landAllocation", mLandAllocation, objects::PeriodVector<Value> ),
 
         //! Rate at which carbon price is expected to increase
         DEFINE_VARIABLE( ARRAY, "carbonPriceIncreaseRate", mCarbonPriceIncreaseRate, objects::PeriodVector<double> ),
