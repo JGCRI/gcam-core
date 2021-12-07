@@ -1,11 +1,11 @@
 # File: A44.satiation_flsp.csv
-# Title: Assumed satiation levels of floorspace
+# Title: Assumed satiation levels of commercial floorspace
 # Units: m2 per capita
-# Column types: cii 
+# Column types: ci 
 # ----------
-region.class,resid,comm
-A,60,27
-B,50,24
-C,45,21
-D,40,19
-E,35,17
+region.class,comm
+A,27
+B,24
+C,21
+D,19
+E,17

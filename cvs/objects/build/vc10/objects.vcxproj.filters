@@ -916,6 +916,8 @@
     </ClCompile>
     <ClCompile Include="..\..\util\base\source\xml_parse_helper.cpp">
       <Filter>Source Files\util\base</Filter>
+    <ClCompile Include="..\..\functions\source\building_gompertz_function.cpp">
+      <Filter>Source Files\functions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1860,6 +1862,8 @@
     </ClInclude>
     <ClInclude Include="..\..\util\base\include\xml_parse_helper.h">
       <Filter>Header Files\util\base</Filter>
+    <ClInclude Include="..\..\functions\include\building_gompertz_function.h">
+      <Filter>Header Files\functions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

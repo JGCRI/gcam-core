@@ -55,6 +55,7 @@
 #include "marketplace/include/marketplace.h"
 #include "sectors/include/sector_utils.h"
 #include "functions/include/satiation_demand_function.h"
+#include "functions/include/building_gompertz_function.h"
 #include "containers/include/market_dependency_finder.h"
 
 using namespace std;
@@ -169,6 +170,8 @@ IInput* BuildingNodeInput::clone() const {
     return retNodeInput;
 }
 
+
+
 void BuildingNodeInput::copy( const BuildingNodeInput& aNodeInput ) {
     mName = aNodeInput.mName;
     mFunctionType = aNodeInput.mFunctionType;
@@ -181,8 +184,11 @@ void BuildingNodeInput::copy( const BuildingNodeInput& aNodeInput ) {
     mInternalGainsMarketname = aNodeInput.mInternalGainsMarketname;
     mInternalGainsUnit = aNodeInput.mInternalGainsUnit;
 
+
     delete mSatiationDemandFunction;
     mSatiationDemandFunction = aNodeInput.mSatiationDemandFunction->clone();
+
+
 
     // copy children
     for( CNestedInputIterator it = aNodeInput.mNestedInputs.begin(); it != aNodeInput.mNestedInputs.end(); ++it ) {
@@ -209,6 +215,15 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
     XMLWriteElement( mShellConductance[ aPeriod ], "shell-conductance", aOut, aTabs );
     XMLWriteElement( mFloorToSurfaceRatio[ aPeriod ], "floor-to-surface-ratio", aOut, aTabs );
     XMLWriteElement( mPrice[ aPeriod ], "price", aOut, aTabs );
+    XMLWriteElement(mUnadjustSatiation, "unadjust-satiation", aOut, aTabs);
+    XMLWriteElement(mHabitableLand, "habitable-land", aOut, aTabs);
+    XMLWriteElement(mBasepcFlsp, "base-pcFlsp", aOut, aTabs);
+    XMLWriteElement(mLandDensityParam, "land-density-param", aOut, aTabs);
+    XMLWriteElement(mbParam, "b-param", aOut, aTabs);
+    XMLWriteElement(mIncomeParam, "income-param", aOut, aTabs);
+    XMLWriteElement(mBiasAdjustParam, "bias-adjust-param", aOut, aTabs);
+    XMLWriteElement(mCurrentSubregionalPopulation, "subregional-population", aOut, aTabs);
+    XMLWriteElement(mCurrentSubregionalIncome, "subregional-income", aOut, aTabs);
 
     XMLWriteElement( mFunctionType, "prodDmdFnType", aOut, aTabs );
     for( CNestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
@@ -309,6 +324,7 @@ double BuildingNodeInput::getInternalGains( const string& aRegionName, const int
 SatiationDemandFunction* BuildingNodeInput::getSatiationDemandFunction() const {
     return mSatiationDemandFunction;
 }
+
 
 void BuildingNodeInput::removeEmptyInputs() {
     // this functionality has not been implemented
