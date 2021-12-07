@@ -4,5 +4,5 @@
 # Column types: ccc 
 # ----------
 gcam.consumer,nodeInput,prodDmdFnType
-resid,resid,building-function
+resid,resid,building-gompertz-function
 comm,comm,building-function
