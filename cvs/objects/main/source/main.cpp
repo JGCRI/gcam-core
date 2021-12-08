@@ -208,6 +208,9 @@ int main( int argc, char *argv[] ) {
 	if (runner_type == SingleScenarioRunner::getXMLName() & !success & quitFirstFailure & !runTargetFinder) {
 		// If this is a single scenario runner (not target finder) which fails a model period while 
 		// QuitFirstFailure bool is set to true (1), do not print output
+		ILogger& mainLog = ILogger::getLogger("main_log");
+		mainLog.setLevel(ILogger::ERROR);
+		mainLog << "Period failed to solve. Skipping writing database." << endl;
 	}
 	else
 	{
