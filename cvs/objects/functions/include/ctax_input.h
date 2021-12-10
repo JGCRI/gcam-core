@@ -159,8 +159,9 @@ protected:
 
         //! The C coef associated with mFuelName
         DEFINE_VARIABLE( SIMPLE, "fuel-C-coef", mCachedCCoef, double ),
-                            
-        DEFINE_VARIABLE( SIMPLE | STATE, "gross-negative-value", mNetTransferAdjust, Value )
+        
+        //! State value for adding gross negative emissions value to market
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "gross-negative-value", mNetTransferAdjust, Value )
     )
 };
 
