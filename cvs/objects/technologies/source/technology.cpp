@@ -41,28 +41,23 @@
 #include "util/base/include/definitions.h"
 #include <string>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/dom/DOMNamedNodeMap.hpp>
 
 // User headers
 #include "util/base/include/configuration.h"
 #include "technologies/include/technology.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/tech_vector_parse_helper.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/gdp.h"
 #include "util/logger/include/ilogger.h"
 #include "technologies/include/icapture_component.h"
-#include "technologies/include/capture_component_factory.h"
 #include "technologies/include/ishutdown_decider.h"
-#include "technologies/include/shutdown_decider_factory.h"
 #include "functions/include/iinput.h"
 #include "functions/include/non_energy_input.h"
 #include "functions/include/input_capital.h"
 #include "functions/include/ifunction.h"
-#include "technologies/include/input_factory.h"
 #include "functions/include/function_manager.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
@@ -71,16 +66,13 @@
 #include "functions/include/idiscrete_choice.hpp"
 
 #include "technologies/include/ioutput.h"
-#include "technologies/include/output_factory.h"
 #include "technologies/include/primary_output.h"
-#include "technologies/include/output_factory.h"
 
 #include "technologies/include/ical_data.h"
 #include "technologies/include/iproduction_state.h"
 #include "technologies/include/production_state_factory.h"
 
 #include "technologies/include/marginal_profit_calculator.h"
-#include "emissions/include/ghg_factory.h"
 #include "emissions/include/co2_emissions.h"
 
 // TODO: Factory for cal data objects.
@@ -93,7 +85,6 @@
 #include "util/base/include/initialize_tech_vector_helper.hpp"
 
 using namespace std;
-using namespace xercesc;
 using namespace objects;
 
 extern Scenario* scenario;
@@ -119,6 +110,13 @@ typedef vector<IInput*>::const_iterator CInputIterator;
 Technology::Technology( const string& aName, const int aYear ) {
     mName = aName;
     mYear = aYear;
+    init();
+}
+
+/*!
+ * \brief Constructor.
+ */
+Technology::Technology() {
     init();
 }
 
@@ -229,75 +227,6 @@ bool Technology::isSameType( const string& aType ) const {
 double Technology::getFixedOutputDefault()
 {
     return -1.0;
-}
-
-bool Technology::XMLParse( const DOMNode* node )
-{
-    /*! \pre Assume we are passed a valid node. */
-    assert( node );
-
-    const DOMNodeList* nodeList = node->getChildNodes();
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() != DOMNode::ELEMENT_NODE ) {
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );        
-        if( nodeName == "lifetime" ) {
-            mLifetimeYears = XMLHelper<int>::getValue( curr );
-        }
-        else if( nodeName == "share-weight" ) {
-            mParsedShareWeight.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if( nodeName == "pMultiplier" ){
-           mPMultiplier = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "fixedOutput" ) {
-            mFixedOutput = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "capacity-factor" ) {
-            mCapacityFactor = XMLHelper<double>::getValue( curr );
-        }
-        else if( InputFactory::isOfType( nodeName ) ) {
-            parseContainerNode( curr, mInputs, InputFactory::create( nodeName ).release() );
-        }
-        else if( CaptureComponentFactory::isOfType( nodeName ) ) {
-            parseSingleNode( curr, mCaptureComponent, CaptureComponentFactory::create( nodeName ).release() );
-        }
-        else if( nodeName == StandardTechnicalChangeCalc::getXMLNameStatic() ){
-            parseSingleNode( curr, mTechChangeCalc, new StandardTechnicalChangeCalc );
-        }
-        else if( ShutdownDeciderFactory::isOfType( nodeName ) ) {
-            parseContainerNode( curr, mShutdownDeciders, ShutdownDeciderFactory::create( nodeName ).release() );
-        }
-        else if( GHGFactory::isGHGNode( nodeName ) ) {
-            parseContainerNode( curr, mGHG, GHGFactory::create( nodeName ).release() );
-        }
-        else if( nodeName == CalDataOutput::getXMLNameStatic() ) {
-            parseSingleNode( curr, mCalValue, new CalDataOutput );
-        }
-        else if( OutputFactory::isOfType( nodeName ) ) {
-            parseContainerNode( curr, mOutputs, OutputFactory::create( nodeName ).release() );
-        }
-        else if( nodeName == "keyword" ){
-            DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
-            for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
-                DOMNode* attrTemp = keywordAttributes->item( attrNum );
-                mKeywordMap[ XMLHelper<string>::safeTranscode( attrTemp->getNodeName() ) ] = 
-                    XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
-            }
-        }
-        // parse derived classes
-        else if( !XMLDerivedClassParse( nodeName, curr ) ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName
-                    << " found while parsing " << getXMLName() << "." << endl;
-        }
-    }
-
-    // TODO: Improve error handling.
-    return true;
 }
 
 /*!
@@ -872,7 +801,9 @@ double Technology::getFixedOutput( const string& aRegionName,
     assert( mProductionState[ aPeriod ] );
 
     // Store the marginal profit rate for use later
-    const_cast<Technology*>(this)->mMarginalRevenue = aMarginalRevenue;
+    if(mProductionState[aPeriod]->isOperating()) {
+        const_cast<Technology*>(this)->mMarginalRevenue = aMarginalRevenue;
+    }
 
     // Construct a marginal profit calculator. This allows the calculation of 
     // marginal profits to be lazy.

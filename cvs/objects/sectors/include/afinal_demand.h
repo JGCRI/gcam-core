@@ -43,12 +43,10 @@
  * \brief The AFinalDemand abstract base class header file.
  * \author Josh Lurz
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iparsable.h"
 #include "util/base/include/data_definition_util.h"
 
 // Forward declarations
@@ -70,7 +68,6 @@ class NegativeEmissionsFinalDemand;
  */
 
 class AFinalDemand: public INamed,
-                    public IParsable,
                     public IVisitable,
                     private boost::noncopyable
 {
@@ -79,10 +76,9 @@ public:
      * \brief Destructor.
      */
     virtual ~AFinalDemand();
-
-    // Documentation is inherited
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
     
+    virtual const std::string& getXMLName() const = 0;
+
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const = 0;

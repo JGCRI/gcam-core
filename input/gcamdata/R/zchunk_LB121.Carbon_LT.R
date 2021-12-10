@@ -94,6 +94,7 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
               L121.CarbonContent_kgm2_R_LTpast_GLU,
               L121.CarbonContent_kgm2_R_LTmgd_GLU) %>%
       select(GCAM_region_ID, Land_Type, GLU, `mature age`, soil_c, veg_c) %>%
+      mutate(`mature age` = round(`mature age`)) %>%
       arrange(GCAM_region_ID, GLU, Land_Type) %>%
       add_title("Natural vegetation and managed land age and carbon density") %>%
       add_units("Years (mature age) and kgC/m2 (others)") %>%

@@ -40,20 +40,16 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/util/include/and_solution_info_filter.h"
-#include "solution/util/include/solution_info_filter_factory.h"
-#include "util/base/include/xml_helper.h"
-#include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
 typedef vector<ISolutionInfoFilter*>::const_iterator CSolutionInfoFilterIterator;
 
-AndSolutionInfoFilter::AndSolutionInfoFilter() {
+AndSolutionInfoFilter::AndSolutionInfoFilter(std::vector<ISolutionInfoFilter*> aFilters)
+:mFilters(aFilters)
+{
 }
 
 AndSolutionInfoFilter::~AndSolutionInfoFilter() {
@@ -66,39 +62,6 @@ AndSolutionInfoFilter::~AndSolutionInfoFilter() {
 const string& AndSolutionInfoFilter::getXMLNameStatic() {
     const static string XML_NAME = "and-solution-info-filter";
     return XML_NAME;
-}
-
-bool AndSolutionInfoFilter::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
-            ISolutionInfoFilter* newFilter = SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr);
-            
-            // make sure the factory was able to create if before adding it
-            if( newFilter ) {
-                mFilters.push_back( newFilter );
-            }
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
 }
 
 bool AndSolutionInfoFilter::acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const {

@@ -49,6 +49,8 @@
  */
 class ITarget {
 public:
+    virtual ~ITarget() {}
+    
     /*!
      * \brief A year flag to indicate that getStatus should use getYearOfMaxTargetValue
      *        to figure out the appropriate year to get the status in.

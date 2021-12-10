@@ -46,14 +46,12 @@
 * \author Jim Naslund
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <vector>
 #include <memory>
 #include <string>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
-#include "util/base/include/iparsable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -83,7 +81,7 @@ class NonCO2Emissions;
  *          The last one of these read in determines the method used.
  * \author Sonny Kim, Marshall Wise, Steve Smith, Nick Fernandez, Jim Naslund
  */
-class AGHG: public INamed, public IParsable, public IVisitable, private boost::noncopyable
+class AGHG: public INamed, public IVisitable, private boost::noncopyable
 { 
     friend class XMLDBOutputter;
 
@@ -95,9 +93,17 @@ public:
     virtual AGHG* clone() const = 0;
     
     virtual void copyGHGParameters( const AGHG* aPrevGHG ) = 0;
-
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+    
+    /*!
+     * \brief Get the XML node name for output to XML.
+     * \details This public function accesses the private constant string,
+     *          XML_NAME. This way the tag is always consistent for both read-in
+     *          and output and can be easily changed. This function may be
+     *          virtual to be overridden by derived class pointers.
+     * \return The constant XML_NAME.
+     */
+    virtual const std::string& getXMLName() const = 0;
 
     void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
@@ -178,17 +184,6 @@ public:
 protected:
 
     AGHG();
-
-    /*!
-     * \brief Get the XML node name for output to XML.
-     * \details This public function accesses the private constant string,
-     *          XML_NAME. This way the tag is always consistent for both read-in
-     *          and output and can be easily changed. This function may be
-     *          virtual to be overridden by derived class pointers.
-     * \author Jim Naslund
-     * \return The constant XML_NAME.
-     */
-    virtual const std::string& getXMLName() const = 0;
     
     DEFINE_DATA(
         /* Declare all subclasses of AGHG to allow automatic traversal of the
@@ -203,27 +198,13 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "emissions-unit", mEmissionsUnit, std::string ),
 
         //! Emissions (calculated)
-        //! TODO: These are sized to store emissions for all periods however only
-        //!       a fraction of that will actually be used (depending on the technology
-        //!       vintage and lifetime.
-        DEFINE_VARIABLE( ARRAY | STATE, "emissions", mEmissions, objects::TechVintageVector<Value> )
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "emissions", mEmissions, objects::TechVintageVector<Value> )
     )
     
     //! Pre-located market which has been cached from the marketplace to get the price
     //! of this ghg and add demands to the market.
     std::auto_ptr<CachedMarket> mCachedMarket;
-
-    /*!
-     * \brief Parses any child nodes specific to derived classes
-     * \details Method parses any input data from child nodes that are specific
-     *          to the classes derived from this class.
-     * \author Josh Lurz, Steve Smith
-     * \param aNodeName name of current node
-     * \param aCurrNode pointer to the current node in the XML input tree
-     * \return Whether any node was parsed.
-     */
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode ) = 0;
-    
+   
     /*!
      * \brief XML debug output stream for derived classes
      * \details Function writes output due to any variables specific to derived

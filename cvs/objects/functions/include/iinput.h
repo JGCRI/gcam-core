@@ -45,11 +45,11 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/aparsable.h"
 #include "util/base/include/data_definition_util.h"
 
 class Tabs;
@@ -79,7 +79,7 @@ class CTaxInput;
  * \details
  * \author Josh Lurz
  */
-class IInput: public INamed, public IVisitable, private boost::noncopyable {
+class IInput: public INamed, public IVisitable, public AParsable, private boost::noncopyable {
 public:
     /*!
      * \brief Define different type attributes of inputs. These are not mutually
@@ -201,13 +201,13 @@ public:
      * \return The name of the input for reporting.
      */
     virtual const std::string& getXMLReportingName() const = 0;
-
-    /*!
-     * \brief Parse the data for this object starting at a given node.
-     * \param aNode Root node from which to parse data.
-     */
-    virtual void XMLParse( const xercesc::DOMNode* aNode ) = 0;
     
+    /*!
+     * \brief Return the name of the input for XMLParse.
+     * \return The name of the input for XMLParse.
+     */
+    virtual const std::string& getXMLName() const = 0;
+  
     /*!
      * \brief Write data from this object in an XML format for debugging.
      * \param aPeriod Period for which to write data.

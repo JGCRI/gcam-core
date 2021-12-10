@@ -40,9 +40,6 @@
 
 #include "util/base/include/definitions.h"
 
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-
 #include "emissions/include/gdp_control.h"
 #include "containers/include/scenario.h"
 #include "containers/include/gdp.h"
@@ -54,7 +51,6 @@
 //#include "functions/include/function_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -111,21 +107,6 @@ const string& GDPControl::getXMLName() const {
 const string& GDPControl::getXMLNameStatic(){
     static const string XML_NAME = "gdp-control";
     return XML_NAME;
-}
-
-bool GDPControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
-    
-    if ( aNodeName == "max-reduction" ){
-        mMaxReduction = XMLHelper<Value>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "steepness" ){
-        mSteepness = XMLHelper<Value>::getValue( aCurrNode );
-    }
-    else{
-        return false;
-    }
-       
-    return true;
 }
 
 void GDPControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

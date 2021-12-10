@@ -45,7 +45,6 @@
 * \author Sonny Kim
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/technology.h"
 
 class GDP;
@@ -62,6 +61,7 @@ class NukeFuelTechnology : public Technology
 {
 public:
     NukeFuelTechnology( const std::string& aName, const int aYear );
+    NukeFuelTechnology();
     virtual NukeFuelTechnology* clone() const;
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
@@ -86,8 +86,6 @@ public:
 							 const int aPeriod );
 
 protected:
-
-    bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
     virtual double getTotalInputCost( const std::string& aRegionName,
@@ -145,10 +143,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "reprocessingCost", reprocessingCost, double ),
 
         //! State value for fertile fuel market necessary to use Marketplace::addToDemand
-        DEFINE_VARIABLE( SIMPLE | STATE, "fertile-fuel-state", mLastFertileValue, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "fertile-fuel-state", mLastFertileValue, Value ),
 
         //! State value for blanket fuel market necessary to use Marketplace::addToDemand
-        DEFINE_VARIABLE( SIMPLE | STATE, "blanket-fuel-state", mLastBlanketValue, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "blanket-fuel-state", mLastBlanketValue, Value )
     )
     
     void copy( const NukeFuelTechnology& aOther );

@@ -46,7 +46,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "consumers/include/consumer.h"
 #include "util/base/include/value.h"
@@ -138,7 +137,6 @@ protected:
 
     void copy( const GCAMConsumer& aOther );
     virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     // not sure what this is for
     bool isCoefBased() const { return true; }

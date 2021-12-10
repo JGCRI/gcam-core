@@ -46,7 +46,6 @@
 #include "util/base/include/model_time.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 

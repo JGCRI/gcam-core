@@ -42,7 +42,6 @@
 * \author Sonny Kim
 */
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "consumers/include/consumer.h"
 #include "util/base/include/xml_helper.h"
@@ -60,7 +59,6 @@
 #include "containers/include/iinfo.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 

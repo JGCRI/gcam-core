@@ -212,11 +212,6 @@ protected :
       std::ostream& out,
       Tabs*         tabs ) const;
 
-   // Documentation is inherited
-   virtual bool XMLDerivedClassParse(
-      const std::string&      nodeName,
-      const xercesc::DOMNode* curr );
-
    static const double kWhrtoGJ;
     
     // Define data such that introspection utilities can process the data from this

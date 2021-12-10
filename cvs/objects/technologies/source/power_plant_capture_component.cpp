@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/power_plant_capture_component.h"
 #include "marketplace/include/marketplace.h"
@@ -103,46 +101,12 @@ const string& PowerPlantCaptureComponent::getXMLNameStatic() {
     return XML_NAME;
 }
 
-const string& PowerPlantCaptureComponent::getName() const {
+const string& PowerPlantCaptureComponent::getXMLName() const {
     return getXMLNameStatic();
 }
 
-// Documentation inherits.
-bool PowerPlantCaptureComponent::XMLParse( const xercesc::DOMNode* node ){
-    /*! \pre Assume we are passed a valid node. */
-    assert( node );
-
-    const xercesc::DOMNodeList* nodeList = node->getChildNodes();
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
-        const xercesc::DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() != xercesc::DOMNode::ELEMENT_NODE ){
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        if( nodeName == "storage-market" ){
-            mStorageMarket = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "remove-fraction" ){
-            mRemoveFraction = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "capture-energy" ){
-            mCaptureEnergy = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "non-energy-penalty" ){
-            mNonEnergyCostPenalty = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "target-gas" ){
-            mTargetGas = XMLHelper<string>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unknown tag " << nodeName << " encountered while processing "
-                    << getXMLNameStatic() << endl;
-        }
-    }
-    // TODO: Handle success and failure better.
-    return true;
+const string& PowerPlantCaptureComponent::getName() const {
+    return getXMLNameStatic();
 }
 
 void PowerPlantCaptureComponent::toDebugXML( const int aPeriod,

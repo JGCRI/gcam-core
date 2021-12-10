@@ -164,7 +164,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
         L102.CEDS %>%
           left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
           group_by(GCAM_region_ID, Non.CO2, CEDS_agg_sector, CEDS_agg_fuel, year) %>%
-          summarise(emissions = sum(emissions)) %>%
+          summarise(emissions = round(sum(emissions),emissions.DIGITS_GFED)) %>%
           ungroup() %>%
           na.omit() %>%
           add_comments("Calculate historical emissions from all sectors by sector and fuel from CEDS and CMIP data. CMIP is used for unmanaged lands") ->

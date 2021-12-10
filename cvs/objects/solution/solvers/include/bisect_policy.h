@@ -68,9 +68,6 @@ public:
     void init();
     ReturnCode solve( SolutionInfoSet& aSolutionSet, const int aPeriod );
     const std::string& getXMLName() const;
-    
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
 protected:
     //! Max iterations for this solver component

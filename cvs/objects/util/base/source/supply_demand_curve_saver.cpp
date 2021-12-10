@@ -57,7 +57,6 @@
 #include "marketplace/include/marketplace.h"
 
 using namespace std;
-using namespace xercesc;
 
 SupplyDemandCurveSaver::SupplyDemandCurveSaver() : mIsPricesRelative(true) {
 }
@@ -78,53 +77,6 @@ const string& SupplyDemandCurveSaver::getXMLNameStatic() {
 const string& SupplyDemandCurveSaver::getName() const {
     return mName;
 }
-
-/* Example XML:
-<scenario>
-   <supply-demand-curve-saver name="USAbiomass">
-      <price>0.995</price>
-      <price>1.000</price>
-      <price>1.005</price>
-   </supply-demand-curve-saver>
-</scenario>
- */
-
-bool SupplyDemandCurveSaver::XMLParse( const DOMNode* aNode ) {
-    /*! \pre Make sure we were passed a valid node. */
-    assert( aNode );
-    
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, XMLHelper<void>::name() );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the child nodes.
-    for ( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if ( nodeName == XMLHelper<void>::text() ) {
-            continue;
-        }
-        else if ( nodeName == "is-price-relative" ) {
-            // defaults to true
-            mIsPricesRelative = XMLHelper<bool>::getValue( curr );
-        }
-        else if ( nodeName == "price" ) {
-          double price = XMLHelper<double>::getValue( curr );	  
-          mPrices.push_back(price);
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unknown element " << nodeName << " encountered while parsing " << getXMLNameStatic() << endl;
-        }
-    }
-    
-    return true;
-}
-
 
 /*! \brief Find and print supply-demand curves for designated market.
 *

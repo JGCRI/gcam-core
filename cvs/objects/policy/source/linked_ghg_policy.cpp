@@ -43,8 +43,6 @@
 #include <cassert>
 
 #include "policy/include/linked_ghg_policy.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "containers/include/iinfo.h"
@@ -54,7 +52,6 @@
 #include "containers/include/iactivity.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -109,58 +106,6 @@ const string& LinkedGHGPolicy::getXMLNameStatic() {
 //! Get the linked ghg policy name. 
 const string& LinkedGHGPolicy::getName() const {
     return mName;
-}
-
-//! Initializes data members from XML.
-void LinkedGHGPolicy::XMLParse( const DOMNode* node ){
-    
-    /*! \pre assume we are passed a valid node.*/
-    assert( node );
-    
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-    
-    // get all child nodes.
-    DOMNodeList* nodeList = node->getChildNodes();
-    const Modeltime* modeltime = scenario->getModeltime();
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "policy-name" ) {
-            mPolicyName = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "market" ){
-            mMarket = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "linked-policy" ){
-            mLinkedPolicyName = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "price-unit" ){
-            mPriceUnits = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "output-unit" ){
-            mOutputUnits = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "price-adjust" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mPriceAdjust, modeltime );
-        }
-        else if( nodeName == "demand-adjust" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mDemandAdjust, modeltime );
-        }
-        else if( nodeName == "start-year" ){
-            mStartYear = XMLHelper<int>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
-        }
-    }
 }
 
 //! Writes data members to data stream in XML format.

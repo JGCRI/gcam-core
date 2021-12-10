@@ -43,11 +43,9 @@
  * \author Pralit Patel
  */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
-#include "util/base/include/value.h"
-#include "util/base/include/iparsable.h"
+#include "util/base/include/inamed.h"
 
 class Scenario;
 class IClimateModel;
@@ -71,7 +69,6 @@ class IClimateModel;
  * \author Pralit Patel
  */
 class IModelFeedbackCalc : public INamed,
-                           public IParsable,
                            private boost::noncopyable
 {
 public:

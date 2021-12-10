@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 class Tabs;
 
@@ -78,8 +77,9 @@ class Tabs;
  */
 class SecondaryOutput: public IOutput
 {
-    friend class OutputFactory;
 public:
+    SecondaryOutput();
+    
     /*!
      * \brief Get the XML name for the class.
      * \return The XML name for the class.
@@ -97,8 +97,8 @@ public:
     virtual void setName( const std::string& aName );
 
     virtual const std::string& getXMLReportingName() const;
-
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+    virtual const std::string& getXMLName() const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -165,11 +165,6 @@ public:
                                    const IOutput* aNextInput );
 
 protected:
-    /*!
-     * \brief Protected constructor so the class can only be created by the
-     *        OutputFactory.
-     */
-    SecondaryOutput();
 
     double calcPhysicalOutputInternal( const double aPrimaryOutput ) const;
     
@@ -179,14 +174,14 @@ protected:
         IOutput,
 
         //! Physical output by period.
-        DEFINE_VARIABLE( ARRAY | STATE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
 
         //! Name of the secondary output. Corresponds to a market for this good and
         //! a supply sector which supplies this good as its primary output.
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! CO2 emissions coefficient cached from the marketplace.
-        DEFINE_VARIABLE( SIMPLE, "co2-coef", mCachedCO2Coef, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "co2-coef", mCachedCO2Coef, Value ),
 
         //! Ratio of the secondary output to primary output production such that
         //! primary output multiplied by the ratio is equal to secondary output.

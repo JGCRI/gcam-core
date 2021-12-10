@@ -1018,7 +1018,7 @@ void XMLDBOutputter::startVisitOutput( const IOutput* aOutput, const int aPeriod
     stringstream* childBuffer = new stringstream();
 
     // the opening tag gets written in the parent buffer
-    XMLWriteOpeningTag( aOutput->getXMLReportingName(), *parentBuffer, mTabs.get(), aOutput->getName(), 0, "output" );
+    XMLWriteOpeningTag( aOutput->getXMLName(), *parentBuffer, mTabs.get(), aOutput->getName(), 0, "output" );
 
     // put the buffers on a stack so that we have the correct ordering
     mBufferStack.push( parentBuffer );
@@ -1070,7 +1070,7 @@ void XMLDBOutputter::endVisitOutput( const IOutput* aOutput, const int aPeriod )
         // retBuffer is still at the top of the stack
         iostream* retBuffer = mBufferStack.top();
         (*retBuffer) << parentBuffer->rdbuf() << childBuffer->rdbuf();
-        XMLWriteClosingTag( aOutput->getXMLReportingName(), *retBuffer, mTabs.get() );
+        XMLWriteClosingTag( aOutput->getXMLName(), *retBuffer, mTabs.get() );
     }
     else {
         // if we don't write the closing tag we still need to decrease the indent
@@ -1355,42 +1355,42 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
         writeItemUsingYear( "forcing-CO2", "W/m^2",
                              aClimateModel->getForcing( "CO2", util::round( year ) ),
                              year );
-		
-		// CH4 Forcing
+        
+        // CH4 Forcing
         writeItemUsingYear( "forcing-CH4", "W/m^2",
-						   aClimateModel->getForcing( "CH4", util::round( year ) ),
-						   year );
-		
-		// N2O Forcing
+                           aClimateModel->getForcing( "CH4", util::round( year ) ),
+                           year );
+        
+        // N2O Forcing
         writeItemUsingYear( "forcing-N2O", "W/m^2",
-						   aClimateModel->getForcing( "N2O", util::round( year ) ),
-						   year );
+                           aClimateModel->getForcing( "N2O", util::round( year ) ),
+                           year );
 
-		// SO2 Forcing
+        // SO2 Forcing
         writeItemUsingYear( "forcing-SO2", "W/m^2",
-						   aClimateModel->getForcing( "SO2", util::round( year ) ),
-						   year );
-		
-		// DirSO2 Forcing
+                           aClimateModel->getForcing( "SO2", util::round( year ) ),
+                           year );
+        
+        // DirSO2 Forcing
         writeItemUsingYear( "forcing-DirSO2", "W/m^2",
-						   aClimateModel->getForcing( "DirSO2", util::round( year ) ),
-						   year );
-		
-		// TropO3 Forcing
+                           aClimateModel->getForcing( "DirSO2", util::round( year ) ),
+                           year );
+        
+        // TropO3 Forcing
         writeItemUsingYear( "forcing-TropO3", "W/m^2",
-						   aClimateModel->getForcing( "TropO3", util::round( year ) ),
-						   year );
-		
-		// BC Forcing
+                           aClimateModel->getForcing( "TropO3", util::round( year ) ),
+                           year );
+        
+        // BC Forcing
         writeItemUsingYear( "forcing-BC", "W/m^2",
-						   aClimateModel->getForcing( "BC", util::round( year ) ),
-						   year );
-		
-		// OC Forcing
+                           aClimateModel->getForcing( "BC", util::round( year ) ),
+                           year );
+        
+        // OC Forcing
         writeItemUsingYear( "forcing-OC", "W/m^2",
-						   aClimateModel->getForcing( "OC", util::round( year ) ),
-						   year );
-		
+                           aClimateModel->getForcing( "OC", util::round( year ) ),
+                           year );
+        
         // StratH2O Forcing
         writeItemUsingYear( "forcing-StratH2O", "W/m^2",
                            aClimateModel->getForcing( "StratH2O", util::round( year ) ),
@@ -1442,18 +1442,18 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
                            aClimateModel->getForcing( "HFC32", util::round( year ) ),
                            year );
         
-		// long-lived F-gas Forcing
+        // long-lived F-gas Forcing
         writeItemUsingYear( "forcing-longlivedFgas", "W/m^2",
-						   aClimateModel->getForcing( "SF6", util::round( year ) )
-						   + aClimateModel->getForcing( "CF4", util::round( year ) )
-						   + aClimateModel->getForcing( "C2F6", util::round( year ) ),
-						   year );
-		
-		// Montreal gas Forcing
+                           aClimateModel->getForcing( "SF6", util::round( year ) )
+                           + aClimateModel->getForcing( "CF4", util::round( year ) )
+                           + aClimateModel->getForcing( "C2F6", util::round( year ) ),
+                           year );
+        
+        // Montreal gas Forcing
         writeItemUsingYear( "forcing-Montreal", "W/m^2",
-						   aClimateModel->getForcing( "Montreal", util::round( year ) ),
-						   year );
-		
+                           aClimateModel->getForcing( "Montreal", util::round( year ) ),
+                           year );
+        
         // Total Forcing
         writeItemUsingYear( "forcing-total", "W/m^2",
                             aClimateModel->getTotalForcing( year ),
@@ -1805,23 +1805,25 @@ void XMLDBOutputter::endVisitGCAMConsumer( const GCAMConsumer* aGCAMConsumer, co
     XMLWriteClosingTag( aGCAMConsumer->getXMLName(), mBuffer, mTabs.get() );
 }
 
-void XMLDBOutputter::startVisitBuildingNodeInput( const BuildingNodeInput* aBuildingNodeInput, const int aPeriod ) {
+void XMLDBOutputter::startVisitBuildingNodeInput(const BuildingNodeInput* aBuildingNodeInput, const int aPeriod) {
     // write the BuildingNodeInput tag and it's children in temp buffers so that we can
     // check if anything was really written out and avoid writing blank node inputs
     stringstream* parentBuffer = new stringstream();
     stringstream* childBuffer = new stringstream();
 
-    XMLWriteOpeningTag( BuildingNodeInput::getXMLNameStatic(), *parentBuffer, mTabs.get(),
-        aBuildingNodeInput->getName() );
+    XMLWriteOpeningTag(BuildingNodeInput::getXMLNameStatic(), *parentBuffer, mTabs.get(),
+        aBuildingNodeInput->getName());
 
     // put the buffers on a stack so that we have the correct ordering
-    mBufferStack.push( parentBuffer );
-    mBufferStack.push( childBuffer );
+    mBufferStack.push(parentBuffer);
+    mBufferStack.push(childBuffer);
 
-    writeItemToBuffer( aBuildingNodeInput->getSatiationDemandFunction()->mSatiationImpedance,
-                       "satiation-impedance", *childBuffer, mTabs.get(), 1, "unitless" );
-    writeItemToBuffer( aBuildingNodeInput->getSatiationDemandFunction()->mSatiationLevel,
-                       "satiation-level", *childBuffer, mTabs.get(), 1, "GJ/m^2" );
+    if (aBuildingNodeInput->getSatiationDemandFunction() ) {
+        writeItemToBuffer(aBuildingNodeInput->getSatiationDemandFunction()->mSatiationImpedance,
+            "satiation-impedance", *childBuffer, mTabs.get(), 1, "unitless");
+        writeItemToBuffer(aBuildingNodeInput->getSatiationDemandFunction()->mSatiationLevel,
+            "satiation-level", *childBuffer, mTabs.get(), 1, "GJ/m^2");
+    }
     const Modeltime* modeltime = scenario->getModeltime();
     for( int per = 0; per < modeltime->getmaxper(); ++per ) {
         double price = aBuildingNodeInput->getPricePaid( mCurrentRegion, per );

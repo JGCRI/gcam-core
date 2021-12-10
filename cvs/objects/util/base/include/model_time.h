@@ -47,7 +47,8 @@
 
 #include <vector>
 #include <map>
-#include "util/base/include/iparsable.h"
+#include "util/base/include/data_definition_util.h"
+#include "util/base/include/aparsable.h"
 
 class Tabs;
 
@@ -58,7 +59,7 @@ class Tabs;
 * \author Sonny Kim
 */
 
-class Modeltime: public IParsable
+class Modeltime: public AParsable
 {
 private:
     //! Model start year (read-in).
@@ -101,8 +102,8 @@ private:
 public:
     static const Modeltime* getInstance();
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    // AParsable methods
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
     
     void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
@@ -131,6 +132,11 @@ public:
      */
     int getCarbonModelStartYear() const;
 
+protected:
+    DEFINE_DATA(
+        /*! \brief Modeltime is the only member of this container hierarchy. */
+        DEFINE_SUBCLASS_FAMILY( Modeltime )
+    )
 };
 
 #endif // _MODEL_TIME_H_

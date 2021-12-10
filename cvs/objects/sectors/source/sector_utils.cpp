@@ -332,31 +332,6 @@ const string SectorUtils::getTrialMarketName( const string& aSectorName ){
 }
 
 /*!
- * \brief Get the variance of the resource.
- * \details Queries the market-info of the good for the resource variance.
- *          Returns zero if the market does not exist or does not have a
- *          resource variance set.
- * \param aResource Resource for which to get the variance.
- * \param aRegion Region for which to get the variance.
- * \param aPeriod Model period.
- * \return The resource variance.
- */
-double SectorUtils::getVariance( const string& aResourceName,
-                                 const string& aRegionName,
-                                 const int aPeriod )
-{
-    const Marketplace* marketplace = scenario->getMarketplace();
-    const IInfo* resourceInfo =
-        marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod, true );
-
-    double variance = resourceInfo ? 
-                      resourceInfo->getDouble( "resourceVariance", true ) : 0;
-
-    assert( variance >= 0 );
-    return variance;
-}
-
-/*!
  * \brief Converts energy to capacity using a given capacity factor.
  * \param aCapacityFactor Capacity factor to use in the conversion.
  * \param aEnergy The energy quantity to convert.

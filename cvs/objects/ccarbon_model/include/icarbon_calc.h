@@ -44,11 +44,9 @@
  * \author James Blackwood, Josh Lurz
  */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iparsable.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -79,7 +77,6 @@ class NoEmissCarbonCalc;
  *          by the land leaf.
  */
 class ICarbonCalc: public IVisitable,
-                   public IParsable ,
                    private boost::noncopyable
 {
 public:
@@ -134,9 +131,6 @@ public:
 
     //! Destructor.
     inline virtual ~ICarbonCalc();
-
-    // Documentation is inherited.
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
 
     // Documentation is inherited.
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;

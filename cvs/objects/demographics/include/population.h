@@ -48,7 +48,6 @@
 
 #include <vector>
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/iyeared.h"
@@ -74,7 +73,6 @@ public:
     Population();
     virtual ~Population();
     virtual Population* cloneAndInterpolate( const int aNewYear, const Population* aNextPopulation ) const = 0;
-    void XMLParse( const xercesc::DOMNode* node );
     void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 
     virtual void completeInit( const std::vector<double>& femalePopFromPrev = std::vector<double>(), const std::vector<double>& malePopFromPrev = std::vector<double>() ) = 0;
@@ -115,7 +113,6 @@ protected:
     )
 
     virtual const std::string& getXMLName() const = 0;
-    virtual bool XMLDerivedClassParse( const std::string &nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
 private:
     const static int WORKING_AGE_MIN_DEFAULT = 15; //!< Default minimum working age.

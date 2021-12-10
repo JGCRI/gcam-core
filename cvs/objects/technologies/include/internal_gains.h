@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 class Tabs;
 
@@ -80,10 +79,12 @@ class Tabs;
  * \author Jiyong Eom
  */
 class InternalGains : public IOutput {
-    friend class OutputFactory;
 public:
+    InternalGains();
 
     virtual const std::string& getXMLReportingName() const;
+    
+    virtual const std::string& getXMLName() const;
 
     /*!
      * \brief Get the XML name for the class.
@@ -98,8 +99,6 @@ public:
     virtual bool isSameType( const std::string& aType ) const;
 
     virtual const std::string& getName() const;
-
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -163,11 +162,6 @@ public:
                                    const int aNextYear, const IOutput* aPreviousInput,
                                    const IOutput* aNextInput );
 protected:
-    /*!
-     * \brief Protected constructor so the class can only be created by the
-     *        OutputFactory.
-     */
-    InternalGains();
     
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
@@ -175,7 +169,7 @@ protected:
         IOutput,
 
         //! Physical output by period.
-        DEFINE_VARIABLE( ARRAY | STATE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
 
         //! The name of the output
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),

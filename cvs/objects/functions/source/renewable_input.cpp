@@ -39,13 +39,10 @@
  */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "functions/include/renewable_input.h"
 #include "util/base/include/xml_helper.h"
 
 using namespace std;
-using namespace xercesc;
 
 // static initialize.
 const string RenewableInput::XML_REPORTING_NAME = "input-renewable";
@@ -75,6 +72,10 @@ const string& RenewableInput::getXMLNameStatic() {
 */
 const string& RenewableInput::getXMLReportingName() const{
     return XML_REPORTING_NAME;
+}
+
+const string& RenewableInput::getXMLName() const{
+    return getXMLNameStatic();
 }
 
 //! Constructor
@@ -114,33 +115,6 @@ void RenewableInput::copyParam( const IInput* aInput,
                                 const int aPeriod )
 {
     aInput->copyParamsInto( *this, aPeriod );
-}
-
-void RenewableInput::XMLParse( const xercesc::DOMNode* node ) {
-    // TODO: Replace this with the restructured XMLParse.
-    // Make sure we were passed a valid node.
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    const DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() == DOMNode::TEXT_NODE ){
-            continue;
-        }
-
-        // Renewable input does not parse any data, but still report errors.
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLNameStatic() << "." << endl;
-    }
 }
 
 void RenewableInput::toDebugXML( const int aPeriod,

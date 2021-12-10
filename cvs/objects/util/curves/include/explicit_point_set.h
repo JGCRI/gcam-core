@@ -50,7 +50,6 @@
 #include <iosfwd>
 #include <string>
 #include <cfloat>
-#include <xercesc/dom/DOMNode.hpp>
 #include "util/curves/include/point_set.h"
 
 class Tabs;
@@ -93,7 +92,6 @@ public:
     double getNearestYBelow( const double x ) const;
     double getNearestYAbove( const double x ) const;
     void outputAsXML( std::ostream& aOut, Tabs* aTabs ) const;
-    void XMLParse( const xercesc::DOMNode* node );
     void invertAxises();
 protected:
     

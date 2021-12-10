@@ -44,7 +44,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
@@ -76,16 +75,16 @@ class Tabs;
  */
 class InputOMFixed: public MiniCAMInput
 {
-    friend class InputFactory;
 public:
+    InputOMFixed();
 
     static const std::string& getXMLNameStatic();
 
-    const std::string& getXMLReportingName() const;    
+    const std::string& getXMLReportingName() const;
+    
+    const std::string& getXMLName() const;
 
     InputOMFixed* clone() const;
-
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
 
     virtual bool isSameType( const std::string& aType ) const;
 
@@ -156,8 +155,6 @@ public:
 
 protected:
 
-    InputOMFixed();
-
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
     DEFINE_DATA_WITH_PARENT(
@@ -165,12 +162,12 @@ protected:
         
         //! Cost of the non-energy input adjusted for the additional costs of the
         //! capture component.
-        DEFINE_VARIABLE( ARRAY, "adjusted-cost", mAdjustedCosts, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "adjusted-cost", mAdjustedCosts, objects::TechVintageVector<Value> ),
         
         //! Coefficient for production or demand function. Coefficients are not
         // read in and are initialized to 1, but can increase over time with
         // technical change.
-        DEFINE_VARIABLE( ARRAY, "adjusted-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "adjusted-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> ),
         
         //! Input specific technical change.
         DEFINE_VARIABLE( SIMPLE, "tech-change", mTechChange, Value ),
@@ -179,11 +176,11 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "OM-fixed", mOMFixed, Value ),
         
         //! Calculated value for the levelized cost of capital.
-        DEFINE_VARIABLE( SIMPLE, "levelized-OM-fixed", mLevelizedOMFixedCost, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "levelized-OM-fixed", mLevelizedOMFixedCost, Value ),
         
         //! Technology capacity factor.
         // TODO: create one in technology and use that instead.
-        DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, double )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "capacity-factor", mCapacityFactor, double )
     )
     
     void copy( const InputOMFixed& aOther );

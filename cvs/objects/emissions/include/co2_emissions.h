@@ -62,6 +62,8 @@ public:
     virtual void copyGHGParameters( const AGHG* aPrevGHG );
     
     static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
 
     virtual double getGHGValue( const std::string& aRegionName,
                                 const std::vector<IInput*>& aInputs,
@@ -82,8 +84,7 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         AGHG
     )
-    virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
 private:

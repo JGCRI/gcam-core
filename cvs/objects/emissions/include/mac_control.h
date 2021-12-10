@@ -66,6 +66,10 @@ public:
     
     static const std::string& getXMLNameStatic();
     
+    virtual const std::string& getXMLName() const;
+    
+    bool XMLParse( rapidxml::xml_node<char>* & aNode );
+    
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const IInfo* aTechIInfo );
@@ -79,8 +83,6 @@ protected:
     MACControl( const MACControl& aOther );
     MACControl& operator=( const MACControl& aOther );
     
-    virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
@@ -94,7 +96,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "no-zero-cost-reductions", mNoZeroCostReductions, bool ),
         
         //! The underlying Curve (as read in)
-        DEFINE_VARIABLE( CONTAINER, "mac-reduction", mMacCurve, PointSetCurve* ),
+        DEFINE_VARIABLE( CONTAINER | NOT_PARSABLE, "mac-reduction", mMacCurve, PointSetCurve* ),
         
         //! Threshold emission price to fully phase-in zero-cost reductions and mac phase-in reductions
         DEFINE_VARIABLE( SIMPLE, "full-phase-in-price", mFullPhaseInPrice, double ),

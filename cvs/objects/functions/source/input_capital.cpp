@@ -38,8 +38,6 @@
  */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "functions/include/input_capital.h"
 #include "functions/include/function_utils.h"
 #include "util/base/include/xml_helper.h"
@@ -48,7 +46,6 @@
 #include "containers/include/iinfo.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -80,6 +77,10 @@ const string& InputCapital::getXMLNameStatic() {
 */
 const string& InputCapital::getXMLReportingName() const{
     return XML_REPORTING_NAME;
+}
+
+const string& InputCapital::getXMLName() const{
+    return getXMLNameStatic();
 }
 
 //! Constructor
@@ -123,47 +124,6 @@ void InputCapital::copyParamsInto( InputCapital& aInput,
     // change which already occurred.
     assert( aPeriod > 0 );
     aInput.mAdjustedCoefficients[ aPeriod ] = mAdjustedCoefficients[ aPeriod - 1 ];
-}
-
-void InputCapital::XMLParse( const xercesc::DOMNode* node ) {
-    // TODO: Replace this with the restructured XMLParse.
-    // Make sure we were passed a valid node.
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    const DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() == DOMNode::TEXT_NODE ){
-            continue;
-        }
-
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        if ( nodeName == "capital-overnight" ) {
-            mCapitalOvernight = XMLHelper<Value>::getValue( curr );
-        }
-        // Capital lifetime may be different from technology lifetime.
-        else if( nodeName == "lifetime-capital" ){
-            mLifetimeCapital = XMLHelper<Value>::getValue( curr );
-        }
-        else if( nodeName == "fixed-charge-rate" ){
-            mFixedChargeRate = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "tech-change" ){
-            mTechChange = XMLHelper<Value>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLNameStatic() << "." << endl;
-        }
-    }
 }
 
 void InputCapital::toDebugXML( const int aPeriod,

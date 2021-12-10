@@ -41,9 +41,6 @@
 #include <string>
 #include <algorithm>
 
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-
 #include "util/base/include/definitions.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
@@ -55,7 +52,6 @@
 #include "sectors/include/negative_emissions_final_demand.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -91,38 +87,6 @@ const string& NegativeEmissionsFinalDemand::getXMLNameStatic() {
 
 const string& NegativeEmissionsFinalDemand::getName() const {
     return mName;
-}
-
-bool NegativeEmissionsFinalDemand::XMLParse( const DOMNode* aNode ) {
-
-    assert( aNode );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        if( nodeName == "policy-name" ){
-            mPolicyName = XMLHelper<string>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unknown element " << nodeName
-                    << " encountered while parsing " << getXMLName() << endl;
-        }
-    }
-    return true;
 }
 
 void NegativeEmissionsFinalDemand::toDebugXML( const int aPeriod,

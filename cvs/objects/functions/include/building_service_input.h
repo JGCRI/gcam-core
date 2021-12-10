@@ -147,9 +147,9 @@ public:
     virtual const std::string& getMarketName( const std::string& aRegionName ) const { return aRegionName; }
 
     virtual const std::string& getXMLReportingName() const;
-
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
     
+    virtual const std::string& getXMLName() const;
+
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
@@ -308,7 +308,7 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE, "base-service", mServiceDemand, objects::PeriodVector<Value> ),
 
         //! Energy service density for reporting.
-        DEFINE_VARIABLE( ARRAY | STATE, "service-density", mServiceDensity, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "service-density", mServiceDensity, objects::PeriodVector<Value> ),
 
         //! Satiation demand function.
         DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* )

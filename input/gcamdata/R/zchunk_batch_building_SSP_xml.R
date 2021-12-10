@@ -39,6 +39,7 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
       Satiation_flsp <- paste0("L244.Satiation_flsp_SSP", i)
       SatiationAdder <- paste0("L244.SatiationAdder_SSP", i)
       GenericServiceSatiation <- paste0("L244.GenericServiceSatiation_SSP", i)
+
       # SSP2 is unique, uses fewer files
       if(i != 2) {
         FuelPrefElast <- paste0("L244.FuelPrefElast_bld_SSP", fuelpref_NUMS[toString(i)])
@@ -60,7 +61,7 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
           add_xml_data(L244.Satiation_flsp_SSP, "Satiation_flsp") %>%
           add_xml_data(L244.SatiationAdder_SSP, "SatiationAdder") %>%
           add_xml_data(L244.GenericServiceSatiation_SSP, "GenericServiceSatiation") %>%
-          add_precursors(Satiation_flsp, SatiationAdder, GenericServiceSatiation) ->
+          add_precursors(Satiation_flsp, SatiationAdder,GenericServiceSatiation) ->
           xml_obj
       } else {
         create_xml(xmlfn) %>%

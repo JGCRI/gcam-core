@@ -1,7 +1,7 @@
 # File: A_ff_TradedSubsector.csv
 # Title: Subsector assumptions for traded fossil fuel markets
 # Units: Various
-# Comments: These subsectors' shareweights evolve over time. They are calibrated to 2010 shares," but become 1 in some to.year following an interpolation.function
+# Comments: These subsectors' shareweights evolve over time. They are calibrated to 2010 shares, but become 1 in some to.year following an interpolation.function
 # Source: NA
 # Column types: ccncncccncic
 # ----------

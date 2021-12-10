@@ -46,7 +46,6 @@
 */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include <memory>
 
 #include "functions/include/iinput.h"

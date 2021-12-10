@@ -46,7 +46,6 @@
 */
 
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
 #include <map>
 #include <memory>
 #include <list>
@@ -54,7 +53,6 @@
 
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/inamed.h"
-#include "util/base/include/object_meta_info.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
@@ -70,6 +68,9 @@ class NationalAccount;
 class ILandAllocator;
 class AGHG;
 class IDiscreteChoice;
+namespace ObjECTS {
+class TObjectMetaInfo;
+}
 
 // Need to forward declare the subclasses as well.
 class SupplySector;
@@ -116,7 +117,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnit, std::string ),
 
         //! region name
-        DEFINE_VARIABLE( SIMPLE, "region-name", mRegionName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "region-name", mRegionName, std::string ),
 
         //! subsector objects
         DEFINE_VARIABLE( CONTAINER, "subsector", mSubsectors, std::vector<Subsector*> ),
@@ -132,7 +133,9 @@ protected:
         
         //! A flag that will force the market dependency finder to create trial price/demand
         //! markets for this sector.
-        DEFINE_VARIABLE( SIMPLE, "use-trial-market", mUseTrialMarkets, bool )
+        DEFINE_VARIABLE( SIMPLE, "use-trial-market", mUseTrialMarkets, bool ),
+                
+        DEFINE_VARIABLE( CONTAINER, "object-meta-info", mObjectMetaInfo, std::vector<ObjECTS::TObjectMetaInfo*> )
     )
     
     typedef std::vector<Subsector*>::iterator SubsectorIterator;
@@ -141,14 +144,11 @@ protected:
     //! Pointer to the sector's information store.
     std::auto_ptr<IInfo> mSectorInfo;
 
-    typedef ObjECTS::TObjectMetaInfo<> object_meta_info_type;
+    typedef ObjECTS::TObjectMetaInfo object_meta_info_type;
     typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
-    object_meta_info_vector_type mObjectMetaInfo; //!< Vector of object meta info to pass to mSectorInfo
 
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
-    virtual const std::string& getXMLName() const = 0;
-    
+
     virtual double getFixedOutput( const int aPeriod ) const;
     const std::vector<double> calcSubsectorShares( const GDP* aGDP, const int aPeriod ) const;
 
@@ -159,11 +159,14 @@ protected:
     virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
 
 public:
-    explicit Sector( const std::string& aRegionName );
+    explicit Sector();
     virtual ~Sector();
     virtual const std::string& getName() const;
+    
+    void setNames( const std::string& aRegionName );
+    
+    virtual const std::string& getXMLName() const = 0;
 
-    virtual void XMLParse( const xercesc::DOMNode* node );
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void completeInit( const IInfo* aRegionInfo,

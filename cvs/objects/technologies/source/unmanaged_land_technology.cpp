@@ -55,7 +55,6 @@
 #include "containers/include/market_dependency_finder.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -67,6 +66,10 @@ extern Scenario* scenario;
 UnmanagedLandTechnology::UnmanagedLandTechnology( const string& aName, const int aYear )
 :AgProductionTechnology( aName, aYear )
 {
+    mResourceInput = mInputs.end();
+}
+
+UnmanagedLandTechnology::UnmanagedLandTechnology() {
     mResourceInput = mInputs.end();
 }
 
@@ -86,17 +89,6 @@ void UnmanagedLandTechnology::copy( const UnmanagedLandTechnology& aOther ) {
     
     mLandItemName = aOther.mLandItemName;
     // note mResourceInput is left unitialized
-}
-
-//! Parses any input variables specific to derived classes
-bool UnmanagedLandTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    if( nodeName == "itemName" ) {
-        mLandItemName = XMLHelper<string>::getValue( curr );
-    }
-    else if( !AgProductionTechnology::XMLDerivedClassParse(nodeName, curr)) {
-        return false;
-    }
-    return true;
 }
 
 //! write object to xml output stream

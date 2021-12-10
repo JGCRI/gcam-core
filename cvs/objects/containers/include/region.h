@@ -50,10 +50,10 @@
 #include <memory>
 #include <string>
 #include <list>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
+#include "util/base/include/aparsable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -77,13 +77,12 @@ class RegionMiniCAM;
 * \author Sonny Kim
 */
 
-class Region: public INamed, public IVisitable, protected boost::noncopyable
+class Region: public INamed, public IVisitable, public AParsable, protected boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
     Region();
     virtual ~Region();
-    void XMLParse( const xercesc::DOMNode* node );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     virtual void completeInit();
@@ -127,11 +126,10 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "resource", mResources, std::vector<AResource*> ),
         
         /*! \brief The region's information store. */
-        DEFINE_VARIABLE( SIMPLE, "info", mRegionInfo, IInfo* )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "info", mRegionInfo, IInfo* )
     )
 
     virtual const std::string& getXMLName() const = 0;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
 private:
     void clear();
