@@ -43,8 +43,6 @@
 #include <string>
 #include <vector>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "resources/include/unlimited_resource.h"
 #include "util/base/include/xml_helper.h"
@@ -57,7 +55,6 @@
 #include "sectors/include/sector_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -77,49 +74,6 @@ UnlimitedResource::UnlimitedResource()
 
 //! Destructor.
 UnlimitedResource::~UnlimitedResource() {
-}
-
-void UnlimitedResource::XMLParse( const DOMNode* node ){
-
-    // make sure we were passed a valid node.
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    const DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        const string nodeName =
-            XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "output-unit" ){
-            mOutputUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "price-unit" ){
-            mPriceUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "market" ){
-            mMarket = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "price" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mFixedPrices,
-                                                     scenario->getModeltime() );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName
-                    << " found while parsing " << getXMLNameStatic() << "."
-                    << endl;
-        }
-    }
 }
 
 const string& UnlimitedResource::getXMLName() const {

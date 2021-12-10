@@ -63,9 +63,9 @@
 #include "reporting/include/xml_db_outputter.h"
 
 #include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/classification.hpp>
 
 using namespace std;
-using namespace xercesc;
 
 /*! \brief Constructor.
 * \param aSingleScenario The single scenario runner.

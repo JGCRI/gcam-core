@@ -1018,7 +1018,7 @@ void XMLDBOutputter::startVisitOutput( const IOutput* aOutput, const int aPeriod
     stringstream* childBuffer = new stringstream();
 
     // the opening tag gets written in the parent buffer
-    XMLWriteOpeningTag( aOutput->getXMLReportingName(), *parentBuffer, mTabs.get(), aOutput->getName(), 0, "output" );
+    XMLWriteOpeningTag( aOutput->getXMLName(), *parentBuffer, mTabs.get(), aOutput->getName(), 0, "output" );
 
     // put the buffers on a stack so that we have the correct ordering
     mBufferStack.push( parentBuffer );
@@ -1070,7 +1070,7 @@ void XMLDBOutputter::endVisitOutput( const IOutput* aOutput, const int aPeriod )
         // retBuffer is still at the top of the stack
         iostream* retBuffer = mBufferStack.top();
         (*retBuffer) << parentBuffer->rdbuf() << childBuffer->rdbuf();
-        XMLWriteClosingTag( aOutput->getXMLReportingName(), *retBuffer, mTabs.get() );
+        XMLWriteClosingTag( aOutput->getXMLName(), *retBuffer, mTabs.get() );
     }
     else {
         // if we don't write the closing tag we still need to decrease the indent

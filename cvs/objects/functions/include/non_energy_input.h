@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
@@ -75,19 +74,19 @@ class Tabs;
  */
 class NonEnergyInput: public MiniCAMInput
 {
-    friend class InputFactory;
     friend class IntermittentTechnology;
     friend class SolarTechnology;
     friend class WindTechnology;
 public:
+    NonEnergyInput();
 
     static const std::string& getXMLNameStatic();
 
-    const std::string& getXMLReportingName() const;    
+    const std::string& getXMLReportingName() const;
+    
+    const std::string& getXMLName() const;
 
     NonEnergyInput* clone() const;
-
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
 
     virtual bool isSameType( const std::string& aType ) const;
 
@@ -150,8 +149,6 @@ public:
                                    const IInput* aNextInput );
 
 protected:
-
-    NonEnergyInput();
     
     NonEnergyInput( const std::string& aName );
     
@@ -162,12 +159,12 @@ protected:
 
         //! Cost of the non-energy input adjusted for the additional costs of the
         //! capture component.
-        DEFINE_VARIABLE( ARRAY | STATE, "adjusted-cost", mAdjustedCosts, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "adjusted-cost", mAdjustedCosts, objects::TechVintageVector<Value> ),
 
         //! Coefficient for production or demand function. Coefficients are not
         // read in and are initialized to 1, but can increase over time with
         // technical change.
-        DEFINE_VARIABLE( ARRAY, "adjusted-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "adjusted-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> ),
 
         //! Cost of the non-energy input.
         DEFINE_VARIABLE( SIMPLE, "input-cost", mCost, Value ),

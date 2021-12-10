@@ -46,13 +46,10 @@
 #include <sstream>
 #include <cassert>
 #include <ctime>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/logger/include/logger.h"
 #include "util/base/include/xml_helper.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Default Constructor
 PassToParentStreamBuf::PassToParentStreamBuf():
@@ -151,39 +148,6 @@ void Logger::printToScreenIfConfigured( const string& aMessage ){
             cout << convertLevelToString( mCurrentWarningLevel ) << ":";
 		}
 		cout << aMessage << endl;
-	}
-}
-
-void Logger::XMLParse( const DOMNode* aNode ){
-	// assume we were passed a valid node.
-	assert( aNode );
-	
-	mName = XMLHelper<string>::getAttr( aNode, "name" );
-	mType = XMLHelper<string>::getAttr( aNode, "type" );
-	// get the children of the node.
-	DOMNodeList* nodeList = aNode->getChildNodes();
-
-	// loop through the children
-	for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-		DOMNode* curr = nodeList->item( i );
-		string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-		
-		if ( nodeName == "FileName" ){
-			mFileName = XMLHelper<string>::getValue( curr );
-		}
-		else if ( nodeName == "printLogWarningLevel" ) {
-			mPrintLogWarningLevel = XMLHelper<bool>::getValue( curr );
-		}
-		// These casts are unsafe.
-		else if ( nodeName == "minLogWarningLevel" ) {
-			mMinLogWarningLevel = static_cast<WarningLevel>( XMLHelper<int>::getValue( curr ) );
-		}
-		else if ( nodeName == "minToScreenWarningLevel" ) {
-			mMinToScreenWarningLevel = static_cast<WarningLevel>( XMLHelper<int>::getValue( curr ) );
-		}
-		else if ( nodeName == "headerMessage" ) {
-			mHeaderMessage = XMLHelper<string>::getValue( curr );
-		}
 	}
 }
 

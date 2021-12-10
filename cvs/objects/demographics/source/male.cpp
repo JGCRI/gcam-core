@@ -38,20 +38,14 @@
 */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
 #include "demographics/include/male.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
+
 // static initialize
 const string Male::XML_NAME = "male";
-
-//! Parse xml file for data
-bool Male::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    return false;
-}
 
 //! Output debug info for derived class
 void Male::toDebugXMLDerived(ostream& out, Tabs* tabs ) const {

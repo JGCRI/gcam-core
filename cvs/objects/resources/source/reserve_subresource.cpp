@@ -43,8 +43,6 @@
 #include <string>
 #include <iostream>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "resources/include/reserve_subresource.h"
 #include "resources/include/grade.h"
@@ -56,7 +54,6 @@
 #include "technologies/include/technology_container.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -84,22 +81,6 @@ void ReserveSubResource::completeInit( const std::string& aRegionName, const std
     currInfo->setDouble( "average-production-lifetime", mAvgProdLifetime );
     SubResource::completeInit( aRegionName, aResourceName, currInfo );
     delete currInfo;
-}
-
-bool ReserveSubResource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
-    if( aNodeName == ResourceReserveTechnology::getXMLNameStatic() ) {
-        parseSingleNode( aNode, mTechnology, new TechnologyContainer() );
-        return true;
-    }
-    else if( aNodeName == "cal-reserve" ) {
-        XMLHelper<Value>::insertValueIntoVector( aNode, mCalReserve, scenario->getModeltime() );
-        return true;
-    }
-    else if( aNodeName == "average-production-lifetime" ) {
-        mAvgProdLifetime = XMLHelper<int>::getValue( aNode );
-        return true;
-    }
-    return false;
 }
 
 /*! \brief Get the XML node name for output to XML.

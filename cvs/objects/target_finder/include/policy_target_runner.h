@@ -116,9 +116,9 @@ class Modeltime;
  */
 class PolicyTargetRunner: public IScenarioRunner {
     friend class ScenarioRunnerFactory;
-public:
-    // IParsable interface
-    virtual bool XMLParse( const xercesc::DOMNode* aRoot );
+public:   
+    // AParsable interface
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 
     virtual ~PolicyTargetRunner();
 
@@ -139,68 +139,72 @@ public:
 
     virtual Scenario* getInternalScenario();
     virtual const Scenario* getInternalScenario() const;
-private:
+protected:
     //! The scenario runner which controls running the initial scenario, and all
     //! fixed taxed scenarios after.
     std::auto_ptr<SingleScenarioRunner> mSingleScenario;
 
     //! The delegate object which calculates total costs.
     std::auto_ptr<TotalPolicyCostCalculator> mPolicyCostCalculator;
-
-    //! The name of the policy target runner.
-    std::string mName;
-
-    //! The type of policy target.
-    std::string mTargetType;
-
-    //! The name of the tax.
-    std::string mTaxName;
-
-    //! Path discount rate. This is the interest rate used to determine the
-    //! Hotelling tax path.
-    Value mPathDiscountRate;
-
-    //! The tolerance as a percent.
-    Value mTolerance;
-
-    //! The target for the climate parameter.
-    Value mTargetValue;
-
-    //! An intial tax value to help speed target finding.
-    Value mInitialTaxGuess;
-
-    //! The first year to tax.
-    unsigned int mFirstTaxYear;
     
-    //! The maximum number of bisection iterations to perform when determining the
-    //! initial tax or the trial tax in a single future period past the
-    //! stabilization year.
-    unsigned int mMaxIterations;
-    
-    //! Initial target year if we are doing an overshoot or the flag
-    //! ITarget::getUseMaxTargetYearFlag() if we are doing a stabilization.
-    int mInitialTargetYear;
-
-    //! Whether the target runner has already parsed its data. The XML parse
-    //! can be called directly from the BatchRunner and in that case the object
-    //! should not parse data from its separate configuration file.
-    bool mHasParsedConfig;
-
-    //! Unique identifier for each scenario run dispatched.  Used to
-    //! help identify output from a particular run in log files.
-    unsigned int mRunID;
-    
-    //! The number of periods to forward look when trying to stay on target
-    //! which my change by period
-    std::vector<int> mNumForwardLooking;
-    
-    //! The number of periods to go backwards before stabalization to re-stabalizing
-    int mNumBackwardsLook;
-
-    //! The maximum tax to use.  Used to avoid extremly high taxes which
-    //! max occur at the end of a long hotelling path and which may not
-    //! solve.
-    double mMaxTax;
+    DEFINE_DATA_WITH_PARENT(
+        IScenarioRunner,
+                            
+        //! The name of the policy target runner.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        
+        //! The type of policy target.
+        DEFINE_VARIABLE( SIMPLE, "target-type", mTargetType, std::string ),
+        
+        //! The name of the tax.
+        DEFINE_VARIABLE( SIMPLE, "tax-name", mTaxName, std::string ),
+        
+        //! Path discount rate. This is the interest rate used to determine the
+        //! Hotelling tax path.
+        DEFINE_VARIABLE( SIMPLE, "path-discount-rate", mPathDiscountRate, Value ),
+        
+        //! The tolerance as a percent.
+        DEFINE_VARIABLE( SIMPLE, "target-tolerance", mTolerance, Value ),
+        
+        //! The target for the climate parameter.
+        DEFINE_VARIABLE( SIMPLE, "target-value", mTargetValue, Value ),
+        
+        //! An intial tax value to help speed target finding.
+        DEFINE_VARIABLE( SIMPLE, "initial-tax-guess", mInitialTaxGuess, Value ),
+        
+        //! The first year to tax.
+        DEFINE_VARIABLE( SIMPLE, "first-tax-year", mFirstTaxYear, unsigned int ),
+        
+        //! The maximum number of bisection iterations to perform when determining the
+        //! initial tax or the trial tax in a single future period past the
+        //! stabilization year.
+        DEFINE_VARIABLE( SIMPLE, "max-iterations", mMaxIterations, unsigned int ),
+        
+        //! Initial target year if we are doing an overshoot or the flag
+        //! ITarget::getUseMaxTargetYearFlag() if we are doing a stabilization.
+        DEFINE_VARIABLE( SIMPLE, "initial-target-year", mInitialTargetYear, unsigned int ),
+        
+        //! Whether the target runner has already parsed its data. The XML parse
+        //! can be called directly from the BatchRunner and in that case the object
+        //! should not parse data from its separate configuration file.
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "parsed-config", mHasParsedConfig, bool ),
+        
+        //! Unique identifier for each scenario run dispatched.  Used to
+        //! help identify output from a particular run in log files.
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "dispatch-ID", mRunID, unsigned int ),
+        
+        //! The number of periods to forward look when trying to stay on target
+        //! which my change by period
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "forward-look", mNumForwardLooking, std::vector<int> ),
+        
+        //! The number of periods to go backwards before stabalization to re-stabalizing
+        DEFINE_VARIABLE( SIMPLE, "backward-look", mNumBackwardsLook, int ),
+        
+        //! The maximum tax to use.  Used to avoid extremly high taxes which
+        //! max occur at the end of a long hotelling path and which may not
+        //! solve.
+        DEFINE_VARIABLE( SIMPLE, "max-tax", mMaxTax, double )
+    )
 
     void
         calculateHotellingPath( const double aIntialTax,

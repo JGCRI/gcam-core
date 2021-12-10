@@ -286,7 +286,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       mutate(soil.carbon.density = if_else(is.na(soil.carbon.density), mean(soil.carbon.density, na.rm = TRUE), soil.carbon.density),
              hist.soil.carbon.density = if_else(is.na(hist.soil.carbon.density),
                                                 mean(hist.soil.carbon.density, na.rm = TRUE), hist.soil.carbon.density),
-             mature.age = if_else(is.na(mature.age), mean(mature.age, na.rm = TRUE), mature.age),
+             mature.age = round(if_else(is.na(mature.age), mean(mature.age, na.rm = TRUE), mature.age)),
              # Convert biomass yield from GJ/m2 to kg/m2
              yield = yield / (aglu.BIO_ENERGY_CONTENT_GJT * CONV_KG_T)) %>%
       # Map in the harvest index, water content, and root-shoot ratio

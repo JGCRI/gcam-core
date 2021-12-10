@@ -46,14 +46,12 @@
 #include <cassert>
 
 // xml headers
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/model_time.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
-
 
 const Modeltime* Modeltime::getInstance() {
     const static Modeltime modeltime;
@@ -70,9 +68,7 @@ mCarbonModelStartYear( -1 )
 {
 }
 
-//! Set the data members from the XML input.
-bool Modeltime::XMLParse( const DOMNode* aNode ) {
-    
+bool Modeltime::XMLParse( rapidxml::xml_node<char>* & aNode ) {
     // It is important that Modeltime only be parse once as the very first
     // object since the rest of the model will rely on it to initialize some
     // datastructures.
@@ -91,59 +87,60 @@ bool Modeltime::XMLParse( const DOMNode* aNode ) {
     // assume node is valid.
     assert( aNode );
 
-    // get all children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
+    // loop through all of aNode's siblings
+    // note, we intentionally modify aNode to ensure XMLParseHelper does not
+    // attempt to re-parse these elements
+    for( ; aNode; aNode = aNode->next_sibling() ) {
+        if( aNode->type() == rapidxml::node_element) {
+            const string nodeName = XMLParseHelper::getNodeName( aNode );
+            map<string, string> attrs = XMLParseHelper::getAllAttrs( aNode );
 
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+            // select the type of node.
+            if( nodeName == "#text" ) {
+                continue;
+            }
 
-        // select the type of node.
-        if( nodeName == "#text" ) {
-            continue;
-        }
-
-        else if ( nodeName == "start-year" ){
-            mStartYear = XMLHelper<int>::getValue( curr );
-            yearToTimeStep[ mStartYear ]  = XMLHelper<int>::getAttr( curr, "time-step" );
-        } 
-        else if ( nodeName == "inter-year" ){
-            int interYear = XMLHelper<int>::getValue( curr );
-            yearToTimeStep[ interYear ]  = XMLHelper<int>::getAttr( curr, "time-step" );
-        } 
-        else if ( nodeName == "end-year" ){
-            mEndYear = XMLHelper<int>::getValue( curr );
-            // the end year does not have a time step
-            yearToTimeStep[ mEndYear ]  = -1;
-        }
-        else if ( nodeName == "final-calibration-year" ){
-            int tempCalibrationYear = XMLHelper<int>::getValue( curr ); 
-            // mFinalCalibrationYear is initialized to 2015
-            if ( tempCalibrationYear < mFinalCalibrationYear ){
+            else if ( nodeName == "start-year" ){
+                mStartYear =  XMLParseHelper::getValue<int>( aNode );
+                yearToTimeStep[ mStartYear ]  = XMLParseHelper::getValue<int>( attrs["time-step"] );
+            }
+            else if ( nodeName == "inter-year" ){
+                int interYear =  XMLParseHelper::getValue<int>( aNode );
+                yearToTimeStep[ interYear ]  = XMLParseHelper::getValue<int>( attrs["time-step"] );
+            }
+            else if ( nodeName == "end-year" ){
+                mEndYear =  XMLParseHelper::getValue<int>( aNode );
+                // the end year does not have a time step
+                yearToTimeStep[ mEndYear ]  = -1;
+            }
+            else if ( nodeName == "final-calibration-year" ){
+                int tempCalibrationYear =  XMLParseHelper::getValue<int>( aNode );
+                // mFinalCalibrationYear is initialized to 2015
+                if ( tempCalibrationYear < mFinalCalibrationYear ){
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::WARNING );
+                    mainLog << "\nRead in final-calibration-year (" << tempCalibrationYear << ") "
+                            << "earlier than last historical year (" << mFinalCalibrationYear << ").\n"
+                            << "Running in HINDCASTING MODE with (" << tempCalibrationYear
+                            << ") as the final calibration year.\n" << endl;
+                    mFinalCalibrationYear = tempCalibrationYear;
+                }
+                else if (tempCalibrationYear > mFinalCalibrationYear ){
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::WARNING );
+                    mainLog << "\nHistorical calibration to (" << tempCalibrationYear << ") is not possible! "
+                            << "Setting final calibration year to default year (" << mFinalCalibrationYear
+                            << ").\n" << endl;
+                }
+            }
+            else if( nodeName == "carbon-model-start-year" ) {
+                mCarbonModelStartYear = XMLParseHelper::getValue<int>( aNode );
+            }
+            else {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::WARNING );
-                mainLog << "\nRead in final-calibration-year (" << tempCalibrationYear << ") "
-                        << "earlier than last historical year (" << mFinalCalibrationYear << ").\n"
-                        << "Running in HINDCASTING MODE with (" << tempCalibrationYear
-                        << ") as the final calibration year.\n" << endl;
-                mFinalCalibrationYear = tempCalibrationYear;
+                mainLog << "Unrecognized text string: " << nodeName << " found while parsing modeltime." << endl;
             }
-            else if (tempCalibrationYear > mFinalCalibrationYear ){
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "\nHistorical calibration to (" << tempCalibrationYear << ") is not possible! "
-                        << "Setting final calibration year to default year (" << mFinalCalibrationYear
-                        << ").\n" << endl;
-            }
-        } 
-        else if( nodeName == "carbon-model-start-year" ) {
-            mCarbonModelStartYear = XMLHelper<int>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing modeltime." << endl;
         }
     }
     

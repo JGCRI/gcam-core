@@ -60,11 +60,17 @@ class Tabs;
  */
 class Intensity : public ICoefficient { 
 public:
-    const static std::string& getXMLNameStatic();
+    Intensity();
+    
+    virtual ~Intensity();
 
     Intensity( const double aIntensity );
 
     virtual Intensity* clone() const;
+    
+    const static std::string& getXMLNameStatic();
+    
+    const std::string& getXMLName() const;
     
     virtual bool isSameType( const std::string& aType ) const;
     

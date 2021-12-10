@@ -40,13 +40,10 @@
 
 #include "util/base/include/definitions.h"
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/bisect_policy_nr_solver.h"
 #include "containers/include/world.h"
 #include "solution/solvers/include/solver_component.h"
-#include "solution/solvers/include/solver_component_factory.h"
 #include "solution/util/include/solution_info_set.h"
 #include "solution/util/include/calc_counter.h"
 #include "util/base/include/configuration.h"
@@ -60,7 +57,6 @@
 #include "solution/solvers/include/bisect_policy.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Constructor
 BisectPolicyNRSolver::BisectPolicyNRSolver( Marketplace* marketplaceIn, World* worldIn ):Solver( marketplaceIn, worldIn ),
@@ -71,14 +67,6 @@ mMaxModelCalcs( 2000 )
 {
     // Construct components.
     mCalcCounter = world->getCalcCounter();
-    mLogNewtonRaphson.reset( SolverComponentFactory::createAndParseSolverComponent( LogNewtonRaphson::getXMLNameStatic(), marketplace,
-                                                                                   world, mCalcCounter, 0 ) );
-    mBisectAll.reset( SolverComponentFactory::createAndParseSolverComponent( BisectAll::getXMLNameStatic(), marketplace,
-                                                                                   world, mCalcCounter, 0 ) );
-    mBisectOne.reset( SolverComponentFactory::createAndParseSolverComponent( BisectOne::getXMLNameStatic(), marketplace,
-                                                                                   world, mCalcCounter, 0 ) );
-    mBisectPolicy.reset( SolverComponentFactory::createAndParseSolverComponent( BisectPolicy::getXMLNameStatic(), marketplace,
-                                                                                   world, mCalcCounter, 0 ) );
 }
 
 //! Destructor
@@ -89,55 +77,6 @@ BisectPolicyNRSolver::~BisectPolicyNRSolver() {
 const string& BisectPolicyNRSolver::getXMLNameStatic() {
     const static string SOLVER_NAME = "BisectPolicyNRSolver";
     return SOLVER_NAME;
-}
-
-bool BisectPolicyNRSolver::XMLParse( const DOMNode* aNode ){
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "solution-tolerance" ) {
-            mDefaultSolutionTolerance = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "solution-floor" ) {
-            mDefaultSolutionFloor = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "calibration-tolerance" ) {
-            mCalibrationTolerance = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "max-model-calcs" ) {
-            mMaxModelCalcs = XMLHelper<int>::getValue( curr );
-        }
-        else if( nodeName == mLogNewtonRaphson->getXMLName() ) {
-            mLogNewtonRaphson->XMLParse( curr );
-        }
-        else if( nodeName == mBisectAll->getXMLName() ) {
-            mBisectAll->XMLParse( curr );
-        }
-        else if( nodeName == mBisectOne->getXMLName() ) {
-            mBisectOne->XMLParse( curr );
-        }
-        else if( nodeName == mBisectPolicy->getXMLName() ) {
-            mBisectPolicy->XMLParse( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-            << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
 }
 
 //! Initialize the solver at the beginning of the model.

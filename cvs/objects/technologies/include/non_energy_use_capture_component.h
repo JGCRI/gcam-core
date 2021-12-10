@@ -46,10 +46,10 @@
 
 #include <string>
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "technologies/include/icapture_component.h"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 
 /*! 
  * \ingroup Objects
@@ -73,18 +73,21 @@
  * \author Josh Lurz
  */
 class NonEnergyUseCaptureComponent: public ICaptureComponent {
-    friend class CaptureComponentFactory;
 public:
+    NonEnergyUseCaptureComponent();
+    
     virtual ~NonEnergyUseCaptureComponent();
     
     // Documentation is inherited from ICaptureComponent.
     virtual NonEnergyUseCaptureComponent* clone() const;
+    
+    static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
 
     virtual bool isSameType( const std::string& aType ) const;
     
     virtual const std::string& getName() const;
-   
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -117,9 +120,7 @@ public:
                                std::vector<IInput*>& aInputs,
                                const int aPeriod ) const;
 protected:
-    NonEnergyUseCaptureComponent();
     void copy( const NonEnergyUseCaptureComponent& aOther );
-    static const std::string& getXMLNameStatic();
 
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
@@ -127,7 +128,7 @@ protected:
         ICaptureComponent,
 
         //! Sequestered quantity by period.
-        DEFINE_VARIABLE( ARRAY, "sequestered-amount", mSequesteredAmount, objects::TechVintageVector<double> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "sequestered-amount", mSequesteredAmount, objects::TechVintageVector<Value> ),
 
         //! The name of the gas which will be sequestered.
         DEFINE_VARIABLE( SIMPLE, "target-gas", mTargetGas, std::string ),

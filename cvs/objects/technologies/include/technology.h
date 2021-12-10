@@ -49,9 +49,7 @@
 #include <vector>
 #include <map>
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 
-#include "util/base/include/istandard_component.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"
 #include "functions/include/ifunction.h" // For TechChange struct.
@@ -155,6 +153,7 @@ class Technology: public ITechnology
     friend class EnergyBalanceTable;
 public:
     Technology( const std::string& aName, const int aYear );
+    Technology();
     virtual Technology* clone() const = 0;
     virtual ~Technology();
 
@@ -163,7 +162,6 @@ public:
     
     virtual bool isSameType( const std::string& aType ) const;
 
-    bool XMLParse( const xercesc::DOMNode* tempnode );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 
     static const std::string& getXMLVintageNameStatic();
@@ -294,7 +292,7 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "input", mInputs, std::vector<IInput*> ),
                                 
         //! The current production state for each period.
-        DEFINE_VARIABLE( CONTAINER, "production-state", mProductionState, objects::PeriodVector<IProductionState*> ),
+        DEFINE_VARIABLE( CONTAINER | NOT_PARSABLE, "production-state", mProductionState, objects::PeriodVector<IProductionState*> ),
 
         //! The objects which combine to calculate the shutdown coefficient.
         DEFINE_VARIABLE( CONTAINER, "shutdown-decider", mShutdownDeciders, std::vector<IShutdownDecider*> ),
@@ -313,7 +311,7 @@ protected:
          * \note calcCost must be called in an iteration before this value is valid.
          * \sa Technology::calcCost
          */
-        DEFINE_VARIABLE( ARRAY | STATE, "cost", mCosts, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "cost", mCosts, objects::TechVintageVector<Value> ),
 
         //! A map of a keyword to its keyword group
         DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
@@ -322,10 +320,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Logit share weight
-        DEFINE_VARIABLE( SIMPLE | STATE, "share-weight", mShareWeight, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "real-share-weight", mShareWeight, Value ),
 
         //! The Logit share weight that was parsed by the user
-        DEFINE_VARIABLE( SIMPLE, "parsed-share-weight", mParsedShareWeight, Value ),
+        DEFINE_VARIABLE( SIMPLE, "share-weight", mParsedShareWeight, Value ),
 
         //! The annual capacity factor
         DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, double ),
@@ -349,7 +347,7 @@ protected:
               
         //! The current marginal revenue.  TODO: cleaner solution for getting
         //! this information to the profit shutdown decider.
-        DEFINE_VARIABLE( SIMPLE | STATE, "marginal-revenue", mMarginalRevenue, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "marginal-revenue", mMarginalRevenue, Value )
     )
 
     //! The technology's information store.
@@ -385,7 +383,6 @@ protected:
 
     virtual const IFunction* getProductionFunction() const;
 
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
 

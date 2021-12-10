@@ -39,7 +39,6 @@
 */
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/internal_gains.h"
 #include "containers/include/scenario.h"
@@ -51,7 +50,6 @@
 #include "containers/include/iinfo.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -106,35 +104,8 @@ const string& InternalGains::getXMLReportingName() const{
     return XML_REPORTING_NAME;
 }
 
-bool InternalGains::XMLParse( const DOMNode* aNode )
-{
-    // assume we are passed a valid node.
-    assert( aNode );
-
-    // get all the children.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ) {
-        const DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "output-ratio" ) {
-            mOutputRatio = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "internal-gains-market-name" ) {
-            mTrialMarketName = XMLHelper<string>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
-        }
-    }
-
-    return true;
+const string& InternalGains::getXMLName() const{
+    return getXMLNameStatic();
 }
 
 void InternalGains::toDebugXML( const int aPeriod,

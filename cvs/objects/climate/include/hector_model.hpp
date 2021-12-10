@@ -86,7 +86,6 @@ public:
     HectorModel();
     
     // IClimateModel interface
-    virtual void XMLParse( const xercesc::DOMNode* node );
     virtual const std::string& getXMLName() const { return getXMLNameStatic(); }
     virtual void toDebugXML( const int period, std::ostream& out, Tabs *tabs ) const;
     virtual void completeInit( const std::string& aScenarioName );
@@ -114,7 +113,7 @@ protected:
         IClimateModel,
 
         //! A map of the gases Magicc can report out.
-        DEFINE_VARIABLE( SIMPLE, "output-gas-name-map", mOutputGasNameMap, std::map<std::string,int> ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "output-gas-name-map", mOutputGasNameMap, std::map<std::string,int> ),
         
         //! Last year to record year-by-year climate
         DEFINE_VARIABLE( SIMPLE, "hector-end-year", mHectorEndYear, int ),
@@ -123,7 +122,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "emissions-switch-year", mEmissionsSwitchYear, int ),
 
         //! Last year the climate model has been run to
-        DEFINE_VARIABLE( SIMPLE, "last-calc-year", mLastYear, int ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "last-calc-year", mLastYear, int ),
 
         //! Hector initialization file
         DEFINE_VARIABLE( SIMPLE, "hector-ini-file", mHectorIniFile, std::string )

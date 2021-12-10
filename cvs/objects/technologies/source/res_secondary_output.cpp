@@ -47,7 +47,6 @@
 
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -60,6 +59,10 @@ extern Scenario* scenario;
 * \return The constant XML_NAME.
 */
 const string& RESSecondaryOutput::getXMLReportingName() const{
+    return getXMLNameStatic();
+}
+
+const string& RESSecondaryOutput::getXMLName() const{
     return getXMLNameStatic();
 }
 

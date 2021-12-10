@@ -40,19 +40,13 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/util/include/not_solution_info_filter.h"
-#include "solution/util/include/solution_info_filter_factory.h"
-#include "util/base/include/xml_helper.h"
-#include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
-NotSolutionInfoFilter::NotSolutionInfoFilter()
-:mWrappedFilter( 0 )
+NotSolutionInfoFilter::NotSolutionInfoFilter(ISolutionInfoFilter* aWrappedFilter)
+:mWrappedFilter( aWrappedFilter )
 {
 }
 
@@ -63,48 +57,6 @@ NotSolutionInfoFilter::~NotSolutionInfoFilter() {
 const string& NotSolutionInfoFilter::getXMLNameStatic() {
     const static string XML_NAME = "not-solution-info-filter";
     return XML_NAME;
-}
-
-bool NotSolutionInfoFilter::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
-            // make sure we don't try to overwrite the filter as that will cause
-            // a memory leak
-            if( mWrappedFilter ) {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << getXMLNameStatic() << " only allows one filter, " << nodeName << " is being skipped." << endl;
-            }
-            else {
-                ISolutionInfoFilter* newFilter = SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr );
-                
-                // make sure the factory was able to create it before setting it
-                if( newFilter ) {
-                    mWrappedFilter = newFilter;
-                }
-            }
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
 }
 
 bool NotSolutionInfoFilter::acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const {

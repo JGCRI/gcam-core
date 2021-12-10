@@ -41,14 +41,12 @@
 #include "util/base/include/definitions.h"
 #include <string>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "sectors/include/subsector_add_techcosts.h"
 #include "technologies/include/itechnology_container.h"
 #include "technologies/include/itechnology.h"
 
 using namespace std;
-using namespace xercesc;
 
 /*! \brief Default constructor.
 *
@@ -56,14 +54,9 @@ using namespace xercesc;
 *
 * \author Sonny Kim
 */
-SubsectorAddTechCosts::SubsectorAddTechCosts( const string& aRegionName, const string& aSectorName )
-: Subsector(aRegionName, aSectorName)
+SubsectorAddTechCosts::SubsectorAddTechCosts()
+: Subsector()
 {
-}
-
-//! Parses any input variables specific to derived classes
-bool SubsectorAddTechCosts::XMLDerivedClassParse( const string nodeName, const DOMNode* curr ) {
-    return false;
 }
 
 /*! \brief Get the XML node name for output to XML.

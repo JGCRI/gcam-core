@@ -47,12 +47,16 @@
 #include <memory>
 #include <string>
 
-#include "util/base/include/iparsable.h"
+#include "util/base/include/data_definition_util.h"
 
 class CalcCounter;
 class Marketplace;
 class World;
 class SolutionInfoParamParser;
+
+// Need to forward declare the subclasses as well.
+class UserConfigurableSolver;
+
 /*!
 * \ingroup objects
 * \brief Solver is an abstract class which defines a very basic interface to an object which solves the 
@@ -61,7 +65,7 @@ class SolutionInfoParamParser;
 * \author Josh Lurz
 */
 
-class Solver : public IParsable {
+class Solver {
 public:
     Solver( Marketplace* aMarketplace, World* aWorld ):marketplace( aMarketplace ), world( aWorld ){};
     virtual ~Solver(){};
@@ -69,6 +73,13 @@ public:
     virtual bool solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser ) = 0;
 
 protected:
+    DEFINE_DATA(
+        /* Declare all subclasses of AGHG to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( Solver, UserConfigurableSolver )
+    )
+    
     Marketplace* marketplace; //<! The marketplace to solve. 
     World* world; //!< The world to call calc on.
     //! Weak pointer to the object which tracks the number of calls to World.calc.

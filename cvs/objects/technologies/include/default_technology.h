@@ -44,7 +44,6 @@
  * \author Josh Lurz
  */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <iosfwd>
 #include "technologies/include/technology.h"
 class Tabs;
@@ -67,6 +66,8 @@ class DefaultTechnology: public Technology
 public:
 	DefaultTechnology( const std::string& aName,
                        const int aYear );
+    
+    DefaultTechnology();
 
 	virtual DefaultTechnology* clone() const;
 
@@ -79,9 +80,6 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         Technology
     )
-
-	virtual bool XMLDerivedClassParse( const std::string& aNodeName,
-                                       const xercesc::DOMNode* aCurr );
 
 	virtual void toDebugXMLDerived( const int aPeriod,
                                     std::ostream& aOut,

@@ -55,9 +55,11 @@ class PassThroughSector: public SupplySector
 {
     friend class CalcFixedOutputActivity;
 public:
-    explicit PassThroughSector( const std::string& aRegionName );
+    explicit PassThroughSector();
     virtual ~PassThroughSector(){};
     static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
 
     virtual void completeInit( const IInfo* aRegionInfo,
                                ILandAllocator* aLandAllocator );
@@ -69,10 +71,6 @@ public:
 
 protected:
     virtual double getFixedOutput( const int aPeriod ) const;
-
-    virtual const std::string& getXMLName() const;
-
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const;
     
@@ -89,7 +87,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "marginal-revenue-market", mMarginalRevenueMarket, std::string ),
 
         //! State value used to set the fixed output to market.
-        DEFINE_VARIABLE( SIMPLE | STATE, "last-calac-fixed-output", mLastCalcFixedOutput, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "last-calac-fixed-output", mLastCalcFixedOutput, Value )
     )
 
 private:

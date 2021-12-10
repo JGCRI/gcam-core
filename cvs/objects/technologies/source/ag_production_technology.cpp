@@ -55,7 +55,6 @@
 #include "sectors/include/sector_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -66,6 +65,16 @@ extern Scenario* scenario;
  */
 AgProductionTechnology::AgProductionTechnology( const string& aName, const int aYear ):
     Technology( aName, aYear )
+{
+    mNonLandVariableCost = 0;
+    mNonLandCostTechChange = 0;
+    mYield  = 0;
+    mAgProdChange  = 0;
+    mHarvestsPerYear = 1;
+    mProductLeaf = 0;
+}
+
+AgProductionTechnology::AgProductionTechnology()
 {
     mNonLandVariableCost = 0;
     mNonLandCostTechChange = 0;
@@ -96,29 +105,6 @@ void AgProductionTechnology::copy( const AgProductionTechnology& aOther ) {
     mHarvestsPerYear = aOther.mHarvestsPerYear;
     // The following do not get copied as they are initialized through other means
     mProductLeaf = 0;
-}
-
-//! Parses any input variables specific to derived classes
-bool AgProductionTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    if ( nodeName == "nonLandVariableCost" ) {
-        mNonLandVariableCost = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "nonLandCostTechChange" ) {
-        mNonLandCostTechChange = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "yield" ) {
-        mYield = XMLHelper<double>::getValue( curr );
-    }    
-    else if( nodeName == "agProdChange" ) {
-        mAgProdChange = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "harvests-per-year" ){
-        mHarvestsPerYear = XMLHelper<double>::getValue( curr );
-    }
-    else {
-        return false;
-    }
-    return true;
 }
 
 /*! \brief Derived class visitor.
@@ -240,6 +226,13 @@ void AgProductionTechnology::completeInit( const std::string& aRegionName,
 {
     // Store away the corresponding leaf in the land allocator.
     mProductLeaf = aLandAllocator->findProductLeaf( mName );
+    if( !mProductLeaf ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Could not find associated product leaf in the land allocator in region: "
+                << aRegionName << ", sector: " << aSectorName << ", tech: " << mName << endl;
+        abort();
+    }
  
     // Send "pointer to the land allocator" to each of the secondary outputs, e.g, residue biomass
     if ( mOutputs.size() ) {

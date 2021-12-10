@@ -41,24 +41,24 @@
 #include "util/base/include/definitions.h"
 #include <iostream>
 #include <fstream>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/user_configurable_solver.h"
+#include "containers/include/scenario.h"
 #include "containers/include/world.h"
 #include "marketplace/include/marketplace.h"
 #include "solution/solvers/include/solver_component.h"
-#include "solution/solvers/include/solver_component_factory.h"
 #include "solution/util/include/solution_info_set.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "solution/util/include/calc_counter.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/util.h"
 #include "util/base/include/auto_file.h"
 
 using namespace std;
-using namespace xercesc;
+
+extern Scenario* scenario;
 
 // typedefs
 typedef vector<SolverComponent*>::iterator SolverComponentIterator;
@@ -67,6 +67,17 @@ typedef vector<SolverComponent*>::const_iterator CSolverComponentIterator;
 //! Constructor
 UserConfigurableSolver::UserConfigurableSolver( Marketplace* aMarketplace, World* aWorld ) :
     Solver( aMarketplace, aWorld ),
+    mDefaultSolutionTolerance( 0.001),
+    mDefaultSolutionFloor( 0.0001 ),
+    mCalibrationTolerance( 0.01 ),
+    mMaxModelCalcs( 2000 )
+{
+    // get the calc counter from the world
+    mCalcCounter = world->getCalcCounter();
+}
+
+UserConfigurableSolver::UserConfigurableSolver() :
+    Solver( scenario->getMarketplace(), scenario->getWorld() ),
     mDefaultSolutionTolerance( 0.001),
     mDefaultSolutionFloor( 0.0001 ),
     mCalibrationTolerance( 0.01 ),
@@ -89,54 +100,8 @@ const string& UserConfigurableSolver::getXMLNameStatic() {
     return SOLVER_NAME;
 }
 
-bool UserConfigurableSolver::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "solution-tolerance" ) {
-            mDefaultSolutionTolerance = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "solution-floor" ) {
-            mDefaultSolutionFloor = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "calibration-tolerance" ) {
-            mCalibrationTolerance = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "max-model-calcs" ) {
-            mMaxModelCalcs = XMLHelper<int>::getValue( curr );
-        }
-        else if( SolverComponentFactory::hasSolverComponent( nodeName ) ) {
-            SolverComponent* tempSolverComponent = SolverComponentFactory::createAndParseSolverComponent( nodeName,
-                                                                                                          marketplace,
-                                                                                                          world,
-                                                                                                          mCalcCounter,
-                                                                                                          curr );
-            
-            // only add valid solver components
-            if( tempSolverComponent ) {
-                mSolverComponents.push_back( tempSolverComponent );
-            }
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    
-    return true;
+const string& UserConfigurableSolver::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 //! Initialize the solver at the beginning of the model.

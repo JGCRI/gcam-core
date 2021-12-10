@@ -39,21 +39,17 @@
 */              
 
 #include "util/base/include/definitions.h"
-#include <string>
-#include <iostream>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 // User headers
 #include "technologies/include/global_technology_database.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "technologies/include/itechnology_container.h"
 #include "technologies/include/technology_container.h"
 #include "util/base/include/util.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Default Constructor
 GlobalTechnologyDatabase::GlobalTechnologyDatabase() {
@@ -85,56 +81,43 @@ const std::string& GlobalTechnologyDatabase::getXMLNameStatic() {
 }
 
 //! parses GlobalTechnologyDatabase xml object
-bool GlobalTechnologyDatabase::XMLParse( const DOMNode* aNode ){
-    // assume we are passed a valid node.
-    assert( aNode );
-
-    // get all the children.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-
-    for( unsigned int i = 0;  i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == XMLHelper<void>::text() ) {
-            continue;
+bool GlobalTechnologyDatabase::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if( nodeName == "location-info" ) {
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        string sectorName = attrs["sector-name"];
+        string subsectorName = attrs["subsector-name"];
+        
+        if( sectorName.empty() ) {
+            // warn missing sector name
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Missing sector-name attribute while parsing location-info in "
+                    << getXMLNameStatic();
         }
-        else if( nodeName == "location-info" ) {
-            string sectorName = XMLHelper<string>::getAttr( curr, "sector-name" );
-            string subsectorName = XMLHelper<string>::getAttr( curr, "subsector-name" );
-            
-            if( sectorName.empty() ) {
-                // warn missing sector name
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::ERROR );
-                mainLog << "Missing sector-name attribute while parsing location-info in "
-                        << getXMLNameStatic();
-            }
-            else if( subsectorName.empty() ) {
-                // warn missing subsector name
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::ERROR );
-                mainLog << "Missing subsector-name attribute while parsing location-info in "
-                        << getXMLNameStatic();
-            }
-            else {
-                // try to find the contained technology
-                DOMNodeList* innerNodeList = curr->getChildNodes();
-                for( int innerIndex = 0; innerIndex < innerNodeList->getLength(); ++innerIndex ) {
-                    DOMNode* currInner = innerNodeList->item( innerIndex );
-                    const string innerNodeName = XMLHelper<string>::safeTranscode( currInner->getNodeName() );
+        else if( subsectorName.empty() ) {
+            // warn missing subsector name
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Missing subsector-name attribute while parsing location-info in "
+                    << getXMLNameStatic();
+        }
+        else {
+            // try to find the contained technology
+            for( rapidxml::xml_node<char>* currInner = aNode->first_node(); currInner; currInner = currInner->next_sibling() ) {
+                if(currInner->type() == rapidxml::node_element) {
+                    const string innerNodeName = XMLParseHelper::getNodeName(currInner);
                     
-                    if( innerNodeName == XMLHelper<void>::text() ) {
-                        continue;
-                    }
-                    else if( TechnologyContainer::hasTechnologyType( innerNodeName ) ) {
+                    if( TechnologyContainer::hasTechnologyType( innerNodeName ) ) {
                         // note only technology containers are considered, no stubs
                         pair<string, string> locationInfo( sectorName, subsectorName );
                         
                         // Get the tech list by reference so that updates are reflected
                         // in mTechnologyList as well.
-                        vector<ITechnologyContainer*>& tempTechList = mTechnologyList[ locationInfo ];
-                        parseContainerNode( currInner, tempTechList, new TechnologyContainer );
+                        std::vector<ITechnologyContainer*>& tempTechList = mTechnologyList[ locationInfo ];
+                        Data<std::vector<ITechnologyContainer*>, CONTAINER> tempTechListData(tempTechList, "");
+                        XMLParseHelper::parseData(currInner, tempTechListData);
+                        //parseContainerNode( currInner, tempTechList, new TechnologyContainer );
                     }
                     else {
                         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -144,14 +127,10 @@ bool GlobalTechnologyDatabase::XMLParse( const DOMNode* aNode ){
                 }
             }
         }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unknown element " << nodeName << " encountered while parsing " << getXMLNameStatic() << endl;
-        }
+        return true;
     }
     
-    return true;
+    return false;
 }
 
 /*!

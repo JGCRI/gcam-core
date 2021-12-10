@@ -196,9 +196,9 @@ public:
     virtual const std::string& getMarketName( const std::string& aRegionName ) const { return aRegionName; }
 
     virtual const std::string& getXMLReportingName() const;
-
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
     
+    virtual const std::string& getXMLName() const;
+
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
@@ -376,7 +376,7 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE, "base-building-size", mBuildingSize, objects::PeriodVector<Value> ),
 
         //! A flag to indicate the user wants to fix the building size to the parsed value.
-        DEFINE_VARIABLE(ARRAY, "is-building-size-fixed", mIsFixedBuildingSize, objects::PeriodVector<bool>),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "is-building-size-fixed", mIsFixedBuildingSize, objects::PeriodVector<bool>),
 
         //! Price exponent by period.
         DEFINE_VARIABLE( ARRAY, "price-exponent", mPriceExponent, objects::PeriodVector<Value> ),
@@ -398,14 +398,14 @@ protected:
 
         //! Current Subregional population.  Note that this is just a
         //! temporary value used during demand calculations
-        DEFINE_VARIABLE( SIMPLE, "subregional-population", mCurrentSubregionalPopulation, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "subregional-population", mCurrentSubregionalPopulation, Value ),
 
         //! Current Subregional income.  Note that this is just a
         //! temporary value used during demand calculations
-        DEFINE_VARIABLE( SIMPLE, "subregional-income", mCurrentSubregionalIncome, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "subregional-income", mCurrentSubregionalIncome, Value ),
 
         //! The sum product of energy service price necessary to drive demands.
-        DEFINE_VARIABLE( ARRAY | STATE, "price", mPrice, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "price", mPrice, objects::PeriodVector<Value> ),
 
         //! The unadjusted satiation level to use during calcDemand. Parsed from XML
         DEFINE_VARIABLE(SIMPLE, "unadjust-satiation", mUnadjustSatiation, Value),

@@ -44,8 +44,6 @@
 #include <cassert>
 #include <vector>
 #include <algorithm>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include <cmath>
 
 #include "util/base/include/configuration.h"
@@ -57,6 +55,7 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/gdp.h"
 #include "containers/include/info_factory.h"
@@ -65,10 +64,8 @@
 #include "sectors/include/sector_utils.h"
 #include "util/base/include/interpolation_rule.h"
 #include "functions/include/idiscrete_choice.hpp"
-#include "functions/include/discrete_choice_factory.hpp"
 
 using namespace std;
-using namespace xercesc;
 using namespace objects;
 
 extern Scenario* scenario;
@@ -79,10 +76,8 @@ extern Scenario* scenario;
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-Subsector::Subsector( const string& aRegionName, const string& aSectorName )
+Subsector::Subsector()
 {
-    mRegionName = aRegionName;
-    mSectorName = aSectorName;
     mDiscreteChoiceModel = 0;
 }
 
@@ -125,68 +120,31 @@ const string& Subsector::getName() const {
     return mName;
 }
 
-//! Initialize Subsector with xml data
-void Subsector::XMLParse( const DOMNode* node ) {
-    /*! \pre Make sure we were passed a valid node. */
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = node->getChildNodes();
-
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "share-weight" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mParsedShareWeights, modeltime );
-        }
-        else if( DiscreteChoiceFactory::isOfType( nodeName ) ) {
-            parseSingleNode( curr, mDiscreteChoiceModel, DiscreteChoiceFactory::create( nodeName ).release() );
-        }
-        else if( nodeName == "fuelprefElasticity" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mFuelPrefElasticity, modeltime );  
-        }
-        else if( nodeName == InterpolationRule::getXMLNameStatic() && XMLHelper<string>::getAttr( curr, "apply-to" ) == "share-weight" ) {
-            // if the delete flag is set then for interpolation rules that means to clear
-            // out any previously parsed rules
-            if( XMLHelper<bool>::getAttr( curr, "delete" ) ) {
-                clearInterpolationRules();
-            }
-
-            InterpolationRule* tempRule = new InterpolationRule();
-            tempRule->XMLParse( curr );
-            mShareWeightInterpRules.push_back( tempRule );
-        }
-        else if( TechnologyContainer::hasTechnologyType( nodeName ) ) {
-            parseContainerNode( curr, mTechContainers, new TechnologyContainer );
-        }
-        else if( nodeName == StubTechnologyContainer::getXMLNameStatic() ) {
-            parseContainerNode( curr, mTechContainers, new StubTechnologyContainer );
-        }
-        // parsed derived classes
-        else if( !XMLDerivedClassParse( nodeName, curr ) ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel(ILogger::WARNING);
-            mainLog << "Unknown element " << nodeName << " encountered while parsing " << getXMLName() << endl;
-        }
-    }
+void Subsector::setNames( const string& aRegionName, const string& aSectorName ) {
+    mRegionName = aRegionName;
+    mSectorName = aSectorName;
 }
 
-//! Parses any input variables specific to derived classes
-bool Subsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    // do nothing
-    // defining method here even though it does nothing so that we do not
-    // create an abstract class.
-    return false;
+bool Subsector::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if( nodeName == InterpolationRule::getXMLNameStatic() ) {
+        // just handle the interpolation rule clear
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        if( attrs["apply-to"] == "share-weight" && attrs["delete"] == "1" ) {
+            clearInterpolationRules();
+        }
+        InterpolationRule* tempRule = new InterpolationRule();
+        ParseChildData parseChildHelper(aNode, attrs);
+        parseChildHelper.setContainer(tempRule);
+        ExpandDataVector<InterpolationRule::SubClassFamilyVector> getDataVector;
+        tempRule->doDataExpansion( getDataVector );
+        getDataVector.getFullDataVector(parseChildHelper);
+        mShareWeightInterpRules.push_back( tempRule );
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 /*! \brief Write information useful for debugging to XML output stream

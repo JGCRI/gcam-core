@@ -46,7 +46,6 @@
 */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "technologies/include/base_technology.h"
 
@@ -135,7 +134,6 @@ protected:
     
     void calcEmissions( const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
     virtual const std::string& getXMLName() const = 0;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     double mUtilityParameterA;
 };

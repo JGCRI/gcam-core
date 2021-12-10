@@ -74,18 +74,21 @@ class Tabs;
  */
 class PhasedShutdownDecider: public IShutdownDecider
 {
-    friend class ShutdownDeciderFactory;
 public:
+    PhasedShutdownDecider();
+    
     virtual ~PhasedShutdownDecider();
     
     // IParsedComponent methods.
     virtual PhasedShutdownDecider* clone() const;
+    
+    static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
 
     virtual bool isSameType( const std::string& aType ) const;
 
     virtual const std::string& getName() const;
-
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -112,10 +115,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "shutdown-rate", mShutdownRate, double )
     )
 
-    PhasedShutdownDecider();
     void copy( const PhasedShutdownDecider& aOther );
-
-    static const std::string& getXMLNameStatic();
 };
 
 #endif // _PHASED_SHUTDOWN_DECIDER_H_

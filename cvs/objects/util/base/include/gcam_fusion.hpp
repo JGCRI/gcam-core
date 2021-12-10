@@ -71,6 +71,7 @@ struct CheckDataFlagHelper {
     using is_simple = boost::integral_constant<bool, DataType::hasDataFlag(SIMPLE)>;
     using is_array = boost::integral_constant<bool, DataType::hasDataFlag(ARRAY)>;
     using is_container = boost::integral_constant<bool, DataType::hasDataFlag(CONTAINER)>;
+    using is_not_parsable = boost::integral_constant<bool, DataType::hasDataFlag(NOT_PARSABLE)>;
 };
 
 /*!
@@ -287,6 +288,11 @@ struct NoFilter {
     bool operator()( const T* aContainer ) {
         return false;
     }
+    
+    template<typename T>
+    static bool matchesXMLAttr( const T* aContainer, const std::map<std::string, std::string>& aAttrs ) {
+        return false;
+    }
 };
 
 /*!
@@ -328,6 +334,16 @@ struct NamedFilter {
     bool operator()( const INamed* aContainer ) const {
         return aContainer && mMatcher->matchesString( aContainer->getName() );
     }
+    
+    static const std::string& getXMLAttrKey() {
+        const static std::string KEY = "name";
+        return KEY;
+    }
+    
+    static bool matchesXMLAttr( const INamed* aContainer, const std::map<std::string, std::string>& aAttrs ) {
+        auto iter = aAttrs.find(getXMLAttrKey());
+        return iter != aAttrs.end() && aContainer->getName() == (*iter).second;
+    }
 };
 
 /*!
@@ -352,6 +368,16 @@ struct YearFilter {
     // specialization where the year has been converted for us
     bool operator()( const int aYear ) const {
         return mMatcher->matchesInt( aYear );
+    }
+    
+    static const std::string& getXMLAttrKey() {
+        const static std::string KEY = "year";
+        return KEY;
+    }
+    
+    static bool matchesXMLAttr( const IYeared* aContainer, const std::map<std::string, std::string>& aAttrs ) {
+        auto iter = aAttrs.find(getXMLAttrKey());
+        return iter != aAttrs.end() && aContainer->getYear() == boost::lexical_cast<int>((*iter).second);
     }
 };
 

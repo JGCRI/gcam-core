@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/s_curve_interpolation_function.h"
 #include "util/curves/include/data_point.h"
@@ -49,7 +47,6 @@
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Default Constructor
 SCurveInterpolationFunction::SCurveInterpolationFunction()
@@ -88,44 +85,13 @@ IInterpolationFunction* SCurveInterpolationFunction::clone() const {
  * \return The string which identifies this function.
  * \see InterpolationFunctionFactory
  */
-const string& SCurveInterpolationFunction::getXMLAttrNameStatic() {
+const string& SCurveInterpolationFunction::getXMLNameStatic() {
     const static string XML_NAME = "s-curve";
     return XML_NAME;
 }
 
-bool SCurveInterpolationFunction::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "steepness" ) {
-            mSteepness = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "median-x-value" ) {
-            mMedianXValue = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLAttrNameStatic() << "." << endl;
-        }
-    }
-    return true;
-}
-
 void SCurveInterpolationFunction::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, getXMLAttrNameStatic() );
+    XMLWriteOpeningTag( IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, getXMLNameStatic() );
 
     XMLWriteElement( mSteepness, "steepness", aOut, aTabs );
     XMLWriteElement( mMedianXValue, "median-x-value", aOut, aTabs );

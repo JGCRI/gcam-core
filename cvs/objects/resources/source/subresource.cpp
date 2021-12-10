@@ -43,8 +43,6 @@
 #include <string>
 #include <iostream>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
@@ -61,7 +59,6 @@
 #include "technologies/include/itechnology.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -84,58 +81,6 @@ SubResource::~SubResource() {
     }
     
     delete mTechnology;
-}
-
-//! Initialize member variables from xml data
-void SubResource::XMLParse( const DOMNode* aNode ){
-    // make sure we were passed a valid node.
-    assert( aNode );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-    
-    // get all child nodes.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == Grade::getXMLNameStatic() ){
-            parseContainerNode( curr, mGrade, new Grade );
-        }
-        else if( nodeName == "annualprod" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mAnnualProd, modeltime );
-        }
-        else if( nodeName == "techChange" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mTechChange, modeltime );
-        }
-        else if( nodeName == "cal-production" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mCalProduction, modeltime );
-        }
-        else if( nodeName == "price-adder" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mPriceAdder, modeltime );
-        }
-        else if( TechnologyContainer::hasTechnologyType( nodeName ) ) {
-            parseSingleNode( curr, mTechnology, new TechnologyContainer() );
-        }
-        else if( !XMLDerivedClassParse( nodeName, curr ) ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName 
-                    << " found while parsing " << getXMLName() << "." << endl;
-        }
-    }
-
-}
-
-bool SubResource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
-    return false;
 }
 
 /*! \brief Complete the initialization

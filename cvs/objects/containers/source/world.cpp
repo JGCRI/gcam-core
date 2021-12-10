@@ -46,8 +46,6 @@
 #include <vector>
 #include <map>
 #include <algorithm>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/xml_helper.h"
 #include "containers/include/world.h"
@@ -90,7 +88,6 @@
 // #include <fenv.h>
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -115,48 +112,6 @@ void World::clear(){
     delete mClimateModel;
     delete mCalcCounter;
     delete mGlobalTechDB;
-}
-
-//! parses World xml object
-void World::XMLParse( const DOMNode* node ){
-    // assume we are passed a valid node.
-    assert( node );
-
-    // get all the children.
-    DOMNodeList* nodeList = node->getChildNodes();
-
-    for( unsigned int i = 0;  i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == GlobalTechnologyDatabase::getXMLNameStatic() ) {
-            mGlobalTechDB->XMLParse( curr );
-        }
-        // MiniCAM regions
-        else if( nodeName == RegionMiniCAM::getXMLNameStatic() ){
-            parseContainerNode( curr, mRegions, new RegionMiniCAM() );
-        }
-		// Read in parameters for climate model
-        else if( nodeName == MagiccModel::getXMLNameStatic() ){
-            parseSingleNode( curr, mClimateModel, new MagiccModel() );
-        }
-        else if( nodeName == NoClimateModel::getXMLNameStatic() ){
-            parseSingleNode( curr, mClimateModel, new NoClimateModel() );
-        }
-#if USE_HECTOR
-        else if( nodeName == HectorModel::getXMLNameStatic() ) {
-            parseSingleNode( curr, mClimateModel, new HectorModel() );
-        }
-#endif
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing World." << endl;
-        }
-    }
 }
 
 /*! \brief Complete the initialization

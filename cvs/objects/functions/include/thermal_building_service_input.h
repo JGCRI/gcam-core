@@ -96,7 +96,7 @@ public:
 
     virtual const std::string& getXMLReportingName() const;
     
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
+    virtual const std::string& getXMLName() const;
     
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -127,7 +127,7 @@ protected:
         DEFINE_VARIABLE( ARRAY, "degree-days", mDegreeDays, objects::PeriodVector<Value> ),
         
         //! Demand function coefficients to capture base year thermal characteristics.
-        DEFINE_VARIABLE( SIMPLE | STATE, "coefficient", mCoefficient, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "coefficient", mCoefficient, Value )
     )
     
     void copy( const ThermalBuildingServiceInput& aInput );

@@ -40,21 +40,16 @@
 
 #include "util/base/include/definitions.h"
 
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-
 #include "emissions/include/readin_control.h"
 #include "containers/include/scenario.h"
 #include "containers/include/gdp.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/iinfo.h"
-//#include "technologies/include/ioutput.h"
-//#include "functions/include/function_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -113,16 +108,16 @@ const string& ReadInControl::getXMLNameStatic(){
     return XML_NAME;
 }
 
-bool ReadInControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    if ( aNodeName == "future-emiss-factor" ){
-        XMLHelper<double>::insertValueIntoVector( aCurrNode, *mFutureEmissionsFactors, modeltime );
+bool ReadInControl::XMLParse(rapidxml::xml_node<char>* & aNode) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if(nodeName == "future-emiss-factor") {
+        Data<objects::PeriodVector<double>, ARRAY> futureEmissData(*mFutureEmissionsFactors, "");
+        XMLParseHelper::parseData(aNode, futureEmissData);
+        return true;
     }
-    else{
+    else {
         return false;
     }
-       
-    return true;
 }
 
 void ReadInControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
