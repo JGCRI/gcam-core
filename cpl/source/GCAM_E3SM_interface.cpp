@@ -176,7 +176,13 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
     // Note that GCAM runs one period ahead of E3SM. We make that adjustment here
     int e3smYear = *yyyymmdd/10000;
-    int gcamPeriod = modeltime->getyr_to_per( e3smYear ) + 1;
+    // If the e3smYear is not a GCAM model year, then GCAM will automatically run ahead
+    int gcamPeriod = modeltime->getyr_to_per( e3smYear );
+    // If the e3smYear is a GCAM model period, then we need to increment GCAM's model period
+    if ( modeltime->isModelYear( e3smYear ) ) {
+        gcamPeriod = gcamPeriod + 1;
+    }
+
     int gcamYear = modeltime->getper_to_yr( gcamPeriod );
     
     bool success = false;
