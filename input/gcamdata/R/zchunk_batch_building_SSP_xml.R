@@ -22,7 +22,6 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
              paste0("L244.GenericServiceImpedance_SSP", SSP_NUMS),
              paste0("L244.GenericServiceAdder_SSP", SSP_NUMS),
              paste0("L244.GenericServiceCoef_SSP", SSP_NUMS),
-             paste0("L244.FuelPrefElast_bld_SSP", unique(fuelpref_NUMS)),
              "L244.DeleteThermalService"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_SSP1.xml",
@@ -48,11 +47,6 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
       GenericServiceAdder <- paste0("L244.GenericServiceAdder_SSP", i)
       GenericServiceCoef <- paste0("L244.GenericServiceCoef_SSP", i)
 
-
-      # SSP2 is unique, uses fewer files
-      if(i != 2) {
-        FuelPrefElast <- paste0("L244.FuelPrefElast_bld_SSP", fuelpref_NUMS[toString(i)])
-      }
       xmlfn <- paste0("building_SSP", i, ".xml")
 
       # Load required inputs
@@ -65,7 +59,6 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
       L244.GenericServiceCoef_SSP <- get_data(all_data, GenericServiceCoef)
 
       if(i != 2) {
-        L244.FuelPrefElast_SSP <- get_data(all_data, FuelPrefElast)
         L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService")
       }
 
@@ -91,10 +84,9 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
           add_xml_data(L244.GenericServiceImpedance_SSP, "GenericServiceImpedance") %>%
           add_xml_data(L244.GenericServiceAdder_SSP, "GenericServiceAdder") %>%
           add_xml_data(L244.GenericServiceCoef_SSP, "GenericServiceCoef") %>%
-          add_xml_data(L244.FuelPrefElast_SSP, "FuelPrefElast") %>%
           add_xml_data(L244.DeleteThermalService, "DeleteThermalService") %>%
           add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance, GenericServiceSatiation, GenericServiceImpedance,
-                         GenericServiceAdder,GenericServiceCoef,FuelPrefElast,"L244.DeleteThermalService") ->
+                         GenericServiceAdder,GenericServiceCoef,"L244.DeleteThermalService") ->
           xml_obj
       }
 

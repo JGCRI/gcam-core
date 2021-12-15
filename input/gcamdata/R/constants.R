@@ -459,7 +459,7 @@ energy.DIGITS_MID_PRICE        <- 3
 energy.DIGITS_MPKM             <- 0
 energy.DIGITS_OM               <- 2
 energy.DIGITS_REMOVE.FRACTION  <- 2
-energy.DIGITS_SATIATION_ADDER  <- 9
+energy.DIGITS_SATIATION_ADDER  <- 5
 energy.DIGITS_SHRWT            <- 4
 energy.DIGITS_SPEED            <- 1
 energy.DIGITS_TECHCHANGE       <- 4

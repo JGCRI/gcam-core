@@ -48,6 +48,8 @@ module_energy_batch_building_det_xml <- function(command, ...) {
              "L244.GenericServiceCoef",
              "L244.ThermalServiceCoef",
              "L244.GompFnParam",
+             "L244.GenericCoalCoef",
+             "L244.ThermalCoalCoef",
              "L244.DeleteGenericService"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_det.xml"))
@@ -93,6 +95,8 @@ module_energy_batch_building_det_xml <- function(command, ...) {
     L244.GenericServiceCoef<-get_data(all_data, "L244.GenericServiceCoef")
     L244.ThermalServiceCoef<-get_data(all_data, "L244.ThermalServiceCoef")
     L244.GompFnParam <- get_data(all_data, "L244.GompFnParam")
+    L244.GenericCoalCoef <- get_data(all_data, "L244.GenericCoalCoef")
+    L244.ThermalCoalCoef <- get_data(all_data, "L244.ThermalCoalCoef")
 
 
     # ===================================================
@@ -117,6 +121,8 @@ module_energy_batch_building_det_xml <- function(command, ...) {
       add_xml_data(L244.Satiation_flsp, "Satiation_flsp") %>%
       add_xml_data(L244.Satiation_impedance, "SatiationImpedance") %>%
       add_xml_data(L244.GompFnParam, "GompFnParam") %>%
+      add_xml_data(L244.GenericCoalCoef, "GenericCoalCoef") %>%
+      add_xml_data(L244.ThermalCoalCoef, "ThermalCoalCoef") %>%
       add_xml_data(L244.DemandFunction_flsp, "DemandFunction_flsp") %>%
       add_xml_data(L244.DemandFunction_serv, "DemandFunction_serv") %>%
       add_xml_data(L244.Floorspace, "Floorspace") %>%
@@ -142,6 +148,7 @@ module_energy_batch_building_det_xml <- function(command, ...) {
                      "L244.GlobalTechCost_bld", "L244.DeleteThermalService", "L244.DeleteGenericService",
                      "L244.PriceExp_IntGains","L244.GenericServiceImpedance","L244.ThermalServiceImpedance",
                      "L244.GenericServiceAdder","L244.ThermalServiceAdder",
+                     "L244.GenericCoalCoef","L244.ThermalCoalCoef",
                      "L244.GenericServiceCoef","L244.ThermalServiceCoef") ->   building_det.xml
 
 

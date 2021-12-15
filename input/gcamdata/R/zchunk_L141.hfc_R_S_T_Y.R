@@ -163,7 +163,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
     # ======================================================================================
     # Select residential and cooling emisssions from L144.in_EJ_R_bld_serv_F_Yh
     L141.R_cooling_T_Yh.long <- L144.in_EJ_R_bld_serv_F_Yh %>%
-      filter(service %in% c("comm cooling", "resid cooling"), fuel == "electricity")
+      filter(grepl("cooling",service), fuel == "electricity")
     # Group by GCAM region and ID and year in new data frame (use to calculate share of total later)
     L141.R_cooling_Yh <-  L141.R_cooling_T_Yh.long %>%
       group_by(GCAM_region_ID,year) %>%
@@ -348,7 +348,7 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
 
     # Compute final cooling HFC emissions factors
     L141.EPA_HFC_R_S_T_Yh_adj %>%
-      filter(supplysector %in% c("comm cooling", "resid cooling"), year %in% HISTORICAL_YEARS) %>%
+      filter(grepl("cooling",supplysector), year %in% HISTORICAL_YEARS) %>%
       left_join_error_no_match(L141.R_cooling_T_Yh.long %>% select(GCAM_region_ID, year, service, energy = value),
                                by = c("GCAM_region_ID", "year", "supplysector" = "service")) %>%
       mutate(em_fact = value / energy) %>%

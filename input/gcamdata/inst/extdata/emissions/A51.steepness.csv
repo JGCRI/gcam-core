@@ -80,22 +80,22 @@ refining,gas to liquids,gas to liquids,3.5,3.5,3.5,3.5,3.5,3.5
 refining,oil refining,oil refining,3.5,3.5,3.5,3.5,3.5,3.5
 unconventional oil production,unconventional oil production,unconventional oil production,,,,,,3.5
 regional oil,crude oil,crude oil,3.5,3.5,3.5,,,3.5
-resid heating,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
-resid heating,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5
-resid heating,electricity,electricity,,,,,,
-resid heating,gas,gas,3.5,3.5,3.5,3.5,3.5,3.5
-resid heating,refined liquids,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
-resid heating,traditional biomass,traditional biomass,3.5,3.5,3.5,3.5,3.5,
-resid heating,district heat,district heat,,,,,,
-resid cooling,electricity,electricity,,,,,,
-resid cooling,gas,gas,3.5,3.5,3.5,3.5,3.5,3.5
-resid others,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
-resid others,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5
-resid others,electricity,electricity,,,,,,
-resid others,gas,gas,3.5,3.5,3.5,3.5,3.5,3.5
-resid others,refined liquids,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
-resid others,traditional biomass,traditional biomass,3.5,3.5,3.5,3.5,3.5,
-resid others,district heat,district heat,,,,,,
+resid heating modern,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
+resid heating coal,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5
+resid heating modern,electricity,electricity,,,,,,
+resid heating modern,gas,gas,3.5,3.5,3.5,3.5,3.5,3.5
+resid heating modern,refined liquids,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
+resid heating TradBio,traditional biomass,traditional biomass,3.5,3.5,3.5,3.5,3.5,
+resid heating modern,district heat,district heat,,,,,,
+resid cooling modern,electricity,electricity,,,,,,
+resid cooling modern,gas,gas,3.5,3.5,3.5,3.5,3.5,3.5
+resid others modern,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
+resid others coal,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5
+resid others modern,electricity,electricity,,,,,,
+resid others modern,gas,gas,3.5,3.5,3.5,3.5,3.5,3.5
+resid others modern,refined liquids,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
+resid others TradBio,traditional biomass,traditional biomass,3.5,3.5,3.5,3.5,3.5,
+resid others modern,district heat,district heat,,,,,,
 comm heating,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
 comm heating,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5
 comm heating,electricity,electricity,,,,,,

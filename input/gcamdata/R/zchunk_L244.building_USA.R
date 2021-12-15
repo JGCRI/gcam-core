@@ -771,7 +771,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       mutate(serv_density=satiation.level*(1-exp((-log(2)/`satiation-impedance`)*afford))) %>%
       mutate(coef=observed_base_serv_perflsp/serv_density*thermal_load) %>%
       mutate(est_base_serv_perflsp=coef*thermal_load*serv_density) %>%
-      mutate(`bias-adder`= round(observed_base_serv_perflsp-est_base_serv_perflsp,3)) %>%
+      mutate(bias.adder= round(observed_base_serv_perflsp-est_base_serv_perflsp,3)) %>%
       mutate(coef=round(coef,0)) %>%
       select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]],coef)
 
@@ -824,7 +824,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
         mutate(serv_density=satiation.level*(1-exp((-log(2)/`satiation-impedance`)*afford))) %>%
         mutate(coef=observed_base_serv_perflsp/(serv_density*thermal_load)) %>%
         mutate(est_base_serv_perflsp=coef*thermal_load*serv_density) %>%
-        mutate(`bias-adder`= round(observed_base_serv_perflsp-est_base_serv_perflsp,3)) %>%
+        mutate(bias.adder= round(observed_base_serv_perflsp-est_base_serv_perflsp,3)) %>%
         mutate(coef=round(coef,energy.DIGITS_SATIATION_ADDER)) %>%
         select(LEVEL2_DATA_NAMES[["ThermalServiceAdder"]],coef)
 

@@ -506,6 +506,10 @@ GenericServiceAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-cons
 
 ThermalServiceAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, thermal-building-service-input/+bias-adder, scenario, scenario/world
 
+GenericCoalCoef, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, building-service-input/+k-coal, building-service-input/+l-coal, scenario, scenario/world
+
+ThermalCoalCoef, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, thermal-building-service-input/+k-coal, thermal-building-service-input/+l-coal, scenario, scenario/world
+
 GenericServiceTechChange, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, building-service-input/+{year;fillout=1}tech-change, building-service-input/+tech-change, scenario, scenario/world
 
 HDDCDD, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, thermal-building-service-input/+{year}degree-days, thermal-building-service-input/+degree-days, scenario, scenario/world

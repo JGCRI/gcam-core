@@ -8,8 +8,9 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L144.end_use_eff}, \code{L144.shell_eff_R_Y}, \code{L144.in_EJ_R_bld_serv_F_Yh}, \code{L144.NEcost_75USDGJ}, \code{L144.internal_gains}, \code{L144.base_service_EJ_serv}. The corresponding file in the
-#' original data system was \code{LA144.building_det_en.R} (energy level1).
+#' the generated outputs: \code{L144.end_use_eff}, \code{L144.shell_eff_R_Y}, \code{L144.in_EJ_R_bld_serv_F_Yh}, \code{L144.NEcost_75USDGJ},
+#'  \code{L144.internal_gains}, \code{L144.base_service_EJ_serv}, \code{L144.prices_bld}.
+#'  The corresponding file in the original data system was \code{LA144.building_det_en.R} (energy level1).
 #' @details Calculates building energy consumption, non-energy costs, energy output by service, internal gains, and end-use technology and shell efficiency
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join lag mutate pull select summarise
@@ -30,14 +31,16 @@ module_energy_LA144.building_det_en <- function(command, ...) {
              "L101.in_EJ_ctry_bld_Fi_Yh",
              "L142.in_EJ_R_bld_F_Yh",
              "L143.HDDCDD_scen_RG3_Y",
-             "L143.HDDCDD_scen_ctry_Y"))
+             "L143.HDDCDD_scen_ctry_Y",
+             FILE = "energy/A44.CalPrice_resid"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L144.end_use_eff",
              "L144.shell_eff_R_Y",
              "L144.in_EJ_R_bld_serv_F_Yh",
              "L144.NEcost_75USDGJ",
              "L144.internal_gains",
-             "L144.base_service_EJ_serv"))
+             "L144.base_service_EJ_serv",
+             "L144.prices_bld"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -53,6 +56,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     A44.shell_eff_mult_RG3 <- get_data(all_data, "energy/A44.shell_eff_mult_RG3")
     A44.tech_eff_mult_RG3 <- get_data(all_data, "energy/A44.tech_eff_mult_RG3")
     A44.USA_TechChange <- get_data(all_data, "energy/A44.USA_TechChange")
+    A44.Calprice_resid <- get_data(all_data, "energy/A44.CalPrice_resid")
     L101.in_EJ_ctry_bld_Fi_Yh <- get_data(all_data, "L101.in_EJ_ctry_bld_Fi_Yh")
     L142.in_EJ_R_bld_F_Yh <- get_data(all_data, "L142.in_EJ_R_bld_F_Yh")
     L143.HDDCDD_scen_RG3_Y <- get_data(all_data, "L143.HDDCDD_scen_RG3_Y")
@@ -469,6 +473,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
              # First, prepare columns concatenating fuel with region and sector
              regions_fuel = paste(GCAM_region_ID, fuel),
              sector_fuel = paste(sector, fuel)) %>%
+      replace_na(list(value = 0)) %>%
       filter(!regions_fuel %in% regions_noheat,
              !regions_fuel %in% regions_NoTradBio,
              sector_fuel != "bld_comm traditional biomass") %>%  # Note that the number of rows didn't decrease
@@ -530,6 +535,43 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.internal_gains # This is a final output table.
 
 
+    # 1G
+    # Create L144.prices_bld to calibrate satiation impedance (mu) ate region level in the DS
+    L144.prices_bld<-A44.Calprice_resid %>%
+      left_join_error_no_match(GCAM_region_names,by="region") %>%
+      gather_years() %>%
+      # Add 1975 and extrapolate prices using rule 2
+      group_by(region,GCAM_region_ID,fuel) %>%
+      complete(nesting(year=MODEL_BASE_YEARS)) %>%
+      mutate(value = if_else(is.na(value),approx_fun(year, value, rule = 2),value)) %>%
+      # Add all historical years and linerly extrapolate (rule 1)
+      complete(nesting(year=HISTORICAL_YEARS)) %>%
+      mutate(value = if_else(is.na(value),approx_fun(year, value, rule = 2),value)) %>%
+      ungroup() %>%
+      # Adjust fuel names
+      mutate(fuel = if_else(fuel == "district heat","heat",fuel),
+             fuel = if_else(fuel == "refined liquids enduse","refined liquids",fuel),
+             fuel = gsub("regional ","",fuel),
+             fuel = gsub("natural ","",fuel)) %>%
+      # Left_join to add all the fuel-service combinations
+      left_join(calibrated_techs_bld_det %>% select(service,fuel), by="fuel") %>%
+      rename(price = value) %>%
+      # select historical years
+      filter(year <= max(MODEL_BASE_YEARS)) %>%
+      left_join_error_no_match(L144.in_EJ_R_bld_serv_F_Yh, by = c("GCAM_region_ID", "fuel", "year", "service")) %>%
+      select(-sector) %>%
+      group_by(region,GCAM_region_ID,service,year) %>%
+      mutate(agg_service = sum(value)) %>%
+      mutate(share_fuel = value/agg_service) %>%
+      replace_na(list(share_fuel=0)) %>%
+      mutate(check_share = sum(share_fuel) ) %>%
+      ungroup() %>%
+      group_by(region,GCAM_region_ID,service,year) %>%
+      summarise(price = weighted.mean(price,share_fuel,na.rm = T)) %>%
+      ungroup()
+
+
+
     # ===================================================
 
     L144.end_use_eff %>%
@@ -587,7 +629,18 @@ module_energy_LA144.building_det_en <- function(command, ...) {
                      "energy/A_regions", "energy/A44.cost_efficiency", "common/GCAM_region_names") ->
       L144.base_service_EJ_serv
 
-    return_data(L144.end_use_eff, L144.shell_eff_R_Y, L144.in_EJ_R_bld_serv_F_Yh, L144.NEcost_75USDGJ, L144.internal_gains, L144.base_service_EJ_serv)
+
+    L144.prices_bld %>%
+      add_title("Residential average service prices by GCAM region ID / historical year") %>%
+      add_units("$1975/unit") %>%
+      add_comments("Weighted by fuel prices") %>%
+      add_legacy_name("L144.prices_bld") %>%
+      add_precursors("energy/A44.CalPrice_resid", "energy/calibrated_techs_bld_det",
+                     "L101.in_EJ_ctry_bld_Fi_Yh", "common/GCAM_region_names") ->
+      L144.prices_bld
+
+
+    return_data(L144.end_use_eff, L144.shell_eff_R_Y, L144.in_EJ_R_bld_serv_F_Yh, L144.NEcost_75USDGJ, L144.internal_gains, L144.base_service_EJ_serv,L144.prices_bld)
   } else {
     stop("Unknown command")
   }
