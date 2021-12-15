@@ -50,6 +50,7 @@
 #include "functions/include/aproduction_function.h"
 
 class IInput;
+class BuildingNodeInput;
 class BuildingServiceInput;
 
 /*!
@@ -141,6 +142,18 @@ private:
                                const double aIncome,
                                const std::string& aRegionName,
                                const int aPeriod ) const;
+
+    double calcServiceDensityCoal(BuildingServiceInput* aBuildingServiceInput,
+        BuildingNodeInput* aBuildingNodeInput,
+        const double aIncome,
+        const std::string& aRegionName,
+        const int aPeriod)  const;
+
+    double calcServiceDensityTradBio(BuildingServiceInput* aBuildingServiceInput,
+        BuildingNodeInput* aBuildingNodeInput,
+        const double aIncome,
+        const std::string& aRegionName,
+        const int aPeriod)  const;
 };
 
 #endif // _BUILDING_SERVICE_FUNCTION_H_
