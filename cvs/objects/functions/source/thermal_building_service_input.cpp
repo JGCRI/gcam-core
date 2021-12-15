@@ -114,6 +114,14 @@ void ThermalBuildingServiceInput::XMLParse( const DOMNode* aNode ) {
 			mBiasAdderEn = (XMLHelper<double>::getValue(curr));
 		}
 
+        else if (nodeName == "k-coal") {
+            mCoalK = (XMLHelper<double>::getValue(curr));
+        }
+
+        else if (nodeName == "l-coal") {
+            mCoalL = (XMLHelper<double>::getValue(curr));
+        }
+
 		else if (nodeName == "coef") {
 			mCoef = (XMLHelper<double>::getValue(curr));
 		}
@@ -153,6 +161,8 @@ void ThermalBuildingServiceInput::copy( const ThermalBuildingServiceInput& aInpu
     mInternalGainsScalar = aInput.mInternalGainsScalar;
     mDegreeDays = aInput.mDegreeDays;
 	mBiasAdderEn = aInput.mBiasAdderEn;
+    mCoalK = aInput.mCoalK;
+    mCoalL = aInput.mCoalL;
 	mCoef = aInput.mCoef;
 }
 
@@ -165,6 +175,8 @@ void ThermalBuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, 
     XMLWriteElement( mServiceDensity[ aPeriod ], "service-density", aOut, aTabs );
     XMLWriteElement( mCoef, "coef", aOut, aTabs );
 	XMLWriteElement( mBiasAdderEn, "bias-adder", aOut, aTabs);
+    XMLWriteElement(mCoalK, "k-coal", aOut, aTabs);
+    XMLWriteElement(mCoalL, "l-coal", aOut, aTabs);
     XMLWriteElement( mInternalGainsScalar, "internal-gains-scalar", aOut, aTabs );
     XMLWriteElement( mDegreeDays[ aPeriod ], "degree-days", aOut, aTabs );
     
@@ -211,14 +223,31 @@ double ThermalBuildingServiceInput::getCoef( ) const {
 
 }
 
+
+double ThermalBuildingServiceInput::getCoefficient(const int aPeriod) const {
+
+    return 1;
+}
+
+/*!
+ * \brief Get the coal coefficients and bias adder for service demand.
+  * \return The coefficient.
+ */
+
+double ThermalBuildingServiceInput::getCoalK() const {
+    return mCoalK;
+}
+
+double ThermalBuildingServiceInput::getCoalL() const {
+    return mCoalL;
+}
+
 double ThermalBuildingServiceInput::getBiasAdder() const {
 	return mBiasAdderEn;
 }
 
-double ThermalBuildingServiceInput::getCoefficient(const int aPeriod) const {
 
-	return 1;
-}
+
 
 /*! \brief Set the building service coefficient.
  * \param aCoefficient new coefficient value

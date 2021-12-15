@@ -194,6 +194,10 @@ public:
 
 	virtual double getCoef() const;
 
+    virtual double getCoalK() const;
+
+    virtual double getCoalL() const;
+
     virtual void setCoefficient( const double aCoefficient,
                                  const int aPeriod );
 
@@ -317,8 +321,14 @@ protected:
 		//! Demand function coefficients to capture base year thermal characteristics.
 		DEFINE_VARIABLE(SIMPLE | STATE, "coef", mCoef, Value),
 
-		//! Demand function coefficients to capture base year thermal characteristics.
+		//! Demand function coefficients to capture base year  characteristics.
 		DEFINE_VARIABLE(SIMPLE | STATE, "bias-adder", mBiasAdderEn, Value),
+
+        //! Demand function coefficients to capture base year  characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "k-coal", mCoalK, Value),
+
+        //! Demand function coefficients to capture base year  characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "l-coal", mCoalL, Value),
 
         //! Satiation demand function.
         DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* )

@@ -112,6 +112,14 @@ void BuildingServiceInput::XMLParse( const DOMNode* aNode ) {
 			mBiasAdderEn = (XMLHelper<double>::getValue(curr));
 		}
 
+        else if (nodeName == "k-coal") {
+            mCoalK = (XMLHelper<double>::getValue(curr));
+        }
+
+        else if (nodeName == "l-coal") {
+            mCoalL = (XMLHelper<double>::getValue(curr));
+        }
+
 		else if (nodeName == "coef") {
 			mCoef = (XMLHelper<double>::getValue(curr));
 		}
@@ -172,6 +180,8 @@ void BuildingServiceInput::copy( const BuildingServiceInput& aInput ) {
     mName = aInput.mName;
     mServiceDemand = aInput.mServiceDemand;
 	mBiasAdderEn = aInput.mBiasAdderEn;
+    mCoalK = aInput.mCoalK;
+    mCoalL = aInput.mCoalL;
 	mCoef = aInput.mCoef;
 
     delete mSatiationDemandFunction;
@@ -189,6 +199,8 @@ void BuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* a
 
     XMLWriteElement( mServiceDemand[ aPeriod ], "service", aOut, aTabs );
 	XMLWriteElement(mBiasAdderEn, "bias-adder", aOut, aTabs);
+    XMLWriteElement(mCoalK, "k-coal", aOut, aTabs);
+    XMLWriteElement(mCoalL, "l-coal", aOut, aTabs);
 	XMLWriteElement(mCoef, "coef", aOut, aTabs);
     XMLWriteElement( mServiceDensity[ aPeriod ], "service-density", aOut, aTabs );
 
@@ -204,9 +216,6 @@ double BuildingServiceInput::calcThermalLoad( const BuildingNodeInput* aBuilding
     return 1;
 }
 
-double BuildingServiceInput::getBiasAdder() const {
-	return mBiasAdderEn;
-}
 
 /*!
  * \brief Set the calculated service density for reporting.
@@ -274,6 +283,23 @@ double BuildingServiceInput::getCoefficient(const int aPeriod) const {
 double BuildingServiceInput::getCoef() const {
 	// Generic building services do not have coefficients.
 	return mCoef;
+}
+
+/*!
+ * \brief Get the coal coefficients and bias adder for service demand.
+  * \return The coefficient.
+ */
+
+double BuildingServiceInput::getCoalK() const {
+    return mCoalK;
+}
+
+double BuildingServiceInput::getCoalL() const {
+    return mCoalL;
+}
+
+double BuildingServiceInput::getBiasAdder() const {
+    return mBiasAdderEn;
 }
 
 /*! \brief Set the building service coefficient.
