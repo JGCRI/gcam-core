@@ -863,11 +863,23 @@ module_energy_L244.building_det <- function(command, ...) {
 
     # Separate thermal and generic services into separate tibbles
     L244.GenericBaseService <- L244.base_service %>%
-      filter(building.service.input %in% generic_services)
+      filter(building.service.input %in% generic_services) %>%
+      complete(nesting(region,year), building.service.input = c(building.service.input, generic_services)) %>%
+      mutate(gcam.consumer = if_else(grepl("resid",building.service.input),"resid","comm"),
+             nodeInput = if_else(grepl("resid",building.service.input),"resid","comm"),
+             building.node.input = if_else(grepl("resid",building.service.input),"resid_building","comm_building")) %>%
+      replace_na(list(base.service=0)) %>%
+      select(LEVEL2_DATA_NAMES[["GenericBaseService"]])
 
     L244.ThermalBaseService <- L244.base_service %>%
       filter(building.service.input %in% thermal_services) %>%
-      rename(thermal.building.service.input = building.service.input)
+      rename(thermal.building.service.input = building.service.input) %>%
+      complete(nesting(region,year), thermal.building.service.input = c(thermal.building.service.input, thermal_services)) %>%
+      mutate(gcam.consumer = if_else(grepl("resid",thermal.building.service.input),"resid","comm"),
+             nodeInput = if_else(grepl("resid",thermal.building.service.input),"resid","comm"),
+             building.node.input = if_else(grepl("resid",thermal.building.service.input),"resid_building","comm_building")) %>%
+      replace_na(list(base.service=0)) %>%
+      select(LEVEL2_DATA_NAMES[["ThermalBaseService"]])
 
     # L244.HDDCDD: Heating and cooling degree days by scenario
     L244.all_sres_gcm <- unique(L143.HDDCDD_scen_R_Y[c("SRES", "GCM")]) # These HDD/CDD scenarios are pretty old, should be updated eventually
@@ -1294,48 +1306,70 @@ module_energy_L244.building_det <- function(command, ...) {
     L244.DeleteThermalService_pre <- L244.ThermalBaseService %>%
       group_by(region, gcam.consumer, nodeInput, building.node.input, thermal.building.service.input) %>%
       summarise(base.service = max(base.service)) %>%
-      ungroup() %>%
+      ungroup()
+
+    L244.DeleteThermalService<-calibrated_techs_bld_det %>%
+      select(service) %>%
+      distinct() %>%
+      filter(service %in% thermal_services) %>%
+      repeat_add_columns(tibble(region = unique(GCAM_region_names$region))) %>%
+      select(region,service) %>%
+      left_join(L244.DeleteThermalService_pre %>% select(region,service=thermal.building.service.input,base.service), by = c("region", "service")) %>%
+      #replace_na(list(base.service = 0)) %>%
+      filter(complete.cases(.)) %>%
+      # adjust Eastern Africa to not delete modern services
+      mutate(base.service = if_else(grepl("Africa",region) & service == "resid heating modern",1e-9,base.service)) %>%
       filter(base.service == 0) %>%
       select(-base.service) %>%
-      mutate(supplysector = thermal.building.service.input) %>%
-      filter(grepl("resid",gcam.consumer)) %>%
+      rename(supplysector = service) %>%
       repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
+      mutate(gcam.consumer = if_else(grepl("resid",supplysector),"resid","comm"),
+             nodeInput = gcam.consumer,
+             building.node.input = paste0(nodeInput,"_building")) %>%
       unite(gcam.consumer, c(gcam.consumer,group),sep="_") %>%
       separate(gcam.consumer, c("adj","group"),sep="_",remove = F) %>%
-      mutate(supplysector = paste0(supplysector,"_",group),
-             thermal.building.service.input = paste0(thermal.building.service.input,"_",group)) %>%
-      bind_rows(L244.ThermalBaseService %>%
-                  group_by(region, gcam.consumer, nodeInput, building.node.input, thermal.building.service.input) %>%
-                  summarise(base.service = max(base.service)) %>%
-                  ungroup() %>%
-                  filter(base.service == 0) %>%
-                  select(-base.service) %>%
-                  mutate(supplysector = thermal.building.service.input) %>%
-                  filter(grepl("comm",gcam.consumer))) %>%
+      # adjust commercial
+      mutate(gcam.consumer = if_else(grepl("comm",gcam.consumer),"comm",gcam.consumer)) %>%
+      mutate(thermal.building.service.input = supplysector,
+             supplysector =if_else(grepl("resid",gcam.consumer),paste0(supplysector,"_",group),supplysector),
+             thermal.building.service.input = if_else(grepl("resid",gcam.consumer) ,paste0(thermal.building.service.input,"_",group),thermal.building.service.input)) %>%
       select(LEVEL2_DATA_NAMES[["DeleteThermalService"]])
-
-    # Delete the resid coal and TradBio sectors if there is no service in the base year.
-    # Do not delete modern services, they may not be in the base year but appear in future periods
-    # Adjust Indonesia (does not have any type of heating services)
-    L244.DeleteThermalService<-L244.DeleteThermalService_pre %>%
-      filter(region != "Indonesia") %>%
-      filter(!grepl("modern",thermal.building.service.input)) %>%
-      bind_rows(L244.DeleteThermalService_pre %>%
-                  filter(region == "Indonesia"))
 
 
 
     # Generic services
-    L244.DeleteGenericService<- L244.GenericBaseService %>%
+    L244.DeleteGenericService_pre<-L244.GenericBaseService %>%
       group_by(region, gcam.consumer, nodeInput, building.node.input, building.service.input) %>%
       summarise(base.service = max(base.service)) %>%
-      ungroup() %>%
+      ungroup()
+
+    L244.DeleteGenericService<-calibrated_techs_bld_det %>%
+      select(service) %>%
+      distinct() %>%
+      filter(service %in% generic_services) %>%
+      repeat_add_columns(tibble(region = unique(GCAM_region_names$region))) %>%
+      select(region,service) %>%
+      left_join(L244.DeleteGenericService_pre %>% select(region,service=building.service.input,base.service), by = c("region", "service")) %>%
+      #replace_na(list(base.service = 0)) %>%
+      filter(complete.cases(.)) %>%
       filter(base.service == 0) %>%
       select(-base.service) %>%
-      mutate(supplysector = building.service.input)%>%
+      rename(supplysector = service) %>%
+      repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
+      mutate(gcam.consumer = if_else(grepl("resid",supplysector),"resid","comm"),
+             nodeInput = gcam.consumer,
+             building.node.input = paste0(nodeInput,"_building")) %>%
+      unite(gcam.consumer, c(gcam.consumer,group),sep="_") %>%
+      separate(gcam.consumer, c("adj","group"),sep="_",remove = F) %>%
+      # adjust commercial
+      mutate(gcam.consumer = if_else(grepl("comm",gcam.consumer),"comm",gcam.consumer)) %>%
+      mutate(building.service.input = supplysector,
+             supplysector =if_else(grepl("resid",gcam.consumer),paste0(supplysector,"_",group),supplysector),
+             building.service.input = if_else(grepl("resid",gcam.consumer) ,paste0(building.service.input,"_",group),building.service.input)) %>%
       select(LEVEL2_DATA_NAMES[["DeleteGenericService"]])
 
-    # In order to make the function flexible to the implementation of multiple consumers, the satiation impedance (mu)
+
+        # In order to make the function flexible to the implementation of multiple consumers, the satiation impedance (mu)
     # is calibrated in the DS per region.
     # Here we create L244.ThermalServiceImpedance and L244.GenericServiceImpedance
     # They need to be calibrated at region level

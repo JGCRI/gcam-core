@@ -114,6 +114,7 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
     return totalDemand;
 }
 
+
 double BuildingServiceFunction::calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
                          const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
                          const IInput* aParentInput ) const
@@ -126,7 +127,26 @@ double BuildingServiceFunction::calcLevelizedCost( const InputSet& aInputs, cons
     for( InputSet::const_iterator inputIter = aInputs.begin(); inputIter != aInputs.end(); ++inputIter ) {
         // calculation for energy services
         BuildingServiceInput* buildingServiceInput = static_cast<BuildingServiceInput*>( *inputIter );
-        double serviceDensity = calcServiceDensity( buildingServiceInput, income, aRegionName, aPeriod );
+        BuildingNodeInput* buildingNodeInput = static_cast<BuildingNodeInput*>(*inputIter);
+
+        double serviceDensity;
+        if (aSectorName == "resid heating coal" || "resid cooling coal" || "resid others coal") {
+
+            double serviceDensity = calcServiceDensityCoal(buildingServiceInput, buildingNodeInput, income, aRegionName, aPeriod);
+
+        }
+        else if ("resid heating TradBio" || "resid cooling TradBio" || "resid others TradBio") {
+
+            double serviceDensity = calcServiceDensityTradBio(buildingServiceInput, buildingNodeInput, income, aRegionName, aPeriod);
+
+        }
+        else {
+            double serviceDensity = calcServiceDensity(buildingServiceInput, income, aRegionName, aPeriod);
+
+        } return serviceDensity;
+
+
+
         double servicePrice = serviceDensity
             * buildingServiceInput->getPricePaid( aRegionName, aPeriod );
 
@@ -134,6 +154,9 @@ double BuildingServiceFunction::calcLevelizedCost( const InputSet& aInputs, cons
     }
     return parentPrice;
 }
+
+
+
 
 /*!
  * \brief Calculate the per square meter service density.

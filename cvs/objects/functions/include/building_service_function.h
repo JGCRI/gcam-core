@@ -81,9 +81,11 @@ public:
                             double capitalStock = 0, const IInput* aParentInput = 0 ) const;
 
 
+    
     double calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
                               const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
                               const IInput* aParentInput = 0 ) const;
+    
 
     // AProductionFunction methods not implemented
     double changeElasticity( InputSet& input, const std::string& aRegionName, double priceReceived,

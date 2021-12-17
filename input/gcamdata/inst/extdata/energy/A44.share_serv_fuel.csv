@@ -270,20 +270,6 @@ Latin America,bld_resid,biomass,resid cooling modern,0
 Former Soviet Union,bld_resid,biomass,resid cooling modern,0
 China,bld_resid,biomass,resid cooling modern,0
 Eastern Europe,bld_resid,biomass,resid cooling modern,0
-USA,bld_resid,coal,resid cooling coal,0
-Canada,bld_resid,coal,resid cooling coal,0
-Western Europe,bld_resid,coal,resid cooling coal,0
-Japan,bld_resid,coal,resid cooling coal,0
-Korea,bld_resid,coal,resid cooling coal,0
-Southeast Asia,bld_resid,coal,resid cooling coal,0
-India,bld_resid,coal,resid cooling coal,0
-Australia_NZ,bld_resid,coal,resid cooling coal,0
-Africa,bld_resid,coal,resid cooling coal,0
-Middle East,bld_resid,coal,resid cooling coal,0
-Latin America,bld_resid,coal,resid cooling coal,0
-Former Soviet Union,bld_resid,coal,resid cooling coal,0
-China,bld_resid,coal,resid cooling coal,0
-Eastern Europe,bld_resid,coal,resid cooling coal,0
 USA,bld_resid,electricity,resid cooling modern,0.079130435
 Canada,bld_resid,electricity,resid cooling modern,0.01
 Western Europe,bld_resid,electricity,resid cooling modern,0.025
@@ -340,20 +326,6 @@ Latin America,bld_resid,refined liquids,resid cooling modern,0
 Former Soviet Union,bld_resid,refined liquids,resid cooling modern,0
 China,bld_resid,refined liquids,resid cooling modern,0
 Eastern Europe,bld_resid,refined liquids,resid cooling modern,0
-USA,bld_resid,traditional biomass,resid cooling TradBio,0
-Canada,bld_resid,traditional biomass,resid cooling TradBio,0
-Western Europe,bld_resid,traditional biomass,resid cooling TradBio,0
-Japan,bld_resid,traditional biomass,resid cooling TradBio,0
-Korea,bld_resid,traditional biomass,resid cooling TradBio,0
-Southeast Asia,bld_resid,traditional biomass,resid cooling TradBio,0
-India,bld_resid,traditional biomass,resid cooling TradBio,0
-Australia_NZ,bld_resid,traditional biomass,resid cooling TradBio,0
-Africa,bld_resid,traditional biomass,resid cooling TradBio,0
-Middle East,bld_resid,traditional biomass,resid cooling TradBio,0
-Latin America,bld_resid,traditional biomass,resid cooling TradBio,0
-Former Soviet Union,bld_resid,traditional biomass,resid cooling TradBio,0
-China,bld_resid,traditional biomass,resid cooling TradBio,0
-Eastern Europe,bld_resid,traditional biomass,resid cooling TradBio,0
 USA,bld_resid,biomass,resid heating modern,0.037587395
 Canada,bld_resid,biomass,resid heating modern,0.06382927
 Western Europe,bld_resid,biomass,resid heating modern,0.10857292
