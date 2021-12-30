@@ -66,6 +66,7 @@
 #include "solution/util/include/edfun.hpp"
 #include "solution/util/include/ublas-helpers.hpp"
 #include "solution/util/include/jacobian-precondition.hpp"
+#include "util/base/include/manage_state_variables.hpp"
 
 #include <Eigen/LU>
 #include <Eigen/SVD>
@@ -558,6 +559,10 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
         static_cast<LogEDFun&>(F).setSlope(jdiag);
           }
 
+          // keep track of the last TRACK_NUM_PAST_F_VALUES f(x) values only
+          if(past_f_values.size() == TRACK_NUM_PAST_F_VALUES) {
+              past_f_values.pop();
+          }
           past_f_values.push(f0);
         // start the next iteration *without* updating x
         continue;
@@ -617,8 +622,12 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     // test for convergence
     double maxval = fabs(fxnew[0]);
     double imaxval = 0;
+      std::list<int> unsolved;
     for(size_t i=1; i<fxnew.size(); ++i) {
       double val = fabs(fxnew[i]);
+        if(val > mFTOL) {
+            unsolved.push_back(i);
+        }
       if(val > maxval) {
         maxval = val;
         imaxval = i;
@@ -627,7 +636,10 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
 
     solverLog << "Convergence test maxval: " << maxval << "  imaxval= " << imaxval << "\n";
     solverLog << "\tx[i]= " << xnew[imaxval] << "  dx[i]= " << dx[imaxval] << "  xstep[i]= "
-              << xstep[imaxval] << "\n";
+              << xstep[imaxval] << " num unsolved: " << unsolved.size() << "\n";
+      if(unsolved.size() <= 20) {
+          const_cast<SolutionInfoSet *>(cSolInfo)->printUnsolved(solverLog);
+      }
     if(maxval <= mFTOL) {
       solverLog << "Solution successful -- max.\n";
       x = xnew;
@@ -644,12 +656,20 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       fxstep /= dx2;
         B += fxstep * xstep.transpose();
       ageB++;                // increment the age of B
+        if((unsolved.size()*30) < ncol) {
+            solverLog << "!!!!! HERE.\n";
+        scenario->getManageStateVariables()->setPartialDeriv(true);
+        for(int j : unsolved) {
+          jacol(F, xnew, fxnew, j, B, true, 0);
+        }
+        F.partial(-1);
+        }
     }
     else {
       // Progress using the Broyden formula is anemic.  This usually
       // happens near discontinuities in the Jacobian matrix.  If B is
       // old, try a finite-difference jacobian to get us back on track.
-      if(ageB > 0 && mMaxJacobainReuse > 0) {
+      //if(ageB > 0 && mMaxJacobainReuse > 0) {
         solverLog << "Insufficient progress with Broyden formula.  Resetting the Jacobian.\n(f0= " << f0 << ", fnew= " << fnew << ")\n";
         // just in case call fdjac such that it re-calculates the model at xnew
         // otherwise we could have bad state data from which we calculate derivatives
@@ -669,14 +689,14 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
         static_cast<LogEDFun&>(F).setSlope(jdiag);
           }
         
-      }
+      /*}
       else {
         // just did a reset, and it didn't help us.  Probably we've
         // got a very ill-behaved value in one of the variables.  Kick
         // it out and see if the bracketing routine can fix it.
         solverLog << "Repeated poor progress in Broyden solver.  Returning.\n";
         return -4;
-      }
+      }*/
     }
 
     // log the data trace before we do the update
