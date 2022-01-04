@@ -453,6 +453,39 @@ void SolutionInfo::moveLeftBracketToX(){
     EDL = getED();
 }
 
+void SolutionInfo::calcSecantBracket(const bool aIsLeft, const double multiplier, const bool aUseSecantBracket) {
+    double prevX = aIsLeft ? XL : XR;
+    double prevED = aIsLeft ? EDL : EDR;
+    double currX = getPrice();
+    double currED = getED();
+    if(!aUseSecantBracket || currX == prevX || currED == prevED) {
+        /*ILogger& solverLog = ILogger::getLogger( "solver_log" );
+        solverLog.setLevel( ILogger::WARNING );
+        solverLog << "Zero slope" << endl;*/
+        if(aIsLeft) {
+            moveLeftBracketToX();
+            increaseX( multiplier, 0.00001 );
+        }
+        else {
+            moveRightBracketToX();
+            decreaseX( multiplier, 0.00001 );
+        }
+        return;
+    }
+    double slope = (currED - prevED) / (currX - prevX);
+    double threshold = 0;//aIsLeft ? -0.001 : 0.001;
+    double newX = currX + ((threshold - currED) / slope);
+    if(aIsLeft) {
+        XL = currX;
+        EDL = currED;
+    }
+    else {
+        XR = currX;
+        EDR = currED;
+    }
+    setPrice(newX);
+}
+
 //! Reset left and right bracket to X.
 void SolutionInfo::resetBrackets(){
     bracketed = false;

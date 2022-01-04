@@ -117,6 +117,7 @@ public:
     void decreaseX( const double multiplier, const double lowerBound );
     void moveRightBracketToX();
     void moveLeftBracketToX();
+    void calcSecantBracket(const bool aIsLeft, const double multiplier, const bool aUseSecantBracket);
     void resetBrackets();
     bool isCurrentlyBracketed() const;
     bool isSolved() const;
