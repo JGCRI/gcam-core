@@ -123,7 +123,7 @@ protected:
 private:
     void copy( const MACControl& other );
     double getMACValue( const double aCarbonPrice ) const;
-    double adjustForTechChange( const int aPeriod, double reduction );
+    double adjustForTechChange(const std::string& aRegionName, const int aPeriod, double reduction );
 };
 
 #endif // _MAC_CONTROL_H_
