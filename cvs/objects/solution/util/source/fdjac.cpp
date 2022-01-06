@@ -48,7 +48,7 @@ extern Scenario* scenario;
  * out from the fdjac subroutine so that we can easily test a single
  * column for nonsingularity without duplicating any code.
  */
-inline void jacol(VecFVec &F, const UBVECTOR &x,
+void jacol(VecFVec &F, const UBVECTOR &x,
                   const UBVECTOR &fx, int j,
                   UBMATRIX &J,
                   bool usepartial, std::ostream *diagnostic) {
