@@ -417,7 +417,7 @@ bool SolutionInfo::checkAndResetBrackets(){
 }
 
 //! Increase price by 1+multiplier, or set it to lowerBound if it is below the lower bound.
-void SolutionInfo::increaseX( const double multiplier, const double lowerBound ){
+void SolutionInfo::increaseX( const double multiplier ){
     double X = getPrice();
     if( X >= 0 ) {
         X *= 1 + multiplier;
@@ -430,7 +430,7 @@ void SolutionInfo::increaseX( const double multiplier, const double lowerBound )
 }
 
 //! Decrease price by 1/(1+multiplier), or set it to 0 if it is below the lower bound.
-void SolutionInfo::decreaseX( const double multiplier, const double lowerBound ){
+void SolutionInfo::decreaseX( const double multiplier ){
     double X = getPrice();
     if( X > 0 ) {
         X /= 1 + multiplier;
@@ -453,37 +453,63 @@ void SolutionInfo::moveLeftBracketToX(){
     EDL = getED();
 }
 
-void SolutionInfo::calcSecantBracket(const bool aIsLeft, const double multiplier, const bool aUseSecantBracket) {
+/*!
+ * \brief Take a bracket step and update the price of this market to the next price to try to
+ *        find a bracket.
+ * \details Exactly how the bracket step is made depends on the arguments given.  First the
+ *          determination of if we are searching for the left or right bracket is handled by the
+ *          aIsLeft argument.  Secondly, if we should choose the next price using a dynamic
+ *          bracket interval (using the secant method) or a fixed interval (using the supplied
+ *          aFixedBracketInterval step) is handled by the aUseSecantBracket argument.  Note,
+ *          for the first iteration a fixed interval step will be taken regardless of the aUseSecantBracket
+ *          argument.
+ * \param aIsLeft If true we are updating the left bracket, otherwise the right bracket.
+ * \param aFixedBracketInterval The appropriate bracket interval to use if we are taking a fixed step.
+ * \param aUseSecantBracket If true use the secant method to determine the size of the step, otherwise fixed interval.
+ */
+void SolutionInfo::takeBracketStep(const bool aIsLeft, const double aFixedBracketInterval, const bool aUseSecantBracket) {
     double prevX = aIsLeft ? XL : XR;
     double prevED = aIsLeft ? EDL : EDR;
     double currX = getPrice();
     double currED = getED();
+    
+    // If we are not using the secant method to decide how big of a step to
+    // take find the other bracket or this is the first iteration and X == XL == XR
+    // then just take a fixed interval bracket step in the appropriate direction
     if(!aUseSecantBracket || currX == prevX || currED == prevED) {
-        /*ILogger& solverLog = ILogger::getLogger( "solver_log" );
-        solverLog.setLevel( ILogger::WARNING );
-        solverLog << "Zero slope" << endl;*/
         if(aIsLeft) {
             moveLeftBracketToX();
-            increaseX( multiplier, 0.00001 );
+            increaseX( aFixedBracketInterval );
         }
         else {
             moveRightBracketToX();
-            decreaseX( multiplier, 0.00001 );
+            decreaseX( aFixedBracketInterval );
         }
-        return;
-    }
-    double slope = (currED - prevED) / (currX - prevX);
-    double threshold = 0;//aIsLeft ? -0.001 : 0.001;
-    double newX = currX + ((threshold - currED) / slope);
-    if(aIsLeft) {
-        XL = currX;
-        EDL = currED;
     }
     else {
-        XR = currX;
-        EDR = currED;
+        // Use the last two price and excess demand values to calculate the next price
+        // to try for bracketing.  Essentially a dynamic width bracket interval.
+        double slope = (currED - prevED) / (currX - prevX);
+        // TODO: aim for zero or slightly on the other side depending on the direction we need?
+        double threshold = 0;//aIsLeft ? -0.001 : 0.001;
+        // NOTE: We are not imposing any kind of limit on the size of this step here however
+        // there is a "backtracking" check in the bracketing algorithm which should provide
+        // appropriate limits.
+        double newX = currX + ((threshold - currED) / slope);
+        
+        // Update the left/right bracket to the current X / ED as appropriate for the direction
+        // we are searching.
+        if(aIsLeft) {
+            XL = currX;
+            EDL = currED;
+        }
+        else {
+            XR = currX;
+            EDR = currED;
+        }
+        // set the next price to try
+        setPrice(newX);
     }
-    setPrice(newX);
 }
 
 //! Reset left and right bracket to X.

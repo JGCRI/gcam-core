@@ -57,10 +57,14 @@ void jacol(VecFVec &F, const UBVECTOR &x,
            bool usepartial=true, std::ostream *diagnostic=NULL);
 
 void fdjac(VecFVec &F, const UBVECTOR &x,
-           const UBVECTOR &fx, UBMATRIX &J, bool usepartial=true,
+           const UBVECTOR &fx, UBMATRIX &J,
+           const std::list<int>& cols,
+           bool usepartial=true,
            std::ostream *diagnostic=NULL);
 
 void fdjac(VecFVec &F, const UBVECTOR &x,
-           UBMATRIX &J, bool usepartial=true);
+           UBMATRIX &J,
+           const std::list<int>& cols,
+           bool usepartial=true);
 
 #endif
