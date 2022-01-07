@@ -122,19 +122,26 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       summarise(available = sum(available),
                 minNEcost_bilUSD = sum(minNEcost_bilUSD),
                 maxNEcost_bilUSD = sum(maxNEcost_bilUSD),
-                #elec_coef = median(elec_coef)) %>%
                 elec_EJ = sum(elec_EJ)) %>%
       ungroup() %>%
-      #mutate(grade = gsub(',', '-', paste0("NE: ", cost_bin, " depth: ", depth_bin))) %>%
-      #separate(cost_bin, c("lower_cost", "upper_cost"), ",") %>%
-      mutate(#upper_cost = as.numeric(gsub('.$', '', upper_cost)),
-             #lower_cost = pmax(as.numeric(gsub('^.', '', lower_cost)), 0.0),
-             #upper_cost = replace_na(upper_cost, 10.0),
-             lower_cost = minNEcost_bilUSD / available,
+      mutate(lower_cost = minNEcost_bilUSD / available,
              upper_cost = maxNEcost_bilUSD / available,
              elec_coef = elec_EJ / available) %>%
-      left_join_error_no_match(grades %>% separate(cost_bin, c("lower", "upper"), ',') %>% mutate(lower = as.numeric(gsub('^.', '', lower)), upper = as.numeric(gsub('.$', '', upper)), range_mult=(upper/lower)) %>% select(grade, range_mult), by="grade") %>%
-      mutate(upper_cost = if_else(round(lower_cost, water.DIGITS_GROUND_WATER_RSC) == round(upper_cost, water.DIGITS_GROUND_WATER_RSC), lower_cost * range_mult, upper_cost)) %>%
+      # We need to guard against lower and upper costs that are "the same" as that
+      # causes a discontinuity in GCAM.  This can happen because the bins are based
+      # on total however lower/upper costs are based on just the non-energy costs
+      # and in GCAM we can only use the average electricity coefficient.  As a work
+      # around in these cases we arbitrarily increase the upper cost to have the same
+      # difference as the original total cost.
+      left_join_error_no_match(grades %>%
+                                 separate(cost_bin, c("lower", "upper"), ',') %>%
+                                 mutate(lower = as.numeric(gsub('^.', '', lower)),
+                                        upper = as.numeric(gsub('.$', '', upper)),
+                                        range_mult=(upper/lower)) %>%
+                                 select(grade, range_mult), by="grade") %>%
+      mutate(upper_cost = if_else(round(lower_cost, water.DIGITS_GROUND_WATER_RSC) == round(upper_cost, water.DIGITS_GROUND_WATER_RSC),
+                                  lower_cost * range_mult,
+                                  upper_cost)) %>%
       select(GCAM_region_ID, GCAM_basin_ID, grade, lower_cost, upper_cost, available, elec_coef)
 
 
