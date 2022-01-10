@@ -96,10 +96,29 @@ void SubResource::completeInit( const std::string& aRegionName, const std::strin
     // update the available resource for period 0
     // this function must be called after all the grades have been parsed and nograde set
     updateAvailable( 0 );
+    
+    if( mGrade.size() == 1 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Invalid " << getXMLName() << " contains only one grade in: "
+                << aRegionName << ", " << aResourceName << ", " << mName << endl;
+        abort();
+    }
 
     // call completeInit for grades
+    vector<Grade*>::iterator prevGrade;
     for( vector<Grade*>::iterator gradeIter = mGrade.begin(); gradeIter != mGrade.end(); gradeIter++ ) {
         ( *gradeIter )->completeInit( mSubresourceInfo.get() );
+        if(gradeIter != mGrade.begin() && (*gradeIter)->getExtCost() <= (*prevGrade)->getExtCost()/* && (*gradeIter)->getAvail() > 0.0*/) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::SEVERE );
+            mainLog << "Invalid " << getXMLName() << " unsorted or equal extraction costs for "
+                    << (*prevGrade)->getName() << " = " << (*prevGrade)->getExtCost() << ", "
+                    << (*gradeIter)->getName() << " = " << (*gradeIter)->getExtCost() << " in: "
+                    << aRegionName << ", " << aResourceName << ", " << mName << endl;
+            abort();
+        }
+        prevGrade = gradeIter;
     }
     
     if( !mTechnology ) {
