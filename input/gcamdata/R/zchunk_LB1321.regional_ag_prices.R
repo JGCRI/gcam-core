@@ -158,9 +158,11 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
 
     L1321.prod_kt_ctry_CttnLnt <- filter(L1321.ag_prod_kt_ctry_item, item == "Seed cotton") %>%
       mutate(item = "Cotton lint",
+             item.code = (FAO_ag_items_TRADE %>% filter(pp_commod == 'Cotton lint'))$item.code,
              production = production * aglu.WEIGHT_COTTON_LINT)
     L1321.prod_kt_ctry_CttnSd <- filter(L1321.ag_prod_kt_ctry_item, item == "Seed cotton") %>%
       mutate(item = "Cottonseed",
+             item.code = (FAO_ag_items_TRADE %>% filter(pp_commod == 'Cottonseed'))$item.code,
              production = production * (1 - aglu.WEIGHT_COTTON_LINT))
     L1321.ag_prod_kt_ctry_item <- bind_rows(filter(L1321.ag_prod_kt_ctry_item, item != "Seed cotton"),
                                          L1321.prod_kt_ctry_CttnLnt,
@@ -239,8 +241,8 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
       mutate(prPmult = prP / avg_prP_C,
              production_wt_prPmult = prPmult * production) %>%
       group_by(GCAM_region_ID) %>%
-      summarise(production_wt_prPmult = sum(production_wt_prPmult),
-                production = sum(production)) %>%
+      summarise(production_wt_prPmult = sum(production_wt_prPmult, na.rm=T),
+                production = sum(production, na.rm=T)) %>%
       mutate(prPmult_R = production_wt_prPmult / production) %>%
       select(GCAM_region_ID, prPmult_R)
 
