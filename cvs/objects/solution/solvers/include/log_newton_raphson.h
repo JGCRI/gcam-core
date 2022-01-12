@@ -81,9 +81,6 @@ public:
     virtual ReturnCode solve( SolutionInfoSet& aSolutionSet, const int aPeriod );
     virtual const std::string& getXMLName() const;
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
 protected:
     //! The default amount to adjust prices by when calculation derivatives.
     double mDefaultDeltaPrice;

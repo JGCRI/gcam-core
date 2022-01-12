@@ -41,12 +41,9 @@
 #include "util/base/include/definitions.h"
 #include <cassert>
 #include "technologies/include/profit_shutdown_decider.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Constructor
 ProfitShutdownDecider::ProfitShutdownDecider()
@@ -94,44 +91,8 @@ const string& ProfitShutdownDecider::getXMLNameStatic() {
     return XML_NAME;
 }
 
-bool ProfitShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
-    
-    // Assume we have a valid node.
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-    if( mName.empty() ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "No name specified for " << getXMLNameStatic() << endl;
-    }
-
-    const xercesc::DOMNodeList* nodeList = node->getChildNodes();
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
-        const xercesc::DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() != xercesc::DOMNode::ELEMENT_NODE ){
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        if( nodeName == "max-shutdown" ){
-            mMaxShutdown = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "steepness" ) {
-            mSteepness = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "median-shutdown-point" ) {
-            mMedianShutdownPoint = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unknown tag " << nodeName << " encountered while processing "
-                    << getXMLNameStatic() << endl;
-        }
-    }
-    
-    return true;
+const string& ProfitShutdownDecider::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 void ProfitShutdownDecider::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

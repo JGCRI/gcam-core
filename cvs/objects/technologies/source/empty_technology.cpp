@@ -45,10 +45,9 @@
 #include "technologies/include/empty_technology.h"
 
 using namespace std;
-using namespace xercesc;
 
 EmptyTechnology* EmptyTechnology::getInstance() {
-    static EmptyTechnology INSTANCE;
+    static CreateableEmptyTechnology INSTANCE;
     
     return &INSTANCE;
 }
@@ -63,17 +62,14 @@ ITechnology* EmptyTechnology::clone() const {
     return 0;
 }
 
-const string& EmptyTechnology::getXMLName() const {
+const string& EmptyTechnology::getXMLNameStatic() {
     const static string XML_NAME = "empty-technology";
     
     return XML_NAME;
 }
 
-bool EmptyTechnology::XMLParse( const DOMNode* aNode )
-{
-    assert( false );
-    
-    return false;
+const string& EmptyTechnology::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 void EmptyTechnology::completeInit( const string& aRegionName,

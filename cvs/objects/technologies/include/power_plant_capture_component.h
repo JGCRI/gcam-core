@@ -46,7 +46,6 @@
 
 #include <string>
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/icapture_component.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -96,18 +95,21 @@
  * \author Josh Lurz
  */
 class PowerPlantCaptureComponent: public ICaptureComponent {
-    friend class CaptureComponentFactory;
 public:
+    PowerPlantCaptureComponent();
+    
     virtual ~PowerPlantCaptureComponent();
     
     // Documentation is inherited from ICaptureComponent.
     virtual PowerPlantCaptureComponent* clone() const;
+    
+    static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
         
     virtual bool isSameType( const std::string& aType ) const;
     
     virtual const std::string& getName() const;
-    
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -150,11 +152,8 @@ public:
                        const int aPeriod ) const;
 
 protected:
-	PowerPlantCaptureComponent();
     
     void copy( const PowerPlantCaptureComponent& aOther );
-
-	static const std::string& getXMLNameStatic();
     
     void adjustEnergyInput( IInput* aEnergyInput,
                             const int aPeriod ) const;
@@ -172,7 +171,7 @@ protected:
         ICaptureComponent,
 
         //! Sequestered quantity by period.
-        DEFINE_VARIABLE( ARRAY | STATE, "sequestered-amount", mSequesteredAmount, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "sequestered-amount", mSequesteredAmount, objects::TechVintageVector<Value> ),
 
         //! Name of the storage market.
         DEFINE_VARIABLE( SIMPLE, "storage-market", mStorageMarket, std::string ),

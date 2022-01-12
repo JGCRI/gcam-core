@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/non_energy_use_capture_component.h"
 #include "util/logger/include/ilogger.h"
@@ -93,37 +91,13 @@ const string& NonEnergyUseCaptureComponent::getXMLNameStatic() {
     return XML_NAME;
 }
 
-const string& NonEnergyUseCaptureComponent::getName() const {
-    // Capture components are not named as only one can exist per Technology.
+const string& NonEnergyUseCaptureComponent::getXMLName() const {
     return getXMLNameStatic();
 }
 
-bool NonEnergyUseCaptureComponent::XMLParse( const xercesc::DOMNode* node ){
-    /*! \pre Assume we are passed a valid node. */
-    assert( node );
-
-    const xercesc::DOMNodeList* nodeList = node->getChildNodes();
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
-        const xercesc::DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() != xercesc::DOMNode::ELEMENT_NODE ){
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        if( nodeName == "remove-fraction" ){
-            mRemoveFraction = XMLHelper<double>::getValue( curr );
-        }
-		else if( nodeName == "target-gas" ){
-			mTargetGas = XMLHelper<string>::getValue( curr );
-		}
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unknown tag " << nodeName << " encountered while processing "
-                    << getXMLNameStatic() << endl;
-        }
-    }
-    // TODO: Handle success and failure better.
-    return true;
+const string& NonEnergyUseCaptureComponent::getName() const {
+    // Capture components are not named as only one can exist per Technology.
+    return getXMLNameStatic();
 }
 
 void NonEnergyUseCaptureComponent::toDebugXML( const int aPeriod,

@@ -40,13 +40,9 @@
 
 #include "util/base/include/definitions.h"
 
-#include <xercesc/dom/DOMNode.hpp>
-
 #include "emissions/include/nonco2_emissions.h"
 #include "emissions/include/iemissions_driver.h"
-#include "emissions/include/emissions_driver_factory.h"
 #include "emissions/include/aemissions_control.h"
-#include "emissions/include/emissions_control_factory.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "util/logger/include/ilogger.h"
@@ -57,7 +53,6 @@
 #include "technologies/include/icapture_component.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -184,25 +179,6 @@ const string& NonCO2Emissions::getXMLName() const {
 const string& NonCO2Emissions::getXMLNameStatic(){
     static const string XML_NAME = "Non-CO2";
     return XML_NAME;
-}
-
-bool NonCO2Emissions::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
-    if( aNodeName == "emiss-coef" ){
-        mEmissionsCoef = XMLHelper<Value>::getValue( aCurrNode );
-    }
-    else if( aNodeName == "input-emissions" ){
-        mInputEmissions = XMLHelper<Value>::getValue( aCurrNode );
-    }
-    else if( EmissionsDriverFactory::isEmissionsDriverNode( aNodeName ) ){
-        parseSingleNode( aCurrNode, mEmissionsDriver, EmissionsDriverFactory::create( aNodeName ) );
-    }
-    else if( EmissionsControlFactory::isEmissionsControlNode( aNodeName ) ) {
-        parseContainerNode( aCurrNode, mEmissionsControls, EmissionsControlFactory::create( aNodeName ).release() );
-    }
-    else{
-        return false;
-    }
-    return true;
 }
 
 void NonCO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

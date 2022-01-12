@@ -41,8 +41,6 @@
 #include "util/base/include/definitions.h"
 
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "emissions/include/input_output_driver.h"
 #include "functions/include/iinput.h"
@@ -52,7 +50,6 @@
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
 double InputOutputDriver::calcEmissionsDriver( const vector<IInput*>& aInputs,
                                                const vector<IOutput*>& aOutputs,
@@ -84,35 +81,6 @@ const string& InputOutputDriver::getXMLName() const {
 const string& InputOutputDriver::getXMLNameStatic(){
     static const string XML_NAME = "input-output-driver";
     return XML_NAME;
-}
-
-bool InputOutputDriver::XMLParse( const xercesc::DOMNode* aNode ) {
-    /*! \pre Assume we are passed a valid node. */
-    assert( aNode );
-
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    bool parsingSuccessful = true;
-
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ) {
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == XMLHelper<void>::text() ){
-            continue;
-        }
-        else if( nodeName == "input-name" ){
-            mInputName = XMLHelper<string>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing" << getXMLName() << endl;
-            parsingSuccessful = false;
-        }
-    }
-    
-    return parsingSuccessful;
 }
 
 void InputOutputDriver::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {

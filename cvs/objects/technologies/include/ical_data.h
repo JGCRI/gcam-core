@@ -44,7 +44,6 @@
  * \author James Blackwood
  */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/data_definition_util.h"
@@ -75,7 +74,6 @@ public:
     // inherited documentation.
     virtual ICalData* clone() const = 0;
 
-    virtual void XMLParse( const xercesc::DOMNode* aNode ) = 0;
     virtual void toDebugXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
 
     /*!

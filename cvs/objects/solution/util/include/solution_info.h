@@ -135,8 +135,8 @@ public:
     double getForecastDemand() const;
     void setForecastPrice( const double aPrice );
     void setForecastDemand( const double aDemand );
-    double getCorrectionSlope() const;
-    void setCorrectionSlope( const double aSlope );
+    double getCorrectionSlope( const double aPriceScale, const double aDemandScale ) const;
+    void setCorrectionSlope( const double aSlope, const double aPriceScale, const double aDemandScale );
 
     int getSerialNumber( void ) const;
     

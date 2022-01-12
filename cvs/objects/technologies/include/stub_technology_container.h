@@ -46,7 +46,6 @@
  */
 
 #include <map>
-#include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/itechnology_container.h"
 
 /*! 
@@ -113,8 +112,8 @@ public:
     // INamed methods
     virtual const std::string& getName() const;
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    // AParsable methods
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
     
     // IVisitable methods
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
@@ -126,11 +125,13 @@ public:
     // the macro DEFINE_DATA utilities and instead set it up ourselves.
     typedef ITechnologyContainer ParentClass;
     virtual void doDataExpansion( ExpandDataVector<ParentClass::SubClassFamilyVector>& aVisitor );
+    typedef boost::fusion::vector<Data<std::string, SIMPLE> > DataVectorType;
+    DataVectorType generateDataVector() {
+        return DataVectorType(Data<std::string, SIMPLE>(mName, "name"));
+    }
     
 protected:
     virtual ITechnologyContainer* clone() const;
-    
-    virtual void interpolateAndParse( const xercesc::DOMNode* aNode );
     
 private:
     //! The name of the stub which will be duplicated in each contained
@@ -142,10 +143,8 @@ private:
     ITechnologyContainer* mTechnology;
     
     //! The vector of XML modifications to make to the global technology
-    std::vector<const xercesc::DOMNode*> mXMLAdjustments;
+    std::vector<rapidxml::xml_node<char>*> mXMLAdjustments;
     
-    // typdef to help simplify code
-    typedef std::vector<const xercesc::DOMNode*>::const_iterator CXMLIterator;
 };
 
 #endif // _STUB_TECHNOLOGY_CONTAINER_H_

@@ -206,10 +206,8 @@ public:
 
     virtual const std::string& getMarketName( const std::string& aRegionName ) const { return aRegionName; }
 
-    virtual const std::string& getXMLReportingName() const = 0;
+    virtual const std::string& getXMLName() const = 0;
 
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
-    
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
@@ -380,7 +378,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Food demand in Pcal/year
-        DEFINE_VARIABLE( ARRAY | STATE, "food-demand", mFoodDemandQuantity, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE, "base-service", mFoodDemandQuantity, objects::PeriodVector<Value> ),
 
         //! Demand scale paramater (A)
         DEFINE_VARIABLE( SIMPLE, "scale-param", mScaleParam, Value ),
@@ -389,23 +387,22 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "self-price-elasticity", mSelfPriceElasticity, Value ),
 
         //! The actual share of the total budget (alpha)
-        DEFINE_VARIABLE( ARRAY | STATE, "share", mShare, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "share", mShare, objects::PeriodVector<Value> ),
                             
         //! Regional bias correction term
         DEFINE_VARIABLE( ARRAY | STATE, "regional-bias", mRegionalBias, objects::PeriodVector<Value> ),
         
         //! The Subregional population.  Note that this is just a
         //! temporary value used during demand calculations
-        DEFINE_VARIABLE( ARRAY, "subregional-population", mSubregionalPopulation, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "subregional-population", mSubregionalPopulation, objects::PeriodVector<Value> ),
 
         //! Current Subregional income (in PPP).  Note that this is just a
         //! temporary value used during demand calculations
-        DEFINE_VARIABLE( SIMPLE, "subregional-income", mCurrentSubregionalIncome, Value )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "subregional-income", mCurrentSubregionalIncome, Value )
 
     )
                            
     void copy( const FoodDemandInput& aNodeInput );
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode ) = 0;
 };
 
 /*!
@@ -434,6 +431,8 @@ public:
     
     virtual const std::string& getXMLReportingName() const;
     
+    virtual const std::string& getXMLName() const;
+    
 protected:
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
@@ -452,7 +451,6 @@ protected:
     )
     
     void copy( const StaplesFoodDemandInput& aNodeInput );
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode );
 };
 
 /*!
@@ -481,6 +479,8 @@ public:
     
     virtual const std::string& getXMLReportingName() const;
     
+    virtual const std::string& getXMLName() const;
+    
 protected:
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
@@ -493,7 +493,6 @@ protected:
     )
     
     void copy( const NonStaplesFoodDemandInput& aNodeInput );
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode );
 };
 
 #endif // _FOOD_DEMAND_INPUT_H_

@@ -45,7 +45,6 @@
  * \author James Blackwood
  */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include "land_allocator/include/aland_allocator_item.h"
 #include "util/base/include/ivisitable.h"
 
@@ -71,10 +70,14 @@ class LandLeaf : public ALandAllocatorItem {
 public:
     LandLeaf( const ALandAllocatorItem* aParent,
               const std::string& aName );
+    
+    LandLeaf();
 
     virtual ~LandLeaf();
 
     static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
 
     // Tree Item methods.
     virtual size_t getNumChildren() const;
@@ -136,8 +139,6 @@ public:
     
     virtual const ALandAllocatorItem* getChildWithHighestShare( const bool aIncludeAllChildren, const int aPeriod ) const;
 
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;
 
@@ -158,13 +159,13 @@ protected:
         ALandAllocatorItem,
                             
         //! Land allocated typically in thous km2.
-        DEFINE_VARIABLE( ARRAY | STATE, "land-allocation", mLandAllocation, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "land-allocation", mLandAllocation, objects::PeriodVector<Value> ),
 
         //! Carbon content and emissions calculator for the leaf.
         DEFINE_VARIABLE( CONTAINER, "carbon-calc", mCarbonContentCalc, ICarbonCalc* ),
 
         //! Social discount rate stored from the region info.
-        DEFINE_VARIABLE( SIMPLE, "social-discount-rate", mSocialDiscountRate, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "social-discount-rate", mSocialDiscountRate, Value ),
 
         //! Minimum above ground carbon density (used for carbon subsidy and not emissions calculations)
         DEFINE_VARIABLE( SIMPLE, "minAboveGroundCDensity", mMinAboveGroundCDensity, Value ),
@@ -178,13 +179,13 @@ protected:
         //! Container of historical land use.
         DEFINE_VARIABLE( CONTAINER, "land-use-history", mLandUseHistory, LandUseHistory* ),
         
-        DEFINE_VARIABLE( ARRAY, "parsed-landAllocation", mReadinLandAllocation, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY, "landAllocation", mReadinLandAllocation, objects::PeriodVector<Value> ),
                             
         //! Name of land constraint policy
         DEFINE_VARIABLE( SIMPLE, "land-constraint-policy", mLandConstraintPolicy, std::string ),
                             
         //! State value necessary to use Marketplace::addToDemand for CO2 emissions
-        DEFINE_VARIABLE( SIMPLE | STATE, "luc-state", mLastCalcCO2Value, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "luc-state", mLastCalcCO2Value, Value ),
 
         //! The name of a negative emissions policy which may scale back
         //! carbon subsidies if there isn't a budget to support it
@@ -197,14 +198,9 @@ protected:
     double getLandConstraintCost( const std::string& aRegionName,
                             const int aPeriod ) const;
 
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName,
-                                       const xercesc::DOMNode* aCurr );
-
     virtual void toDebugXMLDerived( const int aPeriod,
                                     std::ostream& aOut,
                                     Tabs* aTabs ) const;
-
-    virtual const std::string& getXMLName() const;
 
     virtual void initLandUseHistory( const std::string& aRegionName );
 };

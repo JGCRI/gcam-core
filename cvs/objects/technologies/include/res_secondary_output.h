@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "technologies/include/secondary_output.h"
 
@@ -74,8 +73,9 @@
  */
 class RESSecondaryOutput: public SecondaryOutput
 {
-    friend class OutputFactory;
 public:
+    RESSecondaryOutput();
+    
     /*!
      * \brief Get the XML name for the class.
      * \return The XML name for the class.
@@ -88,9 +88,9 @@ public:
 
     virtual bool isSameType( const std::string& aType ) const;
 
-
     virtual const std::string& getXMLReportingName() const;
-
+    
+    virtual const std::string& getXMLName() const;
     
     virtual void setPhysicalOutput( const double aPrimaryOutput,
                                    const std::string& aRegionName,
@@ -100,11 +100,6 @@ public:
     virtual double getPhysicalOutput( const int aPeriod ) const;
 
 protected:
-    /*!
-     * \brief Protected constructor so the class can only be created by the
-     *        OutputFactory.
-     */
-    RESSecondaryOutput();
     
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.

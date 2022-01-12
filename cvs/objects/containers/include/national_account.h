@@ -47,7 +47,6 @@
 
 #include <vector>
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/ivisitable.h"
 
 class Tabs;
@@ -137,7 +136,6 @@ public:
     };
     NationalAccount();
     static const std::string& getXMLNameStatic();
-    void XMLParse( const xercesc::DOMNode* node );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void reset();
     void addToAccount( const AccountType aType, const double aValue );

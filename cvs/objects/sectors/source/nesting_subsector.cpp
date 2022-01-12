@@ -43,8 +43,6 @@
 #include <iostream>
 #include <cassert>
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/configuration.h"
 #include "sectors/include/nesting_subsector.h"
@@ -56,20 +54,13 @@
 #include "functions/include/idiscrete_choice.hpp"
 
 using namespace std;
-using namespace xercesc;
 using namespace objects;
 
 extern Scenario* scenario;
 
-/*! \brief Default constructor.
-*
-* Constructor initializes member variables with default values, sets vector sizes, etc.
-*
-* \author Sonny Kim, Steve Smith, Josh Lurz
-*/
-NestingSubsector::NestingSubsector( const string& aRegionName, const string& aSectorName, const int aDepth ):
-    Subsector( aRegionName, aSectorName ),
-    mNestingDepth( aDepth )
+NestingSubsector::NestingSubsector():
+    Subsector(),
+    mNestingDepth( 0 )
 {
 }
 
@@ -82,23 +73,6 @@ NestingSubsector::~NestingSubsector() {
     for( auto subsector : mSubsectors ) {
         delete subsector;
     }
-}
-
-//! Parses any input variables specific to derived classes
-bool NestingSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    if( nodeName == Subsector::getXMLNameStatic() ){
-        parseContainerNode( curr, mSubsectors, new Subsector( mRegionName, mSectorName ) );
-    }
-    else if( nodeName == TranSubsector::getXMLNameStatic() ){
-        parseContainerNode( curr, mSubsectors, new TranSubsector( mRegionName, mSectorName ) );
-    }
-    else if( nodeName == getXMLNameStatic() ) {
-        parseContainerNode( curr, mSubsectors, new NestingSubsector( mRegionName, mSectorName, mNestingDepth + 1 ) );
-    } else {
-        // unknown element
-        return false;
-    }
-    return true;
 }
 
 void NestingSubsector::toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
@@ -133,6 +107,12 @@ const string& NestingSubsector::getXMLNameStatic() {
     return XML_NAME;
 }
 
+void NestingSubsector::setNames( const string& aRegionName, const string& aSectorName ) {
+    for( auto subsector : mSubsectors ) {
+        subsector->setNames( aRegionName, aSectorName );
+    }
+}
+
 /*! \brief Complete the initialization
 *
 * This routine is only called once per model run
@@ -154,6 +134,9 @@ void NestingSubsector::completeInit( const IInfo* aSectorInfo,
 
     Subsector::completeInit( aSectorInfo, aLandAllocator );
     for( auto subsector : mSubsectors ) {
+        if(subsector->getXMLName() == getXMLNameStatic()) {
+            dynamic_cast<NestingSubsector*>(subsector)->mNestingDepth = mNestingDepth + 1;
+        }
         subsector->completeInit( aSectorInfo, aLandAllocator );
     }
 }

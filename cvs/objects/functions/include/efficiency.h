@@ -62,11 +62,17 @@ class Tabs;
  */
 class Efficiency: public ICoefficient { 
 public:
-    const static std::string& getXMLNameStatic();
+    Efficiency();
+    
+    virtual ~Efficiency();
 
     Efficiency( const double aEfficiency );
 
     virtual Efficiency* clone() const;
+    
+    const static std::string& getXMLNameStatic();
+    
+    const std::string& getXMLName() const;
 
     virtual bool isSameType( const std::string& aType ) const;
 

@@ -43,8 +43,6 @@
 #include <iostream>
 #include <cassert>
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "sectors/include/tran_subsector.h"
 #include "containers/include/scenario.h"
@@ -61,7 +59,6 @@
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -71,16 +68,13 @@ extern Scenario* scenario;
 *
 * Default constructor takes region name, sector name and units as arguments
 * and resizes and initializes vectors.
-* \param regionName The name of the region.
-* \param sectorName The name of the sector.
 * \param aUnit The sector output unit.
 * \author Josh Lurz, Sonny Kim
 */
-TranSubsector::TranSubsector( const string& regionName, const string& sectorName ):
-Subsector( regionName, sectorName ),
+TranSubsector::TranSubsector():
+Subsector(),
 mTimeValueMult( Value( 1.0 ) )
 {
-    mPopDensity = 1; // initialize to 1 for now
     mAddTimeValue = false; // initialize to false
 }
 
@@ -110,33 +104,6 @@ const std::string& TranSubsector::getXMLNameStatic() {
     return XML_NAME;
 }
 
-/*! \brief Function Parses any input variables specific to derived classes.
-* \param nodeName The name of the XML node.
-* \param curr A pointer to the XML DOM node.
-* \author Josh Lurz, Sonny Kim
-* \return Boolean for node match.
-*/
-bool TranSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {    
-    // additional read in for transportation
-    const Modeltime* modeltime = scenario->getModeltime();
-    if( nodeName == "addTimeValue" ){
-        mAddTimeValue = XMLHelper<bool>::getValue( curr );
-    }
-    else if( nodeName == "speed" ){
-        XMLHelper<Value>::insertValueIntoVector( curr, mSpeed, modeltime );
-    }
-    else if( nodeName == "popDenseElasticity" ){
-        XMLHelper<double>::insertValueIntoVector( curr, mPopDenseElasticity, modeltime );
-    }
-    else if( nodeName == "time-value-multiplier" ){
-        XMLHelper<Value>::insertValueIntoVector( curr, mTimeValueMult, modeltime );
-    }
-    else {
-        return false;
-    }
-    return true;
-}
-
 /*! \brief XML output for debugging.
 * Function writes output to debugging XML
 * \author Josh Lurz, Sonny Kim
@@ -146,12 +113,8 @@ bool TranSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode*
 void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mAddTimeValue, "addTimeValue", out, tabs );
     XMLWriteElement( mPopDenseElasticity[ period ], "popDenseElasticity", out, tabs );
-    XMLWriteElement( mPopDensity, "popDensity", out, tabs );
     XMLWriteElement( mSpeed[ period ], "speed", out, tabs );
     XMLWriteElement( mTimeValueMult[ period ], "time-value-multiplier", out, tabs );
-    
-    // Write out useful debugging info
-    XMLWriteElement( mTimeValue, "timeValue", out, tabs );
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -248,8 +211,8 @@ double TranSubsector::getGeneralizedPrice( const GDP* aGDP, const int aPeriod ) 
     
     // Save time value so can print out
     // Maybe also write to XML DB?
-    mTimeValue =  getTimeValue( aGDP, aPeriod );
-    return Subsector::getPrice( aGDP, aPeriod ) + mTimeValue;
+    double timeValue =  getTimeValue( aGDP, aPeriod );
+    return Subsector::getPrice( aGDP, aPeriod ) + timeValue;
 }
 
 /*! \brief Get the time in transit per day per person for the period.

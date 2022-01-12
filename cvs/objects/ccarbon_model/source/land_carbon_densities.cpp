@@ -40,14 +40,12 @@
 
 #include "util/base/include/definitions.h"
 #include "util/base/include/xml_helper.h"
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "ccarbon_model/include/land_carbon_densities.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -63,50 +61,6 @@ LandCarbonDensities::LandCarbonDensities()
 
 //! Default destructor
 LandCarbonDensities::~LandCarbonDensities() {
-}
-
-/*! \brief Parses all XML data for the class.
-* \author James Blackwood
-* \param aCurr Pointer to the current node in the XML input tree
-*/
-bool LandCarbonDensities::XMLParse( const DOMNode* aCurr ) {
-    // Assume we are passed a valid node.
-    assert( aCurr );
-
-    // get all the children.
-    DOMNodeList* nodeList = aCurr->getChildNodes();
-
-    for( unsigned int i = 0;  i < nodeList->getLength(); ++i ){
-        const DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "above-ground-carbon-density" ) {
-            mAvgAboveGroundCarbon = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "below-ground-carbon-density" ) {
-            mAvgBelowGroundCarbon = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "mature-age" ) {    
-			// Because the mature age for some land areas is read in 
-			// as a double, we are converting it to an integer
-			// during XML parse.
-            double temp = XMLHelper<double>::getValue( curr );
-			
-			mMatureAge = util::round( temp );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string " << nodeName
-                    << " found while parsing " << getXMLName() << "." << endl;
-        }
-    }
-
-    // TODO: Improve error handling.
-    return true;
 }
 
 void LandCarbonDensities::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
@@ -144,7 +98,7 @@ const string& LandCarbonDensities::getXMLName() const {
 */
 void LandCarbonDensities::completeInit( const double aPrivateDiscountRateLand  ) {
     // force the sigmoid to get precalculated.
-    setMatureAge( mMatureAge );
+    setMatureAge( mMatureAge);
     
     mPrivateDiscountRate = aPrivateDiscountRateLand; 
 }
@@ -168,8 +122,8 @@ void LandCarbonDensities::setMatureAge( const int aMatureAge )
     
     // Precompute the sigmoid curve differnce to avoid doing it during calc.
     // Note this is only necessary when the mature age is greater than 1.
-    if( mMatureAge > 1 ) {
-        precalc_sigmoid_diff = precalc_sigmoid_type( mMatureAge );
+    if( aMatureAge > 1 ) {
+        precalc_sigmoid_diff = precalc_sigmoid_type( aMatureAge );
     }
 }
 

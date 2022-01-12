@@ -42,8 +42,6 @@
 #include <vector>
 #include <map>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
@@ -56,7 +54,6 @@
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -76,33 +73,6 @@ void Demographic::clear(){
     }
 }
 
-//! parses Demographics xml object
-void Demographic::XMLParse( const xercesc::DOMNode* node ){
-    // make sure we were passed a valid node.
-    assert( node );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == PopulationMiniCAM::getXMLNameStatic() ) {
-            parseContainerNode( curr, population, yearToMapIndex, new PopulationMiniCAM(), "year" );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing demographics." << endl;
-        }
-    }
-}
-
 //! Write out XML for debugging purposes.
 void Demographic::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs );
@@ -117,6 +87,11 @@ void Demographic::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 
 //! Complete the initialization.
 void Demographic::completeInit(){
+    if( yearToMapIndex.empty() ) {
+        for( int i = 0; i < population.size(); ++i ) {
+            yearToMapIndex[ util::toString( population[ i ]->getYear() ) ] = i;
+        }
+    }
     // First make sure we have a population for each model period.  If we do not have one in a given
     // period interpolate between ones we do have.
     const Modeltime* modeltime = scenario->getModeltime();

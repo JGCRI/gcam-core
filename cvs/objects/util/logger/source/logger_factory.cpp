@@ -44,9 +44,8 @@
 #include <string>
 #include <map>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/logger/include/logger_factory.h"
 #include "util/logger/include/logger.h"
 #include "util/logger/include/ilogger.h"
@@ -55,45 +54,41 @@
 #include "util/logger/include/xml_logger.h"
 
 using namespace std;
-using namespace xercesc;
 
 map<string,Logger*> LoggerFactory::mLoggers;
 
-//! Parse the XML data.
-void LoggerFactory::XMLParse( const DOMNode* aRoot ){
-	/*! \pre assume we were passed a valid node. */
-	assert( aRoot );
-	
-	// get the children of the node.
-	DOMNodeList* nodeList = aRoot->getChildNodes();
-	
-	// loop through the children
-	for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-		DOMNode* curr = nodeList->item( i );
-		string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-		
-		if( nodeName == "Logger" ) {
-			// get the Logger type.
-			string loggerType = XMLHelper<string>::getAttr( curr, "type" );
-			
-			// Add additional types here.
-            Logger* newLogger = 0;
-			if( loggerType == "PlainTextLogger" ){
-				newLogger = new PlainTextLogger();
-			}
-			else if( loggerType == "XMLLogger" ){
-				newLogger = new XMLLogger();
-			}
-			else {
-                cerr << "Unknown Logger Type: " << loggerType << endl;
-                return;
-			}
-			
-			newLogger->XMLParse( curr );
-			newLogger->open();
-			mLoggers[ newLogger->mName ] = newLogger;
-		}
-	}
+bool LoggerFactory::XMLParse(rapidxml::xml_node<char>* & aNode) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    
+    if( nodeName == "Logger" ) {
+        // get the Logger type.
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        string loggerType = attrs["type"];
+        
+        // Add additional types here.
+        Logger* newLogger = 0;
+        if( loggerType == "PlainTextLogger" ){
+            newLogger = new PlainTextLogger();
+        }
+        else if( loggerType == "XMLLogger" ){
+            newLogger = new XMLLogger();
+        }
+        else {
+            cerr << "Unknown Logger Type: " << loggerType << endl;
+        }
+        
+        ParseChildData parseChildHelper(aNode, attrs);
+        parseChildHelper.setContainer(newLogger);
+        ExpandDataVector<Logger::SubClassFamilyVector> getDataVector;
+        newLogger->doDataExpansion( getDataVector );
+        getDataVector.getFullDataVector(parseChildHelper);
+        newLogger->open();
+        mLoggers[ newLogger->mName ] = newLogger;
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 //! Single static method of ILogger interface.
@@ -152,3 +147,15 @@ void LoggerFactory::logNewScenarioStarting( const string& aScenarioName ) {
     }
 }
 
+const string& LoggerFactoryWrapper::getXMLNameStatic() {
+    const static string XML_NAME = "LoggerFactoryWrapper";
+    return XML_NAME;
+}
+
+const string& LoggerFactoryWrapper::getXMLName() const {
+    return getXMLNameStatic();
+}
+
+bool LoggerFactoryWrapper::XMLParse(rapidxml::xml_node<char>* & aNode) {
+    return LoggerFactory::XMLParse(aNode);
+}

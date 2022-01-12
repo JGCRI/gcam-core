@@ -48,7 +48,6 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 #include <cassert>
 #include <map>
 #include <boost/core/noncopyable.hpp>
@@ -93,7 +92,7 @@ class GCAMConsumer;
  *                           The vintage year of this technology (i.e. the first year
  *                           this technology will operate).
  *          - Elements:
- *              - \c SGMOutput::getXMLReportingNameStatic() BaseTechnology::mOutputs
+ *              - \c SGMOutput::getXMLName() BaseTechnology::mOutputs
  *                   Parse and output object (used to parse output for pre-base year
  *                   vintage technologies).  Note if non are parsed a default SGMOutput
  *                   will be created.
@@ -131,8 +130,6 @@ public:
 
     virtual void copyParamsInto( Consumer& consumerIn,
                                  const int aPeriod ) const { assert( false ); }
-
-    void XMLParse( const xercesc::DOMNode* node );
 
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     
@@ -187,7 +184,6 @@ protected:
         return false;
     };
 
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     

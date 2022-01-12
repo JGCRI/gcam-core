@@ -13,6 +13,7 @@
 module_water_batch_unlimited_water_supply_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L202.UnlimitRsrc_mapped",
+             "L202.Rsrc_mapped",
              "L202.UnlimitRsrc_nonmapped",
              "L202.UnlimitRsrcPrice_mapped",
              "L202.UnlimitRsrcPrice_nonmapped"))
@@ -24,6 +25,7 @@ module_water_batch_unlimited_water_supply_xml <- function(command, ...) {
 
     # Load required inputs
     L202.UnlimitRsrc_mapped <- get_data(all_data, "L202.UnlimitRsrc_mapped")
+    L202.Rsrc_mapped <- get_data(all_data, "L202.Rsrc_mapped")
     L202.UnlimitRsrc_nonmapped <- get_data(all_data, "L202.UnlimitRsrc_nonmapped")
     L202.UnlimitRsrcPrice_mapped <- get_data(all_data, "L202.UnlimitRsrcPrice_mapped")
     L202.UnlimitRsrcPrice_nonmapped <- get_data(all_data, "L202.UnlimitRsrcPrice_nonmapped")
@@ -34,10 +36,11 @@ module_water_batch_unlimited_water_supply_xml <- function(command, ...) {
     # Produce outputs
     create_xml("unlimited_water_supply.xml") %>%
       add_xml_data(L202.UnlimitRsrc_mapped, "UnlimitRsrc") %>%
+      add_xml_data(L202.Rsrc_mapped, "Rsrc") %>%
       add_xml_data(L202.UnlimitRsrc_nonmapped, "UnlimitRsrc") %>%
       add_xml_data(L202.UnlimitRsrcPrice_mapped, "UnlimitRsrcPrice") %>%
       add_xml_data(L202.UnlimitRsrcPrice_nonmapped, "UnlimitRsrcPrice") %>%
-      add_precursors("L202.UnlimitRsrc_mapped", "L202.UnlimitRsrc_nonmapped",
+      add_precursors("L202.UnlimitRsrc_mapped", "L202.Rsrc_mapped", "L202.UnlimitRsrc_nonmapped",
                      "L202.UnlimitRsrcPrice_mapped", "L202.UnlimitRsrcPrice_nonmapped") ->
       unlimited_water_supply.xml
 

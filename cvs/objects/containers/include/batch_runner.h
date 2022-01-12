@@ -47,7 +47,6 @@
 #include <string>
 #include <list>
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 #include "containers/include/iscenario_runner.h"
 class Timer;
 
@@ -127,8 +126,8 @@ public:
 
 	virtual const Scenario* getInternalScenario() const;
 
-	// IParsable Interface.
-    bool XMLParse( const xercesc::DOMNode* aRoot );
+    // AParsable Interface.
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 protected:
     //! A structure which defines a single file.
     struct File {
@@ -161,6 +160,14 @@ protected:
         std::string mName;
     };
     
+    // We could potentially include ComponentSet set the very least in here
+    // and convert each of the intermediate structs above to generate XML parse
+    // for them but there are a bunch of minor tweaks needed to get that to work
+    // correctly so we will write the XML parse code manually.
+    DEFINE_DATA_WITH_PARENT(
+        IScenarioRunner
+    )
+    
     //! A vector containing a series of Components.
     typedef std::vector<Component> ComponentSet;
 
@@ -183,11 +190,11 @@ protected:
                             const int aSinglePeriod,
                             Timer& aTimer );
 
-    bool XMLParseComponentSet( const xercesc::DOMNode* aNode );
+    bool XMLParseComponentSet( rapidxml::xml_node<char>* aNode );
 
-    bool XMLParseRunnerSet( const xercesc::DOMNode* aNode );
+    bool XMLParseRunnerSet( rapidxml::xml_node<char>* aNode );
 
-    bool XMLParseFileSet( const xercesc::DOMNode* aNode,
+    bool XMLParseFileSet( rapidxml::xml_node<char>* aNode,
                           Component& aCurrComponentSet );
 
 	static const std::string& getXMLNameStatic();
@@ -198,11 +205,8 @@ protected:
      *          IScenarioRunner requested. XML parsing for the class is then
      *          forwarded to the newly created IScenarioRunner.
      */
-    class ParseHelper: public IParsable {
+    class ParseHelper {
     public:
-        // IParsableInterface
-        bool XMLParse( const xercesc::DOMNode* aRoot );
-
         std::auto_ptr<IScenarioRunner>& getParsedScenarioRunner();
     private:
         //! The IScenarioRunner created by the XMLParse method.

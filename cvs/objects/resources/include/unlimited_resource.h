@@ -43,7 +43,6 @@
  * \brief UnlimitedResource header file.
  * \author Josh Lurz
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include "resources/include/aresource.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -81,8 +80,6 @@ public:
 
     virtual const std::string& getXMLName() const;
 
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
-
     virtual void toDebugXML( const int period,
                              std::ostream &out,
                              Tabs* tabs ) const;
@@ -119,15 +116,9 @@ protected:
                             
         //! Read in prices.
         DEFINE_VARIABLE( ARRAY, "price", mFixedPrices, objects::PeriodVector<Value> ),
-
-        //! Capacity factor.
-        DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, Value ),
-
-        //! Variance.
-        DEFINE_VARIABLE( SIMPLE, "variance", mVariance, Value ),
         
         //! The last supply value that was added to the marketplace so it is equal.
-        DEFINE_VARIABLE( SIMPLE | STATE, "supply-wedge", mSupplyWedge, Value)
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "supply-wedge", mSupplyWedge, Value)
     )
 
     void setMarket( const std::string& aRegionName );

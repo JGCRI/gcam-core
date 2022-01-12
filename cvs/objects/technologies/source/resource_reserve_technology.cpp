@@ -50,7 +50,6 @@
 #include "containers/include/iinfo.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -61,6 +60,14 @@ extern Scenario* scenario;
 */
 ResourceReserveTechnology::ResourceReserveTechnology(const string& aName, const int aYear) :
 Technology(aName, aYear),
+mTotalReserve( 0.0 ),
+mInvestmentCost( 0.0 ),
+mBuildupYears( 0 ),
+mDeclinePhasePct( 1.0 )
+{
+}
+
+ResourceReserveTechnology::ResourceReserveTechnology() :
 mTotalReserve( 0.0 ),
 mInvestmentCost( 0.0 ),
 mBuildupYears( 0 ),
@@ -83,20 +90,6 @@ void ResourceReserveTechnology::copy(const ResourceReserveTechnology& aTech) {
 
 // ! Destructor
 ResourceReserveTechnology::~ResourceReserveTechnology() {
-}
-
-//! Parses any input variables specific to derived classes
-bool ResourceReserveTechnology::XMLDerivedClassParse(const string& aNodeName, const DOMNode* aCurrNode) {
-    bool success = false;
-    if( aNodeName == "buildup-years" ) {
-        mBuildupYears = XMLHelper<int>::getValue( aCurrNode );
-        success = true;
-    }
-    else if( aNodeName == "decline-phase-percent" ) {
-        mDeclinePhasePct = XMLHelper<Value>::getValue( aCurrNode );
-        success = true;
-    }
-	return success;
 }
 
 //! write object to xml output stream

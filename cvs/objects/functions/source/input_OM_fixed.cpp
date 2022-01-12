@@ -38,8 +38,6 @@
  */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "functions/include/input_OM_fixed.h"
 #include "functions/include/function_utils.h"
 #include "util/base/include/xml_helper.h"
@@ -48,7 +46,6 @@
 #include "containers/include/iinfo.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -80,6 +77,10 @@ const string& InputOMFixed::getXMLNameStatic() {
 */
 const string& InputOMFixed::getXMLReportingName() const{
     return XML_REPORTING_NAME;
+}
+
+const string& InputOMFixed::getXMLName() const{
+    return getXMLNameStatic();
 }
 
 //! Constructor
@@ -121,40 +122,6 @@ void InputOMFixed::copyParamsInto( InputOMFixed& aInput,
     // change which already occurred.
     assert( aPeriod > 0 );
     aInput.mAdjustedCoefficients[ aPeriod ] = mAdjustedCoefficients[ aPeriod - 1 ];
-}
-
-void InputOMFixed::XMLParse( const xercesc::DOMNode* node ) {
-    // TODO: Replace this with the restructured XMLParse.
-    // Make sure we were passed a valid node.
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    const DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() == DOMNode::TEXT_NODE ){
-            continue;
-        }
-
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        if ( nodeName == "OM-fixed" ) {
-            mOMFixed = XMLHelper<Value>::getValue( curr );
-        }
-        else if( nodeName == "tech-change" ){
-            mTechChange = XMLHelper<Value>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLNameStatic() << "." << endl;
-        }
-    }
 }
 
 void InputOMFixed::toDebugXML( const int aPeriod,

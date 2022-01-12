@@ -43,7 +43,6 @@
  * \brief Header file for the PriceGreaterThanSolutionInfoFilter class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 
 #include "solution/util/include/isolution_info_filter.h"
@@ -68,16 +67,13 @@ class SolutionInfo;
  */
 class PriceGreaterThanSolutionInfoFilter : public ISolutionInfoFilter {
 public:
-    PriceGreaterThanSolutionInfoFilter();
-    ~PriceGreaterThanSolutionInfoFilter();
+    PriceGreaterThanSolutionInfoFilter(const std::string& aPriceStr);
+    virtual ~PriceGreaterThanSolutionInfoFilter();
     
     static const std::string& getXMLNameStatic();
     
     // ISolutionInfoFilter methods
     virtual bool acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const;
-    
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
 private:
     //! The name of the price threshold which will be accepted

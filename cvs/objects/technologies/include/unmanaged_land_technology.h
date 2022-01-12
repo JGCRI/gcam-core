@@ -45,8 +45,6 @@
 * \author Steve Smith, Kate Calvin
 */  
 
-#include <xercesc/dom/DOMNode.hpp>
-
 #include "technologies/include/ag_production_technology.h"
 #include "util/base/include/value.h"
 
@@ -72,6 +70,7 @@ class UnmanagedLandTechnology : public AgProductionTechnology {
 public:
     UnmanagedLandTechnology( const std::string& aName,
                                 const int aYear );
+    UnmanagedLandTechnology();
 
     ~UnmanagedLandTechnology();
 
@@ -109,8 +108,6 @@ public:
                                   const int aPeriod );
 
 protected:
-    bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-
     void initializeInputLocations( const std::string& aRegionName,
                                    const std::string& aSectorName,
                                    const int aPeriod );

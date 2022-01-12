@@ -44,7 +44,6 @@
 */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "climate/include/iclimate_model.h"
@@ -68,9 +67,6 @@ public:
     virtual ~NoClimateModel();
     
     static const std::string& getXMLNameStatic();
-
-    // IClimateModel methods
-    virtual void XMLParse( const xercesc::DOMNode* node ); 
 
     virtual const std::string& getXMLName() const;
     

@@ -46,7 +46,6 @@
 */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/subsector.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
@@ -66,8 +65,9 @@ class IInfo;
 class TranSubsector: public Subsector{
     friend class XMLDBOutputter;
 public:
-    TranSubsector( const std::string& regionName, const std::string& sectorName );
-    static const std::string& getXMLNameStatic();    
+    TranSubsector();
+    static const std::string& getXMLNameStatic();
+    const std::string& getXMLName() const;
 
     virtual void completeInit( const IInfo* aSectorInfo,
                                ILandAllocator* aLandAllocator );
@@ -93,13 +93,10 @@ protected:
         DEFINE_VARIABLE( ARRAY, "speed", mSpeed, objects::PeriodVector<Value> ),
 
         //! copy of population from demographics
-        DEFINE_VARIABLE( ARRAY, "population", mPopulation, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "population", mPopulation, objects::PeriodVector<double> ),
 
         //! Population Density Elasticity of mode
         DEFINE_VARIABLE( ARRAY, "popDenseElasticity", mPopDenseElasticity, objects::PeriodVector<double> ),
-
-        //! population density per land area
-        DEFINE_VARIABLE( SIMPLE, "popDensity", mPopDensity, double ),
 
         //! Time value multiplier
         DEFINE_VARIABLE( ARRAY, "time-value-multiplier", mTimeValueMult, objects::PeriodVector<Value> ),
@@ -108,12 +105,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "addTimeValue", mAddTimeValue, bool )
     )
     
-    //! Save time value for debugging purposes.
-    mutable double mTimeValue;
-
-    bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-    const std::string& getXMLName() const;
 
     double getTimeValue( const GDP* aGDP, const int aPeriod ) const;
     double getTimeInTransit( const int aPeriod ) const;

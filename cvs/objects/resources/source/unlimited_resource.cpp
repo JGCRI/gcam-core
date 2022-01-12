@@ -43,8 +43,6 @@
 #include <string>
 #include <vector>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "resources/include/unlimited_resource.h"
 #include "util/base/include/xml_helper.h"
@@ -57,7 +55,6 @@
 #include "sectors/include/sector_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -79,52 +76,6 @@ UnlimitedResource::UnlimitedResource()
 UnlimitedResource::~UnlimitedResource() {
 }
 
-void UnlimitedResource::XMLParse( const DOMNode* node ){
-
-    // make sure we were passed a valid node.
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    const DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        const string nodeName =
-            XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "output-unit" ){
-            mOutputUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "price-unit" ){
-            mPriceUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "market" ){
-            mMarket = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "price" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mFixedPrices,
-                                                     scenario->getModeltime() );
-        }
-        else if( nodeName == "variance" ){
-            mVariance = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName
-                    << " found while parsing " << getXMLNameStatic() << "."
-                    << endl;
-        }
-    }
-}
-
 const string& UnlimitedResource::getXMLName() const {
     return getXMLNameStatic();
 }
@@ -140,7 +91,6 @@ void UnlimitedResource::toDebugXML( const int aPeriod,
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
     XMLWriteElement( mMarket, "market", aOut, aTabs );
-    XMLWriteElement( mVariance, "variance", aOut, aTabs );
 
     // Write out resource prices for debugging period.
     XMLWriteElement( mFixedPrices[ aPeriod ], "price", aOut, aTabs );
@@ -161,11 +111,6 @@ void UnlimitedResource::completeInit( const string& aRegionName,
     if ( mPriceUnit.empty() ) {
         mPriceUnit = "1975$/GJ"; 
     }
-    // If not read-in, set variance to 0 and isInited to true.
-    // The set() call sets isInited to true.
-    if( !mVariance.isInited() ){
-        mVariance.set( 0 );
-    }
     // Setup markets for this resource.
     setMarket( aRegionName );
     
@@ -177,13 +122,8 @@ void UnlimitedResource::initCalc( const string& aRegionName,
                                   const int aPeriod )
 {
     Marketplace* marketplace = scenario->getMarketplace();
-    // Set the capacity factor and variance.
-    IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, aPeriod, true );
-    assert( marketInfo );
-
-    if( mVariance.isInited() ){
-        marketInfo->setDouble( "resourceVariance", mVariance );
-    }
+    // ensure this market is not solved
+    marketplace->unsetMarketToSolve(mName, aRegionName, aPeriod);
     
     // Set the fixed price if a valid one was read in.
     if( mFixedPrices[ aPeriod ].isInited() ) {
@@ -244,9 +184,13 @@ void UnlimitedResource::setMarket( const string& aRegionName ) {
     IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
     marketInfo->setString( "price-unit", mPriceUnit );
     marketInfo->setString( "output-unit", mOutputUnit );
-    // Need to set resource variance here because initCalc of technology is called
-    // before that of resource. shk 2/27/07
-    marketInfo->setDouble( "resourceVariance", mVariance );
+
+    // UnlimitedResource markets must not be solved so reset the flag in case it
+    // was set by another Resource who was just adding regions to market for instance
+    const Modeltime* modeltime = scenario->getModeltime();
+    for(int period = 0; period < modeltime->getmaxper(); ++period ) {
+        marketplace->unsetMarketToSolve( mName, aRegionName, period );
+    }
 }
 
 void UnlimitedResource::accept( IVisitor* aVisitor,

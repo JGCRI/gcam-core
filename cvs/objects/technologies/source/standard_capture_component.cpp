@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/standard_capture_component.h"
 #include "marketplace/include/marketplace.h"
@@ -100,49 +98,12 @@ const string& StandardCaptureComponent::getXMLNameStatic() {
     return XML_NAME;
 }
 
-const string& StandardCaptureComponent::getName() const {
+const string& StandardCaptureComponent::getXMLName() const {
     return getXMLNameStatic();
 }
 
-// Documentation inherits.
-bool StandardCaptureComponent::XMLParse( const xercesc::DOMNode* node ){
-    /*! \pre Assume we are passed a valid node. */
-    assert( node );
-
-    const xercesc::DOMNodeList* nodeList = node->getChildNodes();
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
-        const xercesc::DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() != xercesc::DOMNode::ELEMENT_NODE ){
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        if( nodeName == "storage-market" ){
-            mStorageMarket = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "remove-fraction" ){
-            mRemoveFraction = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "storage-cost" ){
-            mStorageCost = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "intensity-penalty" ){
-            mIntensityPenalty = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "non-energy-penalty" ){
-            mNonEnergyCostPenalty = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "target-gas" ){
-            mTargetGas = XMLHelper<string>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unknown tag " << nodeName << " encountered while processing " << getXMLNameStatic() << endl;
-        }
-    }
-
-    // TODO: Handle success and failure better.
-    return true;
+const string& StandardCaptureComponent::getName() const {
+    return getXMLNameStatic();
 }
 
 void StandardCaptureComponent::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

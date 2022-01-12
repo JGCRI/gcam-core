@@ -39,7 +39,6 @@
 */
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/primary_output.h"
 #include "containers/include/scenario.h"
@@ -50,13 +49,15 @@
 #include "marketplace/include/cached_market.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
 PrimaryOutput::PrimaryOutput( const string& aSectorName )
 {
     mName = aSectorName;
+}
+
+PrimaryOutput::PrimaryOutput() {
 }
 
 PrimaryOutput::~PrimaryOutput() {
@@ -87,6 +88,11 @@ const string& PrimaryOutput::getName() const
     return mName;
 }
 
+const string& PrimaryOutput::getXMLNameStatic() {
+    static const string XML_REPORTING_NAME = "output-primary";
+    return XML_REPORTING_NAME;
+}
+
 /*! \brief Get the XML name for reporting to XML file.
 *
 * This public function accesses the private constant string, XML_NAME. This way
@@ -100,11 +106,8 @@ const string& PrimaryOutput::getXMLReportingName() const{
     return XML_REPORTING_NAME;
 }
 
-bool PrimaryOutput::XMLParse( const DOMNode* aNode )
-{
-    // Primary outputs are created and cannot be parsed.
-    assert( false );
-    return false;
+const string& PrimaryOutput::getXMLName() const{
+    return getXMLNameStatic();
 }
 
 void PrimaryOutput::toDebugXML( const int aPeriod,

@@ -456,7 +456,7 @@ energy.DIGITS_COST             <- 4
 energy.DIGITS_CURVE_EXPONENT   <- 3
 energy.DIGITS_RESOURCE      <- 2
 energy.DIGITS_EFFICIENCY       <- 3
-energy.DIGITS_FLOORSPACE       <- 3
+energy.DIGITS_FLOORSPACE       <- 6
 energy.DIGITS_GDP_SUPPLY_ELAST <- 3
 energy.DIGITS_HDDCDD           <- 0
 energy.DIGITS_INCELAS_IND      <- 3
@@ -499,6 +499,14 @@ energy.COSTS_LOW_CASE <- "low tech"
 energy.CAPITAL_INPUT <- "capital"
 energy.OM_FIXED_INPUT <- "OM-fixed"
 energy.OM_VAR_INPUT <- "OM-var"
+
+# Constants for the residential sector: Parameters for USA (estimated offline) and unadjusted saturation values:
+obs_UnadjSat<-100
+obs_UnadjSat_USA<-150
+
+land.density.param.usa<-0
+b.param.usa<-3.49026
+income.param.usa<-0.4875
 
 # Socioeconomics constants ======================================================================
 
@@ -685,6 +693,7 @@ emissions.DIGITS_EMISS_COEF    <- 7
 emissions.DIGITS_EMISSIONS     <- 10
 emissions.DIGITS_MACC          <- 3
 emissions.DIGITS_MACC_TC       <- 4 # tech.change rounding
+emissions.DIGITS_GFED          <- 12
 
 # GCAM-USA constants ======================================================================
 

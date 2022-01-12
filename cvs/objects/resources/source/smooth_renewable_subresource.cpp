@@ -89,33 +89,14 @@ const std::string& SmoothRenewableSubresource::getXMLNameStatic( void ){
     return XML_NAME;
 }
 
-// SmoothRenewableSubresource::XMLDerivedClassParse
-bool SmoothRenewableSubresource::XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ){
-    bool didParse = SubRenewableResource::XMLDerivedClassParse( nodeName, node );
-    if ( !didParse ){
-        if( nodeName == "mid-price" ){
-            mMidPrice = XMLHelper<double>::getValue( node );
-            mCostCurve.setMidprice( mMidPrice );
-            didParse = true;
-        }
-        else if( nodeName == "curve-exponent" ){
-            mCostCurve.setCurveExponent( XMLHelper<double>::getValue( node ) );
-            didParse = true;
-        }
-        else if ( nodeName == "price-exponent" ){
-            mPriceExponent = XMLHelper<double>::getValue( node );
-            didParse = true;
-        }
-    }
-    
-    return didParse;
-}
-
 // SmoothRenewableSubresource::completeInit
 void SmoothRenewableSubresource::completeInit( const std::string& aRegionName, const std::string& aResourceName,
                                                const IInfo* aSectorInfo )
 {
    SubRenewableResource::completeInit( aRegionName, aResourceName, aSectorInfo );
+    
+    mCostCurve.setCurveExponent( mCurveExponent );
+    mCostCurve.setMidprice( mMidPrice );
 
    if ( !( mCostCurve.getMidprice() > 0 && mCostCurve.getCurveExponent() > 0 ) )
    // Invalid input parameter

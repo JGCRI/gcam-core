@@ -45,9 +45,6 @@
 #include <fstream>
 #include <vector>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/dom/DOMNamedNodeMap.hpp>
 
 // class headers
 #include "util/base/include/xml_helper.h"
@@ -67,13 +64,11 @@
 
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
 //! Default constructor.
 Resource::Resource():
-mObjectMetaInfo(),
 mResourcePrice( Value( 0.0 ) ),
 mAvailable( Value( 0.0 ) ),
 mAnnualProd( Value( 0.0 ) ),
@@ -114,80 +109,6 @@ const std::string& Resource::getXMLNameStatic() {
     return XML_NAME;
 }
 
-//! Set data members from XML input.
-void Resource::XMLParse( const DOMNode* aNode ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    string nodeName;
-    DOMNodeList* nodeList = 0;
-    DOMNode* curr = 0;
-
-    // make sure we were passed a valid node.
-    assert( aNode );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-
-    // get all child nodes.
-    nodeList = aNode->getChildNodes();
-
-    // loop through the child nodes.
-    for( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "output-unit" ){
-            mOutputUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "price-unit" ){
-            mPriceUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "market" ){
-            mMarket = XMLHelper<string>::getValue( curr ); // only one market element.
-        }
-        else if( nodeName == "price" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mResourcePrice, modeltime );
-        }
-        else if( nodeName == "keyword" ){
-            DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
-            for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
-                DOMNode* attrTemp = keywordAttributes->item( attrNum );
-                mKeywordMap[ XMLHelper<string>::safeTranscode( attrTemp->getNodeName() ) ] = 
-                    XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
-            }
-        }
-        else if ( nodeName == object_meta_info_type::getXMLNameStatic() ){
-            object_meta_info_type metaInfo;
-            if ( metaInfo.XMLParse( curr ) ){
-                // Add to collection
-                mObjectMetaInfo.push_back( metaInfo );
-            }
-        }
-        else if( nodeName == SubResource::getXMLNameStatic() ){
-            parseContainerNode( curr, mSubResource, new SubResource() );
-        }
-        else if( nodeName == SubRenewableResource::getXMLNameStatic() ) {
-            parseContainerNode( curr, mSubResource, new SubRenewableResource() );
-        }
-        else if( nodeName == SmoothRenewableSubresource::getXMLNameStatic() ) {
-            parseContainerNode( curr, mSubResource, new SmoothRenewableSubresource() );
-        }
-        else if( nodeName == ReserveSubResource::getXMLNameStatic() ) {
-            parseContainerNode( curr, mSubResource, new ReserveSubResource() );
-        }
-        else if( XMLDerivedClassParse( nodeName, curr ) ){
-            // no-op
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing Resource." << endl;
-        }
-    }
-}
-
 //! Write data members to data stream in XML format for debugging.
 void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const {
 
@@ -198,14 +119,6 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
     // Write out the market string.
     XMLWriteElement( mMarket, "market", aOut, aTabs );
-
-    if ( mObjectMetaInfo.size() ) {
-        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
-            metaInfoIterItem != mObjectMetaInfo.end(); 
-            ++metaInfoIterItem ) {
-                metaInfoIterItem->toDebugXML( period, aOut, aTabs );
-            }
-    }
 
     // Write out resource prices for debugging period.
     XMLWriteElement( mResourcePrice[ period ], "rscprc", aOut, aTabs );
@@ -226,11 +139,6 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
 
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}
-
-bool Resource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
-    // do nothing
-    return false;
 }
 
 /*! \brief Complete the initialization
@@ -255,15 +163,6 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
     // Set output and price unit of resource into the resource info.
     mResourceInfo->setString( "output-unit", mOutputUnit );
     mResourceInfo->setString( "price-unit", mPriceUnit );
-
-    if ( mObjectMetaInfo.size() ) {
-        // Put values in mSectorInfo
-        for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin(); 
-            metaInfoIterItem != mObjectMetaInfo.end();
-            ++metaInfoIterItem ) {
-                mResourceInfo->setDouble( (*metaInfoIterItem).getName(), (*metaInfoIterItem).getValue() );
-            }
-    }
 
     for( vector<SubResource*>::iterator subResIter = mSubResource.begin(); subResIter != mSubResource.end(); subResIter++ ) {
         ( *subResIter )->completeInit( aRegionName, mName, mResourceInfo.get() );
@@ -328,11 +227,7 @@ void Resource::setMarket( const string& aRegionName ) {
 
         pMarketplace->setPriceVector( mName, aRegionName, mResourcePrice );
         for( int period = 0; period < pModeltime->getmaxper(); ++period ){
-        
-            // TODO: Remove or improve this. Intermittent technologies need to know during initCalc 
-            // which good has a variance. This will get set again later, which is bad.
             IInfo* marketInfo = pMarketplace->getMarketInfo( mName, aRegionName, period, true );
-            marketInfo->setDouble( "resourceVariance", 0 );
             if( period >= 1 ){
                 pMarketplace->setMarketToSolve( mName, aRegionName, period );
             }
@@ -340,20 +235,6 @@ void Resource::setMarket( const string& aRegionName ) {
             // Put region name in market info for error checking in renewable sub-resource
             marketInfo->setString( "Market-Region", mMarket );
       }
-    }
-    // Put values in market.
-    if ( mObjectMetaInfo.size() ) {
-        // Put values in market
-        for ( int period = 0; period < pModeltime->getmaxper(); ++period ) {
-            IInfo* pMarketInfo = pMarketplace->getMarketInfo( mName, aRegionName, period, true );
-            if ( pMarketInfo ) {
-                for ( object_meta_info_vector_type::const_iterator metaInfoIterItem = mObjectMetaInfo.begin();
-                    metaInfoIterItem != mObjectMetaInfo.end(); 
-                    ++metaInfoIterItem ) {
-                        pMarketInfo->setDouble( (*metaInfoIterItem).getName(), (*metaInfoIterItem).getValue() );
-                    }
-            }
-        }
     }
 }
 
@@ -439,7 +320,7 @@ void Resource::accept( IVisitor* aVisitor, const int aPeriod ) const {
 // RenewableResource Class
 // *******************************************************************
 
-//! \brief set the size for the resourceVariance member
+//! \brief default constructor
 RenewableResource::RenewableResource()
 {
 }
@@ -471,69 +352,6 @@ const std::string& RenewableResource::getXMLNameStatic() {
     return XML_NAME;
 }
 
-//! 
-/*! In this case, this read-in just substantiates the appropriate type of subResource */
-/*! \brief Performs XML read-in that is specific to this derived class
-*
-*  this case, this read-in just instantiates the appropriate type of subResource
-*
-* \author Steve Smith
-* \param aNodeName name of the current node
-* \param aNode pointer to the current node in the XML input tree
-* \return Whether an element was parsed.
-*/
-bool RenewableResource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode )
-{
-    return false;
-}
-
-/*! \brief Complete the initialization
-*
-* This routine is only called once per model run.
-*
-* \author Sonny Kim
-* \warning markets are not necessarily set when completeInit is called
-*/
-
-void RenewableResource::completeInit( const string& aRegionName, const IInfo* aRegionInfo ) {
-
-    // Complete resource initialization.
-    // Base class completeInit must be called first to create the market.
-    Resource::completeInit( aRegionName, aRegionInfo );
-
-    Marketplace* pMarketplace = scenario->getMarketplace();
-    const Modeltime* pModeltime = scenario->getModeltime();
-    // Initialize resource variance and capacitity factors in this market's info
-    /*!
-     * \warning This strategy of calculating resource variance and capacity factor
-     *          is inadequate due to sequence issues.  If these values are not 
-     *          constant i.e. multiple subresources it will cause trouble when solving
-     *          and trying to reproduce a solution.  For such a case a trial value
-     *          should be utilized to directly handle the sequence issue.
-     */
-    double resourceVariance = mSubResource[ 0 ]->getVariance();
-    double resourceCapacityFactor = mSubResource[ 0 ]->getAverageCapacityFactor();
-    
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::WARNING );
-    for( int subResource = 1; subResource < mSubResource.size(); ++subResource ) {
-        if( mSubResource[ subResource ]->getVariance() != resourceVariance ) {
-            mainLog << "Non-constant resource variance in " << mName << ", region: "
-                << aRegionName << " may cause trouble finding a solution." << endl;
-        }
-        if( mSubResource[ subResource ]->getAverageCapacityFactor() != resourceCapacityFactor ) {
-            mainLog << "Non-constant resource capacity factor in " << mName << ", region: "
-                << aRegionName << " may cause trouble finding a solution." << endl;
-        }
-    }
-    
-    for( int period = 0; period < pModeltime->getmaxper(); ++period ){
-        IInfo* marketInfo = pMarketplace->getMarketInfo( mName, aRegionName, period, true );
-        marketInfo->setDouble( "resourceVariance", resourceVariance );
-        marketInfo->setDouble( "resourceCapacityFactor", resourceCapacityFactor );
-    }
-}    
-
 //! Calculate annual production
 /*! \brief Adds to the base Resource::annualsupply by computing a weighted-average
 *  variance of the resource based on the variance of the subresources.
@@ -549,47 +367,10 @@ void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, co
     // clear out sums for this iteration
     mAnnualProd[ aPeriod ]=0.0;
     mAvailable[ aPeriod ]=0.0;
-    mResourceVariance[ aPeriod ]=0.0;
-    mResourceCapacityFactor[ aPeriod ] = 0.0;
-    
-    // If annual production is extremely small or zero, these will not be calculated properly.
-    // In this case, set production to some minimum number.
-    const double MIN_RESOURCE_PROD = util::getVerySmallNumber();
-    double adjustedProduction = 0;
     
     // sum annual production of each subsector
     for (int i=0;i<mSubResource.size();i++) {
         mSubResource[i]->annualsupply( aRegionName, mName, aPeriod, aGdp, aPrice );
         mAnnualProd[ aPeriod ] += Value( mSubResource[i]->getAnnualProd( aPeriod ) );
-        double adjustedSubResourceProd = max( mSubResource[i]->getAnnualProd( aPeriod ), MIN_RESOURCE_PROD );
-        adjustedProduction += adjustedSubResourceProd;
-        mAvailable[ aPeriod ] += Value( mSubResource[i]->getAvailable( aPeriod ) );
-        
-        // and compute weighted average variance
-        mResourceVariance[ aPeriod ] += adjustedSubResourceProd * mSubResource[i]->getVariance();
-        // and compute weighted average capacity factor
-        mResourceCapacityFactor[ aPeriod ] += adjustedSubResourceProd * mSubResource[i]->getAverageCapacityFactor();
-    }
-
-    // TODO: This is currently wrong because the resource calculation is done last
-    // so if there were multiple subresources with different variances this would
-    // calculate a stale value and result in solution problems. It would also
-    // be wrong in that case for global markets.
-
-    // This may be a global market and the resource may only exist to add the
-    // region into the market. In this case the resource will not have any
-    // subresources, and should not adjust the market info values.
-    if( !mSubResource.empty() ){
-        if ( adjustedProduction >= MIN_RESOURCE_PROD ) {
-            mResourceVariance[ aPeriod ] /= adjustedProduction;
-            mResourceCapacityFactor[ aPeriod ] /= adjustedProduction;
-        }
-
-        // add variance to marketinfo
-        IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName, aPeriod, true );
-        marketInfo->setDouble( "resourceVariance", mResourceVariance[ aPeriod ] );
-
-        // add capacity factor to marketinfo
-        marketInfo->setDouble( "resourceCapacityFactor", mResourceCapacityFactor[ aPeriod ] );
     }
 }

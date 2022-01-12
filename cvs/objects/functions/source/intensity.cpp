@@ -45,6 +45,12 @@
 
 using namespace std;
 
+Intensity::Intensity():mReadInIntensity(0) {
+}
+
+Intensity::~Intensity() {
+}
+
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
 * \details This public function accesses the private constant string, XML_NAME.
 *          This way
@@ -58,6 +64,10 @@ using namespace std;
 const string& Intensity::getXMLNameStatic() {
     const static string XML_NAME = "coefficient";
     return XML_NAME;
+}
+
+const string& Intensity::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 /*!

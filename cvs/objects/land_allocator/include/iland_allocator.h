@@ -44,9 +44,7 @@
  * \brief The ILandAllocator interface file.
  * \author Josh Lurz, Kate Calvin
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iparsable.h"
 
 // Forward declarations
 class Tabs;
@@ -59,8 +57,7 @@ class ALandAllocatorItem;
  *          technologies to interact with a system for distributing land between
  *          usages.
  */
-class ILandAllocator : public IVisitable,
-                       public IParsable
+class ILandAllocator : public IVisitable
 {
 public:
     ILandAllocator();
@@ -69,8 +66,6 @@ public:
     
     virtual ~ILandAllocator();
 
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
-    
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
     
     /*!

@@ -40,18 +40,17 @@
 #include "util/base/include/definitions.h"
 #include <string>
 #include <cassert>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "technologies/include/stub_technology_container.h"
 #include "technologies/include/global_technology_database.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "containers/include/scenario.h"
 #include "containers/include/world.h"
 #include "util/base/include/model_time.h"
 #include "technologies/include/technology.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -82,19 +81,9 @@ const string& StubTechnologyContainer::getXMLNameStatic() {
     return XML_NAME;
 }
 
-bool StubTechnologyContainer::XMLParse( const DOMNode* aNode ) {
-    /*! \pre Make sure we were passed a valid node. */
-    assert( aNode );
-    
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, XMLHelper<void>::name() );
-    
-    // store the XML for later processing
-    /*!
-     * \warning This may shift some parsing errors to completeInit.
-     */
-    mXMLAdjustments.push_back( XMLHelper<void>::getDOMDocument()->importNode( aNode, true ) );
-    
+// AParsable methods
+bool StubTechnologyContainer::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    mXMLAdjustments.push_back( XMLParseHelper::deepClone(aNode) );
     return true;
 }
 
@@ -121,31 +110,18 @@ void StubTechnologyContainer::completeInit( const string& aRegionName,
     else {
         // If the global technology did not exist we can not go forward.  Note the
         // error message was printed by the global technology database.
-        exit( 1 );
+        abort();
     }
-    
+     
     // Make the XML adjustments note that this may produce parsing errors.
-    vector<const DOMNode*> interpolateThenParse;
-    // First parse XML that does not require interpolation.
-    for( CXMLIterator xmlIter = mXMLAdjustments.begin(); xmlIter != mXMLAdjustments.end(); ++xmlIter ) {
-        if( !XMLHelper<bool>::getAttr( *xmlIter, "allow-interpolate" ) ) {
-            // This XML does not need to intperolate
-            mTechnology->XMLParse( *xmlIter );
-        }
-        else {
-            // Store this XML until all XML which did not need to parse has
-            // finished.
-            interpolateThenParse.push_back( *xmlIter );
-        }
+    for(rapidxml::xml_node<char>* currNode : mXMLAdjustments) {
+        mTechnology->XMLParse(currNode);
     }
-    // now that the XML adjustments are parsed no need to keep them around any longer
-    // Note the XML adjustments's memory will be managed by their document.
-    mXMLAdjustments.clear();
     
-    // Next interpolate and parse XML that was tagged to allow interpolation.
-    for( CXMLIterator xmlIter = interpolateThenParse.begin(); xmlIter != interpolateThenParse.end(); ++xmlIter ) {
-        mTechnology->interpolateAndParse( *xmlIter );
-    }
+    // now that the XML adjustments are parsed no need to keep them around any longer
+    // Note the XML adjustments's memory is managed by rapidxml and will get cleaned up
+    // when XMLParseHelper::cleanupParser is called.
+    mXMLAdjustments.clear();
     
     // Now call complete init on the completed technology.  Note any other interpolations
     // which need to occur will happen here.
@@ -191,10 +167,15 @@ void StubTechnologyContainer::accept( IVisitor* aVisitor, const int aPeriod ) co
     mTechnology->accept( aVisitor, aPeriod );
 }
 
-void StubTechnologyContainer::interpolateAndParse( const DOMNode* aNode ) {
-    // could make this work
-}
-
 void StubTechnologyContainer::doDataExpansion( ExpandDataVector<ParentClass::SubClassFamilyVector>& aVisitor ) {
-    mTechnology->doDataExpansion( aVisitor );
+    // if mTechnology has not yet been filled in, i.e. during XMLParse
+    // the make available the Data from this subclass, otherwise it should
+    // always just appear that mTechnology is the tech container that exists
+    // here
+    if(!mTechnology) {
+        aVisitor.setSubClass( this );
+    }
+    else {
+        mTechnology->doDataExpansion( aVisitor );
+    }
 }

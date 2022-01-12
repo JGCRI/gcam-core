@@ -46,7 +46,6 @@
 */
 
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include <boost/core/noncopyable.hpp>
 
@@ -75,7 +74,6 @@ public:
     virtual const std::string& getName() const;
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
-    virtual void XMLParse( const xercesc::DOMNode* node );
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual void completeInit( const std::string& aRegionName );
     virtual bool isApplicable( const std::string& aRegion ) const;

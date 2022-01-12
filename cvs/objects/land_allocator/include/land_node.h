@@ -47,7 +47,6 @@
 
 #include <vector>
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 #include "land_allocator/include/aland_allocator_item.h"
 
 // Forward declarations
@@ -76,6 +75,8 @@ class NodeCarbonCalc;
 class LandNode : public ALandAllocatorItem {
 public:
     explicit LandNode( const ALandAllocatorItem* aParent );
+    
+    explicit LandNode();
 
     virtual ~LandNode();
 
@@ -87,6 +88,8 @@ public:
     virtual ALandAllocatorItem* getChildAt( const size_t aIndex );
 
     static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
     
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo );
@@ -157,17 +160,12 @@ public:
     virtual void accept( IVisitor* aVisitor, 
                          const int aPeriod ) const;
 
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
 protected:
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, 
-                                       const xercesc::DOMNode* curr );
-
+    virtual void setParent( const ALandAllocatorItem* aParent );
+    
     virtual void toDebugXMLDerived( const int period, 
                                     std::ostream& out, 
                                     Tabs* tabs ) const;
-
-    virtual const std::string& getXMLName() const;
     
     ALandAllocatorItem* findChild( const std::string& aName,
                                    const LandAllocatorItemType aType );
@@ -184,7 +182,7 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "discrete-choice-function", mChoiceFn, IDiscreteChoice* ),
 
         //! Double storing the average price of land in a region or subregion
-        DEFINE_VARIABLE( SIMPLE, "unManagedLandValue", mUnManagedLandValue, double ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "unManagedLandValue", mUnManagedLandValue, Value ),
 
         //! List of the children of this land node located below it in the land
         //! allocation tree.

@@ -49,7 +49,6 @@
 #include "util/base/include/model_time.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -80,46 +79,6 @@ const string& SatiationDemandFunction::getXMLNameStatic() {
 
 const string& SatiationDemandFunction::getName() const {
     return getXMLNameStatic();
-}
-
-bool SatiationDemandFunction::XMLParse( const DOMNode* aNode ) {
-    /*! \pre Make sure we were passed a valid node. */
-    assert( aNode );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == XMLHelper<void>::text() ) {
-            continue;
-        }
-        else if( nodeName == "satiation-level" ) {
-            mParsedSatiationLevel.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if( nodeName == "satiation-adder" ) {
-            mParsedSatiationAdder.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if( nodeName == "satiation-base-year-increase" ) {
-            mBaseYearSatiationMultiplier.set( XMLHelper<double>::getValue( curr ) );
-            
-            /*!
-             * \pre The increase from base year demand to set as the satiation
-             *      level must be greater than 1.
-             */
-            assert( mBaseYearSatiationMultiplier > 1.0 );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unknown element " << nodeName << " encountered while parsing " << getXMLNameStatic() << endl;
-        }
-    }
-    
-    return true;
 }
 
 /*!

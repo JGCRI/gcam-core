@@ -50,7 +50,6 @@
 #include <string>
 #include <cfloat>
 #include <iosfwd>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/data_definition_util.h"
@@ -80,7 +79,6 @@ public:
     virtual PointSet* clone() const = 0;
     static const std::string& getXMLNameStatic();
     virtual const std::string& getXMLName() const;
-    virtual void XMLParse( const xercesc::DOMNode* node ) = 0;
     static PointSet* getPointSet( const std::string& type );
     virtual bool addPoint( DataPoint* pointIn ) = 0;
     virtual double getY( const double xValue ) const = 0;

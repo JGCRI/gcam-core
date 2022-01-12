@@ -46,13 +46,11 @@
  */
 
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/noncopyable.hpp>
 
 #include "containers/include/tree_item.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iparsable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
@@ -113,15 +111,17 @@ enum LandAllocatorItemType {
 class ALandAllocatorItem : public TreeItem<ALandAllocatorItem>,
                            public INamed,
                            public IVisitable,
-                           public IParsable,
                            private boost::noncopyable
 {
     friend class XMLDBOutputter;
+    friend class LandNode; // to access setParent
 public:
     typedef TreeItem<ALandAllocatorItem> ParentTreeType;
 
     explicit ALandAllocatorItem( const ALandAllocatorItem* aParent,
                                  const LandAllocatorItemType aType );
+    
+    explicit ALandAllocatorItem( const LandAllocatorItemType aType );
    
     virtual ~ALandAllocatorItem();
 
@@ -131,10 +131,7 @@ public:
     virtual const ALandAllocatorItem* getChildAt( const size_t aIndex ) const = 0;
     
     virtual ALandAllocatorItem* getChildAt( const size_t aIndex ) = 0;
-    
-    // IParsable
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
-    
+      
     // IVisitable
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const = 0;
@@ -425,6 +422,8 @@ public:
 	virtual bool isUnmanagedLandLeaf( )  const = 0;
 
 protected:
+    virtual void setParent( const ALandAllocatorItem* aParent );
+    
     virtual void toDebugXMLDerived( const int aPeriod,
                                     std::ostream& aOut,
                                     Tabs* aTabs ) const = 0;
@@ -447,14 +446,14 @@ protected:
          *          allocated to node above. This is always the normalized share and
          *          so is always between zero and one inclusive.
          */
-        DEFINE_VARIABLE( ARRAY | STATE, "share", mShare, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "share", mShare, objects::PeriodVector<Value> ),
         
         //! Share weights for calibrating historical shares, or turning how future
         //! crops/technologies will compete.
-        DEFINE_VARIABLE( ARRAY | STATE, "share-weight", mShareWeight, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "share-weight", mShareWeight, objects::PeriodVector<Value> ),
 
         //! Land observed profit rate
-        DEFINE_VARIABLE( ARRAY | STATE, "profit-rate", mProfitRate, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "profit-rate", mProfitRate, objects::PeriodVector<Value> ),
 
         //! The ghost unnormalized share, or the share a future crop/technology would
         //! get if it was available in the final calibration period at the profit rate
@@ -477,7 +476,7 @@ protected:
          * \brief Enum that stores the item's type.
          * \note This is stored to avoid a virtual function call.
          */
-        DEFINE_VARIABLE( SIMPLE, "land-type", mType, LandAllocatorItemType ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "land-type", mType, LandAllocatorItemType ),
 
         //! name of land expansion constraint cost curve
         // TODO: should these be in the leaf?

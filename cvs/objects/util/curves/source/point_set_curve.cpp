@@ -44,8 +44,6 @@
 #include "util/curves/include/explicit_point_set.h" // I dont like this. 
 #include "util/curves/include/data_point.h"
 #include "util/base/include/xml_helper.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include <vector>
 #include <cassert>
 #include <cfloat>
@@ -339,27 +337,6 @@ double PointSetCurve::getDiscountedValue( const double aLowerBound,
 //! Print out the curve to an XML File
 void PointSetCurve::outputAsXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     pointSet->outputAsXML( aOut, aTabs );
-}
-
-//! Parse a curve from a DOM tree.
-bool PointSetCurve::XMLParseDerived( const xercesc::DOMNode* node ) {
-
-    bool nodeParsed = false;
-
-    // assume node is valid.
-    assert( node );
-    
-    // Get the name of the node.
-    string nodeName = XMLHelper<void>::safeTranscode( node->getNodeName() );
-
-    if ( nodeName == PointSet::getXMLNameStatic() ){
-        nodeParsed = true;
-        // First clear the existing pointset to prevent a memory leak.
-        delete pointSet;
-        pointSet = PointSet::getPointSet( XMLHelper<string>::getAttr( node, "type" ) );
-        pointSet->XMLParse( node );
-    }
-    return nodeParsed;
 }
 
 //! Swap the X and the Y axises.

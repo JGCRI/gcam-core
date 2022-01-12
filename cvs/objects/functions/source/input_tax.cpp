@@ -39,15 +39,13 @@
  */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <cmath>
 
 #include "functions/include/input_tax.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/tech_vector_parse_helper.h"
 #include "technologies/include/icapture_component.h"
 #include "functions/include/icoefficient.h"
 #include "functions/include/efficiency.h"
@@ -58,7 +56,6 @@
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -90,6 +87,10 @@ const string& InputTax::getXMLNameStatic() {
 */
 const string& InputTax::getXMLReportingName() const{
     return XML_REPORTING_NAME;
+}
+
+const string& InputTax::getXMLName() const{
+    return getXMLNameStatic();
 }
 
 //! Constructor
@@ -133,43 +134,6 @@ InputTax* InputTax::clone() const {
 
 bool InputTax::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
-}
-
-void InputTax::XMLParse( const xercesc::DOMNode* node ) {
-    // TODO: Replace this with the restructured XMLParse.
-    // Make sure we were passed a valid node.
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    const DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() == DOMNode::TEXT_NODE ){
-            continue;
-        }
-
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "keyword" ){
-            DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
-            for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
-                DOMNode* attrTemp = keywordAttributes->item( attrNum );
-                mKeywordMap[ XMLHelper<string>::safeTranscode( attrTemp->getNodeName() ) ] = 
-                    XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
-            }
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLNameStatic() << "." << endl;
-        }
-    }
 }
 
 void InputTax::toDebugXML( const int aPeriod,
