@@ -44,6 +44,8 @@
 #include <vector>
 #include <cmath>
 #include <cassert>
+#include <regex>
+
 
 #include "functions/include/building_service_function.h"
 #include "functions/include/iinput.h"
@@ -65,6 +67,9 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
                        const std::string& sectorName, const double population, int period,
                        double capitalStock, double alphaZero, double sigma, double IBT, const IInput* aParentInput ) const
 {
+    const regex coalPattern("coal", regex::nosubs | regex::optimize | regex::egrep);
+    const regex TradBioPattern("TradBio", regex::nosubs | regex::optimize | regex::egrep);
+    
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     const BuildingNodeInput* buildingParentInput = static_cast<const BuildingNodeInput*>( aParentInput );
     // income is 1990 thousand $ and service price is 1975 $
@@ -73,6 +78,7 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
     const double internalGainsPerSqMeter = buildingParentInput->getInternalGains( regionName, period )
         / floorSpace;
     double totalDemand = 0;
+
     for( InputSet::iterator inputIter = input.begin(); inputIter != input.end(); ++inputIter ) {
         double demand = 0;
         // Guard against zero floorspace which happens for 1975 since no data was read in for
@@ -81,31 +87,38 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
         if( floorSpace != 0 ) {
             // calculations for energy service
             BuildingServiceInput* buildingServiceInput = static_cast<BuildingServiceInput*>( *inputIter );
-            BuildingNodeInput* buildingNodeInput = static_cast<BuildingNodeInput*>(*inputIter);
 
             double thermalLoad = buildingServiceInput->calcThermalLoad( buildingParentInput, internalGainsPerSqMeter, period );
 
             double serviceDensity;
-            if (sectorName == "resid heating coal" || "resid cooling coal" || "resid others coal") {
+            if (regex_search(buildingServiceInput->getName(), coalPattern)) {
 
-                double serviceDensity = calcServiceDensityCoal(buildingServiceInput, buildingNodeInput, income, regionName, period);
+                serviceDensity = calcServiceDensityCoal(buildingServiceInput,  income, regionName, period);
                 
             }
-            else if ("resid heating TradBio" || "resid cooling TradBio" || "resid others TradBio") {
+            else if (regex_search(buildingServiceInput->getName(), TradBioPattern)) {
 
-                double serviceDensity = calcServiceDensityTradBio(buildingServiceInput, buildingNodeInput,income, regionName, period);
+                serviceDensity = calcServiceDensityTradBio(buildingServiceInput, income, regionName, period);
 
             }
             else {
-                double serviceDensity = calcServiceDensity(buildingServiceInput, income, regionName, period);
+                serviceDensity = calcServiceDensity(buildingServiceInput, income, regionName, period);
 
-            } return serviceDensity;
+            }
 
-               	
             double biasadder = buildingServiceInput->getBiasAdder();
 	        double adjustedServiceDensity = (buildingServiceInput->getCoef( ) * thermalLoad * serviceDensity) + biasadder;
+
+            // May need to make an adjustment in case of negative prices.
+            if (adjustedServiceDensity < 0) {
+                adjustedServiceDensity = 0;
+            };
+
+
             // Set the thermal load adjusted service density back into the input for reporting.
-            buildingServiceInput->setServiceDensity( adjustedServiceDensity, period );
+            buildingServiceInput->setServiceDensity(adjustedServiceDensity, period );
+
+
             demand = floorSpace * adjustedServiceDensity;
         }
         totalDemand += demand;
@@ -119,42 +132,8 @@ double BuildingServiceFunction::calcLevelizedCost( const InputSet& aInputs, cons
                          const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
                          const IInput* aParentInput ) const
 {
-    double parentPrice = 0;
-    const double CVRT90 = 2.212; // 1975 $ to 1990 $
-    const BuildingNodeInput* buildingParentInput = static_cast<const BuildingNodeInput*>( aParentInput );
-    // income is 1990 thousand $ and service price is 1975 $
-    double income = buildingParentInput->getSubregionalIncome() * 1000 / CVRT90;
-    for( InputSet::const_iterator inputIter = aInputs.begin(); inputIter != aInputs.end(); ++inputIter ) {
-        // calculation for energy services
-        BuildingServiceInput* buildingServiceInput = static_cast<BuildingServiceInput*>( *inputIter );
-        BuildingNodeInput* buildingNodeInput = static_cast<BuildingNodeInput*>(*inputIter);
-
-        double serviceDensity;
-        if (aSectorName == "resid heating coal" || "resid cooling coal" || "resid others coal") {
-
-            double serviceDensity = calcServiceDensityCoal(buildingServiceInput, buildingNodeInput, income, aRegionName, aPeriod);
-
-        }
-        else if ("resid heating TradBio" || "resid cooling TradBio" || "resid others TradBio") {
-
-            double serviceDensity = calcServiceDensityTradBio(buildingServiceInput, buildingNodeInput, income, aRegionName, aPeriod);
-
-        }
-        else {
-            double serviceDensity = calcServiceDensity(buildingServiceInput, income, aRegionName, aPeriod);
-
-        } return serviceDensity;
-
-
-
-        double servicePrice = serviceDensity
-            * buildingServiceInput->getPricePaid( aRegionName, aPeriod );
-
-        parentPrice += servicePrice;
-    }
-    return parentPrice;
+    return 1;
 }
-
 
 
 
@@ -181,38 +160,32 @@ double BuildingServiceFunction::calcServiceDensity( BuildingServiceInput* aBuild
         serviceDensity = SectorUtils::adjustDemandForNegativePrice( serviceDensity, servicePrice );
     }
     return serviceDensity;
+
 }
 
 double BuildingServiceFunction::calcServiceDensityCoal(BuildingServiceInput* aBuildingServiceInput,
-                                                       BuildingNodeInput* aBuildingNodeInput,
                                                         const double aIncome,
                                                         const string& aRegionName,
                                                         const int aPeriod) const
 {
-    const double CVRT90 = 2.212; // 1975 $ to 1990 $
-    // income is 1990 thousand $ and service price is 1975 $
-    double income = aBuildingNodeInput->getSubregionalIncome() * 1000 / CVRT90;
-
 
     double CoalK = aBuildingServiceInput->getCoalK();
     double CoalL = aBuildingServiceInput->getCoalL();
 
-    double serviceDensity = pow ( CoalK * income , CoalL / income ) ;
+    double serviceDensity = pow ( CoalK * aIncome, CoalL / aIncome) ;
 
     return serviceDensity;
+
 }
 
 double BuildingServiceFunction::calcServiceDensityTradBio(BuildingServiceInput* aBuildingServiceInput,
-                                                          BuildingNodeInput* aBuildingNodeInput,
                                                           const double aIncome,
                                                           const string& aRegionName,
                                                           const int aPeriod) const
 {
-    const double CVRT90 = 2.212; // 1975 $ to 1990 $
-    // income is 1990 thousand $ and service price is 1975 $
-    double income = aBuildingNodeInput->getSubregionalIncome() * 1000 / CVRT90;
+    double serviceDensity = 1 / aIncome;
 
-    double serviceDensity = 1 / income;
+    return serviceDensity;
 
     return serviceDensity;
 }

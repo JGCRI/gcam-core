@@ -751,13 +751,13 @@ module_energy_L244.building_det <- function(command, ...) {
       ungroup() %>%
       left_join_error_no_match(A_regions %>% select(GCAM_region_ID,region),by="region") %>%
       left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("year", "GCAM_region_ID")) %>%
+      mutate(est_flsp_bm2=round(est_flsp_bm2,3),
+             observed_flsp_bm2=round(observed_flsp_bm2,3)) %>%
       mutate(satiation.adder=((observed_flsp_bm2-est_flsp_bm2)*1E9)/(pop_thous*1E3)) %>%
       select(region,nodeInput,building.node.input,year,satiation.adder) %>%
       mutate(satiation.adder = round(satiation.adder,energy.DIGITS_SATIATION_ADDER)) %>%
       mutate(gcam.consumer = nodeInput) %>%
       select(LEVEL2_DATA_NAMES[["SatiationAdder"]])
-
-
 
     # Repeat the process for SSPs
     L244.SatiationAdder_SSPs <- L244.Satiation_flsp_SSPs %>%

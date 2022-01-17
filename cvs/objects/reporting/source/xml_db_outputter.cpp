@@ -1863,10 +1863,13 @@ void XMLDBOutputter::endVisitBuildingNodeInput( const BuildingNodeInput* aBuildi
 void XMLDBOutputter::startVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod ) {
     startVisitInput( aBuildingServiceInput, aPeriod );
 
+    if (aBuildingServiceInput->getSatiationDemandFunction()) {
     writeItemToBuffer( aBuildingServiceInput->getSatiationDemandFunction()->mSatiationImpedance,
                        "satiation-impedance", *mBufferStack.top(), mTabs.get(), 1, "unitless" );
     writeItemToBuffer( aBuildingServiceInput->getSatiationDemandFunction()->mSatiationLevel,
                        "satiation-level", *mBufferStack.top(), mTabs.get(), 1, "GJ/m^2" );
+    }
+
     const Modeltime* modeltime = scenario->getModeltime();
     for( int per = 0; per < modeltime->getmaxper(); ++per ) {
         double serviceDensity = aBuildingServiceInput->mServiceDensity[ per ];

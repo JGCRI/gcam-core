@@ -146,13 +146,11 @@ private:
                                const int aPeriod ) const;
 
     double calcServiceDensityCoal(BuildingServiceInput* aBuildingServiceInput,
-        BuildingNodeInput* aBuildingNodeInput,
         const double aIncome,
         const std::string& aRegionName,
         const int aPeriod)  const;
 
     double calcServiceDensityTradBio(BuildingServiceInput* aBuildingServiceInput,
-        BuildingNodeInput* aBuildingNodeInput,
         const double aIncome,
         const std::string& aRegionName,
         const int aPeriod)  const;
