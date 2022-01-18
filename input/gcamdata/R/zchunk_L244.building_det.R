@@ -1635,9 +1635,7 @@ module_energy_L244.building_det <- function(command, ...) {
       left_join_error_no_match(L244.Intgains_scalar,by=c("region","gcam.consumer","nodeInput",
                                                          "building.node.input","thermal.building.service.input")) %>%
       mutate(intGains_EJ_serv=intGains_EJ/base.building.size) %>%
-      mutate(thermal_load=if_else(thermal.building.service.input %in% cooling_services,
-                                  degree.days*shell.conductance*floor.to.surface.ratio+internal.gains.scalar*intGains_EJ_serv,
-                                  degree.days*shell.conductance*floor.to.surface.ratio-internal.gains.scalar*intGains_EJ_serv)) %>%
+      mutate(thermal_load=degree.days*shell.conductance*floor.to.surface.ratio+internal.gains.scalar*intGains_EJ_serv) %>%
       select(-base.building.size) %>%
       left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(scenario==socioeconomics.BASE_GDP_SCENARIO),
                                by=c("year","GCAM_region_ID")) %>%
