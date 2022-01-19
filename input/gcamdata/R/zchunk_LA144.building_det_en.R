@@ -32,7 +32,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
              "L142.in_EJ_R_bld_F_Yh",
              "L143.HDDCDD_scen_RG3_Y",
              "L143.HDDCDD_scen_ctry_Y",
-             FILE = "energy/A44.CalPrice_resid"))
+             FILE = "energy/A44.CalPrice_bld"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L144.end_use_eff",
              "L144.shell_eff_R_Y",
@@ -56,7 +56,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
     A44.shell_eff_mult_RG3 <- get_data(all_data, "energy/A44.shell_eff_mult_RG3")
     A44.tech_eff_mult_RG3 <- get_data(all_data, "energy/A44.tech_eff_mult_RG3")
     A44.USA_TechChange <- get_data(all_data, "energy/A44.USA_TechChange")
-    A44.Calprice_resid <- get_data(all_data, "energy/A44.CalPrice_resid")
+    A44.Calprice_bld <- get_data(all_data, "energy/A44.CalPrice_bld")
     L101.in_EJ_ctry_bld_Fi_Yh <- get_data(all_data, "L101.in_EJ_ctry_bld_Fi_Yh")
     L142.in_EJ_R_bld_F_Yh <- get_data(all_data, "L142.in_EJ_R_bld_F_Yh")
     L143.HDDCDD_scen_RG3_Y <- get_data(all_data, "L143.HDDCDD_scen_RG3_Y")
@@ -537,39 +537,20 @@ module_energy_LA144.building_det_en <- function(command, ...) {
 
     # 1G
     # Create L144.prices_bld to calibrate satiation impedance (mu) ate region level in the DS
-    L144.prices_bld<-A44.Calprice_resid %>%
+    L144.prices_bld<-A44.Calprice_bld %>%
       left_join_error_no_match(GCAM_region_names,by="region") %>%
       gather_years() %>%
       # Add 1975 and extrapolate prices using rule 2
-      group_by(region,GCAM_region_ID,fuel) %>%
+      group_by(region,GCAM_region_ID,market) %>%
       complete(nesting(year=MODEL_BASE_YEARS)) %>%
       mutate(value = if_else(is.na(value),approx_fun(year, value, rule = 2),value)) %>%
       # Add all historical years and linerly extrapolate (rule 1)
       complete(nesting(year=HISTORICAL_YEARS)) %>%
       mutate(value = if_else(is.na(value),approx_fun(year, value, rule = 2),value)) %>%
       ungroup() %>%
-      # Adjust fuel names
-      mutate(fuel = if_else(fuel == "district heat","heat",fuel),
-             fuel = if_else(fuel == "refined liquids enduse","refined liquids",fuel),
-             fuel = gsub("regional ","",fuel),
-             fuel = gsub("natural ","",fuel)) %>%
-      # Left_join to add all the fuel-service combinations
-      left_join(calibrated_techs_bld_det %>% select(service,fuel), by="fuel") %>%
       rename(price = value) %>%
       # select historical years
-      filter(year <= max(MODEL_BASE_YEARS)) %>%
-      left_join_error_no_match(L144.in_EJ_R_bld_serv_F_Yh, by = c("GCAM_region_ID", "fuel", "year", "service")) %>%
-      select(-sector) %>%
-      group_by(region,GCAM_region_ID,service,year) %>%
-      mutate(agg_service = sum(value)) %>%
-      mutate(share_fuel = value/agg_service) %>%
-      replace_na(list(share_fuel=0)) %>%
-      mutate(check_share = sum(share_fuel) ) %>%
-      ungroup() %>%
-      group_by(region,GCAM_region_ID,service,year) %>%
-      summarise(price = weighted.mean(price,share_fuel,na.rm = T)) %>%
-      ungroup()
-
+      filter(year <= max(MODEL_BASE_YEARS))
 
 
     # ===================================================
@@ -635,7 +616,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       add_units("$1975/unit") %>%
       add_comments("Weighted by fuel prices") %>%
       add_legacy_name("L144.prices_bld") %>%
-      add_precursors("energy/A44.CalPrice_resid", "energy/calibrated_techs_bld_det",
+      add_precursors("energy/A44.CalPrice_bld", "energy/calibrated_techs_bld_det",
                      "L101.in_EJ_ctry_bld_Fi_Yh", "common/GCAM_region_names") ->
       L144.prices_bld
 

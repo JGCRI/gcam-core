@@ -1369,7 +1369,7 @@ module_energy_L244.building_det <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["DeleteGenericService"]])
 
 
-        # In order to make the function flexible to the implementation of multiple consumers, the satiation impedance (mu)
+    # In order to make the function flexible to the implementation of multiple consumers, the satiation impedance (mu)
     # is calibrated in the DS per region.
     # Here we create L244.ThermalServiceImpedance and L244.GenericServiceImpedance
     # They need to be calibrated at region level
@@ -1448,7 +1448,7 @@ module_energy_L244.building_det <- function(command, ...) {
       rename(pcGDP_thous90USD=value) %>%
       # Add service prices: At this point, we read the calibrated prices from GCAM v5.4 (L144.prices_bld)
       left_join_error_no_match(L144.prices_bld  %>%
-                                 rename(building.service.input=service) %>%
+                                 rename(building.service.input=market) %>%
                                  filter(building.service.input %in% generic_services, year==MODEL_FINAL_BASE_YEAR),
                                by=c("region","year","building.service.input","GCAM_region_ID")) %>%
       mutate(`satiation-impedance` = (log(2)*((pcGDP_thous90USD*1000/def9075)/price))/log((satiation.level)/(satiation.level-base_serv_flsp))) %>%
@@ -1510,7 +1510,7 @@ module_energy_L244.building_det <- function(command, ...) {
       rename(pcGDP_thous90USD=value) %>%
       # Add service prices: At this point, we read the calibrated prices from GCAM v5.4 (L144.prices_bld)
       left_join(L144.prices_bld  %>%
-                                 rename(building.service.input=service) %>%
+                                 rename(building.service.input=market) %>%
                                  filter(building.service.input %in% generic_services, year==MODEL_FINAL_BASE_YEAR),
                                by=c("region","year","building.service.input","GCAM_region_ID")) %>%
       mutate(satiation.level=max(satiation.level,base_serv_flsp*1.001)) %>%
@@ -1643,7 +1643,7 @@ module_energy_L244.building_det <- function(command, ...) {
       # Add service prices: At this point, we read the calibrated prices from GCAM v5.4 ("L144.prices_bld")
       # Use left_join bc there is no heating in Indonesia
       left_join(L144.prices_bld  %>%
-                  rename(thermal.building.service.input=service) %>%
+                  rename(thermal.building.service.input=market) %>%
                   filter(thermal.building.service.input %in% thermal_services, year==MODEL_FINAL_BASE_YEAR),
                 by=c("region","year","thermal.building.service.input","GCAM_region_ID")) %>%
       filter(complete.cases(.)) %>%
@@ -1692,7 +1692,7 @@ module_energy_L244.building_det <- function(command, ...) {
                                by=c("year","GCAM_region_ID")) %>%
       rename(pcGDP_thous90USD=value) %>%
       left_join(L144.prices_bld  %>%
-                  rename(building.service.input=service)
+                  rename(building.service.input=market)
                 ,by=c("region","year","building.service.input","GCAM_region_ID")) %>%
       replace_na(list(price=0)) %>%
       left_join(L244.GenericServiceImpedance_allvars %>%
@@ -1780,7 +1780,7 @@ module_energy_L244.building_det <- function(command, ...) {
       rename(pcGDP_thous90USD=value) %>%
       # Add service prices: At this point, we read the calibrated prices from GCAM v5.4 ("L144.prices_bld")
       left_join(L144.prices_bld  %>%
-                  rename(thermal.building.service.input=service) %>%
+                  rename(thermal.building.service.input=market) %>%
                   filter(thermal.building.service.input %in% thermal_services),
                 by=c("region","year","thermal.building.service.input","GCAM_region_ID")) %>%
       left_join(L244.ThermalServiceImpedance_allvars %>%
@@ -1894,7 +1894,7 @@ module_energy_L244.building_det <- function(command, ...) {
                                ,by=c("region","gcam.consumer","year")) %>%
       rename(pcGDP_thous90USD_gr=pcGDP_thous90USD) %>%
       left_join_error_no_match(L144.prices_bld  %>%
-                  rename(building.service.input=service) %>%
+                  rename(building.service.input=market) %>%
                   filter(building.service.input %in% generic_services, year==MODEL_FINAL_BASE_YEAR),
                 by=c("region","year","building.service.input")) %>%
       left_join_error_no_match(L244.GenericBaseService
@@ -1944,7 +1944,7 @@ module_energy_L244.building_det <- function(command, ...) {
                                ,by=c("region","gcam.consumer","year")) %>%
       rename(pcGDP_thous90USD_gr=pcGDP_thous90USD) %>%
       left_join_error_no_match(L144.prices_bld  %>%
-                                 rename(building.service.input=service) %>%
+                                 rename(building.service.input=market) %>%
                                  filter(building.service.input %in% generic_services, year==MODEL_FINAL_BASE_YEAR),
                                by=c("region","year","building.service.input")) %>%
       left_join_error_no_match(L244.GenericBaseService
@@ -2015,7 +2015,7 @@ module_energy_L244.building_det <- function(command, ...) {
                                ,by=c("region","gcam.consumer","year")) %>%
       rename(pcGDP_thous90USD_gr=pcGDP_thous90USD) %>%
       left_join_error_no_match(L144.prices_bld  %>%
-                  rename(thermal.building.service.input=service) %>%
+                  rename(thermal.building.service.input=market) %>%
                   filter(thermal.building.service.input %in% thermal_services),
                 by=c("region","year","thermal.building.service.input")) %>%
       left_join_error_no_match(L244.ThermalBaseService
