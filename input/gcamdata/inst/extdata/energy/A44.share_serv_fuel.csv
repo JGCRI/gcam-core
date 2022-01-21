@@ -334,7 +334,7 @@ Korea,bld_resid,biomass,resid heating modern,0.003520598
 Southeast Asia,bld_resid,biomass,resid heating modern,0
 India,bld_resid,biomass,resid heating modern,0
 Australia_NZ,bld_resid,biomass,resid heating modern,0.138806089
-Africa,bld_resid,biomass,resid heating modern,0
+Africa,bld_resid,biomass,resid heating modern,0.01548285
 Middle East,bld_resid,biomass,resid heating modern,0
 Latin America,bld_resid,biomass,resid heating modern,0.015
 Former Soviet Union,bld_resid,biomass,resid heating modern,0.022766199
@@ -376,7 +376,7 @@ Korea,bld_resid,gas,resid heating modern,0.3
 Southeast Asia,bld_resid,gas,resid heating modern,0.016666667
 India,bld_resid,gas,resid heating modern,0
 Australia_NZ,bld_resid,gas,resid heating modern,0.150193911
-Africa,bld_resid,gas,resid heating modern,0
+Africa,bld_resid,gas,resid heating modern,0.005570604
 Middle East,bld_resid,gas,resid heating modern,0.05
 Latin America,bld_resid,gas,resid heating modern,0.024
 Former Soviet Union,bld_resid,gas,resid heating modern,0.185210131
@@ -404,7 +404,7 @@ Korea,bld_resid,refined liquids,resid heating modern,0.139737875
 Southeast Asia,bld_resid,refined liquids,resid heating modern,0.016666667
 India,bld_resid,refined liquids,resid heating modern,0
 Australia_NZ,bld_resid,refined liquids,resid heating modern,0.017
-Africa,bld_resid,refined liquids,resid heating modern,0
+Africa,bld_resid,refined liquids,resid heating modern,0.020698301
 Middle East,bld_resid,refined liquids,resid heating modern,0.05
 Latin America,bld_resid,refined liquids,resid heating modern,0.099
 Former Soviet Union,bld_resid,refined liquids,resid heating modern,0
@@ -432,7 +432,7 @@ Korea,bld_resid,biomass,resid others modern,0
 Southeast Asia,bld_resid,biomass,resid others modern,0.026668395
 India,bld_resid,biomass,resid others modern,0
 Australia_NZ,bld_resid,biomass,resid others modern,0
-Africa,bld_resid,biomass,resid others modern,0.051609501
+Africa,bld_resid,biomass,resid others modern,0.036126651
 Middle East,bld_resid,biomass,resid others modern,0.000187993
 Latin America,bld_resid,biomass,resid others modern,0.003579492
 Former Soviet Union,bld_resid,biomass,resid others modern,0
@@ -474,7 +474,7 @@ Korea,bld_resid,gas,resid others modern,0.191927492
 Southeast Asia,bld_resid,gas,resid others modern,0.027716673
 India,bld_resid,gas,resid others modern,0.004041309
 Australia_NZ,bld_resid,gas,resid others modern,0.119164318
-Africa,bld_resid,gas,resid others modern,0.018568679
+Africa,bld_resid,gas,resid others modern,0.012998075
 Middle East,bld_resid,gas,resid others modern,0.271724974
 Latin America,bld_resid,gas,resid others modern,0.086668387
 Former Soviet Union,bld_resid,gas,resid others modern,0.247270212
@@ -502,7 +502,7 @@ Korea,bld_resid,refined liquids,resid others modern,0.053025972
 Southeast Asia,bld_resid,refined liquids,resid others modern,0.091600333
 India,bld_resid,refined liquids,resid others modern,0.133481193
 Australia_NZ,bld_resid,refined liquids,resid others modern,0.018094567
-Africa,bld_resid,refined liquids,resid others modern,0.068994338
+Africa,bld_resid,refined liquids,resid others modern,0.048296036
 Middle East,bld_resid,refined liquids,resid others modern,0.273552709
 Latin America,bld_resid,refined liquids,resid others modern,0.159426821
 Former Soviet Union,bld_resid,refined liquids,resid others modern,0.052340072
