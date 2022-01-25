@@ -220,12 +220,6 @@ bool BatchRunner::runSingleScenario( IScenarioRunner* aScenarioRunner,
                                      const int aSinglePeriod,
                                      Timer& aTimer )
 {
-	// If QuitFirstFailure bool is set to 1 and model is not running in target finder mode,
-	// model will exit after any failed model period (rather than running to completion).
-	const Configuration* conf = Configuration::getInstance();
-	bool quitFirstFailure = conf->getBool("QuitFirstFailure", false, false);
-	bool runTargetFinder = conf->getBool("find-path", false, false);
-
     // Set the current scenario runner.
     mInternalRunner = aScenarioRunner;
 
@@ -270,18 +264,9 @@ bool BatchRunner::runSingleScenario( IScenarioRunner* aScenarioRunner,
     // Run the scenario.
     success = mInternalRunner->runScenarios( runPeriod, false, aTimer );
     
-	// Print the output.
-	// If QuitFirstFailure bool is set to 1 and model is not running in target finder mode,
-	// model will exit after any failed model period (and skip printing database).
-	if (!success & quitFirstFailure & !runTargetFinder) {
-		ILogger& mainLog = ILogger::getLogger("main_log");
-		mainLog.setLevel(ILogger::ERROR);
-		mainLog << "Period failed to solve. Skipping writing database." << endl;
-	}
-	else {
-		mInternalRunner->printOutput( aTimer );
-	}
-
+    // Print the output.
+    mInternalRunner->printOutput( aTimer );
+    
     // If the run failed, add to the list of failed runs. CHECK ME!
     if( !success ){
         mUnsolvedNames.push_back( aComponent.mName );
