@@ -45,7 +45,10 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
              FILE = "emissions/EDGAR/EDGAR_HFC245fa",
              FILE = "emissions/EDGAR/EDGAR_HFC32",
              FILE = "emissions/EDGAR/EDGAR_HFC365mfc",
-             FILE = "emissions/EDGAR/EDGAR_HFC43"))
+             FILE = "emissions/EDGAR/EDGAR_HFC43",
+             FILE = "socioeconomics/income_shares_quintiles",
+             "L244.GenericShares",
+             "L244.ThermalShares"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L141.hfc_R_S_T_Yh",
              "L141.hfc_ef_R_cooling_Yh"))
@@ -92,7 +95,6 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
       Non.CO2 <- emissions <- Sector <- total <- share <- Species <- Emissions <-
       SSP2_tot <- EDGAR_tot <- scaler <- supplysector <- subsector <- stub.technology <-
       adj_emissions <- energy <- em_fact <- NULL  # silence package check notes
-
 
     # Processing and Mapping EDGAR HFC emissions to GCAM technologies
     # ===============================================================
@@ -356,6 +358,69 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
       replace_na(list(em_fact = 0)) %>%
       rename(value = em_fact) -> L141.hfc_ef_R_cooling_Yh
 
+    # Load subregional shares:
+    # ===============================================================
+    # We neeed to allocate residential energy to the diferent consumer groups using the computed shares:
+    L244.GenericShares<- get_data(all_data, "L244.GenericShares",strip_attributes = TRUE) %>%
+      select(region,gcam.consumer,building.service.input,year,gen_share) %>%
+      rename(supplysector=building.service.input,
+             share=gen_share) %>%
+      filter(grepl("resid",supplysector)) %>%
+      separate(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
+      unite(supplysector,c("supplysector","group"),sep = "_") %>%
+      select(-gcam.consumer) %>%
+      complete(nesting(region,supplysector), year = c(year, unique(L141.hfc_R_S_T_Yh$year))) %>%
+      # Interpolate
+      group_by(region,supplysector) %>%
+      mutate(share = approx_fun(year, share, rule = 2))
+
+    L244.ThermalShares<- get_data(all_data, "L244.ThermalShares",strip_attributes = TRUE) %>%
+      select(region,gcam.consumer,thermal.building.service.input,year,thermal_share) %>%
+      rename(supplysector=thermal.building.service.input,
+             share=thermal_share)%>%
+      filter(grepl("resid",supplysector)) %>%
+      separate(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
+      unite(supplysector,c("supplysector","group"),sep = "_") %>%
+      select(-gcam.consumer)%>%
+      complete(nesting(region,supplysector), year = c(year, unique(L141.hfc_R_S_T_Yh$year))) %>%
+      # Interpolate
+      group_by(region,supplysector) %>%
+      mutate(share = approx_fun(year, share, rule = 2))
+
+    L244.Shares<-bind_rows(L244.GenericShares,L244.ThermalShares) %>%
+      left_join_error_no_match(GCAM_region_names, by = "region")
+
+    # Save subregional categories
+    cons.gr.adj<-get_data(all_data, "socioeconomics/income_shares_quintiles",strip_attributes = TRUE)  %>%
+      select(Category) %>%
+      distinct()
+
+    # Adjust L141.hfc_R_S_T_Yh and L141.hfc_ef_R_cooling_Yh for the multiple consumers
+
+    # L141.hfc_R_S_T_Yh: Represents emissions, value needs to be multiplied by the share to allocate across multiple consumers
+    L141.hfc_R_S_T_Yh_resid<- L141.hfc_R_S_T_Yh %>%
+      filter(grepl("resid",supplysector)) %>%
+      repeat_add_columns(tibble(group=unique(cons.gr.adj$Category))) %>%
+      unite(supplysector,c("supplysector","group"),sep = "_") %>%
+      # add shares
+      left_join_error_no_match(L244.Shares, by = c("GCAM_region_ID", "year", "supplysector")) %>%
+      mutate(value = value * share) %>%
+      select(-region,-share)
+
+    L141.hfc_R_S_T_Yh<-L141.hfc_R_S_T_Yh %>%
+      filter(!grepl("resid",supplysector)) %>%
+      bind_rows(L141.hfc_R_S_T_Yh_resid)
+
+    #L141.hfc_ef_R_cooling_Yh: Represents emission factors, so they just need to be extended to multiple consumers
+    L141.hfc_ef_R_cooling_Yh_resid<-L141.hfc_ef_R_cooling_Yh %>%
+      filter(grepl("resid",supplysector)) %>%
+      repeat_add_columns(tibble(group=unique(cons.gr.adj$Category))) %>%
+      unite(supplysector,c("supplysector","group"),sep = "_")
+
+    L141.hfc_ef_R_cooling_Yh<-L141.hfc_ef_R_cooling_Yh %>%
+      filter(!grepl("resid",supplysector)) %>%
+      bind_rows(L141.hfc_ef_R_cooling_Yh_resid)
+
     # ===============
     # Produce outputs
     L141.hfc_R_S_T_Yh %>%
@@ -390,7 +455,10 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_HFC245fa",
                      "emissions/EDGAR/EDGAR_HFC32",
                      "emissions/EDGAR/EDGAR_HFC365mfc",
-                     "emissions/EDGAR/EDGAR_HFC43") ->
+                     "emissions/EDGAR/EDGAR_HFC43",
+                     "socioeconomics/income_shares_quintiles",
+                     "L244.GenericShares",
+                     "L244.ThermalShares") ->
       L141.hfc_R_S_T_Yh
 
     L141.hfc_ef_R_cooling_Yh %>%
@@ -426,7 +494,10 @@ module_emissions_L141.hfc_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR/EDGAR_HFC245fa",
                      "emissions/EDGAR/EDGAR_HFC32",
                      "emissions/EDGAR/EDGAR_HFC365mfc",
-                     "emissions/EDGAR/EDGAR_HFC43") ->
+                     "emissions/EDGAR/EDGAR_HFC43",
+                     "socioeconomics/income_shares_quintiles",
+                     "L244.GenericShares",
+                     "L244.ThermalShares") ->
       L141.hfc_ef_R_cooling_Yh
 
     return_data(L141.hfc_R_S_T_Yh, L141.hfc_ef_R_cooling_Yh)

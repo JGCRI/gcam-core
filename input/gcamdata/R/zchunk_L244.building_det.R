@@ -26,7 +26,8 @@
 #' \code{L244.GenericServiceAdder},\code{L244.GenericServiceAdder_SSP1}, \code{L244.GenericServiceAdder_SSP2}, \code{L244.GenericServiceAdder_SSP3}, \code{L244.GenericServiceAdder_SSP4}, \code{L244.GenericServiceAdder_SSP5}
 #' \code{L244.ThermalServiceImpedance}, \code{L244.ThermalServiceAdder}
 #' \code{L244.GenericServiceCoef},\code{L244.ThermalServiceCoef}, \code{L244.GenericServiceCoef_SSP1}, \code{L244.GenericServiceCoef_SSP2},
-#' \code{L244.GenericServiceCoef_SSP3}, \code{L244.GenericServiceCoef_SSP4}, \code{L244.GenericServiceCoef_SSP5}, \code{L244.ThermalCoalCoef}, \code{L244.GenericCoalCoef}
+#' \code{L244.GenericServiceCoef_SSP3}, \code{L244.GenericServiceCoef_SSP4}, \code{L244.GenericServiceCoef_SSP5}, \code{L244.ThermalCoalCoef}, \code{L244.GenericCoalCoef},
+#' \code{L244.GenericShares}, \code{L244.ThermalShares},
 #' The corresponding file in the original data system was \code{L244.building_det.R} (energy level2).
 #' @details Creates level2 data for the building sector.
 #' @importFrom assertthat assert_that
@@ -147,7 +148,9 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.GenericServiceCoef_SSP4",
              "L244.GenericServiceCoef_SSP5",
              "L244.GenericCoalCoef",
-             "L244.ThermalCoalCoef"))
+             "L244.ThermalCoalCoef",
+             "L244.GenericShares",
+             "L244.ThermalShares"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -2652,6 +2655,22 @@ module_energy_L244.building_det <- function(command, ...) {
       add_precursors("common/GCAM_region_names","L144.in_EJ_R_bld_serv_F_Yh") ->
       L244.ThermalCoalCoef
 
+    L244.ThermalShares %>%
+      add_title("Shares for allocate thermal services across income groups") %>%
+      add_units("%") %>%
+      add_comments("Calculated using pc_thous") %>%
+      add_legacy_name("L244.ThermalShares") %>%
+      add_precursors("common/GCAM_region_names","L144.in_EJ_R_bld_serv_F_Yh") ->
+      L244.ThermalShares
+
+    L244.GenericShares %>%
+      add_title("Shares for allocate generic services across income groups") %>%
+      add_units("%") %>%
+      add_comments("Calculated using pc_thous") %>%
+      add_legacy_name("L244.GenericShares") %>%
+      add_precursors("common/GCAM_region_names","L144.in_EJ_R_bld_serv_F_Yh") ->
+      L244.GenericShares
+
     if(exists("L244.DeleteGenericService")) {
       L244.DeleteGenericService %>%
         add_title("Removing non-existent services") %>%
@@ -2698,7 +2717,8 @@ module_energy_L244.building_det <- function(command, ...) {
                 L244.GenericServiceAdder_SSP4,L244.GenericServiceAdder_SSP5,
                 L244.ThermalServiceImpedance,L244.ThermalServiceAdder,
                 L244.GenericServiceCoef,L244.GenericServiceCoef_SSP1,L244.GenericServiceCoef_SSP2,L244.GenericServiceCoef_SSP3,
-                L244.GenericServiceCoef_SSP4,L244.GenericServiceCoef_SSP5,L244.ThermalServiceCoef,L244.GenericCoalCoef,L244.ThermalCoalCoef)
+                L244.GenericServiceCoef_SSP4,L244.GenericServiceCoef_SSP5,L244.ThermalServiceCoef,L244.GenericCoalCoef,L244.ThermalCoalCoef,
+                L244.GenericShares,L244.ThermalShares)
   } else {
     stop("Unknown command")
   }
