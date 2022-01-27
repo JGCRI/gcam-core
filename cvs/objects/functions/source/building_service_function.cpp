@@ -112,7 +112,7 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
             // May need to make an adjustment in case of negative prices.
             if (adjustedServiceDensity < 0) {
                 adjustedServiceDensity = 0;
-            };
+            }
 
 
             // Set the thermal load adjusted service density back into the input for reporting.
