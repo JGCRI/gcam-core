@@ -357,7 +357,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "energy/calibrated_techs_bld_det",
                      UCD_tech_map_name,
                      "L111.nonghg_tg_R_en_S_F_Yh",
-                     "L244.DeleteThermalService","L244.DeleteGenericService") ->
+                     "L244.DeleteThermalService","L244.DeleteGenericService","socioeconomics/income_shares_quintiles") ->
       L201.en_pol_emissions
 
     L201.en_ghg_emissions %>%
