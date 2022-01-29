@@ -241,6 +241,19 @@ bool Scenario::run( const int aSinglePeriod,
                     const bool aPrintDebugging,
                     const string& aFilenameEnding )
 {
+    // If QuitFirstFailure bool is set to 1 and model is not running in target finder mode,
+    // model will exit after any failed model period (rather than running to completion).
+    const Configuration* conf = Configuration::getInstance();
+    bool quitFirstFailure = conf->getBool("QuitFirstFailure", false, false);
+    bool runTargetFinder = conf->getBool("find-path", false, false);
+    // If applicable, print a statement to the log confirming this behavior.
+    if (quitFirstFailure & !runTargetFinder) {
+        ILogger& mainLog = ILogger::getLogger("main_log");
+        mainLog.setLevel(ILogger::WARNING);
+        mainLog << "QuitFirstFailure is set to true.  GCAM will exit after first failed model period." << endl;
+    }
+
+
     // Avoid accumulating unsolved periods.
     mUnsolvedPeriods.clear();
     
@@ -268,6 +281,14 @@ bool Scenario::run( const int aSinglePeriod,
     if( aSinglePeriod == RUN_ALL_PERIODS ){
         for( int per = 0; per < mModeltime->getmaxper(); per++ ){
             success &= calculatePeriod( per, *XMLDebugFile, &tabs, aPrintDebugging );
+            // If QuitFirstFailure bool is set to 1 and model is not running in target finder mode,
+            // model will exit after any failed model period (rather than running to completion).
+            if (!success & quitFirstFailure & !runTargetFinder) {
+                ILogger& mainLog = ILogger::getLogger("main_log");
+                mainLog.setLevel(ILogger::ERROR);
+                mainLog << "Period " << per << " failed to solve. Skipping all remaining model periods." << endl;
+                break;
+            }
         }
     }
     // Check if the single period is invalid.
@@ -279,20 +300,34 @@ bool Scenario::run( const int aSinglePeriod,
     } 
     else {
         // Run all periods up to the single period which are invalid.
+        // Set up bool to skip all future periods if QuitFirstFailure bool is set to 1 and 
+        // model fails to solve.
+        bool runNextPeriod = true;
         for( int per = 0; per < aSinglePeriod; per++ ){
             if( !mIsValidPeriod[ per ] ){
                 success &= calculatePeriod( per, *XMLDebugFile, &tabs, aPrintDebugging );
+                // If QuitFirstFailure bool is set to 1 and model is not running in target finder mode,
+                // model will exit after any failed model period (rather than running to completion).
+                if (!success & quitFirstFailure & !runTargetFinder) {
+                    ILogger& mainLog = ILogger::getLogger("main_log");
+                    mainLog.setLevel(ILogger::ERROR);
+                    mainLog << "Period " << per << " failed to solve. Skipping all remaining model periods." << endl;
+                    runNextPeriod = false;
+                    break;
+                }
             }
         }
         
-        // Invalidate the period about to be run and all periods past it.
-        for( int per = aSinglePeriod; per < mModeltime->getmaxper(); ++per ){
-            mIsValidPeriod[ per ] = false;
-        }
+        if (runNextPeriod) {
+            // Invalidate the period about to be run and all periods past it.
+            for( int per = aSinglePeriod; per < mModeltime->getmaxper(); ++per ){
+                mIsValidPeriod[ per ] = false;
+            }
 
-        // Now run the requested period. Results past this period will no longer
-        // be valid. Do not attempt to use them!
-        success &= calculatePeriod( aSinglePeriod, *XMLDebugFile, &tabs, aPrintDebugging );
+            // Now run the requested period. Results past this period will no longer
+            // be valid. Do not attempt to use them!
+            success &= calculatePeriod( aSinglePeriod, *XMLDebugFile, &tabs, aPrintDebugging );
+        }
     }
     
     // Print any unsolved periods.
