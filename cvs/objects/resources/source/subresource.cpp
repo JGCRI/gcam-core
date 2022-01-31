@@ -109,10 +109,13 @@ void SubResource::completeInit( const std::string& aRegionName, const std::strin
     vector<Grade*>::iterator prevGrade;
     for( vector<Grade*>::iterator gradeIter = mGrade.begin(); gradeIter != mGrade.end(); gradeIter++ ) {
         ( *gradeIter )->completeInit( mSubresourceInfo.get() );
-        if(gradeIter != mGrade.begin() && (*gradeIter)->getExtCost() <= (*prevGrade)->getExtCost()/* && (*gradeIter)->getAvail() > 0.0*/) {
+        if(gradeIter != mGrade.begin() && (*gradeIter)->getExtCost() <= (*prevGrade)->getExtCost()) {
+            string errorStr = (*prevGrade)->getExtCost() == (*gradeIter)->getExtCost() ?
+                "equal" :
+                "unsorted";
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::SEVERE );
-            mainLog << "Invalid " << getXMLName() << " unsorted or equal extraction costs for "
+            mainLog << "Invalid " << getXMLName() << " " << errorStr << " extraction costs for "
                     << (*prevGrade)->getName() << " = " << (*prevGrade)->getExtCost() << ", "
                     << (*gradeIter)->getName() << " = " << (*gradeIter)->getExtCost() << " in: "
                     << aRegionName << ", " << aResourceName << ", " << mName << endl;

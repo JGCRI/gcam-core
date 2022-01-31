@@ -53,6 +53,7 @@
             <bracket-interval>0.5</bracket-interval>
             <max-bracket-iterations>20</max-bracket-iterations>
             <max-iterations>10</max-iterations>
+            <use-secant-brackets>0</use-secant-brackets>
 			<solution-info-filter>unsolved && solvable && !(has-market-flag="fully-calibrated")</solution-info-filter>
         </bisect-all-solver-component>
         <bisect-all-solver-component>
@@ -86,6 +87,7 @@
             <bracket-interval>0.05</bracket-interval>
             <max-bracket-iterations>20</max-bracket-iterations>
             <max-iterations>10</max-iterations>
+            <use-secant-brackets>0</use-secant-brackets>
             <solution-info-filter>unsolved && solvable && price-greater-than="0"</solution-info-filter>
         </bisect-all-solver-component>
         <bisect-all-solver-component>
