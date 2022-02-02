@@ -1,6 +1,3 @@
-#ifndef FDJAC_HPP_
-#define FDJAC_HPP_
-
 /*
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
@@ -34,37 +31,34 @@
 */
 
 
-/*!
- * \file fdjac.hpp
- * \ingroup Solution
- * \brief Finite-difference Jacobian helper functions for multidimensional root finders
- * \remark Because this function is actually a template, the entire definition goes in the header file.
- * \remark We already have a procedure for finding the Jacobian, but it is a little confusing
- *         to use.  This version will use the functors we have defined to abstract much of that
- *         complexity.  A consequence of this is that if there is any lazy evaluation or other
- *         optimization to be done in the function evaluation, it will be up to the functor to
- *         arrange it.
+/*! 
+ * \file market_matches_solution_info_filter.cpp
+ * \ingroup Objects
+ * \brief MarketMatchesSolutionInfoFilter class source file.
+ * \author Pralit Patel
  */
 
-#include <iostream>
-#include "solution/util/include/functor.hpp"
-#include "solution/util/include/ublas-helpers.hpp"
 #include "util/base/include/definitions.h"
+#include <string>
 
-void jacol(VecFVec &F, const UBVECTOR &x,
-                  const UBVECTOR &fx, int j,
-                  UBMATRIX &J,
-           bool usepartial=true, std::ostream *diagnostic=NULL);
+#include "solution/util/include/market_matches_solution_info_filter.h"
+#include "solution/util/include/solution_info.h"
 
-void fdjac(VecFVec &F, const UBVECTOR &x,
-           const UBVECTOR &fx, UBMATRIX &J,
-           const std::list<int>& cols,
-           bool usepartial=true,
-           std::ostream *diagnostic=NULL);
+using namespace std;
 
-void fdjac(VecFVec &F, const UBVECTOR &x,
-           UBMATRIX &J,
-           const std::list<int>& cols,
-           bool usepartial=true);
+MarketMatchesSolutionInfoFilter::MarketMatchesSolutionInfoFilter(const std::string& aMarketMatches)
+:mAcceptMarketMatches(aMarketMatches, regex::nosubs | regex::optimize | regex::egrep)
+{
+}
 
-#endif
+MarketMatchesSolutionInfoFilter::~MarketMatchesSolutionInfoFilter() {
+}
+
+const string& MarketMatchesSolutionInfoFilter::getXMLNameStatic() {
+    const static string XML_NAME = "market-matches-solution-info-filter";
+    return XML_NAME;
+}
+
+bool MarketMatchesSolutionInfoFilter::acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const {
+    return regex_search(aSolutionInfo.getName(), mAcceptMarketMatches);
+}

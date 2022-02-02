@@ -129,7 +129,7 @@ protected:
     
   //! Perform the Broyden's method iterations.
   int bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
-             UBMATRIX &B, int &neval);
+             UBMATRIX &B, int &neval, const std::list<int>& allCols);
   //! Additional logging for visualizing solver progress.
   void reportVec(const std::string &aname, const UBVECTOR &av, const std::vector<int> &amktids,
                  const std::vector<bool> &aissolvable);

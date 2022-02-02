@@ -404,7 +404,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
                                  round(available, water.DIGITS_GROUND_WATER_RSC),
                                  0),
              grade = if_else(grade == "lower_cost", "grade1", "grade2")) %>%
-      filter(grade != "grade21") %>%
+      filter(subresource != "groundwater grade21") %>%
       select(c(LEVEL2_DATA_NAMES[["RsrcCurves"]], "elec_coef")) ->
       L201.DepRsrcCurves_ground
 
