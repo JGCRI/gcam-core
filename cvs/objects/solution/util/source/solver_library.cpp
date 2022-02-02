@@ -323,10 +323,9 @@ bool SolverLibrary::luFactorizeMatrix( Matrix& aInputMatrix, PermutationMatrix& 
 */
 bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const double aDefaultBracketInterval,
                              const unsigned int aMaxIterations, SolutionInfoSet& aSolutionSet, CalcCounter* aCalcCounter,
-                             const ISolutionInfoFilter* aSolutionInfoFilter, const int aPeriod )
+                             const ISolutionInfoFilter* aSolutionInfoFilter, const bool aUseSecantBracket, const int aPeriod )
 {
     bool code = false;
-    static const double LOWER_BOUND = util::getVerySmallNumber();
 
     // Make sure the markets are up to date before starting.
     aMarketplace->nullSuppliesAndDemands( aPeriod );
@@ -336,10 +335,6 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
     aWorld->calc( aPeriod );
 #endif
     aSolutionSet.updateSolvable( aSolutionInfoFilter );
-    // Return with code true if all markets are bracketed.
-    if( aSolutionSet.isAllBracketed() ){
-        return code = true;
-    }
     aSolutionSet.resetBrackets();
 
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
@@ -406,15 +401,13 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
                     // If ED is negative, then so are EDL and EDR
                     // So, X, XL, and XR are all greater than the solution price
                     if ( currSol.getED() < 0 ) {
-                        currSol.moveRightBracketToX();
-                        currSol.decreaseX( currBracketInterval, LOWER_BOUND );
+                        currSol.takeBracketStep(false, currBracketInterval, aUseSecantBracket);
                     } // END: if statement testing if ED < 0
                     // If Supply <= Demand. Price needs to increase so demand decreases
                     // If ED is positive, then so are EDL and EDR
                     // So, X, XL, and XR are all less than the solution price
                     else {
-                        currSol.moveLeftBracketToX();
-                        currSol.increaseX( currBracketInterval, LOWER_BOUND );
+                        currSol.takeBracketStep(true, currBracketInterval, aUseSecantBracket);
                     } // END: if statement testing if ED > 0
                 } // END: if statement testing if ED and EDL have the same sign
                 // If market is unbracketed, EDL and EDR have the same sign
@@ -536,8 +529,6 @@ bool SolverLibrary::bracketOne( Marketplace* aMarketplace, World* aWorld, const 
                                 const unsigned int aMaxIterations, SolutionInfoSet& aSolSet, SolutionInfo* aSol,
                                 CalcCounter* aCalcCounter, const ISolutionInfoFilter* aSolutionInfoFilter, const int aPeriod )
 {
-    static const double LOWER_BOUND = util::getSmallNumber();
-
     aSolSet.updateSolvable( aSolutionInfoFilter );
     double bracketInterval = aSol->getBracketInterval( aDefaultBracketInterval );
 
@@ -566,7 +557,7 @@ bool SolverLibrary::bracketOne( Marketplace* aMarketplace, World* aWorld, const 
             if ( aSol->getED() < 0 ) {
                 aSol->moveRightBracketToX();
                 if( !aSol->isCurrentlyBracketed() ){
-                    aSol->decreaseX( bracketInterval, LOWER_BOUND );
+                    aSol->decreaseX( bracketInterval );
                 }
                 else {
                     aSol->setBracketed();
@@ -575,7 +566,7 @@ bool SolverLibrary::bracketOne( Marketplace* aMarketplace, World* aWorld, const 
             else { // If Supply <= Demand. Price needs to increase.
                 aSol->moveLeftBracketToX();
                 if( !aSol->isCurrentlyBracketed() ){
-                    aSol->increaseX( bracketInterval, LOWER_BOUND );
+                    aSol->increaseX( bracketInterval );
                 }
                 else {
                     aSol->setBracketed();
@@ -586,7 +577,7 @@ bool SolverLibrary::bracketOne( Marketplace* aMarketplace, World* aWorld, const 
             if ( aSol->getED() < 0 ) { // If Supply > Demand at X.
                 aSol->moveRightBracketToX();
                 if( !aSol->isCurrentlyBracketed() ){
-                    aSol->decreaseX( bracketInterval, LOWER_BOUND );
+                    aSol->decreaseX( bracketInterval );
                 }
                 else {
                     aSol->setBracketed();
@@ -595,7 +586,7 @@ bool SolverLibrary::bracketOne( Marketplace* aMarketplace, World* aWorld, const 
             else { // If Supply <= Demand at X. Prices need to increase.
                 aSol->moveLeftBracketToX();
                 if( !aSol->isCurrentlyBracketed() ){
-                    aSol->increaseX( bracketInterval, LOWER_BOUND );
+                    aSol->increaseX( bracketInterval );
                 }
                 else {
                     aSol->setBracketed();

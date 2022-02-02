@@ -95,7 +95,7 @@ public:
 
    static bool bracket( Marketplace* aMarketplace, World* aWorld, const double aDefaultBracketInterval,
                         const unsigned int aMaxIterations, SolutionInfoSet& aSolSet, CalcCounter* aCalcCounter,
-                        const ISolutionInfoFilter* aSolutionInfoFilter, const int aPeriod );
+                        const ISolutionInfoFilter* aSolutionInfoFilter, const bool aUseSecantBracket, const int aPeriod );
 
 private:
     //! A function object to compare to values and see if they are approximately equal. 

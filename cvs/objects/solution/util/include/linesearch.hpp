@@ -86,7 +86,7 @@ int linesearch(VecFVec &f, const UBVECTOR &x0,
   int n = x0.size();
   double g0dx=g0.dot(dx); // initial rate of decrease, df/dlambda
   double lambda = 1.0;           // start with full step
-  double maxval = 0.0;
+  //double maxval = 0.0;
 
   if(g0dx >= 0) {
     if(solverlog)
@@ -98,11 +98,11 @@ int linesearch(VecFVec &f, const UBVECTOR &x0,
   }
   
   // set lmin (minimum admissable value for lambda)
-  for(int i=0; i<n; ++i) {
+  /*for(int i=0; i<n; ++i) {
     double tmp = fabs(dx[i] / (x0[i] + TOLX)); // fractional change in ith component of x over a unit step
     maxval = std::max(tmp,maxval);          // pick the largest
-  }
-  double lmin = TOLX / maxval;     // when lambda gets this small, even
+  }*/
+  double lmin = TOLX /* maxval*/;     // when lambda gets this small, even
                                 // the fastest changing x is changing
                                 // by less than TOLX
 
