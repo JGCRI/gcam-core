@@ -497,8 +497,8 @@ obs_UnadjSat<-100
 obs_UnadjSat_USA<-150
 
 land.density.param.usa<-0
-b.param.usa<-3.49026
-income.param.usa<-0.4875
+b.param.usa<-1.92066
+income.param.usa<-0.26128
 
 # Socioeconomics constants ======================================================================
 
