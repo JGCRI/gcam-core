@@ -79,6 +79,12 @@ double GompertzDemandFunction::calcDemand(InputSet& input, double income, const 
             * exp((-incomeParam) * log(subregionalIncome)))
             + biasAdjustParam;
 
+    // May need to make an adjustment 
+    if (pcfloorspace < bldInput->mBasepcFlsp) {
+        pcfloorspace = bldInput->mBasepcFlsp;
+    }
+
+
     // unit conversions to convert from from billion m^2 to m^2
     const double CONV_M2_BM2 = 1e-9;
     // unit conversions to convert from thous ppl to ppl
