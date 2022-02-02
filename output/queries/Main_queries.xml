@@ -2016,6 +2016,12 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                     <comments/>
                 </supplyDemandQuery>
 
+            <supplyDemandQuery title="building satiation adder">
+                <axis1 name="input">input[@name]</axis1>
+                <axis2 name="Year">bias-adjust-param[@year]</axis2>
+                    <xPath buildList="true" dataName="building satiation adder" group="false" sumAll="false">gcam-consumer//building-node-input/bias-adjust-param/node()</xPath>
+                <comments/>
+            </supplyDemandQuery>
 
                 <supplyDemandQuery title="total service cost per unit floorspace">
                     <axis1 name="building">building-node-input[@name]</axis1>
@@ -4203,7 +4209,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
             <xPath buildList="true" dataName="total-population" group="false" sumAll="false">demographics/populationMiniCAM/total-population/node()</xPath>
             <comments/>
         </demographicsQuery>
-        <gdpQueryBuilder title="GDP MER by region">
+       <gdpQueryBuilder title="GDP MER by region">
             <axis1 name="region">region</axis1>
             <axis2 name="Year">gdp-mer</axis2>
             <xPath buildList="true" dataName="gdp-mer" group="false" sumAll="false">GDP/gdp-mer/text()</xPath>
@@ -4221,6 +4227,21 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
             <xPath buildList="true" dataName="gdp-per-capita-ppp" group="false" sumAll="false">GDP/gdp-per-capita-ppp/text()</xPath>
             <comments/>
         </gdpQueryBuilder>
+
+        <demographicsQuery title="subregional population">
+            <axis1 name="region">region</axis1>
+            <axis2 name="Year">subregional-population</axis2>
+            <xPath buildList="true" dataName="subregional-population" group="false" sumAll="false">gcam-consumer/subregional-population/node()</xPath>
+            <comments/>
+        </demographicsQuery>
+
+        <demographicsQuery title="subregional income">
+            <axis1 name="region">region</axis1>
+            <axis2 name="Year">subregional-percapita-income</axis2>
+            <xPath buildList="true" dataName="subregional-percapita-income" group="false" sumAll="false">gcam-consumer/subregional-percapita-income/node()</xPath>
+            <comments/>
+        </demographicsQuery>
+
     </queryGroup>
     <queryGroup name="policy">
         <marketQuery title="CO2 prices">
