@@ -33,6 +33,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
              FILE = "energy/Odyssee_ResFloorspacePerHouse",
              "L100.Pop_thous_ctry_Yh",
              "L102.gdp_mil90usd_GCAM3_R_Y",
+             "L102.pcgdp_thous90USD_Scen_R_Y",
              "L221.LN0_Land",
              "L221.LN1_UnmgdAllocation"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -58,6 +59,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     Odyssee_ResFloorspacePerHouse <- get_data(all_data, "energy/Odyssee_ResFloorspacePerHouse")
     L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
     L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y")
+    L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
     L221.LN0_Land<-get_data(all_data, "L221.LN0_Land", strip_attributes = TRUE)
     L221.LN1_UnmgdAllocation<-get_data(all_data, "L221.LN1_UnmgdAllocation", strip_attributes = TRUE)
     # ===================================================
@@ -346,14 +348,12 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
                           year<=avg_fin_obs_year)) %>%
       rename(flps_bm2 = value) %>%
       #add GDP
-      left_join_error_no_match(L102.gdp_mil90usd_GCAM3_R_Y, by = c("GCAM_region_ID", "year")) %>%
-      mutate(gdp=value * 1E6) %>%
-      select(-value) %>%
-      #Add population to estimate pc_GDP
+      left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(scenario == socioeconomics.BASE_GDP_SCENARIO), by = c("GCAM_region_ID", "year")) %>%
+      rename(pc_gdp_thous = value) %>%
+      #Add population to estimate pc_flsp
       left_join_error_no_match(L100.Pop_thous_R_Y, by = c("GCAM_region_ID", "year")) %>%
       rename(pop = value) %>%
-      mutate(pc_gdp_thous= gdp / (pop * 1E3),
-             pc_flsp = (flps_bm2* 1E9) / pop) %>%
+      mutate(pc_flsp = (flps_bm2* 1E9) / pop) %>%
       left_join_error_no_match(L144.hab_land_flsp_fin %>%
                                  group_by(region,Units) %>%
                                  complete(nesting(year=min(L144.flsp_bm2_R_res_Yh_pre$year):max(L144.flsp_bm2_R_res_Yh_pre$year))) %>%
@@ -400,12 +400,11 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     L144.flsp_bm2_R_res_Yh_finBaseYear_est<-L144.flsp_bm2_R_res_Yh_pre %>%
       rename(flsp_bm2 = value) %>%
       filter(year == MODEL_FINAL_BASE_YEAR) %>%
-      left_join_error_no_match(L102.gdp_mil90usd_GCAM3_R_Y %>% filter(year == MODEL_FINAL_BASE_YEAR)
+      left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(year == MODEL_FINAL_BASE_YEAR, scenario== socioeconomics.BASE_GDP_SCENARIO)
                                , by = c("GCAM_region_ID","year")) %>%
-      rename(gdp_mil = value) %>%
+      rename(pc_gdp_thous = value) %>%
       left_join_error_no_match(L100.Pop_thous_R_Y, by = c("GCAM_region_ID", "year")) %>%
       rename(pop = value) %>%
-      mutate(pc_gdp_thous = gdp_mil*1E3/pop) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(L144.flsp_param, by = "region") %>%
       left_join_error_no_match(L144.hab_land_flsp_fin %>% filter(year==MODEL_FINAL_BASE_YEAR),by=c("region","year")) %>%
@@ -559,7 +558,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID","common/GCAM_region_names", "energy/A44.pcflsp_default",
                      "energy/A44.HouseholdSize", "energy/CEDB_ResFloorspace_chn", "energy/Other_pcflsp_m2_ctry_Yh",
                      "energy/IEA_PCResFloorspace", "energy/Odyssee_ResFloorspacePerHouse",
-                     "L100.Pop_thous_ctry_Yh", "energy/RECS_ResFloorspace_usa") ->
+                     "L100.Pop_thous_ctry_Yh", "energy/RECS_ResFloorspace_usa","L102.pcgdp_thous90USD_Scen_R_Y") ->
       L144.flsp_bm2_R_res_Yh
 
     L144.flsp_bm2_R_comm_Yh %>%
@@ -592,7 +591,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID","common/GCAM_region_names", "energy/A44.pcflsp_default",
                      "energy/A44.HouseholdSize", "energy/CEDB_ResFloorspace_chn", "energy/Other_pcflsp_m2_ctry_Yh",
                      "energy/IEA_PCResFloorspace", "energy/Odyssee_ResFloorspacePerHouse",
-                     "L100.Pop_thous_ctry_Yh", "energy/RECS_ResFloorspace_usa") ->
+                     "L100.Pop_thous_ctry_Yh", "energy/RECS_ResFloorspace_usa","L102.pcgdp_thous90USD_Scen_R_Y") ->
       L144.flsp_param
 
     return_data(L144.flsp_bm2_R_res_Yh, L144.flsp_bm2_R_comm_Yh, L144.flspPrice_90USDm2_R_bld_Yh,L144.hab_land_flsp_fin, L144.flsp_param)
