@@ -67,6 +67,7 @@ mMaxIterations( 30 ),
 mDefaultBracketInterval( 0.4 ),
 mBracketTolerance( 1.0e-8 ),
 mMaxBracketIterations( 40 ),
+mUseSecantBrackets( false ),
 mSolutionInfoFilter(0)
 {
 }
@@ -76,6 +77,7 @@ mMaxIterations( 30 ),
 mDefaultBracketInterval( 0.4 ),
 mBracketTolerance( 1.0e-8 ),
 mMaxBracketIterations( 40 ),
+mUseSecantBrackets( false ),
 mSolutionInfoFilter(0)
 {
 }
@@ -158,7 +160,7 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
     solverLog << "Solution set before Bracket: " << endl << aSolutionSet << endl;
     // Currently attempts to bracket but does not necessarily bracket all markets.
     SolverLibrary::bracket( marketplace, world, mDefaultBracketInterval, mMaxBracketIterations,
-                            aSolutionSet, calcCounter, mSolutionInfoFilter, aPeriod );
+                            aSolutionSet, calcCounter, mSolutionInfoFilter, mUseSecantBrackets, aPeriod );
     
     startMethod();
     ReturnCode code = ORIGINAL_STATE; // code that reports success 1 or failure 0

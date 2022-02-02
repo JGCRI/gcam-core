@@ -127,6 +127,21 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       mutate(lower_cost = minNEcost_bilUSD / available,
              upper_cost = maxNEcost_bilUSD / available,
              elec_coef = elec_EJ / available) %>%
+      # We need to guard against lower and upper costs that are "the same" as that
+      # causes a discontinuity in GCAM.  This can happen because the bins are based
+      # on total however lower/upper costs are based on just the non-energy costs
+      # and in GCAM we can only use the average electricity coefficient.  As a work
+      # around in these cases we arbitrarily increase the upper cost to have the same
+      # difference as the original total cost.
+      left_join_error_no_match(grades %>%
+                                 separate(cost_bin, c("lower", "upper"), ',') %>%
+                                 mutate(lower = as.numeric(gsub('^.', '', lower)),
+                                        upper = as.numeric(gsub('.$', '', upper)),
+                                        range_mult=(upper/lower)) %>%
+                                 select(grade, range_mult), by="grade") %>%
+      mutate(upper_cost = if_else(round(lower_cost, water.DIGITS_GROUND_WATER_RSC) == round(upper_cost, water.DIGITS_GROUND_WATER_RSC),
+                                  lower_cost * range_mult,
+                                  upper_cost)) %>%
       select(GCAM_region_ID, GCAM_basin_ID, grade, lower_cost, upper_cost, available, elec_coef)
 
 

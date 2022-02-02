@@ -48,7 +48,7 @@ extern Scenario* scenario;
  * out from the fdjac subroutine so that we can easily test a single
  * column for nonsingularity without duplicating any code.
  */
-inline void jacol(VecFVec &F, const UBVECTOR &x,
+void jacol(VecFVec &F, const UBVECTOR &x,
                   const UBVECTOR &fx, int j,
                   UBMATRIX &J,
                   bool usepartial, std::ostream *diagnostic) {
@@ -87,12 +87,15 @@ inline void jacol(VecFVec &F, const UBVECTOR &x,
  * \param[in] x: The point at which to calculate the Jacobian
  * \param[in] fx: F(x)
  * \param[out] J: The Jacobian of F
+ * \param[in] cols: The columns of J to calculate partials for.
  * \param[in] usepartial: (optional) use partial model evaluation for partial derivatives
  * \param[in] diagnostic: (optional) ostream pointer to which to send additional diagnostics
  *
  */
 void fdjac(VecFVec &F, const UBVECTOR &x,
-           const UBVECTOR &fx, UBMATRIX &J, bool usepartial,
+           const UBVECTOR &fx, UBMATRIX &J,
+           const std::list<int>& cols,
+           bool usepartial,
            std::ostream *diagnostic)
 {
   if(diagnostic) {
@@ -105,7 +108,7 @@ void fdjac(VecFVec &F, const UBVECTOR &x,
     if(usepartial) { scenario->getManageStateVariables()->setPartialDeriv(true); }
   
 #if !GCAM_PARALLEL_ENABLED
-  for(size_t j=0; j<x.size(); ++j) {
+  for(int j : cols) {
     jacol(F, x, fx, j, J, usepartial, diagnostic);
   }
 #else
@@ -113,8 +116,8 @@ void fdjac(VecFVec &F, const UBVECTOR &x,
     tbb::task_group tg;
     threadPool.execute([&](){
         tg.run([&](){
-            tbb::parallel_for_each( x, [&]( const double& j ) {
-                jacol(F, x, fx, (&j - &x[0]), J, usepartial, 0/*diagnostic*/);
+            tbb::parallel_for_each( cols, [&]( int j ) {
+                jacol(F, x, fx, j, J, usepartial, 0/*diagnostic*/);
             });
         });
     });
@@ -130,6 +133,8 @@ void fdjac(VecFVec &F, const UBVECTOR &x,
  * \param[in] F: The function to have its Jacobian calculated
  * \param[in] x: The point at which to calculate the Jacobian
  * \param[out] J: The Jacobian of F
+ * \param[in] cols: The columns of J to calculate partials for.
+ * \param[in] usepartial: (optional) use partial model evaluation for partial derivatives
  * \remark This function evaluates F(x) and then calls fdjac(F,x,Fx,J).  If you have already
  *         evaluated F(x), you should call the latter version directly.
  * \warning The Jacobian calculated here is defined as J(i,j) = \partial F_i / \partial x_j.
@@ -138,11 +143,14 @@ void fdjac(VecFVec &F, const UBVECTOR &x,
  *          that the right convention is being used.
  */
 void fdjac(VecFVec &F, const UBVECTOR &x,
-           UBMATRIX &J, bool usepartial)
+           UBMATRIX &J,
+           const std::list<int>& cols,
+           bool usepartial
+           )
 {
     UBVECTOR fx(F.nrtn());
     
     F(x,fx);                      // fx = F(x)
-    fdjac(F,x,fx,J,usepartial);
+    fdjac(F,x,fx,J,cols,usepartial);
 }
 

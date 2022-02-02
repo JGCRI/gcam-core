@@ -115,8 +115,8 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
 
     // Add on any scenario components that were passed in.
     for( list<string>::const_iterator curr = aScenComponents.begin();
-		curr != aScenComponents.end(); ++curr )
-	{
+        curr != aScenComponents.end(); ++curr )
+    {
         scenComponents.push_back( *curr );
     }
     
@@ -124,8 +124,8 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
     typedef list<string>::const_iterator ScenCompIter;
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     for( ScenCompIter currComp = scenComponents.begin();
-		 currComp != scenComponents.end(); ++currComp )
-	{
+         currComp != scenComponents.end(); ++currComp )
+    {
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Parsing " << *currComp << " scenario component." << endl;
         success = XMLParseHelper::parseXML( *currComp, mScenario.get() );
@@ -184,21 +184,21 @@ bool SingleScenarioRunner::runScenarios( const int aSinglePeriod,
 
     aTimer.start();             // ensure timer is running.
     
-	bool success = false;
-	if( mScenario.get() ){
-		// Perform the initial run of the scenario.
+    bool success = false;
+    if( mScenario.get() ){
+        // Perform the initial run of the scenario.
         success = mScenario->run( runPeriod, aPrintDebugging,
                                   mScenario->getName() );
 
         // Compute model run time.
         mainLog.setLevel( ILogger::DEBUG );
         aTimer.print( mainLog, "Data Readin & Initial Model Run Time:" );
-	}
-	else {
+    }
+    else {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::SEVERE );
         mainLog << "No scenario container was parsed from the input files. Aborting scenario run!" << endl;
-	}
+    }
 
     // Return whether the scenario ran correctly. 
     return success;
@@ -206,36 +206,51 @@ bool SingleScenarioRunner::runScenarios( const int aSinglePeriod,
 
 void SingleScenarioRunner::printOutput( Timer& aTimer ) const {
     ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Printing output" << endl;
-
-    Timer &writeTimer = TimerRegistry::getInstance().getTimer(TimerRegistry::WRITE_DATA);
-    writeTimer.start();
-
-    if( Configuration::getInstance()->shouldWriteFile( "xmldb-location" ) ) {
-        mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Starting output to XML Database." << endl;
-        // Print the XML file for the XML database.
-        assert( !mXMLDBOutputter );
-        mXMLDBOutputter = new XMLDBOutputter();
-
-        // Update the output container with information from the model.
-        // -1 flags to update the output container for all periods at once.
-        mScenario->accept( mXMLDBOutputter, -1 );
-
-
-        // Print the output.
-        mXMLDBOutputter->finish();
+    // If QuitFirstFailure bool is set to 1 and a period fails to solve (success = FALSE), 
+    // the model will exit after this period and not print the database.
+    // If the model is running in target finder mode, this only applies when the final period fails.
+    const Configuration* conf = Configuration::getInstance();
+    bool quitFirstFailure = conf->getBool("QuitFirstFailure", false, false);
+    bool runTargetFinder = conf->getBool("find-path", false, false);
+    bool success = mScenario->getUnsolvedPeriods().empty();
+    if (!success & quitFirstFailure & !runTargetFinder) {
+        // If this is a single scenario runner (not target finder) which fails a model period while 
+        // QuitFirstFailure bool is set to true (1), do not print output
+        mainLog.setLevel(ILogger::ERROR);
+        mainLog << "Period failed to solve. Skipping writing database." << endl;
     }
-    writeTimer.stop();
-    
-    // Print the timestamps.
-    aTimer.stop();
-    mainLog.setLevel( ILogger::DEBUG );
-    aTimer.print( mainLog, "Data Readin, Model Run & Write Time:" );
-    writeTimer.print(mainLog, "Write time: ");
-    mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Model run completed." << endl;
+    else {
+        mainLog.setLevel(ILogger::NOTICE);
+        mainLog << "Printing output" << endl;
+
+        Timer &writeTimer = TimerRegistry::getInstance().getTimer(TimerRegistry::WRITE_DATA);
+        writeTimer.start();
+
+        if (Configuration::getInstance()->shouldWriteFile("xmldb-location")) {
+            mainLog.setLevel(ILogger::NOTICE);
+            mainLog << "Starting output to XML Database." << endl;
+            // Print the XML file for the XML database.
+            assert(!mXMLDBOutputter);
+            mXMLDBOutputter = new XMLDBOutputter();
+
+            // Update the output container with information from the model.
+            // -1 flags to update the output container for all periods at once.
+            mScenario->accept(mXMLDBOutputter, -1);
+
+
+            // Print the output.
+            mXMLDBOutputter->finish();
+        }
+        writeTimer.stop();
+
+        // Print the timestamps.
+        aTimer.stop();
+        mainLog.setLevel(ILogger::DEBUG);
+        aTimer.print(mainLog, "Data Readin, Model Run & Write Time:");
+        writeTimer.print(mainLog, "Write time: ");
+        mainLog.setLevel(ILogger::NOTICE);
+        mainLog << "Model run completed." << endl;
+    }
 }
 
 void SingleScenarioRunner::cleanup() {
@@ -255,11 +270,11 @@ void SingleScenarioRunner::cleanup() {
 }
 
 Scenario* SingleScenarioRunner::getInternalScenario(){
-	return mScenario.get();
+    return mScenario.get();
 }
 
 const Scenario* SingleScenarioRunner::getInternalScenario() const {
-	return mScenario.get();
+    return mScenario.get();
 }
 
 /*!
@@ -275,6 +290,6 @@ XMLDBOutputter* SingleScenarioRunner::getXMLDBOutputter() const {
  * \return The XML name of the class.
  */
 const string& SingleScenarioRunner::getXMLNameStatic(){
-	static const string XML_NAME = "single-scenario-runner";
-	return XML_NAME;
+    static const string XML_NAME = "single-scenario-runner";
+    return XML_NAME;
 }

@@ -198,9 +198,12 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
         return SUCCESS;
     }
     
+    std::list<int> allCols;
+    
     solverLog << "Initial market state:\nmkt    \tprice   \tsupply  \tdemand\n";
     std::vector<SolutionInfo> solvables = solnset.getSolvableSet();
     for(size_t i=0; i<solvables.size(); ++i) {
+        allCols.push_back(i);
         solverLog << std::setw( 8 ) << i << "\t"
                   << std::setw( 8 ) << solvables[i].getPrice() << "\t"
                   << std::setw( 8 ) << solvables[i].getSupply() << "\t"
@@ -249,7 +252,7 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     // Precondition the x values to avoid singular columns in the Jacobian
     solverLog.setLevel(ILogger::DEBUG);
     UBMATRIX J(F.narg(), F.nrtn());
-    fdjac(F, x, fx, J, true);
+    fdjac(F, x, fx, J, allCols, true);
 
     solverLog << ">>>> Main loop jacobian called.\n";
     int pcfail = jacobian_precondition(x, fx, J, F, &solverLog, mLogPricep);
@@ -266,7 +269,7 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     cSolInfo = &solnset;        // make available for log outputs
 
     // call the solver
-    int bstatus = bsolve(F, x, fx, J, neval);
+    int bstatus = bsolve(F, x, fx, J, neval, allCols);
     mPerIter++;                 // increment the iteration count.  This should produce a visible gap in the trace plots.
 
     solverTimer.stop(); 
@@ -323,7 +326,7 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
 }
 
 int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
-                       UBMATRIX & B, int &neval)
+                       UBMATRIX & B, int &neval, const std::list<int>& allCols)
 {
   int nrow = B.rows(), ncol = B.cols();
   int ageB = 0;   // number of iterations since the last reset on B
@@ -546,7 +549,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
               
 
         // we just recalculated fx so we can be confident we can re-use it
-        fdjac(F,x,fx, B);
+        fdjac(F,x,fx, B, allCols, true);
         neval += x.size();
         ageB = 0;  // reset the age on B
 
@@ -558,6 +561,10 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
         static_cast<LogEDFun&>(F).setSlope(jdiag);
           }
 
+          // keep track of the last TRACK_NUM_PAST_F_VALUES f(x) values only
+          if(past_f_values.size() == TRACK_NUM_PAST_F_VALUES) {
+              past_f_values.pop();
+          }
           past_f_values.push(f0);
         // start the next iteration *without* updating x
         continue;
@@ -617,8 +624,12 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     // test for convergence
     double maxval = fabs(fxnew[0]);
     double imaxval = 0;
+      std::list<int> unsolved;
     for(size_t i=1; i<fxnew.size(); ++i) {
       double val = fabs(fxnew[i]);
+        if(val > mFTOL) {
+            unsolved.push_back(i);
+        }
       if(val > maxval) {
         maxval = val;
         imaxval = i;
@@ -627,7 +638,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
 
     solverLog << "Convergence test maxval: " << maxval << "  imaxval= " << imaxval << "\n";
     solverLog << "\tx[i]= " << xnew[imaxval] << "  dx[i]= " << dx[imaxval] << "  xstep[i]= "
-              << xstep[imaxval] << "\n";
+              << xstep[imaxval] << " num unsolved: " << unsolved.size() << "\n";
     if(maxval <= mFTOL) {
       solverLog << "Solution successful -- max.\n";
       x = xnew;
@@ -644,6 +655,16 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       fxstep /= dx2;
         B += fxstep * xstep.transpose();
       ageB++;                // increment the age of B
+        // when only a _few_ markets are left which remain unsolved we will switch
+        // to use fresh partial derivatives for *just* the unsolved markets as we may
+        // be in a situation that those markets are bouncing between vastly different
+        // derivatives
+        // set the threshold at roughly 3% of the markets are left unsolved
+        // which is just some arbitrary threshold
+        const int UNSOLVED_FULL_PARTIAL_THRESHOLD = 30;
+        if((unsolved.size()*UNSOLVED_FULL_PARTIAL_THRESHOLD) < ncol) {
+            fdjac(F, xnew, fxnew, B, unsolved, true);
+        }
     }
     else {
       // Progress using the Broyden formula is anemic.  This usually
@@ -656,7 +677,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
           if((iter+1) < mMaxIter) {
               // no point in re-calculating a jacobian if we won't get a chance
               // to use it
-        fdjac(F,xnew,B);
+        fdjac(F,xnew,B,allCols);
         neval += x.size();
         ageB = 0;
 
