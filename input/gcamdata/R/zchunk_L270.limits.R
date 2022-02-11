@@ -12,7 +12,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L270.CreditOutput}, \code{L270.CreditInput_elec}, \code{L270.CreditInput_feedstocks}, \code{L270.CreditMkt}, \code{L270.CTaxInput}, \code{L270.LandRootNegEmissMkt}, \code{L270.NegEmissFinalDemand}, \code{L270.NegEmissBudgetMaxPrice}, \code{paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5))) )}. The corresponding file in the
+#' the generated outputs: \code{L270.CreditOutput}, \code{L270.CreditInput_elec}, \code{L270.CreditInput_feedstocks}, \code{L270.CreditMkt}, \code{L270.CTaxInput}, \code{L270.LandRootNegEmissMkt}, \code{L270.NegEmissBudgetMaxPrice}, \code{paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5))) )}. The corresponding file in the
 #' original data system was \code{L270.limits.R} (energy level2).
 #' @details Generate GCAM policy constraints which enforce limits to liquid feedstocks
 #' and the amount of subsidies given for net negative emissions.
@@ -39,7 +39,6 @@ module_energy_L270.limits <- function(command, ...) {
              "L270.CreditMkt",
              "L270.CTaxInput",
              "L270.LandRootNegEmissMkt",
-             "L270.NegEmissFinalDemand",
              "L270.NegEmissBudgetMaxPrice",
              # TODO: might just be easier to keep the scenarios in a single
              # table here and split when making XMLs but to match the old
@@ -172,12 +171,6 @@ module_energy_L270.limits <- function(command, ...) {
       filter(!region %in% aglu.NO_AGLU_REGIONS) ->
       L270.LandRootNegEmissMkt
 
-    # L270.NegEmissFinalDemand: Create negative emissions final demand
-    tibble(region = GCAM_region_names$region,
-           negative.emissions.final.demand = energy.NEG_EMISS_TARGET_GAS,
-           policy.name=energy.NEG_EMISS_POLICY_NAME ) ->
-      L270.NegEmissFinalDemand
-
     # L270.NegEmissBudget: Create the budget for paying for net negative emissions
     GDP_scenario %>%
       # no dollar year or unit conversions since emissions already match
@@ -209,9 +202,6 @@ module_energy_L270.limits <- function(command, ...) {
         left_join_error_no_match(select(L270.NegEmissBudget, -constraint), ., by = c("scenario", "year")) %>%
         mutate(market = "global") ->
         L270.NegEmissBudget
-
-      # the negative emissions final demand must only be included in just one region (could be any)
-      L270.NegEmissFinalDemand %<>% dplyr::slice(1)
     }
 
     # create the biomass environmental cost constraint tibbles which will tack on an additional
@@ -326,17 +316,6 @@ module_energy_L270.limits <- function(command, ...) {
       add_precursors("common/GCAM_region_names") ->
       L270.LandRootNegEmissMkt
 
-    L270.NegEmissFinalDemand %>%
-      add_title("Creates a negative emissions final demand") %>%
-      add_units("NA") %>%
-      add_comments("Mostly just a tag to create the final demand object") %>%
-      add_comments("that will check the net subsidy being paid") %>%
-      add_comments("Note if we are using a global market this tag should only") %>%
-      add_comments("be read into a single region (doesn't matter which)") %>%
-      add_legacy_name("L270.NegEmissFinalDemand") %>%
-      add_precursors("common/GCAM_region_names") ->
-      L270.NegEmissFinalDemand
-
     L270.NegEmissBudgetMaxPrice %>%
       add_title("A hint for the solver for what the max price of this market is") %>%
       add_units("%") %>%
@@ -396,7 +375,7 @@ module_energy_L270.limits <- function(command, ...) {
                      "L2012.AgYield_bio_ref") ->
       L270.AgCoef_bioenv
 
-    ret_data <- c("L270.CreditOutput", "L270.CreditInput_elec", "L270.CreditInput_feedstocks", "L270.CreditMkt", "L270.CTaxInput", "L270.LandRootNegEmissMkt", "L270.NegEmissFinalDemand", "L270.NegEmissBudgetMaxPrice",
+    ret_data <- c("L270.CreditOutput", "L270.CreditInput_elec", "L270.CreditInput_feedstocks", "L270.CreditMkt", "L270.CTaxInput", "L270.LandRootNegEmissMkt", "L270.NegEmissBudgetMaxPrice",
                   "L270.RenewRsrc",
                   "L270.RenewRsrcPrice",
                   "L270.GrdRenewRsrcCurves",
