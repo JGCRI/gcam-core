@@ -626,7 +626,6 @@
     <ClCompile Include="..\..\sectors\source\capacity_limit_backup_calculator.cpp" />
     <ClCompile Include="..\..\sectors\source\CSP_backup_calculator.cpp" />
     <ClCompile Include="..\..\sectors\source\energy_final_demand.cpp" />
-    <ClCompile Include="..\..\sectors\source\negative_emissions_final_demand.cpp" />
     <ClCompile Include="..\..\sectors\source\nesting_subsector.cpp" />
     <ClCompile Include="..\..\sectors\source\pass_through_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\sector.cpp" />
@@ -903,7 +902,6 @@
     <ClInclude Include="..\..\sectors\include\CSP_backup_calculator.h" />
     <ClInclude Include="..\..\sectors\include\energy_final_demand.h" />
     <ClInclude Include="..\..\sectors\include\ibackup_calculator.h" />
-    <ClInclude Include="..\..\sectors\include\negative_emissions_final_demand.h" />
     <ClInclude Include="..\..\sectors\include\nesting_subsector.h" />
     <ClInclude Include="..\..\sectors\include\pass_through_sector.h" />
     <ClInclude Include="..\..\sectors\include\sector.h" />
