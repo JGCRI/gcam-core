@@ -17,7 +17,7 @@ module_energy_batch_bio_environ_xml <- function(command, ...) {
              "L270.GrdRenewRsrcCurves",
              "L270.GrdRenewRsrcMax",
              "L270.ResTechShrwt",
-             "L270.GlobalTechCoef_bioenv"))
+             "L270.AgCoef_bioenv"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "bio_environ.xml"))
   } else if(command == driver.MAKE) {
@@ -30,7 +30,7 @@ module_energy_batch_bio_environ_xml <- function(command, ...) {
     L270.GrdRenewRsrcCurves <- get_data(all_data, "L270.GrdRenewRsrcCurves")
     L270.GrdRenewRsrcMax <- get_data(all_data, "L270.GrdRenewRsrcMax")
     L270.ResTechShrwt <- get_data(all_data, "L270.ResTechShrwt")
-    L270.GlobalTechCoef_bioenv <- get_data(all_data, "L270.GlobalTechCoef_bioenv")
+    L270.AgCoef_bioenv <- get_data(all_data, "L270.AgCoef_bioenv")
 
     # ===================================================
 
@@ -43,13 +43,13 @@ module_energy_batch_bio_environ_xml <- function(command, ...) {
       add_node_equiv_xml("resource") %>%
       add_node_equiv_xml("subresource") %>%
       add_xml_data(L270.ResTechShrwt, "ResTechShrwt") %>%
-      add_xml_data(L270.GlobalTechCoef_bioenv, "GlobalTechCoef") %>%
+      add_xml_data(L270.AgCoef_bioenv, "AgCoef") %>%
       add_precursors("L270.RenewRsrc",
                      "L270.RenewRsrcPrice",
                      "L270.GrdRenewRsrcCurves",
                      "L270.GrdRenewRsrcMax",
                      "L270.ResTechShrwt",
-                     "L270.GlobalTechCoef_bioenv") ->
+                     "L270.AgCoef_bioenv") ->
       bio_environ.xml
 
     return_data(bio_environ.xml)

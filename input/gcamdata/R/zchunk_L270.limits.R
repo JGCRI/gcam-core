@@ -30,7 +30,8 @@ module_energy_L270.limits <- function(command, ...) {
              "L102.gdp_mil90usd_GCAM3_R_Y",
              "L102.gdp_mil90usd_Scen_R_Y",
              "L221.GlobalTechCoef_en",
-             "L202.CarbonCoef"))
+             "L202.CarbonCoef",
+             "L2012.AgYield_bio_ref"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L270.CreditOutput",
              "L270.CreditInput_elec",
@@ -49,7 +50,7 @@ module_energy_L270.limits <- function(command, ...) {
              "L270.GrdRenewRsrcCurves",
              "L270.GrdRenewRsrcMax",
              "L270.ResTechShrwt",
-             "L270.GlobalTechCoef_bioenv"))
+             "L270.AgCoef_bioenv"))
   } else if(command == driver.MAKE) {
 
     value <- subsector <- supplysector <- year <- GCAM_region_ID <- sector.name <-
@@ -69,6 +70,7 @@ module_energy_L270.limits <- function(command, ...) {
     L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
     L221.GlobalTechCoef_en <- get_data(all_data, "L221.GlobalTechCoef_en", strip_attributes = TRUE)
     L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef")
+    L2012.AgYield_bio_ref <- get_data(all_data, "L2012.AgYield_bio_ref", strip_attributes = TRUE)
 
     # Limit bioliquids for feedstocks and electricity
     # Note: we do this by requiring a certain fraction of inputs to those technologies to come from oil
@@ -257,12 +259,14 @@ module_energy_L270.limits <- function(command, ...) {
              subresource = sub.renewable.resource) ->
       L270.ResTechShrwt
 
-    L270.CTaxInput %>%
-      filter(sector.name == "regional biomass") %>%
+    L2012.AgYield_bio_ref %>%
+      select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology) %>%
+      unique() %>%
       mutate(minicam.energy.input = unique(L270.rsrc_info$resource),
              coefficient = 1.0) %>%
-      select(LEVEL2_DATA_NAMES[['GlobalTechCoef']]) ->
-      L270.GlobalTechCoef_bioenv
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      select(LEVEL2_DATA_NAMES[['AgCoef']]) ->
+      L270.AgCoef_bioenv
 
 
     # Produce outputs
@@ -384,13 +388,13 @@ module_energy_L270.limits <- function(command, ...) {
       same_precursors_as(L270.GrdRenewRsrcMax) ->
       L270.ResTechShrwt
 
-    L270.GlobalTechCoef_bioenv %>%
+    L270.AgCoef_bioenv %>%
       add_title("Inputs to add the cost for the biomass environmental cost to biomass consumption") %>%
       add_units("NA") %>%
       add_comments("coefficients are just set to 1 as the resource maps consumption to an addtional cost") %>%
       add_precursors("energy/A27.rsrc_info",
-                     "L221.GlobalTechCoef_en") ->
-      L270.GlobalTechCoef_bioenv
+                     "L2012.AgYield_bio_ref") ->
+      L270.AgCoef_bioenv
 
     ret_data <- c("L270.CreditOutput", "L270.CreditInput_elec", "L270.CreditInput_feedstocks", "L270.CreditMkt", "L270.CTaxInput", "L270.LandRootNegEmissMkt", "L270.NegEmissFinalDemand", "L270.NegEmissBudgetMaxPrice",
                   "L270.RenewRsrc",
@@ -398,7 +402,7 @@ module_energy_L270.limits <- function(command, ...) {
                   "L270.GrdRenewRsrcCurves",
                   "L270.GrdRenewRsrcMax",
                   "L270.ResTechShrwt",
-                  "L270.GlobalTechCoef_bioenv")
+                  "L270.AgCoef_bioenv")
     # We will generate a bunch of tibbles for the negative emissions budgets for each scenario
     # and use assign() to save them to variables with names as L270.NegEmissBudget_[SCENARIO]
     # Note that since the call to assign() is in the for loop we must explicitly set the
