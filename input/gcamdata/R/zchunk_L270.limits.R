@@ -49,7 +49,7 @@ module_energy_L270.limits <- function(command, ...) {
              "L270.GrdRenewRsrcCurves",
              "L270.GrdRenewRsrcMax",
              "L270.ResTechShrwt",
-             "L270.AgCoef_bioenv"))
+             "L270.AgCoef_bioext"))
   } else if(command == driver.MAKE) {
 
     value <- subsector <- supplysector <- year <- GCAM_region_ID <- sector.name <-
@@ -204,7 +204,7 @@ module_energy_L270.limits <- function(command, ...) {
         L270.NegEmissBudget
     }
 
-    # create the biomass environmental cost constraint tibbles which will tack on an additional
+    # create the biomass externality cost constraint tibbles which will tack on an additional
     # penalty for use of biomass given the total level of deployment
 
     # A. Output unit, price unit, market
@@ -256,7 +256,7 @@ module_energy_L270.limits <- function(command, ...) {
              coefficient = 1.0) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       select(LEVEL2_DATA_NAMES[['AgCoef']]) ->
-      L270.AgCoef_bioenv
+      L270.AgCoef_bioext
 
 
     # Produce outputs
@@ -327,53 +327,53 @@ module_energy_L270.limits <- function(command, ...) {
       L270.NegEmissBudgetMaxPrice
 
     L270.RenewRsrc %>%
-      add_title("The biomass environmental cost resource") %>%
+      add_title("The biomass externality cost resource") %>%
       add_units("NA") %>%
-      add_comments("Creates the renewable resource which maps biomass deployment to") %>%
-      add_comments("an additional cost meant to reflect environmental damages.") %>%
+      add_comments("Creates the renewable resource which maps purpose grown biomass") %>%
+      add_comments("deployment to an additional cost meant to reflect various externalities.") %>%
       add_precursors("common/GCAM_region_names",
                      "energy/A27.rsrc_info") ->
       L270.RenewRsrc
 
     L270.RenewRsrcPrice %>%
-      add_title("Prices for the biomass environmental cost resource") %>%
+      add_title("Prices for the biomass externality cost resource") %>%
       add_units("1975$/GJ") %>%
       add_comments("Initial price guesses") %>%
       same_precursors_as(L270.RenewRsrc) ->
       L270.RenewRsrcPrice
 
     L270.GrdRenewRsrcCurves %>%
-      add_title("Graded renewable supply curve for the biomass environmental cost resource") %>%
+      add_title("Graded renewable supply curve for the biomass externality cost resource") %>%
       add_units("available: EJ; extractioncost: 1975$/GJ") %>%
-      add_comments("Creates the renewable resource which maps biomass deployment to") %>%
-      add_comments("an additional cost meant to reflect environmental damages.") %>%
+      add_comments("Creates the renewable resource which maps purpose grown biomass") %>%
+      add_comments("deployment to an additional cost meant to reflect various externalities.") %>%
       add_precursors("energy/A27.rsrc_info",
-                     "A27.GrdRenewRsrcCurves") ->
+                     "energy/A27.GrdRenewRsrcCurves") ->
       L270.GrdRenewRsrcCurves
 
     L270.GrdRenewRsrcMax %>%
-      add_title("Graded renewable max resource for the biomass environmental cost resource") %>%
+      add_title("Graded renewable max resource for the biomass externality cost resource") %>%
       add_units("NA") %>%
       add_comments("Note: the max resource is just set to one and available quantities are set") %>%
       add_comments("in L270.GrdRenewRsrcCurves") %>%
-      add_precursors("A27.GrdRenewRsrcCurves") ->
+      add_precursors("energy/A27.GrdRenewRsrcCurves") ->
       L270.GrdRenewRsrcMax
 
     L270.ResTechShrwt %>%
-      add_title("Technology for the biomass environmental cost resource") %>%
+      add_title("Technology for the biomass externality cost resource") %>%
       add_units("NA") %>%
       add_comments("Share weights won't matter for resource technologies as there") %>%
       add_comments("is no competetion between technologies.") %>%
       same_precursors_as(L270.GrdRenewRsrcMax) ->
       L270.ResTechShrwt
 
-    L270.AgCoef_bioenv %>%
-      add_title("Inputs to add the cost for the biomass environmental cost to biomass consumption") %>%
+    L270.AgCoef_bioext %>%
+      add_title("Inputs to add the cost for the biomass externality cost to purpose grown biomass production") %>%
       add_units("NA") %>%
-      add_comments("coefficients are just set to 1 as the resource maps consumption to an addtional cost") %>%
+      add_comments("coefficients are just set to 1 as the resource maps production to an addtional cost") %>%
       add_precursors("energy/A27.rsrc_info",
                      "L2012.AgYield_bio_ref") ->
-      L270.AgCoef_bioenv
+      L270.AgCoef_bioext
 
     ret_data <- c("L270.CreditOutput", "L270.CreditInput_elec", "L270.CreditInput_feedstocks", "L270.CreditMkt", "L270.CTaxInput", "L270.LandRootNegEmissMkt", "L270.NegEmissBudgetMaxPrice",
                   "L270.RenewRsrc",
@@ -381,7 +381,7 @@ module_energy_L270.limits <- function(command, ...) {
                   "L270.GrdRenewRsrcCurves",
                   "L270.GrdRenewRsrcMax",
                   "L270.ResTechShrwt",
-                  "L270.AgCoef_bioenv")
+                  "L270.AgCoef_bioext")
     # We will generate a bunch of tibbles for the negative emissions budgets for each scenario
     # and use assign() to save them to variables with names as L270.NegEmissBudget_[SCENARIO]
     # Note that since the call to assign() is in the for loop we must explicitly set the

@@ -123,7 +123,7 @@
 
             <!-- NEG EMISS BUDGET -->
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP4.xml</Value>
-            <Value name = "bio_environ">../input/gcamdata/xml/bio_environ.xml</Value>
+            <Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
 		</FileSet>
 		
 		<FileSet name="SSP5">
@@ -159,7 +159,7 @@
 
             <!-- NEG EMISS BUDGET -->
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP5.xml</Value>
-            <Value name = "bio_environ">../input/gcamdata/xml/bio_environ.xml</Value>
+            <Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
 		</FileSet>
 		
 		<FileSet name="SSP1">
@@ -213,7 +213,7 @@
 
             <!-- NEG EMISS BUDGET -->
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP1.xml</Value>
-            <Value name = "bio_environ">../input/gcamdata/xml/bio_environ.xml</Value>
+            <Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
 		</FileSet>
 		
 		<FileSet name="SSP2">
@@ -247,7 +247,7 @@
 
             <!-- NEG EMISS BUDGET -->
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP2.xml</Value>
-            <Value name = "bio_environ">../input/gcamdata/xml/bio_environ.xml</Value>
+            <Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
 		</FileSet>
 		
 		<FileSet name="SSP3">
@@ -303,7 +303,7 @@
 
             <!-- NEG EMISS BUDGET -->
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP3.xml</Value>
-            <Value name = "bio_environ">../input/gcamdata/xml/bio_environ.xml</Value>
+            <Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
 		</FileSet>		
 	</ComponentSet>
 	

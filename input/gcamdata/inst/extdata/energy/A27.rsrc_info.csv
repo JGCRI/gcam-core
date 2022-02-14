@@ -5,4 +5,4 @@
 # Column types: cccccnnnnnn
 # ----------
 resource,resource_type,market,output-unit,price-unit,1971,1975,1990,2005,2010,2015
-bio_environ_cost,renewresource,global,EJ,1975$/GJ,0.1,0.1,0.1,0.1,0.1,0.1
+bio_externality_cost,renewresource,global,EJ,1975$/GJ,0.1,0.1,0.1,0.1,0.1,0.1
