@@ -114,9 +114,17 @@ public:
 
     virtual double getBiasAdder() const;
 
+    virtual double getCoalA() const;
+    
     virtual double getCoalK() const;
 
-	virtual double getCoalL() const;
+    virtual double getCoalBase() const;
+
+    virtual double getTradBioX() const;
+
+    virtual double getTradBioY() const;
+
+    virtual double getTradBioBase() const;
     
     virtual void setCoefficient( const double aCoefficient,
                                  const int aPeriod );
@@ -138,10 +146,22 @@ protected:
         DEFINE_VARIABLE( SIMPLE | STATE, "coef", mCoef, Value ),
 
         //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "A-coal", mCoalA, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
         DEFINE_VARIABLE(SIMPLE | STATE, "k-coal", mCoalK, Value),
 
         //! Demand function coefficients to capture base year thermal characteristics.
-        DEFINE_VARIABLE(SIMPLE | STATE, "l-coal", mCoalL, Value),
+        DEFINE_VARIABLE(SIMPLE | STATE, "base-coal", mCoalBase, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "x-TradBio", mTradBioX, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "y-TradBio", mTradBioY, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "base-TradBio", mTradBioBase, Value),
 
 		//! Demand function coefficients to capture base year thermal characteristics.
 		DEFINE_VARIABLE(SIMPLE | STATE, "bias-adder", mBiasAdderEn, Value)

@@ -114,12 +114,28 @@ void ThermalBuildingServiceInput::XMLParse( const DOMNode* aNode ) {
 			mBiasAdderEn = (XMLHelper<double>::getValue(curr));
 		}
 
+        else if (nodeName == "A-coal") {
+            mCoalA = (XMLHelper<double>::getValue(curr));
+        }
+
         else if (nodeName == "k-coal") {
             mCoalK = (XMLHelper<double>::getValue(curr));
         }
 
-        else if (nodeName == "l-coal") {
-            mCoalL = (XMLHelper<double>::getValue(curr));
+        else if (nodeName == "base-coal") {
+            mCoalBase = (XMLHelper<double>::getValue(curr));
+        }
+
+        else if (nodeName == "x-TradBio") {
+            mTradBioX = (XMLHelper<double>::getValue(curr));
+        }
+
+        else if (nodeName == "y-TradBio") {
+            mTradBioY = (XMLHelper<double>::getValue(curr));
+        }
+
+        else if (nodeName == "base-TradBio") {
+            mTradBioBase = (XMLHelper<double>::getValue(curr));
         }
 
 		else if (nodeName == "coef") {
@@ -161,8 +177,12 @@ void ThermalBuildingServiceInput::copy( const ThermalBuildingServiceInput& aInpu
     mInternalGainsScalar = aInput.mInternalGainsScalar;
     mDegreeDays = aInput.mDegreeDays;
 	mBiasAdderEn = aInput.mBiasAdderEn;
+    mCoalA = aInput.mCoalA;
     mCoalK = aInput.mCoalK;
-    mCoalL = aInput.mCoalL;
+    mCoalBase = aInput.mCoalBase;
+    mTradBioX = aInput.mTradBioX;
+    mTradBioY = aInput.mTradBioY;
+    mTradBioBase = aInput.mTradBioBase;
 	mCoef = aInput.mCoef;
 }
 
@@ -175,8 +195,9 @@ void ThermalBuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, 
     XMLWriteElement( mServiceDensity[ aPeriod ], "service-density", aOut, aTabs );
     XMLWriteElement( mCoef, "coef", aOut, aTabs );
 	XMLWriteElement( mBiasAdderEn, "bias-adder", aOut, aTabs);
+    XMLWriteElement(mCoalA, "a-coal", aOut, aTabs);
     XMLWriteElement(mCoalK, "k-coal", aOut, aTabs);
-    XMLWriteElement(mCoalL, "l-coal", aOut, aTabs);
+    XMLWriteElement(mCoalBase, "base-coal", aOut, aTabs);
     XMLWriteElement( mInternalGainsScalar, "internal-gains-scalar", aOut, aTabs );
     XMLWriteElement( mDegreeDays[ aPeriod ], "degree-days", aOut, aTabs );
     
@@ -234,13 +255,30 @@ double ThermalBuildingServiceInput::getCoefficient(const int aPeriod) const {
   * \return The coefficient.
  */
 
+double ThermalBuildingServiceInput::getCoalA() const {
+    return mCoalA;
+}
+
 double ThermalBuildingServiceInput::getCoalK() const {
     return mCoalK;
 }
 
-double ThermalBuildingServiceInput::getCoalL() const {
-    return mCoalL;
+double ThermalBuildingServiceInput::getCoalBase() const {
+    return mCoalBase;
 }
+
+double ThermalBuildingServiceInput::getTradBioX() const {
+    return mTradBioX;
+}
+
+double ThermalBuildingServiceInput::getTradBioY() const {
+    return mTradBioY;
+}
+
+double ThermalBuildingServiceInput::getTradBioBase() const {
+    return mTradBioBase;
+}
+
 
 double ThermalBuildingServiceInput::getBiasAdder() const {
 	return mBiasAdderEn;

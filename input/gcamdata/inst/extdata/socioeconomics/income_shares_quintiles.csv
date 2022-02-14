@@ -1,10 +1,10 @@
-# File: income_shares_quintiles.csv
+# File: income_shares.csv
 # Title: Income quintiles
 # Units: share
 # Description: Net income quintiles for the 32 GCAM regions from 1967-2100. 
 # Column types: icicnn 
 # ----------
-GCAM_region_ID,sce,year,Category,Income (net),gini
+GCAM_region_ID,sce,year,category,shares,gini
 1,Historical data,1967,q1,0.05883005,0.336478902
 1,Historical data,1967,q2,0.118268855,0.336478902
 1,Historical data,1967,q3,0.167496247,0.336478902

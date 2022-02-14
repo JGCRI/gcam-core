@@ -80,47 +80,60 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
     double totalDemand = 0;
 
     for( InputSet::iterator inputIter = input.begin(); inputIter != input.end(); ++inputIter ) {
-        double demand = 0;
+        double demand;
         // Guard against zero floorspace which happens for 1975 since no data was read in for
         // that period.
-        assert( floorSpace != 0 || period == 0 );
         if( floorSpace != 0 ) {
             // calculations for energy service
             BuildingServiceInput* buildingServiceInput = static_cast<BuildingServiceInput*>( *inputIter );
 
             double thermalLoad = buildingServiceInput->calcThermalLoad( buildingParentInput, internalGainsPerSqMeter, period );
 
-            double serviceDensity;
+            
             if (regex_search(buildingServiceInput->getName(), coalPattern)) {
 
-                serviceDensity = calcServiceDensityCoal(buildingServiceInput,  income, regionName, period);
-                
+                demand = calcServiceCoal(buildingServiceInput,  income, regionName, period);
+
+               
             }
             else if (regex_search(buildingServiceInput->getName(), TradBioPattern)) {
 
-                serviceDensity = calcServiceDensityTradBio(buildingServiceInput, income, regionName, period);
+                demand = calcServiceTradBio(buildingServiceInput, income, regionName, period);
+
 
             }
             else {
-                serviceDensity = calcServiceDensity(buildingServiceInput, income, regionName, period);
+                
+                double serviceDensity = calcServiceDensity(buildingServiceInput, income, regionName, period);
+
+                double biasadder = buildingServiceInput->getBiasAdder();
+                double adjustedServiceDensity = (buildingServiceInput->getCoef() * thermalLoad * serviceDensity) + biasadder;
+
+
+                // May need to make an adjustment in case of negative prices.
+                if (adjustedServiceDensity < 0) {
+                    adjustedServiceDensity = 0;
+
+                }
+                    // Set the thermal load adjusted service density back into the input for reporting.
+                    buildingServiceInput->setServiceDensity(adjustedServiceDensity, period);
+
+
+                    demand = floorSpace * adjustedServiceDensity;            
+
+
 
             }
 
-            double biasadder = buildingServiceInput->getBiasAdder();
-	        double adjustedServiceDensity = (buildingServiceInput->getCoef( ) * thermalLoad * serviceDensity) + biasadder;
 
-            // May need to make an adjustment in case of negative prices.
-            if (adjustedServiceDensity < 0) {
-                adjustedServiceDensity = 0;
-            }
-
-
-            // Set the thermal load adjusted service density back into the input for reporting.
-            buildingServiceInput->setServiceDensity(adjustedServiceDensity, period );
-
-
-            demand = floorSpace * adjustedServiceDensity;
         }
+
+        else {
+
+            demand = 0;
+        }
+
+
         totalDemand += demand;
         (*inputIter)->setPhysicalDemand( demand, regionName, period );
     }
@@ -163,30 +176,60 @@ double BuildingServiceFunction::calcServiceDensity( BuildingServiceInput* aBuild
 
 }
 
-double BuildingServiceFunction::calcServiceDensityCoal(BuildingServiceInput* aBuildingServiceInput,
+double BuildingServiceFunction::calcServiceCoal(BuildingServiceInput* aBuildingServiceInput,
                                                         const double aIncome,
                                                         const string& aRegionName,
                                                         const int aPeriod) const
 {
 
+    double CoalA = aBuildingServiceInput->getCoalA();
     double CoalK = aBuildingServiceInput->getCoalK();
-    double CoalL = aBuildingServiceInput->getCoalL();
+    double CoalBase = aBuildingServiceInput->getCoalBase();
 
-    double serviceDensity = pow ( CoalK * aIncome, CoalL / aIncome) ;
+    double biasadder = aBuildingServiceInput->getBiasAdder();
 
-    return serviceDensity;
+    double IncThous = aIncome/1000;
+
+    double demand = (CoalA / (IncThous + CoalK)) + biasadder;
+
+    // May need to make an adjustment in case of negative demand.
+    if (demand < 0) {
+        demand = 0;
+    }
+
+    // Also we need to adjust the demand to avoid problems when gdp per capita decreases (or income shares create problems).
+    demand = min(demand, CoalBase);
+
+    return demand;
 
 }
 
-double BuildingServiceFunction::calcServiceDensityTradBio(BuildingServiceInput* aBuildingServiceInput,
+double BuildingServiceFunction::calcServiceTradBio(BuildingServiceInput* aBuildingServiceInput,
                                                           const double aIncome,
                                                           const string& aRegionName,
                                                           const int aPeriod) const
 {
-    double serviceDensity = 1 / aIncome;
 
-    return serviceDensity;
+    double TradBioX = aBuildingServiceInput->getTradBioX();
+    double TradBioY = aBuildingServiceInput->getTradBioY();
+    double TradBioBase = aBuildingServiceInput->getTradBioBase();
 
-    return serviceDensity;
+    double biasadder = aBuildingServiceInput->getBiasAdder();
+
+    double IncThous = aIncome / 1000;
+
+    double demand = (TradBioX / (IncThous + TradBioY)) + biasadder;
+
+    // May need to make an adjustment in case of negative demand.
+    if (demand < 0) {
+        demand = 0;
+    }
+
+    // Also we need to adjust the demand to avoid problems when gdp per capita decreases (or income shares create problems).
+    demand = min(demand, TradBioBase);
+
+
+    return demand;
+
 }
 

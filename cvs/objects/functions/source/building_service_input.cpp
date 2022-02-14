@@ -112,12 +112,28 @@ void BuildingServiceInput::XMLParse( const DOMNode* aNode ) {
 			mBiasAdderEn = (XMLHelper<double>::getValue(curr));
 		}
 
+        else if (nodeName == "A-coal") {
+            mCoalA = (XMLHelper<double>::getValue(curr));
+        }
+
         else if (nodeName == "k-coal") {
             mCoalK = (XMLHelper<double>::getValue(curr));
         }
 
-        else if (nodeName == "l-coal") {
-            mCoalL = (XMLHelper<double>::getValue(curr));
+        else if (nodeName == "base-coal") {
+            mCoalBase = (XMLHelper<double>::getValue(curr));
+        }
+
+        else if (nodeName == "x-TradBio") {
+            mTradBioX = (XMLHelper<double>::getValue(curr));
+        }
+
+        else if (nodeName == "y-TradBio") {
+            mTradBioY = (XMLHelper<double>::getValue(curr));
+        }
+
+        else if (nodeName == "base-TradBio") {
+            mTradBioBase = (XMLHelper<double>::getValue(curr));
         }
 
 		else if (nodeName == "coef") {
@@ -180,8 +196,12 @@ void BuildingServiceInput::copy( const BuildingServiceInput& aInput ) {
     mName = aInput.mName;
     mServiceDemand = aInput.mServiceDemand;
 	mBiasAdderEn = aInput.mBiasAdderEn;
+    mCoalA = aInput.mCoalA;
     mCoalK = aInput.mCoalK;
-    mCoalL = aInput.mCoalL;
+    mCoalBase = aInput.mCoalBase;
+    mTradBioX = aInput.mTradBioX;
+    mTradBioY = aInput.mTradBioY;
+    mTradBioBase = aInput.mTradBioBase;
 	mCoef = aInput.mCoef;
 
     delete mSatiationDemandFunction;
@@ -199,8 +219,12 @@ void BuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* a
 
     XMLWriteElement( mServiceDemand[ aPeriod ], "service", aOut, aTabs );
 	XMLWriteElement(mBiasAdderEn, "bias-adder", aOut, aTabs);
+    XMLWriteElement(mCoalA, "A-coal", aOut, aTabs);
     XMLWriteElement(mCoalK, "k-coal", aOut, aTabs);
-    XMLWriteElement(mCoalL, "l-coal", aOut, aTabs);
+    XMLWriteElement(mCoalBase, "base-coal", aOut, aTabs);
+    XMLWriteElement(mTradBioX, "x-TradBio", aOut, aTabs);
+    XMLWriteElement(mTradBioY, "y-TradBio", aOut, aTabs);
+    XMLWriteElement(mTradBioBase, "base-TradBio", aOut, aTabs);
 	XMLWriteElement(mCoef, "coef", aOut, aTabs);
     XMLWriteElement( mServiceDensity[ aPeriod ], "service-density", aOut, aTabs );
 
@@ -225,6 +249,7 @@ double BuildingServiceInput::calcThermalLoad( const BuildingNodeInput* aBuilding
 void BuildingServiceInput::setServiceDensity( const double aServiceDensity, const int aPeriod ) {
     mServiceDensity[ aPeriod ].set( aServiceDensity );
 }
+
 
 /*!
  * \brief Get the satiation demand function to be used in demand calculations.
@@ -290,12 +315,28 @@ double BuildingServiceInput::getCoef() const {
   * \return The coefficient.
  */
 
+double BuildingServiceInput::getCoalA() const {
+    return mCoalA;
+}
+
 double BuildingServiceInput::getCoalK() const {
     return mCoalK;
 }
 
-double BuildingServiceInput::getCoalL() const {
-    return mCoalL;
+double BuildingServiceInput::getCoalBase() const {
+    return mCoalBase;
+}
+
+double BuildingServiceInput::getTradBioX() const {
+    return mTradBioX;
+}
+
+double BuildingServiceInput::getTradBioY() const {
+    return mTradBioY;
+}
+
+double BuildingServiceInput::getTradBioBase() const {
+    return mTradBioBase;
 }
 
 double BuildingServiceInput::getBiasAdder() const {

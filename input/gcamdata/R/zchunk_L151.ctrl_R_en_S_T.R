@@ -23,7 +23,7 @@
 module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "emissions/A51.min_coeff",
-             FILE = "socioeconomics/income_shares_quintiles",
+             FILE = "socioeconomics/income_shares",
              "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L151.nonghg_ctrl_R_en_S_T"))
@@ -37,8 +37,8 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
     # Load required inputs
     A51.min_coeff <- get_data(all_data, "emissions/A51.min_coeff")
     L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP", strip_attributes = TRUE)
-    income_shares<-get_data(all_data, "socioeconomics/income_shares_quintiles")
-    groups<-income_shares %>% select(Category) %>% distinct()
+    income_shares<-get_data(all_data, "socioeconomics/income_shares")
+    groups<-income_shares %>% select(category) %>% distinct()
 
     # First, set up min coeff data frame
     A51.min_coeff %>%
@@ -49,7 +49,7 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
     #Adjust the residential sector for multiple consumers:
     L151.min_coeff_resid<-L151.min_coeff %>%
       filter(grepl("resid",supplysector)) %>%
-      repeat_add_columns(tibble(group = unique(groups$Category))) %>%
+      repeat_add_columns(tibble(group = unique(groups$category))) %>%
       unite(supplysector, c("supplysector","group"), sep = "_")
 
     L151.min_coeff<-L151.min_coeff %>%
@@ -90,7 +90,7 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
       add_legacy_name("L151.nonghg_ctrl_R_en_S_T") %>%
       add_precursors("emissions/A51.min_coeff",
                      "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP",
-                     "socioeconomics/income_shares_quintiles") ->
+                     "socioeconomics/income_shares") ->
       L151.nonghg_ctrl_R_en_S_T
 
     return_data(L151.nonghg_ctrl_R_en_S_T)
