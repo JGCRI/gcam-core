@@ -135,33 +135,8 @@ module_gcamusa_L273.en_ghg_emissions_USA <- function(command, ...) {
       select("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emiss.coeff") ->
       L273.ref_ghg_tech_coeff_USA
 
-    # Write electricity emission coefficients to states for technologies shared by GCAMUSA and emissions data
-    L241.nonco2_tech_coeff %>%
-      filter(region == gcam.USA_REGION & Non.CO2 %in% c("N2O","CH4") & supplysector == "electricity") ->
-      L241.elc_ghg_tech_coeff_USA
-
-    L223.StubTech_elec_USA %>%
-      # TODO, check to see if this join is correct. We have to use the left_join_keep_first_only in order to
-      # reproduce the old data system behavior.
-      left_join_keep_first_only(L241.elc_ghg_tech_coeff_USA %>%
-                                  select(subsector, stub.technology) %>%
-                                  mutate(keep = TRUE), by = c("subsector","stub.technology")) %>%
-      filter(TRUE) %>%
-      select(-keep) %>%
-      repeat_add_columns(tibble("year" = unique(L241.elc_ghg_tech_coeff_USA$year))) %>%
-      repeat_add_columns(tibble("Non.CO2" = unique(L241.elc_ghg_tech_coeff_USA$Non.CO2))) %>%
-      # TODO, check to see if this join is correct. We have to use the left_join_keep_first_only in order to
-      # reproduce the old data system behavior.
-      left_join_keep_first_only(L241.elc_ghg_tech_coeff_USA %>%
-                                  select("stub.technology", "year", "Non.CO2", "emiss.coeff"),
-                                by = c("stub.technology", "year", "Non.CO2")) %>%
-      na.omit %>%
-      select("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emiss.coeff") ->
-      L273.elc_ghg_tech_coeff_USA
-
     # Bind rows containing refining and electricity emission coefficients into one table, and organize
     L273.ref_ghg_tech_coeff_USA %>%
-      bind_rows(L273.elc_ghg_tech_coeff_USA) %>%
       mutate(emiss.coeff = round(emiss.coeff, emissions.DIGITS_EMISSIONS)) %>%
       arrange(region, supplysector, subsector, stub.technology, year, Non.CO2) %>%
       left_join_error_no_match(EnTechInputMap %>% select(-supplysector), by = c("subsector", "stub.technology"))->
