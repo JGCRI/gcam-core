@@ -341,6 +341,9 @@
     <ClCompile Include="..\..\solution\util\source\market_name_solution_info_filter.cpp">
       <Filter>Source Files\solution\util</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\solution\util\source\market_matches_solution_info_filter.cpp">
+      <Filter>Source Files\solution\util</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\solution\util\source\market_type_solution_info_filter.cpp">
       <Filter>Source Files\solution\util</Filter>
     </ClCompile>
@@ -1132,6 +1135,9 @@
       <Filter>Header Files\solution\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\solution\util\include\market_name_solution_info_filter.h">
+      <Filter>Header Files\solution\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solution\util\include\market_matches_solution_info_filter.h">
       <Filter>Header Files\solution\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\solution\util\include\market_type_solution_info_filter.h">

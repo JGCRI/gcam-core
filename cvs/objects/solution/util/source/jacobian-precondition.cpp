@@ -52,6 +52,7 @@ int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec &F,
   int fail = 0;
   int change = 0;
   int ncol = (int) x.size();
+  std::list<int> changeCols;
 
   Timer& jacPreTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::JAC_PRE );
   jacPreTimer.start();
@@ -149,6 +150,7 @@ int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec &F,
             // parameters.  We'll add checks for that (only) if it looks like
             // it's becoming a problem.)
             fxx = fx;
+            changeCols.push_back(j);
           }
         } while(deltafx < JPCMIN && ++count < ITMAX);
 
@@ -169,7 +171,7 @@ int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec &F,
   jacPreJacTimer.start();
               
   if(change)
-    fdjac(F,x,fx,J,true); // recalculate the jacobian
+    fdjac(F,x,fx,J,changeCols,true); // recalculate the jacobian
 
   jacPreJacTimer.stop();
   jacPreTimer.stop();
