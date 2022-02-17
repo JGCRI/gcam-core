@@ -219,7 +219,10 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
     double reduction = getMACValue( emissionsPrice );
     
     // base reduction when only considering tech.change
-    double baseReduction = adjustForTechChange( aPeriod, reduction );
+    // tech.change only apply to MAC when there is a positive carbon price
+    // otherwise the zero-cost MAC will be magnified by tech.change
+    // leading to overestimated emission reductions in reference scenario
+    double baseReduction = emissionsPrice > 0 ? adjustForTechChange( aPeriod, reduction ) : reduction;
     
     if( mNoZeroCostReductions && emissionsPrice <= 0.0 ) {
         reduction = 0.0;
@@ -343,7 +346,7 @@ double MACControl::getMACValue( const double aCarbonPrice ) const {
  * \param reduction pre-tech change reduction
  */
 double MACControl::adjustForTechChange( const int aPeriod, double reduction ) {
-
+    
     // note technical change is a rate of change per year, therefore we must
     // be sure to apply it for as many years as are in a model time step
     double techChange = 1;
