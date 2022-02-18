@@ -327,7 +327,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["DemandNonStapleRegBias"]] <- c("region", "gcam.consumer", "nodeInput", "non.staples.food.demand.input", "regional.bias.year", "regional.bias")
   level2_data_names[["StapleBaseService"]] <- c("region", "gcam.consumer", "nodeInput", "staples.food.demand.input", "year", "base.service")
   level2_data_names[["NonStapleBaseService"]] <- c("region", "gcam.consumer", "nodeInput", "non.staples.food.demand.input", "year", "base.service")
-  level2_data_names[["GompFnParam"]] <- c("region","gcam.consumer","nodeInput","building.node.input","habitable.land","base.pcFlsp","unadjust.satiation","land.density.param","b.param","income.param","bias.adjust.param")
+  level2_data_names[["GompFnParam"]] <- c("region","gcam.consumer","nodeInput","building.node.input","base.pcFlsp","unadjust.satiation","land.density.param","b.param","income.param","bias.adjust.param","tot_dens")
   level2_data_names[["GenericCoalCoef"]] <- c("region","gcam.consumer", "nodeInput", "building.node.input", "building.service.input","A_coal","k_coal","base.coal")
   level2_data_names[["ThermalCoalCoef"]] <- c("region","gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input","A_coal","k_coal","base.coal")
   level2_data_names[["GenericTradBioCoef"]] <- c("region","gcam.consumer", "nodeInput", "building.node.input", "building.service.input","x_TradBio","y_TradBio","base.TradBio")

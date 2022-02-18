@@ -422,6 +422,9 @@ protected:
         //! The base floorspace parameter to use during calcDemand. Parsed from XML
         DEFINE_VARIABLE(SIMPLE, "b-param", mbParam, Value),
 
+        //! The base floorspace parameter to use during calcDemand. Parsed from XML
+        DEFINE_VARIABLE(SIMPLE, "tot-dens", mTotDens, Value),
+
         //! The income parameter to use during calcDemand. Parsed from XML
         DEFINE_VARIABLE(SIMPLE, "income-param", mIncomeParam, Value),
 

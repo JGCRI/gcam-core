@@ -198,6 +198,9 @@ void ThermalBuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, 
     XMLWriteElement(mCoalA, "a-coal", aOut, aTabs);
     XMLWriteElement(mCoalK, "k-coal", aOut, aTabs);
     XMLWriteElement(mCoalBase, "base-coal", aOut, aTabs);
+    XMLWriteElement(mTradBioX, "x-TradBio", aOut, aTabs);
+    XMLWriteElement(mTradBioY, "y-TradBio", aOut, aTabs);
+    XMLWriteElement(mTradBioBase, "base-TradBio", aOut, aTabs);
     XMLWriteElement( mInternalGainsScalar, "internal-gains-scalar", aOut, aTabs );
     XMLWriteElement( mDegreeDays[ aPeriod ], "degree-days", aOut, aTabs );
     

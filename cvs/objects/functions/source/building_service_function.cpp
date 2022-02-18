@@ -188,9 +188,13 @@ double BuildingServiceFunction::calcServiceCoal(BuildingServiceInput* aBuildingS
 
     double biasadder = aBuildingServiceInput->getBiasAdder();
 
-    double IncThous = aIncome/1000;
 
-    double demand = (CoalA / (IncThous + CoalK)) + biasadder;
+    const double servicePrice = aBuildingServiceInput->getPricePaid(aRegionName, aPeriod);
+    const double cappedPrice = max(servicePrice, SectorUtils::getDemandPriceThreshold());
+
+    const double serviceAffordability = aIncome / cappedPrice;
+
+    double demand = (CoalA / (serviceAffordability + CoalK)) + biasadder;
 
     // May need to make an adjustment in case of negative demand.
     if (demand < 0) {
@@ -216,14 +220,19 @@ double BuildingServiceFunction::calcServiceTradBio(BuildingServiceInput* aBuildi
 
     double biasadder = aBuildingServiceInput->getBiasAdder();
 
-    double IncThous = aIncome / 1000;
+    const double servicePrice = aBuildingServiceInput->getPricePaid(aRegionName, aPeriod);
+    const double cappedPrice = max(servicePrice, SectorUtils::getDemandPriceThreshold());
 
-    double demand = (TradBioX / (IncThous + TradBioY)) + biasadder;
+    const double serviceAffordability = aIncome / cappedPrice;
 
+    double demand = (TradBioX / (serviceAffordability + TradBioY)) + biasadder;
+
+   
     // May need to make an adjustment in case of negative demand.
     if (demand < 0) {
         demand = 0;
     }
+ 
 
     // Also we need to adjust the demand to avoid problems when gdp per capita decreases (or income shares create problems).
     demand = min(demand, TradBioBase);

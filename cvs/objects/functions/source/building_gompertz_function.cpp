@@ -68,21 +68,16 @@ double GompertzDemandFunction::calcDemand(InputSet& input, double income, const 
     double unadjustSatiation = bldInput->mUnadjustSatiation;
     double landDensityParam = bldInput->mLandDensityParam;
     double subregionalPopulation = bldInput->mCurrentSubregionalPopulation;
-    double habitableLand = bldInput->mHabitableLand;
+    double TotDens = bldInput->mTotDens;
     double bParam = bldInput->mbParam;
     double incomeParam = bldInput->mIncomeParam;
     double subregionalIncome = bldInput->mCurrentSubregionalIncome;
     double biasAdjustParam = bldInput->mBiasAdjustParam;
 
-    double pcfloorspace = (unadjustSatiation + (-landDensityParam) * log(subregionalPopulation / habitableLand))
+    double pcfloorspace = (unadjustSatiation + (-landDensityParam) * log(TotDens))
         * exp((-bParam)
             * exp((-incomeParam) * log(subregionalIncome)))
             + biasAdjustParam;
-
-    // May need to make an adjustment 
-    if (pcfloorspace < bldInput->mBasepcFlsp) {
-        pcfloorspace = bldInput->mBasepcFlsp;
-    }
 
 
     // unit conversions to convert from from billion m^2 to m^2
@@ -90,6 +85,15 @@ double GompertzDemandFunction::calcDemand(InputSet& input, double income, const 
     // unit conversions to convert from thous ppl to ppl
     const double CONV_POP_THOUS = 1e3;
     double floorspace = pcfloorspace * CONV_M2_BM2 * subregionalPopulation * CONV_POP_THOUS;
+
+    
+    // May need to make an adjustment 
+
+    double Basefloorspace = bldInput->mBasepcFlsp * CONV_M2_BM2 * subregionalPopulation * CONV_POP_THOUS;
+    
+    if (floorspace < Basefloorspace) {
+        floorspace = Basefloorspace;
+    }
 
     bldInput->setPhysicalDemand(floorspace, regionName, period);
 

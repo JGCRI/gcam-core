@@ -138,6 +138,9 @@ void BuildingNodeInput::XMLParse( const xercesc::DOMNode* node ) {
         else if (nodeName == "b-param") {
             mbParam = (XMLHelper<double>::getValue(curr));
         }
+        else if (nodeName == "tot-dens") {
+            mTotDens = (XMLHelper<double>::getValue(curr));
+        }
         else if (nodeName == "income-param") {
             mIncomeParam = (XMLHelper<double>::getValue(curr));
         }
@@ -306,6 +309,7 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
     XMLWriteElement(mBasepcFlsp, "base-pcFlsp", aOut, aTabs);
     XMLWriteElement(mLandDensityParam, "land-density-param", aOut, aTabs);
     XMLWriteElement(mbParam, "b-param", aOut, aTabs);
+    XMLWriteElement(mTotDens, "tot-dens", aOut, aTabs);
     XMLWriteElement(mIncomeParam, "income-param", aOut, aTabs);
     XMLWriteElement(mBiasAdjustParam, "bias-adjust-param", aOut, aTabs);
     XMLWriteElement(mCurrentSubregionalPopulation, "subregional-population", aOut, aTabs);
