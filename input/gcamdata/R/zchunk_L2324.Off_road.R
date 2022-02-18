@@ -604,13 +604,6 @@ module_energy_L2324.Off_road <- function(command, ...) {
         L2324.GlobalTechProfitShutdown_Off_road
     }
 
-    #L2324.StubTechProd_Off_road %>%
-      #add_title("calibrated Off_road production") %>%
-      #add_units("EJ") %>%
-      #add_comments("Values are calculated using L1324.in_EJ_R_Off_road_F_Y, then added GCAM region information and supplysector, subsector, and technology information") %>%
-      #add_legacy_name("L2324.StubTechProd_Off_road") %>%
-      #add_precursors("energy/calibrated_techs",  "common/GCAM_region_names") ->
-      #L2324.StubTechProd_Off_road
 
     L2324.StubTechCalInput_Off_road %>%
        add_title("calibrated Off_road production") %>%
@@ -671,7 +664,7 @@ module_energy_L2324.Off_road <- function(command, ...) {
                   L2324.PerCapitaBased_Off_road, L2324.BaseService_Off_road,
                   L2324.PriceElasticity_Off_road)
 
-        #L2324.StubTechCoef_Off_road
+
   } else {
     stop("Unknown command")
   }

@@ -83,7 +83,7 @@ module_energy_L2323.iron_steel <- function(command, ...) {
     A323.demand <- get_data(all_data, "energy/A323.demand", strip_attributes = TRUE)
     L1323.out_Mt_R_iron_steel_Yh <- get_data(all_data, "L1323.out_Mt_R_iron_steel_Yh", strip_attributes = TRUE)
     L1323.IO_GJkg_R_iron_steel_F_Yh <- get_data(all_data, "L1323.IO_GJkg_R_iron_steel_F_Yh")
-    #L1323.in_EJ_R_iron_steel_F_Y <- get_data(all_data, "L1323.in_EJ_R_iron_steel_F_Y")
+
     # ===================================================
     # 0. Give binding for variable names used in pipeline
     year <- value <- GCAM_region_ID <- sector <- fuel <- year.fillout <- to.value <-
@@ -124,7 +124,6 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       filter(is.na(to.value)) %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names) ->
       L2323.SubsectorInterp_iron_steel
-
 
     # 1c. Technology information
     # L2323.StubTech_iron_steel: Identification of stub technologies of iron_steel
@@ -180,6 +179,7 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "remove.fraction") %>%
       mutate(storage.market = energy.CO2.STORAGE.MARKET) ->
       L2323.GlobalTechCapture_iron_steel
+
     # Retirement information
     A323.globaltech_retirement %>%
       set_years() %>%
@@ -251,7 +251,6 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
       L2323.GlobalTechCost_iron_steel
 
-
     # Calibration and region-specific data
     # L2323.StubTechProd_iron_steel: calibrated iron_steel production
     calibrated_techs %>%
@@ -305,7 +304,6 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       mutate(coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & stub.technology == "Biomass-based" , terminal_coef, coefficient)) %>%
       mutate(coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & minicam.energy.input == "scrap" , terminal_coef, coefficient)) %>%
       mutate(coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & minicam.energy.input == "H2 enduse" , terminal_coef, coefficient)) %>%
-      #mutate(coefficient = if_else(year > 2010 & calOutputValue == 0 , terminal_coef, coefficient)) %>%
       select(-terminal_coef,-coeff,-calOutputValue) %>%
       group_by(region, supplysector, subsector, stub.technology, minicam.energy.input) %>%
       mutate(coefficient = round(approx_fun(year, coefficient,rule = 2), energy.DIGITS_COEFFICIENT)) %>%
@@ -317,7 +315,6 @@ module_energy_L2323.iron_steel <- function(command, ...) {
     A323.demand %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["PerCapitaBased"]], GCAM_region_names)  ->
       L2323.PerCapitaBased_iron_steel
-
 
     # L2323.BaseService_iron_steel: base-year service output of iron and steel
     L2323.StubTechProd_iron_steel %>%
@@ -522,7 +519,6 @@ module_energy_L2323.iron_steel <- function(command, ...) {
                   L2323.StubTechProd_iron_steel, L2323.StubTechCoef_iron_steel,
                   L2323.PerCapitaBased_iron_steel, L2323.BaseService_iron_steel,
                   L2323.PriceElasticity_iron_steel)
-				#L2323.StubTechCalInput_iron_steel
   } else {
     stop("Unknown command")
   }
