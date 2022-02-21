@@ -120,9 +120,9 @@ private:
     std::istream& read( std::istream& aIStream );
 
     //! The actual underly value of this class.
-    double mValue;
-    //! A flag to indicate if this Value has been set to any value besides the default.
-    bool mIsInit;
+    uint64_t mBits;
+    //double mValue;
+
 #if !GCAM_PARALLEL_ENABLED
     typedef double* CentralValueType;
 #else
@@ -140,21 +140,56 @@ private:
     //! mostly for convenience.
     static double* sBaseCentralValue;
     //! The index into sCentralValue that contains the data for this instance.
-    unsigned int mCentralValueIndex;
+    //unsigned int mCentralValueIndex;
     //! A flag to indicate if this instance of Value has been identified as active
     //! state.  If so it can assume that mCentralValueIndex has been appropriately
     //! set and mValue gets copied in/out of sBaseCentralValue at the appropriate
     //! time.
-    bool mIsStateCopy;
+    //bool mIsStateCopy;
+    
+    //! A flag to indicate if this Value has been set to any value besides the default.
+    //bool mIsInit;
     
 #if DEBUG_STATE
     void doStateCheck() const;
 #endif
-    double& getInternal();
-    const double& getInternal() const;
+    double getInternal() const;
+    void setInternal(double const aDblValue);
+    static double convertToDouble(uint64_t const u) {
+        static_assert(sizeof(uint64_t) == sizeof(double), "Cannot use this!");
+
+        double d;
+
+        // Aliases to `char*` are explicitly allowed in the Standard (and only them)
+        char const* cu = reinterpret_cast<char const*>(&u);
+        char* cd = reinterpret_cast<char*>(&d);
+
+        // Copy the bitwise representation from u to d
+        memcpy(cd, cu, sizeof(u));
+
+        return d;
+    }
+    static uint64_t convertToBits(double const d) {
+        static_assert(sizeof(uint64_t) == sizeof(double), "Cannot use this!");
+
+        uint64_t u;
+
+        // Aliases to `char*` are explicitly allowed in the Standard (and only them)
+        char const* cd = reinterpret_cast<char const*>(&d);
+        char* cu = reinterpret_cast<char*>(&u);
+
+        // Copy the bitwise representation from u to d
+        memcpy(cu, cd, sizeof(d));
+
+        return u;
+    }
+    static const uint64_t UNINITIALIZED = 0x8000000000000000;
+    static const uint64_t STATE_COPY_MASK = 0xffffffff00000000;
+    static const uint64_t ID_MASK = 0x00000000ffffffff;
+    //const double& getInternal() const;
 };
 
-inline Value::Value(): mValue( 0 ), mIsInit( false ), mIsStateCopy( false ){
+inline Value::Value(): mBits(UNINITIALIZED) {
 }
 
 /*! 
@@ -163,18 +198,15 @@ inline Value::Value(): mValue( 0 ), mIsInit( false ), mIsStateCopy( false ){
  * \param aUnit Unit.
  */
 inline Value::Value( const double aValue ):
-mValue( aValue ),
-mIsInit( true ),
-mIsStateCopy( false )
+mBits(convertToBits(aValue))
 {
 }
 
 //! Initialize the value, can only be done once.
 inline void Value::init( const double aNewValue ){
     assert( util::isValidNumber( aNewValue ) );
-    if( !mIsInit ){
-        mValue = aNewValue;
-        mIsInit = true;
+    if( isInited() ){
+        mBits = convertToBits(aNewValue);
     }
 }
 
@@ -184,14 +216,14 @@ inline void Value::init( const double aNewValue ){
  *          managed state if the mIsStateCopy flag is set.
  * \return A reference the the appropriate value represented by this class.
  */
-inline double& Value::getInternal() {
-    return mIsStateCopy ?
+inline double Value::getInternal() const {
+    return (mBits & STATE_COPY_MASK) == STATE_COPY_MASK ?
 #if !GCAM_PARALLEL_ENABLED
-        sCentralValue[mCentralValueIndex]
+        sCentralValue[ID_MASK & mBits]
 #else
-        sCentralValue.local()[mCentralValueIndex]
+        sCentralValue.local()[ID_MASK & mBits]
 #endif
-        : mValue;
+        : convertToDouble(mBits);
 }
 
 /*!
@@ -200,7 +232,7 @@ inline double& Value::getInternal() {
  *          managed state if the mIsStateCopy flag is set.
  * \return A const reference the the appropriate value represented by this class.
  */
-inline const double& Value::getInternal() const {
+/*inline const double& Value::getInternal() const {
     return mIsStateCopy ?
 #if !GCAM_PARALLEL_ENABLED
         sCentralValue[mCentralValueIndex]
@@ -208,13 +240,24 @@ inline const double& Value::getInternal() const {
         sCentralValue.local()[mCentralValueIndex]
 #endif
         : mValue;
+}*/
+inline void Value::setInternal(double const aDblValue) {
+    if((mBits & STATE_COPY_MASK) == STATE_COPY_MASK) {
+#if !GCAM_PARALLEL_ENABLED
+        sCentralValue[ID_MASK & mBits] = aDblValue;
+#else
+        sCentralValue.local()[ID_MASK & mBits] = aDblValue;
+#endif
+    }
+    else {
+        mBits = convertToBits(aDblValue);
+    }
 }
 
 //! Set the value.
 inline void Value::set( const double aNewValue ){
     assert( util::isValidNumber( aNewValue ) );
-    getInternal() = aNewValue;
-    mIsInit = true;
+    setInternal(aNewValue);
 #if DEBUG_STATE
     doStateCheck();
 #endif
@@ -230,8 +273,8 @@ inline void Value::set( const double aNewValue ){
  * \warning This method is only valid for instances that are mIsStateCopy.
  */
 inline double Value::getDiff() const {
-    assert( !mIsStateCopy );
-    return getInternal() - sBaseCentralValue[ mCentralValueIndex ];
+    assert( (mBits & STATE_COPY_MASK) == STATE_COPY_MASK );
+    return getInternal() - sBaseCentralValue[ ID_MASK & mBits ];
 }
 
 //! Get the value.
@@ -257,9 +300,9 @@ inline double Value::get() const {
 inline Value& Value::operator+=( const Value& aValue ){
     // Assume that if this value is not initialized that adding to zero is
     // correct and the new value is valid.
-    mIsInit = true;
+    //mIsInit = true;
 
-    getInternal() += aValue.getInternal();
+    setInternal(getInternal() + aValue.getInternal());
 #if DEBUG_STATE
     doStateCheck();
 #endif
@@ -274,9 +317,9 @@ inline Value& Value::operator+=( const Value& aValue ){
 inline Value& Value::operator-=( const Value& aValue ){
     // Assume that if this value is not initialized that subtracting from zero
     // is correct and the new value is valid.
-    mIsInit = true;
+    //mIsInit = true;
 
-    getInternal() -= aValue.getInternal();
+    setInternal(getInternal() - aValue.getInternal());
 #if DEBUG_STATE
     doStateCheck();
 #endif
@@ -292,7 +335,7 @@ inline Value& Value::operator*=( const Value& aValue ){
     // If the value hasn't been initialized it should not be used.
     assert( mIsInit );
 
-    getInternal() *= aValue.getInternal();
+    setInternal(getInternal() * aValue.getInternal());
 #if DEBUG_STATE
     doStateCheck();
 #endif
@@ -309,7 +352,7 @@ inline Value& Value::operator/=( const Value& aValue ){
     assert( mIsInit );
     assert( aValue > util::getSmallNumber() );
 
-    getInternal() /= aValue.getInternal();
+    setInternal(getInternal() / aValue.getInternal());
 #if DEBUG_STATE
     doStateCheck();
 #endif
@@ -317,8 +360,8 @@ inline Value& Value::operator/=( const Value& aValue ){
 }
 
 inline Value& Value::operator=( const Value& aValue ) {
-    getInternal() = aValue.getInternal();
-    mIsInit = aValue.mIsInit;
+    setInternal( aValue.getInternal());
+    //mIsInit = aValue.mIsInit;
     
     return *this;
 }
@@ -326,9 +369,9 @@ inline Value& Value::operator=( const Value& aValue ) {
 inline Value& Value::operator+=( const double& aValue ) {
     // Assume that if this value is not initialized that adding to zero is
     // correct and the new value is valid.
-    mIsInit = true;
+    //mIsInit = true;
     
-    getInternal() += aValue;
+    setInternal(getInternal() + aValue);
 #if DEBUG_STATE
     doStateCheck();
 #endif
@@ -338,9 +381,9 @@ inline Value& Value::operator+=( const double& aValue ) {
 inline Value& Value::operator-=( const double& aValue ) {
     // Assume that if this value is not initialized that adding to zero is
     // correct and the new value is valid.
-    mIsInit = true;
+    //mIsInit = true;
     
-    getInternal() -= aValue;
+    setInternal(getInternal() - aValue);
 #if DEBUG_STATE
     doStateCheck();
 #endif
@@ -350,9 +393,9 @@ inline Value& Value::operator-=( const double& aValue ) {
 inline Value& Value::operator*=( const double& aValue ) {
     // Assume that if this value is not initialized that adding to zero is
     // correct and the new value is valid.
-    mIsInit = true;
+    //mIsInit = true;
     
-    getInternal() *= aValue;
+    setInternal(getInternal() * aValue);
 #if DEBUG_STATE
     doStateCheck();
 #endif
@@ -362,9 +405,9 @@ inline Value& Value::operator*=( const double& aValue ) {
 inline Value& Value::operator/=( const double& aValue ) {
     // Assume that if this value is not initialized that adding to zero is
     // correct and the new value is valid.
-    mIsInit = true;
+    //mIsInit = true;
     
-    getInternal() /= aValue;
+    setInternal(getInternal() / aValue);
 #if DEBUG_STATE
     doStateCheck();
 #endif
@@ -385,7 +428,7 @@ inline Value& Value::operator=( const double& aDblValue ) {
 
 //! Check if the value has been initialized.
 inline bool Value::isInited() const {
-    return mIsInit;
+    return mBits != UNINITIALIZED;
 }
 
 /*!
@@ -406,8 +449,8 @@ inline void Value::print( std::ostream& aOut ) const {
 inline std::istream& Value::read( std::istream& aIStream ){
     double streamValue;
     if( aIStream >> streamValue ) {
-        mIsInit = true;
-        getInternal() = streamValue;
+        //mIsInit = true;
+        setInternal(streamValue);
     }
     return aIStream;
 }
