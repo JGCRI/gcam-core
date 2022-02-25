@@ -168,8 +168,6 @@ void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs
         attrs[ "tax" ] = currPair->first;
         XMLWriteElementWithAttributes( currPair->second, "mac-reduction", aOut, aTabs, attrs );
     }
-    const Modeltime* modeltime = scenario->getModeltime();
-
     XMLWriteElementCheckDefault( mFullPhaseInPrice, "full-phase-in-price", aOut, aTabs, 400.0 );
     XMLWriteElementCheckDefault( mZeroCostPhaseInTime, "zero-cost-phase-in-time", aOut, aTabs, 25 );
     XMLWriteElementCheckDefault( mMacPhaseInTime, "mac-phase-in-time", aOut, aTabs, 0 );
@@ -200,10 +198,11 @@ void MACControl::initCalc( const string& aRegionName,
 }
 
 void MACControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
+    
     int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
     // Check first if MAC curve operation should be turned off
     // we do not apply the MAC curve in calibration model periods
-    if ( aPeriod <= finalCalibPer || mCovertPriceValue < 0 ) { // User flag to turn off MAC curves
+    if ( aPeriod <= finalCalibPer || mCovertPriceValue < 0 || mDisableEmControl ) { // User flag to turn off MAC curves
         setEmissionsReduction( 0 );
         return;
     }
