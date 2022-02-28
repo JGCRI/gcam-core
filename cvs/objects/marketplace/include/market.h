@@ -194,9 +194,6 @@ protected:
         DEFINE_SUBCLASS_FAMILY( Market, NormalMarket, MarketTax, MarketRES, MarketSubsidy,
                                 CalibrationMarket, InverseCalibrationMarket, DemandMarket,
                                 TrialValueMarket, PriceMarket, LinkedMarket ),
-
-        //! Whether to solve the market given other constraints are satisfied.
-        DEFINE_VARIABLE( SIMPLE, "solved_Market_Flag", mSolveMarket, bool ),
         
         //! The market price.
         DEFINE_VARIABLE( SIMPLE | STATE, "price", mPrice, Value ),
@@ -217,7 +214,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE | STATE, "supply", mSupply, Value ),
                 
         //! The year associated with this market.
-        DEFINE_VARIABLE( SIMPLE, "year", mYear, int )
+        DEFINE_VARIABLE( SIMPLE, "year", mYear, int ),
+        
+        //! Whether to solve the market given other constraints are satisfied.
+        DEFINE_VARIABLE( SIMPLE, "solved_Market_Flag", mSolveMarket, bool )
     )
     
 #if GCAM_PARALLEL_ENABLED

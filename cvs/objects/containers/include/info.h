@@ -52,13 +52,14 @@
 #include "containers/include/iinfo.h"
 
 // Can't forward declare because operations are used in template functions.
-#include "util/base/include/hash_map.h"
+//#include "util/base/include/hash_map.h"
+#include <map>
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/definitions.h"
 
 #if GCAM_PARALLEL_ENABLED
-#include <tbb/queuing_rw_mutex.h>
+#include <tbb/spin_rw_mutex.h>
 #endif
 
 class Tabs;
@@ -91,7 +92,7 @@ public:
 
     double getDouble( const std::string& aStringKey, const bool aMustExist ) const;
 
-    const std::string& getString( const std::string& aStringKey, const bool aMustExist ) const;
+    const std::string getString( const std::string& aStringKey, const bool aMustExist ) const;
 
     bool getBooleanHelper( const std::string& aStringKey, bool& aFound ) const;
 
@@ -99,7 +100,7 @@ public:
 
     double getDoubleHelper( const std::string& aStringKey, bool& aFound ) const;
 
-    const std::string& getStringHelper( const std::string& aStringKey, bool& aFound ) const;
+    const std::string getStringHelper( const std::string& aStringKey, bool& aFound ) const;
 
     bool hasValue( const std::string& aStringKey ) const;
 
@@ -132,7 +133,7 @@ private:
                                               const AnyType aType,
                                               const T& aValue );
 
-    template<class T> const T& getItemValueLocal( const std::string& aStringKey, bool& aExists ) const;
+    template<class T> T getItemValueLocal( const std::string& aStringKey, bool& aExists ) const;
 
     size_t getInitialSize() const;
 
@@ -147,17 +148,18 @@ private:
                                       Tabs* aTabs ) const;
 
     //! Type of the item stored as the value in the storage map.
-    typedef std::pair<AnyType, boost::any> ValueType;
+    //typedef std::pair<AnyType, boost::any> ValueType;
 
     //! Type of the internal storage map.
-    typedef HashMap<const std::string, ValueType> InfoMap;
+    //typedef HashMap<const std::string, ValueType> InfoMap;
+    typedef std::map<const std::string, boost::any> InfoMap;
 
     //! Internal storage mapping item names to item values.
-    std::auto_ptr<InfoMap> mInfoMap;
+    InfoMap mInfoMap;
 #if GCAM_PARALLEL_ENABLED
     // actions that modify mInfoMap MUST obtain a write lock on the info map.
     // Those that merely read it MUST obtain a read lock
-    mutable tbb::queuing_rw_mutex mInfoMapMutex;
+    mutable tbb::spin_rw_mutex mInfoMapMutex;
 #endif
 
     //! A pointer to the parent of this Info object which can be null.
@@ -188,13 +190,13 @@ template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
         // obtain read lock
         // XXX FIXME:  We should arrange to release this lock BEFORE we recurse into
         // the mParentInfo->hasValue calls
-        tbb::queuing_rw_mutex::scoped_lock readlock(mInfoMapMutex,false);
+        tbb::spin_rw_mutex::scoped_lock readlock(mInfoMapMutex,false);
 #endif
-        InfoMap::const_iterator curr = mInfoMap->find( aStringKey );
-        if( curr != mInfoMap->end() ){
+        InfoMap::const_iterator curr = mInfoMap.find( aStringKey );
+        if( curr != mInfoMap.end() ){
             // Check that the types match.
             try {
-                boost::any_cast<T>( curr->second.second );
+                boost::any_cast<T>( curr->second );
             }
             catch( boost::bad_any_cast ){
                 printBadCastWarning( aStringKey, true );
@@ -208,10 +210,11 @@ template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
 
 #if GCAM_PARALLEL_ENABLED
     // acquire a write lock for updating the infomap
-    tbb::queuing_rw_mutex::scoped_lock writelock(mInfoMapMutex, true);
+    tbb::spin_rw_mutex::scoped_lock writelock(mInfoMapMutex, true);
 #endif
     // Add the value regardless of whether a warning was printed.
-    mInfoMap->insert( std::make_pair( aStringKey, std::make_pair( aType, boost::any( aValue ) ) ) );
+    //mInfoMap->insert( std::make_pair( aStringKey, std::make_pair( aType, boost::any( aValue ) ) ) );
+    mInfoMap[ aStringKey ] = boost::any( aValue );
     return true;
 }
 
@@ -232,7 +235,7 @@ template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
 *          in the string object's malloc call.
 */
 template<class T>
-const T& Info::getItemValueLocal( const std::string& aStringKey,
+T Info::getItemValueLocal( const std::string& aStringKey,
                                  bool& aExists ) const
 {
     /*! \pre A valid key was passed. */
@@ -240,11 +243,11 @@ const T& Info::getItemValueLocal( const std::string& aStringKey,
 
 #if GCAM_PARALLEL_ENABLED
     // read lock for reading the map
-    tbb::queuing_rw_mutex::scoped_lock readlock(mInfoMapMutex, false);
+    tbb::spin_rw_mutex::scoped_lock readlock(mInfoMapMutex, false);
 #endif
     // Check for the value.
-    InfoMap::const_iterator curr = mInfoMap->find( aStringKey );
-    if( curr != mInfoMap->end() ){
+    InfoMap::const_iterator curr = mInfoMap.find( aStringKey );
+    if( curr != mInfoMap.end() ){
         aExists = true;
         // Attempt to set the return value to the found value. This requires
         // converting the data from the actual type to the requested type.
@@ -258,11 +261,12 @@ const T& Info::getItemValueLocal( const std::string& aStringKey,
             // I've also left the try-catch in place, in case there are some
             // versions of the boost libs that actually do throw an exception
             // for the pointer version of the cast.
-            const T *valp = boost::any_cast<T>( &curr->second.second );
-            if(valp)
-                return *valp;
-            else
-                printBadCastWarning(aStringKey, false);
+            const T valp = boost::any_cast<T>( curr->second );
+            //if(valp)
+                //return *valp;
+            return valp;
+            /*else
+                printBadCastWarning(aStringKey, false);*/
         }
         // Catch bad data conversions and print an error.
         // See note within the try-block

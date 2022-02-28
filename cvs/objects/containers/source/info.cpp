@@ -57,7 +57,7 @@ using namespace std;
 */
 Info::Info( const IInfo* aParentInfo, const string& aOwnerName ) :
 mOwnerName( aOwnerName ),
-mInfoMap( new InfoMap( getInitialSize() ) ),
+//mInfoMap( new InfoMap( getInitialSize() ) ),
 mParentInfo( aParentInfo )
 {
 }
@@ -144,11 +144,11 @@ double Info::getDouble( const string& aStringKey, const bool aMustExist ) const
     return value;
 }
 
-const string& Info::getString( const string& aStringKey, const bool aMustExist ) const
+const string Info::getString( const string& aStringKey, const bool aMustExist ) const
 {
     // Perform a local search.
     bool found = false;
-    const string& value = getItemValueLocal<string>( aStringKey, found );
+    const string value = getItemValueLocal<string>( aStringKey, found );
     if( !found ){
         // If the item wasn't found search the parent info.
         if( mParentInfo ){
@@ -200,10 +200,10 @@ double Info::getDoubleHelper( const string& aStringKey, bool& aFound ) const
     return value;
 }
 
-const string& Info::getStringHelper( const string& aStringKey, bool& aFound ) const
+const string Info::getStringHelper( const string& aStringKey, bool& aFound ) const
 {
     // Perform a local search.
-    const string& value = getItemValueLocal<string>( aStringKey, aFound );
+    const string value = getItemValueLocal<string>( aStringKey, aFound );
     
     // If the item wasn't found and parent exists, search the parent info.
     if( !aFound && mParentInfo ){
@@ -215,10 +215,10 @@ const string& Info::getStringHelper( const string& aStringKey, bool& aFound ) co
 bool Info::hasValue( const string& aStringKey ) const {
 #if GCAM_PARALLEL_ENABLED
     // get a read lock on the info map
-    tbb::queuing_rw_mutex::scoped_lock readlock(mInfoMapMutex,false);
+    tbb::spin_rw_mutex::scoped_lock readlock(mInfoMapMutex,false);
 #endif
     // Check the local store. 
-    bool currHasValue = ( mInfoMap->find( aStringKey ) != mInfoMap->end() );
+    bool currHasValue = ( mInfoMap.find( aStringKey ) != mInfoMap.end() );
 
 #if GCAM_PARALLEL_ENABLED
     // the lock on our local map is no longer needed.  Release before
@@ -235,27 +235,40 @@ bool Info::hasValue( const string& aStringKey ) const {
 void Info::toDebugXML( const int aperiod, Tabs* aTabs, ostream& aOut ) const {
 #if GCAM_PARALLEL_ENABLED
     // get read lock for the info map
-    tbb::queuing_rw_mutex::scoped_lock readlock(mInfoMapMutex, false);
+    tbb::spin_rw_mutex::scoped_lock readlock(mInfoMapMutex, false);
 #endif
     XMLWriteOpeningTag( "Info", aOut, aTabs );
-    for( InfoMap::const_iterator item = mInfoMap->begin(); item != mInfoMap->end(); ++item ){
+    for( InfoMap::const_iterator item = mInfoMap.begin(); item != mInfoMap.end(); ++item ){
         XMLWriteOpeningTag( "Pair", aOut, aTabs );
         XMLWriteElement( item->first, "Key", aOut, aTabs );
-        switch( item->second.first ){
-            case eBoolean:
-                printItem<bool>( item->second.second, aOut, aTabs );
+        auto& currType = item->second.type();
+        if(currType == typeid(bool)) {
+            printItem<bool>( item->second, aOut, aTabs );
+        }
+        else if(currType == typeid(int)) {
+            printItem<int>( item->second, aOut, aTabs );
+        }
+        else if(currType == typeid(double)) {
+            printItem<double>( item->second, aOut, aTabs );
+        }
+        else if(currType == typeid(string)) {
+            printItem<string>( item->second, aOut, aTabs );
+        }
+        /*switch( item->second.type() ){
+            case typeid(bool):
+                printItem<bool>( item->second, aOut, aTabs );
                 break;
-            case eInteger:
-                printItem<int>( item->second.second, aOut, aTabs );
+            case typeid(int):
+                printItem<int>( item->second, aOut, aTabs );
                 break;
-            case eDouble:
-                printItem<double>( item->second.second, aOut, aTabs );
+            case typeid(double):
+                printItem<double>( item->second, aOut, aTabs );
                 break;
-            case eString:
-                printItem<string>( item->second.second, aOut, aTabs );
+            case typeid(string):
+                printItem<string>( item->second, aOut, aTabs );
                 break;
             // No default so the compiler can flag omissions.
-        }
+        }*/
         XMLWriteClosingTag( "Pair", aOut, aTabs );
     }
     XMLWriteClosingTag( "Info", aOut, aTabs );
