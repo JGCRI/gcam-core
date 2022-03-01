@@ -2037,6 +2037,8 @@ module_energy_L244.building_det <- function(command, ...) {
     # Bias adder per group
 
     # 1- Generic services
+
+    # Coal and TradBio
     L244.GenericServiceAdder_aggObs<-L144.base_service_EJ_serv %>%
       filter(service %in% generic_services) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
@@ -2047,10 +2049,16 @@ module_energy_L244.building_det <- function(command, ...) {
              obs = value) %>%
       filter(year== MODEL_FINAL_BASE_YEAR)
 
+    L244.GenericServiceAdder_aggObs_gr<-L244.GenericBaseService %>%
+      rename(obs = value) %>%
+      filter(year== MODEL_FINAL_BASE_YEAR)
+
     trad_fuels_oth<-c("resid others coal","resid others TradBio")
     modern_fuels_oth<-c("resid others modern")
+    Adder.Conv.Year<-2030
+    ADJ_MODEL_YEARS<-c(MODEL_BASE_YEARS,MODEL_FUTURE_YEARS[MODEL_FUTURE_YEARS>=Adder.Conv.Year])
 
-    L244.GenericServiceAdder_coal_tradbio<-L244.GenericShares_pre %>%
+    L244.GenericServiceAdder_coal_tradbio_pre<-L244.GenericShares_pre %>%
       filter(grepl("resid",building.service.input)) %>%
       filter(building.service.input %in% trad_fuels_oth) %>%
       select(region,gcam.consumer,nodeInput,building.node.input,building.service.input,year,afford) %>%
@@ -2068,7 +2076,9 @@ module_energy_L244.building_det <- function(command, ...) {
       select(region,gcam.consumer,nodeInput,building.node.input,building.service.input,year,serv) %>%
       mutate(est = serv) %>%
       separate(building.service.input,c("building.service.input","group"),sep = "_") %>%
-      select(region,year,gcam.consumer,building.service.input,est) %>%
+      select(region,year,gcam.consumer,building.service.input,est)
+
+    L244.GenericServiceAdder_coal_tradbio_pre_agg<-L244.GenericServiceAdder_coal_tradbio_pre %>%
       group_by(region,year,building.service.input) %>%
       mutate(est_agg=sum(est)) %>%
       ungroup() %>%
@@ -2076,64 +2086,38 @@ module_energy_L244.building_det <- function(command, ...) {
       left_join(L244.GenericServiceAdder_aggObs, by = c("region", "year", "building.service.input")) %>%
       filter(complete.cases(.)) %>%
       mutate(bias.adder.equal = (obs - est_agg)/n_groups) %>%
-      # start the step-by-step adjustment
-      # step-1
-      #mutate(est_adj2 = if_else(est_adj < 0,0,est_adj),
-      #       is.pos2 = if_else(est_adj2 > 0,1,0)) %>%
-      #group_by(region,year,building.service.input) %>%
-      #mutate(pos2 = sum(is.pos2),
-      #     est_adj2_agg = sum(est_adj2),
-      #      bias.adder.equal2 = (obs - est_adj2_agg)/pos2) %>%
-      # step-2
-      #mutate(est_adj3 = est_adj + bias.adder.equal2,
-      #      est_adj4 = if_else(est_adj3 < 0,0,est_adj3),
-    #      is.pos3 = if_else(est_adj4 > 0,1,0),
-    #        pos3 = sum(is.pos3),
-    #        est_adj4_agg = sum(est_adj4),
-    #        bias.adder.equal3 = (obs - est_adj4_agg)/pos3) %>%
-      # step-3
-    # mutate(est_adj5 = est_adj4 + bias.adder.equal3,
-    #        est_adj6 = if_else(est_adj5 < 0,0,est_adj5),
-    #        is.pos4 = if_else(est_adj6 > 0,1,0),
-    #        pos4 = sum(is.pos4),
-    #        est_adj6_agg = sum(est_adj6),
-    #        bias.adder.equal4 = (obs - est_adj6_agg)/pos4) %>%
-      # step-4
-    # mutate(est_adj7 = est_adj6 + bias.adder.equal4,
-    #        est_adj8 = if_else(est_adj7 < 0,0,est_adj7),
-    #        is.pos5 = if_else(est_adj8 > 0,1,0),
-    #        pos5 = sum(is.pos5),
-    #        est_adj8_agg = sum(est_adj8),
-    #        bias.adder.equal5 = (obs - est_adj8_agg)/pos5) %>%
-    # step-5
-    #mutate(est_adj9 = est_adj8 + bias.adder.equal5,
-    #      est_adj10 = if_else(est_adj9 < 0,0,est_adj9),
-    #      is.pos6 = if_else(est_adj10 > 0,1,0),
-    #      pos6 = sum(is.pos6),
-    #      est_adj10_agg = sum(est_adj10),
-    #      bias.adder.equal6 = (obs - est_adj10_agg)/pos6) %>%
-    # round adder and adjust set NAs to 0
-    # replace_na(list(bias.adder.equal=0)) %>%
-    # replace_na(list(bias.adder.equal2=0)) %>%
-    # replace_na(list(bias.adder.equal3=0)) %>%
-    # replace_na(list(bias.adder.equal4=0)) %>%
-    # replace_na(list(bias.adder.equal5=0)) %>%
-    # replace_na(list(bias.adder.equal6=0)) %>%
-    # mutate(bias.adder = round(bias.adder.equal + bias.adder.equal2 + bias.adder.equal3 +
-    #                             bias.adder.equal4 + bias.adder.equal5 + bias.adder.equal6,9)) %>%
-    mutate(bias.adder = round(bias.adder.equal,9)) %>%
+      mutate(bias.adder = round(bias.adder.equal,9)) %>%
       mutate(nodeInput = "resid",
              building.node.input = "resid_building") %>%
       ungroup() %>%
       # adjust zero adder if observed is 0
       mutate(bias.adder = if_else(obs==0,0,bias.adder)) %>%
+      select(region,gcam.consumer,nodeInput,building.node.input,building.service.input,bias.adder)
+
+    L244.GenericServiceAdder_coal_tradbio<-L244.GenericServiceAdder_coal_tradbio_pre %>%
+      filter(year== MODEL_FINAL_BASE_YEAR) %>%
+      left_join_error_no_match(L244.GenericServiceAdder_aggObs_gr, by = c("region", "year", "gcam.consumer", "building.service.input")) %>%
+      mutate(bias.adder.share = base.service - est,
+             bias.adder.share = if_else(base.service==0,0,bias.adder.share)) %>%
+      left_join_error_no_match(L244.GenericServiceAdder_coal_tradbio_pre_agg, by = c("region", "gcam.consumer", "building.service.input", "nodeInput", "building.node.input")) %>%
+      mutate(bias.adder = if_else(base.service==0,0,bias.adder)) %>%
+      select(region,gcam.consumer,nodeInput,building.node.input,building.service.input,bias.adder.share,bias.adder.eq=bias.adder) %>%
+      repeat_add_columns(tibble(year=ADJ_MODEL_YEARS)) %>%
+      mutate(bias.adder = if_else(year!= MODEL_FINAL_BASE_YEAR,bias.adder.eq,bias.adder.share)) %>%
+      complete(nesting(region,gcam.consumer, nodeInput,building.node.input,building.service.input), year = c(year, MODEL_YEARS)) %>%
+      group_by(region,gcam.consumer, nodeInput,building.node.input,building.service.input) %>%
+      mutate(bias.adder = approx_fun(year, bias.adder, rule = 1)) %>%
+      ungroup() %>%
       select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]])
 
 
-    L244.GenericServiceAdder_modern<-L244.GenericShares_pre %>%
+    # Modern
+    L244.GenericServiceAdder_modern_pre<-L244.GenericShares_pre %>%
       filter(building.service.input %in% modern_fuels_oth) %>%
       mutate(est = serv) %>%
-      select(region,year,gcam.consumer,building.service.input,est) %>%
+      select(region,year,gcam.consumer,building.service.input,est)
+
+    L244.GenericServiceAdder_modern_pre_agg<-L244.GenericServiceAdder_modern_pre %>%
       group_by(region,year,building.service.input) %>%
       mutate(est_agg=sum(est)) %>%
       ungroup() %>%
@@ -2147,10 +2131,27 @@ module_energy_L244.building_det <- function(command, ...) {
              building.node.input = "resid_building") %>%
       # adjust zero adder if observed is 0
       mutate(bias.adder = if_else(obs==0,0,bias.adder)) %>%
+      select(region,gcam.consumer,nodeInput,building.node.input,building.service.input,bias.adder)
+
+    L244.GenericServiceAdder_modern<-L244.GenericServiceAdder_modern_pre %>%
+      filter(year== MODEL_FINAL_BASE_YEAR) %>%
+      left_join_error_no_match(L244.GenericServiceAdder_aggObs_gr, by = c("region", "year", "gcam.consumer", "building.service.input")) %>%
+      left_join_error_no_match(L244.Floorspace, by = c("region", "year", "gcam.consumer", "nodeInput", "building.node.input")) %>%
+      mutate(bias.adder.share = (base.service - est)/base.building.size,
+             bias.adder.share = if_else(base.service==0,0,bias.adder.share)) %>%
+      left_join_error_no_match(L244.GenericServiceAdder_modern_pre_agg, by = c("region", "gcam.consumer", "building.service.input", "nodeInput", "building.node.input")) %>%
+      mutate(bias.adder = if_else(base.service==0,0,bias.adder)) %>%
+      select(region,gcam.consumer,nodeInput,building.node.input,building.service.input,bias.adder.share,bias.adder.eq=bias.adder) %>%
+      repeat_add_columns(tibble(year=ADJ_MODEL_YEARS)) %>%
+      mutate(bias.adder = if_else(year!= MODEL_FINAL_BASE_YEAR,bias.adder.eq,bias.adder.share)) %>%
+      complete(nesting(region,gcam.consumer, nodeInput,building.node.input,building.service.input), year = c(year, MODEL_YEARS)) %>%
+      group_by(region,gcam.consumer, nodeInput,building.node.input,building.service.input) %>%
+      mutate(bias.adder = approx_fun(year, bias.adder, rule = 1)) %>%
+      ungroup() %>%
       select(LEVEL2_DATA_NAMES[["GenericServiceAdder"]])
 
 
-    L244.GenericServiceAdder<-bind_rows(L244.GenericServiceAdder_coal_tradbio,L244.GenericServiceAdder_modern) %>%
+   L244.GenericServiceAdder<-bind_rows(L244.GenericServiceAdder_coal_tradbio,L244.GenericServiceAdder_modern) %>%
     # add commercial
     bind_rows(L244.GenericShares_pre %>%
                 filter(year== MODEL_FINAL_BASE_YEAR) %>%
@@ -2187,6 +2188,8 @@ module_energy_L244.building_det <- function(command, ...) {
     modern_fuels_thermal<-c("resid cooling modern","resid heating modern")
 
     # 2- Thermal services
+
+    # Coal and TradBio
     L244.ThermalServiceAdder_aggObs<-L144.base_service_EJ_serv %>%
       filter(service %in% thermal_services) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
@@ -2197,8 +2200,12 @@ module_energy_L244.building_det <- function(command, ...) {
              obs = value) %>%
       filter(year== MODEL_FINAL_BASE_YEAR)
 
+    L244.ThermalServiceAdder_aggObs_gr<-L244.ThermalBaseService %>%
+      rename(obs = value) %>%
+      filter(year== MODEL_FINAL_BASE_YEAR)
 
-    L244.ThermalServiceAdder_coal_tradbio<-L244.ThermalShares_pre %>%
+
+    L244.ThermalServiceAdder_coal_tradbio_pre<-L244.ThermalShares_pre %>%
       filter(grepl("resid",thermal.building.service.input)) %>%
       filter(thermal.building.service.input %in% trad_fuels_thermal) %>%
       select(region,gcam.consumer,nodeInput,building.node.input,thermal.building.service.input,year,afford) %>%
@@ -2213,75 +2220,52 @@ module_energy_L244.building_det <- function(command, ...) {
              x_TradBio_new = x_TradBio,
              y_TradBio_new = y_TradBio) %>%
       mutate(serv = if_else(grepl("coal",thermal.building.service.input),A_coal_new/(afford+k_coal_new),x_TradBio_new/(afford+y_TradBio_new))) %>%
+      replace_na(list(serv=0)) %>%
       select(region,gcam.consumer,nodeInput,building.node.input,thermal.building.service.input,year,serv) %>%
       mutate(est = serv) %>%
       separate(thermal.building.service.input,c("thermal.building.service.input","group"),sep = "_") %>%
-      select(region,year,gcam.consumer,thermal.building.service.input,est) %>%
+      select(region,year,gcam.consumer,thermal.building.service.input,est)
+
+    L244.ThermalServiceAdder_coal_tradbio_pre_agg<-L244.ThermalServiceAdder_coal_tradbio_pre %>%
       group_by(region,year,thermal.building.service.input) %>%
       mutate(est_agg=sum(est)) %>%
       ungroup() %>%
       filter(year== MODEL_FINAL_BASE_YEAR) %>%
-      left_join(L244.ThermalServiceAdder_aggObs, by = c("region", "year", "thermal.building.service.input")) %>%
+      left_join_error_no_match(L244.ThermalServiceAdder_aggObs, by = c("region", "year", "thermal.building.service.input")) %>%
       filter(complete.cases(.)) %>%
       mutate(bias.adder.equal = (obs - est_agg)/n_groups) %>%
-      # start the step-by-step adjustment
-      # step-1
-      #mutate(est_adj2 = if_else(est_adj < 0,0,est_adj),
-      #       is.pos2 = if_else(est_adj2 > 0,1,0)) %>%
-      #group_by(region,year,thermal.building.service.input) %>%
-      #mutate(pos2 = sum(is.pos2),
-      #       est_adj2_agg = sum(est_adj2),
-      #             bias.adder.equal2 = (obs - est_adj2_agg)/pos2) %>%
-      # step-2
-      #mutate(est_adj3 = est_adj + bias.adder.equal2,
-      #       est_adj4 = if_else(est_adj3 < 0,0,est_adj3),
-    #       is.pos3 = if_else(est_adj4 > 0,1,0),
-    ##        pos3 = sum(is.pos3),
-    #       est_adj4_agg = sum(est_adj4),
-    #        bias.adder.equal3 = (obs - est_adj4_agg)/pos3) %>%
-     # step-3
-    # mutate(est_adj5 = est_adj4 + bias.adder.equal3,
-    #         est_adj6 = if_else(est_adj5 < 0,0,est_adj5),
-    #        is.pos4 = if_else(est_adj6 > 0,1,0),
-    #        pos4 = sum(is.pos4),
-    #        est_adj6_agg = sum(est_adj6),
-    #        bias.adder.equal4 = (obs - est_adj6_agg)/pos4) %>%
-      # step-4
-    # mutate(est_adj7 = est_adj6 + bias.adder.equal4,
-    #        est_adj8 = if_else(est_adj7 < 0,0,est_adj7),
-    #        is.pos5 = if_else(est_adj8 > 0,1,0),
-    #        pos5 = sum(is.pos5),
-    #        est_adj8_agg = sum(est_adj8),
-    #        bias.adder.equal5 = (obs - est_adj8_agg)/pos5) %>%
-      # step-5
-    # mutate(est_adj9 = est_adj8 + bias.adder.equal5,
-    #        est_adj10 = if_else(est_adj9 < 0,0,est_adj9),
-    #        is.pos6 = if_else(est_adj10 > 0,1,0),
-    #        pos6 = sum(is.pos6),
-    #        est_adj10_agg = sum(est_adj10),
-    #        bias.adder.equal6 = (obs - est_adj10_agg)/pos6) %>%
-      # round adder and adjust set NAs to 0
-    # replace_na(list(bias.adder.equal=0)) %>%
-    # replace_na(list(bias.adder.equal2=0)) %>%
-    # replace_na(list(bias.adder.equal3=0)) %>%
-    # replace_na(list(bias.adder.equal4=0)) %>%
-    # replace_na(list(bias.adder.equal5=0)) %>%
-    # replace_na(list(bias.adder.equal6=0)) %>%
-    # mutate(bias.adder = round(bias.adder.equal + bias.adder.equal2 + bias.adder.equal3 +
-    #                             bias.adder.equal4 + bias.adder.equal5 + bias.adder.equal6,9)) %>%
-     mutate(bias.adder = round(bias.adder.equal,9)) %>%
+      mutate(bias.adder = round(bias.adder.equal,9)) %>%
       mutate(nodeInput = "resid",
              building.node.input = "resid_building") %>%
       ungroup() %>%
       # adjust zero adder if observed is 0
       mutate(bias.adder = if_else(obs==0,0,bias.adder)) %>%
+      select(region,gcam.consumer,nodeInput,building.node.input,thermal.building.service.input,bias.adder)
+
+    L244.ThermalServiceAdder_coal_tradbio<-L244.ThermalServiceAdder_coal_tradbio_pre %>%
+      filter(year== MODEL_FINAL_BASE_YEAR) %>%
+      left_join_error_no_match(L244.ThermalServiceAdder_aggObs_gr, by = c("region", "year", "gcam.consumer", "thermal.building.service.input")) %>%
+      mutate(bias.adder.share = base.service - est,
+             bias.adder.share = if_else(base.service==0,0,bias.adder.share)) %>%
+      left_join_error_no_match(L244.ThermalServiceAdder_coal_tradbio_pre_agg, by = c("region", "gcam.consumer", "thermal.building.service.input", "nodeInput", "building.node.input")) %>%
+      mutate(bias.adder = if_else(base.service==0,0,bias.adder)) %>%
+      select(region,gcam.consumer,nodeInput,building.node.input,thermal.building.service.input,bias.adder.share,bias.adder.eq=bias.adder) %>%
+      repeat_add_columns(tibble(year=ADJ_MODEL_YEARS)) %>%
+      mutate(bias.adder = if_else(year!= MODEL_FINAL_BASE_YEAR,bias.adder.eq,bias.adder.share)) %>%
+      complete(nesting(region,gcam.consumer, nodeInput,building.node.input,thermal.building.service.input), year = c(year, MODEL_YEARS)) %>%
+      group_by(region,gcam.consumer, nodeInput,building.node.input,thermal.building.service.input) %>%
+      mutate(bias.adder = approx_fun(year, bias.adder, rule = 1)) %>%
+      ungroup() %>%
       select(LEVEL2_DATA_NAMES[["ThermalServiceAdder"]])
 
 
-    L244.ThermalServiceAdder_modern<-L244.ThermalShares_pre %>%
+    # Modern
+    L244.ThermalServiceAdder_modern_pre<-L244.ThermalShares_pre %>%
       filter(thermal.building.service.input %in% modern_fuels_thermal) %>%
       mutate(est = serv) %>%
-      select(region,year,gcam.consumer,thermal.building.service.input,est) %>%
+      select(region,year,gcam.consumer,thermal.building.service.input,est)
+
+    L244.ThermalServiceAdder_modern_pre_agg<-L244.ThermalServiceAdder_modern_pre %>%
       group_by(region,year,thermal.building.service.input) %>%
       mutate(est_agg=sum(est)) %>%
       ungroup() %>%
@@ -2295,6 +2279,24 @@ module_energy_L244.building_det <- function(command, ...) {
              building.node.input = "resid_building") %>%
       # adjust zero adder if observed is 0
       mutate(bias.adder = if_else(obs==0,0,bias.adder)) %>%
+        select(region,gcam.consumer,nodeInput,building.node.input,thermal.building.service.input,bias.adder)
+
+    L244.ThermalServiceAdder_modern<-L244.ThermalServiceAdder_modern_pre %>%
+      filter(year== MODEL_FINAL_BASE_YEAR) %>%
+      left_join_error_no_match(L244.ThermalServiceAdder_aggObs_gr, by = c("region", "year", "gcam.consumer", "thermal.building.service.input")) %>%
+      left_join_error_no_match(L244.Floorspace, by = c("region", "year", "gcam.consumer", "nodeInput", "building.node.input")) %>%
+      mutate(bias.adder.share = (base.service - est)/base.building.size,
+             bias.adder.share = if_else(base.service==0,0,bias.adder.share)) %>%
+      filter(complete.cases(.)) %>%
+      left_join_error_no_match(L244.ThermalServiceAdder_modern_pre_agg, by = c("region", "gcam.consumer", "thermal.building.service.input", "nodeInput", "building.node.input")) %>%
+      mutate(bias.adder = if_else(base.service==0,0,bias.adder)) %>%
+      select(region,gcam.consumer,nodeInput,building.node.input,thermal.building.service.input,bias.adder.share,bias.adder.eq=bias.adder) %>%
+      repeat_add_columns(tibble(year=ADJ_MODEL_YEARS)) %>%
+      mutate(bias.adder = if_else(year!= MODEL_FINAL_BASE_YEAR,bias.adder.eq,bias.adder.share)) %>%
+      complete(nesting(region,gcam.consumer, nodeInput,building.node.input,thermal.building.service.input), year = c(year, MODEL_YEARS)) %>%
+      group_by(region,gcam.consumer, nodeInput,building.node.input,thermal.building.service.input) %>%
+      mutate(bias.adder = approx_fun(year, bias.adder, rule = 1)) %>%
+      ungroup() %>%
       select(LEVEL2_DATA_NAMES[["ThermalServiceAdder"]])
 
 

@@ -339,7 +339,7 @@ double BuildingServiceInput::getTradBioBase() const {
     return mTradBioBase;
 }
 
-double BuildingServiceInput::getBiasAdder() const {
+double BuildingServiceInput::getBiasAdder(const int aPeriod) const {
     return mBiasAdderEn;
 }
 

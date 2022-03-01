@@ -106,7 +106,7 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
                 
                 double serviceDensity = calcServiceDensity(buildingServiceInput, income, regionName, period);
 
-                double biasadder = buildingServiceInput->getBiasAdder();
+                double biasadder = buildingServiceInput->getBiasAdder(period);
                 double adjustedServiceDensity = (buildingServiceInput->getCoef() * thermalLoad * serviceDensity) + biasadder;
 
 
@@ -186,7 +186,7 @@ double BuildingServiceFunction::calcServiceCoal(BuildingServiceInput* aBuildingS
     double CoalK = aBuildingServiceInput->getCoalK();
     double CoalBase = aBuildingServiceInput->getCoalBase();
 
-    double biasadder = aBuildingServiceInput->getBiasAdder();
+    double biasadder = aBuildingServiceInput->getBiasAdder(aPeriod);
 
 
     const double servicePrice = aBuildingServiceInput->getPricePaid(aRegionName, aPeriod);
@@ -218,7 +218,7 @@ double BuildingServiceFunction::calcServiceTradBio(BuildingServiceInput* aBuildi
     double TradBioY = aBuildingServiceInput->getTradBioY();
     double TradBioBase = aBuildingServiceInput->getTradBioBase();
 
-    double biasadder = aBuildingServiceInput->getBiasAdder();
+    double biasadder = aBuildingServiceInput->getBiasAdder(aPeriod);
 
     const double servicePrice = aBuildingServiceInput->getPricePaid(aRegionName, aPeriod);
     const double cappedPrice = max(servicePrice, SectorUtils::getDemandPriceThreshold());

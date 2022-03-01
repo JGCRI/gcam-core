@@ -263,14 +263,14 @@ Africa,bld_resid,heat,resid cooling modern,0
 Africa,bld_resid,refined liquids,resid cooling modern,0
 Africa,bld_resid,coal,resid heating coal,0
 Africa,bld_resid,biomass,resid heating modern,0.019607697
-Africa,bld_resid,electricity,resid heating modern,0
+Africa,bld_resid,electricity,resid heating modern,0.01776423
 Africa,bld_resid,gas,resid heating modern,0.008227684
 Africa,bld_resid,heat,resid heating modern,0
 Africa,bld_resid,refined liquids,resid heating modern,0.013806598
 Africa,bld_resid,traditional biomass,resid heating TradBio,0.05
 Africa,bld_resid,coal,resid others coal,0.011684994
 Africa,bld_resid,biomass,resid others modern,0.045751294
-Africa,bld_resid,electricity,resid others modern,0.039214101
+Africa,bld_resid,electricity,resid others modern,0.021449871
 Africa,bld_resid,gas,resid others modern,0.01919793
 Africa,bld_resid,heat,resid others modern,0
 Africa,bld_resid,refined liquids,resid others modern,0.032215395

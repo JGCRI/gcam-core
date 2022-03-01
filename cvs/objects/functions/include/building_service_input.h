@@ -95,7 +95,7 @@ public:
                                     const double aInternalGainsPerSqMeter,
                                     const int aPeriod ) const;
 
-	virtual double getBiasAdder() const;
+	virtual double getBiasAdder(const int aPeriod) const;
 
     // INestedInput methods
     // define them to do nothing since a BuildingServiceInput is a leaf in the nesting structure
