@@ -519,6 +519,7 @@ socioeconomics.IMF_GDP_YEARS <- 2015:2024
 socioeconomics.BASE_POP_SCEN         <- "SSP2"
 socioeconomics.BASE_GDP_SCENARIO     <- "SSP2"
 socioeconomics.BASE_INCSHARE_BASE <- "Historical data"
+socioeconomics.BASE_INCSHARE_MODEL <- "PCA algorithm (Two Components)"
 socioeconomics.BASE_INCSHARE_SCENARIO <- "SSP2"
 socioeconomics.INCSHARE_YEARS <- 1967:2100
 socioeconomics.DEFAULT_INTEREST_RATE <- 0.05

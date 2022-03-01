@@ -283,6 +283,11 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       replace_na(list(share_serv_fuel = 0)) ->
       L144.share_serv_fuel
 
+    # check serv_fuel shares
+    check_serv_fuel_shares<-L144.share_serv_fuel %>%
+      group_by(region_GCAM3,sector,fuel) %>%
+      mutate(check_share = sum(share_serv_fuel))
+
     # For making the energy consumption table, start with the tech list that will be in each region,
     # and repeat by number of countries from IEA
     # First, create list of countries, which will be used to expand the table
