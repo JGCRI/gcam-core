@@ -109,7 +109,7 @@ void BuildingServiceInput::XMLParse( const DOMNode* aNode ) {
         }
 
 		else if ( nodeName == "bias-adder" ) {
-			mBiasAdderEn = (XMLHelper<double>::getValue(curr));
+            XMLHelper<Value>::insertValueIntoVector(curr, mBiasAdderEn, scenario->getModeltime());
 		}
 
         else if (nodeName == "A-coal") {
@@ -218,7 +218,7 @@ void BuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* a
     XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs, mName );
 
     XMLWriteElement( mServiceDemand[ aPeriod ], "service", aOut, aTabs );
-	XMLWriteElement(mBiasAdderEn, "bias-adder", aOut, aTabs);
+	XMLWriteElement(mBiasAdderEn[ aPeriod ], "bias-adder", aOut, aTabs);
     XMLWriteElement(mCoalA, "A-coal", aOut, aTabs);
     XMLWriteElement(mCoalK, "k-coal", aOut, aTabs);
     XMLWriteElement(mCoalBase, "base-coal", aOut, aTabs);
@@ -340,7 +340,7 @@ double BuildingServiceInput::getTradBioBase() const {
 }
 
 double BuildingServiceInput::getBiasAdder(const int aPeriod) const {
-    return mBiasAdderEn;
+    return mBiasAdderEn[ aPeriod ];
 }
 
 /*! \brief Set the building service coefficient.

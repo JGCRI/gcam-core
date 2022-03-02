@@ -112,7 +112,7 @@ public:
 
 	virtual double getCoef() const;
 
-    virtual double getBiasAdder() const;
+    virtual double getBiasAdder(const int aPeriod) const;
 
     virtual double getCoalA() const;
     
@@ -164,7 +164,7 @@ protected:
         DEFINE_VARIABLE(SIMPLE | STATE, "base-TradBio", mTradBioBase, Value),
 
 		//! Demand function coefficients to capture base year thermal characteristics.
-		DEFINE_VARIABLE(SIMPLE | STATE, "bias-adder", mBiasAdderEn, Value)
+        DEFINE_VARIABLE(ARRAY | STATE, "bias-adder", mBiasAdderEn, objects::PeriodVector<Value>)
     )
     
     void copy( const ThermalBuildingServiceInput& aInput );

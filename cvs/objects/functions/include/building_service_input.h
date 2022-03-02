@@ -331,7 +331,7 @@ protected:
 		DEFINE_VARIABLE(SIMPLE | STATE, "coef", mCoef, Value),
 
 		//! Demand function coefficients to capture base year  characteristics.
-		DEFINE_VARIABLE(SIMPLE | STATE, "bias-adder", mBiasAdderEn, Value),
+		DEFINE_VARIABLE(ARRAY | STATE, "bias-adder", mBiasAdderEn, objects::PeriodVector<Value>),
 
         //! Demand function coefficients to capture base year  characteristics.
         DEFINE_VARIABLE(SIMPLE | STATE, "A-coal", mCoalA, Value),

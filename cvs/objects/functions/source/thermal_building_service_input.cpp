@@ -111,7 +111,7 @@ void ThermalBuildingServiceInput::XMLParse( const DOMNode* aNode ) {
         }
 
 		else if (nodeName == "bias-adder") {
-			mBiasAdderEn = (XMLHelper<double>::getValue(curr));
+            XMLHelper<Value>::insertValueIntoVector(curr, mBiasAdderEn, scenario->getModeltime());
 		}
 
         else if (nodeName == "A-coal") {
@@ -194,7 +194,7 @@ void ThermalBuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, 
     XMLWriteElement( mServiceDemand[ aPeriod ], "service", aOut, aTabs );
     XMLWriteElement( mServiceDensity[ aPeriod ], "service-density", aOut, aTabs );
     XMLWriteElement( mCoef, "coef", aOut, aTabs );
-	XMLWriteElement( mBiasAdderEn, "bias-adder", aOut, aTabs);
+	XMLWriteElement( mBiasAdderEn[ aPeriod ], "bias-adder", aOut, aTabs);
     XMLWriteElement(mCoalA, "a-coal", aOut, aTabs);
     XMLWriteElement(mCoalK, "k-coal", aOut, aTabs);
     XMLWriteElement(mCoalBase, "base-coal", aOut, aTabs);
@@ -283,8 +283,8 @@ double ThermalBuildingServiceInput::getTradBioBase() const {
 }
 
 
-double ThermalBuildingServiceInput::getBiasAdder() const {
-	return mBiasAdderEn;
+double ThermalBuildingServiceInput::getBiasAdder(const int aPeriod) const {
+	return mBiasAdderEn[ aPeriod ];
 }
 
 
