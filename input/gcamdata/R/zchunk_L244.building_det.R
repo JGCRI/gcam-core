@@ -210,7 +210,6 @@ module_energy_L244.building_det <- function(command, ...) {
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y") # year comes in as double
     L144.flsp_param <- get_data(all_data, "L144.flsp_param", strip_attributes = TRUE)
-    #L144.hab_land_flsp_fin<-get_data(all_data, "L144.hab_land_flsp_fin", strip_attributes = TRUE)
     L144.prices_bld<-get_data(all_data, "L144.prices_bld", strip_attributes = TRUE)
     income_shares<-get_data(all_data, "socioeconomics/income_shares")
     n_groups<-nrow(unique(get_data(all_data, "socioeconomics/income_shares") %>%
@@ -742,6 +741,8 @@ module_energy_L244.building_det <- function(command, ...) {
       ungroup() %>%
       left_join_error_no_match(A_regions %>% select(GCAM_region_ID,region),by="region") %>%
       left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("year", "GCAM_region_ID")) %>%
+      mutate(est_flsp_bm2=round(est_flsp_bm2,3),
+             observed_flsp_bm2=round(observed_flsp_bm2,3)) %>%
       mutate(satiation.adder=((observed_flsp_bm2-est_flsp_bm2)*1E9)/(pop_thous*1E3)) %>%
       select(region,nodeInput,building.node.input,year,satiation.adder,SSP) %>%
       mutate(gcam.consumer = nodeInput) %>%
