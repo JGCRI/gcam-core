@@ -17,12 +17,8 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(paste0("L244.Satiation_flsp_SSP", SSP_NUMS),
              paste0("L244.SatiationAdder_SSP", SSP_NUMS),
-             paste0("L244.Satiation_impedance_SSP", SSP_NUMS),
-             paste0("L244.GenericServiceSatiation_SSP", SSP_NUMS),
-             paste0("L244.GenericServiceImpedance_SSP", SSP_NUMS),
-             paste0("L244.GenericServiceAdder_SSP", SSP_NUMS),
-             paste0("L244.GenericServiceCoef_SSP", SSP_NUMS),
-             "L244.DeleteThermalService"))
+             paste0("L244.Satiation_impedance_SSP", SSP_NUMS)))
+
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_SSP1.xml",
              XML = "building_SSP2.xml",
@@ -42,10 +38,6 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
       Satiation_flsp <- paste0("L244.Satiation_flsp_SSP", i)
       SatiationAdder <- paste0("L244.SatiationAdder_SSP", i)
       Satiation_impedance <- paste0("L244.Satiation_impedance_SSP", i)
-      GenericServiceSatiation <- paste0("L244.GenericServiceSatiation_SSP", i)
-      GenericServiceImpedance <- paste0("L244.GenericServiceImpedance_SSP", i)
-      GenericServiceAdder <- paste0("L244.GenericServiceAdder_SSP", i)
-      GenericServiceCoef <- paste0("L244.GenericServiceCoef_SSP", i)
 
       xmlfn <- paste0("building_SSP", i, ".xml")
 
@@ -53,14 +45,7 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
       L244.Satiation_flsp_SSP <- get_data(all_data, Satiation_flsp)
       L244.SatiationAdder_SSP <- get_data(all_data, SatiationAdder)
       L244.Satiation_impedance_SSP <- get_data(all_data, Satiation_impedance)
-      L244.GenericServiceSatiation_SSP <- get_data(all_data, GenericServiceSatiation)
-      L244.GenericServiceImpedance_SSP <- get_data(all_data, GenericServiceImpedance)
-      L244.GenericServiceAdder_SSP <- get_data(all_data, GenericServiceAdder)
-      L244.GenericServiceCoef_SSP <- get_data(all_data, GenericServiceCoef)
 
-      if(i != 2) {
-        L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService")
-      }
 
       # Produce outputs
       if(i == 2) {
@@ -68,26 +53,14 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
           add_xml_data(L244.Satiation_flsp_SSP, "Satiation_flsp") %>%
           add_xml_data(L244.SatiationAdder_SSP, "SatiationAdder") %>%
           add_xml_data(L244.Satiation_impedance_SSP, "SatiationImpedance") %>%
-          add_xml_data(L244.GenericServiceSatiation_SSP, "GenericServiceSatiation") %>%
-          add_xml_data(L244.GenericServiceImpedance_SSP, "GenericServiceImpedance") %>%
-          add_xml_data(L244.GenericServiceAdder_SSP, "GenericServiceAdder") %>%
-          add_xml_data(L244.GenericServiceCoef_SSP, "GenericServiceCoef") %>%
-          add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance,GenericServiceSatiation,
-                         GenericServiceImpedance,GenericServiceAdder,GenericServiceCoef) ->
-          xml_obj
+          add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance) -> xml_obj
+
       } else {
         create_xml(xmlfn) %>%
           add_xml_data(L244.Satiation_flsp_SSP, "Satiation_flsp") %>%
           add_xml_data(L244.SatiationAdder_SSP, "SatiationAdder") %>%
           add_xml_data(L244.Satiation_impedance_SSP, "SatiationImpedance") %>%
-          add_xml_data(L244.GenericServiceSatiation_SSP, "GenericServiceSatiation") %>%
-          add_xml_data(L244.GenericServiceImpedance_SSP, "GenericServiceImpedance") %>%
-          add_xml_data(L244.GenericServiceAdder_SSP, "GenericServiceAdder") %>%
-          add_xml_data(L244.GenericServiceCoef_SSP, "GenericServiceCoef") %>%
-          add_xml_data(L244.DeleteThermalService, "DeleteThermalService") %>%
-          add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance, GenericServiceSatiation, GenericServiceImpedance,
-                         GenericServiceAdder,GenericServiceCoef,"L244.DeleteThermalService") ->
-          xml_obj
+          add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance) -> xml_obj
       }
 
       # Assign output to output name

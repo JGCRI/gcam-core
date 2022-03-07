@@ -1535,8 +1535,8 @@ module_energy_L244.building_det <- function(command, ...) {
     L244.GenericServiceCoef_SSPs<-L244.GenericServiceImpedance_allvars_SSPs %>%
       select(LEVEL2_DATA_NAMES[["GenericServiceCoef"]],SSP)  %>%
       # only commercial and residential-modern services use coef
-     # filter(!grepl("coal",building.service.input),
-    #         !grepl("TradBio",building.service.input)) %>%
+      filter(!grepl("coal",building.service.input),
+             !grepl("TradBio",building.service.input)) %>%
       filter(grepl("resid",gcam.consumer)) %>%
       repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
       unite(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
