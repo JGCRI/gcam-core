@@ -4,20 +4,13 @@
 \alias{driver}
 \title{driver}
 \usage{
-driver(
-  all_data = empty_data(),
-  stop_before = NULL,
-  stop_after = NULL,
-  return_inputs_of = stop_before,
+driver(all_data = empty_data(), stop_before = NULL,
+  stop_after = NULL, return_inputs_of = stop_before,
   return_outputs_of = stop_after,
-  return_data_names = union(inputs_of(return_inputs_of), outputs_of(return_outputs_of)),
-  return_data_map_only = FALSE,
-  write_outputs = !return_data_map_only,
-  write_xml = write_outputs,
-  outdir = OUTPUTS_DIR,
-  xmldir = XML_DIR,
-  quiet = FALSE
-)
+  return_data_names = union(inputs_of(return_inputs_of),
+  outputs_of(return_outputs_of)), return_data_map_only = FALSE,
+  write_outputs = !return_data_map_only, write_xml = write_outputs,
+  outdir = OUTPUTS_DIR, xmldir = XML_DIR, quiet = FALSE)
 }
 \arguments{
 \item{all_data}{Data to be pre-loaded into data system}
