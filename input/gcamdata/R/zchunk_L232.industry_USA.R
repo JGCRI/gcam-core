@@ -254,9 +254,9 @@ module_gcamusa_L232.industry_USA <- function(command, ...) {
       group_by(region, year) %>%
       summarise(calOutputValue = sum(calOutputValue)) %>% ungroup %>%
       # ^^ aggregate to get output of industrial sector in each region
-      mutate(supplysector = "industry",
-             subsector = "industry",
-             stub.technology = "industry",
+      mutate(supplysector = "other industry",
+             subsector = "other industry",
+             stub.technology = "other industry",
              share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
@@ -274,9 +274,9 @@ module_gcamusa_L232.industry_USA <- function(command, ...) {
       mutate(coefficient = round(calOutputValue / output_tot, energy.DIGITS_COEFFICIENT)) %>%
       # ^^ get coefficient
       rename(minicam.energy.input = supplysector) %>%
-      mutate(supplysector = "industry",
-             subsector = "industry",
-             stub.technology = "industry",
+      mutate(supplysector = "other industry",
+             subsector = "other industry",
+             stub.technology = "other industry",
              market.name = region) ->
       L232.StubTechCoef_industry_USA_base
     # ^^ covers only base years
