@@ -56,7 +56,7 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
       select(supplysector = Electric.sector, subsector, stub.technology = Electric.sector.technology) %>%
       # Get the conventional coal technology without CCS
       filter(subsector == "coal", !grepl("CCS", stub.technology)) %>%
-      bind_rows(tibble(supplysector = "industrial energy use", subsector = "coal", stub.technology = "coal cogen")) %>%
+      bind_rows(tibble(supplysector = "other industrial energy use", subsector = "coal", stub.technology = "coal cogen")) %>%
       repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       mutate(share.weight = 0) %>%

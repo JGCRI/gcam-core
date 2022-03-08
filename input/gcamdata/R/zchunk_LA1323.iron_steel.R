@@ -33,7 +33,6 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
              "L1323.in_EJ_R_indenergy_F_Yh"))
   } else if(command == driver.MAKE) {
 
-
     # Silence global variable package check
     raw <- subsector <- minicam.energy.input <- Country <- sector <-
     share <- value <- iron_steel <- year <- value.y <- value.x <- NULL
@@ -88,8 +87,6 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
       summarise(value = sum(value)) %>%
       ungroup() ->
       en_steel
-
-
 
     # Calculate bottom-up energy consumption = production * intensity from literature
     L1323.out_Mt_R_iron_steel_Yh %>%
