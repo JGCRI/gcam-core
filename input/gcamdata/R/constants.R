@@ -334,7 +334,7 @@ aglu.N0_LOGIT_TYPE <- NA
 
 
 
-#Set the below constant to FALSE to activate the protected areas differentiated by land type and region in GCAM. Setting it to TRUE will use the default protection fraction defined in aglu.PROTECT_DEFAULT
+#Set the below constant to TRUE to de-activate the protected areas differentiated by land type and region in GCAM. Setting it to TRUE will use the default protection fraction defined in aglu.PROTECT_DEFAULT
 aglu.PROTECTION_DATA_SOURCE_DEFAULT <- FALSE
 #Un-Protected area status- This constant can be used to make more land types from the protection categories available for expansion.
 # The available options for land types are - Unknown, UnsuitableUnprotected, SuitableUnprotected, SuitableHighProtectionIntact, SuitbaleHighProtectionDeforested, SuitableLow Protection, UnsuitableHighProtection, UnsuitableLowProtection
