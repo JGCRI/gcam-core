@@ -2434,7 +2434,15 @@ module_energy_L244.building_det <- function(command, ...) {
              year=shell.year) %>%
       select(LEVEL2_DATA_NAMES[["ShellConductance"]]) %>%
       bind_rows(L244.ShellConductance_bld_noadj) %>%
-      arrange(region,year,gcam.consumer)
+      arrange(region,year,gcam.consumer) %>%
+      # To avid big jumps, we linearly interpolate the shell efficiency from final base year to 2050 and 2100
+      filter(year %in% c(MODEL_BASE_YEARS,2050,2100)) %>%
+      complete(nesting(region,gcam.consumer, nodeInput,building.node.input), year = c(year, MODEL_YEARS)) %>%
+      mutate(shell.year = year) %>%
+      group_by(region,gcam.consumer, nodeInput,building.node.input) %>%
+      mutate(shell.conductance = approx_fun(year, shell.conductance, rule = 1),
+             floor.to.surface.ratio = approx_fun(year, floor.to.surface.ratio, rule = 2)) %>%
+      ungroup()
 
     # Supplysectors are also disaggregated at consumer levels (to allow quintile-specific fuel-technology mixes)
     # First, we adjust efficiencies and InterganGain I/O ratios
