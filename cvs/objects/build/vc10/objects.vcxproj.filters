@@ -881,9 +881,6 @@
     <ClCompile Include="..\..\functions\source\ctax_input.cpp">
       <Filter>Source Files\functions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sectors\source\negative_emissions_final_demand.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\emissions\source\readin_control.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
@@ -1832,9 +1829,6 @@
     </ClInclude>
     <ClInclude Include="..\..\functions\include\ctax_input.h">
       <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\negative_emissions_final_demand.h">
-      <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\emissions\include\readin_control.h">
       <Filter>Header Files\emissions</Filter>

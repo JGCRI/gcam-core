@@ -177,8 +177,15 @@ void CTaxInput::setPhysicalDemand( double aPhysicalDemand,
                                      const string& aRegionName,
                                      const int aPeriod )
 {
-    // this input is used in conjunction with a negative emissions
-    // final demand to calculate the constraint demands
+    Marketplace* marketplace = scenario->getMarketplace();
+    double taxFraction = marketplace->getPrice( mName, aRegionName, aPeriod, true );
+    double ctax = marketplace->getPrice( "CO2", aRegionName, aPeriod, false );
+    double priceAdjust = 0.0;
+    if( taxFraction != Marketplace::NO_MARKET_PRICE && ctax != Marketplace::NO_MARKET_PRICE ) {
+        priceAdjust = (1.0 - std::min( taxFraction, 1.0 )) * ctax * mCachedCCoef;
+    }
+    mNetTransferAdjust = aPhysicalDemand * priceAdjust;
+    marketplace->addToDemand( mName, aRegionName, mNetTransferAdjust, aPeriod );
 }
 
 double CTaxInput::getCoefficient( const int aPeriod ) const {

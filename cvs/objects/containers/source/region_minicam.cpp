@@ -56,13 +56,8 @@
 #include "containers/include/iinfo.h"
 #include "containers/include/market_dependency_finder.h"
 
-// TODO: This needs a factory.
 #include "sectors/include/sector.h"
-#include "sectors/include/supply_sector.h"
-#include "sectors/include/ag_supply_sector.h"
-#include "sectors/include/energy_final_demand.h"
-#include "sectors/include/negative_emissions_final_demand.h"
-#include "sectors/include/pass_through_sector.h"
+#include "sectors/include/afinal_demand.h"
 
 #include "consumers/include/gcam_consumer.h"
 #include "containers/include/national_account.h"

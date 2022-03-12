@@ -452,8 +452,6 @@ aeei, world/+{name}region, region/+{name}energy-final-demand, final-energy-consu
 
 DeleteFinalDemand, world/+{name}region, region/+{name; delete=1}energy-final-demand, scenario, scenario/world
 
-NegEmissFinalDemand, world/+{name}region, region/+{name}negative-emissions-final-demand, negative-emissions-final-demand/+policy-name, scenario, scenario/world
-
 #####, BUILDING FINAL DEMAND
 
 DeleteConsumer, world/+{name}region, region/+{name; delete=1}gcam-consumer, scenario, scenario/world
