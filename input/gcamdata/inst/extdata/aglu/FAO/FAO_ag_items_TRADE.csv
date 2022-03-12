@@ -1,7 +1,7 @@
 # File: FAO_ag_items_TRADE.csv
 # Title: FAO_ag_items_TRADE
 # Unit: Unitless
-# Description: Maps FAO crops to item codes, GCAM commodities and crop names in other trade-related databases. Differentiated from PRODSTAT mapping files b/c TRADESTAT includes both crop and animal products in same datasets.
+# Description: Maps FAO crops to item codes, GCAM commodities and crop names in other trade-related databases. Differentiated from PRODSTAT mapping files b/c TRADESTAT includes both crop and animal products in same datasets.,,,
 # Sources: FAO and other databases
 # Column types: icccc
 # ----------
@@ -118,7 +118,7 @@ item.code,GCAM_commodity,prod_commod,pp_commod,bitrade_commod
 250,OilCrop,,,"Coconuts, desiccated"
 251,OilCrop,,,Copra
 252,OilCrop,"Oil, coconut (copra)",,"Oil, coconut (copra)"
-254,OilPalm,"Oil, palm fruit","Oil, palm fruit",
+254,OilPalm,"Oil, palm fruit",Oil palm fruit,
 256,OilPalm,Palm kernels,Palm kernels,
 257,OilPalm,"Oil, palm","Oil, palm","Oil, palm"
 258,OilPalm,"Oil, palm kernel",,"Oil, palm kernel"
