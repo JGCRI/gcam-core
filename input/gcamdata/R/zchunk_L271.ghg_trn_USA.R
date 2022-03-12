@@ -45,7 +45,7 @@ module_gcamusa_L271.ghg_trn_USA <- function(command, ...) {
 
     # US total emissions
     L201.en_ghg_emissions_trn <- L201.en_ghg_emissions %>%
-      filter(year %in% MODEL_BASE_YEARS & region == gcam.USA_REGION & Non.CO2 %in% c("CH4", "N2O")) %>%
+      filter(year %in% MODEL_BASE_YEARS & region == gcam.USA_REGION & Non.CO2 %in% emissions.GHG_NAMES) %>%
       rename(tranSubsector = subsector) %>%
       # just keep on-road techs
       semi_join(L254.StubTranTechCalInput_total, by = c("supplysector", "tranSubsector", "stub.technology", "year"))

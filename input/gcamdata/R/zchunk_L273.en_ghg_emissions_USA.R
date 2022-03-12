@@ -115,7 +115,7 @@ module_gcamusa_L273.en_ghg_emissions_USA <- function(command, ...) {
     ## Remove H2 production emissions for now because energy is not available on state level
     # Refining first:
     L241.nonco2_tech_coeff %>%
-      filter(region == gcam.USA_REGION & Non.CO2 %in% c("N2O","CH4") & supplysector == "refining") ->
+      filter(region == gcam.USA_REGION & Non.CO2 %in% emissions.GHG_NAMES & supplysector == "refining") ->
       L241.ref_ghg_tech_coeff_USA
 
     # Match the refining emission factors to the corresponding technologies in the states. Matching on subsector

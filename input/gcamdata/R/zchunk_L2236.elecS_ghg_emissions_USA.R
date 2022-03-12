@@ -72,6 +72,8 @@ module_gcamusa_L2236.elecS_ghg_emissions_USA <- function(command, ...) {
 
     add_cooling_techs <- function(data){
       data %>%
+        # use left_join becuase the number of rows will change since we map the same fuel technology
+        # to different cooling options
         left_join(A23.elecS_tech_mapping_cool,
                   by=c("stub.technology"="Electric.sector.technology",
                        "supplysector"="Electric.sector","subsector")) %>%
@@ -125,7 +127,7 @@ module_gcamusa_L2236.elecS_ghg_emissions_USA <- function(command, ...) {
       EnTechInputMap
 
     L241.OutputEmissCoeff_elec %>%
-      filter(region == gcam.USA_REGION, supplysector == "electricity", Non.CO2 %in% c("N2O","CH4") ) %>%
+      filter(region == gcam.USA_REGION, supplysector == "electricity", Non.CO2 %in% emissions.GHG_NAMES ) %>%
       left_join(A23.elecS_tech_mapping %>%
                   select(-subsector),
                 by = c("supplysector", "subsector" =  "subsector_1", "stub.technology" =  "technology")) %>%
@@ -143,7 +145,7 @@ module_gcamusa_L2236.elecS_ghg_emissions_USA <- function(command, ...) {
       L2236.elecS_cool_ghg_tech_coeff_USA
 
     L241.OutputEmissCoeff_elec %>%
-      filter(region == gcam.USA_REGION, supplysector == "electricity", Non.CO2 %in% c("N2O","CH4") ) %>%
+      filter(region == gcam.USA_REGION, supplysector == "electricity", Non.CO2 %in% emissions.GHG_NAMES ) %>%
       left_join(A23.elecS_tech_mapping %>%
                   select(-subsector),
                 by = c("supplysector", "subsector" = "subsector_1", "stub.technology" = "technology")) %>%
@@ -162,7 +164,7 @@ module_gcamusa_L2236.elecS_ghg_emissions_USA <- function(command, ...) {
     # L236.en_ghg_emissions_USA: Calibrated input emissions of N2O and CH4 by U.S. state
     # Filter the emissions data for USA & electricity sector
     L201.OutputEmissions_elec %>%
-      filter(region == gcam.USA_REGION & grepl("electricity", supplysector) & Non.CO2 %in% c("N2O","CH4")) %>%
+      filter(region == gcam.USA_REGION & grepl("electricity", supplysector) & Non.CO2 %in% emissions.GHG_NAMES) %>%
       spread(Non.CO2, input.emissions) ->
       L2236.elec_ghg_emissions_USA
 
@@ -177,7 +179,7 @@ module_gcamusa_L2236.elecS_ghg_emissions_USA <- function(command, ...) {
                 by = c("sector" = "supplysector", "technology")) %>%
       select(state, supplysector = Electric.sector, subsector, stub.technology = Electric.sector.technology,
              year, technology, fuel, tech_fuel_input = value) %>%
-      ## Was getting an error with add_cooling_techs. have added manually here for now.
+      # use left_join becuase the number of rows will change (same fuel into multiple cooling techs)
       left_join(A23.elecS_tech_mapping_cool,
                 by=c("stub.technology"="Electric.sector.technology",
                      "supplysector"="Electric.sector","subsector","technology")) %>%
