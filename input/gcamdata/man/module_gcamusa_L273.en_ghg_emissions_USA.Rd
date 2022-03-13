@@ -19,7 +19,9 @@ and \code{L273.MAC_higwp_USA}. The corresponding file in the
 original data system was \code{L273.en_ghg_emissions_USA.R} (gcam-usa level2).
 }
 \description{
-module_gcamusa_L273.en_ghg_emissions_USA
+Define non-CO2 GHG emissions for GCAM-USA states, including 1. CH4 and N2O in refinery,
+buildings, N fertilizer, industrial energy use; 2. F-gases in cooling and power
+transmission; 3. MACs for F-gases
 }
 \details{
 KALYN MTB YO

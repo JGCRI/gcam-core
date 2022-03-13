@@ -31,10 +31,10 @@ module_gcamusa_batch_elecS_ghg_emissions_water_USA_xml <- function(command, ...)
 
     # Produce outputs
     create_xml("elecS_ghg_emissions_water_USA.xml") %>%
+      add_xml_data_generate_levels(L2236.elecS_cool_ghg_emissions_USA,
+                                   "StbTechOutputEmissions","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2236.elecS_cool_ghg_tech_coeff_USA,
                                "OutputEmissCoeff","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2236.elecS_cool_ghg_emissions_USA,
-                                   "InputEmissions","subsector","nesting-subsector",1,FALSE) %>%
       add_precursors("L2236.elecS_cool_ghg_tech_coeff_USA",
                      "L2236.elecS_cool_ghg_emissions_USA") ->
       elecS_ghg_emissions_water_USA.xml

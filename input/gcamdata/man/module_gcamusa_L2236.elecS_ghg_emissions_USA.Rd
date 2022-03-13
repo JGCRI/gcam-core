@@ -14,14 +14,14 @@ module_gcamusa_L2236.elecS_ghg_emissions_USA(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2236.elecS_ghg_tech_coeff_USA} and \code{L2236.elecS_ghg_emissions_USA}. The corresponding file in the
-original data system was \code{L2236.elecS_ghg_emissions_USA} (gcam-usa level2).
+the generated outputs:  \code{L2236.elecS_ghg_emissions_USA}, \code{L2236.elecS_cool_ghg_tech_coeff_USA}.
+The corresponding file in the original data system was \code{L2236.elecS_ghg_emissions_USA} (gcam-usa level2).
 }
 \description{
 U.S. electricity non CO2 and GHG emission coefficients by technology sector
 }
 \details{
-Write electricity emission coefficients to multiple load segments then compute state
+Write electricity emission coefficients to multiple load segments and cooling technology then compute state
 shares for each category in the fuel input table.
 }
 \author{
