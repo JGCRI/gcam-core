@@ -417,7 +417,7 @@ bool SolutionInfo::checkAndResetBrackets(){
 }
 
 //! Increase price by 1+multiplier, or set it to lowerBound if it is below the lower bound.
-void SolutionInfo::increaseX( const double multiplier, const double lowerBound ){
+void SolutionInfo::increaseX( const double multiplier ){
     double X = getPrice();
     if( X >= 0 ) {
         X *= 1 + multiplier;
@@ -430,7 +430,7 @@ void SolutionInfo::increaseX( const double multiplier, const double lowerBound )
 }
 
 //! Decrease price by 1/(1+multiplier), or set it to 0 if it is below the lower bound.
-void SolutionInfo::decreaseX( const double multiplier, const double lowerBound ){
+void SolutionInfo::decreaseX( const double multiplier ){
     double X = getPrice();
     if( X > 0 ) {
         X /= 1 + multiplier;
@@ -451,6 +451,65 @@ void SolutionInfo::moveRightBracketToX(){
 void SolutionInfo::moveLeftBracketToX(){
     XL = getPrice(); 
     EDL = getED();
+}
+
+/*!
+ * \brief Take a bracket step and update the price of this market to the next price to try to
+ *        find a bracket.
+ * \details Exactly how the bracket step is made depends on the arguments given.  First the
+ *          determination of if we are searching for the left or right bracket is handled by the
+ *          aIsLeft argument.  Secondly, if we should choose the next price using a dynamic
+ *          bracket interval (using the secant method) or a fixed interval (using the supplied
+ *          aFixedBracketInterval step) is handled by the aUseSecantBracket argument.  Note,
+ *          for the first iteration a fixed interval step will be taken regardless of the aUseSecantBracket
+ *          argument.
+ * \param aIsLeft If true we are updating the left bracket, otherwise the right bracket.
+ * \param aFixedBracketInterval The appropriate bracket interval to use if we are taking a fixed step.
+ * \param aUseSecantBracket If true use the secant method to determine the size of the step, otherwise fixed interval.
+ */
+void SolutionInfo::takeBracketStep(const bool aIsLeft, const double aFixedBracketInterval, const bool aUseSecantBracket) {
+    double prevX = aIsLeft ? XL : XR;
+    double prevED = aIsLeft ? EDL : EDR;
+    double currX = getPrice();
+    double currED = getED();
+    
+    // If we are not using the secant method to decide how big of a step to
+    // take find the other bracket or this is the first iteration and X == XL == XR
+    // then just take a fixed interval bracket step in the appropriate direction
+    if(!aUseSecantBracket || currX == prevX || currED == prevED) {
+        if(aIsLeft) {
+            moveLeftBracketToX();
+            increaseX( aFixedBracketInterval );
+        }
+        else {
+            moveRightBracketToX();
+            decreaseX( aFixedBracketInterval );
+        }
+    }
+    else {
+        // Use the last two price and excess demand values to calculate the next price
+        // to try for bracketing.  Essentially a dynamic width bracket interval.
+        double slope = (currED - prevED) / (currX - prevX);
+        // TODO: aim for zero or slightly on the other side depending on the direction we need?
+        double threshold = 0;//aIsLeft ? -0.001 : 0.001;
+        // NOTE: We are not imposing any kind of limit on the size of this step here however
+        // there is a "backtracking" check in the bracketing algorithm which should provide
+        // appropriate limits.
+        double newX = currX + ((threshold - currED) / slope);
+        
+        // Update the left/right bracket to the current X / ED as appropriate for the direction
+        // we are searching.
+        if(aIsLeft) {
+            XL = currX;
+            EDL = currED;
+        }
+        else {
+            XR = currX;
+            EDR = currED;
+        }
+        // set the next price to try
+        setPrice(newX);
+    }
 }
 
 //! Reset left and right bracket to X.
@@ -636,17 +695,37 @@ void SolutionInfo::setForecastDemand(const double aDemand) {
     linkedMarket->setForecastDemand(aDemand);
 }
 
-double SolutionInfo::getCorrectionSlope() const {
+/*!
+ * \brief Get the "negative" price correction slope in the approriate normalized units.
+ * \details The correction slope is stored in unnormalized units so that if the price or demand
+ *          scale factors are updated, such as in the preconditioner, we can easily convert
+ *          to the updated scales.  Note:  if not value has been explicitly set a slope of 1 is given.
+ * \param aPriceScale The price scale (i.e. divide by this value to normalize price) to normalize with.
+ * \param aDemandScale The demand scale (i.e. divide by this value to normalize demand) to normalize with.
+ * \return The noramalized correction slope to use.
+ */
+double SolutionInfo::getCorrectionSlope( const double aPriceScale, const double aDemandScale ) const {
     const string SLOPE_KEY = "correction-slope";
     return linkedMarket->getMarketInfo()->hasValue( SLOPE_KEY ) ?
-        linkedMarket->getMarketInfo()->getDouble( SLOPE_KEY, true ) :
+        linkedMarket->getMarketInfo()->getDouble( SLOPE_KEY, true ) * (aPriceScale / aDemandScale) :
         1.0;
 }
 
-void SolutionInfo::setCorrectionSlope(const double aSlope) {
+/*!
+* \brief Store the "negative" price correction slope.
+* \details The correction slope is ideally the slope just above the bottom of the supply curve, however
+ * we do not always happen to observe that when calculating derivatives so if we do we should save the value
+ * so it may be used later.  From that perspective it is important that we save the slope, which will be in normalized
+ * terms, as unnormalized so that if scales are updated we can easily re-normalize accordingly.
+ * \param aSlope The normalized correction slope to store.
+* \param aPriceScale The price scale (i.e. divide by this value to normalize price) to unnormalize with.
+* \param aDemandScale The demand scale (i.e. divide by this value to normalize demand) to unnormalize with.
+*/
+void SolutionInfo::setCorrectionSlope(const double aSlope,  const double aPriceScale, const double aDemandScale ) {
     const string SLOPE_KEY = "correction-slope";
     if( aSlope != 0.0 ) {
-        linkedMarket->getMarketInfo()->setDouble( SLOPE_KEY, aSlope );
+        double unnormalizedSlope = aSlope * (aDemandScale / aPriceScale);
+        linkedMarket->getMarketInfo()->setDouble( SLOPE_KEY, unnormalizedSlope );
     }
 }
 

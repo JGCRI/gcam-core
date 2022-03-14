@@ -43,11 +43,10 @@
  * \brief Header file for the SolutionInfoParamParser class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include <boost/core/noncopyable.hpp>
 
-#include "util/base/include/iparsable.h"
+#include "util/base/include/aparsable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -128,7 +127,7 @@ class Marketplace;
  *
  * \author Pralit Patel
  */
-class SolutionInfoParamParser : public IParsable, private boost::noncopyable {
+class SolutionInfoParamParser : public AParsable, private boost::noncopyable {
 public:
     SolutionInfoParamParser();
     ~SolutionInfoParamParser();
@@ -160,8 +159,8 @@ public:
     SolutionInfoValues getSolutionInfoValuesForMarket( const std::string& aGoodName, const std::string& aRegionName,
                                                        const std::string& aMarketType, const int aPeriod ) const;
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    // AParsable methods
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
     
 protected:
     
@@ -172,10 +171,10 @@ protected:
         //! A data structure that will go from periods to the pair of good name / market
         //! type and region name which maps to the struct SolutionInfoValues which will
         //! contain each of the possible values for a solution info.
-        DEFINE_VARIABLE( ARRAY, "solution-info-param", mSolutionInfoParams, objects::PeriodVector<std::map<std::pair<std::string, std::string>, SolutionInfoValues> > )
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "solution-info-param", mSolutionInfoParams, objects::PeriodVector<std::map<std::pair<std::string, std::string>, SolutionInfoValues> > )
     )
     
-    std::vector<SolutionInfoValues*> getSolutionInfoValuesFromAttrs( const xercesc::DOMNode* aNode );
+    std::vector<SolutionInfoValues*> getSolutionInfoValuesFromAttrs( const std::map<std::string, std::string>& aXMLAttrs );
 };
 
 #endif // _SOLUTION_INFO_PARAM_PARSER_H_

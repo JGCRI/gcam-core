@@ -39,15 +39,12 @@
  */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "functions/include/non_energy_input.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -79,6 +76,10 @@ const string& NonEnergyInput::getXMLNameStatic() {
 */
 const string& NonEnergyInput::getXMLReportingName() const{
     return XML_REPORTING_NAME;
+}
+
+const string& NonEnergyInput::getXMLName() const{
+    return getXMLNameStatic();
 }
 
 //! Constructor
@@ -130,40 +131,6 @@ void NonEnergyInput::copyParamsInto( NonEnergyInput& aInput,
     // change which already occurred.
     assert( aPeriod > 0 );
     aInput.mAdjustedCoefficients[ aPeriod ] = mAdjustedCoefficients[ aPeriod - 1 ];
-}
-
-void NonEnergyInput::XMLParse( const xercesc::DOMNode* node ) {
-    // TODO: Replace this with the restructured XMLParse.
-    // Make sure we were passed a valid node.
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    const DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() == DOMNode::TEXT_NODE ){
-            continue;
-        }
-
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        if ( nodeName == "input-cost" ) {
-            mCost = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "tech-change" ){
-            mTechChange = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLNameStatic() << "." << endl;
-        }
-    }
 }
 
 void NonEnergyInput::toDebugXML( const int aPeriod,

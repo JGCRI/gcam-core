@@ -77,9 +77,6 @@ public:
 
     static const std::string& getXMLNameStatic();
 
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode *aNode );
-
     // IDiscreteChoice methods
     virtual const std::string& getXMLName() const { return getXMLNameStatic(); }
 

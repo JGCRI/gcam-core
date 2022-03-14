@@ -41,8 +41,6 @@
 #include "util/base/include/definitions.h"
 
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "emissions/include/aghg.h"
 #include "util/base/include/xml_helper.h"
@@ -58,7 +56,6 @@
 #include "containers/include/market_dependency_finder.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -77,41 +74,6 @@ void AGHG::copy( const AGHG& aOther ){
     mEmissionsUnit = aOther.mEmissionsUnit;
 
     // Note results (such as emissions) are never copied.
-}
-
-//! \brief initialize Ghg object with xml data
-bool AGHG::XMLParse( const DOMNode* aNode ) {
-    /*! \pre Assume we are passed a valid node. */
-    assert( aNode );
-
-    DOMNodeList* nodeList = aNode->getChildNodes();
-
-    // Parse the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-    
-    bool parsingSuccessful = true;
-
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ) {
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );      
-
-        if( nodeName == "#text" ){
-            continue;
-        }
-        else if( nodeName == "emissions-unit" ){
-            mEmissionsUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( XMLDerivedClassParse( nodeName, curr ) ){
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing GHG." << endl;
-            parsingSuccessful = false;
-        }
-    }
-    
-    return parsingSuccessful;
 }
 
 //! Writes datamembers to debugging datastream in XML format.

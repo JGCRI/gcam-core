@@ -43,8 +43,6 @@
 #include <algorithm>
 #include <limits>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "util/curves/include/explicit_point_set.h"
 #include "util/curves/include/data_point.h"
@@ -319,39 +317,6 @@ void ExplicitPointSet::outputAsXML( ostream& aOut, Tabs* aTabs ) const {
         ( *point )->outputAsXML( aOut, aTabs );
     }
     XMLWriteClosingTag( PointSet::getXMLNameStatic(), aOut, aTabs );
-}
-
-//! Parse an ExplicitPointSet from a DOM tree.
-void ExplicitPointSet::XMLParse( const xercesc::DOMNode* node ) {
-    // First clear the existing points to prevent a memory leak.
-    clear();
-
-    // assume node is valid.
-    assert( node );
-
-    // get all children of the node.
-    xercesc::DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the children
-    for ( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-        xercesc::DOMNode* curr = nodeList->item( i );
-	    string nodeName = XMLHelper<void>::safeTranscode( curr->getNodeName() );
-
-        // select the type of node.
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if ( nodeName == DataPoint::getXMLNameStatic() ){
-            DataPoint* currPoint = DataPoint::getDataPoint( XMLHelper<string>::getAttr( curr, "type" ) );
-            currPoint->XMLParse( curr );
-            addPoint( currPoint );
-        } 
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing ExplicitPointSet." << endl;
-        }
-    }
 }
 
 //! Switch the X and Y values of each datapoint.

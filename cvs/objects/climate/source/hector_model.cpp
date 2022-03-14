@@ -41,8 +41,6 @@
 #include <memory>
 #include <limits>
 #include <fstream>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "climate/include/hector_model.hpp"
 
@@ -64,7 +62,6 @@
 #include "climate/source/hector/inst/include/csv_outputstream_visitor.hpp"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -105,44 +102,6 @@ HectorModel::HectorModel()
 const string& HectorModel::getXMLNameStatic() {
     static string XMLNAME( "HectorModel" );
     return XMLNAME;
-}
-
-void HectorModel::XMLParse( const DOMNode* node ) {
-    /* plan to parse the following:
-     *
-     * hector-end-year
-     * hector-ini-file
-     * emissions-switch-year
-     *
-     */
-
-    ILogger& climatelog = ILogger::getLogger( "climate-log" );
-  
-    DOMNodeList* nodeList = node->getChildNodes();
-    for( unsigned int i = 0; i < nodeList->getLength( ); ++i ){
-        DOMNode* chnode = nodeList->item( i ); 
-        string chname = XMLHelper<std::string>::safeTranscode( chnode->getNodeName() );
-
-        climatelog << "Found XML tag: " << chname << endl;
-
-        if( chname == XMLHelper<void>::text() ) {
-            continue;
-        }
-        else if( chname == "hector-end-year" ) {
-            mHectorEndYear = XMLHelper<int>::getValue( chnode );
-        }
-        else if( chname == "emissions-switch-year" ) {
-            mEmissionsSwitchYear = XMLHelper<int>::getValue( chnode );
-        }
-        else if( chname == "hector-ini-file" ) {
-            mHectorIniFile = XMLHelper<string>::getValue( chnode );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unrecognized text string: " << chname << " found while parsing " << getXMLNameStatic() << endl;
-        }
-    }
 }
 
 void HectorModel::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {

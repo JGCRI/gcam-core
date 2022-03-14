@@ -44,8 +44,6 @@
 #include <algorithm>
 #include <iomanip>
 #include <math.h>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/logbroyden.hpp"
@@ -59,6 +57,7 @@
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "solution/util/include/solution_info_filter_factory.h"
 #include "solution/util/include/solvable_nr_solution_info_filter.h"
 
@@ -72,8 +71,6 @@
 #include <Eigen/SVD>
 
 #include "util/base/include/timer.h"
-
-using namespace xercesc;
 
 std::string LogBroyden::SOLVER_NAME = "broyden-solver-component";
 
@@ -112,49 +109,21 @@ namespace {
 int LogBroyden::mLastPer = 0;
 int LogBroyden::mPerIter = 0;
 
-bool LogBroyden::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        std::string nodeName = XMLHelper<std::string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "max-iterations" ) {
-            mMaxIter = XMLHelper<unsigned int>::getValue( curr );
-        }
-        else if( nodeName == "ftol" ) {
-            mFTOL = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "solution-info-filter" ) {
-            mSolutionInfoFilter.reset(
-                                      SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<std::string>::getValue( curr ) ) );
-        }
-        else if(nodeName == "linear-price") {
-          mLogPricep = false;
-        }
-        else if(nodeName == "log-price") {
-          mLogPricep = true;    // not strictly necessary, as this is the default.
-        }
-        else if(nodeName == "max-jacobian-reuse") {
-            mMaxJacobainReuse = XMLHelper<int>::getValue( curr );
-        }
-        else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
-            mSolutionInfoFilter.reset( SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr ) );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLName() << "." << std::endl;
-        }
+bool LogBroyden::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    std::string nodeName = XMLParseHelper::getNodeName(aNode);
+    if( nodeName == "solution-info-filter" ) {
+        delete mSolutionInfoFilter;
+        mSolutionInfoFilter =
+            SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLParseHelper::getValue<std::string>( aNode ) );
+    }
+    else if(nodeName == "linear-price") {
+      mLogPricep = false;
+    }
+    else if(nodeName == "log-price") {
+      mLogPricep = true;    // not strictly necessary, as this is the default.
+    }
+    else {
+        return false;
     }
     return true;
 }
@@ -205,7 +174,7 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     
     // Update the solution vector for the correct markets to solve.
     // Need to update solvable status before starting solution (Ignore return code)
-    solnset.updateSolvable( mSolutionInfoFilter.get() );
+    solnset.updateSolvable( mSolutionInfoFilter );
 
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
@@ -229,9 +198,12 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
         return SUCCESS;
     }
     
+    std::list<int> allCols;
+    
     solverLog << "Initial market state:\nmkt    \tprice   \tsupply  \tdemand\n";
     std::vector<SolutionInfo> solvables = solnset.getSolvableSet();
     for(size_t i=0; i<solvables.size(); ++i) {
+        allCols.push_back(i);
         solverLog << std::setw( 8 ) << i << "\t"
                   << std::setw( 8 ) << solvables[i].getPrice() << "\t"
                   << std::setw( 8 ) << solvables[i].getSupply() << "\t"
@@ -280,7 +252,7 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     // Precondition the x values to avoid singular columns in the Jacobian
     solverLog.setLevel(ILogger::DEBUG);
     UBMATRIX J(F.narg(), F.nrtn());
-    fdjac(F, x, fx, J, true);
+    fdjac(F, x, fx, J, allCols, true);
 
     solverLog << ">>>> Main loop jacobian called.\n";
     int pcfail = jacobian_precondition(x, fx, J, F, &solverLog, mLogPricep);
@@ -297,7 +269,7 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     cSolInfo = &solnset;        // make available for log outputs
 
     // call the solver
-    int bstatus = bsolve(F, x, fx, J, neval);
+    int bstatus = bsolve(F, x, fx, J, neval, allCols);
     mPerIter++;                 // increment the iteration count.  This should produce a visible gap in the trace plots.
 
     solverTimer.stop(); 
@@ -354,7 +326,7 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
 }
 
 int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
-                       UBMATRIX & B, int &neval)
+                       UBMATRIX & B, int &neval, const std::list<int>& allCols)
 {
   int nrow = B.rows(), ncol = B.cols();
   int ageB = 0;   // number of iterations since the last reset on B
@@ -577,7 +549,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
               
 
         // we just recalculated fx so we can be confident we can re-use it
-        fdjac(F,x,fx, B);
+        fdjac(F,x,fx, B, allCols, true);
         neval += x.size();
         ageB = 0;  // reset the age on B
 
@@ -589,6 +561,11 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
         static_cast<LogEDFun&>(F).setSlope(jdiag);
           }
 
+          // keep track of the last TRACK_NUM_PAST_F_VALUES f(x) values only
+          if(past_f_values.size() == TRACK_NUM_PAST_F_VALUES) {
+              past_f_values.pop();
+          }
+          past_f_values.push(f0);
         // start the next iteration *without* updating x
         continue;
       }
@@ -647,8 +624,12 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     // test for convergence
     double maxval = fabs(fxnew[0]);
     double imaxval = 0;
+      std::list<int> unsolved;
     for(size_t i=1; i<fxnew.size(); ++i) {
       double val = fabs(fxnew[i]);
+        if(val > mFTOL) {
+            unsolved.push_back(i);
+        }
       if(val > maxval) {
         maxval = val;
         imaxval = i;
@@ -657,7 +638,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
 
     solverLog << "Convergence test maxval: " << maxval << "  imaxval= " << imaxval << "\n";
     solverLog << "\tx[i]= " << xnew[imaxval] << "  dx[i]= " << dx[imaxval] << "  xstep[i]= "
-              << xstep[imaxval] << "\n";
+              << xstep[imaxval] << " num unsolved: " << unsolved.size() << "\n";
     if(maxval <= mFTOL) {
       solverLog << "Solution successful -- max.\n";
       x = xnew;
@@ -674,6 +655,16 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       fxstep /= dx2;
         B += fxstep * xstep.transpose();
       ageB++;                // increment the age of B
+        // when only a _few_ markets are left which remain unsolved we will switch
+        // to use fresh partial derivatives for *just* the unsolved markets as we may
+        // be in a situation that those markets are bouncing between vastly different
+        // derivatives
+        // set the threshold at roughly 3% of the markets are left unsolved
+        // which is just some arbitrary threshold
+        const int UNSOLVED_FULL_PARTIAL_THRESHOLD = 30;
+        if((unsolved.size()*UNSOLVED_FULL_PARTIAL_THRESHOLD) < ncol) {
+            fdjac(F, xnew, fxnew, B, unsolved, true);
+        }
     }
     else {
       // Progress using the Broyden formula is anemic.  This usually
@@ -686,7 +677,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
           if((iter+1) < mMaxIter) {
               // no point in re-calculating a jacobian if we won't get a chance
               // to use it
-        fdjac(F,xnew,B);
+        fdjac(F,xnew,B,allCols);
         neval += x.size();
         ageB = 0;
 

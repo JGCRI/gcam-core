@@ -1,9 +1,3 @@
-#ifndef _SOLVER_COMPONENT_FACTORY_H_
-#define _SOLVER_COMPONENT_FACTORY_H_
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 /*
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
@@ -38,38 +32,33 @@
 
 
 /*! 
- * \file solver_component_factory.h  
+ * \file market_matches_solution_info_filter.cpp
  * \ingroup Objects
- * \brief Header file for the SolverComponentFactory class.
+ * \brief MarketMatchesSolutionInfoFilter class source file.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
+
+#include "util/base/include/definitions.h"
 #include <string>
 
-class SolverComponent;
-class Marketplace;
-class World;
-class CalcCounter;
+#include "solution/util/include/market_matches_solution_info_filter.h"
+#include "solution/util/include/solution_info.h"
 
-/*!
- * \ingroup Objects
- * \brief A factory which can be used to create instances of a solver component.
- * \details There are two static methods, one to determine if this factory can create
- *          a solver component with the given xml name and another to create and parse
- *          a solver component with the given xml name.
- *
- * \author Pralit Patel
- */
-class SolverComponentFactory {
-public:
-    static bool hasSolverComponent( const std::string& aXMLName );
-    
-    static SolverComponent* createAndParseSolverComponent( const std::string& aXMLName,
-                                                           Marketplace* aMarketplace,
-                                                           World* aWorld,
-                                                           CalcCounter* aCalcCounter,
-                                                           const xercesc::DOMNode* aNode );
-    
-};
+using namespace std;
 
-#endif // _SOLVER_COMPONENT_FACTORY_H_
+MarketMatchesSolutionInfoFilter::MarketMatchesSolutionInfoFilter(const std::string& aMarketMatches)
+:mAcceptMarketMatches(aMarketMatches, regex::nosubs | regex::optimize | regex::egrep)
+{
+}
+
+MarketMatchesSolutionInfoFilter::~MarketMatchesSolutionInfoFilter() {
+}
+
+const string& MarketMatchesSolutionInfoFilter::getXMLNameStatic() {
+    const static string XML_NAME = "market-matches-solution-info-filter";
+    return XML_NAME;
+}
+
+bool MarketMatchesSolutionInfoFilter::acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const {
+    return regex_search(aSolutionInfo.getName(), mAcceptMarketMatches);
+}

@@ -72,6 +72,8 @@ public:
     virtual void copyGHGParameters( const AGHG* aPrevGHG );
     
     static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
 
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
@@ -104,8 +106,6 @@ protected:
     NonCO2Emissions( const NonCO2Emissions& aOther );
     NonCO2Emissions& operator=( const NonCO2Emissions& aOther );
     
-    virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const;
     
     // Define data such that introspection utilities can process the data from this
@@ -127,7 +127,7 @@ protected:
                                 
         //! Stored Emissions Coefficient (needed for some control technologies)
         //! The emissions coefficient is the current ratio of emissions to driver, accounting for any controls   
-        DEFINE_VARIABLE( ARRAY | STATE, "control-adjusted-emiss-coef", mAdjustedEmissCoef, objects::TechVintageVector<Value> )
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "control-adjusted-emiss-coef", mAdjustedEmissCoef, objects::TechVintageVector<Value> )
     )
 
     //! A flag to indicate if mInputEmissions should be used recalibrate mEmissionsCoef

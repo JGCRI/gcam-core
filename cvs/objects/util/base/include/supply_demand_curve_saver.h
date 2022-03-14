@@ -75,10 +75,7 @@ public:
     
     // INamed methods
     virtual const std::string& getName() const;
-    
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
+     
     // IModelFeedbackCalc methods
     virtual void calcFeedbacksBeforePeriod( Scenario* aScenario,
                                             const IClimateModel* aClimateModel,

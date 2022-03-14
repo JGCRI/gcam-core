@@ -41,14 +41,12 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "technologies/include/cal_data_output_percap.h"
 
 #include "util/base/include/xml_helper.h"
 #include "demographics/include/demographic.h"
 
 using namespace std;
-using namespace xercesc;
 
 /*! \brief Constructor.
 * \author James Blackwood
@@ -66,36 +64,6 @@ CalDataOutputPercap* CalDataOutputPercap::clone() const {
     clone->mCalOutputPercapValue = mCalOutputPercapValue;
     clone->mPopulation = mPopulation;
     return clone;
-}
-
-/*! \brief Parses XML for the object.
-* \author James Blackwood
-* \param aNode pointer to the current node in the XML input tree
-*/
-void CalDataOutputPercap::XMLParse( const DOMNode* aNode ){
-	// assume we are passed a valid node.
-	assert( aNode );
-
-	// get all the children.
-	DOMNodeList* nodeList = aNode->getChildNodes();
-
-	for( unsigned int i = 0;  i <  nodeList->getLength(); ++i ){
-		const DOMNode* curr = nodeList->item( i );
-		const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-		if( nodeName == "#text" ) {
-			continue;
-		}
-        else if( nodeName == "calOutputPercapValue" ) {
-            mCalOutputPercapValue = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-	        mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLNameStatic() << "." << endl;
-		}
-	}
 }
 
 //! Write object to debugging xml output stream.

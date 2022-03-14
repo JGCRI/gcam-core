@@ -557,68 +557,6 @@ void WindTechnology::toDebugXMLDerived(
    XMLWriteElement( mWindPowerVariance, "wind-power-variance", out, tabs );
 }
 
-// WindTechnology::XMLDerivedClassParse ************************************
-
-// Documentation is inherited
-bool WindTechnology::XMLDerivedClassParse(
-   const std::string&      nodeName,
-   const xercesc::DOMNode* curr )
-{
-   if ( nodeName == sXMLTagNames[ CAPITAL_COST_KEY ] )
-   {
-      mCapitalCost = XMLHelper<double>::getValue( curr );
-   }
-   else if ( nodeName == sXMLTagNames[ CUTOUT_SPEED_KEY ] )
-   {
-      mCutOutSpeed = XMLHelper<double>::getValue( curr );
-   }
-   else if ( nodeName == sXMLTagNames[ FCR_KEY ] )
-   {
-      mFCR = XMLHelper<double>::getValue( curr );
-   }
-   else if ( nodeName == sXMLTagNames[ GRID_CONNECTION_COST_KEY ] )
-   {
-      mGridConnectionCost = XMLHelper<double>::getValue( curr );
-   }
-   else if ( nodeName == sXMLTagNames[ OM_KEY ] )
-   {
-      mOM = XMLHelper<double>::getValue( curr );
-   }
-   else if ( nodeName == sXMLTagNames[ ROTOR_DIAMETER_KEY ] )
-   {
-      mRotorDiameter = XMLHelper<double>::getValue( curr );
-   }
-   else if ( nodeName == sXMLTagNames[ TURBINE_DENSITY_KEY ] )
-   {
-      mTurbineDensity = XMLHelper<double>::getValue( curr );
-   }
-   else if ( nodeName == sXMLTagNames[ TURBINE_DERATING_KEY ] )
-   {
-      mTurbineDerating = XMLHelper<double>::getValue( curr );
-   }
-   else if ( nodeName == sXMLTagNames[ TURBINE_HUB_HEIGHT_KEY ] )
-   {
-      mTurbineHubHeight = XMLHelper<double>::getValue( curr );
-   }
-   else if ( nodeName == sXMLTagNames[ TURBINE_RATING_KEY ] )
-   {
-      mTurbineRating = XMLHelper<double>::getValue( curr );
-   }
-   else if ( nodeName == sXMLTagNames[ WIND_FARM_LOSS_KEY ] )
-   {
-      mWindFarmLoss = XMLHelper<double>::getValue( curr );
-   }
-   else if ( IntermittentTechnology::XMLDerivedClassParse( nodeName, curr ) ) {
-   }
-   else
-   {
-      return false;
-   }
-
-   return true;
-}
-
-
 /*
    The one parameter Weibull distribution is (Equation A-1):
    f( x ) = ( B / c ) * ( x / c )^(B - 1) * e^-( x / c )^B

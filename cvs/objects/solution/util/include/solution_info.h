@@ -113,10 +113,11 @@ public:
     void calcDemandElas( const SolutionInfoSet& solvableMarkets );
     void calcSupplyElas( const SolutionInfoSet& solvableMarkets );
     bool checkAndResetBrackets();
-    void increaseX( const double multiplier, const double lowerBound );
-    void decreaseX( const double multiplier, const double lowerBound );
+    void increaseX( const double multiplier );
+    void decreaseX( const double multiplier );
     void moveRightBracketToX();
     void moveLeftBracketToX();
+    void takeBracketStep(const bool aIsLeft, const double aFixedBracketInterval, const bool aUseSecantBracket);
     void resetBrackets();
     bool isCurrentlyBracketed() const;
     bool isSolved() const;
@@ -135,8 +136,8 @@ public:
     double getForecastDemand() const;
     void setForecastPrice( const double aPrice );
     void setForecastDemand( const double aDemand );
-    double getCorrectionSlope() const;
-    void setCorrectionSlope( const double aSlope );
+    double getCorrectionSlope( const double aPriceScale, const double aDemandScale ) const;
+    void setCorrectionSlope( const double aSlope, const double aPriceScale, const double aDemandScale );
 
     int getSerialNumber( void ) const;
     

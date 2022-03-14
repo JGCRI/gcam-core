@@ -41,8 +41,6 @@
 #include "util/base/include/definitions.h"
 #include <cmath>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "containers/include/gdp.h"
 #include "demographics/include/demographic.h"
@@ -57,7 +55,6 @@
 #include "sectors/include/sector_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 // static initialize.
@@ -84,60 +81,11 @@ GDP::GDP() {
     mEnergyGDPElasticity = 0;
     PPPConversionFact = 1;
     PPPDelta = 0;
-    constRatio = false;
+    constRatio = true;//false;
     baseGDP = 0;
     mGDPUnit = "Million1990US$";
 }
 
-//! parses Population xml object
-void GDP::XMLParse( const DOMNode* node ){
-    // make sure we were passed a valid node.
-    assert( node );
-
-    DOMNodeList* nodeList = node->getChildNodes();
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-
-        // get the name of the node.
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        // GDP to PPP conversion factor
-        // Note that variable conversion attribute defaults to true
-        else if ( nodeName == "PPPConvert" ){
-            PPPConversionFact = XMLHelper<double>::getValue( curr );
-            constRatio = XMLHelper<bool>::getAttr( curr, "constRatio" );
-        }
-        // base-year GDP
-        else if ( nodeName == "baseGDP" ){
-            baseGDP = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "GDP-unit" ){
-            mGDPUnit = XMLHelper<string>::getValue( curr );
-        }
-        // Energy GDP elasticity. 
-        else if ( nodeName == "e_GDP_elas" ){
-            mEnergyGDPElasticity = XMLHelper<double>::getValue( curr );
-        }
-        // labor force participation rate
-        else if ( nodeName == "laborproductivity" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, laborProdGrowthRate, modeltime );
-        }
-        // labor force participation rate
-        else if( nodeName == "laborforce" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, laborForceParticipationPercent, modeltime );
-        } 
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing GDP." << endl;
-        }
-    }
-}
 
 //! Writes data members to debugging data stream in XML format.
 void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {

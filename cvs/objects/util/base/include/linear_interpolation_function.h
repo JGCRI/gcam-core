@@ -43,7 +43,6 @@
  * \brief Header file for the LinearInterpolationFunction class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 
 #include "util/base/include/iinterpolation_function.h"
@@ -74,7 +73,7 @@ public:
     LinearInterpolationFunction();
     ~LinearInterpolationFunction();
     
-    static const std::string& getXMLAttrNameStatic();
+    static const std::string& getXMLNameStatic();
     
     // IInterpolationFunction methods
     virtual IInterpolationFunction* clone() const;
@@ -82,10 +81,7 @@ public:
     virtual double interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,
         const double aXValue ) const;
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
-    virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
+     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
     
 protected:
     // Define data such that introspection utilities can process the data from this

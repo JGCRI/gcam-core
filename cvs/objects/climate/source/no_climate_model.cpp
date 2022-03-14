@@ -41,8 +41,6 @@
 #include <memory>
 #include <limits>
 #include <fstream>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "climate/include/no_climate_model.h"
 
@@ -51,7 +49,6 @@
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
 
 NoClimateModel::NoClimateModel()
 {
@@ -72,24 +69,6 @@ const string& NoClimateModel::getXMLNameStatic() {
 
 const string& NoClimateModel::getXMLName() const{
     return getXMLNameStatic();
-}
-
-void NoClimateModel::XMLParse( const DOMNode* aNode ) {
-  
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    for( unsigned int i = 0; i < nodeList->getLength( ); ++i ){
-        DOMNode* chnode = nodeList->item( i ); 
-        string chname = XMLHelper<std::string>::safeTranscode( chnode->getNodeName() );
-
-        if( chname == XMLHelper<void>::text() ) {
-            continue;
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unrecognized text string: " << chname << " found while parsing " << getXMLNameStatic() << endl;
-        }
-    }
 }
 
 void NoClimateModel::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

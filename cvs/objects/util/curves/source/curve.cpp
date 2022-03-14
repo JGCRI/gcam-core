@@ -39,8 +39,6 @@
 */
 #include "util/base/include/definitions.h"
 #include <iostream>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "util/curves/include/curve.h"
 #include "util/curves/include/point_set_curve.h"
@@ -106,58 +104,6 @@ void Curve::outputAsXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElementCheckDefault( yAxisUnits, "yAxisUnit", aOut, aTabs );
     outputAsXMLDerived( aOut, aTabs );
     XMLWriteClosingTag( Curve::getXMLNameStatic(), aOut, aTabs );
-}
-
-//! Parse a curve from a DOM tree.
-void Curve::XMLParse( const xercesc::DOMNode* node ) {
-    
-    name = XMLHelper<string>::getAttr( node, "name" );
-    xercesc::DOMNode* curr = 0;
-    xercesc::DOMNodeList* nodeList; 
-    string nodeName;
-    
-    // assume node is valid.
-    assert( node );
-
-    // get all children of the node.
-    nodeList = node->getChildNodes();
-    
-    // loop through the children
-    for ( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<void>::safeTranscode( curr->getNodeName() );
-
-        // select the type of node.
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if ( nodeName == "title" ){
-            title = XMLHelper<string>::getValue( curr );
-        } 
-        else if ( nodeName == "numericalLabel" ){
-            numericalLabel = XMLHelper<double>::getValue( curr );
-        } 
-        else if ( nodeName == "xAxisLabel" ){
-            xAxisLabel = XMLHelper<string>::getValue( curr );
-        } 
-        else if ( nodeName == "yAxisLabel" ){
-            yAxisLabel = XMLHelper<string>::getValue( curr );
-        } 
-        else if ( nodeName == "xAxisUnits" ){
-            xAxisUnits = XMLHelper<string>::getValue( curr );
-        } 
-        else if ( nodeName == "yAxisUnits" ){
-            yAxisUnits = XMLHelper<string>::getValue( curr );
-        } 
-        else if ( XMLParseDerived( curr ) ){
-            // Do nothing, action was taken care of in the derived parse. 
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing Curve." << endl;
-        }
-    }
 }
 
 //! Get the curve name.

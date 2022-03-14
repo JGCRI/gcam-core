@@ -46,7 +46,6 @@
 
 #include <string>
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
@@ -84,7 +83,6 @@ class CachedMarket;
  */
 class EnergyInput: public MiniCAMInput
 {
-    friend class InputFactory;
 public:
 
     EnergyInput();
@@ -95,9 +93,11 @@ public:
 
     static const std::string& getXMLNameStatic();
 
+    virtual const std::string& getXMLName() const;
+    
     virtual const std::string& getXMLReportingName() const;
 
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 
     virtual bool isSameType( const std::string& aType ) const;
 
@@ -196,7 +196,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "price-unit-conversion", mPriceUnitConversionFactor, Value ),
 
         //! Physical Demand.
-        DEFINE_VARIABLE( ARRAY | STATE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> ),
 
         //! Current coefficient after adjustments have been made by the technology's
         //! capture component.

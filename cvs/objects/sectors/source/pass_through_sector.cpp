@@ -53,15 +53,13 @@
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
 /* \brief Constructor
- * \param aRegionName The name of the region.
  */
-PassThroughSector::PassThroughSector( const string& aRegionName ):
-SupplySector( aRegionName )
+PassThroughSector::PassThroughSector():
+SupplySector()
 {
 }
 
@@ -72,20 +70,6 @@ const string& PassThroughSector::getXMLNameStatic() {
 
 const string& PassThroughSector::getXMLName() const {
     return getXMLNameStatic();
-}
-
-bool PassThroughSector::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
-    bool didParse = true;
-    if( aNodeName == "marginal-revenue-sector" ) {
-        mMarginalRevenueSector = XMLHelper<string>::getValue( aNode );
-    }
-    else if( aNodeName == "marginal-revenue-market" ) {
-        mMarginalRevenueMarket = XMLHelper<string>::getValue( aNode );
-    }
-    else {
-        didParse = false;
-    }
-    return didParse;
 }
 
 void PassThroughSector::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

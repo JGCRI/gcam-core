@@ -50,6 +50,9 @@ GenericOutput::GenericOutput( const string& aSectorName )
 {
 }
 
+GenericOutput::GenericOutput() {
+}
+
 GenericOutput::~GenericOutput() {
 }
 
@@ -62,7 +65,12 @@ GenericOutput* GenericOutput::clone() const
 
 bool GenericOutput::isSameType( const string& aType ) const
 {
-    return aType == "generic-output";
+    return aType == getXMLNameStatic();
+}
+
+const string& GenericOutput::getXMLNameStatic() {
+    static const string XML_REPORTING_NAME = "output-generic";
+    return XML_REPORTING_NAME;
 }
 
 /*! \brief Get the XML name for reporting to XML file.
@@ -74,17 +82,20 @@ bool GenericOutput::isSameType( const string& aType ) const
 * \return The constant XML_NAME.
 */
 const string& GenericOutput::getXMLReportingName() const{
-    static const string XML_REPORTING_NAME = "output-generic";
-    return XML_REPORTING_NAME;
+    return getXMLNameStatic();
+}
+
+const string& GenericOutput::getXMLName() const{
+    return getXMLNameStatic();
 }
 
 void GenericOutput::toDebugXML( const int aPeriod,
                                 ostream& aOut,
                                 Tabs* aTabs ) const
 {
-    XMLWriteOpeningTag( "generic-output", aOut, aTabs, mName );
+    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     XMLWriteElement( mPhysicalOutputs[ aPeriod ], "output", aOut, aTabs );
-    XMLWriteClosingTag( "generic-output", aOut, aTabs );
+    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 void GenericOutput::initCalc( const string& aRegionName,

@@ -41,8 +41,6 @@
 
 #include "util/base/include/definitions.h"
 #include <iostream>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include <cmath>
 
 #include "functions/include/thermal_building_service_input.h"
@@ -52,7 +50,6 @@
 #include "functions/include/building_node_input.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -77,46 +74,12 @@ const string& ThermalBuildingServiceInput::getXMLNameStatic() {
     return XML_REPORTING_NAME;
 }
 
-const string& ThermalBuildingServiceInput::getXMLReportingName() const {
+const string& ThermalBuildingServiceInput::getXMLName() const {
     return getXMLNameStatic();
 }
 
-void ThermalBuildingServiceInput::XMLParse( const DOMNode* aNode ) {
-    /*! \pre make sure we were passed a valid node. */
-    assert( aNode );
-    
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-    
-    // get all child nodes.
-    const DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() == DOMNode::TEXT_NODE ){
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if ( nodeName == "base-service" ) {
-            XMLHelper<Value>::insertValueIntoVector( curr, mServiceDemand, scenario->getModeltime() );
-        }
-        else if( nodeName == "internal-gains-scalar" ) {
-            mInternalGainsScalar = XMLHelper<Value>::getValue( curr );
-        }
-        else if( nodeName == "degree-days" ) {
-            XMLHelper<Value>::insertValueIntoVector( curr, mDegreeDays, scenario->getModeltime() );
-        }
-        else if( nodeName == SatiationDemandFunction::getXMLNameStatic() ) {
-            parseSingleNode( curr, mSatiationDemandFunction, new SatiationDemandFunction );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
-        }
-    }
+const string& ThermalBuildingServiceInput::getXMLReportingName() const {
+    return getXMLNameStatic();
 }
 
 void ThermalBuildingServiceInput::completeInit( const string& aRegionName,

@@ -72,7 +72,6 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
         // linear prices & outputs, so x0 is the price, and fx0 is
         // 1/demand(forecast), for all markets
         for(int i=0; i<na; ++i) {
-            slope[i] = mkts[i].getCorrectionSlope();
             // forecast demands has been constrained so that it
             // doesn't give nonsensical results here, but forecast
             // price is used for other things and so hasn't been
@@ -89,6 +88,7 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
                 mxscl[i] = std::max(fabs(mkts[i].getForecastPrice()), MINXSCL);
             }
             mfxscl[i] = 1.0/std::max(fabs(mkts[i].getForecastDemand()), MINXSCL);
+            slope[i] = mkts[i].getCorrectionSlope(mxscl[i], 1.0/mfxscl[i]);
         }
     } else {
         // for log prices & outputs the situtation is more
@@ -174,12 +174,12 @@ void LogEDFun::setSlope(UBVECTOR& adx) {
             || mkts[i].getType() == IMarketType::SUBSIDY ) && (p > p0 && p < (p0 + 0.5)))
         {
             slope[i] = newSlope;
-            mkts[i].setCorrectionSlope(newSlope);
+            mkts[i].setCorrectionSlope(newSlope, mxscl[i], 1.0/mfxscl[i]);
         }
         else if(( mkts[i].getType() == IMarketType::NORMAL) && (p > p0 && p < (p0 + 0.1)))
         {
             slope[i] = newSlope;
-            mkts[i].setCorrectionSlope(newSlope);
+            mkts[i].setCorrectionSlope(newSlope, mxscl[i], 1.0/mfxscl[i]);
         }
         // other markets would be PRICE and DEMAND type markets for which the slope should
         // always be 1

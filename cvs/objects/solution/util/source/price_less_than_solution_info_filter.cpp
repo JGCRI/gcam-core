@@ -40,19 +40,15 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/util/include/price_less_than_solution_info_filter.h"
 #include "solution/util/include/solution_info.h"
-#include "util/base/include/xml_helper.h"
-#include "util/logger/include/ilogger.h"
+#include "util/base/include/xml_parse_helper.h"
 
 using namespace std;
-using namespace xercesc;
 
-PriceLessThanSolutionInfoFilter::PriceLessThanSolutionInfoFilter()
-:mPriceThreshold( -1 )
+PriceLessThanSolutionInfoFilter::PriceLessThanSolutionInfoFilter(const string& aPriceStr)
+:mPriceThreshold( XMLParseHelper::getValue<double>(aPriceStr) )
 {
 }
 
@@ -64,39 +60,6 @@ const string& PriceLessThanSolutionInfoFilter::getXMLNameStatic() {
     return XML_NAME;
 }
 
-bool PriceLessThanSolutionInfoFilter::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "price-less-than" ) {
-            mPriceThreshold = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-            << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
-}
-
 bool PriceLessThanSolutionInfoFilter::acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const {
-    /*!
-     * \pre mAcceptMarketName was read in.
-     */
-    assert( mPriceThreshold > 0 );
-    
     return aSolutionInfo.getPrice() < mPriceThreshold;
 }

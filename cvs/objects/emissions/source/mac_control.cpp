@@ -41,12 +41,11 @@
 #include "util/base/include/definitions.h"
 
 #include <cmath>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "emissions/include/mac_control.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
@@ -57,7 +56,6 @@
 #include "util/curves/include/xy_data_point.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -138,39 +136,28 @@ const string& MACControl::getXMLNameStatic(){
     return XML_NAME;
 }
 
-bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
-    const Modeltime* modeltime = scenario->getModeltime();
-    if ( aNodeName == "mac-reduction" ){
-        double taxVal = XMLHelper<double>::getAttr( aCurrNode, "tax" );
-        double reductionVal = XMLHelper<double>::getValue( aCurrNode );
+bool MACControl::XMLParse(rapidxml::xml_node<char>* & aNode) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if ( nodeName == "mac-reduction" ){
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        double taxVal = XMLParseHelper::getValue<double>(attrs["tax"]);
+        double reductionVal = XMLParseHelper::getValue<double>( aNode );
         XYDataPoint* currPoint = new XYDataPoint( taxVal, reductionVal );
         mMacCurve->getPointSet()->addPoint( currPoint );
+        return true;
     }
-    else if ( aNodeName == "no-zero-cost-reductions" ){
+    else if ( nodeName == "no-zero-cost-reductions" ){
         mNoZeroCostReductions = true;
+        return true;
     }
-    else if ( aNodeName == "tech-change" ){
-        XMLHelper<double>::insertValueIntoVector( aCurrNode, *mTechChange, modeltime );
+    else if ( nodeName == "tech-change" ){
+        Data<objects::PeriodVector<double>, ARRAY> techChangeData(*mTechChange, "");
+        XMLParseHelper::parseData(aNode, techChangeData);
+        return true;
     }
-    else if ( aNodeName == "full-phase-in-price" ){
-        mFullPhaseInPrice = XMLHelper<double>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "zero-cost-phase-in-time" ){
-        mZeroCostPhaseInTime = XMLHelper<int>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "mac-phase-in-time" ){
-        mMacPhaseInTime = XMLHelper<int>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "mac-price-conversion" ){
-        mCovertPriceValue = XMLHelper<Value>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "market-name" ){
-        mPriceMarketName = XMLHelper<string>::getValue( aCurrNode );
-    }
-    else{
+    else {
         return false;
-    }    
-    return true;
+    }
 }
 
 void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
@@ -181,8 +168,6 @@ void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs
         attrs[ "tax" ] = currPair->first;
         XMLWriteElementWithAttributes( currPair->second, "mac-reduction", aOut, aTabs, attrs );
     }
-    const Modeltime* modeltime = scenario->getModeltime();
-
     XMLWriteElementCheckDefault( mFullPhaseInPrice, "full-phase-in-price", aOut, aTabs, 400.0 );
     XMLWriteElementCheckDefault( mZeroCostPhaseInTime, "zero-cost-phase-in-time", aOut, aTabs, 25 );
     XMLWriteElementCheckDefault( mMacPhaseInTime, "mac-phase-in-time", aOut, aTabs, 0 );
@@ -213,10 +198,11 @@ void MACControl::initCalc( const string& aRegionName,
 }
 
 void MACControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
+    
     int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
     // Check first if MAC curve operation should be turned off
     // we do not apply the MAC curve in calibration model periods
-    if ( aPeriod <= finalCalibPer || mCovertPriceValue < 0 ) { // User flag to turn off MAC curves
+    if ( aPeriod <= finalCalibPer || mCovertPriceValue < 0 || mDisableEmControl ) { // User flag to turn off MAC curves
         setEmissionsReduction( 0 );
         return;
     }
@@ -232,7 +218,10 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
     double reduction = getMACValue( emissionsPrice );
     
     // base reduction when only considering tech.change
-    double baseReduction = adjustForTechChange( aPeriod, reduction );
+    // tech.change only apply to MAC when there is a positive carbon price
+    // otherwise the zero-cost MAC will be magnified by tech.change
+    // leading to overestimated emission reductions in reference scenario
+    double baseReduction = emissionsPrice > 0 ? adjustForTechChange( aPeriod, reduction ) : reduction;
     
     if( mNoZeroCostReductions && emissionsPrice <= 0.0 ) {
         reduction = 0.0;
@@ -356,7 +345,7 @@ double MACControl::getMACValue( const double aCarbonPrice ) const {
  * \param reduction pre-tech change reduction
  */
 double MACControl::adjustForTechChange( const int aPeriod, double reduction ) {
-
+    
     // note technical change is a rate of change per year, therefore we must
     // be sure to apply it for as many years as are in a model time step
     double techChange = 1;

@@ -40,18 +40,15 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/util/include/market_name_solution_info_filter.h"
 #include "solution/util/include/solution_info.h"
-#include "util/base/include/xml_helper.h"
-#include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
-MarketNameSolutionInfoFilter::MarketNameSolutionInfoFilter() {
+MarketNameSolutionInfoFilter::MarketNameSolutionInfoFilter(const std::string& aMarketName)
+:mAcceptMarketName(aMarketName)
+{
 }
 
 MarketNameSolutionInfoFilter::~MarketNameSolutionInfoFilter() {
@@ -60,34 +57,6 @@ MarketNameSolutionInfoFilter::~MarketNameSolutionInfoFilter() {
 const string& MarketNameSolutionInfoFilter::getXMLNameStatic() {
     const static string XML_NAME = "market-name-solution-info-filter";
     return XML_NAME;
-}
-
-bool MarketNameSolutionInfoFilter::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "market-name" ) {
-            mAcceptMarketName = XMLHelper<string>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
 }
 
 bool MarketNameSolutionInfoFilter::acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const {

@@ -47,7 +47,6 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
-#include "util/base/include/istandard_component.h"
 #include "util/base/include/data_definition_util.h"
 
 class IInput;
@@ -68,13 +67,19 @@ class PowerPlantCaptureComponent;
  *          and how the emissions are disposed.
  * \author Josh Lurz
 */
-class ICaptureComponent : public INamed, public IParsedComponent, private boost::noncopyable {
+class ICaptureComponent : public INamed, private boost::noncopyable {
 public:
     // Clone operator must be declared explicitly even though it is inherited
     // from IStandardComponent so that the return type can be changed. Since
     // this class is a subtype of IStandardComponent, this is legal and referred
     // to as a covariant return type.
     virtual ICaptureComponent* clone() const = 0;
+    
+    /*!
+     * \brief Get the XML name appropriate for the subclass.
+     * \return The XML name that can be used for input/output.
+     */
+    virtual const std::string& getXMLName() const = 0;
 
     /*! \brief Returns whether the type of the object is the same as the passed
     *          in type.
@@ -82,12 +87,7 @@ public:
     * \return Whether the type of the object is the same as the passed in type.
     */
     virtual bool isSameType( const std::string& aType ) const = 0;
-    
-    /*! \brief Parse the data for this object starting at a given node.
-    * \param aNode Root node from which to parse data.
-    */
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
-    
+        
     /*! \brief Write data from this object in an XML format for debugging.
     * \param aPeriod Period for which to write data.
     * \param aOut Filestream to which to write.

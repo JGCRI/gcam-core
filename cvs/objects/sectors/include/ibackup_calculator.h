@@ -47,14 +47,13 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
-#include "util/base/include/istandard_component.h"
 #include "util/base/include/data_definition_util.h"
 
 // Forward declaration
 class IInfo;
+class Tabs;
 
 // Need to forward declare the subclasses as well.
-class WindBackupCalculator;
 class CapacityLimitBackupCalculator;
 class CSPBackupCalculator;
 
@@ -69,13 +68,15 @@ class CSPBackupCalculator;
  *          sectors that produce electricity.
  * \author Josh Lurz
  */
-class IBackupCalculator : public INamed, public IParsedComponent, private boost::noncopyable {
+class IBackupCalculator : public INamed, private boost::noncopyable {
 public:
     // Clone operator must be declared explicitly even though it is inherited
     // from IStandardComponent so that the return type can be changed. Since
     // this class is a subtype of IStandardComponent, this is legal and referred
     // to as a covariant return type.
     virtual IBackupCalculator* clone() const = 0;
+    
+    virtual const std::string& getXMLName() const = 0;
 
     /*!
      * \brief Pass parameter information into the backup calculator from the technology.
@@ -83,6 +84,16 @@ public:
      * \author Steve Smith
      */
     virtual void initCalc( const IInfo* aTechInfo ) = 0;
+    
+    /*!
+     * \brief Write data from this object in an XML format for debugging.
+     * \param aPeriod Period for which to write data.
+     * \param aOut Filestream to which to write.
+     * \param aTabs Object responsible for writing the correct number of tabs.
+     */
+    virtual void toDebugXML( const int aPeriod,
+                             std::ostream& aOut,
+                             Tabs* aTabs ) const = 0;
 
     /*!
      * \brief Compute backup required for the marginal unit of energy output.
@@ -140,7 +151,7 @@ protected:
         /* Declare all subclasses of Sector to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( IBackupCalculator, WindBackupCalculator, CapacityLimitBackupCalculator,
+        DEFINE_SUBCLASS_FAMILY( IBackupCalculator, CapacityLimitBackupCalculator,
                                 CSPBackupCalculator )
     )
 };

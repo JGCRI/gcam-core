@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/solver_factory.h"
 #include "util/logger/include/ilogger.h"
@@ -52,7 +50,6 @@
 #include "solution/solvers/include/user_configurable_solver.h"
 
 using namespace std;
-using namespace xercesc;
 
 /*!
  * \brief Returns whether this factory can create a solver with the given xml
@@ -68,50 +65,3 @@ bool SolverFactory::hasSolver( const string& aXMLName ) {
         || UserConfigurableSolver::getXMLNameStatic() == aXMLName;
 }
 
-/*!
- * \brief Creates and parses the solver with the given xml name.
- * \details Creates the solver and calls XMLParse on it before returning it,
- *          if there are no known solvers which match the given xml name null
- *          is returned.
- * \param aXMLName The element name of the given xml node.
- * \param aNode The xml which defines the solver to be created.
- * \return The newly created and parsed solver or null if given an unknown type.
- * \note The list of known solvers here must be kept in sync with
- *       the ones found in hasSolver.
- */
-Solver* SolverFactory::createAndParseSolver( const string& aXMLName, Marketplace* aMarketplace,
-                                             World* aWorld, const DOMNode* aNode )
-{
-    // make sure we know about this solver
-    if( !hasSolver( aXMLName ) ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Could not create unknown Solver: " << aXMLName << endl;
-        return 0;
-    }
-    
-    // create the requested solver
-    Solver* retSolver;
-    if( BisectPolicyNRSolver::getXMLNameStatic() == aXMLName ) {
-        retSolver = new BisectPolicyNRSolver( aMarketplace, aWorld );
-    }
-    else if( BisectionNRSolver::getXMLNameStatic() == aXMLName ) {
-        retSolver = new BisectionNRSolver( aMarketplace, aWorld );
-    }
-    else if( UserConfigurableSolver::getXMLNameStatic() == aXMLName ) {
-        retSolver = new UserConfigurableSolver( aMarketplace, aWorld );
-    }
-    else {
-        // this must mean createAndParseSolver and hasSolver are out of
-        // sync with known solvers
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Could not create unknown Solver: " << aXMLName
-            << ", createAndParseSolver may be out of sync with hasSolver." << endl;
-        return 0;
-    }
-    
-    // parse the created solver
-    retSolver->XMLParse( aNode );
-    return retSolver;
-}

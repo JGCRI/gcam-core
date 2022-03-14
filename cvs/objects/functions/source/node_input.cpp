@@ -40,8 +40,6 @@
 */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "functions/include/node_input.h"
 #include "functions/include/ifunction.h"
@@ -59,7 +57,6 @@
 #include "util/base/include/configuration.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -71,61 +68,6 @@ NodeInput::NodeInput(){
 NodeInput::~NodeInput() {
     for( CNestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
         delete *it;
-    }
-}
-
-void NodeInput::XMLParse( const xercesc::DOMNode* node ) {
-    /*! \pre make sure we were passed a valid node. */
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    const DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() == DOMNode::TEXT_NODE ){
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if ( nodeName == NodeInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new NodeInput() );
-        }
-        else if ( nodeName == BuildingNodeInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new BuildingNodeInput() );
-        }
-        else if( nodeName == StaplesFoodDemandInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new StaplesFoodDemandInput() );
-        }
-        else if( nodeName == NonStaplesFoodDemandInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, mNestedInputs, new NonStaplesFoodDemandInput() );
-        }
-        else if ( nodeName == "prodDmdFnType" ) {
-            mProdDmdFnType = XMLHelper<string>::getValue( curr );
-        }
-        else if ( nodeName == "price-received" ) {
-            mPricePaid.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if ( nodeName == "Sigma1" ) {
-            mSigmaNewCapital.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if ( nodeName == "Sigma2" ) {
-            mSigmaOldCapital.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if ( nodeName == "technicalChange" ) {
-            mTechChange.set( XMLHelper<double>::getValue( curr ) );
-        }
-        // TODO: do I need a derived?
-        else /*if( !XMLDerivedClassParse( nodeName, curr ) )*/{
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " 
-                << getXMLReportingName() << "." << endl;
-        }
     }
 }
 
@@ -268,7 +210,7 @@ void NodeInput::copy( const NodeInput& aNodeInput ) {
 }
 
 bool NodeInput::isSameType( const string& aType ) const {
-    return aType == getXMLReportingName();
+    return aType == getXMLName();
 }
 
 bool NodeInput::hasTypeFlag( const int aTypeFlag ) const {
@@ -279,7 +221,7 @@ bool NodeInput::hasTypeFlag( const int aTypeFlag ) const {
 //! Output debug info to XML
 void NodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLReportingName(), aOut, aTabs, mName );
+    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
 
     XMLWriteElement( mSigmaNewCapital, "Sigma1", aOut, aTabs );
     XMLWriteElement( mSigmaOldCapital, "Sigma2", aOut, aTabs );
@@ -294,7 +236,7 @@ void NodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) cons
     }
 
     // write the closing tag.
-    XMLWriteClosingTag( getXMLReportingName(), aOut, aTabs );
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -305,6 +247,10 @@ void NodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) cons
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
+const string& NodeInput::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 const string& NodeInput::getXMLReportingName() const {
     return getXMLNameStatic();
 }
@@ -443,16 +389,6 @@ void NodeInput::changeSigma( const string& aRegionName, const int aPeriod,
 void NodeInput::calcLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
         const int aPeriod, const double aAlphaZero ) 
 {
-    /*!
-     * \warning Using the mNodePriceSet hack here to avoid excessive calls to calcLevelizedCost
-     *          this means we are relying on the technology to call resetCalcLevelizedCostFlag
-     *          at the end of it's operate to ensure that prices will be recalculated the next
-     *          time the solver changes prices.  Note calling calcVariableCost will also implicitly
-     *          reset the flag.
-     */
-    if( mNodePriceSet ) {
-        return;
-    }
     // have children calculate their levelized costs first
     // the leaves are assumed to already have calculated their appropriate price paid
     for( NestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
@@ -464,12 +400,6 @@ void NodeInput::calcLevelizedCost( const std::string& aRegionName, const std::st
         aAlphaZero, mCurrentSigma, this );
 
     setPricePaid( tempPrice, aPeriod );
-
-    // we only set the hack for the root so that we don't have to recurse through
-    // the nest when it comes time to reset this flag
-    if( mName == "root" ) {
-        mNodePriceSet = true;
-    }
 
     // We need to store the base year price paids since they are require to adjust our coefficients
     // with new sigmas in the future.  Note this may be inconsistent if the base year was not read in

@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/standard_technical_change_calc.h"
 #include "util/logger/include/ilogger.h"
@@ -91,38 +89,6 @@ const string& StandardTechnicalChangeCalc::getXMLNameStatic() {
 
 const string& StandardTechnicalChangeCalc::getName() const {
     return getXMLNameStatic();
-}
-
-// Documentation inherits.
-bool StandardTechnicalChangeCalc::XMLParse( const xercesc::DOMNode* node ){
-	/*! \pre Assume we are passed a valid node. */
-	assert( node );
-
-	const xercesc::DOMNodeList* nodeList = node->getChildNodes();
-	for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
-		const xercesc::DOMNode* curr = nodeList->item( i );
-		if( curr->getNodeType() != xercesc::DOMNode::ELEMENT_NODE ){
-			continue;
-		}
-		const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-		if( nodeName == "hicks-neutral" ){
-			mHicksNeutralTechChange = XMLHelper<double>::getValue( curr );
-		}
-	    else if( nodeName == "energy-only" ){
-            mEnergyTechChange = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "material-only" ){
-            mMaterialTechChange = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unknown tag " << nodeName << " encountered while processing " << getXMLNameStatic() << endl;
-        }
-	}
-
-    // TODO: Handle success and failure better.
-    return true;
 }
 
 void StandardTechnicalChangeCalc::toDebugXML( const int aPeriod,

@@ -44,8 +44,6 @@
  * \author Josh Lurz
  */
 
-#include <xercesc/dom/DOMNode.hpp>
-
 #include "sectors/include/afinal_demand.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -69,13 +67,13 @@ class EnergyFinalDemand: public AFinalDemand
 
 public:
     static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
 
     EnergyFinalDemand();
 
     virtual ~EnergyFinalDemand();
 
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
@@ -104,6 +102,7 @@ protected:
     // TODO: Move all these.
     class IDemandFunction {
     public:
+        virtual ~IDemandFunction() {}
         // TODO: Remove this function once construction is cleanly implemented.
         virtual bool isPerCapitaBased() const = 0;
 
@@ -147,12 +146,12 @@ protected:
     class FinalEnergyConsumer {
     public:
         static const std::string& getXMLNameStatic();
+        
+        const std::string& getXMLName() const;
 
         static double noCalibrationValue();
 
-        FinalEnergyConsumer( const std::string& aFinalDemandName );
-
-        bool XMLParse( const xercesc::DOMNode* aNode );
+        FinalEnergyConsumer();
 
         void completeInit( const std::string& aRegionName,
                            const std::string& aFinalDemandName );
@@ -167,15 +166,20 @@ protected:
         void toDebugXML( const int aPeriod,
                          std::ostream& aOut,
                          Tabs* aTabs ) const;
-    private:
-        //! Name of the TFE market.
-        std::string mTFEMarketName;
-
-        //! Autonomous end-use energy intensity parameter.
-        objects::PeriodVector<Value> mAEEI;
-
-        //! Final energy to calibrate to.
-        objects::PeriodVector<Value> mCalFinalEnergy;
+    protected:
+        
+        DEFINE_DATA(
+            DEFINE_SUBCLASS_FAMILY( FinalEnergyConsumer ),
+            
+            //! Name of the TFE market.
+            DEFINE_VARIABLE( SIMPLE, "market-name", mTFEMarketName, std::string ),
+                    
+            //! Autonomous end-use energy intensity parameter.
+            DEFINE_VARIABLE( ARRAY, "aeei", mAEEI, objects::PeriodVector<Value> ),
+            
+            //! Final energy to calibrate to.
+            DEFINE_VARIABLE( ARRAY, "cal-final-energy", mCalFinalEnergy, objects::PeriodVector<Value> )
+        )
     };
     
     // Define data such that introspection utilities can process the data from this
@@ -185,9 +189,11 @@ protected:
     
         //! Name of the final demand and the good it consumes.
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+                            
+        DEFINE_VARIABLE( SIMPLE, "perCapitaBased", mIsPerCapBased, bool ),
         
         //! Total end-use sector service after technical change is applied.
-        DEFINE_VARIABLE( ARRAY | STATE, "service", mServiceDemands, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "service", mServiceDemands, objects::PeriodVector<Value> ),
 
         //! Income elasticity 
         DEFINE_VARIABLE( ARRAY, "income-elasticity", mIncomeElasticity, objects::PeriodVector<Value> ),
@@ -196,17 +202,17 @@ protected:
         DEFINE_VARIABLE( ARRAY, "price-elasticity", mPriceElasticity, objects::PeriodVector<Value> ),
 
         //! Service demand without technical change applied.
-        DEFINE_VARIABLE( ARRAY | STATE, "service-pre-tech-change", mPreTechChangeServiceDemand, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "service-pre-tech-change", mPreTechChangeServiceDemand, objects::PeriodVector<Value> ),
 
         //! Per capita service for each period to which to calibrate.
-        DEFINE_VARIABLE( ARRAY, "base-service", mBaseService, objects::PeriodVector<Value> )
+        DEFINE_VARIABLE( ARRAY, "base-service", mBaseService, objects::PeriodVector<Value> ),
+                            
+        //! Object responsible for consuming final energy.
+        DEFINE_VARIABLE( CONTAINER, "final-energy-consumer", mFinalEnergyConsumer, FinalEnergyConsumer* )
     )
 
     //! Demand function used to calculate unscaled demand.
     std::auto_ptr<IDemandFunction> mDemandFunction;
-
-    //! Object responsible for consuming final energy.
-    std::auto_ptr<FinalEnergyConsumer> mFinalEnergyConsumer;
     
     virtual double calcFinalDemand( const std::string& aRegionName,
                                     const Demographic* aDemographics,
@@ -219,9 +225,7 @@ protected:
                                     const int aPeriod ) const;
 
     // Methods for deriving from EnergyFinalDemand.
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual const std::string& getXMLName() const;
 private:    
     void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
 };

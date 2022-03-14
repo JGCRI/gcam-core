@@ -64,6 +64,10 @@ public:
     // Singleton class will only provide a getInstance method and no constructors
     static EmptyTechnology* getInstance();
     
+    // A pure virtual function to make it so Factory does not think this class can
+    // be created.
+    virtual void missing() const = 0;
+    
     // ISimpleComponent methods
     virtual bool isSameType( const std::string& aType ) const;
     
@@ -73,10 +77,11 @@ public:
     virtual void setYear( const int aNewYear );
     virtual int getYear() const;
     
-    virtual bool XMLParse( const xercesc::DOMNode* tempnode );
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     
     virtual const std::string& getXMLName() const;
+    
+    static const std::string& getXMLNameStatic();
     
     virtual void completeInit( const std::string& aRegionName,
                               const std::string& aSectorName,
@@ -184,15 +189,26 @@ protected:
     virtual double getTotalInputCost( const std::string& aRegionName,
                                      const std::string& aSectorName,
                                      const int aPeriod ) const;
+};
+
+/*!
+ * \brief A non pure virtual implementation of EmptyTechnology so that it can be
+ *        created however the constructors are all private so can only acutally be
+ *        created in EmptyTechnology::getInstance().
+ */
+class CreateableEmptyTechnology : public EmptyTechnology {
+    friend class EmptyTechnology;
+public:
+    virtual void missing() const {}
     
 private:
     // private constructors to enforce a single instance
-    EmptyTechnology() {}
-    ~EmptyTechnology() {}
+    CreateableEmptyTechnology() {}
+    ~CreateableEmptyTechnology() {}
     
     // intentionally undefined
-    EmptyTechnology( const EmptyTechnology& aEmptyTechnology );
-    EmptyTechnology& operator=( const EmptyTechnology& aEmptyTechnology );
+    CreateableEmptyTechnology( const CreateableEmptyTechnology& aEmptyTechnology );
+    CreateableEmptyTechnology& operator=( const CreateableEmptyTechnology& aEmptyTechnology );
 };
 
 #endif // _EMPTY_TECHNOLOGY_H_

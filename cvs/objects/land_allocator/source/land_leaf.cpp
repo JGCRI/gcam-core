@@ -42,8 +42,6 @@
 #include <string>
 #include <vector>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
@@ -60,7 +58,6 @@
 #include "functions/include/idiscrete_choice.hpp"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -72,6 +69,19 @@ extern Scenario* scenario;
 */
 LandLeaf::LandLeaf( const ALandAllocatorItem* aParent, const std::string &aName ):
     ALandAllocatorItem( aParent, eLeaf ),
+    mCarbonContentCalc( 0 ),
+    mMinAboveGroundCDensity( 0.0 ),
+    mMinBelowGroundCDensity( 0.0 ),
+    mCarbonPriceIncreaseRate( Value( 0.0 ) ),
+    mLandUseHistory( 0 ),
+    mReadinLandAllocation( Value( 0.0 ) ),
+    mLastCalcCO2Value( 0.0 ),
+    mLandConstraintPolicy( "" )
+{
+}
+
+LandLeaf::LandLeaf():
+    ALandAllocatorItem( eLeaf ),
     mCarbonContentCalc( 0 ),
     mMinAboveGroundCDensity( 0.0 ),
     mMinBelowGroundCDensity( 0.0 ),
@@ -121,76 +131,6 @@ ALandAllocatorItem* LandLeaf::getChildAt( const size_t aIndex ) {
     /*! \invariant Leaves have no children so this should never be called. */
     assert( false );
     return 0;
-}
-
-bool LandLeaf::XMLParse( const xercesc::DOMNode* aNode ){
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // assume we are passed a valid node.
-    assert( aNode );
-    
-    // Set the node name.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-
-    // get all the children.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        const DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "landAllocation" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mReadinLandAllocation,
-                                                     modeltime );
-        }
-        else if( nodeName == "minAboveGroundCDensity" ){
-            mMinAboveGroundCDensity = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "minBelowGroundCDensity" ){
-            mMinBelowGroundCDensity = XMLHelper<double>::getValue( curr );
-        }
-		else if( nodeName == "ghost-unnormalized-share" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mGhostUnormalizedShare, modeltime );
-        }
-        else if( nodeName == "is-ghost-share-relative" ){
-            mIsGhostShareRelativeToDominantCrop = XMLHelper<bool>::getValue( curr );
-        }
-        else if( nodeName == LandUseHistory::getXMLNameStatic() ){
-            parseSingleNode( curr, mLandUseHistory, new LandUseHistory );
-        }
-        else if( nodeName == LandCarbonDensities::getXMLNameStatic() ) {
-            parseSingleNode( curr, mCarbonContentCalc, new LandCarbonDensities );
-        }
-        else if( nodeName == NoEmissCarbonCalc::getXMLNameStatic() ) {
-            parseSingleNode( curr, mCarbonContentCalc, new NoEmissCarbonCalc );
-        }
-        else if( nodeName == "landConstraintCurve" ) {
-            mLandExpansionCostName = XMLHelper<string>::getValue( curr );
-            mIsLandExpansionCost = true;
-        }
-        else if( nodeName == "negative-emiss-market" ) {
-            mNegEmissMarketName = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "land-constraint-policy" ){
-            mLandConstraintPolicy = XMLHelper<string>::getValue( curr );
-        }
-        else if ( !XMLDerivedClassParse( nodeName, curr ) ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLName() << "." << endl;
-        }
-    }
-
-    return true;
-}
-
-bool LandLeaf::XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurr ){
-    // Allow derived classes to override.
-    return false;
 }
 
 void LandLeaf::completeInit( const string& aRegionName,

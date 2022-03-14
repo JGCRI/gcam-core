@@ -41,8 +41,6 @@
 
 #include "util/base/include/definitions.h"
 #include <iostream>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include <cmath>
 
 #include "functions/include/food_demand_input.h"
@@ -56,7 +54,6 @@
 #include "containers/include/iinfo.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -67,44 +64,6 @@ FoodDemandInput::FoodDemandInput()
 
 //! Destructor
 FoodDemandInput::~FoodDemandInput() {
-}
-
-void FoodDemandInput::XMLParse( const DOMNode* aNode ) {
-    /*! \pre make sure we were passed a valid node. */
-    assert( aNode );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-
-    // get all child nodes.
-    const DOMNodeList* nodeList = aNode->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() == DOMNode::TEXT_NODE ){
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if ( nodeName == "base-service" ) {
-            XMLHelper<Value>::insertValueIntoVector( curr, mFoodDemandQuantity, scenario->getModeltime() );
-        }
-        else if( nodeName == "scale-param" ) {
-            mScaleParam = XMLHelper<Value>::getValue( curr );
-        }
-        else if( nodeName == "self-price-elasticity" ) {
-            mSelfPriceElasticity = XMLHelper<Value>::getValue( curr );
-        }
-        else if( nodeName == "regional-bias" ) {
-            XMLHelper<Value>::insertValueIntoVector( curr, mRegionalBias, scenario->getModeltime() );
-        }
-        else if( !XMLDerivedClassParse( nodeName, curr ) ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLReportingName() << "." << endl;
-        }
-    }
 }
 
 void FoodDemandInput::completeInit( const string& aRegionName,
@@ -193,13 +152,13 @@ void FoodDemandInput::copy( const FoodDemandInput& aInput ) {
 }
 
 bool FoodDemandInput::isSameType( const string& aType ) const {
-    return aType == getXMLReportingName();
+    return aType == getXMLName();
 }
 
 //! Output debug info to XML
 void FoodDemandInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     // write the beginning tag.
-    XMLWriteOpeningTag ( getXMLReportingName(), aOut, aTabs, mName );
+    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
 
     XMLWriteElement( mFoodDemandQuantity[ aPeriod ], "service", aOut, aTabs );
     XMLWriteElement( mFoodDemandQuantity[ aPeriod ] / getAnnualDemandConversionFactor( aPeriod ), "food-demand-percap", aOut, aTabs );
@@ -208,7 +167,7 @@ void FoodDemandInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs 
     XMLWriteElement( mRegionalBias[ aPeriod ], "regional-bias", aOut, aTabs );
 
     // write the closing tag.
-    XMLWriteClosingTag( getXMLReportingName(), aOut, aTabs );
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
 //! Get the name of the input
@@ -436,6 +395,10 @@ const string& StaplesFoodDemandInput::getXMLReportingName() const {
     return getXMLNameStatic();
 }
 
+const string& StaplesFoodDemandInput::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 IInput* StaplesFoodDemandInput::clone() const {
     StaplesFoodDemandInput* clone = new StaplesFoodDemandInput();
     clone->copy( *this );
@@ -449,22 +412,6 @@ void StaplesFoodDemandInput::copy( const StaplesFoodDemandInput& aInput ) {
     FoodDemandInput::copy( aInput );
 }
     
-bool StaplesFoodDemandInput::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
-    if( aNodeName == "cross-price-elasticity" ) {
-        mCrossPriceElasticity = XMLHelper<Value>::getValue( aNode );
-    }
-    else if( aNodeName == "income-elasticity" ) {
-        mIncomeElasticity = XMLHelper<Value>::getValue( aNode );
-    }
-    else if( aNodeName == "income-max-term" ) {
-        mIncomeMaxTerm = XMLHelper<Value>::getValue( aNode );
-    }
-    else {
-        return false;
-    }
-    return true;
-}
-
 /*!
  * \brief Get the price elasticity (g_ij)
  * \details If this == aOther then returns self price elasticity otherwise the cross both of which are just read in from input.
@@ -576,6 +523,10 @@ const string& NonStaplesFoodDemandInput::getXMLReportingName() const {
     return getXMLNameStatic();
 }
 
+const string& NonStaplesFoodDemandInput::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 IInput* NonStaplesFoodDemandInput::clone() const {
     NonStaplesFoodDemandInput* clone = new NonStaplesFoodDemandInput();
     clone->copy( *this );
@@ -585,16 +536,6 @@ IInput* NonStaplesFoodDemandInput::clone() const {
 void NonStaplesFoodDemandInput::copy( const NonStaplesFoodDemandInput& aInput ) {
     mIncomeElasticity = aInput.mIncomeElasticity;
     FoodDemandInput::copy( aInput );
-}
-    
-bool NonStaplesFoodDemandInput::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
-    if( aNodeName == "income-elasticity" ) {
-        mIncomeElasticity = XMLHelper<Value>::getValue( aNode );
-    }
-    else {
-        return false;
-    }
-    return true;
 }
 
 /*!

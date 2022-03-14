@@ -83,31 +83,38 @@ class SolutionInfoParamParser;
 class UserConfigurableSolver: public Solver {
 public:
     UserConfigurableSolver( Marketplace* aMarketplace, World* aWorld );
+    UserConfigurableSolver();
     virtual ~UserConfigurableSolver();
     static const std::string& getXMLNameStatic();
+    
+    const std::string& getXMLName() const;
     
     // Solver methods
     virtual void init();
     virtual bool solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser );
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
-private:
-    //! In order list of solver components to use when trying to solve.
-    std::vector<SolverComponent*> mSolverComponents;
-    
-    //! Default solution tolerance, this value may be overridden at the SolutionInfo level
-    double mDefaultSolutionTolerance;
-    
-    //! Default solution floor, this value may be overridden at the SolutionInfo level
-    double mDefaultSolutionFloor;
-    
-    //! Calibration tolerance
-    double mCalibrationTolerance;
-    
-    //! Max total solution iterations
-    int mMaxModelCalcs;
+protected:
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Solver,
+        
+        //! Default solution tolerance, this value may be overridden at the SolutionInfo level
+        DEFINE_VARIABLE( SIMPLE, "solution-tolerance", mDefaultSolutionTolerance, double ),
+        
+        //! Default solution floor, this value may be overridden at the SolutionInfo level
+        DEFINE_VARIABLE( SIMPLE, "solution-floor", mDefaultSolutionFloor, double ),
+        
+        //! Calibration tolerance
+        DEFINE_VARIABLE( SIMPLE, "calibration-tolerance", mCalibrationTolerance, double ),
+        
+        //! Max total solution iterations
+        DEFINE_VARIABLE( SIMPLE, "max-model-calcs", mMaxModelCalcs, int ),
+        
+        //! In order list of solver components to use when trying to solve.
+        DEFINE_VARIABLE( CONTAINER, "solver-components", mSolverComponents, std::vector<SolverComponent*> )
+    )
+
 };
 
 #endif // _USER_CONFIGURABLE_SOLVER_H_

@@ -41,7 +41,6 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
 
     # Load required inputs
     All_steel <- get_data(all_data, "energy/steel_prod")
-    # IO_iron_steel <- get_data(all_data, "energy/IO_iron_steel_scaled", strip_attributes = TRUE)
     steel_intensity <- get_data(all_data, "energy/steel_intensity", strip_attributes = TRUE)
     L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1322.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
     L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
@@ -122,7 +121,6 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
       repeat_add_columns(select(iso_GCAM_regID, GCAM_region_ID) %>% distinct(GCAM_region_ID)) %>%
       repeat_add_columns(tibble::tibble(year = HISTORICAL_YEARS)) %>%
       left_join(Intensity_scaled, by = c("GCAM_region_ID", "year", "subsector", "fuel")) %>%
-      #mutate(coefficient = coefficient * 1/CONV_T_KG, Unit = "GJ/kg") %>%
       na.omit
 
 
@@ -154,17 +152,22 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
       L1323.in_EJ_R_indenergy_F_Yh
 
     #Adjust negative energy use
+
+    # Identify rows with negative energy use
     L1323.in_EJ_R_indenergy_F_Yh_tmp %>%
       filter(value < 0) %>%
       select(-sector) ->
       negative
 
+    # revise IO coefficients to zero for rows with negative energy use
     L1323.IO_GJkg_R_iron_steel_F_Yh %>%
       left_join(negative,by = c("GCAM_region_ID", "year", "fuel")) %>%
       mutate(coefficient = if_else(replace_na(value, 0) < 0, 0, coefficient),value = NULL) ->
       L1323.IO_GJkg_R_iron_steel_F_Yh
 
     #Recalculate
+
+    # Recalculate the input steel energy with revised IO coefficients
     L1323.out_Mt_R_iron_steel_Yh %>%
       # 10/11/2019 gpk modification: in order to avoid assigning output (and energy consumption) to technologies that do
       # not exist in the base years, we specify a "technology" column which is equal to the subsector. Note that this
@@ -175,6 +178,7 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
       select(GCAM_region_ID, year, subsector, technology, fuel, value) ->
       L1323.in_EJ_R_iron_steel_F_Y
 
+    # Redo the iron and steel energy use and other industrial energy use subtraction
     L1322.in_EJ_R_indenergy_F_Yh %>%
       rename(raw = value) %>%
       left_join(L1323.in_EJ_R_iron_steel_F_Y %>%

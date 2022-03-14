@@ -51,7 +51,6 @@
 #include "functions/include/idiscrete_choice.hpp"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -88,30 +87,6 @@ const string& LandAllocator::getXMLNameStatic() {
     return XML_NAME;
 }
 
-bool LandAllocator::XMLParse( const DOMNode* aNode ){
-    // Call the XML parse.
-    return LandNode::XMLParse( aNode );
-}
-
-bool LandAllocator::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ){
-    if( aNodeName == "landAllocation" ){
-        XMLHelper<Value>::insertValueIntoVector( aCurr, mLandAllocation, scenario->getModeltime() );
-    }
-    else if( aNodeName == "carbonPriceIncreaseRate" ){
-        XMLHelper<double>::insertValueIntoVector( aCurr, mCarbonPriceIncreaseRate, scenario->getModeltime() );
-    }
-    else if( aNodeName == "soilTimeScale" ){
-        mSoilTimeScale = XMLHelper<int>::getValue( aCurr );
-    }
-    else if( aNodeName == "negative-emiss-market" ){
-        mNegEmissMarketName = XMLHelper<string>::getValue( aCurr );
-    }
-    else {
-        return false;
-    }
-    return true;
-}
-
 void LandAllocator::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
     // Call the node toDebugXML
     ALandAllocatorItem::toDebugXML( aPeriod, aOut, aTabs );  
@@ -142,6 +117,10 @@ void LandAllocator::initCalc( const string& aRegionName, const int aPeriod )
 void LandAllocator::completeInit( const string& aRegionName, 
                                   const IInfo* aRegionInfo )
 {
+    // Ensure the parent nodes are set through out the tree.  The root has no
+    // parent so just set it to null.
+    setParent( 0 );
+    
     // create a land-info from the region info so we can pass the
     // negative emissions market name
     IInfo* landInfo = InfoFactory::constructInfo( aRegionInfo, mName );

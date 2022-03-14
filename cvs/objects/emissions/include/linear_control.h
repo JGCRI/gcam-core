@@ -62,6 +62,8 @@ public:
     
     static const std::string& getXMLNameStatic();
     
+    virtual const std::string& getXMLName() const;
+    
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const IInfo* aTechIInfo );
@@ -75,8 +77,6 @@ protected:
     LinearControl( const LinearControl& aOther );
     LinearControl& operator=( const LinearControl& aOther );
     
-    virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
@@ -104,6 +104,7 @@ private:
     void copy( const LinearControl& aOther );
 
     virtual void calcEmissionsReductionInternal( const double aBaseEmissionsCoef, const int aPeriod );
+
 };
 
 #endif // _LINEAR_CONTROL_H_

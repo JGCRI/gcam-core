@@ -14,7 +14,8 @@ module_energy_LA144.building_det_flsp(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L144.flsp_bm2_R_res_Yh}, \code{L144.flsp_bm2_R_comm_Yh}, \code{L144.flspPrice_90USDm2_R_bld_Yh}. The corresponding file in the
+the generated outputs: \code{L144.flsp_bm2_R_res_Yh}, \code{L144.flsp_bm2_R_comm_Yh}, \code{L144.flspPrice_90USDm2_R_bld_Yh},
+\code{L144.hab_land_flsp_fin}, \code{L144.flsp_param}. The corresponding file in the
 original data system was \code{LA144.building_det_flsp.R} (energy level1).
 }
 \description{

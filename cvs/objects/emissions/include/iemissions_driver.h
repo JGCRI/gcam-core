@@ -44,7 +44,6 @@
  * \author Jim Naslund
  */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <vector>
 #include <string>
 
@@ -86,10 +85,7 @@ public:
      * \return A string representing the type of driver.
      */
     virtual const std::string& getXMLName() const = 0;
-    
-    //! XML parse
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
-    
+      
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
     
 protected:

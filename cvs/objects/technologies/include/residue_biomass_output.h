@@ -36,10 +36,9 @@
 
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
-#include "util/curves/include/cost_curve.h"
 #include "util/base/include/time_vector.h"
 
-class Curve;
+class PointSetCurve;
 class ALandAllocatorItem;
 
 /*!
@@ -81,6 +80,7 @@ public :
     ResidueBiomassOutput( const std::string& sectorName = std::string() );
     virtual ~ResidueBiomassOutput(void);
     virtual const std::string& getXMLReportingName() const;
+    virtual const std::string& getXMLName() const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
     virtual IOutput::OutputList calcPhysicalOutput( const double aPrimaryOutput,
@@ -122,8 +122,8 @@ public :
     virtual double getCurrencyOutput( const int aPeriod ) const { return 0; }
     
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
-
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const IOutput* aPreviousInput,
@@ -138,7 +138,7 @@ protected :
         IOutput,
 
         //! Physical output by period.
-        DEFINE_VARIABLE( ARRAY | STATE, "physical-output", mPhysicalOutputs, value_vector_type ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-output", mPhysicalOutputs, value_vector_type ),
 
         /*!
         * Name of the secondary output. Corresponds to a market for this good
@@ -147,7 +147,7 @@ protected :
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! CO2 emissions coefficient cached from the marketplace.
-        DEFINE_VARIABLE( SIMPLE, "co2-coef", mCachedCO2Coef, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "co2-coef", mCachedCO2Coef, Value ),
 
         //! The harvest index
         DEFINE_VARIABLE( SIMPLE, "harvest-index", mHarvestIndex, double ),
@@ -165,29 +165,9 @@ protected :
         DEFINE_VARIABLE( SIMPLE, "mass-to-energy", mMassToEnergy, double ),
 
         //! Piece-wise linear cost curve 
-        DEFINE_VARIABLE( CONTAINER, "fract-harvested", mCostCurve, Curve* )
+        DEFINE_VARIABLE( CONTAINER | NOT_PARSABLE, "fract-harvested", mCostCurve, PointSetCurve* )
     )
 
-    // These variables are for debugging purposes. Values are written to debug.xml
-    // Are made mutable so values can be saved. Are used only for debugging so are not violating const functions.
-    //! Mass in crop residue
-    mutable double mResMass;
-
-    //! Mass in crop
-    mutable double mCropMass;
-
-    //! Residue Available
-    mutable double mResAvail;
-
-    //! Mass of biomass to be retained to prevent erosion
-    mutable double mMeanErosCtrl;
-
-    //! Max biomass energy supply
-    mutable double mMaxBioEnergySupply;
-
-    //! Fraction of max available residue harvested for energy
-    mutable double mFractProduced;
-    
     //! Weak pointer to the land leaf which corresponds to this biomass output
     //! used to save time finding it over and over
     ALandAllocatorItem* mProductLeaf;

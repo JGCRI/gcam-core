@@ -41,8 +41,6 @@
 #include "util/base/include/definitions.h"
 #include <string>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "sectors/include/CSP_backup_calculator.h"
 #include "util/base/include/util.h"
@@ -52,7 +50,6 @@
 #include "containers/include/iinfo.h"
 
 using namespace std;
-using namespace xercesc;
 
 /*!
  * \brief Constructor.
@@ -100,36 +97,8 @@ const string& CSPBackupCalculator::getXMLNameStatic() {
     return XML_NAME;
 }
 
-// Documentation is inherited.
-bool CSPBackupCalculator::XMLParse( const xercesc::DOMNode* node ){
-    /*! \pre make sure we were passed a valid node. */
-    assert( node );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "max-backup-fraction" ){
-            mMaxBackupFraction = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "backup-exponent" ){
-            mBackupExponent = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
-            return false;
-        }
-    }
-    return true;
+const string& CSPBackupCalculator::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 // Documentation is inherited.

@@ -43,7 +43,6 @@
  * \brief AResource header file.
  * \author Josh Lurz, Sonny Kim
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
@@ -69,8 +68,6 @@ class AResource: public INamed, public IVisitable, private boost::noncopyable {
     friend class XMLDBOutputter;
 public:
     virtual ~AResource();
-
-    virtual void XMLParse( const xercesc::DOMNode* aNode ) = 0;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,

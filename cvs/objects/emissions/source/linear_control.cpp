@@ -40,9 +40,6 @@
 
 #include "util/base/include/definitions.h"
 
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-
 #include "emissions/include/linear_control.h"
 #include "emissions/include/nonco2_emissions.h"
 #include "containers/include/scenario.h"
@@ -52,7 +49,6 @@
 #include "containers/include/iinfo.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -79,7 +75,8 @@ LinearControl::LinearControl( const LinearControl& aOther )
 
 //! Clone operator.
 LinearControl* LinearControl::clone() const {
-    return new LinearControl( *this );
+    LinearControl* newControlObject = new LinearControl( *this );
+    return newControlObject;
 }
 
 //! Assignment operator.
@@ -117,27 +114,6 @@ const string& LinearControl::getXMLNameStatic(){
     return XML_NAME;
 }
 
-bool LinearControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
-    
-    if ( aNodeName == "end-year" ){
-        mTargetYear = XMLHelper<int>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "start-year" ){
-        mStartYear = XMLHelper<int>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "final-emissions-coefficient" ){
-        mFinalEmCoefficient = XMLHelper<Value>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "allow-ef-increase" ){
-        mAllowIncrease = XMLHelper<bool>::getValue( aCurrNode );
-    }
-    else{
-        return false;
-    }
-       
-    return true;
-}
-
 void LinearControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteElement( mFinalEmCoefficient, "final-emissions-coefficient", aOut, aTabs);
@@ -152,7 +128,7 @@ void LinearControl::completeInit( const string& aRegionName, const string& aSect
                                const IInfo* aTechInfo )
 {
 
-    if ( ( mTargetYear == 0 ) || !mFinalEmCoefficient.isInited() ) {
+    if ( ( mTargetYear == 0 ) || !mFinalEmCoefficient.isInited() && !mDisableEmControl ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Linear control function " << getName() << " has not been parameterized. " << endl;
@@ -169,7 +145,7 @@ void LinearControl::initCalc( const string& aRegionName,
     int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
     int finalCalibYr = scenario->getModeltime()->getper_to_yr( finalCalibPer );
 
-    if ( mTargetYear <= finalCalibYr) {
+    if ( mTargetYear <= finalCalibYr && !mDisableEmControl ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Linear control function improperly parameterized. Target year <= last calibration year." << endl;
@@ -177,7 +153,7 @@ void LinearControl::initCalc( const string& aRegionName,
     }
     
     // Make sure start year is not before final calibration year
-    if ( mStartYear < finalCalibYr ) {
+    if ( mStartYear < finalCalibYr && !mDisableEmControl ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << getXMLName() << ", " << getName() << " has start year " << mStartYear
@@ -185,25 +161,32 @@ void LinearControl::initCalc( const string& aRegionName,
         mStartYear = finalCalibYr;
     }
     
-    // Linear control objects are not copied forward, so make sure start year is not before
-    // the first model period for this object.
+    // Make sure start year is not before the first model period for this object.
     int thisModelYear = scenario->getModeltime()->getper_to_yr( aPeriod );
     if ( aTechInfo->getBoolean( "new-vintage-tech", true ) && mStartYear < thisModelYear ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << getXMLName() << ", " << getName() << " has invalid start year " << mStartYear
-                << " before first year " << thisModelYear << " for this vintage. Resetting to " << thisModelYear << endl;
+        
+        // But don't warn if the current object has been disabled via user input
+        if ( !mDisableEmControl ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << getXMLName() << ", " << getName() << " has invalid start year " << mStartYear
+                    << " before first year " << thisModelYear << " for this vintage. Resetting to " << thisModelYear << endl;
+        }
         mStartYear = thisModelYear;
     }
     
     // Need to get the emissions coefficient from start period to serve as starting point 
     // for linear decline.
     int startPeriod = scenario->getModeltime()->getyr_to_per( mStartYear );
-    if ( aPeriod >=  ( startPeriod + 1 ) ) {
-        double baseEmissionsCoef = aParentGHG->getAdjustedEmissCoef( startPeriod );
-        // we calculate the emissions reduction now in initCalc because it will not be
-        // changing with each iteration so we can use this optimization.
-        calcEmissionsReductionInternal( baseEmissionsCoef, aPeriod );
+    if ( mDisableEmControl ) {
+        setEmissionsReduction( 0 );
+    } else {
+        if ( aPeriod >=  ( startPeriod + 1 ) ) {
+            double baseEmissionsCoef = aParentGHG->getAdjustedEmissCoef( startPeriod );
+            // we calculate the emissions reduction now in initCalc because it will not be
+            // changing with each iteration so we can use this optimization.
+            calcEmissionsReductionInternal( baseEmissionsCoef, aPeriod );
+       }
     }
     
     // Note, the emissions driver in NonCO2Emissions::calcEmission for input driver is 

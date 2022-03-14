@@ -45,7 +45,6 @@
 * \author Sonny Kim
 */
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
@@ -82,7 +81,6 @@ public:
     SubResource();
     virtual ~SubResource();
     const std::string& getName() const;
-    void XMLParse( const xercesc::DOMNode* aNode );
     virtual void completeInit( const std::string& aRegionName, const std::string& aResourceName,
                                const IInfo* aResourceInfo );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
@@ -98,14 +96,11 @@ public:
     double getAnnualProd( int aPeriod ) const;
     double getAvailable( int aPeriod ) const;
     void updateAvailable( const int period );
-    virtual double getVariance() const;
-    virtual double getAverageCapacityFactor() const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual double getLowestPrice( const int aPeriod ) const;
     virtual double getHighestPrice( const int aPeriod ) const;
 protected:
     virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
 
     DEFINE_DATA(
         /* Declare all subclasses of SubResource to allow automatic traversal of the
@@ -118,19 +113,19 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! total available resource
-        DEFINE_VARIABLE( ARRAY | STATE, "available", mAvailable, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "available", mAvailable, objects::PeriodVector<Value> ),
         
         //! annual production of SubResource
         DEFINE_VARIABLE( ARRAY | STATE, "annualprod", mAnnualProd, objects::PeriodVector<Value> ),
         
         //! cumulative production of SubResource
-        DEFINE_VARIABLE( ARRAY | STATE, "cumulprod", mCumulProd, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "cumulprod", mCumulProd, objects::PeriodVector<Value> ),
         
         //! Cumulative Technical Change for this subsector
-        DEFINE_VARIABLE( ARRAY, "cumulative-tech-change", mCumulativeTechChange, objects::PeriodVector<double> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "cumulative-tech-change", mCumulativeTechChange, objects::PeriodVector<double> ),
         
         //! effective price (global price + price adder)
-        DEFINE_VARIABLE( ARRAY | STATE, "effective-price", mEffectivePrice, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "effective-price", mEffectivePrice, objects::PeriodVector<Value> ),
         
         //! calibrated production
         DEFINE_VARIABLE( ARRAY, "cal-production", mCalProduction, objects::PeriodVector<double> ),
