@@ -2436,7 +2436,7 @@ module_energy_L244.building_det <- function(command, ...) {
       bind_rows(L244.ShellConductance_bld_noadj) %>%
       arrange(region,year,gcam.consumer) %>%
       # To avid big jumps, we linearly interpolate the shell efficiency from final base year to 2050 and 2100
-      filter(year %in% c(MODEL_BASE_YEARS,2050,2100)) %>%
+      filter(year %in% c(MODEL_BASE_YEARS,2100)) %>%
       complete(nesting(region,gcam.consumer, nodeInput,building.node.input), year = c(year, MODEL_YEARS)) %>%
       mutate(shell.year = year) %>%
       group_by(region,gcam.consumer, nodeInput,building.node.input) %>%
