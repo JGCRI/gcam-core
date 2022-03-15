@@ -109,23 +109,7 @@ public:
                                const IInfo* aTechInfo );
     
     virtual double getCoefficient(const int aPeriod) const;
-
-	virtual double getCoef() const;
-
-    virtual double getBiasAdder(const int aPeriod) const;
-
-    virtual double getCoalA() const;
-    
-    virtual double getCoalK() const;
-
-    virtual double getCoalBase() const;
-
-    virtual double getTradBioX() const;
-
-    virtual double getTradBioY() const;
-
-    virtual double getTradBioBase() const;
-    
+  
     virtual void setCoefficient( const double aCoefficient,
                                  const int aPeriod );
     

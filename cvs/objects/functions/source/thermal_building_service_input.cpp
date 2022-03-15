@@ -164,59 +164,11 @@ double ThermalBuildingServiceInput::calcThermalLoad( const BuildingNodeInput* aB
              + mInternalGainsScalar * aInternalGainsPerSqMeter );
 }
 
-/*!
- * \brief Get the building service coefficient.
- * \param aPeriod Model period.
- * \return The coefficient.
- */
-double ThermalBuildingServiceInput::getCoef( ) const {
-    
-    return mCoef;
-
-
-}
-
 
 double ThermalBuildingServiceInput::getCoefficient(const int aPeriod) const {
 
     return 1;
 }
-
-/*!
- * \brief Get the coal coefficients and bias adder for service demand.
-  * \return The coefficient.
- */
-
-double ThermalBuildingServiceInput::getCoalA() const {
-    return mCoalA;
-}
-
-double ThermalBuildingServiceInput::getCoalK() const {
-    return mCoalK;
-}
-
-double ThermalBuildingServiceInput::getCoalBase() const {
-    return mCoalBase;
-}
-
-double ThermalBuildingServiceInput::getTradBioX() const {
-    return mTradBioX;
-}
-
-double ThermalBuildingServiceInput::getTradBioY() const {
-    return mTradBioY;
-}
-
-double ThermalBuildingServiceInput::getTradBioBase() const {
-    return mTradBioBase;
-}
-
-
-double ThermalBuildingServiceInput::getBiasAdder(const int aPeriod) const {
-	return mBiasAdderEn[ aPeriod ];
-}
-
-
 
 
 /*! \brief Set the building service coefficient.
